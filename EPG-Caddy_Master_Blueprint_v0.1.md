@@ -238,4 +238,237 @@ Pendiente:
 
 ---
 
-FIN DE LA PARTE 1
+FIN DE LA PARTE ---
+
+# 7. ARQUITECTURA GENERAL DEL SISTEMA
+
+EPG Caddy está diseñado bajo una arquitectura modular.
+
+Cada módulo tiene responsabilidades específicas y puede evolucionar sin afectar el resto del sistema.
+
+Los componentes principales son:
+
+- Motor Conversacional
+- Motor de Captura
+- Motor de Reglas
+- Motor Estadístico
+- Motor de Inteligencia Artificial
+- Base de Datos
+- Dashboard
+
+---
+
+## Motor Conversacional
+
+Es la interfaz principal entre el usuario y el sistema.
+
+Responsabilidades:
+
+- Comprender lenguaje natural.
+- Guiar la conversación.
+- Solicitar información faltante.
+- Confirmar datos ambiguos.
+- Mantener una experiencia completamente manos libres.
+
+---
+
+## Motor de Captura
+
+Convierte la conversación en datos estructurados.
+
+Ejemplos:
+
+"Hoyo 7, par."
+
+↓
+
+Hoyo = 7
+
+Resultado = Par
+
+---
+
+"Dos putts."
+
+↓
+
+Putts = 2
+
+---
+
+"Fairway sí."
+
+↓
+
+Fairway = TRUE
+
+---
+
+Toda la información queda registrada automáticamente.
+
+---
+
+## Motor de Reglas
+
+Es el núcleo lógico de EPG Caddy.
+
+Funciones:
+
+- Calcular Gross.
+- Calcular Net.
+- Calcular Stableford.
+- Aplicar Handicap.
+- Validar datos.
+- Detectar inconsistencias.
+- Resolver reglas de juego.
+
+---
+
+## Motor Estadístico
+
+Procesa toda la información histórica.
+
+Genera:
+
+- Fairways.
+- GIR.
+- Putts.
+- Scrambling.
+- Sand Saves.
+- Penalidades.
+- Tendencias.
+- Promedios.
+
+---
+
+## Motor de Inteligencia Artificial
+
+Es el componente estratégico del sistema.
+
+No solamente responde preguntas.
+
+Analiza patrones.
+
+Detecta oportunidades de mejora.
+
+Produce recomendaciones personalizadas.
+
+Ejemplo:
+
+"Durante las últimas cinco rondas has perdido la mayor cantidad de golpes entre 80 y 120 yardas."
+
+---
+
+## Base de Datos
+
+La información queda organizada en módulos independientes.
+
+Inicialmente:
+
+- Campo
+- Rondas
+- Estadísticas
+- Configuración
+- Histórico
+
+Esta estructura permitirá ampliar el sistema sin rediseñarlo.
+
+---
+
+## Dashboard
+
+Presenta toda la información gráfica.
+
+Nunca realiza cálculos.
+
+Únicamente muestra los resultados generados por los demás motores.
+
+---
+
+# 8. FLUJO OPERATIVO DE UNA RONDA
+
+Una ronda completa se divide en cinco etapas.
+
+## Etapa 1
+
+Inicialización.
+
+El sistema identifica:
+
+- Campo.
+- Marcas.
+- Fecha.
+- Handicap.
+- Configuración.
+
+---
+
+## Etapa 2
+
+Captura.
+
+El jugador únicamente habla.
+
+Ejemplos:
+
+"Hoyo tres."
+
+"Bogey."
+
+"Dos putts."
+
+"No fairway."
+
+"Penalidad."
+
+Toda la información queda registrada automáticamente.
+
+---
+
+## Etapa 3
+
+Procesamiento.
+
+Después de cada hoyo se actualizan automáticamente:
+
+- Gross.
+- Net.
+- Stableford.
+- Estadísticas.
+- Totales.
+
+---
+
+## Etapa 4
+
+Consulta.
+
+El jugador puede preguntar:
+
+"¿Cómo voy?"
+
+"¿Cuántos putts llevo?"
+
+"¿Cuál es mi score neto?"
+
+"¿Cuántos GIR llevo?"
+
+---
+
+## Etapa 5
+
+Cierre de ronda.
+
+EPG Caddy genera automáticamente:
+
+- Resumen de la ronda.
+- Estadísticas completas.
+- Hallazgos principales.
+- Comparación histórica.
+- Recomendaciones de entrenamiento.
+
+---
+
+FIN DE LA PARTE 2
+
+
