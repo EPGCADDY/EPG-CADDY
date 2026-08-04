@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPG Caddy</title>
+
+<style>
+body{
+background:#0b0b0b;
+color:white;
+font-family:Arial,sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+text-align:center;
+}
+
+button{
+padding:22px 40px;
+font-size:22px;
+border:none;
+border-radius:14px;
+background:#1db954;
+color:white;
+}
+</style>
+
+</head>
+
+<body>
+
+<div>
+<h1>EPG Caddy</h1>
+<p>Asistente Profesional de Golf</p>
+
+<button onclick="hablar()">
+🎤 Hablar
+</button>
+
+<p id="estado"></p>
+
+</div>
+
+<script>
+
+function hablar(){
+
+document.getElementById("estado").innerHTML="Escuchando...";
+
+}
+
+</script>
+
+</body>
+</html>
