@@ -46,24 +46,43 @@ color:white;
 
 <script>
 
-function hablar(){
+function hablar() {
+  alert("Entré a la función");
 
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
 
-const reconocimiento = new webkitSpeechRecognition();
+  if (!SpeechRecognition) {
+    document.getElementById("estado").innerHTML =
+      "❌ Este navegador no soporta reconocimiento de voz.";
+    return;
+  }
 
-reconocimiento.lang = "es-ES";
+  const reconocimiento = new SpeechRecognition();
 
-reconocimiento.start();
+  reconocimiento.lang = "es-ES";
+  reconocimiento.interimResults = false;
+  reconocimiento.maxAlternatives = 1;
 
-document.getElementById("estado").innerHTML="Escuchando...";
+  document.getElementById("estado").innerHTML = "🎤 Escuchando...";
 
-reconocimiento.onresult = function(event){
+  reconocimiento.start();
 
-const texto = event.results[0][0].transcript;
+  reconocimiento.onresult = function(event) {
+    const texto = event.results[0][0].transcript;
+    document.getElementById("estado").innerHTML = texto;
+  };
 
-document.getElementById("estado").innerHTML = texto;
-
-};
-
-}
+  reconocimiento.onerror = function(event) {
+    document.getElementById("estado").innerHTML =
+      "Error: " + event.error;
+  79  };
+80  }
+81  </script>
+82  </body>
+83  </html>
   
+  
+  
+
+
