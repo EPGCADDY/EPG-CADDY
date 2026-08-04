@@ -7,24 +7,37 @@
 
 <style>
 body{
-background:#0b0b0b;
-color:white;
-font-family:Arial,sans-serif;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-margin:0;
-text-align:center;
+    margin:0;
+    background:#0b0b0b;
+    color:white;
+    font-family:Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.contenedor{
+    text-align:center;
 }
 
 button{
-padding:22px 40px;
-font-size:22px;
-border:none;
-border-radius:14px;
-background:#1db954;
-color:white;
+    padding:15px 35px;
+    font-size:22px;
+    border:none;
+    border-radius:10px;
+    background:#0a84ff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0066d6;
+}
+
+#estado{
+    margin-top:25px;
+    font-size:20px;
 }
 </style>
 
@@ -32,7 +45,8 @@ color:white;
 
 <body>
 
-<div>
+<div class="contenedor">
+
 <h1>EPG Caddy</h1>
 <p>Asistente Profesional de Golf</p>
 
@@ -46,43 +60,55 @@ color:white;
 
 <script>
 
-function hablar() {
-  alert("Entré a la función");
+function hablar(){
 
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
 
-  if (!SpeechRecognition) {
+    if(!SpeechRecognition){
+        document.getElementById("estado").innerHTML =
+        "❌ Tu navegador no soporta Speech Recognition";
+        return;
+    }
+
+    const reconocimiento = new SpeechRecognition();
+
+    reconocimiento.lang = "es-ES";
+    reconocimiento.interimResults = false;
+    reconocimiento.maxAlternatives = 1;
+
     document.getElementById("estado").innerHTML =
-      "❌ Este navegador no soporta reconocimiento de voz.";
-    return;
-  }
+    "🎤 Escuchando...";
 
-  const reconocimiento = new SpeechRecognition();
+    reconocimiento.start();
 
-  reconocimiento.lang = "es-ES";
-  reconocimiento.interimResults = false;
-  reconocimiento.maxAlternatives = 1;
+    reconocimiento.onresult = function(event){
 
-  document.getElementById("estado").innerHTML = "🎤 Escuchando...";
+        const texto = event.results[0][0].transcript;
 
-  reconocimiento.start();
+        document.getElementById("estado").innerHTML =
+        "📝 Dijiste: " + texto;
 
-  reconocimiento.onresult = function(event) {
-    const texto = event.results[0][0].transcript;
-    document.getElementById("estado").innerHTML = texto;
-  };
+        alert("Has dicho: " + texto);
+    };
 
-  reconocimiento.onerror = function(event) {
-    document.getElementById("estado").innerHTML =
-      "Error: " + event.error;
-  79  };
-80  }
-81  </script>
-82  </body>
-83  </html>
-  
-  
-  
+    reconocimiento.onerror = function(event){
+
+        document.getElementById("estado").innerHTML =
+        "❌ Error: " + event.error;
+    };
+
+    reconocimiento.onend = function(){
+
+        console.log("Reconocimiento terminado");
+    };
+
+}
+
+</script>
+
+</body>
+</html>
+
 
 
