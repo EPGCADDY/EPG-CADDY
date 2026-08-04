@@ -48,11 +48,22 @@ color:white;
 
 function hablar(){
 
+
+const reconocimiento = new webkitSpeechRecognition();
+
+reconocimiento.lang = "es-ES";
+
+reconocimiento.start();
+
 document.getElementById("estado").innerHTML="Escuchando...";
 
+reconocimiento.onresult = function(event){
+
+const texto = event.results[0][0].transcript;
+
+document.getElementById("estado").innerHTML = texto;
+
+};
+
 }
-
-</script>
-
-</body>
-</html>
+  
