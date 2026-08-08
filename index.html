@@ -1,116 +1,375 @@
-async function readRawBody(req) {
-  if (typeof req.body === "string") return req.body;
-  if (Buffer.isBuffer(req.body)) return req.body.toString("utf8");
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#07110d" />
+  <title>EPG Caddy</title>
 
-  let body = "";
-
-  for await (const chunk of req) {
-    body += chunk;
-  }
-
-  return body;
-}
-
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
-
-    return res.status(405).json({
-      error: "Usa POST."
-    });
-  }
-
-  const apiKey = process.env.OPENAI_API_KEY;
-
-  if (!apiKey) {
-    return res.status(500).json({
-      error: "Falta OPENAI_API_KEY en Vercel."
-    });
-  }
-
-  try {
-    const sdp = await readRawBody(req);
-
-    if (!sdp || !sdp.trim()) {
-      return res.status(400).json({
-        error: "No se recibió SDP."
-      });
+  <style>
+    * {
+      box-sizing: border-box;
     }
 
-    const session = {
-      type: "realtime",
-      model: "gpt-realtime-2.1",
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #17372a 0%, #0b1b14 35%, #050a08 75%);
+      color: white;
+      display: flex;
+      justify-content: center;
+    }
 
-      instructions: [
-        "Eres EPG Caddy, un caddie profesional de golf que habla en español.",
-        "Responde con frases muy breves, directas y útiles durante una ronda.",
-        "Nunca digas 'un segundo', 'procesando' ni uses relleno verbal.",
-        "No inventes par, handicap del hoyo, distancias ni datos del campo.",
-        "Si falta un dato imprescindible, pregunta solamente ese dato.",
-        "Durante esta sesión recuerda hoyo, golpes, fairway, green, putts y penalidades.",
-        "Cuando el jugador reporte un hoyo, confirma el registro y el acumulado disponible.",
-        "Al iniciar, saluda una sola vez y pregunta en qué hoyo comienza."
-      ].join(" "),
+    .app {
+      width: 100%;
+      max-width: 520px;
+      min-height: 100vh;
+      padding: 28px 22px 40px;
+      display: flex;
+      flex-direction: column;
+    }
 
-      audio: {
-        input: {
-          turn_detection: {
-            type: "semantic_vad"
-          }
-        },
+    .brand {
+      text-align: center;
+      margin-top: 30px;
+    }
 
-        output: {
-          voice: "marin"
+    .brand h1 {
+      margin: 0;
+      font-size: 36px;
+      letter-spacing: 2px;
+    }
+
+    .brand p {
+      margin: 8px 0 0;
+      color: #a8b7af;
+      font-size: 15px;
+    }
+
+    .course {
+      margin-top: 35px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+    }
+
+    .course-name {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .course-info {
+      margin-top: 7px;
+      color: #b8c4be;
+    }
+
+    .status {
+      margin-top: 18px;
+      min-height: 24px;
+      text-align: center;
+      color: #b8c4be;
+      font-size: 14px;
+    }
+
+    .controls {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 35px 0;
+    }
+
+    #talkButton {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.18);
+      background: #2d8c5a;
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      box-shadow: 0 15px 45px rgba(0,0,0,.4);
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    #talkButton:active {
+      transform: scale(.97);
+    }
+
+    #talkButton.active {
+      background: #b64242;
+    }
+
+    .instruction {
+      margin-top: 22px;
+      color: #aebbb4;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .score-summary {
+      width: 100%;
+      margin-top: 25px;
+      display: none;
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .score-summary.visible {
+      display: block;
+    }
+
+    .score-summary h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      text-align: center;
+    }
+
+    .summary-grid div {
+      padding: 10px 5px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.05);
+    }
+
+    .label {
+      display: block;
+      color: #91a099;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .value {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    footer {
+      text-align: center;
+      color: #65736c;
+      font-size: 12px;
+      padding-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header class="brand">
+      <h1>EPG CADDY</h1>
+      <p>Tu caddie profesional de golf por voz</p>
+    </header>
+
+    <section class="course">
+      <div class="course-name" id="courseName">El Pulté</div>
+      <div class="course-info" id="courseInfo">
+        Blancas · Par 72 · 18 hoyos
+      </div>
+    </section>
+
+    <div class="status" id="status">
+      Preparando EPG Caddy…
+    </div>
+
+    <section class="controls">
+      <button id="talkButton" type="button">
+        Iniciar Caddy
+      </button>
+
+      <div class="instruction">
+        Habla normalmente con EPG Caddy durante tu ronda.
+      </div>
+
+      <section class="score-summary" id="scoreSummary">
+        <h2>Ronda</h2>
+
+        <div class="summary-grid">
+          <div>
+            <span class="label">Front 9</span>
+            <span class="value" id="front9">—</span>
+          </div>
+
+          <div>
+            <span class="label">Back 9</span>
+            <span class="value" id="back9">—</span>
+          </div>
+
+          <div>
+            <span class="label">Total</span>
+            <span class="value" id="total">—</span>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <footer>
+      EPG Caddy
+    </footer>
+  </main>
+
+  <script>
+    const talkButton = document.getElementById("talkButton");
+    const statusEl = document.getElementById("status");
+    const courseName = document.getElementById("courseName");
+    const courseInfo = document.getElementById("courseInfo");
+
+    let pc = null;
+    let localStream = null;
+    let audioElement = null;
+    let active = false;
+
+    async function loadCourse() {
+      try {
+        const response = await fetch("/api/score");
+
+        if (!response.ok) {
+          throw new Error("No se pudo cargar el campo");
         }
+
+        const data = await response.json();
+
+        if (data.course) {
+          courseName.textContent = data.course.name || "El Pulté";
+
+          courseInfo.textContent =
+            `${data.course.tees || "Blancas"} · ` +
+            `Par ${data.course.par || 72} · ` +
+            `${data.course.holes?.length || 18} hoyos`;
+        }
+
+        statusEl.textContent = "Listo para iniciar.";
+      } catch (error) {
+        console.error(error);
+        statusEl.textContent = "EPG Caddy listo.";
       }
-    };
-
-    const form = new FormData();
-
-    form.set("sdp", sdp);
-    form.set("session", JSON.stringify(session));
-
-    const openaiResponse = await fetch(
-      "https://api.openai.com/v1/realtime/calls",
-      {
-        method: "POST",
-
-        headers: {
-          Authorization: `Bearer ${apiKey}`
-        },
-
-        body: form
-      }
-    );
-
-    const responseBody = await openaiResponse.text();
-
-    if (!openaiResponse.ok) {
-      console.error(
-        "OpenAI Realtime error:",
-        openaiResponse.status,
-        responseBody
-      );
-
-      return res.status(openaiResponse.status).json({
-        error: "OpenAI no pudo crear la sesión.",
-        details: responseBody
-      });
     }
 
-    res.setHeader("Content-Type", "application/sdp");
-    res.setHeader("Cache-Control", "no-store");
+    async function startCaddy() {
+      if (active) {
+        stopCaddy();
+        return;
+      }
 
-    return res.status(200).send(responseBody);
-  } catch (error) {
-    console.error("session.js error:", error);
+      try {
+        statusEl.textContent = "Conectando…";
+        talkButton.disabled = true;
 
-    return res.status(500).json({
-      error: "No se pudo iniciar EPG Caddy.",
-      details:
-        error instanceof Error
-          ? error.message
-          : String(error)
-    });
-  }
-}
+        localStream = await navigator.mediaDevices.getUserMedia({
+          audio: true
+        });
+
+        pc = new RTCPeerConnection();
+
+        audioElement = document.createElement("audio");
+        audioElement.autoplay = true;
+
+        pc.ontrack = event => {
+          audioElement.srcObject = event.streams[0];
+        };
+
+        localStream.getTracks().forEach(track => {
+          pc.addTrack(track, localStream);
+        });
+
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+
+        await new Promise(resolve => {
+          if (pc.iceGatheringState === "complete") {
+            resolve();
+            return;
+          }
+
+          const checkState = () => {
+            if (pc.iceGatheringState === "complete") {
+              pc.removeEventListener(
+                "icegatheringstatechange",
+                checkState
+              );
+              resolve();
+            }
+          };
+
+          pc.addEventListener(
+            "icegatheringstatechange",
+            checkState
+          );
+        });
+
+        const response = await fetch("/api/session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/sdp"
+          },
+          body: pc.localDescription.sdp
+        });
+
+        const answer = await response.text();
+
+        if (!response.ok) {
+          throw new Error(answer || "No se pudo iniciar la sesión");
+        }
+
+        await pc.setRemoteDescription({
+          type: "answer",
+          sdp: answer
+        });
+
+        active = true;
+        talkButton.disabled = false;
+        talkButton.classList.add("active");
+        talkButton.textContent = "Terminar";
+        statusEl.textContent = "EPG Caddy activo";
+      } catch (error) {
+        console.error(error);
+
+        talkButton.disabled = false;
+        statusEl.textContent =
+          "No se pudo iniciar EPG Caddy.";
+
+        stopCaddy();
+      }
+    }
+
+    function stopCaddy() {
+      if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+        localStream = null;
+      }
+
+      if (pc) {
+        pc.close();
+        pc = null;
+      }
+
+      if (audioElement) {
+        audioElement.srcObject = null;
+        audioElement = null;
+      }
+
+      active = false;
+
+      talkButton.disabled = false;
+      talkButton.classList.remove("active");
+      talkButton.textContent = "Iniciar Caddy";
+      statusEl.textContent = "Listo para iniciar.";
+    }
+
+    talkButton.addEventListener("click", startCaddy);
+
+    loadCourse();
+  </script>
+</body>
+</html>
