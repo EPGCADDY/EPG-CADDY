@@ -191,7 +191,7 @@
       text-align: center;
     }
 
-    .summary-grid div {
+    .summary-grid > div {
       padding: 10px 5px;
 
       border-radius: 10px;
@@ -207,11 +207,154 @@
 
       font-size: 12px;
 
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .value {
-      font-size: 18px;
+      display: block;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      line-height: 1.5;
+
+      white-space: pre-line;
+    }
+
+    .scorecard {
+      width: 100%;
+
+      margin-top: 18px;
+
+      padding: 16px 12px;
+
+      border-radius: 14px;
+
+      background:
+        rgba(255,255,255,.04);
+
+      border:
+        1px solid rgba(255,255,255,.08);
+    }
+
+    .scorecard-title {
+      margin-bottom: 12px;
+
+      text-align: center;
+
+      font-size: 14px;
+      font-weight: 700;
+
+      color: #d5ded9;
+    }
+
+    .nine-title {
+      margin:
+        14px 0 7px;
+
+      font-size: 12px;
+      font-weight: 700;
+
+      color: #91a099;
+
+      text-transform: uppercase;
+
+      letter-spacing: .5px;
+    }
+
+    .nine-title:first-of-type {
+      margin-top: 0;
+    }
+
+    .score-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .score-table {
+      width: 100%;
+
+      min-width: 430px;
+
+      border-collapse: separate;
+      border-spacing: 3px;
+
+      table-layout: fixed;
+
+      text-align: center;
+    }
+
+    .score-table th,
+    .score-table td {
+      height: 31px;
+
+      padding: 3px 2px;
+
+      border-radius: 5px;
+
+      font-size: 12px;
+
+      background:
+        rgba(255,255,255,.05);
+    }
+
+    .score-table th {
+      color: #9caaa3;
+
+      font-weight: 600;
+    }
+
+    .score-table .row-label {
+      width: 48px;
+
+      text-align: left;
+
+      padding-left: 5px;
+
+      color: #9caaa3;
+
+      font-weight: 700;
+
+      background: transparent;
+    }
+
+    .score-table .total-column {
+      width: 45px;
+
+      font-weight: 700;
+
+      background:
+        rgba(255,255,255,.09);
+    }
+
+    .score-table .gross-cell {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .scorecard-total {
+      margin-top: 12px;
+
+      padding-top: 11px;
+
+      border-top:
+        1px solid rgba(255,255,255,.08);
+
+      display: flex;
+
+      justify-content: space-between;
+      align-items: center;
+
+      font-size: 13px;
+    }
+
+    .scorecard-total-label {
+      color: #91a099;
+      font-weight: 700;
+    }
+
+    .scorecard-total-value {
+      font-size: 17px;
       font-weight: 700;
     }
 
@@ -228,7 +371,7 @@
       background:
         rgba(255,255,255,.04);
 
-      color: #9dacA4;
+      color: #9daca4;
 
       font-size: 12px;
     }
@@ -312,6 +455,7 @@
 
         <h2>Ronda guardada</h2>
 
+
         <div class="summary-grid">
 
           <div>
@@ -362,6 +506,89 @@
           </div>
 
         </div>
+
+
+        <section class="scorecard">
+
+          <div class="scorecard-title">
+            Tarjeta Gross
+          </div>
+
+
+          <div class="nine-title">
+            Primera Vuelta
+          </div>
+
+          <div class="score-table-wrap">
+
+            <table class="score-table">
+
+              <tbody>
+
+                <tr id="frontHoleRow">
+                  <th class="row-label">Hoyo</th>
+                </tr>
+
+                <tr id="frontParRow">
+                  <th class="row-label">Par</th>
+                </tr>
+
+                <tr id="frontGrossRow">
+                  <th class="row-label">Gross</th>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+
+          <div class="nine-title">
+            Segunda Vuelta
+          </div>
+
+          <div class="score-table-wrap">
+
+            <table class="score-table">
+
+              <tbody>
+
+                <tr id="backHoleRow">
+                  <th class="row-label">Hoyo</th>
+                </tr>
+
+                <tr id="backParRow">
+                  <th class="row-label">Par</th>
+                </tr>
+
+                <tr id="backGrossRow">
+                  <th class="row-label">Gross</th>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+
+          <div class="scorecard-total">
+
+            <span class="scorecard-total-label">
+              TOTAL GROSS
+            </span>
+
+            <span
+              class="scorecard-total-value"
+              id="scorecardTotalGross"
+            >
+              —
+            </span>
+
+          </div>
+
+        </section>
 
 
         <button
@@ -427,6 +654,14 @@
     };
 
 
+    const FRONT =
+      [1,2,3,4,5,6,7,8,9];
+
+
+    const BACK =
+      [10,11,12,13,14,15,16,17,18];
+
+
     const talkButton =
       document.getElementById("talkButton");
 
@@ -454,9 +689,34 @@
     const newRoundButton =
       document.getElementById("newRoundButton");
 
+    const frontHoleRow =
+      document.getElementById("frontHoleRow");
+
+    const frontParRow =
+      document.getElementById("frontParRow");
+
+    const frontGrossRow =
+      document.getElementById("frontGrossRow");
+
+    const backHoleRow =
+      document.getElementById("backHoleRow");
+
+    const backParRow =
+      document.getElementById("backParRow");
+
+    const backGrossRow =
+      document.getElementById("backGrossRow");
+
+    const scorecardTotalGross =
+      document.getElementById(
+        "scorecardTotalGross"
+      );
+
 
     let course =
-      structuredClone(FALLBACK_COURSE);
+      structuredClone(
+        FALLBACK_COURSE
+      );
 
 
     let pc = null;
@@ -508,7 +768,10 @@
       try {
 
         const raw =
-          localStorage.getItem(STORAGE_KEY);
+          localStorage.getItem(
+            STORAGE_KEY
+          );
+
 
         if (!raw) {
 
@@ -516,8 +779,10 @@
 
         }
 
+
         const parsed =
           JSON.parse(raw);
+
 
         if (
           !parsed ||
@@ -529,6 +794,7 @@
 
         }
 
+
         return parsed;
 
       } catch (error) {
@@ -537,6 +803,7 @@
           "No se pudo leer la ronda:",
           error
         );
+
 
         return emptyRound();
 
@@ -554,17 +821,21 @@
       round.updatedAt =
         new Date().toISOString();
 
+
       localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(round)
       );
+
 
       updateSummary();
 
     }
 
 
-    function holeDefinition(number) {
+    function holeDefinition(
+      number
+    ) {
 
       return course.holes.find(
         item =>
@@ -575,9 +846,16 @@
     }
 
 
-    function strokeForHole(definition) {
+    function strokeForHole(
+      definition
+    ) {
 
-      if (!definition) return 0;
+      if (!definition) {
+
+        return 0;
+
+      }
+
 
       return (
         definition.hcp <=
@@ -604,10 +882,11 @@
 
       const items =
         holeNumbers
-          .map(number =>
-            round.holes[
-              String(number)
-            ]
+          .map(
+            number =>
+              round.holes[
+                String(number)
+              ]
           )
           .filter(Boolean);
 
@@ -639,9 +918,13 @@
       return {
 
         items,
+
         gross,
+
         net,
+
         par,
+
         diff:
           net - par
 
@@ -756,14 +1039,6 @@
     }
 
 
-    const FRONT =
-      [1,2,3,4,5,6,7,8,9];
-
-
-    const BACK =
-      [10,11,12,13,14,15,16,17,18];
-
-
     function roundStatusBeforeUpdate() {
 
       return {
@@ -775,7 +1050,8 @@
           isComplete(BACK),
 
         total:
-          registeredHoles().length === 18
+          registeredHoles()
+            .length === 18
 
       };
 
@@ -833,7 +1109,8 @@
 
 
       const totalNow =
-        registeredHoles().length === 18;
+        registeredHoles()
+          .length === 18;
 
 
       if (
@@ -842,7 +1119,9 @@
       ) {
 
         const front =
-          totalsForHoles(FRONT);
+          totalsForHoles(
+            FRONT
+          );
 
 
         lines.push(
@@ -866,7 +1145,9 @@
       ) {
 
         const back =
-          totalsForHoles(BACK);
+          totalsForHoles(
+            BACK
+          );
 
 
         lines.push(
@@ -935,9 +1216,12 @@
       ) {
 
         return {
+
           ok: false,
+
           speech:
             "Número de hoyo inválido."
+
         };
 
       }
@@ -950,24 +1234,32 @@
       ) {
 
         return {
+
           ok: false,
+
           speech:
             "Score inválido."
+
         };
 
       }
 
 
       const definition =
-        holeDefinition(hole);
+        holeDefinition(
+          hole
+        );
 
 
       if (!definition) {
 
         return {
+
           ok: false,
+
           speech:
             `Hoyo ${hole} sin datos.`
+
         };
 
       }
@@ -995,10 +1287,14 @@
         gross,
 
         par:
-          Number(definition.par),
+          Number(
+            definition.par
+          ),
 
         hcp:
-          Number(definition.hcp),
+          Number(
+            definition.hcp
+          ),
 
         handicapStroke,
 
@@ -1006,10 +1302,13 @@
 
         diff:
           net -
-          Number(definition.par),
+          Number(
+            definition.par
+          ),
 
         updatedAt:
-          new Date().toISOString()
+          new Date()
+            .toISOString()
 
       };
 
@@ -1139,11 +1438,17 @@
 
 
       const start =
-        Math.min(from, to);
+        Math.min(
+          from,
+          to
+        );
 
 
       const end =
-        Math.max(from, to);
+        Math.max(
+          from,
+          to
+        );
 
 
       const speeches = [];
@@ -1199,7 +1504,9 @@
           "get_range",
 
         speech:
-          speeches.join("\n\n")
+          speeches.join(
+            "\n\n"
+          )
 
       };
 
@@ -1244,7 +1551,9 @@
           "get_list",
 
         speech:
-          speeches.join("\n\n")
+          speeches.join(
+            "\n\n"
+          )
 
       };
 
@@ -1346,26 +1655,305 @@
     }
 
 
+    function visualResult(
+      diff
+    ) {
+
+      if (diff === 0) {
+
+        return "Even";
+
+      }
+
+
+      if (diff < 0) {
+
+        return (
+          `${Math.abs(diff)} bajo par`
+        );
+
+      }
+
+
+      return (
+        `${diff} sobre par`
+      );
+
+    }
+
+
+    function visualSummary(
+      totals,
+      expected
+    ) {
+
+      if (
+        totals.items.length === 0
+      ) {
+
+        return `0/${expected}`;
+
+      }
+
+
+      const diff =
+        totals.net -
+        totals.par;
+
+
+      return [
+
+        `${totals.items.length}/${expected}`,
+
+        `G ${totals.gross}`,
+
+        `N ${totals.net}`,
+
+        visualResult(diff)
+
+      ].join("\n");
+
+    }
+
+
+    function clearGeneratedRow(
+      row
+    ) {
+
+      while (
+        row.children.length > 1
+      ) {
+
+        row.removeChild(
+          row.lastChild
+        );
+
+      }
+
+    }
+
+
+    function appendCell(
+      row,
+      text,
+      className = ""
+    ) {
+
+      const cell =
+        document.createElement(
+          "td"
+        );
+
+
+      cell.textContent =
+        text;
+
+
+      if (className) {
+
+        cell.className =
+          className;
+
+      }
+
+
+      row.appendChild(
+        cell
+      );
+
+    }
+
+
+    function renderNineScorecard(
+      numbers,
+      holeRow,
+      parRow,
+      grossRow,
+      totalLabel
+    ) {
+
+      clearGeneratedRow(
+        holeRow
+      );
+
+      clearGeneratedRow(
+        parRow
+      );
+
+      clearGeneratedRow(
+        grossRow
+      );
+
+
+      let grossTotal = 0;
+
+      let registeredCount = 0;
+
+
+      numbers.forEach(
+        number => {
+
+          const definition =
+            holeDefinition(
+              number
+            );
+
+
+          const score =
+            round.holes[
+              String(number)
+            ];
+
+
+          appendCell(
+            holeRow,
+            number
+          );
+
+
+          appendCell(
+            parRow,
+            definition
+              ? definition.par
+              : "—"
+          );
+
+
+          appendCell(
+            grossRow,
+            score
+              ? score.gross
+              : "—",
+            "gross-cell"
+          );
+
+
+          if (score) {
+
+            grossTotal +=
+              Number(
+                score.gross
+              );
+
+            registeredCount++;
+
+          }
+
+        }
+      );
+
+
+      appendCell(
+        holeRow,
+        totalLabel,
+        "total-column"
+      );
+
+
+      const fullPar =
+        numbers.reduce(
+          (sum, number) => {
+
+            const definition =
+              holeDefinition(
+                number
+              );
+
+
+            return (
+              sum +
+              Number(
+                definition?.par ||
+                0
+              )
+            );
+
+          },
+          0
+        );
+
+
+      appendCell(
+        parRow,
+        fullPar,
+        "total-column"
+      );
+
+
+      appendCell(
+        grossRow,
+        registeredCount > 0
+          ? grossTotal
+          : "—",
+        "total-column gross-cell"
+      );
+
+    }
+
+
+    function updateScorecard() {
+
+      renderNineScorecard(
+        FRONT,
+        frontHoleRow,
+        frontParRow,
+        frontGrossRow,
+        "OUT"
+      );
+
+
+      renderNineScorecard(
+        BACK,
+        backHoleRow,
+        backParRow,
+        backGrossRow,
+        "IN"
+      );
+
+
+      const total =
+        totalsForHoles([
+          ...FRONT,
+          ...BACK
+        ]);
+
+
+      scorecardTotalGross.textContent =
+        total.items.length > 0
+          ? total.gross
+          : "—";
+
+    }
+
+
     function updateSummary() {
 
       const count =
-        registeredHoles().length;
+        registeredHoles()
+          .length;
+
+
+      updateScorecard();
 
 
       if (count === 0) {
 
-        scoreSummary.classList.remove(
-          "visible"
-        );
+        scoreSummary
+          .classList
+          .remove(
+            "visible"
+          );
 
         return;
 
       }
 
 
-      scoreSummary.classList.add(
-        "visible"
-      );
+      scoreSummary
+        .classList
+        .add(
+          "visible"
+        );
 
 
       const front =
@@ -1388,21 +1976,24 @@
 
 
       front9El.textContent =
-        front.items.length === 9
-          ? `G ${front.gross} · N ${front.net}`
-          : `${front.items.length}/9`;
+        visualSummary(
+          front,
+          9
+        );
 
 
       back9El.textContent =
-        back.items.length === 9
-          ? `G ${back.gross} · N ${back.net}`
-          : `${back.items.length}/9`;
+        visualSummary(
+          back,
+          9
+        );
 
 
       totalEl.textContent =
-        total.items.length === 18
-          ? `G ${total.gross} · N ${total.net}`
-          : `${total.items.length}/18`;
+        visualSummary(
+          total,
+          18
+        );
 
 
       statusEl.textContent =
@@ -1419,7 +2010,8 @@
           await fetch(
             "/api/score",
             {
-              cache: "no-store"
+              cache:
+                "no-store"
             }
           );
 
@@ -1465,7 +2057,8 @@
 
 
         if (
-          registeredHoles().length === 0
+          registeredHoles()
+            .length === 0
         ) {
 
           statusEl.textContent =
@@ -1490,7 +2083,8 @@
 
 
         if (
-          registeredHoles().length === 0
+          registeredHoles()
+            .length === 0
         ) {
 
           statusEl.textContent =
@@ -1648,9 +2242,12 @@
             sendToolOutput(
               call,
               {
+
                 ok: false,
+
                 speech:
                   "No se pudo procesar el comando."
+
               }
             );
 
@@ -1750,21 +2347,28 @@
 
       if (enabled) {
 
-        talkButton.classList.add(
-          "active"
-        );
+        talkButton
+          .classList
+          .add(
+            "active"
+          );
+
 
         talkButton.textContent =
           "Escuchando";
+
 
         statusEl.textContent =
           "Escuchando…";
 
       } else {
 
-        talkButton.classList.remove(
-          "active"
-        );
+        talkButton
+          .classList
+          .remove(
+            "active"
+          );
+
 
         talkButton.textContent =
           connected
@@ -1776,7 +2380,8 @@
 
 
         if (
-          registeredHoles().length === 0
+          registeredHoles()
+            .length === 0
         ) {
 
           statusEl.textContent =
@@ -1802,7 +2407,11 @@
 
     function connectionAlive() {
 
-      if (!pc) return false;
+      if (!pc) {
+
+        return false;
+
+      }
 
 
       return [
@@ -1838,7 +2447,8 @@
 
 
       localStream =
-        await navigator.mediaDevices
+        await navigator
+          .mediaDevices
           .getUserMedia({
             audio: true
           });
@@ -1912,9 +2522,12 @@
 
           listening = false;
 
-          talkButton.classList.remove(
-            "active"
-          );
+          talkButton
+            .classList
+            .remove(
+              "active"
+            );
+
 
           talkButton.textContent =
             "Iniciar Caddy";
@@ -1938,6 +2551,7 @@
           ) {
 
             connected = false;
+
             listening = false;
 
           }
@@ -1964,6 +2578,7 @@
           ) {
 
             resolve();
+
             return;
 
           }
@@ -1981,6 +2596,7 @@
                   "icegatheringstatechange",
                   checkState
                 );
+
 
                 resolve();
 
@@ -2002,15 +2618,19 @@
         await fetch(
           "/api/session",
           {
+
             method: "POST",
 
             headers: {
+
               "Content-Type":
                 "application/sdp"
+
             },
 
             body:
               pc.localDescription.sdp
+
           }
         );
 
@@ -2031,9 +2651,11 @@
 
       await pc.setRemoteDescription({
 
-        type: "answer",
+        type:
+          "answer",
 
-        sdp: answer
+        sdp:
+          answer
 
       });
 
@@ -2065,6 +2687,7 @@
               timeout
             );
 
+
             resolve();
 
             return;
@@ -2080,6 +2703,7 @@
                 timeout
               );
 
+
               resolve();
 
             },
@@ -2093,6 +2717,7 @@
 
 
       connected = true;
+
 
       setMicEnabled(
         false
@@ -2121,6 +2746,7 @@
           setMicEnabled(
             false
           );
+
 
           return;
 
@@ -2172,13 +2798,16 @@
 
 
       localStream = null;
+
       micTrack = null;
 
 
       if (dc) {
 
         try {
+
           dc.close();
+
         } catch {}
 
       }
@@ -2190,7 +2819,9 @@
       if (pc) {
 
         try {
+
           pc.close();
+
         } catch {}
 
       }
@@ -2210,6 +2841,7 @@
       audioElement = null;
 
       connected = false;
+
       listening = false;
 
     }
@@ -2243,9 +2875,11 @@
       saveRound();
 
 
-      scoreSummary.classList.remove(
-        "visible"
-      );
+      scoreSummary
+        .classList
+        .remove(
+          "visible"
+        );
 
 
       statusEl.textContent =
