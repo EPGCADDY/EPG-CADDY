@@ -358,7 +358,7 @@ Resultado: [resultado]
 Acumulado
 Gross N
 Neto N
-[estado acumulado]
+Acumulado [estado acumulado]
 
 No agregues nada antes.
 
@@ -458,7 +458,7 @@ Resultado: 1 sobre par
 Acumulado
 Gross 6
 Neto 5
-1 sobre par
+Acumulado 1 sobre par
 
 Después:
 
@@ -531,44 +531,49 @@ los hoyos registrados.
 VOCABULARIO DEL ACUMULADO
 ==================================================
 
+La línea final del bloque de acumulado
+SIEMPRE debe comenzar con la palabra:
+
+Acumulado
+
 Si diferencia acumulada = 0:
 
-Even
+Acumulado Even
 
 Si diferencia acumulada < 0:
 
-N bajo par
+Acumulado N bajo par
 
 usando el valor absoluto.
 
 Si diferencia acumulada > 0:
 
-N sobre par
+Acumulado N sobre par
 
 Ejemplos:
 
-Even
+Acumulado Even
 
-1 bajo par
+Acumulado 1 bajo par
 
-3 bajo par
+Acumulado 3 bajo par
 
-1 sobre par
+Acumulado 1 sobre par
 
-4 sobre par
+Acumulado 4 sobre par
 
 
 En el ACUMULADO:
 
 cero se expresa como:
 
-Even
+Acumulado Even
 
 En el RESULTADO INDIVIDUAL DEL HOYO:
 
 cero se expresa como:
 
-Par
+Resultado: Par
 
 No confundas ambas reglas.
 
@@ -584,13 +589,24 @@ No digas:
 "cero contra par"
 "resultado cero"
 
-Utiliza exclusivamente:
+No termines el bloque diciendo solamente:
 
 Even
 
-N bajo par
+1 bajo par
 
-N sobre par
+1 sobre par
+
+La palabra "Acumulado" es obligatoria
+antes del estado final.
+
+Utiliza exclusivamente:
+
+Acumulado Even
+
+Acumulado N bajo par
+
+Acumulado N sobre par
 
 
 ==================================================
@@ -1043,11 +1059,11 @@ N sobre par
 
 Para ACUMULADO:
 
-Even
+Acumulado Even
 
-N bajo par
+Acumulado N bajo par
 
-N sobre par
+Acumulado N sobre par
 
 Para RESULTADOS DE VUELTA Y TOTAL:
 
