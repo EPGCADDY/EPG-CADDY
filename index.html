@@ -2,8 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+
   <meta name="theme-color" content="#07110d" />
+
   <title>EPG Caddy</title>
 
   <style>
@@ -14,10 +20,22 @@
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
       background:
-        radial-gradient(circle at top, #17372a 0%, #0b1b14 35%, #050a08 75%);
+        radial-gradient(
+          circle at top,
+          #17372a 0%,
+          #0b1b14 35%,
+          #050a08 75%
+        );
+
       color: white;
+
       display: flex;
       justify-content: center;
     }
@@ -27,6 +45,7 @@
       max-width: 520px;
       min-height: 100vh;
       padding: 28px 22px 40px;
+
       display: flex;
       flex-direction: column;
     }
@@ -51,9 +70,14 @@
     .course {
       margin-top: 35px;
       padding: 20px;
-      border: 1px solid rgba(255,255,255,.12);
+
+      border:
+        1px solid rgba(255,255,255,.12);
+
       border-radius: 18px;
-      background: rgba(255,255,255,.05);
+
+      background:
+        rgba(255,255,255,.05);
     }
 
     .course-name {
@@ -69,30 +93,44 @@
     .status {
       margin-top: 18px;
       min-height: 24px;
+
       text-align: center;
+
       color: #b8c4be;
       font-size: 14px;
     }
 
     .controls {
       flex: 1;
+
       display: flex;
       flex-direction: column;
+
       justify-content: center;
       align-items: center;
+
       padding: 35px 0;
     }
 
     #talkButton {
       width: 170px;
       height: 170px;
+
       border-radius: 50%;
-      border: 1px solid rgba(255,255,255,.18);
+
+      border:
+        1px solid rgba(255,255,255,.18);
+
       background: #2d8c5a;
+
       color: white;
+
       font-size: 20px;
       font-weight: 700;
-      box-shadow: 0 15px 45px rgba(0,0,0,.4);
+
+      box-shadow:
+        0 15px 45px rgba(0,0,0,.4);
+
       cursor: pointer;
       touch-action: manipulation;
     }
@@ -107,19 +145,30 @@
 
     .instruction {
       margin-top: 22px;
+
       color: #aebbb4;
+
       text-align: center;
+
       line-height: 1.5;
     }
 
     .score-summary {
       width: 100%;
+
       margin-top: 25px;
+
       display: none;
+
       padding: 18px;
+
       border-radius: 16px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.1);
+
+      background:
+        rgba(255,255,255,.06);
+
+      border:
+        1px solid rgba(255,255,255,.1);
     }
 
     .score-summary.visible {
@@ -133,243 +182,2103 @@
 
     .summary-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
       gap: 10px;
+
       text-align: center;
     }
 
     .summary-grid div {
       padding: 10px 5px;
+
       border-radius: 10px;
-      background: rgba(255,255,255,.05);
+
+      background:
+        rgba(255,255,255,.05);
     }
 
     .label {
       display: block;
+
       color: #91a099;
+
       font-size: 12px;
+
       margin-bottom: 4px;
     }
 
     .value {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
+    }
+
+    #newRoundButton {
+      margin-top: 18px;
+
+      border:
+        1px solid rgba(255,255,255,.15);
+
+      border-radius: 10px;
+
+      padding: 9px 14px;
+
+      background:
+        rgba(255,255,255,.04);
+
+      color: #9dacA4;
+
+      font-size: 12px;
     }
 
     footer {
       text-align: center;
+
       color: #65736c;
+
       font-size: 12px;
+
       padding-top: 15px;
     }
   </style>
 </head>
 
 <body>
+
   <main class="app">
+
     <header class="brand">
+
       <h1>EPG CADDY</h1>
-      <p>Tu caddie profesional de golf por voz</p>
+
+      <p>
+        Tu caddie profesional de golf por voz
+      </p>
+
     </header>
 
+
     <section class="course">
-      <div class="course-name" id="courseName">El Pulté</div>
-      <div class="course-info" id="courseInfo">
+
+      <div
+        class="course-name"
+        id="courseName"
+      >
+        El Pulté
+      </div>
+
+      <div
+        class="course-info"
+        id="courseInfo"
+      >
         Blancas · Par 72 · 18 hoyos
       </div>
+
     </section>
 
-    <div class="status" id="status">
+
+    <div
+      class="status"
+      id="status"
+    >
       Preparando EPG Caddy…
     </div>
 
+
     <section class="controls">
-      <button id="talkButton" type="button">
+
+      <button
+        id="talkButton"
+        type="button"
+      >
         Iniciar Caddy
       </button>
 
+
       <div class="instruction">
-        Habla normalmente con EPG Caddy durante tu ronda.
+
+        Toca una vez y di:
+        “Hoyo 5, 3”
+
       </div>
 
-      <section class="score-summary" id="scoreSummary">
-        <h2>Ronda</h2>
+
+      <section
+        class="score-summary"
+        id="scoreSummary"
+      >
+
+        <h2>Ronda guardada</h2>
 
         <div class="summary-grid">
-          <div>
-            <span class="label">Front 9</span>
-            <span class="value" id="front9">—</span>
-          </div>
 
           <div>
-            <span class="label">Back 9</span>
-            <span class="value" id="back9">—</span>
+
+            <span class="label">
+              Primera
+            </span>
+
+            <span
+              class="value"
+              id="front9"
+            >
+              —
+            </span>
+
           </div>
 
+
           <div>
-            <span class="label">Total</span>
-            <span class="value" id="total">—</span>
+
+            <span class="label">
+              Segunda
+            </span>
+
+            <span
+              class="value"
+              id="back9"
+            >
+              —
+            </span>
+
           </div>
+
+
+          <div>
+
+            <span class="label">
+              Total
+            </span>
+
+            <span
+              class="value"
+              id="total"
+            >
+              —
+            </span>
+
+          </div>
+
         </div>
+
+
+        <button
+          id="newRoundButton"
+          type="button"
+        >
+          Nueva ronda
+        </button>
+
       </section>
+
     </section>
+
 
     <footer>
       EPG Caddy
     </footer>
+
   </main>
 
+
   <script>
-    const talkButton = document.getElementById("talkButton");
-    const statusEl = document.getElementById("status");
-    const courseName = document.getElementById("courseName");
-    const courseInfo = document.getElementById("courseInfo");
+
+    const STORAGE_KEY =
+      "epg-caddy-current-round-v1";
+
+
+    const GAME_HANDICAP = 14;
+
+
+    const FALLBACK_COURSE = {
+
+      name: "El Pulté",
+
+      tees: "Blancas",
+
+      par: 72,
+
+      holes: [
+
+        { hole: 1,  par: 4, hcp: 9 },
+        { hole: 2,  par: 4, hcp: 5 },
+        { hole: 3,  par: 4, hcp: 7 },
+        { hole: 4,  par: 4, hcp: 11 },
+        { hole: 5,  par: 3, hcp: 17 },
+        { hole: 6,  par: 5, hcp: 3 },
+        { hole: 7,  par: 5, hcp: 1 },
+        { hole: 8,  par: 3, hcp: 15 },
+        { hole: 9,  par: 4, hcp: 13 },
+
+        { hole: 10, par: 3, hcp: 18 },
+        { hole: 11, par: 5, hcp: 2 },
+        { hole: 12, par: 4, hcp: 8 },
+        { hole: 13, par: 4, hcp: 16 },
+        { hole: 14, par: 5, hcp: 4 },
+        { hole: 15, par: 4, hcp: 6 },
+        { hole: 16, par: 4, hcp: 12 },
+        { hole: 17, par: 3, hcp: 10 },
+        { hole: 18, par: 4, hcp: 14 }
+
+      ]
+
+    };
+
+
+    const talkButton =
+      document.getElementById("talkButton");
+
+    const statusEl =
+      document.getElementById("status");
+
+    const courseName =
+      document.getElementById("courseName");
+
+    const courseInfo =
+      document.getElementById("courseInfo");
+
+    const scoreSummary =
+      document.getElementById("scoreSummary");
+
+    const front9El =
+      document.getElementById("front9");
+
+    const back9El =
+      document.getElementById("back9");
+
+    const totalEl =
+      document.getElementById("total");
+
+    const newRoundButton =
+      document.getElementById("newRoundButton");
+
+
+    let course =
+      structuredClone(FALLBACK_COURSE);
+
 
     let pc = null;
+
+    let dc = null;
+
     let localStream = null;
+
+    let micTrack = null;
+
     let audioElement = null;
-    let active = false;
 
-    async function loadCourse() {
-      try {
-        const response = await fetch("/api/score");
+    let connected = false;
 
-        if (!response.ok) {
-          throw new Error("No se pudo cargar el campo");
-        }
+    let listening = false;
 
-        const data = await response.json();
+    let waitingForToolAnswer = false;
 
-        if (data.course) {
-          courseName.textContent = data.course.name || "El Pulté";
 
-          courseInfo.textContent =
-            `${data.course.tees || "Blancas"} · ` +
-            `Par ${data.course.par || 72} · ` +
-            `${data.course.holes?.length || 18} hoyos`;
-        }
+    function emptyRound() {
 
-        statusEl.textContent = "Listo para iniciar.";
-      } catch (error) {
-        console.error(error);
-        statusEl.textContent = "EPG Caddy listo.";
-      }
+      return {
+
+        version: 1,
+
+        course: "El Pulté",
+
+        tees: "Blancas",
+
+        handicap: GAME_HANDICAP,
+
+        holes: {},
+
+        lastHole: null,
+
+        createdAt:
+          new Date().toISOString(),
+
+        updatedAt:
+          new Date().toISOString()
+
+      };
+
     }
 
-    async function startCaddy() {
-      if (active) {
-        stopCaddy();
-        return;
-      }
+
+    function loadRound() {
 
       try {
-        statusEl.textContent = "Conectando…";
-        talkButton.disabled = true;
 
-        localStream = await navigator.mediaDevices.getUserMedia({
-          audio: true
-        });
+        const raw =
+          localStorage.getItem(STORAGE_KEY);
 
-        pc = new RTCPeerConnection();
+        if (!raw) {
 
-        audioElement = document.createElement("audio");
-        audioElement.autoplay = true;
+          return emptyRound();
 
-        pc.ontrack = event => {
-          audioElement.srcObject = event.streams[0];
+        }
+
+        const parsed =
+          JSON.parse(raw);
+
+        if (
+          !parsed ||
+          typeof parsed !== "object" ||
+          !parsed.holes
+        ) {
+
+          return emptyRound();
+
+        }
+
+        return parsed;
+
+      } catch (error) {
+
+        console.error(
+          "No se pudo leer la ronda:",
+          error
+        );
+
+        return emptyRound();
+
+      }
+
+    }
+
+
+    let round =
+      loadRound();
+
+
+    function saveRound() {
+
+      round.updatedAt =
+        new Date().toISOString();
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(round)
+      );
+
+      updateSummary();
+
+    }
+
+
+    function holeDefinition(number) {
+
+      return course.holes.find(
+        item =>
+          Number(item.hole) ===
+          Number(number)
+      );
+
+    }
+
+
+    function strokeForHole(definition) {
+
+      if (!definition) return 0;
+
+      return (
+        definition.hcp <=
+        GAME_HANDICAP
+      )
+        ? 1
+        : 0;
+
+    }
+
+
+    function registeredHoles() {
+
+      return Object.values(
+        round.holes
+      );
+
+    }
+
+
+    function totalsForHoles(
+      holeNumbers
+    ) {
+
+      const items =
+        holeNumbers
+          .map(number =>
+            round.holes[
+              String(number)
+            ]
+          )
+          .filter(Boolean);
+
+
+      const gross =
+        items.reduce(
+          (sum, item) =>
+            sum + item.gross,
+          0
+        );
+
+
+      const net =
+        items.reduce(
+          (sum, item) =>
+            sum + item.net,
+          0
+        );
+
+
+      const par =
+        items.reduce(
+          (sum, item) =>
+            sum + item.par,
+          0
+        );
+
+
+      return {
+
+        items,
+        gross,
+        net,
+        par,
+        diff:
+          net - par
+
+      };
+
+    }
+
+
+    function allRegisteredTotals() {
+
+      const items =
+        registeredHoles();
+
+
+      return {
+
+        items,
+
+        gross:
+          items.reduce(
+            (sum, item) =>
+              sum + item.gross,
+            0
+          ),
+
+        net:
+          items.reduce(
+            (sum, item) =>
+              sum + item.net,
+            0
+          ),
+
+        par:
+          items.reduce(
+            (sum, item) =>
+              sum + item.par,
+            0
+          )
+
+      };
+
+    }
+
+
+    function individualResult(
+      diff
+    ) {
+
+      if (diff === 0) {
+
+        return "Par";
+
+      }
+
+
+      if (diff < 0) {
+
+        return (
+          `${Math.abs(diff)} bajo par`
+        );
+
+      }
+
+
+      return (
+        `${diff} sobre par`
+      );
+
+    }
+
+
+    function aggregateResult(
+      diff
+    ) {
+
+      if (diff === 0) {
+
+        return "Even";
+
+      }
+
+
+      if (diff < 0) {
+
+        return (
+          `${Math.abs(diff)} bajo par`
+        );
+
+      }
+
+
+      return (
+        `${diff} sobre par`
+      );
+
+    }
+
+
+    function isComplete(
+      numbers
+    ) {
+
+      return numbers.every(
+        number =>
+          Boolean(
+            round.holes[
+              String(number)
+            ]
+          )
+      );
+
+    }
+
+
+    const FRONT =
+      [1,2,3,4,5,6,7,8,9];
+
+
+    const BACK =
+      [10,11,12,13,14,15,16,17,18];
+
+
+    function roundStatusBeforeUpdate() {
+
+      return {
+
+        front:
+          isComplete(FRONT),
+
+        back:
+          isComplete(BACK),
+
+        total:
+          registeredHoles().length === 18
+
+      };
+
+    }
+
+
+    function buildRecordSpeech(
+      score,
+      before
+    ) {
+
+      const all =
+        allRegisteredTotals();
+
+
+      const accumulatedDiff =
+        all.net - all.par;
+
+
+      const lines = [
+
+        `Hoyo ${score.hole}`,
+
+        `Gross ${score.gross}`,
+
+        `Neto ${score.net}`,
+
+        `Resultado: ${
+          individualResult(
+            score.diff
+          )
+        }`,
+
+        "Acumulado",
+
+        `Gross ${all.gross}`,
+
+        `Neto ${all.net}`,
+
+        `Acumulado ${
+          aggregateResult(
+            accumulatedDiff
+          )
+        }`
+
+      ];
+
+
+      const frontNow =
+        isComplete(FRONT);
+
+
+      const backNow =
+        isComplete(BACK);
+
+
+      const totalNow =
+        registeredHoles().length === 18;
+
+
+      if (
+        !before.front &&
+        frontNow
+      ) {
+
+        const front =
+          totalsForHoles(FRONT);
+
+
+        lines.push(
+          "",
+          "Primera Vuelta",
+          `Gross ${front.gross}`,
+          `Neto ${front.net}`,
+          `Resultado: ${
+            aggregateResult(
+              front.net - 36
+            )
+          }`
+        );
+
+      }
+
+
+      if (
+        !before.back &&
+        backNow
+      ) {
+
+        const back =
+          totalsForHoles(BACK);
+
+
+        lines.push(
+          "",
+          "Segunda Vuelta",
+          `Gross ${back.gross}`,
+          `Neto ${back.net}`,
+          `Resultado: ${
+            aggregateResult(
+              back.net - 36
+            )
+          }`
+        );
+
+      }
+
+
+      if (
+        !before.total &&
+        totalNow
+      ) {
+
+        const total =
+          totalsForHoles([
+            ...FRONT,
+            ...BACK
+          ]);
+
+
+        lines.push(
+          "",
+          "Total",
+          `Gross ${total.gross}`,
+          `Neto ${total.net}`,
+          `Resultado: ${
+            aggregateResult(
+              total.net - 72
+            )
+          }`
+        );
+
+      }
+
+
+      return lines.join("\n");
+
+    }
+
+
+    function recordScore(
+      hole,
+      gross
+    ) {
+
+      hole =
+        Number(hole);
+
+      gross =
+        Number(gross);
+
+
+      if (
+        !Number.isInteger(hole) ||
+        hole < 1 ||
+        hole > 18
+      ) {
+
+        return {
+          ok: false,
+          speech:
+            "Número de hoyo inválido."
         };
 
-        localStream.getTracks().forEach(track => {
-          pc.addTrack(track, localStream);
-        });
+      }
 
-        const offer = await pc.createOffer();
-        await pc.setLocalDescription(offer);
 
-        await new Promise(resolve => {
-          if (pc.iceGatheringState === "complete") {
-            resolve();
-            return;
+      if (
+        !Number.isInteger(gross) ||
+        gross < 1 ||
+        gross > 30
+      ) {
+
+        return {
+          ok: false,
+          speech:
+            "Score inválido."
+        };
+
+      }
+
+
+      const definition =
+        holeDefinition(hole);
+
+
+      if (!definition) {
+
+        return {
+          ok: false,
+          speech:
+            `Hoyo ${hole} sin datos.`
+        };
+
+      }
+
+
+      const before =
+        roundStatusBeforeUpdate();
+
+
+      const handicapStroke =
+        strokeForHole(
+          definition
+        );
+
+
+      const net =
+        gross -
+        handicapStroke;
+
+
+      const score = {
+
+        hole,
+
+        gross,
+
+        par:
+          Number(definition.par),
+
+        hcp:
+          Number(definition.hcp),
+
+        handicapStroke,
+
+        net,
+
+        diff:
+          net -
+          Number(definition.par),
+
+        updatedAt:
+          new Date().toISOString()
+
+      };
+
+
+      round.holes[
+        String(hole)
+      ] = score;
+
+
+      round.lastHole =
+        hole;
+
+
+      saveRound();
+
+
+      return {
+
+        ok: true,
+
+        action:
+          "record_score",
+
+        score,
+
+        speech:
+          buildRecordSpeech(
+            score,
+            before
+          )
+
+      };
+
+    }
+
+
+    function speechForHole(
+      hole
+    ) {
+
+      const score =
+        round.holes[
+          String(hole)
+        ];
+
+
+      if (!score) {
+
+        return (
+          `Hoyo ${hole} sin score.`
+        );
+
+      }
+
+
+      return [
+
+        `Hoyo ${score.hole}`,
+
+        `Gross ${score.gross}`,
+
+        `Neto ${score.net}`,
+
+        `Resultado: ${
+          individualResult(
+            score.diff
+          )
+        }`
+
+      ].join("\n");
+
+    }
+
+
+    function getHole(
+      hole
+    ) {
+
+      hole =
+        Number(hole);
+
+
+      return {
+
+        ok: true,
+
+        action:
+          "get_hole",
+
+        speech:
+          speechForHole(
+            hole
+          )
+
+      };
+
+    }
+
+
+    function getRange(
+      from,
+      to
+    ) {
+
+      from =
+        Number(from);
+
+      to =
+        Number(to);
+
+
+      if (
+        !Number.isInteger(from) ||
+        !Number.isInteger(to)
+      ) {
+
+        return {
+
+          ok: false,
+
+          speech:
+            "Rango inválido."
+
+        };
+
+      }
+
+
+      const start =
+        Math.min(from, to);
+
+
+      const end =
+        Math.max(from, to);
+
+
+      const speeches = [];
+
+
+      for (
+        let hole = start;
+        hole <= end;
+        hole++
+      ) {
+
+        if (
+          round.holes[
+            String(hole)
+          ]
+        ) {
+
+          speeches.push(
+            speechForHole(
+              hole
+            )
+          );
+
+        }
+
+      }
+
+
+      if (
+        speeches.length === 0
+      ) {
+
+        return {
+
+          ok: true,
+
+          action:
+            "get_range",
+
+          speech:
+            "No hay scores registrados en ese rango."
+
+        };
+
+      }
+
+
+      return {
+
+        ok: true,
+
+        action:
+          "get_range",
+
+        speech:
+          speeches.join("\n\n")
+
+      };
+
+    }
+
+
+    function getList(
+      holes
+    ) {
+
+      if (
+        !Array.isArray(holes) ||
+        holes.length === 0
+      ) {
+
+        return {
+
+          ok: false,
+
+          speech:
+            "Lista de hoyos inválida."
+
+        };
+
+      }
+
+
+      const speeches =
+        holes.map(
+          hole =>
+            speechForHole(
+              Number(hole)
+            )
+        );
+
+
+      return {
+
+        ok: true,
+
+        action:
+          "get_list",
+
+        speech:
+          speeches.join("\n\n")
+
+      };
+
+    }
+
+
+    function getLast() {
+
+      if (!round.lastHole) {
+
+        return {
+
+          ok: true,
+
+          action:
+            "get_last",
+
+          speech:
+            "No hay scores registrados."
+
+        };
+
+      }
+
+
+      return {
+
+        ok: true,
+
+        action:
+          "get_last",
+
+        speech:
+          speechForHole(
+            round.lastHole
+          )
+
+      };
+
+    }
+
+
+    function processAction(
+      args
+    ) {
+
+      switch (
+        args.action
+      ) {
+
+        case "record_score":
+
+          return recordScore(
+            args.hole,
+            args.gross
+          );
+
+
+        case "get_hole":
+
+          return getHole(
+            args.hole
+          );
+
+
+        case "get_range":
+
+          return getRange(
+            args.from,
+            args.to
+          );
+
+
+        case "get_list":
+
+          return getList(
+            args.holes
+          );
+
+
+        case "get_last":
+
+          return getLast();
+
+
+        default:
+
+          return {
+
+            ok: false,
+
+            speech:
+              "Comando no reconocido."
+
+          };
+
+      }
+
+    }
+
+
+    function updateSummary() {
+
+      const count =
+        registeredHoles().length;
+
+
+      if (count === 0) {
+
+        scoreSummary.classList.remove(
+          "visible"
+        );
+
+        return;
+
+      }
+
+
+      scoreSummary.classList.add(
+        "visible"
+      );
+
+
+      const front =
+        totalsForHoles(
+          FRONT
+        );
+
+
+      const back =
+        totalsForHoles(
+          BACK
+        );
+
+
+      const total =
+        totalsForHoles([
+          ...FRONT,
+          ...BACK
+        ]);
+
+
+      front9El.textContent =
+        front.items.length === 9
+          ? `G ${front.gross} · N ${front.net}`
+          : `${front.items.length}/9`;
+
+
+      back9El.textContent =
+        back.items.length === 9
+          ? `G ${back.gross} · N ${back.net}`
+          : `${back.items.length}/9`;
+
+
+      totalEl.textContent =
+        total.items.length === 18
+          ? `G ${total.gross} · N ${total.net}`
+          : `${total.items.length}/18`;
+
+
+      statusEl.textContent =
+        `Ronda guardada · ${count}/18 hoyos`;
+
+    }
+
+
+    async function loadCourse() {
+
+      try {
+
+        const response =
+          await fetch(
+            "/api/score",
+            {
+              cache: "no-store"
+            }
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            "No se pudo cargar el campo"
+          );
+
+        }
+
+
+        const data =
+          await response.json();
+
+
+        if (
+          data.course &&
+          Array.isArray(
+            data.course.holes
+          )
+        ) {
+
+          course =
+            data.course;
+
+        }
+
+
+        courseName.textContent =
+          course.name ||
+          "El Pulté";
+
+
+        courseInfo.textContent =
+          `${course.tees || "Blancas"} · ` +
+          `Par ${course.par || 72} · ` +
+          `${course.holes.length} hoyos`;
+
+
+        updateSummary();
+
+
+        if (
+          registeredHoles().length === 0
+        ) {
+
+          statusEl.textContent =
+            "Listo para iniciar.";
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        course =
+          structuredClone(
+            FALLBACK_COURSE
+          );
+
+
+        updateSummary();
+
+
+        if (
+          registeredHoles().length === 0
+        ) {
+
+          statusEl.textContent =
+            "Listo para iniciar.";
+
+        }
+
+      }
+
+    }
+
+
+    function sendEvent(
+      event
+    ) {
+
+      if (
+        !dc ||
+        dc.readyState !== "open"
+      ) {
+
+        throw new Error(
+          "Canal Realtime no disponible."
+        );
+
+      }
+
+
+      dc.send(
+        JSON.stringify(
+          event
+        )
+      );
+
+    }
+
+
+    function sendToolOutput(
+      call,
+      result
+    ) {
+
+      sendEvent({
+
+        type:
+          "conversation.item.create",
+
+        item: {
+
+          type:
+            "function_call_output",
+
+          call_id:
+            call.call_id,
+
+          output:
+            JSON.stringify(
+              result
+            )
+
+        }
+
+      });
+
+
+      sendEvent({
+
+        type:
+          "response.create",
+
+        response: {
+
+          instructions:
+            "Pronuncia exactamente el campo speech " +
+            "del resultado de la herramienta. " +
+            "No añadas, quites, reformules ni repitas nada."
+
+        }
+
+      });
+
+
+      waitingForToolAnswer =
+        true;
+
+    }
+
+
+    function handleResponseDone(
+      event
+    ) {
+
+      const output =
+        event?.response?.output;
+
+
+      if (
+        !Array.isArray(output)
+      ) {
+
+        finishListening();
+
+        return;
+
+      }
+
+
+      const functionCalls =
+        output.filter(
+          item =>
+            item.type ===
+            "function_call" &&
+            item.name ===
+            "epg_caddy_action"
+        );
+
+
+      if (
+        functionCalls.length > 0
+      ) {
+
+        for (
+          const call
+          of functionCalls
+        ) {
+
+          try {
+
+            const args =
+              JSON.parse(
+                call.arguments ||
+                "{}"
+              );
+
+
+            const result =
+              processAction(
+                args
+              );
+
+
+            sendToolOutput(
+              call,
+              result
+            );
+
+          } catch (error) {
+
+            console.error(
+              "Error procesando herramienta:",
+              error
+            );
+
+
+            sendToolOutput(
+              call,
+              {
+                ok: false,
+                speech:
+                  "No se pudo procesar el comando."
+              }
+            );
+
           }
 
-          const checkState = () => {
-            if (pc.iceGatheringState === "complete") {
-              pc.removeEventListener(
-                "icegatheringstatechange",
-                checkState
-              );
-              resolve();
-            }
-          };
+        }
+
+
+        return;
+
+      }
+
+
+      if (
+        waitingForToolAnswer
+      ) {
+
+        waitingForToolAnswer =
+          false;
+
+      }
+
+
+      finishListening();
+
+    }
+
+
+    function handleRealtimeEvent(
+      message
+    ) {
+
+      try {
+
+        const event =
+          JSON.parse(
+            message.data
+          );
+
+
+        if (
+          event.type ===
+          "response.done"
+        ) {
+
+          handleResponseDone(
+            event
+          );
+
+          return;
+
+        }
+
+
+        if (
+          event.type ===
+          "error"
+        ) {
+
+          console.error(
+            "Realtime error:",
+            event
+          );
+
+
+          finishListening();
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Evento Realtime inválido:",
+          error
+        );
+
+      }
+
+    }
+
+
+    function setMicEnabled(
+      enabled
+    ) {
+
+      if (micTrack) {
+
+        micTrack.enabled =
+          enabled;
+
+      }
+
+
+      listening =
+        enabled;
+
+
+      if (enabled) {
+
+        talkButton.classList.add(
+          "active"
+        );
+
+        talkButton.textContent =
+          "Escuchando";
+
+        statusEl.textContent =
+          "Escuchando…";
+
+      } else {
+
+        talkButton.classList.remove(
+          "active"
+        );
+
+        talkButton.textContent =
+          connected
+            ? "Hablar"
+            : "Iniciar Caddy";
+
+
+        updateSummary();
+
+
+        if (
+          registeredHoles().length === 0
+        ) {
+
+          statusEl.textContent =
+            connected
+              ? "EPG Caddy listo."
+              : "Listo para iniciar.";
+
+        }
+
+      }
+
+    }
+
+
+    function finishListening() {
+
+      setMicEnabled(
+        false
+      );
+
+    }
+
+
+    function connectionAlive() {
+
+      if (!pc) return false;
+
+
+      return [
+        "new",
+        "connecting",
+        "connected"
+      ].includes(
+        pc.connectionState
+      );
+
+    }
+
+
+    async function ensureSession() {
+
+      if (
+        connected &&
+        connectionAlive() &&
+        dc &&
+        dc.readyState === "open"
+      ) {
+
+        return;
+
+      }
+
+
+      cleanupConnection();
+
+
+      statusEl.textContent =
+        "Conectando…";
+
+
+      localStream =
+        await navigator.mediaDevices
+          .getUserMedia({
+            audio: true
+          });
+
+
+      micTrack =
+        localStream
+          .getAudioTracks()[0];
+
+
+      pc =
+        new RTCPeerConnection();
+
+
+      audioElement =
+        document.createElement(
+          "audio"
+        );
+
+
+      audioElement.autoplay =
+        true;
+
+
+      pc.ontrack =
+        event => {
+
+          audioElement.srcObject =
+            event.streams[0];
+
+        };
+
+
+      pc.addTrack(
+        micTrack,
+        localStream
+      );
+
+
+      dc =
+        pc.createDataChannel(
+          "oai-events"
+        );
+
+
+      dc.addEventListener(
+        "message",
+        handleRealtimeEvent
+      );
+
+
+      dc.addEventListener(
+        "open",
+        () => {
+
+          connected = true;
+
+          setMicEnabled(
+            false
+          );
+
+        }
+      );
+
+
+      dc.addEventListener(
+        "close",
+        () => {
+
+          connected = false;
+
+          listening = false;
+
+          talkButton.classList.remove(
+            "active"
+          );
+
+          talkButton.textContent =
+            "Iniciar Caddy";
+
+        }
+      );
+
+
+      pc.addEventListener(
+        "connectionstatechange",
+        () => {
+
+          if (
+            pc &&
+            [
+              "failed",
+              "closed"
+            ].includes(
+              pc.connectionState
+            )
+          ) {
+
+            connected = false;
+            listening = false;
+
+          }
+
+        }
+      );
+
+
+      const offer =
+        await pc.createOffer();
+
+
+      await pc.setLocalDescription(
+        offer
+      );
+
+
+      await new Promise(
+        resolve => {
+
+          if (
+            pc.iceGatheringState ===
+            "complete"
+          ) {
+
+            resolve();
+            return;
+
+          }
+
+
+          const checkState =
+            () => {
+
+              if (
+                pc.iceGatheringState ===
+                "complete"
+              ) {
+
+                pc.removeEventListener(
+                  "icegatheringstatechange",
+                  checkState
+                );
+
+                resolve();
+
+              }
+
+            };
+
 
           pc.addEventListener(
             "icegatheringstatechange",
             checkState
           );
-        });
 
-        const response = await fetch("/api/session", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/sdp"
-          },
-          body: pc.localDescription.sdp
-        });
+        }
+      );
 
-        const answer = await response.text();
 
-        if (!response.ok) {
-          throw new Error(answer || "No se pudo iniciar la sesión");
+      const response =
+        await fetch(
+          "/api/session",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/sdp"
+            },
+
+            body:
+              pc.localDescription.sdp
+          }
+        );
+
+
+      const answer =
+        await response.text();
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          answer ||
+          "No se pudo iniciar la sesión."
+        );
+
+      }
+
+
+      await pc.setRemoteDescription({
+
+        type: "answer",
+
+        sdp: answer
+
+      });
+
+
+      await new Promise(
+        (resolve, reject) => {
+
+          const timeout =
+            setTimeout(
+              () => {
+
+                reject(
+                  new Error(
+                    "El canal Realtime no abrió."
+                  )
+                );
+
+              },
+              10000
+            );
+
+
+          if (
+            dc.readyState ===
+            "open"
+          ) {
+
+            clearTimeout(
+              timeout
+            );
+
+            resolve();
+
+            return;
+
+          }
+
+
+          dc.addEventListener(
+            "open",
+            () => {
+
+              clearTimeout(
+                timeout
+              );
+
+              resolve();
+
+            },
+            {
+              once: true
+            }
+          );
+
+        }
+      );
+
+
+      connected = true;
+
+      setMicEnabled(
+        false
+      );
+
+    }
+
+
+    async function startTalking() {
+
+      try {
+
+        talkButton.disabled =
+          true;
+
+
+        await ensureSession();
+
+
+        talkButton.disabled =
+          false;
+
+
+        if (listening) {
+
+          setMicEnabled(
+            false
+          );
+
+          return;
+
         }
 
-        await pc.setRemoteDescription({
-          type: "answer",
-          sdp: answer
-        });
 
-        active = true;
-        talkButton.disabled = false;
-        talkButton.classList.add("active");
-        talkButton.textContent = "Terminar";
-        statusEl.textContent = "EPG Caddy activo";
+        waitingForToolAnswer =
+          false;
+
+
+        setMicEnabled(
+          true
+        );
+
       } catch (error) {
-        console.error(error);
 
-        talkButton.disabled = false;
+        console.error(
+          error
+        );
+
+
+        talkButton.disabled =
+          false;
+
+
         statusEl.textContent =
           "No se pudo iniciar EPG Caddy.";
 
-        stopCaddy();
+
+        cleanupConnection();
+
       }
+
     }
 
-    function stopCaddy() {
+
+    function cleanupConnection() {
+
       if (localStream) {
-        localStream.getTracks().forEach(track => track.stop());
-        localStream = null;
+
+        localStream
+          .getTracks()
+          .forEach(
+            track =>
+              track.stop()
+          );
+
       }
+
+
+      localStream = null;
+      micTrack = null;
+
+
+      if (dc) {
+
+        try {
+          dc.close();
+        } catch {}
+
+      }
+
+
+      dc = null;
+
 
       if (pc) {
-        pc.close();
-        pc = null;
+
+        try {
+          pc.close();
+        } catch {}
+
       }
+
+
+      pc = null;
+
 
       if (audioElement) {
-        audioElement.srcObject = null;
-        audioElement = null;
+
+        audioElement.srcObject =
+          null;
+
       }
 
-      active = false;
 
-      talkButton.disabled = false;
-      talkButton.classList.remove("active");
-      talkButton.textContent = "Iniciar Caddy";
-      statusEl.textContent = "Listo para iniciar.";
+      audioElement = null;
+
+      connected = false;
+      listening = false;
+
     }
 
-    talkButton.addEventListener("click", startCaddy);
+
+    function newRound() {
+
+      const confirmed =
+        window.confirm(
+          "¿Iniciar una nueva ronda? " +
+          "Se borrarán los scores actuales."
+        );
+
+
+      if (!confirmed) {
+
+        return;
+
+      }
+
+
+      round =
+        emptyRound();
+
+
+      localStorage.removeItem(
+        STORAGE_KEY
+      );
+
+
+      saveRound();
+
+
+      scoreSummary.classList.remove(
+        "visible"
+      );
+
+
+      statusEl.textContent =
+        "Nueva ronda lista.";
+
+    }
+
+
+    talkButton.addEventListener(
+      "click",
+      startTalking
+    );
+
+
+    newRoundButton.addEventListener(
+      "click",
+      newRound
+    );
+
+
+    window.addEventListener(
+      "beforeunload",
+      () => {
+
+        saveRound();
+
+      }
+    );
+
 
     loadCourse();
+
   </script>
+
 </body>
 </html>
