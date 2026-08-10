@@ -1,0 +1,39 @@
+name: EPGCaddy
+
+options:
+  bundleIdPrefix: com.epgcaddy
+  deploymentTarget:
+    iOS: "16.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+
+targets:
+  EPGCaddy:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+
+    sources:
+      - path: EPGCaddy
+
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.epgcaddy.app
+        PRODUCT_NAME: EPG Caddy
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_STYLE: Automatic
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+
+    info:
+      path: EPGCaddy/Info.plist
+      properties:
+        CFBundleDisplayName: EPG Caddy
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSMicrophoneUsageDescription: "EPG Caddy necesita acceso al micrófono para escuchar tus comandos de voz y registrar los scores de tu ronda."
