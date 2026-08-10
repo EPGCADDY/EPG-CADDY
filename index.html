@@ -257,22 +257,28 @@
       background: rgba(255,255,255,.10);
     }
 
-    .score-table .gross-cell,
+    .score-table .gross-cell {
+      font-size: 11px;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
     .score-table .net-cell {
       font-size: 11px;
       font-weight: 900;
+      color: #78e3a8;
     }
 
     .score-table .hcp-stroke-cell {
-      color: #ff5c5c;
-      background: rgba(214,50,50,.20);
+      color: #ff5c5c !important;
+      background: rgba(214,50,50,.20) !important;
       border: 1px solid rgba(255,92,92,.42);
       font-weight: 900;
     }
 
     .score-table .hcp-double-cell {
-      color: #ffb0b0;
-      background: rgba(214,50,50,.34);
+      color: #ffb0b0 !important;
+      background: rgba(214,50,50,.34) !important;
       border: 1px solid rgba(255,92,92,.70);
       font-weight: 900;
     }
@@ -281,8 +287,9 @@
       margin-top: 14px;
       padding-top: 12px;
       border-top: 1px solid rgba(255,255,255,.08);
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 16px;
       align-items: center;
       font-size: 13px;
     }
@@ -295,6 +302,10 @@
     .scorecard-total-value {
       font-size: 18px;
       font-weight: 800;
+    }
+
+    .net-total-value {
+      color: #78e3a8;
     }
 
     #newRoundButton {
@@ -422,50 +433,31 @@
       <p>Tu caddie profesional de golf por voz</p>
     </header>
 
-
     <section class="course">
 
-      <div
-        class="course-name"
-        id="courseName"
-      >
+      <div class="course-name" id="courseName">
         El Pulté
       </div>
 
-      <div
-        class="course-info"
-        id="courseInfo"
-      >
+      <div class="course-info" id="courseInfo">
         Blancas · Par 72 · 18 hoyos
       </div>
 
-      <div
-        class="player-info"
-        id="playerInfo"
-      >
+      <div class="player-info" id="playerInfo">
         Handicap por definir
       </div>
 
     </section>
 
-
-    <div
-      class="status"
-      id="status"
-    >
+    <div class="status" id="status">
       Preparando EPG Caddy…
     </div>
 
-
     <section class="controls">
 
-      <button
-        id="talkButton"
-        type="button"
-      >
+      <button id="talkButton" type="button">
         Iniciar Caddy
       </button>
-
 
       <div class="instruction">
         Di: “Hoyo 5, 3”
@@ -474,14 +466,9 @@
         “Hoyo 3, 4; hoyo 4, 5; hoyo 5, 3”.
       </div>
 
-
-      <section
-        class="score-summary"
-        id="scoreSummary"
-      >
+      <section class="score-summary" id="scoreSummary">
 
         <h2>CURRENT ROUND</h2>
-
 
         <div class="summary-grid">
 
@@ -502,23 +489,19 @@
 
         </div>
 
-
         <section class="scorecard">
 
           <div class="scorecard-title">
             SCORECARD
           </div>
 
-
           <div class="nine-title">
             Primera Vuelta
           </div>
 
-
           <div class="score-table-wrap">
 
             <table class="score-table">
-
               <tbody>
 
                 <tr id="frontHoleRow">
@@ -542,21 +525,17 @@
                 </tr>
 
               </tbody>
-
             </table>
 
           </div>
-
 
           <div class="nine-title">
             Segunda Vuelta
           </div>
 
-
           <div class="score-table-wrap">
 
             <table class="score-table">
-
               <tbody>
 
                 <tr id="backHoleRow">
@@ -580,11 +559,9 @@
                 </tr>
 
               </tbody>
-
             </table>
 
           </div>
-
 
           <div class="scorecard-total">
 
@@ -592,9 +569,17 @@
               TOTAL GROSS
             </span>
 
+            <span class="scorecard-total-value" id="scorecardTotalGross">
+              —
+            </span>
+
+            <span class="scorecard-total-label">
+              TOTAL NETO
+            </span>
+
             <span
-              class="scorecard-total-value"
-              id="scorecardTotalGross"
+              class="scorecard-total-value net-total-value"
+              id="scorecardTotalNet"
             >
               —
             </span>
@@ -603,11 +588,7 @@
 
         </section>
 
-
-        <button
-          id="newRoundButton"
-          type="button"
-        >
+        <button id="newRoundButton" type="button">
           Nueva ronda
         </button>
 
@@ -615,18 +596,13 @@
 
     </section>
 
-
     <footer>
       EPG Caddy
     </footer>
 
   </main>
 
-
-  <div
-    class="setup-overlay"
-    id="setupOverlay"
-  >
+  <div class="setup-overlay" id="setupOverlay">
 
     <div class="setup-card">
 
@@ -636,7 +612,6 @@
         Ingresa tu nombre y handicap.
         Cada ronda utiliza su propio handicap de juego.
       </p>
-
 
       <div class="field">
 
@@ -652,7 +627,6 @@
         />
 
       </div>
-
 
       <div class="field">
 
@@ -672,7 +646,6 @@
 
       </div>
 
-
       <div class="field">
 
         <label for="courseInput">
@@ -687,7 +660,6 @@
         />
 
       </div>
-
 
       <div class="field">
 
@@ -704,20 +676,13 @@
 
       </div>
 
-
       <div class="setup-actions">
 
-        <button
-          id="cancelSetupButton"
-          type="button"
-        >
+        <button id="cancelSetupButton" type="button">
           Cancelar
         </button>
 
-        <button
-          id="startRoundButton"
-          type="button"
-        >
+        <button id="startRoundButton" type="button">
           Iniciar ronda
         </button>
 
@@ -727,24 +692,19 @@
 
   </div>
 
-
   <script>
-
     const STORAGE_KEY =
-      "epg-caddy-current-round-v5";
+      "epg-caddy-current-round-v6";
 
     const MIN_HANDICAP = 0;
     const MAX_HANDICAP = 24;
 
-
     const FALLBACK_COURSE = {
-
       name: "El Pulté",
       tees: "Blancas",
       par: 72,
 
       holes: [
-
         { hole: 1,  par: 4, hcp: 9 },
         { hole: 2,  par: 4, hcp: 5 },
         { hole: 3,  par: 4, hcp: 7 },
@@ -764,18 +724,12 @@
         { hole: 16, par: 4, hcp: 12 },
         { hole: 17, par: 3, hcp: 10 },
         { hole: 18, par: 4, hcp: 14 }
-
       ]
-
     };
 
-
-    const FRONT =
-      [1,2,3,4,5,6,7,8,9];
-
-    const BACK =
-      [10,11,12,13,14,15,16,17,18];
-
+    const FRONT = [1,2,3,4,5,6,7,8,9];
+    const BACK = [10,11,12,13,14,15,16,17,18];
+    const ALL_HOLES = [...FRONT, ...BACK];
 
     const talkButton =
       document.getElementById("talkButton");
@@ -855,12 +809,15 @@
     const scorecardTotalGross =
       document.getElementById("scorecardTotalGross");
 
+    const scorecardTotalNet =
+      document.getElementById("scorecardTotalNet");
 
     let course =
-      structuredClone(
-        FALLBACK_COURSE
+      JSON.parse(
+        JSON.stringify(
+          FALLBACK_COURSE
+        )
       );
-
 
     let pc = null;
     let dc = null;
@@ -872,38 +829,23 @@
     let listening = false;
     let waitingForToolAnswer = false;
 
-
-    function validHandicap(
-      value
-    ) {
-
-      const handicap =
-        Number(value);
+    function validHandicap(value) {
+      const handicap = Number(value);
 
       return (
         Number.isInteger(handicap) &&
         handicap >= MIN_HANDICAP &&
         handicap <= MAX_HANDICAP
       );
-
     }
 
-
-    function emptyRound(
-      config = {}
-    ) {
-
+    function emptyRound(config = {}) {
       const configured =
         config.configured === true &&
-        validHandicap(
-          config.handicap
-        );
-
+        validHandicap(config.handicap);
 
       return {
-
-        version: 5,
-
+        version: 6,
         configured,
 
         player:
@@ -911,21 +853,15 @@
             config.player || ""
           ).trim(),
 
-        course:
-          "El Pulté",
-
-        tees:
-          "Blancas",
+        course: "El Pulté",
+        tees: "Blancas",
 
         handicap:
           configured
-            ? Number(
-                config.handicap
-              )
+            ? Number(config.handicap)
             : null,
 
         holes: {},
-
         lastHole: null,
 
         createdAt:
@@ -933,25 +869,266 @@
 
         updatedAt:
           new Date().toISOString()
-
       };
-
     }
 
-
     function loadRound() {
-
       try {
-
         const raw =
           localStorage.getItem(
             STORAGE_KEY
           );
 
-
         if (!raw) {
           return emptyRound();
         }
 
-
         const parsed =
+          JSON.parse(raw);
+
+        if (
+          !parsed ||
+          typeof parsed !== "object" ||
+          !parsed.holes
+        ) {
+          return emptyRound();
+        }
+
+        const configured =
+          parsed.configured === true &&
+          validHandicap(
+            parsed.handicap
+          );
+
+        if (!configured) {
+          return emptyRound();
+        }
+
+        return {
+          version: 6,
+          configured: true,
+
+          player:
+            String(
+              parsed.player || ""
+            ).trim(),
+
+          course: "El Pulté",
+          tees: "Blancas",
+
+          handicap:
+            Number(
+              parsed.handicap
+            ),
+
+          holes:
+            parsed.holes || {},
+
+          lastHole:
+            parsed.lastHole || null,
+
+          createdAt:
+            parsed.createdAt ||
+            new Date().toISOString(),
+
+          updatedAt:
+            parsed.updatedAt ||
+            new Date().toISOString()
+        };
+
+      } catch (error) {
+        console.error(
+          "No se pudo leer la ronda:",
+          error
+        );
+
+        return emptyRound();
+      }
+    }
+
+    let round =
+      loadRound();
+
+    function currentHandicap() {
+      if (
+        !round.configured ||
+        !validHandicap(
+          round.handicap
+        )
+      ) {
+        return null;
+      }
+
+      return Number(
+        round.handicap
+      );
+    }
+
+    function saveRound() {
+      round.updatedAt =
+        new Date().toISOString();
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(round)
+      );
+
+      updateSummary();
+    }
+
+    function holeDefinition(number) {
+      return course.holes.find(
+        item =>
+          Number(item.hole) ===
+          Number(number)
+      );
+    }
+
+    /*
+      DISTRIBUCIÓN CORRECTA DE GOLPES DE HANDICAP.
+
+      Handicap 0:
+      ningún golpe.
+
+      Handicap 1 a 18:
+      un golpe en los hoyos cuyo índice HDCP
+      sea menor o igual al handicap.
+
+      Handicap 19 a 24:
+      un golpe en los 18 hoyos,
+      más un segundo golpe en índices
+      HDCP 1 hasta handicap - 18.
+    */
+    function strokeForHole(definition) {
+      if (
+        !definition ||
+        !round.configured
+      ) {
+        return 0;
+      }
+
+      const handicap =
+        currentHandicap();
+
+      if (
+        handicap === null ||
+        handicap === 0
+      ) {
+        return 0;
+      }
+
+      const hcpIndex =
+        Number(
+          definition.hcp
+        );
+
+      if (
+        !Number.isInteger(hcpIndex) ||
+        hcpIndex < 1 ||
+        hcpIndex > 18
+      ) {
+        return 0;
+      }
+
+      if (handicap <= 18) {
+        return (
+          hcpIndex <= handicap
+            ? 1
+            : 0
+        );
+      }
+
+      return (
+        1 +
+        (
+          hcpIndex <=
+          handicap - 18
+            ? 1
+            : 0
+        )
+      );
+    }
+
+    function totalsForHoles(holeNumbers) {
+      const items =
+        holeNumbers
+          .map(
+            number =>
+              round.holes[
+                String(number)
+              ]
+          )
+          .filter(Boolean);
+
+      const gross =
+        items.reduce(
+          (sum, item) =>
+            sum +
+            Number(item.gross || 0),
+          0
+        );
+
+      const net =
+        items.reduce(
+          (sum, item) =>
+            sum +
+            Number(item.net || 0),
+          0
+        );
+
+      const par =
+        items.reduce(
+          (sum, item) =>
+            sum +
+            Number(item.par || 0),
+          0
+        );
+
+      const strokes =
+        items.reduce(
+          (sum, item) =>
+            sum +
+            Number(
+              item.handicapStroke || 0
+            ),
+          0
+        );
+
+      return {
+        items,
+        gross,
+        net,
+        par,
+        strokes,
+        diff: net - par
+      };
+    }
+
+    function allRegisteredTotals() {
+      return totalsForHoles(
+        ALL_HOLES
+      );
+    }
+
+    function individualResult(diff) {
+      if (diff === 0) {
+        return "Par";
+      }
+
+      if (diff < 0) {
+        return `${Math.abs(diff)} bajo par`;
+      }
+
+      return `${diff} sobre par`;
+    }
+
+    function aggregateResult(diff) {
+      if (diff === 0) {
+        return "Even";
+      }
+
+      if (diff < 0) {
+        return `${Math.abs(diff)} bajo par`;
+      }
+
+      return `${diff}
