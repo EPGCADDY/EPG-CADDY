@@ -20,12 +20,7 @@
     body {
       margin: 0;
       min-height: 100vh;
-
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
       background:
         radial-gradient(
@@ -76,13 +71,10 @@
       margin-top: 28px;
       padding: 18px;
 
-      border:
-        1px solid rgba(255,255,255,.12);
-
+      border: 1px solid rgba(255,255,255,.12);
       border-radius: 18px;
 
-      background:
-        rgba(255,255,255,.05);
+      background: rgba(255,255,255,.05);
     }
 
     .course-name {
@@ -94,7 +86,6 @@
       margin-top: 7px;
 
       color: #b8c4be;
-
       font-size: 14px;
       line-height: 1.55;
     }
@@ -103,11 +94,9 @@
       margin-top: 12px;
       padding-top: 12px;
 
-      border-top:
-        1px solid rgba(255,255,255,.08);
+      border-top: 1px solid rgba(255,255,255,.08);
 
       color: #d7e0db;
-
       font-size: 13px;
       line-height: 1.55;
     }
@@ -140,8 +129,7 @@
 
       border-radius: 50%;
 
-      border:
-        1px solid rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.18);
 
       background: #2d8c5a;
 
@@ -150,8 +138,7 @@
       font-size: 20px;
       font-weight: 700;
 
-      box-shadow:
-        0 15px 45px rgba(0,0,0,.4);
+      box-shadow: 0 15px 45px rgba(0,0,0,.4);
 
       cursor: pointer;
       touch-action: manipulation;
@@ -171,7 +158,6 @@
       color: #aebbb4;
 
       text-align: center;
-
       line-height: 1.5;
 
       font-size: 14px;
@@ -188,11 +174,9 @@
 
       border-radius: 18px;
 
-      background:
-        rgba(255,255,255,.06);
+      background: rgba(255,255,255,.06);
 
-      border:
-        1px solid rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.1);
     }
 
     .score-summary.visible {
@@ -222,8 +206,7 @@
 
       border-radius: 12px;
 
-      background:
-        rgba(255,255,255,.05);
+      background: rgba(255,255,255,.05);
     }
 
     .label {
@@ -256,11 +239,9 @@
 
       border-radius: 16px;
 
-      background:
-        rgba(255,255,255,.04);
+      background: rgba(255,255,255,.04);
 
-      border:
-        1px solid rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.08);
 
       overflow: hidden;
     }
@@ -319,8 +300,7 @@
 
       font-size: 11px;
 
-      background:
-        rgba(255,255,255,.055);
+      background: rgba(255,255,255,.055);
 
       overflow: hidden;
     }
@@ -350,8 +330,7 @@
 
       font-weight: 800;
 
-      background:
-        rgba(255,255,255,.10);
+      background: rgba(255,255,255,.10);
     }
 
     .score-table .gross-cell,
@@ -360,10 +339,6 @@
       font-weight: 800;
     }
 
-    /*
-     * ROJO:
-     * el jugador recibe golpe en ese hoyo.
-     */
     .score-table .hcp-stroke-cell {
       color: #ff5c5c;
 
@@ -376,12 +351,6 @@
       font-weight: 900;
     }
 
-    /*
-     * ROJO MÁS INTENSO:
-     * recibe dos golpes.
-     * Aplica para handicap 19-24
-     * según el índice HDCP.
-     */
     .score-table .hcp-double-cell {
       color: #ffb0b0;
 
@@ -683,12 +652,16 @@
 
 
       <div class="instruction">
-        Primera vez:
-        “Soy Jaime, handicap 14,
-        juego El Pulté de blancas”.
+
+        Toca una vez y di:
+        “Hoyo 5, 3”
+
         <br><br>
-        Después:
-        “Hoyo 1, 4”.
+
+        También puedes recuperar varios:
+        “Hoyo 3, 4; hoyo 4, 5;
+        hoyo 5, 3”.
+
       </div>
 
 
@@ -907,8 +880,7 @@
 
       <p>
         Ingresa tu nombre y handicap.
-        En esta versión la tarjeta disponible
-        es El Pulté desde marcas blancas.
+        Handicap permitido de 0 a 24.
       </p>
 
 
@@ -1015,14 +987,11 @@
 
     const FALLBACK_COURSE = {
 
-      name:
-        "El Pulté",
+      name: "El Pulté",
 
-      tees:
-        "Blancas",
+      tees: "Blancas",
 
-      par:
-        72,
+      par: 72,
 
       holes: [
 
@@ -1137,18 +1106,6 @@
       );
 
 
-    const courseInput =
-      document.getElementById(
-        "courseInput"
-      );
-
-
-    const teesInput =
-      document.getElementById(
-        "teesInput"
-      );
-
-
     const cancelSetupButton =
       document.getElementById(
         "cancelSetupButton"
@@ -1249,61 +1206,7 @@
 
     let waitingForToolAnswer = false;
 
-
-    function stripAccents(
-      value
-    ) {
-
-      return String(
-        value || ""
-      )
-        .normalize("NFD")
-        .replace(
-          /[\u0300-\u036f]/g,
-          ""
-        )
-        .trim()
-        .toLowerCase();
-
-    }
-
-
-    function isSupportedCourse(
-      value
-    ) {
-
-      const normalized =
-        stripAccents(value);
-
-      return (
-        normalized ===
-          "el pulte" ||
-        normalized ===
-          "pulte"
-      );
-
-    }
-
-
-    function isSupportedTees(
-      value
-    ) {
-
-      const normalized =
-        stripAccents(value);
-
-      return (
-        normalized ===
-          "blancas" ||
-        normalized ===
-          "blanca" ||
-        normalized ===
-          "white" ||
-        normalized ===
-          "white tees"
-      );
-
-    }
+    let toolResponsePending = false;
 
 
     function validHandicap(
@@ -1313,10 +1216,15 @@
       const handicap =
         Number(value);
 
+
       return (
-        Number.isInteger(handicap) &&
-        handicap >= MIN_HANDICAP &&
-        handicap <= MAX_HANDICAP
+        Number.isInteger(
+          handicap
+        ) &&
+        handicap >=
+          MIN_HANDICAP &&
+        handicap <=
+          MAX_HANDICAP
       );
 
     }
@@ -1326,7 +1234,9 @@
       config = {}
     ) {
 
-      const hasValidHandicap =
+      const configured =
+        config.configured ===
+          true &&
         validHandicap(
           config.handicap
         );
@@ -1338,16 +1248,13 @@
           4,
 
 
-        configured:
-          Boolean(
-            config.configured &&
-            hasValidHandicap
-          ),
+        configured,
 
 
         player:
           String(
-            config.player || ""
+            config.player ||
+            ""
           ).trim(),
 
 
@@ -1360,7 +1267,7 @@
 
 
         handicap:
-          hasValidHandicap
+          configured
             ? Number(
                 config.handicap
               )
@@ -1407,7 +1314,9 @@
 
 
         const parsed =
-          JSON.parse(raw);
+          JSON.parse(
+            raw
+          );
 
 
         if (
@@ -1423,7 +1332,8 @@
 
 
         const configured =
-          parsed.configured === true &&
+          parsed.configured ===
+            true &&
           validHandicap(
             parsed.handicap
           );
@@ -1440,7 +1350,8 @@
 
           player:
             String(
-              parsed.player || ""
+              parsed.player ||
+              ""
             ).trim(),
 
 
@@ -1488,7 +1399,10 @@
 
         };
 
-      } catch (error) {
+
+      } catch (
+        error
+      ) {
 
         console.error(
           "No se pudo leer la ronda:",
@@ -1554,33 +1468,17 @@
 
       return course.holes.find(
         item =>
-          Number(item.hole) ===
-          Number(number)
+          Number(
+            item.hole
+          ) ===
+          Number(
+            number
+          )
       );
 
     }
 
 
-    /*
-     * GOLPES DE HANDICAP POR HOYO
-     *
-     * Handicap 0:
-     * ningún golpe.
-     *
-     * Handicap 14:
-     * 1 golpe en HDCP 1-14.
-     *
-     * Handicap 18:
-     * 1 golpe en todos.
-     *
-     * Handicap 20:
-     * 1 golpe en todos y
-     * segundo golpe en HDCP 1-2.
-     *
-     * Handicap 24:
-     * 1 golpe en todos y
-     * segundo golpe en HDCP 1-6.
-     */
     function strokeForHole(
       definition
     ) {
@@ -1617,19 +1515,22 @@
 
       const fullCycles =
         Math.floor(
-          handicap / 18
+          handicap /
+          18
         );
 
 
       const remainder =
-        handicap % 18;
+        handicap %
+        18;
 
 
       return (
         fullCycles +
         (
           remainder > 0 &&
-          index <= remainder
+          index <=
+            remainder
             ? 1
             : 0
         )
@@ -1656,35 +1557,54 @@
           .map(
             number =>
               round.holes[
-                String(number)
+                String(
+                  number
+                )
               ]
           )
-          .filter(Boolean);
+          .filter(
+            Boolean
+          );
 
 
       const gross =
         items.reduce(
-          (sum, item) =>
+          (
+            sum,
+            item
+          ) =>
             sum +
-            Number(item.gross),
+            Number(
+              item.gross
+            ),
           0
         );
 
 
       const net =
         items.reduce(
-          (sum, item) =>
+          (
+            sum,
+            item
+          ) =>
             sum +
-            Number(item.net),
+            Number(
+              item.net
+            ),
           0
         );
 
 
       const par =
         items.reduce(
-          (sum, item) =>
+          (
+            sum,
+            item
+          ) =>
             sum +
-            Number(item.par),
+            Number(
+              item.par
+            ),
           0
         );
 
@@ -1720,27 +1640,42 @@
 
         gross:
           items.reduce(
-            (sum, item) =>
+            (
+              sum,
+              item
+            ) =>
               sum +
-              Number(item.gross),
+              Number(
+                item.gross
+              ),
             0
           ),
 
 
         net:
           items.reduce(
-            (sum, item) =>
+            (
+              sum,
+              item
+            ) =>
               sum +
-              Number(item.net),
+              Number(
+                item.net
+              ),
             0
           ),
 
 
         par:
           items.reduce(
-            (sum, item) =>
+            (
+              sum,
+              item
+            ) =>
               sum +
-              Number(item.par),
+              Number(
+                item.par
+              ),
             0
           )
 
@@ -1753,17 +1688,23 @@
       diff
     ) {
 
-      if (diff === 0) {
+      if (
+        diff === 0
+      ) {
 
         return "Par";
 
       }
 
 
-      if (diff < 0) {
+      if (
+        diff < 0
+      ) {
 
         return (
-          `${Math.abs(diff)} bajo par`
+          `${Math.abs(
+            diff
+          )} bajo par`
         );
 
       }
@@ -1780,17 +1721,23 @@
       diff
     ) {
 
-      if (diff === 0) {
+      if (
+        diff === 0
+      ) {
 
         return "Even";
 
       }
 
 
-      if (diff < 0) {
+      if (
+        diff < 0
+      ) {
 
         return (
-          `${Math.abs(diff)} bajo par`
+          `${Math.abs(
+            diff
+          )} bajo par`
         );
 
       }
@@ -1811,7 +1758,9 @@
         number =>
           Boolean(
             round.holes[
-              String(number)
+              String(
+                number
+              )
             ]
           )
       );
@@ -1837,7 +1786,8 @@
 
         total:
           registeredHoles()
-            .length === 18
+            .length ===
+          18
 
       };
 
@@ -1901,17 +1851,8 @@
 
       const totalNow =
         registeredHoles()
-          .length === 18;
-
-
-      /*
-       * ORDEN OBLIGATORIO:
-       *
-       * 1. resultado del hoyo
-       * 2. acumulado
-       * 3. resultado de vuelta
-       * 4. total de ronda
-       */
+          .length ===
+        18;
 
 
       if (
@@ -2003,20 +1944,6 @@
     }
 
 
-    /*
-     * CONFIGURACIÓN POR VOZ.
-     *
-     * Esta función recibe:
-     * setup_round
-     *
-     * desde session.js.
-     *
-     * IMPORTANTE:
-     * NO cerramos aquí la conexión
-     * Realtime porque todavía necesitamos
-     * devolver function_call_output y
-     * recibir la confirmación hablada.
-     */
     function setupRound(
       args
     ) {
@@ -2026,7 +1953,8 @@
           undefined ||
         args.handicap ===
           null ||
-        args.handicap === ""
+        args.handicap ===
+          ""
       ) {
 
         return {
@@ -2066,53 +1994,7 @@
             "setup_round",
 
           speech:
-            "Handicap inválido. Usa un número entre 0 y 24."
-
-        };
-
-      }
-
-
-      if (
-        args.course &&
-        !isSupportedCourse(
-          args.course
-        )
-      ) {
-
-        return {
-
-          ok:
-            false,
-
-          action:
-            "setup_round",
-
-          speech:
-            "Campo no disponible."
-
-        };
-
-      }
-
-
-      if (
-        args.tees &&
-        !isSupportedTees(
-          args.tees
-        )
-      ) {
-
-        return {
-
-          ok:
-            false,
-
-          action:
-            "setup_round",
-
-          speech:
-            "Marcas no disponibles."
+            "Handicap inválido. Usa un número entre cero y veinticuatro."
 
         };
 
@@ -2126,12 +2008,6 @@
         ).trim();
 
 
-      /*
-       * setup_round SIEMPRE inicia
-       * una tarjeta nueva.
-       *
-       * No arrastra scores anteriores.
-       */
       round =
         emptyRound({
 
@@ -2149,15 +2025,14 @@
 
 
       const lines =
-        [];
+        [
+          "Ronda configurada"
+        ];
 
 
-      lines.push(
-        "Ronda configurada"
-      );
-
-
-      if (player) {
+      if (
+        player
+      ) {
 
         lines.push(
           `Jugador ${player}`
@@ -2181,20 +2056,6 @@
         action:
           "setup_round",
 
-        round: {
-
-          player,
-
-          handicap,
-
-          course:
-            "El Pulté",
-
-          tees:
-            "Blancas"
-
-        },
-
         speech:
           lines.join(
             "\n"
@@ -2205,52 +2066,29 @@
     }
 
 
-    function recordScore(
+    function validateScoreInput(
       hole,
       gross
     ) {
 
-      /*
-       * PROTECCIÓN:
-       *
-       * nunca registra scores
-       * utilizando handicap cero
-       * por defecto o una ronda vieja.
-       */
-      if (
-        !round.configured
-      ) {
-
-        return {
-
-          ok:
-            false,
-
-          action:
-            "record_score",
-
-          speech:
-            "Primero configura la ronda y el handicap."
-
-        };
-
-      }
+      const parsedHole =
+        Number(
+          hole
+        );
 
 
-      hole =
-        Number(hole);
-
-
-      gross =
-        Number(gross);
+      const parsedGross =
+        Number(
+          gross
+        );
 
 
       if (
         !Number.isInteger(
-          hole
+          parsedHole
         ) ||
-        hole < 1 ||
-        hole > 18
+        parsedHole < 1 ||
+        parsedHole > 18
       ) {
 
         return {
@@ -2268,10 +2106,10 @@
 
       if (
         !Number.isInteger(
-          gross
+          parsedGross
         ) ||
-        gross < 1 ||
-        gross > 30
+        parsedGross < 1 ||
+        parsedGross > 30
       ) {
 
         return {
@@ -2280,7 +2118,7 @@
             false,
 
           speech:
-            "Score inválido."
+            `Score inválido para el hoyo ${parsedHole}.`
 
         };
 
@@ -2289,7 +2127,7 @@
 
       const definition =
         holeDefinition(
-          hole
+          parsedHole
         );
 
 
@@ -2303,16 +2141,36 @@
             false,
 
           speech:
-            `Hoyo ${hole} sin datos.`
+            `Hoyo ${parsedHole} sin datos.`
 
         };
 
       }
 
 
-      const before =
-        roundStatusBeforeUpdate();
+      return {
 
+        ok:
+          true,
+
+        hole:
+          parsedHole,
+
+        gross:
+          parsedGross,
+
+        definition
+
+      };
+
+    }
+
+
+    function buildScoreObject(
+      hole,
+      gross,
+      definition
+    ) {
 
       const handicapStroke =
         strokeForHole(
@@ -2325,7 +2183,7 @@
         handicapStroke;
 
 
-      const score = {
+      return {
 
         hole,
 
@@ -2362,20 +2220,72 @@
 
       };
 
+    }
 
-      /*
-       * Si se vuelve a registrar
-       * el mismo hoyo,
-       * sustituye al anterior.
-       */
+
+    function recordScore(
+      hole,
+      gross
+    ) {
+
+      if (
+        !round.configured
+      ) {
+
+        return {
+
+          ok:
+            false,
+
+          action:
+            "record_score",
+
+          speech:
+            "Primero configura la ronda y el handicap."
+
+        };
+
+      }
+
+
+      const validated =
+        validateScoreInput(
+          hole,
+          gross
+        );
+
+
+      if (
+        !validated.ok
+      ) {
+
+        return validated;
+
+      }
+
+
+      const before =
+        roundStatusBeforeUpdate();
+
+
+      const score =
+        buildScoreObject(
+          validated.hole,
+          validated.gross,
+          validated.definition
+        );
+
+
       round.holes[
-        String(hole)
+        String(
+          score.hole
+        )
       ] =
         score;
 
 
       round.lastHole =
-        hole;
+        score.hole;
 
 
       saveRound();
@@ -2402,17 +2312,271 @@
     }
 
 
+    /*
+     * REGISTRO DE VARIOS HOYOS
+     *
+     * Ejemplo recibido:
+     *
+     * scores = [
+     *   { hole: 3, gross: 4 },
+     *   { hole: 4, gross: 5 },
+     *   { hole: 5, gross: 3 }
+     * ]
+     *
+     * Primero valida TODA la tanda.
+     * Después guarda todo.
+     * Habla solamente una vez al final.
+     */
+    function recordScores(
+      scores
+    ) {
+
+      if (
+        !round.configured
+      ) {
+
+        return {
+
+          ok:
+            false,
+
+          action:
+            "record_scores",
+
+          speech:
+            "Primero configura la ronda y el handicap."
+
+        };
+
+      }
+
+
+      if (
+        !Array.isArray(
+          scores
+        ) ||
+        scores.length ===
+          0
+      ) {
+
+        return {
+
+          ok:
+            false,
+
+          action:
+            "record_scores",
+
+          speech:
+            "No se recibieron scores válidos."
+
+        };
+
+      }
+
+
+      const validated =
+        [];
+
+
+      for (
+        const item
+        of scores
+      ) {
+
+        if (
+          !item ||
+          typeof item !==
+            "object"
+        ) {
+
+          return {
+
+            ok:
+              false,
+
+            action:
+              "record_scores",
+
+            speech:
+              "No se pudo interpretar uno de los scores."
+
+          };
+
+        }
+
+
+        const result =
+          validateScoreInput(
+            item.hole,
+            item.gross
+          );
+
+
+        if (
+          !result.ok
+        ) {
+
+          return {
+
+            ...result,
+
+            action:
+              "record_scores"
+
+          };
+
+        }
+
+
+        validated.push(
+          result
+        );
+
+      }
+
+
+      const uniqueHoles =
+        new Set(
+          validated.map(
+            item =>
+              item.hole
+          )
+        );
+
+
+      if (
+        uniqueHoles.size !==
+        validated.length
+      ) {
+
+        return {
+
+          ok:
+            false,
+
+          action:
+            "record_scores",
+
+          speech:
+            "Hay un hoyo repetido en el dictado."
+
+        };
+
+      }
+
+
+      const before =
+        roundStatusBeforeUpdate();
+
+
+      const savedScores =
+        [];
+
+
+      /*
+       * Sólo llegamos aquí
+       * si TODOS los scores
+       * ya fueron validados.
+       */
+      for (
+        const item
+        of validated
+      ) {
+
+        const score =
+          buildScoreObject(
+            item.hole,
+            item.gross,
+            item.definition
+          );
+
+
+        round.holes[
+          String(
+            item.hole
+          )
+        ] =
+          score;
+
+
+        savedScores.push(
+          score
+        );
+
+      }
+
+
+      const lastScore =
+        savedScores[
+          savedScores.length -
+          1
+        ];
+
+
+      round.lastHole =
+        lastScore.hole;
+
+
+      /*
+       * Un solo guardado.
+       */
+      saveRound();
+
+
+      /*
+       * Una sola respuesta:
+       *
+       * último hoyo dictado
+       * +
+       * acumulado final
+       * +
+       * cierres de vuelta/ronda
+       * si corresponden.
+       */
+      return {
+
+        ok:
+          true,
+
+        action:
+          "record_scores",
+
+        count:
+          savedScores.length,
+
+        scores:
+          savedScores,
+
+        score:
+          lastScore,
+
+        speech:
+          buildRecordSpeech(
+            lastScore,
+            before
+          )
+
+      };
+
+    }
+
+
     function speechForHole(
       hole
     ) {
 
       const score =
         round.holes[
-          String(hole)
+          String(
+            hole
+          )
         ];
 
 
-      if (!score) {
+      if (
+        !score
+      ) {
 
         return (
           `Hoyo ${hole} sin score.`
@@ -2447,7 +2611,9 @@
     ) {
 
       hole =
-        Number(hole);
+        Number(
+          hole
+        );
 
 
       return {
@@ -2474,11 +2640,15 @@
     ) {
 
       from =
-        Number(from);
+        Number(
+          from
+        );
 
 
       to =
-        Number(to);
+        Number(
+          to
+        );
 
 
       if (
@@ -2524,13 +2694,16 @@
       for (
         let hole =
           start;
-        hole <= end;
+        hole <=
+          end;
         hole++
       ) {
 
         if (
           round.holes[
-            String(hole)
+            String(
+              hole
+            )
           ]
         ) {
 
@@ -2546,7 +2719,8 @@
 
 
       if (
-        speeches.length === 0
+        speeches.length ===
+        0
       ) {
 
         return {
@@ -2591,7 +2765,8 @@
         !Array.isArray(
           holes
         ) ||
-        holes.length === 0
+        holes.length ===
+          0
       ) {
 
         return {
@@ -2678,14 +2853,29 @@
       args
     ) {
 
+      if (
+        !args ||
+        typeof args !==
+          "object"
+      ) {
+
+        return {
+
+          ok:
+            false,
+
+          speech:
+            "Comando no reconocido."
+
+        };
+
+      }
+
+
       switch (
         args.action
       ) {
 
-        /*
-         * ESTE CASE ERA EL
-         * ENLACE QUE FALTABA.
-         */
         case "setup_round":
 
           return setupRound(
@@ -2698,6 +2888,13 @@
           return recordScore(
             args.hole,
             args.gross
+          );
+
+
+        case "record_scores":
+
+          return recordScores(
+            args.scores
           );
 
 
@@ -2763,7 +2960,9 @@
       ) {
 
         return (
-          `${Math.abs(diff)} bajo par`
+          `${Math.abs(
+            diff
+          )} bajo par`
         );
 
       }
@@ -2783,7 +2982,8 @@
 
       if (
         totals.items
-          .length === 0
+          .length ===
+        0
       ) {
 
         return (
@@ -2823,7 +3023,8 @@
 
       while (
         row.children
-          .length > 1
+          .length >
+        1
       ) {
 
         row.removeChild(
@@ -2838,7 +3039,8 @@
     function appendCell(
       row,
       text,
-      className = ""
+      className =
+        ""
     ) {
 
       const cell =
@@ -2889,7 +3091,8 @@
 
 
       if (
-        strokes >= 2
+        strokes >=
+        2
       ) {
 
         return (
@@ -2900,7 +3103,8 @@
 
 
       if (
-        strokes === 1
+        strokes ===
+        1
       ) {
 
         return (
@@ -2951,14 +3155,9 @@
         );
 
 
-      /*
-       * El número HDCP siempre
-       * permanece visible.
-       *
-       * ×2 indica segundo golpe.
-       */
       if (
-        strokes >= 2
+        strokes >=
+        2
       ) {
 
         return (
@@ -3033,7 +3232,9 @@
 
           const score =
             round.holes[
-              String(number)
+              String(
+                number
+              )
             ];
 
 
@@ -3161,7 +3362,8 @@
       appendCell(
         grossRow,
 
-        registeredCount > 0
+        registeredCount >
+          0
           ? grossTotal
           : "—",
 
@@ -3172,7 +3374,8 @@
       appendCell(
         netRow,
 
-        registeredCount > 0
+        registeredCount >
+          0
           ? netTotal
           : "—",
 
@@ -3186,34 +3389,22 @@
 
       renderNineScorecard(
         FRONT,
-
         frontHoleRow,
-
         frontParRow,
-
         frontHcpRow,
-
         frontGrossRow,
-
         frontNetRow,
-
         "OUT"
       );
 
 
       renderNineScorecard(
         BACK,
-
         backHoleRow,
-
         backParRow,
-
         backHcpRow,
-
         backGrossRow,
-
         backNetRow,
-
         "IN"
       );
 
@@ -3228,7 +3419,8 @@
       scorecardTotalGross
         .textContent =
           total.items
-            .length > 0
+            .length >
+          0
             ? total.gross
             : "—";
 
@@ -3312,14 +3504,6 @@
       updateHeader();
 
 
-      /*
-       * Mostramos la tarjeta
-       * incluso antes del primer score.
-       *
-       * Una vez configurado el handicap,
-       * los golpes se ven inmediatamente
-       * en rojo.
-       */
       scoreSummary
         .classList
         .add(
@@ -3371,7 +3555,8 @@
 
 
       if (
-        count > 0
+        count >
+        0
       ) {
 
         statusEl
@@ -3385,6 +3570,12 @@
         statusEl
           .textContent =
             `Ronda lista · Handicap ${currentHandicap()}`;
+
+      } else {
+
+        statusEl
+          .textContent =
+            "Configura la ronda antes del primer score.";
 
       }
 
@@ -3424,7 +3615,8 @@
         if (
           data.course &&
           Array.isArray(
-            data.course.holes
+            data.course
+              .holes
           )
         ) {
 
@@ -3451,12 +3643,6 @@
       }
 
 
-      /*
-       * Seguridad:
-       *
-       * Esta versión solamente usa
-       * la tarjeta de El Pulté Blancas.
-       */
       course.name =
         "El Pulté";
 
@@ -3466,17 +3652,6 @@
 
 
       updateSummary();
-
-
-      if (
-        !round.configured
-      ) {
-
-        statusEl
-          .textContent =
-            "Configura la ronda antes del primer score.";
-
-      }
 
     }
 
@@ -3507,15 +3682,29 @@
     }
 
 
+    /*
+     * RESPUESTA DE TOOL
+     *
+     * 1. Marca primero que esperamos audio.
+     * 2. Envía function_call_output.
+     * 3. Solicita una única respuesta.
+     *
+     * El estado se fija ANTES de response.create
+     * para eliminar cualquier carrera de eventos.
+     */
     function sendToolOutput(
       call,
       result
     ) {
 
-      /*
-       * Devuelve el resultado
-       * a la llamada exacta.
-       */
+      waitingForToolAnswer =
+        true;
+
+
+      toolResponsePending =
+        true;
+
+
       sendEvent({
 
         type:
@@ -3542,12 +3731,6 @@
       });
 
 
-      /*
-       * El output de herramienta
-       * no genera por sí mismo
-       * la respuesta hablada.
-       * Solicitamos la respuesta.
-       */
       sendEvent({
 
         type:
@@ -3558,7 +3741,7 @@
 
           instructions:
             "Habla únicamente en español neutro. " +
-            "Pronuncia exactamente el campo speech " +
+            "Pronuncia exactamente una vez el campo speech " +
             "del resultado de la herramienta. " +
             "No añadas, quites, reformules, traduzcas " +
             "ni repitas absolutamente nada."
@@ -3566,10 +3749,6 @@
         }
 
       });
-
-
-      waitingForToolAnswer =
-        true;
 
     }
 
@@ -3590,7 +3769,14 @@
         )
       ) {
 
-        finishListening();
+        if (
+          !toolResponsePending
+        ) {
+
+          finishListening();
+
+        }
+
 
         return;
 
@@ -3608,23 +3794,21 @@
 
 
       /*
-       * Primer response.done:
-       * normalmente contiene
-       * la llamada de herramienta.
+       * RESPUESTA 1:
+       * llamada de herramienta.
        */
       if (
-        functionCalls
-          .length > 0
+        functionCalls.length >
+        0
       ) {
 
         /*
-         * EPG Caddy sólo debe
-         * generar una acción
-         * por comando.
+         * Una frase del jugador
+         * produce una sola acción.
          *
-         * Procesamos únicamente
-         * la primera para impedir
-         * duplicaciones accidentales.
+         * Para varios hoyos:
+         * record_scores contiene
+         * toda la tanda.
          */
         const call =
           functionCalls[0];
@@ -3683,9 +3867,12 @@
 
 
       /*
-       * Segundo response.done:
-       * corresponde a la respuesta
-       * hablada posterior a la herramienta.
+       * RESPUESTA 2:
+       * respuesta posterior
+       * al tool output.
+       *
+       * Sólo aquí damos
+       * por terminado el ciclo.
        */
       if (
         waitingForToolAnswer
@@ -3693,6 +3880,16 @@
 
         waitingForToolAnswer =
           false;
+
+
+        toolResponsePending =
+          false;
+
+
+        finishListening();
+
+
+        return;
 
       }
 
@@ -3723,6 +3920,7 @@
             event
           );
 
+
           return;
 
         }
@@ -3737,6 +3935,14 @@
             "Realtime error:",
             event
           );
+
+
+          waitingForToolAnswer =
+            false;
+
+
+          toolResponsePending =
+            false;
 
 
           finishListening();
@@ -3851,6 +4057,36 @@
     }
 
 
+    async function ensureAudioPlayback() {
+
+      if (
+        !audioElement
+      ) {
+
+        return;
+
+      }
+
+
+      try {
+
+        await audioElement
+          .play();
+
+      } catch (
+        error
+      ) {
+
+        console.warn(
+          "Audio playback:",
+          error
+        );
+
+      }
+
+    }
+
+
     async function ensureSession() {
 
       if (
@@ -3860,6 +4096,9 @@
         dc.readyState ===
           "open"
       ) {
+
+        await ensureAudioPlayback();
+
 
         return;
 
@@ -3888,10 +4127,6 @@
           .getAudioTracks()[0];
 
 
-      /*
-       * Micrófono apagado
-       * mientras se crea la sesión.
-       */
       micTrack.enabled =
         false;
 
@@ -3917,6 +4152,11 @@
 
       audioElement.volume =
         1;
+
+
+      audioElement.style
+        .display =
+          "none";
 
 
       document.body
@@ -3948,15 +4188,7 @@
           }
 
 
-          audioElement
-            .play()
-            .catch(
-              error =>
-                console.warn(
-                  "Audio autoplay:",
-                  error
-                )
-            );
+          ensureAudioPlayback();
 
         };
 
@@ -4004,6 +4236,14 @@
 
 
           listening =
+            false;
+
+
+          waitingForToolAnswer =
+            false;
+
+
+          toolResponsePending =
             false;
 
 
@@ -4070,6 +4310,7 @@
           ) {
 
             resolve();
+
 
             return;
 
@@ -4194,6 +4435,7 @@
 
             resolve();
 
+
             return;
 
           }
@@ -4225,6 +4467,9 @@
         true;
 
 
+      await ensureAudioPlayback();
+
+
       setMicEnabled(
         false
       );
@@ -4240,30 +4485,21 @@
           true;
 
 
-        if (
-          audioElement
-        ) {
-
-          audioElement
-            .play()
-            .catch(
-              () => {}
-            );
-
-        }
-
-
         await ensureSession();
+
+
+        /*
+         * Este play ocurre dentro
+         * del ciclo iniciado por
+         * el toque del usuario.
+         */
+        await ensureAudioPlayback();
 
 
         talkButton.disabled =
           false;
 
 
-        /*
-         * Segundo toque:
-         * cierre manual.
-         */
         if (
           listening
         ) {
@@ -4272,12 +4508,17 @@
             false
           );
 
+
           return;
 
         }
 
 
         waitingForToolAnswer =
+          false;
+
+
+        toolResponsePending =
           false;
 
 
@@ -4375,7 +4616,8 @@
 
         try {
 
-          audioElement.pause();
+          audioElement
+            .pause();
 
 
           audioElement
@@ -4406,6 +4648,10 @@
       waitingForToolAnswer =
         false;
 
+
+      toolResponsePending =
+        false;
+
     }
 
 
@@ -4421,16 +4667,6 @@
         .value =
           currentHandicap()
             ?? "";
-
-
-      courseInput
-        .value =
-          "El Pulté";
-
-
-      teesInput
-        .value =
-          "Blancas";
 
 
       setupOverlay
@@ -4464,14 +4700,6 @@
     }
 
 
-    /*
-     * NUEVA RONDA MANUAL.
-     *
-     * Aquí sí cerramos la
-     * conexión Realtime anterior,
-     * porque no estamos en medio
-     * de una tool call.
-     */
     function createNewRound() {
 
       const handicap =
@@ -4510,9 +4738,10 @@
       cleanupConnection();
 
 
-      localStorage.removeItem(
-        STORAGE_KEY
-      );
+      localStorage
+        .removeItem(
+          STORAGE_KEY
+        );
 
 
       round =
@@ -4550,7 +4779,8 @@
 
       if (
         registeredHoles()
-          .length > 0
+          .length >
+        0
       ) {
 
         const confirmed =
