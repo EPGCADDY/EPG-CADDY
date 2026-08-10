@@ -17,9 +17,17 @@
       box-sizing: border-box;
     }
 
+    html,
     body {
+      width: 100%;
       margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    body {
       min-height: 100vh;
+
       font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -44,7 +52,11 @@
       width: 100%;
       max-width: 520px;
       min-height: 100vh;
-      padding: 28px 22px 40px;
+
+      padding:
+        28px
+        14px
+        40px;
 
       display: flex;
       flex-direction: column;
@@ -57,22 +69,27 @@
 
     .brand h1 {
       margin: 0;
+
       font-size: 36px;
       letter-spacing: 2px;
     }
 
     .brand p {
       margin: 8px 0 0;
+
       color: #a8b7af;
+
       font-size: 15px;
     }
 
     .course {
       margin-top: 35px;
+
       padding: 20px;
 
       border:
-        1px solid rgba(255,255,255,.12);
+        1px solid
+        rgba(255,255,255,.12);
 
       border-radius: 18px;
 
@@ -87,21 +104,26 @@
 
     .course-info {
       margin-top: 7px;
+
       color: #b8c4be;
     }
 
     .status {
       margin-top: 18px;
+
       min-height: 24px;
 
       text-align: center;
 
       color: #b8c4be;
+
       font-size: 14px;
     }
 
     .controls {
       flex: 1;
+
+      width: 100%;
 
       display: flex;
       flex-direction: column;
@@ -116,10 +138,13 @@
       width: 170px;
       height: 170px;
 
+      flex-shrink: 0;
+
       border-radius: 50%;
 
       border:
-        1px solid rgba(255,255,255,.18);
+        1px solid
+        rgba(255,255,255,.18);
 
       background: #2d8c5a;
 
@@ -129,9 +154,11 @@
       font-weight: 700;
 
       box-shadow:
-        0 15px 45px rgba(0,0,0,.4);
+        0 15px 45px
+        rgba(0,0,0,.4);
 
       cursor: pointer;
+
       touch-action: manipulation;
     }
 
@@ -160,7 +187,7 @@
 
       display: none;
 
-      padding: 18px;
+      padding: 14px 10px;
 
       border-radius: 16px;
 
@@ -168,7 +195,10 @@
         rgba(255,255,255,.06);
 
       border:
-        1px solid rgba(255,255,255,.1);
+        1px solid
+        rgba(255,255,255,.1);
+
+      overflow: hidden;
     }
 
     .score-summary.visible {
@@ -177,22 +207,27 @@
 
     .score-summary h2 {
       margin: 0 0 12px;
+
       font-size: 18px;
     }
 
     .summary-grid {
+      width: 100%;
+
       display: grid;
 
       grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3, minmax(0, 1fr));
 
-      gap: 10px;
+      gap: 6px;
 
       text-align: center;
     }
 
     .summary-grid > div {
-      padding: 10px 5px;
+      min-width: 0;
+
+      padding: 9px 3px;
 
       border-radius: 10px;
 
@@ -205,7 +240,7 @@
 
       color: #91a099;
 
-      font-size: 12px;
+      font-size: 11px;
 
       margin-bottom: 6px;
     }
@@ -213,12 +248,14 @@
     .value {
       display: block;
 
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
 
-      line-height: 1.5;
+      line-height: 1.45;
 
       white-space: pre-line;
+
+      overflow-wrap: anywhere;
     }
 
     .scorecard {
@@ -226,7 +263,7 @@
 
       margin-top: 18px;
 
-      padding: 16px 12px;
+      padding: 14px 6px;
 
       border-radius: 14px;
 
@@ -234,7 +271,10 @@
         rgba(255,255,255,.04);
 
       border:
-        1px solid rgba(255,255,255,.08);
+        1px solid
+        rgba(255,255,255,.08);
+
+      overflow: hidden;
     }
 
     .scorecard-title {
@@ -250,9 +290,11 @@
 
     .nine-title {
       margin:
-        14px 0 7px;
+        14px
+        0
+        7px;
 
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
 
       color: #91a099;
@@ -268,16 +310,16 @@
 
     .score-table-wrap {
       width: 100%;
-      overflow-x: auto;
+
+      overflow: hidden;
     }
 
     .score-table {
       width: 100%;
 
-      min-width: 430px;
-
       border-collapse: separate;
-      border-spacing: 3px;
+
+      border-spacing: 2px;
 
       table-layout: fixed;
 
@@ -286,16 +328,18 @@
 
     .score-table th,
     .score-table td {
-      height: 31px;
+      height: 29px;
 
-      padding: 3px 2px;
+      padding: 2px 0;
 
-      border-radius: 5px;
+      border-radius: 4px;
 
-      font-size: 12px;
+      font-size: 10px;
 
       background:
         rgba(255,255,255,.05);
+
+      overflow: hidden;
     }
 
     .score-table th {
@@ -305,13 +349,15 @@
     }
 
     .score-table .row-label {
-      width: 48px;
+      width: 42px;
 
       text-align: left;
 
-      padding-left: 5px;
+      padding-left: 3px;
 
       color: #9caaa3;
+
+      font-size: 10px;
 
       font-weight: 700;
 
@@ -319,7 +365,9 @@
     }
 
     .score-table .total-column {
-      width: 45px;
+      width: 34px;
+
+      font-size: 9px;
 
       font-weight: 700;
 
@@ -328,7 +376,7 @@
     }
 
     .score-table .gross-cell {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 700;
     }
 
@@ -338,7 +386,8 @@
       padding-top: 11px;
 
       border-top:
-        1px solid rgba(255,255,255,.08);
+        1px solid
+        rgba(255,255,255,.08);
 
       display: flex;
 
@@ -350,6 +399,7 @@
 
     .scorecard-total-label {
       color: #91a099;
+
       font-weight: 700;
     }
 
@@ -359,14 +409,20 @@
     }
 
     #newRoundButton {
-      margin-top: 18px;
+      display: block;
+
+      margin:
+        18px
+        auto
+        0;
 
       border:
-        1px solid rgba(255,255,255,.15);
+        1px solid
+        rgba(255,255,255,.15);
 
       border-radius: 10px;
 
-      padding: 9px 14px;
+      padding: 10px 16px;
 
       background:
         rgba(255,255,255,.04);
@@ -374,6 +430,10 @@
       color: #9daca4;
 
       font-size: 12px;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
     }
 
     footer {
@@ -384,6 +444,46 @@
       font-size: 12px;
 
       padding-top: 15px;
+    }
+
+    @media (max-width: 390px) {
+      .app {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .score-summary {
+        padding-left: 7px;
+        padding-right: 7px;
+      }
+
+      .scorecard {
+        padding-left: 3px;
+        padding-right: 3px;
+      }
+
+      .score-table {
+        border-spacing: 1px;
+      }
+
+      .score-table .row-label {
+        width: 38px;
+
+        font-size: 9px;
+      }
+
+      .score-table .total-column {
+        width: 31px;
+      }
+
+      .score-table th,
+      .score-table td {
+        font-size: 9px;
+      }
+
+      .score-table .gross-cell {
+        font-size: 11px;
+      }
     }
   </style>
 </head>
@@ -519,6 +619,7 @@
             Primera Vuelta
           </div>
 
+
           <div class="score-table-wrap">
 
             <table class="score-table">
@@ -547,6 +648,7 @@
           <div class="nine-title">
             Segunda Vuelta
           </div>
+
 
           <div class="score-table-wrap">
 
@@ -615,7 +717,6 @@
     const STORAGE_KEY =
       "epg-caddy-current-round-v1";
 
-
     const GAME_HANDICAP = 14;
 
 
@@ -656,7 +757,6 @@
 
     const FRONT =
       [1,2,3,4,5,6,7,8,9];
-
 
     const BACK =
       [10,11,12,13,14,15,16,17,18];
@@ -718,22 +818,21 @@
         FALLBACK_COURSE
       );
 
-
     let pc = null;
-
     let dc = null;
 
     let localStream = null;
-
     let micTrack = null;
 
     let audioElement = null;
 
     let connected = false;
-
     let listening = false;
 
     let waitingForToolAnswer = false;
+    let waitingForAudioFinish = false;
+
+    let responseInProgress = false;
 
 
     function emptyRound() {
@@ -746,7 +845,8 @@
 
         tees: "Blancas",
 
-        handicap: GAME_HANDICAP,
+        handicap:
+          GAME_HANDICAP,
 
         holes: {},
 
@@ -772,17 +872,14 @@
             STORAGE_KEY
           );
 
-
         if (!raw) {
 
           return emptyRound();
 
         }
 
-
         const parsed =
           JSON.parse(raw);
-
 
         if (
           !parsed ||
@@ -794,7 +891,6 @@
 
         }
 
-
         return parsed;
 
       } catch (error) {
@@ -803,7 +899,6 @@
           "No se pudo leer la ronda:",
           error
         );
-
 
         return emptyRound();
 
@@ -821,12 +916,10 @@
       round.updatedAt =
         new Date().toISOString();
 
-
       localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(round)
       );
-
 
       updateSummary();
 
@@ -856,9 +949,8 @@
 
       }
 
-
       return (
-        definition.hcp <=
+        Number(definition.hcp) <=
         GAME_HANDICAP
       )
         ? 1
@@ -890,41 +982,36 @@
           )
           .filter(Boolean);
 
-
       const gross =
         items.reduce(
           (sum, item) =>
-            sum + item.gross,
+            sum +
+            Number(item.gross),
           0
         );
-
 
       const net =
         items.reduce(
           (sum, item) =>
-            sum + item.net,
+            sum +
+            Number(item.net),
           0
         );
-
 
       const par =
         items.reduce(
           (sum, item) =>
-            sum + item.par,
+            sum +
+            Number(item.par),
           0
         );
-
 
       return {
 
         items,
-
         gross,
-
         net,
-
         par,
-
         diff:
           net - par
 
@@ -938,7 +1025,6 @@
       const items =
         registeredHoles();
 
-
       return {
 
         items,
@@ -946,21 +1032,24 @@
         gross:
           items.reduce(
             (sum, item) =>
-              sum + item.gross,
+              sum +
+              Number(item.gross),
             0
           ),
 
         net:
           items.reduce(
             (sum, item) =>
-              sum + item.net,
+              sum +
+              Number(item.net),
             0
           ),
 
         par:
           items.reduce(
             (sum, item) =>
-              sum + item.par,
+              sum +
+              Number(item.par),
             0
           )
 
@@ -979,7 +1068,6 @@
 
       }
 
-
       if (diff < 0) {
 
         return (
@@ -987,7 +1075,6 @@
         );
 
       }
-
 
       return (
         `${diff} sobre par`
@@ -1006,7 +1093,6 @@
 
       }
 
-
       if (diff < 0) {
 
         return (
@@ -1014,7 +1100,6 @@
         );
 
       }
-
 
       return (
         `${diff} sobre par`
@@ -1066,10 +1151,9 @@
       const all =
         allRegisteredTotals();
 
-
       const accumulatedDiff =
-        all.net - all.par;
-
+        all.net -
+        all.par;
 
       const lines = [
 
@@ -1103,10 +1187,8 @@
       const frontNow =
         isComplete(FRONT);
 
-
       const backNow =
         isComplete(BACK);
-
 
       const totalNow =
         registeredHoles()
@@ -1123,7 +1205,6 @@
             FRONT
           );
 
-
         lines.push(
           "",
           "Primera Vuelta",
@@ -1131,13 +1212,22 @@
           `Neto ${front.net}`,
           `Resultado: ${
             aggregateResult(
-              front.net - 36
+              front.net -
+              front.par
             )
           }`
         );
 
       }
 
+
+      /*
+        IMPORTANTE:
+
+        Al terminar el hoyo 18,
+        la Segunda Vuelta se agrega
+        ANTES que el Total de la ronda.
+      */
 
       if (
         !before.back &&
@@ -1149,7 +1239,6 @@
             BACK
           );
 
-
         lines.push(
           "",
           "Segunda Vuelta",
@@ -1157,7 +1246,8 @@
           `Neto ${back.net}`,
           `Resultado: ${
             aggregateResult(
-              back.net - 36
+              back.net -
+              back.par
             )
           }`
         );
@@ -1176,15 +1266,15 @@
             ...BACK
           ]);
 
-
         lines.push(
           "",
-          "Total",
+          "Total de la Ronda",
           `Gross ${total.gross}`,
           `Neto ${total.net}`,
           `Resultado: ${
             aggregateResult(
-              total.net - 72
+              total.net -
+              total.par
             )
           }`
         );
@@ -1246,9 +1336,7 @@
 
 
       const definition =
-        holeDefinition(
-          hole
-        );
+        holeDefinition(hole);
 
 
       if (!definition) {
@@ -1317,10 +1405,8 @@
         String(hole)
       ] = score;
 
-
       round.lastHole =
         hole;
-
 
       saveRound();
 
@@ -1390,7 +1476,6 @@
       hole =
         Number(hole);
 
-
       return {
 
         ok: true,
@@ -1443,13 +1528,11 @@
           to
         );
 
-
       const end =
         Math.max(
           from,
           to
         );
-
 
       const speeches = [];
 
@@ -1665,7 +1748,6 @@
 
       }
 
-
       if (diff < 0) {
 
         return (
@@ -1673,7 +1755,6 @@
         );
 
       }
-
 
       return (
         `${diff} sobre par`
@@ -1744,10 +1825,8 @@
           "td"
         );
 
-
       cell.textContent =
         text;
-
 
       if (className) {
 
@@ -1755,7 +1834,6 @@
           className;
 
       }
-
 
       row.appendChild(
         cell
@@ -1786,7 +1864,6 @@
 
 
       let grossTotal = 0;
-
       let registeredCount = 0;
 
 
@@ -1797,7 +1874,6 @@
             holeDefinition(
               number
             );
-
 
           const score =
             round.holes[
@@ -1858,7 +1934,6 @@
               holeDefinition(
                 number
               );
-
 
             return (
               sum +
@@ -1961,12 +2036,10 @@
           FRONT
         );
 
-
       const back =
         totalsForHoles(
           BACK
         );
-
 
       const total =
         totalsForHoles([
@@ -1981,13 +2054,11 @@
           9
         );
 
-
       back9El.textContent =
         visualSummary(
           back,
           9
         );
-
 
       totalEl.textContent =
         visualSummary(
@@ -2068,9 +2139,7 @@
 
       } catch (error) {
 
-        console.error(
-          error
-        );
+        console.error(error);
 
 
         course =
@@ -2127,6 +2196,29 @@
       result
     ) {
 
+      waitingForToolAnswer =
+        true;
+
+      waitingForAudioFinish =
+        true;
+
+      responseInProgress =
+        true;
+
+
+      /*
+        En cuanto ya tenemos el comando,
+        cerramos el micrófono para impedir
+        que el audio de EPG Caddy vuelva
+        a entrar por el micrófono.
+      */
+
+      setMicEnabled(
+        false,
+        false
+      );
+
+
       sendEvent({
 
         type:
@@ -2160,15 +2252,14 @@
           instructions:
             "Pronuncia exactamente el campo speech " +
             "del resultado de la herramienta. " +
+            "Habla exclusivamente en español neutro. " +
+            "Pronuncia todos los números en español. " +
+            "Conserva la misma voz durante toda la respuesta. " +
             "No añadas, quites, reformules ni repitas nada."
 
         }
 
       });
-
-
-      waitingForToolAnswer =
-        true;
 
     }
 
@@ -2185,7 +2276,18 @@
         !Array.isArray(output)
       ) {
 
-        finishListening();
+        /*
+          No cerramos nada aquí
+          si todavía esperamos audio.
+        */
+
+        if (
+          !waitingForAudioFinish
+        ) {
+
+          finishListening();
+
+        }
 
         return;
 
@@ -2261,6 +2363,12 @@
       }
 
 
+      /*
+        Este response.done corresponde
+        normalmente a la respuesta hablada
+        después de la herramienta.
+      */
+
       if (
         waitingForToolAnswer
       ) {
@@ -2270,6 +2378,23 @@
 
       }
 
+
+      if (
+        waitingForAudioFinish
+      ) {
+
+        /*
+          Esperamos el evento de audio.done.
+          No finalizamos prematuramente.
+        */
+
+        return;
+
+      }
+
+
+      responseInProgress =
+        false;
 
       finishListening();
 
@@ -2290,12 +2415,54 @@
 
         if (
           event.type ===
+          "response.created"
+        ) {
+
+          responseInProgress =
+            true;
+
+          return;
+
+        }
+
+
+        if (
+          event.type ===
           "response.done"
         ) {
 
           handleResponseDone(
             event
           );
+
+          return;
+
+        }
+
+
+        /*
+          La API puede enviar cualquiera
+          de estos eventos dependiendo
+          de la versión/configuración.
+        */
+
+        if (
+          event.type ===
+            "response.audio.done" ||
+          event.type ===
+            "response.output_audio.done"
+        ) {
+
+          waitingForAudioFinish =
+            false;
+
+          waitingForToolAnswer =
+            false;
+
+          responseInProgress =
+            false;
+
+          finishListening();
 
           return;
 
@@ -2311,6 +2478,16 @@
             "Realtime error:",
             event
           );
+
+
+          waitingForToolAnswer =
+            false;
+
+          waitingForAudioFinish =
+            false;
+
+          responseInProgress =
+            false;
 
 
           finishListening();
@@ -2330,7 +2507,8 @@
 
 
     function setMicEnabled(
-      enabled
+      enabled,
+      refresh = true
     ) {
 
       if (micTrack) {
@@ -2376,7 +2554,11 @@
             : "Iniciar Caddy";
 
 
-        updateSummary();
+        if (refresh) {
+
+          updateSummary();
+
+        }
 
 
         if (
@@ -2450,13 +2632,34 @@
         await navigator
           .mediaDevices
           .getUserMedia({
-            audio: true
+            audio: {
+
+              echoCancellation: true,
+
+              noiseSuppression: true,
+
+              autoGainControl: true
+
+            }
           });
 
 
       micTrack =
         localStream
           .getAudioTracks()[0];
+
+
+      /*
+        MUY IMPORTANTE:
+
+        Al crear la conexión dejamos
+        inicialmente el micrófono apagado.
+
+        Sólo startTalking() lo habilita.
+      */
+
+      micTrack.enabled =
+        false;
 
 
       pc =
@@ -2472,12 +2675,39 @@
       audioElement.autoplay =
         true;
 
+      audioElement.playsInline =
+        true;
+
 
       pc.ontrack =
         event => {
 
           audioElement.srcObject =
             event.streams[0];
+
+
+          const playPromise =
+            audioElement.play();
+
+
+          if (
+            playPromise &&
+            typeof playPromise.catch ===
+              "function"
+          ) {
+
+            playPromise.catch(
+              error => {
+
+                console.warn(
+                  "Audio autoplay:",
+                  error
+                );
+
+              }
+            );
+
+          }
 
         };
 
@@ -2519,8 +2749,17 @@
         () => {
 
           connected = false;
-
           listening = false;
+
+          waitingForToolAnswer =
+            false;
+
+          waitingForAudioFinish =
+            false;
+
+          responseInProgress =
+            false;
+
 
           talkButton
             .classList
@@ -2540,11 +2779,18 @@
         "connectionstatechange",
         () => {
 
+          if (!pc) {
+
+            return;
+
+          }
+
+
           if (
-            pc &&
             [
               "failed",
-              "closed"
+              "closed",
+              "disconnected"
             ].includes(
               pc.connectionState
             )
@@ -2687,7 +2933,6 @@
               timeout
             );
 
-
             resolve();
 
             return;
@@ -2703,7 +2948,6 @@
                 timeout
               );
 
-
               resolve();
 
             },
@@ -2718,7 +2962,6 @@
 
       connected = true;
 
-
       setMicEnabled(
         false
       );
@@ -2729,6 +2972,22 @@
     async function startTalking() {
 
       try {
+
+        /*
+          Mientras EPG Caddy está hablando
+          no permitimos abrir nuevamente
+          el micrófono.
+      */
+
+        if (
+          responseInProgress ||
+          waitingForAudioFinish
+        ) {
+
+          return;
+
+        }
+
 
         talkButton.disabled =
           true;
@@ -2747,7 +3006,6 @@
             false
           );
 
-
           return;
 
         }
@@ -2756,6 +3014,18 @@
         waitingForToolAnswer =
           false;
 
+        waitingForAudioFinish =
+          false;
+
+        responseInProgress =
+          false;
+
+
+        /*
+          El usuario controla el comienzo.
+          Ya no cerramos el micrófono por
+          un evento intermedio de Realtime.
+      */
 
         setMicEnabled(
           true
@@ -2763,9 +3033,7 @@
 
       } catch (error) {
 
-        console.error(
-          error
-        );
+        console.error(error);
 
 
         talkButton.disabled =
@@ -2798,7 +3066,6 @@
 
 
       localStream = null;
-
       micTrack = null;
 
 
@@ -2832,6 +3099,13 @@
 
       if (audioElement) {
 
+        try {
+
+          audioElement.pause();
+
+        } catch {}
+
+
         audioElement.srcObject =
           null;
 
@@ -2841,8 +3115,16 @@
       audioElement = null;
 
       connected = false;
-
       listening = false;
+
+      waitingForToolAnswer =
+        false;
+
+      waitingForAudioFinish =
+        false;
+
+      responseInProgress =
+        false;
 
     }
 
@@ -2863,6 +3145,16 @@
       }
 
 
+      /*
+        Cerramos también la sesión Realtime.
+
+        Así la nueva ronda comienza con
+        tarjeta Y conversación nuevas.
+      */
+
+      cleanupConnection();
+
+
       round =
         emptyRound();
 
@@ -2880,6 +3172,24 @@
         .remove(
           "visible"
         );
+
+
+      updateScorecard();
+
+
+      talkButton.disabled =
+        false;
+
+
+      talkButton
+        .classList
+        .remove(
+          "active"
+        );
+
+
+      talkButton.textContent =
+        "Iniciar Caddy";
 
 
       statusEl.textContent =
