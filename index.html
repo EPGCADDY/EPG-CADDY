@@ -2,48 +2,19 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#07110d" />
-
   <title>EPG Caddy</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
     body {
-      width: 100%;
       margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
-
-    body {
       min-height: 100vh;
-
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-      background:
-        radial-gradient(
-          circle at top,
-          #17372a 0%,
-          #0b1b14 35%,
-          #050a08 75%
-        );
-
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #17372a 0%, #0b1b14 35%, #050a08 75%);
       color: white;
-
       display: flex;
       justify-content: center;
     }
@@ -52,398 +23,376 @@
       width: 100%;
       max-width: 520px;
       min-height: 100vh;
-
       padding:
-        28px
+        max(28px, env(safe-area-inset-top))
         14px
-        40px;
-
+        max(40px, env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
     }
 
     .brand {
       text-align: center;
-      margin-top: 30px;
+      margin-top: 20px;
     }
 
     .brand h1 {
       margin: 0;
-
-      font-size: 36px;
+      font-size: 32px;
       letter-spacing: 2px;
     }
 
     .brand p {
       margin: 8px 0 0;
-
       color: #a8b7af;
-
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .course {
-      margin-top: 35px;
-
-      padding: 20px;
-
-      border:
-        1px solid
-        rgba(255,255,255,.12);
-
+      margin-top: 28px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.12);
       border-radius: 18px;
-
-      background:
-        rgba(255,255,255,.05);
+      background: rgba(255,255,255,.05);
     }
 
     .course-name {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 700;
     }
 
     .course-info {
       margin-top: 7px;
-
       color: #b8c4be;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .player-info {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: #d7e0db;
+      font-size: 13px;
+      line-height: 1.55;
     }
 
     .status {
       margin-top: 18px;
-
       min-height: 24px;
-
       text-align: center;
-
       color: #b8c4be;
-
       font-size: 14px;
     }
 
     .controls {
       flex: 1;
-
-      width: 100%;
-
       display: flex;
       flex-direction: column;
-
-      justify-content: center;
       align-items: center;
-
-      padding: 35px 0;
+      padding: 30px 0;
     }
 
     #talkButton {
       width: 170px;
       height: 170px;
-
-      flex-shrink: 0;
-
+      flex: 0 0 170px;
       border-radius: 50%;
-
-      border:
-        1px solid
-        rgba(255,255,255,.18);
-
+      border: 1px solid rgba(255,255,255,.18);
       background: #2d8c5a;
-
       color: white;
-
       font-size: 20px;
       font-weight: 700;
-
-      box-shadow:
-        0 15px 45px
-        rgba(0,0,0,.4);
-
+      box-shadow: 0 15px 45px rgba(0,0,0,.4);
       cursor: pointer;
-
       touch-action: manipulation;
     }
 
-    #talkButton:active {
-      transform: scale(.97);
-    }
-
-    #talkButton.active {
-      background: #b64242;
-    }
+    #talkButton:active { transform: scale(.97); }
+    #talkButton.active { background: #b64242; }
 
     .instruction {
       margin-top: 22px;
-
       color: #aebbb4;
-
       text-align: center;
-
       line-height: 1.5;
+      font-size: 14px;
     }
 
     .score-summary {
       width: 100%;
-
-      margin-top: 25px;
-
+      margin-top: 30px;
       display: none;
-
-      padding: 14px 10px;
-
-      border-radius: 16px;
-
-      background:
-        rgba(255,255,255,.06);
-
-      border:
-        1px solid
-        rgba(255,255,255,.1);
-
-      overflow: hidden;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
     }
 
-    .score-summary.visible {
-      display: block;
-    }
+    .score-summary.visible { display: block; }
 
     .score-summary h2 {
-      margin: 0 0 12px;
-
-      font-size: 18px;
+      margin: 0 0 14px;
+      font-size: 20px;
     }
 
     .summary-grid {
-      width: 100%;
-
       display: grid;
-
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-      gap: 6px;
-
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
       text-align: center;
     }
 
     .summary-grid > div {
       min-width: 0;
-
-      padding: 9px 3px;
-
-      border-radius: 10px;
-
-      background:
-        rgba(255,255,255,.05);
+      padding: 11px 4px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.05);
     }
 
     .label {
       display: block;
-
       color: #91a099;
-
       font-size: 11px;
-
       margin-bottom: 6px;
     }
 
     .value {
       display: block;
-
       font-size: 12px;
       font-weight: 700;
-
-      line-height: 1.45;
-
+      line-height: 1.5;
       white-space: pre-line;
-
-      overflow-wrap: anywhere;
     }
 
     .scorecard {
       width: 100%;
-
       margin-top: 18px;
-
-      padding: 14px 6px;
-
-      border-radius: 14px;
-
-      background:
-        rgba(255,255,255,.04);
-
-      border:
-        1px solid
-        rgba(255,255,255,.08);
-
+      padding: 15px 10px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
       overflow: hidden;
     }
 
     .scorecard-title {
-      margin-bottom: 12px;
-
+      margin-bottom: 14px;
       text-align: center;
-
-      font-size: 14px;
-      font-weight: 700;
-
+      font-size: 16px;
+      font-weight: 800;
       color: #d5ded9;
     }
 
     .nine-title {
-      margin:
-        14px
-        0
-        7px;
-
-      font-size: 11px;
-      font-weight: 700;
-
+      margin: 16px 0 8px;
+      font-size: 12px;
+      font-weight: 800;
       color: #91a099;
-
       text-transform: uppercase;
-
-      letter-spacing: .5px;
+      letter-spacing: .6px;
     }
 
-    .nine-title:first-of-type {
-      margin-top: 0;
-    }
+    .nine-title:first-of-type { margin-top: 0; }
 
     .score-table-wrap {
       width: 100%;
-
       overflow: hidden;
     }
 
     .score-table {
       width: 100%;
-
       border-collapse: separate;
-
       border-spacing: 2px;
-
       table-layout: fixed;
-
       text-align: center;
     }
 
     .score-table th,
     .score-table td {
-      height: 29px;
-
-      padding: 2px 0;
-
-      border-radius: 4px;
-
-      font-size: 10px;
-
-      background:
-        rgba(255,255,255,.05);
-
+      height: 34px;
+      padding: 2px 1px;
+      border-radius: 5px;
+      font-size: 11px;
+      background: rgba(255,255,255,.055);
       overflow: hidden;
     }
 
     .score-table th {
       color: #9caaa3;
-
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .score-table .row-label {
-      width: 42px;
-
+      width: 52px;
       text-align: left;
-
-      padding-left: 3px;
-
+      padding-left: 2px;
       color: #9caaa3;
-
       font-size: 10px;
-
-      font-weight: 700;
-
+      font-weight: 800;
       background: transparent;
     }
 
     .score-table .total-column {
-      width: 34px;
-
-      font-size: 9px;
-
-      font-weight: 700;
-
-      background:
-        rgba(255,255,255,.09);
+      width: 42px;
+      font-weight: 800;
+      background: rgba(255,255,255,.10);
     }
 
-    .score-table .gross-cell {
+    .score-table .gross-cell,
+    .score-table .net-cell {
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
+    }
+
+    /*
+      ROJO = HOYO DONDE EL JUGADOR RECIBE GOLPE.
+
+      Handicap 0: ninguno.
+      Handicap 14: índices 1-14.
+      Handicap 18: todos.
+      Handicap 20: todos reciben uno y
+      los índices 1 y 2 reciben dos.
+    */
+    .score-table .hcp-stroke-cell {
+      color: #ff5c5c;
+      background: rgba(214, 50, 50, .20);
+      border: 1px solid rgba(255, 92, 92, .42);
+      font-weight: 900;
+    }
+
+    .score-table .hcp-double-cell {
+      color: #ffb0b0;
+      background: rgba(214, 50, 50, .34);
+      border: 1px solid rgba(255, 92, 92, .70);
+      font-weight: 900;
     }
 
     .scorecard-total {
-      margin-top: 12px;
-
-      padding-top: 11px;
-
-      border-top:
-        1px solid
-        rgba(255,255,255,.08);
-
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.08);
       display: flex;
-
       justify-content: space-between;
       align-items: center;
-
       font-size: 13px;
     }
 
     .scorecard-total-label {
       color: #91a099;
-
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .scorecard-total-value {
-      font-size: 17px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 800;
     }
 
     #newRoundButton {
-      display: block;
-
-      margin:
-        18px
-        auto
-        0;
-
-      border:
-        1px solid
-        rgba(255,255,255,.15);
-
+      margin-top: 18px;
+      border: 1px solid rgba(255,255,255,.15);
       border-radius: 10px;
-
-      padding: 10px 16px;
-
-      background:
-        rgba(255,255,255,.04);
-
-      color: #9daca4;
-
+      padding: 10px 15px;
+      background: rgba(255,255,255,.04);
+      color: #d2ddd7;
       font-size: 12px;
-
       cursor: pointer;
-
-      touch-action: manipulation;
     }
 
     footer {
       text-align: center;
-
       color: #65736c;
-
       font-size: 12px;
-
       padding-top: 15px;
+    }
+
+    .setup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(2,8,5,.94);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .setup-overlay.visible { display: flex; }
+
+    .setup-card {
+      width: 100%;
+      max-width: 440px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 22px;
+      border-radius: 20px;
+      background: #102219;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+
+    .setup-card h2 {
+      margin: 0 0 6px;
+      font-size: 23px;
+    }
+
+    .setup-card p {
+      margin: 0 0 20px;
+      color: #9fafa6;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-top: 14px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      color: #b8c5be;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 13px 12px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 11px;
+      outline: none;
+      background: rgba(255,255,255,.06);
+      color: white;
+      font-size: 16px;
+    }
+
+    .field input:focus {
+      border-color: #45a974;
+    }
+
+    .setup-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .setup-actions button {
+      flex: 1;
+      padding: 13px 10px;
+      border-radius: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    #cancelSetupButton {
+      border: 1px solid rgba(255,255,255,.12);
+      background: transparent;
+      color: #aebbb4;
+    }
+
+    #startRoundButton {
+      border: 0;
+      background: #2d8c5a;
+      color: white;
     }
 
     @media (max-width: 390px) {
@@ -452,38 +401,24 @@
         padding-right: 10px;
       }
 
-      .score-summary {
+      .score-summary { padding: 12px; }
+
+      .scorecard {
         padding-left: 7px;
         padding-right: 7px;
       }
 
-      .scorecard {
-        padding-left: 3px;
-        padding-right: 3px;
-      }
-
-      .score-table {
-        border-spacing: 1px;
-      }
-
-      .score-table .row-label {
-        width: 38px;
-
-        font-size: 9px;
-      }
-
-      .score-table .total-column {
-        width: 31px;
-      }
+      .score-table { border-spacing: 1px; }
 
       .score-table th,
-      .score-table td {
+      .score-table td { font-size: 10px; }
+
+      .score-table .row-label {
+        width: 47px;
         font-size: 9px;
       }
 
-      .score-table .gross-cell {
-        font-size: 11px;
-      }
+      .score-table .total-column { width: 38px; }
     }
   </style>
 </head>
@@ -493,137 +428,75 @@
   <main class="app">
 
     <header class="brand">
-
       <h1>EPG CADDY</h1>
-
-      <p>
-        Tu caddie profesional de golf por voz
-      </p>
-
+      <p>Tu caddie profesional de golf por voz</p>
     </header>
-
 
     <section class="course">
 
-      <div
-        class="course-name"
-        id="courseName"
-      >
+      <div class="course-name" id="courseName">
         El Pulté
       </div>
 
-      <div
-        class="course-info"
-        id="courseInfo"
-      >
+      <div class="course-info" id="courseInfo">
         Blancas · Par 72 · 18 hoyos
+      </div>
+
+      <div class="player-info" id="playerInfo">
+        Handicap 0
       </div>
 
     </section>
 
-
-    <div
-      class="status"
-      id="status"
-    >
+    <div class="status" id="status">
       Preparando EPG Caddy…
     </div>
 
-
     <section class="controls">
 
-      <button
-        id="talkButton"
-        type="button"
-      >
+      <button id="talkButton" type="button">
         Iniciar Caddy
       </button>
 
-
       <div class="instruction">
-
-        Toca una vez y di:
-        “Hoyo 5, 3”
-
+        Toca una vez y di: “Hoyo 5, 3”
       </div>
 
+      <section class="score-summary" id="scoreSummary">
 
-      <section
-        class="score-summary"
-        id="scoreSummary"
-      >
-
-        <h2>Ronda guardada</h2>
-
+        <h2>CURRENT ROUND</h2>
 
         <div class="summary-grid">
 
           <div>
-
-            <span class="label">
-              Primera
-            </span>
-
-            <span
-              class="value"
-              id="front9"
-            >
-              —
-            </span>
-
+            <span class="label">Primera</span>
+            <span class="value" id="front9">—</span>
           </div>
 
-
           <div>
-
-            <span class="label">
-              Segunda
-            </span>
-
-            <span
-              class="value"
-              id="back9"
-            >
-              —
-            </span>
-
+            <span class="label">Segunda</span>
+            <span class="value" id="back9">—</span>
           </div>
 
-
           <div>
-
-            <span class="label">
-              Total
-            </span>
-
-            <span
-              class="value"
-              id="total"
-            >
-              —
-            </span>
-
+            <span class="label">Total</span>
+            <span class="value" id="total">—</span>
           </div>
 
         </div>
 
-
         <section class="scorecard">
 
           <div class="scorecard-title">
-            Tarjeta Gross
+            SCORECARD
           </div>
-
 
           <div class="nine-title">
             Primera Vuelta
           </div>
 
-
           <div class="score-table-wrap">
-
             <table class="score-table">
-
               <tbody>
 
                 <tr id="frontHoleRow">
@@ -634,26 +507,28 @@
                   <th class="row-label">Par</th>
                 </tr>
 
+                <tr id="frontHcpRow">
+                  <th class="row-label">HDCP</th>
+                </tr>
+
                 <tr id="frontGrossRow">
-                  <th class="row-label">Gross</th>
+                  <th class="row-label">GROSS</th>
+                </tr>
+
+                <tr id="frontNetRow">
+                  <th class="row-label">NETO</th>
                 </tr>
 
               </tbody>
-
             </table>
-
           </div>
-
 
           <div class="nine-title">
             Segunda Vuelta
           </div>
 
-
           <div class="score-table-wrap">
-
             <table class="score-table">
-
               <tbody>
 
                 <tr id="backHoleRow">
@@ -664,16 +539,21 @@
                   <th class="row-label">Par</th>
                 </tr>
 
+                <tr id="backHcpRow">
+                  <th class="row-label">HDCP</th>
+                </tr>
+
                 <tr id="backGrossRow">
-                  <th class="row-label">Gross</th>
+                  <th class="row-label">GROSS</th>
+                </tr>
+
+                <tr id="backNetRow">
+                  <th class="row-label">NETO</th>
                 </tr>
 
               </tbody>
-
             </table>
-
           </div>
-
 
           <div class="scorecard-total">
 
@@ -692,11 +572,7 @@
 
         </section>
 
-
-        <button
-          id="newRoundButton"
-          type="button"
-        >
+        <button id="newRoundButton" type="button">
           Nueva ronda
         </button>
 
@@ -704,32 +580,113 @@
 
     </section>
 
-
-    <footer>
-      EPG Caddy
-    </footer>
+    <footer>EPG Caddy</footer>
 
   </main>
+
+
+  <div class="setup-overlay" id="setupOverlay">
+
+    <div class="setup-card">
+
+      <h2>NUEVA RONDA</h2>
+
+      <p>
+        Configura los datos de esta ronda.
+        El handicap puede ser de 0 a 24 y se utilizará
+        para calcular automáticamente el score neto.
+      </p>
+
+      <div class="field">
+        <label for="playerNameInput">
+          JUGADOR
+        </label>
+
+        <input
+          id="playerNameInput"
+          type="text"
+          placeholder="Nombre"
+          autocomplete="name"
+        />
+      </div>
+
+      <div class="field">
+        <label for="handicapInput">
+          HANDICAP DE JUEGO · 0 A 24
+        </label>
+
+        <input
+          id="handicapInput"
+          type="number"
+          inputmode="numeric"
+          min="0"
+          max="24"
+          step="1"
+          placeholder="14"
+        />
+      </div>
+
+      <div class="field">
+        <label for="courseInput">
+          CAMPO
+        </label>
+
+        <input
+          id="courseInput"
+          type="text"
+          placeholder="El Pulté"
+        />
+      </div>
+
+      <div class="field">
+        <label for="teesInput">
+          MARCAS
+        </label>
+
+        <input
+          id="teesInput"
+          type="text"
+          placeholder="Blancas"
+        />
+      </div>
+
+      <div class="setup-actions">
+
+        <button
+          id="cancelSetupButton"
+          type="button"
+        >
+          Cancelar
+        </button>
+
+        <button
+          id="startRoundButton"
+          type="button"
+        >
+          Iniciar ronda
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
 
 
   <script>
 
     const STORAGE_KEY =
-      "epg-caddy-current-round-v1";
+      "epg-caddy-current-round-v3";
 
-    const GAME_HANDICAP = 14;
-
+    const DEFAULT_HANDICAP = 0;
+    const MAX_HANDICAP = 24;
 
     const FALLBACK_COURSE = {
-
       name: "El Pulté",
-
       tees: "Blancas",
-
       par: 72,
 
       holes: [
-
         { hole: 1,  par: 4, hcp: 9 },
         { hole: 2,  par: 4, hcp: 5 },
         { hole: 3,  par: 4, hcp: 7 },
@@ -749,18 +706,11 @@
         { hole: 16, par: 4, hcp: 12 },
         { hole: 17, par: 3, hcp: 10 },
         { hole: 18, par: 4, hcp: 14 }
-
       ]
-
     };
 
-
-    const FRONT =
-      [1,2,3,4,5,6,7,8,9];
-
-    const BACK =
-      [10,11,12,13,14,15,16,17,18];
-
+    const FRONT = [1,2,3,4,5,6,7,8,9];
+    const BACK = [10,11,12,13,14,15,16,17,18];
 
     const talkButton =
       document.getElementById("talkButton");
@@ -773,6 +723,9 @@
 
     const courseInfo =
       document.getElementById("courseInfo");
+
+    const playerInfo =
+      document.getElementById("playerInfo");
 
     const scoreSummary =
       document.getElementById("scoreSummary");
@@ -789,14 +742,41 @@
     const newRoundButton =
       document.getElementById("newRoundButton");
 
+    const setupOverlay =
+      document.getElementById("setupOverlay");
+
+    const playerNameInput =
+      document.getElementById("playerNameInput");
+
+    const handicapInput =
+      document.getElementById("handicapInput");
+
+    const courseInput =
+      document.getElementById("courseInput");
+
+    const teesInput =
+      document.getElementById("teesInput");
+
+    const cancelSetupButton =
+      document.getElementById("cancelSetupButton");
+
+    const startRoundButton =
+      document.getElementById("startRoundButton");
+
     const frontHoleRow =
       document.getElementById("frontHoleRow");
 
     const frontParRow =
       document.getElementById("frontParRow");
 
+    const frontHcpRow =
+      document.getElementById("frontHcpRow");
+
     const frontGrossRow =
       document.getElementById("frontGrossRow");
+
+    const frontNetRow =
+      document.getElementById("frontNetRow");
 
     const backHoleRow =
       document.getElementById("backHoleRow");
@@ -804,49 +784,73 @@
     const backParRow =
       document.getElementById("backParRow");
 
+    const backHcpRow =
+      document.getElementById("backHcpRow");
+
     const backGrossRow =
       document.getElementById("backGrossRow");
 
+    const backNetRow =
+      document.getElementById("backNetRow");
+
     const scorecardTotalGross =
-      document.getElementById(
-        "scorecardTotalGross"
-      );
+      document.getElementById("scorecardTotalGross");
 
 
     let course =
-      structuredClone(
-        FALLBACK_COURSE
-      );
+      structuredClone(FALLBACK_COURSE);
 
     let pc = null;
     let dc = null;
-
     let localStream = null;
     let micTrack = null;
-
     let audioElement = null;
 
     let connected = false;
     let listening = false;
-
     let waitingForToolAnswer = false;
-    let waitingForAudioFinish = false;
-
-    let responseInProgress = false;
 
 
-    function emptyRound() {
+    function normalizeHandicap(value) {
+
+      const handicap = Number(value);
+
+      if (!Number.isFinite(handicap)) {
+        return DEFAULT_HANDICAP;
+      }
+
+      return Math.max(
+        0,
+        Math.min(
+          MAX_HANDICAP,
+          Math.floor(handicap)
+        )
+      );
+    }
+
+
+    function emptyRound(config = {}) {
 
       return {
+        version: 3,
 
-        version: 1,
+        player:
+          config.player || "",
 
-        course: "El Pulté",
+        course:
+          config.course ||
+          course.name ||
+          "El Pulté",
 
-        tees: "Blancas",
+        tees:
+          config.tees ||
+          course.tees ||
+          "Blancas",
 
         handicap:
-          GAME_HANDICAP,
+          normalizeHandicap(
+            config.handicap
+          ),
 
         holes: {},
 
@@ -857,9 +861,7 @@
 
         updatedAt:
           new Date().toISOString()
-
       };
-
     }
 
 
@@ -873,9 +875,7 @@
           );
 
         if (!raw) {
-
           return emptyRound();
-
         }
 
         const parsed =
@@ -886,10 +886,13 @@
           typeof parsed !== "object" ||
           !parsed.holes
         ) {
-
           return emptyRound();
-
         }
+
+        parsed.handicap =
+          normalizeHandicap(
+            parsed.handicap
+          );
 
         return parsed;
 
@@ -901,17 +904,19 @@
         );
 
         return emptyRound();
-
       }
-
     }
 
 
-    let round =
-      loadRound();
+    let round = loadRound();
 
 
     function saveRound() {
+
+      round.handicap =
+        normalizeHandicap(
+          round.handicap
+        );
 
       round.updatedAt =
         new Date().toISOString();
@@ -922,40 +927,71 @@
       );
 
       updateSummary();
-
+      updateHeader();
     }
 
 
-    function holeDefinition(
-      number
-    ) {
+    function currentHandicap() {
+
+      return normalizeHandicap(
+        round.handicap
+      );
+    }
+
+
+    function holeDefinition(number) {
 
       return course.holes.find(
         item =>
           Number(item.hole) ===
           Number(number)
       );
-
     }
 
 
-    function strokeForHole(
-      definition
-    ) {
+    /*
+      Devuelve cuántos golpes recibe
+      el jugador en ese hoyo.
+
+      HCP 0  = ninguno
+      HCP 14 = 1 golpe en índices 1-14
+      HCP 18 = 1 golpe en todos
+      HCP 20 = 1 golpe en todos y
+               2 golpes en índices 1 y 2
+      HCP 24 = 1 golpe en todos y
+               2 golpes en índices 1-6
+    */
+    function strokeForHole(definition) {
 
       if (!definition) {
-
         return 0;
-
       }
 
-      return (
-        Number(definition.hcp) <=
-        GAME_HANDICAP
-      )
-        ? 1
-        : 0;
+      const handicap =
+        currentHandicap();
 
+      if (handicap === 0) {
+        return 0;
+      }
+
+      const index =
+        Number(definition.hcp);
+
+      const fullCycles =
+        Math.floor(handicap / 18);
+
+      const remainder =
+        handicap % 18;
+
+      return (
+        fullCycles +
+        (
+          remainder > 0 &&
+          index <= remainder
+            ? 1
+            : 0
+        )
+      );
     }
 
 
@@ -964,7 +1000,6 @@
       return Object.values(
         round.holes
       );
-
     }
 
 
@@ -985,38 +1020,31 @@
       const gross =
         items.reduce(
           (sum, item) =>
-            sum +
-            Number(item.gross),
+            sum + Number(item.gross),
           0
         );
 
       const net =
         items.reduce(
           (sum, item) =>
-            sum +
-            Number(item.net),
+            sum + Number(item.net),
           0
         );
 
       const par =
         items.reduce(
           (sum, item) =>
-            sum +
-            Number(item.par),
+            sum + Number(item.par),
           0
         );
 
       return {
-
         items,
         gross,
         net,
         par,
-        diff:
-          net - par
-
+        diff: net - par
       };
-
     }
 
 
@@ -1026,91 +1054,61 @@
         registeredHoles();
 
       return {
-
         items,
 
         gross:
           items.reduce(
             (sum, item) =>
-              sum +
-              Number(item.gross),
+              sum + Number(item.gross),
             0
           ),
 
         net:
           items.reduce(
             (sum, item) =>
-              sum +
-              Number(item.net),
+              sum + Number(item.net),
             0
           ),
 
         par:
           items.reduce(
             (sum, item) =>
-              sum +
-              Number(item.par),
+              sum + Number(item.par),
             0
           )
-
       };
-
     }
 
 
-    function individualResult(
-      diff
-    ) {
+    function individualResult(diff) {
 
       if (diff === 0) {
-
         return "Par";
-
       }
 
       if (diff < 0) {
-
-        return (
-          `${Math.abs(diff)} bajo par`
-        );
-
+        return `${Math.abs(diff)} bajo par`;
       }
 
-      return (
-        `${diff} sobre par`
-      );
-
+      return `${diff} sobre par`;
     }
 
 
-    function aggregateResult(
-      diff
-    ) {
+    function aggregateResult(diff) {
 
       if (diff === 0) {
-
         return "Even";
-
       }
 
       if (diff < 0) {
-
-        return (
-          `${Math.abs(diff)} bajo par`
-        );
-
+        return `${Math.abs(diff)} bajo par`;
       }
 
-      return (
-        `${diff} sobre par`
-      );
-
+      return `${diff} sobre par`;
     }
 
 
-    function isComplete(
-      numbers
-    ) {
+    function isComplete(numbers) {
 
       return numbers.every(
         number =>
@@ -1120,26 +1118,17 @@
             ]
           )
       );
-
     }
 
 
     function roundStatusBeforeUpdate() {
 
       return {
-
-        front:
-          isComplete(FRONT),
-
-        back:
-          isComplete(BACK),
-
+        front: isComplete(FRONT),
+        back: isComplete(BACK),
         total:
-          registeredHoles()
-            .length === 18
-
+          registeredHoles().length === 18
       };
-
     }
 
 
@@ -1152,37 +1141,18 @@
         allRegisteredTotals();
 
       const accumulatedDiff =
-        all.net -
-        all.par;
+        all.net - all.par;
 
       const lines = [
-
         `Hoyo ${score.hole}`,
-
         `Gross ${score.gross}`,
-
         `Neto ${score.net}`,
-
-        `Resultado: ${
-          individualResult(
-            score.diff
-          )
-        }`,
-
+        `Resultado: ${individualResult(score.diff)}`,
         "Acumulado",
-
         `Gross ${all.gross}`,
-
         `Neto ${all.net}`,
-
-        `Acumulado ${
-          aggregateResult(
-            accumulatedDiff
-          )
-        }`
-
+        `Acumulado ${aggregateResult(accumulatedDiff)}`
       ];
-
 
       const frontNow =
         isComplete(FRONT);
@@ -1191,9 +1161,7 @@
         isComplete(BACK);
 
       const totalNow =
-        registeredHoles()
-          .length === 18;
-
+        registeredHoles().length === 18;
 
       if (
         !before.front &&
@@ -1201,33 +1169,16 @@
       ) {
 
         const front =
-          totalsForHoles(
-            FRONT
-          );
+          totalsForHoles(FRONT);
 
         lines.push(
           "",
           "Primera Vuelta",
           `Gross ${front.gross}`,
           `Neto ${front.net}`,
-          `Resultado: ${
-            aggregateResult(
-              front.net -
-              front.par
-            )
-          }`
+          `Resultado: ${aggregateResult(front.net - front.par)}`
         );
-
       }
-
-
-      /*
-        IMPORTANTE:
-
-        Al terminar el hoyo 18,
-        la Segunda Vuelta se agrega
-        ANTES que el Total de la ronda.
-      */
 
       if (
         !before.back &&
@@ -1235,25 +1186,16 @@
       ) {
 
         const back =
-          totalsForHoles(
-            BACK
-          );
+          totalsForHoles(BACK);
 
         lines.push(
           "",
           "Segunda Vuelta",
           `Gross ${back.gross}`,
           `Neto ${back.net}`,
-          `Resultado: ${
-            aggregateResult(
-              back.net -
-              back.par
-            )
-          }`
+          `Resultado: ${aggregateResult(back.net - back.par)}`
         );
-
       }
-
 
       if (
         !before.total &&
@@ -1268,22 +1210,14 @@
 
         lines.push(
           "",
-          "Total de la Ronda",
+          "Total",
           `Gross ${total.gross}`,
           `Neto ${total.net}`,
-          `Resultado: ${
-            aggregateResult(
-              total.net -
-              total.par
-            )
-          }`
+          `Resultado: ${aggregateResult(total.net - total.par)}`
         );
-
       }
 
-
       return lines.join("\n");
-
     }
 
 
@@ -1292,132 +1226,85 @@
       gross
     ) {
 
-      hole =
-        Number(hole);
-
-      gross =
-        Number(gross);
-
+      hole = Number(hole);
+      gross = Number(gross);
 
       if (
         !Number.isInteger(hole) ||
         hole < 1 ||
         hole > 18
       ) {
-
         return {
-
           ok: false,
-
           speech:
             "Número de hoyo inválido."
-
         };
-
       }
-
 
       if (
         !Number.isInteger(gross) ||
         gross < 1 ||
         gross > 30
       ) {
-
         return {
-
           ok: false,
-
           speech:
             "Score inválido."
-
         };
-
       }
-
 
       const definition =
         holeDefinition(hole);
 
-
       if (!definition) {
-
         return {
-
           ok: false,
-
           speech:
             `Hoyo ${hole} sin datos.`
-
         };
-
       }
-
 
       const before =
         roundStatusBeforeUpdate();
 
-
       const handicapStroke =
-        strokeForHole(
-          definition
-        );
-
+        strokeForHole(definition);
 
       const net =
-        gross -
-        handicapStroke;
-
+        gross - handicapStroke;
 
       const score = {
-
         hole,
-
         gross,
 
         par:
-          Number(
-            definition.par
-          ),
+          Number(definition.par),
 
         hcp:
-          Number(
-            definition.hcp
-          ),
+          Number(definition.hcp),
 
         handicapStroke,
-
         net,
 
         diff:
           net -
-          Number(
-            definition.par
-          ),
+          Number(definition.par),
 
         updatedAt:
-          new Date()
-            .toISOString()
-
+          new Date().toISOString()
       };
-
 
       round.holes[
         String(hole)
       ] = score;
 
-      round.lastHole =
-        hole;
+      round.lastHole = hole;
 
       saveRound();
 
-
       return {
-
         ok: true,
-
-        action:
-          "record_score",
-
+        action: "record_score",
         score,
 
         speech:
@@ -1425,117 +1312,65 @@
             score,
             before
           )
-
       };
-
     }
 
 
-    function speechForHole(
-      hole
-    ) {
+    function speechForHole(hole) {
 
       const score =
         round.holes[
           String(hole)
         ];
 
-
       if (!score) {
-
-        return (
-          `Hoyo ${hole} sin score.`
-        );
-
+        return `Hoyo ${hole} sin score.`;
       }
 
-
       return [
-
         `Hoyo ${score.hole}`,
-
         `Gross ${score.gross}`,
-
         `Neto ${score.net}`,
-
-        `Resultado: ${
-          individualResult(
-            score.diff
-          )
-        }`
-
+        `Resultado: ${individualResult(score.diff)}`
       ].join("\n");
-
     }
 
 
-    function getHole(
-      hole
-    ) {
+    function getHole(hole) {
 
-      hole =
-        Number(hole);
+      hole = Number(hole);
 
       return {
-
         ok: true,
-
-        action:
-          "get_hole",
-
+        action: "get_hole",
         speech:
-          speechForHole(
-            hole
-          )
-
+          speechForHole(hole)
       };
-
     }
 
 
-    function getRange(
-      from,
-      to
-    ) {
+    function getRange(from, to) {
 
-      from =
-        Number(from);
-
-      to =
-        Number(to);
-
+      from = Number(from);
+      to = Number(to);
 
       if (
         !Number.isInteger(from) ||
         !Number.isInteger(to)
       ) {
-
         return {
-
           ok: false,
-
-          speech:
-            "Rango inválido."
-
+          speech: "Rango inválido."
         };
-
       }
 
-
       const start =
-        Math.min(
-          from,
-          to
-        );
+        Math.min(from, to);
 
       const end =
-        Math.max(
-          from,
-          to
-        );
+        Math.max(from, to);
 
       const speeches = [];
-
 
       for (
         let hole = start;
@@ -1548,218 +1383,132 @@
             String(hole)
           ]
         ) {
-
           speeches.push(
-            speechForHole(
-              hole
-            )
+            speechForHole(hole)
           );
-
         }
-
       }
 
-
-      if (
-        speeches.length === 0
-      ) {
-
+      if (!speeches.length) {
         return {
-
           ok: true,
-
-          action:
-            "get_range",
-
+          action: "get_range",
           speech:
             "No hay scores registrados en ese rango."
-
         };
-
       }
 
-
       return {
-
         ok: true,
-
-        action:
-          "get_range",
-
+        action: "get_range",
         speech:
-          speeches.join(
-            "\n\n"
-          )
-
+          speeches.join("\n\n")
       };
-
     }
 
 
-    function getList(
-      holes
-    ) {
+    function getList(holes) {
 
       if (
         !Array.isArray(holes) ||
         holes.length === 0
       ) {
-
         return {
-
           ok: false,
-
           speech:
             "Lista de hoyos inválida."
-
         };
-
       }
 
-
-      const speeches =
-        holes.map(
-          hole =>
-            speechForHole(
-              Number(hole)
-            )
-        );
-
-
       return {
-
         ok: true,
-
-        action:
-          "get_list",
+        action: "get_list",
 
         speech:
-          speeches.join(
-            "\n\n"
-          )
-
+          holes
+            .map(
+              hole =>
+                speechForHole(
+                  Number(hole)
+                )
+            )
+            .join("\n\n")
       };
-
     }
 
 
     function getLast() {
 
       if (!round.lastHole) {
-
         return {
-
           ok: true,
-
-          action:
-            "get_last",
-
+          action: "get_last",
           speech:
             "No hay scores registrados."
-
         };
-
       }
 
-
       return {
-
         ok: true,
-
-        action:
-          "get_last",
-
+        action: "get_last",
         speech:
           speechForHole(
             round.lastHole
           )
-
       };
-
     }
 
 
-    function processAction(
-      args
-    ) {
+    function processAction(args) {
 
-      switch (
-        args.action
-      ) {
+      switch (args.action) {
 
         case "record_score":
-
           return recordScore(
             args.hole,
             args.gross
           );
 
-
         case "get_hole":
-
           return getHole(
             args.hole
           );
 
-
         case "get_range":
-
           return getRange(
             args.from,
             args.to
           );
 
-
         case "get_list":
-
           return getList(
             args.holes
           );
 
-
         case "get_last":
-
           return getLast();
 
-
         default:
-
           return {
-
             ok: false,
-
             speech:
               "Comando no reconocido."
-
           };
-
       }
-
     }
 
 
-    function visualResult(
-      diff
-    ) {
+    function visualResult(diff) {
 
       if (diff === 0) {
-
         return "Even";
-
       }
 
       if (diff < 0) {
-
-        return (
-          `${Math.abs(diff)} bajo par`
-        );
-
+        return `${Math.abs(diff)} bajo par`;
       }
 
-      return (
-        `${diff} sobre par`
-      );
-
+      return `${diff} sobre par`;
     }
 
 
@@ -1771,46 +1520,31 @@
       if (
         totals.items.length === 0
       ) {
-
         return `0/${expected}`;
-
       }
-
 
       const diff =
         totals.net -
         totals.par;
 
-
       return [
-
         `${totals.items.length}/${expected}`,
-
         `G ${totals.gross}`,
-
         `N ${totals.net}`,
-
         visualResult(diff)
-
       ].join("\n");
-
     }
 
 
-    function clearGeneratedRow(
-      row
-    ) {
+    function clearGeneratedRow(row) {
 
       while (
         row.children.length > 1
       ) {
-
         row.removeChild(
           row.lastChild
         );
-
       }
-
     }
 
 
@@ -1821,24 +1555,65 @@
     ) {
 
       const cell =
-        document.createElement(
-          "td"
-        );
+        document.createElement("td");
 
-      cell.textContent =
-        text;
+      cell.textContent = text;
 
       if (className) {
-
-        cell.className =
-          className;
-
+        cell.className = className;
       }
 
-      row.appendChild(
-        cell
-      );
+      row.appendChild(cell);
+    }
 
+
+    function handicapCellClass(
+      definition
+    ) {
+
+      const strokes =
+        strokeForHole(definition);
+
+      if (strokes >= 2) {
+        return "hcp-double-cell";
+      }
+
+      if (strokes === 1) {
+        return "hcp-stroke-cell";
+      }
+
+      return "";
+    }
+
+
+    function handicapCellText(
+      definition
+    ) {
+
+      if (!definition) {
+        return "—";
+      }
+
+      const strokes =
+        strokeForHole(definition);
+
+      /*
+        Conservamos el índice HDCP visible.
+        Si recibe dos golpes, agregamos ••.
+        Si recibe uno, agregamos •.
+      */
+
+      if (strokes >= 2) {
+        return `${definition.hcp}••`;
+      }
+
+      if (strokes === 1) {
+        return `${definition.hcp}•`;
+      }
+
+      return String(
+        definition.hcp
+      );
     }
 
 
@@ -1846,46 +1621,37 @@
       numbers,
       holeRow,
       parRow,
+      hcpRow,
       grossRow,
+      netRow,
       totalLabel
     ) {
 
-      clearGeneratedRow(
-        holeRow
-      );
-
-      clearGeneratedRow(
-        parRow
-      );
-
-      clearGeneratedRow(
-        grossRow
-      );
-
+      clearGeneratedRow(holeRow);
+      clearGeneratedRow(parRow);
+      clearGeneratedRow(hcpRow);
+      clearGeneratedRow(grossRow);
+      clearGeneratedRow(netRow);
 
       let grossTotal = 0;
+      let netTotal = 0;
       let registeredCount = 0;
-
 
       numbers.forEach(
         number => {
 
           const definition =
-            holeDefinition(
-              number
-            );
+            holeDefinition(number);
 
           const score =
             round.holes[
               String(number)
             ];
 
-
           appendCell(
             holeRow,
             number
           );
-
 
           appendCell(
             parRow,
@@ -1894,6 +1660,15 @@
               : "—"
           );
 
+          appendCell(
+            hcpRow,
+            handicapCellText(
+              definition
+            ),
+            handicapCellClass(
+              definition
+            )
+          );
 
           appendCell(
             grossRow,
@@ -1903,21 +1678,26 @@
             "gross-cell"
           );
 
+          appendCell(
+            netRow,
+            score
+              ? score.net
+              : "—",
+            "net-cell"
+          );
 
           if (score) {
 
             grossTotal +=
-              Number(
-                score.gross
-              );
+              Number(score.gross);
+
+            netTotal +=
+              Number(score.net);
 
             registeredCount++;
-
           }
-
         }
       );
-
 
       appendCell(
         holeRow,
@@ -1925,15 +1705,12 @@
         "total-column"
       );
 
-
       const fullPar =
         numbers.reduce(
           (sum, number) => {
 
             const definition =
-              holeDefinition(
-                number
-              );
+              holeDefinition(number);
 
             return (
               sum +
@@ -1942,11 +1719,9 @@
                 0
               )
             );
-
           },
           0
         );
-
 
       appendCell(
         parRow,
@@ -1954,15 +1729,27 @@
         "total-column"
       );
 
+      appendCell(
+        hcpRow,
+        currentHandicap(),
+        "total-column"
+      );
 
       appendCell(
         grossRow,
-        registeredCount > 0
+        registeredCount
           ? grossTotal
           : "—",
         "total-column gross-cell"
       );
 
+      appendCell(
+        netRow,
+        registeredCount
+          ? netTotal
+          : "—",
+        "total-column net-cell"
+      );
     }
 
 
@@ -1972,19 +1759,21 @@
         FRONT,
         frontHoleRow,
         frontParRow,
+        frontHcpRow,
         frontGrossRow,
+        frontNetRow,
         "OUT"
       );
-
 
       renderNineScorecard(
         BACK,
         backHoleRow,
         backParRow,
+        backHcpRow,
         backGrossRow,
+        backNetRow,
         "IN"
       );
-
 
       const total =
         totalsForHoles([
@@ -1992,61 +1781,70 @@
           ...BACK
         ]);
 
-
       scorecardTotalGross.textContent =
-        total.items.length > 0
+        total.items.length
           ? total.gross
           : "—";
+    }
 
+
+    function updateHeader() {
+
+      courseName.textContent =
+        round.course ||
+        course.name ||
+        "El Pulté";
+
+      courseInfo.textContent =
+        `${round.tees || course.tees || "Blancas"} · ` +
+        `Par ${course.par || 72} · ` +
+        `${course.holes.length} hoyos`;
+
+      const parts = [];
+
+      if (round.player) {
+        parts.push(
+          round.player
+        );
+      }
+
+      parts.push(
+        `Handicap ${currentHandicap()}`
+      );
+
+      playerInfo.textContent =
+        parts.join(" · ");
     }
 
 
     function updateSummary() {
 
       const count =
-        registeredHoles()
-          .length;
-
+        registeredHoles().length;
 
       updateScorecard();
+      updateHeader();
 
-
-      if (count === 0) {
-
-        scoreSummary
-          .classList
-          .remove(
-            "visible"
-          );
-
-        return;
-
-      }
-
-
+      /*
+        La tarjeta se muestra desde el inicio
+        de la ronda, aunque todavía no haya scores,
+        para poder ver los golpes de handicap.
+      */
       scoreSummary
         .classList
-        .add(
-          "visible"
-        );
-
+        .add("visible");
 
       const front =
-        totalsForHoles(
-          FRONT
-        );
+        totalsForHoles(FRONT);
 
       const back =
-        totalsForHoles(
-          BACK
-        );
+        totalsForHoles(BACK);
 
       const total =
         totalsForHoles([
           ...FRONT,
           ...BACK
         ]);
-
 
       front9El.textContent =
         visualSummary(
@@ -2066,10 +1864,10 @@
           18
         );
 
-
-      statusEl.textContent =
-        `Ronda guardada · ${count}/18 hoyos`;
-
+      if (count > 0) {
+        statusEl.textContent =
+          `Ronda guardada · ${count}/18 hoyos`;
+      }
     }
 
 
@@ -2081,24 +1879,18 @@
           await fetch(
             "/api/score",
             {
-              cache:
-                "no-store"
+              cache: "no-store"
             }
           );
 
-
         if (!response.ok) {
-
           throw new Error(
             "No se pudo cargar el campo"
           );
-
         }
-
 
         const data =
           await response.json();
-
 
         if (
           data.course &&
@@ -2106,88 +1898,46 @@
             data.course.holes
           )
         ) {
-
           course =
             data.course;
-
-        }
-
-
-        courseName.textContent =
-          course.name ||
-          "El Pulté";
-
-
-        courseInfo.textContent =
-          `${course.tees || "Blancas"} · ` +
-          `Par ${course.par || 72} · ` +
-          `${course.holes.length} hoyos`;
-
-
-        updateSummary();
-
-
-        if (
-          registeredHoles()
-            .length === 0
-        ) {
-
-          statusEl.textContent =
-            "Listo para iniciar.";
-
         }
 
       } catch (error) {
 
         console.error(error);
 
-
         course =
           structuredClone(
             FALLBACK_COURSE
           );
-
-
-        updateSummary();
-
-
-        if (
-          registeredHoles()
-            .length === 0
-        ) {
-
-          statusEl.textContent =
-            "Listo para iniciar.";
-
-        }
-
       }
 
+      updateHeader();
+      updateSummary();
+
+      if (
+        registeredHoles().length === 0
+      ) {
+        statusEl.textContent =
+          "Listo para iniciar.";
+      }
     }
 
 
-    function sendEvent(
-      event
-    ) {
+    function sendEvent(event) {
 
       if (
         !dc ||
         dc.readyState !== "open"
       ) {
-
         throw new Error(
           "Canal Realtime no disponible."
         );
-
       }
 
-
       dc.send(
-        JSON.stringify(
-          event
-        )
+        JSON.stringify(event)
       );
-
     }
 
 
@@ -2196,36 +1946,11 @@
       result
     ) {
 
-      waitingForToolAnswer =
-        true;
-
-      waitingForAudioFinish =
-        true;
-
-      responseInProgress =
-        true;
-
-
-      /*
-        En cuanto ya tenemos el comando,
-        cerramos el micrófono para impedir
-        que el audio de EPG Caddy vuelva
-        a entrar por el micrófono.
-      */
-
-      setMicEnabled(
-        false,
-        false
-      );
-
-
       sendEvent({
-
         type:
           "conversation.item.create",
 
         item: {
-
           type:
             "function_call_output",
 
@@ -2233,80 +1958,47 @@
             call.call_id,
 
           output:
-            JSON.stringify(
-              result
-            )
-
+            JSON.stringify(result)
         }
-
       });
 
-
       sendEvent({
-
         type:
           "response.create",
 
         response: {
-
           instructions:
+            "Habla únicamente en español. " +
             "Pronuncia exactamente el campo speech " +
             "del resultado de la herramienta. " +
-            "Habla exclusivamente en español neutro. " +
-            "Pronuncia todos los números en español. " +
-            "Conserva la misma voz durante toda la respuesta. " +
             "No añadas, quites, reformules ni repitas nada."
-
         }
-
       });
 
+      waitingForToolAnswer = true;
     }
 
 
-    function handleResponseDone(
-      event
-    ) {
+    function handleResponseDone(event) {
 
       const output =
         event?.response?.output;
 
-
-      if (
-        !Array.isArray(output)
-      ) {
-
-        /*
-          No cerramos nada aquí
-          si todavía esperamos audio.
-        */
-
-        if (
-          !waitingForAudioFinish
-        ) {
-
-          finishListening();
-
-        }
-
+      if (!Array.isArray(output)) {
+        finishListening();
         return;
-
       }
-
 
       const functionCalls =
         output.filter(
           item =>
             item.type ===
-            "function_call" &&
+              "function_call" &&
             item.name ===
-            "epg_caddy_action"
+              "epg_caddy_action"
         );
 
-
-      if (
-        functionCalls.length > 0
-      ) {
+      if (functionCalls.length > 0) {
 
         for (
           const call
@@ -2321,12 +2013,8 @@
                 "{}"
               );
 
-
             const result =
-              processAction(
-                args
-              );
-
+              processAction(args);
 
             sendToolOutput(
               call,
@@ -2340,64 +2028,26 @@
               error
             );
 
-
             sendToolOutput(
               call,
               {
-
                 ok: false,
-
                 speech:
                   "No se pudo procesar el comando."
-
               }
             );
-
           }
-
         }
 
-
         return;
-
       }
 
-
-      /*
-        Este response.done corresponde
-        normalmente a la respuesta hablada
-        después de la herramienta.
-      */
-
-      if (
-        waitingForToolAnswer
-      ) {
-
+      if (waitingForToolAnswer) {
         waitingForToolAnswer =
           false;
-
       }
-
-
-      if (
-        waitingForAudioFinish
-      ) {
-
-        /*
-          Esperamos el evento de audio.done.
-          No finalizamos prematuramente.
-        */
-
-        return;
-
-      }
-
-
-      responseInProgress =
-        false;
 
       finishListening();
-
     }
 
 
@@ -2412,66 +2062,16 @@
             message.data
           );
 
-
-        if (
-          event.type ===
-          "response.created"
-        ) {
-
-          responseInProgress =
-            true;
-
-          return;
-
-        }
-
-
         if (
           event.type ===
           "response.done"
         ) {
-
-          handleResponseDone(
-            event
-          );
-
+          handleResponseDone(event);
           return;
-
         }
 
-
-        /*
-          La API puede enviar cualquiera
-          de estos eventos dependiendo
-          de la versión/configuración.
-        */
-
         if (
-          event.type ===
-            "response.audio.done" ||
-          event.type ===
-            "response.output_audio.done"
-        ) {
-
-          waitingForAudioFinish =
-            false;
-
-          waitingForToolAnswer =
-            false;
-
-          responseInProgress =
-            false;
-
-          finishListening();
-
-          return;
-
-        }
-
-
-        if (
-          event.type ===
-          "error"
+          event.type === "error"
         ) {
 
           console.error(
@@ -2479,19 +2079,7 @@
             event
           );
 
-
-          waitingForToolAnswer =
-            false;
-
-          waitingForAudioFinish =
-            false;
-
-          responseInProgress =
-            false;
-
-
           finishListening();
-
         }
 
       } catch (error) {
@@ -2500,41 +2088,29 @@
           "Evento Realtime inválido:",
           error
         );
-
       }
-
     }
 
 
     function setMicEnabled(
-      enabled,
-      refresh = true
+      enabled
     ) {
 
       if (micTrack) {
-
         micTrack.enabled =
           enabled;
-
       }
 
-
-      listening =
-        enabled;
-
+      listening = enabled;
 
       if (enabled) {
 
         talkButton
           .classList
-          .add(
-            "active"
-          );
-
+          .add("active");
 
         talkButton.textContent =
           "Escuchando";
-
 
         statusEl.textContent =
           "Escuchando…";
@@ -2543,58 +2119,38 @@
 
         talkButton
           .classList
-          .remove(
-            "active"
-          );
-
+          .remove("active");
 
         talkButton.textContent =
           connected
             ? "Hablar"
             : "Iniciar Caddy";
 
-
-        if (refresh) {
-
-          updateSummary();
-
-        }
-
+        updateSummary();
 
         if (
           registeredHoles()
             .length === 0
         ) {
-
           statusEl.textContent =
             connected
               ? "EPG Caddy listo."
               : "Listo para iniciar.";
-
         }
-
       }
-
     }
 
 
     function finishListening() {
-
-      setMicEnabled(
-        false
-      );
-
+      setMicEnabled(false);
     }
 
 
     function connectionAlive() {
 
       if (!pc) {
-
         return false;
-
       }
-
 
       return [
         "new",
@@ -2603,7 +2159,6 @@
       ].includes(
         pc.connectionState
       );
-
     }
 
 
@@ -2615,134 +2170,98 @@
         dc &&
         dc.readyState === "open"
       ) {
-
         return;
-
       }
-
 
       cleanupConnection();
 
-
       statusEl.textContent =
         "Conectando…";
-
 
       localStream =
         await navigator
           .mediaDevices
           .getUserMedia({
-            audio: {
-
-              echoCancellation: true,
-
-              noiseSuppression: true,
-
-              autoGainControl: true
-
-            }
+            audio: true
           });
-
 
       micTrack =
         localStream
           .getAudioTracks()[0];
 
-
       /*
-        MUY IMPORTANTE:
-
-        Al crear la conexión dejamos
-        inicialmente el micrófono apagado.
-
-        Sólo startTalking() lo habilita.
+        Muy importante:
+        la sesión se conecta con el micrófono
+        apagado. Sólo se activa cuando el
+        usuario pulsa Hablar.
       */
-
-      micTrack.enabled =
-        false;
-
+      micTrack.enabled = false;
 
       pc =
         new RTCPeerConnection();
-
 
       audioElement =
         document.createElement(
           "audio"
         );
 
+      audioElement.autoplay = true;
+      audioElement.playsInline = true;
+      audioElement.volume = 1;
 
-      audioElement.autoplay =
-        true;
-
-      audioElement.playsInline =
-        true;
-
+      document.body.appendChild(
+        audioElement
+      );
 
       pc.ontrack =
         event => {
 
-          audioElement.srcObject =
-            event.streams[0];
-
-
-          const playPromise =
-            audioElement.play();
-
-
           if (
-            playPromise &&
-            typeof playPromise.catch ===
-              "function"
+            event.streams &&
+            event.streams[0]
           ) {
+            audioElement.srcObject =
+              event.streams[0];
+          } else {
+            audioElement.srcObject =
+              new MediaStream([
+                event.track
+              ]);
+          }
 
-            playPromise.catch(
-              error => {
-
+          audioElement
+            .play()
+            .catch(
+              error =>
                 console.warn(
                   "Audio autoplay:",
                   error
-                );
-
-              }
+                )
             );
-
-          }
-
         };
-
 
       pc.addTrack(
         micTrack,
         localStream
       );
 
-
       dc =
         pc.createDataChannel(
           "oai-events"
         );
-
 
       dc.addEventListener(
         "message",
         handleRealtimeEvent
       );
 
-
       dc.addEventListener(
         "open",
         () => {
-
           connected = true;
-
-          setMicEnabled(
-            false
-          );
-
+          setMicEnabled(false);
         }
       );
-
 
       dc.addEventListener(
         "close",
@@ -2751,42 +2270,21 @@
           connected = false;
           listening = false;
 
-          waitingForToolAnswer =
-            false;
-
-          waitingForAudioFinish =
-            false;
-
-          responseInProgress =
-            false;
-
-
           talkButton
             .classList
-            .remove(
-              "active"
-            );
-
+            .remove("active");
 
           talkButton.textContent =
             "Iniciar Caddy";
-
         }
       );
-
 
       pc.addEventListener(
         "connectionstatechange",
         () => {
 
-          if (!pc) {
-
-            return;
-
-          }
-
-
           if (
+            pc &&
             [
               "failed",
               "closed",
@@ -2795,25 +2293,18 @@
               pc.connectionState
             )
           ) {
-
             connected = false;
-
             listening = false;
-
           }
-
         }
       );
-
 
       const offer =
         await pc.createOffer();
 
-
       await pc.setLocalDescription(
         offer
       );
-
 
       await new Promise(
         resolve => {
@@ -2822,13 +2313,9 @@
             pc.iceGatheringState ===
             "complete"
           ) {
-
             resolve();
-
             return;
-
           }
-
 
           const checkState =
             () => {
@@ -2843,68 +2330,47 @@
                   checkState
                 );
 
-
                 resolve();
-
               }
-
             };
-
 
           pc.addEventListener(
             "icegatheringstatechange",
             checkState
           );
-
         }
       );
-
 
       const response =
         await fetch(
           "/api/session",
           {
-
             method: "POST",
 
             headers: {
-
               "Content-Type":
                 "application/sdp"
-
             },
 
             body:
               pc.localDescription.sdp
-
           }
         );
-
 
       const answer =
         await response.text();
 
-
       if (!response.ok) {
-
         throw new Error(
           answer ||
           "No se pudo iniciar la sesión."
         );
-
       }
 
-
       await pc.setRemoteDescription({
-
-        type:
-          "answer",
-
-        sdp:
-          answer
-
+        type: "answer",
+        sdp: answer
       });
-
 
       await new Promise(
         (resolve, reject) => {
@@ -2912,60 +2378,40 @@
           const timeout =
             setTimeout(
               () => {
-
                 reject(
                   new Error(
                     "El canal Realtime no abrió."
                   )
                 );
-
               },
               10000
             );
 
-
           if (
-            dc.readyState ===
-            "open"
+            dc.readyState === "open"
           ) {
 
-            clearTimeout(
-              timeout
-            );
-
+            clearTimeout(timeout);
             resolve();
-
             return;
-
           }
-
 
           dc.addEventListener(
             "open",
             () => {
-
-              clearTimeout(
-                timeout
-              );
-
+              clearTimeout(timeout);
               resolve();
-
             },
             {
               once: true
             }
           );
-
         }
       );
 
-
       connected = true;
 
-      setMicEnabled(
-        false
-      );
-
+      setMicEnabled(false);
     }
 
 
@@ -2973,81 +2419,49 @@
 
       try {
 
-        /*
-          Mientras EPG Caddy está hablando
-          no permitimos abrir nuevamente
-          el micrófono.
-      */
-
-        if (
-          responseInProgress ||
-          waitingForAudioFinish
-        ) {
-
-          return;
-
-        }
-
-
         talkButton.disabled =
           true;
 
+        if (audioElement) {
+          audioElement
+            .play()
+            .catch(() => {});
+        }
 
         await ensureSession();
-
 
         talkButton.disabled =
           false;
 
+        /*
+          Si está escuchando,
+          el segundo toque termina manualmente.
 
+          No hay temporizador local que corte
+          el micrófono mientras hablas.
+        */
         if (listening) {
-
-          setMicEnabled(
-            false
-          );
-
+          setMicEnabled(false);
           return;
-
         }
-
 
         waitingForToolAnswer =
           false;
 
-        waitingForAudioFinish =
-          false;
-
-        responseInProgress =
-          false;
-
-
-        /*
-          El usuario controla el comienzo.
-          Ya no cerramos el micrófono por
-          un evento intermedio de Realtime.
-      */
-
-        setMicEnabled(
-          true
-        );
+        setMicEnabled(true);
 
       } catch (error) {
 
         console.error(error);
 
-
         talkButton.disabled =
           false;
-
 
         statusEl.textContent =
           "No se pudo iniciar EPG Caddy.";
 
-
         cleanupConnection();
-
       }
-
     }
 
 
@@ -3061,140 +2475,176 @@
             track =>
               track.stop()
           );
-
       }
-
 
       localStream = null;
       micTrack = null;
 
-
       if (dc) {
-
         try {
-
           dc.close();
-
         } catch {}
-
       }
-
 
       dc = null;
 
-
       if (pc) {
-
         try {
-
           pc.close();
-
         } catch {}
-
       }
 
-
       pc = null;
-
 
       if (audioElement) {
 
         try {
-
           audioElement.pause();
-
+          audioElement.srcObject = null;
+          audioElement.remove();
         } catch {}
-
-
-        audioElement.srcObject =
-          null;
-
       }
 
-
       audioElement = null;
-
       connected = false;
       listening = false;
-
-      waitingForToolAnswer =
-        false;
-
-      waitingForAudioFinish =
-        false;
-
-      responseInProgress =
-        false;
-
     }
 
 
-    function newRound() {
+    function openRoundSetup() {
 
-      const confirmed =
-        window.confirm(
-          "¿Iniciar una nueva ronda? " +
-          "Se borrarán los scores actuales."
+      playerNameInput.value =
+        round.player || "";
+
+      handicapInput.value =
+        currentHandicap();
+
+      courseInput.value =
+        round.course ||
+        course.name ||
+        "El Pulté";
+
+      teesInput.value =
+        round.tees ||
+        course.tees ||
+        "Blancas";
+
+      setupOverlay
+        .classList
+        .add("visible");
+
+      setTimeout(
+        () => {
+          playerNameInput.focus();
+        },
+        100
+      );
+    }
+
+
+    function closeRoundSetup() {
+
+      setupOverlay
+        .classList
+        .remove("visible");
+    }
+
+
+    function createNewRound() {
+
+      const handicap =
+        Number(
+          handicapInput.value
         );
 
+      if (
+        !Number.isInteger(handicap) ||
+        handicap < 0 ||
+        handicap > MAX_HANDICAP
+      ) {
 
-      if (!confirmed) {
+        alert(
+          "Ingresa un handicap entre 0 y 24."
+        );
+
+        handicapInput.focus();
 
         return;
-
       }
 
+      const player =
+        playerNameInput
+          .value
+          .trim();
 
-      /*
-        Cerramos también la sesión Realtime.
+      const selectedCourse =
+        courseInput
+          .value
+          .trim() ||
+        course.name ||
+        "El Pulté";
 
-        Así la nueva ronda comienza con
-        tarjeta Y conversación nuevas.
-      */
+      const selectedTees =
+        teesInput
+          .value
+          .trim() ||
+        course.tees ||
+        "Blancas";
 
       cleanupConnection();
-
-
-      round =
-        emptyRound();
-
 
       localStorage.removeItem(
         STORAGE_KEY
       );
 
+      round =
+        emptyRound({
+          player,
+          handicap,
+          course:
+            selectedCourse,
+          tees:
+            selectedTees
+        });
 
       saveRound();
 
-
-      scoreSummary
-        .classList
-        .remove(
-          "visible"
-        );
-
-
-      updateScorecard();
-
-
-      talkButton.disabled =
-        false;
-
-
-      talkButton
-        .classList
-        .remove(
-          "active"
-        );
-
+      closeRoundSetup();
 
       talkButton.textContent =
         "Iniciar Caddy";
 
-
       statusEl.textContent =
-        "Nueva ronda lista.";
+        `Nueva ronda lista · Handicap ${currentHandicap()}`;
 
+      /*
+        updateSummary vuelve a pintar la tarjeta
+        inmediatamente y marca en rojo exactamente
+        los hoyos donde corresponde recibir golpe.
+      */
+      updateSummary();
+    }
+
+
+    function newRound() {
+
+      if (
+        registeredHoles()
+          .length > 0
+      ) {
+
+        const confirmed =
+          window.confirm(
+            "¿Iniciar una nueva ronda? " +
+            "Se borrarán los scores actuales."
+          );
+
+        if (!confirmed) {
+          return;
+        }
+      }
+
+      openRoundSetup();
     }
 
 
@@ -3203,22 +2653,27 @@
       startTalking
     );
 
-
     newRoundButton.addEventListener(
       "click",
       newRound
     );
 
+    cancelSetupButton.addEventListener(
+      "click",
+      closeRoundSetup
+    );
+
+    startRoundButton.addEventListener(
+      "click",
+      createNewRound
+    );
 
     window.addEventListener(
       "beforeunload",
       () => {
-
         saveRound();
-
       }
     );
-
 
     loadCourse();
 
