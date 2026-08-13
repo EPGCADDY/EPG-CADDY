@@ -4,112 +4,609 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#07110d" />
-  <title>EPG Caddy</title>
+  <title>Golf Scorecard Guatemala</title>
+
   <style>
     * { box-sizing: border-box; }
+
     body {
-      margin: 0; min-height: 100vh;
+      margin: 0;
+      min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: radial-gradient(circle at top, #17372a 0%, #0b1b14 35%, #050a08 75%);
-      color: #fff; display: flex; justify-content: center;
+      color: #fff;
+      display: flex;
+      justify-content: center;
     }
+
     .app {
-      width: 100%; max-width: 520px; min-height: 100vh;
-      padding: max(28px, env(safe-area-inset-top)) 10px max(40px, env(safe-area-inset-bottom));
-      display: flex; flex-direction: column;
+      width: 100%;
+      max-width: 520px;
+      min-height: 100vh;
+      padding:
+        max(28px, env(safe-area-inset-top))
+        10px
+        max(40px, env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
     }
-    .brand { text-align: center; margin-top: 18px; }
-    .brand h1 { margin: 0; font-size: 32px; letter-spacing: 2px; }
-    .brand p { margin: 8px 0 0; color: #a8b7af; font-size: 14px; }
+
+    .brand {
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 30px;
+      letter-spacing: 1.4px;
+    }
+
+    .brand p {
+      margin: 8px 0 0;
+      color: #a8b7af;
+      font-size: 14px;
+    }
+
     .course {
-      margin-top: 26px; padding: 17px; border: 1px solid rgba(255,255,255,.12);
-      border-radius: 18px; background: rgba(255,255,255,.05);
+      margin-top: 24px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
     }
-    .course-name { font-size: 21px; font-weight: 700; }
-    .course-info { margin-top: 7px; color: #b8c4be; font-size: 14px; }
-    .player-info { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.08); color: #d7e0db; font-size: 13px; }
-    .status { margin-top: 16px; min-height: 22px; text-align: center; color: #b8c4be; font-size: 14px; }
-    .controls { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 26px 0; }
+
+    .course-name {
+      font-size: 21px;
+      font-weight: 700;
+    }
+
+    .course-info {
+      margin-top: 7px;
+      color: #b8c4be;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .player-info {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: #d7e0db;
+      font-size: 13px;
+    }
+
+    .status {
+      margin-top: 14px;
+      min-height: 22px;
+      text-align: center;
+      color: #b8c4be;
+      font-size: 14px;
+    }
+
+    .controls {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0 26px;
+    }
+
     #talkButton {
-      width: 168px; height: 168px; flex: 0 0 168px; border-radius: 50%;
-      border: 1px solid rgba(255,255,255,.18); background: #2d8c5a; color: #fff;
-      font-size: 20px; font-weight: 700; box-shadow: 0 15px 45px rgba(0,0,0,.4);
-      cursor: pointer; touch-action: manipulation;
+      width: 218px;
+      height: 218px;
+      flex: 0 0 218px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.20);
+      background: #2d8c5a;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 800;
+      box-shadow:
+        0 18px 48px rgba(0,0,0,.46),
+        0 0 0 8px rgba(45,140,90,.08);
+      cursor: pointer;
+      touch-action: manipulation;
     }
-    #talkButton:active { transform: scale(.97); }
-    #talkButton.active { background: #b64242; }
-    #talkButton:disabled { opacity: .65; }
-    .instruction { margin-top: 20px; color: #aebbb4; text-align: center; line-height: 1.5; font-size: 13px; }
+
+    #talkButton:active {
+      transform: scale(.97);
+    }
+
+    #talkButton.active {
+      background: #b64242;
+      box-shadow:
+        0 18px 48px rgba(0,0,0,.46),
+        0 0 0 8px rgba(182,66,66,.10);
+    }
+
+    #talkButton:disabled {
+      opacity: .65;
+    }
+
+    .instruction {
+      margin-top: 18px;
+      color: #aebbb4;
+      text-align: center;
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
     .score-summary {
-      width: 100%; margin-top: 26px; padding: 12px 8px; border-radius: 18px;
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      width: 100%;
+      margin-top: 24px;
+      padding: 12px 8px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
     }
-    .score-summary h2 { margin: 0 0 14px; font-size: 19px; }
-    .summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; text-align: center; }
-    .summary-grid > div { min-width: 0; padding: 10px 2px; border-radius: 11px; background: rgba(255,255,255,.05); }
-    .label { display: block; margin-bottom: 5px; color: #91a099; font-size: 10px; }
-    .value { display: block; font-size: 11px; font-weight: 700; line-height: 1.45; white-space: pre-line; }
-    .scorecard { width: 100%; margin-top: 16px; padding: 13px 4px; border-radius: 15px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); overflow: hidden; }
-    .scorecard-title { margin-bottom: 13px; text-align: center; font-size: 16px; font-weight: 800; color: #d5ded9; }
-    .nine-title { margin: 15px 0 7px; color: #91a099; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; }
-    .nine-title:first-of-type { margin-top: 0; }
-    .score-table-wrap { width: 100%; overflow: hidden; }
-    .score-table { width: 100%; border-collapse: separate; border-spacing: 1px; table-layout: fixed; text-align: center; }
-    .score-table th, .score-table td { height: 33px; padding: 1px 0; border-radius: 4px; background: rgba(255,255,255,.055); font-size: 10px; white-space: nowrap; overflow: hidden; }
-    .score-table th { color: #9caaa3; font-weight: 700; }
-    .score-table .row-label { width: 44px; padding-left: 1px; text-align: left; color: #9caaa3; font-size: 9px; font-weight: 800; background: transparent; }
-    .score-table .total-column { width: 34px; background: rgba(255,255,255,.10); font-weight: 800; }
-    .gross-cell { color: #fff; font-size: 11px !important; font-weight: 900; }
-    .net-cell { color: #79e3a8; font-size: 11px !important; font-weight: 900; }
-    .hcp-stroke-cell { color: #ff5c5c !important; background: rgba(214,50,50,.20) !important; border: 1px solid rgba(255,92,92,.48); font-weight: 900 !important; }
-    .hcp-double-cell { color: #ffd0d0 !important; background: rgba(214,50,50,.38) !important; border: 1px solid rgba(255,92,92,.78); font-weight: 900 !important; }
-    .scorecard-total { margin-top: 13px; padding-top: 11px; border-top: 1px solid rgba(255,255,255,.08); display: grid; grid-template-columns: 1fr auto; gap: 7px 14px; align-items: center; }
-    .scorecard-total-label { color: #91a099; font-size: 12px; font-weight: 800; }
-    .scorecard-total-value { font-size: 17px; font-weight: 900; }
-    .net-total { color: #79e3a8; }
-    #newRoundButton { margin-top: 17px; padding: 10px 15px; border: 1px solid rgba(255,255,255,.15); border-radius: 10px; background: rgba(255,255,255,.04); color: #d2ddd7; font-size: 12px; cursor: pointer; }
-    footer { padding-top: 14px; text-align: center; color: #65736c; font-size: 12px; }
-    .setup-overlay { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(2,8,5,.94); }
-    .setup-overlay.visible { display: flex; }
-    .setup-card { width: 100%; max-width: 430px; max-height: 90vh; overflow-y: auto; padding: 21px; border-radius: 19px; background: #102219; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
-    .setup-card h2 { margin: 0 0 6px; font-size: 22px; }
-    .setup-card p { margin: 0 0 18px; color: #9fafa6; font-size: 13px; line-height: 1.45; }
-    .field { margin-top: 13px; }
-    .field label { display: block; margin-bottom: 6px; color: #b8c5be; font-size: 12px; font-weight: 700; }
-    .field input { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,.13); border-radius: 10px; outline: none; background: rgba(255,255,255,.06); color: #fff; font-size: 16px; }
-    .field input:focus { border-color: #45a974; }
-    .field input[readonly] { opacity: .78; }
-    .setup-actions { display: flex; gap: 9px; margin-top: 20px; }
-    .setup-actions button { flex: 1; padding: 12px 9px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-    #cancelSetupButton { border: 1px solid rgba(255,255,255,.12); background: transparent; color: #aebbb4; }
-    #startRoundButton { border: 0; background: #2d8c5a; color: #fff; }
+
+    .score-summary h2 {
+      margin: 0 0 14px;
+      font-size: 19px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 6px;
+      text-align: center;
+    }
+
+    .summary-grid > div {
+      min-width: 0;
+      padding: 10px 2px;
+      border-radius: 11px;
+      background: rgba(255,255,255,.05);
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 5px;
+      color: #91a099;
+      font-size: 10px;
+    }
+
+    .value {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.45;
+      white-space: pre-line;
+    }
+
+    .scorecard {
+      width: 100%;
+      margin-top: 16px;
+      padding: 13px 4px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      overflow: hidden;
+    }
+
+    .scorecard-title {
+      margin-bottom: 13px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: #d5ded9;
+    }
+
+    .nine-title {
+      margin: 15px 0 7px;
+      color: #91a099;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .nine-title:first-of-type {
+      margin-top: 0;
+    }
+
+    .score-table-wrap {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .score-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 1px;
+      table-layout: fixed;
+      text-align: center;
+    }
+
+    .score-table th,
+    .score-table td {
+      height: 33px;
+      padding: 1px 0;
+      border-radius: 4px;
+      background: rgba(255,255,255,.055);
+      font-size: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .score-table th {
+      color: #9caaa3;
+      font-weight: 700;
+    }
+
+    .score-table .row-label {
+      width: 44px;
+      padding-left: 1px;
+      text-align: left;
+      color: #9caaa3;
+      font-size: 9px;
+      font-weight: 800;
+      background: transparent;
+    }
+
+    .score-table .total-column {
+      width: 34px;
+      background: rgba(255,255,255,.10);
+      font-weight: 800;
+    }
+
+    .gross-cell {
+      color: #fff;
+      font-size: 11px !important;
+      font-weight: 900;
+    }
+
+    .net-cell {
+      color: #79e3a8;
+      font-size: 11px !important;
+      font-weight: 900;
+    }
+
+    .diff-cell {
+      color: #f1f5f3;
+      font-size: 10px !important;
+      font-weight: 900;
+    }
+
+    .diff-under {
+      color: #79e3a8 !important;
+    }
+
+    .diff-over {
+      color: #ff8181 !important;
+    }
+
+    .diff-even {
+      color: #ffffff !important;
+    }
+
+    .hcp-stroke-cell {
+      color: #ff5c5c !important;
+      background: rgba(214,50,50,.20) !important;
+      border: 1px solid rgba(255,92,92,.48);
+      font-weight: 900 !important;
+    }
+
+    .hcp-double-cell {
+      color: #ffd0d0 !important;
+      background: rgba(214,50,50,.38) !important;
+      border: 1px solid rgba(255,92,92,.78);
+      font-weight: 900 !important;
+    }
+
+    .scorecard-total {
+      margin-top: 13px;
+      padding-top: 11px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 7px 14px;
+      align-items: center;
+    }
+
+    .scorecard-total-label {
+      color: #91a099;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .scorecard-total-value {
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .net-total {
+      color: #79e3a8;
+    }
+
+    .final-report {
+      display: none;
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 15px;
+      border: 1px solid rgba(121,227,168,.28);
+      background: rgba(38,107,72,.11);
+    }
+
+    .final-report.visible {
+      display: block;
+    }
+
+    .final-report h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: #dff7e9;
+    }
+
+    .report-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px 10px;
+      margin-bottom: 12px;
+    }
+
+    .report-meta > div {
+      padding: 8px;
+      border-radius: 9px;
+      background: rgba(255,255,255,.045);
+    }
+
+    .report-meta span {
+      display: block;
+      color: #91a099;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .report-meta strong {
+      display: block;
+      margin-top: 3px;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .report-totals {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .report-totals > div {
+      padding: 9px 4px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.05);
+    }
+
+    .report-totals span {
+      display: block;
+      color: #91a099;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .report-totals strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 15px;
+    }
+
+    .round-result {
+      color: #79e3a8;
+    }
+
+    .result-counts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+
+    .result-counts > div {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 9px;
+      border-radius: 9px;
+      background: rgba(255,255,255,.04);
+      font-size: 11px;
+    }
+
+    .result-counts span {
+      color: #aab8b1;
+    }
+
+    .result-counts strong {
+      color: #fff;
+    }
+
+    .report-note {
+      margin-top: 10px;
+      color: #83928a;
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    #newRoundButton {
+      margin-top: 17px;
+      padding: 10px 15px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 10px;
+      background: rgba(255,255,255,.04);
+      color: #d2ddd7;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    footer {
+      padding-top: 14px;
+      text-align: center;
+      color: #65736c;
+      font-size: 12px;
+    }
+
+    .setup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(2,8,5,.94);
+    }
+
+    .setup-overlay.visible {
+      display: flex;
+    }
+
+    .setup-card {
+      width: 100%;
+      max-width: 430px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 21px;
+      border-radius: 19px;
+      background: #102219;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+
+    .setup-card h2 {
+      margin: 0 0 6px;
+      font-size: 22px;
+    }
+
+    .setup-card p {
+      margin: 0 0 18px;
+      color: #9fafa6;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .field {
+      margin-top: 13px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      color: #b8c5be;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 10px;
+      outline: none;
+      background: rgba(255,255,255,.06);
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .field input:focus {
+      border-color: #45a974;
+    }
+
+    .field input[readonly] {
+      opacity: .78;
+    }
+
+    .setup-actions {
+      display: flex;
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    .setup-actions button {
+      flex: 1;
+      padding: 12px 9px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    #cancelSetupButton {
+      border: 1px solid rgba(255,255,255,.12);
+      background: transparent;
+      color: #aebbb4;
+    }
+
+    #startRoundButton {
+      border: 0;
+      background: #2d8c5a;
+      color: #fff;
+    }
+
     @media (max-width: 390px) {
-      .app { padding-left: 7px; padding-right: 7px; }
-      .score-summary { padding-left: 6px; padding-right: 6px; }
-      .scorecard { padding-left: 2px; padding-right: 2px; }
-      .score-table th, .score-table td { font-size: 9px; }
-      .score-table .row-label { width: 41px; font-size: 8px; }
-      .score-table .total-column { width: 31px; }
+      .app {
+        padding-left: 7px;
+        padding-right: 7px;
+      }
+
+      #talkButton {
+        width: 206px;
+        height: 206px;
+        flex-basis: 206px;
+      }
+
+      .score-summary {
+        padding-left: 6px;
+        padding-right: 6px;
+      }
+
+      .scorecard {
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+
+      .score-table th,
+      .score-table td {
+        font-size: 9px;
+      }
+
+      .score-table .row-label {
+        width: 41px;
+        font-size: 8px;
+      }
+
+      .score-table .total-column {
+        width: 31px;
+      }
     }
   </style>
 </head>
+
 <body>
   <main class="app">
     <header class="brand">
-      <h1>EPG CADDY</h1>
-      <p>Tu caddie profesional de golf por voz</p>
+      <h1>GOLF SCORECARD GUATEMALA</h1>
+      <p>Tu scorecard de golf por voz</p>
     </header>
 
     <section class="course">
       <div class="course-name" id="courseName">El Pulté</div>
-      <div class="course-info" id="courseInfo">Blancas · Par 72 · 18 hoyos</div>
-      <div class="player-info" id="playerInfo">Handicap por definir</div>
+      <div class="course-info" id="courseInfo">
+        Blancas · Par 72 · 18 hoyos · CR — · Slope —
+      </div>
+      <div class="player-info" id="playerInfo">
+        Handicap por definir
+      </div>
     </section>
 
-    <div class="status" id="status">Preparando EPG Caddy…</div>
+    <div class="status" id="status">
+      Preparando Golf Scorecard Guatemala…
+    </div>
 
     <section class="controls">
-      <button id="talkButton" type="button">Iniciar Caddy</button>
+      <button id="talkButton" type="button">
+        Iniciar voz
+      </button>
 
       <div class="instruction">
         Configura la ronda por voz o con “Nueva ronda”.
@@ -120,180 +617,576 @@
       </div>
 
       <section class="score-summary">
-        <h2>CURRENT ROUND</h2>
+        <h2>RONDA ACTUAL</h2>
 
         <div class="summary-grid">
-          <div><span class="label">Primera</span><span class="value" id="front9">0/9</span></div>
-          <div><span class="label">Segunda</span><span class="value" id="back9">0/9</span></div>
-          <div><span class="label">Total</span><span class="value" id="total">0/18</span></div>
+          <div>
+            <span class="label">Primera</span>
+            <span class="value" id="front9">0/9</span>
+          </div>
+
+          <div>
+            <span class="label">Segunda</span>
+            <span class="value" id="back9">0/9</span>
+          </div>
+
+          <div>
+            <span class="label">Total</span>
+            <span class="value" id="total">0/18</span>
+          </div>
         </div>
 
         <section class="scorecard">
           <div class="scorecard-title">SCORECARD</div>
 
           <div class="nine-title">Primera Vuelta</div>
+
           <div class="score-table-wrap">
-            <table class="score-table"><tbody>
-              <tr id="frontHoleRow"><th class="row-label">Hoyo</th></tr>
-              <tr id="frontParRow"><th class="row-label">Par</th></tr>
-              <tr id="frontHcpRow"><th class="row-label">HDCP</th></tr>
-              <tr id="frontGrossRow"><th class="row-label">GROSS</th></tr>
-              <tr id="frontNetRow"><th class="row-label">NETO</th></tr>
-            </tbody></table>
+            <table class="score-table">
+              <tbody>
+                <tr id="frontHoleRow">
+                  <th class="row-label">Hoyo</th>
+                </tr>
+
+                <tr id="frontHcpRow">
+                  <th class="row-label">HDCP</th>
+                </tr>
+
+                <tr id="frontYdsRow">
+                  <th class="row-label">YDS</th>
+                </tr>
+
+                <tr id="frontParRow">
+                  <th class="row-label">PAR</th>
+                </tr>
+
+                <tr id="frontGrossRow">
+                  <th class="row-label">GROSS</th>
+                </tr>
+
+                <tr id="frontNetRow">
+                  <th class="row-label">NETO</th>
+                </tr>
+
+                <tr id="frontDiffRow">
+                  <th class="row-label">+/-</th>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <div class="nine-title">Segunda Vuelta</div>
+
           <div class="score-table-wrap">
-            <table class="score-table"><tbody>
-              <tr id="backHoleRow"><th class="row-label">Hoyo</th></tr>
-              <tr id="backParRow"><th class="row-label">Par</th></tr>
-              <tr id="backHcpRow"><th class="row-label">HDCP</th></tr>
-              <tr id="backGrossRow"><th class="row-label">GROSS</th></tr>
-              <tr id="backNetRow"><th class="row-label">NETO</th></tr>
-            </tbody></table>
+            <table class="score-table">
+              <tbody>
+                <tr id="backHoleRow">
+                  <th class="row-label">Hoyo</th>
+                </tr>
+
+                <tr id="backHcpRow">
+                  <th class="row-label">HDCP</th>
+                </tr>
+
+                <tr id="backYdsRow">
+                  <th class="row-label">YDS</th>
+                </tr>
+
+                <tr id="backParRow">
+                  <th class="row-label">PAR</th>
+                </tr>
+
+                <tr id="backGrossRow">
+                  <th class="row-label">GROSS</th>
+                </tr>
+
+                <tr id="backNetRow">
+                  <th class="row-label">NETO</th>
+                </tr>
+
+                <tr id="backDiffRow">
+                  <th class="row-label">+/-</th>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <div class="scorecard-total">
-            <span class="scorecard-total-label">TOTAL GROSS</span>
-            <span class="scorecard-total-value" id="scorecardTotalGross">—</span>
-            <span class="scorecard-total-label">TOTAL NETO</span>
-            <span class="scorecard-total-value net-total" id="scorecardTotalNet">—</span>
+            <span class="scorecard-total-label">
+              TOTAL GROSS
+            </span>
+
+            <span
+              class="scorecard-total-value"
+              id="scorecardTotalGross"
+            >
+              —
+            </span>
+
+            <span class="scorecard-total-label">
+              TOTAL NETO
+            </span>
+
+            <span
+              class="scorecard-total-value net-total"
+              id="scorecardTotalNet"
+            >
+              —
+            </span>
+
+            <span class="scorecard-total-label">
+              RESULTADO
+            </span>
+
+            <span
+              class="scorecard-total-value net-total"
+              id="scorecardTotalDiff"
+            >
+              —
+            </span>
           </div>
+
+          <section
+            class="final-report"
+            id="finalReport"
+          >
+            <h3>REPORTE FINAL</h3>
+
+            <div class="report-meta">
+              <div>
+                <span>Jugador</span>
+                <strong id="reportPlayer">—</strong>
+              </div>
+
+              <div>
+                <span>Handicap</span>
+                <strong id="reportHandicap">—</strong>
+              </div>
+
+              <div>
+                <span>Campo</span>
+                <strong>El Pulté</strong>
+              </div>
+
+              <div>
+                <span>Marcas</span>
+                <strong>Blancas</strong>
+              </div>
+
+              <div>
+                <span>Fecha / hora</span>
+                <strong id="reportDate">—</strong>
+              </div>
+
+              <div>
+                <span>CR / Slope</span>
+                <strong>— / —</strong>
+              </div>
+            </div>
+
+            <div class="report-totals">
+              <div>
+                <span>Primera</span>
+                <strong id="reportFront">—</strong>
+              </div>
+
+              <div>
+                <span>Segunda</span>
+                <strong id="reportBack">—</strong>
+              </div>
+
+              <div>
+                <span>Total</span>
+                <strong
+                  class="round-result"
+                  id="reportTotal"
+                >
+                  —
+                </strong>
+              </div>
+            </div>
+
+            <div
+              class="result-counts"
+              id="resultCounts"
+            ></div>
+
+            <div class="report-note">
+              YDS, Course Rating y Slope permanecen
+              en “—” hasta cargar sus valores oficiales
+              de El Pulté · Blancas.
+            </div>
+          </section>
         </section>
 
-        <button id="newRoundButton" type="button">Nueva ronda</button>
+        <button
+          id="newRoundButton"
+          type="button"
+        >
+          Nueva ronda
+        </button>
       </section>
     </section>
 
-    <footer>EPG Caddy</footer>
+    <footer>
+      Golf Scorecard Guatemala
+    </footer>
   </main>
 
-  <div class="setup-overlay" id="setupOverlay">
+  <div
+    class="setup-overlay"
+    id="setupOverlay"
+  >
     <div class="setup-card">
       <h2>NUEVA RONDA</h2>
-      <p>Ingresa tu nombre y handicap de juego. El handicap puede ser de 0 a 24.</p>
+
+      <p>
+        Ingresa tu nombre y handicap de juego.
+        El handicap puede ser de 0 a 24.
+      </p>
 
       <div class="field">
-        <label for="playerNameInput">JUGADOR</label>
-        <input id="playerNameInput" type="text" placeholder="Nombre" autocomplete="name" />
+        <label for="playerNameInput">
+          JUGADOR
+        </label>
+
+        <input
+          id="playerNameInput"
+          type="text"
+          placeholder="Nombre"
+          autocomplete="name"
+        />
       </div>
 
       <div class="field">
-        <label for="handicapInput">HANDICAP DE JUEGO · 0 A 24</label>
-        <input id="handicapInput" type="number" inputmode="numeric" min="0" max="24" step="1" placeholder="14" />
+        <label for="handicapInput">
+          HANDICAP DE JUEGO · 0 A 24
+        </label>
+
+        <input
+          id="handicapInput"
+          type="number"
+          inputmode="numeric"
+          min="0"
+          max="24"
+          step="1"
+          placeholder="14"
+        />
       </div>
 
-      <div class="field"><label>CAMPO</label><input type="text" value="El Pulté" readonly /></div>
-      <div class="field"><label>MARCAS</label><input type="text" value="Blancas" readonly /></div>
+      <div class="field">
+        <label>CAMPO</label>
+        <input
+          type="text"
+          value="El Pulté"
+          readonly
+        />
+      </div>
+
+      <div class="field">
+        <label>MARCAS</label>
+        <input
+          type="text"
+          value="Blancas"
+          readonly
+        />
+      </div>
 
       <div class="setup-actions">
-        <button id="cancelSetupButton" type="button">Cancelar</button>
-        <button id="startRoundButton" type="button">Iniciar ronda</button>
+        <button
+          id="cancelSetupButton"
+          type="button"
+        >
+          Cancelar
+        </button>
+
+        <button
+          id="startRoundButton"
+          type="button"
+        >
+          Iniciar ronda
+        </button>
       </div>
     </div>
   </div>
 
   <script>
-    const STORAGE_KEY = "epg-caddy-current-round-v7";
+    /*
+      IMPORTANTE:
+      Estos dos identificadores se conservan
+      deliberadamente para no romper compatibilidad
+      con la ronda almacenada y con el backend Realtime.
+    */
+
+    const STORAGE_KEY =
+      "epg-caddy-current-round-v7";
+
     const MIN_HANDICAP = 0;
     const MAX_HANDICAP = 24;
 
     const FALLBACK_COURSE = {
-      name: "El Pulté", tees: "Blancas", par: 72,
+      name: "El Pulté",
+      tees: "Blancas",
+      par: 72,
+
       holes: [
-        { hole: 1, par: 4, hcp: 9 }, { hole: 2, par: 4, hcp: 5 }, { hole: 3, par: 4, hcp: 7 },
-        { hole: 4, par: 4, hcp: 11 }, { hole: 5, par: 3, hcp: 17 }, { hole: 6, par: 5, hcp: 3 },
-        { hole: 7, par: 5, hcp: 1 }, { hole: 8, par: 3, hcp: 15 }, { hole: 9, par: 4, hcp: 13 },
-        { hole: 10, par: 3, hcp: 18 }, { hole: 11, par: 5, hcp: 2 }, { hole: 12, par: 4, hcp: 8 },
-        { hole: 13, par: 4, hcp: 16 }, { hole: 14, par: 5, hcp: 4 }, { hole: 15, par: 4, hcp: 6 },
-        { hole: 16, par: 4, hcp: 12 }, { hole: 17, par: 3, hcp: 10 }, { hole: 18, par: 4, hcp: 14 }
+        { hole: 1,  par: 4, hcp: 9  },
+        { hole: 2,  par: 4, hcp: 5  },
+        { hole: 3,  par: 4, hcp: 7  },
+        { hole: 4,  par: 4, hcp: 11 },
+        { hole: 5,  par: 3, hcp: 17 },
+        { hole: 6,  par: 5, hcp: 3  },
+        { hole: 7,  par: 5, hcp: 1  },
+        { hole: 8,  par: 3, hcp: 15 },
+        { hole: 9,  par: 4, hcp: 13 },
+
+        { hole: 10, par: 3, hcp: 18 },
+        { hole: 11, par: 5, hcp: 2  },
+        { hole: 12, par: 4, hcp: 8  },
+        { hole: 13, par: 4, hcp: 16 },
+        { hole: 14, par: 5, hcp: 4  },
+        { hole: 15, par: 4, hcp: 6  },
+        { hole: 16, par: 4, hcp: 12 },
+        { hole: 17, par: 3, hcp: 10 },
+        { hole: 18, par: 4, hcp: 14 }
       ]
     };
 
-    const FRONT = [1,2,3,4,5,6,7,8,9];
-    const BACK = [10,11,12,13,14,15,16,17,18];
-    const ALL_HOLES = [...FRONT, ...BACK];
+    const FRONT =
+      [1,2,3,4,5,6,7,8,9];
 
-    const $ = id => document.getElementById(id);
+    const BACK =
+      [10,11,12,13,14,15,16,17,18];
+
+    const ALL_HOLES =
+      [...FRONT, ...BACK];
+
+    const $ =
+      id => document.getElementById(id);
+
     const talkButton = $("talkButton");
     const statusEl = $("status");
     const courseName = $("courseName");
     const courseInfo = $("courseInfo");
     const playerInfo = $("playerInfo");
+
     const front9El = $("front9");
     const back9El = $("back9");
     const totalEl = $("total");
-    const newRoundButton = $("newRoundButton");
-    const setupOverlay = $("setupOverlay");
-    const playerNameInput = $("playerNameInput");
-    const handicapInput = $("handicapInput");
-    const cancelSetupButton = $("cancelSetupButton");
-    const startRoundButton = $("startRoundButton");
-    const frontHoleRow = $("frontHoleRow");
-    const frontParRow = $("frontParRow");
-    const frontHcpRow = $("frontHcpRow");
-    const frontGrossRow = $("frontGrossRow");
-    const frontNetRow = $("frontNetRow");
-    const backHoleRow = $("backHoleRow");
-    const backParRow = $("backParRow");
-    const backHcpRow = $("backHcpRow");
-    const backGrossRow = $("backGrossRow");
-    const backNetRow = $("backNetRow");
-    const scorecardTotalGross = $("scorecardTotalGross");
-    const scorecardTotalNet = $("scorecardTotalNet");
 
-    let course = JSON.parse(JSON.stringify(FALLBACK_COURSE));
+    const newRoundButton =
+      $("newRoundButton");
+
+    const setupOverlay =
+      $("setupOverlay");
+
+    const playerNameInput =
+      $("playerNameInput");
+
+    const handicapInput =
+      $("handicapInput");
+
+    const cancelSetupButton =
+      $("cancelSetupButton");
+
+    const startRoundButton =
+      $("startRoundButton");
+
+    const frontHoleRow =
+      $("frontHoleRow");
+
+    const frontHcpRow =
+      $("frontHcpRow");
+
+    const frontYdsRow =
+      $("frontYdsRow");
+
+    const frontParRow =
+      $("frontParRow");
+
+    const frontGrossRow =
+      $("frontGrossRow");
+
+    const frontNetRow =
+      $("frontNetRow");
+
+    const frontDiffRow =
+      $("frontDiffRow");
+
+    const backHoleRow =
+      $("backHoleRow");
+
+    const backHcpRow =
+      $("backHcpRow");
+
+    const backYdsRow =
+      $("backYdsRow");
+
+    const backParRow =
+      $("backParRow");
+
+    const backGrossRow =
+      $("backGrossRow");
+
+    const backNetRow =
+      $("backNetRow");
+
+    const backDiffRow =
+      $("backDiffRow");
+
+    const scorecardTotalGross =
+      $("scorecardTotalGross");
+
+    const scorecardTotalNet =
+      $("scorecardTotalNet");
+
+    const scorecardTotalDiff =
+      $("scorecardTotalDiff");
+
+    const finalReport =
+      $("finalReport");
+
+    const reportPlayer =
+      $("reportPlayer");
+
+    const reportHandicap =
+      $("reportHandicap");
+
+    const reportDate =
+      $("reportDate");
+
+    const reportFront =
+      $("reportFront");
+
+    const reportBack =
+      $("reportBack");
+
+    const reportTotal =
+      $("reportTotal");
+
+    const resultCounts =
+      $("resultCounts");
+
+    let course =
+      JSON.parse(
+        JSON.stringify(FALLBACK_COURSE)
+      );
+
     let pc = null;
     let dc = null;
     let localStream = null;
     let micTrack = null;
     let audioElement = null;
+
     let connected = false;
     let listening = false;
     let waitingForToolAnswer = false;
 
     function validHandicap(value) {
       const handicap = Number(value);
-      return Number.isInteger(handicap) && handicap >= MIN_HANDICAP && handicap <= MAX_HANDICAP;
+
+      return (
+        Number.isInteger(handicap) &&
+        handicap >= MIN_HANDICAP &&
+        handicap <= MAX_HANDICAP
+      );
     }
 
     function emptyRound(config = {}) {
-      const configured = config.configured === true && validHandicap(config.handicap);
+      const configured =
+        config.configured === true &&
+        validHandicap(config.handicap);
+
       return {
         version: 7,
         configured,
-        player: String(config.player || "").trim(),
+        player:
+          String(config.player || "").trim(),
+
         course: "El Pulté",
         tees: "Blancas",
-        handicap: configured ? Number(config.handicap) : null,
+
+        handicap:
+          configured
+            ? Number(config.handicap)
+            : null,
+
         holes: {},
         lastHole: null,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+
+        createdAt:
+          new Date().toISOString(),
+
+        updatedAt:
+          new Date().toISOString()
       };
     }
 
     function loadRound() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return emptyRound();
-        const parsed = JSON.parse(raw);
-        if (!parsed || typeof parsed !== "object" || !parsed.holes) return emptyRound();
-        if (!(parsed.configured === true && validHandicap(parsed.handicap))) return emptyRound();
+        const raw =
+          localStorage.getItem(STORAGE_KEY);
+
+        if (!raw) {
+          return emptyRound();
+        }
+
+        const parsed =
+          JSON.parse(raw);
+
+        if (
+          !parsed ||
+          typeof parsed !== "object" ||
+          !parsed.holes
+        ) {
+          return emptyRound();
+        }
+
+        if (
+          !(
+            parsed.configured === true &&
+            validHandicap(parsed.handicap)
+          )
+        ) {
+          return emptyRound();
+        }
+
         return {
           version: 7,
           configured: true,
-          player: String(parsed.player || "").trim(),
+
+          player:
+            String(
+              parsed.player || ""
+            ).trim(),
+
           course: "El Pulté",
           tees: "Blancas",
-          handicap: Number(parsed.handicap),
-          holes: parsed.holes || {},
-          lastHole: parsed.lastHole || null,
-          createdAt: parsed.createdAt || new Date().toISOString(),
-          updatedAt: parsed.updatedAt || new Date().toISOString()
+
+          handicap:
+            Number(parsed.handicap),
+
+          holes:
+            parsed.holes || {},
+
+          lastHole:
+            parsed.lastHole || null,
+
+          createdAt:
+            parsed.createdAt ||
+            new Date().toISOString(),
+
+          updatedAt:
+            parsed.updatedAt ||
+            new Date().toISOString()
         };
+
       } catch (error) {
-        console.error("Error leyendo ronda:", error);
+        console.error(
+          "Error leyendo ronda:",
+          error
+        );
+
         return emptyRound();
       }
     }
@@ -301,12 +1194,22 @@
     let round = loadRound();
 
     function currentHandicap() {
-      return round.configured && validHandicap(round.handicap) ? Number(round.handicap) : null;
+      return (
+        round.configured &&
+        validHandicap(round.handicap)
+      )
+        ? Number(round.handicap)
+        : null;
     }
 
     function persistRound() {
-      round.updatedAt = new Date().toISOString();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(round));
+      round.updatedAt =
+        new Date().toISOString();
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(round)
+      );
     }
 
     function saveRound() {
@@ -315,70 +1218,239 @@
     }
 
     function holeDefinition(number) {
-      return course.holes.find(item => Number(item.hole) === Number(number));
+      return course.holes.find(
+        item =>
+          Number(item.hole) ===
+          Number(number)
+      );
     }
 
+    /*
+      MOTOR OPERATIVO ORIGINAL:
+      Se conserva la misma lógica
+      para aplicar handicap.
+    */
+
     function strokeForHole(definition) {
-      if (!definition || !round.configured) return 0;
-      const handicap = currentHandicap();
-      if (handicap === null || handicap <= 0) return 0;
-      const index = Number(definition.hcp);
-      if (!Number.isInteger(index) || index < 1 || index > 18) return 0;
-      if (handicap <= 18) return index <= handicap ? 1 : 0;
-      return 1 + (index <= handicap - 18 ? 1 : 0);
+      if (
+        !definition ||
+        !round.configured
+      ) {
+        return 0;
+      }
+
+      const handicap =
+        currentHandicap();
+
+      if (
+        handicap === null ||
+        handicap <= 0
+      ) {
+        return 0;
+      }
+
+      const index =
+        Number(definition.hcp);
+
+      if (
+        !Number.isInteger(index) ||
+        index < 1 ||
+        index > 18
+      ) {
+        return 0;
+      }
+
+      if (handicap <= 18) {
+        return index <= handicap
+          ? 1
+          : 0;
+      }
+
+      return (
+        1 +
+        (
+          index <= handicap - 18
+            ? 1
+            : 0
+        )
+      );
     }
 
     function recalculateStoredScores() {
-      for (const holeNumber of ALL_HOLES) {
-        const key = String(holeNumber);
-        const existing = round.holes[key];
-        if (!existing) continue;
-        const definition = holeDefinition(holeNumber);
-        if (!definition) continue;
-        const gross = Number(existing.gross);
-        const handicapStroke = strokeForHole(definition);
-        const net = gross - handicapStroke;
+      for (
+        const holeNumber
+        of ALL_HOLES
+      ) {
+        const key =
+          String(holeNumber);
+
+        const existing =
+          round.holes[key];
+
+        if (!existing) {
+          continue;
+        }
+
+        const definition =
+          holeDefinition(holeNumber);
+
+        if (!definition) {
+          continue;
+        }
+
+        const gross =
+          Number(existing.gross);
+
+        const handicapStroke =
+          strokeForHole(definition);
+
+        const net =
+          gross - handicapStroke;
+
         round.holes[key] = {
           ...existing,
+
           hole: holeNumber,
           gross,
-          par: Number(definition.par),
-          hcp: Number(definition.hcp),
+
+          par:
+            Number(definition.par),
+
+          hcp:
+            Number(definition.hcp),
+
           handicapStroke,
           net,
-          diff: net - Number(definition.par)
+
+          diff:
+            net -
+            Number(definition.par)
         };
       }
     }
 
-    function totalsForHoles(holeNumbers) {
-      const items = holeNumbers.map(n => round.holes[String(n)]).filter(Boolean);
-      const gross = items.reduce((sum, item) => sum + Number(item.gross || 0), 0);
-      const net = items.reduce((sum, item) => sum + Number(item.net || 0), 0);
-      const par = items.reduce((sum, item) => sum + Number(item.par || 0), 0);
-      return { items, gross, net, par, diff: net - par };
+    function totalsForHoles(
+      holeNumbers
+    ) {
+      const items =
+        holeNumbers
+          .map(
+            n =>
+              round.holes[String(n)]
+          )
+          .filter(Boolean);
+
+      const gross =
+        items.reduce(
+          (sum, item) =>
+            sum +
+            Number(item.gross || 0),
+          0
+        );
+
+      const net =
+        items.reduce(
+          (sum, item) =>
+            sum +
+            Number(item.net || 0),
+          0
+        );
+
+      const par =
+        items.reduce(
+          (sum, item) =>
+            sum +
+            Number(item.par || 0),
+          0
+        );
+
+      return {
+        items,
+        gross,
+        net,
+        par,
+        diff: net - par
+      };
     }
 
+    /*
+      VOZ:
+      Conservamos el lenguaje hablado
+      que ya utilizaba el motor.
+    */
+
     function individualResult(diff) {
-      if (diff === 0) return "Par";
-      return diff < 0 ? `${Math.abs(diff)} bajo par` : `${diff} sobre par`;
+      if (diff === 0) {
+        return "Par";
+      }
+
+      return diff < 0
+        ? `${Math.abs(diff)} bajo par`
+        : `${diff} sobre par`;
     }
 
     function aggregateResult(diff) {
-      if (diff === 0) return "Even";
-      return diff < 0 ? `${Math.abs(diff)} bajo par` : `${diff} sobre par`;
+      if (diff === 0) {
+        return "Even";
+      }
+
+      return diff < 0
+        ? `${Math.abs(diff)} bajo par`
+        : `${diff} sobre par`;
+    }
+
+    /*
+      PANTALLA:
+      Aquí sí utilizamos exclusivamente
+      -X / E / +X.
+    */
+
+    function visualResult(diff) {
+      if (diff === 0) {
+        return "E";
+      }
+
+      return diff > 0
+        ? `+${diff}`
+        : String(diff);
+    }
+
+    function diffClass(diff) {
+      if (diff < 0) {
+        return "diff-cell diff-under";
+      }
+
+      if (diff > 0) {
+        return "diff-cell diff-over";
+      }
+
+      return "diff-cell diff-even";
     }
 
     function isComplete(numbers) {
-      return numbers.every(number => Boolean(round.holes[String(number)]));
+      return numbers.every(
+        number =>
+          Boolean(
+            round.holes[String(number)]
+          )
+      );
     }
 
     function roundStatusBeforeUpdate() {
-      return { front: isComplete(FRONT), back: isComplete(BACK), total: isComplete(ALL_HOLES) };
+      return {
+        front: isComplete(FRONT),
+        back: isComplete(BACK),
+        total: isComplete(ALL_HOLES)
+      };
     }
 
-    function buildRecordSpeech(score, before) {
-      const all = totalsForHoles(ALL_HOLES);
+    function buildRecordSpeech(
+      score,
+      before
+    ) {
+      const all =
+        totalsForHoles(ALL_HOLES);
+
       const lines = [
         `Hoyo ${score.hole}`,
         `Gross ${score.gross}`,
@@ -390,482 +1462,1827 @@
         `Acumulado ${aggregateResult(all.net - all.par)}`
       ];
 
-      const frontNow = isComplete(FRONT);
-      const backNow = isComplete(BACK);
-      const totalNow = isComplete(ALL_HOLES);
+      const frontNow =
+        isComplete(FRONT);
 
-      if (!before.front && frontNow) {
-        const front = totalsForHoles(FRONT);
-        lines.push("", "Primera Vuelta", `Gross ${front.gross}`, `Neto ${front.net}`, `Resultado: ${aggregateResult(front.net - front.par)}`);
+      const backNow =
+        isComplete(BACK);
+
+      const totalNow =
+        isComplete(ALL_HOLES);
+
+      if (
+        !before.front &&
+        frontNow
+      ) {
+        const front =
+          totalsForHoles(FRONT);
+
+        lines.push(
+          "",
+          "Primera Vuelta",
+          `Gross ${front.gross}`,
+          `Neto ${front.net}`,
+          `Resultado: ${aggregateResult(front.net - front.par)}`
+        );
       }
 
-      if (!before.back && backNow) {
-        const back = totalsForHoles(BACK);
-        lines.push("", "Segunda Vuelta", `Gross ${back.gross}`, `Neto ${back.net}`, `Resultado: ${aggregateResult(back.net - back.par)}`);
+      if (
+        !before.back &&
+        backNow
+      ) {
+        const back =
+          totalsForHoles(BACK);
+
+        lines.push(
+          "",
+          "Segunda Vuelta",
+          `Gross ${back.gross}`,
+          `Neto ${back.net}`,
+          `Resultado: ${aggregateResult(back.net - back.par)}`
+        );
       }
 
-      if (!before.total && totalNow) {
-        const total = totalsForHoles(ALL_HOLES);
-        lines.push("", "Total", `Gross ${total.gross}`, `Neto ${total.net}`, `Resultado: ${aggregateResult(total.net - total.par)}`);
+      if (
+        !before.total &&
+        totalNow
+      ) {
+        const total =
+          totalsForHoles(ALL_HOLES);
+
+        lines.push(
+          "",
+          "Total",
+          `Gross ${total.gross}`,
+          `Neto ${total.net}`,
+          `Resultado: ${aggregateResult(total.net - total.par)}`
+        );
       }
 
       return lines.join("\n");
     }
 
     function normalizeText(value) {
-      return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+      return String(value || "")
+        .normalize("NFD")
+        .replace(
+          /[\u0300-\u036f]/g,
+          ""
+        )
+        .trim()
+        .toLowerCase();
     }
 
     function supportedCourse(value) {
-      if (!value) return true;
-      const normalized = normalizeText(value);
-      return normalized === "el pulte" || normalized === "pulte";
+      if (!value) {
+        return true;
+      }
+
+      const normalized =
+        normalizeText(value);
+
+      return (
+        normalized === "el pulte" ||
+        normalized === "pulte"
+      );
     }
 
     function supportedTees(value) {
-      if (!value) return true;
-      return ["blancas","blanca","white","white tees"].includes(normalizeText(value));
+      if (!value) {
+        return true;
+      }
+
+      return [
+        "blancas",
+        "blanca",
+        "white",
+        "white tees"
+      ].includes(
+        normalizeText(value)
+      );
     }
 
     function setupRound(args) {
-      if (args.handicap === undefined || args.handicap === null || args.handicap === "") {
-        return { ok: false, action: "setup_round", speech: "Falta handicap de juego." };
+      if (
+        args.handicap === undefined ||
+        args.handicap === null ||
+        args.handicap === ""
+      ) {
+        return {
+          ok: false,
+          action: "setup_round",
+          speech:
+            "Falta handicap de juego."
+        };
       }
-      const handicap = Number(args.handicap);
-      if (!validHandicap(handicap)) {
-        return { ok: false, action: "setup_round", speech: "Handicap inválido. Usa un número entre cero y veinticuatro." };
-      }
-      if (!supportedCourse(args.course)) return { ok: false, action: "setup_round", speech: "Campo no disponible." };
-      if (!supportedTees(args.tees)) return { ok: false, action: "setup_round", speech: "Marcas no disponibles." };
 
-      const player = String(args.player || "").trim();
-      round = emptyRound({ configured: true, player, handicap });
+      const handicap =
+        Number(args.handicap);
+
+      if (
+        !validHandicap(handicap)
+      ) {
+        return {
+          ok: false,
+          action: "setup_round",
+          speech:
+            "Handicap inválido. Usa un número entre cero y veinticuatro."
+        };
+      }
+
+      if (
+        !supportedCourse(args.course)
+      ) {
+        return {
+          ok: false,
+          action: "setup_round",
+          speech:
+            "Campo no disponible."
+        };
+      }
+
+      if (
+        !supportedTees(args.tees)
+      ) {
+        return {
+          ok: false,
+          action: "setup_round",
+          speech:
+            "Marcas no disponibles."
+        };
+      }
+
+      const player =
+        String(
+          args.player || ""
+        ).trim();
+
+      round =
+        emptyRound({
+          configured: true,
+          player,
+          handicap
+        });
+
       saveRound();
 
       return {
         ok: true,
-        action: "setup_round",
-        round: { player, handicap, course: "El Pulté", tees: "Blancas" },
-        speech: ["Ronda configurada", player ? `Jugador ${player}` : null, `Handicap ${handicap}`, "Campo El Pulté", "Marcas Blancas"].filter(Boolean).join("\n")
+
+        action:
+          "setup_round",
+
+        round: {
+          player,
+          handicap,
+          course: "El Pulté",
+          tees: "Blancas"
+        },
+
+        speech: [
+          "Ronda configurada",
+          player
+            ? `Jugador ${player}`
+            : null,
+          `Handicap ${handicap}`,
+          "Campo El Pulté",
+          "Marcas Blancas"
+        ]
+          .filter(Boolean)
+          .join("\n")
       };
     }
 
-    function validateScoreInput(hole, gross) {
-      const parsedHole = Number(hole);
-      const parsedGross = Number(gross);
-      if (!Number.isInteger(parsedHole) || parsedHole < 1 || parsedHole > 18) return { ok: false, speech: "Número de hoyo inválido." };
-      if (!Number.isInteger(parsedGross) || parsedGross < 1 || parsedGross > 30) return { ok: false, speech: `Score inválido para el hoyo ${parsedHole}.` };
-      const definition = holeDefinition(parsedHole);
-      if (!definition) return { ok: false, speech: `Hoyo ${parsedHole} sin datos.` };
-      return { ok: true, hole: parsedHole, gross: parsedGross, definition };
+    function validateScoreInput(
+      hole,
+      gross
+    ) {
+      const parsedHole =
+        Number(hole);
+
+      const parsedGross =
+        Number(gross);
+
+      if (
+        !Number.isInteger(parsedHole) ||
+        parsedHole < 1 ||
+        parsedHole > 18
+      ) {
+        return {
+          ok: false,
+          speech:
+            "Número de hoyo inválido."
+        };
+      }
+
+      if (
+        !Number.isInteger(parsedGross) ||
+        parsedGross < 1 ||
+        parsedGross > 30
+      ) {
+        return {
+          ok: false,
+          speech:
+            `Score inválido para el hoyo ${parsedHole}.`
+        };
+      }
+
+      const definition =
+        holeDefinition(parsedHole);
+
+      if (!definition) {
+        return {
+          ok: false,
+          speech:
+            `Hoyo ${parsedHole} sin datos.`
+        };
+      }
+
+      return {
+        ok: true,
+        hole: parsedHole,
+        gross: parsedGross,
+        definition
+      };
     }
 
-    function buildScoreObject(hole, gross, definition) {
-      const handicapStroke = strokeForHole(definition);
-      const net = gross - handicapStroke;
+    function buildScoreObject(
+      hole,
+      gross,
+      definition
+    ) {
+      const handicapStroke =
+        strokeForHole(definition);
+
+      const net =
+        gross - handicapStroke;
+
       return {
-        hole, gross,
-        par: Number(definition.par),
-        hcp: Number(definition.hcp),
+        hole,
+        gross,
+
+        par:
+          Number(definition.par),
+
+        hcp:
+          Number(definition.hcp),
+
         handicapStroke,
         net,
-        diff: net - Number(definition.par),
-        updatedAt: new Date().toISOString()
+
+        diff:
+          net -
+          Number(definition.par),
+
+        updatedAt:
+          new Date().toISOString()
       };
     }
 
-    function recordScore(hole, gross) {
-      if (!round.configured) return { ok: false, action: "record_score", speech: "Primero configura la ronda y el handicap." };
-      const result = validateScoreInput(hole, gross);
-      if (!result.ok) return { ...result, action: "record_score" };
-      const before = roundStatusBeforeUpdate();
-      const score = buildScoreObject(result.hole, result.gross, result.definition);
-      round.holes[String(score.hole)] = score;
-      round.lastHole = score.hole;
+    function recordScore(
+      hole,
+      gross
+    ) {
+      if (!round.configured) {
+        return {
+          ok: false,
+          action: "record_score",
+          speech:
+            "Primero configura la ronda y el handicap."
+        };
+      }
+
+      const result =
+        validateScoreInput(
+          hole,
+          gross
+        );
+
+      if (!result.ok) {
+        return {
+          ...result,
+          action: "record_score"
+        };
+      }
+
+      const before =
+        roundStatusBeforeUpdate();
+
+      const score =
+        buildScoreObject(
+          result.hole,
+          result.gross,
+          result.definition
+        );
+
+      round.holes[
+        String(score.hole)
+      ] = score;
+
+      round.lastHole =
+        score.hole;
+
       saveRound();
-      return { ok: true, action: "record_score", score, speech: buildRecordSpeech(score, before) };
+
+      return {
+        ok: true,
+        action: "record_score",
+        score,
+        speech:
+          buildRecordSpeech(
+            score,
+            before
+          )
+      };
     }
 
     function recordScores(scores) {
-      if (!round.configured) return { ok: false, action: "record_scores", speech: "Primero configura la ronda y el handicap." };
-      if (!Array.isArray(scores) || scores.length < 2) return { ok: false, action: "record_scores", speech: "No se recibieron suficientes scores." };
+      if (!round.configured) {
+        return {
+          ok: false,
+          action: "record_scores",
+          speech:
+            "Primero configura la ronda y el handicap."
+        };
+      }
+
+      if (
+        !Array.isArray(scores) ||
+        scores.length < 2
+      ) {
+        return {
+          ok: false,
+          action: "record_scores",
+          speech:
+            "No se recibieron suficientes scores."
+        };
+      }
 
       const validated = [];
-      for (const item of scores) {
-        const result = validateScoreInput(item?.hole, item?.gross);
-        if (!result.ok) return { ...result, action: "record_scores" };
+
+      for (
+        const item
+        of scores
+      ) {
+        const result =
+          validateScoreInput(
+            item?.hole,
+            item?.gross
+          );
+
+        if (!result.ok) {
+          return {
+            ...result,
+            action: "record_scores"
+          };
+        }
+
         validated.push(result);
       }
 
-      if (new Set(validated.map(item => item.hole)).size !== validated.length) {
-        return { ok: false, action: "record_scores", speech: "Hay un hoyo repetido en el dictado." };
+      if (
+        new Set(
+          validated.map(
+            item => item.hole
+          )
+        ).size !== validated.length
+      ) {
+        return {
+          ok: false,
+          action: "record_scores",
+          speech:
+            "Hay un hoyo repetido en el dictado."
+        };
       }
 
-      const before = roundStatusBeforeUpdate();
+      const before =
+        roundStatusBeforeUpdate();
+
       const saved = [];
-      for (const item of validated) {
-        const score = buildScoreObject(item.hole, item.gross, item.definition);
-        round.holes[String(item.hole)] = score;
+
+      for (
+        const item
+        of validated
+      ) {
+        const score =
+          buildScoreObject(
+            item.hole,
+            item.gross,
+            item.definition
+          );
+
+        round.holes[
+          String(item.hole)
+        ] = score;
+
         saved.push(score);
       }
 
-      const lastScore = saved[saved.length - 1];
-      round.lastHole = lastScore.hole;
+      const lastScore =
+        saved[saved.length - 1];
+
+      round.lastHole =
+        lastScore.hole;
+
       saveRound();
-      return { ok: true, action: "record_scores", count: saved.length, scores: saved, speech: buildRecordSpeech(lastScore, before) };
+
+      return {
+        ok: true,
+        action: "record_scores",
+        count: saved.length,
+        scores: saved,
+
+        speech:
+          buildRecordSpeech(
+            lastScore,
+            before
+          )
+      };
     }
 
     function speechForHole(hole) {
-      const score = round.holes[String(hole)];
-      if (!score) return `Hoyo ${hole} sin score.`;
-      return [`Hoyo ${score.hole}`, `Gross ${score.gross}`, `Neto ${score.net}`, `Resultado: ${individualResult(score.diff)}`].join("\n");
+      const score =
+        round.holes[String(hole)];
+
+      if (!score) {
+        return `Hoyo ${hole} sin score.`;
+      }
+
+      return [
+        `Hoyo ${score.hole}`,
+        `Gross ${score.gross}`,
+        `Neto ${score.net}`,
+        `Resultado: ${individualResult(score.diff)}`
+      ].join("\n");
     }
 
     function getHole(hole) {
       hole = Number(hole);
-      if (!Number.isInteger(hole) || hole < 1 || hole > 18) return { ok: false, action: "get_hole", speech: "Número de hoyo inválido." };
-      return { ok: true, action: "get_hole", speech: speechForHole(hole) };
+
+      if (
+        !Number.isInteger(hole) ||
+        hole < 1 ||
+        hole > 18
+      ) {
+        return {
+          ok: false,
+          action: "get_hole",
+          speech:
+            "Número de hoyo inválido."
+        };
+      }
+
+      return {
+        ok: true,
+        action: "get_hole",
+        speech:
+          speechForHole(hole)
+      };
     }
 
     function getRange(from, to) {
-      from = Number(from); to = Number(to);
-      if (!Number.isInteger(from) || !Number.isInteger(to) || from < 1 || from > 18 || to < 1 || to > 18) return { ok: false, action: "get_range", speech: "Rango inválido." };
-      const start = Math.min(from, to), end = Math.max(from, to), speeches = [];
-      for (let hole = start; hole <= end; hole++) if (round.holes[String(hole)]) speeches.push(speechForHole(hole));
-      return { ok: true, action: "get_range", speech: speeches.length ? speeches.join("\n\n") : "No hay scores registrados en ese rango." };
+      from = Number(from);
+      to = Number(to);
+
+      if (
+        !Number.isInteger(from) ||
+        !Number.isInteger(to) ||
+        from < 1 ||
+        from > 18 ||
+        to < 1 ||
+        to > 18
+      ) {
+        return {
+          ok: false,
+          action: "get_range",
+          speech:
+            "Rango inválido."
+        };
+      }
+
+      const start =
+        Math.min(from, to);
+
+      const end =
+        Math.max(from, to);
+
+      const speeches = [];
+
+      for (
+        let hole = start;
+        hole <= end;
+        hole++
+      ) {
+        if (
+          round.holes[String(hole)]
+        ) {
+          speeches.push(
+            speechForHole(hole)
+          );
+        }
+      }
+
+      return {
+        ok: true,
+        action: "get_range",
+
+        speech:
+          speeches.length
+            ? speeches.join("\n\n")
+            : "No hay scores registrados en ese rango."
+      };
     }
 
     function getList(holes) {
-      if (!Array.isArray(holes) || !holes.length) return { ok: false, action: "get_list", speech: "Lista de hoyos inválida." };
-      return { ok: true, action: "get_list", speech: holes.map(hole => speechForHole(Number(hole))).join("\n\n") };
+      if (
+        !Array.isArray(holes) ||
+        !holes.length
+      ) {
+        return {
+          ok: false,
+          action: "get_list",
+          speech:
+            "Lista de hoyos inválida."
+        };
+      }
+
+      return {
+        ok: true,
+        action: "get_list",
+
+        speech:
+          holes
+            .map(
+              hole =>
+                speechForHole(
+                  Number(hole)
+                )
+            )
+            .join("\n\n")
+      };
     }
 
     function getLast() {
-      if (!round.lastHole) return { ok: true, action: "get_last", speech: "No hay scores registrados." };
-      return { ok: true, action: "get_last", speech: speechForHole(round.lastHole) };
+      if (!round.lastHole) {
+        return {
+          ok: true,
+          action: "get_last",
+          speech:
+            "No hay scores registrados."
+        };
+      }
+
+      return {
+        ok: true,
+        action: "get_last",
+        speech:
+          speechForHole(
+            round.lastHole
+          )
+      };
     }
 
     function processAction(args) {
       switch (args?.action) {
-        case "setup_round": return setupRound(args);
-        case "record_score": return recordScore(args.hole, args.gross);
-        case "record_scores": return recordScores(args.scores);
-        case "get_hole": return getHole(args.hole);
-        case "get_range": return getRange(args.from, args.to);
-        case "get_list": return getList(args.holes);
-        case "get_last": return getLast();
-        default: return { ok: false, speech: "Comando no reconocido." };
+        case "setup_round":
+          return setupRound(args);
+
+        case "record_score":
+          return recordScore(
+            args.hole,
+            args.gross
+          );
+
+        case "record_scores":
+          return recordScores(
+            args.scores
+          );
+
+        case "get_hole":
+          return getHole(
+            args.hole
+          );
+
+        case "get_range":
+          return getRange(
+            args.from,
+            args.to
+          );
+
+        case "get_list":
+          return getList(
+            args.holes
+          );
+
+        case "get_last":
+          return getLast();
+
+        default:
+          return {
+            ok: false,
+            speech:
+              "Comando no reconocido."
+          };
       }
     }
 
-    function visualResult(diff) {
-      if (diff === 0) return "Even";
-      return diff < 0 ? `${Math.abs(diff)} bajo par` : `${diff} sobre par`;
-    }
+    function visualSummary(
+      totals,
+      expected
+    ) {
+      if (!totals.items.length) {
+        return `0/${expected}`;
+      }
 
-    function visualSummary(totals, expected) {
-      if (!totals.items.length) return `0/${expected}`;
-      return [`${totals.items.length}/${expected}`, `G ${totals.gross}`, `N ${totals.net}`, visualResult(totals.net - totals.par)].join("\n");
+      return [
+        `${totals.items.length}/${expected}`,
+        `G ${totals.gross}`,
+        `N ${totals.net}`,
+        visualResult(
+          totals.net -
+          totals.par
+        )
+      ].join("\n");
     }
 
     function clearGeneratedRow(row) {
-      while (row.children.length > 1) row.removeChild(row.lastChild);
+      while (
+        row.children.length > 1
+      ) {
+        row.removeChild(
+          row.lastChild
+        );
+      }
     }
 
-    function appendCell(row, text, className = "") {
-      const cell = document.createElement("td");
+    function appendCell(
+      row,
+      text,
+      className = ""
+    ) {
+      const cell =
+        document.createElement("td");
+
       cell.textContent = text;
-      if (className) cell.className = className;
+
+      if (className) {
+        cell.className =
+          className;
+      }
+
       row.appendChild(cell);
     }
 
-    function handicapCellClass(definition) {
-      const strokes = strokeForHole(definition);
-      if (strokes >= 2) return "hcp-double-cell";
-      if (strokes === 1) return "hcp-stroke-cell";
+    function handicapCellClass(
+      definition
+    ) {
+      const strokes =
+        strokeForHole(definition);
+
+      if (strokes >= 2) {
+        return "hcp-double-cell";
+      }
+
+      if (strokes === 1) {
+        return "hcp-stroke-cell";
+      }
+
       return "";
     }
 
-    function handicapCellText(definition) {
-      if (!definition) return "—";
-      const strokes = strokeForHole(definition);
-      if (strokes >= 2) return `${definition.hcp}×2`;
-      return String(definition.hcp);
-    }
-
-    function renderNineScorecard(numbers, holeRow, parRow, hcpRow, grossRow, netRow, totalLabel) {
-      [holeRow, parRow, hcpRow, grossRow, netRow].forEach(clearGeneratedRow);
-      let grossTotal = 0, netTotal = 0, registeredCount = 0;
-
-      for (const number of numbers) {
-        const definition = holeDefinition(number);
-        const score = round.holes[String(number)];
-        appendCell(holeRow, number);
-        appendCell(parRow, definition ? definition.par : "—");
-        appendCell(hcpRow, handicapCellText(definition), handicapCellClass(definition));
-        appendCell(grossRow, score ? score.gross : "—", "gross-cell");
-        appendCell(netRow, score ? score.net : "—", "net-cell");
-        if (score) { grossTotal += Number(score.gross); netTotal += Number(score.net); registeredCount++; }
+    function handicapCellText(
+      definition
+    ) {
+      if (!definition) {
+        return "—";
       }
 
-      appendCell(holeRow, totalLabel, "total-column");
-      appendCell(parRow, numbers.reduce((sum, n) => sum + Number(holeDefinition(n)?.par || 0), 0), "total-column");
-      appendCell(hcpRow, round.configured ? currentHandicap() : "—", "total-column");
-      appendCell(grossRow, registeredCount ? grossTotal : "—", "total-column gross-cell");
-      appendCell(netRow, registeredCount ? netTotal : "—", "total-column net-cell");
+      const strokes =
+        strokeForHole(definition);
+
+      if (strokes >= 2) {
+        return `${definition.hcp}×2`;
+      }
+
+      return String(
+        definition.hcp
+      );
+    }
+
+    function renderNineScorecard(
+      numbers,
+      holeRow,
+      hcpRow,
+      ydsRow,
+      parRow,
+      grossRow,
+      netRow,
+      diffRow,
+      totalLabel
+    ) {
+      [
+        holeRow,
+        hcpRow,
+        ydsRow,
+        parRow,
+        grossRow,
+        netRow,
+        diffRow
+      ].forEach(
+        clearGeneratedRow
+      );
+
+      let grossTotal = 0;
+      let netTotal = 0;
+      let parTotal = 0;
+      let playedPar = 0;
+      let registeredCount = 0;
+
+      for (
+        const number
+        of numbers
+      ) {
+        const definition =
+          holeDefinition(number);
+
+        const score =
+          round.holes[
+            String(number)
+          ];
+
+        appendCell(
+          holeRow,
+          number
+        );
+
+        appendCell(
+          hcpRow,
+          handicapCellText(
+            definition
+          ),
+          handicapCellClass(
+            definition
+          )
+        );
+
+        appendCell(
+          ydsRow,
+          definition?.yds ?? "—"
+        );
+
+        appendCell(
+          parRow,
+          definition
+            ? definition.par
+            : "—"
+        );
+
+        appendCell(
+          grossRow,
+          score
+            ? score.gross
+            : "—",
+          "gross-cell"
+        );
+
+        appendCell(
+          netRow,
+          score
+            ? score.net
+            : "—",
+          "net-cell"
+        );
+
+        appendCell(
+          diffRow,
+          score
+            ? visualResult(
+                score.diff
+              )
+            : "—",
+          score
+            ? diffClass(
+                score.diff
+              )
+            : "diff-cell"
+        );
+
+        if (definition) {
+          parTotal +=
+            Number(
+              definition.par || 0
+            );
+        }
+
+        if (score) {
+          grossTotal +=
+            Number(score.gross);
+
+          netTotal +=
+            Number(score.net);
+
+          playedPar +=
+            Number(score.par);
+
+          registeredCount++;
+        }
+      }
+
+      appendCell(
+        holeRow,
+        totalLabel,
+        "total-column"
+      );
+
+      appendCell(
+        hcpRow,
+        round.configured
+          ? currentHandicap()
+          : "—",
+        "total-column"
+      );
+
+      /*
+        YDS queda vacío hasta cargar
+        yardajes oficiales.
+      */
+
+      appendCell(
+        ydsRow,
+        "—",
+        "total-column"
+      );
+
+      appendCell(
+        parRow,
+        parTotal,
+        "total-column"
+      );
+
+      appendCell(
+        grossRow,
+        registeredCount
+          ? grossTotal
+          : "—",
+        "total-column gross-cell"
+      );
+
+      appendCell(
+        netRow,
+        registeredCount
+          ? netTotal
+          : "—",
+        "total-column net-cell"
+      );
+
+      appendCell(
+        diffRow,
+        registeredCount
+          ? visualResult(
+              netTotal -
+              playedPar
+            )
+          : "—",
+        "total-column diff-cell"
+      );
+    }
+
+    function countResults() {
+      const counts = {
+        eagle: 0,
+        birdie: 0,
+        par: 0,
+        bogey: 0,
+        double: 0,
+        triple: 0,
+        other: 0
+      };
+
+      for (
+        const hole
+        of ALL_HOLES
+      ) {
+        const score =
+          round.holes[
+            String(hole)
+          ];
+
+        if (!score) {
+          continue;
+        }
+
+        const diff =
+          Number(score.diff);
+
+        if (diff === -2) {
+          counts.eagle++;
+        }
+
+        else if (diff === -1) {
+          counts.birdie++;
+        }
+
+        else if (diff === 0) {
+          counts.par++;
+        }
+
+        else if (diff === 1) {
+          counts.bogey++;
+        }
+
+        else if (diff === 2) {
+          counts.double++;
+        }
+
+        else if (diff === 3) {
+          counts.triple++;
+        }
+
+        else {
+          counts.other++;
+        }
+      }
+
+      return counts;
+    }
+
+    function formatRoundDate(value) {
+      try {
+        return new Intl.DateTimeFormat(
+          "es-GT",
+          {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        ).format(
+          new Date(value)
+        );
+      }
+
+      catch {
+        return "—";
+      }
+    }
+
+    function updateFinalReport() {
+      if (
+        !isComplete(ALL_HOLES)
+      ) {
+        finalReport
+          .classList
+          .remove("visible");
+
+        return;
+      }
+
+      const front =
+        totalsForHoles(FRONT);
+
+      const back =
+        totalsForHoles(BACK);
+
+      const total =
+        totalsForHoles(
+          ALL_HOLES
+        );
+
+      const counts =
+        countResults();
+
+      reportPlayer.textContent =
+        round.player ||
+        "Jugador";
+
+      reportHandicap.textContent =
+        currentHandicap() ?? "—";
+
+      reportDate.textContent =
+        formatRoundDate(
+          round.createdAt
+        );
+
+      reportFront.textContent =
+        `G ${front.gross} · N ${front.net} · ${visualResult(front.diff)}`;
+
+      reportBack.textContent =
+        `G ${back.gross} · N ${back.net} · ${visualResult(back.diff)}`;
+
+      reportTotal.textContent =
+        `G ${total.gross} · N ${total.net} · ${visualResult(total.diff)}`;
+
+      resultCounts.innerHTML = [
+        ["Eagles", counts.eagle],
+        ["Birdies", counts.birdie],
+        ["Pares", counts.par],
+        ["Bogeys", counts.bogey],
+        ["Double Bogeys", counts.double],
+        ["Triple Bogeys", counts.triple],
+        ["Otros", counts.other]
+      ]
+        .map(
+          ([label, value]) =>
+            `<div><span>${label}</span><strong>${value}</strong></div>`
+        )
+        .join("");
+
+      finalReport
+        .classList
+        .add("visible");
     }
 
     function updateScorecard() {
-      renderNineScorecard(FRONT, frontHoleRow, frontParRow, frontHcpRow, frontGrossRow, frontNetRow, "OUT");
-      renderNineScorecard(BACK, backHoleRow, backParRow, backHcpRow, backGrossRow, backNetRow, "IN");
-      const total = totalsForHoles(ALL_HOLES);
-      scorecardTotalGross.textContent = total.items.length ? total.gross : "—";
-      scorecardTotalNet.textContent = total.items.length ? total.net : "—";
+      renderNineScorecard(
+        FRONT,
+        frontHoleRow,
+        frontHcpRow,
+        frontYdsRow,
+        frontParRow,
+        frontGrossRow,
+        frontNetRow,
+        frontDiffRow,
+        "OUT"
+      );
+
+      renderNineScorecard(
+        BACK,
+        backHoleRow,
+        backHcpRow,
+        backYdsRow,
+        backParRow,
+        backGrossRow,
+        backNetRow,
+        backDiffRow,
+        "IN"
+      );
+
+      const total =
+        totalsForHoles(
+          ALL_HOLES
+        );
+
+      scorecardTotalGross.textContent =
+        total.items.length
+          ? total.gross
+          : "—";
+
+      scorecardTotalNet.textContent =
+        total.items.length
+          ? total.net
+          : "—";
+
+      scorecardTotalDiff.textContent =
+        total.items.length
+          ? visualResult(
+              total.diff
+            )
+          : "—";
+
+      updateFinalReport();
     }
 
     function updateHeader() {
-      courseName.textContent = "El Pulté";
-      courseInfo.textContent = `Blancas · Par ${course.par || 72} · ${course.holes.length} hoyos`;
-      if (!round.configured) { playerInfo.textContent = "Handicap por definir"; return; }
+      courseName.textContent =
+        "El Pulté";
+
+      courseInfo.textContent =
+        `Blancas · Par ${course.par || 72} · ${course.holes.length} hoyos · CR ${course.rating ?? "—"} · Slope ${course.slope ?? "—"}`;
+
+      if (!round.configured) {
+        playerInfo.textContent =
+          "Handicap por definir";
+
+        return;
+      }
+
       const parts = [];
-      if (round.player) parts.push(round.player);
-      parts.push(`Handicap ${currentHandicap()}`);
-      playerInfo.textContent = parts.join(" · ");
+
+      if (round.player) {
+        parts.push(round.player);
+      }
+
+      parts.push(
+        `Handicap ${currentHandicap()}`
+      );
+
+      playerInfo.textContent =
+        parts.join(" · ");
     }
 
     function updateSummary() {
       recalculateStoredScores();
+
       updateHeader();
       updateScorecard();
-      const front = totalsForHoles(FRONT), back = totalsForHoles(BACK), total = totalsForHoles(ALL_HOLES);
-      front9El.textContent = visualSummary(front, 9);
-      back9El.textContent = visualSummary(back, 9);
-      totalEl.textContent = visualSummary(total, 18);
 
-      if (listening) return;
-      if (!round.configured) statusEl.textContent = "Configura la ronda antes del primer score.";
-      else if (total.items.length) statusEl.textContent = `Ronda guardada · ${total.items.length}/18 hoyos`;
-      else statusEl.textContent = `Ronda lista · Handicap ${currentHandicap()}`;
+      const front =
+        totalsForHoles(FRONT);
+
+      const back =
+        totalsForHoles(BACK);
+
+      const total =
+        totalsForHoles(
+          ALL_HOLES
+        );
+
+      front9El.textContent =
+        visualSummary(
+          front,
+          9
+        );
+
+      back9El.textContent =
+        visualSummary(
+          back,
+          9
+        );
+
+      totalEl.textContent =
+        visualSummary(
+          total,
+          18
+        );
+
+      if (listening) {
+        return;
+      }
+
+      if (!round.configured) {
+        statusEl.textContent =
+          "Configura la ronda antes del primer score.";
+      }
+
+      else if (
+        total.items.length
+      ) {
+        statusEl.textContent =
+          `Ronda guardada · ${total.items.length}/18 hoyos`;
+      }
+
+      else {
+        statusEl.textContent =
+          `Ronda lista · Handicap ${currentHandicap()}`;
+      }
     }
 
     async function loadCourse() {
       try {
-        const response = await fetch("/api/score", { cache: "no-store" });
-        if (!response.ok) throw new Error("No se pudo cargar el campo");
-        const data = await response.json();
-        if (data?.course?.holes && Array.isArray(data.course.holes)) {
-          course = { ...FALLBACK_COURSE, ...data.course, holes: data.course.holes };
+        const response =
+          await fetch(
+            "/api/score",
+            {
+              cache:
+                "no-store"
+            }
+          );
+
+        if (!response.ok) {
+          throw new Error(
+            "No se pudo cargar el campo"
+          );
         }
-      } catch (error) {
-        console.warn("Usando tarjeta local:", error);
-        course = JSON.parse(JSON.stringify(FALLBACK_COURSE));
+
+        const data =
+          await response.json();
+
+        if (
+          data?.course?.holes &&
+          Array.isArray(
+            data.course.holes
+          )
+        ) {
+          course = {
+            ...FALLBACK_COURSE,
+            ...data.course,
+            holes:
+              data.course.holes
+          };
+        }
       }
-      course.name = "El Pulté";
-      course.tees = "Blancas";
+
+      catch (error) {
+        console.warn(
+          "Usando tarjeta local:",
+          error
+        );
+
+        course =
+          JSON.parse(
+            JSON.stringify(
+              FALLBACK_COURSE
+            )
+          );
+      }
+
+      course.name =
+        "El Pulté";
+
+      course.tees =
+        "Blancas";
+
       updateSummary();
     }
 
+    /*
+      REALTIME / WEBRTC:
+      Esta sección conserva
+      el funcionamiento operativo original.
+    */
+
     function sendEvent(event) {
-      if (!dc || dc.readyState !== "open") throw new Error("Canal Realtime no disponible.");
-      dc.send(JSON.stringify(event));
+      if (
+        !dc ||
+        dc.readyState !== "open"
+      ) {
+        throw new Error(
+          "Canal Realtime no disponible."
+        );
+      }
+
+      dc.send(
+        JSON.stringify(event)
+      );
     }
 
-    function sendToolOutput(call, result) {
+    function sendToolOutput(
+      call,
+      result
+    ) {
       sendEvent({
-        type: "conversation.item.create",
+        type:
+          "conversation.item.create",
+
         item: {
-          type: "function_call_output",
-          call_id: call.call_id,
-          output: JSON.stringify(result)
+          type:
+            "function_call_output",
+
+          call_id:
+            call.call_id,
+
+          output:
+            JSON.stringify(result)
         }
       });
 
-      waitingForToolAnswer = true;
+      waitingForToolAnswer =
+        true;
 
       sendEvent({
         type: "response.create",
+
         response: {
-          instructions: "Habla únicamente en español neutro. Pronuncia exactamente el campo speech del resultado de la herramienta. No añadas, quites, reformules, traduzcas ni repitas nada."
+          instructions:
+            "Habla únicamente en español neutro. Pronuncia exactamente el campo speech del resultado de la herramienta. No añadas, quites, reformules, traduzcas ni repitas nada."
         }
       });
     }
 
     function handleResponseDone(event) {
-      const output = event?.response?.output;
-      if (!Array.isArray(output)) { finishListening(); return; }
-      const calls = output.filter(item => item.type === "function_call" && item.name === "epg_caddy_action");
+      const output =
+        event?.response?.output;
 
-      if (calls.length) {
-        const call = calls[0];
-        try {
-          const args = JSON.parse(call.arguments || "{}");
-          const result = processAction(args);
-          sendToolOutput(call, result);
-        } catch (error) {
-          console.error("Error procesando herramienta:", error);
-          sendToolOutput(call, { ok: false, speech: "No se pudo procesar el comando." });
-        }
+      if (
+        !Array.isArray(output)
+      ) {
+        finishListening();
         return;
       }
 
-      if (waitingForToolAnswer) waitingForToolAnswer = false;
+      /*
+        IMPORTANTE:
+        El nombre interno
+        epg_caddy_action se conserva
+        porque pertenece al contrato
+        con /api/session.
+      */
+
+      const calls =
+        output.filter(
+          item =>
+            item.type ===
+              "function_call" &&
+            item.name ===
+              "epg_caddy_action"
+        );
+
+      if (calls.length) {
+        const call =
+          calls[0];
+
+        try {
+          const args =
+            JSON.parse(
+              call.arguments ||
+              "{}"
+            );
+
+          const result =
+            processAction(args);
+
+          sendToolOutput(
+            call,
+            result
+          );
+        }
+
+        catch (error) {
+          console.error(
+            "Error procesando herramienta:",
+            error
+          );
+
+          sendToolOutput(
+            call,
+            {
+              ok: false,
+              speech:
+                "No se pudo procesar el comando."
+            }
+          );
+        }
+
+        return;
+      }
+
+      if (
+        waitingForToolAnswer
+      ) {
+        waitingForToolAnswer =
+          false;
+      }
+
       finishListening();
     }
 
-    function handleRealtimeEvent(message) {
+    function handleRealtimeEvent(
+      message
+    ) {
       try {
-        const event = JSON.parse(message.data);
-        if (event.type === "response.done") { handleResponseDone(event); return; }
-        if (event.type === "error") {
-          console.error("Realtime error:", event);
-          statusEl.textContent = "Error de Realtime.";
+        const event =
+          JSON.parse(
+            message.data
+          );
+
+        if (
+          event.type ===
+          "response.done"
+        ) {
+          handleResponseDone(event);
+          return;
+        }
+
+        if (
+          event.type ===
+          "error"
+        ) {
+          console.error(
+            "Realtime error:",
+            event
+          );
+
+          statusEl.textContent =
+            "Error de Realtime.";
+
           finishListening();
         }
-      } catch (error) {
-        console.error("Evento Realtime inválido:", error);
+      }
+
+      catch (error) {
+        console.error(
+          "Evento Realtime inválido:",
+          error
+        );
       }
     }
 
-    function setMicEnabled(enabled) {
-      if (micTrack) micTrack.enabled = enabled;
-      listening = enabled;
+    function setMicEnabled(
+      enabled
+    ) {
+      if (micTrack) {
+        micTrack.enabled =
+          enabled;
+      }
+
+      listening =
+        enabled;
 
       if (enabled) {
-        talkButton.classList.add("active");
-        talkButton.textContent = "Escuchando";
-        statusEl.textContent = "Escuchando…";
-      } else {
-        talkButton.classList.remove("active");
-        talkButton.textContent = connected ? "Hablar" : "Iniciar Caddy";
+        talkButton
+          .classList
+          .add("active");
+
+        talkButton.textContent =
+          "Escuchando";
+
+        statusEl.textContent =
+          "Escuchando…";
+      }
+
+      else {
+        talkButton
+          .classList
+          .remove("active");
+
+        talkButton.textContent =
+          connected
+            ? "Hablar"
+            : "Iniciar voz";
+
         updateSummary();
       }
     }
 
-    function finishListening() { setMicEnabled(false); }
+    function finishListening() {
+      setMicEnabled(false);
+    }
 
     function connectionAlive() {
-      return !!pc && ["new","connecting","connected"].includes(pc.connectionState);
+      return (
+        !!pc &&
+        [
+          "new",
+          "connecting",
+          "connected"
+        ].includes(
+          pc.connectionState
+        )
+      );
     }
 
-    function waitForIceGatheringComplete(peer) {
-      if (peer.iceGatheringState === "complete") return Promise.resolve();
-      return new Promise(resolve => {
-        const listener = () => {
-          if (peer.iceGatheringState === "complete") {
-            peer.removeEventListener("icegatheringstatechange", listener);
-            resolve();
-          }
-        };
-        peer.addEventListener("icegatheringstatechange", listener);
-      });
+    function waitForIceGatheringComplete(
+      peer
+    ) {
+      if (
+        peer.iceGatheringState ===
+        "complete"
+      ) {
+        return Promise.resolve();
+      }
+
+      return new Promise(
+        resolve => {
+          const listener = () => {
+            if (
+              peer.iceGatheringState ===
+              "complete"
+            ) {
+              peer.removeEventListener(
+                "icegatheringstatechange",
+                listener
+              );
+
+              resolve();
+            }
+          };
+
+          peer.addEventListener(
+            "icegatheringstatechange",
+            listener
+          );
+        }
+      );
     }
 
-    function waitForDataChannelOpen(channel) {
-      if (channel.readyState === "open") return Promise.resolve();
-      return new Promise((resolve, reject) => {
-        const timer = setTimeout(() => reject(new Error("El canal Realtime no abrió.")), 10000);
-        channel.addEventListener("open", () => { clearTimeout(timer); resolve(); }, { once: true });
-        channel.addEventListener("close", () => { clearTimeout(timer); reject(new Error("El canal Realtime se cerró antes de abrir.")); }, { once: true });
-      });
+    function waitForDataChannelOpen(
+      channel
+    ) {
+      if (
+        channel.readyState ===
+        "open"
+      ) {
+        return Promise.resolve();
+      }
+
+      return new Promise(
+        (resolve, reject) => {
+          const timer =
+            setTimeout(
+              () =>
+                reject(
+                  new Error(
+                    "El canal Realtime no abrió."
+                  )
+                ),
+              10000
+            );
+
+          channel.addEventListener(
+            "open",
+            () => {
+              clearTimeout(timer);
+              resolve();
+            },
+            { once: true }
+          );
+
+          channel.addEventListener(
+            "close",
+            () => {
+              clearTimeout(timer);
+
+              reject(
+                new Error(
+                  "El canal Realtime se cerró antes de abrir."
+                )
+              );
+            },
+            { once: true }
+          );
+        }
+      );
     }
 
     async function ensureSession() {
-      if (connected && connectionAlive() && dc?.readyState === "open") return;
+      if (
+        connected &&
+        connectionAlive() &&
+        dc?.readyState ===
+          "open"
+      ) {
+        return;
+      }
 
       cleanupConnection();
-      statusEl.textContent = "Conectando…";
 
-      if (!navigator.mediaDevices?.getUserMedia) throw new Error("El navegador no permite acceso al micrófono.");
+      statusEl.textContent =
+        "Conectando…";
 
-      localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      micTrack = localStream.getAudioTracks()[0];
-      if (!micTrack) throw new Error("No se encontró pista de micrófono.");
-      micTrack.enabled = false;
+      if (
+        !navigator.mediaDevices
+          ?.getUserMedia
+      ) {
+        throw new Error(
+          "El navegador no permite acceso al micrófono."
+        );
+      }
 
-      pc = new RTCPeerConnection();
-      audioElement = document.createElement("audio");
-      audioElement.autoplay = true;
-      audioElement.playsInline = true;
-      document.body.appendChild(audioElement);
+      localStream =
+        await navigator
+          .mediaDevices
+          .getUserMedia({
+            audio: true
+          });
 
-      pc.ontrack = event => {
-        audioElement.srcObject = event.streams?.[0] || new MediaStream([event.track]);
-        audioElement.play().catch(() => {});
-      };
+      micTrack =
+        localStream
+          .getAudioTracks()[0];
 
-      pc.addTrack(micTrack, localStream);
+      if (!micTrack) {
+        throw new Error(
+          "No se encontró pista de micrófono."
+        );
+      }
 
-      dc = pc.createDataChannel("oai-events");
-      dc.addEventListener("message", handleRealtimeEvent);
-      dc.addEventListener("open", () => {
-        connected = true;
-        statusEl.textContent = round.configured ? `Ronda lista · Handicap ${currentHandicap()}` : "EPG Caddy listo.";
-        setMicEnabled(false);
-      });
-      dc.addEventListener("close", () => {
-        connected = false;
-        listening = false;
-        talkButton.classList.remove("active");
-        talkButton.textContent = "Iniciar Caddy";
-      });
+      micTrack.enabled =
+        false;
 
-      pc.addEventListener("connectionstatechange", () => {
-        if (!pc) return;
-        if (["failed","closed","disconnected"].includes(pc.connectionState)) {
+      pc =
+        new RTCPeerConnection();
+
+      audioElement =
+        document.createElement(
+          "audio"
+        );
+
+      audioElement.autoplay =
+        true;
+
+      audioElement.playsInline =
+        true;
+
+      document.body
+        .appendChild(
+          audioElement
+        );
+
+      pc.ontrack =
+        event => {
+          audioElement.srcObject =
+            event.streams?.[0] ||
+            new MediaStream(
+              [event.track]
+            );
+
+          audioElement
+            .play()
+            .catch(() => {});
+        };
+
+      pc.addTrack(
+        micTrack,
+        localStream
+      );
+
+      dc =
+        pc.createDataChannel(
+          "oai-events"
+        );
+
+      dc.addEventListener(
+        "message",
+        handleRealtimeEvent
+      );
+
+      dc.addEventListener(
+        "open",
+        () => {
+          connected = true;
+
+          statusEl.textContent =
+            round.configured
+              ? `Ronda lista · Handicap ${currentHandicap()}`
+              : "Golf Scorecard Guatemala listo.";
+
+          setMicEnabled(false);
+        }
+      );
+
+      dc.addEventListener(
+        "close",
+        () => {
           connected = false;
           listening = false;
+
+          talkButton
+            .classList
+            .remove("active");
+
+          talkButton.textContent =
+            "Iniciar voz";
         }
-      });
+      );
 
-      const offer = await pc.createOffer();
-      await pc.setLocalDescription(offer);
-      await waitForIceGatheringComplete(pc);
+      pc.addEventListener(
+        "connectionstatechange",
+        () => {
+          if (!pc) {
+            return;
+          }
 
-      const response = await fetch("/api/session", {
-        method: "POST",
-        headers: { "Content-Type": "application/sdp" },
-        body: pc.localDescription.sdp
-      });
+          if (
+            [
+              "failed",
+              "closed",
+              "disconnected"
+            ].includes(
+              pc.connectionState
+            )
+          ) {
+            connected = false;
+            listening = false;
+          }
+        }
+      );
 
-      const answer = await response.text();
-      if (!response.ok) throw new Error(answer || "No se pudo iniciar la sesión.");
-      if (!answer || !answer.trim()) throw new Error("La sesión no devolvió SDP.");
+      const offer =
+        await pc.createOffer();
 
-      await pc.setRemoteDescription({ type: "answer", sdp: answer });
-      await waitForDataChannelOpen(dc);
+      await pc
+        .setLocalDescription(
+          offer
+        );
+
+      await
+        waitForIceGatheringComplete(
+          pc
+        );
+
+      const response =
+        await fetch(
+          "/api/session",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/sdp"
+            },
+
+            body:
+              pc.localDescription.sdp
+          }
+        );
+
+      const answer =
+        await response.text();
+
+      if (!response.ok) {
+        throw new Error(
+          answer ||
+          "No se pudo iniciar la sesión."
+        );
+      }
+
+      if (
+        !answer ||
+        !answer.trim()
+      ) {
+        throw new Error(
+          "La sesión no devolvió SDP."
+        );
+      }
+
+      await pc
+        .setRemoteDescription({
+          type: "answer",
+          sdp: answer
+        });
+
+      await
+        waitForDataChannelOpen(
+          dc
+        );
+
       connected = true;
+
       setMicEnabled(false);
     }
 
     async function startTalking() {
       try {
-        if (listening) { setMicEnabled(false); return; }
+        if (listening) {
+          setMicEnabled(false);
+          return;
+        }
 
-        talkButton.disabled = true;
-        if (audioElement) audioElement.play().catch(() => {});
+        talkButton.disabled =
+          true;
+
+        if (audioElement) {
+          audioElement
+            .play()
+            .catch(() => {});
+        }
+
         await ensureSession();
-        waitingForToolAnswer = false;
+
+        waitingForToolAnswer =
+          false;
+
         setMicEnabled(true);
-      } catch (error) {
-        console.error("No se pudo iniciar EPG Caddy:", error);
-        statusEl.textContent = "No se pudo iniciar EPG Caddy.";
+      }
+
+      catch (error) {
+        console.error(
+          "No se pudo iniciar Golf Scorecard Guatemala:",
+          error
+        );
+
+        statusEl.textContent =
+          "No se pudo iniciar Golf Scorecard Guatemala.";
+
         cleanupConnection();
-      } finally {
-        talkButton.disabled = false;
+      }
+
+      finally {
+        talkButton.disabled =
+          false;
       }
     }
 
     function cleanupConnection() {
-      if (localStream) localStream.getTracks().forEach(track => track.stop());
+      if (localStream) {
+        localStream
+          .getTracks()
+          .forEach(
+            track =>
+              track.stop()
+          );
+      }
+
       localStream = null;
       micTrack = null;
-      if (dc) { try { dc.close(); } catch {} }
-      dc = null;
-      if (pc) { try { pc.close(); } catch {} }
-      pc = null;
-      if (audioElement) {
-        try { audioElement.pause(); audioElement.srcObject = null; audioElement.remove(); } catch {}
+
+      if (dc) {
+        try {
+          dc.close();
+        }
+        catch {}
       }
+
+      dc = null;
+
+      if (pc) {
+        try {
+          pc.close();
+        }
+        catch {}
+      }
+
+      pc = null;
+
+      if (audioElement) {
+        try {
+          audioElement.pause();
+          audioElement.srcObject = null;
+          audioElement.remove();
+        }
+        catch {}
+      }
+
       audioElement = null;
       connected = false;
       listening = false;
@@ -873,43 +3290,124 @@
     }
 
     function openRoundSetup() {
-      playerNameInput.value = round.player || "";
-      handicapInput.value = currentHandicap() ?? "";
-      setupOverlay.classList.add("visible");
-      setTimeout(() => playerNameInput.focus(), 100);
+      playerNameInput.value =
+        round.player || "";
+
+      handicapInput.value =
+        currentHandicap() ?? "";
+
+      setupOverlay
+        .classList
+        .add("visible");
+
+      setTimeout(
+        () =>
+          playerNameInput.focus(),
+        100
+      );
     }
 
-    function closeRoundSetup() { setupOverlay.classList.remove("visible"); }
+    function closeRoundSetup() {
+      setupOverlay
+        .classList
+        .remove("visible");
+    }
 
     function createNewRound() {
-      const handicap = Number(handicapInput.value);
-      if (!validHandicap(handicap)) {
-        alert("Ingresa un handicap entre 0 y 24.");
+      const handicap =
+        Number(
+          handicapInput.value
+        );
+
+      if (
+        !validHandicap(
+          handicap
+        )
+      ) {
+        alert(
+          "Ingresa un handicap entre 0 y 24."
+        );
+
         handicapInput.focus();
+
         return;
       }
 
-      const player = playerNameInput.value.trim();
+      const player =
+        playerNameInput
+          .value
+          .trim();
+
       cleanupConnection();
-      round = emptyRound({ configured: true, player, handicap });
+
+      round =
+        emptyRound({
+          configured: true,
+          player,
+          handicap
+        });
+
       saveRound();
+
       closeRoundSetup();
-      statusEl.textContent = `Nueva ronda lista · Handicap ${handicap}`;
+
+      statusEl.textContent =
+        `Nueva ronda lista · Handicap ${handicap}`;
     }
 
     function newRound() {
-      if (Object.keys(round.holes).length > 0) {
-        const confirmed = window.confirm("¿Iniciar una nueva ronda? Se borrarán los scores actuales.");
-        if (!confirmed) return;
+      if (
+        Object.keys(
+          round.holes
+        ).length > 0
+      ) {
+        const confirmed =
+          window.confirm(
+            "¿Iniciar una nueva ronda? Se borrarán los scores actuales."
+          );
+
+        if (!confirmed) {
+          return;
+        }
       }
+
       openRoundSetup();
     }
 
-    talkButton.addEventListener("click", startTalking);
-    newRoundButton.addEventListener("click", newRound);
-    cancelSetupButton.addEventListener("click", closeRoundSetup);
-    startRoundButton.addEventListener("click", createNewRound);
-    window.addEventListener("beforeunload", () => { try { persistRound(); } catch {} });
+    talkButton
+      .addEventListener(
+        "click",
+        startTalking
+      );
+
+    newRoundButton
+      .addEventListener(
+        "click",
+        newRound
+      );
+
+    cancelSetupButton
+      .addEventListener(
+        "click",
+        closeRoundSetup
+      );
+
+    startRoundButton
+      .addEventListener(
+        "click",
+        createNewRound
+      );
+
+    window
+      .addEventListener(
+        "beforeunload",
+        () => {
+          try {
+            persistRound();
+          }
+          catch {}
+        }
+      );
 
     loadCourse();
   </script>
