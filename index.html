@@ -650,8 +650,8 @@ footer{
 
   <section class="summary-matrix">
     <div class="blank"></div>
-    <div class="matrix-head">OUT</div>
     <div class="matrix-head">IN</div>
+    <div class="matrix-head">OUT</div>
     <div class="matrix-head">TOTAL</div>
 
     <div class="matrix-label">GROSS</div>
@@ -2733,15 +2733,15 @@ function updateSummary() {
 
   setText(
     "summaryGrossOut",
-    front.items.length
-      ? front.gross
+    back.items.length
+      ? back.gross
       : "—"
   );
 
   setText(
     "summaryGrossIn",
-    back.items.length
-      ? back.gross
+    front.items.length
+      ? front.gross
       : "—"
   );
 
@@ -2754,15 +2754,15 @@ function updateSummary() {
 
   setText(
     "summaryNetOut",
-    front.items.length
-      ? front.net
+    back.items.length
+      ? back.net
       : "—"
   );
 
   setText(
     "summaryNetIn",
-    back.items.length
-      ? back.net
+    front.items.length
+      ? front.net
       : "—"
   );
 
@@ -2803,12 +2803,12 @@ function updateSummary() {
   [
     [
       "summaryDiffOut",
-      front
+      back
     ],
 
     [
       "summaryDiffIn",
-      back
+      front
     ],
 
     [
