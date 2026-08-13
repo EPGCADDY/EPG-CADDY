@@ -248,11 +248,7 @@ body{
 }
 
 .final-report.visible{display:block}
-
-.final-report h3{
-  margin:0 0 12px;
-  font-size:16px
-}
+.final-report h3{margin:0 0 12px;font-size:16px}
 
 .report-meta{
   display:grid;
@@ -1255,6 +1251,7 @@ function cancelSpeech(){
   try{
     window.speechSynthesis?.cancel();
   }catch{}
+
   speaking=false;
 }
 
@@ -1295,7 +1292,8 @@ function speak(text){
     speaking=true;
     statusEl.textContent="Resultado…";
 
-    const utterance=new SpeechSynthesisUtterance(speech);
+    const utterance=
+      new SpeechSynthesisUtterance(speech);
 
     utterance.lang="es-GT";
     utterance.rate=1;
@@ -1312,6 +1310,7 @@ function speak(text){
 
     const finish=()=>{
       if(done)return;
+
       done=true;
       speaking=false;
       resolve();
@@ -1348,6 +1347,7 @@ async function executeToolCall(call){
   try{
     const args=JSON.parse(call.arguments||"{}");
     result=processAction(args);
+
   }catch(error){
     console.error(error);
 
@@ -1366,15 +1366,17 @@ async function executeToolCall(call){
         output:JSON.stringify(result)
       }
     });
+
+    sendEvent({
+      type:"response.create",
+      response:{
+        output_modalities:["audio"]
+      }
+    });
+
   }catch(error){
     console.error(error);
   }
-
-  /*
-    MUY IMPORTANTE:
-    NO enviamos response.create después del tool.
-    El resultado lo pronuncia exclusivamente el navegador.
-  */
 
   await speak(result.speech);
 
@@ -1382,21 +1384,22 @@ async function executeToolCall(call){
   finishListening();
 }
 
-function handleResponseDone(event){
-  responseInProgress=false;
-
+function findToolCall(event){
   const output=event?.response?.output;
 
   if(!Array.isArray(output)){
-    finishListening();
-    return;
+    return null;
   }
 
-  const call=output.find(
+  return output.find(
     item=>
       item?.type==="function_call"&&
       item?.name==="epg_caddy_action"
-  );
+  )||null;
+}
+
+function handleResponseDone(event){
+  const call=findToolCall(event);
 
   if(call){
     executeToolCall(call).catch(error=>{
@@ -1404,14 +1407,11 @@ function handleResponseDone(event){
       responseInProgress=false;
       finishListening();
     });
+
     return;
   }
 
-  /*
-    Cualquier respuesta libre del modelo queda físicamente
-    silenciada por remoteAudio.muted = true.
-  */
-
+  responseInProgress=false;
   finishListening();
 }
 
@@ -1419,21 +1419,41 @@ function handleRealtimeEvent(message){
   try{
     const event=JSON.parse(message.data);
 
-    if(event.type==="response.created"){
-      responseInProgress=true;
-      return;
-    }
+    switch(event.type){
 
-    if(event.type==="response.done"){
-      handleResponseDone(event);
-      return;
-    }
+      case"session.created":
+      case"session.updated":
+        return;
 
-    if(event.type==="error"){
-      console.error("Realtime:",event);
-      responseInProgress=false;
-      statusEl.textContent="Error de Realtime.";
-      finishListening();
+      case"input_audio_buffer.speech_started":
+        if(listening){
+          statusEl.textContent="Escuchando…";
+        }
+        return;
+
+      case"input_audio_buffer.speech_stopped":
+        if(listening){
+          statusEl.textContent="Procesando…";
+        }
+        return;
+
+      case"response.created":
+        responseInProgress=true;
+        return;
+
+      case"response.done":
+        handleResponseDone(event);
+        return;
+
+      case"error":
+        console.error("Realtime:",event);
+        responseInProgress=false;
+        statusEl.textContent="Error de Realtime.";
+        finishListening();
+        return;
+
+      default:
+        return;
     }
 
   }catch(error){
@@ -1446,12 +1466,13 @@ function setMicEnabled(enabled){
     micTrack.enabled=enabled;
   }
 
-  listening=enabled;
+  listening=Boolean(enabled);
 
   if(enabled){
     talkButton.classList.add("active");
     talkButton.textContent="Escuchando";
     statusEl.textContent="Escuchando…";
+
   }else{
     talkButton.classList.remove("active");
     talkButton.textContent=connected?"Hablar":"Iniciar voz";
@@ -1470,20 +1491,26 @@ function cleanupConnection(){
   cancelSpeech();
 
   if(localStream){
-    localStream.getTracks().forEach(track=>track.stop());
+    localStream.getTracks().forEach(
+      track=>track.stop()
+    );
   }
 
   localStream=null;
   micTrack=null;
 
   if(dc){
-    try{dc.close()}catch{}
+    try{
+      dc.close();
+    }catch{}
   }
 
   dc=null;
 
   if(pc){
-    try{pc.close()}catch{}
+    try{
+      pc.close();
+    }catch{}
   }
 
   pc=null;
@@ -1509,29 +1536,6 @@ function cleanupConnection(){
   talkButton.textContent="Iniciar voz";
 }
 
-function waitForIce(peer){
-  if(peer.iceGatheringState==="complete"){
-    return Promise.resolve();
-  }
-
-  return new Promise(resolve=>{
-    const listener=()=>{
-      if(peer.iceGatheringState==="complete"){
-        peer.removeEventListener(
-          "icegatheringstatechange",
-          listener
-        );
-        resolve();
-      }
-    };
-
-    peer.addEventListener(
-      "icegatheringstatechange",
-      listener
-    );
-  });
-}
-
 function waitChannel(channel){
   if(channel.readyState==="open"){
     return Promise.resolve();
@@ -1539,7 +1543,9 @@ function waitChannel(channel){
 
   return new Promise((resolve,reject)=>{
     const timer=setTimeout(
-      ()=>reject(new Error("El canal Realtime no abrió.")),
+      ()=>reject(
+        new Error("El canal Realtime no abrió.")
+      ),
       15000
     );
 
@@ -1556,7 +1562,9 @@ function waitChannel(channel){
       "close",
       ()=>{
         clearTimeout(timer);
-        reject(new Error("El canal Realtime se cerró."));
+        reject(
+          new Error("El canal Realtime se cerró.")
+        );
       },
       {once:true}
     );
@@ -1567,8 +1575,10 @@ async function ensureSession(){
   if(
     connected&&
     pc&&
-    ["new","connecting","connected"].includes(pc.connectionState)&&
-    dc?.readyState==="open"
+    pc.connectionState==="connected"&&
+    dc?.readyState==="open"&&
+    micTrack&&
+    micTrack.readyState==="live"
   ){
     return;
   }
@@ -1581,13 +1591,14 @@ async function ensureSession(){
     throw new Error("Micrófono no disponible.");
   }
 
-  localStream=await navigator.mediaDevices.getUserMedia({
-    audio:{
-      echoCancellation:true,
-      noiseSuppression:true,
-      autoGainControl:true
-    }
-  });
+  localStream=
+    await navigator.mediaDevices.getUserMedia({
+      audio:{
+        echoCancellation:true,
+        noiseSuppression:true,
+        autoGainControl:true
+      }
+    });
 
   micTrack=localStream.getAudioTracks()[0];
 
@@ -1596,20 +1607,22 @@ async function ensureSession(){
   }
 
   /*
-    El track existe desde el inicio de WebRTC,
-    pero permanece desactivado hasta tocar Hablar.
+    IMPORTANTE:
+    El track se agrega ACTIVO a la negociación WebRTC.
+    Se apaga solamente después de que la conexión
+    y el data channel estén establecidos.
   */
-  micTrack.enabled=false;
+  micTrack.enabled=true;
 
   pc=new RTCPeerConnection();
 
-  /*
-    El audio remoto se conserva para WebRTC,
-    pero queda SIEMPRE físicamente silenciado.
-  */
   remoteAudio=document.createElement("audio");
   remoteAudio.autoplay=true;
   remoteAudio.playsInline=true;
+
+  /*
+    El audio libre del modelo queda físicamente silenciado.
+  */
   remoteAudio.muted=true;
   remoteAudio.volume=0;
   remoteAudio.style.display="none";
@@ -1627,9 +1640,14 @@ async function ensureSession(){
     remoteAudio.play().catch(()=>{});
   };
 
-  pc.addTrack(micTrack,localStream);
+  pc.addTrack(
+    micTrack,
+    localStream
+  );
 
-  dc=pc.createDataChannel("oai-events");
+  dc=pc.createDataChannel(
+    "oai-events"
+  );
 
   dc.addEventListener(
     "message",
@@ -1655,36 +1673,61 @@ async function ensureSession(){
   pc.addEventListener(
     "connectionstatechange",
     ()=>{
-      if(!pc)return;
+      if(!pc){
+        return;
+      }
 
       if(
-        ["failed","closed"].includes(pc.connectionState)
+        [
+          "failed",
+          "disconnected",
+          "closed"
+        ].includes(pc.connectionState)
       ){
         connected=false;
         listening=false;
         responseInProgress=false;
+
+        if(pc.connectionState==="failed"){
+          statusEl.textContent=
+            "Conexión de voz interrumpida.";
+        }
       }
     }
   );
 
-  const offer=await pc.createOffer();
+  const offer=
+    await pc.createOffer();
 
-  await pc.setLocalDescription(offer);
-
-  await waitForIce(pc);
-
-  const response=await fetch(
-    "/api/session",
-    {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/sdp"
-      },
-      body:pc.localDescription.sdp
-    }
+  await pc.setLocalDescription(
+    offer
   );
 
-  const answer=await response.text();
+  const sdp=
+    pc.localDescription?.sdp;
+
+  if(!sdp){
+    throw new Error(
+      "No se pudo generar SDP local."
+    );
+  }
+
+  const response=
+    await fetch(
+      "/api/session",
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":"application/sdp"
+        },
+
+        body:sdp
+      }
+    );
+
+  const answer=
+    await response.text();
 
   if(!response.ok){
     throw new Error(
@@ -1694,7 +1737,9 @@ async function ensureSession(){
   }
 
   if(!answer.trim()){
-    throw new Error("La sesión no devolvió SDP.");
+    throw new Error(
+      "La sesión no devolvió SDP."
+    );
   }
 
   await pc.setRemoteDescription({
@@ -1705,15 +1750,17 @@ async function ensureSession(){
   await waitChannel(dc);
 
   connected=true;
+
+  /*
+    La sesión ya quedó negociada.
+    Ahora sí dejamos el micrófono apagado
+    hasta que el usuario toque Hablar.
+  */
   setMicEnabled(false);
 }
 
 async function startTalking(){
   try{
-    /*
-      No permitir que la voz local se convierta
-      accidentalmente en una nueva orden.
-    */
     if(speaking){
       cancelSpeech();
     }
@@ -1734,16 +1781,16 @@ async function startTalking(){
     responseInProgress=false;
 
     /*
-      A partir de aquí el servidor usa semantic_vad.
-      create_response=true está configurado en /api/session.
-      Por eso NO se crea manualmente response.create aquí.
-    */
-    setMicEnabled(true);
+      semantic_vad + create_response:true en /api/session
+      detectan automáticamente el final de la intervención.
+  */
+  setMicEnabled(true);
 
   }catch(error){
     console.error(error);
 
     statusEl.textContent=
+      error?.message||
       "No se pudo iniciar Golf Scorecard Guatemala.";
 
     cleanupConnection();
@@ -1754,10 +1801,15 @@ async function startTalking(){
 }
 
 function openRoundSetup(){
-  playerNameInput.value=round.player||"";
-  handicapInput.value=round.handicap??"";
+  playerNameInput.value=
+    round.player||"";
 
-  setupOverlay.classList.add("visible");
+  handicapInput.value=
+    round.handicap??"";
+
+  setupOverlay.classList.add(
+    "visible"
+  );
 
   setTimeout(
     ()=>playerNameInput.focus(),
@@ -1766,15 +1818,22 @@ function openRoundSetup(){
 }
 
 function closeRoundSetup(){
-  setupOverlay.classList.remove("visible");
+  setupOverlay.classList.remove(
+    "visible"
+  );
 }
 
 function createNewRound(){
-  const handicap=Number(handicapInput.value);
+  const handicap=
+    Number(handicapInput.value);
 
   if(!validHandicap(handicap)){
-    alert("Ingresa un handicap entre 0 y 24.");
+    alert(
+      "Ingresa un handicap entre 0 y 24."
+    );
+
     handicapInput.focus();
+
     return;
   }
 
@@ -1787,6 +1846,7 @@ function createNewRound(){
   });
 
   saveRound();
+
   closeRoundSetup();
 
   statusEl.textContent=
@@ -1794,7 +1854,9 @@ function createNewRound(){
 }
 
 function newRound(){
-  if(Object.keys(round.holes).length){
+  if(
+    Object.keys(round.holes).length
+  ){
     if(
       !confirm(
         "¿Iniciar una nueva ronda? Se borrarán los scores actuales."
