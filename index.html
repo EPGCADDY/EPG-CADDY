@@ -2733,15 +2733,15 @@ function updateSummary() {
 
   setText(
     "summaryGrossOut",
-    back.items.length
-      ? back.gross
+    front.items.length
+      ? front.gross
       : "—"
   );
 
   setText(
     "summaryGrossIn",
-    front.items.length
-      ? front.gross
+    back.items.length
+      ? back.gross
       : "—"
   );
 
@@ -2754,15 +2754,15 @@ function updateSummary() {
 
   setText(
     "summaryNetOut",
-    back.items.length
-      ? back.net
+    front.items.length
+      ? front.net
       : "—"
   );
 
   setText(
     "summaryNetIn",
-    front.items.length
-      ? front.net
+    back.items.length
+      ? back.net
       : "—"
   );
 
@@ -2803,12 +2803,12 @@ function updateSummary() {
   [
     [
       "summaryDiffOut",
-      back
+      front
     ],
 
     [
       "summaryDiffIn",
-      front
+      back
     ],
 
     [
