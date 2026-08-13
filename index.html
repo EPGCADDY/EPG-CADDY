@@ -8,121 +8,416 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
-  margin:0;min-height:100vh;
+  margin:0;
+  min-height:100vh;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   background:radial-gradient(circle at top,#17372a 0%,#0b1b14 35%,#050a08 75%);
-  color:#fff;display:flex;justify-content:center
+  color:#fff;
+  display:flex;
+  justify-content:center
 }
+
 .app{
-  width:100%;max-width:520px;min-height:100vh;
+  width:100%;
+  max-width:520px;
+  min-height:100vh;
   padding:max(28px,env(safe-area-inset-top)) 10px max(40px,env(safe-area-inset-bottom));
-  display:flex;flex-direction:column
+  display:flex;
+  flex-direction:column
 }
+
 .brand{text-align:center;margin-top:18px}
 .brand h1{margin:0;font-size:30px;letter-spacing:1.4px}
 .brand p{margin:8px 0 0;color:#a8b7af;font-size:14px}
+
 .course{
-  margin-top:24px;padding:16px;border:1px solid rgba(255,255,255,.12);
-  border-radius:18px;background:rgba(255,255,255,.05)
+  margin-top:24px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  background:rgba(255,255,255,.05)
 }
+
 .course-name{font-size:21px;font-weight:700}
-.course-info{margin-top:7px;color:#b8c4be;font-size:13px}
+
+.course-info{
+  margin-top:7px;
+  color:#b8c4be;
+  font-size:13px;
+  line-height:1.45
+}
+
 .player-info{
-  margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);
-  color:#d7e0db;font-size:13px
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.08);
+  color:#d7e0db;
+  font-size:13px
 }
-.status{margin-top:14px;min-height:22px;text-align:center;color:#b8c4be;font-size:14px}
-.controls{flex:1;display:flex;flex-direction:column;align-items:center;padding:20px 0 26px}
+
+.status{
+  margin-top:14px;
+  min-height:22px;
+  text-align:center;
+  color:#b8c4be;
+  font-size:14px
+}
+
+.controls{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:20px 0 26px
+}
+
 #talkButton{
-  width:218px;height:218px;flex:0 0 218px;border-radius:50%;
-  border:1px solid rgba(255,255,255,.20);background:#2d8c5a;color:#fff;
-  font-size:22px;font-weight:800;cursor:pointer;touch-action:manipulation;
-  box-shadow:0 18px 48px rgba(0,0,0,.46),0 0 0 8px rgba(45,140,90,.08)
+  width:218px;
+  height:218px;
+  flex:0 0 218px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.20);
+  background:#2d8c5a;
+  color:#fff;
+  font-size:22px;
+  font-weight:800;
+  box-shadow:0 18px 48px rgba(0,0,0,.46),0 0 0 8px rgba(45,140,90,.08);
+  cursor:pointer;
+  touch-action:manipulation
 }
-#talkButton.active{background:#b64242}
+
 #talkButton:active{transform:scale(.97)}
+#talkButton.active{background:#b64242}
 #talkButton:disabled{opacity:.65}
-.instruction{margin-top:18px;color:#aebbb4;text-align:center;line-height:1.45;font-size:13px}
+
+.instruction{
+  margin-top:18px;
+  color:#aebbb4;
+  text-align:center;
+  line-height:1.45;
+  font-size:13px
+}
+
 .score-summary{
-  width:100%;margin-top:24px;padding:12px 8px;border-radius:18px;
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)
+  width:100%;
+  margin-top:24px;
+  padding:12px 8px;
+  border-radius:18px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1)
 }
+
 .score-summary h2{margin:0 0 14px;font-size:19px}
-.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;text-align:center}
-.summary-grid>div{padding:10px 2px;border-radius:11px;background:rgba(255,255,255,.05)}
-.label{display:block;margin-bottom:5px;color:#91a099;font-size:10px}
-.value{display:block;font-size:11px;font-weight:700;line-height:1.45;white-space:pre-line}
+
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:6px;
+  text-align:center
+}
+
+.summary-grid>div{
+  min-width:0;
+  padding:10px 2px;
+  border-radius:11px;
+  background:rgba(255,255,255,.05)
+}
+
+.label{
+  display:block;
+  margin-bottom:5px;
+  color:#91a099;
+  font-size:10px
+}
+
+.value{
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  line-height:1.45;
+  white-space:pre-line
+}
+
 .scorecard{
-  width:100%;margin-top:16px;padding:13px 4px;border-radius:15px;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);overflow:hidden
+  width:100%;
+  margin-top:16px;
+  padding:13px 4px;
+  border-radius:15px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  overflow:hidden
 }
-.scorecard-title{text-align:center;margin-bottom:13px;font-size:16px;font-weight:800;color:#d5ded9}
-.nine-title{margin:15px 0 7px;color:#91a099;font-size:11px;font-weight:800;text-transform:uppercase}
+
+.scorecard-title{
+  margin-bottom:13px;
+  text-align:center;
+  font-size:16px;
+  font-weight:800;
+  color:#d5ded9
+}
+
+.nine-title{
+  margin:15px 0 7px;
+  color:#91a099;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase
+}
+
 .score-table-wrap{width:100%;overflow:hidden}
-.score-table{width:100%;border-collapse:separate;border-spacing:1px;table-layout:fixed;text-align:center}
-.score-table th,.score-table td{
-  height:33px;padding:1px 0;border-radius:4px;background:rgba(255,255,255,.055);
-  font-size:10px;white-space:nowrap;overflow:hidden
+
+.score-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:1px;
+  table-layout:fixed;
+  text-align:center
 }
+
+.score-table th,
+.score-table td{
+  height:33px;
+  padding:1px 0;
+  border-radius:4px;
+  background:rgba(255,255,255,.055);
+  font-size:10px;
+  white-space:nowrap;
+  overflow:hidden
+}
+
 .score-table th{color:#9caaa3}
-.score-table .row-label{width:44px;text-align:left;color:#9caaa3;font-size:9px;background:transparent}
-.score-table .total-column{width:34px;background:rgba(255,255,255,.10);font-weight:800}
+
+.score-table .row-label{
+  width:44px;
+  text-align:left;
+  color:#9caaa3;
+  font-size:9px;
+  background:transparent
+}
+
+.score-table .total-column{
+  width:34px;
+  background:rgba(255,255,255,.10);
+  font-weight:800
+}
+
 .gross-cell{color:#fff;font-weight:900}
 .net-cell{color:#79e3a8;font-weight:900}
 .diff-under{color:#79e3a8!important}
 .diff-over{color:#ff8181!important}
-.hcp-stroke-cell{color:#ff5c5c!important;background:rgba(214,50,50,.20)!important;font-weight:900!important}
-.hcp-double-cell{color:#ffd0d0!important;background:rgba(214,50,50,.38)!important;font-weight:900!important}
-.scorecard-total{
-  margin-top:13px;padding-top:11px;border-top:1px solid rgba(255,255,255,.08);
-  display:grid;grid-template-columns:1fr auto;gap:7px 14px
+
+.hcp-stroke-cell{
+  color:#ff5c5c!important;
+  background:rgba(214,50,50,.20)!important;
+  font-weight:900!important
 }
-.scorecard-total-label{color:#91a099;font-size:12px;font-weight:800}
+
+.hcp-double-cell{
+  color:#ffd0d0!important;
+  background:rgba(214,50,50,.38)!important;
+  font-weight:900!important
+}
+
+.scorecard-total{
+  margin-top:13px;
+  padding-top:11px;
+  border-top:1px solid rgba(255,255,255,.08);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:7px 14px
+}
+
+.scorecard-total-label{
+  color:#91a099;
+  font-size:12px;
+  font-weight:800
+}
+
 .scorecard-total-value{font-size:17px;font-weight:900}
 .net-total{color:#79e3a8}
+
 .final-report{
-  display:none;margin-top:16px;padding:14px;border-radius:15px;
-  border:1px solid rgba(121,227,168,.28);background:rgba(38,107,72,.11)
+  display:none;
+  margin-top:16px;
+  padding:14px;
+  border-radius:15px;
+  background:rgba(38,107,72,.11);
+  border:1px solid rgba(121,227,168,.25)
 }
+
 .final-report.visible{display:block}
-.final-report h3{margin:0 0 12px}
-.report-meta{display:grid;grid-template-columns:1fr 1fr;gap:7px 10px}
-.report-meta div,.report-totals div{padding:8px;border-radius:9px;background:rgba(255,255,255,.045)}
-.report-meta span,.report-totals span{display:block;color:#91a099;font-size:9px;font-weight:800}
-.report-meta strong{display:block;margin-top:3px;font-size:12px}
-.report-totals{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:center;margin-top:10px}
-.report-totals strong{display:block;margin-top:4px;font-size:14px}
-.result-counts{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:10px}
-.result-counts div{display:flex;justify-content:space-between;padding:7px 9px;border-radius:9px;background:rgba(255,255,255,.04);font-size:11px}
+
+.final-report h3{
+  margin:0 0 12px;
+  font-size:16px
+}
+
+.report-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-bottom:10px
+}
+
+.report-meta div{
+  padding:7px;
+  border-radius:8px;
+  background:rgba(255,255,255,.04)
+}
+
+.report-meta span{
+  display:block;
+  color:#91a099;
+  font-size:9px
+}
+
+.report-meta strong{
+  display:block;
+  margin-top:3px;
+  font-size:12px
+}
+
+.report-totals{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+  text-align:center
+}
+
+.report-totals div{
+  padding:8px 3px;
+  border-radius:9px;
+  background:rgba(255,255,255,.05)
+}
+
+.report-totals span{
+  display:block;
+  color:#91a099;
+  font-size:9px
+}
+
+.report-totals strong{
+  display:block;
+  margin-top:4px;
+  font-size:12px
+}
+
+.result-counts{
+  margin-top:10px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:5px
+}
+
+.result-counts div{
+  display:flex;
+  justify-content:space-between;
+  padding:6px 8px;
+  border-radius:8px;
+  background:rgba(255,255,255,.04);
+  font-size:10px
+}
+
 #newRoundButton{
-  margin-top:17px;padding:10px 15px;border:1px solid rgba(255,255,255,.15);
-  border-radius:10px;background:rgba(255,255,255,.04);color:#d2ddd7;cursor:pointer
+  margin-top:17px;
+  padding:10px 15px;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:10px;
+  background:rgba(255,255,255,.04);
+  color:#d2ddd7;
+  cursor:pointer
 }
-footer{padding-top:14px;text-align:center;color:#65736c;font-size:12px}
+
+footer{
+  padding-top:14px;
+  text-align:center;
+  color:#65736c;
+  font-size:12px
+}
+
 .setup-overlay{
-  position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;
-  padding:18px;background:rgba(2,8,5,.94)
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(2,8,5,.94)
 }
+
 .setup-overlay.visible{display:flex}
+
 .setup-card{
-  width:100%;max-width:430px;padding:21px;border-radius:19px;background:#102219;
+  width:100%;
+  max-width:430px;
+  padding:21px;
+  border-radius:19px;
+  background:#102219
+}
+
+.setup-card h2{margin:0 0 6px}
+.setup-card p{color:#9fafa6;font-size:13px}
+
+.field{margin-top:13px}
+
+.field label{
+  display:block;
+  margin-bottom:6px;
+  color:#b8c5be;
+  font-size:12px;
+  font-weight:700
+}
+
+.field input{
+  width:100%;
+  padding:12px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:10px;
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  font-size:16px
+}
+
+.setup-actions{
+  display:flex;
+  gap:9px;
+  margin-top:20px
+}
+
+.setup-actions button{
+  flex:1;
+  padding:12px 9px;
+  border-radius:10px;
+  font-weight:700
+}
+
+#cancelSetupButton{
+  background:transparent;
+  color:#aebbb4;
   border:1px solid rgba(255,255,255,.12)
 }
-.field{margin-top:13px}
-.field label{display:block;margin-bottom:6px;color:#b8c5be;font-size:12px;font-weight:700}
-.field input{
-  width:100%;padding:12px;border:1px solid rgba(255,255,255,.13);
-  border-radius:10px;background:rgba(255,255,255,.06);color:#fff;font-size:16px
+
+#startRoundButton{
+  border:0;
+  background:#2d8c5a;
+  color:#fff
 }
-.setup-actions{display:flex;gap:9px;margin-top:20px}
-.setup-actions button{flex:1;padding:12px 9px;border-radius:10px;font-weight:700}
-#cancelSetupButton{background:transparent;color:#aebbb4;border:1px solid rgba(255,255,255,.12)}
-#startRoundButton{border:0;background:#2d8c5a;color:#fff}
+
+@media(max-width:390px){
+  .app{padding-left:7px;padding-right:7px}
+  #talkButton{width:206px;height:206px;flex-basis:206px}
+  .score-table th,.score-table td{font-size:9px}
+  .score-table .row-label{width:41px;font-size:8px}
+  .score-table .total-column{width:31px}
+}
 </style>
 </head>
 
 <body>
+
 <main class="app">
 
 <header class="brand">
@@ -131,8 +426,8 @@ footer{padding-top:14px;text-align:center;color:#65736c;font-size:12px}
 </header>
 
 <section class="course">
-<div class="course-name">El Pulté</div>
-<div class="course-info">Blancas · Par 72 · 18 hoyos · CR — · Slope —</div>
+<div class="course-name" id="courseName">El Pulté</div>
+<div class="course-info" id="courseInfo">Blancas · Par 72 · 18 hoyos · CR — · Slope —</div>
 <div class="player-info" id="playerInfo">Handicap por definir</div>
 </section>
 
@@ -145,10 +440,11 @@ footer{padding-top:14px;text-align:center;color:#65736c;font-size:12px}
 <div class="instruction">
 Configura la ronda por voz o con “Nueva ronda”.<br><br>
 Un score: “Hoyo 5, 3”.<br>
-Varios: “Hoyo 1, 4; dos 5; tres 4; cuatro 6”.
+Varios: “Hoyo 3, 4; hoyo 4, 5; hoyo 5, 3”.
 </div>
 
 <section class="score-summary">
+
 <h2>RONDA ACTUAL</h2>
 
 <div class="summary-grid">
@@ -158,6 +454,7 @@ Varios: “Hoyo 1, 4; dos 5; tres 4; cuatro 6”.
 </div>
 
 <section class="scorecard">
+
 <div class="scorecard-title">SCORECARD</div>
 
 <div class="nine-title">Primera Vuelta</div>
@@ -189,14 +486,17 @@ Varios: “Hoyo 1, 4; dos 5; tres 4; cuatro 6”.
 <div class="scorecard-total">
 <span class="scorecard-total-label">TOTAL GROSS</span>
 <span class="scorecard-total-value" id="scorecardTotalGross">—</span>
+
 <span class="scorecard-total-label">TOTAL NETO</span>
 <span class="scorecard-total-value net-total" id="scorecardTotalNet">—</span>
+
 <span class="scorecard-total-label">RESULTADO</span>
 <span class="scorecard-total-value net-total" id="scorecardTotalDiff">—</span>
 </div>
 
 <section class="final-report" id="finalReport">
 <h3>REPORTE FINAL</h3>
+
 <div class="report-meta">
 <div><span>Jugador</span><strong id="reportPlayer">—</strong></div>
 <div><span>Handicap</span><strong id="reportHandicap">—</strong></div>
@@ -205,50 +505,48 @@ Varios: “Hoyo 1, 4; dos 5; tres 4; cuatro 6”.
 <div><span>Fecha / hora</span><strong id="reportDate">—</strong></div>
 <div><span>CR / Slope</span><strong>— / —</strong></div>
 </div>
+
 <div class="report-totals">
 <div><span>Primera</span><strong id="reportFront">—</strong></div>
 <div><span>Segunda</span><strong id="reportBack">—</strong></div>
 <div><span>Total</span><strong id="reportTotal">—</strong></div>
 </div>
+
 <div class="result-counts" id="resultCounts"></div>
 </section>
+
 </section>
 
 <button id="newRoundButton" type="button">Nueva ronda</button>
+
 </section>
 </section>
 
 <footer>Golf Scorecard Guatemala</footer>
+
 </main>
 
 <div class="setup-overlay" id="setupOverlay">
 <div class="setup-card">
+
 <h2>NUEVA RONDA</h2>
+<p>Ingresa tu nombre y handicap de juego.</p>
 
 <div class="field">
-<label>JUGADOR</label>
+<label for="playerNameInput">JUGADOR</label>
 <input id="playerNameInput" type="text" placeholder="Nombre">
 </div>
 
 <div class="field">
-<label>HANDICAP DE JUEGO · 0 A 24</label>
-<input id="handicapInput" type="number" min="0" max="24" step="1">
-</div>
-
-<div class="field">
-<label>CAMPO</label>
-<input value="El Pulté" readonly>
-</div>
-
-<div class="field">
-<label>MARCAS</label>
-<input value="Blancas" readonly>
+<label for="handicapInput">HANDICAP DE JUEGO · 0 A 24</label>
+<input id="handicapInput" type="number" inputmode="numeric" min="0" max="24" step="1">
 </div>
 
 <div class="setup-actions">
 <button id="cancelSetupButton" type="button">Cancelar</button>
 <button id="startRoundButton" type="button">Iniciar ronda</button>
 </div>
+
 </div>
 </div>
 
@@ -256,6 +554,8 @@ Varios: “Hoyo 1, 4; dos 5; tres 4; cuatro 6”.
 "use strict";
 
 const STORAGE_KEY="epg-caddy-current-round-v10";
+const MIN_HANDICAP=0;
+const MAX_HANDICAP=24;
 
 const COURSE={
   name:"El Pulté",
@@ -286,11 +586,15 @@ const COURSE={
 const FRONT=[1,2,3,4,5,6,7,8,9];
 const BACK=[10,11,12,13,14,15,16,17,18];
 const ALL=[...FRONT,...BACK];
+
 const $=id=>document.getElementById(id);
 
 const talkButton=$("talkButton");
 const statusEl=$("status");
 const playerInfo=$("playerInfo");
+const front9El=$("front9");
+const back9El=$("back9");
+const totalEl=$("total");
 const setupOverlay=$("setupOverlay");
 const playerNameInput=$("playerNameInput");
 const handicapInput=$("handicapInput");
@@ -304,48 +608,62 @@ let remoteAudio=null;
 let connected=false;
 let listening=false;
 let responseInProgress=false;
-let toolExecuting=false;
+let speaking=false;
 
-const handledCalls=new Set();
+const handledCallIds=new Set();
 
 function validHandicap(value){
   const n=Number(value);
-  return Number.isInteger(n)&&n>=0&&n<=24;
+  return Number.isInteger(n)&&n>=MIN_HANDICAP&&n<=MAX_HANDICAP;
 }
 
 function emptyRound(config={}){
   const configured=config.configured===true&&validHandicap(config.handicap);
 
   return{
+    version:10,
     configured,
     player:String(config.player||"").trim(),
     handicap:configured?Number(config.handicap):null,
     holes:{},
     lastHole:null,
-    createdAt:new Date().toISOString()
+    createdAt:new Date().toISOString(),
+    updatedAt:new Date().toISOString()
   };
 }
 
 function loadRound(){
   try{
     const raw=localStorage.getItem(STORAGE_KEY);
-    if(!raw)return emptyRound();
+
+    if(!raw){
+      return emptyRound();
+    }
 
     const data=JSON.parse(raw);
 
-    if(!data||data.configured!==true||!validHandicap(data.handicap)){
+    if(
+      !data||
+      data.configured!==true||
+      !validHandicap(data.handicap)||
+      !data.holes
+    ){
       return emptyRound();
     }
 
     return{
+      version:10,
       configured:true,
       player:String(data.player||"").trim(),
       handicap:Number(data.handicap),
       holes:data.holes||{},
       lastHole:data.lastHole||null,
-      createdAt:data.createdAt||new Date().toISOString()
+      createdAt:data.createdAt||new Date().toISOString(),
+      updatedAt:data.updatedAt||new Date().toISOString()
     };
-  }catch{
+
+  }catch(error){
+    console.error(error);
     return emptyRound();
   }
 }
@@ -353,8 +671,9 @@ function loadRound(){
 let round=loadRound();
 
 function saveRound(){
+  round.updatedAt=new Date().toISOString();
   localStorage.setItem(STORAGE_KEY,JSON.stringify(round));
-  updateUI();
+  updateSummary();
 }
 
 function definition(hole){
@@ -362,62 +681,66 @@ function definition(hole){
 }
 
 function handicapStroke(def){
-  if(!round.configured||!def)return 0;
+  if(!round.configured||!def){
+    return 0;
+  }
 
-  const h=Number(round.handicap);
+  const handicap=Number(round.handicap);
 
-  if(h<=0)return 0;
-  if(h<=18)return def.hcp<=h?1:0;
+  if(handicap<=0){
+    return 0;
+  }
 
-  return 1+(def.hcp<=h-18?1:0);
+  if(handicap<=18){
+    return def.hcp<=handicap?1:0;
+  }
+
+  return 1+(def.hcp<=handicap-18?1:0);
 }
 
 function scoreObject(hole,gross){
   const def=definition(hole);
-  const strokes=handicapStroke(def);
-  const net=gross-strokes;
+  const stroke=handicapStroke(def);
+  const net=gross-stroke;
 
   return{
     hole,
     gross,
     par:def.par,
     hcp:def.hcp,
-    handicapStroke:strokes,
+    handicapStroke:stroke,
     net,
-    diff:net-def.par
+    diff:net-def.par,
+    updatedAt:new Date().toISOString()
   };
 }
 
 function totals(numbers){
-  const items=numbers.map(n=>round.holes[String(n)]).filter(Boolean);
+  const items=numbers
+    .map(n=>round.holes[String(n)])
+    .filter(Boolean);
 
   const gross=items.reduce((a,x)=>a+Number(x.gross),0);
   const net=items.reduce((a,x)=>a+Number(x.net),0);
   const par=items.reduce((a,x)=>a+Number(x.par),0);
 
-  return{items,gross,net,par,diff:net-par};
-}
-
-function complete(numbers){
-  return numbers.every(n=>Boolean(round.holes[String(n)]));
-}
-
-function beforeStatus(){
   return{
-    front:complete(FRONT),
-    back:complete(BACK),
-    total:complete(ALL)
+    items,
+    gross,
+    net,
+    par,
+    diff:net-par
   };
 }
 
-function holeResult(diff){
-  if(diff===0)return"Par";
+function aggregateResult(diff){
+  if(diff===0)return"Even";
   if(diff<0)return`${Math.abs(diff)} bajo par`;
   return`${diff} sobre par`;
 }
 
-function totalResult(diff){
-  if(diff===0)return"Even";
+function holeResult(diff){
+  if(diff===0)return"Par";
   if(diff<0)return`${Math.abs(diff)} bajo par`;
   return`${diff} sobre par`;
 }
@@ -427,6 +750,18 @@ function visualDiff(diff){
   return diff>0?`+${diff}`:String(diff);
 }
 
+function complete(numbers){
+  return numbers.every(n=>Boolean(round.holes[String(n)]));
+}
+
+function statusBefore(){
+  return{
+    front:complete(FRONT),
+    back:complete(BACK),
+    total:complete(ALL)
+  };
+}
+
 function buildRecordSpeech(score,before){
   const all=totals(ALL);
 
@@ -434,51 +769,60 @@ function buildRecordSpeech(score,before){
     `Hoyo ${score.hole}`,
     `Gross ${score.gross}`,
     `Neto ${score.net}`,
-    `Resultado ${holeResult(score.diff)}`,
+    `Resultado: ${holeResult(score.diff)}`,
     "Acumulado",
     `Gross ${all.gross}`,
     `Neto ${all.net}`,
-    `Resultado ${totalResult(all.diff)}`
+    `Acumulado ${aggregateResult(all.diff)}`
   ];
 
   if(!before.front&&complete(FRONT)){
     const t=totals(FRONT);
+
     lines.push(
+      "",
       "Primera Vuelta",
       `Gross ${t.gross}`,
       `Neto ${t.net}`,
-      `Resultado ${totalResult(t.diff)}`
+      `Resultado: ${aggregateResult(t.diff)}`
     );
   }
 
   if(!before.back&&complete(BACK)){
     const t=totals(BACK);
+
     lines.push(
+      "",
       "Segunda Vuelta",
       `Gross ${t.gross}`,
       `Neto ${t.net}`,
-      `Resultado ${totalResult(t.diff)}`
+      `Resultado: ${aggregateResult(t.diff)}`
     );
   }
 
   if(!before.total&&complete(ALL)){
     const t=totals(ALL);
+
     lines.push(
+      "",
       "Total",
       `Gross ${t.gross}`,
       `Neto ${t.net}`,
-      `Resultado ${totalResult(t.diff)}`
+      `Resultado: ${aggregateResult(t.diff)}`
     );
   }
 
-  return lines.join(". ");
+  return lines.join("\n");
 }
 
 function setupRound(args){
   const handicap=Number(args.handicap);
 
   if(!validHandicap(handicap)){
-    return{ok:false,speech:"Handicap inválido."};
+    return{
+      ok:false,
+      speech:"Handicap inválido. Usa un número entre cero y veinticuatro."
+    };
   }
 
   round=emptyRound({
@@ -497,38 +841,58 @@ function setupRound(args){
       `Handicap ${handicap}`,
       "Campo El Pulté",
       "Marcas Blancas"
-    ].filter(Boolean).join(". ")
+    ].filter(Boolean).join("\n")
   };
 }
 
 function validateScore(hole,gross){
-  const h=Number(hole);
-  const g=Number(gross);
+  hole=Number(hole);
+  gross=Number(gross);
 
-  if(!Number.isInteger(h)||h<1||h>18){
-    return{ok:false,speech:"Número de hoyo inválido."};
+  if(!Number.isInteger(hole)||hole<1||hole>18){
+    return{
+      ok:false,
+      speech:"Número de hoyo inválido."
+    };
   }
 
-  if(!Number.isInteger(g)||g<1||g>30){
-    return{ok:false,speech:`Score inválido para el hoyo ${h}.`};
+  if(!Number.isInteger(gross)||gross<1||gross>30){
+    return{
+      ok:false,
+      speech:`Score inválido para el hoyo ${hole}.`
+    };
   }
 
-  return{ok:true,hole:h,gross:g};
+  if(!definition(hole)){
+    return{
+      ok:false,
+      speech:`Hoyo ${hole} sin datos.`
+    };
+  }
+
+  return{ok:true,hole,gross};
 }
 
 function recordScore(hole,gross){
   if(!round.configured){
-    return{ok:false,speech:"Primero configura la ronda y el handicap."};
+    return{
+      ok:false,
+      speech:"Primero configura la ronda y el handicap."
+    };
   }
 
-  const v=validateScore(hole,gross);
-  if(!v.ok)return v;
+  const validation=validateScore(hole,gross);
 
-  const before=beforeStatus();
-  const score=scoreObject(v.hole,v.gross);
+  if(!validation.ok){
+    return validation;
+  }
 
-  round.holes[String(v.hole)]=score;
-  round.lastHole=v.hole;
+  const before=statusBefore();
+  const score=scoreObject(validation.hole,validation.gross);
+
+  round.holes[String(score.hole)]=score;
+  round.lastHole=score.hole;
+
   saveRound();
 
   return{
@@ -540,61 +904,75 @@ function recordScore(hole,gross){
 
 function recordScores(scores){
   if(!round.configured){
-    return{ok:false,speech:"Primero configura la ronda y el handicap."};
+    return{
+      ok:false,
+      speech:"Primero configura la ronda y el handicap."
+    };
   }
 
   if(!Array.isArray(scores)||scores.length<2){
-    return{ok:false,speech:"No se recibieron suficientes scores."};
+    return{
+      ok:false,
+      speech:"No se recibieron suficientes scores."
+    };
   }
 
   const checked=[];
 
   for(const item of scores){
-    const v=validateScore(item?.hole,item?.gross);
-    if(!v.ok)return v;
-    checked.push(v);
+    const validation=validateScore(item?.hole,item?.gross);
+
+    if(!validation.ok){
+      return validation;
+    }
+
+    checked.push(validation);
   }
 
   if(new Set(checked.map(x=>x.hole)).size!==checked.length){
-    return{ok:false,speech:"Hay un hoyo repetido en el dictado."};
+    return{
+      ok:false,
+      speech:"Hay un hoyo repetido en el dictado."
+    };
   }
 
-  const before=beforeStatus();
-  const saved=[];
+  const before=statusBefore();
+  let last=null;
 
   for(const item of checked){
-    const score=scoreObject(item.hole,item.gross);
-    round.holes[String(item.hole)]=score;
-    saved.push(score);
+    last=scoreObject(item.hole,item.gross);
+    round.holes[String(item.hole)]=last;
   }
 
-  const last=saved[saved.length-1];
-
   round.lastHole=last.hole;
+
   saveRound();
 
   return{
     ok:true,
-    scores:saved,
+    scores:checked.length,
     speech:buildRecordSpeech(last,before)
   };
 }
 
 function speechForHole(hole){
-  const s=round.holes[String(hole)];
+  const score=round.holes[String(hole)];
 
-  if(!s)return`Hoyo ${hole} sin score.`;
+  if(!score){
+    return`Hoyo ${hole} sin score.`;
+  }
 
   return[
-    `Hoyo ${s.hole}`,
-    `Gross ${s.gross}`,
-    `Neto ${s.net}`,
-    `Resultado ${holeResult(s.diff)}`
-  ].join(". ");
+    `Hoyo ${score.hole}`,
+    `Gross ${score.gross}`,
+    `Neto ${score.net}`,
+    `Resultado: ${holeResult(score.diff)}`
+  ].join("\n");
 }
 
 function processAction(args){
   switch(args?.action){
+
     case"setup_round":
       return setupRound(args);
 
@@ -604,38 +982,50 @@ function processAction(args){
     case"record_scores":
       return recordScores(args.scores);
 
-    case"get_hole":
-      return{
-        ok:true,
-        speech:speechForHole(Number(args.hole))
-      };
+    case"get_hole":{
+      const hole=Number(args.hole);
+
+      if(!Number.isInteger(hole)||hole<1||hole>18){
+        return{ok:false,speech:"Número de hoyo inválido."};
+      }
+
+      return{ok:true,speech:speechForHole(hole)};
+    }
 
     case"get_range":{
       const from=Number(args.from);
       const to=Number(args.to);
 
-      if(!Number.isInteger(from)||!Number.isInteger(to)){
+      if(
+        !Number.isInteger(from)||
+        !Number.isInteger(to)||
+        from<1||from>18||
+        to<1||to>18
+      ){
         return{ok:false,speech:"Rango inválido."};
       }
 
-      const start=Math.max(1,Math.min(from,to));
-      const end=Math.min(18,Math.max(from,to));
-      const out=[];
+      const a=Math.min(from,to);
+      const b=Math.max(from,to);
+      const output=[];
 
-      for(let h=start;h<=end;h++){
-        out.push(speechForHole(h));
+      for(let hole=a;hole<=b;hole++){
+        output.push(speechForHole(hole));
       }
 
-      return{ok:true,speech:out.join(". ")};
+      return{ok:true,speech:output.join("\n\n")};
     }
 
-    case"get_list":
+    case"get_list":{
+      if(!Array.isArray(args.holes)||!args.holes.length){
+        return{ok:false,speech:"Lista de hoyos inválida."};
+      }
+
       return{
         ok:true,
-        speech:Array.isArray(args.holes)
-          ?args.holes.map(h=>speechForHole(Number(h))).join(". ")
-          :"Lista de hoyos inválida."
+        speech:args.holes.map(Number).map(speechForHole).join("\n\n")
       };
+    }
 
     case"get_last":
       return{
@@ -646,7 +1036,10 @@ function processAction(args){
       };
 
     default:
-      return{ok:false,speech:""};
+      return{
+        ok:false,
+        speech:"Comando no reconocido."
+      };
   }
 }
 
@@ -656,14 +1049,14 @@ function clearRow(row){
   }
 }
 
-function addCell(row,text,className=""){
+function cell(row,text,className=""){
   const td=document.createElement("td");
   td.textContent=text;
   td.className=className;
   row.appendChild(td);
 }
 
-function renderNine(numbers,prefix,label){
+function renderNine(numbers,prefix,totalName){
   const rows={
     hole:$(`${prefix}HoleRow`),
     hcp:$(`${prefix}HcpRow`),
@@ -678,29 +1071,40 @@ function renderNine(numbers,prefix,label){
 
   let gross=0;
   let net=0;
-  let playedPar=0;
   let fullPar=0;
+  let playedPar=0;
   let count=0;
 
-  for(const hole of numbers){
+  numbers.forEach(hole=>{
     const def=definition(hole);
     const score=round.holes[String(hole)];
-    const strokes=handicapStroke(def);
+    const stroke=handicapStroke(def);
 
-    addCell(rows.hole,hole);
-    addCell(
+    cell(rows.hole,hole);
+
+    cell(
       rows.hcp,
-      strokes>=2?`${def.hcp}×2`:def.hcp,
-      strokes>=2?"hcp-double-cell":strokes===1?"hcp-stroke-cell":""
+      stroke>=2?`${def.hcp}×2`:def.hcp,
+      stroke>=2
+        ?"hcp-double-cell"
+        :stroke===1
+          ?"hcp-stroke-cell"
+          :""
     );
-    addCell(rows.yds,"—");
-    addCell(rows.par,def.par);
-    addCell(rows.gross,score?score.gross:"—","gross-cell");
-    addCell(rows.net,score?score.net:"—","net-cell");
-    addCell(
+
+    cell(rows.yds,"—");
+    cell(rows.par,def.par);
+    cell(rows.gross,score?score.gross:"—","gross-cell");
+    cell(rows.net,score?score.net:"—","net-cell");
+
+    cell(
       rows.diff,
       score?visualDiff(score.diff):"—",
-      score?.diff<0?"diff-under":score?.diff>0?"diff-over":""
+      score?.diff<0
+        ?"diff-under"
+        :score?.diff>0
+          ?"diff-over"
+          :""
     );
 
     fullPar+=def.par;
@@ -711,22 +1115,22 @@ function renderNine(numbers,prefix,label){
       playedPar+=score.par;
       count++;
     }
-  }
+  });
 
-  addCell(rows.hole,label,"total-column");
-  addCell(rows.hcp,round.configured?round.handicap:"—","total-column");
-  addCell(rows.yds,"—","total-column");
-  addCell(rows.par,fullPar,"total-column");
-  addCell(rows.gross,count?gross:"—","total-column");
-  addCell(rows.net,count?net:"—","total-column");
-  addCell(rows.diff,count?visualDiff(net-playedPar):"—","total-column");
+  cell(rows.hole,totalName,"total-column");
+  cell(rows.hcp,round.configured?round.handicap:"—","total-column");
+  cell(rows.yds,"—","total-column");
+  cell(rows.par,fullPar,"total-column");
+  cell(rows.gross,count?gross:"—","total-column gross-cell");
+  cell(rows.net,count?net:"—","total-column net-cell");
+  cell(rows.diff,count?visualDiff(net-playedPar):"—","total-column");
 }
 
 function updateFinalReport(){
-  const el=$("finalReport");
+  const report=$("finalReport");
 
   if(!complete(ALL)){
-    el.classList.remove("visible");
+    report.classList.remove("visible");
     return;
   }
 
@@ -736,60 +1140,59 @@ function updateFinalReport(){
 
   $("reportPlayer").textContent=round.player||"Jugador";
   $("reportHandicap").textContent=round.handicap;
-  $("reportDate").textContent=new Intl.DateTimeFormat("es-GT",{
-    day:"2-digit",
-    month:"2-digit",
-    year:"numeric",
-    hour:"2-digit",
-    minute:"2-digit"
-  }).format(new Date(round.createdAt));
 
-  $("reportFront").textContent=`G ${front.gross} · N ${front.net} · ${visualDiff(front.diff)}`;
-  $("reportBack").textContent=`G ${back.gross} · N ${back.net} · ${visualDiff(back.diff)}`;
-  $("reportTotal").textContent=`G ${all.gross} · N ${all.net} · ${visualDiff(all.diff)}`;
+  try{
+    $("reportDate").textContent=new Intl.DateTimeFormat(
+      "es-GT",
+      {
+        dateStyle:"short",
+        timeStyle:"short"
+      }
+    ).format(new Date(round.createdAt));
+  }catch{
+    $("reportDate").textContent="—";
+  }
+
+  $("reportFront").textContent=
+    `G ${front.gross} · N ${front.net} · ${visualDiff(front.diff)}`;
+
+  $("reportBack").textContent=
+    `G ${back.gross} · N ${back.net} · ${visualDiff(back.diff)}`;
+
+  $("reportTotal").textContent=
+    `G ${all.gross} · N ${all.net} · ${visualDiff(all.diff)}`;
 
   const counts={
-    eagle:0,birdie:0,par:0,bogey:0,double:0,triple:0,otros:0
+    Eagle:0,
+    Birdie:0,
+    Par:0,
+    Bogey:0,
+    "Doble bogey":0,
+    "Triple+":0
   };
 
-  ALL.forEach(h=>{
-    const s=round.holes[String(h)];
-    if(!s)return;
+  ALL.forEach(hole=>{
+    const score=round.holes[String(hole)];
+    if(!score)return;
 
-    if(s.diff===-2)counts.eagle++;
-    else if(s.diff===-1)counts.birdie++;
-    else if(s.diff===0)counts.par++;
-    else if(s.diff===1)counts.bogey++;
-    else if(s.diff===2)counts.double++;
-    else if(s.diff===3)counts.triple++;
-    else counts.otros++;
+    if(score.diff<=-2)counts.Eagle++;
+    else if(score.diff===-1)counts.Birdie++;
+    else if(score.diff===0)counts.Par++;
+    else if(score.diff===1)counts.Bogey++;
+    else if(score.diff===2)counts["Doble bogey"]++;
+    else counts["Triple+"]++;
   });
 
-  $("resultCounts").innerHTML=[
-    ["Eagles",counts.eagle],
-    ["Birdies",counts.birdie],
-    ["Pares",counts.par],
-    ["Bogeys",counts.bogey],
-    ["Dobles",counts.double],
-    ["Triples",counts.triple],
-    ["Otros",counts.otros]
-  ].map(([name,value])=>`<div><span>${name}</span><strong>${value}</strong></div>`).join("");
+  $("resultCounts").innerHTML=Object.entries(counts)
+    .map(([label,value])=>
+      `<div><span>${label}</span><strong>${value}</strong></div>`
+    )
+    .join("");
 
-  el.classList.add("visible");
+  report.classList.add("visible");
 }
 
-function summaryText(t,expected){
-  if(!t.items.length)return`0/${expected}`;
-
-  return[
-    `${t.items.length}/${expected}`,
-    `G ${t.gross}`,
-    `N ${t.net}`,
-    visualDiff(t.diff)
-  ].join("\n");
-}
-
-function updateUI(){
+function updateSummary(){
   playerInfo.textContent=round.configured
     ?`${round.player?round.player+" · ":""}Handicap ${round.handicap}`
     :"Handicap por definir";
@@ -798,45 +1201,69 @@ function updateUI(){
   const back=totals(BACK);
   const all=totals(ALL);
 
-  $("front9").textContent=summaryText(front,9);
-  $("back9").textContent=summaryText(back,9);
-  $("total").textContent=summaryText(all,18);
+  front9El.textContent=
+    `${front.items.length}/9${
+      front.items.length
+        ?`\nG ${front.gross}\nN ${front.net}\n${visualDiff(front.diff)}`
+        :""
+    }`;
+
+  back9El.textContent=
+    `${back.items.length}/9${
+      back.items.length
+        ?`\nG ${back.gross}\nN ${back.net}\n${visualDiff(back.diff)}`
+        :""
+    }`;
+
+  totalEl.textContent=
+    `${all.items.length}/18${
+      all.items.length
+        ?`\nG ${all.gross}\nN ${all.net}\n${visualDiff(all.diff)}`
+        :""
+    }`;
 
   renderNine(FRONT,"front","OUT");
   renderNine(BACK,"back","IN");
 
-  $("scorecardTotalGross").textContent=all.items.length?all.gross:"—";
-  $("scorecardTotalNet").textContent=all.items.length?all.net:"—";
-  $("scorecardTotalDiff").textContent=all.items.length?visualDiff(all.diff):"—";
+  $("scorecardTotalGross").textContent=
+    all.items.length?all.gross:"—";
+
+  $("scorecardTotalNet").textContent=
+    all.items.length?all.net:"—";
+
+  $("scorecardTotalDiff").textContent=
+    all.items.length?visualDiff(all.diff):"—";
 
   updateFinalReport();
 
-  if(!listening&&!toolExecuting){
+  if(!listening&&!speaking){
     statusEl.textContent=round.configured
       ?`Ronda lista · ${all.items.length}/18 hoyos`
       :"Configura la ronda antes del primer score.";
   }
 }
 
-/* =========================================================
-   AUDIO FINAL
-   =========================================================
-   El audio remoto de Realtime está físicamente silenciado.
-   Solamente SpeechSynthesis pronuncia result.speech.
-   ========================================================= */
+function sendEvent(event){
+  if(!dc||dc.readyState!=="open"){
+    throw new Error("Canal Realtime no disponible.");
+  }
+
+  dc.send(JSON.stringify(event));
+}
 
 function cancelSpeech(){
   try{
-    if("speechSynthesis" in window){
-      speechSynthesis.cancel();
-    }
+    window.speechSynthesis?.cancel();
   }catch{}
+  speaking=false;
 }
 
 function spanishVoice(){
-  if(!("speechSynthesis" in window))return null;
+  if(!("speechSynthesis"in window)){
+    return null;
+  }
 
-  const voices=speechSynthesis.getVoices();
+  const voices=window.speechSynthesis.getVoices();
 
   return(
     voices.find(v=>/^es-GT$/i.test(v.lang||""))||
@@ -847,92 +1274,73 @@ function spanishVoice(){
 
 function speak(text){
   return new Promise(resolve=>{
-    const value=String(text||"").trim();
+    const speech=String(text||"").trim();
 
-    if(!value){
+    if(!speech){
       resolve();
       return;
     }
 
-    if(!("speechSynthesis" in window)){
+    if(
+      !("speechSynthesis"in window)||
+      typeof SpeechSynthesisUtterance==="undefined"
+    ){
+      statusEl.textContent="Voz de salida no disponible.";
       resolve();
       return;
     }
 
     cancelSpeech();
 
-    const utterance=new SpeechSynthesisUtterance(value);
+    speaking=true;
+    statusEl.textContent="Resultado…";
+
+    const utterance=new SpeechSynthesisUtterance(speech);
+
     utterance.lang="es-GT";
     utterance.rate=1;
     utterance.pitch=1;
     utterance.volume=1;
 
     const voice=spanishVoice();
-    if(voice)utterance.voice=voice;
 
-    let finished=false;
+    if(voice){
+      utterance.voice=voice;
+    }
 
-    const done=()=>{
-      if(finished)return;
-      finished=true;
+    let done=false;
+
+    const finish=()=>{
+      if(done)return;
+      done=true;
+      speaking=false;
       resolve();
     };
 
-    utterance.onend=done;
-    utterance.onerror=done;
+    utterance.onend=finish;
+    utterance.onerror=finish;
 
-    speechSynthesis.speak(utterance);
+    try{
+      window.speechSynthesis.speak(utterance);
+    }catch{
+      finish();
+    }
   });
 }
 
-/* =========================================================
-   REALTIME
-   ========================================================= */
-
-function sendEvent(event){
-  if(!dc||dc.readyState!=="open"){
-    throw new Error("Canal Realtime no disponible.");
-  }
-
-  dc.send(JSON.stringify(event));
-}
-
-function setMicEnabled(enabled){
-  if(micTrack){
-    micTrack.enabled=Boolean(enabled);
-  }
-
-  listening=Boolean(enabled);
-
-  if(listening){
-    talkButton.classList.add("active");
-    talkButton.textContent="Escuchando";
-    statusEl.textContent="Escuchando…";
-  }else{
-    talkButton.classList.remove("active");
-    talkButton.textContent=connected?"Hablar":"Iniciar voz";
-
-    if(!toolExecuting){
-      updateUI();
-    }
-  }
-}
-
 async function executeToolCall(call){
-  if(!call||toolExecuting)return;
+  if(!call?.call_id){
+    responseInProgress=false;
+    finishListening();
+    return;
+  }
 
-  const callId=call.call_id;
+  if(handledCallIds.has(call.call_id)){
+    return;
+  }
 
-  if(callId&&handledCalls.has(callId))return;
-  if(callId)handledCalls.add(callId);
+  handledCallIds.add(call.call_id);
 
-  toolExecuting=true;
-  responseInProgress=false;
-
-  /*
-    Apagar micrófono ANTES de hablar.
-    Evita que el resultado vuelva a entrar al modelo.
-  */
   setMicEnabled(false);
 
   let result;
@@ -942,15 +1350,13 @@ async function executeToolCall(call){
     result=processAction(args);
   }catch(error){
     console.error(error);
-    result={ok:false,speech:"No se pudo procesar el comando."};
+
+    result={
+      ok:false,
+      speech:"No se pudo procesar el comando."
+    };
   }
 
-  /*
-    Se registra el function_call_output en Realtime,
-    pero NO se crea response.create.
-    Por tanto el modelo NO obtiene un segundo turno
-    para añadir comentarios.
-  */
   try{
     sendEvent({
       type:"conversation.item.create",
@@ -961,17 +1367,19 @@ async function executeToolCall(call){
       }
     });
   }catch(error){
-    console.warn(error);
+    console.error(error);
   }
 
-  statusEl.textContent="Resultado…";
+  /*
+    MUY IMPORTANTE:
+    NO enviamos response.create después del tool.
+    El resultado lo pronuncia exclusivamente el navegador.
+  */
 
-  await speak(result?.speech||"");
+  await speak(result.speech);
 
-  toolExecuting=false;
   responseInProgress=false;
-  setMicEnabled(false);
-  updateUI();
+  finishListening();
 }
 
 function handleResponseDone(event){
@@ -980,31 +1388,31 @@ function handleResponseDone(event){
   const output=event?.response?.output;
 
   if(!Array.isArray(output)){
-    setMicEnabled(false);
+    finishListening();
     return;
   }
 
-  const calls=output.filter(item=>
-    item?.type==="function_call"&&
-    item?.name==="epg_caddy_action"
+  const call=output.find(
+    item=>
+      item?.type==="function_call"&&
+      item?.name==="epg_caddy_action"
   );
 
-  if(calls.length){
-    executeToolCall(calls[0]).catch(error=>{
+  if(call){
+    executeToolCall(call).catch(error=>{
       console.error(error);
-      toolExecuting=false;
       responseInProgress=false;
-      setMicEnabled(false);
+      finishListening();
     });
-
     return;
   }
 
   /*
-    Si Realtime generó texto/audio conversacional
-    sin herramienta, se ignora completamente.
+    Cualquier respuesta libre del modelo queda físicamente
+    silenciada por remoteAudio.muted = true.
   */
-  setMicEnabled(false);
+
+  finishListening();
 }
 
 function handleRealtimeEvent(message){
@@ -1024,52 +1432,38 @@ function handleRealtimeEvent(message){
     if(event.type==="error"){
       console.error("Realtime:",event);
       responseInProgress=false;
-      toolExecuting=false;
-      setMicEnabled(false);
       statusEl.textContent="Error de Realtime.";
+      finishListening();
     }
+
   }catch(error){
     console.error(error);
   }
 }
 
-function waitForIce(peer){
-  if(peer.iceGatheringState==="complete"){
-    return Promise.resolve();
+function setMicEnabled(enabled){
+  if(micTrack){
+    micTrack.enabled=enabled;
   }
 
-  return new Promise(resolve=>{
-    const listener=()=>{
-      if(peer.iceGatheringState==="complete"){
-        peer.removeEventListener("icegatheringstatechange",listener);
-        resolve();
-      }
-    };
+  listening=enabled;
 
-    peer.addEventListener("icegatheringstatechange",listener);
-  });
+  if(enabled){
+    talkButton.classList.add("active");
+    talkButton.textContent="Escuchando";
+    statusEl.textContent="Escuchando…";
+  }else{
+    talkButton.classList.remove("active");
+    talkButton.textContent=connected?"Hablar":"Iniciar voz";
+
+    if(!speaking){
+      updateSummary();
+    }
+  }
 }
 
-function waitChannel(channel){
-  if(channel.readyState==="open"){
-    return Promise.resolve();
-  }
-
-  return new Promise((resolve,reject)=>{
-    const timer=setTimeout(()=>{
-      reject(new Error("El canal Realtime no abrió."));
-    },10000);
-
-    channel.addEventListener("open",()=>{
-      clearTimeout(timer);
-      resolve();
-    },{once:true});
-
-    channel.addEventListener("close",()=>{
-      clearTimeout(timer);
-      reject(new Error("El canal Realtime se cerró."));
-    },{once:true});
-  });
+function finishListening(){
+  setMicEnabled(false);
 }
 
 function cleanupConnection(){
@@ -1085,11 +1479,13 @@ function cleanupConnection(){
   if(dc){
     try{dc.close()}catch{}
   }
+
   dc=null;
 
   if(pc){
     try{pc.close()}catch{}
   }
+
   pc=null;
 
   if(remoteAudio){
@@ -1103,10 +1499,68 @@ function cleanupConnection(){
   }
 
   remoteAudio=null;
+
   connected=false;
   listening=false;
   responseInProgress=false;
-  toolExecuting=false;
+  speaking=false;
+
+  talkButton.classList.remove("active");
+  talkButton.textContent="Iniciar voz";
+}
+
+function waitForIce(peer){
+  if(peer.iceGatheringState==="complete"){
+    return Promise.resolve();
+  }
+
+  return new Promise(resolve=>{
+    const listener=()=>{
+      if(peer.iceGatheringState==="complete"){
+        peer.removeEventListener(
+          "icegatheringstatechange",
+          listener
+        );
+        resolve();
+      }
+    };
+
+    peer.addEventListener(
+      "icegatheringstatechange",
+      listener
+    );
+  });
+}
+
+function waitChannel(channel){
+  if(channel.readyState==="open"){
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve,reject)=>{
+    const timer=setTimeout(
+      ()=>reject(new Error("El canal Realtime no abrió.")),
+      15000
+    );
+
+    channel.addEventListener(
+      "open",
+      ()=>{
+        clearTimeout(timer);
+        resolve();
+      },
+      {once:true}
+    );
+
+    channel.addEventListener(
+      "close",
+      ()=>{
+        clearTimeout(timer);
+        reject(new Error("El canal Realtime se cerró."));
+      },
+      {once:true}
+    );
+  });
 }
 
 async function ensureSession(){
@@ -1120,6 +1574,7 @@ async function ensureSession(){
   }
 
   cleanupConnection();
+
   statusEl.textContent="Conectando…";
 
   if(!navigator.mediaDevices?.getUserMedia){
@@ -1141,23 +1596,24 @@ async function ensureSession(){
   }
 
   /*
-    El track existe desde la negociación WebRTC,
-    pero permanece apagado hasta pulsar Hablar.
+    El track existe desde el inicio de WebRTC,
+    pero permanece desactivado hasta tocar Hablar.
   */
   micTrack.enabled=false;
 
   pc=new RTCPeerConnection();
 
   /*
-    Realtime necesita poder entregar su track remoto,
-    pero jamás lo reproducimos al usuario.
+    El audio remoto se conserva para WebRTC,
+    pero queda SIEMPRE físicamente silenciado.
   */
   remoteAudio=document.createElement("audio");
-  remoteAudio.autoplay=false;
+  remoteAudio.autoplay=true;
   remoteAudio.playsInline=true;
   remoteAudio.muted=true;
   remoteAudio.volume=0;
   remoteAudio.style.display="none";
+
   document.body.appendChild(remoteAudio);
 
   pc.ontrack=event=>{
@@ -1167,56 +1623,78 @@ async function ensureSession(){
 
     remoteAudio.muted=true;
     remoteAudio.volume=0;
+
+    remoteAudio.play().catch(()=>{});
   };
 
   pc.addTrack(micTrack,localStream);
 
   dc=pc.createDataChannel("oai-events");
 
-  dc.addEventListener("message",handleRealtimeEvent);
+  dc.addEventListener(
+    "message",
+    handleRealtimeEvent
+  );
 
-  dc.addEventListener("open",()=>{
-    connected=true;
-  });
+  dc.addEventListener(
+    "open",
+    ()=>{
+      connected=true;
+    }
+  );
 
-  dc.addEventListener("close",()=>{
-    connected=false;
-    listening=false;
-    responseInProgress=false;
-    toolExecuting=false;
-  });
-
-  pc.addEventListener("connectionstatechange",()=>{
-    if(!pc)return;
-
-    if(["failed","closed"].includes(pc.connectionState)){
+  dc.addEventListener(
+    "close",
+    ()=>{
       connected=false;
       listening=false;
       responseInProgress=false;
-      toolExecuting=false;
     }
-  });
+  );
+
+  pc.addEventListener(
+    "connectionstatechange",
+    ()=>{
+      if(!pc)return;
+
+      if(
+        ["failed","closed"].includes(pc.connectionState)
+      ){
+        connected=false;
+        listening=false;
+        responseInProgress=false;
+      }
+    }
+  );
 
   const offer=await pc.createOffer();
+
   await pc.setLocalDescription(offer);
+
   await waitForIce(pc);
 
-  const response=await fetch("/api/session",{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/sdp"
-    },
-    body:pc.localDescription.sdp
-  });
+  const response=await fetch(
+    "/api/session",
+    {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/sdp"
+      },
+      body:pc.localDescription.sdp
+    }
+  );
 
   const answer=await response.text();
 
   if(!response.ok){
-    throw new Error(answer||"No se pudo iniciar la sesión.");
+    throw new Error(
+      answer||
+      `Error creando sesión: ${response.status}`
+    );
   }
 
   if(!answer.trim()){
-    throw new Error("La API no devolvió SDP.");
+    throw new Error("La sesión no devolvió SDP.");
   }
 
   await pc.setRemoteDescription({
@@ -1227,53 +1705,67 @@ async function ensureSession(){
   await waitChannel(dc);
 
   connected=true;
+  setMicEnabled(false);
 }
 
 async function startTalking(){
   try{
     /*
-      Si está escuchando, segundo toque = detener captura.
-      Semantic VAD seguirá procesando el audio ya enviado.
+      No permitir que la voz local se convierta
+      accidentalmente en una nueva orden.
     */
+    if(speaking){
+      cancelSpeech();
+    }
+
     if(listening){
       setMicEnabled(false);
       return;
     }
 
-    if(responseInProgress||toolExecuting){
+    if(responseInProgress){
       return;
     }
-
-    cancelSpeech();
 
     talkButton.disabled=true;
 
     await ensureSession();
 
+    responseInProgress=false;
+
+    /*
+      A partir de aquí el servidor usa semantic_vad.
+      create_response=true está configurado en /api/session.
+      Por eso NO se crea manualmente response.create aquí.
+    */
     setMicEnabled(true);
 
   }catch(error){
     console.error(error);
-    statusEl.textContent="No se pudo iniciar Golf Scorecard Guatemala.";
+
+    statusEl.textContent=
+      "No se pudo iniciar Golf Scorecard Guatemala.";
+
     cleanupConnection();
+
   }finally{
     talkButton.disabled=false;
   }
 }
 
-/* =========================================================
-   NUEVA RONDA
-   ========================================================= */
-
-function openSetup(){
+function openRoundSetup(){
   playerNameInput.value=round.player||"";
   handicapInput.value=round.handicap??"";
+
   setupOverlay.classList.add("visible");
 
-  setTimeout(()=>playerNameInput.focus(),100);
+  setTimeout(
+    ()=>playerNameInput.focus(),
+    100
+  );
 }
 
-function closeSetup(){
+function closeRoundSetup(){
   setupOverlay.classList.remove("visible");
 }
 
@@ -1282,6 +1774,7 @@ function createNewRound(){
 
   if(!validHandicap(handicap)){
     alert("Ingresa un handicap entre 0 y 24.");
+    handicapInput.focus();
     return;
   }
 
@@ -1294,39 +1787,68 @@ function createNewRound(){
   });
 
   saveRound();
-  closeSetup();
+  closeRoundSetup();
+
+  statusEl.textContent=
+    `Nueva ronda lista · Handicap ${handicap}`;
 }
 
 function newRound(){
   if(Object.keys(round.holes).length){
-    if(!confirm("¿Iniciar una nueva ronda? Se borrarán los scores actuales.")){
+    if(
+      !confirm(
+        "¿Iniciar una nueva ronda? Se borrarán los scores actuales."
+      )
+    ){
       return;
     }
   }
 
-  openSetup();
+  openRoundSetup();
 }
 
-talkButton.addEventListener("click",startTalking);
-$("newRoundButton").addEventListener("click",newRound);
-$("cancelSetupButton").addEventListener("click",closeSetup);
-$("startRoundButton").addEventListener("click",createNewRound);
+talkButton.addEventListener(
+  "click",
+  startTalking
+);
 
-window.addEventListener("beforeunload",()=>{
+$("newRoundButton").addEventListener(
+  "click",
+  newRound
+);
+
+$("cancelSetupButton").addEventListener(
+  "click",
+  closeRoundSetup
+);
+
+$("startRoundButton").addEventListener(
+  "click",
+  createNewRound
+);
+
+window.addEventListener(
+  "beforeunload",
+  ()=>{
+    try{
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(round)
+      );
+    }catch{}
+
+    cleanupConnection();
+  }
+);
+
+if("speechSynthesis"in window){
   try{
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(round));
-  }catch{}
-
-  cleanupConnection();
-});
-
-if("speechSynthesis" in window){
-  try{
-    speechSynthesis.getVoices();
+    window.speechSynthesis.getVoices();
   }catch{}
 }
 
-updateUI();
+updateSummary();
 </script>
+
 </body>
 </html>
