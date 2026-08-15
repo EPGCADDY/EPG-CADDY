@@ -4373,47 +4373,7 @@ startRoundButton
     createNewRound
   );
 
-officialCardButton
-  .addEventListener(
-    "click",
-    () => {
 
-      if (
-        !isComplete(
-          ALL_HOLES
-        )
-      ) {
-
-        return;
-      }
-
-      renderOfficialCard();
-
-      officialOverlay
-        .classList
-        .add(
-          "visible"
-        );
-    }
-  );
-
-closeOfficialButton
-  .addEventListener(
-    "click",
-    () =>
-      officialOverlay
-        .classList
-        .remove(
-          "visible"
-        )
-  );
-
-printOfficialButton
-  .addEventListener(
-    "click",
-    () =>
-      window.print()
-  );
 
 window
   .addEventListener(
