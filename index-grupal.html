@@ -194,11 +194,20 @@ function prepareGroup(args){
   $("setupStatus").textContent="LISTO · PUEDES PRESIONAR OK";
   return{ok:true,speech:"Listo. Si no tienes más jugadores que agregar, puedes presionar OK para principiar la ronda."};
 }
-function startConfirmedRound(){if(!draftPlayers.length)return false;round={version:2,configured:true,course:"El Pulté Golf",players:draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{}},i)),createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};draftPlayers=[];persist();closeSetup();render();return true}
+function startConfirmedRound(){if(!draftPlayers.length)return false;round={version:2,configured:true,course:"El Pulté Golf",players:draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{}},i)),announced:{front:false,back:false,complete:false},createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};draftPlayers=[];persist();closeSetup();render();return true}
 function validateEntry(x){const p=playerByRef(x.player),hole=Number(x.hole),gross=Number(x.gross);if(!p)return{ok:false,speech:`No encuentro al jugador ${x.player||"indicado"}.`};if(!Number.isInteger(hole)||hole<1||hole>18)return{ok:false,speech:"Número de hoyo inválido."};if(!Number.isInteger(gross)||gross<1||gross>30)return{ok:false,speech:`Score inválido para ${p.name} en el hoyo ${hole}.`};return{ok:true,p,hole,gross}}
 function saveEntry(x){const v=validateEntry(x);if(!v.ok)return v;v.p.holes[v.hole]=scoreObject(v.p,v.hole,v.gross,x);v.p.lastHole=v.hole;return{ok:true,p:v.p,score:v.p.holes[v.hole]}}
-function recordScore(a){if(!round.configured)return{ok:false,speech:"Primero configura la ronda grupal."};const r=saveEntry(a);if(!r.ok)return r;persist();render();return{ok:true,speech:`${r.p.name}, hoyo ${r.score.hole}: Gross ${r.score.gross}, Neto ${r.score.net}, ${vr(r.score.diff)}.`}}
-function recordScores(a){if(!round.configured)return{ok:false,speech:"Primero configura la ronda grupal."};if(!Array.isArray(a.entries)||a.entries.length<2)return{ok:false,speech:"No se recibieron suficientes scores."};const checked=a.entries.map(validateEntry),bad=checked.find(x=>!x.ok);if(bad)return bad;const keys=new Set();for(const v of checked){const k=`${v.p.id}:${v.hole}`;if(keys.has(k))return{ok:false,speech:"Hay un jugador y hoyo repetidos en el dictado."};keys.add(k)}let last;for(const e of a.entries)last=saveEntry(e);persist();render();return{ok:true,speech:`Registrados ${a.entries.length} scores. Último: ${last.p.name}, hoyo ${last.score.hole}, Gross ${last.score.gross}, Neto ${last.score.net}.`}}
+function ensureAnnouncedState(){if(!round.announced||typeof round.announced!=="object")round.announced={front:false,back:false,complete:false}}
+function segmentComplete(holes){return round.players.length>0&&round.players.every(p=>holes.every(h=>!!p.holes[h]))}
+function versusParSpeech(diff){return diff===0?"par":diff>0?`${diff} sobre par`:`${Math.abs(diff)} bajo par`}
+function segmentSpeech(title,holes){const lines=[title];for(const p of round.players){const t=totals(p,holes);lines.push(`${p.name}. Gross ${t.gross}. Neto ${t.net}. ${versusParSpeech(t.net-t.par)}.`)}return lines.join(" ")}
+function closureSpeechIfDue(){ensureAnnouncedState();const out=[];if(!round.announced.front&&segmentComplete(FRONT)){round.announced.front=true;out.push(segmentSpeech("Primera vuelta.",FRONT))}if(!round.announced.back&&segmentComplete(BACK)){round.announced.back=true;out.push(segmentSpeech("Segunda vuelta.",BACK))}if(!round.announced.complete&&segmentComplete(ALL)){round.announced.complete=true;out.push(segmentSpeech("Ronda completa.",ALL))}return out.join(" ")}
+function recordScore(a){if(!round.configured)return{ok:false,speech:"Primero configura la ronda grupal."};const r=saveEntry(a);if(!r.ok)return r;const closure=closureSpeechIfDue();persist();render();return{ok:true,speech:"",closure}}
+function recordScores(a){if(!round.configured)return{ok:false,speech:"Primero configura la ronda grupal."};if(!Array.isArray(a.entries)||a.entries.length<2)return{ok:false,speech:"No se recibieron suficientes scores."};const checked=a.entries.map(validateEntry),bad=checked.find(x=>!x.ok);if(bad)return bad;const keys=new Set();for(const v of checked){const k=`${v.p.id}:${v.hole}`;if(keys.has(k))return{ok:false,speech:"Hay un jugador y hoyo repetidos en el dictado."};keys.add(k)}for(const e of a.entries)saveEntry(e);const closure=closureSpeechIfDue();persist();render();return{ok:true,speech:"",closure}}
+function matchPlayerAt(tokens,start){for(const p of round.players){const nt=normalizeSpeech(p.name).split(" ").filter(Boolean);let ok=true;for(let j=0;j<nt.length;j++)if(tokens[start+j]!==nt[j]){ok=false;break}if(ok)return{player:p,next:start+nt.length}}return null}
+function parseRoundScoreTranscript(transcript){const text=normalizeSpeech(transcript),tokens=text.split(" ").filter(Boolean);if(!tokens.length)return{matched:false,ok:false};let i=0,entries=[],sawScoreWord=false;while(i<tokens.length){const m=matchPlayerAt(tokens,i);if(!m){i++;continue}let j=m.next;while(j<tokens.length&&["en","el","del"].includes(tokens[j]))j++;if(tokens[j]!=="hoyo"){i=m.next;continue}sawScoreWord=true;j++;const hn=parseSpanishNumberTokens(tokens,j);if(!hn||hn.value<1||hn.value>18)return{matched:true,ok:false,speech:`Hoyo inválido para ${m.player.name}.`};const hole=hn.value;j=hn.next;while(j<tokens.length&&["con","un","de"].includes(tokens[j]))j++;if(!["gross","gros","score"].includes(tokens[j]))return{matched:true,ok:false,speech:`Falta Gross para ${m.player.name}, hoyo ${hole}.`};j++;const gn=parseSpanishNumberTokens(tokens,j);if(!gn||gn.value<1||gn.value>30)return{matched:true,ok:false,speech:`Gross inválido para ${m.player.name}, hoyo ${hole}.`};entries.push({player:m.player.name,hole,gross:gn.value});i=gn.next}
+if(!entries.length)return{matched:sawScoreWord,ok:false,speech:sawScoreWord?"No pude leer el score completo.":""};return{matched:true,ok:true,entries}}
+function applyLiteralScores(parsed){const result=parsed.entries.length===1?recordScore(parsed.entries[0]):recordScores({entries:parsed.entries});if(result.ok&&result.closure)speakLocal(result.closure);return result}
 function speechForHole(p,h){const s=p.holes[h];return s?`${p.name}, hoyo ${h}: Gross ${s.gross}, Neto ${s.net}, ${vr(s.diff)}.`:`${p.name}, hoyo ${h}: sin score registrado.`}
 function getHole(a){const p=playerByRef(a.player),h=Number(a.hole);if(!p)return{ok:false,speech:"Indica el jugador."};if(!Number.isInteger(h)||h<1||h>18)return{ok:false,speech:"Número de hoyo inválido."};return{ok:true,speech:speechForHole(p,h)}}
 function getRange(a){const p=playerByRef(a.player),f=Number(a.from),t=Number(a.to);if(!p)return{ok:false,speech:"Indica el jugador."};if(!Number.isInteger(f)||!Number.isInteger(t)||f<1||f>18||t<1||t>18)return{ok:false,speech:"Rango inválido."};const out=[];for(let h=Math.min(f,t);h<=Math.max(f,t);h++)if(p.holes[h])out.push(speechForHole(p,h));return{ok:true,speech:out.length?out.join("\n"):"No hay scores registrados en ese rango."}}
@@ -234,26 +243,24 @@ function sendEvent(e){if(!dc||dc.readyState!=="open")throw new Error("Canal Real
 function groupTools(){return [{
   type:"function",name:"epg_caddy_action",description:"Opera una ronda GRUPAL de uno a seis jugadores. Nunca limita la ronda a un solo jugador.",
   parameters:{type:"object",properties:{
-    action:{type:"string",enum:["record_score","record_scores","get_hole","get_range","get_list","get_last","get_round_status"]},
-    player:{type:"string"},hole:{type:"integer",minimum:1,maximum:18},gross:{type:"integer",minimum:1,maximum:30},
-    fairway:{type:"boolean"},green:{type:"boolean"},putts:{type:"integer",minimum:0,maximum:20},penalties:{type:"integer",minimum:0,maximum:20},
-    entries:{type:"array",minItems:2,items:{type:"object",properties:{player:{type:"string"},hole:{type:"integer",minimum:1,maximum:18},gross:{type:"integer",minimum:1,maximum:30},fairway:{type:"boolean"},green:{type:"boolean"},putts:{type:"integer",minimum:0,maximum:20},penalties:{type:"integer",minimum:0,maximum:20}},required:["player","hole","gross"],additionalProperties:false}},
+    action:{type:"string",enum:["get_hole","get_range","get_list","get_last","get_round_status"]},
+    player:{type:"string"},hole:{type:"integer",minimum:1,maximum:18},
     from:{type:"integer",minimum:1,maximum:18},to:{type:"integer",minimum:1,maximum:18},holes:{type:"array",items:{type:"integer",minimum:1,maximum:18}}
   },required:["action"],additionalProperties:false}
 }]}
 function setupSessionConfig(){return{
   type:"realtime",
-  instructions:"EPG_SETUP_LOCK_V10. Modo NUEVA RONDA. Nunca respondas al audio. Nunca hagas preguntas. Nunca uses herramientas. Nunca interpretes ni limites jugadores. El cliente solo necesita la transcripción y procesa localmente de uno a seis jugadores.",
+  instructions:"EPG_SETUP_LOCK_V11. Modo NUEVA RONDA. Nunca respondas al audio. Nunca hagas preguntas. Nunca uses herramientas. Nunca interpretes ni limites jugadores. El cliente solo necesita la transcripción y procesa localmente de uno a seis jugadores.",
   audio:{input:{transcription:{model:"gpt-4o-transcribe",language:"es",prompt:"Golf Guatemala. El Pulté. Dictado por posiciones del uno al seis: número, nombre, handicap y color de tee. La palabra jugador es opcional. La palabra marca o marcas es opcional. Ejemplo: uno Jaime handicap catorce blancas; dos Roberto handicap seis azules."},noise_reduction:{type:"near_field"},turn_detection:{type:"server_vad",threshold:0.5,prefix_padding_ms:300,silence_duration_ms:5000,create_response:false,interrupt_response:false}}},
   tools:[],tool_choice:"none"
 }}
 function roundSessionConfig(){return{
   type:"realtime",
-  instructions:["EPG_ROUND_LOCK_V10.","Eres EPG Caddy para Golf Score Card Guatemala GRUPAL.","La ronda puede tener de uno a seis jugadores y cada jugador puede tener handicap y marcas diferentes.","Nunca digas que la herramienta permite solo un jugador por ronda.","Para un score usa record_score. Para varios jugadores o scores usa record_scores.","Para consultas usa get_hole, get_range, get_list, get_last o get_round_status.","Identifica al jugador por nombre.","Después de una herramienta pronuncia únicamente speech."].join(" "),
-  audio:{input:{transcription:{model:"gpt-4o-transcribe",language:"es"},noise_reduction:{type:"near_field"},turn_detection:{type:"server_vad",threshold:0.5,prefix_padding_ms:300,silence_duration_ms:5000,create_response:false,interrupt_response:false}}},
+  instructions:["EPG_ROUND_LOCK_V11.","Eres EPG Caddy para Golf Score Card Guatemala GRUPAL.","La ronda puede tener de uno a seis jugadores.","Los scores se registran localmente en el cliente: nunca intentes registrarlos, corregirlos ni reinterpretar sus números.","Usa herramientas solamente para consultas get_hole, get_range, get_list, get_last o get_round_status.","Identifica al jugador por nombre.","Después de una herramienta pronuncia únicamente speech."].join(" "),
+  audio:{input:{transcription:{model:"gpt-4o-transcribe",language:"es",prompt:"Golf Guatemala. Transcribe literalmente nombres y números de scores. Formato típico: Jaime hoyo uno gross cinco. Roberto hoyo uno gross cuatro. No cambies los números dictados."},noise_reduction:{type:"near_field"},turn_detection:{type:"server_vad",threshold:0.5,prefix_padding_ms:300,silence_duration_ms:3500,create_response:false,interrupt_response:false}}},
   tools:groupTools(),tool_choice:"auto"
 }}
-async function configureSessionFor(context){const marker=context==="setup"?"EPG_SETUP_LOCK_V10":"EPG_ROUND_LOCK_V10";await updateSessionAndWait(context==="setup"?setupSessionConfig():roundSessionConfig(),marker)}
+async function configureSessionFor(context){const marker=context==="setup"?"EPG_SETUP_LOCK_V11":"EPG_ROUND_LOCK_V11";await updateSessionAndWait(context==="setup"?setupSessionConfig():roundSessionConfig(),marker)}
 
 function teardownRealtime(){
   try{if(dc)dc.close()}catch{}
@@ -298,7 +305,7 @@ function handleRealtime(message){
       if(voiceContext==="setup"){
         $("setupStatus").textContent="PROCESANDO…";
       }else{
-        sendEvent({type:"response.create",response:{instructions:"Interpreta únicamente el audio más reciente y utiliza exactamente una llamada a epg_caddy_action. No hables antes de la herramienta.",tool_choice:{type:"function",name:"epg_caddy_action"}}});
+        $("status").textContent="PROCESANDO…";
       }
     }
     if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="setup"){
@@ -307,12 +314,24 @@ function handleRealtime(message){
       const parsed=parseSetupTranscript(e.transcript||"");const result=parsed.ok?prepareGroup({players:parsed.players}):parsed;
       if(!result.ok)$("setupStatus").textContent=result.speech;speakLocal(result.speech);phase="idle";return;
     }
+    if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="round"){
+      const key=e.item_id||e.event_id||String(Date.now());if(processedTranscriptItems.has(key))return;processedTranscriptItems.add(key);
+      setVoice(false);phase="processing";$("status").textContent="PROCESANDO…";
+      const parsed=parseRoundScoreTranscript(e.transcript||"");
+      if(parsed.matched){
+        const result=parsed.ok?applyLiteralScores(parsed):parsed;
+        $("status").textContent=result.ok?`Ronda activa · ${round.players.length} jugador${round.players.length===1?"":"es"}`:result.speech;
+        phase="idle";return;
+      }
+      try{sendEvent({type:"response.create",response:{instructions:"Interpreta únicamente la transcripción más reciente como consulta de la ronda. Usa exactamente una llamada a epg_caddy_action. No registres scores.",tool_choice:{type:"function",name:"epg_caddy_action"}}});phase="processing"}catch(err){console.error(err);phase="idle"}
+      return;
+    }
     if(e.type==="response.done"){activeResponseId=null;}
     if(e.type==="response.done"&&voiceContext!=="setup"){
       const call=(e.response?.output||[]).find(i=>i.type==="function_call"&&i.name==="epg_caddy_action");
       if(call){let result;try{result=processAction(JSON.parse(call.arguments||"{}"))}catch{result={ok:false,speech:"No se pudo procesar el comando."}}
         sendEvent({type:"conversation.item.create",item:{type:"function_call_output",call_id:call.call_id,output:JSON.stringify(result)}});
-        sendEvent({type:"response.create",response:{instructions:"Pronuncia exactamente y únicamente el campo speech del resultado de la herramienta.",tool_choice:"none"}});phase="speaking";
+        if(result.speech){sendEvent({type:"response.create",response:{instructions:"Pronuncia exactamente y únicamente el campo speech del resultado de la herramienta.",tool_choice:"none"}});phase="speaking"}else phase="idle";
       }else if(phase==="speaking"||phase==="processing")phase="idle";
     }
   }catch(err){console.error(err)}
