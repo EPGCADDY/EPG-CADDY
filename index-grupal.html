@@ -130,6 +130,7 @@ const $=id=>document.getElementById(id);
 const blankRound=()=>({version:2,configured:false,course:"El Pulté Golf",players:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
 let round=loadRound(),draftPlayers=[];
 let setupSegmentOrder=[],setupSegmentText=new Map(),setupPendingItems=new Set(),setupFinalizeRequested=false,setupFinalizeTimer=null;
+let setupLocked=false,setupSpeechActive=false,setupManualCommitPending=false;
 let roundSegmentOrder=[],roundSegmentText=new Map(),roundPendingItems=new Set(),roundFinalizeRequested=false,roundFinalizeTimer=null;
 let pc=null,dc=null,stream=null,micTrack=null,audioEl=null,listening=false,phase="idle",voiceContext="round",activeResponseId=null;
 let setupSpeechAllowed=false,sessionHasSpoken=false;
@@ -221,6 +222,7 @@ function applySetupChanges(changes){
 }
 function resetSetupCapture(){
   setupSegmentOrder=[];setupSegmentText=new Map();setupPendingItems=new Set();setupFinalizeRequested=false;
+  setupLocked=false;setupSpeechActive=false;setupManualCommitPending=false;
   if(setupFinalizeTimer){clearTimeout(setupFinalizeTimer);setupFinalizeTimer=null}
 }
 function rememberSetupItem(itemId){
@@ -251,24 +253,36 @@ function finalizeSetupDictation(){
   resetSetupCapture();showStep2();speakSetupConfirmation();
 }
 function requestSetupFinalize(){
-  if(!setupSegmentOrder.length){
-    if(draftPlayers.length){showStep2();speakSetupConfirmation();return}
-    speakGlobalError("setup");return
-  }
-  setupFinalizeRequested=true;
-  if(listening&&voiceContext==="setup")setVoice(false);
+  // OK cierra la escucha de inmediato. Desde este punto no se acepta audio nuevo.
+  setupLocked=true;setupFinalizeRequested=true;
+  if(voiceContext==="setup")setVoice(false);
+  $("setupMicWrap").classList.remove("active");
   $("setupStatus").classList.remove("listening");
-  if(setupPendingItems.size){
-    $("setupStatus").textContent="ESPERANDO TRANSCRIPCIÓN…";
-    if(setupFinalizeTimer)clearTimeout(setupFinalizeTimer);
-    setupFinalizeTimer=setTimeout(()=>{
-      setupFinalizeTimer=null;
-      if(setupPendingItems.size){setupFinalizeRequested=false;resetSetupCapture();speakGlobalError("setup");return}
-      finalizeSetupDictation();
-    },8000);
-    return;
+  $("setupStatus").textContent="TRANSCRIBIENDO…";
+
+  // Si OK se pulsa mientras todavía se está hablando, Server VAD puede no alcanzar
+  // a emitir speech_stopped al apagar el track. Forzamos commit del audio ya recibido.
+  if(setupSpeechActive&&dc?.readyState==="open"){
+    setupSpeechActive=false;setupManualCommitPending=true;
+    try{sendEvent({type:"input_audio_buffer.commit"})}catch(err){console.error(err);setupManualCommitPending=false}
   }
-  finalizeSetupDictation();
+
+  // Si no hay audio/transcripción pendiente, usamos lo ya acumulado o los jugadores
+  // previamente detectados. Nunca dejamos el micrófono rojo después de OK.
+  if(!setupSegmentOrder.length&&!setupPendingItems.size&&!setupManualCommitPending){
+    setupFinalizeRequested=false;
+    if(draftPlayers.length){showStep2();speakSetupConfirmation();return}
+    resetSetupCapture();speakGlobalError("setup");return
+  }
+
+  if(setupFinalizeTimer)clearTimeout(setupFinalizeTimer);
+  setupFinalizeTimer=setTimeout(()=>{
+    setupFinalizeTimer=null;
+    if(setupPendingItems.size||setupManualCommitPending){resetSetupCapture();speakGlobalError("setup");return}
+    finalizeSetupDictation();
+  },4000);
+
+  if(!setupPendingItems.size&&!setupManualCommitPending)finalizeSetupDictation();
 }
 function resetRoundCapture(){
   roundSegmentOrder=[];roundSegmentText=new Map();roundPendingItems=new Set();roundFinalizeRequested=false;
@@ -474,8 +488,8 @@ function handleRealtime(message){
       if(voiceContext==="setup")$("setupStatus").textContent="ERROR";else $("status").textContent="ERROR";
       return;
     }
-    if(e.type==="input_audio_buffer.speech_started"&&voiceContext==="setup"&&listening){
-      const id=rememberSetupItem(e.item_id);if(id)setupPendingItems.add(id);
+    if(e.type==="input_audio_buffer.speech_started"&&voiceContext==="setup"&&listening&&!setupLocked){
+      setupSpeechActive=true;
       phase="listening";
       $("setupStatus").classList.add("listening");
       $("setupStatus").textContent="● ESCUCHANDO · HABLA CUANDO QUIERAS…";
@@ -487,20 +501,36 @@ function handleRealtime(message){
     }
     if(e.type==="input_audio_buffer.speech_stopped"&&phase==="listening"){
       if(voiceContext==="setup"){
+        setupSpeechActive=false;
         const id=rememberSetupItem(e.item_id);if(id&&!setupSegmentText.has(id))setupPendingItems.add(id);
-        phase="listening";
-        $("setupStatus").classList.remove("listening");
-        $("setupStatus").textContent="TRANSCRIBIENDO… · PUEDES CONTINUAR HABLANDO";
+        if(setupLocked){
+          phase="processing";
+          $("setupStatus").classList.remove("listening");
+          $("setupStatus").textContent="TRANSCRIBIENDO…";
+        }else{
+          phase="listening";
+          $("setupStatus").classList.remove("listening");
+          $("setupStatus").textContent="TRANSCRIBIENDO… · PUEDES CONTINUAR HABLANDO";
+        }
       }else{
         const id=rememberRoundItem(e.item_id);if(id&&!roundSegmentText.has(id))roundPendingItems.add(id);
         phase="processing";
         requestRoundFinalize();
       }
     }
+    if(e.type==="input_audio_buffer.committed"&&voiceContext==="setup"&&setupManualCommitPending){
+      setupManualCommitPending=false;
+      const id=rememberSetupItem(e.item_id);if(id&&!setupSegmentText.has(id))setupPendingItems.add(id);
+      $("setupStatus").classList.remove("listening");
+      $("setupStatus").textContent="TRANSCRIBIENDO…";
+      if(setupFinalizeRequested&&!setupPendingItems.size)finalizeSetupDictation();
+      return;
+    }
     if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="setup"){
       const key=e.item_id||e.event_id||String(Date.now());if(processedTranscriptItems.has(key))return;processedTranscriptItems.add(key);
       appendSetupTranscript(e.item_id||key,e.transcript||"");
       if(setupFinalizeRequested){finalizeSetupDictation();return}
+      if(setupLocked)return;
       phase="listening";
       $("setupStatus").classList.remove("listening");
       $("setupStatus").textContent="LISTO · PRESIONA OK PARA CONFIRMAR · O CONTINÚA DICTANDO";
