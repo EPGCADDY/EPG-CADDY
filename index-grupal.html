@@ -125,6 +125,7 @@ const $=id=>document.getElementById(id);
 const blankRound=()=>({version:2,configured:false,course:"El Pulté Golf",players:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
 let round=loadRound(),draftPlayers=[];
 let pc=null,dc=null,stream=null,micTrack=null,audioEl=null,listening=false,phase="idle",voiceContext="round";
+const processedTranscriptItems=new Set();
 function normalizePlayer(p,i){return{id:p.id||`p${i+1}`,name:String(p.name||`Jugador ${i+1}`).trim(),handicap:Math.max(0,Math.min(54,Math.trunc(Number(p.handicap)||0))),tee:TEES[p.tee]?p.tee:"Blanco",matrix:p.matrix==="Damas"?"Damas":"Caballeros",holes:p.holes&&typeof p.holes==="object"?p.holes:{},lastHole:p.lastHole||null}}
 function loadRound(){try{const x=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");if(!x||!Array.isArray(x.players))return blankRound();x.players=x.players.slice(0,6).map(normalizePlayer);return x}catch{return blankRound()}}
 function persist(){round.updatedAt=new Date().toISOString();localStorage.setItem(STORAGE_KEY,JSON.stringify(round))}
@@ -135,6 +136,25 @@ function totals(p,holes){const items=holes.map(h=>p.holes[h]).filter(Boolean);re
 function vr(n){return n===0?"E":n>0?`+${n}`:String(n)}function resultClass(n){return n<0?"under":n>0?"over":"even"}
 function playerByRef(ref){const q=String(ref||"").trim().toLowerCase();if(!q&&round.players.length===1)return round.players[0];return round.players.find(p=>p.id.toLowerCase()===q||p.name.toLowerCase()===q)||null}
 function normalizeTee(value){const q=String(value||"").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");const aliases={negro:"Negro",negra:"Negro",negros:"Negro",negras:"Negro",azul:"Azul",azules:"Azul",blanco:"Blanco",blanca:"Blanco",blancos:"Blanco",blancas:"Blanco",rojo:"Rojo",roja:"Rojo",rojos:"Rojo",rojas:"Rojo",amarillo:"Amarillo",amarilla:"Amarillo",amarillos:"Amarillo",amarillas:"Amarillo"};return aliases[q]||null}
+function normalizeSpeech(value){return String(value||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñ]+/g," ").replace(/\s+/g," ").trim()}
+const WORD_NUMBERS={cero:0,un:1,uno:1,una:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,trece:13,catorce:14,quince:15,dieciseis:16,diecisiete:17,dieciocho:18,diecinueve:19,veinte:20,veintiuno:21,veintiun:21,veintidos:22,veintitres:23,veinticuatro:24,veinticinco:25,veintiseis:26,veintisiete:27,veintiocho:28,veintinueve:29,treinta:30,cuarenta:40,cincuenta:50};
+function parseSpanishNumberTokens(tokens,start){if(start>=tokens.length)return null;const raw=tokens[start];if(/^\d+$/.test(raw))return{value:Number(raw),next:start+1};if(WORD_NUMBERS[raw]===undefined)return null;let value=WORD_NUMBERS[raw],next=start+1;if((value===30||value===40||value===50)&&tokens[next]==="y"&&WORD_NUMBERS[tokens[next+1]]!==undefined&&WORD_NUMBERS[tokens[next+1]]<10){value+=WORD_NUMBERS[tokens[next+1]];next+=2}return{value,next}}
+function playerPositionToken(token){const x=parseSpanishNumberTokens([token],0);return x&&x.value>=1&&x.value<=6?x.value:null}
+function parseSetupTranscript(transcript){
+ const text=normalizeSpeech(transcript),tokens=text.split(" ").filter(Boolean);if(!tokens.length)return{ok:false,speech:"No escuché datos de jugadores. Intenta nuevamente."};
+ const hasCourse=tokens.includes("pulte");if(!hasCourse&&!draftPlayers.length)return{ok:false,speech:"No escuché El Pulté. Di: Campo El Pulté, y luego los jugadores."};
+ let i=0;if(hasCourse)i=tokens.indexOf("pulte")+1;const players=[];
+ while(i<tokens.length){while(i<tokens.length&&!playerPositionToken(tokens[i]))i++;if(i>=tokens.length)break;const position=playerPositionToken(tokens[i]);i++;
+   const nameStart=i;while(i<tokens.length&&tokens[i]!=="handicap")i++;if(i>=tokens.length)return{ok:false,speech:`Falta handicap para el jugador ${position}.`};
+   const name=tokens.slice(nameStart,i).join(" ").trim();if(!name)return{ok:false,speech:`Falta nombre para el jugador ${position}.`};i++;
+   while(i<tokens.length&&(tokens[i]==="de"||tokens[i]==="es"||tokens[i]==="numero"))i++;const hn=parseSpanishNumberTokens(tokens,i);if(!hn||hn.value<0||hn.value>54)return{ok:false,speech:`Handicap inválido para ${name}.`};const handicap=hn.value;i=hn.next;
+   while(i<tokens.length&&tokens[i]!=="marcas"&&tokens[i]!=="marca")i++;if(i>=tokens.length)return{ok:false,speech:`Faltan marcas para ${name}.`};i++;while(i<tokens.length&&(tokens[i]==="de"||tokens[i]==="color"))i++;
+   if(i>=tokens.length)return{ok:false,speech:`Faltan marcas para ${name}.`};const tee=normalizeTee(tokens[i]);if(!tee)return{ok:false,speech:`Marcas inválidas para ${name}.`};i++;
+   players.push({position,name:name.replace(/\b\w/g,c=>c.toUpperCase()),handicap,tee});if(players.length>=6)break;
+ }
+ if(!players.length)return{ok:false,speech:"No pude identificar jugadores. Di número, nombre, handicap y marcas."};return{ok:true,players};
+}
+function speakExact(text){if(!dc||dc.readyState!=="open")return;sendEvent({type:"response.create",response:{instructions:`Di exactamente esta frase y nada más: ${JSON.stringify(String(text))}`,tool_choice:"none"}})}
 function validatePlayers(players){if(!Array.isArray(players)||players.length<1||players.length>6)return{ok:false,speech:"La ronda requiere de uno a seis jugadores."};const seen=new Set(),out=[];for(let i=0;i<players.length;i++){const x=players[i]||{},name=String(x.name||"").trim(),handicap=Number(x.handicap),teeRaw=String(x.tee||"").trim(),tee=normalizeTee(teeRaw);if(!name)return{ok:false,speech:`Falta el nombre del jugador ${i+1}.`};if(seen.has(name.toLowerCase()))return{ok:false,speech:`El jugador ${name} está repetido.`};if(!Number.isInteger(handicap)||handicap<0||handicap>54)return{ok:false,speech:`Handicap inválido para ${name}.`};if(!tee)return{ok:false,speech:`Marcas inválidas para ${name}.`};seen.add(name.toLowerCase());out.push(normalizePlayer({name,handicap,tee,matrix:x.matrix},i))}return{ok:true,players:out}}
 function prepareGroup(args){
   const v=validatePlayers(args.players);
@@ -214,6 +234,8 @@ function configureSession(){
       ].join(" "),
       audio:{
         input:{
+          transcription:{model:"gpt-4o-transcribe",language:"es",prompt:"Golf Guatemala. Campo El Pulté. Dictado estructurado: Campo El Pulté; número de jugador; nombre; Handicap; Marcas. Marcas posibles: negras, azules, blancas, rojas, amarillas."},
+          noise_reduction:{type:"near_field"},
           turn_detection:{
             type:"server_vad",
             threshold:0.5,
@@ -292,30 +314,25 @@ function handleRealtime(message){
   try{
     const e=JSON.parse(message.data);
     if(e.type==="input_audio_buffer.speech_stopped"&&phase==="listening"){
-      setVoice(false);
-      phase="processing";
-      if(voiceContext==="setup")$("setupStatus").textContent="PROCESANDO…";
-      sendEvent({
-        type:"response.create",
-        response:{
-          instructions:voiceContext==="setup"
-            ? "Procesa únicamente el audio más reciente como alta o adición de jugadores para El Pulté. El orden hablado puede ser: El Pulté; número; nombre; handicap; marcas; siguiente número; nombre; handicap; marcas. Extrae cada jugador como objeto independiente. Jugadores distintos pueden tener handicap y marcas distintas y eso NO es conflicto. Envía SOLO los jugadores mencionados en este turno mediante una única llamada setup_group; los ya detectados se conservarán en la aplicación. Acepta singular y plural de las marcas. Si cada jugador mencionado tiene nombre, handicap y marcas, no hagas preguntas adicionales."
-            : "Interpreta únicamente el audio más reciente y utiliza exactamente una llamada apropiada a epg_caddy_action. No hables antes de la herramienta."
-        }
-      });
-    }
-    if(e.type==="response.done"){
-      const call=(e.response?.output||[]).find(i=>i.type==="function_call"&&i.name==="epg_caddy_action");
-      if(call){
-        let result;
-        try{result=processAction(JSON.parse(call.arguments||"{}"))}
-        catch{result={ok:false,speech:"No se pudo procesar el comando."}}
-        sendEvent({type:"conversation.item.create",item:{type:"function_call_output",call_id:call.call_id,output:JSON.stringify(result)}});
-        sendEvent({type:"response.create",response:{instructions:"Pronuncia exactamente y únicamente el campo speech del resultado de la herramienta."}});
-        phase="speaking";
-      }else if(phase==="speaking"||phase==="processing"){
-        phase="idle";
+      setVoice(false);phase="processing";
+      if(voiceContext==="setup"){
+        $("setupStatus").textContent="PROCESANDO…";
+      }else{
+        sendEvent({type:"response.create",response:{instructions:"Interpreta únicamente el audio más reciente y utiliza exactamente una llamada a epg_caddy_action. No hables antes de la herramienta.",tool_choice:{type:"function",name:"epg_caddy_action"}}});
       }
+    }
+    if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="setup"){
+      const key=e.item_id||e.event_id||String(Date.now());if(processedTranscriptItems.has(key))return;processedTranscriptItems.add(key);
+      setVoice(false);phase="processing";$("setupStatus").textContent="PROCESANDO…";
+      const parsed=parseSetupTranscript(e.transcript||"");const result=parsed.ok?prepareGroup({players:parsed.players}):parsed;
+      if(!result.ok)$("setupStatus").textContent=result.speech;speakExact(result.speech);phase="speaking";return;
+    }
+    if(e.type==="response.done"&&voiceContext!=="setup"){
+      const call=(e.response?.output||[]).find(i=>i.type==="function_call"&&i.name==="epg_caddy_action");
+      if(call){let result;try{result=processAction(JSON.parse(call.arguments||"{}"))}catch{result={ok:false,speech:"No se pudo procesar el comando."}}
+        sendEvent({type:"conversation.item.create",item:{type:"function_call_output",call_id:call.call_id,output:JSON.stringify(result)}});
+        sendEvent({type:"response.create",response:{instructions:"Pronuncia exactamente y únicamente el campo speech del resultado de la herramienta.",tool_choice:"none"}});phase="speaking";
+      }else if(phase==="speaking"||phase==="processing")phase="idle";
     }
   }catch(err){console.error(err)}
 }
