@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#000000">
 <title>Golf Score Card Guatemala · Grupal</title>
-<meta name="gscg-build" content="V27-SCORE-PARSER-ROBUSTO-1S-20260816">
+<meta name="gscg-build" content="V30-AUDIT-GENERAL-STATE-FIX-20260816">
 <style>
 :root{--bg:#000;--fg:#fff;--line:#4b4f50;--lime:#31ff00;--red:#ff2626;--blue:#0878ff;--yellow:#ffbf00;--white:#f5f5f5;--muted:#a7aaad}
 *{box-sizing:border-box}html,body{margin:0;background:#000;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{min-height:100vh}.app{width:100%;min-width:1180px;max-width:1700px;margin:0 auto;padding:14px 14px 24px}.topbar{display:grid;grid-template-columns:145px 250px 105px 300px 1fr;gap:18px;align-items:center;margin-bottom:16px}.logo{width:138px;height:138px;object-fit:contain}.round-meta h1{font-size:25px;line-height:1;margin:0 0 17px;font-weight:800;letter-spacing:.3px}.round-meta div{font-size:17px;margin:0 0 13px}.mic-wrap{position:relative;width:88px;height:88px;margin:auto}.mic-hit{position:absolute;inset:-44px;border:0;background:transparent;cursor:pointer;z-index:2}.mic-visual{position:absolute;inset:0;border:3px solid var(--lime);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--lime);font-size:43px;pointer-events:none}.mic-wrap.active .mic-visual{border-color:#ff4545;color:#ff4545;animation:micPulse 1s ease-in-out infinite}.nr-mic.active .mic-visual{border-color:var(--red);background:var(--red);color:#fff;animation:micListen .8s ease-in-out infinite}@keyframes micPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(49,255,0,.18)}50%{transform:scale(1.08);box-shadow:0 0 0 11px rgba(49,255,0,.08)}}@keyframes micListen{0%,100%{transform:scale(1);opacity:1;box-shadow:0 0 0 0 rgba(255,38,38,.35)}50%{transform:scale(1.08);opacity:.62;box-shadow:0 0 0 18px rgba(255,38,38,.16)}}.course-meta .cap{font-size:13px;color:#bbb;margin-bottom:6px}.course-meta .course{font-size:25px;font-weight:800;margin-bottom:18px}.course-meta .numbers{font-size:18px;display:flex;gap:28px}.course-info{border:1px solid var(--line);padding:6px 12px 8px;align-self:stretch}.course-info h2{font-size:17px;color:var(--lime);text-align:center;margin:0 0 7px;letter-spacing:.5px}.course-info-grid{display:grid;grid-template-columns:1.25fr .8fr .8fr .8fr;gap:4px 12px;align-items:center;font-size:11px}.course-info-grid .head{font-size:10px;color:#c8c8c8;text-align:center}.tee-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:-1px}.status{height:20px;margin:-6px 0 4px;text-align:center;color:var(--lime);font-size:12px}.card-shell{border-top:1px solid var(--line);overflow-x:auto}.scorecard{width:100%;min-width:1360px;border-collapse:collapse;table-layout:fixed;background:#000}.scorecard th,.scorecard td{height:32px;border:1px solid var(--line);text-align:center;padding:2px 3px;font-size:12px}.scorecard th{font-weight:800}.scorecard .player-col{width:142px}.scorecard .concept-col{width:72px}.scorecard .hole-col{width:55px}.scorecard .sum-col{width:63px}.scorecard .left{text-align:left;padding-left:12px}.scorecard .concept{font-weight:800;text-align:left;padding-left:10px}.scorecard .general td{height:29px}.scorecard .player-name{font-size:16px;font-weight:800;vertical-align:middle;text-align:center;padding:0}.scorecard .player-hcp{display:block;margin-top:22px;font-size:20px;color:#fff}.scorecard .player-block td{height:37px}.scorecard .unused td{color:transparent;background:#000}.scorecard .gross-cell{font-weight:800;position:relative}.scorecard .stroke2::after,.scorecard .stroke3::after{position:absolute;right:4px;top:2px;font-size:9px;font-weight:700}.scorecard .stroke2::after{content:"2"}.scorecard .stroke3::after{content:"3"}.under{color:var(--lime)!important;font-weight:800}.over{color:var(--red)!important;font-weight:800}.even{color:#fff!important;font-weight:800}.summary{margin-top:10px;border:1px solid var(--line)}.summary-title{text-align:center;color:var(--lime);font-size:17px;font-weight:900;padding:7px 0 5px}.summary table{width:100%;border-collapse:collapse;table-layout:fixed}.summary th,.summary td{height:31px;border:1px solid var(--line);text-align:center;font-size:11px}.summary th{font-size:10px;font-weight:500}.summary .summary-player{text-align:left;padding-left:85px}.summary .unused td{color:transparent}.summary .net{color:var(--lime);font-weight:800}.round-actions{display:flex;justify-content:center;margin-top:12px}.round-actions button{height:44px;padding:0 22px;border:1px solid var(--lime);background:var(--lime);color:#000;border-radius:4px;font-weight:900;box-shadow:0 0 14px rgba(49,255,0,.28)}.overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.98);display:none;overflow:auto;padding:22px}.overlay.visible{display:block}.new-round-card{max-width:760px;margin:20px auto;border:1px solid #505050;background:#000;padding:20px}.nr-head{display:grid;grid-template-columns:100px 1fr;align-items:center;gap:18px}.nr-head img{width:96px;height:96px;object-fit:contain}.nr-head h1{margin:0;font-size:29px}.nr-date{color:#bbb;margin-top:8px}.nr-mic{position:relative;width:240px;height:240px;margin:18px auto 10px}.nr-mic .mic-hit{inset:-26px}.nr-mic .mic-visual{font-size:108px;border-width:5px;background:var(--lime);border-color:var(--lime);color:#000;box-shadow:0 0 0 5px rgba(49,255,0,.10),0 0 24px rgba(49,255,0,.20)}.field-title{font-size:12px;color:#aaa;margin:20px 0 7px}.course-select{border:1px solid #555;border-radius:6px;padding:14px 15px;font-size:19px;font-weight:800}.voice-prompt{text-align:center;margin:26px 0 18px}.voice-prompt strong{display:block;color:var(--lime);font-size:17px;margin-bottom:8px}.voice-prompt span{font-size:13px;color:#d5d5d5}.detected{margin-top:20px;border-top:1px solid #333}.detected-row,.confirm-row{display:grid;grid-template-columns:1.4fr .6fr 1fr;gap:10px;padding:11px 5px;border-bottom:1px solid #333;align-items:center}.detected-row.head,.confirm-row.head{font-size:10px;color:#888}.nr-button{width:100%;height:52px;margin-top:20px;border:0;border-radius:7px;background:var(--lime);color:#000;font-weight:900;font-size:17px}#setupOk{height:72px;font-size:26px}.nr-button.secondary{background:#070707;color:#fff;border:1px solid #555}.confirm-title{font-size:15px;color:var(--lime);font-weight:800;margin:20px 0 7px}.setup-status{min-height:24px;margin-top:10px;text-align:center;color:var(--lime);font-size:15px;font-weight:800}.setup-status.listening{color:var(--red)}.setup-facts{margin:10px 0 0;text-align:center;color:#999;font-size:10px;letter-spacing:.2px}.note-box{margin:10px 0;padding:9px 11px;border:1px solid #4b4f50;border-radius:6px;background:#050505;color:#cfd2d4;font-size:11px;line-height:1.35}.note-box strong{display:block;color:var(--lime);font-size:10px;letter-spacing:.8px;margin-bottom:4px}.round-note{max-width:760px;margin:8px auto 6px}.hidden{display:none!important}
@@ -30,19 +30,19 @@ body{min-height:100vh}
 .course-info-grid .head{font-size:5.8px;line-height:1.05}
 .tee-dot{width:6px;height:6px;margin-right:3px}
 .status{height:14px;margin:0 0 2px;font-size:7.5px}
-.card-shell{width:100%;overflow:hidden;border-top:1px solid var(--line)}
-.scorecard{width:100%;min-width:0;table-layout:fixed}
-.scorecard th,.scorecard td{height:22px;padding:1px 0;font-size:6.4px;line-height:1}
+.card-shell{width:100%;overflow-x:auto;overflow-y:hidden;border-top:1px solid var(--line);-webkit-overflow-scrolling:touch}
+.scorecard{width:980px;min-width:980px;table-layout:fixed}
+.scorecard th,.scorecard td{height:26px;padding:1px 1px;font-size:9px;line-height:1.05;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
 .scorecard .player-col{width:13%}
 .scorecard .concept-col{width:6.5%}
 .scorecard .hole-col{width:auto}
 .scorecard .sum-col{width:4.7%}
 .scorecard .left{padding-left:2px}
-.scorecard .concept{padding-left:2px;font-size:5.8px;white-space:nowrap}
+.scorecard .concept{padding-left:3px;font-size:8px;white-space:nowrap}
 .scorecard .general td{height:18px}
-.scorecard .player-name{font-size:7.2px;line-height:1.05;padding:0 1px;overflow:hidden;word-break:break-word}
-.scorecard .player-hcp{margin-top:7px;font-size:9px}
-.scorecard .player-block td{height:25px}
+.scorecard .player-name{font-size:10px;line-height:1.08;padding:0 2px;overflow:hidden;word-break:break-word}
+.scorecard .player-hcp{margin-top:8px;font-size:11px}
+.scorecard .player-block td{height:28px}
 .scorecard .stroke2::after,.scorecard .stroke3::after{right:1px;top:1px;font-size:4.8px}
 .summary{margin-top:6px}
 .summary-title{font-size:9px;padding:4px 0 3px}
@@ -146,12 +146,14 @@ function totals(p,holes){const items=holes.map(h=>p.holes[h]).filter(Boolean);re
 function vr(n){return n===0?"E":n>0?`+${n}`:String(n)}function resultClass(n){return n<0?"under":n>0?"over":"even"}
 function playerByRef(ref){const q=String(ref||"").trim().toLowerCase();if(!q&&round.players.length===1)return round.players[0];return round.players.find(p=>p.id.toLowerCase()===q||p.name.toLowerCase()===q)||null}
 function normalizeTee(value){const q=String(value||"").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");const aliases={negro:"Negro",negra:"Negro",negros:"Negro",negras:"Negro",azul:"Azul",azules:"Azul",blanco:"Blanco",blanca:"Blanco",blancos:"Blanco",blancas:"Blanco",rojo:"Rojo",roja:"Rojo",rojos:"Rojo",rojas:"Rojo",amarillo:"Amarillo",amarilla:"Amarillo",amarillos:"Amarillo",amarillas:"Amarillo"};return aliases[q]||null}
+function normalizeMatrix(value){const q=normalizeSpeech(value);if(["damas","dama","femenino","femenina","mujer","mujeres"].includes(q))return "Damas";if(["caballeros","caballero","masculino","masculina","hombre","hombres"].includes(q))return "Caballeros";return null}
 function normalizeSpeech(value){return String(value||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñ]+/g," ").replace(/\s+/g," ").trim()}
 const WORD_NUMBERS={cero:0,un:1,uno:1,una:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,trece:13,catorce:14,quince:15,dieciseis:16,diecisiete:17,dieciocho:18,diecinueve:19,veinte:20,veintiuno:21,veintiun:21,veintidos:22,veintitres:23,veinticuatro:24,veinticinco:25,veintiseis:26,veintisiete:27,veintiocho:28,veintinueve:29,treinta:30,cuarenta:40,cincuenta:50};
 function parseSpanishNumberTokens(tokens,start){if(start>=tokens.length)return null;const raw=tokens[start];if(/^\d+$/.test(raw))return{value:Number(raw),next:start+1};if(WORD_NUMBERS[raw]===undefined)return null;let value=WORD_NUMBERS[raw],next=start+1;if((value===30||value===40||value===50)&&tokens[next]==="y"&&WORD_NUMBERS[tokens[next+1]]!==undefined&&WORD_NUMBERS[tokens[next+1]]<10){value+=WORD_NUMBERS[tokens[next+1]];next+=2}return{value,next}}
 function playerPositionToken(token){const x=parseSpanishNumberTokens([token],0);return x&&x.value>=1&&x.value<=6?x.value:null}
 function titleName(value){return String(value||"").trim().replace(/\b\w/g,c=>c.toUpperCase())}
 function teeAt(tokens,i){while(i<tokens.length&&["marca","marcas","de","color","tee","tees"].includes(tokens[i]))i++;const tee=i<tokens.length?normalizeTee(tokens[i]):null;return tee?{tee,next:i+1}:null}
+function matrixAt(tokens,i){while(i<tokens.length&&["matriz","categoria","categoría","de"].includes(tokens[i]))i++;const matrix=i<tokens.length?normalizeMatrix(tokens[i]):null;return matrix?{matrix,next:i+1}:null}
 function existingDraftMatch(tokens,start){
   let best=null;
   for(let idx=0;idx<draftPlayers.length;idx++){
@@ -168,11 +170,11 @@ function parseSetupSegment(tokens,start){
   if(tokens[i]==="jugador")i++;
   const pos=playerPositionToken(tokens[i]);if(pos){position=pos;i++;if(tokens[i]==="jugador")i++}
   const existingByName=existingDraftMatch(tokens,i);
-  let name="",handicap=null,tee=null;
+  let name="",handicap=null,tee=null,matrix=null;
   if(existingByName){name=existingByName.player.name;i=existingByName.next}
   else{
     const nameStart=i;
-    while(i<tokens.length&&tokens[i]!=="handicap"&&!normalizeTee(tokens[i])&&!playerPositionToken(tokens[i]))i++;
+    while(i<tokens.length&&tokens[i]!=="handicap"&&!normalizeTee(tokens[i])&&!normalizeMatrix(tokens[i])&&!playerPositionToken(tokens[i]))i++;
     name=tokens.slice(nameStart,i).filter(x=>x!=="jugador").join(" ").trim();
   }
   if(tokens[i]==="handicap"){
@@ -181,9 +183,10 @@ function parseSetupSegment(tokens,start){
     handicap=hn.value;i=hn.next;
   }
   const t=teeAt(tokens,i);if(t){tee=t.tee;i=t.next}
+  const mx=matrixAt(tokens,i);if(mx){matrix=mx.matrix;i=mx.next}
   if(!position&&name){const idx=draftPlayers.findIndex(p=>normalizeSpeech(p.name)===normalizeSpeech(name));if(idx>=0)position=idx+1}
   if(!position&&!name)return{ok:false,speech:"No pude identificar qué jugador quieres configurar o corregir."};
-  return{ok:true,change:{position,name:name?titleName(name):undefined,handicap,tee},next:i};
+  return{ok:true,change:{position,name:name?titleName(name):undefined,handicap,tee,matrix},next:i};
 }
 function parseSetupTranscript(transcript){
   const text=normalizeSpeech(transcript),tokens=text.split(" ").filter(Boolean);if(!tokens.length)return{ok:false,speech:"No escuché datos. Intenta nuevamente."};
@@ -206,14 +209,14 @@ function applySetupChanges(changes){
     if(idx<0&&c.name)idx=next.findIndex(p=>normalizeSpeech(p.name)===normalizeSpeech(c.name));
     const existing=idx>=0&&idx<next.length?next[idx]:null;
     if(existing){
-      const updated={...existing};if(c.name)updated.name=c.name;if(c.handicap!==null&&c.handicap!==undefined)updated.handicap=c.handicap;if(c.tee)updated.tee=c.tee;
+      const updated={...existing};if(c.name)updated.name=c.name;if(c.handicap!==null&&c.handicap!==undefined)updated.handicap=c.handicap;if(c.tee)updated.tee=c.tee;if(c.matrix)updated.matrix=c.matrix;
       next[idx]=normalizePlayer(updated,idx);continue;
     }
     if(idx<0)idx=next.length;
     if(idx>5)return{ok:false,speech:"La ronda admite un máximo de seis jugadores."};
     if(!c.name||c.handicap===null||c.handicap===undefined||!c.tee)return{ok:false,speech:`Para agregar al jugador ${idx+1}, necesito nombre, handicap y color.`};
     while(next.length<idx)next.push(null);
-    next[idx]=normalizePlayer({name:c.name,handicap:c.handicap,tee:c.tee,id:`p${idx+1}`},idx);
+    next[idx]=normalizePlayer({name:c.name,handicap:c.handicap,tee:c.tee,matrix:c.matrix||"Caballeros",id:`p${idx+1}`},idx);
   }
   if(next.some((p,i)=>!p&&next.slice(i+1).some(Boolean)))return{ok:false,speech:"Falta un número de jugador intermedio. Corrige el listado antes de continuar."};
   const compact=next.filter(Boolean);const seen=new Set();for(const p of compact){const k=normalizeSpeech(p.name);if(seen.has(k))return{ok:false,speech:`El jugador ${p.name} está repetido.`};seen.add(k)}
@@ -221,6 +224,7 @@ function applySetupChanges(changes){
   return{ok:true,speech:""};
 }
 function resetSetupCapture(){
+  $("setupMicWrap")?.classList?.remove?.("active");
   setupSegmentOrder=[];setupSegmentText=new Map();setupPendingItems=new Set();setupFinalizeRequested=false;
   setupLocked=false;setupSpeechActive=false;setupManualCommitPending=false;
   if(setupFinalizeTimer){clearTimeout(setupFinalizeTimer);setupFinalizeTimer=null}
@@ -282,6 +286,7 @@ function requestSetupFinalize(){
   if(!setupPendingItems.size&&!setupSpeechActive)finalizeSetupDictation();
 }
 function resetRoundCapture(){
+  $("headerMicWrap")?.classList?.remove?.("active");
   roundSegmentOrder=[];roundSegmentText=new Map();roundPendingItems=new Set();roundFinalizeRequested=false;
   if(roundFinalizeTimer){clearTimeout(roundFinalizeTimer);roundFinalizeTimer=null}
 }
@@ -311,8 +316,8 @@ function finalizeRoundDictation(){
     const result=parsed.ok?applyLiteralScores(parsed):parsed;
     if(result.ok){$("status").textContent=roundIdleStatus();resetRoundCapture();phase="idle"}else{resetRoundCapture();speakGlobalError("round")}return
   }
-  // En la tarjeta, un dictado no reconocido NO se envía al modelo conversacional.
-  // Así se evita que el sistema improvise, pregunte por jugador o altere scores.
+  const query=parseRoundQueryTranscript(transcript);
+  if(query.matched){const r=query.result;resetRoundCapture();if(r?.ok){$("status").textContent=roundIdleStatus();speakQuery(r.speech)}else speakGlobalError("round");return}
   resetRoundCapture();speakGlobalError("round");
 }
 function requestRoundFinalize(){
@@ -343,6 +348,7 @@ function speakAuthorized(reason,text){
   const token=`speech_${++speechTokenSeq}`;authorizedSpeech={reason,token,text:String(text)};
   if(reason==="setup_confirmation")setupSpeechAllowed=true;
   sessionHasSpoken=true;
+  if(audioEl)audioEl.muted=false;
   sendEvent({type:"response.create",response:{metadata:{speech_token:token,speech_reason:reason},instructions:`Con voz de locutor masculino serio, sobrio y profesional, en español internacional neutro y sin acento regional marcado, di exactamente esta frase y nada más: ${JSON.stringify(String(text))}`,tool_choice:"none"}});
   return true
 }
@@ -376,38 +382,66 @@ function segmentSpeech(title,holes){const lines=[title];for(const p of round.pla
 function closureSpeechIfDue(){ensureAnnouncedState();const out=[];if(!round.announced.front&&segmentComplete(FRONT)){round.announced.front=true;out.push(segmentSpeech("Primera vuelta.",FRONT))}if(!round.announced.back&&segmentComplete(BACK)){round.announced.back=true;out.push(segmentSpeech("Segunda vuelta.",BACK))}if(!round.announced.complete&&segmentComplete(ALL)){round.announced.complete=true;out.push(segmentSpeech("Ronda completa.",ALL))}return out.join(" ")}
 function recordScore(a){if(!round.configured)return{ok:false,speech:"Primero configura la ronda grupal."};const r=saveEntry(a);if(!r.ok)return r;const closure=closureSpeechIfDue();persist();render();return{ok:true,speech:"",closure}}
 function recordScores(a){if(!round.configured)return{ok:false,speech:"Primero configura la ronda grupal."};if(!Array.isArray(a.entries)||a.entries.length<2)return{ok:false,speech:"No se recibieron suficientes scores."};const checked=a.entries.map(validateEntry),bad=checked.find(x=>!x.ok);if(bad)return bad;const keys=new Set();for(const v of checked){const k=`${v.p.id}:${v.hole}`;if(keys.has(k))return{ok:false,speech:"Hay un jugador y hoyo repetidos en el dictado."};keys.add(k)}for(const e of a.entries)saveEntry(e);const closure=closureSpeechIfDue();persist();render();return{ok:true,speech:"",closure}}
-function matchPlayerAt(tokens,start){for(const p of round.players){const nt=normalizeSpeech(p.name).split(" ").filter(Boolean);let ok=true;for(let j=0;j<nt.length;j++)if(tokens[start+j]!==nt[j]){ok=false;break}if(ok)return{player:p,next:start+nt.length}}return null}
+function editDistance(a,b){a=String(a||"");b=String(b||"");const dp=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=1;j<=b.length;j++)dp[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)dp[i][j]=Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return dp[a.length][b.length]}
+function tokenNameMatch(a,b){if(a===b)return true;if(!a||!b||Math.min(a.length,b.length)<4)return false;return editDistance(a,b)<=1}
+function matchPlayerAt(tokens,start){
+  for(const p of round.players){const nt=normalizeSpeech(p.name).split(" ").filter(Boolean);let ok=true;for(let j=0;j<nt.length;j++)if(tokens[start+j]!==nt[j]){ok=false;break}if(ok)return{player:p,next:start+nt.length,exact:true}}
+  for(const p of round.players){const nt=normalizeSpeech(p.name).split(" ").filter(Boolean);let ok=true;for(let j=0;j<nt.length;j++)if(!tokenNameMatch(tokens[start+j],nt[j])){ok=false;break}if(ok)return{player:p,next:start+nt.length,exact:false}}
+  return null
+}
 const SCORE_WORDS=new Set(["gross","gros","score","scores","scor","escor"]);
-const SCORE_FILLERS=new Set(["con","un","una","de","en","el","del","para","hizo","hace","anota","anotar","registro","registrar","es"]);
+const SCORE_FILLERS=new Set(["con","un","una","de","en","el","del","para","hizo","hace","anota","anotar","registro","registrar","es","y","luego","despues","después","jugador","jugadora"]);
 const CORRECTION_WORDS=new Set(["correccion","corrijo","corrigiendo","corregir","corrige","corregido"]);
-function skipScoreFillers(tokens,i){while(i<tokens.length&&(SCORE_FILLERS.has(tokens[i])||CORRECTION_WORDS.has(tokens[i])))i++;return i}
-function readGrossAt(tokens,i){i=skipScoreFillers(tokens,i);if(SCORE_WORDS.has(tokens[i])){i++;i=skipScoreFillers(tokens,i)}const n=parseSpanishNumberTokens(tokens,i);return n&&n.value>=1&&n.value<=30?{gross:n.value,next:n.next}:null}
+const QUERY_WORDS=new Set(["consulta","consultar","dime","decime","resultado","resultados","como","cómo"]);
+function skipScoreFillers(tokens,i){while(i<tokens.length&&(SCORE_FILLERS.has(tokens[i])||CORRECTION_WORDS.has(tokens[i])||SCORE_WORDS.has(tokens[i])))i++;return i}
+function readGrossAt(tokens,i){i=skipScoreFillers(tokens,i);const n=parseSpanishNumberTokens(tokens,i);return n&&n.value>=1&&n.value<=30?{gross:n.value,next:n.next}:null}
 function parseRoundScoreTranscript(transcript){
   const text=normalizeSpeech(transcript),tokens=text.split(" ").filter(Boolean);if(!tokens.length)return{matched:false,ok:false};
+  // Queries are deliberately not treated as score commands.
+  if(tokens.some(t=>QUERY_WORDS.has(t)))return{matched:false,ok:false};
   const entries=[];let i=0,currentHole=null,sawRelevant=false;
   while(i<tokens.length){
-    if(CORRECTION_WORDS.has(tokens[i])){sawRelevant=true;i++;continue}
+    if(CORRECTION_WORDS.has(tokens[i])||SCORE_FILLERS.has(tokens[i])||SCORE_WORDS.has(tokens[i])){sawRelevant=true;i++;continue}
     if(tokens[i]==="hoyo"){
       sawRelevant=true;const hn=parseSpanishNumberTokens(tokens,i+1);
       if(!hn||hn.value<1||hn.value>18)return{matched:true,ok:false,speech:"Error"};
       currentHole=hn.value;i=hn.next;continue;
     }
     const m=matchPlayerAt(tokens,i);
-    if(!m){i++;continue}
+    if(!m){
+      // Any unexplained token in a score command makes the whole command atomic-fail.
+      return{matched:sawRelevant||currentHole!==null||entries.length>0,ok:false,speech:"Error"};
+    }
     sawRelevant=true;let j=m.next,hole=currentHole;
-    j=skipScoreFillers(tokens,j);
+    while(j<tokens.length&&(CORRECTION_WORDS.has(tokens[j])||SCORE_FILLERS.has(tokens[j])||SCORE_WORDS.has(tokens[j])))j++;
     if(tokens[j]==="hoyo"){
       const hn=parseSpanishNumberTokens(tokens,j+1);if(!hn||hn.value<1||hn.value>18)return{matched:true,ok:false,speech:"Error"};
-      hole=hn.value;currentHole=hole;j=hn.next;j=skipScoreFillers(tokens,j);
+      hole=hn.value;currentHole=hole;j=hn.next;
     }
-    if(!hole){i=m.next;continue}
-    const g=readGrossAt(tokens,j);
-    if(!g){i=m.next;continue}
+    if(!hole)return{matched:true,ok:false,speech:"Error"};
+    const g=readGrossAt(tokens,j);if(!g)return{matched:true,ok:false,speech:"Error"};
     entries.push({player:m.player.name,hole,gross:g.gross});i=g.next;
   }
   if(!entries.length)return{matched:sawRelevant,ok:false,speech:"Error"};
-  const keys=new Set();for(const e of entries){const p=playerByRef(e.player);const k=`${p?.id||normalizeSpeech(e.player)}:${e.hole}`;if(keys.has(k))return{matched:true,ok:false,speech:"Error"};keys.add(k)}
+  const keys=new Set();for(const e of entries){const p=playerByRef(e.player);if(!p)return{matched:true,ok:false,speech:"Error"};const k=`${p.id}:${e.hole}`;if(keys.has(k))return{matched:true,ok:false,speech:"Error"};keys.add(k)}
   return{matched:true,ok:true,entries};
+}
+function parseRoundQueryTranscript(transcript){
+  const text=normalizeSpeech(transcript),tokens=text.split(" ").filter(Boolean);if(!tokens.length||!tokens.some(t=>QUERY_WORDS.has(t)))return{matched:false};
+  // Explicit whole-round query.
+  if(tokens.includes("ronda")||tokens.includes("resultados"))return{matched:true,result:getRoundStatus()};
+  // Explicit player + optional hole query.
+  for(let i=0;i<tokens.length;i++){
+    const m=matchPlayerAt(tokens,i);if(!m)continue;
+    let j=m.next;
+    while(j<tokens.length&&SCORE_FILLERS.has(tokens[j]))j++;
+    if(tokens[j]==="hoyo"){
+      const hn=parseSpanishNumberTokens(tokens,j+1);if(!hn||hn.value<1||hn.value>18)return{matched:true,result:{ok:false,speech:"Error"}};
+      return{matched:true,result:getHole({player:m.player.name,hole:hn.value})};
+    }
+    const t=totals(m.player,ALL);return{matched:true,result:{ok:true,speech:`${m.player.name}: ${t.count} hoyos, Gross ${t.gross}, Neto ${t.net}, ${vr(t.net-t.par)}.`}};
+  }
+  return{matched:true,result:{ok:false,speech:"Error"}};
 }
 function applyLiteralScores(parsed){const result=parsed.entries.length===1?recordScore(parsed.entries[0]):recordScores({entries:parsed.entries});if(result.ok&&result.closure)speakClosure(result.closure);return result}
 function speechForHole(p,h){const s=p.holes[h];return s?`${p.name}, hoyo ${h}: Gross ${s.gross}, Neto ${s.net}, ${vr(s.diff)}.`:`${p.name}, hoyo ${h}: sin score registrado.`}
@@ -449,26 +483,21 @@ function openSetup(){
   setVoice(false);
 }function showStep1(){$("setupStep1").classList.remove("hidden");$("setupStep2").classList.add("hidden")}function showStep2(){renderDraft();$("setupStep1").classList.add("hidden");$("setupStep2").classList.remove("hidden")}
 function sendEvent(e){if(!dc||dc.readyState!=="open")throw new Error("Canal Realtime no disponible");dc.send(JSON.stringify(e))}
-function groupTools(){return [{
-  type:"function",name:"golf_group_action",description:"Consulta una ronda grupal de uno a seis jugadores.",
-  parameters:{type:"object",properties:{
-    action:{type:"string",enum:["get_hole","get_range","get_list","get_last","get_round_status"]},
-    player:{type:"string"},hole:{type:"integer",minimum:1,maximum:18},
-    from:{type:"integer",minimum:1,maximum:18},to:{type:"integer",minimum:1,maximum:18},holes:{type:"array",items:{type:"integer",minimum:1,maximum:18}}
-  },required:["action"],additionalProperties:false}
-}]}
 function setupSessionConfig(){return{
   type:"realtime",
-  instructions:"GROUP_SETUP_LOCK_V24. Modo NUEVA RONDA. REGLA ABSOLUTA: no produzcas audio ni texto espontáneo; solo una respuesta creada explícitamente por el cliente puede hablar. Si el cliente autoriza ERROR, di únicamente Error. Nunca respondas al audio. Nunca hagas preguntas. Nunca uses herramientas. Nunca interpretes ni limites jugadores. El cliente solo necesita la transcripción y procesa localmente de uno a seis jugadores. Cuando el cliente solicite una frase hablada, usa un estilo de locutor masculino serio, sobrio y profesional, en español internacional neutro, sin acento regional marcado, con dicción clara y ritmo medio.",
-  audio:{input:{transcription:{model:"gpt-4o-transcribe",language:"es",prompt:"Golf Guatemala. El Pulté. Dictado por posiciones del uno al seis: número, nombre, handicap y color de tee. La palabra jugador es opcional. La palabra marca o marcas es opcional. Ejemplo: uno NOMBRE handicap catorce blancas; dos NOMBRE handicap seis azules. Para correcciones puede decir corrijo, corrigiendo o corregir seguido del nombre y los datos correctos."},noise_reduction:{type:"near_field"},turn_detection:{type:"server_vad",threshold:0.5,prefix_padding_ms:300,silence_duration_ms:1500,create_response:false,interrupt_response:false}},...(sessionHasSpoken?{}:{output:{voice:"cedar"}})},
+  instructions:"GROUP_SETUP_LOCK_V30. Modo NUEVA RONDA. REGLA ABSOLUTA: no produzcas audio ni texto espontáneo; solo una respuesta creada explícitamente por el cliente puede hablar. Si el cliente autoriza ERROR, di únicamente Error. Nunca respondas al audio. Nunca hagas preguntas. Nunca uses herramientas. Nunca interpretes ni limites jugadores. El cliente solo necesita la transcripción y procesa localmente de uno a seis jugadores. Cuando el cliente solicite una frase hablada, usa un estilo de locutor masculino serio, sobrio y profesional, en español internacional neutro, sin acento regional marcado, con dicción clara y ritmo medio.",
+  audio:{input:{transcription:{model:"gpt-4o-transcribe",language:"es",prompt:"Golf Guatemala. El Pulté. Dictado por posiciones del uno al seis: número, nombre, handicap y color de tee. La palabra jugador es opcional. La palabra marca o marcas es opcional. Ejemplo: uno NOMBRE handicap catorce blancas; dos NOMBRE handicap seis azules. Para correcciones puede decir corrijo, corrigiendo o corregir seguido del nombre y los datos correctos. Si se dicta Damas o Caballeros, consérvalo literalmente."},noise_reduction:{type:"near_field"},turn_detection:{type:"server_vad",threshold:0.5,prefix_padding_ms:300,silence_duration_ms:1500,create_response:false,interrupt_response:false}},...(sessionHasSpoken?{}:{output:{voice:"cedar"}})},
   tools:[],tool_choice:"none"
 }}
-function roundSessionConfig(){return{
-  type:"realtime",
-  instructions:["GROUP_ROUND_LOCK_V24.","REGLA ABSOLUTA: no produzcas audio ni texto espontáneo. Los scores y correcciones se procesan localmente. Solo respuestas explícitamente autorizadas por el cliente pueden producir voz. Si el cliente autoriza ERROR, di únicamente Error.","Asistes la tarjeta grupal de Golf Score Card Guatemala.","La ronda puede tener de uno a seis jugadores.","Los scores se registran localmente en el cliente: nunca intentes registrarlos, corregirlos ni reinterpretar sus números.","Usa herramientas solamente para consultas get_hole, get_range, get_list, get_last o get_round_status.","Identifica al jugador por nombre.","Después de una herramienta pronuncia únicamente speech.","Cuando hables usa un estilo de locutor masculino serio, sobrio y profesional, en español internacional neutro, sin acento regional marcado, con dicción clara y ritmo medio."].join(" "),
-  audio:{input:{transcription:{model:"gpt-4o-transcribe",language:"es",prompt:"Golf Guatemala. Transcribe literalmente nombres y números de scores. Formato típico: NOMBRE hoyo uno gross cinco. NOMBRE hoyo uno gross cuatro. No cambies los números dictados. Si oye corrección, corrigiendo o corregir antes del nombre, transcríbelo literalmente."},noise_reduction:{type:"near_field"},turn_detection:{type:"server_vad",threshold:0.5,prefix_padding_ms:300,silence_duration_ms:1000,create_response:false,interrupt_response:false}},...(sessionHasSpoken?{}:{output:{voice:"cedar"}})},
-  tools:groupTools(),tool_choice:"auto"
-}}
+function roundSessionConfig(){
+  const knownNames=round.players.map(p=>p.name).join(", ");
+  return{
+    type:"realtime",
+    instructions:["GROUP_ROUND_LOCK_V30.","REGLA ABSOLUTA: no produzcas ninguna respuesta espontánea.","Durante captura de scores solo transcribe audio. No repitas scores, nombres ni números. No preguntes nada. No uses herramientas.","Los scores y correcciones se procesan exclusivamente en el cliente.","Solo una response.create explícita y autorizada por el cliente puede producir voz."].join(" "),
+    audio:{input:{transcription:{model:"gpt-4o-transcribe",language:"es",prompt:`Golf Guatemala. Jugadores actuales: ${knownNames}. Conserva exactamente estos nombres cuando los escuches. Transcribe literalmente hoyo y score/gross con sus números. Formatos posibles: Hoyo uno NOMBRE cinco NOMBRE cuatro; NOMBRE hoyo uno score cinco; NOMBRE hoyo uno gross cinco. No cambies los números. Si oye corrección, corrigiendo o corregir, transcríbelo literalmente.`},noise_reduction:{type:"near_field"},turn_detection:{type:"server_vad",threshold:0.5,prefix_padding_ms:300,silence_duration_ms:1000,create_response:false,interrupt_response:false}},...(sessionHasSpoken?{}:{output:{voice:"cedar"}})},
+    tools:[],tool_choice:"none"
+  }
+}
 async function configureSessionFor(context){await updateSessionAndWait(context==="setup"?setupSessionConfig():roundSessionConfig(),context)}
 
 function teardownRealtime(){
@@ -481,6 +510,7 @@ function teardownRealtime(){
 }
 function setVoice(on){
   if(micTrack)micTrack.enabled=on;
+  if(audioEl&&on)audioEl.muted=true;
   listening=on;
   $("headerMicWrap").classList.toggle("active",on&&voiceContext==="round");
   $("setupMicWrap").classList.toggle("active",on&&voiceContext==="setup");
@@ -497,21 +527,25 @@ function handleRealtime(message){
     const e=JSON.parse(message.data);
     if(e.type==="session.updated"&&pendingSessionUpdate){
       const td=e.session?.audio?.input?.turn_detection;
-      const setupOk=pendingSessionUpdate.context==="setup"&&e.session?.type==="realtime"&&Number(td?.silence_duration_ms)===1500&&e.session?.tool_choice==="none";
-      const roundOk=pendingSessionUpdate.context==="round"&&e.session?.type==="realtime"&&Number(td?.silence_duration_ms)===1000;
+      const tools=Array.isArray(e.session?.tools)?e.session.tools:[];
+      const commonOk=e.session?.type==="realtime"&&td?.type==="server_vad"&&td?.create_response===false&&td?.interrupt_response===false&&tools.length===0&&e.session?.tool_choice==="none";
+      const setupOk=pendingSessionUpdate.context==="setup"&&commonOk&&Number(td?.silence_duration_ms)===1500;
+      const roundOk=pendingSessionUpdate.context==="round"&&commonOk&&Number(td?.silence_duration_ms)===1000;
       if(setupOk||roundOk)pendingSessionUpdate.resolve();
     }
     if(e.type==="response.created"){
       activeResponseId=e.response?.id||null;
       const md=e.response?.metadata||{};
       const authorized=!!authorizedSpeech&&md.speech_token===authorizedSpeech.token&&md.speech_reason===authorizedSpeech.reason;
-      if(!authorized){cancelResponseSafe(activeResponseId);return}
+      if(!authorized){if(audioEl)audioEl.muted=true;cancelResponseSafe(activeResponseId);return}
       sessionHasSpoken=true;
     }
     if(e.type==="error"){
       const msg=e.error?.message||"Error Realtime";console.error("Realtime:",msg,e);
       if(pendingSessionUpdate&&(!e.event_id||e.event_id===pendingSessionUpdate.event_id))pendingSessionUpdate.reject(new Error(msg));
       if(listening)setVoice(false);
+      if(audioEl)audioEl.muted=true;
+      if(activeResponseId)cancelResponseSafe(activeResponseId);
       if(voiceContext==="setup")$("setupStatus").textContent="ERROR";else $("status").textContent="ERROR";
       return;
     }
@@ -527,20 +561,23 @@ function handleRealtime(message){
       phase="listening";
       $("status").textContent="● ESCUCHANDO…";
     }
-    if(e.type==="input_audio_buffer.speech_stopped"&&phase==="listening"){
-      if(voiceContext==="setup"){
+    if(e.type==="input_audio_buffer.speech_stopped"){
+      if(voiceContext==="setup"&&(setupSpeechActive||setupLocked||setupFinalizeRequested||listening)){
+        // Debe aceptarse incluso si OK ya apagó el micrófono y setVoice(false)
+        // cambió phase a idle. El evento cierra el audio que ya estaba en curso.
         setupSpeechActive=false;
         const id=rememberSetupItem(e.item_id);if(id&&!setupSegmentText.has(id))setupPendingItems.add(id);
-        if(setupLocked){
+        if(setupLocked||setupFinalizeRequested){
           phase="processing";
           $("setupStatus").classList.remove("listening");
           $("setupStatus").textContent="TRANSCRIBIENDO…";
+          if(setupFinalizeRequested&&!setupPendingItems.size)finalizeSetupDictation();
         }else{
           phase="listening";
           $("setupStatus").classList.remove("listening");
           $("setupStatus").textContent="TRANSCRIBIENDO… · PUEDES CONTINUAR HABLANDO";
         }
-      }else{
+      }else if(voiceContext==="round"&&(listening||phase==="listening")){
         const id=rememberRoundItem(e.item_id);if(id&&!roundSegmentText.has(id))roundPendingItems.add(id);
         phase="processing";
         requestRoundFinalize();
@@ -564,6 +601,7 @@ function handleRealtime(message){
     }
     if(e.type==="response.done"){
       activeResponseId=null;
+      if(audioEl)audioEl.muted=true;
       const finishedReason=authorizedSpeech?.reason||null;
       clearSpeechAuthorization();
       if(finishedReason==="error"){phase="idle";if(voiceContext==="round")$("status").textContent=roundIdleStatus()}
@@ -572,7 +610,7 @@ function handleRealtime(message){
     }
   }catch(err){console.error(err)}
 }
-async function ensureSession(){if(dc?.readyState==="open")return;if(!navigator.mediaDevices?.getUserMedia)throw new Error("Micrófono no disponible");stream=await navigator.mediaDevices.getUserMedia({audio:true});micTrack=stream.getAudioTracks()[0];micTrack.enabled=false;pc=new RTCPeerConnection();audioEl=document.createElement("audio");audioEl.autoplay=true;audioEl.playsInline=true;document.body.appendChild(audioEl);pc.ontrack=e=>{audioEl.srcObject=e.streams?.[0]||new MediaStream([e.track])};pc.addTrack(micTrack,stream);dc=pc.createDataChannel("oai-events");dc.onmessage=handleRealtime;const opened=new Promise((resolve,reject)=>{dc.onopen=resolve;setTimeout(()=>reject(new Error("Realtime no abrió")),10000)});const offer=await pc.createOffer();await pc.setLocalDescription(offer);const rsp=await fetch("/api/session",{method:"POST",headers:{"Content-Type":"application/sdp"},body:pc.localDescription.sdp});const sdp=await rsp.text();if(!rsp.ok)throw new Error(sdp||"No se pudo iniciar Realtime");await pc.setRemoteDescription({type:"answer",sdp});await opened}
+async function ensureSession(){if(dc?.readyState==="open")return;if(!navigator.mediaDevices?.getUserMedia)throw new Error("Micrófono no disponible");stream=await navigator.mediaDevices.getUserMedia({audio:true});micTrack=stream.getAudioTracks()[0];micTrack.enabled=false;pc=new RTCPeerConnection();audioEl=document.createElement("audio");audioEl.autoplay=true;audioEl.playsInline=true;audioEl.muted=true;document.body.appendChild(audioEl);pc.ontrack=e=>{audioEl.srcObject=e.streams?.[0]||new MediaStream([e.track])};pc.addTrack(micTrack,stream);dc=pc.createDataChannel("oai-events");dc.onmessage=handleRealtime;const opened=new Promise((resolve,reject)=>{dc.onopen=resolve;setTimeout(()=>reject(new Error("Realtime no abrió")),10000)});const offer=await pc.createOffer();await pc.setLocalDescription(offer);const rsp=await fetch("/api/session",{method:"POST",headers:{"Content-Type":"application/sdp"},body:pc.localDescription.sdp});const sdp=await rsp.text();if(!rsp.ok)throw new Error(sdp||"No se pudo iniciar Realtime");await pc.setRemoteDescription({type:"answer",sdp});await opened}
 async function toggleVoice(context){try{
   voiceContext=context;
   if(listening){setVoice(false);return}
