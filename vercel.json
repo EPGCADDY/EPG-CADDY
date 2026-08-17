@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/index-grupal.html",
+      "destination": "/api/v96-preview"
+    }
+  ]
+}
