@@ -32,7 +32,7 @@ jobs:
                   raise SystemExit(f'Expected {count}, found {n}: {old[:120]!r}')
               s=s.replace(old,new,count)
 
-          rep('<meta name="gscg-build" content="V96-MIC-CONTEXT-IOS-HARDENED-20260817">','<meta name="gscg-build" content="V97-PERSISTENT-ROUND-DRAFT-20260817">')
+          rep('<meta name="gscg-build" content="V97-MIC-TRANSITION-HARDENED-20260817">','<meta name="gscg-build" content="V98-PERSISTENT-ROUND-DRAFT-20260817">')
           rep('const STORAGE_BACKUP_KEY="golf-score-card-guatemala-group-round-v2-backup";','const STORAGE_BACKUP_KEY="golf-score-card-guatemala-group-round-v2-backup";\nconst DRAFT_STORAGE_KEY="golf-score-card-guatemala-group-draft-v1";')
           anchor='''function persist(){\n  round.updatedAt=new Date().toISOString();\n  const payload=JSON.stringify(round);\n  try{\n    localStorage.setItem(STORAGE_KEY,payload);\n    localStorage.setItem(STORAGE_BACKUP_KEY,payload);\n  }catch(e){console.error("No se pudo persistir la última ronda:",e)}\n}\n'''
           insert=anchor+'''function persistDraftState(){\n  try{\n    if(!draftPlayers.length){localStorage.removeItem(DRAFT_STORAGE_KEY);return}\n    localStorage.setItem(DRAFT_STORAGE_KEY,JSON.stringify({players:draftPlayers.map((p,i)=>normalizePlayer(p,i)),savedAt:new Date().toISOString()}));\n  }catch(e){console.error("No se pudo persistir el registro en curso:",e)}\n}\nfunction loadDraftState(){\n  try{\n    const raw=JSON.parse(localStorage.getItem(DRAFT_STORAGE_KEY)||"null");\n    if(!raw||!Array.isArray(raw.players)||!raw.players.length)return[];\n    return raw.players.slice(0,6).map(normalizePlayer);\n  }catch{return[]}\n}\nfunction clearDraftState(){try{localStorage.removeItem(DRAFT_STORAGE_KEY)}catch{}}\n'''
@@ -57,7 +57,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           s=Path('index-grupal.html').read_text(encoding='utf-8')
-          assert 'V97-PERSISTENT-ROUND-DRAFT-20260817' in s
+          assert 'V98-PERSISTENT-ROUND-DRAFT-20260817' in s
           for x in ['DRAFT_STORAGE_KEY','function persistDraftState()','function loadDraftState()','function clearDraftState()']:
               assert x in s
           assert s.count('function persist()') == 1
@@ -75,7 +75,6 @@ jobs:
           git diff --check
           changed="$(git diff --name-only)"
           test "$changed" = "index-grupal.html"
-          git diff -- index-grupal.html
 
       - name: Commit audited persistence fix to grupal-dev only
         shell: bash
