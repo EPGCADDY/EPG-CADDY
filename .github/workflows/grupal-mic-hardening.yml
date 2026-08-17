@@ -1,0 +1,101 @@
+name: Grupal mic hardening
+
+on:
+  push:
+    branches: [grupal-dev]
+    paths:
+      - '.github/workflows/grupal-mic-hardening.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-audit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+          fetch-depth: 0
+
+      - name: Patch isolated group microphone architecture
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('index-grupal.html')
+          s = p.read_text(encoding='utf-8')
+
+          def rep(old, new, count=1):
+              global s
+              n = s.count(old)
+              if n != count:
+                  raise SystemExit(f'Expected {count} occurrence(s), found {n}: {old[:120]!r}')
+              s = s.replace(old, new, count)
+
+          rep('<meta name="gscg-build" content="V94-ENDPOINT-GRUPAL-AISLADO-20260817">',
+              '<meta name="gscg-build" content="V96-MIC-CONTEXT-IOS-HARDENED-20260817">')
+          rep('let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false;\nconst processedTranscriptItems=new Set();',
+              'let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false;\nlet voiceOpening=false;\nconst processedTranscriptItems=new Set();')
+          rep('function openSetup(mode="new"){\n  if(listening)setVoice(false);\n  if(activeResponseId||stopMonitorActive)stopAuthorizedSpeech();\n  resetRoundCapture();\n  voiceContext="setup";',
+              'function openSetup(mode="new"){\n  if(listening)setVoice(false);\n  if(activeResponseId||stopMonitorActive)stopAuthorizedSpeech();\n  // REGISTRO y TARJETA usan transportes Realtime separados. No se reutiliza\n  // una sesión de ronda para dictado de registro ni viceversa.\n  teardownRealtime();\n  resetRoundCapture();\n  voiceContext="setup";')
+          rep('function closeSetup(){\n  if(!round.configured)return;\n  rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;\n  resetSetupCapture();\n  $("setupOverlay").classList.remove("visible");\n  setVoice(false);\n}',
+              'function closeSetup(){\n  if(!round.configured)return;\n  rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;\n  resetSetupCapture();\n  $("setupOverlay").classList.remove("visible");\n  setVoice(false);\n  // Al volver a la TARJETA se elimina por completo el transporte de REGISTRO.\n  // El próximo toque del micrófono crea una sesión limpia con contexto round.\n  teardownRealtime();\n  voiceContext="round";\n}')
+          rep('let localStream=null,localTrack=null,localPc=null,localDc=null,localAudio=null,openTimer=null;',
+              'let localStream=null,localTrack=null,localPc=null,localDc=null,localAudio=null,openTimer=null,sessionCreatedTimer=null;')
+          rep('const sessionCreatedTimer=setTimeout(()=>sessionCreatedReject(new Error("Realtime no informó session.created")),5000);',
+              'sessionCreatedTimer=setTimeout(()=>sessionCreatedReject(new Error("Realtime no informó session.created")),5000);')
+          rep('if(openTimer)clearTimeout(openTimer);\n      try{clearTimeout(sessionCreatedTimer)}catch{}',
+              'if(openTimer)clearTimeout(openTimer);\n      if(sessionCreatedTimer)clearTimeout(sessionCreatedTimer);')
+          rep('  voiceActivationContext=context;\n  setMicConnecting(context,true);\n  voiceActivationPromise=(async()=>{',
+              '  voiceActivationContext=context;\n  voiceOpening=true;\n  setMicConnecting(context,true);\n  voiceActivationPromise=(async()=>{')
+          rep('  finally{\n    setMicConnecting(context,false);\n    voiceActivationPromise=null;\n    voiceActivationContext=null;\n  }\n}',
+              '  finally{\n    setMicConnecting(context,false);\n    voiceOpening=false;\n    voiceActivationPromise=null;\n    voiceActivationContext=null;\n  }\n}')
+          rep('document.addEventListener("visibilitychange",()=>{\n  if(document.visibilityState==="hidden"){\n    appHiddenAt=Date.now();appWasBackgrounded=true;\n    if(listening)setVoice(false);\n    persist();\n  }else{\n    recoverRealtimeAfterResumeSync();\n    render();\n  }\n});',
+              'document.addEventListener("visibilitychange",()=>{\n  if(document.visibilityState==="hidden"){\n    persist();\n    // iOS puede ocultar brevemente la página al presentar/retirar el permiso de\n    // micrófono. Durante esa apertura no invalidamos la conexión que se está creando.\n    if(voiceOpening)return;\n    appHiddenAt=Date.now();appWasBackgrounded=true;\n    if(listening)setVoice(false);\n  }else{\n    if(voiceOpening)return;\n    recoverRealtimeAfterResumeSync();\n    render();\n  }\n});')
+          rep('window.addEventListener("pageshow",e=>{\n  if(!round.configured)restorePersistedRound();',
+              'window.addEventListener("pageshow",e=>{\n  if(voiceOpening)return;\n  if(!round.configured)restorePersistedRound();')
+          rep('window.addEventListener("focus",()=>{\n  if(!round.configured&&restorePersistedRound())render();',
+              'window.addEventListener("focus",()=>{\n  if(voiceOpening)return;\n  if(!round.configured&&restorePersistedRound())render();')
+          rep('window.addEventListener("pagehide",()=>{\n  appHiddenAt=Date.now();appWasBackgrounded=true;\n  if(listening)setVoice(false);\n  persist();\n});',
+              'window.addEventListener("pagehide",()=>{\n  persist();\n  if(voiceOpening)return;\n  appHiddenAt=Date.now();appWasBackgrounded=true;\n  if(listening)setVoice(false);\n});')
+
+          p.write_text(s, encoding='utf-8')
+
+      - name: Static audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8')
+          assert 'V96-MIC-CONTEXT-IOS-HARDENED-20260817' in s
+          assert 'let voiceOpening=false;' in s
+          assert 'teardownRealtime();\n  resetRoundCapture();\n  voiceContext="setup";' in s
+          assert 'teardownRealtime();\n  voiceContext="round";' in s
+          assert 'if(voiceOpening)return;' in s
+          assert 'fetch("/api/session-grupal"' in s
+          assert 'fetch("/api/session"' not in s
+          assert s.count('function parseRoundScoreTranscript') == 1
+          assert s.count('function recordScore') == 1
+          assert s.count('function recordScores') == 1
+          assert s.count('function persist') == 1
+          assert s.count('function startConfirmedRound') == 1
+          script=s.split('<script>',1)[1].split('</script>',1)[0]
+          Path('/tmp/index-grupal.js').write_text(script,encoding='utf-8')
+          PY
+          node --check /tmp/index-grupal.js
+          git diff --check
+          changed="$(git diff --name-only)"
+          test "$changed" = "index-grupal.html"
+
+      - name: Commit audited fix to grupal-dev only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index-grupal.html
+          git commit -m "[mic-hardening] isolate grupal voice contexts and guard iOS permission"
+          test "$(git branch --show-current)" = "grupal-dev"
+          git push origin HEAD:grupal-dev
