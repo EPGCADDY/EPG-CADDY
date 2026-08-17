@@ -38,8 +38,10 @@ export default async function handler(req, res) {
       model: "gpt-realtime",
       instructions: [
         "Aplicación grupal de score de golf.",
-        "No produzcas respuestas espontáneas.",
+        "REGLA ABSOLUTA: nunca produzcas respuestas espontáneas.",
         "No respondas automáticamente al audio del usuario.",
+        "No hagas preguntas, no ofrezcas ayuda, no pidas aclaraciones y no hables ante errores o instrucciones desconocidas.",
+        "No digas frases como por favor, indique, dime, información, problema, ayudar, ayuda, necesitas, entendido, cómo puedo ayudarte ni equivalentes.",
         "No uses herramientas.",
         "Solo procesa audio para transcripción; cualquier respuesta de voz será creada explícitamente por el cliente."
       ].join(" "),
