@@ -1,0 +1,102 @@
+name: Grupal V108 fast voice
+
+on:
+  push:
+    branches: [grupal-dev]
+    paths:
+      - '.github/workflows/grupal-v108-fast-voice.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-audit-commit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+          fetch-depth: 0
+
+      - name: Patch V108 authorized voice timing
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html'); s=p.read_text(encoding='utf-8')
+          def rep(old,new,count=1):
+              global s
+              n=s.count(old)
+              if n!=count: raise SystemExit(f'Expected {count}, found {n}: {old[:160]!r}')
+              s=s.replace(old,new,count)
+
+          rep('<meta name="gscg-build" content="V107-STRICT-SPEECH-LOCK-20260817">','<meta name="gscg-build" content="V108-FAST-VOICE-20260817">')
+          rep('silence_duration_ms:4000,create_response:false,interrupt_response:false','silence_duration_ms:700,create_response:false,interrupt_response:false')
+          rep('const expectedSilence=context==="setup"?1500:4000;','const expectedSilence=context==="setup"?1500:700;')
+
+          old_query='''async function speakQuery(text,kind="query"){\n  if(kind==="accumulated"){\n    const ok=await setSessionVoiceSpeed(VOICE_POLICY.accumulatedSpeed);\n    if(!ok)return false;\n    pendingVoiceSpeedRestore=true;\n    return speakAuthorized("query_accumulated",text);\n  }\n  return speakAuthorized("query",text);\n}\n'''
+          new_query='''async function speakQuery(text,kind="query"){\n  if(kind==="accumulated")return speakAuthorized("query_accumulated",text);\n  return speakAuthorized("query",text);\n}\n'''
+          rep(old_query,new_query)
+
+          old_connect='''function setMicConnecting(context,on){\n  const wrap=context==="setup"?$("setupMicWrap"):$("headerMicWrap");\n  if(wrap)wrap.classList.toggle("connecting",!!on);\n  if(on){\n    if(context==="setup")$("setupStatus").textContent="CONECTANDO…";\n    else $("status").textContent="CONECTANDO…";\n  }\n}\n'''
+          new_connect='''function setMicConnecting(context,on){\n  const wrap=context==="setup"?$("setupMicWrap"):$("headerMicWrap");\n  if(wrap){\n    wrap.classList.toggle("connecting",!!on);\n    if(on)wrap.classList.add("active");\n    else if(!listening)wrap.classList.remove("active");\n  }\n  if(on){\n    if(context==="setup")$("setupStatus").textContent="CONECTANDO…";\n    else $("status").textContent="CONECTANDO…";\n  }\n}\n'''
+          rep(old_connect,new_connect)
+
+          old_stop='''    if(e.type==="input_audio_buffer.speech_started"&&voiceContext==="round"&&listening){\n      const id=rememberRoundItem(e.item_id);if(id)roundPendingItems.add(id);\n      phase="listening";\n      $("status").textContent="● ESCUCHANDO…";\n    }\n'''
+          new_stop='''    if(e.type==="input_audio_buffer.speech_started"&&voiceContext==="round"&&listening){\n      if(roundFinalizeTimer){clearTimeout(roundFinalizeTimer);roundFinalizeTimer=null}\n      const id=rememberRoundItem(e.item_id);if(id)roundPendingItems.add(id);\n      phase="listening";\n      $("status").textContent="● ESCUCHANDO…";\n    }\n'''
+          rep(old_stop,new_stop)
+
+          old_speech_stopped='''      }else if(voiceContext==="round"&&(listening||phase==="listening")){\n        const id=rememberRoundItem(e.item_id);if(id&&!roundSegmentText.has(id))roundPendingItems.add(id);\n        phase="processing";\n        requestRoundFinalize();\n      }\n'''
+          new_speech_stopped='''      }else if(voiceContext==="round"&&(listening||phase==="listening")){\n        const id=rememberRoundItem(e.item_id);if(id&&!roundSegmentText.has(id))roundPendingItems.add(id);\n        phase="listening";\n        $("status").textContent="TRANSCRIBIENDO…";\n      }\n'''
+          rep(old_speech_stopped,new_speech_stopped)
+
+          old_completed='''    if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="round"){\n      const key=e.item_id||e.event_id||String(Date.now());if(processedTranscriptItems.has(key))return;processedTranscriptItems.add(key);\n      appendRoundTranscript(e.item_id||key,e.transcript||"");\n      if(roundFinalizeRequested){finalizeRoundDictation();return}\n      return;\n    }\n'''
+          new_completed='''    if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="round"){\n      const key=e.item_id||e.event_id||String(Date.now());if(processedTranscriptItems.has(key))return;processedTranscriptItems.add(key);\n      appendRoundTranscript(e.item_id||key,e.transcript||"");\n      if(roundFinalizeRequested){finalizeRoundDictation();return}\n      const combined=roundTranscriptCombined();\n      const immediate=isStopCommand(combined)||parseRosterCommand(combined).matched||parseRoundQueryTranscript(combined).matched;\n      if(immediate){requestRoundFinalize(0);return}\n      if(roundFinalizeTimer)clearTimeout(roundFinalizeTimer);\n      roundFinalizeTimer=setTimeout(()=>{roundFinalizeTimer=null;if(listening)requestRoundFinalize(0)},4000);\n      phase="listening";\n      $("status").textContent="● ESCUCHANDO…";\n      return;\n    }\n'''
+          rep(old_completed,new_completed)
+
+          old_toggle='''      // Cada nueva activación usa transporte Realtime fresco; la captura\n      // lógica permanece separada del transporte (regla V84/V86).\n      teardownRealtime();\n      voiceContext=context;\n      setMicConnecting(context,true);\n      await ensureSession();\n      if(context!==voiceContext)throw new Error("Contexto de micrófono cambió");\n      if(context==="round")resetRoundCapture();\n      if(context==="setup"&&activeResponseId){try{sendEvent({type:"response.cancel",response_id:activeResponseId})}catch{}activeResponseId=null}\n      await configureSessionFor(context);\n      if(!realtimeReady())throw new Error("Realtime no quedó listo");\n'''
+          new_toggle='''      // Reutiliza el transporte Realtime mientras siga sano en el mismo contexto.\n      // Así el toque activa escucha casi inmediata; solo reconecta si iOS lo invalidó.\n      voiceContext=context;\n      setMicConnecting(context,true);\n      const reuse=realtimeReady();\n      if(!reuse)await ensureSession();\n      if(context!==voiceContext)throw new Error("Contexto de micrófono cambió");\n      if(context==="round")resetRoundCapture();\n      if(context==="setup"&&activeResponseId){try{sendEvent({type:"response.cancel",response_id:activeResponseId})}catch{}activeResponseId=null}\n      if(!reuse)await configureSessionFor(context);\n      if(!realtimeReady())throw new Error("Realtime no quedó listo");\n'''
+          rep(old_toggle,new_toggle)
+
+          p.write_text(s,encoding='utf-8')
+
+          q=Path('api/session-grupal.js'); a=q.read_text(encoding='utf-8')
+          if 'const silence = context === "setup" ? 1500 : 4000;' not in a: raise SystemExit('API silence baseline not found')
+          a=a.replace('const silence = context === "setup" ? 1500 : 4000;','const silence = context === "setup" ? 1500 : 700;',1)
+          q.write_text(a,encoding='utf-8')
+
+      - name: Audit V108
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8')
+          a=Path('api/session-grupal.js').read_text(encoding='utf-8')
+          for x in ['V108-FAST-VOICE-20260817','silence_duration_ms:700','const expectedSilence=context==="setup"?1500:700;','const reuse=realtimeReady();','setTimeout(()=>{roundFinalizeTimer=null;if(listening)requestRoundFinalize(0)},4000)','if(kind==="accumulated")return speakAuthorized("query_accumulated",text);']:
+              assert x in s,x
+          assert 'const silence = context === "setup" ? 1500 : 700;' in a
+          assert 'silence_duration_ms:4000' not in s
+          assert 'const silence = context === "setup" ? 1500 : 4000;' not in a
+          assert 'create_response:false,interrupt_response:false' in s
+          assert 'create_response: false' in a and 'interrupt_response: false' in a
+          assert 'function markUnreportedPlayersOnHole' in s
+          assert 'function closureSpeechIfDue' in s
+          js=s.split('<script>',1)[1].split('</script>',1)[0]
+          Path('/tmp/g.js').write_text(js,encoding='utf-8')
+          PY
+          node --check /tmp/g.js
+          node --check api/session-grupal.js
+          git diff --check
+          test "$(git diff --name-only | sort)" = $'api/session-grupal.js\nindex-grupal.html'
+          git diff --quiet HEAD -- index.html api/session.js api/score.js
+
+      - name: Commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index-grupal.html api/session-grupal.js
+          git commit -m "V108 speed up mic activation and non-score replies"
+          git push origin grupal-dev
