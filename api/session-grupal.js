@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
     const context = safeHeader(req.headers["x-gscg-context"], 20) === "setup" ? "setup" : "round";
     const players = safeHeader(req.headers["x-gscg-players"], 300);
-    const silence = context === "setup" ? 1500 : 4000;
+    const silence = context === "setup" ? 1500 : 700;
 
     const transcriptionPrompt = context === "setup"
       ? "Golf Guatemala. Registro de jugadores. Transcribe literalmente nombres propios, handicap y color de marcas. Regla mandatoria: Jessie se escribe Jessie."
