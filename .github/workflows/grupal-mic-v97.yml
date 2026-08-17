@@ -1,0 +1,150 @@
+name: Grupal mic V97 hardening
+
+on:
+  push:
+    branches: [grupal-dev]
+    paths:
+      - '.github/workflows/grupal-mic-v97.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-audit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+          fetch-depth: 0
+
+      - name: Patch isolated group microphone transitions
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html')
+          s=p.read_text(encoding='utf-8')
+
+          def rep(old,new):
+              global s
+              n=s.count(old)
+              if n!=1:
+                  raise SystemExit(f'Expected exactly one anchor, found {n}: {old[:100]!r}')
+              s=s.replace(old,new,1)
+
+          rep('<meta name="gscg-build" content="V96-MIC-CONTEXT-IOS-HARDENED-20260817">',
+              '<meta name="gscg-build" content="V97-MIC-TRANSITION-HARDENED-20260817">')
+
+          rep('''function closeSetup(){
+            if(!round.configured)return;
+            rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;
+            resetSetupCapture();
+            $("setupOverlay").classList.remove("visible");
+            setVoice(false);
+            // Al volver a la TARJETA se elimina por completo el transporte de REGISTRO.
+            // El próximo toque del micrófono crea una sesión limpia con contexto round.
+            teardownRealtime();
+            voiceContext="round";
+          }''','''function closeSetup(){
+            if(!round.configured)return;
+            if(listening)setVoice(false);
+            if(activeResponseId||stopMonitorActive)stopAuthorizedSpeech();
+            // Al volver a la TARJETA se elimina por completo el transporte de REGISTRO.
+            // El próximo toque del micrófono crea una sesión limpia con contexto round.
+            teardownRealtime();
+            voiceContext="round";
+            rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;
+            resetSetupCapture();
+            $("setupOverlay").classList.remove("visible");
+          }''')
+
+          rep('''function invalidateRealtimeForResume(){
+            if(listening)setVoice(false);
+            teardownRealtime();
+            voiceContext=round.configured?"round":"setup";
+          }''','''function invalidateRealtimeForResume(){
+            if(listening)setVoice(false);
+            teardownRealtime();
+            const setupVisible=$("setupOverlay")?.classList?.contains?.("visible");
+            voiceContext=setupVisible||!round.configured?"setup":"round";
+          }''')
+
+          rep('''  if(round.configured)$("status").textContent=roundIdleStatus();
+            else if(voiceContext==="setup")$("setupStatus").textContent=draftPlayers.length?"LISTO · PRESIONA OK PARA CONFIRMAR":"";
+            return true;''','''  const setupVisible=$("setupOverlay")?.classList?.contains?.("visible");
+            if(setupVisible&&voiceContext==="setup")$("setupStatus").textContent=draftPlayers.length?"LISTO · PRESIONA OK PARA CONFIRMAR":"";
+            else if(round.configured)$("status").textContent=roundIdleStatus();
+            return true;''')
+
+          rep('''    voiceContext=context;
+              try{
+                await ensureSession();''','''    voiceContext=context;
+              try{
+                // Cada nueva activación usa transporte Realtime fresco; la captura
+                // lógica permanece separada del transporte (regla V84/V86).
+                teardownRealtime();
+                voiceContext=context;
+                setMicConnecting(context,true);
+                await ensureSession();''')
+
+          rep('''    }catch(err){
+                console.error("Activación de micrófono:",err);
+                teardownRealtime();
+                voiceContext=context;
+                setMicConnecting(context,false);
+                if(context==="setup")$("setupStatus").textContent="ERROR";
+                else $("status").textContent="ERROR";
+                return false;
+              }''','''    }catch(err){
+                console.error("Activación de micrófono:",err);
+                const sameContext=voiceContext===context;
+                teardownRealtime();
+                setMicConnecting(context,false);
+                if(sameContext){
+                  voiceContext=context;
+                  if(context==="setup")$("setupStatus").textContent="ERROR";
+                  else $("status").textContent="ERROR";
+                }
+                return false;
+              }''')
+
+          p.write_text(s,encoding='utf-8')
+
+      - name: Static audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8')
+          assert 'V97-MIC-TRANSITION-HARDENED-20260817' in s
+          assert 'let voiceOpening=false;' in s
+          assert 'teardownRealtime();\n  resetRoundCapture();\n  voiceContext="setup";' in s
+          assert 'const setupVisible=$("setupOverlay")?.classList?.contains?.("visible");' in s
+          assert 'Cada nueva activación usa transporte Realtime fresco' in s
+          assert 'fetch("/api/session-grupal"' in s
+          assert 'fetch("/api/session"' not in s
+          assert s.count('function parseRoundScoreTranscript')==1
+          assert s.count('function recordScore(a){')==1
+          assert s.count('function recordScores(a){')==1
+          assert s.count('function persist(){')==1
+          assert s.count('function startConfirmedRound(){')==1
+          script=s.split('<script>',1)[1].split('</script>',1)[0]
+          Path('/tmp/index-grupal-v97.js').write_text(script,encoding='utf-8')
+          PY
+          node --check /tmp/index-grupal-v97.js
+          git diff --check
+          test "$(git diff --name-only)" = "index-grupal.html"
+
+      - name: Commit audited V97 to grupal-dev only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index-grupal.html
+          test "$(git diff --cached --name-only)" = "index-grupal.html"
+          git commit -m "[mic-v97] harden setup-round transitions and fresh transport"
+          test "$(git branch --show-current)" = "grupal-dev"
+          git push origin HEAD:grupal-dev
