@@ -1,0 +1,50 @@
+name: Grupal V97 cleanup
+
+on:
+  push:
+    branches: [grupal-dev]
+    paths:
+      - '.github/workflows/grupal-cleanup-v97.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+          fetch-depth: 0
+      - name: Verify V97 source before cleanup
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'V97-MIC-TRANSITION-HARDENED-20260817' index-grupal.html
+          git diff --quiet
+      - name: Remove temporary development scaffolding
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/grupal-mic-v97.yml
+          rm -f api/v96-preview.js
+          rm -f vercel.json
+          rm -f .github/workflows/grupal-cleanup-v97.yml
+          test -f index-grupal.html
+          test -f api/session-grupal.js
+          test -f index.html
+      - name: Commit cleanup on grupal-dev only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --name-only | sort > /tmp/changed
+          printf '%s\n' '.github/workflows/grupal-cleanup-v97.yml' '.github/workflows/grupal-mic-v97.yml' 'api/v96-preview.js' 'vercel.json' | sort > /tmp/expected
+          diff -u /tmp/expected /tmp/changed
+          git commit -m "[cleanup] keep only direct V97 grupal source"
+          test "$(git branch --show-current)" = "grupal-dev"
+          git push origin HEAD:grupal-dev
