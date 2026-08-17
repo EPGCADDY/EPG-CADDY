@@ -1,0 +1,61 @@
+name: Grupal card mic touch fix
+on:
+  push:
+    branches: [grupal-dev]
+    paths: ['.github/workflows/grupal-card-mic-touch-fix.yml']
+permissions:
+  contents: write
+jobs:
+  patch-test-commit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+          fetch-depth: 0
+      - name: Patch
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html'); s=p.read_text(encoding='utf-8')
+          old='.mic-hit{position:absolute;inset:-25%;border:0;background:transparent;cursor:pointer;z-index:2;border-radius:50%;}'
+          new='.mic-hit{position:absolute;inset:-25%;border:0;background:transparent;cursor:pointer;z-index:2;border-radius:50%;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}'
+          if s.count(old)!=1: raise SystemExit('mic-hit baseline mismatch')
+          s=s.replace(old,new,1)
+          old2='$("setupOk").addEventListener("click",requestSetupFinalize);$("startRoundButton").addEventListener("click",startConfirmedRound);$("headerMic").addEventListener("click",e=>{e.preventDefault();toggleVoice("round")});$("setupMic").addEventListener("click",e=>{e.preventDefault();toggleVoice("setup")});'
+          new2='''$("setupOk").addEventListener("click",requestSetupFinalize);$("startRoundButton").addEventListener("click",startConfirmedRound);\nfunction bindMicActivation(id,context){\n  const el=$(id);let pointerAt=0;\n  const fire=e=>{e.preventDefault();const now=Date.now();if(e.type==="click"&&now-pointerAt<600)return;if(e.type==="pointerup")pointerAt=now;toggleVoice(context)};\n  if(window.PointerEvent)el.addEventListener("pointerup",fire,{passive:false});\n  el.addEventListener("click",fire,{passive:false});\n}\nbindMicActivation("headerMic","round");bindMicActivation("setupMic","setup");'''
+          if s.count(old2)!=1: raise SystemExit('mic binding baseline mismatch')
+          s=s.replace(old2,new2,1)
+          s=s.replace('V98-PERSISTENT-ROUND-DRAFT-20260817','V99-CARD-MIC-TOUCH-HARDENED-20260817',1)
+          p.write_text(s,encoding='utf-8')
+      - name: Audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8')
+          assert 'V99-CARD-MIC-TOUCH-HARDENED-20260817' in s
+          assert 'function bindMicActivation(id,context)' in s
+          assert 'bindMicActivation("headerMic","round")' in s
+          assert 'bindMicActivation("setupMic","setup")' in s
+          assert 'touch-action:manipulation' in s
+          assert s.count('function bindMicActivation')==1
+          assert s.count('function toggleVoice')==1
+          script=s.split('<script>',1)[1].split('</script>',1)[0]
+          Path('/tmp/index-grupal.js').write_text(script,encoding='utf-8')
+          PY
+          node --check /tmp/index-grupal.js
+          git diff --check
+          test "$(git diff --name-only)" = "index-grupal.html"
+      - name: Commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = "grupal-dev"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index-grupal.html
+          git commit -m "[card-mic] harden iPhone touch activation path"
+          git push origin HEAD:grupal-dev
