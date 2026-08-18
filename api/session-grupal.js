@@ -28,6 +28,9 @@ export default async function handler(req, res) {
     const context = safeHeader(req.headers["x-gscg-context"], 20) === "setup" ? "setup" : "round";
     const players = safeHeader(req.headers["x-gscg-players"], 300);
     const silence = context === "setup" ? 1500 : 700;
+    const threshold = context === "setup" ? 0.5 : 0.25;
+    const prefixPadding = context === "setup" ? 300 : 500;
+    const noiseReduction = context === "setup" ? "near_field" : "far_field";
 
     const transcriptionPrompt = context === "setup"
       ? "Golf Guatemala. Registro de jugadores. Transcribe literalmente nombres propios, handicap y color de marcas. Regla mandatoria: Jessie se escribe Jessie."
@@ -52,11 +55,11 @@ export default async function handler(req, res) {
             language: "es",
             prompt: transcriptionPrompt
           },
-          noise_reduction: { type: "near_field" },
+          noise_reduction: { type: noiseReduction },
           turn_detection: {
             type: "server_vad",
-            threshold: 0.5,
-            prefix_padding_ms: 300,
+            threshold,
+            prefix_padding_ms: prefixPadding,
             silence_duration_ms: silence,
             create_response: false,
             interrupt_response: false
