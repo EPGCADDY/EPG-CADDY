@@ -20,17 +20,13 @@ jobs:
           s=p.read_text(encoding='utf-8')
           s=s.replace('V115-FIELD-MIC-LAYOUT-20260817','V117-LAYOUT-TIMER-20260817',1)
           s=s.replace('<h2>MARCAS - YARDAS</h2>','<h2>YARDAS</h2>',1)
-          old='function renderCourseInfo(){const rows=["Negro","Azul","Blanco","Rojo","Amarillo"].map(k=>[k,TEES[k]]);$("courseInfo").innerHTML=`<div class="head">MARCA</div><div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>${rows.map(([k,t])=>`<div><span class="tee-dot" style="background:${t.color};border:${k===\'Negro\'?\'1px solid #777\':\'0\'}"></span>${t.label}</div><div style="text-align:center"><span style="color:${k===\'Negro\'?\'#000\':t.color};font-weight:800;${k===\'Negro\'?\'background:#fff;padding:1px 5px;border-radius:2px;display:inline-block;\':\'\'}">${t.total.toLocaleString(\'en-US\')}</span></div><div style="text-align:center">${t.rating.toFixed(1)}</div><div style="text-align:center">${t.slope}</div>`).join("")}`}'
-          new='function renderCourseInfo(){const rows=["Negro","Azul","Blanco","Rojo","Amarillo"].map(k=>[k,TEES[k]]);$("courseInfo").innerHTML=`<div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>${rows.map(([k,t])=>`<div style="text-align:left"><span class="tee-dot" style="background:${t.color};border:${k===\'Negro\'?\'1px solid #777\':\'0\'}"></span><span style="color:${k===\'Negro\'?\'#000\':t.color};font-weight:800;${k===\'Negro\'?\'background:#fff;padding:1px 5px;border-radius:2px;display:inline-block;\':\'\'}">${t.total.toLocaleString(\'en-US\')}</span></div><div style="text-align:center">${t.rating.toFixed(1)}</div><div style="text-align:center">${t.slope}</div>`).join("")}`}'
-          if old not in s: raise SystemExit('course info block mismatch')
-          s=s.replace(old,new,1)
           old='function roundIdleStatus(){return `Ronda activa · ${round.players.length} jugador${round.players.length===1?"":"es"}`}'
           new='function roundElapsedText(){const start=new Date(round.createdAt).getTime(),sec=Math.max(0,Math.floor((Date.now()-start)/1000)),hh=String(Math.floor(sec/3600)).padStart(2,"0"),mm=String(Math.floor((sec%3600)/60)).padStart(2,"0"),ss=String(sec%60).padStart(2,"0");return `${hh}:${mm}:${ss}`}\nfunction roundStartText(){return new Intl.DateTimeFormat("es-GT",{hour:"2-digit",minute:"2-digit"}).format(new Date(round.createdAt))}\nfunction roundIdleStatus(){return `Ronda activa · Inicio ${roundStartText()} · ${roundElapsedText()}`}'
           if old not in s: raise SystemExit('status block mismatch')
           s=s.replace(old,new,1)
           css='\n/* V117 */\n.course-info-grid{grid-template-columns:.72fr .72fr .72fr;column-gap:6px;justify-content:start}\n.course-info-layout{grid-template-columns:minmax(0,1fr) 165px;gap:8px}\n.course-mic{width:153px;height:153px}.course-mic .mic-hit{inset:-50%}\n@media(max-width:800px){.official-course-info .course-info-layout{grid-template-columns:minmax(0,1fr) 95px;gap:2px}.course-info-grid{grid-template-columns:.72fr .72fr .72fr;gap:3px 2px;justify-content:start}.official-course-info .course-mic{width:85px;height:85px}.official-course-info .course-mic .mic-visual{font-size:50px;border-width:2px}.official-course-info .course-mic .mic-hit{inset:-50%}.summary td{font-size:12px!important}}\n'
           s=s.replace('</style>',css+'</style>',1)
-          marker='$("closeFinalCard")?.addEventListener'
+          marker='const ALLOWED_SPEECH_REASONS='
           if marker not in s: raise SystemExit('event marker missing')
           s=s.replace(marker,'setInterval(()=>{if(round.configured&&$("status"))$("status").textContent=roundIdleStatus()},1000);\n'+marker,1)
           p.write_text(s,encoding='utf-8')
@@ -40,7 +36,6 @@ jobs:
           set -euo pipefail
           grep -q 'V117-LAYOUT-TIMER-20260817' index-grupal.html
           grep -q '<h2>YARDAS</h2>' index-grupal.html
-          ! grep -q '<div class="head">MARCA</div>' index-grupal.html
           grep -q 'Ronda activa · Inicio' index-grupal.html
           python - <<'PY'
           from pathlib import Path
@@ -52,5 +47,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index-grupal.html
-          git commit -m "V117 compact yardage layout larger mic round timer"
+          git commit -m "V117 compact layout larger mic round timer"
           git push origin grupal-v117-finalize
