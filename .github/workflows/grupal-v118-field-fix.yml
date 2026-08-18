@@ -1,3 +1,4 @@
+# trigger-v118-2
 name: Grupal V118 field fix
 on:
   push:
@@ -25,8 +26,14 @@ jobs:
           if s.count(old)!=1:
               raise SystemExit(f'Expected renderCourseInfo old block once, found {s.count(old)}')
           s=s.replace(old,new,1)
+          if s.count('.course-mic{width:153px;height:153px}.course-mic .mic-hit{inset:-50%}')!=1:
+              raise SystemExit('desktop mic target mismatch')
           s=s.replace('.course-mic{width:153px;height:153px}.course-mic .mic-hit{inset:-50%}', '.course-mic{width:199px;height:199px}.course-mic .mic-hit{inset:-50%}',1)
+          if s.count('.official-course-info .course-mic{width:85px;height:85px}')!=1:
+              raise SystemExit('mobile mic target mismatch')
           s=s.replace('.official-course-info .course-mic{width:85px;height:85px}', '.official-course-info .course-mic{width:111px;height:111px}',1)
+          if s.count('.official-course-info .course-mic .mic-visual{font-size:50px;border-width:2px}')!=1:
+              raise SystemExit('mobile mic visual target mismatch')
           s=s.replace('.official-course-info .course-mic .mic-visual{font-size:50px;border-width:2px}', '.official-course-info .course-mic .mic-visual{font-size:65px;border-width:2px}',1)
           p.write_text(s,encoding='utf-8')
       - name: Audit V118
