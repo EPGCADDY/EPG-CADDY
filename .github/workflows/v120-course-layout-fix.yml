@@ -1,0 +1,39 @@
+name: V120 course info alignment fix
+on:
+  push:
+    branches: [grupal-dev]
+    paths: ['.github/workflows/v120-course-layout-fix.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+      - name: Apply exact course information alignment correction
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index-grupal.html')
+          s=p.read_text()
+          marker='</style>'
+          css='''\n/* V120: course information — precise 3-column alignment; no other UI changes */\n.course-info-data{align-items:flex-start!important}\n.course-info-data h2{width:423px!important;text-align:center!important}\n.course-info-grid{grid-template-columns:140px 140px 140px!important;column-gap:3px!important;justify-content:start!important}\n.course-info-grid .head{text-align:center!important;width:100%!important}\n.course-info-grid>div:nth-child(3n+1){text-align:left!important;white-space:nowrap!important;display:flex!important;align-items:center!important}\n.course-info-grid>div:nth-child(3n+2),.course-info-grid>div:nth-child(3n+3){text-align:center!important}\n.course-info-grid>div:nth-child(3n+1) .tee-dot{flex:0 0 auto!important}\n.course-info-grid>div:nth-child(4) span:last-child{padding:1px 2px!important;border-radius:2px!important}\n@media(max-width:800px){\n .official-course-info .course-info-data{align-items:flex-start!important}\n .official-course-info .course-info-data h2{width:218px!important;text-align:center!important}\n .official-course-info .course-info-grid{grid-template-columns:72px 72px 72px!important;gap:3px 1px!important;justify-content:start!important}\n .official-course-info .course-info-grid .head{text-align:center!important;width:100%!important}\n .official-course-info .course-info-grid>div:nth-child(3n+1){display:flex!important;align-items:center!important;text-align:left!important}\n .official-course-info .course-info-grid>div:nth-child(4) span:last-child{padding:1px 2px!important;border-radius:2px!important}\n}\n'''
+          if '/* V120: course information' not in s:
+              s=s.replace(marker,css+marker,1)
+          s=s.replace('V119-FIELD-GROSS-SYMBOLS-20260817','V120-COURSE-ALIGNMENT-20260818',1)
+          p.write_text(s)
+          PY
+      - name: Validate only intended structural area
+        run: |
+          grep -q 'V120-COURSE-ALIGNMENT-20260818' index-grupal.html
+          grep -q 'grid-template-columns:72px 72px 72px!important' index-grupal.html
+          grep -q 'course-info-grid>div:nth-child(3n+1)' index-grupal.html
+      - name: Commit correction
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'V120 align YARDAS course info block precisely'
+          git push origin grupal-dev
