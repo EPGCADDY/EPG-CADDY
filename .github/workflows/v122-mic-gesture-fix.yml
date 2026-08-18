@@ -1,0 +1,51 @@
+name: V122 microphone gesture activation repair
+on:
+  push:
+    branches: [grupal-dev]
+    paths: ['.github/workflows/v122-mic-gesture-fix.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+      - name: Apply minimal microphone fix
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index-grupal.html')
+          s=p.read_text()
+          s=s.replace('V121-HCP-MARKERS-YARDAS-20260818','V122-MIC-GESTURE-FIX-20260818',1)
+          old='''async function toggleVoice(context){\n  setMicConnecting(context,true);\n  if(voiceActivationPromise){\n    return voiceActivationPromise;\n  }\n  recoverRealtimeAfterResumeSync();'''
+          new='''async function toggleVoice(context){\n  if(voiceActivationPromise){\n    return voiceActivationPromise;\n  }\n  recoverRealtimeAfterResumeSync();'''
+          if old not in s: raise SystemExit('toggleVoice marker missing')
+          s=s.replace(old,new,1)
+          old2='''function fireMicActivation(context,e){\n  if(e&&e.cancelable)e.preventDefault();\n  if(e&&e.stopPropagation)e.stopPropagation();\n  const now=Date.now();\n  if(now-lastMicGestureAt<350)return false;\n  lastMicGestureAt=now;\n  setMicConnecting(context,true);\n  toggleVoice(context);\n  return true;\n}'''
+          new2='''function fireMicActivation(context,e){\n  if(e&&e.cancelable)e.preventDefault();\n  if(e&&e.stopPropagation)e.stopPropagation();\n  const now=Date.now();\n  if(now-lastMicGestureAt<350)return false;\n  lastMicGestureAt=now;\n  toggleVoice(context);\n  return true;\n}'''
+          if old2 not in s: raise SystemExit('fireMicActivation marker missing')
+          s=s.replace(old2,new2,1)
+          p.write_text(s)
+          PY
+      - name: Validate syntax and exact scope
+        run: |
+          grep -q 'V122-MIC-GESTURE-FIX-20260818' index-grupal.html
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text()
+          assert 'function fireMicActivation(context,e)' in s
+          assert 'lastMicGestureAt=now;\n  toggleVoice(context);' in s
+          assert 'lastMicGestureAt=now;\n  setMicConnecting(context,true);\n  toggleVoice(context);' not in s
+          marker='async function toggleVoice(context){'
+          chunk=s[s.index(marker):s.index(marker)+180]
+          assert 'setMicConnecting(context,true);\n  if(voiceActivationPromise)' not in chunk
+          PY
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'V122 repair microphone gesture activation'
+          git push origin grupal-dev
