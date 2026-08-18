@@ -1,0 +1,51 @@
+name: Grupal V117 PR executor
+on:
+  pull_request:
+    branches: [grupal-dev]
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-v117-finalize
+          fetch-depth: 0
+      - name: Patch index
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('V115-FIELD-MIC-LAYOUT-20260817','V117-LAYOUT-TIMER-20260817',1)
+          s=s.replace('<h2>MARCAS - YARDAS</h2>','<h2>YARDAS</h2>',1)
+          old='function roundIdleStatus(){return `Ronda activa · ${round.players.length} jugador${round.players.length===1?"":"es"}`}'
+          new='function roundElapsedText(){const start=new Date(round.createdAt).getTime(),sec=Math.max(0,Math.floor((Date.now()-start)/1000)),hh=String(Math.floor(sec/3600)).padStart(2,"0"),mm=String(Math.floor((sec%3600)/60)).padStart(2,"0"),ss=String(sec%60).padStart(2,"0");return `${hh}:${mm}:${ss}`}\nfunction roundStartText(){return new Intl.DateTimeFormat("es-GT",{hour:"2-digit",minute:"2-digit"}).format(new Date(round.createdAt))}\nfunction roundIdleStatus(){return `Ronda activa · Inicio ${roundStartText()} · ${roundElapsedText()}`}'
+          if old not in s: raise SystemExit('status block mismatch')
+          s=s.replace(old,new,1)
+          css='\n/* V117 */\n.course-info-grid{grid-template-columns:.72fr .72fr .72fr;column-gap:6px;justify-content:start}\n.course-info-layout{grid-template-columns:minmax(0,1fr) 165px;gap:8px}\n.course-mic{width:153px;height:153px}.course-mic .mic-hit{inset:-50%}\n@media(max-width:800px){.official-course-info .course-info-layout{grid-template-columns:minmax(0,1fr) 95px;gap:2px}.course-info-grid{grid-template-columns:.72fr .72fr .72fr;gap:3px 2px;justify-content:start}.official-course-info .course-mic{width:85px;height:85px}.official-course-info .course-mic .mic-visual{font-size:50px;border-width:2px}.official-course-info .course-mic .mic-hit{inset:-50%}.summary td{font-size:12px!important}}\n'
+          s=s.replace('</style>',css+'</style>',1)
+          marker='const ALLOWED_SPEECH_REASONS='
+          if marker not in s: raise SystemExit('event marker missing')
+          s=s.replace(marker,'setInterval(()=>{if(round.configured&&$("status"))$("status").textContent=roundIdleStatus()},1000);\n'+marker,1)
+          p.write_text(s,encoding='utf-8')
+      - name: Validate and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'V117-LAYOUT-TIMER-20260817' index-grupal.html
+          grep -q '<h2>YARDAS</h2>' index-grupal.html
+          grep -q 'Ronda activa · Inicio' index-grupal.html
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8')
+          Path('/tmp/g.js').write_text(s.split('<script>',1)[1].split('</script>',1)[0],encoding='utf-8')
+          PY
+          node --check /tmp/g.js
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index-grupal.html
+          git commit -m "V117 compact layout larger mic round timer"
+          git push origin grupal-v117-finalize
