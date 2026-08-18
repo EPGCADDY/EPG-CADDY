@@ -27,19 +27,21 @@ export default async function handler(req, res) {
 
     const context = safeHeader(req.headers["x-gscg-context"], 20) === "setup" ? "setup" : "round";
     const players = safeHeader(req.headers["x-gscg-players"], 300);
-    const silence = context === "setup" ? 1500 : 3000;
+    const silence = context === "setup" ? 1500 : 700;
 
     const transcriptionPrompt = context === "setup"
       ? "Golf Guatemala. Registro de jugadores. Transcribe literalmente nombres propios, handicap y color de marcas. Regla mandatoria: Jessie se escribe Jessie."
-      : `Golf Guatemala. Dictado de scores. Jugadores actuales: ${players || "los registrados en la tarjeta"}. Transcribe literalmente nombre, hoyo y score o Gross. Regla mandatoria: Jessie se escribe Jessie.`;
+      : `Golf Guatemala. Dictado de scores. Jugadores actuales: ${players || "los registrados en la tarjeta"}. Transcribe literalmente nombres, hoyo y score o Gross. Acepta número Gross directo o vocabulario golfístico: albatros, águila, eagle, birdie, par, even par, bogey, doble bogey, triple bogey, doble par, uno bajo par, uno sobre par, dos sobre par y tres sobre par. Si un primer nombre es único en el grupo puede dictarse solo ese nombre; si hay dos jugadores con el mismo primer nombre, puede dictarse únicamente el apellido. Regla mandatoria: Jessie se escribe Jessie.`;
 
     const session = {
       type: "realtime",
       model: "gpt-realtime",
       instructions: [
         "Aplicación grupal de score de golf.",
-        "No produzcas respuestas espontáneas.",
+        "REGLA ABSOLUTA: nunca produzcas respuestas espontáneas.",
         "No respondas automáticamente al audio del usuario.",
+        "No hagas preguntas, no ofrezcas ayuda, no pidas aclaraciones y no hables ante errores o instrucciones desconocidas.",
+        "No digas frases como por favor, indique, dime, información, problema, ayudar, ayuda, necesitas, entendido, cómo puedo ayudarte ni equivalentes.",
         "No uses herramientas.",
         "Solo procesa audio para transcripción; cualquier respuesta de voz será creada explícitamente por el cliente."
       ].join(" "),
@@ -62,7 +64,7 @@ export default async function handler(req, res) {
         },
         output: {
           voice: "cedar",
-          speed: 0.92
+          speed: 1.15
         }
       },
       tools: [],

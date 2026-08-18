@@ -1,0 +1,39 @@
+name: V123 iOS microphone single gesture handler
+on:
+  push:
+    branches: [grupal-dev]
+    paths: ['.github/workflows/v123-ios-mic-single-handler.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+      - name: Apply minimal iOS mic event fix
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text()
+          s=s.replace('V122-MIC-GESTURE-FIX-20260818','V123-IOS-MIC-SINGLE-HANDLER-20260818',1)
+          old='''function bindMicActivation(id,context){\n  const el=$(id);if(!el)return;\n  if(window.PointerEvent)el.addEventListener("pointerdown",e=>fireMicActivation(context,e),{passive:false,capture:true});\n  else el.addEventListener("touchstart",e=>fireMicActivation(context,e),{passive:false,capture:true});\n  el.addEventListener("click",e=>fireMicActivation(context,e),{passive:false,capture:true});\n}\nbindMicActivation("headerMic","round");bindMicActivation("setupMic","setup");\n$("headerMicWrap")?.addEventListener(window.PointerEvent?"pointerdown":"touchstart",e=>fireMicActivation("round",e),{passive:false,capture:true});\n$("setupMicWrap")?.addEventListener(window.PointerEvent?"pointerdown":"touchstart",e=>fireMicActivation("setup",e),{passive:false,capture:true});'''
+          new='''function bindMicActivation(id,context){\n  const el=$(id);if(!el)return;\n  el.addEventListener("click",e=>fireMicActivation(context,e),{passive:false});\n}\nbindMicActivation("headerMic","round");bindMicActivation("setupMic","setup");'''
+          if old not in s: raise SystemExit('mic binding block missing')
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+      - name: Validate exact scope
+        run: |
+          grep -q 'V123-IOS-MIC-SINGLE-HANDLER-20260818' index-grupal.html
+          grep -q 'el.addEventListener("click",e=>fireMicActivation(context,e),{passive:false});' index-grupal.html
+          ! grep -q 'setupMicWrap")?.addEventListener' index-grupal.html
+          ! grep -q 'headerMicWrap")?.addEventListener' index-grupal.html
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'V123 fix iOS microphone duplicate gesture handlers'
+          git push origin grupal-dev

@@ -1,0 +1,109 @@
+name: Grupal V110 mic tap recovery
+on:
+  push:
+    branches: [grupal-dev]
+    paths: ['.github/workflows/grupal-v110-mic-tap-recovery.yml']
+permissions:
+  contents: write
+jobs:
+  patch-audit-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+          fetch-depth: 0
+      - name: Patch V110 mic tap recovery
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html'); s=p.read_text(encoding='utf-8')
+          def rep(old,new,count=1):
+              global s
+              n=s.count(old)
+              if n!=count: raise SystemExit(f'Expected {count}, found {n}: {old[:160]!r}')
+              s=s.replace(old,new,count)
+          rep('<meta name="gscg-build" content="V109-MIC-REARM-20260817">','<meta name="gscg-build" content="V110-MIC-TAP-RECOVERY-20260817">')
+          old='''async function toggleVoice(context){
+  if(voiceActivationPromise){
+    if(voiceActivationContext===context)setMicConnecting(context,true);
+    return voiceActivationPromise;
+  }
+  recoverRealtimeAfterResumeSync();
+  if(context==="round"&&(phase==="processing"||roundFinalizeRequested||roundPendingItems.size)){
+    $("status").textContent="PROCESANDO…";
+    return false;
+  }
+  if(context==="setup"&&(setupFinalizeRequested||setupLocked)){
+    $("setupStatus").textContent="PROCESANDO…";
+    return false;
+  }
+'''
+          new='''async function toggleVoice(context){
+  // Feedback físico inmediato desde el toque. Si existe una activación en curso,
+  // el mismo toque conserva la indicación visual hasta que termine.
+  setMicConnecting(context,true);
+  if(voiceActivationPromise){
+    return voiceActivationPromise;
+  }
+  recoverRealtimeAfterResumeSync();
+  // Una captura anterior ya sin temporizador ni escucha no puede bloquear para
+  // siempre el siguiente toque. Limpia únicamente estado transitorio huérfano.
+  if(context==="round"&&!listening&&(phase==="processing"||roundFinalizeRequested||roundPendingItems.size)&&!roundFinalizeTimer){
+    resetRoundCapture();phase="idle";
+  }
+  if(context==="round"&&(phase==="processing"||roundFinalizeRequested||roundPendingItems.size)){
+    setMicConnecting(context,false);
+    $("status").textContent="PROCESANDO…";
+    return false;
+  }
+  if(context==="setup"&&(setupFinalizeRequested||setupLocked)){
+    setMicConnecting(context,false);
+    $("setupStatus").textContent="PROCESANDO…";
+    return false;
+  }
+'''
+          rep(old,new)
+          old='''function bindMicActivation(id,context){
+  const el=$(id);let pointerAt=0;
+  const fire=e=>{e.preventDefault();const now=Date.now();if(e.type==="click"&&now-pointerAt<600)return;if(e.type==="pointerup")pointerAt=now;toggleVoice(context)};
+  if(window.PointerEvent)el.addEventListener("pointerup",fire,{passive:false});
+  el.addEventListener("click",fire,{passive:false});
+}
+'''
+          new='''function bindMicActivation(id,context){
+  const el=$(id);let pointerAt=0,touchAt=0;
+  const fire=e=>{
+    e.preventDefault();
+    const now=Date.now();
+    if(e.type==="click"&&(now-pointerAt<700||now-touchAt<700))return;
+    if(e.type==="pointerup")pointerAt=now;
+    if(e.type==="touchend")touchAt=now;
+    setMicConnecting(context,true);
+    toggleVoice(context);
+  };
+  if(window.PointerEvent)el.addEventListener("pointerup",fire,{passive:false});
+  el.addEventListener("touchend",fire,{passive:false});
+  el.addEventListener("click",fire,{passive:false});
+}
+'''
+          rep(old,new)
+          p.write_text(s,encoding='utf-8')
+      - name: Audit V110
+        shell: bash
+        run: |
+          set -e
+          grep -q 'V110-MIC-TAP-RECOVERY-20260817' index-grupal.html
+          grep -q 'touchend' index-grupal.html
+          grep -q 'estado transitorio huérfano' index-grupal.html
+          grep -q 'setMicConnecting(context,true);' index-grupal.html
+          git diff --check
+          test "$(git diff --name-only | tr '\n' ' ')" = "index-grupal.html "
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name 'EPGCADDY'
+          git config user.email 'jaimekirste@gmail.com'
+          git add index-grupal.html
+          git commit -m 'V110 harden iPhone mic tap activation recovery'
+          git push origin grupal-dev

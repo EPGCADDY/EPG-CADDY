@@ -1,0 +1,83 @@
+name: Grupal V109 mic rearm
+
+on:
+  push:
+    branches: [grupal-dev]
+    paths:
+      - '.github/workflows/grupal-v109-mic-rearm.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-audit-commit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+          fetch-depth: 0
+      - name: Patch mic rearm reliability
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html'); s=p.read_text(encoding='utf-8')
+          def rep(old,new,count=1):
+              global s
+              n=s.count(old)
+              if n!=count: raise SystemExit(f'Expected {count}, found {n}: {old[:140]!r}')
+              s=s.replace(old,new,count)
+          rep('<meta name="gscg-build" content="V108-FAST-VOICE-20260817">','<meta name="gscg-build" content="V109-MIC-REARM-20260817">')
+
+          # Immediate visual acknowledgement on tap, without claiming audio is live yet.
+          old='''function setMicConnecting(context,on){\n  const wrap=context==="setup"?$("setupMicWrap"):$("headerMicWrap");\n  if(wrap)wrap.classList.toggle("connecting",!!on);\n  if(on){\n    if(context==="setup")$("setupStatus").textContent="CONECTANDO…";\n    else $("status").textContent="CONECTANDO…";\n  }\n}\n'''
+          new='''function setMicConnecting(context,on){\n  const wrap=context==="setup"?$("setupMicWrap"):$("headerMicWrap");\n  if(wrap){wrap.classList.toggle("connecting",!!on);wrap.classList.toggle("active",!!on||listening)}\n  if(on){\n    if(context==="setup")$("setupStatus").textContent="CONECTANDO…";\n    else $("status").textContent="CONECTANDO…";\n  }\n}\n'''
+          rep(old,new)
+
+          # A reusable transport is only trusted when WebRTC is truly connected.
+          old='''function realtimeReady(){\n  return !!(dc&&dc.readyState==="open"&&pc&&!["failed","closed","disconnected"].includes(pc.connectionState)&&micTrack&&micTrack.readyState==="live");\n}\n'''
+          new='''function realtimeReady(){\n  return !!(dc&&dc.readyState==="open"&&pc&&pc.connectionState==="connected"&&micTrack&&micTrack.readyState==="live");\n}\nfunction realtimeReusableFor(context){\n  if(!realtimeReady())return false;\n  if(voiceContext!==context)return false;\n  if(pendingSessionUpdate||activeResponseId||speechPlaybackResponseId||stopMonitorActive)return false;\n  if(Date.now()-lastRealtimeActivityAt>5*60*1000)return false;\n  return true;\n}\n'''
+          rep(old,new)
+
+          # Re-arm from a clean transient state on every new listening turn. If the warm
+          # transport is not unquestionably healthy, reconnect instead of silently reusing it.
+          old='''      const reuse=realtimeReady();\n      if(!reuse)await ensureSession();\n      if(context!==voiceContext)throw new Error("Contexto de micrófono cambió");\n      if(context==="round")resetRoundCapture();\n      if(context==="setup"&&activeResponseId){try{sendEvent({type:"response.cancel",response_id:activeResponseId})}catch{}activeResponseId=null}\n      if(!reuse)await configureSessionFor(context);\n      if(!realtimeReady())throw new Error("Realtime no quedó listo");\n      setMicConnecting(context,false);\n      setVoice(true);\n'''
+          new='''      const reuse=realtimeReusableFor(context);\n      if(!reuse){teardownRealtime();voiceContext=context;setMicConnecting(context,true);await ensureSession()}\n      if(context!==voiceContext)throw new Error("Contexto de micrófono cambió");\n      if(context==="round")resetRoundCapture();\n      if(context==="setup"&&activeResponseId){try{sendEvent({type:"response.cancel",response_id:activeResponseId})}catch{}activeResponseId=null}\n      if(!reuse)await configureSessionFor(context);\n      if(!realtimeReady())throw new Error("Realtime no quedó listo");\n      if(micTrack)micTrack.enabled=true;\n      setMicConnecting(context,false);\n      setVoice(true);\n'''
+          rep(old,new)
+
+          # If iOS reports disconnected, invalidate the whole transport instead of leaving
+          # a half-alive object that a later tap could mistakenly reuse.
+          old='''      pc.onconnectionstatechange=()=>{\n        if(pc!==installedPc)return;\n        if(["failed","closed","disconnected"].includes(pc.connectionState)){\n          if(listening)setVoice(false);\n          sessionConnectPromise=null;\n        }\n      };\n'''
+          new='''      pc.onconnectionstatechange=()=>{\n        if(pc!==installedPc)return;\n        if(["failed","closed","disconnected"].includes(pc.connectionState)){\n          if(listening)setVoice(false);\n          sessionConnectPromise=null;\n          if(pc===installedPc){try{installedDc?.close()}catch{};dc=null;pc=null;micTrack=null;stream=null;audioEl=null}\n        }\n      };\n'''
+          rep(old,new)
+
+          p.write_text(s,encoding='utf-8')
+      - name: Audit V109
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8')
+          for needle in ['V109-MIC-REARM-20260817','function realtimeReusableFor(context)','pc.connectionState==="connected"','const reuse=realtimeReusableFor(context)','if(micTrack)micTrack.enabled=true;']:
+              assert needle in s, needle
+          # Protected validated behavior remains.
+          for needle in ['setTimeout(()=>{roundFinalizeTimer=null;if(listening)requestRoundFinalize(0)},4000)','markUnreportedPlayersOnHole','score_confirmation','Primera vuelta.','Segunda vuelta.','Ronda completa.','speed:1.15']:
+              assert needle in s, needle
+          js=s.split('<script>',1)[1].split('</script>',1)[0]
+          Path('/tmp/g.js').write_text(js,encoding='utf-8')
+          PY
+          node --check /tmp/g.js
+          git diff --check
+          test "$(git diff --name-only)" = "index-grupal.html"
+          git diff --quiet HEAD -- index.html api/session.js api/score.js api/session-grupal.js
+      - name: Commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index-grupal.html
+          git commit -m "V109 harden mic rearm after repeated turns"
+          git push origin grupal-dev

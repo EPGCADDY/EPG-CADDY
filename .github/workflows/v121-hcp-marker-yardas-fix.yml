@@ -1,0 +1,50 @@
+name: V121 YARDAS and handicap marker refinement
+on:
+  push:
+    branches: [grupal-dev]
+    paths: ['.github/workflows/v121-hcp-marker-yardas-fix.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+      - name: Apply exact requested refinements
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index-grupal.html')
+          s=p.read_text()
+          s=s.replace('V120-COURSE-ALIGNMENT-20260818','V121-HCP-MARKERS-YARDAS-20260818',1)
+          old='function strokeStyle(p,st){if(!st)return"";const t=TEES[p.tee];return`background:${t.fill};color:${t.text};`}'
+          new='function strokeStyle(p,st){return""}\\nfunction handicapMarkerHtml(p,st,si){if(!st)return String(si);const t=TEES[p.tee];return`<span class="hcp-tee-marker" style="--tee:${t.color};--teeText:${p.tee==="Amarillo"||p.tee==="Blanco"||p.tee==="Negro"?"#000":"#fff"}">${si}</span>`}'
+          if old not in s: raise SystemExit('strokeStyle marker missing')
+          s=s.replace(old,new,1)
+          old2='return`<td class="hcp-cell ${st===2?"stroke2":st>=3?"stroke3":""}" style="${strokeStyle(p,st)}">${si[i]}</td>`'
+          new2='return`<td class="hcp-cell ${st===2?"stroke2":st>=3?"stroke3":""}">${handicapMarkerHtml(p,st,si[i])}</td>`'
+          if old2 not in s: raise SystemExit('hcp cell marker missing')
+          s=s.replace(old2,new2,1)
+          old3='<span class="tee-dot" style="background:${t.color};border:${k===\'Negro\'?\'1px solid #777\':k===\'Blanco\'?\'1px solid #ddd\':\'0\'}"></span><span style="color:${k===\'Negro\'?\'#000\':t.color};font-weight:800;${k===\'Negro\'?\'background:#fff;padding:1px 2px;border-radius:2px;display:inline-block;\':\'\'}">${t.total.toLocaleString(\'en-US\')}</span>'
+          new3='${k===\'Negro\'?\'\':`<span class="tee-dot" style="background:${t.color};border:${k===\'Blanco\'?\'1px solid #ddd\':\'0\'}"></span>`}<span style="color:${k===\'Negro\'?\'#000\':t.color};font-weight:800;${k===\'Negro\'?\'background:#fff;padding:1px 2px;border-radius:2px;display:inline-block;\':\'\'}">${t.total.toLocaleString(\'en-US\')}</span>'
+          if old3 not in s: raise SystemExit('course info tee marker missing')
+          s=s.replace(old3,new3,1)
+          css='''\n/* V121: less invasive handicap stroke markers + black-tee yardage alignment */\n.hcp-cell{background:#fff!important;color:#000!important}\n.hcp-tee-marker{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--tee);color:var(--teeText);font-weight:900;line-height:1}\n@media(max-width:800px){.hcp-tee-marker{width:19px;height:19px;font-size:11px}.course-info-grid>div:nth-child(4){padding-left:17px!important}}\n'''
+          if '/* V121:' not in s:s=s.replace('</style>',css+'</style>',1)
+          p.write_text(s)
+          PY
+      - name: Validate exact changes
+        run: |
+          grep -q 'V121-HCP-MARKERS-YARDAS-20260818' index-grupal.html
+          grep -q 'handicapMarkerHtml' index-grupal.html
+          grep -q 'hcp-tee-marker' index-grupal.html
+          grep -q 'hcp-cell{background:#fff!important;color:#000!important}' index-grupal.html
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'V121 refine YARDAS and handicap stroke markers'
+          git push origin grupal-dev

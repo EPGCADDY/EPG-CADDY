@@ -1,0 +1,55 @@
+name: Grupal V111C direct mic capture
+on:
+  push:
+    branches: [grupal-dev]
+    paths:
+      - .github/workflows/grupal-v111c-direct-mic-capture.yml
+permissions:
+  contents: write
+jobs:
+  patch-audit-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+          fetch-depth: 0
+      - name: Patch
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html'); s=p.read_text(encoding='utf-8')
+          old_meta='<meta name="gscg-build" content="V110-MIC-TAP-RECOVERY-20260817">'; new_meta='<meta name="gscg-build" content="V111-DIRECT-MIC-CAPTURE-20260817">'
+          assert s.count(old_meta)==1; s=s.replace(old_meta,new_meta,1)
+          old="function bindMicActivation(id,context){\n  const el=$(id);let pointerAt=0,touchAt=0;\n  const fire=e=>{\n    e.preventDefault();\n    const now=Date.now();\n    if(e.type===\"click\"&&(now-pointerAt<700||now-touchAt<700))return;\n    if(e.type===\"pointerup\")pointerAt=now;\n    if(e.type===\"touchend\")touchAt=now;\n    setMicConnecting(context,true);\n    toggleVoice(context);\n  };\n  if(window.PointerEvent)el.addEventListener(\"pointerup\",fire,{passive:false});\n  el.addEventListener(\"touchend\",fire,{passive:false});\n  el.addEventListener(\"click\",fire,{passive:false});\n}\nbindMicActivation(\"headerMic\",\"round\");bindMicActivation(\"setupMic\",\"setup\");\n"
+          if old not in s:
+              old=old.replace('===','==')
+          assert s.count(old)==1
+          new="let lastMicGestureAt=0;\nfunction fireMicActivation(context,e){\n  if(e&&e.cancelable)e.preventDefault();\n  if(e&&e.stopPropagation)e.stopPropagation();\n  const now=Date.now();\n  if(now-lastMicGestureAt<350)return false;\n  lastMicGestureAt=now;\n  setMicConnecting(context,true);\n  toggleVoice(context);\n  return true;\n}\nfunction bindMicActivation(id,context){\n  const el=$(id);if(!el)return;\n  if(window.PointerEvent)el.addEventListener(\"pointerdown\",e=>fireMicActivation(context,e),{passive:false,capture:true});\n  else el.addEventListener(\"touchstart\",e=>fireMicActivation(context,e),{passive:false,capture:true});\n  el.addEventListener(\"click\",e=>fireMicActivation(context,e),{passive:false,capture:true});\n}\nbindMicActivation(\"headerMic\",\"round\");bindMicActivation(\"setupMic\",\"setup\");\n$(\"headerMicWrap\")?.addEventListener(window.PointerEvent?\"pointerdown\":\"touchstart\",e=>fireMicActivation(\"round\",e),{passive:false,capture:true});\n$(\"setupMicWrap\")?.addEventListener(window.PointerEvent?\"pointerdown\":\"touchstart\",e=>fireMicActivation(\"setup\",e),{passive:false,capture:true});\n"
+          s=s.replace(old,new,1); p.write_text(s,encoding='utf-8')
+      - name: Audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'V111-DIRECT-MIC-CAPTURE-20260817' index-grupal.html
+          grep -q 'function fireMicActivation(context,e)' index-grupal.html
+          grep -q 'pointerdown' index-grupal.html
+          grep -q 'setTimeout(()=>{roundFinalizeTimer=null;if(listening)requestRoundFinalize(0)},4000)' index-grupal.html
+          grep -q 'markUnreportedPlayersOnHole' index-grupal.html
+          grep -q 'score_confirmation' index-grupal.html
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8'); js=s.split('<script>',1)[1].split('</script>',1)[0]; Path('/tmp/g.js').write_text(js,encoding='utf-8')
+          PY
+          node --check /tmp/g.js
+          git diff --check
+          test "$(git diff --name-only)" = "index-grupal.html"
+          git diff --quiet HEAD -- index.html api/session.js api/score.js api/session-grupal.js
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index-grupal.html
+          git commit -m "V111 capture iPhone mic gesture on pointerdown"
+          git push origin grupal-dev

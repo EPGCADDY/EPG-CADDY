@@ -1,0 +1,21 @@
+name: Inspect V113 layout targets
+on:
+  push:
+    branches: [grupal-dev]
+    paths: ['.github/workflows/inspect-v113-layout.yml']
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+      - name: Inspect layout targets
+        shell: python
+        run: |
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8')
+          for key in ['@media(max-width:800px)', '<main class="app">']:
+              i=s.find(key)
+              print('\n###',key,'at',i)
+              print(s[i:i+9000])

@@ -1,0 +1,33 @@
+name: Grupal round session probe
+on:
+  push:
+    branches: [grupal-dev]
+    paths: ['.github/workflows/grupal-round-session-probe.yml']
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static round/setup session differential
+        shell: python
+        run: |
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8')
+          assert 'function setupSessionConfig()' in s
+          assert 'function roundSessionConfig()' in s
+          assert 'await configureSessionFor(context);' in s
+          assert 'if(!realtimeReady())throw new Error("Realtime no quedó listo")' in s
+          assert 'fetch("/api/session-grupal"' in s
+          # Expose lengths of the two transcription-prompt source regions for diagnosis only.
+          a=s.index('function setupSessionConfig()')
+          b=s.index('function roundSessionConfig()')
+          c=s.index('async function configureSessionFor(context)')
+          print('setup config source chars', b-a)
+          print('round config source chars', c-b)
+          # No writes; verify JS syntax.
+          js=s.split('<script>',1)[1].split('</script>',1)[0]
+          Path('/tmp/g.js').write_text(js,encoding='utf-8')
+      - name: JS syntax
+        run: node --check /tmp/g.js

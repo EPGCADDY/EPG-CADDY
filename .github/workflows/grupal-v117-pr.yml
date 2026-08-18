@@ -1,0 +1,52 @@
+name: Grupal V118 course info correction
+on:
+  push:
+    branches: [grupal-dev]
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+          fetch-depth: 0
+      - name: Correct course info only
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html')
+          s=p.read_text(encoding='utf-8')
+          if 'V118-COURSE-INFO-FIX-20260817' in s:
+              raise SystemExit(0)
+          s=s.replace('V117-LAYOUT-TIMER-20260817','V118-COURSE-INFO-FIX-20260817',1)
+          css='''
+/* V118 COURSE INFO ONLY — original design preserved; first tee-name column hidden */
+.official-course-info .course-info-layout{grid-template-columns:minmax(0,1fr) 120px;gap:16px}
+.official-course-info .course-info-grid{grid-template-columns:.8fr .8fr .8fr;gap:4px 6px;justify-content:start}
+.official-course-info .course-info-grid>.head:nth-child(1),
+.official-course-info .course-info-grid>.tee-name{display:none!important}
+.official-course-info .course-mic{width:109px;height:109px}
+@media(max-width:800px){
+ .official-course-info .course-info-layout{grid-template-columns:minmax(0,1fr) 68px;gap:5px}
+ .official-course-info .course-info-grid{grid-template-columns:.8fr .8fr .8fr;gap:3px 2px;justify-content:start}
+ .official-course-info .course-mic{width:62px;height:62px}
+ .official-course-info .course-mic .mic-visual{font-size:36px;border-width:2px}
+}
+'''
+          s=s.replace('</style>',css+'</style>',1)
+          p.write_text(s,encoding='utf-8')
+      - name: Validate and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'V118-COURSE-INFO-FIX-20260817' index-grupal.html
+          grep -q 'tee-name{display:none' index-grupal.html
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index-grupal.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "V118 restore course info design remove tee-name column only"
+          git push origin grupal-dev

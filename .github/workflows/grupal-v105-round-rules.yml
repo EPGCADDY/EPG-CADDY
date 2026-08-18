@@ -1,0 +1,122 @@
+name: Grupal V105 round rules
+
+on:
+  push:
+    branches: [grupal-dev]
+    paths:
+      - '.github/workflows/grupal-v105-round-rules.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-audit-commit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+          fetch-depth: 0
+
+      - name: Patch V105 authorized behavior
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html')
+          s=p.read_text(encoding='utf-8')
+          def rep(old,new,count=1):
+              global s
+              n=s.count(old)
+              if n!=count:
+                  raise SystemExit(f'Expected {count}, found {n}: {old[:160]!r}')
+              s=s.replace(old,new,count)
+
+          rep('<meta name="gscg-build" content="V104-SCORE-CONFIRMATION-ALIASES-20260817">','<meta name="gscg-build" content="V105-ROUND-X-CONFIRM-MULTIEDIT-20260817">')
+
+          # Four seconds of silence closes score dictation.
+          rep('const expectedSilence=context==="setup"?1500:3000;','const expectedSilence=context==="setup"?1500:4000;')
+          rep('silence_duration_ms:3000,create_response:false,interrupt_response:false','silence_duration_ms:4000,create_response:false,interrupt_response:false')
+          rep('// Server VAD cierra normalmente a 3000 ms. Si el usuario apaga el micrófono','// Server VAD cierra normalmente a 4000 ms. Si el usuario apaga el micrófono')
+
+          # One confirmation for any number of manual name/handicap edits.
+          old_open='''  $("startRoundButton").textContent=profileCorrectionMode?"ACTUALIZAR DATOS":rosterEditMode?"ACTUALIZAR RONDA":"INICIAR RONDA";\n  $("cancelSetup").classList.toggle("hidden",!round.configured);'''
+          new_open='''  $("startRoundButton").textContent=profileCorrectionMode?"ACTUALIZAR DATOS":rosterEditMode?"ACTUALIZAR RONDA":"INICIAR RONDA";\n  $("setupOk").textContent=profileCorrectionMode?"CONFIRMAR CAMBIOS":"OK";\n  $("cancelSetup").classList.toggle("hidden",!round.configured);'''
+          rep(old_open,new_open)
+
+          rep('$("setupOk").addEventListener("click",requestSetupFinalize);','$("setupOk").addEventListener("click",()=>{if(profileCorrectionMode){startConfirmedRound();return}requestSetupFinalize()});')
+
+          # Do not rerender the whole edit list after each field change in profile correction mode.
+          rep('''draftPlayers[idx].name=value;nameInput.value=value;persistDraftState();renderDraft();$("setupStatus").textContent="DATOS ACTUALIZADOS · REVISA TODO Y PRESIONA OK";return}''','''draftPlayers[idx].name=value;nameInput.value=value;persistDraftState();if(!profileCorrectionMode)renderDraft();$("setupStatus").textContent=profileCorrectionMode?"CAMBIOS PENDIENTES · CORRIGE TODOS LOS JUGADORES NECESARIOS Y CONFIRMA UNA SOLA VEZ":"DATOS ACTUALIZADOS · REVISA TODO Y PRESIONA OK";return}''')
+          rep('''draftPlayers[idx].handicap=value;persistDraftState();renderDraft();$("setupStatus").textContent="DATOS ACTUALIZADOS · REVISA TODO Y PRESIONA OK"}});''','''draftPlayers[idx].handicap=value;persistDraftState();if(!profileCorrectionMode)renderDraft();$("setupStatus").textContent=profileCorrectionMode?"CAMBIOS PENDIENTES · CORRIGE TODOS LOS JUGADORES NECESARIOS Y CONFIRMA UNA SOLA VEZ":"DATOS ACTUALIZADOS · REVISA TODO Y PRESIONA OK"}});''')
+
+          # X rule: omitted active players are marked at the end of a hole dictation.
+          anchor='''function isOmittedScore(entry){return !!entry&&entry.status==="x"}\nfunction omittedScoreObject(hole){return{hole,status:"x",gross:null,net:null,diff:null,strokes:null,par:PAR[hole-1],updatedAt:new Date().toISOString()}}\n'''
+          replacement='''function isOmittedScore(entry){return !!entry&&entry.status==="x"}\nfunction omittedScoreObject(hole){return{hole,status:"x",gross:null,net:null,diff:null,strokes:null,par:PAR[hole-1],updatedAt:new Date().toISOString()}}\nfunction segmentClosedForHole(hole){\n  ensureAnnouncedState();\n  return Number(hole)<=9?!!round.announced.front:!!round.announced.back||!!round.announced.complete;\n}\nfunction markUnreportedPlayersOnHole(hole){\n  const h=Number(hole);if(!Number.isInteger(h)||h<1||h>18)return false;\n  let changed=false;\n  for(const p of round.players){\n    const activeFrom=Math.max(1,Math.min(18,Number(p.activeFrom)||1));\n    if(h<activeFrom||p.holes[h])continue;\n    p.holes[h]=omittedScoreObject(h);changed=true;\n  }\n  return changed;\n}\n'''
+          rep(anchor,replacement)
+
+          old_save='''function saveEntry(x){\n  const v=validateEntry(x);if(!v.ok)return v;\n  const previous=v.p.holes[v.hole];\n  v.p.holes[v.hole]=scoreObject(v.p,v.hole,v.gross,x);'''
+          new_save='''function saveEntry(x){\n  const v=validateEntry(x);if(!v.ok)return v;\n  const previous=v.p.holes[v.hole];\n  if(isOmittedScore(previous)&&segmentClosedForHole(v.hole))return{ok:false,speech:"Error"};\n  v.p.holes[v.hole]=scoreObject(v.p,v.hole,v.gross,x);'''
+          rep(old_save,new_save)
+
+          old_record='''function recordScore(a){\n  if(!round.configured)return{ok:false,speech:"Primero configura la ronda grupal."};\n  const checked=validateEntry(a);if(!checked.ok)return checked;\n  const retroactive=isRetroactiveScore(checked.p,checked.hole);\n  markMissingScoresBefore(checked.hole);\n  const r=saveEntry(a);if(!r.ok)return r;\n  const closure=closureSpeechIfDue();persist();render();\n  return{ok:true,speech:"",closure,retroactive:retroactive||r.replacedOmission};\n}\n'''
+          new_record='''function recordScore(a){\n  if(!round.configured)return{ok:false,speech:"Primero configura la ronda grupal."};\n  const checked=validateEntry(a);if(!checked.ok)return checked;\n  const retroactive=isRetroactiveScore(checked.p,checked.hole);\n  markMissingScoresBefore(checked.hole);\n  const r=saveEntry(a);if(!r.ok)return r;\n  markUnreportedPlayersOnHole(checked.hole);\n  const closure=closureSpeechIfDue();persist();render();\n  return{ok:true,speech:"",closure,retroactive:retroactive||r.replacedOmission};\n}\n'''
+          rep(old_record,new_record)
+
+          old_mult='''  for(const item of unique){\n    if(isRetroactiveScore(item.checked.p,item.checked.hole))retroactive=true;\n    const r=saveEntry(item.raw);\n    if(r.replacedOmission)retroactive=true;\n  }\n  const closure=closureSpeechIfDue();persist();render();'''
+          new_mult='''  for(const item of unique){\n    if(isRetroactiveScore(item.checked.p,item.checked.hole))retroactive=true;\n    const r=saveEntry(item.raw);if(!r.ok)return r;\n    if(r.replacedOmission)retroactive=true;\n  }\n  for(const h of holes)markUnreportedPlayersOnHole(h);\n  const closure=closureSpeechIfDue();persist();render();'''
+          rep(old_mult,new_mult)
+
+          # Delay authorized confirmation until score processing/reset has fully completed.
+          old_apply='''function applyLiteralScores(parsed){\n  const result=parsed.entries.length===1?recordScore(parsed.entries[0]):recordScores({entries:parsed.entries});\n  if(result.ok){\n    const confirmation=scoreConfirmationSpeech(parsed.entries);\n    const spoken=[confirmation,result.closure].filter(Boolean).join(" ");\n    if(spoken)speakAuthorized("score_confirmation",spoken);\n  }\n  return result;\n}'''
+          new_apply='''function applyLiteralScores(parsed){\n  const result=parsed.entries.length===1?recordScore(parsed.entries[0]):recordScores({entries:parsed.entries});\n  if(result.ok){\n    const confirmation=scoreConfirmationSpeech(parsed.entries);\n    result.confirmationSpeech=[confirmation,result.closure].filter(Boolean).join(" ");\n  }\n  return result;\n}'''
+          rep(old_apply,new_apply)
+
+          old_finalize='''    resetRoundCapture();\n    if(result.ok){$("status").textContent=roundIdleStatus();phase="idle"}\n    else speakGlobalError("round");\n    return;'''
+          new_finalize='''    resetRoundCapture();\n    if(result.ok){\n      $("status").textContent=roundIdleStatus();phase="idle";\n      if(result.confirmationSpeech)setTimeout(()=>{if(dc?.readyState==="open")speakAuthorized("score_confirmation",result.confirmationSpeech)},0);\n    }else speakGlobalError("round");\n    return;'''
+          rep(old_finalize,new_finalize)
+
+          p.write_text(s,encoding='utf-8')
+
+      - name: Audit V105
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8')
+          required=[
+            'V105-ROUND-X-CONFIRM-MULTIEDIT-20260817',
+            'silence_duration_ms:4000,create_response:false,interrupt_response:false',
+            'function markUnreportedPlayersOnHole(',
+            'function segmentClosedForHole(',
+            'CONFIRMAR CAMBIOS',
+            'confirmationSpeech',
+            'Primera vuelta.',
+            'Segunda vuelta.'
+          ]
+          for x in required: assert x in s,x
+          assert s.count('function recordScore(')==1
+          assert s.count('function recordScores(')==1
+          assert s.count('function saveEntry(')==1
+          assert s.count('function applyLiteralScores(')==1
+          assert s.count('function startConfirmedRound(')==1
+          assert 'speed:1.15' in s
+          assert 'score_confirmation' in s
+          js=s.split('<script>',1)[1].split('</script>',1)[0]
+          Path('/tmp/g.js').write_text(js,encoding='utf-8')
+          PY
+          node --check /tmp/g.js
+          git diff --check
+          test "$(git diff --name-only)" = "index-grupal.html"
+          git diff --quiet HEAD -- index.html api/session.js api/score.js api/session-grupal.js
+
+      - name: Commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index-grupal.html
+          git commit -m "V105 enforce round X rules and single correction confirmation"
+          git push origin grupal-dev
