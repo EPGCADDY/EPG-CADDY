@@ -1,5 +1,5 @@
-# trigger-v118-2
-name: Grupal V118 field fix
+# trigger-v119
+name: Grupal V119 field alignment and gross symbols
 on:
   push:
     branches: [grupal-dev]
@@ -15,44 +15,84 @@ jobs:
         with:
           ref: grupal-dev
           fetch-depth: 0
-      - name: Patch V118
+      - name: Patch V119
         shell: python
         run: |
           from pathlib import Path
           p=Path('index-grupal.html')
           s=p.read_text(encoding='utf-8')
-          old='function renderCourseInfo(){const rows=["Negro","Azul","Blanco","Rojo","Amarillo"].map(k=>[k,TEES[k]]);$("courseInfo").innerHTML=`<div class="head">MARCA</div><div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>${rows.map(([k,t])=>`<div><span class="tee-dot" style="background:${t.color};border:${k===\'Negro\'?\'1px solid #777\':\'0\'}"></span>${t.label}</div><div style="text-align:center"><span style="color:${k===\'Negro\'?\'#000\':t.color};font-weight:800;${k===\'Negro\'?\'background:#fff;padding:1px 5px;border-radius:2px;display:inline-block;\':\'\'}">${t.total.toLocaleString(\'en-US\')}</span></div><div style="text-align:center">${t.rating.toFixed(1)}</div><div style="text-align:center">${t.slope}</div>`).join("")}`}'
-          new='function renderCourseInfo(){const rows=["Negro","Azul","Blanco","Rojo","Amarillo"].map(k=>[k,TEES[k]]);$("courseInfo").innerHTML=`<div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>${rows.map(([k,t])=>`<div style="text-align:left"><span class="tee-dot" style="background:${t.color};border:${k===\'Negro\'?\'1px solid #777\':\'0\'}"></span><span style="color:${k===\'Negro\'?\'#000\':t.color};font-weight:800;${k===\'Negro\'?\'background:#fff;padding:1px 5px;border-radius:2px;display:inline-block;\':\'\'}">${t.total.toLocaleString(\'en-US\')}</span></div><div style="text-align:center">${t.rating.toFixed(1)}</div><div style="text-align:center">${t.slope}</div>`).join("")}`}'
-          if s.count(old)!=1:
-              raise SystemExit(f'Expected renderCourseInfo old block once, found {s.count(old)}')
-          s=s.replace(old,new,1)
-          if s.count('.course-mic{width:153px;height:153px}.course-mic .mic-hit{inset:-50%}')!=1:
-              raise SystemExit('desktop mic target mismatch')
-          s=s.replace('.course-mic{width:153px;height:153px}.course-mic .mic-hit{inset:-50%}', '.course-mic{width:199px;height:199px}.course-mic .mic-hit{inset:-50%}',1)
-          if s.count('.official-course-info .course-mic{width:85px;height:85px}')!=1:
-              raise SystemExit('mobile mic target mismatch')
-          s=s.replace('.official-course-info .course-mic{width:85px;height:85px}', '.official-course-info .course-mic{width:111px;height:111px}',1)
-          if s.count('.official-course-info .course-mic .mic-visual{font-size:50px;border-width:2px}')!=1:
-              raise SystemExit('mobile mic visual target mismatch')
-          s=s.replace('.official-course-info .course-mic .mic-visual{font-size:50px;border-width:2px}', '.official-course-info .course-mic .mic-visual{font-size:65px;border-width:2px}',1)
+
+          def rep(old,new,count=1):
+              global s
+              n=s.count(old)
+              if n!=count:
+                  raise SystemExit(f'Expected {count}, found {n}: {old[:160]!r}')
+              s=s.replace(old,new,count)
+
+          # Build marker.
+          rep('<meta name="gscg-build" content="V117-LAYOUT-TIMER-20260817">',
+              '<meta name="gscg-build" content="V119-FIELD-GROSS-SYMBOLS-20260817">')
+
+          # Compact and symmetrically center the three course-data columns.
+          rep('.course-info-grid{grid-template-columns:.72fr .72fr .72fr;column-gap:6px;justify-content:start}',
+              '.course-info-grid{grid-template-columns:140px 140px 140px;column-gap:3px;justify-content:start}.course-info-grid .head{text-align:center;width:100%}')
+          rep('.course-info-layout{grid-template-columns:minmax(0,1fr) 165px;gap:8px}',
+              '.course-info-layout{grid-template-columns:minmax(0,1fr) 165px;gap:8px}.course-info-data{display:flex;flex-direction:column;align-items:flex-start}.course-info-data h2{width:423px;text-align:center}')
+          rep('.course-mic{width:199px;height:199px}.course-mic .mic-hit{inset:-50%}',
+              '.course-mic{width:199px;height:199px;transform:translateX(-25%)}.course-mic .mic-hit{inset:-50%}')
+          rep('@media(max-width:800px){.official-course-info .course-info-layout{grid-template-columns:minmax(0,1fr) 95px;gap:2px}.course-info-grid{grid-template-columns:.72fr .72fr .72fr;gap:3px 2px;justify-content:start}.official-course-info .course-mic{width:111px;height:111px}.official-course-info .course-mic .mic-visual{font-size:65px;border-width:2px}.official-course-info .course-mic .mic-hit{inset:-50%}.summary td{font-size:12px!important}}',
+              '@media(max-width:800px){.official-course-info .course-info-layout{grid-template-columns:minmax(0,1fr) 95px;gap:2px}.course-info-grid{grid-template-columns:72px 72px 72px;gap:3px 1px;justify-content:start}.course-info-grid .head{text-align:center;width:100%}.official-course-info .course-info-data{align-items:flex-start}.official-course-info .course-info-data h2{width:218px;text-align:center}.official-course-info .course-mic{width:111px;height:111px;transform:translateX(-25%)}.official-course-info .course-mic .mic-visual{font-size:65px;border-width:2px}.official-course-info .course-mic .mic-hit{inset:-50%}.summary td{font-size:12px!important}}')
+
+          # Keep a visible dot for every tee, including white; black keeps its neutral border.
+          old_render='function renderCourseInfo(){const rows=["Negro","Azul","Blanco","Rojo","Amarillo"].map(k=>[k,TEES[k]]);$("courseInfo").innerHTML=`<div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>${rows.map(([k,t])=>`<div style="text-align:left"><span class="tee-dot" style="background:${t.color};border:${k===\'Negro\'?\'1px solid #777\':\'0\'}"></span><span style="color:${k===\'Negro\'?\'#000\':t.color};font-weight:800;${k===\'Negro\'?\'background:#fff;padding:1px 5px;border-radius:2px;display:inline-block;\':\'\'}">${t.total.toLocaleString(\'en-US\')}</span></div><div style="text-align:center">${t.rating.toFixed(1)}</div><div style="text-align:center">${t.slope}</div>`).join("")}`}'
+          new_render='function renderCourseInfo(){const rows=["Negro","Azul","Blanco","Rojo","Amarillo"].map(k=>[k,TEES[k]]);$("courseInfo").innerHTML=`<div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>${rows.map(([k,t])=>`<div style="text-align:left;white-space:nowrap"><span class="tee-dot" style="background:${t.color};border:${k===\'Negro\'?\'1px solid #777\':k===\'Blanco\'?\'1px solid #ddd\':\'0\'}"></span><span style="color:${k===\'Negro\'?\'#000\':t.color};font-weight:800;${k===\'Negro\'?\'background:#fff;padding:1px 5px;border-radius:2px;display:inline-block;\':\'\'}">${t.total.toLocaleString(\'en-US\')}</span></div><div style="text-align:center">${t.rating.toFixed(1)}</div><div style="text-align:center">${t.slope}</div>`).join("")}`}'
+          rep(old_render,new_render)
+
+          # Increase round-status typography by 50% while preserving the timer logic.
+          rep('.status{height:20px;margin:-6px 0 4px;text-align:center;color:var(--lime);font-size:12px}',
+              '.status{height:30px;margin:-6px 0 4px;text-align:center;color:var(--lime);font-size:18px;line-height:30px}')
+          rep('.status{height:14px;margin:0 0 2px;font-size:7.5px}',
+              '.status{height:21px;margin:0 0 2px;font-size:11.25px;line-height:21px}')
+
+          # Gross-only score nomenclature: circles below par, squares above par, star for ace.
+          css='''\n/* V119: automatic GROSS score nomenclature */\n.gross-mark{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;line-height:1;font-weight:900}\n.gross-mark.birdie,.gross-mark.eagle,.gross-mark.albatross{border:1.5px solid currentColor;border-radius:50%}\n.gross-mark.eagle{outline:1.5px solid currentColor;outline-offset:2px}\n.gross-mark.albatross{outline:1.5px solid currentColor;outline-offset:2px;box-shadow:0 0 0 5px #000,0 0 0 6.5px currentColor}\n.gross-mark.bogey,.gross-mark.double-bogey,.gross-mark.triple-bogey{border:1.5px solid currentColor;border-radius:0}\n.gross-mark.double-bogey{outline:1.5px solid currentColor;outline-offset:2px}\n.gross-mark.triple-bogey{outline:1.5px solid currentColor;outline-offset:2px;box-shadow:0 0 0 5px #000,0 0 0 6.5px currentColor}\n.gross-mark.ace{min-width:34px}\n.gross-mark.ace::before{content:"★";font-size:.8em;margin-right:2px}\n@media(max-width:800px){.gross-mark{min-width:27px;height:27px}.gross-mark.ace{min-width:38px}}\n'''
+          rep('</style>',css+'\n</style>')
+
+          marker='function strokeStyle(p,st){if(!st)return"";const t=TEES[p.tee];return`background:${t.fill};color:${t.text};`}'
+          helper='''function grossMarkClass(s){if(!s||isOmittedScore(s)||!Number.isInteger(s.gross)||!Number.isInteger(s.par))return"";if(s.gross===1)return"ace";const d=s.gross-s.par;if(d===-1)return"birdie";if(d===-2)return"eagle";if(d<=-3)return"albatross";if(d===1)return"bogey";if(d===2)return"double-bogey";if(d>=3)return"triple-bogey";return""}\nfunction grossMarkHtml(s){if(!s)return"";if(isOmittedScore(s))return"X";const c=grossMarkClass(s);return c?`<span class="gross-mark ${c}">${s.gross}</span>`:String(s.gross)}\n'''
+          rep(marker,marker+'\n'+helper)
+
+          old_score='const scoreCell=(h,k)=>{const s=p.holes[h];if(isOmittedScore(s))return`<td class="${k==="gross"?"gross-cell ":""}omitted-score">X</td>`;if(k==="gross")return`<td class="gross-cell">${isOmittedScore(s)?"X":s?s.gross:""}</td>`;if(k==="net")return`<td>${isOmittedScore(s)?"X":s?s.net:""}</td>`;return`<td class="${s?resultClass(s.diff):""}">${isOmittedScore(s)?"X":s?vr(s.diff):""}</td>`};'
+          new_score='const scoreCell=(h,k)=>{const s=p.holes[h];if(isOmittedScore(s))return`<td class="${k==="gross"?"gross-cell ":""}omitted-score">X</td>`;if(k==="gross")return`<td class="gross-cell">${s?grossMarkHtml(s):""}</td>`;if(k==="net")return`<td>${s?s.net:""}</td>`;return`<td class="${s?resultClass(s.diff):""}">${s?vr(s.diff):""}</td>`};'
+          rep(old_score,new_score)
+
           p.write_text(s,encoding='utf-8')
-      - name: Audit V118
+      - name: Audit V119
         shell: bash
         run: |
           set -euo pipefail
+          grep -q 'V119-FIELD-GROSS-SYMBOLS-20260817' index-grupal.html
           ! grep -q '<div class="head">MARCA</div>' index-grupal.html
           grep -q '<div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>' index-grupal.html
-          grep -q 'course-mic{width:199px;height:199px}' index-grupal.html
-          grep -q 'course-mic{width:111px;height:111px}' index-grupal.html
+          grep -q 'grid-template-columns:72px 72px 72px' index-grupal.html
+          grep -q 'transform:translateX(-25%)' index-grupal.html
+          grep -q 'font-size:11.25px' index-grupal.html
+          grep -q 'function grossMarkClass' index-grupal.html
+          grep -q 'gross-mark birdie' index-grupal.html
+          grep -q 'gross-mark triple-bogey' index-grupal.html
           python - <<'PY'
           from pathlib import Path
           s=Path('index-grupal.html').read_text(encoding='utf-8')
+          assert s.count('function grossMarkClass') == 1
+          assert s.count('function renderCourseInfo()') == 1
+          assert '<div class="head">MARCA</div>' not in s
           js=s.split('<script>',1)[1].split('</script>',1)[0]
           Path('/tmp/g.js').write_text(js,encoding='utf-8')
           PY
           node --check /tmp/g.js
           git diff --check
           test "$(git diff --name-only)" = "index-grupal.html"
+          git diff --quiet HEAD -- index.html api/session.js api/score.js api/session-grupal.js
       - name: Commit
         shell: bash
         run: |
@@ -60,5 +100,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index-grupal.html
-          git commit -m "V118 remove MARCA column and enlarge field mic 30 percent"
+          git commit -m "V119 compact course data and add gross score symbols"
           git push origin grupal-dev
