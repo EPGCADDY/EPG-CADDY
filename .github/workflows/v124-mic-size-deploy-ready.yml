@@ -1,0 +1,37 @@
+name: V124 course microphone visual and hit area
+on:
+  push:
+    branches: [grupal-dev]
+    paths: ['.github/workflows/v124-mic-size-deploy-ready.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: grupal-dev
+      - name: Apply exact microphone sizing only
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text()
+          s=s.replace('V123-IOS-MIC-SINGLE-HANDLER-20260818','V124-MIC-SIZE-20260818',1)
+          s=s.replace('.course-mic{width:199px;height:199px;transform:translateX(-25%)}.course-mic .mic-hit{inset:-50%}', '.course-mic{width:299px;height:299px;transform:translateX(-25%)}.course-mic .mic-hit{inset:-100%}',1)
+          s=s.replace('.official-course-info .course-mic{width:111px;height:111px;transform:translateX(-25%)}.official-course-info .course-mic .mic-visual{font-size:65px;border-width:2px}.official-course-info .course-mic .mic-hit{inset:-50%}', '.official-course-info .course-mic{width:167px;height:167px;transform:translateX(-25%)}.official-course-info .course-mic .mic-visual{font-size:98px;border-width:3px}.official-course-info .course-mic .mic-hit{inset:-100%}',1)
+          p.write_text(s)
+          PY
+      - name: Validate
+        run: |
+          grep -q 'V124-MIC-SIZE-20260818' index-grupal.html
+          grep -q 'course-mic{width:299px;height:299px' index-grupal.html
+          grep -q 'course-mic{width:167px;height:167px' index-grupal.html
+          grep -q 'course-mic .mic-hit{inset:-100%}' index-grupal.html
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'V124 enlarge course microphone visual 50 percent and hit area 300 percent'
+          git push origin grupal-dev
