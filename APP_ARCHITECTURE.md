@@ -167,15 +167,11 @@ Campos.
 
 ## Database Engine
 
-Campos.
+PostgreSQL central administrado como fuente permanente de verdad.
 
-Jugadores.
+Módulos: jugadores, contactos, consentimientos, campos, rondas, participantes, scores, tarjetas, correcciones, entregas y auditoría.
 
-Handicaps.
-
-Rondas.
-
-Configuraciones.
+La copia local del teléfono sostiene la ronda offline y una cola idempotente. Toda sincronización remota pasa por APIs autenticadas; el cliente nunca recibe credenciales de base de datos.
 
 ---
 
@@ -192,6 +188,10 @@ Configuraciones
 Usuarios
 
 Historial
+
+Arquitectura oficial: `DATABASE_ARCHITECTURE.md`.
+
+Migración inicial: `database/001_initial_schema.sql`.
 
 ---
 
