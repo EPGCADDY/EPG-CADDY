@@ -22,7 +22,8 @@ assert.ok(html.includes('round.endedAt?`TIMER OFF · ${roundElapsedText()}`:"TIM
 assert.ok(html.includes('function startRoundClock()'),'TIMER OFF debe poder volver a TIMER ON');
 assert.ok(html.includes('round.createdAt=new Date(now-elapsed*1000).toISOString()'),'La reanudación debe conservar el tiempo acumulado');
 assert.ok(html.includes('button.disabled=!round.configured'),'TIMER OFF no debe deshabilitar el interruptor');
-assert.ok(html.includes('.scorecard,.summary{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}'),'La retícula no debe ser seleccionable');
+assert.ok(html.includes('.scorecard,.summary{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;pointer-events:none!important}'),'La retícula debe ser completamente pasiva: no seleccionable ni táctil');
+assert.ok(html.includes('input,textarea,select{-webkit-user-select:text!important;user-select:text!important'),'Solo los controles de edición deben admitir cursor y selección');
 assert.ok(html.includes('document.addEventListener("selectionstart",lockScorecardSelection'),'Safari debe cancelar la selección azul');
 assert.ok(html.includes('round.endedAt?new Date(round.endedAt).getTime():Date.now()'),'El tiempo debe congelarse al detenerse');
 assert.ok(html.includes('isRoundComplete()&&lastScore'),'Una ronda completa antigua debe recuperar el último score');
@@ -34,4 +35,4 @@ assert.ok(html.includes('REGRESAR A DATOS'),'La flecha debe llevar el texto infe
 assert.ok(html.includes('$("backToRegistrationButton").addEventListener("click",openNewRoundDraft)'),'La flecha debe abrir el registro sin borrar la ronda');
 assert.ok(html.includes('.back-registration-control{position:fixed;left:10px;bottom:10px'),'La flecha debe permanecer visible abajo a la izquierda');
 assert.ok(html.includes('.back-registration-control{left:38px;bottom:23px;font-size:7px}'),'En teléfono la flecha debe estar 60% a la derecha y 30% arriba');
-console.log('PASS TIMER ON/OFF, superficie completa y retícula fija V179');
+console.log('PASS TIMER ON/OFF, superficie completa y retícula táctil fija V183');
