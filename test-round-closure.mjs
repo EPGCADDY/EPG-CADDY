@@ -12,4 +12,7 @@ const first=await engine.close(base,{appVersion:'V182',closedAt:'2026-08-19T12:0
 assert.equal(first.ok,true);assert.equal(first.round.status,'officially_closed');assert.equal(first.snapshot.sha256.length,64);
 const second=await engine.close(first.round,{appVersion:'V182'});
 assert.equal(second.alreadyClosed,true);assert.equal(second.snapshot.sha256,first.snapshot.sha256);
-console.log('PASS cierre oficial: completos, cero X, SHA-256 e idempotencia');
+assert.equal((await engine.correct(first.round,{changes:[{playerId:'p1',hole:2,gross:5}],authorizedBy:'Director',reason:''})).code,'REASON_REQUIRED');
+const corrected=await engine.correct(first.round,{changes:[{playerId:'p1',hole:2,gross:5}],authorizedBy:'Director',reason:'Score verificado',correctedAt:'2026-08-19T13:00:00.000Z',appVersion:'V185'});
+assert.equal(corrected.ok,true);assert.equal(corrected.snapshot.version,2);assert.equal(corrected.snapshot.label,'Tarjeta corregida');assert.equal(corrected.round.officialVersions.length,2);assert.equal(corrected.round.officialVersions[0].sha256,first.snapshot.sha256);assert.notEqual(corrected.snapshot.sha256,first.snapshot.sha256);
+console.log('PASS cierre y corrección: cero X, SHA-256, idempotencia y original preservado');
