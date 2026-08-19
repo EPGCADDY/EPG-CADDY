@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V172
+**Versión documentada:** V173
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -585,10 +585,10 @@ Consultas disponibles o previstas para:
 - El transporte de voz se reinicia limpio al reabrir; los datos no.
 - `NUEVA RONDA` abre registro, pero no elimina la ronda existente por sí sola.
 - Sólo `INICIAR RONDA` confirmado crea y sustituye la ronda activa.
-- Un botón rojo `PARAR CRONÓMETRO`, ubicado debajo de la tarjeta junto a las acciones finales, congela el tiempo de la ronda y lo conserva en la copia primaria, el respaldo y el archivo local.
+- Una barra roja `TIMER OFF`, ubicada inmediatamente a la derecha del cronómetro, congela el tiempo de la ronda y lo conserva en la copia primaria, el respaldo y el archivo local.
 - El botón es idempotente: una vez detenido muestra el tiempo final y no puede volver a modificarlo.
 - En una ronda completa heredada cuyo reloj siguió corriendo, el primer toque recupera como final la hora del último score registrado; en una ronda todavía incompleta usa la hora exacta del toque.
-- Una flecha verde fija en la esquina inferior izquierda regresa al Registro de ronda sin borrar ni sustituir la ronda activa; sólo `INICIAR RONDA` confirmado crea una ronda nueva.
+- Una flecha verde fija en la esquina inferior izquierda, con el texto inferior `REGRESAR A DATOS`, regresa al Registro de ronda sin borrar ni sustituir la ronda activa; sólo `INICIAR RONDA` confirmado crea una ronda nueva.
 - La tarjeta digital puede abrirse como consulta durante una ronda incompleta.
 - La ruta `index-grupal.html` usa política `Cache-Control: no-store, max-age=0` para impedir que cerrar y reabrir conserve una compilación anterior.
 - Abrir `NUEVA RONDA` dentro de una pestaña existente reinicia datos de ronda tras confirmación, pero no recarga por sí solo el código JavaScript; la política sin caché actúa al volver a abrir la aplicación.
@@ -1102,7 +1102,7 @@ Antes de publicar al mercado:
 
 ---
 
-## 24. Estado funcional al corte V172
+## 24. Estado funcional al corte V173
 
 ### Operativo
 
@@ -1159,6 +1159,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 3.5 / App V173 | La barra roja se mueve junto al cronómetro y adopta el texto exacto `TIMER OFF`; la flecha inferior izquierda incorpora debajo `REGRESAR A DATOS`. |
 | 2026-08-19 | Manual 3.4 / App V172 | Controles finales visibles: botón rojo inferior para parar el cronómetro y flecha verde fija en la esquina inferior izquierda para regresar al Registro de ronda sin borrar la ronda vigente. |
 | 2026-08-19 | Manual 3.3 / App V171 | Incorporado botón rojo inferior `PARAR CRONÓMETRO`: congela y persiste el tiempo final, queda deshabilitado después del primer toque y recupera rondas completas antiguas mediante la hora del último score. |
 | 2026-08-19 | Manual 3.2 / App V170 | Reconciliación maestra de las dos líneas de desarrollo: preservadas las correcciones recientes de voz y restaurados manual A–Z, arquitectura de base central, SQL, matriz de pendientes y pruebas. Añadidos candados automáticos de continuidad, silencio y navegación hablada. |
