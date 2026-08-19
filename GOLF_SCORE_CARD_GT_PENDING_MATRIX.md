@@ -1,6 +1,6 @@
 # Tarjeta Oficial — Matriz Maestra de Pendientes
 
-**Corte auditado:** V183 lista para publicación
+**Corte auditado:** V184 lista para publicación
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
 ## Regla
@@ -27,17 +27,17 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 |---|---|---|---|
 | P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
 | P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
-| P0 | Publicación V183 | Pendiente de verificación remota | Publicar V183 y comprobar el identificador en Producción. |
-| P0 | Fuente documental | Sincronizada V183 | Manual V183 normativo; plan V94 histórico; ECOS, arquitectura, SQL y pruebas restaurados. |
+| P0 | Publicación V184 | Pendiente de verificación remota | Publicar V184 y comprobar el identificador en Producción. |
+| P0 | Fuente documental | Sincronizada V184 | Manual V184 normativo; plan V94 histórico; ECOS, arquitectura, SQL y pruebas restaurados. |
 | P0 | Base central alojada | Arquitectura y SQL aprobados | Provisionar Neon, configurar `DATABASE_URL`, aplicar migración y probar restore. |
 | P0 | Identidad/autenticación | Pendiente | Definir propietario, operadores, jugadores y permisos antes de exponer APIs. |
 | P0 | Privacidad/consentimiento | Base local | Crear UI y API de otorgamiento/retiro con evidencia y política aprobada. |
-| P0 | Cierre oficial | Operativo local V183 | Publicar y validar físicamente cierre, reapertura e inmutabilidad antes de PASS comercial. |
+| P0 | Cierre oficial | Operativo local V184 | Publicar y validar físicamente cierre, reapertura e inmutabilidad antes de PASS comercial. |
 | P0 | Seguridad | Pendiente | Threat model, rate limits, validación, logs sin PII y gestión de secretos. |
 | P1 | Sincronización offline | Diseñada | Cola idempotente, reintentos, conflictos y pruebas sin señal. |
 | P1 | Historial remoto | Pendiente | Sincronizar rondas y consultar por jugador, fecha, campo y torneo. |
-| P1 | Tarjeta Global archivo | Pendiente | Generar imagen/PDF verificable desde snapshot cerrado. |
-| P1 | Tarjeta personal ampliada | Pendiente | Estadísticas y resumen desde el mismo motor, sin fórmulas paralelas. |
+| P1 | Tarjeta Global archivo | Operativa local HTML | Derivada exclusivamente del snapshot oficial; falta exportación PDF/imagen y validación física. |
+| P1 | Tarjeta personal ampliada | Operativa local HTML | Estadísticas, gráfica y resumen desde el snapshot; falta exportación PDF/imagen y validación física. |
 | P1 | Guardar/compartir/descargar | Pendiente | Archivos reales en hoja nativa, Fotos y paquete conjunto. |
 | P1 | Correcciones versionadas | Pendiente | Preservar original, generar `TARJETA CORREGIDA` y auditar autorización. |
 | P1 | Motor de entregas | Diseñado | Persistencia idempotente y estados verificables. |
@@ -46,7 +46,7 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 | P2 | Consultas históricas por voz | Pendiente | Consultas de sólo lectura contra base central con permisos. |
 | P2 | Consultas escritas | Pendiente | Misma intención, fuente, permisos y respuesta que la voz. |
 | P2 | Biblioteca visual | Pendiente | Navegación por rondas, torneos, fechas, campos y jugadores. |
-| P2 | Gráficas personales | Pendiente | Definir métrica, escala, accesibilidad y regresión visual. |
+| P2 | Gráficas personales | Operativa local | Comportamiento Neto contra Par por hoyo; falta regresión visual física. |
 | P2 | Resumen automático | Pendiente | Texto trazable exclusivamente a estadísticas calculadas. |
 | P2 | Validación de campo | Continua | Micrófono, ruido, iPhone/Android, background y reconexión. |
 | P2 | Cobertura lingüística | Continua | Matriz de frases, plurales, nombres y ambigüedades. |
