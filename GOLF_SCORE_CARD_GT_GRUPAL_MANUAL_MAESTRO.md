@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V152  
+**Versión documentada:** V172
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -79,6 +79,8 @@ El verificador `verify-manual-sync.mjs` compara automáticamente la versión dec
 10. La tarjeta grupal es el producto único, definitivo y activo. La antigua tarjeta individual queda retirada y no recibe nuevas funciones.
 11. Todo lo no solicitado permanece congelado.
 12. Cada versión publicada debe tener pruebas, commit identificable y respaldo.
+13. Si el asistente solicita `👍🏻` para continuar, recibirlo obliga a reanudar inmediatamente todo el procesamiento pendiente; nunca puede contestar sólo con otro símbolo o un acuse vacío.
+14. Toda necesidad de PC, autenticación, GitHub, Vercel, permisos o intervención manual debe comunicarse al propietario en la misma interacción en que se detecta, con instrucciones exactas.
 
 ---
 
@@ -220,7 +222,9 @@ Cada función comparte tamaño, peso, interlineado y espaciado en toda la pantal
 
 #### Uniformidad absoluta del bloque superior
 
-Por directriz V150, el bloque superior de `NUEVA RONDA` —encabezado, fecha, campo, torneo, datos automáticos, instrucciones de dictado y nota— usa exactamente una misma familia, un mismo tamaño, un mismo peso, un mismo interlineado y el mismo espaciado. En teléfono corresponde a 10 px y en escritorio a 13 px. La cuadrícula editable de jugadores queda fuera de este bloque y conserva sus reglas de legibilidad funcional.
+Por directriz V150, el bloque superior del registro —fecha, campo, torneo, datos automáticos, instrucciones de dictado y nota— usa exactamente una misma familia, un mismo tamaño, un mismo peso, un mismo interlineado y el mismo espaciado. En teléfono corresponde a 10 px y en escritorio a 13 px. La cuadrícula editable de jugadores queda fuera de este bloque y conserva sus reglas de legibilidad funcional.
+
+Desde V153, el encabezado del registro no muestra el texto `NUEVA RONDA`: el logo, la fecha y el contenido del propio registro son suficientemente identificables. Esta eliminación no afecta el botón operativo `NUEVA RONDA` que abre el registro al concluir o abandonar una ronda.
 
 ---
 
@@ -316,6 +320,15 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - La tarjeta digital muestra el nombre del torneo.
 - Las rondas que nunca fueron guardadas no pueden reconstruirse automáticamente; deberán importarse o registrarse manualmente.
 
+### 8.7 Campo de golf V156
+
+- El registro presenta siete opciones ya escritas con casillas de selección única: `El Pulté`, `Country Club`, `San Isidro`, `Mayan Golf`, `Hacienda Nueva`, `Alta Vista` y `La Reunión`.
+- Sólo puede marcarse un campo por ronda.
+- `Country Club` es el nombre exacto mostrado; no se agrega ninguna palabra adicional.
+- El Pulté permanece operativo con su tarjeta oficial cargada.
+- Los otros seis campos quedan visibles como pendientes y no permiten iniciar una ronda hasta cargar y validar sus tarjetas oficiales.
+- Nunca se reutilizan pars, handicaps, yardajes, rating o slope de El Pulté para otro campo.
+
 ---
 
 ## 9. Captura de scores
@@ -360,6 +373,7 @@ Un score real posterior puede reemplazar una `X`. Todos los resultados dependien
 - Una `X` explícita excluye temporalmente al jugador de cierres o resultados que requieran información completa.
 - Al reemplazar la `X`, Gross, Neto, contra par y totales deben recalcularse.
 - Al abrir una ronda antigua afectada por X automáticas, la reparación autorizada elimina esas X inventadas.
+- V155 elimina del motor las funciones que fabricaban X por avance consecutivo, retira sus llamadas en anotaciones simples y múltiples y ejecuta una reparación nueva sobre rondas que pudieron contaminarse después de la reparación V134.
 
 ---
 
@@ -571,6 +585,10 @@ Consultas disponibles o previstas para:
 - El transporte de voz se reinicia limpio al reabrir; los datos no.
 - `NUEVA RONDA` abre registro, pero no elimina la ronda existente por sí sola.
 - Sólo `INICIAR RONDA` confirmado crea y sustituye la ronda activa.
+- Un botón rojo `PARAR CRONÓMETRO`, ubicado debajo de la tarjeta junto a las acciones finales, congela el tiempo de la ronda y lo conserva en la copia primaria, el respaldo y el archivo local.
+- El botón es idempotente: una vez detenido muestra el tiempo final y no puede volver a modificarlo.
+- En una ronda completa heredada cuyo reloj siguió corriendo, el primer toque recupera como final la hora del último score registrado; en una ronda todavía incompleta usa la hora exacta del toque.
+- Una flecha verde fija en la esquina inferior izquierda regresa al Registro de ronda sin borrar ni sustituir la ronda activa; sólo `INICIAR RONDA` confirmado crea una ronda nueva.
 - La tarjeta digital puede abrirse como consulta durante una ronda incompleta.
 - La ruta `index-grupal.html` usa política `Cache-Control: no-store, max-age=0` para impedir que cerrar y reabrir conserve una compilación anterior.
 - Abrir `NUEVA RONDA` dentro de una pestaña existente reinicia datos de ronda tras confirmación, pero no recarga por sí solo el código JavaScript; la política sin caché actúa al volver a abrir la aplicación.
@@ -610,6 +628,8 @@ Desde V143:
 - el archivo conserva orden cronológico;
 - las rondas con el mismo nombre de torneo pueden filtrarse por año derivado de su fecha;
 - el límite local inicial es de 120 rondas; la versión comercial deberá migrar a base de datos permanente y sincronizada.
+
+La base central alojada es obligatoria para el producto comercial. PostgreSQL administrado será la fuente permanente de verdad; el teléfono conservará una copia local offline y una cola idempotente. La arquitectura y el esquema inicial se encuentran en `DATABASE_ARCHITECTURE.md` y `database/001_initial_schema.sql`.
 
 Consultas futuras:
 
@@ -697,6 +717,257 @@ No debe implementarse envío real sin:
 - protección de datos;
 - registro de entregas y errores;
 - definición de costos y límites.
+
+### 19.1 Flujo de cierre y entrega de tarjetas
+
+**Estado:** diseño funcional `APROBADO`; generación del archivo visual y entrega `PLANIFICADAS`.
+
+Al completarse la ronda, el cierre comercial deberá ofrecer únicamente acciones reales y comprensibles:
+
+1. `VER TARJETA FINAL`: abre la tarjeta completa en modo de sólo consulta.
+2. `COMPARTIR TARJETAS POR WHATSAPP`: genera primero el archivo visual definitivo de la tarjeta y presenta los jugadores que tengan WhatsApp válido.
+3. `GUARDAR TARJETA`: guarda la imagen o PDF final en el teléfono mediante la hoja nativa de compartir.
+4. `NUEVA RONDA`: conserva el flujo de confirmación existente y nunca borra la ronda sólo por abrir el registro.
+
+Reglas obligatorias del envío desde el teléfono del usuario:
+
+- se comparte la tarjeta visual, no un sustituto de texto;
+- el usuario selecciona o confirma destinatarios;
+- la aplicación prepara el archivo y el mensaje;
+- WhatsApp se abre con el contenido preparado;
+- el usuario confirma el envío en WhatsApp;
+- cancelar o cerrar WhatsApp no altera la ronda ni marca falsamente la tarjeta como enviada;
+- no se declara entrega exitosa sin confirmación verificable;
+- el envío silencioso o masivo sólo podrá incorporarse después mediante WhatsApp Business Platform y consentimiento.
+
+### 19.2 Base maestra de jugadores
+
+**Estado:** base local compatible `OPERATIVA` desde V154; interfaz completa y sincronización remota `PLANIFICADAS`.
+
+Cada jugador tendrá un registro estable e independiente de sus participaciones en rondas. La base deberá conservar:
+
+- identificador interno inmutable;
+- nombre;
+- apellido;
+- nombre corto utilizado en la Tarjeta Oficial;
+- correo electrónico opcional;
+- WhatsApp opcional en formato internacional con código de país;
+- preferencia de entrega: `correo`, `WhatsApp`, `ambos` o `ninguno`;
+- autorización expresa para recibir tarjetas;
+- fecha, hora, alcance y versión de la autorización;
+- estado de autorización: activa o retirada;
+- fecha y hora de retiro cuando corresponda;
+- historial de rondas;
+- historial de campos jugados;
+- fecha del último envío;
+- último estado de entrega por canal.
+
+V154 incorpora la primera base ejecutable sin alterar la pantalla de registro:
+
+- migra automáticamente el directorio V141 al esquema de jugadores V2;
+- conserva nombre completo y deriva un nombre corto inicial;
+- normaliza WhatsApp con código de país, manteniendo `+502` para los registros existentes;
+- crea campos para correo, preferencia, consentimiento, rondas, campos y último envío;
+- registra identificadores de rondas y campos al actualizar un jugador;
+- mantiene consentimiento inactivo y preferencia `ninguno` durante toda migración;
+- permite retirar consentimiento mediante una operación que conserva la trazabilidad;
+- define la clave idempotente de futuras entregas;
+- mantiene una copia compatible con el directorio V141 para evitar regresiones en el registro actual.
+
+Los campos nuevos todavía no aparecen en la interfaz y no habilitan envíos. Su activación visual y remota requiere las siguientes etapas aprobadas.
+
+#### Alojamiento central obligatorio
+
+**Estado:** arquitectura y esquema `APROBADOS`; recurso remoto y sincronización `PENDIENTES`.
+
+- Todos los jugadores deben alojarse en una base PostgreSQL central administrada.
+- La opción recomendada para el despliegue actual es Neon Postgres mediante Vercel Marketplace.
+- El navegador nunca accede directamente a PostgreSQL ni recibe `DATABASE_URL`.
+- La API del servidor valida identidad, autorización, esquema e idempotencia.
+- El almacenamiento local permite jugar sin señal y sincroniza después.
+- Contactos, consentimientos, rondas cerradas, scores, tarjetas, correcciones y entregas quedan relacionados y auditables.
+- Las tarjetas visuales se almacenan separadamente como archivos privados; la base conserva su metadata, versión y hash.
+- Backups automáticos no sustituyen una prueba periódica de restauración.
+- No se activa sincronización hasta definir autenticación, privacidad, retención y resolución de conflictos.
+
+Reglas inviolables:
+
+- correo y WhatsApp nunca son obligatorios para registrarse ni jugar;
+- la ausencia de datos de contacto no impide crear, jugar, cerrar ni conservar una ronda;
+- ningún canal se considera autorizado por estar escrito en el registro;
+- el consentimiento debe ser afirmativo, específico, verificable y revocable;
+- retirar la autorización detiene entregas futuras, pero no borra resultados deportivos ni evidencias legales de autorizaciones anteriores;
+- el nombre corto sólo afecta la presentación; nunca sustituye la identidad estable ni mezcla historiales;
+- los cambios de handicap, marcas o contacto no reescriben tarjetas históricas.
+
+### 19.3 Archivos automáticos de cierre
+
+**Estado:** especificación `APROBADA`; generación de archivos `PLANIFICADA`.
+
+Al cerrar oficialmente una ronda, el sistema genera una sola vez una familia versionada de entregables.
+
+#### A. Tarjeta Global o grupal
+
+Debe contener:
+
+- todos los jugadores;
+- scores por hoyo;
+- Gross, Neto y resultado contra par;
+- ida, vuelta y total;
+- fecha y hora;
+- campo;
+- marcas;
+- handicaps usados en esa ronda;
+- posiciones;
+- resultado final;
+- identificador de ronda y versión de tarjeta.
+
+#### B. Tarjeta personal ampliada
+
+Se genera una por jugador desde la misma ronda y el mismo motor. No constituye una segunda aplicación ni revive la tarjeta individual retirada en V144.
+
+Debe contener:
+
+- nombre;
+- fecha;
+- campo;
+- handicap y marcas utilizados;
+- Gross y Neto por hoyo;
+- ida, vuelta y total;
+- resultado contra par;
+- cantidad de águilas;
+- birdies;
+- pares;
+- bogeys;
+- dobles bogeys;
+- triples bogeys o superiores;
+- hoyos ganados, empatados o perdidos cuando el formato de juego lo permita;
+- mejor y peor hoyo;
+- mejor vuelta;
+- promedio de golpes en pares 3, 4 y 5;
+- tiros de handicap recibidos;
+- comparación Gross contra Neto;
+- gráfica del comportamiento durante la ronda;
+- resumen escrito automático del desempeño, construido exclusivamente con datos reales de la ronda.
+
+La tarjeta personal ampliada es un derivado de sólo lectura de la Tarjeta Oficial. Nunca mantiene fórmulas, scores ni datos paralelos.
+
+### 19.4 Cierre oficial
+
+**Estado:** especificación `APROBADA`; motor de cierre versionado `PLANIFICADO`.
+
+Una ronda sólo puede pasar a `CERRADA OFICIALMENTE` cuando:
+
+- todos los hoyos obligatorios de todos los jugadores activos tienen score válido;
+- no existe ninguna X explícita pendiente;
+- Gross, Neto, contra par, ida, vuelta y total recalculan sin diferencias;
+- la distribución de handicap supera sus candados;
+- fecha, campo, jugadores, handicaps y marcas quedan congelados en el snapshot;
+- se crea un identificador único de cierre y una huella de versión.
+
+Al completarse el proceso, la aplicación muestra exactamente:
+
+> Ronda finalizada. Las tarjetas están listas.
+
+Abrir la tarjeta digital durante una ronda no equivale a cerrarla. Sólo el estado `CERRADA OFICIALMENTE` habilita generación definitiva y envío automático.
+
+### 19.5 Acciones posteriores al cierre
+
+**Estado:** experiencia `APROBADA`; implementación `PLANIFICADA`.
+
+Después del cierre deben estar disponibles:
+
+- abrir la Tarjeta Global;
+- abrir la tarjeta personal ampliada de cada jugador;
+- `GUARDAR EN FOTOS`;
+- `COMPARTIR` mediante la hoja nativa del teléfono;
+- descargar la Global y las personales como un paquete único;
+- enviar automáticamente ambas tarjetas a cada jugador autorizado;
+- consultar el estado individual de cada entrega;
+- reintentar únicamente entregas fallidas, sin duplicar las exitosas.
+
+### 19.6 Motor de entregas sin duplicados
+
+**Estado:** especificación `APROBADA`; proveedores externos `PENDIENTES`.
+
+Cada intento de entrega debe tener una clave idempotente compuesta por:
+
+`ronda + versión de tarjeta + jugador + tipo de tarjeta + canal`
+
+Estados permitidos:
+
+- `NO AUTORIZADO`;
+- `SIN DESTINO`;
+- `PENDIENTE`;
+- `PREPARADO`;
+- `ENVIANDO`;
+- `ENTREGADO`;
+- `FALLIDO`;
+- `CANCELADO`.
+
+Un registro `ENTREGADO` nunca vuelve a enviarse automáticamente con la misma clave. Un proveedor debe aportar identificador de mensaje, fecha, hora y estado verificable; abrir WhatsApp o la hoja de compartir no basta para declarar éxito.
+
+La automatización por WhatsApp requiere WhatsApp Business Platform. La automatización por correo requiere proveedor transaccional autenticado. Las credenciales, costos, límites, plantillas, bajas y políticas se definirán antes de activar producción.
+
+### 19.7 Correcciones posteriores al cierre
+
+**Estado:** especificación `APROBADA`; implementación `PLANIFICADA`.
+
+Una ronda cerrada es inmutable. Si se autoriza una corrección:
+
+1. se conserva íntegramente la versión original;
+2. se registra quién autorizó la corrección, cuándo y por qué;
+3. se crea una nueva versión derivada;
+4. se recalculan todos los resultados dependientes;
+5. los nuevos archivos muestran claramente `TARJETA CORREGIDA` y su número de versión;
+6. la entrega usa nuevas claves idempotentes;
+7. el historial relaciona original y corrección sin sobrescribir ninguna;
+8. los destinatarios autorizados reciben la versión corregida según su preferencia vigente.
+
+### 19.8 Inteligencia hablada y escrita sobre jugadores, cierres y entregas
+
+**Estado:** alcance `APROBADO`; desarrollo incremental `PLANIFICADO`.
+
+Las mismas consultas deben funcionar por voz y por texto, con idéntica fuente de datos, permisos y resultados. Familias aprobadas:
+
+- buscar jugador por nombre completo o nombre corto;
+- consultar rondas y campos jugados;
+- mostrar la Global o una personal por fecha, torneo o campo;
+- comparar rondas, vueltas, hoyos y tipos de score;
+- explicar el resumen automático usando sólo estadísticas calculadas;
+- consultar si una ronda está incompleta, lista para cerrar o cerrada;
+- consultar qué tarjetas se generaron;
+- consultar destinatarios autorizados y canales elegidos;
+- consultar estados de entrega y fallos;
+- solicitar reintento de entregas fallidas cuando el usuario tenga autorización;
+- retirar consentimiento por un flujo explícito y confirmado.
+
+Candados:
+
+- consultar nunca modifica;
+- una orden escrita no tiene menos controles que una hablada;
+- ninguna IA inventa consentimiento, dirección, entrega, score o análisis;
+- las acciones sensibles exigen confirmación explícita;
+- las respuestas distinguen `generada`, `preparada`, `enviada` y `entregada`;
+- no se exponen datos de contacto a jugadores no autorizados;
+- una ronda abierta nunca puede disparar envío automático.
+
+### 19.9 Secuencia obligatoria de implementación
+
+1. Modelo persistente de jugadores, consentimiento e identidades.
+2. Estados de ronda y cierre oficial inmutable.
+3. Motor único de estadísticas y snapshots versionados.
+4. Generador visual de Tarjeta Global.
+5. Generador visual de tarjetas personales ampliadas.
+6. Guardar, compartir y descargar localmente.
+7. Motor idempotente de entregas.
+8. Proveedor de correo.
+9. WhatsApp Business Platform.
+10. Consultas habladas y escritas sobre historial, cierres y entregas.
+11. Correcciones versionadas y reenvíos controlados.
+12. Auditoría integral, privacidad y lanzamiento comercial.
+
+No se permite invertir esta secuencia conectando envíos antes de que cierre, consentimiento, archivos y trazabilidad estén probados.
 
 ---
 
@@ -831,7 +1102,7 @@ Antes de publicar al mercado:
 
 ---
 
-## 24. Estado funcional al corte V140
+## 24. Estado funcional al corte V172
 
 ### Operativo
 
@@ -853,6 +1124,13 @@ Antes de publicar al mercado:
 - registro opcional de torneo por nombre;
 - fecha automática como identificador de año y orden de ronda;
 - archivo histórico local de hasta 120 rondas con snapshots actualizados.
+- selector de campo mediante siete casillas visibles de selección única;
+- bloqueo preventivo de campos sin tarjeta oficial cargada.
+- dictado continuo de ronda con espera de cuatro segundos entre capturas;
+- navegación hablada desde la ronda hacia el registro;
+- silencio ante frases sin intención reconocida, sin inventar datos ni alterar scores.
+- botón rojo persistente para detener y congelar el cronómetro de ronda.
+- flecha inferior izquierda siempre visible para regresar al Registro de ronda.
 
 ### En validación continua
 
@@ -870,6 +1148,10 @@ Antes de publicar al mercado:
 - envío automático de la tarjeta grupal;
 - análisis personales integrados dentro del producto grupal;
 - analítica histórica y comparaciones avanzadas.
+- base PostgreSQL central alojada y sincronización offline idempotente;
+- autenticación y permisos por rol;
+- cierre oficial inmutable y correcciones versionadas;
+- archivos privados Global/personales y entregas verificables.
 
 ---
 
@@ -877,6 +1159,18 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 3.4 / App V172 | Controles finales visibles: botón rojo inferior para parar el cronómetro y flecha verde fija en la esquina inferior izquierda para regresar al Registro de ronda sin borrar la ronda vigente. |
+| 2026-08-19 | Manual 3.3 / App V171 | Incorporado botón rojo inferior `PARAR CRONÓMETRO`: congela y persiste el tiempo final, queda deshabilitado después del primer toque y recupera rondas completas antiguas mediante la hora del último score. |
+| 2026-08-19 | Manual 3.2 / App V170 | Reconciliación maestra de las dos líneas de desarrollo: preservadas las correcciones recientes de voz y restaurados manual A–Z, arquitectura de base central, SQL, matriz de pendientes y pruebas. Añadidos candados automáticos de continuidad, silencio y navegación hablada. |
+| 2026-08-19 | Manual 3.1 / App V158 | La guía de voz del registro indica `DICTA AL PRIMER JUGADOR: NOMBRE / HDCP / TEES - MARCAS` y avanza automáticamente del primer al sexto jugador; `TEES` usa una sola S final y el ejemplo identifica expresamente 38 y 14 como HDCP. Torneo conserva `NOMBRE DEL TORNEO`; la revisión manual previa a OK permanece exclusivamente en la nota inferior para evitar duplicación. |
+| 2026-08-19 | Manual 3.0 / App V157 | Agregado `La Reunión` como séptima opción visible de campo, con selección única y estado pendiente hasta recibir su tarjeta oficial. |
+| 2026-08-19 | Manual 2.9 / App V156 | Protocolo mandatorio de continuidad: 👍🏻 solicitado y recibido obliga a ejecutar el trabajo pendiente; además, toda dependencia de PC, GitHub, Vercel, autenticación o intervención del propietario debe avisarse inmediatamente. |
+| 2026-08-19 | Manual 2.8 / App V156 | Registro de campo con seis opciones escritas y selección única: El Pulté, Country Club, San Isidro, Mayan Golf, Hacienda Nueva y Alta Vista. Sólo El Pulté queda habilitado hasta recibir las tarjetas oficiales restantes. |
+| 2026-08-19 | Manual 2.7 / App V155 | Auditoría documental y lógica integral: eliminada definitivamente la fabricación automática de X, habilitado reemplazo de X históricas por Gross real, nueva reparación V155, ECOS alineado con registro silencioso y documentos antiguos clasificados. |
+| 2026-08-19 | Manual 2.6 / App V154 | Aprobada la base PostgreSQL central alojada, almacenamiento local offline, sincronización idempotente, esquema SQL inicial y matriz maestra de pendientes; el antiguo plan V94 queda marcado como histórico y no normativo. |
+| 2026-08-19 | Manual 2.5 / App V154 | Primera base ejecutable de jugadores V2: migración compatible desde V141, identidad estable, nombre corto, contacto internacional, preferencias, consentimiento inactivo por defecto, historial de rondas/campos, retiro de autorización y claves idempotentes; sin cambios visuales ni envíos. |
+| 2026-08-19 | Manual 2.4 / App V153 | Aprobada la arquitectura integral de jugadores, consentimiento revocable, cierre oficial, Tarjeta Global, tarjetas personales ampliadas, guardar/compartir/descargar, entregas idempotentes, correcciones versionadas e inteligencia hablada y escrita. Cambio exclusivamente documental; estas capacidades permanecen clasificadas como planificadas hasta su implementación y prueba. |
+| 2026-08-19 | Manual 2.3 / App V153 | Eliminado el texto `NUEVA RONDA` sobre la fecha del registro; definido y blindado el flujo final de tarjeta visual y entrega por WhatsApp sin prometer automatización inexistente. |
 | 2026-08-19 | Manual 2.2 / App V152 | Fila vacía trasladada a su ubicación exacta dentro de Jessie: entre YDS y HDCP; rowspan del primer jugador ampliado a seis filas. |
 | 2026-08-19 | Manual 2.1 / App V151 | Fila separadora estructural visible antes de Jessie; espacios libres elevados de 7.5% a 12.5%; borde superior continuo restaurado en YDS de Jaime. |
 | 2026-08-19 | Manual 2.0 / App V150 | Uniformidad absoluta del bloque superior del registro: una familia, tamaño, peso, interlineado y espaciado para todos sus textos y campos. |
