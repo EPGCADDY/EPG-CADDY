@@ -1,6 +1,6 @@
 # Tarjeta Oficial — Matriz Maestra de Pendientes
 
-**Corte auditado:** V182 lista para publicación
+**Corte auditado:** V183 lista para publicación
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
 ## Regla
@@ -27,12 +27,12 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 |---|---|---|---|
 | P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
 | P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
-| P0 | Publicación V182 | Pendiente de verificación remota | Publicar V182 y comprobar el identificador en Producción. |
-| P0 | Fuente documental | Sincronizada V182 | Manual V182 normativo; plan V94 histórico; ECOS, arquitectura, SQL y pruebas restaurados. |
+| P0 | Publicación V183 | Pendiente de verificación remota | Publicar V183 y comprobar el identificador en Producción. |
+| P0 | Fuente documental | Sincronizada V183 | Manual V183 normativo; plan V94 histórico; ECOS, arquitectura, SQL y pruebas restaurados. |
 | P0 | Base central alojada | Arquitectura y SQL aprobados | Provisionar Neon, configurar `DATABASE_URL`, aplicar migración y probar restore. |
 | P0 | Identidad/autenticación | Pendiente | Definir propietario, operadores, jugadores y permisos antes de exponer APIs. |
 | P0 | Privacidad/consentimiento | Base local | Crear UI y API de otorgamiento/retiro con evidencia y política aprobada. |
-| P0 | Cierre oficial | Operativo local V182 | Publicar y validar físicamente cierre, reapertura e inmutabilidad antes de PASS comercial. |
+| P0 | Cierre oficial | Operativo local V183 | Publicar y validar físicamente cierre, reapertura e inmutabilidad antes de PASS comercial. |
 | P0 | Seguridad | Pendiente | Threat model, rate limits, validación, logs sin PII y gestión de secretos. |
 | P1 | Sincronización offline | Diseñada | Cola idempotente, reintentos, conflictos y pruebas sin señal. |
 | P1 | Historial remoto | Pendiente | Sincronizar rondas y consultar por jugador, fecha, campo y torneo. |
