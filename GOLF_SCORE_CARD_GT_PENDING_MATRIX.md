@@ -1,6 +1,6 @@
 # Tarjeta Oficial — Matriz Maestra de Pendientes
 
-**Corte auditado:** V180 lista para publicación
+**Corte auditado:** V181 lista para publicación
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
 ## Regla
@@ -27,8 +27,8 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 |---|---|---|---|
 | P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
 | P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
-| P0 | Publicación V180 | Pendiente de verificación remota | Publicar V180 y comprobar el identificador en Producción. |
-| P0 | Fuente documental | Sincronizada V180 | Manual V180 normativo; plan V94 histórico; ECOS, arquitectura, SQL y pruebas restaurados. |
+| P0 | Publicación V181 | Pendiente de verificación remota | Publicar V181 y comprobar el identificador en Producción. |
+| P0 | Fuente documental | Sincronizada V181 | Manual V181 normativo; plan V94 histórico; ECOS, arquitectura, SQL y pruebas restaurados. |
 | P0 | Base central alojada | Arquitectura y SQL aprobados | Provisionar Neon, configurar `DATABASE_URL`, aplicar migración y probar restore. |
 | P0 | Identidad/autenticación | Pendiente | Definir propietario, operadores, jugadores y permisos antes de exponer APIs. |
 | P0 | Privacidad/consentimiento | Base local | Crear UI y API de otorgamiento/retiro con evidencia y política aprobada. |
