@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 
-const html=fs.readFileSync(new URL('./index-grupal-v138.html',import.meta.url),'utf8');
+const html=fs.readFileSync(new URL('./index-grupal.html',import.meta.url),'utf8');
 const manual=fs.readFileSync(new URL('./GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md',import.meta.url),'utf8');
 const build=html.match(/gscg-build" content="V(\d+)-/i)?.[1];
 const documented=manual.match(/\*\*Versión documentada:\*\* V(\d+)/i)?.[1];
