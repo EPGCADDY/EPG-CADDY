@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V141  
+**Versión documentada:** V142  
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -348,6 +348,18 @@ La implementación puede usar una forma algebraicamente equivalente, pero debe p
 - Los scores persistidos se recalculan con el handicap vigente.
 - Totales y celdas derivan Neto desde Gross y tiros actuales, no desde un valor antiguo desconectado.
 
+### 11.5 Auditoría crítica V142
+
+**Estado:** `OPERATIVO`.
+
+- La fórmula se expresa directamente como `base = floor(H/18)` y `extras = H mod 18`.
+- El arranque valida las matrices Caballeros y Damas como permutaciones completas de SI 1–18.
+- Se comprueban automáticamente todos los handicaps enteros de 0 a 54.
+- Para cada handicap, la suma de tiros de los 18 hoyos debe ser exactamente igual al handicap.
+- Si una matriz o distribución no cumple, el candado crítico impide iniciar el motor con cálculos incorrectos.
+- La prueba de regresión cubre 55 handicaps × 2 matrices × 18 hoyos, más los 18 círculos visuales de seis jugadores.
+- Handicap 38 queda definido como dos tiros en cada hoyo y un tercero en los hoyos SI 1 y 2; el hoyo 18 recibe dos tiros.
+
 ---
 
 ## 12. Simbología gráfica de scores
@@ -498,6 +510,8 @@ Consultas disponibles o previstas para:
 - `NUEVA RONDA` abre registro, pero no elimina la ronda existente por sí sola.
 - Sólo `INICIAR RONDA` confirmado crea y sustituye la ronda activa.
 - La tarjeta digital puede abrirse como consulta durante una ronda incompleta.
+- La ruta `index-grupal.html` usa política `Cache-Control: no-store, max-age=0` para impedir que cerrar y reabrir conserve una compilación anterior.
+- Abrir `NUEVA RONDA` dentro de una pestaña existente reinicia datos de ronda tras confirmación, pero no recarga por sí solo el código JavaScript; la política sin caché actúa al volver a abrir la aplicación.
 
 Prohibiciones operativas durante una ronda:
 
@@ -803,6 +817,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 1.2 / App V142 | Auditoría exhaustiva del motor HDCP 0–54, candado crítico de matrices, seis jugadores × 18 círculos y política sin caché para la tarjeta grupal. |
 | 2026-08-19 | Manual 1.1 / App V141 | Campo WhatsApp opcional `+502`, validación de ocho dígitos, directorio local persistente y definición de límites entre web, contactos del teléfono, WhatsApp personal y WhatsApp Business. |
 | 2026-08-19 | Manual 1.0 / App V140 | Creación del Manual Maestro y Memoria Funcional Viva. Incluye diseño, jugadores dinámicos, voz, vocabulario, fórmulas, V140, inteligencia de ronda, persistencia, historial futuro, WhatsApp y pruebas de lanzamiento. |
 
