@@ -21,7 +21,7 @@ La V185 conserva todos los controles hasta V184 y añade consultas históricas c
 - Vocabulario golfístico documentado y respaldado en código y prompts de transcripción.
 - Dictado continuo, silencio ante frases desconocidas y navegación hablada hacia el registro.
 - Watchdog de transcripción y protección de estados activos para evitar bloqueos indefinidos en escucha.
-- Cierre oficial idempotente, cero X, snapshot SHA-256 y bloqueo de mutaciones directas.
+- Cierre oficial idempotente, cero X, snapshot SHA-256, bloqueo de mutaciones directas y corrección versionada con original preservado.
 - Interruptor rojo `TIMER ON`/`TIMER OFF` para detener y reanudar sin contar la pausa, con superficie táctil ampliada y persistencia.
 - Flecha `REGRESAR A DATOS` y retícula protegida contra selección táctil accidental.
 - Manual Maestro A–Z, ECOS, arquitectura, base de campos, arquitectura PostgreSQL, SQL inicial y matriz de pendientes presentes.
