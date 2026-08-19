@@ -798,14 +798,31 @@ function compactPlayerSpeech(p){
   const diff=t.net-t.par;
   return`${p.name}. Gross ${t.gross}. Neto ${t.net}. ${parSpeech(diff)}.`;
 }
+function parseRoundNavigationCommand(transcript){
+  const text=normalizeSpeech(transcript);
+  if(!text)return{matched:false};
+  const directRegistration=/^(?:registro|registro de jugador|registro de jugadores|pantalla de registro|pantalla de registro de jugador|pantalla de registro de jugadores)$/;
+  const requestedRegistration=/^(?:(?:quiero|necesito)\s+)?(?:ir|ve|vete|volver|vuelve|regresar|regresa|abrir|abre|mostrar|muestra)\s+(?:(?:a|al)\s+)?(?:la\s+)?(?:pantalla\s+de\s+)?registro(?:\s+de\s+jugadores?)?$/;
+  const requestedNewRound=/^(?:abrir|abre|ir\s+a|ve\s+a|iniciar|inicia)\s+(?:una\s+)?nueva\s+ronda$/;
+  return directRegistration.test(text)||requestedRegistration.test(text)||requestedNewRound.test(text)
+    ?{matched:true,action:"registration"}
+    :{matched:false};
+}
 function finalizeRoundDictation(){
   if(!roundFinalizeRequested)return;
   if(roundPendingItems.size){$("status").textContent="TRANSCRIBIENDO…";return}
   roundFinalizeRequested=false;
   if(roundFinalizeTimer){clearTimeout(roundFinalizeTimer);roundFinalizeTimer=null}
   const transcript=roundTranscriptCombined();
-  if(!transcript){resetRoundCapture();speakGlobalError("round");return}
+  if(!transcript){resetRoundCapture();phase="idle";$("status").textContent=roundIdleStatus();return}
   if(isStopCommand(transcript)){resetRoundCapture();stopAuthorizedSpeech();return}
+  const navigation=parseRoundNavigationCommand(transcript);
+  if(navigation.matched){
+    resetRoundCapture();
+    phase="idle";
+    openNewRoundDraft();
+    return;
+  }
   $("status").textContent="PROCESANDO…";
 
   // 1) Gestión explícita de jugadores durante una ronda.
@@ -847,8 +864,11 @@ function finalizeRoundDictation(){
     return;
   }
 
+  // Candado de silencio: una frase sin intención reconocida no genera voz,
+  // no inventa resultados y no modifica la ronda.
   resetRoundCapture();
-  speakGlobalError("round");
+  phase="idle";
+  $("status").textContent=roundIdleStatus();
 }
 function requestRoundFinalize(graceMs=120){
   roundFinalizeRequested=true;
@@ -1728,7 +1748,7 @@ function handleRealtime(message){
       appendRoundTranscript(e.item_id||key,e.transcript||"");
       if(roundFinalizeRequested){finalizeRoundDictation();return}
       const combined=roundTranscriptCombined();
-      const immediate=isStopCommand(combined)||parseRosterCommand(combined).matched||parseRoundQueryTranscript(combined).matched;
+      const immediate=isStopCommand(combined)||parseRoundNavigationCommand(combined).matched||parseRosterCommand(combined).matched||parseRoundQueryTranscript(combined).matched;
       if(immediate){requestRoundFinalize(0);return}
       if(roundFinalizeTimer)clearTimeout(roundFinalizeTimer);
       roundFinalizeTimer=setTimeout(()=>{roundFinalizeTimer=null;if(listening)requestRoundFinalize(0)},4000);
