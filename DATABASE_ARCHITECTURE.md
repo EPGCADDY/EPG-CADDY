@@ -1,0 +1,63 @@
+# GOLF Score Card Guatemala — Arquitectura de Base Central
+
+## Decisión aprobada
+
+La aplicación tendrá una base PostgreSQL central, alojada y administrada. La opción recomendada para el despliegue actual en Vercel es Neon Postgres mediante Vercel Marketplace.
+
+La base central será la fuente permanente de verdad para jugadores, rondas cerradas, scores, consentimientos, archivos generados, correcciones y entregas. El almacenamiento local del teléfono seguirá siendo una copia operativa offline y una cola de sincronización; nunca será la única copia comercial.
+
+## Principios
+
+1. Jugar no requiere correo, WhatsApp ni consentimiento de entrega.
+2. Contacto escrito no equivale a consentimiento.
+3. Consentimientos son eventos auditables y revocables; no se sobrescriben.
+4. Una ronda cerrada es inmutable.
+5. Una corrección crea una nueva versión y preserva la original.
+6. Scores y estadísticas no se duplican en motores paralelos.
+7. Los envíos son idempotentes y verificables.
+8. El cliente nunca recibe credenciales directas de PostgreSQL.
+9. Toda escritura remota pasa por APIs autenticadas y validadas.
+10. La aplicación debe seguir registrando una ronda si temporalmente no hay señal.
+
+## Almacenamiento
+
+- PostgreSQL alojado: identidades, contactos, consentimientos, rondas, participantes, scores, versiones y entregas.
+- Vercel Blob privado o almacenamiento equivalente: imágenes/PDF/paquetes finales.
+- Teléfono: ronda activa, directorio local compatible, snapshots pendientes y cola offline.
+- Backups del proveedor: recuperación puntual; deben probarse restauraciones periódicas.
+
+## Sincronización offline
+
+Cada mutación lleva:
+
+- `client_mutation_id` único;
+- identificador del dispositivo o instalación;
+- versión de esquema;
+- fecha del dispositivo;
+- fecha recibida por servidor;
+- versión esperada del registro.
+
+El servidor acepta una mutación una sola vez. Si recibe nuevamente el mismo `client_mutation_id`, devuelve el resultado anterior. Los conflictos nunca se resuelven por “último dispositivo gana” en rondas cerradas, consentimientos o entregas.
+
+## Seguridad
+
+- TLS obligatorio.
+- Secretos únicamente en variables de entorno del servidor.
+- Cifrado del proveedor en reposo.
+- Contactos excluidos de logs y mensajes de error.
+- Acceso por roles y mínimo privilegio.
+- Auditoría de lectura sensible, cambios de consentimiento, cierres, correcciones y entregas.
+- Retención y eliminación definidas antes de lanzamiento.
+- Exportación de datos del jugador y atención de solicitudes de privacidad.
+
+## Dependencias para activación
+
+1. Proyecto Vercel autenticado y enlazado.
+2. Neon Postgres provisionado desde Marketplace.
+3. `DATABASE_URL` inyectada en Development, Preview y Production.
+4. Migración `database/001_initial_schema.sql` aplicada.
+5. API autenticada de jugadores y sincronización.
+6. Política de privacidad y términos aprobados.
+7. Pruebas de backup, restore, concurrencia, offline y migración.
+
+Hasta completar estos puntos, la base central se considera diseñada pero no alojada ni operativa.
