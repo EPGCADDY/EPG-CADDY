@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V150  
+**Versión documentada:** V151  
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -162,7 +162,9 @@ Reglas:
 - Simbología gráfica aplicada sobre el Gross individual por hoyo.
 - Círculos de handicap sutiles, continuos y visibles, sin contaminación visual excesiva.
 - La columna independiente de marcas/tees fue retirada; las yardas y el color ya identifican el tee.
-- Existe una única fila separadora vacía, cuadriculada y tenue entre el `PAR` general y `YDS` del primer jugador. Usa la misma baja intensidad de las filas desocupadas y no se repite entre jugadores.
+- Existe una única fila separadora vacía, cuadriculada y tenue entre el `PAR` general y `YDS` del primer jugador. Forma parte de un bloque estructural válido para impedir que el navegador la reubique; no se repite entre jugadores.
+- Las líneas de espacios desocupados usan 12.5% de intensidad.
+- Toda fila `YDS` ocupada inicia con un borde superior continuo de intensidad normal, incluso cuando viene después de espacios desocupados.
 
 ### 6.5 Nombre auxiliar del hoyo 10
 
@@ -875,6 +877,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 2.1 / App V151 | Fila separadora estructural visible antes de Jessie; espacios libres elevados de 7.5% a 12.5%; borde superior continuo restaurado en YDS de Jaime. |
 | 2026-08-19 | Manual 2.0 / App V150 | Uniformidad absoluta del bloque superior del registro: una familia, tamaño, peso, interlineado y espaciado para todos sus textos y campos. |
 | 2026-08-19 | Manual 1.9 / App V149 | Sistema tipográfico cerrado para el registro: una familia, cinco funciones editoriales coherentes, pesos e interlineados homologados y controles nativos normalizados. |
 | 2026-08-19 | Manual 1.8 / App V148 | Fila separadora única, vacía y tenue entre PAR general y YDS del primer jugador; cuadrícula completa con intensidad de espacio desocupado. |
