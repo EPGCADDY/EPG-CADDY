@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO NORMATIVO.** Este documento conserva una copia antigua de trabajo (V94) y reglas posteriormente sustituidas. No debe usarse para desarrollar, probar ni decidir el comportamiento actual. La única fuente normativa de la Tarjeta Oficial es `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`; la matriz vigente de pendientes es `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`.
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
