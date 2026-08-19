@@ -1,11 +1,11 @@
-# Auditoría Maestra V181
+# Auditoría Maestra V182
 
 **Fecha:** 19 de agosto de 2026  
 **Alcance:** reconciliación de código, voz, jugadores, campos, documentación, pruebas y respaldos.
 
 ## Resultado ejecutivo
 
-La V181 conserva la reconciliación documental de V170, los controles publicados hasta V179, el motor unificado V180 y añade vigilancia de continuidad de voz. La base local queda coherente y verificable. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
+La V182 conserva la reconciliación documental de V170, los controles publicados hasta V179, el motor unificado V180, la vigilancia de voz V181 y añade el cierre oficial con snapshot SHA-256. La base local queda coherente y verificable. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
 
 ## PASS local verificado
 
@@ -21,6 +21,7 @@ La V181 conserva la reconciliación documental de V170, los controles publicados
 - Vocabulario golfístico documentado y respaldado en código y prompts de transcripción.
 - Dictado continuo, silencio ante frases desconocidas y navegación hablada hacia el registro.
 - Watchdog de transcripción y protección de estados activos para evitar bloqueos indefinidos en escucha.
+- Cierre oficial idempotente, cero X, snapshot SHA-256 y bloqueo de mutaciones directas.
 - Interruptor rojo `TIMER ON`/`TIMER OFF` para detener y reanudar sin contar la pausa, con superficie táctil ampliada y persistencia.
 - Flecha `REGRESAR A DATOS` y retícula protegida contra selección táctil accidental.
 - Manual Maestro A–Z, ECOS, arquitectura, base de campos, arquitectura PostgreSQL, SQL inicial y matriz de pendientes presentes.
