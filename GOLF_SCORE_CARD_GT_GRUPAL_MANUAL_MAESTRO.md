@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V146  
+**Versión documentada:** V147  
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -120,7 +120,7 @@ Capacidad:
 
 - Logo oficial horizontal ubicado en la parte superior y extendido sobre el espacio izquierdo/central disponible.
 - El logo horizontal conserva la fuente, textos, bandera, pelota verde, camino, marco, colores, acabados y línea gráfica del emblema cuadrado aprobado; sólo cambia su composición longitudinal.
-- Los logos cuadrados del registro de jugadores y de confirmación permanecen congelados y sin cambios.
+- La misma identidad horizontal se usa en el encabezado de la tarjeta, `NUEVA RONDA` y `CONFIRMACIÓN`; no puede reaparecer el emblema cuadrado en esos flujos.
 - Estado `Ronda en curso`.
 - Fecha y hora de inicio.
 - Campo, PAR y Slope.
@@ -856,6 +856,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 1.7 / App V147 | Corrección visual verificada: identidad horizontal aplicada también a Nueva ronda y Confirmación; eliminado el retorno del emblema cuadrado en el flujo principal. |
 | 2026-08-19 | Manual 1.6 / App V146 | Integración exclusiva de la Propuesta 1 horizontal en el encabezado de la Tarjeta Oficial; todos los demás componentes permanecen frisados, protegidos y blindados. |
 | 2026-08-19 | Manual 1.5 / App V145 | Retícula profesional del registro primario; selector de marcas normalizado; alineación y altura tipográfica unificadas; pruebas obligatorias con `Rodrigo Barterechea` y `AMARILLAS`. |
 | 2026-08-19 | Manual 1.4 / App V144 | Líneas de espacios libres reducidas otro 70%; tarjeta grupal declarada producto único y definitivo; tarjeta individual retirada de la hoja de ruta. |
