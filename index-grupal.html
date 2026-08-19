@@ -465,7 +465,7 @@ function vr(n){return n===0?"E":n>0?`+${n}`:String(n)}function parSpeech(n){if(n
 function playerByRef(ref){const raw=String(ref||"").trim(),q=canonicalPlayerNameKey(raw);if(!q&&round.players.length===1)return round.players[0];return round.players.find(p=>p.id.toLowerCase()===raw.toLowerCase()||canonicalPlayerNameKey(p.name)===q)||null}
 function normalizeTee(value){const q=String(value||"").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");const aliases={negro:"Negro",negra:"Negro",negros:"Negro",negras:"Negro",azul:"Azul",azules:"Azul",blanco:"Blanco",blanca:"Blanco",blancos:"Blanco",blancas:"Blanco",rojo:"Rojo",roja:"Rojo",rojos:"Rojo",rojas:"Rojo",amarillo:"Amarillo",amarilla:"Amarillo",amarillos:"Amarillo",amarillas:"Amarillo"};return aliases[q]||null}
 function normalizeMatrix(value){const q=normalizeSpeech(value);if(["damas","dama","femenino","femenina","mujer","mujeres"].includes(q))return "Damas";if(["caballeros","caballero","masculino","masculina","hombre","hombres"].includes(q))return "Caballeros";return null}
-function normalizeSpeech(value){return String(value||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñ]+/g," ").replace(/\s+/g," ").trim()}
+function normalizeSpeech(value){return String(value||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñ]+/g," ").replace(/\bhoy\s+o\b/g,"hoyo").replace(/\boyo\b/g,"hoyo").replace(/\s+/g," ").trim()}
 const PULTE_COURSE_TRIGGERS=new Set(["pulte","pulthe","pulteh","pulti","pult"]);
 const PULTE_LEFT_WORDS=new Set(["el","campo","club","golf","de","del","en","jugamos","jugando","estamos","hoy","vamos","a","jugar","course","country"]);
 const PULTE_RIGHT_WORDS=new Set(["golf","club","de","del","guatemala","course","country","countryclub","golfclub","gc","cc"]);
@@ -857,9 +857,11 @@ function finalizeRoundDictation(){
   const parsed=parseRoundScoreTranscript(transcript);
   if(parsed.matched){
     const result=parsed.ok?applyLiteralScores(parsed):parsed;
+    const continuous=listening&&voiceContext==="round";
     resetRoundCapture();
     if(result.ok){
-      $("status").textContent=roundIdleStatus();phase="idle";
+      $("status").textContent=continuous?"● ESCUCHANDO…":roundIdleStatus();phase=continuous?"listening":"idle";
+      if(result.closure)speakClosure(result.closure);
     }else speakGlobalError("round");
     return;
   }
@@ -870,12 +872,12 @@ function finalizeRoundDictation(){
   phase="idle";
   $("status").textContent=roundIdleStatus();
 }
-function requestRoundFinalize(graceMs=120){
+function requestRoundFinalize(graceMs=120,keepListening=false){
   roundFinalizeRequested=true;
   // Server VAD cierra normalmente a 4000 ms. Si el usuario apaga el micrófono
   // manualmente después de dictar, damos una ventana corta para recibir
   // speech_stopped/transcription.completed y procesar igualmente el turno.
-  if(voiceContext==="round")setVoice(false);
+  if(voiceContext==="round"&&!keepListening)setVoice(false);
   phase="processing";
   $("status").textContent="TRANSCRIBIENDO…";
   if(roundPendingItems.size){
@@ -1751,6 +1753,8 @@ function handleRealtime(message){
       const immediate=isStopCommand(combined)||parseRoundNavigationCommand(combined).matched||parseRosterCommand(combined).matched||parseRoundQueryTranscript(combined).matched;
       if(immediate){requestRoundFinalize(0);return}
       if(roundFinalizeTimer)clearTimeout(roundFinalizeTimer);
+      // Mantener el micrófono abierto durante todo el dictado. Solo cuatro
+      // segundos completos sin una nueva transcripción cierran la captura.
       roundFinalizeTimer=setTimeout(()=>{roundFinalizeTimer=null;if(listening)requestRoundFinalize(0)},4000);
       phase="listening";
       $("status").textContent="● ESCUCHANDO…";
