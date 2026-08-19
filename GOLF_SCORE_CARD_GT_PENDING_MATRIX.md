@@ -51,7 +51,10 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 | P1 | Zona horaria y calendario | Operativa local V185 | Cálculo explícito en `America/Guatemala`; validar cambios de fecha en dispositivo físico. |
 | P1 | Filtros históricos cruzados | Operativos localmente | Combina periodo, últimas N rondas, jugador reconocido, campo registrado, hoyo o vuelta; falta consulta central multi-dispositivo. |
 | P1 | Estadística histórica avanzada | Operativa localmente | Promedio Gross/Neto, mejor, peor, porcentaje por categoría, consistencia y tendencia; falta comparación formal entre dos ventanas nombradas. |
-| P0 | Respaldo retroactivo ilimitado | Pendiente externo | La continuidad local conserva hasta 120 rondas; para histórico ilimitado y restauración entre dispositivos se requiere PostgreSQL central, autenticación y migración verificable. |
+| P0 | Respaldo retroactivo ilimitado | Pendiente externo obligatorio | PostgreSQL central será la única fuente permanente; migrar las rondas locales existentes, verificar restauración y luego purgar historial del dispositivo. |
+| P0 | Historial dentro de la aplicación | Pendiente backend/UI | La pantalla consulta el alojamiento central y reconstruye rondas, tarjetas, estadísticas y récords sin descargar el histórico completo al teléfono. |
+| P0 | Purga segura del dispositivo | Pendiente backend | Conservar sólo ronda activa/caché/cola; purgar únicamente después de acuse remoto e integridad comprobada. |
+| P1 | Motor de Tarjeta corregida | Operativo local | Preserva original, exige motivo/autorizador, incrementa versión y enlaza hashes; falta interfaz autorizada, persistencia central y reenvío idempotente. |
 | P2 | Resumen automático | Pendiente | Texto trazable exclusivamente a estadísticas calculadas. |
 | P2 | Validación de campo | Continua | Micrófono, ruido, iPhone/Android, background y reconexión. |
 | P2 | Cobertura lingüística | Continua | Matriz de frases, plurales, nombres y ambigüedades. |
