@@ -361,7 +361,7 @@ Ejemplo:
 
 ## Base de Datos
 
-La información queda organizada en módulos independientes.
+La información queda organizada en módulos independientes dentro de una base PostgreSQL central administrada. El teléfono conserva una copia offline y sincroniza mediante mutaciones idempotentes; nunca contiene credenciales directas de la base.
 
 Inicialmente:
 
@@ -370,6 +370,10 @@ Inicialmente:
 - Estadísticas
 - Configuración
 - Histórico
+- Jugadores e identidades
+- Contactos y consentimientos
+- Versiones de tarjetas
+- Correcciones y entregas
 
 Esta estructura permitirá ampliar el sistema sin rediseñarlo.
 
@@ -470,5 +474,4 @@ EPG Caddy genera automáticamente:
 ---
 
 FIN DE LA PARTE 2
-
 
