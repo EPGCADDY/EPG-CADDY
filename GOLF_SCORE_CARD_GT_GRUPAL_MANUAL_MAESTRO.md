@@ -4,9 +4,9 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V173
+**Versión documentada:** V180
 **Fecha de corte:** 19 de agosto de 2026  
-**Rama operativa:** `grupal-v120-safe`  
+**Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
 **Responsable de implementación y control:** Partner / ChatGPT
@@ -1102,7 +1102,7 @@ Antes de publicar al mercado:
 
 ---
 
-## 24. Estado funcional al corte V173
+## 24. Estado funcional al corte V180
 
 ### Operativo
 
@@ -1115,6 +1115,7 @@ Antes de publicar al mercado:
 - simbología Gross;
 - círculos de handicap;
 - fórmula Neto y recálculo V140;
+- fuente matemática única V180 para cada casilla, ida, vuelta y total, cubierta exhaustivamente en dos matrices, handicaps 0–54, 18 hoyos y Gross 1–12;
 - consultas múltiples de ronda activa;
 - acumulados, posiciones, tipos de score, mejores/peores, handicap y pendientes;
 - tarjeta digital de consulta;
@@ -1129,7 +1130,9 @@ Antes de publicar al mercado:
 - dictado continuo de ronda con espera de cuatro segundos entre capturas;
 - navegación hablada desde la ronda hacia el registro;
 - silencio ante frases sin intención reconocida, sin inventar datos ni alterar scores.
-- botón rojo persistente para detener y congelar el cronómetro de ronda.
+- interruptor rojo persistente `TIMER ON` / `TIMER OFF` para detener y reanudar el cronómetro sin contar la pausa;
+- superficie táctil protegida desde `YARDAS` superior hasta la parte baja de la fila `YDS`, entre las posiciones visuales de media columna 2 y media columna 6;
+- cuadrícula de tarjeta y resultados bloqueada contra selección azul, arrastre y menú contextual de Safari;
 - flecha inferior izquierda siempre visible para regresar al Registro de ronda.
 
 ### En validación continua
@@ -1143,8 +1146,8 @@ Antes de publicar al mercado:
 
 - historial permanente de rondas;
 - consultas por fecha;
-- base de jugadores;
-- WhatsApp opcional y consentido;
+- base central alojada de jugadores (el registro V2 y directorio local ya son operativos);
+- interfaz y API completas de consentimiento para correo/WhatsApp (el WhatsApp opcional local ya es operativo);
 - envío automático de la tarjeta grupal;
 - análisis personales integrados dentro del producto grupal;
 - analítica histórica y comparaciones avanzadas.
@@ -1159,6 +1162,8 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 3.7 / App V180 | Unificada la fuente matemática de casillas y totales mediante `derivedScoreForHole`; añadida prueba exhaustiva de Gross, Neto, handicap, contra par, ida, vuelta y total para ambas matrices y todos los handicaps 0–54. |
+| 2026-08-19 | Manual 3.6 / App V179 | Cronómetro convertido en interruptor real `TIMER ON`/`TIMER OFF`, reanudación conservando el tiempo acumulado y excluyendo la pausa; superficie táctil completa hasta la fila `YDS`; retícula bloqueada contra selección azul, arrastre y menú contextual; publicación verificada en Producción. |
 | 2026-08-19 | Manual 3.5 / App V173 | La barra roja se mueve junto al cronómetro y adopta el texto exacto `TIMER OFF`; la flecha inferior izquierda incorpora debajo `REGRESAR A DATOS`. |
 | 2026-08-19 | Manual 3.4 / App V172 | Controles finales visibles: botón rojo inferior para parar el cronómetro y flecha verde fija en la esquina inferior izquierda para regresar al Registro de ronda sin borrar la ronda vigente. |
 | 2026-08-19 | Manual 3.3 / App V171 | Incorporado botón rojo inferior `PARAR CRONÓMETRO`: congela y persiste el tiempo final, queda deshabilitado después del primer toque y recupera rondas completas antiguas mediante la hora del último score. |
