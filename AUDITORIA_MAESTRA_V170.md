@@ -1,11 +1,11 @@
-# Auditoría Maestra V183
+# Auditoría Maestra V184
 
 **Fecha:** 19 de agosto de 2026  
 **Alcance:** reconciliación de código, voz, jugadores, campos, documentación, pruebas y respaldos.
 
 ## Resultado ejecutivo
 
-La V183 conserva la reconciliación documental de V170, los controles publicados hasta V179, el motor unificado V180, la vigilancia de voz V181, el cierre oficial V182 con snapshot SHA-256 y añade el blindaje táctil total de la cuadrícula. La base local queda coherente y verificable. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
+La V184 conserva la reconciliación documental de V170, los controles publicados hasta V179, el motor unificado V180, la vigilancia de voz V181, el cierre oficial V182 con snapshot SHA-256 y el blindaje táctil V183. Añade la generación local de Tarjeta Global y tarjetas personales ampliadas desde el snapshot oficial. La base local queda coherente y verificable. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
 
 ## PASS local verificado
 
@@ -37,7 +37,7 @@ El vocabulario es **ampliable y respaldado**, no literalmente infinito. Las vari
 - Sincronización offline con resolución de conflictos.
 - Interfaz completa de correo, preferencias y consentimiento verificable.
 - Cierre oficial inmutable con snapshot y hash.
-- Generación de Tarjeta Global y tarjetas personales ampliadas como archivos.
+- Generación visual PDF/imagen y entrega remota de los archivos ya derivados localmente.
 - Guardar en Fotos, compartir y descargar paquete conjunto.
 - WhatsApp Business y correo transaccional con entregas verificables y sin duplicados.
 - Correcciones posteriores al cierre con original preservado y rótulo `Tarjeta corregida`.
