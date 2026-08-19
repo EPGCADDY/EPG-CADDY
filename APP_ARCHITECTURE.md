@@ -171,7 +171,7 @@ PostgreSQL central administrado como fuente permanente de verdad.
 
 Módulos: jugadores, contactos, consentimientos, campos, rondas, participantes, scores, tarjetas, correcciones, entregas y auditoría.
 
-La copia local del teléfono sostiene la ronda offline y una cola idempotente. Toda sincronización remota pasa por APIs autenticadas; el cliente nunca recibe credenciales de base de datos.
+La copia local del teléfono sostiene exclusivamente la ronda activa, una caché mínima y una cola idempotente. Al confirmarse la sincronización, la aplicación purga la copia temporal. El historial permanente se consulta dentro de la aplicación desde PostgreSQL central. Toda sincronización remota pasa por APIs autenticadas; el cliente nunca recibe credenciales de base de datos.
 
 ---
 
