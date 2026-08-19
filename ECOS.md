@@ -39,17 +39,19 @@ La única salida permitida será la respuesta final cuando el procesamiento haya
 
 ---
 
-### OS-002 — Cierre Automático del Hoyo
+### OS-002 — Registro silencioso y cierres autorizados
 
-Al finalizar el registro de un hoyo, el sistema deberá responder automáticamente, sin intervención del usuario, con el siguiente resumen en este orden:
+Al registrar uno o varios scores, el sistema guarda y recalcula en silencio. Está prohibido recitar automáticamente el resultado de cada jugador o cerrar un hoyo por inferencia.
 
-1. Gross del hoyo.
-2. Neto del hoyo.
-3. Gross acumulado.
-4. Neto acumulado.
-5. Par acumulado.
-6. Resultado acumulado respecto al par.
-7. Alertas de inconsistencias, únicamente si existen.
+La voz sólo puede producirse por:
+
+1. consulta expresa del usuario;
+2. cierre completo de primera vuelta;
+3. cierre completo de segunda vuelta;
+4. cierre completo de ronda;
+5. error literal autorizado por la matriz vigente.
+
+Un jugador no mencionado en un hoyo queda simplemente sin score registrado. Avanzar a otro hoyo nunca fabrica una X. Sólo una X expresamente indicada puede existir y siempre puede reemplazarse posteriormente por un Gross real con recálculo integral.
 
 ---
 
@@ -90,3 +92,19 @@ No se permiten cálculos parciales.
 Durante una ronda de golf, la prioridad absoluta será no interrumpir el ritmo del jugador.
 
 El sistema deberá minimizar preguntas y únicamente solicitar información cuando sea estrictamente indispensable.
+
+---
+
+### OS-008 — Continuación efectiva mediante 👍🏻
+
+Cuando el asistente solicite al propietario que envíe `👍🏻` para autorizar o reanudar el trabajo, la recepción de ese símbolo constituye una orden expresa de **continuar inmediatamente todo el procesamiento pendiente hasta su conclusión técnica o hasta encontrar un bloqueo real**.
+
+Está prohibido contestar únicamente con otro `👍🏻`, una confirmación vacía o un mensaje de espera. La respuesta debe ir acompañada de ejecución real, revisión, pruebas, documentación y demás acciones pendientes autorizadas.
+
+Si durante esa continuación se necesita PC, autenticación, GitHub, Vercel, permisos o una acción manual del propietario, se activa de inmediato OS-009.
+
+---
+
+### OS-009 — Aviso inmediato de dependencia del propietario
+
+En el mismo instante en que se detecte una dependencia del propietario, el asistente debe detener únicamente la parte bloqueada y avisar qué necesita, por qué, dónde y cuál es el paso exacto. Nunca podrá callar el bloqueo, aparentar conclusión ni esperar a que el propietario lo descubra.
