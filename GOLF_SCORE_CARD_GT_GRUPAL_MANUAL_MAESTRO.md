@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V142  
+**Versión documentada:** V143  
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -47,6 +47,8 @@ Orden obligatorio:
 7. Crear una rama de respaldo identificable.
 
 No se considerará completa una versión comercial si el código y este manual no coinciden.
+
+El verificador `verify-manual-sync.mjs` compara automáticamente la versión declarada por la aplicación con la versión documentada y exige una entrada correspondiente en este historial. Debe ejecutarse antes de cada publicación.
 
 ---
 
@@ -253,6 +255,19 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - El número también acompaña los datos de la ronda, sin mostrarse en la tarjeta de scores.
 - Las rondas antiguas sin WhatsApp siguen siendo compatibles.
 - La V141 no escribe silenciosamente en la libreta del teléfono y no envía mensajes todavía.
+
+### 8.6 Torneo V143
+
+**Estado:** registro y archivo local `OPERATIVOS`; visualizador y consulta histórica por voz `PLANIFICADOS`.
+
+- El registro ofrece una opción `TORNEO`.
+- Al activarla, sólo se solicita el nombre del torneo.
+- No se solicita año ni número de ronda: la tarjeta ya conserva fecha y hora automáticas.
+- Varias tarjetas con el mismo nombre de torneo forman una colección.
+- Su orden cronológico determina primera, segunda, tercera y siguientes rondas.
+- Ejemplo: las tres tarjetas más antiguas a recientes con nombre `Torneo Nacional` y fecha de 2025 corresponden a sus rondas 1, 2 y 3.
+- La tarjeta digital muestra el nombre del torneo.
+- Las rondas que nunca fueron guardadas no pueden reconstruirse automáticamente; deberán importarse o registrarse manualmente.
 
 ---
 
@@ -536,9 +551,18 @@ Prohibiciones operativas durante una ronda:
 
 ## 17. Historial inteligente
 
-**Estado:** `PLANIFICADO`.
+**Estado:** archivo local base `OPERATIVO` desde V143; consultas y biblioteca visual `PLANIFICADAS`.
 
 Objetivo: guardar todas las tarjetas concluidas con fecha, campo, jugadores, handicaps, tees, scores por hoyo, vueltas, totales y estadísticas.
+
+Desde V143:
+
+- cada ronda activa recibe un identificador estable;
+- cada actualización conserva una copia de la ronda en el archivo histórico local;
+- las actualizaciones de una misma ronda reemplazan su snapshot en lugar de duplicarlo;
+- el archivo conserva orden cronológico;
+- las rondas con el mismo nombre de torneo pueden filtrarse por año derivado de su fecha;
+- el límite local inicial es de 120 rondas; la versión comercial deberá migrar a base de datos permanente y sincronizada.
 
 Consultas futuras:
 
@@ -793,6 +817,9 @@ Antes de publicar al mercado:
 - resultados totales.
 - registro WhatsApp opcional con `+502`;
 - directorio local persistente de jugadores y recuperación del número por nombre.
+- registro opcional de torneo por nombre;
+- fecha automática como identificador de año y orden de ronda;
+- archivo histórico local de hasta 120 rondas con snapshots actualizados.
 
 ### En validación continua
 
@@ -817,6 +844,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 1.3 / App V143 | Opción Torneo por nombre, orden automático por fecha, archivo histórico local de rondas y verificador automático de sincronización código/manual. |
 | 2026-08-19 | Manual 1.2 / App V142 | Auditoría exhaustiva del motor HDCP 0–54, candado crítico de matrices, seis jugadores × 18 círculos y política sin caché para la tarjeta grupal. |
 | 2026-08-19 | Manual 1.1 / App V141 | Campo WhatsApp opcional `+502`, validación de ocho dígitos, directorio local persistente y definición de límites entre web, contactos del teléfono, WhatsApp personal y WhatsApp Business. |
 | 2026-08-19 | Manual 1.0 / App V140 | Creación del Manual Maestro y Memoria Funcional Viva. Incluye diseño, jugadores dinámicos, voz, vocabulario, fórmulas, V140, inteligencia de ronda, persistencia, historial futuro, WhatsApp y pruebas de lanzamiento. |
