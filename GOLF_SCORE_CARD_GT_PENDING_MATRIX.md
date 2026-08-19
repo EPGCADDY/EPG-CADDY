@@ -1,6 +1,6 @@
 # Tarjeta Oficial — Matriz Maestra de Pendientes
 
-**Corte auditado:** V184 lista para publicación
+**Corte auditado:** V185 lista para publicación
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
 ## Regla
@@ -27,8 +27,8 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 |---|---|---|---|
 | P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
 | P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
-| P0 | Publicación V184 | Pendiente de verificación remota | Publicar V184 y comprobar el identificador en Producción. |
-| P0 | Fuente documental | Sincronizada V184 | Manual V184 normativo; plan V94 histórico; ECOS, arquitectura, SQL y pruebas restaurados. |
+| P0 | Publicación V185 | Pendiente de verificación remota | Publicar V185 y comprobar el identificador en Producción. |
+| P0 | Fuente documental | Sincronizada V185 | Manual V185 normativo; matriz registra capacidades, no cada frase equivalente. |
 | P0 | Base central alojada | Arquitectura y SQL aprobados | Provisionar Neon, configurar `DATABASE_URL`, aplicar migración y probar restore. |
 | P0 | Identidad/autenticación | Pendiente | Definir propietario, operadores, jugadores y permisos antes de exponer APIs. |
 | P0 | Privacidad/consentimiento | Base local | Crear UI y API de otorgamiento/retiro con evidencia y política aprobada. |
@@ -47,6 +47,11 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 | P2 | Consultas escritas | Pendiente | Misma intención, fuente, permisos y respuesta que la voz. |
 | P2 | Biblioteca visual | Pendiente | Navegación por rondas, torneos, fechas, campos y jugadores. |
 | P2 | Gráficas personales | Operativa local | Comportamiento Neto contra Par por hoyo; falta regresión visual física. |
+| P1 | Inteligencia histórica combinable | Operativa local V185 | Consulta por hoy/ayer/franja/última jugada/último mes + hoyo/vuelta/ronda + promedio/reporte/categoría/ranking; ampliar filtros de jugador, torneo y campo al conectar base central. |
+| P1 | Zona horaria y calendario | Operativa local V185 | Cálculo explícito en `America/Guatemala`; validar cambios de fecha en dispositivo físico. |
+| P1 | Filtros históricos cruzados | Operativos localmente | Combina periodo, últimas N rondas, jugador reconocido, campo registrado, hoyo o vuelta; falta consulta central multi-dispositivo. |
+| P1 | Estadística histórica avanzada | Operativa localmente | Promedio Gross/Neto, mejor, peor, porcentaje por categoría, consistencia y tendencia; falta comparación formal entre dos ventanas nombradas. |
+| P0 | Respaldo retroactivo ilimitado | Pendiente externo | La continuidad local conserva hasta 120 rondas; para histórico ilimitado y restauración entre dispositivos se requiere PostgreSQL central, autenticación y migración verificable. |
 | P2 | Resumen automático | Pendiente | Texto trazable exclusivamente a estadísticas calculadas. |
 | P2 | Validación de campo | Continua | Micrófono, ruido, iPhone/Android, background y reconexión. |
 | P2 | Cobertura lingüística | Continua | Matriz de frases, plurales, nombres y ambigüedades. |
