@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "source": "/index-grupal.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    }
+  ]
+}
