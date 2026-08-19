@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V149  
+**Versión documentada:** V150  
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -215,6 +215,10 @@ La jerarquía se limita a cinco funciones editoriales resueltas mediante una esc
 - **Metadatos:** fecha, encabezados de columnas y ayudas secundarias.
 
 Cada función comparte tamaño, peso, interlineado y espaciado en toda la pantalla. Queda prohibido introducir un tamaño aislado o permitir que un control use fuente nativa sin documentar y validar el cambio.
+
+#### Uniformidad absoluta del bloque superior
+
+Por directriz V150, el bloque superior de `NUEVA RONDA` —encabezado, fecha, campo, torneo, datos automáticos, instrucciones de dictado y nota— usa exactamente una misma familia, un mismo tamaño, un mismo peso, un mismo interlineado y el mismo espaciado. En teléfono corresponde a 10 px y en escritorio a 13 px. La cuadrícula editable de jugadores queda fuera de este bloque y conserva sus reglas de legibilidad funcional.
 
 ---
 
@@ -871,6 +875,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 2.0 / App V150 | Uniformidad absoluta del bloque superior del registro: una familia, tamaño, peso, interlineado y espaciado para todos sus textos y campos. |
 | 2026-08-19 | Manual 1.9 / App V149 | Sistema tipográfico cerrado para el registro: una familia, cinco funciones editoriales coherentes, pesos e interlineados homologados y controles nativos normalizados. |
 | 2026-08-19 | Manual 1.8 / App V148 | Fila separadora única, vacía y tenue entre PAR general y YDS del primer jugador; cuadrícula completa con intensidad de espacio desocupado. |
 | 2026-08-19 | Manual 1.7 / App V147 | Corrección visual verificada: identidad horizontal aplicada también a Nueva ronda y Confirmación; eliminado el retorno del emblema cuadrado en el flujo principal. |
