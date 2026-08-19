@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V183
+**Versión documentada:** V184
 **Fecha de corte:** 19 de agosto de 2026  
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -1102,7 +1102,7 @@ Antes de publicar al mercado:
 
 ---
 
-## 24. Estado funcional al corte V183
+## 24. Estado funcional al corte V184
 
 ### Operativo
 
@@ -1168,6 +1168,7 @@ Antes de publicar al mercado:
 |---|---|---|
 | 2026-08-19 | Manual 3.9 / App V182 | Implementado motor de cierre oficial: validación completa, cero X, snapshot SHA-256, cierre idempotente, bloqueo de mutaciones posteriores y botón `FINALIZAR RONDA` dentro del panel final. |
 | 2026-08-19 | Manual 3.10 / App V183 | Blindaje táctil absoluto de tarjeta y resumen: líneas, columnas, celdas y textos no reciben eventos ni selección; solamente los controles editables del Registro conservan cursor y borrado. |
+| 2026-08-19 | Manual 3.11 / App V184 | Generador determinista desde snapshot oficial: Tarjeta Global, tarjeta personal ampliada por jugador, estadísticas, gráfica, resumen escrito, apertura individual y descarga conjunta. |
 | 2026-08-19 | Manual 3.8 / App V181 | Robustez de voz: el texto completado se procesa aunque cambie `listening`; watchdog libera transcripciones pendientes; el refresco del reloj deja de sobrescribir los estados activos de escucha, transcripción y procesamiento. |
 | 2026-08-19 | Manual 3.7 / App V180 | Unificada la fuente matemática de casillas y totales mediante `derivedScoreForHole`; añadida prueba exhaustiva de Gross, Neto, handicap, contra par, ida, vuelta y total para ambas matrices y todos los handicaps 0–54. |
 | 2026-08-19 | Manual 3.6 / App V179 | Cronómetro convertido en interruptor real `TIMER ON`/`TIMER OFF`, reanudación conservando el tiempo acumulado y excluyendo la pausa; superficie táctil completa hasta la fila `YDS`; retícula bloqueada contra selección azul, arrastre y menú contextual; publicación verificada en Producción. |
