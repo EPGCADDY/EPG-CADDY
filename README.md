@@ -35,6 +35,9 @@ El proyecto se encuentra dividido en documentos especializados.
 - [Arquitectura de la aplicación](APP_ARCHITECTURE.md)
 - [Sistema ECOS](ECOS.md)
 - [Base de datos de campos](COURSE_DATABASE.md)
+- [Arquitectura de base central](DATABASE_ARCHITECTURE.md)
+- [Matriz maestra de pendientes](GOLF_SCORE_CARD_GT_PENDING_MATRIX.md)
+- [Auditoría Maestra V170](AUDITORIA_MAESTRA_V170.md)
 
 ---
 
@@ -70,3 +73,5 @@ Próximos módulos:
 - Business Rules
 - UI/UX
 - Testing
+
+La Tarjeta Oficial ya cuenta con motor grupal, voz, scoring, persistencia local, historial local y una base local de jugadores V2. La base central alojada, cierre oficial, generación de archivos y entregas permanecen en desarrollo según la matriz maestra.
