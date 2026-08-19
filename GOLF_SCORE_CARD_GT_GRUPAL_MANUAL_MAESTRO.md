@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V140  
+**Versión documentada:** V141  
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -240,6 +240,19 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - `Agregar jugador` / `Agregar jugadores`.
 - `Quitar jugador [nombre]`.
 - Un jugador agregado durante la ronda comienza en el hoyo de incorporación definido y no recibe scores ficticios anteriores.
+
+### 8.5 WhatsApp y directorio local V141
+
+**Estado:** `OPERATIVO` para registro y persistencia local.
+
+- Cada jugador dispone de un campo WhatsApp opcional.
+- El prefijo fijo predeterminado es `+502` para Guatemala.
+- Se aceptan exactamente ocho dígitos nacionales después del prefijo.
+- El número se guarda en un directorio privado local de EPG Caddy en el dispositivo.
+- Cuando el mismo jugador vuelve a registrarse, la aplicación recupera automáticamente su WhatsApp.
+- El número también acompaña los datos de la ronda, sin mostrarse en la tarjeta de scores.
+- Las rondas antiguas sin WhatsApp siguen siendo compatibles.
+- La V141 no escribe silenciosamente en la libreta del teléfono y no envía mensajes todavía.
 
 ---
 
@@ -576,11 +589,16 @@ Requisito: ninguna consulta histórica debe mezclarse con la ronda activa ni mod
 
 ## 19. Registro principal y WhatsApp
 
-**Estado:** `APROBADO` como dirección futura; implementación `PLANIFICADA`.
+**Estado:** registro local `OPERATIVO` desde V141; contactos del teléfono y envío `PLANIFICADOS`.
 
 - WhatsApp será la opción única y preferente de contacto cuando se rediseñe el registro.
 - Compartir WhatsApp o correo será opcional.
 - Debe existir consentimiento claro antes de almacenar o enviar.
+- El directorio local V141 guarda el número dentro de EPG Caddy, con prefijo `+502` y ocho dígitos.
+- Guardar en la libreta de contactos del teléfono requerirá una app nativa y permiso explícito del usuario.
+- Desde una aplicación web, el selector de contactos permite al usuario compartir contactos seleccionados, pero no autoriza escritura silenciosa y permanente.
+- Enviar desde el WhatsApp personal del teléfono puede abrir el chat y preparar el contenido; el usuario debe confirmar el envío.
+- El envío completamente automático requiere WhatsApp Business Platform, un número del servicio, consentimiento y cumplimiento de sus políticas.
 - Al finalizar la ronda, el servicio futuro podrá enviar automáticamente:
   1. tarjeta global/grupal;
   2. tarjeta personal del jugador.
@@ -759,6 +777,8 @@ Antes de publicar al mercado:
 - acumulados, posiciones, tipos de score, mejores/peores, handicap y pendientes;
 - tarjeta digital de consulta;
 - resultados totales.
+- registro WhatsApp opcional con `+502`;
+- directorio local persistente de jugadores y recuperación del número por nombre.
 
 ### En validación continua
 
@@ -783,6 +803,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 1.1 / App V141 | Campo WhatsApp opcional `+502`, validación de ocho dígitos, directorio local persistente y definición de límites entre web, contactos del teléfono, WhatsApp personal y WhatsApp Business. |
 | 2026-08-19 | Manual 1.0 / App V140 | Creación del Manual Maestro y Memoria Funcional Viva. Incluye diseño, jugadores dinámicos, voz, vocabulario, fórmulas, V140, inteligencia de ronda, persistencia, historial futuro, WhatsApp y pruebas de lanzamiento. |
 
 ---
