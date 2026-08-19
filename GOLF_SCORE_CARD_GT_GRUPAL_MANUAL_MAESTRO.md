@@ -627,7 +627,8 @@ Desde V143:
 - las actualizaciones de una misma ronda reemplazan su snapshot en lugar de duplicarlo;
 - el archivo conserva orden cronológico;
 - las rondas con el mismo nombre de torneo pueden filtrarse por año derivado de su fecha;
-- el límite local inicial es de 120 rondas; la versión comercial deberá migrar a base de datos permanente y sincronizada.
+- el archivo local de hasta 120 rondas es únicamente una salvaguarda transitoria de desarrollo y debe migrarse íntegramente antes de retirarse;
+- en la versión comercial, el teléfono no conserva el historial: sólo ronda activa, caché mínima y cola pendiente, purgadas después de confirmación remota.
 
 La base central alojada es obligatoria para el producto comercial. PostgreSQL administrado será la fuente permanente de verdad; el teléfono conservará una copia local offline y una cola idempotente. La arquitectura y el esquema inicial se encuentran en `DATABASE_ARCHITECTURE.md` y `database/001_initial_schema.sql`.
 
@@ -1127,7 +1128,7 @@ Antes de publicar al mercado:
 - directorio local persistente de jugadores y recuperación del número por nombre.
 - registro opcional de torneo por nombre;
 - fecha automática como identificador de año y orden de ronda;
-- archivo histórico local de hasta 120 rondas con snapshots actualizados.
+- salvaguarda transitoria local de hasta 120 rondas mientras se habilita y verifica la migración central; no es la arquitectura comercial definitiva.
 - selector de campo mediante siete casillas visibles de selección única;
 - bloqueo preventivo de campos sin tarjeta oficial cargada.
 - dictado continuo de ronda con espera de cuatro segundos entre capturas;
@@ -1170,6 +1171,7 @@ Antes de publicar al mercado:
 | 2026-08-19 | Manual 3.10 / App V183 | Blindaje táctil absoluto de tarjeta y resumen: líneas, columnas, celdas y textos no reciben eventos ni selección; solamente los controles editables del Registro conservan cursor y borrado. |
 | 2026-08-19 | Manual 3.11 / App V184 | Generador determinista desde snapshot oficial: Tarjeta Global, tarjeta personal ampliada por jugador, estadísticas, gráfica, resumen escrito, apertura individual y descarga conjunta. |
 | 2026-08-19 | Manual 3.12 / App V185 | Motor compositivo de consultas históricas habladas y escritas con calendario `America/Guatemala`: hoy, ayer, mañana/tarde, última jugada, último mes, hoyo/vuelta/ronda, promedios, reportes, categorías y ranking de hoyos. |
+| 2026-08-19 | Manual 3.13 / App V185 | Motor de corrección posterior al cierre: exige autorización y motivo, incrementa versión, recalcula el hoyo corregido, enlaza el SHA-256 anterior y preserva íntegramente la Tarjeta original. Interfaz de autorización aún pendiente. |
 
 ### 24.1 Capacidad histórica combinatoria
 
