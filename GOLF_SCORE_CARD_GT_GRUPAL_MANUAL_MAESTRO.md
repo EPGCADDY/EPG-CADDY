@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V144  
+**Versión documentada:** V145  
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -180,6 +180,24 @@ Incluyen:
 - handicap;
 - Neto total;
 - diferencia contra par neto.
+
+### 6.7 Sistema gráfico profesional del registro primario
+
+El registro de jugadores usa una sola retícula y una sola familia tipográfica en nombre, handicap, marcas y WhatsApp. Sus controles deben conservar alturas, bordes, radios, pesos y espaciados familiares; ningún selector nativo puede alterar esa línea gráfica.
+
+Controles obligatorios de calidad comercial:
+
+- las cuatro columnas y sus encabezados comparten exactamente la misma alineación;
+- el selector de marcas normaliza su apariencia y reserva espacio propio para la flecha;
+- `AMARILLAS`, la marca de texto más extensa, debe mostrarse completa sin recorte;
+- `Rodrigo Barterechea` es el caso obligatorio de prueba para nombre largo;
+- desde 18 caracteres, el nombre reduce su fuente 15% sin cambiar la altura de la casilla;
+- desde 24 caracteres, aplica una reducción controlada de 25%;
+- el valor completo siempre permanece editable y almacenado aunque visualmente se requiera elipsis en un ancho extremo;
+- ningún cambio puede introducir familias tipográficas, alturas o escalas ajenas a la página;
+- se revisa tanto en teléfono como en escritorio antes de declarar una versión comercializable.
+
+Esta matriz visual forma parte de los candados operativos permanentes del producto.
 
 ---
 
@@ -836,6 +854,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 1.5 / App V145 | Retícula profesional del registro primario; selector de marcas normalizado; alineación y altura tipográfica unificadas; pruebas obligatorias con `Rodrigo Barterechea` y `AMARILLAS`. |
 | 2026-08-19 | Manual 1.4 / App V144 | Líneas de espacios libres reducidas otro 70%; tarjeta grupal declarada producto único y definitivo; tarjeta individual retirada de la hoja de ruta. |
 | 2026-08-19 | Manual 1.3 / App V143 | Opción Torneo por nombre, orden automático por fecha, archivo histórico local de rondas y verificador automático de sincronización código/manual. |
 | 2026-08-19 | Manual 1.2 / App V142 | Auditoría exhaustiva del motor HDCP 0–54, candado crítico de matrices, seis jugadores × 18 círculos y política sin caché para la tarjeta grupal. |
