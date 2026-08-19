@@ -3,12 +3,14 @@ import {readFileSync} from 'node:fs';
 
 const html=readFileSync(new URL('./index-grupal.html',import.meta.url),'utf8');
 assert.ok(html.includes('id="stopClockButton"'),'Falta el botón para detener el cronómetro');
-assert.ok(html.includes('>TIMER OFF</button>'),'El botón debe decir TIMER OFF');
+assert.ok(html.includes('id="stopClockButton">TIMER ON</button>'),'El botón debe decir TIMER ON mientras corre');
 assert.ok(html.includes('class="round-status-row"'),'El botón debe compartir la línea del cronómetro');
 assert.ok(html.includes('.timer-off-button{height:28px'),'El botón debe ser una barra roja compacta');
-assert.ok(html.includes('.timer-off-button::after{content:"";position:absolute;z-index:1;left:0;right:0;top:100%;height:72px;background:transparent}'),'La barra debe ampliar su toque invisible hacia abajo sin crecer lateralmente');
-assert.ok(html.includes('.timer-off-button::after{height:82px}'),'En teléfono el toque invisible debe llegar hasta la zona de YARDAS');
-assert.ok(html.includes('.timer-off-button:disabled::after{display:none}'),'El área invisible debe desactivarse al detener el cronómetro');
+assert.ok(html.includes('id="stopClockHitArea"'),'Falta la superficie táctil invisible independiente');
+assert.ok(html.includes("h2.left+h2.width/2,right=h6.left+h6.width/2"),'El toque debe abarcar de media columna 2 a media columna 6');
+assert.ok(html.includes('bottom=y.bottom'),'El toque debe bajar hasta el final de YARDAS');
+assert.ok(html.includes('z-index:94'),'La superficie del timer debe tener prioridad táctil');
+assert.ok(html.includes('round.endedAt?`TIMER OFF · ${roundElapsedText()}`:"TIMER ON"'),'Debe alternar TIMER ON y TIMER OFF');
 assert.ok(html.includes('round.endedAt?new Date(round.endedAt).getTime():Date.now()'),'El tiempo debe congelarse al detenerse');
 assert.ok(html.includes('isRoundComplete()&&lastScore'),'Una ronda completa antigua debe recuperar el último score');
 assert.ok(html.includes('round.durationSeconds='),'La duración final debe persistirse');
@@ -18,4 +20,4 @@ assert.ok(html.includes('REGRESAR A DATOS'),'La flecha debe llevar el texto infe
 assert.ok(html.includes('$("backToRegistrationButton").addEventListener("click",openNewRoundDraft)'),'La flecha debe abrir el registro sin borrar la ronda');
 assert.ok(html.includes('.back-registration-control{position:fixed;left:10px;bottom:10px'),'La flecha debe permanecer visible abajo a la izquierda');
 assert.ok(html.includes('.back-registration-control{left:38px;bottom:23px;font-size:7px}'),'En teléfono la flecha debe estar 60% a la derecha y 30% arriba');
-console.log('PASS controles visibles y toque ampliado de ronda V174');
+console.log('PASS TIMER ON/OFF y superficie exacta de toque V175');
