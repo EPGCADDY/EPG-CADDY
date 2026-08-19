@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V147  
+**Versión documentada:** V148  
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -162,6 +162,7 @@ Reglas:
 - Simbología gráfica aplicada sobre el Gross individual por hoyo.
 - Círculos de handicap sutiles, continuos y visibles, sin contaminación visual excesiva.
 - La columna independiente de marcas/tees fue retirada; las yardas y el color ya identifican el tee.
+- Existe una única fila separadora vacía, cuadriculada y tenue entre el `PAR` general y `YDS` del primer jugador. Usa la misma baja intensidad de las filas desocupadas y no se repite entre jugadores.
 
 ### 6.5 Nombre auxiliar del hoyo 10
 
@@ -856,6 +857,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 1.8 / App V148 | Fila separadora única, vacía y tenue entre PAR general y YDS del primer jugador; cuadrícula completa con intensidad de espacio desocupado. |
 | 2026-08-19 | Manual 1.7 / App V147 | Corrección visual verificada: identidad horizontal aplicada también a Nueva ronda y Confirmación; eliminado el retorno del emblema cuadrado en el flujo principal. |
 | 2026-08-19 | Manual 1.6 / App V146 | Integración exclusiva de la Propuesta 1 horizontal en el encabezado de la Tarjeta Oficial; todos los demás componentes permanecen frisados, protegidos y blindados. |
 | 2026-08-19 | Manual 1.5 / App V145 | Retícula profesional del registro primario; selector de marcas normalizado; alineación y altura tipográfica unificadas; pruebas obligatorias con `Rodrigo Barterechea` y `AMARILLAS`. |
