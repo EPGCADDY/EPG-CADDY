@@ -55,3 +55,19 @@ Esta base de datos constituye la única fuente oficial de verdad para todos los 
 | 16 | 3 | 10 | 302 |
 | 17 | 4 | 14 | 140 |
 | 18 | 4 | 12 | 281 |
+
+---
+
+# CATÁLOGO DEL REGISTRO V157
+
+| Campo mostrado | Estado de tarjeta oficial |
+|---|---|
+| El Pulté | Configurada |
+| Country Club | Pendiente de recibir |
+| San Isidro | Pendiente de recibir |
+| Mayan Golf | Pendiente de recibir |
+| Hacienda Nueva | Pendiente de recibir |
+| Alta Vista | Pendiente de recibir |
+| La Reunión | Pendiente de recibir |
+
+El registro permite marcar sólo una opción. Ningún campo pendiente puede iniciar una ronda ni heredar datos de El Pulté.

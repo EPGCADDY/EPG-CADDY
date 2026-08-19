@@ -28,10 +28,13 @@ export default async function handler(req, res) {
     const context = safeHeader(req.headers["x-gscg-context"], 20) === "setup" ? "setup" : "round";
     const players = safeHeader(req.headers["x-gscg-players"], 300);
     const silence = context === "setup" ? 1500 : 700;
+    const threshold = context === "setup" ? 0.5 : 0.25;
+    const prefixPadding = context === "setup" ? 300 : 500;
+    const noiseReduction = context === "setup" ? "near_field" : "far_field";
 
     const transcriptionPrompt = context === "setup"
       ? "Golf Guatemala. Registro de jugadores. Transcribe literalmente nombres propios, handicap y color de marcas. Regla mandatoria: Jessie se escribe Jessie."
-      : `Golf Guatemala. Dictado de scores. Jugadores actuales: ${players || "los registrados en la tarjeta"}. Transcribe literalmente nombres, hoyo y score o Gross. Acepta número Gross directo o vocabulario golfístico: albatros, águila, eagle, birdie, par, even par, bogey, doble bogey, triple bogey, doble par, uno bajo par, uno sobre par, dos sobre par y tres sobre par. Si un primer nombre es único en el grupo puede dictarse solo ese nombre; si hay dos jugadores con el mismo primer nombre, puede dictarse únicamente el apellido. Regla mandatoria: Jessie se escribe Jessie.`;
+      : `Golf Guatemala. Dictado de scores. Jugadores actuales: ${players || "los registrados en la tarjeta"}. Transcribe literalmente nombres, hoyo y score o Gross. Acepta número Gross directo o vocabulario golfístico: albatros, águila, aguiler, eagle, birdie, pájaro, verdura, par, even par, parinelo, paraso, parcuato, bogey, doble bogey, doblete, triple bogey, triplete, doble par, par español, uno bajo par, uno sobre par, dos sobre par y tres sobre par. Si un primer nombre es único en el grupo puede dictarse solo ese nombre; si hay dos jugadores con el mismo primer nombre, puede dictarse únicamente el apellido. Regla mandatoria: Jessie se escribe Jessie.`;
 
     const session = {
       type: "realtime",
@@ -52,11 +55,11 @@ export default async function handler(req, res) {
             language: "es",
             prompt: transcriptionPrompt
           },
-          noise_reduction: { type: "near_field" },
+          noise_reduction: { type: noiseReduction },
           turn_detection: {
             type: "server_vad",
-            threshold: 0.5,
-            prefix_padding_ms: 300,
+            threshold,
+            prefix_padding_ms: prefixPadding,
             silence_duration_ms: silence,
             create_response: false,
             interrupt_response: false
