@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V148  
+**Versión documentada:** V149  
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -201,6 +201,20 @@ Controles obligatorios de calidad comercial:
 - se revisa tanto en teléfono como en escritorio antes de declarar una versión comercializable.
 
 Esta matriz visual forma parte de los candados operativos permanentes del producto.
+
+#### Sistema tipográfico cerrado
+
+El registro utiliza una sola familia: `Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`. La apariencia no depende de la tipografía nativa de botones, inputs o selectores.
+
+La jerarquía se limita a cinco funciones editoriales resueltas mediante una escala cerrada de cuatro tamaños, no mediante valores arbitrarios:
+
+- **Título de pantalla:** identidad principal de Nueva ronda o Confirmación;
+- **Título de sección:** instrucciones y estados principales en verde;
+- **Texto de lectura:** instrucciones y notas;
+- **Texto de control:** campos editables, handicap, marcas y confirmaciones;
+- **Metadatos:** fecha, encabezados de columnas y ayudas secundarias.
+
+Cada función comparte tamaño, peso, interlineado y espaciado en toda la pantalla. Queda prohibido introducir un tamaño aislado o permitir que un control use fuente nativa sin documentar y validar el cambio.
 
 ---
 
@@ -857,6 +871,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 1.9 / App V149 | Sistema tipográfico cerrado para el registro: una familia, cinco funciones editoriales coherentes, pesos e interlineados homologados y controles nativos normalizados. |
 | 2026-08-19 | Manual 1.8 / App V148 | Fila separadora única, vacía y tenue entre PAR general y YDS del primer jugador; cuadrícula completa con intensidad de espacio desocupado. |
 | 2026-08-19 | Manual 1.7 / App V147 | Corrección visual verificada: identidad horizontal aplicada también a Nueva ronda y Confirmación; eliminado el retorno del emblema cuadrado en el flujo principal. |
 | 2026-08-19 | Manual 1.6 / App V146 | Integración exclusiva de la Propuesta 1 horizontal en el encabezado de la Tarjeta Oficial; todos los demás componentes permanecen frisados, protegidos y blindados. |
