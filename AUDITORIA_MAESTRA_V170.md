@@ -1,11 +1,11 @@
-# Auditoría Maestra V184
+# Auditoría Maestra V185
 
 **Fecha:** 19 de agosto de 2026  
 **Alcance:** reconciliación de código, voz, jugadores, campos, documentación, pruebas y respaldos.
 
 ## Resultado ejecutivo
 
-La V184 conserva la reconciliación documental de V170, los controles publicados hasta V179, el motor unificado V180, la vigilancia de voz V181, el cierre oficial V182 con snapshot SHA-256 y el blindaje táctil V183. Añade la generación local de Tarjeta Global y tarjetas personales ampliadas desde el snapshot oficial. La base local queda coherente y verificable. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
+La V185 conserva todos los controles hasta V184 y añade consultas históricas compositivas con calendario de Guatemala, periodos naturales, métricas por hoyo/vuelta/ronda y categorías de score. La base local queda coherente y verificable. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
 
 ## PASS local verificado
 
