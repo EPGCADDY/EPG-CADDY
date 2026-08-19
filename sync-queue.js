@@ -1,0 +1,12 @@
+(function(root,factory){const api=factory();if(typeof module==="object"&&module.exports)module.exports=api;root.GSCSyncQueue=api})(typeof globalThis!=="undefined"?globalThis:this,function(){
+ const SCHEMA_VERSION=1,stable=value=>Array.isArray(value)?`[${value.map(stable).join(",")}]`:value&&typeof value==="object"?`{${Object.keys(value).sort().map(k=>`${JSON.stringify(k)}:${stable(value[k])}`).join(",")}}`:JSON.stringify(value);
+ async function hash(value){const bytes=new TextEncoder().encode(stable(value)),sum=await crypto.subtle.digest("SHA-256",bytes);return[...new Uint8Array(sum)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+ function mutationId(installationId,entityType,entityId,sequence){return`${installationId}:${entityType}:${entityId}:${sequence}`}
+ async function create({installationId,entityType,entityId,sequence,payload,deviceAt=new Date().toISOString(),expectedVersion=null}){if(!installationId||!entityType||!entityId||!Number.isInteger(sequence)||sequence<1)throw new Error("SYNC_MUTATION_INVALID");return{clientMutationId:mutationId(installationId,entityType,entityId,sequence),installationId,entityType,entityId,schemaVersion:SCHEMA_VERSION,deviceAt,expectedVersion,payload,payloadHash:await hash(payload),state:"pending",attempts:0}}
+ function enqueue(queue,item){const out=Array.isArray(queue)?[...queue]:[];const old=out.find(x=>x.clientMutationId===item.clientMutationId);if(old){if(old.payloadHash!==item.payloadHash)throw new Error("IDEMPOTENCY_CONFLICT");return out}out.push(item);return out}
+ function markAttempt(queue,id,at=new Date().toISOString()){return(queue||[]).map(x=>x.clientMutationId===id?{...x,state:"sending",attempts:(x.attempts||0)+1,lastAttemptAt:at}:x)}
+ function acknowledge(queue,{clientMutationId,payloadHash,serverAt,integrityOk}){const item=(queue||[]).find(x=>x.clientMutationId===clientMutationId);if(!item)return{ok:false,code:"MUTATION_NOT_FOUND",queue};if(!integrityOk||item.payloadHash!==payloadHash||!serverAt)return{ok:false,code:"ACK_INVALID",queue};return{ok:true,purged:clientMutationId,queue:(queue||[]).filter(x=>x.clientMutationId!==clientMutationId)}}
+ function pendingOnly(queue){return(queue||[]).filter(x=>x&&["pending","sending","failed"].includes(x.state))}
+ function deviceFootprint({activeRound=null,queue=[]}={}){return{activeRound:activeRound||null,pendingMutations:pendingOnly(queue)}}
+ return{SCHEMA_VERSION,stableStringify:stable,hash,mutationId,create,enqueue,markAttempt,acknowledge,pendingOnly,deviceFootprint};
+});
