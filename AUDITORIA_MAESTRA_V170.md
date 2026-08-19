@@ -1,11 +1,11 @@
-# Auditoría Maestra V180
+# Auditoría Maestra V181
 
 **Fecha:** 19 de agosto de 2026  
 **Alcance:** reconciliación de código, voz, jugadores, campos, documentación, pruebas y respaldos.
 
 ## Resultado ejecutivo
 
-La V180 conserva la reconciliación documental de V170, los controles publicados hasta V179 y unifica el motor de casillas y totales. La base local queda coherente y verificable. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
+La V181 conserva la reconciliación documental de V170, los controles publicados hasta V179, el motor unificado V180 y añade vigilancia de continuidad de voz. La base local queda coherente y verificable. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
 
 ## PASS local verificado
 
@@ -20,6 +20,7 @@ La V180 conserva la reconciliación documental de V170, los controles publicados
 - El Pulté como único campo configurado; los otros seis quedan bloqueados hasta recibir tarjeta oficial.
 - Vocabulario golfístico documentado y respaldado en código y prompts de transcripción.
 - Dictado continuo, silencio ante frases desconocidas y navegación hablada hacia el registro.
+- Watchdog de transcripción y protección de estados activos para evitar bloqueos indefinidos en escucha.
 - Interruptor rojo `TIMER ON`/`TIMER OFF` para detener y reanudar sin contar la pausa, con superficie táctil ampliada y persistencia.
 - Flecha `REGRESAR A DATOS` y retícula protegida contra selección táctil accidental.
 - Manual Maestro A–Z, ECOS, arquitectura, base de campos, arquitectura PostgreSQL, SQL inicial y matriz de pendientes presentes.
