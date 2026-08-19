@@ -1,6 +1,6 @@
 # Tarjeta Oficial — Matriz Maestra de Pendientes
 
-**Corte auditado:** V170 reconciliada
+**Corte auditado:** V180 lista para publicación
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
 ## Regla
@@ -27,8 +27,8 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 |---|---|---|---|
 | P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
 | P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
-| P0 | Publicación V170 | Pendiente de verificación remota | Publicar el commit reconciliado y comprobar el despliegue antes de declararlo operativo en producción. |
-| P0 | Fuente documental | Reconciliada localmente | Manual V170 normativo; plan V94 histórico; ECOS, arquitectura, SQL y pruebas restaurados. |
+| P0 | Publicación V180 | Pendiente de verificación remota | Publicar V180 y comprobar el identificador en Producción. |
+| P0 | Fuente documental | Sincronizada V180 | Manual V180 normativo; plan V94 histórico; ECOS, arquitectura, SQL y pruebas restaurados. |
 | P0 | Base central alojada | Arquitectura y SQL aprobados | Provisionar Neon, configurar `DATABASE_URL`, aplicar migración y probar restore. |
 | P0 | Identidad/autenticación | Pendiente | Definir propietario, operadores, jugadores y permisos antes de exponer APIs. |
 | P0 | Privacidad/consentimiento | Base local | Crear UI y API de otorgamiento/retiro con evidencia y política aprobada. |
@@ -50,7 +50,7 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 | P2 | Resumen automático | Pendiente | Texto trazable exclusivamente a estadísticas calculadas. |
 | P2 | Validación de campo | Continua | Micrófono, ruido, iPhone/Android, background y reconexión. |
 | P2 | Cobertura lingüística | Continua | Matriz de frases, plurales, nombres y ambigüedades. |
-| P0 | X automáticas | Corregida localmente V155 | Publicar, abrir rondas antiguas y confirmar cero creación nueva y reparación segura. |
+| P0 | X automáticas | Publicada y cubierta por prueba | Abrir rondas antiguas en validación de campo y confirmar reparación segura. |
 | P3 | Multi-campo | Pendiente | Expandir base oficial de campos sin romper El Pulté. |
 | P3 | Comercialización | Pendiente | Términos, privacidad, soporte, costos, monitoreo y recuperación. |
 
@@ -60,5 +60,5 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 - `README.md` todavía describe módulos centrales como futuros aunque varios ya existen; requiere alineación.
 - `APP_ARCHITECTURE.md` y el Blueprint describen una base genérica pero no consentimiento, versionado, idempotencia ni offline; requieren actualización.
 - El título “Estado funcional al corte V140” estaba obsoleto y fue actualizado a V155 durante esta auditoría.
-- El despliegue público continúa por detrás de los commits locales debido a autenticación GitHub ausente.
+- Producción y la rama segura reciben publicaciones explícitas; cada versión debe verificarse contra la URL pública para evitar que una vista previa se confunda con Producción.
 - El silencio ante una dependencia del propietario constituye un fallo de proceso, aunque el cambio local esté correcto; debe registrarse y corregirse inmediatamente.
