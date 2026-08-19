@@ -54,6 +54,7 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 | P0 | Respaldo retroactivo ilimitado | Pendiente externo obligatorio | PostgreSQL central será la única fuente permanente; migrar las rondas locales existentes, verificar restauración y luego purgar historial del dispositivo. |
 | P0 | Historial dentro de la aplicación | Pendiente backend/UI | La pantalla consulta el alojamiento central y reconstruye rondas, tarjetas, estadísticas y récords sin descargar el histórico completo al teléfono. |
 | P0 | Purga segura del dispositivo | Pendiente backend | Conservar sólo ronda activa/caché/cola; purgar únicamente después de acuse remoto e integridad comprobada. |
+| P0 | Cola idempotente del dispositivo | Motor local operativo | ID único, hash de payload, reintentos, detección de conflicto y purga sólo con acuse íntegro; falta conectar transporte/API central. |
 | P1 | Motor de Tarjeta corregida | Operativo local | Preserva original, exige motivo/autorizador, incrementa versión y enlaza hashes; falta interfaz autorizada, persistencia central y reenvío idempotente. |
 | P2 | Resumen automático | Pendiente | Texto trazable exclusivamente a estadísticas calculadas. |
 | P2 | Validación de campo | Continua | Micrófono, ruido, iPhone/Android, background y reconexión. |
