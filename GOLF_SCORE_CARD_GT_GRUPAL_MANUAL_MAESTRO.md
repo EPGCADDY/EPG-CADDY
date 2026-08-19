@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V180
+**Versión documentada:** V181
 **Fecha de corte:** 19 de agosto de 2026  
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -1102,7 +1102,7 @@ Antes de publicar al mercado:
 
 ---
 
-## 24. Estado funcional al corte V180
+## 24. Estado funcional al corte V181
 
 ### Operativo
 
@@ -1128,6 +1128,7 @@ Antes de publicar al mercado:
 - selector de campo mediante siete casillas visibles de selección única;
 - bloqueo preventivo de campos sin tarjeta oficial cargada.
 - dictado continuo de ronda con espera de cuatro segundos entre capturas;
+- cierre de dictado independiente del estado transitorio `listening`, watchdog de diez segundos para transcripciones pendientes y protección de los estados `ESCUCHANDO`, `TRANSCRIBIENDO` y `PROCESANDO`;
 - navegación hablada desde la ronda hacia el registro;
 - silencio ante frases sin intención reconocida, sin inventar datos ni alterar scores.
 - interruptor rojo persistente `TIMER ON` / `TIMER OFF` para detener y reanudar el cronómetro sin contar la pausa;
@@ -1162,6 +1163,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 3.8 / App V181 | Robustez de voz: el texto completado se procesa aunque cambie `listening`; watchdog libera transcripciones pendientes; el refresco del reloj deja de sobrescribir los estados activos de escucha, transcripción y procesamiento. |
 | 2026-08-19 | Manual 3.7 / App V180 | Unificada la fuente matemática de casillas y totales mediante `derivedScoreForHole`; añadida prueba exhaustiva de Gross, Neto, handicap, contra par, ida, vuelta y total para ambas matrices y todos los handicaps 0–54. |
 | 2026-08-19 | Manual 3.6 / App V179 | Cronómetro convertido en interruptor real `TIMER ON`/`TIMER OFF`, reanudación conservando el tiempo acumulado y excluyendo la pausa; superficie táctil completa hasta la fila `YDS`; retícula bloqueada contra selección azul, arrastre y menú contextual; publicación verificada en Producción. |
 | 2026-08-19 | Manual 3.5 / App V173 | La barra roja se mueve junto al cronómetro y adopta el texto exacto `TIMER OFF`; la flecha inferior izquierda incorpora debajo `REGRESAR A DATOS`. |
