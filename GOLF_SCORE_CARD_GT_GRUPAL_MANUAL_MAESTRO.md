@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V143  
+**Versión documentada:** V144  
 **Fecha de corte:** 19 de agosto de 2026  
 **Rama operativa:** `grupal-v120-safe`  
 **Aplicación:** `index-grupal.html`  
@@ -76,7 +76,7 @@ El verificador `verify-manual-sync.mjs` compara automáticamente la versión dec
 7. La ronda activa persiste al cerrar, minimizar, poner en background o reabrir la aplicación.
 8. La ronda activa sólo se sustituye al confirmar expresamente una `NUEVA RONDA` mediante `INICIAR RONDA`.
 9. Los cálculos Gross, Neto, contra par y handicap deben derivarse de una única fuente matemática.
-10. La tarjeta individual y la grupal son productos separados; modificar una no autoriza modificar la otra.
+10. La tarjeta grupal es el producto único, definitivo y activo. La antigua tarjeta individual queda retirada y no recibe nuevas funciones.
 11. Todo lo no solicitado permanece congelado.
 12. Cada versión publicada debe tener pruebas, commit identificable y respaldo.
 
@@ -101,7 +101,12 @@ Capacidad:
 
 ### 5.2 Tarjeta individual
 
-**Estado:** producto separado. No debe alterarse desde el trabajo de la grupal.
+**Estado:** `DESCARTADO` desde V144.
+
+- Deja de formar parte de la hoja de ruta.
+- No recibe correcciones, nuevas funciones ni evolución comercial.
+- Su archivo histórico no se elimina para conservar trazabilidad y respaldo.
+- Toda capacidad futura se diseña exclusivamente alrededor de la tarjeta grupal.
 
 ### 5.3 Enlace operativo
 
@@ -199,6 +204,7 @@ Reglas:
 
 - agregar un jugador no mueve a los ya existentes;
 - las filas disponibles conservan su estructura con aproximadamente 75% menos saturación;
+- desde V144, las líneas de las filas disponibles reducen otro 70% su intensidad respecto del nivel anterior y quedan aproximadamente en 7.5% de la línea normal;
 - las filas disponibles no muestran datos falsos;
 - el mismo criterio se aplica al bloque de resultados totales;
 - al retirar un jugador, su espacio queda disponible sin reordenar innecesariamente a los demás.
@@ -570,7 +576,7 @@ Consultas futuras:
 - `Cuánto tiré el 5 de mayo en la primera vuelta`;
 - `Qué tiraron Alan y Diego en los hoyos 3, 7 y 12 el 5 de mayo`;
 - `Muéstrame la tarjeta grupal del 5 de mayo`;
-- `Muéstrame las tarjetas individuales de Alan y Diego de esa ronda`;
+- `Muéstrame la información de Alan y Diego dentro de la tarjeta grupal de esa ronda`;
 - comparaciones entre fechas, campos, jugadores, vueltas y hoyos.
 
 Requisito: ninguna consulta histórica debe mezclarse con la ronda activa ni modificarla.
@@ -617,7 +623,7 @@ Requisito: ninguna consulta histórica debe mezclarse con la ronda activa ni mod
 
 ### Tarjeta generada
 
-- grupal o individual;
+- grupal;
 - versión visual;
 - fecha de generación;
 - destinatario;
@@ -637,11 +643,9 @@ Requisito: ninguna consulta histórica debe mezclarse con la ronda activa ni mod
 - Desde una aplicación web, el selector de contactos permite al usuario compartir contactos seleccionados, pero no autoriza escritura silenciosa y permanente.
 - Enviar desde el WhatsApp personal del teléfono puede abrir el chat y preparar el contenido; el usuario debe confirmar el envío.
 - El envío completamente automático requiere WhatsApp Business Platform, un número del servicio, consentimiento y cumplimiento de sus políticas.
-- Al finalizar la ronda, el servicio futuro podrá enviar automáticamente:
-  1. tarjeta global/grupal;
-  2. tarjeta personal del jugador.
-- El jugador podrá guardar la tarjeta deseada en su carrete.
-- La tarjeta individual futura incluirá resumen extendido: pares, birdies, bogeys, dobles bogeys, triples, vueltas y otros indicadores.
+- Al finalizar la ronda, el servicio futuro podrá enviar automáticamente la tarjeta global/grupal.
+- Cada jugador podrá guardar la tarjeta grupal en su carrete.
+- Los análisis personales futuros se consultarán dentro de la experiencia grupal y no producirán un segundo producto individual.
 
 No debe implementarse envío real sin:
 
@@ -655,23 +659,11 @@ No debe implementarse envío real sin:
 
 ---
 
-## 20. Tarjeta individual futura ampliada
+## 20. Tarjeta individual retirada
 
-**Estado:** `PLANIFICADO`.
+**Estado:** `DESCARTADO` desde V144.
 
-Contenido previsto:
-
-- identidad del jugador y ronda;
-- campo, fecha, tee y handicap;
-- Gross y Neto por hoyo;
-- primera y segunda vuelta;
-- resultado total;
-- cantidad de cada tipo de score;
-- mejores y peores hoyos;
-- tiros recibidos;
-- comparación Gross/Neto;
-- simbología gráfica;
-- formato guardable y compartible.
+No se desarrollará una tarjeta individual separada. Las consultas, estadísticas y análisis por jugador se producirán desde la tarjeta grupal, su historial y su motor inteligente.
 
 ---
 
@@ -761,7 +753,7 @@ Antes de publicar al mercado:
 - protección de datos aprobada;
 - consentimiento de WhatsApp implementado;
 - historial y base de datos tienen respaldo;
-- tarjeta grupal e individual tienen pruebas separadas;
+- la tarjeta grupal tiene pruebas completas de todos sus jugadores y configuraciones;
 - existe rollback a una versión estable;
 - cada versión tiene commit, hash y rama de respaldo.
 
@@ -788,7 +780,7 @@ Antes de publicar al mercado:
 - **Q — Queries/consultas:** jugadores, hoyos, rangos, vueltas y comparaciones.
 - **R — Resultados/Respaldo:** totales consistentes y versiones recuperables.
 - **S — Scores/Simbología:** captura, vocabulario y gráficos por hoyo.
-- **T — Tarjetas:** grupal actual e individual ampliada futura.
+- **T — Tarjeta:** grupal única y definitiva.
 - **U — Usuario:** control final, privacidad y consentimiento.
 - **V — Voz/Versionado:** lenguaje natural y trazabilidad de cada cambio.
 - **W — WhatsApp:** canal futuro preferente, opcional y consentido.
@@ -834,8 +826,8 @@ Antes de publicar al mercado:
 - consultas por fecha;
 - base de jugadores;
 - WhatsApp opcional y consentido;
-- envío automático de tarjeta grupal e individual;
-- tarjeta individual con reporte ampliado;
+- envío automático de la tarjeta grupal;
+- análisis personales integrados dentro del producto grupal;
 - analítica histórica y comparaciones avanzadas.
 
 ---
@@ -844,6 +836,7 @@ Antes de publicar al mercado:
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-19 | Manual 1.4 / App V144 | Líneas de espacios libres reducidas otro 70%; tarjeta grupal declarada producto único y definitivo; tarjeta individual retirada de la hoja de ruta. |
 | 2026-08-19 | Manual 1.3 / App V143 | Opción Torneo por nombre, orden automático por fecha, archivo histórico local de rondas y verificador automático de sincronización código/manual. |
 | 2026-08-19 | Manual 1.2 / App V142 | Auditoría exhaustiva del motor HDCP 0–54, candado crítico de matrices, seis jugadores × 18 círculos y política sin caché para la tarjeta grupal. |
 | 2026-08-19 | Manual 1.1 / App V141 | Campo WhatsApp opcional `+502`, validación de ocho dígitos, directorio local persistente y definición de límites entre web, contactos del teléfono, WhatsApp personal y WhatsApp Business. |
