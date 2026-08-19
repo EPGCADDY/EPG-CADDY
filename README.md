@@ -30,9 +30,11 @@ El proyecto se encuentra dividido en documentos especializados.
 
 ## Documentos Oficiales
 
-- EPG-Caddy_Master_Blueprint_v0.1.md
-- ECOS.md
-- COURSE_DATABASE.md
+- [GOLF Score Card GT. GRUPAL — Manual Maestro y Memoria Funcional](GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md)
+- [EPG-Caddy Master Blueprint](EPG-Caddy_Master_Blueprint_v0.1.md)
+- [Arquitectura de la aplicación](APP_ARCHITECTURE.md)
+- [Sistema ECOS](ECOS.md)
+- [Base de datos de campos](COURSE_DATABASE.md)
 
 ---
 
@@ -51,6 +53,8 @@ Todo cambio del proyecto deberá cumplir las siguientes reglas:
 # Estado Actual
 
 ✅ Documento Maestro
+
+✅ Manual Maestro y Memoria Funcional de la tarjeta grupal
 
 ✅ Sistema Operativo ECOS
 
