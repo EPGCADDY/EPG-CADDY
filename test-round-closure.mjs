@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import './round-closure.js';
+const engine=globalThis.GSCRoundClosure;
+const player={id:'p1',name:'Jugador',handicap:0,tee:'Blanco',matrix:'Caballeros',activeFrom:1,holes:Object.fromEntries(Array.from({length:18},(_,i)=>[i+1,{gross:4,net:4,diff:0}]))};
+const base={id:'r1',configured:true,course:'El Pulté Golf',createdAt:'2026-08-19T08:00:00.000Z',players:[player]};
+assert.equal(engine.validate(base).ok,true);
+const incomplete=structuredClone(base);delete incomplete.players[0].holes[7];
+assert.deepEqual(engine.validate(incomplete),{ok:false,code:'SCORE_PENDING',playerId:'p1',hole:7});
+const omitted=structuredClone(base);omitted.players[0].holes[3]={status:'x'};
+assert.equal(engine.validate(omitted).ok,false);
+const first=await engine.close(base,{appVersion:'V182',closedAt:'2026-08-19T12:00:00.000Z'});
+assert.equal(first.ok,true);assert.equal(first.round.status,'officially_closed');assert.equal(first.snapshot.sha256.length,64);
+const second=await engine.close(first.round,{appVersion:'V182'});
+assert.equal(second.alreadyClosed,true);assert.equal(second.snapshot.sha256,first.snapshot.sha256);
+console.log('PASS cierre oficial: completos, cero X, SHA-256 e idempotencia');
