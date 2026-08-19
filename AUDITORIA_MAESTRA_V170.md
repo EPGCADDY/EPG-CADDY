@@ -1,16 +1,17 @@
-# Auditoría Maestra V170
+# Auditoría Maestra V180
 
 **Fecha:** 19 de agosto de 2026  
 **Alcance:** reconciliación de código, voz, jugadores, campos, documentación, pruebas y respaldos.
 
 ## Resultado ejecutivo
 
-La V170 recupera en una sola línea de desarrollo la documentación y pruebas que se habían separado de las correcciones recientes de voz. La base local queda coherente y verificable. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
+La V180 conserva la reconciliación documental de V170, los controles publicados hasta V179 y unifica el motor de casillas y totales. La base local queda coherente y verificable. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
 
 ## PASS local verificado
 
 - Tarjeta grupal de uno a seis jugadores.
 - Gross, Neto, handicap por hoyo, ida, vuelta, total y resultado contra par.
+- Prueba exhaustiva del motor para dos matrices, handicaps 0–54, 18 hoyos y Gross 1–12.
 - Registro, corrección, incorporación y retiro de jugadores.
 - Directorio local y registro V2 de jugadores con migración, consentimiento inactivo por defecto, retiro y claves idempotentes.
 - Persistencia primaria, copia local de respaldo y archivo local de hasta 120 rondas.
@@ -19,7 +20,8 @@ La V170 recupera en una sola línea de desarrollo la documentación y pruebas qu
 - El Pulté como único campo configurado; los otros seis quedan bloqueados hasta recibir tarjeta oficial.
 - Vocabulario golfístico documentado y respaldado en código y prompts de transcripción.
 - Dictado continuo, silencio ante frases desconocidas y navegación hablada hacia el registro.
-- Botón rojo inferior para detener, congelar y respaldar el cronómetro; recuperación de rondas completas mediante el último score.
+- Interruptor rojo `TIMER ON`/`TIMER OFF` para detener y reanudar sin contar la pausa, con superficie táctil ampliada y persistencia.
+- Flecha `REGRESAR A DATOS` y retícula protegida contra selección táctil accidental.
 - Manual Maestro A–Z, ECOS, arquitectura, base de campos, arquitectura PostgreSQL, SQL inicial y matriz de pendientes presentes.
 - Seis paquetes automáticos y validación de sintaxis JavaScript aprobados.
 
@@ -38,7 +40,7 @@ El vocabulario es **ampliable y respaldado**, no literalmente infinito. Las vari
 - WhatsApp Business y correo transaccional con entregas verificables y sin duplicados.
 - Correcciones posteriores al cierre con original preservado y rótulo `Tarjeta corregida`.
 - Pruebas físicas completas en campo, ruido, segundo plano, iPhone y Android.
-- Verificación del despliegue remoto de esta versión.
+- Validación física completa de V179 en todos los dispositivos objetivo, aunque Producción ya entrega la versión correcta.
 
 ## Regla para cargar nuevos campos
 
