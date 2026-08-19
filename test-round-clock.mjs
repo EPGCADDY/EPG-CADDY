@@ -7,7 +7,9 @@ assert.ok(html.includes('id="stopClockButton">TIMER ON</button>'),'El botón deb
 assert.ok(html.includes('class="round-status-row"'),'El botón debe compartir la línea del cronómetro');
 assert.ok(html.includes('.timer-off-button{height:28px'),'El botón debe ser una barra roja compacta');
 assert.ok(html.includes('id="stopClockHitArea"'),'Falta la superficie táctil invisible independiente');
-assert.ok(html.includes("h2.left+h2.width/2")&&html.includes("h6.left+h6.width/2"),'El toque debe abarcar de media columna 2 a media columna 6');
+assert.ok(html.includes('rawLeft=c.left+player.offsetWidth+concept.offsetWidth+h1.offsetWidth+h2.offsetWidth/2'),'El límite debe partir de media columna 2 sin depender del desplazamiento');
+assert.ok(html.includes('h5.offsetWidth+h6.offsetWidth/2'),'El límite debe llegar a media columna 6');
+assert.ok(!html.includes('h2.left+h2.width/2'),'El área no debe seguir columnas desplazadas fuera de pantalla');
 assert.ok(html.includes('yardas=$("courseInfo")?.querySelector(".head")'),'La referencia debe ser YARDAS de Información del campo');
 assert.ok(html.includes('top=y.bottom,bottom=b.bottom'),'El toque debe subir desde la barra hasta la parte baja de YARDAS');
 assert.ok(html.includes('z-index:94'),'La superficie del timer debe tener prioridad táctil');
@@ -27,4 +29,4 @@ assert.ok(html.includes('REGRESAR A DATOS'),'La flecha debe llevar el texto infe
 assert.ok(html.includes('$("backToRegistrationButton").addEventListener("click",openNewRoundDraft)'),'La flecha debe abrir el registro sin borrar la ronda');
 assert.ok(html.includes('.back-registration-control{position:fixed;left:10px;bottom:10px'),'La flecha debe permanecer visible abajo a la izquierda');
 assert.ok(html.includes('.back-registration-control{left:38px;bottom:23px;font-size:7px}'),'En teléfono la flecha debe estar 60% a la derecha y 30% arriba');
-console.log('PASS TIMER ON/OFF con guardia táctil de documento V177');
+console.log('PASS TIMER ON/OFF con superficie fija de pantalla V178');
