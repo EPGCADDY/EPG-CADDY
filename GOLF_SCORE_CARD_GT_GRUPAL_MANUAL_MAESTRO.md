@@ -1172,6 +1172,7 @@ Antes de publicar al mercado:
 | 2026-08-19 | Manual 3.11 / App V184 | Generador determinista desde snapshot oficial: Tarjeta Global, tarjeta personal ampliada por jugador, estadísticas, gráfica, resumen escrito, apertura individual y descarga conjunta. |
 | 2026-08-19 | Manual 3.12 / App V185 | Motor compositivo de consultas históricas habladas y escritas con calendario `America/Guatemala`: hoy, ayer, mañana/tarde, última jugada, último mes, hoyo/vuelta/ronda, promedios, reportes, categorías y ranking de hoyos. |
 | 2026-08-19 | Manual 3.13 / App V185 | Motor de corrección posterior al cierre: exige autorización y motivo, incrementa versión, recalcula el hoyo corregido, enlaza el SHA-256 anterior y preserva íntegramente la Tarjeta original. Interfaz de autorización aún pendiente. |
+| 2026-08-19 | Manual 3.14 / App V185 | Cola offline idempotente: identificador único, hash de payload, reintentos controlados, conflicto detectable y purga local solamente después de acuse remoto con integridad comprobada. Transporte central aún pendiente. |
 
 ### 24.1 Capacidad histórica combinatoria
 
