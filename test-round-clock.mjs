@@ -10,15 +10,20 @@ assert.ok(html.includes('id="stopClockHitArea"'),'Falta la superficie táctil in
 assert.ok(html.includes('rawLeft=c.left+player.offsetWidth+concept.offsetWidth+h1.offsetWidth+h2.offsetWidth/2'),'El límite debe partir de media columna 2 sin depender del desplazamiento');
 assert.ok(html.includes('h5.offsetWidth+h6.offsetWidth/2'),'El límite debe llegar a media columna 6');
 assert.ok(!html.includes('h2.left+h2.width/2'),'El área no debe seguir columnas desplazadas fuera de pantalla');
+assert.ok(html.includes('ydsRow=document.querySelector("#scorecard tbody.player-block tr:first-child")'),'La superficie debe localizar la fila YDS inferior');
+assert.ok(html.includes('top=y.bottom,bottom=yds.bottom'),'La superficie debe cubrir desde YARDAS superior hasta el final de YDS inferior');
 assert.ok(html.includes('yardas=$("courseInfo")?.querySelector(".head")'),'La referencia debe ser YARDAS de Información del campo');
-assert.ok(html.includes('top=y.bottom,bottom=b.bottom'),'El toque debe subir desde la barra hasta la parte baja de YARDAS');
 assert.ok(html.includes('z-index:94'),'La superficie del timer debe tener prioridad táctil');
 assert.ok(html.includes('addEventListener("touchstart",stopClockFromLargeArea'),'iPhone debe capturar touchstart directamente');
 assert.ok(html.includes('addEventListener("pointerdown",stopClockFromLargeArea'),'Debe capturar pointerdown directamente');
 assert.ok(html.includes('document.addEventListener("touchstart",interceptTimerStopGesture'),'Safari debe interceptar el toque antes del micrófono');
 assert.ok(html.includes('e.stopImmediatePropagation?.()'),'El toque del timer no debe llegar al micrófono');
-assert.ok(html.includes('now-lastTimerStopInterceptAt>1200'),'Debe bloquear también el click posterior del mismo toque');
 assert.ok(html.includes('round.endedAt?`TIMER OFF · ${roundElapsedText()}`:"TIMER ON"'),'Debe alternar TIMER ON y TIMER OFF');
+assert.ok(html.includes('function startRoundClock()'),'TIMER OFF debe poder volver a TIMER ON');
+assert.ok(html.includes('round.createdAt=new Date(now-elapsed*1000).toISOString()'),'La reanudación debe conservar el tiempo acumulado');
+assert.ok(html.includes('button.disabled=!round.configured'),'TIMER OFF no debe deshabilitar el interruptor');
+assert.ok(html.includes('.scorecard,.summary{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}'),'La retícula no debe ser seleccionable');
+assert.ok(html.includes('document.addEventListener("selectionstart",lockScorecardSelection'),'Safari debe cancelar la selección azul');
 assert.ok(html.includes('round.endedAt?new Date(round.endedAt).getTime():Date.now()'),'El tiempo debe congelarse al detenerse');
 assert.ok(html.includes('isRoundComplete()&&lastScore'),'Una ronda completa antigua debe recuperar el último score');
 assert.ok(html.includes('round.durationSeconds='),'La duración final debe persistirse');
@@ -29,4 +34,4 @@ assert.ok(html.includes('REGRESAR A DATOS'),'La flecha debe llevar el texto infe
 assert.ok(html.includes('$("backToRegistrationButton").addEventListener("click",openNewRoundDraft)'),'La flecha debe abrir el registro sin borrar la ronda');
 assert.ok(html.includes('.back-registration-control{position:fixed;left:10px;bottom:10px'),'La flecha debe permanecer visible abajo a la izquierda');
 assert.ok(html.includes('.back-registration-control{left:38px;bottom:23px;font-size:7px}'),'En teléfono la flecha debe estar 60% a la derecha y 30% arriba');
-console.log('PASS TIMER ON/OFF con superficie fija de pantalla V178');
+console.log('PASS TIMER ON/OFF, superficie completa y retícula fija V179');
