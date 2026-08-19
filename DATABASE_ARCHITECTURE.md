@@ -4,7 +4,7 @@
 
 La aplicación tendrá una base PostgreSQL central, alojada y administrada. La opción recomendada para el despliegue actual en Vercel es Neon Postgres mediante Vercel Marketplace.
 
-La base central será la fuente permanente de verdad para jugadores, rondas cerradas, scores, consentimientos, archivos generados, correcciones y entregas. El almacenamiento local del teléfono seguirá siendo una copia operativa offline y una cola de sincronización; nunca será la única copia comercial.
+La base central será la única fuente permanente de verdad para jugadores, rondas, scores, consentimientos, archivos generados, correcciones, estadísticas y entregas. El historial se consulta dentro de la misma aplicación, pero no reside permanentemente en el teléfono. El dispositivo conserva solamente la ronda activa, una caché mínima y la cola de sincronización; después de confirmación remota, los datos temporales se purgan automáticamente.
 
 ## Principios
 
@@ -23,7 +23,8 @@ La base central será la fuente permanente de verdad para jugadores, rondas cerr
 
 - PostgreSQL alojado: identidades, contactos, consentimientos, rondas, participantes, scores, versiones y entregas.
 - Vercel Blob privado o almacenamiento equivalente: imágenes/PDF/paquetes finales.
-- Teléfono: ronda activa, directorio local compatible, snapshots pendientes y cola offline.
+- Teléfono: ronda activa, caché temporal mínima, snapshots pendientes y cola offline; nunca el historial permanente.
+- Aplicación: pantalla única de historial que consulta la base central y permite reconstruir rondas, tarjetas, estadísticas y récords en cualquier dispositivo autorizado.
 - Backups del proveedor: recuperación puntual; deben probarse restauraciones periódicas.
 
 ## Sincronización offline
