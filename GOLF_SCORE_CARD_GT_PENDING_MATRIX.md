@@ -29,9 +29,9 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 
 | Prioridad | Módulo | Estado real | Próxima condición de PASS |
 |---|---|---|---|
-| P0 | Tarjeta en sucio sin registro | Implementada V193; pendiente verificación remota | La flecha activa automáticamente seis nombres opcionales editables y seis bloques sólo Gross; sin HDCP, círculos, Neto ni `+/-`; acepta hoyos salteados y dictado por posición/nombre; cero efectos en historial, récords, tarjetas o envíos. |
+| P0 | Tarjeta en sucio sin registro | Publicada V193; verificación técnica remota completada | La flecha activa automáticamente seis nombres opcionales editables y seis bloques sólo Gross; sin HDCP, círculos, Neto ni `+/-`; acepta hoyos salteados y dictado por posición/nombre; cero efectos en historial, récords, tarjetas o envíos. |
 | P0 | Regla de trazabilidad funcional | Obligatoria permanente | Toda función aprobada debe constar simultáneamente en código, Matriz, manual y pruebas de aceptación; con una evidencia faltante continúa pendiente. |
-| P0 | Sistema tipográfico, campos y cronómetro | Implementado V193; pendiente verificación remota | Fecha/estado/hora/Campo/Par/Slope e Información del campo con familia, mayúsculas, peso y alineación homologados; línea compacta `INICIO … · RONDA …` en verde neón y sin cortes. |
+| P0 | Sistema tipográfico, campos y cronómetro | Publicado V193; verificación técnica remota completada | Fecha/estado/hora/Campo/Par/Slope, nombres de los campos e Información del campo con familia, mayúsculas, peso y alineación homologados; línea compacta `INICIO … · RONDA …` en verde neón y sin cortes. |
 | P0 | Actualización obligatoria | Implementada V192; pendiente verificación remota | Una versión vencida bloquea toda la interfaz y sólo `ACTUALIZAR` conserva la ronda y carga la publicación vigente sin caché. |
 | P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
 | P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
