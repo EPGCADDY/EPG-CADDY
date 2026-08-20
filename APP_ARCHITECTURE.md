@@ -121,6 +121,10 @@ Calcula:
 
 • Estadísticas
 
+### Stableford Scratch permanente
+
+La modalidad de clasificación se abre desde la opción `STABLE`, ubicada en la cuadrícula de campos inmediatamente debajo de `ALTA VISTA`, sin contaminar la ronda normal. Al abrirla permite elegir `SENIOR` o `S. SENIOR`. Admite un máximo de cuatro jugadores y configura automáticamente handicap cero. Senior utiliza marcas blancas; S. Senior utiliza marcas amarillas. La tarjeta muestra Gross y Puntos por hoyo, totales de ida, vuelta y ronda, y una clasificación de cuatro fechas que suma las tres mejores tarjetas. Sólo se habilitan Country Club, El Pulté, San Isidro y Mayan Golf; cualquier campo sin datos oficiales permanece bloqueado.
+
 ---
 
 ## ECOS

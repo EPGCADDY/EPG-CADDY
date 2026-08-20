@@ -58,6 +58,7 @@ El servidor acepta una mutación una sola vez. Si recibe nuevamente el mismo `cl
 - `DATABASE_URL` está disponible en Producción.
 - La migración inicial está aplicada.
 - La API `/api/sync` existe, pero el transporte permanece cerrado porque falta configurar `SYNC_TOKEN`; responde correctamente `SYNC_AUTH_NOT_CONFIGURED`.
+- La modalidad Stableford V199 conserva temporalmente en el navegador la serie de cuatro fechas y las tres mejores tarjetas por jugador. Esta persistencia local permite la operación inmediata, pero no sustituye la fuente central ni se considera historial multi-dispositivo.
 
 ## Dependencias restantes para activación integral
 
@@ -66,5 +67,6 @@ El servidor acepta una mutación una sola vez. Si recibe nuevamente el mismo `cl
 3. Definir identidad y permisos de propietario, operadores y jugadores.
 4. Aprobar política de privacidad y términos.
 5. Ejecutar pruebas de backup, restore, concurrencia, offline y migración retroactiva.
+6. Crear el modelo central de series Stableford, fechas, categorías y resultados oficiales, y migrar el acumulado local con claves idempotentes.
 
 La base central ya está alojada y responde. Hasta completar los puntos restantes, no se considera habilitada la sincronización comercial de datos personales y rondas.

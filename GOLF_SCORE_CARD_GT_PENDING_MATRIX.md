@@ -1,6 +1,6 @@
 # Tarjeta Oficial — Matriz Maestra de Pendientes
 
-**Corte auditado:** V196 lista para publicación; Vercel Pro y Neon activos, verificados el 20 de agosto de 2026
+**Corte auditado:** V199 con PASS local de 16 paquetes y publicación a `main` autorizada; prueba física posterior pendiente; Vercel Pro y Neon activos, verificados el 20 de agosto de 2026
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
 ## Regla
@@ -29,20 +29,21 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 
 | Prioridad | Módulo | Estado real | Próxima condición de PASS |
 |---|---|---|---|
+| P0 | Stableford Scratch Senior / S. Senior | V199 implementado y auditado localmente; publicación a `main` autorizada | Acceso `STABLE` dentro de la cuadrícula de campos, inmediatamente debajo de Alta Vista; Senior HCP 0/blancas y S. Senior HCP 0/amarillas; 1–4 nombres; Gross/Puntos por hoyo; `X` explícita en cero; ida/vuelta/total; cuatro fechas/campos; ranking por mejores 3 y alta manual de resultados externos. |
 | P0 | Tarjeta en sucio sin registro | Publicada V193; verificación técnica remota completada | La flecha activa automáticamente seis nombres opcionales editables y seis bloques sólo Gross; sin HDCP, círculos, Neto ni `+/-`; acepta hoyos salteados y dictado por posición/nombre; cero efectos en historial, récords, tarjetas o envíos. |
 | P0 | Regla de trazabilidad funcional | Obligatoria permanente | Toda función aprobada debe constar simultáneamente en código, Matriz, manual y pruebas de aceptación; con una evidencia faltante continúa pendiente. |
-| P0 | Sistema tipográfico, campos y cronómetro | Publicado V193; verificación técnica remota completada | Fecha/estado/hora/Campo/Par/Slope, nombres de los campos e Información del campo con familia, mayúsculas, peso y alineación homologados; línea compacta `INICIO … · RONDA …` en verde neón y sin cortes. |
+| P0 | Sistema tipográfico, campos y cronómetro | V197 implementada; verificación en curso | Fecha/estado/hora/Campo/Par/Slope y nombres de campos homologados; franja separada con `INICIO` a la izquierda, TIMER en el centro y cronómetro a la derecha. |
 | P0 | Alineación fina del encabezado y la tarjeta | V194 publicada y verificada técnicamente; validación visual física abierta | FECHA/HORA usan exactamente la familia y peso de CAMPO/PAR/SLOPE; HOYO, PAR y YDS quedan centrados dentro de la columna conceptual. Falta aprobación visual del propietario en el teléfono objetivo. |
-| HECHO | Espaciado del reloj y encabezados del registro | V195 publicada y aprobada por el propietario | La franja usa distribución `space-between`, reduce al mínimo los márgenes laterales móviles y separa `INICIO · RONDA` de TIMER; `HDCP - MARCAS - TEES` conserva columnas independientes. |
+| HECHO | Espaciado y aislamiento táctil del reloj | V197 implementada; pendiente validación física final | Tres columnas simétricas: INICIO izquierda, TIMER centro con zona táctil real de 44 px y cronómetro derecha; sin capa invisible ni interceptores sobre micrófono o cuadrícula. |
 | P0 | Actualización obligatoria | Implementada V192; pendiente verificación remota | Una versión vencida bloquea toda la interfaz y sólo `ACTUALIZAR` conserva la ronda y carga la publicación vigente sin caché. |
 | P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
 | P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
 | P0 | Publicación funcional V185 | PASS remoto | Index completo, histórico y cola offline verificados públicamente; únicamente la última actualización documental quedó bloqueada. |
-| P0 | Publicación documental más reciente | V196 lista para publicación atómica | Publicar código, pruebas y documentos juntos y verificar Producción. |
+| P0 | Publicación documental más reciente | V199 con PASS local y autorización expresa para `main` | Publicar código, pruebas y documentos juntos y verificar Producción. |
 | HECHO | Vercel Pro | Activo y verificado | Billing del equipo muestra `Pro Plan · Active`, ciclo 19-08-2026 a 19-09-2026, factura próxima de USD 20 y crédito incluido de USD 20. |
 | P0 | Control de compilaciones Vercel | Obligatorio permanente | Una publicación atómica por bloque; evitar commits archivo por archivo y previews innecesarios de la rama de respaldo. |
 | P0 | Traspaso inmediato de bloqueos | Obligatorio permanente | Si la pelota está del lado del propietario, avisar y numerar pasos inmediatamente; si está del lado técnico, continuar sin pausa. |
-| P0 | Fuente documental | Sincronizada V185 | Manual V185 normativo; matriz registra capacidades, no cada frase equivalente. |
+| P0 | Fuente documental | Sincronizada V199 | Manual V199 normativo; matriz registra capacidades, no cada frase equivalente. |
 | P0 | Base central alojada | Neon operativo en Producción; `database-health` PASS con 9 tablas | Completar prueba documentada de backup/restore y monitoreo. |
 | P0 | Identidad/autenticación | Pendiente | Definir propietario, operadores, jugadores y permisos antes de exponer APIs. |
 | P0 | Privacidad/consentimiento | Base local | Crear UI y API de otorgamiento/retiro con evidencia y política aprobada. |
@@ -50,6 +51,7 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 | P0 | Seguridad | Pendiente | Threat model, rate limits, validación, logs sin PII y gestión de secretos. |
 | P1 | Sincronización offline | Motor de cola y API central implementados; Neon operativo | Configurar `SYNC_TOKEN`, conectar el transporte autenticado, resolver conflictos y ejecutar prueba física sin señal. Producción reporta `SYNC_AUTH_NOT_CONFIGURED`. |
 | P1 | Historial remoto | Pendiente | Sincronizar rondas y consultar por jugador, fecha, campo y torneo. |
+| P1 | Clasificación Stableford central | Acumulado local V199 | Migrar resultados de las cuatro fechas a Neon con identidad, permisos, idempotencia y consulta multi-dispositivo; hasta entonces no declarar sincronización remota. |
 | P1 | Tarjeta Global archivo | Operativa local HTML | Derivada exclusivamente del snapshot oficial; falta exportación PDF/imagen y validación física. |
 | P1 | Tarjeta personal ampliada | Operativa local HTML | Estadísticas, gráfica y resumen desde el snapshot; falta exportación PDF/imagen y validación física. |
 | P1 | Guardar/compartir/descargar | Pendiente | Archivos reales en hoja nativa, Fotos y paquete conjunto. |
@@ -75,7 +77,7 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 | P2 | Cobertura lingüística | Continua | Matriz de frases, plurales, nombres y ambigüedades. |
 | P0 | X automáticas | Publicada y cubierta por prueba | Abrir rondas antiguas en validación de campo y confirmar reparación segura. |
 | P1 | Multi-campo | El Pulté y Guatemala Country Club operativos | Incorporar los siguientes campos uno por uno, sin heredar datos y con auditoría oficial independiente. |
-| HECHO | Tarjeta oficial Country Club | V196 implementada y auditada | Par 71, cinco marcas, 90 yardajes, ratings, slopes y matrices de handicap verificados contra la fotografía oficial; falta únicamente publicación y prueba física final. |
+| HECHO | Tarjeta oficial Country Club | Publicada V196 e incluida en V199 | Par 71, cinco marcas, 90 yardajes, ratings, slopes y matrices de handicap verificados contra la fotografía oficial; queda la prueba física final. |
 | P3 | Tarjetas oficiales adicionales | Imágenes de San Isidro recibidas; carga expresamente diferida | Conservarlas como fuente visual y procesarlas después de cerrar Country Club; validar casilla por casilla antes de habilitar el campo. |
 | P3 | Comercialización | Pendiente | Términos, privacidad, soporte, costos, monitoreo y recuperación. |
 

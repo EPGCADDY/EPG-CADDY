@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V196
+**Versión documentada:** V199
 **Fecha de corte:** 20 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -586,7 +586,9 @@ Consultas disponibles o previstas para:
 - El transporte de voz se reinicia limpio al reabrir; los datos no.
 - `NUEVA RONDA` abre registro, pero no elimina la ronda existente por sí sola.
 - Sólo `INICIAR RONDA` confirmado crea y sustituye la ronda activa.
-- Una barra roja `TIMER OFF`, ubicada inmediatamente a la derecha del cronómetro, congela el tiempo de la ronda y lo conserva en la copia primaria, el respaldo y el archivo local.
+- La franja del reloj se distribuye en tres zonas independientes: `INICIO` a la izquierda, el botón rojo `TIMER ON` / `TIMER OFF` en el centro y el cronómetro `RONDA HH:MM:SS` a la derecha.
+- La superficie táctil ampliada pertenece exclusivamente al botón rojo central; no existe ninguna capa invisible sobre el micrófono, la información del campo ni la cuadrícula.
+- El botón central congela o reanuda el tiempo de la ronda y conserva el estado en la copia primaria, el respaldo y el archivo local.
 - El botón es idempotente: una vez detenido muestra el tiempo final y no puede volver a modificarlo.
 - En una ronda completa heredada cuyo reloj siguió corriendo, el primer toque recupera como final la hora del último score registrado; en una ronda todavía incompleta usa la hora exacta del toque.
 - Una flecha verde fija en la esquina inferior izquierda, con el texto inferior `REGRESAR A DATOS`, regresa al Registro de ronda sin borrar ni sustituir la ronda activa; sólo `INICIAR RONDA` confirmado crea una ronda nueva.
@@ -1104,7 +1106,7 @@ Antes de publicar al mercado:
 
 ---
 
-## 24. Estado funcional al corte V185
+## 24. Estado funcional al corte V199
 
 ### Operativo
 
@@ -1137,7 +1139,7 @@ Antes de publicar al mercado:
 - navegación hablada desde la ronda hacia el registro;
 - silencio ante frases sin intención reconocida, sin inventar datos ni alterar scores.
 - interruptor rojo persistente `TIMER ON` / `TIMER OFF` para detener y reanudar el cronómetro sin contar la pausa;
-- superficie táctil protegida desde `YARDAS` superior hasta la parte baja de la fila `YDS`, entre las posiciones visuales de media columna 2 y media columna 6;
+- zona táctil real de 44 px de alto limitada al botón TIMER central, sin interceptores globales y completamente separada del micrófono y la cuadrícula;
 - cuadrícula de tarjeta y resultados bloqueada contra selección azul, arrastre y menú contextual de Safari;
 - flecha inferior izquierda siempre visible para regresar al Registro de ronda.
 
@@ -1183,10 +1185,30 @@ La aplicación consulta periódicamente el identificador central de la versión 
 
 Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarjeta oficial o provisional, dictar scores ni utilizar ninguna función. `ACTUALIZAR` conserva primero la ronda local activa, carga la versión publicada con una URL nueva para evitar caché y sólo entonces devuelve el control. La revisión ocurre al iniciar, cada treinta segundos y al volver a primer plano.
 
-## 27. Historial inicial del documento
+## 27. Stableford Scratch — Senior y S. Senior
+
+La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la misma cuadrícula de campos, inmediatamente debajo de `ALTA VISTA`. Al tocarla abre la selección `SENIOR` o `S. SENIOR`. Esta modalidad es independiente de la ronda normal y de la tarjeta provisional.
+
+- `SENIOR`: handicap fijo `0`, marcas blancas y cinco plazas de clasificación por ranking.
+- `S. SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
+- En ambas categorías se registran únicamente de uno a cuatro nombres; handicap y marcas no se escriben porque la aplicación los configura automáticamente.
+- Los únicos campos admitidos por la serie son Country Club, El Pulté, San Isidro y Mayan Golf. Un campo sin tarjeta oficial cargada permanece bloqueado para evitar cálculos con datos heredados o inventados.
+- Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales de ida, vuelta y ronda.
+- Puntuación automática por hoyo: doble bogey o más `0`; bogey `1`; par `2`; birdie `3`; eagle, albatros o mejor `4`. El valor máximo por hoyo queda limitado a cuatro puntos.
+- `X`, `EQUIS` o `LEVANTA` registra el hoyo levantado con cero puntos y sin fabricar un Gross.
+- La voz acepta nombre, hoyo y Gross numérico o expresión golfística. No calcula Neto ni reparte tiros de handicap.
+- Al cierre oficial, la ronda conserva su snapshot y actualiza la clasificación acumulada de su categoría.
+- La clasificación contiene cuatro fechas, una por campo, y suma automáticamente las tres mejores tarjetas de cada jugador.
+- Se pueden incorporar resultados oficiales de otros grupos mediante `AGREGAR RESULTADO OFICIAL`, indicando jugador, categoría, fecha, campo, puntos y Gross opcional.
+- La clasificación Senior muestra las primeras cinco posiciones de ranking; las tres elecciones de capitán se administran fuera del cálculo. S. Senior muestra cuatro posiciones; sus dos elecciones de capitán también son externas.
+- En V199 el acumulado operativo se conserva localmente en el navegador. Su migración a Neon y consulta multi-dispositivo continúan pendientes y no deben anunciarse como sincronizadas hasta superar la prueba central.
+
+## 28. Historial inicial del documento
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-20 | Manual 3.25 / App V199 | Stableford Scratch permanente: Senior HCP 0/marcas blancas y S. Senior HCP 0/marcas amarillas; máximo cuatro jugadores; Gross y puntos por hoyo; X explícita con cero; cuatro campos y fechas; totales por vuelta/ronda; clasificación por las tres mejores tarjetas e ingreso manual de resultados oficiales. |
+| 2026-08-20 | Manual 3.24 / App V197 | Franja del reloj reorganizada en tres zonas: INICIO a la izquierda, TIMER centrado con superficie táctil real ampliada y cronómetro a la derecha; eliminada completamente la antigua capa invisible y sus interceptores globales para impedir que el micrófono active o desactive el timer. |
 | 2026-08-20 | Manual 3.23 / App V196 | Guatemala Country Club habilitado desde su tarjeta oficial: Par 71, 90 yardajes, cinco ratings/slopes y tres matrices de handicap validados casilla por casilla; selección de campo enlazada al motor de Gross, Neto, vueltas y total sin heredar datos de El Pulté. |
 | 2026-08-20 | Manual 3.18 / App V193 | Tarjeta en sucio ampliada: seis nombres opcionales y editables directamente, seis bloques exclusivamente Gross, sin handicap/círculos/Neto/resultado, dictado por posición o nombre y aislamiento absoluto de todos los efectos oficiales. |
 | 2026-08-20 | Manual 3.19 / App V193 | Revisión visual rigurosa: fecha y metadatos del encabezado fijados a una sola familia/tamaño/peso; cronómetro simplificado a `INICIO … · RONDA …` en verde neón; bloque completo de información del campo homologado en familia, mayúsculas, peso y alineación. |
