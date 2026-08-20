@@ -131,6 +131,18 @@
       COURSE_CATALOG[key].displayName=c.displayName;
       COURSE_DATA[key]={par:[...c.par],tees:{Blanco:{...c.tees.Blanco,yds:[...c.tees.Blanco.yds]},Amarillo:{...c.tees.Amarillo,yds:[...c.tees.Amarillo.yds]}},siMen:[...c.si],siWomen:[...c.si],siByTee:{Blanco:[...c.si],Amarillo:[...c.si]}};
     }
+    if(typeof renderCourseInfo==="function"&&!renderCourseInfo.__stablefordSafe){
+      const baseRenderCourseInfo=renderCourseInfo;
+      const safeRender=function(){
+        const standard=["Negro","Azul","Blanco","Rojo","Amarillo"];
+        if(typeof TEES==="undefined"||standard.every(k=>TEES[k]))return baseRenderCourseInfo();
+        const rows=standard.filter(k=>TEES[k]).map(k=>[k,TEES[k]]);
+        const target=typeof $==="function"?$("courseInfo"):null;if(!target)return;
+        target.innerHTML=`<div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>${rows.map(([k,t])=>`<div style="text-align:left"><span class="tee-dot" style="background:${t.color}"></span><span style="color:${t.color};font-weight:800">${Number(t.total).toLocaleString("en-US")}</span></div><div style="text-align:center">${Number(t.rating).toFixed(1)}</div><div style="text-align:center">${Number(t.slope)}</div>`).join("")}`;
+      };
+      safeRender.__stablefordSafe=true;
+      renderCourseInfo=safeRender;
+    }
     return !!COURSE_DATA.san_isidro&&!!COURSE_DATA.mayan_golf;
   }
   return{SERIES_ID,MAX_PLAYERS,MAX_ROUNDS,BEST_ROUNDS,ALLOWED_COURSES,CATEGORY_CONFIG,TOURNAMENT_COURSES,categoryConfig,isAllowedCourse,pointsFor,holeResult,totals,bestThree,blankSeries,normalizeSeries,normalizeResult,upsertResult,standings,nextRoundNumber,cleanName,installTournamentCourses};
