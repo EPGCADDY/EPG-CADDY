@@ -8,6 +8,15 @@
           "value": "no-store, max-age=0"
         }
       ]
+    },
+    {
+      "source": "/(player-registry|round-closure|card-artifacts|historical-analytics|sync-queue).js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0, must-revalidate"
+        }
+      ]
     }
   ]
 }
