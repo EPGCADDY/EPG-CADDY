@@ -5,7 +5,7 @@
 
 ## Resultado ejecutivo
 
-La V185 conserva todos los controles hasta V184 y añade consultas históricas compositivas con calendario de Guatemala, periodos naturales, métricas por hoyo/vuelta/ronda y categorías de score. La base local queda coherente y verificable. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
+La V185 conserva todos los controles hasta V184 y añade consultas históricas compositivas con calendario de Guatemala, periodos naturales, métricas por hoyo/vuelta/ronda y categorías de score. Vercel Pro fue activado por el propietario y la publicación remota completa quedó verificada. La base local y pública queda coherente. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
 
 ## PASS local verificado
 
@@ -14,7 +14,7 @@ La V185 conserva todos los controles hasta V184 y añade consultas históricas c
 - Prueba exhaustiva del motor para dos matrices, handicaps 0–54, 18 hoyos y Gross 1–12.
 - Registro, corrección, incorporación y retiro de jugadores.
 - Directorio local y registro V2 de jugadores con migración, consentimiento inactivo por defecto, retiro y claves idempotentes.
-- Persistencia primaria, copia local de respaldo y archivo local de hasta 120 rondas.
+- Persistencia transitoria local de hasta 120 rondas mientras se migra a PostgreSQL; no es la arquitectura comercial definitiva.
 - Cero creación automática de X y reparación de omisiones históricas identificadas.
 - Catálogo visible de siete campos con selección única.
 - El Pulté como único campo configurado; los otros seis quedan bloqueados hasta recibir tarjeta oficial.
@@ -26,7 +26,7 @@ La V185 conserva todos los controles hasta V184 y añade consultas históricas c
 - Interruptor rojo `TIMER ON`/`TIMER OFF` para detener y reanudar sin contar la pausa, con superficie táctil ampliada y persistencia.
 - Flecha `REGRESAR A DATOS` y retícula protegida contra selección táctil accidental.
 - Manual Maestro A–Z, ECOS, arquitectura, base de campos, arquitectura PostgreSQL, SQL inicial y matriz de pendientes presentes.
-- Seis paquetes automáticos y validación de sintaxis JavaScript aprobados.
+- Doce paquetes automáticos y validación de sintaxis JavaScript aprobados.
 
 ## Alcance real del vocabulario
 
@@ -35,9 +35,9 @@ El vocabulario es **ampliable y respaldado**, no literalmente infinito. Las vari
 ## Pendiente antes de afirmar 100% comercial
 
 - Base PostgreSQL realmente provisionada, migrada, autenticada y probada con restauración.
-- Sincronización offline con resolución de conflictos.
+- Transporte central autenticado para la cola offline y resolución de conflictos multi-dispositivo.
 - Interfaz completa de correo, preferencias y consentimiento verificable.
-- Cierre oficial inmutable con snapshot y hash.
+- Interfaz física de cierre/corrección y persistencia central de sus snapshots y hashes.
 - Generación visual PDF/imagen y entrega remota de los archivos ya derivados localmente.
 - Guardar en Fotos, compartir y descargar paquete conjunto.
 - WhatsApp Business y correo transaccional con entregas verificables y sin duplicados.
@@ -57,4 +57,4 @@ Ejecutar:
 node audit-project.mjs
 ```
 
-Resultado esperado: seis paquetes en PASS, seguidos de la validación independiente de sintaxis JavaScript.
+Resultado esperado: doce paquetes en PASS, seguidos de la validación independiente de sintaxis JavaScript.

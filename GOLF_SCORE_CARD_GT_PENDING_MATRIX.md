@@ -1,6 +1,6 @@
 # Tarjeta Oficial — Matriz Maestra de Pendientes
 
-**Corte auditado:** V185 desarrollada y respaldada; publicación parcial bloqueada por límite de Vercel
+**Corte auditado:** V185 publicada y verificada después de activación de Vercel Pro
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
 ## Regla
@@ -19,6 +19,10 @@ Cuando cualquier bloqueo, autenticación, permiso, publicación, acceso a GitHub
 
 La tarea permanece marcada como `BLOQUEADA — ESPERANDO AL PROPIETARIO` hasta resolver la dependencia. Esta regla aplica aunque el código local haya superado todas las pruebas.
 
+### Regla de traspaso inmediato de la pelota
+
+Cuando la solución dependa del propietario, el asistente debe pasarle inmediatamente la acción con motivo, servicio, dispositivo y pasos numerados. Cuando la solución dependa del asistente, debe ejecutarla sin detener el proceso ni pedir confirmaciones innecesarias. Ningún bloqueo puede permanecer oculto o esperando silenciosamente.
+
 ### Comando mandatorio 👍🏻
 
 Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, debe reanudar inmediatamente el trabajo real pendiente. Está prohibido responder sólo con `👍🏻`, confirmar sin ejecutar o quedarse esperando sin causa. Debe continuar hasta concluir o informar inmediatamente un bloqueo que requiera al propietario.
@@ -27,8 +31,10 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 |---|---|---|---|
 | P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
 | P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
-| P0 | Publicación V185 completa | BLOQUEADA por `build-rate-limit` de Vercel | Esperar ventana móvil o activar Pro; desplegar un único commit atómico y verificar todos los módulos públicos. |
-| P0 | Control de compilaciones Vercel | Directriz nueva | Una publicación atómica por bloque; evitar commits archivo por archivo y previews innecesarios de la rama de respaldo. |
+| P0 | Publicación V185 completa | PASS remoto | Vercel aceptó el despliegue, estado `success`; index completo, módulo histórico y cola offline verificados públicamente. |
+| P0 | Vercel Pro | Activado por el propietario | Confirmar facturación en panel; mantener un solo asiento de despliegue y monitorear Usage. |
+| P0 | Control de compilaciones Vercel | Obligatorio permanente | Una publicación atómica por bloque; evitar commits archivo por archivo y previews innecesarios de la rama de respaldo. |
+| P0 | Traspaso inmediato de bloqueos | Obligatorio permanente | Si la pelota está del lado del propietario, avisar y numerar pasos inmediatamente; si está del lado técnico, continuar sin pausa. |
 | P0 | Fuente documental | Sincronizada V185 | Manual V185 normativo; matriz registra capacidades, no cada frase equivalente. |
 | P0 | Base central alojada | Arquitectura y SQL aprobados | Provisionar Neon, configurar `DATABASE_URL`, aplicar migración y probar restore. |
 | P0 | Identidad/autenticación | Pendiente | Definir propietario, operadores, jugadores y permisos antes de exponer APIs. |
