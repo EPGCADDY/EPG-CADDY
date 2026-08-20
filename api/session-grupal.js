@@ -38,7 +38,7 @@ export default async function handler(req, res) {
 
     const session = {
       type: "realtime",
-      model: "gpt-realtime-2.1",
+      model: "gpt-realtime",
       instructions: [
         "Aplicación grupal de score de golf.",
         "REGLA ABSOLUTA: nunca produzcas respuestas espontáneas.",
@@ -51,7 +51,7 @@ export default async function handler(req, res) {
       audio: {
         input: {
           transcription: {
-            model: "gpt-live-transcribe",
+            model: "gpt-4o-transcribe",
             language: "es",
             prompt: transcriptionPrompt
           },
