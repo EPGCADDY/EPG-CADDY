@@ -340,6 +340,47 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
   .new-round-card .player-registration-guide{gap:5px}
   .new-round-card .player-registration-guide span{min-height:44px;padding:6px 4px}
 }
+/* V188: FECHA, CAMPO, PAR y SLOPE comparten exactamente la misma tipografia */
+.official-round-header{
+  --header-label-size:17px;
+  --header-title-size:25px;
+  --header-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.official-round-header .round-meta #dateText,
+.official-round-header .course-meta .cap,
+.official-round-header .course-meta .numbers,
+.official-round-header .course-meta .numbers span{
+  font-family:var(--header-family)!important;
+  font-size:var(--header-label-size)!important;
+  font-style:normal!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:0!important;
+  color:#fff!important;
+  text-transform:uppercase!important;
+}
+.official-round-header .round-meta h1,
+.official-round-header .course-meta .course{
+  font-family:var(--header-family)!important;
+  font-size:var(--header-title-size)!important;
+  font-style:normal!important;
+  font-weight:800!important;
+  line-height:1!important;
+  letter-spacing:.2px!important;
+}
+@media(max-width:800px){
+  .official-round-header{--header-label-size:9px;--header-title-size:12px}
+}
+/* V189: norma grafica general — toda la interfaz visible en mayusculas */
+.app,.overlay,.final-card-panel,.new-round-card,
+.app button,.overlay button,.app input,.overlay input,.app select,.overlay select,
+.app textarea,.overlay textarea{
+  text-transform:uppercase!important;
+}
+.app input::placeholder,.overlay input::placeholder,
+.app textarea::placeholder,.overlay textarea::placeholder{
+  text-transform:uppercase!important;
+}
 </style>
 </head>
 <body>
@@ -866,12 +907,12 @@ function roundTranscriptCombined(){return roundSegmentOrder.map(id=>roundSegment
 function roundElapsedSeconds(){const start=new Date(round.createdAt).getTime(),end=round.endedAt?new Date(round.endedAt).getTime():Date.now();return Math.max(0,Math.floor((end-start)/1000))}
 function roundElapsedText(){const sec=roundElapsedSeconds(),hh=String(Math.floor(sec/3600)).padStart(2,"0"),mm=String(Math.floor((sec%3600)/60)).padStart(2,"0"),ss=String(sec%60).padStart(2,"0");return `${hh}:${mm}:${ss}`}
 function roundStartText(){return new Intl.DateTimeFormat("es-GT",{hour:"2-digit",minute:"2-digit"}).format(new Date(round.createdAt))}
-function roundIdleStatus(){return `${round.endedAt?"Tiempo de Inicio / fin":"Ronda activa"} · Inicio ${roundStartText()} · ${roundElapsedText()}`}
+function roundIdleStatus(){return `${round.endedAt?"TIEMPO DE INICIO / FIN":"RONDA ACTIVA"} · INICIO ${roundStartText()} · ${roundElapsedText()}`}
 function latestScoreTimestamp(){const values=round.players.flatMap(p=>Object.values(p.holes||{}).map(s=>Date.parse(s?.updatedAt||"")).filter(Number.isFinite));return values.length?Math.max(...values):null}
 let timerStopTouchRect=null,lastTimerStopInterceptAt=0;
 function syncTimerStopHitArea(){const area=$("stopClockHitArea"),button=$("stopClockButton"),card=$("scorecard")?.parentElement,player=document.querySelector("#scorecard th.player-col"),concept=document.querySelector("#scorecard th.concept-col"),holes=[1,2,3,4,5,6].map(h=>document.querySelector(`#scorecard th[data-hole="${h}"]`)),yardas=$("courseInfo")?.querySelector(".head"),ydsRow=document.querySelector("#scorecard tbody.player-block tr:first-child");if(!area||!button||!card||!player||!concept||holes.some(x=>!x)||!yardas||!ydsRow||!round.configured){if(area)area.style.display="none";return}const c=card.getBoundingClientRect(),y=yardas.getBoundingClientRect(),yds=ydsRow.getBoundingClientRect(),[h1,h2,h3,h4,h5,h6]=holes,rawLeft=c.left+player.offsetWidth+concept.offsetWidth+h1.offsetWidth+h2.offsetWidth/2,rawRight=rawLeft+h2.offsetWidth/2+h3.offsetWidth+h4.offsetWidth+h5.offsetWidth+h6.offsetWidth/2,left=Math.max(0,rawLeft),right=Math.min(innerWidth,rawRight),top=y.bottom,bottom=yds.bottom;timerStopTouchRect={left,right,top,bottom};area.style.left=`${left}px`;area.style.top=`${top}px`;area.style.width=`${Math.max(1,right-left)}px`;area.style.height=`${Math.max(1,bottom-top)}px`;area.style.display="block"}
 function renderRoundClockButton(){const button=$("stopClockButton");if(!button)return;button.disabled=!round.configured;button.textContent=round.endedAt?`TIMER OFF · ${roundElapsedText()}`:"TIMER ON";requestAnimationFrame(syncTimerStopHitArea)}
-function stopRoundClock(){if(!round.configured||round.endedAt)return false;const now=Date.now(),lastScore=latestScoreTimestamp(),end=!round.clockResumedAt&&isRoundComplete()&&lastScore&&lastScore<now?lastScore:now;round.endedAt=new Date(end).toISOString();round.durationSeconds=Math.max(0,Math.floor((end-new Date(round.createdAt).getTime())/1000));round.clockResumedAt=null;persist();render();renderRoundClockButton();$("status").textContent=`Tiempo de Inicio / fin · Inicio ${roundStartText()} · ${roundElapsedText()}`;return true}
+function stopRoundClock(){if(!round.configured||round.endedAt)return false;const now=Date.now(),lastScore=latestScoreTimestamp(),end=!round.clockResumedAt&&isRoundComplete()&&lastScore&&lastScore<now?lastScore:now;round.endedAt=new Date(end).toISOString();round.durationSeconds=Math.max(0,Math.floor((end-new Date(round.createdAt).getTime())/1000));round.clockResumedAt=null;persist();render();renderRoundClockButton();$("status").textContent=`TIEMPO DE INICIO / FIN · INICIO ${roundStartText()} · ${roundElapsedText()}`;return true}
 function startRoundClock(){if(!round.configured||!round.endedAt)return false;const now=Date.now(),elapsed=Math.max(0,Number(round.durationSeconds)||roundElapsedSeconds());round.createdAt=new Date(now-elapsed*1000).toISOString();round.endedAt=null;round.clockResumedAt=new Date(now).toISOString();persist();render();renderRoundClockButton();$("status").textContent=roundIdleStatus();return true}
 let lastRoundClockToggleAt=0;
 function toggleRoundClock(){const now=Date.now();if(now-lastRoundClockToggleAt<650)return false;lastRoundClockToggleAt=now;return round.endedAt?startRoundClock():stopRoundClock()}
