@@ -1,6 +1,6 @@
 import { getDatabase } from "./_lib/database.js";
 import { noStore, readJson, requireSyncToken } from "./_lib/http.js";
-import { validateMutation } from "./_lib/sync-validation.mjs";
+import { validateMutation } from "./_lib/sync-validation.js";
 
 export default async function handler(req, res) {
   noStore(res);
@@ -34,4 +34,4 @@ export default async function handler(req, res) {
   }
 }
 
-export { validateMutation } from "./_lib/sync-validation.mjs";
+export { validateMutation } from "./_lib/sync-validation.js";

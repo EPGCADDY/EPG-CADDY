@@ -12,7 +12,7 @@ function authorized(req) {
 }
 
 function statements() {
-  const source = readFileSync(new URL("../database/001_initial_schema.sql", import.meta.url), "utf8");
+  const source = readFileSync(`${process.cwd()}/database/001_initial_schema.sql`, "utf8");
   return source.replace(/^\s*(BEGIN|COMMIT);\s*$/gim, "").split(";").map(statement => statement.trim()).filter(Boolean);
 }
 
