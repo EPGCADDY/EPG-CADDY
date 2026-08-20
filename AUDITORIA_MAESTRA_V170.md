@@ -1,11 +1,11 @@
-# Auditoría Maestra V185
+# Auditoría Maestra V194
 
 **Fecha:** 19 de agosto de 2026  
 **Alcance:** reconciliación de código, voz, jugadores, campos, documentación, pruebas y respaldos.
 
 ## Resultado ejecutivo
 
-La V185 conserva todos los controles hasta V184 y añade consultas históricas compositivas con calendario de Guatemala, periodos naturales, métricas por hoyo/vuelta/ronda y categorías de score. Vercel Pro fue activado por el propietario y la publicación remota completa quedó verificada. La base local y pública queda coherente. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
+La V185 conserva todos los controles hasta V184 y añade consultas históricas compositivas con calendario de Guatemala, periodos naturales, métricas por hoyo/vuelta/ronda y categorías de score. Vercel Pro quedó activo y fue verificado visualmente en Billing del equipo correcto el 20 de agosto de 2026. Esto no significa que todas las funciones comerciales planificadas estén implementadas.
 
 ## PASS local verificado
 
@@ -34,7 +34,7 @@ El vocabulario es **ampliable y respaldado**, no literalmente infinito. Las vari
 
 ## Pendiente antes de afirmar 100% comercial
 
-- Base PostgreSQL realmente provisionada, migrada, autenticada y probada con restauración.
+- Neon PostgreSQL ya provisionado y migrado; falta autenticación del transporte, prueba de restauración y monitoreo.
 - Transporte central autenticado para la cola offline y resolución de conflictos multi-dispositivo.
 - Interfaz completa de correo, preferencias y consentimiento verificable.
 - Interfaz física de cierre/corrección y persistencia central de sus snapshots y hashes.
@@ -57,4 +57,4 @@ Ejecutar:
 node audit-project.mjs
 ```
 
-Resultado esperado: doce paquetes en PASS, seguidos de la validación independiente de sintaxis JavaScript.
+Resultado esperado: trece paquetes en PASS.

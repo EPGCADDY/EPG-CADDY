@@ -9,7 +9,7 @@ assert.equal((html.match(/name:"(?:El Pulté|Country Club|San Isidro|Mayan Golf|
 assert.ok(html.includes('type="radio" name="registrationCourse"'),'El campo debe elegirse mediante selección única');
 assert.ok(html.includes('if(!selectedCourse?.configured)'),'Los campos pendientes deben quedar bloqueados');
 assert.ok(!html.includes('Guatemala Country Club'),'El rótulo debe ser exactamente Country Club');
-assert.ok(html.includes('NOMBRE / HDCP / MARCAS - TEES'),'La guía debe mostrar nombre, handicap, marcas y tees');
+assert.ok(html.includes('NOMBRE / HDCP - MARCAS - TEES'),'La guía debe mostrar nombre, HDCP, marcas y tees con el rótulo vigente');
 assert.ok(!html.includes('TEESS'),'La forma TEESS está prohibida');
 assert.ok(html.includes('HASTA 6 JUGADORES'),'La guía debe informar el límite de seis jugadores');
 console.log('PASS catálogo y registro V170');

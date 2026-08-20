@@ -2,7 +2,7 @@ import fs from "node:fs";
 
 const html = fs.readFileSync(new URL("./index-grupal.html", import.meta.url), "utf8");
 const required = [
-  ["versión V194", "V194-HEADER-FAMILY-COLUMN-CENTER-20260820"],
+  ["versión V195", "V195-CLOCK-FULL-WIDTH-20260820"],
   ["seis filas provisionales", "Array.from({length:6}"],
   ["nombres provisionales editables", "provisional-player-name-input"],
   ["resumen sólo Gross", "TOTALES GROSS PROVISIONALES"],
@@ -20,4 +20,6 @@ for (const [label, needle] of required) {
   if (!html.includes(needle)) throw new Error(`FALTA: ${label}`);
 }
 
-console.log("PASS V194: familia del encabezado y columnas HOYO/PAR/YDS centradas");
+assert.ok(html.includes('justify-content:space-between!important'),'La franja del reloj debe usar los extremos laterales disponibles');
+assert.ok(html.includes('padding:0 8px!important'),'La franja móvil no debe desperdiciar espacio lateral');
+console.log("PASS V195: encabezado homogéneo, columnas centradas y reloj a todo el ancho");

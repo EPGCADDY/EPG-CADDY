@@ -51,14 +51,20 @@ El servidor acepta una mutación una sola vez. Si recibe nuevamente el mismo `cl
 - Retención y eliminación definidas antes de lanzamiento.
 - Exportación de datos del jugador y atención de solicitudes de privacidad.
 
-## Dependencias para activación
+## Estado comprobado al 20 de agosto de 2026
 
-1. Proyecto Vercel autenticado y enlazado.
-2. Neon Postgres provisionado desde Marketplace.
-3. `DATABASE_URL` inyectada en Development, Preview y Production.
-4. Migración `database/001_initial_schema.sql` aplicada.
-5. API autenticada de jugadores y sincronización.
-6. Política de privacidad y términos aprobados.
-7. Pruebas de backup, restore, concurrencia, offline y migración.
+- Neon Postgres está provisionado y conectado al proyecto Vercel.
+- `GET /api/database-health` responde `ok:true`, base `neondb` y nueve tablas.
+- `DATABASE_URL` está disponible en Producción.
+- La migración inicial está aplicada.
+- La API `/api/sync` existe, pero el transporte permanece cerrado porque falta configurar `SYNC_TOKEN`; responde correctamente `SYNC_AUTH_NOT_CONFIGURED`.
 
-Hasta completar estos puntos, la base central se considera diseñada pero no alojada ni operativa.
+## Dependencias restantes para activación integral
+
+1. Configurar y custodiar `SYNC_TOKEN` en los entornos autorizados.
+2. Conectar el cliente y la cola local con la API autenticada.
+3. Definir identidad y permisos de propietario, operadores y jugadores.
+4. Aprobar política de privacidad y términos.
+5. Ejecutar pruebas de backup, restore, concurrencia, offline y migración retroactiva.
+
+La base central ya está alojada y responde. Hasta completar los puntos restantes, no se considera habilitada la sincronización comercial de datos personales y rondas.

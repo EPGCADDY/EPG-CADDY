@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import crypto from "node:crypto";
-import { validateMutation } from "./api/_lib/sync-validation.mjs";
+import { validateMutation } from "./api/_lib/sync-validation.js";
 
 const payload = { round: { id: "round-001", score: 87 }, players: ["Jaime", "Diego"] };
 const stable = JSON.stringify({ players: ["Jaime", "Diego"], round: { id: "round-001", score: 87 } });

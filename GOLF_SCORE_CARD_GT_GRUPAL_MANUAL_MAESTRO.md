@@ -4,8 +4,8 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V194
-**Fecha de corte:** 20 de agosto de 2026  
+**Versión documentada:** V195
+**Fecha de corte:** 20 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
@@ -779,7 +779,7 @@ Los campos nuevos todavía no aparecen en la interfaz y no habilitan envíos. Su
 
 #### Alojamiento central obligatorio
 
-**Estado:** arquitectura y esquema `APROBADOS`; recurso remoto y sincronización `PENDIENTES`.
+**Estado:** arquitectura, esquema, Neon remoto y nueve tablas `OPERATIVOS`; autenticación del transporte, migración retroactiva y sincronización comercial `PENDIENTES`.
 
 - Todos los jugadores deben alojarse en una base PostgreSQL central administrada.
 - La opción recomendada para el despliegue actual es Neon Postgres mediante Vercel Marketplace.
@@ -1190,6 +1190,7 @@ Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarje
 | 2026-08-20 | Manual 3.19 / App V193 | Revisión visual rigurosa: fecha y metadatos del encabezado fijados a una sola familia/tamaño/peso; cronómetro simplificado a `INICIO … · RONDA …` en verde neón; bloque completo de información del campo homologado en familia, mayúsculas, peso y alineación. |
 | 2026-08-20 | Manual 3.20 / App V194 | FECHA y HORA homologadas expresamente con CAMPO, PAR y SLOPE; rótulos HOYO, PAR y YDS centrados horizontal y verticalmente dentro de su columna. |
 | 2026-08-20 | Manual 3.21 / App V194 | Franja `INICIO · RONDA` y botón TIMER distribuida en todo el ancho con separación amplia y simétrica; nomenclatura de registro abreviada a `HDCP - MARCAS - TEES` y encabezados protegidos contra superposición. |
+| 2026-08-20 | Manual 3.22 / App V195 | Franja del reloj corregida para usar realmente los extremos laterales: distribución `space-between`, margen móvil mínimo y separación estable entre `INICIO · RONDA` y TIMER. |
 | 2026-08-20 | Manual 3.16 / App V192 | Tarjeta provisional sin registro: acceso directo desde Registro, sin handicap, dictado por hoyo y score, hoyos salteados, casillas vacías y aislamiento absoluto de historial, récords, cierre oficial y envíos. |
 | 2026-08-20 | Manual 3.17 / App V192 | Actualización obligatoria: detección central de versión, bloqueo total de la aplicación vencida, conservación de ronda y botón único `ACTUALIZAR` con recarga anticaché. |
 | 2026-08-19 | Manual 3.9 / App V182 | Implementado motor de cierre oficial: validación completa, cero X, snapshot SHA-256, cierre idempotente, bloqueo de mutaciones posteriores y botón `FINALIZAR RONDA` dentro del panel final. |
