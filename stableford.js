@@ -6,7 +6,7 @@
   if(root){
     root.GSCStableford=api;
     if(root.document){
-      const install=()=>{try{api.installTournamentCourses()}catch(err){console.error("Stableford course install",err)}};
+      const install=()=>{try{api.installTournamentCourses();api.installStablefordUi()}catch(err){console.error("Stableford install",err)}};
       if(root.document.readyState==="loading")root.document.addEventListener("DOMContentLoaded",install,{once:true});
       else setTimeout(install,0);
     }
@@ -145,5 +145,49 @@
     }
     return !!COURSE_DATA.san_isidro&&!!COURSE_DATA.mayan_golf;
   }
-  return{SERIES_ID,MAX_PLAYERS,MAX_ROUNDS,BEST_ROUNDS,ALLOWED_COURSES,CATEGORY_CONFIG,TOURNAMENT_COURSES,categoryConfig,isAllowedCourse,pointsFor,holeResult,totals,bestThree,blankSeries,normalizeSeries,normalizeResult,upsertResult,standings,nextRoundNumber,cleanName,installTournamentCourses};
+  function installStablefordUi(){
+    if(typeof document==="undefined")return false;
+    const overlay=document.getElementById("stablefordSetupOverlay"),card=overlay?.querySelector(".stableford-setup-card");
+    if(!overlay||!card)return false;
+    if(!document.getElementById("stablefordTournamentName")){
+      const facts=document.getElementById("stablefordSetupFacts");
+      const wrap=document.createElement("label");
+      wrap.className="stableford-tournament-field";
+      wrap.innerHTML='<span>NOMBRE DEL TORNEO</span><input id="stablefordTournamentName" maxlength="80" autocomplete="off" placeholder="NOMBRE DEL TORNEO">';
+      (facts?.parentNode||card).insertBefore(wrap,facts?.nextSibling||card.firstChild);
+    }
+    if(!document.getElementById("stablefordSetupMicWrap")){
+      const course=document.getElementById("stablefordSetupCourse");
+      const mic=document.createElement("div");
+      mic.className="nr-mic stableford-registration-mic";
+      mic.id="stablefordSetupMicWrap";
+      mic.innerHTML='<button class="mic-hit" id="stablefordSetupMic" type="button" aria-label="Micrófono de registro Stableford"></button><div class="mic-visual" aria-hidden="true">🎤</div>';
+      (course?.parentNode||card).insertBefore(mic,course?.nextSibling||card.firstChild);
+      const hit=document.getElementById("stablefordSetupMic");
+      const activate=e=>{if(typeof fireMicActivation==="function")return fireMicActivation("setup",e);return false};
+      if(hit){if(globalThis.PointerEvent)hit.addEventListener("pointerdown",activate,{passive:false,capture:true});else hit.addEventListener("touchstart",activate,{passive:false,capture:true});hit.addEventListener("click",activate,{passive:false,capture:true})}
+    }
+    if(!document.getElementById("stableford-ui-bridge-style")){
+      const style=document.createElement("style");style.id="stableford-ui-bridge-style";
+      style.textContent='.stableford-tournament-field{display:grid;gap:6px;margin:12px 0;text-align:left;color:#fff;font:800 11px Arial,sans-serif}.stableford-tournament-field input{width:100%;height:44px;border:1px solid var(--line);border-radius:6px;background:#050505;color:#fff;padding:0 12px;font:800 14px Arial,sans-serif;text-transform:uppercase}.stableford-registration-mic{margin-top:12px;margin-bottom:12px}.stableford-registration-mic .mic-visual{background:var(--lime);border-color:var(--lime);color:#000}.stableford-registration-mic.active .mic-visual{background:var(--red);border-color:var(--red);color:#fff}';
+      document.head.appendChild(style);
+    }
+    const stableStatus=document.getElementById("stablefordSetupStatus"),baseStatus=document.getElementById("setupStatus"),baseMic=document.getElementById("setupMicWrap"),stableMic=document.getElementById("stablefordSetupMicWrap");
+    const syncNames=()=>{if(!overlay.classList.contains("visible"))return;const source=[...document.querySelectorAll("[data-draft-name]")].map(x=>cleanName(x.value)).filter(Boolean).slice(0,MAX_PLAYERS);if(!source.length)return;const targets=[...document.querySelectorAll("[data-stableford-name]")];source.forEach((name,i)=>{if(targets[i])targets[i].value=name})};
+    const syncVoiceUi=()=>{if(!overlay.classList.contains("visible"))return;syncNames();if(stableStatus&&baseStatus?.textContent)stableStatus.textContent=baseStatus.textContent;if(stableMic&&baseMic)stableMic.classList.toggle("active",baseMic.classList.contains("active"))};
+    if(!overlay.__stablefordVoiceBridge){
+      overlay.__stablefordVoiceBridge=true;
+      const observer=new MutationObserver(syncVoiceUi);if(baseStatus)observer.observe(baseStatus,{subtree:true,childList:true,characterData:true,attributes:true});if(baseMic)observer.observe(baseMic,{attributes:true,attributeFilter:["class"]});const detected=document.getElementById("detectedBody");if(detected)observer.observe(detected,{subtree:true,childList:true,attributes:true,characterData:true});
+      overlay.addEventListener("transitionend",syncVoiceUi);setInterval(syncVoiceUi,500);
+    }
+    const start=document.getElementById("startStablefordRound");
+    if(start&&!start.__stablefordTournamentBridge){
+      start.__stablefordTournamentBridge=true;
+      start.addEventListener("click",()=>{const value=cleanName(document.getElementById("stablefordTournamentName")?.value||"");setTimeout(()=>{try{if(typeof round!=="undefined"&&round?.stablefordMode){round.tournament=value?{name:value}:null;if(typeof persist==="function")persist();if(typeof render==="function")render()}}catch(err){console.error("Stableford tournament",err)}},0)});
+    }
+    const categoryButtons=[...document.querySelectorAll("[data-stableford-category]")];
+    for(const button of categoryButtons)if(!button.__stablefordDefaults){button.__stablefordDefaults=true;button.addEventListener("click",()=>{const category=button.getAttribute("data-stableford-category"),cfg=categoryConfig(category);if(!cfg)return;const facts=document.getElementById("stablefordSetupFacts");if(facts)facts.textContent=`SCRATCH · MARCAS ${cfg.tee.toUpperCase()}S · HCP 0 · MÁXIMO 4 JUGADORES`})}
+    return true;
+  }
+  return{SERIES_ID,MAX_PLAYERS,MAX_ROUNDS,BEST_ROUNDS,ALLOWED_COURSES,CATEGORY_CONFIG,TOURNAMENT_COURSES,categoryConfig,isAllowedCourse,pointsFor,holeResult,totals,bestThree,blankSeries,normalizeSeries,normalizeResult,upsertResult,standings,nextRoundNumber,cleanName,installTournamentCourses,installStablefordUi};
 });
