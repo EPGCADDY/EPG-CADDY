@@ -1,6 +1,6 @@
 # Tarjeta Oficial — Matriz Maestra de Pendientes
 
-**Corte auditado:** V185 lista para publicación
+**Corte auditado:** V185 desarrollada y respaldada; publicación parcial bloqueada por límite de Vercel
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
 ## Regla
@@ -27,24 +27,25 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 |---|---|---|---|
 | P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
 | P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
-| P0 | Publicación V185 | Pendiente de verificación remota | Publicar V185 y comprobar el identificador en Producción. |
+| P0 | Publicación V185 completa | BLOQUEADA por `build-rate-limit` de Vercel | Esperar ventana móvil o activar Pro; desplegar un único commit atómico y verificar todos los módulos públicos. |
+| P0 | Control de compilaciones Vercel | Directriz nueva | Una publicación atómica por bloque; evitar commits archivo por archivo y previews innecesarios de la rama de respaldo. |
 | P0 | Fuente documental | Sincronizada V185 | Manual V185 normativo; matriz registra capacidades, no cada frase equivalente. |
 | P0 | Base central alojada | Arquitectura y SQL aprobados | Provisionar Neon, configurar `DATABASE_URL`, aplicar migración y probar restore. |
 | P0 | Identidad/autenticación | Pendiente | Definir propietario, operadores, jugadores y permisos antes de exponer APIs. |
 | P0 | Privacidad/consentimiento | Base local | Crear UI y API de otorgamiento/retiro con evidencia y política aprobada. |
 | P0 | Cierre oficial | Operativo local V184 | Publicar y validar físicamente cierre, reapertura e inmutabilidad antes de PASS comercial. |
 | P0 | Seguridad | Pendiente | Threat model, rate limits, validación, logs sin PII y gestión de secretos. |
-| P1 | Sincronización offline | Diseñada | Cola idempotente, reintentos, conflictos y pruebas sin señal. |
+| P1 | Sincronización offline | Motor de cola operativo local | Falta transporte autenticado, API central, resolución de conflictos y prueba física sin señal. |
 | P1 | Historial remoto | Pendiente | Sincronizar rondas y consultar por jugador, fecha, campo y torneo. |
 | P1 | Tarjeta Global archivo | Operativa local HTML | Derivada exclusivamente del snapshot oficial; falta exportación PDF/imagen y validación física. |
 | P1 | Tarjeta personal ampliada | Operativa local HTML | Estadísticas, gráfica y resumen desde el snapshot; falta exportación PDF/imagen y validación física. |
 | P1 | Guardar/compartir/descargar | Pendiente | Archivos reales en hoja nativa, Fotos y paquete conjunto. |
-| P1 | Correcciones versionadas | Pendiente | Preservar original, generar `TARJETA CORREGIDA` y auditar autorización. |
+| P1 | Correcciones versionadas | Motor operativo local | Falta interfaz autorizada, persistencia central, regeneración/reenvío y validación física. |
 | P1 | Motor de entregas | Diseñado | Persistencia idempotente y estados verificables. |
 | P1 | Correo transaccional | Dependencia externa | Elegir proveedor, dominio, SPF/DKIM/DMARC y plantillas. |
 | P1 | WhatsApp automático | Dependencia externa | WhatsApp Business Platform, número, plantillas y consentimiento. |
-| P2 | Consultas históricas por voz | Pendiente | Consultas de sólo lectura contra base central con permisos. |
-| P2 | Consultas escritas | Pendiente | Misma intención, fuente, permisos y respuesta que la voz. |
+| P2 | Consultas históricas por voz | Motor local V185 | Falta conectar la fuente central, permisos y pruebas físicas extensas de frases combinadas. |
+| P2 | Consultas escritas | Motor compartido local V185 | Falta interfaz escrita de historial y consulta central autenticada. |
 | P2 | Biblioteca visual | Pendiente | Navegación por rondas, torneos, fechas, campos y jugadores. |
 | P2 | Gráficas personales | Operativa local | Comportamiento Neto contra Par por hoyo; falta regresión visual física. |
 | P1 | Inteligencia histórica combinable | Operativa local V185 | Consulta por hoy/ayer/franja/última jugada/último mes + hoyo/vuelta/ronda + promedio/reporte/categoría/ranking; ampliar filtros de jugador, torneo y campo al conectar base central. |
@@ -56,11 +57,12 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 | P0 | Purga segura del dispositivo | Pendiente backend | Conservar sólo ronda activa/caché/cola; purgar únicamente después de acuse remoto e integridad comprobada. |
 | P0 | Cola idempotente del dispositivo | Motor local operativo | ID único, hash de payload, reintentos, detección de conflicto y purga sólo con acuse íntegro; falta conectar transporte/API central. |
 | P1 | Motor de Tarjeta corregida | Operativo local | Preserva original, exige motivo/autorizador, incrementa versión y enlaza hashes; falta interfaz autorizada, persistencia central y reenvío idempotente. |
-| P2 | Resumen automático | Pendiente | Texto trazable exclusivamente a estadísticas calculadas. |
+| P2 | Resumen automático | Operativo local en tarjeta personal | Falta validación editorial, PDF/imagen, histórico central y prueba de regresión. |
 | P2 | Validación de campo | Continua | Micrófono, ruido, iPhone/Android, background y reconexión. |
 | P2 | Cobertura lingüística | Continua | Matriz de frases, plurales, nombres y ambigüedades. |
 | P0 | X automáticas | Publicada y cubierta por prueba | Abrir rondas antiguas en validación de campo y confirmar reparación segura. |
 | P3 | Multi-campo | Pendiente | Expandir base oficial de campos sin romper El Pulté. |
+| P3 | Tarjetas oficiales de tres campos adicionales | Esperando archivos del propietario | Recibir imágenes completas, transcribir y validar casilla por casilla antes de habilitar cada campo. |
 | P3 | Comercialización | Pendiente | Términos, privacidad, soporte, costos, monitoreo y recuperación. |
 
 ## Hallazgos documentales
