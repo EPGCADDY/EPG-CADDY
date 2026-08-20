@@ -1,4 +1,4 @@
-import crypto from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { getDatabase } from "./_lib/database.js";
 import { noStore } from "./_lib/http.js";
@@ -7,8 +7,8 @@ const EXPECTED_HASH = "412f14f53ed63f4d5da7e95db2a42d8e88aa44397b7b1d292bdee2a3b
 
 function authorized(req) {
   const token = String(req.headers["x-bootstrap-token"] || "");
-  const actual = crypto.createHash("sha256").update(token).digest("hex");
-  return token.length === 64 && crypto.timingSafeEqual(Buffer.from(actual), Buffer.from(EXPECTED_HASH));
+  const actual = createHash("sha256").update(token).digest("hex");
+  return token.length === 64 && timingSafeEqual(Buffer.from(actual), Buffer.from(EXPECTED_HASH));
 }
 
 function statements() {

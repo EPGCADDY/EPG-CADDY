@@ -1,4 +1,4 @@
-import crypto from "node:crypto";
+import { createHash } from "node:crypto";
 
 const ID_PATTERN = /^[A-Za-z0-9._:-]{8,160}$/;
 
@@ -20,7 +20,7 @@ export function validateMutation(input) {
   }
   if (!/^[a-f0-9]{64}$/.test(mutation.payloadHash)) throw Object.assign(new Error("INVALID_PAYLOAD_HASH"), { code: "INVALID_MUTATION" });
   if (mutation.payload === undefined) throw Object.assign(new Error("MISSING_PAYLOAD"), { code: "INVALID_MUTATION" });
-  const actualHash = crypto.createHash("sha256").update(stableStringify(mutation.payload)).digest("hex");
+  const actualHash = createHash("sha256").update(stableStringify(mutation.payload)).digest("hex");
   if (actualHash !== mutation.payloadHash) throw Object.assign(new Error("PAYLOAD_HASH_MISMATCH"), { code: "PAYLOAD_HASH_MISMATCH" });
   return mutation;
 }
