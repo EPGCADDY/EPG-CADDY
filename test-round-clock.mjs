@@ -28,11 +28,11 @@ assert.ok(html.includes('document.addEventListener("selectionstart",lockScorecar
 assert.ok(html.includes('round.endedAt?new Date(round.endedAt).getTime():Date.now()'),'El tiempo debe congelarse al detenerse');
 assert.ok(html.includes('isRoundComplete()&&lastScore'),'Una ronda completa antigua debe recuperar el último score');
 assert.ok(html.includes('round.durationSeconds='),'La duración final debe persistirse');
-assert.ok(html.includes('Tiempo de Inicio / fin'),'El reloj detenido debe mostrar Tiempo de Inicio / fin');
+assert.ok(html.includes('function roundIdleStatus(){return `INICIO ${roundStartText()} · RONDA ${roundElapsedText()}`}'),'El reloj debe mostrar el formato aprobado INICIO / RONDA');
 assert.ok(html.includes('if(!round.configured||round.endedAt)return false'),'El botón debe ser idempotente');
 assert.ok(html.includes('id="backToRegistrationButton"'),'Falta la flecha inferior izquierda');
 assert.ok(html.includes('REGRESAR A DATOS'),'La flecha debe llevar el texto inferior aprobado');
 assert.ok(html.includes('$("backToRegistrationButton").addEventListener("click",openNewRoundDraft)'),'La flecha debe abrir el registro sin borrar la ronda');
 assert.ok(html.includes('.back-registration-control{position:fixed;left:10px;bottom:10px'),'La flecha debe permanecer visible abajo a la izquierda');
 assert.ok(html.includes('.back-registration-control{left:38px;bottom:23px;font-size:7px}'),'En teléfono la flecha debe estar 60% a la derecha y 30% arriba');
-console.log('PASS TIMER ON/OFF, superficie completa y retícula táctil fija V183');
+console.log('PASS TIMER ON/OFF, formato INICIO/RONDA, superficie completa y retícula táctil fija V193');

@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V192
+**Versión documentada:** V193
 **Fecha de corte:** 20 de agosto de 2026  
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -1167,8 +1167,10 @@ Antes de publicar al mercado:
 
 La primera pantalla incorpora el acceso **SCORE CARD SIN REGISTRO**. Permite abrir inmediatamente la tarjeta sin registrar jugadores, sin handicap y sin presionar `OK`. Está destinada a inspección visual, práctica y partidas informales de algunos hoyos, incluso salteados.
 
-- La tarjeta muestra un único renglón `SIN NOMBRE` y no asigna handicap.
-- El dictado acepta hoyo y resultado, por ejemplo: `HOYO 1 PAR`, `HOYO 5 BOGEY` o varios pares hoyo/score en una sola intervención.
+- La flecha de acceso activa por sí sola el modo interno `TARJETA EN SUCIO`; el usuario no debe marcar ninguna opción adicional.
+- La cuadrícula abre seis espacios de nombre completamente en blanco. Los nombres son opcionales y pueden teclearse directamente en la tarjeta sólo como referencia informal.
+- Cada jugador muestra exclusivamente `YDS` y `GROSS`. No aparecen handicap, círculos de handicap, Neto ni resultado `+/-`.
+- El dictado acepta hoyo y resultado para el primer espacio, por ejemplo: `HOYO 1 PAR`, y también jugador o nombre, hoyo y resultado, por ejemplo: `JUGADOR 3 HOYO 5 BOGEY` o `CARLOS HOYO 9 PAR`.
 - No exige orden consecutivo ni completar 18 hoyos; las casillas no jugadas permanecen vacías y nunca se convierten en `X`.
 - Se identifica permanentemente como `TARJETA PROVISIONAL · NO GENERA RÉCORD NI ENVÍOS`.
 - No entra al archivo histórico, base de jugadores, estadísticas históricas, récords, cierre oficial, Tarjeta Global, tarjeta personal, WhatsApp, correo ni cola de entregas.
@@ -1184,7 +1186,9 @@ Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarje
 
 | Fecha | Versión | Registro |
 |---|---|---|
-| 2026-08-20 | Manual 3.16 / App V192 | Tarjeta provisional sin registro: acceso directo desde Registro, `SIN NOMBRE`, sin handicap, dictado por hoyo y score, hoyos salteados, casillas vacías y aislamiento absoluto de historial, récords, cierre oficial y envíos. |
+| 2026-08-20 | Manual 3.18 / App V193 | Tarjeta en sucio ampliada: seis nombres opcionales y editables directamente, seis bloques exclusivamente Gross, sin handicap/círculos/Neto/resultado, dictado por posición o nombre y aislamiento absoluto de todos los efectos oficiales. |
+| 2026-08-20 | Manual 3.19 / App V193 | Revisión visual rigurosa: fecha y metadatos del encabezado fijados a una sola familia/tamaño/peso; cronómetro simplificado a `INICIO … · RONDA …` en verde neón; bloque completo de información del campo homologado en familia, mayúsculas, peso y alineación. |
+| 2026-08-20 | Manual 3.16 / App V192 | Tarjeta provisional sin registro: acceso directo desde Registro, sin handicap, dictado por hoyo y score, hoyos salteados, casillas vacías y aislamiento absoluto de historial, récords, cierre oficial y envíos. |
 | 2026-08-20 | Manual 3.17 / App V192 | Actualización obligatoria: detección central de versión, bloqueo total de la aplicación vencida, conservación de ronda y botón único `ACTUALIZAR` con recarga anticaché. |
 | 2026-08-19 | Manual 3.9 / App V182 | Implementado motor de cierre oficial: validación completa, cero X, snapshot SHA-256, cierre idempotente, bloqueo de mutaciones posteriores y botón `FINALIZAR RONDA` dentro del panel final. |
 | 2026-08-19 | Manual 3.10 / App V183 | Blindaje táctil absoluto de tarjeta y resumen: líneas, columnas, celdas y textos no reciben eventos ni selección; solamente los controles editables del Registro conservan cursor y borrado. |
@@ -1242,4 +1246,4 @@ La próxima versión deberá registrar aquí:
 6. pruebas añadidas y resultados;
 7. número de versión, commit y respaldo.
 
-**Regla final:** si una capacidad no está documentada y probada, no se considera lista para mercado.
+**Regla final:** si una capacidad no está documentada y probada, no se considera lista para mercado. Toda función aprobada debe actualizar simultáneamente código, Matriz de Funciones, manual del usuario y pruebas de aceptación; si falta cualquiera de esas cuatro evidencias, permanece pendiente.
