@@ -1,0 +1,22 @@
+name: Stableford Tournament PASS
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [stableford-tournament-final]
+jobs:
+  stableford-pass:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Stableford core
+        run: node test-stableford.mjs
+      - name: Stableford integrated UI
+        run: node test-stableford-ui.mjs
+      - name: Stableford tournament card
+        run: node test-stableford-torneo.mjs
+      - name: Verify tournament page references core
+        run: grep -q '<script src="./stableford.js"></script>' stableford-torneo.html
