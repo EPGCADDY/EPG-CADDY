@@ -1,6 +1,6 @@
 # STABLEFORD — CIERRE TORNEO
 
-Estado: BLOQUE DE CIERRE AISLADO. No publicar a main hasta PASS.
+Estado: PRE-PASS TÉCNICO EN RAMA AISLADA. NO PUBLICAR A MAIN HASTA PRUEBA FÍSICA.
 
 ## Reglas mandatorias confirmadas
 - Máximo 4 jugadores.
@@ -15,21 +15,28 @@ Estado: BLOQUE DE CIERRE AISLADO. No publicar a main hasta PASS.
 - Resultado oficial y clasificación acumulada.
 
 ## Gate de datos oficiales
-- Country Club: cargado y auditado.
-- El Pulté: cargado y auditado.
-- San Isidro: tarjeta oficial recibida; datos aún deben cargarse y validarse casilla por casilla antes de habilitar Stableford.
-- Mayan Golf: tarjeta oficial recibida; datos aún deben cargarse y validarse casilla por casilla antes de habilitar Stableford.
+- Country Club: CARGADO.
+- El Pulté: CARGADO.
+- San Isidro: CARGADO para Stableford con PAR + tee BLANCO + tee AMARILLO y totales verificados.
+- Mayan Golf: CARGADO para Stableford con PAR + tee BLANCO + tee AMARILLO y totales verificados.
+- Ningún dato de San Isidro/Mayan se hereda de otro campo.
 
-## PASS requerido antes del torneo
-1. Los 4 campos están configurados con PAR y yardajes oficiales de la marca correspondiente.
-2. Ningún campo hereda datos de otro.
-3. 18 hoyos calculan puntos correctamente.
-4. X vale 0 y no inventa Gross.
-5. IDA/VTA/TOTAL de puntos cuadran.
-6. 1, 2, 3 y 4 jugadores renderizan sin mezcla de datos.
-7. Senior y S. Senior fuerzan HCP/marca correctos.
-8. Cuatro fechas respetan campo único y mejores 3.
-9. Persistencia y reapertura conservan ronda y clasificación.
-10. Micrófono registra Gross/X y la tarjeta refleja PUNTOS.
-11. Prueba física en iPhone objetivo.
-12. Sólo después de PASS: publicación atómica y verificación de Producción.
+## Validación ejecutada
+- Motor de puntos 4/3/2/1/0 y X=0 cubierto por test.
+- Máximo 4 jugadores cubierto por test.
+- 4 campos y 4 fechas cubiertos por test.
+- Mejores 3 de 4 cubierto por test.
+- Matrices Stableford San Isidro y Mayan cubiertas por test de 18 hoyos.
+- Instalación integrada de San Isidro/Mayan en index-grupal cubierta por test.
+- Renderer protegido para campos Stableford que sólo requieren tees BLANCO/AMARILLO.
+- Tarjeta independiente de torneo creada como respaldo operativo dentro del mismo repositorio.
+- Vercel Preview: DEPLOY SUCCESS en la rama de cierre.
+
+## PASS pendiente
+1. Prueba física en iPhone: abrir Stableford.
+2. Crear SENIOR con 1–4 jugadores y confirmar BLANCAS / HCP 0.
+3. Crear S. SENIOR y confirmar AMARILLAS / HCP 0.
+4. Probar un hoyo con Birdie, Par, Bogey, Doble Bogey y X; verificar 3/2/1/0/0.
+5. Confirmar que IDA/VTA/TOTAL y clasificación se muestran sin desconfiguración.
+6. Confirmar micrófono en dispositivo objetivo para Gross/X.
+7. Con prueba física PASS: publicación atómica a main y verificación de Producción.
