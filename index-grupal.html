@@ -236,6 +236,110 @@ body{min-height:100vh}
 .app,.final-card-panel{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 input,textarea,select{-webkit-user-select:text!important;user-select:text!important;-webkit-touch-callout:default!important}
 .artifact-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.artifact-actions button,.artifact-actions select{height:42px;border:1px solid var(--lime);border-radius:5px;background:#050505;color:var(--lime);padding:0 14px;font-weight:900}.artifact-actions[hidden]{display:none}
+/* V186: refinamiento tipografico, alineacion y simetria del encabezado oficial */
+.official-round-header .round-meta h1,
+.official-round-header .course-meta .course{
+  font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:25px;
+  font-weight:800;
+  line-height:1;
+  letter-spacing:.2px;
+}
+.official-round-header .round-meta h1{margin:0 0 22px}
+.official-round-header .round-meta div,
+.official-round-header .course-meta .cap,
+.official-round-header .course-meta .numbers{
+  font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:17px;
+  font-weight:400;
+  line-height:1.2;
+  letter-spacing:0;
+}
+.official-round-header .course-meta .cap{display:flex;align-items:center;justify-content:flex-start}
+.official-round-header .course-meta .course{display:flex;align-items:center;justify-content:center;text-align:center}
+.official-round-header .course-meta .numbers{align-items:center;justify-content:flex-end;gap:28px}
+.round-status-row .status{text-transform:uppercase}
+@media(max-width:800px){
+  .official-round-header .round-meta h1,
+  .official-round-header .course-meta .course{font-size:12px;line-height:1;letter-spacing:.1px}
+  .official-round-header .round-meta h1{margin:0 0 13px}
+  .official-round-header .round-meta div,
+  .official-round-header .course-meta .cap,
+  .official-round-header .course-meta .numbers{font-size:9px;line-height:1.2}
+  .official-round-header .course-meta .numbers{gap:10px}
+}
+/* V187: sistema grafico limpio y consistente para Registro de ronda */
+.new-round-card{
+  --reg-section:15px;
+  --reg-content:14px;
+  --reg-help:13px;
+  font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  text-transform:uppercase;
+  text-rendering:geometricPrecision;
+  -webkit-font-smoothing:antialiased;
+}
+.new-round-card button,.new-round-card input,.new-round-card select{font-family:inherit!important;text-transform:uppercase}
+.new-round-card .field-title,
+.new-round-card .setup-facts,
+.new-round-card .voice-prompt strong,
+.new-round-card .confirm-title{
+  font-family:inherit!important;
+  font-size:var(--reg-section)!important;
+  font-weight:800!important;
+  line-height:1.2!important;
+  letter-spacing:.35px!important;
+  text-align:center;
+}
+.new-round-card .course-option,
+.new-round-card .tournament-toggle,
+.new-round-card .tournament-fields input,
+.new-round-card .course-select,
+.new-round-card .tournament-confirm,
+.new-round-card .draft-edit-row,
+.new-round-card .confirm-row,
+.new-round-card .nr-button,
+.new-round-card input,
+.new-round-card select{
+  font-family:inherit!important;
+  font-size:var(--reg-content)!important;
+  font-weight:700!important;
+  line-height:1.25!important;
+  letter-spacing:.15px!important;
+}
+.new-round-card .player-registration-guide{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.new-round-card .player-registration-guide span{
+  min-width:0;
+  min-height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 6px;
+  font-family:inherit!important;
+  font-size:var(--reg-help)!important;
+  font-weight:700!important;
+  line-height:1.25!important;
+  letter-spacing:.1px!important;
+  text-align:center!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere;
+}
+.new-round-card .note-box,
+.new-round-card .detected-row,
+.new-round-card .confirm-row.head,
+.new-round-card .nr-date,
+.new-round-card .setup-status{
+  font-family:inherit!important;
+  font-size:var(--reg-help)!important;
+  line-height:1.4!important;
+  letter-spacing:.1px!important;
+}
+.new-round-card .note-box{text-align:left}
+.new-round-card input::placeholder{font-family:inherit;font-size:inherit;text-transform:uppercase}
+@media(max-width:800px){
+  .new-round-card{--reg-section:12px;--reg-content:11px;--reg-help:10px}
+  .new-round-card .player-registration-guide{gap:5px}
+  .new-round-card .player-registration-guide span{min-height:44px;padding:6px 4px}
+}
 </style>
 </head>
 <body>
@@ -268,7 +372,7 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
 <div class="overlay" id="setupOverlay">
   <section class="new-round-card" id="setupStep1">
     <div class="registration-upper">
-    <div class="nr-head"><img class="official-logo-target" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Golf Score Card Guatemala"><div><div class="nr-date" id="setupDate">REGISTRO DE CAMPO</div></div></div>
+    <div class="nr-head"><img class="official-logo-target" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Golf Score Card Guatemala"></div>
     <div class="field-title course-selection-title">SELECCIONA CAMPO</div><div class="course-options" id="courseOptions" role="radiogroup" aria-label="Campo de golf"></div><div class="setup-facts" id="courseSetupStatus">REGISTRO DE TORNEO</div>
     <div class="tournament-box"><label class="tournament-toggle"><input type="checkbox" id="tournamentToggle"> NOMBRE TORNEO</label><div class="tournament-fields hidden" id="tournamentFields"><input id="tournamentName" type="text" maxlength="80" placeholder="NOMBRE DEL TORNEO" aria-label="Nombre del torneo"></div></div>
     <div class="voice-prompt"><strong id="playerVoicePrompt">REGISTRO DE JUGADORES</strong><div class="player-registration-guide"><span>1- NOMBRE / HDCP / MARCAS - TEES</span><span>2- NOMBRE / HDCP / MARCAS - TEES</span><span>3- HASTA 6 JUGADORES</span></div></div>
@@ -1993,7 +2097,7 @@ async function toggleVoice(context){
     voiceActivationContext=null;
   }
 }
-function dateSetup(){const d=new Date(),date=new Intl.DateTimeFormat("es-GT",{day:"2-digit",month:"long",year:"numeric"}).format(d).toUpperCase();$("setupDate").textContent="REGISTRO DE CAMPO";$("confirmDate").textContent=date}
+function dateSetup(){const d=new Date(),date=new Intl.DateTimeFormat("es-GT",{day:"2-digit",month:"long",year:"numeric"}).format(d).toUpperCase();$("confirmDate").textContent=date}
 $("finalCardButton").addEventListener("click",openFinalDigitalCard);$("officialCloseButton").addEventListener("click",officiallyCloseRound);$("closeFinalCard").addEventListener("click",closeFinalDigitalCard);$("finalCardOverlay").addEventListener("click",e=>{if(e.target===$("finalCardOverlay"))closeFinalDigitalCard()});
 $("openGlobalCard").addEventListener("click",()=>openArtifact(officialArtifacts().global));$("openPersonalCard").addEventListener("click",()=>openArtifact(selectedPersonalArtifact()));$("downloadAllCards").addEventListener("click",downloadAllOfficialCards);
 $("stopClockButton").addEventListener("click",toggleRoundClock);
