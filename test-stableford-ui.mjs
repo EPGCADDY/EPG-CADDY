@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+const stable=fs.readFileSync(new URL("./stableford.js",import.meta.url),"utf8");
 
 assert.match(html,/gscg-build" content="V199-STABLEFORD-INTEGRATED-20260820"/);
 for(const id of [
@@ -25,5 +26,11 @@ assert.match(html,/\["x","equis","levanta","levantar","levantada"\]/);
 assert.match(html,/CLASIFICACIÓN ACUMULADA · MEJORES 3 DE 4/);
 assert.match(html,/RESULTADO OFICIAL STABLEFORD/);
 assert.match(html,/stablefordRoundNumber:roundNumber/);
+assert.match(html,/bindMicActivation\("headerMic","round"\)/,"El micrófono de scores debe seguir enlazado al motor oficial");
+assert.match(stable,/stablefordTournamentName/,"Falta nombre de torneo en el inicio Stableford");
+assert.match(stable,/stablefordSetupMic/,"Falta micrófono de registro Stableford");
+assert.match(stable,/fireMicActivation\("setup",e\)/,"El micrófono Stableford debe reutilizar el motor oficial de registro");
+assert.match(stable,/round\.tournament=value\?\{name:value\}:null/,"El nombre del torneo debe persistir en la ronda Stableford");
+assert.match(stable,/HCP 0 · MÁXIMO 4 JUGADORES/);
 
-console.log("Stableford UI: STABLE bajo los campos, categorías, cuatro jugadores, Gross/Puntos y clasificación verificados.");
+console.log("Stableford UI: inicio completo, torneo, micrófonos, categorías, cuatro jugadores, Gross/Puntos y clasificación verificados.");
