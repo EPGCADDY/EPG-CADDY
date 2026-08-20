@@ -1,0 +1,67 @@
+name: Stableford V200 voice session ready
+
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths:
+      - '.github/workflows/stableford-v200-voice-session-ready.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-audit-commit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+          fetch-depth: 0
+      - name: Apply proven session-ready protections
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html'); s=p.read_text(encoding='utf-8')
+          def rep(old,new,count=1):
+              global s
+              n=s.count(old)
+              if n!=count: raise SystemExit(f'Expected {count}, found {n}: {old[:180]!r}')
+              s=s.replace(old,new,count)
+          rep('<meta name="gscg-build" content="V199-STABLEFORD-INTEGRATED-20260820">','<meta name="gscg-build" content="V200-STABLEFORD-VOICE-SESSION-READY-20260820">')
+          rep('let localStream=null,localTrack=null,localPc=null,localDc=null,localAudio=null,openTimer=null;','let localStream=null,localTrack=null,localPc=null,localDc=null,localAudio=null,openTimer=null,sessionCreatedTimer=null;')
+          rep('''      realtimeShape="unknown";\n      const opened=new Promise((resolve,reject)=>{''','''      realtimeShape="unknown";\n      let sessionCreatedResolve,sessionCreatedReject;\n      const sessionCreated=new Promise((resolve,reject)=>{sessionCreatedResolve=resolve;sessionCreatedReject=reject});\n      sessionCreatedTimer=setTimeout(()=>sessionCreatedReject(new Error("Realtime no informó session.created")),5000);\n      const opened=new Promise((resolve,reject)=>{''')
+          rep('''          if(msg.type==="session.created")realtimeShape=detectRealtimeShape(msg.session);''','''          if(msg.type==="session.created"){\n            realtimeShape=detectRealtimeShape(msg.session);\n            clearTimeout(sessionCreatedTimer);\n            sessionCreatedResolve(true);\n          }''')
+          rep('''      await localPc.setRemoteDescription({type:"answer",sdp});\n      await opened;\n      if(generation!==realtimeGeneration)throw new Error("Conexión reemplazada");''','''      await localPc.setRemoteDescription({type:"answer",sdp});\n      await opened;\n      await sessionCreated;\n      if(generation!==realtimeGeneration)throw new Error("Conexión reemplazada");''')
+          rep('''    }catch(err){\n      if(openTimer)clearTimeout(openTimer);''','''    }catch(err){\n      if(openTimer)clearTimeout(openTimer);\n      if(sessionCreatedTimer)clearTimeout(sessionCreatedTimer);''')
+          old='''      // Reutiliza el transporte Realtime mientras siga sano en el mismo contexto.\n      // Así el toque activa escucha casi inmediata; solo reconecta si iOS lo invalidó.\n      voiceContext=context;\n      setMicConnecting(context,true);\n      const reuse=realtimeReusableFor(context);\n      if(!reuse){\n        teardownRealtime();\n        voiceContext=context;\n        setMicConnecting(context,true);\n        await ensureSession();\n      }'''
+          new='''      // Cada nueva activación usa transporte Realtime fresco; evita reutilizar\n      // una sesión iOS aparentemente conectada que ya dejó de entregar audio.\n      teardownRealtime();\n      voiceContext=context;\n      setMicConnecting(context,true);\n      await ensureSession();'''
+          rep(old,new)
+          p.write_text(s,encoding='utf-8')
+      - name: Audit isolated change
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8')
+          required=['V200-STABLEFORD-VOICE-SESSION-READY-20260820','await sessionCreated;','Realtime no informó session.created','Cada nueva activación usa transporte Realtime fresco']
+          for needle in required: assert needle in s, needle
+          assert 'const reuse=realtimeReusableFor(context);' not in s
+          js=s.split('<script>',1)[1].split('</script>',1)[0]
+          Path('/tmp/g.js').write_text(js,encoding='utf-8')
+          PY
+          node --check /tmp/g.js
+          git diff --check
+          test "$(git diff --name-only)" = "index-grupal.html"
+          git diff --quiet HEAD -- index.html api/session.js api/score.js api/session-grupal.js stableford.js
+      - name: Commit repair and remove temporary workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index-grupal.html
+          git rm .github/workflows/stableford-v200-voice-session-ready.yml
+          git commit -m "Stableford V200 harden intermittent iPhone voice capture"
+          git push origin stableford-tournament-final
