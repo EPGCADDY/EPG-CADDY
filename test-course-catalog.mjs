@@ -8,7 +8,7 @@ for(const name of expected)assert.ok(html.includes(`name:"${name}"`),`Falta el c
 assert.equal((html.match(/name:"(?:El Pulté|Country Club|San Isidro|Mayan Golf|Hacienda Nueva|Alta Vista|La Reunión)"/g)||[]).length,7);
 assert.ok(html.includes('type="radio" name="registrationCourse"'),'El campo debe elegirse mediante selección única');
 assert.ok(html.includes('if(!selectedCourse?.configured)'),'Los campos pendientes deben quedar bloqueados');
-assert.ok(!html.includes('Guatemala Country Club'),'El rótulo debe ser exactamente Country Club');
+assert.ok(html.includes('country_club:{name:"Country Club",displayName:"GUATEMALA COUNTRY CLUB",configured:true}'),'Country Club debe estar habilitado con su nombre oficial de tarjeta');
 assert.ok(html.includes('NOMBRE / HDCP - MARCAS - TEES'),'La guía debe mostrar nombre, HDCP, marcas y tees con el rótulo vigente');
 assert.ok(!html.includes('TEESS'),'La forma TEESS está prohibida');
 assert.ok(html.includes('HASTA 6 JUGADORES'),'La guía debe informar el límite de seis jugadores');

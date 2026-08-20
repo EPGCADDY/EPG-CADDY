@@ -2,7 +2,7 @@ import fs from "node:fs";
 
 const html = fs.readFileSync(new URL("./index-grupal.html", import.meta.url), "utf8");
 const required = [
-  ["versión V195", "V195-CLOCK-FULL-WIDTH-20260820"],
+  ["versión V196", "V196-COUNTRY-CLUB-OFFICIAL-20260820"],
   ["seis filas provisionales", "Array.from({length:6}"],
   ["nombres provisionales editables", "provisional-player-name-input"],
   ["resumen sólo Gross", "TOTALES GROSS PROVISIONALES"],
@@ -22,4 +22,4 @@ for (const [label, needle] of required) {
 
 assert.ok(html.includes('justify-content:space-between!important'),'La franja del reloj debe usar los extremos laterales disponibles');
 assert.ok(html.includes('padding:0 8px!important'),'La franja móvil no debe desperdiciar espacio lateral');
-console.log("PASS V195: encabezado homogéneo, columnas centradas y reloj a todo el ancho");
+console.log("PASS V196: encabezado homogéneo, columnas centradas, reloj a todo el ancho y Country Club oficial");

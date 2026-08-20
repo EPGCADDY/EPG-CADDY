@@ -1,6 +1,6 @@
 # Tarjeta Oficial — Matriz Maestra de Pendientes
 
-**Corte auditado:** V195 en validación; Vercel Pro y Neon activos, verificados el 20 de agosto de 2026
+**Corte auditado:** V196 lista para publicación; Vercel Pro y Neon activos, verificados el 20 de agosto de 2026
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
 ## Regla
@@ -33,12 +33,12 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 | P0 | Regla de trazabilidad funcional | Obligatoria permanente | Toda función aprobada debe constar simultáneamente en código, Matriz, manual y pruebas de aceptación; con una evidencia faltante continúa pendiente. |
 | P0 | Sistema tipográfico, campos y cronómetro | Publicado V193; verificación técnica remota completada | Fecha/estado/hora/Campo/Par/Slope, nombres de los campos e Información del campo con familia, mayúsculas, peso y alineación homologados; línea compacta `INICIO … · RONDA …` en verde neón y sin cortes. |
 | P0 | Alineación fina del encabezado y la tarjeta | V194 publicada y verificada técnicamente; validación visual física abierta | FECHA/HORA usan exactamente la familia y peso de CAMPO/PAR/SLOPE; HOYO, PAR y YDS quedan centrados dentro de la columna conceptual. Falta aprobación visual del propietario en el teléfono objetivo. |
-| P0 | Espaciado del reloj y encabezados del registro | Corrección V195 implementada; pendiente publicación y aprobación física | La franja usa distribución `space-between`, reduce al mínimo los márgenes laterales móviles y separa `INICIO · RONDA` de TIMER; `HDCP - MARCAS - TEES` conserva columnas independientes. |
+| HECHO | Espaciado del reloj y encabezados del registro | V195 publicada y aprobada por el propietario | La franja usa distribución `space-between`, reduce al mínimo los márgenes laterales móviles y separa `INICIO · RONDA` de TIMER; `HDCP - MARCAS - TEES` conserva columnas independientes. |
 | P0 | Actualización obligatoria | Implementada V192; pendiente verificación remota | Una versión vencida bloquea toda la interfaz y sólo `ACTUALIZAR` conserva la ronda y carga la publicación vigente sin caché. |
 | P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
 | P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
 | P0 | Publicación funcional V185 | PASS remoto | Index completo, histórico y cola offline verificados públicamente; únicamente la última actualización documental quedó bloqueada. |
-| P0 | Publicación documental más reciente | V194 activa en Producción | Consolidar las correcciones documentales de auditoría en la siguiente publicación atómica. |
+| P0 | Publicación documental más reciente | V196 lista para publicación atómica | Publicar código, pruebas y documentos juntos y verificar Producción. |
 | HECHO | Vercel Pro | Activo y verificado | Billing del equipo muestra `Pro Plan · Active`, ciclo 19-08-2026 a 19-09-2026, factura próxima de USD 20 y crédito incluido de USD 20. |
 | P0 | Control de compilaciones Vercel | Obligatorio permanente | Una publicación atómica por bloque; evitar commits archivo por archivo y previews innecesarios de la rama de respaldo. |
 | P0 | Traspaso inmediato de bloqueos | Obligatorio permanente | Si la pelota está del lado del propietario, avisar y numerar pasos inmediatamente; si está del lado técnico, continuar sin pausa. |
@@ -74,8 +74,9 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 | P2 | Validación de campo | Continua | Micrófono, ruido, iPhone/Android, background y reconexión. |
 | P2 | Cobertura lingüística | Continua | Matriz de frases, plurales, nombres y ambigüedades. |
 | P0 | X automáticas | Publicada y cubierta por prueba | Abrir rondas antiguas en validación de campo y confirmar reparación segura. |
-| P3 | Multi-campo | Pendiente | Expandir base oficial de campos sin romper El Pulté. |
-| P3 | Tarjetas oficiales adicionales | Imágenes de San Isidro y Country Club recibidas; carga expresamente diferida | Conservarlas como fuente visual y procesarlas sólo después de cerrar los pendientes anteriores; validar casilla por casilla antes de habilitar cualquier campo. |
+| P1 | Multi-campo | El Pulté y Guatemala Country Club operativos | Incorporar los siguientes campos uno por uno, sin heredar datos y con auditoría oficial independiente. |
+| HECHO | Tarjeta oficial Country Club | V196 implementada y auditada | Par 71, cinco marcas, 90 yardajes, ratings, slopes y matrices de handicap verificados contra la fotografía oficial; falta únicamente publicación y prueba física final. |
+| P3 | Tarjetas oficiales adicionales | Imágenes de San Isidro recibidas; carga expresamente diferida | Conservarlas como fuente visual y procesarlas después de cerrar Country Club; validar casilla por casilla antes de habilitar el campo. |
 | P3 | Comercialización | Pendiente | Términos, privacidad, soporte, costos, monitoreo y recuperación. |
 
 ## Hallazgos documentales

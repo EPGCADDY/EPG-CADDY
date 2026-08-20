@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V195
+**Versión documentada:** V196
 **Fecha de corte:** 20 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -325,8 +325,9 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - El registro presenta siete opciones ya escritas con casillas de selección única: `El Pulté`, `Country Club`, `San Isidro`, `Mayan Golf`, `Hacienda Nueva`, `Alta Vista` y `La Reunión`.
 - Sólo puede marcarse un campo por ronda.
 - `Country Club` es el nombre exacto mostrado; no se agrega ninguna palabra adicional.
-- El Pulté permanece operativo con su tarjeta oficial cargada.
-- Los otros seis campos quedan visibles como pendientes y no permiten iniciar una ronda hasta cargar y validar sus tarjetas oficiales.
+- El Pulté y Guatemala Country Club permanecen operativos con sus tarjetas oficiales cargadas y validadas.
+- Guatemala Country Club usa Par 71 (35 ida y 36 vuelta), cinco marcas oficiales y la matriz de handicap correspondiente a cada marca.
+- Los otros cinco campos quedan visibles como pendientes y no permiten iniciar una ronda hasta cargar y validar sus tarjetas oficiales.
 - Nunca se reutilizan pars, handicaps, yardajes, rating o slope de El Pulté para otro campo.
 
 ---
@@ -1186,6 +1187,7 @@ Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarje
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-20 | Manual 3.23 / App V196 | Guatemala Country Club habilitado desde su tarjeta oficial: Par 71, 90 yardajes, cinco ratings/slopes y tres matrices de handicap validados casilla por casilla; selección de campo enlazada al motor de Gross, Neto, vueltas y total sin heredar datos de El Pulté. |
 | 2026-08-20 | Manual 3.18 / App V193 | Tarjeta en sucio ampliada: seis nombres opcionales y editables directamente, seis bloques exclusivamente Gross, sin handicap/círculos/Neto/resultado, dictado por posición o nombre y aislamiento absoluto de todos los efectos oficiales. |
 | 2026-08-20 | Manual 3.19 / App V193 | Revisión visual rigurosa: fecha y metadatos del encabezado fijados a una sola familia/tamaño/peso; cronómetro simplificado a `INICIO … · RONDA …` en verde neón; bloque completo de información del campo homologado en familia, mayúsculas, peso y alineación. |
 | 2026-08-20 | Manual 3.20 / App V194 | FECHA y HORA homologadas expresamente con CAMPO, PAR y SLOPE; rótulos HOYO, PAR y YDS centrados horizontal y verticalmente dentro de su columna. |
