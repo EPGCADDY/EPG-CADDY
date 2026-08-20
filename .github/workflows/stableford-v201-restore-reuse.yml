@@ -1,0 +1,59 @@
+name: Stableford V201 restore proven Realtime reuse
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v201-restore-reuse.yml']
+permissions:
+  contents: write
+jobs:
+  patch-audit-commit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+          fetch-depth: 0
+      - name: Restore proven V133 reuse only
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html'); s=p.read_text(encoding='utf-8')
+          old='''      // Cada nueva activación usa transporte Realtime fresco; evita reutilizar\n      // una sesión iOS aparentemente conectada que ya dejó de entregar audio.\n      teardownRealtime();\n      voiceContext=context;\n      setMicConnecting(context,true);\n      await ensureSession();'''
+          new='''      // Reutiliza el transporte Realtime mientras siga sano en el mismo contexto.\n      // Patrón funcional V133: solo reconstruye si la sesión realmente dejó de ser reutilizable.\n      voiceContext=context;\n      setMicConnecting(context,true);\n      const reuse=realtimeReusableFor(context);\n      if(!reuse){\n        teardownRealtime();\n        voiceContext=context;\n        setMicConnecting(context,true);\n        await ensureSession();\n      }'''
+          if s.count(old)!=1: raise SystemExit(f'guard: expected exact V200 block once, found {s.count(old)}')
+          s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+      - name: Differential audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          test "$(git diff --name-only)" = "index-grupal.html"
+          grep -q 'const reuse=realtimeReusableFor(context);' index-grupal.html
+          grep -q 'await sessionCreated;' index-grupal.html
+          grep -q 'model: "gpt-realtime-2.1"' api/session-grupal.js
+          git diff --quiet HEAD -- api/session-grupal.js stableford.js stableford-torneo.html
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index-grupal.html').read_text(encoding='utf-8')
+          js=s.split('<script>',1)[1].split('</script>',1)[0]
+          Path('/tmp/g.js').write_text(js,encoding='utf-8')
+          PY
+          node --check /tmp/g.js
+          node test-voice-continuity.mjs
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+      - name: Commit exact correction
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V201 restore proven Realtime reuse'
+          git push origin stableford-tournament-final
+          git rm .github/workflows/stableford-v201-restore-reuse.yml
+          git commit -m 'Remove temporary Stableford V201 patch workflow'
+          git push origin stableford-tournament-final
