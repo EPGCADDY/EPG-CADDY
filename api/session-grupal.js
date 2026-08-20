@@ -38,7 +38,7 @@ export default async function handler(req, res) {
 
     const session = {
       type: "realtime",
-      model: "gpt-realtime",
+      model: "gpt-realtime-2.1",
       instructions: [
         "Aplicación grupal de score de golf.",
         "REGLA ABSOLUTA: nunca produzcas respuestas espontáneas.",
