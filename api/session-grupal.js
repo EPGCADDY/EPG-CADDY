@@ -51,7 +51,7 @@ export default async function handler(req, res) {
       audio: {
         input: {
           transcription: {
-            model: "gpt-4o-transcribe",
+            model: "gpt-live-transcribe",
             language: "es",
             prompt: transcriptionPrompt
           },
