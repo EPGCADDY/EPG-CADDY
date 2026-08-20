@@ -1,6 +1,6 @@
 # Tarjeta Oficial — Matriz Maestra de Pendientes
 
-**Corte auditado:** V185 publicada y verificada después de activación de Vercel Pro
+**Corte auditado:** V192 en validación y publicación; Vercel Pro activo, verificado visualmente el 20 de agosto de 2026
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
 ## Regla
@@ -29,10 +29,13 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 
 | Prioridad | Módulo | Estado real | Próxima condición de PASS |
 |---|---|---|---|
+| P0 | Tarjeta provisional sin registro | Implementada V192; pendiente verificación remota | Acceso directo, `SIN NOMBRE`, sin HDCP, hoyos salteados, dictado hoyo/score y cero efectos en historial, récords, tarjetas o envíos. |
+| P0 | Actualización obligatoria | Implementada V192; pendiente verificación remota | Una versión vencida bloquea toda la interfaz y sólo `ACTUALIZAR` conserva la ronda y carga la publicación vigente sin caché. |
 | P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
 | P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
-| P0 | Publicación V185 completa | PASS remoto | Vercel aceptó el despliegue, estado `success`; index completo, módulo histórico y cola offline verificados públicamente. |
-| P0 | Vercel Pro | Activado por el propietario | Confirmar facturación en panel; mantener un solo asiento de despliegue y monitorear Usage. |
+| P0 | Publicación funcional V185 | PASS remoto | Index completo, histórico y cola offline verificados públicamente; únicamente la última actualización documental quedó bloqueada. |
+| P0 | Publicación documental más reciente | Lista para publicación consolidada | El bloqueo `build-rate-limit` pertenecía al plan Hobby; relanzar un único commit y verificar Producción. |
+| HECHO | Vercel Pro | Activo y verificado | Billing del equipo muestra `Pro Plan · Active`, ciclo 19-08-2026 a 19-09-2026, factura próxima de USD 20 y crédito incluido de USD 20. |
 | P0 | Control de compilaciones Vercel | Obligatorio permanente | Una publicación atómica por bloque; evitar commits archivo por archivo y previews innecesarios de la rama de respaldo. |
 | P0 | Traspaso inmediato de bloqueos | Obligatorio permanente | Si la pelota está del lado del propietario, avisar y numerar pasos inmediatamente; si está del lado técnico, continuar sin pausa. |
 | P0 | Fuente documental | Sincronizada V185 | Manual V185 normativo; matriz registra capacidades, no cada frase equivalente. |

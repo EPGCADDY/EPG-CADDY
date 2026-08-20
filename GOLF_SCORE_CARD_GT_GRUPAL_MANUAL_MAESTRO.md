@@ -4,8 +4,8 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V185
-**Fecha de corte:** 19 de agosto de 2026  
+**Versión documentada:** V192
+**Fecha de corte:** 20 de agosto de 2026  
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
@@ -1163,10 +1163,29 @@ Antes de publicar al mercado:
 
 ---
 
-## 25. Historial inicial del documento
+## 25. Tarjeta provisional sin registro
+
+La primera pantalla incorpora el acceso **SCORE CARD SIN REGISTRO**. Permite abrir inmediatamente la tarjeta sin registrar jugadores, sin handicap y sin presionar `OK`. Está destinada a inspección visual, práctica y partidas informales de algunos hoyos, incluso salteados.
+
+- La tarjeta muestra un único renglón `SIN NOMBRE` y no asigna handicap.
+- El dictado acepta hoyo y resultado, por ejemplo: `HOYO 1 PAR`, `HOYO 5 BOGEY` o varios pares hoyo/score en una sola intervención.
+- No exige orden consecutivo ni completar 18 hoyos; las casillas no jugadas permanecen vacías y nunca se convierten en `X`.
+- Se identifica permanentemente como `TARJETA PROVISIONAL · NO GENERA RÉCORD NI ENVÍOS`.
+- No entra al archivo histórico, base de jugadores, estadísticas históricas, récords, cierre oficial, Tarjeta Global, tarjeta personal, WhatsApp, correo ni cola de entregas.
+- Al regresar a Datos puede iniciarse posteriormente una ronda oficial mediante el registro normal.
+
+## 26. Actualización obligatoria de la aplicación
+
+La aplicación consulta periódicamente el identificador central de la versión publicada. Cuando detecta una versión superior a la cargada, detiene voz y funciones, cubre completamente la interfaz y presenta `ACTUALIZACIÓN OBLIGATORIA` con un único botón operativo: `ACTUALIZAR`.
+
+Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarjeta oficial o provisional, dictar scores ni utilizar ninguna función. `ACTUALIZAR` conserva primero la ronda local activa, carga la versión publicada con una URL nueva para evitar caché y sólo entonces devuelve el control. La revisión ocurre al iniciar, cada treinta segundos y al volver a primer plano.
+
+## 27. Historial inicial del documento
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-20 | Manual 3.16 / App V192 | Tarjeta provisional sin registro: acceso directo desde Registro, `SIN NOMBRE`, sin handicap, dictado por hoyo y score, hoyos salteados, casillas vacías y aislamiento absoluto de historial, récords, cierre oficial y envíos. |
+| 2026-08-20 | Manual 3.17 / App V192 | Actualización obligatoria: detección central de versión, bloqueo total de la aplicación vencida, conservación de ronda y botón único `ACTUALIZAR` con recarga anticaché. |
 | 2026-08-19 | Manual 3.9 / App V182 | Implementado motor de cierre oficial: validación completa, cero X, snapshot SHA-256, cierre idempotente, bloqueo de mutaciones posteriores y botón `FINALIZAR RONDA` dentro del panel final. |
 | 2026-08-19 | Manual 3.10 / App V183 | Blindaje táctil absoluto de tarjeta y resumen: líneas, columnas, celdas y textos no reciben eventos ni selección; solamente los controles editables del Registro conservan cursor y borrado. |
 | 2026-08-19 | Manual 3.11 / App V184 | Generador determinista desde snapshot oficial: Tarjeta Global, tarjeta personal ampliada por jugador, estadísticas, gráfica, resumen escrito, apertura individual y descarga conjunta. |
@@ -1211,7 +1230,7 @@ Toda interpretación temporal usa `America/Guatemala`. Cada respuesta debe conse
 
 ---
 
-## 26. Próxima actualización obligatoria
+## 28. Próxima actualización obligatoria
 
 La próxima versión deberá registrar aquí:
 
