@@ -37,6 +37,22 @@ assert.equal(leader.bestThree,95);
 assert.deepEqual(leader.rounds,[31,28,34,30]);
 assert.throws(()=>s.upsertResult(series,{playerName:"JAIME KIRSTE",category:"senior",roundNumber:2,courseKey:"country_club",points:20}),/campo/);
 assert.throws(()=>s.upsertResult(series,{playerName:"JAIME KIRSTE",category:"senior",roundNumber:5,courseKey:"pulte",points:20}),/inválido/);
-assert.equal(s.installTournamentCourses(),false,"En Node no debe intentar tocar globals del navegador");
 
-console.log("Stableford: reglas, matrices de cuatro campos, cuatro fechas y mejores tres verificados.");
+// Simula el entorno global de index-grupal.html para validar la integración real.
+global.COURSE_CATALOG={san_isidro:{name:"San Isidro",configured:false},mayan_golf:{name:"Mayan Golf",configured:false}};
+global.COURSE_DATA={};
+global.TEES={};
+global.renderCourseInfo=function baseRender(){throw new Error("El renderer completo no debe ejecutarse con sólo dos tees")};
+const courseInfo={innerHTML:""};global.$=id=>id==="courseInfo"?courseInfo:null;
+assert.equal(s.installTournamentCourses(),true);
+assert.equal(global.COURSE_CATALOG.san_isidro.configured,true);
+assert.equal(global.COURSE_CATALOG.mayan_golf.configured,true);
+assert.equal(global.COURSE_DATA.san_isidro.tees.Blanco.total,6470);
+assert.equal(global.COURSE_DATA.mayan_golf.tees.Amarillo.total,6457);
+global.TEES=global.COURSE_DATA.san_isidro.tees;
+assert.doesNotThrow(()=>global.renderCourseInfo());
+assert.match(courseInfo.innerHTML,/6,470/);
+assert.match(courseInfo.innerHTML,/6,036/);
+
+delete global.COURSE_CATALOG;delete global.COURSE_DATA;delete global.TEES;delete global.renderCourseInfo;delete global.$;
+console.log("Stableford: reglas, matrices, instalación integrada, cuatro fechas y mejores tres verificados.");
