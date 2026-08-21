@@ -149,6 +149,70 @@
     if(typeof document==="undefined")return false;
     const overlay=document.getElementById("stablefordSetupOverlay"),card=overlay?.querySelector(".stableford-setup-card");
     if(!overlay||!card)return false;
+    const stablefordVoiceActive=()=>overlay.classList.contains("visible")||(typeof round!=="undefined"&&(round?.mode==="stableford"||round?.stablefordMode===true));
+    if(typeof toggleVoice==="function"&&!toggleVoice.__stablefordFastVoice){
+      const baseToggleVoice=toggleVoice;
+      const fastToggleVoice=async function(context){
+        if(!stablefordVoiceActive())return baseToggleVoice(context);
+        if(voiceActivationPromise){
+          if(voiceActivationContext===context&&typeof setMicConnecting==="function")setMicConnecting(context,true);
+          return voiceActivationPromise;
+        }
+        if(typeof recoverRealtimeAfterResumeSync==="function")recoverRealtimeAfterResumeSync();
+        if(context==="round"&&(phase==="processing"||roundFinalizeRequested||roundPendingItems.size)){
+          if(typeof setMicConnecting==="function")setMicConnecting(context,false);
+          if(typeof $==="function"&&$("status"))$("status").textContent="PROCESANDO…";
+          return false;
+        }
+        if(context==="setup"&&(setupFinalizeRequested||setupLocked)){
+          if(typeof setMicConnecting==="function")setMicConnecting(context,false);
+          if(typeof $==="function"&&$("setupStatus"))$("setupStatus").textContent="PROCESANDO…";
+          return false;
+        }
+        if(activeResponseId||stopMonitorActive)stopAuthorizedSpeech();
+        voiceContext=context;
+        if(listening){
+          if(context==="round"){requestRoundFinalize(900);return true}
+          setVoice(false);return true;
+        }
+        voiceActivationContext=context;
+        voiceOpening=true;
+        const reuse=typeof realtimeReady==="function"&&realtimeReady();
+        if(!reuse&&typeof setMicConnecting==="function")setMicConnecting(context,true);
+        voiceActivationPromise=(async()=>{
+          try{
+            if(!reuse)await ensureSession();
+            if(context!==voiceContext)throw new Error("Contexto de micrófono cambió");
+            if(context==="round")resetRoundCapture();
+            if(context==="setup"&&activeResponseId){try{sendEvent({type:"response.cancel",response_id:activeResponseId})}catch{}activeResponseId=null}
+            if(!realtimeReady())throw new Error("Realtime no quedó listo");
+            if(typeof setMicConnecting==="function")setMicConnecting(context,false);
+            setVoice(true);
+            return true;
+          }catch(err){
+            console.error("Activación Stableford:",err);
+            const sameContext=voiceContext===context;
+            teardownRealtime();
+            if(typeof setMicConnecting==="function")setMicConnecting(context,false);
+            if(sameContext){
+              voiceContext=context;
+              if(context==="setup"&&typeof $==="function"&&$("setupStatus"))$("setupStatus").textContent="ERROR";
+              else if(typeof $==="function"&&$("status"))$("status").textContent="ERROR";
+            }
+            return false;
+          }
+        })();
+        try{return await voiceActivationPromise}
+        finally{
+          if(typeof setMicConnecting==="function")setMicConnecting(context,false);
+          voiceOpening=false;
+          voiceActivationPromise=null;
+          voiceActivationContext=null;
+        }
+      };
+      fastToggleVoice.__stablefordFastVoice=true;
+      toggleVoice=fastToggleVoice;
+    }
     if(!document.getElementById("stablefordTournamentName")){
       const facts=document.getElementById("stablefordSetupFacts");
       const wrap=document.createElement("label");
@@ -165,7 +229,7 @@
       (course?.parentNode||card).insertBefore(mic,course?.nextSibling||card.firstChild);
       const hit=document.getElementById("stablefordSetupMic");
       const activate=e=>{if(typeof fireMicActivation==="function")return fireMicActivation("setup",e);return false};
-      if(hit){if(globalThis.PointerEvent)hit.addEventListener("pointerdown",activate,{passive:false,capture:true});else hit.addEventListener("touchstart",activate,{passive:false,capture:true});hit.addEventListener("click",activate,{passive:false,capture:true})}
+      if(hit){if(globalThis.PointerEvent)hit.addEventListener("pointerup",activate,{passive:false,capture:true});else hit.addEventListener("touchend",activate,{passive:false,capture:true});hit.addEventListener("click",activate,{passive:false,capture:true})}
     }
     if(!document.getElementById("stableford-ui-bridge-style")){
       const style=document.createElement("style");style.id="stableford-ui-bridge-style";
