@@ -163,22 +163,8 @@
     // Stableford usa exactamente la ruta Realtime base ya probada de GRUPAL.
 
 
-    if(typeof fireMicActivation==="function"&&!fireMicActivation.__stablefordCleanGesture){
-      const baseFireMicActivation=fireMicActivation;
-      let stablefordGestureAt=0;
-      const cleanFire=function(context,e){
-        if(!stablefordVoiceActive())return baseFireMicActivation(context,e);
-        if(e&&e.cancelable)e.preventDefault();
-        if(e&&e.stopPropagation)e.stopPropagation();
-        const now=Date.now();
-        if(now-stablefordGestureAt<500)return false;
-        stablefordGestureAt=now;
-        toggleVoice(context);
-        return true;
-      };
-      cleanFire.__stablefordCleanGesture=true;
-      fireMicActivation=cleanFire;
-    }
+    // Micrófono Stableford: handler base GRUPAL sin wrapper intermedio.
+
 
     if(!document.getElementById("stablefordTournamentName")){
       const facts=document.getElementById("stablefordSetupFacts");
