@@ -2214,7 +2214,7 @@ function handleRealtime(message){
       if(roundFinalizeTimer)clearTimeout(roundFinalizeTimer);
       // Mantener el micrófono abierto durante todo el dictado. Solo cuatro
       // segundos completos sin una nueva transcripción cierran la captura.
-      roundFinalizeTimer=setTimeout(()=>{roundFinalizeTimer=null;requestRoundFinalize(0,true)},4000);
+      roundFinalizeTimer=setTimeout(()=>{roundFinalizeTimer=null;requestRoundFinalize(0,true)},(typeof round!=="undefined"&&round&&round.mode==="stableford")?2000:4000);
       phase="listening";
       $("status").textContent="● ESCUCHANDO…";
       return;
