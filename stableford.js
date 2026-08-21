@@ -272,6 +272,7 @@
       const observer=new MutationObserver(syncVoiceUi);if(baseStatus)observer.observe(baseStatus,{subtree:true,childList:true,characterData:true,attributes:true});if(baseMic)observer.observe(baseMic,{attributes:true,attributeFilter:["class"]});const detected=document.getElementById("detectedBody");if(detected)observer.observe(detected,{subtree:true,childList:true,attributes:true,characterData:true});
       overlay.addEventListener("transitionend",syncVoiceUi);
     }
+    if(new URLSearchParams(location.search).get("stableford_emergency")==="countryclub"){const names=["Jaime","Junior","Adolfo","Herny"];const apply=()=>document.querySelectorAll("[data-stableford-name]").forEach((el,i)=>{if(i<4)el.value=names[i]});apply();setTimeout(apply,50);setTimeout(apply,250);}
     const start=document.getElementById("startStablefordRound");
     if(start&&!start.__stablefordTournamentBridge){
       start.__stablefordTournamentBridge=true;
