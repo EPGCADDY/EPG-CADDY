@@ -1,0 +1,44 @@
+name: Stableford V246 borrar scores only
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v246-clear-scores-only.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Add BORRAR SCORES preserving setup
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          anchor='''<button id="sfGridEnter" type="button"'''
+          if s.count(anchor)!=1: raise SystemExit('enter anchor mismatch')
+          s=s.replace(anchor,'''<button id="sfClearScores" type="button" style="display:block;width:100%;min-height:38px;margin-top:6px;font-size:14px;font-weight:800;background:#050505;color:#ff4545;border:1px solid #ff4545">BORRAR SCORES</button><button id="sfGridEnter" type="button"''',1)
+          bind='''manual.querySelector("#sfGridEnter").onclick=saveManualHole;'''
+          if s.count(bind)!=1: raise SystemExit('binding anchor mismatch')
+          clear='''manual.querySelector("#sfClearScores").onclick=()=>{if(!window.confirm("¿BORRAR ÚNICAMENTE TODOS LOS SCORES DE LOS HOYOS?\\nSe conservarán jugadores, campo, categoría, marcas y configuración."))return;round.players.forEach(p=>{p.holes={}});manual.dataset.hole="1";persist();localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round));render()};'''
+          s=s.replace(bind,clear+bind,1)
+          p.write_text(s,encoding='utf-8')
+      - name: Validate scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq '>BORRAR SCORES</button>' index-grupal.html
+          grep -Fq 'round.players.forEach(p=>{p.holes={}})' index-grupal.html
+          grep -Fq 'Se conservarán jugadores, campo, categoría, marcas y configuración.' index-grupal.html
+          grep -Fq 'localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round))' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V246 add BORRAR SCORES preserving setup'
+          git push origin stableford-tournament-final
