@@ -1,0 +1,41 @@
+name: Stableford five player isolated
+on:
+  push:
+    branches: [stableford-five-player-emergency]
+    paths: ['.github/workflows/stableford-five-player.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-five-player-emergency
+      - name: Expand isolated Stableford to five players
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('stableford.js');s=p.read_text(encoding='utf-8');s=s.replace('const MAX_PLAYERS=4;','const MAX_PLAYERS=5;',1);p.write_text(s,encoding='utf-8')
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          s=s.replace('const STABLEFORD_EMERGENCY_ROSTER=["JAIME","JUNIOR","FITO","HENRY"];','const STABLEFORD_EMERGENCY_ROSTER=["JAIME","JUNIOR","FITO","HENRY","ALFONSO"];',1)
+          s=s.replace('for(let i=0;i<4;i++)card+=stablefordPlayerBlock(round.players[i]||null,i+1);','for(let i=0;i<5;i++)card+=stablefordPlayerBlock(round.players[i]||null,i+1);',1)
+          s=s.replace('Array.from({length:4},(_,i)=>{const p=round.players[i];','Array.from({length:5},(_,i)=>{const p=round.players[i];',1)
+          p.write_text(s,encoding='utf-8')
+      - name: Validate isolated five-player build
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'const MAX_PLAYERS=5;' stableford.js
+          grep -Fq '"ALFONSO"' index-grupal.html
+          grep -Fq 'for(let i=0;i<5;i++)card+=stablefordPlayerBlock' index-grupal.html
+          grep -Fq 'Array.from({length:5}' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add stableford.js index-grupal.html
+          git commit -m 'Stableford isolated five-player card with Alfonso'
+          git push origin stableford-five-player-emergency
