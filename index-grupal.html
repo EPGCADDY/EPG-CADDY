@@ -2185,7 +2185,8 @@ function handleRealtime(message){
         phase="listening";
         $("status").textContent="TRANSCRIBIENDO…";
         if(roundTranscriptionWatchdog)clearTimeout(roundTranscriptionWatchdog);
-        roundTranscriptionWatchdog=setTimeout(()=>{roundTranscriptionWatchdog=null;if(!roundPendingItems.size)return;roundPendingItems.clear();if(roundTranscriptCombined())requestRoundFinalize(0,true);else{resetRoundCapture();phase=listening?"listening":"idle";$("status").textContent=listening?"● ESCUCHANDO…":roundIdleStatus()}},10000);
+        const stablefordWatchdog=(typeof round!=="undefined"&&round&&round.mode==="stableford")?3000:10000;
+        roundTranscriptionWatchdog=setTimeout(()=>{roundTranscriptionWatchdog=null;if(!roundPendingItems.size)return;roundPendingItems.clear();if(roundTranscriptCombined())requestRoundFinalize(0,true);else{resetRoundCapture();phase=listening?"listening":"idle";$("status").textContent=listening?"● ESCUCHANDO…":roundIdleStatus()}},stablefordWatchdog);
       }
     }
     if(e.type==="conversation.item.input_audio_transcription.completed"&&stopMonitorActive&&!listening){
