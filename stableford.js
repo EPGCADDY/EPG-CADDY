@@ -147,6 +147,14 @@
   }
   function installStablefordUi(){
     if(typeof document==="undefined")return false;
+    try{
+      const params=new URLSearchParams(location.search);
+      if(params.get("stableford_emergency")==="countryclub"){
+        localStorage.removeItem("gscg_round_v1");
+        localStorage.removeItem("gscg_round");
+        sessionStorage.setItem("gscg_stableford_emergency","countryclub");
+      }
+    }catch{}
     const overlay=document.getElementById("stablefordSetupOverlay"),card=overlay?.querySelector(".stableford-setup-card");
     if(!overlay||!card)return false;
     const stablefordVoiceActive=()=>overlay.classList.contains("visible")||(typeof round!=="undefined"&&round?.mode==="stableford");
