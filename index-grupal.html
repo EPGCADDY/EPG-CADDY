@@ -611,9 +611,8 @@ function validTournament(value){return !value||!!value.name}
 const newRoundId=()=>`round_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
 const blankRound=()=>({id:newRoundId(),version:2,configured:false,provisional:false,courseKey:"pulte",course:"El Pulté",tournament:null,players:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),endedAt:null,durationSeconds:null});
 const sfEmergency=new URLSearchParams(location.search).get("stableford_emergency")==="countryclub";
-if(sfEmergency){localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(STORAGE_BACKUP_KEY);localStorage.removeItem(DRAFT_STORAGE_KEY);}
 let round=loadRound(),draftPlayers=[],draftTournament=null,draftCourse="pulte",rosterEditMode=false,rosterEditJoinHole=1,handicapRectificationMode=false,nameCorrectionMode=false,profileCorrectionMode=false,rosterAddMode=false;
-if(sfEmergency){round.configured=true;round.provisional=false;round.courseKey="country_club";round.course="Guatemala Country Club";round.mode="stableford";round.stablefordCategory="senior";round.players=["Jaime","Junior","Fito","Henry"].map((name,i)=>({id:`sf${i+1}`,name,handicap:0,tee:"Blanco",matrix:"Caballeros",whatsapp:"",holes:{},lastHole:null,activeFrom:1,slot:i+1}));localStorage.setItem(STORAGE_KEY,JSON.stringify(round));}
+if(sfEmergency&&!round.configured){round.configured=true;round.provisional=false;round.courseKey="country_club";round.course="Guatemala Country Club";round.mode="stableford";round.stablefordCategory="senior";round.players=["Jaime","Junior","Fito","Henry"].map((name,i)=>({id:`sf${i+1}`,name,handicap:0,tee:"Blanco",matrix:"Caballeros",whatsapp:"",holes:{},lastHole:null,activeFrom:1,slot:i+1}));localStorage.setItem(STORAGE_KEY,JSON.stringify(round));}
 let setupSegmentOrder=[],setupSegmentText=new Map(),setupPendingItems=new Set(),setupFinalizeRequested=false,setupFinalizeTimer=null;
 let setupLocked=false,setupSpeechActive=false,setupManualCommitPending=false;
 let roundSegmentOrder=[],roundSegmentText=new Map(),roundPendingItems=new Set(),roundFinalizeRequested=false,roundFinalizeTimer=null,roundTranscriptionWatchdog=null;
