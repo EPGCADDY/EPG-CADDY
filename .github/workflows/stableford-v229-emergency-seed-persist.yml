@@ -1,0 +1,39 @@
+name: Stableford V229 emergency seed persist
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v229-emergency-seed-persist.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Persist emergency seed to both stores
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          old='''localStorage.setItem(STORAGE_KEY,JSON.stringify(round));}'''
+          new='''localStorage.setItem(STORAGE_KEY,JSON.stringify(round));localStorage.setItem(STORAGE_BACKUP_KEY,JSON.stringify(round));localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round));}'''
+          if s.count(old)<1: raise SystemExit('seed anchor missing')
+          s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round))' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          test -f test-stableford-manual.mjs && node test-stableford-manual.mjs || true
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V229 persist emergency seed to dedicated store'
+          git push origin stableford-tournament-final
