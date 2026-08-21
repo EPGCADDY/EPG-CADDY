@@ -317,7 +317,7 @@
         const parsed=parser(event.transcript||"");
         if(!parsed?.ok||!Array.isArray(parsed.changes))return;
         const targets=[...document.querySelectorAll("[data-stableford-name]")];
-        for(const change of parsed.changes){const target=targets[Number(change.position)-1];if(target)target.value=cleanName(change.name)}
+        for(const change of parsed.changes){const target=targets[Number(change.position)-1];if(target){target.value=cleanName(change.name);target.dispatchEvent(new Event("input",{bubbles:true}));target.dispatchEvent(new Event("change",{bubbles:true}))}}
         if(stableStatus)stableStatus.textContent="JUGADORES DETECTADOS";
         if(listening)setVoice(false);
       };
