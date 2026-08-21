@@ -1,0 +1,39 @@
+name: Stableford V236 horizontal scroll
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v236-horizontal-scroll.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Enable horizontal scroll only on Stableford card
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          anchor='''  let card=stablefordScorecardLead();for(let i=0;i<4;i++)card+=stablefordPlayerBlock(round.players[i]||null,i+1);$("scorecard").innerHTML=card;'''
+          new='''  let card=stablefordScorecardLead();for(let i=0;i<4;i++)card+=stablefordPlayerBlock(round.players[i]||null,i+1);const sc=$("scorecard");sc.innerHTML=card;sc.style.overflowX="auto";sc.style.overflowY="visible";sc.style.webkitOverflowScrolling="touch";sc.style.touchAction="pan-x pan-y";sc.style.maxWidth="100%";const table=sc.querySelector("table");if(table){table.style.minWidth="1450px";table.style.width="max-content"}'''
+          if s.count(anchor)!=1: raise SystemExit('scorecard anchor mismatch')
+          p.write_text(s.replace(anchor,new,1),encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'sc.style.overflowX="auto"' index-grupal.html
+          grep -Fq 'table.style.minWidth="1450px"' index-grupal.html
+          grep -Fq 'sc.style.touchAction="pan-x pan-y"' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V236 allow full-width horizontal scorecard navigation'
+          git push origin stableford-tournament-final
