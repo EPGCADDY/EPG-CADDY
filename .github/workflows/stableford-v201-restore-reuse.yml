@@ -1,4 +1,4 @@
-name: Stableford V201 restore proven Realtime reuse
+name: Stableford voice restore exact V120 SAFE
 on:
   push:
     branches: [stableford-tournament-final]
@@ -14,15 +14,20 @@ jobs:
         with:
           ref: stableford-tournament-final
           fetch-depth: 0
-      - name: Restore proven V133 reuse only
+      - name: Restore exact V120 SAFE activation path only
         shell: python
         run: |
           from pathlib import Path
           p=Path('index-grupal.html'); s=p.read_text(encoding='utf-8')
           old='''      // Cada nueva activación usa transporte Realtime fresco; evita reutilizar\n      // una sesión iOS aparentemente conectada que ya dejó de entregar audio.\n      teardownRealtime();\n      voiceContext=context;\n      setMicConnecting(context,true);\n      await ensureSession();'''
-          new='''      // Reutiliza el transporte Realtime mientras siga sano en el mismo contexto.\n      // Patrón funcional V133: solo reconstruye si la sesión realmente dejó de ser reutilizable.\n      voiceContext=context;\n      setMicConnecting(context,true);\n      const reuse=realtimeReusableFor(context);\n      if(!reuse){\n        teardownRealtime();\n        voiceContext=context;\n        setMicConnecting(context,true);\n        await ensureSession();\n      }'''
-          if s.count(old)!=1: raise SystemExit(f'guard: expected exact V200 block once, found {s.count(old)}')
+          new='''      // Reutiliza el transporte Realtime mientras siga sano en el mismo contexto.\n      // Patrón comprobado físicamente en V120 SAFE: solo reconecta si iOS lo invalidó.\n      voiceContext=context;\n      setMicConnecting(context,true);\n      const reuse=realtimeReusableFor(context);\n      if(!reuse){\n        teardownRealtime();\n        voiceContext=context;\n        setMicConnecting(context,true);\n        await ensureSession();\n      }'''
+          if s.count(old)!=1: raise SystemExit(f'guard activation block count={s.count(old)}')
           s=s.replace(old,new,1)
+          # V120 SAFE does not wait for session.created after the data channel opens.
+          old2='''      await opened;\n      await sessionCreated;\n      if(generation!==realtimeGeneration)throw new Error("Conexión reemplazada");'''
+          new2='''      await opened;\n      if(generation!==realtimeGeneration)throw new Error("Conexión reemplazada");'''
+          if s.count(old2)!=1: raise SystemExit(f'guard session-created wait count={s.count(old2)}')
+          s=s.replace(old2,new2,1)
           p.write_text(s,encoding='utf-8')
       - name: Differential audit
         shell: bash
@@ -31,8 +36,7 @@ jobs:
           git diff --check
           test "$(git diff --name-only)" = "index-grupal.html"
           grep -q 'const reuse=realtimeReusableFor(context);' index-grupal.html
-          grep -q 'await sessionCreated;' index-grupal.html
-          grep -q 'model: "gpt-realtime-2.1"' api/session-grupal.js
+          ! grep -q 'await sessionCreated;' index-grupal.html
           git diff --quiet HEAD -- api/session-grupal.js stableford.js stableford-torneo.html
           python - <<'PY'
           from pathlib import Path
@@ -52,8 +56,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index-grupal.html
-          git commit -m 'Stableford V201 restore proven Realtime reuse'
-          git push origin stableford-tournament-final
-          git rm .github/workflows/stableford-v201-restore-reuse.yml
-          git commit -m 'Remove temporary Stableford V201 patch workflow'
+          git commit -m 'Stableford restore exact V120 SAFE mic activation'
           git push origin stableford-tournament-final
