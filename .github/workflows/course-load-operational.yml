@@ -1,4 +1,4 @@
-name: Load Mayan Golf operational data
+name: Correct Mayan Golf official card
 on:
   push:
     branches: [operational-courses-20260821]
@@ -6,45 +6,53 @@ on:
 permissions:
   contents: write
 jobs:
-  load-mayan:
+  correct-mayan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: operational-courses-20260821
-      - name: Patch only Mayan Golf course data
+      - name: Correct only Mayan Golf from official card
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
           p=Path('index-grupal.html')
           s=p.read_text()
-          s=s.replace('mayan_golf:{name:"Mayan Golf",configured:false}', 'mayan_golf:{name:"Mayan Golf",displayName:"MAYAN GOLF CLUB",configured:true}')
-          anchor='const COURSE_DATA={'
-          block='''const MAYAN_GOLF_PAR=[4,3,4,5,4,5,4,3,4,4,3,5,4,4,5,3,4,4];\nconst MAYAN_GOLF_SI=[7,17,1,3,13,5,15,9,11,2,14,4,8,12,6,18,16,10];\nconst MAYAN_GOLF_TEES={\n  Azul:{label:"AZULES",color:"#0878ff",fill:"#0878ff",text:"#fff",yds:[395,186,486,578,363,552,372,204,400,449,202,555,411,389,542,178,348,389],front:3536,back:3463,rating:74.6,slope:140,total:6999},\n  Blanco:{label:"BLANCAS",color:"#fff",fill:"#f3f3f3",text:"#000",yds:[368,162,463,548,336,528,349,180,371,423,178,525,386,362,514,154,328,368],front:3305,back:3238,rating:72.6,slope:137,total:6543},\n  Amarillo:{label:"DORADAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:[333,137,441,515,307,494,326,155,345,395,153,491,357,334,480,129,291,343],front:3053,back:2993,rating:70.5,slope:133,total:6046},\n  Rojo:{label:"ROJAS",color:"#ff1010",fill:"#f51212",text:"#fff",yds:[297,114,407,478,276,459,292,132,301,355,127,454,319,296,442,106,253,303],front:2756,back:2655,rating:72.4,slope:127,total:5411}\n};\n'''
-          if 'const MAYAN_GOLF_PAR=' not in s:
-              s=s.replace(anchor,block+anchor)
-          needle='country_club:{par:COUNTRY_CLUB_PAR,tees:COUNTRY_CLUB_TEES,siMen:COUNTRY_CLUB_SI_WHITE,siWomen:COUNTRY_CLUB_SI_WOMEN,siByTee:{Negro:COUNTRY_CLUB_SI_BLUE,Azul:COUNTRY_CLUB_SI_BLUE,Blanco:COUNTRY_CLUB_SI_WHITE,Amarillo:COUNTRY_CLUB_SI_WOMEN,Rojo:COUNTRY_CLUB_SI_WOMEN}}'
-          repl=needle+',\n  mayan_golf:{par:MAYAN_GOLF_PAR,tees:MAYAN_GOLF_TEES,siMen:MAYAN_GOLF_SI,siWomen:MAYAN_GOLF_SI,siByTee:{}}'
-          if 'mayan_golf:{par:MAYAN_GOLF_PAR' not in s:
-              s=s.replace(needle,repl)
+          new='''const MAYAN_GOLF_PAR=[4,3,4,4,5,4,3,4,5,4,4,4,3,5,4,4,3,5];
+const MAYAN_GOLF_SI=[13,15,7,9,1,3,11,5,17,6,8,4,12,10,16,2,14,18];
+const MAYAN_GOLF_TEES={
+  Negro:{label:"NEGRAS",color:"#d9d9d9",fill:"#f3f3f3",text:"#000",yds:[412,218,392,476,624,469,195,423,529,417,466,435,192,571,422,460,173,549],front:3738,back:3685,rating:75.7,slope:138,total:7423},
+  Azul:{label:"AZULES",color:"#0878ff",fill:"#0878ff",text:"#fff",yds:[403,139,357,415,604,429,189,370,523,402,415,399,166,582,397,414,167,541],front:3429,back:3483,rating:73.4,slope:133,total:6912},
+  Blanco:{label:"BLANCAS",color:"#fff",fill:"#f3f3f3",text:"#000",yds:[390,132,348,397,583,418,179,357,515,388,405,392,157,566,384,394,160,530],front:3319,back:3376,rating:72.2,slope:132,total:6695},
+  Amarillo:{label:"AMARILLAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:[377,120,324,380,573,407,168,345,506,334,395,385,151,562,370,387,154,519],front:3200,back:3257,rating:71.2,slope:130,total:6457},
+  Rojo:{label:"ROJAS",color:"#ff1010",fill:"#f51212",text:"#fff",yds:[356,114,297,356,487,341,158,333,466,321,342,331,144,469,309,360,139,481],front:2908,back:2896,rating:74.9,slope:135,total:5804}
+};'''
+          s,n=re.subn(r'const MAYAN_GOLF_PAR=.*?\nconst COURSE_DATA=\{',new+'\nconst COURSE_DATA={',s,count=1,flags=re.S)
+          assert n==1
           p.write_text(s)
           PY
-      - name: Verify Mayan matrix
+      - name: Verify official Mayan matrix
         run: |
           python - <<'PY'
-          import re
           s=open('index-grupal.html').read()
-          assert 'mayan_golf:{name:"Mayan Golf",displayName:"MAYAN GOLF CLUB",configured:true}' in s
-          assert 'mayan_golf:{par:MAYAN_GOLF_PAR,tees:MAYAN_GOLF_TEES' in s
-          assert 'const MAYAN_GOLF_PAR=[4,3,4,5,4,5,4,3,4,4,3,5,4,4,5,3,4,4]' in s
-          assert 'const MAYAN_GOLF_SI=[7,17,1,3,13,5,15,9,11,2,14,4,8,12,6,18,16,10]' in s
-          print('MAYAN_GOLF_STATIC_PASS')
+          checks=[
+            'const MAYAN_GOLF_PAR=[4,3,4,4,5,4,3,4,5,4,4,4,3,5,4,4,3,5]',
+            'const MAYAN_GOLF_SI=[13,15,7,9,1,3,11,5,17,6,8,4,12,10,16,2,14,18]',
+            'front:3738,back:3685,rating:75.7,slope:138,total:7423',
+            'front:3429,back:3483,rating:73.4,slope:133,total:6912',
+            'front:3319,back:3376,rating:72.2,slope:132,total:6695',
+            'front:3200,back:3257,rating:71.2,slope:130,total:6457',
+            'front:2908,back:2896,rating:74.9,slope:135,total:5804'
+          ]
+          assert all(x in s for x in checks)
+          print('MAYAN_OFFICIAL_CARD_STATIC_PASS')
           PY
-      - name: Commit Mayan Golf
+      - name: Commit correction
         run: |
           git config user.name 'gscg-automation'
           git config user.email 'actions@users.noreply.github.com'
           git add index-grupal.html
           git diff --cached --quiet && exit 0
-          git commit -m 'Operational: load Mayan Golf official card data'
+          git commit -m 'Operational: correct Mayan Golf official card matrix'
           git push origin HEAD:operational-courses-20260821
