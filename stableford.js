@@ -160,65 +160,8 @@
     if(!overlay||!card)return false;
     const stablefordVoiceActive=()=>overlay.classList.contains("visible")||(typeof round!=="undefined"&&round?.mode==="stableford");
 
-    if(typeof toggleVoice==="function"&&!toggleVoice.__stablefordFastVoice){
-      const baseToggleVoice=toggleVoice;
-      const fastToggleVoice=async function(context){
-        if(!stablefordVoiceActive())return baseToggleVoice(context);
-        if(voiceActivationPromise)return voiceActivationPromise;
-        if(context==="round"&&(phase==="processing"||roundFinalizeRequested||roundPendingItems.size)){
-          if(typeof $==="function"&&$("status"))$("status").textContent="PROCESANDO…";
-          return false;
-        }
-        if(context==="setup"&&(setupFinalizeRequested||setupLocked)){
-          if(typeof $==="function"&&$("setupStatus"))$("setupStatus").textContent="PROCESANDO…";
-          return false;
-        }
-        if(activeResponseId||stopMonitorActive)stopAuthorizedSpeech();
-        voiceContext=context;
-        if(listening){
-          if(context==="round"){requestRoundFinalize(0,true);return true}
-          setVoice(false);return true;
-        }
-        voiceActivationContext=context;
-        voiceOpening=true;
-        voiceActivationPromise=(async()=>{
-          try{
-            const reuse=typeof realtimeReusableFor==="function"?realtimeReusableFor(context):(typeof realtimeReady==="function"&&realtimeReady());
-            const stablefordContextMismatch=typeof realtimeSessionContext!=="undefined"&&realtimeSessionContext&&realtimeSessionContext!==context;
-            if(!reuse||stablefordContextMismatch){
-              if(typeof setMicConnecting==="function")setMicConnecting(context,true);
-              teardownRealtime();
-              voiceContext=context;
-              await ensureSession();
-            }
-            if(context!==voiceContext)throw new Error("Contexto de micrófono cambió");
-            if(context==="round")resetRoundCapture();
-            else resetSetupCapture();
-            if(!realtimeReady())throw new Error("Realtime no quedó listo");
-            if(typeof setMicConnecting==="function")setMicConnecting(context,false);
-            setVoice(true);
-            return true;
-          }catch(err){
-            console.error("Activación Stableford:",err);
-            teardownRealtime();
-            voiceContext=context;
-            if(typeof setMicConnecting==="function")setMicConnecting(context,false);
-            if(context==="setup"&&typeof $==="function"&&$("setupStatus"))$("setupStatus").textContent="ERROR";
-            else if(typeof $==="function"&&$("status"))$("status").textContent="ERROR";
-            return false;
-          }
-        })();
-        try{return await voiceActivationPromise}
-        finally{
-          if(typeof setMicConnecting==="function")setMicConnecting(context,false);
-          voiceOpening=false;
-          voiceActivationPromise=null;
-          voiceActivationContext=null;
-        }
-      };
-      fastToggleVoice.__stablefordFastVoice=true;
-      toggleVoice=fastToggleVoice;
-    }
+    // Stableford usa exactamente la ruta Realtime base ya probada de GRUPAL.
+
 
     if(typeof fireMicActivation==="function"&&!fireMicActivation.__stablefordCleanGesture){
       const baseFireMicActivation=fireMicActivation;
