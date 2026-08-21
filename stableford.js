@@ -149,56 +149,52 @@
     if(typeof document==="undefined")return false;
     const overlay=document.getElementById("stablefordSetupOverlay"),card=overlay?.querySelector(".stableford-setup-card");
     if(!overlay||!card)return false;
-    const stablefordVoiceActive=()=>overlay.classList.contains("visible")||(typeof round!=="undefined"&&(round?.mode==="stableford"||round?.stablefordMode===true));
+    const stablefordVoiceActive=()=>overlay.classList.contains("visible")||(typeof round!=="undefined"&&round?.mode==="stableford");
+
     if(typeof toggleVoice==="function"&&!toggleVoice.__stablefordFastVoice){
       const baseToggleVoice=toggleVoice;
       const fastToggleVoice=async function(context){
         if(!stablefordVoiceActive())return baseToggleVoice(context);
-        if(voiceActivationPromise){
-          if(voiceActivationContext===context&&typeof setMicConnecting==="function")setMicConnecting(context,true);
-          return voiceActivationPromise;
-        }
-        if(typeof recoverRealtimeAfterResumeSync==="function")recoverRealtimeAfterResumeSync();
+        if(voiceActivationPromise)return voiceActivationPromise;
         if(context==="round"&&(phase==="processing"||roundFinalizeRequested||roundPendingItems.size)){
-          if(typeof setMicConnecting==="function")setMicConnecting(context,false);
           if(typeof $==="function"&&$("status"))$("status").textContent="PROCESANDO…";
           return false;
         }
         if(context==="setup"&&(setupFinalizeRequested||setupLocked)){
-          if(typeof setMicConnecting==="function")setMicConnecting(context,false);
           if(typeof $==="function"&&$("setupStatus"))$("setupStatus").textContent="PROCESANDO…";
           return false;
         }
         if(activeResponseId||stopMonitorActive)stopAuthorizedSpeech();
         voiceContext=context;
         if(listening){
-          if(context==="round"){requestRoundFinalize(900);return true}
+          if(context==="round"){requestRoundFinalize(0,true);return true}
           setVoice(false);return true;
         }
         voiceActivationContext=context;
         voiceOpening=true;
-        const reuse=typeof realtimeReady==="function"&&realtimeReady();
-        if(!reuse&&typeof setMicConnecting==="function")setMicConnecting(context,true);
         voiceActivationPromise=(async()=>{
           try{
-            if(!reuse)await ensureSession();
+            const reuse=typeof realtimeReusableFor==="function"?realtimeReusableFor(context):(typeof realtimeReady==="function"&&realtimeReady());
+            if(!reuse){
+              if(typeof setMicConnecting==="function")setMicConnecting(context,true);
+              teardownRealtime();
+              voiceContext=context;
+              await ensureSession();
+            }
             if(context!==voiceContext)throw new Error("Contexto de micrófono cambió");
             if(context==="round")resetRoundCapture();
-            if(context==="setup"&&activeResponseId){try{sendEvent({type:"response.cancel",response_id:activeResponseId})}catch{}activeResponseId=null}
+            else resetSetupCapture();
             if(!realtimeReady())throw new Error("Realtime no quedó listo");
             if(typeof setMicConnecting==="function")setMicConnecting(context,false);
             setVoice(true);
             return true;
           }catch(err){
             console.error("Activación Stableford:",err);
-            const sameContext=voiceContext===context;
             teardownRealtime();
+            voiceContext=context;
             if(typeof setMicConnecting==="function")setMicConnecting(context,false);
-            if(sameContext){
-              voiceContext=context;
-              if(context==="setup"&&typeof $==="function"&&$("setupStatus"))$("setupStatus").textContent="ERROR";
-              else if(typeof $==="function"&&$("status"))$("status").textContent="ERROR";
-            }
+            if(context==="setup"&&typeof $==="function"&&$("setupStatus"))$("setupStatus").textContent="ERROR";
+            else if(typeof $==="function"&&$("status"))$("status").textContent="ERROR";
             return false;
           }
         })();
@@ -213,6 +209,24 @@
       fastToggleVoice.__stablefordFastVoice=true;
       toggleVoice=fastToggleVoice;
     }
+
+    if(typeof fireMicActivation==="function"&&!fireMicActivation.__stablefordCleanGesture){
+      const baseFireMicActivation=fireMicActivation;
+      let stablefordGestureAt=0;
+      const cleanFire=function(context,e){
+        if(!stablefordVoiceActive())return baseFireMicActivation(context,e);
+        if(e&&e.cancelable)e.preventDefault();
+        if(e&&e.stopPropagation)e.stopPropagation();
+        const now=Date.now();
+        if(now-stablefordGestureAt<500)return false;
+        stablefordGestureAt=now;
+        toggleVoice(context);
+        return true;
+      };
+      cleanFire.__stablefordCleanGesture=true;
+      fireMicActivation=cleanFire;
+    }
+
     if(!document.getElementById("stablefordTournamentName")){
       const facts=document.getElementById("stablefordSetupFacts");
       const wrap=document.createElement("label");
@@ -229,7 +243,11 @@
       (course?.parentNode||card).insertBefore(mic,course?.nextSibling||card.firstChild);
       const hit=document.getElementById("stablefordSetupMic");
       const activate=e=>{if(typeof fireMicActivation==="function")return fireMicActivation("setup",e);return false};
-      if(hit){if(globalThis.PointerEvent)hit.addEventListener("pointerup",activate,{passive:false,capture:true});else hit.addEventListener("touchend",activate,{passive:false,capture:true});hit.addEventListener("click",activate,{passive:false,capture:true})}
+      if(hit){
+        if(globalThis.PointerEvent)hit.addEventListener("pointerup",activate,{passive:false,capture:true});
+        else hit.addEventListener("touchend",activate,{passive:false,capture:true});
+        hit.addEventListener("click",e=>{if(e.detail===0)activate(e)},{passive:false,capture:true});
+      }
     }
     if(!document.getElementById("stableford-ui-bridge-style")){
       const style=document.createElement("style");style.id="stableford-ui-bridge-style";
@@ -242,16 +260,18 @@
     if(!overlay.__stablefordVoiceBridge){
       overlay.__stablefordVoiceBridge=true;
       const observer=new MutationObserver(syncVoiceUi);if(baseStatus)observer.observe(baseStatus,{subtree:true,childList:true,characterData:true,attributes:true});if(baseMic)observer.observe(baseMic,{attributes:true,attributeFilter:["class"]});const detected=document.getElementById("detectedBody");if(detected)observer.observe(detected,{subtree:true,childList:true,attributes:true,characterData:true});
-      overlay.addEventListener("transitionend",syncVoiceUi);setInterval(syncVoiceUi,500);
+      overlay.addEventListener("transitionend",syncVoiceUi);
     }
     const start=document.getElementById("startStablefordRound");
     if(start&&!start.__stablefordTournamentBridge){
       start.__stablefordTournamentBridge=true;
-      start.addEventListener("click",()=>{const value=cleanName(document.getElementById("stablefordTournamentName")?.value||"");setTimeout(()=>{try{if(typeof round!=="undefined"&&round?.stablefordMode){round.tournament=value?{name:value}:null;if(typeof persist==="function")persist();if(typeof render==="function")render()}}catch(err){console.error("Stableford tournament",err)}},0)});
+      start.addEventListener("click",()=>{const value=cleanName(document.getElementById("stablefordTournamentName")?.value||"");setTimeout(()=>{try{if(typeof round!=="undefined"&&round?.mode==="stableford"){round.tournament=value?{name:value}:null;if(typeof persist==="function")persist();if(typeof render==="function")render()}}catch(err){console.error("Stableford tournament",err)}},0)});
     }
+
+    let stablefordParseSetupTranscript=null;
     if(typeof parseSetupTranscript==="function"&&!parseSetupTranscript.__stablefordScratchVoice){
       const baseParseSetupTranscript=parseSetupTranscript;
-      const stablefordParseSetupTranscript=function(transcript){
+      stablefordParseSetupTranscript=function(transcript){
         if(!overlay.classList.contains("visible"))return baseParseSetupTranscript(transcript);
         const active=document.querySelector("#stablefordSetupOverlay [data-stableford-category].active")||document.querySelector("#stablefordSetupOverlay [data-stableford-category][aria-pressed='true']");
         const category=active?.getAttribute("data-stableford-category")||(typeof stablefordSetupCategory!=="undefined"?stablefordSetupCategory:"senior");
@@ -284,6 +304,27 @@
       stablefordParseSetupTranscript.__stablefordScratchVoice=true;
       parseSetupTranscript=stablefordParseSetupTranscript;
     }
+
+    if(typeof handleRealtime==="function"&&!handleRealtime.__stablefordDirectTranscript){
+      const baseHandleRealtime=handleRealtime;
+      const directHandleRealtime=function(message){
+        let event=null;
+        try{event=JSON.parse(message.data)}catch{}
+        baseHandleRealtime(message);
+        if(!overlay.classList.contains("visible")||event?.type!=="conversation.item.input_audio_transcription.completed")return;
+        const parser=stablefordParseSetupTranscript||parseSetupTranscript;
+        const parsed=parser(event.transcript||"");
+        if(!parsed?.ok||!Array.isArray(parsed.changes))return;
+        const targets=[...document.querySelectorAll("[data-stableford-name]")];
+        for(const change of parsed.changes){const target=targets[Number(change.position)-1];if(target)target.value=cleanName(change.name)}
+        if(stableStatus)stableStatus.textContent="JUGADORES DETECTADOS";
+        if(listening)setVoice(false);
+      };
+      directHandleRealtime.__stablefordDirectTranscript=true;
+      handleRealtime=directHandleRealtime;
+      if(typeof dc!=="undefined"&&dc)dc.onmessage=handleRealtime;
+    }
+
     const categoryButtons=[...document.querySelectorAll("[data-stableford-category]")];
     for(const button of categoryButtons)if(!button.__stablefordDefaults){button.__stablefordDefaults=true;button.addEventListener("click",()=>{const category=button.getAttribute("data-stableford-category"),cfg=categoryConfig(category);if(!cfg)return;const facts=document.getElementById("stablefordSetupFacts");if(facts)facts.textContent=`SCRATCH · MARCAS ${cfg.tee.toUpperCase()}S · HCP 0 · MÁXIMO 4 JUGADORES`})}
     return true;
