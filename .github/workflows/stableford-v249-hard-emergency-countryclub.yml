@@ -1,0 +1,47 @@
+name: Stableford V249 hard emergency Country Club
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v249-hard-emergency-countryclub.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Emergency restore only when saved desktop emergency URL is used
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          marker='''const STABLEFORD_EMERGENCY_ROSTER=["JAIME","JUNIOR","FITO","HENRY"];'''
+          anchor='''const STABLEFORD_ACTIVE_KEY='''
+          if marker not in s:
+            pos=s.find(anchor)
+            if pos<0: raise SystemExit('stableford key anchor missing')
+            s=s[:pos]+marker+'\n'+s[pos:]
+          # In emergency route, if active Stableford state is absent/corrupted, seed only the approved roster/course.
+          old='''const active=JSON.parse(localStorage.getItem(STABLEFORD_ACTIVE_KEY)||"null");if(active?.mode==="stableford"&&active?.players?.length){round=active;round.courseKey="country_club";round.mode="stableford";setCourse("country_club");showRound();render();return}'''
+          new='''let active=JSON.parse(localStorage.getItem(STABLEFORD_ACTIVE_KEY)||"null");if(!(active?.mode==="stableford"&&active?.players?.length)){active={id:"stableford-emergency-countryclub",mode:"stableford",courseKey:"country_club",stablefordCategory:"senior",players:STABLEFORD_EMERGENCY_ROSTER.map((name,i)=>({id:"sf-emergency-"+(i+1),name,holes:{}})),startedAt:Date.now()};localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(active))}round=active;round.courseKey="country_club";round.mode="stableford";setCourse("country_club");showRound();render();return'''
+          if old not in s: raise SystemExit('V248 emergency anchor missing')
+          s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+      - name: Validate emergency only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'STABLEFORD_EMERGENCY_ROSTER=["JAIME","JUNIOR","FITO","HENRY"]' index-grupal.html
+          grep -Fq 'courseKey:"country_club"' index-grupal.html
+          grep -Fq 'mode:"stableford"' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V249 emergency restore Country Club and approved roster'
+          git push origin stableford-tournament-final
