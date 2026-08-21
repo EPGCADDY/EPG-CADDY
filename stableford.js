@@ -337,6 +337,7 @@
 
     const stableSelector=document.querySelector('[data-course-key="stableford"]');
     if(stableSelector&&!stableSelector.__stablefordRoute){stableSelector.__stablefordRoute=true;stableSelector.addEventListener("click",e=>{e.preventDefault();e.stopImmediatePropagation();overlay.classList.add("visible");overlay.setAttribute("aria-hidden","false");},true)}
+    if(new URLSearchParams(location.search).get("stableford_emergency")==="countryclub"){const names=["Jaime","Junior","Adolfo","Herny"];document.querySelectorAll("[data-stableford-name]").forEach((el,i)=>{if(i<4){el.value=names[i];el.dispatchEvent(new Event("input",{bubbles:true}));el.dispatchEvent(new Event("change",{bubbles:true}))}})}
     const categoryButtons=[...document.querySelectorAll("[data-stableford-category]")];
     for(const button of categoryButtons)if(!button.__stablefordDefaults){button.__stablefordDefaults=true;button.addEventListener("click",()=>{const category=button.getAttribute("data-stableford-category"),cfg=categoryConfig(category);if(!cfg)return;const facts=document.getElementById("stablefordSetupFacts");if(facts)facts.textContent=`SCRATCH · MARCAS ${cfg.tee.toUpperCase()}S · HCP 0 · MÁXIMO 4 JUGADORES`})}
     return true;
