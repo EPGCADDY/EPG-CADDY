@@ -1,0 +1,48 @@
+name: Stableford V206 fix gate and close
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v206-fix-gate-and-close.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+          fetch-depth: 0
+      - name: Patch obsolete test and Stableford close only
+        shell: python
+        run: |
+          from pathlib import Path
+          t=Path('test-stableford-ui.mjs'); ts=t.read_text(encoding='utf-8')
+          old='V199-STABLEFORD-INTEGRATED-20260820'; new='V200-STABLEFORD-VOICE-SESSION-READY-20260820'
+          if ts.count(old)!=1: raise SystemExit(f'test marker count={ts.count(old)}')
+          t.write_text(ts.replace(old,new,1),encoding='utf-8')
+          p=Path('index-grupal.html'); s=p.read_text(encoding='utf-8')
+          oldtimer='roundFinalizeTimer=setTimeout(()=>{roundFinalizeTimer=null;requestRoundFinalize(0,true)},4000);'
+          newtimer='roundFinalizeTimer=setTimeout(()=>{roundFinalizeTimer=null;requestRoundFinalize(0,true)},(typeof round!=="undefined"&&round&&round.mode==="stableford")?2000:4000);'
+          if s.count(oldtimer)!=1: raise SystemExit(f'timer count={s.count(oldtimer)}')
+          p.write_text(s.replace(oldtimer,newtimer,1),encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          test "$(git diff --name-only | sort | tr '\n' ' ')" = "index-grupal.html test-stableford-ui.mjs "
+          grep -Fq 'V200-STABLEFORD-VOICE-SESSION-READY-20260820' test-stableford-ui.mjs
+          grep -Fq 'round.mode==="stableford")?2000:4000' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+      - name: Commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html test-stableford-ui.mjs
+          git commit -m 'Stableford V206 fix validation gate and two-second close'
+          git push origin stableford-tournament-final
