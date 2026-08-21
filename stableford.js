@@ -150,8 +150,9 @@
     try{
       const params=new URLSearchParams(location.search);
       if(params.get("stableford_emergency")==="countryclub"){
-        localStorage.removeItem("gscg_round_v1");
-        localStorage.removeItem("gscg_round");
+        localStorage.removeItem("golf-score-card-guatemala-group-round-v2");
+        localStorage.removeItem("golf-score-card-guatemala-group-round-v2-backup");
+        localStorage.removeItem("golf-score-card-guatemala-group-draft-v1");
         sessionStorage.setItem("gscg_stableford_emergency","countryclub");
       }
     }catch{}
