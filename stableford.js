@@ -201,7 +201,7 @@
       const observer=new MutationObserver(syncVoiceUi);if(baseStatus)observer.observe(baseStatus,{subtree:true,childList:true,characterData:true,attributes:true});if(baseMic)observer.observe(baseMic,{attributes:true,attributeFilter:["class"]});const detected=document.getElementById("detectedBody");if(detected)observer.observe(detected,{subtree:true,childList:true,attributes:true,characterData:true});
       overlay.addEventListener("transitionend",syncVoiceUi);
     }
-    if(new URLSearchParams(location.search).get("stableford_emergency")==="countryclub"){const names=["Jaime","Junior","Adolfo","Herny"];const apply=()=>document.querySelectorAll("[data-stableford-name]").forEach((el,i)=>{if(i<4)el.value=names[i]});apply();setTimeout(apply,50);setTimeout(apply,250);}
+    if(new URLSearchParams(location.search).get("stableford_emergency")==="countryclub"){const names=["Jaime","Junior","Fito","Henry"];const apply=()=>document.querySelectorAll("[data-stableford-name]").forEach((el,i)=>{if(i<4)el.value=names[i]});apply();setTimeout(apply,50);setTimeout(apply,250);}
     const start=document.getElementById("startStablefordRound");
     if(start&&!start.__stablefordTournamentBridge){
       start.__stablefordTournamentBridge=true;
@@ -267,7 +267,7 @@
 
     const stableSelector=document.querySelector('[data-course-key="stableford"]');
     if(stableSelector&&!stableSelector.__stablefordRoute){stableSelector.__stablefordRoute=true;stableSelector.addEventListener("click",e=>{e.preventDefault();e.stopImmediatePropagation();overlay.classList.add("visible");overlay.setAttribute("aria-hidden","false");},true)}
-    if(new URLSearchParams(location.search).get("stableford_emergency")==="countryclub"){const names=["Jaime","Junior","Adolfo","Herny"];document.querySelectorAll("[data-stableford-name]").forEach((el,i)=>{if(i<4){el.value=names[i];el.dispatchEvent(new Event("input",{bubbles:true}));el.dispatchEvent(new Event("change",{bubbles:true}))}})}
+    if(new URLSearchParams(location.search).get("stableford_emergency")==="countryclub"){const names=["Jaime","Junior","Fito","Henry"];document.querySelectorAll("[data-stableford-name]").forEach((el,i)=>{if(i<4){el.value=names[i];el.dispatchEvent(new Event("input",{bubbles:true}));el.dispatchEvent(new Event("change",{bubbles:true}))}})}
     if(!document.getElementById("stableford-touch-plan-b-style")){const st=document.createElement("style");st.id="stableford-touch-plan-b-style";st.textContent='body.stableford-round .score-cell{touch-action:manipulation;-webkit-user-select:none;user-select:none}body.stableford-round .score-cell input{touch-action:manipulation;min-width:100%;min-height:100%;margin:0;padding:0;text-align:center}body.stableford-round .score-table{touch-action:pan-x pan-y}';document.head.appendChild(st)}
     const markStablefordRound=()=>document.body.classList.toggle("stableford-round",typeof round!=="undefined"&&round?.mode==="stableford");markStablefordRound();
     const categoryButtons=[...document.querySelectorAll("[data-stableford-category]")];
