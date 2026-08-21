@@ -1,0 +1,40 @@
+name: Stableford V230 manual overlay
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v230-manual-overlay.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Add reliable manual editor
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          anchor='''  $("summaryTitle").textContent="RESULTADOS STABLEFORD";'''
+          insert='''  let manual=document.getElementById("stablefordManualEntry");if(!manual){manual=document.createElement("div");manual.id="stablefordManualEntry";manual.innerHTML='<select id="sfManualPlayer"></select><select id="sfManualHole"></select><input id="sfManualGross" inputmode="numeric" type="number" min="1" max="30" placeholder="GROSS"><button id="sfManualSave" type="button">ANOTAR GROSS</button>';manual.style.cssText="display:flex;gap:6px;justify-content:center;align-items:center;margin:8px 0;padding:8px;border:1px solid #31ff00;background:#000";document.querySelector(".card-shell").before(manual)}manual.querySelector("#sfManualPlayer").innerHTML=round.players.map(p=>`<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join("");manual.querySelector("#sfManualHole").innerHTML=ALL.map(h=>`<option value="${h}">HOYO ${h}</option>`).join("");manual.querySelector("#sfManualSave").onclick=()=>{const p=round.players.find(x=>x.id===manual.querySelector("#sfManualPlayer").value),hole=Number(manual.querySelector("#sfManualHole").value),gross=Number(manual.querySelector("#sfManualGross").value);const result=saveEntry({player:p?.name,hole,gross});if(result.ok){persist();localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round));render()}else window.alert("SCORE INVÁLIDO")};\n  $("summaryTitle").textContent="RESULTADOS STABLEFORD";'''
+          if s.count(anchor)!=1: raise SystemExit('render anchor mismatch')
+          p.write_text(s.replace(anchor,insert,1),encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'id="sfManualGross"' index-grupal.html
+          grep -Fq 'id="sfManualSave"' index-grupal.html
+          grep -Fq 'saveEntry({player:p?.name,hole,gross})' index-grupal.html
+          grep -Fq 'STABLEFORD_ACTIVE_KEY' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V230 add explicit manual Gross editor'
+          git push origin stableford-tournament-final
