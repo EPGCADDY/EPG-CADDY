@@ -1,0 +1,41 @@
+name: Stableford V223 touch Plan B
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v223-touch-plan-b.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+          fetch-depth: 0
+      - name: Add touch-safe score cells only for Stableford
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('stableford.js'); s=p.read_text(encoding='utf-8')
+          anchor='''    const categoryButtons=[...document.querySelectorAll("[data-stableford-category]")];'''
+          code='''    if(!document.getElementById("stableford-touch-plan-b-style")){const st=document.createElement("style");st.id="stableford-touch-plan-b-style";st.textContent='body.stableford-round .score-cell{touch-action:manipulation;-webkit-user-select:none;user-select:none}body.stableford-round .score-cell input{touch-action:manipulation;min-width:100%;min-height:100%;margin:0;padding:0;text-align:center}body.stableford-round .score-table{touch-action:pan-x pan-y}';document.head.appendChild(st)}\n    const markStablefordRound=()=>document.body.classList.toggle("stableford-round",typeof round!=="undefined"&&round?.mode==="stableford");markStablefordRound();\n    const categoryButtons=[...document.querySelectorAll("[data-stableford-category]")];'''
+          if s.count(anchor)!=1: raise SystemExit('touch anchor mismatch')
+          p.write_text(s.replace(anchor,code,1),encoding='utf-8')
+      - name: Validate and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          test "$(git diff --name-only)" = "stableford.js"
+          grep -Fq 'stableford-touch-plan-b-style' stableford.js
+          grep -Fq 'touch-action:manipulation' stableford.js
+          node --check stableford.js
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add stableford.js
+          git commit -m 'Stableford V223 protect manual score-cell touch entry'
+          git push origin stableford-tournament-final
