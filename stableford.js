@@ -185,6 +185,41 @@
       start.__stablefordTournamentBridge=true;
       start.addEventListener("click",()=>{const value=cleanName(document.getElementById("stablefordTournamentName")?.value||"");setTimeout(()=>{try{if(typeof round!=="undefined"&&round?.stablefordMode){round.tournament=value?{name:value}:null;if(typeof persist==="function")persist();if(typeof render==="function")render()}}catch(err){console.error("Stableford tournament",err)}},0)});
     }
+    if(typeof parseSetupTranscript==="function"&&!parseSetupTranscript.__stablefordScratchVoice){
+      const baseParseSetupTranscript=parseSetupTranscript;
+      const stablefordParseSetupTranscript=function(transcript){
+        if(!overlay.classList.contains("visible"))return baseParseSetupTranscript(transcript);
+        const active=document.querySelector("#stablefordSetupOverlay [data-stableford-category].active")||document.querySelector("#stablefordSetupOverlay [data-stableford-category][aria-pressed='true']");
+        const category=active?.getAttribute("data-stableford-category")||(typeof stablefordSetupCategory!=="undefined"?stablefordSetupCategory:"senior");
+        const cfg=categoryConfig(category);
+        if(!cfg||typeof normalizeSpeech!=="function"||typeof playerPositionToken!=="function")return{ok:false,speech:"Error"};
+        const tokens=normalizeSpeech(transcript).split(" ").filter(Boolean);
+        const changes=[];let i=0;
+        while(i<tokens.length){
+          while(i<tokens.length&&["y","luego","despues","después","jugadores","jugadoras"].includes(tokens[i]))i++;
+          if(i>=tokens.length)break;
+          if(["jugador","jugadora"].includes(tokens[i]))i++;
+          const position=playerPositionToken(tokens[i]);
+          if(!position||position<1||position>MAX_PLAYERS)return{ok:false,speech:"Error"};
+          i++;
+          const start=i;
+          while(i<tokens.length){
+            if(["jugador","jugadora"].includes(tokens[i])&&playerPositionToken(tokens[i+1]))break;
+            i++;
+          }
+          const nameTokens=tokens.slice(start,i);
+          while(nameTokens.length&&["y","luego","despues","después"].includes(nameTokens[nameTokens.length-1]))nameTokens.pop();
+          const rawName=nameTokens.join(" ").trim();
+          if(!rawName)return{ok:false,speech:"Error"};
+          const name=typeof titleName==="function"?titleName(rawName):cleanName(rawName);
+          changes.push({position,name,handicap:0,tee:cfg.tee,matrix:"Caballeros"});
+          if(changes.length>MAX_PLAYERS)return{ok:false,speech:"Error"};
+        }
+        return changes.length?{ok:true,changes}:{ok:false,speech:"Error"};
+      };
+      stablefordParseSetupTranscript.__stablefordScratchVoice=true;
+      parseSetupTranscript=stablefordParseSetupTranscript;
+    }
     const categoryButtons=[...document.querySelectorAll("[data-stableford-category]")];
     for(const button of categoryButtons)if(!button.__stablefordDefaults){button.__stablefordDefaults=true;button.addEventListener("click",()=>{const category=button.getAttribute("data-stableford-category"),cfg=categoryConfig(category);if(!cfg)return;const facts=document.getElementById("stablefordSetupFacts");if(facts)facts.textContent=`SCRATCH · MARCAS ${cfg.tee.toUpperCase()}S · HCP 0 · MÁXIMO 4 JUGADORES`})}
     return true;
