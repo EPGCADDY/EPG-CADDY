@@ -175,7 +175,8 @@
         voiceActivationPromise=(async()=>{
           try{
             const reuse=typeof realtimeReusableFor==="function"?realtimeReusableFor(context):(typeof realtimeReady==="function"&&realtimeReady());
-            if(!reuse){
+            const stablefordContextMismatch=typeof realtimeSessionContext!=="undefined"&&realtimeSessionContext&&realtimeSessionContext!==context;
+            if(!reuse||stablefordContextMismatch){
               if(typeof setMicConnecting==="function")setMicConnecting(context,true);
               teardownRealtime();
               voiceContext=context;
