@@ -1,4 +1,4 @@
-name: Correct Mayan Golf official card
+name: Load Hacienda Nueva official card
 on:
   push:
     branches: [operational-courses-20260821]
@@ -6,53 +6,39 @@ on:
 permissions:
   contents: write
 jobs:
-  correct-mayan:
+  load-hacienda:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: operational-courses-20260821
-      - name: Correct only Mayan Golf from official card
+      - name: Patch only Hacienda Nueva
         run: |
           python - <<'PY'
           from pathlib import Path
-          import re
-          p=Path('index-grupal.html')
-          s=p.read_text()
-          new='''const MAYAN_GOLF_PAR=[4,3,4,4,5,4,3,4,5,4,4,4,3,5,4,4,3,5];
-const MAYAN_GOLF_SI=[13,15,7,9,1,3,11,5,17,6,8,4,12,10,16,2,14,18];
-const MAYAN_GOLF_TEES={
-  Negro:{label:"NEGRAS",color:"#d9d9d9",fill:"#f3f3f3",text:"#000",yds:[412,218,392,476,624,469,195,423,529,417,466,435,192,571,422,460,173,549],front:3738,back:3685,rating:75.7,slope:138,total:7423},
-  Azul:{label:"AZULES",color:"#0878ff",fill:"#0878ff",text:"#fff",yds:[403,139,357,415,604,429,189,370,523,402,415,399,166,582,397,414,167,541],front:3429,back:3483,rating:73.4,slope:133,total:6912},
-  Blanco:{label:"BLANCAS",color:"#fff",fill:"#f3f3f3",text:"#000",yds:[390,132,348,397,583,418,179,357,515,388,405,392,157,566,384,394,160,530],front:3319,back:3376,rating:72.2,slope:132,total:6695},
-  Amarillo:{label:"AMARILLAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:[377,120,324,380,573,407,168,345,506,334,395,385,151,562,370,387,154,519],front:3200,back:3257,rating:71.2,slope:130,total:6457},
-  Rojo:{label:"ROJAS",color:"#ff1010",fill:"#f51212",text:"#fff",yds:[356,114,297,356,487,341,158,333,466,321,342,331,144,469,309,360,139,481],front:2908,back:2896,rating:74.9,slope:135,total:5804}
-};'''
-          s,n=re.subn(r'const MAYAN_GOLF_PAR=.*?\nconst COURSE_DATA=\{',new+'\nconst COURSE_DATA={',s,count=1,flags=re.S)
-          assert n==1
+          p=Path('index-grupal.html'); s=p.read_text()
+          s=s.replace('hacienda_nueva:{name:"Hacienda Nueva",configured:false}','hacienda_nueva:{name:"Hacienda Nueva",displayName:"HACIENDA NUEVA COUNTRY CLUB",configured:true}')
+          block='''const HACIENDA_NUEVA_PAR=[4,5,4,4,3,5,4,3,4,4,5,4,4,3,5,4,3,4];\nconst HACIENDA_NUEVA_SI_MEN=[3,9,13,17,15,5,1,11,7,16,18,2,10,12,6,4,14,8];\nconst HACIENDA_NUEVA_SI_WOMEN=[7,3,9,11,17,5,1,15,13,14,6,12,10,16,2,4,18,8];\nconst HACIENDA_NUEVA_TEES={\n  Azul:{label:"AZULES",color:"#0878ff",fill:"#0878ff",text:"#fff",yds:[428,577,381,357,169,521,396,182,465,369,496,485,376,220,558,454,198,448],front:3476,back:3604,rating:73.3,slope:130,total:7080},\n  Blanco:{label:"BLANCAS",color:"#fff",fill:"#f3f3f3",text:"#000",yds:[407,553,360,337,148,497,377,163,444,349,477,466,356,200,539,436,179,428],front:3286,back:3430,rating:71.4,slope:124,total:6716},\n  Amarillo:{label:"AMARILLAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:[386,532,339,316,128,476,355,140,423,328,462,444,335,179,517,415,157,409],front:3095,back:3246,rating:69.9,slope:116,total:6341},\n  Rojo:{label:"ROJAS",color:"#ff1010",fill:"#f51212",text:"#fff",yds:[366,514,321,298,109,457,334,123,404,310,356,425,316,160,499,395,142,395],front:2926,back:2998,rating:73.8,slope:132,total:5926}\n};\n'''
+          anchor='const COURSE_DATA={'
+          if 'const HACIENDA_NUEVA_PAR=' not in s: s=s.replace(anchor,block+anchor)
+          needle='mayan_golf:{par:MAYAN_GOLF_PAR,tees:MAYAN_GOLF_TEES,siMen:MAYAN_GOLF_SI,siWomen:MAYAN_GOLF_SI,siByTee:{}}'
+          repl=needle+',\n  hacienda_nueva:{par:HACIENDA_NUEVA_PAR,tees:HACIENDA_NUEVA_TEES,siMen:HACIENDA_NUEVA_SI_MEN,siWomen:HACIENDA_NUEVA_SI_WOMEN,siByTee:{}}'
+          if 'hacienda_nueva:{par:HACIENDA_NUEVA_PAR' not in s: s=s.replace(needle,repl)
           p.write_text(s)
           PY
-      - name: Verify official Mayan matrix
+      - name: Verify Hacienda matrix
         run: |
           python - <<'PY'
           s=open('index-grupal.html').read()
-          checks=[
-            'const MAYAN_GOLF_PAR=[4,3,4,4,5,4,3,4,5,4,4,4,3,5,4,4,3,5]',
-            'const MAYAN_GOLF_SI=[13,15,7,9,1,3,11,5,17,6,8,4,12,10,16,2,14,18]',
-            'front:3738,back:3685,rating:75.7,slope:138,total:7423',
-            'front:3429,back:3483,rating:73.4,slope:133,total:6912',
-            'front:3319,back:3376,rating:72.2,slope:132,total:6695',
-            'front:3200,back:3257,rating:71.2,slope:130,total:6457',
-            'front:2908,back:2896,rating:74.9,slope:135,total:5804'
-          ]
+          checks=['hacienda_nueva:{name:"Hacienda Nueva",displayName:"HACIENDA NUEVA COUNTRY CLUB",configured:true}','const HACIENDA_NUEVA_PAR=[4,5,4,4,3,5,4,3,4,4,5,4,4,3,5,4,3,4]','const HACIENDA_NUEVA_SI_MEN=[3,9,13,17,15,5,1,11,7,16,18,2,10,12,6,4,14,8]','const HACIENDA_NUEVA_SI_WOMEN=[7,3,9,11,17,5,1,15,13,14,6,12,10,16,2,4,18,8]','front:3476,back:3604,rating:73.3,slope:130,total:7080','front:3286,back:3430,rating:71.4,slope:124,total:6716','front:3095,back:3246,rating:69.9,slope:116,total:6341','front:2926,back:2998,rating:73.8,slope:132,total:5926','hacienda_nueva:{par:HACIENDA_NUEVA_PAR,tees:HACIENDA_NUEVA_TEES']
           assert all(x in s for x in checks)
-          print('MAYAN_OFFICIAL_CARD_STATIC_PASS')
+          print('HACIENDA_NUEVA_STATIC_PASS')
           PY
-      - name: Commit correction
+      - name: Commit Hacienda Nueva
         run: |
           git config user.name 'gscg-automation'
           git config user.email 'actions@users.noreply.github.com'
           git add index-grupal.html
           git diff --cached --quiet && exit 0
-          git commit -m 'Operational: correct Mayan Golf official card matrix'
+          git commit -m 'Operational: load Hacienda Nueva official card matrix'
           git push origin HEAD:operational-courses-20260821
