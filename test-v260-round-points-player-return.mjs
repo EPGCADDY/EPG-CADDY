@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V262-REGISTRATION-MODALITIES-20260822/);
+assert.match(html,/V263-COMPACT-PLAYERS-BACK-BUTTON-20260822/);
 
 // El nombre aprobado reemplaza completamente los títulos anteriores en la interfaz.
 assert.match(html,/id="stablefordRoundPointsTitle"[^>]*>STABLEFORD</);
@@ -24,8 +24,10 @@ assert.match(html,/stablefordSetupMode==="edit"&&isStablefordRound\(\)/);
 assert.match(html,/holes:previous\[i\]\?\.holes\|\|\{\}/);
 assert.match(html,/names\.slice\(0,6\)/);
 
-// La flecha queda elevada y ya no tapa TARJETA DIGITAL ni su leyenda.
-assert.match(html,/\.back-registration-control\{left:18px;bottom:96px;font-size:7px\}/);
+// ATRÁS queda pequeño y en el flujo; nunca tapa la tarjeta ni sus resultados.
+assert.match(html,/\.back-registration-control\{position:static;/);
+assert.match(html,/>ATRÁS<\/button>/);
+assert.doesNotMatch(html,/\.back-registration-control\{position:fixed;/);
 
 // General y Stableford conservan estados separados: un enlace limpio nunca restaura Stableford.
 assert.match(html,/let round=sfEmergency\?blankRound\(\):loadRound\(\)/);

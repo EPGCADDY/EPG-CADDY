@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V262-REGISTRATION-MODALITIES-20260822/);
+assert.match(html,/V263-COMPACT-PLAYERS-BACK-BUTTON-20260822/);
 
 // Campo y modalidad son decisiones distintas en la Tarjeta Oficial.
 assert.match(html,/<div class="field-title course-selection-title">SELECCIONA CAMPO<\/div><div class="course-options" id="courseOptions"/);

@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V262
+**Versión documentada:** V263
 **Fecha de corte:** 22 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -329,7 +329,7 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - En Dictado, se toca el micrófono y se pronuncian únicamente `NOMBRE + HDCP + MARCAS`.
 - En Manual Opcional, cada fila contiene únicamente `NOMBRE + HDCP + MARCAS`; las marcas se eligen en el selector de color.
 - Se permiten de uno a seis jugadores.
-- Si un jugador fue omitido, `REGRESAR A DATOS` abre la ronda activa en modo de incorporación: puede agregarse manualmente o por micrófono, y los scores ya registrados se conservan. El jugador nuevo comienza operativamente desde el hoyo de incorporación.
+- Si un jugador fue omitido y todavía hay menos de seis, el botón pequeño `+ JUGADOR` abre directamente la ronda activa en modo de incorporación. También puede usarse `ATRÁS` para editar los datos generales. En ambos casos, los scores ya registrados se conservan y el jugador nuevo comienza operativamente desde el hoyo de incorporación.
 - No se muestran ni operan Código, Compartir o WhatsApp dentro del registro.
 
 ### 8.7 Base maestra y sustitución del dato vigente V256
@@ -1259,6 +1259,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 | Fecha | Versión | Registro |
 |---|---|---|
 | 2026-08-22 | Manual 3.39 / App V262 | El segundo método se identifica como `2 · MANUAL OPCIONAL`. `SCORE CARD SIN REGISTRO` queda dentro de `SELECCIONA MODALIDAD`, debajo de `STABLEFORD`, sin duplicado inferior. La `RONDA SIN REGISTRO` acepta seis perfiles vacíos, parciales o completos, editables manualmente o por micrófono durante la ronda. Los yardajes dependen de las marcas, Neto requiere HDCP y marcas, y los tres totales Gross se calculan automáticamente y permanecen visibles. `REGRESAR A DATOS` de una ronda oficial edita o agrega jugadores sin borrar scores. El acceso Stableford usa caché `v=262`. |
+| 2026-08-22 | Manual 3.40 / App V263 | En rondas registradas se muestran únicamente los jugadores reales, consecutivos y sin bloques vacíos intercalados; la ronda sin registro conserva seis posiciones editables. La flecha flotante `REGRESAR A DATOS` se elimina y se sustituye por un botón pequeño `ATRÁS`, dentro del flujo de la tarjeta, que abre el editor de datos sin borrar scores. Mientras haya menos de seis jugadores aparece además el control pequeño `+ JUGADOR`; al completar seis se oculta. La simulación funcional verifica que al agregar al sexto se conservan intactos los scores de los cinco anteriores. El acceso Stableford usa caché `v=263`. |
 | 2026-08-22 | Manual 3.38 / App V261 | Registro oficial depurado a dos vías exactas: `1 · DICTADO` y `2 · MANUAL`, ambas limitadas a Nombre, HDCP y Marcas; se eliminan de esa interfaz Código, Compartir y WhatsApp. `SELECCIONA CAMPO` contiene únicamente campos; `STABLEFORD` queda separado bajo `SELECCIONA MODALIDAD` con apariencia neutral, nunca verde como selección activa. En la tarjeta Stableford, el panel manual se titula `STABLEFORD` y el resumen inferior `PUNTOS`, incluido el digital final. `RONDA PREVIA` continúa alternando a `RONDA ACTUAL` para recuperar la ronda vigente completa. El acceso Stableford usa caché `v=261`. |
 | 2026-08-22 | Manual 3.37 / App V260 | El panel alternativo de registro queda titulado únicamente `PUNTOS DE RONDA`; la casilla del nombre gana 25% de ancho y las tres columnas acumuladas IN/OUT/TOTAL se angostan. El PUNTOS TOTAL del resumen se muestra en verde neón. La flecha `REGRESAR A DATOS` queda separada de `TARJETA DIGITAL` y permite agregar un jugador faltante conservando todos los scores existentes. General y Stableford quedan aisladas por enlace y almacenamiento: General no restaura una ronda Stableford antigua y `NUEVA RONDA STABLEFORD` no borra datos General. El acceso oficial Stableford usa versión de caché `v=260`. |
 | 2026-08-22 | Manual 3.36 / App V259 | El registro manual opcional de Stableford conserva las seis casillas disponibles para permitir grupos de 1 a 6 jugadores. Después de iniciar la ronda, la anotación manual Plan B, la tarjeta oficial y el resumen muestran únicamente los jugadores efectivamente registrados; las filas restantes quedan invisibles. |
