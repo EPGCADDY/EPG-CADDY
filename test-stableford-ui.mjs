@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const stable=fs.readFileSync(new URL("./stableford.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V(?:252-STABLEFORD-PERSISTENCE-CATEGORY-COURSE|253-LIVE-PREVIOUS-ROUND|254-REMOVE-REGISTRATION-GUIDE|255-PLAYER-REGISTRATION-BOXES-CODES|256-MASTER-DATA-PLATFORM|257-STABLEFORD-COURSE-SELECTOR-TITLE|258-STABLEFORD-READONLY-MANUAL-PLAN-B|259-STABLEFORD-HIDE-UNUSED-PLAYER-ROWS)-20260822"/);
+assert.match(html,/gscg-build" content="V(?:252-STABLEFORD-PERSISTENCE-CATEGORY-COURSE|253-LIVE-PREVIOUS-ROUND|254-REMOVE-REGISTRATION-GUIDE|255-PLAYER-REGISTRATION-BOXES-CODES|256-MASTER-DATA-PLATFORM|257-STABLEFORD-COURSE-SELECTOR-TITLE|258-STABLEFORD-READONLY-MANUAL-PLAN-B|259-STABLEFORD-HIDE-UNUSED-PLAYER-ROWS|260-STABLEFORD-ROUND-POINTS-PLAYER-RETURN)-20260822"/);
 for(const id of [
   "stablefordSetupOverlay","stablefordResultOverlay","stablefordSeriesSection",
   "stablefordSeniorTab","stablefordSuperSeniorTab","openStablefordResult"
@@ -12,7 +12,7 @@ for(const id of [
 
 assert.match(html,/data-stableford-category="senior">SENIOR · BLANCAS/);
 assert.match(html,/data-stableford-category="super_senior">SÚPER SENIOR · AMARILLAS/);
-assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="https:\/\/epg-caddy-git-stableford-tournament-final-epgcaddys-projects\.vercel\.app\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=259"/);
+assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="https:\/\/epg-caddy-git-stableford-tournament-final-epgcaddys-projects\.vercel\.app\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=260"/);
 assert.match(html,/id="stableCourseOption" href="\$\{STABLEFORD_OFFICIAL_HOSTING_URL\}"[^>]*>[\s\S]*?<span>STABLEFORD<\/span>/);
 assert.doesNotMatch(html,/closest\("#stableCourseOption"\)[\s\S]{0,180}openFreshStablefordSetup/);
 assert.match(html,/Object\.entries\(COURSE_CATALOG\)[\s\S]*?\.join\(""\)\+stableOption/);

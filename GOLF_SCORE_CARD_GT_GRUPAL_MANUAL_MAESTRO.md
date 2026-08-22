@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V259
+**Versión documentada:** V260
 **Fecha de corte:** 22 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -112,7 +112,9 @@ Capacidad:
 
 ### 5.3 Enlace operativo
 
-`https://epg-caddy-git-grupal-v120-safe-epgcaddys-projects.vercel.app/index-grupal.html`
+`https://epg-caddy.vercel.app/index-grupal.html`
+
+Esta URL es exclusivamente General y nunca debe llevar el parámetro `stableford_emergency`. Stableford usa su propia ruta oficial y sus propios datos activos. Si una llave General antigua contiene accidentalmente una ronda Stableford, la aplicación la ignora y recupera la última ronda General disponible sin borrar el historial.
 
 ---
 
@@ -1244,6 +1246,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-22 | Manual 3.37 / App V260 | El panel alternativo de registro queda titulado únicamente `PUNTOS DE RONDA`; la casilla del nombre gana 25% de ancho y las tres columnas acumuladas IN/OUT/TOTAL se angostan. El PUNTOS TOTAL del resumen se muestra en verde neón. La flecha `REGRESAR A DATOS` queda separada de `TARJETA DIGITAL` y permite agregar un jugador faltante conservando todos los scores existentes. General y Stableford quedan aisladas por enlace y almacenamiento: General no restaura una ronda Stableford antigua y `NUEVA RONDA STABLEFORD` no borra datos General. El acceso oficial Stableford usa versión de caché `v=260`. |
 | 2026-08-22 | Manual 3.36 / App V259 | El registro manual opcional de Stableford conserva las seis casillas disponibles para permitir grupos de 1 a 6 jugadores. Después de iniciar la ronda, la anotación manual Plan B, la tarjeta oficial y el resumen muestran únicamente los jugadores efectivamente registrados; las filas restantes quedan invisibles. |
 | 2026-08-22 | Manual 3.35 / App V258 | En la tarjeta Stableford, el nombre del torneo y la categoría seleccionados en el registro pasan a ser indicadores de sólo lectura y no pueden modificarse durante la anotación. El recuadro alternativo queda identificado expresamente como `ANOTACIÓN MANUAL · PLAN B`; conserva HOYO, GROSS y ENTER para registrar scores sin voz. |
 | 2026-08-22 | Manual 3.34 / App V257 | Corregida la selección de campo en la preparación Stableford: la casilla visible es ahora un selector nativo operativo y queda sincronizada con los cuatro botones de campo (El Pulté, Country Club, San Isidro y Mayan Golf). El título de esta pantalla queda únicamente como `RONDA STABLEFORD`. |

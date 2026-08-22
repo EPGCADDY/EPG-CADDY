@@ -4,12 +4,13 @@ import stableford from "./stableford.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V(?:252-STABLEFORD-PERSISTENCE-CATEGORY-COURSE|253-LIVE-PREVIOUS-ROUND|254-REMOVE-REGISTRATION-GUIDE|255-PLAYER-REGISTRATION-BOXES-CODES|256-MASTER-DATA-PLATFORM|257-STABLEFORD-COURSE-SELECTOR-TITLE|258-STABLEFORD-READONLY-MANUAL-PLAN-B|259-STABLEFORD-HIDE-UNUSED-PLAYER-ROWS)-20260822/);
+assert.match(html,/V(?:252-STABLEFORD-PERSISTENCE-CATEGORY-COURSE|253-LIVE-PREVIOUS-ROUND|254-REMOVE-REGISTRATION-GUIDE|255-PLAYER-REGISTRATION-BOXES-CODES|256-MASTER-DATA-PLATFORM|257-STABLEFORD-COURSE-SELECTOR-TITLE|258-STABLEFORD-READONLY-MANUAL-PLAN-B|259-STABLEFORD-HIDE-UNUSED-PLAYER-ROWS|260-STABLEFORD-ROUND-POINTS-PLAYER-RETURN)-20260822/);
 assert.doesNotMatch(html,/sfEmergencyClean/);
 assert.doesNotMatch(html,/round\.players=\["Jaime","Junior","Fito","Henry"\]/);
 assert.match(html,/let stablefordSetupCategory=null,stablefordSetupCourseKey=null/);
 assert.match(html,/if\(saved\?\.configured&&saved\?\.mode==="stableford"\)\{round=saved;sfRestoredActive=true\}/);
-assert.match(html,/const basePersistStableford=persist;persist=function\(\)\{const out=basePersistStableford\(\);if\(isStablefordRound\(\)\)localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,JSON\.stringify\(round\)\);return out\}/);
+assert.match(html,/if\(round\.mode==="stableford"\)localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,payload\);/);
+assert.match(html,/else\{\s*localStorage\.setItem\(STORAGE_KEY,payload\);\s*localStorage\.setItem\(STORAGE_BACKUP_KEY,payload\);\s*\}/);
 
 for(const course of ["pulte","country_club","san_isidro","mayan_golf"]){
   assert.match(html,new RegExp(`data-stableford-course="${course}"`),`Falta campo ${course}`);
@@ -25,7 +26,8 @@ for(const course of Object.values(stableford.TOURNAMENT_COURSES)){
 }
 
 assert.match(html,/function openFreshStablefordSetup\(\)/);
-assert.match(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\);localStorage\.removeItem\(STORAGE_KEY\);localStorage\.removeItem\(STORAGE_BACKUP_KEY\);localStorage\.removeItem\(DRAFT_STORAGE_KEY\)/);
+assert.match(html,/try\{localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)\}catch\{\}/);
+assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\);localStorage\.removeItem\(STORAGE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(ROUND_ARCHIVE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_SERIES_KEY\)/);
 assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\|\|sfEmergency\?openFreshStablefordSetup\(\):openNewRoundDraft\(\)\)/);
