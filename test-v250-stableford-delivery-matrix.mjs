@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 
 const html=fs.readFileSync(new URL('./index-grupal.html',import.meta.url),'utf8');
 
-assert.match(html,/V(?:252-STABLEFORD-PERSISTENCE-CATEGORY-COURSE|253-LIVE-PREVIOUS-ROUND|254-REMOVE-REGISTRATION-GUIDE)-20260822/);
+assert.match(html,/V(?:252-STABLEFORD-PERSISTENCE-CATEGORY-COURSE|253-LIVE-PREVIOUS-ROUND|254-REMOVE-REGISTRATION-GUIDE|255-PLAYER-REGISTRATION-BOXES-CODES)-20260822/);
 assert.match(html,/id="shareGlobalCard">CORREO \/ WHATSAPP GLOBAL/);
 assert.match(html,/id="sharePersonalCard">CORREO \/ WHATSAPP PERSONAL/);
 assert.match(html,/navigator\.share\(\{title,text,files:\[file\]\}\)/);

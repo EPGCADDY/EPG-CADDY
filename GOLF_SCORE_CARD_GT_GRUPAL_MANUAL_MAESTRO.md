@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V254
+**Versión documentada:** V255
 **Fecha de corte:** 22 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -307,7 +307,21 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - Las rondas antiguas sin WhatsApp siguen siendo compatibles.
 - La V141 no escribe silenciosamente en la libreta del teléfono y no envía mensajes todavía.
 
-### 8.6 Torneo V143
+### 8.6 Casillas, código privado e historial de perfil V255
+
+**Estado:** casillas, selector, dictado visible, código y directorio histórico local `OPERATIVOS`; sincronización central `PREPARADA, NO ACTIVADA`.
+
+- Las seis posiciones muestran desde el inicio casillas reales para código, nombre, HDCP, marcas y WhatsApp opcional; ya no existen líneas abiertas con `DISPONIBLE`.
+- En captura manual el color de marcas nunca se escribe: se elige en un selector con `NEGRAS`, `AZULES`, `BLANCAS`, `ROJAS` o `AMARILLAS`.
+- En dictado se pronuncian nombre, HDCP y color; el resultado reconocido aparece en las mismas casillas, con número y color visibles antes de presionar `OK`.
+- Al completar por primera vez nombre, HDCP y marcas se crea un perfil privado reutilizable y se le asigna un código corto.
+- Escribir únicamente ese código recupera en el mismo dispositivo el nombre, último HDCP, últimas marcas y último WhatsApp guardado; todos permanecen editables.
+- Cada variación conserva el dato vigente y agrega un evento al historial local sin borrar la información anterior.
+- La migración central `002_player_profiles_and_history.sql` deja preparados código único, dato vigente e historial de cambios. No debe anunciarse como sincronización central activa hasta aplicar la migración, habilitar autenticación y superar prueba multi-dispositivo.
+- El botón corto `COMPARTIR` abre un panel de proyecto para seleccionar perfil/código, marcas y HDCP actuales, última ronda o últimas tres rondas.
+- Compartir será permitido en una fase posterior, pero en V255 la acción final permanece deshabilitada y marcada `PROYECTO · AÚN NO DISPONIBLE`; todavía no solicita autorizaciones ni transmite información.
+
+### 8.7 Torneo V143
 
 **Estado:** registro y archivo local `OPERATIVOS`; visualizador y consulta histórica por voz `PLANIFICADOS`.
 
@@ -320,7 +334,7 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - La tarjeta digital muestra el nombre del torneo.
 - Las rondas que nunca fueron guardadas no pueden reconstruirse automáticamente; deberán importarse o registrarse manualmente.
 
-### 8.7 Campo de golf V156
+### 8.8 Campo de golf V156
 
 - El registro presenta siete opciones ya escritas con casillas de selección única: `El Pulté`, `Country Club`, `San Isidro`, `Mayan Golf`, `Hacienda Nueva`, `Alta Vista` y `La Reunión`.
 - Sólo puede marcarse un campo por ronda.
@@ -1218,6 +1232,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-22 | Manual 3.32 / App V255 | Registro General con seis filas de casillas reales para código privado, nombre, HDCP, selector de marcas y WhatsApp; manual y dictado llenan la misma retícula y muestran número/color antes de `OK`. El perfil se guarda localmente al completar datos válidos, recupera por código y conserva historial de cambios. Migración central preparada pero no aplicada. `COMPARTIR` abre únicamente el proyecto de selección; autorización y envío aún no están disponibles. |
 | 2026-08-22 | Manual 3.31 / App V254 | Eliminadas completamente las tres falsas casillas visuales bajo `REGISTRO DE JUGADORES` porque no ejecutaban ninguna acción y podían confundirse con botones. Se conservan sin cambios el título, las instrucciones funcionales, el registro de uno a seis jugadores, el micrófono, la revisión editable, `OK` y la confirmación previa a iniciar la ronda. |
 | 2026-08-22 | Manual 3.30 / App V253 | `RONDA PREVIA` operativa y viva en General y Stableford: antes de alternar guarda la ronda visible; restaura campo, fecha, torneo, jugadores, configuración y scores completos; permite continuar editando o dictando; cambia a `RONDA ACTUAL` para regresar sin perder modificaciones; separa estrictamente los historiales General y Stableford y también permite recuperar la última ronda desde el registro vacío posterior a `NUEVA RONDA`. |
 | 2026-08-22 | Manual 3.29 / App V252 | Stableford aislado con estado operativo explícito: apertura normal restaura la última ronda; `NUEVA RONDA` limpia solamente ronda activa y borrador, sin tocar historial ni clasificación; registro nuevo sin nombres, campo o categoría forzados; cuatro campos, Senior/blancas, Súper Senior/amarillas y uno a seis jugadores. |

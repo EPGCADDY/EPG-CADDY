@@ -69,4 +69,11 @@ El servidor acepta una mutación una sola vez. Si recibe nuevamente el mismo `cl
 5. Ejecutar pruebas de backup, restore, concurrencia, offline y migración retroactiva.
 6. Crear el modelo central de series Stableford, fechas, categorías y resultados oficiales, y migrar el acumulado local con claves idempotentes.
 
+## Preparación V255 — perfil reutilizable
+
+- `database/002_player_profiles_and_history.sql` prepara un código privado único por jugador, el último handicap, las últimas marcas y la tabla append-only `player_profile_events` para conservar cada cambio de nombre, handicap, marcas o WhatsApp.
+- La interfaz V255 guarda y recupera estos perfiles en el directorio privado del dispositivo mientras la sincronización central permanece cerrada.
+- La migración todavía no se considera aplicada en Producción y la aplicación no debe afirmar permanencia central ni consulta multi-dispositivo hasta habilitar autenticación, ejecutar la migración y probar el recorrido completo.
+- `COMPARTIR` aparece únicamente como proyecto de selección de información. El intercambio entre usuarios será permitido en una fase posterior, pero en V255 no existe autorización ni transporte y la acción final permanece deshabilitada.
+
 La base central ya está alojada y responde. Hasta completar los puntos restantes, no se considera habilitada la sincronización comercial de datos personales y rondas.
