@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V200
+**Versión documentada:** V201
 **Fecha de corte:** 20 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -1191,17 +1191,18 @@ Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarje
 
 ## 27. Stableford Scratch — Senior y S. Senior
 
-La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la misma cuadrícula de campos, inmediatamente debajo de `ALTA VISTA`. Al tocarla abre la selección `SENIOR` o `S. SENIOR`. Esta modalidad es independiente de la ronda normal y de la tarjeta provisional.
+La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la misma cuadrícula de campos, inmediatamente debajo de `ALTA VISTA`. Al tocarla abre directamente la tarjeta oficial Stableford limpia y sin nombres precargados. Esta modalidad es independiente de la ronda normal y de la tarjeta provisional.
 
 - `SENIOR`: handicap fijo `0`, marcas blancas y cinco plazas de clasificación por ranking.
 - `S. SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
-- En ambas categorías se registran únicamente de uno a cuatro nombres; handicap y marcas no se escriben porque la aplicación los configura automáticamente.
+- En ambas categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial. Los espacios no utilizados permanecen vacíos; `ENTER` registra únicamente los nombres escritos, sin permitir huecos ni duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
+- El mismo panel permite confirmar `SENIOR` o `S. SENIOR` y editar el nombre del torneo antes de iniciar scores. Después del primer score no se permite cambiar la categoría ni la cantidad de jugadores.
 - Los únicos campos admitidos por la serie son Country Club, El Pulté, San Isidro y Mayan Golf. Un campo sin tarjeta oficial cargada permanece bloqueado para evitar cálculos con datos heredados o inventados.
 - Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales de ida, vuelta y ronda.
 - Puntuación automática por hoyo: doble bogey o más `0`; bogey `1`; par `2`; birdie `3`; eagle, albatros o mejor `4`. El valor máximo por hoyo queda limitado a cuatro puntos.
 - `X`, `EQUIS` o `LEVANTA` registra el hoyo levantado con cero puntos y sin fabricar un Gross.
 - La voz acepta nombre, hoyo y Gross numérico o expresión golfística. No calcula Neto ni reparte tiros de handicap.
-- Al cierre oficial, la ronda conserva su snapshot y actualiza la clasificación acumulada de su categoría.
+- Al cierre oficial, la ronda conserva un snapshot con SHA-256 y guarda en el historial el campo, la fecha y hora, el torneo, la categoría, los jugadores, los 18 hoyos, Gross y Puntos; además actualiza la clasificación acumulada de su categoría.
 - La clasificación contiene cuatro fechas, una por campo, y suma automáticamente las tres mejores tarjetas de cada jugador.
 - Se pueden incorporar resultados oficiales de otros grupos mediante `AGREGAR RESULTADO OFICIAL`, indicando jugador, categoría, fecha, campo, puntos y Gross opcional.
 - La clasificación Senior muestra las primeras cinco posiciones de ranking; las tres elecciones de capitán se administran fuera del cálculo. S. Senior muestra cuatro posiciones; sus dos elecciones de capitán también son externas.
@@ -1211,6 +1212,7 @@ La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la mi
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-22 | Manual 3.27 / App V201 | Stableford oficial limpio: acceso directo sin nombres precargados, registro interno de uno a seis jugadores, torneo/categoría dentro de la tarjeta y snapshot histórico con campo, fecha, torneo, jugadores, Gross y Puntos. |
 | 2026-08-20 | Manual 3.25 / App V199 | Stableford Scratch permanente: Senior HCP 0/marcas blancas y S. Senior HCP 0/marcas amarillas; máximo cuatro jugadores; Gross y puntos por hoyo; X explícita con cero; cuatro campos y fechas; totales por vuelta/ronda; clasificación por las tres mejores tarjetas e ingreso manual de resultados oficiales. |
 | 2026-08-22 | Manual 3.26 / App V200 | Reconciliación de la versión física Stableford: bloque inferior unificado como `INFORMACIÓN DE RONDA`, verde neón, con primera vuelta, segunda vuelta y total completos en grupal, provisional, Stableford y tarjeta digital. |
 | 2026-08-20 | Manual 3.24 / App V197 | Franja del reloj reorganizada en tres zonas: INICIO a la izquierda, TIMER centrado con superficie táctil real ampliada y cronómetro a la derecha; eliminada completamente la antigua capa invisible y sus interceptores globales para impedir que el micrófono active o desactive el timer. |

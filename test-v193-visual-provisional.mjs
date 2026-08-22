@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 const html = fs.readFileSync(new URL("./index-grupal.html", import.meta.url), "utf8");
 const required = [
-  ["build integrado vigente", "V200-STABLEFORD-VOICE-SESSION-READY-20260820"],
+  ["build integrado vigente", "V201-STABLEFORD-CLEAN-SIX-PLAYER-20260822"],
   ["seis filas provisionales", "Array.from({length:6}"],
   ["nombres provisionales editables", "provisional-player-name-input"],
   ["resumen provisional de primera vuelta", "GROSS PRIMERA VUELTA"],
