@@ -1,0 +1,50 @@
+name: Stableford V241 horizontal accumulated
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v241-horizontal-accumulated.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Reflow manual and accumulated into one horizontal block
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          old='''manual.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1.7fr;gap:7px;align-items:center">'''
+          new='''manual.innerHTML=`<div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(210px,.9fr);gap:10px;align-items:start"><div style="display:grid;grid-template-columns:1fr 1.7fr;gap:7px;align-items:center">'''
+          if old not in s: raise SystemExit('manual start anchor mismatch')
+          s=s.replace(old,new,1)
+          old2='''`).join("")}</div><div style="display:grid;grid-template-columns:1fr 70px 70px 70px;gap:5px;margin-top:8px;align-items:center">'''
+          new2='''`).join("")}</div><div style="display:grid;grid-template-columns:1fr 48px 48px 54px;gap:4px;align-items:center">'''
+          if old2 not in s: raise SystemExit('accumulated start anchor mismatch')
+          s=s.replace(old2,new2,1)
+          old3='''}).join("")}</div><button id="sfGridEnter"'''
+          new3='''}).join("")}</div></div><button id="sfGridEnter"'''
+          if old3 not in s: raise SystemExit('block close anchor mismatch')
+          s=s.replace(old3,new3,1)
+          p.write_text(s,encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'grid-template-columns:minmax(0,1.35fr) minmax(210px,.9fr)' index-grupal.html
+          grep -Fq 'grid-template-columns:1fr 48px 48px 54px' index-grupal.html
+          grep -Fq '>IN</b>' index-grupal.html
+          grep -Fq '>OUT</b>' index-grupal.html
+          grep -Fq '>TOTAL</b>' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V241 place IN OUT TOTAL beside manual entry'
+          git push origin stableford-tournament-final

@@ -1,0 +1,41 @@
+name: Stableford V232 manual grid
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v232-manual-grid.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Build fixed-player one-enter manual grid
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          start=s.index('  let manual=document.getElementById("stablefordManualEntry");')
+          end=s.index('\n  $("summaryTitle")',start)
+          new='''  let manual=document.getElementById("stablefordManualEntry");if(!manual){manual=document.createElement("div");manual.id="stablefordManualEntry";manual.style.cssText="position:relative;z-index:9999;margin:10px 0;padding:8px;border:2px solid #31ff00;background:#000;pointer-events:auto;touch-action:manipulation";document.querySelector(".card-shell").before(manual)}const selectedHole=Number(manual.dataset.hole||1);manual.innerHTML=`<div style="display:grid;grid-template-columns:100px 72px 1fr;gap:5px;align-items:center"><b>JUGADOR</b><select id="sfGridHole" style="min-height:40px;font-size:16px">${ALL.map(h=>`<option value="${h}" ${h===selectedHole?"selected":""}>H${h}</option>`).join("")}</select><b>GROSS</b>${round.players.map(p=>`<span>${escapeHtml(p.name)}</span><span>H${selectedHole}</span><input class="sfGridGross" data-player="${escapeHtml(p.id)}" inputmode="numeric" type="number" min="1" max="30" style="min-height:40px;font-size:18px;text-align:center" value="${GSCStableford.holeResult(p.holes?.[selectedHole],PAR[selectedHole-1]).recorded?(GSCStableford.holeResult(p.holes?.[selectedHole],PAR[selectedHole-1]).gross??""):""}">`).join("")}</div>`;manual.querySelector("#sfGridHole").onchange=e=>{manual.dataset.hole=e.target.value;render()};manual.querySelectorAll(".sfGridGross").forEach(input=>{input.onkeydown=e=>{if(e.key!=="Enter")return;e.preventDefault();const p=round.players.find(x=>x.id===input.dataset.player),hole=selectedHole,gross=Number(input.value);const result=saveEntry({player:p?.name,hole,gross});if(result.ok){persist();localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round));render()}else window.alert("SCORE INVÁLIDO")}});'''
+          s=s[:start]+new+s[end:]
+          p.write_text(s,encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'sfGridHole' index-grupal.html
+          grep -Fq 'sfGridGross' index-grupal.html
+          grep -Fq 'if(e.key!=="Enter")return' index-grupal.html
+          grep -Fq 'saveEntry({player:p?.name,hole,gross})' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V232 fixed players movable hole one-enter manual entry'
+          git push origin stableford-tournament-final

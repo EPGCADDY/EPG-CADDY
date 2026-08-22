@@ -4,8 +4,8 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V199
-**Fecha de corte:** 20 de agosto de 2026
+**Versión documentada:** V255
+**Fecha de corte:** 22 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
@@ -307,7 +307,21 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - Las rondas antiguas sin WhatsApp siguen siendo compatibles.
 - La V141 no escribe silenciosamente en la libreta del teléfono y no envía mensajes todavía.
 
-### 8.6 Torneo V143
+### 8.6 Casillas, código privado e historial de perfil V255
+
+**Estado:** casillas, selector, dictado visible, código y directorio histórico local `OPERATIVOS`; sincronización central `PREPARADA, NO ACTIVADA`.
+
+- Las seis posiciones muestran desde el inicio casillas reales para código, nombre, HDCP, marcas y WhatsApp opcional; ya no existen líneas abiertas con `DISPONIBLE`.
+- En captura manual el color de marcas nunca se escribe: se elige en un selector con `NEGRAS`, `AZULES`, `BLANCAS`, `ROJAS` o `AMARILLAS`.
+- En dictado se pronuncian nombre, HDCP y color; el resultado reconocido aparece en las mismas casillas, con número y color visibles antes de presionar `OK`.
+- Al completar por primera vez nombre, HDCP y marcas se crea un perfil privado reutilizable y se le asigna un código corto.
+- Escribir únicamente ese código recupera en el mismo dispositivo el nombre, último HDCP, últimas marcas y último WhatsApp guardado; todos permanecen editables.
+- Cada variación conserva el dato vigente y agrega un evento al historial local sin borrar la información anterior.
+- La migración central `002_player_profiles_and_history.sql` deja preparados código único, dato vigente e historial de cambios. No debe anunciarse como sincronización central activa hasta aplicar la migración, habilitar autenticación y superar prueba multi-dispositivo.
+- El botón corto `COMPARTIR` abre un panel de proyecto para seleccionar perfil/código, marcas y HDCP actuales, última ronda o últimas tres rondas.
+- Compartir será permitido en una fase posterior, pero en V255 la acción final permanece deshabilitada y marcada `PROYECTO · AÚN NO DISPONIBLE`; todavía no solicita autorizaciones ni transmite información.
+
+### 8.7 Torneo V143
 
 **Estado:** registro y archivo local `OPERATIVOS`; visualizador y consulta histórica por voz `PLANIFICADOS`.
 
@@ -320,7 +334,7 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - La tarjeta digital muestra el nombre del torneo.
 - Las rondas que nunca fueron guardadas no pueden reconstruirse automáticamente; deberán importarse o registrarse manualmente.
 
-### 8.7 Campo de golf V156
+### 8.8 Campo de golf V156
 
 - El registro presenta siete opciones ya escritas con casillas de selección única: `El Pulté`, `Country Club`, `San Isidro`, `Mayan Golf`, `Hacienda Nueva`, `Alta Vista` y `La Reunión`.
 - Sólo puede marcarse un campo por ronda.
@@ -610,6 +624,10 @@ Prohibiciones operativas durante una ronda:
 - Primera vuelta: hoyos 1–9.
 - Segunda vuelta: hoyos 10–18.
 - Ronda: hoyos 1–18.
+- El bloque inferior autorizado se titula `INFORMACIÓN DE RONDA` y su título siempre usa verde neón, también en la tarjeta provisional/en sucio.
+- La tarjeta grupal muestra: `JUGADOR`, `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA`, `GROSS TOTAL`, `HCP`, `NETO TOTAL` y `+/- NETO`.
+- La tarjeta provisional/en sucio muestra únicamente sus datos Gross reales: `JUGADOR`, `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA` y `GROSS TOTAL`.
+- La tarjeta Stableford muestra: `JUGADOR`, Gross de primera vuelta, segunda vuelta y total, y Puntos de primera vuelta, segunda vuelta y total.
 - El cierre depende de scores requeridos, no de que simplemente se mencione el hoyo 18.
 - Jugadores incorporados tarde se evalúan desde su hoyo de incorporación.
 - Una X explícita impide un cierre completo hasta ser resuelta.
@@ -1187,17 +1205,24 @@ Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarje
 
 ## 27. Stableford Scratch — Senior y S. Senior
 
-La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la misma cuadrícula de campos, inmediatamente debajo de `ALTA VISTA`. Al tocarla abre la selección `SENIOR` o `S. SENIOR`. Esta modalidad es independiente de la ronda normal y de la tarjeta provisional.
+La pantalla general de Registro mantiene una opción permanente correctamente nombrada `STABLEFORD`. Al tocarla abandona el formulario GRUPAL y abre directamente el alojamiento aislado de la tarjeta oficial Stableford. Esta modalidad es independiente de la ronda normal y de la tarjeta provisional.
+
+La apertura normal del alojamiento conserva y restaura la última ronda Stableford activa: campo, torneo, categoría, jugadores, marcas, Gross y Puntos. El botón `NUEVA RONDA` elimina únicamente la ronda activa y el borrador de registro, y presenta un registro Stableford completamente limpio. Nunca borra el historial de tarjetas cerradas ni la clasificación acumulada.
 
 - `SENIOR`: handicap fijo `0`, marcas blancas y cinco plazas de clasificación por ranking.
 - `S. SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
-- En ambas categorías se registran únicamente de uno a cuatro nombres; handicap y marcas no se escriben porque la aplicación los configura automáticamente.
+- En una nueva ronda no queda categoría impuesta. El registro muestra simultáneamente `SENIOR · BLANCAS` y `SÚPER SENIOR · AMARILLAS`; la selección configura automáticamente las marcas, los yardajes, Course Rating y Slope correspondientes al campo elegido.
+- El registro muestra los cuatro campos autorizados —Country Club, El Pulté, San Isidro y Mayan Golf— y exige seleccionar uno antes de iniciar.
+- En ambas categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
+- El mismo panel permite escribir el nombre del torneo antes de iniciar scores. `REGRESAR A DATOS` abre los datos de la ronda actual sin borrar sus scores; `NUEVA RONDA` sí abre un registro completamente limpio.
 - Los únicos campos admitidos por la serie son Country Club, El Pulté, San Isidro y Mayan Golf. Un campo sin tarjeta oficial cargada permanece bloqueado para evitar cálculos con datos heredados o inventados.
 - Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales de ida, vuelta y ronda.
 - Puntuación automática por hoyo: doble bogey o más `0`; bogey `1`; par `2`; birdie `3`; eagle, albatros o mejor `4`. El valor máximo por hoyo queda limitado a cuatro puntos.
 - `X`, `EQUIS` o `LEVANTA` registra el hoyo levantado con cero puntos y sin fabricar un Gross.
 - La voz acepta nombre, hoyo y Gross numérico o expresión golfística. No calcula Neto ni reparte tiros de handicap.
-- Al cierre oficial, la ronda conserva su snapshot y actualiza la clasificación acumulada de su categoría.
+- Al cierre oficial, la ronda conserva un snapshot con SHA-256 y guarda en el historial el campo, la fecha y hora, el torneo, la categoría, los jugadores, los 18 hoyos, Gross y Puntos; además actualiza la clasificación acumulada de su categoría.
+- Después del cierre, Stableford usa la misma matriz oficial GRUPAL: abre una Tarjeta Global, permite elegir y abrir cada tarjeta personal, descarga el paquete completo y entrega el archivo visual a la hoja nativa del teléfono para escoger correo o WhatsApp.
+- La hoja nativa constituye una entrega preparada y confirmada por el usuario. Cancelarla no altera la ronda ni marca la tarjeta como enviada; el envío automático y el estado `ENTREGADO` continúan reservados a proveedores verificables.
 - La clasificación contiene cuatro fechas, una por campo, y suma automáticamente las tres mejores tarjetas de cada jugador.
 - Se pueden incorporar resultados oficiales de otros grupos mediante `AGREGAR RESULTADO OFICIAL`, indicando jugador, categoría, fecha, campo, puntos y Gross opcional.
 - La clasificación Senior muestra las primeras cinco posiciones de ranking; las tres elecciones de capitán se administran fuera del cálculo. S. Senior muestra cuatro posiciones; sus dos elecciones de capitán también son externas.
@@ -1207,7 +1232,14 @@ La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la mi
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-22 | Manual 3.32 / App V255 | Registro General con seis filas de casillas reales para código privado, nombre, HDCP, selector de marcas y WhatsApp; manual y dictado llenan la misma retícula y muestran número/color antes de `OK`. El perfil se guarda localmente al completar datos válidos, recupera por código y conserva historial de cambios. Migración central preparada pero no aplicada. `COMPARTIR` abre únicamente el proyecto de selección; autorización y envío aún no están disponibles. |
+| 2026-08-22 | Manual 3.31 / App V254 | Eliminadas completamente las tres falsas casillas visuales bajo `REGISTRO DE JUGADORES` porque no ejecutaban ninguna acción y podían confundirse con botones. Se conservan sin cambios el título, las instrucciones funcionales, el registro de uno a seis jugadores, el micrófono, la revisión editable, `OK` y la confirmación previa a iniciar la ronda. |
+| 2026-08-22 | Manual 3.30 / App V253 | `RONDA PREVIA` operativa y viva en General y Stableford: antes de alternar guarda la ronda visible; restaura campo, fecha, torneo, jugadores, configuración y scores completos; permite continuar editando o dictando; cambia a `RONDA ACTUAL` para regresar sin perder modificaciones; separa estrictamente los historiales General y Stableford y también permite recuperar la última ronda desde el registro vacío posterior a `NUEVA RONDA`. |
+| 2026-08-22 | Manual 3.29 / App V252 | Stableford aislado con estado operativo explícito: apertura normal restaura la última ronda; `NUEVA RONDA` limpia solamente ronda activa y borrador, sin tocar historial ni clasificación; registro nuevo sin nombres, campo o categoría forzados; cuatro campos, Senior/blancas, Súper Senior/amarillas y uno a seis jugadores. |
+| 2026-08-22 | Manual 3.28 / App V250 | Fin de ronda Stableford conectado a la matriz oficial GRUPAL: Global, una personal por jugador, paquete conjunto, historial y compartir del archivo visual por correo/WhatsApp mediante la hoja nativa, sin falsos estados de entrega. |
+| 2026-08-22 | Manual 3.27 / App V201 | Stableford oficial limpio: acceso directo sin nombres precargados, registro interno de uno a seis jugadores, torneo/categoría dentro de la tarjeta y snapshot histórico con campo, fecha, torneo, jugadores, Gross y Puntos. |
 | 2026-08-20 | Manual 3.25 / App V199 | Stableford Scratch permanente: Senior HCP 0/marcas blancas y S. Senior HCP 0/marcas amarillas; máximo cuatro jugadores; Gross y puntos por hoyo; X explícita con cero; cuatro campos y fechas; totales por vuelta/ronda; clasificación por las tres mejores tarjetas e ingreso manual de resultados oficiales. |
+| 2026-08-22 | Manual 3.26 / App V200 | Reconciliación de la versión física Stableford: bloque inferior unificado como `INFORMACIÓN DE RONDA`, verde neón, con primera vuelta, segunda vuelta y total completos en grupal, provisional, Stableford y tarjeta digital. |
 | 2026-08-20 | Manual 3.24 / App V197 | Franja del reloj reorganizada en tres zonas: INICIO a la izquierda, TIMER centrado con superficie táctil real ampliada y cronómetro a la derecha; eliminada completamente la antigua capa invisible y sus interceptores globales para impedir que el micrófono active o desactive el timer. |
 | 2026-08-20 | Manual 3.23 / App V196 | Guatemala Country Club habilitado desde su tarjeta oficial: Par 71, 90 yardajes, cinco ratings/slopes y tres matrices de handicap validados casilla por casilla; selección de campo enlazada al motor de Gross, Neto, vueltas y total sin heredar datos de El Pulté. |
 | 2026-08-20 | Manual 3.18 / App V193 | Tarjeta en sucio ampliada: seis nombres opcionales y editables directamente, seis bloques exclusivamente Gross, sin handicap/círculos/Neto/resultado, dictado por posición o nombre y aislamiento absoluto de todos los efectos oficiales. |

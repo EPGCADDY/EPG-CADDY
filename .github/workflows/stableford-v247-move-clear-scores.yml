@@ -1,0 +1,45 @@
+name: Stableford V247 move borrar scores
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v247-move-clear-scores.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Move clear scores control beside new round
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          # Remove button markup from manual panel only; preserve its handler logic for rebinding.
+          import re
+          s,n=re.subn(r'<button id="sfClearScores"[^>]*>BORRAR SCORES</button>','',s,count=1)
+          if n!=1: raise SystemExit('clear button markup missing')
+          # Inject the button beside NUEVA RONDA at runtime, reusing existing round action area.
+          anchor='''manual.querySelector("#sfClearScores").onclick=()=>'''
+          if anchor not in s: raise SystemExit('clear handler anchor missing')
+          prefix='''let clearBtn=document.getElementById("sfClearScores");if(!clearBtn){const newRoundBtn=document.getElementById("newRoundButton")||document.getElementById("newRound");if(newRoundBtn){clearBtn=document.createElement("button");clearBtn.id="sfClearScores";clearBtn.type="button";clearBtn.textContent="BORRAR SCORES";clearBtn.style.cssText="margin-left:8px;border-color:#ff4545;color:#ff4545;background:#050505";newRoundBtn.insertAdjacentElement("afterend",clearBtn)}}if(clearBtn)clearBtn.onclick=()=>'''
+          s=s.replace(anchor,prefix,1)
+          p.write_text(s,encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'clearBtn.textContent="BORRAR SCORES"' index-grupal.html
+          grep -Fq 'newRoundBtn.insertAdjacentElement("afterend",clearBtn)' index-grupal.html
+          grep -Fq 'round.players.forEach(p=>{p.holes={}})' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V247 move BORRAR SCORES beside NUEVA RONDA'
+          git push origin stableford-tournament-final

@@ -1,0 +1,43 @@
+name: Stableford V243 mobile clean grid
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v243-mobile-clean-grid.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Rebuild compact mobile grid without overlap
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          start=s.index('manual.innerHTML=`')
+          end=s.index('`;manual.querySelector("#sfGridHole")',start)
+          new='''manual.innerHTML=`<div style="display:grid;grid-template-columns:minmax(0,1fr) 72px 72px 52px 52px 58px;gap:4px;align-items:center;width:100%;box-sizing:border-box"><b style="text-align:center;color:#72ff42;font-size:13px">JUGADOR</b><div style="text-align:center"><b style="color:#72ff42;font-size:12px">HOYO</b><select id="sfGridHole" style="display:block;width:100%;min-height:36px;margin-top:2px;font-size:19px;text-align:center;text-align-last:center">${ALL.map(h=>`<option value="${h}" ${h===selectedHole?"selected":""}>${h}</option>`).join("")}</select></div><b style="text-align:center;color:#72ff42;font-size:13px">GROSS</b><b style="text-align:center;color:#72ff42;font-size:12px">IN</b><b style="text-align:center;color:#72ff42;font-size:12px">OUT</b><b style="text-align:center;color:#72ff42;font-size:11px">TOTAL</b>${round.players.map(p=>{const i=stablefordTotals(p,FRONT),o=stablefordTotals(p,BACK),t=stablefordTotals(p,ALL),r=GSCStableford.holeResult(p.holes?.[selectedHole],PAR[selectedHole-1]);return`<input class="sfGridName" data-player="${escapeHtml(p.id)}" value="${escapeHtml(p.name)}" style="min-width:0;width:100%;min-height:42px;font-size:15px;text-align:center;box-sizing:border-box"><span style="text-align:center;font-size:18px">${selectedHole}</span><input class="sfGridGross" data-player="${escapeHtml(p.id)}" inputmode="numeric" type="number" min="1" max="30" style="min-width:0;width:100%;min-height:42px;font-size:20px;text-align:center;box-sizing:border-box" value="${r.recorded?(r.gross??""):""}"><strong style="text-align:center">${i.count?i.points:0}</strong><strong style="text-align:center">${o.count?o.points:0}</strong><strong style="text-align:center;color:#72ff42">${t.count?t.points:0}</strong>`}).join("")}</div><button id="sfGridEnter" type="button" style="display:block;width:100%;min-height:44px;margin-top:6px;font-size:18px;font-weight:800;background:#72ff42;color:#000;border:2px solid #72ff42;box-shadow:0 0 14px rgba(114,255,66,.65)">ENTER</button>'''
+          s=s[:start]+new+s[end:]
+          p.write_text(s,encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'grid-template-columns:minmax(0,1fr) 72px 72px 52px 52px 58px' index-grupal.html
+          grep -Fq 'font-size:12px">IN' index-grupal.html
+          grep -Fq 'font-size:12px">OUT' index-grupal.html
+          grep -Fq 'font-size:11px">TOTAL' index-grupal.html
+          grep -Fq 'class="sfGridName"' index-grupal.html
+          grep -Fq 'class="sfGridGross"' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V243 compact mobile manual grid with IN OUT TOTAL'
+          git push origin stableford-tournament-final

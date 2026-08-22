@@ -1,0 +1,42 @@
+name: Stableford V227 persistence
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v227-persistence.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+          fetch-depth: 0
+      - name: Stop emergency URL from deleting active round
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          old='''const sfEmergency=new URLSearchParams(location.search).get("stableford_emergency")==="countryclub";\nif(sfEmergency){localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(STORAGE_BACKUP_KEY);localStorage.removeItem(DRAFT_STORAGE_KEY);}\nlet round=loadRound(),draftPlayers=[],draftTournament=null,draftCourse="pulte",rosterEditMode=false,rosterEditJoinHole=1,handicapRectificationMode=false,nameCorrectionMode=false,profileCorrectionMode=false,rosterAddMode=false;\nif(sfEmergency){round.configured=true;round.provisional=false;round.courseKey="country_club";round.course="Guatemala Country Club";round.mode="stableford";round.stablefordCategory="senior";round.players=["Jaime","Junior","Fito","Henry"].map((name,i)=>({id:`sf${i+1}`,name,handicap:0,tee:"Blanco",matrix:"Caballeros",whatsapp:"",holes:{},lastHole:null,activeFrom:1,slot:i+1}));localStorage.setItem(STORAGE_KEY,JSON.stringify(round));}'''
+          new='''const sfEmergency=new URLSearchParams(location.search).get("stableford_emergency")==="countryclub";\nlet round=loadRound(),draftPlayers=[],draftTournament=null,draftCourse="pulte",rosterEditMode=false,rosterEditJoinHole=1,handicapRectificationMode=false,nameCorrectionMode=false,profileCorrectionMode=false,rosterAddMode=false;\nif(sfEmergency&&!round.configured){round.configured=true;round.provisional=false;round.courseKey="country_club";round.course="Guatemala Country Club";round.mode="stableford";round.stablefordCategory="senior";round.players=["Jaime","Junior","Fito","Henry"].map((name,i)=>({id:`sf${i+1}`,name,handicap:0,tee:"Blanco",matrix:"Caballeros",whatsapp:"",holes:{},lastHole:null,activeFrom:1,slot:i+1}));localStorage.setItem(STORAGE_KEY,JSON.stringify(round));}'''
+          if old not in s: raise SystemExit('persistence anchor mismatch')
+          p.write_text(s.replace(old,new,1),encoding='utf-8')
+      - name: Validate persistence and Stableford suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          ! grep -Fq 'if(sfEmergency){localStorage.removeItem(STORAGE_KEY)' index-grupal.html
+          grep -Fq 'if(sfEmergency&&!round.configured)' index-grupal.html
+          grep -Fq 'stableford-manual-cell' index-grupal.html
+          grep -Fq 'points:GSCStableford.pointsFor' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          test -f test-stableford-manual.mjs && node test-stableford-manual.mjs || true
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V227 preserve active scores on reload'
+          git push origin stableford-tournament-final
