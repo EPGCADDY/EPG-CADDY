@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V256
+**Versión documentada:** V257
 **Fecha de corte:** 22 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -1244,6 +1244,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-22 | Manual 3.34 / App V257 | Corregida la selección de campo en la preparación Stableford: la casilla visible es ahora un selector nativo operativo y queda sincronizada con los cuatro botones de campo (El Pulté, Country Club, San Isidro y Mayan Golf). El título de esta pantalla queda únicamente como `RONDA STABLEFORD`. |
 | 2026-08-22 | Manual 3.33 / App V256 | Plataforma maestra por rubros preparada: el código actualiza al mismo jugador; el último registro reemplaza nombre, handicap, marcas y WhatsApp vigentes sin borrar el historial anterior. Paquete central para campos/yardajes, torneos, rondas, participantes, jugadas por hoyo, tarjetas lógicas y acciones honestas de compartir; cola offline idempotente y API transaccional autenticada. Migración y recorrido real de Producción pendientes de validación aislada. |
 | 2026-08-22 | Manual 3.32 / App V255 | Registro General con seis filas de casillas reales para código privado, nombre, HDCP, selector de marcas y WhatsApp; manual y dictado llenan la misma retícula y muestran número/color antes de `OK`. El perfil se guarda localmente al completar datos válidos, recupera por código y conserva historial de cambios. Migración central preparada pero no aplicada. `COMPARTIR` abre únicamente el proyecto de selección; autorización y envío aún no están disponibles. |
 | 2026-08-22 | Manual 3.31 / App V254 | Eliminadas completamente las tres falsas casillas visuales bajo `REGISTRO DE JUGADORES` porque no ejecutaban ninguna acción y podían confundirse con botones. Se conservan sin cambios el título, las instrucciones funcionales, el registro de uno a seis jugadores, el micrófono, la revisión editable, `OK` y la confirmación previa a iniciar la ronda. |
