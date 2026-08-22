@@ -4,7 +4,7 @@ import stableford from "./stableford.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V252-STABLEFORD-PERSISTENCE-CATEGORY-COURSE-20260822/);
+assert.match(html,/V(?:252-STABLEFORD-PERSISTENCE-CATEGORY-COURSE|253-LIVE-PREVIOUS-ROUND)-20260822/);
 assert.doesNotMatch(html,/sfEmergencyClean/);
 assert.doesNotMatch(html,/round\.players=\["Jaime","Junior","Fito","Henry"\]/);
 assert.match(html,/let stablefordSetupCategory=null,stablefordSetupCourseKey=null/);
