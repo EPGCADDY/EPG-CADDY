@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/V261-REGISTRATION-SIMPLIFIED-STABLEFORD-LABELS-20260822/);
+assert.match(html,/V262-REGISTRATION-MODALITIES-20260822/);
 assert.match(html,/for\(let i=0;i<6;i\+\+\)/);
 assert.match(html,/data-draft-name=/);
 assert.match(html,/data-draft-hcp=/);
@@ -12,7 +12,7 @@ assert.doesNotMatch(html,/draft-empty-label">DISPONIBLE/);
 assert.match(html,/function syncDraftPlayersFromManualRows/);
 assert.match(html,/<div class="registration-method-title">1 · DICTADO<\/div>/);
 assert.match(html,/<div class="registration-method-action">CLICK MICRÓFONO<\/div>/);
-assert.match(html,/<div class="registration-method-title">2 · MANUAL<\/div>/);
+assert.match(html,/<div class="registration-method-title">2 · MANUAL OPCIONAL<\/div>/);
 assert.equal((html.match(/<div class="registration-method-fields">NOMBRE \+ HDCP \+ MARCAS<\/div>/g)||[]).length,2);
 assert.doesNotMatch(html,/data-draft-code=/);
 assert.doesNotMatch(html,/data-draft-whatsapp=/);
@@ -22,4 +22,4 @@ assert.doesNotMatch(html,/>CÓDIGO<\/span>/);
 assert.doesNotMatch(html,/WHATSAPP OPCIONAL/);
 assert.match(html,/NO SE RECONOCIÓ · DICTA NOMBRE, HDCP Y MARCAS/);
 
-console.log("PASS V261 · registro oficial limitado a Dictado o Manual: Nombre, HDCP y Marcas");
+console.log("PASS V262 · registro oficial limitado a Dictado o Manual Opcional: Nombre, HDCP y Marcas");

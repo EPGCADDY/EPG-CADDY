@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V261-REGISTRATION-SIMPLIFIED-STABLEFORD-LABELS-20260822/);
+assert.match(html,/V262-REGISTRATION-MODALITIES-20260822/);
 
 // Campo y modalidad son decisiones distintas en la Tarjeta Oficial.
 assert.match(html,/<div class="field-title course-selection-title">SELECCIONA CAMPO<\/div><div class="course-options" id="courseOptions"/);
@@ -24,7 +24,10 @@ assert.doesNotMatch(neutralDot,/background:var\(--lime\)/);
 // El registro oficial contiene exactamente las dos vías autorizadas.
 assert.match(html,/>1 · DICTADO<\/div>/);
 assert.match(html,/>CLICK MICRÓFONO<\/div>/);
-assert.match(html,/>2 · MANUAL<\/div>/);
+assert.match(html,/>2 · MANUAL OPCIONAL<\/div>/);
+assert.match(html,/<div class="stableford-mode-option" id="stablefordModeOption"><\/div>\s*<div class="provisional-mode-option"><button[^>]+id="provisionalScorecardButton"[^>]*>[\s\S]*?SCORE CARD SIN REGISTRO[\s\S]*?<\/button><\/div>\s*<div class="setup-facts"/);
+assert.equal((html.match(/id="provisionalScorecardButton"/g)||[]).length,1);
+assert.doesNotMatch(html,/class="provisional-entry"|class="provisional-entry-button"/);
 assert.equal((html.match(/>NOMBRE \+ HDCP \+ MARCAS<\/div>/g)||[]).length,2);
 assert.doesNotMatch(html,/data-draft-code=/);
 assert.doesNotMatch(html,/data-draft-whatsapp=/);
@@ -35,4 +38,4 @@ assert.match(html,/id="stablefordRoundPointsTitle"[^>]*>STABLEFORD<\/div>/);
 assert.match(html,/\$\("summaryTitle"\)\.textContent="PUNTOS"/);
 assert.match(html,/\$\("finalSummaryTitle"\)\.textContent=isStablefordRound\(\)\?"PUNTOS":"INFORMACIÓN DE RONDA"/);
 
-console.log("PASS V261 · campo separado, modalidad Stableford neutral y registro Dictado/Manual depurado");
+console.log("PASS V262 · campo separado, modalidad Stableford neutral y registro Dictado/Manual Opcional depurado");

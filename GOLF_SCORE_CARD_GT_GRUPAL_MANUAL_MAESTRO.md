@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V261
+**Versión documentada:** V262
 **Fecha de corte:** 22 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -323,12 +323,13 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - El panel de proyecto `COMPARTIR`, su código visible y la recuperación manual por código fueron eliminados del registro en V261.
 - La eliminación se limita al registro de jugadores. Las acciones oficiales de cierre `CORREO / WHATSAPP GLOBAL` y `CORREO / WHATSAPP PERSONAL` permanecen operativas.
 
-### 8.6.1 Registro oficial vigente V261
+### 8.6.1 Registro oficial vigente V262
 
-- El registro ofrece exactamente dos vías: `1 · DICTADO` y `2 · MANUAL`.
+- El registro ofrece exactamente dos vías: `1 · DICTADO` y `2 · MANUAL OPCIONAL`.
 - En Dictado, se toca el micrófono y se pronuncian únicamente `NOMBRE + HDCP + MARCAS`.
-- En Manual, cada fila contiene únicamente `NOMBRE + HDCP + MARCAS`; las marcas se eligen en el selector de color.
+- En Manual Opcional, cada fila contiene únicamente `NOMBRE + HDCP + MARCAS`; las marcas se eligen en el selector de color.
 - Se permiten de uno a seis jugadores.
+- Si un jugador fue omitido, `REGRESAR A DATOS` abre la ronda activa en modo de incorporación: puede agregarse manualmente o por micrófono, y los scores ya registrados se conservan. El jugador nuevo comienza operativamente desde el hoyo de incorporación.
 - No se muestran ni operan Código, Compartir o WhatsApp dentro del registro.
 
 ### 8.7 Base maestra y sustitución del dato vigente V256
@@ -646,10 +647,10 @@ Prohibiciones operativas durante una ronda:
 - Primera vuelta: hoyos 1–9.
 - Segunda vuelta: hoyos 10–18.
 - Ronda: hoyos 1–18.
-- En General y en la tarjeta provisional/en sucio, el bloque inferior se titula `INFORMACIÓN DE RONDA` en verde neón.
+- En General y en `RONDA SIN REGISTRO`, el bloque inferior se titula `INFORMACIÓN DE RONDA` en verde neón.
 - En Stableford, el bloque de captura manual se titula `STABLEFORD` y el bloque inferior de resultados se titula `PUNTOS`, también en la tarjeta digital final.
 - La tarjeta grupal muestra: `JUGADOR`, `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA`, `GROSS TOTAL`, `HCP`, `NETO TOTAL` y `+/- NETO`.
-- La tarjeta provisional/en sucio muestra únicamente sus datos Gross reales: `JUGADOR`, `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA` y `GROSS TOTAL`.
+- `RONDA SIN REGISTRO` siempre muestra sus datos Gross reales: `JUGADOR`, `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA` y `GROSS TOTAL`; cuando un jugador tiene HDCP y marcas completos, añade para él los resultados Neto correspondientes.
 - La tarjeta Stableford muestra: `JUGADOR`, Gross de primera vuelta, segunda vuelta y total, y Puntos de primera vuelta, segunda vuelta y total.
 - El cierre depende de scores requeridos, no de que simplemente se mencione el hoyo 18.
 - Jugadores incorporados tarde se evalúan desde su hoyo de incorporación.
@@ -1207,16 +1208,18 @@ Antes de publicar al mercado:
 
 ---
 
-## 25. Tarjeta provisional sin registro
+## 25. Ronda sin registro
 
-La primera pantalla incorpora el acceso **SCORE CARD SIN REGISTRO**. Permite abrir inmediatamente la tarjeta sin registrar jugadores, sin handicap y sin presionar `OK`. Está destinada a inspección visual, práctica y partidas informales de algunos hoyos, incluso salteados.
+La primera pantalla incorpora el acceso **SCORE CARD SIN REGISTRO** dentro de `SELECCIONA MODALIDAD`, exactamente debajo de `STABLEFORD`. Permite abrir inmediatamente la tarjeta sin registrar jugadores y sin presionar `OK`. Está destinada a inspección visual, práctica y partidas informales de algunos hoyos, incluso salteados. No existe una segunda opción duplicada al final del registro.
 
-- La flecha de acceso activa por sí sola el modo interno `TARJETA EN SUCIO`; el usuario no debe marcar ninguna opción adicional.
-- La cuadrícula abre seis espacios de nombre completamente en blanco. Los nombres son opcionales y pueden teclearse directamente en la tarjeta sólo como referencia informal.
-- Cada jugador muestra exclusivamente `YDS` y `GROSS`. No aparecen handicap, círculos de handicap, Neto ni resultado `+/-`.
-- El dictado acepta hoyo y resultado para el primer espacio, por ejemplo: `HOYO 1 PAR`, y también jugador o nombre, hoyo y resultado, por ejemplo: `JUGADOR 3 HOYO 5 BOGEY` o `CARLOS HOYO 9 PAR`.
+- La flecha de acceso activa por sí sola el modo `RONDA SIN REGISTRO`; el usuario no debe marcar ninguna opción adicional.
+- La cuadrícula abre seis perfiles opcionales. En cada uno puede dejar todo vacío o completar sólo nombre, sólo HDCP, sólo marcas, cualquier combinación parcial o los tres datos.
+- Los datos omitidos pueden completarse durante la ronda sin reiniciar ni perder scores: manualmente en las casillas de la propia tarjeta o por micrófono indicando la posición, por ejemplo `JUGADOR 2 CARLOS 14 BLANCAS`, `JUGADOR 2 HANDICAP 14` o `JUGADOR 2 MARCAS BLANCAS`.
+- Sin marcas, los yardajes permanecen vacíos. Con marcas, aparecen sus yardajes. Con HDCP y marcas válidos, aparecen también HDCP, Neto y `+/-` para ese jugador.
+- El dictado de scores acepta hoyo y resultado para el primer espacio, por ejemplo: `HOYO 1 PAR`, y también jugador o nombre, hoyo y resultado, por ejemplo: `JUGADOR 3 HOYO 5 BOGEY` o `CARLOS HOYO 9 PAR`.
 - No exige orden consecutivo ni completar 18 hoyos; las casillas no jugadas permanecen vacías y nunca se convierten en `X`.
-- Se identifica permanentemente como `TARJETA PROVISIONAL · NO GENERA RÉCORD NI ENVÍOS`.
+- Los resultados calculan automáticamente `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA` y `GROSS TOTAL`; el total no se escribe manualmente.
+- Se identifica permanentemente como `RONDA SIN REGISTRO · DATOS OPCIONALES · NO GENERA RÉCORD NI ENVÍOS`.
 - No entra al archivo histórico, base de jugadores, estadísticas históricas, récords, cierre oficial, Tarjeta Global, tarjeta personal, WhatsApp, correo ni cola de entregas.
 - Al regresar a Datos puede iniciarse posteriormente una ronda oficial mediante el registro normal.
 
@@ -1228,7 +1231,7 @@ Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarje
 
 ## 27. Stableford Scratch — Senior y S. Senior
 
-La pantalla general de Registro mantiene una opción permanente correctamente nombrada `STABLEFORD`. Al tocarla abandona el formulario GRUPAL y abre directamente el alojamiento aislado de la tarjeta oficial Stableford. Esta modalidad es independiente de la ronda normal y de la tarjeta provisional.
+La pantalla general de Registro mantiene una opción permanente correctamente nombrada `STABLEFORD`. Al tocarla abandona el formulario GRUPAL y abre directamente el alojamiento aislado de la tarjeta oficial Stableford. Esta modalidad es independiente de la ronda normal y de `RONDA SIN REGISTRO`.
 
 La apertura normal del alojamiento conserva y restaura la última ronda Stableford activa: campo, torneo, categoría, jugadores, marcas, Gross y Puntos. El botón `NUEVA RONDA` elimina únicamente la ronda activa y el borrador de registro, y presenta un registro Stableford completamente limpio. Nunca borra el historial de tarjetas cerradas ni la clasificación acumulada.
 
@@ -1255,6 +1258,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-22 | Manual 3.39 / App V262 | El segundo método se identifica como `2 · MANUAL OPCIONAL`. `SCORE CARD SIN REGISTRO` queda dentro de `SELECCIONA MODALIDAD`, debajo de `STABLEFORD`, sin duplicado inferior. La `RONDA SIN REGISTRO` acepta seis perfiles vacíos, parciales o completos, editables manualmente o por micrófono durante la ronda. Los yardajes dependen de las marcas, Neto requiere HDCP y marcas, y los tres totales Gross se calculan automáticamente y permanecen visibles. `REGRESAR A DATOS` de una ronda oficial edita o agrega jugadores sin borrar scores. El acceso Stableford usa caché `v=262`. |
 | 2026-08-22 | Manual 3.38 / App V261 | Registro oficial depurado a dos vías exactas: `1 · DICTADO` y `2 · MANUAL`, ambas limitadas a Nombre, HDCP y Marcas; se eliminan de esa interfaz Código, Compartir y WhatsApp. `SELECCIONA CAMPO` contiene únicamente campos; `STABLEFORD` queda separado bajo `SELECCIONA MODALIDAD` con apariencia neutral, nunca verde como selección activa. En la tarjeta Stableford, el panel manual se titula `STABLEFORD` y el resumen inferior `PUNTOS`, incluido el digital final. `RONDA PREVIA` continúa alternando a `RONDA ACTUAL` para recuperar la ronda vigente completa. El acceso Stableford usa caché `v=261`. |
 | 2026-08-22 | Manual 3.37 / App V260 | El panel alternativo de registro queda titulado únicamente `PUNTOS DE RONDA`; la casilla del nombre gana 25% de ancho y las tres columnas acumuladas IN/OUT/TOTAL se angostan. El PUNTOS TOTAL del resumen se muestra en verde neón. La flecha `REGRESAR A DATOS` queda separada de `TARJETA DIGITAL` y permite agregar un jugador faltante conservando todos los scores existentes. General y Stableford quedan aisladas por enlace y almacenamiento: General no restaura una ronda Stableford antigua y `NUEVA RONDA STABLEFORD` no borra datos General. El acceso oficial Stableford usa versión de caché `v=260`. |
 | 2026-08-22 | Manual 3.36 / App V259 | El registro manual opcional de Stableford conserva las seis casillas disponibles para permitir grupos de 1 a 6 jugadores. Después de iniciar la ronda, la anotación manual Plan B, la tarjeta oficial y el resumen muestran únicamente los jugadores efectivamente registrados; las filas restantes quedan invisibles. |

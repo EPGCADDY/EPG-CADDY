@@ -9,7 +9,7 @@
 
 ## STABLEFORD
 
-- Ruta oficial: `https://epg-caddy-git-stableford-tournament-final-epgcaddys-projects.vercel.app/index-grupal.html?stableford_emergency=countryclub&emergency_clean=1&v=261`
+- Ruta oficial: `https://epg-caddy-git-stableford-tournament-final-epgcaddys-projects.vercel.app/index-grupal.html?stableford_emergency=countryclub&emergency_clean=1&v=262`
 - Propósito: registro y tarjeta oficial Stableford.
 - Persistencia: únicamente ronda activa Stableford y su historial.
 

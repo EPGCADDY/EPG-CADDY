@@ -32,7 +32,7 @@ assert.ok(html.includes('function roundIdleStatus(){return `INICIO ${roundStartT
 assert.ok(html.includes('if(!round.configured||round.endedAt)return false'),'El botón debe ser idempotente');
 assert.ok(html.includes('id="backToRegistrationButton"'),'Falta la flecha inferior izquierda');
 assert.ok(html.includes('REGRESAR A DATOS'),'La flecha debe llevar el texto inferior aprobado');
-assert.ok(html.includes('$("backToRegistrationButton").addEventListener("click",()=>isStablefordRound()?openStablefordDataEditor():openNewRoundDraft())'),'La flecha debe abrir los datos correspondientes sin borrar la ronda');
+assert.ok(html.includes('$("backToRegistrationButton").addEventListener("click",()=>isStablefordRound()?openStablefordDataEditor():openCurrentRoundDataEditor())'),'La flecha debe editar o agregar datos de la ronda activa sin borrar scores');
 assert.ok(html.includes('.back-registration-control{position:fixed;left:10px;bottom:82px'),'La flecha debe permanecer visible sin invadir la barra de acciones');
 assert.ok(html.includes('.back-registration-control{left:18px;bottom:96px;font-size:7px}'),'En teléfono la flecha debe quedar por encima de TARJETA DIGITAL');
 console.log('PASS V197: INICIO izquierda, TIMER centro con toque ampliado, cronómetro derecha y micrófono aislado');

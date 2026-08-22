@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V261-REGISTRATION-SIMPLIFIED-STABLEFORD-LABELS-20260822/);
+assert.match(html,/V262-REGISTRATION-MODALITIES-20260822/);
 
 // El nombre aprobado reemplaza completamente los títulos anteriores en la interfaz.
 assert.match(html,/id="stablefordRoundPointsTitle"[^>]*>STABLEFORD</);
@@ -36,4 +36,4 @@ assert.match(html,/if\(round\.mode==="stableford"\)localStorage\.setItem\(STABLE
 assert.match(html,/try\{localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)\}catch\{\}/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\);localStorage\.removeItem\(STORAGE_KEY\)/);
 
-console.log("PASS V260/V261 · STABLEFORD, anchos, total neón, alta segura y rutas General/Stableford aisladas");
+console.log("PASS V260/V262 · STABLEFORD, anchos, total neón, alta segura y rutas General/Stableford aisladas");
