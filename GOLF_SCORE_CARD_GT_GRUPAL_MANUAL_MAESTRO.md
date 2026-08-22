@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V199
+**Versión documentada:** V200
 **Fecha de corte:** 20 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -610,6 +610,10 @@ Prohibiciones operativas durante una ronda:
 - Primera vuelta: hoyos 1–9.
 - Segunda vuelta: hoyos 10–18.
 - Ronda: hoyos 1–18.
+- El bloque inferior autorizado se titula `INFORMACIÓN DE RONDA` y su título siempre usa verde neón, también en la tarjeta provisional/en sucio.
+- La tarjeta grupal muestra: `JUGADOR`, `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA`, `GROSS TOTAL`, `HCP`, `NETO TOTAL` y `+/- NETO`.
+- La tarjeta provisional/en sucio muestra únicamente sus datos Gross reales: `JUGADOR`, `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA` y `GROSS TOTAL`.
+- La tarjeta Stableford muestra: `JUGADOR`, Gross de primera vuelta, segunda vuelta y total, y Puntos de primera vuelta, segunda vuelta y total.
 - El cierre depende de scores requeridos, no de que simplemente se mencione el hoyo 18.
 - Jugadores incorporados tarde se evalúan desde su hoyo de incorporación.
 - Una X explícita impide un cierre completo hasta ser resuelta.
@@ -1208,6 +1212,7 @@ La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la mi
 | Fecha | Versión | Registro |
 |---|---|---|
 | 2026-08-20 | Manual 3.25 / App V199 | Stableford Scratch permanente: Senior HCP 0/marcas blancas y S. Senior HCP 0/marcas amarillas; máximo cuatro jugadores; Gross y puntos por hoyo; X explícita con cero; cuatro campos y fechas; totales por vuelta/ronda; clasificación por las tres mejores tarjetas e ingreso manual de resultados oficiales. |
+| 2026-08-22 | Manual 3.26 / App V200 | Reconciliación de la versión física Stableford: bloque inferior unificado como `INFORMACIÓN DE RONDA`, verde neón, con primera vuelta, segunda vuelta y total completos en grupal, provisional, Stableford y tarjeta digital. |
 | 2026-08-20 | Manual 3.24 / App V197 | Franja del reloj reorganizada en tres zonas: INICIO a la izquierda, TIMER centrado con superficie táctil real ampliada y cronómetro a la derecha; eliminada completamente la antigua capa invisible y sus interceptores globales para impedir que el micrófono active o desactive el timer. |
 | 2026-08-20 | Manual 3.23 / App V196 | Guatemala Country Club habilitado desde su tarjeta oficial: Par 71, 90 yardajes, cinco ratings/slopes y tres matrices de handicap validados casilla por casilla; selección de campo enlazada al motor de Gross, Neto, vueltas y total sin heredar datos de El Pulté. |
 | 2026-08-20 | Manual 3.18 / App V193 | Tarjeta en sucio ampliada: seis nombres opcionales y editables directamente, seis bloques exclusivamente Gross, sin handicap/círculos/Neto/resultado, dictado por posición o nombre y aislamiento absoluto de todos los efectos oficiales. |
