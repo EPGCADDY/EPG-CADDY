@@ -5,7 +5,7 @@ const s=require("./stableford.js");
 
 assert.deepEqual(s.ALLOWED_COURSES,["country_club","pulte","san_isidro","mayan_golf"]);
 assert.equal(s.MAX_ROUNDS,4);
-assert.equal(s.MAX_PLAYERS,4);
+assert.equal(s.MAX_PLAYERS,6);
 assert.deepEqual(s.categoryConfig("senior"),{key:"senior",label:"SENIOR",handicap:0,tee:"Blanco",rankingPlaces:5,captainChoices:3});
 assert.equal(s.categoryConfig("super_senior").tee,"Amarillo");
 assert.equal(s.pointsFor(6,4),0);
@@ -55,4 +55,4 @@ assert.match(courseInfo.innerHTML,/6,470/);
 assert.match(courseInfo.innerHTML,/6,036/);
 
 delete global.COURSE_CATALOG;delete global.COURSE_DATA;delete global.TEES;delete global.renderCourseInfo;delete global.$;
-console.log("Stableford: reglas, matrices, instalación integrada, cuatro fechas y mejores tres verificados.");
+console.log("Stableford: reglas, seis jugadores, matrices, cuatro fechas y mejores tres verificados.");

@@ -13,7 +13,7 @@
   }
 })(typeof globalThis!=="undefined"?globalThis:this,function buildStableford(){
   const SERIES_ID="clasificacion-senior-super-senior-ca-el-salvador-2027";
-  const MAX_PLAYERS=4;
+  const MAX_PLAYERS=6;
   const MAX_ROUNDS=4;
   const BEST_ROUNDS=3;
   const ALLOWED_COURSES=Object.freeze(["country_club","pulte","san_isidro","mayan_golf"]);
@@ -201,7 +201,6 @@
       const observer=new MutationObserver(syncVoiceUi);if(baseStatus)observer.observe(baseStatus,{subtree:true,childList:true,characterData:true,attributes:true});if(baseMic)observer.observe(baseMic,{attributes:true,attributeFilter:["class"]});const detected=document.getElementById("detectedBody");if(detected)observer.observe(detected,{subtree:true,childList:true,attributes:true,characterData:true});
       overlay.addEventListener("transitionend",syncVoiceUi);
     }
-    if(new URLSearchParams(location.search).get("stableford_emergency")==="countryclub"){const names=["Jaime","Junior","Fito","Henry"];const apply=()=>document.querySelectorAll("[data-stableford-name]").forEach((el,i)=>{if(i<4)el.value=names[i]});apply();setTimeout(apply,50);setTimeout(apply,250);}
     const start=document.getElementById("startStablefordRound");
     if(start&&!start.__stablefordTournamentBridge){
       start.__stablefordTournamentBridge=true;
@@ -267,11 +266,10 @@
 
     const stableSelector=document.querySelector('[data-course-key="stableford"]');
     if(stableSelector&&!stableSelector.__stablefordRoute){stableSelector.__stablefordRoute=true;stableSelector.addEventListener("click",e=>{e.preventDefault();e.stopImmediatePropagation();overlay.classList.add("visible");overlay.setAttribute("aria-hidden","false");},true)}
-    if(new URLSearchParams(location.search).get("stableford_emergency")==="countryclub"){const names=["Jaime","Junior","Fito","Henry"];document.querySelectorAll("[data-stableford-name]").forEach((el,i)=>{if(i<4){el.value=names[i];el.dispatchEvent(new Event("input",{bubbles:true}));el.dispatchEvent(new Event("change",{bubbles:true}))}})}
     if(!document.getElementById("stableford-touch-plan-b-style")){const st=document.createElement("style");st.id="stableford-touch-plan-b-style";st.textContent='body.stableford-round .score-cell{touch-action:manipulation;-webkit-user-select:none;user-select:none}body.stableford-round .score-cell input{touch-action:manipulation;min-width:100%;min-height:100%;margin:0;padding:0;text-align:center}body.stableford-round .score-table{touch-action:pan-x pan-y}';document.head.appendChild(st)}
     const markStablefordRound=()=>document.body.classList.toggle("stableford-round",typeof round!=="undefined"&&round?.mode==="stableford");markStablefordRound();
     const categoryButtons=[...document.querySelectorAll("[data-stableford-category]")];
-    for(const button of categoryButtons)if(!button.__stablefordDefaults){button.__stablefordDefaults=true;button.addEventListener("click",()=>{const category=button.getAttribute("data-stableford-category"),cfg=categoryConfig(category);if(!cfg)return;const facts=document.getElementById("stablefordSetupFacts");if(facts)facts.textContent=`SCRATCH · MARCAS ${cfg.tee.toUpperCase()}S · HCP 0 · MÁXIMO 4 JUGADORES`})}
+    for(const button of categoryButtons)if(!button.__stablefordDefaults){button.__stablefordDefaults=true;button.addEventListener("click",()=>{const category=button.getAttribute("data-stableford-category"),cfg=categoryConfig(category);if(!cfg)return;const facts=document.getElementById("stablefordSetupFacts");if(facts)facts.textContent=`SCRATCH · MARCAS ${cfg.tee.toUpperCase()}S · HCP 0 · MÁXIMO 6 JUGADORES`})}
     return true;
   }
   return{SERIES_ID,MAX_PLAYERS,MAX_ROUNDS,BEST_ROUNDS,ALLOWED_COURSES,CATEGORY_CONFIG,TOURNAMENT_COURSES,categoryConfig,isAllowedCourse,pointsFor,holeResult,totals,bestThree,blankSeries,normalizeSeries,normalizeResult,upsertResult,standings,nextRoundNumber,cleanName,installTournamentCourses,installStablefordUi};

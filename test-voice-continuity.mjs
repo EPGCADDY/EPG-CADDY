@@ -5,7 +5,7 @@ const html=readFileSync(new URL('./index-grupal.html',import.meta.url),'utf8');
 assert.ok(html.includes('function parseRoundNavigationCommand('),'Falta navegación hablada al registro');
 assert.ok(html.includes('if(!transcript){resetRoundCapture();phase="idle"'),'El silencio no debe producir Error hablado');
 assert.ok(html.includes('Candado de silencio'),'Falta el candado de comandos desconocidos');
-assert.ok(html.includes('requestRoundFinalize(0,true)},4000)'),'La captura continua debe procesar aunque cambie el estado listening');
+assert.ok(html.includes('requestRoundFinalize(0,true)},(typeof round!=="undefined"&&round&&round.mode==="stableford")?2000:4000)'),'La captura continua debe procesar con el cierre aprobado para cada modalidad');
 assert.ok(html.includes('if(voiceContext==="round"&&!keepListening)setVoice(false)'),'El cierre continuo no debe apagar el micrófono antes de tiempo');
 assert.ok(html.includes('parseRoundNavigationCommand(combined).matched'),'La navegación debe procesarse inmediatamente');
 assert.ok(html.includes('roundTranscriptionWatchdog=setTimeout'),'Falta vigilancia para una transcripción que nunca termina');
