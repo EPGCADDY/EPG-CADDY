@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V250
+**Versión documentada:** V251
 **Fecha de corte:** 22 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -1214,6 +1214,7 @@ La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la mi
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-22 | Manual 3.29 / App V251 | La opción, rotulada con su nombre correcto STABLEFORD, deja de ejecutar la modalidad dentro del registro GRUPAL y navega mediante un enlace explícito al alojamiento aislado `stableford-tournament-final`, abriendo Country Club en limpio con `stableford_emergency=countryclub`, `emergency_clean=1` y `v=249`. |
 | 2026-08-22 | Manual 3.28 / App V250 | Fin de ronda Stableford conectado a la matriz oficial GRUPAL: Global, una personal por jugador, paquete conjunto, historial y compartir del archivo visual por correo/WhatsApp mediante la hoja nativa, sin falsos estados de entrega. |
 | 2026-08-22 | Manual 3.27 / App V201 | Stableford oficial limpio: acceso directo sin nombres precargados, registro interno de uno a seis jugadores, torneo/categoría dentro de la tarjeta y snapshot histórico con campo, fecha, torneo, jugadores, Gross y Puntos. |
 | 2026-08-20 | Manual 3.25 / App V199 | Stableford Scratch permanente: Senior HCP 0/marcas blancas y S. Senior HCP 0/marcas amarillas; máximo cuatro jugadores; Gross y puntos por hoyo; X explícita con cero; cuatro campos y fechas; totales por vuelta/ronda; clasificación por las tres mejores tarjetas e ingreso manual de resultados oficiales. |

@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const stable=fs.readFileSync(new URL("./stableford.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V250-STABLEFORD-OFFICIAL-DELIVERY-MATRIX-20260822"/);
+assert.match(html,/gscg-build" content="V251-STABLEFORD-ISOLATED-ROUTE-20260822"/);
 for(const id of [
   "stablefordSetupOverlay","stablefordResultOverlay","stablefordSeriesSection",
   "stablefordSeniorTab","stablefordSuperSeniorTab","openStablefordResult"
@@ -12,10 +12,11 @@ for(const id of [
 
 assert.match(html,/data-stableford-category="senior">SENIOR/);
 assert.match(html,/data-stableford-category="super_senior">S\. SENIOR/);
-assert.match(html,/id="stableCourseOption"[^>]*>[\s\S]*?<span>STABLE<\/span>/);
+assert.match(html,/id="stableCourseOption"[^>]*>[\s\S]*?<span>STABLEFORD<\/span>/);
+assert.match(html,/id="stableCourseOption" href="\$\{STABLEFORD_OFFICIAL_HOSTING_URL\}"/);
 assert.match(html,/Object\.entries\(COURSE_CATALOG\)[\s\S]*?\.join\(""\)\+stableOption/);
 assert.doesNotMatch(html,/class="stableford-entry"/);
-assert.match(html,/openStablefordSetup\("senior"\)/);
+assert.doesNotMatch(html,/closest\("#stableCourseOption"\)[\s\S]{0,160}openStablefordSetup/);
 assert.match(html,/names\.slice\(0,6\)/);
 assert.match(html,/handicap:0,tee:cfg\.tee/);
 assert.match(html,/stablefordTeeLabel\(cfg\)/);
