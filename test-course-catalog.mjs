@@ -13,5 +13,5 @@ assert.ok(!html.includes('TEESS'),'La forma TEESS está prohibida');
 assert.ok(!html.includes('player-registration-guide'),'Las tres falsas casillas de registro deben estar eliminadas');
 assert.ok(!html.includes('NOMBRE / HDCP - MARCAS - TEES'),'El rótulo engañoso de las falsas casillas debe estar eliminado');
 assert.ok(!html.includes('HASTA 6 JUGADORES'),'La falsa tercera casilla debe estar eliminada');
-assert.ok(html.includes('Dicta de 1 a 6 jugadores.'),'La instrucción funcional debe conservar el límite de seis jugadores');
+assert.ok(html.includes('if(!Array.isArray(players)||players.length<1||players.length>6)'),'La validación funcional debe conservar el límite de seis jugadores');
 console.log('PASS catálogo y registro V170');

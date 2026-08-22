@@ -3,10 +3,10 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V260-STABLEFORD-ROUND-POINTS-PLAYER-RETURN-20260822/);
+assert.match(html,/V261-REGISTRATION-SIMPLIFIED-STABLEFORD-LABELS-20260822/);
 
 // El nombre aprobado reemplaza completamente los títulos anteriores en la interfaz.
-assert.match(html,/id="stablefordRoundPointsTitle"[^>]*>PUNTOS DE RONDA</);
+assert.match(html,/id="stablefordRoundPointsTitle"[^>]*>STABLEFORD</);
 assert.doesNotMatch(html,/>ANOTACIÓN MANUAL · PLAN B</);
 assert.doesNotMatch(html,/>SCORE MANUAL</);
 
@@ -36,4 +36,4 @@ assert.match(html,/if\(round\.mode==="stableford"\)localStorage\.setItem\(STABLE
 assert.match(html,/try\{localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)\}catch\{\}/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\);localStorage\.removeItem\(STORAGE_KEY\)/);
 
-console.log("PASS V260 · PUNTOS DE RONDA, anchos, total neón, alta segura y rutas General/Stableford aisladas");
+console.log("PASS V260/V261 · STABLEFORD, anchos, total neón, alta segura y rutas General/Stableford aisladas");

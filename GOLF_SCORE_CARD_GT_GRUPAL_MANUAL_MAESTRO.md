@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V260
+**Versión documentada:** V261
 **Fecha de corte:** 22 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -296,9 +296,9 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - `Quitar jugador [nombre]`.
 - Un jugador agregado durante la ronda comienza en el hoyo de incorporación definido y no recibe scores ficticios anteriores.
 
-### 8.5 WhatsApp y directorio local V141
+### 8.5 WhatsApp y directorio local V141 (histórico; retirado del registro visible en V261)
 
-**Estado:** `OPERATIVO` para registro y persistencia local.
+**Estado actual:** compatibilidad histórica interna. Desde V261 WhatsApp no se solicita ni se muestra en el registro de jugadores.
 
 - Cada jugador dispone de un campo WhatsApp opcional.
 - El prefijo fijo predeterminado es `+502` para Guatemala.
@@ -309,7 +309,7 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - Las rondas antiguas sin WhatsApp siguen siendo compatibles.
 - La V141 no escribe silenciosamente en la libreta del teléfono y no envía mensajes todavía.
 
-### 8.6 Casillas, código privado e historial de perfil V255
+### 8.6 Casillas, código privado e historial de perfil V255 (histórico; interfaz sustituida en V261)
 
 **Estado:** casillas, selector, dictado visible, código y directorio histórico local `OPERATIVOS`; sincronización central `PREPARADA, NO ACTIVADA`.
 
@@ -320,8 +320,16 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - Escribir únicamente ese código recupera en el mismo dispositivo el nombre, último HDCP, últimas marcas y último WhatsApp guardado; todos permanecen editables.
 - Cada variación conserva el dato vigente y agrega un evento al historial local sin borrar la información anterior.
 - La migración central `002_player_profiles_and_history.sql` deja preparados código único, dato vigente e historial de cambios. No debe anunciarse como sincronización central activa hasta aplicar la migración, habilitar autenticación y superar prueba multi-dispositivo.
-- El botón corto `COMPARTIR` abre un panel de proyecto para seleccionar perfil/código, marcas y HDCP actuales, última ronda o últimas tres rondas.
-- Compartir será permitido en una fase posterior, pero en V255 la acción final permanece deshabilitada y marcada `PROYECTO · AÚN NO DISPONIBLE`; todavía no solicita autorizaciones ni transmite información.
+- El panel de proyecto `COMPARTIR`, su código visible y la recuperación manual por código fueron eliminados del registro en V261.
+- La eliminación se limita al registro de jugadores. Las acciones oficiales de cierre `CORREO / WHATSAPP GLOBAL` y `CORREO / WHATSAPP PERSONAL` permanecen operativas.
+
+### 8.6.1 Registro oficial vigente V261
+
+- El registro ofrece exactamente dos vías: `1 · DICTADO` y `2 · MANUAL`.
+- En Dictado, se toca el micrófono y se pronuncian únicamente `NOMBRE + HDCP + MARCAS`.
+- En Manual, cada fila contiene únicamente `NOMBRE + HDCP + MARCAS`; las marcas se eligen en el selector de color.
+- Se permiten de uno a seis jugadores.
+- No se muestran ni operan Código, Compartir o WhatsApp dentro del registro.
 
 ### 8.7 Base maestra y sustitución del dato vigente V256
 
@@ -638,7 +646,8 @@ Prohibiciones operativas durante una ronda:
 - Primera vuelta: hoyos 1–9.
 - Segunda vuelta: hoyos 10–18.
 - Ronda: hoyos 1–18.
-- El bloque inferior autorizado se titula `INFORMACIÓN DE RONDA` y su título siempre usa verde neón, también en la tarjeta provisional/en sucio.
+- En General y en la tarjeta provisional/en sucio, el bloque inferior se titula `INFORMACIÓN DE RONDA` en verde neón.
+- En Stableford, el bloque de captura manual se titula `STABLEFORD` y el bloque inferior de resultados se titula `PUNTOS`, también en la tarjeta digital final.
 - La tarjeta grupal muestra: `JUGADOR`, `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA`, `GROSS TOTAL`, `HCP`, `NETO TOTAL` y `+/- NETO`.
 - La tarjeta provisional/en sucio muestra únicamente sus datos Gross reales: `JUGADOR`, `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA` y `GROSS TOTAL`.
 - La tarjeta Stableford muestra: `JUGADOR`, Gross de primera vuelta, segunda vuelta y total, y Puntos de primera vuelta, segunda vuelta y total.
@@ -1246,6 +1255,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-22 | Manual 3.38 / App V261 | Registro oficial depurado a dos vías exactas: `1 · DICTADO` y `2 · MANUAL`, ambas limitadas a Nombre, HDCP y Marcas; se eliminan de esa interfaz Código, Compartir y WhatsApp. `SELECCIONA CAMPO` contiene únicamente campos; `STABLEFORD` queda separado bajo `SELECCIONA MODALIDAD` con apariencia neutral, nunca verde como selección activa. En la tarjeta Stableford, el panel manual se titula `STABLEFORD` y el resumen inferior `PUNTOS`, incluido el digital final. `RONDA PREVIA` continúa alternando a `RONDA ACTUAL` para recuperar la ronda vigente completa. El acceso Stableford usa caché `v=261`. |
 | 2026-08-22 | Manual 3.37 / App V260 | El panel alternativo de registro queda titulado únicamente `PUNTOS DE RONDA`; la casilla del nombre gana 25% de ancho y las tres columnas acumuladas IN/OUT/TOTAL se angostan. El PUNTOS TOTAL del resumen se muestra en verde neón. La flecha `REGRESAR A DATOS` queda separada de `TARJETA DIGITAL` y permite agregar un jugador faltante conservando todos los scores existentes. General y Stableford quedan aisladas por enlace y almacenamiento: General no restaura una ronda Stableford antigua y `NUEVA RONDA STABLEFORD` no borra datos General. El acceso oficial Stableford usa versión de caché `v=260`. |
 | 2026-08-22 | Manual 3.36 / App V259 | El registro manual opcional de Stableford conserva las seis casillas disponibles para permitir grupos de 1 a 6 jugadores. Después de iniciar la ronda, la anotación manual Plan B, la tarjeta oficial y el resumen muestran únicamente los jugadores efectivamente registrados; las filas restantes quedan invisibles. |
 | 2026-08-22 | Manual 3.35 / App V258 | En la tarjeta Stableford, el nombre del torneo y la categoría seleccionados en el registro pasan a ser indicadores de sólo lectura y no pueden modificarse durante la anotación. El recuadro alternativo queda identificado expresamente como `ANOTACIÓN MANUAL · PLAN B`; conserva HOYO, GROSS y ENTER para registrar scores sin voz. |

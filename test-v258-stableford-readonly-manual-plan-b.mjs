@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const stableford=fs.readFileSync(new URL("./stableford.js",import.meta.url),"utf8");
 
-assert.match(html,/V(?:258-STABLEFORD-READONLY-MANUAL-PLAN-B|259-STABLEFORD-HIDE-UNUSED-PLAYER-ROWS|260-STABLEFORD-ROUND-POINTS-PLAYER-RETURN)-20260822/);
+assert.match(html,/V(?:258-STABLEFORD-READONLY-MANUAL-PLAN-B|259-STABLEFORD-HIDE-UNUSED-PLAYER-ROWS|260-STABLEFORD-ROUND-POINTS-PLAYER-RETURN|261-REGISTRATION-SIMPLIFIED-STABLEFORD-LABELS)-20260822/);
 
 // Registro: aquí sí se seleccionan torneo y categoría antes de iniciar la ronda.
 assert.match(stableford,/id="stablefordTournamentName"/);
@@ -24,8 +24,8 @@ assert.match(html,/\$\{escapeHtml\(`\$\{cfg\.label\} · \$\{stablefordTeeLabel\(
 
 // Captura manual: identificación visible y ruta completa HOYO -> GROSS -> ENTER -> guardado.
 assert.match(html,/id="stablefordManualEntry"/);
-assert.match(html,/aria-label","Puntos de ronda"/);
-assert.match(html,/id="stablefordRoundPointsTitle"[^>]*>PUNTOS DE RONDA</);
+assert.match(html,/aria-label","Stableford"/);
+assert.match(html,/id="stablefordRoundPointsTitle"[^>]*>STABLEFORD</);
 assert.match(html,/id="sfGridHole"/);
 assert.match(html,/class="sfGridGross"/);
 assert.match(html,/id="sfGridEnter"/);
@@ -33,4 +33,4 @@ assert.match(html,/manual\.querySelector\("#sfGridEnter"\)\.onclick=saveManualHo
 assert.match(html,/saveEntry\(\{player:p\.name,hole:selectedHole,gross\}\)/);
 assert.doesNotMatch(html,/\.sfGridGross,\.sfGridName,#sfTournamentName/);
 
-console.log("PASS V258/V260 · torneo y categoría bloqueados; PUNTOS DE RONDA operativo");
+console.log("PASS V258/V261 · torneo y categoría bloqueados; STABLEFORD operativo");
