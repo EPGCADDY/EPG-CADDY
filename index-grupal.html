@@ -566,8 +566,8 @@ const COURSE_CATALOG={
   pulte:{name:"El Pulté",displayName:"EL PULTÉ GOLF",configured:true},
   country_club:{name:"Country Club",displayName:"GUATEMALA COUNTRY CLUB",configured:true},
   san_isidro:{name:"San Isidro",configured:false},
-  mayan_golf:{name:"Mayan Golf",configured:false},
-  hacienda_nueva:{name:"Hacienda Nueva",configured:false},
+  mayan_golf:{name:"Mayan Golf",displayName:"MAYAN GOLF CLUB",configured:true},
+  hacienda_nueva:{name:"Hacienda Nueva",displayName:"HACIENDA NUEVA COUNTRY CLUB",configured:true},
   alta_vista:{name:"Alta Vista",configured:false},
   la_reunion:{name:"La Reunión",configured:false}
 };
@@ -593,9 +593,28 @@ const COUNTRY_CLUB_TEES={
   Amarillo:{label:"AMARILLAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:[358,171,270,336,541,161,346,151,422,363,303,141,374,305,498,155,441,328],front:2756,back:2908,rating:67.5,slope:134,total:5664},
   Rojo:{label:"ROJAS",color:"#ff1010",fill:"#f51212",text:"#fff",yds:[354,170,270,336,541,161,317,132,415,363,296,141,374,300,494,155,437,324],front:2696,back:2884,rating:72.6,slope:137,total:5580}
 };
+const MAYAN_GOLF_PAR=[4,3,4,5,4,5,4,3,4,4,3,5,4,4,5,3,4,4];
+const MAYAN_GOLF_SI=[7,17,1,3,13,5,15,9,11,2,14,4,8,12,6,18,16,10];
+const MAYAN_GOLF_TEES={
+  Azul:{label:"AZULES",color:"#0878ff",fill:"#0878ff",text:"#fff",yds:[395,186,486,578,363,552,372,204,400,449,202,555,411,389,542,178,348,389],front:3536,back:3463,rating:74.6,slope:140,total:6999},
+  Blanco:{label:"BLANCAS",color:"#fff",fill:"#f3f3f3",text:"#000",yds:[368,162,463,548,336,528,349,180,371,423,178,525,386,362,514,154,328,368],front:3305,back:3238,rating:72.6,slope:137,total:6543},
+  Amarillo:{label:"DORADAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:[333,137,441,515,307,494,326,155,345,395,153,491,357,334,480,129,291,343],front:3053,back:2993,rating:70.5,slope:133,total:6046},
+  Rojo:{label:"ROJAS",color:"#ff1010",fill:"#f51212",text:"#fff",yds:[297,114,407,478,276,459,292,132,301,355,127,454,319,296,442,106,253,303],front:2756,back:2655,rating:72.4,slope:127,total:5411}
+};
+const HACIENDA_NUEVA_PAR=[4,5,4,4,3,5,4,3,4,4,5,4,4,3,5,4,3,4];
+const HACIENDA_NUEVA_SI_MEN=[3,9,13,17,15,5,1,11,7,16,18,2,10,12,6,4,14,8];
+const HACIENDA_NUEVA_SI_WOMEN=[7,3,9,11,17,5,1,15,13,14,6,12,10,16,2,4,18,8];
+const HACIENDA_NUEVA_TEES={
+  Azul:{label:"AZULES",color:"#0878ff",fill:"#0878ff",text:"#fff",yds:[428,577,381,357,169,521,396,182,465,369,496,485,376,220,558,454,198,448],front:3476,back:3604,rating:73.3,slope:130,total:7080},
+  Blanco:{label:"BLANCAS",color:"#fff",fill:"#f3f3f3",text:"#000",yds:[407,553,360,337,148,497,377,163,444,349,477,466,356,200,539,436,179,428],front:3286,back:3430,rating:71.4,slope:124,total:6716},
+  Amarillo:{label:"AMARILLAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:[386,532,339,316,128,476,355,140,423,328,462,444,335,179,517,415,157,409],front:3095,back:3246,rating:69.9,slope:116,total:6341},
+  Rojo:{label:"ROJAS",color:"#ff1010",fill:"#f51212",text:"#fff",yds:[366,514,321,298,109,457,334,123,404,310,356,425,316,160,499,395,142,395],front:2926,back:2998,rating:73.8,slope:132,total:5926}
+};
 const COURSE_DATA={
   pulte:{par:PULTE_PAR,tees:PULTE_TEES,siMen:PULTE_SI_MEN,siWomen:PULTE_SI_WOMEN,siByTee:{}},
-  country_club:{par:COUNTRY_CLUB_PAR,tees:COUNTRY_CLUB_TEES,siMen:COUNTRY_CLUB_SI_WHITE,siWomen:COUNTRY_CLUB_SI_WOMEN,siByTee:{Negro:COUNTRY_CLUB_SI_BLUE,Azul:COUNTRY_CLUB_SI_BLUE,Blanco:COUNTRY_CLUB_SI_WHITE,Amarillo:COUNTRY_CLUB_SI_WOMEN,Rojo:COUNTRY_CLUB_SI_WOMEN}}
+  country_club:{par:COUNTRY_CLUB_PAR,tees:COUNTRY_CLUB_TEES,siMen:COUNTRY_CLUB_SI_WHITE,siWomen:COUNTRY_CLUB_SI_WOMEN,siByTee:{Negro:COUNTRY_CLUB_SI_BLUE,Azul:COUNTRY_CLUB_SI_BLUE,Blanco:COUNTRY_CLUB_SI_WHITE,Amarillo:COUNTRY_CLUB_SI_WOMEN,Rojo:COUNTRY_CLUB_SI_WOMEN}},
+  mayan_golf:{par:MAYAN_GOLF_PAR,tees:MAYAN_GOLF_TEES,siMen:MAYAN_GOLF_SI,siWomen:MAYAN_GOLF_SI,siByTee:{}},
+  hacienda_nueva:{par:HACIENDA_NUEVA_PAR,tees:HACIENDA_NUEVA_TEES,siMen:HACIENDA_NUEVA_SI_MEN,siWomen:HACIENDA_NUEVA_SI_WOMEN,siByTee:{}}
 };
 let ACTIVE_COURSE_KEY="pulte",PAR=PULTE_PAR,SI_MEN=PULTE_SI_MEN,SI_WOMEN=PULTE_SI_WOMEN,TEES=PULTE_TEES;
 function activateCourse(key){

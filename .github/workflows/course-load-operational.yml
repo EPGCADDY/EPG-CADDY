@@ -1,0 +1,44 @@
+name: Load Hacienda Nueva official card
+on:
+  push:
+    branches: [operational-courses-20260821]
+    paths: ['.github/workflows/course-load-operational.yml']
+permissions:
+  contents: write
+jobs:
+  load-hacienda:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: operational-courses-20260821
+      - name: Patch only Hacienda Nueva
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index-grupal.html'); s=p.read_text()
+          s=s.replace('hacienda_nueva:{name:"Hacienda Nueva",configured:false}','hacienda_nueva:{name:"Hacienda Nueva",displayName:"HACIENDA NUEVA COUNTRY CLUB",configured:true}')
+          block='''const HACIENDA_NUEVA_PAR=[4,5,4,4,3,5,4,3,4,4,5,4,4,3,5,4,3,4];\nconst HACIENDA_NUEVA_SI_MEN=[3,9,13,17,15,5,1,11,7,16,18,2,10,12,6,4,14,8];\nconst HACIENDA_NUEVA_SI_WOMEN=[7,3,9,11,17,5,1,15,13,14,6,12,10,16,2,4,18,8];\nconst HACIENDA_NUEVA_TEES={\n  Azul:{label:"AZULES",color:"#0878ff",fill:"#0878ff",text:"#fff",yds:[428,577,381,357,169,521,396,182,465,369,496,485,376,220,558,454,198,448],front:3476,back:3604,rating:73.3,slope:130,total:7080},\n  Blanco:{label:"BLANCAS",color:"#fff",fill:"#f3f3f3",text:"#000",yds:[407,553,360,337,148,497,377,163,444,349,477,466,356,200,539,436,179,428],front:3286,back:3430,rating:71.4,slope:124,total:6716},\n  Amarillo:{label:"AMARILLAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:[386,532,339,316,128,476,355,140,423,328,462,444,335,179,517,415,157,409],front:3095,back:3246,rating:69.9,slope:116,total:6341},\n  Rojo:{label:"ROJAS",color:"#ff1010",fill:"#f51212",text:"#fff",yds:[366,514,321,298,109,457,334,123,404,310,356,425,316,160,499,395,142,395],front:2926,back:2998,rating:73.8,slope:132,total:5926}\n};\n'''
+          anchor='const COURSE_DATA={'
+          if 'const HACIENDA_NUEVA_PAR=' not in s: s=s.replace(anchor,block+anchor)
+          needle='mayan_golf:{par:MAYAN_GOLF_PAR,tees:MAYAN_GOLF_TEES,siMen:MAYAN_GOLF_SI,siWomen:MAYAN_GOLF_SI,siByTee:{}}'
+          repl=needle+',\n  hacienda_nueva:{par:HACIENDA_NUEVA_PAR,tees:HACIENDA_NUEVA_TEES,siMen:HACIENDA_NUEVA_SI_MEN,siWomen:HACIENDA_NUEVA_SI_WOMEN,siByTee:{}}'
+          if 'hacienda_nueva:{par:HACIENDA_NUEVA_PAR' not in s: s=s.replace(needle,repl)
+          p.write_text(s)
+          PY
+      - name: Verify Hacienda matrix
+        run: |
+          python - <<'PY'
+          s=open('index-grupal.html').read()
+          checks=['hacienda_nueva:{name:"Hacienda Nueva",displayName:"HACIENDA NUEVA COUNTRY CLUB",configured:true}','const HACIENDA_NUEVA_PAR=[4,5,4,4,3,5,4,3,4,4,5,4,4,3,5,4,3,4]','const HACIENDA_NUEVA_SI_MEN=[3,9,13,17,15,5,1,11,7,16,18,2,10,12,6,4,14,8]','const HACIENDA_NUEVA_SI_WOMEN=[7,3,9,11,17,5,1,15,13,14,6,12,10,16,2,4,18,8]','front:3476,back:3604,rating:73.3,slope:130,total:7080','front:3286,back:3430,rating:71.4,slope:124,total:6716','front:3095,back:3246,rating:69.9,slope:116,total:6341','front:2926,back:2998,rating:73.8,slope:132,total:5926','hacienda_nueva:{par:HACIENDA_NUEVA_PAR,tees:HACIENDA_NUEVA_TEES']
+          assert all(x in s for x in checks)
+          print('HACIENDA_NUEVA_STATIC_PASS')
+          PY
+      - name: Commit Hacienda Nueva
+        run: |
+          git config user.name 'gscg-automation'
+          git config user.email 'actions@users.noreply.github.com'
+          git add index-grupal.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'Operational: load Hacienda Nueva official card matrix'
+          git push origin HEAD:operational-courses-20260821
