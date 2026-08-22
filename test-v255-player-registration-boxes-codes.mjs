@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const registry=fs.readFileSync(new URL("./player-registry.js",import.meta.url),"utf8");
 
-assert.match(html,/V(?:255-PLAYER-REGISTRATION-BOXES-CODES|256-MASTER-DATA-PLATFORM|257-STABLEFORD-COURSE-SELECTOR-TITLE)-20260822/);
+assert.match(html,/V(?:255-PLAYER-REGISTRATION-BOXES-CODES|256-MASTER-DATA-PLATFORM|257-STABLEFORD-COURSE-SELECTOR-TITLE|258-STABLEFORD-READONLY-MANUAL-PLAN-B)-20260822/);
 assert.match(html,/for\(let i=0;i<6;i\+\+\)/);
 assert.match(html,/data-draft-code=/);
 assert.match(html,/staged\.registrationCode&&staged\.name\?"readonly":""/);

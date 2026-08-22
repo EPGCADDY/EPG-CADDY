@@ -20,8 +20,7 @@ assert.match(html,/INGRESA AL MENOS UN JUGADOR/);
 assert.match(html,/DE 1 A 6 JUGADORES/);
 assert.match(html,/NO REPITAS EL MISMO JUGADOR/);
 assert.match(html,/id="sfTournamentName"/);
-assert.match(html,/data-sf-card-category="senior"/);
-assert.match(html,/data-sf-card-category="super_senior"/);
+assert.match(html,/id="sfCategoryIndicator"/);
 for(const field of ["courseKey:round.courseKey","course:round.course","tournament:round.tournament","playedAt:round.createdAt","officiallyClosedAt:closedAt","players:JSON.parse(JSON.stringify(round.players))"]){
   assert.ok(html.includes(field),`Falta historial Stableford: ${field}`);
 }
