@@ -42,5 +42,16 @@ assert.equal(registry.findByRegistrationCode(updated,updated[0].registrationCode
 const unchanged=registry.upsertProfiles(updated,[{name:"Rodrigo Barterechea",handicap:17,tee:"Amarillo",whatsapp:"44445555"}],{source:"registration",occurredAt:"2026-08-22T12:45:00.000Z"});
 assert.equal(unchanged[0].profileHistory.length,3);
 
+const replaced=registry.upsertProfiles(unchanged,[{registrationCode:unchanged[0].registrationCode,name:"Rodrigo Barter Echea",handicap:15,tee:"Blanco",whatsapp:"33334444"}],{source:"correction",occurredAt:"2026-08-22T13:00:00.000Z"});
+assert.equal(replaced.length,1,"El código debe actualizar el mismo jugador, no crear otro");
+assert.equal(replaced[0].id,unchanged[0].id);
+assert.equal(replaced[0].registrationCode,unchanged[0].registrationCode);
+assert.equal(replaced[0].fullName,"Rodrigo Barter Echea");
+assert.equal(replaced[0].handicap,15);
+assert.equal(replaced[0].tee,"Blanco");
+assert.equal(replaced[0].whatsapp.nationalNumber,"33334444");
+assert.equal(replaced[0].profileHistory.at(-2).fullName,"Rodrigo Barterechea","El dato anterior permanece en el historial");
+assert.equal(replaced[0].profileHistory.at(-1).fullName,"Rodrigo Barter Echea","El último registro queda vigente");
+
 assert.equal(registry.deliveryKey({roundId:"r1",cardVersion:"v1",playerId:"p1",cardType:"global",channel:"whatsapp"}),"r1:v1:p1:global:whatsapp");
 console.log("PASS player registry: código, recuperación, datos vigentes, historial, consentimiento e idempotencia");

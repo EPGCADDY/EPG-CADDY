@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V255
+**Versión documentada:** V256
 **Fecha de corte:** 22 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
@@ -320,6 +320,18 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - La migración central `002_player_profiles_and_history.sql` deja preparados código único, dato vigente e historial de cambios. No debe anunciarse como sincronización central activa hasta aplicar la migración, habilitar autenticación y superar prueba multi-dispositivo.
 - El botón corto `COMPARTIR` abre un panel de proyecto para seleccionar perfil/código, marcas y HDCP actuales, última ronda o últimas tres rondas.
 - Compartir será permitido en una fase posterior, pero en V255 la acción final permanece deshabilitada y marcada `PROYECTO · AÚN NO DISPONIBLE`; todavía no solicita autorizaciones ni transmite información.
+
+### 8.7 Base maestra y sustitución del dato vigente V256
+
+- El código privado es la identidad estable del jugador. Si se vuelve a registrar ese código, se actualiza el mismo jugador aunque el nombre haya sido corregido.
+- El registro más reciente reemplaza los datos vigentes anteriores: nombre, handicap, marcas, correo y WhatsApp.
+- Los datos sustituidos no se eliminan: se conservan como eventos históricos con fecha, fuente y vínculo de ronda cuando corresponde.
+- Una ronda nueva carga exclusivamente el último perfil vigente.
+- Campo y definición de yardajes, torneo, participantes, scores por hoyo, cierres, tarjetas lógicas y acciones de compartir viajan en un paquete maestro versionado.
+- La cola trabaja sin conexión y sólo elimina un paquete después de recibir confirmación remota íntegra del mismo hash.
+- La base central distribuye el paquete por rubros; no usa una bolsa genérica como fuente operativa.
+- WhatsApp y demás contactos siguen siendo datos privados. La API central requiere autenticación y el navegador nunca contiene la contraseña de PostgreSQL.
+- V256 no debe anunciarse como centralmente activa hasta aplicar la migración en Producción y completar una prueba real de ida, lectura y recuperación.
 
 ### 8.7 Torneo V143
 
@@ -1232,6 +1244,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-22 | Manual 3.33 / App V256 | Plataforma maestra por rubros preparada: el código actualiza al mismo jugador; el último registro reemplaza nombre, handicap, marcas y WhatsApp vigentes sin borrar el historial anterior. Paquete central para campos/yardajes, torneos, rondas, participantes, jugadas por hoyo, tarjetas lógicas y acciones honestas de compartir; cola offline idempotente y API transaccional autenticada. Migración y recorrido real de Producción pendientes de validación aislada. |
 | 2026-08-22 | Manual 3.32 / App V255 | Registro General con seis filas de casillas reales para código privado, nombre, HDCP, selector de marcas y WhatsApp; manual y dictado llenan la misma retícula y muestran número/color antes de `OK`. El perfil se guarda localmente al completar datos válidos, recupera por código y conserva historial de cambios. Migración central preparada pero no aplicada. `COMPARTIR` abre únicamente el proyecto de selección; autorización y envío aún no están disponibles. |
 | 2026-08-22 | Manual 3.31 / App V254 | Eliminadas completamente las tres falsas casillas visuales bajo `REGISTRO DE JUGADORES` porque no ejecutaban ninguna acción y podían confundirse con botones. Se conservan sin cambios el título, las instrucciones funcionales, el registro de uno a seis jugadores, el micrófono, la revisión editable, `OK` y la confirmación previa a iniciar la ronda. |
 | 2026-08-22 | Manual 3.30 / App V253 | `RONDA PREVIA` operativa y viva en General y Stableford: antes de alternar guarda la ronda visible; restaura campo, fecha, torneo, jugadores, configuración y scores completos; permite continuar editando o dictando; cambia a `RONDA ACTUAL` para regresar sin perder modificaciones; separa estrictamente los historiales General y Stableford y también permite recuperar la última ronda desde el registro vacío posterior a `NUEVA RONDA`. |

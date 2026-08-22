@@ -111,11 +111,11 @@
     return{ok:true,reason:null};
   }
   function upsertProfiles(raw,players,context={}){
-    const profiles=migrateDirectory(raw),byKey=new Map(profiles.map(p=>[p.identityKey,p])),taken=new Set(profiles.map(p=>p.registrationCode).filter(Boolean));
+    const profiles=migrateDirectory(raw),byKey=new Map(profiles.map(p=>[p.identityKey,p])),byCode=new Map(profiles.filter(p=>p.registrationCode).map(p=>[p.registrationCode,p])),taken=new Set(profiles.map(p=>p.registrationCode).filter(Boolean));
     for(const [index,player] of (players||[]).entries()){
       const incoming=normalizeProfile({...player,fullName:player?.name||player?.fullName,whatsapp:{countryCode:player?.countryCode||"502",nationalNumber:player?.whatsapp?.nationalNumber||player?.whatsapp||""}},index);
-      const previous=byKey.get(incoming.identityKey);
-      let registrationCode=normalizeRegistrationCode(player?.registrationCode)||previous?.registrationCode;
+      const requestedCode=normalizeRegistrationCode(player?.registrationCode),previous=requestedCode?byCode.get(requestedCode)||byKey.get(incoming.identityKey):byKey.get(incoming.identityKey);
+      let registrationCode=requestedCode||previous?.registrationCode;
       if(!registrationCode)registrationCode=generateRegistrationCode(incoming.identityKey,taken);
       if(previous?.registrationCode!==registrationCode&&taken.has(registrationCode))registrationCode=previous?.registrationCode||generateRegistrationCode(`${incoming.identityKey}:${index}`,taken);
       taken.add(registrationCode);
@@ -126,7 +126,8 @@
       let merged=normalizeProfile({...previous,...incoming,id:previous?.id||incoming.id,registrationCode,handicap,tee,whatsapp,email:previous?.email||incoming.email,deliveryPreference:previous?.deliveryPreference||"none",consent:previous?.consent||incoming.consent,roundIds:unique([...(previous?.roundIds||[]),context.roundId]),coursesPlayed:unique([...(previous?.coursesPlayed||[]),context.course]),profileHistory:history,createdAt:previous?.createdAt||now,updatedAt:now},index);
       const latest=history[history.length-1],snapshot=snapshotForProfile(merged,text(context.source)||"registration",now);
       if(!latest||snapshotKey(latest)!==snapshotKey(snapshot))merged=normalizeProfile({...merged,profileHistory:[...history,snapshot]},index);
-      byKey.set(merged.identityKey,merged);
+      if(previous&&previous.identityKey!==merged.identityKey)byKey.delete(previous.identityKey);
+      byKey.set(merged.identityKey,merged);if(merged.registrationCode)byCode.set(merged.registrationCode,merged);
     }
     return[...byKey.values()];
   }
