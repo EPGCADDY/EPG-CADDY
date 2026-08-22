@@ -4,8 +4,8 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V201
-**Fecha de corte:** 20 de agosto de 2026
+**Versión documentada:** V250
+**Fecha de corte:** 22 de agosto de 2026
 **Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
@@ -1203,6 +1203,8 @@ La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la mi
 - `X`, `EQUIS` o `LEVANTA` registra el hoyo levantado con cero puntos y sin fabricar un Gross.
 - La voz acepta nombre, hoyo y Gross numérico o expresión golfística. No calcula Neto ni reparte tiros de handicap.
 - Al cierre oficial, la ronda conserva un snapshot con SHA-256 y guarda en el historial el campo, la fecha y hora, el torneo, la categoría, los jugadores, los 18 hoyos, Gross y Puntos; además actualiza la clasificación acumulada de su categoría.
+- Después del cierre, Stableford usa la misma matriz oficial GRUPAL: abre una Tarjeta Global, permite elegir y abrir cada tarjeta personal, descarga el paquete completo y entrega el archivo visual a la hoja nativa del teléfono para escoger correo o WhatsApp.
+- La hoja nativa constituye una entrega preparada y confirmada por el usuario. Cancelarla no altera la ronda ni marca la tarjeta como enviada; el envío automático y el estado `ENTREGADO` continúan reservados a proveedores verificables.
 - La clasificación contiene cuatro fechas, una por campo, y suma automáticamente las tres mejores tarjetas de cada jugador.
 - Se pueden incorporar resultados oficiales de otros grupos mediante `AGREGAR RESULTADO OFICIAL`, indicando jugador, categoría, fecha, campo, puntos y Gross opcional.
 - La clasificación Senior muestra las primeras cinco posiciones de ranking; las tres elecciones de capitán se administran fuera del cálculo. S. Senior muestra cuatro posiciones; sus dos elecciones de capitán también son externas.
@@ -1212,6 +1214,7 @@ La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la mi
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-22 | Manual 3.28 / App V250 | Fin de ronda Stableford conectado a la matriz oficial GRUPAL: Global, una personal por jugador, paquete conjunto, historial y compartir del archivo visual por correo/WhatsApp mediante la hoja nativa, sin falsos estados de entrega. |
 | 2026-08-22 | Manual 3.27 / App V201 | Stableford oficial limpio: acceso directo sin nombres precargados, registro interno de uno a seis jugadores, torneo/categoría dentro de la tarjeta y snapshot histórico con campo, fecha, torneo, jugadores, Gross y Puntos. |
 | 2026-08-20 | Manual 3.25 / App V199 | Stableford Scratch permanente: Senior HCP 0/marcas blancas y S. Senior HCP 0/marcas amarillas; máximo cuatro jugadores; Gross y puntos por hoyo; X explícita con cero; cuatro campos y fechas; totales por vuelta/ronda; clasificación por las tres mejores tarjetas e ingreso manual de resultados oficiales. |
 | 2026-08-22 | Manual 3.26 / App V200 | Reconciliación de la versión física Stableford: bloque inferior unificado como `INFORMACIÓN DE RONDA`, verde neón, con primera vuelta, segunda vuelta y total completos en grupal, provisional, Stableford y tarjeta digital. |
