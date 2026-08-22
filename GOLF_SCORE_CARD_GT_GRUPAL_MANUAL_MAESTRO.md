@@ -1191,7 +1191,7 @@ Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarje
 
 ## 27. Stableford Scratch — Senior y S. Senior
 
-La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la misma cuadrícula de campos, inmediatamente debajo de `ALTA VISTA`. Al tocarla abre directamente la tarjeta oficial Stableford limpia y sin nombres precargados. Esta modalidad es independiente de la ronda normal y de la tarjeta provisional.
+La pantalla de Registro mantiene una opción permanente `STABLEFORD` dentro de la misma cuadrícula de campos, inmediatamente debajo de `ALTA VISTA`. Al tocarla navega al alojamiento independiente `stableford-tournament-final` y abre Country Club con la tarjeta oficial Stableford limpia y sin nombres precargados. Esta modalidad es independiente de la ronda normal y de la tarjeta provisional.
 
 - `SENIOR`: handicap fijo `0`, marcas blancas y cinco plazas de clasificación por ranking.
 - `S. SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
