@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos después de V292: **160**.
+Archivos activos con la colección visual detallada: **173**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -42,6 +42,19 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `README.md` | `e93c3adc84c81fdda07303f5d0f75fbb35140ea2` | 2170 bytes | Portada de GitHub que presenta el producto como Golf Score Card GT. |
 | `ROADMAP_OVERALL.md` | `a4a49abd085efe36880bd28288569144aed76496` | 2966 bytes | Resumen general y sencillo del estado completo del proyecto. |
 | `ROADMAP_OVERALL_V291.png` | `2e7aaaaf4b7b337caa8750b17754d9173f8930fe` | 685254 bytes | Imagen vertical y sencilla del estado general para verla desde el teléfono. |
+| `ROADMAP_IMAGES/README.md` | `Se genera con este mismo archivo` | Se calcula al publicar | Índice sencillo de todas las imágenes detalladas del ROADMAP OVERALL. |
+| `ROADMAP_IMAGES/01_ARCHIVOS_ACTIVOS_COMPLETO.png` | `b3ac32312aaaa986e64684793b56539cf22e9280` | 722840 bytes | Imagen con las 160 líneas de archivos activos, sus códigos y su explicación. |
+| `ROADMAP_IMAGES/02_ARCHIVOS_RETIRADOS_COMPLETO.png` | `eb46364dc267183bf0d6e2863d26aa0c657eee65` | 443224 bytes | Imagen con los 89 archivos antiguos retirados y recuperables. |
+| `ROADMAP_IMAGES/03_INFRAESTRUCTURA_COMPLETO.png` | `0f66e7ac0a000573ffeb9f613d88815c829f9fa0` | 393499 bytes | Imagen de GitHub, Vercel, Apple, Android, datos y sus IDs. |
+| `ROADMAP_IMAGES/04_RAMAS_GITHUB_COMPLETO.png` | `b0b615d5c147373000e84dcba10fe01304100ce2` | 489643 bytes | Imagen con las 80 ramas de GitHub, su código y estado. |
+| `ROADMAP_IMAGES/05_VERCEL_01_A_COMPLETO.png` | `a1cb219919df9d3c530799be9bf469863e59820f` | 638295 bytes | Primera imagen del bloque de publicaciones Vercel 1 a 156. |
+| `ROADMAP_IMAGES/05_VERCEL_01_B_COMPLETO.png` | `f12aa1d1faa64eef046851e012e616ab0176093f` | 636874 bytes | Segunda imagen del bloque de publicaciones Vercel 1 a 156. |
+| `ROADMAP_IMAGES/06_VERCEL_02_A_COMPLETO.png` | `424bdb42ee60ccdd299c5d09648144fe76d6301b` | 640724 bytes | Primera imagen del bloque de publicaciones Vercel 157 a 312. |
+| `ROADMAP_IMAGES/06_VERCEL_02_B_COMPLETO.png` | `d5a041447df51e6e7aeb8bd8c237ce4cf930300e` | 533991 bytes | Segunda imagen del bloque de publicaciones Vercel 157 a 312. |
+| `ROADMAP_IMAGES/07_VERCEL_03_A_COMPLETO.png` | `227e81e811a9dfff4ca83feaa6fcc35d1253b244` | 625741 bytes | Primera imagen del bloque de publicaciones Vercel 313 a 468. |
+| `ROADMAP_IMAGES/07_VERCEL_03_B_COMPLETO.png` | `4037cfe4d9c5f6dbb731abcc37b4170e8f0359fb` | 585443 bytes | Segunda imagen del bloque de publicaciones Vercel 313 a 468. |
+| `ROADMAP_IMAGES/08_VERCEL_04_A_COMPLETO.png` | `c0cd9ad1fba1b07dbd607db175230bdc8092c1b0` | 592363 bytes | Primera imagen del bloque de publicaciones Vercel 469 a 622. |
+| `ROADMAP_IMAGES/08_VERCEL_04_B_COMPLETO.png` | `3e94c9fc0bab3b7d7c5450846316ccffb5ff4ba3` | 553541 bytes | Segunda imagen del bloque de publicaciones Vercel 469 a 622. |
 | `STABLEFORD_TOURNAMENT_PASS_CHECKLIST.md` | `02838f5745be3f424ecf4250894da97bed61d201` | 4275 bytes | Lista de comprobaciones para cerrar un torneo Stableford. |
 | `account-backup.js` | `a1b3fbe28a3807312acbb9aaee3750ee244c3f0c` | 4202 bytes | Muestra y controla el respaldo opcional de la cuenta. |
 | `api/_lib/account-auth.js` | `2bd196110b8e57a9d7491b0d3e40527993026133` | 2128 bytes | Ayuda a reconocer la cuenta abierta. |
