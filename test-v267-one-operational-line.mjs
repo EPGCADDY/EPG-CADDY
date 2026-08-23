@@ -67,7 +67,8 @@ assert.match(html,/committed\.get\(key\)===fingerprint/);
 assert.match(html,/if\(roundLiveStaging\)return false/);
 assert.match(html,/function rememberLiveRoundOriginal\(itemId,entries\)/);
 assert.match(html,/function rollbackLiveRoundItem\(itemId,\{commit=true\}=\{\}\)/);
-assert.match(html,/if\(final&&roundLiveOriginal\.has\(id\)\)\{rollbackLiveRoundItem\(id\);return\{handled:true,applied:0,rolledBack:true\}\}/);
+assert.match(html,/if\(!parsed\?\.ok\)return\{handled:final&&committed\.size>0,applied:0,preserved:committed\.size>0\}/);
+assert.doesNotMatch(html,/if\(final&&roundLiveOriginal\.has\(id\)\)\{rollbackLiveRoundItem/);
 assert.match(html,/if\(final\)\{persist\(\);render\(\)\}/);
 
 // Ejecuta el parser único real para General y Stableford.
@@ -126,7 +127,7 @@ const applyStart=html.indexOf("function applyLiteralScores");
 const applyEnd=html.indexOf("\nfunction speechForHole",applyStart);
 const applySource=html.slice(applyStart,applyEnd);
 let single=0,batch=0;
-const applyLiteralScores=new Function("recordScore","recordScores","document","operationalTargetHoleForEntries","scheduleOperationalMissingPrompt",`${applySource};return applyLiteralScores`)(()=>{single++;return{ok:true}},({entries})=>{batch++;return{ok:true,count:entries.length}},{getElementById:()=>null},()=>1,()=>false);
+const applyLiteralScores=new Function("recordScore","recordScores","document","operationalTargetHoleForEntries","scheduleOperationalMissingPrompt","listening","voiceContext","noteRoundOperationalActivity",`${applySource};return applyLiteralScores`)(()=>{single++;return{ok:true}},({entries})=>{batch++;return{ok:true,count:entries.length}},{getElementById:()=>null},()=>1,()=>false,false,"round",()=>{});
 applyLiteralScores({entries:[{player:"JAIME",hole:1,gross:4}]});
 applyLiteralScores({entries:groupBatch.entries});
 assert.equal(single,1);assert.equal(batch,1);

@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V273-SAN-ISIDRO-ALTA-VISTA-OFFICIAL-20260823/);
+assert.match(html,/V274-COMPLETE-COURSES-VOICE-OPERATIONS-20260823/);
 
 // Campo y modalidad son decisiones distintas en la Tarjeta Oficial.
 assert.match(html,/<div class="field-title course-selection-title">SELECCIONA CAMPO<\/div><div class="course-options" id="courseOptions"/);

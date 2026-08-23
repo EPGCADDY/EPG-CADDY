@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const stableford=fs.readFileSync(new URL("./stableford.js",import.meta.url),"utf8");
 
-assert.match(html,/V273-SAN-ISIDRO-ALTA-VISTA-OFFICIAL-20260823/);
+assert.match(html,/V274-COMPLETE-COURSES-VOICE-OPERATIONS-20260823/);
 
 // Registro: aquí sí se seleccionan torneo y categoría antes de iniciar la ronda.
 assert.match(stableford,/id="stablefordTournamentName"/);

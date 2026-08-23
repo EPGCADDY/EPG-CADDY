@@ -34,8 +34,8 @@
       name:"Mayan Golf",displayName:"MAYAN GOLF",par:Object.freeze([4,3,4,4,5,4,3,4,5,4,4,4,3,5,4,4,3,5]),
       si:Object.freeze([13,15,7,9,1,3,11,5,17,6,8,4,12,10,16,2,14,18]),
       tees:Object.freeze({
-        Blanco:Object.freeze({label:"BLANCAS",color:"#fff",fill:"#f3f3f3",text:"#000",yds:Object.freeze([390,132,348,397,583,418,179,357,515,388,405,392,157,566,384,394,160,530]),front:3319,back:3376,total:6695,rating:72.2,slope:145}),
-        Amarillo:Object.freeze({label:"AMARILLAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:Object.freeze([377,120,324,380,573,407,168,345,506,334,395,385,151,562,370,387,154,519]),front:3200,back:3257,total:6457,rating:71.4,slope:130})
+        Blanco:Object.freeze({label:"BLANCAS",color:"#fff",fill:"#f3f3f3",text:"#000",yds:Object.freeze([390,132,348,397,583,418,179,357,515,388,405,392,157,566,384,394,160,530]),front:3319,back:3376,total:6695,rating:72.2,slope:132}),
+        Amarillo:Object.freeze({label:"AMARILLAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:Object.freeze([377,120,324,380,573,407,168,345,506,334,395,385,151,562,370,387,154,519]),front:3200,back:3257,total:6457,rating:71.2,slope:130})
       })
     })
   });

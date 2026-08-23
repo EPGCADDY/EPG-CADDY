@@ -49,7 +49,7 @@ for(const courseKey of stableford.ALLOWED_COURSES){
 assert.equal(stablefordConfigurations,96,"4 campos × 2 categorías × 1–6 jugadores × torneo con/sin nombre");
 
 const generalCourses=Object.keys(COURSE_DATA).filter(key=>COURSE_CATALOG[key]?.configured);
-assert.deepEqual(generalCourses.sort(),["alta_vista","country_club","pulte","san_isidro"]);
+assert.deepEqual(generalCourses.sort(),["alta_vista","country_club","hacienda_nueva","la_reunion","mayan_golf","pulte","san_isidro"]);
 let generalConfigurations=0;
 for(const courseKey of generalCourses){
   const data=COURSE_DATA[courseKey];
@@ -70,7 +70,7 @@ for(const courseKey of generalCourses){
   verifyRoundShape({mode:"general",courseKey,count:6,tee:tees[0],provisional:true});
   generalConfigurations++;
 }
-assert.equal(generalConfigurations,292,"General: cuatro campos oficiales, marcas individuales/mixtas, 1–6, torneo y sin registro");
+assert.equal(generalConfigurations,487,"General: siete campos oficiales, marcas individuales/mixtas, 1–6, torneo y sin registro");
 
 // Manual, final de voz e incremental deben desembocar en la misma operación.
 assert.match(html,/function applyManualScoreEntries\(entries\)[\s\S]*?applyLiteralScores\(\{matched:true,ok:true,entries\}\)/);

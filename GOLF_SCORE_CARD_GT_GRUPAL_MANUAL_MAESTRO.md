@@ -4,9 +4,9 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V273
+**Versión documentada:** V274
 **Fecha de corte:** 23 de agosto de 2026
-**Ramas operativas:** `main` (Producción vigente) y `v273-san-isidro-alta-vista-official`
+**Ramas operativas:** `main` (Producción vigente) y `v274-complete-courses-voice-operations`
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
 **Responsable de implementación y control:** Partner / ChatGPT
@@ -1269,6 +1269,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-23 | Manual 3.50 / App V274 | Quedan operativos los siete campos General en una sola arquitectura: El Pulté, Country Club, San Isidro, Mayan Golf, Hacienda Nueva, Alta Vista y La Reunión. Mayan incorpora cinco marcas; Hacienda Nueva, cuatro marcas y matrices distintas para Caballeros/Damas; La Reunión incorpora cuatro marcas y muestra guion cuando la fuente disponible no publica Rating o Slope. La recepción viva conserva cada score válido aun cuando la transcripción final contenga después conversación ajena al vocabulario; cada actividad de voz, delta, transcripción o escritura reinicia el silencio real antes de `Falta NOMBRE`. General y Stableford comparten el mismo cursor, escritor, X explícita, corrección retroactiva, persistencia, render y cierre. |
 | 2026-08-23 | Manual 3.48 / App V272 | Candidato de liberación definitiva bajo el nombre `Golf Score Card GT`. Corregida la interferencia Stableford: `Falta NOMBRE` ya no se programa desde scores parciales ni puede hablar mientras continúa el dictado, existe audio/transcripción pendiente o el motor aplica datos. General y Stableford comparten un único cierre continuo de cuatro segundos y watchdog de diez segundos. Los reportes de primera vuelta, segunda vuelta y total cierran el micrófono antes de hablar y lo mantienen cerrado. Todos los rótulos visuales pasan a `OUT`, `IN` y `TOTAL` en tarjeta oficial, Control Manual, resúmenes, tarjeta digital y artefactos. Se añade prueba V272 de la puerta de inactividad, cancelación por voz/delta, cierre de micrófono, marca y ausencia de rótulos obsoletos. La publicación permanente continúa sujeta a auditoría integral, navegador real, commit local identificado y autorización explícita del destino remoto. |
 | 2026-08-23 | Manual 3.49 / App V273 | San Isidro y Alta Vista quedan cargados desde sus tarjetas oficiales dentro del mismo motor General. San Isidro incorpora seis marcas, incluida Plateada, y conserva su operación Stableford; Alta Vista incorpora cuatro marcas y par 71. La selección de campo actualiza jugadores, marcas, yardajes, rating, slope y tarjeta sin mezclar datos de la ronda activa. |
 | 2026-08-23 | Manual 3.47 / App V271 | Corregido el bloqueo físico de apertura del micrófono detectado en el preview V270. La sesión Realtime devolvía HTTP 400 porque el prompt de transcripción medía 1,070 caracteres y excedía el máximo contractual de 1,024. El prompt se compacta sin eliminar jugadores, hoyo activo automático, Nombre + Score, respuesta contextual a `Falta NOMBRE`, vocabulario golfístico ni omisiones X; además queda limitado programáticamente a 1,024 caracteres. Se incorpora una prueba contractual independiente con plantillas de cero a 300 caracteres de jugadores para impedir la regresión. Evidencia: prueba V271 y auditoría maestra de 44 paquetes PASS. |
