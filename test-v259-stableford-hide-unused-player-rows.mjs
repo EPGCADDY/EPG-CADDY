@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V(?:259-STABLEFORD-HIDE-UNUSED-PLAYER-ROWS|260-STABLEFORD-ROUND-POINTS-PLAYER-RETURN|261-REGISTRATION-SIMPLIFIED-STABLEFORD-LABELS|262-REGISTRATION-MODALITIES|263-COMPACT-PLAYERS-BACK-BUTTON)-20260822/);
+assert.match(html,/V272-DEFINITIVE-OFFICIAL-CARD-20260823/);
 
 // El registro manual inicial conserva exactamente seis espacios opcionales.
 assert.equal((html.match(/<input[^>]+data-stableford-name="[0-5]"/g)||[]).length,6);

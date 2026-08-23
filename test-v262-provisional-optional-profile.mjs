@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V263-COMPACT-PLAYERS-BACK-BUTTON-20260822/);
+assert.match(html,/V272-DEFINITIVE-OFFICIAL-CARD-20260823/);
 assert.match(html,/>2 · MANUAL OPCIONAL<\/div>/);
 assert.match(html,/function provisionalPlayerFromOptionalRow\(source,i\)/);
 assert.match(html,/provisionalHandicapProvided:hasHandicap,provisionalTeeProvided:!!tee/);
@@ -23,8 +23,8 @@ assert.match(html,/provisional&&!provisionalHasTee\?blankYards:tee\.yds/);
 assert.match(html,/provisional&&!provisionalFull\?"":hcp/);
 assert.match(html,/RONDA SIN REGISTRO/);
 assert.doesNotMatch(html,/TARJETA EN SUCIO/);
-assert.match(html,/GROSS PRIMERA VUELTA/);
-assert.match(html,/GROSS SEGUNDA VUELTA/);
+assert.match(html,/GROSS OUT/);
+assert.match(html,/GROSS IN/);
 assert.match(html,/GROSS TOTAL/);
 assert.match(html,/const f=totals\(p,FRONT\),b=totals\(p,BACK\),t=totals\(p,ALL\)/);
 assert.match(html,/t\.count\?t\.gross:""/);

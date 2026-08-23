@@ -50,7 +50,7 @@
 
   function stablefordSummary(name,stats){
     const gross=stats.grossCount===18?`${stats.gross} Gross`:`Gross parcial ${stats.gross} en ${stats.grossCount} hoyos`;
-    return`${name} finalizó con ${stats.points} puntos Stableford y ${gross}. Primera vuelta: ${stats.front.points} puntos. Segunda vuelta: ${stats.back.points} puntos.`;
+    return`${name} finalizó con ${stats.points} puntos Stableford y ${gross}. OUT: ${stats.front.points} puntos. IN: ${stats.back.points} puntos.`;
   }
 
   const style=`<style>*{box-sizing:border-box}body{margin:0;padding:28px;background:#000;color:#fff;font-family:Arial,sans-serif}main{max-width:1500px;margin:auto;border:1px solid #555;padding:22px}h1,h2{color:#31ff00}.table-wrap{max-width:100%;overflow:auto}table{width:100%;border-collapse:collapse}th,td{border:1px solid #555;padding:7px;text-align:center}.meta{display:flex;gap:22px;flex-wrap:wrap;color:#ccc;margin-bottom:16px}.under{color:#31ff00}.over{color:#ff3030}.points{color:#31ff00;font-weight:900}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0}.stat{border:1px solid #555;padding:10px}.chart{display:flex;align-items:center;gap:3px;height:150px;border:1px solid #555;padding:10px}.bar{flex:1;position:relative;height:100%}.bar i{position:absolute;left:12%;right:12%;bottom:50%;background:#31ff00;min-height:2px}.bar.over i{top:50%;bottom:auto;background:#ff3030}.bar b{position:absolute;bottom:0;width:100%;text-align:center;font-size:10px}.stableford-chart{align-items:flex-end}.stableford-chart .bar i,.stableford-chart .bar.over i{top:auto;bottom:24px}@media(max-width:720px){body{padding:8px}main{padding:10px}.stats{grid-template-columns:repeat(2,1fr)}th,td{padding:5px;font-size:11px}}</style>`;

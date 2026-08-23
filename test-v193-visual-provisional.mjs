@@ -3,11 +3,11 @@ import assert from "node:assert/strict";
 
 const html = fs.readFileSync(new URL("./index-grupal.html", import.meta.url), "utf8");
 const required = [
-  ["build integrado vigente", "V263-COMPACT-PLAYERS-BACK-BUTTON-20260822"],
+  ["build integrado vigente", "V272-DEFINITIVE-OFFICIAL-CARD-20260823"],
   ["seis filas provisionales", "Array.from({length:6}"],
   ["nombres provisionales editables", "provisional-player-name-input"],
-  ["resumen provisional de primera vuelta", "GROSS PRIMERA VUELTA"],
-  ["resumen provisional de segunda vuelta", "GROSS SEGUNDA VUELTA"],
+  ["resumen provisional OUT", "GROSS OUT"],
+  ["resumen provisional IN", "GROSS IN"],
   ["título autorizado del resumen", "INFORMACIÓN DE RONDA"],
   ["modo sin registro operativo", "provisional:true"],
   ["hora de inicio independiente", "function roundIdleStatus(){return `INICIO ${roundStartText()}`}"],

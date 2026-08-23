@@ -13,11 +13,11 @@ assert.match(html,/\$\("summaryTitle"\)\.textContent="PUNTOS"/);
 assert.match(html,/\$\("finalSummaryTitle"\)\.textContent=isStablefordRound\(\)\?"PUNTOS":"INFORMACIÓN DE RONDA"/);
 
 for(const label of [
-  "GROSS PRIMERA VUELTA",
-  "GROSS SEGUNDA VUELTA",
+  "GROSS OUT",
+  "GROSS IN",
   "GROSS TOTAL",
-  "PUNTOS PRIMERA VUELTA",
-  "PUNTOS SEGUNDA VUELTA",
+  "PUNTOS OUT",
+  "PUNTOS IN",
   "PUNTOS TOTAL",
   "NETO TOTAL",
   "+/- NETO",

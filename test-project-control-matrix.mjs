@@ -25,7 +25,8 @@ for(const key of ["pulte","country_club","mayan_golf","hacienda_nueva","alta_vis
 }
 assert.equal(registry.courses.find(course=>course.courseKey==="la_reunion")?.sourceStatus,"internal-inventory-pending");
 const links=fs.readFileSync(new URL("05_MATRIZ_DE_ENLACES/ENLACES_OPERATIVOS.md",root),"utf8");
-assert.match(links,/GENERAL[\s\S]*https:\/\/epg-caddy\.vercel\.app\/index-grupal\.html/);
-assert.match(links,/STABLEFORD[\s\S]*stableford_emergency=countryclub/);
-assert.match(links,/General nunca lleva `stableford_emergency`/);
+assert.match(links,/ENTRADA OFICIAL ÚNICA[\s\S]*https:\/\/golf-score-card-gt\.vercel\.app\//);
+assert.match(links,/MODALIDADES[\s\S]*stableford_emergency=countryclub/);
+assert.match(links,/una sola entrada para Registro, General y Stableford/);
+assert.match(links,/nunca abandona el alojamiento actual ni abre una rama histórica/);
 console.log("PASS control de proyecto · fuentes originales, cola y política de no reiteración");

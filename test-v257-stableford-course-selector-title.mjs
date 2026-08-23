@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V(?:257-STABLEFORD-COURSE-SELECTOR-TITLE|258-STABLEFORD-READONLY-MANUAL-PLAN-B|259-STABLEFORD-HIDE-UNUSED-PLAYER-ROWS|260-STABLEFORD-ROUND-POINTS-PLAYER-RETURN|261-REGISTRATION-SIMPLIFIED-STABLEFORD-LABELS|262-REGISTRATION-MODALITIES|263-COMPACT-PLAYERS-BACK-BUTTON)-20260822/);
+assert.match(html,/V272-DEFINITIVE-OFFICIAL-CARD-20260823/);
 assert.match(html,/<h1 id="stablefordSetupTitle">RONDA STABLEFORD<\/h1>/);
 assert.doesNotMatch(html,/NUEVA RONDA STABLEFORD|DATOS DE RONDA STABLEFORD/);
 assert.match(html,/<select class="course-select" id="stablefordSetupCourse"[^>]*aria-hidden="true"[^>]*tabindex="-1"[^>]*>/);

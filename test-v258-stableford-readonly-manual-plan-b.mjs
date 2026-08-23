@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const stableford=fs.readFileSync(new URL("./stableford.js",import.meta.url),"utf8");
 
-assert.match(html,/V(?:258-STABLEFORD-READONLY-MANUAL-PLAN-B|259-STABLEFORD-HIDE-UNUSED-PLAYER-ROWS|260-STABLEFORD-ROUND-POINTS-PLAYER-RETURN|261-REGISTRATION-SIMPLIFIED-STABLEFORD-LABELS|262-REGISTRATION-MODALITIES|263-COMPACT-PLAYERS-BACK-BUTTON)-20260822/);
+assert.match(html,/V272-DEFINITIVE-OFFICIAL-CARD-20260823/);
 
 // Registro: aquí sí se seleccionan torneo y categoría antes de iniciar la ronda.
 assert.match(stableford,/id="stablefordTournamentName"/);

@@ -4,9 +4,9 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V263
-**Fecha de corte:** 22 de agosto de 2026
-**Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
+**Versión documentada:** V272
+**Fecha de corte:** 23 de agosto de 2026
+**Ramas operativas:** `main` (Producción vigente) y candidato V272 pendiente de autorización de publicación definitiva
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
 **Responsable de implementación y control:** Partner / ChatGPT
@@ -657,8 +657,8 @@ Prohibiciones operativas durante una ronda:
 - Ronda: hoyos 1–18.
 - En General y en `RONDA SIN REGISTRO`, el bloque inferior se titula `INFORMACIÓN DE RONDA` en verde neón.
 - En Stableford, el bloque de captura manual se titula `STABLEFORD` y el bloque inferior de resultados se titula `PUNTOS`, también en la tarjeta digital final.
-- La tarjeta grupal muestra: `JUGADOR`, `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA`, `GROSS TOTAL`, `HCP`, `NETO TOTAL` y `+/- NETO`.
-- `RONDA SIN REGISTRO` siempre muestra sus datos Gross reales: `JUGADOR`, `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA` y `GROSS TOTAL`; cuando un jugador tiene HDCP y marcas completos, añade para él los resultados Neto correspondientes.
+- La tarjeta grupal muestra: `JUGADOR`, `GROSS OUT`, `GROSS IN`, `GROSS TOTAL`, `HCP`, `NETO TOTAL` y `+/- NETO`.
+- `RONDA SIN REGISTRO` siempre muestra sus datos Gross reales: `JUGADOR`, `GROSS OUT`, `GROSS IN` y `GROSS TOTAL`; cuando un jugador tiene HDCP y marcas completos, añade para él los resultados Neto correspondientes.
 - La tarjeta Stableford muestra: `JUGADOR`, Gross de primera vuelta, segunda vuelta y total, y Puntos de primera vuelta, segunda vuelta y total.
 - El cierre depende de scores requeridos, no de que simplemente se mencione el hoyo 18.
 - Jugadores incorporados tarde se evalúan desde su hoyo de incorporación.
@@ -1226,7 +1226,7 @@ La primera pantalla incorpora el acceso **SCORE CARD SIN REGISTRO** dentro de `S
 - Sin marcas, los yardajes permanecen vacíos. Con marcas, aparecen sus yardajes. Con HDCP y marcas válidos, aparecen también HDCP, Neto y `+/-` para ese jugador.
 - El dictado de scores acepta hoyo y resultado para el primer espacio, por ejemplo: `HOYO 1 PAR`, y también jugador o nombre, hoyo y resultado, por ejemplo: `JUGADOR 3 HOYO 5 BOGEY` o `CARLOS HOYO 9 PAR`.
 - No exige orden consecutivo ni completar 18 hoyos; las casillas no jugadas permanecen vacías y nunca se convierten en `X`.
-- Los resultados calculan automáticamente `GROSS PRIMERA VUELTA`, `GROSS SEGUNDA VUELTA` y `GROSS TOTAL`; el total no se escribe manualmente.
+- Los resultados calculan automáticamente `GROSS OUT`, `GROSS IN` y `GROSS TOTAL`; el total no se escribe manualmente.
 - Se identifica permanentemente como `RONDA SIN REGISTRO · DATOS OPCIONALES · NO GENERA RÉCORD NI ENVÍOS`.
 - No entra al archivo histórico, base de jugadores, estadísticas históricas, récords, cierre oficial, Tarjeta Global, tarjeta personal, WhatsApp, correo ni cola de entregas.
 - Al regresar a Datos puede iniciarse posteriormente una ronda oficial mediante el registro normal.
@@ -1239,7 +1239,7 @@ Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarje
 
 ## 27. Stableford Scratch — Senior y S. Senior
 
-La pantalla general de Registro mantiene una opción permanente correctamente nombrada `STABLEFORD`. Al tocarla abandona el formulario GRUPAL y abre directamente el alojamiento aislado de la tarjeta oficial Stableford. Esta modalidad es independiente de la ronda normal y de `RONDA SIN REGISTRO`.
+La pantalla general de Registro mantiene una opción permanente correctamente nombrada `STABLEFORD`. Al tocarla abre la modalidad Stableford dentro de la misma tarjeta oficial y la misma arquitectura operacional. General y Stableford conservan datos de ronda separados para impedir contaminación cruzada, pero comparten navegación, control manual, voz, validación, escritura, persistencia, render y cierre.
 
 La apertura normal del alojamiento conserva y restaura la última ronda Stableford activa: campo, torneo, categoría, jugadores, marcas, Gross y Puntos. El botón `NUEVA RONDA` elimina únicamente la ronda activa y el borrador de registro, y presenta un registro Stableford completamente limpio. Nunca borra el historial de tarjetas cerradas ni la clasificación acumulada.
 
@@ -1250,10 +1250,13 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 - En ambas categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
 - El mismo panel permite escribir el nombre del torneo antes de iniciar scores. `REGRESAR A DATOS` abre los datos de la ronda actual sin borrar sus scores; `NUEVA RONDA` sí abre un registro completamente limpio.
 - Los únicos campos admitidos por la serie son Country Club, El Pulté, San Isidro y Mayan Golf. Un campo sin tarjeta oficial cargada permanece bloqueado para evitar cálculos con datos heredados o inventados.
-- Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales de ida, vuelta y ronda.
+- Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales `OUT`, `IN` y `TOTAL`.
 - Puntuación automática por hoyo: doble bogey o más `0`; bogey `1`; par `2`; birdie `3`; eagle, albatros o mejor `4`. El valor máximo por hoyo queda limitado a cuatro puntos.
 - `X`, `EQUIS` o `LEVANTA` registra el hoyo levantado con cero puntos y sin fabricar un Gross.
 - La voz acepta `Nombre + Gross` en el hoyo activo; el número de hoyo es opcional y únicamente reposiciona el cursor. Acepta bloques consecutivos, X explícita y la respuesta contextual posterior a `Falta NOMBRE`. No reparte tiros de handicap. El ingreso manual y el dictado terminan en la misma secuencia oficial de cálculo, guardado, render y cierre hablado. Al completar los hoyos 1–9 por cualquiera de los dos controles anuncia automáticamente `Primera vuelta` y, en orden de registro, el nombre, Gross y Puntos de cada jugador. Al completar los hoyos 10–18 anuncia `Segunda vuelta` con nombre, Gross y Puntos de cada jugador y luego `Total` con nombre, Gross y Puntos acumulados de cada jugador. Cada cierre se pronuncia una sola vez.
+- El recordatorio `Falta NOMBRE` conserva los dos segundos aprobados, pero el tiempo comienza únicamente después de una transcripción final y de comprobar inactividad real. Queda bloqueado y se cancela mientras existe voz activa, delta parcial, transcripción pendiente, watchdog, finalización, salida hablada o aplicación viva de scores. General y Stableford comparten los mismos cuatro segundos de continuidad y diez segundos de vigilancia; no existen excepciones de tiempos por modalidad.
+- Antes de cualquier reporte de primera vuelta, segunda vuelta o total, la aplicación cierra automáticamente el micrófono. El micrófono permanece cerrado durante y después de la lectura para que conversaciones externas no interrumpan, alteren ni reinicien el reporte.
+- Todos los rótulos visuales de las tarjetas oficial, digital, General, Stableford, Control Manual y artefactos Global/personales utilizan exclusivamente `OUT`, `IN` y `TOTAL`. Las expresiones habladas `Primera vuelta` y `Segunda vuelta` se conservan únicamente dentro del vocabulario de cierre aprobado.
 - Al cierre oficial, la ronda conserva un snapshot con SHA-256 y guarda en el historial el campo, la fecha y hora, el torneo, la categoría, los jugadores, los 18 hoyos, Gross y Puntos; además actualiza la clasificación acumulada de su categoría.
 - Después del cierre, Stableford usa la misma matriz oficial GRUPAL: abre una Tarjeta Global, permite elegir y abrir cada tarjeta personal, descarga el paquete completo y entrega el archivo visual a la hoja nativa del teléfono para escoger correo o WhatsApp.
 - La hoja nativa constituye una entrega preparada y confirmada por el usuario. Cancelarla no altera la ronda ni marca la tarjeta como enviada; el envío automático y el estado `ENTREGADO` continúan reservados a proveedores verificables.
@@ -1266,6 +1269,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-23 | Manual 3.48 / App V272 | Candidato de liberación definitiva bajo el nombre `Golf Score Card GT`. Corregida la interferencia Stableford: `Falta NOMBRE` ya no se programa desde scores parciales ni puede hablar mientras continúa el dictado, existe audio/transcripción pendiente o el motor aplica datos. General y Stableford comparten un único cierre continuo de cuatro segundos y watchdog de diez segundos. Los reportes de primera vuelta, segunda vuelta y total cierran el micrófono antes de hablar y lo mantienen cerrado. Todos los rótulos visuales pasan a `OUT`, `IN` y `TOTAL` en tarjeta oficial, Control Manual, resúmenes, tarjeta digital y artefactos. Se añade prueba V272 de la puerta de inactividad, cancelación por voz/delta, cierre de micrófono, marca y ausencia de rótulos obsoletos. La publicación permanente continúa sujeta a auditoría integral, navegador real, commit local identificado y autorización explícita del destino remoto. |
 | 2026-08-23 | Manual 3.47 / App V271 | Corregido el bloqueo físico de apertura del micrófono detectado en el preview V270. La sesión Realtime devolvía HTTP 400 porque el prompt de transcripción medía 1,070 caracteres y excedía el máximo contractual de 1,024. El prompt se compacta sin eliminar jugadores, hoyo activo automático, Nombre + Score, respuesta contextual a `Falta NOMBRE`, vocabulario golfístico ni omisiones X; además queda limitado programáticamente a 1,024 caracteres. Se incorpora una prueba contractual independiente con plantillas de cero a 300 caracteres de jugadores para impedir la regresión. Evidencia: prueba V271 y auditoría maestra de 44 paquetes PASS. |
 | 2026-08-23 | Manual 3.46 / App V270 | El panel común `CONTROL MANUAL` pasa a ser la pantalla principal de ingreso encima de la tarjeta oficial para General y Stableford. El cursor se coloca automáticamente en el hoyo activo, por lo que el dictado normal exige únicamente `Nombre + Score`; decir `Hoyo N` queda como reposicionamiento opcional. Cada score se muestra de inmediato y, al completar Gross o X explícita para todos los jugadores activos, el mismo motor de `ENTER` valida, guarda, calcula, renderiza y avanza. Se incorpora un vocabulario amplio de X explícita —incluidos cero, sin score, sin dato, no informó, no dijo, no cantó, ponle cero y no le anotes— sin restaurar ninguna X automática. Si un hoyo ya empezó y pasan dos segundos sin otro score, la única voz autorizada es `Falta NOMBRE`; la respuesta puede ser solo el score o solo una omisión y se vincula exclusivamente al jugador señalado. Una X puede reemplazarse posteriormente y recalcula General o Stableford. Evidencia automatizada: 43 paquetes, matriz de 242 configuraciones y prueba V270 de bloques completos, incompletos, X múltiples, correcciones, hoyo 18, respuesta contextual y atomicidad. La prueba de navegador local quedó bloqueada porque el entorno no dispone de Chromium y el instalador no pudo obtenerlo; por tanto V270 permanece local y no se declara liberada ni publicada. |
 | 2026-08-23 | Manual 3.45 / App V269 | Corregida la omisión operacional detectada físicamente en V268. La demostración vuelve a mostrar y operar `ATRÁS` hacia el Registro, `RONDA PREVIA`, el cambio automático del mismo control a `RONDA ACTUAL` y `NUEVA RONDA`. Registro en curso, ronda activa y archivo de rondas usan llaves exclusivas de la demostración; no leen ni escriben el directorio oficial de jugadores, la ronda General oficial, Stableford ni la sincronización central. Se incorpora una ronda previa completa de seis jugadores y 108 scores para probar el recorrido real anterior/actual sin mezclar datos oficiales. V269 conserva los seis jugadores y los 30 Gross iniciales de los hoyos 1 al 5 en la ronda actual. La puerta de liberación exige la prueba específica V269, auditoría maestra y navegador real de todas las transiciones antes de publicar. |
