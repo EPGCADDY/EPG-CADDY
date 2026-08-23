@@ -4,9 +4,9 @@ import stableford from "./stableford.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V278-CARD-IMAGE-PDF-EXPORT-20260823"/);
+assert.match(html,/gscg-build" content="V279-LOCAL-CARD-LIBRARY-20260823"/);
 assert.match(html,/V275-LIVE-TURN-ANCHOR-SPEECH-LOCK-20260823/);
-assert.match(html,/appVersion:"V278"/);
+assert.match(html,/appVersion:"V279"/);
 
 const courseStart=html.indexOf("const COURSE_CATALOG=");
 const courseEnd=html.indexOf("let ACTIVE_COURSE_KEY",courseStart);

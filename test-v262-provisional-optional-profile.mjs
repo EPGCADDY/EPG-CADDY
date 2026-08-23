@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V278-CARD-IMAGE-PDF-EXPORT-20260823/);
+assert.match(html,/V279-LOCAL-CARD-LIBRARY-20260823/);
 assert.match(html,/>2 · MANUAL OPCIONAL<\/div>/);
 assert.match(html,/function provisionalPlayerFromOptionalRow\(source,i\)/);
 assert.match(html,/provisionalHandicapProvided:hasHandicap,provisionalTeeProvided:!!tee/);

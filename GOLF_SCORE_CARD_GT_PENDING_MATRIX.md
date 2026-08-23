@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V278
+**Corte vigente:** V279
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -33,6 +33,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - ✅ Todas las tarjetas muestran `OUT`, `IN` y `TOTAL`.
 - ✅ Existen regreso a datos, ronda previa, regreso a ronda actual, nueva ronda y borrar scores.
 - ✅ Existen Tarjeta Global y tarjetas personales con exportación PNG, PDF individual, PDF conjunto y hoja nativa para guardar o compartir.
+- ✅ La biblioteca privada local permite buscar tarjetas oficiales por ronda, fecha, campo, torneo, modalidad y jugador sin reemplazar la ronda actual.
 - ✅ Stableford calcula Gross y puntos por jugador para `OUT`, `IN` y `TOTAL`.
 - ✅ Stableford conserva localmente el torneo de cuatro fechas y clasificación por mejores tres resultados.
 - ✅ Una ronda cerrada puede corregirse mediante versión oficial nueva, conservando original, motivo, responsable, fecha, SHA-256 y recálculo General/Stableford.
@@ -97,13 +98,13 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 6. Archivos finales de tarjetas
 
-**Estado:** EN PROGRESO · ARCHIVOS SOLVENTADOS V278
+**Estado:** SOLVENTADO V279
 
 - ✅ Exportar Tarjeta Global y tarjetas personales como imagen PNG real.
 - ✅ Exportar Tarjeta Global y tarjetas personales como PDF real.
 - ✅ Entregar la imagen a la hoja nativa para seleccionar `Guardar imagen` cuando el dispositivo lo permita.
 - ✅ Descargar un PDF conjunto multipágina con Global y todas las personales.
-- Crear una biblioteca privada de tarjetas por ronda, fecha, campo, torneo y jugador.
+- ✅ Crear una biblioteca privada local de tarjetas por ronda, fecha, campo, torneo, modalidad y jugador.
 
 ### 7. Correcciones oficiales
 

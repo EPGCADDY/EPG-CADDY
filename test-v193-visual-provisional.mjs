@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 const html = fs.readFileSync(new URL("./index-grupal.html", import.meta.url), "utf8");
 const required = [
-  ["build integrado vigente", "V278-CARD-IMAGE-PDF-EXPORT-20260823"],
+  ["build integrado vigente", "V279-LOCAL-CARD-LIBRARY-20260823"],
   ["seis filas provisionales", "Array.from({length:6}"],
   ["nombres provisionales editables", "provisional-player-name-input"],
   ["resumen provisional OUT", "GROSS OUT"],
