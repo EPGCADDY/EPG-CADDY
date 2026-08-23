@@ -8,10 +8,10 @@ const individual=fs.readFileSync(new URL("./index.html",import.meta.url),"utf8")
 const hosting=JSON.parse(fs.readFileSync(new URL("./vercel.json",import.meta.url),"utf8"));
 
 assert.match(html,/<title>Golf Score Card GT<\/title>/);
-assert.match(html,/gscg-build" content="V274-COMPLETE-COURSES-VOICE-OPERATIONS-20260823"/);
-assert.match(html,/appVersion:"V274"/);
+assert.match(html,/gscg-build" content="V275-STABLE-LIVE-VOICE-TURNS-20260823"/);
+assert.match(html,/appVersion:"V275"/);
 assert.match(html,/V272-QUIET-MISSING-PROMPT-CLOSED-REPORTS-OUT-IN-20260823/);
-assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=274"/);
+assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=275"/);
 assert.doesNotMatch(html,/epg-caddy-git-stableford-tournament-final/);
 assert.match(stableford,/GOLF SCORE CARD GT · STABLEFORD/);
 for(const source of ["/","/index.html","/stableford-torneo.html"]){
@@ -40,10 +40,11 @@ for(const [key,value] of [["listeningNow",false],["context","setup"],["speechAct
 assert.match(html,/const ROUND_TRANSCRIPTION_WATCHDOG_MS=10000/);
 assert.match(html,/const ROUND_CONTINUOUS_FINALIZE_MS=4000/);
 assert.match(html,/const ROUND_MISSING_IDLE_MS=2000/);
+assert.match(html,/const ROUND_MISSING_CONFIRM_MS=450/);
 assert.doesNotMatch(html,/stablefordWatchdog|mode==="stableford"\)\?2000:4000/);
-assert.match(html,/input_audio_buffer\.speech_started"&&voiceContext==="round"&&listening\)\{\s*roundSpeechActive=true;\s*noteRoundOperationalActivity\(\)/);
-assert.match(html,/conversation\.item\.input_audio_transcription\.delta"&&voiceContext==="round"&&!stopMonitorActive\)\{\s*roundSpeechActive=true;\s*noteRoundOperationalActivity\(\)/);
-assert.match(html,/conversation\.item\.input_audio_transcription\.completed"&&voiceContext==="round"\)\{\s*roundSpeechActive=false/);
+assert.match(html,/input_audio_buffer\.speech_started"&&voiceContext==="round"&&listening\)\{\s*noteRoundOperationalActivity\(\);[\s\S]*?rememberRoundSpeechStarted\(e\.item_id\)/);
+assert.match(html,/conversation\.item\.input_audio_transcription\.delta"&&voiceContext==="round"&&!stopMonitorActive\)\{\s*noteRoundOperationalActivity\(\)/);
+assert.match(html,/conversation\.item\.input_audio_transcription\.completed"&&voiceContext==="round"\)\{[\s\S]*?rememberRoundTranscriptionCompleted\(key\)/);
 assert.match(html,/if\(closure\)speakClosure\(closure\);else\{[\s\S]*?if\(listening\)scheduleOperationalMissingPrompt\(\)\}/);
 
 const closureStart=html.indexOf("async function speakClosure"),closureEnd=html.indexOf("\nasync function speakQuery",closureStart),closureSource=html.slice(closureStart,closureEnd);

@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V274
+**Versión documentada:** V275
 **Fecha de corte:** 23 de agosto de 2026
 **Ramas operativas:** `main` (Producción vigente) y `v274-complete-courses-voice-operations`
 **Aplicación:** `index-grupal.html`  
@@ -83,6 +83,25 @@ El verificador `verify-manual-sync.mjs` compara automáticamente la versión dec
 14. Toda necesidad de PC, autenticación, GitHub, Vercel, permisos o intervención manual debe comunicarse al propietario en la misma interacción en que se detecta, con instrucciones exactas.
 15. La línea operacional debe ser tan coherente como la línea gráfica: pantalla atrás/adelante, regreso al registro, dictado, revisión, guardar, cerrar y enviar conservan el mismo patrón y significado en toda la aplicación; no se crean recorridos paralelos o contradictorios para la misma acción.
 16. Control manual y control de voz son dos entradas equivalentes al mismo motor oficial. Cuando ambos admiten una operación, deben compartir validación, cálculo, persistencia, transición de estado y resultado; cambiar el medio de control no puede cambiar el efecto funcional.
+
+### Reglas 23 y 24 — comunicación y siguiente acción
+
+**23. Prohibido dejar al usuario adivinando.** Esta regla es obligatoria para todos los mensajes del proyecto. Ningún mensaje puede terminar en el aire. Después de cualquier explicación, investigación, resultado, problema, avance, corrección o reporte debe quedar inequívocamente indicado quién tiene la siguiente acción.
+
+El usuario nunca debe tener que preguntarse si espera, responde, toca algo, envía `sigue`, deja abierta la computadora o si el trabajo ya terminó.
+
+**24. Todo mensaje debe terminar con una acción o solicitud.** Existen únicamente estos dos estados válidos:
+
+1. **La siguiente acción es del usuario.** El mensaje termina con `SIGUIENTE ACCIÓN — TUYA:` y especifica exactamente qué debe hacer o responder.
+2. **No se necesita nada del usuario en este momento.** El mensaje lo declara expresamente, explica el estado real y señala el siguiente punto del proceso.
+
+ChatGPT no puede fingir que continuará trabajando silenciosamente después de finalizar un turno. Si para continuar hace falta otro mensaje, el cierre obligatorio es:
+
+`DE TU PARTE: no necesitas hacer nada en la computadora; déjala abierta únicamente si ya se indicó una eventualidad concreta.`
+
+`PARA CONTINUAR: envíame cualquier mensaje —por ejemplo “sigue”— y retomo exactamente desde este punto. No necesitas repetir instrucciones ni volver a autorizar lo ya autorizado.`
+
+La expresión `SIGUIENTE ACCIÓN — MÍA:` sólo puede utilizarse en una actualización intermedia cuando el procesamiento realmente continuará dentro del mismo turno. Está prohibido usarla como cierre final para simular trabajo posterior inexistente.
 
 ---
 
@@ -1269,6 +1288,8 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-23 | Manual 3.52 / App V275 | Estabilizada la recepción viva común de General y Stableford. Cada ítem de audio conserva el hoyo operativo donde comenzó, por lo que el avance visual al hoyo siguiente no puede reinterpretar los deltas anteriores. La actividad de voz se controla por ítem concurrente: una transcripción atrasada ya no apaga el estado de una frase posterior todavía activa. `Falta NOMBRE` mantiene dos segundos de inactividad mínima y añade una confirmación breve que se cancela ante cualquier audio, delta o transcripción nueva. El VAD de ronda amplía el prefijo a 700 ms, reduce el umbral a 0.2 y exige 1,200 ms de silencio antes de cortar una frase, conservando el render inmediato de cada pareja válida. |
+| 2026-08-23 | Manual 3.51 / App V274 | Incorporadas literalmente las reglas 23 y 24 de comunicación: ningún mensaje puede terminar sin indicar quién tiene la siguiente acción; si el turno finaliza, queda prohibido simular trabajo silencioso posterior. El cierre debe pedir una acción exacta al propietario o declarar que no necesita hacer nada y explicar qué mensaje permite retomar. |
 | 2026-08-23 | Manual 3.50 / App V274 | Quedan operativos los siete campos General en una sola arquitectura: El Pulté, Country Club, San Isidro, Mayan Golf, Hacienda Nueva, Alta Vista y La Reunión. Mayan incorpora cinco marcas; Hacienda Nueva, cuatro marcas y matrices distintas para Caballeros/Damas; La Reunión incorpora cuatro marcas y muestra guion cuando la fuente disponible no publica Rating o Slope. La recepción viva conserva cada score válido aun cuando la transcripción final contenga después conversación ajena al vocabulario; cada actividad de voz, delta, transcripción o escritura reinicia el silencio real antes de `Falta NOMBRE`. General y Stableford comparten el mismo cursor, escritor, X explícita, corrección retroactiva, persistencia, render y cierre. |
 | 2026-08-23 | Manual 3.48 / App V272 | Candidato de liberación definitiva bajo el nombre `Golf Score Card GT`. Corregida la interferencia Stableford: `Falta NOMBRE` ya no se programa desde scores parciales ni puede hablar mientras continúa el dictado, existe audio/transcripción pendiente o el motor aplica datos. General y Stableford comparten un único cierre continuo de cuatro segundos y watchdog de diez segundos. Los reportes de primera vuelta, segunda vuelta y total cierran el micrófono antes de hablar y lo mantienen cerrado. Todos los rótulos visuales pasan a `OUT`, `IN` y `TOTAL` en tarjeta oficial, Control Manual, resúmenes, tarjeta digital y artefactos. Se añade prueba V272 de la puerta de inactividad, cancelación por voz/delta, cierre de micrófono, marca y ausencia de rótulos obsoletos. La publicación permanente continúa sujeta a auditoría integral, navegador real, commit local identificado y autorización explícita del destino remoto. |
 | 2026-08-23 | Manual 3.49 / App V273 | San Isidro y Alta Vista quedan cargados desde sus tarjetas oficiales dentro del mismo motor General. San Isidro incorpora seis marcas, incluida Plateada, y conserva su operación Stableford; Alta Vista incorpora cuatro marcas y par 71. La selección de campo actualiza jugadores, marcas, yardajes, rating, slope y tarjeta sin mezclar datos de la ronda activa. |

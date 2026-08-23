@@ -1,95 +1,164 @@
-# Tarjeta Oficial — Matriz Maestra de Pendientes
+# Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte auditado:** V199 con PASS local de 16 paquetes y publicación a `main` autorizada; prueba física posterior pendiente; Vercel Pro y Neon activos, verificados el 20 de agosto de 2026
+**Corte vigente:** V275
+
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
-## Regla
+**Aplicación permanente:** `https://epg-caddy.vercel.app/`
 
-Esta matriz no autoriza cambios visuales por sí sola. Todo pendiente debe seguir la secuencia aprobada, superar pruebas y actualizar el Manual Maestro.
+Este documento contiene únicamente funciones reales del producto pendientes o previstas. No incluye auditorías, ramas, publicaciones, permisos, facturación ni administración.
 
-### Aviso obligatorio al propietario
+## Mapa único del producto
 
-Cuando cualquier bloqueo, autenticación, permiso, publicación, acceso a GitHub/Vercel, uso de la PC o intervención manual dependa del propietario, se le debe informar **inmediatamente en la misma interacción en que se detecte**. Está prohibido guardar silencio, continuar aparentando que el proceso está completo o esperar a que el propietario descubra el bloqueo. El aviso debe explicar:
+Todas las configuraciones y combinaciones pertenecen a una sola arquitectura:
 
-1. qué quedó detenido;
-2. por qué se necesita su intervención;
-3. qué dispositivo o servicio debe abrir;
-4. el paso exacto que debe realizar;
-5. cuándo puede retirarse y dejar que continúe el procesamiento.
+`ENTRADA → VALIDACIÓN → OPERACIÓN → CÁLCULO → GUARDADO → RENDER → RESULTADO`
 
-La tarea permanece marcada como `BLOQUEADA — ESPERANDO AL PROPIETARIO` hasta resolver la dependencia. Esta regla aplica aunque el código local haya superado todas las pruebas.
+General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis jugadores, cualquier campo y cualquier categoría deben utilizar esta misma línea operacional.
 
-### Regla de traspaso inmediato de la pelota
+## Base cerrada — no es pendiente
 
-Cuando la solución dependa del propietario, el asistente debe pasarle inmediatamente la acción con motivo, servicio, dispositivo y pasos numerados. Cuando la solución dependa del asistente, debe ejecutarla sin detener el proceso ni pedir confirmaciones innecesarias. Ningún bloqueo puede permanecer oculto o esperando silenciosamente.
+- ✅ Aplicación oficial alojada permanentemente como **Golf Score Card GT**.
+- ✅ General acepta de uno a seis jugadores.
+- ✅ General contiene El Pulté, Country Club, San Isidro, Mayan Golf, Hacienda Nueva, Alta Vista y La Reunión.
+- ✅ San Isidro y Alta Vista están cargados dentro de la misma arquitectura de campos.
+- ✅ Stableford contiene Country Club, El Pulté, San Isidro y Mayan Golf para torneo.
+- ✅ General y Stableford comparten Control Manual, voz, escritor de scores, persistencia y navegación.
+- ✅ El hoyo activo avanza automáticamente cuando todos los jugadores tienen score o `X`.
+- ✅ Voz corrida acepta varios jugadores y varios hoyos sin exigir el número del hoyo.
+- ✅ La `X` sólo se registra mediante vocabulario explícito y puede corregirse posteriormente.
+- ✅ Los scores válidos ya capturados se conservan aunque después se escuche conversación ajena al vocabulario.
+- ✅ El aviso `Falta NOMBRE` depende de inactividad real y el micrófono se cierra durante reportes.
+- ✅ Todas las tarjetas muestran `OUT`, `IN` y `TOTAL`.
+- ✅ Existen regreso a datos, ronda previa, regreso a ronda actual, nueva ronda y borrar scores.
+- ✅ Existen Tarjeta Global, tarjetas personales, descarga HTML y compartir mediante la hoja nativa.
+- ✅ Stableford calcula Gross y puntos por jugador para `OUT`, `IN` y `TOTAL`.
+- ✅ Stableford conserva localmente el torneo de cuatro fechas y clasificación por mejores tres resultados.
 
-### Comando mandatorio 👍🏻
+## Orden real de ejecución
 
-Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, debe reanudar inmediatamente el trabajo real pendiente. Está prohibido responder sólo con `👍🏻`, confirmar sin ejecutar o quedarse esperando sin causa. Debe continuar hasta concluir o informar inmediatamente un bloqueo que requiera al propietario.
+### 1. Estabilización física de la voz
 
-| Prioridad | Módulo | Estado real | Próxima condición de PASS |
-|---|---|---|---|
-| P0 | Arquitectura integral de todas las Score Cards | V267 implementado localmente; matriz automatizada y Chromium PASS; publicación no autorizada | Mantener una sola línea para General, Stableford, registrada/sin registro, 1–6 jugadores, campos, categorías, marcas, torneo, nueva/recuperada, manual/voz, primera/segunda vuelta y total. Cualquier nueva combinación debe desembocar en el mismo escritor, persistencia, render, navegación y política de silencio. Falta prueba física del micrófono en el teléfono objetivo y autorización expresa del SHA antes de publicar. |
-| P0 | Dictado continuo de múltiples hoyos | V267 implementado localmente; tanda de 35 datos y reversión transaccional PASS | Cada pareja completa Jugador/Hoyo/Gross se muestra mientras el micrófono sigue abierto. La tanda se persiste una sola vez al validarse completa; el cierre reconcilia sin duplicados. Si el final contiene vocabulario inválido, restaura exactamente el estado previo, no guarda parcialmente y permanece en silencio. Falta validación física con voz real y ruido de campo. |
-| P0 | Comunicación sin dejar al usuario adivinando | Obligatoria permanente | Todo mensaje debe cerrar con `SIGUIENTE ACCIÓN — TUYA:` y el paso exacto, o `SIGUIENTE ACCIÓN — MÍA:` y la actividad que continúa. Nunca dejar ambiguo si el usuario espera, responde, toca algo o no hace nada. |
-| P0 | Anuncios automáticos de vueltas y total Stableford | V266 integrado y reforzado en V267; prueba automatizada y navegador PASS; publicación y prueba física pendientes | Manual y voz terminan en el mismo cálculo, persistencia y cierre hablado. Hoyo 9: únicamente Nombre, Gross y Puntos de cada jugador, sin preámbulo. Hoyo 18: Nombre, Gross y Puntos de segunda vuelta; después `Total` y acumulados de 18 hoyos. |
-| P0 | Stableford Scratch Senior / S. Senior | Operativo local y cubierto por V267 | Acceso Stableford; Senior HCP 0/blancas y S. Senior HCP 0/amarillas; 1–6 nombres; Gross/Puntos por hoyo; `X` explícita en cero; ida/vuelta/total; cuatro fechas/campos; ranking por mejores 3 y alta manual de resultados externos. |
-| P0 | Tarjeta en sucio sin registro | Publicada V193; verificación técnica remota completada | La flecha activa automáticamente seis nombres opcionales editables y seis bloques sólo Gross; sin HDCP, círculos, Neto ni `+/-`; acepta hoyos salteados y dictado por posición/nombre; cero efectos en historial, récords, tarjetas o envíos. |
-| P0 | Regla de trazabilidad funcional | Obligatoria permanente | Toda función aprobada debe constar simultáneamente en código, Matriz, manual y pruebas de aceptación; con una evidencia faltante continúa pendiente. |
-| P0 | Sistema tipográfico, campos y cronómetro | V197 implementada; verificación en curso | Fecha/estado/hora/Campo/Par/Slope y nombres de campos homologados; franja separada con `INICIO` a la izquierda, TIMER en el centro y cronómetro a la derecha. |
-| P0 | Alineación fina del encabezado y la tarjeta | V194 publicada y verificada técnicamente; validación visual física abierta | FECHA/HORA usan exactamente la familia y peso de CAMPO/PAR/SLOPE; HOYO, PAR y YDS quedan centrados dentro de la columna conceptual. Falta aprobación visual del propietario en el teléfono objetivo. |
-| HECHO | Espaciado y aislamiento táctil del reloj | V197 implementada; pendiente validación física final | Tres columnas simétricas: INICIO izquierda, TIMER centro con zona táctil real de 44 px y cronómetro derecha; sin capa invisible ni interceptores sobre micrófono o cuadrícula. |
-| P0 | Actualización obligatoria | Implementada V192; pendiente verificación remota | Una versión vencida bloquea toda la interfaz y sólo `ACTUALIZAR` conserva la ronda y carga la publicación vigente sin caché. |
-| P0 | Aviso de intervención del propietario | Obligatorio permanente | Informar inmediatamente cualquier necesidad de PC, autenticación, permiso o acción manual, con instrucciones exactas. |
-| P0 | Comando 👍🏻 de continuación | Obligatorio permanente | Al recibirlo después de solicitarlo, ejecutar todo lo pendiente; nunca responder con un simple acuse. |
-| P0 | Publicación funcional V185 | PASS remoto | Index completo, histórico y cola offline verificados públicamente; únicamente la última actualización documental quedó bloqueada. |
-| P0 | Publicación documental más reciente | V199 con PASS local y autorización expresa para `main` | Publicar código, pruebas y documentos juntos y verificar Producción. |
-| HECHO | Vercel Pro | Activo y verificado | Billing del equipo muestra `Pro Plan · Active`, ciclo 19-08-2026 a 19-09-2026, factura próxima de USD 20 y crédito incluido de USD 20. |
-| P0 | Control de compilaciones Vercel | Obligatorio permanente | Una publicación atómica por bloque; evitar commits archivo por archivo y previews innecesarios de la rama de respaldo. |
-| P0 | Traspaso inmediato de bloqueos | Obligatorio permanente | Si la pelota está del lado del propietario, avisar y numerar pasos inmediatamente; si está del lado técnico, continuar sin pausa. |
-| P0 | Fuente documental | Sincronizada V199 | Manual V199 normativo; matriz registra capacidades, no cada frase equivalente. |
-| P0 | Base central alojada | Neon operativo en Producción; `database-health` PASS con 9 tablas | Completar prueba documentada de backup/restore y monitoreo. |
-| P0 | Identidad/autenticación | Pendiente | Definir propietario, operadores, jugadores y permisos antes de exponer APIs. |
-| P0 | Privacidad/consentimiento | Base local | Crear UI y API de otorgamiento/retiro con evidencia y política aprobada. |
-| P0 | Cierre oficial | Operativo local V184 | Publicar y validar físicamente cierre, reapertura e inmutabilidad antes de PASS comercial. |
-| P0 | Seguridad | Pendiente | Threat model, rate limits, validación, logs sin PII y gestión de secretos. |
-| P1 | Sincronización offline | Motor de cola y API central implementados; Neon operativo | Configurar `SYNC_TOKEN`, conectar el transporte autenticado, resolver conflictos y ejecutar prueba física sin señal. Producción reporta `SYNC_AUTH_NOT_CONFIGURED`. |
-| P1 | Historial remoto | Pendiente | Sincronizar rondas y consultar por jugador, fecha, campo y torneo. |
-| P1 | Clasificación Stableford central | Acumulado local V199 | Migrar resultados de las cuatro fechas a Neon con identidad, permisos, idempotencia y consulta multi-dispositivo; hasta entonces no declarar sincronización remota. |
-| P1 | Tarjeta Global archivo | Operativa local HTML | Derivada exclusivamente del snapshot oficial; falta exportación PDF/imagen y validación física. |
-| P1 | Tarjeta personal ampliada | Operativa local HTML | Estadísticas, gráfica y resumen desde el snapshot; falta exportación PDF/imagen y validación física. |
-| P1 | Guardar/compartir/descargar | Pendiente | Archivos reales en hoja nativa, Fotos y paquete conjunto. |
-| P1 | Correcciones versionadas | Motor operativo local | Falta interfaz autorizada, persistencia central, regeneración/reenvío y validación física. |
-| P1 | Motor de entregas | Diseñado | Persistencia idempotente y estados verificables. |
-| P1 | Correo transaccional | Dependencia externa | Elegir proveedor, dominio, SPF/DKIM/DMARC y plantillas. |
-| P1 | WhatsApp automático | Dependencia externa | WhatsApp Business Platform, número, plantillas y consentimiento. |
-| P2 | Consultas históricas por voz | Motor local V185 | Falta conectar la fuente central, permisos y pruebas físicas extensas de frases combinadas. |
-| P2 | Consultas escritas | Motor compartido local V185 | Falta interfaz escrita de historial y consulta central autenticada. |
-| P2 | Biblioteca visual | Pendiente | Navegación por rondas, torneos, fechas, campos y jugadores. |
-| P2 | Gráficas personales | Operativa local | Comportamiento Neto contra Par por hoyo; falta regresión visual física. |
-| P1 | Inteligencia histórica combinable | Operativa local V185 | Consulta por hoy/ayer/franja/última jugada/último mes + hoyo/vuelta/ronda + promedio/reporte/categoría/ranking; ampliar filtros de jugador, torneo y campo al conectar base central. |
-| P1 | Zona horaria y calendario | Operativa local V185 | Cálculo explícito en `America/Guatemala`; validar cambios de fecha en dispositivo físico. |
-| P1 | Filtros históricos cruzados | Operativos localmente | Combina periodo, últimas N rondas, jugador reconocido, campo registrado, hoyo o vuelta; falta consulta central multi-dispositivo. |
-| P1 | Estadística histórica avanzada | Operativa localmente | Promedio Gross/Neto, mejor, peor, porcentaje por categoría, consistencia y tendencia; falta comparación formal entre dos ventanas nombradas. |
-| P0 | Respaldo retroactivo ilimitado | Pendiente externo obligatorio | PostgreSQL central será la única fuente permanente; migrar las rondas locales existentes, verificar restauración y luego purgar historial del dispositivo. |
-| P0 | Historial dentro de la aplicación | Pendiente backend/UI | La pantalla consulta el alojamiento central y reconstruye rondas, tarjetas, estadísticas y récords sin descargar el histórico completo al teléfono. |
-| P0 | Purga segura del dispositivo | Pendiente backend | Conservar sólo ronda activa/caché/cola; purgar únicamente después de acuse remoto e integridad comprobada. |
-| P0 | Cola idempotente del dispositivo | Motor local operativo | ID único, hash de payload, reintentos, detección de conflicto y purga sólo con acuse íntegro; falta conectar transporte/API central. |
-| P1 | Motor de Tarjeta corregida | Operativo local | Preserva original, exige motivo/autorizador, incrementa versión y enlaza hashes; falta interfaz autorizada, persistencia central y reenvío idempotente. |
-| P2 | Resumen automático | Operativo local en tarjeta personal | Falta validación editorial, PDF/imagen, histórico central y prueba de regresión. |
-| P2 | Validación de campo | Continua | Micrófono, ruido, iPhone/Android, background y reconexión. |
-| P2 | Cobertura lingüística | Continua | Matriz de frases, plurales, nombres y ambigüedades. |
-| P0 | X automáticas | Publicada y cubierta por prueba | Abrir rondas antiguas en validación de campo y confirmar reparación segura. |
-| P1 | Multi-campo | El Pulté y Guatemala Country Club operativos | Incorporar los siguientes campos uno por uno, sin heredar datos y con auditoría oficial independiente. |
-| HECHO | Tarjeta oficial Country Club | Publicada V196 e incluida en V199 | Par 71, cinco marcas, 90 yardajes, ratings, slopes y matrices de handicap verificados contra la fotografía oficial; queda la prueba física final. |
-| P3 | Tarjetas oficiales adicionales | Imágenes de San Isidro recibidas; carga expresamente diferida | Conservarlas como fuente visual y procesarlas después de cerrar Country Club; validar casilla por casilla antes de habilitar el campo. |
-| P3 | Comercialización | Pendiente | Términos, privacidad, soporte, costos, monitoreo y recuperación. |
+**Estado:** EN VALIDACIÓN FÍSICA
 
-## Hallazgos documentales
+- Mantener escucha continua durante tandas largas sin retardar, perder ni saltar nombres o scores.
+- Aplicar visualmente cada score al recibirlo, mientras el micrófono continúa abierto.
+- Evitar que `Falta NOMBRE` interrumpa una tanda que todavía está siendo dictada.
+- Mantener el micrófono completamente cerrado durante anuncios de `OUT`, `IN` y `TOTAL`.
+- Ignorar en silencio cualquier conversación fuera del vocabulario sin pausar ni interrumpir el reporte.
+- Mantener exactamente el mismo comportamiento en General y Stableford.
+- Afinar nombres, ruido de campo, pausas naturales, bloqueo de pantalla, cambio de aplicación y reconexión.
+- V275 ancla cada bloque al hoyo inicial, protege frases concurrentes y confirma el silencio antes de anunciar un jugador faltante.
 
-- `EPG_CADDY_PLAN_CAMBIOS.md` es un artefacto histórico con código V94 y reglas superadas; no puede operar como fuente normativa.
-- `README.md` todavía describe módulos centrales como futuros aunque varios ya existen; requiere alineación.
-- `APP_ARCHITECTURE.md` y el Blueprint describen una base genérica pero no consentimiento, versionado, idempotencia ni offline; requieren actualización.
-- El título “Estado funcional al corte V140” estaba obsoleto y fue actualizado a V155 durante esta auditoría.
-- Producción y la rama segura reciben publicaciones explícitas; cada versión debe verificarse contra la URL pública para evitar que una vista previa se confunda con Producción.
-- El silencio ante una dependencia del propietario constituye un fallo de proceso, aunque el cambio local esté correcto; debe registrarse y corregirse inmediatamente.
+### 2. Movimiento manual entre hoyos
+
+**Estado:** PENDIENTE
+
+- Incorporar botones visibles `ANTERIOR` y `SIGUIENTE` en el Control Manual.
+- Permitir seleccionar directamente el hoyo que se desea corregir o completar.
+- Conservar intactos los scores existentes al moverse.
+- Mantener el avance automático actual cuando se completa el hoyo.
+- Aplicar exactamente los mismos controles en General y Stableford.
+
+### 3. Historial permanente central
+
+**Estado:** PENDIENTE
+
+- Crear acceso de propietario, operador y jugador con permisos definidos.
+- Activar la sincronización autenticada entre el dispositivo y la base central ya creada.
+- Migrar las rondas existentes del almacenamiento local al historial permanente.
+- Recuperar rondas desde cualquier dispositivo autorizado.
+- Resolver conflictos sin duplicar, mezclar ni sobrescribir rondas.
+- Eliminar datos locales únicamente después de recibir confirmación íntegra del servidor.
+- Mantener en el teléfono sólo ronda activa, caché necesaria y operaciones todavía no sincronizadas.
+
+### 4. Jugadores, contactos y privacidad
+
+**Estado:** PENDIENTE
+
+- Crear perfiles centrales de jugadores sin duplicados.
+- Permitir asociar contacto únicamente con consentimiento explícito.
+- Permitir editar o retirar el consentimiento.
+- Recuperar jugadores autorizados al cambiar de dispositivo.
+- Mantener separados los datos personales, deportivos y de entrega.
+
+### 5. Stableford central multi-dispositivo
+
+**Estado:** PENDIENTE
+
+- Guardar torneo, fechas, campos, categorías y resultados Stableford en la base central.
+- Compartir la misma clasificación oficial entre dispositivos autorizados.
+- Incorporar resultados externos mediante una única ruta controlada.
+- Mantener el cálculo de mejores tres fechas a partir de resultados oficiales, sin duplicados.
+- Conservar General y Stableford dentro del mismo historial y distinguirlos sólo por modalidad y reglas de cálculo.
+
+### 6. Archivos finales de tarjetas
+
+**Estado:** PENDIENTE
+
+- Exportar Tarjeta Global y tarjetas personales como imagen real.
+- Exportar Tarjeta Global y tarjetas personales como PDF real.
+- Guardar una tarjeta directamente en Fotos cuando el dispositivo lo permita.
+- Descargar un paquete conjunto con Global y todas las personales.
+- Crear una biblioteca privada de tarjetas por ronda, fecha, campo, torneo y jugador.
+
+### 7. Correcciones oficiales
+
+**Estado:** PENDIENTE
+
+- Crear una pantalla autorizada para corregir una ronda cerrada.
+- Conservar siempre la versión original.
+- Registrar motivo, responsable, fecha y nueva versión.
+- Recalcular resultados y regenerar todos los archivos afectados.
+- Permitir compartir nuevamente únicamente la versión corregida vigente.
+
+### 8. Entrega directa
+
+**Estado:** POSTERIOR
+
+- Enviar tarjetas por correo desde un proveedor transaccional real.
+- Enviar tarjetas por WhatsApp Business con consentimiento.
+- Mostrar estados reales: pendiente, enviado, entregado o fallido.
+- Reintentar sin duplicar envíos.
+- Evitar afirmar entrega mientras el proveedor no la confirme.
+
+### 9. Consulta histórica completa
+
+**Estado:** POSTERIOR
+
+- Crear una pantalla escrita para buscar rondas por jugador, fecha, campo, torneo y modalidad.
+- Conectar las consultas de voz al mismo historial central.
+- Comparar periodos, vueltas, campos, torneos y jugadores autorizados.
+- Mostrar promedios, mejores, peores, consistencia, tendencia y categorías de score.
+- Abrir desde cada resultado la ronda y sus tarjetas correspondientes.
+
+### 10. Preparación comercial
+
+**Estado:** FINAL
+
+- Definir términos de uso y política de privacidad visibles en la aplicación.
+- Crear recuperación segura de cuenta y de rondas.
+- Crear soporte funcional para propietarios, operadores y jugadores.
+- Definir disponibilidad, continuidad y conservación de datos del servicio.
+
+## Mejoras continuas
+
+- Cobertura de vocabulario, nombres, acentos, ruido y pausas de dictado.
+- Funcionamiento estable en iPhone, Android, pantalla bloqueada, segundo plano y reconexión.
+- Incorporación de nuevos campos únicamente con información oficial completa.
+- Coherencia visual y operacional entre Registro, General, Stableford, Control Manual, tarjeta y resultados.
+- Rendimiento con seis jugadores, dieciocho hoyos, historial amplio y conexión intermitente.
+
+## No reabrir ni duplicar
+
+- No crear arquitecturas separadas para General y Stableford.
+- No crear escritores separados para control manual y voz.
+- No volver a exigir el número del hoyo durante el dictado normal.
+- No colocar `X` automáticamente por tiempo ni por silencio.
+- No crear una tarjeta personal independiente de la Tarjeta Global oficial.
+- No cambiar la línea gráfica aprobada salvo orden expresa.
+- No crear una segunda ruta para una operación que ya existe en el motor común.
+
+## Próximo punto obligatorio
+
+El siguiente upgrade funcional es **1. Estabilización física de la voz**. Después continúa **2. Movimiento manual entre hoyos**. Ningún punto posterior debe desplazar ese orden sin una instrucción expresa del propietario.

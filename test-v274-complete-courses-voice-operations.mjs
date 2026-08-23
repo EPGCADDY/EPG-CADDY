@@ -4,9 +4,9 @@ import stableford from "./stableford.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V274-COMPLETE-COURSES-VOICE-OPERATIONS-20260823"/);
-assert.match(html,/V274-SEVEN-COURSES-CONTINUOUS-VOICE-X-CORRECTION-20260823/);
-assert.match(html,/appVersion:"V274"/);
+assert.match(html,/gscg-build" content="V275-STABLE-LIVE-VOICE-TURNS-20260823"/);
+assert.match(html,/V275-LIVE-TURN-ANCHOR-SPEECH-LOCK-20260823/);
+assert.match(html,/appVersion:"V275"/);
 
 const courseStart=html.indexOf("const COURSE_CATALOG=");
 const courseEnd=html.indexOf("let ACTIVE_COURSE_KEY",courseStart);
@@ -51,11 +51,11 @@ assert.match(liveSource,/parseLiveRoundScorePrefix\(text,parseOptions\)/);
 assert.match(liveSource,/preserved:committed\.size>0/);
 assert.doesNotMatch(liveSource,/if\(final&&roundLiveOriginal\.has\(id\)\)\{rollbackLiveRoundItem/);
 
-const roundLiveItemText=new Map(),roundLiveCommitted=new Map([["item-1",new Map([["p1:1","p1:1:gross:5"]])]]),roundLiveOriginal=new Map();
+const roundLiveItemText=new Map(),roundLiveCommitted=new Map([["item-1",new Map([["p1:1","p1:1:gross:5"]])]]),roundLiveOriginal=new Map(),roundLiveOperationalHole=new Map();
 const applyLiveRoundTranscript=new Function(
-  "roundLiveItemText","round","stopMonitorActive","roundLiveCommitted","currentOperationalHole","parseRoundScoreTranscript","parseLiveRoundScorePrefix","liveScoreEntryKey","liveScoreEntryFingerprint","rememberLiveRoundOriginal","roundLiveStaging","applyLiteralScores","rollbackLiveRoundItem","roundLiveClosureQueue","$","phase","listening","persist","render",
+  "roundLiveItemText","round","stopMonitorActive","roundLiveCommitted","roundLiveOperationalHole","currentOperationalHole","parseRoundScoreTranscript","parseLiveRoundScorePrefix","liveScoreEntryKey","liveScoreEntryFingerprint","rememberLiveRoundOriginal","roundLiveStaging","applyLiteralScores","rollbackLiveRoundItem","roundLiveClosureQueue","$","phase","listening","persist","render",
   `${liveSource};return applyLiveRoundTranscript`
-)(roundLiveItemText,{configured:true},false,roundLiveCommitted,()=>1,()=>({ok:false}),()=>({ok:false}),()=>"",()=>"",()=>{},false,()=>({ok:true}),()=>{throw new Error("No debe revertir")},[],()=>({textContent:""}),"listening",true,()=>{},()=>{});
+)(roundLiveItemText,{configured:true},false,roundLiveCommitted,roundLiveOperationalHole,()=>1,()=>({ok:false}),()=>({ok:false}),()=>"",()=>"",()=>{},false,()=>({ok:true}),()=>{throw new Error("No debe revertir")},[],()=>({textContent:""}),"listening",true,()=>{},()=>{});
 const preserved=applyLiveRoundTranscript("item-1","Jaime cinco conversación ajena",{final:true});
 assert.equal(preserved.handled,true);
 assert.equal(preserved.preserved,true);
