@@ -7,7 +7,7 @@
     "@capacitor/core": "8.5.0",
     "@capacitor/ios": "8.5.0",
     "@neondatabase/serverless": "^1.0.2",
-    "@revenuecat/purchases-capacitor": "13.4.1",
+    "@revenuecat/purchases-capacitor": "13.4.0",
     "@revenuecat/purchases-capacitor-ui": "13.4.0"
   },
   "devDependencies": {
