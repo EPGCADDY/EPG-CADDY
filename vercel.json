@@ -36,7 +36,7 @@
       ]
     },
     {
-      "source": "/(player-registry|round-closure|card-artifacts|card-file-export|card-library|historical-analytics|stableford|sync-queue|master-data-sync|round-navigation).js",
+      "source": "/(player-registry|round-closure|card-artifacts|card-file-export|card-library|historical-analytics|stableford|sync-queue|master-data-sync|account-backup|commerce|round-navigation).js",
       "headers": [
         {
           "key": "Cache-Control",

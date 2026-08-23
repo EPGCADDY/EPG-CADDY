@@ -36,9 +36,9 @@ export function authCookies(response){
   return combined?combined.split(/,(?=\s*[^;,=]+=[^;,]+)/g):[];
 }
 
-export function sameOriginAuthCookie(value){
+export function sameOriginAuthCookie(value,{native=false}={}){
   const parts=String(value||"").split(";").map(part=>part.trim()).filter(Boolean);
   if(!parts.length)return"";
   const retained=parts.slice(1).filter(part=>!/^(domain|path|samesite)=/i.test(part)&&!/^secure$/i.test(part)&&!/^httponly$/i.test(part));
-  return[parts[0],...retained,"Path=/","HttpOnly","Secure","SameSite=Lax"].join("; ");
+  return[parts[0],...retained,"Path=/","HttpOnly","Secure",`SameSite=${native?"None":"Lax"}`].join("; ");
 }

@@ -1,0 +1,6 @@
+node_modules/
+mobile-www/
+native/
+assets/logo.png
+.DS_Store
+npm-debug.log*

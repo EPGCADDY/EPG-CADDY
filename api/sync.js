@@ -1,10 +1,12 @@
 import { getDatabase } from "./_lib/database.js";
 import { requireAccountSession } from "./_lib/account-auth.js";
+import { handleAppPreflight } from "./_lib/cors.js";
 import { noStore, readJson } from "./_lib/http.js";
 import { validateMutation } from "./_lib/sync-validation.js";
 
 export default async function handler(req, res) {
   noStore(res);
+  if(handleAppPreflight(req,res))return;
   if (req.method !== "POST") { res.setHeader("Allow", "POST"); return res.status(405).json({ ok: false, code: "METHOD_NOT_ALLOWED" }); }
   try {
     const account = await requireAccountSession(req);

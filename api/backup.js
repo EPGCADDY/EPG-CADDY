@@ -1,5 +1,6 @@
 import { getDatabase } from "./_lib/database.js";
 import { requireAccountSession } from "./_lib/account-auth.js";
+import { handleAppPreflight } from "./_lib/cors.js";
 import { noStore } from "./_lib/http.js";
 
 function mergeProfiles(rows){
@@ -15,6 +16,7 @@ function mergeProfiles(rows){
 
 export default async function handler(req,res){
   noStore(res);
+  if(handleAppPreflight(req,res))return;
   if(req.method!=="GET"){res.setHeader("Allow","GET");return res.status(405).json({ok:false,code:"METHOD_NOT_ALLOWED"})}
   try{
     const account=await requireAccountSession(req),sql=getDatabase();

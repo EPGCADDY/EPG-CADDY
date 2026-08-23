@@ -8,7 +8,7 @@ const authLib=fs.readFileSync(new URL("./api/_lib/account-auth.js",import.meta.u
 const syncApi=fs.readFileSync(new URL("./api/sync.js",import.meta.url),"utf8");
 const backupApi=fs.readFileSync(new URL("./api/backup.js",import.meta.url),"utf8");
 
-assert.match(html,/V282-OPTIONAL-ACCOUNT-CENTRAL-BACKUP-20260823/);
+assert.match(html,/V282-NEON-AUTH-BACKUP-RECOVERY-20260823/);
 for(const id of ["accountBackupButton","accountBackupOverlay","accountName","accountEmail","accountPassword","accountSignUp","accountSignIn","accountBackupNow","accountRestoreNow","accountSignOut"])assert.match(html,new RegExp(`id="${id}"`));
 assert.match(html,/window\.GSC_ACCOUNT_SIGNED_IN=false/);
 assert.match(html,/window\.GSC_ACCOUNT_SIGNED_IN!==true/);
@@ -17,7 +17,7 @@ assert.match(html,/GSCAccountBackup\.recover\(\)/);
 assert.match(accountApi,/\/sign-up\/email/);
 assert.match(accountApi,/\/sign-in\/email/);
 assert.match(authLib,/HttpOnly/);
-assert.match(authLib,/SameSite=Lax/);
+assert.match(authLib,/SameSite=.*Lax/);
 assert.match(syncApi,/requireAccountSession/);
 assert.match(syncApi,/authUserId/);
 assert.doesNotMatch(syncApi,/requireSyncToken/);

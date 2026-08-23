@@ -1,9 +1,10 @@
-(function(root,factory){const api=factory();if(typeof module==="object"&&module.exports)module.exports=api;if(root)root.GSCAccountBackup=api})(typeof globalThis!=="undefined"?globalThis:this,function(){
+(function(root,factory){const api=factory(root);if(typeof module==="object"&&module.exports)module.exports=api;if(root)root.GSCAccountBackup=api})(typeof globalThis!=="undefined"?globalThis:this,function(root){
   "use strict";
 
+  function apiUrl(path){const origin=String(root?.GSC_API_ORIGIN||"").replace(/\/$/,"");return`${origin}${path}`}
   async function jsonRequest(url,options={}){
     let response;
-    try{response=await fetch(url,{credentials:"same-origin",cache:"no-store",...options})}
+    try{response=await fetch(apiUrl(url),{credentials:"include",cache:"no-store",...options})}
     catch{return{ok:false,code:"NETWORK_ERROR"}}
     const body=await response.json().catch(()=>({ok:false,code:`HTTP_${response.status}`}));
     return{...body,ok:response.ok&&body?.ok!==false,status:response.status};

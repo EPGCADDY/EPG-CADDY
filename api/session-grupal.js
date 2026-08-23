@@ -1,3 +1,5 @@
+import { handleAppPreflight } from "./_lib/cors.js";
+
 async function readRawBody(req) {
   if (typeof req.body === "string") return req.body;
   if (Buffer.isBuffer(req.body)) return req.body.toString("utf8");
@@ -17,6 +19,7 @@ function roundTranscriptionPrompt(players) {
 }
 
 export default async function handler(req, res) {
+  if(handleAppPreflight(req,res))return;
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Usa POST." });
@@ -101,9 +104,7 @@ export default async function handler(req, res) {
     if (!openai.ok) {
       console.error("OpenAI Realtime grupal error", openai.status);
       res.setHeader("Cache-Control", "no-store");
-      return res.status(openai.status).json({
-        error: "OpenAI no pudo crear la sesión grupal."
-      });
+      return res.status(openai.status).json({ error: "OpenAI no pudo crear la sesión grupal." });
     }
 
     res.setHeader("Content-Type", "application/sdp");
@@ -112,8 +113,6 @@ export default async function handler(req, res) {
   } catch (error) {
     console.error("session-grupal.js error");
     res.setHeader("Cache-Control", "no-store");
-    return res.status(500).json({
-      error: "No se pudo iniciar la sesión grupal."
-    });
+    return res.status(500).json({ error: "No se pudo iniciar la sesión grupal." });
   }
 }
