@@ -856,6 +856,7 @@ function readStoredRound(key){
 }
 function latestStoredRound(modeHint){
   const primary=readStoredRound(STORAGE_KEY),backup=readStoredRound(STORAGE_BACKUP_KEY),stableford=readStoredRound(STABLEFORD_ACTIVE_KEY);
+  if(modeHint==="stableford"&&stableford&&!stableford.configured)return null;
   const timestamp=value=>new Date(value?.updatedAt||value?.createdAt||0).getTime()||0;
   const mode=value=>value?.mode==="stableford"?"stableford":"general";
   const active=[primary,backup,stableford].filter(value=>value?.configured&&mode(value)===modeHint).sort((a,b)=>timestamp(b)-timestamp(a))[0];
@@ -2578,8 +2579,9 @@ function selectStablefordSetupCategory(category){
 }
 function openFreshStablefordSetup(){
   if(round.configured)persist();
-  try{localStorage.removeItem(STABLEFORD_ACTIVE_KEY)}catch{}
-  round=blankRound();resetStablefordSetupFields();render();return showStablefordSetup()
+  round={...blankRound(),mode:"stableford"};
+  try{localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round))}catch{}
+  resetStablefordSetupFields();render();return showStablefordSetup()
 }
 function openStablefordDataEditor(){
   if(!isStablefordRound())return openNewRoundDraft();
