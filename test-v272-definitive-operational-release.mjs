@@ -8,10 +8,10 @@ const individual=fs.readFileSync(new URL("./index.html",import.meta.url),"utf8")
 const hosting=JSON.parse(fs.readFileSync(new URL("./vercel.json",import.meta.url),"utf8"));
 
 assert.match(html,/<title>Golf Score Card GT<\/title>/);
-assert.match(html,/gscg-build" content="V277-OFFICIAL-ROUND-CORRECTIONS-20260823"/);
-assert.match(html,/appVersion:"V277"/);
+assert.match(html,/gscg-build" content="V278-CARD-IMAGE-PDF-EXPORT-20260823"/);
+assert.match(html,/appVersion:"V278"/);
 assert.match(html,/V272-QUIET-MISSING-PROMPT-CLOSED-REPORTS-OUT-IN-20260823/);
-assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=277"/);
+assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=278"/);
 assert.doesNotMatch(html,/epg-caddy-git-stableford-tournament-final/);
 assert.match(stableford,/GOLF SCORE CARD GT · STABLEFORD/);
 for(const source of ["/","/index.html","/stableford-torneo.html"]){

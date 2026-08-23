@@ -4,9 +4,9 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V277
+**Versión documentada:** V278
 **Fecha de corte:** 23 de agosto de 2026
-**Ramas operativas:** `main` (Producción vigente) y `v277-official-round-corrections`
+**Ramas operativas:** `main` (Producción vigente) y `v278-card-image-pdf-export`
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
 **Responsable de implementación y control:** Partner / ChatGPT
@@ -1288,6 +1288,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-23 | Manual 3.55 / App V278 | Las tarjetas oficiales Global y personales de General y Stableford se exportan desde el mismo snapshot oficial como imagen PNG y PDF real. `IMAGEN GLOBAL` e `IMAGEN PERSONAL` abren la hoja nativa del teléfono para compartir o seleccionar `Guardar imagen`; si el dispositivo no permite compartir archivos, descargan el PNG. `PDF GLOBAL` y `PDF PERSONAL` descargan el archivo individual y `PDF TODAS` crea un documento multipágina con la Global y todas las personales. Una corrección oficial genera los archivos desde la versión vigente sin alterar ni borrar el original. |
 | 2026-08-23 | Manual 3.54 / App V277 | Incorporada la pantalla única de `CORRECCIÓN OFICIAL` para General y Stableford. Exige jugador, hoyo, nuevo Gross, motivo y responsable; recalcula todos los datos derivados de la modalidad, genera una versión oficial nueva con SHA-256 propio y conserva la tarjeta original disponible mediante `ABRIR ORIGINAL`. La tarjeta corregida queda identificada por versión, reemplaza únicamente el resultado vigente y conserva íntegra la secuencia de versiones anteriores. |
 | 2026-08-23 | Manual 3.53 / App V276 | El Control Manual común de General y Stableford incorpora `ANTERIOR`, selector directo de hoyo y `SIGUIENTE`. Los límites 1 y 18 se deshabilitan correctamente y una ronda cerrada bloquea toda navegación de captura. Moverse conserva todos los scores ya guardados; si existe una edición aún no confirmada, la aplicación mantiene el hoyo actual y exige `PRESIONA ENTER ANTES DE CAMBIAR DE HOYO`, evitando pérdida o escritura accidental. El avance automático al completar todos los jugadores permanece intacto y las entradas manual y de voz continúan utilizando el mismo escritor operacional. |
 | 2026-08-23 | Manual 3.52 / App V275 | Estabilizada la recepción viva común de General y Stableford. Cada ítem de audio conserva el hoyo operativo donde comenzó, por lo que el avance visual al hoyo siguiente no puede reinterpretar los deltas anteriores. La actividad de voz se controla por ítem concurrente: una transcripción atrasada ya no apaga el estado de una frase posterior todavía activa. `Falta NOMBRE` mantiene dos segundos de inactividad mínima y añade una confirmación breve que se cancela ante cualquier audio, delta o transcripción nueva. El VAD de ronda amplía el prefijo a 700 ms, reduce el umbral a 0.2 y exige 1,200 ms de silencio antes de cortar una frase, conservando el render inmediato de cada pareja válida. |

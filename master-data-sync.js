@@ -6,7 +6,7 @@
   "use strict";
 
   const SCHEMA_VERSION=1;
-  const APP_VERSION="V277";
+  const APP_VERSION="V278";
 
   function text(value){return String(value??"").trim()}
   function integer(value,fallback=null){const n=Number(value);return Number.isInteger(n)?n:fallback}

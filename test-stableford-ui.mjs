@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const stable=fs.readFileSync(new URL("./stableford.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V277-OFFICIAL-ROUND-CORRECTIONS-20260823"/);
+assert.match(html,/gscg-build" content="V278-CARD-IMAGE-PDF-EXPORT-20260823"/);
 for(const id of [
   "stablefordSetupOverlay","stablefordResultOverlay","stablefordSeriesSection",
   "stablefordSeniorTab","stablefordSuperSeniorTab","openStablefordResult"
@@ -12,7 +12,7 @@ for(const id of [
 
 assert.match(html,/data-stableford-category="senior">SENIOR · BLANCAS/);
 assert.match(html,/data-stableford-category="super_senior">SÚPER SENIOR · AMARILLAS/);
-assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=277"/);
+assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=278"/);
 assert.match(html,/id="stableCourseOption" href="\$\{STABLEFORD_OFFICIAL_HOSTING_URL\}"[^>]*>[\s\S]*?<span>STABLEFORD<\/span>/);
 assert.doesNotMatch(html,/closest\("#stableCourseOption"\)[\s\S]{0,180}openFreshStablefordSetup/);
 assert.match(html,/\$\("courseOptions"\)\.innerHTML=Object\.entries\(COURSE_CATALOG\)[\s\S]*?\.join\(""\);\$\("stablefordModeOption"\)\.innerHTML=stableOption/);

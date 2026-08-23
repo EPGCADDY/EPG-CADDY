@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V277
+**Corte vigente:** V278
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -32,7 +32,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - ✅ El aviso `Falta NOMBRE` depende de inactividad real y el micrófono se cierra durante reportes.
 - ✅ Todas las tarjetas muestran `OUT`, `IN` y `TOTAL`.
 - ✅ Existen regreso a datos, ronda previa, regreso a ronda actual, nueva ronda y borrar scores.
-- ✅ Existen Tarjeta Global, tarjetas personales, descarga HTML y compartir mediante la hoja nativa.
+- ✅ Existen Tarjeta Global y tarjetas personales con exportación PNG, PDF individual, PDF conjunto y hoja nativa para guardar o compartir.
 - ✅ Stableford calcula Gross y puntos por jugador para `OUT`, `IN` y `TOTAL`.
 - ✅ Stableford conserva localmente el torneo de cuatro fechas y clasificación por mejores tres resultados.
 - ✅ Una ronda cerrada puede corregirse mediante versión oficial nueva, conservando original, motivo, responsable, fecha, SHA-256 y recálculo General/Stableford.
@@ -97,12 +97,12 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 6. Archivos finales de tarjetas
 
-**Estado:** PENDIENTE
+**Estado:** EN PROGRESO · ARCHIVOS SOLVENTADOS V278
 
-- Exportar Tarjeta Global y tarjetas personales como imagen real.
-- Exportar Tarjeta Global y tarjetas personales como PDF real.
-- Guardar una tarjeta directamente en Fotos cuando el dispositivo lo permita.
-- Descargar un paquete conjunto con Global y todas las personales.
+- ✅ Exportar Tarjeta Global y tarjetas personales como imagen PNG real.
+- ✅ Exportar Tarjeta Global y tarjetas personales como PDF real.
+- ✅ Entregar la imagen a la hoja nativa para seleccionar `Guardar imagen` cuando el dispositivo lo permita.
+- ✅ Descargar un PDF conjunto multipágina con Global y todas las personales.
 - Crear una biblioteca privada de tarjetas por ronda, fecha, campo, torneo y jugador.
 
 ### 7. Correcciones oficiales

@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V277-OFFICIAL-ROUND-CORRECTIONS-20260823/);
+assert.match(html,/V278-CARD-IMAGE-PDF-EXPORT-20260823/);
 assert.match(html,/<h1 id="stablefordSetupTitle">RONDA STABLEFORD<\/h1>/);
 assert.doesNotMatch(html,/NUEVA RONDA STABLEFORD|DATOS DE RONDA STABLEFORD/);
 assert.match(html,/<select class="course-select" id="stablefordSetupCourse"[^>]*aria-hidden="true"[^>]*tabindex="-1"[^>]*>/);

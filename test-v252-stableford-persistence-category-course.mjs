@@ -4,7 +4,7 @@ import stableford from "./stableford.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V277-OFFICIAL-ROUND-CORRECTIONS-20260823/);
+assert.match(html,/V278-CARD-IMAGE-PDF-EXPORT-20260823/);
 assert.doesNotMatch(html,/sfEmergencyClean/);
 assert.doesNotMatch(html,/round\.players=\["Jaime","Junior","Fito","Henry"\]/);
 assert.match(html,/let stablefordSetupCategory=null,stablefordSetupCourseKey=null/);

@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V277-OFFICIAL-ROUND-CORRECTIONS-20260823/);
+assert.match(html,/V278-CARD-IMAGE-PDF-EXPORT-20260823/);
 
 // El nombre aprobado reemplaza completamente los títulos anteriores en la interfaz.
 assert.match(html,/id="roundManualTitle"[^>]*>CONTROL MANUAL · \$\{stable\?"STABLEFORD":"GENERAL"\}/);
