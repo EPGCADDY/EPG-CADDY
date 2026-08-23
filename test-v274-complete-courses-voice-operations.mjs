@@ -4,9 +4,9 @@ import stableford from "./stableford.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V275-STABLE-LIVE-VOICE-TURNS-20260823"/);
+assert.match(html,/gscg-build" content="V276-MANUAL-HOLE-NAVIGATION-20260823"/);
 assert.match(html,/V275-LIVE-TURN-ANCHOR-SPEECH-LOCK-20260823/);
-assert.match(html,/appVersion:"V275"/);
+assert.match(html,/appVersion:"V276"/);
 
 const courseStart=html.indexOf("const COURSE_CATALOG=");
 const courseEnd=html.indexOf("let ACTIVE_COURSE_KEY",courseStart);

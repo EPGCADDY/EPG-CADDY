@@ -4,9 +4,9 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V275
+**Versión documentada:** V276
 **Fecha de corte:** 23 de agosto de 2026
-**Ramas operativas:** `main` (Producción vigente) y `v274-complete-courses-voice-operations`
+**Ramas operativas:** `main` (Producción vigente) y `v276-manual-hole-navigation`
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
 **Responsable de implementación y control:** Partner / ChatGPT
@@ -1288,6 +1288,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-23 | Manual 3.53 / App V276 | El Control Manual común de General y Stableford incorpora `ANTERIOR`, selector directo de hoyo y `SIGUIENTE`. Los límites 1 y 18 se deshabilitan correctamente y una ronda cerrada bloquea toda navegación de captura. Moverse conserva todos los scores ya guardados; si existe una edición aún no confirmada, la aplicación mantiene el hoyo actual y exige `PRESIONA ENTER ANTES DE CAMBIAR DE HOYO`, evitando pérdida o escritura accidental. El avance automático al completar todos los jugadores permanece intacto y las entradas manual y de voz continúan utilizando el mismo escritor operacional. |
 | 2026-08-23 | Manual 3.52 / App V275 | Estabilizada la recepción viva común de General y Stableford. Cada ítem de audio conserva el hoyo operativo donde comenzó, por lo que el avance visual al hoyo siguiente no puede reinterpretar los deltas anteriores. La actividad de voz se controla por ítem concurrente: una transcripción atrasada ya no apaga el estado de una frase posterior todavía activa. `Falta NOMBRE` mantiene dos segundos de inactividad mínima y añade una confirmación breve que se cancela ante cualquier audio, delta o transcripción nueva. El VAD de ronda amplía el prefijo a 700 ms, reduce el umbral a 0.2 y exige 1,200 ms de silencio antes de cortar una frase, conservando el render inmediato de cada pareja válida. |
 | 2026-08-23 | Manual 3.51 / App V274 | Incorporadas literalmente las reglas 23 y 24 de comunicación: ningún mensaje puede terminar sin indicar quién tiene la siguiente acción; si el turno finaliza, queda prohibido simular trabajo silencioso posterior. El cierre debe pedir una acción exacta al propietario o declarar que no necesita hacer nada y explicar qué mensaje permite retomar. |
 | 2026-08-23 | Manual 3.50 / App V274 | Quedan operativos los siete campos General en una sola arquitectura: El Pulté, Country Club, San Isidro, Mayan Golf, Hacienda Nueva, Alta Vista y La Reunión. Mayan incorpora cinco marcas; Hacienda Nueva, cuatro marcas y matrices distintas para Caballeros/Damas; La Reunión incorpora cuatro marcas y muestra guion cuando la fuente disponible no publica Rating o Slope. La recepción viva conserva cada score válido aun cuando la transcripción final contenga después conversación ajena al vocabulario; cada actividad de voz, delta, transcripción o escritura reinicia el silencio real antes de `Falta NOMBRE`. General y Stableford comparten el mismo cursor, escritor, X explícita, corrección retroactiva, persistencia, render y cierre. |

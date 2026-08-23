@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V275-STABLE-LIVE-VOICE-TURNS-20260823/);
+assert.match(html,/V276-MANUAL-HOLE-NAVIGATION-20260823/);
 
 // El nombre aprobado reemplaza completamente los títulos anteriores en la interfaz.
 assert.match(html,/id="roundManualTitle"[^>]*>CONTROL MANUAL · \$\{stable\?"STABLEFORD":"GENERAL"\}/);

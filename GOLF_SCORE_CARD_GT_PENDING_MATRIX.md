@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V275
+**Corte vigente:** V276
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -25,6 +25,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - ✅ Stableford contiene Country Club, El Pulté, San Isidro y Mayan Golf para torneo.
 - ✅ General y Stableford comparten Control Manual, voz, escritor de scores, persistencia y navegación.
 - ✅ El hoyo activo avanza automáticamente cuando todos los jugadores tienen score o `X`.
+- ✅ El Control Manual común contiene `ANTERIOR`, selección directa de hoyo y `SIGUIENTE`, sin perder scores guardados ni omitir el `ENTER` de una edición pendiente.
 - ✅ Voz corrida acepta varios jugadores y varios hoyos sin exigir el número del hoyo.
 - ✅ La `X` sólo se registra mediante vocabulario explícito y puede corregirse posteriormente.
 - ✅ Los scores válidos ya capturados se conservan aunque después se escuche conversación ajena al vocabulario.
@@ -52,13 +53,14 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 2. Movimiento manual entre hoyos
 
-**Estado:** PENDIENTE
+**Estado:** SOLVENTADO V276
 
-- Incorporar botones visibles `ANTERIOR` y `SIGUIENTE` en el Control Manual.
-- Permitir seleccionar directamente el hoyo que se desea corregir o completar.
-- Conservar intactos los scores existentes al moverse.
-- Mantener el avance automático actual cuando se completa el hoyo.
-- Aplicar exactamente los mismos controles en General y Stableford.
+- ✅ Botones visibles `ANTERIOR` y `SIGUIENTE` en el Control Manual.
+- ✅ Selección directa del hoyo que se desea corregir o completar.
+- ✅ Conservación intacta de scores existentes al moverse.
+- ✅ Bloqueo de navegación cuando existe una edición pendiente de `ENTER`.
+- ✅ Avance automático cuando se completa el hoyo.
+- ✅ Controles idénticos en General y Stableford.
 
 ### 3. Historial permanente central
 
@@ -161,4 +163,4 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ## Próximo punto obligatorio
 
-El siguiente upgrade funcional es **1. Estabilización física de la voz**. Después continúa **2. Movimiento manual entre hoyos**. Ningún punto posterior debe desplazar ese orden sin una instrucción expresa del propietario.
+La **1. Estabilización física de la voz** permanece en validación de campo. El siguiente bloque funcional no resuelto es **3. Historial permanente central**. Ningún punto posterior debe duplicar motores ni separar General, Stableford, manual y voz.
