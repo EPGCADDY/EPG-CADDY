@@ -40,14 +40,17 @@ if(missing.length)throw new Error(`MOBILE_PACKAGE_INCOMPLETE ${missing.join(",")
 
 const html=await fsp.readFile(path.join(root,"mobile-www/index.html"),"utf8");
 const build=html.match(/<meta name="gscg-build" content="([^"]+)"/)?.[1]||"unknown";
+const release=JSON.parse(await fsp.readFile(path.join(root,"mobile-release.json"),"utf8"));
 const readiness={
   appId:"com.epgcaddy.app",
   appName:"Golf Score Card GT",
   build,
+  versionName:release.versionName,
+  buildNumber:release.buildNumber,
   generatedAt:new Date().toISOString(),
   platforms:["ios","android"],
   monetization:"revenuecat-ready",
   signing:"pending-store-accounts"
 };
 await fsp.writeFile(path.join(root,"mobile-www/native-readiness.json"),`${JSON.stringify(readiness,null,2)}\n`);
-console.log(`MOBILE_NATIVE_PACKAGE_READY build=${build} ios=true android=true monetization=revenuecat-ready`);
+console.log(`MOBILE_NATIVE_PACKAGE_READY build=${build} version=${release.versionName} number=${release.buildNumber} ios=true android=true monetization=revenuecat-ready`);

@@ -3,6 +3,7 @@ name: Mobile native package
 on:
   push:
     branches:
+      - main
       - v284-native-packages-ready
   workflow_dispatch:
 
@@ -28,10 +29,22 @@ jobs:
       - name: Validate native package contract
         run: node test-v284-native-package-generation.mjs
 
+      - name: Compile unsigned Android App Bundle
+        working-directory: native/android
+        run: ./gradlew bundleRelease
+
+      - name: Compile unsigned iOS application
+        run: |
+          if [ -d native/ios/App/App.xcworkspace ]; then
+            xcodebuild -workspace native/ios/App/App.xcworkspace -scheme App -sdk iphonesimulator -configuration Release -derivedDataPath native/build/ios CODE_SIGNING_ALLOWED=NO build
+          else
+            xcodebuild -project native/ios/App/App.xcodeproj -scheme App -sdk iphonesimulator -configuration Release -derivedDataPath native/build/ios CODE_SIGNING_ALLOWED=NO build
+          fi
+
       - name: Preserve unsigned native source package
         uses: actions/upload-artifact@v4
         with:
-          name: golf-score-card-gt-v284-native-unsigned
+          name: golf-score-card-gt-native-unsigned
           if-no-files-found: error
           retention-days: 90
           path: |
@@ -39,4 +52,5 @@ jobs:
             native/android
             mobile-www
             capacitor.config.json
+            mobile-release.json
             package.json
