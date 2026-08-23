@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+
+const html=fs.readFileSync("index-grupal.html","utf8");
+
+assert.match(html,/<button class="nr-button secondary" type="button" id="backStablefordSetup">ATRÁS<\/button>/);
+assert.doesNotMatch(html,/<button[^>]*id="backStablefordSetup"[^>]*\bhidden\b/);
+assert.match(html,/function backFromStablefordSetup\(\)[\s\S]*?stablefordSetupOverlay[\s\S]*?classList\.remove\("visible"\)[\s\S]*?showStep1\(\)[\s\S]*?setupOverlay[\s\S]*?classList\.add\("visible"\)/);
+assert.match(html,/\$\("backStablefordSetup"\)\.addEventListener\("click",backFromStablefordSetup\)/);
+assert.match(html,/V285-STABLEFORD-BACK-NAVIGATION-20260823/);
+
+console.log("PASS V285 · ATRÁS vuelve de Stableford a la pantalla principal");
