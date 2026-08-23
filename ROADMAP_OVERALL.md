@@ -35,7 +35,7 @@ Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sólo perm
 ## Organización actual
 
 - Archivos activos antes de agregar la colección visual: **160**.
-- Archivos activos con la colección visual detallada: **173**.
+- Archivos activos con ROADMAP A DETALLE: **183**.
 - Archivos históricos retirados del uso diario: **89**.
 - Procesos automáticos actuales conservados: **4**.
 - Ramas GitHub inventariadas: **80**.
@@ -57,6 +57,7 @@ Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sólo perm
 
 ## Mapas detallados
 
+- [ROADMAP A DETALLE · Directorio visual en nueve páginas](ROADMAP_A_DETALLE.md)
 - [Mapa de todos los archivos](CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md)
 - [Mapa de GitHub, Vercel, Apple, Android y datos](CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_INFRAESTRUCTURA.md)
 - [Inventario de publicaciones Vercel](CONTROL_PROYECTO_SCIRE/INVENTARIO_DESPLIEGUES_VERCEL.md)
@@ -78,6 +79,37 @@ Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sólo perm
 - [08B · Vercel · publicaciones 546 a 622](ROADMAP_IMAGES/08_VERCEL_04_B_COMPLETO.png)
 - [Índice de la colección visual](ROADMAP_IMAGES/README.md)
 
+## Punto de corte del directorio
+
+- Punto de activación original: **línea 183**.
+- Registro vigente después de instalar el candado: **línea 185**.
+- Activación de seguimiento obligatorio: **23 de agosto de 2026, 17:05:00, hora de Guatemala**.
+- Desde este punto, cualquier creación, modificación, cambio de nombre, movimiento o eliminación se registra directamente y dentro de la misma versión en **ROADMAP OVERALL** y **ROADMAP A DETALLE**.
+
+## Registro obligatorio V294 · Candado técnico
+
+| Archivo o modificación | Qué quedó registrado |
+|---|---|
+| `.github/workflows/ios-build.yml` | La construcción de iPhone exige primero ambos ROADMAPS. |
+| `.github/workflows/ios-testflight.yml` | La preparación para TestFlight exige primero ambos ROADMAPS. |
+| `.github/workflows/mobile-native-package.yml` | El paquete Apple/Android se bloquea si los ROADMAPS están incompletos. |
+| `.github/workflows/roadmap-gate.yml` | Nuevo control automático obligatorio en GitHub. |
+| `.github/workflows/stableford-tournament-pass.yml` | Las pruebas de Stableford exigen primero ambos ROADMAPS. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | Norma permanente, línea de corte y hora de activación. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Códigos y archivos del directorio actualizados. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_01.png` | Página visual 1 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_02.png` | Página visual 2 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_03.png` | Página visual 3 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_04.png` | Página visual 4 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_05.png` | Página visual 5 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_06.png` | Página visual 6 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_07.png` | Página visual 7 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_08.png` | Página visual 8 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_09.png` | Página visual 9 de 9. |
+| `audit-project.mjs` | La auditoría maestra ejecuta primero el candado. |
+| `package.json` | Agrega el comando `roadmap:gate`. |
+| `scripts/roadmap-gate.mjs` | Comprueba que cada cambio aparezca en ambos ROADMAPS. |
+
 ## Regla permanente
 
 1. Todo nombre visible será **Golf Score Card GT**.
@@ -85,3 +117,5 @@ Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sólo perm
 3. Cada archivo nuevo se registra en el mapa maestro.
 4. Cada publicación oficial se comprueba en GitHub y Vercel.
 5. Nunca se guardan contraseñas, correos personales o llaves privadas dentro de estos mapas.
+6. Cada carpeta, archivo o modificación se agrega automáticamente, en la misma versión, a **ROADMAP OVERALL** y **ROADMAP A DETALLE**.
+7. Ninguna versión se cierra ni se publica si falta ese registro doble.

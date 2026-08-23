@@ -9,6 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Block Stableford tests when ROADMAPS are incomplete
+        env:
+          ROADMAP_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          ROADMAP_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/roadmap-gate.mjs "$ROADMAP_BASE_SHA" "$ROADMAP_HEAD_SHA"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

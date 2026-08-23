@@ -1,4 +1,4 @@
-name: Golf Score Card GT · Mobile native package
+name: Mobile native package
 
 on:
   push:
@@ -17,6 +17,14 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Block package when ROADMAPS are incomplete
+        env:
+          ROADMAP_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          ROADMAP_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/roadmap-gate.mjs "$ROADMAP_BASE_SHA" "$ROADMAP_HEAD_SHA"
 
       - name: Use Node.js
         uses: actions/setup-node@v4

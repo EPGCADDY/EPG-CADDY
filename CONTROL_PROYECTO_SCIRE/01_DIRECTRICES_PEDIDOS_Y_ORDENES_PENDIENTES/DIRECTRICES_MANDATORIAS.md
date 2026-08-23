@@ -14,6 +14,19 @@
 - Regla de comunicación 23: ningún mensaje puede terminar en el aire ni dejar al propietario adivinando si espera, responde, toca algo o si el trabajo terminó.
 - Regla de comunicación 24: todo mensaje termina con una de dos asignaciones inequívocas: `SIGUIENTE ACCIÓN — TUYA:` seguida del paso exacto requerido, o `SIGUIENTE ACCIÓN — MÍA:` seguida del trabajo que continuará. Si la acción es del asistente, el propietario no debe tocar ni responder nada.
 
+## Norma permanente y estricta de ROADMAPS
+
+1. Punto de activación oficial: directorio registrado hasta la **línea 183**.
+2. Punto de corte vigente después de instalar el candado técnico: **línea 185**.
+3. Activación oficial: **23 de agosto de 2026, 17:05:00, hora de Guatemala**.
+4. Desde ese instante, cada creación, modificación, cambio de nombre, movimiento o eliminación de una carpeta o archivo debe agregarse **automáticamente y dentro de la misma versión** a `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+5. El registro debe incluir nombre o ruta exacta, ID o código cuando exista y una explicación básica y fácil de entender.
+6. Si se crea una carpeta, se registra la carpeta y también cada archivo que contenga.
+7. `scripts/roadmap-gate.mjs` y `.github/workflows/roadmap-gate.yml` ejecutan el candado técnico. Si falta el registro doble, el resultado obligatorio es `FAIL ROADMAP GATE`.
+8. La auditoría maestra, la construcción de iPhone, la preparación para TestFlight, el paquete Apple/Android y las pruebas principales de Stableford deben ejecutar este candado antes de continuar.
+9. Ninguna versión puede declararse terminada, publicarse ni cerrarse si la modificación no aparece en ambos ROADMAPS.
+10. Esta norma es mandatoria, automática y permanente; no requiere que el propietario la repita en futuras conversaciones.
+
 ## Secuencia vigente
 
 1. Cerrar visual y funcionalmente las tarjetas General y Stableford.

@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos con la colección visual detallada: **173**.
+Archivos activos con candado técnico de ROADMAPS: **185**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -10,15 +10,16 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 
 | Ruta exacta | Código único del contenido | Tamaño | Explicación sencilla |
 |---|---|---:|---|
-| `.github/workflows/ios-build.yml` | `864f07ce44d63c96cfa7136f6b23f5ae48a8017d` | 796 bytes | Comprueba que la aplicación de iPhone pueda construirse. |
-| `.github/workflows/ios-testflight.yml` | `06d47d055dfe525b8c053ad328841aa337699600` | 990 bytes | Prepara una copia de iPhone para el futuro envío a TestFlight. |
-| `.github/workflows/mobile-native-package.yml` | `1d543e2620f8bf0bff82a48428736ec4b4ed6e39` | 1764 bytes | Prepara y comprueba los paquetes de iPhone y Android. |
-| `.github/workflows/stableford-tournament-pass.yml` | `f2bc82d4af49f2c764d570ea5edf10c24c2f0a05` | 697 bytes | Comprueba las reglas principales de Stableford antes de publicar. |
+| `.github/workflows/ios-build.yml` | `8a61450069cd4ec9297204841a70788ae1f4ad0f` | 1092 bytes | Comprueba que la aplicación de iPhone pueda construirse y exige primero ambos ROADMAPS. |
+| `.github/workflows/ios-testflight.yml` | `b67cfeef9a79cc4b419accece846a7e334a27636` | 1133 bytes | Prepara una copia para TestFlight y exige primero ambos ROADMAPS. |
+| `.github/workflows/mobile-native-package.yml` | `ee0d6b5b72cfab49646b58a764dcb8d585c88ee5` | 2112 bytes | Prepara Apple/Android y se bloquea si faltan los dos ROADMAPS. |
+| `.github/workflows/roadmap-gate.yml` | `2b0e0640e36c07e343f06414a9d2d703727237bb` | 712 bytes | Ejecuta automáticamente el candado ROADMAP en GitHub. |
+| `.github/workflows/stableford-tournament-pass.yml` | `df70cf36092ddd72b59271bf241b1ac58fb21027` | 1075 bytes | Comprueba Stableford y exige primero ambos ROADMAPS. |
 | `.gitignore` | `0994446eb785e2166ce79941bec8bba6c245c567` | 75 bytes | Indica qué archivos temporales no deben subirse a GitHub. |
 | `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | `a75309584c45d651daa6ef2db27db7722a2159d1` | 528361 bytes | Logo oficial original; su nombre raro se conserva porque ya estaba enlazado. |
 | `APP_ARCHITECTURE.md` | `7119e67641ce309201fa32922195ebceb3006fb4` | 3405 bytes | Explica cómo se divide la aplicación y cómo trabajan juntas sus partes. |
 | `AUDITORIA_MAESTRA_V170.md` | `8dd135a84521f64c39928fadb35de0518447fe40` | 4462 bytes | Resumen de una revisión histórica del producto. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `0b94bd43a77c3ba1487dafabbbb4fc734f7eb4db` | 2630 bytes | Reglas permanentes que debe respetar el proyecto. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `ab8b3c84c37401427245a498b08652903f8dd4b2` | 3991 bytes | Reglas permanentes, punto de corte y candado técnico de ambos ROADMAPS. |
 | `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INDICE_DOCUMENTOS_PENDIENTES.md` | `064e9201c833cb7f5c751ba5328290d8c4c2b20b` | 814 bytes | Lista de documentos todavía pendientes de usar. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | `b9815c3eae588f1f54c0e4fabbf1d51b52c75b0e` | 722 bytes | Registro de trabajos terminados. |
 | `CONTROL_PROYECTO_SCIRE/04_MATRIZ_DE_CAMPOS/INDICE_TARJETAS_ORIGINALES.md` | `2c2635943ce64a83e64012e71603193b74b35019` | 1161 bytes | Lista de tarjetas originales de los campos. |
@@ -40,8 +41,18 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
 | `MAPA_MATRIZ_STABLEFORD_V252.md` | `8911a7ef86398e0c3f18e647433387a02645082c` | 3828 bytes | Explica las piezas de Stableford incorporadas en V252. |
 | `README.md` | `e93c3adc84c81fdda07303f5d0f75fbb35140ea2` | 2170 bytes | Portada de GitHub que presenta el producto como Golf Score Card GT. |
-| `ROADMAP_OVERALL.md` | `a4a49abd085efe36880bd28288569144aed76496` | 2966 bytes | Resumen general y sencillo del estado completo del proyecto. |
+| `ROADMAP_A_DETALLE.md` | `e4ea64e43b9648507e91c12840b9261091cc712a` | 7272 bytes | Abre el directorio, sus 185 líneas y el registro del candado técnico. |
+| `ROADMAP_OVERALL.md` | `7df5960e512ce57b080ccca71851e330a14a0c53` | 6747 bytes | Resumen general, punto de corte y registro obligatorio de cada modificación. |
 | `ROADMAP_OVERALL_V291.png` | `2e7aaaaf4b7b337caa8750b17754d9173f8930fe` | 685254 bytes | Imagen vertical y sencilla del estado general para verla desde el teléfono. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_01.png` | `2377b6bba6c886a2fddac44b2d01fbc7ebf3f0ca` | 410461 bytes | Página 1 de 9 del directorio visual detallado. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_02.png` | `ba0d741c811283d33e53431b9a90cf3055a97bed` | 487065 bytes | Página 2 de 9 del directorio visual detallado. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_03.png` | `feb9f2f6ebab3b7321f6e741fb5c6886625cb0d7` | 414996 bytes | Página 3 de 9 del directorio visual detallado. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_04.png` | `8b1240dce80a451ff2274708317a303c220c2133` | 468658 bytes | Página 4 de 9 del directorio visual detallado. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_05.png` | `3277fc72250970281438c00eb11f1e29a2ffaf4f` | 455317 bytes | Página 5 de 9 del directorio visual detallado. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_06.png` | `0aa2913da74c26c396e114d9958f3d06e7f296b0` | 447637 bytes | Página 6 de 9 del directorio visual detallado. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_07.png` | `f29b846a85639291b546149fe3a819b1bca23115` | 459494 bytes | Página 7 de 9 del directorio visual detallado. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_08.png` | `50bb1bbb190bcee92bcecccc576d61bf2f89f44a` | 490283 bytes | Página 8 de 9 del directorio visual detallado. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_09.png` | `2375cd4734decbc33ea9e778d9ae292e19dacd34` | 407182 bytes | Página 9 de 9 del directorio visual detallado. |
 | `ROADMAP_IMAGES/README.md` | `Se genera con este mismo archivo` | Se calcula al publicar | Índice sencillo de todas las imágenes detalladas del ROADMAP OVERALL. |
 | `ROADMAP_IMAGES/01_ARCHIVOS_ACTIVOS_COMPLETO.png` | `b3ac32312aaaa986e64684793b56539cf22e9280` | 722840 bytes | Imagen con las 160 líneas de archivos activos, sus códigos y su explicación. |
 | `ROADMAP_IMAGES/02_ARCHIVOS_RETIRADOS_COMPLETO.png` | `eb46364dc267183bf0d6e2863d26aa0c657eee65` | 443224 bytes | Imagen con los 89 archivos antiguos retirados y recuperables. |
@@ -78,7 +89,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | `a75309584c45d651daa6ef2db27db7722a2159d1` | 528361 bytes | Copia maestra del logo oficial original. |
 | `assets/official-logos/golf-score-card-gt-pwa-192.png` | `b6a84d41edb0e2d7b42b6f9a3d9457c9458970f0` | 45723 bytes | Icono pequeño de la app instalable. |
 | `assets/official-logos/golf-score-card-gt-pwa-512.png` | `28929abc6f0f77bdd359dc0473f6b7cc44cabee4` | 260992 bytes | Icono grande de la app instalable. |
-| `audit-project.mjs` | `36975d059b734fa662a5cc03d53cd7d995f8010f` | 3454 bytes | Ejecuta todas las comprobaciones importantes antes de publicar. |
+| `audit-project.mjs` | `597a19619b0c7f64e8d6963f0d28ab02a329f6cf` | 3512 bytes | Ejecuta primero el candado ROADMAP y después las demás comprobaciones. |
 | `capacitor.config.json` | `a5ca52fde974ea370d90dbfe422f08101ec7f7eb` | 867 bytes | Define el nombre visible y la identidad de las apps de iPhone y Android. |
 | `card-artifacts.js` | `df8ba2b09532b73701681d7de1781ca5b54baf26` | 12799 bytes | Arma la tarjeta oficial con la información de la ronda. |
 | `card-file-export.js` | `4ddbf8f36ec142114cfa965a78d97ea55365afa1` | 5919 bytes | Convierte la tarjeta en imagen o PDF. |
@@ -103,7 +114,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `master-data-sync.js` | `be2aade4553f95b389189fcf4225ece6d16deaad` | 8202 bytes | Mantiene igual la información del teléfono y del respaldo central. |
 | `mobile-release.json` | `78b302dd140af710b05467d86de7bfba983ffe7c` | 76 bytes | Guarda la versión y el número del próximo paquete móvil. |
 | `mobile/native-runtime-entry.js` | `ffbe9107212932779e6c8e7e5017f4c178b62326` | 704 bytes | Conecta la pantalla con funciones propias del teléfono. |
-| `package.json` | `74043418bd3fb53cbe36c10625201fc4f07b233b` | 1356 bytes | Lista lo necesario y los botones para preparar web, iPhone y Android. |
+| `package.json` | `a9ffec0ea56adb2998235b502fd71ed092b13bb0` | 1403 bytes | Lista lo necesario y agrega el botón técnico `roadmap:gate`. |
 | `player-registry.js` | `bf406d7b60803aedf1fd1d936de699d0cc95e0a5` | 11246 bytes | Guarda, encuentra y actualiza jugadores. |
 | `round-closure.js` | `c31ec239f8a8184a5b2fb184a03f23080e39933b` | 3939 bytes | Cierra una ronda y conserva sus correcciones. |
 | `round-navigation.js` | `5b5f4de45cfd1d0c05b4d2daf874465953887cf5` | 1967 bytes | Controla el paso entre ronda actual, ronda previa y pantalla principal. |
@@ -111,6 +122,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/configure-native-projects.mjs` | `fdb439880f7f4e18e1c57e303df5634ffa677c59` | 2911 bytes | Coloca versión, permisos y ajustes en iPhone y Android. |
 | `scripts/prepare-mobile-assets.mjs` | `fcd2fa387095322c9731917834ad424ad3e8fd73` | 1356 bytes | Crea todos los tamaños oficiales del logo. |
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
+| `scripts/roadmap-gate.mjs` | `1fbf23718ab13b44a0c8b45f7f9e136102a88fc2` | 2618 bytes | Bloquea cualquier modificación que no aparezca en ambos ROADMAPS. |
 | `service-worker.js` | `009e07173e747f2ef05e89de5f91465c9abe16bb` | 1987 bytes | Mantiene la app actualizada y permite abrir partes guardadas cuando falla la conexión. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |

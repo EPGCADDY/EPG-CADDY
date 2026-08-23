@@ -1,9 +1,7 @@
 {
   "name": "golf-score-card-gt",
   "private": true,
-  "engines": {
-    "node": "22.x"
-  },
+  "engines": { "node": "22.x" },
   "dependencies": {
     "@capacitor/android": "8.5.0",
     "@capacitor/core": "8.5.0",
@@ -19,6 +17,7 @@
     "sharp": "0.35.3"
   },
   "scripts": {
+    "roadmap:gate": "node scripts/roadmap-gate.mjs",
     "audit": "node audit-project.mjs",
     "mobile:web": "node scripts/build-mobile-web.mjs",
     "mobile:add:ios": "npm run mobile:web && cap add ios",
