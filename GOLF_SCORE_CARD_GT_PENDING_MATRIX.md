@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V276
+**Corte vigente:** V277
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -35,6 +35,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - ✅ Existen Tarjeta Global, tarjetas personales, descarga HTML y compartir mediante la hoja nativa.
 - ✅ Stableford calcula Gross y puntos por jugador para `OUT`, `IN` y `TOTAL`.
 - ✅ Stableford conserva localmente el torneo de cuatro fechas y clasificación por mejores tres resultados.
+- ✅ Una ronda cerrada puede corregirse mediante versión oficial nueva, conservando original, motivo, responsable, fecha, SHA-256 y recálculo General/Stableford.
 
 ## Orden real de ejecución
 
@@ -106,13 +107,13 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 7. Correcciones oficiales
 
-**Estado:** PENDIENTE
+**Estado:** SOLVENTADO V277
 
-- Crear una pantalla autorizada para corregir una ronda cerrada.
-- Conservar siempre la versión original.
-- Registrar motivo, responsable, fecha y nueva versión.
-- Recalcular resultados y regenerar todos los archivos afectados.
-- Permitir compartir nuevamente únicamente la versión corregida vigente.
+- ✅ Pantalla única para corregir una ronda cerrada.
+- ✅ Conservación permanente de la versión original.
+- ✅ Registro de motivo, responsable, fecha, nueva versión y SHA-256.
+- ✅ Recálculo General o Stableford y regeneración de archivos vigentes.
+- ✅ La versión corregida queda disponible para abrir, descargar y compartir; la original queda en consulta.
 
 ### 8. Entrega directa
 

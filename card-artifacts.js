@@ -75,7 +75,7 @@
 
   function stablefordGlobalCard(snapshot){
     const label=categoryLabel(snapshot.stablefordCategory),rows=snapshot.players.map(player=>{const stats=stablefordPlayerStats(player),byHole=new Map(stats.holes.map(hole=>[hole.hole,hole]));return`<tr><td>${esc(player.name)}</td><td>${esc(player.tee)}</td>${Array.from({length:18},(_,i)=>{const hole=byHole.get(i+1);return`<td>${hole?(hole.status==="x"?"X":hole.gross):"—"}/${hole?.points??"—"}</td>`}).join("")}<td>${stats.grossCount===18?stats.gross:"—"}</td><td class="points">${stats.points}</td></tr>`}).join("");
-    return shell(`Tarjeta Global Stableford · ${label}`,snapshot,`<div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>MARCAS</th>${Array.from({length:18},(_,i)=>`<th>${i+1}<br>G/P</th>`).join("")}<th>GROSS</th><th>PUNTOS</th></tr></thead><tbody>${rows}</tbody></table></div><p>G/P = Gross / Puntos Stableford.</p>`);
+    return shell(snapshot.version>1?`Tarjeta Global Stableford corregida · ${label}`:`Tarjeta Global Stableford · ${label}`,snapshot,`<div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>MARCAS</th>${Array.from({length:18},(_,i)=>`<th>${i+1}<br>G/P</th>`).join("")}<th>GROSS</th><th>PUNTOS</th></tr></thead><tbody>${rows}</tbody></table></div><p>G/P = Gross / Puntos Stableford.</p>`);
   }
 
   function stablefordPersonalCard(snapshot,player){
@@ -83,11 +83,11 @@
     const grossTotal=stats.grossCount===18?stats.gross:"—";
     const line=`<div class="table-wrap"><table><tr><th>HOYO</th>${stats.holes.map(hole=>`<th>${hole.hole}</th>`).join("")}<th>TOTAL</th></tr><tr><th>GROSS</th>${stats.holes.map(hole=>`<td>${hole.status==="x"?"X":hole.gross}</td>`).join("")}<td>${grossTotal}</td></tr><tr><th>PUNTOS</th>${stats.holes.map(hole=>`<td class="points">${hole.points}</td>`).join("")}<td class="points">${stats.points}</td></tr></table></div>`;
     const items=[["Gross",grossTotal],["Puntos",stats.points],["Gross 1ª vuelta",stats.front.grossCount===9?stats.front.gross:"—"],["Puntos 1ª vuelta",stats.front.points],["Gross 2ª vuelta",stats.back.grossCount===9?stats.back.gross:"—"],["Puntos 2ª vuelta",stats.back.points],["4 puntos",stats.pointCounts[4]],["3 puntos",stats.pointCounts[3]],["2 puntos",stats.pointCounts[2]],["1 punto",stats.pointCounts[1]],["0 puntos",stats.pointCounts[0]],["Fecha clasificatoria",snapshot.stablefordRoundNumber||"—"]].map(([key,value])=>`<div class="stat"><b>${key}</b><br>${value}</div>`).join("");
-    return shell(`Tarjeta personal Stableford · ${player.name}`,snapshot,`<h2>${esc(player.name)} · ${esc(label)} · ${esc(player.tee)}</h2>${line}<div class="stats">${items}</div><h2>Puntos Stableford por hoyo</h2><div class="chart stableford-chart">${bars}</div><p>${esc(stablefordSummary(player.name,stats))}</p>`);
+    return shell(snapshot.version>1?`Tarjeta personal Stableford corregida · ${player.name}`:`Tarjeta personal Stableford · ${player.name}`,snapshot,`<h2>${esc(player.name)} · ${esc(label)} · ${esc(player.tee)}</h2>${line}<div class="stats">${items}</div><h2>Puntos Stableford por hoyo</h2><div class="chart stableford-chart">${bars}</div><p>${esc(stablefordSummary(player.name,stats))}</p>`);
   }
 
   function build(snapshot){
-    if(!snapshot||snapshot.status!=="officially_closed"||!snapshot.sha256)throw new Error("Se requiere snapshot oficialmente cerrado");
+    if(!snapshot||!["officially_closed","corrected"].includes(snapshot.status)||!snapshot.sha256)throw new Error("Se requiere snapshot oficialmente cerrado");
     const stableford=snapshot.mode==="stableford";
     const global={kind:"global",mode:stableford?"stableford":"stroke",name:stableford?`tarjeta-global-stableford-v${snapshot.version}.html`:`tarjeta-global-v${snapshot.version}.html`,html:stableford?stablefordGlobalCard(snapshot):globalCard(snapshot)};
     const personal=snapshot.players.map(player=>({kind:"personal",mode:stableford?"stableford":"stroke",playerId:player.id,name:stableford?`tarjeta-stableford-${slug(player.name)}-v${snapshot.version}.html`:`tarjeta-${slug(player.name)}-v${snapshot.version}.html`,html:stableford?stablefordPersonalCard(snapshot,player):personalCard(snapshot,player),stats:stableford?stablefordPlayerStats(player):playerStats(player)}));

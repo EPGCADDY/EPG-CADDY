@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V276-MANUAL-HOLE-NAVIGATION-20260823/);
+assert.match(html,/V277-OFFICIAL-ROUND-CORRECTIONS-20260823/);
 assert.match(html,/>2 · MANUAL OPCIONAL<\/div>/);
 assert.match(html,/function provisionalPlayerFromOptionalRow\(source,i\)/);
 assert.match(html,/provisionalHandicapProvided:hasHandicap,provisionalTeeProvided:!!tee/);
