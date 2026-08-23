@@ -1,0 +1,40 @@
+name: Stableford V231 manual visible
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v231-manual-always-visible.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Make manual editor unmistakably visible
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          old='''manual.style.cssText="display:flex;gap:6px;justify-content:center;align-items:center;margin:8px 0;padding:8px;border:1px solid #31ff00;background:#000";'''
+          new='''manual.style.cssText="display:flex;position:relative;z-index:9999;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:10px 0;padding:10px;border:2px solid #31ff00;background:#000;pointer-events:auto;touch-action:manipulation";manual.querySelectorAll("select,input,button").forEach(el=>el.style.cssText="min-height:44px;font-size:16px;pointer-events:auto;touch-action:manipulation");'''
+          if old not in s: raise SystemExit('manual style anchor missing')
+          p.write_text(s.replace(old,new,1),encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'z-index:9999' index-grupal.html
+          grep -Fq 'min-height:44px' index-grupal.html
+          grep -Fq 'ANOTAR GROSS' index-grupal.html
+          grep -Fq 'saveEntry({player:p?.name,hole,gross})' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V231 keep manual score editor active on touch'
+          git push origin stableford-tournament-final

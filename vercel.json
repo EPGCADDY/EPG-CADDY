@@ -1,5 +1,31 @@
 {
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/index-grupal.html",
+      "permanent": false
+    },
+    {
+      "source": "/index.html",
+      "destination": "/index-grupal.html",
+      "permanent": false
+    },
+    {
+      "source": "/stableford-torneo.html",
+      "destination": "/index-grupal.html",
+      "permanent": false
+    }
+  ],
   "headers": [
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    },
     {
       "source": "/index-grupal.html",
       "headers": [

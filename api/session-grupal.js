@@ -10,6 +10,12 @@ function safeHeader(value, max = 300) {
   return String(value || "").replace(/[\r\n]/g, " ").slice(0, max);
 }
 
+const MAX_TRANSCRIPTION_PROMPT_LENGTH = 1024;
+
+function roundTranscriptionPrompt(players) {
+  return `Golf Guatemala. Jugadores: ${players || "los registrados"}. El cursor ya indica automáticamente el hoyo activo. Transcribe Nombre + Score. Hoyo N opcional: reposiciona. Tras Falta NOMBRE, Score u omisión solos son de ese jugador. Gross: número o golf. X: equis, cero, sin score, sin dato, sin resultado, no informó, no reportó, no dijo, no cantó, no dio score, no se sabe, ponle cero, no le anotes. Golf: albatros, águila, aguiler, eagle, birdie, pájaro, verdura, par, even par, parinelo, paraso, parcuato, bogey, doble bogey, doblete, triple bogey, triplete, doble par, par español, uno bajo par, uno sobre par, dos sobre par, tres sobre par. Nombre único solo; si se repite, apellido. Jessie se escribe Jessie.`.slice(0, MAX_TRANSCRIPTION_PROMPT_LENGTH);
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -34,11 +40,12 @@ export default async function handler(req, res) {
 
     const transcriptionPrompt = context === "setup"
       ? "Golf Guatemala. Registro de jugadores. Transcribe literalmente nombres propios, handicap y color de marcas. Regla mandatoria: Jessie se escribe Jessie."
-      : `Golf Guatemala. Dictado de scores. Jugadores actuales: ${players || "los registrados en la tarjeta"}. Transcribe literalmente nombres, hoyo y score o Gross. Acepta número Gross directo o vocabulario golfístico: albatros, águila, aguiler, eagle, birdie, pájaro, verdura, par, even par, parinelo, paraso, parcuato, bogey, doble bogey, doblete, triple bogey, triplete, doble par, par español, uno bajo par, uno sobre par, dos sobre par y tres sobre par. Si un primer nombre es único en el grupo puede dictarse solo ese nombre; si hay dos jugadores con el mismo primer nombre, puede dictarse únicamente el apellido. Regla mandatoria: Jessie se escribe Jessie.`;
+      : roundTranscriptionPrompt(players);
+    const roundKeywords = ["hoyo", "gross", "par", "birdie", "bogey", "doble bogey", "triple bogey", "eagle", "albatros", "equis", "cero", "sin score", "sin dato", "no informó", "no dijo", "no cantó", "ponle cero", "no le anotes", ...players.split(",").map(value => value.trim()).filter(Boolean)].slice(0, 80);
 
     const session = {
       type: "realtime",
-      model: "gpt-realtime-2.1",
+      model: "gpt-realtime",
       instructions: [
         "Aplicación grupal de score de golf.",
         "REGLA ABSOLUTA: nunca produzcas respuestas espontáneas.",
@@ -51,8 +58,9 @@ export default async function handler(req, res) {
       audio: {
         input: {
           transcription: {
-            model: "gpt-live-transcribe",
-            language: "es",
+            ...(context === "setup"
+              ? { model: "gpt-4o-transcribe", language: "es" }
+              : { model: "gpt-live-transcribe", languages: ["es"], keywords: roundKeywords }),
             prompt: transcriptionPrompt
           },
           noise_reduction: { type: noiseReduction },

@@ -1048,7 +1048,7 @@ function processAction(a){switch(a?.action){case"get_hole":return getHole(a);cas
 
 
 function yds10NameSafe(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
-function tableHeader(){return`<tr><th class="player-col">JUGADOR</th><th class="concept-col">HOYO</th>${FRONT.map(h=>`<th class="hole-col">${h}</th>`).join("")}<th class="sum-col">IDA</th>${BACK.map(h=>`<th class="hole-col">${h}</th>`).join("")}<th class="sum-col">VTA</th><th class="sum-col">TOTAL</th></tr>`}
+function tableHeader(){return`<tr><th class="player-col">JUGADOR</th><th class="concept-col">HOYO</th>${FRONT.map(h=>`<th class="hole-col">${h}</th>`).join("")}<th class="sum-col">OUT</th>${BACK.map(h=>`<th class="hole-col">${h}</th>`).join("")}<th class="sum-col">IN</th><th class="sum-col">TOTAL</th></tr>`}
 function generalRow(label,values,front,back,total){return`<tr class="general"><td></td><td class="concept">${label}</td>${values.slice(0,9).map(v=>`<td>${v}</td>`).join("")}<td>${front}</td>${values.slice(9).map(v=>`<td>${v}</td>`).join("")}<td>${back}</td><td>${total}</td></tr>`}
 function strokeStyle(p,st){if(!st)return"";const t=TEES[p.tee];return`background:${t.fill};color:${t.text};`}
 function playerBlock(p,slot){

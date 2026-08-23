@@ -9,7 +9,9 @@ assert.equal((html.match(/name:"(?:El Pulté|Country Club|San Isidro|Mayan Golf|
 assert.ok(html.includes('type="radio" name="registrationCourse"'),'El campo debe elegirse mediante selección única');
 assert.ok(html.includes('if(!selectedCourse?.configured)'),'Los campos pendientes deben quedar bloqueados');
 assert.ok(html.includes('country_club:{name:"Country Club",displayName:"GUATEMALA COUNTRY CLUB",configured:true}'),'Country Club debe estar habilitado con su nombre oficial de tarjeta');
-assert.ok(html.includes('NOMBRE / HDCP - MARCAS - TEES'),'La guía debe mostrar nombre, HDCP, marcas y tees con el rótulo vigente');
 assert.ok(!html.includes('TEESS'),'La forma TEESS está prohibida');
-assert.ok(html.includes('HASTA 6 JUGADORES'),'La guía debe informar el límite de seis jugadores');
+assert.ok(!html.includes('player-registration-guide'),'Las tres falsas casillas de registro deben estar eliminadas');
+assert.ok(!html.includes('NOMBRE / HDCP - MARCAS - TEES'),'El rótulo engañoso de las falsas casillas debe estar eliminado');
+assert.ok(!html.includes('HASTA 6 JUGADORES'),'La falsa tercera casilla debe estar eliminada');
+assert.ok(html.includes('if(!Array.isArray(players)||players.length<1||players.length>6)'),'La validación funcional debe conservar el límite de seis jugadores');
 console.log('PASS catálogo y registro V170');

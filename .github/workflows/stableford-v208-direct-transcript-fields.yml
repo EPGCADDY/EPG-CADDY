@@ -1,0 +1,44 @@
+name: Stableford V208 direct transcript fields
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v208-direct-transcript-fields.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+          fetch-depth: 0
+      - name: Patch only Stableford completed transcript bridge
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('stableford.js'); s=p.read_text(encoding='utf-8')
+          old='for(const change of parsed.changes){const target=targets[Number(change.position)-1];if(target)target.value=cleanName(change.name)}'
+          new='for(const change of parsed.changes){const target=targets[Number(change.position)-1];if(target){target.value=cleanName(change.name);target.dispatchEvent(new Event("input",{bubbles:true}));target.dispatchEvent(new Event("change",{bubbles:true}))}}'
+          if s.count(old)!=1: raise SystemExit(f'direct transcript anchor count={s.count(old)}')
+          p.write_text(s.replace(old,new,1),encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          test "$(git diff --name-only)" = "stableford.js"
+          grep -Fq 'target.dispatchEvent(new Event("input",{bubbles:true}))' stableford.js
+          git diff --quiet HEAD -- index-grupal.html api/session-grupal.js stableford-torneo.html
+          node --check stableford.js
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add stableford.js
+          git commit -m 'Stableford V208 commit direct registration transcript to fields'
+          git push origin stableford-tournament-final

@@ -1,0 +1,42 @@
+name: Stableford V235 manual UI
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v235-manual-ui.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Refine only manual editor UI and auto-hole selection
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          a=s.index('  let manual=document.getElementById("stablefordManualEntry");')
+          b=s.index('\n  $("summaryTitle")',a)
+          new='''  let manual=document.getElementById("stablefordManualEntry");if(!manual){manual=document.createElement("div");manual.id="stablefordManualEntry";manual.style.cssText="position:relative;z-index:9999;margin:10px 0;padding:10px;border:2px solid #31ff00;background:#000;pointer-events:auto;touch-action:manipulation";document.querySelector(".card-shell").before(manual)}const firstPending=ALL.find(h=>round.players.some(p=>!GSCStableford.holeResult(p.holes?.[h],PAR[h-1]).recorded))||18;if(!manual.dataset.hole)manual.dataset.hole=String(firstPending);const selectedHole=Number(manual.dataset.hole);manual.innerHTML=`<div style="display:grid;grid-template-columns:1fr 92px 1.7fr;gap:7px;align-items:center"><b style="text-align:center">JUGADOR</b><div style="text-align:center"><b>HOYO</b><select id="sfGridHole" style="display:block;width:100%;min-height:46px;margin-top:4px;font-size:24px;text-align:center;text-align-last:center">${ALL.map(h=>`<option value="${h}" ${h===selectedHole?"selected":""}>${h}</option>`).join("")}</select></div><b style="text-align:center">GROSS</b>${round.players.map(p=>`<input class="sfGridName" data-player="${escapeHtml(p.id)}" value="${escapeHtml(p.name)}" style="min-height:48px;font-size:17px;text-align:center"><span style="text-align:center;font-size:20px">${selectedHole}</span><input class="sfGridGross" data-player="${escapeHtml(p.id)}" inputmode="numeric" type="number" min="1" max="30" style="min-height:48px;font-size:24px;text-align:center" value="${GSCStableford.holeResult(p.holes?.[selectedHole],PAR[selectedHole-1]).recorded?(GSCStableford.holeResult(p.holes?.[selectedHole],PAR[selectedHole-1]).gross??""):""}">`).join("")}</div><button id="sfGridEnter" type="button" style="display:block;width:100%;min-height:50px;margin-top:8px;font-size:20px;font-weight:800">ENTER</button>`;manual.querySelector("#sfGridHole").onchange=e=>{manual.dataset.hole=e.target.value;render()};manual.querySelectorAll(".sfGridName").forEach(input=>input.onchange=()=>{const p=round.players.find(x=>x.id===input.dataset.player),name=input.value.trim();if(p&&name){p.name=name;persist();localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round));render()}});const saveManualHole=()=>{let ok=true;manual.querySelectorAll(".sfGridGross").forEach(input=>{if(!ok)return;const p=round.players.find(x=>x.id===input.dataset.player),gross=Number(input.value);if(!p||!input.value.trim())return;const result=saveEntry({player:p.name,hole:selectedHole,gross});if(!result.ok)ok=false});if(!ok)return window.alert("SCORE INVÁLIDO");persist();localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round));const complete=round.players.every(p=>GSCStableford.holeResult(p.holes?.[selectedHole],PAR[selectedHole-1]).recorded);if(complete&&selectedHole<18)manual.dataset.hole=String(selectedHole+1);render()};manual.querySelector("#sfGridEnter").onclick=saveManualHole;manual.querySelectorAll(".sfGridGross").forEach(input=>input.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();saveManualHole()}});'''
+          s=s[:a]+new+s[b:]
+          p.write_text(s,encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'id="sfGridEnter"' index-grupal.html
+          grep -Fq '>HOYO</b><select' index-grupal.html
+          grep -Fq 'text-align-last:center' index-grupal.html
+          grep -Fq 'if(complete&&selectedHole<18)manual.dataset.hole=String(selectedHole+1)' index-grupal.html
+          grep -Fq 'const firstPending=ALL.find' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V235 centered hole single Enter auto advance'
+          git push origin stableford-tournament-final

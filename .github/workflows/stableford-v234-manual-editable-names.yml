@@ -1,0 +1,44 @@
+name: Stableford V234 editable names
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v234-manual-editable-names.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Make fixed names editable without changing score flow
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          old='''${round.players.map(p=>`<span>${escapeHtml(p.name)}</span><span>H${selectedHole}</span><input class="sfGridGross"'''
+          new='''${round.players.map(p=>`<input class="sfGridName" data-player="${escapeHtml(p.id)}" value="${escapeHtml(p.name)}" style="min-height:40px;font-size:16px"><span>H${selectedHole}</span><input class="sfGridGross"'''
+          if old not in s: raise SystemExit('name anchor mismatch')
+          s=s.replace(old,new,1)
+          old2='''manual.querySelector("#sfGridHole").onchange=e=>{manual.dataset.hole=e.target.value;render()};manual.querySelectorAll(".sfGridGross")'''
+          new2='''manual.querySelector("#sfGridHole").onchange=e=>{manual.dataset.hole=e.target.value;render()};manual.querySelectorAll(".sfGridName").forEach(input=>input.onchange=()=>{const p=round.players.find(x=>x.id===input.dataset.player),name=input.value.trim();if(p&&name){p.name=name;persist();localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round));render()}});manual.querySelectorAll(".sfGridGross")'''
+          if old2 not in s: raise SystemExit('binding anchor mismatch')
+          p.write_text(s.replace(old2,new2,1),encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq 'sfGridName' index-grupal.html
+          grep -Fq 'p.name=name' index-grupal.html
+          grep -Fq 'manual.dataset.hole=String(Math.min(18,hole+1))' index-grupal.html
+          grep -Fq 'saveEntry({player:p?.name,hole,gross})' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V234 editable roster with automatic manual score flow'
+          git push origin stableford-tournament-final

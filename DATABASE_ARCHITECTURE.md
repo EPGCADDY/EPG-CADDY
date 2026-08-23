@@ -69,4 +69,24 @@ El servidor acepta una mutación una sola vez. Si recibe nuevamente el mismo `cl
 5. Ejecutar pruebas de backup, restore, concurrencia, offline y migración retroactiva.
 6. Crear el modelo central de series Stableford, fechas, categorías y resultados oficiales, y migrar el acumulado local con claves idempotentes.
 
+## V255 — perfil reutilizable
+
+- `database/002_player_profiles_and_history.sql` prepara un código privado único por jugador, el último handicap, las últimas marcas y la tabla append-only `player_profile_events` para conservar cada cambio de nombre, handicap, marcas o WhatsApp.
+- La interfaz V255 guarda y recupera estos perfiles en el directorio privado del dispositivo mientras la sincronización central permanece cerrada.
+- La migración todavía no se considera aplicada en Producción y la aplicación no debe afirmar permanencia central ni consulta multi-dispositivo hasta habilitar autenticación, ejecutar la migración y probar el recorrido completo.
+- `COMPARTIR` aparece únicamente como proyecto de selección de información. El intercambio entre usuarios será permitido en una fase posterior, pero en V255 no existe autorización ni transporte y la acción final permanece deshabilitada.
+
+## Preparación V256 — plataforma maestra por rubros
+
+- `database/003_master_data_platform.sql` normaliza instalaciones, campos y sus definiciones, torneos, jugadores, contactos, handicap, marcas, rondas, participantes, scores, tarjetas lógicas y acciones de compartir.
+- Cada rubro mantiene un dato vigente para consulta rápida y una tabla de eventos append-only para conservar la evolución completa.
+- Cuando se registra nuevamente un código existente, nombre, handicap, marcas, correo o WhatsApp reemplazan el dato vigente del mismo jugador. La versión anterior no se usa en una nueva ronda, pero permanece en el historial con fecha y origen.
+- `master-data-sync.js` transforma el directorio y la ronda activa en un único contrato versionado. Incluye la definición del campo y yardajes, torneo, uno a seis jugadores, los hoyos registrados, cierre oficial y manifiestos reconstruibles de tarjetas.
+- La cola local es offline-first, idempotente y compacta estados todavía no enviados; nunca purga un paquete hasta recibir acuse remoto con el mismo SHA-256.
+- `/api/sync` entrega el paquete a `apply_master_sync_mutation`, que aplica la mutación completa dentro de una transacción PostgreSQL y distribuye los datos a sus tablas correspondientes.
+- La API acepta token de operador o sesión segura HttpOnly. El secreto nunca se incorpora al HTML ni al JavaScript público.
+- La acción nativa de compartir registra solamente `PREPARED`, `CANCELLED` o `FAILED`; no afirma entrega por correo o WhatsApp porque la hoja del sistema no informa el canal ni confirma que el destinatario lo recibió.
+
+La migración V256 debe ensayarse en una rama aislada de Neon y superar ingestión, duplicado, corrección y recuperación antes de aplicarse a Producción. Mientras falten migración y sesión autenticada, la cola conserva el último paquete pendiente y la interfaz no debe anunciar sincronización central terminada.
+
 La base central ya está alojada y responde. Hasta completar los puntos restantes, no se considera habilitada la sincronización comercial de datos personales y rondas.

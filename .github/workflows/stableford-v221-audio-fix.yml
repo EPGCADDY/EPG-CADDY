@@ -1,0 +1,42 @@
+name: Stableford V221 audio fix
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v221-audio-fix.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+          fetch-depth: 0
+      - name: Use proven base realtime path for Stableford
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('stableford.js'); s=p.read_text(encoding='utf-8')
+          start=s.find('    if(typeof toggleVoice==="function"&&!toggleVoice.__stablefordFastVoice){')
+          end=s.find('\n\n    if(typeof fireMicActivation==="function"&&!fireMicActivation.__stablefordCleanGesture){',start)
+          if start<0 or end<0: raise SystemExit('audio wrapper anchors missing')
+          s=s[:start]+'''    // Stableford usa exactamente la ruta Realtime base ya probada de GRUPAL.\n'''+s[end:]
+          p.write_text(s,encoding='utf-8')
+      - name: Validate and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          test "$(git diff --name-only)" = "stableford.js"
+          ! grep -Fq '__stablefordFastVoice' stableford.js
+          grep -Fq '__stablefordCleanGesture' stableford.js
+          node --check stableford.js
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add stableford.js
+          git commit -m 'Stableford V221 restore proven GRUPAL realtime audio path'
+          git push origin stableford-tournament-final

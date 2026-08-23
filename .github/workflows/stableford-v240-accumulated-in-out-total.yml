@@ -1,0 +1,40 @@
+name: Stableford V240 accumulated IN OUT TOTAL
+on:
+  push:
+    branches: [stableford-tournament-final]
+    paths: ['.github/workflows/stableford-v240-accumulated-in-out-total.yml']
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stableford-tournament-final
+      - name: Expand only live accumulated box
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index-grupal.html');s=p.read_text(encoding='utf-8')
+          old='''today.innerHTML=`<div style="text-align:center;color:#72ff42;font-weight:800;font-size:20px;margin-bottom:5px">ACUMULADO</div>${round.players.map(p=>{const t=stablefordTotals(p,ALL);return`<div style="display:grid;grid-template-columns:1fr 80px;border-top:1px solid #333;padding:6px 4px"><span>${escapeHtml(p.name)}</span><strong style="text-align:center;color:#72ff42">${t.count?t.points:0}</strong></div>`}).join("")}`;'''
+          new='''today.innerHTML=`<div style="text-align:center;color:#72ff42;font-weight:800;font-size:20px;margin-bottom:5px">ACUMULADO</div><div style="display:grid;grid-template-columns:1fr 70px 70px 70px;text-align:center;font-weight:700;padding:5px 4px"><span>JUGADOR</span><span>IN</span><span>OUT</span><span>TOTAL</span></div>${round.players.map(p=>{const i=stablefordTotals(p,FRONT),o=stablefordTotals(p,BACK),t=stablefordTotals(p,ALL);return`<div style="display:grid;grid-template-columns:1fr 70px 70px 70px;border-top:1px solid #333;padding:6px 4px"><span>${escapeHtml(p.name)}</span><strong style="text-align:center;color:#72ff42">${i.count?i.points:0}</strong><strong style="text-align:center;color:#72ff42">${o.count?o.points:0}</strong><strong style="text-align:center;color:#72ff42">${t.count?t.points:0}</strong></div>`}).join("")}`;'''
+          if old not in s: raise SystemExit('accumulated box anchor mismatch')
+          p.write_text(s.replace(old,new,1),encoding='utf-8')
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -Fq '<span>IN</span><span>OUT</span><span>TOTAL</span>' index-grupal.html
+          grep -Fq 'stablefordTotals(p,FRONT)' index-grupal.html
+          grep -Fq 'stablefordTotals(p,BACK)' index-grupal.html
+          grep -Fq 'stablefordTotals(p,ALL)' index-grupal.html
+          node test-stableford.mjs
+          node test-stableford-ui.mjs
+          node test-stableford-torneo.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index-grupal.html
+          git commit -m 'Stableford V240 accumulated points by IN OUT TOTAL'
+          git push origin stableford-tournament-final

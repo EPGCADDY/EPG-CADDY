@@ -4,9 +4,9 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V199
-**Fecha de corte:** 20 de agosto de 2026
-**Ramas operativas:** `main` (Producción) y `grupal-v120-safe` (respaldo)
+**Versión documentada:** V272
+**Fecha de corte:** 23 de agosto de 2026
+**Ramas operativas:** `main` (Producción vigente) y candidato V272 pendiente de autorización de publicación definitiva
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
 **Responsable de implementación y control:** Partner / ChatGPT
@@ -81,6 +81,8 @@ El verificador `verify-manual-sync.mjs` compara automáticamente la versión dec
 12. Cada versión publicada debe tener pruebas, commit identificable y respaldo.
 13. Si el asistente solicita `👍🏻` para continuar, recibirlo obliga a reanudar inmediatamente todo el procesamiento pendiente; nunca puede contestar sólo con otro símbolo o un acuse vacío.
 14. Toda necesidad de PC, autenticación, GitHub, Vercel, permisos o intervención manual debe comunicarse al propietario en la misma interacción en que se detecta, con instrucciones exactas.
+15. La línea operacional debe ser tan coherente como la línea gráfica: pantalla atrás/adelante, regreso al registro, dictado, revisión, guardar, cerrar y enviar conservan el mismo patrón y significado en toda la aplicación; no se crean recorridos paralelos o contradictorios para la misma acción.
+16. Control manual y control de voz son dos entradas equivalentes al mismo motor oficial. Cuando ambos admiten una operación, deben compartir validación, cálculo, persistencia, transición de estado y resultado; cambiar el medio de control no puede cambiar el efecto funcional.
 
 ---
 
@@ -112,7 +114,9 @@ Capacidad:
 
 ### 5.3 Enlace operativo
 
-`https://epg-caddy-git-grupal-v120-safe-epgcaddys-projects.vercel.app/index-grupal.html`
+`https://epg-caddy.vercel.app/index-grupal.html`
+
+Esta URL es exclusivamente General y nunca debe llevar el parámetro `stableford_emergency`. Stableford usa su propia ruta oficial y sus propios datos activos. Si una llave General antigua contiene accidentalmente una ronda Stableford, la aplicación la ignora y recupera la última ronda General disponible sin borrar el historial.
 
 ---
 
@@ -294,9 +298,9 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - `Quitar jugador [nombre]`.
 - Un jugador agregado durante la ronda comienza en el hoyo de incorporación definido y no recibe scores ficticios anteriores.
 
-### 8.5 WhatsApp y directorio local V141
+### 8.5 WhatsApp y directorio local V141 (histórico; retirado del registro visible en V261)
 
-**Estado:** `OPERATIVO` para registro y persistencia local.
+**Estado actual:** compatibilidad histórica interna. Desde V261 WhatsApp no se solicita ni se muestra en el registro de jugadores.
 
 - Cada jugador dispone de un campo WhatsApp opcional.
 - El prefijo fijo predeterminado es `+502` para Guatemala.
@@ -307,7 +311,42 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - Las rondas antiguas sin WhatsApp siguen siendo compatibles.
 - La V141 no escribe silenciosamente en la libreta del teléfono y no envía mensajes todavía.
 
-### 8.6 Torneo V143
+### 8.6 Casillas, código privado e historial de perfil V255 (histórico; interfaz sustituida en V261)
+
+**Estado:** casillas, selector, dictado visible, código y directorio histórico local `OPERATIVOS`; sincronización central `PREPARADA, NO ACTIVADA`.
+
+- Las seis posiciones muestran desde el inicio casillas reales para código, nombre, HDCP, marcas y WhatsApp opcional; ya no existen líneas abiertas con `DISPONIBLE`.
+- En captura manual el color de marcas nunca se escribe: se elige en un selector con `NEGRAS`, `AZULES`, `BLANCAS`, `ROJAS` o `AMARILLAS`.
+- En dictado se pronuncian nombre, HDCP y color; el resultado reconocido aparece en las mismas casillas, con número y color visibles antes de presionar `OK`.
+- Al completar por primera vez nombre, HDCP y marcas se crea un perfil privado reutilizable y se le asigna un código corto.
+- Escribir únicamente ese código recupera en el mismo dispositivo el nombre, último HDCP, últimas marcas y último WhatsApp guardado; todos permanecen editables.
+- Cada variación conserva el dato vigente y agrega un evento al historial local sin borrar la información anterior.
+- La migración central `002_player_profiles_and_history.sql` deja preparados código único, dato vigente e historial de cambios. No debe anunciarse como sincronización central activa hasta aplicar la migración, habilitar autenticación y superar prueba multi-dispositivo.
+- El panel de proyecto `COMPARTIR`, su código visible y la recuperación manual por código fueron eliminados del registro en V261.
+- La eliminación se limita al registro de jugadores. Las acciones oficiales de cierre `CORREO / WHATSAPP GLOBAL` y `CORREO / WHATSAPP PERSONAL` permanecen operativas.
+
+### 8.6.1 Registro oficial vigente V262
+
+- El registro ofrece exactamente dos vías: `1 · DICTADO` y `2 · MANUAL OPCIONAL`.
+- En Dictado, se toca el micrófono y se pronuncian únicamente `NOMBRE + HDCP + MARCAS`.
+- En Manual Opcional, cada fila contiene únicamente `NOMBRE + HDCP + MARCAS`; las marcas se eligen en el selector de color.
+- Se permiten de uno a seis jugadores.
+- Si un jugador fue omitido y todavía hay menos de seis, el botón pequeño `+ JUGADOR` abre directamente la ronda activa en modo de incorporación. También puede usarse `ATRÁS` para editar los datos generales. En ambos casos, los scores ya registrados se conservan y el jugador nuevo comienza operativamente desde el hoyo de incorporación.
+- No se muestran ni operan Código, Compartir o WhatsApp dentro del registro.
+
+### 8.7 Base maestra y sustitución del dato vigente V256
+
+- El código privado es la identidad estable del jugador. Si se vuelve a registrar ese código, se actualiza el mismo jugador aunque el nombre haya sido corregido.
+- El registro más reciente reemplaza los datos vigentes anteriores: nombre, handicap, marcas, correo y WhatsApp.
+- Los datos sustituidos no se eliminan: se conservan como eventos históricos con fecha, fuente y vínculo de ronda cuando corresponde.
+- Una ronda nueva carga exclusivamente el último perfil vigente.
+- Campo y definición de yardajes, torneo, participantes, scores por hoyo, cierres, tarjetas lógicas y acciones de compartir viajan en un paquete maestro versionado.
+- La cola trabaja sin conexión y sólo elimina un paquete después de recibir confirmación remota íntegra del mismo hash.
+- La base central distribuye el paquete por rubros; no usa una bolsa genérica como fuente operativa.
+- WhatsApp y demás contactos siguen siendo datos privados. La API central requiere autenticación y el navegador nunca contiene la contraseña de PostgreSQL.
+- V256 no debe anunciarse como centralmente activa hasta aplicar la migración en Producción y completar una prueba real de ida, lectura y recuperación.
+
+### 8.7 Torneo V143
 
 **Estado:** registro y archivo local `OPERATIVOS`; visualizador y consulta histórica por voz `PLANIFICADOS`.
 
@@ -320,7 +359,7 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - La tarjeta digital muestra el nombre del torneo.
 - Las rondas que nunca fueron guardadas no pueden reconstruirse automáticamente; deberán importarse o registrarse manualmente.
 
-### 8.7 Campo de golf V156
+### 8.8 Campo de golf V156
 
 - El registro presenta siete opciones ya escritas con casillas de selección única: `El Pulté`, `Country Club`, `San Isidro`, `Mayan Golf`, `Hacienda Nueva`, `Alta Vista` y `La Reunión`.
 - Sólo puede marcarse un campo por ronda.
@@ -338,22 +377,26 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 
 Una anotación válida contiene:
 
-- hoyo real entre 1 y 18;
+- hoyo activo automático real entre 1 y 18;
 - jugador existente;
-- Gross válido o término golfístico reconocido.
+- Gross válido, término golfístico reconocido o X explícita autorizada.
 
 Ejemplos:
 
-- `Hoyo 4 Jessie 5`;
-- `Alan hoyo 7 birdie`;
+- `Jessie 5` en el hoyo que muestra el cursor;
+- `Alan birdie` en el hoyo que muestra el cursor;
+- `Hoyo 7 Alan birdie` únicamente cuando se desea reposicionar expresamente el cursor;
 - múltiples jugadores para el mismo hoyo;
+- bloques completos consecutivos sin repetir el número de hoyo;
 - corrección retroactiva de un hoyo ya registrado.
+
+El panel común `CONTROL MANUAL` es la pantalla principal de ingreso para General y Stableford. El cursor se coloca en el primer hoyo pendiente, muestra inmediatamente cada score recibido y ejecuta la misma operación de `ENTER` cuando todos los jugadores activos tienen Gross o X explícita. Después avanza al hoyo siguiente. Manual y voz comparten el mismo criterio de completitud, escritor, cálculo, persistencia y render.
 
 ### 9.2 Registro silencioso
 
 **Estado:** `OPERATIVO`.
 
-Después de registrar scores, la aplicación no debe recitar automáticamente los scores de cada jugador ni los resultados globales. La voz queda reservada para una consulta expresa.
+Después de registrar scores, la aplicación no debe recitar automáticamente los scores de cada jugador ni los resultados globales. La única excepción operacional es el recordatorio exacto de dato faltante: si un hoyo ya comenzó y pasan dos segundos sin recibir otro score, puede pronunciar únicamente `Falta NOMBRE`. Después acepta `Score`, `Nombre + Score`, una omisión explícita o `Nombre + omisión`. No puede añadir ninguna otra palabra ni crear una X por tiempo.
 
 ### 9.3 Atomicidad
 
@@ -361,7 +404,7 @@ Si una instrucción múltiple contiene un elemento inválido, no debe aplicar si
 
 ### 9.4 Corrección retroactiva
 
-Un score real posterior puede reemplazar una `X`. Todos los resultados dependientes se recalculan.
+Un score real posterior puede reemplazar una `X`. Todos los resultados dependientes —Gross, Neto, handicap aplicado, contra par, puntos Stableford, primera vuelta, segunda vuelta y total— se recalculan.
 
 ---
 
@@ -371,6 +414,8 @@ Un score real posterior puede reemplazar una `X`. Todos los resultados dependien
 
 - Avanzar de hoyo no autoriza colocar `X` a quienes no fueron dictados.
 - La aplicación no puede inferir que un jugador omitió un hoyo.
+- `X`, `EQUIS`, `CERO`, `SIN SCORE`, `SIN DATO`, `SIN RESULTADO`, `NO INFORMÓ`, `NO REPORTÓ`, `NO DIJO`, `NO CANTÓ`, `NO DIO SCORE`, `NO SE SABE`, `PONLE CERO`, `NO LE ANOTES` y sus variantes autorizadas registran una X únicamente cuando identifican al jugador o responden al recordatorio exacto `Falta NOMBRE`.
+- Una X explícita cuenta como dato atendido para ejecutar `ENTER` y avanzar, pero nunca inventa Gross, Neto ni puntos.
 - Una `X` explícita excluye temporalmente al jugador de cierres o resultados que requieran información completa.
 - Al reemplazar la `X`, Gross, Neto, contra par y totales deben recalcularse.
 - Al abrir una ronda antigua afectada por X automáticas, la reparación autorizada elimina esas X inventadas.
@@ -610,6 +655,11 @@ Prohibiciones operativas durante una ronda:
 - Primera vuelta: hoyos 1–9.
 - Segunda vuelta: hoyos 10–18.
 - Ronda: hoyos 1–18.
+- En General y en `RONDA SIN REGISTRO`, el bloque inferior se titula `INFORMACIÓN DE RONDA` en verde neón.
+- En Stableford, el bloque de captura manual se titula `STABLEFORD` y el bloque inferior de resultados se titula `PUNTOS`, también en la tarjeta digital final.
+- La tarjeta grupal muestra: `JUGADOR`, `GROSS OUT`, `GROSS IN`, `GROSS TOTAL`, `HCP`, `NETO TOTAL` y `+/- NETO`.
+- `RONDA SIN REGISTRO` siempre muestra sus datos Gross reales: `JUGADOR`, `GROSS OUT`, `GROSS IN` y `GROSS TOTAL`; cuando un jugador tiene HDCP y marcas completos, añade para él los resultados Neto correspondientes.
+- La tarjeta Stableford muestra: `JUGADOR`, Gross de primera vuelta, segunda vuelta y total, y Puntos de primera vuelta, segunda vuelta y total.
 - El cierre depende de scores requeridos, no de que simplemente se mencione el hoyo 18.
 - Jugadores incorporados tarde se evalúan desde su hoyo de incorporación.
 - Una X explícita impide un cierre completo hasta ser resuelta.
@@ -1166,16 +1216,18 @@ Antes de publicar al mercado:
 
 ---
 
-## 25. Tarjeta provisional sin registro
+## 25. Ronda sin registro
 
-La primera pantalla incorpora el acceso **SCORE CARD SIN REGISTRO**. Permite abrir inmediatamente la tarjeta sin registrar jugadores, sin handicap y sin presionar `OK`. Está destinada a inspección visual, práctica y partidas informales de algunos hoyos, incluso salteados.
+La primera pantalla incorpora el acceso **SCORE CARD SIN REGISTRO** dentro de `SELECCIONA MODALIDAD`, exactamente debajo de `STABLEFORD`. Permite abrir inmediatamente la tarjeta sin registrar jugadores y sin presionar `OK`. Está destinada a inspección visual, práctica y partidas informales de algunos hoyos, incluso salteados. No existe una segunda opción duplicada al final del registro.
 
-- La flecha de acceso activa por sí sola el modo interno `TARJETA EN SUCIO`; el usuario no debe marcar ninguna opción adicional.
-- La cuadrícula abre seis espacios de nombre completamente en blanco. Los nombres son opcionales y pueden teclearse directamente en la tarjeta sólo como referencia informal.
-- Cada jugador muestra exclusivamente `YDS` y `GROSS`. No aparecen handicap, círculos de handicap, Neto ni resultado `+/-`.
-- El dictado acepta hoyo y resultado para el primer espacio, por ejemplo: `HOYO 1 PAR`, y también jugador o nombre, hoyo y resultado, por ejemplo: `JUGADOR 3 HOYO 5 BOGEY` o `CARLOS HOYO 9 PAR`.
+- La flecha de acceso activa por sí sola el modo `RONDA SIN REGISTRO`; el usuario no debe marcar ninguna opción adicional.
+- La cuadrícula abre seis perfiles opcionales. En cada uno puede dejar todo vacío o completar sólo nombre, sólo HDCP, sólo marcas, cualquier combinación parcial o los tres datos.
+- Los datos omitidos pueden completarse durante la ronda sin reiniciar ni perder scores: manualmente en las casillas de la propia tarjeta o por micrófono indicando la posición, por ejemplo `JUGADOR 2 CARLOS 14 BLANCAS`, `JUGADOR 2 HANDICAP 14` o `JUGADOR 2 MARCAS BLANCAS`.
+- Sin marcas, los yardajes permanecen vacíos. Con marcas, aparecen sus yardajes. Con HDCP y marcas válidos, aparecen también HDCP, Neto y `+/-` para ese jugador.
+- El dictado de scores acepta hoyo y resultado para el primer espacio, por ejemplo: `HOYO 1 PAR`, y también jugador o nombre, hoyo y resultado, por ejemplo: `JUGADOR 3 HOYO 5 BOGEY` o `CARLOS HOYO 9 PAR`.
 - No exige orden consecutivo ni completar 18 hoyos; las casillas no jugadas permanecen vacías y nunca se convierten en `X`.
-- Se identifica permanentemente como `TARJETA PROVISIONAL · NO GENERA RÉCORD NI ENVÍOS`.
+- Los resultados calculan automáticamente `GROSS OUT`, `GROSS IN` y `GROSS TOTAL`; el total no se escribe manualmente.
+- Se identifica permanentemente como `RONDA SIN REGISTRO · DATOS OPCIONALES · NO GENERA RÉCORD NI ENVÍOS`.
 - No entra al archivo histórico, base de jugadores, estadísticas históricas, récords, cierre oficial, Tarjeta Global, tarjeta personal, WhatsApp, correo ni cola de entregas.
 - Al regresar a Datos puede iniciarse posteriormente una ronda oficial mediante el registro normal.
 
@@ -1187,17 +1239,27 @@ Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarje
 
 ## 27. Stableford Scratch — Senior y S. Senior
 
-La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la misma cuadrícula de campos, inmediatamente debajo de `ALTA VISTA`. Al tocarla abre la selección `SENIOR` o `S. SENIOR`. Esta modalidad es independiente de la ronda normal y de la tarjeta provisional.
+La pantalla general de Registro mantiene una opción permanente correctamente nombrada `STABLEFORD`. Al tocarla abre la modalidad Stableford dentro de la misma tarjeta oficial y la misma arquitectura operacional. General y Stableford conservan datos de ronda separados para impedir contaminación cruzada, pero comparten navegación, control manual, voz, validación, escritura, persistencia, render y cierre.
+
+La apertura normal del alojamiento conserva y restaura la última ronda Stableford activa: campo, torneo, categoría, jugadores, marcas, Gross y Puntos. El botón `NUEVA RONDA` elimina únicamente la ronda activa y el borrador de registro, y presenta un registro Stableford completamente limpio. Nunca borra el historial de tarjetas cerradas ni la clasificación acumulada.
 
 - `SENIOR`: handicap fijo `0`, marcas blancas y cinco plazas de clasificación por ranking.
 - `S. SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
-- En ambas categorías se registran únicamente de uno a cuatro nombres; handicap y marcas no se escriben porque la aplicación los configura automáticamente.
+- En una nueva ronda no queda categoría impuesta. El registro muestra simultáneamente `SENIOR · BLANCAS` y `SÚPER SENIOR · AMARILLAS`; la selección configura automáticamente las marcas, los yardajes, Course Rating y Slope correspondientes al campo elegido.
+- El registro muestra los cuatro campos autorizados —Country Club, El Pulté, San Isidro y Mayan Golf— y exige seleccionar uno antes de iniciar.
+- En ambas categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
+- El mismo panel permite escribir el nombre del torneo antes de iniciar scores. `REGRESAR A DATOS` abre los datos de la ronda actual sin borrar sus scores; `NUEVA RONDA` sí abre un registro completamente limpio.
 - Los únicos campos admitidos por la serie son Country Club, El Pulté, San Isidro y Mayan Golf. Un campo sin tarjeta oficial cargada permanece bloqueado para evitar cálculos con datos heredados o inventados.
-- Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales de ida, vuelta y ronda.
+- Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales `OUT`, `IN` y `TOTAL`.
 - Puntuación automática por hoyo: doble bogey o más `0`; bogey `1`; par `2`; birdie `3`; eagle, albatros o mejor `4`. El valor máximo por hoyo queda limitado a cuatro puntos.
 - `X`, `EQUIS` o `LEVANTA` registra el hoyo levantado con cero puntos y sin fabricar un Gross.
-- La voz acepta nombre, hoyo y Gross numérico o expresión golfística. No calcula Neto ni reparte tiros de handicap.
-- Al cierre oficial, la ronda conserva su snapshot y actualiza la clasificación acumulada de su categoría.
+- La voz acepta `Nombre + Gross` en el hoyo activo; el número de hoyo es opcional y únicamente reposiciona el cursor. Acepta bloques consecutivos, X explícita y la respuesta contextual posterior a `Falta NOMBRE`. No reparte tiros de handicap. El ingreso manual y el dictado terminan en la misma secuencia oficial de cálculo, guardado, render y cierre hablado. Al completar los hoyos 1–9 por cualquiera de los dos controles anuncia automáticamente `Primera vuelta` y, en orden de registro, el nombre, Gross y Puntos de cada jugador. Al completar los hoyos 10–18 anuncia `Segunda vuelta` con nombre, Gross y Puntos de cada jugador y luego `Total` con nombre, Gross y Puntos acumulados de cada jugador. Cada cierre se pronuncia una sola vez.
+- El recordatorio `Falta NOMBRE` conserva los dos segundos aprobados, pero el tiempo comienza únicamente después de una transcripción final y de comprobar inactividad real. Queda bloqueado y se cancela mientras existe voz activa, delta parcial, transcripción pendiente, watchdog, finalización, salida hablada o aplicación viva de scores. General y Stableford comparten los mismos cuatro segundos de continuidad y diez segundos de vigilancia; no existen excepciones de tiempos por modalidad.
+- Antes de cualquier reporte de primera vuelta, segunda vuelta o total, la aplicación cierra automáticamente el micrófono. El micrófono permanece cerrado durante y después de la lectura para que conversaciones externas no interrumpan, alteren ni reinicien el reporte.
+- Todos los rótulos visuales de las tarjetas oficial, digital, General, Stableford, Control Manual y artefactos Global/personales utilizan exclusivamente `OUT`, `IN` y `TOTAL`. Las expresiones habladas `Primera vuelta` y `Segunda vuelta` se conservan únicamente dentro del vocabulario de cierre aprobado.
+- Al cierre oficial, la ronda conserva un snapshot con SHA-256 y guarda en el historial el campo, la fecha y hora, el torneo, la categoría, los jugadores, los 18 hoyos, Gross y Puntos; además actualiza la clasificación acumulada de su categoría.
+- Después del cierre, Stableford usa la misma matriz oficial GRUPAL: abre una Tarjeta Global, permite elegir y abrir cada tarjeta personal, descarga el paquete completo y entrega el archivo visual a la hoja nativa del teléfono para escoger correo o WhatsApp.
+- La hoja nativa constituye una entrega preparada y confirmada por el usuario. Cancelarla no altera la ronda ni marca la tarjeta como enviada; el envío automático y el estado `ENTREGADO` continúan reservados a proveedores verificables.
 - La clasificación contiene cuatro fechas, una por campo, y suma automáticamente las tres mejores tarjetas de cada jugador.
 - Se pueden incorporar resultados oficiales de otros grupos mediante `AGREGAR RESULTADO OFICIAL`, indicando jugador, categoría, fecha, campo, puntos y Gross opcional.
 - La clasificación Senior muestra las primeras cinco posiciones de ranking; las tres elecciones de capitán se administran fuera del cálculo. S. Senior muestra cuatro posiciones; sus dos elecciones de capitán también son externas.
@@ -1207,7 +1269,30 @@ La pantalla de Registro mantiene una opción permanente `STABLE` dentro de la mi
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-23 | Manual 3.48 / App V272 | Candidato de liberación definitiva bajo el nombre `Golf Score Card GT`. Corregida la interferencia Stableford: `Falta NOMBRE` ya no se programa desde scores parciales ni puede hablar mientras continúa el dictado, existe audio/transcripción pendiente o el motor aplica datos. General y Stableford comparten un único cierre continuo de cuatro segundos y watchdog de diez segundos. Los reportes de primera vuelta, segunda vuelta y total cierran el micrófono antes de hablar y lo mantienen cerrado. Todos los rótulos visuales pasan a `OUT`, `IN` y `TOTAL` en tarjeta oficial, Control Manual, resúmenes, tarjeta digital y artefactos. Se añade prueba V272 de la puerta de inactividad, cancelación por voz/delta, cierre de micrófono, marca y ausencia de rótulos obsoletos. La publicación permanente continúa sujeta a auditoría integral, navegador real, commit local identificado y autorización explícita del destino remoto. |
+| 2026-08-23 | Manual 3.47 / App V271 | Corregido el bloqueo físico de apertura del micrófono detectado en el preview V270. La sesión Realtime devolvía HTTP 400 porque el prompt de transcripción medía 1,070 caracteres y excedía el máximo contractual de 1,024. El prompt se compacta sin eliminar jugadores, hoyo activo automático, Nombre + Score, respuesta contextual a `Falta NOMBRE`, vocabulario golfístico ni omisiones X; además queda limitado programáticamente a 1,024 caracteres. Se incorpora una prueba contractual independiente con plantillas de cero a 300 caracteres de jugadores para impedir la regresión. Evidencia: prueba V271 y auditoría maestra de 44 paquetes PASS. |
+| 2026-08-23 | Manual 3.46 / App V270 | El panel común `CONTROL MANUAL` pasa a ser la pantalla principal de ingreso encima de la tarjeta oficial para General y Stableford. El cursor se coloca automáticamente en el hoyo activo, por lo que el dictado normal exige únicamente `Nombre + Score`; decir `Hoyo N` queda como reposicionamiento opcional. Cada score se muestra de inmediato y, al completar Gross o X explícita para todos los jugadores activos, el mismo motor de `ENTER` valida, guarda, calcula, renderiza y avanza. Se incorpora un vocabulario amplio de X explícita —incluidos cero, sin score, sin dato, no informó, no dijo, no cantó, ponle cero y no le anotes— sin restaurar ninguna X automática. Si un hoyo ya empezó y pasan dos segundos sin otro score, la única voz autorizada es `Falta NOMBRE`; la respuesta puede ser solo el score o solo una omisión y se vincula exclusivamente al jugador señalado. Una X puede reemplazarse posteriormente y recalcula General o Stableford. Evidencia automatizada: 43 paquetes, matriz de 242 configuraciones y prueba V270 de bloques completos, incompletos, X múltiples, correcciones, hoyo 18, respuesta contextual y atomicidad. La prueba de navegador local quedó bloqueada porque el entorno no dispone de Chromium y el instalador no pudo obtenerlo; por tanto V270 permanece local y no se declara liberada ni publicada. |
+| 2026-08-23 | Manual 3.45 / App V269 | Corregida la omisión operacional detectada físicamente en V268. La demostración vuelve a mostrar y operar `ATRÁS` hacia el Registro, `RONDA PREVIA`, el cambio automático del mismo control a `RONDA ACTUAL` y `NUEVA RONDA`. Registro en curso, ronda activa y archivo de rondas usan llaves exclusivas de la demostración; no leen ni escriben el directorio oficial de jugadores, la ronda General oficial, Stableford ni la sincronización central. Se incorpora una ronda previa completa de seis jugadores y 108 scores para probar el recorrido real anterior/actual sin mezclar datos oficiales. V269 conserva los seis jugadores y los 30 Gross iniciales de los hoyos 1 al 5 en la ronda actual. La puerta de liberación exige la prueba específica V269, auditoría maestra y navegador real de todas las transiciones antes de publicar. |
+| 2026-08-23 | Manual 3.44 / App V268 | Enlace de demostración rechazado después de la prueba física. Aunque cargó correctamente seis jugadores y 30 Gross en los hoyos 1 al 5, el aislamiento ocultó indebidamente `ATRÁS`, `RONDA PREVIA`, el retorno `RONDA ACTUAL` y `NUEVA RONDA`. La auditoría automatizada V268 no cubrió esa matriz de navegación y por tanto su PASS fue insuficiente. V268 no se considera versión aprobada ni completa. |
+| 2026-08-23 | Manual 3.43 / App V267 | Arquitectura operacional integral aplicada a todas las configuraciones y combinaciones de Score Card. General, Stableford, ronda registrada, ronda sin registro, uno a seis jugadores, campos, categorías, marcas, torneo, ronda nueva/recuperada, manual y voz usan la misma secuencia y el mismo escritor `applyLiteralScores → recordScore(s) → saveEntry → persist → render`. Se eliminó el escritor manual paralelo de Stableford y se creó un único `CONTROL MANUAL` compartido; los nombres sólo se corrigen desde el Registro. La recuperación usa una sola política con filtro explícito de modalidad: General jamás carga jugadores o scores Stableford y Stableford jamás carga General, aunque la ronda contraria sea más reciente. El dictado vivo acepta múltiples hoyos y múltiples jugadores en una misma toma y anota cada pareja completa Jugador/Hoyo/Gross mientras el micrófono continúa abierto; el evento final reconcilia sin duplicar. Una frase ajena al vocabulario permanece en silencio y no modifica datos. El cierre Stableford pronuncia únicamente Nombre, Gross y Puntos; no agrega “Entendido”, “voy a leer” ni preámbulos. Se corrigió además la reconstrucción del formulario General que podía devolver el handicap anterior al pasar desde Nombre. Evidencia: 41 paquetes automatizados, matriz de 242 configuraciones renderizadas en Chromium con 242 escrituras manuales, flujo móvil/escritorio General y Stableford, tanda viva de 35 scores, recuperación cruzada prohibida con fechas adversarias, cero errores de consola y cero solicitudes fallidas. V267 fue publicada en la rama de prueba, pasó la validación física funcional/operacional y quedó aprobada; se conserva como limitación conocida la pérdida ocasional de comprensión del micrófono durante dictados prolongados. |
+| 2026-08-23 | Manual 3.42 / App V266 | Ajustado exclusivamente el cierre hablado Stableford al formato propio de la modalidad y a la línea operacional única. Tanto el control manual como el control de voz pasan por el mismo cierre calculado: en el hoyo 9 anuncia `Primera vuelta` y, por jugador, Nombre, Gross y Puntos; en el hoyo 18 anuncia `Segunda vuelta` con esos mismos datos y a continuación `Total` con los acumulados de los 18 hoyos. General y la interfaz visual permanecen congelados; se conserva la recuperación y el reintento de la sesión de voz incorporados en V265. |
+| 2026-08-23 | Manual 3.41 / App V265 | Corregido exclusivamente el cierre hablado de la primera vuelta Stableford: al registrar el último score del hoyo 9 anuncia automáticamente por jugador Gross, Neto y resultado sobre/bajo par. Stableford delega este resumen al motor oficial GRUPAL y, si el primer envío de audio no encuentra la sesión disponible, recupera la sesión y reintenta. La interfaz visual, jugadores, scores, puntos, campos y demás funciones permanecen congelados. |
+| 2026-08-22 | Manual 3.39 / App V262 | El segundo método se identifica como `2 · MANUAL OPCIONAL`. `SCORE CARD SIN REGISTRO` queda dentro de `SELECCIONA MODALIDAD`, debajo de `STABLEFORD`, sin duplicado inferior. La `RONDA SIN REGISTRO` acepta seis perfiles vacíos, parciales o completos, editables manualmente o por micrófono durante la ronda. Los yardajes dependen de las marcas, Neto requiere HDCP y marcas, y los tres totales Gross se calculan automáticamente y permanecen visibles. `REGRESAR A DATOS` de una ronda oficial edita o agrega jugadores sin borrar scores. El acceso Stableford usa caché `v=262`. |
+| 2026-08-22 | Manual 3.40 / App V263 | En rondas registradas se muestran únicamente los jugadores reales, consecutivos y sin bloques vacíos intercalados; la ronda sin registro conserva seis posiciones editables. La flecha flotante `REGRESAR A DATOS` se elimina y se sustituye por un botón pequeño `ATRÁS`, dentro del flujo de la tarjeta, que abre el editor de datos sin borrar scores. Mientras haya menos de seis jugadores aparece además el control pequeño `+ JUGADOR`; al completar seis se oculta. La simulación funcional verifica que al agregar al sexto se conservan intactos los scores de los cinco anteriores. El acceso Stableford usa caché `v=263`. |
+| 2026-08-22 | Manual 3.38 / App V261 | Registro oficial depurado a dos vías exactas: `1 · DICTADO` y `2 · MANUAL`, ambas limitadas a Nombre, HDCP y Marcas; se eliminan de esa interfaz Código, Compartir y WhatsApp. `SELECCIONA CAMPO` contiene únicamente campos; `STABLEFORD` queda separado bajo `SELECCIONA MODALIDAD` con apariencia neutral, nunca verde como selección activa. En la tarjeta Stableford, el panel manual se titula `STABLEFORD` y el resumen inferior `PUNTOS`, incluido el digital final. `RONDA PREVIA` continúa alternando a `RONDA ACTUAL` para recuperar la ronda vigente completa. El acceso Stableford usa caché `v=261`. |
+| 2026-08-22 | Manual 3.37 / App V260 | El panel alternativo de registro queda titulado únicamente `PUNTOS DE RONDA`; la casilla del nombre gana 25% de ancho y las tres columnas acumuladas IN/OUT/TOTAL se angostan. El PUNTOS TOTAL del resumen se muestra en verde neón. La flecha `REGRESAR A DATOS` queda separada de `TARJETA DIGITAL` y permite agregar un jugador faltante conservando todos los scores existentes. General y Stableford quedan aisladas por enlace y almacenamiento: General no restaura una ronda Stableford antigua y `NUEVA RONDA STABLEFORD` no borra datos General. El acceso oficial Stableford usa versión de caché `v=260`. |
+| 2026-08-22 | Manual 3.36 / App V259 | El registro manual opcional de Stableford conserva las seis casillas disponibles para permitir grupos de 1 a 6 jugadores. Después de iniciar la ronda, la anotación manual Plan B, la tarjeta oficial y el resumen muestran únicamente los jugadores efectivamente registrados; las filas restantes quedan invisibles. |
+| 2026-08-22 | Manual 3.35 / App V258 | En la tarjeta Stableford, el nombre del torneo y la categoría seleccionados en el registro pasan a ser indicadores de sólo lectura y no pueden modificarse durante la anotación. El recuadro alternativo queda identificado expresamente como `ANOTACIÓN MANUAL · PLAN B`; conserva HOYO, GROSS y ENTER para registrar scores sin voz. |
+| 2026-08-22 | Manual 3.34 / App V257 | Corregida la selección de campo en la preparación Stableford: la casilla visible es ahora un selector nativo operativo y queda sincronizada con los cuatro botones de campo (El Pulté, Country Club, San Isidro y Mayan Golf). El título de esta pantalla queda únicamente como `RONDA STABLEFORD`. |
+| 2026-08-22 | Manual 3.33 / App V256 | Plataforma maestra por rubros preparada: el código actualiza al mismo jugador; el último registro reemplaza nombre, handicap, marcas y WhatsApp vigentes sin borrar el historial anterior. Paquete central para campos/yardajes, torneos, rondas, participantes, jugadas por hoyo, tarjetas lógicas y acciones honestas de compartir; cola offline idempotente y API transaccional autenticada. Migración y recorrido real de Producción pendientes de validación aislada. |
+| 2026-08-22 | Manual 3.32 / App V255 | Registro General con seis filas de casillas reales para código privado, nombre, HDCP, selector de marcas y WhatsApp; manual y dictado llenan la misma retícula y muestran número/color antes de `OK`. El perfil se guarda localmente al completar datos válidos, recupera por código y conserva historial de cambios. Migración central preparada pero no aplicada. `COMPARTIR` abre únicamente el proyecto de selección; autorización y envío aún no están disponibles. |
+| 2026-08-22 | Manual 3.31 / App V254 | Eliminadas completamente las tres falsas casillas visuales bajo `REGISTRO DE JUGADORES` porque no ejecutaban ninguna acción y podían confundirse con botones. Se conservan sin cambios el título, las instrucciones funcionales, el registro de uno a seis jugadores, el micrófono, la revisión editable, `OK` y la confirmación previa a iniciar la ronda. |
+| 2026-08-22 | Manual 3.30 / App V253 | `RONDA PREVIA` operativa y viva en General y Stableford: antes de alternar guarda la ronda visible; restaura campo, fecha, torneo, jugadores, configuración y scores completos; permite continuar editando o dictando; cambia a `RONDA ACTUAL` para regresar sin perder modificaciones; separa estrictamente los historiales General y Stableford y también permite recuperar la última ronda desde el registro vacío posterior a `NUEVA RONDA`. |
+| 2026-08-22 | Manual 3.29 / App V252 | Stableford aislado con estado operativo explícito: apertura normal restaura la última ronda; `NUEVA RONDA` limpia solamente ronda activa y borrador, sin tocar historial ni clasificación; registro nuevo sin nombres, campo o categoría forzados; cuatro campos, Senior/blancas, Súper Senior/amarillas y uno a seis jugadores. |
+| 2026-08-22 | Manual 3.28 / App V250 | Fin de ronda Stableford conectado a la matriz oficial GRUPAL: Global, una personal por jugador, paquete conjunto, historial y compartir del archivo visual por correo/WhatsApp mediante la hoja nativa, sin falsos estados de entrega. |
+| 2026-08-22 | Manual 3.27 / App V201 | Stableford oficial limpio: acceso directo sin nombres precargados, registro interno de uno a seis jugadores, torneo/categoría dentro de la tarjeta y snapshot histórico con campo, fecha, torneo, jugadores, Gross y Puntos. |
 | 2026-08-20 | Manual 3.25 / App V199 | Stableford Scratch permanente: Senior HCP 0/marcas blancas y S. Senior HCP 0/marcas amarillas; máximo cuatro jugadores; Gross y puntos por hoyo; X explícita con cero; cuatro campos y fechas; totales por vuelta/ronda; clasificación por las tres mejores tarjetas e ingreso manual de resultados oficiales. |
+| 2026-08-22 | Manual 3.26 / App V200 | Reconciliación de la versión física Stableford: bloque inferior unificado como `INFORMACIÓN DE RONDA`, verde neón, con primera vuelta, segunda vuelta y total completos en grupal, provisional, Stableford y tarjeta digital. |
 | 2026-08-20 | Manual 3.24 / App V197 | Franja del reloj reorganizada en tres zonas: INICIO a la izquierda, TIMER centrado con superficie táctil real ampliada y cronómetro a la derecha; eliminada completamente la antigua capa invisible y sus interceptores globales para impedir que el micrófono active o desactive el timer. |
 | 2026-08-20 | Manual 3.23 / App V196 | Guatemala Country Club habilitado desde su tarjeta oficial: Par 71, 90 yardajes, cinco ratings/slopes y tres matrices de handicap validados casilla por casilla; selección de campo enlazada al motor de Gross, Neto, vueltas y total sin heredar datos de El Pulté. |
 | 2026-08-20 | Manual 3.18 / App V193 | Tarjeta en sucio ampliada: seis nombres opcionales y editables directamente, seis bloques exclusivamente Gross, sin handicap/círculos/Neto/resultado, dictado por posición o nombre y aislamiento absoluto de todos los efectos oficiales. |
