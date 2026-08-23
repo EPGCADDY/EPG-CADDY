@@ -377,22 +377,26 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 
 Una anotación válida contiene:
 
-- hoyo real entre 1 y 18;
+- hoyo activo automático real entre 1 y 18;
 - jugador existente;
-- Gross válido o término golfístico reconocido.
+- Gross válido, término golfístico reconocido o X explícita autorizada.
 
 Ejemplos:
 
-- `Hoyo 4 Jessie 5`;
-- `Alan hoyo 7 birdie`;
+- `Jessie 5` en el hoyo que muestra el cursor;
+- `Alan birdie` en el hoyo que muestra el cursor;
+- `Hoyo 7 Alan birdie` únicamente cuando se desea reposicionar expresamente el cursor;
 - múltiples jugadores para el mismo hoyo;
+- bloques completos consecutivos sin repetir el número de hoyo;
 - corrección retroactiva de un hoyo ya registrado.
+
+El panel común `CONTROL MANUAL` es la pantalla principal de ingreso para General y Stableford. El cursor se coloca en el primer hoyo pendiente, muestra inmediatamente cada score recibido y ejecuta la misma operación de `ENTER` cuando todos los jugadores activos tienen Gross o X explícita. Después avanza al hoyo siguiente. Manual y voz comparten el mismo criterio de completitud, escritor, cálculo, persistencia y render.
 
 ### 9.2 Registro silencioso
 
 **Estado:** `OPERATIVO`.
 
-Después de registrar scores, la aplicación no debe recitar automáticamente los scores de cada jugador ni los resultados globales. La voz queda reservada para una consulta expresa.
+Después de registrar scores, la aplicación no debe recitar automáticamente los scores de cada jugador ni los resultados globales. La única excepción operacional es el recordatorio exacto de dato faltante: si un hoyo ya comenzó y pasan dos segundos sin recibir otro score, puede pronunciar únicamente `Falta NOMBRE`. Después acepta `Score`, `Nombre + Score`, una omisión explícita o `Nombre + omisión`. No puede añadir ninguna otra palabra ni crear una X por tiempo.
 
 ### 9.3 Atomicidad
 
@@ -400,7 +404,7 @@ Si una instrucción múltiple contiene un elemento inválido, no debe aplicar si
 
 ### 9.4 Corrección retroactiva
 
-Un score real posterior puede reemplazar una `X`. Todos los resultados dependientes se recalculan.
+Un score real posterior puede reemplazar una `X`. Todos los resultados dependientes —Gross, Neto, handicap aplicado, contra par, puntos Stableford, primera vuelta, segunda vuelta y total— se recalculan.
 
 ---
 
@@ -410,6 +414,8 @@ Un score real posterior puede reemplazar una `X`. Todos los resultados dependien
 
 - Avanzar de hoyo no autoriza colocar `X` a quienes no fueron dictados.
 - La aplicación no puede inferir que un jugador omitió un hoyo.
+- `X`, `EQUIS`, `CERO`, `SIN SCORE`, `SIN DATO`, `SIN RESULTADO`, `NO INFORMÓ`, `NO REPORTÓ`, `NO DIJO`, `NO CANTÓ`, `NO DIO SCORE`, `NO SE SABE`, `PONLE CERO`, `NO LE ANOTES` y sus variantes autorizadas registran una X únicamente cuando identifican al jugador o responden al recordatorio exacto `Falta NOMBRE`.
+- Una X explícita cuenta como dato atendido para ejecutar `ENTER` y avanzar, pero nunca inventa Gross, Neto ni puntos.
 - Una `X` explícita excluye temporalmente al jugador de cierres o resultados que requieran información completa.
 - Al reemplazar la `X`, Gross, Neto, contra par y totales deben recalcularse.
 - Al abrir una ronda antigua afectada por X automáticas, la reparación autorizada elimina esas X inventadas.
@@ -1247,7 +1253,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 - Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales de ida, vuelta y ronda.
 - Puntuación automática por hoyo: doble bogey o más `0`; bogey `1`; par `2`; birdie `3`; eagle, albatros o mejor `4`. El valor máximo por hoyo queda limitado a cuatro puntos.
 - `X`, `EQUIS` o `LEVANTA` registra el hoyo levantado con cero puntos y sin fabricar un Gross.
-- La voz acepta nombre, hoyo y Gross numérico o expresión golfística. No reparte tiros de handicap. El ingreso manual y el dictado terminan en la misma secuencia oficial de cálculo, guardado, render y cierre hablado. Al completar los hoyos 1–9 por cualquiera de los dos controles anuncia automáticamente `Primera vuelta` y, en orden de registro, el nombre, Gross y Puntos de cada jugador. Al completar los hoyos 10–18 anuncia `Segunda vuelta` con nombre, Gross y Puntos de cada jugador y luego `Total` con nombre, Gross y Puntos acumulados de cada jugador. Cada cierre se pronuncia una sola vez.
+- La voz acepta `Nombre + Gross` en el hoyo activo; el número de hoyo es opcional y únicamente reposiciona el cursor. Acepta bloques consecutivos, X explícita y la respuesta contextual posterior a `Falta NOMBRE`. No reparte tiros de handicap. El ingreso manual y el dictado terminan en la misma secuencia oficial de cálculo, guardado, render y cierre hablado. Al completar los hoyos 1–9 por cualquiera de los dos controles anuncia automáticamente `Primera vuelta` y, en orden de registro, el nombre, Gross y Puntos de cada jugador. Al completar los hoyos 10–18 anuncia `Segunda vuelta` con nombre, Gross y Puntos de cada jugador y luego `Total` con nombre, Gross y Puntos acumulados de cada jugador. Cada cierre se pronuncia una sola vez.
 - Al cierre oficial, la ronda conserva un snapshot con SHA-256 y guarda en el historial el campo, la fecha y hora, el torneo, la categoría, los jugadores, los 18 hoyos, Gross y Puntos; además actualiza la clasificación acumulada de su categoría.
 - Después del cierre, Stableford usa la misma matriz oficial GRUPAL: abre una Tarjeta Global, permite elegir y abrir cada tarjeta personal, descarga el paquete completo y entrega el archivo visual a la hoja nativa del teléfono para escoger correo o WhatsApp.
 - La hoja nativa constituye una entrega preparada y confirmada por el usuario. Cancelarla no altera la ronda ni marca la tarjeta como enviada; el envío automático y el estado `ENTREGADO` continúan reservados a proveedores verificables.
@@ -1260,7 +1266,9 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
-| 2026-08-23 | Manual 3.44 / App V268 | Incorporado un enlace de demostración real y operativa para evaluar visualmente `CONTROL MANUAL · GENERAL`: carga seis jugadores —Jaime, Nelson, Junior, Fito, Pedro y Carlos— con 30 Gross distribuidos en los hoyos 1 al 5 y deja el selector preparado en el hoyo 6. La demostración usa una llave local exclusiva, no lee ni sobrescribe la ronda General oficial, no mezcla Stableford, no archiva la muestra y no la envía a sincronización central. Sin el parámetro `demo_control_manual=v268`, todas las rutas, estados, cálculos, persistencia y voz conservan literalmente V267. Evidencia: prueba específica V268 y auditoría maestra de 42 paquetes PASS. |
+| 2026-08-23 | Manual 3.46 / App V270 | El panel común `CONTROL MANUAL` pasa a ser la pantalla principal de ingreso encima de la tarjeta oficial para General y Stableford. El cursor se coloca automáticamente en el hoyo activo, por lo que el dictado normal exige únicamente `Nombre + Score`; decir `Hoyo N` queda como reposicionamiento opcional. Cada score se muestra de inmediato y, al completar Gross o X explícita para todos los jugadores activos, el mismo motor de `ENTER` valida, guarda, calcula, renderiza y avanza. Se incorpora un vocabulario amplio de X explícita —incluidos cero, sin score, sin dato, no informó, no dijo, no cantó, ponle cero y no le anotes— sin restaurar ninguna X automática. Si un hoyo ya empezó y pasan dos segundos sin otro score, la única voz autorizada es `Falta NOMBRE`; la respuesta puede ser solo el score o solo una omisión y se vincula exclusivamente al jugador señalado. Una X puede reemplazarse posteriormente y recalcula General o Stableford. Evidencia automatizada: 43 paquetes, matriz de 242 configuraciones y prueba V270 de bloques completos, incompletos, X múltiples, correcciones, hoyo 18, respuesta contextual y atomicidad. La prueba de navegador local quedó bloqueada porque el entorno no dispone de Chromium y el instalador no pudo obtenerlo; por tanto V270 permanece local y no se declara liberada ni publicada. |
+| 2026-08-23 | Manual 3.45 / App V269 | Corregida la omisión operacional detectada físicamente en V268. La demostración vuelve a mostrar y operar `ATRÁS` hacia el Registro, `RONDA PREVIA`, el cambio automático del mismo control a `RONDA ACTUAL` y `NUEVA RONDA`. Registro en curso, ronda activa y archivo de rondas usan llaves exclusivas de la demostración; no leen ni escriben el directorio oficial de jugadores, la ronda General oficial, Stableford ni la sincronización central. Se incorpora una ronda previa completa de seis jugadores y 108 scores para probar el recorrido real anterior/actual sin mezclar datos oficiales. V269 conserva los seis jugadores y los 30 Gross iniciales de los hoyos 1 al 5 en la ronda actual. La puerta de liberación exige la prueba específica V269, auditoría maestra y navegador real de todas las transiciones antes de publicar. |
+| 2026-08-23 | Manual 3.44 / App V268 | Enlace de demostración rechazado después de la prueba física. Aunque cargó correctamente seis jugadores y 30 Gross en los hoyos 1 al 5, el aislamiento ocultó indebidamente `ATRÁS`, `RONDA PREVIA`, el retorno `RONDA ACTUAL` y `NUEVA RONDA`. La auditoría automatizada V268 no cubrió esa matriz de navegación y por tanto su PASS fue insuficiente. V268 no se considera versión aprobada ni completa. |
 | 2026-08-23 | Manual 3.43 / App V267 | Arquitectura operacional integral aplicada a todas las configuraciones y combinaciones de Score Card. General, Stableford, ronda registrada, ronda sin registro, uno a seis jugadores, campos, categorías, marcas, torneo, ronda nueva/recuperada, manual y voz usan la misma secuencia y el mismo escritor `applyLiteralScores → recordScore(s) → saveEntry → persist → render`. Se eliminó el escritor manual paralelo de Stableford y se creó un único `CONTROL MANUAL` compartido; los nombres sólo se corrigen desde el Registro. La recuperación usa una sola política con filtro explícito de modalidad: General jamás carga jugadores o scores Stableford y Stableford jamás carga General, aunque la ronda contraria sea más reciente. El dictado vivo acepta múltiples hoyos y múltiples jugadores en una misma toma y anota cada pareja completa Jugador/Hoyo/Gross mientras el micrófono continúa abierto; el evento final reconcilia sin duplicar. Una frase ajena al vocabulario permanece en silencio y no modifica datos. El cierre Stableford pronuncia únicamente Nombre, Gross y Puntos; no agrega “Entendido”, “voy a leer” ni preámbulos. Se corrigió además la reconstrucción del formulario General que podía devolver el handicap anterior al pasar desde Nombre. Evidencia: 41 paquetes automatizados, matriz de 242 configuraciones renderizadas en Chromium con 242 escrituras manuales, flujo móvil/escritorio General y Stableford, tanda viva de 35 scores, recuperación cruzada prohibida con fechas adversarias, cero errores de consola y cero solicitudes fallidas. V267 fue publicada en la rama de prueba, pasó la validación física funcional/operacional y quedó aprobada; se conserva como limitación conocida la pérdida ocasional de comprensión del micrófono durante dictados prolongados. |
 | 2026-08-23 | Manual 3.42 / App V266 | Ajustado exclusivamente el cierre hablado Stableford al formato propio de la modalidad y a la línea operacional única. Tanto el control manual como el control de voz pasan por el mismo cierre calculado: en el hoyo 9 anuncia `Primera vuelta` y, por jugador, Nombre, Gross y Puntos; en el hoyo 18 anuncia `Segunda vuelta` con esos mismos datos y a continuación `Total` con los acumulados de los 18 hoyos. General y la interfaz visual permanecen congelados; se conserva la recuperación y el reintento de la sesión de voz incorporados en V265. |
 | 2026-08-23 | Manual 3.41 / App V265 | Corregido exclusivamente el cierre hablado de la primera vuelta Stableford: al registrar el último score del hoyo 9 anuncia automáticamente por jugador Gross, Neto y resultado sobre/bajo par. Stableford delega este resumen al motor oficial GRUPAL y, si el primer envío de audio no encuentra la sesión disponible, recupera la sesión y reintenta. La interfaz visual, jugadores, scores, puntos, campos y demás funciones permanecen congelados. |

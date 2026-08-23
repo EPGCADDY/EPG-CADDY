@@ -31,7 +31,7 @@ assert.match(html,/try\{localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)\}catch
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\);localStorage\.removeItem\(STORAGE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(ROUND_ARCHIVE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_SERIES_KEY\)/);
-assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>demoControlManual\?false:isStablefordRound\(\)\|\|sfEmergency\?openFreshStablefordSetup\(\):openNewRoundDraft\(\)\)/);
+assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\|\|sfEmergency\?openFreshStablefordSetup\(\):openNewRoundDraft\(\)\)/);
 assert.match(html,/if\(!round\.configured\)\{\s*if\(sfEmergency\)window\.addEventListener\("DOMContentLoaded",openFreshStablefordSetup,\{once:true\}\)/);
 assert.match(html,/if\(!GSCStableford\.isAllowedCourse\(stablefordSetupCourseKey\)\)return fail\("SELECCIONA EL CAMPO"\)/);
 assert.match(html,/if\(!cfg\)return fail\("SELECCIONA SENIOR O SÚPER SENIOR"\)/);

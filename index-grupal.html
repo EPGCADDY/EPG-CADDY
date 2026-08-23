@@ -9,7 +9,8 @@
 <meta name="gscg-hotfix" content="V264-PREVIOUS-ROUND-RESPONSIVE-NAMES-20260823">
 <meta name="gscg-voice-hotfix" content="V266-STABLEFORD-SEGMENT-GROSS-POINTS-20260823">
 <meta name="gscg-operational-hotfix" content="V267-ONE-OPERATIONAL-LINE-20260823">
-<meta name="gscg-demo-link" content="V268-CONTROL-MANUAL-DEMO-20260823">
+<meta name="gscg-demo-link" content="V269-OPERATIONAL-MATRIX-DEMO-20260823">
+<meta name="gscg-score-entry" content="V270-AUTOMATIC-HOLE-CURSOR-EXPLICIT-X-20260823">
 <style>
 :root{--bg:#000;--fg:#fff;--line:#4b4f50;--lime:#31ff00;--red:#ff2626;--blue:#0878ff;--yellow:#ffbf00;--white:#f5f5f5;--muted:#a7aaad}
 *{box-sizing:border-box}html,body{margin:0;background:#000;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{min-height:100vh}.app{width:100%;min-width:1180px;max-width:1700px;margin:0 auto;padding:14px 14px 24px}.topbar{display:grid;grid-template-columns:230px minmax(150px,1fr) 330px;grid-template-rows:auto auto;gap:12px 22px;align-items:center;margin:10px 0 12px;border:1px solid var(--line);border-radius:6px;padding:12px 14px 0;background:#000}.official-round-header .logo{grid-column:1;grid-row:1}.official-round-header .mic-wrap{grid-column:2;grid-row:1}.official-round-header .round-meta{grid-column:3;grid-row:1}.official-round-header .course-meta{grid-column:1/4;grid-row:2}.official-course-info{width:100%;margin:0 0 8px}.logo{width:210px;height:210px;object-fit:contain}.round-meta{text-align:right;padding-right:10px}.round-meta h1{font-size:25px;line-height:1;margin:0 0 22px;font-weight:500;letter-spacing:.2px}.round-meta div{font-size:17px;margin:0 0 18px}.mic-wrap{position:relative;width:84px;height:84px;margin:auto;z-index:20}.mic-hit{position:absolute;inset:-25%;border:0;background:transparent;cursor:pointer;z-index:2;border-radius:50%;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}.mic-visual{position:absolute;inset:0;border:3px solid var(--lime);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--lime);font-size:43px;pointer-events:none}.mic-wrap.active .mic-visual{border-color:#ff4545;color:#ff4545;animation:micPulse 1s ease-in-out infinite}.nr-mic.active .mic-visual{border-color:var(--red);background:var(--red);color:#fff;animation:micListen .8s ease-in-out infinite}@keyframes micPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(49,255,0,.18)}50%{transform:scale(1.08);box-shadow:0 0 0 11px rgba(49,255,0,.08)}}@keyframes micListen{0%,100%{transform:scale(1);opacity:1;box-shadow:0 0 0 0 rgba(255,38,38,.35)}50%{transform:scale(1.08);opacity:.62;box-shadow:0 0 0 18px rgba(255,38,38,.16)}}.course-meta{display:grid;grid-template-columns:230px minmax(150px,1fr) 330px;gap:0 22px;align-items:center;border-top:1px solid #262a2b;padding:10px 0 8px}.course-meta .cap{grid-column:1;font-size:13px;color:#bbb;margin:0}.course-meta .course{grid-column:2;font-size:25px;font-weight:800;margin:0;text-align:center;white-space:nowrap}.course-meta .numbers{grid-column:3;font-size:18px;display:flex;gap:28px;justify-content:flex-end}.course-info{border:1px solid var(--line);padding:6px 12px 8px;align-self:stretch}.course-info-layout{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:16px;align-items:center}.course-info-data{min-width:0}.course-mic{width:109px;height:109px;margin:auto}.course-info h2{font-size:17px;color:var(--lime);text-align:center;margin:0 0 7px;letter-spacing:.5px}.course-info-grid{display:grid;grid-template-columns:1.25fr .8fr .8fr .8fr;gap:4px 12px;align-items:center;font-size:11px}.course-info-grid .head{font-size:10px;color:#c8c8c8;text-align:center}.tee-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:-1px}.status{height:20px;margin:-6px 0 4px;text-align:center;color:var(--lime);font-size:12px}.card-shell{border-top:1px solid var(--line);overflow-x:auto}.scorecard{width:100%;min-width:1360px;border-collapse:collapse;table-layout:fixed;background:#000}.scorecard th,.scorecard td{height:32px;border:1px solid var(--line);text-align:center;padding:2px 3px;font-size:12px}.scorecard th{font-weight:800}.scorecard .player-col{width:142px}.scorecard .concept-col{width:72px}.scorecard .hole-col{width:55px}.scorecard .sum-col{width:63px}.scorecard .left{text-align:left;padding-left:12px}.scorecard .concept{font-weight:800;text-align:left;padding-left:10px}.scorecard .general td{height:29px}.scorecard .player-name{font-size:16px;font-weight:800;vertical-align:middle;text-align:center;padding:0}.scorecard .player-hcp{display:block;margin-top:22px;font-size:20px;color:#fff}.scorecard .player-block td{height:37px}.scorecard .unused td{color:transparent;background:#000}.scorecard .gross-cell{font-weight:800}.scorecard .yds10-cell{position:relative}.scorecard .yds10-name{position:absolute;left:50%;bottom:2px;transform:translateX(-50%);width:34px;height:10px;display:flex;align-items:center;justify-content:center;padding:0 2px;border-radius:2px;background:#000;-webkit-text-stroke:0 transparent;text-shadow:-.35px 0 #000,.35px 0 #000,0 -.35px #000,0 .35px #000;font-size:7px;line-height:1;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:clip;pointer-events:none;text-align:center;box-sizing:border-box}.scorecard .hcp-cell{font-weight:800;position:relative}.scorecard .stroke2::after,.scorecard .stroke3::after{position:absolute;right:4px;top:2px;font-size:9px;font-weight:700}.scorecard .stroke2::after{content:"2"}.scorecard .stroke3::after{content:"3"}.under{color:var(--lime)!important;font-weight:800}.over{color:var(--red)!important;font-weight:800}.even{color:#fff!important;font-weight:800}.summary{margin-top:10px;border:1px solid var(--line)}.summary-title{text-align:center;color:var(--lime);font-size:17px;font-weight:900;padding:7px 0 5px}.summary table{width:100%;border-collapse:collapse;table-layout:fixed}.summary th,.summary td{height:31px;border:1px solid var(--line);text-align:center;font-size:11px}.summary th{font-size:10px;font-weight:500}.summary .summary-player{text-align:left;padding-left:85px}.summary .unused td{color:transparent}.summary .net{color:var(--lime);font-weight:800}.round-actions{display:flex;justify-content:center;margin-top:12px}.round-actions button{height:44px;padding:0 22px;border:1px solid var(--lime);background:var(--lime);color:#000;border-radius:4px;font-weight:900;box-shadow:0 0 14px rgba(49,255,0,.28)}.round-actions #finalCardButton{background:#050505;color:var(--lime);border:2px solid var(--lime);box-shadow:0 0 18px rgba(49,255,0,.32)}.final-card-panel{width:max-content;min-width:1500px;margin:18px auto;background:#000;border:1px solid #555;padding:18px}.final-card-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:12px}.final-card-head h1{margin:0;color:var(--lime);font-size:26px;letter-spacing:.5px}.final-card-head button{height:42px;padding:0 18px;border:1px solid var(--lime);border-radius:5px;background:#050505;color:var(--lime);font-weight:900}.final-card-meta{display:flex;gap:28px;flex-wrap:wrap;margin:0 0 12px;color:#d5d5d5;font-size:14px}.final-card-shell{overflow:visible}.final-card-panel .scorecard{min-width:1500px;width:1500px}.final-card-panel .scorecard th,.final-card-panel .scorecard td{font-size:13px;border-color:#666}.final-card-panel .scorecard .player-name{font-size:17px}.final-card-panel .scorecard .player-hcp{font-size:20px}.final-card-panel .summary{min-width:1500px}.final-card-panel .summary th,.final-card-panel .summary td{font-size:12px;border-color:#666}.final-card-readonly{margin:10px 0 0;color:#999;font-size:11px;text-align:center}.overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.98);display:none;overflow:auto;padding:22px}.overlay.visible{display:block}.new-round-card{max-width:760px;margin:20px auto;border:1px solid #505050;background:#000;padding:20px}.nr-head{display:grid;grid-template-columns:100px 1fr;align-items:center;gap:18px}.nr-head img{width:96px;height:96px;object-fit:contain}.nr-head h1{margin:0;font-size:29px}.nr-date{color:#bbb;margin-top:8px}.nr-mic{position:relative;width:240px;height:240px;margin:18px auto 10px}.nr-mic .mic-hit{inset:-26px}.nr-mic .mic-visual{font-size:108px;border-width:5px;background:var(--lime);border-color:var(--lime);color:#000;box-shadow:0 0 0 5px rgba(49,255,0,.10),0 0 24px rgba(49,255,0,.20)}.field-title{font-size:12px;color:#aaa;margin:20px 0 7px}.course-select{border:1px solid #555;border-radius:6px;padding:14px 15px;font-size:19px;font-weight:800}.voice-prompt{text-align:center;margin:26px 0 18px}.voice-prompt strong{display:block;color:var(--lime);font-size:17px;margin-bottom:8px}.voice-prompt span{font-size:13px;color:#d5d5d5}.detected{margin-top:20px;border-top:1px solid #333}.detected-row,.confirm-row{display:grid;grid-template-columns:1.4fr .6fr 1fr;gap:10px;padding:11px 5px;border-bottom:1px solid #333;align-items:center}.detected-row.head,.confirm-row.head{font-size:10px;color:#888}.draft-edit-row{display:grid;grid-template-columns:28px minmax(0,1.4fr) .6fr 1fr;gap:8px;align-items:center;padding:9px 5px;border-bottom:1px solid #333;min-height:46px}.draft-edit-row.empty{opacity:.45}.draft-slot{font-size:11px;color:#888;text-align:center;font-weight:800}.draft-name-input{width:100%;min-width:0;background:#050505;border:1px solid #4b4f50;border-radius:5px;padding:8px 9px;font:inherit;font-weight:800;outline:none}.draft-name-input:focus{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime)}.draft-hcp{font-weight:800;text-align:center}.draft-hcp-input{width:100%;min-width:0;background:#050505;border:1px solid #4b4f50;border-radius:5px;padding:8px 5px;font:inherit;font-weight:800;text-align:center;color:#fff;outline:none}.draft-hcp-input:focus{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime)}.draft-tee-select{width:100%;min-width:0;background:#050505;border:1px solid #4b4f50;border-radius:5px;padding:8px 5px;font:inherit;font-weight:800;outline:none}.draft-tee-select:focus{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime)}.draft-tee{display:flex;align-items:center;gap:6px;font-weight:800;white-space:nowrap}.draft-tee-dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:0 0 auto}.draft-empty-label{grid-column:2/5;color:#777;font-size:10px;letter-spacing:.4px}.nr-button{width:100%;height:52px;margin-top:20px;border:0;border-radius:7px;background:var(--lime);color:#000;font-weight:900;font-size:17px}#setupOk{height:72px;font-size:26px}.nr-button.secondary{background:#070707;color:#fff;border:1px solid #555}.confirm-title{font-size:15px;color:var(--lime);font-weight:800;margin:20px 0 7px}.setup-status{min-height:24px;margin-top:10px;text-align:center;color:var(--lime);font-size:15px;font-weight:800}.setup-status.listening{color:var(--red)}.setup-facts{margin:10px 0 0;text-align:center;color:#999;font-size:10px;letter-spacing:.2px}.note-box{margin:10px 0;padding:9px 11px;border:1px solid #4b4f50;border-radius:6px;background:#050505;color:#cfd2d4;font-size:11px;line-height:1.35}.note-box strong{display:block;color:var(--lime);font-size:10px;letter-spacing:.8px;margin-bottom:4px}.round-note{width:100%;max-width:none;margin:8px 0 8px;font-size:11px;line-height:1.4}.round-note>strong{display:block;font-size:11px;letter-spacing:0;margin:0 0 5px;color:var(--lime);text-transform:none}.round-note .note-line{display:block;font-size:11px;line-height:1.4;margin:2px 0;text-align:left}.round-note .note-topic{display:inline;font-size:11px;letter-spacing:0;margin:0;color:#fff;font-weight:900;text-transform:none}.hidden{display:none!important}
@@ -655,8 +656,10 @@ const newRoundId=()=>`round_${Date.now()}_${Math.random().toString(36).slice(2,9
 const blankRound=()=>({id:newRoundId(),version:2,configured:false,provisional:false,courseKey:"pulte",course:"El Pulté",tournament:null,players:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),endedAt:null,durationSeconds:null});
 const startupParams=new URLSearchParams(location.search);
 const sfEmergency=startupParams.get("stableford_emergency")==="countryclub";
-const demoControlManual=startupParams.get("demo_control_manual")==="v268";
-const DEMO_CONTROL_MANUAL_KEY="golf-score-card-guatemala-demo-control-manual-v268";
+const demoControlManual=startupParams.get("demo_control_manual")==="v269";
+const DEMO_CONTROL_MANUAL_KEY="golf-score-card-guatemala-demo-control-manual-v269";
+const DEMO_CONTROL_MANUAL_DRAFT_KEY="golf-score-card-guatemala-demo-control-manual-draft-v269";
+const DEMO_CONTROL_MANUAL_ARCHIVE_KEY="golf-score-card-guatemala-demo-control-manual-archive-v269";
 const CONTROL_MANUAL_DEMO_PLAYERS=[
   {name:"JAIME",handicap:14,scores:[5,4,5,4,3]},
   {name:"NELSON",handicap:18,scores:[4,5,4,6,4]},
@@ -673,7 +676,8 @@ let draftPlayers=[],manualDraftRows=Array.from({length:6},()=>({name:"",handicap
 let setupSegmentOrder=[],setupSegmentText=new Map(),setupPendingItems=new Set(),setupFinalizeRequested=false,setupFinalizeTimer=null;
 let setupLocked=false,setupSpeechActive=false,setupManualCommitPending=false;
 let roundSegmentOrder=[],roundSegmentText=new Map(),roundPendingItems=new Set(),roundFinalizeRequested=false,roundFinalizeTimer=null,roundTranscriptionWatchdog=null;
-let roundLiveItemText=new Map(),roundLiveCommitted=new Map(),roundLiveOriginal=new Map(),roundLiveAnnounced=new Map(),roundLiveClosureQueue=[],roundLiveStaging=false;
+let roundLiveItemText=new Map(),roundLiveCommitted=new Map(),roundLiveOriginal=new Map(),roundLiveAnnounced=new Map(),roundLiveOperationalHole=new Map(),roundLiveClosureQueue=[],roundLiveStaging=false;
+let roundMissingPromptTimer=null,roundMissingPrompt=null;
 let pc=null,dc=null,stream=null,micTrack=null,audioEl=null,listening=false,phase="idle",voiceContext="round",activeResponseId=null;
 let sessionConnectPromise=null,voiceActivationPromise=null,voiceActivationContext=null,realtimeGeneration=0;
 let appHiddenAt=0,appWasBackgrounded=false,lastRealtimeActivityAt=Date.now(),resumeCheckPromise=null;
@@ -721,7 +725,7 @@ function enforceCanonicalDraftNames(){
 }
 const PLAYER_SLOT_SEQUENCE=[1,3,5,2,4,6];
 function normalizePlayer(p,i){const slot=Number(p.slot);return{id:p.id||`p${i+1}`,registrationCode:normalizePlayerCode(p.registrationCode),name:canonicalPlayerName(p.name||`Jugador ${i+1}`),handicap:Math.max(0,Math.min(54,Math.trunc(Number(p.handicap)||0))),tee:TEES[p.tee]?p.tee:"Blanco",matrix:p.matrix==="Damas"?"Damas":"Caballeros",whatsapp:normalizeWhatsApp(p.whatsapp),holes:p.holes&&typeof p.holes==="object"?p.holes:{},lastHole:p.lastHole||null,activeFrom:Math.max(1,Math.min(18,Math.trunc(Number(p.activeFrom)||1))),slot:Number.isInteger(slot)&&slot>=1&&slot<=6?slot:null,provisionalHandicapProvided:p.provisionalHandicapProvided===true,provisionalTeeProvided:p.provisionalTeeProvided===true}}
-function readPlayerDirectory(){try{const registry=window.GSCPlayerRegistry,modern=JSON.parse(localStorage.getItem(PLAYER_REGISTRY_KEY)||"null"),legacy=JSON.parse(localStorage.getItem(PLAYER_DIRECTORY_KEY)||"[]");if(registry){const profiles=registry.migrateDirectory(Array.isArray(modern)?modern:legacy);if(!Array.isArray(modern))localStorage.setItem(PLAYER_REGISTRY_KEY,JSON.stringify(profiles));return profiles.map(x=>({name:canonicalPlayerName(x.fullName),key:canonicalPlayerNameKey(x.fullName),registrationCode:normalizePlayerCode(x.registrationCode),handicap:Number.isInteger(x.handicap)?x.handicap:null,tee:TEES[x.tee]?x.tee:null,whatsapp:normalizeWhatsApp(x.whatsapp?.nationalNumber),profile:x,updatedAt:x.updatedAt||null}))}return Array.isArray(legacy)?legacy.filter(x=>x&&x.name).map(x=>({name:canonicalPlayerName(x.name),key:canonicalPlayerNameKey(x.name),registrationCode:normalizePlayerCode(x.registrationCode),handicap:Number.isInteger(x.handicap)?x.handicap:null,tee:TEES[x.tee]?x.tee:null,whatsapp:normalizeWhatsApp(x.whatsapp),updatedAt:x.updatedAt||null})):[]}catch{return[]}}
+function readPlayerDirectory(){if(demoControlManual)return[];try{const registry=window.GSCPlayerRegistry,modern=JSON.parse(localStorage.getItem(PLAYER_REGISTRY_KEY)||"null"),legacy=JSON.parse(localStorage.getItem(PLAYER_DIRECTORY_KEY)||"[]");if(registry){const profiles=registry.migrateDirectory(Array.isArray(modern)?modern:legacy);if(!Array.isArray(modern))localStorage.setItem(PLAYER_REGISTRY_KEY,JSON.stringify(profiles));return profiles.map(x=>({name:canonicalPlayerName(x.fullName),key:canonicalPlayerNameKey(x.fullName),registrationCode:normalizePlayerCode(x.registrationCode),handicap:Number.isInteger(x.handicap)?x.handicap:null,tee:TEES[x.tee]?x.tee:null,whatsapp:normalizeWhatsApp(x.whatsapp?.nationalNumber),profile:x,updatedAt:x.updatedAt||null}))}return Array.isArray(legacy)?legacy.filter(x=>x&&x.name).map(x=>({name:canonicalPlayerName(x.name),key:canonicalPlayerNameKey(x.name),registrationCode:normalizePlayerCode(x.registrationCode),handicap:Number.isInteger(x.handicap)?x.handicap:null,tee:TEES[x.tee]?x.tee:null,whatsapp:normalizeWhatsApp(x.whatsapp),updatedAt:x.updatedAt||null})):[]}catch{return[]}}
 function directoryWhatsAppFor(name){const key=canonicalPlayerNameKey(name),entry=readPlayerDirectory().find(x=>x.key===key);return entry?.whatsapp||""}
 function hydrateDraftWhatsApps(){let changed=false;for(const p of draftPlayers){if(p.whatsapp)continue;const saved=directoryWhatsAppFor(p.name);if(saved){p.whatsapp=saved;changed=true}}return changed}
 function savePlayersToDirectory(players,context={}){if(demoControlManual)return[];try{const registry=window.GSCPlayerRegistry;if(registry){const current=readPlayerDirectory().map(x=>x.profile).filter(Boolean),profiles=registry.upsertProfiles(current,players,{roundId:context.roundId??(round.configured?round.id:null),course:context.course??(round.configured?round.course:null),source:context.source||"registration"});localStorage.setItem(PLAYER_REGISTRY_KEY,JSON.stringify(profiles));localStorage.setItem(PLAYER_DIRECTORY_KEY,JSON.stringify(profiles.map(x=>({name:x.fullName,key:canonicalPlayerNameKey(x.fullName),registrationCode:x.registrationCode,handicap:x.handicap,tee:x.tee,whatsapp:x.whatsapp?.nationalNumber||"",updatedAt:x.updatedAt}))));for(const p of players||[]){const profile=profiles.find(x=>x.identityKey===canonicalPlayerNameKey(p.name));if(profile)p.registrationCode=normalizePlayerCode(profile.registrationCode)}queueMasterDataSnapshot(context.source||"player-profile",{includeRound:false,profilesOverride:profiles});return profiles}const entries=readPlayerDirectory(),byKey=new Map(entries.map(x=>[x.key,x]));for(const p of players||[]){const key=canonicalPlayerNameKey(p.name),whatsapp=normalizeWhatsApp(p.whatsapp);if(!key)continue;byKey.set(key,{name:canonicalPlayerName(p.name),key,registrationCode:normalizePlayerCode(p.registrationCode),handicap:p.handicap,tee:p.tee,whatsapp,updatedAt:new Date().toISOString()})}localStorage.setItem(PLAYER_DIRECTORY_KEY,JSON.stringify([...byKey.values()]));const profiles=[...byKey.values()];queueMasterDataSnapshot(context.source||"player-profile",{includeRound:false,profilesOverride:profiles});return profiles}catch{return[]}}
@@ -763,7 +767,7 @@ function persist(){
   round.updatedAt=new Date().toISOString();
   const payload=JSON.stringify(round);
   try{
-    if(demoControlManual){localStorage.setItem(DEMO_CONTROL_MANUAL_KEY,payload);return true}
+    if(demoControlManual){localStorage.setItem(DEMO_CONTROL_MANUAL_KEY,payload);archiveRoundSnapshot(round);return true}
     if(round.mode==="stableford")localStorage.setItem(STABLEFORD_ACTIVE_KEY,payload);
     else{
       localStorage.setItem(STORAGE_KEY,payload);
@@ -810,13 +814,13 @@ async function flushMasterSyncQueue(){
     return true;
   }finally{masterSyncFlushing=false}
 }
-function readRoundArchive(){try{const raw=JSON.parse(localStorage.getItem(ROUND_ARCHIVE_KEY)||"[]");return Array.isArray(raw)?raw.map(normalizeStoredRound).filter(Boolean):[]}catch{return[]}}
-function archiveRoundSnapshot(value){if(!value?.configured||value.provisional||!value.players?.length)return false;try{const snapshot=normalizeStoredRound(JSON.parse(JSON.stringify(value))),archive=readRoundArchive(),idx=archive.findIndex(x=>x.id===snapshot.id);if(idx>=0)archive[idx]=snapshot;else archive.push(snapshot);archive.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));localStorage.setItem(ROUND_ARCHIVE_KEY,JSON.stringify(archive.slice(-120)));return true}catch(e){console.error("No se pudo archivar la ronda:",e);return false}}
+function activeRoundArchiveKey(){return demoControlManual?DEMO_CONTROL_MANUAL_ARCHIVE_KEY:ROUND_ARCHIVE_KEY}
+function readRoundArchive(){try{const raw=JSON.parse(localStorage.getItem(activeRoundArchiveKey())||"[]");return Array.isArray(raw)?raw.map(normalizeStoredRound).filter(Boolean):[]}catch{return[]}}
+function archiveRoundSnapshot(value){if(!value?.configured||value.provisional||!value.players?.length)return false;try{const snapshot=normalizeStoredRound(JSON.parse(JSON.stringify(value))),archive=readRoundArchive(),idx=archive.findIndex(x=>x.id===snapshot.id);if(idx>=0)archive[idx]=snapshot;else archive.push(snapshot);archive.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));localStorage.setItem(activeRoundArchiveKey(),JSON.stringify(archive.slice(-120)));return true}catch(e){console.error("No se pudo archivar la ronda:",e);return false}}
 function operationalRoundMode(value=round){return value?.mode==="stableford"?"stableford":"general"}
 function previousRoundState(modeHint=null,includeCurrent=true){return window.GSCPreviousRound.resolve(readRoundArchive(),includeCurrent?round:null,modeHint||operationalRoundMode())}
 function setPreviousRoundControl(id,state,visible,showWhenUnavailable=false){const control=$(id);if(!control)return;control.textContent=state.label;control.classList.toggle("hidden",!visible||(!showWhenUnavailable&&!state.available));control.disabled=!state.available;control.setAttribute("aria-disabled",String(!state.available))}
 function renderPreviousRoundControls(){
-  if(demoControlManual){["previousRoundButton","previousRoundSetupButton","previousStablefordRoundButton"].forEach(id=>$(id)?.classList.add("hidden"));return}
   const main=previousRoundState();
   setPreviousRoundControl("previousRoundButton",main,round.configured,true);
   const generalSetup=previousRoundState("general",false),stablefordSetup=previousRoundState("stableford",false);
@@ -824,12 +828,11 @@ function renderPreviousRoundControls(){
   setPreviousRoundControl("previousStablefordRoundButton",stablefordSetup,stablefordSetup.available);
 }
 function renderPlayerEditControls(){
-  const add=$("addPlayerButton"),back=$("backToRegistrationButton"),editable=!!(!demoControlManual&&round.configured&&!round.provisional&&!round.officiallyClosedAt);
+  const add=$("addPlayerButton"),back=$("backToRegistrationButton"),editable=!!(round.configured&&!round.provisional&&!round.officiallyClosedAt);
   if(back)back.classList.toggle("hidden",!editable);
   if(add)add.classList.toggle("hidden",!(editable&&round.players.length<6));
 }
 function activatePreviousOperationalRound(modeHint=null,fromSetup=false){
-  if(demoControlManual)return false;
   const state=previousRoundState(modeHint,!fromSetup);
   if(!state.available||!state.target){const target=modeHint==="stableford"?$("stablefordSetupStatus"):$("setupStatus")||$("status");if(target)target.textContent="NO HAY RONDA PREVIA";return false}
   if(round.configured)persist();
@@ -840,16 +843,17 @@ function activatePreviousOperationalRound(modeHint=null,fromSetup=false){
   persist();render();$("status").textContent=state.relation==="current"?"RONDA ACTUAL RESTAURADA · OPERATIVA":"RONDA PREVIA RESTAURADA · OPERATIVA";return true
 }
 function tournamentArchive(name,year=null){const key=normalizeSpeech(name);return readRoundArchive().filter(r=>normalizeSpeech(r.tournament?.name)===key&&(!year||new Date(r.createdAt).getFullYear()===Number(year))).sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt))}
+function activeDraftStorageKey(){return demoControlManual?DEMO_CONTROL_MANUAL_DRAFT_KEY:DRAFT_STORAGE_KEY}
 function persistDraftState(){
-  try{if(!draftPlayers.length){localStorage.removeItem(DRAFT_STORAGE_KEY);return}localStorage.setItem(DRAFT_STORAGE_KEY,JSON.stringify({players:draftPlayers.map((p,i)=>normalizePlayer(p,i)),tournament:normalizeTournament(draftTournament),course:COURSE_CATALOG[draftCourse]?draftCourse:"pulte",savedAt:new Date().toISOString()}))}catch(e){console.error("No se pudo persistir el registro en curso:",e)}
+  try{const key=activeDraftStorageKey();if(!draftPlayers.length){localStorage.removeItem(key);return}localStorage.setItem(key,JSON.stringify({players:draftPlayers.map((p,i)=>normalizePlayer(p,i)),tournament:normalizeTournament(draftTournament),course:COURSE_CATALOG[draftCourse]?draftCourse:"pulte",savedAt:new Date().toISOString()}))}catch(e){console.error("No se pudo persistir el registro en curso:",e)}
 }
 function loadDraftState(){
-  try{const raw=JSON.parse(localStorage.getItem(DRAFT_STORAGE_KEY)||"null");if(!raw||!Array.isArray(raw.players)||!raw.players.length)return[];return raw.players.slice(0,6).map(normalizePlayer)}catch{return[]}
+  try{const raw=JSON.parse(localStorage.getItem(activeDraftStorageKey())||"null");if(!raw||!Array.isArray(raw.players)||!raw.players.length)return[];return raw.players.slice(0,6).map(normalizePlayer)}catch{return[]}
 }
-function loadDraftTournament(){try{const raw=JSON.parse(localStorage.getItem(DRAFT_STORAGE_KEY)||"null");return normalizeTournament(raw?.tournament)}catch{return null}}
-function loadDraftCourse(){try{const raw=JSON.parse(localStorage.getItem(DRAFT_STORAGE_KEY)||"null"),key=String(raw?.course||"pulte");return COURSE_CATALOG[key]?key:"pulte"}catch{return"pulte"}}
+function loadDraftTournament(){try{const raw=JSON.parse(localStorage.getItem(activeDraftStorageKey())||"null");return normalizeTournament(raw?.tournament)}catch{return null}}
+function loadDraftCourse(){try{const raw=JSON.parse(localStorage.getItem(activeDraftStorageKey())||"null"),key=String(raw?.course||"pulte");return COURSE_CATALOG[key]?key:"pulte"}catch{return"pulte"}}
 function courseKeyForName(name){const target=normalizeSpeech(name);return Object.keys(COURSE_CATALOG).find(key=>normalizeSpeech(COURSE_CATALOG[key].name)===target)||"pulte"}
-function clearDraftState(){try{localStorage.removeItem(DRAFT_STORAGE_KEY)}catch{}}
+function clearDraftState(){try{localStorage.removeItem(activeDraftStorageKey())}catch{}}
 function emptyManualDraftRow(){return{name:"",handicap:"",tee:"",dirty:false}}
 function manualRowFromPlayer(player){return{name:canonicalPlayerName(player?.name),handicap:Number.isInteger(Number(player?.handicap))?String(Number(player.handicap)):"",tee:TEES[player?.tee]?player.tee:"",dirty:false,id:player?.id||null}}
 function seedManualDraftRowsFromPlayers(){manualDraftRows=Array.from({length:6},(_,i)=>draftPlayers[i]?manualRowFromPlayer(draftPlayers[i]):emptyManualDraftRow())}
@@ -895,14 +899,29 @@ function validateHandicapEngine(){for(const matrix of [SI_MEN,SI_WOMEN]){if(matr
 const HANDICAP_ENGINE_VALID=validateHandicapEngine();
 if(!HANDICAP_ENGINE_VALID)throw new Error("CRITICAL_HANDICAP_ENGINE_LOCK");
 function scoreObject(p,hole,gross,stats={}){const strokes=strokesOnHole(p.handicap,hole,matrixFor(p)),net=gross-strokes,diff=net-PAR[hole-1];return{hole,gross,par:PAR[hole-1],si:matrixFor(p)[hole-1],strokes,net,diff,fairway:stats.fairway??null,green:stats.green??null,putts:Number.isInteger(stats.putts)?stats.putts:null,penalties:Number.isInteger(stats.penalties)?stats.penalties:0,updatedAt:new Date().toISOString()}}
+function controlManualDemoRound(id,createdAt,complete=false){
+  const players=CONTROL_MANUAL_DEMO_PLAYERS.map((item,index)=>normalizePlayer({id:`${id}-p${index+1}`,name:item.name,handicap:item.handicap,tee:"Blanco",matrix:"Caballeros",holes:{},lastHole:complete?18:5,activeFrom:1,slot:index+1},index));
+  players.forEach((player,index)=>{
+    const scores=complete?ALL.map(hole=>Math.max(1,PAR[hole-1]+((index+hole)%4===0?-1:(index+hole)%4===1?0:1))):CONTROL_MANUAL_DEMO_PLAYERS[index].scores;
+    scores.forEach((gross,scoreIndex)=>{const hole=scoreIndex+1;player.holes[hole]=scoreObject(player,hole,gross)});
+  });
+  const started=new Date(createdAt),endedAt=complete?new Date(started.getTime()+4*60*60*1000).toISOString():null;
+  return{id,version:2,configured:true,provisional:false,courseKey:"pulte",course:"El Pulté",tournament:null,players,announced:{front:complete,back:complete,complete},createdAt:started.toISOString(),updatedAt:started.toISOString(),endedAt,durationSeconds:complete?14400:null}
+}
 function activateControlManualDemo(){
   if(!demoControlManual)return false;
   activateCourse("pulte");
-  if(round.configured&&round.players?.length===CONTROL_MANUAL_DEMO_PLAYERS.length){voiceContext="round";return true}
-  const now=new Date().toISOString();
-  const players=CONTROL_MANUAL_DEMO_PLAYERS.map((item,index)=>normalizePlayer({id:`demo-p${index+1}`,name:item.name,handicap:item.handicap,tee:"Blanco",matrix:"Caballeros",holes:{},lastHole:5,activeFrom:1,slot:index+1},index));
-  players.forEach((player,index)=>CONTROL_MANUAL_DEMO_PLAYERS[index].scores.forEach((gross,scoreIndex)=>{const hole=scoreIndex+1;player.holes[hole]=scoreObject(player,hole,gross)}));
-  round={id:"demo-control-manual-v268",version:2,configured:true,provisional:false,courseKey:"pulte",course:"El Pulté",tournament:null,players,announced:{front:false,back:false,complete:false},createdAt:now,updatedAt:now,endedAt:null,durationSeconds:null};
+  if(round.configured&&round.players?.length){
+    archiveRoundSnapshot(round);
+    if(!readRoundArchive().some(item=>item.id==="demo-control-manual-previous-v269")){
+      const activeTime=Number.isFinite(new Date(round.createdAt).getTime())?new Date(round.createdAt).getTime():Date.now();
+      archiveRoundSnapshot(controlManualDemoRound("demo-control-manual-previous-v269",new Date(activeTime-86400000).toISOString(),true));
+    }
+    voiceContext="round";return true
+  }
+  const now=new Date(),previous=controlManualDemoRound("demo-control-manual-previous-v269",new Date(now.getTime()-86400000).toISOString(),true);
+  round=controlManualDemoRound("demo-control-manual-current-v269",now.toISOString(),false);
+  archiveRoundSnapshot(previous);archiveRoundSnapshot(round);
   try{localStorage.setItem(DEMO_CONTROL_MANUAL_KEY,JSON.stringify(round))}catch{}
   voiceContext="round";
   return true
@@ -1202,9 +1221,10 @@ function requestSetupFinalize(){
 }
 function resetRoundCapture(){
   $("headerMicWrap")?.classList?.remove?.("active");
+  clearOperationalMissingPrompt();
   if(roundLiveOriginal.size)rollbackAllLiveRoundItems();
   roundSegmentOrder=[];roundSegmentText=new Map();roundPendingItems=new Set();roundFinalizeRequested=false;
-  roundLiveItemText=new Map();roundLiveCommitted=new Map();roundLiveOriginal=new Map();roundLiveAnnounced=new Map();roundLiveClosureQueue=[];roundLiveStaging=false;
+  roundLiveItemText=new Map();roundLiveCommitted=new Map();roundLiveOriginal=new Map();roundLiveAnnounced=new Map();roundLiveOperationalHole=new Map();roundLiveClosureQueue=[];roundLiveStaging=false;
   if(roundFinalizeTimer){clearTimeout(roundFinalizeTimer);roundFinalizeTimer=null}
   if(roundTranscriptionWatchdog){clearTimeout(roundTranscriptionWatchdog);roundTranscriptionWatchdog=null}
 }
@@ -1225,6 +1245,7 @@ function liveScoreEntryFingerprint(entry){return`${liveScoreEntryKey(entry)}:${e
 function rememberLiveRoundOriginal(itemId,entries){
   const id=String(itemId||"round_live_fallback");
   if(!roundLiveAnnounced.has(id))roundLiveAnnounced.set(id,JSON.parse(JSON.stringify(round.announced||{front:false,back:false,complete:false})));
+  if(!roundLiveOperationalHole.has(id))roundLiveOperationalHole.set(id,currentOperationalHole());
   let originals=roundLiveOriginal.get(id);if(!originals){originals=new Map();roundLiveOriginal.set(id,originals)}
   for(const entry of entries||[]){const key=liveScoreEntryKey(entry);if(!key||originals.has(key))continue;const player=playerByRef(entry.player),hole=Number(entry.hole),score=player?.holes?.[hole];originals.set(key,score?JSON.parse(JSON.stringify(score)):null)}
 }
@@ -1234,22 +1255,24 @@ function rollbackLiveRoundItem(itemId,{commit=true}={}){
   for(const [key,score] of originals){const split=key.lastIndexOf(":"),player=round.players.find(item=>item.id===key.slice(0,split)),hole=Number(key.slice(split+1));if(!player||!Number.isInteger(hole))continue;if(score===null)delete player.holes[hole];else player.holes[hole]=JSON.parse(JSON.stringify(score));touched.add(player)}
   for(const player of touched){player.lastHole=Math.max(0,...Object.keys(player.holes||{}).map(Number).filter(hole=>Number.isInteger(hole)&&hole>=1&&hole<=18));recalculatePlayerScores(player)}
   if(roundLiveAnnounced.has(id))round.announced=JSON.parse(JSON.stringify(roundLiveAnnounced.get(id)));
+  const operationalHole=roundLiveOperationalHole.get(id),manual=document.getElementById("roundManualEntry");if(manual&&Number.isInteger(operationalHole))manual.dataset.hole=String(operationalHole);
   roundLiveClosureQueue=roundLiveClosureQueue.filter(item=>item.id!==id);roundLiveStaging=false;
   if(commit){persist();render()}
   return true
 }
 function rollbackAllLiveRoundItems(){let changed=false;for(const id of [...roundLiveOriginal.keys()])if(rollbackLiveRoundItem(id,{commit:false}))changed=true;if(changed){persist();render()}return changed}
-function parseLiveRoundScorePrefix(transcript){
+function parseLiveRoundScorePrefix(transcript,options={}){
   const tokens=normalizeSpeech(transcript).split(" ").filter(Boolean);
-  for(let end=tokens.length;end>0;end--){const parsed=parseRoundScoreTranscript(tokens.slice(0,end).join(" "));if(parsed?.ok)return{...parsed,consumedTokens:end,totalTokens:tokens.length}}
+  for(let end=tokens.length;end>0;end--){const parsed=parseRoundScoreTranscript(tokens.slice(0,end).join(" "),options);if(parsed?.ok)return{...parsed,consumedTokens:end,totalTokens:tokens.length}}
   return{matched:false,ok:false,entries:[],consumedTokens:0,totalTokens:tokens.length}
 }
 function applyLiveRoundTranscript(itemId,transcript,{final=false}={}){
   const id=String(itemId||"round_live_fallback"),text=String(transcript||"");roundLiveItemText.set(id,text);
   if(!round.configured||stopMonitorActive)return{handled:false,applied:0};
-  const parsed=final?parseRoundScoreTranscript(text):parseLiveRoundScorePrefix(text);
-  if(!parsed?.ok){if(final&&roundLiveOriginal.has(id)){rollbackLiveRoundItem(id);return{handled:true,applied:0,rolledBack:true}}return{handled:false,applied:0}}
   let committed=roundLiveCommitted.get(id);if(!committed){committed=new Map();roundLiveCommitted.set(id,committed)}
+  const parseOptions={defaultHole:currentOperationalHole(),ignoreRecordedKeys:new Set(committed.keys())};
+  const parsed=final?parseRoundScoreTranscript(text,parseOptions):parseLiveRoundScorePrefix(text,parseOptions);
+  if(!parsed?.ok){if(final&&roundLiveOriginal.has(id)){rollbackLiveRoundItem(id);return{handled:true,applied:0,rolledBack:true}}return{handled:false,applied:0}}
   const fresh=[];
   for(const entry of parsed.entries||[]){const key=liveScoreEntryKey(entry),fingerprint=liveScoreEntryFingerprint(entry);if(!key||committed.get(key)===fingerprint)continue;fresh.push(entry)}
   if(fresh.length){
@@ -1265,7 +1288,7 @@ function applyLiveRoundTranscript(itemId,transcript,{final=false}={}){
 }
 function appendLiveRoundDelta(itemId,delta){const id=String(itemId||"round_live_fallback"),next=`${roundLiveItemText.get(id)||""}${String(delta||"")}`;return applyLiveRoundTranscript(id,next)}
 function consumeLiveRoundItem(itemId){
-  const id=String(itemId||"");roundLiveItemText.delete(id);roundLiveCommitted.delete(id);roundLiveOriginal.delete(id);roundLiveAnnounced.delete(id);roundSegmentText.delete(id);roundPendingItems.delete(id);roundSegmentOrder=roundSegmentOrder.filter(value=>value!==id);
+  const id=String(itemId||"");roundLiveItemText.delete(id);roundLiveCommitted.delete(id);roundLiveOriginal.delete(id);roundLiveAnnounced.delete(id);roundLiveOperationalHole.delete(id);roundSegmentText.delete(id);roundPendingItems.delete(id);roundSegmentOrder=roundSegmentOrder.filter(value=>value!==id);
   if(!roundPendingItems.size&&roundTranscriptionWatchdog){clearTimeout(roundTranscriptionWatchdog);roundTranscriptionWatchdog=null}
 }
 function consumeLiveRoundClosures(){const text=roundLiveClosureQueue.map(item=>item.text).filter(Boolean).join(" ");roundLiveClosureQueue=[];return text}
@@ -1400,6 +1423,7 @@ function finalizeRoundDictation(){
     resetRoundCapture();
     if(result.ok){
       $("status").textContent=continuous?"● ESCUCHANDO…":roundIdleStatus();phase=continuous?"listening":"idle";
+      if(continuous)scheduleOperationalMissingPrompt();
       if(result.closure)speakClosure(result.closure);
     }else speakGlobalError("round");
     return;
@@ -1434,7 +1458,7 @@ function requestRoundFinalize(graceMs=120,keepListening=false){
   roundFinalizeTimer=setTimeout(()=>{roundFinalizeTimer=null;finalizeRoundDictation()},Math.max(120,Number(graceMs)||120));
 }
 setInterval(()=>{if(round.configured&&$("status")&&phase==="idle"&&!listening&&!roundFinalizeRequested&&!roundPendingItems.size)$("status").textContent=roundIdleStatus();renderRoundClockButton()},1000);
-const ALLOWED_SPEECH_REASONS=new Set(["closure","query","query_accumulated"]);
+const ALLOWED_SPEECH_REASONS=new Set(["closure","query","query_accumulated","missing_score"]);
 const VOICE_POLICY=Object.freeze({
   voice:"cedar",
   speed:1.15,
@@ -1661,12 +1685,12 @@ function playerEligibleForResults(p,holes=ALL){
   if(!p)return false;
   return !playerHasOmittedScore(p,holes);
 }
-function validateEntry(x){const p=playerByRef(x.player),hole=Number(x.hole),gross=Number(x.gross);if(!p)return{ok:false,speech:`No encuentro al jugador ${x.player||"indicado"}.`};if(!Number.isInteger(hole)||hole<1||hole>18)return{ok:false,speech:"Error"};if(!Number.isInteger(gross)||gross<1||gross>30)return{ok:false,speech:`Score inválido para ${p.name} en el hoyo ${hole}.`};return{ok:true,p,hole,gross}}
+function validateEntry(x){const p=playerByRef(x.player),hole=Number(x.hole),status=String(x.status||"").toLowerCase(),gross=Number(x.gross);if(!p)return{ok:false,speech:`No encuentro al jugador ${x.player||"indicado"}.`};if(!Number.isInteger(hole)||hole<1||hole>18)return{ok:false,speech:"Error"};if(status==="x")return{ok:true,p,hole,gross:null,status};if(!Number.isInteger(gross)||gross<1||gross>30)return{ok:false,speech:`Score inválido para ${p.name} en el hoyo ${hole}.`};return{ok:true,p,hole,gross,status:null}}
 function saveEntry(x){
   if(round.officiallyClosedAt)return{ok:false,speech:"Ronda cerrada oficialmente."};
   const v=validateEntry(x);if(!v.ok)return v;
   const previous=v.p.holes[v.hole];
-  v.p.holes[v.hole]=scoreObject(v.p,v.hole,v.gross,x);
+  v.p.holes[v.hole]=v.status==="x"?{hole:v.hole,gross:null,par:PAR[v.hole-1],status:"x",updatedAt:new Date().toISOString()}:scoreObject(v.p,v.hole,v.gross,x);
   const last=Number(v.p.lastHole)||0;
   v.p.lastHole=Math.max(last,v.hole);
   return{ok:true,p:v.p,score:v.p.holes[v.hole],replacedOmission:isOmittedScore(previous)};
@@ -1717,12 +1741,12 @@ function recordScores(a){
   if(!round.configured)return{ok:false,speech:"Primero configura la ronda grupal."};
   if(!Array.isArray(a.entries)||a.entries.length<2)return{ok:false,speech:"No se recibieron suficientes scores."};
   const checked=a.entries.map(validateEntry),bad=checked.find(x=>!x.ok);if(bad)return bad;
-  const unique=[],keys=new Set();
+  const uniqueByKey=new Map();
   for(let i=0;i<checked.length;i++){
     const v=checked[i],k=`${v.p.id}:${v.hole}`;
-    if(keys.has(k))continue;
-    keys.add(k);unique.push({raw:a.entries[i],checked:v});
+    uniqueByKey.set(k,{raw:a.entries[i],checked:v});
   }
+  const unique=[...uniqueByKey.values()];
   let retroactive=false;
   for(const item of unique){
     if(isRetroactiveScore(item.checked.p,item.checked.hole))retroactive=true;
@@ -1855,6 +1879,24 @@ function readGrossAt(tokens,i,hole){
   if(PAR[hole-1]===3&&n.value>6)return{gross:6,next:n.next};
   return{gross:n.value,next:n.next};
 }
+const OMITTED_SCORE_PHRASES=[
+  ["dejalo","sin","resultado"],["dejala","sin","resultado"],["dejalo","sin","score"],["dejala","sin","score"],
+  ["no","dio","resultado"],["no","dio","score"],["no","le","anotes"],["no","se","sabe"],
+  ["anota","equis"],["anota","x"],["marca","equis"],["marca","x"],["ponle","equis"],["ponle","x"],["ponle","cero"],
+  ["sin","resultado"],["sin","registro"],["sin","datos"],["sin","dato"],["sin","score"],
+  ["no","informo"],["no","reporto"],["no","registro"],["no","respondio"],["no","contesto"],["no","canto"],["no","dijo"],["no","anotes"],
+  ["desconocido"],["desconocida"],["omitido"],["omitida"],["pendiente"],["ausente"],["levanta"],["levantado"],["levantada"],["equis"],["x"],["cero"]
+].sort((a,b)=>b.length-a.length);
+function readOmittedScoreAt(tokens,start){
+  const i=skipScoreFillers(tokens,start);
+  for(const phrase of OMITTED_SCORE_PHRASES){let matches=true;for(let j=0;j<phrase.length;j++)if(tokens[i+j]!==phrase[j]){matches=false;break}if(matches)return{gross:null,status:"x",next:i+phrase.length}}
+  return null
+}
+function readOperationalScoreAt(tokens,start,hole){
+  const omitted=readOmittedScoreAt(tokens,start);if(omitted)return omitted;
+  const gross=readGrossAt(tokens,start,hole);return gross?{...gross,status:null}:null
+}
+function hasNamedOmissionIntent(tokens){for(let i=0;i<tokens.length;i++){const player=matchPlayerAt(tokens,i);if(player&&readOmittedScoreAt(tokens,player.next))return true}return false}
 function playerMentionInTokens(tokens){
   const found=[];
   for(let i=0;i<tokens.length;i++){const m=matchPlayerAt(tokens,i);if(m&&!found.some(p=>p.id===m.player.id))found.push(m.player)}
@@ -1889,19 +1931,49 @@ function removeRoundPlayer(player){
   persist();render();
   return{ok:true,closure};
 }
-function parseScoreSequenceTranscript(transcript,{defaultPlayer=null,readScoreAt=null}={}){
+function operationalPlayersForHole(hole){
+  const value=Number(hole);return Number.isInteger(value)&&value>=1&&value<=18?round.players.filter(player=>value>=Math.max(1,Math.min(18,Number(player?.activeFrom)||1))):[]
+}
+function operationalEntryRecorded(entry){return entry?.status==="x"||(Number.isInteger(Number(entry?.gross))&&Number(entry.gross)>=1&&Number(entry.gross)<=30)}
+function operationalHoleComplete(hole,entries=[],{ignoreRecordedKeys=null}={}){
+  const value=Number(hole),required=operationalPlayersForHole(value);if(!required.length)return false;
+  const pending=new Set();for(const entry of entries||[]){if(Number(entry?.hole)!==value||!operationalEntryRecorded(entry))continue;const player=playerByRef(entry.player);if(player)pending.add(player.id)}
+  const ignored=ignoreRecordedKeys instanceof Set?ignoreRecordedKeys:new Set(ignoreRecordedKeys||[]);
+  return required.every(player=>pending.has(player.id)||(!ignored.has(`${player.id}:${value}`)&&manualHoleResult(player,value).recorded))
+}
+function nextOperationalHole(hole,entries=[],options={}){const value=Number(hole);return operationalHoleComplete(value,entries,options)&&value<18?value+1:value}
+function currentOperationalHole(){
+  const selected=Number(document.getElementById("roundManualEntry")?.dataset?.hole);if(Number.isInteger(selected)&&selected>=1&&selected<=18)return selected;
+  return ALL.find(hole=>!operationalHoleComplete(hole))||18
+}
+function operationalTargetHoleForEntries(entries){const last=Array.isArray(entries)?entries.at(-1):null,hole=Number(last?.hole);return Number.isInteger(hole)&&hole>=1&&hole<=18?nextOperationalHole(hole,entries):currentOperationalHole()}
+function operationalMissingPlayers(hole){return operationalPlayersForHole(hole).filter(player=>!manualHoleResult(player,hole).recorded)}
+function operationalHoleStarted(hole){return operationalPlayersForHole(hole).some(player=>manualHoleResult(player,hole).recorded)}
+function clearOperationalMissingPrompt(){if(roundMissingPromptTimer){clearTimeout(roundMissingPromptTimer);roundMissingPromptTimer=null}roundMissingPrompt=null}
+function operationalPromptPlayer(){
+  if(!roundMissingPrompt)return null;const hole=Number(roundMissingPrompt.hole),player=round.players.find(item=>item.id===roundMissingPrompt.playerId);
+  if(!player||hole!==currentOperationalHole()||manualHoleResult(player,hole).recorded){roundMissingPrompt=null;return null}return player
+}
+function scheduleOperationalMissingPrompt(hole=currentOperationalHole()){
+  if(roundMissingPromptTimer){clearTimeout(roundMissingPromptTimer);roundMissingPromptTimer=null}
+  const value=Number(hole),pending=operationalPromptPlayer();if(pending||!listening||voiceContext!=="round"||!operationalHoleStarted(value))return false;
+  const missing=operationalMissingPlayers(value);if(!missing.length)return false;
+  roundMissingPromptTimer=setTimeout(()=>{roundMissingPromptTimer=null;if(!listening||voiceContext!=="round"||currentOperationalHole()!==value)return;const player=operationalMissingPlayers(value)[0];if(!player)return;const text=`Falta ${playerVoiceAlias(player)}`;if(speakAuthorized("missing_score",text)){roundMissingPrompt={hole:value,playerId:player.id};$("status").textContent=text.toUpperCase();const grid=document.getElementById("roundGridStatus");if(grid)grid.textContent=text.toUpperCase()}},2000);
+  return true
+}
+function parseScoreSequenceTranscript(transcript,{defaultPlayer=null,readScoreAt=null,defaultHole=null,ignoreRecordedKeys=null}={}){
   const text=normalizeSpeech(transcript),tokens=text.split(" ").filter(Boolean);if(!tokens.length)return{matched:false,ok:false};
-  if(tokens.some(t=>QUERY_WORDS.has(t)))return{matched:false,ok:false};
-  const scoreReader=typeof readScoreAt==="function"?readScoreAt:(source,start,hole)=>{const gross=readGrossAt(source,start,hole);return gross?{...gross,status:null}:null};
-  const entries=[];let i=0,currentHole=null,activePlayer=defaultPlayer,sawRelevant=false;
+  const contextualOmission=!!defaultPlayer&&!!readOmittedScoreAt(tokens,0);if(tokens.some(t=>QUERY_WORDS.has(t))&&!hasNamedOmissionIntent(tokens)&&!contextualOmission)return{matched:false,ok:false};
+  const scoreReader=typeof readScoreAt==="function"?readScoreAt:readOperationalScoreAt;
+  const initialHole=Number(defaultHole),entries=[];let i=0,currentHole=Number.isInteger(initialHole)&&initialHole>=1&&initialHole<=18?initialHole:null,activePlayer=defaultPlayer,sawRelevant=false,explicitHole=false,sequenceClosed=false;
   const fail=()=>({matched:sawRelevant||currentHole!==null||entries.length>0,ok:false,speech:"Error"});
-  const addEntry=(player,hole,score)=>{entries.push({player:player.name,hole,gross:score.gross,status:score.status||null});activePlayer=player;currentHole=hole};
+  const addEntry=(player,hole,score)=>{entries.push({player:player.name,hole,gross:score.gross,status:score.status||null});activePlayer=player;const complete=operationalHoleComplete(hole,entries,{ignoreRecordedKeys});currentHole=complete&&hole<18?hole+1:hole;sequenceClosed=complete&&hole===18};
   while(i<tokens.length){
     if(CORRECTION_WORDS.has(tokens[i])||SCORE_FILLERS.has(tokens[i])||SCORE_WORDS.has(tokens[i])){sawRelevant=true;i++;continue}
     if(tokens[i]==="hoyo"){
       sawRelevant=true;const hn=parseSpanishNumberTokens(tokens,i+1);
       if(!hn||hn.value<1||hn.value>18)return{matched:true,ok:false,speech:"Error"};
-      currentHole=hn.value;let j=skipScoreFillers(tokens,hn.next),named=matchPlayerAt(tokens,j);
+      explicitHole=true;sequenceClosed=false;currentHole=hn.value;let j=skipScoreFillers(tokens,hn.next),named=matchPlayerAt(tokens,j);
       if(named){activePlayer=named.player;j=skipScoreFillers(tokens,named.next)}
       if(!activePlayer)return fail();
       const score=scoreReader(tokens,j,currentHole);if(!score)return fail();
@@ -1909,15 +1981,18 @@ function parseScoreSequenceTranscript(transcript,{defaultPlayer=null,readScoreAt
     }
     const m=matchPlayerAt(tokens,i);
     if(m){
+      if(sequenceClosed)return fail();
       sawRelevant=true;activePlayer=m.player;let j=skipScoreFillers(tokens,m.next),hole=currentHole;
       if(tokens[j]==="hoyo"){
         const hn=parseSpanishNumberTokens(tokens,j+1);if(!hn||hn.value<1||hn.value>18)return{matched:true,ok:false,speech:"Error"};
-        hole=hn.value;j=skipScoreFillers(tokens,hn.next);
+        explicitHole=true;sequenceClosed=false;hole=hn.value;j=skipScoreFillers(tokens,hn.next);
       }
       if(!hole)return fail();
       const score=scoreReader(tokens,j,hole);if(!score)return fail();
       addEntry(activePlayer,hole,score);i=score.next;continue;
     }
+    const contextual=activePlayer&&currentHole&&!entries.length?scoreReader(tokens,i,currentHole):null;
+    if(contextual){sawRelevant=true;addEntry(activePlayer,currentHole,contextual);i=contextual.next;continue}
     // Después de establecer jugador y primer hoyo, también acepta la tanda
     // abreviada natural: "Jaime, hoyo 1 cuatro, 2 cinco, 3 par".
     const abbreviated=activePlayer&&entries.length?parseSpanishNumberTokens(tokens,i):null;
@@ -1928,23 +2003,23 @@ function parseScoreSequenceTranscript(transcript,{defaultPlayer=null,readScoreAt
     return fail();
   }
   if(!entries.length)return{matched:sawRelevant,ok:false,speech:"Error"};
-  const keys=new Set(),deduped=[];
+  const dedupedByKey=new Map();
   for(const e of entries){
     const p=playerByRef(e.player);if(!p)return{matched:true,ok:false,speech:"Error"};
     const k=`${p.id}:${e.hole}`;
-    if(keys.has(k))continue;
-    keys.add(k);deduped.push(e);
+    dedupedByKey.set(k,e);
   }
-  return{matched:true,ok:true,entries:deduped};
+  return{matched:true,ok:true,entries:[...dedupedByKey.values()],explicitHole,nextHole:currentHole};
 }
-function parseProvisionalScoreTranscript(transcript){return parseScoreSequenceTranscript(transcript,{defaultPlayer:round.players[0]||null})}
-function parseRoundScoreTranscript(transcript){return round.provisional?parseProvisionalScoreTranscript(transcript):parseScoreSequenceTranscript(transcript)}
+function parseProvisionalScoreTranscript(transcript,options={}){return parseScoreSequenceTranscript(transcript,{...options,defaultPlayer:options.defaultPlayer??round.players[0]??null,defaultHole:options.defaultHole??currentOperationalHole()})}
+function parseRoundScoreTranscript(transcript,options={}){const merged={...options,defaultPlayer:options.defaultPlayer??operationalPromptPlayer(),defaultHole:options.defaultHole??currentOperationalHole()};return round.provisional?parseProvisionalScoreTranscript(transcript,merged):parseScoreSequenceTranscript(transcript,merged)}
 const ACCUMULATED_QUERY_MATRIX=["acumulado","acumulados","score acumulado","subtotal","sub total","actual","score actual","total actual","hasta ahora","como vamos","como voy","como va la vuelta","como va mi vuelta","como va nuestra vuelta","cuanto llevo","cuanto llevamos","que llevo","que llevamos","donde voy","donde vamos","marcador","marcador actual","parcial","parciales"];
 const RESULT_QUERY_MATRIX=["resultado","resultados","resultado actual","resultados actuales","como va","como estamos","como esta la vuelta","como esta la ronda","estado actual","estado de la vuelta","estado de la ronda","total","totales","que resultado llevo","que resultado llevamos"];
 function matrixPhraseMatch(text,phrases){const padded=` ${text} `;return phrases.some(x=>padded.includes(` ${normalizeSpeech(x)} `))}
 function flexibleAccumulatedIntent(transcript){const text=normalizeSpeech(transcript);return matrixPhraseMatch(text,ACCUMULATED_QUERY_MATRIX)||matrixPhraseMatch(text,RESULT_QUERY_MATRIX)}
 function parseRoundQueryTranscript(transcript){
   const text=normalizeSpeech(transcript),tokens=text.split(" ").filter(Boolean);if(!tokens.length)return{matched:false};
+  if(hasNamedOmissionIntent(tokens)||(operationalPromptPlayer()&&readOmittedScoreAt(tokens,0)))return{matched:false};
   const historical=window.GSCHistoricalAnalytics?.run?.(transcript,readRoundArchive());if(historical?.matched)return{matched:true,kind:"historical",result:{ok:historical.ok,speech:historical.speech}};
   const advancedPriority=tokens.some(t=>["pendiente","pendientes","falta","faltan","omitido","omitidos","recibio","recibieron","handicap","mejor","mejores","peor","peores","ganando","gana","lider","posicion","posiciones","birdie","birdies","bogey","bogeys","doblete","dobletes","triplete","tripletes"].includes(t));
   if(advancedPriority){const priority=parseAdvancedRoundQueryTranscript(transcript);if(priority.matched)return priority}
@@ -2005,7 +2080,12 @@ function scoreConfirmationSpeech(entries){
 function applyLiteralScores(parsed){
   // El registro de scores es silencioso: actualiza la tarjeta sin repetir
   // jugador, hoyo, score ni resultados. La voz queda reservada para consultas expresas.
-  return parsed.entries.length===1?recordScore(parsed.entries[0]):recordScores({entries:parsed.entries});
+  const manual=document.getElementById("roundManualEntry"),previousHole=manual?.dataset?.hole,targetHole=operationalTargetHoleForEntries(parsed.entries);
+  if(manual&&Number.isInteger(targetHole))manual.dataset.hole=String(targetHole);
+  const result=parsed.entries.length===1?recordScore(parsed.entries[0]):recordScores({entries:parsed.entries});
+  if(!result.ok&&manual){if(previousHole===undefined)delete manual.dataset.hole;else manual.dataset.hole=previousHole}
+  if(result.ok)scheduleOperationalMissingPrompt(targetHole);
+  return result
 }
 function speechForHole(p,h){
   const s=p.holes[h];
@@ -2211,8 +2291,8 @@ function roundSessionConfig(){
   const knownNames=round.players.map(p=>p.name).join(", ");
   return{
     type:"realtime",
-    instructions:["GROUP_ROUND_LOCK_V107.","REGLA ABSOLUTA: nunca respondas espontáneamente al usuario.","No hagas preguntas, no ofrezcas ayuda, no pidas aclaraciones, no digas frases conversacionales y no hables ante errores o instrucciones desconocidas.","Durante captura de scores solo transcribe audio.","Los scores y correcciones se procesan exclusivamente en el cliente.","Solo una response.create explícita con token autorizado por el cliente puede producir voz.","Toda voz autorizada se limita al contenido literal enviado por el cliente: confirmación de score, consulta solicitada, acumulado o cierre de vuelta/ronda.","Nunca generes expresiones como por favor, indique, dime, información, problema, ayudar, ayuda, necesitas, entendido, cómo puedo ayudarte o equivalentes.","No uses herramientas.","Toda voz autorizada usa obligatoriamente el mismo locutor masculino adulto, serio, sobrio y profesional, español internacional neutro, sin Spanglish. Pronuncia Gross como gros."].join(" "),
-    audio:{input:{transcription:{model:"gpt-live-transcribe",languages:["es"],keywords:["hoyo","gross","par","birdie","bogey","doble bogey","triple bogey","eagle","albatros","equis",...round.players.map(p=>p.name)],prompt:round.provisional?"Golf Guatemala. Ronda sin registro con seis espacios opcionales. Transcribe literalmente hoyo y score, por ejemplo: hoyo uno par; jugador tres hoyo cinco bogey. También transcribe datos tardíos opcionales por posición: jugador dos Carlos; jugador dos handicap catorce; jugador dos marcas blancas; jugador dos Carlos catorce blancas. Pueden completarse nombre, handicap y marcas juntos o por separado. No inventes datos.":`Golf Guatemala. Jugadores actuales: ${knownNames}. Transcribe literalmente nombres, hoyo y score o Gross. Dos formas válidas de score: número Gross directo o nombre golfístico. Vocabulario esperado: albatros, águila, aguiler, eagle, birdie, pájaro, verdura, par, even par, parinelo, paraso, parcuato, bogey, doble bogey, doblete, triple bogey, triplete, doble par, par español, uno bajo par, uno sobre par, dos sobre par, tres sobre par, corrección, corrijo, corregir, acumulado, agregar jugador, quitar jugador, corregir nombre, corregir handicap, rectificación de handicap y Stop. Conserva exactamente los nombres registrados. El jugador puede dictarse por primer nombre cuando ese primer nombre es único en el grupo; si dos jugadores comparten primer nombre, puede dictarse únicamente el apellido para diferenciarlos. Jessie se escribe siempre Jessie. No reordenes nombres ni números.`},noise_reduction:{type:"far_field"},turn_detection:{type:"server_vad",threshold:0.25,prefix_padding_ms:500,silence_duration_ms:700,create_response:false,interrupt_response:false}},output:{...(sessionHasSpoken?{}:{voice:VOICE_POLICY.voice}),speed:VOICE_POLICY.speed}},
+    instructions:["GROUP_ROUND_LOCK_V270.","REGLA ABSOLUTA: nunca respondas espontáneamente al usuario.","No hagas preguntas, no ofrezcas ayuda, no pidas aclaraciones, no digas frases conversacionales y no hables ante errores o instrucciones desconocidas.","Durante captura de scores solo transcribe audio.","Los scores y correcciones se procesan exclusivamente en el cliente.","Solo una response.create explícita con token autorizado por el cliente puede producir voz.","Toda voz autorizada se limita al contenido literal enviado por el cliente: recordatorio exacto de jugador faltante, consulta solicitada, acumulado o cierre de vuelta/ronda.","El recordatorio autorizado contiene únicamente Falta y el nombre exacto del jugador.","Nunca generes expresiones como por favor, indique, dime, información, problema, ayudar, ayuda, necesitas, entendido, cómo puedo ayudarte o equivalentes.","No uses herramientas.","Toda voz autorizada usa obligatoriamente el mismo locutor masculino adulto, serio, sobrio y profesional, español internacional neutro, sin Spanglish. Pronuncia Gross como gros."].join(" "),
+    audio:{input:{transcription:{model:"gpt-live-transcribe",languages:["es"],keywords:["gross","par","birdie","bogey","doble bogey","triple bogey","eagle","albatros","equis","cero","sin score","sin dato","no informó","no dijo","no cantó","ponle cero","no le anotes",...round.players.map(p=>p.name)],prompt:round.provisional?"Golf Guatemala. Ronda sin registro con seis espacios opcionales. Transcribe literalmente jugador y score. El hoyo es opcional porque el cursor indica automáticamente el hoyo activo. También transcribe datos tardíos opcionales por posición: jugador dos Carlos; jugador dos handicap catorce; jugador dos marcas blancas; jugador dos Carlos catorce blancas. Pueden completarse nombre, handicap y marcas juntos o por separado. No inventes datos.":`Golf Guatemala. Jugadores actuales: ${knownNames}. El cursor ya indica el hoyo activo: transcribe literalmente nombre y score o Gross; el número de hoyo es opcional y solo reposiciona el cursor cuando se pronuncia. Después de un recordatorio Falta NOMBRE, una respuesta con solo score o solo omisión pertenece exclusivamente a ese jugador. Dos formas válidas de score: número Gross directo o nombre golfístico. Omisiones explícitas válidas: X, equis, cero, sin score, sin dato, sin resultado, no informó, no reportó, no dijo, no cantó, no dio score, no se sabe, ponle cero y no le anotes. Vocabulario esperado: albatros, águila, aguiler, eagle, birdie, pájaro, verdura, par, even par, parinelo, paraso, parcuato, bogey, doble bogey, doblete, triple bogey, triplete, doble par, par español, uno bajo par, uno sobre par, dos sobre par, tres sobre par, corrección, corrijo, corregir, acumulado, agregar jugador, quitar jugador, corregir nombre, corregir handicap, rectificación de handicap y Stop. Conserva exactamente los nombres registrados. El jugador puede dictarse por primer nombre cuando ese primer nombre es único en el grupo; si dos jugadores comparten primer nombre, puede dictarse únicamente el apellido para diferenciarlos. Jessie se escribe siempre Jessie. No reordenes nombres ni números.`},noise_reduction:{type:"far_field"},turn_detection:{type:"server_vad",threshold:0.25,prefix_padding_ms:500,silence_duration_ms:700,create_response:false,interrupt_response:false}},output:{...(sessionHasSpoken?{}:{voice:VOICE_POLICY.voice}),speed:VOICE_POLICY.speed}},
     tools:[],tool_choice:"none"
   }
 }
@@ -2335,11 +2415,11 @@ function startStablefordRoundMode(){
   savePlayersToDirectory(round.players);voiceContext="round";resetRoundCapture();persist();
   $("stablefordSetupOverlay").classList.remove("visible");$("stablefordSetupOverlay").setAttribute("aria-hidden","true");$("setupOverlay").classList.remove("visible");render();return true
 }
-function stablefordGrossAt(tokens,start,hole){let i=skipScoreFillers(tokens,start);if(["x","equis","levanta","levantar","levantada"].includes(tokens[i]))return{gross:null,status:"x",next:i+1};const parsed=readGrossAt(tokens,i,hole);return parsed?{...parsed,status:null}:null}
-function parseStablefordTranscript(transcript){
-  return parseScoreSequenceTranscript(transcript,{readScoreAt:stablefordGrossAt});
+function stablefordGrossAt(tokens,start,hole){return readOperationalScoreAt(tokens,start,hole)}
+function parseStablefordTranscript(transcript,options={}){
+  return parseScoreSequenceTranscript(transcript,{...options,readScoreAt:stablefordGrossAt,defaultHole:options.defaultHole??currentOperationalHole()});
 }
-parseRoundScoreTranscript=function(transcript){return isStablefordRound()?parseStablefordTranscript(transcript):baseParseRoundScoreTranscript(transcript)};
+parseRoundScoreTranscript=function(transcript,options={}){const merged={...options,defaultPlayer:options.defaultPlayer??operationalPromptPlayer(),defaultHole:options.defaultHole??currentOperationalHole()};return isStablefordRound()?parseStablefordTranscript(transcript,merged):baseParseRoundScoreTranscript(transcript,merged)};
 validateEntry=function(x){if(!isStablefordRound())return baseValidateEntry(x);const p=playerByRef(x.player),hole=Number(x.hole),status=String(x.status||"").toLowerCase();if(!p||!Number.isInteger(hole)||hole<1||hole>18)return{ok:false,speech:"Error"};if(status==="x")return{ok:true,p,hole,gross:null,status};const gross=Number(x.gross);return Number.isInteger(gross)&&gross>=1&&gross<=30?{ok:true,p,hole,gross,status:null}:{ok:false,speech:"Error"}};
 saveEntry=function(x){if(!isStablefordRound())return baseSaveEntry(x);if(round.officiallyClosedAt)return{ok:false,speech:"RONDA CERRADA OFICIALMENTE"};const v=validateEntry(x);if(!v.ok)return v;const previous=v.p.holes[v.hole];const score=v.status==="x"?{hole:v.hole,gross:null,par:PAR[v.hole-1],status:"x",points:0,updatedAt:new Date().toISOString()}:{...scoreObject(v.p,v.hole,v.gross,x),points:GSCStableford.pointsFor(v.gross,PAR[v.hole-1])};v.p.holes[v.hole]=score;v.p.lastHole=Math.max(Number(v.p.lastHole)||0,v.hole);return{ok:true,p:v.p,score,replacedOmission:isOmittedScore(previous)}};
 segmentSpeech=function(title,holes){if(!isStablefordRound())return baseSegmentSpeech(title,holes);const lines=[];for(const p of round.players){const t=stablefordTotals(p,holes);if(t.count)lines.push(`${p.name}. Gross ${t.gross}. Puntos ${t.points}.`)}if(!lines.length)return"";return holes.length===ALL.length?["Total.",...lines].join(" "):lines.join(" ")};
@@ -2369,9 +2449,10 @@ function manualSegmentValue(player,holes){
 }
 function roundManualPlayerRows(selectedHole){
   const locked=!!round.officiallyClosedAt;
-  return round.players.map((player,index)=>{const first=manualSegmentValue(player,FRONT),second=manualSegmentValue(player,BACK),total=manualSegmentValue(player,ALL),result=manualHoleResult(player,selectedHole);return`<div class="round-grid-name" aria-label="JUGADOR ${index+1}" style="display:flex;align-items:center;justify-content:center;min-width:0;width:100%;min-height:42px;padding:3px;border:1px solid #4b4f50;background:#050505;font-size:14px;font-weight:900;text-align:center;overflow:hidden">${escapeHtml(player.name)}</div><span style="text-align:center;font-size:18px">${selectedHole}</span><input class="round-grid-gross" data-player-id="${escapeHtml(player.id)}" inputmode="numeric" type="number" min="1" max="30" aria-label="GROSS ${escapeHtml(player.name)} HOYO ${selectedHole}" style="min-width:0;width:100%;min-height:42px;font-size:20px;text-align:center;box-sizing:border-box" value="${result.recorded?(result.gross??""):""}" ${locked?"disabled":""}><strong style="text-align:center">${first.count?first.total:0}</strong><strong style="text-align:center">${second.count?second.total:0}</strong><strong style="text-align:center;color:#72ff42">${total.count?total.total:0}</strong>`}).join("")
+  return round.players.map((player,index)=>{const first=manualSegmentValue(player,FRONT),second=manualSegmentValue(player,BACK),total=manualSegmentValue(player,ALL),result=manualHoleResult(player,selectedHole),value=result.recorded?(result.status==="x"?"X":result.gross??""):"";return`<div class="round-grid-name" aria-label="JUGADOR ${index+1}" style="display:flex;align-items:center;justify-content:center;min-width:0;width:100%;min-height:42px;padding:3px;border:1px solid #4b4f50;background:#050505;font-size:14px;font-weight:900;text-align:center;overflow:hidden">${escapeHtml(player.name)}</div><span style="text-align:center;font-size:18px">${selectedHole}</span><input class="round-grid-gross" data-player-id="${escapeHtml(player.id)}" inputmode="text" type="text" autocapitalize="characters" aria-label="GROSS ${escapeHtml(player.name)} HOYO ${selectedHole}" style="min-width:0;width:100%;min-height:42px;font-size:20px;text-align:center;box-sizing:border-box" value="${escapeHtml(value)}" ${locked?"disabled":""}><strong style="text-align:center">${first.count?first.total:0}</strong><strong style="text-align:center">${second.count?second.total:0}</strong><strong style="text-align:center;color:#72ff42">${total.count?total.total:0}</strong>`}).join("")
 }
 function roundGridStatus(message){const target=document.querySelector("#roundGridStatus");if(target)target.textContent=message;return false}
+function manualScoreEntry(player,hole,value){const tokens=normalizeSpeech(value).split(" ").filter(Boolean),score=readOperationalScoreAt(tokens,0,hole);return score&&score.next===tokens.length?{player,hole,gross:score.gross,status:score.status||null}:null}
 function applyManualScoreEntries(entries){
   if(!entries.length)return roundGridStatus("INGRESA AL MENOS UN SCORE");
   const result=applyLiteralScores({matched:true,ok:true,entries});
@@ -2388,20 +2469,20 @@ function renderRoundManualEntry(){
   let manual=document.getElementById("roundManualEntry");
   if(!round.configured||!round.players.length){manual?.remove();return}
   if(!manual){manual=document.createElement("div");manual.id="roundManualEntry";manual.style.cssText="position:relative;z-index:9;margin:10px 0;padding:10px;border:2px solid #31ff00;background:#000;pointer-events:auto;touch-action:manipulation";document.querySelector(".card-shell").before(manual)}
-  const firstPending=ALL.find(hole=>round.players.some(player=>!manualHoleResult(player,hole).recorded))||18;if(!manual.dataset.hole)manual.dataset.hole=String(firstPending);
+  const firstPending=ALL.find(hole=>!operationalHoleComplete(hole))||18;if(!manual.dataset.hole)manual.dataset.hole=String(firstPending);
   const selectedHole=Math.max(1,Math.min(18,Number(manual.dataset.hole)||firstPending)),stable=isStablefordRound(),course=COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte,cfg=stable?stablefordConfig():null,locked=!!round.officiallyClosedAt;
   const detailOne=stable?{label:"TORNEO",value:round.tournament?.name||STABLEFORD_DEFAULT_TOURNAMENT}:{label:"CAMPO",value:course.displayName||course.name};
   const detailTwo=stable?{label:"CATEGORÍA",value:`${cfg.label} · ${stablefordTeeLabel(cfg)}`}:{label:"MODALIDAD",value:round.provisional?"GENERAL · SIN REGISTRO":"GENERAL"};
   const metric=stable?"PTS":"GROSS";
   manual.setAttribute("aria-label",stable?"CONTROL MANUAL STABLEFORD":"CONTROL MANUAL GENERAL");
-  manual.innerHTML=`<div id="roundManualTitle" style="margin:0 0 10px;color:#72ff42;text-align:center;font-size:16px;font-weight:900">CONTROL MANUAL · ${stable?"STABLEFORD":"GENERAL"}</div><div style="display:grid;grid-template-columns:72px 1fr;gap:5px;align-items:center;margin-bottom:8px"><b style="color:#72ff42;font-size:12px">${detailOne.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;width:100%;min-height:38px;padding:5px 9px;border:1px solid #4b4f50;border-radius:5px;background:#050505;color:#fff;box-sizing:border-box;text-align:center;font-size:12px;font-weight:900;text-transform:uppercase">${escapeHtml(detailOne.value)}</div></div><div style="display:grid;grid-template-columns:72px 1fr;gap:5px;align-items:center;margin-bottom:8px"><b style="color:#72ff42;font-size:12px">${detailTwo.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;min-height:36px;border:1px solid #31ff00;border-radius:5px;background:#050505;color:#fff;font-size:13px;font-weight:900">${escapeHtml(detailTwo.value)}</div></div><div style="display:grid;grid-template-columns:103px 72px 72px .65fr .65fr .75fr;gap:4px;align-items:center;width:100%;box-sizing:border-box"><b style="text-align:center;color:#72ff42;font-size:13px">JUGADOR</b><div style="text-align:center"><b style="color:#72ff42;font-size:12px">HOYO</b><select id="roundGridHole" style="display:block;width:100%;min-height:36px;margin-top:2px;font-size:19px;text-align:center;text-align-last:center" ${locked?"disabled":""}>${ALL.map(hole=>`<option value="${hole}" ${hole===selectedHole?"selected":""}>${hole}</option>`).join("")}</select></div><b style="text-align:center;color:#72ff42;font-size:13px">GROSS</b><b style="text-align:center;color:#72ff42;font-size:11px">${metric} 1V</b><b style="text-align:center;color:#72ff42;font-size:11px">${metric} 2V</b><b style="text-align:center;color:#72ff42;font-size:10px">${metric} TOTAL</b>${roundManualPlayerRows(selectedHole)}</div><div id="roundGridStatus" style="min-height:18px;margin-top:5px;color:#ff4545;text-align:center;font-size:11px;font-weight:900"></div><button id="roundGridEnter" type="button" style="display:block;width:100%;min-height:44px;margin-top:6px;font-size:18px;font-weight:800;background:${locked?"#111":"#72ff42"};color:${locked?"#777":"#000"};border:2px solid ${locked?"#555":"#72ff42"};box-shadow:${locked?"none":"0 0 14px rgba(114,255,66,.65)"}" ${locked?"disabled":""}>${locked?"RONDA CERRADA":"ENTER"}</button>`;
+  manual.innerHTML=`<div id="roundManualTitle" style="margin:0 0 6px;color:#72ff42;text-align:center;font-size:16px;font-weight:900">CONTROL MANUAL · ${stable?"STABLEFORD":"GENERAL"}</div><div id="roundGridInstruction" aria-live="polite" style="margin:0 0 10px;padding:7px 5px;border-top:1px solid #4b4f50;border-bottom:1px solid #4b4f50;color:#fff;text-align:center;font-size:12px;font-weight:900">INGRESO OFICIAL · HOYO ${selectedHole} · NOMBRE + SCORE · X = SIN DATO</div><div style="display:grid;grid-template-columns:72px 1fr;gap:5px;align-items:center;margin-bottom:8px"><b style="color:#72ff42;font-size:12px">${detailOne.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;width:100%;min-height:38px;padding:5px 9px;border:1px solid #4b4f50;border-radius:5px;background:#050505;color:#fff;box-sizing:border-box;text-align:center;font-size:12px;font-weight:900;text-transform:uppercase">${escapeHtml(detailOne.value)}</div></div><div style="display:grid;grid-template-columns:72px 1fr;gap:5px;align-items:center;margin-bottom:8px"><b style="color:#72ff42;font-size:12px">${detailTwo.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;min-height:36px;border:1px solid #31ff00;border-radius:5px;background:#050505;color:#fff;font-size:13px;font-weight:900">${escapeHtml(detailTwo.value)}</div></div><div style="display:grid;grid-template-columns:103px 72px 72px .65fr .65fr .75fr;gap:4px;align-items:center;width:100%;box-sizing:border-box"><b style="text-align:center;color:#72ff42;font-size:13px">JUGADOR</b><div style="text-align:center"><b style="color:#72ff42;font-size:12px">HOYO</b><select id="roundGridHole" style="display:block;width:100%;min-height:36px;margin-top:2px;font-size:19px;text-align:center;text-align-last:center" ${locked?"disabled":""}>${ALL.map(hole=>`<option value="${hole}" ${hole===selectedHole?"selected":""}>${hole}</option>`).join("")}</select></div><b style="text-align:center;color:#72ff42;font-size:13px">GROSS</b><b style="text-align:center;color:#72ff42;font-size:11px">${metric} 1V</b><b style="text-align:center;color:#72ff42;font-size:11px">${metric} 2V</b><b style="text-align:center;color:#72ff42;font-size:10px">${metric} TOTAL</b>${roundManualPlayerRows(selectedHole)}</div><div id="roundGridStatus" style="min-height:18px;margin-top:5px;color:#ff4545;text-align:center;font-size:11px;font-weight:900"></div><button id="roundGridEnter" type="button" style="display:block;width:100%;min-height:44px;margin-top:6px;font-size:18px;font-weight:800;background:${locked?"#111":"#72ff42"};color:${locked?"#777":"#000"};border:2px solid ${locked?"#555":"#72ff42"};box-shadow:${locked?"none":"0 0 14px rgba(114,255,66,.65)"}" ${locked?"disabled":""}>${locked?"RONDA CERRADA":"ENTER"}</button>`;
   manual.querySelector("#roundGridHole").onchange=event=>{manual.dataset.hole=event.target.value;render()};
-  const saveManualHole=()=>{const entries=[...manual.querySelectorAll(".round-grid-gross")].filter(input=>input.value.trim()!=="").map(input=>({player:input.dataset.playerId,hole:selectedHole,gross:Number(input.value)})),result=applyManualScoreEntries(entries);if(!result?.ok)return false;const complete=round.players.every(player=>manualHoleResult(player,selectedHole).recorded);const current=document.getElementById("roundManualEntry");if(complete&&selectedHole<18&&current){current.dataset.hole=String(selectedHole+1);render()}return true};
+  const saveManualHole=()=>{const entries=[];for(const input of manual.querySelectorAll(".round-grid-gross")){if(input.value.trim()==="")continue;const entry=manualScoreEntry(input.dataset.playerId,selectedHole,input.value);if(!entry)return roundGridStatus("SCORE INVÁLIDO");entries.push(entry)}const result=applyManualScoreEntries(entries);return!!result?.ok};
   manual.querySelector("#roundGridEnter").onclick=saveManualHole;manual.querySelectorAll(".round-grid-gross").forEach(input=>input.onkeydown=event=>{if(event.key==="Enter"){event.preventDefault();saveManualHole()}});
   let clearButton=document.getElementById("clearRoundScores");if(!clearButton){clearButton=document.createElement("button");clearButton.id="clearRoundScores";clearButton.type="button";clearButton.textContent="BORRAR SCORES";clearButton.style.cssText="margin-left:8px;border-color:#ff4545;color:#ff4545;background:#050505";$('newRoundButton').insertAdjacentElement("afterend",clearButton)}clearButton.disabled=locked;clearButton.setAttribute("aria-disabled",String(locked));clearButton.onclick=()=>{if(locked||!window.confirm("¿BORRAR ÚNICAMENTE TODOS LOS SCORES DE LOS HOYOS?\nSe conservarán jugadores, campo, categoría, marcas y configuración."))return;round.players.forEach(player=>{player.holes={};player.lastHole=0});round.announced={front:false,back:false,complete:false};manual.dataset.hole="1";persist();render()}
 }
 function bindRoundManualCells(){
-  $("scorecard").querySelectorAll(".round-manual-cell").forEach(cell=>{const edit=()=>{if(round.officiallyClosedAt)return;const player=round.players.find(item=>item.id===cell.dataset.roundPlayer),hole=Number(cell.dataset.roundHole);if(!player||!hole)return;const current=manualHoleResult(player,hole),raw=window.prompt(`${player.name} · HOYO ${hole} · GROSS`,current.recorded?(current.status==="x"?"X":String(current.gross??"")):"");if(raw===null)return;const value=raw.trim().toUpperCase();if(value===""){removeManualScore(player,hole);return}const entry={player:player.id,hole,status:stablefordGrossAt([normalizeSpeech(value)],0,hole)?.status||null,gross:value==="X"?null:Number(value)},result=applyManualScoreEntries([entry]);if(!result?.ok)window.alert("SCORE INVÁLIDO")};cell.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();edit()});cell.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();edit()}})})
+  $("scorecard").querySelectorAll(".round-manual-cell").forEach(cell=>{const edit=()=>{if(round.officiallyClosedAt)return;const player=round.players.find(item=>item.id===cell.dataset.roundPlayer),hole=Number(cell.dataset.roundHole);if(!player||!hole)return;const current=manualHoleResult(player,hole),raw=window.prompt(`${player.name} · HOYO ${hole} · GROSS`,current.recorded?(current.status==="x"?"X":String(current.gross??"")):"");if(raw===null)return;const value=raw.trim();if(value===""){removeManualScore(player,hole);return}const entry=manualScoreEntry(player.id,hole,value),result=entry?applyManualScoreEntries([entry]):null;if(!result?.ok)window.alert("SCORE INVÁLIDO")};cell.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();edit()});cell.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();edit()}})})
 }
 function renderStableford(){
   activateCourse(round.courseKey);const cfg=stablefordConfig(),course=COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte,par=PAR.reduce((a,b)=>a+b,0),d=new Date(round.createdAt);
@@ -2418,12 +2499,12 @@ function renderStableford(){
   $("status").textContent=roundIdleStatus();$("finalCardButton").classList.remove("hidden");$("finalCardButton").textContent=isRoundComplete()?"TARJETA DIGITAL FINAL":"TARJETA DIGITAL";renderRoundClockButton();renderStablefordSeries();
 }
 render=function(){if(isStablefordRound())return renderStableford();document.body.classList.remove("stableford-mode");$("stablefordSeriesSection")?.classList.add("hidden");return baseRender()};
-const baseRenderPreviousRound=render;render=function(){const output=baseRenderPreviousRound();renderPreviousRoundControls();renderPlayerEditControls();if(demoControlManual)$("newRoundButton")?.classList.add("hidden");return output};
+const baseRenderPreviousRound=render;render=function(){const output=baseRenderPreviousRound();renderPreviousRoundControls();renderPlayerEditControls();return output};
 renderFinalDigitalCard=function(){const ok=baseRenderFinalDigitalCard();if(!ok)return false;$("finalSummaryHeadRow").innerHTML=$("summaryHeadRow").innerHTML;$("finalSummaryTitle").textContent=isStablefordRound()?"PUNTOS":"INFORMACIÓN DE RONDA";if(isStablefordRound()){const cfg=stablefordConfig();document.querySelector(".final-card-head h1").textContent=`TARJETA STABLEFORD · ${cfg.label}`;document.querySelector(".final-card-readonly").textContent="STABLEFORD SCRATCH · TARJETA OFICIAL · SOLO CONSULTA"}return true};
 function storeStablefordRoundResults(){let series=readStablefordSeries();for(const p of round.players){const t=stablefordTotals(p,ALL);series=GSCStableford.upsertResult(series,{playerName:p.name,category:round.stablefordCategory,roundNumber:round.stablefordRoundNumber,courseKey:round.courseKey,points:t.points,gross:t.grossCount?t.gross:null,source:"scorecard",roundId:round.id})}writeStablefordSeries(series)}
 async function stablefordOfficialSnapshot(closedAt){const snapshot={roundId:round.id,version:Number(round.officialVersion)||1,status:"officially_closed",mode:"stableford",stablefordCategory:round.stablefordCategory,stablefordRoundNumber:round.stablefordRoundNumber,courseKey:round.courseKey,course:round.course,tournament:round.tournament||{name:STABLEFORD_DEFAULT_TOURNAMENT},playedAt:round.createdAt,officiallyClosedAt:closedAt,appVersion:"V267",players:JSON.parse(JSON.stringify(round.players))};snapshot.sha256=await window.GSCRoundClosure.sha256(snapshot);return snapshot}
 officiallyCloseRound=async function(){if(!isStablefordRound())return baseOfficiallyCloseRound();if(!isRoundComplete()||round.officiallyClosedAt){$("status").textContent="RONDA STABLEFORD INCOMPLETA";return false}if(!round.endedAt)stopRoundClock();const closedAt=new Date().toISOString(),snapshot=await stablefordOfficialSnapshot(closedAt);round={...round,status:"officially_closed",officiallyClosedAt:closedAt,officialVersion:snapshot.version,snapshotHash:snapshot.sha256,officialSnapshot:snapshot};storeStablefordRoundResults();persist();archiveRoundSnapshot(round);render();renderFinalDigitalCard();$("status").textContent="RONDA FINALIZADA · CAMPO, FECHA, TORNEO Y TARJETA GUARDADOS EN HISTORIAL";return true};
-roundSessionConfig=function(){const cfg=baseRoundSessionConfig();if(!isStablefordRound())return cfg;cfg.audio.input.transcription.prompt=`Golf Guatemala. Modalidad Stableford Scratch ${stablefordConfig().label}. Jugadores: ${round.players.map(p=>p.name).join(", ")}. Transcribe literalmente jugador, hoyo y Gross. Acepta números, par, bogey, doble bogey, birdie, eagle, albatros, X, equis o levanta. No inventes handicap ni Neto.`;return cfg};
+roundSessionConfig=function(){const cfg=baseRoundSessionConfig();if(!isStablefordRound())return cfg;cfg.audio.input.transcription.prompt=`Golf Guatemala. Modalidad Stableford Scratch ${stablefordConfig().label}. Jugadores: ${round.players.map(p=>p.name).join(", ")}. El cursor ya indica el hoyo activo: transcribe literalmente nombre y Gross; el hoyo es opcional y solo reposiciona el cursor cuando se pronuncia. Después de Falta NOMBRE, una respuesta con solo score o solo omisión pertenece a ese jugador. Acepta números, par, bogey, doble bogey, birdie, eagle, albatros, X, equis, cero, sin score, sin dato, no informó, no dijo, no cantó, ponle cero, no le anotes o levanta. No inventes handicap ni Neto.`;return cfg};
 function openStablefordResultEditor(){const cfg=stablefordConfig();$("stablefordResultCategory").value=stablefordRankingCategory;$("stablefordResultRound").value=String(round.stablefordRoundNumber||1);$("stablefordResultCourse").value=round.courseKey||"country_club";$("stablefordResultName").value="";$("stablefordResultPoints").value="";$("stablefordResultGross").value="";$("stablefordResultStatus").textContent="";$("stablefordResultOverlay").classList.add("visible");$("stablefordResultOverlay").setAttribute("aria-hidden","false");$("stablefordResultName").focus();return cfg}
 function closeStablefordResultEditor(){$("stablefordResultOverlay").classList.remove("visible");$("stablefordResultOverlay").setAttribute("aria-hidden","true")}
 function saveStablefordManualResult(){try{const name=GSCStableford.cleanName($("stablefordResultName").value),points=Number($("stablefordResultPoints").value),grossRaw=$("stablefordResultGross").value;if(!name||!Number.isInteger(points)||points<0||points>72)throw new Error("REVISA JUGADOR Y PUNTOS");const series=GSCStableford.upsertResult(readStablefordSeries(),{playerName:name,category:$("stablefordResultCategory").value,roundNumber:Number($("stablefordResultRound").value),courseKey:$("stablefordResultCourse").value,points,gross:grossRaw===""?null:Number(grossRaw),source:"manual"});writeStablefordSeries(series);stablefordRankingCategory=$("stablefordResultCategory").value;closeStablefordResultEditor();renderStablefordSeries();return true}catch(error){$("stablefordResultStatus").textContent=String(error?.message||"ERROR").toUpperCase();return false}}
@@ -2440,6 +2521,7 @@ async function configureSessionFor(context){
 }
 
 function teardownRealtime(){
+  clearOperationalMissingPrompt();
   realtimeGeneration++;
   try{if(dc){dc.onopen=null;dc.onclose=null;dc.onerror=null;dc.onmessage=null;dc.close()}}catch{}
   try{if(pc)pc.close()}catch{}
@@ -2522,6 +2604,7 @@ async function recoverRealtimeAfterResume(){
   finally{resumeCheckPromise=null}
 }
 function setVoice(on){
+  if(!on)clearOperationalMissingPrompt();
   if(micTrack)micTrack.enabled=on;
   if(audioEl&&on){audioEl.muted=true;audioEl.volume=0;}
   listening=on;
@@ -2682,7 +2765,8 @@ function handleRealtime(message){
         pendingVoiceSpeedRestore=false;
         setSessionVoiceSpeed(VOICE_POLICY.speed);
       }
-      if(finishedReason==="error"){phase="idle";if(voiceContext==="round")$("status").textContent=roundIdleStatus()}
+      if(finishedReason==="missing_score"){phase=listening?"listening":"idle";if(micTrack&&listening)micTrack.enabled=true;const pending=operationalPromptPlayer();if(voiceContext==="round"&&pending)$("status").textContent=`FALTA ${playerVoiceAlias(pending).toUpperCase()}`}
+      else if(finishedReason==="error"){phase="idle";if(voiceContext==="round")$("status").textContent=roundIdleStatus()}
       else if(phase==="speaking"||phase==="processing"||phase==="error")phase="idle";
       return;
     }
@@ -2865,12 +2949,12 @@ const lockScorecardSelection=e=>{if(e.target?.closest?.(".provisional-player-con
 document.addEventListener("selectionstart",lockScorecardSelection,{capture:true});
 document.addEventListener("contextmenu",lockScorecardSelection,{capture:true});
 document.addEventListener("dragstart",lockScorecardSelection,{capture:true});
-$("backToRegistrationButton").addEventListener("click",()=>demoControlManual?false:isStablefordRound()?openStablefordDataEditor():openCurrentRoundDataEditor());
-$("addPlayerButton").addEventListener("click",()=>demoControlManual?false:isStablefordRound()?openStablefordDataEditor():openRosterEditor());
+$("backToRegistrationButton").addEventListener("click",()=>isStablefordRound()?openStablefordDataEditor():openCurrentRoundDataEditor());
+$("addPlayerButton").addEventListener("click",()=>isStablefordRound()?openStablefordDataEditor():openRosterEditor());
 $("scorecard").addEventListener("input",e=>{const input=e.target.closest?.("[data-provisional-player]");if(!input||!round.provisional)return;const p=round.players.find(x=>x.id===input.dataset.provisionalPlayer);if(p)p.name=String(input.value||"").toUpperCase().trimStart()||`JUGADOR ${p.slot}`});
 $("scorecard").addEventListener("change",e=>{if(!round.provisional)return;const name=e.target.closest?.("[data-provisional-player]"),hcp=e.target.closest?.("[data-provisional-hcp]"),tee=e.target.closest?.("[data-provisional-tee]"),control=name||hcp||tee;if(!control)return;const id=name?.dataset.provisionalPlayer||hcp?.dataset.provisionalHcp||tee?.dataset.provisionalTee,p=round.players.find(x=>x.id===id);if(!p)return;if(name){const value=String(name.value||"").trim().toUpperCase();p.name=value||`JUGADOR ${p.slot}`;name.value=value}if(hcp){const value=String(hcp.value||"").trim(),number=Number(value),valid=value!==""&&Number.isInteger(number)&&number>=0&&number<=54;p.provisionalHandicapProvided=valid;p.handicap=valid?number:0}if(tee){const value=normalizeTee(tee.value);p.provisionalTeeProvided=!!value;p.tee=value||"Blanco"}recomputePlayerScores(p);persist();render()});
 $("previousRoundButton").addEventListener("click",()=>activatePreviousOperationalRound());$("previousRoundSetupButton").addEventListener("click",()=>activatePreviousOperationalRound("general",true));$("previousStablefordRoundButton").addEventListener("click",()=>activatePreviousOperationalRound("stableford",true));
-$("newRoundButton").addEventListener("click",()=>demoControlManual?false:isStablefordRound()||sfEmergency?openFreshStablefordSetup():openNewRoundDraft());$("cancelSetup").addEventListener("click",closeSetup);$("backSetup").addEventListener("click",()=>{resetSetupCapture();showStep1();$("setupStatus").textContent=draftPlayers.length?"CORRIGE CON: CORRIJO / CORRIGIENDO / CORREGIR · LUEGO PRESIONA OK":""});
+$("newRoundButton").addEventListener("click",()=>isStablefordRound()||sfEmergency?openFreshStablefordSetup():openNewRoundDraft());$("cancelSetup").addEventListener("click",closeSetup);$("backSetup").addEventListener("click",()=>{resetSetupCapture();showStep1();$("setupStatus").textContent=draftPlayers.length?"CORRIGE CON: CORRIJO / CORRIGIENDO / CORREGIR · LUEGO PRESIONA OK":""});
 $("detectedBody").addEventListener("input",e=>{
   const name=e.target.closest?.("[data-draft-name]"),hcp=e.target.closest?.("[data-draft-hcp]");
   const target=name||hcp;if(!target)return;
