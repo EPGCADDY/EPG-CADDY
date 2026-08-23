@@ -14,7 +14,7 @@ const mobileBuild=read("./scripts/build-mobile-web.mjs");
 const nativeConfig=JSON.parse(read("./capacitor.config.json"));
 const packageJson=JSON.parse(read("./package.json"));
 
-assert.match(html,/V283-NATIVE-IOS-ANDROID-COMMERCIAL-20260823/);
+assert.match(html,/V284-NATIVE-PACKAGES-READY-20260823/);
 assert.match(html,/V283-CAPACITOR-REVENUECAT-READY-20260823/);
 assert.match(html,/id="commercialProButton"/);
 assert.match(html,/window\.gscgApiUrl/);

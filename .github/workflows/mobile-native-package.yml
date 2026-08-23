@@ -1,0 +1,42 @@
+name: Mobile native package
+
+on:
+  push:
+    branches:
+      - v284-native-packages-ready
+  workflow_dispatch:
+
+jobs:
+  native-package:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install exact application dependencies
+        run: npm install
+
+      - name: Generate iOS and Android projects
+        run: npm run mobile:prepare
+
+      - name: Validate native package contract
+        run: node test-v284-native-package-generation.mjs
+
+      - name: Preserve unsigned native source package
+        uses: actions/upload-artifact@v4
+        with:
+          name: golf-score-card-gt-v284-native-unsigned
+          if-no-files-found: error
+          retention-days: 90
+          path: |
+            native/ios
+            native/android
+            mobile-www
+            capacitor.config.json
+            package.json

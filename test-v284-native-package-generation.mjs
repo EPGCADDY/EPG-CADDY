@@ -1,0 +1,27 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+
+const read=file=>fs.readFileSync(file,"utf8");
+const packageJson=JSON.parse(read("package.json"));
+const prepare=read("scripts/prepare-native-release.mjs");
+const workflow=read(".github/workflows/mobile-native-package.yml");
+const html=read("index-grupal.html");
+const worker=read("service-worker.js");
+
+assert.equal(packageJson.scripts["mobile:prepare"],"node scripts/prepare-native-release.mjs");
+assert.match(prepare,/cap","add","ios/);
+assert.match(prepare,/cap","add","android/);
+assert.match(prepare,/cap","sync/);
+assert.match(prepare,/mobile:configure/);
+assert.match(prepare,/mobile:assets/);
+assert.match(prepare,/native\/ios\/App\/App\.xcodeproj\/project\.pbxproj/);
+assert.match(prepare,/native\/android\/app\/build\.gradle/);
+assert.match(prepare,/revenuecat-ready/);
+assert.match(workflow,/runs-on: macos-latest/);
+assert.match(workflow,/npm run mobile:prepare/);
+assert.match(workflow,/actions\/upload-artifact@v4/);
+assert.match(workflow,/golf-score-card-gt-v284-native-unsigned/);
+assert.match(html,/V284-NATIVE-PACKAGES-READY-20260823/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v284"/);
+
+console.log("PASS V284 · paquetes nativos reproducibles para Xcode y Android Studio");
