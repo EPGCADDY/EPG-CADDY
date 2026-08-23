@@ -1,4 +1,4 @@
-name: iOS TestFlight
+name: Golf Score Card GT · iOS TestFlight
 
 on:
   workflow_dispatch:
@@ -26,13 +26,13 @@ jobs:
             -scheme EPGCaddy \
             -configuration Release \
             -destination 'generic/platform=iOS' \
-            -archivePath "$RUNNER_TEMP/EPGCaddy.xcarchive" \
+            -archivePath "$RUNNER_TEMP/GolfScoreCardGT.xcarchive" \
             CODE_SIGNING_ALLOWED=NO \
             archive
 
       - name: Upload archive artifact
         uses: actions/upload-artifact@v4
         with:
-          name: EPGCaddy-unsigned-archive
-          path: ${{ runner.temp }}/EPGCaddy.xcarchive
+          name: golf-score-card-gt-ios-unsigned-archive
+          path: ${{ runner.temp }}/GolfScoreCardGT.xcarchive
           retention-days: 7

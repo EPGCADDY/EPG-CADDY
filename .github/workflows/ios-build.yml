@@ -1,4 +1,4 @@
-name: iOS Build Check
+name: Golf Score Card GT · iOS Build Check
 
 on:
   workflow_dispatch:

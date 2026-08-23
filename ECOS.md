@@ -1,4 +1,4 @@
-# EPG Caddy Operating System (ECOS)
+# Golf Score Card GT Operating System (ECOS)
 
 ## Versión
 1.0
@@ -12,7 +12,7 @@ En desarrollo
 
 # PROPÓSITO
 
-Este documento define el comportamiento interno obligatorio de EPG Caddy.
+Este documento define el comportamiento interno obligatorio de Golf Score Card GT.
 
 No describe arquitectura.
 

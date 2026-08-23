@@ -1,11 +1,14 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v288";
+const CACHE_NAME="gscg-mobile-v290";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
   "/manifest.webmanifest",
   "/7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg",
+  "/assets/official-logos/golf-score-card-gt-pwa-192.png",
+  "/assets/official-logos/golf-score-card-gt-pwa-512.png",
+  "/assets/official-logos/golf-score-card-gt-apple-touch-180.png",
   "/player-registry.js",
   "/round-closure.js",
   "/card-artifacts.js",

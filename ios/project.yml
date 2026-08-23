@@ -21,7 +21,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.epgcaddy.app
-        PRODUCT_NAME: EPG Caddy
+        PRODUCT_NAME: Golf Score Card GT
         TARGETED_DEVICE_FAMILY: "1"
         CODE_SIGN_STYLE: Automatic
         MARKETING_VERSION: "1.0"
@@ -30,10 +30,10 @@ targets:
     info:
       path: EPGCaddy/Info.plist
       properties:
-        CFBundleDisplayName: EPG Caddy
+        CFBundleDisplayName: Golf Score Card GT
         CFBundleShortVersionString: "1.0"
         CFBundleVersion: "1"
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
-        NSMicrophoneUsageDescription: "EPG Caddy necesita acceso al micrófono para escuchar tus comandos de voz y registrar los scores de tu ronda."
+        NSMicrophoneUsageDescription: "Golf Score Card GT necesita acceso al micrófono para escuchar tus comandos de voz y registrar los scores de tu ronda."

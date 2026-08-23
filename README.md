@@ -1,4 +1,4 @@
-# EPG Caddy
+# Golf Score Card GT
 
 ## Sistema Profesional de IA para Golf
 
@@ -18,7 +18,7 @@
 
 # Objetivo
 
-EPG Caddy es un sistema profesional de inteligencia artificial diseñado para asistir al golfista durante toda la ronda mediante interacción por voz, análisis estratégico, registro automático de estadísticas y generación de recomendaciones.
+Golf Score Card GT es un sistema profesional de inteligencia artificial diseñado para asistir al golfista durante toda la ronda mediante interacción por voz, análisis estratégico, registro automático de estadísticas y generación de recomendaciones.
 
 El objetivo del proyecto es desarrollar una aplicación comercial de clase mundial para iPhone y Android.
 
@@ -31,7 +31,7 @@ El proyecto se encuentra dividido en documentos especializados.
 ## Documentos Oficiales
 
 - [GOLF Score Card GT. GRUPAL — Manual Maestro y Memoria Funcional](GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md)
-- [EPG-Caddy Master Blueprint](EPG-Caddy_Master_Blueprint_v0.1.md)
+- [Golf Score Card GT Master Blueprint](Golf Score Card GT_Master_Blueprint_v0.1.md)
 - [Arquitectura de la aplicación](APP_ARCHITECTURE.md)
 - [Sistema ECOS](ECOS.md)
 - [Base de datos de campos](COURSE_DATABASE.md)

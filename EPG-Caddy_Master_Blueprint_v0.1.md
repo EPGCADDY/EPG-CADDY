@@ -1,4 +1,4 @@
-# EPG-Caddy Master Blueprint
+# Golf Score Card GT Master Blueprint
 ## Versión 0.1
 ### Documento Maestro de Arquitectura
 
@@ -24,7 +24,7 @@ GitHub (Privado)
 
 # 1. PROPÓSITO DEL DOCUMENTO
 
-Este documento constituye la especificación técnica oficial de EPG Caddy.
+Este documento constituye la especificación técnica oficial de Golf Score Card GT.
 
 No es un README.
 
@@ -32,7 +32,7 @@ No es un manual de usuario.
 
 No es documentación de programación.
 
-Es el plano maestro sobre el cual se diseñará, evolucionará y mantendrá todo el ecosistema EPG Caddy.
+Es el plano maestro sobre el cual se diseñará, evolucionará y mantendrá todo el ecosistema Golf Score Card GT.
 
 Cada modificación importante del proyecto deberá reflejarse en este documento mediante una nueva versión.
 
@@ -44,7 +44,7 @@ Este documento representa la única fuente oficial de verdad del proyecto.
 
 # 2. VISIÓN DEL PROYECTO
 
-EPG Caddy nace con un objetivo extremadamente específico:
+Golf Score Card GT nace con un objetivo extremadamente específico:
 
 Construir el mejor caddie virtual de golf jamás desarrollado para un jugador amateur avanzado.
 
@@ -54,7 +54,7 @@ No pretende competir únicamente con Arccos, Garmin o Shot Scope.
 
 El objetivo es mucho mayor.
 
-EPG Caddy debe convertirse en un copiloto inteligente capaz de acompañar al jugador durante una ronda completa, interpretar lo que ocurre, comprender el contexto del campo y generar información útil en tiempo real mediante conversación natural.
+Golf Score Card GT debe convertirse en un copiloto inteligente capaz de acompañar al jugador durante una ronda completa, interpretar lo que ocurre, comprender el contexto del campo y generar información útil en tiempo real mediante conversación natural.
 
 El usuario no debe sentir que utiliza una aplicación.
 
@@ -82,7 +82,7 @@ Menos es más.
 
 Si un dato no genera una decisión futura, no merece almacenarse.
 
-EPG Caddy almacenará únicamente información útil.
+Golf Score Card GT almacenará únicamente información útil.
 
 ---
 
@@ -106,7 +106,7 @@ Interesa descubrir por qué hizo 34 putts y qué patrón provocó ese resultado.
 
 El sistema debe pensar.
 
-EPG Caddy no será una hoja electrónica.
+Golf Score Card GT no será una hoja electrónica.
 
 Será un motor de decisiones.
 
@@ -124,7 +124,7 @@ La aplicación deberá adaptarse completamente al jugador.
 
 # 4. MISIÓN DEL SISTEMA
 
-Durante una ronda, EPG Caddy deberá ser capaz de:
+Durante una ronda, Golf Score Card GT deberá ser capaz de:
 
 • Registrar absolutamente toda la ronda mediante voz.
 
@@ -162,7 +162,7 @@ Todo ello sin que el jugador tenga que escribir una sola línea.
 
 # 5. OBJETIVO FINAL
 
-Cuando el proyecto alcance su madurez, EPG Caddy deberá comportarse como un verdadero caddie profesional.
+Cuando el proyecto alcance su madurez, Golf Score Card GT deberá comportarse como un verdadero caddie profesional.
 
 Será capaz de responder preguntas como:
 
@@ -242,7 +242,7 @@ FIN DE LA PARTE ---
 
 # 7. ARQUITECTURA GENERAL DEL SISTEMA
 
-EPG Caddy está diseñado bajo una arquitectura modular.
+Golf Score Card GT está diseñado bajo una arquitectura modular.
 
 Cada módulo tiene responsabilidades específicas y puede evolucionar sin afectar el resto del sistema.
 
@@ -310,7 +310,7 @@ Toda la información queda registrada automáticamente.
 
 ## Motor de Reglas
 
-Es el núcleo lógico de EPG Caddy.
+Es el núcleo lógico de Golf Score Card GT.
 
 Funciones:
 
@@ -463,7 +463,7 @@ El jugador puede preguntar:
 
 Cierre de ronda.
 
-EPG Caddy genera automáticamente:
+Golf Score Card GT genera automáticamente:
 
 - Resumen de la ronda.
 - Estadísticas completas.

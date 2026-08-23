@@ -14,6 +14,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v286-stableford-ba
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v287-stableford-back-controls-clear.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v288-stableford-one-touch-home.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v289-stableford-new-round-empty.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v290-brand-icons-cleanup.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

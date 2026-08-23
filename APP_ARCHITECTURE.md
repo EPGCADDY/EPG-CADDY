@@ -1,6 +1,6 @@
 # APP ARCHITECTURE
 
-# EPG Caddy
+# Golf Score Card GT
 Arquitectura Oficial del Sistema
 
 Versión: 1.0
@@ -11,7 +11,7 @@ Estado: Oficial
 
 # Objetivo
 
-Este documento define la arquitectura completa de la aplicación EPG Caddy.
+Este documento define la arquitectura completa de la aplicación Golf Score Card GT.
 
 Toda implementación futura deberá respetar esta arquitectura.
 
@@ -19,7 +19,7 @@ Toda implementación futura deberá respetar esta arquitectura.
 
 # Arquitectura General
 
-EPG Caddy está dividido en cinco grandes capas.
+Golf Score Card GT está dividido en cinco grandes capas.
 
 1. Interfaz de Usuario (UI)
 

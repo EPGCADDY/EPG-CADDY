@@ -1,4 +1,4 @@
-name: Stableford Tournament PASS
+name: Golf Score Card GT · Stableford Tournament PASS
 on:
   pull_request:
     branches: [main]

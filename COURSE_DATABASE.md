@@ -14,7 +14,7 @@
 
 # PROPÓSITO
 
-Este documento constituye la Base de Datos Oficial de todos los campos de golf utilizados por EPG Caddy.
+Este documento constituye la Base de Datos Oficial de todos los campos de golf utilizados por Golf Score Card GT.
 
 Toda operación del Motor de Scoring deberá consultar exclusivamente este documento para obtener:
 

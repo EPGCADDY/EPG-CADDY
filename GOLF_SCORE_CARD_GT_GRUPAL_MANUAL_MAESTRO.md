@@ -324,7 +324,7 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - Cada jugador dispone de un campo WhatsApp opcional.
 - El prefijo fijo predeterminado es `+502` para Guatemala.
 - Se aceptan exactamente ocho dígitos nacionales después del prefijo.
-- El número se guarda en un directorio privado local de EPG Caddy en el dispositivo.
+- El número se guarda en un directorio privado local de Golf Score Card GT en el dispositivo.
 - Cuando el mismo jugador vuelve a registrarse, la aplicación recupera automáticamente su WhatsApp.
 - El número también acompaña los datos de la ronda, sin mostrarse en la tarjeta de scores.
 - Las rondas antiguas sin WhatsApp siguen siendo compatibles.
@@ -772,7 +772,7 @@ Requisito: ninguna consulta histórica debe mezclarse con la ronda activa ni mod
 - WhatsApp será la opción única y preferente de contacto cuando se rediseñe el registro.
 - Compartir WhatsApp o correo será opcional.
 - Debe existir consentimiento claro antes de almacenar o enviar.
-- El directorio local V141 guarda el número dentro de EPG Caddy, con prefijo `+502` y ocho dígitos.
+- El directorio local V141 guarda el número dentro de Golf Score Card GT, con prefijo `+502` y ocho dígitos.
 - Guardar en la libreta de contactos del teléfono requerirá una app nativa y permiso explícito del usuario.
 - Desde una aplicación web, el selector de contactos permite al usuario compartir contactos seleccionados, pero no autoriza escritura silenciosa y permanente.
 - Enviar desde el WhatsApp personal del teléfono puede abrir el chat y preparar el contenido; el usuario debe confirmar el envío.

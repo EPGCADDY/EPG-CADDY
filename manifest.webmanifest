@@ -8,17 +8,29 @@
   "start_url": "/index-grupal.html?source=pwa",
   "scope": "/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "any",
   "background_color": "#000000",
   "theme_color": "#000000",
-  "categories": ["sports", "utilities"],
+  "categories": [
+    "sports",
+    "utilities"
+  ],
   "icons": [
     {
-      "src": "/7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg",
-      "sizes": "1254x1254",
-      "type": "image/jpeg",
-      "purpose": "any maskable"
+      "src": "/assets/official-logos/golf-score-card-gt-pwa-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/official-logos/golf-score-card-gt-pwa-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
