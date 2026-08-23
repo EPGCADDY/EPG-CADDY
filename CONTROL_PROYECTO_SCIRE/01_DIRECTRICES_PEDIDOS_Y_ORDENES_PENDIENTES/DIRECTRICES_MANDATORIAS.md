@@ -23,7 +23,7 @@
 5. El registro debe incluir nombre o ruta exacta, ID o código cuando exista y una explicación básica y fácil de entender.
 6. Si se crea una carpeta, se registra la carpeta y también cada archivo que contenga.
 7. `scripts/roadmap-gate.mjs` y `.github/workflows/roadmap-gate.yml` ejecutan el candado técnico. Si falta el registro doble, el resultado obligatorio es `FAIL ROADMAP GATE`.
-8. La auditoría maestra, la construcción de iPhone, la preparación para TestFlight, el paquete Apple/Android y las pruebas principales de Stableford deben ejecutar este candado antes de continuar.
+8. La auditoría maestra, la construcción de iPhone, la preparación para TestFlight, el paquete Apple/Android, las pruebas principales de Stableford y la publicación de Vercel deben ejecutar este candado antes de continuar.
 9. Ninguna versión puede declararse terminada, publicarse ni cerrarse si la modificación no aparece en ambos ROADMAPS.
 10. Esta norma es mandatoria, automática y permanente; no requiere que el propietario la repita en futuras conversaciones.
 

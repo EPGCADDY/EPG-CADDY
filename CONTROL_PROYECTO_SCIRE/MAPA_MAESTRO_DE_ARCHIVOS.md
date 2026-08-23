@@ -19,7 +19,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | `a75309584c45d651daa6ef2db27db7722a2159d1` | 528361 bytes | Logo oficial original; su nombre raro se conserva porque ya estaba enlazado. |
 | `APP_ARCHITECTURE.md` | `7119e67641ce309201fa32922195ebceb3006fb4` | 3405 bytes | Explica cómo se divide la aplicación y cómo trabajan juntas sus partes. |
 | `AUDITORIA_MAESTRA_V170.md` | `8dd135a84521f64c39928fadb35de0518447fe40` | 4462 bytes | Resumen de una revisión histórica del producto. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `ab8b3c84c37401427245a498b08652903f8dd4b2` | 3991 bytes | Reglas permanentes, punto de corte y candado técnico de ambos ROADMAPS. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `be454f43b458670199a7be029abf716dc49108d7` | 4018 bytes | Reglas permanentes, punto de corte y candado técnico de ambos ROADMAPS, incluido Vercel. |
 | `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INDICE_DOCUMENTOS_PENDIENTES.md` | `064e9201c833cb7f5c751ba5328290d8c4c2b20b` | 814 bytes | Lista de documentos todavía pendientes de usar. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | `b9815c3eae588f1f54c0e4fabbf1d51b52c75b0e` | 722 bytes | Registro de trabajos terminados. |
 | `CONTROL_PROYECTO_SCIRE/04_MATRIZ_DE_CAMPOS/INDICE_TARJETAS_ORIGINALES.md` | `2c2635943ce64a83e64012e71603193b74b35019` | 1161 bytes | Lista de tarjetas originales de los campos. |
@@ -41,8 +41,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
 | `MAPA_MATRIZ_STABLEFORD_V252.md` | `8911a7ef86398e0c3f18e647433387a02645082c` | 3828 bytes | Explica las piezas de Stableford incorporadas en V252. |
 | `README.md` | `e93c3adc84c81fdda07303f5d0f75fbb35140ea2` | 2170 bytes | Portada de GitHub que presenta el producto como Golf Score Card GT. |
-| `ROADMAP_A_DETALLE.md` | `e4ea64e43b9648507e91c12840b9261091cc712a` | 7272 bytes | Abre el directorio, sus 185 líneas y el registro del candado técnico. |
-| `ROADMAP_OVERALL.md` | `7df5960e512ce57b080ccca71851e330a14a0c53` | 6747 bytes | Resumen general, punto de corte y registro obligatorio de cada modificación. |
+| `ROADMAP_A_DETALLE.md` | `48aec03421f88acc39f93ac169cf294c53588446` | 8297 bytes | Abre el directorio, sus 185 líneas y el registro del candado técnico, incluido Vercel. |
+| `ROADMAP_OVERALL.md` | `b4224d198c734d368b10387a7d1d88dc8b36e7bd` | 7513 bytes | Resumen general, punto de corte y registro obligatorio de cada modificación, incluido Vercel. |
 | `ROADMAP_OVERALL_V291.png` | `2e7aaaaf4b7b337caa8750b17754d9173f8930fe` | 685254 bytes | Imagen vertical y sencilla del estado general para verla desde el teléfono. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_01.png` | `2377b6bba6c886a2fddac44b2d01fbc7ebf3f0ca` | 410461 bytes | Página 1 de 9 del directorio visual detallado. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_02.png` | `ba0d741c811283d33e53431b9a90cf3055a97bed` | 487065 bytes | Página 2 de 9 del directorio visual detallado. |
@@ -122,7 +122,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/configure-native-projects.mjs` | `fdb439880f7f4e18e1c57e303df5634ffa677c59` | 2911 bytes | Coloca versión, permisos y ajustes en iPhone y Android. |
 | `scripts/prepare-mobile-assets.mjs` | `fcd2fa387095322c9731917834ad424ad3e8fd73` | 1356 bytes | Crea todos los tamaños oficiales del logo. |
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
-| `scripts/roadmap-gate.mjs` | `1fbf23718ab13b44a0c8b45f7f9e136102a88fc2` | 2618 bytes | Bloquea cualquier modificación que no aparezca en ambos ROADMAPS. |
+| `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | 2881 bytes | Bloquea cualquier modificación o publicación que no aparezca en ambos ROADMAPS. |
 | `service-worker.js` | `009e07173e747f2ef05e89de5f91465c9abe16bb` | 1987 bytes | Mantiene la app actualizada y permite abrir partes guardadas cuando falla la conexión. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |
@@ -193,7 +193,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v289-stableford-new-round-empty.mjs` | `bcb1295e20116ea9cde8b86ad96b5f8c366e626e` | 2005 bytes | Comprueba que Nueva ronda deje vacíos los nombres. |
 | `test-v290-brand-icons-cleanup.mjs` | `7e5afbd53573531f0133fbf85319b8c6146198f7` | 1648 bytes | Comprueba nombre, iconos oficiales y preparación comercial. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
-| `vercel.json` | `7b29e2c8706497e820c2237bf3de107f5c399f92` | 1561 bytes | Indica a Vercel qué pantalla abrir y cómo publicar la app. |
+| `vercel.json` | `7915a87799ed0549f7ef1f4f40a46ad719a922eb` | 1612 bytes | Indica a Vercel qué pantalla abrir y obliga a ejecutar el candado antes de publicar. |
 | `verify-manual-sync.mjs` | `8042010c6b0cd81915a57a8ac65d1f778bea7cc7` | 730 bytes | Comprueba el respaldo y el envío de cambios. |
 
 ## Archivos retirados del uso diario

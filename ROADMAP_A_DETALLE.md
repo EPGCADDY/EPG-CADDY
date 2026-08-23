@@ -81,7 +81,7 @@ Este archivo permanece como entrada directa y amigable al directorio detallado d
 | 182 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_08.png` | `50bb1bbb190bcee92bcecccc576d61bf2f89f44a` | Página 8 de 9 del directorio visual. |
 | 183 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_09.png` | `2375cd4734decbc33ea9e778d9ae292e19dacd34` | Página 9 de 9 del directorio visual. |
 | 184 | `.github/workflows/roadmap-gate.yml` | `2b0e0640e36c07e343f06414a9d2d703727237bb` | Candado automático que bloquea cambios no registrados. |
-| 185 | `scripts/roadmap-gate.mjs` | `1fbf23718ab13b44a0c8b45f7f9e136102a88fc2` | Comprueba que toda modificación aparezca en ambos ROADMAPS. |
+| 185 | `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | Comprueba que toda modificación aparezca en ambos ROADMAPS. |
 
 ## Registro obligatorio de la modificación V294
 
@@ -92,11 +92,22 @@ Este archivo permanece como entrada directa y amigable al directorio detallado d
 | `.github/workflows/mobile-native-package.yml` | `ee0d6b5b72cfab49646b58a764dcb8d585c88ee5` | El paquete Apple/Android también se detiene si faltan los ROADMAPS. |
 | `.github/workflows/roadmap-gate.yml` | `2b0e0640e36c07e343f06414a9d2d703727237bb` | Ejecuta automáticamente el candado en GitHub. |
 | `.github/workflows/stableford-tournament-pass.yml` | `df70cf36092ddd72b59271bf241b1ac58fb21027` | Las pruebas principales de Stableford se detienen si faltan los dos ROADMAPS. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `ab8b3c84c37401427245a498b08652903f8dd4b2` | Guarda la norma permanente, el punto de corte y la hora. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `be454f43b458670199a7be029abf716dc49108d7` | Guarda la norma permanente, el punto de corte y la hora. |
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Registra los archivos nuevos y los códigos actualizados. |
 | `audit-project.mjs` | `597a19619b0c7f64e8d6963f0d28ab02a329f6cf` | Toda comprobación maestra empieza ejecutando el candado. |
 | `package.json` | `a9ffec0ea56adb2998235b502fd71ed092b13bb0` | Agrega el botón técnico `roadmap:gate`. |
-| `scripts/roadmap-gate.mjs` | `1fbf23718ab13b44a0c8b45f7f9e136102a88fc2` | Revisa los archivos cambiados contra ambos ROADMAPS. |
+| `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | Revisa los archivos cambiados contra ambos ROADMAPS. |
+
+## Registro obligatorio del refuerzo técnico V295
+
+| Archivo modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `vercel.json` | `7915a87799ed0549f7ef1f4f40a46ad719a922eb` | Vercel debe ejecutar el candado antes de publicar. |
+| `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | Si Vercel no puede identificar los cambios, bloquea la publicación por seguridad. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `be454f43b458670199a7be029abf716dc49108d7` | Incorpora Vercel a las rutas obligadas a ejecutar el candado. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Actualiza códigos y explicaciones del refuerzo. |
+| `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra este refuerzo técnico línea por línea. |
+| `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra este refuerzo en el resumen general. |
 
 ## Punto de corte y norma permanente estricta
 
@@ -104,4 +115,4 @@ Este archivo permanece como entrada directa y amigable al directorio detallado d
 - **Directorio vigente después de instalar el candado: línea 185.**
 - **Activación:** 23 de agosto de 2026, 17:05:00, hora de Guatemala.
 - Desde ese instante, cualquier creación, modificación, cambio de nombre, movimiento o eliminación debe registrarse directamente y en la misma versión en `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
-- Ninguna versión puede cerrarse ni publicarse si falta ese registro doble.
+- Ninguna versión puede cerrarse ni publicarse en GitHub, Vercel, Apple o Android si falta ese registro doble.

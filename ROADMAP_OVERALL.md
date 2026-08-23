@@ -110,6 +110,17 @@ Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sólo perm
 | `package.json` | Agrega el comando `roadmap:gate`. |
 | `scripts/roadmap-gate.mjs` | Comprueba que cada cambio aparezca en ambos ROADMAPS. |
 
+## Refuerzo técnico V295 · Publicación también bloqueada
+
+| Archivo o modificación | Qué quedó registrado |
+|---|---|
+| `vercel.json` | Vercel ejecuta obligatoriamente el candado antes de publicar. |
+| `scripts/roadmap-gate.mjs` | Si Vercel no puede identificar los cambios, la publicación queda bloqueada por seguridad. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | La publicación de Vercel se incorpora a la norma permanente. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra los códigos y explicaciones actualizados. |
+| `ROADMAP_A_DETALLE.md` | Guarda el refuerzo dentro del directorio detallado. |
+| `ROADMAP_OVERALL.md` | Guarda el refuerzo dentro de este resumen general. |
+
 ## Regla permanente
 
 1. Todo nombre visible será **Golf Score Card GT**.

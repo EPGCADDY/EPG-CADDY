@@ -29,6 +29,9 @@ function changedFiles(){
   const lastCommit=runGit(['diff','--name-only','HEAD^','HEAD']);
   if(lastCommit)return normalizeFiles(lastCommit);
 
+  const currentCommit=runGit(['show','--pretty=format:','--name-only','HEAD']);
+  if(currentCommit)return normalizeFiles(currentCommit);
+
   const working=[runGit(['diff','--name-only']),runGit(['diff','--cached','--name-only'])].filter(Boolean).join('\n');
   return normalizeFiles(working);
 }
@@ -50,6 +53,7 @@ try{
 
 const files=changedFiles();
 if(files.length===0){
+  if(process.env.VERCEL)fail(['Vercel no pudo determinar los archivos modificados; publicación bloqueada por seguridad.']);
   console.log('PASS ROADMAP GATE: no hay modificaciones pendientes que registrar.');
   process.exit(0);
 }
