@@ -10,6 +10,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v282-optional-acco
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v283-native-commercial-readiness.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v284-native-package-generation.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v285-stableford-back-navigation.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v286-stableford-back-restores-home.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);
