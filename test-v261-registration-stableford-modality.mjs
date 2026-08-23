@@ -33,8 +33,8 @@ assert.doesNotMatch(html,/data-draft-code=/);
 assert.doesNotMatch(html,/data-draft-whatsapp=/);
 assert.doesNotMatch(html,/id="openShareProject"|id="shareProjectPanel"/);
 
-// Nombres autorizados dentro de Stableford.
-assert.match(html,/id="stablefordRoundPointsTitle"[^>]*>STABLEFORD<\/div>/);
+// Nombres autorizados dentro de Stableford dentro del control operacional común.
+assert.match(html,/id="roundManualTitle"[^>]*>CONTROL MANUAL · \$\{stable\?"STABLEFORD":"GENERAL"\}<\/div>/);
 assert.match(html,/\$\("summaryTitle"\)\.textContent="PUNTOS"/);
 assert.match(html,/\$\("finalSummaryTitle"\)\.textContent=isStablefordRound\(\)\?"PUNTOS":"INFORMACIÓN DE RONDA"/);
 

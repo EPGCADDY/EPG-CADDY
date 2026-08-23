@@ -6,12 +6,12 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 assert.match(html,/V(?:257-STABLEFORD-COURSE-SELECTOR-TITLE|258-STABLEFORD-READONLY-MANUAL-PLAN-B|259-STABLEFORD-HIDE-UNUSED-PLAYER-ROWS|260-STABLEFORD-ROUND-POINTS-PLAYER-RETURN|261-REGISTRATION-SIMPLIFIED-STABLEFORD-LABELS|262-REGISTRATION-MODALITIES|263-COMPACT-PLAYERS-BACK-BUTTON)-20260822/);
 assert.match(html,/<h1 id="stablefordSetupTitle">RONDA STABLEFORD<\/h1>/);
 assert.doesNotMatch(html,/NUEVA RONDA STABLEFORD|DATOS DE RONDA STABLEFORD/);
-assert.match(html,/<select class="course-select" id="stablefordSetupCourse"[^>]*>/);
+assert.match(html,/<select class="course-select" id="stablefordSetupCourse"[^>]*aria-hidden="true"[^>]*tabindex="-1"[^>]*>/);
+assert.match(html,/#stablefordSetupCourse\{display:none!important\}/,"El selector técnico duplicado no debe ser visible");
 for(const [key,label] of [["pulte","EL PULTÉ"],["country_club","COUNTRY CLUB"],["san_isidro","SAN ISIDRO"],["mayan_golf","MAYAN GOLF"]]){
   assert.match(html,new RegExp(`<option value="${key}">${label}<\\/option>`),`Falta opción operativa ${label}`);
 }
 assert.match(html,/\$\("stablefordSetupCourse"\)\.value=stablefordSetupCourseKey\|\|""/);
-assert.match(html,/\$\("stablefordSetupCourse"\)\.addEventListener\("change",event=>selectStablefordSetupCourse\(event\.target\.value\)\)/);
 assert.match(html,/document\.querySelectorAll\("\[data-stableford-course\]"\)[\s\S]*selectStablefordSetupCourse\(button\.dataset\.stablefordCourse\)/);
 assert.match(html,/function selectStablefordSetupCourse\(courseKey\)[\s\S]*GSCStableford\.isAllowedCourse\(courseKey\)[\s\S]*stablefordSetupCourseKey=courseKey[\s\S]*renderStablefordSetup\(\)/);
 
@@ -37,6 +37,8 @@ function element(dataset={}){
     listeners:{},
     classList:{
       toggle(name,active){active?classes.add(name):classes.delete(name)},
+      add(name){classes.add(name)},
+      remove(name){classes.delete(name)},
       contains(name){return classes.has(name)}
     },
     setAttribute(name,value){this.attributes[name]=value},
@@ -62,10 +64,11 @@ const documentFixture={
     return [];
   }
 };
-const bindings=html.match(/document\.querySelectorAll\("\[data-stableford-course\]"\)[^\n]+\n\$\("stablefordSetupCourse"\)[^\n]+/)?.[0];
-assert.ok(bindings,"Faltan enlaces operativos del selector de campo");
+const bindings=html.match(/document\.querySelectorAll\("\[data-stableford-course\]"\)\.forEach\(button=>button\.addEventListener\("click",\(\)=>selectStablefordSetupCourse\(button\.dataset\.stablefordCourse\)\)\);/)?.[0];
+assert.ok(bindings,"Faltan enlaces operativos de los botones únicos de campo");
 const runHarness=new Function("$","document","GSCStableford","COURSE_CATALOG","round","stablefordTeeLabel",`
   let stablefordSetupCategory=null,stablefordSetupCourseKey=null,draftCourse=null;
+  const updateStablefordSetupValidity=()=>({ready:false});
   ${extractFunction("renderStablefordSetup")}
   ${extractFunction("selectStablefordSetupCourse")}
   ${bindings}
@@ -89,12 +92,6 @@ for(const key of keys){
   assert.equal(button.attributes["aria-pressed"],"true");
   assert.equal(courseButtons.filter(item=>item.classList.contains("active")).length,1);
 }
-for(const key of keys){
-  ui.stablefordSetupCourse.value=key;
-  ui.stablefordSetupCourse.dispatch("change");
-  assert.deepEqual(harness.state(),{stablefordSetupCourseKey:key,draftCourse:key});
-  assert.equal(courseButtons.find(item=>item.dataset.stablefordCourse===key).classList.contains("active"),true);
-}
 assert.equal(ui.stablefordSetupTitle.textContent,"RONDA STABLEFORD");
 
-console.log("PASS V257 · selector de campo táctil y título único RONDA STABLEFORD");
+console.log("PASS V257/V267 · botones únicos de campo y título RONDA STABLEFORD");

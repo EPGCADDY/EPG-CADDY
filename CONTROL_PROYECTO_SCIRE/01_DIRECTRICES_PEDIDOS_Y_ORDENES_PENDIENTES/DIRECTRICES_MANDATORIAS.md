@@ -8,6 +8,11 @@
 - No publicar ramas ni commits sin la autorización expresa del propietario usando el SHA exacto.
 - Nunca enviar como General una URL que contenga `stableford_emergency`; General y Stableford deben conservar estado, enlace y propósito independientes.
 - Al terminar un caso, revisar la cola y continuar con el siguiente trabajo pendiente.
+- Toda configuración y combinación de Score Card pertenece a una sola arquitectura integral. General y Stableford son modalidades; manual y voz son entradas. Campo, categoría, marcas, torneo, cantidad de jugadores, ronda registrada/sin registro, nueva/recuperada, primera/segunda vuelta y total no autorizan escritores, persistencias, renders, navegaciones ni políticas de voz paralelas.
+- Después de cualquier cambio se revisa el producto completo: línea gráfica, arquitectónica, funcional, operativa y operacional; navegador real móvil/escritorio; consola; solicitudes; persistencia; regreso/avance; manual/voz; cierres y combinaciones. Un solo FAIL impide declarar terminada la versión.
+- La voz sólo procesa vocabulario autorizado. No dice `Entendido`, `voy a leer`, `procesando`, preguntas, ayuda, saludos ni explicaciones. Una frase no reconocida permanece en silencio y no modifica datos.
+- Regla de comunicación 23: ningún mensaje puede terminar en el aire ni dejar al propietario adivinando si espera, responde, toca algo o si el trabajo terminó.
+- Regla de comunicación 24: todo mensaje termina con una de dos asignaciones inequívocas: `SIGUIENTE ACCIÓN — TUYA:` seguida del paso exacto requerido, o `SIGUIENTE ACCIÓN — MÍA:` seguida del trabajo que continuará. Si la acción es del asistente, el propietario no debe tocar ni responder nada.
 
 ## Secuencia vigente
 

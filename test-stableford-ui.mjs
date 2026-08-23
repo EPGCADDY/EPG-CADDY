@@ -12,7 +12,7 @@ for(const id of [
 
 assert.match(html,/data-stableford-category="senior">SENIOR · BLANCAS/);
 assert.match(html,/data-stableford-category="super_senior">SÚPER SENIOR · AMARILLAS/);
-assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="https:\/\/epg-caddy-git-stableford-tournament-final-epgcaddys-projects\.vercel\.app\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=263"/);
+assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="https:\/\/epg-caddy-git-stableford-tournament-final-epgcaddys-projects\.vercel\.app\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=267"/);
 assert.match(html,/id="stableCourseOption" href="\$\{STABLEFORD_OFFICIAL_HOSTING_URL\}"[^>]*>[\s\S]*?<span>STABLEFORD<\/span>/);
 assert.doesNotMatch(html,/closest\("#stableCourseOption"\)[\s\S]{0,180}openFreshStablefordSetup/);
 assert.match(html,/\$\("courseOptions"\)\.innerHTML=Object\.entries\(COURSE_CATALOG\)[\s\S]*?\.join\(""\);\$\("stablefordModeOption"\)\.innerHTML=stableOption/);

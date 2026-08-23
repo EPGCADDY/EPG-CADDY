@@ -8,7 +8,8 @@ assert.match(html,/V(?:252-STABLEFORD-PERSISTENCE-CATEGORY-COURSE|253-LIVE-PREVI
 assert.doesNotMatch(html,/sfEmergencyClean/);
 assert.doesNotMatch(html,/round\.players=\["Jaime","Junior","Fito","Henry"\]/);
 assert.match(html,/let stablefordSetupCategory=null,stablefordSetupCourseKey=null/);
-assert.match(html,/if\(saved\?\.configured&&saved\?\.mode==="stableford"\)\{round=saved;sfRestoredActive=true\}/);
+assert.match(html,/let round=sfEmergency\?\(latestStoredRound\("stableford"\)\|\|blankRound\(\)\):loadRound\(\)/);
+assert.match(html,/let sfRestoredActive=!!\(sfEmergency&&round\.configured&&round\.mode==="stableford"\)/);
 assert.match(html,/if\(round\.mode==="stableford"\)localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,payload\);/);
 assert.match(html,/else\{\s*localStorage\.setItem\(STORAGE_KEY,payload\);\s*localStorage\.setItem\(STORAGE_BACKUP_KEY,payload\);\s*\}/);
 

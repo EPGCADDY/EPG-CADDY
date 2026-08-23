@@ -35,6 +35,7 @@ export default async function handler(req, res) {
     const transcriptionPrompt = context === "setup"
       ? "Golf Guatemala. Registro de jugadores. Transcribe literalmente nombres propios, handicap y color de marcas. Regla mandatoria: Jessie se escribe Jessie."
       : `Golf Guatemala. Dictado de scores. Jugadores actuales: ${players || "los registrados en la tarjeta"}. Transcribe literalmente nombres, hoyo y score o Gross. Acepta número Gross directo o vocabulario golfístico: albatros, águila, aguiler, eagle, birdie, pájaro, verdura, par, even par, parinelo, paraso, parcuato, bogey, doble bogey, doblete, triple bogey, triplete, doble par, par español, uno bajo par, uno sobre par, dos sobre par y tres sobre par. Si un primer nombre es único en el grupo puede dictarse solo ese nombre; si hay dos jugadores con el mismo primer nombre, puede dictarse únicamente el apellido. Regla mandatoria: Jessie se escribe Jessie.`;
+    const roundKeywords = ["hoyo", "gross", "par", "birdie", "bogey", "doble bogey", "triple bogey", "eagle", "albatros", "equis", ...players.split(",").map(value => value.trim()).filter(Boolean)].slice(0, 80);
 
     const session = {
       type: "realtime",
@@ -51,8 +52,9 @@ export default async function handler(req, res) {
       audio: {
         input: {
           transcription: {
-            model: "gpt-4o-transcribe",
-            language: "es",
+            ...(context === "setup"
+              ? { model: "gpt-4o-transcribe", language: "es" }
+              : { model: "gpt-live-transcribe", languages: ["es"], keywords: roundKeywords }),
             prompt: transcriptionPrompt
           },
           noise_reduction: { type: noiseReduction },

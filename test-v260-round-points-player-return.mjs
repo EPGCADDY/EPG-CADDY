@@ -6,7 +6,7 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 assert.match(html,/V263-COMPACT-PLAYERS-BACK-BUTTON-20260822/);
 
 // El nombre aprobado reemplaza completamente los títulos anteriores en la interfaz.
-assert.match(html,/id="stablefordRoundPointsTitle"[^>]*>STABLEFORD</);
+assert.match(html,/id="roundManualTitle"[^>]*>CONTROL MANUAL · \$\{stable\?"STABLEFORD":"GENERAL"\}/);
 assert.doesNotMatch(html,/>ANOTACIÓN MANUAL · PLAN B</);
 assert.doesNotMatch(html,/>SCORE MANUAL</);
 
@@ -29,13 +29,15 @@ assert.match(html,/\.back-registration-control\{position:static;/);
 assert.match(html,/>ATRÁS<\/button>/);
 assert.doesNotMatch(html,/\.back-registration-control\{position:fixed;/);
 
-// General y Stableford conservan estados separados: un enlace limpio nunca restaura Stableford.
-assert.match(html,/let round=sfEmergency\?blankRound\(\):loadRound\(\)/);
-assert.match(html,/if\(primary&&primary\.mode!=="stableford"\)return primary/);
-assert.match(html,/if\(backup&&backup\.mode!=="stableford"\)/);
-assert.match(html,/readRoundArchive\(\)\.filter\(value=>value\.mode!=="stableford"\)/);
+// General y Stableford usan una sola política con filtro de modalidad: comparten arquitectura, nunca mezclan rondas.
+assert.match(html,/function latestStoredRound\(modeHint\)/);
+assert.match(html,/let round=sfEmergency\?\(latestStoredRound\("stableford"\)\|\|blankRound\(\)\):loadRound\(\)/);
+assert.match(html,/stableford=readStoredRound\(STABLEFORD_ACTIVE_KEY\)/);
+assert.match(html,/\[primary,backup,stableford\]\.filter\(value=>value\?\.configured&&mode\(value\)===modeHint\)\.sort/);
+assert.match(html,/readRoundArchive\(\)\.filter\(value=>value\?\.configured&&mode\(value\)===modeHint\)\.sort/);
+assert.match(html,/function loadRound\(\)\{return latestStoredRound\("general"\)\|\|blankRound\(\)\}/);
 assert.match(html,/if\(round\.mode==="stableford"\)localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,payload\)/);
 assert.match(html,/try\{localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)\}catch\{\}/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\);localStorage\.removeItem\(STORAGE_KEY\)/);
 
-console.log("PASS V260/V262 · STABLEFORD, anchos, total neón, alta segura y rutas General/Stableford aisladas");
+console.log("PASS V260/V267 · STABLEFORD, anchos, total neón, alta segura y recuperación única sin mezclar modalidades");

@@ -20,6 +20,7 @@ assert.doesNotMatch(html,/id="openShareProject"/);
 assert.doesNotMatch(html,/id="shareProjectPanel"/);
 assert.doesNotMatch(html,/>CÓDIGO<\/span>/);
 assert.doesNotMatch(html,/WHATSAPP OPCIONAL/);
-assert.match(html,/NO SE RECONOCIÓ · DICTA NOMBRE, HDCP Y MARCAS/);
+assert.doesNotMatch(html,/NO SE RECONOCIÓ · DICTA NOMBRE, HDCP Y MARCAS/);
+assert.match(html,/target\.textContent="ERROR"/);
 
 console.log("PASS V262 · registro oficial limitado a Dictado o Manual Opcional: Nombre, HDCP y Marcas");

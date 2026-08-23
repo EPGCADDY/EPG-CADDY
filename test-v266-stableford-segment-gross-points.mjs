@@ -11,7 +11,8 @@ const functionSource=(name,next)=>{
 assert.match(html,/name="gscg-voice-hotfix" content="V266-STABLEFORD-SEGMENT-GROSS-POINTS-20260823"/);
 const stableOverride=html.match(/segmentSpeech=function\(title,holes\)\{if\(!isStablefordRound\(\)\)return baseSegmentSpeech\(title,holes\);[\s\S]*?\};/)?.[0];
 assert.ok(stableOverride,"Falta el resumen Stableford con nombre, Gross y puntos");
-assert.equal((html.match(/finishStablefordManualScoreChange\(\)/g)||[]).length,3,"El guardado manual y la edición manual deben compartir el mismo cierre");
+assert.match(html,/function applyManualScoreEntries\(entries\)/,"El control manual debe compartir la ruta literal con voz");
+assert.match(html,/const result=applyLiteralScores\(\{matched:true,ok:true,entries\}\)/);
 
 const FRONT=[1,2,3,4,5,6,7,8,9],BACK=[10,11,12,13,14,15,16,17,18],ALL=[...FRONT,...BACK];
 const players=[{name:"JAIME",holes:{}},{name:"MARÍA",holes:{}}];
@@ -44,7 +45,7 @@ players[0].holes[9]={gross:5,points:1};
 players[1].holes[9]={gross:4,points:2};
 assert.equal(
   closureSpeechIfDue(),
-  "Primera vuelta. JAIME. Gross 37. Puntos 17. MARÍA. Gross 36. Puntos 18."
+  "JAIME. Gross 37. Puntos 17. MARÍA. Gross 36. Puntos 18."
 );
 assert.equal(closureSpeechIfDue(),"","La primera vuelta no debe duplicarse");
 
@@ -52,25 +53,22 @@ addScores(players[0],BACK,4,2);
 addScores(players[1],BACK,5,1);
 assert.equal(
   closureSpeechIfDue(),
-  "Segunda vuelta. JAIME. Gross 36. Puntos 18. MARÍA. Gross 45. Puntos 9. Total. JAIME. Gross 73. Puntos 35. MARÍA. Gross 81. Puntos 27."
+  "JAIME. Gross 36. Puntos 18. MARÍA. Gross 45. Puntos 9. Total. JAIME. Gross 73. Puntos 35. MARÍA. Gross 81. Puntos 27."
 );
 assert.equal(round.announced.back,true);
 assert.equal(round.announced.complete,true);
 assert.equal(closureSpeechIfDue(),"","La segunda vuelta y el total no deben duplicarse");
 
-const manualFinishSource=functionSource("finishStablefordManualScoreChange","function registerStablefordRoster");
-let manualClosureCalls=0,manualPersistCalls=0,manualRenderCalls=0;
+const manualFinishSource=functionSource("applyManualScoreEntries","function resetAnnouncementsAfterRemoval");
+let manualApplyCalls=0;
 const manualSpoken=[];
-const finishStablefordManualScoreChange=new Function("closureSpeechIfDue","persist","render","speakClosure",`${manualFinishSource};return finishStablefordManualScoreChange`)(
-  ()=>{manualClosureCalls+=1;return"Primera vuelta. JAIME. Gross 37. Puntos 17."},
-  ()=>{manualPersistCalls+=1},
-  ()=>{manualRenderCalls+=1},
+const applyManualScoreEntries=new Function("applyLiteralScores","roundGridStatus","speakClosure",`${manualFinishSource};return applyManualScoreEntries`)(
+  ({entries})=>{manualApplyCalls+=1;return{ok:true,closure:"JAIME. Gross 37. Puntos 17.",entries}},
+  ()=>false,
   text=>{manualSpoken.push(text)}
 );
-assert.equal(finishStablefordManualScoreChange(),"Primera vuelta. JAIME. Gross 37. Puntos 17.");
-assert.equal(manualClosureCalls,1);
-assert.equal(manualPersistCalls,1);
-assert.equal(manualRenderCalls,1);
-assert.deepEqual(manualSpoken,["Primera vuelta. JAIME. Gross 37. Puntos 17."],"El control manual debe guardar, renderizar y pronunciar el mismo cierre");
+assert.equal(applyManualScoreEntries([{player:"JAIME",hole:9,gross:5}]).ok,true);
+assert.equal(manualApplyCalls,1);
+assert.deepEqual(manualSpoken,["JAIME. Gross 37. Puntos 17."],"El control manual debe pronunciar exactamente el cierre producido por el motor común");
 
 console.log("PASS V266 · Stableford manual/voz anuncia nombre, Gross y puntos en primera vuelta, segunda vuelta y total");

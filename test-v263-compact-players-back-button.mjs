@@ -53,6 +53,9 @@ const harness=new Function("initialRound","setupInputs","controls",`
     getElementById:id=>id==="stablefordTournamentName"?{value:"TORNEO"}:null
   };
   const $=id=>controls[id];
+  const updateStablefordSetupValidity=()=>({names:setupInputs.map(input=>GSCStableford.cleanName(input.value)).filter(Boolean),duplicates:[]});
+  const setStablefordSetupError=message=>{controls.stablefordSetupStatus.textContent=message;return false};
+  const stablefordDuplicateMessage=()=>"NO REPITAS EL MISMO JUGADOR";
   const stablefordCourseRoundNumber=()=>1,isStablefordRound=(value=round)=>value?.mode==="stableford";
   const normalizePlayer=(value,index)=>({...value,slot:index+1});
   const teardownRealtime=()=>{},activateCourse=()=>{},savePlayersToDirectory=()=>{},resetRoundCapture=()=>{},persist=()=>{},render=()=>{};

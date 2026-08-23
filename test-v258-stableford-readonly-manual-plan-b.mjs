@@ -13,24 +13,22 @@ assert.match(html,/data-stableford-category="super_senior"/);
 assert.match(html,/stablefordCategory:stablefordSetupCategory/);
 assert.match(html,/tournament:tournamentName\?\{name:tournamentName\}:null/);
 
-// Tarjeta: ambos datos llegan desde la ronda y son indicadores, nunca controles editables.
-assert.match(html,/id="sfTournamentName" aria-readonly="true"/);
-assert.match(html,/id="sfCategoryIndicator" aria-readonly="true"/);
-assert.doesNotMatch(html,/<input id="sfTournamentName"/);
+// Tarjeta: los metadatos llegan desde la ronda y son indicadores, nunca controles editables.
+assert.match(html,/const detailOne=stable\?\{label:"TORNEO",value:round\.tournament\?\.name\|\|STABLEFORD_DEFAULT_TOURNAMENT\}/);
+assert.match(html,/const detailTwo=stable\?\{label:"CATEGORÍA",value:`\$\{cfg\.label\} · \$\{stablefordTeeLabel\(cfg\)\}`\}/);
+assert.match(html,/aria-readonly="true"/);
 assert.doesNotMatch(html,/data-sf-card-category=/);
 assert.doesNotMatch(html,/changeStablefordCardCategory/);
-assert.match(html,/const cfg=stablefordConfig\(\),tournamentName=round\.tournament\?\.name\|\|STABLEFORD_DEFAULT_TOURNAMENT/);
-assert.match(html,/\$\{escapeHtml\(`\$\{cfg\.label\} · \$\{stablefordTeeLabel\(cfg\)\}`\)\}/);
 
-// Captura manual: identificación visible y ruta completa HOYO -> GROSS -> ENTER -> guardado.
-assert.match(html,/id="stablefordManualEntry"/);
-assert.match(html,/aria-label","Stableford"/);
-assert.match(html,/id="stablefordRoundPointsTitle"[^>]*>STABLEFORD</);
-assert.match(html,/id="sfGridHole"/);
-assert.match(html,/class="sfGridGross"/);
-assert.match(html,/id="sfGridEnter"/);
-assert.match(html,/manual\.querySelector\("#sfGridEnter"\)\.onclick=saveManualHole/);
-assert.match(html,/saveEntry\(\{player:p\.name,hole:selectedHole,gross\}\)/);
-assert.doesNotMatch(html,/\.sfGridGross,\.sfGridName,#sfTournamentName/);
+// Captura manual: un solo control para General/Stableford y el mismo escritor que voz.
+assert.match(html,/id="roundManualEntry"/);
+assert.match(html,/CONTROL MANUAL · \$\{stable\?"STABLEFORD":"GENERAL"\}/);
+assert.match(html,/id="roundGridHole"/);
+assert.match(html,/class="round-grid-gross"/);
+assert.match(html,/id="roundGridEnter"/);
+assert.match(html,/manual\.querySelector\("#roundGridEnter"\)\.onclick=saveManualHole/);
+assert.match(html,/const result=applyLiteralScores\(\{matched:true,ok:true,entries\}\)/);
+assert.match(html,/renderRoundManualEntry\(\);bindRoundManualCells\(\)/);
+assert.doesNotMatch(html,/class="sfGridName"/);
 
-console.log("PASS V258/V262 · torneo y categoría bloqueados; STABLEFORD operativo");
+console.log("PASS V258/V267 · metadatos bloqueados y control manual operacional único");

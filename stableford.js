@@ -194,8 +194,7 @@
       document.head.appendChild(style);
     }
     const stableStatus=document.getElementById("stablefordSetupStatus"),baseStatus=document.getElementById("setupStatus"),baseMic=document.getElementById("setupMicWrap"),stableMic=document.getElementById("stablefordSetupMicWrap");
-    const syncNames=()=>{if(!overlay.classList.contains("visible"))return;const source=[...document.querySelectorAll("[data-draft-name]")].map(x=>cleanName(x.value)).filter(Boolean).slice(0,MAX_PLAYERS);if(!source.length)return;const targets=[...document.querySelectorAll("[data-stableford-name]")];source.forEach((name,i)=>{if(targets[i])targets[i].value=name})};
-    const syncVoiceUi=()=>{if(!overlay.classList.contains("visible"))return;syncNames();if(stableStatus&&baseStatus?.textContent)stableStatus.textContent=baseStatus.textContent;if(stableMic&&baseMic)stableMic.classList.toggle("active",baseMic.classList.contains("active"))};
+    const syncVoiceUi=()=>{if(!overlay.classList.contains("visible"))return;if(stableStatus&&!stableStatus.classList.contains("error")&&baseStatus?.textContent)stableStatus.textContent=baseStatus.textContent;if(stableMic&&baseMic)stableMic.classList.toggle("active",baseMic.classList.contains("active"))};
     if(!overlay.__stablefordVoiceBridge){
       overlay.__stablefordVoiceBridge=true;
       const observer=new MutationObserver(syncVoiceUi);if(baseStatus)observer.observe(baseStatus,{subtree:true,childList:true,characterData:true,attributes:true});if(baseMic)observer.observe(baseMic,{attributes:true,attributeFilter:["class"]});const detected=document.getElementById("detectedBody");if(detected)observer.observe(detected,{subtree:true,childList:true,attributes:true,characterData:true});
@@ -244,24 +243,20 @@
       parseSetupTranscript=stablefordParseSetupTranscript;
     }
 
-    if(typeof handleRealtime==="function"&&!handleRealtime.__stablefordDirectTranscript){
-      const baseHandleRealtime=handleRealtime;
-      const directHandleRealtime=function(message){
-        let event=null;
-        try{event=JSON.parse(message.data)}catch{}
-        baseHandleRealtime(message);
-        if(!overlay.classList.contains("visible")||event?.type!=="conversation.item.input_audio_transcription.completed")return;
-        const parser=stablefordParseSetupTranscript||parseSetupTranscript;
-        const parsed=parser(event.transcript||"");
-        if(!parsed?.ok||!Array.isArray(parsed.changes))return;
-        const targets=[...document.querySelectorAll("[data-stableford-name]")];
-        for(const change of parsed.changes){const target=targets[Number(change.position)-1];if(target){target.value=cleanName(change.name);target.dispatchEvent(new Event("input",{bubbles:true}));target.dispatchEvent(new Event("change",{bubbles:true}))}}
-        if(stableStatus)stableStatus.textContent="JUGADORES DETECTADOS";
-        if(listening)setVoice(false);
+    if(typeof applySetupChanges==="function"&&!applySetupChanges.__stablefordRegistrationTarget){
+      const baseApplySetupChanges=applySetupChanges;
+      const applyToActiveRegistration=function(changes){
+        if(!overlay.classList.contains("visible"))return baseApplySetupChanges(changes);
+        if(!Array.isArray(changes)||!changes.length)return{ok:false,speech:"Error"};
+        const targets=[...document.querySelectorAll("[data-stableford-name]")],next=targets.map(target=>cleanName(target.value));
+        for(const change of changes){const index=Number(change.position)-1,name=cleanName(change.name);if(!Number.isInteger(index)||index<0||index>=MAX_PLAYERS||!name)return{ok:false,speech:"Error"};next[index]=name}
+        next.forEach((name,index)=>{const target=targets[index];if(!target||target.value===name)return;target.value=name;target.dispatchEvent(new Event("input",{bubbles:true}));target.dispatchEvent(new Event("change",{bubbles:true}))});
+        if(stableStatus&&!stableStatus.classList.contains("error"))stableStatus.textContent="JUGADORES DETECTADOS · REVISA Y PRESIONA INICIAR RONDA";
+        if(typeof listening!=="undefined"&&listening&&typeof setVoice==="function")setVoice(false);
+        return{ok:true,speech:""};
       };
-      directHandleRealtime.__stablefordDirectTranscript=true;
-      handleRealtime=directHandleRealtime;
-      if(typeof dc!=="undefined"&&dc)dc.onmessage=handleRealtime;
+      applyToActiveRegistration.__stablefordRegistrationTarget=true;
+      applySetupChanges=applyToActiveRegistration;
     }
 
     const stableSelector=document.querySelector('[data-course-key="stableford"]');
@@ -269,7 +264,7 @@
     if(!document.getElementById("stableford-touch-plan-b-style")){const st=document.createElement("style");st.id="stableford-touch-plan-b-style";st.textContent='body.stableford-round .score-cell{touch-action:manipulation;-webkit-user-select:none;user-select:none}body.stableford-round .score-cell input{touch-action:manipulation;min-width:100%;min-height:100%;margin:0;padding:0;text-align:center}body.stableford-round .score-table{touch-action:pan-x pan-y}';document.head.appendChild(st)}
     const markStablefordRound=()=>document.body.classList.toggle("stableford-round",typeof round!=="undefined"&&round?.mode==="stableford");markStablefordRound();
     const categoryButtons=[...document.querySelectorAll("[data-stableford-category]")];
-    for(const button of categoryButtons)if(!button.__stablefordDefaults){button.__stablefordDefaults=true;button.addEventListener("click",()=>{const category=button.getAttribute("data-stableford-category"),cfg=categoryConfig(category);if(!cfg)return;const facts=document.getElementById("stablefordSetupFacts");if(facts)facts.textContent=`SCRATCH · MARCAS ${cfg.tee.toUpperCase()}S · HCP 0 · MÁXIMO 6 JUGADORES`})}
+    for(const button of categoryButtons)if(!button.__stablefordDefaults){button.__stablefordDefaults=true;button.addEventListener("click",()=>{const category=button.getAttribute("data-stableford-category"),cfg=categoryConfig(category);if(!cfg)return;const facts=document.getElementById("stablefordSetupFacts"),teeLabel=cfg.tee==="Blanco"?"BLANCAS":"AMARILLAS";if(facts)facts.textContent=`SCRATCH · MARCAS ${teeLabel} · HCP 0 · MÁXIMO 6 JUGADORES`})}
     return true;
   }
   return{SERIES_ID,MAX_PLAYERS,MAX_ROUNDS,BEST_ROUNDS,ALLOWED_COURSES,CATEGORY_CONFIG,TOURNAMENT_COURSES,categoryConfig,isAllowedCourse,pointsFor,holeResult,totals,bestThree,blankSeries,normalizeSeries,normalizeResult,upsertResult,standings,nextRoundNumber,cleanName,installTournamentCourses,installStablefordUi};

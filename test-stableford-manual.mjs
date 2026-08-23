@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';import fs from 'node:fs';
 const h=fs.readFileSync('index-grupal.html','utf8');
-assert.match(h,/stableford-manual-cell/);
-assert.match(h,/window\.prompt\(`\$\{p\.name\} · HOYO \$\{hole\} · GROSS`/);
-assert.match(h,/saveEntry\(\{player:p\.name,hole,status:value==="X"\?"x":null,gross:value==="X"\?null:Number\(value\)\}\)/);
-assert.match(h,/if\(result\.ok\)finishStablefordManualScoreChange\(\)/);
-assert.match(h,/function finishStablefordManualScoreChange\(\)\{const closure=closureSpeechIfDue\(\);persist\(\);render\(\);if\(closure\)speakClosure\(closure\);return closure\}/);
+assert.match(h,/round-manual-cell/);
+assert.match(h,/window\.prompt\(`\$\{player\.name\} · HOYO \$\{hole\} · GROSS`/);
+assert.match(h,/function applyManualScoreEntries\(entries\)/);
+assert.match(h,/applyLiteralScores\(\{matched:true,ok:true,entries\}\)/);
+assert.match(h,/if\(result\.closure\)speakClosure\(result\.closure\)/);
 assert.match(h,/points:GSCStableford\.pointsFor\(v\.gross,PAR\[v\.hole-1\]\)/);
-console.log('PASS manual Gross -> saveEntry -> points -> cierre compartido -> persist -> render -> voz');
+assert.doesNotMatch(h,/stableford-manual-cell/);
+console.log('PASS manual General/Stableford -> applyLiteralScores -> recordScore(s) -> cálculo/persist/render/cierre únicos');
