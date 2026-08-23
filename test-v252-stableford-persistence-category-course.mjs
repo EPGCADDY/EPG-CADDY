@@ -8,7 +8,7 @@ assert.match(html,/V(?:252-STABLEFORD-PERSISTENCE-CATEGORY-COURSE|253-LIVE-PREVI
 assert.doesNotMatch(html,/sfEmergencyClean/);
 assert.doesNotMatch(html,/round\.players=\["Jaime","Junior","Fito","Henry"\]/);
 assert.match(html,/let stablefordSetupCategory=null,stablefordSetupCourseKey=null/);
-assert.match(html,/let round=sfEmergency\?\(latestStoredRound\("stableford"\)\|\|blankRound\(\)\):loadRound\(\)/);
+assert.match(html,/let round=sfEmergency\?\(latestStoredRound\("stableford"\)\|\|blankRound\(\)\):demoControlManual\?\(readStoredRound\(DEMO_CONTROL_MANUAL_KEY\)\|\|blankRound\(\)\):loadRound\(\)/);
 assert.match(html,/let sfRestoredActive=!!\(sfEmergency&&round\.configured&&round\.mode==="stableford"\)/);
 assert.match(html,/if\(round\.mode==="stableford"\)localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,payload\);/);
 assert.match(html,/else\{\s*localStorage\.setItem\(STORAGE_KEY,payload\);\s*localStorage\.setItem\(STORAGE_BACKUP_KEY,payload\);\s*\}/);
@@ -31,7 +31,7 @@ assert.match(html,/try\{localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)\}catch
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\);localStorage\.removeItem\(STORAGE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(ROUND_ARCHIVE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_SERIES_KEY\)/);
-assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\|\|sfEmergency\?openFreshStablefordSetup\(\):openNewRoundDraft\(\)\)/);
+assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>demoControlManual\?false:isStablefordRound\(\)\|\|sfEmergency\?openFreshStablefordSetup\(\):openNewRoundDraft\(\)\)/);
 assert.match(html,/if\(!round\.configured\)\{\s*if\(sfEmergency\)window\.addEventListener\("DOMContentLoaded",openFreshStablefordSetup,\{once:true\}\)/);
 assert.match(html,/if\(!GSCStableford\.isAllowedCourse\(stablefordSetupCourseKey\)\)return fail\("SELECCIONA EL CAMPO"\)/);
 assert.match(html,/if\(!cfg\)return fail\("SELECCIONA SENIOR O SÚPER SENIOR"\)/);

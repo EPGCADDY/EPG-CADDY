@@ -7,7 +7,7 @@ const stable=fs.readFileSync(new URL("./stableford.js",import.meta.url),"utf8");
 assert.doesNotMatch(html,/round\.players=\["Jaime","Junior","Fito","Henry"\]/);
 assert.doesNotMatch(stable,/const names=\["Jaime","Junior","Fito","Henry"\]/);
 assert.doesNotMatch(html,/sfEmergencyClean/);
-assert.match(html,/let round=sfEmergency\?\(latestStoredRound\("stableford"\)\|\|blankRound\(\)\):loadRound\(\)/);
+assert.match(html,/let round=sfEmergency\?\(latestStoredRound\("stableford"\)\|\|blankRound\(\)\):demoControlManual\?\(readStoredRound\(DEMO_CONTROL_MANUAL_KEY\)\|\|blankRound\(\)\):loadRound\(\)/);
 assert.match(html,/let sfRestoredActive=!!\(sfEmergency&&round\.configured&&round\.mode==="stableford"\)/);
 assert.match(html,/function openFreshStablefordSetup\(\)/);
 assert.match(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)/);

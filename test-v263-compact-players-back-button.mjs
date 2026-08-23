@@ -21,10 +21,10 @@ assert.doesNotMatch(html,/\.back-registration-control\{position:fixed;/);
 // Agregar jugador es explícito, sólo aparece con cupo y usa el editor que conserva la ronda.
 assert.match(html,/id="addPlayerButton"[^>]*>\+ JUGADOR<\/button>/);
 assert.match(html,/editable&&round\.players\.length<6/);
-assert.match(html,/addPlayerButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openStablefordDataEditor\(\):openRosterEditor\(\)\)/);
+assert.match(html,/addPlayerButton"\)\.addEventListener\("click",\(\)=>demoControlManual\?false:isStablefordRound\(\)\?openStablefordDataEditor\(\):openRosterEditor\(\)\)/);
 
 // Las acciones siguen abriendo el editor apropiado y conservan los scores.
-assert.match(html,/backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openStablefordDataEditor\(\):openCurrentRoundDataEditor\(\)\)/);
+assert.match(html,/backToRegistrationButton"\)\.addEventListener\("click",\(\)=>demoControlManual\?false:isStablefordRound\(\)\?openStablefordDataEditor\(\):openCurrentRoundDataEditor\(\)\)/);
 assert.match(html,/holes:previous\[i\]\?\.holes\|\|\{\}/);
 
 // Simulación con la función real: se agrega el sexto y los scores existentes permanecen intactos.

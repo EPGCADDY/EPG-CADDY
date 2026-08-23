@@ -31,7 +31,7 @@ assert.doesNotMatch(html,/\.back-registration-control\{position:fixed;/);
 
 // General y Stableford usan una sola política con filtro de modalidad: comparten arquitectura, nunca mezclan rondas.
 assert.match(html,/function latestStoredRound\(modeHint\)/);
-assert.match(html,/let round=sfEmergency\?\(latestStoredRound\("stableford"\)\|\|blankRound\(\)\):loadRound\(\)/);
+assert.match(html,/let round=sfEmergency\?\(latestStoredRound\("stableford"\)\|\|blankRound\(\)\):demoControlManual\?\(readStoredRound\(DEMO_CONTROL_MANUAL_KEY\)\|\|blankRound\(\)\):loadRound\(\)/);
 assert.match(html,/stableford=readStoredRound\(STABLEFORD_ACTIVE_KEY\)/);
 assert.match(html,/\[primary,backup,stableford\]\.filter\(value=>value\?\.configured&&mode\(value\)===modeHint\)\.sort/);
 assert.match(html,/readRoundArchive\(\)\.filter\(value=>value\?\.configured&&mode\(value\)===modeHint\)\.sort/);
