@@ -99,11 +99,10 @@ export default async function handler(req, res) {
     const body = await openai.text();
 
     if (!openai.ok) {
-      console.error("OpenAI Realtime grupal error", openai.status, body);
+      console.error("OpenAI Realtime grupal error", openai.status);
       res.setHeader("Cache-Control", "no-store");
       return res.status(openai.status).json({
-        error: "OpenAI no pudo crear la sesión grupal.",
-        details: body
+        error: "OpenAI no pudo crear la sesión grupal."
       });
     }
 
@@ -111,11 +110,10 @@ export default async function handler(req, res) {
     res.setHeader("Cache-Control", "no-store");
     return res.status(200).send(body);
   } catch (error) {
-    console.error("session-grupal.js error", error);
+    console.error("session-grupal.js error");
     res.setHeader("Cache-Control", "no-store");
     return res.status(500).json({
-      error: "No se pudo iniciar la sesión grupal.",
-      details: error instanceof Error ? error.message : String(error)
+      error: "No se pudo iniciar la sesión grupal."
     });
   }
 }
