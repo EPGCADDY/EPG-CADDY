@@ -1,5 +1,7 @@
 # ROADMAP OVERALL
 
+![ROADMAP OVERALL · Golf Score Card GT](ROADMAP_OVERALL_V291.png)
+
 ## Golf Score Card GT
 
 Este es el mapa general y sencillo del proyecto. El nombre comercial único es **Golf Score Card GT**.
