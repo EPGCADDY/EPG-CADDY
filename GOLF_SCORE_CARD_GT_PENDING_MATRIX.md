@@ -29,6 +29,7 @@ Cuando el asistente solicite `👍🏻` para seguir y el propietario lo envíe, 
 
 | Prioridad | Módulo | Estado real | Próxima condición de PASS |
 |---|---|---|---|
+| P0 | Anuncio automático al completar la primera vuelta Stableford | V265 corregido y cubierto por prueba local; publicación y prueba física pendientes | Al registrar el último score del hoyo 9 debe anunciar una sola vez, por jugador, Gross, Neto y resultado sobre/bajo par; si la sesión de voz no está disponible en el primer intento debe recuperarla y reintentar sin alterar la tarjeta. |
 | P0 | Stableford Scratch Senior / S. Senior | V199 implementado y auditado localmente; publicación a `main` autorizada | Acceso `STABLE` dentro de la cuadrícula de campos, inmediatamente debajo de Alta Vista; Senior HCP 0/blancas y S. Senior HCP 0/amarillas; 1–4 nombres; Gross/Puntos por hoyo; `X` explícita en cero; ida/vuelta/total; cuatro fechas/campos; ranking por mejores 3 y alta manual de resultados externos. |
 | P0 | Tarjeta en sucio sin registro | Publicada V193; verificación técnica remota completada | La flecha activa automáticamente seis nombres opcionales editables y seis bloques sólo Gross; sin HDCP, círculos, Neto ni `+/-`; acepta hoyos salteados y dictado por posición/nombre; cero efectos en historial, récords, tarjetas o envíos. |
 | P0 | Regla de trazabilidad funcional | Obligatoria permanente | Toda función aprobada debe constar simultáneamente en código, Matriz, manual y pruebas de aceptación; con una evidencia faltante continúa pendiente. |

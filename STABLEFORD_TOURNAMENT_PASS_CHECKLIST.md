@@ -29,6 +29,7 @@ Estado: PRE-PASS TÉCNICO EN RAMA AISLADA. NO PUBLICAR A MAIN HASTA PRUEBA FÍSI
 - Matrices Stableford San Isidro y Mayan cubiertas por test de 18 hoyos.
 - Instalación integrada de San Isidro/Mayan en index-grupal cubierta por test.
 - Renderer protegido para campos Stableford que sólo requieren tees BLANCO/AMARILLO.
+- Cierre automático del hoyo 9 cubierto por prueba: una sola lectura por jugador con Gross, Neto y resultado sobre/bajo par, más recuperación de la sesión de voz si el primer envío no estaba disponible.
 - Tarjeta independiente de torneo creada como respaldo operativo dentro del mismo repositorio.
 - Vercel Preview: DEPLOY SUCCESS en la rama de cierre.
 
@@ -40,3 +41,4 @@ Estado: PRE-PASS TÉCNICO EN RAMA AISLADA. NO PUBLICAR A MAIN HASTA PRUEBA FÍSI
 5. Confirmar que IDA/VTA/TOTAL y clasificación se muestran sin desconfiguración.
 6. Confirmar micrófono en dispositivo objetivo para Gross/X.
 7. Con prueba física PASS: publicación atómica a main y verificación de Producción.
+8. Al completar el hoyo 9, confirmar una sola lectura automática de primera vuelta con Gross, Neto y resultado sobre/bajo par.
