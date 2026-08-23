@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos después de V290: **158**.
+Archivos activos después de V291: **159**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -40,6 +40,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
 | `MAPA_MATRIZ_STABLEFORD_V252.md` | `8911a7ef86398e0c3f18e647433387a02645082c` | 3828 bytes | Explica las piezas de Stableford incorporadas en V252. |
 | `README.md` | `e93c3adc84c81fdda07303f5d0f75fbb35140ea2` | 2170 bytes | Portada de GitHub que presenta el producto como Golf Score Card GT. |
+| `ROADMAP_OVERALL.md` | `a4a49abd085efe36880bd28288569144aed76496` | 2966 bytes | Resumen general y sencillo del estado completo del proyecto. |
 | `STABLEFORD_TOURNAMENT_PASS_CHECKLIST.md` | `02838f5745be3f424ecf4250894da97bed61d201` | 4275 bytes | Lista de comprobaciones para cerrar un torneo Stableford. |
 | `account-backup.js` | `a1b3fbe28a3807312acbb9aaee3750ee244c3f0c` | 4202 bytes | Muestra y controla el respaldo opcional de la cuenta. |
 | `api/_lib/account-auth.js` | `2bd196110b8e57a9d7491b0d3e40527993026133` | 2128 bytes | Ayuda a reconocer la cuenta abierta. |
