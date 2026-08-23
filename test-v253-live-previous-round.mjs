@@ -41,7 +41,7 @@ const detached=navigation.resolve(archive,generalCurrent,"general").target;
 detached.players[0].name="EDITADA";
 assert.equal(generalPrevious.players[0].name,"AYER","La ronda restaurada es una copia operativa independiente");
 
-assert.match(html,/V280-LOCAL-HISTORY-INSIGHTS-20260823/);
+assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
 assert.match(html,/id="previousRoundButton">RONDA PREVIA/);
 assert.match(html,/id="previousRoundSetupButton">RONDA PREVIA/);
 assert.match(html,/id="previousStablefordRoundButton">RONDA PREVIA/);
@@ -51,7 +51,7 @@ assert.match(html,/round=restored;activateCourse/);
 assert.match(html,/persist\(\);render\(\);\$\("status"\)\.textContent=state\.relation/,"La ronda restaurada debe quedar activa, editable y persistida");
 assert.match(html,/activatePreviousOperationalRound\("general",true\)/);
 assert.match(html,/activatePreviousOperationalRound\("stableford",true\)/);
-assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=280"/);
+assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=288"/);
 assert.match(html,/id="stableCourseOption" href="\$\{STABLEFORD_OFFICIAL_HOSTING_URL\}"[\s\S]{0,180}<span>STABLEFORD<\/span>/);
 assert.doesNotMatch(html,/closest\("#stableCourseOption"\)[\s\S]{0,180}openFreshStablefordSetup/);
 assert.doesNotMatch(html,/removeItem\(ROUND_ARCHIVE_KEY\)/);

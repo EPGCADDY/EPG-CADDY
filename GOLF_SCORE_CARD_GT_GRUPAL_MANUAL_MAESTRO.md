@@ -4,9 +4,9 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V280
+**Versión documentada:** V288
 **Fecha de corte:** 23 de agosto de 2026
-**Ramas operativas:** `main` (Producción vigente) y `v280-local-history-insights`
+**Ramas operativas:** `main` (Producción vigente) y `v288-stableford-one-touch-home` (candidata)
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
 **Responsable de implementación y control:** Partner / ChatGPT
@@ -350,7 +350,7 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - En Dictado, se toca el micrófono y se pronuncian únicamente `NOMBRE + HDCP + MARCAS`.
 - En Manual Opcional, cada fila contiene únicamente `NOMBRE + HDCP + MARCAS`; las marcas se eligen en el selector de color.
 - Se permiten de uno a seis jugadores.
-- Si un jugador fue omitido y todavía hay menos de seis, el botón pequeño `+ JUGADOR` abre directamente la ronda activa en modo de incorporación. También puede usarse `ATRÁS` para editar los datos generales. En ambos casos, los scores ya registrados se conservan y el jugador nuevo comienza operativamente desde el hoyo de incorporación.
+- Si un jugador fue omitido y todavía hay menos de seis, el botón pequeño `+ JUGADOR` abre directamente la ronda activa en modo de incorporación y conserva los scores ya registrados. El botón `ATRÁS` de una tarjeta Stableford vuelve en un solo toque a la pantalla principal completa —campos, modalidades, torneo y registro—, conserva la ronda activa y elimina la ruta especial del URL; no abre primero el editor Stableford ni obliga a recorrer pantallas intermedias.
 - No se muestran ni operan Código, Compartir o WhatsApp dentro del registro.
 
 ### 8.7 Base maestra y sustitución del dato vigente V256
@@ -1288,6 +1288,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-23 | Manual 3.58 / App V288 | Corregida la navegación física demostrada en V287: desde la tarjeta Stableford, `ATRÁS` abre directamente y en un solo toque la pantalla principal completa. La transición persiste la ronda activa, elimina del URL la ruta especial Stableford y no pasa por `RONDA STABLEFORD` como pantalla intermedia. `+ JUGADOR` conserva su función independiente de editar o incorporar participantes sin borrar scores. La prueba V288 bloquea la conexión correcta del botón, la restauración de campos/modalidades/registro, la conservación de la ronda y la ausencia del vínculo anterior al editor Stableford. |
 | 2026-08-23 | Manual 3.57 / App V280 | La biblioteca incorpora una pantalla escrita de `ESTADÍSTICAS DEL HISTORIAL` que consulta exclusivamente las rondas guardadas en el dispositivo y no habla automáticamente. Acepta periodos, jugador, campo, torneo, modalidad, vuelta u hoyo; entrega promedios Gross/Neto, mejor/peor, consistencia, tendencia, categorías de score, comparación entre jugadores y puntos Stableford. Las opciones rápidas ejecutan el mismo motor de consultas ya utilizado por voz y los resultados no modifican rondas ni tarjetas. La consulta multi-dispositivo continúa pendiente de la sincronización central autenticada. |
 | 2026-08-23 | Manual 3.56 / App V279 | Incorporada `BIBLIOTECA DE TARJETAS` en la ronda, el Registro General y el Registro Stableford. Conserva únicamente rondas con snapshot oficial y permite filtrar por modalidad y campo, además de buscar por jugador, torneo o fecha. Abrir la biblioteca no restaura, reemplaza ni modifica la ronda actual. Desde la ronda histórica seleccionada se puede abrir la Global o una personal, generar su imagen PNG, descargar su PDF o descargar el PDF conjunto. La biblioteca permanece privada en el almacenamiento del dispositivo hasta que la sincronización central autenticada quede habilitada. |
 | 2026-08-23 | Manual 3.55 / App V278 | Las tarjetas oficiales Global y personales de General y Stableford se exportan desde el mismo snapshot oficial como imagen PNG y PDF real. `IMAGEN GLOBAL` e `IMAGEN PERSONAL` abren la hoja nativa del teléfono para compartir o seleccionar `Guardar imagen`; si el dispositivo no permite compartir archivos, descargan el PNG. `PDF GLOBAL` y `PDF PERSONAL` descargan el archivo individual y `PDF TODAS` crea un documento multipágina con la Global y todas las personales. Una corrección oficial genera los archivos desde la versión vigente sin alterar ni borrar el original. |

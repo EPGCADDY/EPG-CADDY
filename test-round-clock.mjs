@@ -32,7 +32,7 @@ assert.ok(html.includes('function roundIdleStatus(){return `INICIO ${roundStartT
 assert.ok(html.includes('if(!round.configured||round.endedAt)return false'),'El botón debe ser idempotente');
 assert.ok(html.includes('id="backToRegistrationButton"'),'Falta el botón ATRÁS');
 assert.ok(html.includes('>ATRÁS</button>'),'El control debe ser un botón pequeño y legible que diga ATRÁS');
-assert.ok(html.includes('$("backToRegistrationButton").addEventListener("click",()=>isStablefordRound()?openStablefordDataEditor():openCurrentRoundDataEditor())'),'ATRÁS debe editar o agregar datos de la ronda activa sin borrar scores');
+assert.ok(html.includes('$("backToRegistrationButton").addEventListener("click",()=>isStablefordRound()?openNewRoundDraft():openCurrentRoundDataEditor())'),'ATRÁS debe volver al inicio desde Stableford sin borrar la ronda activa');
 assert.ok(html.includes('.back-registration-control{position:static;'),'ATRÁS debe formar parte del flujo y no flotar sobre la tarjeta');
 assert.ok(!html.includes('.back-registration-control{position:fixed;'),'No debe quedar el antiguo control flotante invasivo');
 assert.ok(html.includes('.back-registration-button{min-width:68px;height:30px'),'ATRÁS debe conservar un tamaño pequeño');

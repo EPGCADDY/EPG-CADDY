@@ -14,7 +14,7 @@ const mobileBuild=read("./scripts/build-mobile-web.mjs");
 const nativeConfig=JSON.parse(read("./capacitor.config.json"));
 const packageJson=JSON.parse(read("./package.json"));
 
-assert.match(html,/V287-STABLEFORD-BACK-CONTROLS-CLEAR-20260823/);
+assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
 assert.match(html,/V283-CAPACITOR-REVENUECAT-READY-20260823/);
 assert.match(html,/id="commercialProButton"/);
 assert.match(html,/window\.gscgApiUrl/);

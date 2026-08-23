@@ -6,11 +6,11 @@ const registry=fs.readFileSync(new URL("./player-registry.js",import.meta.url),"
 const api=fs.readFileSync(new URL("./api/sync.js",import.meta.url),"utf8");
 const schema=fs.readFileSync(new URL("./database/003_master_data_platform.sql",import.meta.url),"utf8");
 
-assert.match(html,/V280-LOCAL-HISTORY-INSIGHTS-20260823/);
+assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
 assert.match(html,/<script src="\.\/sync-queue\.js"><\/script><script src="\.\/master-data-sync\.js"><\/script>/);
 assert.match(html,/queueMasterDataSnapshot\("round-state"\)/);
 assert.match(html,/queueMasterDataSnapshot\(context\.source\|\|"player-profile",\{includeRound:false,profilesOverride:profiles\}\)/);
-assert.match(html,/fetch\("\/api\/sync",\{method:"POST"/);
+assert.match(html,/fetch\(window\.gscgApiUrl\("\/api\/sync"\),\{method:"POST"/);
 assert.match(html,/recordShareEvent\(item,"PREPARED"/);
 assert.match(registry,/requestedCode\?byCode\.get\(requestedCode\)\|\|byKey\.get/);
 assert.match(api,/apply_master_sync_mutation/);

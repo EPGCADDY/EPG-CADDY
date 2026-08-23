@@ -4,14 +4,14 @@ import analytics from "./historical-analytics.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V280-LOCAL-HISTORY-INSIGHTS-20260823"/);
+assert.match(html,/gscg-build" content="V288-STABLEFORD-ONE-TOUCH-HOME-20260823"/);
 assert.match(html,/V280-WRITTEN-GENERAL-STABLEFORD-STATS-20260823/);
 for(const id of ["openHistoryInsights","historyInsightsOverlay","historyInsightsQuery","runHistoryInsights","historyInsightsResult","closeHistoryInsights"])assert.match(html,new RegExp(`id="${id}"`),`Falta ${id}`);
 assert.match(html,/data-history-query="ESTADÍSTICAS DE PUNTOS STABLEFORD DEL ÚLTIMO MES"/);
 assert.match(html,/GSCHistoricalAnalytics\.run\(query,cardLibraryOfficialRounds\(\)\)/);
 assert.match(html,/historyInsightsResult"\)\.textContent=result\.matched\?result\.speech/);
-assert.match(html,/appVersion:"V280"/);
-assert.equal(masterSync.APP_VERSION,"V280");
+assert.match(html,/appVersion:"V288"/);
+assert.equal(masterSync.APP_VERSION,"V283");
 
 const player=(name,scores,points=false)=>({name,holes:Object.fromEntries(scores.map((gross,index)=>[index+1,{gross,net:gross-1,par:4,diff:gross-5,...(points?{points:Math.max(0,6-gross)}:{})}]))});
 const rounds=[

@@ -23,8 +23,9 @@ assert.match(html,/id="addPlayerButton"[^>]*>\+ JUGADOR<\/button>/);
 assert.match(html,/editable&&round\.players\.length<6/);
 assert.match(html,/addPlayerButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openStablefordDataEditor\(\):openRosterEditor\(\)\)/);
 
-// Las acciones siguen abriendo el editor apropiado y conservan los scores.
-assert.match(html,/backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openStablefordDataEditor\(\):openCurrentRoundDataEditor\(\)\)/);
+// ATRÁS vuelve al inicio en Stableford; + JUGADOR conserva el editor y los scores.
+assert.match(html,/backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)\)/);
+assert.match(html,/function openNewRoundDraft\(\)[\s\S]*?persist\(\);[\s\S]*?openSetup\("new"\)/);
 assert.match(html,/holes:previous\[i\]\?\.holes\|\|\{\}/);
 
 // Simulación con la función real: se agrega el sexto y los scores existentes permanecen intactos.

@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V280-LOCAL-HISTORY-INSIGHTS-20260823/);
+assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
 assert.match(html,/>2 · MANUAL OPCIONAL<\/div>/);
 assert.match(html,/function provisionalPlayerFromOptionalRow\(source,i\)/);
 assert.match(html,/provisionalHandicapProvided:hasHandicap,provisionalTeeProvided:!!tee/);
@@ -18,7 +18,7 @@ assert.match(html,/jugador dos Carlos catorce blancas/);
 assert.match(html,/const provisionalProfile=parseProvisionalProfileTranscript\(transcript\)/);
 assert.match(html,/function openCurrentRoundDataEditor\(\)/);
 assert.match(html,/openSetup\(round\.players\.length<6\?"add":"correction"\)/);
-assert.match(html,/backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openStablefordDataEditor\(\):openCurrentRoundDataEditor\(\)\)/);
+assert.match(html,/backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)\)/);
 assert.match(html,/provisional&&!provisionalHasTee\?blankYards:tee\.yds/);
 assert.match(html,/provisional&&!provisionalFull\?"":hcp/);
 assert.match(html,/RONDA SIN REGISTRO/);

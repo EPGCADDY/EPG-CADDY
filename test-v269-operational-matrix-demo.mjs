@@ -33,7 +33,7 @@ assert.doesNotMatch(html,/editable=!!\(!demoControlManual&&round\.configured/);
 assert.doesNotMatch(html,/if\(demoControlManual\)\$\("newRoundButton"\)\?\.classList\.add\("hidden"\)/);
 assert.doesNotMatch(html,/\$\("backToRegistrationButton"\)\.addEventListener\("click",\(\)=>demoControlManual\?false:/);
 assert.doesNotMatch(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>demoControlManual\?false:/);
-assert.match(html,/\$\("backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openStablefordDataEditor\(\):openCurrentRoundDataEditor\(\)\)/);
+assert.match(html,/\$\("backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)\)/);
 assert.match(html,/\$\("previousRoundButton"\)\.addEventListener\("click",\(\)=>activatePreviousOperationalRound\(\)\)/);
 assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\|\|sfEmergency\?openFreshStablefordSetup\(\):openNewRoundDraft\(\)\)/);
 

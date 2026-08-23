@@ -24,14 +24,14 @@ assert.match(configure,/CURRENT_PROJECT_VERSION/);
 assert.match(configure,/versionCode/);
 assert.match(configure,/versionName/);
 assert.equal(release.versionName,"0.9.0");
-assert.equal(release.buildNumber,287);
+assert.equal(release.buildNumber,288);
 assert.match(workflow,/runs-on: macos-latest/);
 assert.match(workflow,/npm run mobile:prepare/);
 assert.match(workflow,/\.\/gradlew bundleRelease/);
 assert.match(workflow,/xcodebuild/);
 assert.match(workflow,/actions\/upload-artifact@v4/);
 assert.match(workflow,/golf-score-card-gt-native-unsigned/);
-assert.match(html,/V287-STABLEFORD-BACK-CONTROLS-CLEAR-20260823/);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v287"/);
+assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v288"/);
 
 console.log("PASS V284 · paquetes nativos reproducibles para Xcode y Android Studio");
