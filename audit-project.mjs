@@ -6,6 +6,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v278-card-image-pd
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v279-local-card-library.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v280-local-history-insights.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v281-pwa-installation.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v282-optional-account-backup.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

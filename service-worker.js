@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v281";
+const CACHE_NAME="gscg-mobile-v282";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -14,6 +14,7 @@ const SHELL=[
   "/historical-analytics.js",
   "/sync-queue.js",
   "/master-data-sync.js",
+  "/account-backup.js",
   "/stableford.js",
   "/round-navigation.js"
 ];
