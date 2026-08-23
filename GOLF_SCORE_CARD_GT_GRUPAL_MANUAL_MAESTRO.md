@@ -4,9 +4,9 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V279
+**Versión documentada:** V280
 **Fecha de corte:** 23 de agosto de 2026
-**Ramas operativas:** `main` (Producción vigente) y `v279-local-card-library`
+**Ramas operativas:** `main` (Producción vigente) y `v280-local-history-insights`
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
 **Responsable de implementación y control:** Partner / ChatGPT
@@ -1288,6 +1288,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-23 | Manual 3.57 / App V280 | La biblioteca incorpora una pantalla escrita de `ESTADÍSTICAS DEL HISTORIAL` que consulta exclusivamente las rondas guardadas en el dispositivo y no habla automáticamente. Acepta periodos, jugador, campo, torneo, modalidad, vuelta u hoyo; entrega promedios Gross/Neto, mejor/peor, consistencia, tendencia, categorías de score, comparación entre jugadores y puntos Stableford. Las opciones rápidas ejecutan el mismo motor de consultas ya utilizado por voz y los resultados no modifican rondas ni tarjetas. La consulta multi-dispositivo continúa pendiente de la sincronización central autenticada. |
 | 2026-08-23 | Manual 3.56 / App V279 | Incorporada `BIBLIOTECA DE TARJETAS` en la ronda, el Registro General y el Registro Stableford. Conserva únicamente rondas con snapshot oficial y permite filtrar por modalidad y campo, además de buscar por jugador, torneo o fecha. Abrir la biblioteca no restaura, reemplaza ni modifica la ronda actual. Desde la ronda histórica seleccionada se puede abrir la Global o una personal, generar su imagen PNG, descargar su PDF o descargar el PDF conjunto. La biblioteca permanece privada en el almacenamiento del dispositivo hasta que la sincronización central autenticada quede habilitada. |
 | 2026-08-23 | Manual 3.55 / App V278 | Las tarjetas oficiales Global y personales de General y Stableford se exportan desde el mismo snapshot oficial como imagen PNG y PDF real. `IMAGEN GLOBAL` e `IMAGEN PERSONAL` abren la hoja nativa del teléfono para compartir o seleccionar `Guardar imagen`; si el dispositivo no permite compartir archivos, descargan el PNG. `PDF GLOBAL` y `PDF PERSONAL` descargan el archivo individual y `PDF TODAS` crea un documento multipágina con la Global y todas las personales. Una corrección oficial genera los archivos desde la versión vigente sin alterar ni borrar el original. |
 | 2026-08-23 | Manual 3.54 / App V277 | Incorporada la pantalla única de `CORRECCIÓN OFICIAL` para General y Stableford. Exige jugador, hoyo, nuevo Gross, motivo y responsable; recalcula todos los datos derivados de la modalidad, genera una versión oficial nueva con SHA-256 propio y conserva la tarjeta original disponible mediante `ABRIR ORIGINAL`. La tarjeta corregida queda identificada por versión, reemplaza únicamente el resultado vigente y conserva íntegra la secuencia de versiones anteriores. |

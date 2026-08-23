@@ -5,7 +5,7 @@ import fileExport from "./card-file-export.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V279-LOCAL-CARD-LIBRARY-20260823"/);
+assert.match(html,/gscg-build" content="V280-LOCAL-HISTORY-INSIGHTS-20260823"/);
 assert.match(html,/V278-PNG-PDF-PACKAGE-20260823/);
 assert.match(html,/card-file-export\.js/);
 assert.match(html,/id="imageGlobalCard">IMAGEN GLOBAL/);
@@ -16,8 +16,8 @@ assert.match(html,/id="downloadAllCards">PDF TODAS/);
 assert.match(html,/GSCCardFileExport\.shareImage/);
 assert.match(html,/GSCCardFileExport\.downloadPdf/);
 assert.match(html,/GSCCardFileExport\.downloadPackage\(all\.all/);
-assert.match(html,/appVersion:"V279"/);
-assert.equal(masterSync.APP_VERSION,"V279");
+assert.match(html,/appVersion:"V280"/);
+assert.equal(masterSync.APP_VERSION,"V280");
 
 const holes=Object.fromEntries(Array.from({length:18},(_,index)=>{const hole=index+1,par=hole%3===0?3:hole%3===1?4:5;return[hole,{hole,par,gross:par,strokes:0,net:par,diff:0}]}));
 const snapshot={roundId:"round-v278",status:"officially_closed",sha256:"c".repeat(64),version:1,course:"El Pulté",playedAt:"2026-08-23T12:00:00Z",players:[{id:"p1",name:"JAIME",handicap:0,tee:"Blanco",holes}]};

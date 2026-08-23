@@ -3,9 +3,9 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V279-LOCAL-CARD-LIBRARY-20260823"/);
+assert.match(html,/gscg-build" content="V280-LOCAL-HISTORY-INSIGHTS-20260823"/);
 assert.match(html,/V276-PREVIOUS-DIRECT-NEXT-20260823/);
-assert.match(html,/appVersion:"V279"/);
+assert.match(html,/appVersion:"V280"/);
 
 const start=html.indexOf("function roundManualHoleNavigation");
 const end=html.indexOf("\nfunction roundGridStatus",start);

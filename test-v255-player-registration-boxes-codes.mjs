@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/V279-LOCAL-CARD-LIBRARY-20260823/);
+assert.match(html,/V280-LOCAL-HISTORY-INSIGHTS-20260823/);
 assert.match(html,/for\(let i=0;i<6;i\+\+\)/);
 assert.match(html,/data-draft-name=/);
 assert.match(html,/data-draft-hcp=/);

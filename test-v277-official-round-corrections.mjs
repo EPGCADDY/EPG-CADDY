@@ -5,18 +5,18 @@ import artifacts from "./card-artifacts.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V279-LOCAL-CARD-LIBRARY-20260823"/);
+assert.match(html,/gscg-build" content="V280-LOCAL-HISTORY-INSIGHTS-20260823"/);
 assert.match(html,/V277-ORIGINAL-REASON-VERSIONED-CORRECTION-20260823/);
 assert.match(html,/id="openOfficialCorrection">CORREGIR RONDA/);
 assert.match(html,/id="openOriginalGlobal">ABRIR ORIGINAL/);
 assert.match(html,/id="officialCorrectionOverlay"/);
 assert.match(html,/MOTIVO OBLIGATORIO/);
 assert.match(html,/RESPONSABLE OBLIGATORIO/);
-assert.match(html,/GSCRoundClosure\.correct\(round,\{changes,reason,authorizedBy,appVersion:"V279"\}\)/);
+assert.match(html,/GSCRoundClosure\.correct\(round,\{changes,reason,authorizedBy,appVersion:"V280"\}\)/);
 assert.match(html,/CORRECCIÓN V\$\{round\.officialVersion\} GUARDADA · ORIGINAL PRESERVADO/);
 assert.match(html,/isStablefordRound\(\)\?\{\.\.\.correctedScore,points:GSCStableford\.pointsFor/);
-assert.match(html,/appVersion:"V279"/);
-assert.equal(masterSync.APP_VERSION,"V279");
+assert.match(html,/appVersion:"V280"/);
+assert.equal(masterSync.APP_VERSION,"V280");
 
 const holes=Object.fromEntries(Array.from({length:18},(_,index)=>{const hole=index+1,par=hole%3===0?3:hole%3===1?4:5;return[hole,{hole,par,gross:par,status:null,points:2,strokes:0,net:par,diff:0}]}));
 const snapshot={roundId:"round-v277",status:"officially_closed",mode:"stableford",sha256:"a".repeat(64),version:1,course:"El Pulté",playedAt:"2026-08-23T12:00:00Z",stablefordCategory:"senior",players:[{id:"p1",name:"JAIME",handicap:0,tee:"Blanco",holes}]};
@@ -24,7 +24,7 @@ const closed={id:"round-v277",configured:true,officiallyClosedAt:"2026-08-23T16:
 
 const missingReason=await globalThis.GSCRoundClosure.correct(closed,{changes:[{playerId:"p1",hole:1,gross:3}],authorizedBy:"JAIME"});
 assert.equal(missingReason.code,"REASON_REQUIRED");
-const corrected=await globalThis.GSCRoundClosure.correct(closed,{changes:[{playerId:"p1",hole:1,gross:3}],reason:"SCORE VERIFICADO",authorizedBy:"JAIME",correctedAt:"2026-08-23T17:00:00Z",appVersion:"V279"});
+const corrected=await globalThis.GSCRoundClosure.correct(closed,{changes:[{playerId:"p1",hole:1,gross:3}],reason:"SCORE VERIFICADO",authorizedBy:"JAIME",correctedAt:"2026-08-23T17:00:00Z",appVersion:"V280"});
 assert.equal(corrected.ok,true);
 assert.equal(corrected.snapshot.status,"corrected");
 assert.equal(corrected.snapshot.version,2);

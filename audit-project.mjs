@@ -4,6 +4,7 @@ const checks=['test-player-registry.js','database/test-schema.mjs','database/tes
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v277-official-round-corrections.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v278-card-image-pdf-export.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v279-local-card-library.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v280-local-history-insights.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

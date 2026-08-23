@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/V279-LOCAL-CARD-LIBRARY-20260823/);
+assert.match(html,/V280-LOCAL-HISTORY-INSIGHTS-20260823/);
 assert.match(html,/<div class="voice-prompt"><strong id="playerVoicePrompt">REGISTRO DE JUGADORES<\/strong><\/div>/);
 assert.doesNotMatch(html,/player-registration-guide/);
 assert.doesNotMatch(html,/1- NOMBRE \/ HDCP - MARCAS - TEES/);

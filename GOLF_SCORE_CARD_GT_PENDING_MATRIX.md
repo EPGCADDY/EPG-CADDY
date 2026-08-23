@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V279
+**Corte vigente:** V280
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -34,6 +34,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - ✅ Existen regreso a datos, ronda previa, regreso a ronda actual, nueva ronda y borrar scores.
 - ✅ Existen Tarjeta Global y tarjetas personales con exportación PNG, PDF individual, PDF conjunto y hoja nativa para guardar o compartir.
 - ✅ La biblioteca privada local permite buscar tarjetas oficiales por ronda, fecha, campo, torneo, modalidad y jugador sin reemplazar la ronda actual.
+- ✅ La biblioteca incluye consultas estadísticas escritas de Gross, Neto, consistencia, tendencia, comparación y puntos Stableford sobre el historial local.
 - ✅ Stableford calcula Gross y puntos por jugador para `OUT`, `IN` y `TOTAL`.
 - ✅ Stableford conserva localmente el torneo de cuatro fechas y clasificación por mejores tres resultados.
 - ✅ Una ronda cerrada puede corregirse mediante versión oficial nueva, conservando original, motivo, responsable, fecha, SHA-256 y recálculo General/Stableford.
@@ -128,13 +129,13 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 9. Consulta histórica completa
 
-**Estado:** POSTERIOR
+**Estado:** EN PROGRESO · CONSULTA LOCAL SOLVENTADA V280
 
-- Crear una pantalla escrita para buscar rondas por jugador, fecha, campo, torneo y modalidad.
-- Conectar las consultas de voz al mismo historial central.
-- Comparar periodos, vueltas, campos, torneos y jugadores autorizados.
-- Mostrar promedios, mejores, peores, consistencia, tendencia y categorías de score.
-- Abrir desde cada resultado la ronda y sus tarjetas correspondientes.
+- ✅ Crear una pantalla escrita local para buscar rondas por jugador, fecha, campo, torneo y modalidad.
+- Conectar las consultas de voz al mismo historial central cuando se habilite la sincronización autenticada.
+- ✅ Comparar localmente periodos, vueltas, campos, torneos y jugadores.
+- ✅ Mostrar promedios, mejores, peores, consistencia, tendencia, categorías de score y puntos Stableford.
+- ✅ Abrir desde la biblioteca cada ronda oficial y sus tarjetas correspondientes.
 
 ### 10. Preparación comercial
 
