@@ -98,6 +98,15 @@ assert.match(html,/const text=`Falta \$\{playerVoiceAlias\(player\)\}`/);
 assert.match(html,/ALLOWED_SPEECH_REASONS=new Set\(\["closure","query","query_accumulated","missing_score"\]\)/);
 assert.doesNotMatch(html,/roundMissingPromptTimer[\s\S]{0,120}status:"x"/,"El recordatorio no puede fabricar X por tiempo");
 assert.match(sessionApi,/El cursor ya indica automáticamente el hoyo activo/);
-assert.match(sessionApi,/Después de Falta NOMBRE, una respuesta con solo score o solo omisión pertenece exclusivamente a ese jugador/);
+assert.match(sessionApi,/Tras Falta NOMBRE, Score u omisión solos son de ese jugador/);
+const promptStart=sessionApi.indexOf("const MAX_TRANSCRIPTION_PROMPT_LENGTH");
+const promptEnd=sessionApi.indexOf("\nexport default",promptStart);
+assert.ok(promptStart>=0&&promptEnd>promptStart,"No se encontró el límite del prompt de transcripción");
+const roundTranscriptionPrompt=new Function(`${sessionApi.slice(promptStart,promptEnd)};return roundTranscriptionPrompt`)();
+const maximumRoster="J".repeat(300),maximumPrompt=roundTranscriptionPrompt(maximumRoster);
+assert.ok(maximumPrompt.length<=1024,`El prompt excede el máximo Realtime: ${maximumPrompt.length}`);
+assert.match(maximumPrompt,/automáticamente el hoyo activo/);
+assert.match(maximumPrompt,/Tras Falta NOMBRE/);
+assert.match(maximumPrompt,/sin score/);
 
 console.log("PASS V270 · cursor automático General/Stableford, ENTER por bloque, X amplia y corrección retroactiva");
