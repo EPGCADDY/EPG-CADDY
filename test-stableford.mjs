@@ -19,9 +19,9 @@ assert.equal(s.bestThree([31,28,34,30]),95);
 
 assert.deepEqual(s.TOURNAMENT_COURSES.san_isidro.par,[4,3,5,3,4,4,5,4,4,4,5,4,3,4,5,3,4,4]);
 assert.deepEqual(s.TOURNAMENT_COURSES.san_isidro.tees.Blanco.yds,[358,139,530,155,375,436,553,259,410,409,455,383,200,385,535,149,370,369]);
-assert.deepEqual(s.TOURNAMENT_COURSES.san_isidro.tees.Amarillo.yds,[338,129,500,144,360,410,525,228,377,374,419,354,173,374,503,131,348,349]);
+assert.deepEqual(s.TOURNAMENT_COURSES.san_isidro.tees.Amarillo.yds,[335,132,500,134,369,429,543,230,377,371,419,354,165,364,522,128,360,356]);
 assert.equal(s.TOURNAMENT_COURSES.san_isidro.tees.Blanco.total,6470);
-assert.equal(s.TOURNAMENT_COURSES.san_isidro.tees.Amarillo.total,6036);
+assert.equal(s.TOURNAMENT_COURSES.san_isidro.tees.Amarillo.total,6088);
 assert.deepEqual(s.TOURNAMENT_COURSES.mayan_golf.par,[4,3,4,4,5,4,3,4,5,4,4,4,3,5,4,4,3,5]);
 assert.deepEqual(s.TOURNAMENT_COURSES.mayan_golf.tees.Blanco.yds,[390,132,348,397,583,418,179,357,515,388,405,392,157,566,384,394,160,530]);
 assert.deepEqual(s.TOURNAMENT_COURSES.mayan_golf.tees.Amarillo.yds,[377,120,324,380,573,407,168,345,506,334,395,385,151,562,370,387,154,519]);
@@ -52,7 +52,7 @@ assert.equal(global.COURSE_DATA.mayan_golf.tees.Amarillo.total,6457);
 global.TEES=global.COURSE_DATA.san_isidro.tees;
 assert.doesNotThrow(()=>global.renderCourseInfo());
 assert.match(courseInfo.innerHTML,/6,470/);
-assert.match(courseInfo.innerHTML,/6,036/);
+assert.match(courseInfo.innerHTML,/6,088/);
 
 delete global.COURSE_CATALOG;delete global.COURSE_DATA;delete global.TEES;delete global.renderCourseInfo;delete global.$;
 console.log("Stableford: reglas, seis jugadores, matrices, cuatro fechas y mejores tres verificados.");

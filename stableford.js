@@ -27,7 +27,7 @@
       si:Object.freeze([9,15,11,13,7,1,5,17,3,4,18,8,12,2,10,14,6,16]),
       tees:Object.freeze({
         Blanco:Object.freeze({label:"BLANCAS",color:"#fff",fill:"#f3f3f3",text:"#000",yds:Object.freeze([358,139,530,155,375,436,553,259,410,409,455,383,200,385,535,149,370,369]),front:3215,back:3255,total:6470,rating:71.3,slope:121}),
-        Amarillo:Object.freeze({label:"AMARILLAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:Object.freeze([338,129,500,144,360,410,525,228,377,374,419,354,173,374,503,131,348,349]),front:3011,back:3025,total:6036,rating:69.3,slope:121})
+        Amarillo:Object.freeze({label:"AMARILLAS",color:"#ffbf00",fill:"#ffbf00",text:"#000",yds:Object.freeze([335,132,500,134,369,429,543,230,377,371,419,354,165,364,522,128,360,356]),front:3049,back:3039,total:6088,rating:69.3,slope:121})
       })
     }),
     mayan_golf:Object.freeze({
@@ -129,7 +129,8 @@
       if(!COURSE_CATALOG[key])continue;
       COURSE_CATALOG[key].configured=true;
       COURSE_CATALOG[key].displayName=c.displayName;
-      COURSE_DATA[key]={par:[...c.par],tees:{Blanco:{...c.tees.Blanco,yds:[...c.tees.Blanco.yds]},Amarillo:{...c.tees.Amarillo,yds:[...c.tees.Amarillo.yds]}},siMen:[...c.si],siWomen:[...c.si],siByTee:{Blanco:[...c.si],Amarillo:[...c.si]}};
+      const existing=COURSE_DATA[key],complete=Array.isArray(existing?.par)&&existing.par.length===18&&existing?.tees?.Blanco&&existing?.tees?.Amarillo;
+      if(!complete)COURSE_DATA[key]={par:[...c.par],tees:{Blanco:{...c.tees.Blanco,yds:[...c.tees.Blanco.yds]},Amarillo:{...c.tees.Amarillo,yds:[...c.tees.Amarillo.yds]}},siMen:[...c.si],siWomen:[...c.si],siByTee:{Blanco:[...c.si],Amarillo:[...c.si]}};
     }
     if(typeof renderCourseInfo==="function"&&!renderCourseInfo.__stablefordSafe){
       const baseRenderCourseInfo=renderCourseInfo;

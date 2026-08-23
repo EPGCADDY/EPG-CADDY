@@ -8,10 +8,10 @@ const individual=fs.readFileSync(new URL("./index.html",import.meta.url),"utf8")
 const hosting=JSON.parse(fs.readFileSync(new URL("./vercel.json",import.meta.url),"utf8"));
 
 assert.match(html,/<title>Golf Score Card GT<\/title>/);
-assert.match(html,/gscg-build" content="V272-DEFINITIVE-OFFICIAL-CARD-20260823"/);
-assert.match(html,/appVersion:"V272"/);
+assert.match(html,/gscg-build" content="V273-SAN-ISIDRO-ALTA-VISTA-OFFICIAL-20260823"/);
+assert.match(html,/appVersion:"V273"/);
 assert.match(html,/V272-QUIET-MISSING-PROMPT-CLOSED-REPORTS-OUT-IN-20260823/);
-assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=272"/);
+assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=273"/);
 assert.doesNotMatch(html,/epg-caddy-git-stableford-tournament-final/);
 assert.match(stableford,/GOLF SCORE CARD GT · STABLEFORD/);
 for(const source of ["/","/index.html","/stableford-torneo.html"]){
@@ -58,4 +58,4 @@ assert.match(html,/segmentSpeech\("Primera vuelta\.",FRONT\)/,"OUT visual no deb
 assert.match(html,/segmentSpeech\("Segunda vuelta\.",BACK\)/,"IN visual no debe alterar el vocabulario hablado aprobado");
 assert.match(html,/Candado de silencio: una frase sin intención reconocida no genera voz/);
 
-console.log("PASS V272 · recepción continua sin avisos superpuestos, cierre con micrófono apagado, OUT/IN/TOTAL y marca definitiva");
+console.log("PASS V273 · recepción continua sin avisos superpuestos, cierre con micrófono apagado, OUT/IN/TOTAL y campos oficiales nuevos");
