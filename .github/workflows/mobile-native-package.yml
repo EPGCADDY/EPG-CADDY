@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - v284-native-packages-ready
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
