@@ -109,6 +109,15 @@ Este archivo permanece como entrada directa y amigable al directorio detallado d
 | `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra este refuerzo técnico línea por línea. |
 | `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra este refuerzo en el resumen general. |
 
+## Registro obligatorio del ajuste de salida V296
+
+| Archivo modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `vercel.json` | `c6dbbe007a72b62ed141e39aac6128f2dce3eb8b` | Mantiene el candado y señala a Vercel la carpeta final que debe publicar. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Actualiza el código y la explicación del ajuste. |
+| `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra el ajuste dentro del directorio detallado. |
+| `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra el ajuste dentro del resumen general. |
+
 ## Punto de corte y norma permanente estricta
 
 - **Punto de activación original: línea 183.**

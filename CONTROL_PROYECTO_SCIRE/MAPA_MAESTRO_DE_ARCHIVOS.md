@@ -41,8 +41,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
 | `MAPA_MATRIZ_STABLEFORD_V252.md` | `8911a7ef86398e0c3f18e647433387a02645082c` | 3828 bytes | Explica las piezas de Stableford incorporadas en V252. |
 | `README.md` | `e93c3adc84c81fdda07303f5d0f75fbb35140ea2` | 2170 bytes | Portada de GitHub que presenta el producto como Golf Score Card GT. |
-| `ROADMAP_A_DETALLE.md` | `48aec03421f88acc39f93ac169cf294c53588446` | 8297 bytes | Abre el directorio, sus 185 líneas y el registro del candado técnico, incluido Vercel. |
-| `ROADMAP_OVERALL.md` | `b4224d198c734d368b10387a7d1d88dc8b36e7bd` | 7513 bytes | Resumen general, punto de corte y registro obligatorio de cada modificación, incluido Vercel. |
+| `ROADMAP_A_DETALLE.md` | `c3dcfcffb8c64cef23890a49d6e2fca724d0801b` | 8944 bytes | Abre el directorio, sus 185 líneas y el registro del candado técnico, incluido Vercel. |
+| `ROADMAP_OVERALL.md` | `08221027494d52438fc0163f8c3904e4e6a7d04d` | 7992 bytes | Resumen general, punto de corte y registro obligatorio de cada modificación, incluido Vercel. |
 | `ROADMAP_OVERALL_V291.png` | `2e7aaaaf4b7b337caa8750b17754d9173f8930fe` | 685254 bytes | Imagen vertical y sencilla del estado general para verla desde el teléfono. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_01.png` | `2377b6bba6c886a2fddac44b2d01fbc7ebf3f0ca` | 410461 bytes | Página 1 de 9 del directorio visual detallado. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_02.png` | `ba0d741c811283d33e53431b9a90cf3055a97bed` | 487065 bytes | Página 2 de 9 del directorio visual detallado. |
@@ -193,7 +193,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v289-stableford-new-round-empty.mjs` | `bcb1295e20116ea9cde8b86ad96b5f8c366e626e` | 2005 bytes | Comprueba que Nueva ronda deje vacíos los nombres. |
 | `test-v290-brand-icons-cleanup.mjs` | `7e5afbd53573531f0133fbf85319b8c6146198f7` | 1648 bytes | Comprueba nombre, iconos oficiales y preparación comercial. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
-| `vercel.json` | `7915a87799ed0549f7ef1f4f40a46ad719a922eb` | 1612 bytes | Indica a Vercel qué pantalla abrir y obliga a ejecutar el candado antes de publicar. |
+| `vercel.json` | `c6dbbe007a72b62ed141e39aac6128f2dce3eb8b` | 1638 bytes | Indica qué publicar, ejecuta el candado y conserva la salida web correcta. |
 | `verify-manual-sync.mjs` | `8042010c6b0cd81915a57a8ac65d1f778bea7cc7` | 730 bytes | Comprueba el respaldo y el envío de cambios. |
 
 ## Archivos retirados del uso diario

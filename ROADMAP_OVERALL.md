@@ -121,6 +121,15 @@ Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sólo perm
 | `ROADMAP_A_DETALLE.md` | Guarda el refuerzo dentro del directorio detallado. |
 | `ROADMAP_OVERALL.md` | Guarda el refuerzo dentro de este resumen general. |
 
+## Ajuste de publicación V296 · Salida Vercel
+
+| Archivo o modificación | Qué quedó registrado |
+|---|---|
+| `vercel.json` | Conserva el candado y señala correctamente la carpeta que Vercel debe publicar. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el código y la explicación del ajuste. |
+| `ROADMAP_A_DETALLE.md` | Guarda el ajuste dentro del directorio detallado. |
+| `ROADMAP_OVERALL.md` | Guarda el ajuste dentro de este resumen general. |
+
 ## Regla permanente
 
 1. Todo nombre visible será **Golf Score Card GT**.

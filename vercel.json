@@ -1,6 +1,7 @@
 {
   "installCommand": "npm install --omit=dev",
   "buildCommand": "node scripts/roadmap-gate.mjs",
+  "outputDirectory": ".",
   "redirects": [
     {
       "source": "/",
