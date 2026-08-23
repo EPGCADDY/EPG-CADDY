@@ -52,5 +52,6 @@ officialCourse("alta_vista",{
 assert.match(html,/plateadas:"Plateado"/i,"El registro por voz debe aceptar marcas plateadas");
 assert.match(html,/preferred=\["Negro","Azul","Blanco","Rojo","Amarillo","Plateado"\]/,"La información del campo debe aceptar matrices de marcas variables");
 assert.match(html,/activateCourse\(draftCourse\);[\s\S]{0,180}draftPlayers=/,"La selección del campo debe activar sus propias marcas antes de normalizar jugadores");
+assert.match(html,/courseOptions"\)\.addEventListener\("change"[\s\S]{0,500}activateCourse\(draftCourse\)[\s\S]{0,500}renderDraft\(\)/,"Cambiar de campo debe reconstruir inmediatamente las marcas visibles del registro");
 
 console.log("PASS V273 · San Isidro y Alta Vista cargados desde tarjetas oficiales");
