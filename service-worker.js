@@ -1,0 +1,47 @@
+"use strict";
+
+const CACHE_NAME="gscg-mobile-v281";
+const OFFLINE_ENTRY="/index-grupal.html";
+const SHELL=[
+  OFFLINE_ENTRY,
+  "/manifest.webmanifest",
+  "/7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg",
+  "/player-registry.js",
+  "/round-closure.js",
+  "/card-artifacts.js",
+  "/card-file-export.js",
+  "/card-library.js",
+  "/historical-analytics.js",
+  "/sync-queue.js",
+  "/master-data-sync.js",
+  "/stableford.js",
+  "/round-navigation.js"
+];
+
+async function refreshShell(){
+  const cache=await caches.open(CACHE_NAME);
+  await Promise.all(SHELL.map(async url=>{try{const response=await fetch(url,{cache:"reload"});if(response.ok)await cache.put(url,response)}catch{}}));
+}
+
+self.addEventListener("install",event=>event.waitUntil(refreshShell().then(()=>self.skipWaiting())));
+self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith("gscg-mobile-")&&key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
+self.addEventListener("message",event=>{if(event.data?.type==="SKIP_WAITING")self.skipWaiting()});
+
+async function networkFirst(request){
+  const cache=await caches.open(CACHE_NAME);
+  try{
+    const response=await fetch(request);
+    if(response.ok&&response.type==="basic")await cache.put(request,response.clone());
+    return response;
+  }catch{
+    return await cache.match(request)||await cache.match(OFFLINE_ENTRY)||Response.error();
+  }
+}
+
+self.addEventListener("fetch",event=>{
+  const request=event.request;
+  if(request.method!=="GET")return;
+  const url=new URL(request.url);
+  if(url.origin!==self.location.origin||url.pathname.startsWith("/api/"))return;
+  if(request.mode==="navigate"||SHELL.includes(url.pathname))event.respondWith(networkFirst(request));
+});

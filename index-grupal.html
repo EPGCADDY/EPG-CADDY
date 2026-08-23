@@ -4,8 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#000000">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Golf Score Card GT">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V280-LOCAL-HISTORY-INSIGHTS-20260823">
+<meta name="gscg-build" content="V281-PWA-OFFICIAL-INSTALL-20260823">
+<meta name="gscg-pwa" content="V281-INSTALLABLE-IOS-ANDROID-OFFLINE-20260823">
 <meta name="gscg-hotfix" content="V264-PREVIOUS-ROUND-RESPONSIVE-NAMES-20260823">
 <meta name="gscg-voice-hotfix" content="V266-STABLEFORD-SEGMENT-GROSS-POINTS-20260823">
 <meta name="gscg-operational-hotfix" content="V267-ONE-OPERATIONAL-LINE-20260823">
@@ -503,6 +510,10 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
  .history-insights-panel{padding:12px}.history-insights-query{grid-template-columns:1fr}.history-insights-quick{grid-template-columns:1fr 1fr}.history-insights-result{font-size:13px}
 }
 </style>
+<style id="gscg-pwa-install-v281">
+.pwa-install-button{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));z-index:3500;min-height:38px;padding:0 13px;border:1px solid var(--lime);border-radius:7px;background:#050505;color:var(--lime);font-size:10px;font-weight:900;letter-spacing:.35px;box-shadow:0 0 16px rgba(49,255,0,.25)}
+.pwa-install-button.hidden{display:none!important}.pwa-install-overlay{position:fixed;inset:0;z-index:3600;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.96)}.pwa-install-overlay.visible{display:flex}.pwa-install-card{width:min(520px,100%);border:1px solid var(--lime);border-radius:10px;background:#050505;padding:20px;color:#fff;box-shadow:0 0 28px rgba(49,255,0,.16)}.pwa-install-card h1{margin:0 0 12px;color:var(--lime);font-size:21px}.pwa-install-card p{margin:0 0 12px;color:#ddd;font-size:13px;line-height:1.5}.pwa-install-card ol{margin:0 0 16px;padding-left:22px;color:#fff;font-size:13px;line-height:1.65}.pwa-install-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.pwa-install-actions button{min-height:44px;border-radius:7px;font-weight:900}.pwa-install-primary{border:0;background:var(--lime);color:#000}.pwa-install-secondary{border:1px solid #555;background:#090909;color:#fff}@media(display-mode:standalone){.pwa-install-button{display:none!important}}
+</style>
 </head>
 <body>
 <main class="app">
@@ -614,6 +625,8 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
   </section>
 </div>
 <div class="overlay" id="stablefordResultOverlay" aria-hidden="true"><section class="new-round-card stableford-result-card"><h1>RESULTADO OFICIAL STABLEFORD</h1><div class="stableford-result-fields"><label class="wide">JUGADOR<input type="text" id="stablefordResultName" maxlength="40"></label><label>CATEGORÍA<select id="stablefordResultCategory"><option value="senior">SENIOR</option><option value="super_senior">S. SENIOR</option></select></label><label>FECHA<select id="stablefordResultRound"><option value="1">FECHA 1</option><option value="2">FECHA 2</option><option value="3">FECHA 3</option><option value="4">FECHA 4</option></select></label><label>CAMPO<select id="stablefordResultCourse"><option value="country_club">COUNTRY CLUB</option><option value="pulte">EL PULTÉ</option><option value="san_isidro">SAN ISIDRO</option><option value="mayan_golf">MAYAN GOLF</option></select></label><label>PUNTOS<input type="number" id="stablefordResultPoints" min="0" max="72" inputmode="numeric"></label><label>GROSS OPCIONAL<input type="number" id="stablefordResultGross" min="0" max="300" inputmode="numeric"></label></div><div class="setup-status" id="stablefordResultStatus"></div><button class="nr-button" type="button" id="saveStablefordResult">GUARDAR RESULTADO</button><button class="nr-button secondary" type="button" id="cancelStablefordResult">CANCELAR</button></section></div>
+<button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
+<div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button><button class="pwa-install-secondary" type="button" id="closeInstallApp">CERRAR</button></div></section></div>
 <div class="mandatory-update" id="mandatoryUpdate" role="dialog" aria-modal="true" aria-labelledby="mandatoryUpdateTitle"><div class="mandatory-update-card"><h1 id="mandatoryUpdateTitle">ACTUALIZACIÓN OBLIGATORIA</h1><p>HAY UNA NUEVA VERSIÓN DE GOLF SCORE CARD GUATEMALA. PARA PROTEGER LOS CÁLCULOS, LOS DATOS Y LAS FUNCIONES, DEBES ACTUALIZAR ANTES DE CONTINUAR.</p><button type="button" id="mandatoryUpdateButton">ACTUALIZAR</button></div></div>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./stableford.js"></script><script src="./round-navigation.js"></script>
 <script>
@@ -3235,6 +3248,35 @@ if(!round.configured){
   if(sfEmergency)window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
   else openSetup("new");
 }
+let deferredInstallPrompt=null;
+const standaloneApp=()=>window.matchMedia?.("(display-mode: standalone)")?.matches||window.navigator.standalone===true;
+const iosDevice=()=>/iphone|ipad|ipod/i.test(navigator.userAgent);
+function setInstallGuide(){
+  const steps=$("installAppSteps"),confirm=$("confirmInstallApp");if(!steps||!confirm)return;
+  if(iosDevice()){
+    steps.innerHTML="<li>Toca el botón Compartir de Safari.</li><li>Selecciona Agregar a pantalla de inicio.</li><li>Confirma Agregar.</li>";
+    confirm.textContent="ENTENDIDO";
+  }else if(deferredInstallPrompt){
+    steps.innerHTML="<li>Toca INSTALAR.</li><li>Confirma la instalación cuando el teléfono la solicite.</li>";
+    confirm.textContent="INSTALAR";
+  }else{
+    steps.innerHTML="<li>Abre el menú del navegador.</li><li>Selecciona Instalar aplicación o Agregar a pantalla de inicio.</li>";
+    confirm.textContent="ENTENDIDO";
+  }
+}
+function showInstallControl(){const button=$("installAppButton");if(button)button.classList.toggle("hidden",standaloneApp())}
+function openInstallGuide(){setInstallGuide();$("installAppOverlay")?.classList.add("visible");$("installAppOverlay")?.setAttribute("aria-hidden","false")}
+function closeInstallGuide(){$("installAppOverlay")?.classList.remove("visible");$("installAppOverlay")?.setAttribute("aria-hidden","true")}
+window.addEventListener("beforeinstallprompt",event=>{event.preventDefault();deferredInstallPrompt=event;showInstallControl()});
+window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;closeInstallGuide();showInstallControl()});
+$("installAppButton")?.addEventListener("click",openInstallGuide);
+$("closeInstallApp")?.addEventListener("click",closeInstallGuide);
+$("confirmInstallApp")?.addEventListener("click",async()=>{
+  if(!deferredInstallPrompt){closeInstallGuide();return}
+  const prompt=deferredInstallPrompt;deferredInstallPrompt=null;await prompt.prompt();await prompt.userChoice.catch(()=>null);closeInstallGuide();showInstallControl();
+});
+showInstallControl();
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
 const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-build"]')?.content||"";
 let appBuildCheckRunning=false,appBuildReloading=false,pendingPublishedBuild="";

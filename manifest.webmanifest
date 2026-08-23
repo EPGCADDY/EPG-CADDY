@@ -1,0 +1,24 @@
+{
+  "id": "/index-grupal.html",
+  "name": "Golf Score Card GT",
+  "short_name": "Golf Score GT",
+  "description": "Tarjeta oficial de golf General y Stableford para Guatemala.",
+  "lang": "es-GT",
+  "dir": "ltr",
+  "start_url": "/index-grupal.html?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "categories": ["sports", "utilities"],
+  "icons": [
+    {
+      "src": "/7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg",
+      "sizes": "1254x1254",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
