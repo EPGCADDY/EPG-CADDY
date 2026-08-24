@@ -153,6 +153,20 @@ Autorización recibida el **24 de agosto de 2026** para instalar como icono ofic
 | `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de esta modificación. |
 | `ROADMAP_OVERALL.md` | Registro general obligatorio de esta modificación. |
 
+## Actualización operativa V298 · Instrucciones de registro para newbies
+
+Autorización recibida el **24 de agosto de 2026** para sustituir únicamente los textos situados arriba del micrófono por una guía más grande, alineada a la izquierda y ordenada: **DICTA O ESCRIBE, 1-NOMBRE, 2-HDCP, 3-MARCAS, DE CADA JUGADOR, 4-OK**. El micrófono y el registro conservan exactamente su funcionamiento.
+
+| Archivo o modificación | Qué queda registrado |
+|---|---|
+| `index-grupal.html` | Muestra la guía para usuarios nuevos en el orden autorizado, a la izquierda y con letra mayor. |
+| `mobile-release.json` | Número de paquete preparado actualizado a V298. |
+| `service-worker.js` | Caché V298 para entregar inmediatamente las instrucciones nuevas. |
+| `test-v290-brand-icons-cleanup.mjs` | Comprueba el texto, orden, alineación, tamaño, paquete y caché V298. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza códigos, tamaños y explicaciones sencillas. |
+| `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de V298. |
+| `ROADMAP_OVERALL.md` | Registro general obligatorio de V298. |
+
 ## Regla permanente
 
 1. Todo nombre visible será **Golf Score Card GT**.

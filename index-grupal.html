@@ -496,6 +496,10 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
 .registration-method-title{color:var(--lime);font:900 16px Arial,sans-serif;letter-spacing:.4px}
 .registration-method-action{margin-top:5px;color:#fff;font:900 13px Arial,sans-serif}
 .registration-method-fields{margin-top:3px;color:#cfd2d4;font:800 12px Arial,sans-serif;letter-spacing:.2px}
+.newbie-registration-guide{text-align:left;margin:0 0 10px;color:#fff}
+.newbie-registration-guide,.newbie-registration-guide *{font-size:17px!important;font-weight:900!important;line-height:1.45!important}
+.newbie-registration-guide .newbie-guide-title{color:var(--lime)!important;margin-bottom:5px}
+.newbie-registration-guide .newbie-guide-player{color:#cfd2d4!important;margin:5px 0}
 .registration-method .nr-mic{width:120px;height:120px;margin:14px auto 4px}
 .registration-method .nr-mic .mic-hit{inset:-26px}
 .registration-method .nr-mic .mic-visual{border-width:3px}
@@ -507,7 +511,7 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
 #cardLibraryOverlay{z-index:140}.card-library-panel{width:min(920px,100%);margin:18px auto;border:1px solid #555;background:#000;padding:18px}.card-library-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.card-library-head h1{margin:0;color:var(--lime);font-size:24px}.card-library-head button,.card-library-actions button{min-height:42px;border:1px solid var(--lime);border-radius:5px;background:#050505;color:#fff;font:900 12px Arial,sans-serif;padding:0 14px}.card-library-filters{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:8px;margin:15px 0}.card-library-filters select,.card-library-filters input,.card-library-actions select{width:100%;height:44px;border:1px solid #555;border-radius:5px;background:#050505;color:#fff;padding:0 10px;font:800 12px Arial,sans-serif;text-transform:uppercase}.card-library-list{display:grid;gap:8px;max-height:42vh;overflow:auto}.card-library-round{width:100%;display:grid;grid-template-columns:130px 1fr auto;gap:12px;align-items:center;min-height:68px;border:1px solid #4b4f50;border-radius:6px;background:#030303;color:#fff;padding:10px 12px;text-align:left}.card-library-round.active{border-color:var(--lime);box-shadow:0 0 10px rgba(49,255,0,.22)}.card-library-round-date{color:var(--lime);font-weight:900}.card-library-round-main{font-weight:900}.card-library-round-main small{display:block;margin-top:5px;color:#aaa}.card-library-round-mode{font-weight:900}.card-library-status{min-height:24px;padding:8px 0;color:var(--lime);font-weight:900;text-align:center}.card-library-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;padding-top:12px;border-top:1px solid #444}.card-library-selected{grid-column:1/4;color:#fff;font-weight:900;text-align:center}.card-library-actions select{grid-column:1/4}.card-library-empty{padding:26px;border:1px solid #333;color:#999;text-align:center;font-weight:900}
 #historyInsightsOverlay{z-index:150}.history-insights-panel{width:min(760px,100%);margin:18px auto;border:1px solid #555;background:#000;padding:18px}.history-insights-panel h1{margin:0;color:var(--lime);font-size:23px}.history-insights-query{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:16px}.history-insights-query input{height:48px;border:1px solid #555;border-radius:5px;background:#050505;color:#fff;padding:0 12px;font:800 13px Arial,sans-serif;text-transform:uppercase}.history-insights-query button,.history-insights-quick button,.history-insights-close{min-height:44px;border:1px solid var(--lime);border-radius:5px;background:#050505;color:#fff;font:900 11px Arial,sans-serif;padding:0 13px}.history-insights-quick{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}.history-insights-result{min-height:110px;border:1px solid #444;border-radius:6px;padding:16px;color:#fff;font:900 16px/1.5 Arial,sans-serif}.history-insights-note{margin:10px 0;color:#999;font-size:10px;text-align:center}.history-insights-close{width:100%}
 @media(max-width:800px){
- .registration-method{margin-top:8px;padding:8px}.registration-method-title{font-size:12px}.registration-method-action{font-size:10px}.registration-method-fields{font-size:9px}.registration-method .nr-mic{width:112px;height:112px;margin:10px auto 3px}.registration-method .nr-mic .mic-hit{inset:-26px}
+ .registration-method{margin-top:8px;padding:8px}.registration-method-title{font-size:12px}.registration-method-action{font-size:10px}.registration-method-fields{font-size:9px}.newbie-registration-guide,.newbie-registration-guide *{font-size:13px!important}.newbie-registration-guide .newbie-guide-title{font-size:14px!important}.registration-method .nr-mic{width:112px;height:112px;margin:10px auto 3px}.registration-method .nr-mic .mic-hit{inset:-26px}
  .new-round-card .detected-row.head{grid-template-columns:minmax(0,1.35fr) 42px minmax(0,.8fr)!important;column-gap:3px!important;margin-left:23px!important;width:calc(100% - 23px)!important}
  .new-round-card .draft-edit-row{grid-template-columns:20px minmax(0,1.35fr) 42px minmax(0,.8fr)!important;gap:3px!important;padding:6px 2px!important}
  .new-round-card .confirm-row,.new-round-card .confirm-row.head{grid-template-columns:minmax(0,1.35fr) 42px minmax(0,.8fr)!important;column-gap:3px!important}
@@ -572,9 +576,14 @@ body.stableford-mode .account-backup-button{position:static;display:block;width:
     <div class="tournament-box"><label class="tournament-toggle"><input type="checkbox" id="tournamentToggle"> NOMBRE TORNEO</label><div class="tournament-fields hidden" id="tournamentFields"><input id="tournamentName" type="text" maxlength="80" placeholder="NOMBRE DEL TORNEO" aria-label="Nombre del torneo"></div></div>
     <div class="voice-prompt"><strong id="playerVoicePrompt">REGISTRO DE JUGADORES</strong></div>
     <section class="registration-method" aria-label="Método 1 Dictado">
-      <div class="registration-method-title">1 · DICTADO</div>
-      <div class="registration-method-action">CLICK MICRÓFONO</div>
-      <div class="registration-method-fields">NOMBRE + HDCP + MARCAS</div>
+      <div class="newbie-registration-guide" aria-label="Instrucciones de registro para cada jugador">
+        <div class="newbie-guide-title">DICTA O ESCRIBE:</div>
+        <div>1-NOMBRE</div>
+        <div>2-HDCP</div>
+        <div>3-MARCAS</div>
+        <div class="newbie-guide-player">DE CADA JUGADOR</div>
+        <div>4-OK</div>
+      </div>
       <div class="nr-mic" id="setupMicWrap"><button class="mic-hit" id="setupMic" aria-label="Dictar nombre, HDCP y marcas"></button><div class="mic-visual" aria-hidden="true"><svg class="setup-mic-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></div></div>
     </section>
     </div>

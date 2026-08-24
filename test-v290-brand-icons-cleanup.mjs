@@ -16,9 +16,12 @@ assert.match(html,/\.registration-method \.nr-mic\{width:120px;height:120px;/);
 assert.match(html,/\.registration-method \.nr-mic\{width:112px;height:112px;/);
 assert.match(html,/class="setup-mic-icon"/);
 assert.doesNotMatch(html,/id="setupMicWrap"[^\n]*<div class="mic-visual">🎙<\/div>/);
+assert.match(html,/class="newbie-guide-title">DICTA O ESCRIBE:<\/div>\s*<div>1-NOMBRE<\/div>\s*<div>2-HDCP<\/div>\s*<div>3-MARCAS<\/div>\s*<div class="newbie-guide-player">DE CADA JUGADOR<\/div>\s*<div>4-OK<\/div>/);
+assert.match(html,/\.newbie-registration-guide\{text-align:left;/);
+assert.match(html,/\.newbie-registration-guide,\.newbie-registration-guide \*\{font-size:13px!important\}/);
 assert.equal(packageJson.engines.node,"22.x");
 assert.equal(apiPackage.type,"module");
-assert.equal(release.buildNumber,297);
+assert.equal(release.buildNumber,298);
 assert.equal(vercel.installCommand,"npm install --omit=dev");
 assert.equal(manifest.name,"Golf Score Card GT");
 for(const size of ["192x192","512x512"])assert.ok(manifest.icons.some(icon=>icon.sizes===size&&icon.type==="image/png"&&icon.purpose==="any"));
@@ -29,7 +32,7 @@ for(const icon of [
   "assets/official-logos/golf-score-card-gt-pwa-192.png",
   "assets/official-logos/golf-score-card-gt-apple-touch-180.png"
 ])assert.ok(fs.existsSync(icon),icon);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v297"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v298"/);
 assert.match(read("assets/official-logos/README.md"),/Logos oficiales · Golf Score Card GT/);
 
-console.log("PASS V297 · icono neón oficial, micrófono compacto y paquete comercial");
+console.log("PASS V298 · instrucciones claras para newbies y registro comercial");
