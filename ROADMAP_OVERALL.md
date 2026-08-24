@@ -187,7 +187,7 @@ El **24 de agosto de 2026** se crea el compendio final de funciones reales para 
 
 | Archivo o modificación | Qué queda registrado |
 |---|---|
-| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Manual amigable que explica desde la selección del campo hasta la tarjeta final, biblioteca, correcciones, respaldo e instalación. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Manual amigable que explica desde la selección del campo hasta la tarjeta final, historial, correcciones, respaldo e instalación. |
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Agrega el compendio al inventario y actualiza las explicaciones de ambos ROADMAPS. |
 | `ROADMAP_A_DETALLE.md` | Registra a detalle la creación documental V300. |
 | `ROADMAP_OVERALL.md` | Registra esta creación dentro del resumen general. |
@@ -242,7 +242,7 @@ El **24 de agosto de 2026** se corrige la diferencia que obligaba al usuario a r
 
 | Archivo nuevo o modificación | Qué queda registrado |
 |---|---|
-| `index-grupal.html` | Instala el sistema visual compartido para OK, Ronda previa, Biblioteca, Atrás y Cancelar en ambas tarjetas. |
+| `index-grupal.html` | Instala el sistema visual compartido para OK, Ronda previa, Historial, Atrás y Cancelar en ambas tarjetas. |
 | `mobile-release.json` | Número de paquete preparado actualizado a V304. |
 | `service-worker.js` | Caché V304 para entregar inmediatamente la homologación. |
 | `test-v290-brand-icons-cleanup.mjs` | Mantiene la validación acumulada alineada con V304. |
@@ -253,6 +253,51 @@ El **24 de agosto de 2026** se corrige la diferencia que obligaba al usuario a r
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el inventario completo e incorpora la nueva prueba. |
 | `ROADMAP_A_DETALLE.md` | Registra V304 a detalle. |
 | `ROADMAP_OVERALL.md` | Registra V304 en este resumen general. |
+
+## Actualización operativa V305 · Historial, navegación y cero superposiciones
+
+El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base V304. Todo acceso visible al archivo de tarjetas usa **HISTORIAL**; cada pantalla con retorno ofrece **ATRÁS** conectado y situado arriba del contenido; el acceso opcional de cuenta pasa a **REGÍSTRATE** dentro del flujo y deja de cubrir controles. En Stableford se elimina el aviso huérfano bajo los jugadores, se conserva su validación interna y la guía visible se corrige para pedir únicamente número de jugador y nombre. Los OK General y Stableford comparten geometría, tipografía, color y estados equivalentes: delineados mientras el registro está incompleto y sólidos cuando ya puede confirmarse. Cálculos y reglas no solicitadas permanecen congelados.
+
+| Archivo nuevo o modificado | Qué queda registrado |
+|---|---|
+| `.github/workflows/roadmap-gate.yml` | Ejecuta también el filtro obligatorio V305 en GitHub. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Usa HISTORIAL y REGÍSTRATE y explica los formatos reales de dictado General y Stableford. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Sincroniza el manual vivo con App V305, el estado de los OK y las guías operativas reales. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Homologa el vocabulario del historial en la matriz funcional. |
+| `ROADMAP_A_DETALLE.md` | Registra individualmente la intervención V305. |
+| `ROADMAP_OVERALL.md` | Incorpora este resumen general V305. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Eleva el inventario activo e incorpora todos los archivos V305. |
+| `audit-project.mjs` | Añade la prueba V305 a la auditoría maestra. |
+| `index-grupal.html` | Homologa HISTORIAL, ATRÁS, REGÍSTRATE y los estados del OK General; evita superposiciones y conserva las validaciones. |
+| `mobile-release.json` | Prepara el paquete móvil 305. |
+| `service-worker.js` | Activa la caché `gscg-mobile-v305`. |
+| `stableford.js` | Muestra únicamente `1-# JUGADOR`, `2-NOMBRE`, `HASTA 6 JUGADORES` y `3-OK`; el motor exige la posición y asigna HCP y marcas por categoría. |
+| `test-course-catalog.mjs` | Conserva la eliminación de las falsas casillas históricas y reconoce la guía vigente del límite real de seis jugadores. |
+| `test-stableford-ui.mjs` | Alinea la prueba de UI con el build vigente V305. |
+| `test-stableford-clean-roster-history.mjs` | Alinea la prueba limpia con la regla V289 de persistir la nueva ronda vacía. |
+| `test-v255-player-registration-boxes-codes.mjs` | Alinea la prueba histórica con la guía visual vigente: Dicta o escribe, Nombre, HDCP, Marcas y OK. |
+| `test-v260-round-points-player-return.mjs` | Alinea la recuperación con la regla V289 de persistir Stableford vacío para impedir que reaparezcan nombres anteriores. |
+| `test-v261-registration-stableford-modality.mjs` | Alinea la prueba histórica con Ronda Normal, Stableford, Score Card - Práctica y la guía homologada vigente. |
+| `test-v262-provisional-optional-profile.mjs` | Conserva los perfiles opcionales y reconoce el nombre comercial vigente `SCORE CARD - PRÁCTICA` sin recuperar `RONDA SIN REGISTRO`. |
+| `test-v253-live-previous-round.mjs` | Alinea la ruta Stableford oficial con `v=305`. |
+| `test-v252-stableford-persistence-category-course.mjs` | Alinea la persistencia con la regla V289 de guardar vacía la nueva ronda Stableford. |
+| `test-v272-definitive-operational-release.mjs` | Alinea build, snapshot y ruta oficial con V305. |
+| `test-v274-complete-courses-voice-operations.mjs` | Alinea la identificación de versión sin cambiar la cobertura de voz. |
+| `test-v275-stable-live-voice-turns.mjs` | Alinea la identificación de versión sin cambiar la cobertura viva. |
+| `test-v276-manual-hole-navigation.mjs` | Alinea la identificación de versión sin cambiar la navegación por hoyos. |
+| `test-v277-official-round-corrections.mjs` | Alinea correcciones y snapshots oficiales con V305. |
+| `test-v278-card-image-pdf-export.mjs` | Alinea los artefactos de tarjeta con V305. |
+| `test-v279-local-card-library.mjs` | Homologa la redacción de Historial y la versión vigente. |
+| `test-v280-local-history-insights.mjs` | Alinea las estadísticas del Historial con V305. |
+| `test-v281-pwa-installation.mjs` | Comprueba la caché móvil V305. |
+| `test-v284-native-package-generation.mjs` | Comprueba paquete móvil y caché V305. |
+| `test-v285-stableford-back-navigation.mjs` | Comprueba el ATRÁS superior de Stableford. |
+| `test-v287-stableford-back-controls-clear.mjs` | Comprueba que REGÍSTRATE esté en flujo y no tape controles. |
+| `test-v290-brand-icons-cleanup.mjs` | Mantiene la validación acumulada y reconoce la guía Stableford exacta, el paquete y la caché V305. |
+| `test-v304-homogeneous-registration-actions.mjs` | Conserva el filtro hermano y prohíbe pedir HDCP o marcas en la guía visible Stableford. |
+| `test-v305-history-navigation-zero-error.mjs` | Bloquea vocabulario retirado, ATRÁS sin conexión, superposición, estado huérfano y versiones incoherentes. |
+| `test-v305-registration-guides-parser-truth.mjs` | Ejecuta ambos analizadores reales y exige que cada guía corresponda exactamente con su formato y con los estados equivalentes de OK. |
+| `vercel.json` | Exige filtros V304 y V305 antes de publicar. |
 
 ## Regla permanente
 

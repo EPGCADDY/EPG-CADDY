@@ -28,3 +28,9 @@ jobs:
 
       - name: Block visible differences between sister registration cards
         run: node test-v304-homogeneous-registration-actions.mjs
+
+      - name: Block navigation, history and overlap regressions
+        run: node test-v305-history-navigation-zero-error.mjs
+
+      - name: Block false registration guides and mismatched OK states
+        run: node test-v305-registration-guides-parser-truth.mjs

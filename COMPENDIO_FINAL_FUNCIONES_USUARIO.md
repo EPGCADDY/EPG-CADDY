@@ -19,7 +19,7 @@ Al abrir la aplicación aparece la pantalla principal. Desde allí el usuario pu
 - escribir el nombre del torneo, si corresponde;
 - registrar a los jugadores por dictado o manualmente;
 - abrir la ronda anterior;
-- entrar a la biblioteca de tarjetas;
+- entrar al historial de tarjetas;
 - abrir el respaldo y recuperación de datos.
 
 La aplicación conserva la ronda que está en curso. Si se cierra y se vuelve a abrir, la información guardada continúa disponible. Una ronda anterior sólo se sustituye al confirmar una nueva con **INICIAR RONDA**.
@@ -103,17 +103,29 @@ Se pueden registrar de uno a seis jugadores.
 
 ### Opción 1 · Dictado
 
+En una **Ronda Normal**:
+
 1. Tocar el micrófono verde.
-2. Dictar, en este orden, los datos de cada jugador:
-   - nombre;
-   - HDCP;
-   - marcas.
-3. Repetir los tres datos para cada jugador.
+2. Dictar directamente nombre, HDCP y marcas. Ejemplo: **“Jaime 14 blancas; Roberto 21 azules”**.
+3. Repetir el mismo orden hasta completar de uno a seis jugadores. Decir **“Jugador 1”** es opcional.
 4. Tocar **OK**.
 
 La guía de pantalla muestra:
 
-**DICTA O ESCRIBE: 1-NOMBRE, 2-HDCP, 3-MARCAS, DE CADA JUGADOR, 4-OK.**
+**DICTA ASÍ: JAIME · 14 · BLANCAS; ROBERTO · 21 · AZULES; HASTA 6 JUGADORES; LUEGO TOCA OK.**
+
+En **Stableford**:
+
+1. Seleccionar campo y categoría.
+2. Tocar el micrófono verde.
+3. Dictar obligatoriamente la posición y el nombre. Ejemplo: **“Jugador 1 Jaime; Jugador 2 Roberto”**.
+4. Continuar hasta **Jugador 6** si corresponde y tocar **OK**.
+
+En Stableford no se dictan HDCP ni marcas: la aplicación asigna automáticamente HCP 0 y blancas o amarillas según la categoría.
+
+La guía de pantalla muestra únicamente:
+
+**1-# JUGADOR · 2-NOMBRE · HASTA 6 JUGADORES · 3-OK.**
 
 ### Opción 2 · Manual
 
@@ -186,7 +198,7 @@ El botón **TIMER ON** permite ver el tiempo transcurrido de la ronda. Al detene
 ## 9. Botones disponibles durante una ronda
 
 - **TARJETA DIGITAL**: abre la tarjeta completa de la ronda.
-- **BIBLIOTECA**: abre las tarjetas oficiales guardadas en el dispositivo.
+- **HISTORIAL**: abre las tarjetas oficiales guardadas en el dispositivo.
 - **RONDA PREVIA**: cambia temporalmente a la ronda anterior disponible.
 - **NUEVA RONDA**: prepara una ronda nueva y deja en blanco el registro de los nuevos jugadores.
 - **BORRAR SCORES**: borra únicamente los scores; conserva jugadores, campo, categoría, marcas y configuración.
@@ -231,9 +243,9 @@ Para corregir una ronda finalizada:
 
 La aplicación conserva la tarjeta original y crea una nueva versión oficial corregida. La corrección registra fecha, motivo, responsable y un código SHA-256 para identificarla.
 
-## 12. Biblioteca de tarjetas
+## 12. Historial de tarjetas
 
-La **BIBLIOTECA DE TARJETAS** guarda las rondas oficiales dentro del dispositivo.
+La **HISTORIAL DE TARJETAS** guarda las rondas oficiales dentro del dispositivo.
 
 El usuario puede buscar por:
 
@@ -289,7 +301,7 @@ La aplicación conserva localmente la ronda en curso y sus scores aunque se camb
 
 ## 16. Respaldo y recuperación
 
-El botón **RESPALDO** abre una cuenta opcional. No es obligatorio crear una cuenta para jugar.
+El botón **REGÍSTRATE** abre una cuenta opcional. No es obligatorio crear una cuenta para jugar.
 
 La cuenta permite:
 

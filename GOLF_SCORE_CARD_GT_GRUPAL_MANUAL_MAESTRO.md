@@ -4,9 +4,9 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V288
-**Fecha de corte:** 23 de agosto de 2026
-**Ramas operativas:** `main` (Producción vigente) y `v288-stableford-one-touch-home` (candidata)
+**Versión documentada:** V305
+**Fecha de corte:** 24 de agosto de 2026
+**Ramas operativas:** `main` (Producción vigente) y `v305-history-navigation-zero-error` (candidata)
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
 **Responsable de implementación y control:** Partner / ChatGPT
@@ -347,7 +347,8 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 ### 8.6.1 Registro oficial vigente V262
 
 - El registro ofrece exactamente dos vías: `1 · DICTADO` y `2 · MANUAL OPCIONAL`.
-- En Dictado, se toca el micrófono y se pronuncian únicamente `NOMBRE + HDCP + MARCAS`.
+- En Dictado General se toca el micrófono y se pronuncia directamente `NOMBRE + HDCP + MARCAS`, por ejemplo `JAIME 14 BLANCAS; ROBERTO 21 AZULES`; decir `JUGADOR 1` es opcional.
+- En Dictado Stableford la posición sí es obligatoria: `JUGADOR 1 JAIME; JUGADOR 2 ROBERTO`. Su guía visible dice únicamente `1-# JUGADOR`, `2-NOMBRE`, `HASTA 6 JUGADORES` y `3-OK`; no pide HDCP ni marcas porque la categoría los configura automáticamente.
 - En Manual Opcional, cada fila contiene únicamente `NOMBRE + HDCP + MARCAS`; las marcas se eligen en el selector de color.
 - Se permiten de uno a seis jugadores.
 - Si un jugador fue omitido y todavía hay menos de seis, el botón pequeño `+ JUGADOR` abre directamente la ronda activa en modo de incorporación y conserva los scores ya registrados. El botón `ATRÁS` de una tarjeta Stableford vuelve en un solo toque a la pantalla principal completa —campos, modalidades, torneo y registro—, conserva la ronda activa y elimina la ruta especial del URL; no abre primero el editor Stableford ni obliga a recorrer pantallas intermedias.
@@ -688,7 +689,7 @@ Prohibiciones operativas durante una ronda:
 
 ## 17. Historial inteligente
 
-**Estado:** archivo local base `OPERATIVO` desde V143; consultas y biblioteca visual `PLANIFICADAS`.
+**Estado:** archivo local base `OPERATIVO` desde V143; consultas y historial visual `PLANIFICADAS`.
 
 Objetivo: guardar todas las tarjetas concluidas con fecha, campo, jugadores, handicaps, tees, scores por hoyo, vueltas, totales y estadísticas.
 
@@ -1266,7 +1267,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 - `S. SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
 - En una nueva ronda no queda categoría impuesta. El registro muestra simultáneamente `SENIOR · BLANCAS` y `SÚPER SENIOR · AMARILLAS`; la selección configura automáticamente las marcas, los yardajes, Course Rating y Slope correspondientes al campo elegido.
 - El registro muestra los cuatro campos autorizados —Country Club, El Pulté, San Isidro y Mayan Golf— y exige seleccionar uno antes de iniciar.
-- En ambas categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
+- En ambas categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. El dictado debe conservar la posición: `JUGADOR 1 JAIME; JUGADOR 2 ROBERTO`; los nombres solos sin posición no se aceptan en esta pantalla. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
 - El mismo panel permite escribir el nombre del torneo antes de iniciar scores. `REGRESAR A DATOS` abre los datos de la ronda actual sin borrar sus scores; `NUEVA RONDA` sí abre un registro completamente limpio.
 - Los únicos campos admitidos por la serie son Country Club, El Pulté, San Isidro y Mayan Golf. Un campo sin tarjeta oficial cargada permanece bloqueado para evitar cálculos con datos heredados o inventados.
 - Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales `OUT`, `IN` y `TOTAL`.
@@ -1288,9 +1289,10 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-24 | Manual 3.59 / App V305 | Auditoría integral de navegación, vocabulario y registros hermanos desde la base V304. Todas las entradas visibles del archivo de tarjetas usan `HISTORIAL` y su pantalla se titula `HISTORIAL DE TARJETAS`. Las pantallas con retorno muestran `ATRÁS` en una posición superior, homogénea y protegida contra superposición. El acceso opcional de cuenta pasa a llamarse `REGÍSTRATE`, queda dentro del flujo de Ronda, Registro General y Registro Stableford y deja de ser un flotante azul. Stableford ya no muestra el aviso huérfano `SELECCIONA EL CAMPO` debajo de los jugadores, pero conserva esa validación interna. Los OK General y Stableford comparten dimensiones, tipografía, color y estados equivalentes; ambos quedan deshabilitados cuando el registro está incompleto. Las guías dicen exactamente lo que reconoce cada analizador: General acepta `JAIME 14 BLANCAS`, con posición opcional, y Stableford exige `JUGADOR 1 JAIME`; su guía visible se limita a número de jugador, nombre, máximo seis y OK, sin pedir HDCP ni marcas. Los filtros V304/V305 bloquean regresiones gráficas, operativas, de vocabulario, retornos, superposición, versiones y caché. |
 | 2026-08-23 | Manual 3.58 / App V288 | Corregida la navegación física demostrada en V287: desde la tarjeta Stableford, `ATRÁS` abre directamente y en un solo toque la pantalla principal completa. La transición persiste la ronda activa, elimina del URL la ruta especial Stableford y no pasa por `RONDA STABLEFORD` como pantalla intermedia. `+ JUGADOR` conserva su función independiente de editar o incorporar participantes sin borrar scores. La prueba V288 bloquea la conexión correcta del botón, la restauración de campos/modalidades/registro, la conservación de la ronda y la ausencia del vínculo anterior al editor Stableford. |
-| 2026-08-23 | Manual 3.57 / App V280 | La biblioteca incorpora una pantalla escrita de `ESTADÍSTICAS DEL HISTORIAL` que consulta exclusivamente las rondas guardadas en el dispositivo y no habla automáticamente. Acepta periodos, jugador, campo, torneo, modalidad, vuelta u hoyo; entrega promedios Gross/Neto, mejor/peor, consistencia, tendencia, categorías de score, comparación entre jugadores y puntos Stableford. Las opciones rápidas ejecutan el mismo motor de consultas ya utilizado por voz y los resultados no modifican rondas ni tarjetas. La consulta multi-dispositivo continúa pendiente de la sincronización central autenticada. |
-| 2026-08-23 | Manual 3.56 / App V279 | Incorporada `BIBLIOTECA DE TARJETAS` en la ronda, el Registro General y el Registro Stableford. Conserva únicamente rondas con snapshot oficial y permite filtrar por modalidad y campo, además de buscar por jugador, torneo o fecha. Abrir la biblioteca no restaura, reemplaza ni modifica la ronda actual. Desde la ronda histórica seleccionada se puede abrir la Global o una personal, generar su imagen PNG, descargar su PDF o descargar el PDF conjunto. La biblioteca permanece privada en el almacenamiento del dispositivo hasta que la sincronización central autenticada quede habilitada. |
+| 2026-08-23 | Manual 3.57 / App V280 | El historial incorpora una pantalla escrita de `ESTADÍSTICAS DEL HISTORIAL` que consulta exclusivamente las rondas guardadas en el dispositivo y no habla automáticamente. Acepta periodos, jugador, campo, torneo, modalidad, vuelta u hoyo; entrega promedios Gross/Neto, mejor/peor, consistencia, tendencia, categorías de score, comparación entre jugadores y puntos Stableford. Las opciones rápidas ejecutan el mismo motor de consultas ya utilizado por voz y los resultados no modifican rondas ni tarjetas. La consulta multi-dispositivo continúa pendiente de la sincronización central autenticada. |
+| 2026-08-23 | Manual 3.56 / App V279 | Incorporado `HISTORIAL DE TARJETAS` en la ronda, el Registro General y el Registro Stableford. Conserva únicamente rondas con snapshot oficial y permite filtrar por modalidad y campo, además de buscar por jugador, torneo o fecha. Abrir el historial no restaura, reemplaza ni modifica la ronda actual. Desde la ronda histórica seleccionada se puede abrir la Global o una personal, generar su imagen PNG, descargar su PDF o descargar el PDF conjunto. El historial permanece privado en el almacenamiento del dispositivo hasta que la sincronización central autenticada quede habilitada. |
 | 2026-08-23 | Manual 3.55 / App V278 | Las tarjetas oficiales Global y personales de General y Stableford se exportan desde el mismo snapshot oficial como imagen PNG y PDF real. `IMAGEN GLOBAL` e `IMAGEN PERSONAL` abren la hoja nativa del teléfono para compartir o seleccionar `Guardar imagen`; si el dispositivo no permite compartir archivos, descargan el PNG. `PDF GLOBAL` y `PDF PERSONAL` descargan el archivo individual y `PDF TODAS` crea un documento multipágina con la Global y todas las personales. Una corrección oficial genera los archivos desde la versión vigente sin alterar ni borrar el original. |
 | 2026-08-23 | Manual 3.54 / App V277 | Incorporada la pantalla única de `CORRECCIÓN OFICIAL` para General y Stableford. Exige jugador, hoyo, nuevo Gross, motivo y responsable; recalcula todos los datos derivados de la modalidad, genera una versión oficial nueva con SHA-256 propio y conserva la tarjeta original disponible mediante `ABRIR ORIGINAL`. La tarjeta corregida queda identificada por versión, reemplaza únicamente el resultado vigente y conserva íntegra la secuencia de versiones anteriores. |
 | 2026-08-23 | Manual 3.53 / App V276 | El Control Manual común de General y Stableford incorpora `ANTERIOR`, selector directo de hoyo y `SIGUIENTE`. Los límites 1 y 18 se deshabilitan correctamente y una ronda cerrada bloquea toda navegación de captura. Moverse conserva todos los scores ya guardados; si existe una edición aún no confirmada, la aplicación mantiene el hoyo actual y exige `PRESIONA ENTER ANTES DE CAMBIAR DE HOYO`, evitando pérdida o escritura accidental. El avance automático al completar todos los jugadores permanece intacto y las entradas manual y de voz continúan utilizando el mismo escritor operacional. |

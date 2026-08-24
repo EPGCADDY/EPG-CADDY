@@ -37,7 +37,8 @@ assert.match(html,/\[primary,backup,stableford\]\.filter\(value=>value\?\.config
 assert.match(html,/readRoundArchive\(\)\.filter\(value=>value\?\.configured&&mode\(value\)===modeHint\)\.sort/);
 assert.match(html,/function loadRound\(\)\{return latestStoredRound\("general"\)\|\|blankRound\(\)\}/);
 assert.match(html,/if\(round\.mode==="stableford"\)localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,payload\)/);
-assert.match(html,/try\{localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)\}catch\{\}/);
+assert.match(html,/function openFreshStablefordSetup\(\)[\s\S]*?localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,JSON\.stringify\(round\)\)/);
+assert.doesNotMatch(html,/function openFreshStablefordSetup\(\)[\s\S]*?localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\);localStorage\.removeItem\(STORAGE_KEY\)/);
 
 console.log("PASS V260/V267 · STABLEFORD, anchos, total neón, alta segura y recuperación única sin mezclar modalidades");

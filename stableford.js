@@ -183,7 +183,7 @@
       const method=document.createElement("section");
       method.className="registration-method stableford-registration-method";
       method.setAttribute("aria-label","Método 1 Dictado Stableford");
-      method.innerHTML='<div class="newbie-registration-guide" aria-label="Instrucciones de registro para cada jugador"><div class="newbie-guide-title">DICTA O ESCRIBE:</div><div>1-NOMBRE</div><div>2-HDCP</div><div>3-MARCAS</div><div class="newbie-guide-player">DE CADA JUGADOR</div><div>4-OK</div></div><div class="nr-mic stableford-registration-mic" id="stablefordSetupMicWrap"><button class="mic-hit" id="stablefordSetupMic" type="button" aria-label="Dictar nombre, HDCP y marcas"></button><div class="mic-visual" aria-hidden="true"><svg class="setup-mic-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></div></div>';
+      method.innerHTML='<div class="newbie-registration-guide" aria-label="Instrucciones de registro Stableford por posición"><div class="newbie-guide-title">DICTA ASÍ:</div><div>1-# JUGADOR</div><div>2-NOMBRE</div><div class="newbie-guide-player">HASTA 6 JUGADORES</div><div>3-OK</div></div><div class="nr-mic stableford-registration-mic" id="stablefordSetupMicWrap"><button class="mic-hit" id="stablefordSetupMic" type="button" aria-label="Dictar número de jugador y nombre"></button><div class="mic-visual" aria-hidden="true"><svg class="setup-mic-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></div></div>';
       parent.insertBefore(prompt,anchor);
       parent.insertBefore(method,anchor);
       const hit=document.getElementById("stablefordSetupMic");
@@ -210,6 +210,16 @@
     if(start&&!start.__stablefordTournamentBridge){
       start.__stablefordTournamentBridge=true;
       start.addEventListener("click",()=>{const value=cleanName(document.getElementById("stablefordTournamentName")?.value||"");setTimeout(()=>{try{if(typeof round!=="undefined"&&round?.mode==="stableford"){round.tournament=value?{name:value}:null;if(typeof persist==="function")persist();if(typeof render==="function")render()}}catch(err){console.error("Stableford tournament",err)}},0)});
+    }
+
+    if(typeof setupSessionConfig==="function"&&!setupSessionConfig.__stablefordRegistrationPrompt){
+      const baseSetupSessionConfig=setupSessionConfig;
+      setupSessionConfig=function(){
+        const config=baseSetupSessionConfig();
+        if(overlay.classList.contains("visible")&&config?.audio?.input?.transcription)config.audio.input.transcription.prompt="Golf Guatemala. Registro Stableford Scratch. Transcribe literalmente posiciones y nombres en este formato: Jugador 1 Jaime; Jugador 2 Roberto; hasta Jugador 6. Conserva cada número de posición y cada nombre. No agregues handicap ni marcas porque la categoría los asigna automáticamente.";
+        return config;
+      };
+      setupSessionConfig.__stablefordRegistrationPrompt=true;
     }
 
     let stablefordParseSetupTranscript=null;

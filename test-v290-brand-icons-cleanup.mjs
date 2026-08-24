@@ -17,7 +17,7 @@ assert.match(html,/\.registration-method \.nr-mic\{width:120px;height:120px;/);
 assert.match(html,/\.registration-method \.nr-mic\{width:112px;height:112px;/);
 assert.match(html,/class="setup-mic-icon"/);
 assert.doesNotMatch(html,/id="setupMicWrap"[^\n]*<div class="mic-visual">🎙<\/div>/);
-assert.match(html,/class="newbie-guide-title">DICTA O ESCRIBE:<\/div>\s*<div>1-NOMBRE<\/div>\s*<div>2-HDCP<\/div>\s*<div>3-MARCAS<\/div>\s*<div class="newbie-guide-player">DE CADA JUGADOR<\/div>\s*<div>4-OK<\/div>/);
+assert.match(html,/class="newbie-guide-title">DICTA ASÍ:<\/div>\s*<div>JAIME · 14 · BLANCAS<\/div>\s*<div>ROBERTO · 21 · AZULES<\/div>\s*<div class="newbie-guide-player">HASTA 6 JUGADORES<\/div>\s*<div>LUEGO TOCA OK<\/div>/);
 assert.match(html,/\.newbie-registration-guide\{text-align:left;/);
 assert.match(html,/\.newbie-registration-guide,\.newbie-registration-guide \*\{font-size:13px!important\}/);
 assert.match(html,/#setupOverlay\{padding-top:max\(8px,calc\(env\(safe-area-inset-top\) \+ 4px\)\)\}/);
@@ -32,7 +32,7 @@ assert.equal(apiPackage.type,"module");
 assert.match(stable,/className="voice-prompt stableford-voice-prompt"/);
 assert.match(stable,/prompt\.innerHTML='<strong>REGISTRO DE JUGADORES<\/strong>'/);
 assert.match(stable,/className="registration-method stableford-registration-method"/);
-assert.match(stable,/class="newbie-guide-title">DICTA O ESCRIBE:<\/div><div>1-NOMBRE<\/div><div>2-HDCP<\/div><div>3-MARCAS<\/div><div class="newbie-guide-player">DE CADA JUGADOR<\/div><div>4-OK<\/div>/);
+assert.match(stable,/class="newbie-guide-title">DICTA ASÍ:<\/div><div>1-# JUGADOR<\/div><div>2-NOMBRE<\/div><div class="newbie-guide-player">HASTA 6 JUGADORES<\/div><div>3-OK<\/div>/);
 assert.match(stable,/id="stablefordSetupMicWrap"[\s\S]*?class="setup-mic-icon"/);
 assert.doesNotMatch(stable,/id="stablefordSetupMicWrap"[^\n]*>🎤<\/div>/);
 assert.doesNotMatch(stable,/\.stableford-registration-mic\{margin-top:/);
@@ -40,7 +40,7 @@ assert.match(html,/id="startStablefordRound">OK<\/button>/);
 assert.match(html,/\$\("startStablefordRound"\)\.textContent="OK"/);
 assert.match(stable,/JUGADORES DETECTADOS · REVISA Y PRESIONA OK/);
 assert.doesNotMatch(stable,/PRESIONA INICIAR RONDA/);
-assert.equal(release.buildNumber,304);
+assert.equal(release.buildNumber,305);
 assert.equal(vercel.installCommand,"npm install --omit=dev");
 assert.equal(manifest.name,"Golf Score Card GT");
 for(const size of ["192x192","512x512"])assert.ok(manifest.icons.some(icon=>icon.sizes===size&&icon.type==="image/png"&&icon.purpose==="any"));
@@ -51,7 +51,7 @@ for(const icon of [
   "assets/official-logos/golf-score-card-gt-pwa-192.png",
   "assets/official-logos/golf-score-card-gt-apple-touch-180.png"
 ])assert.ok(fs.existsSync(icon),icon);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v304"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v305"/);
 assert.match(read("assets/official-logos/README.md"),/Logos oficiales · Golf Score Card GT/);
 
-console.log("PASS V304 · acciones homologadas en General y Stableford");
+console.log("PASS V305 · historial, navegación y acciones homologadas en General y Stableford");
