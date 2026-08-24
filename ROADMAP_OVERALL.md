@@ -299,6 +299,21 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 | `test-v305-registration-guides-parser-truth.mjs` | Ejecuta ambos analizadores reales y exige que cada guía corresponda exactamente con su formato y con los estados equivalentes de OK. |
 | `vercel.json` | Exige filtros V304 y V305 antes de publicar. |
 
+## Guía Operativa 1.0 · Documento profesional para el usuario final
+
+El **24 de agosto de 2026** se crea la primera edición profesional de la **GUÍA OPERATIVA GOLF SCORE CARD GT**, compatible con App V305. Lleva el logo maestro oficial como protagonista, línea gráfica negra y verde neón, navegación rápida y redacción directa para que una persona sin conocimientos técnicos pueda instalar, configurar, jugar, dictar, corregir, cerrar, compartir y recuperar una ronda. Incluye formatos distintos y verificados para Registro General y Stableford, vocabulario real de scores y consultas, solución de atrancones, guía de emergencia de una página, glosario y lista final. La aplicación y sus reglas permanecen congeladas.
+
+| Archivo nuevo o modificado | Qué queda registrado |
+|---|---|
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.md` | Fuente editable completa de la guía para mantenerla sincronizada con futuras versiones. |
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.docx` | Documento final de 18 páginas, visualmente revisado una por una y listo para la revisión del usuario. |
+| `tools/build_operational_guide_v1.py` | Constructor reproducible que aplica el logo oficial, estilos profesionales y auditoría interna. |
+| `test-operational-guide-v1.mjs` | Control automático que impide pérdida de secciones, vocabulario retirado o instrucciones falsas de registro. |
+| `audit-project.mjs` | Ejecuta el nuevo filtro documental dentro del PASS maestro. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Eleva el inventario activo a 193 y registra todos los archivos de la guía. |
+| `ROADMAP_A_DETALLE.md` | Registra esta entrega editorial a detalle. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen obligatorio. |
+
 ## Regla permanente
 
 1. Todo nombre visible será **Golf Score Card GT**.

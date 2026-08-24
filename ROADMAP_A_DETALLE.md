@@ -287,6 +287,41 @@ Solicitud: **24 de agosto de 2026**. Alcance: auditar todas las pantallas, confi
 | `test-v305-registration-guides-parser-truth.mjs` | Filtro semántico V305 | Ejecuta los analizadores reales, valida el dictado General directo y el Stableford por posición, y compara los estados equivalentes de ambos OK. |
 | `vercel.json` | Candado Vercel V305 | Cancela la publicación si falla el filtro V304 o V305. |
 
+## Registro obligatorio de la Guía Operativa 1.0
+
+Solicitud: **24 de agosto de 2026**. Base congelada: **App V305**. Objetivo: construir la Biblia operativa del producto para el usuario final, amigable, condensada, directa y completa, sin modificar funciones de la aplicación.
+
+### Alcance editorial y operativo
+
+1. Portada profesional con el logo maestro oficial mostrado de forma dominante y sin deformarlo.
+2. Mapa de la guía para localizar en segundos inicio, registro, ronda, cierre, atrancones, emergencia y glosario.
+3. Flujo completo desde instalación en iPhone hasta finalizar, guardar, compartir y consultar en Historial.
+4. Registro General con el orden real Nombre, HDCP y Marcas.
+5. Registro Stableford Scratch con la guía exacta `1-# JUGADOR`, `2-NOMBRE`, `HASTA 6 JUGADORES`, `3-OK`; prohíbe dictar HDCP o marcas.
+6. Vocabulario real de scores, X, correcciones, consultas por voz, Timer y Stop.
+7. Solución de atrancones sin borrar la ronda y guía de emergencia de una página.
+8. Glosario operativo y lista final antes de guardar.
+
+### Control de calidad ejecutado
+
+- Documento final: **18 páginas tamaño carta**.
+- Revisión visual individual de las 18 páginas: sin texto cortado, bloques huérfanos, superposiciones ni encabezados fuera de margen.
+- Auditoría de accesibilidad del DOCX: **0 hallazgos altos, 0 medios y 0 bajos**.
+- Logo con texto alternativo y dimensiones verificadas.
+- Estructura verificada: 8 encabezados de nivel 1, 58 de nivel 2 y 43 de nivel 3.
+- Filtro automático documental integrado al PASS maestro.
+
+| Archivo nuevo o modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.md` | Fuente Guía 1.0 | Contenido editable completo y auditable. |
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.docx` | Guía 1.0 / App V305 | Documento profesional listo para revisión del usuario. |
+| `tools/build_operational_guide_v1.py` | Constructor Guía 1.0 | Maqueta el Word con estilos, logo, numeración real, encabezados, pies y validaciones. |
+| `test-operational-guide-v1.mjs` | Filtro Guía 1.0 | Comprueba secciones, vocabulario, registros General/Stableford, logo y artefacto. |
+| `audit-project.mjs` | Auditoría Guía 1.0 | Ejecuta el filtro nuevo dentro de la auditoría maestra. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Inventario Guía 1.0 | Registra los cuatro archivos nuevos y eleva el total activo a 193. |
+| `ROADMAP_A_DETALLE.md` | Registro Guía 1.0 | Guarda este detalle editorial y técnico. |
+| `ROADMAP_OVERALL.md` | Registro Guía 1.0 | Guarda el resumen general obligatorio. |
+
 ## Punto de corte y norma permanente estricta
 
 - **Punto de activación original: línea 183.**

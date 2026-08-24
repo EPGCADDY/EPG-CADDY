@@ -20,6 +20,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v290-brand-icons-c
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v304-homogeneous-registration-actions.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v305-history-navigation-zero-error.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v305-registration-guides-parser-truth.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-operational-guide-v1.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);
