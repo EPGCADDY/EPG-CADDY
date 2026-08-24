@@ -207,6 +207,20 @@ El **24 de agosto de 2026** se cierra el vacío de orientación de la pantalla p
 | `ROADMAP_A_DETALLE.md` | Registra V301 a detalle. |
 | `ROADMAP_OVERALL.md` | Registra V301 en este resumen general. |
 
+## Actualización operativa V302 · Micrófonos hermanos en General y Stableford
+
+El **24 de agosto de 2026** se unifica el registro visual de Stableford con la Score Card General. Stableford deja de mostrar el círculo de 240 px con emoji y adopta el mismo bloque de instrucciones, micrófono SVG compacto de 120 px en escritorio y 112 px en iPhone, color neón y estado rojo de escucha. El enlace con el motor oficial de voz permanece intacto.
+
+| Archivo o modificación | Qué queda registrado |
+|---|---|
+| `stableford.js` | Reutiliza la línea gráfica y descriptiva aprobada de la Score Card General sin cambiar la lógica de registro. |
+| `mobile-release.json` | Número de paquete preparado actualizado a V302. |
+| `service-worker.js` | Caché V302 para entregar inmediatamente el componente unificado. |
+| `test-v290-brand-icons-cleanup.mjs` | Comprueba la estructura hermana, el SVG, la ausencia del emoji grande, el paquete y la caché. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el inventario de todos los archivos modificados. |
+| `ROADMAP_A_DETALLE.md` | Registra V302 a detalle. |
+| `ROADMAP_OVERALL.md` | Registra V302 en este resumen general. |
+
 ## Regla permanente
 
 1. Todo nombre visible será **Golf Score Card GT**.

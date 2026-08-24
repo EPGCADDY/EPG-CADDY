@@ -3,6 +3,7 @@ import fs from "node:fs";
 
 const read=file=>fs.readFileSync(file,"utf8");
 const html=read("index-grupal.html");
+const stable=read("stableford.js");
 const manifest=JSON.parse(read("manifest.webmanifest"));
 const worker=read("service-worker.js");
 const packageJson=JSON.parse(read("package.json"));
@@ -28,7 +29,12 @@ assert.match(html,/id="tournamentDescription"[^>]*placeholder="DESCRIPCIÓN DE T
 assert.match(html,/return\{name:String\(value\.name\|\|""\)\.trim\(\),description:String\(value\.description\|\|""\)\.trim\(\)\}/);
 assert.equal(packageJson.engines.node,"22.x");
 assert.equal(apiPackage.type,"module");
-assert.equal(release.buildNumber,301);
+assert.match(stable,/className="registration-method stableford-registration-method"/);
+assert.match(stable,/class="newbie-guide-title">DICTA O ESCRIBE:<\/div><div>1-NOMBRE<\/div><div>2-HDCP<\/div><div>3-MARCAS<\/div><div class="newbie-guide-player">DE CADA JUGADOR<\/div><div>4-OK<\/div>/);
+assert.match(stable,/id="stablefordSetupMicWrap"[\s\S]*?class="setup-mic-icon"/);
+assert.doesNotMatch(stable,/id="stablefordSetupMicWrap"[^\n]*>🎤<\/div>/);
+assert.doesNotMatch(stable,/\.stableford-registration-mic\{margin-top:/);
+assert.equal(release.buildNumber,302);
 assert.equal(vercel.installCommand,"npm install --omit=dev");
 assert.equal(manifest.name,"Golf Score Card GT");
 for(const size of ["192x192","512x512"])assert.ok(manifest.icons.some(icon=>icon.sizes===size&&icon.type==="image/png"&&icon.purpose==="any"));
@@ -39,7 +45,7 @@ for(const icon of [
   "assets/official-logos/golf-score-card-gt-pwa-192.png",
   "assets/official-logos/golf-score-card-gt-apple-touch-180.png"
 ])assert.ok(fs.existsSync(icon),icon);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v301"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v302"/);
 assert.match(read("assets/official-logos/README.md"),/Logos oficiales · Golf Score Card GT/);
 
-console.log("PASS V301 · tres modalidades y torneo opcional completos");
+console.log("PASS V302 · micrófonos hermanos en General y Stableford");

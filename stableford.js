@@ -176,11 +176,11 @@
     }
     if(!document.getElementById("stablefordSetupMicWrap")){
       const course=document.getElementById("stablefordSetupCourse");
-      const mic=document.createElement("div");
-      mic.className="nr-mic stableford-registration-mic";
-      mic.id="stablefordSetupMicWrap";
-      mic.innerHTML='<button class="mic-hit" id="stablefordSetupMic" type="button" aria-label="Micrófono de registro Stableford"></button><div class="mic-visual" aria-hidden="true">🎤</div>';
-      (course?.parentNode||card).insertBefore(mic,course?.nextSibling||card.firstChild);
+      const method=document.createElement("section");
+      method.className="registration-method stableford-registration-method";
+      method.setAttribute("aria-label","Método 1 Dictado Stableford");
+      method.innerHTML='<div class="newbie-registration-guide" aria-label="Instrucciones de registro para cada jugador"><div class="newbie-guide-title">DICTA O ESCRIBE:</div><div>1-NOMBRE</div><div>2-HDCP</div><div>3-MARCAS</div><div class="newbie-guide-player">DE CADA JUGADOR</div><div>4-OK</div></div><div class="nr-mic stableford-registration-mic" id="stablefordSetupMicWrap"><button class="mic-hit" id="stablefordSetupMic" type="button" aria-label="Dictar nombre, HDCP y marcas"></button><div class="mic-visual" aria-hidden="true"><svg class="setup-mic-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></div></div>';
+      (course?.parentNode||card).insertBefore(method,course?.nextSibling||card.firstChild);
       const hit=document.getElementById("stablefordSetupMic");
       const activate=e=>{if(typeof fireMicActivation==="function")return fireMicActivation("setup",e);return false};
       if(hit){
@@ -191,7 +191,7 @@
     }
     if(!document.getElementById("stableford-ui-bridge-style")){
       const style=document.createElement("style");style.id="stableford-ui-bridge-style";
-      style.textContent='.stableford-tournament-field{display:grid;gap:6px;margin:12px 0;text-align:left;color:#fff;font:800 11px Arial,sans-serif}.stableford-tournament-field input{width:100%;height:44px;border:1px solid var(--line);border-radius:6px;background:#050505;color:#fff;padding:0 12px;font:800 14px Arial,sans-serif;text-transform:uppercase}.stableford-registration-mic{margin-top:12px;margin-bottom:12px}.stableford-registration-mic .mic-visual{background:var(--lime);border-color:var(--lime);color:#000}.stableford-registration-mic.active .mic-visual{background:var(--red);border-color:var(--red);color:#fff}';
+      style.textContent='.stableford-tournament-field{display:grid;gap:6px;margin:12px 0;text-align:left;color:#fff;font:800 11px Arial,sans-serif}.stableford-tournament-field input{width:100%;height:44px;border:1px solid var(--line);border-radius:6px;background:#050505;color:#fff;padding:0 12px;font:800 14px Arial,sans-serif;text-transform:uppercase}';
       document.head.appendChild(style);
     }
     const stableStatus=document.getElementById("stablefordSetupStatus"),baseStatus=document.getElementById("setupStatus"),baseMic=document.getElementById("setupMicWrap"),stableMic=document.getElementById("stablefordSetupMicWrap");

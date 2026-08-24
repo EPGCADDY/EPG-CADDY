@@ -195,6 +195,20 @@ Solicitud: **24 de agosto de 2026**. Alcance: mostrar claramente la ruta normal,
 | `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra V301 a detalle. |
 | `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra V301 en el resumen general. |
 
+## Registro obligatorio de la actualización operativa V302
+
+Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford use la misma línea gráfica y descriptiva que la Score Card General, sin modificar el motor de voz ni las reglas de la modalidad.
+
+| Archivo modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `stableford.js` | Registro V302 | Sustituye el micrófono grande con emoji por el mismo bloque compacto, SVG y guía DICTA O ESCRIBE de la Score Card General; conserva el motor oficial de voz. |
+| `mobile-release.json` | Paquete `302` | Deja preparada la numeración móvil de esta actualización. |
+| `service-worker.js` | Caché `gscg-mobile-v302` | Obliga a descargar el componente Stableford actualizado y retirar la caché anterior. |
+| `test-v290-brand-icons-cleanup.mjs` | Validación V302 | Comprueba que General y Stableford compartan guía, SVG, tamaño compacto, paquete y caché. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Registra en el inventario cada archivo modificado por V302. |
+| `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra V302 a detalle. |
+| `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra V302 en el resumen general. |
+
 ## Punto de corte y norma permanente estricta
 
 - **Punto de activación original: línea 183.**
