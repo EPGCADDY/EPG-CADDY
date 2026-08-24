@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos con candado técnico de ROADMAPS: **186**.
+Archivos activos con candado técnico de ROADMAPS: **187**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -13,7 +13,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `.github/workflows/ios-build.yml` | `8a61450069cd4ec9297204841a70788ae1f4ad0f` | 1092 bytes | Comprueba que la aplicación de iPhone pueda construirse y exige primero ambos ROADMAPS. |
 | `.github/workflows/ios-testflight.yml` | `b67cfeef9a79cc4b419accece846a7e334a27636` | 1133 bytes | Prepara una copia para TestFlight y exige primero ambos ROADMAPS. |
 | `.github/workflows/mobile-native-package.yml` | `ee0d6b5b72cfab49646b58a764dcb8d585c88ee5` | 2112 bytes | Prepara Apple/Android y se bloquea si faltan los dos ROADMAPS. |
-| `.github/workflows/roadmap-gate.yml` | `2b0e0640e36c07e343f06414a9d2d703727237bb` | 712 bytes | Ejecuta automáticamente el candado ROADMAP en GitHub. |
+| `.github/workflows/roadmap-gate.yml` | `55d607666ade5f730121d42900f02b1463a274f3` | 852 bytes | Ejecuta en GitHub los candados ROADMAP y de tarjetas hermanas antes de aceptar cambios. |
 | `.github/workflows/stableford-tournament-pass.yml` | `df70cf36092ddd72b59271bf241b1ac58fb21027` | 1075 bytes | Comprueba Stableford y exige primero ambos ROADMAPS. |
 | `.gitignore` | `0994446eb785e2166ce79941bec8bba6c245c567` | 75 bytes | Indica qué archivos temporales no deben subirse a GitHub. |
 | `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Fuente histórica del logo cromado 3D con verde neón muy saturado; conserva su nombre para no romper enlaces. |
@@ -42,8 +42,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
 | `MAPA_MATRIZ_STABLEFORD_V252.md` | `8911a7ef86398e0c3f18e647433387a02645082c` | 3828 bytes | Explica las piezas de Stableford incorporadas en V252. |
 | `README.md` | `e93c3adc84c81fdda07303f5d0f75fbb35140ea2` | 2170 bytes | Portada de GitHub que presenta el producto como Golf Score Card GT. |
-| `ROADMAP_A_DETALLE.md` | Registro V303 | Se calcula al publicar | Abre el directorio, conserva el candado y registra a detalle la actualización V303. |
-| `ROADMAP_OVERALL.md` | Registro V303 | Se calcula al publicar | Resumen general con el registro obligatorio de la actualización V303. |
+| `ROADMAP_A_DETALLE.md` | Registro V304 | Se calcula al publicar | Abre el directorio, conserva el candado y registra a detalle la actualización V304. |
+| `ROADMAP_OVERALL.md` | Registro V304 | Se calcula al publicar | Resumen general con el registro obligatorio de la actualización V304. |
 | `ROADMAP_OVERALL_V291.png` | `2e7aaaaf4b7b337caa8750b17754d9173f8930fe` | 685254 bytes | Imagen vertical y sencilla del estado general para verla desde el teléfono. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_01.png` | `2377b6bba6c886a2fddac44b2d01fbc7ebf3f0ca` | 410461 bytes | Página 1 de 9 del directorio visual detallado. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_02.png` | `ba0d741c811283d33e53431b9a90cf3055a97bed` | 487065 bytes | Página 2 de 9 del directorio visual detallado. |
@@ -90,7 +90,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Copia maestra del logo cromado 3D con verde neón muy saturado. |
 | `assets/official-logos/golf-score-card-gt-pwa-192.png` | `e28cd92c784748a2d4ff02bf3491b96c8121ed94` | 67805 bytes | Icono cromado 3D neón pequeño de la aplicación instalable. |
 | `assets/official-logos/golf-score-card-gt-pwa-512.png` | `0e85cc6995f9bafefb49dec5a8253aef3db7fffd` | 461402 bytes | Icono cromado 3D neón grande de la aplicación instalable. |
-| `audit-project.mjs` | `597a19619b0c7f64e8d6963f0d28ab02a329f6cf` | 3512 bytes | Ejecuta primero el candado ROADMAP y después las demás comprobaciones. |
+| `audit-project.mjs` | `35e94709bf7d2417707776fbd5a82e4ef5d9f335` | 3619 bytes | Ejecuta el candado ROADMAP e incorpora la comparación gráfica automática V304. |
 | `capacitor.config.json` | `a5ca52fde974ea370d90dbfe422f08101ec7f7eb` | 867 bytes | Define el nombre visible y la identidad de las apps de iPhone y Android. |
 | `card-artifacts.js` | `df8ba2b09532b73701681d7de1781ca5b54baf26` | 12799 bytes | Arma la tarjeta oficial con la información de la ronda. |
 | `card-file-export.js` | `4ddbf8f36ec142114cfa965a78d97ea55365afa1` | 5919 bytes | Convierte la tarjeta en imagen o PDF. |
@@ -103,7 +103,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `database/test-player-profile-schema.mjs` | `32d0b6f78446a1193e8b2239b26f93738547b24b` | 817 bytes | Comprueba los espacios de la información central. |
 | `database/test-schema.mjs` | `ad64ac3b0ed21932c24ea56886124f518a7b0692` | 1099 bytes | Comprueba los espacios de la información central. |
 | `historical-analytics.js` | `2a5bb2f2ef1564b09a567823efde14b54829ce86` | 8963 bytes | Resume el historial y muestra datos útiles de rondas anteriores. |
-| `index-grupal.html` | `7c264cd227aa189fcbb2f4214e398ba629d8b7a3` | 549724 bytes | Pantalla principal V303 con OK como acción final de una nueva ronda Stableford. |
+| `index-grupal.html` | `928655f9a1a0332e3dd3b4fb7586a119f96f69e6` | 550683 bytes | Pantalla principal V304 con acciones tipográficas hermanas en General y Stableford. |
 | `index.html` | `7b483f1553246274920c71a10723f484d1847744` | 759569 bytes | Entrada antigua que lleva a la pantalla principal. |
 | `ios/EPGCaddy/App.swift` | `06a1c8ee89139ef87af20f07bba2496aa2b90636` | 141 bytes | Inicia la aplicación de apoyo para iPhone. |
 | `ios/EPGCaddy/ContentView.swift` | `80556289a09cc451f4e11e56f2f9d6a800a50a5f` | 208 bytes | Abre Golf Score Card GT dentro de la aplicación de iPhone. |
@@ -113,7 +113,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ios/project.yml` | `ef15575463a1913d778c7d8b8fb3dea237b0f4c7` | 976 bytes | Prepara el proyecto antiguo de iPhone con el nombre visible Golf Score Card GT. |
 | `manifest.webmanifest` | `e1aabc9eb3e15e548b3603fbdccb6318d417e56c` | 842 bytes | Define el nombre, colores, inicio e iconos cuando la web se instala como app. |
 | `master-data-sync.js` | `be2aade4553f95b389189fcf4225ece6d16deaad` | 8202 bytes | Mantiene igual la información del teléfono y del respaldo central. |
-| `mobile-release.json` | `0365842ae0931a6d7689bf23d8c54770ceae2b62` | 76 bytes | Guarda la versión y el número 303 del próximo paquete móvil. |
+| `mobile-release.json` | `0f35238d7204c7a23fdeed1ba26beea26d57c923` | 76 bytes | Guarda la versión y el número 304 del próximo paquete móvil. |
 | `mobile/native-runtime-entry.js` | `ffbe9107212932779e6c8e7e5017f4c178b62326` | 704 bytes | Conecta la pantalla con funciones propias del teléfono. |
 | `package.json` | `a9ffec0ea56adb2998235b502fd71ed092b13bb0` | 1403 bytes | Lista lo necesario y agrega el botón técnico `roadmap:gate`. |
 | `player-registry.js` | `bf406d7b60803aedf1fd1d936de699d0cc95e0a5` | 11246 bytes | Guarda, encuentra y actualiza jugadores. |
@@ -124,7 +124,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/prepare-mobile-assets.mjs` | `fcd2fa387095322c9731917834ad424ad3e8fd73` | 1356 bytes | Crea todos los tamaños oficiales del logo. |
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
 | `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | 2881 bytes | Bloquea cualquier modificación o publicación que no aparezca en ambos ROADMAPS. |
-| `service-worker.js` | `1342818d0485fe3698fe3eb7dc861608c2526e94` | 1987 bytes | Activa la caché V303 para entregar el botón y aviso OK de Stableford. |
+| `service-worker.js` | `1b9d4ecfe29b5b52a961c1990b02b54b1887bcda` | 1987 bytes | Activa la caché V304 para entregar la homologación visual de las dos tarjetas. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |
 | `stableford-course-source-san-isidro.md` | `b370db591d5139895c9586801d55b57b3bcf0359` | 505 bytes | Fuente usada para cargar la tarjeta de San Isidro. |
@@ -192,9 +192,10 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v287-stableford-back-controls-clear.mjs` | `38775203ce67f828c90687799046a566e82fd517` | 667 bytes | Comprueba que Respaldo no tape Atrás ni + Jugador. |
 | `test-v288-stableford-one-touch-home.mjs` | `bf4b127fdfb288b01f55a506f80dd92445855e5c` | 2078 bytes | Comprueba que Atrás regrese al inicio con un toque. |
 | `test-v289-stableford-new-round-empty.mjs` | `bcb1295e20116ea9cde8b86ad96b5f8c366e626e` | 2005 bytes | Comprueba que Nueva ronda deje vacíos los nombres. |
-| `test-v290-brand-icons-cleanup.mjs` | `a12df8154897114bbd181828776fe8a93d231ceb` | 3988 bytes | Comprueba V303: botón OK, aviso PRESIONA OK, paquete y caché. |
+| `test-v290-brand-icons-cleanup.mjs` | `d93114419e6827fcf23fc9f0eaa21922598e0bd8` | 3998 bytes | Conserva las comprobaciones de registro y valida paquete y caché V304. |
+| `test-v304-homogeneous-registration-actions.mjs` | `acd09d5c04677ef60a37b07b2d748c8c26db53a6` | 3254 bytes | Compara automáticamente vocabulario, guía, SVG del micrófono, fuente, peso, tamaño, altura, brillo y estado de las tarjetas hermanas. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
-| `vercel.json` | `c6dbbe007a72b62ed141e39aac6128f2dce3eb8b` | 1638 bytes | Indica qué publicar, ejecuta el candado y conserva la salida web correcta. |
+| `vercel.json` | `8735afbd1185aba7d85605459312ed24e95d8172` | 1693 bytes | Ejecuta en Vercel los candados ROADMAP y visual hermano antes de publicar. |
 | `verify-manual-sync.mjs` | `8042010c6b0cd81915a57a8ac65d1f778bea7cc7` | 730 bytes | Comprueba el respaldo y el envío de cambios. |
 
 ## Registro obligatorio de la documentación operativa V300
@@ -243,6 +244,22 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Conserva el inventario integral de V303. |
 | `ROADMAP_A_DETALLE.md` | Registro V303 | Registra V303 a detalle. |
 | `ROADMAP_OVERALL.md` | Registro V303 | Registra V303 en el resumen general. |
+
+## Registro obligatorio de la actualización operativa V304
+
+| Archivo nuevo o modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `index-grupal.html` | `928655f9a1a0332e3dd3b4fb7586a119f96f69e6` | Unifica las acciones de General y Stableford con la misma fuente, peso 900, tamaño cercano a 30 % mayor y la misma altura de OK; el OK bloqueado de Stableford deja de verse gris. |
+| `mobile-release.json` | `0f35238d7204c7a23fdeed1ba26beea26d57c923` | Prepara el paquete móvil número 304. |
+| `service-worker.js` | `1b9d4ecfe29b5b52a961c1990b02b54b1887bcda` | Entrega la actualización V304 y retira la caché anterior. |
+| `test-v290-brand-icons-cleanup.mjs` | `d93114419e6827fcf23fc9f0eaa21922598e0bd8` | Mantiene la validación histórica alineada con paquete y caché V304. |
+| `test-v304-homogeneous-registration-actions.mjs` | `acd09d5c04677ef60a37b07b2d748c8c26db53a6` | Instala el control de calidad automático para impedir diferencias de vocabulario, instrucciones, micrófono y línea gráfica compartida. |
+| `audit-project.mjs` | `35e94709bf7d2417707776fbd5a82e4ef5d9f335` | Agrega el nuevo control V304 a la auditoría maestra. |
+| `.github/workflows/roadmap-gate.yml` | `55d607666ade5f730121d42900f02b1463a274f3` | Bloquea en GitHub cualquier cambio que rompa el contrato gráfico y descriptivo de las tarjetas hermanas. |
+| `vercel.json` | `8735afbd1185aba7d85605459312ed24e95d8172` | Impide que Vercel publique si el filtro de tarjetas hermanas falla. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Conserva el inventario integral de los once archivos V304 y eleva el total activo a 187. |
+| `ROADMAP_A_DETALLE.md` | Registro V304 | Registra V304 a detalle. |
+| `ROADMAP_OVERALL.md` | Registro V304 | Registra V304 en el resumen general. |
 
 ## Archivos retirados del uso diario
 

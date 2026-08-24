@@ -224,6 +224,24 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el paso 4-OK de las inst
 | `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra V303 a detalle. |
 | `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra V303 en el resumen general. |
 
+## Registro obligatorio de la actualización operativa V304
+
+Solicitud: **24 de agosto de 2026**. Alcance: homologar el brillo del OK y convertir las acciones inferiores de Registro General y Stableford en un solo sistema tipográfico, aproximadamente 30 % más grande, con control de calidad automático y sin modificar la operación de las modalidades.
+
+| Archivo nuevo o modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `index-grupal.html` | Registro V304 | Aplica a las dos tarjetas la misma familia Arial/Sistema, peso 900, 18 px en escritorio y 14 px en iPhone; iguala la altura de ambos OK y sustituye el gris desvanecido de Stableford por un estado neón delineado que sigue bloqueado hasta completar los datos. |
+| `mobile-release.json` | Paquete `304` | Deja preparada la numeración móvil de esta actualización. |
+| `service-worker.js` | Caché `gscg-mobile-v304` | Obliga a descargar la homologación y retirar la caché anterior. |
+| `test-v290-brand-icons-cleanup.mjs` | Validación V304 | Conserva las pruebas acumuladas y comprueba el paquete y la caché actualizados. |
+| `test-v304-homogeneous-registration-actions.mjs` | Control visual V304 | Verifica automáticamente familia, tamaño, peso, alturas iguales, brillo del estado bloqueado y ausencia del gris anterior. |
+| `audit-project.mjs` | Auditoría V304 | Ejecuta el nuevo control comparativo dentro de la auditoría maestra. |
+| `.github/workflows/roadmap-gate.yml` | Candado GitHub V304 | Ejecuta el filtro hermano automáticamente en cada cambio y solicitud de incorporación. |
+| `vercel.json` | Candado Vercel V304 | Ejecuta el filtro hermano después del candado ROADMAP y cancela una publicación que no lo supere. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Registra individualmente todos los archivos modificados y el nuevo control V304. |
+| `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra V304 a detalle. |
+| `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra V304 en el resumen general. |
+
 ## Punto de corte y norma permanente estricta
 
 - **Punto de activación original: línea 183.**

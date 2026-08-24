@@ -236,6 +236,24 @@ El **24 de agosto de 2026** se completa la hermandad de vocabulario entre Genera
 | `ROADMAP_A_DETALLE.md` | Registra V303 a detalle. |
 | `ROADMAP_OVERALL.md` | Registra V303 en este resumen general. |
 
+## Actualización operativa V304 · Acciones hermanas y control visual
+
+El **24 de agosto de 2026** se corrige la diferencia que obligaba al usuario a revisar manualmente las dos tarjetas. Registro General y Registro Stableford comparten ahora un único tratamiento para sus acciones inferiores: misma familia, peso 900, tamaño aproximadamente 30 % mayor y la misma altura para OK. Cuando Stableford todavía no está listo, OK permanece funcionalmente bloqueado, pero se muestra con texto y borde neón legibles en lugar de gris desvanecido. Ninguna regla de juego, validación o navegación cambia.
+
+| Archivo nuevo o modificación | Qué queda registrado |
+|---|---|
+| `index-grupal.html` | Instala el sistema visual compartido para OK, Ronda previa, Biblioteca, Atrás y Cancelar en ambas tarjetas. |
+| `mobile-release.json` | Número de paquete preparado actualizado a V304. |
+| `service-worker.js` | Caché V304 para entregar inmediatamente la homologación. |
+| `test-v290-brand-icons-cleanup.mjs` | Mantiene la validación acumulada alineada con V304. |
+| `test-v304-homogeneous-registration-actions.mjs` | Impide automáticamente diferencias futuras de fuente, peso, tamaño, altura o brillo entre las acciones hermanas. |
+| `audit-project.mjs` | Ejecuta la comparación V304 dentro del control maestro. |
+| `.github/workflows/roadmap-gate.yml` | Vuelve obligatorio el filtro hermano en GitHub. |
+| `vercel.json` | Vuelve obligatorio el filtro hermano antes de cada publicación Vercel. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el inventario completo e incorpora la nueva prueba. |
+| `ROADMAP_A_DETALLE.md` | Registra V304 a detalle. |
+| `ROADMAP_OVERALL.md` | Registra V304 en este resumen general. |
+
 ## Regla permanente
 
 1. Todo nombre visible será **Golf Score Card GT**.

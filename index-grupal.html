@@ -533,6 +533,39 @@ body.stableford-mode .account-backup-button{position:static;display:block;width:
 <style id="gscg-native-commercial-v283">
 .native-pro-button{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:max(58px,calc(env(safe-area-inset-bottom) + 48px));z-index:3500;min-height:38px;padding:0 14px;border:1px solid #d6a83d;border-radius:7px;background:#050505;color:#ffd86b;font-size:10px;font-weight:900;letter-spacing:.45px;box-shadow:0 0 16px rgba(214,168,61,.25)}.native-pro-button.active{border-color:var(--lime);color:var(--lime)}.native-pro-button.hidden{display:none!important}
 </style>
+<style id="gscg-registration-actions-v304">
+/* V304: un solo sistema tipografico y de estado para las acciones de Registro General y Stableford. */
+#setupStep1>.nr-button,
+#stablefordSetupOverlay .stableford-setup-card>.nr-button{
+  font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  font-size:18px!important;
+  font-weight:900!important;
+  line-height:1.1!important;
+  letter-spacing:.2px!important;
+}
+#setupOk,
+#startStablefordRound{
+  height:72px!important;
+}
+#startStablefordRound:disabled{
+  border:2px solid var(--lime)!important;
+  background:#081d04!important;
+  color:var(--lime)!important;
+  opacity:1!important;
+  box-shadow:0 0 14px rgba(49,255,0,.16)!important;
+  cursor:not-allowed;
+}
+@media(max-width:800px){
+  #setupStep1>.nr-button,
+  #stablefordSetupOverlay .stableford-setup-card>.nr-button{
+    font-size:14px!important;
+  }
+  #setupOk,
+  #startStablefordRound{
+    height:64px!important;
+  }
+}
+</style>
 </head>
 <body>
 <main class="app">
