@@ -299,6 +299,21 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 | `test-v305-registration-guides-parser-truth.mjs` | Ejecuta ambos analizadores reales y exige que cada guía corresponda exactamente con su formato y con los estados equivalentes de OK. |
 | `vercel.json` | Exige filtros V304 y V305 antes de publicar. |
 
+## Guía Operativa 1.0 · Documento profesional para el usuario final
+
+El **24 de agosto de 2026** se crea la primera edición profesional de la **GUÍA OPERATIVA GOLF SCORE CARD GT**, compatible con App V305. Lleva el logo maestro oficial como protagonista, línea gráfica negra y verde neón, navegación rápida y redacción directa para que una persona sin conocimientos técnicos pueda instalar, configurar, jugar, dictar, corregir, cerrar, compartir y recuperar una ronda. Incluye formatos distintos y verificados para Registro General y Stableford, vocabulario real de scores y consultas, solución de atrancones, guía de emergencia de una página, glosario y lista final. La aplicación y sus reglas permanecen congeladas.
+
+| Archivo nuevo o modificado | Qué queda registrado |
+|---|---|
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.md` | Fuente editable completa de la guía para mantenerla sincronizada con futuras versiones. |
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.docx` | Documento final de 18 páginas, visualmente revisado una por una y listo para la revisión del usuario. |
+| `tools/build_operational_guide_v1.py` | Constructor reproducible que aplica el logo oficial, estilos profesionales y auditoría interna. |
+| `test-operational-guide-v1.mjs` | Control automático que impide pérdida de secciones, vocabulario retirado o instrucciones falsas de registro. |
+| `audit-project.mjs` | Ejecuta el nuevo filtro documental dentro del PASS maestro. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Eleva el inventario activo a 193 y registra todos los archivos de la guía. |
+| `ROADMAP_A_DETALLE.md` | Registra esta entrega editorial a detalle. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen obligatorio. |
+
 ## Regla permanente
 
 1. Todo nombre visible será **Golf Score Card GT**.
@@ -308,3 +323,53 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 5. Nunca se guardan contraseñas, correos personales o llaves privadas dentro de estos mapas.
 6. Cada carpeta, archivo o modificación se agrega automáticamente, en la misma versión, a **ROADMAP OVERALL** y **ROADMAP A DETALLE**.
 7. Ninguna versión se cierra ni se publica si falta ese registro doble.
+
+## Actualización operativa V306 · Siete campos e IN → OUT → TOTAL
+
+El **24 de agosto de 2026** se corrige el orden transversal de las tarjetas y se establece un único contrato visible y funcional: **IN = hoyos 1–9**, **OUT = hoyos 10–18** y **TOTAL** al final. La misma secuencia queda aplicada en Score Card General, Score Card - Práctica, Stableford, tarjetas oficiales, resúmenes, Control Manual, archivos personales/globales, Historial y Guía Operativa. Las tres modalidades ofrecen el mismo catálogo de siete campos. Se retiran nombres reales de ejemplos visibles, se incorporan bandas negras a los títulos verde neón de la guía y se conserva Stableford Scratch con HCP 0 y marcas automáticas por categoría.
+
+| Archivo nuevo o modificado | Qué queda registrado |
+|---|---|
+| `.github/workflows/roadmap-gate.yml` | Ejecuta el filtro obligatorio V306 en GitHub. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Documenta siete campos, ejemplos neutros y orden IN → OUT → TOTAL. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Eleva el inventario activo a 194 y registra V306. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Sincroniza el manual maestro con App V306 y la regla real de segmentos. |
+| `ROADMAP_A_DETALLE.md` | Registra individualmente toda la intervención V306. |
+| `ROADMAP_OVERALL.md` | Incorpora este resumen general V306. |
+| `audit-project.mjs` | Incorpora el filtro V306 al PASS maestro. |
+| `card-artifacts.js` | Ordena IN, OUT y TOTAL en artefactos Globales y personales. |
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.docx` | Entrega Word V306 revisada visualmente, con títulos neón sobre banda negra. |
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.md` | Fuente de guía con siete campos, ejemplos neutros y segmentos correctos. |
+| `index-grupal.html` | Corrige encabezados, resúmenes, voz y tarjetas; habilita siete campos en Stableford. |
+| `mobile-release.json` | Prepara el paquete móvil 306. |
+| `service-worker.js` | Activa la caché `gscg-mobile-v306`. |
+| `stableford-torneo.html` | Corrige la secuencia IN → OUT → TOTAL en la pantalla histórica redirigida. |
+| `stableford.js` | Autoriza el mismo catálogo de siete campos y conserva la guía Scratch real. |
+| `test-operational-guide-v1.mjs` | Verifica siete campos, ejemplos neutros, orden y bandas negras. |
+| `test-stableford-ui.mjs` | Alinea la interfaz Stableford con App V306. |
+| `test-stableford.mjs` | Comprueba el catálogo Stableford completo de siete campos. |
+| `test-stableford-torneo.mjs` | Comprueba también siete campos, seis jugadores e IN → OUT → TOTAL en la ruta histórica. |
+| `test-v253-live-previous-round.mjs` | Alinea la ruta Stableford oficial con `v=306`. |
+| `test-v255-player-registration-boxes-codes.mjs` | Prohíbe ejemplos visibles con nombres reales. |
+| `test-v261-registration-stableford-modality.mjs` | Verifica el ejemplo General neutro y las modalidades vigentes. |
+| `test-v263-compact-players-back-button.mjs` | Conserva altas Stableford y normalización Scratch bajo V306. |
+| `test-v267-scorecard-combination-matrix.mjs` | Amplía la matriz integral a los siete campos Stableford. |
+| `test-v268-control-manual-demo-link.mjs` | Sustituye jugadores reales del demo por JUGADOR 1–6. |
+| `test-v269-operational-matrix-demo.mjs` | Sustituye jugadores reales del demo por JUGADOR 1–6. |
+| `test-v272-definitive-operational-release.mjs` | Verifica encabezados y versión V306. |
+| `test-v274-complete-courses-voice-operations.mjs` | Alinea voz, campos y versión V306. |
+| `test-v275-stable-live-voice-turns.mjs` | Alinea turnos vivos con V306. |
+| `test-v276-manual-hole-navigation.mjs` | Alinea navegación manual con V306. |
+| `test-v277-official-round-corrections.mjs` | Alinea snapshots corregidos con V306. |
+| `test-v278-card-image-pdf-export.mjs` | Alinea exportaciones oficiales con V306. |
+| `test-v279-local-card-library.mjs` | Alinea Historial con V306. |
+| `test-v280-local-history-insights.mjs` | Alinea estadísticas históricas con V306. |
+| `test-v281-pwa-installation.mjs` | Comprueba la caché móvil V306. |
+| `test-v284-native-package-generation.mjs` | Comprueba paquete 306 y caché V306. |
+| `test-v290-brand-icons-cleanup.mjs` | Verifica ejemplos neutros, paquete y caché vigentes. |
+| `test-v304-homogeneous-registration-actions.mjs` | Conserva la hermandad visual bajo el build V306. |
+| `test-v305-history-navigation-zero-error.mjs` | Conserva vocabulario, retornos y cero superposiciones bajo V306. |
+| `test-v305-registration-guides-parser-truth.mjs` | Conserva la verdad operacional de ambos registros bajo V306. |
+| `test-v306-universal-fields-in-out-guide.mjs` | Nuevo filtro transversal de campos, orden, nombres y diseño documental. |
+| `tools/build_operational_guide_v1.py` | Genera la Guía V306 y aplica banda/marco negro a títulos neón. |
+| `vercel.json` | Exige V306 antes de publicar. |

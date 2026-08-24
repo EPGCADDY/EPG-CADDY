@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --omit=dev",
-  "buildCommand": "node scripts/roadmap-gate.mjs && node test-v304-homogeneous-registration-actions.mjs && node test-v305-history-navigation-zero-error.mjs && node test-v305-registration-guides-parser-truth.mjs",
+  "buildCommand": "node scripts/roadmap-gate.mjs && node test-v304-homogeneous-registration-actions.mjs && node test-v305-history-navigation-zero-error.mjs && node test-v305-registration-guides-parser-truth.mjs && node test-v306-universal-fields-in-out-guide.mjs",
   "outputDirectory": ".",
   "redirects": [
     {

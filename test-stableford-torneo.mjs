@@ -3,7 +3,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./stableford-torneo.html",import.meta.url),"utf8");
 assert.match(html,/GOLF SCORE CARD GT · STABLEFORD/);
 assert.match(html,/CLASIFICACIÓN CENTROAMERICANA · MEJORES 3 DE 4/);
-for(const key of ["country_club","pulte","san_isidro","mayan_golf"])assert.match(html,new RegExp(`${key}:\\{name:`),`Falta ${key}`);
+for(const key of ["country_club","pulte","san_isidro","mayan_golf","hacienda_nueva","alta_vista","la_reunion"])assert.match(html,new RegExp(`${key}:\\{name:`),`Falta ${key}`);
 assert.match(html,/SENIOR · BLANCAS · HCP 0/);
 assert.match(html,/id="superBtn"[^>]*>S\. SENIOR/);
 assert.match(html,/PUNTOS/);
@@ -14,7 +14,7 @@ assert.match(html,/PTS IN/);
 assert.match(html,/MEJORES 3/);
 assert.match(html,/raw==="X"/);
 assert.match(html,/GSCStableford\.pointsFor|GSCStableford\.holeResult/);
-assert.match(html,/state\.players=.*slice\(0,4\)/s);
+assert.match(html,/state\.players=.*slice\(0,6\)/s);
 assert.match(html,/NUEVA RONDA LIMPIA/);
 const expected={
  sanWhite:[358,139,530,155,375,436,553,259,410,409,455,383,200,385,535,149,370,369],
@@ -41,4 +41,4 @@ assert.equal(expected.mayanYellow.reduce((a,b)=>a+b,0),6457);
 const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]).filter(Boolean);
 assert.ok(scripts.length>=1,"Falta script inline de la tarjeta");
 for(const js of scripts)new Function(js);
-console.log("Stableford torneo PASS estático: sintaxis, cuatro campos, categorías, máximo cuatro jugadores, Gross/Puntos, X, totales, nueva ronda, ranking y matrices verificadas.");
+console.log("Stableford torneo PASS estático: sintaxis, siete campos, categorías, máximo seis jugadores, Gross/Puntos, X, IN/OUT/TOTAL, nueva ronda, ranking y matrices verificadas.");

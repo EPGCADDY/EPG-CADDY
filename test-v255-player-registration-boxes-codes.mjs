@@ -11,8 +11,8 @@ assert.match(html,/<option value="" \$\{staged\.tee\?"":"selected"\}>SELECCIONA<
 assert.doesNotMatch(html,/draft-empty-label">DISPONIBLE/);
 assert.match(html,/function syncDraftPlayersFromManualRows/);
 assert.match(html,/<div class="newbie-guide-title">DICTA ASÍ:<\/div>/);
-assert.match(html,/<div>JAIME · 14 · BLANCAS<\/div>/);
-assert.match(html,/<div>ROBERTO · 21 · AZULES<\/div>/);
+assert.match(html,/<div>NOMBRE · 14 · BLANCAS<\/div>/);
+assert.match(html,/<div>NOMBRE · 21 · AZULES<\/div>/);
 assert.match(html,/<div class="newbie-guide-player">HASTA 6 JUGADORES<\/div>/);
 assert.match(html,/<div>LUEGO TOCA OK<\/div>/);
 assert.match(html,/id="setupMic" aria-label="Dictar nombre, HDCP y marcas"/);

@@ -26,7 +26,7 @@ La aplicación conserva la ronda que está en curso. Si se cierra y se vuelve a 
 
 ## 3. Selección del campo
 
-Para una ronda General están disponibles:
+Los mismos siete campos están disponibles en **Ronda Normal**, **Stableford** y **Score Card - Práctica**:
 
 - El Pulté;
 - Country Club;
@@ -36,13 +36,6 @@ Para una ronda General están disponibles:
 - Alta Vista;
 - La Reunión.
 
-Para una ronda Stableford de torneo están disponibles:
-
-- El Pulté;
-- Country Club;
-- San Isidro;
-- Mayan Golf.
-
 El usuario toca el nombre del campo que jugará. La opción seleccionada queda marcada en verde.
 
 ## 4. Modalidades disponibles
@@ -51,7 +44,7 @@ El usuario toca el nombre del campo que jugará. La opción seleccionada queda m
 
 Se abre al tocar **RONDA NORMAL**. Es la modalidad normal de Golf Score Card GT. Usa el handicap y las marcas de cada jugador para mostrar:
 
-- Gross OUT, IN y TOTAL;
+- Gross IN, OUT y TOTAL;
 - handicap;
 - Neto TOTAL;
 - resultado neto sobre o bajo par.
@@ -67,8 +60,8 @@ Se abre al tocar **STABLEFORD**. El usuario selecciona:
 
 La ronda trabaja como Scratch con HCP 0 y calcula por jugador:
 
-- Gross OUT, IN y TOTAL;
-- Puntos OUT, IN y TOTAL.
+- Gross IN, OUT y TOTAL;
+- Puntos IN, OUT y TOTAL.
 
 También conserva en el teléfono la clasificación de cuatro fechas y calcula los mejores tres resultados.
 
@@ -106,19 +99,19 @@ Se pueden registrar de uno a seis jugadores.
 En una **Ronda Normal**:
 
 1. Tocar el micrófono verde.
-2. Dictar directamente nombre, HDCP y marcas. Ejemplo: **“Jaime 14 blancas; Roberto 21 azules”**.
+2. Dictar directamente nombre, HDCP y marcas. Ejemplo: **“NOMBRE 14 blancas; NOMBRE 21 azules”**.
 3. Repetir el mismo orden hasta completar de uno a seis jugadores. Decir **“Jugador 1”** es opcional.
 4. Tocar **OK**.
 
 La guía de pantalla muestra:
 
-**DICTA ASÍ: JAIME · 14 · BLANCAS; ROBERTO · 21 · AZULES; HASTA 6 JUGADORES; LUEGO TOCA OK.**
+**DICTA ASÍ: NOMBRE · 14 · BLANCAS; NOMBRE · 21 · AZULES; HASTA 6 JUGADORES; LUEGO TOCA OK.**
 
 En **Stableford**:
 
 1. Seleccionar campo y categoría.
 2. Tocar el micrófono verde.
-3. Dictar obligatoriamente la posición y el nombre. Ejemplo: **“Jugador 1 Jaime; Jugador 2 Roberto”**.
+3. Dictar obligatoriamente la posición y el nombre. Ejemplo: **“Jugador 1 NOMBRE; Jugador 2 NOMBRE”**.
 4. Continuar hasta **Jugador 6** si corresponde y tocar **OK**.
 
 En Stableford no se dictan HDCP ni marcas: la aplicación asigna automáticamente HCP 0 y blancas o amarillas según la categoría.
@@ -177,8 +170,8 @@ Durante la ronda, Golf Score Card GT actualiza la tarjeta y los totales.
 
 En General muestra:
 
-- Gross OUT;
 - Gross IN;
+- Gross OUT;
 - Gross TOTAL;
 - handicap;
 - Neto TOTAL;
@@ -186,11 +179,11 @@ En General muestra:
 
 En Stableford muestra:
 
-- Gross OUT;
 - Gross IN;
+- Gross OUT;
 - Gross TOTAL;
-- Puntos OUT;
 - Puntos IN;
+- Puntos OUT;
 - Puntos TOTAL.
 
 El botón **TIMER ON** permite ver el tiempo transcurrido de la ronda. Al detenerlo muestra **TIMER OFF**.
@@ -339,8 +332,8 @@ Las siguientes capacidades continúan en preparación o validación y no deben c
 - **Gross:** golpes realizados antes de aplicar handicap.
 - **HDCP:** handicap del jugador.
 - **Marcas:** salida o tee desde donde juega cada jugador.
-- **OUT:** total de los hoyos 1 al 9.
-- **IN:** total de los hoyos 10 al 18.
+- **IN:** total de los hoyos 1 al 9.
+- **OUT:** total de los hoyos 10 al 18.
 - **TOTAL:** suma de los 18 hoyos.
 - **Neto:** resultado después de aplicar el handicap.
 - **X:** hoyo sin score registrado.

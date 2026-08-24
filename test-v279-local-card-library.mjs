@@ -4,11 +4,11 @@ import library from "./card-library.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V305-HISTORY-NAVIGATION-ZERO-ERROR-20260824"/);
+assert.match(html,/gscg-build" content="V306-UNIVERSAL-FIELDS-IN-OUT-GUIDE-20260824"/);
 assert.match(html,/V279-ROUND-FIELD-TOURNAMENT-PLAYER-20260823/);
 for(const id of ["openCardLibraryButton","openCardLibrarySetup","openCardLibraryStableford","cardLibraryOverlay","cardLibraryMode","cardLibraryCourse","cardLibraryQuery","cardLibraryList","libraryOpenGlobal","libraryImageGlobal","libraryPdfGlobal","libraryOpenPersonal","libraryImagePersonal","libraryPdfPersonal","libraryPdfAll"])assert.match(html,new RegExp(`id="${id}"`),`Falta ${id}`);
 assert.match(html,/card-library\.js/);
-assert.match(html,/appVersion:"V305"/);
+assert.match(html,/appVersion:"V306"/);
 assert.equal(masterSync.APP_VERSION,"V283");
 
 const snapshot=(id,mode,course,tournament,playedAt,players,status="officially_closed")=>({id,createdAt:playedAt,configured:true,officiallyClosedAt:playedAt,officialSnapshot:{roundId:id,status,mode,course,courseKey:course.toLowerCase().replaceAll(" ","_"),tournament:{name:tournament},playedAt,officiallyClosedAt:playedAt,version:status==="corrected"?2:1,sha256:id.padEnd(64,"a").slice(0,64),players:players.map((name,index)=>({id:`${id}-p${index}`,name,holes:{}}))}});

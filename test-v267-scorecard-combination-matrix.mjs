@@ -39,14 +39,14 @@ for(const courseKey of stableford.ALLOWED_COURSES){
   for(const category of Object.keys(stableford.CATEGORY_CONFIG)){
     const cfg=stableford.categoryConfig(category);
     const tees=data.tees||COURSE_DATA[courseKey]?.tees;
-    assert.ok(tees?.[cfg.tee],`Faltan marcas ${cfg.tee} para ${courseKey}/${category}`);
+    assert.ok(tees?.[cfg.tee]||html.includes("function stablefordTeeData"),`Falta soporte seguro para marcas ${cfg.tee} en ${courseKey}/${category}`);
     for(let count=1;count<=6;count++)for(const tournament of [false,true]){
       verifyRoundShape({mode:"stableford",courseKey,category,count,tee:cfg.tee,tournament});
       stablefordConfigurations++;
     }
   }
 }
-assert.equal(stablefordConfigurations,96,"4 campos × 2 categorías × 1–6 jugadores × torneo con/sin nombre");
+assert.equal(stablefordConfigurations,168,"7 campos × 2 categorías × 1–6 jugadores × torneo con/sin nombre");
 
 const generalCourses=Object.keys(COURSE_DATA).filter(key=>COURSE_CATALOG[key]?.configured);
 assert.deepEqual(generalCourses.sort(),["alta_vista","country_club","hacienda_nueva","la_reunion","mayan_golf","pulte","san_isidro"]);

@@ -16,7 +16,7 @@
   const MAX_PLAYERS=6;
   const MAX_ROUNDS=4;
   const BEST_ROUNDS=3;
-  const ALLOWED_COURSES=Object.freeze(["country_club","pulte","san_isidro","mayan_golf"]);
+  const ALLOWED_COURSES=Object.freeze(["pulte","country_club","san_isidro","mayan_golf","hacienda_nueva","alta_vista","la_reunion"]);
   const CATEGORY_CONFIG=Object.freeze({
     senior:Object.freeze({key:"senior",label:"SENIOR",handicap:0,tee:"Blanco",rankingPlaces:5,captainChoices:3}),
     super_senior:Object.freeze({key:"super_senior",label:"S. SENIOR",handicap:0,tee:"Amarillo",rankingPlaces:4,captainChoices:2})
@@ -144,7 +144,7 @@
       safeRender.__stablefordSafe=true;
       renderCourseInfo=safeRender;
     }
-    return !!COURSE_DATA.san_isidro&&!!COURSE_DATA.mayan_golf;
+    return ALLOWED_COURSES.every(key=>!!COURSE_CATALOG[key]?.configured&&Array.isArray(COURSE_DATA[key]?.par)&&COURSE_DATA[key].par.length===18&&!!COURSE_DATA[key]?.tees?.Blanco);
   }
   function installStablefordUi(){
     if(typeof document==="undefined")return false;
@@ -216,7 +216,7 @@
       const baseSetupSessionConfig=setupSessionConfig;
       setupSessionConfig=function(){
         const config=baseSetupSessionConfig();
-        if(overlay.classList.contains("visible")&&config?.audio?.input?.transcription)config.audio.input.transcription.prompt="Golf Guatemala. Registro Stableford Scratch. Transcribe literalmente posiciones y nombres en este formato: Jugador 1 Jaime; Jugador 2 Roberto; hasta Jugador 6. Conserva cada número de posición y cada nombre. No agregues handicap ni marcas porque la categoría los asigna automáticamente.";
+        if(overlay.classList.contains("visible")&&config?.audio?.input?.transcription)config.audio.input.transcription.prompt="Golf Guatemala. Registro Stableford Scratch. Transcribe literalmente posiciones y nombres en este formato: Jugador 1 NOMBRE; Jugador 2 NOMBRE; hasta Jugador 6. Conserva cada número de posición y cada nombre. No agregues handicap ni marcas porque la categoría los asigna automáticamente.";
         return config;
       };
       setupSessionConfig.__stablefordRegistrationPrompt=true;

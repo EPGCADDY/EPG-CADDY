@@ -8,10 +8,10 @@ const individual=fs.readFileSync(new URL("./index.html",import.meta.url),"utf8")
 const hosting=JSON.parse(fs.readFileSync(new URL("./vercel.json",import.meta.url),"utf8"));
 
 assert.match(html,/<title>Golf Score Card GT<\/title>/);
-assert.match(html,/gscg-build" content="V305-HISTORY-NAVIGATION-ZERO-ERROR-20260824"/);
-assert.match(html,/appVersion:"V305"/);
+assert.match(html,/gscg-build" content="V306-UNIVERSAL-FIELDS-IN-OUT-GUIDE-20260824"/);
+assert.match(html,/appVersion:"V306"/);
 assert.match(html,/V272-QUIET-MISSING-PROMPT-CLOSED-REPORTS-OUT-IN-20260823/);
-assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=305"/);
+assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=306"/);
 assert.doesNotMatch(html,/epg-caddy-git-stableford-tournament-final/);
 assert.match(stableford,/GOLF SCORE CARD GT · STABLEFORD/);
 for(const source of ["/","/index.html","/stableford-torneo.html"]){
@@ -24,7 +24,7 @@ for(const label of ["GROSS OUT","GROSS IN","PTS OUT","PTS IN"])assert.ok(stablef
 for(const obsolete of ["GROSS PRIMERA VUELTA","GROSS SEGUNDA VUELTA","PUNTOS PRIMERA VUELTA","PUNTOS SEGUNDA VUELTA","GROSS 1V","GROSS 2V","PUNTOS 1V","PUNTOS 2V",">IDA<",">VTA<","GROSS IDA","GROSS VTA"]){
   assert.equal([html,stableford,artifacts,individual].some(source=>source.includes(obsolete)),false,`Rótulo visual obsoleto: ${obsolete}`);
 }
-assert.match(artifacts,/OUT: \$\{stats\.front\.points\} puntos\. IN: \$\{stats\.back\.points\} puntos\./);
+assert.match(artifacts,/IN: \$\{stats\.front\.points\} puntos\. OUT: \$\{stats\.back\.points\} puntos\./);
 assert.match(individual,/<strong>OUT<\/strong>/);
 assert.match(individual,/<strong>IN<\/strong>/);
 

@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos con candado técnico de ROADMAPS: **189**.
+Archivos activos con candado técnico de ROADMAPS: **194**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -35,6 +35,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ECOS.md` | `43a9c6f5bacb8c758edd33c8ad31f9e59e63f84f` | 3982 bytes | Reglas de comportamiento de Golf Score Card GT. |
 | `EPG-Caddy_Master_Blueprint_v0.1.md` | `95b4c227c4e5dce7f90fede0ebc9cdd0af6ed76c` | 7990 bytes | Plano maestro; el nombre del archivo es antiguo, pero el contenido ya usa Golf Score Card GT. |
 | `EPG_CADDY_PLAN_CAMBIOS.md` | `a81981bda6522c0ab29ec5e70f6ebe557cde34bf` | 116300 bytes | Lista antigua de cambios; el nombre sólo se conserva para localizarla. |
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.docx` | Guía Operativa 1.0 / App V305 | 651686 bytes | Documento profesional de 18 páginas para el usuario final, con logo oficial, operación completa, voz, atrancones, emergencia y glosario. |
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.md` | `4bcb0370fd17f09a6668f0453ff114ea68c23b7f05323868e1b2fd005791dfd8` | 20713 bytes | Fuente editable y auditable de la Guía Operativa 1.0. |
 | `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V305 | Se calcula al publicar | Manual completo sincronizado con App V305, sus pantallas y sus reglas. |
 | `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V305 | Se calcula al publicar | Lista ordenada de funciones terminadas y pendientes con vocabulario Historial. |
 | `MAPA_MATRIZ_BASE_MAESTRA_V256.md` | `8d0cdb23c0b1d9445f51b822ba49d385f5c71d3c` | 1718 bytes | Explica la información central incorporada en V256. |
@@ -90,7 +92,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Copia maestra del logo cromado 3D con verde neón muy saturado. |
 | `assets/official-logos/golf-score-card-gt-pwa-192.png` | `e28cd92c784748a2d4ff02bf3491b96c8121ed94` | 67805 bytes | Icono cromado 3D neón pequeño de la aplicación instalable. |
 | `assets/official-logos/golf-score-card-gt-pwa-512.png` | `0e85cc6995f9bafefb49dec5a8253aef3db7fffd` | 461402 bytes | Icono cromado 3D neón grande de la aplicación instalable. |
-| `audit-project.mjs` | Registro V305 | Se calcula al publicar | Ejecuta el candado ROADMAP y los filtros automáticos V304 y V305. |
+| `audit-project.mjs` | Registro Guía Operativa 1.0 | Se calcula al publicar | Ejecuta el candado ROADMAP, los filtros V304/V305 y el control automático de la guía para usuario final. |
 | `capacitor.config.json` | `a5ca52fde974ea370d90dbfe422f08101ec7f7eb` | 867 bytes | Define el nombre visible y la identidad de las apps de iPhone y Android. |
 | `card-artifacts.js` | `df8ba2b09532b73701681d7de1781ca5b54baf26` | 12799 bytes | Arma la tarjeta oficial con la información de la ronda. |
 | `card-file-export.js` | `4ddbf8f36ec142114cfa965a78d97ea55365afa1` | 5919 bytes | Convierte la tarjeta en imagen o PDF. |
@@ -196,7 +198,9 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v304-homogeneous-registration-actions.mjs` | Registro V305 | Se calcula al publicar | Conserva el control de vocabulario, guía, micrófono, fuente, peso, tamaño, altura, brillo y estado. |
 | `test-v305-history-navigation-zero-error.mjs` | Registro V305 | Se calcula al publicar | Audita Historial, Atrás, Regístrate, superposiciones, validación Stableford, versión y caché. |
 | `test-v305-registration-guides-parser-truth.mjs` | Registro V305 | Se calcula al publicar | Ejecuta ambos analizadores reales y bloquea guías falsas, HDCP o marcas visibles en Stableford y estados de OK incoherentes. |
+| `test-operational-guide-v1.mjs` | `22e118726ed8c156b313b42723ff794cf596a8833fc6cbf32946e951317fdbd8` | 2982 bytes | Impide que la guía pierda secciones, logo, vocabulario vigente o los formatos reales de registro General y Stableford. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
+| `tools/build_operational_guide_v1.py` | `38e4bb20530b1dab68d431a0a769d3cd41d3fa26d595a9ce19861675c79a54eb` | 20784 bytes | Construye el DOCX profesional desde la fuente, aplica la línea gráfica y comprueba el contenido obligatorio. |
 | `vercel.json` | Registro V305 | Se calcula al publicar | Ejecuta en Vercel los candados ROADMAP, visual hermano y navegación V305 antes de publicar. |
 | `verify-manual-sync.mjs` | `8042010c6b0cd81915a57a8ac65d1f778bea7cc7` | 730 bytes | Comprueba el respaldo y el envío de cambios. |
 
@@ -306,6 +310,21 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v305-registration-guides-parser-truth.mjs` | Registro V305 | Comprueba los formatos reales de dictado y los estados equivalentes de OK. |
 | `vercel.json` | Registro V305 | Impide publicar si falla el filtro V304 o V305. |
 
+## Registro obligatorio de la Guía Operativa 1.0
+
+Solicitud: **24 de agosto de 2026**. Alcance: crear la guía profesional para el usuario final sobre la base App V305, con portada de marca, logo oficial dominante, operación completa, vocabulario de voz, solución de atrancones, guía de emergencia, glosario y control automático. No modifica la aplicación ni sus reglas.
+
+| Archivo nuevo o modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.md` | Fuente Guía Operativa 1.0 | Conserva todo el contenido editable, incluidos los registros diferentes de General y Stableford. |
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.docx` | Artefacto Guía Operativa 1.0 | Entrega 18 páginas profesionales con el logo maestro oficial, mapa rápido, cinco partes, emergencia, glosario y lista final. |
+| `tools/build_operational_guide_v1.py` | Constructor Guía Operativa 1.0 | Genera la versión Word con tipografía Arial, negro, verde neón, numeración real, encabezados, pies y auditoría interna. |
+| `test-operational-guide-v1.mjs` | Filtro Guía Operativa 1.0 | Prohíbe el vocabulario retirado, exige HISTORIAL y valida registros, vocabulario, logo, secciones y tamaño mínimo del DOCX. |
+| `audit-project.mjs` | Auditoría Guía Operativa 1.0 | Incorpora el filtro documental a la auditoría maestra del repositorio. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Inventario Guía Operativa 1.0 | Eleva el inventario activo a 193 y registra cada archivo creado o modificado. |
+| `ROADMAP_A_DETALLE.md` | Registro Guía Operativa 1.0 | Conserva el detalle técnico y editorial de esta entrega. |
+| `ROADMAP_OVERALL.md` | Registro Guía Operativa 1.0 | Conserva el resumen general de esta entrega. |
+
 ## Archivos retirados del uso diario
 
 Se retiraron porque eran procesos antiguos que cambiaban el código automáticamente y ya fueron sustituidos. Siguen dentro del historial de V289.
@@ -408,3 +427,53 @@ Se retiraron porque eran procesos antiguos que cambiaban el código automáticam
 2. Leer la explicación sencilla.
 3. Usar el código para confirmar la versión exacta.
 4. Ver [MAPA_MAESTRO_INFRAESTRUCTURA.md](MAPA_MAESTRO_INFRAESTRUCTURA.md) para ramas, Vercel, Apple, Android y datos.
+
+## Inventario V306 · Homologación universal
+
+Registro del **24 de agosto de 2026**. Se modificaron 42 archivos existentes y se agregó `test-v306-universal-fields-in-out-guide.mjs`; total activo: **194**.
+
+| Ruta exacta | Código vigente | Qué quedó inventariado |
+|---|---|---|
+| `.github/workflows/roadmap-gate.yml` | Registro V306 | Filtro GitHub V306. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Registro V306 | Siete campos, ejemplos neutros e IN → OUT → TOTAL. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mapa | Inventario V306 y total 194. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V306 | Manual vivo V306. |
+| `ROADMAP_A_DETALLE.md` | Registro V306 | Detalle completo V306. |
+| `ROADMAP_OVERALL.md` | Registro V306 | Resumen completo V306. |
+| `audit-project.mjs` | Registro V306 | Auditoría maestra con 68 paquetes. |
+| `card-artifacts.js` | Registro V306 | Artefactos Global/personal en orden correcto. |
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.docx` | Guía 1.0 / App V306 | Documento final de 18 páginas. |
+| `docs/GUIA_OPERATIVA_GOLF_SCORE_CARD_GT_V1.md` | Registro V306 | Fuente auditable de la guía. |
+| `index-grupal.html` | Build V306 | Aplicación canónica homologada. |
+| `mobile-release.json` | Paquete 306 | Paquete móvil vigente. |
+| `service-worker.js` | Caché V306 | Entrega móvil vigente. |
+| `stableford-torneo.html` | Registro V306 | Orden corregido en pantalla histórica redirigida. |
+| `stableford.js` | Registro V306 | Motor Scratch con siete campos. |
+| `test-operational-guide-v1.mjs` | Registro V306 | Auditoría documental. |
+| `test-stableford-ui.mjs` | Registro V306 | Contrato visual Stableford. |
+| `test-stableford.mjs` | Registro V306 | Reglas y campos Stableford. |
+| `test-stableford-torneo.mjs` | Registro V306 | Siete campos, seis jugadores y segmentos correctos en la ruta histórica. |
+| `test-v253-live-previous-round.mjs` | Registro V306 | Ruta oficial. |
+| `test-v255-player-registration-boxes-codes.mjs` | Registro V306 | Ejemplos neutros. |
+| `test-v261-registration-stableford-modality.mjs` | Registro V306 | Modalidades y registro. |
+| `test-v263-compact-players-back-button.mjs` | Registro V306 | Jugadores y retorno. |
+| `test-v267-scorecard-combination-matrix.mjs` | Registro V306 | Matriz integral. |
+| `test-v268-control-manual-demo-link.mjs` | Registro V306 | Demo neutro. |
+| `test-v269-operational-matrix-demo.mjs` | Registro V306 | Matriz demo neutra. |
+| `test-v272-definitive-operational-release.mjs` | Registro V306 | Contrato definitivo. |
+| `test-v274-complete-courses-voice-operations.mjs` | Registro V306 | Campos y voz. |
+| `test-v275-stable-live-voice-turns.mjs` | Registro V306 | Turnos vivos. |
+| `test-v276-manual-hole-navigation.mjs` | Registro V306 | Navegación manual. |
+| `test-v277-official-round-corrections.mjs` | Registro V306 | Correcciones oficiales. |
+| `test-v278-card-image-pdf-export.mjs` | Registro V306 | Exportaciones. |
+| `test-v279-local-card-library.mjs` | Registro V306 | Historial local. |
+| `test-v280-local-history-insights.mjs` | Registro V306 | Estadísticas históricas. |
+| `test-v281-pwa-installation.mjs` | Registro V306 | Instalación PWA. |
+| `test-v284-native-package-generation.mjs` | Registro V306 | Paquetes nativos. |
+| `test-v290-brand-icons-cleanup.mjs` | Registro V306 | Marca y ejemplos. |
+| `test-v304-homogeneous-registration-actions.mjs` | Registro V306 | Línea gráfica hermana. |
+| `test-v305-history-navigation-zero-error.mjs` | Registro V306 | Navegación y vocabulario. |
+| `test-v305-registration-guides-parser-truth.mjs` | Registro V306 | Veracidad del dictado. |
+| `test-v306-universal-fields-in-out-guide.mjs` | Nuevo V306 | Candado de campos, orden, nombres y guía. |
+| `tools/build_operational_guide_v1.py` | Registro V306 | Constructor Word con títulos en banda negra. |
+| `vercel.json` | Registro V306 | Publicación bloqueada por filtro V306. |

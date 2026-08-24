@@ -14,7 +14,7 @@ const sharedVocabulary=[
   ["HISTORIAL","openCardLibrarySetup","openCardLibraryStableford"]
 ];
 const sharedInstructions=["REGISTRO DE JUGADORES","DICTA ASÍ:"];
-const generalInstructions=["JAIME · 14 · BLANCAS","ROBERTO · 21 · AZULES","HASTA 6 JUGADORES","LUEGO TOCA OK"];
+const generalInstructions=["NOMBRE · 14 · BLANCAS","NOMBRE · 21 · AZULES","HASTA 6 JUGADORES","LUEGO TOCA OK"];
 const stablefordInstructions=["1-# JUGADOR","2-NOMBRE","HASTA 6 JUGADORES","3-OK"];
 const microphonePath='M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z';
 
@@ -46,7 +46,7 @@ assert.match(html,/id="setupMicWrap"[\s\S]*?class="setup-mic-icon"/);
 assert.match(stable,/id="stablefordSetupMicWrap"[\s\S]*?class="setup-mic-icon"/);
 assert.match(html,/\.registration-method \.nr-mic\{width:120px;height:120px;/);
 assert.match(html,/\.registration-method \.nr-mic\{width:112px;height:112px;/);
-assert.equal(release.buildNumber,305);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v305"/);
+assert.equal(release.buildNumber,306);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v306"/);
 
 console.log("PASS V304 · filtro hermano: vocabulario, guía, micrófono, tipografía, tamaño, brillo y estados");

@@ -5,17 +5,17 @@ import artifacts from "./card-artifacts.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V305-HISTORY-NAVIGATION-ZERO-ERROR-20260824"/);
+assert.match(html,/gscg-build" content="V306-UNIVERSAL-FIELDS-IN-OUT-GUIDE-20260824"/);
 assert.match(html,/V277-ORIGINAL-REASON-VERSIONED-CORRECTION-20260823/);
 assert.match(html,/id="openOfficialCorrection">CORREGIR RONDA/);
 assert.match(html,/id="openOriginalGlobal">ABRIR ORIGINAL/);
 assert.match(html,/id="officialCorrectionOverlay"/);
 assert.match(html,/MOTIVO OBLIGATORIO/);
 assert.match(html,/RESPONSABLE OBLIGATORIO/);
-assert.match(html,/GSCRoundClosure\.correct\(round,\{changes,reason,authorizedBy,appVersion:"V305"\}\)/);
+assert.match(html,/GSCRoundClosure\.correct\(round,\{changes,reason,authorizedBy,appVersion:"V306"\}\)/);
 assert.match(html,/CORRECCIÓN V\$\{round\.officialVersion\} GUARDADA · ORIGINAL PRESERVADO/);
 assert.match(html,/isStablefordRound\(\)\?\{\.\.\.correctedScore,points:GSCStableford\.pointsFor/);
-assert.match(html,/appVersion:"V305"/);
+assert.match(html,/appVersion:"V306"/);
 assert.equal(masterSync.APP_VERSION,"V283");
 
 const holes=Object.fromEntries(Array.from({length:18},(_,index)=>{const hole=index+1,par=hole%3===0?3:hole%3===1?4:5;return[hole,{hole,par,gross:par,status:null,points:2,strokes:0,net:par,diff:0}]}));

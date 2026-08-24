@@ -3,7 +3,7 @@ import {createRequire} from "node:module";
 const require=createRequire(import.meta.url);
 const s=require("./stableford.js");
 
-assert.deepEqual(s.ALLOWED_COURSES,["country_club","pulte","san_isidro","mayan_golf"]);
+assert.deepEqual(s.ALLOWED_COURSES,["pulte","country_club","san_isidro","mayan_golf","hacienda_nueva","alta_vista","la_reunion"]);
 assert.equal(s.MAX_ROUNDS,4);
 assert.equal(s.MAX_PLAYERS,6);
 assert.deepEqual(s.categoryConfig("senior"),{key:"senior",label:"SENIOR",handicap:0,tee:"Blanco",rankingPlaces:5,captainChoices:3});
@@ -44,7 +44,7 @@ global.COURSE_DATA={};
 global.TEES={};
 global.renderCourseInfo=function baseRender(){throw new Error("El renderer completo no debe ejecutarse con sólo dos tees")};
 const courseInfo={innerHTML:""};global.$=id=>id==="courseInfo"?courseInfo:null;
-assert.equal(s.installTournamentCourses(),true);
+assert.equal(s.installTournamentCourses(),false,"El instalador parcial no debe declarar completo el catálogo universal");
 assert.equal(global.COURSE_CATALOG.san_isidro.configured,true);
 assert.equal(global.COURSE_CATALOG.mayan_golf.configured,true);
 assert.equal(global.COURSE_DATA.san_isidro.tees.Blanco.total,6470);
