@@ -10,8 +10,8 @@ Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sólo perm
 
 ## Estado actual
 
-- Versión publicada: **V292**.
-- Código oficial GitHub: `f239cc4316809284480daff3f37904b4c2e6fb8d`.
+- Versión publicada antes de esta actualización: **V296**.
+- Código base oficial GitHub: `1007d5889d5c5ab5bb18d64661adf1955cc63f72`.
 - Vercel: **READY**.
 - Publicación Vercel: `dpl_FuHxdWb71xeHGNvcESFLT4ig8rWA`.
 - Aplicación oficial: https://epg-caddy.vercel.app/
@@ -129,6 +129,29 @@ Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sólo perm
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el código y la explicación del ajuste. |
 | `ROADMAP_A_DETALLE.md` | Guarda el ajuste dentro del directorio detallado. |
 | `ROADMAP_OVERALL.md` | Guarda el ajuste dentro de este resumen general. |
+
+## Actualización operativa V297 · Icono cromado 3D neón y micrófono compacto
+
+Autorización recibida el **24 de agosto de 2026** para instalar como icono oficial la versión cuadrada cromada, con relieve profundo, apariencia de metal troquelado y verde neón muy saturado. También se reduce 50 % el diámetro visible del micrófono de registro y se coloca una figura clara de micrófono en el centro. No cambia su funcionamiento ni su área cómoda de toque.
+
+| Archivo o modificación | Qué queda registrado |
+|---|---|
+| `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | Fuente cuadrada histórica actualizada con el logo autorizado, conservando su nombre técnico. |
+| `assets/logo.png` | Fuente operativa de 1024 × 1024 para los paquetes Apple y Android. |
+| `assets/official-logos/README.md` | Identifica la nueva versión cromada 3D como oficial. |
+| `assets/official-logos/golf-score-card-gt-app-store-1024.png` | Icono preparado para App Store. |
+| `assets/official-logos/golf-score-card-gt-apple-touch-180.png` | Icono preparado para el acceso directo de iPhone y iPad. |
+| `assets/official-logos/golf-score-card-gt-google-play-512.png` | Icono preparado para Google Play. |
+| `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | Copia maestra oficial en máxima medida. |
+| `assets/official-logos/golf-score-card-gt-pwa-192.png` | Icono pequeño de la aplicación instalable. |
+| `assets/official-logos/golf-score-card-gt-pwa-512.png` | Icono grande de la aplicación instalable. |
+| `index-grupal.html` | Micrófono de registro 50 % más pequeño, con símbolo central claro para el usuario nuevo. |
+| `mobile-release.json` | Número de paquete preparado actualizado a V297. |
+| `service-worker.js` | Caché renovada para entregar el icono V297 y retirar el anterior. |
+| `test-v290-brand-icons-cleanup.mjs` | Comprobación operativa alineada con el paquete y la caché V297. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Códigos, tamaños y explicaciones de los archivos actualizados. |
+| `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de esta modificación. |
+| `ROADMAP_OVERALL.md` | Registro general obligatorio de esta modificación. |
 
 ## Regla permanente
 

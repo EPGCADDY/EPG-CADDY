@@ -16,7 +16,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `.github/workflows/roadmap-gate.yml` | `2b0e0640e36c07e343f06414a9d2d703727237bb` | 712 bytes | Ejecuta automáticamente el candado ROADMAP en GitHub. |
 | `.github/workflows/stableford-tournament-pass.yml` | `df70cf36092ddd72b59271bf241b1ac58fb21027` | 1075 bytes | Comprueba Stableford y exige primero ambos ROADMAPS. |
 | `.gitignore` | `0994446eb785e2166ce79941bec8bba6c245c567` | 75 bytes | Indica qué archivos temporales no deben subirse a GitHub. |
-| `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | `a75309584c45d651daa6ef2db27db7722a2159d1` | 528361 bytes | Logo oficial original; su nombre raro se conserva porque ya estaba enlazado. |
+| `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Fuente histórica del logo cromado 3D con verde neón muy saturado; conserva su nombre para no romper enlaces. |
 | `APP_ARCHITECTURE.md` | `7119e67641ce309201fa32922195ebceb3006fb4` | 3405 bytes | Explica cómo se divide la aplicación y cómo trabajan juntas sus partes. |
 | `AUDITORIA_MAESTRA_V170.md` | `8dd135a84521f64c39928fadb35de0518447fe40` | 4462 bytes | Resumen de una revisión histórica del producto. |
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `be454f43b458670199a7be029abf716dc49108d7` | 4018 bytes | Reglas permanentes, punto de corte y candado técnico de ambos ROADMAPS, incluido Vercel. |
@@ -41,8 +41,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
 | `MAPA_MATRIZ_STABLEFORD_V252.md` | `8911a7ef86398e0c3f18e647433387a02645082c` | 3828 bytes | Explica las piezas de Stableford incorporadas en V252. |
 | `README.md` | `e93c3adc84c81fdda07303f5d0f75fbb35140ea2` | 2170 bytes | Portada de GitHub que presenta el producto como Golf Score Card GT. |
-| `ROADMAP_A_DETALLE.md` | `c3dcfcffb8c64cef23890a49d6e2fca724d0801b` | 8944 bytes | Abre el directorio, sus 185 líneas y el registro del candado técnico, incluido Vercel. |
-| `ROADMAP_OVERALL.md` | `08221027494d52438fc0163f8c3904e4e6a7d04d` | 7992 bytes | Resumen general, punto de corte y registro obligatorio de cada modificación, incluido Vercel. |
+| `ROADMAP_A_DETALLE.md` | `dcea1c90d3ec53e9be56b7a31601c4d3d4543f38` | 11599 bytes | Abre el directorio, conserva el candado y registra el icono neón y el micrófono compacto V297. |
+| `ROADMAP_OVERALL.md` | `d017d7fad33d729cd2d455ccb593d19470a97d29` | 10223 bytes | Resumen general con el registro obligatorio del icono neón y el micrófono compacto V297. |
 | `ROADMAP_OVERALL_V291.png` | `2e7aaaaf4b7b337caa8750b17754d9173f8930fe` | 685254 bytes | Imagen vertical y sencilla del estado general para verla desde el teléfono. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_01.png` | `2377b6bba6c886a2fddac44b2d01fbc7ebf3f0ca` | 410461 bytes | Página 1 de 9 del directorio visual detallado. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_02.png` | `ba0d741c811283d33e53431b9a90cf3055a97bed` | 487065 bytes | Página 2 de 9 del directorio visual detallado. |
@@ -81,14 +81,14 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `api/session-grupal.js` | `4bd02dcd9cdc1fb4fada6ddb4fd8b7400d2280ee` | 5355 bytes | Abre el reconocimiento de voz grupal. |
 | `api/session.js` | `454a914b435c6cadadd0a169fe065719eef475de` | 14431 bytes | Abre el reconocimiento de voz anterior. |
 | `api/sync.js` | `82e4bdd482531f4ee6b41254652606d9f53e2251` | 3202 bytes | Intercambia cambios entre teléfono y respaldo. |
-| `assets/logo.png` | `fa3ea15951c42e379d33889c383be6ffaa8c26a0` | 912428 bytes | Logo de 1024 usado para crear iconos de iPhone y Android. |
-| `assets/official-logos/README.md` | `4edd9a19f1f57e7a3fae8372ce9498463c0a5dd8` | 1580 bytes | Explica cuál es el logo oficial y para qué sirve cada tamaño. |
-| `assets/official-logos/golf-score-card-gt-app-store-1024.png` | `fa3ea15951c42e379d33889c383be6ffaa8c26a0` | 912428 bytes | Icono oficial para App Store. |
-| `assets/official-logos/golf-score-card-gt-apple-touch-180.png` | `28f0f8533a4807f2c9bf8f0988a645c848532410` | 41189 bytes | Icono que aparece al instalar la web en iPhone o iPad. |
-| `assets/official-logos/golf-score-card-gt-google-play-512.png` | `28929abc6f0f77bdd359dc0473f6b7cc44cabee4` | 260992 bytes | Icono oficial para Google Play. |
-| `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | `a75309584c45d651daa6ef2db27db7722a2159d1` | 528361 bytes | Copia maestra del logo oficial original. |
-| `assets/official-logos/golf-score-card-gt-pwa-192.png` | `b6a84d41edb0e2d7b42b6f9a3d9457c9458970f0` | 45723 bytes | Icono pequeño de la app instalable. |
-| `assets/official-logos/golf-score-card-gt-pwa-512.png` | `28929abc6f0f77bdd359dc0473f6b7cc44cabee4` | 260992 bytes | Icono grande de la app instalable. |
+| `assets/logo.png` | `376f6237bbdddf4245ecd3da0f080ad5462f8178` | 514891 bytes | Logo cromado 3D neón de 1024 usado para crear iconos de iPhone y Android. |
+| `assets/official-logos/README.md` | `d4c2f8e156b2f614d5992c477bc117c11a8ef2d7` | 1826 bytes | Explica que la versión cromada 3D con verde neón muy saturado es oficial y para qué sirve cada tamaño. |
+| `assets/official-logos/golf-score-card-gt-app-store-1024.png` | `376f6237bbdddf4245ecd3da0f080ad5462f8178` | 514891 bytes | Icono cromado 3D neón oficial para App Store. |
+| `assets/official-logos/golf-score-card-gt-apple-touch-180.png` | `ed44949eeb3aedad2ea1cf806091d216bc5e67e0` | 59579 bytes | Icono cromado 3D neón que aparece al instalar la web en iPhone o iPad. |
+| `assets/official-logos/golf-score-card-gt-google-play-512.png` | `0e85cc6995f9bafefb49dec5a8253aef3db7fffd` | 461402 bytes | Icono cromado 3D neón oficial para Google Play. |
+| `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Copia maestra del logo cromado 3D con verde neón muy saturado. |
+| `assets/official-logos/golf-score-card-gt-pwa-192.png` | `e28cd92c784748a2d4ff02bf3491b96c8121ed94` | 67805 bytes | Icono cromado 3D neón pequeño de la aplicación instalable. |
+| `assets/official-logos/golf-score-card-gt-pwa-512.png` | `0e85cc6995f9bafefb49dec5a8253aef3db7fffd` | 461402 bytes | Icono cromado 3D neón grande de la aplicación instalable. |
 | `audit-project.mjs` | `597a19619b0c7f64e8d6963f0d28ab02a329f6cf` | 3512 bytes | Ejecuta primero el candado ROADMAP y después las demás comprobaciones. |
 | `capacitor.config.json` | `a5ca52fde974ea370d90dbfe422f08101ec7f7eb` | 867 bytes | Define el nombre visible y la identidad de las apps de iPhone y Android. |
 | `card-artifacts.js` | `df8ba2b09532b73701681d7de1781ca5b54baf26` | 12799 bytes | Arma la tarjeta oficial con la información de la ronda. |
@@ -102,7 +102,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `database/test-player-profile-schema.mjs` | `32d0b6f78446a1193e8b2239b26f93738547b24b` | 817 bytes | Comprueba los espacios de la información central. |
 | `database/test-schema.mjs` | `ad64ac3b0ed21932c24ea56886124f518a7b0692` | 1099 bytes | Comprueba los espacios de la información central. |
 | `historical-analytics.js` | `2a5bb2f2ef1564b09a567823efde14b54829ce86` | 8963 bytes | Resume el historial y muestra datos útiles de rondas anteriores. |
-| `index-grupal.html` | `8c2261ad1bf63ee0a884dbb69fd02b4a4b3d776c` | 546922 bytes | Pantalla principal que usa el cliente: campos, modalidades, jugadores, rondas y Stableford. |
+| `index-grupal.html` | `897826a6f7909774127f1dd92c309d204a8a05b7` | 547446 bytes | Pantalla principal; en V297 reduce 50 % el micrófono de registro y muestra claramente su figura sin cambiar su función. |
 | `index.html` | `7b483f1553246274920c71a10723f484d1847744` | 759569 bytes | Entrada antigua que lleva a la pantalla principal. |
 | `ios/EPGCaddy/App.swift` | `06a1c8ee89139ef87af20f07bba2496aa2b90636` | 141 bytes | Inicia la aplicación de apoyo para iPhone. |
 | `ios/EPGCaddy/ContentView.swift` | `80556289a09cc451f4e11e56f2f9d6a800a50a5f` | 208 bytes | Abre Golf Score Card GT dentro de la aplicación de iPhone. |
@@ -112,7 +112,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ios/project.yml` | `ef15575463a1913d778c7d8b8fb3dea237b0f4c7` | 976 bytes | Prepara el proyecto antiguo de iPhone con el nombre visible Golf Score Card GT. |
 | `manifest.webmanifest` | `e1aabc9eb3e15e548b3603fbdccb6318d417e56c` | 842 bytes | Define el nombre, colores, inicio e iconos cuando la web se instala como app. |
 | `master-data-sync.js` | `be2aade4553f95b389189fcf4225ece6d16deaad` | 8202 bytes | Mantiene igual la información del teléfono y del respaldo central. |
-| `mobile-release.json` | `78b302dd140af710b05467d86de7bfba983ffe7c` | 76 bytes | Guarda la versión y el número del próximo paquete móvil. |
+| `mobile-release.json` | `2d8d65d03bae3537128d8abb01ea8817ff0ec69a` | 76 bytes | Guarda la versión y el número 297 del próximo paquete móvil. |
 | `mobile/native-runtime-entry.js` | `ffbe9107212932779e6c8e7e5017f4c178b62326` | 704 bytes | Conecta la pantalla con funciones propias del teléfono. |
 | `package.json` | `a9ffec0ea56adb2998235b502fd71ed092b13bb0` | 1403 bytes | Lista lo necesario y agrega el botón técnico `roadmap:gate`. |
 | `player-registry.js` | `bf406d7b60803aedf1fd1d936de699d0cc95e0a5` | 11246 bytes | Guarda, encuentra y actualiza jugadores. |
@@ -123,7 +123,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/prepare-mobile-assets.mjs` | `fcd2fa387095322c9731917834ad424ad3e8fd73` | 1356 bytes | Crea todos los tamaños oficiales del logo. |
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
 | `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | 2881 bytes | Bloquea cualquier modificación o publicación que no aparezca en ambos ROADMAPS. |
-| `service-worker.js` | `009e07173e747f2ef05e89de5f91465c9abe16bb` | 1987 bytes | Mantiene la app actualizada y permite abrir partes guardadas cuando falla la conexión. |
+| `service-worker.js` | `bbc159c3792139d28d99cd99f43fea57cd596ae4` | 1987 bytes | Activa la caché V297 para entregar el icono nuevo y retirar la versión anterior. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |
 | `stableford-course-source-san-isidro.md` | `b370db591d5139895c9586801d55b57b3bcf0359` | 505 bytes | Fuente usada para cargar la tarjeta de San Isidro. |
@@ -191,7 +191,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v287-stableford-back-controls-clear.mjs` | `38775203ce67f828c90687799046a566e82fd517` | 667 bytes | Comprueba que Respaldo no tape Atrás ni + Jugador. |
 | `test-v288-stableford-one-touch-home.mjs` | `bf4b127fdfb288b01f55a506f80dd92445855e5c` | 2078 bytes | Comprueba que Atrás regrese al inicio con un toque. |
 | `test-v289-stableford-new-round-empty.mjs` | `bcb1295e20116ea9cde8b86ad96b5f8c366e626e` | 2005 bytes | Comprueba que Nueva ronda deje vacíos los nombres. |
-| `test-v290-brand-icons-cleanup.mjs` | `7e5afbd53573531f0133fbf85319b8c6146198f7` | 1648 bytes | Comprueba nombre, iconos oficiales y preparación comercial. |
+| `test-v290-brand-icons-cleanup.mjs` | `9b69d99e27380eb025e0d0a9ced6de22688543ef` | 1939 bytes | Comprueba el icono neón, el micrófono compacto y la preparación comercial V297. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
 | `vercel.json` | `c6dbbe007a72b62ed141e39aac6128f2dce3eb8b` | 1638 bytes | Indica qué publicar, ejecuta el candado y conserva la salida web correcta. |
 | `verify-manual-sync.mjs` | `8042010c6b0cd81915a57a8ac65d1f778bea7cc7` | 730 bytes | Comprueba el respaldo y el envío de cambios. |
