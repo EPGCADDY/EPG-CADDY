@@ -379,3 +379,25 @@ Solicitud: **24 de agosto de 2026**. Alcance: homologar los siete campos de Gene
 | `test-v306-universal-fields-in-out-guide.mjs` | Filtro V306 | Impide diferencias de campos, orden, ejemplos o títulos. |
 | `tools/build_operational_guide_v1.py` | Constructor V306 | Aplica los marcos negros y audita la guía. |
 | `vercel.json` | Candado Vercel V306 | Bloquea publicación si falla el nuevo filtro. |
+
+## Corrección auditada V306 · IN antes de OUT en todas las tarjetas
+
+Solicitud: **24 de agosto de 2026**. Alcance exclusivo: corregir las variantes de tarjeta que todavía presentaban la segunda vuelta antes de la primera o separaban incorrectamente los valores Stableford. Regla verificada: **IN = hoyos 1–9**, **OUT = hoyos 10–18**, **TOTAL = hoyos 1–18**. Stableford se presenta por bloque operativo: Gross IN, Puntos IN, Gross OUT, Puntos OUT y los dos totales. No se modifican funciones ajenas.
+
+| Archivo nuevo o modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `.github/workflows/roadmap-gate.yml` | Candado tarjetas V306 | Ejecuta la prueba nueva en cada cambio de GitHub. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Inventario corrección V306 | Registra quince archivos intervenidos y total activo 195. |
+| `ROADMAP_A_DETALLE.md` | Registro corrección V306 | Guarda este detalle completo. |
+| `ROADMAP_OVERALL.md` | Resumen corrección V306 | Guarda el alcance y resultado general. |
+| `audit-project.mjs` | PASS maestro V306 | Ejecuta también la corrección transversal. |
+| `index-grupal.html` | Stableford V306 corregido | Empareja cada encabezado con su valor: IN, después OUT y luego TOTAL. |
+| `index.html` | Individual V306 corregida | Corrige resumen, cierres de nueve hoyos, reporte final y tarjeta digital. |
+| `test-v306-card-in-out-correction.mjs` | Nuevo filtro de tarjetas | Revisa encabezados, datos y artefactos de todas las rutas. |
+| `test-v306-universal-fields-in-out-guide.mjs` | Filtro universal reforzado | Exige la secuencia exacta Stableford por segmento. |
+| `test-round-information.mjs` | Títulos auditados | Revisa IN antes de OUT en la lista transversal. |
+| `test-stableford-torneo.mjs` | Stableford histórico reforzado | Exige toda la secuencia IN, OUT y TOTAL en una sola prueba. |
+| `test-v193-visual-provisional.mjs` | Práctica visual alineada | Enumera IN antes de OUT. |
+| `test-v262-provisional-optional-profile.mjs` | Práctica opcional alineada | Comprueba IN antes de OUT. |
+| `test-v272-definitive-operational-release.mjs` | Contrato definitivo corregido | Alinea listas, mensajes y tarjeta digital individual. |
+| `vercel.json` | Candado Vercel reforzado | Bloquea despliegues con una tarjeta OUT → IN. |

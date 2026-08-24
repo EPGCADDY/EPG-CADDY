@@ -37,3 +37,6 @@ jobs:
 
       - name: Block field, IN OUT and guide regressions
         run: node test-v306-universal-fields-in-out-guide.mjs
+
+      - name: Block any card that places OUT before IN
+        run: node test-v306-card-in-out-correction.mjs

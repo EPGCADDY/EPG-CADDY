@@ -7,10 +7,7 @@ for(const key of ["country_club","pulte","san_isidro","mayan_golf","hacienda_nue
 assert.match(html,/SENIOR · BLANCAS · HCP 0/);
 assert.match(html,/id="superBtn"[^>]*>S\. SENIOR/);
 assert.match(html,/PUNTOS/);
-assert.match(html,/GROSS OUT/);
-assert.match(html,/PTS OUT/);
-assert.match(html,/GROSS IN/);
-assert.match(html,/PTS IN/);
+assert.match(html,/GROSS IN<\/th><th>PTS IN<\/th><th>GROSS OUT<\/th><th>PTS OUT<\/th><th>GROSS TOTAL<\/th><th>PTS TOTAL/);
 assert.match(html,/MEJORES 3/);
 assert.match(html,/raw==="X"/);
 assert.match(html,/GSCStableford\.pointsFor|GSCStableford\.holeResult/);

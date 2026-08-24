@@ -373,3 +373,25 @@ El **24 de agosto de 2026** se corrige el orden transversal de las tarjetas y se
 | `test-v306-universal-fields-in-out-guide.mjs` | Nuevo filtro transversal de campos, orden, nombres y diseño documental. |
 | `tools/build_operational_guide_v1.py` | Genera la Guía V306 y aplica banda/marco negro a títulos neón. |
 | `vercel.json` | Exige V306 antes de publicar. |
+
+## Corrección V306 · Orden real de todas las tarjetas
+
+El **24 de agosto de 2026** se completa la auditoría solicitada de las tarjetas. Se detectó y corrigió la inconsistencia que aún agrupaba el resumen Stableford por tipo de dato y la entrada individual antigua con la convención inversa. El contrato único queda probado sobre títulos y valores: **IN = hoyos 1–9**, después **OUT = hoyos 10–18** y al final **TOTAL**. En Stableford, cada bloque mantiene juntos Gross y Puntos: **GROSS IN · PUNTOS IN · GROSS OUT · PUNTOS OUT · GROSS TOTAL · PUNTOS TOTAL**. Todo lo demás permanece congelado.
+
+| Archivo nuevo o modificado | Qué queda registrado |
+|---|---|
+| `.github/workflows/roadmap-gate.yml` | Ejecuta en GitHub el candado específico que prohíbe OUT antes de IN. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra la corrección y eleva el inventario activo a 195 archivos. |
+| `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico de esta corrección. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen de alcance congelado. |
+| `audit-project.mjs` | Incorpora la prueba nueva al PASS maestro. |
+| `index-grupal.html` | Reordena encabezados y valores del resumen Stableford por segmento IN, OUT y TOTAL. |
+| `index.html` | Corrige la tarjeta individual antigua, su reporte y su tarjeta digital oficial. |
+| `test-v306-card-in-out-correction.mjs` | Nuevo filtro transversal que valida tarjeta principal, individual, digital, Stableford histórica y artefactos exportados. |
+| `test-v306-universal-fields-in-out-guide.mjs` | Endurece el contrato Stableford para agrupar Gross/Puntos dentro de IN y OUT. |
+| `test-round-information.mjs` | Alinea el orden de la lista de rótulos auditados a IN, OUT y TOTAL. |
+| `test-stableford-torneo.mjs` | Exige en una sola secuencia los seis valores Stableford por segmento. |
+| `test-v193-visual-provisional.mjs` | Alinea el filtro visual de Práctica a IN antes de OUT. |
+| `test-v262-provisional-optional-profile.mjs` | Alinea el filtro de Práctica opcional a IN antes de OUT. |
+| `test-v272-definitive-operational-release.mjs` | Corrige orden, mensajes y comprobación de la tarjeta individual oficial. |
+| `vercel.json` | Impide publicar si falla la corrección de tarjetas. |

@@ -49,8 +49,7 @@ for(const pattern of badOrders){
   assert.doesNotMatch(html,pattern,"La aplicación conserva una variante OUT → IN");
   assert.doesNotMatch(legacy,pattern,"La tarjeta heredada conserva una variante OUT → IN");
 }
-assert.match(html,/GROSS IN<\/th><th>GROSS OUT<\/th><th>GROSS TOTAL/);
-assert.match(html,/PUNTOS IN<\/th><th>PUNTOS OUT<\/th><th>PUNTOS TOTAL/);
+assert.match(html,/GROSS IN<\/th><th>PUNTOS IN<\/th><th>GROSS OUT<\/th><th>PUNTOS OUT<\/th><th>GROSS TOTAL<\/th><th>PUNTOS TOTAL/);
 assert.match(html,/<th class="sum-col">IN<\/th>[\s\S]{0,250}<th class="sum-col">OUT<\/th><th class="sum-col">TOTAL<\/th>/);
 assert.match(html,/\$\{metric\} IN[\s\S]{0,180}\$\{metric\} OUT[\s\S]{0,180}\$\{metric\} TOTAL/);
 assert.match(legacy,/GROSS IN<\/th><th>PTS IN<\/th><th>GROSS OUT<\/th><th>PTS OUT/);

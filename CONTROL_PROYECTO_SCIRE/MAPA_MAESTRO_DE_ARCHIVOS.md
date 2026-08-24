@@ -477,3 +477,25 @@ Registro del **24 de agosto de 2026**. Se modificaron 42 archivos existentes y s
 | `test-v306-universal-fields-in-out-guide.mjs` | Nuevo V306 | Candado de campos, orden, nombres y guía. |
 | `tools/build_operational_guide_v1.py` | Registro V306 | Constructor Word con títulos en banda negra. |
 | `vercel.json` | Registro V306 | Publicación bloqueada por filtro V306. |
+
+## Inventario V306 · Corrección definitiva de tarjetas IN → OUT
+
+Registro del **24 de agosto de 2026**. Se modificaron catorce archivos existentes y se agregó `test-v306-card-in-out-correction.mjs`; total activo: **195**. La corrección conserva el resto del producto congelado.
+
+| Ruta exacta | Código vigente | Qué quedó inventariado |
+|---|---|---|
+| `.github/workflows/roadmap-gate.yml` | Candado IN/OUT V306 | Ejecuta el filtro específico en GitHub. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mapa | Inventario de corrección y total activo 195. |
+| `ROADMAP_A_DETALLE.md` | Registro corrección V306 | Detalle técnico de los quince archivos. |
+| `ROADMAP_OVERALL.md` | Registro corrección V306 | Resumen ejecutivo del cambio. |
+| `audit-project.mjs` | Auditoría V306 reforzada | Añade el filtro de tarjetas al PASS maestro. |
+| `index-grupal.html` | Stableford V306 corregido | Encabezados y valores agrupados IN, OUT y TOTAL. |
+| `index.html` | Tarjeta individual corregida | IN corresponde a hoyos 1–9 y OUT a hoyos 10–18 en todas sus vistas. |
+| `test-v306-card-in-out-correction.mjs` | Nuevo V306 | Impide que cualquier tarjeta vuelva a OUT → IN. |
+| `test-v306-universal-fields-in-out-guide.mjs` | Filtro V306 reforzado | Comprueba el contrato exacto del resumen Stableford. |
+| `test-round-information.mjs` | Registro corrección V306 | Alinea el inventario de rótulos a IN → OUT. |
+| `test-stableford-torneo.mjs` | Registro corrección V306 | Endurece la secuencia de resultados históricos. |
+| `test-v193-visual-provisional.mjs` | Registro corrección V306 | Ordena el control visual de Práctica. |
+| `test-v262-provisional-optional-profile.mjs` | Registro corrección V306 | Ordena el control de Práctica opcional. |
+| `test-v272-definitive-operational-release.mjs` | Registro corrección V306 | Corrige el contrato y sus mensajes de auditoría. |
+| `vercel.json` | Publicación V306 reforzada | Ejecuta el filtro antes de desplegar. |
