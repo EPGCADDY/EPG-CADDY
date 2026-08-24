@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos con candado técnico de ROADMAPS: **185**.
+Archivos activos con candado técnico de ROADMAPS: **186**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -19,6 +19,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Fuente histórica del logo cromado 3D con verde neón muy saturado; conserva su nombre para no romper enlaces. |
 | `APP_ARCHITECTURE.md` | `7119e67641ce309201fa32922195ebceb3006fb4` | 3405 bytes | Explica cómo se divide la aplicación y cómo trabajan juntas sus partes. |
 | `AUDITORIA_MAESTRA_V170.md` | `8dd135a84521f64c39928fadb35de0518447fe40` | 4462 bytes | Resumen de una revisión histórica del producto. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | `f399765ed3de72bcee3d30c57629b966aeda5495` | 11957 bytes | Manual sencillo actualizado con Ronda Normal, Score Card - Práctica y el torneo opcional. |
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `be454f43b458670199a7be029abf716dc49108d7` | 4018 bytes | Reglas permanentes, punto de corte y candado técnico de ambos ROADMAPS, incluido Vercel. |
 | `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INDICE_DOCUMENTOS_PENDIENTES.md` | `064e9201c833cb7f5c751ba5328290d8c4c2b20b` | 814 bytes | Lista de documentos todavía pendientes de usar. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | `b9815c3eae588f1f54c0e4fabbf1d51b52c75b0e` | 722 bytes | Registro de trabajos terminados. |
@@ -41,8 +42,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
 | `MAPA_MATRIZ_STABLEFORD_V252.md` | `8911a7ef86398e0c3f18e647433387a02645082c` | 3828 bytes | Explica las piezas de Stableford incorporadas en V252. |
 | `README.md` | `e93c3adc84c81fdda07303f5d0f75fbb35140ea2` | 2170 bytes | Portada de GitHub que presenta el producto como Golf Score Card GT. |
-| `ROADMAP_A_DETALLE.md` | `26c56be08bfe9a5955a5c187f228123ecf6be5ad` | 14064 bytes | Abre el directorio, conserva el candado y registra a detalle la corrección del logo móvil V299. |
-| `ROADMAP_OVERALL.md` | `5e7b85e435c4c8a27b3529547b16ba9441a3f209` | 12444 bytes | Resumen general con el registro obligatorio de la corrección del logo móvil V299. |
+| `ROADMAP_A_DETALLE.md` | `3ac14246852995f82c67cd29362fc4f6d0eafac8` | 16294 bytes | Abre el directorio, conserva el candado y registra a detalle la actualización V301. |
+| `ROADMAP_OVERALL.md` | `ed9f443be1b0591201e98b208ad8c21e2af3f817` | 14730 bytes | Resumen general con el registro obligatorio de la actualización V301. |
 | `ROADMAP_OVERALL_V291.png` | `2e7aaaaf4b7b337caa8750b17754d9173f8930fe` | 685254 bytes | Imagen vertical y sencilla del estado general para verla desde el teléfono. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_01.png` | `2377b6bba6c886a2fddac44b2d01fbc7ebf3f0ca` | 410461 bytes | Página 1 de 9 del directorio visual detallado. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_02.png` | `ba0d741c811283d33e53431b9a90cf3055a97bed` | 487065 bytes | Página 2 de 9 del directorio visual detallado. |
@@ -102,7 +103,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `database/test-player-profile-schema.mjs` | `32d0b6f78446a1193e8b2239b26f93738547b24b` | 817 bytes | Comprueba los espacios de la información central. |
 | `database/test-schema.mjs` | `ad64ac3b0ed21932c24ea56886124f518a7b0692` | 1099 bytes | Comprueba los espacios de la información central. |
 | `historical-analytics.js` | `2a5bb2f2ef1564b09a567823efde14b54829ce86` | 8963 bytes | Resume el historial y muestra datos útiles de rondas anteriores. |
-| `index-grupal.html` | `3535bc6890aa244ee019334a8e92dfd14846f7fb` | 548280 bytes | Pantalla principal; en V299 limita el logo al ancho disponible y respeta la barra superior del iPhone. |
+| `index-grupal.html` | `9e33d3e34f4181dbcefa3ad7ec15ae0faf51a275` | 549746 bytes | Pantalla principal V301 con tres modalidades claras y descripción opcional del torneo. |
 | `index.html` | `7b483f1553246274920c71a10723f484d1847744` | 759569 bytes | Entrada antigua que lleva a la pantalla principal. |
 | `ios/EPGCaddy/App.swift` | `06a1c8ee89139ef87af20f07bba2496aa2b90636` | 141 bytes | Inicia la aplicación de apoyo para iPhone. |
 | `ios/EPGCaddy/ContentView.swift` | `80556289a09cc451f4e11e56f2f9d6a800a50a5f` | 208 bytes | Abre Golf Score Card GT dentro de la aplicación de iPhone. |
@@ -112,7 +113,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ios/project.yml` | `ef15575463a1913d778c7d8b8fb3dea237b0f4c7` | 976 bytes | Prepara el proyecto antiguo de iPhone con el nombre visible Golf Score Card GT. |
 | `manifest.webmanifest` | `e1aabc9eb3e15e548b3603fbdccb6318d417e56c` | 842 bytes | Define el nombre, colores, inicio e iconos cuando la web se instala como app. |
 | `master-data-sync.js` | `be2aade4553f95b389189fcf4225ece6d16deaad` | 8202 bytes | Mantiene igual la información del teléfono y del respaldo central. |
-| `mobile-release.json` | `f15cc960bc35a4b07b705b47feb9d6ada2309c0d` | 76 bytes | Guarda la versión y el número 299 del próximo paquete móvil. |
+| `mobile-release.json` | `7bc5ae9678c842359b69cbc7f23c0a0592c6427a` | 76 bytes | Guarda la versión y el número 301 del próximo paquete móvil. |
 | `mobile/native-runtime-entry.js` | `ffbe9107212932779e6c8e7e5017f4c178b62326` | 704 bytes | Conecta la pantalla con funciones propias del teléfono. |
 | `package.json` | `a9ffec0ea56adb2998235b502fd71ed092b13bb0` | 1403 bytes | Lista lo necesario y agrega el botón técnico `roadmap:gate`. |
 | `player-registry.js` | `bf406d7b60803aedf1fd1d936de699d0cc95e0a5` | 11246 bytes | Guarda, encuentra y actualiza jugadores. |
@@ -123,7 +124,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/prepare-mobile-assets.mjs` | `fcd2fa387095322c9731917834ad424ad3e8fd73` | 1356 bytes | Crea todos los tamaños oficiales del logo. |
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
 | `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | 2881 bytes | Bloquea cualquier modificación o publicación que no aparezca en ambos ROADMAPS. |
-| `service-worker.js` | `72ba2809f3c87f7ec9ebe36ba9484513293bc885` | 1987 bytes | Activa la caché V299 para entregar el logo móvil corregido y retirar la pantalla anterior. |
+| `service-worker.js` | `d500b7894dcae221ea8c97eeaa88a42adc1f8fd6` | 1987 bytes | Activa la caché V301 para entregar las modalidades y el torneo opcional. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |
 | `stableford-course-source-san-isidro.md` | `b370db591d5139895c9586801d55b57b3bcf0359` | 505 bytes | Fuente usada para cargar la tarjeta de San Isidro. |
@@ -191,10 +192,32 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v287-stableford-back-controls-clear.mjs` | `38775203ce67f828c90687799046a566e82fd517` | 667 bytes | Comprueba que Respaldo no tape Atrás ni + Jugador. |
 | `test-v288-stableford-one-touch-home.mjs` | `bf4b127fdfb288b01f55a506f80dd92445855e5c` | 2078 bytes | Comprueba que Atrás regrese al inicio con un toque. |
 | `test-v289-stableford-new-round-empty.mjs` | `bcb1295e20116ea9cde8b86ad96b5f8c366e626e` | 2005 bytes | Comprueba que Nueva ronda deje vacíos los nombres. |
-| `test-v290-brand-icons-cleanup.mjs` | `aba95e1f7621f49485c9149d73d8695a011cd47a` | 2534 bytes | Comprueba el logo dentro del iPhone, el espacio seguro y la preparación comercial V299. |
+| `test-v290-brand-icons-cleanup.mjs` | `acd1203caf98fd42798891253b8d4a40f4b4defa` | 3028 bytes | Comprueba la pantalla V301, las tres modalidades, el torneo opcional, el paquete y la caché. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
 | `vercel.json` | `c6dbbe007a72b62ed141e39aac6128f2dce3eb8b` | 1638 bytes | Indica qué publicar, ejecuta el candado y conserva la salida web correcta. |
 | `verify-manual-sync.mjs` | `8042010c6b0cd81915a57a8ac65d1f778bea7cc7` | 730 bytes | Comprueba el respaldo y el envío de cambios. |
+
+## Registro obligatorio de la documentación operativa V300
+
+| Archivo nuevo o modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | `ac985b34d6d279c903e39f4457fccfd57832b53d` | Documento final y amigable que explica al consumidor todas las funciones disponibles. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Agrega el compendio y actualiza el directorio a 186 archivos activos. |
+| `ROADMAP_A_DETALLE.md` | `a26ff673efceb4c724a01161cd44e81963e436c2` | Registra la documentación V300 a detalle. |
+| `ROADMAP_OVERALL.md` | `4a1c9f3121f4898f7292942270b328146a9402b5` | Registra la documentación V300 en el resumen general. |
+
+## Registro obligatorio de la actualización operativa V301
+
+| Archivo modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `index-grupal.html` | `9e33d3e34f4181dbcefa3ad7ec15ae0faf51a275` | Agrega RONDA NORMAL, cambia la modalidad rápida a SCORE CARD - PRÁCTICA y guarda la descripción opcional del torneo. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | `f399765ed3de72bcee3d30c57629b966aeda5495` | Actualiza el manual con las tres modalidades y el registro opcional. |
+| `mobile-release.json` | `7bc5ae9678c842359b69cbc7f23c0a0592c6427a` | Prepara el paquete móvil número 301. |
+| `service-worker.js` | `d500b7894dcae221ea8c97eeaa88a42adc1f8fd6` | Entrega la pantalla nueva y retira la caché anterior. |
+| `test-v290-brand-icons-cleanup.mjs` | `acd1203caf98fd42798891253b8d4a40f4b4defa` | Valida nombres, campo opcional, paquete y caché V301. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Actualiza los códigos y explicaciones de V301. |
+| `ROADMAP_A_DETALLE.md` | `3ac14246852995f82c67cd29362fc4f6d0eafac8` | Registra V301 a detalle. |
+| `ROADMAP_OVERALL.md` | `ed9f443be1b0591201e98b208ad8c21e2af3f817` | Registra V301 en el resumen general. |
 
 ## Archivos retirados del uso diario
 

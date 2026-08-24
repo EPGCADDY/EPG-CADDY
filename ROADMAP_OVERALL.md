@@ -181,6 +181,32 @@ Corrección solicitada el **24 de agosto de 2026** después de comprobar la apli
 | `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de V299. |
 | `ROADMAP_OVERALL.md` | Registro general obligatorio de V299. |
 
+## Documentación operativa V300 · Compendio final para el usuario
+
+El **24 de agosto de 2026** se crea el compendio final de funciones reales para el consumidor. Está escrito con palabras sencillas, usa los nombres visibles de los botones y separa expresamente las funciones disponibles de las que todavía siguen en preparación. No modifica la aplicación ni reabre funciones ya aprobadas.
+
+| Archivo o modificación | Qué queda registrado |
+|---|---|
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Manual amigable que explica desde la selección del campo hasta la tarjeta final, biblioteca, correcciones, respaldo e instalación. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Agrega el compendio al inventario y actualiza las explicaciones de ambos ROADMAPS. |
+| `ROADMAP_A_DETALLE.md` | Registra a detalle la creación documental V300. |
+| `ROADMAP_OVERALL.md` | Registra esta creación dentro del resumen general. |
+
+## Actualización operativa V301 · Modalidades claras y torneo opcional
+
+El **24 de agosto de 2026** se cierra el vacío de orientación de la pantalla principal. La ruta que ya funcionaba como ronda general ahora tiene una opción visible llamada **RONDA NORMAL**; la modalidad rápida cambia su nombre comercial a **SCORE CARD - PRÁCTICA**. El registro de torneo se identifica como opcional y permite guardar una descripción también opcional. No se modifica ninguna regla de cálculo, score, voz, tarjeta o navegación.
+
+| Archivo o modificación | Qué queda registrado |
+|---|---|
+| `index-grupal.html` | Presenta las tres modalidades, cambia el nombre de Práctica y agrega la descripción opcional del torneo. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Actualiza el manual con los nombres visibles y el nuevo campo opcional. |
+| `mobile-release.json` | Número de paquete preparado actualizado a V301. |
+| `service-worker.js` | Caché V301 para entregar la pantalla nueva. |
+| `test-v290-brand-icons-cleanup.mjs` | Comprueba las tres modalidades, el registro opcional y el guardado de la descripción. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza códigos y explicaciones sencillas de V301. |
+| `ROADMAP_A_DETALLE.md` | Registra V301 a detalle. |
+| `ROADMAP_OVERALL.md` | Registra V301 en este resumen general. |
+
 ## Regla permanente
 
 1. Todo nombre visible será **Golf Score Card GT**.
