@@ -201,7 +201,7 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 
 | Archivo modificado | ID o código actualizado | Explicación sencilla |
 |---|---|---|
-| `stableford.js` | Registro V302 | Sustituye el micrófono grande con emoji por el mismo bloque compacto, SVG y guía DICTA O ESCRIBE de la Score Card General; conserva el motor oficial de voz. |
+| `stableford.js` | Registro V302 | Sustituye el micrófono grande con emoji por el mismo encabezado REGISTRO DE JUGADORES, bloque compacto, SVG y guía DICTA O ESCRIBE de la Score Card General; conserva el motor oficial de voz. |
 | `mobile-release.json` | Paquete `302` | Deja preparada la numeración móvil de esta actualización. |
 | `service-worker.js` | Caché `gscg-mobile-v302` | Obliga a descargar el componente Stableford actualizado y retirar la caché anterior. |
 | `test-v290-brand-icons-cleanup.mjs` | Validación V302 | Comprueba que General y Stableford compartan guía, SVG, tamaño compacto, paquete y caché. |

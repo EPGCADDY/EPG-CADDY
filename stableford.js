@@ -176,11 +176,16 @@
     }
     if(!document.getElementById("stablefordSetupMicWrap")){
       const course=document.getElementById("stablefordSetupCourse");
+      const parent=course?.parentNode||card,anchor=course?.nextSibling||card.firstChild;
+      const prompt=document.createElement("div");
+      prompt.className="voice-prompt stableford-voice-prompt";
+      prompt.innerHTML='<strong>REGISTRO DE JUGADORES</strong>';
       const method=document.createElement("section");
       method.className="registration-method stableford-registration-method";
       method.setAttribute("aria-label","Método 1 Dictado Stableford");
       method.innerHTML='<div class="newbie-registration-guide" aria-label="Instrucciones de registro para cada jugador"><div class="newbie-guide-title">DICTA O ESCRIBE:</div><div>1-NOMBRE</div><div>2-HDCP</div><div>3-MARCAS</div><div class="newbie-guide-player">DE CADA JUGADOR</div><div>4-OK</div></div><div class="nr-mic stableford-registration-mic" id="stablefordSetupMicWrap"><button class="mic-hit" id="stablefordSetupMic" type="button" aria-label="Dictar nombre, HDCP y marcas"></button><div class="mic-visual" aria-hidden="true"><svg class="setup-mic-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></div></div>';
-      (course?.parentNode||card).insertBefore(method,course?.nextSibling||card.firstChild);
+      parent.insertBefore(prompt,anchor);
+      parent.insertBefore(method,anchor);
       const hit=document.getElementById("stablefordSetupMic");
       const activate=e=>{if(typeof fireMicActivation==="function")return fireMicActivation("setup",e);return false};
       if(hit){

@@ -29,6 +29,8 @@ assert.match(html,/id="tournamentDescription"[^>]*placeholder="DESCRIPCIÓN DE T
 assert.match(html,/return\{name:String\(value\.name\|\|""\)\.trim\(\),description:String\(value\.description\|\|""\)\.trim\(\)\}/);
 assert.equal(packageJson.engines.node,"22.x");
 assert.equal(apiPackage.type,"module");
+assert.match(stable,/className="voice-prompt stableford-voice-prompt"/);
+assert.match(stable,/prompt\.innerHTML='<strong>REGISTRO DE JUGADORES<\/strong>'/);
 assert.match(stable,/className="registration-method stableford-registration-method"/);
 assert.match(stable,/class="newbie-guide-title">DICTA O ESCRIBE:<\/div><div>1-NOMBRE<\/div><div>2-HDCP<\/div><div>3-MARCAS<\/div><div class="newbie-guide-player">DE CADA JUGADOR<\/div><div>4-OK<\/div>/);
 assert.match(stable,/id="stablefordSetupMicWrap"[\s\S]*?class="setup-mic-icon"/);

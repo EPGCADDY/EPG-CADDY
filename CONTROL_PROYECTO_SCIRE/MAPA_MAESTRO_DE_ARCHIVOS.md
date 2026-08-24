@@ -129,7 +129,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |
 | `stableford-course-source-san-isidro.md` | `b370db591d5139895c9586801d55b57b3bcf0359` | 505 bytes | Fuente usada para cargar la tarjeta de San Isidro. |
 | `stableford-torneo.html` | `b80abecdc60a1a0f72a1c083ea2a0ad217e3bf71` | 14321 bytes | Entrada antigua de Stableford que ahora lleva a la pantalla principal. |
-| `stableford.js` | `7a7cba35e3e9281af7e69678d3267dae745c5192` | 20379 bytes | Mantiene las reglas Stableford y ahora comparte el bloque compacto de registro con la Score Card General. |
+| `stableford.js` | `f97d34333ec6f8e85f4734ce25adb935225f3725` | 20638 bytes | Mantiene las reglas Stableford y ahora comparte encabezado, guía y bloque compacto de registro con la Score Card General. |
 | `sync-queue.js` | `472255acb2a293433df36ddd207257e14e256961` | 2510 bytes | Guarda cambios que todavía no se han enviado. |
 | `test-card-artifacts.mjs` | `476f031924639d2ff88d4b296ceb83a197b6cd1c` | 2461 bytes | Comprueba la creación, guardado o entrega de tarjetas. |
 | `test-country-club-official.mjs` | `bfc863c01fa6f4d42dda2d85ae07f0f940bd0187` | 2135 bytes | Comprueba la información y selección de campos. |
@@ -192,7 +192,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v287-stableford-back-controls-clear.mjs` | `38775203ce67f828c90687799046a566e82fd517` | 667 bytes | Comprueba que Respaldo no tape Atrás ni + Jugador. |
 | `test-v288-stableford-one-touch-home.mjs` | `bf4b127fdfb288b01f55a506f80dd92445855e5c` | 2078 bytes | Comprueba que Atrás regrese al inicio con un toque. |
 | `test-v289-stableford-new-round-empty.mjs` | `bcb1295e20116ea9cde8b86ad96b5f8c366e626e` | 2005 bytes | Comprueba que Nueva ronda deje vacíos los nombres. |
-| `test-v290-brand-icons-cleanup.mjs` | `873d716432aa5ebe4eea664febaf75b376d83322` | 3588 bytes | Comprueba V302: guía y micrófono hermanos en General y Stableford, paquete y caché. |
+| `test-v290-brand-icons-cleanup.mjs` | `699991bd6abafbfcb15c64daf58c2b809f113e2d` | 3745 bytes | Comprueba V302: encabezado, guía y micrófono hermanos en General y Stableford, paquete y caché. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
 | `vercel.json` | `c6dbbe007a72b62ed141e39aac6128f2dce3eb8b` | 1638 bytes | Indica qué publicar, ejecuta el candado y conserva la salida web correcta. |
 | `verify-manual-sync.mjs` | `8042010c6b0cd81915a57a8ac65d1f778bea7cc7` | 730 bytes | Comprueba el respaldo y el envío de cambios. |
@@ -223,10 +223,10 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 
 | Archivo modificado | ID o código actualizado | Explicación sencilla |
 |---|---|---|
-| `stableford.js` | `7a7cba35e3e9281af7e69678d3267dae745c5192` | Adopta exactamente la guía, el SVG y el tamaño compacto del micrófono de la Score Card General sin cambiar el motor de voz. |
+| `stableford.js` | `f97d34333ec6f8e85f4734ce25adb935225f3725` | Adopta exactamente el encabezado, la guía, el SVG y el tamaño compacto del micrófono de la Score Card General sin cambiar el motor de voz. |
 | `mobile-release.json` | `6554704e52000dd7e5db80c7f798c84e02983b1a` | Prepara el paquete móvil número 302. |
 | `service-worker.js` | `99e3f2f8105d27aa67b6bfad2384bace8c7c6bdb` | Entrega la actualización V302 y retira la caché anterior. |
-| `test-v290-brand-icons-cleanup.mjs` | `873d716432aa5ebe4eea664febaf75b376d83322` | Valida estructura, guía, SVG, tamaño, paquete y caché V302. |
+| `test-v290-brand-icons-cleanup.mjs` | `699991bd6abafbfcb15c64daf58c2b809f113e2d` | Valida encabezado, estructura, guía, SVG, tamaño, paquete y caché V302. |
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Conserva el inventario integral de V302. |
 | `ROADMAP_A_DETALLE.md` | Registro V302 | Registra V302 a detalle. |
 | `ROADMAP_OVERALL.md` | Registro V302 | Registra V302 en el resumen general. |
