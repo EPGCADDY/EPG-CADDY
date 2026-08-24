@@ -257,7 +257,7 @@
         const targets=[...document.querySelectorAll("[data-stableford-name]")],next=targets.map(target=>cleanName(target.value));
         for(const change of changes){const index=Number(change.position)-1,name=cleanName(change.name);if(!Number.isInteger(index)||index<0||index>=MAX_PLAYERS||!name)return{ok:false,speech:"Error"};next[index]=name}
         next.forEach((name,index)=>{const target=targets[index];if(!target||target.value===name)return;target.value=name;target.dispatchEvent(new Event("input",{bubbles:true}));target.dispatchEvent(new Event("change",{bubbles:true}))});
-        if(stableStatus&&!stableStatus.classList.contains("error"))stableStatus.textContent="JUGADORES DETECTADOS · REVISA Y PRESIONA INICIAR RONDA";
+        if(stableStatus&&!stableStatus.classList.contains("error"))stableStatus.textContent="JUGADORES DETECTADOS · REVISA Y PRESIONA OK";
         if(typeof listening!=="undefined"&&listening&&typeof setVoice==="function")setVoice(false);
         return{ok:true,speech:""};
       };

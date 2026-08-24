@@ -209,6 +209,21 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 | `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra V302 a detalle. |
 | `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra V302 en el resumen general. |
 
+## Registro obligatorio de la actualización operativa V303
+
+Solicitud: **24 de agosto de 2026**. Alcance: hacer que el paso 4-OK de las instrucciones Stableford corresponda al botón final visible, conservando exactamente la misma función de iniciar la ronda.
+
+| Archivo modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `index-grupal.html` | Registro V303 | Cambia únicamente el botón de nueva ronda Stableford de INICIAR RONDA a OK; al editar conserva ACTUALIZAR DATOS. |
+| `stableford.js` | Registro V303 | Cambia el aviso posterior al dictado a JUGADORES DETECTADOS · REVISA Y PRESIONA OK. |
+| `mobile-release.json` | Paquete `303` | Deja preparada la numeración móvil de esta actualización. |
+| `service-worker.js` | Caché `gscg-mobile-v303` | Obliga a descargar el vocabulario homologado y retirar la caché anterior. |
+| `test-v290-brand-icons-cleanup.mjs` | Validación V303 | Comprueba el botón OK, el mensaje PRESIONA OK, el paquete y la caché. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Registra en el inventario cada archivo modificado por V303. |
+| `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra V303 a detalle. |
+| `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra V303 en el resumen general. |
+
 ## Punto de corte y norma permanente estricta
 
 - **Punto de activación original: línea 183.**

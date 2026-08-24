@@ -221,6 +221,21 @@ El **24 de agosto de 2026** se unifica el registro visual de Stableford con la S
 | `ROADMAP_A_DETALLE.md` | Registra V302 a detalle. |
 | `ROADMAP_OVERALL.md` | Registra V302 en este resumen general. |
 
+## Actualización operativa V303 · Paso 4-OK también en Stableford
+
+El **24 de agosto de 2026** se completa la hermandad de vocabulario entre General y Stableford. El botón final de una nueva ronda Stableford ahora dice **OK**, tal como indica el paso 4. Su operación no cambia: sigue validando los datos e iniciando la ronda. Cuando se edita una ronda existente, el botón conserva **ACTUALIZAR DATOS**.
+
+| Archivo o modificación | Qué queda registrado |
+|---|---|
+| `index-grupal.html` | Muestra OK como acción final de una nueva ronda Stableford. |
+| `stableford.js` | Orienta al usuario con REVISA Y PRESIONA OK después del dictado. |
+| `mobile-release.json` | Número de paquete preparado actualizado a V303. |
+| `service-worker.js` | Caché V303 para entregar inmediatamente el texto homologado. |
+| `test-v290-brand-icons-cleanup.mjs` | Comprueba OK en pantalla, OK en el aviso, paquete y caché. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el inventario de todos los archivos modificados. |
+| `ROADMAP_A_DETALLE.md` | Registra V303 a detalle. |
+| `ROADMAP_OVERALL.md` | Registra V303 en este resumen general. |
+
 ## Regla permanente
 
 1. Todo nombre visible será **Golf Score Card GT**.

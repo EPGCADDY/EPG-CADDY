@@ -644,7 +644,7 @@ body.stableford-mode .account-backup-button{position:static;display:block;width:
       <label>JUGADOR 6<input type="text" maxlength="40" data-stableford-name="5" autocomplete="off"></label>
     </div>
     <div class="setup-status" id="stablefordSetupStatus"></div>
-    <button class="nr-button" type="button" id="startStablefordRound">INICIAR RONDA</button>
+    <button class="nr-button" type="button" id="startStablefordRound">OK</button>
     <button class="nr-button secondary hidden" type="button" id="previousStablefordRoundButton">RONDA PREVIA</button>
     <button class="nr-button secondary" type="button" id="openCardLibraryStableford">BIBLIOTECA</button>
     <button class="nr-button secondary" type="button" id="backStablefordSetup">ATRÁS</button>
@@ -2534,7 +2534,7 @@ function resetStablefordSetupFields(){
   stablefordSetupCategory=null;stablefordSetupCourseKey=null;stablefordSetupMode="new";
   document.querySelectorAll("[data-stableford-name]").forEach(input=>{input.value="";input.classList.remove("stableford-name-duplicate");input.removeAttribute("aria-invalid")});
   const tournament=document.getElementById("stablefordTournamentName");if(tournament)tournament.value="";
-  $("startStablefordRound").textContent="INICIAR RONDA";
+  $("startStablefordRound").textContent="OK";
 }
 function stablefordSetupNameState(){
   const inputs=[...document.querySelectorAll("[data-stableford-name]")],groups=new Map();
