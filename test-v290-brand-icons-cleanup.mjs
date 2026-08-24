@@ -19,9 +19,11 @@ assert.doesNotMatch(html,/id="setupMicWrap"[^\n]*<div class="mic-visual">🎙<\/
 assert.match(html,/class="newbie-guide-title">DICTA O ESCRIBE:<\/div>\s*<div>1-NOMBRE<\/div>\s*<div>2-HDCP<\/div>\s*<div>3-MARCAS<\/div>\s*<div class="newbie-guide-player">DE CADA JUGADOR<\/div>\s*<div>4-OK<\/div>/);
 assert.match(html,/\.newbie-registration-guide\{text-align:left;/);
 assert.match(html,/\.newbie-registration-guide,\.newbie-registration-guide \*\{font-size:13px!important\}/);
+assert.match(html,/#setupOverlay\{padding-top:max\(8px,calc\(env\(safe-area-inset-top\) \+ 4px\)\)\}/);
+assert.match(html,/#setupOverlay \.nr-head img\{width:100%;max-width:100%;height:auto;margin-left:0\}/);
 assert.equal(packageJson.engines.node,"22.x");
 assert.equal(apiPackage.type,"module");
-assert.equal(release.buildNumber,298);
+assert.equal(release.buildNumber,299);
 assert.equal(vercel.installCommand,"npm install --omit=dev");
 assert.equal(manifest.name,"Golf Score Card GT");
 for(const size of ["192x192","512x512"])assert.ok(manifest.icons.some(icon=>icon.sizes===size&&icon.type==="image/png"&&icon.purpose==="any"));
@@ -32,7 +34,7 @@ for(const icon of [
   "assets/official-logos/golf-score-card-gt-pwa-192.png",
   "assets/official-logos/golf-score-card-gt-apple-touch-180.png"
 ])assert.ok(fs.existsSync(icon),icon);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v298"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v299"/);
 assert.match(read("assets/official-logos/README.md"),/Logos oficiales · Golf Score Card GT/);
 
-console.log("PASS V298 · instrucciones claras para newbies y registro comercial");
+console.log("PASS V299 · logo completo dentro del iPhone y registro comercial");

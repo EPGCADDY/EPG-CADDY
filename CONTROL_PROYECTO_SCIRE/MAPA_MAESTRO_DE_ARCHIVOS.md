@@ -41,8 +41,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
 | `MAPA_MATRIZ_STABLEFORD_V252.md` | `8911a7ef86398e0c3f18e647433387a02645082c` | 3828 bytes | Explica las piezas de Stableford incorporadas en V252. |
 | `README.md` | `e93c3adc84c81fdda07303f5d0f75fbb35140ea2` | 2170 bytes | Portada de GitHub que presenta el producto como Golf Score Card GT. |
-| `ROADMAP_A_DETALLE.md` | `c0587049b14350014065bac43d08aaee7239a9e2` | 12851 bytes | Abre el directorio, conserva el candado y registra a detalle la guía para newbies V298. |
-| `ROADMAP_OVERALL.md` | `ccbba37b6130ca7de2bcee8d5b10cffdba8e412c` | 11342 bytes | Resumen general con el registro obligatorio de la guía para newbies V298. |
+| `ROADMAP_A_DETALLE.md` | `26c56be08bfe9a5955a5c187f228123ecf6be5ad` | 14064 bytes | Abre el directorio, conserva el candado y registra a detalle la corrección del logo móvil V299. |
+| `ROADMAP_OVERALL.md` | `5e7b85e435c4c8a27b3529547b16ba9441a3f209` | 12444 bytes | Resumen general con el registro obligatorio de la corrección del logo móvil V299. |
 | `ROADMAP_OVERALL_V291.png` | `2e7aaaaf4b7b337caa8750b17754d9173f8930fe` | 685254 bytes | Imagen vertical y sencilla del estado general para verla desde el teléfono. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_01.png` | `2377b6bba6c886a2fddac44b2d01fbc7ebf3f0ca` | 410461 bytes | Página 1 de 9 del directorio visual detallado. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_02.png` | `ba0d741c811283d33e53431b9a90cf3055a97bed` | 487065 bytes | Página 2 de 9 del directorio visual detallado. |
@@ -102,7 +102,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `database/test-player-profile-schema.mjs` | `32d0b6f78446a1193e8b2239b26f93738547b24b` | 817 bytes | Comprueba los espacios de la información central. |
 | `database/test-schema.mjs` | `ad64ac3b0ed21932c24ea56886124f518a7b0692` | 1099 bytes | Comprueba los espacios de la información central. |
 | `historical-analytics.js` | `2a5bb2f2ef1564b09a567823efde14b54829ce86` | 8963 bytes | Resume el historial y muestra datos útiles de rondas anteriores. |
-| `index-grupal.html` | `88a8176c66fd40e840e1f3aae52e6892a5bd72d8` | 548125 bytes | Pantalla principal; en V298 muestra arriba del micrófono la guía grande, ordenada y alineada a la izquierda para usuarios nuevos. |
+| `index-grupal.html` | `3535bc6890aa244ee019334a8e92dfd14846f7fb` | 548280 bytes | Pantalla principal; en V299 limita el logo al ancho disponible y respeta la barra superior del iPhone. |
 | `index.html` | `7b483f1553246274920c71a10723f484d1847744` | 759569 bytes | Entrada antigua que lleva a la pantalla principal. |
 | `ios/EPGCaddy/App.swift` | `06a1c8ee89139ef87af20f07bba2496aa2b90636` | 141 bytes | Inicia la aplicación de apoyo para iPhone. |
 | `ios/EPGCaddy/ContentView.swift` | `80556289a09cc451f4e11e56f2f9d6a800a50a5f` | 208 bytes | Abre Golf Score Card GT dentro de la aplicación de iPhone. |
@@ -112,7 +112,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ios/project.yml` | `ef15575463a1913d778c7d8b8fb3dea237b0f4c7` | 976 bytes | Prepara el proyecto antiguo de iPhone con el nombre visible Golf Score Card GT. |
 | `manifest.webmanifest` | `e1aabc9eb3e15e548b3603fbdccb6318d417e56c` | 842 bytes | Define el nombre, colores, inicio e iconos cuando la web se instala como app. |
 | `master-data-sync.js` | `be2aade4553f95b389189fcf4225ece6d16deaad` | 8202 bytes | Mantiene igual la información del teléfono y del respaldo central. |
-| `mobile-release.json` | `cf4f86071da2941eab49fc90c718925900a9607e` | 76 bytes | Guarda la versión y el número 298 del próximo paquete móvil. |
+| `mobile-release.json` | `f15cc960bc35a4b07b705b47feb9d6ada2309c0d` | 76 bytes | Guarda la versión y el número 299 del próximo paquete móvil. |
 | `mobile/native-runtime-entry.js` | `ffbe9107212932779e6c8e7e5017f4c178b62326` | 704 bytes | Conecta la pantalla con funciones propias del teléfono. |
 | `package.json` | `a9ffec0ea56adb2998235b502fd71ed092b13bb0` | 1403 bytes | Lista lo necesario y agrega el botón técnico `roadmap:gate`. |
 | `player-registry.js` | `bf406d7b60803aedf1fd1d936de699d0cc95e0a5` | 11246 bytes | Guarda, encuentra y actualiza jugadores. |
@@ -123,7 +123,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/prepare-mobile-assets.mjs` | `fcd2fa387095322c9731917834ad424ad3e8fd73` | 1356 bytes | Crea todos los tamaños oficiales del logo. |
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
 | `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | 2881 bytes | Bloquea cualquier modificación o publicación que no aparezca en ambos ROADMAPS. |
-| `service-worker.js` | `aeefcc9769a66d118c774deac9664641fe8eada9` | 1987 bytes | Activa la caché V298 para entregar la guía para newbies y retirar la pantalla anterior. |
+| `service-worker.js` | `72ba2809f3c87f7ec9ebe36ba9484513293bc885` | 1987 bytes | Activa la caché V299 para entregar el logo móvil corregido y retirar la pantalla anterior. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |
 | `stableford-course-source-san-isidro.md` | `b370db591d5139895c9586801d55b57b3bcf0359` | 505 bytes | Fuente usada para cargar la tarjeta de San Isidro. |
@@ -191,7 +191,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v287-stableford-back-controls-clear.mjs` | `38775203ce67f828c90687799046a566e82fd517` | 667 bytes | Comprueba que Respaldo no tape Atrás ni + Jugador. |
 | `test-v288-stableford-one-touch-home.mjs` | `bf4b127fdfb288b01f55a506f80dd92445855e5c` | 2078 bytes | Comprueba que Atrás regrese al inicio con un toque. |
 | `test-v289-stableford-new-round-empty.mjs` | `bcb1295e20116ea9cde8b86ad96b5f8c366e626e` | 2005 bytes | Comprueba que Nueva ronda deje vacíos los nombres. |
-| `test-v290-brand-icons-cleanup.mjs` | `b1662ac6eb42ccd851c5f2ecea202897eae1fd0f` | 2327 bytes | Comprueba la guía para newbies, el micrófono compacto y la preparación comercial V298. |
+| `test-v290-brand-icons-cleanup.mjs` | `aba95e1f7621f49485c9149d73d8695a011cd47a` | 2534 bytes | Comprueba el logo dentro del iPhone, el espacio seguro y la preparación comercial V299. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
 | `vercel.json` | `c6dbbe007a72b62ed141e39aac6128f2dce3eb8b` | 1638 bytes | Indica qué publicar, ejecuta el candado y conserva la salida web correcta. |
 | `verify-manual-sync.mjs` | `8042010c6b0cd81915a57a8ac65d1f778bea7cc7` | 730 bytes | Comprueba el respaldo y el envío de cambios. |

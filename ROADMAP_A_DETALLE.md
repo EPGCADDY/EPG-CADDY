@@ -155,6 +155,20 @@ Autorización: **24 de agosto de 2026**. Alcance: cambiar únicamente la explica
 | `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra V298 a detalle. |
 | `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra V298 en el resumen general. |
 
+## Registro obligatorio de la corrección operativa V299
+
+Solicitud: **24 de agosto de 2026**. Alcance: corregir exclusivamente el logo superior que se veía agrandado en la aplicación instalada en iPhone. Se conserva sin cambios la guía para newbies y el micrófono aprobado.
+
+| Archivo modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `index-grupal.html` | Registro V299 | Evita que el logo sea más ancho que su recuadro y deja libre la barra superior del iPhone. |
+| `mobile-release.json` | Paquete `299` | Deja preparada la numeración móvil de esta corrección. |
+| `service-worker.js` | Caché `gscg-mobile-v299` | Hace que la aplicación descargue la corrección y retire la pantalla anterior. |
+| `test-v290-brand-icons-cleanup.mjs` | Validación V299 | Comprueba que el logo use 100 % máximo y respete el espacio seguro superior. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Actualiza códigos, tamaños y explicaciones sencillas. |
+| `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra V299 a detalle. |
+| `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra V299 en el resumen general. |
+
 ## Punto de corte y norma permanente estricta
 
 - **Punto de activación original: línea 183.**

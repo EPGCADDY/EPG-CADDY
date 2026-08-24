@@ -167,6 +167,20 @@ Autorización recibida el **24 de agosto de 2026** para sustituir únicamente lo
 | `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de V298. |
 | `ROADMAP_OVERALL.md` | Registro general obligatorio de V298. |
 
+## Corrección operativa V299 · Logo completo dentro del iPhone
+
+Corrección solicitada el **24 de agosto de 2026** después de comprobar la aplicación instalada en iPhone. Se elimina únicamente el exceso de ancho del logo superior y se respeta el espacio de seguridad de la barra del teléfono. El texto para newbies, el micrófono y todas las funciones permanecen iguales.
+
+| Archivo o modificación | Qué queda registrado |
+|---|---|
+| `index-grupal.html` | Limita el logo al 100 % del espacio disponible y lo baja debajo de la barra superior del iPhone. |
+| `mobile-release.json` | Número de paquete preparado actualizado a V299. |
+| `service-worker.js` | Caché V299 para entregar inmediatamente la corrección del logo. |
+| `test-v290-brand-icons-cleanup.mjs` | Comprueba el ancho del logo, el espacio seguro, el paquete y la caché V299. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza códigos, tamaños y explicaciones sencillas. |
+| `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de V299. |
+| `ROADMAP_OVERALL.md` | Registro general obligatorio de V299. |
+
 ## Regla permanente
 
 1. Todo nombre visible será **Golf Score Card GT**.
