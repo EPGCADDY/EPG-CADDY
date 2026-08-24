@@ -11,9 +11,11 @@ const buttonText=(source,id)=>source.match(new RegExp(`id="${id}"[^>]*>([^<]+)<\
 const sharedVocabulary=[
   ["OK","setupOk","startStablefordRound"],
   ["RONDA PREVIA","previousRoundSetupButton","previousStablefordRoundButton"],
-  ["BIBLIOTECA","openCardLibrarySetup","openCardLibraryStableford"]
+  ["HISTORIAL","openCardLibrarySetup","openCardLibraryStableford"]
 ];
-const sharedInstructions=["REGISTRO DE JUGADORES","DICTA O ESCRIBE:","1-NOMBRE","2-HDCP","3-MARCAS","DE CADA JUGADOR","4-OK"];
+const sharedInstructions=["REGISTRO DE JUGADORES","DICTA ASÍ:"];
+const generalInstructions=["JAIME · 14 · BLANCAS","ROBERTO · 21 · AZULES","HASTA 6 JUGADORES","LUEGO TOCA OK"];
+const stablefordInstructions=["1-# JUGADOR","2-NOMBRE","HASTA 6 JUGADORES","3-OK"];
 const microphonePath='M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z';
 
 assert.ok(style,"Falta el sistema visual V304");
@@ -22,10 +24,10 @@ assert.match(style,/font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI
 assert.match(style,/font-size:18px!important/);
 assert.match(style,/font-weight:900!important/);
 assert.match(style,/#setupOk,[\s\S]*?#startStablefordRound\{[\s\S]*?height:72px!important/);
-assert.match(style,/#startStablefordRound:disabled\{[\s\S]*?border:2px solid var\(--lime\)!important[\s\S]*?background:#081d04!important[\s\S]*?color:var\(--lime\)!important[\s\S]*?opacity:1!important/);
+assert.match(style,/#setupOk:disabled,[\s\S]*?#startStablefordRound:disabled\{[\s\S]*?border:2px solid var\(--lime\)!important[\s\S]*?background:#081d04!important[\s\S]*?color:var\(--lime\)!important[\s\S]*?opacity:1!important/);
 assert.match(style,/@media\(max-width:800px\)\{[\s\S]*?font-size:14px!important[\s\S]*?#setupOk,[\s\S]*?#startStablefordRound\{[\s\S]*?height:64px!important/);
 assert.doesNotMatch(style,/color:#737778/);
-assert.match(html,/<style id="gscg-registration-actions-v304">[\s\S]*?<\/style>\s*<\/head>/,"El contrato hermano debe ser la última regla visual del encabezado");
+assert.match(html,/<style id="gscg-registration-actions-v304">[\s\S]*?<\/style>\s*<style id="gscg-navigation-homogeneity-v305">/,"El contrato hermano debe conservar prioridad antes del filtro V305");
 for(const [expected,generalId,stablefordId] of sharedVocabulary){
   assert.equal(buttonText(html,generalId),expected,`${generalId} debe usar vocabulario hermano`);
   assert.equal(buttonText(html,stablefordId),expected,`${stablefordId} debe usar vocabulario hermano`);
@@ -34,13 +36,17 @@ for(const text of sharedInstructions){
   assert.ok(html.includes(text),`General perdió la instrucción hermana: ${text}`);
   assert.ok(stable.includes(text),`Stableford perdió la instrucción hermana: ${text}`);
 }
+for(const text of generalInstructions)assert.ok(html.includes(text),`General perdió su ejemplo operativo: ${text}`);
+for(const text of stablefordInstructions)assert.ok(stable.includes(text),`Stableford perdió su ejemplo operativo: ${text}`);
+const stablefordGuide=stable.match(/<div class="newbie-registration-guide"[^>]*>([\s\S]*?)<\/div><div class="nr-mic stableford-registration-mic"/)?.[1]||"";
+assert.doesNotMatch(stablefordGuide,/HDCP|HANDICAP|MARCA/,'La guía visible Stableford no debe pedir HDCP ni marcas');
 assert.ok(html.includes(microphonePath),"General perdió el SVG oficial del micrófono");
 assert.ok(stable.includes(microphonePath),"Stableford perdió el SVG oficial del micrófono");
 assert.match(html,/id="setupMicWrap"[\s\S]*?class="setup-mic-icon"/);
 assert.match(stable,/id="stablefordSetupMicWrap"[\s\S]*?class="setup-mic-icon"/);
 assert.match(html,/\.registration-method \.nr-mic\{width:120px;height:120px;/);
 assert.match(html,/\.registration-method \.nr-mic\{width:112px;height:112px;/);
-assert.equal(release.buildNumber,304);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v304"/);
+assert.equal(release.buildNumber,305);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v305"/);
 
 console.log("PASS V304 · filtro hermano: vocabulario, guía, micrófono, tipografía, tamaño, brillo y estados");

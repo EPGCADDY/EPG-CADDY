@@ -4,9 +4,9 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const sessionApi=fs.readFileSync(new URL("./api/session-grupal.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V288-STABLEFORD-ONE-TOUCH-HOME-20260823"/);
+assert.match(html,/gscg-build" content="V305-HISTORY-NAVIGATION-ZERO-ERROR-20260824"/);
 assert.match(html,/V275-LIVE-TURN-ANCHOR-SPEECH-LOCK-20260823/);
-assert.match(html,/appVersion:"V288"/);
+assert.match(html,/appVersion:"V305"/);
 
 // Un mismo ítem de audio conserva el hoyo donde comenzó aunque el cursor
 // visual avance mientras siguen llegando deltas del mismo dictado.

@@ -175,7 +175,7 @@ Solicitud: **24 de agosto de 2026**. Alcance: crear un compendio final, básico 
 
 | Archivo modificado o nuevo | ID o código actualizado | Explicación sencilla |
 |---|---|---|
-| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Documento V300 | Explica cómo usar inicio, campos, modalidades, jugadores, scores, tarjetas, biblioteca, correcciones, respaldo e instalación. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Documento V300 | Explica cómo usar inicio, campos, modalidades, jugadores, scores, tarjetas, historial, correcciones, respaldo e instalación. |
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Incorpora el documento nuevo al directorio completo. |
 | `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Guarda V300 a detalle. |
 | `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Guarda V300 en el resumen general. |
@@ -241,6 +241,51 @@ Solicitud: **24 de agosto de 2026**. Alcance: homologar el brillo del OK y conve
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Registra individualmente todos los archivos modificados y el nuevo control V304. |
 | `ROADMAP_A_DETALLE.md` | Se genera con este mismo archivo | Registra V304 a detalle. |
 | `ROADMAP_OVERALL.md` | Se genera con este mismo archivo | Registra V304 en el resumen general. |
+
+## Registro obligatorio de la actualización operativa V305
+
+Solicitud: **24 de agosto de 2026**. Alcance: auditar todas las pantallas, configuraciones, modalidades y botones desde V304; homologar el vocabulario visible, asegurar retornos ATRÁS operativos, retirar la superposición del acceso de cuenta, igualar estados equivalentes de OK y corregir la guía Stableford según su operación Scratch real.
+
+| Archivo nuevo o modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `.github/workflows/roadmap-gate.yml` | Candado GitHub V305 | Ejecuta automáticamente el filtro de Historial, Atrás, Regístrate y superposiciones. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Manual de usuario V305 | Cambia la orientación visible a Historial, explica Regístrate y separa los formatos reales de dictado General y Stableford. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.59 / App V305 | Actualiza versión, rama, fecha, estados de OK y memoria funcional de las guías operativas. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Matriz V305 | Corrige el género y el vocabulario de Historial sin alterar estados funcionales. |
+| `ROADMAP_A_DETALLE.md` | Registro V305 | Conserva este inventario detallado de cada modificación. |
+| `ROADMAP_OVERALL.md` | Registro V305 | Conserva el resumen general de la versión. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Inventario V305 | Incorpora la prueba nueva y la relación completa de archivos modificados. |
+| `audit-project.mjs` | Auditoría V305 | Ejecuta `test-v305-history-navigation-zero-error.mjs` en el PASS maestro. |
+| `index-grupal.html` | Build V305 | Usa Historial en tres entradas y título; sitúa Atrás arriba; coloca Regístrate dentro del flujo; retira el texto huérfano y hace que el OK General comparta el estado bloqueado/activo de Stableford. |
+| `mobile-release.json` | Paquete `305` | Identifica el paquete móvil de esta versión. |
+| `service-worker.js` | Caché `gscg-mobile-v305` | Fuerza la entrega de la interfaz auditada. |
+| `stableford.js` | Guía operativa V305 | Limita el texto visible a `1-# JUGADOR`, `2-NOMBRE`, `HASTA 6 JUGADORES` y `3-OK`; conserva el dictado obligatorio por posición y la configuración Scratch automática. |
+| `test-course-catalog.mjs` | Compatibilidad V170/V305 | Conserva la prohibición de las falsas casillas históricas y reconoce que la guía vigente sí debe informar el máximo real de seis jugadores. |
+| `test-stableford-ui.mjs` | Compatibilidad V305 | Reconoce el build vigente sin cambiar la matriz funcional Stableford. |
+| `test-stableford-clean-roster-history.mjs` | Compatibilidad V289/V305 | Conserva el roster limpio y reconoce que la nueva ronda vacía se persiste para no revivir nombres anteriores. |
+| `test-v255-player-registration-boxes-codes.mjs` | Compatibilidad V304/V305 | Comprueba la guía visual homogénea vigente y el micrófono accesible sin exigir rótulos retirados. |
+| `test-v260-round-points-player-return.mjs` | Compatibilidad V289/V305 | Conserva retorno, puntos y aislamiento de modalidades con la persistencia vacía vigente. |
+| `test-v261-registration-stableford-modality.mjs` | Compatibilidad V301/V304/V305 | Comprueba las tres modalidades y la guía Dicta o escribe vigente sin recuperar vocabulario retirado. |
+| `test-v262-provisional-optional-profile.mjs` | Compatibilidad V262/V301/V305 | Conserva los perfiles opcionales y exige el nombre comercial vigente `SCORE CARD - PRÁCTICA`, prohibiendo el rótulo anterior. |
+| `test-v253-live-previous-round.mjs` | Ruta V305 | Comprueba que el acceso Stableford use la URL oficial con `v=305`. |
+| `test-v252-stableford-persistence-category-course.mjs` | Persistencia V289/V305 | Comprueba que Nueva ronda reemplace el activo por un estado vacío y no reviva nombres anteriores. |
+| `test-v272-definitive-operational-release.mjs` | Contrato V305 | Verifica build, snapshot y ruta oficial vigentes. |
+| `test-v274-complete-courses-voice-operations.mjs` | Contrato V305 | Conserva la prueba de campos y voz bajo la versión vigente. |
+| `test-v275-stable-live-voice-turns.mjs` | Contrato V305 | Conserva la prueba de turnos vivos bajo la versión vigente. |
+| `test-v276-manual-hole-navigation.mjs` | Contrato V305 | Conserva la prueba manual ANTERIOR/SIGUIENTE bajo la versión vigente. |
+| `test-v277-official-round-corrections.mjs` | Contrato V305 | Verifica que correcciones y snapshots guarden V305. |
+| `test-v278-card-image-pdf-export.mjs` | Contrato V305 | Verifica que los artefactos oficiales correspondan al build vigente. |
+| `test-v279-local-card-library.mjs` | Historial V305 | Corrige la redacción y confirma que abrir Historial no sustituye la ronda. |
+| `test-v280-local-history-insights.mjs` | Estadísticas V305 | Conserva las consultas escritas del Historial bajo la versión vigente. |
+| `test-v281-pwa-installation.mjs` | PWA V305 | Comprueba la caché de instalación V305. |
+| `test-v284-native-package-generation.mjs` | Nativo V305 | Comprueba paquete 305 y caché V305. |
+| `test-v285-stableford-back-navigation.mjs` | Atrás V305 | Verifica el botón superior visible y su conexión. |
+| `test-v287-stableford-back-controls-clear.mjs` | Superposición V305 | Prohíbe que Regístrate vuelva a una posición fija sobre controles. |
+| `test-v290-brand-icons-cleanup.mjs` | Acumulada V305 | Mantiene logo, guía Stableford exacta, paquete y caché bajo el build vigente. |
+| `test-v304-homogeneous-registration-actions.mjs` | Filtro hermano acumulado | Mantiene fuente, tamaño, peso, altura, brillo y estados homologados y prohíbe HDCP o marcas en la guía Stableford. |
+| `test-v305-history-navigation-zero-error.mjs` | Filtro cero errores V305 | Recorre el vocabulario de archivos, botones de retorno, conexiones, estilos, validación Stableford y versiones. |
+| `test-v305-registration-guides-parser-truth.mjs` | Filtro semántico V305 | Ejecuta los analizadores reales, valida el dictado General directo y el Stableford por posición, y compara los estados equivalentes de ambos OK. |
+| `vercel.json` | Candado Vercel V305 | Cancela la publicación si falla el filtro V304 o V305. |
 
 ## Punto de corte y norma permanente estricta
 

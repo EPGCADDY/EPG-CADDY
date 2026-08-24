@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos con candado técnico de ROADMAPS: **187**.
+Archivos activos con candado técnico de ROADMAPS: **189**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -13,13 +13,13 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `.github/workflows/ios-build.yml` | `8a61450069cd4ec9297204841a70788ae1f4ad0f` | 1092 bytes | Comprueba que la aplicación de iPhone pueda construirse y exige primero ambos ROADMAPS. |
 | `.github/workflows/ios-testflight.yml` | `b67cfeef9a79cc4b419accece846a7e334a27636` | 1133 bytes | Prepara una copia para TestFlight y exige primero ambos ROADMAPS. |
 | `.github/workflows/mobile-native-package.yml` | `ee0d6b5b72cfab49646b58a764dcb8d585c88ee5` | 2112 bytes | Prepara Apple/Android y se bloquea si faltan los dos ROADMAPS. |
-| `.github/workflows/roadmap-gate.yml` | `55d607666ade5f730121d42900f02b1463a274f3` | 852 bytes | Ejecuta en GitHub los candados ROADMAP y de tarjetas hermanas antes de aceptar cambios. |
+| `.github/workflows/roadmap-gate.yml` | Registro V305 | Se calcula al publicar | Ejecuta en GitHub los candados ROADMAP, de tarjetas hermanas y de navegación V305. |
 | `.github/workflows/stableford-tournament-pass.yml` | `df70cf36092ddd72b59271bf241b1ac58fb21027` | 1075 bytes | Comprueba Stableford y exige primero ambos ROADMAPS. |
 | `.gitignore` | `0994446eb785e2166ce79941bec8bba6c245c567` | 75 bytes | Indica qué archivos temporales no deben subirse a GitHub. |
 | `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Fuente histórica del logo cromado 3D con verde neón muy saturado; conserva su nombre para no romper enlaces. |
 | `APP_ARCHITECTURE.md` | `7119e67641ce309201fa32922195ebceb3006fb4` | 3405 bytes | Explica cómo se divide la aplicación y cómo trabajan juntas sus partes. |
 | `AUDITORIA_MAESTRA_V170.md` | `8dd135a84521f64c39928fadb35de0518447fe40` | 4462 bytes | Resumen de una revisión histórica del producto. |
-| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | `f399765ed3de72bcee3d30c57629b966aeda5495` | 11957 bytes | Manual sencillo actualizado con Ronda Normal, Score Card - Práctica y el torneo opcional. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Registro V305 | Se calcula al publicar | Manual sencillo actualizado con Historial, Regístrate y el vocabulario visible vigente. |
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `be454f43b458670199a7be029abf716dc49108d7` | 4018 bytes | Reglas permanentes, punto de corte y candado técnico de ambos ROADMAPS, incluido Vercel. |
 | `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INDICE_DOCUMENTOS_PENDIENTES.md` | `064e9201c833cb7f5c751ba5328290d8c4c2b20b` | 814 bytes | Lista de documentos todavía pendientes de usar. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | `b9815c3eae588f1f54c0e4fabbf1d51b52c75b0e` | 722 bytes | Registro de trabajos terminados. |
@@ -35,15 +35,15 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ECOS.md` | `43a9c6f5bacb8c758edd33c8ad31f9e59e63f84f` | 3982 bytes | Reglas de comportamiento de Golf Score Card GT. |
 | `EPG-Caddy_Master_Blueprint_v0.1.md` | `95b4c227c4e5dce7f90fede0ebc9cdd0af6ed76c` | 7990 bytes | Plano maestro; el nombre del archivo es antiguo, pero el contenido ya usa Golf Score Card GT. |
 | `EPG_CADDY_PLAN_CAMBIOS.md` | `a81981bda6522c0ab29ec5e70f6ebe557cde34bf` | 116300 bytes | Lista antigua de cambios; el nombre sólo se conserva para localizarla. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | `dfae60a77b5e25f8690e49f1fcd2a7b738801689` | 98591 bytes | Manual completo de la tarjeta grupal y sus reglas. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | `f496809e954a7324109592e0eca23ac4de365abd` | 9280 bytes | Lista ordenada de funciones terminadas y pendientes. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V305 | Se calcula al publicar | Manual completo sincronizado con App V305, sus pantallas y sus reglas. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V305 | Se calcula al publicar | Lista ordenada de funciones terminadas y pendientes con vocabulario Historial. |
 | `MAPA_MATRIZ_BASE_MAESTRA_V256.md` | `8d0cdb23c0b1d9445f51b822ba49d385f5c71d3c` | 1718 bytes | Explica la información central incorporada en V256. |
 | `MAPA_MATRIZ_REGISTRO_JUGADORES_V255.md` | `5d0670562aa89ffa7a265820573e0e31895fe95b` | 1993 bytes | Explica el registro de jugadores de V255. |
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
 | `MAPA_MATRIZ_STABLEFORD_V252.md` | `8911a7ef86398e0c3f18e647433387a02645082c` | 3828 bytes | Explica las piezas de Stableford incorporadas en V252. |
 | `README.md` | `e93c3adc84c81fdda07303f5d0f75fbb35140ea2` | 2170 bytes | Portada de GitHub que presenta el producto como Golf Score Card GT. |
-| `ROADMAP_A_DETALLE.md` | Registro V304 | Se calcula al publicar | Abre el directorio, conserva el candado y registra a detalle la actualización V304. |
-| `ROADMAP_OVERALL.md` | Registro V304 | Se calcula al publicar | Resumen general con el registro obligatorio de la actualización V304. |
+| `ROADMAP_A_DETALLE.md` | Registro V305 | Se calcula al publicar | Abre el directorio, conserva el candado y registra a detalle la actualización V305. |
+| `ROADMAP_OVERALL.md` | Registro V305 | Se calcula al publicar | Resumen general con el registro obligatorio de la actualización V305. |
 | `ROADMAP_OVERALL_V291.png` | `2e7aaaaf4b7b337caa8750b17754d9173f8930fe` | 685254 bytes | Imagen vertical y sencilla del estado general para verla desde el teléfono. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_01.png` | `2377b6bba6c886a2fddac44b2d01fbc7ebf3f0ca` | 410461 bytes | Página 1 de 9 del directorio visual detallado. |
 | `ROADMAP_IMAGES/ROADMAP_A_DETALLE_02.png` | `ba0d741c811283d33e53431b9a90cf3055a97bed` | 487065 bytes | Página 2 de 9 del directorio visual detallado. |
@@ -90,7 +90,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Copia maestra del logo cromado 3D con verde neón muy saturado. |
 | `assets/official-logos/golf-score-card-gt-pwa-192.png` | `e28cd92c784748a2d4ff02bf3491b96c8121ed94` | 67805 bytes | Icono cromado 3D neón pequeño de la aplicación instalable. |
 | `assets/official-logos/golf-score-card-gt-pwa-512.png` | `0e85cc6995f9bafefb49dec5a8253aef3db7fffd` | 461402 bytes | Icono cromado 3D neón grande de la aplicación instalable. |
-| `audit-project.mjs` | `35e94709bf7d2417707776fbd5a82e4ef5d9f335` | 3619 bytes | Ejecuta el candado ROADMAP e incorpora la comparación gráfica automática V304. |
+| `audit-project.mjs` | Registro V305 | Se calcula al publicar | Ejecuta el candado ROADMAP y los filtros automáticos V304 y V305. |
 | `capacitor.config.json` | `a5ca52fde974ea370d90dbfe422f08101ec7f7eb` | 867 bytes | Define el nombre visible y la identidad de las apps de iPhone y Android. |
 | `card-artifacts.js` | `df8ba2b09532b73701681d7de1781ca5b54baf26` | 12799 bytes | Arma la tarjeta oficial con la información de la ronda. |
 | `card-file-export.js` | `4ddbf8f36ec142114cfa965a78d97ea55365afa1` | 5919 bytes | Convierte la tarjeta en imagen o PDF. |
@@ -103,7 +103,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `database/test-player-profile-schema.mjs` | `32d0b6f78446a1193e8b2239b26f93738547b24b` | 817 bytes | Comprueba los espacios de la información central. |
 | `database/test-schema.mjs` | `ad64ac3b0ed21932c24ea56886124f518a7b0692` | 1099 bytes | Comprueba los espacios de la información central. |
 | `historical-analytics.js` | `2a5bb2f2ef1564b09a567823efde14b54829ce86` | 8963 bytes | Resume el historial y muestra datos útiles de rondas anteriores. |
-| `index-grupal.html` | `928655f9a1a0332e3dd3b4fb7586a119f96f69e6` | 550683 bytes | Pantalla principal V304 con acciones tipográficas hermanas en General y Stableford. |
+| `index-grupal.html` | Registro V305 | Se calcula al publicar | Pantalla principal V305 con Historial, Atrás, Regístrate y controles sin superposición. |
 | `index.html` | `7b483f1553246274920c71a10723f484d1847744` | 759569 bytes | Entrada antigua que lleva a la pantalla principal. |
 | `ios/EPGCaddy/App.swift` | `06a1c8ee89139ef87af20f07bba2496aa2b90636` | 141 bytes | Inicia la aplicación de apoyo para iPhone. |
 | `ios/EPGCaddy/ContentView.swift` | `80556289a09cc451f4e11e56f2f9d6a800a50a5f` | 208 bytes | Abre Golf Score Card GT dentro de la aplicación de iPhone. |
@@ -113,7 +113,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ios/project.yml` | `ef15575463a1913d778c7d8b8fb3dea237b0f4c7` | 976 bytes | Prepara el proyecto antiguo de iPhone con el nombre visible Golf Score Card GT. |
 | `manifest.webmanifest` | `e1aabc9eb3e15e548b3603fbdccb6318d417e56c` | 842 bytes | Define el nombre, colores, inicio e iconos cuando la web se instala como app. |
 | `master-data-sync.js` | `be2aade4553f95b389189fcf4225ece6d16deaad` | 8202 bytes | Mantiene igual la información del teléfono y del respaldo central. |
-| `mobile-release.json` | `0f35238d7204c7a23fdeed1ba26beea26d57c923` | 76 bytes | Guarda la versión y el número 304 del próximo paquete móvil. |
+| `mobile-release.json` | Registro V305 | 76 bytes | Guarda la versión y el número 305 del próximo paquete móvil. |
 | `mobile/native-runtime-entry.js` | `ffbe9107212932779e6c8e7e5017f4c178b62326` | 704 bytes | Conecta la pantalla con funciones propias del teléfono. |
 | `package.json` | `a9ffec0ea56adb2998235b502fd71ed092b13bb0` | 1403 bytes | Lista lo necesario y agrega el botón técnico `roadmap:gate`. |
 | `player-registry.js` | `bf406d7b60803aedf1fd1d936de699d0cc95e0a5` | 11246 bytes | Guarda, encuentra y actualiza jugadores. |
@@ -124,16 +124,16 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/prepare-mobile-assets.mjs` | `fcd2fa387095322c9731917834ad424ad3e8fd73` | 1356 bytes | Crea todos los tamaños oficiales del logo. |
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
 | `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | 2881 bytes | Bloquea cualquier modificación o publicación que no aparezca en ambos ROADMAPS. |
-| `service-worker.js` | `1b9d4ecfe29b5b52a961c1990b02b54b1887bcda` | 1987 bytes | Activa la caché V304 para entregar la homologación visual de las dos tarjetas. |
+| `service-worker.js` | Registro V305 | 1987 bytes | Activa la caché V305 para entregar la navegación auditada. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |
 | `stableford-course-source-san-isidro.md` | `b370db591d5139895c9586801d55b57b3bcf0359` | 505 bytes | Fuente usada para cargar la tarjeta de San Isidro. |
 | `stableford-torneo.html` | `b80abecdc60a1a0f72a1c083ea2a0ad217e3bf71` | 14321 bytes | Entrada antigua de Stableford que ahora lleva a la pantalla principal. |
-| `stableford.js` | `343cfa8bae3fa0fffe960f8ea7762deb50f487b1` | 20627 bytes | Mantiene las reglas Stableford y orienta al usuario a presionar OK después del dictado. |
+| `stableford.js` | Registro V305 | Se calcula al publicar | Mantiene las reglas Scratch y muestra una guía que pide únicamente número de jugador, nombre, máximo seis y OK. |
 | `sync-queue.js` | `472255acb2a293433df36ddd207257e14e256961` | 2510 bytes | Guarda cambios que todavía no se han enviado. |
 | `test-card-artifacts.mjs` | `476f031924639d2ff88d4b296ceb83a197b6cd1c` | 2461 bytes | Comprueba la creación, guardado o entrega de tarjetas. |
 | `test-country-club-official.mjs` | `bfc863c01fa6f4d42dda2d85ae07f0f940bd0187` | 2135 bytes | Comprueba la información y selección de campos. |
-| `test-course-catalog.mjs` | `4f730f5b93c1122706d8604d8b9dbe04aedb7cf0` | 1548 bytes | Comprueba la información y selección de campos. |
+| `test-course-catalog.mjs` | Registro V305 | Se calcula al publicar | Comprueba los campos, prohíbe las falsas casillas antiguas y reconoce la guía vigente del máximo de seis jugadores. |
 | `test-historical-analytics.mjs` | `4e182ac2115f70a637cfae27e74a8f9f2b87fd19` | 1185 bytes | Comprueba el historial y sus resúmenes. |
 | `test-master-data-sync.mjs` | `e217fce804954c18707ec96ef210bcdbca1408c1` | 2397 bytes | Comprueba el respaldo y el envío de cambios. |
 | `test-no-automatic-x.mjs` | `f533babe3998f1adebde2d205fe484d825eef48d` | 766 bytes | Comprueba que una función anterior siga trabajando correctamente. |
@@ -156,14 +156,14 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v252-stableford-persistence-category-course.mjs` | `d98492914be7cc5b841502d50413dd01368ec015` | 3030 bytes | Comprueba una regla o pantalla de Stableford. |
 | `test-v253-live-previous-round.mjs` | `b4703fcd9c6f4fc62d2e3b777048e7d131cd81b9` | 3961 bytes | Comprueba resultados, hoyos o movimientos entre rondas. |
 | `test-v254-remove-registration-guide.mjs` | `d187443a3313198b43a8980d88ba0015c1644ad9` | 895 bytes | Comprueba nombres y registro de jugadores. |
-| `test-v255-player-registration-boxes-codes.mjs` | `24cabd14d6800afd7d3de7455379f4f98f91d4c3` | 1488 bytes | Comprueba nombres y registro de jugadores. |
+| `test-v255-player-registration-boxes-codes.mjs` | Registro V305 | Se calcula al publicar | Comprueba la guía visual Dicta o escribe, Nombre, HDCP, Marcas y OK. |
 | `test-v256-master-data-platform.mjs` | `ec16af9be11c0ed717de9d1ecd46806d849591bd` | 1725 bytes | Comprueba que una función anterior siga trabajando correctamente. |
 | `test-v257-stableford-course-selector-title.mjs` | `fa107447ac98126aef5362ffde04433b85d64249` | 4584 bytes | Comprueba una regla o pantalla de Stableford. |
 | `test-v258-stableford-readonly-manual-plan-b.mjs` | `e87b114e8756d360ee2c8ce9a5eba8c3d2c18c99` | 1944 bytes | Comprueba una regla o pantalla de Stableford. |
 | `test-v259-stableford-hide-unused-player-rows.mjs` | `ff1012fedc358510e62dead2deecdd35e4245072` | 2055 bytes | Comprueba una regla o pantalla de Stableford. |
-| `test-v260-round-points-player-return.mjs` | `d6e9575f595f10638b011be8594e0411fd9e774e` | 2893 bytes | Comprueba nombres y registro de jugadores. |
-| `test-v261-registration-stableford-modality.mjs` | `b3e0c9c60288d2ee6a9404a5287276c8043e7e36` | 2741 bytes | Comprueba una regla o pantalla de Stableford. |
-| `test-v262-provisional-optional-profile.mjs` | `1dc4713d3b6b125a9ada7fddc755f3ef4aede0b0` | 5034 bytes | Comprueba que una función anterior siga trabajando correctamente. |
+| `test-v260-round-points-player-return.mjs` | Registro V305 | Se calcula al publicar | Comprueba retorno, puntos y aislamiento de modalidades con la persistencia Stableford vigente. |
+| `test-v261-registration-stableford-modality.mjs` | Registro V305 | Se calcula al publicar | Comprueba Ronda Normal, Stableford, Score Card - Práctica y la guía homogénea vigente. |
+| `test-v262-provisional-optional-profile.mjs` | Registro V305 | Se calcula al publicar | Conserva los perfiles opcionales y exige el nombre vigente Score Card - Práctica sin recuperar Ronda sin registro. |
 | `test-v263-compact-players-back-button.mjs` | `9c680c66c293baaf76c67e1bd324002289e7fca9` | 4840 bytes | Comprueba nombres y registro de jugadores. |
 | `test-v264-previous-round-responsive-names.mjs` | `41307f04e0af3b899354fd8c91574c08cc2dfc54` | 3287 bytes | Comprueba resultados, hoyos o movimientos entre rondas. |
 | `test-v265-first-nine-automatic-result.mjs` | `28fc90b78fee5c718d7806630e3fa51e2ffa38cd` | 2111 bytes | Comprueba que una función anterior siga trabajando correctamente. |
@@ -189,13 +189,15 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v284-native-package-generation.mjs` | `7d1a8183c6fb6fbbdc492cfb521c4d275f819491` | 1748 bytes | Comprueba que una función anterior siga trabajando correctamente. |
 | `test-v285-stableford-back-navigation.mjs` | `1202bd6751841ea0d9dfcc55330621ac55f07b98` | 763 bytes | Comprueba que exista Atrás al entrar a Stableford. |
 | `test-v286-stableford-back-restores-home.mjs` | `3d8bce123de3e370c2ec5ef68b93b4ee214875aa` | 707 bytes | Comprueba que Atrás regrese a la pantalla principal completa. |
-| `test-v287-stableford-back-controls-clear.mjs` | `38775203ce67f828c90687799046a566e82fd517` | 667 bytes | Comprueba que Respaldo no tape Atrás ni + Jugador. |
+| `test-v287-stableford-back-controls-clear.mjs` | Registro V305 | Se calcula al publicar | Comprueba que Regístrate permanezca dentro del flujo y no tape Atrás ni + Jugador. |
 | `test-v288-stableford-one-touch-home.mjs` | `bf4b127fdfb288b01f55a506f80dd92445855e5c` | 2078 bytes | Comprueba que Atrás regrese al inicio con un toque. |
 | `test-v289-stableford-new-round-empty.mjs` | `bcb1295e20116ea9cde8b86ad96b5f8c366e626e` | 2005 bytes | Comprueba que Nueva ronda deje vacíos los nombres. |
-| `test-v290-brand-icons-cleanup.mjs` | `d93114419e6827fcf23fc9f0eaa21922598e0bd8` | 3998 bytes | Conserva las comprobaciones de registro y valida paquete y caché V304. |
-| `test-v304-homogeneous-registration-actions.mjs` | `acd09d5c04677ef60a37b07b2d748c8c26db53a6` | 3254 bytes | Compara automáticamente vocabulario, guía, SVG del micrófono, fuente, peso, tamaño, altura, brillo y estado de las tarjetas hermanas. |
+| `test-v290-brand-icons-cleanup.mjs` | Registro V305 | Se calcula al publicar | Conserva las comprobaciones de registro y valida paquete y caché V305. |
+| `test-v304-homogeneous-registration-actions.mjs` | Registro V305 | Se calcula al publicar | Conserva el control de vocabulario, guía, micrófono, fuente, peso, tamaño, altura, brillo y estado. |
+| `test-v305-history-navigation-zero-error.mjs` | Registro V305 | Se calcula al publicar | Audita Historial, Atrás, Regístrate, superposiciones, validación Stableford, versión y caché. |
+| `test-v305-registration-guides-parser-truth.mjs` | Registro V305 | Se calcula al publicar | Ejecuta ambos analizadores reales y bloquea guías falsas, HDCP o marcas visibles en Stableford y estados de OK incoherentes. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
-| `vercel.json` | `8735afbd1185aba7d85605459312ed24e95d8172` | 1693 bytes | Ejecuta en Vercel los candados ROADMAP y visual hermano antes de publicar. |
+| `vercel.json` | Registro V305 | Se calcula al publicar | Ejecuta en Vercel los candados ROADMAP, visual hermano y navegación V305 antes de publicar. |
 | `verify-manual-sync.mjs` | `8042010c6b0cd81915a57a8ac65d1f778bea7cc7` | 730 bytes | Comprueba el respaldo y el envío de cambios. |
 
 ## Registro obligatorio de la documentación operativa V300
@@ -260,6 +262,49 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Conserva el inventario integral de los once archivos V304 y eleva el total activo a 187. |
 | `ROADMAP_A_DETALLE.md` | Registro V304 | Registra V304 a detalle. |
 | `ROADMAP_OVERALL.md` | Registro V304 | Registra V304 en el resumen general. |
+
+## Registro obligatorio de la actualización operativa V305
+
+| Archivo nuevo o modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `.github/workflows/roadmap-gate.yml` | Registro V305 | Ejecuta en GitHub el filtro nuevo de navegación y vocabulario. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Registro V305 | Orienta al usuario con Historial y Regístrate. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.59 / App V305 | Sincroniza la memoria viva con la interfaz vigente. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V305 | Homologa la redacción del Historial. |
+| `ROADMAP_A_DETALLE.md` | Registro V305 | Guarda el detalle individual de esta versión. |
+| `ROADMAP_OVERALL.md` | Registro V305 | Guarda el resumen general de esta versión. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Se genera con este mismo mapa | Eleva el inventario activo a 189 y registra cada archivo V305. |
+| `audit-project.mjs` | Registro V305 | Agrega la prueba nueva al PASS maestro. |
+| `index-grupal.html` | Build V305 | Homologa Historial, Atrás, Regístrate y los estados del OK General; elimina superposición y texto huérfano conservando la validación. |
+| `mobile-release.json` | Paquete 305 | Prepara la versión móvil. |
+| `service-worker.js` | Caché V305 | Entrega la interfaz nueva y retira la caché anterior. |
+| `stableford.js` | Registro V305 | Corrige la guía visible a número de jugador, nombre, máximo seis y OK, sin pedir HDCP ni marcas. |
+| `test-course-catalog.mjs` | Registro V305 | Alinea la prueba histórica con la guía real de hasta seis jugadores sin recuperar las falsas casillas. |
+| `test-stableford-ui.mjs` | Registro V305 | Alinea la identificación de build en la prueba Stableford. |
+| `test-stableford-clean-roster-history.mjs` | Registro V305 | Alinea la prueba limpia con la persistencia vacía aprobada en V289. |
+| `test-v255-player-registration-boxes-codes.mjs` | Registro V305 | Alinea el contrato histórico con la guía gráfica homogénea aprobada en V304. |
+| `test-v260-round-points-player-return.mjs` | Registro V305 | Alinea la recuperación con la persistencia vacía aprobada en V289. |
+| `test-v261-registration-stableford-modality.mjs` | Registro V305 | Alinea la prueba histórica con las modalidades y guía gráfica vigentes. |
+| `test-v262-provisional-optional-profile.mjs` | Registro V305 | Alinea la prueba histórica de perfiles opcionales con el nombre Score Card - Práctica. |
+| `test-v253-live-previous-round.mjs` | Registro V305 | Alinea la ruta oficial Stableford. |
+| `test-v252-stableford-persistence-category-course.mjs` | Registro V305 | Alinea la persistencia con la nueva ronda vacía aprobada en V289. |
+| `test-v272-definitive-operational-release.mjs` | Registro V305 | Alinea build, snapshot y ruta de liberación. |
+| `test-v274-complete-courses-voice-operations.mjs` | Registro V305 | Alinea la versión de la prueba de campos y voz. |
+| `test-v275-stable-live-voice-turns.mjs` | Registro V305 | Alinea la versión de la prueba viva. |
+| `test-v276-manual-hole-navigation.mjs` | Registro V305 | Alinea la versión de la prueba manual. |
+| `test-v277-official-round-corrections.mjs` | Registro V305 | Alinea correcciones y snapshots oficiales. |
+| `test-v278-card-image-pdf-export.mjs` | Registro V305 | Alinea la prueba de imagen y PDF. |
+| `test-v279-local-card-library.mjs` | Registro V305 | Homologa la redacción y conserva la prueba del Historial local. |
+| `test-v280-local-history-insights.mjs` | Registro V305 | Alinea las estadísticas del Historial. |
+| `test-v281-pwa-installation.mjs` | Registro V305 | Comprueba la caché V305. |
+| `test-v284-native-package-generation.mjs` | Registro V305 | Comprueba paquete y caché V305. |
+| `test-v285-stableford-back-navigation.mjs` | Registro V305 | Comprueba el Atrás superior de Stableford. |
+| `test-v287-stableford-back-controls-clear.mjs` | Registro V305 | Prohíbe que Regístrate tape otros controles. |
+| `test-v290-brand-icons-cleanup.mjs` | Registro V305 | Mantiene la validación acumulada y la guía Stableford exacta bajo paquete V305. |
+| `test-v304-homogeneous-registration-actions.mjs` | Registro V305 | Conserva el filtro gráfico hermano y prohíbe HDCP o marcas en la guía Stableford. |
+| `test-v305-history-navigation-zero-error.mjs` | Registro V305 | Revisa vocabulario, retornos, conexiones, superposición, validación y versión. |
+| `test-v305-registration-guides-parser-truth.mjs` | Registro V305 | Comprueba los formatos reales de dictado y los estados equivalentes de OK. |
+| `vercel.json` | Registro V305 | Impide publicar si falla el filtro V304 o V305. |
 
 ## Archivos retirados del uso diario
 

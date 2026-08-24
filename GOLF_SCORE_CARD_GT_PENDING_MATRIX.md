@@ -33,8 +33,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - ✅ Todas las tarjetas muestran `OUT`, `IN` y `TOTAL`.
 - ✅ Existen regreso a datos, ronda previa, regreso a ronda actual, nueva ronda y borrar scores.
 - ✅ Existen Tarjeta Global y tarjetas personales con exportación PNG, PDF individual, PDF conjunto y hoja nativa para guardar o compartir.
-- ✅ La biblioteca privada local permite buscar tarjetas oficiales por ronda, fecha, campo, torneo, modalidad y jugador sin reemplazar la ronda actual.
-- ✅ La biblioteca incluye consultas estadísticas escritas de Gross, Neto, consistencia, tendencia, comparación y puntos Stableford sobre el historial local.
+- ✅ El historial privado local permite buscar tarjetas oficiales por ronda, fecha, campo, torneo, modalidad y jugador sin reemplazar la ronda actual.
+- ✅ El historial incluye consultas estadísticas escritas de Gross, Neto, consistencia, tendencia, comparación y puntos Stableford sobre el historial local.
 - ✅ Stableford calcula Gross y puntos por jugador para `OUT`, `IN` y `TOTAL`.
 - ✅ Stableford conserva localmente el torneo de cuatro fechas y clasificación por mejores tres resultados.
 - ✅ Una ronda cerrada puede corregirse mediante versión oficial nueva, conservando original, motivo, responsable, fecha, SHA-256 y recálculo General/Stableford.
@@ -105,7 +105,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - ✅ Exportar Tarjeta Global y tarjetas personales como PDF real.
 - ✅ Entregar la imagen a la hoja nativa para seleccionar `Guardar imagen` cuando el dispositivo lo permita.
 - ✅ Descargar un PDF conjunto multipágina con Global y todas las personales.
-- ✅ Crear una biblioteca privada local de tarjetas por ronda, fecha, campo, torneo, modalidad y jugador.
+- ✅ Crear un historial privado local de tarjetas por ronda, fecha, campo, torneo, modalidad y jugador.
 
 ### 7. Correcciones oficiales
 
@@ -135,7 +135,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Conectar las consultas de voz al mismo historial central cuando se habilite la sincronización autenticada.
 - ✅ Comparar localmente periodos, vueltas, campos, torneos y jugadores.
 - ✅ Mostrar promedios, mejores, peores, consistencia, tendencia, categorías de score y puntos Stableford.
-- ✅ Abrir desde la biblioteca cada ronda oficial y sus tarjetas correspondientes.
+- ✅ Abrir desde el historial cada ronda oficial y sus tarjetas correspondientes.
 
 ### 10. Preparación comercial
 

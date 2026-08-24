@@ -27,7 +27,8 @@ for(const course of Object.values(stableford.TOURNAMENT_COURSES)){
 }
 
 assert.match(html,/function openFreshStablefordSetup\(\)/);
-assert.match(html,/try\{localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)\}catch\{\}/);
+assert.match(html,/localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,JSON\.stringify\(round\)\)/);
+assert.doesNotMatch(html,/function openFreshStablefordSetup\(\)[\s\S]*?localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\);localStorage\.removeItem\(STORAGE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(ROUND_ARCHIVE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_SERIES_KEY\)/);
