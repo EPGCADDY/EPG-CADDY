@@ -548,14 +548,14 @@ Solicitud: **25 de agosto de 2026**. Estado: **PENDIENTE · NO INICIADO**. Se pr
 | `ROADMAP_OVERALL.md` | Resumen PEND-CLI-002 | Registra el alcance general sin declarar implementación. |
 | `ROADMAP_A_DETALLE.md` | Matriz PEND-CLI-002 | Conserva este detalle técnico. |
 
-## PEND-VOZ-003 · Caddie conversacional experto en golf
+## PEND-VOZ-003 · Caddie/Support conversacional humano
 
-Solicitud: **25 de agosto de 2026**. Estado: **PENDIENTE · NO INICIADO**. Se proyecta una capa de audio conversacional con contexto de ronda y conocimiento aprobado de golf. El clasificador separará score, consulta, navegación y conocimiento antes de responder o ejecutar cualquier acción.
+Solicitud ampliada: **25 de agosto de 2026**. Estado: **PENDIENTE · NO INICIADO**. Se proyecta una conversación por texto o voz que conserve especialidad prioritaria en golf y pueda atender Manual, clima vivo, conversación general y orientación de salud con límites médicos seguros. El clasificador separará siete rutas antes de responder o ejecutar cualquier acción.
 
 | Archivo nuevo o modificado | ID o código | Explicación sencilla |
 |---|---|---|
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-VOZ-003` | Define audio, contexto, fuentes, seguridad, conexión, pruebas y cierre. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Punto 13 | Añade el caddie conversacional a los trabajos proyectados. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-VOZ-003` | Define texto, audio, contexto, herramientas, fuentes, seguridad médica, conexión, pruebas y cierre. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Punto 13 | Amplía el Caddie/Support conversacional a los trabajos proyectados. |
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registro de voz experta | Permite localizar el pendiente por nombre o código. |
 | `ROADMAP_OVERALL.md` | Resumen PEND-VOZ-003 | Registra el alcance general sin declarar implementación. |
 | `ROADMAP_A_DETALLE.md` | Matriz PEND-VOZ-003 | Conserva este detalle técnico. |
@@ -680,4 +680,17 @@ Solicitud: **25 de agosto de 2026**. Estado: **IMPLEMENTADO · EN AUDITORÍA**. 
 | `test-v311-manual-hosting.mjs` | Candado de navegación | Prohíbe el desplazamiento vertical del índice y exige ancla, foco liberado y apertura directa. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Registra la nueva huella de las fuentes. |
 | `ROADMAP_OVERALL.md` | Resumen | Registra la corrección visible. |
+| `ROADMAP_A_DETALLE.md` | Detalle | Conserva este bloque técnico. |
+
+## Acceso permanente V311 · Support global al Manual vivo
+
+Solicitud: **25 de agosto de 2026**. Estado: **IMPLEMENTADO · EN AUDITORÍA**. El enlace se monta como hijo directo de `body`, antes de `main.app` y fuera de todos los overlays. Usa `position:fixed` y `z-index:11000`, superior al bloqueo de actualización, para permanecer visible en toda presentación. Su URL es absoluta para funcionar en web y en los paquetes nativos; `target="_blank"` conserva la ronda abierta.
+
+| Archivo nuevo o modificado | ID o código | Explicación sencilla |
+|---|---|---|
+| `index-grupal.html` | V311-LIVE-SUPPORT | Muestra Support siempre y abre el Manual vivo sin salir de la ronda. |
+| `test-v311-live-support-link.mjs` | Candado Support | Exige una sola instancia, URL exacta, prioridad global y tamaño de 7 px en móvil. |
+| `audit-project.mjs` | Puerta maestra | Ejecuta el candado Support dentro de la revisión general. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Registra la nueva huella de las fuentes. |
+| `ROADMAP_OVERALL.md` | Resumen | Registra el acceso permanente. |
 | `ROADMAP_A_DETALLE.md` | Detalle | Conserva este bloque técnico. |

@@ -33,6 +33,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v311-manual-voice-
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v311-manual-search.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v311-voice-assistant.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v311-timer-inactivity.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v311-live-support-link.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

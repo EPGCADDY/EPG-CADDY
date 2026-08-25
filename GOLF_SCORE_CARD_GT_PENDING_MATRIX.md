@@ -173,16 +173,19 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Comparar WeatherKit, Tomorrow.io y OpenWeather mediante mediciones en los clubes; WeatherKit es candidato inicial, no proveedor aprobado sin piloto.
 - Conservar el detalle operativo en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`.
 
-### 13. Caddie conversacional experto en golf
+### 13. Caddie/Support conversacional humano
 
 **Estado:** PENDIENTE · `PEND-VOZ-003`
 
-- Convertir el micrófono en conversación natural con contexto de campo, hoyo, modalidad, jugadores, resultados, clima y reglas locales.
-- Separar rigurosamente score, consulta, navegación y conocimiento de golf.
+- Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
+- Separar rigurosamente score, consulta, navegación, conocimiento de golf, clima vivo, conversación general y orientación de salud.
+- Abrir la página exacta cuando la pregunta pertenezca al Manual y mantener el buscador local como recuperación inmediata.
+- Consultar clima actual por ubicación autorizada o campo activo mediante `PEND-CLI-002`; no inventar datos vivos.
+- Responder salud con límites médicos seguros: orientación general, preguntas mínimas, señales de alarma y derivación profesional; nunca diagnóstico o prescripción automática.
 - Responder con conocimiento aprobado y fuente; reconocer cuando no exista respaldo suficiente.
 - Exigir confirmación independiente antes de toda acción que cambie la ronda.
 - Conservar score y navegación básica sin conexión y reservar respuestas abiertas para la capa conectada.
-- Validar preguntas, ruido, acentos, latencia, exactitud y falsas acciones con un banco de pruebas de golfistas.
+- Validar texto, voz, preguntas de Golf, Manual, clima, conversación general y salud, además de ruido, acentos, latencia, exactitud y falsas acciones.
 - Conservar el detalle operativo en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`.
 
 ## Mejoras continuas

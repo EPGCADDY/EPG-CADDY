@@ -643,14 +643,14 @@ El **25 de agosto de 2026** se registra, sin iniciar implementación, la sincron
 | `ROADMAP_A_DETALLE.md` | Conserva el registro técnico detallado. |
 | `ROADMAP_OVERALL.md` | Conserva este resumen general. |
 
-## Pendiente PEND-VOZ-003 · Caddie conversacional experto en golf
+## Pendiente PEND-VOZ-003 · Caddie/Support conversacional humano
 
-El **25 de agosto de 2026** se registra, sin iniciar implementación, una capa de voz natural con conocimiento contextual de golf. Separará scores, consultas, navegación y preguntas abiertas; responderá desde fuentes aprobadas y no podrá modificar la ronda sin confirmación independiente.
+El **25 de agosto de 2026** se registra y amplía, sin declarar implementación, una conversación por texto o voz con especialidad prioritaria en golf. El mismo Support entenderá el Manual, clima vivo, conversación general y orientación de salud segura. Separará rigurosamente cada intención, usará fuentes actuales cuando correspondan y no podrá modificar la ronda sin confirmación independiente.
 
 | Archivo nuevo o modificado | Registro del pendiente |
 |---|---|
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Agrega `PEND-VOZ-003`, arquitectura, seguridad, fuentes y condiciones de cierre. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Incorpora el caddie conversacional como punto 13. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Amplía `PEND-VOZ-003` a texto, voz, Golf, Manual, clima, conversación general y salud segura. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Actualiza el Caddie/Support conversacional como punto 13. |
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Amplía los códigos localizables de la cola. |
 | `ROADMAP_A_DETALLE.md` | Conserva el registro técnico detallado. |
 | `ROADMAP_OVERALL.md` | Conserva este resumen general. |
@@ -698,4 +698,17 @@ El **25 de agosto de 2026** se elimina el desplazamiento vertical accidental que
 | `test-v311-manual-hosting.mjs` | Bloquea el desplazamiento vertical del índice y comprueba anclas y navegación móvil. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
 | `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico de la corrección. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen general. |
+
+## Acceso permanente V311 · Support al Manual vivo
+
+El **25 de agosto de 2026** se incorpora en GOLF Score Card GT un enlace fijo y mínimo llamado **Support**. Permanece visible por encima de Inicio, Registro, General, Stableford, Práctica, Match Play, Four Ball, Historial, Tarjeta Digital y demás ventanas. Abre en otra pestaña el Manual vivo `https://epg-caddy.vercel.app/manual-scg`, por lo que la ronda activa permanece intacta.
+
+| Archivo nuevo o modificado | Registro funcional |
+|---|---|
+| `index-grupal.html` | Añade el Support global, fijo, pequeño y exterior a todas las vistas. |
+| `test-v311-live-support-link.mjs` | Comprueba URL exacta, visibilidad global, tamaño móvil y herencia nativa. |
+| `audit-project.mjs` | Incorpora el nuevo candado a la auditoría maestra. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
+| `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico del acceso permanente. |
 | `ROADMAP_OVERALL.md` | Conserva este resumen general. |

@@ -87,24 +87,28 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 
 `clima`, `tiempo`, `temperatura`, `viento`, `lluvia`, `humedad`, `ubicación del campo`, `localización`, `clima en la tarjeta`, `pendientes por hacer`.
 
-## PEND-VOZ-003 · Caddie conversacional experto en golf
+## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
 **Estado:** PENDIENTE · NO INICIADO  
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
-**Solicitud original:** lograr que el micrófono sea relativamente lo más cercano a un humano con conocimientos de golf y pueda responder distintas preguntas dentro del mundo del golf.
+**Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
 ### Objetivo
 
-Convertir el micrófono en un asistente conversacional de golf que comprenda preguntas abiertas, conozca el contexto exacto de la ronda y responda de forma natural, breve y comprobable. No se presentará como árbitro infalible ni sustituirá una decisión oficial del Comité.
+Convertir el micrófono y el buscador del Manual vivo en una sola conversación natural por texto o voz. El asistente conservará especialidad prioritaria en golf y contexto exacto de la ronda, pero también podrá responder preguntas generales, consultar clima vivo y ofrecer orientación de salud responsable. No se presentará como árbitro infalible, médico ni sustituto del Comité o de un profesional sanitario.
 
 ### Arquitectura obligatoria
 
-`AUDIO → TRANSCRIPCIÓN → CLASIFICADOR SEGURO → CONTEXTO DE RONDA → CONOCIMIENTO APROBADO → RESPUESTA CON FUENTE → VOZ`
+`TEXTO O AUDIO → CLASIFICADOR SEGURO → CONTEXTO NECESARIO → HERRAMIENTA O CONOCIMIENTO APROBADO → RESPUESTA NATURAL CON FUENTE CUANDO APLIQUE → TEXTO Y/O VOZ`
 
-- Separar cuatro rutas: escribir/corregir score, consultar resultados, navegar/explicar la aplicación y responder conocimiento de golf.
+- Separar siete rutas: escribir/corregir score, consultar resultados, navegar/explicar la aplicación, conocimiento de golf, clima vivo, conversación general y orientación de salud.
 - Entregar al asistente campo, hoyo, modalidad, equipos, handicap, scores, clima y reglas locales vigentes, sólo cuando sean necesarios para la pregunta.
-- Fundamentar respuestas en el manual, fuentes reglamentarias vigentes, reglas locales verificadas y matriz oficial de campos; si no existe respaldo suficiente, decirlo claramente.
+- Cuando la pregunta sea sobre Score Card, responder y abrir la página exacta del Manual vivo; el buscador local actual seguirá disponible como recuperación inmediata.
+- Para preguntas como «¿crees que va a llover hoy?», obtener ubicación autorizada o campo activo y consultar datos climáticos actuales mediante `PEND-CLI-002`; nunca inventar clima ni responder con datos viejos sin rotularlos.
+- Fundamentar respuestas de golf en el manual, fuentes reglamentarias vigentes, reglas locales verificadas y matriz oficial de campos; si no existe respaldo suficiente, decirlo claramente.
+- En salud, hacer preguntas mínimas de seguridad, distinguir orientación general de urgencia y recomendar evaluación profesional cuando corresponda. No diagnosticar, prescribir ni indicar combinaciones o dosis de medicamentos sin datos clínicos suficientes; ante señales de alarma, priorizar atención inmediata.
+- En conversación general, hablar con vocabulario humano y permitir repreguntas, pero verificar con fuentes actuales todo dato vivo, incierto o de alto impacto.
 - Mantener conversación con preguntas de seguimiento, interrupción por `STOP` y memoria limitada a la ronda activa.
 - Contestar en español sencillo, entender términos comunes en español e inglés y explicar como para un niño de 10 años cuando el usuario lo necesite.
 - No modificar scores, penalidades, jugadores, modalidad, campo ni cierre mediante una respuesta informativa. Toda acción de escritura exige confirmación separada y verificable.
@@ -117,8 +121,8 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 
 ### Condiciones de cierre futuro
 
-Este pendiente sólo podrá cerrarse después de un banco amplio de preguntas de golf, pruebas con acentos y ruido de campo, validación contra fuentes, control de alucinaciones, prueba de que ninguna pregunta modifica scores y evaluación práctica con golfistas.
+Este pendiente sólo podrá cerrarse después de un banco amplio de preguntas de golf, Manual, clima, conversación general y salud; pruebas por texto y voz con acentos y ruido de campo; validación contra fuentes; control de alucinaciones; prueba de que ninguna pregunta modifica scores; límites médicos verificados y evaluación práctica con golfistas.
 
 ### Frases para localizar este pendiente
 
-`caddie conversacional`, `experto de golf`, `micrófono humano`, `preguntas de golf`, `asistente de voz`, `reglas por voz`, `pendientes por hacer`.
+`caddie conversacional`, `Support conversacional`, `buscador humano`, `experto de golf`, `micrófono humano`, `preguntas de golf`, `clima por voz`, `dolor de tobillo`, `conversación general`, `asistente de voz`, `reglas por voz`, `pendientes por hacer`.
