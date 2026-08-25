@@ -411,3 +411,5 @@ La fila MATCH de cada jugador ya no muestra únicamente quién ganó, empató o 
 | `ROADMAP_OVERALL.md` | Registra la entrega V308 y mantiene el ROADMAP Gate. |
 
 **Compatibilidad V308:** se conserva la firma base V307 exigida por los 67 controles acumulados y se añade la firma específica `gscg-match-cumulative = V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825`; el comportamiento nuevo permanece identificado sin romper los contratos anteriores.
+
+**Validación funcional V308:** la persistencia acumulada se limita estrictamente a hoyos ya registrados; los hoyos futuros continúan como `PENDIENTE` y no heredan anticipadamente la ventaja actual.

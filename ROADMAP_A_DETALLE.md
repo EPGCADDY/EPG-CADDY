@@ -395,3 +395,5 @@ Solicitud: **25 de agosto de 2026**. Alcance: conservar íntegramente la tarjeta
 | `ROADMAP_OVERALL.md` | Resumen V308 | Conserva la definición general y el ROADMAP Gate. |
 
 **Firma compatible V308:** `index-grupal.html` mantiene `gscg-build = V307-MATCH-PLAY-THICK-ARROWS-FORMAT-20260825` para los controles acumulados y añade `gscg-match-cumulative = V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825` para identificar esta corrección.
+
+**Validación funcional V308:** la persistencia acumulada se limita estrictamente a hoyos ya registrados; los hoyos futuros continúan como `PENDIENTE` y no heredan anticipadamente la ventaja actual.
