@@ -833,3 +833,21 @@ La solicitud real `/api/session-grupal` de las 16:27 terminó con HTTP 200; no h
 ## Corrección V318 · cierre de respuestas y pronóstico por horario
 
 La batería viva de temas reveló que una respuesta web extensa podía consumir el límite y quedar incompleta. `api/research.js` exige un máximo de 120 palabras, elige tres opciones cuando existan muchas, aumenta el margen de salida a 900 tokens y separa las citas para que no sean habladas. Para clima futuro, `index-grupal.html` infiere `time_period` del lenguaje natural; `api/weather.js` obtiene temperatura, sensación, condición, viento y lluvia por hora y resume únicamente 06:00–11:59, 12:00–17:59, 18:00–21:59 o 22:00–23:59. `test-v312-general-caddie.mjs` prueba que la tarde no contamine una pregunta de mañana y que la investigación termine sin URL hablada. La firma y la caché V318 fuerzan la actualización instalada.
+
+## Corrección V319 · enrutamiento universal antes de la tarjeta
+
+La reproducción con las frases exactas del usuario aisló tres causas. Primero, `parseRoundQueryTranscript()` aceptaba palabras generales como `ronda`, `mejor` o `Match Play` antes de saber si la pregunta realmente pedía un score. Segundo, el asistente de navegación consideraba la sola mención de una modalidad como solicitud para abrirla. Tercero, durante la espera de `search_web` o clima aún no existía transcripción de salida y la voz del jugador podía clasificarse como eco. V319 introduce `isLocalRoundQueryIntent()`, exige orden directa para navegar a una modalidad y registra `conversationOutputStarted` para distinguir una espera web silenciosa de audio real del Caddie.
+
+Se prueban de manera explícita: “Puedo tomar Tramadol en plena ronda de Golf”, “mi rival tira palos en Match Play”, zapatos impermeables, clima de mañana y viaje a Ciudad de México. Todas continúan hacia la conversación universal. “Cómo vamos”, “Quién va ganando”, birdies, hoyo de Miguel y handicap de Miguel permanecen en el motor local de la tarjeta. La batería completa de archivos `test-*.mjs` termina sin fallos antes de publicar.
+
+| Archivo nuevo o modificado | Control V319 |
+|---|---|
+| `index-grupal.html` | Firma V319, intención local estricta, estado real de inicio de audio y barge-in durante una consulta viva. |
+| `voice-assistant.js` | `NAVIGATION_ONLY` impide que una conversación sobre una modalidad ejecute navegación. |
+| `service-worker.js` | `gscg-mobile-v319-universal-intent-routing`. |
+| `test-v311-voice-assistant.mjs` | Protege conversación y explicación sobre Match Play. |
+| `test-v312-general-caddie.mjs` | Banco de frases universales, regresión del score, espera web y protección contra eco. |
+| `test-v268-control-manual-demo-link.mjs` | Comprueba que V268 está retirada y V269 continúa activa. |
+| `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs` y `test-v307-match-arrows-format.mjs` | Reconocen la firma y la caché V319; su comportamiento original queda cubierto por la misma batería. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Huella final de las fuentes publicadas. |
+| `ROADMAP_A_DETALLE.md` y `ROADMAP_OVERALL.md` | Evidencia técnica y resumen de V319. |

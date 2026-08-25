@@ -4,7 +4,7 @@ import stableford from "./stableford.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V318-MULTITOPIC-COMPLETE-20260825"/);
+assert.match(html,/gscg-build" content="V319-UNIVERSAL-INTENT-ROUTING-20260825"/);
 assert.match(html,/V275-LIVE-TURN-ANCHOR-SPEECH-LOCK-20260823/);
 assert.match(html,/appVersion:"V307"/);
 

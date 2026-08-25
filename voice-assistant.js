@@ -13,6 +13,7 @@
   const HELP=/\b(como hago|como puedo|como se|donde|que debo|que tengo que|que le digo|que puedo decir|ayuda|explica|ensenam|quiero saber)\b/;
   const ASSISTANT_CUE=/\b(abrir|abre|muestrame|mostrar|muestra|llevame|llevarme|ir|ve|vete|entrar|quiero|necesito|como|donde|ayuda|explica|ensenam|que debo|que tengo que|que le digo|que puedo decir)\b/;
   const LIVE_RESULT=/\b(como voy|como vamos|como va|quien va|quien gana|quien esta ganando)\b/;
+  const NAVIGATION_ONLY=new Set(["stableford","match_play","four_ball","practice"]);
 
   const rules=[
     {id:"correct_score",match:/\b(borr|elimin|quit|cambi|corrig|rectific|equivoc)\w*\b.*\b(score|gross|golpe|aguila|birdie|par|bogey)\b|\b(score|gross|golpe|aguila|birdie|par|bogey)\b.*\b(borr|elimin|quit|cambi|corrig|rectific|equivoc)\w*\b/,speech:"Abre Control Manual, elige el hoyo, cambia el Gross del jugador y toca Enter. El cálculo se actualiza sin perder los demás scores.",action:"open_manual_entry"},
@@ -41,6 +42,10 @@
     const direct=DIRECT.test(text),help=HELP.test(text);
     for(const rule of rules){
       if(!rule.match.test(text))continue;
+      // Nombrar una modalidad dentro de una conversación no es una orden de
+      // navegación. Ejemplo: "¿Cómo manejo a un rival molesto en Match Play?"
+      // debe llegar al Caddie universal; sólo "abre/llévame/quiero jugar" abre UI.
+      if(NAVIGATION_ONLY.has(rule.id)&&!direct)continue;
       const execute=!!(rule.action&&direct&&!help);
       return{matched:true,id:rule.id,speech:rule.speech,action:execute?rule.action:null,execute};
     }

@@ -17,11 +17,13 @@ assert.equal(assistant.parse("¿Cómo estará el próximo fin de semana?").match
 assert.equal(assistant.parse("¿Qué podré tomar para el dolor de tobillo?").matched, false, "La salud debe llegar al Caddie con límites seguros");
 assert.equal(assistant.parse("Carlos cinco").matched, false, "El score debe conservar su ruta operacional");
 assert.equal(assistant.parse("Háblame de medicinas, vuelos y cultura").matched, false, "Los temas generales deben llegar al Caddie universal");
+assert.equal(assistant.parse("¿Cómo manejar a un rival molesto en Match Play?").matched, false, "Una conversación sobre Match Play no debe navegar a la modalidad");
 
 for (const token of [
   "function speakConversation(transcript)",
   "function responseForConversation(token",
   "function isGeneralConversationIntent(transcript)",
+  "function isLocalRoundQueryIntent(transcript)",
   "continueConversationAfterTool(functionCall)",
   "let conversationToolTransition=null",
   "function conversationToolStopIsPreFollowup(eventResponseId,transition)",
@@ -56,9 +58,27 @@ assert.ok(
   "Una conversación inequívoca debe protegerse antes del escritor de scores"
 );
 assert.match(html, /if\(!speakConversation\(transcript\)\)/, "Toda frase operacionalmente desconocida debe llegar al Caddie");
+const localIntentSource=html.slice(html.indexOf("function isLocalRoundQueryIntent"),html.indexOf("\nfunction parseRoundQueryTranscript"));
+const isLocalRoundQueryIntent=new Function("normalizeSpeech","round",`${localIntentSource};return isLocalRoundQueryIntent`)(value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9ñ]+/g," ").replace(/\s+/g," ").trim(),{players:[{name:"Miguel"}]});
+for(const phrase of [
+  "Puedo tomar Tramadol en plena ronda de Golf",
+  "Estoy jugando un Match Play y mi rival tira palos, dame consejos",
+  "Cuál es la mejor marca de zapatos de Golf contra agua",
+  "Cómo está el clima mañana por la mañana",
+  "Cuál es la mejor opción para viajar a Ciudad de México"
+])assert.equal(isLocalRoundQueryIntent(phrase),false,`La pregunta universal no puede convertirse en score: ${phrase}`);
+for(const phrase of ["Cómo vamos","Quién va ganando","Cuántos birdies llevo","Cómo hizo Miguel en el hoyo 3","Qué handicap tiene Miguel"]){
+  assert.equal(isLocalRoundQueryIntent(phrase),true,`La consulta real de tarjeta debe conservarse: ${phrase}`);
+}
 assert.match(html,/response\.output_audio_transcript\.delta[\s\S]*?conversationOutputTranscript\+=/,"Debe conservar la transcripción hablada para distinguir voz humana de eco");
 assert.match(html,/input_audio_buffer\.speech_started"&&listening&&authorizedSpeech\?\.reason==="conversation"[\s\S]*?conversationBargeInItemId=/,"La interrupción debe iniciar como candidata sin cortar por el primer ruido");
 assert.match(html,/conversation\.item\.input_audio_transcription\.delta"&&listening&&authorizedSpeech\?\.reason==="conversation"[\s\S]*?!conversationInputLooksLikeEcho\(heard\)[\s\S]*?interruptConversationSpeech\(\)/,"La voz humana confirmada debe interrumpir al Caddie");
+assert.doesNotMatch(html,/normalizeSpeech\(heard\)\.length>=8&&conversationOutputTranscript&&/,"La búsqueda web no puede desechar la voz del jugador antes de producir audio");
+const echoSource=html.slice(html.indexOf("function explicitConversationInterruption"),html.indexOf("\nfunction rememberConversationBargeIn"));
+const echoBeforeAudio=new Function("normalizeSpeech","conversationOutputStarted","conversationOutputTranscript",`${echoSource};return conversationInputLooksLikeEcho`)(value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim(),false,"");
+const echoDuringAudio=new Function("normalizeSpeech","conversationOutputStarted","conversationOutputTranscript",`${echoSource};return conversationInputLooksLikeEcho`)(value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim(),true,"");
+assert.equal(echoBeforeAudio("Cambia mi pregunta"),false,"Durante la espera web la voz debe reconocerse como humana");
+assert.equal(echoDuringAudio("ruido del altavoz"),true,"Al comenzar audio sin transcripción debe protegerse contra eco");
 assert.match(html,/conversation\.item\.input_audio_transcription\.completed"&&listening[\s\S]*?conversationInputLooksLikeEcho\(heard\)[\s\S]*?consumeLiveRoundItem/ ,"El eco del altavoz debe descartarse sin cortar la respuesta");
 const conversationStart=html.slice(html.indexOf("function speakConversation(transcript)"),html.indexOf("async function setSessionVoiceSpeed"));
 assert.match(conversationStart,/conversationBargeInArmedAt=Date\.now\(\)\+250/,"La interrupción debe ignorar sólo el arranque inmediato del altavoz");
@@ -132,7 +152,7 @@ assert.match(sessionApi, /Caddie conversacional de propósito general/, "La sesi
 assert.match(sessionApi, /Transcribe literalmente español natural de cualquier tema/, "La transcripción no debe limitarse al vocabulario de score");
 assert.match(weatherApi, /api\.open-meteo\.com\/v1\/forecast/, "Falta proveedor meteorológico vivo");
 assert.match(weatherApi, /geocoding-api\.open-meteo\.com\/v1\/search/, "Falta resolución de campos o ubicaciones");
-assert.match(serviceWorker, /gscg-mobile-v318-multitopic-complete/, "La PWA debe reemplazar el shell anterior");
+assert.match(serviceWorker, /gscg-mobile-v319-universal-intent-routing/, "La PWA debe reemplazar el shell anterior");
 assert.match(weatherApi, /forecast_days\", \"16\"/, "El pronóstico natural debe admitir el máximo confiable de 16 días");
 assert.match(weatherApi,/const FORECAST_PERIODS/,"El pronóstico debe resumir la franja horaria pedida");
 assert.match(researchApi,/https:\/\/api\.openai\.com\/v1\/responses/,"La investigación universal debe usar Responses API");
@@ -225,4 +245,4 @@ assert.deepEqual(research,{ok:true,source:"OpenAI Web Search",answer:"Respuesta 
 const cleanResearch=summarizeResearchResponse({output:[{type:"message",content:[{type:"output_text",text:"Respuesta completa. ([Fuente](https://example.org/a))",annotations:[{type:"url_citation",title:"Fuente",url:"https://example.org/a"}]}]}]});
 assert.equal(cleanResearch.answer,"Respuesta completa.","La voz no debe recibir URLs ni citas Markdown");
 
-console.log("PASS V318 · conversación multitema completa y clima por franja horaria");
+console.log("PASS V319 · intención universal protegida y consultas de tarjeta conservadas");

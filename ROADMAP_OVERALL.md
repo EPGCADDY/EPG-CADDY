@@ -847,3 +847,18 @@ El registro de producción confirmó que el micrófono de las 16:27 sí abrió, 
 ## Corrección V318 · prueba multitema completa
 
 La prueba viva mezcló golf, salud, viajes, cultura, arquitectura, planetas, océanos, vehículos, clima y equipo de golf. Detectó dos fallas antes de aprobar: una comparación de zapatos podía cortarse y “mañana por la mañana” devolvía el día completo. `api/research.js` limita la respuesta hablada, elimina citas largas y reserva margen para terminar; `api/weather.js` e `index-grupal.html` distinguen mañana, tarde, atardecer y noche. `test-v312-general-caddie.mjs`, `service-worker.js`, los candados de versión y el inventario sellan V318.
+
+## Corrección V319 · lenguaje universal sin desvíos por palabras de golf
+
+El Caddie continúa aceptando cualquier tema permitido y usa Internet para información actual. La falla no estaba en el vocabulario del modelo: el cliente interpretaba palabras aisladas como `ronda`, `Match Play` o `mejor` como órdenes de la tarjeta y algunas preguntas nunca llegaban a la inteligencia artificial. `index-grupal.html` ahora reserva la ruta local únicamente para preguntas inequívocas del marcador, historial, hoyos o jugadores; `voice-assistant.js` sólo abre modalidades mediante una orden directa como “abre Match Play”. También se conserva la voz del jugador mientras una consulta web sigue procesándose, antes de que empiece el audio del Caddie.
+
+| Archivo nuevo o modificado | Resultado V319 |
+|---|---|
+| `index-grupal.html` | Clasificador estricto de consultas de tarjeta y turno humano protegido durante la espera web. |
+| `voice-assistant.js` | Las menciones conversacionales de Stableford, Match Play, Four Ball o Práctica ya no se confunden con navegación. |
+| `service-worker.js` | Caché V319 para que el teléfono reciba la corrección. |
+| `test-v311-voice-assistant.mjs` y `test-v312-general-caddie.mjs` | Prueban preguntas reales de salud, viajes, clima, equipo y manejo de un rival en Match Play, además de conservar las consultas verdaderas de score. |
+| `test-v268-control-manual-demo-link.mjs` | Retira el candado histórico V268 y confirma que la demostración vigente continúa en V269. |
+| `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs` y `test-v307-match-arrows-format.mjs` | Alinean la firma y la caché del build V319 sin alterar sus reglas funcionales. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella la huella reproducible de la publicación. |
+| `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` | Registran la causa, la corrección y las verificaciones. |

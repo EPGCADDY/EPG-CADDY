@@ -17,6 +17,8 @@ assert.match(parse("Cómo pregunto el acumulado").speech,/acumulado/i);
 assert.equal(parse("Cómo voy").matched,false,"La consulta de resultado real debe continuar al motor de ronda");
 assert.equal(parse("Miguel cinco").matched,false,"Un score no debe convertirse en ayuda");
 assert.equal(parse("Miguel bogey").matched,false,"El vocabulario golfístico debe continuar al escritor de scores");
+assert.equal(parse("¿Cómo manejar a un rival molesto en Match Play?").matched,false,"Hablar de Match Play no debe abrir el registro");
+assert.equal(parse("¿Cómo funciona Match Play?").matched,false,"Las reglas de Match Play deben llegar al Caddie universal");
 
 for(const token of ["voice-assistant.js","handleVoiceAssistantTranscript","executeVoiceAssistantAction","pendingVoiceAssistantAction"]){
   assert.ok(html.includes(token),`Falta integración del asistente: ${token}`);
