@@ -86,7 +86,7 @@
         clientRoundId:text(round.id),
         version:Math.max(1,integer(round.officialVersion,integer(round.version,1))),
         status,
-        mode:round.mode==="stableford"?"stableford":"general",
+        mode:round.mode==="stableford"?"stableford":round.mode==="match_play"?"match_play":"general",
         categoryKey:text(round.stablefordCategory)||null,
         seriesRoundNumber:integer(round.stablefordRoundNumber),
         course:{key:text(round.courseKey)||"unknown",name:text(round.course)||"CAMPO",definition:courseDefinition(courseData)},

@@ -5,7 +5,7 @@ import fileExport from "./card-file-export.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V305-HISTORY-NAVIGATION-ZERO-ERROR-20260824"/);
+assert.match(html,/gscg-build" content="V306-MATCH-PLAY-NET-HDCP-20260824"/);
 assert.match(html,/V278-PNG-PDF-PACKAGE-20260823/);
 assert.match(html,/card-file-export\.js/);
 assert.match(html,/id="imageGlobalCard">IMAGEN GLOBAL/);
@@ -16,7 +16,7 @@ assert.match(html,/id="downloadAllCards">PDF TODAS/);
 assert.match(html,/GSCCardFileExport\.shareImage/);
 assert.match(html,/GSCCardFileExport\.downloadPdf/);
 assert.match(html,/GSCCardFileExport\.downloadPackage\(all\.all/);
-assert.match(html,/appVersion:"V305"/);
+assert.match(html,/appVersion:"V306"/);
 assert.equal(masterSync.APP_VERSION,"V283");
 
 const holes=Object.fromEntries(Array.from({length:18},(_,index)=>{const hole=index+1,par=hole%3===0?3:hole%3===1?4:5;return[hole,{hole,par,gross:par,strokes:0,net:par,diff:0}]}));

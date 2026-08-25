@@ -15,7 +15,7 @@ assert.match(stable,/applySetupChanges=applyToActiveRegistration/);
 assert.match(html,/stableford=readStoredRound\(STABLEFORD_ACTIVE_KEY\)/);
 assert.match(html,/function latestStoredRound\(modeHint\)/);
 assert.match(html,/value\?\.configured&&mode\(value\)===modeHint/);
-assert.match(html,/function loadRound\(\)\{return latestStoredRound\("general"\)\|\|blankRound\(\)\}/);
+assert.match(html,/function loadRound\(\)\{const candidates=\[latestStoredRound\("general"\),latestStoredRound\("match_play"\)\]/);
 
 // Todas las combinaciones de Score Card comparten el mismo control manual,
 // las mismas celdas editables y el mismo escritor usado por la voz.

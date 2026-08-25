@@ -4,9 +4,9 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V305
+**Versión documentada:** V306
 **Fecha de corte:** 24 de agosto de 2026
-**Ramas operativas:** `main` (Producción vigente) y `v305-history-navigation-zero-error` (candidata)
+**Ramas operativas:** `main` (Producción vigente) y `v306-match-play` (candidata)
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Jaime  
 **Responsable de implementación y control:** Partner / ChatGPT
@@ -1289,6 +1289,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-24 | Manual 3.60 / App V306 | Integración funcional de `MATCH PLAY · CON HDCP` como copia de la Ronda Normal para exactamente dos jugadores. Conserva registro, Gross, golpes de HDCP, Neto, captura manual y por voz; únicamente añade el rubro MATCH calculado por Neto: flecha verde al ganador, flecha roja al perdedor y ningún símbolo en el empate. Muestra el estado permanente `AS` o `N UP` y reconoce el cierre anticipado oficial, por ejemplo `3 & 2`. |
 | 2026-08-24 | Manual 3.59 / App V305 | Auditoría integral de navegación, vocabulario y registros hermanos desde la base V304. Todas las entradas visibles del archivo de tarjetas usan `HISTORIAL` y su pantalla se titula `HISTORIAL DE TARJETAS`. Las pantallas con retorno muestran `ATRÁS` en una posición superior, homogénea y protegida contra superposición. El acceso opcional de cuenta pasa a llamarse `REGÍSTRATE`, queda dentro del flujo de Ronda, Registro General y Registro Stableford y deja de ser un flotante azul. Stableford ya no muestra el aviso huérfano `SELECCIONA EL CAMPO` debajo de los jugadores, pero conserva esa validación interna. Los OK General y Stableford comparten dimensiones, tipografía, color y estados equivalentes; ambos quedan deshabilitados cuando el registro está incompleto. Las guías dicen exactamente lo que reconoce cada analizador: General acepta `JAIME 14 BLANCAS`, con posición opcional, y Stableford exige `JUGADOR 1 JAIME`; su guía visible se limita a número de jugador, nombre, máximo seis y OK, sin pedir HDCP ni marcas. Los filtros V304/V305 bloquean regresiones gráficas, operativas, de vocabulario, retornos, superposición, versiones y caché. |
 | 2026-08-23 | Manual 3.58 / App V288 | Corregida la navegación física demostrada en V287: desde la tarjeta Stableford, `ATRÁS` abre directamente y en un solo toque la pantalla principal completa. La transición persiste la ronda activa, elimina del URL la ruta especial Stableford y no pasa por `RONDA STABLEFORD` como pantalla intermedia. `+ JUGADOR` conserva su función independiente de editar o incorporar participantes sin borrar scores. La prueba V288 bloquea la conexión correcta del botón, la restauración de campos/modalidades/registro, la conservación de la ronda y la ausencia del vínculo anterior al editor Stableford. |
 | 2026-08-23 | Manual 3.57 / App V280 | El historial incorpora una pantalla escrita de `ESTADÍSTICAS DEL HISTORIAL` que consulta exclusivamente las rondas guardadas en el dispositivo y no habla automáticamente. Acepta periodos, jugador, campo, torneo, modalidad, vuelta u hoyo; entrega promedios Gross/Neto, mejor/peor, consistencia, tendencia, categorías de score, comparación entre jugadores y puntos Stableford. Las opciones rápidas ejecutan el mismo motor de consultas ya utilizado por voz y los resultados no modifican rondas ni tarjetas. La consulta multi-dispositivo continúa pendiente de la sincronización central autenticada. |

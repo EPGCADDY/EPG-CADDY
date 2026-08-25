@@ -7,8 +7,9 @@
 
   const GENERAL="general";
   const STABLEFORD="stableford";
+  const MATCH_PLAY="match_play";
 
-  function modeOf(value){return value?.mode===STABLEFORD?STABLEFORD:GENERAL}
+  function modeOf(value){return value?.mode===STABLEFORD?STABLEFORD:value?.mode===MATCH_PLAY?MATCH_PLAY:GENERAL}
   function validRound(value){return !!(value&&value.configured&&Array.isArray(value.players)&&value.players.length&&value.id)}
   function clone(value){return value?JSON.parse(JSON.stringify(value)):null}
   function timestamp(value){const parsed=new Date(value?.createdAt||0).getTime();return Number.isFinite(parsed)?parsed:0}
@@ -20,7 +21,7 @@
       .sort((a,b)=>timestamp(a)-timestamp(b)||String(a.id).localeCompare(String(b.id)));
   }
   function resolve(archive,current,modeHint=null){
-    const mode=modeHint===STABLEFORD?STABLEFORD:modeHint===GENERAL?GENERAL:validRound(current)?modeOf(current):GENERAL;
+    const mode=[STABLEFORD,MATCH_PLAY,GENERAL].includes(modeHint)?modeHint:validRound(current)?modeOf(current):GENERAL;
     const candidates=orderedRounds(archive,mode);
     const latest=candidates[candidates.length-1]||null;
     if(!latest)return{available:false,mode,label:"RONDA PREVIA",relation:null,target:null};
@@ -36,5 +37,5 @@
       :{available:false,mode,label:"RONDA PREVIA",relation:null,target:null};
   }
 
-  return Object.freeze({GENERAL,STABLEFORD,modeOf,orderedRounds,resolve});
+  return Object.freeze({GENERAL,STABLEFORD,MATCH_PLAY,modeOf,orderedRounds,resolve});
 });

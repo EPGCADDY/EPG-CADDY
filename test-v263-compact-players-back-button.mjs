@@ -20,7 +20,7 @@ assert.doesNotMatch(html,/\.back-registration-control\{position:fixed;/);
 
 // Agregar jugador es explícito, sólo aparece con cupo y usa el editor que conserva la ronda.
 assert.match(html,/id="addPlayerButton"[^>]*>\+ JUGADOR<\/button>/);
-assert.match(html,/editable&&round\.players\.length<6/);
+assert.match(html,/editable&&round\.mode!=="match_play"&&round\.players\.length<6/);
 assert.match(html,/addPlayerButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openStablefordDataEditor\(\):openRosterEditor\(\)\)/);
 
 // ATRÁS vuelve al inicio en Stableford; + JUGADOR conserva el editor y los scores.

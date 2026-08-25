@@ -10,11 +10,12 @@
     if(!round?.id||!snapshot?.sha256||!["officially_closed","corrected"].includes(snapshot.status)||!Array.isArray(snapshot.players)||!snapshot.players.length)return null;
     const players=snapshot.players.map(player=>({id:text(player.id),name:text(player.name)})).filter(player=>player.id&&player.name);
     if(!players.length)return null;
-    return Object.freeze({roundId:text(round.id),mode:snapshot.mode==="stableford"?"stableford":"general",course:courseName(snapshot),courseKey:text(snapshot.courseKey||round.courseKey),tournament:tournamentName(snapshot),playedAt:snapshot.playedAt||round.createdAt||snapshot.officiallyClosedAt,closedAt:snapshot.officiallyClosedAt||round.officiallyClosedAt,version:Number(snapshot.version)||1,sha256:text(snapshot.sha256),players:Object.freeze(players),snapshot});
+    const mode=snapshot.mode==="stableford"?"stableford":snapshot.mode==="match_play"?"match_play":"general";
+    return Object.freeze({roundId:text(round.id),mode,course:courseName(snapshot),courseKey:text(snapshot.courseKey||round.courseKey),tournament:tournamentName(snapshot),playedAt:snapshot.playedAt||round.createdAt||snapshot.officiallyClosedAt,closedAt:snapshot.officiallyClosedAt||round.officiallyClosedAt,version:Number(snapshot.version)||1,sha256:text(snapshot.sha256),players:Object.freeze(players),snapshot});
   }
   function entries(archive){return (Array.isArray(archive)?archive:[]).map(entry).filter(Boolean).sort((a,b)=>timestamp(b.playedAt)-timestamp(a.playedAt)||b.version-a.version||a.roundId.localeCompare(b.roundId))}
   function filter(list,{mode="all",course="all",query=""}={}){
-    const wantedMode=mode==="stableford"?"stableford":mode==="general"?"general":"all",wantedCourse=normalized(course),needle=normalized(query);
+    const wantedMode=["stableford","match_play","general"].includes(mode)?mode:"all",wantedCourse=normalized(course),needle=normalized(query);
     return (Array.isArray(list)?list:[]).filter(item=>{
       if(wantedMode!=="all"&&item.mode!==wantedMode)return false;
       if(wantedCourse&&wantedCourse!=="ALL"&&normalized(item.course)!==wantedCourse&&normalized(item.courseKey)!==wantedCourse)return false;

@@ -402,7 +402,53 @@ Se retiraron porque eran procesos antiguos que cambiaban el código automáticam
 | `.github/workflows/stableford-v248-return-data-sync.yml` | `2fac800e6949b914a6a6cf40a5a8ac8b17f2c8e4` | 2241 bytes | Proceso antiguo de una versión ya incorporada. |
 | `.github/workflows/stableford-v249-hard-emergency-countryclub.yml` | `05f2428e29a66ada9c0b27d5d7c66fbb5f3cd9fe` | 2813 bytes | Proceso antiguo de una versión ya incorporada. |
 
+## Manual visual autorizado
+
+| Archivo | SHA-256 | Descripción |
+|---|---|---|
+| `docs/manual/MANUAL_GOLF_SCORE_CARD_GT_IPHONE_01_INICIO_4K.png` | `78c12da229d35b2baa74be402f971829568ab7125b28a1b46d6e7c4096d1dee1` | Página 01 autorizada y congelada: configuración de campo y modalidad. PNG 4K para iPhone, 300 dpi. |
+| `docs/manual/MANUAL_GOLF_SCORE_CARD_GT_IPHONE_02_REGISTRO_4K.png` | `42f62f22f7896ab7eab1e15b317445b21843c765ef2d2fdb69dc49b58024a5f5` | Página 02 autorizada y congelada: registro y corrección de jugadores. PNG 4K para iPhone, 300 dpi. |
+
 ## Cómo usarlo
+
+## Actualización operativa V306 · Match Play sobre la tarjeta Normal
+
+El **24 de agosto de 2026** se incorpora Match Play como extensión aislada de la Ronda Normal. La modalidad exige exactamente dos jugadores y conserva sin cambios el registro de nombre, HDCP y marcas; la distribución oficial de tiros; Gross, Neto, resultado, dictado por voz, ingreso manual, correcciones y resumen. El motor Match Play solo lee el Neto ya calculado: muestra **↑ verde** al ganador del hoyo, **↓ roja** al perdedor y no añade símbolo cuando existe empate. El marcador permanente informa AS, 1 UP, 2 UP y el cierre reglamentario anticipado, por ejemplo 3 & 2.
+
+| Archivo nuevo o modificado | Registro V306 |
+|---|---|
+| `match-play.js` | Motor puro de comparación Neto, estados por hoyo, AS/UP y cierre anticipado. |
+| `test-v306-match-play.mjs` | Prueba tarjeta Normal intacta, dos jugadores, Neto, ↑/↓, empate sin símbolo, 3 & 2, cierre, artefactos e Historial. |
+| `index-grupal.html` | Añade selección Match Play, exige dos jugadores y superpone únicamente el rubro MATCH a la tarjeta Normal. |
+| `round-closure.js` | Permite cierre oficial anticipado y recalcula Match Play después de una corrección oficial. |
+| `card-artifacts.js` | Genera tarjeta global y personales Match Play con Gross/Neto e indicadores ↑/↓. |
+| `card-library.js` | Conserva Match Play como modalidad propia en Historial. |
+| `round-navigation.js` | Conserva la modalidad al recuperar una ronda Match Play. |
+| `master-data-sync.js` | Sincroniza Match Play sin convertirlo en General. |
+| `account-backup.js` | Restaura Match Play, su snapshot y su marcador. |
+| `mobile-release.json` | Prepara el paquete móvil 306. |
+| `service-worker.js` | Activa caché V306 e incluye el motor Match Play para uso sin conexión. |
+| `scripts/build-mobile-web.mjs` | Incluye `match-play.js` en el paquete nativo iPhone/Android. |
+| `audit-project.mjs` | Ejecuta el control V306 dentro de la auditoría maestra. |
+| `.github/workflows/roadmap-gate.yml` | Ejecuta el candado Match Play en GitHub. |
+| `vercel.json` | Exige la prueba V306 y entrega el módulo sin caché obsoleta. |
+| `test-v305-registration-guides-parser-truth.mjs` | Conserva General y añade el requisito exacto de dos jugadores para Match Play. |
+| `test-v305-history-navigation-zero-error.mjs` | Alinea paquete y caché con V306 sin retirar controles V305. |
+| `test-stableford-ui.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v272-definitive-operational-release.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v274-complete-courses-voice-operations.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v275-stable-live-voice-turns.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v276-manual-hole-navigation.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v277-official-round-corrections.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v278-card-image-pdf-export.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v279-local-card-library.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v280-local-history-insights.mjs` | Alinea únicamente la identificación del build vigente. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra el inventario V306 completo. |
+| `ROADMAP_A_DETALLE.md` | Registra esta actualización a detalle. |
+| `ROADMAP_OVERALL.md` | Registra esta actualización en el resumen general. |
+
+## Cómo usar este inventario
+
 
 1. Buscar el nombre exacto.
 2. Leer la explicación sencilla.

@@ -46,7 +46,7 @@ assert.match(html,/id="setupMicWrap"[\s\S]*?class="setup-mic-icon"/);
 assert.match(stable,/id="stablefordSetupMicWrap"[\s\S]*?class="setup-mic-icon"/);
 assert.match(html,/\.registration-method \.nr-mic\{width:120px;height:120px;/);
 assert.match(html,/\.registration-method \.nr-mic\{width:112px;height:112px;/);
-assert.equal(release.buildNumber,305);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v305"/);
+assert.equal(release.buildNumber,306);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v306"/);
 
 console.log("PASS V304 · filtro hermano: vocabulario, guía, micrófono, tipografía, tamaño, brillo y estados");

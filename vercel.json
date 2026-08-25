@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --omit=dev",
-  "buildCommand": "node scripts/roadmap-gate.mjs && node test-v304-homogeneous-registration-actions.mjs && node test-v305-history-navigation-zero-error.mjs && node test-v305-registration-guides-parser-truth.mjs",
+  "buildCommand": "node scripts/roadmap-gate.mjs && node test-v304-homogeneous-registration-actions.mjs && node test-v305-history-navigation-zero-error.mjs && node test-v305-registration-guides-parser-truth.mjs && node test-v306-match-play.mjs",
   "outputDirectory": ".",
   "redirects": [
     {
@@ -39,7 +39,7 @@
       ]
     },
     {
-      "source": "/(player-registry|round-closure|card-artifacts|card-file-export|card-library|historical-analytics|stableford|sync-queue|master-data-sync|account-backup|commerce|round-navigation).js",
+      "source": "/(player-registry|round-closure|card-artifacts|card-file-export|card-library|historical-analytics|match-play|stableford|sync-queue|master-data-sync|account-backup|commerce|round-navigation).js",
       "headers": [
         {
           "key": "Cache-Control",

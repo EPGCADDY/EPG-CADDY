@@ -17,7 +17,7 @@ assert.match(html,/function applyProvisionalProfileChange\(change\)/);
 assert.match(html,/jugador dos Carlos catorce blancas/);
 assert.match(html,/const provisionalProfile=parseProvisionalProfileTranscript\(transcript\)/);
 assert.match(html,/function openCurrentRoundDataEditor\(\)/);
-assert.match(html,/openSetup\(round\.players\.length<6\?"add":"correction"\)/);
+assert.match(html,/openSetup\(round\.mode==="match_play"\?"correction":round\.players\.length<6\?"add":"correction"\)/);
 assert.match(html,/backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)\)/);
 assert.match(html,/provisional&&!provisionalHasTee\?blankYards:tee\.yds/);
 assert.match(html,/provisional&&!provisionalFull\?"":hcp/);

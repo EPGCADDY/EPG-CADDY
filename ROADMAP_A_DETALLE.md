@@ -294,3 +294,54 @@ Solicitud: **24 de agosto de 2026**. Alcance: auditar todas las pantallas, confi
 - **Activación:** 23 de agosto de 2026, 17:05:00, hora de Guatemala.
 - Desde ese instante, cualquier creación, modificación, cambio de nombre, movimiento o eliminación debe registrarse directamente y en la misma versión en `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
 - Ninguna versión puede cerrarse ni publicarse en GitHub, Vercel, Apple o Android si falta ese registro doble.
+
+## Autorización editorial · manual visual 01–02
+
+Solicitud y autorización: **24 de agosto de 2026**.
+
+| Archivo | Estado | Especificación y contenido |
+|---|---|---|
+| `docs/manual/MANUAL_GOLF_SCORE_CARD_GT_IPHONE_01_INICIO_4K.png` | AUTORIZADO · CONGELADO | PNG 2160 × 4320, 300 dpi. Configuración de campo y siete opciones: Ronda Normal, Stableford, Práctica, Match Play, Four Ball y Torneo opcional. |
+| `docs/manual/MANUAL_GOLF_SCORE_CARD_GT_IPHONE_02_REGISTRO_4K.png` | AUTORIZADO · CONGELADO | PNG 2160 × 4320, 300 dpi. Nombre, HDCP, marcas, otro jugador, corrección manual y OK. |
+
+Candado: no modificar contenido, tipografía, proporciones, colores, márgenes, logo ni retícula de estas dos páginas sin instrucción expresa del usuario. La página 03 debe heredar estos mismos tokens y documentar la tarjeta General real de V305.
+
+## Actualización operativa V306 · Match Play sobre la tarjeta Normal
+
+El **24 de agosto de 2026** se incorpora Match Play como extensión aislada de la Ronda Normal. La modalidad exige exactamente dos jugadores y conserva sin cambios el registro de nombre, HDCP y marcas; la distribución oficial de tiros; Gross, Neto, resultado, dictado por voz, ingreso manual, correcciones y resumen. El motor Match Play solo lee el Neto ya calculado: muestra **↑ verde** al ganador del hoyo, **↓ roja** al perdedor y no añade símbolo cuando existe empate. El marcador permanente informa AS, 1 UP, 2 UP y el cierre reglamentario anticipado, por ejemplo 3 & 2.
+
+| Archivo nuevo o modificado | Registro V306 |
+|---|---|
+| `match-play.js` | Motor puro de comparación Neto, estados por hoyo, AS/UP y cierre anticipado. |
+| `test-v306-match-play.mjs` | Prueba tarjeta Normal intacta, dos jugadores, Neto, ↑/↓, empate sin símbolo, 3 & 2, cierre, artefactos e Historial. |
+| `index-grupal.html` | Añade selección Match Play, exige dos jugadores y superpone únicamente el rubro MATCH a la tarjeta Normal. |
+| `round-closure.js` | Permite cierre oficial anticipado y recalcula Match Play después de una corrección oficial. |
+| `card-artifacts.js` | Genera tarjeta global y personales Match Play con Gross/Neto e indicadores ↑/↓. |
+| `card-library.js` | Conserva Match Play como modalidad propia en Historial. |
+| `round-navigation.js` | Conserva la modalidad al recuperar una ronda Match Play. |
+| `master-data-sync.js` | Sincroniza Match Play sin convertirlo en General. |
+| `account-backup.js` | Restaura Match Play, su snapshot y su marcador. |
+| `mobile-release.json` | Prepara el paquete móvil 306. |
+| `service-worker.js` | Activa caché V306 e incluye el motor Match Play para uso sin conexión. |
+| `scripts/build-mobile-web.mjs` | Incluye `match-play.js` en el paquete nativo iPhone/Android. |
+| `audit-project.mjs` | Ejecuta el control V306 dentro de la auditoría maestra. |
+| `.github/workflows/roadmap-gate.yml` | Ejecuta el candado Match Play en GitHub. |
+| `vercel.json` | Exige la prueba V306 y entrega el módulo sin caché obsoleta. |
+| `test-v305-registration-guides-parser-truth.mjs` | Conserva General y añade el requisito exacto de dos jugadores para Match Play. |
+| `test-v305-history-navigation-zero-error.mjs` | Alinea paquete y caché con V306 sin retirar controles V305. |
+| `test-stableford-ui.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v263-compact-players-back-button.mjs` | Conserva el alta de jugadores en General y confirma que Match Play permanezca limitado a exactamente dos. |
+| `test-v267-one-operational-line.mjs` | Conserva una sola línea operacional y reconoce Match Play como modalidad persistida independiente. |
+| `test-v272-definitive-operational-release.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v274-complete-courses-voice-operations.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v275-stable-live-voice-turns.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v276-manual-hole-navigation.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v277-official-round-corrections.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v278-card-image-pdf-export.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v279-local-card-library.mjs` | Alinea únicamente la identificación del build vigente. |
+| `test-v280-local-history-insights.mjs` | Alinea únicamente la identificación del build vigente. |
+| `docs/manual/MANUAL_GOLF_SCORE_CARD_GT_IPHONE_01_INICIO_4K.png` | Página 01 autorizada y congelada en 2160 × 4320 px a 300 dpi. |
+| `docs/manual/MANUAL_GOLF_SCORE_CARD_GT_IPHONE_02_REGISTRO_4K.png` | Página 02 autorizada y congelada en 2160 × 4320 px a 300 dpi. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra el inventario V306 completo. |
+| `ROADMAP_A_DETALLE.md` | Registra esta actualización a detalle. |
+| `ROADMAP_OVERALL.md` | Registra esta actualización en el resumen general. |

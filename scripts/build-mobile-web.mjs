@@ -22,6 +22,7 @@ const assets=[
   "master-data-sync.js",
   "account-backup.js",
   "commerce.js",
+  "match-play.js",
   "stableford.js",
   "round-navigation.js"
 ];

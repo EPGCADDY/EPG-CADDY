@@ -34,3 +34,6 @@ jobs:
 
       - name: Block false registration guides and mismatched OK states
         run: node test-v305-registration-guides-parser-truth.mjs
+
+      - name: Block Match Play net, indicator and closure regressions
+        run: node test-v306-match-play.mjs
