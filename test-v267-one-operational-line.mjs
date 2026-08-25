@@ -58,8 +58,8 @@ assert.match(html,/\$\("status"\)\.textContent=roundIdleStatus\(\);\$\("finalCar
 assert.match(stable,/teeLabel=cfg\.tee==="Blanco"\?"BLANCAS":"AMARILLAS"/);
 
 // La ronda usa transcripción viva y consume los deltas por el mismo parser/escritor.
-assert.match(html,/model:"gpt-live-transcribe",languages:\["es"\]/);
-assert.match(sessionApi,/model: "gpt-live-transcribe", languages: \["es"\], keywords: roundKeywords/);
+assert.match(html,/model:"gpt-live-transcribe",keywords:/);
+assert.match(sessionApi,/model: "gpt-live-transcribe", keywords: roundKeywords/);
 assert.match(html,/conversation\.item\.input_audio_transcription\.delta/);
 assert.match(html,/appendLiveRoundDelta\(e\.item_id\|\|e\.event_id\|\|"round_live_fallback",e\.delta\|\|""\)/);
 assert.match(html,/function applyLiveRoundTranscript\(itemId,transcript,\{final=false\}=\{\}\)/);

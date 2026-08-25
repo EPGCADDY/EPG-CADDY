@@ -729,15 +729,15 @@
   },
   {
     "number": "73",
-    "kicker": "Caddie de conversación universal",
-    "title": "El mismo Caddie en cada micrófono",
-    "subtitle": "Desde la primera pantalla, abre el micrófono y habla normalmente; entiende cualquier tema sin cambiar de modo.",
+    "kicker": "AI UNIVERSAL ∞ · voz y texto",
+    "title": "Pregunta cualquier cosa",
+    "subtitle": "Toca AI ∞ para escribir o toca un micrófono para hablar. No existe una lista cerrada de temas.",
     "steps": [
-      ["DESDE LA PRIMERA PANTALLA", "Inicio muestra el clima por GPS; sus micrófonos y los de Stableford y Tarjeta abren el mismo Caddie."],
-      ["PREGUNTA CUALQUIER TEMA", "Cultura Maya, medicinas, vuelos de aerolínea, arquitectura, planetas, océanos, vehículos, viajes o países. Para datos actuales investiga la Web y muestra fuentes."],
-      ["CAMBIA O INTERRUMPE", "Pregunta: ¿CÓMO ESTÁ EL CLIMA HOY? Luego: ¿POR QUÉ TENGO FRÍO? Si no te sirve una respuesta, habla encima y el Caddie se callará."],
-      ["RESPUESTA Y CIERRE", "Responde tras aproximadamente un segundo de silencio. Al terminar espera tres segundos; si no continúas, cierra. El micrófono nunca se abre solo."]
+      ["1 · ELIGE", "AI ∞ abre el teclado. ESCUCHAR abre el micrófono. El micrófono nunca se abre solo."],
+      ["2 · HABLA NORMAL", "Pregunta de medicina, vuelos, cultura o un tema nuevo. Los 200 temas de prueba son ejemplos, nunca límites."],
+      ["3 · ORDEN O PREGUNTA", "Si dices una orden de la tarjeta, la ejecuta. Si preguntas cualquier otra cosa, responde AI UNIVERSAL ∞ sin cambiar de modo."],
+      ["4 · SIGUE EL HILO", "Recuerda la conversación temporal. Para datos actuales consulta la Web y muestra fuentes. Usa DETENER, REPETIR, SILENCIAR o CONTINUAR."]
     ],
-    "remember": "Toca primero el micrófono. Una respuesta normal comienza tras aproximadamente un segundo de silencio; una búsqueda web puede tardar un poco más."
+    "remember": "Nunca inventa datos. Distingue hechos, estimaciones y opiniones. Sus límites reales son seguridad, privacidad, legalidad, veracidad y herramientas disponibles."
   }
 ]

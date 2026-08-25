@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V315
+**Versión documentada:** V321
 **Fecha de corte:** 25 de agosto de 2026
 **Rama operativa:** `main` (Producción vigente)
 **Aplicación:** `index-grupal.html`  
@@ -1108,6 +1108,20 @@ Probar como mínimo:
 - consultas que nunca escriben;
 - anotaciones que nunca recitan resultados automáticamente.
 
+#### AI UNIVERSAL ∞
+
+**Estado:** `OPERATIVO` en voz y texto.
+
+- El botón `AI ∞` acepta texto y todos los micrófonos aceptan conversación natural después de una apertura manual.
+- La aplicación distingue primero órdenes locales de registro, navegación, score y consulta de tarjeta. Todo lo demás llega al modelo avanzado mediante API.
+- No existe catálogo, lista cerrada, palabras clave temáticas ni respuestas simuladas. Las 200 áreas de prueba son ejemplos y jamás límites.
+- Conserva contexto temporal entre preguntas escritas y habladas. Ese contexto no se guarda en el historial local de rondas.
+- Responde de forma escrita y hablada y ofrece `ESCUCHAR`, `DETENER`, `REPETIR`, `SILENCIAR` y `CONTINUAR`.
+- Para información cambiante puede consultar la Web y presentar fuentes; diferencia hechos confirmados, estimaciones, opiniones e hipótesis y nunca inventa datos.
+- Cambia automáticamente de idioma y profundidad. Si falta un dato indispensable, realiza una sola pregunta breve.
+- Sus límites reales son seguridad, privacidad, legalidad, veracidad, acceso disponible y capacidad técnica. Una consulta médica, legal o financiera no sustituye a un profesional.
+- El micrófono nunca se abre solo. Tras la respuesta espera tres segundos para un seguimiento; si no lo hay, se cierra.
+
 ### 21.5 Persistencia
 
 - minimizar;
@@ -1322,6 +1336,7 @@ La modalidad se identifica en todas las pantallas únicamente como **FOUR BALL**
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-25 | Manual 3.69 / App V321 | Integrada AI UNIVERSAL ∞ mediante API de modelo avanzado: comunicación por voz y texto sin catálogo temático cerrado, contexto temporal, búsqueda Web para datos cambiantes, fuentes visibles, adaptación de idioma y nivel, separación automática entre órdenes de la tarjeta y consultas generales, y controles ESCUCHAR, DETENER, REPETIR, SILENCIAR y CONTINUAR. Las 200 áreas validadas son pruebas, nunca límites. |
 | 2026-08-25 | Manual 3.68 / App V315 | El Caddie entiende cualquier frase que no sea una operación válida de tarjeta, incluso situaciones contadas sin pregunta perfecta; conversa sobre cualquier tema, investiga datos actuales mediante búsqueda web y muestra fuentes. La respuesta normal comienza tras aproximadamente un segundo de silencio. Mientras habla puede ser interrumpido por la voz del jugador. Al terminar espera tres segundos y cierra el micrófono si no hay seguimiento; nunca lo abre solo. El pronóstico llega hasta 16 días e incluye intervalos y hora pico de lluvia. |
 | 2026-08-25 | Manual 3.67 / App V314 | El mismo Caddie universal queda disponible en todos los micrófonos visibles, incluida la primera pantalla, sin cambio de modo y siempre bajo apertura manual. La primera pantalla muestra automáticamente la condición meteorológica mediante GPS del teléfono, con respaldo del campo, sin activar el micrófono. Se registran como pendientes separados la Guía Rápida derivada del Manual y el tiempo vehicular sin mapa; este último requiere destino exacto y un servicio de rutas con tráfico, por lo que no se declara operativo. |
 | 2026-08-25 | Manual 3.66 / App V313 | Corregida la continuidad hablada después de consultar clima: la primera respuesta técnica ya no corta el resultado final y el micrófono se pausa mientras habla el Caddie para evitar eco. El Manual agrega la página 73 con ejemplos sencillos de conversación universal y queda en 74 páginas físicas. |

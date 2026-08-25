@@ -26,6 +26,6 @@ for(const roster of rosters){
 
 assert.match(sessionApi,/const MAX_TRANSCRIPTION_PROMPT_LENGTH = 1024/);
 assert.match(sessionApi,/roundTranscriptionPrompt\(players\)/);
-assert.match(sessionApi,/model: "gpt-live-transcribe", languages: \["es"\], keywords: roundKeywords/);
+assert.match(sessionApi,/model: "gpt-live-transcribe", keywords: roundKeywords/);
 
 console.log("PASS V271 · sesión Realtime limitada a 1024 caracteres con vocabulario operacional intacto");

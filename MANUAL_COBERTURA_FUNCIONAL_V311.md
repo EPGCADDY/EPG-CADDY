@@ -52,7 +52,7 @@ Estado: **en verificación**. Ninguna afirmación de cobertura total es válida 
 | Mapa de capacidades y significado de respuestas | 71–72 | 70 | `test-v311-manual-semantic-coverage.mjs` |
 | Índice por categorías y lupa con preguntas completas | Visor web | 71–72 | `test-v311-manual-search.mjs` |
 | Asistente de micrófono para ayuda y navegación segura | 69 y 71–72 | 70 | `test-v311-voice-assistant.mjs` |
-| Caddie universal, clima futuro, Web viva, fuentes e interrupción hablada | 73 | 70 | `test-v312-general-caddie.mjs` |
+| AI UNIVERSAL ∞ por voz y texto, contexto, Web viva, fuentes y controles | 73 | 70 | `test-v321-ai-universal-infinity.mjs` |
 | Inclusión del asistente en el paquete móvil | Aplicación instalada | 47 | `test-v311-voice-assistant.mjs` y `test-v284-native-package-generation.mjs` |
 
 ## Combinaciones mínimas que deben permanecer probadas

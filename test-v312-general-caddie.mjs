@@ -112,13 +112,14 @@ assert.ok(setupTranscriptBlock.indexOf("isGeneralConversationIntent")<setupTrans
 assert.match(setupTranscriptBlock,/speakConversation\(setupUtterance\)/,"El micrófono de Inicio debe abrir el mismo Caddie conversacional");
 assert.match(setupTranscriptBlock,/!setupRegistration\.ok/,"Toda frase de Inicio que no sea un registro válido debe llegar al Caddie universal");
 assert.match(sessionApi,/Caddie conversacional de propósito general disponible desde todos los micrófonos/,"La sesión Realtime de Inicio no debe limitarse al registro");
-assert.match(sessionApi,/español natural de cualquier tema, preguntas y seguimiento/,"La transcripción inicial debe comprender conversación universal");
+assert.match(sessionApi,/Detecta y transcribe literalmente el idioma que hable el usuario[\s\S]*?Conserva preguntas y seguimiento/,"La transcripción inicial debe comprender conversación universal multilingüe");
 assert.match(sessionApi,/const threshold = 0\.2;/,"Inicio debe reconocer una voz normal con la sensibilidad ya probada en la ronda");
 assert.match(sessionApi,/const prefixPadding = 700;/,"Inicio no debe perder el comienzo de la primera pregunta");
 assert.match(sessionApi,/const noiseReduction = "far_field";/,"Inicio debe aceptar el teléfono a distancia de conversación");
-assert.match(sessionApi,/context === "setup"[\s\S]*?model: "gpt-live-transcribe", languages: \["es"\]/,"Inicio debe usar la transcripción viva en español");
+assert.match(sessionApi,/context === "setup"[\s\S]*?model: "gpt-live-transcribe"/,"Inicio debe usar la transcripción viva con idioma automático");
 const setupSessionBlock=html.slice(html.indexOf("function setupSessionConfig()"),html.indexOf("\nfunction roundSessionConfig()"));
-assert.match(setupSessionBlock,/model:"gpt-live-transcribe",languages:\["es"\]/,"La configuración del cliente debe conservar la transcripción viva de Inicio");
+assert.match(setupSessionBlock,/model:"gpt-live-transcribe",prompt:/,"La configuración del cliente debe conservar la transcripción viva de Inicio con idioma automático");
+assert.match(sessionApi,/Detecta y transcribe literalmente el idioma que hable el usuario/,"La voz universal debe detectar el idioma sin limitarse al español");
 assert.match(setupSessionBlock,/noise_reduction:\{type:"far_field"\}/,"La configuración del cliente debe conservar voz a distancia");
 assert.match(setupSessionBlock,/threshold:ROUND_VAD_THRESHOLD,prefix_padding_ms:ROUND_VAD_PREFIX_MS/,"Cliente y servidor deben usar la misma sensibilidad en Inicio");
 assert.match(html,/const expectedThreshold=ROUND_VAD_THRESHOLD;\s*const expectedPrefix=ROUND_VAD_PREFIX_MS;/,"La validación no debe restaurar la sensibilidad antigua de Inicio");
@@ -149,10 +150,10 @@ const toggleEnd = html.indexOf("\nfunction dateSetup()", toggleStart);
 assert.ok(toggleStart > 0 && html.indexOf("setVoice(true)", toggleStart) < toggleEnd, "La única activación debe vivir dentro del gesto toggleVoice");
 assert.doesNotMatch(html, /voiceprint|speakerRecognition|voiceBiometric|enrollVoice/i, "No se permite huella, identificación ni enrolamiento de voz");
 assert.match(sessionApi, /Caddie conversacional de propósito general/, "La sesión Realtime debe aceptar respuestas conversacionales explícitas");
-assert.match(sessionApi, /Transcribe literalmente español natural de cualquier tema/, "La transcripción no debe limitarse al vocabulario de score");
+assert.match(sessionApi, /Detecta y transcribe literalmente el idioma que hable el usuario/, "La transcripción no debe limitarse al vocabulario de score ni a un idioma");
 assert.match(weatherApi, /api\.open-meteo\.com\/v1\/forecast/, "Falta proveedor meteorológico vivo");
 assert.match(weatherApi, /geocoding-api\.open-meteo\.com\/v1\/search/, "Falta resolución de campos o ubicaciones");
-assert.match(serviceWorker, /gscg-mobile-v320-unbounded-universal-domains/, "La PWA debe reemplazar el shell anterior");
+assert.match(serviceWorker, /gscg-mobile-v321-ai-universal-infinity/, "La PWA debe reemplazar el shell anterior");
 assert.match(weatherApi, /forecast_days\", \"16\"/, "El pronóstico natural debe admitir el máximo confiable de 16 días");
 assert.match(weatherApi,/const FORECAST_PERIODS/,"El pronóstico debe resumir la franja horaria pedida");
 assert.match(researchApi,/https:\/\/api\.openai\.com\/v1\/responses/,"La investigación universal debe usar Responses API");
@@ -245,4 +246,4 @@ assert.deepEqual(research,{ok:true,source:"OpenAI Web Search",answer:"Respuesta 
 const cleanResearch=summarizeResearchResponse({output:[{type:"message",content:[{type:"output_text",text:"Respuesta completa. ([Fuente](https://example.org/a))",annotations:[{type:"url_citation",title:"Fuente",url:"https://example.org/a"}]}]}]});
 assert.equal(cleanResearch.answer,"Respuesta completa.","La voz no debe recibir URLs ni citas Markdown");
 
-console.log("PASS V320 · intención universal protegida, consultas de tarjeta conservadas y dominio abierto");
+console.log("PASS V321 · intención universal protegida, consultas de tarjeta conservadas, idioma automático y dominio abierto");

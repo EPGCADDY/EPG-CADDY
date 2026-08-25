@@ -16,10 +16,10 @@ MANUAL_DIR = ROOT / "docs" / "manual" / "v311"
 TMP_DIR = ROOT / "tmp" / "pdfs"
 SOURCE_PDF = MANUAL_DIR / "Manual_Golf_Score_Card_GT_COMPLETO.pdf"
 ALIAS_PDF = MANUAL_DIR / "Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf"
-PAGE_PDF = TMP_DIR / "manual-page-73-v315.pdf"
-UPDATED_PDF = TMP_DIR / "Manual_Golf_Score_Card_GT_COMPLETO-v315.pdf"
-PAGE_PNG_PREFIX = TMP_DIR / "page-73-v315"
-PAGE_PNG = TMP_DIR / "page-73-v315-1.png"
+PAGE_PDF = TMP_DIR / "manual-page-73-v321.pdf"
+UPDATED_PDF = TMP_DIR / "Manual_Golf_Score_Card_GT_COMPLETO-v321.pdf"
+PAGE_PNG_PREFIX = TMP_DIR / "page-73-v321"
+PAGE_PNG = TMP_DIR / "page-73-v321-1.png"
 
 
 def register_fonts():
@@ -61,7 +61,7 @@ def build_page():
     regular, bold = register_fonts()
     width, height = 576, 1152
     c = canvas.Canvas(str(PAGE_PDF), pagesize=(width, height), pageCompression=1)
-    c.setTitle("73 - El mismo Caddie en cada micrófono")
+    c.setTitle("73 - AI UNIVERSAL INFINITA - voz y texto")
     c.setFillColor(white)
     c.rect(0, 0, width, height, stroke=0, fill=1)
 
@@ -70,12 +70,12 @@ def build_page():
     c.setFont(bold, 17.5)
     c.drawString(70, 1120, "GOLF SCORE CARD GT · MANUAL DE FUNCIONES")
     c.setFont(regular, 15.5)
-    c.drawString(left, 1087, "73 · Caddie de conversación universal")
+    c.drawString(left, 1087, "73 · AI UNIVERSAL ∞ · voz y texto")
     c.setFont(regular, 22)
-    c.drawString(left, 1060, "El mismo Caddie en cada micrófono")
+    c.drawString(left, 1060, "Pregunta cualquier cosa")
     draw_wrapped(
         c,
-        "Desde la primera pantalla, abre el micrófono y habla normalmente; entiende cualquier tema sin cambiar de modo.",
+        "Toca AI ∞ para escribir o toca un micrófono para hablar. No existe una lista cerrada de temas.",
         left,
         1027,
         500,
@@ -94,20 +94,20 @@ def build_page():
 
     steps = [
         (
-            "DESDE LA PRIMERA PANTALLA",
-            "Inicio muestra clima GPS; sus micrófonos y los de Stableford y Tarjeta abren el mismo Caddie.",
+            "ELIGE VOZ O TEXTO",
+            "AI ∞ abre el teclado. ESCUCHAR abre el micrófono. El micrófono nunca se abre solo.",
         ),
         (
-            "PREGUNTA CUALQUIER TEMA",
-            "Medicina, arquitectura, planetas, océanos, vehículos, viajes o países. Para datos actuales investiga la Web y muestra fuentes.",
+            "HABLA NORMAL",
+            "Pregunta de medicina, vuelos, cultura o un tema nuevo. Los 200 temas probados son ejemplos, nunca límites.",
         ),
         (
-            "CAMBIA O INTERRUMPE",
-            "Pasa del clima a otro tema sin comando. Si la respuesta no te sirve, habla encima: el Caddie se calla y atiende tu nuevo mensaje.",
+            "ORDEN O PREGUNTA",
+            "Una orden de la tarjeta se ejecuta allí. Cualquier otra consulta va a AI UNIVERSAL ∞ sin cambiar de modo.",
         ),
         (
-            "RESPUESTA Y CIERRE",
-            "Responde tras cerca de 1 segundo de silencio. Al terminar espera 3 segundos; si no continúas, cierra. Nunca se abre solo.",
+            "SIGUE EL HILO",
+            "Recuerda el contexto temporal, busca datos actuales y muestra fuentes. Usa DETENER, REPETIR, SILENCIAR o CONTINUAR.",
         ),
     ]
     row_top = box_y + box_h - 62
@@ -142,7 +142,7 @@ def build_page():
     c.drawString(remember_x + 20, remember_y + remember_h - 29, "RECUERDA")
     draw_wrapped(
         c,
-        "Toca primero el micrófono. Golf es su especialidad, no su límite. Una búsqueda Web puede tardar un poco más porque consulta fuentes reales.",
+        "Nunca inventa datos. Distingue hechos, estimaciones y opiniones. Sus límites reales son seguridad, privacidad, legalidad, veracidad y herramientas disponibles.",
         remember_x + 20,
         remember_y + remember_h - 54,
         remember_w - 40,
@@ -172,7 +172,7 @@ def replace_last_page():
     writer.add_page(replacement.pages[0])
     writer.add_metadata({
         "/Title": "Golf Score Card GT - Manual completo de funciones - Paginas 01-73",
-        "/Subject": "Manual de funciones, voz, clima, Web y Caddie de conversacion universal",
+        "/Subject": "Manual de funciones, voz, texto, Web y AI UNIVERSAL INFINITA",
         "/Author": "Golf Score Card GT",
         "/Creator": "Golf Score Card GT",
     })
@@ -190,7 +190,7 @@ def render_page_png():
         "pdftoppm", "-f", "1", "-l", "1", "-r", "300", "-png", "-singlefile",
         str(PAGE_PDF), str(PAGE_PNG_PREFIX)
     ], check=True)
-    rendered = TMP_DIR / "page-73-v315.png"
+    rendered = TMP_DIR / "page-73-v321.png"
     with Image.open(rendered) as image:
         image.resize((2160, 4320), Image.Resampling.LANCZOS).save(
             MANUAL_DIR / "page-73.png", format="PNG", dpi=(300, 300), optimize=True

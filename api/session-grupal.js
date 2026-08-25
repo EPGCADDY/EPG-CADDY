@@ -15,7 +15,7 @@ function safeHeader(value, max = 300) {
 const MAX_TRANSCRIPTION_PROMPT_LENGTH = 1024;
 
 function roundTranscriptionPrompt(players) {
-  return `Golf Guatemala con Caddie conversacional. Transcribe literalmente español natural de cualquier tema, preguntas y seguimiento de una conversación. Jugadores: ${players || "los registrados"}. Si es score: el cursor indica automáticamente el hoyo activo; transcribe Nombre + Score. Hoyo N opcional reposiciona. Tras Falta NOMBRE, Score u omisión solos son de ese jugador. Gross: número o golf. X: equis, cero, sin score, sin dato, no informó, no dijo, no cantó, ponle cero, no le anotes. Golf: albatros, águila, eagle, birdie, pájaro, par, bogey, doble bogey, triple bogey, doble par, uno bajo par, uno sobre par, dos sobre par, tres sobre par. Nombre único solo; si se repite, apellido. Jessie se escribe Jessie.`.slice(0, MAX_TRANSCRIPTION_PROMPT_LENGTH);
+  return `Golf Guatemala con Caddie conversacional. Detecta y transcribe literalmente el idioma que hable el usuario; español es el predeterminado. Conserva preguntas y seguimiento de una conversación. Jugadores: ${players || "los registrados"}. Si es score: el cursor indica automáticamente el hoyo activo; transcribe Nombre + Score. Hoyo N opcional reposiciona. Tras Falta NOMBRE, Score u omisión solos son de ese jugador. Gross: número o golf. X: equis, cero, sin score, sin dato, no informó, no dijo, no cantó, ponle cero, no le anotes. Golf: albatros, águila, eagle, birdie, pájaro, par, bogey, doble bogey, triple bogey, doble par, uno bajo par, uno sobre par, dos sobre par, tres sobre par. Nombre único solo; si se repite, apellido. Jessie se escribe Jessie.`.slice(0, MAX_TRANSCRIPTION_PROMPT_LENGTH);
 }
 
 export default async function handler(req, res) {
@@ -45,7 +45,7 @@ export default async function handler(req, res) {
     const noiseReduction = "far_field";
 
     const transcriptionPrompt = context === "setup"
-      ? "Golf Guatemala con Caddie universal. Transcribe literalmente español natural de cualquier tema, preguntas y seguimiento de una conversación. Si el usuario registra jugadores, conserva exactamente nombres propios, handicap y color de marcas. Regla mandatoria: Jessie se escribe Jessie."
+      ? "Golf Guatemala con Caddie universal. Detecta y transcribe literalmente el idioma que hable el usuario; español es el predeterminado. Conserva preguntas y seguimiento de una conversación. Si el usuario registra jugadores, conserva exactamente nombres propios, handicap y color de marcas. Regla mandatoria: Jessie se escribe Jessie."
       : roundTranscriptionPrompt(players);
     const roundKeywords = ["hoyo", "gross", "par", "birdie", "bogey", "doble bogey", "triple bogey", "eagle", "albatros", "equis", "cero", "sin score", "sin dato", "no informó", "no dijo", "no cantó", "ponle cero", "no le anotes", ...players.split(",").map(value => value.trim()).filter(Boolean)].slice(0, 80);
 
@@ -64,8 +64,8 @@ export default async function handler(req, res) {
         input: {
           transcription: {
             ...(context === "setup"
-              ? { model: "gpt-live-transcribe", languages: ["es"] }
-              : { model: "gpt-live-transcribe", languages: ["es"], keywords: roundKeywords }),
+              ? { model: "gpt-live-transcribe" }
+              : { model: "gpt-live-transcribe", keywords: roundKeywords }),
             prompt: transcriptionPrompt
           },
           noise_reduction: { type: noiseReduction },

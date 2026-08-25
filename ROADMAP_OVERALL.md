@@ -2,6 +2,46 @@
 
 ![ROADMAP OVERALL · Golf Score Card GT](ROADMAP_OVERALL_V291.png)
 
+## Actualización operativa V321 · AI UNIVERSAL ∞
+
+AI UNIVERSAL ∞ queda integrada mediante API de modelo avanzado, con voz y texto, contexto temporal compartido, búsqueda Web para datos cambiantes, idioma automático, respuesta escrita y hablada, separación entre órdenes locales y consultas generales, y controles `ESCUCHAR`, `DETENER`, `REPETIR`, `SILENCIAR` y `CONTINUAR`. Las 200 áreas verificadas son pruebas, nunca una lista límite. El Manual conserva la portada como primera página y documenta la función en la página 73.
+
+| Archivo | Registro V321 |
+|---|---|
+| `api/universal-ai.js` | Endpoint real de AI UNIVERSAL ∞ con Responses API, modelo avanzado, contexto, Web, fuentes y `store:false`. |
+| `api/session-grupal.js` | Realtime conserva Golf y habilita detección automática del idioma hablado. |
+| `index-grupal.html` | Panel AI ∞, teclado, respuestas escritas, contexto voz-texto, clasificación orden/pregunta y cinco controles. |
+| `service-worker.js` | Caché V321 para entregar inmediatamente la integración. |
+| `audit-project.mjs` | Incorpora la batería obligatoria V321. |
+| `test-v321-ai-universal-infinity.mjs` | Verifica API real, 200 áreas sin lista cerrada, texto, voz, contexto, Web y controles. |
+| `test-v267-one-operational-line.mjs` | Alinea el contrato de transcripción con idioma automático. |
+| `test-v271-realtime-prompt-limit.mjs` | Conserva el límite Realtime con idioma automático. |
+| `test-v312-general-caddie.mjs` | Amplía la verificación universal a idioma automático y caché V321. |
+| `test-stableford-ui.mjs` | Alinea el build esperado con V321. |
+| `test-v272-definitive-operational-release.mjs` | Alinea el build esperado con V321. |
+| `test-v274-complete-courses-voice-operations.mjs` | Alinea el build esperado con V321. |
+| `test-v275-stable-live-voice-turns.mjs` | Alinea el build esperado con V321. |
+| `test-v276-manual-hole-navigation.mjs` | Alinea el build esperado con V321. |
+| `test-v277-official-round-corrections.mjs` | Alinea el build esperado con V321. |
+| `test-v278-card-image-pdf-export.mjs` | Alinea el build esperado con V321. |
+| `test-v279-local-card-library.mjs` | Alinea el build esperado con V321. |
+| `test-v280-local-history-insights.mjs` | Alinea el build esperado con V321. |
+| `test-v281-pwa-installation.mjs` | Alinea la caché instalable esperada con V321. |
+| `test-v284-native-package-generation.mjs` | Alinea el paquete web esperado con V321. |
+| `test-v290-brand-icons-cleanup.mjs` | Alinea el build esperado con V321. |
+| `test-v304-homogeneous-registration-actions.mjs` | Alinea el build esperado con V321. |
+| `test-v305-history-navigation-zero-error.mjs` | Alinea el build esperado con V321. |
+| `test-v307-match-arrows-format.mjs` | Alinea el build esperado con V321. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registra la especificación y estado operativo de AI UNIVERSAL ∞. |
+| `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Ubica AI UNIVERSAL ∞ en la página 73 y su prueba técnica. |
+| `docs/manual/v311/manual-pages-17-35.json` | Explicación para un niño de diez años: voz, texto, órdenes, contexto y límites reales. |
+| `scripts/update-manual-page-73.py` | Genera la página 73 V321 sin alterar portada ni páginas anteriores. |
+| `docs/manual/v311/page-73.png` | Imagen 4K verificada de AI UNIVERSAL ∞. |
+| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` | Manual completo actualizado; portada primero y página 73 AI UNIVERSAL ∞. |
+| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias PDF completo actualizado con el mismo orden correcto. |
+| `test-v311-manual-semantic-coverage.mjs` | Exige la explicación V321 y los cinco controles en el Manual. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello de inventario recalculado sobre las fuentes V321. |
+
 ## Golf Score Card GT
 
 Este es el mapa general y sencillo del proyecto. El nombre comercial único es **Golf Score Card GT**.

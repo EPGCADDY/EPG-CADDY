@@ -4,7 +4,7 @@ import library from "./card-library.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V320-UNBOUNDED-UNIVERSAL-DOMAINS-20260825"/);
+assert.match(html,/gscg-build" content="V321-AI-UNIVERSAL-INFINITY-20260825"/);
 assert.match(html,/V279-ROUND-FIELD-TOURNAMENT-PLAYER-20260823/);
 for(const id of ["openCardLibraryButton","openCardLibrarySetup","openCardLibraryStableford","cardLibraryOverlay","cardLibraryMode","cardLibraryCourse","cardLibraryQuery","cardLibraryList","libraryOpenGlobal","libraryImageGlobal","libraryPdfGlobal","libraryOpenPersonal","libraryImagePersonal","libraryPdfPersonal","libraryPdfAll"])assert.match(html,new RegExp(`id="${id}"`),`Falta ${id}`);
 assert.match(html,/card-library\.js/);
