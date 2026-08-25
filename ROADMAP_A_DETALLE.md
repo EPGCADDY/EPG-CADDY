@@ -657,3 +657,15 @@ El **25 de agosto de 2026** el manual se amplía a **portada más 72 páginas fu
 - `test-v311-manual-voice-map.mjs`
 - `test-v311-voice-assistant.mjs`
 - `voice-assistant.js`
+
+## Corrección editorial V311 · portada antes del compendio y sin textos añadidos
+
+Solicitud: **25 de agosto de 2026**. Estado: **IMPLEMENTADO · EN AUDITORÍA**. La ruta `/manual` inicia con `docs/manual/v311/page-00.png`. La introducción, el buscador, el índice temático y el índice numérico permanecen disponibles después del cuerpo visual, pero ya no desplazan la portada a una segunda pantalla. En la portada se ocultan el estado superior, la píldora `PORTADA` y el texto central del paginador. **SIGUIENTE** conserva el salto directo a `page-01.png`.
+
+| Archivo nuevo o modificado | ID o código | Explicación sencilla |
+|---|---|---|
+| `manual.html` | V311-COVER-FIRST | La portada abre primero, queda limpia y avanza a la página 01. |
+| `test-v311-manual-hosting.mjs` | Candado de portada | Comprueba orden DOM, ausencia de etiqueta y ausencia de texto superpuesto. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Registra la nueva huella de las fuentes. |
+| `ROADMAP_OVERALL.md` | Resumen | Registra la corrección visible. |
+| `ROADMAP_A_DETALLE.md` | Detalle | Conserva este bloque técnico. |

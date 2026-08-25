@@ -675,3 +675,15 @@ El **25 de agosto de 2026** se fija una regla común para General, Stableford, M
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra motor y prueba nuevos. |
 | `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico. |
 | `ROADMAP_OVERALL.md` | Conserva este resumen general. |
+
+## Corrección editorial V311 · portada real como primera pantalla
+
+El **25 de agosto de 2026** se corrige el orden visible del Manual SCG. Al abrir `/manual`, la primera pantalla es la imagen de portada `page-00.png`; el compendio, buscador e índice dejan de aparecer antes de ella. La portada no muestra la palabra `PORTADA` como etiqueta, título superpuesto ni texto central del pie. El botón **SIGUIENTE** avanza directamente a la página 01.
+
+| Archivo nuevo o modificado | Registro funcional |
+|---|---|
+| `manual.html` | Coloca la portada antes del compendio, retira sus textos superpuestos y conserva la secuencia 00 → 01. |
+| `test-v311-manual-hosting.mjs` | Bloquea regresiones de orden y textos visibles en la portada. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
+| `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico de la corrección. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen general. |

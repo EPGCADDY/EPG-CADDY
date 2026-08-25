@@ -21,6 +21,7 @@
     .brand strong{display:block;font-size:13px;letter-spacing:.4px}
     .brand small{display:block;margin-top:2px;color:var(--green);font-size:10px;letter-spacing:.9px}
     .page-status{text-align:center}
+    .page-status.cover{visibility:hidden}
     .page-status strong{display:block;color:var(--green);font-size:14px}
     .page-status span{display:block;margin-top:3px;color:var(--muted);font-size:11px}
     .actions{display:flex;gap:8px}
@@ -94,8 +95,8 @@
       <span><strong>GOLF SCORE CARD GT</strong><small>MANUAL DE FUNCIONES</small></span>
     </a>
     <div class="page-status" aria-live="polite">
-      <strong id="pageTitle">PORTADA · MANUAL DE FUNCIONES Y APLICACIONES</strong>
-      <span>Portada + 72 páginas · versión vigente</span>
+      <strong id="pageTitle"></strong>
+      <span id="pageMeta"></span>
     </div>
     <nav class="actions" aria-label="Acciones del manual">
       <a href="/inicio">ABRIR APP</a>
@@ -103,12 +104,14 @@
     </nav>
   </header>
 
+  <main class="manual" id="manual"></main>
+
   <section class="intro">
     <h1>Manual de Funciones y Aplicaciones</h1>
     <p>Uso de la aplicación, Match Play, Four Ball e información de campos.</p>
   </section>
 
-  <section class="manual-tools" aria-label="Índice y buscador del manual">
+  <section class="manual-tools" id="manualTools" aria-label="Índice y buscador del manual">
     <div class="manual-search">
       <label for="manualSearch"><span aria-hidden="true">⌕</span>BUSCAR UNA FUNCIÓN, PANTALLA O DUDA</label>
       <div class="manual-search-row">
@@ -131,11 +134,10 @@
   </section>
 
   <nav class="index" id="pageIndex" aria-label="Índice por página"></nav>
-  <main class="manual" id="manual"></main>
 
   <footer class="pager">
     <button type="button" id="previousPage">← ANTERIOR</button>
-    <strong id="pageCounter">PORTADA</strong>
+    <strong id="pageCounter"></strong>
     <button type="button" id="nextPage">SIGUIENTE →</button>
   </footer>
 
@@ -207,19 +209,23 @@
     const pageId=value=>`pagina-${String(value).padStart(2,"0")}`;
     pages.forEach((item,index)=>{
       pageIndex.insertAdjacentHTML("beforeend",`<a href="#${pageId(index)}" data-index="${index}" aria-label="${item.label}: ${item.title}">${item.number}</a>`);
-      manual.insertAdjacentHTML("beforeend",`<section class="manual-page" id="${pageId(index)}" data-page="${index}" aria-label="${item.label}: ${item.title}"><span class="label">${item.label}</span><img src="/docs/manual/v311/page-${item.number}.png" alt="${item.label} del manual: ${item.title}" ${index===0?'fetchpriority="high"':'loading="lazy"'}></section>`);
+      manual.insertAdjacentHTML("beforeend",`<section class="manual-page" id="${pageId(index)}" data-page="${index}" aria-label="${item.label}: ${item.title}">${index===0?"":`<span class="label">${item.label}</span>`}<img src="/docs/manual/v311/page-${item.number}.png" alt="${item.label} del manual: ${item.title}" ${index===0?'fetchpriority="high"':'loading="lazy"'}></section>`);
     });
     const sections=[...document.querySelectorAll(".manual-page")];
     const indexLinks=[...document.querySelectorAll("#pageIndex a")];
+    const pageStatus=document.querySelector(".page-status");
     const title=document.getElementById("pageTitle");
+    const pageMeta=document.getElementById("pageMeta");
     const counter=document.getElementById("pageCounter");
     const previous=document.getElementById("previousPage");
     const next=document.getElementById("nextPage");
     function setCurrent(page){
       current=Math.max(0,Math.min(pages.length-1,page));
       const item=pages[current];
-      title.textContent=current===0?`PORTADA · ${item.title}`:`PÁGINA ${item.number} · ${item.title}`;
-      counter.textContent=current===0?"PORTADA":`${item.number} / 72`;
+      pageStatus.classList.toggle("cover",current===0);
+      title.textContent=current===0?"":`PÁGINA ${item.number} · ${item.title}`;
+      pageMeta.textContent=current===0?"":"73 páginas · versión vigente";
+      counter.textContent=current===0?"":`${item.number} / 72`;
       previous.disabled=current===0;
       next.disabled=current===pages.length-1;
       indexLinks.forEach(link=>link.classList.toggle("active",Number(link.dataset.index)===current));
