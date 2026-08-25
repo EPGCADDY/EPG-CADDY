@@ -53,4 +53,4 @@ assert.match(html,/Todo lo que no sea una operación reconocida de la tarjeta pa
 assert.match(research,/No existe catálogo, lista cerrada ni whitelist de materias/);
 assert.match(research,/tools: \[\{ type: "web_search", external_web_access: true \}\]/);
 
-console.log("PASS V320 · 100 de 100 áreas y temas fuera de lista llegan al Caddie universal");
+console.log("PASS V321 · 100 de 100 áreas y temas fuera de lista llegan al Caddie universal");

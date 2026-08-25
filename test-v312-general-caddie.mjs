@@ -96,7 +96,8 @@ assert.equal(conversationToolStopIsPreFollowup(null,{sourceResponseId:"source",f
 assert.match(html,/Cuando necesites una herramienta, no pronuncies un preámbulo/,"El clima debe responder una sola vez y completo");
 assert.match(html, /phase=listening\?"listening":"idle"/, "La conversación debe volver a escuchar automáticamente");
 assert.match(html, /En salud ofrece únicamente orientación general/, "Faltan límites seguros para preguntas médicas");
-assert.match(html,/const CONVERSATION_IDLE_CLOSE_MS=3000/,"El micrófono debe cerrarse tras tres segundos sin seguimiento");
+assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=30\*60\*1000/,"El micrófono sólo debe cerrarse tras treinta minutos sin actividad");
+assert.doesNotMatch(html,/CONVERSATION_IDLE_CLOSE_MS=3000/,"La conversación no puede apagarse tres segundos después de responder");
 assert.match(html,/const ROUND_VAD_SILENCE_MS=1000/,"Un segundo de silencio debe iniciar la respuesta sin demora artificial");
 assert.match(html,/silence_duration_ms:ROUND_VAD_SILENCE_MS/,"Cliente y sesión deben compartir el cierre rápido del turno");
 assert.match(html,/start_date:[\s\S]*?end_date:/,"La herramienta debe aceptar fechas y rangos futuros");
@@ -152,7 +153,7 @@ assert.match(sessionApi, /Caddie conversacional de propósito general/, "La sesi
 assert.match(sessionApi, /Transcribe literalmente español natural de cualquier tema/, "La transcripción no debe limitarse al vocabulario de score");
 assert.match(weatherApi, /api\.open-meteo\.com\/v1\/forecast/, "Falta proveedor meteorológico vivo");
 assert.match(weatherApi, /geocoding-api\.open-meteo\.com\/v1\/search/, "Falta resolución de campos o ubicaciones");
-assert.match(serviceWorker, /gscg-mobile-v320-unbounded-universal-domains/, "La PWA debe reemplazar el shell anterior");
+assert.match(serviceWorker, /gscg-mobile-v321-sustained-conversation-recovery/, "La PWA debe reemplazar el shell anterior");
 assert.match(weatherApi, /forecast_days\", \"16\"/, "El pronóstico natural debe admitir el máximo confiable de 16 días");
 assert.match(weatherApi,/const FORECAST_PERIODS/,"El pronóstico debe resumir la franja horaria pedida");
 assert.match(researchApi,/https:\/\/api\.openai\.com\/v1\/responses/,"La investigación universal debe usar Responses API");
@@ -161,6 +162,10 @@ assert.match(researchApi,/model: \"gpt-5\.6\"/,"La investigación debe usar el m
 assert.match(researchApi,/tool_choice: \"required\"/,"Si el Caddie solicita investigación, la API debe ejecutarla realmente");
 assert.match(researchApi,/max_output_tokens: 900/,"La investigación debe tener margen para terminar su última oración");
 assert.match(researchApi,/máximo 120 palabras/,"La respuesta web debe ser breve para escucharse durante el juego");
+assert.match(researchApi,/SEARCH_TIMEOUT_MS = 40_000/,"La búsqueda debe tener margen real antes de recuperar un timeout");
+assert.match(researchApi,/res\.status\(200\)\.json\(unavailableResearch/,"Un fallo web recuperable no puede cortar el turno con HTTP 502");
+assert.match(html,/if\(!realtimeReusableFor\(context\)\)/,"Una reapertura debe conservar el transporte iPhone cuando sigue sano");
+assert.match(html,/setupTranscriptionWatchdog=setTimeout/,"Inicio debe recuperarse si iPhone no entrega la transcripción final");
 
 const forecastHelperSource=html.slice(html.indexOf("function guatemalaDateIso"),html.indexOf("\nfunction conversationInstructions"));
 const inferConversationForecastRange=new Function("normalizeSpeech",`${forecastHelperSource};return inferConversationForecastRange`)(value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase());
@@ -245,4 +250,4 @@ assert.deepEqual(research,{ok:true,source:"OpenAI Web Search",answer:"Respuesta 
 const cleanResearch=summarizeResearchResponse({output:[{type:"message",content:[{type:"output_text",text:"Respuesta completa. ([Fuente](https://example.org/a))",annotations:[{type:"url_citation",title:"Fuente",url:"https://example.org/a"}]}]}]});
 assert.equal(cleanResearch.answer,"Respuesta completa.","La voz no debe recibir URLs ni citas Markdown");
 
-console.log("PASS V320 · intención universal protegida, consultas de tarjeta conservadas y dominio abierto");
+console.log("PASS V321 · intención universal, continuidad prolongada y recuperación protegidas");

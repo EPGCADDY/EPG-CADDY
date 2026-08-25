@@ -2,7 +2,15 @@ import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 
 const MAX_QUERY_LENGTH = 900;
 const MAX_SOURCES = 5;
-const SEARCH_TIMEOUT_MS = 25_000;
+const SEARCH_TIMEOUT_MS = 40_000;
+
+function unavailableResearch(error = "RESEARCH_UNAVAILABLE") {
+  return {
+    ok: false,
+    error,
+    message: "No pude verificar esa información en este momento. Puedes continuar con otra pregunta."
+  };
+}
 
 function responseText(payload) {
   return (payload?.output || [])
@@ -99,13 +107,14 @@ export default async function handler(req, res) {
     }
     const payload = await upstream.json().catch(() => null);
     if (!upstream.ok) {
-      console.error("research upstream", upstream.status);
-      return res.status(502).json({ ok: false, error: "RESEARCH_UNAVAILABLE" });
+      console.warn("research upstream", upstream.status);
+      return res.status(200).json(unavailableResearch("RESEARCH_UPSTREAM_UNAVAILABLE"));
     }
     const summary = summarizeResearchResponse(payload);
-    return res.status(summary.ok ? 200 : 502).json(summary);
+    return res.status(200).json(summary.ok ? summary : unavailableResearch(summary.error));
   } catch (error) {
-    console.error("research", error instanceof Error ? error.message : String(error));
-    return res.status(502).json({ ok: false, error: "RESEARCH_UNAVAILABLE" });
+    const timedOut = error?.name === "AbortError";
+    console.warn("research", timedOut ? "timeout recuperado" : (error instanceof Error ? error.message : String(error)));
+    return res.status(200).json(unavailableResearch(timedOut ? "RESEARCH_TIMEOUT" : "RESEARCH_UNAVAILABLE"));
   }
 }

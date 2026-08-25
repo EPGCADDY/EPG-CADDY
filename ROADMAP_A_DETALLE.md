@@ -859,3 +859,32 @@ La precisión contractual cambia de “muchos temas” a “ninguna lista cerrad
 El banco `test-v320-universal-100-domains.mjs` recorre literalmente las 100 áreas entregadas por el propietario y añade bioluminiscencia, una materia inventada y cualquier tema no listado. Cada frase debe superar dos barreras: no puede ser secuestrada por `voice-assistant.js` ni por `isLocalRoundQueryIntent()`. La primera ejecución reveló que `Estadística` coincidía con el historial de golf; V320 exige contexto adicional de ronda, tarjeta o resultados propios. Así, “Háblame de Estadística” llega a la IA y “Dame mis estadísticas de la ronda” continúa local.
 
 Archivos: `api/research.js`, `audit-project.mjs`, `index-grupal.html`, `service-worker.js`, `test-v320-universal-100-domains.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_A_DETALLE.md` y `ROADMAP_OVERALL.md`.
+
+## Corrección V321 · conversación prolongada, reapertura sana y recuperación
+
+Evidencia de producción del 25 de agosto de 2026: dos preguntas fueron contestadas; después de la segunda, el micrófono se cerró solo. Al reabrirlo, `/api/session-grupal` respondió HTTP 200 pero la siguiente frase no produjo una reacción útil. En el mismo período `/api/research` registró HTTP 502 con `This operation was aborted`. La revisión exacta del commit V320 encontró que `CONVERSATION_IDLE_CLOSE_MS=3000` era exigido incluso por una prueba automática, por lo que el fallo era arquitectura publicada y no una maniobra del usuario.
+
+V321 cambia el contrato de estado:
+
+- `setVoice(true)` abre escucha sostenida y arma únicamente 30 minutos de inactividad.
+- `speech_stopped` renueva ese plazo; `output_audio_buffer.stopped` vuelve a escuchar sin ventana de tres segundos.
+- `toggleVoice()` conserva una sesión Realtime cuando data channel, WebRTC y pista de audio siguen conectados; sólo reconstruye una sesión dañada o de otro contexto.
+- `setupTranscriptionWatchdog` y el watchdog existente de ronda liberan una transcripción perdida después de diez segundos y devuelven la interfaz a escucha.
+- `teardownRealtime()` limpia temporizadores e identificadores procesados para que una reconstrucción no herede bloqueos.
+- Un error Realtime recuperable conserva el micrófono; un error de transporte sí muestra una instrucción concreta para reabrir.
+- `api/research.js` usa 40 segundos de margen y responde HTTP 200 con `RESEARCH_TIMEOUT`, `RESEARCH_UPSTREAM_UNAVAILABLE` o respuesta vacía explicada. El cliente tiene un límite de 45 segundos y siempre entrega una salida al modelo.
+- Las instrucciones posteriores a herramientas distinguen `ok true` de `ok false`; prohíben silencio e invención y reanudan el diálogo.
+
+| Archivo nuevo o modificado | Control V321 |
+|---|---|
+| `index-grupal.html` | Firma V321, escucha 30 minutos, reapertura reutilizable, watchdog de Inicio, limpieza de sesión y recuperación sin silencio. |
+| `api/research.js` | Timeout recuperable y salida HTTP 200 utilizable por el siguiente turno. |
+| `service-worker.js` | `gscg-mobile-v321-sustained-conversation-recovery`, que retira la caché V320. |
+| `test-v321-sustained-caddie.mjs` | Simula 24 turnos, 30 minutos, reapertura sana, éxito web, fallo del proveedor y timeout. |
+| `test-v312-general-caddie.mjs` | Actualiza el contrato conversacional y conserva clima, interrupción, salud, score y recuperación. |
+| `test-v320-universal-100-domains.mjs` | Conserva 100 de 100 áreas más materias fuera de lista. |
+| `audit-project.mjs` | Inserta V321 en la auditoría maestra obligatoria. |
+| `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs` y `test-v307-match-arrows-format.mjs` | Reconocen la firma y caché V321 sin alterar sus funciones protegidas. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra la nueva prueba y el total activo V321. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella las fuentes y los tres PDF de inventario regenerados. |
+| `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` | Conservan causa, corrección y evidencia dentro del mismo cambio. |

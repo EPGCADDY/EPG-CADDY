@@ -11,7 +11,7 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/official-logos/golf-score-card-gt-apple-touch-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V320-UNBOUNDED-UNIVERSAL-DOMAINS-20260825">
+<meta name="gscg-build" content="V321-SUSTAINED-CONVERSATION-RECOVERY-20260825">
 <meta name="gscg-manual" content="V315-MANUAL-UNIVERSAL-WEB-BARGE-IN-20260825">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
@@ -877,14 +877,15 @@ const STABLEFORD_OFFICIAL_HOSTING_URL="/index-grupal.html?stableford_emergency=c
 let round=sfEmergency?(latestStoredRound("stableford")||blankRound()):demoControlManual?(readStoredRound(DEMO_CONTROL_MANUAL_KEY)||blankRound()):loadRound();
 let sfRestoredActive=!!(sfEmergency&&round.configured&&round.mode==="stableford");
 let draftPlayers=[],manualDraftRows=Array.from({length:6},()=>({name:"",handicap:"",tee:""})),draftTournament=null,draftCourse="pulte",draftRoundMode="general",rosterEditMode=false,rosterEditJoinHole=1,handicapRectificationMode=false,nameCorrectionMode=false,profileCorrectionMode=false,rosterAddMode=false;
-let setupSegmentOrder=[],setupSegmentText=new Map(),setupPendingItems=new Set(),setupFinalizeRequested=false,setupFinalizeTimer=null;
+let setupSegmentOrder=[],setupSegmentText=new Map(),setupPendingItems=new Set(),setupFinalizeRequested=false,setupFinalizeTimer=null,setupTranscriptionWatchdog=null;
 let setupLocked=false,setupSpeechActive=false,setupManualCommitPending=false;
 let roundSegmentOrder=[],roundSegmentText=new Map(),roundPendingItems=new Set(),roundFinalizeRequested=false,roundFinalizeTimer=null,roundTranscriptionWatchdog=null,roundSpeechActive=false,roundActiveSpeechItems=new Set();
 let roundLiveItemText=new Map(),roundLiveCommitted=new Map(),roundLiveOriginal=new Map(),roundLiveAnnounced=new Map(),roundLiveOperationalHole=new Map(),roundLiveClosureQueue=[],roundLiveStaging=false;
 let roundMissingPromptTimer=null,roundMissingPrompt=null,roundOperationalActivityAt=Date.now();
 const ROUND_TRANSCRIPTION_WATCHDOG_MS=10000;
 const ROUND_CONTINUOUS_FINALIZE_MS=3000;
-const CONVERSATION_IDLE_CLOSE_MS=3000;
+const CONVERSATION_INACTIVITY_CLOSE_MS=30*60*1000;
+const CLIENT_RESEARCH_TIMEOUT_MS=45*1000;
 const ROUND_MISSING_IDLE_MS=2000;
 const ROUND_MISSING_CONFIRM_MS=450;
 const ROUND_VAD_THRESHOLD=0.2;
@@ -1345,6 +1346,7 @@ function resetSetupCapture(){
   setupSegmentOrder=[];setupSegmentText=new Map();setupPendingItems=new Set();setupFinalizeRequested=false;
   setupLocked=false;setupSpeechActive=false;setupManualCommitPending=false;
   if(setupFinalizeTimer){clearTimeout(setupFinalizeTimer);setupFinalizeTimer=null}
+  if(setupTranscriptionWatchdog){clearTimeout(setupTranscriptionWatchdog);setupTranscriptionWatchdog=null}
 }
 function rememberSetupItem(itemId){
   const id=String(itemId||"").trim();if(!id)return "";
@@ -1968,7 +1970,7 @@ function conversationInstructions(completedTool=""){
     "En salud ofrece únicamente orientación general. No diagnostiques ni prescribas. Antes de sugerir un medicamento pregunta por edad, alergias, enfermedades, otros medicamentos y gravedad; ante síntomas de alarma recomienda atención médica urgente. En temas legales, financieros, fiscales, psicológicos, privacidad o seguridad explica límites, incertidumbre y riesgo sin fingir certeza profesional.",
     "Para medicina, vuelos, tráfico, noticias, política, precios, horarios u otra información que cambie o requiera verificación, usa search_live_web. Para el clima usa exclusivamente get_current_weather.",
     "La búsqueda web puede tardar un poco más que una respuesta de conocimiento general. Después de recibirla, responde con la información encontrada y no inventes lo que no aparezca.",
-    completedTool==="get_current_weather"?"Ya recibiste el resultado meteorológico solicitado. Explícalo con palabras naturales, menciona que es un pronóstico de Open-Meteo y no vuelvas a llamar herramientas.":completedTool==="search_live_web"?"Ya recibiste una investigación web actual. Sintetiza su respuesta con palabras naturales, menciona brevemente las fuentes por nombre si ayuda y no vuelvas a llamar herramientas.":"Usa herramientas solamente cuando aporten información actual o verificación; para conversación, consejo y conocimiento estable responde directamente."
+    completedTool==="get_current_weather"?"Ya recibiste el resultado meteorológico solicitado. Si contiene ok true, explícalo con palabras naturales y menciona que es un pronóstico de Open-Meteo. Si contiene ok false, informa brevemente que no pudiste consultar el pronóstico ahora y permite continuar; nunca guardes silencio. No vuelvas a llamar herramientas.":completedTool==="search_live_web"?"Ya recibiste el resultado de la investigación web. Si contiene ok true, sintetiza la respuesta con palabras naturales y menciona brevemente las fuentes por nombre si ayuda. Si contiene ok false, informa en una sola oración que no pudiste verificarlo en este momento y permite continuar; nunca guardes silencio ni inventes. No vuelvas a llamar herramientas.":"Usa herramientas solamente cuando aporten información actual o verificación; para conversación, consejo y conocimiento estable responde directamente."
   ].join(" ");
 }
 function realtimeWeatherTool(){return{
@@ -2039,12 +2041,14 @@ function renderCaddieSources(result){
 async function researchToolResult(argumentsText){
   let args={};try{args=JSON.parse(argumentsText||"{}")||{}}catch{}
   const query=String(args.query||authorizedSpeech?.text||"").trim();
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),CLIENT_RESEARCH_TIMEOUT_MS);
   try{
-    const response=await fetch(window.gscgApiUrl("/api/research"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({query})});
+    const response=await fetch(window.gscgApiUrl("/api/research"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({query}),signal:controller.signal});
     const result=await response.json().catch(()=>({ok:false,error:"RESEARCH_UNAVAILABLE"}));
     renderCaddieSources(result);
     return JSON.stringify(result);
-  }catch{return JSON.stringify({ok:false,error:"RESEARCH_UNAVAILABLE",message:"No se pudo consultar la web en este momento."})}
+  }catch(error){return JSON.stringify({ok:false,error:error?.name==="AbortError"?"RESEARCH_TIMEOUT":"RESEARCH_UNAVAILABLE",message:"No se pudo consultar la web en este momento. Puedes continuar con otra pregunta."})}
+  finally{clearTimeout(timeout)}
 }
 async function continueConversationAfterTool(call){
   if(!call?.call_id||processedConversationToolCalls.has(call.call_id))return;
@@ -3353,6 +3357,8 @@ async function configureSessionFor(context){
 
 function teardownRealtime(){
   clearOperationalMissingPrompt();
+  clearConversationIdleCloseTimer();
+  if(setupTranscriptionWatchdog){clearTimeout(setupTranscriptionWatchdog);setupTranscriptionWatchdog=null}
   realtimeGeneration++;
   try{if(dc){dc.onopen=null;dc.onclose=null;dc.onerror=null;dc.onmessage=null;dc.close()}}catch{}
   try{if(pc)pc.close()}catch{}
@@ -3363,6 +3369,7 @@ function teardownRealtime(){
   activeResponseId=null;speechPlaybackResponseId=null;stopMonitorActive=false;ignoreCancelErrorUntil=0;
   pendingVoiceSpeedRestore=false;conversationToolTransition=null;clearSpeechAuthorization();sessionHasSpoken=false;
   conversationOutputStarted=false;conversationOutputTranscript="";conversationEchoGuardUntil=0;conversationClearResponseId=null;resetConversationBargeInCandidate();
+  processedTranscriptItems.clear();processedConversationToolCalls.clear();
   if(pendingSessionUpdate){try{pendingSessionUpdate.reject(new Error("Realtime reiniciado"))}catch{}}
   pendingSessionUpdate=null;listening=false;phase="idle";
   $("headerMicWrap").classList.remove("active","connecting");
@@ -3453,6 +3460,7 @@ function setVoice(on){
     $("status").textContent=on?"● ESCUCHANDO…":round.configured?`Ronda activa · ${round.players.length} jugador${round.players.length===1?"":"es"}`:"";
     renderCourseWeather();
   }
+  if(on)scheduleConversationIdleClose();
 }
 function clearConversationIdleCloseTimer(){if(conversationIdleCloseTimer){clearTimeout(conversationIdleCloseTimer);conversationIdleCloseTimer=null}}
 function scheduleConversationIdleClose(){
@@ -3463,7 +3471,7 @@ function scheduleConversationIdleClose(){
     if(!listening||authorizedSpeech||stopMonitorActive||phase!=="listening"||setupSpeechActive||roundSpeechActive||setupPendingItems.size||roundPendingItems.size)return;
     setVoice(false);
     const target=conversationStatusTarget();if(target)target.textContent="MICRÓFONO CERRADO · TOCA PARA HABLAR";
-  },CONVERSATION_IDLE_CLOSE_MS);
+  },CONVERSATION_INACTIVITY_CLOSE_MS);
   return true;
 }
 function resumeConversationListening({autoClose=true}={}){
@@ -3507,8 +3515,6 @@ function handleRealtime(message){
       if(Date.now()<ignoreCancelErrorUntil&&/cancel|active response|response.*progress/i.test(msg)){console.debug("Cancelación por STOP:",msg);return}
       console.error("Realtime:",msg,e);
       if(pendingSessionUpdate&&(!e.event_id||e.event_id===pendingSessionUpdate.event_id))pendingSessionUpdate.reject(new Error(msg));
-      if(listening)setVoice(false);
-      if(micTrack)micTrack.enabled=false;
       stopMonitorActive=false;
       if(audioEl){audioEl.muted=true;audioEl.volume=0;}
       if(activeResponseId)cancelResponseSafe(activeResponseId);
@@ -3516,8 +3522,13 @@ function handleRealtime(message){
       speechPlaybackResponseId=null;
       conversationToolTransition=null;
       clearSpeechAuthorization();
-      phase="idle";
-      if(voiceContext==="setup")$("setupStatus").textContent="ERROR DE MICRÓFONO · INTENTA DE NUEVO";else $("status").textContent="ERROR";
+      if(listening&&realtimeReady()){
+        resumeConversationListening();
+        const target=conversationStatusTarget();if(target)target.textContent="NO PUDE COMPLETAR ESA RESPUESTA · PUEDES CONTINUAR";
+      }else{
+        if(listening)setVoice(false);if(micTrack)micTrack.enabled=false;phase="idle";
+        if(voiceContext==="setup")$("setupStatus").textContent="ERROR DE MICRÓFONO · TOCA PARA REABRIR";else $("status").textContent="ERROR DE MICRÓFONO · TOCA PARA REABRIR";
+      }
       return;
     }
     if((e.type==="output_audio_buffer.started"||e.type==="output_audio_buffer.audio_started")&&authorizedSpeech?.reason==="conversation")conversationOutputStarted=true;
@@ -3549,6 +3560,7 @@ function handleRealtime(message){
       $("status").textContent="● ESCUCHANDO…";
     }
     if(e.type==="input_audio_buffer.speech_stopped"){
+      if(listening)scheduleConversationIdleClose();
       if(voiceContext==="setup"&&(setupSpeechActive||setupLocked||setupFinalizeRequested||listening)){
         // Debe aceptarse incluso si OK ya apagó el micrófono y setVoice(false)
         // cambió phase a idle. El evento cierra el audio que ya estaba en curso.
@@ -3563,6 +3575,8 @@ function handleRealtime(message){
           phase="listening";
           $("setupStatus").classList.remove("listening");
           $("setupStatus").textContent="TRANSCRIBIENDO… · PUEDES CONTINUAR HABLANDO";
+          if(setupTranscriptionWatchdog)clearTimeout(setupTranscriptionWatchdog);
+          setupTranscriptionWatchdog=setTimeout(()=>{setupTranscriptionWatchdog=null;if(!setupPendingItems.size)return;resetSetupCapture();phase=listening?"listening":"idle";if(listening){$("setupMicWrap").classList.add("active");$("setupStatus").classList.add("listening");$("setupStatus").textContent="● ESCUCHANDO · HABLA CUANDO QUIERAS…"}},ROUND_TRANSCRIPTION_WATCHDOG_MS);
         }
       }else if(voiceContext==="round"&&(listening||phase==="listening")){
         noteRoundOperationalActivity();
@@ -3570,7 +3584,7 @@ function handleRealtime(message){
         phase="listening";
         $("status").textContent="TRANSCRIBIENDO…";
         if(roundTranscriptionWatchdog)clearTimeout(roundTranscriptionWatchdog);
-        roundTranscriptionWatchdog=setTimeout(()=>{roundTranscriptionWatchdog=null;if(!roundPendingItems.size)return;roundPendingItems.clear();if(roundTranscriptCombined())requestRoundFinalize(0,true);else{resetRoundCapture();phase=listening?"listening":"idle";$("status").textContent=listening?"● ESCUCHANDO…":roundIdleStatus()}},ROUND_TRANSCRIPTION_WATCHDOG_MS);
+        roundTranscriptionWatchdog=setTimeout(()=>{roundTranscriptionWatchdog=null;if(!roundPendingItems.size)return;roundPendingItems.clear();if(roundTranscriptCombined())requestRoundFinalize(0,true);else{resetRoundCapture();phase=listening?"listening":"idle";if(listening)$("headerMicWrap").classList.add("active");$("status").textContent=listening?"● ESCUCHANDO…":roundIdleStatus()}},ROUND_TRANSCRIPTION_WATCHDOG_MS);
       }
     }
     if(e.type==="conversation.item.input_audio_transcription.completed"&&stopMonitorActive&&!listening){
@@ -3605,6 +3619,7 @@ function handleRealtime(message){
       resetConversationBargeInCandidate();
     }
     if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="setup"){
+      if(setupTranscriptionWatchdog){clearTimeout(setupTranscriptionWatchdog);setupTranscriptionWatchdog=null}
       const key=e.item_id||e.event_id||String(Date.now());if(processedTranscriptItems.has(key))return;processedTranscriptItems.add(key);
       if(window.GSCVoiceAssistant?.parse?.(e.transcript||"")?.matched){
         resetSetupCapture();
@@ -3847,12 +3862,15 @@ async function toggleVoice(context){
   voiceActivationPromise=(async()=>{
     voiceContext=context;
     try{
-      // Cada nueva activación usa transporte Realtime fresco; evita reutilizar
-      // una sesión iOS aparentemente conectada que ya dejó de entregar audio.
-      teardownRealtime();
-      voiceContext=context;
-      setMicConnecting(context,true);
-      await ensureSession();
+      // Una reapertura inmediata reutiliza el transporte WebRTC si continúa sano.
+      // iPhone no pierde así una sesión que ya respondió correctamente; sólo se
+      // reconstruye cuando el canal, la pista o el contexto están dañados.
+      if(!realtimeReusableFor(context)){
+        teardownRealtime();
+        voiceContext=context;
+        setMicConnecting(context,true);
+        await ensureSession();
+      }
       if(context!==voiceContext)throw new Error("Contexto de micrófono cambió");
       if(context==="round")resetRoundCapture();
       if(context==="setup"&&activeResponseId){try{sendEvent({type:"response.cancel",response_id:activeResponseId})}catch{}activeResponseId=null}
