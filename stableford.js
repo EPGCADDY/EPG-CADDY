@@ -216,7 +216,7 @@
       const baseSetupSessionConfig=setupSessionConfig;
       setupSessionConfig=function(){
         const config=baseSetupSessionConfig();
-        if(overlay.classList.contains("visible")&&config?.audio?.input?.transcription)config.audio.input.transcription.prompt="Golf Guatemala. Registro Stableford Scratch. Transcribe literalmente posiciones y nombres en este formato: Jugador 1 Jaime; Jugador 2 Roberto; hasta Jugador 6. Conserva cada número de posición y cada nombre. No agregues handicap ni marcas porque la categoría los asigna automáticamente.";
+        if(overlay.classList.contains("visible")&&config?.audio?.input?.transcription)config.audio.input.transcription.prompt="Golf Guatemala. Registro Stableford Scratch. Transcribe literalmente posiciones y nombres en este formato: Jugador 1 Miguel; Jugador 2 y el nombre pronunciado; hasta Jugador 6. Conserva cada número de posición y cada nombre. No agregues handicap ni marcas porque la categoría los asigna automáticamente.";
         return config;
       };
       setupSessionConfig.__stablefordRegistrationPrompt=true;

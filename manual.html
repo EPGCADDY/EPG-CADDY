@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="MANUAL SCG">
+  <link rel="manifest" href="/manual.webmanifest">
+  <link rel="apple-touch-icon" href="/docs/manual/v311/manual-scg-escritorio-4k.png">
+  <title>Manual de Funciones · Golf Score Card GT</title>
+  <style>
+    :root{--green:#16ff00;--gold:#d4af37;--ink:#050505;--muted:#a7aca8}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:#090909;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .topbar{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;padding:10px max(14px,env(safe-area-inset-right)) 10px max(14px,env(safe-area-inset-left));border-bottom:1px solid #282828;background:rgba(0,0,0,.96);backdrop-filter:blur(14px)}
+    .brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none}
+    .brand img{width:58px;height:42px;border:1px solid #2c2c2c;border-radius:7px;object-fit:cover}
+    .brand strong{display:block;font-size:13px;letter-spacing:.4px}
+    .brand small{display:block;margin-top:2px;color:var(--green);font-size:10px;letter-spacing:.9px}
+    .page-status{text-align:center}
+    .page-status strong{display:block;color:var(--green);font-size:14px}
+    .page-status span{display:block;margin-top:3px;color:var(--muted);font-size:11px}
+    .actions{display:flex;gap:8px}
+    .actions a{display:inline-flex;min-height:38px;align-items:center;justify-content:center;padding:0 13px;border:1px solid #454545;border-radius:7px;color:#fff;font-size:11px;font-weight:900;text-decoration:none}
+    .actions a.primary{border-color:var(--green);background:var(--green);color:#000}
+    .intro{max-width:920px;margin:0 auto;padding:24px 16px 14px;text-align:center}
+    .intro h1{margin:0;color:#fff;font-size:clamp(22px,4vw,36px)}
+    .intro p{margin:9px 0 0;color:var(--muted);font-size:14px;line-height:1.5}
+    .manual-tools{max-width:920px;margin:4px auto 22px;padding:0 16px}
+    .manual-search,.category-index{border:1px solid #2d2d2d;border-radius:18px;background:linear-gradient(145deg,#121212,#080808);box-shadow:0 16px 42px rgba(0,0,0,.24)}
+    .manual-search{padding:18px}
+    .manual-search label,.category-index h2{display:block;margin:0 0 11px;color:#fff;font-size:12px;font-weight:900;letter-spacing:1.1px}
+    .manual-search label span{margin-right:7px;color:var(--green);font-size:20px;vertical-align:-2px}
+    .manual-search-row{display:grid;grid-template-columns:1fr auto;gap:8px}
+    .manual-search input{width:100%;min-height:50px;padding:0 16px;border:1px solid #474747;border-radius:13px;outline:0;background:#000;color:#fff;font:600 15px/1.2 Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .manual-search input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(22,255,0,.12)}
+    .manual-search-row button,.search-suggestions button{border:1px solid #424242;border-radius:11px;background:#151515;color:#fff;font-weight:800;cursor:pointer}
+    .manual-search-row button{padding:0 15px;font-size:10px;letter-spacing:.5px}
+    .search-suggestions{display:flex;gap:7px;margin-top:10px;overflow-x:auto;padding-bottom:2px}
+    .search-suggestions button{flex:0 0 auto;padding:9px 11px;color:#d8d8d8;font-size:10px;text-align:left}
+    .search-suggestions button:hover,.search-suggestions button:focus{border-color:var(--green);color:var(--green)}
+    .search-results{display:none;margin-top:13px;border-top:1px solid #292929;padding-top:8px}
+    .search-results.visible{display:block}
+    .search-results>p{margin:4px 2px 8px;color:var(--muted);font-size:11px;line-height:1.45}
+    .search-result{display:grid;grid-template-columns:72px 1fr;gap:11px;width:100%;padding:11px 4px;border:0;border-bottom:1px solid #252525;background:transparent;color:#fff;text-align:left;cursor:pointer}
+    .search-result:last-child{border-bottom:0}
+    .search-result strong{color:var(--green);font-size:10px;letter-spacing:.5px}
+    .search-result span{font-size:13px;font-weight:800;line-height:1.25}
+    .category-index{margin-top:14px;padding:18px}
+    .category-index h2{margin-bottom:4px}
+    .category-index>p{margin:0 0 13px;color:var(--muted);font-size:11px;line-height:1.45}
+    .category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .category-card{padding:13px;border:1px solid #292929;border-radius:13px;background:#0a0a0a}
+    .category-card h3{margin:0 0 8px;color:#fff;font-size:12px;letter-spacing:.45px}
+    .category-links{display:flex;flex-wrap:wrap;gap:6px}
+    .category-links button{min-width:35px;height:31px;padding:0 8px;border:1px solid #393939;border-radius:999px;background:#111;color:#dcdcdc;font-size:10px;font-weight:900;cursor:pointer}
+    .category-links button:hover,.category-links button:focus{border-color:var(--green);background:var(--green);color:#000}
+    .index{display:flex;max-width:920px;margin:0 auto 18px;padding:0 16px;gap:7px;overflow-x:auto;scrollbar-width:thin}
+    .index a{flex:0 0 auto;display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;border:1px solid #3b3b3b;border-radius:50%;color:#d8d8d8;font-size:11px;font-weight:900;text-decoration:none}
+    .index a.active{border-color:var(--green);background:var(--green);color:#000}
+    .manual{width:min(100%,800px);margin:0 auto;padding:0 16px 105px}
+    .manual-page{position:relative;margin:0 0 24px;scroll-margin-top:82px;border:1px solid #242424;border-radius:8px;background:#fff;box-shadow:0 12px 34px rgba(0,0,0,.32);overflow:hidden}
+    .manual-page img{display:block;width:100%;height:auto;background:#fff}
+    .manual-page .label{position:absolute;top:10px;right:10px;padding:5px 8px;border-radius:999px;background:rgba(0,0,0,.78);color:var(--green);font-size:10px;font-weight:900;letter-spacing:.5px}
+    .pager{position:fixed;right:0;bottom:0;left:0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:9px max(14px,env(safe-area-inset-right)) calc(9px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));border-top:1px solid #282828;background:rgba(0,0,0,.96);backdrop-filter:blur(14px)}
+    .pager button{min-height:44px;border:1px solid #474747;border-radius:8px;background:#0b0b0b;color:#fff;font-weight:900;cursor:pointer}
+    .pager button:last-child{border-color:var(--green);color:var(--green)}
+    .pager button:disabled{opacity:.32}
+    .pager strong{min-width:82px;text-align:center;color:#fff;font-size:12px}
+    @media(max-width:640px){
+      .topbar{grid-template-columns:1fr auto;gap:8px}
+      .brand img{width:48px;height:35px}
+      .page-status{grid-column:1/3;grid-row:2}
+      .actions a{min-height:35px;padding:0 9px;font-size:10px}
+      .actions a:not(.primary){display:none}
+      .intro{padding-top:18px}
+      .manual-tools{padding-right:8px;padding-left:8px}
+      .manual-search,.category-index{border-radius:14px;padding:14px}
+      .manual-search-row{grid-template-columns:1fr}
+      .manual-search-row button{min-height:38px}
+      .category-grid{grid-template-columns:1fr}
+      .manual{padding-right:7px;padding-left:7px}
+      .manual-page{margin-bottom:12px;border-radius:4px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/inicio" aria-label="Ir a Golf Score Card GT">
+      <img src="/assets/official-logos/golf-score-card-gt-official-master-1254.jpeg" alt="">
+      <span><strong>GOLF SCORE CARD GT</strong><small>MANUAL DE FUNCIONES</small></span>
+    </a>
+    <div class="page-status" aria-live="polite">
+      <strong id="pageTitle">PORTADA · MANUAL DE FUNCIONES Y APLICACIONES</strong>
+      <span>Portada + 72 páginas · versión vigente</span>
+    </div>
+    <nav class="actions" aria-label="Acciones del manual">
+      <a href="/inicio">ABRIR APP</a>
+      <a class="primary" href="/docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf" download>PDF</a>
+    </nav>
+  </header>
+
+  <section class="intro">
+    <h1>Manual de Funciones y Aplicaciones</h1>
+    <p>Uso de la aplicación, Match Play, Four Ball e información de campos.</p>
+  </section>
+
+  <section class="manual-tools" aria-label="Índice y buscador del manual">
+    <div class="manual-search">
+      <label for="manualSearch"><span aria-hidden="true">⌕</span>BUSCAR UNA FUNCIÓN, PANTALLA O DUDA</label>
+      <div class="manual-search-row">
+        <input id="manualSearch" type="search" autocomplete="off" spellcheck="true" placeholder="Ejemplo: ¿Cómo corrijo un bogey que fue par?">
+        <button type="button" id="clearManualSearch">LIMPIAR</button>
+      </div>
+      <div class="search-suggestions" aria-label="Ejemplos de búsqueda">
+        <button type="button">Quiero jugar Stableford</button>
+        <button type="button">Cómo corrijo un bogey que fue par</button>
+        <button type="button">Cómo pregunto el acumulado</button>
+        <button type="button">No puedo finalizar la ronda</button>
+      </div>
+      <div class="search-results" id="manualSearchResults" aria-live="polite"></div>
+    </div>
+    <div class="category-index">
+      <h2>ÍNDICE RÁPIDO</h2>
+      <p>Toca un número para ir directamente a esa explicación. La lupa también acepta preguntas completas.</p>
+      <div class="category-grid" id="categoryIndex"></div>
+    </div>
+  </section>
+
+  <nav class="index" id="pageIndex" aria-label="Índice por página"></nav>
+  <main class="manual" id="manual"></main>
+
+  <footer class="pager">
+    <button type="button" id="previousPage">← ANTERIOR</button>
+    <strong id="pageCounter">PORTADA</strong>
+    <button type="button" id="nextPage">SIGUIENTE →</button>
+  </footer>
+
+  <script src="/manual-search.js"></script>
+  <script>
+    const pages=[
+      {number:"00",label:"PORTADA",title:"MANUAL DE FUNCIONES Y APLICACIONES"},
+      {number:"01",label:"01",title:"CONFIGURA LA RONDA"},{number:"02",label:"02",title:"REGISTRA JUGADORES"},
+      {number:"03",label:"03",title:"CONFIRMA LA RONDA"},{number:"04",label:"04",title:"CONFIGURA STABLEFORD"},
+      {number:"05",label:"05",title:"SCORE CARD - PRÁCTICA"},{number:"06",label:"06",title:"RONDA GENERAL"},
+      {number:"07",label:"07",title:"CONTROL MANUAL"},{number:"08",label:"08",title:"MATCH PLAY"},
+      {number:"09",label:"09",title:"FOUR BALL"},{number:"10",label:"10",title:"EL PULTÉ GOLF"},
+      {number:"11",label:"11",title:"GUATEMALA COUNTRY CLUB"},{number:"12",label:"12",title:"SAN ISIDRO"},
+      {number:"13",label:"13",title:"MAYAN GOLF"},{number:"14",label:"14",title:"HACIENDA NUEVA COUNTRY CLUB"},
+      {number:"15",label:"15",title:"ALTA VISTA GOLF & TENNIS CLUB"},{number:"16",label:"16",title:"LA REUNIÓN GOLF RESORT"}
+    ];
+    const extraTitles=[
+      "ELIGE CÓMO REGISTRAR","DICTA LOS GOLPES","CORRIGE SIN PERDER DATOS","LEE GROSS, NETO Y RESULTADO",
+      "PREGUNTA POR LA RONDA","CONTROLA LA RONDA","MIRA LA RONDA PREVIA","DIFERENCIA LOS BOTONES",
+      "REGRESA A LOS DATOS","REVISA ANTES DE FINALIZAR","FINALIZA LA RONDA","GUARDA IMAGEN O PDF",
+      "CORRIGE UNA RONDA CERRADA","USA EL HISTORIAL","CONSULTA ESTADÍSTICAS","GUARDA UN RESULTADO",
+      "RESPALDA Y RECUPERA","PON LA APP EN TU TELÉFONO","COMPRUEBA ANTES DE ACTUAR","FALTA CAMPO O MODALIDAD",
+      "LA VOZ NO ENTENDIÓ","RECUPERA EL DICTADO","REVISA EL CONTROL MANUAL","COMPLETA EL BLOQUE ACTIVO",
+      "VUELVE A RONDA ACTUAL","BUSCA EL DATO PENDIENTE","RECUPERA EL ARCHIVO","COMPRUEBA EL CIERRE OFICIAL",
+      "AMPLÍA LA CONSULTA","PROTEGE LA RONDA LOCAL","ACTUALIZA SIN PERDER LA RONDA","REVISA CADA MATCH",
+      "COMPLETA LA PAREJA","NO PIERDAS TU TRABAJO",
+      "DICTA NOMBRE, HANDICAP Y MARCAS","CORRIGE, AGREGA O ELIMINA","DI NÚMEROS Y MARCAS VÁLIDAS",
+      "DICTA ÚNICAMENTE LOS NOMBRES","COMPLETA EL PERFIL CUANDO QUIERAS","DICTA UN SCORE DEL HOYO ACTIVO",
+      "DICTA VARIOS DATOS CON ORDEN","DICTA EL SCORE POR NÚMERO O PALABRA","MARCA X SÓLO CUANDO CORRESPONDA",
+      "PIDE UN SCORE GUARDADO","CONSULTA CÓMO VA LA RONDA","INDICA VUELTA, HOYO O TRAMO",
+      "PREGUNTA QUIÉN VA MEJOR","CUENTA LOGROS Y DATOS PENDIENTES","PREGUNTA POR RONDAS ANTERIORES",
+      "HAZ UNA CONSULTA PRECISA","ANOTA GROSS Y LEE EL MATCH","ANOTA A CADA JUGADOR DE LA PAREJA",
+      "CAMBIA DE PANTALLA SIN TOCAR","RECUPÉRATE SIN PERDER DATOS","ENCUENTRA QUÉ PUEDES DECIR",
+      "ENTIENDE CADA RESPUESTA HABLADA"
+    ];
+    extraTitles.forEach((title,index)=>{
+      const number=String(index+17).padStart(2,"0");
+      pages.push({number,label:number,title});
+    });
+    const categories=[
+      {title:"EMPEZAR Y REGISTRAR",pages:[1,2,3,17,36,51,52,53]},
+      {title:"MODALIDADES",pages:[4,5,8,9,48,49,54,55,67,68]},
+      {title:"ANOTAR Y CORREGIR",pages:[6,7,18,19,20,37,38,39,40,56,57,58,59]},
+      {title:"PREGUNTAR Y ESCUCHAR",pages:[21,60,61,62,63,64,65,66,69,70,71,72]},
+      {title:"FINALIZAR, GUARDAR Y RECUPERAR",pages:[22,23,24,25,26,27,28,29,30,31,32,33,34,41,42,43,44,45,46,47,50]},
+      {title:"INFORMACIÓN DE CAMPOS",pages:[10,11,12,13,14,15,16]}
+    ];
+    const baseSearchTags={
+      "01":"campo modalidad ronda normal stableford práctica match play four ball torneo empezar jugar",
+      "02":"registro jugadores nombre handicap hdcp marcas tees voz manual agregar corregir",
+      "03":"confirmar fecha campo torneo jugadores atrás iniciar ronda",
+      "04":"stableford categoría nombres registro puntos",
+      "05":"práctica perfil opcional gross neto borrar scores",
+      "06":"ronda general timer micrófono gross neto resultado tarjeta digital",
+      "07":"control manual corregir borrar cambiar score bogey par hoyo enter gross x",
+      "08":"match play arriba abajo empatado even uno o dos matches",
+      "09":"four ball parejas mejor bola handicap gross neto",
+      "10":"el pulté información campo yardas slope rating scorecard",
+      "11":"guatemala country club información campo yardas slope rating scorecard",
+      "12":"san isidro información campo yardas slope rating scorecard",
+      "13":"mayan golf información campo yardas slope rating scorecard",
+      "14":"hacienda nueva información campo yardas slope rating scorecard",
+      "15":"alta vista información campo yardas slope rating scorecard",
+      "16":"la reunión información campo en reconstrucción"
+    };
+    const manual=document.getElementById("manual");
+    const pageIndex=document.getElementById("pageIndex");
+    let current=0;
+    const pageId=value=>`pagina-${String(value).padStart(2,"0")}`;
+    pages.forEach((item,index)=>{
+      pageIndex.insertAdjacentHTML("beforeend",`<a href="#${pageId(index)}" data-index="${index}" aria-label="${item.label}: ${item.title}">${item.number}</a>`);
+      manual.insertAdjacentHTML("beforeend",`<section class="manual-page" id="${pageId(index)}" data-page="${index}" aria-label="${item.label}: ${item.title}"><span class="label">${item.label}</span><img src="/docs/manual/v311/page-${item.number}.png" alt="${item.label} del manual: ${item.title}" ${index===0?'fetchpriority="high"':'loading="lazy"'}></section>`);
+    });
+    const sections=[...document.querySelectorAll(".manual-page")];
+    const indexLinks=[...document.querySelectorAll("#pageIndex a")];
+    const title=document.getElementById("pageTitle");
+    const counter=document.getElementById("pageCounter");
+    const previous=document.getElementById("previousPage");
+    const next=document.getElementById("nextPage");
+    function setCurrent(page){
+      current=Math.max(0,Math.min(pages.length-1,page));
+      const item=pages[current];
+      title.textContent=current===0?`PORTADA · ${item.title}`:`PÁGINA ${item.number} · ${item.title}`;
+      counter.textContent=current===0?"PORTADA":`${item.number} / 72`;
+      previous.disabled=current===0;
+      next.disabled=current===pages.length-1;
+      indexLinks.forEach(link=>link.classList.toggle("active",Number(link.dataset.index)===current));
+      indexLinks[current-1]?.scrollIntoView({block:"nearest",inline:"center"});
+    }
+    function go(page){document.getElementById(pageId(page))?.scrollIntoView({behavior:"smooth",block:"start"});}
+    const categoryIndex=document.getElementById("categoryIndex");
+    for(const category of categories){
+      const card=document.createElement("section");
+      card.className="category-card";
+      const heading=document.createElement("h3");
+      heading.textContent=category.title;
+      const links=document.createElement("div");
+      links.className="category-links";
+      for(const page of category.pages){
+        const button=document.createElement("button");
+        button.type="button";
+        button.textContent=String(page).padStart(2,"0");
+        button.title=pages[page].title;
+        button.setAttribute("aria-label",`Página ${String(page).padStart(2,"0")}: ${pages[page].title}`);
+        button.addEventListener("click",()=>go(page));
+        links.append(button);
+      }
+      card.append(heading,links);
+      categoryIndex.append(card);
+    }
+    const searchInput=document.getElementById("manualSearch");
+    const searchResults=document.getElementById("manualSearchResults");
+    const searchEntries=pages.map(item=>({...item,searchText:baseSearchTags[item.number]||""}));
+    function renderSearch(query){
+      const results=window.GSCManualSearch?.search(query,searchEntries,{limit:8})||[];
+      searchResults.replaceChildren();
+      if(!query.trim()){
+        searchResults.classList.remove("visible");
+        return;
+      }
+      searchResults.classList.add("visible");
+      const message=document.createElement("p");
+      message.textContent=results.length?`${results.length} explicaciones relacionadas. Toca la que necesitas.`:"No encontré una coincidencia directa. Prueba con la pantalla, acción o dato que necesitas.";
+      searchResults.append(message);
+      for(const result of results){
+        const button=document.createElement("button");
+        button.type="button";
+        button.className="search-result";
+        const number=document.createElement("strong");
+        number.textContent=`PÁGINA ${result.number}`;
+        const resultTitle=document.createElement("span");
+        resultTitle.textContent=result.title;
+        button.append(number,resultTitle);
+        button.addEventListener("click",()=>{go(Number(result.number));searchResults.classList.remove("visible");});
+        searchResults.append(button);
+      }
+    }
+    let searchTimer;
+    searchInput.addEventListener("input",()=>{
+      clearTimeout(searchTimer);
+      searchTimer=setTimeout(()=>renderSearch(searchInput.value),90);
+    });
+    document.getElementById("clearManualSearch").addEventListener("click",()=>{
+      searchInput.value="";
+      renderSearch("");
+      searchInput.focus();
+    });
+    document.querySelectorAll(".search-suggestions button").forEach(button=>button.addEventListener("click",()=>{
+      searchInput.value=button.textContent;
+      renderSearch(searchInput.value);
+      searchInput.focus();
+    }));
+    fetch("/docs/manual/v311/manual-pages-17-35.json",{cache:"no-store"}).then(response=>response.ok?response.json():[]).then(details=>{
+      for(const detail of details){
+        const entry=searchEntries.find(item=>item.number===detail.number);
+        if(entry)entry.searchText=JSON.stringify(detail);
+      }
+      if(searchInput.value.trim())renderSearch(searchInput.value);
+    }).catch(()=>{});
+    previous.addEventListener("click",()=>go(current-1));
+    next.addEventListener("click",()=>go(current+1));
+    const observer=new IntersectionObserver(entries=>{
+      const visible=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if(visible)setCurrent(Number(visible.target.dataset.page));
+    },{rootMargin:"-18% 0px -54% 0px",threshold:[0,.1,.3,.6]});
+    sections.forEach(section=>observer.observe(section));
+    setCurrent(0);
+  </script>
+</body>
+</html>

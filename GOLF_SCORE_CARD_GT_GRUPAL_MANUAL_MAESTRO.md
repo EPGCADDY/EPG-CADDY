@@ -4,11 +4,11 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V307
+**Versión documentada:** V311
 **Fecha de corte:** 24 de agosto de 2026
-**Ramas operativas:** `main` (Producción vigente) y `v307-match-arrows-format` (candidata)
+**Ramas operativas:** `main` (Producción vigente) y `v311-match-play-neutral-label` (candidata)
 **Aplicación:** `index-grupal.html`  
-**Responsable de producto:** Jaime  
+**Responsable de producto:** Dirección de producto
 **Responsable de implementación y control:** Partner / ChatGPT
 
 ---
@@ -168,6 +168,14 @@ Reglas:
 - encabezados y datos permanecen centrados;
 - el punto de cada tee se alinea verticalmente;
 - el fondo blanco de las yardas negras no desplaza el punto ni rompe la línea visual.
+
+### 6.2.1 Norma editorial obligatoria del manual
+
+- Todas las páginas del manual, hojas de campos, inventarios visuales e imágenes de revisión conservan una sola línea tipo iPhone: tipografía limpia, texto negro sobre blanco, jerarquía precisa, márgenes seguros, espaciado uniforme, acentos mínimos y equilibrio vertical.
+- El archivo maestro de cada página vertical es obligatoriamente 4K: `2160 × 4320 px` con metadatos mínimos de `300 dpi`. Quedan prohibidas como entrega final las imágenes reducidas, borrosas, recortadas, estiradas o con contenido pegado a un borde.
+- El verde se limita a acentos controlados sobre fondo oscuro; no se usa como texto editorial corriente sobre blanco.
+- `scripts/manual-visual-qc.py` valida automáticamente resolución, densidad, márgenes, recortes, predominio negro/gris y equilibrio vertical. Un solo resultado `FAIL` impide aprobar o publicar el manual.
+- La hoja de La Reunión Golf Resort permanece únicamente como plantilla vacía durante la reconstrucción total del campo. No contiene PAR, HCP, marcas, yardajes, Rating, Slope ni totales hasta que exista una fuente oficial nueva y validada.
 
 ### 6.3 Micrófono
 
@@ -347,8 +355,8 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 ### 8.6.1 Registro oficial vigente V262
 
 - El registro ofrece exactamente dos vías: `1 · DICTADO` y `2 · MANUAL OPCIONAL`.
-- En Dictado General se toca el micrófono y se pronuncia directamente `NOMBRE + HDCP + MARCAS`, por ejemplo `JAIME 14 BLANCAS; ROBERTO 21 AZULES`; decir `JUGADOR 1` es opcional.
-- En Dictado Stableford la posición sí es obligatoria: `JUGADOR 1 JAIME; JUGADOR 2 ROBERTO`. Su guía visible dice únicamente `1-# JUGADOR`, `2-NOMBRE`, `HASTA 6 JUGADORES` y `3-OK`; no pide HDCP ni marcas porque la categoría los configura automáticamente.
+- En Dictado General se toca el micrófono y se pronuncia directamente `NOMBRE + HDCP + MARCAS`, por ejemplo `MIGUEL 14 BLANCAS`; decir `JUGADOR 1` es opcional.
+- En Dictado Stableford la posición sí es obligatoria: `JUGADOR 1 MIGUEL`; para los siguientes se conserva `JUGADOR # + NOMBRE`. Su guía visible dice únicamente `1-# JUGADOR`, `2-NOMBRE`, `HASTA 6 JUGADORES` y `3-OK`; no pide HDCP ni marcas porque la categoría los configura automáticamente.
 - En Manual Opcional, cada fila contiene únicamente `NOMBRE + HDCP + MARCAS`; las marcas se eligen en el selector de color.
 - Se permiten de uno a seis jugadores.
 - Si un jugador fue omitido y todavía hay menos de seis, el botón pequeño `+ JUGADOR` abre directamente la ronda activa en modo de incorporación y conserva los scores ya registrados. El botón `ATRÁS` de una tarjeta Stableford vuelve en un solo toque a la pantalla principal completa —campos, modalidades, torneo y registro—, conserva la ronda activa y elimina la ruta especial del URL; no abre primero el editor Stableford ni obliga a recorrer pantallas intermedias.
@@ -654,7 +662,9 @@ Consultas disponibles o previstas para:
 - La franja del reloj se distribuye en tres zonas independientes: `INICIO` a la izquierda, el botón rojo `TIMER ON` / `TIMER OFF` en el centro y el cronómetro `RONDA HH:MM:SS` a la derecha.
 - La superficie táctil ampliada pertenece exclusivamente al botón rojo central; no existe ninguna capa invisible sobre el micrófono, la información del campo ni la cuadrícula.
 - El botón central congela o reanuda el tiempo de la ronda y conserva el estado en la copia primaria, el respaldo y el archivo local.
-- El botón es idempotente: una vez detenido muestra el tiempo final y no puede volver a modificarlo.
+- Todos los TIMER de General, Stableford, Match Play, Four Ball y Práctica se ponen automáticamente en `TIMER OFF` después de 30 minutos completos sin una instrucción válida.
+- Un score, una consulta reconocida o el uso de un control válido reinicia el plazo de 30 minutos; ruido o frases no reconocidas no lo reinician.
+- El apagado automático conserva jugadores, scores, campo, modalidad y ronda; el usuario puede reanudar el TIMER manualmente sin sumar la pausa.
 - En una ronda completa heredada cuyo reloj siguió corriendo, el primer toque recupera como final la hora del último score registrado; en una ronda todavía incompleta usa la hora exacta del toque.
 - Una flecha verde fija en la esquina inferior izquierda, con el texto inferior `REGRESAR A DATOS`, regresa al Registro de ronda sin borrar ni sustituir la ronda activa; sólo `INICIAR RONDA` confirmado crea una ronda nueva.
 - La tarjeta digital puede abrirse como consulta durante una ronda incompleta.
@@ -1208,7 +1218,7 @@ Antes de publicar al mercado:
 - cierre de dictado independiente del estado transitorio `listening`, watchdog de diez segundos para transcripciones pendientes y protección de los estados `ESCUCHANDO`, `TRANSCRIBIENDO` y `PROCESANDO`;
 - navegación hablada desde la ronda hacia el registro;
 - silencio ante frases sin intención reconocida, sin inventar datos ni alterar scores.
-- interruptor rojo persistente `TIMER ON` / `TIMER OFF` para detener y reanudar el cronómetro sin contar la pausa;
+- interruptor rojo persistente `TIMER ON` / `TIMER OFF` para detener y reanudar el cronómetro sin contar la pausa, con apagado automático común a todas las modalidades tras 30 minutos sin instrucciones;
 - zona táctil real de 44 px de alto limitada al botón TIMER central, sin interceptores globales y completamente separada del micrófono y la cuadrícula;
 - cuadrícula de tarjeta y resultados bloqueada contra selección azul, arrastre y menú contextual de Safari;
 - flecha inferior izquierda siempre visible para regresar al Registro de ronda.
@@ -1242,9 +1252,9 @@ La primera pantalla incorpora el acceso **SCORE CARD SIN REGISTRO** dentro de `S
 
 - La flecha de acceso activa por sí sola el modo `RONDA SIN REGISTRO`; el usuario no debe marcar ninguna opción adicional.
 - La cuadrícula abre seis perfiles opcionales. En cada uno puede dejar todo vacío o completar sólo nombre, sólo HDCP, sólo marcas, cualquier combinación parcial o los tres datos.
-- Los datos omitidos pueden completarse durante la ronda sin reiniciar ni perder scores: manualmente en las casillas de la propia tarjeta o por micrófono indicando la posición, por ejemplo `JUGADOR 2 CARLOS 14 BLANCAS`, `JUGADOR 2 HANDICAP 14` o `JUGADOR 2 MARCAS BLANCAS`.
+- Los datos omitidos pueden completarse durante la ronda sin reiniciar ni perder scores: manualmente en las casillas de la propia tarjeta o por micrófono indicando la posición, por ejemplo `JUGADOR 2 MIGUEL 14 BLANCAS`, `JUGADOR 2 HANDICAP 14` o `JUGADOR 2 MARCAS BLANCAS`.
 - Sin marcas, los yardajes permanecen vacíos. Con marcas, aparecen sus yardajes. Con HDCP y marcas válidos, aparecen también HDCP, Neto y `+/-` para ese jugador.
-- El dictado de scores acepta hoyo y resultado para el primer espacio, por ejemplo: `HOYO 1 PAR`, y también jugador o nombre, hoyo y resultado, por ejemplo: `JUGADOR 3 HOYO 5 BOGEY` o `CARLOS HOYO 9 PAR`.
+- El dictado de scores acepta hoyo y resultado para el primer espacio, por ejemplo: `HOYO 1 PAR`, y también jugador o nombre, hoyo y resultado, por ejemplo: `JUGADOR 3 HOYO 5 BOGEY` o `MIGUEL HOYO 9 PAR`.
 - No exige orden consecutivo ni completar 18 hoyos; las casillas no jugadas permanecen vacías y nunca se convierten en `X`.
 - Los resultados calculan automáticamente `GROSS OUT`, `GROSS IN` y `GROSS TOTAL`; el total no se escribe manualmente.
 - Se identifica permanentemente como `RONDA SIN REGISTRO · DATOS OPCIONALES · NO GENERA RÉCORD NI ENVÍOS`.
@@ -1267,7 +1277,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 - `S. SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
 - En una nueva ronda no queda categoría impuesta. El registro muestra simultáneamente `SENIOR · BLANCAS` y `SÚPER SENIOR · AMARILLAS`; la selección configura automáticamente las marcas, los yardajes, Course Rating y Slope correspondientes al campo elegido.
 - El registro muestra los cuatro campos autorizados —Country Club, El Pulté, San Isidro y Mayan Golf— y exige seleccionar uno antes de iniciar.
-- En ambas categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. El dictado debe conservar la posición: `JUGADOR 1 JAIME; JUGADOR 2 ROBERTO`; los nombres solos sin posición no se aceptan en esta pantalla. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
+- En ambas categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. El dictado debe conservar la posición: `JUGADOR 1 MIGUEL`; para los siguientes se usa `JUGADOR # + NOMBRE`. Los nombres solos sin posición no se aceptan en esta pantalla. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
 - El mismo panel permite escribir el nombre del torneo antes de iniciar scores. `REGRESAR A DATOS` abre los datos de la ronda actual sin borrar sus scores; `NUEVA RONDA` sí abre un registro completamente limpio.
 - Los únicos campos admitidos por la serie son Country Club, El Pulté, San Isidro y Mayan Golf. Un campo sin tarjeta oficial cargada permanece bloqueado para evitar cálculos con datos heredados o inventados.
 - Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales `OUT`, `IN` y `TOTAL`.
@@ -1317,7 +1327,7 @@ La modalidad se identifica en todas las pantallas únicamente como **FOUR BALL**
 | 2026-08-25 | Manual 3.62 / App V309 | Implementación funcional de `FOUR BALL · 2 PAREJAS` para exactamente cuatro jugadores. Pareja Verde ocupa posiciones 1–2 y Pareja Oro 3–4. Cada jugador registra Gross; el motor General calcula su Neto y el módulo Four Ball compara el mejor Neto de cada pareja. La tarjeta identifica la mejor bola, conserva acumulativamente `EVEN`, `+N` o `−N` durante hoyos empatados, cierra anticipadamente, permite corrección oficial y genera Historial, Global y cuatro personales. |
 | 2026-08-24 | Manual 3.60 / App V306 | Integración funcional de `MATCH PLAY · CON HDCP` como copia de la Ronda Normal para exactamente dos jugadores. Conserva registro, Gross, golpes de HDCP, Neto, captura manual y por voz; únicamente añade el rubro MATCH calculado por Neto: flecha verde al ganador, flecha roja al perdedor y ningún símbolo en el empate. Muestra el estado permanente `AS` o `N UP` y reconoce el cierre anticipado oficial, por ejemplo `3 & 2`. |
 | 2026-08-25 | Manual 3.61 / App V307 | Sustituye los glifos delgados de Match Play por flechas SVG de trazo 4.5, tallo largo y punta amplia para distinguir sin ambigüedad ganador y perdedor en iPhone. El campo de modalidad muestra únicamente `MATCH PLAY`; Gross, HDCP y Neto por hoyo permanecen intactos. Los resultados escritos de OUT, IN y total muestran `NOMBRE · X UP`, `NOMBRE · X DOWN` o `NOMBRE · AS`, nunca una suma Neto. Si la ventaja supera los hoyos restantes, se muestra y anuncia `FIN DEL MATCH` con el resultado; quedan bloqueados los hoyos posteriores y siguen editables los anteriores. |
-| 2026-08-24 | Manual 3.59 / App V305 | Auditoría integral de navegación, vocabulario y registros hermanos desde la base V304. Todas las entradas visibles del archivo de tarjetas usan `HISTORIAL` y su pantalla se titula `HISTORIAL DE TARJETAS`. Las pantallas con retorno muestran `ATRÁS` en una posición superior, homogénea y protegida contra superposición. El acceso opcional de cuenta pasa a llamarse `REGÍSTRATE`, queda dentro del flujo de Ronda, Registro General y Registro Stableford y deja de ser un flotante azul. Stableford ya no muestra el aviso huérfano `SELECCIONA EL CAMPO` debajo de los jugadores, pero conserva esa validación interna. Los OK General y Stableford comparten dimensiones, tipografía, color y estados equivalentes; ambos quedan deshabilitados cuando el registro está incompleto. Las guías dicen exactamente lo que reconoce cada analizador: General acepta `JAIME 14 BLANCAS`, con posición opcional, y Stableford exige `JUGADOR 1 JAIME`; su guía visible se limita a número de jugador, nombre, máximo seis y OK, sin pedir HDCP ni marcas. Los filtros V304/V305 bloquean regresiones gráficas, operativas, de vocabulario, retornos, superposición, versiones y caché. |
+| 2026-08-24 | Manual 3.59 / App V305 | Auditoría integral de navegación, vocabulario y registros hermanos desde la base V304. Todas las entradas visibles del archivo de tarjetas usan `HISTORIAL` y su pantalla se titula `HISTORIAL DE TARJETAS`. Las pantallas con retorno muestran `ATRÁS` en una posición superior, homogénea y protegida contra superposición. El acceso opcional de cuenta pasa a llamarse `REGÍSTRATE`, queda dentro del flujo de Ronda, Registro General y Registro Stableford y deja de ser un flotante azul. Stableford ya no muestra el aviso huérfano `SELECCIONA EL CAMPO` debajo de los jugadores, pero conserva esa validación interna. Los OK General y Stableford comparten dimensiones, tipografía, color y estados equivalentes; ambos quedan deshabilitados cuando el registro está incompleto. Las guías dicen exactamente lo que reconoce cada analizador: General acepta `MIGUEL 14 BLANCAS`, con posición opcional, y Stableford exige `JUGADOR 1 MIGUEL`; su guía visible se limita a número de jugador, nombre, máximo seis y OK, sin pedir HDCP ni marcas. Los filtros V304/V305 bloquean regresiones gráficas, operativas, de vocabulario, retornos, superposición, versiones y caché. |
 | 2026-08-23 | Manual 3.58 / App V288 | Corregida la navegación física demostrada en V287: desde la tarjeta Stableford, `ATRÁS` abre directamente y en un solo toque la pantalla principal completa. La transición persiste la ronda activa, elimina del URL la ruta especial Stableford y no pasa por `RONDA STABLEFORD` como pantalla intermedia. `+ JUGADOR` conserva su función independiente de editar o incorporar participantes sin borrar scores. La prueba V288 bloquea la conexión correcta del botón, la restauración de campos/modalidades/registro, la conservación de la ronda y la ausencia del vínculo anterior al editor Stableford. |
 | 2026-08-23 | Manual 3.57 / App V280 | El historial incorpora una pantalla escrita de `ESTADÍSTICAS DEL HISTORIAL` que consulta exclusivamente las rondas guardadas en el dispositivo y no habla automáticamente. Acepta periodos, jugador, campo, torneo, modalidad, vuelta u hoyo; entrega promedios Gross/Neto, mejor/peor, consistencia, tendencia, categorías de score, comparación entre jugadores y puntos Stableford. Las opciones rápidas ejecutan el mismo motor de consultas ya utilizado por voz y los resultados no modifican rondas ni tarjetas. La consulta multi-dispositivo continúa pendiente de la sincronización central autenticada. |
 | 2026-08-23 | Manual 3.56 / App V279 | Incorporado `HISTORIAL DE TARJETAS` en la ronda, el Registro General y el Registro Stableford. Conserva únicamente rondas con snapshot oficial y permite filtrar por modalidad y campo, además de buscar por jugador, torneo o fecha. Abrir el historial no restaura, reemplaza ni modifica la ronda actual. Desde la ronda histórica seleccionada se puede abrir la Global o una personal, generar su imagen PNG, descargar su PDF o descargar el PDF conjunto. El historial permanece privado en el almacenamiento del dispositivo hasta que la sincronización central autenticada quede habilitada. |
@@ -1390,7 +1400,7 @@ Toda interpretación temporal usa `America/Guatemala`. Cada respuesta debe conse
 | 2026-08-19 | Manual 2.4 / App V153 | Aprobada la arquitectura integral de jugadores, consentimiento revocable, cierre oficial, Tarjeta Global, tarjetas personales ampliadas, guardar/compartir/descargar, entregas idempotentes, correcciones versionadas e inteligencia hablada y escrita. Cambio exclusivamente documental; estas capacidades permanecen clasificadas como planificadas hasta su implementación y prueba. |
 | 2026-08-19 | Manual 2.3 / App V153 | Eliminado el texto `NUEVA RONDA` sobre la fecha del registro; definido y blindado el flujo final de tarjeta visual y entrega por WhatsApp sin prometer automatización inexistente. |
 | 2026-08-19 | Manual 2.2 / App V152 | Fila vacía trasladada a su ubicación exacta dentro de Jessie: entre YDS y HDCP; rowspan del primer jugador ampliado a seis filas. |
-| 2026-08-19 | Manual 2.1 / App V151 | Fila separadora estructural visible antes de Jessie; espacios libres elevados de 7.5% a 12.5%; borde superior continuo restaurado en YDS de Jaime. |
+| 2026-08-19 | Manual 2.1 / App V151 | Fila separadora estructural visible entre grupos; espacios libres elevados de 7.5% a 12.5%; borde superior continuo restaurado en YDS del primer jugador. |
 | 2026-08-19 | Manual 2.0 / App V150 | Uniformidad absoluta del bloque superior del registro: una familia, tamaño, peso, interlineado y espaciado para todos sus textos y campos. |
 | 2026-08-19 | Manual 1.9 / App V149 | Sistema tipográfico cerrado para el registro: una familia, cinco funciones editoriales coherentes, pesos e interlineados homologados y controles nativos normalizados. |
 | 2026-08-19 | Manual 1.8 / App V148 | Fila separadora única, vacía y tenue entre PAR general y YDS del primer jugador; cuadrícula completa con intensidad de espacio desocupado. |

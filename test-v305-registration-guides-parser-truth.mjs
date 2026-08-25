@@ -36,12 +36,12 @@ assert.deepEqual(stableNumbered.changes,[
 ]);
 assert.equal(stableParser("Jaime Roberto").ok,false,"Stableford debe exigir la posición que usa su analizador");
 
-for(const text of ["DICTA ASÍ:","JAIME · 14 · BLANCAS","ROBERTO · 21 · AZULES","HASTA 6 JUGADORES","LUEGO TOCA OK"])assert.ok(html.includes(text),`Falta guía General: ${text}`);
+for(const text of ["DICTA ASÍ:","MIGUEL · 14 · BLANCAS","OTRO JUGADOR · NOMBRE + HDCP + MARCAS","HASTA 6 JUGADORES","LUEGO TOCA OK"])assert.ok(html.includes(text),`Falta guía General: ${text}`);
 for(const text of ["DICTA ASÍ:","1-# JUGADOR","2-NOMBRE","HASTA 6 JUGADORES","3-OK"])assert.ok(stable.includes(text),`Falta guía Stableford: ${text}`);
 const stablefordGuide=stable.match(/<div class="newbie-registration-guide"[^>]*>([\s\S]*?)<\/div><div class="nr-mic stableford-registration-mic"/)?.[1]||"";
 assert.ok(stablefordGuide,"No se encontró la guía visible Stableford");
 assert.doesNotMatch(stablefordGuide,/HDCP|HANDICAP|MARCA/,'La guía visible Stableford no debe pedir HDCP ni marcas');
-assert.match(stable,/Registro Stableford Scratch[\s\S]*?Jugador 1 Jaime; Jugador 2 Roberto; hasta Jugador 6/);
+assert.match(stable,/Registro Stableford Scratch[\s\S]*?Jugador 1 Miguel; Jugador 2 y el nombre pronunciado; hasta Jugador 6/);
 assert.match(html,/function generalSetupState\(\)[\s\S]*?\["match_play","four_ball"\]\.includes\(draftRoundMode\)\?\[2,4\]\.includes\(count\):count>=1[\s\S]*?complete&&required&&course\?\.configured/);
 assert.match(html,/function updateGeneralSetupValidity\(\)[\s\S]*?button\.disabled=!state\.ready[\s\S]*?aria-disabled/);
 assert.match(html,/#setupOk:disabled,[\s\S]*?#startStablefordRound:disabled\{/);

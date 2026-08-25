@@ -13,6 +13,9 @@
 - La voz sólo procesa vocabulario autorizado. No dice `Entendido`, `voy a leer`, `procesando`, preguntas, ayuda, saludos ni explicaciones. Una frase no reconocida permanece en silencio y no modifica datos.
 - Regla de comunicación 23: ningún mensaje puede terminar en el aire ni dejar al propietario adivinando si espera, responde, toca algo o si el trabajo terminó.
 - Regla de comunicación 24: todo mensaje termina con una de dos asignaciones inequívocas: `SIGUIENTE ACCIÓN — TUYA:` seguida del paso exacto requerido, o `SIGUIENTE ACCIÓN — MÍA:` seguida del trabajo que continuará. Si la acción es del asistente, el propietario no debe tocar ni responder nada.
+- Toda imagen producida para manuales, inventarios, revisiones, publicación o arquitectura es obligatoriamente 4K en su orientación final. Las páginas verticales usan `2160 × 4320 px` y metadatos mínimos de `300 dpi`; no se admite una versión reducida, borrosa, recortada o reescalada como archivo maestro.
+- El manual completo conserva una sola línea editorial tipo iPhone: tipografía negra sobre fondo blanco, jerarquía limpia, márgenes seguros, espaciado uniforme, alineación precisa, verde limitado a acentos sobre fondo oscuro y composición vertical equilibrada. `scripts/manual-visual-qc.py` es un candado obligatorio previo a aprobación o publicación; cualquier `FAIL` bloquea el manual.
+- La hoja de La Reunión permanece como plantilla vacía mientras el campo esté en reconstrucción total. No muestra PAR, HCP, marcas, yardajes, Rating, Slope ni totales hasta recibir y validar una fuente oficial nueva.
 
 ## Norma permanente y estricta de ROADMAPS
 

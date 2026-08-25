@@ -1,0 +1,730 @@
+[
+  {
+    "number": "17",
+    "kicker": "Formas de comenzar",
+    "title": "Elige cómo registrar",
+    "subtitle": "Puedes usar voz, escribir o abrir una práctica sin perfil.",
+    "steps": [
+      ["DICTADO", "Toca el micrófono y di nombre, handicap y color de marcas."],
+      ["MANUAL", "Escribe los datos en las casillas y revisa cada fila."],
+      ["SIN PERFIL", "En Práctica puedes anotar Gross sin registrar datos personales."],
+      ["OK", "Continúa sólo cuando los datos visibles estén correctos."]
+    ],
+    "remember": "La voz y el ingreso manual escriben en la misma ronda. No los uses al mismo tiempo."
+  },
+  {
+    "number": "18",
+    "kicker": "Scores por voz",
+    "title": "Dicta los golpes",
+    "subtitle": "Di el jugador y su Gross; espera que aparezca antes de seguir.",
+    "steps": [
+      ["TOCA MIC", "Rojo significa que la aplicación está escuchando."],
+      ["DI EL DATO", "Ejemplo: MIGUEL 5. Gross significa golpes realizados."],
+      ["MIRA LA CELDA", "Comprueba que el número apareció en el hoyo correcto."],
+      ["SIGUE", "Cuando todos tienen Gross o X, la tarjeta avanza de hoyo."]
+    ],
+    "remember": "Si la aplicación no entendió, no cambia ningún dato. Repite con calma."
+  },
+  {
+    "number": "19",
+    "kicker": "Ingreso manual y X",
+    "title": "Corrige sin perder datos",
+    "subtitle": "Usa Control Manual para escribir, cambiar o marcar un hoyo sin score.",
+    "steps": [
+      ["ELIGE HOYO", "Usa ANTERIOR, SIGUIENTE o toca el número del hoyo."],
+      ["ESCRIBE GROSS", "Coloca los golpes de cada jugador."],
+      ["USA X", "X significa que ese jugador no tiene score en ese hoyo."],
+      ["TOCA ENTER", "Guarda los cambios antes de salir o cambiar de hoyo."]
+    ],
+    "remember": "La X nunca aparece sola: únicamente se guarda si tú la dictas o escribes."
+  },
+  {
+    "number": "20",
+    "kicker": "Cálculos automáticos",
+    "title": "Lee Gross, Neto y resultado",
+    "subtitle": "Tú anotas Gross; la aplicación calcula lo demás.",
+    "steps": [
+      ["GROSS", "Son los golpes realizados antes de aplicar handicap."],
+      ["HDCP", "Indica los golpes de ventaja que corresponden al jugador."],
+      ["NETO", "Es el resultado después de aplicar el handicap del hoyo."],
+      ["RESULTADO", "Negativo es bajo par, E es par y positivo es sobre par."]
+    ],
+    "remember": "OUT muestra hoyos 1–9, IN muestra 10–18 y TOTAL reúne toda la ronda."
+  },
+  {
+    "number": "21",
+    "kicker": "Consultas por voz",
+    "title": "Pregunta por la ronda",
+    "subtitle": "La aplicación puede leer scores y acumulados sin modificar la tarjeta.",
+    "steps": [
+      ["UN HOYO", "Pregunta el score de un jugador en un hoyo."],
+      ["UNA VUELTA", "Pregunta primera vuelta o segunda vuelta."],
+      ["TOTAL", "Pregunta Gross, Neto, puntos o resultado total."],
+      ["COMPARA", "Pregunta posiciones o diferencias entre jugadores."]
+    ],
+    "remember": "Una consulta sólo lee información guardada; nunca cambia scores."
+  },
+  {
+    "number": "22",
+    "kicker": "Tiempo y navegación",
+    "title": "Controla la ronda",
+    "subtitle": "El reloj, el inicio y el micrófono tienen controles separados; la inactividad protege el tiempo.",
+    "steps": [
+      ["INICIO", "Regresa a la entrada principal sin mezclar modalidades."],
+      ["TIMER ON", "Inicia o continúa el tiempo de juego."],
+      ["TIMER OFF", "Pausa el cronómetro; la pausa no se suma. Sin instrucciones durante 30 minutos, todos los TIMER se ponen en OFF automáticamente."],
+      ["MICRÓFONO", "Sólo registra cuando lo activas y se muestra rojo."]
+    ],
+    "remember": "Un score, una consulta o un control válido reinicia los 30 minutos. El apagado automático no borra la ronda ni sus scores."
+  },
+  {
+    "number": "23",
+    "kicker": "Continuidad",
+    "title": "Mira la ronda previa",
+    "subtitle": "Puedes consultar la ronda anterior sin borrar la que estás jugando.",
+    "steps": [
+      ["RONDA PREVIA", "Guarda la vista actual y abre la ronda anterior disponible."],
+      ["REVISA", "Puedes mirar campo, jugadores y scores completos."],
+      ["RONDA ACTUAL", "Regresa a la ronda en curso con todos sus datos."],
+      ["CIERRA Y ABRE", "La ronda activa se conserva localmente al volver a la aplicación."]
+    ],
+    "remember": "Ronda Previa y Ronda Actual nunca deben mezclar sus jugadores ni sus scores."
+  },
+  {
+    "number": "24",
+    "kicker": "Reinicios seguros",
+    "title": "Diferencia los botones",
+    "subtitle": "Nueva Ronda y Borrar Scores hacen cosas distintas.",
+    "steps": [
+      ["NUEVA RONDA", "Abre un registro vacío para preparar otra ronda."],
+      ["CONFIRMA", "La ronda activa no se reemplaza hasta confirmar el nuevo inicio."],
+      ["BORRAR SCORES", "Elimina sólo los golpes anotados después de pedir confirmación."],
+      ["CONSERVA DATOS", "Borrar Scores mantiene campo, categoría, jugadores y marcas."]
+    ],
+    "remember": "Lee la confirmación antes de borrar. Si no estás seguro, toca Cancelar."
+  },
+  {
+    "number": "25",
+    "kicker": "Cambios durante la ronda",
+    "title": "Regresa a los datos",
+    "subtitle": "Puedes revisar datos o agregar un jugador sin perder los scores existentes.",
+    "steps": [
+      ["ATRÁS", "Vuelve a los datos de la ronda actual."],
+      ["REVISA", "Corrige nombre, handicap o marcas cuando esté permitido."],
+      ["+ JUGADOR", "Agrega otro jugador si todavía hay espacio, hasta seis."],
+      ["REGRESA", "Vuelve a la tarjeta y comprueba que los scores continúan."]
+    ],
+    "remember": "No abras Nueva Ronda para corregir datos de la ronda actual."
+  },
+  {
+    "number": "26",
+    "kicker": "Tarjeta digital",
+    "title": "Revisa antes de finalizar",
+    "subtitle": "La tarjeta digital reúne la Global y las personales.",
+    "steps": [
+      ["ABRE TARJETA", "Toca TARJETA DIGITAL para ver la ronda completa."],
+      ["REVISA 18 HOYOS", "Cada jugador debe tener Gross o X en todos los hoyos."],
+      ["GLOBAL", "Muestra juntos a todos los jugadores."],
+      ["PERSONAL", "Muestra la tarjeta completa de un jugador."]
+    ],
+    "remember": "Llegar al hoyo 18 no cierra la ronda si todavía falta algún dato."
+  },
+  {
+    "number": "27",
+    "kicker": "Cierre oficial",
+    "title": "Finaliza la ronda",
+    "subtitle": "Cierra únicamente cuando los 18 hoyos estén completos.",
+    "steps": [
+      ["COMPLETA", "Revisa que cada celda tenga Gross o X."],
+      ["FINALIZAR RONDA", "Toca el botón una sola vez."],
+      ["ESPERA", "La aplicación crea el resultado oficial y guarda su versión."],
+      ["ABRE", "Después puedes abrir Global, personales e Historial."]
+    ],
+    "remember": "Una ronda oficial cerrada se conserva; una corrección crea otra versión."
+  },
+  {
+    "number": "28",
+    "kicker": "Archivos y compartir",
+    "title": "Guarda imagen o PDF",
+    "subtitle": "La aplicación prepara el archivo; tú eliges dónde guardarlo o enviarlo.",
+    "steps": [
+      ["IMAGEN", "IMAGEN GLOBAL o PERSONAL prepara un archivo PNG."],
+      ["PDF", "PDF GLOBAL o PERSONAL prepara una tarjeta en PDF."],
+      ["PDF TODAS", "Crea un solo PDF con Global y todas las personales."],
+      ["COMPARTIR", "Correo o WhatsApp abre la hoja del teléfono para confirmar el envío."]
+    ],
+    "remember": "La aplicación prepara el archivo, pero no afirma que otra persona ya lo recibió."
+  },
+  {
+    "number": "29",
+    "kicker": "Corrección oficial",
+    "title": "Corrige una ronda cerrada",
+    "subtitle": "La tarjeta original se conserva y se crea una versión corregida.",
+    "steps": [
+      ["CORREGIR RONDA", "Abre la opción desde la tarjeta final."],
+      ["ELIGE", "Selecciona jugador, hoyo y nuevo Gross."],
+      ["EXPLICA", "Escribe motivo y responsable de la corrección."],
+      ["GUARDA", "GUARDAR CORRECCIÓN crea una versión nueva con código SHA-256."]
+    ],
+    "remember": "ABRIR ORIGINAL permite comprobar la tarjeta anterior sin modificarla."
+  },
+  {
+    "number": "30",
+    "kicker": "Archivo local",
+    "title": "Usa el Historial",
+    "subtitle": "Las rondas oficiales quedan guardadas dentro del dispositivo.",
+    "steps": [
+      ["ABRE HISTORIAL", "Entra desde la ronda o desde los registros."],
+      ["BUSCA", "Filtra por modalidad, campo, jugador, torneo o fecha."],
+      ["ABRE TARJETA", "Consulta Global o la tarjeta personal elegida."],
+      ["EXPORTA", "Desde allí puedes crear imagen, PDF o PDF TODAS."]
+    ],
+    "remember": "Abrir Historial no reemplaza ni modifica la ronda actual."
+  },
+  {
+    "number": "31",
+    "kicker": "Análisis del historial",
+    "title": "Consulta estadísticas",
+    "subtitle": "Las estadísticas usan únicamente las rondas guardadas en ese dispositivo.",
+    "steps": [
+      ["PROMEDIOS", "Muestra valores medios de Gross, Neto o puntos."],
+      ["MEJOR / PEOR", "Encuentra resultados altos y bajos."],
+      ["CONSISTENCIA", "Compara cuánto cambian los resultados."],
+      ["TENDENCIA", "Muestra si los resultados mejoran o empeoran con el tiempo."]
+    ],
+    "remember": "También puedes escribir una pregunta y tocar CONSULTAR."
+  },
+  {
+    "number": "32",
+    "kicker": "Stableford oficial",
+    "title": "Guarda un resultado",
+    "subtitle": "Agrega resultados oficiales a la clasificación Stableford.",
+    "steps": [
+      ["AGREGAR RESULTADO", "Abre el formulario oficial Stableford."],
+      ["COMPLETA", "Elige jugador, categoría, fecha, campo y puntos."],
+      ["GROSS OPCIONAL", "Puedes agregar Gross si lo tienes."],
+      ["GUARDAR", "GUARDAR RESULTADO conserva el dato; CANCELAR sale sin guardarlo."]
+    ],
+    "remember": "Los puntos de una ronda jugada se calculan automáticamente."
+  },
+  {
+    "number": "33",
+    "kicker": "Cuenta opcional",
+    "title": "Respalda y recupera",
+    "subtitle": "Puedes jugar sin cuenta; REGÍSTRATE sirve para un respaldo opcional.",
+    "steps": [
+      ["CREAR CUENTA", "Crea el acceso sólo si deseas usar respaldo."],
+      ["INICIAR SESIÓN", "Entra con la cuenta que ya creaste."],
+      ["RESPALDAR AHORA", "Guarda jugadores, rondas y tarjetas asociados."],
+      ["RECUPERAR RESPALDO", "Trae la copia disponible y luego permite cerrar sesión."]
+    ],
+    "remember": "No necesitas registrarte para jugar una ronda normal."
+  },
+  {
+    "number": "34",
+    "kicker": "Instalación y actualización",
+    "title": "Pon la app en tu teléfono",
+    "subtitle": "El acceso instalado abre Golf Score Card GT como una aplicación.",
+    "steps": [
+      ["INSTALAR APP", "Toca el botón cuando aparezca y sigue las instrucciones."],
+      ["IPHONE", "En Safari usa Compartir y Agregar a pantalla de inicio."],
+      ["SIN CONEXIÓN", "La estructura instalada puede abrirse; algunas funciones necesitan internet."],
+      ["ACTUALIZAR", "Si aparece Actualización obligatoria, actualiza antes de continuar."]
+    ],
+    "remember": "Actualizar protege los cálculos y evita usar una versión antigua."
+  },
+  {
+    "number": "35",
+    "kicker": "Seguridad y ayuda",
+    "title": "Comprueba antes de actuar",
+    "subtitle": "Estas reglas evitan borrar, mezclar o enviar información por error.",
+    "steps": [
+      ["LEE", "Revisa campo, modalidad, jugadores y hoyo antes de guardar."],
+      ["NO INVENTES", "Si no hay score, usa X sólo cuando corresponda."],
+      ["CONFIRMA", "Revisa los avisos antes de borrar, cerrar o reemplazar una ronda."],
+      ["RECUERDA", "Gross son golpes; HDCP es handicap; Neto aplica handicap; E es par."]
+    ],
+    "remember": "Servicios multi-dispositivo, confirmación automática de entrega y planes comerciales aún no son funciones finales."
+  },
+  {
+    "number": "36",
+    "kicker": "Si no puedes comenzar",
+    "title": "Falta campo o modalidad",
+    "subtitle": "La aplicación no continúa hasta tener los datos obligatorios.",
+    "steps": [
+      ["MIRA EL AVISO", "Lee qué dato falta: campo, modalidad o jugadores."],
+      ["TOCA UNA OPCIÓN", "Selecciona un solo campo y una sola modalidad."],
+      ["REVISA COLOR", "La opción marcada debe verse seleccionada."],
+      ["INTENTA OK", "Cuando todo esté completo, OK vuelve a estar disponible."]
+    ],
+    "remember": "No recargues la página: completa primero el dato indicado."
+  },
+  {
+    "number": "37",
+    "kicker": "Si falla el registro",
+    "title": "La voz no entendió",
+    "subtitle": "Puedes repetir o completar manualmente sin perder lo ya escrito.",
+    "steps": [
+      ["ESPERA", "Deja que termine el intento anterior antes de volver a tocar el micrófono."],
+      ["REPITE CORTO", "Di un jugador por vez y habla despacio."],
+      ["REVISA", "Confirma nombre, handicap y marcas en la fila correcta."],
+      ["USA MANUAL", "Si continúa fallando, corrige sólo la casilla necesaria."]
+    ],
+    "remember": "No alternes rápidamente voz y teclado mientras el micrófono sigue rojo."
+  },
+  {
+    "number": "38",
+    "kicker": "Si el score no aparece",
+    "title": "Recupera el dictado",
+    "subtitle": "Un dato no reconocido no debe modificar la tarjeta.",
+    "steps": [
+      ["CONFIRMA HOYO", "Mira qué hoyo está activo antes de repetir."],
+      ["DI NOMBRE + NÚMERO", "Ejemplo: MIGUEL 5. No agregues explicaciones."],
+      ["ESPERA LA CELDA", "No dictes al siguiente jugador hasta ver el dato."],
+      ["CONTROL MANUAL", "Escribe el Gross y toca ENTER si la voz no responde."]
+    ],
+    "remember": "Si el dato quedó en otro hoyo, corrígelo desde Control Manual."
+  },
+  {
+    "number": "39",
+    "kicker": "Si ENTER no guarda",
+    "title": "Revisa el Control Manual",
+    "subtitle": "La mayoría de bloqueos se resuelven completando la fila activa.",
+    "steps": [
+      ["BUSCA VACÍOS", "Cada jugador activo necesita Gross o X en ese hoyo."],
+      ["REVISA FORMATO", "Usa un número válido de golpes o una X."],
+      ["TOCA ENTER", "Guarda antes de usar ANTERIOR o SIGUIENTE."],
+      ["COMPRUEBA TOTAL", "Si cambió el acumulado, el dato quedó guardado."]
+    ],
+    "remember": "No cierres la pantalla mientras exista un dato escrito pendiente de ENTER."
+  },
+  {
+    "number": "40",
+    "kicker": "Si el hoyo no avanza",
+    "title": "Completa el bloque activo",
+    "subtitle": "El avance automático espera a todos los jugadores del hoyo.",
+    "steps": [
+      ["MIRA JUGADORES", "Encuentra quién todavía tiene la celda vacía."],
+      ["ANOTA", "Ingresa su Gross o X si realmente no tiene score."],
+      ["ESPERA", "La aplicación avanza cuando el bloque queda completo."],
+      ["ELIGE HOYO", "También puedes abrir Control Manual y seleccionar el hoyo."]
+    ],
+    "remember": "Match Play y Four Ball esperan a los jugadores necesarios de cada pareja."
+  },
+  {
+    "number": "41",
+    "kicker": "Si no ves tu ronda",
+    "title": "Vuelve a Ronda Actual",
+    "subtitle": "La ronda previa puede estar visible sin haber borrado la actual.",
+    "steps": [
+      ["MIRA EL BOTÓN", "Si dice RONDA ACTUAL, estás viendo la ronda previa."],
+      ["TOCA RONDA ACTUAL", "Regresa a la ronda que estabas jugando."],
+      ["REVISA CAMPO", "Confirma campo, jugadores y hoyo activo."],
+      ["REABRE", "Si cerraste la aplicación, ábrela normalmente para restaurar la ronda local."]
+    ],
+    "remember": "No uses Nueva Ronda para intentar recuperar una ronda existente."
+  },
+  {
+    "number": "42",
+    "kicker": "Si no permite finalizar",
+    "title": "Busca el dato pendiente",
+    "subtitle": "FINALIZAR RONDA se bloquea cuando falta Gross o X.",
+    "steps": [
+      ["ABRE TARJETA", "Revisa los hoyos 1 al 18."],
+      ["BUSCA VACÍOS", "Comprueba todos los jugadores, no sólo el primero."],
+      ["CORRIGE", "Usa Control Manual para llenar el dato pendiente."],
+      ["FINALIZA", "Vuelve a Tarjeta Digital y toca FINALIZAR RONDA."]
+    ],
+    "remember": "En Match Play puede existir un cierre anticipado reglamentario; la aplicación lo identifica."
+  },
+  {
+    "number": "43",
+    "kicker": "Si no descarga o comparte",
+    "title": "Recupera el archivo",
+    "subtitle": "Primero comprueba que la ronda esté cerrada y la tarjeta abierta.",
+    "steps": [
+      ["ABRE LA TARJETA", "Selecciona Global o Personal antes de exportar."],
+      ["ELIGE FORMATO", "Usa IMAGEN, PDF o PDF TODAS."],
+      ["ESPERA", "No vuelvas a tocar mientras se prepara el archivo."],
+      ["REVISA DESCARGAS", "Si no aparece Compartir, busca el archivo en Descargas del teléfono."]
+    ],
+    "remember": "WhatsApp o Correo requieren que tú confirmes el destinatario y el envío."
+  },
+  {
+    "number": "44",
+    "kicker": "Si Historial está vacío",
+    "title": "Comprueba el cierre oficial",
+    "subtitle": "Historial guarda rondas oficiales, no borradores incompletos.",
+    "steps": [
+      ["REVISA LA RONDA", "Confirma que fue finalizada oficialmente."],
+      ["QUITA FILTROS", "Borra búsquedas de campo, jugador, torneo o fecha."],
+      ["MISMO DISPOSITIVO", "El historial local pertenece al teléfono que guardó la ronda."],
+      ["RESPALDO", "Si usas cuenta, recupera la copia disponible antes de buscar."]
+    ],
+    "remember": "Abrir Historial nunca debe borrar la ronda que está en curso."
+  },
+  {
+    "number": "45",
+    "kicker": "Si Estadísticas no muestra datos",
+    "title": "Amplía la consulta",
+    "subtitle": "Un filtro demasiado específico puede dejar el resultado vacío.",
+    "steps": [
+      ["QUITA FILTROS", "Prueba primero con todas las rondas."],
+      ["ELIGE JUGADOR", "Confirma que el nombre existe en el Historial."],
+      ["CAMBIA PERIODO", "Usa un rango que incluya las fechas guardadas."],
+      ["TOCA CONSULTAR", "Ejecuta de nuevo la búsqueda escrita."]
+    ],
+    "remember": "Las estadísticas no inventan datos y no modifican ninguna tarjeta."
+  },
+  {
+    "number": "46",
+    "kicker": "Si el respaldo falla",
+    "title": "Protege la ronda local",
+    "subtitle": "La cuenta es opcional y una falla de red no debe impedir jugar.",
+    "steps": [
+      ["NO BORRES", "Conserva la ronda local mientras revisas la conexión."],
+      ["INICIA SESIÓN", "Confirma que estás usando la cuenta correcta."],
+      ["RESPALDA", "Toca RESPALDAR AHORA una sola vez y espera el resultado."],
+      ["RECUPERA CON CUIDADO", "Lee el aviso antes de traer una copia anterior."]
+    ],
+    "remember": "No se promete todavía sincronización completa automática entre varios teléfonos."
+  },
+  {
+    "number": "47",
+    "kicker": "Si la app no abre bien",
+    "title": "Actualiza sin perder la ronda",
+    "subtitle": "Una versión antigua o una caché guardada puede mostrar una pantalla anterior.",
+    "steps": [
+      ["CIERRA Y ABRE", "Vuelve a abrir el acceso oficial."],
+      ["ACTUALIZA", "Si aparece Actualización obligatoria, tócala."],
+      ["REVISA INTERNET", "Algunas funciones de cuenta y compartir necesitan conexión."],
+      ["NO REINSTALES PRIMERO", "Comprueba la ronda guardada antes de quitar el acceso del teléfono."]
+    ],
+    "remember": "La ronda activa se guarda localmente, pero evita borrar datos del navegador."
+  },
+  {
+    "number": "48",
+    "kicker": "Si Match Play se ve detenido",
+    "title": "Revisa cada Match",
+    "subtitle": "Con cuatro jugadores existen dos Matches independientes.",
+    "steps": [
+      ["PAREJA 1", "Jugadores 1–2 tienen su propio resultado."],
+      ["PAREJA 2", "Jugadores 3–4 tienen otro resultado y cierre."],
+      ["EMPATE", "Un hoyo empatado conserva +1, +2, −1 o EVEN anterior."],
+      ["CIERRE", "Un Match puede terminar antes sin bloquear correcciones anteriores."]
+    ],
+    "remember": "El resultado hablado debe decir arriba, abajo o empatado."
+  },
+  {
+    "number": "49",
+    "kicker": "Si Four Ball no calcula",
+    "title": "Completa la pareja",
+    "subtitle": "La mejor bola necesita los Netos requeridos del hoyo.",
+    "steps": [
+      ["REVISA JUGADORES", "Comprueba Gross, handicap y marcas de cada jugador."],
+      ["UNA PAREJA", "La aplicación acumula el mejor Neto de sus dos jugadores."],
+      ["DOS PAREJAS", "Compara la mejor bola Verde contra la mejor bola Oro."],
+      ["LÍNEA", "La separación visual evita mezclar los dos equipos."]
+    ],
+    "remember": "Si falta un Gross necesario, el hoyo permanece pendiente."
+  },
+  {
+    "number": "50",
+    "kicker": "Salida segura",
+    "title": "No pierdas tu trabajo",
+    "subtitle": "Sigue este orden cuando no sepas qué hacer.",
+    "steps": [
+      ["1 · DETENTE", "No borres, no recargues y no abras Nueva Ronda."],
+      ["2 · REVISA", "Mira modalidad, campo, hoyo, jugador y aviso visible."],
+      ["3 · GUARDA", "Usa ENTER o termina la acción pendiente una sola vez."],
+      ["4 · REGRESA", "Usa ATRÁS, RONDA ACTUAL o abre de nuevo el acceso oficial."]
+    ],
+    "remember": "Si el problema continúa, conserva una captura del aviso y de la tarjeta antes de cerrar."
+  },
+  {
+    "number": "51",
+    "kicker": "Vocabulario de registro",
+    "title": "Dicta nombre, handicap y marcas",
+    "subtitle": "En Ronda Normal, Match Play y Four Ball usa siempre este orden.",
+    "steps": [
+      ["UN JUGADOR", "Di: MIGUEL 14 BLANCAS. La aplicación separa nombre, handicap y marcas."],
+      ["OTRO JUGADOR", "Continúa con el nombre visible, su número y sus marcas. Puedes decir Y o LUEGO."],
+      ["REVISA", "Cada jugador aparece en una fila editable antes de comenzar la ronda."],
+      ["CONFIRMA", "Cuando nombre, número y color estén correctos, toca OK." ]
+    ],
+    "remember": "El orden recomendado es NOMBRE + HANDICAP + MARCAS. El handicap válido va de 0 a 54."
+  },
+  {
+    "number": "52",
+    "kicker": "Cambios por voz",
+    "title": "Corrige, agrega o elimina",
+    "subtitle": "Usa una orden corta y después revisa la pantalla que se abre.",
+    "steps": [
+      ["CORREGIR DATOS", "Di: CORREGIR NOMBRES, CORREGIR HANDICAP o CORREGIR MARCAS."],
+      ["AGREGAR", "Di: AGREGAR JUGADOR. Completa el nuevo registro en la pantalla."],
+      ["ELIMINAR", "Di: ELIMINAR MIGUEL. Usa exactamente el nombre visible del jugador."],
+      ["GUARDAR", "Revisa el cambio y toca OK o INICIAR RONDA cuando corresponda." ]
+    ],
+    "remember": "No uses NUEVA RONDA para corregir el grupo actual: esa opción prepara otra ronda."
+  },
+  {
+    "number": "53",
+    "kicker": "Palabras de registro",
+    "title": "Di números y marcas válidas",
+    "subtitle": "La aplicación reconoce números hablados y los colores oficiales.",
+    "steps": [
+      ["HANDICAP", "Puedes decir 14 o CATORCE. El valor debe ser un entero entre 0 y 54."],
+      ["MARCAS 1", "Puedes decir NEGRAS, AZULES o BLANCAS."],
+      ["MARCAS 2", "También reconoce ROJAS, AMARILLAS y PLATEADAS."],
+      ["EJEMPLO", "Di: MIGUEL CERO ROJAS. Después confirma que la fila muestre 0 y Rojo." ]
+    ],
+    "remember": "Usa el color de marcas que aparece en el campo seleccionado; no inventes otro nombre."
+  },
+  {
+    "number": "54",
+    "kicker": "Voz en Stableford",
+    "title": "Dicta únicamente los nombres",
+    "subtitle": "Stableford Scratch fija handicap 0 y las marcas de la categoría.",
+    "steps": [
+      ["PRIMER NOMBRE", "Di: JUGADOR 1 MIGUEL."],
+      ["MÁS JUGADORES", "Continúa con JUGADOR 2 y el nombre pronunciado, hasta un máximo de seis."],
+      ["SIN OTROS DATOS", "No dictes handicap ni marcas: la categoría ya los define."],
+      ["OK", "Revisa que no haya nombres repetidos y toca OK." ]
+    ],
+    "remember": "Si un nombre quedó mal, corrígelo en su casilla antes de iniciar Stableford."
+  },
+  {
+    "number": "55",
+    "kicker": "Voz en Práctica",
+    "title": "Completa el perfil cuando quieras",
+    "subtitle": "Puedes empezar sin datos y añadir nombre, handicap o marcas durante la práctica.",
+    "steps": [
+      ["IDENTIFICA", "Di: JUGADOR 1 MIGUEL HANDICAP 14 BLANCAS."],
+      ["PARCIAL", "También puedes completar sólo el dato que falta del JUGADOR 1."],
+      ["SCORE", "Mientras el perfil está pendiente, dicta JUGADOR 1 5 o usa Control Manual."],
+      ["COMPRUEBA", "Revisa el nombre y los cálculos antes de usar el resultado como referencia." ]
+    ],
+    "remember": "El perfil es opcional para anotar Gross, pero nombre, handicap y marcas completan los cálculos."
+  },
+  {
+    "number": "56",
+    "kicker": "Formato básico de score",
+    "title": "Dicta un score del hoyo activo",
+    "subtitle": "El nombre y el Gross bastan cuando el cursor ya está en el hoyo correcto.",
+    "steps": [
+      ["POR DÍGITO", "Di: MIGUEL 4. También acepta el número dicho como palabra: MIGUEL CUATRO."],
+      ["OTRO JUGADOR", "Di el nombre que aparece en su fila y luego el score. Espera antes de continuar."],
+      ["SIN NOMBRE", "Si la aplicación dice FALTA MIGUEL, responde sólo CUATRO o PAR."],
+      ["VERIFICA", "Comprueba jugador, hoyo y Gross en la celda que acaba de cambiar." ]
+    ],
+    "remember": "El score puede dictarse como número o palabra. La aplicación nunca debe inventarlo."
+  },
+  {
+    "number": "57",
+    "kicker": "Hoyos explícitos y tandas",
+    "title": "Dicta varios datos con orden",
+    "subtitle": "Nombra el hoyo cuando quieras corregir o registrar fuera del cursor actual.",
+    "steps": [
+      ["HOYO PRIMERO", "Di: HOYO 4 MIGUEL 5."],
+      ["JUGADOR PRIMERO", "También puedes decir: MIGUEL HOYO 4 CINCO."],
+      ["VARIOS HOYOS", "Di: MIGUEL HOYO 1 CUATRO, 2 CINCO, 3 PAR."],
+      ["VARIOS JUGADORES", "Di HOYO 4 MIGUEL 5 y después el nombre visible del siguiente jugador y su score." ]
+    ],
+    "remember": "Usa frases cortas. Si un dato falla, repite sólo ese jugador y ese hoyo."
+  },
+  {
+    "number": "58",
+    "kicker": "Vocabulario oficial de golf",
+    "title": "Dicta el score por número o palabra",
+    "subtitle": "La aplicación convierte cada término en Gross usando el par del hoyo.",
+    "steps": [
+      ["POR NÚMERO", "Di: MIGUEL 4 o MIGUEL CUATRO."],
+      ["BAJO PAR", "ÁGUILA equivale a dos bajo par. BIRDIE equivale a uno bajo par."],
+      ["PAR Y BOGEY", "PAR conserva el par. BOGEY equivale a uno sobre par."],
+      ["MÁS GOLPES", "DOBLE BOGEY es dos sobre par; TRIPLE BOGEY, tres; DOBLE PAR, dos veces el par." ]
+    ],
+    "remember": "Vocabulario recomendado: ÁGUILA, BIRDIE, PAR, BOGEY, DOBLE BOGEY, TRIPLE BOGEY y DOBLE PAR."
+  },
+  {
+    "number": "59",
+    "kicker": "Score ausente",
+    "title": "Marca X sólo cuando corresponda",
+    "subtitle": "Una X es un dato explícito; una celda vacía continúa pendiente.",
+    "steps": [
+      ["FORMA CORTA", "Di el nombre y X: MIGUEL X. También puedes decir MIGUEL EQUIS."],
+      ["FORMA CLARA", "Di: MIGUEL SIN SCORE o MIGUEL SIN RESULTADO."],
+      ["LO QUE OCURRE", "La celda muestra X y ese jugador no entra al resultado del tramo."],
+      ["CORREGIR", "Después puedes reemplazar la X por el Gross real del mismo jugador y hoyo." ]
+    ],
+    "remember": "La aplicación no crea una X por silencio, demora o falta de respuesta."
+  },
+  {
+    "number": "60",
+    "kicker": "Preguntas de un hoyo",
+    "title": "Pide un score guardado",
+    "subtitle": "La consulta lee la tarjeta y no modifica ningún dato.",
+    "steps": [
+      ["UN JUGADOR", "Pregunta: ¿CUÁNTO HIZO MIGUEL EN EL HOYO 4?"],
+      ["OTRA FORMA", "Pregunta: REPITE EL SCORE DE MIGUEL EN EL HOYO 7."],
+      ["VARIOS HOYOS", "Pregunta: ¿CUÁNTO HIZO MIGUEL EN LOS HOYOS 4 Y 5?"],
+      ["VARIOS JUGADORES", "Nombra cada jugador y sus hoyos en una sola pregunta ordenada." ]
+    ],
+    "remember": "Si el hoyo no tiene Gross ni X, la respuesta indica que todavía no existe score."
+  },
+  {
+    "number": "61",
+    "kicker": "Preguntas de acumulado",
+    "title": "Consulta cómo va la ronda",
+    "subtitle": "Puedes pedir el total de todos o mencionar a un jugador.",
+    "steps": [
+      ["TODOS", "Di: ACUMULADO, CÓMO VAMOS o MARCADOR ACTUAL."],
+      ["UN JUGADOR", "Di: ¿CUÁNTO LLEVA MIGUEL? o RESULTADO ACTUAL DE MIGUEL."],
+      ["RESPUESTA GENERAL", "La aplicación dice Gross, Neto y relación contra par."],
+      ["STABLEFORD", "En Stableford la respuesta usa Gross y Puntos." ]
+    ],
+    "remember": "En Match Play y Four Ball la voz informa siempre arriba, abajo o empatado."
+  },
+  {
+    "number": "62",
+    "kicker": "Alcance de una consulta",
+    "title": "Indica vuelta, hoyo o tramo",
+    "subtitle": "Añade el alcance para evitar una respuesta más amplia de la necesaria.",
+    "steps": [
+      ["PRIMERA VUELTA", "Di: ¿CÓMO VA MIGUEL EN LA PRIMERA VUELTA?"],
+      ["SEGUNDA VUELTA", "Di: RESULTADO DE MIGUEL EN LA SEGUNDA VUELTA."],
+      ["HASTA UN HOYO", "Di: ¿CUÁNTO LLEVA MIGUEL HASTA EL HOYO 12?"],
+      ["HOYOS ELEGIDOS", "Di COMPARA MIGUEL Y después pronuncia el otro nombre visible EN LOS HOYOS 3 A 7." ]
+    ],
+    "remember": "Primera vuelta son hoyos 1-9; segunda vuelta son 10-18; sin alcance se usa la ronda."
+  },
+  {
+    "number": "63",
+    "kicker": "Posiciones y comparación",
+    "title": "Pregunta quién va mejor",
+    "subtitle": "La aplicación compara únicamente los scores que ya están guardados.",
+    "steps": [
+      ["LÍDER", "Pregunta: ¿QUIÉN VA GANANDO? o ¿QUIÉN VA PRIMERO?"],
+      ["POSICIONES", "Pregunta: DIME LAS POSICIONES DE LA PRIMERA VUELTA."],
+      ["COMPARAR", "Di COMPARA MIGUEL CONTRA y luego el otro nombre visible HASTA EL HOYO 9."],
+      ["DIFERENCIA", "Pregunta por la diferencia y el tramo que deseas revisar." ]
+    ],
+    "remember": "Una X o un dato pendiente puede impedir un resultado completo; primero revisa esos hoyos."
+  },
+  {
+    "number": "64",
+    "kicker": "Preguntas específicas",
+    "title": "Cuenta logros y datos pendientes",
+    "subtitle": "Usa la palabra exacta del dato que quieres conocer.",
+    "steps": [
+      ["TIPOS DE SCORE", "Pregunta: ¿CUÁNTOS BIRDIES, PARES O BOGEYS LLEVA MIGUEL?"],
+      ["MEJOR O PEOR", "Pregunta: ¿CUÁL FUE EL MEJOR HOYO DE MIGUEL?"],
+      ["PENDIENTES", "Pregunta: ¿QUÉ SCORES LE FALTAN A MIGUEL?"],
+      ["HANDICAP", "Pregunta: ¿EN QUÉ HOYOS RECIBIÓ TIROS DE HANDICAP MIGUEL?" ]
+    ],
+    "remember": "También reconoce águilas, dobles bogeys y triples bogeys cuando existen en la tarjeta."
+  },
+  {
+    "number": "65",
+    "kicker": "Historial y periodos",
+    "title": "Pregunta por rondas anteriores",
+    "subtitle": "Las respuestas usan el historial oficial guardado en este dispositivo.",
+    "steps": [
+      ["PROMEDIO", "Di o escribe: REPORTE DEL ÚLTIMO MES."],
+      ["EXTREMOS", "Di o escribe: MEJOR Y PEOR DEL ÚLTIMO MES."],
+      ["CAMBIO", "Di o escribe: TENDENCIA DEL ÚLTIMO MES."],
+      ["REGULARIDAD", "Di o escribe: CONSISTENCIA DEL ÚLTIMO MES." ]
+    ],
+    "remember": "Si no existen rondas oficiales dentro del periodo, la aplicación informa que no hay scores."
+  },
+  {
+    "number": "66",
+    "kicker": "Filtros del historial",
+    "title": "Haz una consulta precisa",
+    "subtitle": "Combina periodo, jugador, campo, torneo, modalidad y tramo.",
+    "steps": [
+      ["PERIODO", "Usa HOY, AYER, ÚLTIMA SEMANA, ÚLTIMO MES, ÚLTIMO AÑO o ÚLTIMAS 3 RONDAS."],
+      ["PERSONA Y LUGAR", "Añade el nombre del jugador y el campo si deseas filtrarlos."],
+      ["MODALIDAD", "Puedes indicar GENERAL, STABLEFORD, MATCH PLAY o FOUR BALL."],
+      ["TRAMO", "Añade HOYO 18, PRIMERA VUELTA o SEGUNDA VUELTA." ]
+    ],
+    "remember": "Quita filtros si la respuesta queda vacía; la consulta nunca inventa información."
+  },
+  {
+    "number": "67",
+    "kicker": "Dictado en Match Play",
+    "title": "Anota Gross y lee el Match",
+    "subtitle": "El ingreso de golpes usa las mismas frases de la Ronda General.",
+    "steps": [
+      ["SCORE", "Di: MIGUEL 4 o MIGUEL PAR. No dictes el resultado del Match."],
+      ["CÁLCULO", "La aplicación compara los Netos y coloca la flecha en quien ganó el hoyo."],
+      ["EMPATE", "Si el hoyo empata, +1, +2, -1 o EVEN se mantiene sin cambiar."],
+      ["VOZ", "El reporte dice MIGUEL UNO ARRIBA, UNO ABAJO o EMPATADO." ]
+    ],
+    "remember": "Con cuatro jugadores existen dos Matches separados por una línea y cada uno cierra por su cuenta."
+  },
+  {
+    "number": "68",
+    "kicker": "Dictado en Four Ball",
+    "title": "Anota a cada jugador de la pareja",
+    "subtitle": "Puede participar una pareja o competir dos parejas.",
+    "steps": [
+      ["GROSS INDIVIDUAL", "Dicta el nombre y Gross de cada jugador; cada uno conserva su handicap registrado."],
+      ["MEJOR BOLA", "La estrella identifica el mejor Neto de la pareja en ese hoyo."],
+      ["UNA PAREJA", "La tarjeta acumula su mejor Neto hasta completar los 18 hoyos."],
+      ["DOS PAREJAS", "Verde y Oro se comparan; el reporte dice arriba, abajo o empatado." ]
+    ],
+    "remember": "La línea entre jugadores 2 y 3 separa las parejas y evita mezclar sus resultados."
+  },
+  {
+    "number": "69",
+    "kicker": "Asistente y navegación por voz",
+    "title": "Pide una pantalla o modalidad",
+    "subtitle": "Habla como normalmente preguntarías; la aplicación abre destinos seguros.",
+    "steps": [
+      ["MODALIDAD", "Di: QUIERO JUGAR STABLEFORD, LLÉVAME A MATCH PLAY o ABRE FOUR BALL."],
+      ["RONDA Y TARJETAS", "Di: ABRE UNA NUEVA RONDA, ABRE HISTORIAL o MUESTRA LA TARJETA DIGITAL."],
+      ["INGRESO Y MANUAL", "Di: MUESTRA EL CONTROL MANUAL o ABRE EL MANUAL DE FUNCIONES."],
+      ["SEGURIDAD", "La voz abre la pantalla; no inicia, reemplaza, finaliza ni modifica scores sin tu confirmación." ]
+    ],
+    "remember": "Di STOP para detener una respuesta hablada. Abrir un destino conserva primero la ronda existente."
+  },
+  {
+    "number": "70",
+    "kicker": "Cuando la voz no reconoce",
+    "title": "Recupérate sin perder datos",
+    "subtitle": "ERROR significa que la frase no produjo un cambio válido.",
+    "steps": [
+      ["DETENTE", "Espera a que el micrófono termine el intento anterior."],
+      ["REVISA", "Comprueba si cambió alguna celda y confirma el hoyo activo."],
+      ["REPITE CORTO", "Usa una frase oficial: NOMBRE + SCORE o NOMBRE + HOYO + SCORE."],
+      ["USA MANUAL", "Si vuelve a fallar, escribe únicamente ese Gross y toca ENTER." ]
+    ],
+    "remember": "No encadenes frases nuevas mientras la aplicación procesa; verifica cada cambio antes de continuar."
+  },
+  {
+    "number": "71",
+    "kicker": "Mapa de capacidades de voz",
+    "title": "Pregunta qué hacer",
+    "subtitle": "El micrófono también explica procedimientos sin cambiar la tarjeta.",
+    "steps": [
+      ["CORREGIR", "Pregunta: ¿CÓMO BORRO UN BOGEY QUE FUE PAR? Te dirige a Control Manual."],
+      ["ANOTAR", "Pregunta: ¿CÓMO ANOTO UN SCORE? Responde con voz o Control Manual."],
+      ["CONSULTAR", "Pregunta: ¿CÓMO PREGUNTO EL ACUMULADO? Enseña ACUMULADO, CÓMO VAMOS o MARCADOR ACTUAL."],
+      ["FINALIZAR", "Pregunta: ¿CÓMO FINALIZO LA RONDA? Explica revisión, Tarjeta Digital y cierre." ]
+    ],
+    "remember": "Una pregunta de ayuda sólo orienta. Una orden como ABRE o LLÉVAME puede navegar, pero nunca guarda una acción peligrosa por sí sola."
+  },
+  {
+    "number": "72",
+    "kicker": "Qué responderá la aplicación",
+    "title": "Entiende resultados y orientación",
+    "subtitle": "La voz lee datos reales o explica una acción concreta; nunca inventa.",
+    "steps": [
+      ["UN HOYO", "Dice jugador, hoyo, Gross, Neto y relación contra par, o informa que no hay score."],
+      ["ACUMULADO", "General dice Gross y Neto; Stableford dice Gross y Puntos."],
+      ["MATCH Y FOUR BALL", "Dice el nombre o pareja y luego arriba, abajo o empatado."],
+      ["AYUDA O ERROR", "La ayuda indica pasos seguros. FALTA MIGUEL pide ese score. ERROR significa que no se aplicó una orden válida." ]
+    ],
+    "remember": "Después de navegar o escuchar una respuesta, mira la pantalla para comprobar destino, hoyo, jugador y valor visible."
+  }
+]

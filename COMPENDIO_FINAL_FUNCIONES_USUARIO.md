@@ -106,19 +106,19 @@ Se pueden registrar de uno a seis jugadores.
 En una **Ronda Normal**:
 
 1. Tocar el micrófono verde.
-2. Dictar directamente nombre, HDCP y marcas. Ejemplo: **“Jaime 14 blancas; Roberto 21 azules”**.
+2. Dictar directamente nombre, HDCP y marcas. Ejemplo: **“Miguel 14 blancas”**.
 3. Repetir el mismo orden hasta completar de uno a seis jugadores. Decir **“Jugador 1”** es opcional.
 4. Tocar **OK**.
 
 La guía de pantalla muestra:
 
-**DICTA ASÍ: JAIME · 14 · BLANCAS; ROBERTO · 21 · AZULES; HASTA 6 JUGADORES; LUEGO TOCA OK.**
+**DICTA ASÍ: MIGUEL · 14 · BLANCAS; PARA LOS DEMÁS REPITE NOMBRE + HDCP + MARCAS; HASTA 6 JUGADORES; LUEGO TOCA OK.**
 
 En **Stableford**:
 
 1. Seleccionar campo y categoría.
 2. Tocar el micrófono verde.
-3. Dictar obligatoriamente la posición y el nombre. Ejemplo: **“Jugador 1 Jaime; Jugador 2 Roberto”**.
+3. Dictar obligatoriamente la posición y el nombre. Ejemplo: **“Jugador 1 Miguel”**; para los demás, repetir **“Jugador # + nombre”**.
 4. Continuar hasta **Jugador 6** si corresponde y tocar **OK**.
 
 En Stableford no se dictan HDCP ni marcas: la aplicación asigna automáticamente HCP 0 y blancas o amarillas según la categoría.
@@ -193,7 +193,7 @@ En Stableford muestra:
 - Puntos IN;
 - Puntos TOTAL.
 
-El botón **TIMER ON** permite ver el tiempo transcurrido de la ronda. Al detenerlo muestra **TIMER OFF**.
+El botón **TIMER ON** permite ver el tiempo transcurrido de la ronda. Al detenerlo muestra **TIMER OFF**. La misma regla aplica a General, Stableford, Match Play, Four Ball y Práctica: si transcurren 30 minutos completos sin una instrucción válida, el TIMER se pone automáticamente en OFF. Un score, consulta o uso de un control reinicia el plazo; el apagado no borra jugadores, scores ni la ronda.
 
 ## 9. Botones disponibles durante una ronda
 

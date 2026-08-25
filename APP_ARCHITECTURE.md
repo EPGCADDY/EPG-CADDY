@@ -59,6 +59,14 @@ Pantallas principales:
 
 El dominio público raíz abre siempre la pantalla **Configura la ronda** mediante el parámetro interno `inicio=1`. Antes de mostrarla, la aplicación conserva la ronda activa persistida; abrir el inicio no borra, reemplaza ni finaliza la ronda anterior.
 
+### Arquitectura editorial del manual
+
+El manual de funciones, sus hojas de campos, sus inventarios visuales y toda imagen de revisión comparten una sola línea editorial tipo iPhone: tipografía limpia, texto negro sobre fondo blanco, jerarquía precisa, márgenes seguros, separación uniforme, acentos mínimos y composición vertical equilibrada.
+
+Todo archivo maestro de imagen es obligatoriamente 4K en su orientación final. Las páginas verticales se generan a `2160 × 4320 px` con metadatos mínimos de `300 dpi`. Una imagen reducida, borrosa, recortada o estirada no puede aprobarse ni publicarse. El candado `scripts/manual-visual-qc.py` comprueba resolución, densidad, márgenes, predominio negro/gris, verde limitado a acentos y equilibrio vertical; un solo `FAIL` bloquea la entrega.
+
+La página de **La Reunión Golf Resort** conserva únicamente la plantilla editorial vacía mientras el campo se encuentre en reconstrucción total. No se muestran PAR, HCP, marcas, yardajes, Rating, Slope ni totales hasta validar una nueva fuente oficial.
+
 ---
 
 # Flujo Principal

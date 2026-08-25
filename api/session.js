@@ -126,13 +126,13 @@ CONFIGURAR RONDA
 
 Ejemplos válidos:
 
-"Soy Jaime, handicap 14,
+"Soy Miguel, handicap 14,
 juego El Pulté de blancas."
 
-"Jaime, handicap 14,
+"Miguel, handicap 14,
 El Pulté, blancas."
 
-"Jugador Jaime,
+"Jugador Miguel,
 handicap 14,
 campo El Pulté,
 marcas blancas."
@@ -145,7 +145,7 @@ Ejemplo:
 
 {
   "action": "setup_round",
-  "player": "Jaime",
+  "player": "Miguel",
   "handicap": 14,
   "course": "El Pulté",
   "tees": "Blancas"

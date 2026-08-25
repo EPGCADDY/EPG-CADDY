@@ -495,3 +495,183 @@ Solicitud: **25 de agosto de 2026**. Se actualizan los inventarios hasta el últ
 | `ROADMAP_A_DETALLE.md` | Consolida V311, repite la línea 160 como inicio del bloque nuevo y conserva V294-V311. |
 | `ROADMAP_IMAGES/README.md` | Aclara que las imágenes V292 son base histórica y que el PDF incorpora la continuación. |
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el total activo rastreado a 197 archivos. |
+
+## Integración editorial V311 · manual completo 4K y enlace permanente
+
+El **25 de agosto de 2026** se incorpora el corte editorial inicial de 16 páginas, ampliado posteriormente en este mismo V311 a **72 páginas funcionales más portada**. El PDF y el visor web directo en `/manual` conservan nombres permanentes. Todas las imágenes maestras son verticales 4K de `2160 × 4320 px` a `300 dpi`. Las páginas 10–16 documentan los campos con composición vertical equilibrada; La Reunión queda como plantilla totalmente vacía mientras el campo permanece en reconstrucción.
+
+| Archivo nuevo o modificado | Registro editorial V311 |
+|---|---|
+| `APP_ARCHITECTURE.md` | Fija la línea editorial tipo iPhone, la regla 4K y La Reunión sin datos. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | Convierte resolución, composición y filtro visual en normas obligatorias. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Sincroniza V311 y documenta el contrato editorial permanente. |
+| `audit-project.mjs` | Ejecuta el candado del alojamiento del manual dentro de la auditoría maestra. |
+| `package.json` | Añade el comando de control `manual:visual-qc`. |
+| `vercel.json` | Crea `/manual` y `/manual.pdf`; entrega siempre la versión vigente sin caché anual inmutable. |
+| `manual.html` | Visor web responsivo con portada, 72 páginas funcionales, índice por categorías, lupa, navegación, aplicación y descarga PDF. |
+| `manual.webmanifest` | Acceso directo MANUAL SCG | Instala el manual completo como acceso independiente en el escritorio del iPhone. |
+| `scripts/manual-visual-qc.py` | Rechaza resolución, densidad, márgenes, recortes, color o equilibrio editorial incorrectos en las 73 imágenes. |
+| `scripts/inventory-gate.mjs` | Bloquea auditoría, construcción y publicación si los inventarios no fueron regenerados y sellados. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Conserva huella de fuentes y códigos SHA-256 de los tres inventarios vigentes. |
+| `test-v311-manual-hosting.mjs` | Comprueba rutas, portada, 72 páginas funcionales, PDF físico de 73 páginas, marcadores y dimensiones 4K. |
+| `verify-manual-sync.mjs` | Comprueba que la firma documental V311 de la aplicación coincida con el manual maestro. |
+| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias estable del manual completo de 73 páginas para conservar enlaces históricos. |
+| `docs/manual/v311/page-00.png` | Portada 4K aprobada con logo al 50% de saturación. |
+| `docs/manual/v311/manual-scg-escritorio-4k.png` | PNG maestro 4K del acceso MANUAL SCG. |
+| `docs/manual/v311/manual-scg-escritorio-4k.jpg` | JPG 4K optimizado para descarga desde iPhone. |
+| `docs/manual/v311/page-01.png` | Página 01 4K · Configura la ronda. |
+| `docs/manual/v311/page-02.png` | Página 02 4K · Registra jugadores. |
+| `docs/manual/v311/page-03.png` | Página 03 4K · Confirma la ronda. |
+| `docs/manual/v311/page-04.png` | Página 04 4K · Configura Stableford. |
+| `docs/manual/v311/page-05.png` | Página 05 4K · Score Card - Práctica. |
+| `docs/manual/v311/page-06.png` | Página 06 4K · Ronda General. |
+| `docs/manual/v311/page-07.png` | Página 07 4K · Control Manual. |
+| `docs/manual/v311/page-08.png` | Página 08 4K · Match Play. |
+| `docs/manual/v311/page-09.png` | Página 09 4K · Four Ball. |
+| `docs/manual/v311/page-10.png` | Página 10 4K · El Pulté Golf. |
+| `docs/manual/v311/page-11.png` | Página 11 4K · Guatemala Country Club. |
+| `docs/manual/v311/page-12.png` | Página 12 4K · San Isidro. |
+| `docs/manual/v311/page-13.png` | Página 13 4K · Mayan Golf. |
+| `docs/manual/v311/page-14.png` | Página 14 4K · Hacienda Nueva Country Club. |
+| `docs/manual/v311/page-15.png` | Página 15 4K · Alta Vista Golf & Tennis Club. |
+| `docs/manual/v311/page-16.png` | Página 16 4K · plantilla vacía de La Reunión Golf Resort. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Eleva el inventario activo a 223 archivos y registra cada artefacto nuevo. |
+| `ROADMAP_A_DETALLE.md` | Registra individualmente toda la integración. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen y satisface el ROADMAP Gate. |
+
+**Inventarios externos actualizados sin cambiar de nombre:** `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf` e `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`.
+
+## Pendiente reglamentario PEND-REG-001 · Reglas de Golf integradas
+
+El **25 de agosto de 2026** se registra, sin iniciar implementación, el futuro bloque principal para adaptar las Reglas de Golf a Golf Score Card GT. La proyección incluye consultas naturales por micrófono y buscador, orientación según modalidad y Regla Local, fuente reglamentaria vigente y confirmación obligatoria antes de que una respuesta pueda modificar scores o penalidades.
+
+| Archivo nuevo o modificado | Registro del pendiente |
+|---|---|
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Crea `PEND-REG-001`, su alcance, arquitectura, condiciones de cierre y palabras para localizarlo. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Agrega Reglas de Golf integradas al roadmap funcional proyectado. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Incorpora el archivo de cola al mapa maestro. |
+| `ROADMAP_A_DETALLE.md` | Conserva el registro técnico detallado. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen general. |
+
+
+## Cierre ampliado V311 · manual localizable y asistente por micrófono
+
+El **25 de agosto de 2026** el manual se amplía a **portada más 72 páginas funcionales**. El visor incorpora índice por categorías y una lupa que acepta preguntas naturales. La aplicación incorpora un asistente local de micrófono para explicar procedimientos y abrir destinos seguros, sin convertir preguntas en scores ni ejecutar cierres o modificaciones peligrosas. El PDF contiene 73 marcadores internos y todas las páginas conservan 2160 × 4320 px y 300 dpi.
+
+### Archivos registrados por el candado ROADMAP
+
+- `api/session.js`
+- `test-v268-control-manual-demo-link.mjs`
+- `test-v269-operational-matrix-demo.mjs`
+- `MANUAL_COBERTURA_FUNCIONAL_V311.md`
+- `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`
+- `docs/manual/v311/manual-pages-17-35.json`
+- `docs/manual/v311/page-17.png`
+- `docs/manual/v311/page-18.png`
+- `docs/manual/v311/page-19.png`
+- `docs/manual/v311/page-20.png`
+- `docs/manual/v311/page-21.png`
+- `docs/manual/v311/page-22.png`
+- `docs/manual/v311/page-23.png`
+- `docs/manual/v311/page-24.png`
+- `docs/manual/v311/page-25.png`
+- `docs/manual/v311/page-26.png`
+- `docs/manual/v311/page-27.png`
+- `docs/manual/v311/page-28.png`
+- `docs/manual/v311/page-29.png`
+- `docs/manual/v311/page-30.png`
+- `docs/manual/v311/page-31.png`
+- `docs/manual/v311/page-32.png`
+- `docs/manual/v311/page-33.png`
+- `docs/manual/v311/page-34.png`
+- `docs/manual/v311/page-35.png`
+- `docs/manual/v311/page-36.png`
+- `docs/manual/v311/page-37.png`
+- `docs/manual/v311/page-38.png`
+- `docs/manual/v311/page-39.png`
+- `docs/manual/v311/page-40.png`
+- `docs/manual/v311/page-41.png`
+- `docs/manual/v311/page-42.png`
+- `docs/manual/v311/page-43.png`
+- `docs/manual/v311/page-44.png`
+- `docs/manual/v311/page-45.png`
+- `docs/manual/v311/page-46.png`
+- `docs/manual/v311/page-47.png`
+- `docs/manual/v311/page-48.png`
+- `docs/manual/v311/page-49.png`
+- `docs/manual/v311/page-50.png`
+- `docs/manual/v311/page-51.png`
+- `docs/manual/v311/page-52.png`
+- `docs/manual/v311/page-53.png`
+- `docs/manual/v311/page-54.png`
+- `docs/manual/v311/page-55.png`
+- `docs/manual/v311/page-56.png`
+- `docs/manual/v311/page-57.png`
+- `docs/manual/v311/page-58.png`
+- `docs/manual/v311/page-59.png`
+- `docs/manual/v311/page-60.png`
+- `docs/manual/v311/page-61.png`
+- `docs/manual/v311/page-62.png`
+- `docs/manual/v311/page-63.png`
+- `docs/manual/v311/page-64.png`
+- `docs/manual/v311/page-65.png`
+- `docs/manual/v311/page-66.png`
+- `docs/manual/v311/page-67.png`
+- `docs/manual/v311/page-68.png`
+- `docs/manual/v311/page-69.png`
+- `docs/manual/v311/page-70.png`
+- `docs/manual/v311/page-71.png`
+- `docs/manual/v311/page-72.png`
+- `manual-search.js`
+- `scripts/publish-manual-pages.py`
+- `test-v311-manual-search.mjs`
+- `test-v311-manual-semantic-coverage.mjs`
+- `test-v311-manual-voice-map.mjs`
+- `test-v311-voice-assistant.mjs`
+- `voice-assistant.js`
+
+
+## Pendiente climático PEND-CLI-002 · Clima por campo en la tarjeta
+
+El **25 de agosto de 2026** se registra, sin iniciar implementación, la sincronización del clima mediante la ubicación exacta del campo seleccionado. Debe mostrarse desde Configuración después de elegir el club y permanecer en la tarjeta activa. Mayan Golf y cada club usarán exclusivamente sus coordenadas oficiales en todas sus alternativas. WeatherKit queda como candidato inicial sujeto a un piloto comparativo contra Tomorrow.io y OpenWeather en los campos de Guatemala.
+
+| Archivo nuevo o modificado | Registro del pendiente |
+|---|---|
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Agrega `PEND-CLI-002`, alcance, arquitectura, estados sin conexión y condiciones de cierre. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Incorpora el clima sincronizado como punto 12 del roadmap funcional. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Amplía el registro de la cola con el código climático. |
+| `ROADMAP_A_DETALLE.md` | Conserva el registro técnico detallado. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen general. |
+
+## Pendiente PEND-VOZ-003 · Caddie conversacional experto en golf
+
+El **25 de agosto de 2026** se registra, sin iniciar implementación, una capa de voz natural con conocimiento contextual de golf. Separará scores, consultas, navegación y preguntas abiertas; responderá desde fuentes aprobadas y no podrá modificar la ronda sin confirmación independiente.
+
+| Archivo nuevo o modificado | Registro del pendiente |
+|---|---|
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Agrega `PEND-VOZ-003`, arquitectura, seguridad, fuentes y condiciones de cierre. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Incorpora el caddie conversacional como punto 13. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Amplía los códigos localizables de la cola. |
+| `ROADMAP_A_DETALLE.md` | Conserva el registro técnico detallado. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen general. |
+
+## Cierre V311 · TIMER OFF automático por inactividad
+
+El **25 de agosto de 2026** se fija una regla común para General, Stableford, Match Play, Four Ball y Práctica: después de 30 minutos completos sin una instrucción válida, el TIMER activo pasa automáticamente a OFF. Scores, consultas reconocidas y controles válidos reinician el plazo. El apagado conserva la ronda y no modifica scores.
+
+| Archivo nuevo o modificado | Registro funcional |
+|---|---|
+| `timer-inactivity.js` | Motor puro del límite de 30 minutos. |
+| `index-grupal.html` | Programa, reinicia, persiste y ejecuta el apagado común. |
+| `service-worker.js` | Conserva el motor disponible en la instalación web. |
+| `scripts/build-mobile-web.mjs` | Incluye el motor en iPhone y Android. |
+| `test-v311-timer-inactivity.mjs` | Prueba el límite exacto y la integración física. |
+| `test-v263-compact-players-back-button.mjs` | Actualiza el simulador aislado de Stableford para incluir el programador del TIMER sin alterar jugadores ni scores. |
+| `audit-project.mjs` | Incorpora el candado a la auditoría maestra. |
+| `docs/manual/v311/manual-pages-17-35.json` | Explica la regla en la página 22. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Añade la explicación sencilla. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registra el contrato técnico completo. |
+| `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Relaciona función, página y prueba. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra motor y prueba nuevos. |
+| `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen general. |

@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V311: **197**.
+Archivos activos rastreados al corte V311 ampliado: **292**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -17,10 +17,12 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `.github/workflows/stableford-tournament-pass.yml` | `df70cf36092ddd72b59271bf241b1ac58fb21027` | 1075 bytes | Comprueba Stableford y exige primero ambos ROADMAPS. |
 | `.gitignore` | `0994446eb785e2166ce79941bec8bba6c245c567` | 75 bytes | Indica qué archivos temporales no deben subirse a GitHub. |
 | `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Fuente histórica del logo cromado 3D con verde neón muy saturado; conserva su nombre para no romper enlaces. |
-| `APP_ARCHITECTURE.md` | `7119e67641ce309201fa32922195ebceb3006fb4` | 3405 bytes | Explica cómo se divide la aplicación y cómo trabajan juntas sus partes. |
+| `APP_ARCHITECTURE.md` | `48eb432665d9a880624ad6a93e852e2992cbc7ad` | 7104 bytes | Explica arquitectura, modalidades, reglas editoriales 4K y campos. |
 | `AUDITORIA_MAESTRA_V170.md` | `8dd135a84521f64c39928fadb35de0518447fe40` | 4462 bytes | Resumen de una revisión histórica del producto. |
 | `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Registro V305 | Se calcula al publicar | Manual sencillo actualizado con Historial, Regístrate y el vocabulario visible vigente. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `be454f43b458670199a7be029abf716dc49108d7` | 4018 bytes | Reglas permanentes, punto de corte y candado técnico de ambos ROADMAPS, incluido Vercel. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `54288b53e83185333276d45cca4fe41dc9f7b591` | 4948 bytes | Reglas permanentes, candados ROADMAP/inventarios, Vercel y calidad visual 4K. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001 · PEND-CLI-002 · PEND-VOZ-003` | Se calcula al publicar | Cola consultable; guarda Reglas de Golf, clima exacto por club desde Configuración y caddie conversacional experto. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Se calcula al regenerar | Huella técnica que impide validar o publicar con inventarios desactualizados. |
 | `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INDICE_DOCUMENTOS_PENDIENTES.md` | `064e9201c833cb7f5c751ba5328290d8c4c2b20b` | 814 bytes | Lista de documentos todavía pendientes de usar. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | `b9815c3eae588f1f54c0e4fabbf1d51b52c75b0e` | 722 bytes | Registro de trabajos terminados. |
 | `CONTROL_PROYECTO_SCIRE/04_MATRIZ_DE_CAMPOS/INDICE_TARJETAS_ORIGINALES.md` | `2c2635943ce64a83e64012e71603193b74b35019` | 1161 bytes | Lista de tarjetas originales de los campos. |
@@ -35,7 +37,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ECOS.md` | `43a9c6f5bacb8c758edd33c8ad31f9e59e63f84f` | 3982 bytes | Reglas de comportamiento de Golf Score Card GT. |
 | `EPG-Caddy_Master_Blueprint_v0.1.md` | `95b4c227c4e5dce7f90fede0ebc9cdd0af6ed76c` | 7990 bytes | Plano maestro; el nombre del archivo es antiguo, pero el contenido ya usa Golf Score Card GT. |
 | `EPG_CADDY_PLAN_CAMBIOS.md` | `a81981bda6522c0ab29ec5e70f6ebe557cde34bf` | 116300 bytes | Lista antigua de cambios; el nombre sólo se conserva para localizarla. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V305 | Se calcula al publicar | Manual completo sincronizado con App V305, sus pantallas y sus reglas. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | `34cc624c0dc8c93373e91b151a4f7a96becb9cf7` | 106334 bytes | Manual maestro sincronizado con App V311, modalidades, portada y reglas editoriales. |
 | `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V305 | Se calcula al publicar | Lista ordenada de funciones terminadas y pendientes con vocabulario Historial. |
 | `MAPA_MATRIZ_BASE_MAESTRA_V256.md` | `8d0cdb23c0b1d9445f51b822ba49d385f5c71d3c` | 1718 bytes | Explica la información central incorporada en V256. |
 | `MAPA_MATRIZ_REGISTRO_JUGADORES_V255.md` | `5d0670562aa89ffa7a265820573e0e31895fe95b` | 1993 bytes | Explica el registro de jugadores de V255. |
@@ -90,7 +92,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Copia maestra del logo cromado 3D con verde neón muy saturado. |
 | `assets/official-logos/golf-score-card-gt-pwa-192.png` | `e28cd92c784748a2d4ff02bf3491b96c8121ed94` | 67805 bytes | Icono cromado 3D neón pequeño de la aplicación instalable. |
 | `assets/official-logos/golf-score-card-gt-pwa-512.png` | `0e85cc6995f9bafefb49dec5a8253aef3db7fffd` | 461402 bytes | Icono cromado 3D neón grande de la aplicación instalable. |
-| `audit-project.mjs` | Registro V305 | Se calcula al publicar | Ejecuta el candado ROADMAP y los filtros automáticos V304 y V305. |
+| `audit-project.mjs` | `baaa661c4b9d864e6d37c95a56841c534d3e613b` | 4446 bytes | Ejecuta los candados ROADMAP, inventarios y todos los filtros automáticos. |
 | `capacitor.config.json` | `a5ca52fde974ea370d90dbfe422f08101ec7f7eb` | 867 bytes | Define el nombre visible y la identidad de las apps de iPhone y Android. |
 | `card-artifacts.js` | `df8ba2b09532b73701681d7de1781ca5b54baf26` | 12799 bytes | Arma la tarjeta oficial con la información de la ronda. |
 | `card-file-export.js` | `4ddbf8f36ec142114cfa965a78d97ea55365afa1` | 5919 bytes | Convierte la tarjeta en imagen o PDF. |
@@ -103,7 +105,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `database/test-player-profile-schema.mjs` | `32d0b6f78446a1193e8b2239b26f93738547b24b` | 817 bytes | Comprueba los espacios de la información central. |
 | `database/test-schema.mjs` | `ad64ac3b0ed21932c24ea56886124f518a7b0692` | 1099 bytes | Comprueba los espacios de la información central. |
 | `historical-analytics.js` | `2a5bb2f2ef1564b09a567823efde14b54829ce86` | 8963 bytes | Resume el historial y muestra datos útiles de rondas anteriores. |
-| `index-grupal.html` | Registro V305 | Se calcula al publicar | Pantalla principal V305 con Historial, Atrás, Regístrate y controles sin superposición. |
+| `index-grupal.html` | `eae87b8e6cc0629744837deabce6616fca2d6971` | 579351 bytes | Pantalla principal con firma funcional V307 protegida y firma documental V311 para el manual completo. |
 | `index.html` | `7b483f1553246274920c71a10723f484d1847744` | 759569 bytes | Entrada antigua que lleva a la pantalla principal. |
 | `ios/EPGCaddy/App.swift` | `06a1c8ee89139ef87af20f07bba2496aa2b90636` | 141 bytes | Inicia la aplicación de apoyo para iPhone. |
 | `ios/EPGCaddy/ContentView.swift` | `80556289a09cc451f4e11e56f2f9d6a800a50a5f` | 208 bytes | Abre Golf Score Card GT dentro de la aplicación de iPhone. |
@@ -115,7 +117,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `master-data-sync.js` | `be2aade4553f95b389189fcf4225ece6d16deaad` | 8202 bytes | Mantiene igual la información del teléfono y del respaldo central. |
 | `mobile-release.json` | Registro V305 | 76 bytes | Guarda la versión y el número 305 del próximo paquete móvil. |
 | `mobile/native-runtime-entry.js` | `ffbe9107212932779e6c8e7e5017f4c178b62326` | 704 bytes | Conecta la pantalla con funciones propias del teléfono. |
-| `package.json` | `a9ffec0ea56adb2998235b502fd71ed092b13bb0` | 1403 bytes | Lista lo necesario y agrega el botón técnico `roadmap:gate`. |
+| `package.json` | `08ff6dc440023e09a84e01e3885eeb8a285a73bf` | 1523 bytes | Lista dependencias y expone candados ROADMAP, inventarios y control visual del manual. |
 | `player-registry.js` | `bf406d7b60803aedf1fd1d936de699d0cc95e0a5` | 11246 bytes | Guarda, encuentra y actualiza jugadores. |
 | `round-closure.js` | `c31ec239f8a8184a5b2fb184a03f23080e39933b` | 3939 bytes | Cierra una ronda y conserva sus correcciones. |
 | `round-navigation.js` | `5b5f4de45cfd1d0c05b4d2daf874465953887cf5` | 1967 bytes | Controla el paso entre ronda actual, ronda previa y pantalla principal. |
@@ -197,8 +199,101 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v305-history-navigation-zero-error.mjs` | Registro V305 | Se calcula al publicar | Audita Historial, Atrás, Regístrate, superposiciones, validación Stableford, versión y caché. |
 | `test-v305-registration-guides-parser-truth.mjs` | Registro V305 | Se calcula al publicar | Ejecuta ambos analizadores reales y bloquea guías falsas, HDCP o marcas visibles en Stableford y estados de OK incoherentes. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
-| `vercel.json` | Registro V305 | Se calcula al publicar | Ejecuta en Vercel los candados ROADMAP, visual hermano y navegación V305 antes de publicar. |
-| `verify-manual-sync.mjs` | `8042010c6b0cd81915a57a8ac65d1f778bea7cc7` | 730 bytes | Comprueba el respaldo y el envío de cambios. |
+| `vercel.json` | `eb7aa74873a757c387e8c8b94e6da73f20022955` | 2516 bytes | Publica inicio, manual y acceso MANUAL SCG; ejecuta la auditoría con candados antes de publicar. |
+| `verify-manual-sync.mjs` | `df56ae83b57d5ee4d6273f36be1db9350e1b2c9c` | 731 bytes | Comprueba que la firma documental de la aplicación coincida con la versión del manual maestro. |
+| `manual.html` | Registro V311 ampliado | Se calcula al publicar | Visor permanente con portada, 72 páginas funcionales, índice por categorías, lupa de lenguaje natural, navegación, app y descarga PDF. |
+| `manual.webmanifest` | `2c07adafaa323be295c05b927c1418c712bd514a` | 456 bytes | Instala MANUAL SCG como acceso independiente al manual completo. |
+| `scripts/manual-visual-qc.py` | Registro V311 ampliado | Se calcula al publicar | Filtro obligatorio de 73 imágenes, resolución 4K, densidad, márgenes, color y equilibrio editorial. |
+| `scripts/inventory-gate.mjs` | `3e1d28a73526c50858b68df85a64f35086efc96e` | 2234 bytes | Bloquea auditoría y publicación si los tres inventarios no coinciden con las fuentes activas. |
+| `test-v311-manual-hosting.mjs` | Registro V311 ampliado | Se calcula al publicar | Comprueba visor, acceso MANUAL SCG, PDF físico de 73 páginas, marcadores internos y las 73 imágenes 4K. |
+| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias estable V311 | Se calcula al publicar | Copia completa de 73 páginas conservada bajo el nombre histórico para no romper enlaces existentes. |
+| `docs/manual/v311/page-00.png` | `f2558f664e2df29292a09c2ede9ef799b1f54541` | 3526431 bytes | Portada 4K aprobada con logo al 50% de saturación. |
+| `docs/manual/v311/manual-scg-escritorio-4k.png` | `e1614c0f8415dc735d003b4e5b38cb0a5a1be308` | 2273808 bytes | PNG cuadrado 4K del acceso MANUAL SCG. |
+| `docs/manual/v311/manual-scg-escritorio-4k.jpg` | `4ca08447591bc66820a43627f97d75ebdf2c6a34` | 663088 bytes | JPG cuadrado 4K optimizado para descarga desde iPhone. |
+| `docs/manual/v311/page-01.png` | `df5f83560dfe77b381c0048844c081ff296f0f79` | 744315 bytes | Página 01 4K del manual. |
+| `docs/manual/v311/page-02.png` | `65141cded163551cb57432fa243241dca2cfec22` | 762172 bytes | Página 02 4K del manual. |
+| `docs/manual/v311/page-03.png` | `1bc21951ba865a5130cad515cde77ec7a59a6003` | 629721 bytes | Página 03 4K del manual. |
+| `docs/manual/v311/page-04.png` | `b01b3d166e6065f493230993bfda865773f45fa0` | 744844 bytes | Página 04 4K del manual. |
+| `docs/manual/v311/page-05.png` | `b86aab515e1984428a89de7a586a555b4f414c52` | 763925 bytes | Página 05 4K del manual. |
+| `docs/manual/v311/page-06.png` | `caa3cc934e1fed14455582835642b3a4bf980023` | 673665 bytes | Página 06 4K del manual. |
+| `docs/manual/v311/page-07.png` | `62d9408cc462c9ec15449eb68c0105972fc0d08d` | 669371 bytes | Página 07 4K del manual. |
+| `docs/manual/v311/page-08.png` | `53625d46ab08ad861e3190fe0b21ae5f4dc59d1f` | 854835 bytes | Página 08 4K Match Play. |
+| `docs/manual/v311/page-09.png` | `f90cf53a6d1f11f8d9c01b6540be365e8cc267ba` | 836105 bytes | Página 09 4K Four Ball. |
+| `docs/manual/v311/page-10.png` | `52c50b67f5957ec62f90abc7cc05371eece411f9` | 795611 bytes | Página 10 4K de El Pulté Golf. |
+| `docs/manual/v311/page-11.png` | `150eb1a59909a4519fa7f42e774708814d9fc00c` | 834415 bytes | Página 11 4K de Guatemala Country Club. |
+| `docs/manual/v311/page-12.png` | `b1b9bca2d050fc31560b9611262970943bb5236c` | 875197 bytes | Página 12 4K de San Isidro. |
+| `docs/manual/v311/page-13.png` | `7e5804731a94bd2602442c609313994755ea60bb` | 759283 bytes | Página 13 4K de Mayan Golf. |
+| `docs/manual/v311/page-14.png` | `7f03343602d602c3d43d13faf42b05474a32939e` | 728904 bytes | Página 14 4K de Hacienda Nueva Country Club. |
+| `docs/manual/v311/page-15.png` | `24b5a9a1d57315aecc34567643ff4f84bacca44e` | 709854 bytes | Página 15 4K de Alta Vista Golf & Tennis Club. |
+| `docs/manual/v311/page-16.png` | `44f26965efce63a2980baec99f3c7877c2a70a9a` | 322915 bytes | Página 16 4K: plantilla vacía de La Reunión durante su reconstrucción total. |
+| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` | PDF completo | Se calcula al publicar | Portada más 72 páginas, índice PDF interno y contenido funcional ampliado. |
+| `docs/manual/v311/manual-pages-17-35.json` | Fuente páginas 17–72 | Se calcula al publicar | Contenido estructurado del manual ampliado y mapa de voz. |
+| `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Matriz de cobertura | Se calcula al publicar | Relaciona funciones, páginas y pruebas automáticas. |
+| `manual-search.js` | Buscador natural | Se calcula al publicar | Interpreta preguntas completas y dirige a la explicación correspondiente. |
+| `voice-assistant.js` | Asistente de voz seguro | Se calcula al publicar | Distingue ayuda, navegación, consultas y scores sin acciones destructivas automáticas. |
+| `timer-inactivity.js` | Control de inactividad | Se calcula al publicar | Calcula el límite común de 30 minutos y determina cuándo debe ponerse el TIMER en OFF. |
+| `scripts/publish-manual-pages.py` | Publicador 4K | Se calcula al publicar | Publica atómicamente las páginas renderizadas y verifica 2160 × 4320 y 300 dpi. |
+| `test-v311-manual-search.mjs` | Candado de búsqueda | Se calcula al publicar | Comprueba frases naturales, resultados y categorías. |
+| `test-v311-manual-semantic-coverage.mjs` | Candado semántico | Se calcula al publicar | Comprueba la cobertura funcional de las 72 páginas. |
+| `test-v311-manual-voice-map.mjs` | Candado de voz | Se calcula al publicar | Verifica vocabulario oficial, consultas y respuestas documentadas. |
+| `test-v311-voice-assistant.mjs` | Candado del asistente | Se calcula al publicar | Comprueba ayuda, navegación y separación de los scores reales. |
+| `test-v311-timer-inactivity.mjs` | Candado TIMER 30 minutos | Se calcula al publicar | Comprueba el apagado en todas las modalidades, persistencia y reinicio por instrucción válida. |
+| `docs/manual/v311/page-17.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-18.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-19.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-20.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-21.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-22.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-23.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-24.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-25.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-26.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-27.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-28.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-29.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-30.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-31.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-32.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-33.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-34.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-35.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-36.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-37.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-38.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-39.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-40.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-41.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-42.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-43.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-44.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-45.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-46.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-47.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-48.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-49.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-50.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-51.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-52.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-53.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-54.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-55.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-56.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-57.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-58.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-59.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-60.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-61.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-62.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-63.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-64.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-65.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-66.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-67.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-68.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-69.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-70.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-71.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-72.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 
 ## Registro obligatorio de la documentación operativa V300
 

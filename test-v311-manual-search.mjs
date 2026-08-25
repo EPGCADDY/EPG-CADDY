@@ -1,0 +1,33 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import searchApi from "./manual-search.js";
+
+const html=fs.readFileSync(new URL("./manual.html",import.meta.url),"utf8");
+const details=JSON.parse(fs.readFileSync(new URL("./docs/manual/v311/manual-pages-17-35.json",import.meta.url),"utf8"));
+const baseTitles=[
+  "PORTADA","CONFIGURA LA RONDA","REGISTRA JUGADORES","CONFIRMA LA RONDA","CONFIGURA STABLEFORD",
+  "SCORE CARD - PRÁCTICA","RONDA GENERAL","CONTROL MANUAL","MATCH PLAY","FOUR BALL","EL PULTÉ GOLF",
+  "GUATEMALA COUNTRY CLUB","SAN ISIDRO","MAYAN GOLF","HACIENDA NUEVA COUNTRY CLUB",
+  "ALTA VISTA GOLF & TENNIS CLUB","LA REUNIÓN GOLF RESORT"
+];
+const entries=baseTitles.map((title,index)=>({number:String(index).padStart(2,"0"),title,searchText:index===7?"corregir borrar cambiar score bogey par gross enter":""}));
+for(const detail of details)entries.push({number:detail.number,title:detail.title,searchText:JSON.stringify(detail)});
+
+const first=query=>searchApi.search(query,entries,{limit:8})[0]?.number;
+const pages=query=>searchApi.search(query,entries,{limit:8}).map(item=>item.number);
+
+assert.equal(first("Quiero jugar Stableford"),"04");
+assert.equal(first("Cómo borro un bogey que fue par"),"07");
+assert.equal(first("Cómo pregunto el acumulado"),"61");
+assert.equal(first("No puedo finalizar la ronda"),"27");
+assert.ok(pages("Quiero consultar yardas slope rating").some(page=>Number(page)>=10&&Number(page)<=16));
+assert.ok(pages("Qué puedo decirle a la aplicación").includes("71"));
+
+for(const required of ["manualSearch","manualSearchResults","categoryIndex","manual-search.js","Quiero jugar Stableford","Cómo corrijo un bogey que fue par"]){
+  assert.ok(html.includes(required),`Falta el componente de búsqueda: ${required}`);
+}
+for(const category of ["EMPEZAR Y REGISTRAR","MODALIDADES","ANOTAR Y CORREGIR","PREGUNTAR Y ESCUCHAR","FINALIZAR, GUARDAR Y RECUPERAR","INFORMACIÓN DE CAMPOS"]){
+  assert.ok(html.includes(category),`Falta categoría del índice: ${category}`);
+}
+
+console.log("PASS V311 · índice temático y lupa con preguntas naturales");

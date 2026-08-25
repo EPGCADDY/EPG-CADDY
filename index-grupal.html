@@ -12,6 +12,7 @@
 <link rel="apple-touch-icon" href="/assets/official-logos/golf-score-card-gt-apple-touch-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V307-MATCH-PLAY-THICK-ARROWS-FORMAT-20260825">
+<meta name="gscg-manual" content="V311-MANUAL-COMPLETE-DIRECT-ACCESS-20260825">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
 <meta name="gscg-four-ball" content="V309-TWO-PAIRS-BEST-NET-CUMULATIVE-MATCH-20260825">
@@ -615,7 +616,7 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
   </section>
 </div>
 
-<div class="overlay" id="officialCorrectionOverlay" aria-hidden="true"><section class="new-round-card stableford-result-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="cancelOfficialCorrection">ATRÁS</button></div><h1>CORRECCIÓN OFICIAL</h1><div class="stableford-result-fields"><label class="wide">JUGADOR<select id="officialCorrectionPlayer"></select></label><label>HOYO<select id="officialCorrectionHole"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option></select></label><label>SCORE ACTUAL<input id="officialCorrectionCurrent" type="text" readonly aria-readonly="true"></label><label>NUEVO GROSS<input id="officialCorrectionGross" type="number" min="1" max="30" inputmode="numeric"></label><label class="wide">MOTIVO<input id="officialCorrectionReason" type="text" maxlength="120" autocomplete="off"></label><label class="wide">RESPONSABLE<input id="officialCorrectionAuthorizedBy" type="text" maxlength="60" value="JAIME" autocomplete="off"></label></div><div class="setup-status" id="officialCorrectionStatus"></div><button class="nr-button" type="button" id="saveOfficialCorrection">GUARDAR CORRECCIÓN</button></section></div>
+<div class="overlay" id="officialCorrectionOverlay" aria-hidden="true"><section class="new-round-card stableford-result-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="cancelOfficialCorrection">ATRÁS</button></div><h1>CORRECCIÓN OFICIAL</h1><div class="stableford-result-fields"><label class="wide">JUGADOR<select id="officialCorrectionPlayer"></select></label><label>HOYO<select id="officialCorrectionHole"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option></select></label><label>SCORE ACTUAL<input id="officialCorrectionCurrent" type="text" readonly aria-readonly="true"></label><label>NUEVO GROSS<input id="officialCorrectionGross" type="number" min="1" max="30" inputmode="numeric"></label><label class="wide">MOTIVO<input id="officialCorrectionReason" type="text" maxlength="120" autocomplete="off"></label><label class="wide">RESPONSABLE<input id="officialCorrectionAuthorizedBy" type="text" maxlength="60" placeholder="NOMBRE DEL RESPONSABLE" autocomplete="off"></label></div><div class="setup-status" id="officialCorrectionStatus"></div><button class="nr-button" type="button" id="saveOfficialCorrection">GUARDAR CORRECCIÓN</button></section></div>
 
 <div class="overlay" id="cardLibraryOverlay" aria-hidden="true"><section class="card-library-panel"><div class="card-library-head"><h1>HISTORIAL DE TARJETAS</h1><button class="screen-back-button" type="button" id="closeCardLibrary">ATRÁS</button></div><div class="card-library-filters"><select id="cardLibraryMode" aria-label="Modalidad"><option value="all">TODAS LAS MODALIDADES</option><option value="general">GENERAL</option><option value="stableford">STABLEFORD</option></select><select id="cardLibraryCourse" aria-label="Campo"><option value="all">TODOS LOS CAMPOS</option></select><input id="cardLibraryQuery" type="search" placeholder="JUGADOR / TORNEO / FECHA" aria-label="Buscar jugador, torneo o fecha" autocomplete="off"></div><div class="card-library-status" id="cardLibraryStatus" role="status" aria-live="polite"></div><div class="card-library-list" id="cardLibraryList"></div><div class="card-library-actions hidden" id="cardLibraryActions"><div class="card-library-selected" id="cardLibrarySelected"></div><button type="button" id="libraryOpenGlobal">ABRIR GLOBAL</button><button type="button" id="libraryImageGlobal">IMAGEN GLOBAL</button><button type="button" id="libraryPdfGlobal">PDF GLOBAL</button><select id="cardLibraryPlayer" aria-label="Jugador de tarjeta personal"></select><button type="button" id="libraryOpenPersonal">ABRIR PERSONAL</button><button type="button" id="libraryImagePersonal">IMAGEN PERSONAL</button><button type="button" id="libraryPdfPersonal">PDF PERSONAL</button><button type="button" id="libraryPdfAll">PDF TODAS</button><button type="button" id="openHistoryInsights">ESTADÍSTICAS</button></div></section></div>
 
@@ -639,8 +640,8 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
     <section class="registration-method" aria-label="Método 1 Dictado">
       <div class="newbie-registration-guide" aria-label="Instrucciones de registro para cada jugador">
         <div class="newbie-guide-title">DICTA ASÍ:</div>
-        <div>JAIME · 14 · BLANCAS</div>
-        <div>ROBERTO · 21 · AZULES</div>
+        <div>MIGUEL · 14 · BLANCAS</div>
+        <div>OTRO JUGADOR · NOMBRE + HDCP + MARCAS</div>
         <div class="newbie-guide-player">HASTA 6 JUGADORES</div>
         <div>LUEGO TOCA OK</div>
       </div>
@@ -714,7 +715,7 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
 <div class="mandatory-update" id="mandatoryUpdate" role="dialog" aria-modal="true" aria-labelledby="mandatoryUpdateTitle"><div class="mandatory-update-card"><h1 id="mandatoryUpdateTitle">ACTUALIZACIÓN OBLIGATORIA</h1><p>HAY UNA NUEVA VERSIÓN DE GOLF SCORE CARD GUATEMALA. PARA PROTEGER LOS CÁLCULOS, LOS DATOS Y LAS FUNCIONES, DEBES ACTUALIZAR ANTES DE CONTINUAR.</p><button type="button" id="mandatoryUpdateButton">ACTUALIZAR</button></div></div>
-<script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./round-navigation.js"></script>
+<script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./timer-inactivity.js"></script>
 <script>
 "use strict";
 const GSC_API_ORIGIN=String(window.GSC_API_ORIGIN||"").replace(/\/$/,"");
@@ -837,7 +838,7 @@ const DEMO_CONTROL_MANUAL_KEY="golf-score-card-guatemala-demo-control-manual-v26
 const DEMO_CONTROL_MANUAL_DRAFT_KEY="golf-score-card-guatemala-demo-control-manual-draft-v269";
 const DEMO_CONTROL_MANUAL_ARCHIVE_KEY="golf-score-card-guatemala-demo-control-manual-archive-v269";
 const CONTROL_MANUAL_DEMO_PLAYERS=[
-  {name:"JAIME",handicap:14,scores:[5,4,5,4,3]},
+  {name:"MIGUEL",handicap:14,scores:[5,4,5,4,3]},
   {name:"NELSON",handicap:18,scores:[4,5,4,6,4]},
   {name:"JUNIOR",handicap:8,scores:[6,4,5,5,3]},
   {name:"FITO",handicap:12,scores:[5,6,4,5,5]},
@@ -866,7 +867,7 @@ let sessionConnectPromise=null,voiceActivationPromise=null,voiceActivationContex
 let appHiddenAt=0,appWasBackgrounded=false,lastRealtimeActivityAt=Date.now(),resumeCheckPromise=null;
 let realtimeShape="unknown";
 let setupSpeechAllowed=false,sessionHasSpoken=false;
-let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false;
+let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false,pendingVoiceAssistantAction=null;
 let voiceOpening=false;
 const processedTranscriptItems=new Set();
 function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
@@ -1517,8 +1518,21 @@ function roundStartText(){return new Intl.DateTimeFormat("es-GT",{hour:"2-digit"
 function roundIdleStatus(){return `INICIO ${roundStartText()}`}
 function latestScoreTimestamp(){const values=round.players.flatMap(p=>Object.values(p.holes||{}).map(s=>Date.parse(s?.updatedAt||"")).filter(Number.isFinite));return values.length?Math.max(...values):null}
 function renderRoundClockButton(){const button=$("stopClockButton"),elapsed=$("roundElapsedStatus");if(!button)return;button.disabled=!round.configured;button.textContent=round.endedAt?"TIMER OFF":"TIMER ON";if(elapsed)elapsed.textContent=round.configured?`RONDA ${roundElapsedText()}`:""}
-function stopRoundClock(){if(!round.configured||round.endedAt)return false;const now=Date.now(),lastScore=latestScoreTimestamp(),end=!round.clockResumedAt&&isRoundComplete()&&lastScore&&lastScore<now?lastScore:now;round.endedAt=new Date(end).toISOString();round.durationSeconds=Math.max(0,Math.floor((end-new Date(round.createdAt).getTime())/1000));round.clockResumedAt=null;persist();render();renderRoundClockButton();$("status").textContent=roundIdleStatus();return true}
-function startRoundClock(){if(!round.configured||!round.endedAt)return false;const now=Date.now(),elapsed=Math.max(0,Number(round.durationSeconds)||roundElapsedSeconds());round.createdAt=new Date(now-elapsed*1000).toISOString();round.endedAt=null;round.clockResumedAt=new Date(now).toISOString();persist();render();renderRoundClockButton();$("status").textContent=roundIdleStatus();return true}
+let roundTimerIdleTimeout=null;
+function clearRoundTimerIdleTimeout(){if(roundTimerIdleTimeout){clearTimeout(roundTimerIdleTimeout);roundTimerIdleTimeout=null}}
+function scheduleRoundTimerIdleShutdown(){
+  clearRoundTimerIdleTimeout();
+  const idle=window.GSCTimerInactivity;if(!idle||!round.configured||round.endedAt)return false;
+  if(idle.shouldStop(round)){stopRoundClock("idle");return true}
+  roundTimerIdleTimeout=setTimeout(()=>{roundTimerIdleTimeout=null;scheduleRoundTimerIdleShutdown()},Math.max(50,idle.remainingMs(round)));
+  return true;
+}
+function noteRoundTimerInstruction(){
+  if(!round.configured||round.endedAt)return false;
+  round.timerLastInstructionAt=new Date().toISOString();persist();scheduleRoundTimerIdleShutdown();return true;
+}
+function stopRoundClock(reason="manual"){if(!round.configured||round.endedAt)return false;clearRoundTimerIdleTimeout();const now=Date.now(),lastScore=latestScoreTimestamp(),end=reason!=="idle"&&!round.clockResumedAt&&isRoundComplete()&&lastScore&&lastScore<now?lastScore:now;round.endedAt=new Date(end).toISOString();round.durationSeconds=Math.max(0,Math.floor((end-new Date(round.createdAt).getTime())/1000));round.clockResumedAt=null;if(reason==="idle")round.timerStoppedByInactivityAt=round.endedAt;persist();render();renderRoundClockButton();$("status").textContent=reason==="idle"?"TIMER OFF · 30 MIN SIN INSTRUCCIONES":roundIdleStatus();return true}
+function startRoundClock(){if(!round.configured||!round.endedAt)return false;const now=Date.now(),elapsed=Math.max(0,Number(round.durationSeconds)||roundElapsedSeconds());round.createdAt=new Date(now-elapsed*1000).toISOString();round.endedAt=null;round.clockResumedAt=new Date(now).toISOString();round.timerLastInstructionAt=round.clockResumedAt;round.timerStoppedByInactivityAt=null;persist();render();renderRoundClockButton();scheduleRoundTimerIdleShutdown();$("status").textContent=roundIdleStatus();return true}
 let lastRoundClockToggleAt=0;
 function toggleRoundClock(){const now=Date.now();if(now-lastRoundClockToggleAt<650)return false;lastRoundClockToggleAt=now;return round.endedAt?startRoundClock():stopRoundClock()}
 function isStopCommand(value){
@@ -1527,6 +1541,7 @@ function isStopCommand(value){
 }
 function clearOutputAudioSafe(){try{if(dc?.readyState==="open")sendEvent({type:"output_audio_buffer.clear"})}catch{}}
 function stopAuthorizedSpeech(){
+  pendingVoiceAssistantAction=null;
   const responseId=activeResponseId||speechPlaybackResponseId;
   if(audioEl){audioEl.muted=true;audioEl.volume=0;}
   if(micTrack)micTrack.enabled=false;
@@ -1578,6 +1593,39 @@ function parseRoundNavigationCommand(transcript){
     ?{matched:true,action:"registration"}
     :{matched:false};
 }
+function executeVoiceAssistantAction(action){
+  if(listening)setVoice(false);
+  switch(action){
+    case"open_stableford":return openFreshStablefordSetup();
+    case"open_match":openNewRoundDraft();return selectGeneralRoundMode("match_play");
+    case"open_four_ball":openNewRoundDraft();return selectGeneralRoundMode("four_ball");
+    case"open_practice":openNewRoundDraft();return startProvisionalScorecard();
+    case"open_registration":return openNewRoundDraft();
+    case"open_history":return openCardLibrary();
+    case"open_statistics":return openHistoryInsights();
+    case"open_final_card":return openFinalDigitalCard();
+    case"open_manual_entry":document.getElementById("roundManualEntry")?.scrollIntoView({behavior:"smooth",block:"start"});return true;
+    case"open_course_info":document.getElementById("courseInfo")?.scrollIntoView({behavior:"smooth",block:"center"});return true;
+    case"open_manual":persist();window.location.assign("/manual-scg");return true;
+    case"open_account":return openCentralAccount();
+    case"open_install":return openInstallGuide();
+    default:return false;
+  }
+}
+function handleVoiceAssistantTranscript(transcript){
+  const command=window.GSCVoiceAssistant?.parse?.(transcript)||{matched:false};
+  if(!command.matched)return false;
+  noteRoundTimerInstruction();
+  const action=command.execute?command.action:null;
+  pendingVoiceAssistantAction=action;
+  const statusTarget=voiceContext==="setup"?$("setupStatus"):$("status");
+  if(statusTarget)statusTarget.textContent=command.speech;
+  speakQuery(command.speech,"assistant").then(spoken=>{
+    if(spoken||!action||pendingVoiceAssistantAction!==action)return;
+    pendingVoiceAssistantAction=null;executeVoiceAssistantAction(action);
+  });
+  return true;
+}
 function finalizeRoundDictation(){
   if(!roundFinalizeRequested)return;
   if(roundPendingItems.size){$("status").textContent="TRANSCRIBIENDO…";return}
@@ -1585,12 +1633,17 @@ function finalizeRoundDictation(){
   if(roundFinalizeTimer){clearTimeout(roundFinalizeTimer);roundFinalizeTimer=null}
   const transcript=roundTranscriptCombined();
   if(!transcript){resetRoundCapture();phase="idle";$("status").textContent=roundIdleStatus();return}
-  if(isStopCommand(transcript)){resetRoundCapture();stopAuthorizedSpeech();return}
+  if(isStopCommand(transcript)){noteRoundTimerInstruction();resetRoundCapture();stopAuthorizedSpeech();return}
   const navigation=parseRoundNavigationCommand(transcript);
   if(navigation.matched){
+    noteRoundTimerInstruction();
     resetRoundCapture();
     phase="idle";
     openNewRoundDraft();
+    return;
+  }
+  if(handleVoiceAssistantTranscript(transcript)){
+    resetRoundCapture();
     return;
   }
   $("status").textContent="PROCESANDO…";
@@ -1599,6 +1652,7 @@ function finalizeRoundDictation(){
   // completarse después por micrófono sin reiniciar ni perder scores.
   const provisionalProfile=parseProvisionalProfileTranscript(transcript);
   if(provisionalProfile.matched){
+    noteRoundTimerInstruction();
     const result=provisionalProfile.ok?applyProvisionalProfileChange(provisionalProfile.change):provisionalProfile;
     resetRoundCapture();phase="idle";
     if(!result.ok)speakGlobalError("round");
@@ -1608,6 +1662,7 @@ function finalizeRoundDictation(){
   // 1) Gestión explícita de jugadores durante una ronda.
   const rosterCmd=parseRosterCommand(transcript);
   if(rosterCmd.matched){
+    noteRoundTimerInstruction();
     resetRoundCapture();
     if(rosterCmd.action==="open_add"){if(openRosterEditor())return;speakGlobalError("round");return}
     if(rosterCmd.action==="rectify_handicap"){openProfileCorrection();return}
@@ -1624,6 +1679,7 @@ function finalizeRoundDictation(){
   // 2) Las consultas tienen prioridad absoluta.
   const query=parseRoundQueryTranscript(transcript);
   if(query.matched){
+    noteRoundTimerInstruction();
     const r=query.result;
     resetRoundCapture();
     if(r?.ok){
@@ -1636,6 +1692,7 @@ function finalizeRoundDictation(){
   // 3) Único modo autorizado de scores: jugador + hoyo + score/gross.
   const parsed=parseRoundScoreTranscript(transcript);
   if(parsed.matched){
+    noteRoundTimerInstruction();
     const result=parsed.ok?applyLiteralScores(parsed):parsed;
     const continuous=listening&&voiceContext==="round";
     resetRoundCapture();
@@ -1835,8 +1892,8 @@ function startConfirmedRound(){
   // ÚNICO punto autorizado para sustituir la última ronda persistida por una nueva:
   // el usuario llegó a la confirmación y presionó INICIAR RONDA.
   activateCourse(draftCourse);
-  round={id:newRoundId(),version:2,mode:draftRoundMode,configured:true,provisional:false,courseKey:draftCourse,course:selectedCourse.name,tournament:draftTournament,players:assignStablePlayerSlots(draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{},activeFrom:1},i))),announced:{front:false,back:false,complete:false},createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),endedAt:null,durationSeconds:null};
-  savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;clearDraftState();persist();closeSetup();render();return true
+  const startedAt=new Date().toISOString();round={id:newRoundId(),version:2,mode:draftRoundMode,configured:true,provisional:false,courseKey:draftCourse,course:selectedCourse.name,tournament:draftTournament,players:assignStablePlayerSlots(draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{},activeFrom:1},i))),announced:{front:false,back:false,complete:false},createdAt:startedAt,updatedAt:startedAt,endedAt:null,durationSeconds:null,timerLastInstructionAt:startedAt};
+  savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;clearDraftState();persist();closeSetup();render();scheduleRoundTimerIdleShutdown();return true
 }
 function startProvisionalScorecard(){
   const selectedCourse=COURSE_CATALOG[draftCourse];
@@ -1844,8 +1901,8 @@ function startProvisionalScorecard(){
   if(listening)setVoice(false);if(activeResponseId||stopMonitorActive)stopAuthorizedSpeech();teardownRealtime();resetSetupCapture();resetRoundCapture();
   activateCourse(draftCourse);
   const provisionalPlayers=Array.from({length:6},(_,i)=>provisionalPlayerFromOptionalRow(manualDraftRows[i],i));
-  round={id:newRoundId(),version:2,configured:true,provisional:true,courseKey:draftCourse,course:selectedCourse.name,tournament:null,players:assignStablePlayerSlots(provisionalPlayers),announced:{front:true,back:true,complete:true},createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),endedAt:null,durationSeconds:null};
-  rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;voiceContext="round";persist();closeSetup();render();return true
+  const startedAt=new Date().toISOString();round={id:newRoundId(),version:2,configured:true,provisional:true,courseKey:draftCourse,course:selectedCourse.name,tournament:null,players:assignStablePlayerSlots(provisionalPlayers),announced:{front:true,back:true,complete:true},createdAt:startedAt,updatedAt:startedAt,endedAt:null,durationSeconds:null,timerLastInstructionAt:startedAt};
+  rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;voiceContext="round";persist();closeSetup();render();scheduleRoundTimerIdleShutdown();return true
 }
 function provisionalPlayerFromOptionalRow(source,i){
   const row=source||emptyManualDraftRow(),name=canonicalPlayerName(row.name),handicapText=String(row.handicap??"").trim(),handicap=Number(handicapText),hasHandicap=handicapText!==""&&Number.isInteger(handicap)&&handicap>=0&&handicap<=54,tee=normalizeTee(row.tee);
@@ -2239,7 +2296,7 @@ function parseScoreSequenceTranscript(transcript,{defaultPlayer=null,readScoreAt
     const contextual=activePlayer&&currentHole&&!entries.length?scoreReader(tokens,i,currentHole):null;
     if(contextual){sawRelevant=true;addEntry(activePlayer,currentHole,contextual);i=contextual.next;continue}
     // Después de establecer jugador y primer hoyo, también acepta la tanda
-    // abreviada natural: "Jaime, hoyo 1 cuatro, 2 cinco, 3 par".
+      // abreviada natural: "Miguel, hoyo 1 cuatro, 2 cinco, 3 par".
     const abbreviated=activePlayer&&entries.length?parseSpanishNumberTokens(tokens,i):null;
     if(abbreviated&&abbreviated.value>=1&&abbreviated.value<=18){
       const score=scoreReader(tokens,skipScoreFillers(tokens,abbreviated.next),abbreviated.value);if(!score)return fail();
@@ -2601,7 +2658,7 @@ function roundSessionConfig(){
   const knownNames=round.players.map(p=>p.name).join(", ");
   return{
     type:"realtime",
-    instructions:["GROUP_ROUND_LOCK_V270.","REGLA ABSOLUTA: nunca respondas espontáneamente al usuario.","No hagas preguntas, no ofrezcas ayuda, no pidas aclaraciones, no digas frases conversacionales y no hables ante errores o instrucciones desconocidas.","Durante captura de scores solo transcribe audio.","Los scores y correcciones se procesan exclusivamente en el cliente.","Solo una response.create explícita con token autorizado por el cliente puede producir voz.","Toda voz autorizada se limita al contenido literal enviado por el cliente: recordatorio exacto de jugador faltante, consulta solicitada, acumulado o cierre de vuelta/ronda.","El recordatorio autorizado contiene únicamente Falta y el nombre exacto del jugador.","Nunca generes expresiones como por favor, indique, dime, información, problema, ayudar, ayuda, necesitas, entendido, cómo puedo ayudarte o equivalentes.","No uses herramientas.","Toda voz autorizada usa obligatoriamente el mismo locutor masculino adulto, serio, sobrio y profesional, español internacional neutro, sin Spanglish. Pronuncia Gross como gros."].join(" "),
+    instructions:["GROUP_ROUND_LOCK_V270.","REGLA ABSOLUTA: nunca respondas espontáneamente al usuario.","No hagas preguntas, no pidas aclaraciones y no hables ante errores o instrucciones desconocidas.","Durante captura de scores solo transcribe audio.","Los scores y correcciones se procesan exclusivamente en el cliente.","Solo una response.create explícita con token autorizado por el cliente puede producir voz.","Toda voz autorizada se limita al contenido literal enviado por el cliente: recordatorio exacto de jugador faltante, consulta solicitada, orientación solicitada, acumulado o cierre de vuelta/ronda.","El recordatorio autorizado contiene únicamente Falta y el nombre exacto del jugador.","Nunca agregues palabras distintas al texto literal autorizado.","No uses herramientas.","Toda voz autorizada usa obligatoriamente el mismo locutor masculino adulto, serio, sobrio y profesional, español internacional neutro, sin Spanglish. Pronuncia Gross como gros."].join(" "),
     audio:{input:{transcription:{model:"gpt-live-transcribe",languages:["es"],keywords:["gross","par","birdie","bogey","doble bogey","triple bogey","eagle","albatros","equis","cero","sin score","sin dato","no informó","no dijo","no cantó","ponle cero","no le anotes",...round.players.map(p=>p.name)],prompt:round.provisional?"Golf Guatemala. Score Card de práctica con seis espacios opcionales. Transcribe literalmente jugador y score. El hoyo es opcional porque el cursor indica automáticamente el hoyo activo. También transcribe datos tardíos opcionales por posición: jugador dos Carlos; jugador dos handicap catorce; jugador dos marcas blancas; jugador dos Carlos catorce blancas. Pueden completarse nombre, handicap y marcas juntos o por separado. No inventes datos.":`Golf Guatemala. Jugadores actuales: ${knownNames}. El cursor ya indica el hoyo activo: transcribe literalmente nombre y score o Gross; el número de hoyo es opcional y solo reposiciona el cursor cuando se pronuncia. Después de un recordatorio Falta NOMBRE, una respuesta con solo score o solo omisión pertenece exclusivamente a ese jugador. Dos formas válidas de score: número Gross directo o nombre golfístico. Omisiones explícitas válidas: X, equis, cero, sin score, sin dato, sin resultado, no informó, no reportó, no dijo, no cantó, no dio score, no se sabe, ponle cero y no le anotes. Vocabulario esperado: albatros, águila, aguiler, eagle, birdie, pájaro, verdura, par, even par, parinelo, paraso, parcuato, bogey, doble bogey, doblete, triple bogey, triplete, doble par, par español, uno bajo par, uno sobre par, dos sobre par, tres sobre par, corrección, corrijo, corregir, acumulado, agregar jugador, quitar jugador, corregir nombre, corregir handicap, rectificación de handicap y Stop. Conserva exactamente los nombres registrados. El jugador puede dictarse por primer nombre cuando ese primer nombre es único en el grupo; si dos jugadores comparten primer nombre, puede dictarse únicamente el apellido para diferenciarlos. Jessie se escribe siempre Jessie. No reordenes nombres ni números.`},noise_reduction:{type:"far_field"},turn_detection:{type:"server_vad",threshold:ROUND_VAD_THRESHOLD,prefix_padding_ms:ROUND_VAD_PREFIX_MS,silence_duration_ms:ROUND_VAD_SILENCE_MS,create_response:false,interrupt_response:false}},output:{...(sessionHasSpoken?{}:{voice:VOICE_POLICY.voice}),speed:VOICE_POLICY.speed}},
     tools:[],tool_choice:"none"
   }
@@ -2781,10 +2838,10 @@ function startStablefordRoundMode(){
     const previous=round.players;
     round={...round,stablefordCategory:stablefordSetupCategory,stablefordRoundNumber:roundNumber,courseKey:stablefordSetupCourseKey,course:course.name,tournament:tournamentName?{name:tournamentName}:null,players:names.slice(0,6).map((name,i)=>normalizePlayer({...previous[i],id:previous[i]?.id||`sf${i+1}`,name,handicap:0,tee:cfg.tee,matrix:"Caballeros",holes:previous[i]?.holes||{},activeFrom:previous[i]?.activeFrom||1,slot:i+1},i)),updatedAt:now};
   }else{
-    round={id:newRoundId(),version:2,mode:"stableford",stablefordCategory:stablefordSetupCategory,stablefordRoundNumber:roundNumber,configured:true,provisional:false,courseKey:stablefordSetupCourseKey,course:course.name,tournament:tournamentName?{name:tournamentName}:null,players:names.slice(0,6).map((name,i)=>normalizePlayer({id:`sf${i+1}`,name,handicap:0,tee:cfg.tee,matrix:"Caballeros",holes:{},activeFrom:1,slot:i+1},i)),announced:{front:false,back:false,complete:false},createdAt:now,updatedAt:now,endedAt:null,durationSeconds:null};
+    round={id:newRoundId(),version:2,mode:"stableford",stablefordCategory:stablefordSetupCategory,stablefordRoundNumber:roundNumber,configured:true,provisional:false,courseKey:stablefordSetupCourseKey,course:course.name,tournament:tournamentName?{name:tournamentName}:null,players:names.slice(0,6).map((name,i)=>normalizePlayer({id:`sf${i+1}`,name,handicap:0,tee:cfg.tee,matrix:"Caballeros",holes:{},activeFrom:1,slot:i+1},i)),announced:{front:false,back:false,complete:false},createdAt:now,updatedAt:now,endedAt:null,durationSeconds:null,timerLastInstructionAt:now};
   }
   savePlayersToDirectory(round.players);voiceContext="round";resetRoundCapture();persist();
-  $("stablefordSetupOverlay").classList.remove("visible");$("stablefordSetupOverlay").setAttribute("aria-hidden","true");$("setupOverlay").classList.remove("visible");render();return true
+  $("stablefordSetupOverlay").classList.remove("visible");$("stablefordSetupOverlay").setAttribute("aria-hidden","true");$("setupOverlay").classList.remove("visible");render();scheduleRoundTimerIdleShutdown();return true
 }
 function stablefordGrossAt(tokens,start,hole){return readOperationalScoreAt(tokens,start,hole)}
 function parseStablefordTranscript(transcript,options={}){
@@ -3101,6 +3158,11 @@ function handleRealtime(message){
     }
     if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="setup"){
       const key=e.item_id||e.event_id||String(Date.now());if(processedTranscriptItems.has(key))return;processedTranscriptItems.add(key);
+      if(window.GSCVoiceAssistant?.parse?.(e.transcript||"")?.matched){
+        resetSetupCapture();
+        handleVoiceAssistantTranscript(e.transcript||"");
+        return;
+      }
       appendSetupTranscript(e.item_id||key,e.transcript||"");
       if(setupFinalizeRequested){finalizeSetupDictation();return}
       if(setupLocked)return;
@@ -3126,7 +3188,7 @@ function handleRealtime(message){
       appendRoundTranscript(e.item_id||key,e.transcript||"");
       if(roundFinalizeRequested){finalizeRoundDictation();return}
       const combined=roundTranscriptCombined();
-      const immediate=isStopCommand(combined)||parseRoundNavigationCommand(combined).matched||parseRosterCommand(combined).matched||parseRoundQueryTranscript(combined).matched;
+      const immediate=isStopCommand(combined)||parseRoundNavigationCommand(combined).matched||window.GSCVoiceAssistant?.parse?.(combined)?.matched||parseRosterCommand(combined).matched||parseRoundQueryTranscript(combined).matched;
       if(immediate){requestRoundFinalize(0);return}
       if(roundFinalizeTimer)clearTimeout(roundFinalizeTimer);
       // Mantener el micrófono abierto durante todo el dictado. Solo cuatro
@@ -3164,9 +3226,12 @@ function handleRealtime(message){
         pendingVoiceSpeedRestore=false;
         setSessionVoiceSpeed(VOICE_POLICY.speed);
       }
+      const assistantAction=finishedReason==="query"?pendingVoiceAssistantAction:null;
+      pendingVoiceAssistantAction=null;
       if(finishedReason==="missing_score"){phase=listening?"listening":"idle";if(micTrack&&listening)micTrack.enabled=true;const pending=operationalPromptPlayer();if(voiceContext==="round"&&pending)$("status").textContent=`FALTA ${playerVoiceAlias(pending).toUpperCase()}`}
       else if(finishedReason==="error"){phase="idle";if(voiceContext==="round")$("status").textContent=roundIdleStatus()}
       else if(phase==="speaking"||phase==="processing"||phase==="error")phase="idle";
+      if(assistantAction)setTimeout(()=>executeVoiceAssistantAction(assistantAction),0);
       return;
     }
     if(e.type==="output_audio_buffer.cleared"){
@@ -3347,6 +3412,8 @@ for(const id of ["openCardLibraryButton","openCardLibrarySetup","openCardLibrary
 $("openHistoryInsights").addEventListener("click",openHistoryInsights);$("closeHistoryInsights").addEventListener("click",closeHistoryInsights);$("historyInsightsOverlay").addEventListener("click",event=>{if(event.target===$("historyInsightsOverlay"))closeHistoryInsights()});$("runHistoryInsights").addEventListener("click",()=>runHistoryInsights());$("historyInsightsQuery").addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();runHistoryInsights()}});document.querySelectorAll("[data-history-query]").forEach(button=>button.addEventListener("click",()=>runHistoryInsights(button.dataset.historyQuery)));
 $("openOfficialCorrection").addEventListener("click",openOfficialCorrection);$("openOriginalGlobal").addEventListener("click",openOriginalGlobalCard);$("officialCorrectionPlayer").addEventListener("change",renderOfficialCorrectionCurrent);$("officialCorrectionHole").addEventListener("change",renderOfficialCorrectionCurrent);$("saveOfficialCorrection").addEventListener("click",saveOfficialCorrection);$("cancelOfficialCorrection").addEventListener("click",closeOfficialCorrection);$("officialCorrectionOverlay").addEventListener("click",event=>{if(event.target===$("officialCorrectionOverlay"))closeOfficialCorrection()});
 $("stopClockButton").addEventListener("click",toggleRoundClock);
+document.addEventListener("click",event=>{if(event.target?.closest?.("button,a,[role='button']"))noteRoundTimerInstruction()});
+document.addEventListener("input",event=>{if(event.target?.matches?.("input,textarea,select"))noteRoundTimerInstruction()});
 const lockScorecardSelection=e=>{if(e.target?.closest?.(".provisional-player-control"))return;if(e.target?.closest?.(".scorecard,.summary")){if(e.cancelable)e.preventDefault();e.stopPropagation?.();try{getSelection()?.removeAllRanges()}catch{}}};
 document.addEventListener("selectionstart",lockScorecardSelection,{capture:true});
 document.addEventListener("contextmenu",lockScorecardSelection,{capture:true});
@@ -3420,6 +3487,7 @@ document.addEventListener("visibilitychange",()=>{
   }else{
     if(voiceOpening)return;
     recoverRealtimeAfterResumeSync();
+    scheduleRoundTimerIdleShutdown();
     render();
   }
 });
@@ -3427,12 +3495,14 @@ window.addEventListener("pageshow",e=>{
   if(voiceOpening)return;
   if(!round.configured)restorePersistedRound();
   if(e.persisted||appWasBackgrounded||appHiddenAt||realtimeLooksStale())recoverRealtimeAfterResumeSync();
+  scheduleRoundTimerIdleShutdown();
   render();
 });
 window.addEventListener("focus",()=>{
   if(voiceOpening)return;
   if(!round.configured&&restorePersistedRound())render();
   if(appWasBackgrounded||appHiddenAt||realtimeLooksStale())recoverRealtimeAfterResumeSync();
+  scheduleRoundTimerIdleShutdown();
 });
 window.addEventListener("pagehide",()=>{
   persist();
@@ -3461,6 +3531,7 @@ else if(round.configured)activateCourse(round.courseKey);
 // siempre parte limpio. Nunca se hereda un phase/pending congelado entre sesiones.
 phase="idle";listening=false;resetRoundCapture();resetSetupCapture();
 render();
+scheduleRoundTimerIdleShutdown();
 dateSetup();
 if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
 if(directHome&&!sfEmergency&&!demoControlManual)openNewRoundDraft();

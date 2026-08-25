@@ -16,7 +16,7 @@ assert.ok(definitionsStart>0&&definitionsEnd>definitionsStart,"No se encontró l
 const definitionsSource=html.slice(definitionsStart,definitionsEnd);
 const demoPlayers=new Function(`${definitionsSource};return CONTROL_MANUAL_DEMO_PLAYERS`)();
 
-assert.deepEqual(demoPlayers.map(player=>player.name),["JAIME","NELSON","JUNIOR","FITO","PEDRO","CARLOS"]);
+assert.deepEqual(demoPlayers.map(player=>player.name),["MIGUEL","NELSON","JUNIOR","FITO","PEDRO","CARLOS"]);
 assert.equal(demoPlayers.length,6);
 assert.equal(demoPlayers.flatMap(player=>player.scores).length,30);
 assert.ok(demoPlayers.every(player=>player.scores.length===5));

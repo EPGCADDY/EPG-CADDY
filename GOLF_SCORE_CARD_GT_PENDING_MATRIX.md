@@ -146,6 +146,45 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Crear soporte funcional para propietarios, operadores y jugadores.
 - Definir disponibilidad, continuidad y conservación de datos del servicio.
 
+### 11. Reglas de Golf integradas
+
+**Estado:** PENDIENTE · `PEND-REG-001`
+
+- Adaptar las Reglas de Golf a la aplicación y al manual sin crear un motor paralelo.
+- Permitir consultas naturales por escrito y micrófono, con respuestas breves y una explicación ampliada localizable.
+- Diferenciar reglas generales, modalidad activa y Reglas Locales del campo o torneo.
+- Cubrir penalidades, alivios, bola perdida o provisional, fuera de límites, áreas de penalidad, bola injugable, búnker, green, bola movida/equivocada, orden de juego, concesiones y cierres de Match Play.
+- Mostrar fuente, edición y fecha vigente; no inventar decisiones ni aplicar penalidades automáticamente.
+- Exigir confirmación expresa antes de modificar un score, registrar una penalidad o cerrar una ronda.
+- Conservar el detalle operativo en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`.
+
+### 12. Clima sincronizado por campo
+
+**Estado:** PENDIENTE · `PEND-CLI-002`
+
+- Asociar cada campo con coordenadas y zona horaria oficiales verificadas.
+- Mostrar el clima en Configuración inmediatamente después de elegir el campo y conservarlo dentro de la tarjeta activa.
+- Consultar el clima de la ubicación exacta del campo seleccionado y guardarlo con la ronda.
+- Mostrar condición, temperatura, sensación, humedad, lluvia, viento, ráfagas, hora y fuente en tarjeta activa y artefactos oficiales.
+- Conservar snapshots climáticos de inicio y cierre sin reescribir una tarjeta histórica.
+- Compartir la misma integración entre General, Stableford, Match Play, Four Ball y Práctica.
+- Permitir consultas climáticas por micrófono sin modificar scores ni resultados.
+- Mantener operativa la ronda cuando el clima no esté disponible y rotular claramente cualquier dato anterior.
+- Comparar WeatherKit, Tomorrow.io y OpenWeather mediante mediciones en los clubes; WeatherKit es candidato inicial, no proveedor aprobado sin piloto.
+- Conservar el detalle operativo en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`.
+
+### 13. Caddie conversacional experto en golf
+
+**Estado:** PENDIENTE · `PEND-VOZ-003`
+
+- Convertir el micrófono en conversación natural con contexto de campo, hoyo, modalidad, jugadores, resultados, clima y reglas locales.
+- Separar rigurosamente score, consulta, navegación y conocimiento de golf.
+- Responder con conocimiento aprobado y fuente; reconocer cuando no exista respaldo suficiente.
+- Exigir confirmación independiente antes de toda acción que cambie la ronda.
+- Conservar score y navegación básica sin conexión y reservar respuestas abiertas para la capa conectada.
+- Validar preguntas, ruido, acentos, latencia, exactitud y falsas acciones con un banco de pruebas de golfistas.
+- Conservar el detalle operativo en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`.
+
 ## Mejoras continuas
 
 - Cobertura de vocabulario, nombres, acentos, ruido y pausas de dictado.

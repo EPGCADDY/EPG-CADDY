@@ -19,6 +19,21 @@
       "permanent": false
     },
     {
+      "source": "/manual",
+      "destination": "/manual.html",
+      "permanent": false
+    },
+    {
+      "source": "/manual-scg",
+      "destination": "/manual.html",
+      "permanent": false
+    },
+    {
+      "source": "/manual.pdf",
+      "destination": "/docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf",
+      "permanent": false
+    },
+    {
       "source": "/stableford-torneo.html",
       "destination": "/index-grupal.html",
       "permanent": false
@@ -40,6 +55,24 @@
         {
           "key": "Cache-Control",
           "value": "no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/manual.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/docs/manual/v311/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
         }
       ]
     },
