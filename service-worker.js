@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v312-conversational-caddie";
+const CACHE_NAME="gscg-mobile-v314-all-microphones-universal";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

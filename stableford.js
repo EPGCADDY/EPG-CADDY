@@ -179,11 +179,11 @@
       const parent=course?.parentNode||card,anchor=course?.nextSibling||card.firstChild;
       const prompt=document.createElement("div");
       prompt.className="voice-prompt stableford-voice-prompt";
-      prompt.innerHTML='<strong>REGISTRO DE JUGADORES</strong>';
+      prompt.innerHTML='<strong>REGISTRO DE JUGADORES · CADDIE UNIVERSAL</strong><span>REGISTRA O PREGUNTA CUALQUIER TEMA</span>';
       const method=document.createElement("section");
       method.className="registration-method stableford-registration-method";
       method.setAttribute("aria-label","Método 1 Dictado Stableford");
-      method.innerHTML='<div class="newbie-registration-guide" aria-label="Instrucciones de registro Stableford por posición"><div class="newbie-guide-title">DICTA ASÍ:</div><div>1-# JUGADOR</div><div>2-NOMBRE</div><div class="newbie-guide-player">HASTA 6 JUGADORES</div><div>3-OK</div></div><div class="nr-mic stableford-registration-mic" id="stablefordSetupMicWrap"><button class="mic-hit" id="stablefordSetupMic" type="button" aria-label="Dictar número de jugador y nombre"></button><div class="mic-visual" aria-hidden="true"><svg class="setup-mic-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></div></div>';
+      method.innerHTML='<div class="newbie-registration-guide" aria-label="Instrucciones de registro Stableford por posición"><div class="newbie-guide-title">DICTA ASÍ:</div><div>1-# JUGADOR</div><div>2-NOMBRE</div><div class="newbie-guide-player">HASTA 6 JUGADORES</div><div>3-OK</div></div><div class="nr-mic stableford-registration-mic" id="stablefordSetupMicWrap"><button class="mic-hit" id="stablefordSetupMic" type="button" aria-label="Abrir Caddie universal o dictar jugadores Stableford"></button><div class="mic-visual" aria-hidden="true"><svg class="setup-mic-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></div></div>';
       parent.insertBefore(prompt,anchor);
       parent.insertBefore(method,anchor);
       const hit=document.getElementById("stablefordSetupMic");
@@ -216,7 +216,7 @@
       const baseSetupSessionConfig=setupSessionConfig;
       setupSessionConfig=function(){
         const config=baseSetupSessionConfig();
-        if(overlay.classList.contains("visible")&&config?.audio?.input?.transcription)config.audio.input.transcription.prompt="Golf Guatemala. Registro Stableford Scratch. Transcribe literalmente posiciones y nombres en este formato: Jugador 1 Miguel; Jugador 2 y el nombre pronunciado; hasta Jugador 6. Conserva cada número de posición y cada nombre. No agregues handicap ni marcas porque la categoría los asigna automáticamente.";
+        if(overlay.classList.contains("visible")&&config?.audio?.input?.transcription)config.audio.input.transcription.prompt="Golf Guatemala con Caddie universal. Transcribe literalmente español natural de cualquier tema. Registro Stableford Scratch: conserva posiciones y nombres: Jugador 1 Miguel; Jugador 2 y el nombre pronunciado; hasta Jugador 6. No agregues handicap ni marcas porque la categoría los asigna automáticamente.";
         return config;
       };
       setupSessionConfig.__stablefordRegistrationPrompt=true;

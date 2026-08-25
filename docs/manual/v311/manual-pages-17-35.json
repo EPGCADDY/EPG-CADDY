@@ -726,5 +726,18 @@
       ["AYUDA O ERROR", "La ayuda indica pasos seguros. FALTA MIGUEL pide ese score. ERROR significa que no se aplicó una orden válida." ]
     ],
     "remember": "Después de navegar o escuchar una respuesta, mira la pantalla para comprobar destino, hoyo, jugador y valor visible."
+  },
+  {
+    "number": "73",
+    "kicker": "Caddie de conversación universal",
+    "title": "El mismo Caddie en cada micrófono",
+    "subtitle": "Desde la primera pantalla, abre el micrófono y habla normalmente; no necesitas cambiar de modo.",
+    "steps": [
+      ["DESDE LA PRIMERA PANTALLA", "Inicio muestra el clima por GPS; sus micrófonos y los de Stableford y Tarjeta abren el mismo Caddie."],
+      ["PREGUNTA CUALQUIER TEMA", "Ejemplos: HÁBLAME DE CULTURA MAYA, MEDICINAS o VUELOS DE AEROLÍNEA."],
+      ["CAMBIA DE TEMA", "Pregunta: ¿CÓMO ESTÁ EL CLIMA HOY? Luego: ¿POR QUÉ TENGO FRÍO? Sin comando especial."],
+      ["USA GOLF NORMALMENTE", "Para anotar, di NOMBRE + SCORE. Para conversar, pregunta con tus propias palabras."]
+    ],
+    "remember": "El micrófono nunca se abre solo. Tócalo primero. Necesitas internet; vuelos, tráfico y noticias en vivo requieren una fuente conectada."
   }
 ]

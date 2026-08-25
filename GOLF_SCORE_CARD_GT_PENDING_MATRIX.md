@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V280
+**Corte vigente:** V314
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -160,7 +160,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 12. Clima sincronizado por campo
 
-**Estado:** EN PROGRESO · GPS automático y clima visible en tarjeta V312 implementados; artefactos y validación física pendientes · `PEND-CLI-002`
+**Estado:** EN PROGRESO · GPS automático visible desde Inicio y dentro de la tarjeta V314; artefactos y validación física pendientes · `PEND-CLI-002`
 
 - Asociar cada campo con coordenadas y zona horaria oficiales verificadas.
 - Mostrar el clima en Configuración inmediatamente después de elegir el campo y conservarlo dentro de la tarjeta activa.
@@ -169,17 +169,18 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Conservar snapshots climáticos de inicio y cierre sin reescribir una tarjeta histórica.
 - Compartir la misma integración entre General, Stableford, Match Play, Four Ball y Práctica.
 - Permitir consultas climáticas por micrófono sin modificar scores ni resultados.
-- **Implementado V312:** al abrir una tarjeta activa obtiene automáticamente el GPS, muestra y guarda el clima, lo renueva cada diez minutos y nunca actualiza una tarjeta cerrada; si no hay GPS usa el campo seleccionado como respaldo. La consulta hablada usa la misma prioridad y rotula Open-Meteo.
+- **Implementado V314:** la primera pantalla muestra condición, temperatura, sensación, lluvia, viento y hora usando primero el GPS. Al abrir una tarjeta activa también muestra y guarda el clima, lo renueva cada diez minutos y nunca actualiza una tarjeta cerrada; si no hay GPS usa el campo seleccionado como respaldo.
 - Mantener operativa la ronda cuando el clima no esté disponible y rotular claramente cualquier dato anterior.
 - Comparar WeatherKit, Tomorrow.io y OpenWeather mediante mediciones en los clubes; WeatherKit es candidato inicial, no proveedor aprobado sin piloto.
 - Conservar el detalle operativo en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`.
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** EN PROGRESO · micrófono de propósito general V312 implementado; texto y validación física pendientes · `PEND-VOZ-003`
+**Estado:** EN PROGRESO · Caddie universal V314 disponible en todos los micrófonos; texto y validación física pendientes · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
-- **Implementado V312:** después de que el jugador abre el micrófono, conversa sobre cualquier tema sin palabra clave ni cambio de modo, conserva contexto, acepta interrupciones naturales y continúa escuchando mientras el botón permanezca abierto.
+- **Implementado V314:** el micrófono de Inicio/Registro, Stableford y Tarjeta abre el mismo Caddie. Conversa sobre Golf, medicina general, vuelos, cultura y cualquier tema permitido sin palabra clave ni cambio de modo. Mientras responde, pausa la entrada para que el eco o ruido no corte palabras; al terminar vuelve a escuchar si el botón permanece abierto. La página 73 del Manual ya lo explica.
+
 - **Candado de privacidad V312:** no hay activación automática, huella de voz ni reconocimiento biométrico; el jugador debe abrir primero el micrófono con el botón.
 - Separar rigurosamente score, consulta, navegación, conocimiento de golf, clima vivo, conversación general y orientación de salud.
 - Abrir la página exacta cuando la pregunta pertenezca al Manual y mantener el buscador local como recuperación inmediata.
@@ -190,6 +191,21 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Conservar score y navegación básica sin conexión y reservar respuestas abiertas para la capa conectada.
 - Validar texto, voz, preguntas de Golf, Manual, clima, conversación general y salud, además de ruido, acentos, latencia, exactitud y falsas acciones.
 - Conservar el detalle operativo en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`.
+
+### 14. Guía Rápida del Manual
+
+**Estado:** PENDIENTE · `PEND-MAN-004`
+
+- Crear una versión corta, visual y entendible para un niño de 10 años a partir del Manual vigente.
+- Incluir los recorridos principales, enlaces exactos al Manual completo, versión web, PDF y acceso desde Support.
+
+### 15. Tránsito y tiempo de llegada por voz
+
+**Estado:** PENDIENTE · destino exacto y proveedor por conectar · `PEND-TRA-005`
+
+- Responder ETA y condición del tráfico sin mapa mediante Google Maps Routes u otro proveedor autorizado.
+- Waze no entrega silenciosamente estos datos a una web común; sus Deep Links abren Waze y su Transport SDK requiere asociación.
+- Requiere destino exacto, consentimiento de ubicación, clave protegida en servidor, facturación y pruebas reales en Guatemala.
 
 ## Mejoras continuas
 

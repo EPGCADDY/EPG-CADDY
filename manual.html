@@ -122,6 +122,7 @@
         <button type="button">Quiero jugar Stableford</button>
         <button type="button">Cómo corrijo un bogey que fue par</button>
         <button type="button">Cómo pregunto el acumulado</button>
+        <button type="button">Puedo platicar de cualquier tema</button>
         <button type="button">No puedo finalizar la ronda</button>
       </div>
       <div class="search-results" id="manualSearchResults" aria-live="polite"></div>
@@ -171,7 +172,7 @@
       "PREGUNTA QUIÉN VA MEJOR","CUENTA LOGROS Y DATOS PENDIENTES","PREGUNTA POR RONDAS ANTERIORES",
       "HAZ UNA CONSULTA PRECISA","ANOTA GROSS Y LEE EL MATCH","ANOTA A CADA JUGADOR DE LA PAREJA",
       "CAMBIA DE PANTALLA SIN TOCAR","RECUPÉRATE SIN PERDER DATOS","ENCUENTRA QUÉ PUEDES DECIR",
-      "ENTIENDE CADA RESPUESTA HABLADA"
+      "ENTIENDE CADA RESPUESTA HABLADA","PLATICA DE CUALQUIER TEMA"
     ];
     extraTitles.forEach((title,index)=>{
       const number=String(index+17).padStart(2,"0");
@@ -181,7 +182,7 @@
       {title:"EMPEZAR Y REGISTRAR",pages:[1,2,3,17,36,51,52,53]},
       {title:"MODALIDADES",pages:[4,5,8,9,48,49,54,55,67,68]},
       {title:"ANOTAR Y CORREGIR",pages:[6,7,18,19,20,37,38,39,40,56,57,58,59]},
-      {title:"PREGUNTAR Y ESCUCHAR",pages:[21,60,61,62,63,64,65,66,69,70,71,72]},
+      {title:"PREGUNTAR Y ESCUCHAR",pages:[21,60,61,62,63,64,65,66,69,70,71,72,73]},
       {title:"FINALIZAR, GUARDAR Y RECUPERAR",pages:[22,23,24,25,26,27,28,29,30,31,32,33,34,41,42,43,44,45,46,47,50]},
       {title:"INFORMACIÓN DE CAMPOS",pages:[10,11,12,13,14,15,16]}
     ];
@@ -224,8 +225,8 @@
       const item=pages[current];
       pageStatus.classList.toggle("cover",current===0);
       title.textContent=current===0?"":`PÁGINA ${item.number} · ${item.title}`;
-      pageMeta.textContent=current===0?"":"73 páginas · versión vigente";
-      counter.textContent=current===0?"":`${item.number} / 72`;
+      pageMeta.textContent=current===0?"":"74 páginas · versión vigente";
+      counter.textContent=current===0?"":`${item.number} / 73`;
       previous.disabled=current===0;
       next.disabled=current===pages.length-1;
       indexLinks.forEach(link=>link.classList.toggle("active",Number(link.dataset.index)===current));

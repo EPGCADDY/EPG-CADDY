@@ -100,7 +100,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** EN PROGRESO · MICRÓFONO CONVERSACIONAL V312 IMPLEMENTADO; BUSCADOR-TEXTO Y VALIDACIÓN FÍSICA PENDIENTES
+**Estado:** EN PROGRESO · CADDIE UNIVERSAL V314 EN TODOS LOS MICRÓFONOS; BUSCADOR-TEXTO Y VALIDACIÓN FÍSICA PENDIENTES
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -119,7 +119,7 @@ Convertir el micrófono y el buscador del Manual vivo en una sola conversación 
 - Fundamentar respuestas de golf en el manual, fuentes reglamentarias vigentes, reglas locales verificadas y matriz oficial de campos; si no existe respaldo suficiente, decirlo claramente.
 - En salud, hacer preguntas mínimas de seguridad, distinguir orientación general de urgencia y recomendar evaluación profesional cuando corresponda. No diagnosticar, prescribir ni indicar combinaciones o dosis de medicamentos sin datos clínicos suficientes; ante señales de alarma, priorizar atención inmediata.
 - En conversación general, hablar con vocabulario humano y permitir repreguntas, pero verificar con fuentes actuales todo dato vivo, incierto o de alto impacto.
-- Mantener conversación con preguntas de seguimiento, interrupción por `STOP` y memoria limitada a la ronda activa.
+- Mantener conversación con preguntas de seguimiento y memoria limitada a la ronda activa. V313 entrega cada respuesta completa antes de volver a escuchar; el botón del micrófono conserva el corte manual.
 - Contestar en español sencillo, entender términos comunes en español e inglés y explicar como para un niño de 10 años cuando el usuario lo necesite.
 - No modificar scores, penalidades, jugadores, modalidad, campo ni cierre mediante una respuesta informativa. Toda acción de escritura exige confirmación separada y verificable.
 - Conservar una ruta local limitada para score y navegación cuando no haya conexión; las respuestas abiertas pueden indicar que requieren conexión.
@@ -129,13 +129,13 @@ Convertir el micrófono y el buscador del Manual vivo en una sola conversación 
 
 Los modelos Realtime permiten audio de entrada y salida en tiempo real; los archivos de reglas y manual pueden indexarse en un almacén consultable. La integración debe realizarse con API protegida en servidor, nunca exponiendo una clave en el teléfono: <https://platform.openai.com/docs/models> y <https://platform.openai.com/docs/api-reference/vector-stores-files>.
 
-### Fase de micrófono V312 ya implementada
+### Fase de micrófono V314 ya implementada
 
-- Un solo toque abre el micrófono continuo de la ronda. No existe comando, palabra clave ni cambio manual de tema.
+- Un solo toque abre el mismo Caddie universal desde Inicio/Registro, Stableford o la Tarjeta. No existe comando, palabra clave ni cambio manual de tema.
 - El micrófono jamás se abre solo y no existe huella, identificación ni registro biométrico de voz. Toda escucha comienza exclusivamente con el botón visible y termina cuando el usuario lo cierra.
 - Score, consultas de ronda, navegación y conversación general se separan antes de ejecutar cualquier escritura.
 - Toda frase que no sea una operación reconocida pasa a una respuesta Realtime natural con memoria de la conversación activa.
-- El usuario puede interrumpir al Caddie mientras habla y continuar sin decir `STOP`.
+- Mientras el Caddie responde se pausa la entrada para evitar cortes por eco o ruido; al terminar vuelve a escuchar si el botón permanece abierto. El usuario siempre puede cerrar el micrófono manualmente.
 - Las preguntas de clima usan el campo activo y `api/weather.js`; las preguntas de salud reciben límites expresos de orientación general, sin diagnóstico ni prescripción automática.
 - Continúan pendientes la conversación por texto dentro del buscador del Manual, el banco amplio de preguntas, pruebas físicas con ruido/acento y la validación práctica con golfistas.
 
@@ -146,3 +146,60 @@ Este pendiente sólo podrá cerrarse después de un banco amplio de preguntas de
 ### Frases para localizar este pendiente
 
 `caddie conversacional`, `Support conversacional`, `buscador humano`, `experto de golf`, `micrófono humano`, `preguntas de golf`, `clima por voz`, `dolor de tobillo`, `conversación general`, `asistente de voz`, `reglas por voz`, `pendientes por hacer`.
+
+## PEND-MAN-004 · Crear Guía Rápida desde el Manual de Funciones
+
+**Fecha de registro:** 25 de agosto de 2026
+**Estado:** PENDIENTE
+**Prioridad:** Pendiente de orden de ejecución del propietario
+**Solicitud original:** “Hacer una guía rápida a partir del Manual de Funciones”.
+
+### Objetivo
+
+Crear una versión corta, visual y muy fácil de consultar que resuma las funciones indispensables del Manual completo de Golf Score Card GT.
+
+### Alcance proyectado
+
+- Explicar con pocas palabras: iniciar una ronda, registrar jugadores, usar el micrófono/Caddie universal, anotar y corregir scores, cambiar de modalidad, consultar clima, abrir Tarjeta Digital, finalizar, guardar y compartir.
+- Usar lenguaje entendible para un niño de 10 años, ejemplos directos y capturas o ilustraciones sólo cuando aclaren un paso.
+- Conservar enlaces a las páginas exactas del Manual completo para ampliar cada explicación.
+- Preparar una versión web y PDF, con portada primero, navegación correcta y acceso visible desde `Support`.
+- Probar cada enlace, página, botón y búsqueda antes de publicarla.
+
+### Condiciones de cierre futuro
+
+La Guía Rápida se considerará terminada cuando cubra el recorrido básico completo, abra siempre por la portada, enlace correctamente al Manual vivo, tenga revisión visual en teléfono y supere pruebas de navegación y PDF.
+
+### Frases para localizar este pendiente
+
+`guía rápida`, `manual corto`, `resumen del manual`, `funciones principales`, `manual para niño de 10 años`, `pendientes por hacer`.
+
+## PEND-TRA-005 · Tiempo de llegada y tránsito sin mostrar mapa
+
+**Fecha de registro:** 25 de agosto de 2026
+**Estado:** PENDIENTE · WAZE NO OFRECE ESTA RESPUESTA INVISIBLE PARA UNA WEB COMÚN
+**Prioridad:** Pendiente de destino exacto y credenciales del proveedor
+**Solicitud original:** preguntar al Caddie cuánto tráfico hay para ir a casa en Pradera y escuchar únicamente tiempo estimado y comentarios, sin abrir una gráfica de navegación.
+
+### Objetivo
+
+Permitir una pregunta natural como `¿Cómo está el tráfico para ir a mi casa en Pradera?` y responder por voz con duración estimada, demora por tráfico y resumen de la ruta, sin modificar la tarjeta ni mostrar un mapa.
+
+### Arquitectura prevista
+
+`GPS DEL TELÉFONO → DESTINO EXACTO GUARDADO CON CONSENTIMIENTO → GOOGLE MAPS ROUTES CON TRÁFICO → RESUMEN DE TIEMPO → RESPUESTA DEL CADDIE`
+
+- No afirmar que Waze está sincronizado: los Deep Links sólo abren Waze y el Transport SDK exige asociación comercial y atribución visible.
+- Usar Google Maps Routes u otro proveedor autorizado que entregue ETA con tráfico sin exigir mostrar un mapa.
+- Solicitar y guardar el destino exacto sólo con consentimiento; `Pradera` por sí solo no identifica una vivienda.
+- Mantener la clave en servidor y activar facturación/cuotas antes de publicar.
+- Informar origen, destino entendido, minutos estimados, demora y hora de cálculo; nunca inventar tráfico actual.
+- Permitir abrir Waze o Maps únicamente como acción separada y voluntaria si el usuario luego desea navegación.
+
+### Condiciones de cierre futuro
+
+Este pendiente sólo podrá cerrarse con destino exacto validado, proveedor y facturación activos, pruebas de ETA real en Guatemala, límites de privacidad, manejo de error/sin GPS y explicación añadida al Manual.
+
+### Frases para localizar este pendiente
+
+`tráfico`, `tránsito`, `Waze`, `Pradera`, `tiempo para llegar`, `ETA`, `ir a mi casa`, `pendientes por hacer`.

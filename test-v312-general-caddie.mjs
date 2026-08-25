@@ -7,23 +7,29 @@ const html = fs.readFileSync(new URL("./index-grupal.html", import.meta.url), "u
 const sessionApi = fs.readFileSync(new URL("./api/session-grupal.js", import.meta.url), "utf8");
 const weatherApi = fs.readFileSync(new URL("./api/weather.js", import.meta.url), "utf8");
 const serviceWorker = fs.readFileSync(new URL("./service-worker.js", import.meta.url), "utf8");
+const stableford = fs.readFileSync(new URL("./stableford.js", import.meta.url), "utf8");
 
 assert.equal(assistant.parse("¿Cómo estás?").matched, false, "Una plática no debe convertirse en menú de comandos");
 assert.equal(assistant.parse("¿Crees que va a llover hoy?").matched, false, "El clima debe llegar al Caddie general");
 assert.equal(assistant.parse("¿Qué podré tomar para el dolor de tobillo?").matched, false, "La salud debe llegar al Caddie con límites seguros");
 assert.equal(assistant.parse("Carlos cinco").matched, false, "El score debe conservar su ruta operacional");
+assert.equal(assistant.parse("Háblame de medicinas, vuelos y cultura").matched, false, "Los temas generales deben llegar al Caddie universal");
 
 for (const token of [
   "function speakConversation(transcript)",
   "function responseForConversation(token",
   "function isGeneralConversationIntent(transcript)",
-  "function interruptConversationSpeech()",
   "continueConversationAfterTool(functionCall)",
+  "let conversationToolTransition=null",
+  "conversationToolTransition.followupRequested=true",
   'name:"get_current_weather"',
   'window.gscgApiUrl("/api/weather")',
   "activeCourseWeatherContext()",
   "navigator.geolocation.getCurrentPosition",
   "function renderCourseWeather(state=\"\")",
+  "function renderSetupWeather(state=\"\")",
+  "async function syncSetupWeather({force=false}={})",
+  'id="setupWeather"',
   "async function syncActiveCourseWeather({force=false}={})",
   "function scheduleActiveCourseWeather(retryDelay=0)",
   "WEATHER_REFRESH_MS=10*60*1000",
@@ -38,9 +44,24 @@ assert.ok(
   "Una conversación inequívoca debe protegerse antes del escritor de scores"
 );
 assert.match(html, /if\(!speakConversation\(transcript\)\)/, "Toda frase operacionalmente desconocida debe llegar al Caddie");
-assert.match(html, /if\(authorizedSpeech\?\.reason==="conversation"\)interruptConversationSpeech\(\)/, "El jugador debe poder interrumpir sin comando especial");
+const speechStartedBlock=html.slice(html.indexOf('if(e.type==="input_audio_buffer.speech_started"&&voiceContext==="round"'),html.indexOf('if(e.type==="input_audio_buffer.speech_stopped"'));
+assert.doesNotMatch(speechStartedBlock,/interruptConversationSpeech|cancelResponseSafe|clearOutputAudioSafe/,"El ruido o el eco no deben cortar una respuesta del Caddie");
+const conversationStart=html.slice(html.indexOf("function speakConversation(transcript)"),html.indexOf("async function setSessionVoiceSpeed"));
+assert.match(conversationStart,/if\(micTrack\)micTrack\.enabled=false/,"El micrófono local debe pausarse mientras habla el Caddie");
+const outputStopped=html.slice(html.indexOf('if(e.type==="output_audio_buffer.stopped")'),html.indexOf('if(e.type==="output_audio_buffer.cleared")'));
+assert.ok(outputStopped.indexOf("conversationToolTransition")<outputStopped.indexOf("clearSpeechAuthorization()"),"El cierre de la consulta no puede desautorizar la respuesta climática final");
+assert.match(html,/Cuando necesites una herramienta, no pronuncies un preámbulo/,"El clima debe responder una sola vez y completo");
 assert.match(html, /phase=listening\?"listening":"idle"/, "La conversación debe volver a escuchar automáticamente");
 assert.match(html, /En salud ofrece únicamente orientación general/, "Faltan límites seguros para preguntas médicas");
+assert.match(html, /V314-ALL-MICROPHONES-UNIVERSAL/, "Falta declarar el Caddie universal en todos los micrófonos");
+assert.match(html, /Abrir Caddie universal o dictar jugadores/, "El micrófono de la primera pantalla debe identificarse como universal");
+assert.match(html, /REGISTRO DE JUGADORES · CADDIE UNIVERSAL/, "La primera pantalla debe explicar la doble función del micrófono");
+const setupTranscriptBlock=html.slice(html.indexOf('if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="setup")'),html.indexOf('if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="round")'));
+assert.ok(setupTranscriptBlock.indexOf("isGeneralConversationIntent")<setupTranscriptBlock.indexOf("appendSetupTranscript"),"Una pregunta universal de Inicio debe atenderse antes de tratarla como registro");
+assert.match(setupTranscriptBlock,/speakConversation\(e\.transcript\|\|""\)/,"El micrófono de Inicio debe abrir el mismo Caddie conversacional");
+assert.match(sessionApi,/Caddie conversacional de propósito general disponible desde todos los micrófonos/,"La sesión Realtime de Inicio no debe limitarse al registro");
+assert.match(sessionApi,/español natural de cualquier tema, preguntas y seguimiento/,"La transcripción inicial debe comprender conversación universal");
+assert.match(stableford,/Abrir Caddie universal o dictar jugadores Stableford/,"El micrófono Stableford también debe abrir el Caddie universal");
 assert.match(html, /Nunca inventes scores ni afirmes que cambiaste la tarjeta/, "La conversación no debe atribuirse mutaciones de score");
 assert.match(html, /weatherLocation:"El Pulté Golf/, "El clima debe enlazarse con el catálogo de campos");
 assert.match(html, /weatherCoordinates:\{latitude:14\.4920708,longitude:-90\.5792525\}/, "Mayan Golf debe usar coordenadas propias y no una ciudad vecina");
@@ -48,6 +69,12 @@ assert.match(html, /const gps=await currentBrowserCoordinates\(\);\s*const origi
 assert.match(html, /\?\{location:"GPS del teléfono",latitude:gps\.latitude,longitude:gps\.longitude\}\s*:\{location:course\.weatherLocation,\.\.\.course\.weatherCoordinates\}/, "El campo sólo debe ser respaldo cuando no haya GPS");
 assert.match(html, /gpsAccuracyMeters:origin==="gps"\?gps\.accuracyMeters:null/, "La tarjeta debe registrar la precisión sin guardar las coordenadas exactas");
 assert.match(html, /scheduleActiveCourseWeather\(\);/, "Abrir o renderizar una tarjeta activa debe programar clima automático");
+assert.match(html, /\$\("setupOverlay"\)\.classList\.add\("visible"\);\s*syncSetupWeather\(\)/, "Abrir la primera pantalla debe solicitar y mostrar el clima");
+assert.match(html, /renderDraft\(\);syncSetupWeather\(\{force:true\}\)/, "Cambiar el campo en Inicio debe renovar la condición meteorológica");
+const setupWeatherStart=html.indexOf("async function syncSetupWeather");
+const setupWeatherEnd=html.indexOf("\nfunction renderCourseWeather",setupWeatherStart);
+const setupWeatherSource=html.slice(setupWeatherStart,setupWeatherEnd);
+assert.doesNotMatch(setupWeatherSource,/setVoice|toggleVoice|ensureSession|getUserMedia/,"El clima de Inicio no puede abrir ni modificar el micrófono");
 assert.match(html, /snapshot\?\.fieldKey===round\.courseKey/, "Una lectura de otro campo no puede considerarse vigente");
 assert.match(html, /weather:round\.courseKey===stablefordSetupCourseKey\?\(round\.weather\|\|null\):null/, "Cambiar el campo de Stableford debe descartar el clima anterior");
 const automaticWeatherStart=html.indexOf("async function syncActiveCourseWeather");
@@ -64,7 +91,7 @@ assert.match(sessionApi, /Caddie conversacional de propósito general/, "La sesi
 assert.match(sessionApi, /Transcribe literalmente español natural de cualquier tema/, "La transcripción no debe limitarse al vocabulario de score");
 assert.match(weatherApi, /api\.open-meteo\.com\/v1\/forecast/, "Falta proveedor meteorológico vivo");
 assert.match(weatherApi, /geocoding-api\.open-meteo\.com\/v1\/search/, "Falta resolución de campos o ubicaciones");
-assert.match(serviceWorker, /gscg-mobile-v312-conversational-caddie/, "La PWA debe reemplazar el shell anterior");
+assert.match(serviceWorker, /gscg-mobile-v314-all-microphones-universal/, "La PWA debe reemplazar el shell anterior");
 
 const summary = summarizeWeather({
   timezone: "America/Guatemala",

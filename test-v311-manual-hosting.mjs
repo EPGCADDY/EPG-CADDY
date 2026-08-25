@@ -29,10 +29,10 @@ assert.match(html,/history\.replaceState\(null,"",`#\$\{pageId\(destination\)\}`
 assert.match(html,/searchInput\.blur\(\);[\s\S]*?requestAnimationFrame\(\(\)=>go\(destination\)\)/,"El buscador debe soltar el teclado antes de navegar");
 assert.match(html,/initialMatch=location\.hash\.match\(\/\^#pagina-\(\\d\{2\}\)\$\//,"Un enlace directo debe abrir la página indicada");
 assert.ok(fs.statSync(pdf).size>100000,"El PDF completo debe estar alojado en el proyecto");
-assert.match(fs.readFileSync(pdf,"latin1"),/\/Count\s+73\b/,"El PDF debe contener portada más 72 páginas funcionales");
+assert.match(fs.readFileSync(pdf,"latin1"),/\/Count\s+74\b/,"El PDF debe contener portada más 73 páginas funcionales");
 assert.match(fs.readFileSync(pdf,"latin1"),/\/Outlines\b/,"El PDF debe contener navegación interna por páginas");
 
-for(let page=0;page<=72;page+=1){
+for(let page=0;page<=73;page+=1){
   const number=String(page).padStart(2,"0");
   const image=`${manualDir}/page-${number}.png`;
   assert.ok(fs.statSync(image).size>50000,`Falta la página visual ${number}`);
@@ -50,4 +50,4 @@ assert.equal(manifest.start_url,"/manual-scg");
 assert.equal(manifest.display,"standalone");
 assert.equal(manifest.icons[0].src,"/docs/manual/v311/manual-scg-escritorio-4k.png");
 
-console.log("PASS V311 · manual web directo, PDF, portada y 72 páginas alojadas");
+console.log("PASS V311 · manual web directo, PDF, portada y 73 páginas alojadas");

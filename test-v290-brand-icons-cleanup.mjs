@@ -30,7 +30,7 @@ assert.match(html,/return\{name:String\(value\.name\|\|""\)\.trim\(\),descriptio
 assert.equal(packageJson.engines.node,"22.x");
 assert.equal(apiPackage.type,"module");
 assert.match(stable,/className="voice-prompt stableford-voice-prompt"/);
-assert.match(stable,/prompt\.innerHTML='<strong>REGISTRO DE JUGADORES<\/strong>'/);
+assert.match(stable,/prompt\.innerHTML='<strong>REGISTRO DE JUGADORES · CADDIE UNIVERSAL<\/strong><span>REGISTRA O PREGUNTA CUALQUIER TEMA<\/span>'/);
 assert.match(stable,/className="registration-method stableford-registration-method"/);
 assert.match(stable,/class="newbie-guide-title">DICTA ASÍ:<\/div><div>1-# JUGADOR<\/div><div>2-NOMBRE<\/div><div class="newbie-guide-player">HASTA 6 JUGADORES<\/div><div>3-OK<\/div>/);
 assert.match(stable,/id="stablefordSetupMicWrap"[\s\S]*?class="setup-mic-icon"/);
@@ -51,7 +51,7 @@ for(const icon of [
   "assets/official-logos/golf-score-card-gt-pwa-192.png",
   "assets/official-logos/golf-score-card-gt-apple-touch-180.png"
 ])assert.ok(fs.existsSync(icon),icon);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v312-conversational-caddie"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v314-all-microphones-universal"/);
 assert.match(read("assets/official-logos/README.md"),/Logos oficiales · Golf Score Card GT/);
 
 console.log("PASS V305 · historial, navegación y acciones homologadas en General y Stableford");

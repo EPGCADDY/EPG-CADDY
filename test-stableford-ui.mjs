@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const stable=fs.readFileSync(new URL("./stableford.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V307-MATCH-PLAY-THICK-ARROWS-FORMAT-20260825"/);
+assert.match(html,/gscg-build" content="V314-ALL-MICROPHONES-UNIVERSAL-20260825"/);
 for(const id of [
   "stablefordSetupOverlay","stablefordResultOverlay","stablefordSeriesSection",
   "stablefordSeniorTab","stablefordSuperSeniorTab","openStablefordResult"

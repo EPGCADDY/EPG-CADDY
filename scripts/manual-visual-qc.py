@@ -22,7 +22,7 @@ def fail(page, rule, actual):
     failures.append(f"{page}: {rule} ({actual})")
 
 
-for page_number in range(0, 73):
+for page_number in range(0, 74):
     page = f"page-{page_number:02d}.png"
     file = MANUAL_DIR / page
     if not file.exists():
@@ -103,6 +103,6 @@ min_occupancy = min(metric[2] for metric in course_metrics)
 max_occupancy = max(metric[2] for metric in course_metrics)
 print(
     "MANUAL_VISUAL_QC PASS "
-    f"pages=73 coursePages=7 resolution=2160x4320 density>=300dpi "
+    f"pages=74 coursePages=7 resolution=2160x4320 density>=300dpi "
     f"verticalDeltaMax={max_delta}px occupancy={min_occupancy * 100:.1f}-{max_occupancy * 100:.1f}%"
 )

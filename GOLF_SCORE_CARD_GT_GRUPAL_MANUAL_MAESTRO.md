@@ -4,9 +4,9 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V311
-**Fecha de corte:** 24 de agosto de 2026
-**Ramas operativas:** `main` (Producción vigente) y `v311-match-play-neutral-label` (candidata)
+**Versión documentada:** V314
+**Fecha de corte:** 25 de agosto de 2026
+**Rama operativa:** `main` (Producción vigente)
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Dirección de producto
 **Responsable de implementación y control:** Partner / ChatGPT
@@ -1322,6 +1322,9 @@ La modalidad se identifica en todas las pantallas únicamente como **FOUR BALL**
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-25 | Manual 3.67 / App V314 | El mismo Caddie universal queda disponible en todos los micrófonos visibles, incluida la primera pantalla, sin cambio de modo y siempre bajo apertura manual. La primera pantalla muestra automáticamente la condición meteorológica mediante GPS del teléfono, con respaldo del campo, sin activar el micrófono. Se registran como pendientes separados la Guía Rápida derivada del Manual y el tiempo vehicular sin mapa; este último requiere destino exacto y un servicio de rutas con tráfico, por lo que no se declara operativo. |
+| 2026-08-25 | Manual 3.66 / App V313 | Corregida la continuidad hablada después de consultar clima: la primera respuesta técnica ya no corta el resultado final y el micrófono se pausa mientras habla el Caddie para evitar eco. El Manual agrega la página 73 con ejemplos sencillos de conversación universal y queda en 74 páginas físicas. |
+| 2026-08-25 | Manual 3.65 / App V312 | Incorporados el Caddie conversacional de propósito general y el clima vivo por GPS en la tarjeta activa, conservando la escritura de scores separada y la apertura voluntaria del micrófono. |
 | 2026-08-25 | Manual 3.64 / App V311 | Homologados `MATCH PLAY` y `FOUR BALL` para una o dos parejas, con HCP individual, resultados separados y una línea vacía entre parejas cuando participan cuatro jugadores. Match Play mantiene un resultado independiente para jugadores 1–2 y 3–4. Four Ball acumula el mejor Neto con una pareja o compara los mejores Netos con dos. La dicción de primera vuelta, segunda vuelta y total dice `arriba`, `abajo` y `empatado`, nunca `UP`, `DOWN` o `AS`. El nombre Match Play no añade `HDCP`. El enlace público raíz abre directamente `Configura la ronda` mediante `inicio=1` y conserva cualquier ronda activa. |
 | 2026-08-25 | Manual 3.63 / App V310 | Homologado el nombre visible `FOUR BALL` sin el sufijo `2 PAREJAS`. El cambio alcanza selección de modalidad, validación, registro por voz, encabezado de ronda, control manual y tarjeta digital final. La lógica de mejor Neto por pareja y el marcador acumulado permanecen intactos. |
 | 2026-08-25 | Manual 3.62 / App V309 | Implementación funcional de `FOUR BALL · 2 PAREJAS` para exactamente cuatro jugadores. Pareja Verde ocupa posiciones 1–2 y Pareja Oro 3–4. Cada jugador registra Gross; el motor General calcula su Neto y el módulo Four Ball compara el mejor Neto de cada pareja. La tarjeta identifica la mejor bola, conserva acumulativamente `EVEN`, `+N` o `−N` durante hoyos empatados, cierra anticipadamente, permite corrección oficial y genera Historial, Global y cuatro personales. |

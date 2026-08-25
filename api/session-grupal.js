@@ -42,7 +42,7 @@ export default async function handler(req, res) {
     const noiseReduction = context === "setup" ? "near_field" : "far_field";
 
     const transcriptionPrompt = context === "setup"
-      ? "Golf Guatemala. Registro de jugadores. Transcribe literalmente nombres propios, handicap y color de marcas. Regla mandatoria: Jessie se escribe Jessie."
+      ? "Golf Guatemala con Caddie universal. Transcribe literalmente español natural de cualquier tema, preguntas y seguimiento de una conversación. Si el usuario registra jugadores, conserva exactamente nombres propios, handicap y color de marcas. Regla mandatoria: Jessie se escribe Jessie."
       : roundTranscriptionPrompt(players);
     const roundKeywords = ["hoyo", "gross", "par", "birdie", "bogey", "doble bogey", "triple bogey", "eagle", "albatros", "equis", "cero", "sin score", "sin dato", "no informó", "no dijo", "no cantó", "ponle cero", "no le anotes", ...players.split(",").map(value => value.trim()).filter(Boolean)].slice(0, 80);
 
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
       type: "realtime",
       model: "gpt-realtime",
       instructions: [
-        "Aplicación grupal de score de golf con Caddie conversacional de propósito general.",
+        "Aplicación grupal de score de golf con Caddie conversacional de propósito general disponible desde todos los micrófonos.",
         "REGLA ABSOLUTA: nunca produzcas respuestas espontáneas.",
         "No respondas automáticamente al audio del usuario.",
         "Solo procesa audio para transcripción; cualquier respuesta de voz, de Golf Score Card o de conversación general, será creada explícitamente por el cliente.",

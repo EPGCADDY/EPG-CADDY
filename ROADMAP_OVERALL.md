@@ -498,7 +498,7 @@ Solicitud: **25 de agosto de 2026**. Se actualizan los inventarios hasta el últ
 
 ## Integración editorial V311 · manual completo 4K y enlace permanente
 
-El **25 de agosto de 2026** se incorpora el corte editorial inicial de 16 páginas, ampliado posteriormente en este mismo V311 a **72 páginas funcionales más portada**. El PDF y el visor web directo en `/manual` conservan nombres permanentes. Todas las imágenes maestras son verticales 4K de `2160 × 4320 px` a `300 dpi`. Las páginas 10–16 documentan los campos con composición vertical equilibrada; La Reunión queda como plantilla totalmente vacía mientras el campo permanece en reconstrucción.
+El **25 de agosto de 2026** se incorpora el corte editorial inicial de 16 páginas, ampliado posteriormente a **73 páginas funcionales más portada**. El PDF y el visor web directo en `/manual` conservan nombres permanentes. Todas las imágenes maestras son verticales 4K de `2160 × 4320 px` a `300 dpi`. Las páginas 10–16 documentan los campos con composición vertical equilibrada; La Reunión queda como plantilla totalmente vacía mientras el campo permanece en reconstrucción.
 
 | Archivo nuevo o modificado | Registro editorial V311 |
 |---|---|
@@ -508,12 +508,12 @@ El **25 de agosto de 2026** se incorpora el corte editorial inicial de 16 págin
 | `audit-project.mjs` | Ejecuta el candado del alojamiento del manual dentro de la auditoría maestra. |
 | `package.json` | Añade el comando de control `manual:visual-qc`. |
 | `vercel.json` | Crea `/manual` y `/manual.pdf`; entrega siempre la versión vigente sin caché anual inmutable. |
-| `manual.html` | Visor web responsivo con portada, 72 páginas funcionales, índice por categorías, lupa, navegación, aplicación y descarga PDF. |
+| `manual.html` | Visor web responsivo con portada, 73 páginas funcionales, índice por categorías, lupa, navegación, aplicación y descarga PDF. |
 | `manual.webmanifest` | Acceso directo MANUAL SCG | Instala el manual completo como acceso independiente en el escritorio del iPhone. |
-| `scripts/manual-visual-qc.py` | Rechaza resolución, densidad, márgenes, recortes, color o equilibrio editorial incorrectos en las 73 imágenes. |
+| `scripts/manual-visual-qc.py` | Rechaza resolución, densidad, márgenes, recortes, color o equilibrio editorial incorrectos en las 74 imágenes. |
 | `scripts/inventory-gate.mjs` | Bloquea auditoría, construcción y publicación si los inventarios no fueron regenerados y sellados; en Vercel compara los blobs del commit para ignorar archivos transitorios o reescritos por el instalador. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Conserva huella de fuentes y códigos SHA-256 de los tres inventarios vigentes. |
-| `test-v311-manual-hosting.mjs` | Comprueba rutas, portada, 72 páginas funcionales, PDF físico de 73 páginas, marcadores y dimensiones 4K. |
+| `test-v311-manual-hosting.mjs` | Comprueba rutas, portada, 73 páginas funcionales, PDF físico de 74 páginas, marcadores y dimensiones 4K. |
 | `verify-manual-sync.mjs` | Comprueba que la firma documental V311 de la aplicación coincida con el manual maestro. |
 | `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias estable del manual completo de 73 páginas para conservar enlaces históricos. |
 | `docs/manual/v311/page-00.png` | Portada 4K aprobada con logo al 50% de saturación. |
@@ -556,7 +556,7 @@ El **25 de agosto de 2026** se registra, sin iniciar implementación, el futuro 
 
 ## Cierre ampliado V311 · manual localizable y asistente por micrófono
 
-El **25 de agosto de 2026** el manual se amplía a **portada más 72 páginas funcionales**. El visor incorpora índice por categorías y una lupa que acepta preguntas naturales. La aplicación incorpora un asistente local de micrófono para explicar procedimientos y abrir destinos seguros, sin convertir preguntas en scores ni ejecutar cierres o modificaciones peligrosas. El PDF contiene 73 marcadores internos y todas las páginas conservan 2160 × 4320 px y 300 dpi.
+El **25 de agosto de 2026** el manual se amplía a **portada más 73 páginas funcionales**. El visor incorpora índice por categorías y una lupa que acepta preguntas naturales. La aplicación incorpora un asistente local de micrófono para explicar procedimientos y abrir destinos seguros, sin convertir preguntas en scores ni ejecutar cierres o modificaciones peligrosas. El PDF contiene 74 marcadores internos y todas las páginas conservan 2160 × 4320 px y 300 dpi.
 
 ### Archivos registrados por el candado ROADMAP
 
@@ -645,7 +645,7 @@ El **25 de agosto de 2026** se registra la sincronización del clima. La fase V3
 
 ## Pendiente PEND-VOZ-003 · Caddie/Support conversacional humano
 
-El **25 de agosto de 2026** se registra y amplía una conversación por texto o voz con especialidad prioritaria en golf. La fase de micrófono V312 ya conversa sin palabra clave sobre Golf, ronda, clima vivo y temas generales, con límites de salud y escritura de score separada. La conversación escrita del buscador del Manual y la validación física amplia continúan pendientes.
+El **25 de agosto de 2026** se registra y amplía una conversación por voz con especialidad prioritaria en golf. La fase V314 ya conversa desde todos los micrófonos visibles, sin palabra clave, sobre Golf, ronda, clima vivo y temas generales, con límites de salud y escritura de score separada. El buscador escrito del Manual localiza la explicación correspondiente; un chat escrito interactivo y la validación física amplia continúan pendientes.
 
 | Archivo nuevo o modificado | Registro del pendiente |
 |---|---|
@@ -715,7 +715,7 @@ El **25 de agosto de 2026** se incorpora en GOLF Score Card GT un enlace fijo y 
 
 ## Implementación V312 · Caddie de voz de propósito general y clima vivo
 
-El **25 de agosto de 2026** el micrófono de la ronda deja de exigir comandos o cambios de tema después de que el jugador lo abre voluntariamente. Un solo micrófono abierto distingue operaciones de Score Card, consultas de ronda, navegación y conversación libre. Una frase general nunca escribe scores; pasa a OpenAI Realtime, conserva el contexto de la conversación activa, permite interrumpir la respuesta y continúa escuchando mientras el botón permanezca abierto. No existe activación automática, huella ni identificación biométrica de voz.
+El **25 de agosto de 2026** el micrófono de la ronda deja de exigir comandos o cambios de tema después de que el jugador lo abre voluntariamente. Un solo micrófono abierto distingue operaciones de Score Card, consultas de ronda, navegación y conversación libre. Una frase general nunca escribe scores; pasa a OpenAI Realtime y conserva el contexto. Para evitar cortes por eco o ruido, la entrada local se pausa únicamente mientras habla el Caddie y vuelve a escuchar al terminar si el botón continúa abierto. No existe activación automática, huella ni identificación biométrica de voz.
 
 Al abrir o reabrir una tarjeta activa, la aplicación solicita el GPS del teléfono con el permiso normal del sistema, consulta Open-Meteo y presenta automáticamente condición, temperatura, sensación, lluvia, viento y hora. La lectura se conserva en la ronda y se renueva cada diez minutos sin guardar las coordenadas exactas. Si no existe GPS, usa las coordenadas del campo como respaldo; una tarjeta cerrada nunca se reescribe. Continúan pendientes la vista previa en Configuración, los snapshots formales de inicio/cierre, historial y artefactos oficiales, además de la comparación física de proveedores.
 
@@ -740,3 +740,73 @@ Al abrir o reabrir una tarjeta activa, la aplicación solicita el GPS del teléf
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
 | `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico V312. |
 | `ROADMAP_OVERALL.md` | Conserva este resumen V312. |
+
+## Corrección V313 · respuesta completa y página 73 del Manual
+
+El **25 de agosto de 2026** se corrige la transición de una consulta con herramienta a su respuesta hablada. El cierre técnico de la consulta climática ya no puede desautorizar ni silenciar la segunda respuesta que contiene el resultado. Mientras habla el Caddie, el micrófono local se pausa para impedir que el eco o el ruido de campo corte palabras; al terminar vuelve a escuchar solamente si el jugador lo dejó abierto. El Manual añade una página infantil y directa sobre conversación universal, clima y cambio de tema, y el PDF queda con portada más 73 páginas.
+
+| Archivo nuevo o modificado | Registro funcional |
+|---|---|
+| `index-grupal.html` | Protege la transición de herramientas y entrega respuestas completas antes de reabrir la escucha. |
+| `service-worker.js` | Publica el shell V313 para reemplazar la copia anterior. |
+| `manual.html` | Añade la página 73 al visor, índice, buscador y contador. |
+| `manual-search.js` | Lleva preguntas de conversación universal directamente a la página 73. |
+| `docs/manual/v311/manual-pages-17-35.json` | Conserva el texto sencillo y los ejemplos aprobados. |
+| `docs/manual/v311/page-73.png` | Nueva lámina 4K/300 dpi: conversación universal. |
+| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` | PDF vigente de 74 páginas físicas. |
+| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias histórico sincronizado con el PDF vigente. |
+| `scripts/manual-visual-qc.py` | Revisa las 74 páginas visuales. |
+| `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Relaciona conversación universal con la página 73 y su prueba. |
+| `test-v312-general-caddie.mjs` | Bloquea el corte por eco y el cierre prematuro de la transición climática. |
+| `test-v311-manual-hosting.mjs` | Exige 74 PNG/PDF físicos y portada primero. |
+| `test-v311-manual-semantic-coverage.mjs` | Exige texto universal, clima, frío y micrófono manual. |
+| `test-v311-manual-search.mjs` | Comprueba que la búsqueda universal abre la página 73. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible final. |
+| `ROADMAP_A_DETALLE.md` | Conserva el detalle V313. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen V313. |
+
+## Implementación V314 · todos los micrófonos universales, clima inicial y pendientes claros
+
+El **25 de agosto de 2026** todos los botones de micrófono, incluida la primera pantalla, abren el mismo Caddie universal después de un toque voluntario. La pantalla inicial muestra automáticamente la condición meteorológica mediante GPS del teléfono, con respaldo del campo seleccionado; esto no abre ni modifica el micrófono. Se registra la **Guía Rápida** como pendiente. El tiempo de tránsito sin mapa también queda pendiente: no se declara conectado con Waze y requiere un destino exacto, credencial protegida y servicio de rutas con tráfico.
+
+| Archivo nuevo o modificado | Registro V314 |
+|---|---|
+| `index-grupal.html` | Une todos los micrófonos al Caddie universal y muestra clima en la primera pantalla. |
+| `stableford.js` | Homologa el micrófono inicial de Stableford con el Caddie universal. |
+| `api/session-grupal.js` | Acepta conversación natural desde registro y ronda. |
+| `service-worker.js` | Renueva la caché V314. |
+| `manual.html` | Conserva portada primero e integra la página 73. |
+| `manual-search.js` | Localiza vocabulario universal en la página 73. |
+| `docs/manual/v311/manual-pages-17-35.json` | Fuente textual de la explicación V314. |
+| `docs/manual/v311/page-73.png` | Lámina 4K de todos los micrófonos y clima inicial. |
+| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` | Manual oficial de 74 páginas físicas. |
+| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias PDF sincronizado. |
+| `scripts/manual-visual-qc.py` | Revisa 74 láminas. |
+| `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Relaciona la página 73 con las pruebas. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registra App V312–V314 y los pendientes reales. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Separa clima inicial entregado, Guía Rápida y tránsito pendiente. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Añade PEND-MAN-004 y PEND-TRA-005. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza V314, 295 fuentes y página 73. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella el estado exacto publicado. |
+| `test-v312-general-caddie.mjs` | Prueba todos los micrófonos, clima inicial, audio completo y score protegido. |
+| `test-v254-remove-registration-guide.mjs` | Alinea la cabecera inicial con el Caddie universal sin restaurar guías retiradas. |
+| `test-v311-manual-hosting.mjs` | Prueba 74 PNG/PDF y portada primero. |
+| `test-v311-manual-search.mjs` | Prueba destino 73 desde lenguaje natural. |
+| `test-v311-manual-semantic-coverage.mjs` | Prueba ejemplos de medicinas, vuelos, cultura y micrófono manual. |
+| `test-stableford-ui.mjs` | Alinea firma V314. |
+| `test-v272-definitive-operational-release.mjs` | Alinea firma V314. |
+| `test-v274-complete-courses-voice-operations.mjs` | Alinea firma V314. |
+| `test-v275-stable-live-voice-turns.mjs` | Alinea firma V314. |
+| `test-v276-manual-hole-navigation.mjs` | Alinea firma V314. |
+| `test-v277-official-round-corrections.mjs` | Alinea firma V314. |
+| `test-v278-card-image-pdf-export.mjs` | Alinea firma V314. |
+| `test-v279-local-card-library.mjs` | Alinea firma V314. |
+| `test-v280-local-history-insights.mjs` | Alinea firma V314. |
+| `test-v281-pwa-installation.mjs` | Alinea caché V314. |
+| `test-v284-native-package-generation.mjs` | Alinea paquete V314. |
+| `test-v290-brand-icons-cleanup.mjs` | Alinea firma V314. |
+| `test-v304-homogeneous-registration-actions.mjs` | Alinea firma V314. |
+| `test-v305-history-navigation-zero-error.mjs` | Alinea firma y caché V314. |
+| `test-v307-match-arrows-format.mjs` | Alinea firma V314. |
+| `ROADMAP_A_DETALLE.md` | Conserva el detalle V314. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen V314. |

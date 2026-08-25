@@ -52,6 +52,7 @@ Estado: **en verificación**. Ninguna afirmación de cobertura total es válida 
 | Mapa de capacidades y significado de respuestas | 71–72 | 70 | `test-v311-manual-semantic-coverage.mjs` |
 | Índice por categorías y lupa con preguntas completas | Visor web | 71–72 | `test-v311-manual-search.mjs` |
 | Asistente de micrófono para ayuda y navegación segura | 69 y 71–72 | 70 | `test-v311-voice-assistant.mjs` |
+| Caddie de conversación universal, clima y cambio libre de tema | 73 | 70 | `test-v312-general-caddie.mjs` |
 | Inclusión del asistente en el paquete móvil | Aplicación instalada | 47 | `test-v311-voice-assistant.mjs` y `test-v284-native-package-generation.mjs` |
 
 ## Combinaciones mínimas que deben permanecer probadas
@@ -74,8 +75,8 @@ Estado: **en verificación**. Ninguna afirmación de cobertura total es válida 
 
 El manual sólo puede declararse completo cuando:
 
-1. existan portada y páginas 01–72 en 4K;
-2. el PDF contenga 73 páginas físicas;
+1. existan portada y páginas 01–73 en 4K;
+2. el PDF contenga 74 páginas físicas;
 3. cada función de esta matriz tenga explicación normal y recuperación;
 4. las pruebas citadas y la auditoría maestra obtengan PASS;
 5. una inspección visual confirme texto legible, sin recortes ni páginas descentradas;

@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V312: **294**.
+Archivos activos rastreados al corte V314: **295**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -37,7 +37,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ECOS.md` | `43a9c6f5bacb8c758edd33c8ad31f9e59e63f84f` | 3982 bytes | Reglas de comportamiento de Golf Score Card GT. |
 | `EPG-Caddy_Master_Blueprint_v0.1.md` | `95b4c227c4e5dce7f90fede0ebc9cdd0af6ed76c` | 7990 bytes | Plano maestro; el nombre del archivo es antiguo, pero el contenido ya usa Golf Score Card GT. |
 | `EPG_CADDY_PLAN_CAMBIOS.md` | `a81981bda6522c0ab29ec5e70f6ebe557cde34bf` | 116300 bytes | Lista antigua de cambios; el nombre sólo se conserva para localizarla. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | `34cc624c0dc8c93373e91b151a4f7a96becb9cf7` | 106334 bytes | Manual maestro sincronizado con App V311, modalidades, portada y reglas editoriales. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V314 | Se calcula al publicar | Manual maestro sincronizado con App V314, modalidades, portada, Caddie universal, clima inicial y pendientes de tránsito/Guía Rápida. |
 | `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V305 | Se calcula al publicar | Lista ordenada de funciones terminadas y pendientes con vocabulario Historial. |
 | `MAPA_MATRIZ_BASE_MAESTRA_V256.md` | `8d0cdb23c0b1d9445f51b822ba49d385f5c71d3c` | 1718 bytes | Explica la información central incorporada en V256. |
 | `MAPA_MATRIZ_REGISTRO_JUGADORES_V255.md` | `5d0670562aa89ffa7a265820573e0e31895fe95b` | 1993 bytes | Explica el registro de jugadores de V255. |
@@ -202,12 +202,12 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
 | `vercel.json` | `eb7aa74873a757c387e8c8b94e6da73f20022955` | 2516 bytes | Publica inicio, manual y acceso MANUAL SCG; ejecuta la auditoría con candados antes de publicar. |
 | `verify-manual-sync.mjs` | `df56ae83b57d5ee4d6273f36be1db9350e1b2c9c` | 731 bytes | Comprueba que la firma documental de la aplicación coincida con la versión del manual maestro. |
-| `manual.html` | Registro V311 ampliado | Se calcula al publicar | Visor permanente con portada, 72 páginas funcionales, índice por categorías, lupa de lenguaje natural, navegación, app y descarga PDF. |
+| `manual.html` | Registro V314 ampliado | Se calcula al publicar | Visor permanente con portada, 73 páginas funcionales, índice por categorías, lupa de lenguaje natural, navegación, app y descarga PDF. |
 | `manual.webmanifest` | `2c07adafaa323be295c05b927c1418c712bd514a` | 456 bytes | Instala MANUAL SCG como acceso independiente al manual completo. |
-| `scripts/manual-visual-qc.py` | Registro V311 ampliado | Se calcula al publicar | Filtro obligatorio de 73 imágenes, resolución 4K, densidad, márgenes, color y equilibrio editorial. |
+| `scripts/manual-visual-qc.py` | Registro V314 ampliado | Se calcula al publicar | Filtro obligatorio de 74 imágenes, resolución 4K, densidad, márgenes, color y equilibrio editorial. |
 | `scripts/inventory-gate.mjs` | `3e1d28a73526c50858b68df85a64f35086efc96e` | 2234 bytes | Bloquea auditoría y publicación si los tres inventarios no coinciden con las fuentes activas. |
-| `test-v311-manual-hosting.mjs` | Registro V311 ampliado | Se calcula al publicar | Comprueba visor, acceso MANUAL SCG, PDF físico de 73 páginas, marcadores internos y las 73 imágenes 4K. |
-| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias estable V311 | Se calcula al publicar | Copia completa de 73 páginas conservada bajo el nombre histórico para no romper enlaces existentes. |
+| `test-v311-manual-hosting.mjs` | Registro V314 ampliado | Se calcula al publicar | Comprueba visor, acceso MANUAL SCG, PDF físico de 74 páginas, marcadores internos y las 74 imágenes 4K. |
+| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias estable V314 | Se calcula al publicar | Copia completa de 74 páginas conservada bajo el nombre histórico para no romper enlaces existentes. |
 | `docs/manual/v311/page-00.png` | `f2558f664e2df29292a09c2ede9ef799b1f54541` | 3526431 bytes | Portada 4K aprobada con logo al 50% de saturación. |
 | `docs/manual/v311/manual-scg-escritorio-4k.png` | `e1614c0f8415dc735d003b4e5b38cb0a5a1be308` | 2273808 bytes | PNG cuadrado 4K del acceso MANUAL SCG. |
 | `docs/manual/v311/manual-scg-escritorio-4k.jpg` | `4ca08447591bc66820a43627f97d75ebdf2c6a34` | 663088 bytes | JPG cuadrado 4K optimizado para descarga desde iPhone. |
@@ -227,15 +227,15 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `docs/manual/v311/page-14.png` | `7f03343602d602c3d43d13faf42b05474a32939e` | 728904 bytes | Página 14 4K de Hacienda Nueva Country Club. |
 | `docs/manual/v311/page-15.png` | `24b5a9a1d57315aecc34567643ff4f84bacca44e` | 709854 bytes | Página 15 4K de Alta Vista Golf & Tennis Club. |
 | `docs/manual/v311/page-16.png` | `44f26965efce63a2980baec99f3c7877c2a70a9a` | 322915 bytes | Página 16 4K: plantilla vacía de La Reunión durante su reconstrucción total. |
-| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` | PDF completo | Se calcula al publicar | Portada más 72 páginas, índice PDF interno y contenido funcional ampliado. |
-| `docs/manual/v311/manual-pages-17-35.json` | Fuente páginas 17–72 | Se calcula al publicar | Contenido estructurado del manual ampliado y mapa de voz. |
+| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` | PDF completo | Se calcula al publicar | Portada más 73 páginas, índice PDF interno y contenido funcional ampliado. |
+| `docs/manual/v311/manual-pages-17-35.json` | Fuente páginas 17–73 | Se calcula al publicar | Contenido estructurado del manual ampliado y mapa de voz. |
 | `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Matriz de cobertura | Se calcula al publicar | Relaciona funciones, páginas y pruebas automáticas. |
 | `manual-search.js` | Buscador natural | Se calcula al publicar | Interpreta preguntas completas y dirige a la explicación correspondiente. |
 | `voice-assistant.js` | Asistente de voz seguro | Se calcula al publicar | Distingue ayuda, navegación, consultas y scores sin acciones destructivas automáticas. |
 | `timer-inactivity.js` | Control de inactividad | Se calcula al publicar | Calcula el límite común de 30 minutos y determina cuándo debe ponerse el TIMER en OFF. |
 | `scripts/publish-manual-pages.py` | Publicador 4K | Se calcula al publicar | Publica atómicamente las páginas renderizadas y verifica 2160 × 4320 y 300 dpi. |
 | `test-v311-manual-search.mjs` | Candado de búsqueda | Se calcula al publicar | Comprueba frases naturales, resultados y categorías. |
-| `test-v311-manual-semantic-coverage.mjs` | Candado semántico | Se calcula al publicar | Comprueba la cobertura funcional de las 72 páginas. |
+| `test-v311-manual-semantic-coverage.mjs` | Candado semántico | Se calcula al publicar | Comprueba la cobertura funcional de las 73 páginas. |
 | `test-v311-manual-voice-map.mjs` | Candado de voz | Se calcula al publicar | Verifica vocabulario oficial, consultas y respuestas documentadas. |
 | `test-v311-voice-assistant.mjs` | Candado del asistente | Se calcula al publicar | Comprueba ayuda, navegación y separación de los scores reales. |
 | `test-v312-general-caddie.mjs` | Candado conversacional V312 | Se calcula al publicar | Comprueba conversación abierta, GPS primero, clima visible y periódico, respaldo por campo, micrófono manual, salud y score protegido. |
@@ -296,6 +296,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `docs/manual/v311/page-70.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-71.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-72.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
+| `docs/manual/v311/page-73.png` | 4K · 300 dpi | Se calcula al publicar | Explica con ejemplos infantiles que todos los micrófonos abren el mismo Caddie universal y que el clima aparece desde el inicio. |
 
 ## Registro obligatorio de la documentación operativa V300
 

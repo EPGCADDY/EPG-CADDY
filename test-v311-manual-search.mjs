@@ -22,6 +22,9 @@ assert.equal(first("Cómo pregunto el acumulado"),"61");
 assert.equal(first("No puedo finalizar la ronda"),"27");
 assert.ok(pages("Quiero consultar yardas slope rating").some(page=>Number(page)>=10&&Number(page)<=16));
 assert.ok(pages("Qué puedo decirle a la aplicación").includes("71"));
+assert.equal(first("Puedo platicar de cualquier tema"),"73");
+assert.equal(first("¿Puedo preguntar de medicinas, vuelos y cultura?"),"73");
+assert.equal(first("¿Funciona en todos los micrófonos?"),"73");
 
 for(const required of ["manualSearch","manualSearchResults","categoryIndex","manual-search.js","Quiero jugar Stableford","Cómo corrijo un bogey que fue par"]){
   assert.ok(html.includes(required),`Falta el componente de búsqueda: ${required}`);
