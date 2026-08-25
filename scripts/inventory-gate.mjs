@@ -17,7 +17,9 @@ function sourceState(){
     .split('\n').filter(Boolean).filter(path=>path!==lockPath).sort();
   const digest=createHash('sha256');
   for(const path of files){
-    const objectId=git(['hash-object','--',path]);
+    const objectId=process.env.VERCEL
+      ?git(['rev-parse',`HEAD:${path}`])
+      :git(['hash-object','--',path]);
     digest.update(`${path}\0${objectId}\n`);
   }
   return {files,digest:digest.digest('hex')};

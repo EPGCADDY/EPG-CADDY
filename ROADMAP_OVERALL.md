@@ -511,7 +511,7 @@ El **25 de agosto de 2026** se incorpora el corte editorial inicial de 16 págin
 | `manual.html` | Visor web responsivo con portada, 72 páginas funcionales, índice por categorías, lupa, navegación, aplicación y descarga PDF. |
 | `manual.webmanifest` | Acceso directo MANUAL SCG | Instala el manual completo como acceso independiente en el escritorio del iPhone. |
 | `scripts/manual-visual-qc.py` | Rechaza resolución, densidad, márgenes, recortes, color o equilibrio editorial incorrectos en las 73 imágenes. |
-| `scripts/inventory-gate.mjs` | Bloquea auditoría, construcción y publicación si los inventarios no fueron regenerados y sellados; cuenta sólo archivos controlados por Git para ignorar archivos transitorios creados por Vercel durante el build. |
+| `scripts/inventory-gate.mjs` | Bloquea auditoría, construcción y publicación si los inventarios no fueron regenerados y sellados; en Vercel compara los blobs del commit para ignorar archivos transitorios o reescritos por el instalador. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Conserva huella de fuentes y códigos SHA-256 de los tres inventarios vigentes. |
 | `test-v311-manual-hosting.mjs` | Comprueba rutas, portada, 72 páginas funcionales, PDF físico de 73 páginas, marcadores y dimensiones 4K. |
 | `verify-manual-sync.mjs` | Comprueba que la firma documental V311 de la aplicación coincida con el manual maestro. |
