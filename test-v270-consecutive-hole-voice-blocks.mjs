@@ -32,7 +32,8 @@ assert.ok(operationalStart>0&&operationalEnd>operationalStart,"No se encontró e
 const document={getElementById:()=>null};
 const ALL=Array.from({length:18},(_,index)=>index+1);
 const manualHoleResult=(player,hole)=>({recorded:!!player?.holes?.[hole],status:player?.holes?.[hole]?.status||null,gross:player?.holes?.[hole]?.gross??null});
-const operational=new Function("round","playerByRef","manualHoleResult","document","ALL",`${html.slice(operationalStart,operationalEnd)};return{operationalHoleComplete,nextOperationalHole}`)(round,playerByRef,manualHoleResult,document,ALL);
+const teamMatchPlayerLimit=()=>18;
+const operational=new Function("round","playerByRef","manualHoleResult","document","ALL","teamMatchPlayerLimit",`${html.slice(operationalStart,operationalEnd)};return{operationalHoleComplete,nextOperationalHole}`)(round,playerByRef,manualHoleResult,document,ALL,teamMatchPlayerLimit);
 
 const parserStart=html.indexOf("function parseScoreSequenceTranscript");
 const parserEnd=html.indexOf("\nfunction parseProvisionalScoreTranscript",parserStart);

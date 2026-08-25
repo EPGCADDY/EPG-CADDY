@@ -14,10 +14,12 @@ assert.match(html,/V272-QUIET-MISSING-PROMPT-CLOSED-REPORTS-OUT-IN-20260823/);
 assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=305"/);
 assert.doesNotMatch(html,/epg-caddy-git-stableford-tournament-final/);
 assert.match(stableford,/GOLF SCORE CARD GT · STABLEFORD/);
-for(const source of ["/","/index.html","/stableford-torneo.html"]){
+for(const source of ["/","/index.html"]){
   const route=hosting.redirects?.find(item=>item.source===source);
-  assert.equal(route?.destination,"/index-grupal.html",`${source} debe abrir exclusivamente la tarjeta oficial`);
+  assert.equal(route?.destination,"/index-grupal.html?inicio=1",`${source} debe abrir directamente la pantalla principal oficial`);
 }
+assert.equal(hosting.redirects?.find(item=>item.source==="/inicio")?.destination,"/index-grupal.html?inicio=1","/inicio debe abrir directamente la pantalla principal oficial");
+assert.equal(hosting.redirects?.find(item=>item.source==="/stableford-torneo.html")?.destination,"/index-grupal.html","Stableford conserva su ruta oficial");
 
 for(const label of ["GROSS OUT","GROSS IN","PUNTOS OUT","PUNTOS IN","GROSS TOTAL","PUNTOS TOTAL"])assert.ok(html.includes(label),`Falta ${label}`);
 for(const label of ["GROSS OUT","GROSS IN","PTS OUT","PTS IN"])assert.ok(stableford.includes(label),`Falta ${label} en Stableford`);

@@ -5,12 +5,17 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "/index-grupal.html",
+      "destination": "/index-grupal.html?inicio=1",
       "permanent": false
     },
     {
       "source": "/index.html",
-      "destination": "/index-grupal.html",
+      "destination": "/index-grupal.html?inicio=1",
+      "permanent": false
+    },
+    {
+      "source": "/inicio",
+      "destination": "/index-grupal.html?inicio=1",
       "permanent": false
     },
     {

@@ -55,6 +55,10 @@ Pantallas principales:
 
 • Perfil
 
+### Entrada principal directa
+
+El dominio público raíz abre siempre la pantalla **Configura la ronda** mediante el parámetro interno `inicio=1`. Antes de mostrarla, la aplicación conserva la ronda activa persistida; abrir el inicio no borra, reemplaza ni finaliza la ronda anterior.
+
 ---
 
 # Flujo Principal
@@ -123,9 +127,22 @@ Calcula:
 
 • Estadísticas
 
-### Four Ball 2 vs 2
+### Match Play
 
-Four Ball es una modalidad propia de la arquitectura General y no un nombre visual aplicado a la Ronda Normal. Cada partida exige exactamente cuatro jugadores distribuidos de forma determinista:
+El nombre visible de la modalidad es únicamente **MATCH PLAY**. Los botones, encabezados, estados y tarjetas finales no agregan `HDCP` ni `CON HDCP` al nombre. La tarjeta conserva los campos HCP, Gross y Neto que requiere el cálculo; esta información pertenece al score de los jugadores y no a la denominación de la modalidad.
+
+Admite una o dos parejas de juego:
+
+- Pareja 1: jugadores 1 y 2, que disputan entre sí un Match independiente.
+- Pareja 2 opcional: jugadores 3 y 4, que disputan entre sí otro Match independiente.
+
+Cuando participan dos parejas, una línea vacía separa jugadores 2–3 en registro, tarjeta, resumen y exportación. Cada Match se decide por el Neto de cada hoyo, mantiene su propio marcador acumulado `EVEN`, `+N` o `−N` y cierra independientemente cuando la ventaja supera los hoyos restantes.
+
+En la dicción de los reportes de primera vuelta, segunda vuelta y total se usan exclusivamente **arriba**, **abajo** y **empatado**; la voz no pronuncia `UP`, `DOWN` ni `AS`.
+
+### Four Ball por parejas
+
+Four Ball es una modalidad propia de la arquitectura General y no un nombre visual aplicado a la Ronda Normal. Admite una o dos parejas, siempre de dos jugadores:
 
 El nombre visible de la modalidad es únicamente **FOUR BALL**. La interfaz no agrega `2 PAREJAS` al botón, encabezado, control manual ni tarjeta final; la cantidad pertenece a la configuración de la partida y no al nombre permanente de la modalidad.
 
@@ -134,7 +151,7 @@ El nombre visible de la modalidad es únicamente **FOUR BALL**. La interfaz no a
 
 Cada jugador juega su propia bola y registra únicamente Gross por voz o manualmente. El motor compartido calcula los golpes de handicap y el Neto individual. `four-ball.js` selecciona el menor Neto de cada pareja por hoyo y compara ambos mejores Netos; el resultado del hoyo pertenece a la pareja, no al jugador individual.
 
-El marcador conserva acumulativamente `EVEN`, `+1`, `+2`, `−1`, etc. en todos los hoyos ya registrados. Un hoyo empatado mantiene la posición anterior y un hoyo futuro permanece pendiente. El cierre anticipado se produce cuando la ventaja supera los hoyos restantes y genera snapshot oficial, correcciones, Historial, tarjeta Global y cuatro tarjetas personales.
+Con una sola pareja, la tarjeta acumula su mejor Neto por hoyo y cierra al completar 18. Con dos parejas, compara ambos mejores Netos y conserva acumulativamente `EVEN`, `+1`, `+2`, `−1`, etc.; un hoyo empatado mantiene la posición anterior. Una línea vacía separa visualmente Pareja Verde y Pareja Oro. Los hoyos futuros permanecen pendientes. El cierre genera snapshot oficial, correcciones, Historial, tarjeta Global y una tarjeta personal por jugador.
 
 ### Stableford Scratch permanente
 

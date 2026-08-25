@@ -1289,19 +1289,30 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 La modalidad se identifica en todas las pantallas únicamente como **FOUR BALL**. El nombre no incorpora una cantidad fija de parejas; la organización de la partida se muestra dentro del registro cuando corresponde.
 
-- La partida se compone de dos parejas y cuatro jugadores: jugadores 1–2 forman la **Pareja Verde** y jugadores 3–4 forman la **Pareja Oro**.
-- Cada jugador juega su propia bola. La entrada manual y la voz registran exclusivamente el **Gross** individual de los cuatro jugadores.
+- La partida acepta una pareja de dos jugadores o dos parejas con cuatro jugadores. Jugadores 1–2 forman la **Pareja Verde** y los jugadores opcionales 3–4 forman la **Pareja Oro**.
+- Cada jugador juega su propia bola. La entrada manual y la voz registran exclusivamente su **Gross** individual.
 - La aplicación calcula automáticamente el handicap y el **Neto** de cada jugador; después selecciona el menor Neto de cada pareja como la bola que cuenta.
-- El mejor Neto de la Pareja Verde se compara con el mejor Neto de la Pareja Oro. La pareja con menor resultado gana el hoyo; resultados iguales empatan el hoyo.
+- Con una pareja, el resultado acumula el mejor Neto de esa pareja por hoyo. Con dos parejas, el mejor Neto Verde se compara con el mejor Neto Oro; el menor gana el hoyo y resultados iguales lo empatan.
 - La tarjeta identifica con `★ MEJOR` al jugador o jugadores que aportan la mejor bola de su pareja.
 - El marcador acumulado muestra `EVEN`, `+1`, `+2`, `−1`, etc. Si un hoyo se empata, mantiene exactamente la posición anterior hasta que otro resultado la cambie. Los hoyos futuros permanecen pendientes.
-- El match termina anticipadamente cuando la ventaja supera los hoyos restantes y usa resultados como `3 & 2`. Si llega empatado al hoyo 18, finaliza como `MATCH EMPATADO`.
-- El cierre oficial guarda el campo, la fecha, el torneo, las dos parejas, los cuatro jugadores, Gross, handicap, Neto, mejor bola, resultado por hoyo y marcador final. Genera una Global y cuatro tarjetas personales disponibles en Historial, imagen, PDF y paquete completo.
+- Cuando hay dos parejas, el match termina anticipadamente si la ventaja supera los hoyos restantes; con una pareja, la tarjeta termina al completar 18.
+- Una línea vacía separa ambas parejas en registro, tarjeta, resumen y archivos exportados.
+- El cierre oficial guarda campo, fecha, torneo, parejas, jugadores, Gross, handicap, Neto, mejor bola y resultado. Genera una Global y una personal por jugador en Historial, imagen, PDF y paquete completo.
+
+### Match Play por parejas de juego
+
+- La modalidad se identifica únicamente como **MATCH PLAY**, sin `HDCP` en el nombre visible.
+- Acepta una pareja de juego (jugadores 1–2) o dos parejas de juego (jugadores 1–2 y 3–4).
+- Cada pareja disputa un Match independiente por Neto; un Match puede terminar antes que el otro.
+- Con dos parejas, una línea vacía las separa en registro, tarjeta, resumen y exportación.
+- Los campos HCP, Gross y Neto permanecen dentro de cada tarjeta y el cálculo no cambia.
+- En la voz de primera vuelta, segunda vuelta y total, `UP`, `DOWN` y `AS` se pronuncian respectivamente **arriba**, **abajo** y **empatado**.
 
 ## 28. Historial inicial del documento
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-25 | Manual 3.64 / App V311 | Homologados `MATCH PLAY` y `FOUR BALL` para una o dos parejas, con HCP individual, resultados separados y una línea vacía entre parejas cuando participan cuatro jugadores. Match Play mantiene un resultado independiente para jugadores 1–2 y 3–4. Four Ball acumula el mejor Neto con una pareja o compara los mejores Netos con dos. La dicción de primera vuelta, segunda vuelta y total dice `arriba`, `abajo` y `empatado`, nunca `UP`, `DOWN` o `AS`. El nombre Match Play no añade `HDCP`. El enlace público raíz abre directamente `Configura la ronda` mediante `inicio=1` y conserva cualquier ronda activa. |
 | 2026-08-25 | Manual 3.63 / App V310 | Homologado el nombre visible `FOUR BALL` sin el sufijo `2 PAREJAS`. El cambio alcanza selección de modalidad, validación, registro por voz, encabezado de ronda, control manual y tarjeta digital final. La lógica de mejor Neto por pareja y el marcador acumulado permanecen intactos. |
 | 2026-08-25 | Manual 3.62 / App V309 | Implementación funcional de `FOUR BALL · 2 PAREJAS` para exactamente cuatro jugadores. Pareja Verde ocupa posiciones 1–2 y Pareja Oro 3–4. Cada jugador registra Gross; el motor General calcula su Neto y el módulo Four Ball compara el mejor Neto de cada pareja. La tarjeta identifica la mejor bola, conserva acumulativamente `EVEN`, `+N` o `−N` durante hoyos empatados, cierra anticipadamente, permite corrección oficial y genera Historial, Global y cuatro personales. |
 | 2026-08-24 | Manual 3.60 / App V306 | Integración funcional de `MATCH PLAY · CON HDCP` como copia de la Ronda Normal para exactamente dos jugadores. Conserva registro, Gross, golpes de HDCP, Neto, captura manual y por voz; únicamente añade el rubro MATCH calculado por Neto: flecha verde al ganador, flecha roja al perdedor y ningún símbolo en el empate. Muestra el estado permanente `AS` o `N UP` y reconoce el cierre anticipado oficial, por ejemplo `3 & 2`. |

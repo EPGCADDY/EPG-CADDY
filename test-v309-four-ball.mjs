@@ -13,6 +13,7 @@ const score=(hole,net,strokes=1)=>({hole,gross:net+strokes,strokes,net,par:4,dif
 const player=(id,name,nets)=>({id,name,handicap:12,tee:"Blanco",holes:Object.fromEntries(nets.map((net,index)=>[index+1,score(index+1,net)]))});
 
 assert.equal(fourBall.validatePlayers([]),false);
+assert.equal(fourBall.validatePlayers([player("a","ANA",[]),player("b","BETO",[])]),true);
 assert.equal(fourBall.validatePlayers([player("a","ANA",[]),player("b","BETO",[]),player("c","CARLA",[]),player("d","DIEGO",[])]),true);
 assert.equal(fourBall.teamIndexForPlayer(0),0);
 assert.equal(fourBall.teamIndexForPlayer(3),1);
@@ -34,6 +35,20 @@ assert.equal(fourBall.teamIndexForPlayer(3),1);
   assert.equal(fourBall.teamStanding(players,0,[1,2]).position,"+1","Un hoyo empatado conserva +1");
   assert.equal(fourBall.teamStanding(players,1,[1,2]).position,"−1","La pareja rival conserva −1");
   assert.equal(fourBall.teamStanding(players,0,[1,2,3]).position,"EVEN");
+}
+
+{
+  const players=[player("a","ANA",Array(18).fill(4)),player("b","BETO",Array(18).fill(5))],result=fourBall.status(players);
+  assert.equal(result.teamCount,1,"Four Ball admite una sola pareja");
+  assert.equal(result.closed,true);
+  assert.equal(result.resultLabel,"PAREJA VERDE · NETO TOTAL 72");
+  assert.equal(fourBall.teamStanding(players,0,[1,2,3]).position,"NETO 12");
+  const singleClosed=await roundClosure.close({id:"four-ball-single",configured:true,mode:"four_ball",courseKey:"pulte",course:"El Pulté",players,fourBall:{...result,holes:undefined},createdAt:"2026-08-25T00:00:00.000Z"},{appVersion:"V311",closedAt:"2026-08-25T03:00:00.000Z"});
+  assert.equal(singleClosed.ok,true);
+  const singleArtifacts=cardArtifacts.build(singleClosed.snapshot);
+  assert.equal(singleArtifacts.personal.length,2);
+  assert.match(singleArtifacts.global.html,/Una o dos parejas/);
+  assert.doesNotMatch(singleArtifacts.personal[0].html,/Rivales:/);
 }
 
 {
@@ -83,7 +98,8 @@ assert.match(artifacts.global.name,/tarjeta-global-four-ball/);
 assert.match(artifacts.global.html,/PAREJA VERDE/);
 assert.match(artifacts.global.html,/PAREJA ORO/);
 assert.match(artifacts.global.html,/★ MEJOR/);
-assert.match(artifacts.global.html,/EVEN, \+1, \+2 o −1 se mantienen acumulados/);
+assert.match(artifacts.global.html,/Una o dos parejas, con HCP individual y resultado separado por pareja/);
+assert.match(artifacts.global.html,/class="pair-divider"/);
 assert.match(artifacts.personal[0].html,/NETO COMPAÑERO/);
 assert.match(artifacts.personal[0].html,/MEJOR NETO RIVAL/);
 
@@ -93,9 +109,10 @@ const mobile=fs.readFileSync(new URL("./scripts/build-mobile-web.mjs",import.met
 const vercel=fs.readFileSync(new URL("./vercel.json",import.meta.url),"utf8");
 assert.match(html,/gscg-four-ball" content="V309-TWO-PAIRS-BEST-NET-CUMULATIVE-MATCH-20260825"/);
 assert.match(html,/id="fourBallRoundButton"[\s\S]*?<span>FOUR BALL<\/span>/);
-assert.match(html,/FOUR BALL REQUIERE 4 JUGADORES/);
+assert.match(html,/FOUR BALL REQUIERE 2 O 4 JUGADORES/);
 assert.doesNotMatch(html,/FOUR BALL · 2 PAREJAS/);
-assert.match(html,/PAREJA VERDE 1–2 · PAREJA ORO 3–4/);
+assert.match(html,/FOUR BALL · REGISTRA UNA O DOS PAREJAS/);
+assert.match(html,/team-pair-spacer/);
 assert.match(html,/function fourBallPlayerBlock/);
 assert.match(html,/function fourBallHoleStanding/);
 assert.match(html,/fourBallStatus\(\)\.closed/);
@@ -107,4 +124,4 @@ assert.match(worker,/"\/four-ball\.js"/);
 assert.match(mobile,/"four-ball\.js"/);
 assert.match(vercel,/four-ball/);
 
-console.log("PASS V309/V310 · FOUR BALL · ETIQUETA NEUTRAL · 4 GROSS · MEJOR NETO · ACUMULADO · CIERRE · HISTORIAL · EXPORTACIÓN");
+console.log("PASS V309/V310/V311 · FOUR BALL · UNA O DOS PAREJAS · HCP INDIVIDUAL · MEJOR NETO · SEPARACIÓN · EXPORTACIÓN");

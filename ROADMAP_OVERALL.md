@@ -454,3 +454,29 @@ El **25 de agosto de 2026** se homologa el nombre visible de la modalidad como `
 | `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.63 con denominación neutral. |
 | `ROADMAP_A_DETALLE.md` | Registra la homologación técnica V310. |
 | `ROADMAP_OVERALL.md` | Registra esta entrega V310. |
+
+## V311 · Match Play neutral y enlace directo de inicio
+
+El **25 de agosto de 2026** se deja el nombre visible de la modalidad exclusivamente como `MATCH PLAY`; la arquitectura conserva HCP, Gross y Neto como datos de cálculo, pero no agrega `HDCP` al nombre, los estados ni la tarjeta final. Match Play y Four Ball aceptan una o dos parejas, con una línea vacía entre ellas cuando hay cuatro jugadores. Los reportes hablados de primera vuelta, segunda vuelta y total dicen `arriba`, `abajo` y `empatado`, sin pronunciar UP/DOWN/AS. El dominio público raíz y `/inicio` abren directamente `Configura la ronda` sin borrar una ronda activa guardada.
+
+| Archivo nuevo o modificado | Registro V311 |
+|---|---|
+| `index-grupal.html` | Neutraliza el nombre Match Play; admite 2 o 4 jugadores en ambos formatos; separa parejas en registro, tarjeta y resumen; habla arriba/abajo/empatado; reconoce `inicio=1`. |
+| `match-play.js` | Organiza uno o dos Matches independientes: jugadores 1–2 y, opcionalmente, 3–4. |
+| `four-ball.js` | Admite una o dos parejas; con una acumula mejor Neto y con dos conserva la comparación acumulada. |
+| `round-closure.js` | Cierra y corrige configuraciones de 2 o 4 jugadores, respetando el hoyo final independiente de cada Match. |
+| `card-artifacts.js` | Exporta una o dos parejas con HCP individual, resultado propio y línea separadora. |
+| `vercel.json` | Envía `/`, `/index.html` y `/inicio` a `/index-grupal.html?inicio=1`. |
+| `test-v306-match-play.mjs` | Prueba nombre neutral, uno o dos Matches, cierres independientes y exportación separada. |
+| `test-v307-match-arrows-format.mjs` | Conserva flechas, formato y bloqueo individual posterior al cierre. |
+| `test-v309-four-ball.mjs` | Prueba una o dos parejas, mejor Neto, cierre, HCP, línea y exportación. |
+| `test-v272-definitive-operational-release.mjs` | Verifica las rutas públicas directas y conserva la ruta exclusiva Stableford. |
+| `test-v270-consecutive-hole-voice-blocks.mjs` | Conserva el simulador de voz cargando el nuevo límite operativo independiente por pareja. |
+| `test-v255-player-registration-boxes-codes.mjs` | Homologa el registro visual de Match Play y Four Ball con cuatro espacios disponibles. |
+| `test-v305-registration-guides-parser-truth.mjs` | Homologa el candado del registro para exigir 2 o 4 jugadores en Match Play y Four Ball. |
+| `test-v311-neutral-match-home-link.mjs` | Candado de nombres, parejas, separación, dicción en español y apertura directa. |
+| `audit-project.mjs` | Incorpora el candado V311 a la homologación completa. |
+| `APP_ARCHITECTURE.md` | Define una o dos parejas, resultados independientes, separación, voz e inicio sin pérdida de ronda. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.64 / App V311 con el contrato operativo completo. |
+| `ROADMAP_A_DETALLE.md` | Registra la matriz técnica V311. |
+| `ROADMAP_OVERALL.md` | Registra esta entrega V311 y satisface el ROADMAP Gate. |

@@ -20,13 +20,14 @@ assert.doesNotMatch(html,/state==="won"\?"↑":state==="lost"\?"↓":""/);
 
 assert.match(html,/label:"MODALIDAD",value:round\.provisional\?"SCORE CARD - PRÁCTICA":isMatchPlayRound\(\)\?"MATCH PLAY":"RONDA NORMAL"/);
 assert.doesNotMatch(html,/label:"MODALIDAD",value:[^\n]*isMatchPlayRound\(\)\?"MATCH PLAY · CON HDCP"/);
-assert.match(html,/id="matchPlayRoundButton"[\s\S]*?MATCH PLAY · CON HDCP/);
+assert.match(html,/id="matchPlayRoundButton"[\s\S]*?<span>MATCH PLAY<\/span>/);
+assert.doesNotMatch(html,/MATCH PLAY · CON HDCP/);
 assert.match(html,/RESULTADO MATCH PLAY/);
 assert.match(html,/MATCH OUT<\/th><th>MATCH IN<\/th><th>MATCH TOTAL/);
 assert.match(html,/matchStandingMarkup\(out\)[\s\S]*?matchStandingMarkup\(inside\)[\s\S]*?matchStandingMarkup\(total\)/);
 assert.match(html,/FIN DEL MATCH/);
 assert.match(html,/matchPlayFinalSpeech/);
-assert.match(html,/hole>before\.decidedAt/);
+assert.match(html,/hole>limit/);
 assert.doesNotMatch(html,/RESULTADO NETO HOYO POR HOYO/);
 
 assert.match(artifacts,/const matchSymbol=status=>\{if\(status!=="won"&&status!=="lost"\)return""/);

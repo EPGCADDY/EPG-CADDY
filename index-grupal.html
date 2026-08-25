@@ -580,6 +580,12 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
 .account-entry-button.connected{border-color:var(--lime)!important;color:var(--lime)!important}
 @media(max-width:800px){.screen-back-button{min-width:96px;min-height:42px;font-size:13px}.screen-back-row{margin-bottom:9px}}
 </style>
+<style id="gscg-team-pair-separation-v311">
+.draft-edit-row.match-pair-one{border-left:4px solid var(--lime)}
+.draft-edit-row.match-pair-two{border-left:4px solid #fff}
+.draft-pair-divider,.confirm-pair-divider{height:18px;border:0;border-top:2px solid #444;border-bottom:2px solid #181818;background:#000}
+.scorecard .team-pair-spacer td,.summary .summary-pair-divider td{height:18px!important;border-color:#202323!important;background:#000!important}
+</style>
 </head>
 <body>
 <main class="app">
@@ -623,7 +629,7 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
     <div class="field-title course-selection-title">SELECCIONA CAMPO</div><div class="course-options" id="courseOptions" role="radiogroup" aria-label="Campo de golf"></div>
     <div class="field-title">SELECCIONA MODALIDAD</div>
     <div class="normal-mode-option"><button type="button" class="course-option stable-course-option normal-round-option" id="normalRoundButton" aria-label="Seleccionar Ronda Normal" aria-pressed="true"><span class="stable-course-dot">N</span><span>RONDA NORMAL</span></button></div>
-    <div class="match-play-mode-option"><button type="button" class="course-option stable-course-option match-play-round-option" id="matchPlayRoundButton" aria-label="Seleccionar Match Play con handicap" aria-pressed="false"><span class="stable-course-dot">M</span><span>MATCH PLAY · CON HDCP</span></button></div>
+    <div class="match-play-mode-option"><button type="button" class="course-option stable-course-option match-play-round-option" id="matchPlayRoundButton" aria-label="Seleccionar Match Play" aria-pressed="false"><span class="stable-course-dot">M</span><span>MATCH PLAY</span></button></div>
     <div class="four-ball-mode-option"><button type="button" class="course-option stable-course-option four-ball-round-option" id="fourBallRoundButton" aria-label="Seleccionar Four Ball" aria-pressed="false"><span class="stable-course-dot">4</span><span>FOUR BALL</span></button></div>
     <div class="stableford-mode-option" id="stablefordModeOption"></div>
     <div class="provisional-mode-option"><button type="button" class="course-option stable-course-option provisional-scorecard-option" id="provisionalScorecardButton" aria-label="Abrir Score Card de práctica"><span class="stable-course-dot">➜</span><span>SCORE CARD - PRÁCTICA</span></button></div>
@@ -826,6 +832,7 @@ const blankRound=()=>({id:newRoundId(),version:2,mode:"general",configured:false
 const startupParams=new URLSearchParams(location.search);
 const sfEmergency=startupParams.get("stableford_emergency")==="countryclub";
 const demoControlManual=startupParams.get("demo_control_manual")==="v269";
+const directHome=startupParams.get("inicio")==="1";
 const DEMO_CONTROL_MANUAL_KEY="golf-score-card-guatemala-demo-control-manual-v269";
 const DEMO_CONTROL_MANUAL_DRAFT_KEY="golf-score-card-guatemala-demo-control-manual-draft-v269";
 const DEMO_CONTROL_MANUAL_ARCHIVE_KEY="golf-score-card-guatemala-demo-control-manual-archive-v269";
@@ -1042,7 +1049,7 @@ function seedManualDraftRowsFromPlayers(){manualDraftRows=Array.from({length:6},
 function manualRowHasData(row){return !!(String(row?.name||"").trim()||String(row?.handicap??"").trim()||row?.tee)}
 function setManualRegistrationStatus(message){const status=$("setupStatus");if(status){status.classList.remove("listening");status.textContent=message}return false}
 function syncDraftPlayersFromManualRows({strict=false,renderAfter=false}={}){
-  const next=[],seen=new Set(),limit=draftRoundMode==="match_play"?2:draftRoundMode==="four_ball"?4:6;let incomplete=null;
+  const next=[],seen=new Set(),limit=["match_play","four_ball"].includes(draftRoundMode)?4:6;let incomplete=null;
   for(let i=0;i<limit;i++){
     const row=manualDraftRows[i]||emptyManualDraftRow(),hasData=manualRowHasData(row),name=canonicalPlayerName(row.name),handicapText=String(row.handicap??"").trim(),handicap=Number(handicapText),tee=normalizeTee(row.tee);
     if(!hasData)continue;
@@ -1057,8 +1064,8 @@ function syncDraftPlayersFromManualRows({strict=false,renderAfter=false}={}){
     if(incomplete.handicapText===""||!Number.isInteger(Number(incomplete.handicapText))||Number(incomplete.handicapText)<0||Number(incomplete.handicapText)>54)return setManualRegistrationStatus(`JUGADOR ${incomplete.slot}: HDCP VÁLIDO DE 0 A 54`);
     if(!incomplete.tee)return setManualRegistrationStatus(`JUGADOR ${incomplete.slot}: SELECCIONA LAS MARCAS`);
   }
-  if(strict&&draftRoundMode==="match_play"&&next.length!==2)return setManualRegistrationStatus("MATCH PLAY REQUIERE EXACTAMENTE 2 JUGADORES");
-  if(strict&&draftRoundMode==="four_ball"&&next.length!==4)return setManualRegistrationStatus("FOUR BALL REQUIERE 4 JUGADORES");
+  if(strict&&draftRoundMode==="match_play"&&![2,4].includes(next.length))return setManualRegistrationStatus("MATCH PLAY REQUIERE 2 O 4 JUGADORES");
+  if(strict&&draftRoundMode==="four_ball"&&![2,4].includes(next.length))return setManualRegistrationStatus("FOUR BALL REQUIERE 2 O 4 JUGADORES");
   if(strict&&!next.length)return setManualRegistrationStatus("REGISTRA DE 1 A 6 JUGADORES");
   if(rosterEditMode&&next.length<draftPlayers.length)return setManualRegistrationStatus("NO SE PUEDE ELIMINAR UN JUGADOR DESDE ESTA CORRECCIÓN");
   draftPlayers=next.map((p,i)=>normalizePlayer({...p,id:p.id||`p${i+1}`},i));
@@ -1068,14 +1075,14 @@ function syncDraftPlayersFromManualRows({strict=false,renderAfter=false}={}){
   return true;
 }
 function generalSetupState(){
-  const seen=new Set(),limit=draftRoundMode==="match_play"?2:draftRoundMode==="four_ball"?4:6;let count=0,complete=true;
+  const seen=new Set(),limit=["match_play","four_ball"].includes(draftRoundMode)?4:6;let count=0,complete=true;
   for(let i=0;i<limit;i++){
     const row=manualDraftRows[i]||emptyManualDraftRow();if(!manualRowHasData(row))continue;
     const name=canonicalPlayerName(row.name),handicapText=String(row.handicap??"").trim(),handicap=Number(handicapText),tee=normalizeTee(row.tee),key=canonicalPlayerNameKey(name);
     if(!name||handicapText===""||!Number.isInteger(handicap)||handicap<0||handicap>54||!tee||seen.has(key)){complete=false;continue}
     seen.add(key);count++;
   }
-  const baseRequired=draftRoundMode==="match_play"?count===2:count>=1,required=draftRoundMode==="four_ball"?count===4:baseRequired,course=COURSE_CATALOG[draftCourse];return{ready:!!(complete&&required&&course?.configured),count,complete};
+  const required=["match_play","four_ball"].includes(draftRoundMode)?[2,4].includes(count):count>=1,course=COURSE_CATALOG[draftCourse];return{ready:!!(complete&&required&&course?.configured),count,complete};
 }
 function updateGeneralSetupValidity(){
   const state=generalSetupState(),button=$("setupOk");if(button){button.disabled=!state.ready;button.setAttribute("aria-disabled",String(!state.ready))}return state;
@@ -1806,8 +1813,8 @@ function prepareGroup(args){
 }
 function startConfirmedRound(){
   if(!draftPlayers.length)return false;
-  if(draftRoundMode==="match_play"&&draftPlayers.length!==2){setManualRegistrationStatus("MATCH PLAY REQUIERE EXACTAMENTE 2 JUGADORES");return false}
-  if(draftRoundMode==="four_ball"&&draftPlayers.length!==4){setManualRegistrationStatus("FOUR BALL REQUIERE 4 JUGADORES");return false}
+  if(draftRoundMode==="match_play"&&![2,4].includes(draftPlayers.length)){setManualRegistrationStatus("MATCH PLAY REQUIERE 2 O 4 JUGADORES");return false}
+  if(draftRoundMode==="four_ball"&&![2,4].includes(draftPlayers.length)){setManualRegistrationStatus("FOUR BALL REQUIERE 2 O 4 JUGADORES");return false}
   enforceCanonicalDraftNames();
   draftTournament=normalizeTournament(draftTournament);
   if(draftTournament&&!draftTournament.name)draftTournament=null;
@@ -2152,7 +2159,7 @@ function removeRoundPlayer(player){
   return{ok:true,closure};
 }
 function operationalPlayersForHole(hole){
-  const value=Number(hole);return Number.isInteger(value)&&value>=1&&value<=18?round.players.filter(player=>value>=Math.max(1,Math.min(18,Number(player?.activeFrom)||1))):[]
+  const value=Number(hole);return Number.isInteger(value)&&value>=1&&value<=18?round.players.filter(player=>value>=Math.max(1,Math.min(18,Number(player?.activeFrom)||1))&&value<=teamMatchPlayerLimit(player)):[]
 }
 function operationalEntryRecorded(entry){return entry?.status==="x"||(Number.isInteger(Number(entry?.gross))&&Number(entry.gross)>=1&&Number(entry.gross)<=30)}
 function operationalHoleComplete(hole,entries=[],{ignoreRecordedKeys=null}={}){
@@ -2355,6 +2362,7 @@ function yds10NameSafe(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp
 function tableHeader(){return`<tr><th class="player-col">JUGADOR</th><th class="concept-col">HOYO</th>${FRONT.map(h=>`<th class="hole-col" data-hole="${h}">${h}</th>`).join("")}<th class="sum-col">OUT</th>${BACK.map(h=>`<th class="hole-col" data-hole="${h}">${h}</th>`).join("")}<th class="sum-col">IN</th><th class="sum-col">TOTAL</th></tr>`}
 function generalRow(label,values,front,back,total){return`<tr class="general"><td></td><td class="concept">${label}</td>${values.slice(0,9).map(v=>`<td>${v}</td>`).join("")}<td>${front}</td>${values.slice(9).map(v=>`<td>${v}</td>`).join("")}<td>${back}</td><td>${total}</td></tr>`}
 function firstPlayerSpacer(){return`<tr class="first-player-spacer" aria-hidden="true">${Array(22).fill("<td></td>").join("")}</tr>`}
+function teamPairSpacer(){return`<tbody class="team-pair-spacer" aria-hidden="true"><tr>${Array(22).fill("<td></td>").join("")}</tr></tbody>`}
 function scorecardLead(){const front=PAR.slice(0,9).reduce((a,b)=>a+b,0),back=PAR.slice(9).reduce((a,b)=>a+b,0);return`<tbody class="scorecard-lead">${tableHeader()}${generalRow("PAR",PAR,front,back,front+back)}</tbody>`}
 function grossMarkClass(s){if(!s||isOmittedScore(s)||!Number.isInteger(s.gross)||!Number.isInteger(s.par))return"";if(s.gross===1)return"ace";const d=s.gross-s.par;if(d===-1)return"birdie";if(d===-2)return"eagle";if(d<=-3)return"albatross";if(d===1)return"bogey";if(d===2)return"double-bogey";if(d>=3)return"triple-bogey";return""}
 function grossMarkHtml(s){if(!s)return"";if(isOmittedScore(s))return"X";const mark=grossMarkClass(s);return mark?`<span class="gross-mark ${mark}">${s.gross}</span>`:String(s.gross)}
@@ -2482,13 +2490,13 @@ function renderCourseDraft(){const key=COURSE_CATALOG[draftCourse]?draftCourse:"
 function selectGeneralRoundMode(mode){
   if(rosterEditMode)return false;
   draftRoundMode=["match_play","four_ball"].includes(mode)?mode:"general";
-  const limit=draftRoundMode==="match_play"?2:draftRoundMode==="four_ball"?4:6;
+  const limit=["match_play","four_ball"].includes(draftRoundMode)?4:6;
   draftPlayers=draftPlayers.slice(0,limit);manualDraftRows=manualDraftRows.slice(0,limit).concat(Array.from({length:6-limit},()=>emptyManualDraftRow()));
   $("normalRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="general"));
   $("matchPlayRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="match_play"));
   $("fourBallRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="four_ball"));
   persistDraftState();renderDraft();
-  $("setupStatus").textContent=draftRoundMode==="match_play"?"MATCH PLAY · REGISTRA EXACTAMENTE 2 JUGADORES · SE JUEGA CON HDCP":draftRoundMode==="four_ball"?"FOUR BALL · PAREJA VERDE 1–2 · PAREJA ORO 3–4 · CON HDCP":"";
+  $("setupStatus").textContent=draftRoundMode==="match_play"?"MATCH PLAY · REGISTRA 2 O 4 JUGADORES":draftRoundMode==="four_ball"?"FOUR BALL · REGISTRA UNA O DOS PAREJAS":"";
   return true
 }
 function renderDraft(){
@@ -2498,20 +2506,20 @@ function renderDraft(){
   $("normalRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="general"));
   $("matchPlayRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="match_play"));
   $("fourBallRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="four_ball"));
-  $("playerVoicePrompt").textContent=draftRoundMode==="match_play"?"REGISTRO MATCH PLAY · 2 JUGADORES":draftRoundMode==="four_ball"?"REGISTRO FOUR BALL · 4 JUGADORES":"REGISTRO DE JUGADORES";
-  document.querySelector(".newbie-guide-player").textContent=draftRoundMode==="match_play"?"EXACTAMENTE 2 JUGADORES":draftRoundMode==="four_ball"?"VERDE: JUGADORES 1–2 · ORO: 3–4":"HASTA 6 JUGADORES";
+  $("playerVoicePrompt").textContent=draftRoundMode==="match_play"?"REGISTRO MATCH PLAY · UNA O DOS PAREJAS":draftRoundMode==="four_ball"?"REGISTRO FOUR BALL · UNA O DOS PAREJAS":"REGISTRO DE JUGADORES";
+  document.querySelector(".newbie-guide-player").textContent=draftRoundMode==="match_play"?"PAREJA 1: JUGADORES 1–2 · PAREJA 2: 3–4":draftRoundMode==="four_ball"?"VERDE: JUGADORES 1–2 · ORO: 3–4":"HASTA 6 JUGADORES";
   let editHtml="",confirmHtml="";
-  const registrationSlots=draftRoundMode==="match_play"?2:6;
+  const registrationSlots=["match_play","four_ball"].includes(draftRoundMode)?4:6;
   for(let i=0;i<registrationSlots;i++){
-    if(draftRoundMode==="four_ball"&&i>=4)continue;
     const p=draftPlayers[i],row=manualDraftRows[i]||emptyManualDraftRow();
     if(p&&!row.dirty)manualDraftRows[i]=manualRowFromPlayer(p);
     const staged=manualDraftRows[i]||row,tee=TEES[staged.tee]||null,safeName=escapeHtml(staged.name),nameLength=Array.from(String(staged.name||"").trim()).length;
     const longNameClass=nameLength>=24?" very-long-name":nameLength>=18?" long-name":"";
     const teeOptions=`<option value="" ${staged.tee?"":"selected"}>SELECCIONA</option>`+Object.entries(TEES).map(([key,t])=>`<option value="${key}" ${key===staged.tee?"selected":""}>${t.label}</option>`).join("");
-    const color=tee?.color||"#fff",emptyClass=p||manualRowHasData(staged)?"":" empty",teamClass=draftRoundMode==="four_ball"?(i<2?" team-green":" team-gold"):"",slotLabel=draftRoundMode==="four_ball"?`${i<2?"V":"O"}${i%2+1}`:String(i+1);
+    const color=tee?.color||"#fff",emptyClass=p||manualRowHasData(staged)?"":" empty",teamClass=draftRoundMode==="four_ball"?(i<2?" team-green":" team-gold"):draftRoundMode==="match_play"?(i<2?" match-pair-one":" match-pair-two"):"",slotLabel=draftRoundMode==="four_ball"?`${i<2?"V":"O"}${i%2+1}`:draftRoundMode==="match_play"?`${i<2?"P1":"P2"}.${i%2+1}`:String(i+1);
+    if(i===2&&["match_play","four_ball"].includes(draftRoundMode)){editHtml+='<div class="draft-pair-divider" aria-hidden="true"></div>';confirmHtml+='<div class="confirm-pair-divider" aria-hidden="true"></div>'}
     editHtml+=`<div class="draft-edit-row${emptyClass}${teamClass}" data-draft-row="${i}"><span class="draft-slot">${slotLabel}</span><input class="draft-name-input${longNameClass}" data-draft-name="${i}" value="${safeName}" placeholder="NOMBRE" aria-label="Nombre jugador ${i+1}" style="color:${color}"><input class="draft-hcp-input" data-draft-hcp="${i}" type="number" inputmode="numeric" min="0" max="54" step="1" value="${escapeHtml(staged.handicap)}" placeholder="0-54" aria-label="Handicap jugador ${i+1}"><select class="draft-tee-select" data-draft-tee="${i}" aria-label="Marcas jugador ${i+1}" style="color:${color}">${teeOptions}</select></div>`;
-    if(p){const playerTee=TEES[p.tee],pair=draftRoundMode==="four_ball"?`<small style="color:${i<2?"var(--lime)":"#d4af37"}">${i<2?"PAREJA VERDE":"PAREJA ORO"}</small><br>`:"";confirmHtml+=`<div class="confirm-row"><strong style="color:${playerTee.color}">${pair}${escapeHtml(p.name)}</strong><span>${p.handicap}</span><span>${playerTee.label}</span></div>`}
+    if(p){const playerTee=TEES[p.tee],pair=draftRoundMode==="four_ball"?`<small style="color:${i<2?"var(--lime)":"#d4af37"}">${i<2?"PAREJA VERDE":"PAREJA ORO"}</small><br>`:draftRoundMode==="match_play"?`<small>${i<2?"PAREJA 1":"PAREJA 2"}</small><br>`:"";confirmHtml+=`<div class="confirm-row"><strong style="color:${playerTee.color}">${pair}${escapeHtml(p.name)}</strong><span>${p.handicap}</span><span>${playerTee.label}</span></div>`}
   }
   $("detectedBody").innerHTML=editHtml;
   $("detectedPlayers").classList.remove("hidden");
@@ -2615,34 +2623,35 @@ function isTeamMatchRound(value=round){return isMatchPlayRound(value)||isFourBal
 function matchPlayStatus(){return window.GSCMatchPlay.status(round.players)}
 function matchPlaySegment(playerIndex,holes){return window.GSCMatchPlay.segmentStanding(round.players,playerIndex,holes)}
 function matchArrowSvg(state){if(state!=="won"&&state!=="lost")return"";const path=state==="won"?"M12 22V5M5 12l7-7 7 7":"M12 2v17M5 12l7 7 7-7";return`<span class="match-arrow match-arrow-${state}" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="${path}"></path></svg></span>`}
-function matchHoleStanding(playerIndex,hole){const result=window.GSCMatchPlay.holeResult(round.players,hole);if(!result.recorded)return{state:"pending",label:"",title:"PENDIENTE"};const value=matchPlaySegment(playerIndex,ALL.filter(number=>number<=hole)),state=value.margin>0?"won":value.margin<0?"lost":"tied",label=value.margin===0?"EVEN":`${value.margin>0?"+":"−"}${Math.abs(value.margin)}`;return{state,label,title:label}}
+function matchHoleStanding(playerIndex,hole){const pairIndex=window.GSCMatchPlay.pairIndexForPlayer(playerIndex),result=window.GSCMatchPlay.pairHoleResult(round.players,pairIndex,hole);if(!result.recorded)return{state:"pending",label:"",title:"PENDIENTE"};const value=matchPlaySegment(playerIndex,ALL.filter(number=>number<=hole)),state=value.margin>0?"won":value.margin<0?"lost":"tied",label=value.margin===0?"EVEN":`${value.margin>0?"+":"−"}${Math.abs(value.margin)}`;return{state,label,title:label}}
 function matchStandingMarkup(value){return value?.played?`<span class="match-standing match-standing-${value.state}">${escapeHtml(value.label)}</span>`:""}
 function matchStandingCell(value){return`<td class="match-standing-cell match-standing-${value?.state||"pending"}">${matchStandingMarkup(value)}</td>`}
 function matchPlayPlayerBlock(player,slot){
   let html=basePlayerBlock(player,slot);if(!player)return html;
   const playerIndex=round.players.findIndex(item=>item.id===player.id),marker=hole=>{const standing=matchHoleStanding(playerIndex,hole);return`<td class="match-${standing.state}" title="${standing.title}" aria-label="HOYO ${hole} ${standing.title}"><span class="match-hole-standing">${matchArrowSvg(standing.state)}<span class="match-hole-standing-value">${escapeHtml(standing.label)}</span></span></td>`},front=matchPlaySegment(playerIndex,FRONT),back=matchPlaySegment(playerIndex,BACK),all=matchPlaySegment(playerIndex,ALL);
   html=html.replace(/rowspan="(\d+)"/,(_,value)=>`rowspan="${Number(value)+1}"`);
-  return html.replace("</tbody>",`<tr class="match-row"><td class="concept">MATCH</td>${FRONT.map(marker).join("")}${matchStandingCell(front)}${BACK.map(marker).join("")}${matchStandingCell(back)}${matchStandingCell(all)}</tr></tbody>`)
+  const block=html.replace("</tbody>",`<tr class="match-row"><td class="concept">MATCH</td>${FRONT.map(marker).join("")}${matchStandingCell(front)}${BACK.map(marker).join("")}${matchStandingCell(back)}${matchStandingCell(all)}</tr></tbody>`);return slot===3?teamPairSpacer()+block:block
 }
-function matchPlaySummaryRows(){return round.players.map((player,index)=>{const grossOut=totals(player,FRONT),grossIn=totals(player,BACK),grossTotal=totals(player,ALL),out=matchPlaySegment(index,FRONT),inside=matchPlaySegment(index,BACK),total=matchPlaySegment(index,ALL);return`<tr><td class="summary-player">${escapeHtml(player.name)}</td><td>${grossOut.count?grossOut.gross:""}</td><td>${grossIn.count?grossIn.gross:""}</td><td>${grossTotal.count?grossTotal.gross:""}</td><td>${player.handicap}</td><td>${matchStandingMarkup(out)}</td><td>${matchStandingMarkup(inside)}</td><td>${matchStandingMarkup(total)}</td></tr>`}).join("")}
-function matchPlayFinalSpeech(state=matchPlayStatus()){const result=String(state.resultLabel||"").replace(/\s*&\s*/g," y "),standings=round.players.map((player,index)=>matchPlaySegment(index,ALL).label.replace(" · "," ")).filter(Boolean).join(". ");return`Fin del Match. ${result}. ${standings}.`}
+function matchPlaySummaryRows(){return round.players.map((player,index)=>{const grossOut=totals(player,FRONT),grossIn=totals(player,BACK),grossTotal=totals(player,ALL),out=matchPlaySegment(index,FRONT),inside=matchPlaySegment(index,BACK),total=matchPlaySegment(index,ALL),divider=index===2?'<tr class="summary-pair-divider" aria-hidden="true"><td colspan="8"></td></tr>':"";return`${divider}<tr><td class="summary-player">${escapeHtml(player.name)}</td><td>${grossOut.count?grossOut.gross:""}</td><td>${grossIn.count?grossIn.gross:""}</td><td>${grossTotal.count?grossTotal.gross:""}</td><td>${player.handicap}</td><td>${matchStandingMarkup(out)}</td><td>${matchStandingMarkup(inside)}</td><td>${matchStandingMarkup(total)}</td></tr>`}).join("")}
+function teamStandingSpeech(value){return String(value||"").replace(" · ",", ").replace(/\bUP\b/gi,"arriba").replace(/\bDOWN\b/gi,"abajo").replace(/\bAS\b/gi,"empatado").replace(/\+(\d+)/g,"$1 arriba").replace(/−(\d+)/g,"$1 abajo").replace(/\bEVEN\b/gi,"empatado")}
+function matchPlayFinalSpeech(state=matchPlayStatus()){const result=teamStandingSpeech(String(state.resultLabel||"").replace(/\s*&\s*/g," y ")),standings=round.players.map((player,index)=>teamStandingSpeech(matchPlaySegment(index,ALL).label)).filter(Boolean).join(". ");return`Fin del Match. ${result}. ${standings}.`}
 function renderMatchPlay(){
   const output=baseRender(),state=matchPlayStatus();round.matchPlay={...state,holes:undefined};document.body.classList.add("match-play-mode");document.querySelector(".round-meta h1").textContent="MATCH PLAY";
   $("summaryTitle").textContent="RESULTADO MATCH PLAY";$("summaryHeadRow").innerHTML='<th class="summary-player">JUGADOR</th><th>GROSS OUT</th><th>GROSS IN</th><th>GROSS TOTAL</th><th>HCP</th><th>MATCH OUT</th><th>MATCH IN</th><th>MATCH TOTAL</th>';$("summaryBody").innerHTML=matchPlaySummaryRows();
-  let indicator=$("matchPlayStatus");if(!indicator){indicator=document.createElement("section");indicator.id="matchPlayStatus";indicator.className="match-play-status";document.querySelector(".summary").before(indicator)}indicator.innerHTML=state.closed?`FIN DEL MATCH · <strong>${escapeHtml(state.resultLabel)}</strong> · NETO CON HDCP`:`MATCH PLAY · <strong>${escapeHtml(state.resultLabel)}</strong> · NETO CON HDCP`;
+  let indicator=$("matchPlayStatus");if(!indicator){indicator=document.createElement("section");indicator.id="matchPlayStatus";indicator.className="match-play-status";document.querySelector(".summary").before(indicator)}indicator.innerHTML=state.closed?`FIN DEL MATCH · <strong>${escapeHtml(state.resultLabel)}</strong> · RESULTADO NETO`:`MATCH PLAY · <strong>${escapeHtml(state.resultLabel)}</strong> · RESULTADO NETO`;
   $("status").textContent=state.closed?`FIN DEL MATCH · ${state.resultLabel}`:`MATCH ACTIVO · ${state.resultLabel}`;$("finalCardButton").textContent=state.closed?"TARJETA DIGITAL FINAL":"TARJETA DIGITAL";return output
 }
 function fourBallStatus(){return window.GSCFourBall.status(round.players)}
 function fourBallSegment(teamIndex,holes){return window.GSCFourBall.teamStanding(round.players,teamIndex,holes)}
-function fourBallHoleStanding(playerIndex,hole){const result=window.GSCFourBall.holeResult(round.players,hole);if(!result.recorded)return{state:"pending",label:"",title:"PENDIENTE",best:false};const teamIndex=window.GSCFourBall.teamIndexForPlayer(playerIndex),value=fourBallSegment(teamIndex,ALL.filter(number=>number<=hole)),state=value.margin>0?"won":value.margin<0?"lost":"tied",label=value.margin===0?"EVEN":`${value.margin>0?"+":"−"}${Math.abs(value.margin)}`,best=result.teamBest?.[teamIndex]?.playerIndexes?.includes(playerIndex);return{state,label,title:`${label}${best?" · MEJOR NETO DE LA PAREJA":""}`,best}}
+function fourBallHoleStanding(playerIndex,hole){const result=window.GSCFourBall.holeResult(round.players,hole);if(!result.recorded)return{state:"pending",label:"",title:"PENDIENTE",best:false};const teamIndex=window.GSCFourBall.teamIndexForPlayer(playerIndex),value=fourBallSegment(teamIndex,ALL.filter(number=>number<=hole)),single=window.GSCFourBall.teamCount(round.players)===1,state=single?"tied":value.margin>0?"won":value.margin<0?"lost":"tied",label=single?value.position:value.margin===0?"EVEN":`${value.margin>0?"+":"−"}${Math.abs(value.margin)}`,best=result.teamBest?.[teamIndex]?.playerIndexes?.includes(playerIndex);return{state,label,title:`${label}${best?" · MEJOR NETO DE LA PAREJA":""}`,best}}
 function fourBallPlayerBlock(player,slot){
   let html=basePlayerBlock(player,slot);if(!player)return html;
   const playerIndex=round.players.findIndex(item=>item.id===player.id),teamIndex=window.GSCFourBall.teamIndexForPlayer(playerIndex),teamClass=teamIndex===0?"four-ball-team-green":"four-ball-team-gold",marker=hole=>{const standing=fourBallHoleStanding(playerIndex,hole);return`<td class="match-${standing.state}" title="${standing.title}" aria-label="HOYO ${hole} ${standing.title}"><span class="match-hole-standing">${matchArrowSvg(standing.state)}<span class="match-hole-standing-value">${escapeHtml(standing.label)}${standing.best?" · ★":""}</span></span></td>`},front=fourBallSegment(teamIndex,FRONT),back=fourBallSegment(teamIndex,BACK),all=fourBallSegment(teamIndex,ALL);
   html=html.replace('<tbody class="player-block"',`<tbody class="player-block ${teamClass}"`).replace(/rowspan="(\d+)"/,(_,value)=>`rowspan="${Number(value)+1}"`);
-  return html.replace("</tbody>",`<tr class="match-row"><td class="concept">PAREJA</td>${FRONT.map(marker).join("")}${matchStandingCell(front)}${BACK.map(marker).join("")}${matchStandingCell(back)}${matchStandingCell(all)}</tr></tbody>`)
+  const block=html.replace("</tbody>",`<tr class="match-row"><td class="concept">PAREJA</td>${FRONT.map(marker).join("")}${matchStandingCell(front)}${BACK.map(marker).join("")}${matchStandingCell(back)}${matchStandingCell(all)}</tr></tbody>`);return slot===3?teamPairSpacer()+block:block
 }
-function fourBallSummaryRows(){return round.players.map((player,index)=>{const teamIndex=window.GSCFourBall.teamIndexForPlayer(index),teamName=window.GSCFourBall.DEFAULT_TEAM_NAMES[teamIndex],teamClass=teamIndex===0?"four-ball-team-green":"four-ball-team-gold",grossOut=totals(player,FRONT),grossIn=totals(player,BACK),grossTotal=totals(player,ALL),out=fourBallSegment(teamIndex,FRONT),inside=fourBallSegment(teamIndex,BACK),total=fourBallSegment(teamIndex,ALL);return`<tr class="${teamClass}"><td class="summary-player">${escapeHtml(player.name)}</td><td>${escapeHtml(teamName)}</td><td>${grossOut.count?grossOut.gross:""}</td><td>${grossIn.count?grossIn.gross:""}</td><td>${grossTotal.count?grossTotal.gross:""}</td><td>${player.handicap}</td><td>${matchStandingMarkup(out)}</td><td>${matchStandingMarkup(inside)}</td><td>${matchStandingMarkup(total)}</td></tr>`}).join("")}
-function fourBallFinalSpeech(state=fourBallStatus()){const result=String(state.resultLabel||"").replace(/\s*&\s*/g," y "),standings=[0,1].map(index=>fourBallSegment(index,ALL).label.replace(" · "," ")).filter(Boolean).join(". ");return`Fin del Four Ball. ${result}. ${standings}.`}
+function fourBallSummaryRows(){return round.players.map((player,index)=>{const teamIndex=window.GSCFourBall.teamIndexForPlayer(index),teamName=window.GSCFourBall.DEFAULT_TEAM_NAMES[teamIndex],teamClass=teamIndex===0?"four-ball-team-green":"four-ball-team-gold",grossOut=totals(player,FRONT),grossIn=totals(player,BACK),grossTotal=totals(player,ALL),out=fourBallSegment(teamIndex,FRONT),inside=fourBallSegment(teamIndex,BACK),total=fourBallSegment(teamIndex,ALL),divider=index===2?'<tr class="summary-pair-divider" aria-hidden="true"><td colspan="9"></td></tr>':"";return`${divider}<tr class="${teamClass}"><td class="summary-player">${escapeHtml(player.name)}</td><td>${escapeHtml(teamName)}</td><td>${grossOut.count?grossOut.gross:""}</td><td>${grossIn.count?grossIn.gross:""}</td><td>${grossTotal.count?grossTotal.gross:""}</td><td>${player.handicap}</td><td>${matchStandingMarkup(out)}</td><td>${matchStandingMarkup(inside)}</td><td>${matchStandingMarkup(total)}</td></tr>`}).join("")}
+function fourBallFinalSpeech(state=fourBallStatus()){const result=teamStandingSpeech(String(state.resultLabel||"").replace(/\s*&\s*/g," y ")),standings=Array.from({length:state.teamCount||0},(_,index)=>teamStandingSpeech(fourBallSegment(index,ALL).label)).filter(Boolean).join(". ");return`Fin del Four Ball. ${result}. ${standings}.`}
 function renderFourBall(){
   const output=baseRender(),state=fourBallStatus();round.fourBall={...state,holes:undefined};document.body.classList.add("four-ball-mode");document.querySelector(".round-meta h1").textContent="FOUR BALL";
   $("summaryTitle").textContent="RESULTADO FOUR BALL";$("summaryHeadRow").innerHTML='<th class="summary-player">JUGADOR</th><th>PAREJA</th><th>GROSS OUT</th><th>GROSS IN</th><th>GROSS TOTAL</th><th>HCP</th><th>MATCH OUT</th><th>MATCH IN</th><th>MATCH TOTAL</th>';$("summaryBody").innerHTML=fourBallSummaryRows();
@@ -2650,8 +2659,17 @@ function renderFourBall(){
   $("status").textContent=state.closed?`FIN DEL FOUR BALL · ${state.resultLabel}`:`FOUR BALL ACTIVO · ${state.resultLabel}`;$("finalCardButton").textContent=state.closed?"TARJETA DIGITAL FINAL":"TARJETA DIGITAL";return output
 }
 function activeTeamMatchStatus(){return isFourBallRound()?fourBallStatus():isMatchPlayRound()?matchPlayStatus():null}
+function teamMatchPlayerLimit(player,state=activeTeamMatchStatus()){if(!isTeamMatchRound()||!player)return 18;if(isFourBallRound())return state?.closed&&Number.isInteger(state.decidedAt)?state.decidedAt:18;const playerIndex=round.players.findIndex(item=>item.id===player.id),pairIndex=window.GSCMatchPlay.pairIndexForPlayer(playerIndex),match=state?.matches?.[pairIndex]||state;return match?.closed&&Number.isInteger(match.decidedAt)?match.decidedAt:18}
 function activeTeamMatchFinalSpeech(state=activeTeamMatchStatus()){return isFourBallRound()?fourBallFinalSpeech(state):matchPlayFinalSpeech(state)}
-closureSpeechIfDue=function(){if(!isTeamMatchRound())return baseClosureSpeechIfDue();ensureAnnouncedState();const state=activeTeamMatchStatus();if(state.closed&&!round.announced.complete){round.announced.complete=true;if(state.played>=9)round.announced.front=true;return activeTeamMatchFinalSpeech(state)}if(!round.announced.front&&segmentComplete(FRONT)){round.announced.front=true;const standings=isFourBallRound()?[0,1].map(index=>fourBallSegment(index,FRONT).label.replace(" · "," ")).filter(Boolean).join(". "):round.players.map((player,index)=>matchPlaySegment(index,FRONT).label.replace(" · "," ")).filter(Boolean).join(". ");return standings?`Primera vuelta. ${standings}.`:""}return""};
+function teamMatchSegmentReport(title,holes){const state=activeTeamMatchStatus(),standings=isFourBallRound()?Array.from({length:state.teamCount||0},(_,index)=>teamStandingSpeech(fourBallSegment(index,holes).label)).filter(Boolean):round.players.map((player,index)=>teamStandingSpeech(matchPlaySegment(index,holes).label)).filter(Boolean);return standings.length?`${title}. ${standings.join(". ")}.`:""}
+closureSpeechIfDue=function(){
+  if(!isTeamMatchRound())return baseClosureSpeechIfDue();
+  ensureAnnouncedState();const state=activeTeamMatchStatus(),reports=[];
+  if(!round.announced.front&&segmentComplete(FRONT)){round.announced.front=true;const report=teamMatchSegmentReport("Primera vuelta",FRONT);if(report)reports.push(report)}
+  if(!round.announced.back&&segmentComplete(BACK)){round.announced.back=true;const report=teamMatchSegmentReport("Segunda vuelta",BACK);if(report)reports.push(report)}
+  if(state.closed&&!round.announced.complete){round.announced.complete=true;if(state.played>=9)round.announced.front=true;reports.push(activeTeamMatchFinalSpeech(state))}
+  return reports.join(" ")
+};
 function readStablefordSeries(){try{return GSCStableford.normalizeSeries(JSON.parse(localStorage.getItem(STABLEFORD_SERIES_KEY)||"null"))}catch{return GSCStableford.blankSeries()}}
 function writeStablefordSeries(value){const next=GSCStableford.normalizeSeries(value);next.updatedAt=new Date().toISOString();localStorage.setItem(STABLEFORD_SERIES_KEY,JSON.stringify(next));return next}
 function stablefordConfig(category=round.stablefordCategory){return GSCStableford.categoryConfig(category)||GSCStableford.categoryConfig("senior")}
@@ -2776,8 +2794,8 @@ parseRoundScoreTranscript=function(transcript,options={}){const merged={...optio
 validateEntry=function(x){if(!isStablefordRound())return baseValidateEntry(x);const p=playerByRef(x.player),hole=Number(x.hole),status=String(x.status||"").toLowerCase();if(!p||!Number.isInteger(hole)||hole<1||hole>18)return{ok:false,speech:"Error"};if(status==="x")return{ok:true,p,hole,gross:null,status};const gross=Number(x.gross);return Number.isInteger(gross)&&gross>=1&&gross<=30?{ok:true,p,hole,gross,status:null}:{ok:false,speech:"Error"}};
 saveEntry=function(x){
   if(isTeamMatchRound()){
-    const before=activeTeamMatchStatus(),hole=Number(x.hole);
-    if(before.closed&&Number.isInteger(before.decidedAt)&&hole>before.decidedAt)return{ok:false,speech:activeTeamMatchFinalSpeech(before)};
+    const before=activeTeamMatchStatus(),hole=Number(x.hole),player=playerByRef(x.player),limit=teamMatchPlayerLimit(player,before);
+    if(Number.isInteger(hole)&&hole>limit)return{ok:false,speech:activeTeamMatchFinalSpeech(before)};
     const result=baseSaveEntry(x),after=activeTeamMatchStatus();
     if(result?.ok&&before.closed&&(before.resultLabel!==after.resultLabel||before.decidedAt!==after.decidedAt)){ensureAnnouncedState();round.announced.complete=false}
     return result
@@ -2857,7 +2875,7 @@ function renderRoundManualEntry(){
 }
 function bindRoundManualCells(){
   const matchState=activeTeamMatchStatus();
-  $("scorecard").querySelectorAll(".round-manual-cell").forEach(cell=>{const hole=Number(cell.dataset.roundHole);if(matchState?.closed&&hole>matchState.decidedAt){cell.classList.add("match-closed-cell");cell.removeAttribute("role");cell.removeAttribute("tabindex");cell.setAttribute("aria-disabled","true");return}const edit=()=>{if(round.officiallyClosedAt)return;const player=round.players.find(item=>item.id===cell.dataset.roundPlayer);if(!player||!hole)return;const current=manualHoleResult(player,hole),raw=window.prompt(`${player.name} · HOYO ${hole} · GROSS`,current.recorded?(current.status==="x"?"X":String(current.gross??"")):"");if(raw===null)return;const value=raw.trim();if(value===""){removeManualScore(player,hole);return}const entry=manualScoreEntry(player.id,hole,value),result=entry?applyManualScoreEntries([entry]):null;if(!result?.ok)window.alert("SCORE INVÁLIDO")};cell.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();edit()});cell.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();edit()}})})
+  $("scorecard").querySelectorAll(".round-manual-cell").forEach(cell=>{const hole=Number(cell.dataset.roundHole),player=round.players.find(item=>item.id===cell.dataset.roundPlayer);if(matchState&&hole>teamMatchPlayerLimit(player,matchState)){cell.classList.add("match-closed-cell");cell.removeAttribute("role");cell.removeAttribute("tabindex");cell.setAttribute("aria-disabled","true");return}const edit=()=>{if(round.officiallyClosedAt)return;if(!player||!hole)return;const current=manualHoleResult(player,hole),raw=window.prompt(`${player.name} · HOYO ${hole} · GROSS`,current.recorded?(current.status==="x"?"X":String(current.gross??"")):"");if(raw===null)return;const value=raw.trim();if(value===""){removeManualScore(player,hole);return}const entry=manualScoreEntry(player.id,hole,value),result=entry?applyManualScoreEntries([entry]):null;if(!result?.ok)window.alert("SCORE INVÁLIDO")};cell.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();edit()});cell.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();edit()}})})
 }
 function renderStableford(){
   activateCourse(round.courseKey);const cfg=stablefordConfig(),course=COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte,par=PAR.reduce((a,b)=>a+b,0),d=new Date(round.createdAt);
@@ -2875,11 +2893,11 @@ function renderStableford(){
 }
 render=function(){if(isStablefordRound()){$("matchPlayStatus")?.remove();$("fourBallStatus")?.remove();document.body.classList.remove("match-play-mode","four-ball-mode");return renderStableford()}document.body.classList.remove("stableford-mode");$("stablefordSeriesSection")?.classList.add("hidden");if(isFourBallRound()){$("matchPlayStatus")?.remove();document.body.classList.remove("match-play-mode");return renderFourBall()}if(isMatchPlayRound()){$("fourBallStatus")?.remove();document.body.classList.remove("four-ball-mode");return renderMatchPlay()}$("matchPlayStatus")?.remove();$("fourBallStatus")?.remove();document.body.classList.remove("match-play-mode","four-ball-mode");return baseRender()};
 const baseRenderPreviousRound=render;render=function(){const output=baseRenderPreviousRound();renderPreviousRoundControls();renderPlayerEditControls();return output};
-renderFinalDigitalCard=function(){const ok=baseRenderFinalDigitalCard();if(!ok)return false;$("finalSummaryHeadRow").innerHTML=$("summaryHeadRow").innerHTML;$("finalSummaryTitle").textContent=isStablefordRound()?"PUNTOS":isMatchPlayRound()?"RESULTADO MATCH PLAY":"INFORMACIÓN DE RONDA";if(isFourBallRound())$("finalSummaryTitle").textContent="RESULTADO FOUR BALL";if(isStablefordRound()){const cfg=stablefordConfig(),corrected=Number(round.officialVersion||1)>1;document.querySelector(".final-card-head h1").textContent=corrected?`TARJETA STABLEFORD CORREGIDA · ${cfg.label} · V${round.officialVersion}`:`TARJETA STABLEFORD · ${cfg.label}`;document.querySelector(".final-card-readonly").textContent=corrected?"STABLEFORD SCRATCH · CORRECCIÓN OFICIAL · ORIGINAL PRESERVADO · SOLO CONSULTA":"STABLEFORD SCRATCH · TARJETA OFICIAL · SOLO CONSULTA"}else if(isFourBallRound()){const state=fourBallStatus();document.querySelector(".final-card-head h1").textContent=`TARJETA FOUR BALL · ${state.resultLabel}`;document.querySelector(".final-card-readonly").textContent="FOUR BALL · MEJOR NETO POR PAREJA · SOLO CONSULTA"}else if(isMatchPlayRound()){const state=matchPlayStatus();document.querySelector(".final-card-head h1").textContent=`TARJETA MATCH PLAY · ${state.resultLabel}`;document.querySelector(".final-card-readonly").textContent="MATCH PLAY CON HDCP · RESULTADO POR HOYOS UP/DOWN · SOLO CONSULTA"}return true};
+renderFinalDigitalCard=function(){const ok=baseRenderFinalDigitalCard();if(!ok)return false;$("finalSummaryHeadRow").innerHTML=$("summaryHeadRow").innerHTML;$("finalSummaryTitle").textContent=isStablefordRound()?"PUNTOS":isMatchPlayRound()?"RESULTADO MATCH PLAY":"INFORMACIÓN DE RONDA";if(isFourBallRound())$("finalSummaryTitle").textContent="RESULTADO FOUR BALL";if(isStablefordRound()){const cfg=stablefordConfig(),corrected=Number(round.officialVersion||1)>1;document.querySelector(".final-card-head h1").textContent=corrected?`TARJETA STABLEFORD CORREGIDA · ${cfg.label} · V${round.officialVersion}`:`TARJETA STABLEFORD · ${cfg.label}`;document.querySelector(".final-card-readonly").textContent=corrected?"STABLEFORD SCRATCH · CORRECCIÓN OFICIAL · ORIGINAL PRESERVADO · SOLO CONSULTA":"STABLEFORD SCRATCH · TARJETA OFICIAL · SOLO CONSULTA"}else if(isFourBallRound()){const state=fourBallStatus();document.querySelector(".final-card-head h1").textContent=`TARJETA FOUR BALL · ${state.resultLabel}`;document.querySelector(".final-card-readonly").textContent="FOUR BALL · MEJOR NETO POR PAREJA · SOLO CONSULTA"}else if(isMatchPlayRound()){const state=matchPlayStatus();document.querySelector(".final-card-head h1").textContent=`TARJETA MATCH PLAY · ${state.resultLabel}`;document.querySelector(".final-card-readonly").textContent="MATCH PLAY · RESULTADO POR HOYOS UP/DOWN · SOLO CONSULTA"}return true};
 function storeStablefordRoundResults(){let series=readStablefordSeries();for(const p of round.players){const t=stablefordTotals(p,ALL);series=GSCStableford.upsertResult(series,{playerName:p.name,category:round.stablefordCategory,roundNumber:round.stablefordRoundNumber,courseKey:round.courseKey,points:t.points,gross:t.grossCount?t.gross:null,source:"scorecard",roundId:round.id})}writeStablefordSeries(series)}
 async function stablefordOfficialSnapshot(closedAt){const snapshot={roundId:round.id,version:Number(round.officialVersion)||1,status:"officially_closed",mode:"stableford",stablefordCategory:round.stablefordCategory,stablefordRoundNumber:round.stablefordRoundNumber,courseKey:round.courseKey,course:round.course,tournament:round.tournament||{name:STABLEFORD_DEFAULT_TOURNAMENT},playedAt:round.createdAt,officiallyClosedAt:closedAt,appVersion:"V307",players:JSON.parse(JSON.stringify(round.players))};snapshot.sha256=await window.GSCRoundClosure.sha256(snapshot);return snapshot}
 officiallyCloseRound=async function(){if(isFourBallRound()){const state=fourBallStatus();if(!state.closed||round.officiallyClosedAt){$("status").textContent="FOUR BALL AÚN NO ESTÁ DEFINIDO";return false}round.fourBall={...state,holes:undefined};return baseOfficiallyCloseRound()}if(isMatchPlayRound()){const state=matchPlayStatus();if(!state.closed||round.officiallyClosedAt){$("status").textContent="MATCH PLAY AÚN NO ESTÁ DEFINIDO";return false}round.matchPlay={...state,holes:undefined};return baseOfficiallyCloseRound()}if(!isStablefordRound())return baseOfficiallyCloseRound();if(!isRoundComplete()||round.officiallyClosedAt){$("status").textContent="RONDA STABLEFORD INCOMPLETA";return false}if(!round.endedAt)stopRoundClock();const closedAt=new Date().toISOString(),snapshot=await stablefordOfficialSnapshot(closedAt);round={...round,status:"officially_closed",officiallyClosedAt:closedAt,officialVersion:snapshot.version,snapshotHash:snapshot.sha256,officialSnapshot:snapshot};storeStablefordRoundResults();persist();archiveRoundSnapshot(round);render();renderFinalDigitalCard();$("status").textContent="RONDA FINALIZADA · CAMPO, FECHA, TORNEO Y TARJETA GUARDADOS EN HISTORIAL";return true};
-getRoundStatus=function(){if(isFourBallRound()){const state=fourBallStatus();return{ok:true,speech:state.closed?`Four Ball finalizado. ${state.resultLabel}.`:`Four Ball en curso. ${state.resultLabel}.`}}if(!isMatchPlayRound())return baseGetRoundStatus();const state=matchPlayStatus();return{ok:true,speech:state.closed?`Match finalizado. ${state.resultLabel}.`:`Match en curso. ${state.resultLabel}.`}};
+getRoundStatus=function(){if(isFourBallRound()){const state=fourBallStatus(),result=teamStandingSpeech(state.resultLabel);return{ok:true,speech:state.closed?`Four Ball finalizado. ${result}.`:`Four Ball en curso. ${result}.`}}if(!isMatchPlayRound())return baseGetRoundStatus();const state=matchPlayStatus(),result=teamStandingSpeech(state.resultLabel);return{ok:true,speech:state.closed?`Match finalizado. ${result}.`:`Match en curso. ${result}.`}};
 roundSessionConfig=function(){const cfg=baseRoundSessionConfig();if(isFourBallRound()){cfg.audio.input.transcription.prompt=`Golf Guatemala. Modalidad Four Ball por parejas. Pareja Verde: ${round.players.slice(0,2).map(p=>p.name).join(", ")}. Pareja Oro: ${round.players.slice(2,4).map(p=>p.name).join(", ")}. El cursor indica el hoyo activo. Transcribe literalmente nombre y Gross de los cuatro jugadores; nunca inventes Neto ni el resultado de pareja porque la aplicación los calcula.`;return cfg}if(!isStablefordRound())return cfg;cfg.audio.input.transcription.prompt=`Golf Guatemala. Modalidad Stableford Scratch ${stablefordConfig().label}. Jugadores: ${round.players.map(p=>p.name).join(", ")}. El cursor ya indica el hoyo activo: transcribe literalmente nombre y Gross; el hoyo es opcional y solo reposiciona el cursor cuando se pronuncia. Después de Falta NOMBRE, una respuesta con solo score o solo omisión pertenece a ese jugador. Acepta números, par, bogey, doble bogey, birdie, eagle, albatros, X, equis, cero, sin score, sin dato, no informó, no dijo, no cantó, ponle cero, no le anotes o levanta. No inventes handicap ni Neto.`;return cfg};
 function openStablefordResultEditor(){const cfg=stablefordConfig();$("stablefordResultCategory").value=stablefordRankingCategory;$("stablefordResultRound").value=String(round.stablefordRoundNumber||1);$("stablefordResultCourse").value=round.courseKey||"country_club";$("stablefordResultName").value="";$("stablefordResultPoints").value="";$("stablefordResultGross").value="";$("stablefordResultStatus").textContent="";$("stablefordResultOverlay").classList.add("visible");$("stablefordResultOverlay").setAttribute("aria-hidden","false");$("stablefordResultName").focus();return cfg}
 function closeStablefordResultEditor(){$("stablefordResultOverlay").classList.remove("visible");$("stablefordResultOverlay").setAttribute("aria-hidden","true")}
@@ -3445,7 +3463,8 @@ phase="idle";listening=false;resetRoundCapture();resetSetupCapture();
 render();
 dateSetup();
 if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
-if(!round.configured){
+if(directHome&&!sfEmergency&&!demoControlManual)openNewRoundDraft();
+else if(!round.configured){
   if(sfEmergency)window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
   else openSetup("new");
 }
