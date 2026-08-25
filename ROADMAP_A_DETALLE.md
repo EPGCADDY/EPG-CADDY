@@ -494,7 +494,7 @@ Solicitud: **25 de agosto de 2026**. El manual visual queda integrado como artef
 | `manual.html` | Visor permanente | Abre la portada y las 72 páginas funcionales, incorpora índice por categorías y lupa, y permite navegación, regreso a la aplicación y PDF. |
 | `manual.webmanifest` | Acceso directo MANUAL SCG | Abre el manual completo en modo independiente desde el escritorio del iPhone. |
 | `scripts/manual-visual-qc.py` | Filtro visual V311 | Mide las 73 imágenes 4K, 300 dpi, márgenes, recortes, color y centrado vertical. |
-| `scripts/inventory-gate.mjs` | Candado de inventarios V311 | Bloquea auditoría, construcción y publicación cuando los inventarios no están regenerados y sellados. |
+| `scripts/inventory-gate.mjs` | Candado de inventarios V311 | Bloquea auditoría, construcción y publicación cuando los inventarios no están regenerados y sellados; excluye archivos transitorios no controlados por Git que Vercel crea durante el build. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello reproducible V311 | Registra huella de fuentes, conteo y SHA-256 de los tres PDF oficiales. |
 | `test-v311-manual-hosting.mjs` | Candado de alojamiento V311 | Valida portada, rutas, 73 PNG, 2160 × 4320, marcadores y PDF físico de 73 páginas. |
 | `verify-manual-sync.mjs` | Candado de versión documental | Exige correspondencia entre la firma V311 de la aplicación y el manual maestro. |
