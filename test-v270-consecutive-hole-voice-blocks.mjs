@@ -100,9 +100,9 @@ assert.match(html,/function operationalCaptureQuiet\([\s\S]*?!speechActive[\s\S]
 assert.match(html,/input_audio_buffer\.speech_started"&&voiceContext==="round"&&listening\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
 assert.match(html,/conversation\.item\.input_audio_transcription\.delta"&&voiceContext==="round"&&!stopMonitorActive\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
 assert.match(html,/const text=`Falta \$\{playerVoiceAlias\(player\)\}`/);
-assert.match(html,/ALLOWED_SPEECH_REASONS=new Set\(\["closure","query","query_accumulated","missing_score"\]\)/);
+assert.match(html,/ALLOWED_SPEECH_REASONS=new Set\(\["closure","query","query_accumulated","missing_score","conversation"\]\)/);
 assert.doesNotMatch(html,/roundMissingPromptTimer[\s\S]{0,120}status:"x"/,"El recordatorio no puede fabricar X por tiempo");
-assert.match(sessionApi,/El cursor ya indica automáticamente el hoyo activo/);
+assert.match(sessionApi,/el cursor indica automáticamente el hoyo activo/i);
 assert.match(sessionApi,/Tras Falta NOMBRE, Score u omisión solos son de ese jugador/);
 const promptStart=sessionApi.indexOf("const MAX_TRANSCRIPTION_PROMPT_LENGTH");
 const promptEnd=sessionApi.indexOf("\nexport default",promptStart);

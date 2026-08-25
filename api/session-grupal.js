@@ -15,7 +15,7 @@ function safeHeader(value, max = 300) {
 const MAX_TRANSCRIPTION_PROMPT_LENGTH = 1024;
 
 function roundTranscriptionPrompt(players) {
-  return `Golf Guatemala. Jugadores: ${players || "los registrados"}. El cursor ya indica automáticamente el hoyo activo. Transcribe Nombre + Score. Hoyo N opcional: reposiciona. Tras Falta NOMBRE, Score u omisión solos son de ese jugador. Gross: número o golf. X: equis, cero, sin score, sin dato, sin resultado, no informó, no reportó, no dijo, no cantó, no dio score, no se sabe, ponle cero, no le anotes. Golf: albatros, águila, aguiler, eagle, birdie, pájaro, verdura, par, even par, parinelo, paraso, parcuato, bogey, doble bogey, doblete, triple bogey, triplete, doble par, par español, uno bajo par, uno sobre par, dos sobre par, tres sobre par. Nombre único solo; si se repite, apellido. Jessie se escribe Jessie.`.slice(0, MAX_TRANSCRIPTION_PROMPT_LENGTH);
+  return `Golf Guatemala con Caddie conversacional. Transcribe literalmente español natural de cualquier tema, preguntas y seguimiento de una conversación. Jugadores: ${players || "los registrados"}. Si es score: el cursor indica automáticamente el hoyo activo; transcribe Nombre + Score. Hoyo N opcional reposiciona. Tras Falta NOMBRE, Score u omisión solos son de ese jugador. Gross: número o golf. X: equis, cero, sin score, sin dato, no informó, no dijo, no cantó, ponle cero, no le anotes. Golf: albatros, águila, eagle, birdie, pájaro, par, bogey, doble bogey, triple bogey, doble par, uno bajo par, uno sobre par, dos sobre par, tres sobre par. Nombre único solo; si se repite, apellido. Jessie se escribe Jessie.`.slice(0, MAX_TRANSCRIPTION_PROMPT_LENGTH);
 }
 
 export default async function handler(req, res) {
@@ -50,13 +50,12 @@ export default async function handler(req, res) {
       type: "realtime",
       model: "gpt-realtime",
       instructions: [
-        "Aplicación grupal de score de golf.",
+        "Aplicación grupal de score de golf con Caddie conversacional de propósito general.",
         "REGLA ABSOLUTA: nunca produzcas respuestas espontáneas.",
         "No respondas automáticamente al audio del usuario.",
-        "No hagas preguntas, no ofrezcas ayuda, no pidas aclaraciones y no hables ante errores o instrucciones desconocidas.",
-        "No digas frases como por favor, indique, dime, información, problema, ayudar, ayuda, necesitas, entendido, cómo puedo ayudarte ni equivalentes.",
-        "No uses herramientas.",
-        "Solo procesa audio para transcripción; cualquier respuesta de voz será creada explícitamente por el cliente."
+        "Solo procesa audio para transcripción; cualquier respuesta de voz, de Golf Score Card o de conversación general, será creada explícitamente por el cliente.",
+        "Las instrucciones incluidas por el cliente en cada response.create determinan si debes leer un texto literal o sostener una conversación natural.",
+        "Nunca afirmes que cambiaste un score: las modificaciones de la tarjeta se procesan exclusivamente en el cliente."
       ].join(" "),
       audio: {
         input: {

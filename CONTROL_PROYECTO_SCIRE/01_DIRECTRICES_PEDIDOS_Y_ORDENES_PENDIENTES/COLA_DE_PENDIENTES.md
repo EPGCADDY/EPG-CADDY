@@ -5,7 +5,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 ## PEND-REG-001 · Adaptar las Reglas de Golf a la aplicación
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** PENDIENTE · NO INICIADO  
+**Estado:** EN PROGRESO · CONSULTA CONVERSACIONAL DISPONIBLE; FUENTES REGLAMENTARIAS Y VALIDACIÓN PENDIENTES
 **Prioridad:** Principal, pendiente de orden de ejecución del propietario  
 **Solicitud original:** “Tratar de adaptar las reglas de Golf a la aplicación”.
 
@@ -43,20 +43,20 @@ Este pendiente sólo podrá declararse terminado cuando exista fuente reglamenta
 ## PEND-CLI-002 · Clima sincronizado por campo y guardado en la tarjeta
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** PENDIENTE · NO INICIADO  
+**Estado:** EN PROGRESO · GPS AUTOMÁTICO Y CLIMA VISIBLE EN TARJETA V312 IMPLEMENTADOS; ARTEFACTOS Y VALIDACIÓN FÍSICA PENDIENTES
 **Prioridad:** Principal, pendiente de orden de ejecución del propietario  
 **Solicitud original:** “Guardar el clima, también sincronizarlo en la tarjeta dependiendo del campo que se seleccione y su locación”.
 
 ### Objetivo
 
-Cuando el usuario seleccione un campo en la pantalla de configuración de la tarjeta, Golf Score Card GT debe identificar la ubicación exacta registrada para ese club, consultar el clima correspondiente, mostrarlo desde esa misma configuración y conservar una fotografía climática dentro de la tarjeta oficial. Si cualquiera de las alternativas de juego selecciona Mayan Golf, el dato debe corresponder precisa y exclusivamente a Mayan Golf; el mismo contrato aplica a cada club y cada tarjeta.
+Al abrir una tarjeta activa, Golf Score Card GT debe solicitar la ubicación autorizada del GPS del teléfono, consultar automáticamente el clima de donde realmente está el jugador, mostrarlo y conservar la lectura dentro de la ronda. Si el GPS no está disponible, la ubicación registrada del campo seleccionado funciona como respaldo sin impedir el juego.
 
 ### Alcance proyectado
 
 - Agregar a la matriz maestra de cada campo coordenadas, zona horaria y ubicación oficial verificadas.
 - Mostrar el bloque climático inmediatamente después de elegir el campo en Configuración, antes de iniciar la ronda, y mantenerlo dentro de la tarjeta que se está jugando.
 - Reutilizar las mismas coordenadas oficiales en todas las alternativas y modalidades que apunten al mismo club; nunca duplicar ubicaciones contradictorias.
-- Consultar el clima mediante la ubicación del campo seleccionado; no utilizar como sustituto la ubicación aproximada del teléfono ni una ciudad vecina.
+- Consultar primero mediante el GPS autorizado del teléfono; usar las coordenadas verificadas del campo seleccionado únicamente como respaldo.
 - Guardar como mínimo: condición, temperatura, sensación térmica, humedad, probabilidad o presencia de lluvia, velocidad/dirección del viento, ráfagas, hora local, fuente y momento de actualización.
 - Mostrar un resumen compacto y elegante en la tarjeta activa, Tarjeta Digital, Tarjeta Global, tarjetas personales, PDF e imagen final.
 - Capturar un registro al iniciar la ronda y otro al finalizar; posteriormente se decidirá si conviene seguimiento intermedio sin saturar la tarjeta.
@@ -75,9 +75,19 @@ Cuando el usuario seleccione un campo en la pantalla de configuración de la tar
 
 ### Arquitectura obligatoria al ejecutarlo
 
-`CAMPO SELECCIONADO → COORDENADAS OFICIALES → PROVEEDOR CLIMÁTICO → VALIDACIÓN → SNAPSHOT DE INICIO/CIERRE → TARJETA E HISTORIAL`
+`TARJETA ACTIVA → PERMISO GPS → UBICACIÓN DEL TELÉFONO → PROVEEDOR CLIMÁTICO → TARJETA Y RONDA`; si no hay GPS: `CAMPO SELECCIONADO → COORDENADAS DE RESPALDO`.
 
 El clima será un dato contextual de la ronda. No podrá alterar automáticamente Gross, Neto, handicap, puntos, resultados ni cierre.
+
+### Fase automática y conversacional V312 ya implementada
+
+- El Caddie puede consultar condición, temperatura, sensación térmica, lluvia, viento, hora local y probabilidad máxima de lluvia restante mediante Open-Meteo.
+- Al abrir o reabrir una tarjeta activa, el cliente obtiene primero el GPS del teléfono con permiso del sistema, consulta automáticamente `api/weather.js` y renueva la lectura cada diez minutos.
+- La tarjeta muestra condición, temperatura, sensación, máxima probabilidad de lluvia, viento y hora; guarda esos datos en `round.weather` sin conservar latitud ni longitud exactas.
+- Si el GPS no responde, usa las coordenadas propias del campo seleccionado y lo rotula como respaldo. La tarjeta continúa funcionando aunque también falle el proveedor.
+- La misma ruta se ejecuta en General, Match Play, Four Ball, Stableford y Práctica; una tarjeta cerrada oficialmente no vuelve a actualizarse.
+- El Caddie usa el GPS como primera opción para preguntas de clima y nunca escribe scores.
+- Continúan pendientes la vista previa en Configuración, snapshots formales de inicio/cierre, historial y artefactos PDF/imagen, comparación física de proveedores y validación final en campo.
 
 ### Condiciones de cierre futuro
 
@@ -90,7 +100,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** PENDIENTE · NO INICIADO  
+**Estado:** EN PROGRESO · MICRÓFONO CONVERSACIONAL V312 IMPLEMENTADO; BUSCADOR-TEXTO Y VALIDACIÓN FÍSICA PENDIENTES
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -118,6 +128,16 @@ Convertir el micrófono y el buscador del Manual vivo en una sola conversación 
 ### Base técnica evaluada
 
 Los modelos Realtime permiten audio de entrada y salida en tiempo real; los archivos de reglas y manual pueden indexarse en un almacén consultable. La integración debe realizarse con API protegida en servidor, nunca exponiendo una clave en el teléfono: <https://platform.openai.com/docs/models> y <https://platform.openai.com/docs/api-reference/vector-stores-files>.
+
+### Fase de micrófono V312 ya implementada
+
+- Un solo toque abre el micrófono continuo de la ronda. No existe comando, palabra clave ni cambio manual de tema.
+- El micrófono jamás se abre solo y no existe huella, identificación ni registro biométrico de voz. Toda escucha comienza exclusivamente con el botón visible y termina cuando el usuario lo cierra.
+- Score, consultas de ronda, navegación y conversación general se separan antes de ejecutar cualquier escritura.
+- Toda frase que no sea una operación reconocida pasa a una respuesta Realtime natural con memoria de la conversación activa.
+- El usuario puede interrumpir al Caddie mientras habla y continuar sin decir `STOP`.
+- Las preguntas de clima usan el campo activo y `api/weather.js`; las preguntas de salud reciben límites expresos de orientación general, sin diagnóstico ni prescripción automática.
+- Continúan pendientes la conversación por texto dentro del buscador del Manual, el banco amplio de preguntas, pruebas físicas con ruido/acento y la validación práctica con golfistas.
 
 ### Condiciones de cierre futuro
 

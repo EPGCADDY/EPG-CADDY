@@ -44,7 +44,9 @@
       const execute=!!(rule.action&&direct&&!help);
       return{matched:true,id:rule.id,speech:rule.speech,action:execute?rule.action:null,execute};
     }
-    return{matched:true,id:"capabilities",speech:"Puedes decir: quiero jugar Stableford, llévame a Match Play, abre Four Ball, abre Historial, muestra Tarjeta Digital, abre Control Manual o cómo corrijo un score.",action:null,execute:false};
+    // Una intención que no pertenece a ayuda/navegación se entrega al Caddie
+    // conversacional. No la conviertas en un menú de comandos.
+    return{matched:false};
   }
 
   return Object.freeze({normalize,parse,rules});

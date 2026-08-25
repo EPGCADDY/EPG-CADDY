@@ -65,7 +65,8 @@ assert.match(html,/ROUND_MISSING_IDLE_MS-\(Date\.now\(\)-roundOperationalActivit
 assert.match(html,/speech_started"&&voiceContext==="round"&&listening\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
 assert.match(html,/input_audio_transcription\.delta"&&voiceContext==="round"&&!stopMonitorActive\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
 assert.match(html,/input_audio_transcription\.completed"&&voiceContext==="round"\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
-assert.match(html,/Candado de silencio: una frase sin intención reconocida no genera voz/);
+assert.match(html,/Todo lo que no sea una operación reconocida de la tarjeta pasa al Caddie/);
+assert.match(html,/Esta ruta nunca modifica jugadores, hoyos ni scores/);
 assert.match(html,/replacedOmission:isOmittedScore\(previous\)/);
 
-console.log("PASS V274 · siete campos, voz continua protegida, silencio ajeno y corrección X");
+console.log("PASS V274 · siete campos, voz continua protegida, conversación y corrección X");

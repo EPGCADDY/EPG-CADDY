@@ -57,6 +57,6 @@ for(const file of textFiles(root)){
 }
 
 assert.equal(release.buildNumber,307);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v311-manual-search"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v312-conversational-caddie"/);
 
 console.log("PASS V305 · HISTORIAL, ATRÁS, REGÍSTRATE, Stableford limpio y cero vocabulario retirado");

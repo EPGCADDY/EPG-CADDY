@@ -538,7 +538,7 @@ Solicitud: **25 de agosto de 2026**. Estado: **PENDIENTE · NO INICIADO**. Se re
 
 ## PEND-CLI-002 · Clima sincronizado por ubicación del campo
 
-Solicitud: **25 de agosto de 2026**. Estado: **PENDIENTE · NO INICIADO**. Se proyecta obtener el clima desde coordenadas oficiales del campo seleccionado, mostrarlo desde Configuración y conservarlo en tarjeta, historial, PDF e imagen. Cada alternativa que elija Mayan Golf usará exclusivamente la ubicación de ese club. WeatherKit es candidato inicial, sujeto a medición comparativa contra Tomorrow.io y OpenWeather en los clubes de Guatemala.
+Solicitud: **25 de agosto de 2026**. Estado: **EN PROGRESO**. V312 solicita automáticamente el GPS autorizado al abrir una tarjeta activa, muestra y guarda la lectura de Open-Meteo, la renueva cada diez minutos y usa el campo seleccionado sólo como respaldo. Siguen pendientes la vista previa en Configuración, snapshots formales de inicio/cierre, historial, PDF/imagen y comparación final de proveedores.
 
 | Archivo nuevo o modificado | ID o código | Explicación sencilla |
 |---|---|---|
@@ -550,7 +550,7 @@ Solicitud: **25 de agosto de 2026**. Estado: **PENDIENTE · NO INICIADO**. Se pr
 
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
-Solicitud ampliada: **25 de agosto de 2026**. Estado: **PENDIENTE · NO INICIADO**. Se proyecta una conversación por texto o voz que conserve especialidad prioritaria en golf y pueda atender Manual, clima vivo, conversación general y orientación de salud con límites médicos seguros. El clasificador separará siete rutas antes de responder o ejecutar cualquier acción.
+Solicitud ampliada: **25 de agosto de 2026**. Estado: **EN PROGRESO**. El micrófono V312 ya sostiene conversación de propósito general sin palabra clave, conserva especialidad de Golf Score Card GT, consulta clima vivo y separa escritura de scores. Siguen pendientes la conversación escrita del Manual y la validación física amplia con golfistas.
 
 | Archivo nuevo o modificado | ID o código | Explicación sencilla |
 |---|---|---|
@@ -694,3 +694,31 @@ Solicitud: **25 de agosto de 2026**. Estado: **IMPLEMENTADO · EN AUDITORÍA**. 
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Registra la nueva huella de las fuentes. |
 | `ROADMAP_OVERALL.md` | Resumen | Registra el acceso permanente. |
 | `ROADMAP_A_DETALLE.md` | Detalle | Conserva este bloque técnico. |
+
+## Implementación V312 · micrófono conversacional universal sin cambio de modo
+
+Solicitud: **25 de agosto de 2026**. Estado: **IMPLEMENTADO EN CÓDIGO · EN AUDITORÍA Y PUBLICACIÓN**. La escucha sólo comienza cuando el jugador pulsa el botón del micrófono; no existe activación automática, huella ni identificación biométrica de voz. Una vez abierto, el clasificador local conserva prioridad para scores, consultas, navegación y cambios autorizados. Si la transcripción es conversación general o no coincide con una operación válida, se crea una respuesta Realtime explícita dentro de la conversación activa. La respuesta tiene memoria, acepta interrupción natural y continúa escuchando únicamente mientras el botón permanezca abierto.
+
+El tool `get_current_weather` consulta `api/weather.js`. Por defecto obtiene la geolocalización autorizada del teléfono; si no está disponible, envía la latitud/longitud propia del campo seleccionado como respaldo. La tarjeta ejecuta esa misma ruta al abrirse y cada diez minutos, muestra la lectura y la guarda sin conservar coordenadas exactas. La respuesta incluye `source`, `observedAt`, zona horaria, condición, temperatura, sensación, precipitación, viento y máxima probabilidad restante de lluvia. La instrucción conversacional exige atribución Open-Meteo, prohíbe clima inventado y aplica límites médicos seguros.
+
+| Archivo nuevo o modificado | ID o código | Explicación sencilla |
+|---|---|---|
+| `index-grupal.html` | V312-CADDIE-GENERAL / GPS-WEATHER | Un micrófono abierto voluntariamente entiende score o plática; la tarjeta sincroniza clima por GPS sin abrir el micrófono. |
+| `api/session-grupal.js` | V312-REALTIME-SESSION | Transcribe conversación natural y mantiene la respuesta bajo control del cliente. |
+| `api/weather.js` | V312-WEATHER-TOOL | Obtiene clima vivo por coordenadas del campo o ubicación solicitada. |
+| `voice-assistant.js` | V312-OPEN-FALLBACK | Una pregunta abierta ya no termina en el menú de funciones. |
+| `service-worker.js` | V312-PWA-SHELL | Obliga a sustituir la copia V311 almacenada. |
+| `test-v312-general-caddie.mjs` | Candado V312 | Prueba propósito general, GPS primero, respaldo por campo, clima visible y periódico, micrófono manual, salud y score protegido. |
+| `test-course-catalog.mjs` | Regresión de catálogo | Verifica los siete campos y la ubicación meteorológica propia de Country Club sin exigir el formato anterior. |
+| `test-v267-one-operational-line.mjs` | Regresión operacional | Mantiene un escritor de score y admite la salida `conversation` como razón independiente. |
+| `test-v270-consecutive-hole-voice-blocks.mjs` | Regresión de bloques | Conserva scores consecutivos y admite conversación autorizada sin mezclarlos. |
+| `test-voice-continuity.mjs` | Regresión de continuidad | Exige que la frase general converse sin modificar la ronda. |
+| `test-v272-definitive-operational-release.mjs` | Regresión operacional | Acepta la interrupción conversacional antes de continuar la captura. |
+| `test-v274-complete-courses-voice-operations.mjs` | Regresión de score | Mantiene prefijos válidos y ruta general separada. |
+| `audit-project.mjs` | Puerta maestra V312 | Añade el nuevo paquete de pruebas. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Estado verificable | Registra voz entregada y tareas de texto/clima aún abiertas. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | PEND-CLI-002 / PEND-VOZ-003 | Documenta el corte real V312 sin declarar terminado todo el proyecto. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Inventario V312 | Registra archivos y responsabilidades. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello reproducible | Actualiza cantidad y digest final. |
+| `ROADMAP_OVERALL.md` | Resumen V312 | Explica el resultado al propietario. |
+| `ROADMAP_A_DETALLE.md` | Detalle V312 | Conserva esta matriz técnica. |

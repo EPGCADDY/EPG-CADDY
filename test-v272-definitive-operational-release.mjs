@@ -44,7 +44,7 @@ assert.match(html,/const ROUND_CONTINUOUS_FINALIZE_MS=4000/);
 assert.match(html,/const ROUND_MISSING_IDLE_MS=2000/);
 assert.match(html,/const ROUND_MISSING_CONFIRM_MS=450/);
 assert.doesNotMatch(html,/stablefordWatchdog|mode==="stableford"\)\?2000:4000/);
-assert.match(html,/input_audio_buffer\.speech_started"&&voiceContext==="round"&&listening\)\{\s*noteRoundOperationalActivity\(\);[\s\S]*?rememberRoundSpeechStarted\(e\.item_id\)/);
+assert.match(html,/input_audio_buffer\.speech_started"&&voiceContext==="round"&&listening\)\{[\s\S]*?noteRoundOperationalActivity\(\);[\s\S]*?rememberRoundSpeechStarted\(e\.item_id\)/);
 assert.match(html,/conversation\.item\.input_audio_transcription\.delta"&&voiceContext==="round"&&!stopMonitorActive\)\{\s*noteRoundOperationalActivity\(\)/);
 assert.match(html,/conversation\.item\.input_audio_transcription\.completed"&&voiceContext==="round"\)\{[\s\S]*?rememberRoundTranscriptionCompleted\(key\)/);
 assert.match(html,/if\(closure\)speakClosure\(closure\);else\{[\s\S]*?if\(listening\)scheduleOperationalMissingPrompt\(\)\}/);
@@ -59,6 +59,7 @@ assert.match(authorizedSource,/const monitorStop=reason==="query"\|\|reason==="q
 assert.match(authorizedSource,/if\(micTrack\)micTrack\.enabled=monitorStop/);
 assert.match(html,/segmentSpeech\("Primera vuelta\.",FRONT\)/,"OUT visual no debe alterar el vocabulario hablado aprobado");
 assert.match(html,/segmentSpeech\("Segunda vuelta\.",BACK\)/,"IN visual no debe alterar el vocabulario hablado aprobado");
-assert.match(html,/Candado de silencio: una frase sin intención reconocida no genera voz/);
+assert.match(html,/Todo lo que no sea una operación reconocida de la tarjeta pasa al Caddie/);
+assert.match(html,/Esta ruta nunca modifica jugadores, hoyos ni scores/);
 
 console.log("PASS V274 · recepción continua sin avisos superpuestos, cierre con micrófono apagado, OUT/IN/TOTAL y campos oficiales nuevos");

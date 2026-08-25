@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V311 ampliado: **292**.
+Archivos activos rastreados al corte V312: **294**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -21,7 +21,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `AUDITORIA_MAESTRA_V170.md` | `8dd135a84521f64c39928fadb35de0518447fe40` | 4462 bytes | Resumen de una revisión histórica del producto. |
 | `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Registro V305 | Se calcula al publicar | Manual sencillo actualizado con Historial, Regístrate y el vocabulario visible vigente. |
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `54288b53e83185333276d45cca4fe41dc9f7b591` | 4948 bytes | Reglas permanentes, candados ROADMAP/inventarios, Vercel y calidad visual 4K. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001 · PEND-CLI-002 · PEND-VOZ-003` | Se calcula al publicar | Cola consultable; guarda Reglas de Golf, clima exacto por club y Caddie/Support conversacional por texto o voz para Golf, Manual, clima, conversación general y salud segura. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001 · PEND-CLI-002 · PEND-VOZ-003` | Se calcula al publicar | Cola consultable; guarda Reglas de Golf, clima automático por GPS con respaldo del club y Caddie/Support conversacional por texto o voz para Golf, Manual, clima, conversación general y salud segura. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Se calcula al regenerar | Huella técnica que impide validar o publicar con inventarios desactualizados. |
 | `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INDICE_DOCUMENTOS_PENDIENTES.md` | `064e9201c833cb7f5c751ba5328290d8c4c2b20b` | 814 bytes | Lista de documentos todavía pendientes de usar. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | `b9815c3eae588f1f54c0e4fabbf1d51b52c75b0e` | 722 bytes | Registro de trabajos terminados. |
@@ -84,6 +84,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `api/session-grupal.js` | `4bd02dcd9cdc1fb4fada6ddb4fd8b7400d2280ee` | 5355 bytes | Abre el reconocimiento de voz grupal. |
 | `api/session.js` | `454a914b435c6cadadd0a169fe065719eef475de` | 14431 bytes | Abre el reconocimiento de voz anterior. |
 | `api/sync.js` | `82e4bdd482531f4ee6b41254652606d9f53e2251` | 3202 bytes | Intercambia cambios entre teléfono y respaldo. |
+| `api/weather.js` | Piloto climático V312 | Se calcula al publicar | Consulta Open-Meteo por coordenadas GPS del teléfono, ubicación indicada o respaldo del campo y devuelve un resumen auditable. |
 | `assets/logo.png` | `376f6237bbdddf4245ecd3da0f080ad5462f8178` | 514891 bytes | Logo cromado 3D neón de 1024 usado para crear iconos de iPhone y Android. |
 | `assets/official-logos/README.md` | `d4c2f8e156b2f614d5992c477bc117c11a8ef2d7` | 1826 bytes | Explica que la versión cromada 3D con verde neón muy saturado es oficial y para qué sirve cada tamaño. |
 | `assets/official-logos/golf-score-card-gt-app-store-1024.png` | `376f6237bbdddf4245ecd3da0f080ad5462f8178` | 514891 bytes | Icono cromado 3D neón oficial para App Store. |
@@ -237,6 +238,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v311-manual-semantic-coverage.mjs` | Candado semántico | Se calcula al publicar | Comprueba la cobertura funcional de las 72 páginas. |
 | `test-v311-manual-voice-map.mjs` | Candado de voz | Se calcula al publicar | Verifica vocabulario oficial, consultas y respuestas documentadas. |
 | `test-v311-voice-assistant.mjs` | Candado del asistente | Se calcula al publicar | Comprueba ayuda, navegación y separación de los scores reales. |
+| `test-v312-general-caddie.mjs` | Candado conversacional V312 | Se calcula al publicar | Comprueba conversación abierta, GPS primero, clima visible y periódico, respaldo por campo, micrófono manual, salud y score protegido. |
 | `test-v311-timer-inactivity.mjs` | Candado TIMER 30 minutos | Se calcula al publicar | Comprueba el apagado en todas las modalidades, persistencia y reinicio por instrucción válida. |
 | `docs/manual/v311/page-17.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-18.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
@@ -580,6 +582,30 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `ROADMAP_OVERALL.md` | ROADMAP general | Registra todos los archivos. |
 
 **Publicación V307:** `vercel.json` usa `node audit-project.mjs` como `buildCommand` compacto de 22 caracteres; sustituye la cadena que superaba el límite Vercel de 256 sin retirar ninguno de los 67 controles obligatorios.
+
+## Corte funcional V312 · Caddie conversacional y clima vivo
+
+| Archivo | Código V312 | Función vigente |
+|---|---|---|
+| `index-grupal.html` | CADDIE-GENERAL / GPS-WEATHER | Separa operaciones de tarjeta y conversación; mantiene el micrófono manual y sincroniza automáticamente el clima por GPS, con respaldo del campo. |
+| `api/session-grupal.js` | REALTIME-GENERAL | Transcribe español natural además del vocabulario de score. |
+| `api/weather.js` | WEATHER-TOOL | Consulta condiciones actuales y probabilidad de lluvia con fuente y hora. |
+| `voice-assistant.js` | OPEN-FALLBACK | Deja pasar preguntas generales al Caddie. |
+| `service-worker.js` | CACHE-V312 | Sustituye la copia instalada anterior. |
+| `test-v312-general-caddie.mjs` | TEST-V312 | Verifica conversación, GPS primero, renovación climática, respaldo por campo, micrófono manual, salud y score protegido. |
+| `test-course-catalog.mjs` | REGRESIÓN DE CATÁLOGO | Conserva los siete campos habilitados y admite su ubicación meteorológica propia. |
+| `test-v267-one-operational-line.mjs` | REGRESIÓN OPERACIONAL | Conserva un solo escritor de score y admite conversación como salida separada. |
+| `test-v270-consecutive-hole-voice-blocks.mjs` | REGRESIÓN DE BLOQUES | Conserva score consecutivo y salida conversacional autorizada sin cruces. |
+| `test-voice-continuity.mjs` | REGRESIÓN | Reemplaza el silencio de frases generales por respuesta segura. |
+| `test-v272-definitive-operational-release.mjs` | REGRESIÓN | Conserva la continuidad de captura con interrupción conversacional. |
+| `test-v274-complete-courses-voice-operations.mjs` | REGRESIÓN | Conserva scores ya reconocidos y separa la plática. |
+| `audit-project.mjs` | AUDITORÍA-V312 | Ejecuta el candado nuevo. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | ESTADO-V312 | Distingue GPS/clima visible entregado de Configuración, artefactos, snapshots formales y validaciones pendientes. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | PEND-CLI-002 / PEND-VOZ-003 | Conserva el alcance pendiente sin negar la fase ya implementada. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | MAPA-V312 | Incorpora este corte y eleva el total activo a 294. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | SELLO | Guarda la huella reproducible final. |
+| `ROADMAP_A_DETALLE.md` | DETALLE-V312 | Registra arquitectura, archivos y prueba. |
+| `ROADMAP_OVERALL.md` | OVERALL-V312 | Resume el resultado para revisión. |
 
 ## Cómo usar este inventario
 

@@ -9,7 +9,7 @@ const release=JSON.parse(fs.readFileSync(new URL("./mobile-release.json",import.
 assert.match(html,/gscg-build" content="V307-MATCH-PLAY-THICK-ARROWS-FORMAT-20260825"/);
 assert.match(html,/gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825"/);
 assert.equal(release.buildNumber,307);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v311-manual-search"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v312-conversational-caddie"/);
 
 assert.match(html,/function matchArrowSvg\(state\)/);
 assert.match(html,/M12 22V5M5 12l7-7 7 7/);

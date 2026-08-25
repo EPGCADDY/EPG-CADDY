@@ -8,7 +8,7 @@ for(const name of expected)assert.ok(html.includes(`name:"${name}"`),`Falta el c
 assert.equal((html.match(/name:"(?:El Pulté|Country Club|San Isidro|Mayan Golf|Hacienda Nueva|Alta Vista|La Reunión)"/g)||[]).length,7);
 assert.ok(html.includes('type="radio" name="registrationCourse"'),'El campo debe elegirse mediante selección única');
 assert.ok(html.includes('if(!selectedCourse?.configured)'),'Los campos pendientes deben quedar bloqueados');
-assert.ok(html.includes('country_club:{name:"Country Club",displayName:"GUATEMALA COUNTRY CLUB",configured:true}'),'Country Club debe estar habilitado con su nombre oficial de tarjeta');
+assert.match(html,/country_club:\{name:"Country Club",displayName:"GUATEMALA COUNTRY CLUB",configured:true,weatherLocation:"Guatemala Country Club, Guatemala",weatherCoordinates:\{latitude:14\.6166459,longitude:-90\.5650996\}\}/,'Country Club debe estar habilitado con su nombre oficial y ubicación meteorológica propia');
 assert.ok(!html.includes('TEESS'),'La forma TEESS está prohibida');
 assert.ok(!html.includes('player-registration-guide'),'Las tres falsas casillas de registro deben estar eliminadas');
 assert.ok(!html.includes('NOMBRE / HDCP - MARCAS - TEES'),'El rótulo engañoso de las falsas casillas debe estar eliminado');

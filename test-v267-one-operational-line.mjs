@@ -48,7 +48,7 @@ assert.match(html,/function exactSpeechInstructions\(reason,spokenText\)/);
 assert.match(html,/Tu primer sonido debe ser la primera palabra del texto autorizado/);
 assert.match(html,/Está prohibido decir entendido, voy a leer, resultados ahora/);
 assert.match(html,/input:\[\{type:"message",role:"user",content:\[\{type:"input_text",text:"Pronuncia ahora únicamente el TEXTO ÚNICO AUTORIZADO de las instrucciones\."\}\]\}\]/);
-assert.match(html,/const ALLOWED_SPEECH_REASONS=new Set\(\["closure","query","query_accumulated","missing_score"\]\)/);
+assert.match(html,/const ALLOWED_SPEECH_REASONS=new Set\(\["closure","query","query_accumulated","missing_score","conversation"\]\)/);
 assert.doesNotMatch(html,/speakAuthorized\("setup_confirmation"/);
 assert.doesNotMatch(html,/Listo, puedes confirmar el inicio de la ronda/);
 assert.match(html,/function speakSetupConfirmation\(\)\{return false\}/);

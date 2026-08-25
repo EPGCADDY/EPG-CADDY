@@ -14,7 +14,7 @@ assert.match(html,/data-provisional-tee=/);
 assert.match(html,/provisional-player-control/);
 assert.match(html,/function parseProvisionalProfileTranscript\(transcript\)/);
 assert.match(html,/function applyProvisionalProfileChange\(change\)/);
-assert.match(html,/jugador dos Carlos catorce blancas/);
+assert.match(html,/jugador dos Carlos; jugador dos handicap catorce; jugador dos marcas blancas/);
 assert.match(html,/const provisionalProfile=parseProvisionalProfileTranscript\(transcript\)/);
 assert.match(html,/function openCurrentRoundDataEditor\(\)/);
 assert.match(html,/openSetup\(round\.mode==="match_play"\?"correction":round\.players\.length<6\?"add":"correction"\)/);

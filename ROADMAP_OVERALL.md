@@ -633,7 +633,7 @@ El **25 de agosto de 2026** el manual se amplía a **portada más 72 páginas fu
 
 ## Pendiente climático PEND-CLI-002 · Clima por campo en la tarjeta
 
-El **25 de agosto de 2026** se registra, sin iniciar implementación, la sincronización del clima mediante la ubicación exacta del campo seleccionado. Debe mostrarse desde Configuración después de elegir el club y permanecer en la tarjeta activa. Mayan Golf y cada club usarán exclusivamente sus coordenadas oficiales en todas sus alternativas. WeatherKit queda como candidato inicial sujeto a un piloto comparativo contra Tomorrow.io y OpenWeather en los campos de Guatemala.
+El **25 de agosto de 2026** se registra la sincronización del clima. La fase V312 obtiene automáticamente el GPS autorizado al abrir una tarjeta activa, muestra y guarda la lectura de Open-Meteo y la renueva cada diez minutos. Las coordenadas propias del campo activo sólo sirven de respaldo si no hay GPS. La vista previa en Configuración, artefactos oficiales, snapshots formales de inicio/cierre y comparación final de proveedores siguen pendientes.
 
 | Archivo nuevo o modificado | Registro del pendiente |
 |---|---|
@@ -645,7 +645,7 @@ El **25 de agosto de 2026** se registra, sin iniciar implementación, la sincron
 
 ## Pendiente PEND-VOZ-003 · Caddie/Support conversacional humano
 
-El **25 de agosto de 2026** se registra y amplía, sin declarar implementación, una conversación por texto o voz con especialidad prioritaria en golf. El mismo Support entenderá el Manual, clima vivo, conversación general y orientación de salud segura. Separará rigurosamente cada intención, usará fuentes actuales cuando correspondan y no podrá modificar la ronda sin confirmación independiente.
+El **25 de agosto de 2026** se registra y amplía una conversación por texto o voz con especialidad prioritaria en golf. La fase de micrófono V312 ya conversa sin palabra clave sobre Golf, ronda, clima vivo y temas generales, con límites de salud y escritura de score separada. La conversación escrita del buscador del Manual y la validación física amplia continúan pendientes.
 
 | Archivo nuevo o modificado | Registro del pendiente |
 |---|---|
@@ -712,3 +712,31 @@ El **25 de agosto de 2026** se incorpora en GOLF Score Card GT un enlace fijo y 
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
 | `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico del acceso permanente. |
 | `ROADMAP_OVERALL.md` | Conserva este resumen general. |
+
+## Implementación V312 · Caddie de voz de propósito general y clima vivo
+
+El **25 de agosto de 2026** el micrófono de la ronda deja de exigir comandos o cambios de tema después de que el jugador lo abre voluntariamente. Un solo micrófono abierto distingue operaciones de Score Card, consultas de ronda, navegación y conversación libre. Una frase general nunca escribe scores; pasa a OpenAI Realtime, conserva el contexto de la conversación activa, permite interrumpir la respuesta y continúa escuchando mientras el botón permanezca abierto. No existe activación automática, huella ni identificación biométrica de voz.
+
+Al abrir o reabrir una tarjeta activa, la aplicación solicita el GPS del teléfono con el permiso normal del sistema, consulta Open-Meteo y presenta automáticamente condición, temperatura, sensación, lluvia, viento y hora. La lectura se conserva en la ronda y se renueva cada diez minutos sin guardar las coordenadas exactas. Si no existe GPS, usa las coordenadas del campo como respaldo; una tarjeta cerrada nunca se reescribe. Continúan pendientes la vista previa en Configuración, los snapshots formales de inicio/cierre, historial y artefactos oficiales, además de la comparación física de proveedores.
+
+| Archivo nuevo o modificado | Registro funcional |
+|---|---|
+| `index-grupal.html` | Clasifica sin modo manual, conversa, mantiene el micrófono bajo pulsación voluntaria y sincroniza automáticamente el clima por GPS en la tarjeta activa. |
+| `api/session-grupal.js` | Abre la transcripción a español natural y autoriza únicamente respuestas conversacionales explícitas. |
+| `api/weather.js` | Consulta clima vivo por coordenadas o lugar y devuelve fuente, hora, temperatura, sensación, lluvia y viento. |
+| `voice-assistant.js` | Entrega al Caddie las preguntas abiertas en vez de convertirlas en un menú de comandos. |
+| `service-worker.js` | Renueva el shell V312 para iPhone, Android y PWA. |
+| `test-v312-general-caddie.mjs` | Bloquea regresiones de conversación, salud segura, GPS primero, respaldo por campo, renovación automática, micrófono manual y score protegido. |
+| `test-course-catalog.mjs` | Conserva los siete campos habilitados y acepta su ubicación meteorológica propia dentro del catálogo. |
+| `test-v267-one-operational-line.mjs` | Mantiene un solo escritor de score y reconoce `conversation` como salida hablada autorizada y separada. |
+| `test-v270-consecutive-hole-voice-blocks.mjs` | Conserva los bloques consecutivos de score y admite la razón conversacional sin mezclar escritores. |
+| `test-voice-continuity.mjs` | Sustituye el antiguo silencio de frases desconocidas por conversación sin mutaciones. |
+| `test-v272-definitive-operational-release.mjs` | Conserva continuidad y admite interrupción del Caddie. |
+| `test-v274-complete-courses-voice-operations.mjs` | Conserva score en vivo y valida la nueva ruta conversacional. |
+| `audit-project.mjs` | Ejecuta el candado V312 en la auditoría maestra. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Marca como implementada la fase de micrófono y mantiene claramente los cierres futuros. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Separa lo entregado de lo aún pendiente en voz y clima. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra los archivos nuevos y la fase V312. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
+| `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico V312. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen V312. |
