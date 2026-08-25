@@ -409,3 +409,5 @@ La fila MATCH de cada jugador ya no muestra únicamente quién ganó, empató o 
 | `index-grupal.html` | Calcula y dibuja en cada hoyo el estado Match Play acumulado, mantiene la flecha durante empates posteriores y muestra la nomenclatura `+N`, `−N` o `EVEN`. |
 | `ROADMAP_A_DETALLE.md` | Registra la regla funcional V308. |
 | `ROADMAP_OVERALL.md` | Registra la entrega V308 y mantiene el ROADMAP Gate. |
+
+**Compatibilidad V308:** se conserva la firma base V307 exigida por los 67 controles acumulados y se añade la firma específica `gscg-match-cumulative = V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825`; el comportamiento nuevo permanece identificado sin romper los contratos anteriores.

@@ -393,3 +393,5 @@ Solicitud: **25 de agosto de 2026**. Alcance: conservar íntegramente la tarjeta
 | `index-grupal.html` | Build `V308-MATCH-PLAY-CUMULATIVE-STANDING-20260825` | Cada hoyo muestra el marcador acumulado del jugador después de esa columna. Una ventaja `+1` o `−1` y su flecha continúan en los hoyos empatados; cambia solamente al producirse un nuevo resultado. El empate global se identifica como `EVEN`. |
 | `ROADMAP_A_DETALLE.md` | Registro V308 | Conserva esta definición detallada. |
 | `ROADMAP_OVERALL.md` | Resumen V308 | Conserva la definición general y el ROADMAP Gate. |
+
+**Firma compatible V308:** `index-grupal.html` mantiene `gscg-build = V307-MATCH-PLAY-THICK-ARROWS-FORMAT-20260825` para los controles acumulados y añade `gscg-match-cumulative = V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825` para identificar esta corrección.
