@@ -687,3 +687,15 @@ El **25 de agosto de 2026** se corrige el orden visible del Manual SCG. Al abrir
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
 | `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico de la corrección. |
 | `ROADMAP_OVERALL.md` | Conserva este resumen general. |
+
+## Corrección funcional V311 · navegación estable del Manual SCG
+
+El **25 de agosto de 2026** se elimina el desplazamiento vertical accidental que, después de mostrar la portada, arrastraba el visor hasta la página 72 y el compendio. El índice numérico ahora se centra únicamente dentro de su propia barra horizontal. Los resultados del buscador fijan la página elegida mediante su ancla, sueltan el teclado del teléfono y abren exactamente la explicación seleccionada.
+
+| Archivo nuevo o modificado | Registro funcional |
+|---|---|
+| `manual.html` | Impide el salto automático al final y fija los destinos del buscador, índice y botones. |
+| `test-v311-manual-hosting.mjs` | Bloquea el desplazamiento vertical del índice y comprueba anclas y navegación móvil. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
+| `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico de la corrección. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen general. |

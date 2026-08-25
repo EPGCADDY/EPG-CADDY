@@ -23,6 +23,11 @@ assert.match(html,/title\.textContent=current===0\?"":/,"La portada no debe most
 assert.match(html,/counter\.textContent=current===0\?"":/,"La portada no debe mostrar PORTADA en el pie");
 assert.doesNotMatch(html,/<strong id="pageTitle">[^<]*PORTADA/i);
 assert.doesNotMatch(html,/<strong id="pageCounter">[^<]*PORTADA/i);
+assert.doesNotMatch(html,/indexLinks\[[^\]]+\]\?\.scrollIntoView/,"El índice horizontal nunca debe desplazar la página completa");
+assert.match(html,/pageIndex\.scrollTo\(\{left:Math\.max\(0,left\),behavior:"smooth"\}\)/,"El índice activo sólo debe centrarse horizontalmente");
+assert.match(html,/history\.replaceState\(null,"",`#\$\{pageId\(destination\)\}`\)/,"Cada destino debe quedar fijado por su ancla");
+assert.match(html,/searchInput\.blur\(\);[\s\S]*?requestAnimationFrame\(\(\)=>go\(destination\)\)/,"El buscador debe soltar el teclado antes de navegar");
+assert.match(html,/initialMatch=location\.hash\.match\(\/\^#pagina-\(\\d\{2\}\)\$\//,"Un enlace directo debe abrir la página indicada");
 assert.ok(fs.statSync(pdf).size>100000,"El PDF completo debe estar alojado en el proyecto");
 assert.match(fs.readFileSync(pdf,"latin1"),/\/Count\s+73\b/,"El PDF debe contener portada más 72 páginas funcionales");
 assert.match(fs.readFileSync(pdf,"latin1"),/\/Outlines\b/,"El PDF debe contener navegación interna por páginas");

@@ -669,3 +669,15 @@ Solicitud: **25 de agosto de 2026**. Estado: **IMPLEMENTADO · EN AUDITORÍA**. 
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Registra la nueva huella de las fuentes. |
 | `ROADMAP_OVERALL.md` | Resumen | Registra la corrección visible. |
 | `ROADMAP_A_DETALLE.md` | Detalle | Conserva este bloque técnico. |
+
+## Corrección funcional V311 · portada inmóvil y destinos exactos del buscador
+
+Solicitud: **25 de agosto de 2026**. Estado: **IMPLEMENTADO · EN AUDITORÍA**. Se confirma que `scrollIntoView()` aplicado al enlace activo del índice horizontal podía mover también el documento completo hasta la barra numérica situada después del compendio. Se sustituye por `pageIndex.scrollTo()`, limitado al eje horizontal. La navegación central normaliza el número de página, actualiza el ancla `#pagina-NN` y desplaza únicamente la lámina solicitada. Antes de abrir un resultado, el buscador libera el foco del teclado móvil.
+
+| Archivo nuevo o modificado | ID o código | Explicación sencilla |
+|---|---|---|
+| `manual.html` | V311-MANUAL-NAV | La portada permanece quieta y cada resultado abre su página real. |
+| `test-v311-manual-hosting.mjs` | Candado de navegación | Prohíbe el desplazamiento vertical del índice y exige ancla, foco liberado y apertura directa. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Registra la nueva huella de las fuentes. |
+| `ROADMAP_OVERALL.md` | Resumen | Registra la corrección visible. |
+| `ROADMAP_A_DETALLE.md` | Detalle | Conserva este bloque técnico. |
