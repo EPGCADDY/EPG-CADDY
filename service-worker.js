@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v314-all-microphones-universal";
+const CACHE_NAME="gscg-mobile-v315-universal-web-barge-in";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

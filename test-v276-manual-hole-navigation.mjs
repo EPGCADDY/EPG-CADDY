@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V314-ALL-MICROPHONES-UNIVERSAL-20260825"/);
+assert.match(html,/gscg-build" content="V315-UNIVERSAL-WEB-BARGE-IN-20260825"/);
 assert.match(html,/V276-PREVIOUS-DIRECT-NEXT-20260823/);
 assert.match(html,/appVersion:"V307"/);
 

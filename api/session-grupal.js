@@ -36,7 +36,7 @@ export default async function handler(req, res) {
 
     const context = safeHeader(req.headers["x-gscg-context"], 20) === "setup" ? "setup" : "round";
     const players = safeHeader(req.headers["x-gscg-players"], 300);
-    const silence = context === "setup" ? 1500 : 1200;
+    const silence = 1000;
     const threshold = context === "setup" ? 0.5 : 0.2;
     const prefixPadding = context === "setup" ? 300 : 700;
     const noiseReduction = context === "setup" ? "near_field" : "far_field";

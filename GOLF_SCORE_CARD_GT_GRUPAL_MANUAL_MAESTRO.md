@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V314
+**Versión documentada:** V315
 **Fecha de corte:** 25 de agosto de 2026
 **Rama operativa:** `main` (Producción vigente)
 **Aplicación:** `index-grupal.html`  
@@ -1322,6 +1322,7 @@ La modalidad se identifica en todas las pantallas únicamente como **FOUR BALL**
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-25 | Manual 3.68 / App V315 | El Caddie entiende cualquier frase que no sea una operación válida de tarjeta, incluso situaciones contadas sin pregunta perfecta; conversa sobre cualquier tema, investiga datos actuales mediante búsqueda web y muestra fuentes. La respuesta normal comienza tras aproximadamente un segundo de silencio. Mientras habla puede ser interrumpido por la voz del jugador. Al terminar espera tres segundos y cierra el micrófono si no hay seguimiento; nunca lo abre solo. El pronóstico llega hasta 16 días e incluye intervalos y hora pico de lluvia. |
 | 2026-08-25 | Manual 3.67 / App V314 | El mismo Caddie universal queda disponible en todos los micrófonos visibles, incluida la primera pantalla, sin cambio de modo y siempre bajo apertura manual. La primera pantalla muestra automáticamente la condición meteorológica mediante GPS del teléfono, con respaldo del campo, sin activar el micrófono. Se registran como pendientes separados la Guía Rápida derivada del Manual y el tiempo vehicular sin mapa; este último requiere destino exacto y un servicio de rutas con tráfico, por lo que no se declara operativo. |
 | 2026-08-25 | Manual 3.66 / App V313 | Corregida la continuidad hablada después de consultar clima: la primera respuesta técnica ya no corta el resultado final y el micrófono se pausa mientras habla el Caddie para evitar eco. El Manual agrega la página 73 con ejemplos sencillos de conversación universal y queda en 74 páginas físicas. |
 | 2026-08-25 | Manual 3.65 / App V312 | Incorporados el Caddie conversacional de propósito general y el clima vivo por GPS en la tarjeta activa, conservando la escritura de scores separada y la apertura voluntaria del micrófono. |

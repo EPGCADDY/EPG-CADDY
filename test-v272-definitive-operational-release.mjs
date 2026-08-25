@@ -8,7 +8,7 @@ const individual=fs.readFileSync(new URL("./index.html",import.meta.url),"utf8")
 const hosting=JSON.parse(fs.readFileSync(new URL("./vercel.json",import.meta.url),"utf8"));
 
 assert.match(html,/<title>Golf Score Card GT<\/title>/);
-assert.match(html,/gscg-build" content="V314-ALL-MICROPHONES-UNIVERSAL-20260825"/);
+assert.match(html,/gscg-build" content="V315-UNIVERSAL-WEB-BARGE-IN-20260825"/);
 assert.match(html,/appVersion:"V307"/);
 assert.match(html,/V272-QUIET-MISSING-PROMPT-CLOSED-REPORTS-OUT-IN-20260823/);
 assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=305"/);
@@ -40,7 +40,7 @@ for(const [key,value] of [["listeningNow",false],["context","setup"],["speechAct
 }
 
 assert.match(html,/const ROUND_TRANSCRIPTION_WATCHDOG_MS=10000/);
-assert.match(html,/const ROUND_CONTINUOUS_FINALIZE_MS=4000/);
+assert.match(html,/const ROUND_CONTINUOUS_FINALIZE_MS=3000/);
 assert.match(html,/const ROUND_MISSING_IDLE_MS=2000/);
 assert.match(html,/const ROUND_MISSING_CONFIRM_MS=450/);
 assert.doesNotMatch(html,/stablefordWatchdog|mode==="stableford"\)\?2000:4000/);

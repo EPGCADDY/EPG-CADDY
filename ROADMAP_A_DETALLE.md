@@ -796,3 +796,26 @@ El tránsito vehicular queda registrado como arquitectura pendiente, no como fun
 | `test-v307-match-arrows-format.mjs` | BUILD-V314 | Alinea firma. |
 | `ROADMAP_OVERALL.md` | Resumen V314 | Explica el resultado al propietario. |
 | `ROADMAP_A_DETALLE.md` | Detalle V314 | Conserva este contrato técnico. |
+
+## Corrección V315 · asistente universal con web viva, interrupción y pronóstico natural
+
+Solicitud: **25 de agosto de 2026**. Estado: **IMPLEMENTADO EN CÓDIGO · EN AUDITORÍA**. La escucha sólo se abre por toque. Cuando termina una respuesta, la pista del micrófono se reactiva correctamente aunque iPhone envíe `output_audio_buffer.stopped` sin `response_id`; comienza entonces una ventana de tres segundos. Una nueva voz cancela el cierre y continúa la plática; el silencio apaga el micrófono y elimina el estado rojo. El VAD usa un segundo para procesar con rapidez la frase completa. Durante una respuesta conversacional, la pista permanece habilitada con cancelación de eco: `speech_started` cancela el audio del Caddie y conserva el mismo mensaje humano para la transcripción siguiente.
+
+El entendimiento universal no se limita a una expresión regular. En Inicio, toda frase que no sea un registro válido pasa al Caddie. En Tarjeta, score, órdenes y consultas operacionales conservan prioridad; cualquier otro contenido se responde como conversación, aunque el jugador solamente describa una situación. `search_live_web` permite al modelo pedir investigación actual de salud, viajes, vuelos, tráfico, noticias, ciencia, cultura o cualquier tema verificable. `api/research.js` ejecuta Responses API con `web_search`, limita longitud y tiempo, prioriza fuentes primarias y devuelve hasta cinco enlaces que la interfaz muestra de forma clicable.
+
+La consulta meteorológica admite una fecha o un rango ISO derivado de lenguaje natural. `api/weather.js` solicita variables diarias y hasta 16 días, selecciona exactamente los días pedidos y devuelve condición, mínimas, máximas, sensación, lluvia y viento. Los datos por hora se agrupan en ventanas con hora pico para responder un seguimiento como “¿a qué hora?”. `setupWeather` permanece pegado visualmente al borde superior cuando el usuario baja hasta el micrófono.
+
+| Archivo nuevo o modificado | ID o código | Explicación sencilla |
+|---|---|---|
+| `index-grupal.html` | V315-UNIVERSAL / BARGE-IN / 3S-IDLE / NATURAL-DATES | Entiende frases abiertas, acepta interrupción, cierra solo tras tres segundos y entiende fechas futuras. |
+| `api/session-grupal.js` | V315-VAD-1000 | Considera terminada la frase después de un segundo de silencio para responder antes. |
+| `api/research.js` | V315-WEB-SEARCH | Investiga cualquier tema actual y entrega respuesta con fuentes. |
+| `api/weather.js` | V315-FORECAST-16 / RAIN-TIMING | Consulta un día o rango futuro y responde la hora probable de lluvia. |
+| `service-worker.js` | V315-PWA-SHELL | Fuerza la actualización del teléfono. |
+| `test-v312-general-caddie.mjs` | GATE-V315 | Prueba conversación universal, búsqueda web, fuentes, barge-in, clima → hora de lluvia → cierre sin ID → segundo turno. |
+| `test-voice-continuity.mjs` | CONTINUITY-3000 | Bloquea regresiones del plazo solicitado. |
+| `test-v275-stable-live-voice-turns.mjs` | VAD-1000 | Alinea cliente y sesión del servidor. |
+| `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs` y `test-v307-match-arrows-format.mjs` | BUILD-CACHE-V315 | Conservan sus candados y reconocen la firma vigente. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | DIGEST-V315 | Sella fuentes y artefactos vigentes. |
+| `ROADMAP_OVERALL.md` | Resumen V315 | Registra el resultado visible. |
+| `ROADMAP_A_DETALLE.md` | Detalle V315 | Conserva este contrato técnico. |

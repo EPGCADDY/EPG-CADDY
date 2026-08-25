@@ -810,3 +810,26 @@ El **25 de agosto de 2026** todos los botones de micrófono, incluida la primera
 | `test-v307-match-arrows-format.mjs` | Alinea firma V314. |
 | `ROADMAP_A_DETALLE.md` | Conserva el detalle V314. |
 | `ROADMAP_OVERALL.md` | Conserva este resumen V314. |
+
+## Corrección V315 · asistente universal, interrupción natural, web viva y pronóstico futuro
+
+El **25 de agosto de 2026** se corrige la secuencia observada en iPhone después de una respuesta meteorológica: un cierre de audio sin identificador ya no deja el botón rojo con la pista del micrófono apagada. Al terminar de hablar, el Caddie reactiva la escucha durante tres segundos; si el jugador no continúa, el micrófono se cierra y sólo vuelve a abrirse mediante un toque voluntario. El final de cada frase se detecta tras aproximadamente un segundo de silencio para reducir la espera. Mientras el Caddie responde, la pista conserva cancelación de eco y una nueva intervención del jugador corta el audio para atender inmediatamente el mensaje siguiente.
+
+La conversación deja de depender de palabras clave: cualquier frase que no sea un registro, score u orden válida se envía al asistente universal. Esto incluye situaciones contadas sin una pregunta perfecta, como pedir consejo durante un Match Play incómodo. Para datos actuales o que necesitan verificación, `search_live_web` consulta `api/research.js`, que usa Responses API con búsqueda web viva, devuelve una respuesta breve y muestra enlaces clicables a sus fuentes. La consulta directa sigue siendo rápida; la investigación web puede tardar más porque consulta fuentes externas.
+
+La herramienta meteorológica acepta fechas y rangos naturales, incluidos “mañana”, “próximo miércoles” y “próximo fin de semana”. El cliente convierte esas expresiones a fechas, conserva GPS primero y campo como respaldo, y `api/weather.js` devuelve datos diarios de Open-Meteo dentro de su alcance oficial máximo de 16 días. También resume intervalos y hora de mayor probabilidad para contestar “¿a qué hora lloverá?” sin remitir a otra aplicación. Fuera del periodo disponible responde con límite explícito y no inventa.
+
+| Archivo nuevo o modificado | Registro V315 |
+|---|---|
+| `index-grupal.html` | Comprende frases abiertas, permite interrumpir al Caddie hablando, muestra fuentes, corrige la reactivación Realtime, interpreta fechas naturales y apaga la escucha tras tres segundos sin seguimiento. |
+| `api/session-grupal.js` | Configura un segundo de silencio para comenzar a responder con menor demora. |
+| `api/research.js` | Investiga información actual de cualquier tema mediante búsqueda web viva y devuelve fuentes verificables. |
+| `api/weather.js` | Entrega pronóstico diario de una fecha o rango dentro de 16 días, con intervalos y hora pico de lluvia. |
+| `service-worker.js` | Renueva la caché V315 para sustituir la copia defectuosa. |
+| `test-v312-general-caddie.mjs` | Simula cierre sin ID, segunda pregunta, web viva, fuentes, interrupción, frase universal, respuesta rápida y clima futuro. |
+| `test-voice-continuity.mjs` | Conserva el cierre operacional independiente. |
+| `test-v275-stable-live-voice-turns.mjs` | Exige VAD uniforme de un segundo. |
+| `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs` y `test-v307-match-arrows-format.mjs` | Alinean firma y caché V315 sin cambiar sus reglas funcionales. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella la huella reproducible V315. |
+| `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico V315. |
+| `ROADMAP_OVERALL.md` | Conserva este resumen V315. |

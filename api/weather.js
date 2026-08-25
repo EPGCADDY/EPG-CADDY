@@ -73,7 +73,101 @@ async function resolvePlace(location) {
   };
 }
 
-export function summarizeWeather(payload, label) {
+function summarizeRainTiming(payload, date, notBefore = "") {
+  const hourly = payload?.hourly || {};
+  const times = Array.isArray(hourly.time) ? hourly.time.map(String) : [];
+  const probabilities = Array.isArray(hourly.precipitation_probability) ? hourly.precipitation_probability : [];
+  const precipitation = Array.isArray(hourly.precipitation) ? hourly.precipitation : [];
+  const records = times.map((time, index) => ({
+    isoTime: time,
+    time: time.slice(11, 16),
+    probability: Number.isFinite(Number(probabilities[index])) ? Number(probabilities[index]) : null,
+    precipitationMm: Number.isFinite(Number(precipitation[index])) ? Number(precipitation[index]) : null
+  })).filter(item => item.isoTime.slice(0, 10) === date && (!notBefore || item.isoTime >= notBefore) && item.probability != null);
+  if (!records.length) return null;
+  const peak = records.reduce((best, item) => item.probability > best.probability ? item : best, records[0]);
+  let likely = records.filter(item => item.probability >= 30 || Number(item.precipitationMm) > 0);
+  if (!likely.length && peak.probability > 0) likely = [peak];
+  const windows = [];
+  for (const item of likely) {
+    const previous = windows.at(-1);
+    const previousMs = previous ? Date.parse(previous.lastIsoTime) : NaN;
+    const itemMs = Date.parse(item.isoTime);
+    if (!previous || !Number.isFinite(previousMs) || !Number.isFinite(itemMs) || itemMs - previousMs > 61 * 60 * 1000) {
+      windows.push({
+        startTime: item.time,
+        endTime: item.time,
+        maxProbability: item.probability,
+        peakTime: item.time,
+        precipitationMm: Number(item.precipitationMm) || 0,
+        lastIsoTime: item.isoTime
+      });
+      continue;
+    }
+    previous.endTime = item.time;
+    previous.lastIsoTime = item.isoTime;
+    previous.precipitationMm = Number((previous.precipitationMm + (Number(item.precipitationMm) || 0)).toFixed(1));
+    if (item.probability > previous.maxProbability) {
+      previous.maxProbability = item.probability;
+      previous.peakTime = item.time;
+    }
+  }
+  return {
+    date,
+    peakProbability: peak.probability,
+    peakTime: peak.time,
+    windows: windows.map(({ lastIsoTime, ...window }) => window)
+  };
+}
+
+export function summarizeWeather(payload, label, options = {}) {
+  const forecastStartDate = String(options.forecastStartDate || "").trim();
+  const forecastEndDate = String(options.forecastEndDate || forecastStartDate).trim();
+  if (forecastStartDate) {
+    const daily = payload?.daily || {};
+    const dates = Array.isArray(daily.time) ? daily.time.map(String) : [];
+    const startIndex = dates.indexOf(forecastStartDate);
+    const endIndex = dates.indexOf(forecastEndDate);
+    if (startIndex < 0 || endIndex < startIndex) {
+      return {
+        ok: false,
+        error: "FORECAST_DATE_UNAVAILABLE",
+        requestedStartDate: forecastStartDate,
+        requestedEndDate: forecastEndDate,
+        availableFrom: dates[0] || null,
+        availableThrough: dates.at(-1) || null
+      };
+    }
+    const valueAt = (key, index) => {
+      const value = Array.isArray(daily[key]) ? Number(daily[key][index]) : NaN;
+      return Number.isFinite(value) ? value : null;
+    };
+    const days = dates.slice(startIndex, endIndex + 1).map((date, offset) => {
+      const index = startIndex + offset;
+      return {
+        date,
+        condition: WEATHER_CODES[valueAt("weather_code", index)] || "condición no clasificada",
+        temperatureMinC: valueAt("temperature_2m_min", index),
+        temperatureMaxC: valueAt("temperature_2m_max", index),
+        feelsLikeMinC: valueAt("apparent_temperature_min", index),
+        feelsLikeMaxC: valueAt("apparent_temperature_max", index),
+        precipitationMm: valueAt("precipitation_sum", index),
+        maxRainProbability: valueAt("precipitation_probability_max", index),
+        windKmh: valueAt("wind_speed_10m_max", index),
+        rainTiming: summarizeRainTiming(payload, date)
+      };
+    });
+    return {
+      ok: true,
+      source: "Open-Meteo",
+      location: label,
+      timezone: payload?.timezone || null,
+      forecastType: days.length > 1 ? "range" : "day",
+      forecastStartDate,
+      forecastEndDate,
+      ...(days.length === 1 ? days[0] : { days })
+    };
+  }
   const current = payload?.current || {};
   const times = Array.isArray(payload?.hourly?.time) ? payload.hourly.time : [];
   const probabilities = Array.isArray(payload?.hourly?.precipitation_probability)
@@ -85,6 +179,7 @@ export function summarizeWeather(payload, label) {
     return Number.isFinite(Number(value)) && (!Number.isFinite(now) || time >= now);
   }).map(Number);
   const maxRainProbability = remaining.length ? Math.max(...remaining) : null;
+  const observedDate = String(current.time || "").slice(0, 10);
   return {
     ok: true,
     source: "Open-Meteo",
@@ -96,7 +191,8 @@ export function summarizeWeather(payload, label) {
     precipitationMm: Number.isFinite(Number(current.precipitation)) ? Number(current.precipitation) : null,
     windKmh: Number.isFinite(Number(current.wind_speed_10m)) ? Number(current.wind_speed_10m) : null,
     condition: WEATHER_CODES[Number(current.weather_code)] || "condición no clasificada",
-    maxRainProbabilityToday: maxRainProbability
+    maxRainProbabilityToday: maxRainProbability,
+    rainTiming: observedDate ? summarizeRainTiming(payload, observedDate, current.time || "") : null
   };
 }
 
@@ -120,15 +216,34 @@ export default async function handler(req, res) {
       }
       ({ latitude, longitude, label } = place);
     }
+    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    const rawForecastStartDate = String(body.forecastStartDate || body.forecastDate || "").trim();
+    const rawForecastEndDate = String(body.forecastEndDate || rawForecastStartDate).trim();
+    if ((rawForecastStartDate && !datePattern.test(rawForecastStartDate)) ||
+        (rawForecastEndDate && !datePattern.test(rawForecastEndDate)) ||
+        (rawForecastStartDate && rawForecastEndDate < rawForecastStartDate)) {
+      return res.status(422).json({ ok: false, error: "INVALID_FORECAST_DATE" });
+    }
+    const wantsFutureForecast = Boolean(rawForecastStartDate);
     const url = new URL("https://api.open-meteo.com/v1/forecast");
     url.searchParams.set("latitude", String(latitude));
     url.searchParams.set("longitude", String(longitude));
-    url.searchParams.set("current", "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m");
-    url.searchParams.set("hourly", "precipitation_probability");
-    url.searchParams.set("forecast_days", "1");
+    if (wantsFutureForecast) {
+      url.searchParams.set("daily", "weather_code,temperature_2m_min,temperature_2m_max,apparent_temperature_min,apparent_temperature_max,precipitation_sum,precipitation_probability_max,wind_speed_10m_max");
+      url.searchParams.set("hourly", "precipitation_probability,precipitation");
+      url.searchParams.set("forecast_days", "16");
+    } else {
+      url.searchParams.set("current", "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m");
+      url.searchParams.set("hourly", "precipitation_probability,precipitation");
+      url.searchParams.set("forecast_days", "1");
+    }
     url.searchParams.set("timezone", "auto");
     const payload = await fetchJson(url);
-    return res.status(200).json(summarizeWeather(payload, label));
+    const summary = summarizeWeather(payload, label, {
+      forecastStartDate: rawForecastStartDate,
+      forecastEndDate: rawForecastEndDate
+    });
+    return res.status(summary.ok ? 200 : 422).json(summary);
   } catch (error) {
     console.error("weather", error instanceof Error ? error.message : String(error));
     return res.status(502).json({ ok: false, error: "WEATHER_UNAVAILABLE" });

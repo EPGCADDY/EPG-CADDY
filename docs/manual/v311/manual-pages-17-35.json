@@ -731,13 +731,13 @@
     "number": "73",
     "kicker": "Caddie de conversación universal",
     "title": "El mismo Caddie en cada micrófono",
-    "subtitle": "Desde la primera pantalla, abre el micrófono y habla normalmente; no necesitas cambiar de modo.",
+    "subtitle": "Desde la primera pantalla, abre el micrófono y habla normalmente; entiende cualquier tema sin cambiar de modo.",
     "steps": [
       ["DESDE LA PRIMERA PANTALLA", "Inicio muestra el clima por GPS; sus micrófonos y los de Stableford y Tarjeta abren el mismo Caddie."],
-      ["PREGUNTA CUALQUIER TEMA", "Ejemplos: HÁBLAME DE CULTURA MAYA, MEDICINAS o VUELOS DE AEROLÍNEA."],
-      ["CAMBIA DE TEMA", "Pregunta: ¿CÓMO ESTÁ EL CLIMA HOY? Luego: ¿POR QUÉ TENGO FRÍO? Sin comando especial."],
-      ["USA GOLF NORMALMENTE", "Para anotar, di NOMBRE + SCORE. Para conversar, pregunta con tus propias palabras."]
+      ["PREGUNTA CUALQUIER TEMA", "Cultura Maya, medicinas, vuelos de aerolínea, arquitectura, planetas, océanos, vehículos, viajes o países. Para datos actuales investiga la Web y muestra fuentes."],
+      ["CAMBIA O INTERRUMPE", "Pregunta: ¿CÓMO ESTÁ EL CLIMA HOY? Luego: ¿POR QUÉ TENGO FRÍO? Si no te sirve una respuesta, habla encima y el Caddie se callará."],
+      ["RESPUESTA Y CIERRE", "Responde tras aproximadamente un segundo de silencio. Al terminar espera tres segundos; si no continúas, cierra. El micrófono nunca se abre solo."]
     ],
-    "remember": "El micrófono nunca se abre solo. Tócalo primero. Necesitas internet; vuelos, tráfico y noticias en vivo requieren una fuente conectada."
+    "remember": "Toca primero el micrófono. Una respuesta normal comienza tras aproximadamente un segundo de silencio; una búsqueda web puede tardar un poco más."
   }
 ]

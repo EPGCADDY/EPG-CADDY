@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const sessionApi=fs.readFileSync(new URL("./api/session-grupal.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V314-ALL-MICROPHONES-UNIVERSAL-20260825"/);
+assert.match(html,/gscg-build" content="V315-UNIVERSAL-WEB-BARGE-IN-20260825"/);
 assert.match(html,/V275-LIVE-TURN-ANCHOR-SPEECH-LOCK-20260823/);
 assert.match(html,/appVersion:"V307"/);
 
@@ -55,10 +55,10 @@ assert.match(html,/\},ROUND_MISSING_CONFIRM_MS\)/);
 // pareja nombre/score por respiraciones naturales, sin detener los deltas.
 assert.match(html,/const ROUND_VAD_THRESHOLD=0\.2/);
 assert.match(html,/const ROUND_VAD_PREFIX_MS=700/);
-assert.match(html,/const ROUND_VAD_SILENCE_MS=1200/);
+assert.match(html,/const ROUND_VAD_SILENCE_MS=1000/);
 assert.match(html,/threshold:ROUND_VAD_THRESHOLD,prefix_padding_ms:ROUND_VAD_PREFIX_MS,silence_duration_ms:ROUND_VAD_SILENCE_MS/);
 assert.match(html,/Number\(td\?\.threshold\)===expectedThreshold&&Number\(td\?\.prefix_padding_ms\)===expectedPrefix/);
-assert.match(sessionApi,/const silence = context === "setup" \? 1500 : 1200/);
+assert.match(sessionApi,/const silence = 1000/);
 assert.match(sessionApi,/const threshold = context === "setup" \? 0\.5 : 0\.2/);
 assert.match(sessionApi,/const prefixPadding = context === "setup" \? 300 : 700/);
 
