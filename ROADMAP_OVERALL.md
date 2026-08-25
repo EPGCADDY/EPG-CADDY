@@ -10,13 +10,14 @@ Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sólo perm
 
 ## Estado actual
 
-- Versión publicada antes de esta actualización: **V296**.
-- Código base oficial GitHub: `1007d5889d5c5ab5bb18d64661adf1955cc63f72`.
+- Corte consolidado de este inventario: **V311 · 25 de agosto de 2026**.
+- Código oficial GitHub en `main`: `e938fd4d1f1815fdfac3a4babc68c3beedfd96c5`.
 - Vercel: **READY**.
-- Publicación Vercel: `dpl_FuHxdWb71xeHGNvcESFLT4ig8rWA`.
+- Publicación Vercel vigente: `dpl_FkfVRcQVUK8AnWdgtW5gU6eG9KEh`.
 - Aplicación oficial: https://epg-caddy.vercel.app/
 - Errores de publicación actuales: **0**.
 - Advertencias actuales: **0**.
+- Auditoría maestra: **PASS · 69 paquetes**.
 
 ## Aplicación Apple y Android
 
@@ -34,14 +35,17 @@ Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sólo perm
 
 ## Organización actual
 
-- Archivos activos antes de agregar la colección visual: **160**.
-- Archivos activos con ROADMAP A DETALLE: **183**.
+- Archivos activos rastreados en Git al corte V311: **197**.
+- Base visual original V292: **160 archivos activos** distribuidos en nueve páginas.
+- Continuación documentada después de crear la base visual: **V294 a V311**.
+- Corte solicitado para revisión: **desde la línea 160 hacia abajo se considera nuevo**.
+- Archivos de la colección `ROADMAP_IMAGES`: **22**.
 - Archivos históricos retirados del uso diario: **89**.
 - Procesos automáticos actuales conservados: **4**.
 - Ramas GitHub inventariadas: **80**.
 - Ramas ya incluidas en main: **70**.
 - Ramas con cambios propios conservadas: **9**.
-- Publicaciones Vercel inventariadas antes de V290: **622**.
+- Publicaciones Vercel de la base visual histórica: **622**; los despliegues V306-V311 quedan identificados en la continuación documental.
 - Base central preparada: **22 grupos de información**.
 - Nombres internos de guardado en el teléfono identificados: **14**.
 
@@ -480,3 +484,14 @@ El **25 de agosto de 2026** se deja el nombre visible de la modalidad exclusivam
 | `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.64 / App V311 con el contrato operativo completo. |
 | `ROADMAP_A_DETALLE.md` | Registra la matriz técnica V311. |
 | `ROADMAP_OVERALL.md` | Registra esta entrega V311 y satisface el ROADMAP Gate. |
+
+## Cierre documental V311 · Inventarios consolidados en PDF
+
+Solicitud: **25 de agosto de 2026**. Se actualizan los inventarios hasta el último cambio publicado de V311 y se fija, para revisión, que todo lo situado desde la línea 160 hacia abajo se considera nuevo. La base visual V292 no se sustituye ni se borra: queda incorporada como antecedente dentro del PDF A Detalle. Se generan fuera del repositorio tres archivos para guardar: Overall, A Detalle y Por imágenes y rubros.
+
+| Archivo modificado | Registro documental |
+|---|---|
+| `ROADMAP_OVERALL.md` | Actualiza versión, commit, despliegue, auditoría, cantidades y corte desde línea 160. |
+| `ROADMAP_A_DETALLE.md` | Consolida V311, repite la línea 160 como inicio del bloque nuevo y conserva V294-V311. |
+| `ROADMAP_IMAGES/README.md` | Aclara que las imágenes V292 son base histórica y que el PDF incorpora la continuación. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el total activo rastreado a 197 archivos. |

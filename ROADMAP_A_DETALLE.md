@@ -2,7 +2,9 @@
 
 ## Golf Score Card GT
 
-Directorio visual completo de los **160 archivos activos** registrados al cierre de V292. Cada línea incluye:
+Inventario consolidado al corte **V311 · 25 de agosto de 2026**, con **197 archivos activos rastreados en Git**. Las nueve páginas visuales conservan la fotografía original de los 160 archivos activos al cierre de V292; las secciones V294-V311 incorporan, sin borrar ese antecedente, todos los cambios posteriores. Cada línea incluye:
+
+> **CORTE DE REVISIÓN SOLICITADO:** desde la **línea 160 hacia abajo** se considera contenido nuevo para revisión.
 
 - nombre exacto del archivo;
 - ID o código único;
@@ -53,10 +55,11 @@ Directorio visual completo de los **160 archivos activos** registrados al cierre
 
 Este archivo permanece como entrada directa y amigable al directorio detallado del proyecto.
 
-## Continuación del directorio · Líneas 161 a 183
+## Continuación del directorio · Corte nuevo desde la línea 160
 
 | Línea | Nombre exacto | ID o código | Qué contiene |
 |---:|---|---|---|
+| 160 | `verify-manual-sync.mjs` | `8042010c6b0cd81915a57a8ac65d1f778bea7cc7` | Primera línea del corte nuevo solicitado; comprueba la sincronización entre el manual y la aplicación. |
 | 161 | `ROADMAP_IMAGES/README.md` | `693f74b22cd9b885b473288f36c8437539429485` | Índice de todas las imágenes detalladas. |
 | 162 | `ROADMAP_IMAGES/01_ARCHIVOS_ACTIVOS_COMPLETO.png` | `b3ac32312aaaa986e64684793b56539cf22e9280` | Imagen continua de los archivos activos. |
 | 163 | `ROADMAP_IMAGES/02_ARCHIVOS_RETIRADOS_COMPLETO.png` | `eb46364dc267183bf0d6e2863d26aa0c657eee65` | Imagen continua de los archivos retirados. |
@@ -464,3 +467,14 @@ Solicitud: **25 de agosto de 2026**. El nombre permanente de Match Play deja de 
 | `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.64 / App V311 | Conserva el contrato funcional completo y el enlace de inicio. |
 | `ROADMAP_A_DETALLE.md` | Registro técnico V311 | Conserva esta matriz completa. |
 | `ROADMAP_OVERALL.md` | Resumen V311 | Conserva la entrega y el ROADMAP Gate. |
+
+## Cierre documental V311 · Inventarios consolidados en PDF
+
+Solicitud: **25 de agosto de 2026**. Los inventarios se cierran contra el commit oficial `e938fd4d1f1815fdfac3a4babc68c3beedfd96c5`, despliegue `dpl_FkfVRcQVUK8AnWdgtW5gU6eG9KEh`, estado READY y auditoría PASS de 69 paquetes. El corte solicitado comienza en la línea 160. Los tres PDF resultantes se entregan como artefactos externos para guardar y no alteran la aplicación.
+
+| Archivo modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `ROADMAP_OVERALL.md` | Corte documental V311 | Actualiza el estado general y registra los tres inventarios PDF. |
+| `ROADMAP_A_DETALLE.md` | Corte documental V311 | Conserva la base visual y agrega la continuación completa con línea 160 incluida. |
+| `ROADMAP_IMAGES/README.md` | Índice visual V311 | Explica la relación entre la fotografía V292 y los inventarios consolidados. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Total activo 197 | Corrige el total de archivos activos rastreados al corte V311. |

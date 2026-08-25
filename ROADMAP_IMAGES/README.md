@@ -24,4 +24,6 @@ Las 622 publicaciones se dividen solamente para que las imágenes abran correcta
 2. `ID / CÓDIGO` confirma exactamente cuál es.
 3. `QUÉ CONTIENE` lo explica sin términos complicados.
 
-Estas imágenes son una fotografía ordenada del inventario preparado al cierre de V292. Los archivos de esta misma carpeta se registran en el mapa maestro como material visual del ROADMAP OVERALL.
+Estas imágenes son la fotografía histórica ordenada del inventario preparado al cierre de V292. El inventario consolidado V311 conserva esa base y agrega en PDF todos los cambios V294-V311, además de una vista nueva agrupada por rubros e imágenes. Los archivos de esta misma carpeta se registran en el mapa maestro como material visual del ROADMAP OVERALL.
+
+Para la revisión actual, el corte solicitado comienza en la **línea 160**: todo lo situado desde esa línea hacia abajo se presenta como nuevo.
