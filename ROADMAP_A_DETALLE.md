@@ -825,3 +825,7 @@ La consulta meteorológica admite una fecha o un rango ISO derivado de lenguaje 
 ## Corrección V316 · interrupción confirmada y protección contra eco
 
 Durante una respuesta, `input_audio_buffer.speech_started` sólo abre una candidatura de interrupción. La aplicación recibe `response.output_audio_transcript.delta`, compara lo que oye el micrófono con lo que el Caddie está pronunciando y descarta coincidencias de eco. Una frase humana diferente sí ejecuta `interruptConversationSpeech()` y continúa como el siguiente turno. La protección también cubre el último audio rezagado de iPhone. `index-grupal.html`, `service-worker.js`, `test-v312-general-caddie.mjs`, los candados de firma V316, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` quedan registrados en la misma publicación.
+
+## Corrección V317 · recuperación de voz en Inicio
+
+La solicitud real `/api/session-grupal` de las 16:27 terminó con HTTP 200; no hubo una transcripción posterior. La causa se aisló en la detección demasiado estricta exclusiva de Inicio. Se elimina esa diferencia: `api/session-grupal.js` usa umbral 0.2, `prefix_padding_ms` 700, `far_field` y `gpt-live-transcribe` en español tanto para preguntas universales como para dictado de jugadores. `test-v312-general-caddie.mjs` bloquea la regresión y la caché V317 obliga a renovar la copia instalada.

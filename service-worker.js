@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v316-echo-safe-barge-in";
+const CACHE_NAME="gscg-mobile-v317-setup-voice-recovery";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

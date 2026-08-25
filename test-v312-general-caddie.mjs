@@ -91,6 +91,14 @@ assert.match(setupTranscriptBlock,/speakConversation\(setupUtterance\)/,"El micr
 assert.match(setupTranscriptBlock,/!setupRegistration\.ok/,"Toda frase de Inicio que no sea un registro válido debe llegar al Caddie universal");
 assert.match(sessionApi,/Caddie conversacional de propósito general disponible desde todos los micrófonos/,"La sesión Realtime de Inicio no debe limitarse al registro");
 assert.match(sessionApi,/español natural de cualquier tema, preguntas y seguimiento/,"La transcripción inicial debe comprender conversación universal");
+assert.match(sessionApi,/const threshold = 0\.2;/,"Inicio debe reconocer una voz normal con la sensibilidad ya probada en la ronda");
+assert.match(sessionApi,/const prefixPadding = 700;/,"Inicio no debe perder el comienzo de la primera pregunta");
+assert.match(sessionApi,/const noiseReduction = "far_field";/,"Inicio debe aceptar el teléfono a distancia de conversación");
+assert.match(sessionApi,/context === "setup"[\s\S]*?model: "gpt-live-transcribe", languages: \["es"\]/,"Inicio debe usar la transcripción viva en español");
+const setupSessionBlock=html.slice(html.indexOf("function setupSessionConfig()"),html.indexOf("\nfunction roundSessionConfig()"));
+assert.match(setupSessionBlock,/model:"gpt-live-transcribe",languages:\["es"\]/,"La configuración del cliente debe conservar la transcripción viva de Inicio");
+assert.match(setupSessionBlock,/noise_reduction:\{type:"far_field"\}/,"La configuración del cliente debe conservar voz a distancia");
+assert.match(setupSessionBlock,/threshold:ROUND_VAD_THRESHOLD,prefix_padding_ms:ROUND_VAD_PREFIX_MS/,"Cliente y servidor deben usar la misma sensibilidad en Inicio");
 assert.match(stableford,/Abrir Caddie universal o dictar jugadores Stableford/,"El micrófono Stableford también debe abrir el Caddie universal");
 assert.match(html, /Nunca inventes scores ni afirmes que cambiaste la tarjeta/, "La conversación no debe atribuirse mutaciones de score");
 assert.match(html, /weatherLocation:"El Pulté Golf/, "El clima debe enlazarse con el catálogo de campos");
@@ -121,7 +129,7 @@ assert.match(sessionApi, /Caddie conversacional de propósito general/, "La sesi
 assert.match(sessionApi, /Transcribe literalmente español natural de cualquier tema/, "La transcripción no debe limitarse al vocabulario de score");
 assert.match(weatherApi, /api\.open-meteo\.com\/v1\/forecast/, "Falta proveedor meteorológico vivo");
 assert.match(weatherApi, /geocoding-api\.open-meteo\.com\/v1\/search/, "Falta resolución de campos o ubicaciones");
-assert.match(serviceWorker, /gscg-mobile-v316-echo-safe-barge-in/, "La PWA debe reemplazar el shell anterior");
+assert.match(serviceWorker, /gscg-mobile-v317-setup-voice-recovery/, "La PWA debe reemplazar el shell anterior");
 assert.match(weatherApi, /forecast_days\", \"16\"/, "El pronóstico natural debe admitir el máximo confiable de 16 días");
 assert.match(researchApi,/https:\/\/api\.openai\.com\/v1\/responses/,"La investigación universal debe usar Responses API");
 assert.match(researchApi,/type: \"web_search\"/,"La investigación debe consultar la web viva");
@@ -193,4 +201,4 @@ const research = summarizeResearchResponse({output:[
 ]});
 assert.deepEqual(research,{ok:true,source:"OpenAI Web Search",answer:"Respuesta verificada.",sources:[{title:"Fuente oficial",url:"https://example.org/a"},{title:"Segunda fuente",url:"https://example.com/b"}]});
 
-console.log("PASS V316 · asistente universal, web viva, interrupción, respuesta rápida y clima futuro");
+console.log("PASS V317 · Inicio reconoce voz normal y conserva el Caddie universal");

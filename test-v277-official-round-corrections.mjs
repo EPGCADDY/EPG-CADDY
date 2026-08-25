@@ -5,7 +5,7 @@ import artifacts from "./card-artifacts.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V316-ECHO-SAFE-BARGE-IN-20260825"/);
+assert.match(html,/gscg-build" content="V317-SETUP-VOICE-RECOVERY-20260825"/);
 assert.match(html,/V277-ORIGINAL-REASON-VERSIONED-CORRECTION-20260823/);
 assert.match(html,/id="openOfficialCorrection">CORREGIR RONDA/);
 assert.match(html,/id="openOriginalGlobal">ABRIR ORIGINAL/);

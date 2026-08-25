@@ -37,9 +37,12 @@ export default async function handler(req, res) {
     const context = safeHeader(req.headers["x-gscg-context"], 20) === "setup" ? "setup" : "round";
     const players = safeHeader(req.headers["x-gscg-players"], 300);
     const silence = 1000;
-    const threshold = context === "setup" ? 0.5 : 0.2;
-    const prefixPadding = context === "setup" ? 300 : 700;
-    const noiseReduction = context === "setup" ? "near_field" : "far_field";
+    // La pantalla de Inicio se usa con el teléfono a distintas distancias. La
+    // antigua sensibilidad 0.5 podía abrir el micrófono sin reconocer una voz
+    // normal. Usamos la misma detección tolerante que ya funciona en la ronda.
+    const threshold = 0.2;
+    const prefixPadding = 700;
+    const noiseReduction = "far_field";
 
     const transcriptionPrompt = context === "setup"
       ? "Golf Guatemala con Caddie universal. Transcribe literalmente español natural de cualquier tema, preguntas y seguimiento de una conversación. Si el usuario registra jugadores, conserva exactamente nombres propios, handicap y color de marcas. Regla mandatoria: Jessie se escribe Jessie."
@@ -61,7 +64,7 @@ export default async function handler(req, res) {
         input: {
           transcription: {
             ...(context === "setup"
-              ? { model: "gpt-4o-transcribe", language: "es" }
+              ? { model: "gpt-live-transcribe", languages: ["es"] }
               : { model: "gpt-live-transcribe", languages: ["es"], keywords: roundKeywords }),
             prompt: transcriptionPrompt
           },
