@@ -824,6 +824,8 @@ La herramienta meteorológica acepta fechas y rangos naturales, incluidos “ma�
 | `index-grupal.html` | Comprende frases abiertas, permite interrumpir al Caddie hablando, muestra fuentes, corrige la reactivación Realtime, interpreta fechas naturales y apaga la escucha tras tres segundos sin seguimiento. |
 | `api/session-grupal.js` | Configura un segundo de silencio para comenzar a responder con menor demora. |
 | `api/research.js` | Investiga información actual de cualquier tema mediante búsqueda web viva y devuelve fuentes verificables. |
+| `.gitattributes` | Trata los manuales PDF como archivos binarios para proteger su contenido durante la publicación. |
+| `scripts/update-manual-page-73.py` | Regenera la página 73 y la inserta en los dos PDF oficiales del Manual. |
 | `api/weather.js` | Entrega pronóstico diario de una fecha o rango dentro de 16 días, con intervalos y hora pico de lluvia. |
 | `service-worker.js` | Renueva la caché V315 para sustituir la copia defectuosa. |
 | `test-v312-general-caddie.mjs` | Simula cierre sin ID, segunda pregunta, web viva, fuentes, interrupción, frase universal, respuesta rápida y clima futuro. |

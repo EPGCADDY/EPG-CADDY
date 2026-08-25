@@ -810,6 +810,8 @@ La consulta meteorológica admite una fecha o un rango ISO derivado de lenguaje 
 | `index-grupal.html` | V315-UNIVERSAL / BARGE-IN / 3S-IDLE / NATURAL-DATES | Entiende frases abiertas, acepta interrupción, cierra solo tras tres segundos y entiende fechas futuras. |
 | `api/session-grupal.js` | V315-VAD-1000 | Considera terminada la frase después de un segundo de silencio para responder antes. |
 | `api/research.js` | V315-WEB-SEARCH | Investiga cualquier tema actual y entrega respuesta con fuentes. |
+| `.gitattributes` | PDF-BINARY | Evita que Git interprete o altere el contenido interno de los PDF. |
+| `scripts/update-manual-page-73.py` | MANUAL-PAGE-73 | Regenera la explicación universal y reemplaza la última página de ambos PDF. |
 | `api/weather.js` | V315-FORECAST-16 / RAIN-TIMING | Consulta un día o rango futuro y responde la hora probable de lluvia. |
 | `service-worker.js` | V315-PWA-SHELL | Fuerza la actualización del teléfono. |
 | `test-v312-general-caddie.mjs` | GATE-V315 | Prueba conversación universal, búsqueda web, fuentes, barge-in, clima → hora de lluvia → cierre sin ID → segundo turno. |
