@@ -19,6 +19,7 @@ const SHELL=[
   "/master-data-sync.js",
   "/account-backup.js",
   "/match-play.js",
+  "/four-ball.js",
   "/stableford.js",
   "/round-navigation.js"
 ];

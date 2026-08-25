@@ -413,3 +413,30 @@ La fila MATCH de cada jugador ya no muestra únicamente quién ganó, empató o 
 **Compatibilidad V308:** se conserva la firma base V307 exigida por los 67 controles acumulados y se añade la firma específica `gscg-match-cumulative = V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825`; el comportamiento nuevo permanece identificado sin romper los contratos anteriores.
 
 **Validación funcional V308:** la persistencia acumulada se limita estrictamente a hoyos ya registrados; los hoyos futuros continúan como `PENDIENTE` y no heredan anticipadamente la ventaja actual.
+
+## V309 · Four Ball homologado como partida de dos parejas
+
+El **25 de agosto de 2026** se implementa Four Ball como modalidad operativa propia: exactamente cuatro jugadores, Pareja Verde en posiciones 1–2 y Pareja Oro en posiciones 3–4. Cada jugador registra Gross; el motor compartido calcula handicap y Neto; `four-ball.js` toma el mejor Neto de cada pareja y decide el hoyo. El marcador `EVEN`, `+N` o `−N` permanece acumulado durante hoyos empatados y los hoyos futuros continúan pendientes. Incluye cierre anticipado, corrección oficial, recuperación, sincronización, Historial y exportaciones Global/personales.
+
+| Archivo nuevo o modificado | Registro V309 |
+|---|---|
+| `four-ball.js` | Motor puro Four Ball para dos parejas, mejor Neto, marcador acumulado y cierre. |
+| `index-grupal.html` | Registro 2 × 2, colores Verde/Oro, voz/manual, tarjeta, acumulado, cierre y tarjeta digital. |
+| `round-closure.js` | Snapshot y corrección oficial Four Ball. |
+| `card-artifacts.js` | Global y cuatro personales con mejor bola y resultado acumulado. |
+| `card-library.js` | Filtro e identidad Four Ball dentro de Historial. |
+| `round-navigation.js` | Recuperación de rondas Four Ball sin convertirlas en General. |
+| `master-data-sync.js` | Conserva `four_ball` en la arquitectura central. |
+| `account-backup.js` | Restaura modalidad, snapshot y marcador Four Ball. |
+| `historical-analytics.js` | Reconoce Four Ball como modalidad propia en las consultas. |
+| `service-worker.js` | Incluye el motor Four Ball en el paquete sin conexión. |
+| `scripts/build-mobile-web.mjs` | Incluye `four-ball.js` en iPhone/Android. |
+| `vercel.json` | Entrega `four-ball.js` con política sin caché obsoleta. |
+| `test-v309-four-ball.mjs` | Prueba 2 parejas, cuatro Gross, mejor Neto, empate persistente, cierre, Historial y exportación. |
+| `audit-project.mjs` | Incorpora el candado V309 a la auditoría maestra. |
+| `APP_ARCHITECTURE.md` | Define oficialmente Four Ball 2 vs 2 y sus límites de responsabilidad. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.62 con operación completa Four Ball. |
+| `ROADMAP_A_DETALLE.md` | Matriz técnica V309. |
+| `ROADMAP_OVERALL.md` | Resumen y puerta ROADMAP V309. |
+
+**Compatibilidad V309:** se conserva la firma acumulada V307/V308 y se añade `gscg-four-ball = V309-TWO-PAIRS-BEST-NET-CUMULATIVE-MATCH-20260825` para identificar la modalidad nueva sin retirar los contratos anteriores.

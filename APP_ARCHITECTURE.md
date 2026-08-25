@@ -117,9 +117,22 @@ Calcula:
 
 • Match Play
 
+• Four Ball por parejas
+
 • Medal Play
 
 • Estadísticas
+
+### Four Ball 2 vs 2
+
+Four Ball es una modalidad propia de la arquitectura General y no un nombre visual aplicado a la Ronda Normal. Cada partida exige exactamente cuatro jugadores distribuidos de forma determinista:
+
+- Pareja Verde: jugadores 1 y 2.
+- Pareja Oro: jugadores 3 y 4.
+
+Cada jugador juega su propia bola y registra únicamente Gross por voz o manualmente. El motor compartido calcula los golpes de handicap y el Neto individual. `four-ball.js` selecciona el menor Neto de cada pareja por hoyo y compara ambos mejores Netos; el resultado del hoyo pertenece a la pareja, no al jugador individual.
+
+El marcador conserva acumulativamente `EVEN`, `+1`, `+2`, `−1`, etc. en todos los hoyos ya registrados. Un hoyo empatado mantiene la posición anterior y un hoyo futuro permanece pendiente. El cierre anticipado se produce cuando la ventaja supera los hoyos restantes y genera snapshot oficial, correcciones, Historial, tarjeta Global y cuatro tarjetas personales.
 
 ### Stableford Scratch permanente
 

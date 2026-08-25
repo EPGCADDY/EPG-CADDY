@@ -23,6 +23,7 @@ const assets=[
   "account-backup.js",
   "commerce.js",
   "match-play.js",
+  "four-ball.js",
   "stableford.js",
   "round-navigation.js"
 ];
