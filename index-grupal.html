@@ -11,7 +11,7 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/official-logos/golf-score-card-gt-apple-touch-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V315-UNIVERSAL-WEB-BARGE-IN-20260825">
+<meta name="gscg-build" content="V316-ECHO-SAFE-BARGE-IN-20260825">
 <meta name="gscg-manual" content="V315-MANUAL-UNIVERSAL-WEB-BARGE-IN-20260825">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
@@ -895,7 +895,7 @@ let sessionConnectPromise=null,voiceActivationPromise=null,voiceActivationContex
 let appHiddenAt=0,appWasBackgrounded=false,lastRealtimeActivityAt=Date.now(),resumeCheckPromise=null;
 let realtimeShape="unknown";
 let setupSpeechAllowed=false,sessionHasSpoken=false;
-let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false,pendingVoiceAssistantAction=null,conversationIdleCloseTimer=null,conversationBargeInArmedAt=0;
+let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false,pendingVoiceAssistantAction=null,conversationIdleCloseTimer=null,conversationBargeInArmedAt=0,conversationOutputTranscript="",conversationBargeInItemId="",conversationBargeInText="",conversationEchoGuardUntil=0,conversationClearResponseId=null;
 let voiceOpening=false;
 const processedTranscriptItems=new Set();
 const WEATHER_REFRESH_MS=10*60*1000;
@@ -1602,6 +1602,7 @@ function interruptConversationSpeech(){
   clearConversationIdleCloseTimer();
   conversationToolTransition=null;
   const responseId=activeResponseId||speechPlaybackResponseId;
+  conversationClearResponseId=responseId||"pending";
   if(audioEl){audioEl.muted=true;audioEl.volume=0}
   ignoreCancelErrorUntil=Date.now()+1800;
   if(activeResponseId)cancelResponseSafe(activeResponseId);
@@ -1611,6 +1612,28 @@ function interruptConversationSpeech(){
   if(micTrack)micTrack.enabled=true;
   const target=conversationStatusTarget();if(target){target.classList?.add?.("listening");target.textContent=voiceContext==="setup"?"● ESCUCHANDO · HABLA CUANDO QUIERAS…":"● ESCUCHANDO…"}
   return true;
+}
+function resetConversationBargeInCandidate(){conversationBargeInItemId="";conversationBargeInText=""}
+function explicitConversationInterruption(value){return /^(?:espera|alto|detente|corta|callate|no no|otra cosa|cambio de pregunta)\b/.test(normalizeSpeech(value))}
+function conversationInputLooksLikeEcho(value){
+  const heard=normalizeSpeech(value),spoken=normalizeSpeech(conversationOutputTranscript);
+  if(!heard)return true;
+  if(explicitConversationInterruption(heard))return false;
+  // Si el navegador todavía no entregó la transcripción de salida, prioriza no
+  // cortar la respuesta. Al terminar la frase del jugador habrá otro turno.
+  if(!spoken)return true;
+  if(heard.length>=5&&spoken.includes(heard))return true;
+  const words=[...new Set(heard.split(" ").filter(word=>word.length>=3))];
+  if(words.length<2)return spoken.includes(heard);
+  const overlap=words.filter(word=>spoken.includes(` ${word} `)||spoken.startsWith(`${word} `)||spoken.endsWith(` ${word}`)).length;
+  return overlap>=2&&overlap/words.length>=.75;
+}
+function rememberConversationBargeIn(itemId,text,{replace=false}={}){
+  const id=String(itemId||"").trim();
+  if(id&&conversationBargeInItemId&&id!==conversationBargeInItemId){conversationBargeInItemId=id;conversationBargeInText=""}
+  else if(id&&!conversationBargeInItemId)conversationBargeInItemId=id;
+  conversationBargeInText=replace?String(text||""):`${conversationBargeInText}${String(text||"")}`;
+  return conversationBargeInText;
 }
 function cumulativeAllPlayersSpeech(){
   if(!round.configured||!round.players.length)return{ok:false,speech:"Error"};
@@ -2021,6 +2044,7 @@ async function continueConversationAfterTool(call){
   sendEvent({type:"conversation.item.create",item:{type:"function_call_output",call_id:call.call_id,output}});
   if(conversationToolTransition?.callId===call.call_id)conversationToolTransition.followupRequested=true;
   phase="speaking";
+  conversationOutputTranscript="";resetConversationBargeInCandidate();
   if(audioEl){audioEl.volume=1;audioEl.muted=false}
   sendEvent({type:"response.create",response:responseForConversation(authorizedSpeech.token,{completedTool:call.name})});
 }
@@ -2036,8 +2060,9 @@ function speakConversation(transcript){
   phase="speaking";
   // El micrófono permanece disponible para que el jugador pueda interrumpir
   // naturalmente la respuesta. WebRTC conserva cancelación de eco; el cliente
-  // cancela la voz sólo cuando el VAD detecta una nueva intervención humana.
+  // cancela la voz sólo después de confirmar que no es el eco del propio Caddie.
   conversationBargeInArmedAt=Date.now()+250;
+  conversationOutputTranscript="";conversationEchoGuardUntil=0;resetConversationBargeInCandidate();
   if(micTrack)micTrack.enabled=listening;
   if(audioEl){audioEl.volume=1;audioEl.muted=false}
   const statusTarget=conversationStatusTarget();if(statusTarget)statusTarget.textContent="CADDIE RESPONDIENDO…";
@@ -3303,6 +3328,7 @@ function teardownRealtime(){
   sessionConnectPromise=null;
   activeResponseId=null;speechPlaybackResponseId=null;stopMonitorActive=false;ignoreCancelErrorUntil=0;
   pendingVoiceSpeedRestore=false;conversationToolTransition=null;clearSpeechAuthorization();sessionHasSpoken=false;
+  conversationOutputTranscript="";conversationEchoGuardUntil=0;conversationClearResponseId=null;resetConversationBargeInCandidate();
   if(pendingSessionUpdate){try{pendingSessionUpdate.reject(new Error("Realtime reiniciado"))}catch{}}
   pendingSessionUpdate=null;listening=false;phase="idle";
   $("headerMicWrap").classList.remove("active","connecting");
@@ -3460,10 +3486,17 @@ function handleRealtime(message){
       if(voiceContext==="setup")$("setupStatus").textContent="ERROR DE MICRÓFONO · INTENTA DE NUEVO";else $("status").textContent="ERROR";
       return;
     }
-    if(e.type==="input_audio_buffer.speech_started"&&listening&&authorizedSpeech?.reason==="conversation"&&Date.now()>=conversationBargeInArmedAt){
-      interruptConversationSpeech();
+    if((e.type==="response.output_audio_transcript.delta"||e.type==="response.audio_transcript.delta")&&authorizedSpeech?.reason==="conversation"){
+      conversationOutputTranscript+=String(e.delta||"");
     }
-    if(e.type==="input_audio_buffer.speech_started"&&voiceContext==="setup"&&listening&&!setupLocked){
+    if((e.type==="response.output_audio_transcript.done"||e.type==="response.audio_transcript.done")&&authorizedSpeech?.reason==="conversation"&&e.transcript){
+      conversationOutputTranscript=String(e.transcript);
+    }
+    if(e.type==="input_audio_buffer.speech_started"&&listening&&authorizedSpeech?.reason==="conversation"&&Date.now()>=conversationBargeInArmedAt){
+      // Primero confirma que es el jugador y no el eco del propio Caddie.
+      conversationBargeInItemId=String(e.item_id||"");conversationBargeInText="";
+    }
+    if(e.type==="input_audio_buffer.speech_started"&&voiceContext==="setup"&&listening&&!setupLocked&&authorizedSpeech?.reason!=="conversation"){
       clearConversationIdleCloseTimer();
       setupSpeechActive=true;
       const id=rememberSetupItem(e.item_id);if(id&&!setupSegmentText.has(id))setupPendingItems.add(id);
@@ -3471,7 +3504,7 @@ function handleRealtime(message){
       $("setupStatus").classList.add("listening");
       $("setupStatus").textContent="● ESCUCHANDO · HABLA CUANDO QUIERAS…";
     }
-    if(e.type==="input_audio_buffer.speech_started"&&voiceContext==="round"&&listening){
+    if(e.type==="input_audio_buffer.speech_started"&&voiceContext==="round"&&listening&&authorizedSpeech?.reason!=="conversation"){
       clearConversationIdleCloseTimer();
       noteRoundOperationalActivity();
       if(roundFinalizeTimer){clearTimeout(roundFinalizeTimer);roundFinalizeTimer=null}
@@ -3509,10 +3542,31 @@ function handleRealtime(message){
       if(isStopCommand(e.transcript||""))stopAuthorizedSpeech();
       return;
     }
+    if(e.type==="conversation.item.input_audio_transcription.delta"&&listening&&authorizedSpeech?.reason==="conversation"){
+      const heard=rememberConversationBargeIn(e.item_id||e.event_id||"conversation_barge_in",e.delta||"");
+      if(Date.now()>=conversationBargeInArmedAt&&normalizeSpeech(heard).length>=8&&conversationOutputTranscript&& !conversationInputLooksLikeEcho(heard)){
+        const id=conversationBargeInItemId;
+        interruptConversationSpeech();
+        if(voiceContext==="round")rememberRoundSpeechStarted(id);
+        else{setupSpeechActive=true;const setupId=rememberSetupItem(id);if(setupId&&!setupSegmentText.has(setupId))setupPendingItems.add(setupId)}
+        resetConversationBargeInCandidate();
+      }
+    }
     if(e.type==="conversation.item.input_audio_transcription.delta"&&voiceContext==="round"&&!stopMonitorActive){
       noteRoundOperationalActivity();
       appendLiveRoundDelta(e.item_id||e.event_id||"round_live_fallback",e.delta||"");
       return;
+    }
+    if(e.type==="conversation.item.input_audio_transcription.completed"&&listening&&(authorizedSpeech?.reason==="conversation"||(Date.now()<conversationEchoGuardUntil&&String(e.item_id||"")===conversationBargeInItemId))){
+      const key=e.item_id||e.event_id||String(Date.now()),heard=rememberConversationBargeIn(key,e.transcript||"",{replace:true});
+      if(conversationInputLooksLikeEcho(heard)){
+        processedTranscriptItems.add(key);
+        if(voiceContext==="setup")consumeSetupConversationItem(key);else consumeLiveRoundItem(key);
+        resetConversationBargeInCandidate();
+        return;
+      }
+      if(authorizedSpeech?.reason==="conversation")interruptConversationSpeech();
+      resetConversationBargeInCandidate();
     }
     if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="setup"){
       const key=e.item_id||e.event_id||String(Date.now());if(processedTranscriptItems.has(key))return;processedTranscriptItems.add(key);
@@ -3599,6 +3653,7 @@ function handleRealtime(message){
       }
       if(speechPlaybackResponseId&&e.response_id&&e.response_id!==speechPlaybackResponseId)return;
       const finishedReason=authorizedSpeech?.reason||null;
+      if(finishedReason==="conversation"&&conversationBargeInItemId)conversationEchoGuardUntil=Date.now()+1800;
       if(audioEl){audioEl.muted=true;audioEl.volume=0;}
       if(micTrack&&!listening)micTrack.enabled=false;
       stopMonitorActive=false;
@@ -3618,6 +3673,10 @@ function handleRealtime(message){
       return;
     }
     if(e.type==="output_audio_buffer.cleared"){
+      if(conversationClearResponseId&&(!e.response_id||e.response_id===conversationClearResponseId)){
+        conversationClearResponseId=null;
+        if(authorizedSpeech?.reason==="conversation"){if(audioEl){audioEl.muted=false;audioEl.volume=1}return}
+      }
       conversationToolTransition=null;
       if(audioEl){audioEl.muted=true;audioEl.volume=0;}
       if(micTrack&&!listening)micTrack.enabled=false;

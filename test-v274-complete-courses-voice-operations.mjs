@@ -4,7 +4,7 @@ import stableford from "./stableford.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V315-UNIVERSAL-WEB-BARGE-IN-20260825"/);
+assert.match(html,/gscg-build" content="V316-ECHO-SAFE-BARGE-IN-20260825"/);
 assert.match(html,/V275-LIVE-TURN-ANCHOR-SPEECH-LOCK-20260823/);
 assert.match(html,/appVersion:"V307"/);
 
@@ -62,7 +62,7 @@ assert.equal(preserved.preserved,true);
 
 assert.match(html,/function noteRoundOperationalActivity\(\)\{roundOperationalActivityAt=Date\.now\(\);cancelOperationalMissingTimer\(\)/);
 assert.match(html,/ROUND_MISSING_IDLE_MS-\(Date\.now\(\)-roundOperationalActivityAt\)/);
-assert.match(html,/speech_started"&&voiceContext==="round"&&listening\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
+assert.match(html,/speech_started"&&voiceContext==="round"&&listening[^)]*\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
 assert.match(html,/input_audio_transcription\.delta"&&voiceContext==="round"&&!stopMonitorActive\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
 assert.match(html,/input_audio_transcription\.completed"&&voiceContext==="round"\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
 assert.match(html,/Todo lo que no sea una operación reconocida de la tarjeta pasa al Caddie/);

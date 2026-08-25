@@ -55,7 +55,10 @@ assert.ok(
   "Una conversación inequívoca debe protegerse antes del escritor de scores"
 );
 assert.match(html, /if\(!speakConversation\(transcript\)\)/, "Toda frase operacionalmente desconocida debe llegar al Caddie");
-assert.match(html,/input_audio_buffer\.speech_started"&&listening&&authorizedSpeech\?\.reason==="conversation"[\s\S]*?interruptConversationSpeech\(\)/,"La voz del jugador debe cortar inmediatamente al Caddie");
+assert.match(html,/response\.output_audio_transcript\.delta[\s\S]*?conversationOutputTranscript\+=/,"Debe conservar la transcripción hablada para distinguir voz humana de eco");
+assert.match(html,/input_audio_buffer\.speech_started"&&listening&&authorizedSpeech\?\.reason==="conversation"[\s\S]*?conversationBargeInItemId=/,"La interrupción debe iniciar como candidata sin cortar por el primer ruido");
+assert.match(html,/conversation\.item\.input_audio_transcription\.delta"&&listening&&authorizedSpeech\?\.reason==="conversation"[\s\S]*?!conversationInputLooksLikeEcho\(heard\)[\s\S]*?interruptConversationSpeech\(\)/,"La voz humana confirmada debe interrumpir al Caddie");
+assert.match(html,/conversation\.item\.input_audio_transcription\.completed"&&listening[\s\S]*?conversationInputLooksLikeEcho\(heard\)[\s\S]*?consumeLiveRoundItem/ ,"El eco del altavoz debe descartarse sin cortar la respuesta");
 const conversationStart=html.slice(html.indexOf("function speakConversation(transcript)"),html.indexOf("async function setSessionVoiceSpeed"));
 assert.match(conversationStart,/conversationBargeInArmedAt=Date\.now\(\)\+250/,"La interrupción debe ignorar sólo el arranque inmediato del altavoz");
 assert.match(conversationStart,/if\(micTrack\)micTrack\.enabled=listening/,"El micrófono debe permanecer disponible mientras habla el Caddie");
@@ -118,7 +121,7 @@ assert.match(sessionApi, /Caddie conversacional de propósito general/, "La sesi
 assert.match(sessionApi, /Transcribe literalmente español natural de cualquier tema/, "La transcripción no debe limitarse al vocabulario de score");
 assert.match(weatherApi, /api\.open-meteo\.com\/v1\/forecast/, "Falta proveedor meteorológico vivo");
 assert.match(weatherApi, /geocoding-api\.open-meteo\.com\/v1\/search/, "Falta resolución de campos o ubicaciones");
-assert.match(serviceWorker, /gscg-mobile-v315-universal-web-barge-in/, "La PWA debe reemplazar el shell anterior");
+assert.match(serviceWorker, /gscg-mobile-v316-echo-safe-barge-in/, "La PWA debe reemplazar el shell anterior");
 assert.match(weatherApi, /forecast_days\", \"16\"/, "El pronóstico natural debe admitir el máximo confiable de 16 días");
 assert.match(researchApi,/https:\/\/api\.openai\.com\/v1\/responses/,"La investigación universal debe usar Responses API");
 assert.match(researchApi,/type: \"web_search\"/,"La investigación debe consultar la web viva");
@@ -190,4 +193,4 @@ const research = summarizeResearchResponse({output:[
 ]});
 assert.deepEqual(research,{ok:true,source:"OpenAI Web Search",answer:"Respuesta verificada.",sources:[{title:"Fuente oficial",url:"https://example.org/a"},{title:"Segunda fuente",url:"https://example.com/b"}]});
 
-console.log("PASS V315 · asistente universal, web viva, interrupción, respuesta rápida y clima futuro");
+console.log("PASS V316 · asistente universal, web viva, interrupción, respuesta rápida y clima futuro");

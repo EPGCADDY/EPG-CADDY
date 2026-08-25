@@ -835,3 +835,7 @@ La herramienta meteorológica acepta fechas y rangos naturales, incluidos “ma�
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella la huella reproducible V315. |
 | `ROADMAP_A_DETALLE.md` | Conserva el detalle técnico V315. |
 | `ROADMAP_OVERALL.md` | Conserva este resumen V315. |
+
+## Corrección V316 · respuesta completa sin cortarse por su propio eco
+
+El micrófono ya no corta al Caddie sólo porque detectó sonido mientras hablaba. Primero compara la transcripción captada con la respuesta del propio Caddie: si es eco, la descarta; si es la voz real del jugador, permite la interrupción y recibe el siguiente mensaje. `index-grupal.html` contiene la protección, `service-worker.js` obliga al iPhone a recibirla, `test-v312-general-caddie.mjs` la verifica y los demás candados de interfaz conservan la firma vigente. `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` registran el cambio.

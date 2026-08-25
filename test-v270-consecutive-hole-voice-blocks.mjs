@@ -97,7 +97,7 @@ assert.match(html,/INGRESO OFICIAL · HOYO \$\{selectedHole\} · NOMBRE \+ SCORE
 assert.match(html,/const ROUND_MISSING_IDLE_MS=2000/);
 assert.match(html,/setTimeout\(\(\)=>\{[\s\S]*?confirmedActivityAt=roundOperationalActivityAt[\s\S]*?roundOperationalActivityAt!==confirmedActivityAt[\s\S]*?speakAuthorized\("missing_score",text\)[\s\S]*?ROUND_MISSING_CONFIRM_MS[\s\S]*?ROUND_MISSING_IDLE_MS/);
 assert.match(html,/function operationalCaptureQuiet\([\s\S]*?!speechActive[\s\S]*?!pendingItems[\s\S]*?!liveItems[\s\S]*?currentPhase!=="speaking"/);
-assert.match(html,/input_audio_buffer\.speech_started"&&voiceContext==="round"&&listening\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
+assert.match(html,/input_audio_buffer\.speech_started"&&voiceContext==="round"&&listening[^)]*\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
 assert.match(html,/conversation\.item\.input_audio_transcription\.delta"&&voiceContext==="round"&&!stopMonitorActive\)\{[\s\S]*?noteRoundOperationalActivity\(\)/);
 assert.match(html,/const text=`Falta \$\{playerVoiceAlias\(player\)\}`/);
 assert.match(html,/ALLOWED_SPEECH_REASONS=new Set\(\["closure","query","query_accumulated","missing_score","conversation"\]\)/);
