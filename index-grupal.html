@@ -11,7 +11,7 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/official-logos/golf-score-card-gt-apple-touch-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V319-UNIVERSAL-INTENT-ROUTING-20260825">
+<meta name="gscg-build" content="V320-UNBOUNDED-UNIVERSAL-DOMAINS-20260825">
 <meta name="gscg-manual" content="V315-MANUAL-UNIVERSAL-WEB-BARGE-IN-20260825">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
@@ -1955,7 +1955,8 @@ function conversationInstructions(completedTool=""){
   return[
     "Eres Caddie, el asistente conversacional de voz de Golf Score Card GT.",
     "Conserva tu especialidad profesional en golf, reglas, estrategia y uso de esta tarjeta, pero conversa naturalmente en español sobre cualquier tema que el usuario elija, sin pedir una palabra clave ni anunciar cambios de modo.",
-    "Tu conversación y entendimiento son universales: comprende vocabulario y frases completas sobre medicina y salud, vuelos y viajes, cultura, historia, ciencia, tecnología, noticias, deportes, cocina, familia, emociones, relaciones y cualquier otro tema permitido.",
+    "Tu conversación y entendimiento son universales. No existe catálogo, lista cerrada ni whitelist de materias: los ejemplos mencionados por el usuario nunca limitan el alcance. Atiende cualquier tema permitido.",
+    "Puedes explicar, enseñar, traducir, redactar, corregir, resumir, calcular, comparar, analizar, planificar, programar, generar ideas y orientar decisiones en cualquier área permitida. Si una tarea necesita una imagen, video, archivo, cuenta externa o acción física que esta conversación de voz no puede ejecutar, ayuda con el contenido o los pasos y explica con precisión esa limitación concreta.",
     "Nunca dependas de una lista de palabras clave para comprender al usuario. Interpreta el sentido completo de lo que dijo y responde aunque haya contado una situación sin formular una pregunta perfecta.",
     "Haz preguntas breves cuando falte un dato necesario y conserva el hilo de los turnos anteriores mientras el micrófono permanezca abierto.",
     `La ronda activa corresponde a ${course}.`,
@@ -1964,7 +1965,7 @@ function conversationInstructions(completedTool=""){
     `Hoy en Guatemala es ${guatemalaDateIso()}. Para clima actual o futuro usa get_current_weather. Convierte expresiones como mañana, próximo miércoles o próximo fin de semana en start_date y end_date con formato AAAA-MM-DD. Si dice por la mañana, por la tarde, al atardecer o por la noche, envía también time_period. El proveedor entrega como máximo 16 días; fuera de ese alcance explícalo y no inventes. Sin un lugar escrito por el usuario, la aplicación intenta primero el GPS del teléfono y sólo usa el campo seleccionado como respaldo.`,
     "Cuando necesites una herramienta, no pronuncies un preámbulo: consulta primero y entrega después una sola respuesta completa.",
     "Para clima, responde en dos oraciones sencillas: condición, temperatura, sensación, lluvia y viento. Si pregunta a qué hora lloverá, usa rainTiming, indica el intervalo y la hora de mayor probabilidad; no lo remitas a otra aplicación si esos datos vienen en la herramienta. No cortes palabras ni dejes una frase incompleta.",
-    "En salud ofrece únicamente orientación general. No diagnostiques ni prescribas. Antes de sugerir un medicamento pregunta por edad, alergias, enfermedades, otros medicamentos y gravedad; ante síntomas de alarma recomienda atención médica urgente.",
+    "En salud ofrece únicamente orientación general. No diagnostiques ni prescribas. Antes de sugerir un medicamento pregunta por edad, alergias, enfermedades, otros medicamentos y gravedad; ante síntomas de alarma recomienda atención médica urgente. En temas legales, financieros, fiscales, psicológicos, privacidad o seguridad explica límites, incertidumbre y riesgo sin fingir certeza profesional.",
     "Para medicina, vuelos, tráfico, noticias, política, precios, horarios u otra información que cambie o requiera verificación, usa search_live_web. Para el clima usa exclusivamente get_current_weather.",
     "La búsqueda web puede tardar un poco más que una respuesta de conocimiento general. Después de recibirla, responde con la información encontrada y no inventes lo que no aparezca.",
     completedTool==="get_current_weather"?"Ya recibiste el resultado meteorológico solicitado. Explícalo con palabras naturales, menciona que es un pronóstico de Open-Meteo y no vuelvas a llamar herramientas.":completedTool==="search_live_web"?"Ya recibiste una investigación web actual. Sintetiza su respuesta con palabras naturales, menciona brevemente las fuentes por nombre si ayuda y no vuelvas a llamar herramientas.":"Usa herramientas solamente cuando aporten información actual o verificación; para conversación, consejo y conocimiento estable responde directamente."
@@ -1979,7 +1980,7 @@ function realtimeWeatherTool(){return{
 function realtimeWebResearchTool(){return{
   type:"function",
   name:"search_live_web",
-  description:"Investiga en la web información vigente o que requiera verificación: salud, vuelos, tráfico, noticias, política, precios, horarios, cultura, ciencia y cualquier tema factual actual.",
+  description:"Investiga en la web cualquier tema permitido que sea vigente, factual, incierto o requiera verificación. No usa un catálogo cerrado de materias.",
   parameters:{type:"object",properties:{query:{type:"string",description:"Pregunta completa y específica que debe investigarse en la web."}},required:["query"],additionalProperties:false}
 }}
 function responseForConversation(token,{completedTool=""}={}){
@@ -2600,9 +2601,12 @@ function isLocalRoundQueryIntent(transcript){
   const text=normalizeSpeech(transcript);if(!text)return false;
   // Frases cortas que, dentro de una tarjeta abierta, significan el marcador.
   if(/^(?:acumulado|acumulados|score acumulado|subtotal|sub total|score actual|total actual|resultado|resultados|resultado actual|resultados actuales|total|totales|marcador|marcador actual|parcial|parciales|como voy|como vamos|como va|como estamos|quien va ganando|quien gana|estado actual)$/.test(text))return true;
-  // Consultas históricas explícitas. Mencionar Match Play o una ronda dentro de
-  // una plática normal jamás debe abrir Estadísticas ni responder con scores.
-  if(/\b(historial|historico|historica|estadistica|estadisticas|promedio|tendencia|consistencia|record|records|rondas anteriores|tarjetas anteriores)\b/.test(text))return true;
+  // Consultas históricas explícitas, sólo cuando también nombran la tarjeta,
+  // la ronda o resultados propios. "Háblame de Estadística" es una materia
+  // universal, no una orden para abrir estadísticas de golf.
+  const historicalCue=/\b(historial|historico|historica|estadistica|estadisticas|promedio|tendencia|consistencia|record|records|rondas anteriores|tarjetas anteriores)\b/.test(text);
+  const historicalRoundContext=/\b(mi|mis|mio|mios|ronda|rondas|tarjeta|tarjetas|jugador|jugadores|score|scores|gross|neto|hoyo|hoyos|birdie|birdies|bogey|bogeys|golf)\b/.test(text);
+  if(historicalCue&&historicalRoundContext)return true;
   if(/\b(ronda|rondas)\b/.test(text)&&/\b(hoy|ayer|semana|mes|meses|ano|ultima|ultimas|anteriores)\b/.test(text)&&/\b(score|gross|neto|resultado|promedio|mejor|peor|compar)\w*\b/.test(text))return true;
   // Preguntas inequívocas de la tarjeta actual.
   const scorecardNoun=/\b(score|scores|gross|neto|netos|hoyo|hoyos|birdie|birdies|bogey|bogeys|eagle|aguila|par|pares|handicap|marcador|acumulado|acumulados|pendiente|pendientes|omitido|omitidos|tiro|tiros|primera vuelta|segunda vuelta)\b/.test(text);

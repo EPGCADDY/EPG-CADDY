@@ -152,7 +152,7 @@ assert.match(sessionApi, /Caddie conversacional de propósito general/, "La sesi
 assert.match(sessionApi, /Transcribe literalmente español natural de cualquier tema/, "La transcripción no debe limitarse al vocabulario de score");
 assert.match(weatherApi, /api\.open-meteo\.com\/v1\/forecast/, "Falta proveedor meteorológico vivo");
 assert.match(weatherApi, /geocoding-api\.open-meteo\.com\/v1\/search/, "Falta resolución de campos o ubicaciones");
-assert.match(serviceWorker, /gscg-mobile-v319-universal-intent-routing/, "La PWA debe reemplazar el shell anterior");
+assert.match(serviceWorker, /gscg-mobile-v320-unbounded-universal-domains/, "La PWA debe reemplazar el shell anterior");
 assert.match(weatherApi, /forecast_days\", \"16\"/, "El pronóstico natural debe admitir el máximo confiable de 16 días");
 assert.match(weatherApi,/const FORECAST_PERIODS/,"El pronóstico debe resumir la franja horaria pedida");
 assert.match(researchApi,/https:\/\/api\.openai\.com\/v1\/responses/,"La investigación universal debe usar Responses API");
@@ -245,4 +245,4 @@ assert.deepEqual(research,{ok:true,source:"OpenAI Web Search",answer:"Respuesta 
 const cleanResearch=summarizeResearchResponse({output:[{type:"message",content:[{type:"output_text",text:"Respuesta completa. ([Fuente](https://example.org/a))",annotations:[{type:"url_citation",title:"Fuente",url:"https://example.org/a"}]}]}]});
 assert.equal(cleanResearch.answer,"Respuesta completa.","La voz no debe recibir URLs ni citas Markdown");
 
-console.log("PASS V319 · intención universal protegida y consultas de tarjeta conservadas");
+console.log("PASS V320 · intención universal protegida, consultas de tarjeta conservadas y dominio abierto");

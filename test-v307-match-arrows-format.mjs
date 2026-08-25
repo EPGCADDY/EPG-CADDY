@@ -6,10 +6,10 @@ const artifacts=fs.readFileSync(new URL("./card-artifacts.js",import.meta.url),"
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 const release=JSON.parse(fs.readFileSync(new URL("./mobile-release.json",import.meta.url),"utf8"));
 
-assert.match(html,/gscg-build" content="V319-UNIVERSAL-INTENT-ROUTING-20260825"/);
+assert.match(html,/gscg-build" content="V320-UNBOUNDED-UNIVERSAL-DOMAINS-20260825"/);
 assert.match(html,/gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825"/);
 assert.equal(release.buildNumber,307);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v319-universal-intent-routing"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v320-unbounded-universal-domains"/);
 
 assert.match(html,/function matchArrowSvg\(state\)/);
 assert.match(html,/M12 22V5M5 12l7-7 7 7/);
