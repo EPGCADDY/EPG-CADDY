@@ -37,3 +37,6 @@ jobs:
 
       - name: Block Match Play net, indicator and closure regressions
         run: node test-v306-match-play.mjs
+
+      - name: Block thin Match Play arrows and verbose format labels
+        run: node test-v307-match-arrows-format.mjs

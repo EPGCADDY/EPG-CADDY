@@ -447,6 +447,43 @@ El **24 de agosto de 2026** se incorpora Match Play como extensión aislada de l
 | `ROADMAP_A_DETALLE.md` | Registra esta actualización a detalle. |
 | `ROADMAP_OVERALL.md` | Registra esta actualización en el resumen general. |
 
+## Registro obligatorio de la actualización operativa V307
+
+Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direccional de Match Play en iPhone; mostrar únicamente `MATCH PLAY`; escribir OUT, IN y total como UP/DOWN/AS; y cerrar automáticamente cuando el rival ya no pueda empatar ni ganar.
+
+| Archivo nuevo o modificado | Código V307 | Función registrada |
+|---|---|---|
+| `match-play.js` | Cálculo V307 | Posición UP/DOWN/AS por OUT, IN y total para ambos jugadores. |
+| `index-grupal.html` | Interfaz V307 | Flechas SVG 30 × 36, trazo 4.5; MODALIDAD = MATCH PLAY; resultados escritos por hoyos; anuncio FIN DEL MATCH; bloqueo de hoyos posteriores; snapshots V307. |
+| `card-artifacts.js` | Artefactos V307 | Flechas SVG hermanas en tarjeta global y personales. |
+| `mobile-release.json` | Paquete 307 | Entrega móvil vigente. |
+| `service-worker.js` | Caché V307 | Actualización inmediata en iPhone. |
+| `test-v307-match-arrows-format.mjs` | Candado V307 | Bloquea flechas débiles, direcciones ambiguas, totales Neto indebidos y ausencia de cierre. |
+| `test-v306-match-play.mjs` | Regresión V306/V307 | Verifica Neto por hoyo, UP/DOWN por vuelta, 3 & 2, anuncio y bloqueo posterior. |
+| `test-round-information.mjs` | Regresión de títulos | Exige `RESULTADO MATCH PLAY` sin alterar General ni Stableford. |
+| `test-v261-registration-stableford-modality.mjs` | Compatibilidad | Conserva Stableford y reconoce el título propio Match Play. |
+| `test-stableford-ui.mjs` | Compatibilidad | Build V307. |
+| `test-v272-definitive-operational-release.mjs` | Compatibilidad | Build y snapshot V307. |
+| `test-v274-complete-courses-voice-operations.mjs` | Compatibilidad | Build V307. |
+| `test-v275-stable-live-voice-turns.mjs` | Compatibilidad | Build V307. |
+| `test-v276-manual-hole-navigation.mjs` | Compatibilidad | Build V307. |
+| `test-v277-official-round-corrections.mjs` | Compatibilidad | Correcciones V307. |
+| `test-v278-card-image-pdf-export.mjs` | Compatibilidad | Artefactos V307. |
+| `test-v279-local-card-library.mjs` | Compatibilidad | Historial V307. |
+| `test-v280-local-history-insights.mjs` | Compatibilidad | Estadísticas V307. |
+| `test-v281-pwa-installation.mjs` | Compatibilidad | Caché V307. |
+| `test-v284-native-package-generation.mjs` | Compatibilidad | Paquete 307. |
+| `test-v290-brand-icons-cleanup.mjs` | Compatibilidad | Controles acumulados V307. |
+| `test-v304-homogeneous-registration-actions.mjs` | Compatibilidad | Hermandad y paquete V307. |
+| `test-v305-history-navigation-zero-error.mjs` | Compatibilidad | Navegación y caché V307. |
+| `audit-project.mjs` | Auditoría | Incluye V307. |
+| `.github/workflows/roadmap-gate.yml` | CI | Ejecuta V307. |
+| `vercel.json` | Publicación | Exige V307. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.61 | Documenta V307. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Inventario | Incorpora esta sección. |
+| `ROADMAP_A_DETALLE.md` | ROADMAP detallado | Registra todos los archivos. |
+| `ROADMAP_OVERALL.md` | ROADMAP general | Registra todos los archivos. |
+
 ## Cómo usar este inventario
 
 

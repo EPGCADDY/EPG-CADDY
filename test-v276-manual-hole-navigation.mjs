@@ -3,9 +3,9 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V306-MATCH-PLAY-NET-HDCP-20260824"/);
+assert.match(html,/gscg-build" content="V307-MATCH-PLAY-THICK-ARROWS-FORMAT-20260825"/);
 assert.match(html,/V276-PREVIOUS-DIRECT-NEXT-20260823/);
-assert.match(html,/appVersion:"V306"/);
+assert.match(html,/appVersion:"V307"/);
 
 const start=html.indexOf("function roundManualHoleNavigation");
 const end=html.indexOf("\nfunction roundGridStatus",start);

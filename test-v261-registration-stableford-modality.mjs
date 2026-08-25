@@ -38,6 +38,6 @@ assert.doesNotMatch(html,/id="openShareProject"|id="shareProjectPanel"/);
 // Nombres autorizados dentro de Stableford dentro del control operacional común.
 assert.match(html,/id="roundManualTitle"[^>]*>CONTROL MANUAL · \$\{stable\?"STABLEFORD":"GENERAL"\}<\/div>/);
 assert.match(html,/\$\("summaryTitle"\)\.textContent="PUNTOS"/);
-assert.match(html,/\$\("finalSummaryTitle"\)\.textContent=isStablefordRound\(\)\?"PUNTOS":"INFORMACIÓN DE RONDA"/);
+assert.match(html,/\$\("finalSummaryTitle"\)\.textContent=isStablefordRound\(\)\?"PUNTOS":isMatchPlayRound\(\)\?"RESULTADO MATCH PLAY":"INFORMACIÓN DE RONDA"/);
 
 console.log("PASS V262 · campo separado, modalidad Stableford neutral y registro Dictado/Manual Opcional depurado");

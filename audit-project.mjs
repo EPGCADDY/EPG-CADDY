@@ -21,6 +21,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v304-homogeneous-r
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v305-history-navigation-zero-error.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v305-registration-guides-parser-truth.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v306-match-play.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v307-match-arrows-format.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

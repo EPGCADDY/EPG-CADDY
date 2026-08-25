@@ -54,5 +54,22 @@
     return holeResult(players,hole).statuses?.[playerIndex]||"pending";
   }
 
-  return Object.freeze({MAX_HOLES,validatePlayers,netScore,holeResult,status,playerHoleStatus});
+  function segmentStanding(players,playerIndex,holes){
+    const index=Number(playerIndex),selected=Array.isArray(holes)?holes.map(Number).filter(hole=>Number.isInteger(hole)&&hole>=1&&hole<=MAX_HOLES):[];
+    if(!validatePlayers(players)||![0,1].includes(index)||!selected.length)return{valid:false,played:0,won:0,tied:0,lost:0,margin:0,position:"",label:"",state:"pending"};
+    let won=0,tied=0,lost=0,played=0;
+    for(const hole of selected){
+      const result=holeResult(players,hole);
+      if(!result.recorded)break;
+      played++;
+      const state=result.statuses[index];
+      if(state==="won")won++;
+      else if(state==="lost")lost++;
+      else tied++;
+    }
+    const margin=won-lost,state=!played?"pending":margin>0?"up":margin<0?"down":"as",position=!played?"":margin===0?"AS":`${Math.abs(margin)} ${margin>0?"UP":"DOWN"}`;
+    return{valid:true,played,won,tied,lost,margin,position,label:played?`${playerName(players[index],index)} · ${position}`:"",state};
+  }
+
+  return Object.freeze({MAX_HOLES,validatePlayers,netScore,holeResult,status,playerHoleStatus,segmentStanding});
 });

@@ -359,3 +359,40 @@ El **24 de agosto de 2026** se incorpora Match Play como extensión aislada de l
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra el inventario V306 completo. |
 | `ROADMAP_A_DETALLE.md` | Registra esta actualización a detalle. |
 | `ROADMAP_OVERALL.md` | Registra esta actualización en el resumen general. |
+
+## Actualización operativa V307 · Flechas Match Play legibles y formato limpio
+
+El **25 de agosto de 2026** se reemplazan los caracteres tipográficos delgados de Match Play por flechas SVG de **30 × 36 px**, trazo **4.5**, extremos redondeados, tallo largo y punta amplia. La flecha verde ascendente identifica al ganador; la roja descendente identifica al perdedor; el empate conserva el score normal sin símbolo. En el control de captura, el campo **MODALIDAD** muestra exclusivamente **MATCH PLAY**. La fórmula Gross, HDCP, Neto y asignación de tiros permanecen congeladas. Los resultados escritos de OUT, IN y TOTAL dejan de sumar Neto: muestran `NOMBRE · X UP`, `NOMBRE · X DOWN` o `NOMBRE · AS`. Cuando la ventaja supera los hoyos restantes, la aplicación declara y anuncia inmediatamente `FIN DEL MATCH`, bloquea los hoyos posteriores y conserva la corrección de los ya jugados.
+
+| Archivo nuevo o modificado | Registro V307 |
+|---|---|
+| `match-play.js` | Calcula la posición escrita UP/DOWN/AS de cada jugador por OUT, IN y total. |
+| `index-grupal.html` | Instala flechas SVG gruesas, deja MODALIDAD en MATCH PLAY, sustituye totales Neto por posiciones de hoyos, anuncia el cierre anticipado y firma snapshots V307. |
+| `card-artifacts.js` | Homologa las flechas gruesas en tarjetas globales y personales exportadas. |
+| `mobile-release.json` | Prepara el paquete móvil 307. |
+| `service-worker.js` | Activa la caché `gscg-mobile-v307`. |
+| `test-v307-match-arrows-format.mjs` | Bloquea glifos delgados, tamaños menores, direcciones ambiguas, totales Neto indebidos y ausencia de cierre anticipado. |
+| `test-v306-match-play.mjs` | Mantiene el contrato funcional Match Play y verifica UP/DOWN por vuelta, bloqueo posterior y anuncio final. |
+| `test-round-information.mjs` | Conserva los títulos General/Stableford y exige `RESULTADO MATCH PLAY` en el resumen final. |
+| `test-v261-registration-stableford-modality.mjs` | Conserva el aislamiento de Stableford y reconoce el título propio del resumen Match Play. |
+| `test-stableford-ui.mjs` | Alinea la identificación del build vigente. |
+| `test-v272-definitive-operational-release.mjs` | Alinea build y snapshots con V307. |
+| `test-v274-complete-courses-voice-operations.mjs` | Alinea la identificación del build vigente. |
+| `test-v275-stable-live-voice-turns.mjs` | Alinea la identificación del build vigente. |
+| `test-v276-manual-hole-navigation.mjs` | Alinea la identificación del build vigente. |
+| `test-v277-official-round-corrections.mjs` | Alinea correcciones y snapshots con V307. |
+| `test-v278-card-image-pdf-export.mjs` | Alinea artefactos oficiales con V307. |
+| `test-v279-local-card-library.mjs` | Alinea Historial con V307. |
+| `test-v280-local-history-insights.mjs` | Alinea estadísticas del Historial con V307. |
+| `test-v281-pwa-installation.mjs` | Comprueba la caché móvil V307. |
+| `test-v284-native-package-generation.mjs` | Comprueba paquete 307 y caché V307. |
+| `test-v290-brand-icons-cleanup.mjs` | Mantiene el control acumulado bajo V307. |
+| `test-v304-homogeneous-registration-actions.mjs` | Mantiene la homologación de acciones bajo V307. |
+| `test-v305-history-navigation-zero-error.mjs` | Mantiene navegación e Historial bajo V307. |
+| `audit-project.mjs` | Incorpora el candado V307 en la auditoría maestra. |
+| `.github/workflows/roadmap-gate.yml` | Ejecuta el candado V307 en GitHub. |
+| `vercel.json` | Exige el candado V307 antes de publicar. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Documenta App V307 y la regla visual de flechas. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra el inventario V307 completo. |
+| `ROADMAP_A_DETALLE.md` | Registra V307 a detalle. |
+| `ROADMAP_OVERALL.md` | Registra V307 en este resumen general. |

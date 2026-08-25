@@ -345,3 +345,40 @@ El **24 de agosto de 2026** se incorpora Match Play como extensión aislada de l
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra el inventario V306 completo. |
 | `ROADMAP_A_DETALLE.md` | Registra esta actualización a detalle. |
 | `ROADMAP_OVERALL.md` | Registra esta actualización en el resumen general. |
+
+## Actualización operativa V307 · Flechas Match Play legibles y formato limpio
+
+Solicitud: **25 de agosto de 2026**. Alcance: conservar íntegramente la tarjeta Normal y su fórmula Neto con HDCP por hoyo, sustituir los indicadores tipográficos débiles por geometría SVG robusta, reducir MODALIDAD a `MATCH PLAY` y expresar los resultados de cada vuelta y total como hoyos UP/DOWN/AS. La ventaja matemáticamente irreversible debe cerrar y anunciar el Match en ese instante.
+
+| Archivo nuevo o modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `match-play.js` | Motor de segmentos V307 | Calcula por jugador el resultado escrito de OUT, IN y total como `NOMBRE · X UP`, `NOMBRE · X DOWN` o `NOMBRE · AS`. |
+| `index-grupal.html` | Build `V307-MATCH-PLAY-THICK-ARROWS-FORMAT-20260825` | Dibuja flechas SVG 30 × 36 px y trazo 4.5; muestra solo MATCH PLAY; sustituye los totales Neto escritos por posiciones de hoyos; declara y anuncia FIN DEL MATCH al cierre matemático, impide anotar hoyos posteriores y conserva correcciones anteriores. |
+| `card-artifacts.js` | Flechas oficiales V307 | Repite la misma geometría robusta en tarjetas globales y personales exportadas y sustituye la leyenda de glifos por texto inequívoco. |
+| `mobile-release.json` | Paquete `307` | Identifica la nueva entrega móvil. |
+| `service-worker.js` | Caché `gscg-mobile-v307` | Fuerza al iPhone a descargar la corrección. |
+| `test-v307-match-arrows-format.mjs` | Candado visual y semántico V307 | Comprueba build, paquete, caché, flechas, MATCH PLAY, OUT/IN/TOTAL UP-DOWN y FIN DEL MATCH sin totales Neto. |
+| `test-v306-match-play.mjs` | Compatibilidad funcional V306/V307 | Conserva dos jugadores, Neto por hoyo, AS/UP, 3 & 2, cierre e Historial; verifica posición por vuelta, bloqueo posterior y anuncio final. |
+| `test-round-information.mjs` | Títulos de resumen V307 | Mantiene General y Stableford y exige `RESULTADO MATCH PLAY` en la tarjeta digital final. |
+| `test-v261-registration-stableford-modality.mjs` | Compatibilidad V307 | Mantiene el aislamiento de Stableford y acepta el título independiente de Match Play. |
+| `test-stableford-ui.mjs` | Compatibilidad V307 | Alinea únicamente el build vigente. |
+| `test-v272-definitive-operational-release.mjs` | Contrato V307 | Alinea build y firma oficial. |
+| `test-v274-complete-courses-voice-operations.mjs` | Contrato V307 | Conserva campos y voz con la versión vigente. |
+| `test-v275-stable-live-voice-turns.mjs` | Contrato V307 | Conserva turnos vivos con la versión vigente. |
+| `test-v276-manual-hole-navigation.mjs` | Contrato V307 | Conserva ANTERIOR/SIGUIENTE con la versión vigente. |
+| `test-v277-official-round-corrections.mjs` | Contrato V307 | Verifica correcciones y snapshots V307. |
+| `test-v278-card-image-pdf-export.mjs` | Contrato V307 | Verifica artefactos del build vigente. |
+| `test-v279-local-card-library.mjs` | Historial V307 | Conserva la ronda e Historial bajo V307. |
+| `test-v280-local-history-insights.mjs` | Estadísticas V307 | Conserva consultas del Historial bajo V307. |
+| `test-v281-pwa-installation.mjs` | PWA V307 | Exige caché V307. |
+| `test-v284-native-package-generation.mjs` | Nativo V307 | Exige paquete 307 y caché V307. |
+| `test-v290-brand-icons-cleanup.mjs` | Acumulada V307 | Conserva marca y controles acumulados. |
+| `test-v304-homogeneous-registration-actions.mjs` | Acumulada V307 | Conserva la hermandad de acciones y reconoce paquete/caché vigentes. |
+| `test-v305-history-navigation-zero-error.mjs` | Acumulada V307 | Conserva navegación, Historial y cero superposiciones con V307. |
+| `audit-project.mjs` | Auditoría V307 | Ejecuta automáticamente el candado nuevo. |
+| `.github/workflows/roadmap-gate.yml` | GitHub V307 | Impide incorporar flechas delgadas o un formato distinto. |
+| `vercel.json` | Vercel V307 | Cancela el despliegue si falla la prueba V307. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.61 / App V307 | Documenta la corrección sin alterar las reglas de juego. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Inventario V307 | Registra cada archivo de esta intervención. |
+| `ROADMAP_A_DETALLE.md` | Registro V307 | Conserva esta matriz detallada. |
+| `ROADMAP_OVERALL.md` | Resumen V307 | Conserva el resumen general de la intervención. |
