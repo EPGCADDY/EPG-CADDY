@@ -843,3 +843,7 @@ El micrófono ya no corta al Caddie sólo porque detectó sonido mientras hablab
 ## Corrección V317 · el micrófono de Inicio reconoce la voz
 
 El registro de producción confirmó que el micrófono de las 16:27 sí abrió, pero no detectó la frase. `api/session-grupal.js` iguala Inicio con la sensibilidad funcional de la ronda: umbral 0.2, 700 ms de inicio protegido, reducción para voz a distancia y `gpt-live-transcribe` en español. La conversación universal, la activación manual y el cierre posterior de tres segundos no cambian.
+
+## Corrección V318 · prueba multitema completa
+
+La prueba viva mezcló golf, salud, viajes, cultura, arquitectura, planetas, océanos, vehículos, clima y equipo de golf. Detectó dos fallas antes de aprobar: una comparación de zapatos podía cortarse y “mañana por la mañana” devolvía el día completo. `api/research.js` limita la respuesta hablada, elimina citas largas y reserva margen para terminar; `api/weather.js` e `index-grupal.html` distinguen mañana, tarde, atardecer y noche. `test-v312-general-caddie.mjs`, `service-worker.js`, los candados de versión y el inventario sellan V318.

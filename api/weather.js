@@ -38,6 +38,13 @@ const COURSE_PLACE_FALLBACKS = Object.freeze([
   { match: /reuni[oó]n/i, place: "Alotenango, Guatemala" }
 ]);
 
+const FORECAST_PERIODS = Object.freeze({
+  morning: { label: "mañana", startHour: 6, endHour: 11 },
+  afternoon: { label: "tarde", startHour: 12, endHour: 17 },
+  evening: { label: "atardecer", startHour: 18, endHour: 21 },
+  night: { label: "noche", startHour: 22, endHour: 23 }
+});
+
 function numberInRange(value, min, max) {
   const number = Number(value);
   return Number.isFinite(number) && number >= min && number <= max ? number : null;
@@ -73,7 +80,7 @@ async function resolvePlace(location) {
   };
 }
 
-function summarizeRainTiming(payload, date, notBefore = "") {
+function summarizeRainTiming(payload, date, notBefore = "", notAfter = "") {
   const hourly = payload?.hourly || {};
   const times = Array.isArray(hourly.time) ? hourly.time.map(String) : [];
   const probabilities = Array.isArray(hourly.precipitation_probability) ? hourly.precipitation_probability : [];
@@ -83,7 +90,7 @@ function summarizeRainTiming(payload, date, notBefore = "") {
     time: time.slice(11, 16),
     probability: Number.isFinite(Number(probabilities[index])) ? Number(probabilities[index]) : null,
     precipitationMm: Number.isFinite(Number(precipitation[index])) ? Number(precipitation[index]) : null
-  })).filter(item => item.isoTime.slice(0, 10) === date && (!notBefore || item.isoTime >= notBefore) && item.probability != null);
+  })).filter(item => item.isoTime.slice(0, 10) === date && (!notBefore || item.isoTime >= notBefore) && (!notAfter || item.isoTime <= notAfter) && item.probability != null);
   if (!records.length) return null;
   const peak = records.reduce((best, item) => item.probability > best.probability ? item : best, records[0]);
   let likely = records.filter(item => item.probability >= 30 || Number(item.precipitationMm) > 0);
@@ -120,9 +127,54 @@ function summarizeRainTiming(payload, date, notBefore = "") {
   };
 }
 
+function summarizeHourlyPeriod(payload, date, periodKey) {
+  const period = FORECAST_PERIODS[periodKey];
+  if (!period) return null;
+  const hourly = payload?.hourly || {};
+  const times = Array.isArray(hourly.time) ? hourly.time.map(String) : [];
+  const rows = times.map((time, index) => ({
+    time,
+    temperatureC: Number(hourly.temperature_2m?.[index]),
+    feelsLikeC: Number(hourly.apparent_temperature?.[index]),
+    weatherCode: Number(hourly.weather_code?.[index]),
+    windKmh: Number(hourly.wind_speed_10m?.[index]),
+    rainProbability: Number(hourly.precipitation_probability?.[index]),
+    precipitationMm: Number(hourly.precipitation?.[index])
+  })).filter(row => {
+    const hour = Number(row.time.slice(11, 13));
+    return row.time.slice(0, 10) === date && hour >= period.startHour && hour <= period.endHour;
+  });
+  if (!rows.length) return null;
+  const finite = (key) => rows.map(row => row[key]).filter(Number.isFinite);
+  const temperatures = finite("temperatureC");
+  const feels = finite("feelsLikeC");
+  const winds = finite("windKmh");
+  const probabilities = finite("rainProbability");
+  const precipitation = finite("precipitationMm");
+  const representative = [...rows].sort((a, b) => (Number.isFinite(b.rainProbability) ? b.rainProbability : -1) - (Number.isFinite(a.rainProbability) ? a.rainProbability : -1))[0];
+  const startTime = `${String(period.startHour).padStart(2, "0")}:00`;
+  const endTime = `${String(period.endHour).padStart(2, "0")}:59`;
+  return {
+    forecastPeriod: periodKey,
+    periodLabel: period.label,
+    periodStartTime: startTime,
+    periodEndTime: endTime,
+    condition: WEATHER_CODES[representative.weatherCode] || "condición no clasificada",
+    temperatureMinC: temperatures.length ? Math.min(...temperatures) : null,
+    temperatureMaxC: temperatures.length ? Math.max(...temperatures) : null,
+    feelsLikeMinC: feels.length ? Math.min(...feels) : null,
+    feelsLikeMaxC: feels.length ? Math.max(...feels) : null,
+    precipitationMm: precipitation.length ? Number(precipitation.reduce((sum, value) => sum + value, 0).toFixed(1)) : null,
+    maxRainProbability: probabilities.length ? Math.max(...probabilities) : null,
+    windKmh: winds.length ? Math.max(...winds) : null,
+    rainTiming: summarizeRainTiming(payload, date, `${date}T${startTime}`, `${date}T${String(period.endHour).padStart(2, "0")}:59`)
+  };
+}
+
 export function summarizeWeather(payload, label, options = {}) {
   const forecastStartDate = String(options.forecastStartDate || "").trim();
   const forecastEndDate = String(options.forecastEndDate || forecastStartDate).trim();
+  const timePeriod = FORECAST_PERIODS[options.timePeriod] ? String(options.timePeriod) : "";
   if (forecastStartDate) {
     const daily = payload?.daily || {};
     const dates = Array.isArray(daily.time) ? daily.time.map(String) : [];
@@ -144,7 +196,7 @@ export function summarizeWeather(payload, label, options = {}) {
     };
     const days = dates.slice(startIndex, endIndex + 1).map((date, offset) => {
       const index = startIndex + offset;
-      return {
+      const dailySummary = {
         date,
         condition: WEATHER_CODES[valueAt("weather_code", index)] || "condición no clasificada",
         temperatureMinC: valueAt("temperature_2m_min", index),
@@ -156,6 +208,8 @@ export function summarizeWeather(payload, label, options = {}) {
         windKmh: valueAt("wind_speed_10m_max", index),
         rainTiming: summarizeRainTiming(payload, date)
       };
+      const periodSummary = summarizeHourlyPeriod(payload, date, timePeriod);
+      return periodSummary ? { date, ...periodSummary } : dailySummary;
     });
     return {
       ok: true,
@@ -219,9 +273,11 @@ export default async function handler(req, res) {
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
     const rawForecastStartDate = String(body.forecastStartDate || body.forecastDate || "").trim();
     const rawForecastEndDate = String(body.forecastEndDate || rawForecastStartDate).trim();
+    const timePeriod = String(body.timePeriod || "").trim().toLowerCase();
     if ((rawForecastStartDate && !datePattern.test(rawForecastStartDate)) ||
         (rawForecastEndDate && !datePattern.test(rawForecastEndDate)) ||
-        (rawForecastStartDate && rawForecastEndDate < rawForecastStartDate)) {
+        (rawForecastStartDate && rawForecastEndDate < rawForecastStartDate) ||
+        (timePeriod && !FORECAST_PERIODS[timePeriod])) {
       return res.status(422).json({ ok: false, error: "INVALID_FORECAST_DATE" });
     }
     const wantsFutureForecast = Boolean(rawForecastStartDate);
@@ -230,7 +286,7 @@ export default async function handler(req, res) {
     url.searchParams.set("longitude", String(longitude));
     if (wantsFutureForecast) {
       url.searchParams.set("daily", "weather_code,temperature_2m_min,temperature_2m_max,apparent_temperature_min,apparent_temperature_max,precipitation_sum,precipitation_probability_max,wind_speed_10m_max");
-      url.searchParams.set("hourly", "precipitation_probability,precipitation");
+      url.searchParams.set("hourly", "temperature_2m,apparent_temperature,weather_code,wind_speed_10m,precipitation_probability,precipitation");
       url.searchParams.set("forecast_days", "16");
     } else {
       url.searchParams.set("current", "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m");
@@ -241,7 +297,8 @@ export default async function handler(req, res) {
     const payload = await fetchJson(url);
     const summary = summarizeWeather(payload, label, {
       forecastStartDate: rawForecastStartDate,
-      forecastEndDate: rawForecastEndDate
+      forecastEndDate: rawForecastEndDate,
+      timePeriod
     });
     return res.status(summary.ok ? 200 : 422).json(summary);
   } catch (error) {

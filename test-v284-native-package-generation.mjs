@@ -32,6 +32,6 @@ assert.match(workflow,/xcodebuild/);
 assert.match(workflow,/actions\/upload-artifact@v4/);
 assert.match(workflow,/golf-score-card-gt-native-unsigned/);
 assert.match(html,/V290-GOLF-SCORE-CARD-GT-BRAND-ICONS-CLEANUP-20260823/);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v317-setup-voice-recovery"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v318-multitopic-complete"/);
 
 console.log("PASS V284 · paquetes nativos reproducibles para Xcode y Android Studio");

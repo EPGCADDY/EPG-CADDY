@@ -33,6 +33,7 @@ for (const token of [
   "function renderCourseWeather(state=\"\")",
   "function renderSetupWeather(state=\"\")",
   "function inferConversationForecastRange(transcript)",
+  "function inferConversationTimePeriod(transcript)",
   "function resumeConversationListening({autoClose=true}={})",
   "function realtimeWebResearchTool()",
   'name:"search_live_web"',
@@ -81,6 +82,7 @@ assert.match(html,/silence_duration_ms:ROUND_VAD_SILENCE_MS/,"Cliente y sesión 
 assert.match(html,/start_date:[\s\S]*?end_date:/,"La herramienta debe aceptar fechas y rangos futuros");
 assert.match(html,/forecastStartDate,forecastEndDate/,"La consulta futura debe llegar completa a la API meteorológica");
 assert.match(html,/Si pregunta a qué hora lloverá, usa rainTiming/,"La segunda pregunta debe contestar la hora de lluvia sin remitir a otra aplicación");
+assert.match(html,/time_period:\{type:"string",enum:\["morning","afternoon","evening","night"\]/,"La herramienta debe distinguir mañana, tarde, atardecer y noche");
 assert.match(html,/\.setup-weather\{position:sticky/,"El clima de Inicio debe seguir visible al desplazarse hasta el micrófono");
 assert.match(html, /V314-ALL-MICROPHONES-UNIVERSAL/, "Falta declarar el Caddie universal en todos los micrófonos");
 assert.match(html, /Abrir Caddie universal o dictar jugadores/, "El micrófono de la primera pantalla debe identificarse como universal");
@@ -99,6 +101,7 @@ const setupSessionBlock=html.slice(html.indexOf("function setupSessionConfig()")
 assert.match(setupSessionBlock,/model:"gpt-live-transcribe",languages:\["es"\]/,"La configuración del cliente debe conservar la transcripción viva de Inicio");
 assert.match(setupSessionBlock,/noise_reduction:\{type:"far_field"\}/,"La configuración del cliente debe conservar voz a distancia");
 assert.match(setupSessionBlock,/threshold:ROUND_VAD_THRESHOLD,prefix_padding_ms:ROUND_VAD_PREFIX_MS/,"Cliente y servidor deben usar la misma sensibilidad en Inicio");
+assert.match(html,/const expectedThreshold=ROUND_VAD_THRESHOLD;\s*const expectedPrefix=ROUND_VAD_PREFIX_MS;/,"La validación no debe restaurar la sensibilidad antigua de Inicio");
 assert.match(stableford,/Abrir Caddie universal o dictar jugadores Stableford/,"El micrófono Stableford también debe abrir el Caddie universal");
 assert.match(html, /Nunca inventes scores ni afirmes que cambiaste la tarjeta/, "La conversación no debe atribuirse mutaciones de score");
 assert.match(html, /weatherLocation:"El Pulté Golf/, "El clima debe enlazarse con el catálogo de campos");
@@ -129,19 +132,24 @@ assert.match(sessionApi, /Caddie conversacional de propósito general/, "La sesi
 assert.match(sessionApi, /Transcribe literalmente español natural de cualquier tema/, "La transcripción no debe limitarse al vocabulario de score");
 assert.match(weatherApi, /api\.open-meteo\.com\/v1\/forecast/, "Falta proveedor meteorológico vivo");
 assert.match(weatherApi, /geocoding-api\.open-meteo\.com\/v1\/search/, "Falta resolución de campos o ubicaciones");
-assert.match(serviceWorker, /gscg-mobile-v317-setup-voice-recovery/, "La PWA debe reemplazar el shell anterior");
+assert.match(serviceWorker, /gscg-mobile-v318-multitopic-complete/, "La PWA debe reemplazar el shell anterior");
 assert.match(weatherApi, /forecast_days\", \"16\"/, "El pronóstico natural debe admitir el máximo confiable de 16 días");
+assert.match(weatherApi,/const FORECAST_PERIODS/,"El pronóstico debe resumir la franja horaria pedida");
 assert.match(researchApi,/https:\/\/api\.openai\.com\/v1\/responses/,"La investigación universal debe usar Responses API");
 assert.match(researchApi,/type: \"web_search\"/,"La investigación debe consultar la web viva");
 assert.match(researchApi,/model: \"gpt-5\.6\"/,"La investigación debe usar el modelo universal vigente configurado");
 assert.match(researchApi,/tool_choice: \"required\"/,"Si el Caddie solicita investigación, la API debe ejecutarla realmente");
+assert.match(researchApi,/max_output_tokens: 900/,"La investigación debe tener margen para terminar su última oración");
+assert.match(researchApi,/máximo 120 palabras/,"La respuesta web debe ser breve para escucharse durante el juego");
 
 const forecastHelperSource=html.slice(html.indexOf("function guatemalaDateIso"),html.indexOf("\nfunction conversationInstructions"));
 const inferConversationForecastRange=new Function("normalizeSpeech",`${forecastHelperSource};return inferConversationForecastRange`)(value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase());
+const inferConversationTimePeriod=new Function("normalizeSpeech",`${forecastHelperSource};return inferConversationTimePeriod`)(value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase());
 const nextWeekend=inferConversationForecastRange("¿Cómo estará el próximo fin de semana?");
 assert.equal(new Date(`${nextWeekend.startDate}T12:00:00Z`).getUTCDay(),6,"El fin de semana debe comenzar sábado");
 assert.equal(new Date(`${nextWeekend.endDate}T12:00:00Z`).getUTCDay(),0,"El fin de semana debe terminar domingo");
 assert.equal(inferConversationForecastRange("¿Cómo estará mañana?").startDate.length,10,"Mañana debe convertirse en fecha ISO");
+assert.equal(inferConversationTimePeriod("¿Cómo estará mañana por la mañana?"),"morning","La mañana debe conservarse como franja horaria");
 
 const summary = summarizeWeather({
   timezone: "America/Guatemala",
@@ -195,10 +203,26 @@ assert.equal(weekend.days[1].maxRainProbability, 25);
 assert.equal(weekend.days[0].rainTiming.peakTime, "15:00");
 assert.equal(weekend.days[0].rainTiming.windows[0].maxProbability, 75);
 
+const morning = summarizeWeather({
+  timezone:"America/Guatemala",
+  daily:{time:["2026-08-26"],weather_code:[95],temperature_2m_min:[17],temperature_2m_max:[29],apparent_temperature_min:[18],apparent_temperature_max:[31],precipitation_sum:[9],precipitation_probability_max:[90],wind_speed_10m_max:[18]},
+  hourly:{
+    time:["2026-08-26T06:00","2026-08-26T08:00","2026-08-26T11:00","2026-08-26T17:00"],
+    temperature_2m:[18,20,24,28],apparent_temperature:[19,21,25,30],weather_code:[2,2,61,95],wind_speed_10m:[4,6,8,18],precipitation_probability:[5,10,45,90],precipitation:[0,0,0.4,4]
+  }
+},"GPS del teléfono",{forecastStartDate:"2026-08-26",forecastEndDate:"2026-08-26",timePeriod:"morning"});
+assert.equal(morning.forecastPeriod,"morning");
+assert.equal(morning.periodStartTime,"06:00");
+assert.equal(morning.periodEndTime,"11:59");
+assert.equal(morning.temperatureMaxC,24,"La tarde no debe contaminar el pronóstico de la mañana");
+assert.equal(morning.maxRainProbability,45);
+
 const research = summarizeResearchResponse({output:[
   {type:"web_search_call",action:{sources:[{title:"Fuente oficial",url:"https://example.org/a"}]}},
   {type:"message",content:[{type:"output_text",text:"Respuesta verificada.",annotations:[{type:"url_citation",title:"Fuente oficial",url:"https://example.org/a"},{type:"url_citation",title:"Segunda fuente",url:"https://example.com/b"}]}]}
 ]});
 assert.deepEqual(research,{ok:true,source:"OpenAI Web Search",answer:"Respuesta verificada.",sources:[{title:"Fuente oficial",url:"https://example.org/a"},{title:"Segunda fuente",url:"https://example.com/b"}]});
+const cleanResearch=summarizeResearchResponse({output:[{type:"message",content:[{type:"output_text",text:"Respuesta completa. ([Fuente](https://example.org/a))",annotations:[{type:"url_citation",title:"Fuente",url:"https://example.org/a"}]}]}]});
+assert.equal(cleanResearch.answer,"Respuesta completa.","La voz no debe recibir URLs ni citas Markdown");
 
-console.log("PASS V317 · Inicio reconoce voz normal y conserva el Caddie universal");
+console.log("PASS V318 · conversación multitema completa y clima por franja horaria");

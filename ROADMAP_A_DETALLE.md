@@ -829,3 +829,7 @@ Durante una respuesta, `input_audio_buffer.speech_started` sólo abre una candid
 ## Corrección V317 · recuperación de voz en Inicio
 
 La solicitud real `/api/session-grupal` de las 16:27 terminó con HTTP 200; no hubo una transcripción posterior. La causa se aisló en la detección demasiado estricta exclusiva de Inicio. Se elimina esa diferencia: `api/session-grupal.js` usa umbral 0.2, `prefix_padding_ms` 700, `far_field` y `gpt-live-transcribe` en español tanto para preguntas universales como para dictado de jugadores. `test-v312-general-caddie.mjs` bloquea la regresión y la caché V317 obliga a renovar la copia instalada.
+
+## Corrección V318 · cierre de respuestas y pronóstico por horario
+
+La batería viva de temas reveló que una respuesta web extensa podía consumir el límite y quedar incompleta. `api/research.js` exige un máximo de 120 palabras, elige tres opciones cuando existan muchas, aumenta el margen de salida a 900 tokens y separa las citas para que no sean habladas. Para clima futuro, `index-grupal.html` infiere `time_period` del lenguaje natural; `api/weather.js` obtiene temperatura, sensación, condición, viento y lluvia por hora y resume únicamente 06:00–11:59, 12:00–17:59, 18:00–21:59 o 22:00–23:59. `test-v312-general-caddie.mjs` prueba que la tarde no contamine una pregunta de mañana y que la investigación termine sin URL hablada. La firma y la caché V318 fuerzan la actualización instalada.

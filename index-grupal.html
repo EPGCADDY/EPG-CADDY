@@ -11,7 +11,7 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/official-logos/golf-score-card-gt-apple-touch-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V317-SETUP-VOICE-RECOVERY-20260825">
+<meta name="gscg-build" content="V318-MULTITOPIC-COMPLETE-20260825">
 <meta name="gscg-manual" content="V315-MANUAL-UNIVERSAL-WEB-BARGE-IN-20260825">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
@@ -1860,8 +1860,8 @@ function effectiveSessionCheck(session,context,expectedSpeed=VOICE_POLICY.speed)
   const voice=typeof voiceRaw==="string"?voiceRaw:String(voiceRaw?.id||voiceRaw?.name||"");
   const speedRaw=beta?session?.speed:session?.audio?.output?.speed;
   const expectedSilence=ROUND_VAD_SILENCE_MS;
-  const expectedThreshold=context==="setup"?0.5:ROUND_VAD_THRESHOLD;
-  const expectedPrefix=context==="setup"?300:ROUND_VAD_PREFIX_MS;
+  const expectedThreshold=ROUND_VAD_THRESHOLD;
+  const expectedPrefix=ROUND_VAD_PREFIX_MS;
   const typeOk=beta?session?.object==="realtime.session":session?.type==="realtime";
   const ok=typeOk&&td?.type==="server_vad"&&Number(td?.silence_duration_ms)===expectedSilence&&
     Number(td?.threshold)===expectedThreshold&&Number(td?.prefix_padding_ms)===expectedPrefix&&
@@ -1939,6 +1939,14 @@ function inferConversationForecastRange(transcript){
   }
   const date=addIsoDays(today,offset);return{startDate:date,endDate:date};
 }
+function inferConversationTimePeriod(transcript){
+  const text=normalizeSpeech(transcript);
+  if(/\b(?:por la manana|en la manana|durante la manana|temprano)\b/.test(text))return"morning";
+  if(/\b(?:por la tarde|en la tarde|durante la tarde)\b/.test(text))return"afternoon";
+  if(/\b(?:al atardecer|por el atardecer)\b/.test(text))return"evening";
+  if(/\b(?:por la noche|en la noche|durante la noche)\b/.test(text))return"night";
+  return"";
+}
 function conversationInstructions(completedTool=""){
   const course=COURSE_CATALOG[round.courseKey]?.displayName||round.course||"el campo seleccionado";
   return[
@@ -1950,7 +1958,7 @@ function conversationInstructions(completedTool=""){
     `La ronda activa corresponde a ${course}.`,
     "Responde de forma humana, clara y breve para escucharse mientras se juega; normalmente usa de dos a cinco oraciones y continúa el contexto de la conversación.",
     "Nunca inventes scores ni afirmes que cambiaste la tarjeta. Las órdenes de score se ejecutan exclusivamente en el cliente antes de llegar a esta conversación.",
-    `Hoy en Guatemala es ${guatemalaDateIso()}. Para clima actual o futuro usa get_current_weather. Convierte expresiones como mañana, próximo miércoles o próximo fin de semana en start_date y end_date con formato AAAA-MM-DD. El proveedor entrega como máximo 16 días; fuera de ese alcance explícalo y no inventes. Sin un lugar escrito por el usuario, la aplicación intenta primero el GPS del teléfono y sólo usa el campo seleccionado como respaldo.`,
+    `Hoy en Guatemala es ${guatemalaDateIso()}. Para clima actual o futuro usa get_current_weather. Convierte expresiones como mañana, próximo miércoles o próximo fin de semana en start_date y end_date con formato AAAA-MM-DD. Si dice por la mañana, por la tarde, al atardecer o por la noche, envía también time_period. El proveedor entrega como máximo 16 días; fuera de ese alcance explícalo y no inventes. Sin un lugar escrito por el usuario, la aplicación intenta primero el GPS del teléfono y sólo usa el campo seleccionado como respaldo.`,
     "Cuando necesites una herramienta, no pronuncies un preámbulo: consulta primero y entrega después una sola respuesta completa.",
     "Para clima, responde en dos oraciones sencillas: condición, temperatura, sensación, lluvia y viento. Si pregunta a qué hora lloverá, usa rainTiming, indica el intervalo y la hora de mayor probabilidad; no lo remitas a otra aplicación si esos datos vienen en la herramienta. No cortes palabras ni dejes una frase incompleta.",
     "En salud ofrece únicamente orientación general. No diagnostiques ni prescribas. Antes de sugerir un medicamento pregunta por edad, alergias, enfermedades, otros medicamentos y gravedad; ante síntomas de alarma recomienda atención médica urgente.",
@@ -1963,7 +1971,7 @@ function realtimeWeatherTool(){return{
   type:"function",
   name:"get_current_weather",
   description:"Obtiene condiciones actuales o un pronóstico de hasta 16 días, incluyendo intervalos y hora de mayor probabilidad de lluvia.",
-  parameters:{type:"object",properties:{location:{type:"string",description:"Lugar mencionado. Omítelo para usar primero el GPS y después el campo activo."},start_date:{type:"string",description:"Primer día solicitado en formato AAAA-MM-DD. Omítelo para condiciones actuales."},end_date:{type:"string",description:"Último día solicitado en formato AAAA-MM-DD. Para un solo día usa la misma fecha; para fin de semana usa domingo."}},additionalProperties:false}
+  parameters:{type:"object",properties:{location:{type:"string",description:"Lugar mencionado. Omítelo para usar primero el GPS y después el campo activo."},start_date:{type:"string",description:"Primer día solicitado en formato AAAA-MM-DD. Omítelo para condiciones actuales."},end_date:{type:"string",description:"Último día solicitado en formato AAAA-MM-DD. Para un solo día usa la misma fecha; para fin de semana usa domingo."},time_period:{type:"string",enum:["morning","afternoon","evening","night"],description:"Franja solicitada: morning=mañana, afternoon=tarde, evening=atardecer, night=noche."}},additionalProperties:false}
 }}
 function realtimeWebResearchTool(){return{
   type:"function",
@@ -2000,6 +2008,8 @@ async function weatherToolResult(argumentsText){
   const datePattern=/^\d{4}-\d{2}-\d{2}$/;
   const forecastStartDate=datePattern.test(String(args.start_date||""))?String(args.start_date):inferredRange.startDate;
   const forecastEndDate=datePattern.test(String(args.end_date||""))?String(args.end_date):(inferredRange.endDate||forecastStartDate);
+  const allowedPeriods=new Set(["morning","afternoon","evening","night"]),inferredPeriod=inferConversationTimePeriod(authorizedSpeech?.text||"");
+  const timePeriod=allowedPeriods.has(String(args.time_period||""))?String(args.time_period):inferredPeriod;
   const courseContext=activeCourseWeatherContext();
   const deviceCoordinates=!requestedLocation?await currentBrowserCoordinates():null;
   const locationPayload=requestedLocation
@@ -2007,7 +2017,7 @@ async function weatherToolResult(argumentsText){
     :deviceCoordinates
       ?{location:"GPS del teléfono",latitude:deviceCoordinates.latitude,longitude:deviceCoordinates.longitude}
       :courseContext;
-  const payload={...locationPayload,...(forecastStartDate?{forecastStartDate,forecastEndDate:forecastEndDate||forecastStartDate}:{})};
+  const payload={...locationPayload,...(forecastStartDate?{forecastStartDate,forecastEndDate:forecastEndDate||forecastStartDate,...(timePeriod?{timePeriod}:{})}:{})};
   try{
     const response=await fetch(window.gscgApiUrl("/api/weather"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
     const result=await response.json().catch(()=>({ok:false,error:"WEATHER_UNAVAILABLE"}));
