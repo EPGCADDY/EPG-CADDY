@@ -398,3 +398,14 @@ El **25 de agosto de 2026** se reemplazan los caracteres tipográficos delgados 
 | `ROADMAP_OVERALL.md` | Registra V307 en este resumen general. |
 
 **Hotfix de publicación V307:** `vercel.json` ejecuta `node audit-project.mjs` como único `buildCommand` de 22 caracteres. Conserva los 67 paquetes de control y cumple el límite máximo de 256 caracteres del esquema Vercel; este ajuste queda registrado simultáneamente en ambos ROADMAPS y en el inventario maestro.
+
+
+## V308 · Marcador acumulado persistente en cada hoyo Match Play
+
+La fila MATCH de cada jugador ya no muestra únicamente quién ganó, empató o perdió el hoyo aislado. Desde esta versión, cada columna conserva el marcador acumulado vigente después de ese hoyo: `+1`, `+2`, `EVEN`, `−1`, etc. Si los hoyos siguientes se empatan, la misma ventaja y su flecha permanecen visibles hasta que un resultado posterior cambie el estado.
+
+| Archivo modificado | Registro V308 |
+|---|---|
+| `index-grupal.html` | Calcula y dibuja en cada hoyo el estado Match Play acumulado, mantiene la flecha durante empates posteriores y muestra la nomenclatura `+N`, `−N` o `EVEN`. |
+| `ROADMAP_A_DETALLE.md` | Registra la regla funcional V308. |
+| `ROADMAP_OVERALL.md` | Registra la entrega V308 y mantiene el ROADMAP Gate. |

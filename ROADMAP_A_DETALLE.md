@@ -384,3 +384,12 @@ Solicitud: **25 de agosto de 2026**. Alcance: conservar íntegramente la tarjeta
 | `ROADMAP_OVERALL.md` | Resumen V307 | Conserva el resumen general de la intervención. |
 
 **Hotfix de despliegue V307:** el `buildCommand` extenso fue sustituido por `node audit-project.mjs` (22/256 caracteres). La auditoría maestra conserva ROADMAP Gate, pruebas Match Play V306/V307 y los 67 paquetes antes de cada publicación. Registro simultáneo: `vercel.json`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`.
+
+
+## V308 · Match Play acumulado por columna
+
+| Archivo | Identificación | Función registrada |
+|---|---|---|
+| `index-grupal.html` | Build `V308-MATCH-PLAY-CUMULATIVE-STANDING-20260825` | Cada hoyo muestra el marcador acumulado del jugador después de esa columna. Una ventaja `+1` o `−1` y su flecha continúan en los hoyos empatados; cambia solamente al producirse un nuevo resultado. El empate global se identifica como `EVEN`. |
+| `ROADMAP_A_DETALLE.md` | Registro V308 | Conserva esta definición detallada. |
+| `ROADMAP_OVERALL.md` | Resumen V308 | Conserva la definición general y el ROADMAP Gate. |
