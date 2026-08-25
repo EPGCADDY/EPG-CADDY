@@ -424,3 +424,17 @@ Solicitud: **25 de agosto de 2026**. Four Ball se construye como modalidad propi
 | `ROADMAP_OVERALL.md` | Resumen V309 | Conserva alcance, archivos y compatibilidad. |
 
 **Puerta funcional V309:** un PASS exige que el hoyo permanezca pendiente hasta registrar los cuatro jugadores; que un empate posterior conserve la ventaja anterior; que el cierre oficial use mejor Neto por pareja; y que General, Stableford y Match Play mantengan sus pruebas anteriores.
+
+## V310 · Denominación neutral FOUR BALL
+
+Solicitud: **25 de agosto de 2026**. El nombre permanente de la modalidad deja de codificar la cantidad de parejas. Botones, encabezados, validaciones, control manual y tarjeta final muestran `FOUR BALL`; la asignación de parejas continúa dentro de la configuración operativa y puede evolucionar sin volver a renombrar la modalidad.
+
+| Archivo modificado | ID o código actualizado | Explicación sencilla |
+|---|---|---|
+| `index-grupal.html` | Etiqueta visible V310 | Retira `2 PAREJAS` de selección, registro, encabezado, modalidad y tarjeta final. |
+| `four-ball.js` | Estado de configuración neutral | Solicita jugadores sin usar la cantidad de parejas como apellido de Four Ball. |
+| `test-v309-four-ball.mjs` | Candado V309/V310 | Exige FOUR BALL y prohíbe el sufijo anterior en la interfaz. |
+| `APP_ARCHITECTURE.md` | Regla de denominación | Separa el nombre del modo de la composición de una partida. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.63 / App V310 | Documenta la homologación sin alterar la fórmula. |
+| `ROADMAP_A_DETALLE.md` | Registro técnico V310 | Conserva esta matriz. |
+| `ROADMAP_OVERALL.md` | Resumen V310 | Conserva la entrega y el ROADMAP Gate. |

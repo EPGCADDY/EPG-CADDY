@@ -92,8 +92,9 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 const mobile=fs.readFileSync(new URL("./scripts/build-mobile-web.mjs",import.meta.url),"utf8");
 const vercel=fs.readFileSync(new URL("./vercel.json",import.meta.url),"utf8");
 assert.match(html,/gscg-four-ball" content="V309-TWO-PAIRS-BEST-NET-CUMULATIVE-MATCH-20260825"/);
-assert.match(html,/id="fourBallRoundButton"[\s\S]*?FOUR BALL · 2 PAREJAS/);
-assert.match(html,/FOUR BALL REQUIERE 2 PAREJAS · 4 JUGADORES/);
+assert.match(html,/id="fourBallRoundButton"[\s\S]*?<span>FOUR BALL<\/span>/);
+assert.match(html,/FOUR BALL REQUIERE 4 JUGADORES/);
+assert.doesNotMatch(html,/FOUR BALL · 2 PAREJAS/);
 assert.match(html,/PAREJA VERDE 1–2 · PAREJA ORO 3–4/);
 assert.match(html,/function fourBallPlayerBlock/);
 assert.match(html,/function fourBallHoleStanding/);
@@ -106,4 +107,4 @@ assert.match(worker,/"\/four-ball\.js"/);
 assert.match(mobile,/"four-ball\.js"/);
 assert.match(vercel,/four-ball/);
 
-console.log("PASS V309 · FOUR BALL 2 PAREJAS · 4 GROSS · MEJOR NETO · ACUMULADO · CIERRE · HISTORIAL · EXPORTACIÓN");
+console.log("PASS V309/V310 · FOUR BALL · ETIQUETA NEUTRAL · 4 GROSS · MEJOR NETO · ACUMULADO · CIERRE · HISTORIAL · EXPORTACIÓN");

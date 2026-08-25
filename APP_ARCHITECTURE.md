@@ -127,6 +127,8 @@ Calcula:
 
 Four Ball es una modalidad propia de la arquitectura General y no un nombre visual aplicado a la Ronda Normal. Cada partida exige exactamente cuatro jugadores distribuidos de forma determinista:
 
+El nombre visible de la modalidad es únicamente **FOUR BALL**. La interfaz no agrega `2 PAREJAS` al botón, encabezado, control manual ni tarjeta final; la cantidad pertenece a la configuración de la partida y no al nombre permanente de la modalidad.
+
 - Pareja Verde: jugadores 1 y 2.
 - Pareja Oro: jugadores 3 y 4.
 

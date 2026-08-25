@@ -1285,7 +1285,9 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 - La clasificación Senior muestra las primeras cinco posiciones de ranking; las tres elecciones de capitán se administran fuera del cálculo. S. Senior muestra cuatro posiciones; sus dos elecciones de capitán también son externas.
 - En V199 el acumulado operativo se conserva localmente en el navegador. Su migración a Neon y consulta multi-dispositivo continúan pendientes y no deben anunciarse como sincronizadas hasta superar la prueba central.
 
-### Four Ball · dos parejas
+### Four Ball
+
+La modalidad se identifica en todas las pantallas únicamente como **FOUR BALL**. El nombre no incorpora una cantidad fija de parejas; la organización de la partida se muestra dentro del registro cuando corresponde.
 
 - La partida se compone de dos parejas y cuatro jugadores: jugadores 1–2 forman la **Pareja Verde** y jugadores 3–4 forman la **Pareja Oro**.
 - Cada jugador juega su propia bola. La entrada manual y la voz registran exclusivamente el **Gross** individual de los cuatro jugadores.
@@ -1300,6 +1302,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-25 | Manual 3.63 / App V310 | Homologado el nombre visible `FOUR BALL` sin el sufijo `2 PAREJAS`. El cambio alcanza selección de modalidad, validación, registro por voz, encabezado de ronda, control manual y tarjeta digital final. La lógica de mejor Neto por pareja y el marcador acumulado permanecen intactos. |
 | 2026-08-25 | Manual 3.62 / App V309 | Implementación funcional de `FOUR BALL · 2 PAREJAS` para exactamente cuatro jugadores. Pareja Verde ocupa posiciones 1–2 y Pareja Oro 3–4. Cada jugador registra Gross; el motor General calcula su Neto y el módulo Four Ball compara el mejor Neto de cada pareja. La tarjeta identifica la mejor bola, conserva acumulativamente `EVEN`, `+N` o `−N` durante hoyos empatados, cierra anticipadamente, permite corrección oficial y genera Historial, Global y cuatro personales. |
 | 2026-08-24 | Manual 3.60 / App V306 | Integración funcional de `MATCH PLAY · CON HDCP` como copia de la Ronda Normal para exactamente dos jugadores. Conserva registro, Gross, golpes de HDCP, Neto, captura manual y por voz; únicamente añade el rubro MATCH calculado por Neto: flecha verde al ganador, flecha roja al perdedor y ningún símbolo en el empate. Muestra el estado permanente `AS` o `N UP` y reconoce el cierre anticipado oficial, por ejemplo `3 & 2`. |
 | 2026-08-25 | Manual 3.61 / App V307 | Sustituye los glifos delgados de Match Play por flechas SVG de trazo 4.5, tallo largo y punta amplia para distinguir sin ambigüedad ganador y perdedor en iPhone. El campo de modalidad muestra únicamente `MATCH PLAY`; Gross, HDCP y Neto por hoyo permanecen intactos. Los resultados escritos de OUT, IN y total muestran `NOMBRE · X UP`, `NOMBRE · X DOWN` o `NOMBRE · AS`, nunca una suma Neto. Si la ventaja supera los hoyos restantes, se muestra y anuncia `FIN DEL MATCH` con el resultado; quedan bloqueados los hoyos posteriores y siguen editables los anteriores. |

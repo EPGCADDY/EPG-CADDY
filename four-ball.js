@@ -54,7 +54,7 @@
 
   function status(players,{maxHoles=MAX_HOLES,names=DEFAULT_TEAM_NAMES}={}){
     const limit=Math.max(1,Math.min(MAX_HOLES,Number(maxHoles)||MAX_HOLES)),labels=teamNames(names);
-    if(!validatePlayers(players))return{valid:false,played:0,remaining:limit,closed:false,label:"FOUR BALL REQUIERE 2 PAREJAS · 4 JUGADORES",resultLabel:"FOUR BALL REQUIERE 2 PAREJAS · 4 JUGADORES",teamNames:labels,holes:[]};
+    if(!validatePlayers(players))return{valid:false,played:0,remaining:limit,closed:false,label:"FOUR BALL REQUIERE 4 JUGADORES",resultLabel:"FOUR BALL REQUIERE 4 JUGADORES",teamNames:labels,holes:[]};
     const holes=[];let winsA=0,winsB=0,halves=0;
     for(let hole=1;hole<=limit;hole++){
       const result=holeResult(players,hole);

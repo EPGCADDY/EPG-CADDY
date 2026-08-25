@@ -440,3 +440,17 @@ El **25 de agosto de 2026** se implementa Four Ball como modalidad operativa pro
 | `ROADMAP_OVERALL.md` | Resumen y puerta ROADMAP V309. |
 
 **Compatibilidad V309:** se conserva la firma acumulada V307/V308 y se añade `gscg-four-ball = V309-TWO-PAIRS-BEST-NET-CUMULATIVE-MATCH-20260825` para identificar la modalidad nueva sin retirar los contratos anteriores.
+
+## V310 · Nombre Four Ball neutral
+
+El **25 de agosto de 2026** se homologa el nombre visible de la modalidad como `FOUR BALL`, sin añadir `2 PAREJAS`. La cantidad de parejas deja de formar parte del título permanente y queda reservada a la configuración operativa de cada partida. No cambia el cálculo Gross/HDCP/Neto, la mejor bola, el acumulado ni el cierre.
+
+| Archivo modificado | Registro V310 |
+|---|---|
+| `index-grupal.html` | Muestra únicamente FOUR BALL en selección, encabezado, control manual y tarjeta final; las validaciones solicitan jugadores sin convertir la cantidad de parejas en nombre. |
+| `four-ball.js` | Neutraliza el mensaje de configuración sin alterar el motor de resultados. |
+| `test-v309-four-ball.mjs` | Bloquea el regreso del sufijo `2 PAREJAS` en la interfaz. |
+| `APP_ARCHITECTURE.md` | Define la separación entre nombre permanente y configuración de partida. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.63 con denominación neutral. |
+| `ROADMAP_A_DETALLE.md` | Registra la homologación técnica V310. |
+| `ROADMAP_OVERALL.md` | Registra esta entrega V310. |
