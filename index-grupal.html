@@ -2598,7 +2598,7 @@ function isMatchPlayRound(value=round){return value?.mode==="match_play"}
 function matchPlayStatus(){return window.GSCMatchPlay.status(round.players)}
 function matchPlaySegment(playerIndex,holes){return window.GSCMatchPlay.segmentStanding(round.players,playerIndex,holes)}
 function matchArrowSvg(state){if(state!=="won"&&state!=="lost")return"";const path=state==="won"?"M12 22V5M5 12l7-7 7 7":"M12 2v17M5 12l7 7 7-7";return`<span class="match-arrow match-arrow-${state}" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="${path}"></path></svg></span>`}
-function matchHoleStanding(playerIndex,hole){const value=matchPlaySegment(playerIndex,ALL.filter(number=>number<=hole));if(!value.played)return{state:"pending",label:"",title:"PENDIENTE"};const state=value.margin>0?"won":value.margin<0?"lost":"tied",label=value.margin===0?"EVEN":`${value.margin>0?"+":"−"}${Math.abs(value.margin)}`;return{state,label,title:label}}
+function matchHoleStanding(playerIndex,hole){const result=window.GSCMatchPlay.holeResult(round.players,hole);if(!result.recorded)return{state:"pending",label:"",title:"PENDIENTE"};const value=matchPlaySegment(playerIndex,ALL.filter(number=>number<=hole)),state=value.margin>0?"won":value.margin<0?"lost":"tied",label=value.margin===0?"EVEN":`${value.margin>0?"+":"−"}${Math.abs(value.margin)}`;return{state,label,title:label}}
 function matchStandingMarkup(value){return value?.played?`<span class="match-standing match-standing-${value.state}">${escapeHtml(value.label)}</span>`:""}
 function matchStandingCell(value){return`<td class="match-standing-cell match-standing-${value?.state||"pending"}">${matchStandingMarkup(value)}</td>`}
 function matchPlayPlayerBlock(player,slot){
