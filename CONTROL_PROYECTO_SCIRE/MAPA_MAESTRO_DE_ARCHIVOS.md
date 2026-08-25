@@ -484,6 +484,8 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `ROADMAP_A_DETALLE.md` | ROADMAP detallado | Registra todos los archivos. |
 | `ROADMAP_OVERALL.md` | ROADMAP general | Registra todos los archivos. |
 
+**Publicación V307:** `vercel.json` usa `node audit-project.mjs` como `buildCommand` compacto de 22 caracteres; sustituye la cadena que superaba el límite Vercel de 256 sin retirar ninguno de los 67 controles obligatorios.
+
 ## Cómo usar este inventario
 
 

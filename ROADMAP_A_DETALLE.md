@@ -382,3 +382,5 @@ Solicitud: **25 de agosto de 2026**. Alcance: conservar íntegramente la tarjeta
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Inventario V307 | Registra cada archivo de esta intervención. |
 | `ROADMAP_A_DETALLE.md` | Registro V307 | Conserva esta matriz detallada. |
 | `ROADMAP_OVERALL.md` | Resumen V307 | Conserva el resumen general de la intervención. |
+
+**Hotfix de despliegue V307:** el `buildCommand` extenso fue sustituido por `node audit-project.mjs` (22/256 caracteres). La auditoría maestra conserva ROADMAP Gate, pruebas Match Play V306/V307 y los 67 paquetes antes de cada publicación. Registro simultáneo: `vercel.json`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`.

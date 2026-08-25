@@ -396,3 +396,5 @@ El **25 de agosto de 2026** se reemplazan los caracteres tipográficos delgados 
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra el inventario V307 completo. |
 | `ROADMAP_A_DETALLE.md` | Registra V307 a detalle. |
 | `ROADMAP_OVERALL.md` | Registra V307 en este resumen general. |
+
+**Hotfix de publicación V307:** `vercel.json` ejecuta `node audit-project.mjs` como único `buildCommand` de 22 caracteres. Conserva los 67 paquetes de control y cumple el límite máximo de 256 caracteres del esquema Vercel; este ajuste queda registrado simultáneamente en ambos ROADMAPS y en el inventario maestro.
