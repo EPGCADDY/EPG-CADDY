@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V330-SIDE-GAMES-20260826"/);
+assert.match(html,/gscg-build" content="V330-R2-SINGLE-MODE-SELECTION-20260826"/);
 assert.match(html,/V276-PREVIOUS-DIRECT-NEXT-20260823/);
 assert.match(html,/appVersion:"V307"/);
 

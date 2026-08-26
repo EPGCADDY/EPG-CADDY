@@ -11,7 +11,7 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/official-logos/golf-score-card-gt-apple-touch-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V330-SIDE-GAMES-20260826">
+<meta name="gscg-build" content="V330-R2-SINGLE-MODE-SELECTION-20260826">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
@@ -3423,11 +3423,12 @@ function renderDraft(){
   enforceCanonicalDraftNames();
   renderTournamentDraft();
   renderCourseDraft();
-  $("normalRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="general"));
+  const draftGame=activeDraftGameKey();
+  $("normalRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="general"&&!draftGame));
   $("matchPlayRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="match_play"));
   $("fourBallRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="four_ball"));
   renderSideGameDrafts();
-  const draftGame=activeDraftGameKey();$("playerVoicePrompt").textContent=draftGame?`REGISTRO ${draftGame.toUpperCase()} · ${draftGame==="vegas"?"4 O 6":"HASTA 6"} JUGADORES`:draftRoundMode==="match_play"?"REGISTRO MATCH PLAY · HASTA TRES PAREJAS":draftRoundMode==="four_ball"?"REGISTRO FOUR BALL · HASTA TRES PAREJAS":"REGISTRO DE JUGADORES";
+  $("playerVoicePrompt").textContent=draftGame?`REGISTRO ${draftGame.toUpperCase()} · ${draftGame==="vegas"?"4 O 6":"HASTA 6"} JUGADORES`:draftRoundMode==="match_play"?"REGISTRO MATCH PLAY · HASTA TRES PAREJAS":draftRoundMode==="four_ball"?"REGISTRO FOUR BALL · HASTA TRES PAREJAS":"REGISTRO DE JUGADORES";
   document.querySelector(".newbie-guide-player").textContent=draftGame?draftGame==="vegas"?"VEGAS: 2 O 3 PAREJAS":`${draftGame.toUpperCase()}: HASTA 6 JUGADORES`:draftRoundMode==="match_play"?"P1: 1–2 · P2: 3–4 · P3: 5–6":draftRoundMode==="four_ball"?"VERDE: 1–2 · ORO: 3–4 · AZUL: 5–6":"HASTA 6 JUGADORES";
   let editHtml="",confirmHtml="";
   const registrationSlots=6;

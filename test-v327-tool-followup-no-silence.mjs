@@ -7,8 +7,8 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 const universalApi=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V330-SIDE-GAMES-20260826"/);
-assert.match(worker,/gscg-mobile-v330-side-games-r1/);
+assert.match(html,/gscg-build" content="V330-R2-SINGLE-MODE-SELECTION-20260826"/);
+assert.match(worker,/gscg-mobile-v330-side-games-r2/);
 const script=html.slice(html.indexOf("<script>")+8,html.lastIndexOf("</script>"));
 assert.doesNotThrow(()=>new Function(script),"El JavaScript V327 debe compilar completo");
 

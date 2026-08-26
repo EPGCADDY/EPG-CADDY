@@ -118,6 +118,7 @@ for(const file of ["wolf.js","vegas.js","dots.js"]){
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"),worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8"),mobile=fs.readFileSync(new URL("./scripts/build-mobile-web.mjs",import.meta.url),"utf8");
 for(const file of ["wolf.js","vegas.js","dots.js"]){assert.ok(html.includes(`<script src="./${file}"></script>`));assert.ok(worker.includes(`"/${file}"`));assert.ok(mobile.includes(`"${file}"`))}
 for(const token of ['id="wolfConfig"','id="vegasConfig"','id="dotsConfig"','id="dotsEventConfig"','data-dots-enabled','AMIGO · GRUPO','IZQUIERDA · GRUPO','DERECHA · GRUPO','function sideGameSpeechSummary()','MODALIDADES EXISTENTES','NUEVOS JUEGOS'])assert.ok(html.includes(token)||fs.readFileSync(new URL("./dots.js",import.meta.url),"utf8").includes(token),`Falta integración V330: ${token}`);
-assert.match(worker,/gscg-mobile-v330-side-games-r1/);
+assert.match(worker,/gscg-mobile-v330-side-games-r2/);
+assert.match(html,/normalRoundButton"\)\.setAttribute\("aria-pressed",String\(draftRoundMode==="general"&&!draftGame\)\)/,"Ronda Normal debe desmarcarse visualmente cuando hay un juego lateral activo");
 
 console.log("PASS V330 · Wolf 3–6, Vegas 4/6 y Dots 2–6 · reglas, empates, multiplicadores, tope, tres parejas y liquidación cero-suma");
