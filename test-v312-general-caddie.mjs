@@ -145,7 +145,7 @@ const automaticWeatherSource=html.slice(automaticWeatherStart,automaticWeatherEn
 assert.doesNotMatch(automaticWeatherSource, /setVoice|toggleVoice|ensureSession|getUserMedia/, "El clima automático no puede abrir ni modificar el micrófono");
 assert.match(html, /bindMicActivation\("headerMic","round"\)/, "El micrófono debe conservar activación manual por botón");
 assert.equal((html.match(/setVoice\(true\)/g)||[]).length, 1, "No puede aparecer una segunda activación automática del micrófono");
-const toggleStart = html.indexOf("async function toggleVoice(context)");
+const toggleStart = html.indexOf("async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL)");
 const toggleEnd = html.indexOf("\nfunction dateSetup()", toggleStart);
 assert.ok(toggleStart > 0 && html.indexOf("setVoice(true)", toggleStart) < toggleEnd, "La única activación debe vivir dentro del gesto toggleVoice");
 assert.doesNotMatch(html, /voiceprint|speakerRecognition|voiceBiometric|enrollVoice/i, "No se permite huella, identificación ni enrolamiento de voz");
@@ -153,7 +153,7 @@ assert.match(sessionApi, /Caddie conversacional de propósito general/, "La sesi
 assert.match(sessionApi, /Detecta y transcribe literalmente el idioma que hable el usuario/, "La transcripción no debe limitarse al vocabulario de score ni a un idioma");
 assert.match(weatherApi, /api\.open-meteo\.com\/v1\/forecast/, "Falta proveedor meteorológico vivo");
 assert.match(weatherApi, /geocoding-api\.open-meteo\.com\/v1\/search/, "Falta resolución de campos o ubicaciones");
-assert.match(serviceWorker, /gscg-mobile-v324-real-traffic/, "La PWA debe reemplazar el shell anterior");
+assert.match(serviceWorker, /gscg-mobile-v325-ideal-microphone-timings/, "La PWA debe reemplazar el shell anterior");
 assert.match(weatherApi, /forecast_days\", \"16\"/, "El pronóstico natural debe admitir el máximo confiable de 16 días");
 assert.match(weatherApi,/const FORECAST_PERIODS/,"El pronóstico debe resumir la franja horaria pedida");
 assert.match(researchApi,/https:\/\/api\.openai\.com\/v1\/responses/,"La investigación universal debe usar Responses API");

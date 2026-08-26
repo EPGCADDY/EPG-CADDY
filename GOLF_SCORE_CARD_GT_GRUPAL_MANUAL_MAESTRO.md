@@ -4,8 +4,8 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V321
-**Fecha de corte:** 25 de agosto de 2026
+**Versión documentada:** V325
+**Fecha de corte:** 26 de agosto de 2026
 **Rama operativa:** `main` (Producción vigente)
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Dirección de producto
@@ -1110,7 +1110,7 @@ Probar como mínimo:
 
 #### AI UNIVERSAL ∞
 
-**Estado:** `OPERATIVO` en voz y texto.
+**Estado:** `EN VALIDACIÓN` en voz y texto; el código V325 tiene pruebas automáticas y falta la prueba física prolongada en iPhone.
 
 - El botón `AI ∞` acepta texto y todos los micrófonos aceptan conversación natural después de una apertura manual.
 - La aplicación distingue primero órdenes locales de registro, navegación, score y consulta de tarjeta. Todo lo demás llega al modelo avanzado mediante API.
@@ -1120,7 +1120,8 @@ Probar como mínimo:
 - Para información cambiante puede consultar la Web y presentar fuentes; diferencia hechos confirmados, estimaciones, opiniones e hipótesis y nunca inventa datos.
 - Cambia automáticamente de idioma y profundidad. Si falta un dato indispensable, realiza una sola pregunta breve.
 - Sus límites reales son seguridad, privacidad, legalidad, veracidad, acceso disponible y capacidad técnica. Una consulta médica, legal o financiera no sustituye a un profesional.
-- El micrófono nunca se abre solo. Tras la respuesta espera tres segundos para un seguimiento; si no lo hay, se cierra.
+- El micrófono nunca se abre solo. Para órdenes de la tarjeta usa VAD operativo de 0.2, prefijo de 700 ms y cierre tras 1,000 ms de silencio. Para AI UNIVERSAL ∞ cambia a VAD semántico de baja urgencia, que respeta pausas naturales y evita cortar una idea únicamente por un silencio fijo.
+- Durante la respuesta el micrófono permanece disponible para una interrupción bilateral confirmada: arma el corte a los 250 ms, exige al menos ocho caracteres reconocidos y descarta eco. Al terminar la voz vuelve inmediatamente a escuchar. Sólo 30 minutos completos de inactividad cierran la conversación.
 
 ### 21.5 Persistencia
 
@@ -1298,7 +1299,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 - Puntuación automática por hoyo: doble bogey o más `0`; bogey `1`; par `2`; birdie `3`; eagle, albatros o mejor `4`. El valor máximo por hoyo queda limitado a cuatro puntos.
 - `X`, `EQUIS` o `LEVANTA` registra el hoyo levantado con cero puntos y sin fabricar un Gross.
 - La voz acepta `Nombre + Gross` en el hoyo activo; el número de hoyo es opcional y únicamente reposiciona el cursor. Acepta bloques consecutivos, X explícita y la respuesta contextual posterior a `Falta NOMBRE`. No reparte tiros de handicap. El ingreso manual y el dictado terminan en la misma secuencia oficial de cálculo, guardado, render y cierre hablado. Al completar los hoyos 1–9 por cualquiera de los dos controles anuncia automáticamente `Primera vuelta` y, en orden de registro, el nombre, Gross y Puntos de cada jugador. Al completar los hoyos 10–18 anuncia `Segunda vuelta` con nombre, Gross y Puntos de cada jugador y luego `Total` con nombre, Gross y Puntos acumulados de cada jugador. Cada cierre se pronuncia una sola vez.
-- El recordatorio `Falta NOMBRE` conserva los dos segundos aprobados, pero el tiempo comienza únicamente después de una transcripción final y de comprobar inactividad real. Queda bloqueado y se cancela mientras existe voz activa, delta parcial, transcripción pendiente, watchdog, finalización, salida hablada o aplicación viva de scores. General y Stableford comparten los mismos cuatro segundos de continuidad y diez segundos de vigilancia; no existen excepciones de tiempos por modalidad.
+- El recordatorio `Falta NOMBRE` conserva dos segundos de inactividad y una confirmación adicional de 450 ms, pero el tiempo comienza únicamente después de una transcripción final y de comprobar inactividad real. Queda bloqueado y se cancela mientras existe voz activa, delta parcial, transcripción pendiente, watchdog, finalización, salida hablada o aplicación viva de scores. General y Stableford comparten VAD operativo de un segundo y vigilancia de diez segundos; AI UNIVERSAL ∞ usa por separado el final de turno semántico V325.
 - Antes de cualquier reporte de primera vuelta, segunda vuelta o total, la aplicación cierra automáticamente el micrófono. El micrófono permanece cerrado durante y después de la lectura para que conversaciones externas no interrumpan, alteren ni reinicien el reporte.
 - Todos los rótulos visuales de las tarjetas oficial, digital, General, Stableford, Control Manual y artefactos Global/personales utilizan exclusivamente `OUT`, `IN` y `TOTAL`. Las expresiones habladas `Primera vuelta` y `Segunda vuelta` se conservan únicamente dentro del vocabulario de cierre aprobado.
 - Al cierre oficial, la ronda conserva un snapshot con SHA-256 y guarda en el historial el campo, la fecha y hora, el torneo, la categoría, los jugadores, los 18 hoyos, Gross y Puntos; además actualiza la clasificación acumulada de su categoría.
@@ -1336,6 +1337,7 @@ La modalidad se identifica en todas las pantallas únicamente como **FOUR BALL**
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-26 | Manual 3.73 / App V325 | Separados los tiempos del micrófono: órdenes y scores conservan VAD operativo de 0.2/700/1,000 ms; AI UNIVERSAL ∞ usa `semantic_vad` con urgencia baja para respetar pausas naturales. La interrupción bilateral conserva guardia de 250 ms, confirmación mínima de ocho caracteres, protección de eco por 1,800 ms, reescucha inmediata y cierre sólo tras 30 minutos sin actividad. Se registra además como trabajo futuro el enlace oficial/autorizado con USGA y Reglas de Golf, la modalidad Skins y soporte Apple Watch/Wear OS. La aprobación comercial sigue pendiente de prueba física prolongada en iPhone. |
 | 2026-08-26 | Manual 3.72 / App V324 | AI UNIVERSAL ∞ incorpora tráfico vehicular real o proyectado mediante Google Maps Routes en modo `TRAFFIC_AWARE_OPTIMAL`: entiende origen, destino y hora por voz o texto, solicita GPS cuando el usuario dice `aquí`, responde ETA, demora, distancia y hora de cálculo sin mostrar mapa ni conservar coordenadas en el historial. No se presenta como Waze. Fallo, timeout o permiso denegado permiten continuar la conversación. La función permanece pendiente de credencial/facturación y de comparación física en Guatemala e iPhone antes de declararse lista para montar. |
 | 2026-08-25 | Manual 3.69 / App V321 | Integrada AI UNIVERSAL ∞ mediante API de modelo avanzado: comunicación por voz y texto sin catálogo temático cerrado, contexto temporal, búsqueda Web para datos cambiantes, fuentes visibles, adaptación de idioma y nivel, separación automática entre órdenes de la tarjeta y consultas generales, y controles ESCUCHAR, DETENER, REPETIR, SILENCIAR y CONTINUAR. Las 200 áreas validadas son pruebas, nunca límites. |
 | 2026-08-25 | Manual 3.68 / App V315 | El Caddie entiende cualquier frase que no sea una operación válida de tarjeta, incluso situaciones contadas sin pregunta perfecta; conversa sobre cualquier tema, investiga datos actuales mediante búsqueda web y muestra fuentes. La respuesta normal comienza tras aproximadamente un segundo de silencio. Mientras habla puede ser interrumpido por la voz del jugador. Al terminar espera tres segundos y cierra el micrófono si no hay seguimiento; nunca lo abre solo. El pronóstico llega hasta 16 días e incluye intervalos y hora pico de lluvia. |

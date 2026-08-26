@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const stable=fs.readFileSync(new URL("./stableford.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V324-REAL-TRAFFIC-20260826"/);
+assert.match(html,/gscg-build" content="V325-IDEAL-MICROPHONE-TIMINGS-20260826"/);
 for(const id of [
   "stablefordSetupOverlay","stablefordResultOverlay","stablefordSeriesSection",
   "stablefordSeniorTab","stablefordSuperSeniorTab","openStablefordResult"

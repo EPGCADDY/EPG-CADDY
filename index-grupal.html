@@ -11,8 +11,8 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/official-logos/golf-score-card-gt-apple-touch-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V324-REAL-TRAFFIC-20260826">
-<meta name="gscg-manual" content="V321-AI-UNIVERSAL-INFINITY-MANUAL-20260825">
+<meta name="gscg-build" content="V325-IDEAL-MICROPHONE-TIMINGS-20260826">
+<meta name="gscg-manual" content="V325-IDEAL-MICROPHONE-TIMINGS-MANUAL-20260826">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
 <meta name="gscg-four-ball" content="V309-TWO-PAIRS-BEST-NET-CUMULATIVE-MATCH-20260825">
@@ -914,12 +914,16 @@ const ROUND_MISSING_CONFIRM_MS=450;
 const ROUND_VAD_THRESHOLD=0.2;
 const ROUND_VAD_PREFIX_MS=700;
 const ROUND_VAD_SILENCE_MS=1000;
+const REALTIME_TURN_PROFILE_OPERATIONAL="operational";
+const REALTIME_TURN_PROFILE_CONVERSATION="conversation";
+const CONVERSATION_VAD_EAGERNESS="low";
 let pc=null,dc=null,stream=null,micTrack=null,audioEl=null,listening=false,phase="idle",voiceContext="round",activeResponseId=null;
 let sessionConnectPromise=null,voiceActivationPromise=null,voiceActivationContext=null,realtimeGeneration=0;
 let appHiddenAt=0,appWasBackgrounded=false,lastRealtimeActivityAt=Date.now(),resumeCheckPromise=null;
 let realtimeShape="unknown";
 let setupSpeechAllowed=false,sessionHasSpoken=false;
 let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false,pendingVoiceAssistantAction=null,conversationIdleCloseTimer=null,conversationBargeInArmedAt=0,conversationOutputStarted=false,conversationOutputTranscript="",conversationBargeInItemId="",conversationBargeInText="",conversationEchoGuardUntil=0,conversationClearResponseId=null;
+let realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL,realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;
 let voiceOpening=false;
 let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null;
 const AI_UNIVERSAL_HISTORY_LIMIT=80;
@@ -1403,6 +1407,7 @@ function previewSetupDictation(){
   const transcript=completedSetupTranscript();if(!transcript)return false;
   const parsed=parseSetupTranscript(transcript);if(!parsed.ok)return false;
   const result=applySetupChanges(parsed.changes);if(!result.ok)return false;
+  restoreOperationalTurnProfile();
   consumeCompletedSetupTranscript();
   enforceCanonicalDraftNames();
   renderDraft();
@@ -1425,6 +1430,7 @@ function finalizeSetupDictation(){
     $("setupStatus").textContent="PROCESANDO LISTADO COMPLETO…";
     const parsed=parseSetupTranscript(transcript),result=parsed.ok?applySetupChanges(parsed.changes):parsed;
     if(!result.ok){resetSetupCapture();speakGlobalError("setup");return}
+    restoreOperationalTurnProfile();
     consumeCompletedSetupTranscript();
   }
   if(!draftPlayers.length){resetSetupCapture();speakGlobalError("setup");return}
@@ -1716,6 +1722,7 @@ function executeVoiceAssistantAction(action){
 function handleVoiceAssistantTranscript(transcript){
   const command=window.GSCVoiceAssistant?.parse?.(transcript)||{matched:false};
   if(!command.matched)return false;
+  restoreOperationalTurnProfile();
   noteRoundTimerInstruction();
   const action=command.execute?command.action:null;
   pendingVoiceAssistantAction=action;
@@ -1734,9 +1741,10 @@ function finalizeRoundDictation(){
   if(roundFinalizeTimer){clearTimeout(roundFinalizeTimer);roundFinalizeTimer=null}
   const transcript=roundTranscriptCombined();
   if(!transcript){resetRoundCapture();phase="idle";$("status").textContent=roundIdleStatus();return}
-  if(isStopCommand(transcript)){noteRoundTimerInstruction();resetRoundCapture();stopAuthorizedSpeech();return}
+  if(isStopCommand(transcript)){restoreOperationalTurnProfile();noteRoundTimerInstruction();resetRoundCapture();stopAuthorizedSpeech();return}
   const navigation=parseRoundNavigationCommand(transcript);
   if(navigation.matched){
+    restoreOperationalTurnProfile();
     noteRoundTimerInstruction();
     resetRoundCapture();
     phase="idle";
@@ -1753,6 +1761,7 @@ function finalizeRoundDictation(){
   // completarse después por micrófono sin reiniciar ni perder scores.
   const provisionalProfile=parseProvisionalProfileTranscript(transcript);
   if(provisionalProfile.matched){
+    restoreOperationalTurnProfile();
     noteRoundTimerInstruction();
     const result=provisionalProfile.ok?applyProvisionalProfileChange(provisionalProfile.change):provisionalProfile;
     resetRoundCapture();phase="idle";
@@ -1763,6 +1772,7 @@ function finalizeRoundDictation(){
   // 1) Gestión explícita de jugadores durante una ronda.
   const rosterCmd=parseRosterCommand(transcript);
   if(rosterCmd.matched){
+    restoreOperationalTurnProfile();
     noteRoundTimerInstruction();
     resetRoundCapture();
     if(rosterCmd.action==="open_add"){if(openRosterEditor())return;speakGlobalError("round");return}
@@ -1780,6 +1790,7 @@ function finalizeRoundDictation(){
   // 2) Las consultas tienen prioridad absoluta.
   const query=parseRoundQueryTranscript(transcript);
   if(query.matched){
+    restoreOperationalTurnProfile();
     noteRoundTimerInstruction();
     const r=query.result;
     resetRoundCapture();
@@ -1803,6 +1814,7 @@ function finalizeRoundDictation(){
   // 3) Único modo autorizado de scores: jugador + hoyo + score/gross.
   const parsed=parseRoundScoreTranscript(transcript);
   if(parsed.matched){
+    restoreOperationalTurnProfile();
     noteRoundTimerInstruction();
     const result=parsed.ok?applyLiteralScores(parsed):parsed;
     const continuous=listening&&voiceContext==="round";
@@ -1882,7 +1894,15 @@ function betaSessionConfigFromGa(cfg){
 function sessionConfigForActiveShape(cfg){
   return realtimeShape==="beta"?betaSessionConfigFromGa(cfg):cfg;
 }
-function effectiveSessionCheck(session,context,expectedSpeed=VOICE_POLICY.speed){
+function turnDetectionForProfile(profile=REALTIME_TURN_PROFILE_OPERATIONAL){
+  if(profile===REALTIME_TURN_PROFILE_CONVERSATION)return{type:"semantic_vad",eagerness:CONVERSATION_VAD_EAGERNESS,create_response:false,interrupt_response:false};
+  return{type:"server_vad",threshold:ROUND_VAD_THRESHOLD,prefix_padding_ms:ROUND_VAD_PREFIX_MS,silence_duration_ms:ROUND_VAD_SILENCE_MS,create_response:false,interrupt_response:false};
+}
+function applyTurnProfileToConfig(cfg,profile=REALTIME_TURN_PROFILE_OPERATIONAL){
+  if(cfg?.audio?.input)cfg.audio.input.turn_detection=turnDetectionForProfile(profile);
+  return cfg;
+}
+function effectiveSessionCheck(session,context,expectedSpeed=VOICE_POLICY.speed,expectedProfile=REALTIME_TURN_PROFILE_OPERATIONAL){
   const beta=detectRealtimeShape(session)==="beta";
   const td=beta?session?.turn_detection:session?.audio?.input?.turn_detection;
   const tools=Array.isArray(session?.tools)?session.tools:[];
@@ -1893,9 +1913,11 @@ function effectiveSessionCheck(session,context,expectedSpeed=VOICE_POLICY.speed)
   const expectedThreshold=ROUND_VAD_THRESHOLD;
   const expectedPrefix=ROUND_VAD_PREFIX_MS;
   const typeOk=beta?session?.object==="realtime.session":session?.type==="realtime";
-  const ok=typeOk&&td?.type==="server_vad"&&Number(td?.silence_duration_ms)===expectedSilence&&
-    Number(td?.threshold)===expectedThreshold&&Number(td?.prefix_padding_ms)===expectedPrefix&&
-    td?.create_response===false&&td?.interrupt_response===false&&tools.length===0&&
+  const turnOk=expectedProfile===REALTIME_TURN_PROFILE_CONVERSATION
+    ?td?.type==="semantic_vad"&&td?.eagerness===CONVERSATION_VAD_EAGERNESS
+    :td?.type==="server_vad"&&Number(td?.silence_duration_ms)===expectedSilence&&
+      Number(td?.threshold)===expectedThreshold&&Number(td?.prefix_padding_ms)===expectedPrefix;
+  const ok=typeOk&&turnOk&&td?.create_response===false&&td?.interrupt_response===false&&tools.length===0&&
     (session?.tool_choice==="none"||session?.tool_choice==null)&&(!voice||voice===VOICE_POLICY.voice)&&
     (!Number.isFinite(Number(speedRaw))||Math.abs(Number(speedRaw)-Number(expectedSpeed))<0.001);
   return ok;
@@ -2201,11 +2223,14 @@ function openAiUniversalPanel(){
 }
 function closeAiUniversalPanel(){const overlay=$("aiUniversalOverlay");overlay.classList.remove("visible");overlay.setAttribute("aria-hidden","true")}
 async function startAiUniversalListening(){
-  if(listening){aiUniversalSetState("● MICRÓFONO ESCUCHANDO · HABLA CON NATURALIDAD",{busy:true});return true}
+  if(listening){
+    try{await setRealtimeTurnProfile(REALTIME_TURN_PROFILE_CONVERSATION)}catch(error){console.error("Perfil conversacional:",error)}
+    aiUniversalSetState("● MICRÓFONO ESCUCHANDO · HABLA CON NATURALIDAD",{busy:true});return true
+  }
   if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;
   const setupVisible=$("setupOverlay")?.classList?.contains("visible"),context=setupVisible||!round.configured?"setup":"round";
   aiUniversalSetState("ABRIENDO MICRÓFONO…",{busy:true});
-  const opened=await toggleVoice(context);
+  const opened=await toggleVoice(context,REALTIME_TURN_PROFILE_CONVERSATION);
   aiUniversalSetState(opened?"● MICRÓFONO ESCUCHANDO · HABLA CON NATURALIDAD":"NO SE PUDO ABRIR EL MICRÓFONO",{busy:!!opened});return !!opened;
 }
 function aiUniversalLooksLikeSetupOrder(text){
@@ -2311,7 +2336,12 @@ function speakConversation(transcript){
   if(audioEl){audioEl.volume=aiUniversalMuted?0:1;audioEl.muted=aiUniversalMuted}
   const statusTarget=conversationStatusTarget();if(statusTarget)statusTarget.textContent="CADDIE RESPONDIENDO…";
   aiUniversalSetState("AI UNIVERSAL ∞ PENSANDO…",{busy:true});
-  sendEvent({type:"response.create",response:responseForConversation(token)});
+  const beginConversationResponse=()=>{
+    if(!dc||dc.readyState!=="open"||authorizedSpeech?.token!==token||authorizedSpeech?.reason!=="conversation")return false;
+    sendEvent({type:"response.create",response:responseForConversation(token)});return true;
+  };
+  if(realtimeTurnProfile===REALTIME_TURN_PROFILE_CONVERSATION&&realtimeTurnProfileRequested===REALTIME_TURN_PROFILE_CONVERSATION&&!pendingSessionUpdate)beginConversationResponse();
+  else setRealtimeTurnProfile(REALTIME_TURN_PROFILE_CONVERSATION).then(beginConversationResponse).catch(error=>{console.error("Perfil conversacional:",error);beginConversationResponse()});
   return true;
 }
 
@@ -2320,9 +2350,9 @@ async function setSessionVoiceSpeed(speed){
   if(!dc||dc.readyState!=="open")return false;
   const context=voiceContext==="setup"?"setup":"round";
   try{
-    const cfg=context==="setup"?setupSessionConfig():roundSessionConfig();
+    const cfg=applyTurnProfileToConfig(context==="setup"?setupSessionConfig():roundSessionConfig(),realtimeTurnProfileRequested);
     cfg.audio.output.speed=speed;
-    await updateSessionAndWait(sessionConfigForActiveShape(cfg),context,speed);
+    await updateSessionAndWait(sessionConfigForActiveShape(cfg),context,speed,realtimeTurnProfileRequested);
     return true;
   }catch(e){console.error(e);return false}
 }
@@ -2370,8 +2400,27 @@ async function speakQuery(text,kind="query"){
   if(kind==="accumulated")return speakAuthorized("query_accumulated",text);
   return speakAuthorized("query",text);
 }
-let sessionUpdateSeq=0;let pendingSessionUpdate=null;
-function updateSessionAndWait(session,context,expectedSpeed=VOICE_POLICY.speed){return new Promise((resolve,reject)=>{if(!dc||dc.readyState!=="open")return reject(new Error("Canal Realtime no disponible"));const event_id=`group_session_${++sessionUpdateSeq}`;const timer=setTimeout(()=>{if(pendingSessionUpdate?.event_id===event_id)pendingSessionUpdate=null;reject(new Error("No se confirmó la configuración de voz"))},8000);pendingSessionUpdate={event_id,context,expectedSpeed,resolve:()=>{clearTimeout(timer);pendingSessionUpdate=null;resolve()},reject:(err)=>{clearTimeout(timer);pendingSessionUpdate=null;reject(err)}};sendEvent({type:"session.update",event_id,session})})}
+let sessionUpdateSeq=0;let pendingSessionUpdate=null;let sessionUpdateQueue=Promise.resolve();
+function performSessionUpdateAndWait(session,context,expectedSpeed=VOICE_POLICY.speed,expectedProfile=REALTIME_TURN_PROFILE_OPERATIONAL){return new Promise((resolve,reject)=>{if(!dc||dc.readyState!=="open")return reject(new Error("Canal Realtime no disponible"));const event_id=`group_session_${++sessionUpdateSeq}`;const timer=setTimeout(()=>{if(pendingSessionUpdate?.event_id===event_id)pendingSessionUpdate=null;reject(new Error("No se confirmó la configuración de voz"))},8000);pendingSessionUpdate={event_id,context,expectedSpeed,expectedProfile,resolve:()=>{clearTimeout(timer);pendingSessionUpdate=null;resolve()},reject:(err)=>{clearTimeout(timer);pendingSessionUpdate=null;reject(err)}};sendEvent({type:"session.update",event_id,session})})}
+function updateSessionAndWait(session,context,expectedSpeed=VOICE_POLICY.speed,expectedProfile=REALTIME_TURN_PROFILE_OPERATIONAL){
+  const queued=sessionUpdateQueue.catch(()=>{}).then(()=>performSessionUpdateAndWait(session,context,expectedSpeed,expectedProfile));
+  sessionUpdateQueue=queued.catch(()=>{});return queued;
+}
+async function setRealtimeTurnProfile(profile=REALTIME_TURN_PROFILE_OPERATIONAL){
+  const target=profile===REALTIME_TURN_PROFILE_CONVERSATION?REALTIME_TURN_PROFILE_CONVERSATION:REALTIME_TURN_PROFILE_OPERATIONAL;
+  const previousRequested=realtimeTurnProfileRequested;
+  realtimeTurnProfileRequested=target;
+  if(!realtimeReady())return false;
+  if(realtimeTurnProfile===target&&previousRequested===target&&!pendingSessionUpdate)return true;
+  const context=voiceContext==="setup"?"setup":"round";
+  const cfg=applyTurnProfileToConfig(context==="setup"?setupSessionConfig():roundSessionConfig(),target);
+  await updateSessionAndWait(sessionConfigForActiveShape(cfg),context,VOICE_POLICY.speed,target);
+  realtimeTurnProfile=target;return true;
+}
+function restoreOperationalTurnProfile(){
+  if(realtimeTurnProfile===REALTIME_TURN_PROFILE_OPERATIONAL&&realtimeTurnProfileRequested===REALTIME_TURN_PROFILE_OPERATIONAL&&!pendingSessionUpdate)return true;
+  setRealtimeTurnProfile(REALTIME_TURN_PROFILE_OPERATIONAL).catch(error=>console.error("Perfil operativo:",error));return true;
+}
 function validatePlayers(players){if(!Array.isArray(players)||players.length<1||players.length>6)return{ok:false,speech:"La ronda requiere de uno a seis jugadores."};const seen=new Set(),out=[];for(let i=0;i<players.length;i++){const x=players[i]||{},name=String(x.name||"").trim(),handicap=Number(x.handicap),teeRaw=String(x.tee||"").trim(),tee=normalizeTee(teeRaw);if(!name)return{ok:false,speech:`Falta el nombre del jugador ${i+1}.`};if(seen.has(name.toLowerCase()))return{ok:false,speech:`El jugador ${name} está repetido.`};if(!Number.isInteger(handicap)||handicap<0||handicap>54)return{ok:false,speech:`Handicap inválido para ${name}.`};if(!tee)return{ok:false,speech:`Marcas inválidas para ${name}.`};seen.add(name.toLowerCase());out.push(normalizePlayer({name,handicap,tee,matrix:x.matrix},i))}return{ok:true,players:out}}
 function prepareGroup(args){
   if(Array.isArray(args?.changes))return applySetupChanges(args.changes);
@@ -3579,8 +3628,9 @@ $("startStablefordRound").addEventListener("click",startStablefordRoundMode);$("
 $("stablefordSeniorTab").addEventListener("click",()=>{stablefordRankingCategory="senior";renderStablefordSeries()});$("stablefordSuperSeniorTab").addEventListener("click",()=>{stablefordRankingCategory="super_senior";renderStablefordSeries()});
 $("openStablefordResult").addEventListener("click",openStablefordResultEditor);$("saveStablefordResult").addEventListener("click",saveStablefordManualResult);$("cancelStablefordResult").addEventListener("click",closeStablefordResultEditor);
 async function configureSessionFor(context){
-  const cfg=context==="setup"?setupSessionConfig():roundSessionConfig();
-  await updateSessionAndWait(sessionConfigForActiveShape(cfg),context);
+  const cfg=applyTurnProfileToConfig(context==="setup"?setupSessionConfig():roundSessionConfig(),REALTIME_TURN_PROFILE_OPERATIONAL);
+  await updateSessionAndWait(sessionConfigForActiveShape(cfg),context,VOICE_POLICY.speed,REALTIME_TURN_PROFILE_OPERATIONAL);
+  realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL;realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;
 }
 
 function teardownRealtime(){
@@ -3599,7 +3649,7 @@ function teardownRealtime(){
   conversationOutputStarted=false;conversationOutputTranscript="";conversationEchoGuardUntil=0;conversationClearResponseId=null;resetConversationBargeInCandidate();
   processedTranscriptItems.clear();processedConversationToolCalls.clear();
   if(pendingSessionUpdate){try{pendingSessionUpdate.reject(new Error("Realtime reiniciado"))}catch{}}
-  pendingSessionUpdate=null;listening=false;phase="idle";
+  pendingSessionUpdate=null;realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL;realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;listening=false;phase="idle";
   $("headerMicWrap").classList.remove("active","connecting");
   $("setupMicWrap").classList.remove("active","connecting");
 }
@@ -3725,7 +3775,7 @@ function handleRealtime(message){
     }
     if(e.type==="session.updated"&&pendingSessionUpdate){
       if(realtimeShape==="unknown")realtimeShape=detectRealtimeShape(e.session);
-      if(effectiveSessionCheck(e.session,pendingSessionUpdate.context,pendingSessionUpdate.expectedSpeed))pendingSessionUpdate.resolve();
+      if(effectiveSessionCheck(e.session,pendingSessionUpdate.context,pendingSessionUpdate.expectedSpeed,pendingSessionUpdate.expectedProfile))pendingSessionUpdate.resolve();
       else pendingSessionUpdate.reject(new Error("Configuración Realtime incompatible"));
     }
     if(e.type==="response.created"){
@@ -3853,6 +3903,7 @@ function handleRealtime(message){
       if(setupTranscriptionWatchdog){clearTimeout(setupTranscriptionWatchdog);setupTranscriptionWatchdog=null}
       const key=e.item_id||e.event_id||String(Date.now());if(processedTranscriptItems.has(key))return;processedTranscriptItems.add(key);
       if(window.GSCVoiceAssistant?.parse?.(e.transcript||"")?.matched){
+        restoreOperationalTurnProfile();
         resetSetupCapture();
         handleVoiceAssistantTranscript(e.transcript||"");
         return;
@@ -3866,6 +3917,7 @@ function handleRealtime(message){
         return;
       }
       appendSetupTranscript(e.item_id||key,e.transcript||"");
+      restoreOperationalTurnProfile();
       if(setupFinalizeRequested){finalizeSetupDictation();return}
       if(setupLocked)return;
       phase="listening";
@@ -3880,6 +3932,7 @@ function handleRealtime(message){
       rememberRoundTranscriptionCompleted(key);
       const live=applyLiveRoundTranscript(key,e.transcript||"",{final:true});
       if(live.handled){
+        restoreOperationalTurnProfile();
         consumeLiveRoundItem(key);
         if(roundFinalizeTimer){clearTimeout(roundFinalizeTimer);roundFinalizeTimer=null}
         roundFinalizeRequested=false;
@@ -4065,7 +4118,7 @@ async function ensureSession(){
   })();
   return sessionConnectPromise;
 }
-async function toggleVoice(context){
+async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL){
   setMicConnecting(context,true);
   if(voiceActivationPromise){
     return voiceActivationPromise;
@@ -4109,8 +4162,10 @@ async function toggleVoice(context){
       if(context==="round")resetRoundCapture();
       if(context==="setup"&&activeResponseId){try{sendEvent({type:"response.cancel",response_id:activeResponseId})}catch{}activeResponseId=null}
       // /api/session-grupal entrega la sesión ya configurada en el SDP inicial.
-      // Evita una segunda espera session.update antes de activar el micrófono.
       if(!realtimeReady())throw new Error("Realtime no quedó listo");
+      // AI UNIVERSAL usa final de turno semántico paciente; las órdenes de la
+      // tarjeta conservan el VAD rápido y predecible de un segundo.
+      await setRealtimeTurnProfile(desiredTurnProfile);
       setMicConnecting(context,false);
       setVoice(true);
       return true;

@@ -151,6 +151,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 **Estado:** PENDIENTE · `PEND-REG-001`
 
 - Adaptar las Reglas de Golf a la aplicación y al manual sin crear un motor paralelo.
+- Buscar y formalizar un enlace oficial/autorizado con USGA y sus Reglas de Golf, sujeto a licencia, atribución, vigencia y capacidades técnicas comprobadas.
 - Permitir consultas naturales por escrito y micrófono, con respuestas breves y una explicación ampliada localizable.
 - Diferenciar reglas generales, modalidad activa y Reglas Locales del campo o torneo.
 - Cubrir penalidades, alivios, bola perdida o provisional, fuera de límites, áreas de penalidad, bola injugable, búnker, green, bola movida/equivocada, orden de juego, concesiones y cierres de Match Play.
@@ -176,10 +177,10 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** EN PROGRESO · Caddie universal V314 disponible en todos los micrófonos; texto y validación física pendientes · `PEND-VOZ-003`
+**Estado:** EN PROGRESO · AI UNIVERSAL ∞ V325 con tiempos diferenciados en código; validación física prolongada pendiente · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
-- **Implementado V314:** el micrófono de Inicio/Registro, Stableford y Tarjeta abre el mismo Caddie. Conversa sobre Golf, medicina general, vuelos, cultura y cualquier tema permitido sin palabra clave ni cambio de modo. Mientras responde, pausa la entrada para que el eco o ruido no corte palabras; al terminar vuelve a escuchar si el botón permanece abierto. La página 73 del Manual ya lo explica.
+- **Implementado V325:** las órdenes de registro y score conservan cierre rápido de un segundo; AI UNIVERSAL ∞ usa detección semántica paciente para respetar pausas naturales. El micrófono sigue disponible durante la respuesta, permite interrupción confirmada, vuelve inmediatamente a escuchar y sólo se cierra por 30 minutos reales de inactividad.
 
 - **Candado de privacidad V312:** no hay activación automática, huella de voz ni reconocimiento biométrico; el jugador debe abrir primero el micrófono con el botón.
 - Separar rigurosamente score, consulta, navegación, conocimiento de golf, clima vivo, conversación general y orientación de salud.
@@ -207,6 +208,22 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Waze no entrega silenciosamente estos datos a una web común; sus Deep Links abren Waze y su Transport SDK requiere asociación, aplicación nativa aprobada y atribución.
 - Timeout, proveedor caído, falta de GPS o permiso regresan una respuesta recuperable para que el micrófono pueda continuar.
 - No se cierra todavía: requiere destino exacto, consentimiento de ubicación, clave protegida en servidor, facturación, pruebas físicas en iPhone y comparación de varias rutas/horarios reales en Guatemala contra Waze.
+
+### 16. Modalidad Skins
+
+**Estado:** PENDIENTE · `PEND-SKI-006`
+
+- Integrar Skins Gross y Neto dentro del mismo motor de score, sin duplicar captura, cálculo ni persistencia.
+- Definir valor por hoyo y regla de empate/acumulación antes de programar.
+- Cubrir ganadores por hoyo, acumulados, correcciones, X, cierre, historial, voz y tarjeta final.
+
+### 17. Apple Watch y otros smartwatches
+
+**Estado:** PENDIENTE · `PEND-WAT-007`
+
+- Priorizar Apple Watch enlazado con iPhone y evaluar después Wear OS.
+- Consultar hoyo y resultado esencial, y registrar scores con toque o voz mediante el mismo motor oficial.
+- Resolver sincronización interrumpida, duplicados, funcionamiento sin conexión, batería, permisos y pruebas de ronda completa.
 
 ## Mejoras continuas
 

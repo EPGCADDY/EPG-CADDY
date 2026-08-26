@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v324-real-traffic";
+const CACHE_NAME="gscg-mobile-v325-ideal-microphone-timings";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

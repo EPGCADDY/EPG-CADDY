@@ -13,6 +13,8 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 
 Integrar las Reglas de Golf a Golf Score Card GT de forma práctica, comprensible y verificable, para que el usuario pueda consultar una situación real desde la pantalla o el micrófono y recibir orientación sin abandonar innecesariamente la ronda.
 
+La solución debe buscar un enlace oficial y autorizado con **USGA** y sus **Reglas de Golf**, respetando licencia, atribución, vigencia, condiciones de uso y capacidades técnicas reales. No se simulará una integración ni se copiarán contenidos restringidos sin autorización.
+
 ### Alcance proyectado
 
 - Crear un centro de consulta reglamentaria dentro de la aplicación y del manual.
@@ -206,3 +208,51 @@ Este pendiente sólo podrá cerrarse con destino exacto validado, proveedor y fa
 ### Frases para localizar este pendiente
 
 `tráfico`, `tránsito`, `Waze`, `Pradera`, `tiempo para llegar`, `ETA`, `ir a mi casa`, `pendientes por hacer`.
+
+## PEND-SKI-006 · Modalidad de juego Skins
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE
+**Prioridad:** Función nueva solicitada por el propietario
+
+### Objetivo
+
+Agregar **Skins** dentro de la arquitectura única de Golf Score Card GT, reutilizando registro, campos, handicap, captura manual y por voz, persistencia, historial y tarjeta final.
+
+### Alcance mínimo para diseñar y aprobar
+
+- Definir Skins Gross y Neto, número de jugadores, valor por hoyo y moneda/unidad opcional.
+- Definir antes de programar si los empates acumulan el Skin al hoyo siguiente, se dividen o se anulan.
+- Calcular ganador por hoyo, acumulados pendientes, Skins ganados por jugador y resultado final.
+- Mantener scores individuales intactos y separar claramente score deportivo de cualquier valor económico.
+- Permitir anotación manual y por voz mediante el mismo escritor oficial; una consulta nunca debe modificar resultados.
+- Cubrir correcciones retroactivas, X explícita, hoyo 18 con acumulado pendiente, ronda recuperada, exportación e historial.
+- Añadir pruebas automáticas, visuales y físicas antes de declararlo operativo.
+
+### Frases para localizar este pendiente
+
+`Skins`, `juego Skins`, `Skin por hoyo`, `empate acumulado`, `pozo por hoyo`, `modalidad nueva`, `pendientes por hacer`.
+
+## PEND-WAT-007 · Apple Watch y smartwatches
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE
+**Prioridad:** Función nueva solicitada por el propietario
+
+### Objetivo
+
+Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posterior, con relojes **Wear OS**, para consultar y registrar información esencial durante la ronda sin sacar el teléfono.
+
+### Alcance mínimo para diseñar y aprobar
+
+- Priorizar Apple Watch por el dispositivo objetivo actual; evaluar después Wear OS sin crear motores de score separados.
+- Mostrar hoyo activo, par, jugador o turno, Gross pendiente, Neto y resultado esencial con controles grandes.
+- Permitir dictado o toque rápido de score y enviar la operación al mismo validador, cálculo y guardado de la aplicación principal.
+- Sincronizar de forma recuperable con el iPhone; impedir duplicados, saltos de hoyo o pérdida de datos cuando se interrumpa Bluetooth, Internet o la aplicación.
+- Determinar qué funciones pueden operar sin conexión y cómo reconciliar cambios al recuperar el enlace.
+- Mantener privacidad, permisos explícitos, consumo razonable de batería y pruebas físicas durante una ronda completa.
+- No declarar soporte universal de relojes hasta comprobar modelos, sistemas operativos y limitaciones reales.
+
+### Frases para localizar este pendiente
+
+`Apple Watch`, `Smart Watch`, `smartwatch`, `Wear OS`, `reloj`, `score desde el reloj`, `pendientes por hacer`.
