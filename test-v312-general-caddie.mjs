@@ -96,7 +96,7 @@ assert.equal(conversationToolStopIsPreFollowup(null,{sourceResponseId:"source",f
 assert.match(html,/Cuando necesites una herramienta, no pronuncies un preámbulo/,"El clima debe responder una sola vez y completo");
 assert.match(html, /phase=listening\?"listening":"idle"/, "La conversación debe volver a escuchar automáticamente");
 assert.match(html, /En salud ofrece únicamente orientación general/, "Faltan límites seguros para preguntas médicas");
-assert.match(html,/const CONVERSATION_IDLE_CLOSE_MS=3000/,"El micrófono debe cerrarse tras tres segundos sin seguimiento");
+assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=30\*60\*1000/,"El micrófono debe mantenerse abierto y cerrarse sólo tras treinta minutos sin actividad");
 assert.match(html,/const ROUND_VAD_SILENCE_MS=1000/,"Un segundo de silencio debe iniciar la respuesta sin demora artificial");
 assert.match(html,/silence_duration_ms:ROUND_VAD_SILENCE_MS/,"Cliente y sesión deben compartir el cierre rápido del turno");
 assert.match(html,/start_date:[\s\S]*?end_date:/,"La herramienta debe aceptar fechas y rangos futuros");
@@ -153,7 +153,7 @@ assert.match(sessionApi, /Caddie conversacional de propósito general/, "La sesi
 assert.match(sessionApi, /Detecta y transcribe literalmente el idioma que hable el usuario/, "La transcripción no debe limitarse al vocabulario de score ni a un idioma");
 assert.match(weatherApi, /api\.open-meteo\.com\/v1\/forecast/, "Falta proveedor meteorológico vivo");
 assert.match(weatherApi, /geocoding-api\.open-meteo\.com\/v1\/search/, "Falta resolución de campos o ubicaciones");
-assert.match(serviceWorker, /gscg-mobile-v321-ai-universal-infinity/, "La PWA debe reemplazar el shell anterior");
+assert.match(serviceWorker, /gscg-mobile-v322-real-sustained-conversation/, "La PWA debe reemplazar el shell anterior");
 assert.match(weatherApi, /forecast_days\", \"16\"/, "El pronóstico natural debe admitir el máximo confiable de 16 días");
 assert.match(weatherApi,/const FORECAST_PERIODS/,"El pronóstico debe resumir la franja horaria pedida");
 assert.match(researchApi,/https:\/\/api\.openai\.com\/v1\/responses/,"La investigación universal debe usar Responses API");

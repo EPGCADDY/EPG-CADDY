@@ -81,7 +81,7 @@ for(const token of [
   "function renderAiUniversalHistory()",
   'aiUniversalRemember("user",transcript)',
   'aiUniversalRemember("assistant",finishedConversationText,aiUniversalPendingSources)',
-  "const CONVERSATION_IDLE_CLOSE_MS=3000",
+  "const CONVERSATION_INACTIVITY_CLOSE_MS=30*60*1000",
   "CONTEXTO TEMPORAL · NO SE GUARDA EN HISTORIAL"
 ])assert.ok(html.includes(token),`Falta integración AI UNIVERSAL ∞: ${token}`);
 assert.doesNotMatch(html,/localStorage[^\n]{0,120}aiUniversal|aiUniversal[^\n]{0,120}localStorage/i,"La conversación universal no debe persistirse en el dispositivo");

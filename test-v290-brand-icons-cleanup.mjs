@@ -51,7 +51,7 @@ for(const icon of [
   "assets/official-logos/golf-score-card-gt-pwa-192.png",
   "assets/official-logos/golf-score-card-gt-apple-touch-180.png"
 ])assert.ok(fs.existsSync(icon),icon);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v321-ai-universal-infinity"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v322-real-sustained-conversation"/);
 assert.match(read("assets/official-logos/README.md"),/Logos oficiales · Golf Score Card GT/);
 
 console.log("PASS V305 · historial, navegación y acciones homologadas en General y Stableford");

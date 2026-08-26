@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v321-ai-universal-infinity";
+const CACHE_NAME="gscg-mobile-v322-real-sustained-conversation";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
