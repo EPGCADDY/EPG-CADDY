@@ -62,7 +62,7 @@ assert.equal(routePayload.destination.address,"Pradera Concepción, Guatemala");
 
 assert.equal((await computeTrafficRoute({destination:"Pradera"},{apiKey:"google-test-key"})).error,"TRAFFIC_ORIGIN_REQUIRED");
 assert.equal((await computeTrafficRoute({origin:"El Pulté"},{apiKey:"google-test-key"})).error,"TRAFFIC_DESTINATION_REQUIRED");
-assert.equal((await computeTrafficRoute({origin:"El Pulté",destination:"Pradera"},{apiKey:""})).error,"TRAFFIC_NOT_CONFIGURED");
+assert.equal((await computeTrafficRoute({origin:"El Pulté",destination:"Pradera"},{apiKey:" "})).error,"TRAFFIC_NOT_CONFIGURED");
 const upstreamFailure=await computeTrafficRoute({origin:"El Pulté",destination:"Pradera"},{apiKey:"google-test-key",fetchImpl:async()=>({ok:false,json:async()=>({error:"quota"})})});
 assert.equal(upstreamFailure.error,"TRAFFIC_UPSTREAM_UNAVAILABLE");
 assert.match(upstreamFailure.message,/continuar con otra pregunta/i);
