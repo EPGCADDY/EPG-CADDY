@@ -2,6 +2,8 @@
 
 ## Registro técnico V330 · juegos laterales y tres parejas
 
+**Hotfix V330-R2 · selección única:** `renderDraft()` sólo marca `RONDA NORMAL` cuando el motor General está activo y no existe un juego lateral seleccionado. `test-v330-side-games.mjs` fija el contrato, los candados históricos reconocen la nueva firma y `service-worker.js` fuerza la actualización de caché en iPhone.
+
 | Archivo exacto | Control V330 | Resultado comprobado |
 |---|---|---|
 | `skins.js` | `2–6 / GROSS-NET / CARRY-SPLIT-VOID / ZERO-SUM` | Ganador o empate por hoyo, bolsa, carry final, X y saldo económico separado. |

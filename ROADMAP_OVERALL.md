@@ -4,6 +4,8 @@
 
 ## V330 · Skins, Wolf, Vegas, Dots y seis jugadores
 
+**Hotfix V330-R2:** la selección visual de modalidad queda estrictamente exclusiva. Al elegir Skins, Wolf, Vegas o Dots, `RONDA NORMAL` se desmarca aunque el juego reutilice internamente el motor General; la caché instalable sube a `gscg-mobile-v330-side-games-r2` y la regresión impide que reaparezca la doble selección.
+
 El **26 de agosto de 2026** `PEND-SKI-006` pasa de diseño a implementación comprobable. `skins.js`, `wolf.js`, `vegas.js` y `dots.js` son motores puros conectados al score oficial, no menús de respuestas fijas. La ventana de opciones se divide en dos columnas —modalidades existentes a la izquierda y juegos nuevos a la derecha— y la pantalla principal de la tarjeta conserva su formato.
 
 Skins opera Gross/Neto para dos a seis jugadores con unidad monetaria, carry, división o anulación de empates. Wolf rota decisiones para tres a seis jugadores y no permite cierre con hoyos sin pareja/Solo/Lone/Blind. Vegas trabaja con cuatro o seis jugadores; la variante de seis usa tres parejas y comparaciones par a par. Dots permite activar y valorar eventos antes de jugar, mantiene apagadas por defecto las reglas de grupo `Amigo`, izquierda y derecha, y separa el saldo económico del score deportivo. Match Play y Four Ball se amplían a las parejas Verde, Oro y Azul.
