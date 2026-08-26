@@ -12,7 +12,7 @@ const UNIVERSAL_TIMEOUT_MS=55_000;
 const LIVE_TRAFFIC_TOOL={
   type:"function",
   name:"get_live_traffic",
-  description:"Calcula una ruta vehicular con ETA y demora usando tráfico real o predicción para una salida futura. Úsala para toda pregunta de tráfico, tiempo de llegada o congestión entre dos lugares; no uses búsqueda web para inventar un ETA.",
+  description:"Calcula una ruta vehicular con ETA y demora usando tráfico real o predicción para una salida futura. Úsala sólo cuando origen y destino identifiquen lugares suficientes; si el destino es ambiguo, pide primero una sola aclaración breve. No uses búsqueda web para inventar un ETA.",
   parameters:{type:"object",properties:{
     origin:{type:"string",description:"Punto de salida escrito por el usuario. Usa 'ubicación actual' si dice aquí, desde donde estoy o equivalente."},
     destination:{type:"string",description:"Destino suficientemente específico, incluyendo ciudad o país cuando ayude a desambiguar."},
@@ -116,7 +116,7 @@ export default async function handler(req,res){
             "Interpreta la intención real, conserva el contexto recibido, adapta la profundidad al usuario y responde en su idioma; usa español de forma predeterminada.",
             "Puedes explicar, enseñar, traducir, redactar, corregir, resumir, calcular, comparar, analizar, planificar, programar, generar ideas y orientar decisiones.",
             "Cuando la consulta dependa de noticias, precios, clima, leyes, productos, resultados, ubicaciones u otro dato cambiante, usa búsqueda web y prioriza fuentes primarias, oficiales y recientes.",
-            "Para tráfico vehicular, congestión, ruta o tiempo de llegada usa exclusivamente get_live_traffic. Puede calcular tráfico actual o una salida futura. Nunca presentes una búsqueda web como ETA real ni afirmes que el dato viene de Waze.",
+            "Para tráfico vehicular, congestión, ruta o tiempo de llegada usa exclusivamente get_live_traffic. Puede calcular tráfico actual o una salida futura. Si el destino es un fragmento ambiguo —por ejemplo sólo Concepción— pide una sola aclaración breve de nombre completo, zona o municipio antes de usar la herramienta; no adivines. Nunca presentes una búsqueda web como ETA real ni afirmes que el dato viene de Waze.",
             "Diferencia información confirmada, estimaciones, opiniones e hipótesis. Nunca inventes datos ni presentes una suposición como hecho.",
             "Si falta un dato indispensable, formula solamente una pregunta breve. Si no tienes una herramienta necesaria, dilo y ofrece la mejor alternativa real.",
             "Tus límites son seguridad, privacidad, legalidad, veracidad y capacidades técnicas reales. En medicina, asuntos legales, finanzas, impuestos, psicología, privacidad y seguridad ofrece orientación responsable y señala riesgos o necesidad profesional.",
@@ -153,7 +153,7 @@ export default async function handler(req,res){
             instructions:[
               "Eres AI UNIVERSAL ∞. Responde en el idioma del usuario con el resultado de tráfico recibido.",
               "Si ok es true, menciona origen, destino, ETA, demora, distancia, hora de cálculo y que la fuente es Google Maps Routes en modo de tráfico óptimo. trafficLevel es una estimación derivada; duración y demora son datos del proveedor.",
-              "Si ok es false, informa la limitación en una oración y permite continuar. Nunca inventes tráfico ni afirmes que proviene de Waze.",
+              "Si needsDestinationClarification es true, haz solamente una pregunta breve para pedir nombre completo, zona o municipio. Ante otro ok false, informa la limitación en una oración y permite continuar. Nunca inventes tráfico ni afirmes que proviene de Waze.",
               "No repitas coordenadas exactas ni incluyas URLs. Responde normalmente en dos o tres oraciones completas."
             ].join(" "),
             input:[...input,...(payload?.output||[]),{type:"function_call_output",call_id:trafficCall.call_id,output:JSON.stringify(trafficResult)}]

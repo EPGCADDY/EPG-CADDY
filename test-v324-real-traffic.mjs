@@ -26,6 +26,8 @@ assert.match(universalApi,/LIVE_TRAFFIC_TOOL/);
 assert.match(trafficLib,/routingPreference:"TRAFFIC_AWARE_OPTIMAL"/);
 assert.match(universalApi,/needsCurrentLocation:true/);
 assert.match(universalApi,/store:false/);
+assert.match(universalApi,/Si el destino es un fragmento ambiguo/);
+assert.match(universalApi,/Si needsDestinationClarification es true, haz solamente una pregunta breve/);
 
 const summary=summarizeTrafficRoute({routes:[{duration:"2100s",staticDuration:"1500s",distanceMeters:18640}]},{originLabel:"Ubicación GPS actual",destinationLabel:"Pradera Concepción, Guatemala",calculatedAt:"2026-08-26T14:00:00.000Z"});
 assert.equal(summary.ok,true);

@@ -5,6 +5,7 @@ import {summarizeTrafficRoute} from "./api/_lib/traffic.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
+const universalApi=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 
 assert.match(html,/gscg-build" content="V327-TOOL-FOLLOWUP-NO-SILENCE-20260826"/);
 assert.match(worker,/gscg-mobile-v327-tool-followup-no-silence/);
@@ -55,6 +56,8 @@ assert.match(toolBridge,/tool_transport_recovered/);
 assert.match(toolBridge,/recoverStalledConversation\("LA CONSULTA TERMINÓ, PERO LA VOZ SE INTERRUMPIÓ/);
 assert.match(html,/Si el destino es un fragmento ambiguo/);
 assert.match(html,/haz solamente una pregunta breve para pedir nombre completo, zona o municipio/);
+assert.match(universalApi,/Si el destino es un fragmento ambiguo/);
+assert.match(universalApi,/Si needsDestinationClarification es true, haz solamente una pregunta breve/);
 
 const unresolved=summarizeTrafficRoute({routes:[]},{originLabel:"El Pulté Golf",destinationLabel:"Concepción"});
 assert.equal(unresolved.ok,false);
