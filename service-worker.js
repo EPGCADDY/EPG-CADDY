@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v326-no-silent-conversation";
+const CACHE_NAME="gscg-mobile-v327-tool-followup-no-silence";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

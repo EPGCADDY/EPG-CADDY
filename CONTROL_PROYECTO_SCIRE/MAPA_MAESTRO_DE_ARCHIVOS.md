@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V326: **309**.
+Archivos activos rastreados al corte V327: **311**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -37,8 +37,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ECOS.md` | `43a9c6f5bacb8c758edd33c8ad31f9e59e63f84f` | 3982 bytes | Reglas de comportamiento de Golf Score Card GT. |
 | `EPG-Caddy_Master_Blueprint_v0.1.md` | `95b4c227c4e5dce7f90fede0ebc9cdd0af6ed76c` | 7990 bytes | Plano maestro; el nombre del archivo es antiguo, pero el contenido ya usa Golf Score Card GT. |
 | `EPG_CADDY_PLAN_CAMBIOS.md` | `a81981bda6522c0ab29ec5e70f6ebe557cde34bf` | 116300 bytes | Lista antigua de cambios; el nombre sólo se conserva para localizarla. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V326 | Se calcula al publicar | Manual maestro con la evidencia del micrófono rojo, cierre conversacional de 2.2 segundos, guardianes de 15/90/30 segundos y prohibición de montaje. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V326 | Se calcula al publicar | Lista ordenada: V325 rechazada, V326 pendiente de prueba física, además de USGA/Reglas de Golf, Skins y Apple Watch/Wear OS. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V327 | Se calcula al publicar | Manual maestro con V326-R2 rechazada, retorno herramienta→voz corregido, guardianes y prohibición de montaje. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V327 | Se calcula al publicar | Lista ordenada: V327 pendiente de prueba física, además de USGA/Reglas de Golf, Skins y Apple Watch/Wear OS. |
 | `MAPA_MATRIZ_BASE_MAESTRA_V256.md` | `8d0cdb23c0b1d9445f51b822ba49d385f5c71d3c` | 1718 bytes | Explica la información central incorporada en V256. |
 | `MAPA_MATRIZ_REGISTRO_JUGADORES_V255.md` | `5d0670562aa89ffa7a265820573e0e31895fe95b` | 1993 bytes | Explica el registro de jugadores de V255. |
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
@@ -86,6 +86,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `api/session.js` | `454a914b435c6cadadd0a169fe065719eef475de` | 14431 bytes | Abre el reconocimiento de voz anterior. |
 | `api/sync.js` | `82e4bdd482531f4ee6b41254652606d9f53e2251` | 3202 bytes | Intercambia cambios entre teléfono y respaldo. |
 | `api/traffic.js` | Puerta de tráfico V324 | Se calcula al publicar | Recibe de forma protegida las solicitudes de tráfico por voz o texto y entrega un resultado recuperable sin mostrar mapa. |
+| `api/voice-health.js` | Salud de voz V327 | Se calcula al publicar | Registra sólo etapas y tiempos técnicos permitidos; excluye preguntas, transcripciones, nombres, ubicaciones y claves. |
 | `api/weather.js` | Piloto climático V312 | Se calcula al publicar | Consulta Open-Meteo por coordenadas GPS del teléfono, ubicación indicada o respaldo del campo y devuelve un resumen auditable. |
 | `assets/logo.png` | `376f6237bbdddf4245ecd3da0f080ad5462f8178` | 514891 bytes | Logo cromado 3D neón de 1024 usado para crear iconos de iPhone y Android. |
 | `assets/official-logos/README.md` | `d4c2f8e156b2f614d5992c477bc117c11a8ef2d7` | 1826 bytes | Explica que la versión cromada 3D con verde neón muy saturado es oficial y para qué sirve cada tamaño. |
@@ -95,7 +96,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Copia maestra del logo cromado 3D con verde neón muy saturado. |
 | `assets/official-logos/golf-score-card-gt-pwa-192.png` | `e28cd92c784748a2d4ff02bf3491b96c8121ed94` | 67805 bytes | Icono cromado 3D neón pequeño de la aplicación instalable. |
 | `assets/official-logos/golf-score-card-gt-pwa-512.png` | `0e85cc6995f9bafefb49dec5a8253aef3db7fffd` | 461402 bytes | Icono cromado 3D neón grande de la aplicación instalable. |
-| `audit-project.mjs` | Auditoría V326 | Se calcula al publicar | Ejecuta los candados ROADMAP, inventarios y todos los filtros automáticos, incluida la recuperación del micrófono rojo. |
+| `audit-project.mjs` | Auditoría V327 | Se calcula al publicar | Ejecuta los candados ROADMAP, inventarios y todos los filtros automáticos, incluida la transición herramienta→voz. |
 | `capacitor.config.json` | `a5ca52fde974ea370d90dbfe422f08101ec7f7eb` | 867 bytes | Define el nombre visible y la identidad de las apps de iPhone y Android. |
 | `card-artifacts.js` | `df8ba2b09532b73701681d7de1781ca5b54baf26` | 12799 bytes | Arma la tarjeta oficial con la información de la ronda. |
 | `card-file-export.js` | `4ddbf8f36ec142114cfa965a78d97ea55365afa1` | 5919 bytes | Convierte la tarjeta en imagen o PDF. |
@@ -246,6 +247,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v324-real-traffic.mjs` | `V324-CURRENT-FUTURE-TRAFFIC-RECOVERY` | Se calcula al publicar | Prueba tráfico actual/futuro, ETA, demora, privacidad, GPS, texto, voz, proveedor caído, timeout y continuación bilateral. |
 | `test-v325-ideal-microphone-timings.mjs` | `V326-30-BILATERAL-TURNS` | Se calcula al publicar | Conserva 30 turnos y sustituye la expectativa semántica no determinista por la pausa conversacional fija de 2.2 segundos. |
 | `test-v326-no-silent-conversation.mjs` | `V326-INPUT-15S-HARD-90S-RESPONSE-30S` | Se calcula al publicar | Ejecuta la máquina de temporizadores y comprueba que una captura sin final apaga el rojo y que una respuesta sin inicio vuelve a escuchar. |
+| `test-v327-tool-followup-no-silence.mjs` | `V327-550-SEQUENCES-100-PRIVATE-EVENTS` | Se calcula al publicar | Prueba cierres tardíos con/sin ID, audio final, tres guardianes, ruta ambigua y telemetría sin contenido. |
 | `test-v311-timer-inactivity.mjs` | Candado TIMER 30 minutos | Se calcula al publicar | Comprueba el apagado en todas las modalidades, persistencia y reinicio por instrucción válida. |
 | `docs/manual/v311/page-17.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-18.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |

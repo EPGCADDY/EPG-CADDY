@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V326
+**Versión documentada:** V327
 **Fecha de corte:** 26 de agosto de 2026
 **Rama operativa:** `main` (Producción vigente)
 **Aplicación:** `index-grupal.html`  
@@ -1110,7 +1110,7 @@ Probar como mínimo:
 
 #### AI UNIVERSAL ∞
 
-**Estado:** `V325 RECHAZADA EN IPHONE · V326 EN VALIDACIÓN`; dos consultas reales dejaron el micrófono rojo sin cierre. V326 tiene pruebas automáticas y falta repetir la prueba física prolongada.
+**Estado:** `V326-R2 RECHAZADA EN IPHONE · V327 EN BANCO`; después de unas seis consultas, una búsqueda sobre una persona conocida en Colima y otra ruta de tráfico demostraron un corte al devolver herramientas a la voz. No fue una limitación de vocabulario: el servidor completó la investigación.
 
 - El botón `AI ∞` acepta texto y todos los micrófonos aceptan conversación natural después de una apertura manual.
 - La aplicación distingue primero órdenes locales de registro, navegación, score y consulta de tarjeta. Todo lo demás llega al modelo avanzado mediante API.
@@ -1122,6 +1122,9 @@ Probar como mínimo:
 - Sus límites reales son seguridad, privacidad, legalidad, veracidad, acceso disponible y capacidad técnica. Una consulta médica, legal o financiera no sustituye a un profesional.
 - El micrófono nunca se abre solo. Para órdenes de la tarjeta usa VAD operativo de 0.2, prefijo de 700 ms y cierre tras 1,000 ms de silencio. La evidencia de iPhone rechazó el VAD semántico de baja urgencia porque podía mantener el círculo rojo sin cierre. V326 usa para AI UNIVERSAL ∞ un perfil conversacional separado con los mismos umbral y prefijo, pero 2,200 ms de silencio: acepta pausas naturales y entrega un final determinista.
 - Si Realtime recibe inicio de voz pero no entrega final ni deltas durante 15 segundos, V326 desmonta la captura atascada, apaga el estado rojo e indica que debe repetirse la pregunta. Los deltas reales renuevan esa vigilancia hasta un límite duro de 90 segundos por turno. Si la transcripción ya terminó pero la respuesta no comienza, un segundo guardián recupera la conversación a los 30 segundos. Nunca debe quedar pensando o escuchando indefinidamente.
+- V327 mantiene el guardián después de `speech_stopped` hasta que llega la transcripción. En consultas de clima, tráfico o Web, distingue el cierre de la primera respuesta técnica del audio final aunque iPhone omita `response_id`; la reproducción queda vigilada durante 60 segundos y un canal perdido muestra recuperación en vez de guardar silencio.
+- V327 registra salud técnica sin contenido: etapa, build, pantalla, número de turno, tiempo, herramienta y banderas de transición. Nunca registra preguntas, transcripciones, nombres, coordenadas ni claves.
+- El tráfico real El Pulté Golf → Pradera Concepción quedó calculable; si el usuario dice solamente `Concepción`, AI UNIVERSAL ∞ hace una pregunta breve pidiendo nombre completo, zona o municipio en lugar de adivinar.
 - Los conocimientos estables y cálculos aproximados, incluido el consumo eléctrico de un aire acondicionado, se responden directamente con supuestos y fórmula. La búsqueda Web sólo se abre cuando el usuario pide tarifa, precio, modelo o dato vigente.
 - Durante la respuesta el micrófono permanece disponible para una interrupción bilateral confirmada: arma el corte a los 250 ms, exige al menos ocho caracteres reconocidos y descarta eco. Al terminar la voz vuelve inmediatamente a escuchar. Sólo 30 minutos completos de inactividad cierran la conversación.
 
@@ -1339,6 +1342,7 @@ La modalidad se identifica en todas las pantallas únicamente como **FOUR BALL**
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-26 | Manual 3.75 / App V327 | Rechazada V326-R2 tras aproximadamente seis preguntas físicas: investigación web y tráfico completaban en servidor, pero un cierre tardío sin ID podía apagar el follow-up antes del audio. V327 conserva vigilancia hasta transcripción, protege la transición herramienta→voz, añade guardián de reproducción de 60 s y telemetría técnica sin contenido privado. El banco dirigido cubre 550 secuencias y 100 eventos; aún falta Preview, regresión completa y PASS físico prolongado. |
 | 2026-08-26 | Manual 3.74 / App V326 | Rechazada V325 después de dos silencios reales con micrófono rojo en iPhone. AI UNIVERSAL ∞ cambia de final semántico indefinido a `server_vad` conversacional 0.2/700/2,200 ms; añade guardián de entrada 15 s con límite duro 90 s, guardián de respuesta 30 s y respuesta directa para cálculos estables como consumo eléctrico de A/C. Se prohíbe montaje hasta repetir tráfico El Pulté-Oakland 12:30 PM, consumo A/C y conversación multitema prolongada. |
 | 2026-08-26 | Manual 3.73 / App V325 | Separados los tiempos del micrófono: órdenes y scores conservan VAD operativo de 0.2/700/1,000 ms; AI UNIVERSAL ∞ usa `semantic_vad` con urgencia baja para respetar pausas naturales. La interrupción bilateral conserva guardia de 250 ms, confirmación mínima de ocho caracteres, protección de eco por 1,800 ms, reescucha inmediata y cierre sólo tras 30 minutos sin actividad. Se registra además como trabajo futuro el enlace oficial/autorizado con USGA y Reglas de Golf, la modalidad Skins y soporte Apple Watch/Wear OS. La aprobación comercial sigue pendiente de prueba física prolongada en iPhone. |
 | 2026-08-26 | Manual 3.72 / App V324 | AI UNIVERSAL ∞ incorpora tráfico vehicular real o proyectado mediante Google Maps Routes en modo `TRAFFIC_AWARE_OPTIMAL`: entiende origen, destino y hora por voz o texto, solicita GPS cuando el usuario dice `aquí`, responde ETA, demora, distancia y hora de cálculo sin mostrar mapa ni conservar coordenadas en el historial. No se presenta como Waze. Fallo, timeout o permiso denegado permiten continuar la conversación. La función permanece pendiente de credencial/facturación y de comparación física en Guatemala e iPhone antes de declararse lista para montar. |

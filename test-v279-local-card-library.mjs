@@ -4,7 +4,7 @@ import library from "./card-library.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V326-NO-SILENT-CONVERSATION-20260826"/);
+assert.match(html,/gscg-build" content="V327-TOOL-FOLLOWUP-NO-SILENCE-20260826"/);
 assert.match(html,/V279-ROUND-FIELD-TOURNAMENT-PLAYER-20260823/);
 for(const id of ["openCardLibraryButton","openCardLibrarySetup","openCardLibraryStableford","cardLibraryOverlay","cardLibraryMode","cardLibraryCourse","cardLibraryQuery","cardLibraryList","libraryOpenGlobal","libraryImageGlobal","libraryPdfGlobal","libraryOpenPersonal","libraryImagePersonal","libraryPdfPersonal","libraryPdfAll"])assert.match(html,new RegExp(`id="${id}"`),`Falta ${id}`);
 assert.match(html,/card-library\.js/);

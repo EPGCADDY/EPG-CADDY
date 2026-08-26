@@ -6,8 +6,8 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const api=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 const serviceWorker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V326-NO-SILENT-CONVERSATION-20260826"/);
-assert.match(serviceWorker,/gscg-mobile-v326-no-silent-conversation/);
+assert.match(html,/gscg-build" content="V327-TOOL-FOLLOWUP-NO-SILENCE-20260826"/);
+assert.match(serviceWorker,/gscg-mobile-v327-tool-followup-no-silence/);
 assert.match(api,/const MAX_HISTORY_TURNS=80/);
 assert.match(html,/const AI_UNIVERSAL_HISTORY_LIMIT=80/);
 assert.match(html,/\.slice\(-AI_UNIVERSAL_HISTORY_LIMIT\)/);

@@ -46,7 +46,7 @@ function roundedMinutes(seconds){return Number.isFinite(seconds)?Math.max(0,Math
 export function summarizeTrafficRoute(payload,{originLabel="Ubicación GPS actual",destinationLabel="Destino",departureTime="",calculatedAt=new Date().toISOString()}={}){
   const route=payload?.routes?.[0]||null;
   const duration=durationSeconds(route?.duration),staticDuration=durationSeconds(route?.staticDuration);
-  if(!route||duration===null)return{ok:false,error:"TRAFFIC_ROUTE_UNAVAILABLE",message:"No pude calcular una ruta confiable con tráfico en este momento. Puedes continuar con otra pregunta."};
+  if(!route||duration===null)return{ok:false,error:"TRAFFIC_ROUTE_UNAVAILABLE",needsDestinationClarification:true,message:"No pude identificar una ruta confiable. ¿Cuál es el nombre completo, zona o municipio del destino?"};
   const durationMinutes=roundedMinutes(duration);
   const staticDurationMinutes=staticDuration===null?null:roundedMinutes(staticDuration);
   const delayMinutes=staticDuration===null?null:Math.max(0,roundedMinutes(duration-staticDuration));

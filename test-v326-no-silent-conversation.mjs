@@ -4,8 +4,8 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V326-NO-SILENT-CONVERSATION-20260826"/);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v326-no-silent-conversation"/);
+assert.match(html,/gscg-build" content="V327-TOOL-FOLLOWUP-NO-SILENCE-20260826"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v327-tool-followup-no-silence"/);
 
 const script=html.slice(html.indexOf("<script>")+8,html.lastIndexOf("</script>"));
 assert.doesNotThrow(()=>new Function(script),"El JavaScript principal V326 debe compilar completo");
@@ -15,6 +15,7 @@ for(const contract of [
   /const CONVERSATION_INPUT_STALL_MS=15000/,
   /const CONVERSATION_INPUT_HARD_LIMIT_MS=90000/,
   /const CONVERSATION_RESPONSE_STALL_MS=30000/,
+  /const CONVERSATION_PLAYBACK_STALL_MS=60000/,
   /silence_duration_ms:CONVERSATION_VAD_SILENCE_MS,create_response:false,interrupt_response:false/,
   /armConversationInputStall\(\{newTurn:true\}\)/,
   /recoverStalledConversationInput\(\)/,
@@ -22,7 +23,7 @@ for(const contract of [
   /MICRÓFONO REINICIADO · TOCA ESCUCHAR Y REPITE LA PREGUNTA/,
   /NO PUDE COMPLETAR ESA RESPUESTA · PUEDES CONTINUAR/,
   /consumo eléctrico de un aire acondicionado/,
-  /Si contiene ok false, informa brevemente la limitación y permite continuar/
+  /Ante otro ok false, informa brevemente la limitación y permite continuar/
 ])assert.match(html,contract);
 
 const profileStart=html.indexOf("function turnDetectionForProfile");
@@ -57,7 +58,7 @@ function createWatchdogHarness(){
     let conversationToolTransition=null,activeResponseId=null,speechPlaybackResponseId=null,stopMonitorActive=false;
     let authorizedSpeech=null,listening=true,voiceContext="round",realtimeTurnProfileRequested="conversation";
     const REALTIME_TURN_PROFILE_CONVERSATION="conversation";
-    const CONVERSATION_INPUT_STALL_MS=15000,CONVERSATION_INPUT_HARD_LIMIT_MS=90000,CONVERSATION_RESPONSE_STALL_MS=30000;
+    const CONVERSATION_INPUT_STALL_MS=15000,CONVERSATION_INPUT_HARD_LIMIT_MS=90000,CONVERSATION_RESPONSE_STALL_MS=30000,CONVERSATION_PLAYBACK_STALL_MS=60000;
     let timers=[],teardownCount=0,resumeCount=0,states=[];
     const target={textContent:"",classList:{remove(){}}};
     const setTimeout=(fn,delay)=>{const timer={fn,delay,active:true};timers.push(timer);return timer};
@@ -70,6 +71,7 @@ function createWatchdogHarness(){
     const setVoice=on=>{listening=on};
     const conversationStatusTarget=()=>target;
     const aiUniversalSetState=value=>states.push(value);
+    const reportVoiceHealth=()=>true;
     const teardownRealtime=()=>{teardownCount++;listening=false};
     ${watchdogSource}
     return{
@@ -107,4 +109,4 @@ for(let turn=1;turn<=30;turn++){
   assert.equal(profiles.turnDetectionForProfile("operational").silence_duration_ms,1000,`Turno ${turn}: se alteró la captura rápida de órdenes`);
 }
 
-console.log("PASS V326 · no queda micrófono rojo infinito; entrada 15 s, respuesta 30 s y conversación 2.2 s");
+console.log("PASS V327 · entrada, generación y reproducción tienen recuperación comprobable");

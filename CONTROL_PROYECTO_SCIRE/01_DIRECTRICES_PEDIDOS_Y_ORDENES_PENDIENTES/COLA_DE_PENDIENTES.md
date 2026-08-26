@@ -102,7 +102,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** EN PROGRESO · CADDIE UNIVERSAL V314 EN TODOS LOS MICRÓFONOS; BUSCADOR-TEXTO Y VALIDACIÓN FÍSICA PENDIENTES
+**Estado:** V326-R2 RECHAZADA EN IPHONE · V327 EN BANCO; VALIDACIÓN FÍSICA PROLONGADA PENDIENTE
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -140,6 +140,13 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - Mientras el Caddie responde se pausa la entrada para evitar cortes por eco o ruido; al terminar vuelve a escuchar si el botón permanece abierto. El usuario siempre puede cerrar el micrófono manualmente.
 - Las preguntas de clima usan el campo activo y `api/weather.js`; las preguntas de salud reciben límites expresos de orientación general, sin diagnóstico ni prescripción automática.
 - Continúan pendientes la conversación por texto dentro del buscador del Manual, el banco amplio de preguntas, pruebas físicas con ruido/acento y la validación práctica con golfistas.
+
+### Corrección V327 en banco
+
+- La consulta sobre una persona conocida en Colima alcanzó la búsqueda web con HTTP 200; el silencio ocurrió al devolver el resultado a Realtime, no por vocabulario limitado.
+- `speech_stopped` conserva ahora su guardián hasta la transcripción final. Un cierre tardío de audio sin identificador no puede apagar el follow-up antes de que empiece a sonar y la reproducción dispone de un límite recuperable de 60 segundos.
+- La observabilidad excluye expresamente el contenido hablado, nombres, ubicaciones y claves. Sólo registra estado técnico, turno, duración, herramienta y banderas de transición.
+- V327 permanece sin aprobación hasta que la regresión completa, el Preview y una conversación larga física en iPhone pasen sin un solo silencio.
 
 ### Condiciones de cierre futuro
 
@@ -179,8 +186,8 @@ La Guía Rápida se considerará terminada cuando cubra el recorrido básico com
 ## PEND-TRA-005 · Tiempo de llegada y tránsito sin mostrar mapa
 
 **Fecha de registro:** 25 de agosto de 2026
-**Estado:** IMPLEMENTADO EN CÓDIGO V324 · ACTIVACIÓN Y VALIDACIÓN REAL PENDIENTES
-**Prioridad:** Alta · pendiente credencial/facturación, destino exacto y comparación Guatemala/iPhone
+**Estado:** CREDENCIAL Y GOOGLE ROUTES ACTIVOS EN PREVIEW · V327 EN VALIDACIÓN
+**Prioridad:** Alta · pendiente conversación física prolongada y comparación Guatemala/iPhone
 **Solicitud original:** preguntar al Caddie cuánto tráfico hay para ir a casa en Pradera y escuchar únicamente tiempo estimado y comentarios, sin abrir una gráfica de navegación.
 
 ### Objetivo
@@ -192,6 +199,8 @@ Permitir una pregunta natural como `¿Cómo está el tráfico para ir a mi casa 
 `GPS DEL TELÉFONO → DESTINO EXACTO GUARDADO CON CONSENTIMIENTO → GOOGLE MAPS ROUTES CON TRÁFICO → RESUMEN DE TIEMPO → RESPUESTA DEL CADDIE`
 
 - La consulta natural de AI UNIVERSAL ∞ usa una función real de tráfico y Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL`; devuelve ETA, demora, distancia, hora de cálculo y nivel derivado, tanto a texto como a voz.
+- La medición real El Pulté Golf → Pradera Concepción devolvió 15 km y cerca de 33 minutos en el instante del diagnóstico; confirma proveedor y credencial. El problema observado fue el retorno a voz.
+- Un destino que sólo diga `Concepción` es ambiguo: debe pedir una sola aclaración de nombre completo, zona o municipio antes de calcular.
 - El origen `aquí` solicita GPS sólo durante esa consulta y las coordenadas exactas no se incorporan a la respuesta ni al historial conversacional.
 - El destino escrito llega al proveedor; `mi casa` o `Pradera` sin identificación suficiente debe producir una sola pregunta breve, nunca una ubicación inventada.
 - No afirmar que Waze está sincronizado: los Deep Links sólo abren Waze y el Transport SDK exige asociación comercial, aplicación nativa aprobada y atribución visible.
