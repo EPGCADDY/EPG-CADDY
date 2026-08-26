@@ -11,8 +11,8 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/official-logos/golf-score-card-gt-apple-touch-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V327-TOOL-FOLLOWUP-NO-SILENCE-20260826">
-<meta name="gscg-manual" content="V327-TOOL-FOLLOWUP-NO-SILENCE-MANUAL-20260826">
+<meta name="gscg-build" content="V328-OFFICIAL-GOLF-RULES-20260826">
+<meta name="gscg-manual" content="V328-OFFICIAL-GOLF-RULES-MANUAL-20260826">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
 <meta name="gscg-four-ball" content="V309-TWO-PAIRS-BEST-NET-CUMULATIVE-MATCH-20260825">
@@ -612,24 +612,28 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
 </style>
 <style id="gscg-ai-universal-infinity-v321">
 .ai-universal-launch{position:fixed;top:calc(env(safe-area-inset-top,0px) + 5px);right:calc(env(safe-area-inset-right,0px) + 67px);z-index:11000;min-height:22px;padding:0 8px;border:1px solid var(--lime);border-radius:999px;background:rgba(0,0,0,.94);color:var(--lime);font:900 8px/1 Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:.5px;box-shadow:0 0 10px rgba(49,255,0,.2);cursor:pointer}
+.golf-rules-launch{position:fixed;top:calc(env(safe-area-inset-top,0px) + 5px);right:calc(env(safe-area-inset-right,0px) + 111px);z-index:11000;min-height:22px;padding:0 8px;border:1px solid #d3b35d;border-radius:999px;background:rgba(0,0,0,.94);color:#f3d57d;font:900 8px/1 Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:.4px;cursor:pointer}
 .ai-universal-overlay{position:fixed;inset:0;z-index:12000;display:none;align-items:flex-end;justify-content:center;padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(5px)}
 .ai-universal-overlay.visible{display:flex}.ai-universal-panel{width:min(760px,100%);max-height:min(88vh,880px);display:flex;flex-direction:column;border:1px solid #555;border-radius:14px;background:#050505;box-shadow:0 0 30px rgba(0,0,0,.8);overflow:hidden}
 .ai-universal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid #303333}.ai-universal-head h2{margin:0;color:var(--lime);font-size:18px;letter-spacing:.4px}.ai-universal-close{min-width:72px;min-height:38px;border:1px solid #666;border-radius:7px;background:#0a0a0a;color:#fff;font-weight:900}
 .ai-universal-state{min-height:24px;padding:6px 12px;color:#aaa;text-align:center;font:800 10px/1.25 Arial,sans-serif;letter-spacing:.2px}.ai-universal-state.busy{color:var(--lime)}
+.ai-universal-rules-note{padding:7px 12px;border-bottom:1px solid #303333;background:#171407;color:#e9d9a5;text-align:center;font:800 9px/1.4 Arial,sans-serif}.ai-universal-rules-note a{color:#f3d57d;text-decoration:underline;text-underline-offset:2px}.ai-universal-rules-note.hidden{display:none}
 .ai-universal-messages{min-height:180px;max-height:48vh;overflow:auto;padding:8px 12px;scroll-behavior:smooth}.ai-message{max-width:92%;margin:7px 0;padding:9px 11px;border:1px solid #343838;border-radius:10px;color:#fff;font:600 13px/1.45 Arial,sans-serif;white-space:pre-wrap;overflow-wrap:anywhere}.ai-message.user{margin-left:auto;border-color:#52704b;background:#0a1a07}.ai-message.assistant{margin-right:auto;background:#0b0b0b}.ai-message strong{display:block;margin-bottom:3px;color:var(--lime);font-size:9px;letter-spacing:.5px}.ai-message-sources{margin-top:6px;font-size:9px}.ai-message-sources a{display:inline-block;margin:2px 5px 0 0;color:var(--lime);text-decoration:underline}
 .ai-universal-compose{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:8px;padding:10px 12px;border-top:1px solid #303333}.ai-universal-compose textarea{min-height:62px;max-height:150px;resize:vertical;padding:10px;border:1px solid #555;border-radius:8px;background:#000;color:#fff;font:600 14px/1.35 Arial,sans-serif}.ai-universal-send{border:2px solid var(--lime);border-radius:8px;background:var(--lime);color:#000;font-weight:900}.ai-universal-send:disabled{opacity:.45}
 .ai-universal-controls{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:0 12px 10px}.ai-universal-controls button{min-height:38px;padding:5px 3px;border:1px solid #505555;border-radius:7px;background:#0a0a0a;color:#fff;font:900 9px/1.1 Arial,sans-serif}.ai-universal-controls button.active{border-color:var(--red);color:var(--red)}
 .ai-universal-privacy{padding:0 12px 11px;color:#858585;text-align:center;font:700 8px/1.3 Arial,sans-serif}.ai-universal-empty{color:#aaa;text-align:center;font:700 12px/1.5 Arial,sans-serif;padding:24px 10px}
-@media(max-width:800px){.ai-universal-launch{top:calc(env(safe-area-inset-top,0px) + 3px);right:calc(env(safe-area-inset-right,0px) + 57px);min-height:20px;padding:0 6px;font-size:7px}.ai-universal-overlay{padding:0;align-items:stretch}.ai-universal-panel{width:100%;max-height:none;border-radius:0;border-left:0;border-right:0}.ai-universal-head{padding-top:calc(env(safe-area-inset-top,0px) + 10px)}.ai-universal-messages{max-height:none;flex:1}.ai-message{font-size:14px}.ai-universal-controls{grid-template-columns:repeat(5,minmax(0,1fr))}.ai-universal-controls button{font-size:8px}}
+@media(max-width:800px){.ai-universal-launch{top:calc(env(safe-area-inset-top,0px) + 3px);right:calc(env(safe-area-inset-right,0px) + 57px);min-height:20px;padding:0 6px;font-size:7px}.golf-rules-launch{top:calc(env(safe-area-inset-top,0px) + 3px);right:calc(env(safe-area-inset-right,0px) + 96px);min-height:20px;padding:0 6px;font-size:7px}.ai-universal-overlay{padding:0;align-items:stretch}.ai-universal-panel{width:100%;max-height:none;border-radius:0;border-left:0;border-right:0}.ai-universal-head{padding-top:calc(env(safe-area-inset-top,0px) + 10px)}.ai-universal-messages{max-height:none;flex:1}.ai-message{font-size:14px}.ai-universal-controls{grid-template-columns:repeat(5,minmax(0,1fr))}.ai-universal-controls button{font-size:8px}}
 </style>
 </head>
 <body>
+<button class="golf-rules-launch" id="openGolfRules" type="button" aria-label="Abrir consulta oficial de Reglas de Golf">REGLAS</button>
 <button class="ai-universal-launch" id="openAiUniversal" type="button" aria-label="Abrir AI Universal Infinita">AI ∞</button>
 <a class="live-support-link" href="https://epg-caddy.vercel.app/manual-scg" target="_blank" rel="noopener noreferrer" aria-label="Abrir el Manual vivo de Golf Score Card GT">Support</a>
 <div class="ai-universal-overlay" id="aiUniversalOverlay" role="dialog" aria-modal="true" aria-labelledby="aiUniversalTitle" aria-hidden="true">
   <section class="ai-universal-panel">
     <div class="ai-universal-head"><h2 id="aiUniversalTitle">AI UNIVERSAL ∞</h2><button class="ai-universal-close" id="closeAiUniversal" type="button">ATRÁS</button></div>
     <div class="ai-universal-state" id="aiUniversalState" role="status" aria-live="polite">VOZ Y TEXTO · CUALQUIER TEMA PERMITIDO</div>
+    <div class="ai-universal-rules-note hidden" id="aiUniversalRulesNote">FUENTES OFICIALES: <a href="https://www.usga.org/content/usga/home-page/rules-hub.html" target="_blank" rel="noopener noreferrer">USGA</a> · <a href="https://www.randa.org/en/rules/rules-hub" target="_blank" rel="noopener noreferrer">THE R&amp;A</a> · La consulta no cambia scores ni aplica penalidades.</div>
     <div class="ai-universal-messages" id="aiUniversalMessages" role="log" aria-live="polite"><div class="ai-universal-empty">Pregunta por voz con el micrófono de la tarjeta o escribe aquí.<br>No existe una lista cerrada de temas.</div></div>
     <div class="ai-universal-compose"><textarea id="aiUniversalInput" maxlength="4000" autocomplete="off" placeholder="Escribe una pregunta, orden o tema…" aria-label="Mensaje para AI Universal Infinita"></textarea><button class="ai-universal-send" id="sendAiUniversal" type="button">ENVIAR</button></div>
     <div class="ai-universal-controls" aria-label="Controles de AI Universal Infinita"><button type="button" id="listenAiUniversal">ESCUCHAR</button><button type="button" id="stopAiUniversal">DETENER</button><button type="button" id="repeatAiUniversal">REPETIR</button><button type="button" id="muteAiUniversal">SILENCIAR</button><button type="button" id="continueAiUniversal">CONTINUAR</button></div>
@@ -929,7 +933,7 @@ let setupSpeechAllowed=false,sessionHasSpoken=false;
 let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false,pendingVoiceAssistantAction=null,conversationIdleCloseTimer=null,conversationInputStallTimer=null,conversationInputStartedAt=0,conversationResponseStallTimer=null,conversationBargeInArmedAt=0,conversationOutputStarted=false,conversationOutputTranscript="",conversationBargeInItemId="",conversationBargeInText="",conversationEchoGuardUntil=0,conversationClearResponseId=null,voiceHealthTurn=0,voiceHealthTurnStartedAt=0;
 let realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL,realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;
 let voiceOpening=false;
-let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null;
+let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null,aiUniversalRulesMode=false;
 const AI_UNIVERSAL_HISTORY_LIMIT=80;
 const processedTranscriptItems=new Set();
 const WEATHER_REFRESH_MS=10*60*1000;
@@ -1965,7 +1969,7 @@ function markConversationFollowupAudioStarted(eventResponseId=""){
 const VOICE_HEALTH_EVENTS=new Set(["speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered"]);
 function reportVoiceHealth(event,detail={}){
   if(!VOICE_HEALTH_EVENTS.has(event)||typeof fetch!=="function")return false;
-  const payload={event,build:"V327",context:voiceContext==="setup"?"setup":"round",turn:Math.max(0,voiceHealthTurn),elapsedMs:voiceHealthTurnStartedAt?Math.max(0,Date.now()-voiceHealthTurnStartedAt):0};
+  const payload={event,build:"V328",context:voiceContext==="setup"?"setup":"round",turn:Math.max(0,voiceHealthTurn),elapsedMs:voiceHealthTurnStartedAt?Math.max(0,Date.now()-voiceHealthTurnStartedAt):0};
   for(const key of ["tool","hasResponseId","followupCreated","followupAudioStarted"]){
     const value=detail?.[key];if(typeof value==="boolean"||typeof value==="number"||typeof value==="string")payload[key]=value;
   }
@@ -2048,10 +2052,12 @@ function conversationInstructions(completedTool=""){
     "Para clima, responde en dos oraciones sencillas: condición, temperatura, sensación, lluvia y viento. Si pregunta a qué hora lloverá, usa rainTiming, indica el intervalo y la hora de mayor probabilidad; no lo remitas a otra aplicación si esos datos vienen en la herramienta. No cortes palabras ni dejes una frase incompleta.",
     "En salud ofrece únicamente orientación general. No diagnostiques ni prescribas. Antes de sugerir un medicamento pregunta por edad, alergias, enfermedades, otros medicamentos y gravedad; ante síntomas de alarma recomienda atención médica urgente. En temas legales, financieros, fiscales, psicológicos, privacidad o seguridad explica límites, incertidumbre y riesgo sin fingir certeza profesional.",
     "Para tráfico vehicular, congestión, ruta o tiempo de llegada usa exclusivamente get_live_traffic; sirve para salir ahora o para una hora futura. Si el destino es un fragmento ambiguo —por ejemplo sólo Concepción— haz una única pregunta breve pidiendo nombre completo, zona o municipio antes de llamar la herramienta; no adivines el lugar. Nunca uses una búsqueda web como ETA ni digas que proviene de Waze.",
+    "Para cualquier duda sobre Reglas de Golf, penalidades, alivios, procedimientos, Match Play, Stableford o Four-Ball usa get_official_golf_rule. Esa herramienta consulta exclusivamente fuentes oficiales actuales de USGA y The R&A. Una respuesta reglamentaria nunca modifica scores ni aplica penalidades.",
+    aiUniversalRulesMode?"El usuario abrió el centro REGLAS. Trata su intervención como consulta reglamentaria, usa get_official_golf_rule antes de responder y no ejecutes órdenes de score desde este modo.":"El centro especializado REGLAS no está forzado; selecciona la herramienta reglamentaria cuando la intención del usuario lo requiera.",
     "Para medicina, vuelos, noticias, política, precios, horarios u otra información que cambie o requiera verificación, usa search_live_web. Para el clima usa exclusivamente get_current_weather.",
     "Para conocimientos estables y cálculos aproximados —por ejemplo el consumo eléctrico de un aire acondicionado— responde directamente, declara los supuestos y muestra el cálculo. No uses búsqueda web salvo que el usuario pida una tarifa, precio, modelo o dato vigente específico.",
     "La búsqueda web puede tardar un poco más que una respuesta de conocimiento general. Después de recibirla, responde con la información encontrada y no inventes lo que no aparezca.",
-    completedTool==="get_current_weather"?"Ya recibiste el resultado meteorológico solicitado. Si contiene ok true, explícalo con palabras naturales y menciona que es un pronóstico de Open-Meteo. Si contiene ok false, informa brevemente que no pudiste consultar el pronóstico ahora y permite continuar; nunca guardes silencio. No vuelvas a llamar herramientas.":completedTool==="get_live_traffic"?"Ya recibiste el cálculo vehicular solicitado. Si contiene ok true, menciona origen, destino, ETA, demora, distancia, hora de cálculo y Google Maps Routes; aclara sólo cuando sea útil que el nivel es una estimación derivada. Si contiene needsDestinationClarification true, haz solamente una pregunta breve para pedir nombre completo, zona o municipio. Ante otro ok false, informa brevemente la limitación y permite continuar. Nunca inventes tráfico, repitas coordenadas exactas ni digas que proviene de Waze. No vuelvas a llamar herramientas.":completedTool==="search_live_web"?"Ya recibiste el resultado de la investigación web. Si contiene ok true, sintetiza la respuesta con palabras naturales y menciona brevemente las fuentes por nombre si ayuda. Si contiene ok false, informa en una sola oración que no pudiste verificarlo en este momento y permite continuar; nunca guardes silencio ni inventes. No vuelvas a llamar herramientas.":"Usa herramientas solamente cuando aporten información actual o verificación; para conversación, consejo y conocimiento estable responde directamente."
+    completedTool==="get_current_weather"?"Ya recibiste el resultado meteorológico solicitado. Si contiene ok true, explícalo con palabras naturales y menciona que es un pronóstico de Open-Meteo. Si contiene ok false, informa brevemente que no pudiste consultar el pronóstico ahora y permite continuar; nunca guardes silencio. No vuelvas a llamar herramientas.":completedTool==="get_live_traffic"?"Ya recibiste el cálculo vehicular solicitado. Si contiene ok true, menciona origen, destino, ETA, demora, distancia, hora de cálculo y Google Maps Routes; aclara sólo cuando sea útil que el nivel es una estimación derivada. Si contiene needsDestinationClarification true, haz solamente una pregunta breve para pedir nombre completo, zona o municipio. Ante otro ok false, informa brevemente la limitación y permite continuar. Nunca inventes tráfico, repitas coordenadas exactas ni digas que proviene de Waze. No vuelvas a llamar herramientas.":completedTool==="get_official_golf_rule"?"Ya recibiste una consulta reglamentaria oficial. Si contiene ok true, explica brevemente la decisión, identifica la Regla cuando esté disponible y recuerda que una Regla Local o el Comité puede cambiar el procedimiento. Las fuentes oficiales se muestran por separado. Si contiene ok false, informa que no pudiste verificar la regla ahora; nunca inventes ni guardes silencio. No modifiques scores ni penalidades y no vuelvas a llamar herramientas.":completedTool==="search_live_web"?"Ya recibiste el resultado de la investigación web. Si contiene ok true, sintetiza la respuesta con palabras naturales y menciona brevemente las fuentes por nombre si ayuda. Si contiene ok false, informa en una sola oración que no pudiste verificarlo en este momento y permite continuar; nunca guardes silencio ni inventes. No vuelvas a llamar herramientas.":"Usa herramientas solamente cuando aporten información actual o verificación; para conversación, consejo y conocimiento estable responde directamente."
   ].join(" ");
 }
 function realtimeWeatherTool(){return{
@@ -2072,13 +2078,19 @@ function realtimeTrafficTool(){return{
   description:"Calcula ETA, demora y distancia con tráfico vehicular real o predicción para una salida futura. Úsala para toda pregunta de tráfico, congestión, ruta o tiempo de llegada, pero primero pide una sola aclaración si el destino no identifica un lugar concreto.",
   parameters:{type:"object",properties:{origin:{type:"string",description:"Punto de salida. Omítelo o usa ubicación actual si el usuario dice aquí o desde donde estoy."},destination:{type:"string",description:"Destino exacto o suficientemente específico."},departure_time:{type:"string",description:"Hora futura de salida en ISO 8601 con zona horaria; omítela si sale ahora."}},required:["destination"],additionalProperties:false}
 }}
+function realtimeGolfRulesTool(){return{
+  type:"function",
+  name:"get_official_golf_rule",
+  description:"Consulta una situación de Reglas de Golf exclusivamente en fuentes oficiales actuales de USGA y The R&A. Nunca modifica la tarjeta ni aplica penalidades.",
+  parameters:{type:"object",properties:{query:{type:"string",description:"Pregunta reglamentaria completa, incluyendo la situación y modalidad conocida."}},required:["query"],additionalProperties:false}
+}}
 function responseForConversation(token,{completedTool=""}={}){
   const common={
     metadata:{speech_token:token,speech_reason:"conversation",voice_policy:"CADDIE_GENERAL_V312"},
     conversation:"auto",
     instructions:conversationInstructions(completedTool),
     tool_choice:completedTool?"none":"auto",
-    tools:completedTool?[]:[realtimeWeatherTool(),realtimeTrafficTool(),realtimeWebResearchTool()]
+    tools:completedTool?[]:[realtimeWeatherTool(),realtimeTrafficTool(),realtimeGolfRulesTool(),realtimeWebResearchTool()]
   };
   if(realtimeShape==="beta")return{...common,modalities:["audio"],voice:VOICE_POLICY.voice};
   return{...common,output_modalities:["audio"],audio:{output:{voice:VOICE_POLICY.voice}}};
@@ -2157,6 +2169,20 @@ async function researchToolResult(argumentsText){
     renderCaddieSources(result);
     return JSON.stringify(result);
   }catch(error){return JSON.stringify({ok:false,error:error?.name==="AbortError"?"RESEARCH_TIMEOUT":"RESEARCH_UNAVAILABLE",message:"No se pudo consultar la web en este momento. Puedes continuar con otra pregunta."})}
+  finally{clearTimeout(timeout)}
+}
+async function golfRulesToolResult(argumentsText){
+  aiUniversalSetState("CONSULTANDO REGLAS OFICIALES USGA / R&A…",{busy:true});
+  let args={};try{args=JSON.parse(argumentsText||"{}")||{}}catch{}
+  const query=String(args.query||authorizedSpeech?.text||"").trim();
+  const history=aiUniversalHistory.slice(-AI_UNIVERSAL_HISTORY_LIMIT).map(item=>({role:item.role,content:item.content}));
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),CLIENT_RESEARCH_TIMEOUT_MS);
+  try{
+    const response=await fetch(window.gscgApiUrl("/api/golf-rules"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,appContext:aiUniversalAppContext()}),signal:controller.signal});
+    const result=await response.json().catch(()=>({ok:false,error:"GOLF_RULES_UNAVAILABLE"}));
+    renderCaddieSources(result);
+    return JSON.stringify(result);
+  }catch(error){return JSON.stringify({ok:false,error:error?.name==="AbortError"?"GOLF_RULES_TIMEOUT":"GOLF_RULES_UNAVAILABLE",message:"No pude verificar la regla oficial en este momento. Puedes continuar con otra pregunta."})}
   finally{clearTimeout(timeout)}
 }
 function aiUniversalSetState(text,{busy=false}={}){
@@ -2243,8 +2269,12 @@ function toggleAiUniversalMute(){
   const button=$("muteAiUniversal");button.classList.toggle("active",aiUniversalMuted);button.textContent=aiUniversalMuted?"ACTIVAR VOZ":"SILENCIAR";
   aiUniversalSetState(aiUniversalMuted?"VOZ SILENCIADA · EL TEXTO SIGUE ACTIVO":"VOZ ACTIVADA");return aiUniversalMuted;
 }
-function openAiUniversalPanel(){
-  const overlay=$("aiUniversalOverlay");overlay.classList.add("visible");overlay.setAttribute("aria-hidden","false");renderAiUniversalHistory();aiUniversalSetState(aiUniversalTextBusy?"INVESTIGANDO Y PENSANDO…":"VOZ Y TEXTO · CUALQUIER TEMA PERMITIDO",{busy:aiUniversalTextBusy});setTimeout(()=>$("aiUniversalInput").focus(),0);
+function openAiUniversalPanel(rulesMode=false){
+  aiUniversalRulesMode=!!rulesMode;
+  $("aiUniversalTitle").textContent=aiUniversalRulesMode?"REGLAS DE GOLF · USGA / R&A":"AI UNIVERSAL ∞";
+  $("aiUniversalRulesNote").classList.toggle("hidden",!aiUniversalRulesMode);
+  $("aiUniversalInput").placeholder=aiUniversalRulesMode?"Describe la situación: bola, lugar, modalidad y qué ocurrió…":"Escribe una pregunta, orden o tema…";
+  const overlay=$("aiUniversalOverlay");overlay.classList.add("visible");overlay.setAttribute("aria-hidden","false");renderAiUniversalHistory();aiUniversalSetState(aiUniversalTextBusy?"INVESTIGANDO Y PENSANDO…":aiUniversalRulesMode?"CONSULTA OFICIAL · REGLAS 2023 Y ACLARACIONES VIGENTES":"VOZ Y TEXTO · CUALQUIER TEMA PERMITIDO",{busy:aiUniversalTextBusy});setTimeout(()=>$("aiUniversalInput").focus(),0);
 }
 function closeAiUniversalPanel(){const overlay=$("aiUniversalOverlay");overlay.classList.remove("visible");overlay.setAttribute("aria-hidden","true")}
 async function startAiUniversalListening(){
@@ -2296,18 +2326,19 @@ async function submitAiUniversalText(forcedText=""){
   if(aiUniversalTextBusy)return false;
   const input=$("aiUniversalInput"),query=String(forcedText||input.value||"").trim();if(!query){input.focus();return false}
   input.value="";aiUniversalRemember("user",query);
-  const local=routeAiUniversalAppText(query);
+  const local=aiUniversalRulesMode?{handled:false}:routeAiUniversalAppText(query);
   if(local.handled){aiUniversalRemember("assistant",local.answer);aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");speakAiUniversalText(local.answer);return true}
   aiUniversalTextBusy=true;$("sendAiUniversal").disabled=true;aiUniversalSetState("INVESTIGANDO Y PENSANDO…",{busy:true});
   const controller=new AbortController();aiUniversalTextAbortController=controller;
   try{
     const history=aiUniversalHistory.slice(0,-1).slice(-AI_UNIVERSAL_HISTORY_LIMIT).map(item=>({role:item.role,content:item.content}));
     const requestUniversal=async trafficOrigin=>{
-      const response=await fetch(window.gscgApiUrl("/api/universal-ai"),{method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,appContext:aiUniversalAppContext(trafficOrigin)})});
+      const endpoint=aiUniversalRulesMode?window.gscgApiUrl("/api/golf-rules"):window.gscgApiUrl("/api/universal-ai");
+      const response=await fetch(endpoint,{method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,appContext:aiUniversalAppContext(trafficOrigin)})});
       return{response,result:await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}))};
     };
     let{response,result}=await requestUniversal(null);
-    if(result?.needsCurrentLocation){
+    if(!aiUniversalRulesMode&&result?.needsCurrentLocation){
       aiUniversalSetState("SOLICITANDO UBICACIÓN PARA EL TRÁFICO…",{busy:true});
       const coordinates=await currentBrowserCoordinates();
       if(!coordinates){const locationError=new Error("TRAFFIC_LOCATION_DENIED");locationError.code="TRAFFIC_LOCATION_DENIED";throw locationError}
@@ -2317,7 +2348,7 @@ async function submitAiUniversalText(forcedText=""){
     aiUniversalRemember("assistant",result.answer,result.sources);aiUniversalSetState("LISTO · PUEDES CONTINUAR");speakAiUniversalText(result.answer);return true;
   }catch(error){
     if(error?.name==="AbortError"){if(!aiUniversalTextAbortController||aiUniversalTextAbortController===controller)aiUniversalSetState("DETENIDO · PUEDES CONTINUAR");return false}
-    const message=error?.code==="TRAFFIC_LOCATION_DENIED"?"Necesito permiso de ubicación o un punto de salida escrito para calcular el tráfico.":"No pude conectar con AI UNIVERSAL ∞ en este momento. Intenta nuevamente.";aiUniversalRemember("assistant",message);aiUniversalSetState(error?.code==="TRAFFIC_LOCATION_DENIED"?"UBICACIÓN NECESARIA":"CONEXIÓN NO DISPONIBLE");return false;
+    const message=error?.code==="TRAFFIC_LOCATION_DENIED"?"Necesito permiso de ubicación o un punto de salida escrito para calcular el tráfico.":aiUniversalRulesMode?"No pude verificar la regla en las fuentes oficiales USGA / The R&A en este momento. Intenta nuevamente.":"No pude conectar con AI UNIVERSAL ∞ en este momento. Intenta nuevamente.";aiUniversalRemember("assistant",message);aiUniversalSetState(error?.code==="TRAFFIC_LOCATION_DENIED"?"UBICACIÓN NECESARIA":"CONEXIÓN NO DISPONIBLE");return false;
   }finally{
     if(aiUniversalTextAbortController===controller){aiUniversalTextAbortController=null;aiUniversalTextBusy=false;$("sendAiUniversal").disabled=false}
   }
@@ -2330,6 +2361,8 @@ async function continueConversationAfterTool(call){
     ?await weatherToolResult(call.arguments)
     :call.name==="get_live_traffic"
       ?await trafficToolResult(call.arguments)
+    :call.name==="get_official_golf_rule"
+      ?await golfRulesToolResult(call.arguments)
     :call.name==="search_live_web"
       ?await researchToolResult(call.arguments)
     :JSON.stringify({ok:false,error:"TOOL_NOT_AVAILABLE"});
@@ -4290,7 +4323,8 @@ async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPER
   }
 }
 function dateSetup(){const d=new Date(),date=new Intl.DateTimeFormat("es-GT",{day:"2-digit",month:"long",year:"numeric"}).format(d).toUpperCase();$("confirmDate").textContent=date}
-$("openAiUniversal").addEventListener("click",openAiUniversalPanel);
+$("openAiUniversal").addEventListener("click",()=>openAiUniversalPanel(false));
+$("openGolfRules").addEventListener("click",()=>openAiUniversalPanel(true));
 $("closeAiUniversal").addEventListener("click",closeAiUniversalPanel);
 $("aiUniversalOverlay").addEventListener("click",event=>{if(event.target===$("aiUniversalOverlay"))closeAiUniversalPanel()});
 $("sendAiUniversal").addEventListener("click",()=>submitAiUniversalText());

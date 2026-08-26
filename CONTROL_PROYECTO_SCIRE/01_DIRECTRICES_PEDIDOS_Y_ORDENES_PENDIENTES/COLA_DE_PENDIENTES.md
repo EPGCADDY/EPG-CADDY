@@ -28,8 +28,8 @@ La prioridad inmediata continúa siendo `PEND-VOZ-003`. **Producción permanece 
 ## PEND-REG-001 · Adaptar las Reglas de Golf a la aplicación
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** EN PROGRESO · CONSULTA CONVERSACIONAL DISPONIBLE; FUENTES REGLAMENTARIAS Y VALIDACIÓN PENDIENTES
-**Prioridad:** Principal, pendiente de orden de ejecución del propietario  
+**Estado:** V328 EN BANCO · CENTRO OFICIAL USGA/THE R&A IMPLEMENTADO; PREVIEW, VOZ FÍSICA Y MODO BÁSICO SIN CONEXIÓN PENDIENTES
+**Prioridad:** Principal, en ejecución por orden permanente del propietario
 **Solicitud original:** “Tratar de adaptar las reglas de Golf a la aplicación”.
 
 ### Objetivo
@@ -37,6 +37,18 @@ La prioridad inmediata continúa siendo `PEND-VOZ-003`. **Producción permanece 
 Integrar las Reglas de Golf a Golf Score Card GT de forma práctica, comprensible y verificable, para que el usuario pueda consultar una situación real desde la pantalla o el micrófono y recibir orientación sin abandonar innecesariamente la ronda.
 
 La solución debe buscar un enlace oficial y autorizado con **USGA** y sus **Reglas de Golf**, respetando licencia, atribución, vigencia, condiciones de uso y capacidades técnicas reales. No se simulará una integración ni se copiarán contenidos restringidos sin autorización.
+
+### Avance real V328
+
+- La aplicación incorpora el botón global `REGLAS` dentro del mismo asistente AI UNIVERSAL ∞; no existe un segundo motor de scores.
+- Texto y voz pueden llamar `get_official_golf_rule`, que usa `/api/golf-rules` y limita técnicamente la búsqueda a `usga.org` y `randa.org`, incluidos sus subdominios oficiales.
+- Cada respuesta exige al menos una fuente oficial visible, conserva el contexto de campo y modalidad, distingue Regla general, Regla Local y Comité, y señala la edición `Rules of Golf 2023` y clarificaciones actuales.
+- El corte verificado es la clarificación oficial del **1 de julio de 2026**. Una actualización posterior publicada por USGA o The R&A prevalece automáticamente al consultarse.
+- La consulta reglamentaria no puede ejecutar órdenes locales, modificar un score, aplicar una penalidad, conceder un hoyo ni cerrar una ronda. Cualquier cambio exige otra orden separada y explícita.
+- El banco V328 cubre 15 situaciones distintas y rechaza fuentes ajenas a USGA/The R&A. El manual de 74 páginas ya explica el uso y aprobó 4K/300 dpi.
+- Esto es acceso a fuentes públicas oficiales, no una alianza, licencia de marca ni API privada de USGA/The R&A. El modo básico sin conexión, Preview y la prueba física hablada permanecen abiertos antes del cierre total del pendiente.
+
+**Fuentes oficiales verificadas:** [USGA Rules Hub](https://www.usga.org/content/usga/home-page/rules-hub.html), [USGA Clarifications](https://rulesworkshops.usga.org/content/usga/home-page/rules-hub/clarifications-of-the-rules-of-golf.html) y [The R&A Rules Hub](https://www.randa.org/en/rules/rules-hub).
 
 ### Alcance proyectado
 

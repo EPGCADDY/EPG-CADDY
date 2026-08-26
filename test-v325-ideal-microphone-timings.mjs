@@ -5,8 +5,8 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const sessionApi=fs.readFileSync(new URL("./api/session-grupal.js",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V327-TOOL-FOLLOWUP-NO-SILENCE-20260826"/);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v327-tool-followup-no-silence"/);
+assert.match(html,/gscg-build" content="V328-OFFICIAL-GOLF-RULES-20260826"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v328-official-golf-rules"/);
 
 const script=html.slice(html.indexOf("<script>")+8,html.lastIndexOf("</script>"));
 assert.doesNotThrow(()=>new Function(script),"El JavaScript principal debe compilar completo");

@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V327
+**Versión documentada:** V328
 **Fecha de corte:** 26 de agosto de 2026
 **Rama operativa:** `main` (Producción vigente)
 **Aplicación:** `index-grupal.html`  
@@ -1128,6 +1128,17 @@ Probar como mínimo:
 - Los conocimientos estables y cálculos aproximados, incluido el consumo eléctrico de un aire acondicionado, se responden directamente con supuestos y fórmula. La búsqueda Web sólo se abre cuando el usuario pide tarifa, precio, modelo o dato vigente.
 - Durante la respuesta el micrófono permanece disponible para una interrupción bilateral confirmada: arma el corte a los 250 ms, exige al menos ocho caracteres reconocidos y descarta eco. Al terminar la voz vuelve inmediatamente a escuchar. Sólo 30 minutos completos de inactividad cierran la conversación.
 
+#### Centro REGLAS · USGA / The R&A
+
+- V328 agrega el botón global `REGLAS` sin crear otra aplicación ni otro motor de scores. Abre el mismo panel de AI UNIVERSAL ∞ con texto, micrófono, historial temporal y controles `ESCUCHAR`, `DETENER`, `REPETIR`, `SILENCIAR` y `CONTINUAR`.
+- Una pregunta reglamentaria hablada o escrita usa `get_official_golf_rule` y `/api/golf-rules`. La búsqueda queda restringida técnicamente a `usga.org` y `randa.org`, incluidos sus subdominios oficiales; una respuesta sin fuente oficial se rechaza.
+- La aplicación toma como base la edición **Rules of Golf 2023** y verifica las clarificaciones oficiales vigentes. El corte comprobado el 26 de agosto de 2026 corresponde a la actualización del **1 de julio de 2026**.
+- La respuesta recibe sólo el nombre del campo y la modalidad activa como contexto informativo. Debe distinguir stroke play, Match Play, Stableford, Four-Ball, Reglas Locales y decisiones del Comité.
+- Consultar una Regla nunca ejecuta el analizador local de órdenes, cambia un score, aplica una penalidad, concede un hoyo ni cierra la ronda. Si el jugador decide modificar la tarjeta, debe dar después una orden separada y explícita.
+- La interfaz muestra enlaces oficiales a USGA y The R&A y las fuentes concretas de cada respuesta. No copia el libro completo ni afirma una alianza, licencia de marca o API privada inexistente.
+- El banco V328 prueba 15 situaciones: fuera de límites, bola provisional, áreas de penalidad, bola injugable, búnker, green, bola equivocada, orden de juego, Match Play, Four-Ball, Stableford, agua temporal, bola empotrada, influencia animal y Reglas Locales.
+- La página 73 del manual fue regenerada; el PDF completo conserva 74 páginas, 2160 × 4320 px y 300 dpi. Siguen pendientes el modo básico sin conexión, el Preview y la prueba física hablada antes de cerrar `PEND-REG-001`.
+
 ### 21.5 Persistencia
 
 - minimizar;
@@ -1342,6 +1353,7 @@ La modalidad se identifica en todas las pantallas únicamente como **FOUR BALL**
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-26 | Manual 3.76 / App V328 | Centro REGLAS integrado en AI UNIVERSAL ∞ por texto y voz; búsqueda limitada a USGA/The R&A, edición 2023 y clarificaciones vigentes, fuentes visibles y aislamiento absoluto de scores/penalidades. Banco de 15 situaciones y manual de 74 páginas aprobado; continúan abiertos Preview, voz física y consulta básica offline. |
 | 2026-08-26 | Manual 3.75 / App V327 | Rechazada V326-R2 tras aproximadamente seis preguntas físicas: investigación web y tráfico completaban en servidor, pero un cierre tardío sin ID podía apagar el follow-up antes del audio. V327 conserva vigilancia hasta transcripción, protege la transición herramienta→voz, añade guardián de reproducción de 60 s y telemetría técnica sin contenido privado. El banco dirigido cubre 550 secuencias y 100 eventos; aún falta Preview, regresión completa y PASS físico prolongado. |
 | 2026-08-26 | Manual 3.74 / App V326 | Rechazada V325 después de dos silencios reales con micrófono rojo en iPhone. AI UNIVERSAL ∞ cambia de final semántico indefinido a `server_vad` conversacional 0.2/700/2,200 ms; añade guardián de entrada 15 s con límite duro 90 s, guardián de respuesta 30 s y respuesta directa para cálculos estables como consumo eléctrico de A/C. Se prohíbe montaje hasta repetir tráfico El Pulté-Oakland 12:30 PM, consumo A/C y conversación multitema prolongada. |
 | 2026-08-26 | Manual 3.73 / App V325 | Separados los tiempos del micrófono: órdenes y scores conservan VAD operativo de 0.2/700/1,000 ms; AI UNIVERSAL ∞ usa `semantic_vad` con urgencia baja para respetar pausas naturales. La interrupción bilateral conserva guardia de 250 ms, confirmación mínima de ocho caracteres, protección de eco por 1,800 ms, reescucha inmediata y cierre sólo tras 30 minutos sin actividad. Se registra además como trabajo futuro el enlace oficial/autorizado con USGA y Reglas de Golf, la modalidad Skins y soporte Apple Watch/Wear OS. La aprobación comercial sigue pendiente de prueba física prolongada en iPhone. |

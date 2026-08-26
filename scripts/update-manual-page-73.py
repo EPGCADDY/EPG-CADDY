@@ -61,7 +61,7 @@ def build_page():
     regular, bold = register_fonts()
     width, height = 576, 1152
     c = canvas.Canvas(str(PAGE_PDF), pagesize=(width, height), pageCompression=1)
-    c.setTitle("73 - AI UNIVERSAL INFINITA - voz y texto")
+    c.setTitle("73 - AI UNIVERSAL INFINITA y Reglas de Golf")
     c.setFillColor(white)
     c.rect(0, 0, width, height, stroke=0, fill=1)
 
@@ -70,12 +70,12 @@ def build_page():
     c.setFont(bold, 17.5)
     c.drawString(70, 1120, "GOLF SCORE CARD GT · MANUAL DE FUNCIONES")
     c.setFont(regular, 15.5)
-    c.drawString(left, 1087, "73 · AI UNIVERSAL ∞ · voz y texto")
+    c.drawString(left, 1087, "73 · AI UNIVERSAL ∞ · voz, texto y Reglas")
     c.setFont(regular, 22)
-    c.drawString(left, 1060, "Pregunta cualquier cosa")
+    c.drawString(left, 1060, "Pregunta o consulta una Regla")
     draw_wrapped(
         c,
-        "Toca AI ∞ para escribir o toca un micrófono para hablar. No existe una lista cerrada de temas.",
+        "Pregunta cualquier cosa: no existe una lista cerrada. REGLAS consulta fuentes oficiales.",
         left,
         1027,
         500,
@@ -94,20 +94,20 @@ def build_page():
 
     steps = [
         (
-            "ELIGE VOZ O TEXTO",
-            "AI ∞ abre el teclado. ESCUCHAR abre el micrófono. El micrófono nunca se abre solo.",
+            "ORDEN O PREGUNTA",
+            "AI ∞ abre cualquier tema. REGLAS abre la consulta oficial. El micrófono nunca se abre solo.",
         ),
         (
             "HABLA NORMAL",
-            "Pregunta de medicina, vuelos, cultura o un tema nuevo. Los 200 temas probados son ejemplos, nunca límites.",
+            "Los 200 temas de prueba son ejemplos, nunca límites. En REGLAS di qué pasó, dónde y la modalidad.",
         ),
         (
-            "ORDEN O PREGUNTA",
-            "Una orden de la tarjeta se ejecuta allí. Cualquier otra consulta va a AI UNIVERSAL ∞ sin cambiar de modo.",
+            "COMPRUEBA LA FUENTE",
+            "La consulta reglamentaria usa USGA y The R&A, muestra fuentes y distingue Reglas Locales.",
         ),
         (
-            "SIGUE EL HILO",
-            "Recuerda el contexto temporal, busca datos actuales y muestra fuentes. Usa DETENER, REPETIR, SILENCIAR o CONTINUAR.",
+            "CONSERVA LA TARJETA",
+            "Consultar una Regla no cambia scores ni penalidades. Usa DETENER, REPETIR, SILENCIAR o CONTINUAR.",
         ),
     ]
     row_top = box_y + box_h - 62
@@ -142,7 +142,7 @@ def build_page():
     c.drawString(remember_x + 20, remember_y + remember_h - 29, "RECUERDA")
     draw_wrapped(
         c,
-        "Nunca inventa datos. Distingue hechos, estimaciones y opiniones. Sus límites reales son seguridad, privacidad, legalidad, veracidad y herramientas disponibles.",
+        "Si una Regla Local o el Comité puede cambiar el procedimiento, la aplicación lo indica. Ante duda antes de entregar la tarjeta, consulta al Comité.",
         remember_x + 20,
         remember_y + remember_h - 54,
         remember_w - 40,
@@ -172,7 +172,7 @@ def replace_last_page():
     writer.add_page(replacement.pages[0])
     writer.add_metadata({
         "/Title": "Golf Score Card GT - Manual completo de funciones - Paginas 01-73",
-        "/Subject": "Manual de funciones, voz, texto, Web y AI UNIVERSAL INFINITA",
+        "/Subject": "Manual de funciones, voz, texto, AI UNIVERSAL INFINITA y Reglas de Golf",
         "/Author": "Golf Score Card GT",
         "/Creator": "Golf Score Card GT",
     })

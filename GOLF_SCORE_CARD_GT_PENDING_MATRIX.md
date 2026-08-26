@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V327-R1 · banco automatizado y Preview aprobados; puerta física iPhone abierta
+**Corte vigente:** V328 · Reglas oficiales en banco; Preview y validaciones físicas abiertas
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -148,7 +148,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 11. Reglas de Golf integradas
 
-**Estado:** PENDIENTE · `PEND-REG-001`
+**Estado:** V328 EN BANCO · centro USGA/The R&A implementado; Preview, voz física y consulta básica offline pendientes · `PEND-REG-001`
 
 - Adaptar las Reglas de Golf a la aplicación y al manual sin crear un motor paralelo.
 - Buscar y formalizar un enlace oficial/autorizado con USGA y sus Reglas de Golf, sujeto a licencia, atribución, vigencia y capacidades técnicas comprobadas.
@@ -158,6 +158,9 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Mostrar fuente, edición y fecha vigente; no inventar decisiones ni aplicar penalidades automáticamente.
 - Exigir confirmación expresa antes de modificar un score, registrar una penalidad o cerrar una ronda.
 - Conservar el detalle operativo en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`.
+- **Implementado V328:** acceso global `REGLAS`; consultas naturales escritas y habladas; búsqueda restringida a fuentes oficiales USGA/The R&A; contexto de campo/modalidad; fuentes visibles; edición 2023 y clarificaciones vigentes; cero escritura de score o penalidad.
+- **Banco V328:** 15 situaciones reglamentarias, filtro de dominios, aislamiento de tarjeta, continuidad texto/voz, compilación JavaScript y manual de 74 páginas en 4K/300 dpi aprobados.
+- **Pendiente real:** consulta básica sin conexión, Preview desplegado, prueba física por voz y revisión de condiciones de uso si se pretende una integración comercial o de marca más profunda. No se declara alianza oficial.
 
 ### 12. Clima sincronizado por campo
 

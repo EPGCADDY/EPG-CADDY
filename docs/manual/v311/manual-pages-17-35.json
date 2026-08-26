@@ -730,14 +730,14 @@
   {
     "number": "73",
     "kicker": "AI UNIVERSAL ∞ · voz y texto",
-    "title": "Pregunta cualquier cosa",
-    "subtitle": "Toca AI ∞ para escribir o toca un micrófono para hablar. No existe una lista cerrada de temas.",
+    "title": "Pregunta cualquier cosa o consulta una Regla",
+    "subtitle": "Pregunta cualquier cosa: no existe una lista cerrada de temas. Usa REGLAS para una situación de golf.",
     "steps": [
-      ["1 · ELIGE", "AI ∞ abre el teclado. ESCUCHAR abre el micrófono. El micrófono nunca se abre solo."],
-      ["2 · HABLA NORMAL", "Pregunta de medicina, vuelos, cultura o un tema nuevo. Los 200 temas de prueba son ejemplos, nunca límites."],
-      ["3 · ORDEN O PREGUNTA", "Si dices una orden de la tarjeta, la ejecuta. Si preguntas cualquier otra cosa, responde AI UNIVERSAL ∞ sin cambiar de modo."],
-      ["4 · SIGUE EL HILO", "Recuerda la conversación temporal. Para datos actuales consulta la Web y muestra fuentes. Usa DETENER, REPETIR, SILENCIAR o CONTINUAR."]
+      ["1 · ORDEN O PREGUNTA", "AI ∞ abre cualquier tema. REGLAS abre la consulta oficial. ESCUCHAR abre el micrófono; el micrófono nunca se abre solo."],
+      ["2 · HABLA NORMAL", "Los 200 temas de prueba son ejemplos, nunca límites. En REGLAS di qué pasó, dónde está la bola y la modalidad."],
+      ["3 · COMPRUEBA", "La respuesta reglamentaria consulta únicamente USGA y The R&A, muestra sus fuentes y distingue Reglas Locales."],
+      ["4 · CONSERVA LA TARJETA", "Consultar una Regla nunca cambia un score ni aplica una penalidad. Usa DETENER, REPETIR, SILENCIAR o CONTINUAR."]
     ],
-    "remember": "Nunca inventa datos. Distingue hechos, estimaciones y opiniones. Sus límites reales son seguridad, privacidad, legalidad, veracidad y herramientas disponibles."
+    "remember": "Si una Regla Local o el Comité puede cambiar el procedimiento, la aplicación lo indica. Ante duda antes de entregar la tarjeta, consulta al Comité."
   }
 ]
