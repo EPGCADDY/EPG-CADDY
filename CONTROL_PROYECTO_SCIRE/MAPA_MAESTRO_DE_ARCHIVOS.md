@@ -111,11 +111,11 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `database/test-master-data-platform-schema.mjs` | `24517be27fb31df9b91391b12b4cc9d3dace3bb0` | 1385 bytes | Comprueba los espacios de la información central. |
 | `database/test-player-profile-schema.mjs` | `32d0b6f78446a1193e8b2239b26f93738547b24b` | 817 bytes | Comprueba los espacios de la información central. |
 | `database/test-schema.mjs` | `ad64ac3b0ed21932c24ea56886124f518a7b0692` | 1099 bytes | Comprueba los espacios de la información central. |
-| `dots.js` | Motor V330 | Se calcula al publicar | Calcula Dots para dos a seis jugadores, eventos activos, valores propios y reglas de grupo opcionales. |
+| `dots.js` | Motor V331 investigado | Se calcula al publicar | Define cada evento en español, separa puntos positivos/negativos y automáticos/manuales, y mantiene apagadas las reglas de grupo. |
 | `four-ball.js` | Motor V330 de tres parejas | Se calcula al publicar | Compara el mejor Neto de una, dos o tres parejas Verde, Oro y Azul. |
 | `historical-analytics.js` | `2a5bb2f2ef1564b09a567823efde14b54829ce86` | 8963 bytes | Resume el historial y muestra datos útiles de rondas anteriores. |
 | `golf-rules-offline.js` | V328-R2 · caché oficial básica | Se calcula al publicar | Reutiliza hasta 24 respuestas USGA/The R&A confirmadas durante 90 días, por coincidencia y modalidad, sin consulta completa ni escritura de score. |
-| `index-grupal.html` | Build V330 | Se calcula al publicar | Conserva la tarjeta principal y divide Configuración en modalidades existentes y juegos nuevos; integra AI, Reglas, Skins, Wolf, Vegas y Dots. |
+| `index-grupal.html` | Build V331 | Se calcula al publicar | Conserva la tarjeta principal y agrega configuración, estados, riesgos, métricas, acumulados y liquidación comprensible para Wolf, Vegas y Dots. |
 | `index.html` | `7b483f1553246274920c71a10723f484d1847744` | 759569 bytes | Entrada antigua que lleva a la pantalla principal. |
 | `ios/EPGCaddy/App.swift` | `06a1c8ee89139ef87af20f07bba2496aa2b90636` | 141 bytes | Inicia la aplicación de apoyo para iPhone. |
 | `ios/EPGCaddy/ContentView.swift` | `80556289a09cc451f4e11e56f2f9d6a800a50a5f` | 208 bytes | Abre Golf Score Card GT dentro de la aplicación de iPhone. |
@@ -137,7 +137,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/prepare-mobile-assets.mjs` | `fcd2fa387095322c9731917834ad424ad3e8fd73` | 1356 bytes | Crea todos los tamaños oficiales del logo. |
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
 | `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | 2881 bytes | Bloquea cualquier modificación o publicación que no aparezca en ambos ROADMAPS. |
-| `service-worker.js` | Caché V330 | Se calcula al publicar | Sustituye la copia instalada anterior e incluye Reglas offline y los motores Skins, Wolf, Vegas y Dots. |
+| `service-worker.js` | Caché V331 | Se calcula al publicar | Fuerza `gscg-mobile-v331-researched-side-games` e incluye Reglas offline y los motores Skins, Wolf, Vegas y Dots. |
 | `skins.js` | Motor V329-R2 | Se calcula al publicar | Calcula Skins Gross/Neto para dos a seis jugadores con carry, división o anulación, X y saldo cero-suma. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |
@@ -211,12 +211,12 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v305-history-navigation-zero-error.mjs` | Registro V305 | Se calcula al publicar | Audita Historial, Atrás, Regístrate, superposiciones, validación Stableford, versión y caché. |
 | `test-v305-registration-guides-parser-truth.mjs` | Registro V305 | Se calcula al publicar | Ejecuta ambos analizadores reales y bloquea guías falsas, HDCP o marcas visibles en Stableford y estados de OK incoherentes. |
 | `test-v329-skins.mjs` | Banco V329-R2 | Se calcula al publicar | Prueba Skins desde el motor hasta cierre, corrección, tarjetas, Historial, nube, restauración, voz y pantalla principal intacta. |
-| `test-v330-side-games.mjs` | Banco V330 | Se calcula al publicar | Prueba Wolf, Vegas y Dots, seis jugadores, tres parejas, empates, multiplicadores, tope, cero-suma y persistencia integral. |
+| `test-v330-side-games.mjs` | Banco V331 | Se calcula al publicar | Prueba selección única, riesgo/tope Wolf, birdies y score 10+ Vegas, métricas Dots, cero-suma, cierre, corrección y persistencia integral. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
-| `vegas.js` | Motor V330 | Se calcula al publicar | Calcula Vegas para dos o tres parejas con número menor, volteo, diferencia doble, tope y liquidación cero-suma. |
+| `vegas.js` | Motor V331 investigado | Se calcula al publicar | Calcula dos o tres parejas, scores de 10+, birdies simultáneos configurables, volteos, águila, topes, métricas y liquidación cero-suma. |
 | `vercel.json` | V330 | Se calcula al publicar | Publica inicio y manual; exige auditoría integral y consulta real con fuente USGA/The R&A antes de entregar Preview. |
 | `verify-manual-sync.mjs` | `df56ae83b57d5ee4d6273f36be1db9350e1b2c9c` | 731 bytes | Comprueba que la firma documental de la aplicación coincida con la versión del manual maestro. |
-| `wolf.js` | Motor V330 | Se calcula al publicar | Calcula Wolf de tres a seis jugadores con rotación, pareja/Solo/Lone/Blind, empate y cobro cruzado. |
+| `wolf.js` | Motor V331 investigado | Se calcula al publicar | Calcula Wolf de tres a seis jugadores con pareja/Lobo solitario/Lobo ciego, orden, riesgo, tope, carry, unidades netas y pago por diferencia. |
 | `manual.html` | Registro V314 ampliado | Se calcula al publicar | Visor permanente con portada, 73 páginas funcionales, índice por categorías, lupa de lenguaje natural, navegación, app y descarga PDF. |
 | `manual.webmanifest` | `2c07adafaa323be295c05b927c1418c712bd514a` | 456 bytes | Instala MANUAL SCG como acceso independiente al manual completo. |
 | `scripts/manual-visual-qc.py` | Registro V314 ampliado | Se calcula al publicar | Filtro obligatorio de 74 imágenes, resolución 4K, densidad, márgenes, color y equilibrio editorial. |

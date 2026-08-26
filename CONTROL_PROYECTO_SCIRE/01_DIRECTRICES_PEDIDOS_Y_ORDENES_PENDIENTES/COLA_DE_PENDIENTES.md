@@ -12,7 +12,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
 | 5 | `PEND-CAM-009` campos mundiales | Falta proveedor/catálogo licenciado y tarjetas oficiales verificables |
 | 6 | `PEND-GPS-010` GPS de golf | Clima y tráfico ya usan GPS efímero; faltan distancias deportivas por hoyo y validación de precisión |
-| 7 | `PEND-SKI-006` Skins, Wolf, Vegas y apuestas | V330-R2 rechazada físicamente por doble selección Normal/Wolf; V330-R3 en corrección y nueva validación |
+| 7 | `PEND-SKI-006` Skins, Wolf, Vegas y apuestas | V330-R3 aprobó selección única en iPhone; V331 incorpora matriz investigada, estados, métricas y lenguaje claro; falta ronda física por juego |
 | 8 | `PEND-WAT-007` Apple Watch y smartwatches | Falta aplicación/sincronización física; Apple Watch primero y Wear OS después |
 | 9 | `PEND-NUB-011` nube, cuentas y seguridad | Base preparada; faltan sincronización central, roles, recuperación, privacidad y endurecimiento |
 | 10 | `PEND-EST-012` estadísticas avanzadas | Estadística local básica entregada; faltan histórico central, tendencias y comparaciones multi-dispositivo |
@@ -277,25 +277,25 @@ Este pendiente sólo podrá cerrarse con destino exacto validado, proveedor y fa
 ## PEND-SKI-006 · Juegos y apuestas: Skins, Wolf, Vegas y Dots
 
 **Fecha de registro:** 26 de agosto de 2026
-**Estado:** V330-R2 RECHAZADA EN IPHONE POR DOBLE SELECCIÓN NORMAL/WOLF · V330-R3 EN CORRECCIÓN Y NUEVA VALIDACIÓN
+**Estado:** V330-R3 APROBÓ SELECCIÓN ÚNICA EN IPHONE · V331 MATRIZ INVESTIGADA EN IMPLEMENTACIÓN Y BANCO
 **Prioridad:** Función nueva solicitada por el propietario
 
 ### Objetivo
 
 Agregar **Skins, Wolf, Vegas y el módulo maestro de apuestas** dentro de la arquitectura única de Golf Score Card GT, reutilizando registro, campos, handicap, captura manual y por voz, persistencia, historial y tarjeta final.
 
-### Avance real V329/V330
+### Avance real V329/V330/V331
 
 - La ventana de Configuración quedó dividida en dos columnas: modalidades existentes a la izquierda y juegos nuevos a la derecha. La pantalla principal de la tarjeta no cambió de formato.
 - Skins admite de dos a seis jugadores, Gross o Neto, unidad monetaria configurable —GTQ por defecto— y tres políticas explícitas de empate: acumular, dividir o anular. Resuelve X, hoyo 18, saldos cero-suma y carry final.
-- Wolf admite de tres a seis jugadores como adaptación de grupo. Rota al Wolf, exige definir pareja, Solo, Lone o Blind por hoyo, usa multiplicadores configurados antes de jugar y bloquea el cierre oficial si falta una decisión. El empate devuelve cero por defecto; el carry queda rotulado como regla de grupo.
-- Vegas admite cuatro o seis jugadores; con seis utiliza tres parejas y compara cada pareja contra las otras dos. Forma el número menor con los Netos de la pareja, distingue empate, volteo y águila, aplica tope y conserva liquidación cero-suma. La variante de seis jugadores queda identificada como adaptación propia de Golf Score Card GT.
-- Dots admite de dos a seis jugadores. Sandy, Greenie, Birdie, Eagle, Barkie, Arnie, Chippie, Poley, Ferret y Snake pueden activarse y valorarse antes de iniciar. `Amigo`, izquierda y derecha quedan marcados como reglas propias del grupo y apagados por defecto.
+- Wolf admite de tres a seis jugadores como adaptación de grupo. V331 elimina la duplicidad `Solo base`/`Lone`: sólo ofrece Con pareja, Lobo solitario y Lobo ciego; configura Wolf primero/último, multiplicadores, unidad y tope por rival/hoyo. Muestra riesgo, decisión y score pendientes, carry, unidades netas, dinero movido y liquidación; bloquea el cierre si falta una decisión.
+- Vegas admite cuatro o seis jugadores; con seis utiliza tres parejas y compara cada pareja contra las otras dos. V331 explica y muestra cada número por hoyo, maneja 10+4 como 104, permite acordar si dos birdies cancelan o aplican ambos volteos, registra águila, tope, puntos movidos, saldo y liquidación cero-suma. La variante de seis queda identificada como adaptación propia.
+- Dots admite de dos a seis jugadores. V331 añade una definición en español a cada evento, separa puntos positivos/negativos y registros automáticos/manuales. Ferret queda apagado por defecto porque puede duplicar Chippie; `Amigo`, izquierda y derecha continúan como reglas propias del grupo apagadas.
 - Match Play y Four Ball aceptan ahora hasta seis jugadores. Cuando se arman parejas, las posiciones 1–2, 3–4 y 5–6 forman las parejas Verde, Oro y Azul; cada Match se resuelve de forma independiente y Four Ball compara el mejor Neto de cada pareja.
 - Cada resultado explica ganador, empate, multiplicador, valor de unidad, cobro/pago y saldo. El dinero se mantiene separado del score deportivo.
 - El cierre oficial guarda la configuración y liquidación en el snapshot SHA-256. Una corrección recalcula el juego, preserva el original y actualiza Global, personales, Historial, consultas, respaldo central y restauración.
 - Los bancos `test-v329-skins.mjs` y `test-v330-side-games.mjs` aprobaron reglas, empates, X, límites, tres parejas, cierre, corrección, artefactos, búsqueda, nube, recuperación, voz y ausencia de cambios estructurales en la pantalla principal.
-- Las referencias profesionales usadas para escoger valores predeterminados son BirdieBet y Squabbit para Vegas, Wiz Golf/FLOG/Squabbit/Golf Monthly para Wolf y The 1st Tee para Dots. Las reglas que varían entre grupos se muestran como configurables, nunca como universales.
+- La revisión V331 usa 18Birdies y Wolf Golf Scorecard para Wolf; Mashie, 18Birdies y Golf Digest para Vegas; 18Birdies, MyScorecard y SCGA para Dots/Junk; USGA queda como autoridad del hándicap y score deportivo. Las reglas que varían entre grupos se muestran como configurables, nunca como universales.
 
 ### Alcance mínimo para diseñar y aprobar
 
@@ -317,7 +317,8 @@ Agregar **Skins, Wolf, Vegas y el módulo maestro de apuestas** dentro de la arq
 
 - ✅ El Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` quedó `READY`: 89 paquetes, 322 fuentes, tres inventarios PDF, cero vulnerabilidades y puerta viva de Reglas con seis fuentes oficiales.
 - ❌ La prueba física V330-R2 rechazó la selección visual: al tocar `WOLF`, abrió su configuración pero `RONDA NORMAL` también permaneció verde.
-- ⏳ V330-R3 debe demostrar en iPhone que al elegir cualquier modalidad sólo esa opción queda verde; para WOLF, las otras seis deben quedar desmarcadas inmediatamente.
+- ✅ V330-R3 demostró en iPhone que al elegir `WOLF` sólo Wolf queda verde, Ronda Normal se desmarca y la configuración se abre.
+- ⏳ V331 debe publicar la matriz investigada y confirmar físicamente que acuerdos, estados, métricas, acumulados y liquidaciones sean legibles y operables.
 - Revisar físicamente en iPhone la ventana dividida, seis jugadores, tres parejas, selectores monetarios y controles Dots/Wolf sin tropiezos.
 - Jugar o simular una ronda completa por cada juego en el dispositivo, corregir al menos un hoyo y confirmar tarjetas, Historial y restauración.
 - Sólo después de esos PASS el propietario podrá autorizar el montaje en Producción.

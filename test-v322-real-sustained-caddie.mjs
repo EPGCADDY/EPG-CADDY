@@ -5,7 +5,7 @@ import researchHandler from "./api/research.js";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const researchApi=fs.readFileSync(new URL("./api/research.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V330-R3-PHYSICAL-SINGLE-MODE-20260826"/);
+assert.match(html,/gscg-build" content="V331-RESEARCHED-SIDE-GAMES-20260826"/);
 assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=30\*60\*1000/);
 assert.doesNotMatch(html,/CONVERSATION_IDLE_CLOSE_MS=3000/);
 assert.match(html,/if\(on\)scheduleConversationIdleClose\(\)/);

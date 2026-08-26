@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V330-R2 rechazada físicamente por doble selección Normal/Wolf; V330-R3 corrige exclusividad y fuerza caché nueva
+**Corte vigente:** V330-R3 aprobó selección única Wolf en iPhone; V331 incorpora matriz investigada de apuestas, estados, métricas y lenguaje operativo
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -228,17 +228,20 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 16. Juegos y apuestas: Skins, Wolf, Vegas y Dots
 
-**Estado:** V330-R2 RECHAZADA EN IPHONE; V330-R3 EN CORRECCIÓN Y NUEVA VALIDACIÓN · `PEND-SKI-006`
+**Estado:** V330-R3 APROBÓ SELECCIÓN ÚNICA EN IPHONE; V331 EN IMPLEMENTACIÓN Y BANCO · `PEND-SKI-006`
 
 - ✅ Skins Gross/Neto, Wolf, Vegas y Dots reutilizan el score oficial, de dos a seis jugadores según el juego, sin segundo capturador.
 - ✅ La ventana de opciones conserva a la izquierda las modalidades anteriores y ubica a la derecha los juegos nuevos; la tarjeta principal no cambia de formato.
 - ✅ Match Play y Four Ball aceptan hasta tres parejas: Verde 1–2, Oro 3–4 y Azul 5–6.
 - ✅ Unidad monetaria configurable en GTQ, reglas de empate, multiplicadores, topes y saldos cero-suma definidos antes de jugar.
-- ✅ Dots configura eventos y valores; `Amigo`, izquierda y derecha son reglas de grupo apagadas por defecto.
+- ✅ V331 documenta Wolf como Con pareja/Lobo solitario/Lobo ciego; muestra riesgo, pendientes, carry, unidades netas, dinero movido y pago por diferencia.
+- ✅ V331 muestra el cálculo Vegas por hoyo, birdies simultáneos configurables, score de 10 o más, volteos, águilas, topes y puntos movidos.
+- ✅ Dots configura eventos y valores con definición en español, puntos positivos/negativos y registros automáticos/manuales; Ferret, `Amigo`, izquierda y derecha son reglas de grupo apagadas por defecto.
 - ✅ Correcciones, X, cierre, snapshot SHA-256, Global, personales, Historial, voz, respaldo y restauración cubiertos por V329/V330.
 - ✅ Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` READY: 89 paquetes, 322 fuentes, tres PDF, cero vulnerabilidades y puerta viva de Reglas aprobados.
 - ❌ Prueba física R2: `WOLF` abrió su configuración, pero `RONDA NORMAL` permaneció verde simultáneamente.
-- ⏳ R3 usa una sola sincronización visual para las siete opciones, limpia estados heredados y sube la caché PWA; debe confirmarse otra vez en iPhone.
+- ✅ Prueba física R3: únicamente `WOLF` quedó verde, Ronda Normal se desmarcó y la configuración se abrió.
+- ⏳ Falta publicar V331 y probar físicamente acuerdos, estados, métricas, acumulados, corrección y liquidación por juego.
 - ⏳ Falta revisión visual táctil y una ronda física por juego en iPhone antes de montar.
 
 ### 17. Apple Watch y otros smartwatches

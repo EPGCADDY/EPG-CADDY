@@ -4,8 +4,8 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V330-R3-PHYSICAL-SINGLE-MODE-20260826"/);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v330-side-games-r3"/);
+assert.match(html,/gscg-build" content="V331-RESEARCHED-SIDE-GAMES-20260826"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v331-researched-side-games"/);
 
 const script=html.slice(html.indexOf("<script>")+8,html.lastIndexOf("</script>"));
 assert.doesNotThrow(()=>new Function(script),"El JavaScript principal V326 debe compilar completo");

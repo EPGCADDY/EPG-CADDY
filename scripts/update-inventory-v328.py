@@ -12,7 +12,7 @@ from reportlab.pdfgen import canvas
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT.parent / "output" / "pdf"
-TMP_DIR = ROOT / "tmp" / "pdfs" / "inventory-v330"
+TMP_DIR = OUTPUT_DIR / ".inventory-v331-tmp"
 FILES = {
     "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf": "INVENTARIO OVERALL",
     "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf": "INVENTARIO A DETALLE",
@@ -69,7 +69,7 @@ def build_cover(path, title):
     regular, bold = register_fonts()
     width, height = A4
     c = canvas.Canvas(str(path), pagesize=A4, pageCompression=1)
-    c.setTitle(f"{title} - V330")
+    c.setTitle(f"{title} - V331")
     c.setFillColor(HexColor("#080808"))
     c.rect(0, 0, width, height, stroke=0, fill=1)
     c.setFillColor(HexColor("#20ff00"))
@@ -81,23 +81,23 @@ def build_cover(path, title):
     c.drawString(44, height - 80, title)
     c.setFillColor(HexColor("#20ff00"))
     c.setFont(bold, 28)
-    c.drawString(44, height - 126, "V330 · JUEGOS Y TRES PAREJAS")
+    c.drawString(44, height - 126, "V331 · MATRIZ DE APUESTAS")
     c.setFillColor(white)
     c.setFont(bold, 15)
-    c.drawString(44, height - 153, "SKINS · WOLF · VEGAS · DOTS · 2 A 6 JUGADORES")
+    c.drawString(44, height - 153, "WOLF · VEGAS · DOTS · REGLAS · ESTADOS · MÉTRICAS")
 
     c.setFillColor(HexColor("#151515"))
     c.roundRect(42, 414, 511, 239, 12, stroke=0, fill=1)
     c.setFillColor(HexColor("#20ff00"))
     c.setFont(bold, 11)
-    c.drawString(58, 628, "BANCO LOCAL Y PREVIEW TÉCNICO APROBADOS")
+    c.drawString(58, 628, "MATRIZ INVESTIGADA · BANCO V331 EN EJECUCIÓN")
     y = 598
     items = [
-        ("PANTALLA PROTEGIDA", "Configuración divide modalidades existentes y juegos nuevos; la pantalla principal de la tarjeta conserva su formato."),
-        ("SEIS JUGADORES", "Skins y Dots llegan a seis; Wolf admite de tres a seis; Vegas usa dos o tres parejas fijas."),
-        ("TRES PAREJAS", "Match Play y Four Ball agregan Verde 1-2, Oro 3-4 y Azul 5-6 sin cambiar el score individual."),
-        ("DINERO SEPARADO", "Unidad GTQ, empates, multiplicadores y topes calculan saldos cero-suma sin procesar pagos ni alterar Gross/Neto."),
-        ("TRAZABILIDAD", "Cierre SHA-256, corrección, Global, personales, Historial, voz, nube y restauración conservan el resultado completo."),
+        ("WOLF COMPRENSIBLE", "Con pareja, Lobo solitario y Lobo ciego; orden, riesgo, tope, decisiones, carry, unidades netas y liquidación."),
+        ("VEGAS EXPLICADO", "Números por hoyo, scores de 10 o más, birdies simultáneos, volteos, águila, topes y puntos movidos."),
+        ("DOTS EN ESPAÑOL", "Cada evento explica su significado y separa puntos positivos, negativos, automáticos y manuales."),
+        ("DINERO SEPARADO", "Unidad GTQ, empates, multiplicadores y topes calculan saldos cero-suma sin alterar Gross ni Neto."),
+        ("TRAZABILIDAD", "Cierre SHA-256, corrección, tarjetas, Historial, nube y restauración conservan el resultado completo."),
     ]
     for number, (item_title, text) in enumerate(items, start=1):
         y = draw_bullet(c, number, item_title, text, y, regular, bold)
@@ -108,8 +108,8 @@ def build_cover(path, title):
     c.setFont(bold, 11)
     c.drawString(58, 355, "ESTADO HONESTO · PEND-SKI-006 SIGUE ABIERTO")
     open_items = [
-        "Preview V330 READY: 89 paquetes y puerta viva de Reglas aprobados.",
-        "Falta revisión visual y táctil de Configuración en iPhone.",
+        "V330-R3 aprobó en iPhone la selección visual única de Wolf.",
+        "V331 debe aprobar banco, build y nuevo Preview antes de prueba física.",
         "Falta una ronda física completa por juego con corrección y recuperación.",
         "Producción no se modifica hasta obtener todos los PASS requeridos.",
     ]
@@ -123,12 +123,12 @@ def build_cover(path, title):
     c.setFillColor(HexColor("#8d8d8d"))
     c.setFont(regular, 8.4)
     c.drawString(44, 177, "Producción permanece en V322. Un FAIL bloquea cualquier montaje.")
-    c.drawString(44, 161, "Inventarios regenerados después de código, manual y pruebas V330.")
+    c.drawString(44, 161, "Inventarios regenerados después de código, documentación y pruebas V331.")
     c.setFillColor(white)
     c.setFont(bold, 10)
     c.drawString(44, 111, "26 DE AGOSTO DE 2026")
     c.setFillColor(HexColor("#20ff00"))
-    c.drawRightString(width - 44, 111, "PREVIEW PASS · PRUEBA FÍSICA PENDIENTE")
+    c.drawRightString(width - 44, 111, "V331 EN BANCO · PRUEBA FÍSICA PENDIENTE")
     c.showPage()
     c.save()
 
@@ -144,7 +144,7 @@ def update_inventory(filename, title):
     first_content_page = 0
     for page in source.pages:
         page_text = page.extract_text() or ""
-        if "V330 · JUEGOS Y TRES PAREJAS" in page_text or "V328 · REGLAS OFICIALES" in page_text or "V328-R2 · REGLAS OFICIALES" in page_text:
+        if "V331 · MATRIZ DE APUESTAS" in page_text or "V330 · JUEGOS Y TRES PAREJAS" in page_text or "V328 · REGLAS OFICIALES" in page_text or "V328-R2 · REGLAS OFICIALES" in page_text:
             first_content_page += 1
             continue
         break
@@ -153,8 +153,8 @@ def update_inventory(filename, title):
     for page in source.pages[first_content_page:]:
         writer.add_page(page)
     writer.add_metadata({
-        "/Title": f"Golf Score Card GT - {title} - V330",
-        "/Subject": "Inventario de control V330 - Skins, Wolf, Vegas, Dots y tres parejas",
+        "/Title": f"Golf Score Card GT - {title} - V331",
+        "/Subject": "Inventario de control V331 - matriz investigada de Wolf, Vegas y Dots",
         "/Author": "Golf Score Card GT",
         "/Creator": "Golf Score Card GT",
     })

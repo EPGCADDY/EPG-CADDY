@@ -22,20 +22,34 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
   assert.equal(result.balances.a,40);
   assert.equal(result.balances.b,40);
   assert.equal(result.balances.c,-20);
+  assert.equal(result.summaries.find(item=>item.playerId==="a").netUnits,4,"Wolf debe mostrar unidades netas además del saldo");
+  assert.equal(result.metrics.completedHoles,1);
+  assert.equal(result.metrics.moneyTransferred,80);
   assert.equal(Object.values(result.balances).reduce((sum,value)=>sum+value,0),0);
   assert.equal(result.settlements.reduce((sum,item)=>sum+item.amount,0),80);
 }
 
 {
-  const players=six([[3,5],[8,3],[3,6],[7,7],[6,8],[5,9]]),push=wolf.compute(players,{enabled:true,scoreType:"gross",tiePolicy:"push",unitValue:10,decisions:{1:{type:"solo"},2:{type:"blind"}}},{holeCount:2});
+  const players=six([[3,5],[8,3],[3,6],[7,7],[6,8],[5,9]]),push=wolf.compute(players,{enabled:true,scoreType:"gross",tiePolicy:"push",unitValue:10,decisions:{1:{type:"lone"},2:{type:"blind"}}},{holeCount:2});
   assert.equal(push.holes[0].state,"push","El empate Wolf hace push por omisión");
   assert.equal(push.holes[1].wolfPlayerId,"b","El Wolf rota por orden de jugadores");
   assert.equal(push.holes[1].multiplier,3,"Blind Wolf usa multiplicador tres");
   assert.equal(push.holes[1].winnerSide,"wolf");
-  const carry=wolf.compute(players,{enabled:true,scoreType:"gross",tiePolicy:"carry",unitValue:10,decisions:{1:{type:"solo"},2:{type:"lone"}}},{holeCount:2});
+  const carry=wolf.compute(players,{enabled:true,scoreType:"gross",tiePolicy:"carry",unitValue:10,decisions:{1:{type:"lone"},2:{type:"lone"}}},{holeCount:2});
   assert.equal(carry.holes[0].state,"carry");
   assert.equal(carry.holes[1].potUnits,2);
   assert.equal(carry.holes[1].multiplier,2);
+  assert.equal(carry.metrics.openCarryUnits,0);
+  const capped=wolf.compute(players,{enabled:true,scoreType:"gross",unitValue:10,holeCapAmount:15,decisions:{1:{type:"lone"},2:{type:"blind"}}},{holeCount:2});
+  assert.equal(capped.holes[1].rawStake,30);
+  assert.equal(capped.holes[1].stake,15,"El tope limita el valor por rival y hoyo");
+  assert.equal(capped.holes[1].capApplied,true);
+  assert.equal(capped.metrics.largestStakePerRival,15);
+  const migrated=wolf.normalizeConfig({enabled:true,wolfTeePosition:"last",loneMultiplier:4,blindMultiplier:5,decisions:{1:{type:"solo"}}});
+  assert.equal(migrated.decisions[1].type,"lone","SOLO legado migra al término claro Lobo solitario");
+  assert.equal(migrated.wolfTeePosition,"last");
+  assert.deepEqual(migrated.multipliers,{partner:1,lone:4,blind:5});
+  assert.equal(wolf.decisionRisk(4,"blind",migrated,1).wolfExposure,300);
 }
 
 {
@@ -45,6 +59,9 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
   assert.deepEqual(result.teamPoints,[31,0,-31],"Tres parejas se comparan de forma pareada con tope por duelo");
   assert.equal(result.teams[0].balance,31);
   assert.equal(result.balances.a,15.5);
+  assert.equal(result.metrics.duelsResolved,3);
+  assert.equal(result.metrics.cappedDuels,1);
+  assert.equal(result.metrics.totalPointsMoved,42);
   assert.equal(Object.values(result.balances).reduce((sum,value)=>sum+value,0),0);
   assert.equal(result.settlements.reduce((sum,item)=>sum+item.amount,0),31);
 }
@@ -54,6 +71,12 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
   assert.equal(flipped.holes[0].matchups[0].numberB,64,"El birdie voltea el número de la pareja rival");
   assert.equal(flipped.teamPoints[0],29);
   assert.equal(plain.teamPoints[0],11);
+  const bothBirdiesPlayers=[player("a","ANA",[3]),player("b","BETO",[5]),player("c","CARLA",[3]),player("d","DIEGO",[6])],bothCancel=vegas.compute(bothBirdiesPlayers,{enabled:true,birdieFlip:true,bothBirdies:"cancel",holeCapPoints:999},{holeCount:1}),bothFlip=vegas.compute(bothBirdiesPlayers,{enabled:true,birdieFlip:true,bothBirdies:"both_flip",holeCapPoints:999},{holeCount:1});
+  assert.equal(bothCancel.holes[0].matchups[0].numberA,35,"Dos birdies cancelan el volteo en la regla base");
+  assert.equal(bothCancel.holes[0].matchups[0].numberB,36);
+  assert.equal(bothFlip.holes[0].matchups[0].numberA,53,"La regla del grupo puede voltear ambas parejas");
+  assert.equal(bothFlip.holes[0].matchups[0].numberB,63);
+  assert.equal(vegas.pairNumber([{value:4},{value:10}]),104,"Un score de 10 o más va primero y no produce un número ambiguo");
   const voided=vegas.compute([player("a","ANA",[3]),player("b","BETO",[5]),player("c","CARLA",["X"]),player("d","DIEGO",[6])],{enabled:true},{holeCount:1});
   assert.equal(voided.holes[0].state,"void","Una X no se convierte en número Vegas inventado");
 }
@@ -64,6 +87,14 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
   assert.deepEqual(result.summaries.find(item=>item.playerId==="a").events.map(item=>item.event).sort(),["birdie","sandy"]);
   assert.equal(result.points.a,2);
   assert.equal(result.points.f,-1);
+  assert.equal(result.metrics.totalAwards,3);
+  assert.equal(result.metrics.automaticAwards,1);
+  assert.equal(result.metrics.manualAwards,2);
+  assert.equal(result.metrics.positivePoints,2);
+  assert.equal(result.metrics.negativePoints,-1);
+  assert.equal(result.summaries.find(item=>item.playerId==="a").positivePoints,2);
+  assert.equal(dots.EVENTS.greenie.description,"MÁS CERCA EN PAR 3 Y PAR O MEJOR");
+  assert.equal(result.config.enabledEvents.ferret,false,"Ferret empieza apagado porque puede duplicar Chippie");
   assert.equal(Object.values(result.balances).reduce((sum,value)=>sum+value,0),0);
   assert.equal(result.balances.a,55,"Cada jugador paga la diferencia de puntos a cada rival");
   assert.equal(result.balances.f,-35);
@@ -117,8 +148,8 @@ for(const file of ["wolf.js","vegas.js","dots.js"]){
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"),worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8"),mobile=fs.readFileSync(new URL("./scripts/build-mobile-web.mjs",import.meta.url),"utf8");
 for(const file of ["wolf.js","vegas.js","dots.js"]){assert.ok(html.includes(`<script src="./${file}"></script>`));assert.ok(worker.includes(`"/${file}"`));assert.ok(mobile.includes(`"${file}"`))}
-for(const token of ['id="wolfConfig"','id="vegasConfig"','id="dotsConfig"','id="dotsEventConfig"','data-dots-enabled','AMIGO · GRUPO','IZQUIERDA · GRUPO','DERECHA · GRUPO','function sideGameSpeechSummary()','MODALIDADES EXISTENTES','NUEVOS JUEGOS'])assert.ok(html.includes(token)||fs.readFileSync(new URL("./dots.js",import.meta.url),"utf8").includes(token),`Falta integración V330: ${token}`);
-assert.match(worker,/gscg-mobile-v330-side-games-r3/);
+for(const token of ['id="wolfConfig"','id="wolfTeePosition"','id="wolfLoneMultiplier"','id="wolfBlindMultiplier"','id="wolfHoleCap"','LOBO SOLITARIO','LOBO CIEGO','UNIDADES NETAS','data-wolf-save','id="vegasConfig"','id="vegasBothBirdies"','SCORE DE 10 O MÁS','PUNTOS MOVIDOS','id="dotsConfig"','id="dotsEventConfig"','data-dots-enabled','NO EXISTE UN PAQUETE UNIVERSAL DE DOTS','PUNTOS + / −','AMIGO · GRUPO','IZQUIERDA · GRUPO','DERECHA · GRUPO','function sideGameSpeechSummary()','MODALIDADES EXISTENTES','NUEVOS JUEGOS'])assert.ok(html.includes(token)||fs.readFileSync(new URL("./dots.js",import.meta.url),"utf8").includes(token),`Falta integración V331: ${token}`);
+assert.match(worker,/gscg-mobile-v331-researched-side-games/);
 assert.match(html,/function enforceExclusiveDraftGame\(preferredKey=undefined\)/,"Debe limpiar estados laterales heredados");
 assert.match(html,/function syncDraftModeSelection\(preferredKey=undefined\)/,"Debe existir un único escritor visual de modalidad");
 assert.match(html,/draftRoundMode="general";enforceExclusiveDraftGame\(key\);syncDraftModeSelection\(key\)/,"El toque lateral debe desmarcar visualmente las demás opciones antes de renderizar");
@@ -144,4 +175,4 @@ assert.match(html,/draftRoundMode="general";enforceExclusiveDraftGame\(key\);syn
   },"Sólo WOLF puede quedar verde después del toque");
 }
 
-console.log("PASS V330-R3 · selección física única + Wolf 3–6, Vegas 4/6 y Dots 2–6");
+console.log("PASS V331 · selección física única + Wolf investigado con estados, riesgo, acumulados y liquidación");
