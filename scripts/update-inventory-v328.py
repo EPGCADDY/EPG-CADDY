@@ -90,7 +90,7 @@ def build_cover(path, title):
     c.roundRect(42, 414, 511, 239, 12, stroke=0, fill=1)
     c.setFillColor(HexColor("#20ff00"))
     c.setFont(bold, 11)
-    c.drawString(58, 628, "IMPLEMENTADO Y APROBADO EN BANCO LOCAL")
+    c.drawString(58, 628, "BANCO LOCAL Y PREVIEW TÉCNICO APROBADOS")
     y = 598
     items = [
         ("PANTALLA PROTEGIDA", "Configuración divide modalidades existentes y juegos nuevos; la pantalla principal de la tarjeta conserva su formato."),
@@ -108,7 +108,7 @@ def build_cover(path, title):
     c.setFont(bold, 11)
     c.drawString(58, 355, "ESTADO HONESTO · PEND-SKI-006 SIGUE ABIERTO")
     open_items = [
-        "El Preview V330 debe aprobar 89 paquetes y la puerta viva de Reglas.",
+        "Preview V330 READY: 89 paquetes y puerta viva de Reglas aprobados.",
         "Falta revisión visual y táctil de Configuración en iPhone.",
         "Falta una ronda física completa por juego con corrección y recuperación.",
         "Producción no se modifica hasta obtener todos los PASS requeridos.",
@@ -128,7 +128,7 @@ def build_cover(path, title):
     c.setFont(bold, 10)
     c.drawString(44, 111, "26 DE AGOSTO DE 2026")
     c.setFillColor(HexColor("#20ff00"))
-    c.drawRightString(width - 44, 111, "BANCO LOCAL PASS · PREVIEW Y PRUEBA FÍSICA PENDIENTES")
+    c.drawRightString(width - 44, 111, "PREVIEW PASS · PRUEBA FÍSICA PENDIENTE")
     c.showPage()
     c.save()
 

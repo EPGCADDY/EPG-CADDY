@@ -37,8 +37,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ECOS.md` | `43a9c6f5bacb8c758edd33c8ad31f9e59e63f84f` | 3982 bytes | Reglas de comportamiento de Golf Score Card GT. |
 | `EPG-Caddy_Master_Blueprint_v0.1.md` | `95b4c227c4e5dce7f90fede0ebc9cdd0af6ed76c` | 7990 bytes | Plano maestro; el nombre del archivo es antiguo, pero el contenido ya usa Golf Score Card GT. |
 | `EPG_CADDY_PLAN_CAMBIOS.md` | `a81981bda6522c0ab29ec5e70f6ebe557cde34bf` | 116300 bytes | Lista antigua de cambios; el nombre sólo se conserva para localizarla. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V330 | Se calcula al publicar | Manual maestro con AI UNIVERSAL, Reglas oficiales, Skins, Wolf, Vegas, Dots, seis jugadores, tres parejas y estado honesto de validación. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V330 / PEND-001–014 | Se calcula al publicar | Lista ordenada: juegos V330 en banco, voz/tráfico físicos, ASOGOLF/GHIN, campos, GPS, relojes, nube, seguridad, estadísticas, monetización y certificación. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V330 Preview PASS | Se calcula al publicar | Manual maestro con AI UNIVERSAL, Reglas oficiales, Skins, Wolf, Vegas, Dots, seis jugadores, tres parejas y estado honesto de validación. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V330 Preview PASS / PEND-001–014 | Se calcula al publicar | Lista ordenada: juegos V330 en Preview técnico aprobado, voz/tráfico físicos, ASOGOLF/GHIN, campos, GPS, relojes, nube, seguridad, estadísticas, monetización y certificación. |
 | `MAPA_MATRIZ_BASE_MAESTRA_V256.md` | `8d0cdb23c0b1d9445f51b822ba49d385f5c71d3c` | 1718 bytes | Explica la información central incorporada en V256. |
 | `MAPA_MATRIZ_REGISTRO_JUGADORES_V255.md` | `5d0670562aa89ffa7a265820573e0e31895fe95b` | 1993 bytes | Explica el registro de jugadores de V255. |
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |

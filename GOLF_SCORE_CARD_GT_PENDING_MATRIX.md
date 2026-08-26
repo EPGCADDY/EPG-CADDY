@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V330 · Skins, Wolf, Vegas, Dots y tres parejas en banco local; Preview y prueba física abiertos
+**Corte vigente:** V330 · Skins, Wolf, Vegas, Dots y tres parejas con banco local y Preview técnico aprobados; prueba física abierta
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -224,7 +224,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 16. Juegos y apuestas: Skins, Wolf, Vegas y Dots
 
-**Estado:** V330 EN BANCO LOCAL; PREVIEW Y PRUEBA FÍSICA PENDIENTES · `PEND-SKI-006`
+**Estado:** V330 CON BANCO LOCAL Y PREVIEW TÉCNICO APROBADOS; PRUEBA FÍSICA PENDIENTE · `PEND-SKI-006`
 
 - ✅ Skins Gross/Neto, Wolf, Vegas y Dots reutilizan el score oficial, de dos a seis jugadores según el juego, sin segundo capturador.
 - ✅ La ventana de opciones conserva a la izquierda las modalidades anteriores y ubica a la derecha los juegos nuevos; la tarjeta principal no cambia de formato.
@@ -232,7 +232,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - ✅ Unidad monetaria configurable en GTQ, reglas de empate, multiplicadores, topes y saldos cero-suma definidos antes de jugar.
 - ✅ Dots configura eventos y valores; `Amigo`, izquierda y derecha son reglas de grupo apagadas por defecto.
 - ✅ Correcciones, X, cierre, snapshot SHA-256, Global, personales, Historial, voz, respaldo y restauración cubiertos por V329/V330.
-- ⏳ Falta banco completo desplegado en Preview, revisión visual táctil y una ronda física por juego en iPhone antes de montar.
+- ✅ Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` READY: 89 paquetes, 322 fuentes, tres PDF, cero vulnerabilidades y puerta viva de Reglas aprobados.
+- ⏳ Falta revisión visual táctil y una ronda física por juego en iPhone antes de montar.
 
 ### 17. Apple Watch y otros smartwatches
 

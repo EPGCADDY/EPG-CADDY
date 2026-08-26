@@ -4,7 +4,7 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V328
+**Versión documentada:** V330
 **Fecha de corte:** 26 de agosto de 2026
 **Rama operativa:** `main` (Producción vigente)
 **Aplicación:** `index-grupal.html`  
@@ -1366,7 +1366,7 @@ La pantalla `Configura la ronda` muestra dos columnas sin cambiar la tarjeta pri
 
 | Fecha | Versión | Registro |
 |---|---|---|
-| 2026-08-26 | Manual 3.79 / App V330 | Wolf, Vegas y Dots operativos en banco local; pantalla de opciones dividida sin alterar la tarjeta principal, hasta seis jugadores y tres parejas, unidad monetaria, empates, multiplicadores, topes, eventos configurables, cierre protegido, correcciones, tarjetas, Historial, voz, nube y restauración. Preview y prueba física siguen pendientes. |
+| 2026-08-26 | Manual 3.79 / App V330 | Wolf, Vegas y Dots operativos; pantalla de opciones dividida sin alterar la tarjeta principal, hasta seis jugadores y tres parejas, unidad monetaria, empates, multiplicadores, topes, eventos configurables, cierre protegido, correcciones, tarjetas, Historial, voz, nube y restauración. Banco local y Preview técnico `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` aprobados; revisión visual/táctil y prueba física siguen pendientes. |
 | 2026-08-26 | Manual 3.78 / App V329 | Skins Gross/Neto de dos a seis jugadores con valor GTQ, empate acumulado/dividido/anulado, X, carry final, saldo cero-suma, cierre firmado y corrección versionada. |
 | 2026-08-26 | Manual 3.77 / App V328-R2 | Modo básico sin conexión para REGLAS: reutiliza respuestas oficiales confirmadas en el dispositivo, con fecha, fuente, límite de 24, vigencia de 90 días, coincidencia por modalidad y cero escritura; no conserva la consulta completa ni inventa si no existe una respuesta adecuada. Voz física permanece pendiente. |
 | 2026-08-26 | Manual 3.76 / App V328 | Centro REGLAS integrado en AI UNIVERSAL ∞ por texto y voz; búsqueda limitada a USGA/The R&A, edición 2023 y clarificaciones vigentes, fuentes visibles y aislamiento absoluto de scores/penalidades. Banco de 15 situaciones y manual de 74 páginas aprobado; continúan abiertos Preview, voz física y consulta básica offline. |
