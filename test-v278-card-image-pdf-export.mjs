@@ -5,7 +5,7 @@ import fileExport from "./card-file-export.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V325-IDEAL-MICROPHONE-TIMINGS-20260826"/);
+assert.match(html,/gscg-build" content="V326-NO-SILENT-CONVERSATION-20260826"/);
 assert.match(html,/V278-PNG-PDF-PACKAGE-20260823/);
 assert.match(html,/card-file-export\.js/);
 assert.match(html,/id="imageGlobalCard">IMAGEN GLOBAL/);

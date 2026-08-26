@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V325: **308**.
+Archivos activos rastreados al corte V326: **309**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -37,8 +37,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ECOS.md` | `43a9c6f5bacb8c758edd33c8ad31f9e59e63f84f` | 3982 bytes | Reglas de comportamiento de Golf Score Card GT. |
 | `EPG-Caddy_Master_Blueprint_v0.1.md` | `95b4c227c4e5dce7f90fede0ebc9cdd0af6ed76c` | 7990 bytes | Plano maestro; el nombre del archivo es antiguo, pero el contenido ya usa Golf Score Card GT. |
 | `EPG_CADDY_PLAN_CAMBIOS.md` | `a81981bda6522c0ab29ec5e70f6ebe557cde34bf` | 116300 bytes | Lista antigua de cambios; el nombre sólo se conserva para localizarla. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V325 | Se calcula al publicar | Manual maestro con los dos perfiles de micrófono V325, AI UNIVERSAL ∞, tráfico y pendientes USGA, Skins y relojes; conserva abierta la validación física. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V325 | Se calcula al publicar | Lista ordenada de funciones terminadas y pendientes, incluidos USGA/Reglas de Golf, Skins y Apple Watch/Wear OS. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V326 | Se calcula al publicar | Manual maestro con la evidencia del micrófono rojo, cierre conversacional de 2.2 segundos, guardianes de 15/90/30 segundos y prohibición de montaje. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V326 | Se calcula al publicar | Lista ordenada: V325 rechazada, V326 pendiente de prueba física, además de USGA/Reglas de Golf, Skins y Apple Watch/Wear OS. |
 | `MAPA_MATRIZ_BASE_MAESTRA_V256.md` | `8d0cdb23c0b1d9445f51b822ba49d385f5c71d3c` | 1718 bytes | Explica la información central incorporada en V256. |
 | `MAPA_MATRIZ_REGISTRO_JUGADORES_V255.md` | `5d0670562aa89ffa7a265820573e0e31895fe95b` | 1993 bytes | Explica el registro de jugadores de V255. |
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
@@ -95,7 +95,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Copia maestra del logo cromado 3D con verde neón muy saturado. |
 | `assets/official-logos/golf-score-card-gt-pwa-192.png` | `e28cd92c784748a2d4ff02bf3491b96c8121ed94` | 67805 bytes | Icono cromado 3D neón pequeño de la aplicación instalable. |
 | `assets/official-logos/golf-score-card-gt-pwa-512.png` | `0e85cc6995f9bafefb49dec5a8253aef3db7fffd` | 461402 bytes | Icono cromado 3D neón grande de la aplicación instalable. |
-| `audit-project.mjs` | Auditoría V325 | Se calcula al publicar | Ejecuta los candados ROADMAP, inventarios y todos los filtros automáticos, incluida la prueba de tiempos ideales del micrófono. |
+| `audit-project.mjs` | Auditoría V326 | Se calcula al publicar | Ejecuta los candados ROADMAP, inventarios y todos los filtros automáticos, incluida la recuperación del micrófono rojo. |
 | `capacitor.config.json` | `a5ca52fde974ea370d90dbfe422f08101ec7f7eb` | 867 bytes | Define el nombre visible y la identidad de las apps de iPhone y Android. |
 | `card-artifacts.js` | `df8ba2b09532b73701681d7de1781ca5b54baf26` | 12799 bytes | Arma la tarjeta oficial con la información de la ronda. |
 | `card-file-export.js` | `4ddbf8f36ec142114cfa965a78d97ea55365afa1` | 5919 bytes | Convierte la tarjeta en imagen o PDF. |
@@ -108,7 +108,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `database/test-player-profile-schema.mjs` | `32d0b6f78446a1193e8b2239b26f93738547b24b` | 817 bytes | Comprueba los espacios de la información central. |
 | `database/test-schema.mjs` | `ad64ac3b0ed21932c24ea56886124f518a7b0692` | 1099 bytes | Comprueba los espacios de la información central. |
 | `historical-analytics.js` | `2a5bb2f2ef1564b09a567823efde14b54829ce86` | 8963 bytes | Resume el historial y muestra datos útiles de rondas anteriores. |
-| `index-grupal.html` | Build V325 | Se calcula al publicar | Pantalla principal con VAD operativo rápido para scores y VAD semántico paciente para AI UNIVERSAL ∞, sin cerrar la comunicación bilateral. |
+| `index-grupal.html` | Build V326 | Se calcula al publicar | Pantalla principal con VAD operativo de 1 segundo, conversación de 2.2 segundos y guardianes que impiden escuchar o pensar indefinidamente. |
 | `index.html` | `7b483f1553246274920c71a10723f484d1847744` | 759569 bytes | Entrada antigua que lleva a la pantalla principal. |
 | `ios/EPGCaddy/App.swift` | `06a1c8ee89139ef87af20f07bba2496aa2b90636` | 141 bytes | Inicia la aplicación de apoyo para iPhone. |
 | `ios/EPGCaddy/ContentView.swift` | `80556289a09cc451f4e11e56f2f9d6a800a50a5f` | 208 bytes | Abre Golf Score Card GT dentro de la aplicación de iPhone. |
@@ -129,7 +129,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/prepare-mobile-assets.mjs` | `fcd2fa387095322c9731917834ad424ad3e8fd73` | 1356 bytes | Crea todos los tamaños oficiales del logo. |
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
 | `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | 2881 bytes | Bloquea cualquier modificación o publicación que no aparezca en ambos ROADMAPS. |
-| `service-worker.js` | Caché V325 | Se calcula al publicar | Sustituye el shell anterior y entrega los tiempos diferenciados del micrófono V325. |
+| `service-worker.js` | Caché V326 | Se calcula al publicar | Sustituye el shell V325 rechazado y entrega la recuperación del micrófono rojo. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |
 | `stableford-course-source-san-isidro.md` | `b370db591d5139895c9586801d55b57b3bcf0359` | 505 bytes | Fuente usada para cargar la tarjeta de San Isidro. |
@@ -244,7 +244,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v322-real-sustained-caddie.mjs` | `V322-24-TURNS-RECOVERY` | Se calcula al publicar | Simula 24 turnos consecutivos, reapertura de una sesión sana, cierre a los 30 minutos y fallos web recuperables sin silencio. |
 | `test-v323-long-multitopic-context.mjs` | `V323-30-TOPICS-63-MESSAGES` | Se calcula al publicar | Exige que texto y voz conserven la primera clave después de 30 cambios de tema y sólo descarten historial al superar 80 mensajes. |
 | `test-v324-real-traffic.mjs` | `V324-CURRENT-FUTURE-TRAFFIC-RECOVERY` | Se calcula al publicar | Prueba tráfico actual/futuro, ETA, demora, privacidad, GPS, texto, voz, proveedor caído, timeout y continuación bilateral. |
-| `test-v325-ideal-microphone-timings.mjs` | `V325-30-BILATERAL-TURNS` | Se calcula al publicar | Prueba 30 turnos con VAD semántico paciente, órdenes rápidas, interrupción, eco, vigilancia, recordatorios y continuidad. |
+| `test-v325-ideal-microphone-timings.mjs` | `V326-30-BILATERAL-TURNS` | Se calcula al publicar | Conserva 30 turnos y sustituye la expectativa semántica no determinista por la pausa conversacional fija de 2.2 segundos. |
+| `test-v326-no-silent-conversation.mjs` | `V326-INPUT-15S-HARD-90S-RESPONSE-30S` | Se calcula al publicar | Ejecuta la máquina de temporizadores y comprueba que una captura sin final apaga el rojo y que una respuesta sin inicio vuelve a escuchar. |
 | `test-v311-timer-inactivity.mjs` | Candado TIMER 30 minutos | Se calcula al publicar | Comprueba el apagado en todas las modalidades, persistencia y reinicio por instrucción válida. |
 | `docs/manual/v311/page-17.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-18.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |

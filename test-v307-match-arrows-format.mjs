@@ -6,10 +6,10 @@ const artifacts=fs.readFileSync(new URL("./card-artifacts.js",import.meta.url),"
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 const release=JSON.parse(fs.readFileSync(new URL("./mobile-release.json",import.meta.url),"utf8"));
 
-assert.match(html,/gscg-build" content="V325-IDEAL-MICROPHONE-TIMINGS-20260826"/);
+assert.match(html,/gscg-build" content="V326-NO-SILENT-CONVERSATION-20260826"/);
 assert.match(html,/gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825"/);
 assert.equal(release.buildNumber,307);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v325-ideal-microphone-timings"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v326-no-silent-conversation"/);
 
 assert.match(html,/function matchArrowSvg\(state\)/);
 assert.match(html,/M12 22V5M5 12l7-7 7 7/);

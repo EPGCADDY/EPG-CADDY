@@ -11,8 +11,8 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/official-logos/golf-score-card-gt-apple-touch-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V325-IDEAL-MICROPHONE-TIMINGS-20260826">
-<meta name="gscg-manual" content="V325-IDEAL-MICROPHONE-TIMINGS-MANUAL-20260826">
+<meta name="gscg-build" content="V326-NO-SILENT-CONVERSATION-20260826">
+<meta name="gscg-manual" content="V326-NO-SILENT-CONVERSATION-MANUAL-20260826">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
 <meta name="gscg-four-ball" content="V309-TWO-PAIRS-BEST-NET-CUMULATIVE-MATCH-20260825">
@@ -914,15 +914,18 @@ const ROUND_MISSING_CONFIRM_MS=450;
 const ROUND_VAD_THRESHOLD=0.2;
 const ROUND_VAD_PREFIX_MS=700;
 const ROUND_VAD_SILENCE_MS=1000;
+const CONVERSATION_VAD_SILENCE_MS=2200;
+const CONVERSATION_INPUT_STALL_MS=15000;
+const CONVERSATION_INPUT_HARD_LIMIT_MS=90000;
+const CONVERSATION_RESPONSE_STALL_MS=30000;
 const REALTIME_TURN_PROFILE_OPERATIONAL="operational";
 const REALTIME_TURN_PROFILE_CONVERSATION="conversation";
-const CONVERSATION_VAD_EAGERNESS="low";
 let pc=null,dc=null,stream=null,micTrack=null,audioEl=null,listening=false,phase="idle",voiceContext="round",activeResponseId=null;
 let sessionConnectPromise=null,voiceActivationPromise=null,voiceActivationContext=null,realtimeGeneration=0;
 let appHiddenAt=0,appWasBackgrounded=false,lastRealtimeActivityAt=Date.now(),resumeCheckPromise=null;
 let realtimeShape="unknown";
 let setupSpeechAllowed=false,sessionHasSpoken=false;
-let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false,pendingVoiceAssistantAction=null,conversationIdleCloseTimer=null,conversationBargeInArmedAt=0,conversationOutputStarted=false,conversationOutputTranscript="",conversationBargeInItemId="",conversationBargeInText="",conversationEchoGuardUntil=0,conversationClearResponseId=null;
+let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false,pendingVoiceAssistantAction=null,conversationIdleCloseTimer=null,conversationInputStallTimer=null,conversationInputStartedAt=0,conversationResponseStallTimer=null,conversationBargeInArmedAt=0,conversationOutputStarted=false,conversationOutputTranscript="",conversationBargeInItemId="",conversationBargeInText="",conversationEchoGuardUntil=0,conversationClearResponseId=null;
 let realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL,realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;
 let voiceOpening=false;
 let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null;
@@ -1606,6 +1609,7 @@ function isStopCommand(value){
 }
 function clearOutputAudioSafe(){try{if(dc?.readyState==="open")sendEvent({type:"output_audio_buffer.clear"})}catch{}}
 function stopAuthorizedSpeech(){
+  clearConversationTurnWatchdogs();
   pendingVoiceAssistantAction=null;
   conversationToolTransition=null;
   const responseId=activeResponseId||speechPlaybackResponseId;
@@ -1632,6 +1636,7 @@ function stopAuthorizedSpeech(){
 }
 function interruptConversationSpeech(){
   if(authorizedSpeech?.reason!=="conversation")return false;
+  clearConversationTurnWatchdogs();
   clearConversationIdleCloseTimer();
   conversationToolTransition=null;
   const responseId=activeResponseId||speechPlaybackResponseId;
@@ -1895,7 +1900,7 @@ function sessionConfigForActiveShape(cfg){
   return realtimeShape==="beta"?betaSessionConfigFromGa(cfg):cfg;
 }
 function turnDetectionForProfile(profile=REALTIME_TURN_PROFILE_OPERATIONAL){
-  if(profile===REALTIME_TURN_PROFILE_CONVERSATION)return{type:"semantic_vad",eagerness:CONVERSATION_VAD_EAGERNESS,create_response:false,interrupt_response:false};
+  if(profile===REALTIME_TURN_PROFILE_CONVERSATION)return{type:"server_vad",threshold:ROUND_VAD_THRESHOLD,prefix_padding_ms:ROUND_VAD_PREFIX_MS,silence_duration_ms:CONVERSATION_VAD_SILENCE_MS,create_response:false,interrupt_response:false};
   return{type:"server_vad",threshold:ROUND_VAD_THRESHOLD,prefix_padding_ms:ROUND_VAD_PREFIX_MS,silence_duration_ms:ROUND_VAD_SILENCE_MS,create_response:false,interrupt_response:false};
 }
 function applyTurnProfileToConfig(cfg,profile=REALTIME_TURN_PROFILE_OPERATIONAL){
@@ -1914,7 +1919,8 @@ function effectiveSessionCheck(session,context,expectedSpeed=VOICE_POLICY.speed,
   const expectedPrefix=ROUND_VAD_PREFIX_MS;
   const typeOk=beta?session?.object==="realtime.session":session?.type==="realtime";
   const turnOk=expectedProfile===REALTIME_TURN_PROFILE_CONVERSATION
-    ?td?.type==="semantic_vad"&&td?.eagerness===CONVERSATION_VAD_EAGERNESS
+    ?td?.type==="server_vad"&&Number(td?.silence_duration_ms)===CONVERSATION_VAD_SILENCE_MS&&
+      Number(td?.threshold)===expectedThreshold&&Number(td?.prefix_padding_ms)===expectedPrefix
     :td?.type==="server_vad"&&Number(td?.silence_duration_ms)===expectedSilence&&
       Number(td?.threshold)===expectedThreshold&&Number(td?.prefix_padding_ms)===expectedPrefix;
   const ok=typeOk&&turnOk&&td?.create_response===false&&td?.interrupt_response===false&&tools.length===0&&
@@ -2025,6 +2031,7 @@ function conversationInstructions(completedTool=""){
     "En salud ofrece únicamente orientación general. No diagnostiques ni prescribas. Antes de sugerir un medicamento pregunta por edad, alergias, enfermedades, otros medicamentos y gravedad; ante síntomas de alarma recomienda atención médica urgente. En temas legales, financieros, fiscales, psicológicos, privacidad o seguridad explica límites, incertidumbre y riesgo sin fingir certeza profesional.",
     "Para tráfico vehicular, congestión, ruta o tiempo de llegada usa exclusivamente get_live_traffic; sirve para salir ahora o para una hora futura. Nunca uses una búsqueda web como ETA ni digas que proviene de Waze.",
     "Para medicina, vuelos, noticias, política, precios, horarios u otra información que cambie o requiera verificación, usa search_live_web. Para el clima usa exclusivamente get_current_weather.",
+    "Para conocimientos estables y cálculos aproximados —por ejemplo el consumo eléctrico de un aire acondicionado— responde directamente, declara los supuestos y muestra el cálculo. No uses búsqueda web salvo que el usuario pida una tarifa, precio, modelo o dato vigente específico.",
     "La búsqueda web puede tardar un poco más que una respuesta de conocimiento general. Después de recibirla, responde con la información encontrada y no inventes lo que no aparezca.",
     completedTool==="get_current_weather"?"Ya recibiste el resultado meteorológico solicitado. Si contiene ok true, explícalo con palabras naturales y menciona que es un pronóstico de Open-Meteo. Si contiene ok false, informa brevemente que no pudiste consultar el pronóstico ahora y permite continuar; nunca guardes silencio. No vuelvas a llamar herramientas.":completedTool==="get_live_traffic"?"Ya recibiste el cálculo vehicular solicitado. Si contiene ok true, menciona origen, destino, ETA, demora, distancia, hora de cálculo y Google Maps Routes; aclara sólo cuando sea útil que el nivel es una estimación derivada. Si contiene ok false, informa brevemente la limitación y permite continuar. Nunca inventes tráfico, repitas coordenadas exactas ni digas que proviene de Waze. No vuelvas a llamar herramientas.":completedTool==="search_live_web"?"Ya recibiste el resultado de la investigación web. Si contiene ok true, sintetiza la respuesta con palabras naturales y menciona brevemente las fuentes por nombre si ayuda. Si contiene ok false, informa en una sola oración que no pudiste verificarlo en este momento y permite continuar; nunca guardes silencio ni inventes. No vuelvas a llamar herramientas.":"Usa herramientas solamente cuando aporten información actual o verificación; para conversación, consejo y conocimiento estable responde directamente."
   ].join(" ");
@@ -2315,6 +2322,7 @@ async function continueConversationAfterTool(call){
   if(audioEl){audioEl.volume=aiUniversalMuted?0:1;audioEl.muted=aiUniversalMuted}
   aiUniversalSetState("AI UNIVERSAL ∞ RESPONDIENDO…",{busy:true});
   sendEvent({type:"response.create",response:responseForConversation(authorizedSpeech.token,{completedTool:call.name})});
+  armConversationResponseStall();
 }
 function speakConversation(transcript){
   if(!dc||dc.readyState!=="open"||!String(transcript||"").trim())return false;
@@ -2338,7 +2346,7 @@ function speakConversation(transcript){
   aiUniversalSetState("AI UNIVERSAL ∞ PENSANDO…",{busy:true});
   const beginConversationResponse=()=>{
     if(!dc||dc.readyState!=="open"||authorizedSpeech?.token!==token||authorizedSpeech?.reason!=="conversation")return false;
-    sendEvent({type:"response.create",response:responseForConversation(token)});return true;
+    sendEvent({type:"response.create",response:responseForConversation(token)});armConversationResponseStall();return true;
   };
   if(realtimeTurnProfile===REALTIME_TURN_PROFILE_CONVERSATION&&realtimeTurnProfileRequested===REALTIME_TURN_PROFILE_CONVERSATION&&!pendingSessionUpdate)beginConversationResponse();
   else setRealtimeTurnProfile(REALTIME_TURN_PROFILE_CONVERSATION).then(beginConversationResponse).catch(error=>{console.error("Perfil conversacional:",error);beginConversationResponse()});
@@ -3636,6 +3644,7 @@ async function configureSessionFor(context){
 function teardownRealtime(){
   clearOperationalMissingPrompt();
   clearConversationIdleCloseTimer();
+  clearConversationTurnWatchdogs();
   if(setupTranscriptionWatchdog){clearTimeout(setupTranscriptionWatchdog);setupTranscriptionWatchdog=null}
   realtimeGeneration++;
   try{if(dc){dc.onopen=null;dc.onclose=null;dc.onerror=null;dc.onmessage=null;dc.close()}}catch{}
@@ -3741,6 +3750,44 @@ function setVoice(on){
   if(on)scheduleConversationIdleClose();
 }
 function clearConversationIdleCloseTimer(){if(conversationIdleCloseTimer){clearTimeout(conversationIdleCloseTimer);conversationIdleCloseTimer=null}}
+function clearConversationInputStall(){if(conversationInputStallTimer){clearTimeout(conversationInputStallTimer);conversationInputStallTimer=null}conversationInputStartedAt=0}
+function clearConversationResponseStall(){if(conversationResponseStallTimer){clearTimeout(conversationResponseStallTimer);conversationResponseStallTimer=null}}
+function clearConversationTurnWatchdogs(){clearConversationInputStall();clearConversationResponseStall()}
+function recoverStalledConversation(label){
+  clearConversationTurnWatchdogs();
+  conversationToolTransition=null;
+  if(activeResponseId)cancelResponseSafe(activeResponseId);
+  if(activeResponseId||speechPlaybackResponseId)clearOutputAudioSafe();
+  activeResponseId=null;speechPlaybackResponseId=null;stopMonitorActive=false;clearSpeechAuthorization();
+  if(listening&&realtimeReady())resumeConversationListening();else if(listening)setVoice(false);
+  const message=String(label||"NO PUDE COMPLETAR ESA RESPUESTA · PUEDES REPETIRLA");
+  const target=conversationStatusTarget();if(target)target.textContent=message;
+  aiUniversalSetState(message);
+  return false;
+}
+function recoverStalledConversationInput(){
+  const context=voiceContext;
+  clearConversationTurnWatchdogs();
+  teardownRealtime();voiceContext=context;
+  const message="MICRÓFONO REINICIADO · TOCA ESCUCHAR Y REPITE LA PREGUNTA";
+  const target=conversationStatusTarget();if(target){target.classList?.remove?.("listening");target.textContent=message}
+  aiUniversalSetState(message);
+  return false;
+}
+function armConversationInputStall({newTurn=false}={}){
+  if(conversationInputStallTimer){clearTimeout(conversationInputStallTimer);conversationInputStallTimer=null}
+  if(!listening||authorizedSpeech?.reason==="conversation"||realtimeTurnProfileRequested!==REALTIME_TURN_PROFILE_CONVERSATION)return false;
+  if(newTurn||!conversationInputStartedAt)conversationInputStartedAt=Date.now();
+  const hardRemaining=Math.max(1,CONVERSATION_INPUT_HARD_LIMIT_MS-(Date.now()-conversationInputStartedAt));
+  conversationInputStallTimer=setTimeout(()=>{conversationInputStallTimer=null;recoverStalledConversationInput()},Math.min(CONVERSATION_INPUT_STALL_MS,hardRemaining));
+  return true;
+}
+function armConversationResponseStall(){
+  clearConversationResponseStall();
+  if(authorizedSpeech?.reason!=="conversation")return false;
+  conversationResponseStallTimer=setTimeout(()=>{conversationResponseStallTimer=null;recoverStalledConversation("NO PUDE COMPLETAR ESA RESPUESTA · PUEDES CONTINUAR")},CONVERSATION_RESPONSE_STALL_MS);
+  return true;
+}
 function scheduleConversationIdleClose(){
   clearConversationIdleCloseTimer();
   if(!listening)return false;
@@ -3788,8 +3835,10 @@ function handleRealtime(message){
         conversationToolTransition.followupResponseId=activeResponseId;
       }
       sessionHasSpoken=true;
+      if(authorizedSpeech?.reason==="conversation")armConversationResponseStall();
     }
     if(e.type==="error"){
+      clearConversationTurnWatchdogs();
       const msg=e.error?.message||"Error Realtime";
       if(Date.now()<ignoreCancelErrorUntil&&/cancel|active response|response.*progress/i.test(msg)){console.debug("Cancelación por STOP:",msg);return}
       console.error("Realtime:",msg,e);
@@ -3812,7 +3861,7 @@ function handleRealtime(message){
       }
       return;
     }
-    if((e.type==="output_audio_buffer.started"||e.type==="output_audio_buffer.audio_started")&&authorizedSpeech?.reason==="conversation"){conversationOutputStarted=true;aiUniversalSetState("AI UNIVERSAL ∞ RESPONDIENDO…",{busy:true})}
+    if((e.type==="output_audio_buffer.started"||e.type==="output_audio_buffer.audio_started")&&authorizedSpeech?.reason==="conversation"){clearConversationResponseStall();conversationOutputStarted=true;aiUniversalSetState("AI UNIVERSAL ∞ RESPONDIENDO…",{busy:true})}
     if((e.type==="response.output_audio_transcript.delta"||e.type==="response.audio_transcript.delta")&&authorizedSpeech?.reason==="conversation"){
       conversationOutputStarted=true;
       conversationOutputTranscript+=String(e.delta||"");
@@ -3824,6 +3873,7 @@ function handleRealtime(message){
       // Primero confirma que es el jugador y no el eco del propio Caddie.
       conversationBargeInItemId=String(e.item_id||"");conversationBargeInText="";
     }
+    if(e.type==="input_audio_buffer.speech_started"&&listening&&authorizedSpeech?.reason!=="conversation")armConversationInputStall({newTurn:true});
     if(e.type==="input_audio_buffer.speech_started"&&voiceContext==="setup"&&listening&&!setupLocked&&authorizedSpeech?.reason!=="conversation"){
       clearConversationIdleCloseTimer();
       setupSpeechActive=true;
@@ -3841,6 +3891,7 @@ function handleRealtime(message){
       $("status").textContent="● ESCUCHANDO…";
     }
     if(e.type==="input_audio_buffer.speech_stopped"){
+      clearConversationInputStall();
       if(listening)scheduleConversationIdleClose();
       if(voiceContext==="setup"&&(setupSpeechActive||setupLocked||setupFinalizeRequested||listening)){
         // Debe aceptarse incluso si OK ya apagó el micrófono y setVoice(false)
@@ -3883,6 +3934,7 @@ function handleRealtime(message){
         resetConversationBargeInCandidate();
       }
     }
+    if(e.type==="conversation.item.input_audio_transcription.delta"&&listening&&authorizedSpeech?.reason!=="conversation")armConversationInputStall();
     if(e.type==="conversation.item.input_audio_transcription.delta"&&voiceContext==="round"&&!stopMonitorActive){
       noteRoundOperationalActivity();
       appendLiveRoundDelta(e.item_id||e.event_id||"round_live_fallback",e.delta||"");
@@ -3900,6 +3952,7 @@ function handleRealtime(message){
       resetConversationBargeInCandidate();
     }
     if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="setup"){
+      clearConversationInputStall();
       if(setupTranscriptionWatchdog){clearTimeout(setupTranscriptionWatchdog);setupTranscriptionWatchdog=null}
       const key=e.item_id||e.event_id||String(Date.now());if(processedTranscriptItems.has(key))return;processedTranscriptItems.add(key);
       if(window.GSCVoiceAssistant?.parse?.(e.transcript||"")?.matched){
@@ -3927,6 +3980,7 @@ function handleRealtime(message){
       return;
     }
     if(e.type==="conversation.item.input_audio_transcription.completed"&&voiceContext==="round"){
+      clearConversationInputStall();
       noteRoundOperationalActivity();
       const key=e.item_id||e.event_id||String(Date.now());if(processedTranscriptItems.has(key))return;processedTranscriptItems.add(key);
       rememberRoundTranscriptionCompleted(key);
@@ -3956,11 +4010,13 @@ function handleRealtime(message){
       if(status==="completed"&&authorizedSpeech?.reason==="conversation"&&!conversationOutputTranscript){const fallbackTranscript=realtimeResponseTranscript(e.response);if(fallbackTranscript)conversationOutputTranscript=fallbackTranscript}
       const functionCall=e.response?.output?.find?.(item=>item?.type==="function_call");
       if(status==="completed"&&functionCall&&authorizedSpeech?.reason==="conversation"){
+        clearConversationResponseStall();
         conversationToolTransition={callId:functionCall.call_id,sourceResponseId:e.response?.id||null,followupRequested:false,followupResponseId:null};
         continueConversationAfterTool(functionCall).catch(error=>{console.error("Caddie weather tool:",error);speakGlobalError(voiceContext)});
         return;
       }
       if(status==="failed"||status==="incomplete"){
+        clearConversationResponseStall();
         const failedReason=authorizedSpeech?.reason||null;
         if(audioEl){audioEl.muted=true;audioEl.volume=0;}
         if(micTrack&&!listening)micTrack.enabled=false;
@@ -3978,6 +4034,7 @@ function handleRealtime(message){
       return;
     }
     if(e.type==="output_audio_buffer.stopped"){
+      clearConversationResponseStall();
       if(authorizedSpeech?.reason==="conversation"&&conversationToolTransition){
         const transition=conversationToolTransition,eventResponseId=e.response_id||null;
         const waitingForFollowup=!transition.followupResponseId;
@@ -4012,6 +4069,7 @@ function handleRealtime(message){
       return;
     }
     if(e.type==="output_audio_buffer.cleared"){
+      clearConversationResponseStall();
       if(conversationClearResponseId&&(!e.response_id||e.response_id===conversationClearResponseId)){
         conversationClearResponseId=null;
         if(authorizedSpeech?.reason==="conversation"){if(audioEl){audioEl.muted=false;audioEl.volume=1}return}

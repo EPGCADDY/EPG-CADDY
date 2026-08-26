@@ -9,8 +9,8 @@ const serviceWorker=fs.readFileSync(new URL("./service-worker.js",import.meta.ur
 const universalApi=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 const trafficLib=fs.readFileSync(new URL("./api/_lib/traffic.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V325-IDEAL-MICROPHONE-TIMINGS-20260826"/);
-assert.match(serviceWorker,/gscg-mobile-v325-ideal-microphone-timings/);
+assert.match(html,/gscg-build" content="V326-NO-SILENT-CONVERSATION-20260826"/);
+assert.match(serviceWorker,/gscg-mobile-v326-no-silent-conversation/);
 for(const token of [
   "function realtimeTrafficTool()",
   'name:"get_live_traffic"',

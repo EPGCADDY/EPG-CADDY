@@ -41,6 +41,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v322-real-sustaine
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v323-long-multitopic-context.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v324-real-traffic.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v325-ideal-microphone-timings.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v326-no-silent-conversation.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);
