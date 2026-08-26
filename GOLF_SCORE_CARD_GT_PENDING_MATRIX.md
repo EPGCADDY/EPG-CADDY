@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V330-R3 aprobó selección única Wolf en iPhone; V331 incorpora matriz investigada de apuestas, estados, métricas y lenguaje operativo
+**Corte vigente:** V330-R3 aprobó selección única Wolf en iPhone; V331 publicó la matriz investigada; V332 agrega Q/$ excluyentes y arquitectura completa de acumulados, riesgo y liquidación
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -228,12 +228,12 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 16. Juegos y apuestas: Skins, Wolf, Vegas y Dots
 
-**Estado:** V330-R3 APROBÓ SELECCIÓN ÚNICA EN IPHONE; V331 EN IMPLEMENTACIÓN Y BANCO · `PEND-SKI-006`
+**Estado:** V330-R3 APROBÓ SELECCIÓN ÚNICA EN IPHONE; V331 PREVIEW READY; V332 BANCO INTEGRAL PASS, PREVIEW PENDIENTE · `PEND-SKI-006`
 
 - ✅ Skins Gross/Neto, Wolf, Vegas y Dots reutilizan el score oficial, de dos a seis jugadores según el juego, sin segundo capturador.
 - ✅ La ventana de opciones conserva a la izquierda las modalidades anteriores y ubica a la derecha los juegos nuevos; la tarjeta principal no cambia de formato.
 - ✅ Match Play y Four Ball aceptan hasta tres parejas: Verde 1–2, Oro 3–4 y Azul 5–6.
-- ✅ Unidad monetaria configurable en GTQ, reglas de empate, multiplicadores, topes y saldos cero-suma definidos antes de jugar.
+- ✅ V332 ofrece dos radios excluyentes por juego: `Q · QUETZALES` o `$ · DÓLARES`; la moneda elegida se conserva sin conversión en toda la arquitectura.
 - ✅ V331 documenta Wolf como Con pareja/Lobo solitario/Lobo ciego; muestra riesgo, pendientes, carry, unidades netas, dinero movido y pago por diferencia.
 - ✅ V331 muestra el cálculo Vegas por hoyo, birdies simultáneos configurables, score de 10 o más, volteos, águilas, topes y puntos movidos.
 - ✅ Dots configura eventos y valores con definición en español, puntos positivos/negativos y registros automáticos/manuales; Ferret, `Amigo`, izquierda y derecha son reglas de grupo apagadas por defecto.
@@ -241,10 +241,25 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - ✅ Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` READY: 89 paquetes, 322 fuentes, tres PDF, cero vulnerabilidades y puerta viva de Reglas aprobados.
 - ❌ Prueba física R2: `WOLF` abrió su configuración, pero `RONDA NORMAL` permaneció verde simultáneamente.
 - ✅ Prueba física R3: únicamente `WOLF` quedó verde, Ronda Normal se desmarcó y la configuración se abrió.
-- ⏳ Falta publicar V331 y probar físicamente acuerdos, estados, métricas, acumulados, corrección y liquidación por juego.
+- ✅ V331 publicada en Preview desde `35898aaaee0c1b32510f47bebb88a2c823e605a6`; despliegue `dpl_7UZ7uKSJQz9hiDdGzrPE2JGDPLKk` en estado `READY`.
+- ✅ Banco dirigido V332: moneda, símbolos, estados, acumulados, dinero movido, líder, riesgo, neto a liquidar, cierre, corrección, tarjetas y persistencia aprobados.
+- ✅ Auditoría integral V332: 89 paquetes, 325 fuentes y tres inventarios PDF sellados.
+- ⏳ Falta publicación del Preview V332.
+- ⏳ Falta probar físicamente acuerdos, estados, métricas, acumulados, corrección y liquidación por juego.
 - ⏳ Falta revisión visual táctil y una ronda física por juego en iPhone antes de montar.
 
-### 17. Apple Watch y otros smartwatches
+### 17. Fichas didácticas por modalidad y esquema
+
+**Estado:** PENDIENTE DE DISEÑO, REDACCIÓN, VALIDACIÓN Y PUBLICACIÓN · `PEND-DID-017`
+
+- Crear una hoja web/PDF para Ronda Normal, Stableford, Match Play, Four Ball, Práctica, Skins, Wolf, Vegas, Dots y cada variante que cambie el cálculo.
+- Escribir para comprensión de 10 años, con ejemplo completo, estrategia, glosario, errores comunes, estados, acumulados y liquidación.
+- Garantizar impresión real en blanco y negro: no depender del color para entender jugadores, ganadores, riesgos ni estados.
+- Mantener siempre visible el cálculo monetario general —casillas excluyentes Q/$, unidad, multiplicador, tope y liquidación—; cada grupo decide cuál moneda usa o si juega sólo con puntos/unidades sin liquidar dinero.
+- Validar cada ejemplo contra el motor real y versionar las hojas junto con las reglas.
+- Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md`.
+
+### 18. Apple Watch y otros smartwatches
 
 **Estado:** PENDIENTE · `PEND-WAT-007`
 
@@ -252,7 +267,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Consultar hoyo y resultado esencial, y registrar scores con toque o voz mediante el mismo motor oficial.
 - Resolver sincronización interrumpida, duplicados, funcionamiento sin conexión, batería, permisos y pruebas de ronda completa.
 
-### 18. Hándicap oficial ASOGOLF/GHIN
+### 19. Hándicap oficial ASOGOLF/GHIN
 
 **Estado:** PENDIENTE DE AUTORIZACIÓN/INTEGRACIÓN · `PEND-HCP-008`
 
@@ -260,7 +275,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Mantener separados índice oficial e índice interno, con fuente, vigencia, fecha y trazabilidad.
 - No presentar como oficial ningún dato sin permiso verificable de ASOGOLF/GHIN o la autoridad correspondiente.
 
-### 19. Campos de golf mundiales
+### 20. Campos de golf mundiales
 
 **Estado:** PENDIENTE · `PEND-CAM-009`
 
@@ -268,7 +283,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Conservar fuentes y versiones, evitar duplicados y no inventar datos faltantes.
 - Mantener intacta la matriz oficial de Guatemala y aplicar el mismo motor a cualquier país.
 
-### 20. GPS de golf
+### 21. GPS de golf
 
 **Estado:** PENDIENTE; GPS efímero de clima/tráfico ya existe · `PEND-GPS-010`
 
@@ -276,7 +291,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Medir precisión, batería, privacidad, señal degradada y operación offline en rondas físicas.
 - Enlazar posteriormente con Apple Watch sin duplicar campo, hoyo ni scores.
 
-### 21. Nube, cuentas y seguridad
+### 22. Nube, cuentas y seguridad
 
 **Estado:** BASE PREPARADA; OPERACIÓN CENTRAL PENDIENTE · `PEND-NUB-011`
 
@@ -284,7 +299,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Recuperar rondas y perfiles autorizados entre dispositivos sin duplicar, mezclar ni perder datos.
 - Endurecer secretos, sesiones, cifrado, eliminación y respuesta a incidentes antes de comercializar.
 
-### 22. Estadísticas avanzadas
+### 23. Estadísticas avanzadas
 
 **Estado:** CONSULTA LOCAL BÁSICA ENTREGADA; CAPA CENTRAL PENDIENTE · `PEND-EST-012`
 
@@ -292,7 +307,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Mantener captura opcional breve por voz/manual y explicar todo dato inferido.
 - Sincronizar y comparar únicamente datos autorizados cuando exista historial central.
 
-### 23. Monetización y operación comercial
+### 24. Monetización y operación comercial
 
 **Estado:** PENDIENTE · `PEND-COM-013`
 
@@ -300,7 +315,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Integrar proveedores reales de cobro y medir costos de IA, clima, tráfico, mapas y almacenamiento.
 - Validar App Store, Google Play, impuestos y continuidad antes de ofrecer el servicio.
 
-### 24. Banco final y certificación integral
+### 25. Banco final y certificación integral
 
 **Estado:** OBLIGATORIO Y CONTINUO · `PEND-QA-014`
 
@@ -308,7 +323,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Probar ruido, acentos, pausas, conexión intermitente, bloqueo, segundo plano, recuperación y ronda completa.
 - Un solo `FAIL` impide montaje; Producción sólo cambia después de PASS completo conforme a la autorización permanente del propietario.
 
-### 25. Detección automática del campo por GPS
+### 26. Detección automática del campo por GPS
 
 **Estado:** PENDIENTE · `PEND-UBI-015`
 
@@ -317,7 +332,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Mantener separado este objetivo de clima/tráfico y de las distancias deportivas frente/centro/fondo.
 - Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_UBI_015_DETECCION_CAMPO_POR_GPS.md`.
 
-### 26. Sincronización verificable de Reglas de Golf
+### 27. Sincronización verificable de Reglas de Golf
 
 **Estado:** PENDIENTE DE DISEÑO/CONDICIONES DE USO · `PEND-RSG-016`
 

@@ -5,8 +5,8 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const sessionApi=fs.readFileSync(new URL("./api/session-grupal.js",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V331-RESEARCHED-SIDE-GAMES-20260826"/);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v331-researched-side-games"/);
+assert.match(html,/gscg-build" content="V332-DUAL-CURRENCY-MATRIX-20260826"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v332-dual-currency-matrix"/);
 
 const script=html.slice(html.indexOf("<script>")+8,html.lastIndexOf("</script>"));
 assert.doesNotThrow(()=>new Function(script),"El JavaScript principal debe compilar completo");

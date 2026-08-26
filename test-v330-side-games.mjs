@@ -14,7 +14,7 @@ const player=(id,name,values,par=4)=>({id,name,holes:Object.fromEntries(values.m
 const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index)=>player(String.fromCharCode(97+index),name,values[index]));
 
 {
-  const players=six([[3],[4],[5],[6],[7],[8]]),result=wolf.compute(players,{enabled:true,scoreType:"gross",unitValue:10,decisions:{1:{type:"partner",partnerPlayerId:"b"}}},{holeCount:1});
+  const players=six([[3],[4],[5],[6],[7],[8]]),result=wolf.compute(players,{enabled:true,scoreType:"gross",unitValue:10,currency:"USD",decisions:{1:{type:"partner",partnerPlayerId:"b"}}},{holeCount:1});
   assert.equal(result.ok,true);
   assert.equal(result.holes[0].wolfPlayerId,"a");
   assert.equal(result.holes[0].winnerSide,"wolf");
@@ -25,6 +25,9 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
   assert.equal(result.summaries.find(item=>item.playerId==="a").netUnits,4,"Wolf debe mostrar unidades netas además del saldo");
   assert.equal(result.metrics.completedHoles,1);
   assert.equal(result.metrics.moneyTransferred,80);
+  assert.equal(result.metrics.settlementTotal,80);
+  assert.deepEqual(result.metrics.leaderNames,["ANA","BETO"]);
+  assert.equal(result.config.currency,"USD");
   assert.equal(Object.values(result.balances).reduce((sum,value)=>sum+value,0),0);
   assert.equal(result.settlements.reduce((sum,item)=>sum+item.amount,0),80);
 }
@@ -50,6 +53,8 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
   assert.equal(migrated.wolfTeePosition,"last");
   assert.deepEqual(migrated.multipliers,{partner:1,lone:4,blind:5});
   assert.equal(wolf.decisionRisk(4,"blind",migrated,1).wolfExposure,300);
+  assert.equal(wolf.normalizeConfig({currency:"USD"}).currency,"USD");
+  assert.equal(wolf.normalizeConfig({currency:"EUR"}).currency,"GTQ");
 }
 
 {
@@ -62,6 +67,10 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
   assert.equal(result.metrics.duelsResolved,3);
   assert.equal(result.metrics.cappedDuels,1);
   assert.equal(result.metrics.totalPointsMoved,42);
+  assert.equal(result.metrics.moneyTransferred,42);
+  assert.equal(result.metrics.settlementTotal,31);
+  assert.equal(result.metrics.maximumDuelExposure,20);
+  assert.deepEqual(result.metrics.leaderNames,["PAREJA VERDE"]);
   assert.equal(Object.values(result.balances).reduce((sum,value)=>sum+value,0),0);
   assert.equal(result.settlements.reduce((sum,item)=>sum+item.amount,0),31);
 }
@@ -79,6 +88,8 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
   assert.equal(vegas.pairNumber([{value:4},{value:10}]),104,"Un score de 10 o más va primero y no produce un número ambiguo");
   const voided=vegas.compute([player("a","ANA",[3]),player("b","BETO",[5]),player("c","CARLA",["X"]),player("d","DIEGO",[6])],{enabled:true},{holeCount:1});
   assert.equal(voided.holes[0].state,"void","Una X no se convierte en número Vegas inventado");
+  assert.equal(vegas.normalizeConfig({currency:"USD"}).currency,"USD");
+  assert.equal(vegas.normalizeConfig({currency:"EUR"}).currency,"GTQ");
 }
 
 {
@@ -92,6 +103,12 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
   assert.equal(result.metrics.manualAwards,2);
   assert.equal(result.metrics.positivePoints,2);
   assert.equal(result.metrics.negativePoints,-1);
+  assert.equal(result.metrics.completedHoles,1);
+  assert.equal(result.metrics.pendingHoles,0);
+  assert.equal(result.metrics.moneyTransferred,75);
+  assert.equal(result.metrics.settlementTotal,55);
+  assert.equal(result.metrics.pointExposurePerPlayer,25);
+  assert.deepEqual(result.metrics.leaderNames,["ANA"]);
   assert.equal(result.summaries.find(item=>item.playerId==="a").positivePoints,2);
   assert.equal(dots.EVENTS.greenie.description,"MÁS CERCA EN PAR 3 Y PAR O MEJOR");
   assert.equal(result.config.enabledEvents.ferret,false,"Ferret empieza apagado porque puede duplicar Chippie");
@@ -104,14 +121,16 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
   assert.equal(disabled.points.a,0,"Un evento desactivado antes de la ronda no debe contar");
   const amigoConfig=dots.toggleEvent({enabled:true,enabledEvents:{amigo:true}},1,"b","amigo"),amigoResult=dots.compute(players,amigoConfig,{holeCount:1});
   assert.ok(amigoResult.summaries.find(item=>item.playerId==="b").events.some(item=>item.event==="amigo"));
+  assert.equal(dots.normalizeConfig({currency:"USD"}).currency,"USD");
+  assert.equal(dots.normalizeConfig({currency:"EUR"}).currency,"GTQ");
 }
 
 {
   const names=["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"],ids=["a","b","c","d","e","f"],officialPlayers=firstScores=>names.map((name,index)=>player(ids[index],name,Array(18).fill(firstScores[index]))),decisions=Object.fromEntries(Array.from({length:18},(_,index)=>{const wolfIndex=index%6;return[index+1,{type:"partner",partnerPlayerId:ids[(wolfIndex+1)%6]}]}));
   const cases=[
-    {key:"wolf",players:officialPlayers([3,4,5,6,7,8]),config:{enabled:true,scoreType:"gross",tiePolicy:"push",unitValue:10,decisions},heading:/WOLF · GROSS/},
-    {key:"vegas",players:officialPlayers([4,5,5,6,6,7]),config:{enabled:true,scoreType:"gross",unitValue:2,birdieFlip:true,eagleDouble:false,holeCapPoints:20},heading:/VEGAS · 3 PAREJAS/},
-    {key:"dots",players:officialPlayers([3,4,4,4,4,4]),config:dots.toggleEvent(dots.toggleEvent({enabled:true,unitValue:5},1,"a","sandy"),1,"f","snake"),heading:/DOTS/}
+    {key:"wolf",players:officialPlayers([3,4,5,6,7,8]),config:{enabled:true,scoreType:"gross",tiePolicy:"push",unitValue:10,currency:"USD",decisions},heading:/WOLF · GROSS/},
+    {key:"vegas",players:officialPlayers([4,5,5,6,6,7]),config:{enabled:true,scoreType:"gross",unitValue:2,currency:"USD",birdieFlip:true,eagleDouble:false,holeCapPoints:20},heading:/VEGAS · 3 PAREJAS/},
+    {key:"dots",players:officialPlayers([3,4,4,4,4,4]),config:dots.toggleEvent(dots.toggleEvent({enabled:true,unitValue:5,currency:"USD"},1,"a","sandy"),1,"f","snake"),heading:/DOTS/}
   ];
   const pendingWolf=await roundClosure.close({id:"wolf-pending",configured:true,mode:"general",courseKey:"pulte",course:"El Pulté",createdAt:"2026-08-26T10:00:00.000Z",sideGames:{wolf:{enabled:true}},players:officialPlayers([3,4,5,6,7,8])},{appVersion:"V330"});
   assert.equal(pendingWolf.code,"SIDE_GAME_PENDING","Wolf no debe cerrar sin decisión por hoyo");
@@ -120,10 +139,12 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
     const closed=await roundClosure.close(round,{appVersion:"V330",closedAt:"2026-08-26T14:00:00.000Z"});
     assert.equal(closed.ok,true,`${item.key} debe cerrar oficialmente`);
     assert.equal(closed.snapshot.sideGames[item.key].result.ok,true);
+    assert.equal(closed.snapshot.sideGames[item.key].currency,"USD",`${item.key} debe conservar la moneda elegida`);
     assert.ok(closed.snapshot.sideGames[item.key].result.settlements.length,`${item.key} debe producir liquidación`);
     const artifacts=cardArtifacts.build(closed.snapshot);
     assert.match(artifacts.global.html,item.heading);
     assert.match(artifacts.global.html,/LIQUIDACIÓN:/);
+    assert.match(artifacts.global.html,/\$\d/,`${item.key} debe usar dólares en toda la tarjeta cuando se eligió USD`);
     assert.match(artifacts.personal[0].html,item.heading,`${item.key} también debe aparecer en tarjeta personal`);
     const entry=cardLibrary.entry(closed.round);
     assert.equal(cardLibrary.filter([entry],{query:item.key}).length,1,`${item.key} debe localizarse en historial`);
@@ -148,8 +169,15 @@ for(const file of ["wolf.js","vegas.js","dots.js"]){
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"),worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8"),mobile=fs.readFileSync(new URL("./scripts/build-mobile-web.mjs",import.meta.url),"utf8");
 for(const file of ["wolf.js","vegas.js","dots.js"]){assert.ok(html.includes(`<script src="./${file}"></script>`));assert.ok(worker.includes(`"/${file}"`));assert.ok(mobile.includes(`"${file}"`))}
-for(const token of ['id="wolfConfig"','id="wolfTeePosition"','id="wolfLoneMultiplier"','id="wolfBlindMultiplier"','id="wolfHoleCap"','LOBO SOLITARIO','LOBO CIEGO','UNIDADES NETAS','data-wolf-save','id="vegasConfig"','id="vegasBothBirdies"','SCORE DE 10 O MÁS','PUNTOS MOVIDOS','id="dotsConfig"','id="dotsEventConfig"','data-dots-enabled','NO EXISTE UN PAQUETE UNIVERSAL DE DOTS','PUNTOS + / −','AMIGO · GRUPO','IZQUIERDA · GRUPO','DERECHA · GRUPO','function sideGameSpeechSummary()','MODALIDADES EXISTENTES','NUEVOS JUEGOS'])assert.ok(html.includes(token)||fs.readFileSync(new URL("./dots.js",import.meta.url),"utf8").includes(token),`Falta integración V331: ${token}`);
-assert.match(worker,/gscg-mobile-v331-researched-side-games/);
+for(const token of ['id="wolfConfig"','id="wolfTeePosition"','id="wolfLoneMultiplier"','id="wolfBlindMultiplier"','id="wolfHoleCap"','LOBO SOLITARIO','LOBO CIEGO','UNIDADES NETAS','data-wolf-save','id="vegasConfig"','id="vegasBothBirdies"','SCORE DE 10 O MÁS','PUNTOS MOVIDOS','id="dotsConfig"','id="dotsEventConfig"','data-dots-enabled','NO EXISTE UN PAQUETE UNIVERSAL DE DOTS','PUNTOS + / −','AMIGO · GRUPO','IZQUIERDA · GRUPO','DERECHA · GRUPO','function sideGameSpeechSummary()','MODALIDADES EXISTENTES','NUEVOS JUEGOS','DINERO MOVIDO','NETO A LIQUIDAR','LÍDER ACTUAL','RIESGO MÁXIMO POR DUELO','IMPACTO DE 1 PUNTO'])assert.ok(html.includes(token)||fs.readFileSync(new URL("./dots.js",import.meta.url),"utf8").includes(token),`Falta integración V332: ${token}`);
+for(const key of ["skins","wolf","vegas","dots"]){
+  for(const currency of ["GTQ","USD"])assert.ok(html.includes(`id="${key}Currency${currency}"`),`Falta casilla ${currency} en ${key}`);
+  assert.equal((html.match(new RegExp(`name="${key}Currency"`,"g"))||[]).length,2,`${key} debe tener exactamente dos casillas de una misma familia`);
+  const block=html.slice(html.indexOf(`id="${key}Config"`),html.indexOf(`</section>`,html.indexOf(`id="${key}Config"`)));
+  assert.equal((block.match(/type="radio"/g)||[]).length,2,`${key} debe ofrecer Q y $ como radios excluyentes`);
+  assert.equal((block.match(/checked/g)||[]).length,1,`${key} debe iniciar con una sola moneda marcada`);
+}
+assert.match(worker,/gscg-mobile-v332-dual-currency-matrix/);
 assert.match(html,/function enforceExclusiveDraftGame\(preferredKey=undefined\)/,"Debe limpiar estados laterales heredados");
 assert.match(html,/function syncDraftModeSelection\(preferredKey=undefined\)/,"Debe existir un único escritor visual de modalidad");
 assert.match(html,/draftRoundMode="general";enforceExclusiveDraftGame\(key\);syncDraftModeSelection\(key\)/,"El toque lateral debe desmarcar visualmente las demás opciones antes de renderizar");
@@ -175,4 +203,4 @@ assert.match(html,/draftRoundMode="general";enforceExclusiveDraftGame\(key\);syn
   },"Sólo WOLF puede quedar verde después del toque");
 }
 
-console.log("PASS V331 · selección física única + Wolf investigado con estados, riesgo, acumulados y liquidación");
+console.log("PASS V332 · selección física única + Q/$ excluyentes + matriz común de estados, riesgo, acumulados, dinero, líder y liquidación");

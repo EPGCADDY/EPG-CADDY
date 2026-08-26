@@ -8,7 +8,7 @@ const release=JSON.parse(fs.readFileSync(path.join(root,"mobile-release.json"),"
 const worker=fs.readFileSync(path.join(root,"service-worker.js"),"utf8");
 const buttonText=id=>html.match(new RegExp(`id="${id}"[^>]*>([^<]+)<\\/button>`))?.[1]?.trim()||"";
 
-assert.match(html,/gscg-build" content="V331-RESEARCHED-SIDE-GAMES-20260826"/);
+assert.match(html,/gscg-build" content="V332-DUAL-CURRENCY-MATRIX-20260826"/);
 for(const id of ["openCardLibraryButton","openCardLibrarySetup","openCardLibraryStableford"]){
   assert.equal(buttonText(id),"HISTORIAL",`${id} debe usar el vocabulario común`);
 }
@@ -57,6 +57,6 @@ for(const file of textFiles(root)){
 }
 
 assert.equal(release.buildNumber,307);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v331-researched-side-games"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v332-dual-currency-matrix"/);
 
 console.log("PASS V305 · HISTORIAL, ATRÁS, REGÍSTRATE, Stableford limpio y cero vocabulario retirado");

@@ -27,6 +27,16 @@ assert.equal(carry.summaries.find(item=>item.playerId==="a").skins,2);
 assert.equal(carry.balances.a,20);
 assert.equal(carry.balances.b,-20);
 assert.equal(carry.settlements[0].amount,20);
+assert.equal(carry.metrics.completedHoles,2);
+assert.equal(carry.metrics.skinsAwarded,2);
+assert.equal(carry.metrics.moneyTransferred,20);
+assert.equal(carry.metrics.settlementTotal,20);
+assert.equal(carry.metrics.largestPotUnits,2);
+assert.deepEqual(carry.metrics.leaderNames,["ANA"]);
+assert.equal(skins.normalizeConfig({currency:"USD"}).currency,"USD");
+assert.equal(skins.normalizeConfig({currency:"EUR"}).currency,"GTQ");
+assert.equal(skins.formatMoney(12.5,"USD"),"$12.50");
+assert.equal(skins.formatMoney(-12.5,"GTQ"),"−Q12.50");
 
 const gross=skins.compute([
   player("a","ANA",[{gross:4,net:3}]),player("b","BETO",[{gross:3,net:4}])
@@ -84,21 +94,24 @@ assert.equal(skins.compute([
 {
   const officialPlayer=(id,name,first,rest)=>({id,name,handicap:0,tee:"Blanco",matrix:"Caballeros",holes:Object.fromEntries(Array.from({length:18},(_,index)=>{const hole=index+1,gross=index===0?first:rest;return[hole,{hole,gross,strokes:0,net:gross,par:4,diff:gross-4,status:null}]}))});
   const players=[officialPlayer("a","ANA",4,4),officialPlayer("b","BETO",5,4)];
-  const round={id:"skins-official",configured:true,mode:"general",courseKey:"pulte",course:"El Pulté",createdAt:"2026-08-26T10:00:00.000Z",sideGames:{skins:{enabled:true,scoreType:"gross",tiePolicy:"carry",unitValue:20}},players};
+  const round={id:"skins-official",configured:true,mode:"general",courseKey:"pulte",course:"El Pulté",createdAt:"2026-08-26T10:00:00.000Z",sideGames:{skins:{enabled:true,scoreType:"gross",tiePolicy:"carry",unitValue:20,currency:"USD"}},players};
   const closed=await roundClosure.close(round,{appVersion:"V329",closedAt:"2026-08-26T14:00:00.000Z"});
   assert.equal(closed.ok,true);
+  assert.equal(closed.snapshot.sideGames.skins.currency,"USD");
+  assert.equal(closed.snapshot.sideGames.skins.result.config.currency,"USD");
   assert.equal(closed.snapshot.sideGames.skins.result.summaries.find(item=>item.playerId==="a").skins,1);
   assert.equal(closed.snapshot.sideGames.skins.result.settlements[0].amount,20);
   const artifacts=cardArtifacts.build(closed.snapshot);
   assert.match(artifacts.global.html,/SKINS · GROSS/);
   assert.match(artifacts.global.html,/LIQUIDACIÓN:/);
-  assert.match(artifacts.global.html,/BETO paga Q20\.00 a ANA/);
+  assert.match(artifacts.global.html,/BETO paga \$20\.00 a ANA/);
   assert.match(artifacts.personal[0].html,/el score deportivo no se modifica/i);
   const libraryEntry=cardLibrary.entry(closed.round);
   assert.equal(libraryEntry.sideGames.skins.enabled,true);
   assert.equal(cardLibrary.filter([libraryEntry],{query:"skins"}).length,1);
   const central=masterDataSync.build({round:closed.round,profiles:[],courseData:{par:Array(18).fill(4),tees:{}},capturedAt:"2026-08-26T14:05:00.000Z"});
   assert.equal(central.round.sideGames.skins.result.settlements[0].amount,20);
+  assert.equal(central.round.sideGames.skins.currency,"USD");
   const restored=accountBackup.localRound(central.round);
   assert.equal(restored.sideGames.skins.result.summaries.find(item=>item.playerId==="a").skins,1);
   const changed=await roundClosure.correct(closed.round,{changes:[{playerId:"a",hole:1,gross:6}],reason:"Score verificado",authorizedBy:"Jaime",appVersion:"V329",correctedAt:"2026-08-26T14:10:00.000Z"});
@@ -107,7 +120,7 @@ assert.equal(skins.compute([
   assert.equal(changed.snapshot.sideGames.skins.result.summaries.find(item=>item.playerId==="a").skins,0);
   assert.equal(changed.snapshot.sideGames.skins.result.summaries.find(item=>item.playerId==="b").skins,1);
   assert.notEqual(changed.snapshot.sha256,closed.snapshot.sha256);
-  assert.match(cardArtifacts.build(changed.snapshot).global.html,/ANA paga Q20\.00 a BETO/);
+  assert.match(cardArtifacts.build(changed.snapshot).global.html,/ANA paga \$20\.00 a BETO/);
 }
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
@@ -118,6 +131,8 @@ for(const token of [
   'id="skinsScoreType"',
   'id="skinsTiePolicy"',
   'id="skinsUnitValue"',
+  'id="skinsCurrencyGTQ"',
+  'id="skinsCurrencyUSD"',
   'MODALIDADES EXISTENTES',
   'NUEVOS JUEGOS',
   'id="wolfRoundButton"',
@@ -132,8 +147,8 @@ assert.ok(overlayIndex>=0&&overlayIndex<mainIndex,"Skins debe abrir fuera del fo
 const main=html.slice(mainIndex,html.indexOf('</main>',mainIndex));
 assert.ok(main.includes('id="scorecard"')&&main.includes('id="summaryBody"'));
 assert.equal(main.includes('id="skinsResults"'),false,"No se debe insertar el resultado económico en la pantalla principal");
-assert.match(worker,/gscg-mobile-v331-researched-side-games/);
+assert.match(worker,/gscg-mobile-v332-dual-currency-matrix/);
 assert.ok(worker.includes('"/skins.js"'));
 assert.doesNotMatch(fs.readFileSync(new URL("./skins.js",import.meta.url),"utf8"),/(?:saveEntry|recordScore|setScore|fetch\()/,"El cálculo Skins no escribe scores ni consulta servicios");
 
-console.log("PASS V329-R2 · Skins Gross/Neto, tres políticas de empate, unidad GTQ, X, cierre firmado, corrección, nube, historial, liquidación, voz y pantalla principal intacta");
+console.log("PASS V332 · Skins Gross/Neto, moneda exclusiva Q/$, acumulados, X, cierre firmado, corrección, nube, historial, liquidación, voz y pantalla principal intacta");

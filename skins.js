@@ -17,12 +17,13 @@
     const scoreType=SCORE_TYPES.has(value.scoreType)?value.scoreType:"net";
     const tiePolicy=TIE_POLICIES.has(value.tiePolicy)?value.tiePolicy:"carry";
     const unitValue=Math.max(0,roundNumber(value.unitValue,2));
+    const currency=value.currency==="USD"?"USD":"GTQ";
     return{
       enabled:value.enabled===true,
       scoreType,
       tiePolicy,
       unitValue:unitValue||10,
-      currency:"GTQ",
+      currency,
       settlement:"each_player_stakes_one_unit"
     };
   }
@@ -42,12 +43,13 @@
 
   function allocateEvent(balances,players,winnerIds,units,unitValue){
     const safeUnits=roundNumber(units,4);
-    if(!winnerIds.length||safeUnits<=0)return;
+    if(!winnerIds.length||safeUnits<=0)return 0;
     const stake=roundNumber(safeUnits*unitValue,2);
     const pot=roundNumber(stake*players.length,2);
     const share=roundNumber(pot/winnerIds.length,2);
     for(const player of players)balances[player.id]=roundNumber((balances[player.id]||0)-stake,2);
     for(const id of winnerIds)balances[id]=roundNumber((balances[id]||0)+share,2);
+    return roundNumber(stake*Math.max(0,players.length-winnerIds.length),2);
   }
 
   function settlementsFromBalances(players,balances){
@@ -68,9 +70,9 @@
     const summaries=Object.fromEntries(players.map(player=>[player.id,{playerId:player.id,name:player.name,skins:0,holesWon:[],balance:0}]));
     const balances=Object.fromEntries(players.map(player=>[player.id,0]));
     const holes=[];
-    if(!config.enabled||players.length<2)return{ok:false,code:!config.enabled?"SKINS_DISABLED":"SKINS_REQUIRES_2_PLAYERS",config,holes,summaries:Object.values(summaries),pendingCarryUnits:0,balances,settlements:[]};
+    if(!config.enabled||players.length<2)return{ok:false,code:!config.enabled?"SKINS_DISABLED":"SKINS_REQUIRES_2_PLAYERS",config,holes,summaries:Object.values(summaries),pendingCarryUnits:0,balances,metrics:{completedHoles:0,pendingHoles:0,voidHoles:0,skinsAwarded:0,openCarryUnits:0,moneyTransferred:0,settlementTotal:0,largestPotUnits:0,leaderNames:[]},settlements:[]};
 
-    let carryUnits=0,blocked=false;
+    let carryUnits=0,blocked=false,moneyTransferred=0;
     for(let hole=1;hole<=holeCount;hole++){
       const scores=players.map(player=>({playerId:player.id,name:player.name,...scoreAt(player,hole,config.scoreType)}));
       const missing=scores.filter(item=>item.state==="missing");
@@ -88,13 +90,13 @@
       const best=Math.min(...valid.map(item=>item.value)),winners=valid.filter(item=>item.value===best),potUnits=1+carryUnits;
       if(winners.length===1){
         const winner=winners[0];summaries[winner.playerId].skins=roundNumber(summaries[winner.playerId].skins+potUnits,4);summaries[winner.playerId].holesWon.push(hole);
-        allocateEvent(balances,players,[winner.playerId],potUnits,config.unitValue);
+        moneyTransferred=roundNumber(moneyTransferred+allocateEvent(balances,players,[winner.playerId],potUnits,config.unitValue),2);
         holes.push({hole,state:"won",potUnits,winnerIds:[winner.playerId],winnerNames:[winner.name],bestScore:best,scores});carryUnits=0;continue;
       }
       if(config.tiePolicy==="split"){
         const share=roundNumber(1/winners.length,4),winnerIds=winners.map(item=>item.playerId);
         for(const winner of winners){summaries[winner.playerId].skins=roundNumber(summaries[winner.playerId].skins+share,4);summaries[winner.playerId].holesWon.push(hole)}
-        allocateEvent(balances,players,winnerIds,1,config.unitValue);
+        moneyTransferred=roundNumber(moneyTransferred+allocateEvent(balances,players,winnerIds,1,config.unitValue),2);
         holes.push({hole,state:"split",potUnits:1,winnerIds,winnerNames:winners.map(item=>item.name),sharePerWinner:share,bestScore:best,scores});carryUnits=0;continue;
       }
       if(config.tiePolicy==="void"){
@@ -104,11 +106,12 @@
       holes.push({hole,state:hole===holeCount?"carry_pending":"carry",potUnits,winnerIds:[],tiedPlayerIds:winners.map(item=>item.playerId),tiedNames:winners.map(item=>item.name),bestScore:best,scores});
     }
     for(const summary of Object.values(summaries))summary.balance=roundNumber(balances[summary.playerId]||0,2);
-    return{ok:true,config,holes,summaries:Object.values(summaries),pendingCarryUnits:carryUnits,balances,settlements:settlementsFromBalances(players,balances)};
+    const summaryList=Object.values(summaries),bestSkins=Math.max(0,...summaryList.map(item=>item.skins)),metrics={completedHoles:holes.filter(item=>!["pending","blocked"].includes(item.state)).length,pendingHoles:holes.filter(item=>["pending","blocked"].includes(item.state)).length,voidHoles:holes.filter(item=>item.state==="void").length,skinsAwarded:roundNumber(summaryList.reduce((sum,item)=>sum+item.skins,0),4),openCarryUnits:carryUnits,moneyTransferred,settlementTotal:roundNumber(Object.values(balances).filter(value=>value>0).reduce((sum,value)=>sum+value,0),2),largestPotUnits:holes.reduce((largest,item)=>Math.max(largest,Number(item.potUnits)||0),0),leaderNames:bestSkins>0?summaryList.filter(item=>item.skins===bestSkins).map(item=>item.name):[]};
+    return{ok:true,config,holes,summaries:summaryList,pendingCarryUnits:carryUnits,balances,metrics,settlements:settlementsFromBalances(players,balances)};
   }
 
   function formatMoney(value,currency="GTQ"){
-    const amount=roundNumber(value,2),prefix=currency==="GTQ"?"Q":"";
+    const amount=roundNumber(value,2),prefix=currency==="USD"?"$":"Q";
     return`${amount<0?"−":""}${prefix}${Math.abs(amount).toFixed(2)}`;
   }
 

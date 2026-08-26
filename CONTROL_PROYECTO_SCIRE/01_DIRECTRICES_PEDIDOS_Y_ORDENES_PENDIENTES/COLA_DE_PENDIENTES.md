@@ -12,18 +12,19 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
 | 5 | `PEND-CAM-009` campos mundiales | Falta proveedor/catálogo licenciado y tarjetas oficiales verificables |
 | 6 | `PEND-GPS-010` GPS de golf | Clima y tráfico ya usan GPS efímero; faltan distancias deportivas por hoyo y validación de precisión |
-| 7 | `PEND-SKI-006` Skins, Wolf, Vegas y apuestas | V330-R3 aprobó selección única en iPhone; V331 incorpora matriz investigada, estados, métricas y lenguaje claro; falta ronda física por juego |
-| 8 | `PEND-WAT-007` Apple Watch y smartwatches | Falta aplicación/sincronización física; Apple Watch primero y Wear OS después |
-| 9 | `PEND-NUB-011` nube, cuentas y seguridad | Base preparada; faltan sincronización central, roles, recuperación, privacidad y endurecimiento |
-| 10 | `PEND-EST-012` estadísticas avanzadas | Estadística local básica entregada; faltan histórico central, tendencias y comparaciones multi-dispositivo |
-| 11 | `PEND-COM-013` monetización y operación comercial | Falta modelo comercial, términos, privacidad, soporte y proveedores de pago/entrega |
-| 12 | `PEND-QA-014` certificación integral | Falta banco final automático, visual y físico por dispositivo, modalidad, ruido, conexión y ronda completa |
-| 13 | `PEND-CLI-002` clima completo en artefactos | Clima vivo entregado; faltan proveedor comparado, snapshots, historial, PDF/imagen y prueba de campo |
-| 14 | `PEND-MAN-004` Guía Rápida | Falta versión web/PDF visual enlazada al Manual vigente |
-| 15 | `PEND-UBI-015` detectar el campo por GPS | Falta catálogo geográfico verificado, propuesta segura, confirmación manual y prueba física por campo |
-| 16 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
+| 7 | `PEND-SKI-006` Skins, Wolf, Vegas y apuestas | V332 aprobó 89 paquetes y 325 fuentes; falta nuevo Preview y ronda física |
+| 8 | `PEND-DID-017` fichas para aprender cada modalidad | Falta una hoja web/PDF por modalidad y esquema, comprensible a los 10 años, imprimible en blanco y negro y validada contra el motor |
+| 9 | `PEND-WAT-007` Apple Watch y smartwatches | Falta aplicación/sincronización física; Apple Watch primero y Wear OS después |
+| 10 | `PEND-NUB-011` nube, cuentas y seguridad | Base preparada; faltan sincronización central, roles, recuperación, privacidad y endurecimiento |
+| 11 | `PEND-EST-012` estadísticas avanzadas | Estadística local básica entregada; faltan histórico central, tendencias y comparaciones multi-dispositivo |
+| 12 | `PEND-COM-013` monetización y operación comercial | Falta modelo comercial, términos, privacidad, soporte y proveedores de pago/entrega |
+| 13 | `PEND-QA-014` certificación integral | Falta banco final automático, visual y físico por dispositivo, modalidad, ruido, conexión y ronda completa |
+| 14 | `PEND-CLI-002` clima completo en artefactos | Clima vivo entregado; faltan proveedor comparado, snapshots, historial, PDF/imagen y prueba de campo |
+| 15 | `PEND-MAN-004` Guía Rápida | Falta versión web/PDF visual enlazada al Manual vigente |
+| 16 | `PEND-UBI-015` detectar el campo por GPS | Falta catálogo geográfico verificado, propuesta segura, confirmación manual y prueba física por campo |
+| 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
 
-La prioridad inmediata continúa siendo `PEND-VOZ-003`. **Producción permanece intacta y no existe autorización de montaje hasta obtener PASS físico prolongado en iPhone.**
+La prioridad activa por orden del propietario es terminar `PEND-SKI-006` V332; `PEND-VOZ-003` queda registrado para ejecutarse después. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
 
 **Autorización de ejecución permanente:** el propietario ordenó el 26 de agosto de 2026 agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versión cuando esté realmente probada. Esta autorización no convierte un `FAIL` en `PASS` ni permite simular licencias, credenciales o integraciones externas inexistentes.
 
@@ -277,17 +278,17 @@ Este pendiente sólo podrá cerrarse con destino exacto validado, proveedor y fa
 ## PEND-SKI-006 · Juegos y apuestas: Skins, Wolf, Vegas y Dots
 
 **Fecha de registro:** 26 de agosto de 2026
-**Estado:** V330-R3 APROBÓ SELECCIÓN ÚNICA EN IPHONE · V331 MATRIZ INVESTIGADA EN IMPLEMENTACIÓN Y BANCO
+**Estado:** V330-R3 APROBÓ SELECCIÓN ÚNICA EN IPHONE · V331 PREVIEW READY · V332 MONEDA DUAL Y MATRIZ COMPLETA APROBÓ BANCO INTEGRAL
 **Prioridad:** Función nueva solicitada por el propietario
 
 ### Objetivo
 
 Agregar **Skins, Wolf, Vegas y el módulo maestro de apuestas** dentro de la arquitectura única de Golf Score Card GT, reutilizando registro, campos, handicap, captura manual y por voz, persistencia, historial y tarjeta final.
 
-### Avance real V329/V330/V331
+### Avance real V329/V330/V331/V332
 
 - La ventana de Configuración quedó dividida en dos columnas: modalidades existentes a la izquierda y juegos nuevos a la derecha. La pantalla principal de la tarjeta no cambió de formato.
-- Skins admite de dos a seis jugadores, Gross o Neto, unidad monetaria configurable —GTQ por defecto— y tres políticas explícitas de empate: acumular, dividir o anular. Resuelve X, hoyo 18, saldos cero-suma y carry final.
+- Skins admite de dos a seis jugadores, Gross o Neto, unidad monetaria configurable y tres políticas explícitas de empate: acumular, dividir o anular. Resuelve X, hoyo 18, saldos cero-suma y carry final.
 - Wolf admite de tres a seis jugadores como adaptación de grupo. V331 elimina la duplicidad `Solo base`/`Lone`: sólo ofrece Con pareja, Lobo solitario y Lobo ciego; configura Wolf primero/último, multiplicadores, unidad y tope por rival/hoyo. Muestra riesgo, decisión y score pendientes, carry, unidades netas, dinero movido y liquidación; bloquea el cierre si falta una decisión.
 - Vegas admite cuatro o seis jugadores; con seis utiliza tres parejas y compara cada pareja contra las otras dos. V331 explica y muestra cada número por hoyo, maneja 10+4 como 104, permite acordar si dos birdies cancelan o aplican ambos volteos, registra águila, tope, puntos movidos, saldo y liquidación cero-suma. La variante de seis queda identificada como adaptación propia.
 - Dots admite de dos a seis jugadores. V331 añade una definición en español a cada evento, separa puntos positivos/negativos y registros automáticos/manuales. Ferret queda apagado por defecto porque puede duplicar Chippie; `Amigo`, izquierda y derecha continúan como reglas propias del grupo apagadas.
@@ -296,6 +297,8 @@ Agregar **Skins, Wolf, Vegas y el módulo maestro de apuestas** dentro de la arq
 - El cierre oficial guarda la configuración y liquidación en el snapshot SHA-256. Una corrección recalcula el juego, preserva el original y actualiza Global, personales, Historial, consultas, respaldo central y restauración.
 - Los bancos `test-v329-skins.mjs` y `test-v330-side-games.mjs` aprobaron reglas, empates, X, límites, tres parejas, cierre, corrección, artefactos, búsqueda, nube, recuperación, voz y ausencia de cambios estructurales en la pantalla principal.
 - La revisión V331 usa 18Birdies y Wolf Golf Scorecard para Wolf; Mashie, 18Birdies y Golf Digest para Vegas; 18Birdies, MyScorecard y SCGA para Dots/Junk; USGA queda como autoridad del hándicap y score deportivo. Las reglas que varían entre grupos se muestran como configurables, nunca como universales.
+- V332 añade a cada juego dos casillas excluyentes `Q · QUETZALES` y `$ · DÓLARES`; la selección queda guardada y se usa en pantalla, voz, snapshot, corrección, tarjeta, Historial, sincronización, restauración y liquidación sin conversión.
+- V332 homologa la matriz común: estado, resueltos/pendientes, acumulados, dinero movido, saldo por jugador/pareja, líder o empate, riesgo útil del juego, neto a liquidar y quién paga a quién.
 
 ### Alcance mínimo para diseñar y aprobar
 
@@ -304,7 +307,7 @@ Agregar **Skins, Wolf, Vegas y el módulo maestro de apuestas** dentro de la arq
 - Calcular ganador por hoyo, acumulados pendientes, Skins ganados por jugador y resultado final.
 - Incorporar Wolf con elección de pareja, Lobo solitario, orden rotativo, Gross/Neto, multiplicadores y límites previamente configurados.
 - Incorporar Vegas con parejas, formación del número, volteos/multiplicadores y topes de riesgo definidos antes de iniciar.
-- Crear una sola casilla de **valor de la unidad**, inicialmente en quetzales, que alimente los cálculos económicos sin alterar el score deportivo.
+- Crear una sola casilla de **valor de la unidad** y dos radios excluyentes de moneda —Q o $— que alimenten los cálculos económicos sin alterar el score deportivo.
 - Registrar por voz o manual las apuestas de grupo: `Amigo`, caída a izquierda/derecha del fairway, elección de pareja y eventos equivalentes acordados por el grupo.
 - Incluir Dots configurables: Sandy, Greenie, Birdie, Eagle, Barkie, Arnie, Chippie, Poley, Ferret y Snake; permitir activar o desactivar cada uno antes de la ronda.
 - Mostrar saldos por jugador, quién cobra o paga, límites, multiplicadores, acumulados y liquidación final automática y auditable.
@@ -318,7 +321,9 @@ Agregar **Skins, Wolf, Vegas y el módulo maestro de apuestas** dentro de la arq
 - ✅ El Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` quedó `READY`: 89 paquetes, 322 fuentes, tres inventarios PDF, cero vulnerabilidades y puerta viva de Reglas con seis fuentes oficiales.
 - ❌ La prueba física V330-R2 rechazó la selección visual: al tocar `WOLF`, abrió su configuración pero `RONDA NORMAL` también permaneció verde.
 - ✅ V330-R3 demostró en iPhone que al elegir `WOLF` sólo Wolf queda verde, Ronda Normal se desmarca y la configuración se abre.
-- ⏳ V331 debe publicar la matriz investigada y confirmar físicamente que acuerdos, estados, métricas, acumulados y liquidaciones sean legibles y operables.
+- ✅ V331 fue publicada en Preview `READY`; la matriz investigada ya está disponible para prueba.
+- ✅ V332 aprueba 89 paquetes, 325 fuentes, tres inventarios PDF, radios Q/$, símbolos, acumulados, riesgos, neto a liquidar, persistencia y tarjetas; falta publicación Preview.
+- ⏳ Confirmar físicamente que acuerdos, estados, métricas, acumulados y liquidaciones sean legibles y operables.
 - Revisar físicamente en iPhone la ventana dividida, seis jugadores, tres parejas, selectores monetarios y controles Dots/Wolf sin tropiezos.
 - Jugar o simular una ronda completa por cada juego en el dispositivo, corregir al menos un hoyo y confirmar tarjetas, Historial y restauración.
 - Sólo después de esos PASS el propietario podrá autorizar el montaje en Producción.
@@ -326,6 +331,24 @@ Agregar **Skins, Wolf, Vegas y el módulo maestro de apuestas** dentro de la arq
 ### Frases para localizar este pendiente
 
 `Skins`, `Wolf`, `Vegas`, `Dots`, `Sandy`, `Greenie`, `Birdie`, `Eagle`, `Barkie`, `Arnie`, `Chippie`, `Poley`, `Ferret`, `Snake`, `Amigo`, `izquierda`, `derecha`, `unidad`, `quetzales`, `liquidación`, `juego Skins`, `Skin por hoyo`, `empate acumulado`, `pozo por hoyo`, `modalidad nueva`, `pendientes por hacer`.
+
+## PEND-DID-017 · Una ficha para aprender cada modalidad y esquema
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE DE DISEÑO, REDACCIÓN, VALIDACIÓN Y PUBLICACIÓN
+**Prioridad:** Después de la validación física de V332
+
+### Objetivo
+
+Crear una hoja web/PDF por Ronda Normal, Stableford, Match Play, Four Ball, Práctica, Skins, Wolf, Vegas, Dots y por cada esquema que cambie el cálculo. El lenguaje debe poder entenderlo un niño de 10 años; la versión impresa debe funcionar en blanco y negro y cada ejemplo debe enseñar acuerdos, jugada, estrategia, estado, acumulado y liquidación sin ambigüedades.
+
+La edad de 10 años define sólo la claridad didáctica, no la edad de los jugadores. El dinero quedará siempre incluido en el alcance general de cada hoja —unidad, moneda, multiplicador, tope, cobro, pago y liquidación— con dos opciones excluyentes: **quetzales (`Q`/`GTQ`) o dólares (`$`/`USD`)**. Cada grupo decidirá cuál usa o si juega únicamente con puntos/unidades sin liquidar dinero. Cada operación deberá coincidir exactamente con el motor real de la aplicación y enseñar la matriz completa de estado, acumulado, riesgo, balance y liquidación.
+
+**Especificación completa:** `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md`.
+
+### Frases para localizar este pendiente
+
+`fichas de modalidades`, `cómo se juega`, `niño de 10 años`, `blanco y negro`, `aprender apuestas`, `estrategia`, `ejemplo completo`, `guía por modalidad`, `pendientes por hacer`.
 
 ## PEND-WAT-007 · Apple Watch y smartwatches
 

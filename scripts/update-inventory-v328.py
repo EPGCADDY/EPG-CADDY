@@ -69,7 +69,7 @@ def build_cover(path, title):
     regular, bold = register_fonts()
     width, height = A4
     c = canvas.Canvas(str(path), pagesize=A4, pageCompression=1)
-    c.setTitle(f"{title} - V331")
+    c.setTitle(f"{title} - V332")
     c.setFillColor(HexColor("#080808"))
     c.rect(0, 0, width, height, stroke=0, fill=1)
     c.setFillColor(HexColor("#20ff00"))
@@ -81,23 +81,23 @@ def build_cover(path, title):
     c.drawString(44, height - 80, title)
     c.setFillColor(HexColor("#20ff00"))
     c.setFont(bold, 28)
-    c.drawString(44, height - 126, "V331 · MATRIZ DE APUESTAS")
+    c.drawString(44, height - 126, "V332 · MONEDA Y ACUMULADOS")
     c.setFillColor(white)
     c.setFont(bold, 15)
-    c.drawString(44, height - 153, "WOLF · VEGAS · DOTS · REGLAS · ESTADOS · MÉTRICAS")
+    c.drawString(44, height - 153, "SKINS · WOLF · VEGAS · DOTS · Q/$ · RIESGO · LIQUIDACIÓN")
 
     c.setFillColor(HexColor("#151515"))
     c.roundRect(42, 414, 511, 239, 12, stroke=0, fill=1)
     c.setFillColor(HexColor("#20ff00"))
     c.setFont(bold, 11)
-    c.drawString(58, 628, "MATRIZ INVESTIGADA · BANCO V331 EN EJECUCIÓN")
+    c.drawString(58, 628, "MONEDA DUAL Y MATRIZ COMÚN · BANCO V332")
     y = 598
     items = [
-        ("WOLF COMPRENSIBLE", "Con pareja, Lobo solitario y Lobo ciego; orden, riesgo, tope, decisiones, carry, unidades netas y liquidación."),
-        ("VEGAS EXPLICADO", "Números por hoyo, scores de 10 o más, birdies simultáneos, volteos, águila, topes y puntos movidos."),
-        ("DOTS EN ESPAÑOL", "Cada evento explica su significado y separa puntos positivos, negativos, automáticos y manuales."),
-        ("DINERO SEPARADO", "Unidad GTQ, empates, multiplicadores y topes calculan saldos cero-suma sin alterar Gross ni Neto."),
-        ("TRAZABILIDAD", "Cierre SHA-256, corrección, tarjetas, Historial, nube y restauración conservan el resultado completo."),
+        ("DOS MONEDAS", "Cada juego ofrece casillas excluyentes Q y $; la elegida permanece en voz, tarjetas, Historial y liquidación."),
+        ("ACUMULADOS", "Estados, hoyos, puntos o unidades, carry, registros y balances muestran cómo cambió la ronda."),
+        ("RIESGO COMPRENSIBLE", "Mayor pozo, exposición Wolf, riesgo por duelo Vegas e impacto de un punto Dots se explican antes de pagar."),
+        ("DINERO SEPARADO", "Dinero movido y neto a liquidar se calculan en la moneda elegida sin alterar Gross ni Neto."),
+        ("TRAZABILIDAD", "Líder, saldos y transferencias exactas sobreviven cierre SHA-256, corrección, tarjetas, nube y restauración."),
     ]
     for number, (item_title, text) in enumerate(items, start=1):
         y = draw_bullet(c, number, item_title, text, y, regular, bold)
@@ -109,7 +109,7 @@ def build_cover(path, title):
     c.drawString(58, 355, "ESTADO HONESTO · PEND-SKI-006 SIGUE ABIERTO")
     open_items = [
         "V330-R3 aprobó en iPhone la selección visual única de Wolf.",
-        "V331 debe aprobar banco, build y nuevo Preview antes de prueba física.",
+        "V332 aprobó 89 paquetes y 325 fuentes; falta publicar el nuevo Preview antes de prueba física.",
         "Falta una ronda física completa por juego con corrección y recuperación.",
         "Producción no se modifica hasta obtener todos los PASS requeridos.",
     ]
@@ -123,12 +123,12 @@ def build_cover(path, title):
     c.setFillColor(HexColor("#8d8d8d"))
     c.setFont(regular, 8.4)
     c.drawString(44, 177, "Producción permanece en V322. Un FAIL bloquea cualquier montaje.")
-    c.drawString(44, 161, "Inventarios regenerados después de código, documentación y pruebas V331.")
+    c.drawString(44, 161, "Inventarios regenerados después de código, documentación y pruebas V332.")
     c.setFillColor(white)
     c.setFont(bold, 10)
     c.drawString(44, 111, "26 DE AGOSTO DE 2026")
     c.setFillColor(HexColor("#20ff00"))
-    c.drawRightString(width - 44, 111, "V331 EN BANCO · PRUEBA FÍSICA PENDIENTE")
+    c.drawRightString(width - 44, 111, "V332 EN BANCO · PRUEBA FÍSICA PENDIENTE")
     c.showPage()
     c.save()
 
@@ -144,7 +144,7 @@ def update_inventory(filename, title):
     first_content_page = 0
     for page in source.pages:
         page_text = page.extract_text() or ""
-        if "V331 · MATRIZ DE APUESTAS" in page_text or "V330 · JUEGOS Y TRES PAREJAS" in page_text or "V328 · REGLAS OFICIALES" in page_text or "V328-R2 · REGLAS OFICIALES" in page_text:
+        if "V332 · MONEDA Y ACUMULADOS" in page_text or "V331 · MATRIZ DE APUESTAS" in page_text or "V330 · JUEGOS Y TRES PAREJAS" in page_text or "V328 · REGLAS OFICIALES" in page_text or "V328-R2 · REGLAS OFICIALES" in page_text:
             first_content_page += 1
             continue
         break
@@ -153,8 +153,8 @@ def update_inventory(filename, title):
     for page in source.pages[first_content_page:]:
         writer.add_page(page)
     writer.add_metadata({
-        "/Title": f"Golf Score Card GT - {title} - V331",
-        "/Subject": "Inventario de control V331 - matriz investigada de Wolf, Vegas y Dots",
+        "/Title": f"Golf Score Card GT - {title} - V332",
+        "/Subject": "Inventario de control V332 - moneda dual y matriz común de acumulados y riesgos",
         "/Author": "Golf Score Card GT",
         "/Creator": "Golf Score Card GT",
     })

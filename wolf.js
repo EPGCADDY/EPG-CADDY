@@ -13,9 +13,9 @@
   const scoreAt=(player,hole,type)=>{const score=player?.holes?.[hole];if(!score)return{state:"missing",value:null};if(score.status==="x")return{state:"x",value:null};const value=Number(score[type]);return Number.isFinite(value)?{state:"valid",value}:{state:"missing",value:null}};
 
   function normalizeConfig(value={}){
-    const scoreType=value.scoreType==="gross"?"gross":"net",tiePolicy=value.tiePolicy==="carry"?"carry":"push",unitValue=Math.max(.01,round(value.unitValue||10,2)),wolfTeePosition=value.wolfTeePosition==="last"?"last":"first",holeCapAmount=Math.max(0,Math.min(100000,round(value.holeCapAmount||0,2))),multipliers={partner:1,lone:integer(value.multipliers?.lone??value.loneMultiplier,2,1,9),blind:integer(value.multipliers?.blind??value.blindMultiplier,3,1,9)};
+    const scoreType=value.scoreType==="gross"?"gross":"net",tiePolicy=value.tiePolicy==="carry"?"carry":"push",unitValue=Math.max(.01,round(value.unitValue||10,2)),currency=value.currency==="USD"?"USD":"GTQ",wolfTeePosition=value.wolfTeePosition==="last"?"last":"first",holeCapAmount=Math.max(0,Math.min(100000,round(value.holeCapAmount||0,2))),multipliers={partner:1,lone:integer(value.multipliers?.lone??value.loneMultiplier,2,1,9),blind:integer(value.multipliers?.blind??value.blindMultiplier,3,1,9)};
     const decisions={};for(const[hole,entry]of Object.entries(value.decisions||{})){const number=Number(hole),legacyType=entry?.type==="solo"?"lone":entry?.type,type=Object.hasOwn(DECISIONS,legacyType)?legacyType:"partner";if(Number.isInteger(number)&&number>=1&&number<=18)decisions[number]={type,partnerPlayerId:type==="partner"?(String(entry?.partnerPlayerId||"")||null):null,declaredBeforeTee:type==="blind"}}
-    return{enabled:value.enabled===true,scoreType,tiePolicy,unitValue,currency:"GTQ",wolfTeePosition,holeCapAmount,decisions,multipliers,settlement:"pay_the_difference_pairwise",rulesVersion:"WOLF_RESEARCHED_V331",variant:"CLASSIC_4_WITH_GSC_GT_3_5_6_ADAPTATIONS"};
+    return{enabled:value.enabled===true,scoreType,tiePolicy,unitValue,currency,wolfTeePosition,holeCapAmount,decisions,multipliers,settlement:"pay_the_difference_pairwise",rulesVersion:"WOLF_DUAL_CURRENCY_V332",variant:"CLASSIC_4_WITH_GSC_GT_3_5_6_ADAPTATIONS"};
   }
 
   function wolfForHole(playersInput,hole){const players=validPlayers(playersInput),number=Math.max(1,Math.min(18,Math.trunc(Number(hole)||1)));return players.length?players[(number-1)%players.length]:null}
@@ -38,7 +38,7 @@
 
   function compute(playersInput,configInput={},options={}){
     const players=validPlayers(playersInput),config=normalizeConfig(configInput),holeCount=Math.max(1,Math.min(18,Math.trunc(Number(options.holeCount)||18))),balances=Object.fromEntries(players.map(player=>[player.id,0])),summaries=Object.fromEntries(players.map(player=>[player.id,{playerId:player.id,name:player.name,wolfHoles:0,wins:0,losses:0,ties:0,unitsWon:0,unitsLost:0,netUnits:0,balance:0}])),holes=[];
-    if(!config.enabled||players.length<3)return{ok:false,code:!config.enabled?"WOLF_DISABLED":"WOLF_REQUIRES_3_PLAYERS",config,holes,summaries:Object.values(summaries),balances,metrics:{completedHoles:0,pendingDecisions:0,pendingScores:0,voidHoles:0,pushHoles:0,carryHoles:0,openCarryUnits:0,moneyTransferred:0,largestStakePerRival:0},settlements:[]};
+    if(!config.enabled||players.length<3)return{ok:false,code:!config.enabled?"WOLF_DISABLED":"WOLF_REQUIRES_3_PLAYERS",config,holes,summaries:Object.values(summaries),balances,metrics:{completedHoles:0,pendingDecisions:0,pendingScores:0,voidHoles:0,pushHoles:0,carryHoles:0,openCarryUnits:0,moneyTransferred:0,settlementTotal:0,largestStakePerRival:0,leaderNames:[]},settlements:[]};
     let carryUnits=0,moneyTransferred=0,largestStakePerRival=0;
     for(let hole=1;hole<=holeCount;hole++){
       const wolf=wolfForHole(players,hole),decision=config.decisions[hole];summaries[wolf.id].wolfHoles++;
@@ -56,7 +56,7 @@
       holes.push({hole,state:"won",type,decisionLabel:DECISION_LABELS[type],multiplier,potUnits,rawStake,stake,capApplied:stake<rawStake,totalTransferred,wolfPlayerId:wolf.id,wolfName:wolf.name,partnerPlayerId:partner?.id||null,partnerName:partner?.name||null,wolfSideIds,opponentIds,wolfBest,opponentBest,scores,winnerIds,loserIds,winnerSide:wolfWins?"wolf":"field"});carryUnits=0;
     }
     for(const summary of Object.values(summaries)){summary.balance=round(balances[summary.playerId]||0,2);summary.netUnits=round(summary.balance/config.unitValue,4)}
-    const metrics={completedHoles:holes.filter(item=>["won","push","carry"].includes(item.state)).length,pendingDecisions:holes.filter(item=>item.state==="decision_pending").length,pendingScores:holes.filter(item=>item.state==="pending").length,voidHoles:holes.filter(item=>item.state==="void").length,pushHoles:holes.filter(item=>item.state==="push").length,carryHoles:holes.filter(item=>item.state==="carry").length,openCarryUnits:carryUnits,moneyTransferred,largestStakePerRival:round(largestStakePerRival,2)};
+    const summaryList=Object.values(summaries),bestBalance=Math.max(0,...summaryList.map(item=>item.balance)),metrics={completedHoles:holes.filter(item=>["won","push","carry"].includes(item.state)).length,pendingDecisions:holes.filter(item=>item.state==="decision_pending").length,pendingScores:holes.filter(item=>item.state==="pending").length,voidHoles:holes.filter(item=>item.state==="void").length,pushHoles:holes.filter(item=>item.state==="push").length,carryHoles:holes.filter(item=>item.state==="carry").length,openCarryUnits:carryUnits,moneyTransferred,settlementTotal:round(Object.values(balances).filter(value=>value>0).reduce((sum,value)=>sum+value,0),2),largestStakePerRival:round(largestStakePerRival,2),leaderNames:bestBalance>0?summaryList.filter(item=>item.balance===bestBalance).map(item=>item.name):[]};
     return{ok:true,config,holes,summaries:Object.values(summaries),balances,pendingCarryUnits:carryUnits,metrics,settlements:settlements(players,balances)};
   }
 

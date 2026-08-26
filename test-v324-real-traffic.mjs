@@ -9,8 +9,8 @@ const serviceWorker=fs.readFileSync(new URL("./service-worker.js",import.meta.ur
 const universalApi=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 const trafficLib=fs.readFileSync(new URL("./api/_lib/traffic.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V331-RESEARCHED-SIDE-GAMES-20260826"/);
-assert.match(serviceWorker,/gscg-mobile-v331-researched-side-games/);
+assert.match(html,/gscg-build" content="V332-DUAL-CURRENCY-MATRIX-20260826"/);
+assert.match(serviceWorker,/gscg-mobile-v332-dual-currency-matrix/);
 for(const token of [
   "function realtimeTrafficTool()",
   'name:"get_live_traffic"',

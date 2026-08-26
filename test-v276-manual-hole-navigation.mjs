@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V331-RESEARCHED-SIDE-GAMES-20260826"/);
+assert.match(html,/gscg-build" content="V332-DUAL-CURRENCY-MATRIX-20260826"/);
 assert.match(html,/V276-PREVIOUS-DIRECT-NEXT-20260823/);
 assert.match(html,/appVersion:"V307"/);
 
