@@ -6,7 +6,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
-| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V327-R1 aprobó banco automatizado y Preview; falta conversación física prolongada en iPhone |
+| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V327-R1 aprobó banco automatizado y Preview; nueva prueba física detectó respuestas vagas, corte de conversación y estados bilaterales poco visibles |
 | 2 | `PEND-TRA-005` tráfico actual y futuro | Google Maps Routes activo y probado; faltan comparación simultánea con Waze y validación física en Guatemala |
 | 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
@@ -20,6 +20,8 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 12 | `PEND-QA-014` certificación integral | Falta banco final automático, visual y físico por dispositivo, modalidad, ruido, conexión y ronda completa |
 | 13 | `PEND-CLI-002` clima completo en artefactos | Clima vivo entregado; faltan proveedor comparado, snapshots, historial, PDF/imagen y prueba de campo |
 | 14 | `PEND-MAN-004` Guía Rápida | Falta versión web/PDF visual enlazada al Manual vigente |
+| 15 | `PEND-UBI-015` detectar el campo por GPS | Falta catálogo geográfico verificado, propuesta segura, confirmación manual y prueba física por campo |
+| 16 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
 
 La prioridad inmediata continúa siendo `PEND-VOZ-003`. **Producción permanece intacta y no existe autorización de montaje hasta obtener PASS físico prolongado en iPhone.**
 
@@ -193,6 +195,13 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - El banco local conserva 550 secuencias `herramienta → follow-up → audio`, 100 eventos de privacidad, 30 turnos bilaterales y 30 temas/63 mensajes.
 - Los registros del deployment no mostraron errores ni advertencias y la telemetría descartó pregunta, transcripción, nombres, ubicación y credenciales.
 - Esta evidencia automática no sustituye el micrófono físico, altavoz, interrupciones, ruido ni gestión de audio de un iPhone real. La única puerta inmediata abierta es una conversación larga física sin silencio ni micrófono rojo atascado.
+
+### Observaciones físicas nuevas registradas para una fase posterior
+
+- Las respuestas generales pueden resultar vagas, básicas o demasiado breves hasta que el usuario pide expresamente una respuesta más estudiada, investigada, profunda y formal. Debe incorporarse una matriz permanente de calidad que revise pertinencia, fundamento, profundidad, precisión, aplicación práctica y claridad antes de cada respuesta, sin obligar al usuario a repetir esa orden.
+- En la quinta conversación física el estado quedó escuchando y, después de terminar la pregunta, el turno se cortó sin completar el ciclo. Debe reproducirse y corregirse la recuperación del micrófono en conversaciones consecutivas.
+- El aviso bilateral debe mostrar exactamente `ESCUCHANDO` mientras recibe voz y `RESPONDIENDO` mientras habla, ambos en rojo claramente visible y parpadeante. No debe mostrar `CADDIE RESPONDIENDO` ni textos adicionales en esos dos estados.
+- Por orden del propietario, estas correcciones quedan registradas pero pospuestas hasta continuar la configuración y prueba de las modalidades nuevas. No se consideran implementadas ni aprobadas.
 
 ### Condiciones de cierre futuro
 
@@ -391,6 +400,32 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 ### Frases para localizar este pendiente
 
 `GPS de golf`, `distancia al green`, `frente centro fondo`, `yardas`, `ubicación del jugador`, `mapa del hoyo`, `pendientes por hacer`.
+
+## PEND-UBI-015 · Detección automática del campo por GPS
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE
+**Prioridad:** Después de verificar coordenadas/perímetros de los campos activos
+
+### Objetivo y condiciones
+
+- Detectar el campo probable con GPS autorizado y un catálogo geográfico verificado, sin confundirlo con las distancias deportivas por hoyo.
+- Proponer el campo y exigir confirmación o permitir cambio manual; nunca sustituir silenciosamente una ronda activa.
+- Resolver señal débil, campos cercanos, permiso denegado, funcionamiento offline, privacidad y pruebas físicas en Guatemala.
+- Especificación completa: `PEND_UBI_015_DETECCION_CAMPO_POR_GPS.md`.
+
+## PEND-RSG-016 · Sincronización verificable de Reglas de Golf
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE DE DISEÑO/CONDICIONES DE USO
+**Prioridad:** Extensión de `PEND-REG-001`
+
+### Objetivo y condiciones
+
+- Detectar cambios oficiales USGA/The R&A y mantener edición, fecha, fuente, SHA-256, caché versionada y reversión comprobable.
+- Separar Reglas generales, clarificaciones, Comité y Reglas Locales, sin declarar licencia o API privada inexistente.
+- Mantener el modo offline rotulado y conservar la prohibición absoluta de modificar scores o penalidades sin confirmación.
+- Especificación completa: `PEND_RSG_016_SINCRONIZACION_REGLAS_GOLF.md`.
 
 ## PEND-NUB-011 · Nube, cuentas, sincronización y seguridad
 
