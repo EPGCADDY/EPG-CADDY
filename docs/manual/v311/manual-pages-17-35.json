@@ -735,7 +735,7 @@
     "steps": [
       ["1 · ORDEN O PREGUNTA", "AI ∞ abre cualquier tema. REGLAS abre la consulta oficial. ESCUCHAR abre el micrófono; el micrófono nunca se abre solo."],
       ["2 · HABLA NORMAL", "Los 200 temas de prueba son ejemplos, nunca límites. En REGLAS di qué pasó, dónde está la bola y la modalidad."],
-      ["3 · COMPRUEBA", "La respuesta reglamentaria consulta únicamente USGA y The R&A, muestra sus fuentes y distingue Reglas Locales."],
+      ["3 · COMPRUEBA O REUTILIZA", "Con Internet consulta USGA y The R&A. Sin conexión sólo reutiliza una respuesta oficial ya guardada, muestra su fecha y no inventa si no existe."],
       ["4 · CONSERVA LA TARJETA", "Consultar una Regla nunca cambia un score ni aplica una penalidad. Usa DETENER, REPETIR, SILENCIAR o CONTINUAR."]
     ],
     "remember": "Si una Regla Local o el Comité puede cambiar el procedimiento, la aplicación lo indica. Ante duda antes de entregar la tarjeta, consulta al Comité."

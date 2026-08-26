@@ -1137,7 +1137,8 @@ Probar como mínimo:
 - Consultar una Regla nunca ejecuta el analizador local de órdenes, cambia un score, aplica una penalidad, concede un hoyo ni cierra la ronda. Si el jugador decide modificar la tarjeta, debe dar después una orden separada y explícita.
 - La interfaz muestra enlaces oficiales a USGA y The R&A y las fuentes concretas de cada respuesta. No copia el libro completo ni afirma una alianza, licencia de marca o API privada inexistente.
 - El banco V328 prueba 15 situaciones: fuera de límites, bola provisional, áreas de penalidad, bola injugable, búnker, green, bola equivocada, orden de juego, Match Play, Four-Ball, Stableford, agua temporal, bola empotrada, influencia animal y Reglas Locales.
-- La página 73 del manual fue regenerada; el PDF completo conserva 74 páginas, 2160 × 4320 px y 300 dpi. Siguen pendientes el modo básico sin conexión, el Preview y la prueba física hablada antes de cerrar `PEND-REG-001`.
+- V328-R2 incorpora un modo básico sin conexión honesto: reutiliza únicamente respuestas oficiales ya confirmadas y guardadas en el dispositivo, conserva hasta 24 durante 90 días, no almacena la pregunta completa, exige coincidencia y modalidad compatibles, muestra la fecha y no inventa cuando falta una respuesta adecuada.
+- La página 73 del manual fue regenerada; el PDF completo conserva 74 páginas, 2160 × 4320 px y 300 dpi. Sigue pendiente la prueba física hablada antes de cerrar `PEND-REG-001`.
 
 ### 21.5 Persistencia
 
@@ -1353,6 +1354,7 @@ La modalidad se identifica en todas las pantallas únicamente como **FOUR BALL**
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-26 | Manual 3.77 / App V328-R2 | Modo básico sin conexión para REGLAS: reutiliza respuestas oficiales confirmadas en el dispositivo, con fecha, fuente, límite de 24, vigencia de 90 días, coincidencia por modalidad y cero escritura; no conserva la consulta completa ni inventa si no existe una respuesta adecuada. Voz física permanece pendiente. |
 | 2026-08-26 | Manual 3.76 / App V328 | Centro REGLAS integrado en AI UNIVERSAL ∞ por texto y voz; búsqueda limitada a USGA/The R&A, edición 2023 y clarificaciones vigentes, fuentes visibles y aislamiento absoluto de scores/penalidades. Banco de 15 situaciones y manual de 74 páginas aprobado; continúan abiertos Preview, voz física y consulta básica offline. |
 | 2026-08-26 | Manual 3.75 / App V327 | Rechazada V326-R2 tras aproximadamente seis preguntas físicas: investigación web y tráfico completaban en servidor, pero un cierre tardío sin ID podía apagar el follow-up antes del audio. V327 conserva vigilancia hasta transcripción, protege la transición herramienta→voz, añade guardián de reproducción de 60 s y telemetría técnica sin contenido privado. El banco dirigido cubre 550 secuencias y 100 eventos; aún falta Preview, regresión completa y PASS físico prolongado. |
 | 2026-08-26 | Manual 3.74 / App V326 | Rechazada V325 después de dos silencios reales con micrófono rojo en iPhone. AI UNIVERSAL ∞ cambia de final semántico indefinido a `server_vad` conversacional 0.2/700/2,200 ms; añade guardián de entrada 15 s con límite duro 90 s, guardián de respuesta 30 s y respuesta directa para cálculos estables como consumo eléctrico de A/C. Se prohíbe montaje hasta repetir tráfico El Pulté-Oakland 12:30 PM, consumo A/C y conversación multitema prolongada. |

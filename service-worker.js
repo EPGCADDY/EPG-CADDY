@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v328-official-golf-rules";
+const CACHE_NAME="gscg-mobile-v328-official-golf-rules-offline-r2";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -9,6 +9,7 @@ const SHELL=[
   "/manual.webmanifest",
   "/manual-search.js",
   "/voice-assistant.js",
+  "/golf-rules-offline.js",
   "/timer-inactivity.js",
   "/docs/manual/v311/manual-pages-17-35.json",
   "/7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg",

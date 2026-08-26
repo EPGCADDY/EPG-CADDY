@@ -57,6 +57,6 @@ for(const file of textFiles(root)){
 }
 
 assert.equal(release.buildNumber,307);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v328-official-golf-rules"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v328-official-golf-rules-offline-r2"/);
 
 console.log("PASS V305 · HISTORIAL, ATRÁS, REGÍSTRATE, Stableford limpio y cero vocabulario retirado");

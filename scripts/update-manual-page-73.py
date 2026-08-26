@@ -102,8 +102,8 @@ def build_page():
             "Los 200 temas de prueba son ejemplos, nunca límites. En REGLAS di qué pasó, dónde y la modalidad.",
         ),
         (
-            "COMPRUEBA LA FUENTE",
-            "La consulta reglamentaria usa USGA y The R&A, muestra fuentes y distingue Reglas Locales.",
+            "COMPRUEBA O REUTILIZA",
+            "Con Internet usa USGA y The R&A. Sin conexión sólo reutiliza una respuesta oficial guardada y muestra su fecha.",
         ),
         (
             "CONSERVA LA TARJETA",

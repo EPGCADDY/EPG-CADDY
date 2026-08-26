@@ -44,6 +44,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v325-ideal-microph
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v326-no-silent-conversation.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v327-tool-followup-no-silence.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v328-official-golf-rules.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v328-offline-official-rules.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

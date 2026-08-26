@@ -83,9 +83,9 @@ for(const token of [
   'aiUniversalRemember("user",transcript)',
   'aiUniversalRemember("assistant",finishedConversationText,aiUniversalPendingSources)',
   "const CONVERSATION_INACTIVITY_CLOSE_MS=30*60*1000",
-  "CONTEXTO TEMPORAL · NO SE GUARDA EN HISTORIAL"
+  "CONTEXTO DE CHAT TEMPORAL · REGLAS PUEDE GUARDAR SÓLO TOKENS Y RESPUESTAS OFICIALES EN ESTE DISPOSITIVO"
 ])assert.ok(html.includes(token),`Falta integración AI UNIVERSAL ∞: ${token}`);
-assert.doesNotMatch(html,/localStorage[^\n]{0,120}aiUniversal|aiUniversal[^\n]{0,120}localStorage/i,"La conversación universal no debe persistirse en el dispositivo");
+assert.doesNotMatch(html,/localStorage[^\n]{0,120}aiUniversalHistory|aiUniversalHistory[^\n]{0,120}localStorage/i,"El historial temporal de conversación no debe persistirse en el dispositivo");
 assert.match(api,/https:\/\/api\.openai\.com\/v1\/responses/);
 assert.match(api,/model:"gpt-5\.6"/);
 assert.match(api,/store:false/);

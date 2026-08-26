@@ -633,11 +633,11 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
   <section class="ai-universal-panel">
     <div class="ai-universal-head"><h2 id="aiUniversalTitle">AI UNIVERSAL ∞</h2><button class="ai-universal-close" id="closeAiUniversal" type="button">ATRÁS</button></div>
     <div class="ai-universal-state" id="aiUniversalState" role="status" aria-live="polite">VOZ Y TEXTO · CUALQUIER TEMA PERMITIDO</div>
-    <div class="ai-universal-rules-note hidden" id="aiUniversalRulesNote">FUENTES OFICIALES: <a href="https://www.usga.org/content/usga/home-page/rules-hub.html" target="_blank" rel="noopener noreferrer">USGA</a> · <a href="https://www.randa.org/en/rules/rules-hub" target="_blank" rel="noopener noreferrer">THE R&amp;A</a> · La consulta no cambia scores ni aplica penalidades.</div>
+    <div class="ai-universal-rules-note hidden" id="aiUniversalRulesNote">FUENTES OFICIALES: <a href="https://www.usga.org/content/usga/home-page/rules-hub.html" target="_blank" rel="noopener noreferrer">USGA</a> · <a href="https://www.randa.org/en/rules/rules-hub" target="_blank" rel="noopener noreferrer">THE R&amp;A</a> · La consulta no cambia scores ni aplica penalidades. Sin conexión sólo se reutilizan respuestas oficiales confirmadas y guardadas localmente, con fecha visible.</div>
     <div class="ai-universal-messages" id="aiUniversalMessages" role="log" aria-live="polite"><div class="ai-universal-empty">Pregunta por voz con el micrófono de la tarjeta o escribe aquí.<br>No existe una lista cerrada de temas.</div></div>
     <div class="ai-universal-compose"><textarea id="aiUniversalInput" maxlength="4000" autocomplete="off" placeholder="Escribe una pregunta, orden o tema…" aria-label="Mensaje para AI Universal Infinita"></textarea><button class="ai-universal-send" id="sendAiUniversal" type="button">ENVIAR</button></div>
     <div class="ai-universal-controls" aria-label="Controles de AI Universal Infinita"><button type="button" id="listenAiUniversal">ESCUCHAR</button><button type="button" id="stopAiUniversal">DETENER</button><button type="button" id="repeatAiUniversal">REPETIR</button><button type="button" id="muteAiUniversal">SILENCIAR</button><button type="button" id="continueAiUniversal">CONTINUAR</button></div>
-    <div class="ai-universal-privacy">CONTEXTO TEMPORAL · NO SE GUARDA EN HISTORIAL · DATOS SÓLO AL MODELO O SERVICIO NECESARIO</div>
+    <div class="ai-universal-privacy">CONTEXTO DE CHAT TEMPORAL · REGLAS PUEDE GUARDAR SÓLO TOKENS Y RESPUESTAS OFICIALES EN ESTE DISPOSITIVO · NO SE COMPARTE CON TERCEROS</div>
   </section>
 </div>
 <main class="app">
@@ -769,7 +769,7 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
 <div class="mandatory-update" id="mandatoryUpdate" role="dialog" aria-modal="true" aria-labelledby="mandatoryUpdateTitle"><div class="mandatory-update-card"><h1 id="mandatoryUpdateTitle">ACTUALIZACIÓN OBLIGATORIA</h1><p>HAY UNA NUEVA VERSIÓN DE GOLF SCORE CARD GUATEMALA. PARA PROTEGER LOS CÁLCULOS, LOS DATOS Y LAS FUNCIONES, DEBES ACTUALIZAR ANTES DE CONTINUAR.</p><button type="button" id="mandatoryUpdateButton">ACTUALIZAR</button></div></div>
-<script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./timer-inactivity.js"></script>
+<script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
 "use strict";
 const GSC_API_ORIGIN=String(window.GSC_API_ORIGIN||"").replace(/\/$/,"");
@@ -2171,6 +2171,18 @@ async function researchToolResult(argumentsText){
   }catch(error){return JSON.stringify({ok:false,error:error?.name==="AbortError"?"RESEARCH_TIMEOUT":"RESEARCH_UNAVAILABLE",message:"No se pudo consultar la web en este momento. Puedes continuar con otra pregunta."})}
   finally{clearTimeout(timeout)}
 }
+function officialGolfRuleOfflineResult(query){
+  try{
+    const cached=window.GSCGolfRulesOffline?.find?.(localStorage,query,aiUniversalAppContext());
+    if(!cached)return null;
+    const savedDate=new Date(cached.savedAt);
+    const visibleDate=Number.isFinite(savedDate.getTime())?savedDate.toLocaleDateString("es-GT",{day:"2-digit",month:"2-digit",year:"numeric"}):"fecha no disponible";
+    return{...cached,answer:`SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA EL ${visibleDate}. ${cached.answer} Verifica nuevamente con USGA / The R&A cuando recuperes conexión.`,offline:true,scoreChanged:false};
+  }catch{return null}
+}
+function saveOfficialGolfRuleForOffline(query,result){
+  try{return !!window.GSCGolfRulesOffline?.save?.(localStorage,query,result,aiUniversalAppContext())}catch{return false}
+}
 async function golfRulesToolResult(argumentsText){
   aiUniversalSetState("CONSULTANDO REGLAS OFICIALES USGA / R&A…",{busy:true});
   let args={};try{args=JSON.parse(argumentsText||"{}")||{}}catch{}
@@ -2180,9 +2192,18 @@ async function golfRulesToolResult(argumentsText){
   try{
     const response=await fetch(window.gscgApiUrl("/api/golf-rules"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,appContext:aiUniversalAppContext()}),signal:controller.signal});
     const result=await response.json().catch(()=>({ok:false,error:"GOLF_RULES_UNAVAILABLE"}));
+    if(result?.ok)saveOfficialGolfRuleForOffline(query,result);
+    if(!response.ok||!result?.ok){
+      const offline=officialGolfRuleOfflineResult(query);
+      if(offline){renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");return JSON.stringify(offline)}
+    }
     renderCaddieSources(result);
     return JSON.stringify(result);
-  }catch(error){return JSON.stringify({ok:false,error:error?.name==="AbortError"?"GOLF_RULES_TIMEOUT":"GOLF_RULES_UNAVAILABLE",message:"No pude verificar la regla oficial en este momento. Puedes continuar con otra pregunta."})}
+  }catch(error){
+    const offline=officialGolfRuleOfflineResult(query);
+    if(offline){renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");return JSON.stringify(offline)}
+    return JSON.stringify({ok:false,error:error?.name==="AbortError"?"GOLF_RULES_TIMEOUT":"GOLF_RULES_UNAVAILABLE",message:"No pude verificar la regla oficial en este momento. Puedes continuar con otra pregunta."})
+  }
   finally{clearTimeout(timeout)}
 }
 function aiUniversalSetState(text,{busy=false}={}){
@@ -2345,9 +2366,14 @@ async function submitAiUniversalText(forcedText=""){
       ({response,result}=await requestUniversal(coordinates));
     }
     if(!response.ok||!result.ok)throw new Error(result.error||"UNIVERSAL_AI_UNAVAILABLE");
+    if(aiUniversalRulesMode)saveOfficialGolfRuleForOffline(query,result);
     aiUniversalRemember("assistant",result.answer,result.sources);aiUniversalSetState("LISTO · PUEDES CONTINUAR");speakAiUniversalText(result.answer);return true;
   }catch(error){
     if(error?.name==="AbortError"){if(!aiUniversalTextAbortController||aiUniversalTextAbortController===controller)aiUniversalSetState("DETENIDO · PUEDES CONTINUAR");return false}
+    if(aiUniversalRulesMode){
+      const offline=officialGolfRuleOfflineResult(query);
+      if(offline){aiUniversalRemember("assistant",offline.answer,offline.sources);renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");speakAiUniversalText(offline.answer);return true}
+    }
     const message=error?.code==="TRAFFIC_LOCATION_DENIED"?"Necesito permiso de ubicación o un punto de salida escrito para calcular el tráfico.":aiUniversalRulesMode?"No pude verificar la regla en las fuentes oficiales USGA / The R&A en este momento. Intenta nuevamente.":"No pude conectar con AI UNIVERSAL ∞ en este momento. Intenta nuevamente.";aiUniversalRemember("assistant",message);aiUniversalSetState(error?.code==="TRAFFIC_LOCATION_DENIED"?"UBICACIÓN NECESARIA":"CONEXIÓN NO DISPONIBLE");return false;
   }finally{
     if(aiUniversalTextAbortController===controller){aiUniversalTextAbortController=null;aiUniversalTextBusy=false;$("sendAiUniversal").disabled=false}

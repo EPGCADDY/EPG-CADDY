@@ -69,7 +69,7 @@ def build_cover(path, title):
     regular, bold = register_fonts()
     width, height = A4
     c = canvas.Canvas(str(path), pagesize=A4, pageCompression=1)
-    c.setTitle(f"{title} - V328")
+    c.setTitle(f"{title} - V328-R2")
     c.setFillColor(HexColor("#080808"))
     c.rect(0, 0, width, height, stroke=0, fill=1)
     c.setFillColor(HexColor("#20ff00"))
@@ -81,7 +81,7 @@ def build_cover(path, title):
     c.drawString(44, height - 80, title)
     c.setFillColor(HexColor("#20ff00"))
     c.setFont(bold, 28)
-    c.drawString(44, height - 126, "V328 · REGLAS OFICIALES")
+    c.drawString(44, height - 126, "V328-R2 · REGLAS OFICIALES")
     c.setFillColor(white)
     c.setFont(bold, 15)
     c.drawString(44, height - 153, "USGA / THE R&A · TEXTO Y VOZ · CERO ESCRITURAS")
@@ -97,7 +97,7 @@ def build_cover(path, title):
         ("AUTORIDAD", "Cada consulta busca sólo en usga.org y randa.org, exige fuente visible y usa Rules of Golf 2023 con clarificaciones vigentes."),
         ("CONTEXTO", "La respuesta reconoce campo y modalidad activa: General, Stableford, Match Play o Four-Ball."),
         ("AISLAMIENTO", "Consultar una Regla no cambia scores, no aplica penalidades, no concede hoyos y no cierra rondas."),
-        ("PRUEBAS", "Quince situaciones reglamentarias aprobaron; Vercel exige además modelo real, búsqueda web y fuente oficial en cada build."),
+        ("PRUEBAS", "Quince situaciones conectadas y el banco offline aprobaron; Vercel exige modelo real, Web y fuente oficial en cada build."),
     ]
     for number, (item_title, text) in enumerate(items, start=1):
         y = draw_bullet(c, number, item_title, text, y, regular, bold)
@@ -108,9 +108,9 @@ def build_cover(path, title):
     c.setFont(bold, 11)
     c.drawString(58, 355, "ESTADO HONESTO · PEND-REG-001 SIGUE ABIERTO")
     open_items = [
-        "Preview V328 quedó READY y su compilación aprobó 86 paquetes.",
+        "Cada Preview R2 debe aprobar 87 paquetes y la puerta viva del modelo.",
         "Falta prueba física hablada del centro REGLAS en iPhone.",
-        "Falta la consulta básica sin conexión prevista en el alcance completo.",
+        "El modo offline sólo reutiliza respuestas oficiales guardadas; no inventa.",
         "No existe alianza, licencia de marca ni API privada de USGA/The R&A.",
     ]
     y = 331
@@ -123,12 +123,12 @@ def build_cover(path, title):
     c.setFillColor(HexColor("#8d8d8d"))
     c.setFont(regular, 8.4)
     c.drawString(44, 177, "Producción permanece en V322. Un FAIL bloquea cualquier montaje.")
-    c.drawString(44, 161, "Inventarios regenerados después de código, manual y pruebas V328.")
+    c.drawString(44, 161, "Inventarios regenerados después de código, manual y pruebas V328-R2.")
     c.setFillColor(white)
     c.setFont(bold, 10)
     c.drawString(44, 111, "26 DE AGOSTO DE 2026")
     c.setFillColor(HexColor("#20ff00"))
-    c.drawRightString(width - 44, 111, "PREVIEW READY · PRUEBA FÍSICA Y OFFLINE PENDIENTES")
+    c.drawRightString(width - 44, 111, "PREVIEW CONTROLADO · PRUEBA FÍSICA PENDIENTE")
     c.showPage()
     c.save()
 
@@ -141,14 +141,20 @@ def update_inventory(filename, title):
     updated = TMP_DIR / filename
     build_cover(cover, title)
     source = PdfReader(str(target))
-    already_v328 = "V328 · REGLAS OFICIALES" in (source.pages[0].extract_text() or "")
+    first_content_page = 0
+    for page in source.pages:
+        page_text = page.extract_text() or ""
+        if "V328 · REGLAS OFICIALES" in page_text or "V328-R2 · REGLAS OFICIALES" in page_text:
+            first_content_page += 1
+            continue
+        break
     writer = PdfWriter()
     writer.add_page(PdfReader(str(cover)).pages[0])
-    for page in source.pages[1 if already_v328 else 0:]:
+    for page in source.pages[first_content_page:]:
         writer.add_page(page)
     writer.add_metadata({
-        "/Title": f"Golf Score Card GT - {title} - V328",
-        "/Subject": "Inventario de control V328 - Reglas de Golf oficiales dentro de AI UNIVERSAL INFINITA",
+        "/Title": f"Golf Score Card GT - {title} - V328-R2",
+        "/Subject": "Inventario de control V328-R2 - Reglas oficiales con respaldo básico sin conexión",
         "/Author": "Golf Score Card GT",
         "/Creator": "Golf Score Card GT",
     })
