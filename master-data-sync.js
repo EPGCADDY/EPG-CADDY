@@ -91,6 +91,7 @@
         seriesRoundNumber:integer(round.stablefordRoundNumber),
         course:{key:text(round.courseKey)||"unknown",name:text(round.course)||"CAMPO",definition:courseDefinition(courseData)},
         tournament:round.tournament?.name?{name:text(round.tournament.name)}:null,
+        sideGames:round.sideGames&&typeof round.sideGames==="object"?round.sideGames:{},
         playedAt:iso(round.createdAt)||payload.capturedAt,
         officiallyClosedAt:iso(round.officiallyClosedAt),
         rulesVersion:text(round.rulesVersion)||"gscg-score-engine-v1",

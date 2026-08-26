@@ -38,6 +38,15 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v312-general-caddi
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v320-universal-100-domains.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v321-ai-universal-infinity.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v322-real-sustained-caddie.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v323-long-multitopic-context.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v324-real-traffic.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v325-ideal-microphone-timings.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v326-no-silent-conversation.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v327-tool-followup-no-silence.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v328-official-golf-rules.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v328-offline-official-rules.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v329-skins.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v330-side-games.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

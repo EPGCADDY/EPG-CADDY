@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V322: **303**.
+Archivos activos rastreados al corte V330: **323**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -20,8 +20,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `APP_ARCHITECTURE.md` | `48eb432665d9a880624ad6a93e852e2992cbc7ad` | 7104 bytes | Explica arquitectura, modalidades, reglas editoriales 4K y campos. |
 | `AUDITORIA_MAESTRA_V170.md` | `8dd135a84521f64c39928fadb35de0518447fe40` | 4462 bytes | Resumen de una revisión histórica del producto. |
 | `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Registro V305 | Se calcula al publicar | Manual sencillo actualizado con Historial, Regístrate y el vocabulario visible vigente. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `54288b53e83185333276d45cca4fe41dc9f7b591` | 4948 bytes | Reglas permanentes, candados ROADMAP/inventarios, Vercel y calidad visual 4K. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001 · PEND-CLI-002 · PEND-VOZ-003` | Se calcula al publicar | Cola consultable; guarda Reglas de Golf, clima automático por GPS con respaldo del club y Caddie/Support conversacional por texto o voz para Golf, Manual, clima, conversación general y salud segura. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | Autorización permanente 2026-08-26 | Se calcula al publicar | Reglas permanentes, candados ROADMAP/inventarios, ejecución autónoma sin autorizaciones intermedias y montaje sólo después de PASS completo. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001` a `PEND-QA-014` | Se calcula al publicar | Cola consultable completa: voz, tráfico, reglas, handicap oficial, campos mundiales, GPS de golf, juegos/apuestas, relojes, nube/seguridad, estadísticas, monetización, pruebas, clima y Guía Rápida. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Se calcula al regenerar | Huella técnica que impide validar o publicar con inventarios desactualizados. |
 | `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INDICE_DOCUMENTOS_PENDIENTES.md` | `064e9201c833cb7f5c751ba5328290d8c4c2b20b` | 814 bytes | Lista de documentos todavía pendientes de usar. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | `b9815c3eae588f1f54c0e4fabbf1d51b52c75b0e` | 722 bytes | Registro de trabajos terminados. |
@@ -37,8 +37,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ECOS.md` | `43a9c6f5bacb8c758edd33c8ad31f9e59e63f84f` | 3982 bytes | Reglas de comportamiento de Golf Score Card GT. |
 | `EPG-Caddy_Master_Blueprint_v0.1.md` | `95b4c227c4e5dce7f90fede0ebc9cdd0af6ed76c` | 7990 bytes | Plano maestro; el nombre del archivo es antiguo, pero el contenido ya usa Golf Score Card GT. |
 | `EPG_CADDY_PLAN_CAMBIOS.md` | `a81981bda6522c0ab29ec5e70f6ebe557cde34bf` | 116300 bytes | Lista antigua de cambios; el nombre sólo se conserva para localizarla. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V314 | Se calcula al publicar | Manual maestro sincronizado con App V314, modalidades, portada, Caddie universal, clima inicial y pendientes de tránsito/Guía Rápida. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V305 | Se calcula al publicar | Lista ordenada de funciones terminadas y pendientes con vocabulario Historial. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V330 | Se calcula al publicar | Manual maestro con AI UNIVERSAL, Reglas oficiales, Skins, Wolf, Vegas, Dots, seis jugadores, tres parejas y estado honesto de validación. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V330 / PEND-001–014 | Se calcula al publicar | Lista ordenada: juegos V330 en banco, voz/tráfico físicos, ASOGOLF/GHIN, campos, GPS, relojes, nube, seguridad, estadísticas, monetización y certificación. |
 | `MAPA_MATRIZ_BASE_MAESTRA_V256.md` | `8d0cdb23c0b1d9445f51b822ba49d385f5c71d3c` | 1718 bytes | Explica la información central incorporada en V256. |
 | `MAPA_MATRIZ_REGISTRO_JUGADORES_V255.md` | `5d0670562aa89ffa7a265820573e0e31895fe95b` | 1993 bytes | Explica el registro de jugadores de V255. |
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
@@ -76,14 +76,18 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `api/_lib/database.js` | `1e99935741e212ff9f0043197f82348972c2263c` | 453 bytes | Abre la información central. |
 | `api/_lib/http.js` | `abf34ad0d937577da81c7cd56833eceeb231bf95` | 1625 bytes | Prepara respuestas para la app. |
 | `api/_lib/sync-validation.js` | `b90cd0193c0606448a13e06e17cb34b359d18978` | 3713 bytes | Revisa que la información enviada esté completa. |
+| `api/_lib/traffic.js` | Tráfico V324 | Se calcula al publicar | Consulta Google Maps Routes con tráfico óptimo, resume ETA/demora/distancia y excluye coordenadas de la respuesta. |
 | `api/account.js` | `eec1c7ff408316ccaff98bcab968cd66bf92120c` | 2437 bytes | Abre, crea o cierra la cuenta opcional. |
 | `api/backup.js` | `128c8f613861641f16ea5973d6592c8e50e46031` | 2174 bytes | Guarda y recupera respaldos. |
+| `api/golf-rules.js` | `V328-OFFICIAL-USGA-RANDA-SOURCES` | Se calcula al publicar | Consulta Reglas de Golf con el modelo real, restringe fuentes a USGA/The R&A y nunca escribe scores ni penalidades. |
 | `api/database-health.js` | `150c3e82b7e16d79613a2e341ac8fb1cf66de789` | 1307 bytes | Comprueba que el respaldo central responda. |
 | `api/package.json` | `3dbc1ca591c0557e35b6004aeba250e6a70b56e3` | 23 bytes | Indica el formato que usan las puertas de la aplicación. |
 | `api/score.js` | `6ecbef77ba0bd37519cd602e8c73596128f7547f` | 2545 bytes | Recibe resultados enviados por la app. |
 | `api/session-grupal.js` | `4bd02dcd9cdc1fb4fada6ddb4fd8b7400d2280ee` | 5355 bytes | Abre el reconocimiento de voz grupal. |
 | `api/session.js` | `454a914b435c6cadadd0a169fe065719eef475de` | 14431 bytes | Abre el reconocimiento de voz anterior. |
 | `api/sync.js` | `82e4bdd482531f4ee6b41254652606d9f53e2251` | 3202 bytes | Intercambia cambios entre teléfono y respaldo. |
+| `api/traffic.js` | Puerta de tráfico V324 | Se calcula al publicar | Recibe de forma protegida las solicitudes de tráfico por voz o texto y entrega un resultado recuperable sin mostrar mapa. |
+| `api/voice-health.js` | Salud de voz V327 | Se calcula al publicar | Registra sólo etapas y tiempos técnicos permitidos; excluye preguntas, transcripciones, nombres, ubicaciones y claves. |
 | `api/weather.js` | Piloto climático V312 | Se calcula al publicar | Consulta Open-Meteo por coordenadas GPS del teléfono, ubicación indicada o respaldo del campo y devuelve un resumen auditable. |
 | `assets/logo.png` | `376f6237bbdddf4245ecd3da0f080ad5462f8178` | 514891 bytes | Logo cromado 3D neón de 1024 usado para crear iconos de iPhone y Android. |
 | `assets/official-logos/README.md` | `d4c2f8e156b2f614d5992c477bc117c11a8ef2d7` | 1826 bytes | Explica que la versión cromada 3D con verde neón muy saturado es oficial y para qué sirve cada tamaño. |
@@ -93,7 +97,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Copia maestra del logo cromado 3D con verde neón muy saturado. |
 | `assets/official-logos/golf-score-card-gt-pwa-192.png` | `e28cd92c784748a2d4ff02bf3491b96c8121ed94` | 67805 bytes | Icono cromado 3D neón pequeño de la aplicación instalable. |
 | `assets/official-logos/golf-score-card-gt-pwa-512.png` | `0e85cc6995f9bafefb49dec5a8253aef3db7fffd` | 461402 bytes | Icono cromado 3D neón grande de la aplicación instalable. |
-| `audit-project.mjs` | `baaa661c4b9d864e6d37c95a56841c534d3e613b` | 4446 bytes | Ejecuta los candados ROADMAP, inventarios y todos los filtros automáticos. |
+| `audit-project.mjs` | Auditoría V330 | Se calcula al publicar | Ejecuta 89 paquetes, candados, inventarios y filtros automáticos, incluidos Reglas, Skins, Wolf, Vegas y Dots. |
 | `capacitor.config.json` | `a5ca52fde974ea370d90dbfe422f08101ec7f7eb` | 867 bytes | Define el nombre visible y la identidad de las apps de iPhone y Android. |
 | `card-artifacts.js` | `df8ba2b09532b73701681d7de1781ca5b54baf26` | 12799 bytes | Arma la tarjeta oficial con la información de la ronda. |
 | `card-file-export.js` | `4ddbf8f36ec142114cfa965a78d97ea55365afa1` | 5919 bytes | Convierte la tarjeta en imagen o PDF. |
@@ -105,8 +109,11 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `database/test-master-data-platform-schema.mjs` | `24517be27fb31df9b91391b12b4cc9d3dace3bb0` | 1385 bytes | Comprueba los espacios de la información central. |
 | `database/test-player-profile-schema.mjs` | `32d0b6f78446a1193e8b2239b26f93738547b24b` | 817 bytes | Comprueba los espacios de la información central. |
 | `database/test-schema.mjs` | `ad64ac3b0ed21932c24ea56886124f518a7b0692` | 1099 bytes | Comprueba los espacios de la información central. |
+| `dots.js` | Motor V330 | Se calcula al publicar | Calcula Dots para dos a seis jugadores, eventos activos, valores propios y reglas de grupo opcionales. |
+| `four-ball.js` | Motor V330 de tres parejas | Se calcula al publicar | Compara el mejor Neto de una, dos o tres parejas Verde, Oro y Azul. |
 | `historical-analytics.js` | `2a5bb2f2ef1564b09a567823efde14b54829ce86` | 8963 bytes | Resume el historial y muestra datos útiles de rondas anteriores. |
-| `index-grupal.html` | `eae87b8e6cc0629744837deabce6616fca2d6971` | 579351 bytes | Pantalla principal con firma funcional V307 protegida y firma documental V311 para el manual completo. |
+| `golf-rules-offline.js` | V328-R2 · caché oficial básica | Se calcula al publicar | Reutiliza hasta 24 respuestas USGA/The R&A confirmadas durante 90 días, por coincidencia y modalidad, sin consulta completa ni escritura de score. |
+| `index-grupal.html` | Build V330 | Se calcula al publicar | Conserva la tarjeta principal y divide Configuración en modalidades existentes y juegos nuevos; integra AI, Reglas, Skins, Wolf, Vegas y Dots. |
 | `index.html` | `7b483f1553246274920c71a10723f484d1847744` | 759569 bytes | Entrada antigua que lleva a la pantalla principal. |
 | `ios/EPGCaddy/App.swift` | `06a1c8ee89139ef87af20f07bba2496aa2b90636` | 141 bytes | Inicia la aplicación de apoyo para iPhone. |
 | `ios/EPGCaddy/ContentView.swift` | `80556289a09cc451f4e11e56f2f9d6a800a50a5f` | 208 bytes | Abre Golf Score Card GT dentro de la aplicación de iPhone. |
@@ -116,6 +123,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ios/project.yml` | `ef15575463a1913d778c7d8b8fb3dea237b0f4c7` | 976 bytes | Prepara el proyecto antiguo de iPhone con el nombre visible Golf Score Card GT. |
 | `manifest.webmanifest` | `e1aabc9eb3e15e548b3603fbdccb6318d417e56c` | 842 bytes | Define el nombre, colores, inicio e iconos cuando la web se instala como app. |
 | `master-data-sync.js` | `be2aade4553f95b389189fcf4225ece6d16deaad` | 8202 bytes | Mantiene igual la información del teléfono y del respaldo central. |
+| `match-play.js` | Motor V330 de tres parejas | Se calcula al publicar | Resuelve hasta tres Matches independientes por Neto entre posiciones 1–2, 3–4 y 5–6. |
 | `mobile-release.json` | Registro V305 | 76 bytes | Guarda la versión y el número 305 del próximo paquete móvil. |
 | `mobile/native-runtime-entry.js` | `ffbe9107212932779e6c8e7e5017f4c178b62326` | 704 bytes | Conecta la pantalla con funciones propias del teléfono. |
 | `package.json` | `08ff6dc440023e09a84e01e3885eeb8a285a73bf` | 1523 bytes | Lista dependencias y expone candados ROADMAP, inventarios y control visual del manual. |
@@ -127,7 +135,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/prepare-mobile-assets.mjs` | `fcd2fa387095322c9731917834ad424ad3e8fd73` | 1356 bytes | Crea todos los tamaños oficiales del logo. |
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
 | `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | 2881 bytes | Bloquea cualquier modificación o publicación que no aparezca en ambos ROADMAPS. |
-| `service-worker.js` | Registro V305 | 1987 bytes | Activa la caché V305 para entregar la navegación auditada. |
+| `service-worker.js` | Caché V330 | Se calcula al publicar | Sustituye la copia instalada anterior e incluye Reglas offline y los motores Skins, Wolf, Vegas y Dots. |
+| `skins.js` | Motor V329-R2 | Se calcula al publicar | Calcula Skins Gross/Neto para dos a seis jugadores con carry, división o anulación, X y saldo cero-suma. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |
 | `stableford-course-source-san-isidro.md` | `b370db591d5139895c9586801d55b57b3bcf0359` | 505 bytes | Fuente usada para cargar la tarjeta de San Isidro. |
@@ -199,13 +208,18 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v304-homogeneous-registration-actions.mjs` | Registro V305 | Se calcula al publicar | Conserva el control de vocabulario, guía, micrófono, fuente, peso, tamaño, altura, brillo y estado. |
 | `test-v305-history-navigation-zero-error.mjs` | Registro V305 | Se calcula al publicar | Audita Historial, Atrás, Regístrate, superposiciones, validación Stableford, versión y caché. |
 | `test-v305-registration-guides-parser-truth.mjs` | Registro V305 | Se calcula al publicar | Ejecuta ambos analizadores reales y bloquea guías falsas, HDCP o marcas visibles en Stableford y estados de OK incoherentes. |
+| `test-v329-skins.mjs` | Banco V329-R2 | Se calcula al publicar | Prueba Skins desde el motor hasta cierre, corrección, tarjetas, Historial, nube, restauración, voz y pantalla principal intacta. |
+| `test-v330-side-games.mjs` | Banco V330 | Se calcula al publicar | Prueba Wolf, Vegas y Dots, seis jugadores, tres parejas, empates, multiplicadores, tope, cero-suma y persistencia integral. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
-| `vercel.json` | `eb7aa74873a757c387e8c8b94e6da73f20022955` | 2516 bytes | Publica inicio, manual y acceso MANUAL SCG; ejecuta la auditoría con candados antes de publicar. |
+| `vegas.js` | Motor V330 | Se calcula al publicar | Calcula Vegas para dos o tres parejas con número menor, volteo, diferencia doble, tope y liquidación cero-suma. |
+| `vercel.json` | V330 | Se calcula al publicar | Publica inicio y manual; exige auditoría integral y consulta real con fuente USGA/The R&A antes de entregar Preview. |
 | `verify-manual-sync.mjs` | `df56ae83b57d5ee4d6273f36be1db9350e1b2c9c` | 731 bytes | Comprueba que la firma documental de la aplicación coincida con la versión del manual maestro. |
+| `wolf.js` | Motor V330 | Se calcula al publicar | Calcula Wolf de tres a seis jugadores con rotación, pareja/Solo/Lone/Blind, empate y cobro cruzado. |
 | `manual.html` | Registro V314 ampliado | Se calcula al publicar | Visor permanente con portada, 73 páginas funcionales, índice por categorías, lupa de lenguaje natural, navegación, app y descarga PDF. |
 | `manual.webmanifest` | `2c07adafaa323be295c05b927c1418c712bd514a` | 456 bytes | Instala MANUAL SCG como acceso independiente al manual completo. |
 | `scripts/manual-visual-qc.py` | Registro V314 ampliado | Se calcula al publicar | Filtro obligatorio de 74 imágenes, resolución 4K, densidad, márgenes, color y equilibrio editorial. |
 | `scripts/inventory-gate.mjs` | `3e1d28a73526c50858b68df85a64f35086efc96e` | 2234 bytes | Bloquea auditoría y publicación si los tres inventarios no coinciden con las fuentes activas. |
+| `scripts/update-inventory-v328.py` | Portadas V330 reproducibles | Se calcula al publicar | Actualiza los tres inventarios PDF con Skins, Wolf, Vegas, Dots, tres parejas y bloqueos reales, sin duplicar la portada al repetirlo. |
 | `test-v311-manual-hosting.mjs` | Registro V314 ampliado | Se calcula al publicar | Comprueba visor, acceso MANUAL SCG, PDF físico de 74 páginas, marcadores internos y las 74 imágenes 4K. |
 | `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias estable V314 | Se calcula al publicar | Copia completa de 74 páginas conservada bajo el nombre histórico para no romper enlaces existentes. |
 | `docs/manual/v311/page-00.png` | `f2558f664e2df29292a09c2ede9ef799b1f54541` | 3526431 bytes | Portada 4K aprobada con logo al 50% de saturación. |
@@ -240,6 +254,14 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v311-voice-assistant.mjs` | Candado del asistente | Se calcula al publicar | Comprueba ayuda, navegación y separación de los scores reales. |
 | `test-v312-general-caddie.mjs` | Candado conversacional V322 | Se calcula al publicar | Comprueba conversación abierta, GPS primero, clima visible y periódico, respaldo por campo, micrófono manual, salud, score protegido y escucha sostenida. |
 | `test-v322-real-sustained-caddie.mjs` | `V322-24-TURNS-RECOVERY` | Se calcula al publicar | Simula 24 turnos consecutivos, reapertura de una sesión sana, cierre a los 30 minutos y fallos web recuperables sin silencio. |
+| `test-v323-long-multitopic-context.mjs` | `V323-30-TOPICS-63-MESSAGES` | Se calcula al publicar | Exige que texto y voz conserven la primera clave después de 30 cambios de tema y sólo descarten historial al superar 80 mensajes. |
+| `test-v324-real-traffic.mjs` | `V324-CURRENT-FUTURE-TRAFFIC-RECOVERY` | Se calcula al publicar | Prueba tráfico actual/futuro, ETA, demora, privacidad, GPS, texto, voz, proveedor caído, timeout y continuación bilateral. |
+| `test-v325-ideal-microphone-timings.mjs` | `V326-30-BILATERAL-TURNS` | Se calcula al publicar | Conserva 30 turnos y sustituye la expectativa semántica no determinista por la pausa conversacional fija de 2.2 segundos. |
+| `test-v326-no-silent-conversation.mjs` | `V326-INPUT-15S-HARD-90S-RESPONSE-30S` | Se calcula al publicar | Ejecuta la máquina de temporizadores y comprueba que una captura sin final apaga el rojo y que una respuesta sin inicio vuelve a escuchar. |
+| `test-v327-tool-followup-no-silence.mjs` | `V327-550-SEQUENCES-100-PRIVATE-EVENTS` | Se calcula al publicar | Prueba cierres tardíos con/sin ID, audio final, tres guardianes, ruta ambigua y telemetría sin contenido. |
+| `test-v328-official-golf-rules.mjs` | `V328-15-RULE-SCENARIOS-OFFICIAL-ONLY` | Se calcula al publicar | Prueba 15 situaciones, dominios USGA/R&A, texto/voz y que ninguna consulta modifique la tarjeta. |
+| `test-v328-live-official-rules.mjs` | `V328-REAL-MODEL-WEB-OFFICIAL-SOURCE` | Se calcula al publicar | Puerta exclusiva de Vercel: exige modelo real, búsqueda web, fuente USGA/The R&A y cero cambio de score. |
+| `test-v328-offline-official-rules.mjs` | `V328-R2-OFFICIAL-OFFLINE-PRIVACY-ZERO-SCORE` | Se calcula al publicar | Prueba 24 entradas, 90 días, fuente oficial, privacidad, modalidad, coincidencias negativas, PWA y cero escritura. |
 | `test-v311-timer-inactivity.mjs` | Candado TIMER 30 minutos | Se calcula al publicar | Comprueba el apagado en todas las modalidades, persistencia y reinicio por instrucción válida. |
 | `docs/manual/v311/page-17.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-18.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
@@ -297,7 +319,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `docs/manual/v311/page-70.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-71.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-72.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
-| `docs/manual/v311/page-73.png` | 4K · 300 dpi | Se calcula al publicar | Explica con ejemplos infantiles que todos los micrófonos abren el mismo Caddie universal y que el clima aparece desde el inicio. |
+| `docs/manual/v311/page-73.png` | V328 · 4K · 300 dpi | Se calcula al publicar | Explica AI UNIVERSAL y REGLAS oficiales, las fuentes y por qué una consulta no cambia la tarjeta. |
 
 ## Registro obligatorio de la documentación operativa V300
 

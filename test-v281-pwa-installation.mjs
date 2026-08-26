@@ -17,7 +17,7 @@ assert.match(html,/apple-mobile-web-app-capable/);
 assert.match(html,/V281-INSTALLABLE-IOS-ANDROID-OFFLINE/);
 assert.match(html,/id="installAppButton"/);
 assert.match(html,/serviceWorker\.register\("\/service-worker\.js"/);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v322-real-sustained-conversation"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v330-side-games-r1"/);
 assert.match(worker,/url\.pathname\.startsWith\("\/api\/"\)/);
 assert.match(worker,/request\.mode==="navigate"/);
 assert.ok(vercel.headers.some(rule=>rule.source==="/service-worker.js"&&rule.headers.some(header=>header.key==="Service-Worker-Allowed"&&header.value==="/")));

@@ -27,7 +27,7 @@ assert.doesNotMatch(neutralDot,/background:var\(--lime\)/);
 assert.match(html,/class="newbie-guide-title">DICTA ASÍ:<\/div>/);
 assert.match(html,/<div>MIGUEL · 14 · BLANCAS<\/div>[\s\S]*?<div>LUEGO TOCA OK<\/div>/);
 assert.match(html,/>2 · MANUAL OPCIONAL<\/div>/);
-assert.match(html,/<div class="stableford-mode-option" id="stablefordModeOption"><\/div>\s*<div class="provisional-mode-option"><button[^>]+id="provisionalScorecardButton"[^>]*>[\s\S]*?SCORE CARD - PRÁCTICA[\s\S]*?<\/button><\/div>\s*<div class="setup-facts"/);
+assert.match(html,/<section class="game-mode-column" aria-label="Modalidades existentes">[\s\S]*?<div class="stableford-mode-option" id="stablefordModeOption"><\/div>\s*<div class="provisional-mode-option"><button[^>]+id="provisionalScorecardButton"[^>]*>[\s\S]*?SCORE CARD - PRÁCTICA[\s\S]*?<\/button><\/div>[\s\S]*?<section class="skins-config" id="skinsConfig"[\s\S]*?<div class="setup-facts"/);
 assert.equal((html.match(/id="provisionalScorecardButton"/g)||[]).length,1);
 assert.doesNotMatch(html,/class="provisional-entry"|class="provisional-entry-button"/);
 assert.equal((html.match(/>NOMBRE \+ HDCP \+ MARCAS<\/div>/g)||[]).length,1);

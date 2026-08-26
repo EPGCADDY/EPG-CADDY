@@ -10,6 +10,7 @@ const player=(id,name,nets)=>({id,name,holes:Object.fromEntries(nets.map((net,in
 assert.equal(matchPlay.validatePlayers([]),false);
 assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[])]),true);
 assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),player("c","C",[]),player("d","D",[])]),true);
+assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),player("c","C",[]),player("d","D",[]),player("e","E",[]),player("f","F",[])]),true);
 
 {
   const players=[player("a","ANA",[4,5,3]),player("b","BETO",[5,5,4])];
@@ -22,6 +23,25 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   assert.equal(result.closed,false);
   assert.equal(matchPlay.segmentStanding(players,0,[1,2,3]).label,"ANA · 2 UP");
   assert.equal(matchPlay.segmentStanding(players,1,[1,2,3]).label,"BETO · 2 DOWN");
+}
+
+{
+  const players=[
+    player("a","ANA",Array(10).fill(4)),player("b","BETO",Array(10).fill(6)),
+    player("c","CARLA",Array(18).fill(5)),player("d","DIEGO",Array(18).fill(5)),
+    player("e","ELENA",Array(12).fill(3)),player("f","FABIO",Array(12).fill(5))
+  ];
+  const result=matchPlay.status(players);
+  assert.equal(result.pairCount,3,"Match Play admite tres parejas independientes");
+  assert.equal(result.matches[0].resultLabel,"ANA GANA 10 & 8");
+  assert.equal(result.matches[1].resultLabel,"MATCH EMPATADO");
+  assert.equal(result.matches[2].resultLabel,"ELENA GANA 12 & 6");
+  assert.equal(result.closed,true);
+  assert.equal(matchPlay.pairIndexForPlayer(5),2);
+  const closed=await roundClosure.close({id:"match-3-pairs",configured:true,mode:"match_play",courseKey:"pulte",course:"El Pulté",players,matchPlay:{...result,holes:undefined},createdAt:"2026-08-26T00:00:00.000Z"},{appVersion:"V329",closedAt:"2026-08-26T02:00:00.000Z"});
+  const artifacts=cardArtifacts.build(closed.snapshot);
+  assert.match(artifacts.global.html,/PAREJA 3:/);
+  assert.equal((artifacts.global.html.match(/class="pair-divider"/g)||[]).length,2);
 }
 
 {
@@ -92,8 +112,8 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   assert.match(html,/M12 22V5M5 12l7-7 7 7/,"La flecha ganadora debe tener tallo y punta ascendente completos");
   assert.match(html,/M12 2v17M5 12l7 7 7-7/,"La flecha perdedora debe tener tallo y punta descendente completos");
   assert.doesNotMatch(html,/state==="tied"\?"\/"/,"El empate conserva el score normal sin símbolo");
-  assert.match(html,/draftRoundMode==="match_play"&&!\[2,4\]\.includes\(draftPlayers\.length\)/);
-  assert.match(html,/MATCH PLAY REQUIERE 2 O 4 JUGADORES/);
+  assert.match(html,/draftRoundMode==="match_play"&&!\[2,4,6\]\.includes\(draftPlayers\.length\)/);
+  assert.match(html,/MATCH PLAY REQUIERE 2, 4 O 6 JUGADORES/);
   assert.match(html,/teamPairSpacer\(\)\+block/);
   assert.match(html,/mode:draftRoundMode/);
   assert.match(html,/matchPlayStatus\(\)\.closed/);
@@ -103,8 +123,8 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   assert.match(html,/hole>limit/,'Los hoyos posteriores a la decisión de cada pareja deben quedar bloqueados');
   assert.match(html,/CORRECCIÓN HASTA HOYO/,'Los hoyos ya jugados deben conservar corrección tras el final');
   assert.match(html,/RESULTADO POR HOYOS UP\/DOWN/,'La tarjeta digital final no debe describir un total Neto');
-  assert.match(html,/GSCRoundClosure\.close\(round,\{deriveScore:derivedScoreForHole,appVersion:"V307"\}\)/,"El snapshot oficial Match Play debe firmarse con el build V307");
+  assert.match(html,/GSCRoundClosure\.close\(round,\{deriveScore:derivedScoreForHole,appVersion:"V330"\}\)/,"El snapshot oficial debe firmarse con el build V330");
   assert.doesNotMatch(html,/appVersion:"V305"/,"Ningún cierre o corrección puede conservar la firma V305");
 }
 
-console.log("PASS V306/V307/V311 MATCH PLAY · UNA O DOS PAREJAS · TARJETA NORMAL · NETO · FLECHAS · CIERRE INDEPENDIENTE");
+console.log("PASS V306/V307/V311/V330 MATCH PLAY · UNA, DOS O TRES PAREJAS · TARJETA NORMAL · NETO · FLECHAS · CIERRE INDEPENDIENTE");

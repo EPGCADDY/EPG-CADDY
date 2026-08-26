@@ -42,7 +42,7 @@ const stablefordGuide=stable.match(/<div class="newbie-registration-guide"[^>]*>
 assert.ok(stablefordGuide,"No se encontró la guía visible Stableford");
 assert.doesNotMatch(stablefordGuide,/HDCP|HANDICAP|MARCA/,'La guía visible Stableford no debe pedir HDCP ni marcas');
 assert.match(stable,/Registro Stableford Scratch[\s\S]*?Jugador 1 Miguel; Jugador 2 y el nombre pronunciado; hasta Jugador 6/);
-assert.match(html,/function generalSetupState\(\)[\s\S]*?\["match_play","four_ball"\]\.includes\(draftRoundMode\)\?\[2,4\]\.includes\(count\):count>=1[\s\S]*?complete&&required&&course\?\.configured/);
+assert.match(html,/function generalSetupState\(\)[\s\S]*?\["match_play","four_ball"\]\.includes\(draftRoundMode\)\?\[2,4,6\]\.includes\(count\):count>=1[\s\S]*?complete&&required&&course\?\.configured&&gameRequired&&wolfRequired&&vegasRequired&&dotsRequired/);
 assert.match(html,/function updateGeneralSetupValidity\(\)[\s\S]*?button\.disabled=!state\.ready[\s\S]*?aria-disabled/);
 assert.match(html,/#setupOk:disabled,[\s\S]*?#startStablefordRound:disabled\{/);
 

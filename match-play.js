@@ -6,7 +6,7 @@
   "use strict";
 
   const MAX_HOLES=18;
-  const PAIR_PLAYER_INDEXES=Object.freeze([[0,1],[2,3]]);
+  const PAIR_PLAYER_INDEXES=Object.freeze([[0,1],[2,3],[4,5]]);
   const playerName=(player,index)=>String(player?.name||`JUGADOR ${index+1}`).trim().toUpperCase();
   const netScore=(player,hole)=>{
     const score=player?.holes?.[hole];
@@ -14,7 +14,7 @@
   };
 
   function validatePlayers(players){
-    if(!Array.isArray(players)||![2,4].includes(players.length))return false;
+    if(!Array.isArray(players)||![2,4,6].includes(players.length))return false;
     const ids=new Set();
     for(let index=0;index<players.length;index++){
       const player=players[index],id=String(player?.id||"").trim();
@@ -26,7 +26,7 @@
 
   function pairIndexForPlayer(playerIndex){
     const index=Number(playerIndex);
-    return index===0||index===1?0:index===2||index===3?1:null;
+    return Number.isInteger(index)&&index>=0&&index<6?Math.floor(index/2):null;
   }
 
   function pairIndexes(players,pairIndex){
@@ -48,7 +48,7 @@
 
   function statusForPair(players,pairIndex,{maxHoles=MAX_HOLES}={}){
     const limit=Math.max(1,Math.min(MAX_HOLES,Number(maxHoles)||MAX_HOLES)),indexes=pairIndexes(players,pairIndex);
-    if(!validatePlayers(players)||indexes.length!==2)return{valid:false,pairIndex:Number(pairIndex),played:0,remaining:limit,closed:false,label:"MATCH PLAY REQUIERE 2 O 4 JUGADORES",resultLabel:"MATCH PLAY REQUIERE 2 O 4 JUGADORES",holes:[]};
+    if(!validatePlayers(players)||indexes.length!==2)return{valid:false,pairIndex:Number(pairIndex),played:0,remaining:limit,closed:false,label:"MATCH PLAY REQUIERE 2, 4 O 6 JUGADORES",resultLabel:"MATCH PLAY REQUIERE 2, 4 O 6 JUGADORES",holes:[]};
     const holes=[];let winsA=0,winsB=0,halves=0;
     for(let hole=1;hole<=limit;hole++){
       const result=pairHoleResult(players,pairIndex,hole);
@@ -67,7 +67,7 @@
 
   function status(players,{maxHoles=MAX_HOLES}={}){
     const limit=Math.max(1,Math.min(MAX_HOLES,Number(maxHoles)||MAX_HOLES));
-    if(!validatePlayers(players))return{valid:false,pairCount:0,played:0,remaining:limit,closed:false,label:"MATCH PLAY REQUIERE 2 O 4 JUGADORES",resultLabel:"MATCH PLAY REQUIERE 2 O 4 JUGADORES",matches:[],holes:[]};
+    if(!validatePlayers(players))return{valid:false,pairCount:0,played:0,remaining:limit,closed:false,label:"MATCH PLAY REQUIERE 2, 4 O 6 JUGADORES",resultLabel:"MATCH PLAY REQUIERE 2, 4 O 6 JUGADORES",matches:[],holes:[]};
     const pairCount=players.length/2,matches=Array.from({length:pairCount},(_,pairIndex)=>statusForPair(players,pairIndex,{maxHoles:limit}));
     if(pairCount===1)return{...matches[0],pairCount,matches};
     const closed=matches.every(match=>match.closed),played=Math.min(...matches.map(match=>match.played)),remaining=limit-played,decidedAt=closed?Math.max(...matches.map(match=>match.decidedAt||limit)):null;

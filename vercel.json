@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --omit=dev",
-  "buildCommand": "node audit-project.mjs",
+  "buildCommand": "node audit-project.mjs && node test-v328-live-official-rules.mjs",
   "outputDirectory": ".",
   "redirects": [
     {
@@ -77,7 +77,7 @@
       ]
     },
     {
-      "source": "/(player-registry|round-closure|card-artifacts|card-file-export|card-library|historical-analytics|match-play|four-ball|stableford|sync-queue|master-data-sync|account-backup|commerce|round-navigation).js",
+      "source": "/(player-registry|round-closure|card-artifacts|card-file-export|card-library|historical-analytics|match-play|four-ball|skins|wolf|vegas|dots|stableford|sync-queue|master-data-sync|account-backup|commerce|round-navigation).js",
       "headers": [
         {
           "key": "Cache-Control",

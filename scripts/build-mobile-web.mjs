@@ -25,6 +25,10 @@ const assets=[
   "match-play.js",
   "four-ball.js",
   "stableford.js",
+  "skins.js",
+  "wolf.js",
+  "vegas.js",
+  "dots.js",
   "voice-assistant.js",
   "timer-inactivity.js",
   "round-navigation.js"
