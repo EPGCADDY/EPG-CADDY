@@ -38,6 +38,8 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v312-general-caddi
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v320-universal-100-domains.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v321-ai-universal-infinity.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v322-real-sustained-caddie.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v323-long-multitopic-context.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v324-real-traffic.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

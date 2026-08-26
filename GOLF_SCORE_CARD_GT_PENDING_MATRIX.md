@@ -201,11 +201,12 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 15. Tránsito y tiempo de llegada por voz
 
-**Estado:** PENDIENTE · destino exacto y proveedor por conectar · `PEND-TRA-005`
+**Estado:** IMPLEMENTADO EN CÓDIGO V324 · activación y validación real pendientes · `PEND-TRA-005`
 
-- Responder ETA y condición del tráfico sin mapa mediante Google Maps Routes u otro proveedor autorizado.
-- Waze no entrega silenciosamente estos datos a una web común; sus Deep Links abren Waze y su Transport SDK requiere asociación.
-- Requiere destino exacto, consentimiento de ubicación, clave protegida en servidor, facturación y pruebas reales en Guatemala.
+- AI UNIVERSAL ∞ ya enruta voz y texto a Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL` y resume ETA, demora, distancia y hora sin mostrar mapa ni revelar coordenadas.
+- Waze no entrega silenciosamente estos datos a una web común; sus Deep Links abren Waze y su Transport SDK requiere asociación, aplicación nativa aprobada y atribución.
+- Timeout, proveedor caído, falta de GPS o permiso regresan una respuesta recuperable para que el micrófono pueda continuar.
+- No se cierra todavía: requiere destino exacto, consentimiento de ubicación, clave protegida en servidor, facturación, pruebas físicas en iPhone y comparación de varias rutas/horarios reales en Guatemala contra Waze.
 
 ## Mejoras continuas
 

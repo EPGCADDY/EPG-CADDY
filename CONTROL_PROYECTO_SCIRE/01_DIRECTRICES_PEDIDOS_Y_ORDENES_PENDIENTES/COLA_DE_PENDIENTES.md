@@ -177,28 +177,31 @@ La Guía Rápida se considerará terminada cuando cubra el recorrido básico com
 ## PEND-TRA-005 · Tiempo de llegada y tránsito sin mostrar mapa
 
 **Fecha de registro:** 25 de agosto de 2026
-**Estado:** PENDIENTE · WAZE NO OFRECE ESTA RESPUESTA INVISIBLE PARA UNA WEB COMÚN
-**Prioridad:** Pendiente de destino exacto y credenciales del proveedor
+**Estado:** IMPLEMENTADO EN CÓDIGO V324 · ACTIVACIÓN Y VALIDACIÓN REAL PENDIENTES
+**Prioridad:** Alta · pendiente credencial/facturación, destino exacto y comparación Guatemala/iPhone
 **Solicitud original:** preguntar al Caddie cuánto tráfico hay para ir a casa en Pradera y escuchar únicamente tiempo estimado y comentarios, sin abrir una gráfica de navegación.
 
 ### Objetivo
 
 Permitir una pregunta natural como `¿Cómo está el tráfico para ir a mi casa en Pradera?` y responder por voz con duración estimada, demora por tráfico y resumen de la ruta, sin modificar la tarjeta ni mostrar un mapa.
 
-### Arquitectura prevista
+### Arquitectura implementada en V324
 
 `GPS DEL TELÉFONO → DESTINO EXACTO GUARDADO CON CONSENTIMIENTO → GOOGLE MAPS ROUTES CON TRÁFICO → RESUMEN DE TIEMPO → RESPUESTA DEL CADDIE`
 
-- No afirmar que Waze está sincronizado: los Deep Links sólo abren Waze y el Transport SDK exige asociación comercial y atribución visible.
-- Usar Google Maps Routes u otro proveedor autorizado que entregue ETA con tráfico sin exigir mostrar un mapa.
+- La consulta natural de AI UNIVERSAL ∞ usa una función real de tráfico y Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL`; devuelve ETA, demora, distancia, hora de cálculo y nivel derivado, tanto a texto como a voz.
+- El origen `aquí` solicita GPS sólo durante esa consulta y las coordenadas exactas no se incorporan a la respuesta ni al historial conversacional.
+- El destino escrito llega al proveedor; `mi casa` o `Pradera` sin identificación suficiente debe producir una sola pregunta breve, nunca una ubicación inventada.
+- No afirmar que Waze está sincronizado: los Deep Links sólo abren Waze y el Transport SDK exige asociación comercial, aplicación nativa aprobada y atribución visible.
 - Solicitar y guardar el destino exacto sólo con consentimiento; `Pradera` por sí solo no identifica una vivienda.
 - Mantener la clave en servidor y activar facturación/cuotas antes de publicar.
 - Informar origen, destino entendido, minutos estimados, demora y hora de cálculo; nunca inventar tráfico actual.
 - Permitir abrir Waze o Maps únicamente como acción separada y voluntaria si el usuario luego desea navegación.
+- Tiempo agotado, proveedor caído, cuota, falta de GPS o falta de permiso producen una explicación recuperable y permiten continuar la conversación bilateral.
 
 ### Condiciones de cierre futuro
 
-Este pendiente sólo podrá cerrarse con destino exacto validado, proveedor y facturación activos, pruebas de ETA real en Guatemala, límites de privacidad, manejo de error/sin GPS y explicación añadida al Manual.
+Este pendiente sólo podrá cerrarse con destino exacto validado, proveedor y facturación activos, varias pruebas de ETA real en Guatemala comparadas a la misma hora contra Waze, límites de privacidad, manejo de error/sin GPS, conversación bilateral prolongada en iPhone y explicación añadida al Manual. La batería simulada V324 no sustituye esa validación física.
 
 ### Frases para localizar este pendiente
 

@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V322: **303**.
+Archivos activos rastreados al corte V324: **307**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -21,7 +21,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `AUDITORIA_MAESTRA_V170.md` | `8dd135a84521f64c39928fadb35de0518447fe40` | 4462 bytes | Resumen de una revisión histórica del producto. |
 | `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Registro V305 | Se calcula al publicar | Manual sencillo actualizado con Historial, Regístrate y el vocabulario visible vigente. |
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `54288b53e83185333276d45cca4fe41dc9f7b591` | 4948 bytes | Reglas permanentes, candados ROADMAP/inventarios, Vercel y calidad visual 4K. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001 · PEND-CLI-002 · PEND-VOZ-003` | Se calcula al publicar | Cola consultable; guarda Reglas de Golf, clima automático por GPS con respaldo del club y Caddie/Support conversacional por texto o voz para Golf, Manual, clima, conversación general y salud segura. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001 · PEND-CLI-002 · PEND-VOZ-003 · PEND-TRA-005` | Se calcula al publicar | Cola consultable; guarda reglas, clima, AI UNIVERSAL ∞ y el tráfico V324 implementado en código pero todavía pendiente de activación y validación física. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Se calcula al regenerar | Huella técnica que impide validar o publicar con inventarios desactualizados. |
 | `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INDICE_DOCUMENTOS_PENDIENTES.md` | `064e9201c833cb7f5c751ba5328290d8c4c2b20b` | 814 bytes | Lista de documentos todavía pendientes de usar. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | `b9815c3eae588f1f54c0e4fabbf1d51b52c75b0e` | 722 bytes | Registro de trabajos terminados. |
@@ -37,7 +37,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ECOS.md` | `43a9c6f5bacb8c758edd33c8ad31f9e59e63f84f` | 3982 bytes | Reglas de comportamiento de Golf Score Card GT. |
 | `EPG-Caddy_Master_Blueprint_v0.1.md` | `95b4c227c4e5dce7f90fede0ebc9cdd0af6ed76c` | 7990 bytes | Plano maestro; el nombre del archivo es antiguo, pero el contenido ya usa Golf Score Card GT. |
 | `EPG_CADDY_PLAN_CAMBIOS.md` | `a81981bda6522c0ab29ec5e70f6ebe557cde34bf` | 116300 bytes | Lista antigua de cambios; el nombre sólo se conserva para localizarla. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V314 | Se calcula al publicar | Manual maestro sincronizado con App V314, modalidades, portada, Caddie universal, clima inicial y pendientes de tránsito/Guía Rápida. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V324 | Se calcula al publicar | Manual maestro con modalidades, AI UNIVERSAL ∞, clima y tráfico V324; distingue el código probado de la activación/calibración todavía pendiente. |
 | `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V305 | Se calcula al publicar | Lista ordenada de funciones terminadas y pendientes con vocabulario Historial. |
 | `MAPA_MATRIZ_BASE_MAESTRA_V256.md` | `8d0cdb23c0b1d9445f51b822ba49d385f5c71d3c` | 1718 bytes | Explica la información central incorporada en V256. |
 | `MAPA_MATRIZ_REGISTRO_JUGADORES_V255.md` | `5d0670562aa89ffa7a265820573e0e31895fe95b` | 1993 bytes | Explica el registro de jugadores de V255. |
@@ -76,6 +76,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `api/_lib/database.js` | `1e99935741e212ff9f0043197f82348972c2263c` | 453 bytes | Abre la información central. |
 | `api/_lib/http.js` | `abf34ad0d937577da81c7cd56833eceeb231bf95` | 1625 bytes | Prepara respuestas para la app. |
 | `api/_lib/sync-validation.js` | `b90cd0193c0606448a13e06e17cb34b359d18978` | 3713 bytes | Revisa que la información enviada esté completa. |
+| `api/_lib/traffic.js` | Tráfico V324 | Se calcula al publicar | Consulta Google Maps Routes con tráfico óptimo, resume ETA/demora/distancia y excluye coordenadas de la respuesta. |
 | `api/account.js` | `eec1c7ff408316ccaff98bcab968cd66bf92120c` | 2437 bytes | Abre, crea o cierra la cuenta opcional. |
 | `api/backup.js` | `128c8f613861641f16ea5973d6592c8e50e46031` | 2174 bytes | Guarda y recupera respaldos. |
 | `api/database-health.js` | `150c3e82b7e16d79613a2e341ac8fb1cf66de789` | 1307 bytes | Comprueba que el respaldo central responda. |
@@ -84,6 +85,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `api/session-grupal.js` | `4bd02dcd9cdc1fb4fada6ddb4fd8b7400d2280ee` | 5355 bytes | Abre el reconocimiento de voz grupal. |
 | `api/session.js` | `454a914b435c6cadadd0a169fe065719eef475de` | 14431 bytes | Abre el reconocimiento de voz anterior. |
 | `api/sync.js` | `82e4bdd482531f4ee6b41254652606d9f53e2251` | 3202 bytes | Intercambia cambios entre teléfono y respaldo. |
+| `api/traffic.js` | Puerta de tráfico V324 | Se calcula al publicar | Recibe de forma protegida las solicitudes de tráfico por voz o texto y entrega un resultado recuperable sin mostrar mapa. |
 | `api/weather.js` | Piloto climático V312 | Se calcula al publicar | Consulta Open-Meteo por coordenadas GPS del teléfono, ubicación indicada o respaldo del campo y devuelve un resumen auditable. |
 | `assets/logo.png` | `376f6237bbdddf4245ecd3da0f080ad5462f8178` | 514891 bytes | Logo cromado 3D neón de 1024 usado para crear iconos de iPhone y Android. |
 | `assets/official-logos/README.md` | `d4c2f8e156b2f614d5992c477bc117c11a8ef2d7` | 1826 bytes | Explica que la versión cromada 3D con verde neón muy saturado es oficial y para qué sirve cada tamaño. |
@@ -240,6 +242,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v311-voice-assistant.mjs` | Candado del asistente | Se calcula al publicar | Comprueba ayuda, navegación y separación de los scores reales. |
 | `test-v312-general-caddie.mjs` | Candado conversacional V322 | Se calcula al publicar | Comprueba conversación abierta, GPS primero, clima visible y periódico, respaldo por campo, micrófono manual, salud, score protegido y escucha sostenida. |
 | `test-v322-real-sustained-caddie.mjs` | `V322-24-TURNS-RECOVERY` | Se calcula al publicar | Simula 24 turnos consecutivos, reapertura de una sesión sana, cierre a los 30 minutos y fallos web recuperables sin silencio. |
+| `test-v323-long-multitopic-context.mjs` | `V323-30-TOPICS-63-MESSAGES` | Se calcula al publicar | Exige que texto y voz conserven la primera clave después de 30 cambios de tema y sólo descarten historial al superar 80 mensajes. |
+| `test-v324-real-traffic.mjs` | `V324-CURRENT-FUTURE-TRAFFIC-RECOVERY` | Se calcula al publicar | Prueba tráfico actual/futuro, ETA, demora, privacidad, GPS, texto, voz, proveedor caído, timeout y continuación bilateral. |
 | `test-v311-timer-inactivity.mjs` | Candado TIMER 30 minutos | Se calcula al publicar | Comprueba el apagado en todas las modalidades, persistencia y reinicio por instrucción válida. |
 | `docs/manual/v311/page-17.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-18.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |

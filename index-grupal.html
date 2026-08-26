@@ -11,7 +11,7 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/official-logos/golf-score-card-gt-apple-touch-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V322-REAL-SUSTAINED-CONVERSATION-20260826">
+<meta name="gscg-build" content="V324-REAL-TRAFFIC-20260826">
 <meta name="gscg-manual" content="V321-AI-UNIVERSAL-INFINITY-MANUAL-20260825">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
@@ -922,6 +922,7 @@ let setupSpeechAllowed=false,sessionHasSpoken=false;
 let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false,pendingVoiceAssistantAction=null,conversationIdleCloseTimer=null,conversationBargeInArmedAt=0,conversationOutputStarted=false,conversationOutputTranscript="",conversationBargeInItemId="",conversationBargeInText="",conversationEchoGuardUntil=0,conversationClearResponseId=null;
 let voiceOpening=false;
 let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null;
+const AI_UNIVERSAL_HISTORY_LIMIT=80;
 const processedTranscriptItems=new Set();
 const WEATHER_REFRESH_MS=10*60*1000;
 const WEATHER_RETRY_MS=2*60*1000;
@@ -1978,7 +1979,7 @@ function inferConversationTimePeriod(transcript){
 }
 function aiUniversalContextForPrompt(){
   const current=normalizeSpeech(authorizedSpeech?.text||"");
-  const turns=aiUniversalHistory.filter((item,index,array)=>!(index===array.length-1&&item.role==="user"&&normalizeSpeech(item.content)===current)).slice(-6);
+  const turns=aiUniversalHistory.filter((item,index,array)=>!(index===array.length-1&&item.role==="user"&&normalizeSpeech(item.content)===current)).slice(-AI_UNIVERSAL_HISTORY_LIMIT);
   if(!turns.length)return"";
   return turns.map(item=>`${item.role==="assistant"?"AI":"USUARIO"}: ${String(item.content||"").slice(0,500)}`).join(" | ");
 }
@@ -2000,9 +2001,10 @@ function conversationInstructions(completedTool=""){
     "Cuando necesites una herramienta, no pronuncies un preámbulo: consulta primero y entrega después una sola respuesta completa.",
     "Para clima, responde en dos oraciones sencillas: condición, temperatura, sensación, lluvia y viento. Si pregunta a qué hora lloverá, usa rainTiming, indica el intervalo y la hora de mayor probabilidad; no lo remitas a otra aplicación si esos datos vienen en la herramienta. No cortes palabras ni dejes una frase incompleta.",
     "En salud ofrece únicamente orientación general. No diagnostiques ni prescribas. Antes de sugerir un medicamento pregunta por edad, alergias, enfermedades, otros medicamentos y gravedad; ante síntomas de alarma recomienda atención médica urgente. En temas legales, financieros, fiscales, psicológicos, privacidad o seguridad explica límites, incertidumbre y riesgo sin fingir certeza profesional.",
-    "Para medicina, vuelos, tráfico, noticias, política, precios, horarios u otra información que cambie o requiera verificación, usa search_live_web. Para el clima usa exclusivamente get_current_weather.",
+    "Para tráfico vehicular, congestión, ruta o tiempo de llegada usa exclusivamente get_live_traffic; sirve para salir ahora o para una hora futura. Nunca uses una búsqueda web como ETA ni digas que proviene de Waze.",
+    "Para medicina, vuelos, noticias, política, precios, horarios u otra información que cambie o requiera verificación, usa search_live_web. Para el clima usa exclusivamente get_current_weather.",
     "La búsqueda web puede tardar un poco más que una respuesta de conocimiento general. Después de recibirla, responde con la información encontrada y no inventes lo que no aparezca.",
-    completedTool==="get_current_weather"?"Ya recibiste el resultado meteorológico solicitado. Si contiene ok true, explícalo con palabras naturales y menciona que es un pronóstico de Open-Meteo. Si contiene ok false, informa brevemente que no pudiste consultar el pronóstico ahora y permite continuar; nunca guardes silencio. No vuelvas a llamar herramientas.":completedTool==="search_live_web"?"Ya recibiste el resultado de la investigación web. Si contiene ok true, sintetiza la respuesta con palabras naturales y menciona brevemente las fuentes por nombre si ayuda. Si contiene ok false, informa en una sola oración que no pudiste verificarlo en este momento y permite continuar; nunca guardes silencio ni inventes. No vuelvas a llamar herramientas.":"Usa herramientas solamente cuando aporten información actual o verificación; para conversación, consejo y conocimiento estable responde directamente."
+    completedTool==="get_current_weather"?"Ya recibiste el resultado meteorológico solicitado. Si contiene ok true, explícalo con palabras naturales y menciona que es un pronóstico de Open-Meteo. Si contiene ok false, informa brevemente que no pudiste consultar el pronóstico ahora y permite continuar; nunca guardes silencio. No vuelvas a llamar herramientas.":completedTool==="get_live_traffic"?"Ya recibiste el cálculo vehicular solicitado. Si contiene ok true, menciona origen, destino, ETA, demora, distancia, hora de cálculo y Google Maps Routes; aclara sólo cuando sea útil que el nivel es una estimación derivada. Si contiene ok false, informa brevemente la limitación y permite continuar. Nunca inventes tráfico, repitas coordenadas exactas ni digas que proviene de Waze. No vuelvas a llamar herramientas.":completedTool==="search_live_web"?"Ya recibiste el resultado de la investigación web. Si contiene ok true, sintetiza la respuesta con palabras naturales y menciona brevemente las fuentes por nombre si ayuda. Si contiene ok false, informa en una sola oración que no pudiste verificarlo en este momento y permite continuar; nunca guardes silencio ni inventes. No vuelvas a llamar herramientas.":"Usa herramientas solamente cuando aporten información actual o verificación; para conversación, consejo y conocimiento estable responde directamente."
   ].join(" ");
 }
 function realtimeWeatherTool(){return{
@@ -2017,13 +2019,19 @@ function realtimeWebResearchTool(){return{
   description:"Investiga en la web cualquier tema permitido que sea vigente, factual, incierto o requiera verificación. No usa un catálogo cerrado de materias.",
   parameters:{type:"object",properties:{query:{type:"string",description:"Pregunta completa y específica que debe investigarse en la web."}},required:["query"],additionalProperties:false}
 }}
+function realtimeTrafficTool(){return{
+  type:"function",
+  name:"get_live_traffic",
+  description:"Calcula ETA, demora y distancia con tráfico vehicular real o predicción para una salida futura. Úsala para toda pregunta de tráfico, congestión, ruta o tiempo de llegada.",
+  parameters:{type:"object",properties:{origin:{type:"string",description:"Punto de salida. Omítelo o usa ubicación actual si el usuario dice aquí o desde donde estoy."},destination:{type:"string",description:"Destino exacto o suficientemente específico."},departure_time:{type:"string",description:"Hora futura de salida en ISO 8601 con zona horaria; omítela si sale ahora."}},required:["destination"],additionalProperties:false}
+}}
 function responseForConversation(token,{completedTool=""}={}){
   const common={
     metadata:{speech_token:token,speech_reason:"conversation",voice_policy:"CADDIE_GENERAL_V312"},
     conversation:"auto",
     instructions:conversationInstructions(completedTool),
     tool_choice:completedTool?"none":"auto",
-    tools:completedTool?[]:[realtimeWeatherTool(),realtimeWebResearchTool()]
+    tools:completedTool?[]:[realtimeWeatherTool(),realtimeTrafficTool(),realtimeWebResearchTool()]
   };
   if(realtimeShape==="beta")return{...common,modalities:["audio"],voice:VOICE_POLICY.voice};
   return{...common,output_modalities:["audio"],audio:{output:{voice:VOICE_POLICY.voice}}};
@@ -2063,6 +2071,25 @@ async function weatherToolResult(argumentsText){
     return JSON.stringify(result);
   }catch{return JSON.stringify({ok:false,error:"WEATHER_UNAVAILABLE",message:"No se pudo consultar el pronóstico en este momento."})}
 }
+async function trafficToolResult(argumentsText){
+  aiUniversalSetState("CALCULANDO TRÁFICO REAL…",{busy:true});
+  let args={};try{args=JSON.parse(argumentsText||"{}")||{}}catch{}
+  const rawOrigin=String(args.origin||"").trim();
+  const asksDevice=!rawOrigin||/^(?:aqu[ií]|ac[aá]|mi ubicaci[oó]n|ubicaci[oó]n actual|donde estoy|current location|here)$/i.test(rawOrigin);
+  const deviceCoordinates=asksDevice?await currentBrowserCoordinates():null;
+  const payload={
+    ...(deviceCoordinates?{originCoordinates:{latitude:deviceCoordinates.latitude,longitude:deviceCoordinates.longitude}}:{origin:rawOrigin}),
+    destination:String(args.destination||"").trim(),
+    departureTime:String(args.departure_time||"").trim(),
+    languageCode:"es-419"
+  };
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),20000);
+  try{
+    const response=await fetch(window.gscgApiUrl("/api/traffic"),{method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    return JSON.stringify(await response.json().catch(()=>({ok:false,error:"TRAFFIC_UNAVAILABLE",message:"No pude consultar tráfico confiable en este momento. Puedes continuar con otra pregunta."})));
+  }catch(error){return JSON.stringify({ok:false,error:error?.name==="AbortError"?"TRAFFIC_TIMEOUT":"TRAFFIC_UNAVAILABLE",message:"No pude consultar tráfico confiable en este momento. Puedes continuar con otra pregunta."})}
+  finally{clearTimeout(timeout)}
+}
 function renderCaddieSources(result){
   const target=voiceContext==="setup"?$("setupCaddieSources"):$("roundCaddieSources");if(!target)return;
   const sources=Array.isArray(result?.sources)?result.sources.filter(source=>/^https:\/\//i.test(String(source?.url||""))).slice(0,5):[];
@@ -2100,7 +2127,7 @@ function aiUniversalRemember(role,content,sources=[]){
   }
   const entry={role:safeRole,content:clean,...(safeSources.length?{sources:safeSources}:{})};
   aiUniversalHistory.push(entry);
-  if(aiUniversalHistory.length>40)aiUniversalHistory=aiUniversalHistory.slice(-40);
+  if(aiUniversalHistory.length>AI_UNIVERSAL_HISTORY_LIMIT)aiUniversalHistory=aiUniversalHistory.slice(-AI_UNIVERSAL_HISTORY_LIMIT);
   if(safeRole==="assistant")aiUniversalLastAnswer=clean;
   renderAiUniversalHistory();return entry;
 }
@@ -2206,12 +2233,13 @@ function routeAiUniversalAppText(text){
   }
   return{handled:false};
 }
-function aiUniversalAppContext(){
+function aiUniversalAppContext(trafficOrigin=null){
   const weather=round?.weather||setupWeatherSnapshot||null;
   return{
     course:COURSE_CATALOG[round?.courseKey]?.displayName||round?.course||COURSE_CATALOG[draftCourse]?.displayName||"",
     mode:String(round?.mode||draftRoundMode||"general"),
-    weather:weather?{location:weather.location||"",condition:weather.condition||"",observedAt:weather.observedAt||"",temperatureC:weather.temperatureC,feelsLikeC:weather.feelsLikeC,rainProbability:weather.maxRainProbabilityToday,windKmh:weather.windKmh}:null
+    weather:weather?{location:weather.location||"",condition:weather.condition||"",observedAt:weather.observedAt||"",temperatureC:weather.temperatureC,feelsLikeC:weather.feelsLikeC,rainProbability:weather.maxRainProbabilityToday,windKmh:weather.windKmh}:null,
+    trafficOrigin:trafficOrigin?{latitude:trafficOrigin.latitude,longitude:trafficOrigin.longitude}:null
   };
 }
 async function submitAiUniversalText(forcedText=""){
@@ -2223,14 +2251,23 @@ async function submitAiUniversalText(forcedText=""){
   aiUniversalTextBusy=true;$("sendAiUniversal").disabled=true;aiUniversalSetState("INVESTIGANDO Y PENSANDO…",{busy:true});
   const controller=new AbortController();aiUniversalTextAbortController=controller;
   try{
-    const history=aiUniversalHistory.slice(0,-1).slice(-16).map(item=>({role:item.role,content:item.content}));
-    const response=await fetch(window.gscgApiUrl("/api/universal-ai"),{method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,appContext:aiUniversalAppContext()})});
-    const result=await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}));
+    const history=aiUniversalHistory.slice(0,-1).slice(-AI_UNIVERSAL_HISTORY_LIMIT).map(item=>({role:item.role,content:item.content}));
+    const requestUniversal=async trafficOrigin=>{
+      const response=await fetch(window.gscgApiUrl("/api/universal-ai"),{method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,appContext:aiUniversalAppContext(trafficOrigin)})});
+      return{response,result:await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}))};
+    };
+    let{response,result}=await requestUniversal(null);
+    if(result?.needsCurrentLocation){
+      aiUniversalSetState("SOLICITANDO UBICACIÓN PARA EL TRÁFICO…",{busy:true});
+      const coordinates=await currentBrowserCoordinates();
+      if(!coordinates){const locationError=new Error("TRAFFIC_LOCATION_DENIED");locationError.code="TRAFFIC_LOCATION_DENIED";throw locationError}
+      ({response,result}=await requestUniversal(coordinates));
+    }
     if(!response.ok||!result.ok)throw new Error(result.error||"UNIVERSAL_AI_UNAVAILABLE");
     aiUniversalRemember("assistant",result.answer,result.sources);aiUniversalSetState("LISTO · PUEDES CONTINUAR");speakAiUniversalText(result.answer);return true;
   }catch(error){
     if(error?.name==="AbortError"){if(!aiUniversalTextAbortController||aiUniversalTextAbortController===controller)aiUniversalSetState("DETENIDO · PUEDES CONTINUAR");return false}
-    const message="No pude conectar con AI UNIVERSAL ∞ en este momento. Intenta nuevamente.";aiUniversalRemember("assistant",message);aiUniversalSetState("CONEXIÓN NO DISPONIBLE");return false;
+    const message=error?.code==="TRAFFIC_LOCATION_DENIED"?"Necesito permiso de ubicación o un punto de salida escrito para calcular el tráfico.":"No pude conectar con AI UNIVERSAL ∞ en este momento. Intenta nuevamente.";aiUniversalRemember("assistant",message);aiUniversalSetState(error?.code==="TRAFFIC_LOCATION_DENIED"?"UBICACIÓN NECESARIA":"CONEXIÓN NO DISPONIBLE");return false;
   }finally{
     if(aiUniversalTextAbortController===controller){aiUniversalTextAbortController=null;aiUniversalTextBusy=false;$("sendAiUniversal").disabled=false}
   }
@@ -2240,6 +2277,8 @@ async function continueConversationAfterTool(call){
   processedConversationToolCalls.add(call.call_id);
   const output=call.name==="get_current_weather"
     ?await weatherToolResult(call.arguments)
+    :call.name==="get_live_traffic"
+      ?await trafficToolResult(call.arguments)
     :call.name==="search_live_web"
       ?await researchToolResult(call.arguments)
     :JSON.stringify({ok:false,error:"TOOL_NOT_AVAILABLE"});
