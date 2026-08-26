@@ -20,8 +20,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `APP_ARCHITECTURE.md` | `48eb432665d9a880624ad6a93e852e2992cbc7ad` | 7104 bytes | Explica arquitectura, modalidades, reglas editoriales 4K y campos. |
 | `AUDITORIA_MAESTRA_V170.md` | `8dd135a84521f64c39928fadb35de0518447fe40` | 4462 bytes | Resumen de una revisión histórica del producto. |
 | `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Registro V305 | Se calcula al publicar | Manual sencillo actualizado con Historial, Regístrate y el vocabulario visible vigente. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `54288b53e83185333276d45cca4fe41dc9f7b591` | 4948 bytes | Reglas permanentes, candados ROADMAP/inventarios, Vercel y calidad visual 4K. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001 · PEND-CLI-002 · PEND-VOZ-003 · PEND-TRA-005 · PEND-SKI-006 · PEND-WAT-007` | Se calcula al publicar | Cola consultable; guarda USGA/Reglas de Golf, clima, AI UNIVERSAL ∞, tráfico, modalidad Skins y Apple Watch/Wear OS. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | Autorización permanente 2026-08-26 | Se calcula al publicar | Reglas permanentes, candados ROADMAP/inventarios, ejecución autónoma sin autorizaciones intermedias y montaje sólo después de PASS completo. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001` a `PEND-QA-014` | Se calcula al publicar | Cola consultable completa: voz, tráfico, reglas, handicap oficial, campos mundiales, GPS de golf, juegos/apuestas, relojes, nube/seguridad, estadísticas, monetización, pruebas, clima y Guía Rápida. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Se calcula al regenerar | Huella técnica que impide validar o publicar con inventarios desactualizados. |
 | `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INDICE_DOCUMENTOS_PENDIENTES.md` | `064e9201c833cb7f5c751ba5328290d8c4c2b20b` | 814 bytes | Lista de documentos todavía pendientes de usar. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | `b9815c3eae588f1f54c0e4fabbf1d51b52c75b0e` | 722 bytes | Registro de trabajos terminados. |
@@ -38,7 +38,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `EPG-Caddy_Master_Blueprint_v0.1.md` | `95b4c227c4e5dce7f90fede0ebc9cdd0af6ed76c` | 7990 bytes | Plano maestro; el nombre del archivo es antiguo, pero el contenido ya usa Golf Score Card GT. |
 | `EPG_CADDY_PLAN_CAMBIOS.md` | `a81981bda6522c0ab29ec5e70f6ebe557cde34bf` | 116300 bytes | Lista antigua de cambios; el nombre sólo se conserva para localizarla. |
 | `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V327 | Se calcula al publicar | Manual maestro con V326-R2 rechazada, retorno herramienta→voz corregido, guardianes y prohibición de montaje. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V327 | Se calcula al publicar | Lista ordenada: V327 pendiente de prueba física, además de USGA/Reglas de Golf, Skins y Apple Watch/Wear OS. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V327-R1 / PEND-001–014 | Se calcula al publicar | Lista ordenada y adaptada: V327-R1 física, USGA/ASOGOLF/GHIN, campos mundiales, GPS, Skins/Wolf/Vegas/Dots, Apple Watch, nube, seguridad, estadísticas, monetización y certificación. |
 | `MAPA_MATRIZ_BASE_MAESTRA_V256.md` | `8d0cdb23c0b1d9445f51b822ba49d385f5c71d3c` | 1718 bytes | Explica la información central incorporada en V256. |
 | `MAPA_MATRIZ_REGISTRO_JUGADORES_V255.md` | `5d0670562aa89ffa7a265820573e0e31895fe95b` | 1993 bytes | Explica el registro de jugadores de V255. |
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
