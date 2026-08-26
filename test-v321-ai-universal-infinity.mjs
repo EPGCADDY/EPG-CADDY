@@ -5,6 +5,7 @@ import handler,{sanitizeUniversalAppContext,sanitizeUniversalHistory,summarizeUn
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const api=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
+const manual=fs.readFileSync(new URL("./manual.html",import.meta.url),"utf8");
 const normalizeSpeech=value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9ñ]+/g," ").replace(/\s+/g," ").trim();
 const localIntentSource=html.slice(html.indexOf("function isLocalRoundQueryIntent"),html.indexOf("\nfunction parseRoundQueryTranscript"));
 const isLocalRoundQueryIntent=new Function("normalizeSpeech","round",`${localIntentSource};return isLocalRoundQueryIntent`)(normalizeSpeech,{players:[{name:"Miguel"}]});
@@ -92,6 +93,7 @@ assert.match(api,/tools:\[\{type:"web_search",external_web_access:true\}\]/);
 assert.match(api,/tool_choice:"auto"/);
 assert.match(api,/Tu conocimiento no está limitado a una lista/);
 assert.match(api,/Diferencia información confirmada, estimaciones, opiniones e hipótesis/);
+assert.match(manual,/"ENTIENDE CADA RESPUESTA HABLADA","AI UNIVERSAL ∞"/);
 
 assert.deepEqual(sanitizeUniversalHistory([
   {role:"system",content:"descartar"},
