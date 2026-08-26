@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V314: **295**.
+Archivos activos rastreados al corte V322: **303**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -238,7 +238,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v311-manual-semantic-coverage.mjs` | Candado semántico | Se calcula al publicar | Comprueba la cobertura funcional de las 73 páginas. |
 | `test-v311-manual-voice-map.mjs` | Candado de voz | Se calcula al publicar | Verifica vocabulario oficial, consultas y respuestas documentadas. |
 | `test-v311-voice-assistant.mjs` | Candado del asistente | Se calcula al publicar | Comprueba ayuda, navegación y separación de los scores reales. |
-| `test-v312-general-caddie.mjs` | Candado conversacional V312 | Se calcula al publicar | Comprueba conversación abierta, GPS primero, clima visible y periódico, respaldo por campo, micrófono manual, salud y score protegido. |
+| `test-v312-general-caddie.mjs` | Candado conversacional V322 | Se calcula al publicar | Comprueba conversación abierta, GPS primero, clima visible y periódico, respaldo por campo, micrófono manual, salud, score protegido y escucha sostenida. |
+| `test-v322-real-sustained-caddie.mjs` | `V322-24-TURNS-RECOVERY` | Se calcula al publicar | Simula 24 turnos consecutivos, reapertura de una sesión sana, cierre a los 30 minutos y fallos web recuperables sin silencio. |
 | `test-v311-timer-inactivity.mjs` | Candado TIMER 30 minutos | Se calcula al publicar | Comprueba el apagado en todas las modalidades, persistencia y reinicio por instrucción válida. |
 | `docs/manual/v311/page-17.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-18.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |

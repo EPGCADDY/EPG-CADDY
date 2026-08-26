@@ -4,7 +4,7 @@ import analytics from "./historical-analytics.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V321-AI-UNIVERSAL-INFINITY-20260825"/);
+assert.match(html,/gscg-build" content="V322-REAL-SUSTAINED-CONVERSATION-20260826"/);
 assert.match(html,/V280-WRITTEN-GENERAL-STABLEFORD-STATS-20260823/);
 for(const id of ["openHistoryInsights","historyInsightsOverlay","historyInsightsQuery","runHistoryInsights","historyInsightsResult","closeHistoryInsights"])assert.match(html,new RegExp(`id="${id}"`),`Falta ${id}`);
 assert.match(html,/data-history-query="ESTADÍSTICAS DE PUNTOS STABLEFORD DEL ÚLTIMO MES"/);
