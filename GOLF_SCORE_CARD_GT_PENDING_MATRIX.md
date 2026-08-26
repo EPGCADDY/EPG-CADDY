@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V328 · Reglas oficiales en banco; Preview y validaciones físicas abiertas
+**Corte vigente:** V328-R1 · Reglas oficiales en Preview READY; voz física y modo básico offline abiertos
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -148,7 +148,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 11. Reglas de Golf integradas
 
-**Estado:** V328 EN BANCO · centro USGA/The R&A implementado; Preview, voz física y consulta básica offline pendientes · `PEND-REG-001`
+**Estado:** V328-R1 PREVIEW READY · centro USGA/The R&A implementado; voz física y consulta básica offline pendientes · `PEND-REG-001`
 
 - Adaptar las Reglas de Golf a la aplicación y al manual sin crear un motor paralelo.
 - Buscar y formalizar un enlace oficial/autorizado con USGA y sus Reglas de Golf, sujeto a licencia, atribución, vigencia y capacidades técnicas comprobadas.
@@ -160,7 +160,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Conservar el detalle operativo en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`.
 - **Implementado V328:** acceso global `REGLAS`; consultas naturales escritas y habladas; búsqueda restringida a fuentes oficiales USGA/The R&A; contexto de campo/modalidad; fuentes visibles; edición 2023 y clarificaciones vigentes; cero escritura de score o penalidad.
 - **Banco V328:** 15 situaciones reglamentarias, filtro de dominios, aislamiento de tarjeta, continuidad texto/voz, compilación JavaScript y manual de 74 páginas en 4K/300 dpi aprobados.
-- **Pendiente real:** consulta básica sin conexión, Preview desplegado, prueba física por voz y revisión de condiciones de uso si se pretende una integración comercial o de marca más profunda. No se declara alianza oficial.
+- **Preview V328-R1:** deployment `dpl_7YrNwkYsPB55iKk8vQrUoUfDuJ4K` READY, 86 paquetes aprobados y árbol remoto idéntico al probado; cada build ejecuta además modelo real, búsqueda web, autoridad oficial y `scoreChanged:false`.
+- **Pendiente real:** consulta básica sin conexión, prueba física por voz y revisión de condiciones de uso si se pretende una integración comercial o de marca más profunda. No se declara alianza oficial.
 
 ### 12. Clima sincronizado por campo
 

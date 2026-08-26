@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --omit=dev",
-  "buildCommand": "node audit-project.mjs",
+  "buildCommand": "node audit-project.mjs && node test-v328-live-official-rules.mjs",
   "outputDirectory": ".",
   "redirects": [
     {

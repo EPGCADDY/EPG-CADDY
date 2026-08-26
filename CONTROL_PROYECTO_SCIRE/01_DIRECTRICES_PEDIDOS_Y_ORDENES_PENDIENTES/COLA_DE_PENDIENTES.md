@@ -8,7 +8,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 |---:|---|---|
 | 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V327-R1 aprobó banco automatizado y Preview; falta conversación física prolongada en iPhone |
 | 2 | `PEND-TRA-005` tráfico actual y futuro | Google Maps Routes activo y probado; faltan comparación simultánea con Waze y validación física en Guatemala |
-| 3 | `PEND-REG-001` USGA y Reglas de Golf | Consulta general disponible; falta fuente oficial/autorizada y módulo reglamentario validado |
+| 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R1 en Preview READY con fuentes públicas USGA/The R&A; faltan voz física y modo básico offline |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
 | 5 | `PEND-CAM-009` campos mundiales | Falta proveedor/catálogo licenciado y tarjetas oficiales verificables |
 | 6 | `PEND-GPS-010` GPS de golf | Clima y tráfico ya usan GPS efímero; faltan distancias deportivas por hoyo y validación de precisión |
@@ -28,7 +28,7 @@ La prioridad inmediata continúa siendo `PEND-VOZ-003`. **Producción permanece 
 ## PEND-REG-001 · Adaptar las Reglas de Golf a la aplicación
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V328 EN BANCO · CENTRO OFICIAL USGA/THE R&A IMPLEMENTADO; PREVIEW, VOZ FÍSICA Y MODO BÁSICO SIN CONEXIÓN PENDIENTES
+**Estado:** V328-R1 PREVIEW READY · CENTRO USGA/THE R&A IMPLEMENTADO; VOZ FÍSICA Y MODO BÁSICO SIN CONEXIÓN PENDIENTES
 **Prioridad:** Principal, en ejecución por orden permanente del propietario
 **Solicitud original:** “Tratar de adaptar las reglas de Golf a la aplicación”.
 
@@ -46,7 +46,8 @@ La solución debe buscar un enlace oficial y autorizado con **USGA** y sus **Reg
 - El corte verificado es la clarificación oficial del **1 de julio de 2026**. Una actualización posterior publicada por USGA o The R&A prevalece automáticamente al consultarse.
 - La consulta reglamentaria no puede ejecutar órdenes locales, modificar un score, aplicar una penalidad, conceder un hoyo ni cerrar una ronda. Cualquier cambio exige otra orden separada y explícita.
 - El banco V328 cubre 15 situaciones distintas y rechaza fuentes ajenas a USGA/The R&A. El manual de 74 páginas ya explica el uso y aprobó 4K/300 dpi.
-- Esto es acceso a fuentes públicas oficiales, no una alianza, licencia de marca ni API privada de USGA/The R&A. El modo básico sin conexión, Preview y la prueba física hablada permanecen abiertos antes del cierre total del pendiente.
+- El primer Preview V328 quedó READY con 86 paquetes y árbol remoto idéntico. La puerta `test-v328-live-official-rules.mjs` obliga dentro de Vercel una consulta real del modelo, búsqueda web, fuente USGA/The R&A y `scoreChanged:false` antes de entregar el build.
+- Esto es acceso a fuentes públicas oficiales, no una alianza, licencia de marca ni API privada de USGA/The R&A. El modo básico sin conexión y la prueba física hablada permanecen abiertos antes del cierre total del pendiente.
 
 **Fuentes oficiales verificadas:** [USGA Rules Hub](https://www.usga.org/content/usga/home-page/rules-hub.html), [USGA Clarifications](https://rulesworkshops.usga.org/content/usga/home-page/rules-hub/clarifications-of-the-rules-of-golf.html) y [The R&A Rules Hub](https://www.randa.org/en/rules/rules-hub).
 

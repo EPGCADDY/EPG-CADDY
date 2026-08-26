@@ -97,7 +97,7 @@ def build_cover(path, title):
         ("AUTORIDAD", "Cada consulta busca sólo en usga.org y randa.org, exige fuente visible y usa Rules of Golf 2023 con clarificaciones vigentes."),
         ("CONTEXTO", "La respuesta reconoce campo y modalidad activa: General, Stableford, Match Play o Four-Ball."),
         ("AISLAMIENTO", "Consultar una Regla no cambia scores, no aplica penalidades, no concede hoyos y no cierra rondas."),
-        ("PRUEBAS", "Quince situaciones reglamentarias aprobaron; el manual conserva 74 páginas, 4K vertical y 300 dpi."),
+        ("PRUEBAS", "Quince situaciones reglamentarias aprobaron; Vercel exige además modelo real, búsqueda web y fuente oficial en cada build."),
     ]
     for number, (item_title, text) in enumerate(items, start=1):
         y = draw_bullet(c, number, item_title, text, y, regular, bold)
@@ -108,7 +108,7 @@ def build_cover(path, title):
     c.setFont(bold, 11)
     c.drawString(58, 355, "ESTADO HONESTO · PEND-REG-001 SIGUE ABIERTO")
     open_items = [
-        "Falta desplegar y verificar V328 en Preview.",
+        "Preview V328 quedó READY y su compilación aprobó 86 paquetes.",
         "Falta prueba física hablada del centro REGLAS en iPhone.",
         "Falta la consulta básica sin conexión prevista en el alcance completo.",
         "No existe alianza, licencia de marca ni API privada de USGA/The R&A.",
@@ -128,7 +128,7 @@ def build_cover(path, title):
     c.setFont(bold, 10)
     c.drawString(44, 111, "26 DE AGOSTO DE 2026")
     c.setFillColor(HexColor("#20ff00"))
-    c.drawRightString(width - 44, 111, "EN PROCESO · PREVIEW DESPUÉS DE PASS INTEGRAL")
+    c.drawRightString(width - 44, 111, "PREVIEW READY · PRUEBA FÍSICA Y OFFLINE PENDIENTES")
     c.showPage()
     c.save()
 

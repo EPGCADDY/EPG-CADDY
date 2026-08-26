@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V328: **314**.
+Archivos activos rastreados al corte V328-R1: **315**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -204,7 +204,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v305-history-navigation-zero-error.mjs` | Registro V305 | Se calcula al publicar | Audita Historial, Atrás, Regístrate, superposiciones, validación Stableford, versión y caché. |
 | `test-v305-registration-guides-parser-truth.mjs` | Registro V305 | Se calcula al publicar | Ejecuta ambos analizadores reales y bloquea guías falsas, HDCP o marcas visibles en Stableford y estados de OK incoherentes. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
-| `vercel.json` | `eb7aa74873a757c387e8c8b94e6da73f20022955` | 2516 bytes | Publica inicio, manual y acceso MANUAL SCG; ejecuta la auditoría con candados antes de publicar. |
+| `vercel.json` | V328-R1 | Se calcula al publicar | Publica inicio y manual; exige los 86 paquetes y la consulta real con fuente USGA/The R&A antes de entregar Preview. |
 | `verify-manual-sync.mjs` | `df56ae83b57d5ee4d6273f36be1db9350e1b2c9c` | 731 bytes | Comprueba que la firma documental de la aplicación coincida con la versión del manual maestro. |
 | `manual.html` | Registro V314 ampliado | Se calcula al publicar | Visor permanente con portada, 73 páginas funcionales, índice por categorías, lupa de lenguaje natural, navegación, app y descarga PDF. |
 | `manual.webmanifest` | `2c07adafaa323be295c05b927c1418c712bd514a` | 456 bytes | Instala MANUAL SCG como acceso independiente al manual completo. |
@@ -251,6 +251,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v326-no-silent-conversation.mjs` | `V326-INPUT-15S-HARD-90S-RESPONSE-30S` | Se calcula al publicar | Ejecuta la máquina de temporizadores y comprueba que una captura sin final apaga el rojo y que una respuesta sin inicio vuelve a escuchar. |
 | `test-v327-tool-followup-no-silence.mjs` | `V327-550-SEQUENCES-100-PRIVATE-EVENTS` | Se calcula al publicar | Prueba cierres tardíos con/sin ID, audio final, tres guardianes, ruta ambigua y telemetría sin contenido. |
 | `test-v328-official-golf-rules.mjs` | `V328-15-RULE-SCENARIOS-OFFICIAL-ONLY` | Se calcula al publicar | Prueba 15 situaciones, dominios USGA/R&A, texto/voz y que ninguna consulta modifique la tarjeta. |
+| `test-v328-live-official-rules.mjs` | `V328-REAL-MODEL-WEB-OFFICIAL-SOURCE` | Se calcula al publicar | Puerta exclusiva de Vercel: exige modelo real, búsqueda web, fuente USGA/The R&A y cero cambio de score. |
 | `test-v311-timer-inactivity.mjs` | Candado TIMER 30 minutos | Se calcula al publicar | Comprueba el apagado en todas las modalidades, persistencia y reinicio por instrucción válida. |
 | `docs/manual/v311/page-17.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-18.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
