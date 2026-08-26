@@ -12,7 +12,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
 | 5 | `PEND-CAM-009` campos mundiales | Falta proveedor/catálogo licenciado y tarjetas oficiales verificables |
 | 6 | `PEND-GPS-010` GPS de golf | Clima y tráfico ya usan GPS efímero; faltan distancias deportivas por hoyo y validación de precisión |
-| 7 | `PEND-SKI-006` Skins, Wolf, Vegas y apuestas | V330: motor, unidad monetaria, Dots y liquidación aprobados en banco local y Preview técnico; falta prueba física |
+| 7 | `PEND-SKI-006` Skins, Wolf, Vegas y apuestas | V330-R2 rechazada físicamente por doble selección Normal/Wolf; V330-R3 en corrección y nueva validación |
 | 8 | `PEND-WAT-007` Apple Watch y smartwatches | Falta aplicación/sincronización física; Apple Watch primero y Wear OS después |
 | 9 | `PEND-NUB-011` nube, cuentas y seguridad | Base preparada; faltan sincronización central, roles, recuperación, privacidad y endurecimiento |
 | 10 | `PEND-EST-012` estadísticas avanzadas | Estadística local básica entregada; faltan histórico central, tendencias y comparaciones multi-dispositivo |
@@ -277,7 +277,7 @@ Este pendiente sólo podrá cerrarse con destino exacto validado, proveedor y fa
 ## PEND-SKI-006 · Juegos y apuestas: Skins, Wolf, Vegas y Dots
 
 **Fecha de registro:** 26 de agosto de 2026
-**Estado:** V330 CON BANCO LOCAL Y PREVIEW TÉCNICO APROBADOS · PRUEBA FÍSICA PENDIENTE
+**Estado:** V330-R2 RECHAZADA EN IPHONE POR DOBLE SELECCIÓN NORMAL/WOLF · V330-R3 EN CORRECCIÓN Y NUEVA VALIDACIÓN
 **Prioridad:** Función nueva solicitada por el propietario
 
 ### Objetivo
@@ -316,6 +316,8 @@ Agregar **Skins, Wolf, Vegas y el módulo maestro de apuestas** dentro de la arq
 ### Condiciones restantes para cierre
 
 - ✅ El Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` quedó `READY`: 89 paquetes, 322 fuentes, tres inventarios PDF, cero vulnerabilidades y puerta viva de Reglas con seis fuentes oficiales.
+- ❌ La prueba física V330-R2 rechazó la selección visual: al tocar `WOLF`, abrió su configuración pero `RONDA NORMAL` también permaneció verde.
+- ⏳ V330-R3 debe demostrar en iPhone que al elegir cualquier modalidad sólo esa opción queda verde; para WOLF, las otras seis deben quedar desmarcadas inmediatamente.
 - Revisar físicamente en iPhone la ventana dividida, seis jugadores, tres parejas, selectores monetarios y controles Dots/Wolf sin tropiezos.
 - Jugar o simular una ronda completa por cada juego en el dispositivo, corregir al menos un hoyo y confirmar tarjetas, Historial y restauración.
 - Sólo después de esos PASS el propietario podrá autorizar el montaje en Producción.

@@ -6,8 +6,8 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const api=fs.readFileSync(new URL("./api/golf-rules.js",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V330-R2-SINGLE-MODE-SELECTION-20260826"/);
-assert.match(worker,/gscg-mobile-v330-side-games-r2/);
+assert.match(html,/gscg-build" content="V330-R3-PHYSICAL-SINGLE-MODE-20260826"/);
+assert.match(worker,/gscg-mobile-v330-side-games-r3/);
 for(const id of ["openGolfRules","aiUniversalRulesNote","aiUniversalTitle","listenAiUniversal","stopAiUniversal","repeatAiUniversal","muteAiUniversal","continueAiUniversal"]){
   assert.match(html,new RegExp(`id=["']${id}["']`),`Falta el control reglamentario ${id}`);
 }

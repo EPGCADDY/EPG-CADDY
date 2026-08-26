@@ -11,7 +11,7 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/official-logos/golf-score-card-gt-apple-touch-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V330-R2-SINGLE-MODE-SELECTION-20260826">
+<meta name="gscg-build" content="V330-R3-PHYSICAL-SINGLE-MODE-20260826">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
@@ -1149,6 +1149,21 @@ function activeDraftStorageKey(){return demoControlManual?DEMO_CONTROL_MANUAL_DR
 function activeDraftGameKey(){return[{key:"skins",config:draftSkins},{key:"wolf",config:draftWolf},{key:"vegas",config:draftVegas},{key:"dots",config:draftDots}].find(item=>item.config.enabled)?.key||null}
 function draftSideGames(){return normalizeSideGames({skins:draftSkins,wolf:draftWolf,vegas:draftVegas,dots:draftDots})}
 function resetDraftGames(){draftSkins=defaultSkinsDraft();draftWolf=defaultWolfDraft();draftVegas=defaultVegasDraft();draftDots=defaultDotsDraft()}
+const DRAFT_MODE_BUTTONS={general:"normalRoundButton",match_play:"matchPlayRoundButton",four_ball:"fourBallRoundButton",skins:"skinsRoundButton",wolf:"wolfRoundButton",vegas:"vegasRoundButton",dots:"dotsRoundButton"};
+function enforceExclusiveDraftGame(preferredKey=undefined){
+  const key=preferredKey===undefined?activeDraftGameKey():SIDE_GAME_KEYS.includes(preferredKey)?preferredKey:null;
+  draftSkins={...window.GSCSkins.normalizeConfig(draftSkins),enabled:key==="skins"};
+  draftWolf={...window.GSCWolf.normalizeConfig(draftWolf),enabled:key==="wolf"};
+  draftVegas={...window.GSCVegas.normalizeConfig(draftVegas),enabled:key==="vegas"};
+  draftDots={...window.GSCDots.normalizeConfig(draftDots),enabled:key==="dots"};
+  return key
+}
+function syncDraftModeSelection(preferredKey=undefined){
+  const gameKey=preferredKey===undefined?activeDraftGameKey():SIDE_GAME_KEYS.includes(preferredKey)?preferredKey:null;
+  const selected=gameKey||(["match_play","four_ball"].includes(draftRoundMode)?draftRoundMode:"general");
+  for(const [mode,id] of Object.entries(DRAFT_MODE_BUTTONS))$(id)?.setAttribute("aria-pressed",String(mode===selected));
+  return selected
+}
 function persistDraftState(){
   try{const key=activeDraftStorageKey();if(!draftPlayers.length&&!activeDraftGameKey()){localStorage.removeItem(key);return}localStorage.setItem(key,JSON.stringify({players:draftPlayers.map((p,i)=>normalizePlayer(p,i)),tournament:normalizeTournament(draftTournament),course:COURSE_CATALOG[draftCourse]?draftCourse:"pulte",mode:draftRoundMode,sideGames:draftSideGames(),skins:window.GSCSkins.normalizeConfig(draftSkins),savedAt:new Date().toISOString()}))}catch(e){console.error("No se pudo persistir el registro en curso:",e)}
 }
@@ -3387,36 +3402,32 @@ function renderTournamentDraft(){const t=normalizeTournament(draftTournament),en
 function renderCourseDraft(){const key=COURSE_CATALOG[draftCourse]?draftCourse:"pulte",course=COURSE_CATALOG[key],stableOption=`<a class="course-option stable-course-option" id="stableCourseOption" href="${STABLEFORD_OFFICIAL_HOSTING_URL}" aria-label="Seleccionar modalidad Stableford"><span class="stable-course-dot">S</span><span>STABLEFORD</span></a>`;$("courseOptions").innerHTML=Object.entries(COURSE_CATALOG).map(([value,item])=>`<label class="course-option ${item.configured?"":"pending"}"><input type="radio" name="registrationCourse" value="${value}" ${value===key?"checked":""} ${rosterEditMode?"disabled":""}><span>${item.name}</span></label>`).join("");$("stablefordModeOption").innerHTML=stableOption;$("confirmCourse").textContent=course.name;$("courseSetupStatus").textContent="REGISTRO DE TORNEO (OPCIONAL)";$("courseSetupStatus").style.color="var(--lime)"}
 function selectGeneralRoundMode(mode){
   if(rosterEditMode)return false;
-  draftSkins={...window.GSCSkins.normalizeConfig(draftSkins),enabled:false};
-  draftWolf={...window.GSCWolf.normalizeConfig(draftWolf),enabled:false};draftVegas={...window.GSCVegas.normalizeConfig(draftVegas),enabled:false};draftDots={...window.GSCDots.normalizeConfig(draftDots),enabled:false};
+  enforceExclusiveDraftGame(null);
   draftRoundMode=["match_play","four_ball"].includes(mode)?mode:"general";
   const limit=6;
   draftPlayers=draftPlayers.slice(0,limit);manualDraftRows=manualDraftRows.slice(0,limit).concat(Array.from({length:6-limit},()=>emptyManualDraftRow()));
-  $("normalRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="general"));
-  $("matchPlayRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="match_play"));
-  $("fourBallRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="four_ball"));
-  $("skinsRoundButton").setAttribute("aria-pressed","false");
-  $("wolfRoundButton").setAttribute("aria-pressed","false");$("vegasRoundButton").setAttribute("aria-pressed","false");$("dotsRoundButton").setAttribute("aria-pressed","false");
+  syncDraftModeSelection(null);
   persistDraftState();renderDraft();
   $("setupStatus").textContent=draftRoundMode==="match_play"?"MATCH PLAY · REGISTRA 2, 4 O 6 JUGADORES":draftRoundMode==="four_ball"?"FOUR BALL · REGISTRA UNA, DOS O TRES PAREJAS":"";
   return true
 }
 function selectSideGameRoundMode(key){
   if(rosterEditMode)return false;
-  draftRoundMode="general";draftSkins={...window.GSCSkins.normalizeConfig(draftSkins),enabled:key==="skins"};draftWolf={...window.GSCWolf.normalizeConfig(draftWolf),enabled:key==="wolf"};draftVegas={...window.GSCVegas.normalizeConfig(draftVegas),enabled:key==="vegas"};draftDots={...window.GSCDots.normalizeConfig(draftDots),enabled:key==="dots"};
+  draftRoundMode="general";enforceExclusiveDraftGame(key);syncDraftModeSelection(key);
   draftPlayers=draftPlayers.slice(0,6);persistDraftState();renderDraft();
   $("setupStatus").textContent=key==="skins"?"SKINS · REGISTRA DE 2 A 6 JUGADORES · CONFIGURA ANTES DE INICIAR":key==="wolf"?"WOLF · REGISTRA DE 3 A 6 JUGADORES · DECISIÓN POR HOYO":key==="vegas"?"VEGAS · REGISTRA 4 O 6 JUGADORES · 2 O 3 PAREJAS":key==="dots"?"DOTS · REGISTRA DE 2 A 6 JUGADORES · EVENTOS EN VIVO":"";return true
 }
 function selectSkinsRoundMode(){return selectSideGameRoundMode("skins")}
 function skinsTieLabel(value){return value==="split"?"DIVIDE":value==="void"?"ANULA":"ACUMULA"}
 function renderSideGameDrafts(){
+  const selectedGame=enforceExclusiveDraftGame();
   const config=window.GSCSkins.normalizeConfig(draftSkins);draftSkins=config;
   $("skinsRoundButton").setAttribute("aria-pressed",String(config.enabled));$("skinsConfig").classList.toggle("visible",config.enabled);
   $("skinsScoreType").value=config.scoreType;$("skinsTiePolicy").value=config.tiePolicy;$("skinsUnitValue").value=String(config.unitValue);
   draftWolf=window.GSCWolf.normalizeConfig(draftWolf);$("wolfRoundButton").setAttribute("aria-pressed",String(draftWolf.enabled));$("wolfConfig").classList.toggle("visible",draftWolf.enabled);$("wolfScoreType").value=draftWolf.scoreType;$("wolfTiePolicy").value=draftWolf.tiePolicy;$("wolfUnitValue").value=String(draftWolf.unitValue);
   draftVegas=window.GSCVegas.normalizeConfig(draftVegas);$("vegasRoundButton").setAttribute("aria-pressed",String(draftVegas.enabled));$("vegasConfig").classList.toggle("visible",draftVegas.enabled);$("vegasScoreType").value=draftVegas.scoreType;$("vegasBirdieFlip").value=draftVegas.birdieFlip?"yes":"no";$("vegasEagleDouble").value=draftVegas.eagleDouble?"yes":"no";$("vegasCap").value=String(draftVegas.holeCapPoints);$("vegasUnitValue").value=String(draftVegas.unitValue);
   draftDots=window.GSCDots.normalizeConfig(draftDots);$("dotsRoundButton").setAttribute("aria-pressed",String(draftDots.enabled));$("dotsConfig").classList.toggle("visible",draftDots.enabled);$("dotsUnitValue").value=String(draftDots.unitValue);$("dotsEventConfig").innerHTML=Object.entries(window.GSCDots.EVENTS).map(([event,definition])=>`<label class="dots-config-event"><input type="checkbox" data-dots-enabled="${event}" ${draftDots.enabledEvents[event]?"checked":""}><span>${escapeHtml(definition.label)}${definition.automatic?" · AUTO":""}</span><input type="number" inputmode="numeric" min="-20" max="20" step="1" value="${draftDots.eventPoints[event]}" data-dots-points="${event}" aria-label="Puntos ${escapeHtml(definition.label)}"></label>`).join("");
-  const activeDots=Object.values(draftDots.enabledEvents).filter(Boolean).length,confirm=$("confirmSkins"),key=activeDraftGameKey(),labels={skins:`SKINS · ${config.scoreType.toUpperCase()} · EMPATE ${skinsTieLabel(config.tiePolicy)} · UNIDAD Q${config.unitValue.toFixed(2)}`,wolf:`WOLF · ${draftWolf.scoreType.toUpperCase()} · EMPATE ${draftWolf.tiePolicy.toUpperCase()} · UNIDAD Q${draftWolf.unitValue.toFixed(2)} · ×1/×2/×3`,vegas:`VEGAS · ${draftVegas.scoreType.toUpperCase()} · PUNTO Q${draftVegas.unitValue.toFixed(2)} · TOPE ${draftVegas.holeCapPoints}`,dots:`DOTS · PUNTO Q${draftDots.unitValue.toFixed(2)} · ${activeDots} EVENTOS ACTIVOS`};confirm.classList.toggle("hidden",!key);confirm.textContent=key?labels[key]:"";
+  const activeDots=Object.values(draftDots.enabledEvents).filter(Boolean).length,confirm=$("confirmSkins"),key=selectedGame,labels={skins:`SKINS · ${config.scoreType.toUpperCase()} · EMPATE ${skinsTieLabel(config.tiePolicy)} · UNIDAD Q${config.unitValue.toFixed(2)}`,wolf:`WOLF · ${draftWolf.scoreType.toUpperCase()} · EMPATE ${draftWolf.tiePolicy.toUpperCase()} · UNIDAD Q${draftWolf.unitValue.toFixed(2)} · ×1/×2/×3`,vegas:`VEGAS · ${draftVegas.scoreType.toUpperCase()} · PUNTO Q${draftVegas.unitValue.toFixed(2)} · TOPE ${draftVegas.holeCapPoints}`,dots:`DOTS · PUNTO Q${draftDots.unitValue.toFixed(2)} · ${activeDots} EVENTOS ACTIVOS`};confirm.classList.toggle("hidden",!key);confirm.textContent=key?labels[key]:"";syncDraftModeSelection(key);
 }
 function renderSkinsDraft(){return renderSideGameDrafts()}
 function renderDraft(){
@@ -3424,10 +3435,8 @@ function renderDraft(){
   renderTournamentDraft();
   renderCourseDraft();
   const draftGame=activeDraftGameKey();
-  $("normalRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="general"&&!draftGame));
-  $("matchPlayRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="match_play"));
-  $("fourBallRoundButton").setAttribute("aria-pressed",String(draftRoundMode==="four_ball"));
   renderSideGameDrafts();
+  syncDraftModeSelection(draftGame);
   $("playerVoicePrompt").textContent=draftGame?`REGISTRO ${draftGame.toUpperCase()} · ${draftGame==="vegas"?"4 O 6":"HASTA 6"} JUGADORES`:draftRoundMode==="match_play"?"REGISTRO MATCH PLAY · HASTA TRES PAREJAS":draftRoundMode==="four_ball"?"REGISTRO FOUR BALL · HASTA TRES PAREJAS":"REGISTRO DE JUGADORES";
   document.querySelector(".newbie-guide-player").textContent=draftGame?draftGame==="vegas"?"VEGAS: 2 O 3 PAREJAS":`${draftGame.toUpperCase()}: HASTA 6 JUGADORES`:draftRoundMode==="match_play"?"P1: 1–2 · P2: 3–4 · P3: 5–6":draftRoundMode==="four_ball"?"VERDE: 1–2 · ORO: 3–4 · AZUL: 5–6":"HASTA 6 JUGADORES";
   let editHtml="",confirmHtml="";

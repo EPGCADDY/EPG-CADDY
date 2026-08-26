@@ -9,8 +9,8 @@ const serviceWorker=fs.readFileSync(new URL("./service-worker.js",import.meta.ur
 const universalApi=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 const trafficLib=fs.readFileSync(new URL("./api/_lib/traffic.js",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V330-R2-SINGLE-MODE-SELECTION-20260826"/);
-assert.match(serviceWorker,/gscg-mobile-v330-side-games-r2/);
+assert.match(html,/gscg-build" content="V330-R3-PHYSICAL-SINGLE-MODE-20260826"/);
+assert.match(serviceWorker,/gscg-mobile-v330-side-games-r3/);
 for(const token of [
   "function realtimeTrafficTool()",
   'name:"get_live_traffic"',

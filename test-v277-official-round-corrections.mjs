@@ -5,7 +5,7 @@ import artifacts from "./card-artifacts.js";
 import masterSync from "./master-data-sync.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-build" content="V330-R2-SINGLE-MODE-SELECTION-20260826"/);
+assert.match(html,/gscg-build" content="V330-R3-PHYSICAL-SINGLE-MODE-20260826"/);
 assert.match(html,/V277-ORIGINAL-REASON-VERSIONED-CORRECTION-20260823/);
 assert.match(html,/id="openOfficialCorrection">CORREGIR RONDA/);
 assert.match(html,/id="openOriginalGlobal">ABRIR ORIGINAL/);
