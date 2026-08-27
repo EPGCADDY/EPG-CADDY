@@ -1101,4 +1101,4 @@ La prueba de cinco anclas en el Preview `8a13f97a3fb007e2b6d3f94cb124de8958656dd
 
 La prueba de la sugerencia visible “Cómo corrijo un bogey que fue par” rechazó el orden de la lupa: ofrecía primero la página 59 de vocabulario. `manual-search.js` separa ahora corregir/rectificar/equivocarse de borrar y prioriza la página 21; `test-v311-manual-search.mjs` exige 21 para corregir, conserva 07 para borrar y exige 67 para lluvia. `.github/workflows/v334-m1-search-finalize.yml` sella y audita el candidato antes de eliminarse. Producción no cambia.
 
-<!-- V334-M1-R7-REMOTE-PENDING -->
+<!-- V334-M1-R7-REMOTE-FINALIZED -->

@@ -1252,4 +1252,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v334-m1-search-finalize.yml` | `TEMPORARY-SEARCH-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit final. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V334-M1-R7` | Sella el candidato exacto. |
 
-<!-- V334-M1-R7-REMOTE-PENDING -->
+<!-- V334-M1-R7-REMOTE-FINALIZED -->
