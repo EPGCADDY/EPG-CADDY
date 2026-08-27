@@ -27,6 +27,7 @@
     {name:"registrar jugadores",match:/\bregistr|\bagregar jugador\b|\bnombre\b.*\bhandicap\b|\bmarcas\b/,pages:[2,18,19,28],weight:50},
     {name:"score por voz",match:/\bdict|\bhabl|\bmicrofono\b|\bvoz\b/,pages:[20,57,58,59,60,61],weight:35},
     {name:"conversación universal",match:/\bplatic|\bconvers|\bcualquier tema\b|\bcambia(?:r)? de tema\b|\bmedicina\b|\bvuelo\b|\baerolinea\b|\bcultura\b|\btodos? los microfonos\b/,pages:[62,63],weight:170},
+    {name:"corregir un resultado",match:/\b(corr(?:eg|ig|ij)|rectific|equivoc)\w*\b.*\b(score|gross|golpe|aguila|birdie|par|bogey)\b|\b(score|gross|golpe|aguila|birdie|par|bogey)\b.*\b(corr(?:eg|ig|ij)|rectific|equivoc)\w*\b/,pages:[21],weight:350},
     {name:"vocabulario de score",match:/\baguila\b|\bbirdie\b|\bpar\b|\bbogey\b|\bdoble par\b/,pages:[59,57],weight:68},
     {name:"corregir un score",match:/\b(borr|elimin|quit|cambi|corrig|rectific|equivoc)\w*\b.*\b(score|gross|golpe|aguila|birdie|par|bogey)\b|\b(score|gross|golpe|aguila|birdie|par|bogey)\b.*\b(borr|elimin|quit|cambi|corrig|rectific|equivoc)\w*\b/,pages:[7,21,32,58],weight:150},
     {name:"borrar todos los scores",match:/\bborrar\b.*\b(todo|todos|scores|ronda)\b|\breiniciar\b.*\bscores\b/,pages:[27],weight:75},

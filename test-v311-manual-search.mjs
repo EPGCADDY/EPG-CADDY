@@ -21,6 +21,7 @@ const pages=query=>searchApi.search(query,entries,{limit:8}).map(item=>item.numb
 
 assert.equal(first("Quiero jugar Stableford"),"04");
 assert.equal(first("Cómo borro un bogey que fue par"),"07");
+assert.equal(first("Cómo corrijo un bogey que fue par"),"21");
 assert.equal(first("Cómo pregunto el acumulado"),"23");
 assert.equal(first("No puedo finalizar la ronda"),"30");
 assert.ok(pages("Quiero consultar yardas slope rating").some(page=>Number(page)>=10&&Number(page)<=16));
@@ -32,6 +33,7 @@ assert.equal(first("¿Cómo se juega Vegas?"),"49");
 assert.equal(first("¿Quién es el Wolf?"),"46");
 assert.equal(first("¿Cómo funcionan los Skins?"),"43");
 assert.equal(first("¿Cuál es el tráfico y la ETA?"),"64");
+assert.equal(first("¿A qué hora puede llover?"),"67");
 
 for(const required of ["manualSearch","manualSearchResults","categoryIndex","manual-search.js","Quiero jugar Stableford","Cómo corrijo un bogey que fue par"]){
   assert.ok(html.includes(required),`Falta el componente de búsqueda: ${required}`);
