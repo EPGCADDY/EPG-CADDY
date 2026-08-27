@@ -1268,3 +1268,9 @@ V349 queda rechazada por la prueba física de las 08:59: el navegador transcribi
 
 Archivos exactos V350: `index-grupal.html`, `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta; el candidato requiere build, navegador y prueba física iPhone.
 
+## V351 · Safari XIV y separación correcta de jugadores · 27 de agosto de 2026
+
+V350 queda rechazada por la prueba física de las 14:16. Safari convirtió “catorce” en `XIV`; el parser lo trató como nombre y escribió `JAIME XIV BLANCAS JORGE · 6 · AZULES` en una sola fila. V351 agrega romanos canónicos I–LIV únicamente al parser de hándicap del Registro. La frase real `Jaime xiv blancas Jorge seis azules` produce dos jugadores: Jaime, 14, Blanco; Jorge, 6, Azul. La `X` operacional del score permanece fuera de esta conversión.
+
+Archivos exactos V351: `index-grupal.html`, `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta; falta build, navegador y prueba física iPhone.
+

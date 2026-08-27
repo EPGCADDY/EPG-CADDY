@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V349 RECHAZADA EN IPHONE A LAS 08:59; V350 convierte Registro de jugadores en ruta local exclusiva y admite conectores naturales antes de marcas; requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
+**Estado:** V350 RECHAZADA EN IPHONE A LAS 14:16; V351 interpreta números romanos generados por Safari dentro del hándicap y conserva separados los jugadores; requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -202,7 +202,9 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - **Fallo físico V348:** el respaldo entregó transcripción a las 08:36, pero la lista repetida fue rechazada, se desvió a respuestas generales y un error de precedencia ocultó el diagnóstico real bajo `PROCESANDO…`.
 - **Control V349:** acepta repeticiones idénticas, entiende “otro jugador”, muestra el mensaje real y reinicia cualquier lock al volver a tocar.
 - **Fallo físico V349:** a las 08:59 mostró `RESPONDIENDO`, no llenó jugadores y desvió el dictado a respuestas generales, que informó saldo agotado.
-- **Control V350:** el micrófono de Registro de jugadores nunca sale hacia AI UNIVERSAL; admite “hándicap catorce y marcas blancas”, registra telemetría aplicada/rechazada desde cliente y termina localmente con resultado o instrucción.
+- **Control V350:** el micrófono de Registro de jugadores nunca sale hacia AI UNIVERSAL; admite conectores naturales, registra telemetría aplicada/rechazada desde cliente y termina localmente con resultado o instrucción.
+- **Fallo físico V350:** Safari convirtió “catorce” en `XIV`; el parser lo incorporó al nombre y aplicó `JAIME XIV BLANCAS JORGE · 6 · AZULES` en una sola fila.
+- **Control V351:** interpreta romanos canónicos I–LIV sólo como hándicap de registro, reproduce `Jaime XIV blancas Jorge seis azules` y mantiene la `X` de score fuera de esta conversión.
 - **Orden de ejecución:** registrar estas tres correcciones y retomarlas después de continuar con la configuración y prueba de SKINS, WOLF, VEGAS y DOTS.
 
 - **Candado de privacidad V312:** no hay activación automática, huella de voz ni reconocimiento biométrico; el jugador debe abrir primero el micrófono con el botón.

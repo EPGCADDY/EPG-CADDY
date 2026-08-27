@@ -1543,3 +1543,14 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 | `test-v336-microphone-transport.mjs` | `UNCONDITIONAL-LOCAL-RETURN` | Prohíbe `looksLikeSetupRosterTranscript(clean)` dentro del flujo de respaldo y exige retorno antes de cualquier ruta general. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-022` | V349 queda rechazada; V350 permanece pendiente de Preview y PASS físico. |
 
+## V351-SAFARI-ROMAN-HANDICAP · corte físico 14:16
+
+| Archivo exacto | Control V351 | PASS obligatorio |
+|---|---|---|
+| `index-grupal.html` | `CANONICAL-ROMAN-HANDICAP` | I, VI, XIV, XXI, XL y LIV se convierten en 1, 6, 14, 21, 40 y 54 sólo durante el registro. |
+| `index-grupal.html` | `TWO-PLAYER-SPLIT` | `Jaime XIV blancas Jorge seis azules` se divide después de la primera marca y genera dos filas. |
+| `index-grupal.html` | `INVALID-ROMAN-REJECT` | IIV, VX, LV, MIX y XIVX no se aceptan como romanos canónicos. |
+| `test-v305-registration-guides-parser-truth.mjs` | `PHYSICAL-TRANSCRIPT-REGRESSION` | Ejecuta la transcripción observada y exige Jaime/14/Blanco + Jorge/6/Azul. |
+| `test-v305-registration-guides-parser-truth.mjs` | `GLOBAL-X-NEGATIVE` | `parseSpanishNumberTokens(["x"],0)` sigue devolviendo null. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-023` | V350 queda rechazada; V351 permanece pendiente de Preview y PASS físico. |
+
