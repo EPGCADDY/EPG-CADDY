@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V350 RECHAZADA EN IPHONE A LAS 14:16; V351 interpreta números romanos generados por Safari dentro del hándicap y conserva separados los jugadores; requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
+**Estado:** V350 RECHAZADA EN IPHONE A LAS 14:16; V351 interpreta números romanos generados por Safari dentro del hándicap. V351-R1 corrige el fallo individual `hoyo uno + score` que no se reflejaba visualmente; requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -205,6 +205,10 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - **Control V350:** el micrófono de Registro de jugadores nunca sale hacia AI UNIVERSAL; admite conectores naturales, registra telemetría aplicada/rechazada desde cliente y termina localmente con resultado o instrucción.
 - **Fallo físico V350:** Safari convirtió “catorce” en `XIV`; el parser lo incorporó al nombre y aplicó `JAIME XIV BLANCAS JORGE · 6 · AZULES` en una sola fila.
 - **Control V351:** interpreta romanos canónicos I–LIV sólo como hándicap de registro, reproduce `Jaime XIV blancas Jorge seis azules` y mantiene la `X` de score fuera de esta conversión.
+- **Fallo recuperado hoyo 1:** en una ronda de un jugador, `hoyo uno, cuatro` no tenía jugador por defecto antes del primer recordatorio y podía salir de la ruta de score sin escribir la tarjeta.
+- **Control V351-R1:** usa como jugador implícito únicamente al único jugador activo; una ronda grupal jamás adivina. El banco ejecuta escritor, persistencia y render visible del hoyo 1, y el respaldo de score no habla durante el registro.
+- **Control V351-R2:** en Safari/iOS, si Web Speech está disponible, el reconocimiento se inicia dentro del toque antes de cualquier espera remota. Esto elimina la ruta observada 429 → gesto vencido → cierre inmediato; la prueba física iPhone sigue obligatoria.
+- **Clima visible V351-R2:** la Score Card móvil eleva la condición meteorológica de 7.7 px a 10.5 px con 40 px de altura mínima; Registro usa 11 px/44 px. El proveedor y el refresco siguen siendo Open-Meteo y no dependen del micrófono.
 - **Orden de ejecución:** registrar estas tres correcciones y retomarlas después de continuar con la configuración y prueba de SKINS, WOLF, VEGAS y DOTS.
 
 - **Candado de privacidad V312:** no hay activación automática, huella de voz ni reconocimiento biométrico; el jugador debe abrir primero el micrófono con el botón.

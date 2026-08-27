@@ -91,7 +91,8 @@ assert.match(html,/const saveManualHole=\(\)=>\{[\s\S]*?manualScoreEntry\(input\
 assert.doesNotMatch(html,/const saveManualHole=\(\)=>\{[\s\S]*?round\.players\.every\(player=>manualHoleResult/);
 assert.match(html,/function stablefordGrossAt\(tokens,start,hole\)\{return readOperationalScoreAt\(tokens,start,hole\)\}/);
 assert.match(html,/parseRoundScoreTranscript=function\(transcript,options=\{\}\)[\s\S]*?baseParseRoundScoreTranscript\(transcript,merged\)/);
-assert.match(html,/defaultPlayer:options\.defaultPlayer\?\?operationalPromptPlayer\(\)/,"General y Stableford deben aceptar la respuesta contextual al recordatorio");
+assert.match(html,/defaultPlayer:options\.defaultPlayer\?\?operationalDefaultPlayer\(defaultHole\)/,"General y Stableford deben aceptar la respuesta contextual y el único jugador activo");
+assert.match(html,/function operationalDefaultPlayer\(hole=currentOperationalHole\(\)\)[\s\S]*?active\.length===1\?active\[0\]:null/,"El atajo sin nombre sólo puede elegir un jugador cuando no existe ambigüedad");
 assert.match(html,/roundLiveOperationalHole/);
 assert.match(html,/INGRESO OFICIAL · HOYO \$\{selectedHole\} · NOMBRE \+ SCORE · X = SIN DATO/);
 assert.match(html,/const ROUND_MISSING_IDLE_MS=2000/);

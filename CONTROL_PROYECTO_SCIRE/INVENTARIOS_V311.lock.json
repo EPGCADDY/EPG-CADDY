@@ -1,23 +1,23 @@
 {
-  "version": "V351-SAFARI-ROMAN-HANDICAP",
-  "generatedAt": "2026-08-27T20:39:42Z",
-  "sourceFileCount": 349,
-  "sourceDigest": "569ee609a46a056c445678158bc491efecc663fd10c1c67e52e7fa65d607315f",
+  "version": "V351-R2-IOS-TOUCH-HOLE1-RENDER",
+  "generatedAt": "2026-08-27T22:55:19Z",
+  "sourceFileCount": 350,
+  "sourceDigest": "da001063356868fd3a8b55bb3c207c182265ff83381fa8175b6f50de2038569c",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 165201,
-      "sha256": "446cbfcafcee33bbf76a9c68bd7f212b5c90c88eb59581a63e37ada3968fc483"
+      "size": 174406,
+      "sha256": "bd34086ec3389fa9276b96e6a9cdc703a40971cc59aca6471e8488bab9b7a890"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 182660,
-      "sha256": "3ac0c7ee3f2a53a7590859288ce6b0276b0eb64f6cc804706ace142e057c64cf"
+      "size": 193775,
+      "sha256": "12357b2e6c6baf2e635ecf013fb533a3537dc0adbbf41aca70b0cb2ac164dbaa"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19260964,
-      "sha256": "3c749ffb51978eba1914934c365ffc937b8209e06730425308020c066ca869e5"
+      "size": 19260979,
+      "sha256": "dd43a9c816adb91f1e6da263e0855a72d96cb896f01f84d15586b3c36a3a57f5"
     }
   ]
 }

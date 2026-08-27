@@ -1558,3 +1558,34 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 Corrección de rutas V351: se eliminaron las rutas temporales erróneas `tests/test-v305-registration-guides-parser-truth.mjs` y `tests/test-v336-microphone-transport.mjs`; las pruebas activas permanecen en la raíz como `test-v305-registration-guides-parser-truth.mjs` y `test-v336-microphone-transport.mjs`. También se eliminaron las copias raíz temporales de los dos controles SCIRE. El árbol final conserva 349 fuentes activas más el sello.
 
 Sello V351: la huella del inventario se recalculó con el orden binario exacto que usa `scripts/inventory-gate.mjs`; no cambia el alcance funcional ni las 349 fuentes activas.
+
+## V351-R1-HOLE1-VOICE-RENDER · corte recuperado del micrófono individual · 27 de agosto de 2026
+
+| Archivo exacto | Control V351-R1 | PASS obligatorio |
+|---|---|---|
+| `index-grupal.html` | `SINGLE-ACTIVE-PLAYER-DEFAULT` | En una ronda individual, `hoyo uno, cuatro` produce Jaime/hoyo 1/Gross 4; en una ronda grupal la misma frase sin nombre se rechaza. |
+| `index-grupal.html` | `FALLBACK-SCORE-SILENT` | El score reconocido por el micrófono alternativo usa el escritor local y no reproduce una confirmación hablada durante el registro. |
+| `test-v351-r1-hole1-voice-score-render.mjs` | `PHYSICAL-FAILURE-REGRESSION` | Ejecuta parser, escritor oficial, `persist`, `render` y HTML visible `data-round-hole="1"` con valor 4. |
+| `test-v270-consecutive-hole-voice-blocks.mjs` | `OPERATIONAL-DEFAULT-GUARD` | Conserva recordatorios contextuales y prohíbe asignación implícita con varios jugadores. |
+| `audit-project.mjs` | `BANK-95` | Añade la prueba exacta al banco integral sin retirar controles previos. |
+| `scripts/rebuild-inventory-pdfs.py` | `V351-R1-INVENTORY-CUT` | Elimina rótulos obsoletos V345 y genera sello, fecha, tamaños y SHA-256 actuales. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-024` | Registra defecto, causa, escape, candado y estado físico pendiente. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | `PEND-VOZ-003` | Separa el score del hoyo 1 del fallo de registro Safari XIV y del módulo LIVE. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V351-R1` | Identifica funciones, banco y regenerador. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Registran esta modificación en el mismo corte. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V351-R1` | Sella todas las fuentes activas y los tres PDF restaurados. |
+
+## V351-R2-IOS-TOUCH · apertura sincrónica del micrófono · 27 de agosto de 2026
+
+| Archivo exacto | Control V351-R2 | PASS obligatorio |
+|---|---|---|
+| `index-grupal.html` | `IOS-GESTURE-SAFE-VOICE` | iPhone/iPad con Web Speech abre el micrófono dentro del toque, antes de esperar WebRTC o `/api/session-grupal`. |
+| `index-grupal.html` | `SAME-OFFICIAL-WRITERS` | Registro y Score procesan la transcripción por las mismas funciones locales; no se crea un segundo escritor. |
+| `test-v336-microphone-transport.mjs` | `GESTURE-BEFORE-AWAIT` | La llamada a `gestureSafeBrowserVoicePreferred()` y `startBrowserVoiceFallback(context)` aparece antes de `await ensureSession()`. |
+| `scripts/rebuild-inventory-pdfs.py` | `V351-R2-INVENTORY-CUT` | Regenera los tres PDF con el corte y hashes actuales. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-025` | Conserva el 429 observado, la caducidad del gesto como escape y la prueba física pendiente. |
+| `index-grupal.html` | `MOBILE-WEATHER-VISIBLE` | La Score Card mantiene clima a 10.5 px/40 px y Registro a 11 px/44 px en pantallas de hasta 800 px. |
+| `test-v312-general-caddie.mjs` | `WEATHER-MOBILE-MINIMUMS` | Bloquea el regreso al rótulo meteorológico de 7.7 px que no era legible en iPhone. |
+| `test-v267-scorecard-combination-matrix.mjs` | `LEGACY-GATE-MIGRATION` | La matriz histórica exige `operationalDefaultPlayer(defaultHole)` y la frontera estricta de un único jugador activo. |
+
+Artefactos externos restaurados: `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf` e `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`. Producción no cambia; Preview y prueba física iPhone siguen siendo puertas separadas.

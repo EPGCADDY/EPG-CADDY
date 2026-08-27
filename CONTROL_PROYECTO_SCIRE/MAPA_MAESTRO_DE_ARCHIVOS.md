@@ -775,3 +775,24 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `test-v336-microphone-transport.mjs` | `V351-VOICE-GUARD` | Conserva Registro local, matriz exacta y telemetría privada. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-023` | Registra captura, eventos 20:16:56 UTC, causa, escape y puerta física pendiente. |
 
+## V351-R1-HOLE1-VOICE-RENDER · score individual visible desde el hoyo 1
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `SINGLE-ACTIVE-PLAYER-DEFAULT` | `hoyo uno, cuatro` asigna el score al único jugador activo; dos o más jugadores continúan requiriendo nombre. |
+| `index-grupal.html` | `FALLBACK-SCORE-SILENT` | El reconocimiento alternativo escribe el score y vuelve a estado inactivo sin pronunciar confirmaciones durante el registro. |
+| `test-v351-r1-hole1-voice-score-render.mjs` | `HOLE1-WRITER-PERSIST-RENDER` | Ejecuta la frase recuperada, el escritor oficial, la persistencia y la casilla visual del hoyo 1. |
+| `test-v270-consecutive-hole-voice-blocks.mjs` | `SINGLE-PLAYER-NO-GROUP-GUESS` | Conserva cursor y recordatorio, pero bloquea que una ronda grupal adivine jugador. |
+| `audit-project.mjs` | `95-PACKAGE-BANK` | Incorpora la regresión exacta al banco maestro. |
+| `scripts/rebuild-inventory-pdfs.py` | `CURRENT-INVENTORY-CUT` | Regenera los tres PDF con el corte V351-R1, fuentes, fecha y hashes actuales. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-024` | Conserva causa raíz, punto de escape, control permanente y puerta física iPhone. |
+
+## V351-R2-IOS-TOUCH · micrófono abierto dentro del gesto
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | `gestureSafeBrowserVoicePreferred` detecta iPhone/iPad y `toggleVoice` inicia el reconocimiento alternativo antes del primer `await`. |
+| `test-v336-microphone-transport.mjs` | Bloquea el orden que permitió que un 429 consumiera el gesto de Safari y cerrara el micrófono. |
+| `scripts/rebuild-inventory-pdfs.py` | Sella el corte documental `V351-R2-IOS-TOUCH-HOLE1-RENDER`. |
+| `test-v312-general-caddie.mjs` | Exige altura y tipografía mínima para que la condición meteorológica sea visible en Score Card y Registro móvil. |
+| `test-v267-scorecard-combination-matrix.mjs` | Mantiene la matriz integral alineada con el jugador implícito sólo cuando existe exactamente uno activo. |

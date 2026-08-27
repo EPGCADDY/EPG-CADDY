@@ -105,6 +105,8 @@ assert.match(html,/forecastStartDate,forecastEndDate/,"La consulta futura debe l
 assert.match(html,/Si pregunta a qué hora lloverá, usa rainTiming/,"La segunda pregunta debe contestar la hora de lluvia sin remitir a otra aplicación");
 assert.match(html,/time_period:\{type:"string",enum:\["morning","afternoon","evening","night"\]/,"La herramienta debe distinguir mañana, tarde, atardecer y noche");
 assert.match(html,/\.setup-weather\{position:sticky/,"El clima de Inicio debe seguir visible al desplazarse hasta el micrófono");
+assert.match(html,/gscg-weather-visibility" content="V351-R2-MOBILE-VISIBLE-20260827"/,"La tarjeta debe versionar la visibilidad meteorológica móvil");
+assert.match(html,/@media\(max-width:800px\)\{\.course-weather\{min-height:40px[\s\S]*?font-size:10\.5px[\s\S]*?\.setup-weather\{min-height:44px[\s\S]*?font-size:11px/,"El clima debe ser legible y tener altura visible en iPhone");
 assert.match(html, /V314-ALL-MICROPHONES-UNIVERSAL/, "Falta declarar el Caddie universal en todos los micrófonos");
 assert.match(html, /Abrir Caddie universal o dictar jugadores/, "El micrófono de la primera pantalla debe identificarse como universal");
 assert.match(html, /REGISTRO DE JUGADORES · CADDIE UNIVERSAL/, "La primera pantalla debe explicar la doble función del micrófono");
