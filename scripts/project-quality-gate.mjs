@@ -35,11 +35,29 @@ for(const id of ['G0-02','G0-03','G0-04','G0-05','G0-06','G0-07','G0-08','G0-09'
   if(!gateIds.includes(id))errors.push(`Falta la puerta ${id}.`);
 }
 
+const expectedRepository='EPGCADDY/EPG-CADDY';
 const remote=git(['remote','get-url','origin']);
-if(!/github\.com[/:]EPGCADDY\/EPG-CADDY(?:\.git)?$/i.test(remote))errors.push(`Origen canónico inesperado: ${remote||'ausente'}`);
+const isVercel=Boolean(process.env.VERCEL);
+if(isVercel){
+  const owner=process.env.VERCEL_GIT_REPO_OWNER||'';
+  const slug=process.env.VERCEL_GIT_REPO_SLUG||'';
+  const exposedRepository=owner&&slug?`${owner}/${slug}`:'';
+  if(exposedRepository&&exposedRepository.toLowerCase()!==expectedRepository.toLowerCase()){
+    errors.push(`Repositorio Vercel inesperado: ${exposedRepository}.`);
+  }
+  const exposedCommit=process.env.VERCEL_GIT_COMMIT_SHA||'';
+  const head=git(['rev-parse','HEAD']);
+  if(exposedCommit&&head&&exposedCommit!==head)errors.push(`Vercel declara ${exposedCommit}, pero HEAD es ${head}.`);
+}else if(!/github\.com[/:]EPGCADDY\/EPG-CADDY(?:\.git)?$/i.test(remote)){
+  errors.push(`Origen canónico inesperado: ${remote||'ausente'}`);
+}
 const baseline=matrix.canonical?.productionBaselineCommit||'';
-const originMain=git(['rev-parse','origin/main']);
-if(!baseline||originMain!==baseline)errors.push(`Producción/origin main no coincide con la base protegida ${baseline||'ausente'}.`);
+let protectedMain=git(['rev-parse','origin/main']);
+if(!protectedMain){
+  const canonicalUrl=matrix.canonical?.repository||'https://github.com/EPGCADDY/EPG-CADDY';
+  protectedMain=git(['ls-remote',canonicalUrl,'refs/heads/main']).split(/\s+/)[0]||'';
+}
+if(!baseline||protectedMain!==baseline)errors.push(`Producción/main no coincide con la base protegida ${baseline||'ausente'}; recibido ${protectedMain||'ausente'}.`);
 
 for(const path of ['ROADMAP_OVERALL.md','ROADMAP_A_DETALLE.md','GOLF_SCORE_CARD_GT_PENDING_MATRIX.md','audit-project.mjs','scripts/roadmap-gate.mjs','scripts/inventory-gate.mjs']){
   if(!existsSync(path))errors.push(`Falta archivo de control del proyecto: ${path}`);
@@ -47,4 +65,3 @@ for(const path of ['ROADMAP_OVERALL.md','ROADMAP_A_DETALLE.md','GOLF_SCORE_CARD_
 
 if(errors.length)fail(errors);
 console.log(`PROJECT_QUALITY_GATE PASS controls=${controls.length} inputs=7 gates=11 production=${baseline.slice(0,12)}`);
-

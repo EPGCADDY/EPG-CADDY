@@ -1046,3 +1046,7 @@ Archivos integrados y auditados: `MANUAL_COBERTURA_FUNCIONAL_V311.md`, `manual.h
 La publicación se limita a `v333-manual-operational-preview`. El flujo temporal `.github/workflows/v333-rebuild-preview.yml` reconstruye las 74 láminas y los dos PDF, ejecuta la auditoría integral, guarda el commit final de Preview y se elimina antes de ese commit; no modifica `main` ni Producción.
 
 <!-- V333-REMOTE-FINALIZED -->
+
+## V333-R1 · candado reproducible en Vercel
+
+El primer Preview del commit V333 fue bloqueado porque el checkout separado de Vercel no expone `origin/main`. La corrección conserva la misma base protegida: valida el repositorio mediante `VERCEL_GIT_REPO_OWNER`/`VERCEL_GIT_REPO_SLUG` cuando están disponibles, comprueba que el SHA declarado coincida con `HEAD` y consulta `refs/heads/main` del repositorio canónico para exigir todavía `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. `scripts/project-quality-gate.mjs`, `test-project-quality-gate.mjs`, ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` quedan sincronizados; Producción no cambia.

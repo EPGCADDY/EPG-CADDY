@@ -1131,3 +1131,12 @@ Candados e inventarios: `scripts/project-quality-gate.mjs`, `test-project-qualit
 Mecanismo temporal de publicación: `.github/workflows/v333-rebuild-preview.yml` reconstruye en GitHub las 74 láminas y los dos PDF desde las fuentes versionadas, ejecuta la auditoría integral, publica sólo `v333-manual-operational-preview` y se elimina antes del commit final. El archivo nunca entra en Producción ni permanece en el candidato terminado.
 
 <!-- V333-REMOTE-FINALIZED -->
+
+## V333-R1 · validación canónica dentro del checkout separado de Vercel
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `scripts/project-quality-gate.mjs` | `VERCEL REPOSITORY / HEAD / REMOTE MAIN` | Acepta la ausencia normal de `origin` sólo dentro de Vercel, rechaza otro repositorio o SHA y consulta la rama `main` canónica para conservar la base protegida. |
+| `test-project-quality-gate.mjs` | `LOCAL + VERCEL + NEGATIVE` | Prueba camino local, checkout Vercel, repositorio incorrecto y control obligatorio ausente. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REGISTRO DOBLE` | Conservan la causa exacta, la corrección y el alcance restringido a Preview. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST V333-R1` | Sella el mismo árbol que vuelve a desplegarse. |
