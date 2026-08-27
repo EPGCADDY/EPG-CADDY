@@ -1137,4 +1137,4 @@ La prueba real del Preview `0aaf45a` confirmó Open-Meteo y redujo la espera, pe
 
 La prueba real del Preview `acd8221` confirmó el día completo y el pico de 99% a las 16:00, pero rechazó la respuesta porque `api/weather.js` resumía la serie de Open-Meteo en ventanas antes de entregarla a AI UNIVERSAL. `api/weather.js` conserva ahora cada hora con probabilidad, precipitación, temperatura, sensación, viento y condición para consultas de un día; `api/universal-ai.js` exige enumerar todas las horas recibidas cuando el usuario pide “por hora”, “por horario” o “a qué hora”. `test-v337-universal-weather.mjs` bloquea cualquier nueva pérdida de la serie. `.github/workflows/v337-weather-r2-finalize.yml` sella y audita el candidato antes de eliminarse. Producción no cambia.
 
-<!-- V337-WEATHER-R2-REMOTE-PENDING -->
+<!-- V337-WEATHER-R2-REMOTE-FINALIZED -->

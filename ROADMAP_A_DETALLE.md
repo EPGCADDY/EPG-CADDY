@@ -1323,4 +1323,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `test-v337-universal-weather.mjs` | `NO-HOURLY-DATA-LOSS` | Exige la serie exacta 06:00, 07:00, 14:00 y 15:00 del proveedor simulado. |
 | `.github/workflows/v337-weather-r2-finalize.yml` | `TEMPORARY-WEATHER-R2-FINALIZE` | Regenera inventario, audita 92 paquetes y se elimina antes del commit final. |
 
-<!-- V337-WEATHER-R2-REMOTE-PENDING -->
+<!-- V337-WEATHER-R2-REMOTE-FINALIZED -->
