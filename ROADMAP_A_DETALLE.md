@@ -1337,3 +1337,13 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v337-weather-close-finalize.yml` | Sella inventario y se elimina antes del commit final. |
 
 <!-- V337-WEATHER-CLOSE-REMOTE-FINALIZED -->
+
+## V337-WEATHER-RETRY · mismo ejecutable, nueva compilación
+
+| Control | Resultado exigido |
+|---|---|
+| Causa | Vercel registró HTTP 429 de la fuente externa de Reglas; no hubo defecto de clima. |
+| Ejecutable | `index-grupal.html`, `api/weather.js` y `api/universal-ai.js` permanecen idénticos al Preview aprobado `6a2f845`. |
+| `.github/workflows/v337-weather-retry-finalize.yml` | Audita 92 paquetes, sella inventario, se elimina y vuelve a publicar únicamente Preview. |
+
+<!-- V337-WEATHER-RETRY-REMOTE-PENDING -->

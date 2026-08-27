@@ -1144,3 +1144,9 @@ La prueba real del Preview `acd8221` confirmó el día completo y el pico de 99%
 El Preview `6a2f845` respondió la misma consulta rechazada sin búsqueda web: Open-Meteo, 27 de agosto de 2026, llovizna ligera, 16.9–27.5 °C, sensación 18–28.4 °C, viento hasta 17.8 km/h, 3 mm, pico 99% a las 16:00 y los 24 porcentajes horarios de 00:00 a 23:00. Recomendó jugar por la mañana y terminar antes de las 14:00. RC-012 queda cerrado con esta evidencia. `.github/workflows/v337-weather-close-finalize.yml` actualiza inventario, audita 92 paquetes y se elimina antes del commit documental final; el ejecutable y Producción permanecen intactos.
 
 <!-- V337-WEATHER-CLOSE-REMOTE-FINALIZED -->
+
+## V337-WEATHER-RETRY · recuperación de límite externo en Vercel
+
+El commit documental `6a3386b` pasó 92/92 en GitHub, pero su Preview falló durante `test-v328-live-official-rules.mjs` porque el proveedor reglamentario devolvió HTTP 429; clima y código no fallaron. `.github/workflows/v337-weather-retry-finalize.yml` reconstruye el mismo ejecutable, vuelve a sellar inventario y repite la auditoría completa antes de eliminarse. No cambia la respuesta meteorológica aprobada ni Producción.
+
+<!-- V337-WEATHER-RETRY-REMOTE-PENDING -->

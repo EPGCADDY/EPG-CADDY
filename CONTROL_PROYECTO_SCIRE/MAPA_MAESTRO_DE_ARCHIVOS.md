@@ -665,6 +665,7 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `api/universal-ai.js`, `test-v337-universal-weather.mjs`, `.github/workflows/v337-weather-r1-finalize.yml` | V337-WEATHER-R1 impide que una franja sugerida por el modelo recorte el día completo si el usuario no pidió mañana, tarde, atardecer o noche. |
 | `api/weather.js`, `api/universal-ai.js`, `test-v337-universal-weather.mjs`, `.github/workflows/v337-weather-r2-finalize.yml` | V337-WEATHER-R2 conserva cada hora y porcentaje de Open-Meteo para responder literalmente consultas por horario. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `.github/workflows/v337-weather-close-finalize.yml` | V337-WEATHER-CLOSE sella la evidencia real de 24 horas y cierra RC-012 sin cambiar el ejecutable. |
+| `.github/workflows/v337-weather-retry-finalize.yml` | Reintento trazado del mismo ejecutable después de que Vercel recibió 429 transitorio en la prueba externa de Reglas. |
 
 ## Cómo usar este inventario
 
