@@ -678,3 +678,9 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 2. Leer la explicación sencilla.
 3. Usar el código para confirmar la versión exacta.
 4. Ver [MAPA_MAESTRO_INFRAESTRUCTURA.md](MAPA_MAESTRO_INFRAESTRUCTURA.md) para ramas, Vercel, Apple, Android y datos.
+
+## V340-SUPPORT · corrección de enlace al Manual por entorno
+
+- `index-grupal.html`: `Support` abre `/manual-scg` dentro del mismo deployment.
+- `test-v311-live-support-link.mjs`: bloquea cualquier escape futuro de Preview hacia Producción.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran la corrección y su alcance.

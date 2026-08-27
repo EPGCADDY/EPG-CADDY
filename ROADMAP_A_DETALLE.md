@@ -1380,3 +1380,13 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | Integridad | 24 horas, 00:00–23:00; pico 99% a las 16:00. |
 | Dependencias | Open-Meteo directo; cero modelo y cero búsqueda web. |
 | Estado | RC-013 cerrado; Producción intacta. |
+
+## V340-SUPPORT · aislamiento Preview/Producción del Manual vivo
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `SAME-DEPLOYMENT-MANUAL` | `Support` usa `/manual-scg`; cada entorno abre su propio Manual sin cruzar a Producción. |
+| `test-v311-live-support-link.mjs` | `NO-PRODUCTION-ESCAPE` | Exige la ruta relativa y rechaza la URL absoluta `https://epg-caddy.vercel.app/manual-scg`. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V340-SUPPORT` | Registra el defecto, la corrección y el candado permanente. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Conservan alcance y protección de Producción. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V340-SUPPORT` | Sella exactamente las fuentes corregidas. |

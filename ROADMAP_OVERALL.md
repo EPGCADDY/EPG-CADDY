@@ -1166,3 +1166,7 @@ La repetición final en el Preview `0684ee8` recibió HTTP 429 en `/api/universa
 ## V339-WEATHER-DIRECT-CLOSE · prueba real final
 
 El Preview `8a62824` quedó READY y respondió la misma consulta completa en aproximadamente 13 segundos de extremo a extremo: Open-Meteo, 16.9–27.5 °C, sensación 18–28.4 °C, viento 17.8 km/h, 3 mm, pico 99% a las 16:00, los 24 porcentajes de 00:00 a 23:00 y recomendación de terminar dos horas antes. La ruta hizo cero llamadas al modelo y no puede caer por su cuota. RC-013 queda cerrado; el ejecutable probado y Producción permanecen intactos.
+
+## V340-SUPPORT · Manual del mismo deployment
+
+El **27 de agosto de 2026** la verificación real del candidato detectó que el enlace fijo `Support` escapaba desde Preview hacia el Manual de Producción. Se reemplaza la URL absoluta por `/manual-scg`, de modo que Preview abre su Manual corregido y Producción conserva el suyo. `test-v311-live-support-link.mjs` rechaza permanentemente cualquier retorno al dominio absoluto de Producción. Producción permanece intacta.
