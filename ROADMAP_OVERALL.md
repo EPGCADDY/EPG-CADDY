@@ -1155,4 +1155,4 @@ El commit documental `6a3386b` pasó 92/92 en GitHub, pero su Preview falló dur
 
 Dos Previews documentales consecutivos fueron rechazados porque la llamada viva de Reglas recibió HTTP 429, aunque GitHub aprobó 92/92 y el ejecutable meteorológico era idéntico al ya probado. `api/golf-rules.js` distingue ahora ese límite con 503, `Retry-After: 60` y `GOLF_RULES_RATE_LIMITED`. `test-v328-official-golf-rules.mjs` bloquea ese contrato de forma determinista. `test-v328-live-official-rules.mjs` continúa bloqueando respuestas incorrectas, fuentes no oficiales, vacío y cambios de score, pero difiere únicamente el caso 429 reconocido en vez de emitir una falsa regresión. `.github/workflows/v338-rules-gate-finalize.yml` actualiza inventario, audita 92 paquetes y se elimina. El clima aprobado y Producción no cambian.
 
-<!-- V338-RULES-GATE-REMOTE-PENDING -->
+<!-- V338-RULES-GATE-REMOTE-FINALIZED -->

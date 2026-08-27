@@ -1357,4 +1357,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `test-v328-live-official-rules.mjs` | `LIVE-WHEN-AVAILABLE` | Sólo difiere el 429 reconocido; una respuesta inválida o no oficial sigue bloqueando la publicación. |
 | `.github/workflows/v338-rules-gate-finalize.yml` | `TEMPORARY-RULES-GATE-FINALIZE` | Sella inventario, ejecuta 92 paquetes y se elimina antes del commit final. |
 
-<!-- V338-RULES-GATE-REMOTE-PENDING -->
+<!-- V338-RULES-GATE-REMOTE-FINALIZED -->
