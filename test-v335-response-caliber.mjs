@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import handler,{isDirectWeatherQuery,universalResponseProfile} from "./api/universal-ai.js";
+import handler,{isDirectWeatherQuery,requestUniversalResponse,universalResponseProfile} from "./api/universal-ai.js";
 import assistant from "./voice-assistant.js";
 
 const api=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
@@ -42,5 +42,27 @@ assert.equal(providerPayload.reasoning.effort,"medium");
 assert.equal(providerPayload.max_output_tokens,3200);
 assert.match(providerPayload.instructions,/Profundidad solicitada para esta respuesta: deep/);
 assert.match(providerPayload.instructions,/fuentes que la aplicación mostrará por separado/);
+
+const retryCalls=[];
+const recovered=await requestUniversalResponse({model:"gpt-5.6",input:[{role:"user",content:"Consulta estratégica"}]},{
+  apiKey:"test-key",deadlineMs:Date.now()+5_000,sleepImpl:async()=>{},fetchImpl:async(_url,options)=>{
+    const body=JSON.parse(options.body);retryCalls.push(body.model);
+    if(retryCalls.length<3)return{ok:false,status:429,headers:{get:name=>name.toLowerCase()==="retry-after"?"0":null},json:async()=>({error:{code:"rate_limit_exceeded"}})};
+    return{ok:true,status:200,headers:{get:()=>null},json:async()=>({output:[{type:"message",content:[{type:"output_text",text:"Respuesta recuperada con calibre completo."}]}]})};
+  }
+});
+assert.equal(recovered.ok,true,"Dos límites 429 deben recuperarse automáticamente");
+assert.deepEqual(retryCalls,["gpt-5.6","gpt-5.4","gpt-5.6"],"La recuperación debe alternar el modelo antes del último reintento");
+
+const exhausted=await requestUniversalResponse({model:"gpt-5.6",input:[{role:"user",content:"Consulta estratégica"}]},{
+  apiKey:"test-key",deadlineMs:Date.now()+5_000,sleepImpl:async()=>{},fetchImpl:async()=>({ok:false,status:429,headers:{get:name=>name.toLowerCase()==="retry-after"?"0":null},json:async()=>({error:{code:"rate_limit_exceeded"}})})
+});
+assert.equal(exhausted.ok,false);
+assert.equal(exhausted.retryable,true);
+assert.equal(exhausted.status,429);
+
+for(const recoveryToken of ["OPENAI_ATTEMPTS","UNIVERSAL_AI_RATE_LIMITED","RECUPERANDO CONEXIÓN CON AI UNIVERSAL ∞"]){
+  assert.ok(api.includes(recoveryToken)||html.includes(recoveryToken),`Falta control permanente de recuperación: ${recoveryToken}`);
+}
 
 console.log("PASS V335 · calibre adaptable: directo, sustantivo, no infantil, con límites, acciones y fuentes");

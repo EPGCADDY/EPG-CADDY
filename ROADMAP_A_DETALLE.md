@@ -1409,3 +1409,16 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `api/universal-ai.js` | `SHOT-WEATHER-BOUNDARY` | Viento dentro de análisis de golpe no activa clima directo. |
 | `test-v335-response-caliber.mjs` | `140-YARD-DEEP` | La consulta compleja llega al modelo profundo. |
 | `test-v337-universal-weather.mjs` | `EXPLICIT-WEATHER-ONLY` | Pronóstico explícito sigue directo; estrategia con viento queda fuera. |
+
+## V342-AI-RESILIENCE · transporte recuperable para respuestas generales
+
+| Archivo exacto | Control | PASS obligatorio |
+|---|---|---|
+| `api/universal-ai.js` | `THREE-ATTEMPT-MODEL-FAILOVER` | Un límite transitorio reintenta `gpt-5.6 → gpt-5.4 → gpt-5.6` dentro de 55 segundos; sólo el agotamiento devuelve 503 reintentable. |
+| `api/universal-ai.js` | `PRIVATE-UPSTREAM-TRACE` | Registra estado, código, modelo, intento y request ID sin pregunta, historial, nombres, audio ni ubicación. |
+| `index-grupal.html` | `TRANSPARENT-CLIENT-RETRY` | Un 503 reintentable conserva una sola pregunta y hace un segundo intento sin exigir repetición al usuario. |
+| `test-v335-response-caliber.mjs` | `TWO-429-THEN-200` | Simula dos 429 consecutivos, exige cambio de modelo y termina en respuesta 200; también prueba el agotamiento seguro. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-016` | Conserva causa, punto de escape, control y cierre pendiente de consulta real. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V342` | Registra el circuito completo de recuperación. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V342` | Sella las fuentes exactas después de los bancos y ambos ROADMAPS. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Documentan el mismo candidato y mantienen Producción en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. |

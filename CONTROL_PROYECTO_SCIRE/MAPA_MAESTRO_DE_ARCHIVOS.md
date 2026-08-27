@@ -686,3 +686,11 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 - `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran la corrección y su alcance.
 - Evidencia final: commit `43dcb2c`, deployment `dpl_4MAeofErPXWFx5dK5QAEoSvycYLT` READY y navegador real sobre el mismo dominio Preview.
 - V341-WEATHER-INTENT: `api/universal-ai.js`, `test-v335-response-caliber.mjs` y `test-v337-universal-weather.mjs` separan pronóstico explícito de estrategia de golpe con viento.
+
+## V342-AI-RESILIENCE · recuperación automática de AI UNIVERSAL
+
+- `api/universal-ai.js`: reintenta límites transitorios, alterna modelos, respeta una espera acotada y devuelve 503 reintentable sólo al agotar la recuperación.
+- `index-grupal.html`: hace un segundo intento transparente sin duplicar la pregunta ni el historial visible.
+- `test-v335-response-caliber.mjs`: reproduce dos HTTP 429 antes de una respuesta 200 y verifica el agotamiento seguro.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-016 registra el defecto, su causa y el candado permanente.
+- `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad y sello reproducible V342.

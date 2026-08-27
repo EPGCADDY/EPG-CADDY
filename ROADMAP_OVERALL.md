@@ -1176,3 +1176,9 @@ El Preview del commit `43dcb2c` quedó READY como `dpl_4MAeofErPXWFx5dK5QAEoSvyc
 ## V341-WEATHER-INTENT · viento estratégico no es pronóstico
 
 La prueba real del commit final detectó que una consulta de estrategia a 140 yardas con viento, agua corta y lie húmedo era desviada al clima directo. `isDirectWeatherQuery()` excluye ahora preguntas analíticas de golpe, palo, bandera, green, carry, lie, dispersión y estrategia: esas llegan a AI UNIVERSAL; el clima explícito continúa directo a Open-Meteo. Las frases exactas quedan fijadas en los bancos V335 y V337. Producción permanece intacta.
+
+## V342-AI-RESILIENCE · recuperación automática del límite 429
+
+El Preview V341 confirmó que la intención estratégica ya llegaba a AI UNIVERSAL, pero el proveedor respondió HTTP 429 y la ruta convirtió una limitación transitoria en 502 sin recuperación. `api/universal-ai.js` instala tres intentos dentro de un plazo total de 55 segundos, alterna `gpt-5.6 → gpt-5.4 → gpt-5.6`, respeta `Retry-After` con espera limitada y registra únicamente estado, código técnico, modelo, intento e identificador de solicitud. Si todos fallan, devuelve 503 reintentable en vez de fingir una respuesta.
+
+`index-grupal.html` conserva una sola pregunta visible y ejecuta un segundo intento transparente únicamente ante ese 503; no duplica el historial ni modifica scores. `test-v335-response-caliber.mjs` demuestra dos 429 consecutivos seguidos por 200 y demuestra también el agotamiento seguro. RC-016 conserva el defecto y su control permanente. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` sellan el candidato. Producción permanece protegida en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` hasta cero FAIL.

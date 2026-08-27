@@ -2434,8 +2434,15 @@ async function submitAiUniversalText(forcedText=""){
     const history=aiUniversalHistory.slice(0,-1).slice(-AI_UNIVERSAL_HISTORY_LIMIT).map(item=>({role:item.role,content:item.content}));
     const requestUniversal=async trafficOrigin=>{
       const endpoint=aiUniversalRulesMode?window.gscgApiUrl("/api/golf-rules"):window.gscgApiUrl("/api/universal-ai");
-      const response=await fetch(endpoint,{method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,appContext:aiUniversalAppContext(trafficOrigin)})});
-      return{response,result:await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}))};
+      const options={method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,appContext:aiUniversalAppContext(trafficOrigin)})};
+      let response=await fetch(endpoint,options),result=await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}));
+      if(!aiUniversalRulesMode&&response.status===503&&result?.retryable){
+        aiUniversalSetState("RECUPERANDO CONEXIÓN CON AI UNIVERSAL ∞…",{busy:true});
+        const waitSeconds=Math.min(5,Math.max(1,Number(response.headers.get("Retry-After")||1)));
+        await new Promise(resolve=>setTimeout(resolve,waitSeconds*1000));
+        response=await fetch(endpoint,options);result=await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}));
+      }
+      return{response,result};
     };
     let{response,result}=await requestUniversal(null);
     if(!aiUniversalRulesMode&&result?.needsCurrentLocation){
