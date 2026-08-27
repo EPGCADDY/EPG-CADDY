@@ -1261,3 +1261,10 @@ El commit `1026a3e6555077fab1af4f8f932e97a7032e0182` quedó READY en Preview com
 - `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran las diez fuentes modificadas.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sella el candidato exacto V349.
 - Producción permanece intacta; el saldo o credencial del proveedor sigue bloqueando respuestas generales.
+
+## V350 · Registro de jugadores local y dictado natural · 27 de agosto de 2026
+
+V349 queda rechazada por la prueba física de las 08:59: el navegador transcribió, mostró `RESPONDIENDO`, no llenó filas y llamó al servicio general, que informó saldo agotado. V350 elimina esa dependencia: dentro de Registro de jugadores toda transcripción termina localmente, sea aplicada o rechazada, y nunca consulta AI UNIVERSAL. El parser admite conectores naturales como “hándicap catorce y marcas blancas”; la telemetría cliente incluye aplicado/rechazado sin contenido hablado.
+
+Archivos exactos V350: `index-grupal.html`, `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta; el candidato requiere build, navegador y prueba física iPhone.
+

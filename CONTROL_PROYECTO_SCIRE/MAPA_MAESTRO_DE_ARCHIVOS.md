@@ -753,3 +753,15 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `index-grupal.html` | `MATRIX-MESSAGE-PRECEDENCE` | Los mensajes personalizados conservan su texto; nunca se convierten en `PROCESANDO…`. |
 | `index-grupal.html` | `LOCK-TOUCH-RECOVERY` | Un nuevo toque limpia bloqueo transitorio de setup y permite reabrir el micrófono. |
 | `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs` | `V349-PERMANENT-REGRESSION` | Ejecutan repetición, gramática visible, frontera de intención, matriz y privacidad. |
+
+## V350-SETUP-LOCAL · Registro de jugadores independiente de respuestas
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `SETUP-LOCAL-ONLY` | En `context=setup`, una transcripción sólo puede aplicar jugadores o mostrar la instrucción de registro; jamás llama `routeAiUniversalAppText` ni `submitAiUniversalText`. |
+| `index-grupal.html` | `NATURAL-TEE-CONNECTORS` | “Hándicap catorce y marcas blancas” y sus conectores naturales llegan a la misma marca canónica. |
+| `index-grupal.html` | `CLIENT-SETUP-TELEMETRY` | El cliente autoriza applied/rejected sin texto hablado, nombres ni ubicación. |
+| `test-v305-registration-guides-parser-truth.mjs` | `NATURAL-DICTATION-REGRESSION` | Ejecuta dos jugadores con “otro jugador” y conectores “y marcas”. |
+| `test-v336-microphone-transport.mjs` | `NO-AI-ESCAPE` | Inspecciona el cuerpo real de `processBrowserVoiceTranscript`, exige retorno local incondicional y eventos cliente. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-022` | Conserva capturas, logs, causa, escape y estado físico pendiente. |
+

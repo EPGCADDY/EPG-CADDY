@@ -1,8 +1,8 @@
 {
-  "version": "V349-ROSTER-ROUTING-STATE-RECOVERY",
-  "generatedAt": "2026-08-27T14:44:15Z",
+  "version": "V350-SETUP-LOCAL-NATURAL-TEE",
+  "generatedAt": "2026-08-27T15:34:39Z",
   "sourceFileCount": 349,
-  "sourceDigest": "b11bfeffefc1a5804f353b9a5c31da405e5719e43bf3f37782b020bc04c437e5",
+  "sourceDigest": "f679d673e5638b9e42435599766c3d7a2c57ef280a07d6fff643e45fb69740f9",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",

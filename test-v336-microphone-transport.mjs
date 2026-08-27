@@ -38,7 +38,13 @@ assert.match(html,/shouldUseBrowserVoiceFallback\(err\)&&fallbackVoiceAvailable\
 assert.match(html,/if\(startBrowserVoiceFallback\(context\)\)/);
 assert.match(html,/processBrowserVoiceTranscript[\s\S]*?setPrimaryVoiceMatrix\("responding",context\)/);
 assert.match(html,/submitAiUniversalText[\s\S]*?setPrimaryVoiceMatrix\("responding",voiceContext\)/);
-assert.match(html,/looksLikeSetupRosterTranscript\(clean\)[\s\S]*?browser_fallback_setup_rejected[\s\S]*?return false/);
+const browserProcessStart=html.indexOf("function processBrowserVoiceTranscript");
+const browserProcessEnd=html.indexOf("\nfunction startBrowserVoiceFallback",browserProcessStart);
+const browserProcess=html.slice(browserProcessStart,browserProcessEnd);
+assert.match(browserProcess,/if\(context==="setup"\)[\s\S]*?browser_fallback_setup_applied[\s\S]*?browser_fallback_setup_rejected[\s\S]*?return false/);
+assert.doesNotMatch(browserProcess,/looksLikeSetupRosterTranscript\(clean\)/);
+assert.ok(browserProcess.indexOf("browser_fallback_setup_rejected")<browserProcess.indexOf("routeAiUniversalAppText(clean)"));
+assert.match(html,/VOICE_HEALTH_EVENTS=new Set\([\s\S]*?"browser_fallback_setup_applied","browser_fallback_setup_rejected"/);
 assert.match(html,/setupFinalizeRequested\|\|setupLocked[\s\S]*?resetSetupCapture\(\)[\s\S]*?LISTO PARA ESCUCHAR/);
 assert.match(html,/failure\.status=rsp\.status/);
 assert.match(html,/setPrimaryVoiceMatrix\("listening",context\)/);
@@ -63,4 +69,4 @@ assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_start_failed",erro
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_applied",transcript:"privado"}),{event:"browser_fallback_setup_applied",build:"",context:"round",turn:0,elapsedMs:0});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_rejected",transcript:"privado"}),{event:"browser_fallback_setup_rejected",build:"",context:"round",turn:0,elapsedMs:0});
 
-console.log("PASS V349 · registro no se desvía, repetición segura y matriz nunca oculta el resultado");
+console.log("PASS V350 · Registro de jugadores permanece local, acepta dictado natural y nunca depende del saldo de respuestas");

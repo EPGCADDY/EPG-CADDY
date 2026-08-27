@@ -25,6 +25,9 @@ assert.deepEqual(repeated.changes.map(({name,handicap,tee})=>({name,handicap,tee
 const guided=generalApi.parseSetupTranscript("Miguel catorce blancas otro jugador Roberto veintiuno azules");
 assert.equal(guided.ok,true);
 assert.deepEqual(guided.changes.map(({name,handicap,tee})=>({name,handicap,tee})),[{name:"Miguel",handicap:14,tee:"Blanco"},{name:"Roberto",handicap:21,tee:"Azul"}]);
+const guidedNatural=generalApi.parseSetupTranscript("Miguel handicap catorce y marcas blancas otro jugador Roberto handicap veintiuno y marcas azules");
+assert.equal(guidedNatural.ok,true);
+assert.deepEqual(guidedNatural.changes.map(({name,handicap,tee})=>({name,handicap,tee})),[{name:"Miguel",handicap:14,tee:"Blanco"},{name:"Roberto",handicap:21,tee:"Azul"}]);
 assert.equal(generalApi.looksLikeSetupRosterTranscript("Miguel catorce blancas"),true);
 assert.equal(generalApi.looksLikeSetupRosterTranscript("¿Cómo puedo ver las yardas del campo?"),false);
 
@@ -54,4 +57,4 @@ assert.match(html,/function generalSetupState\(\)[\s\S]*?\["match_play","four_ba
 assert.match(html,/function updateGeneralSetupValidity\(\)[\s\S]*?button\.disabled=!state\.ready[\s\S]*?aria-disabled/);
 assert.match(html,/#setupOk:disabled,[\s\S]*?#startStablefordRound:disabled\{/);
 
-console.log("PASS V305/V349 · guía literal, repetición segura y dictado de jugadores separado de preguntas");
+console.log("PASS V305/V350 · guía literal, conectores naturales y dictado de jugadores local");

@@ -1531,3 +1531,15 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 - `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran las diez fuentes modificadas.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sella el candidato exacto V349.
 - Producción permanece intacta; el saldo o credencial del proveedor sigue bloqueando respuestas generales.
+
+## V350-SETUP-LOCAL · corte físico 08:59
+
+| Archivo exacto | Control V350 | PASS obligatorio |
+|---|---|---|
+| `index-grupal.html` | `SETUP-LOCAL-ONLY` | Registro aplica filas o devuelve “NO RECONOCÍ EL LISTADO”; no puede alcanzar AI UNIVERSAL ni su saldo. |
+| `index-grupal.html` | `NATURAL-TEE-CONNECTORS` | Acepta “hándicap 14 y marcas blancas” para uno a seis jugadores. |
+| `index-grupal.html` | `CLIENT-SETUP-TELEMETRY` | Emite `browser_fallback_setup_applied` o `browser_fallback_setup_rejected` sin datos privados. |
+| `test-v305-registration-guides-parser-truth.mjs` | `PHRASE-0859-CLASS` | Ejecuta dos jugadores, “otro jugador” y conectores naturales. |
+| `test-v336-microphone-transport.mjs` | `UNCONDITIONAL-LOCAL-RETURN` | Prohíbe `looksLikeSetupRosterTranscript(clean)` dentro del flujo de respaldo y exige retorno antes de cualquier ruta general. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-022` | V349 queda rechazada; V350 permanece pendiente de Preview y PASS físico. |
+
