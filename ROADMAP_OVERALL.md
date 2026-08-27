@@ -1050,3 +1050,7 @@ La publicación se limita a `v333-manual-operational-preview`. El flujo temporal
 ## V333-R1 · candado reproducible en Vercel
 
 El primer Preview del commit V333 fue bloqueado porque el checkout separado de Vercel no expone `origin/main`. La corrección conserva la misma base protegida: valida el repositorio mediante `VERCEL_GIT_REPO_OWNER`/`VERCEL_GIT_REPO_SLUG` cuando están disponibles, comprueba que el SHA declarado coincida con `HEAD` y consulta `refs/heads/main` del repositorio canónico para exigir todavía `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. `scripts/project-quality-gate.mjs`, `test-project-quality-gate.mjs`, ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` quedan sincronizados; Producción no cambia.
+
+## V333-R2 · dependencias del auditor en Preview
+
+El segundo intento alcanzó el auditor y fue bloqueado porque el constructor Vercel no incluía `numpy`. `vercel.json` instala de forma explícita `numpy`, `pillow`, `pypdf` y `reportlab` junto con las dependencias Node; `test-v290-brand-icons-cleanup.mjs` exige que las cuatro permanezcan declaradas. Son las mismas dependencias que generan y revisan las 74 páginas y los PDF. Ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran el cambio; no modifica la aplicación ni Producción.

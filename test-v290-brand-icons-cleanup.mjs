@@ -41,7 +41,10 @@ assert.match(html,/\$\("startStablefordRound"\)\.textContent="OK"/);
 assert.match(stable,/JUGADORES DETECTADOS · REVISA Y PRESIONA OK/);
 assert.doesNotMatch(stable,/PRESIONA INICIAR RONDA/);
 assert.equal(release.buildNumber,307);
-assert.equal(vercel.installCommand,"npm install --omit=dev");
+assert.match(vercel.installCommand,/^npm install --omit=dev && python3 -m pip install /);
+for(const dependency of ["numpy","pillow","pypdf","reportlab"]){
+  assert.match(vercel.installCommand,new RegExp(`(?:^|\\s)${dependency}(?:\\s|$)`));
+}
 assert.equal(manifest.name,"Golf Score Card GT");
 for(const size of ["192x192","512x512"])assert.ok(manifest.icons.some(icon=>icon.sizes===size&&icon.type==="image/png"&&icon.purpose==="any"));
 for(const icon of [

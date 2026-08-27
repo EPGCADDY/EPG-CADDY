@@ -1140,3 +1140,12 @@ Mecanismo temporal de publicación: `.github/workflows/v333-rebuild-preview.yml`
 | `test-project-quality-gate.mjs` | `LOCAL + VERCEL + NEGATIVE` | Prueba camino local, checkout Vercel, repositorio incorrecto y control obligatorio ausente. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REGISTRO DOBLE` | Conservan la causa exacta, la corrección y el alcance restringido a Preview. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST V333-R1` | Sella el mismo árbol que vuelve a desplegarse. |
+
+## V333-R2 · dependencias reproducibles del control editorial
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `vercel.json` | `NODE + PYTHON AUDIT DEPENDENCIES` | Instala `numpy`, `pillow`, `pypdf` y `reportlab` antes de ejecutar los candados editorial, visual y PDF. |
+| `test-v290-brand-icons-cleanup.mjs` | `DEPENDENCY CONFIG GATE` | Exige que el constructor conserve las cuatro dependencias Python del auditor. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REGISTRO DOBLE` | Conservan el bloqueo exacto y la corrección limitada al constructor Preview. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST V333-R2` | Sella la configuración que vuelve a desplegarse. |
