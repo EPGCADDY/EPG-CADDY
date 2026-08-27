@@ -1598,3 +1598,15 @@ Evidencia Neon principal: aprobación expresa recibida; migración aplicada corr
 |---|---|---|
 | `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs` | Exigían literalmente `V332-DUAL-CURRENCY-MATRIX-20260826` como build general y rechazaban V352 antes de ejecutar su función histórica. | Aceptan cualquier identificador general válido `V###`; cada prueba mantiene sus controles funcionales y `test-v352-live.mjs` exige el build exacto V352. |
 | `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v312-general-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs`, `test-v328-offline-official-rules.mjs`, `test-v329-skins.mjs`, `test-v330-side-games.mjs` | Congelaban `service-worker.js` en `gscg-mobile-v332-dual-currency-matrix` e impedían invalidar el shell para V352. | Exigen una caché versionada `gscg-mobile-v###`; `test-v352-live.mjs` exige exactamente `gscg-mobile-v352-live` y el nuevo control. |
+
+### V352-PREVIEW-R1 · rechazo preventivo del webhook vacío
+
+| Evidencia | Resultado |
+|---|---|
+| Rama GitHub | `v352-live` |
+| Commit funcional | `54242fa2352dc3b8d7fd233197403a54b65a720d` |
+| Commit técnico sin cambio de árbol | `0e19b4cf11d904b23423db617292653de66a7226` |
+| Deployment rechazado | `dpl_8ncVihJ46TWXqrMrWmKWgmcurbWh` · `ERROR` |
+| Causa reproducible | `FAIL ROADMAP GATE`: el commit técnico no modificó `ROADMAP_OVERALL.md` ni `ROADMAP_A_DETALLE.md`. |
+| Impacto | Cero Preview publicado; código y Producción intactos. |
+| Corrección R1 | Registrar el intento en ambos ROADMAPS, regenerar `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` y desplegar desde un commit que contenga las tres modificaciones. |
