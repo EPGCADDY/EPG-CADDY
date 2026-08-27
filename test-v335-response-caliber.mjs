@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import handler,{universalResponseProfile} from "./api/universal-ai.js";
+import handler,{isDirectWeatherQuery,universalResponseProfile} from "./api/universal-ai.js";
 import assistant from "./voice-assistant.js";
 
 const api=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
@@ -13,6 +13,7 @@ assert.deepEqual(universalResponseProfile("Gracias"),{reasoningEffort:"low",maxO
 assert.deepEqual(universalResponseProfile("¿Qué ventajas tiene caminar el campo?"),{reasoningEffort:"medium",maxOutputTokens:2400,depth:"standard"});
 assert.deepEqual(universalResponseProfile("Analiza a fondo las opciones, riesgos y alternativas antes de recomendarme una decisión."),{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"});
 const complexGolfQuestion="Analiza cómo el viento cruzado, la humedad y la elevación afectan la selección de palo para un golpe de 140 yardas. Compara riesgos y dame una recomendación.";
+assert.equal(isDirectWeatherQuery(complexGolfQuestion),false,"Una consulta estratégica con viento debe llegar al modelo, no al pronóstico");
 assert.equal(assistant.parse(complexGolfQuestion).id,"course_info","La prueba debe reproducir el secuestro anterior por la palabra yardas");
 assert.equal(commandShouldRemainLocal(complexGolfQuestion,assistant.parse(complexGolfQuestion)),false,"Una consulta analítica debe llegar al modelo aunque contenga yardas");
 assert.equal(commandShouldRemainLocal("¿Cómo puedo ver las yardas del campo?",assistant.parse("¿Cómo puedo ver las yardas del campo?")),true,"Una consulta corta y explícita de la aplicación debe seguir local");

@@ -11,6 +11,8 @@ assert.equal(weatherTimePeriodFromQuery("¿A qué hora lloverá mañana?"),"","M
 assert.equal(weatherTimePeriodFromQuery("¿Lloverá por la mañana?"),"morning");
 assert.equal(weatherTimePeriodFromQuery("¿Cómo estará esta tarde?"),"afternoon");
 assert.equal(isDirectWeatherQuery("¿A qué hora lloverá hoy?"),true);
+assert.equal(isDirectWeatherQuery("¿Cuánto viento habrá mañana en El Pulté?"),true);
+assert.equal(isDirectWeatherQuery("Analiza si conviene atacar una bandera a 140 yardas con viento de frente, agua corta y lie húmedo; compara riesgos y alternativas."),false,"Viento como factor de estrategia no debe secuestrar AI Universal");
 assert.match(weatherForecastDateForQuery("¿A qué hora lloverá hoy?"),/^20\d{2}-\d{2}-\d{2}$/);
 
 assert.deepEqual(sanitizeUniversalAppContext({

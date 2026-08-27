@@ -1172,3 +1172,7 @@ El Preview `8a62824` quedó READY y respondió la misma consulta completa en apr
 El **27 de agosto de 2026** la verificación real del candidato detectó que el enlace fijo `Support` escapaba desde Preview hacia el Manual de Producción. Se reemplaza la URL absoluta por `/manual-scg`, de modo que Preview abre su Manual corregido y Producción conserva el suyo. `test-v311-live-support-link.mjs` rechaza permanentemente cualquier retorno al dominio absoluto de Producción. Producción permanece intacta.
 
 El Preview del commit `43dcb2c` quedó READY como `dpl_4MAeofErPXWFx5dK5QAEoSvycYLT`. En navegador real, `Support` abrió `/manual-scg` en el mismo dominio, mostró 74 páginas y llevó `#pagina-20` a `DICTA LOS GOLPES DEL HOYO`; las páginas 20 y 21 cargaron a 2160 × 4320 y conservaron el orden didáctico aprobado. RC-014 queda cerrado. Producción no cambió.
+
+## V341-WEATHER-INTENT · viento estratégico no es pronóstico
+
+La prueba real del commit final detectó que una consulta de estrategia a 140 yardas con viento, agua corta y lie húmedo era desviada al clima directo. `isDirectWeatherQuery()` excluye ahora preguntas analíticas de golpe, palo, bandera, green, carry, lie, dispersión y estrategia: esas llegan a AI UNIVERSAL; el clima explícito continúa directo a Open-Meteo. Las frases exactas quedan fijadas en los bancos V335 y V337. Producción permanece intacta.

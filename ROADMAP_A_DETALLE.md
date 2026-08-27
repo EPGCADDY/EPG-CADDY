@@ -1401,3 +1401,11 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | Manual | 74 páginas; página 20 y 21 cargadas a 2160 × 4320. |
 | Orden | Dictado → corrección → Gross/HDCP/Neto → OUT/IN/TOTAL. |
 | Estado | RC-014 cerrado; Producción intacta. |
+
+## V341-WEATHER-INTENT · frontera entre pronóstico y estrategia
+
+| Archivo | Control | PASS obligatorio |
+|---|---|---|
+| `api/universal-ai.js` | `SHOT-WEATHER-BOUNDARY` | Viento dentro de análisis de golpe no activa clima directo. |
+| `test-v335-response-caliber.mjs` | `140-YARD-DEEP` | La consulta compleja llega al modelo profundo. |
+| `test-v337-universal-weather.mjs` | `EXPLICIT-WEATHER-ONLY` | Pronóstico explícito sigue directo; estrategia con viento queda fuera. |

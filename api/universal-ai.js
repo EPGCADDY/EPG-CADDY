@@ -29,7 +29,12 @@ export function weatherTimePeriodFromQuery(query){
 }
 
 export function isDirectWeatherQuery(query){
-  return /\b(clima|tiempo meteorologico|lluvia|llov\w*|temperatura|sensacion termica|viento|weather|rain\w*|temperature|wind)\b/i.test(String(query||"").normalize("NFD").replace(/[\u0300-\u036f]/g,""));
+  const text=String(query||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  const mentionsWeather=/\b(clima|pronostico|tiempo meteorologico|lluvia|llov\w*|temperatura|sensacion termica|viento|weather|forecast|rain\w*|temperature|wind)\b/.test(text);
+  if(!mentionsWeather)return false;
+  const shotContext=/\b(yardas?|palo|palos|golpe|bandera|green|carry|lie|dispersion|swing|trayectoria|estrategia|atacar|agua corta)\b/.test(text);
+  const analyticalIntent=/\b(analiza|analisis|afecta|conviene|compara|comparacion|riesgos?|recomienda|recomendacion|seleccion|mecanismo|alternativa)\b/.test(text);
+  return !(shotContext&&analyticalIntent);
 }
 
 function guatemalaDate(offsetDays=0){
