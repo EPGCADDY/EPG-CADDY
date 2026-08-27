@@ -1468,3 +1468,7 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `TRACE / DIGEST / HONEST STATUS` | Regeneran y sellan el inventario V345 y mantienen Producción intacta. |
 
 La lámina `docs/manual/v311/manual-scg-escritorio-4k.png` permanece como artefacto de descarga y no vuelve a usarse como icono. El cierre de RC-018 exige abrir los dos accesos del nuevo Preview desde Safari, agregarlos a la pantalla de inicio y comprobar físicamente que Golf Score muestra la placa cromada y Manual SCG la placa con el rótulo MANUAL.
+
+### V345-ICONS-R1 · nombres literales en el ROADMAP general
+
+El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado correctamente por `scripts/roadmap-gate.mjs`: faltaban en `ROADMAP_OVERALL.md` las seis rutas binarias V345 y `manifest.webmanifest` escritas de manera literal. R1 añade únicamente esos siete nombres al registro general, vuelve a sellar el inventario y conserva sin cambios los iconos, la aplicación, el Manual y Producción.

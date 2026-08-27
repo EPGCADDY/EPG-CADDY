@@ -1201,6 +1201,12 @@ La evidencia física del propietario rechazó los accesos instalados: el Manual 
 
 V345 crea seis recursos RGB sin transparencia y con nombres nuevos: 180×180 para iPhone y 192×192/512×512 para los manifiestos de Golf Score y Manual SCG. El Manual usa el logo oficial en primer plano y el rótulo `MANUAL`; los dos accesos son visualmente distintos. `index-grupal.html` y `manual.html` declaran `sizes` explícito, favicon y Apple Touch Icon; `manual.webmanifest` recibe identidad propia; `service-worker.js` precarga los seis archivos y `vercel.json` entrega manifiestos sin caché e iconos versionados inmutables.
 
+Rutas exactas de los recursos nuevos y manifiesto modificado: `assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png`, `assets/official-logos/golf-score-card-gt-pwa-v345-192.png`, `assets/official-logos/golf-score-card-gt-pwa-v345-512.png`, `docs/manual/v311/manual-scg-apple-touch-v345-180.png`, `docs/manual/v311/manual-scg-pwa-v345-192.png`, `docs/manual/v311/manual-scg-pwa-v345-512.png` y `manifest.webmanifest`.
+
 `test-v345-home-icons.mjs` decodifica los PNG, exige dimensiones exactas, RGB, SHA distintos y menos de 55% de blanco en el icono del Manual; también comprueba HTML, manifiestos, Service Worker y encabezados. Las puertas históricas V281, V290 y V311 se actualizan al mismo contrato. `scripts/rebuild-inventory-pdfs.py` identifica y sella el mismo corte V345. RC-018 permanece abierto hasta comprobar la instalación real desde el Preview. Producción continúa en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
 
 Estado operativo asociado: micrófono y respuestas generales conservan banco automático de continuidad, interrupción, eco, recuperación y calibre, pero RC-007 sigue abierto hasta una conversación física larga en iPhone. Clima directo ya aprobó una consulta real de 24 horas con Open-Meteo; siguen abiertos snapshots, artefactos y contraste físico de campo. Tráfico directo V344 aprobó el banco sin IA; su repetición real de Preview y la comparación simultánea contra Waze siguen pendientes.
+
+### V345-ICONS-R1 · ROADMAP remoto
+
+El deployment `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue rechazado antes de publicación porque `ROADMAP_OVERALL.md` agrupaba seis archivos binarios y `manifest.webmanifest` sin escribir sus rutas literales. La corrección anterior incorpora los siete nombres exactos; no cambia PNG, HTML, manifiestos, lógica ni Producción.

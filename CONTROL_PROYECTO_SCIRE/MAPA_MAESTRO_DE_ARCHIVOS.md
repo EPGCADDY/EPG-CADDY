@@ -720,3 +720,5 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 - `test-v281-pwa-installation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v311-manual-hosting.mjs`, `audit-project.mjs`: integración del control V345 al banco maestro.
 - `REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-018 conserva el defecto que alcanzó al propietario y la puerta física pendiente.
 - `scripts/rebuild-inventory-pdfs.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: regeneración, estado, inventario y sello del candidato V345.
+
+V345-ICONS-R1: el primer build remoto fue bloqueado porque el ROADMAP general no contenía siete rutas literales. Ambos ROADMAPS las registran ahora; no existe cambio funcional adicional.
