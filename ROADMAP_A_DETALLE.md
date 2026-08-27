@@ -1219,3 +1219,14 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v334-m1-web-nav-finalize.yml` | `TEMPORARY-WEB-NAV-FINALIZE` | Regenera inventarios, audita y se elimina antes del commit desplegable. |
 
 <!-- V334-M1-R4-REMOTE-FINALIZED -->
+
+## V334-M1-R5 · sincronía entre ancla, lámina e indicador
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `manual.html` | `VIEWPORT-REFERENCE-PAGE` | Selecciona como activa la primera lámina que atraviesa la línea útil del visor; un residuo superior no gobierna el encabezado. |
+| `test-v311-manual-hosting.mjs` | `STALE-HEADER-GATE` | Impide volver al observador que elegía sólo entre entradas modificadas. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Registra el defecto visible, su causa y el control. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V334-M1-R5` | Sella el candidato exacto de Preview. |
+
+<!-- V334-M1-R5-REMOTE-PENDING -->

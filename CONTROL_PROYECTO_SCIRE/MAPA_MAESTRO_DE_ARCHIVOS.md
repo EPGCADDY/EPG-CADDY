@@ -651,6 +651,7 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `.github/workflows/v334-m1-finalize-preview.yml` | Flujo temporal: reconstruye, audita y se elimina antes del commit final de Preview. |
 | `manual.html`, `test-v311-manual-hosting.mjs` | V334-M1-R4 reserva proporción 1:2 y evita que un enlace directo retroceda por carga diferida. |
 | `.github/workflows/v334-m1-web-nav-finalize.yml` | Flujo temporal R4: actualiza sello, audita y se elimina antes del commit final. |
+| `manual.html`, `test-v311-manual-hosting.mjs` | V334-M1-R5 sincroniza encabezado y contador con la lámina que ocupa el área útil del visor. |
 
 ## Cómo usar este inventario
 

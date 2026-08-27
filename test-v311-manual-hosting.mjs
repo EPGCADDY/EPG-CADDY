@@ -29,6 +29,8 @@ assert.match(html,/pageIndex\.scrollTo\(\{left:Math\.max\(0,left\),behavior:"smo
 assert.match(html,/history\.replaceState\(null,"",`#\$\{pageId\(destination\)\}`\)/,"Cada destino debe quedar fijado por su ancla");
 assert.match(html,/searchInput\.blur\(\);[\s\S]*?requestAnimationFrame\(\(\)=>go\(destination\)\)/,"El buscador debe soltar el teclado antes de navegar");
 assert.match(html,/initialMatch=location\.hash\.match\(\/\^#pagina-\(\\d\{2\}\)\$\//,"Un enlace directo debe abrir la página indicada");
+assert.match(html,/function syncCurrentToViewport\(\)/,"El indicador debe sincronizarse con la página visible completa");
+assert.match(html,/getBoundingClientRect\(\)\.bottom>reference/,"El indicador no debe conservar la página anterior por un residuo visual");
 assert.ok(fs.statSync(pdf).size>100000,"El PDF completo debe estar alojado en el proyecto");
 assert.match(fs.readFileSync(pdf,"latin1"),/\/Count\s+74\b/,"El PDF debe contener portada más 73 páginas funcionales");
 assert.match(fs.readFileSync(pdf,"latin1"),/\/Outlines\b/,"El PDF debe contener navegación interna por páginas");
