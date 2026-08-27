@@ -11,7 +11,7 @@ permissions:
 
 concurrency:
   group: v333-manual-operational-preview
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   finalize:
