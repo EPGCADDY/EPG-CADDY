@@ -1490,3 +1490,7 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 - `index-grupal.html`: clasifica HTTP 429 como límite del servicio, activa reconocimiento de voz alternativo cuando está disponible y muestra `ESCUCHANDO` / `RESPONDIENDO` en la matriz principal.
 - `test-v336-microphone-transport.mjs`: deja de aceptar el diagnóstico falso de Internet y bloquea regresiones del respaldo y de ambos estados visibles.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello recalculado para esta modificación atómica.
+
+## V346-R1 · Corrección determinista del sello de inventario · 27 de agosto de 2026
+
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: recalculado con el mismo orden lexicográfico de Node usado por `scripts/inventory-gate.mjs`.

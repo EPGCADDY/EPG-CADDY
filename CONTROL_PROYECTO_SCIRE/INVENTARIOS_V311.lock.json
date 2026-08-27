@@ -1,8 +1,8 @@
 {
-  "version": "V346-MICROPHONE-FALLBACK",
-  "generatedAt": "2026-08-27T12:48:26Z",
+  "version": "V346-R1-MICROPHONE-FALLBACK",
+  "generatedAt": "2026-08-27T12:52:21Z",
   "sourceFileCount": 349,
-  "sourceDigest": "c8d606eb7f3ee06ad06d5013e871bdab6117a331adc608e98f360b178934bb63",
+  "sourceDigest": "1e6ec548229e019a1b51684ac08be37d92dbb1828f62162b4c51e07b6e9f608b",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
