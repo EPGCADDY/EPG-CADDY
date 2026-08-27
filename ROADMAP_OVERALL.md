@@ -1090,3 +1090,9 @@ La inspección del Preview `6778d6ff30482c4ed9dbf94eb35f228047f35982` rechazó l
 La comprobación real de R4 confirmó que `#pagina-20` ya muestra la lámina 20, pero rechazó el encabezado porque todavía podía conservar “PÁGINA 19” cuando sólo quedaban 58 píxeles de la lámina anterior. `manual.html` calcula la página activa desde una línea de referencia dentro del área útil, y `test-v311-manual-hosting.mjs` exige ese criterio. `.github/workflows/v334-m1-header-finalize.yml` regenera el inventario, audita el SHA exacto y se elimina antes del commit final. El cambio no altera imágenes, PDF ni Producción.
 
 <!-- V334-M1-R5-REMOTE-FINALIZED -->
+
+## V334-M1-R6 · geometría estable en la sección completa
+
+La prueba de cinco anclas en el Preview `8a13f97a3fb007e2b6d3f94cb124de8958656dd4` volvió a rechazar el Manual: reservar proporción sólo en la imagen no evitó que la sección cambiara de altura durante la descarga diferida. `manual.html` fija ahora la relación 1:2 en cada `.manual-page` y obliga a la imagen a ocupar esa caja con `height:100%` y `object-fit:contain`. `test-v311-manual-hosting.mjs` exige la geometría del contenedor. `.github/workflows/v334-m1-layout-finalize.yml` sella, audita y se elimina antes del commit final. Producción permanece intacta.
+
+<!-- V334-M1-R6-REMOTE-PENDING -->

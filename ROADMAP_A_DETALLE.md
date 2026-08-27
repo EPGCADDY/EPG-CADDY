@@ -1231,3 +1231,14 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v334-m1-header-finalize.yml` | `TEMPORARY-HEADER-FINALIZE` | Actualiza el sello, audita el SHA exacto y se elimina antes del commit desplegable. |
 
 <!-- V334-M1-R5-REMOTE-FINALIZED -->
+
+## V334-M1-R6 · caja de página independiente de la red
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `manual.html` | `SECTION-ASPECT-1x2` | La altura de las 74 secciones existe antes de descargar imágenes; ninguna ancla cambia por carga diferida. |
+| `test-v311-manual-hosting.mjs` | `CONTAINER-GEOMETRY-GATE` | Exige relación 1:2 en sección y ocupación completa de la imagen. |
+| `.github/workflows/v334-m1-layout-finalize.yml` | `TEMPORARY-LAYOUT-FINALIZE` | Actualiza inventario, audita el SHA exacto y se elimina antes del commit desplegable. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V334-M1-R6` | Sella el candidato exacto. |
+
+<!-- V334-M1-R6-REMOTE-PENDING -->

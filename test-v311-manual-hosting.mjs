@@ -18,6 +18,8 @@ assert.match(html,/Cómo corrijo un bogey que fue par/);
 assert.match(html,/apple-mobile-web-app-title" content="MANUAL SCG"/);
 assert.match(html,/page-\$\{item\.number\}\.png/);
 assert.match(html,/\.manual-page img\{[^}]*aspect-ratio:1 \/ 2/,"Las páginas deben reservar su altura 2160×4320 antes de cargar para que el enlace exacto no salte");
+assert.match(html,/\.manual-page\{[^}]*aspect-ratio:1 \/ 2/,"La sección completa debe reservar la geometría 1:2 y no depender de la descarga de la imagen");
+assert.match(html,/\.manual-page img\{[^}]*height:100%[^}]*object-fit:contain/,"La imagen debe ocupar la geometría estable de su sección");
 assert.ok(html.indexOf('<main class="manual" id="manual">')<html.indexOf('<section class="intro">'),"La portada visual debe aparecer antes del compendio");
 assert.match(html,/index===0\?"":`<span class="label">\$\{item\.label\}<\/span>`/,"La portada no debe mostrar la etiqueta PORTADA");
 assert.match(html,/title\.textContent=current===0\?"":/,"La portada no debe mostrar un título superpuesto");
