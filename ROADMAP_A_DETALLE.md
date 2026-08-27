@@ -1289,3 +1289,16 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v336-mic-finalize.yml` | `TEMPORARY-MIC-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit final. |
 
 <!-- V336-MIC-REMOTE-FINALIZED -->
+
+## V337-WEATHER · proveedor meteorológico único y verificable
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `api/weather.js` | `SHARED-WEATHER-COMPUTE` | El endpoint y AI UNIVERSAL reutilizan la misma consulta Open-Meteo y el mismo resumen horario. |
+| `api/universal-ai.js` | `WEATHER-TOOL-ONLY` | Clima usa `get_current_weather`; no usa búsqueda web ni mezcla proveedores; la síntesis conserva hora pico y porcentajes. |
+| `index-grupal.html` | `PUBLIC-COURSE-WEATHER-ORIGIN` | El texto entrega nombre y coordenadas públicas del campo seleccionado sin exponer GPS personal. |
+| `test-v337-universal-weather.mjs`, `audit-project.mjs` | `92-PACKAGE-BANK` | Simula herramienta, Open-Meteo y síntesis; exige proveedor, fecha, hora pico, porcentaje y cero búsquedas posteriores. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-006-CLOSED / RC-012` | Cierra tráfico con evidencia real y mantiene clima abierto hasta su prueba real de Preview. |
+| `.github/workflows/v337-weather-finalize.yml` | `TEMPORARY-WEATHER-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit desplegable. |
+
+<!-- V337-WEATHER-REMOTE-PENDING -->

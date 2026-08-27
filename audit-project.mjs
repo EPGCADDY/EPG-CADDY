@@ -57,6 +57,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v328-official-golf
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v328-offline-official-rules.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v335-response-caliber.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v336-microphone-transport.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v337-universal-weather.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v329-skins.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v330-side-games.mjs');
 for(const file of checks){

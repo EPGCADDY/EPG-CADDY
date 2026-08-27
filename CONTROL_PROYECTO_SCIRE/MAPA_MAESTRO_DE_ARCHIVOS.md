@@ -659,6 +659,9 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `index-grupal.html`, `test-v335-response-caliber.mjs`, `.github/workflows/v335-ai-routing-finalize.yml` | V335-AI-R1 impide que vocabulario como “yardas” secuestre análisis y recomendaciones destinados a AI UNIVERSAL. |
 | `index-grupal.html`, `api/session-grupal.js`, `api/voice-health.js`, `test-v336-microphone-transport.mjs`, `audit-project.mjs` | V336-MIC distingue causas de apertura, tolera desconexiones breves, limpia transporte fallido y agrega trazas privadas. |
 | `.github/workflows/v336-mic-finalize.yml` | Flujo temporal V336-MIC: actualiza inventario, ejecuta 91 paquetes y se elimina antes del commit desplegable. |
+| `api/weather.js`, `api/universal-ai.js`, `index-grupal.html` | V337-WEATHER unifica clima de texto, voz y tarjeta sobre Open-Meteo estructurado, usando coordenadas públicas del campo y probabilidad por horario. |
+| `test-v337-universal-weather.mjs`, `audit-project.mjs` | Puerta 92: exige llamada meteorológica estructurada, hora pico, porcentaje y síntesis sin segunda búsqueda web. |
+| `.github/workflows/v337-weather-finalize.yml` | Flujo temporal V337-WEATHER: actualiza inventario, ejecuta 92 paquetes y se elimina antes del commit desplegable. |
 
 ## Cómo usar este inventario
 

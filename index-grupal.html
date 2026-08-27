@@ -2413,10 +2413,12 @@ function routeAiUniversalAppText(text){
 }
 function aiUniversalAppContext(trafficOrigin=null){
   const weather=round?.weather||setupWeatherSnapshot||null;
+  const courseKey=COURSE_CATALOG[round?.courseKey]?round.courseKey:(COURSE_CATALOG[draftCourse]?draftCourse:"pulte"),course=COURSE_CATALOG[courseKey];
   return{
-    course:COURSE_CATALOG[round?.courseKey]?.displayName||round?.course||COURSE_CATALOG[draftCourse]?.displayName||"",
+    course:course?.displayName||round?.course||"",
     mode:String(round?.mode||draftRoundMode||"general"),
     weather:weather?{location:weather.location||"",condition:weather.condition||"",observedAt:weather.observedAt||"",temperatureC:weather.temperatureC,feelsLikeC:weather.feelsLikeC,rainProbability:weather.maxRainProbabilityToday,windKmh:weather.windKmh}:null,
+    weatherOrigin:course?.weatherCoordinates?{location:course.weatherLocation,...course.weatherCoordinates}:null,
     trafficOrigin:trafficOrigin?{latitude:trafficOrigin.latitude,longitude:trafficOrigin.longitude}:null
   };
 }

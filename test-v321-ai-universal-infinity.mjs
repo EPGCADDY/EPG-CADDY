@@ -89,7 +89,7 @@ assert.doesNotMatch(html,/localStorage[^\n]{0,120}aiUniversalHistory|aiUniversal
 assert.match(api,/https:\/\/api\.openai\.com\/v1\/responses/);
 assert.match(api,/model:"gpt-5\.6"/);
 assert.match(api,/store:false/);
-assert.match(api,/tools:\[\{type:"web_search",external_web_access:true\},LIVE_TRAFFIC_TOOL\]/);
+assert.match(api,/tools:\[\{type:"web_search",external_web_access:true\},LIVE_TRAFFIC_TOOL,LIVE_WEATHER_TOOL\]/);
 assert.match(api,/tool_choice:"auto"/);
 assert.match(api,/Tu conocimiento no está limitado a una lista/);
 assert.match(api,/Diferencia información confirmada, estimaciones, opiniones e hipótesis/);
@@ -121,6 +121,7 @@ assert.equal(upstreamBody.store,false);
 assert.equal(upstreamBody.tool_choice,"auto");
 assert.ok(upstreamBody.tools.some(tool=>tool.type==="web_search"));
 assert.ok(upstreamBody.tools.some(tool=>tool.name==="get_live_traffic"));
+assert.ok(upstreamBody.tools.some(tool=>tool.name==="get_current_weather"));
 assert.deepEqual(upstreamBody.input.map(item=>item.role),["user","assistant","user"]);
 assert.equal(upstreamBody.input.at(-1).content,"¿Qué cambió hoy?");
 assert.match(upstreamBody.instructions,/El Pulté/);

@@ -250,6 +250,49 @@ export function summarizeWeather(payload, label, options = {}) {
   };
 }
 
+export async function computeWeatherForecast(body = {}) {
+  let latitude = numberInRange(body.latitude, -90, 90);
+  let longitude = numberInRange(body.longitude, -180, 180);
+  let label = String(body.location || "").trim().slice(0, 120) || "ubicación actual";
+  if (latitude == null || longitude == null) {
+    const place = await resolvePlace(body.location);
+    if (!place || place.latitude == null || place.longitude == null) {
+      return { ok: false, needsLocation: true, error: "LOCATION_REQUIRED" };
+    }
+    ({ latitude, longitude, label } = place);
+  }
+  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+  const rawForecastStartDate = String(body.forecastStartDate || body.forecastDate || "").trim();
+  const rawForecastEndDate = String(body.forecastEndDate || rawForecastStartDate).trim();
+  const timePeriod = String(body.timePeriod || "").trim().toLowerCase();
+  if ((rawForecastStartDate && !datePattern.test(rawForecastStartDate)) ||
+      (rawForecastEndDate && !datePattern.test(rawForecastEndDate)) ||
+      (rawForecastStartDate && rawForecastEndDate < rawForecastStartDate) ||
+      (timePeriod && !FORECAST_PERIODS[timePeriod])) {
+    return { ok: false, error: "INVALID_FORECAST_DATE" };
+  }
+  const wantsFutureForecast = Boolean(rawForecastStartDate);
+  const url = new URL("https://api.open-meteo.com/v1/forecast");
+  url.searchParams.set("latitude", String(latitude));
+  url.searchParams.set("longitude", String(longitude));
+  if (wantsFutureForecast) {
+    url.searchParams.set("daily", "weather_code,temperature_2m_min,temperature_2m_max,apparent_temperature_min,apparent_temperature_max,precipitation_sum,precipitation_probability_max,wind_speed_10m_max");
+    url.searchParams.set("hourly", "temperature_2m,apparent_temperature,weather_code,wind_speed_10m,precipitation_probability,precipitation");
+    url.searchParams.set("forecast_days", "16");
+  } else {
+    url.searchParams.set("current", "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m");
+    url.searchParams.set("hourly", "precipitation_probability,precipitation");
+    url.searchParams.set("forecast_days", "1");
+  }
+  url.searchParams.set("timezone", "auto");
+  const payload = await fetchJson(url);
+  return summarizeWeather(payload, label, {
+    forecastStartDate: rawForecastStartDate,
+    forecastEndDate: rawForecastEndDate,
+    timePeriod
+  });
+}
+
 export default async function handler(req, res) {
   if (handleAppPreflight(req, res)) return;
   res.setHeader("Cache-Control", "no-store");
@@ -260,46 +303,7 @@ export default async function handler(req, res) {
   }
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
-    let latitude = numberInRange(body.latitude, -90, 90);
-    let longitude = numberInRange(body.longitude, -180, 180);
-    let label = String(body.location || "").trim().slice(0, 120) || "ubicación actual";
-    if (latitude == null || longitude == null) {
-      const place = await resolvePlace(body.location);
-      if (!place || place.latitude == null || place.longitude == null) {
-        return res.status(422).json({ ok: false, needsLocation: true, error: "LOCATION_REQUIRED" });
-      }
-      ({ latitude, longitude, label } = place);
-    }
-    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    const rawForecastStartDate = String(body.forecastStartDate || body.forecastDate || "").trim();
-    const rawForecastEndDate = String(body.forecastEndDate || rawForecastStartDate).trim();
-    const timePeriod = String(body.timePeriod || "").trim().toLowerCase();
-    if ((rawForecastStartDate && !datePattern.test(rawForecastStartDate)) ||
-        (rawForecastEndDate && !datePattern.test(rawForecastEndDate)) ||
-        (rawForecastStartDate && rawForecastEndDate < rawForecastStartDate) ||
-        (timePeriod && !FORECAST_PERIODS[timePeriod])) {
-      return res.status(422).json({ ok: false, error: "INVALID_FORECAST_DATE" });
-    }
-    const wantsFutureForecast = Boolean(rawForecastStartDate);
-    const url = new URL("https://api.open-meteo.com/v1/forecast");
-    url.searchParams.set("latitude", String(latitude));
-    url.searchParams.set("longitude", String(longitude));
-    if (wantsFutureForecast) {
-      url.searchParams.set("daily", "weather_code,temperature_2m_min,temperature_2m_max,apparent_temperature_min,apparent_temperature_max,precipitation_sum,precipitation_probability_max,wind_speed_10m_max");
-      url.searchParams.set("hourly", "temperature_2m,apparent_temperature,weather_code,wind_speed_10m,precipitation_probability,precipitation");
-      url.searchParams.set("forecast_days", "16");
-    } else {
-      url.searchParams.set("current", "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m");
-      url.searchParams.set("hourly", "precipitation_probability,precipitation");
-      url.searchParams.set("forecast_days", "1");
-    }
-    url.searchParams.set("timezone", "auto");
-    const payload = await fetchJson(url);
-    const summary = summarizeWeather(payload, label, {
-      forecastStartDate: rawForecastStartDate,
-      forecastEndDate: rawForecastEndDate,
-      timePeriod
-    });
+    const summary = await computeWeatherForecast(body);
     return res.status(summary.ok ? 200 : 422).json(summary);
   } catch (error) {
     console.error("weather", error instanceof Error ? error.message : String(error));

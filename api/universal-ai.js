@@ -1,5 +1,6 @@
 import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 import { computeTrafficRoute } from "./_lib/traffic.js";
+import { computeWeatherForecast } from "./weather.js";
 
 const MAX_QUERY_LENGTH=4000;
 // Conserva hasta 40 intercambios completos para que una conversación extensa
@@ -27,6 +28,18 @@ const LIVE_TRAFFIC_TOOL={
     destination:{type:"string",description:"Destino suficientemente específico, incluyendo ciudad o país cuando ayude a desambiguar."},
     departure_time:{type:"string",description:"Hora futura de salida en formato ISO 8601 con zona horaria. Omítela si sale ahora."}
   },required:["destination"],additionalProperties:false}
+};
+
+const LIVE_WEATHER_TOOL={
+  type:"function",
+  name:"get_current_weather",
+  description:"Obtiene clima actual o pronóstico estructurado de Open-Meteo. Úsala exclusivamente para clima, lluvia, temperatura, sensación térmica o viento; no uses búsqueda web para esos datos. Para hoy o una fecha concreta incluye forecast_start_date en YYYY-MM-DD para recibir detalle y probabilidad por horario.",
+  parameters:{type:"object",properties:{
+    location:{type:"string",description:"Lugar del pronóstico. Si el usuario se refiere al campo actual, usa el nombre del campo del contexto."},
+    forecast_start_date:{type:"string",description:"Fecha inicial YYYY-MM-DD. Inclúyela para hoy, mañana o cualquier pronóstico solicitado."},
+    forecast_end_date:{type:"string",description:"Fecha final YYYY-MM-DD; omítela si es el mismo día."},
+    time_period:{type:"string",enum:["morning","afternoon","evening","night"],description:"Franja pedida, sólo si el usuario la especifica."}
+  },required:["location"],additionalProperties:false}
 };
 
 function responseText(payload){
@@ -82,8 +95,12 @@ export function sanitizeUniversalAppContext(value){
   const trafficOrigin=trafficLatitude!==null&&trafficLatitude>=-90&&trafficLatitude<=90&&trafficLongitude!==null&&trafficLongitude>=-180&&trafficLongitude<=180
     ?{latitude:trafficLatitude,longitude:trafficLongitude}
     :null;
-  const context={course:cleanText(source.course,100),mode:cleanText(source.mode,40),weather,...(trafficOrigin?{trafficOrigin}:{})};
-  return context.course||context.mode||context.weather||context.trafficOrigin?context:null;
+  const weatherLatitude=number(source.weatherOrigin?.latitude),weatherLongitude=number(source.weatherOrigin?.longitude);
+  const weatherOrigin=weatherLatitude!==null&&weatherLatitude>=-90&&weatherLatitude<=90&&weatherLongitude!==null&&weatherLongitude>=-180&&weatherLongitude<=180
+    ?{location:cleanText(source.weatherOrigin?.location,120),latitude:weatherLatitude,longitude:weatherLongitude}
+    :null;
+  const context={course:cleanText(source.course,100),mode:cleanText(source.mode,40),weather,...(trafficOrigin?{trafficOrigin}:{}),...(weatherOrigin?{weatherOrigin}:{})};
+  return context.course||context.mode||context.weather||context.trafficOrigin||context.weatherOrigin?context:null;
 }
 
 export default async function handler(req,res){
@@ -116,7 +133,7 @@ export default async function handler(req,res){
           model:"gpt-5.6",
           reasoning:{effort:responseProfile.reasoningEffort},
           store:false,
-          tools:[{type:"web_search",external_web_access:true},LIVE_TRAFFIC_TOOL],
+          tools:[{type:"web_search",external_web_access:true},LIVE_TRAFFIC_TOOL,LIVE_WEATHER_TOOL],
           tool_choice:"auto",
           include:["web_search_call.action.sources"],
           max_output_tokens:responseProfile.maxOutputTokens,
@@ -125,7 +142,8 @@ export default async function handler(req,res){
             "Tu conocimiento no está limitado a una lista, categoría, palabra clave ni respuesta preprogramada. Comprende, relaciona, investiga y responde cualquier tema permitido, existente, nuevo, multidisciplinario o todavía no clasificado.",
             "Interpreta la intención real, conserva el contexto recibido, adapta la profundidad al usuario y responde en su idioma; usa español de forma predeterminada.",
             "Puedes explicar, enseñar, traducir, redactar, corregir, resumir, calcular, comparar, analizar, planificar, programar, generar ideas y orientar decisiones.",
-            "Cuando la consulta dependa de noticias, precios, clima, leyes, productos, resultados, ubicaciones u otro dato cambiante, usa búsqueda web y prioriza fuentes primarias, oficiales y recientes.",
+            "Cuando la consulta dependa de noticias, precios, leyes, productos, resultados, ubicaciones u otro dato cambiante, usa búsqueda web y prioriza fuentes primarias, oficiales y recientes.",
+            "Para clima, lluvia, temperatura, sensación térmica o viento usa exclusivamente get_current_weather, que consulta Open-Meteo. Para hoy, mañana o una fecha concreta envía la fecha YYYY-MM-DD para obtener probabilidad por horario. Nunca mezcles el pronóstico con búsqueda web.",
             "Para tráfico vehicular, congestión, ruta o tiempo de llegada usa exclusivamente get_live_traffic. Puede calcular tráfico actual o una salida futura. Si el destino es un fragmento ambiguo —por ejemplo sólo Concepción— pide una sola aclaración breve de nombre completo, zona o municipio antes de usar la herramienta; no adivines. Nunca presentes una búsqueda web como ETA real ni afirmes que el dato viene de Waze.",
             "Diferencia información confirmada, estimaciones, opiniones e hipótesis. Nunca inventes datos ni presentes una suposición como hecho.",
             "Si falta un dato indispensable, formula solamente una pregunta breve. Si no tienes una herramienta necesaria, dilo y ofrece la mejor alternativa real.",
@@ -147,7 +165,37 @@ export default async function handler(req,res){
     let payload=await upstream.json().catch(()=>null);
     if(!upstream.ok){console.error("universal ai upstream",upstream.status);return res.status(502).json({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"})}
     const trafficCall=(payload?.output||[]).find(item=>item?.type==="function_call"&&item?.name==="get_live_traffic");
-    if(trafficCall){
+    const weatherCall=(payload?.output||[]).find(item=>item?.type==="function_call"&&item?.name==="get_current_weather");
+    if(weatherCall){
+      let args={};try{args=JSON.parse(weatherCall.arguments||"{}")||{}}catch{}
+      const weatherResult=await computeWeatherForecast({
+        location:args.location||appContext?.weatherOrigin?.location||appContext?.course,
+        latitude:appContext?.weatherOrigin?.latitude,
+        longitude:appContext?.weatherOrigin?.longitude,
+        forecastStartDate:args.forecast_start_date,
+        forecastEndDate:args.forecast_end_date,
+        timePeriod:args.time_period
+      });
+      const followupController=new AbortController(),followupTimeout=setTimeout(()=>followupController.abort(),UNIVERSAL_TIMEOUT_MS);
+      try{
+        upstream=await fetch("https://api.openai.com/v1/responses",{
+          method:"POST",signal:followupController.signal,
+          headers:{Authorization:`Bearer ${apiKey}`,"Content-Type":"application/json","OpenAI-Safety-Identifier":"golf-score-card-guatemala-ai-universal-infinity"},
+          body:JSON.stringify({
+            model:"gpt-5.6",reasoning:{effort:"low"},store:false,tools:[],tool_choice:"none",max_output_tokens:1100,
+            instructions:[
+              "Eres AI UNIVERSAL ∞. Responde en el idioma del usuario usando solamente el resultado meteorológico estructurado recibido.",
+              "Si ok es true, menciona lugar, fecha u hora observada, condición, temperatura, sensación térmica, viento y lluvia que existan en el resultado. Si hay rainTiming, indica la hora pico, su porcentaje y las ventanas con sus porcentajes máximos.",
+              "Distingue pronóstico de observación, identifica Open-Meteo como proveedor y no mezcles ni inventes cifras. Si falta un valor, dilo en vez de sustituirlo con una fuente web.",
+              "Si ok es false, informa la limitación concreta en una oración. No incluyas URLs ni coordenadas exactas. Sé directo y accionable."
+            ].join(" "),
+            input:[...input,...(payload?.output||[]),{type:"function_call_output",call_id:weatherCall.call_id,output:JSON.stringify(weatherResult)}]
+          })
+        });
+      }finally{clearTimeout(followupTimeout)}
+      payload=await upstream.json().catch(()=>null);
+      if(!upstream.ok){console.error("universal weather followup",upstream.status);return res.status(502).json({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"})}
+    }else if(trafficCall){
       let args={};try{args=JSON.parse(trafficCall.arguments||"{}")||{}}catch{}
       const trafficResult=await computeTrafficRoute({
         origin:args.origin,
