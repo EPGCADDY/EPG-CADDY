@@ -1206,3 +1206,16 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 <!-- V334-M1-REMOTE-FINALIZED -->
 <!-- V334-M1-REMOTE-REBUILD-R2 -->
 <!-- V334-M1-REMOTE-REBUILD-R3 -->
+
+## V334-M1-R4 · estabilidad de anclas durante carga diferida
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `manual.html` | `IMAGE-ASPECT-2160x4320` | Cada imagen reserva proporción 1:2 antes de descargar; `#pagina-20` no retrocede visualmente a la 17. |
+| `test-v311-manual-hosting.mjs` | `ANCHOR-LAYOUT-SHIFT-GATE` | Exige la reserva de altura además de las 74 imágenes, el PDF y el ancla inicial. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V334-M1-R4` | Registra el defecto descubierto en navegador y el control permanente. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Conservan el rechazo, la causa y la corrección en el mismo cambio. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V334-M1-R4` | Sella el SHA final sin modificar las láminas ni los PDF del Manual. |
+| `.github/workflows/v334-m1-web-nav-finalize.yml` | `TEMPORARY-WEB-NAV-FINALIZE` | Regenera inventarios, audita y se elimina antes del commit desplegable. |
+
+<!-- V334-M1-R4-REMOTE-PENDING -->

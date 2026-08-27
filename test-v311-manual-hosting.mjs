@@ -17,6 +17,7 @@ assert.match(html,/manual-search\.js/);
 assert.match(html,/Cómo corrijo un bogey que fue par/);
 assert.match(html,/apple-mobile-web-app-title" content="MANUAL SCG"/);
 assert.match(html,/page-\$\{item\.number\}\.png/);
+assert.match(html,/\.manual-page img\{[^}]*aspect-ratio:1 \/ 2/,"Las páginas deben reservar su altura 2160×4320 antes de cargar para que el enlace exacto no salte");
 assert.ok(html.indexOf('<main class="manual" id="manual">')<html.indexOf('<section class="intro">'),"La portada visual debe aparecer antes del compendio");
 assert.match(html,/index===0\?"":`<span class="label">\$\{item\.label\}<\/span>`/,"La portada no debe mostrar la etiqueta PORTADA");
 assert.match(html,/title\.textContent=current===0\?"":/,"La portada no debe mostrar un título superpuesto");
@@ -50,4 +51,4 @@ assert.equal(manifest.start_url,"/manual-scg");
 assert.equal(manifest.display,"standalone");
 assert.equal(manifest.icons[0].src,"/docs/manual/v311/manual-scg-escritorio-4k.png");
 
-console.log("PASS V311 · manual web directo, PDF, portada y 73 páginas alojadas");
+console.log("PASS V334 · manual web directo, anclas estables, PDF, portada y 73 páginas alojadas");

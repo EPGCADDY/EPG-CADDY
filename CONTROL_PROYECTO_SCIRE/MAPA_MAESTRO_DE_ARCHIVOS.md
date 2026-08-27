@@ -649,6 +649,8 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-010: falso PASS anterior y control permanente. |
 | `scripts/rebuild-inventory-pdfs.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Trazabilidad, tres inventarios y huella reproducible V334-M1. |
 | `.github/workflows/v334-m1-finalize-preview.yml` | Flujo temporal: reconstruye, audita y se elimina antes del commit final de Preview. |
+| `manual.html`, `test-v311-manual-hosting.mjs` | V334-M1-R4 reserva proporción 1:2 y evita que un enlace directo retroceda por carga diferida. |
+| `.github/workflows/v334-m1-web-nav-finalize.yml` | Flujo temporal R4: actualiza sello, audita y se elimina antes del commit final. |
 
 ## Cómo usar este inventario
 
