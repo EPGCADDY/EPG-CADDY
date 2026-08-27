@@ -37,6 +37,7 @@ jobs:
           python3 scripts/rebuild-manual-bets-live-data.py
           python3 scripts/rebuild-manual-pdf-from-pages.py
           rm .github/workflows/v334-m1-finalize-preview.yml
+          git add -u .github/workflows/v334-m1-finalize-preview.yml
           sed -i 's/V334-M1-REMOTE-PENDING/V334-M1-REMOTE-FINALIZED/' ROADMAP_OVERALL.md ROADMAP_A_DETALLE.md
           python3 scripts/rebuild-inventory-pdfs.py
 
