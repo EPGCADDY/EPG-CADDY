@@ -13,6 +13,7 @@ assert.match(manifest.start_url,/index-grupal\.html/);
 assert.ok(manifest.icons.some(icon=>icon.sizes==="192x192"&&icon.type==="image/png"&&icon.purpose==="any"));
 assert.ok(manifest.icons.some(icon=>icon.sizes==="512x512"&&icon.type==="image/png"&&icon.purpose==="any"));
 assert.match(html,/rel="manifest" href="\/manifest\.webmanifest"/);
+assert.match(html,/apple-touch-icon" sizes="180x180" href="\/assets\/official-logos\/golf-score-card-gt-apple-touch-v345-180\.png"/);
 assert.match(html,/apple-mobile-web-app-capable/);
 assert.match(html,/V281-INSTALLABLE-IOS-ANDROID-OFFLINE/);
 assert.match(html,/id="installAppButton"/);

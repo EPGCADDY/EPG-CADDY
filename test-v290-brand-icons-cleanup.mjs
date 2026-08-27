@@ -12,7 +12,7 @@ const release=JSON.parse(read("mobile-release.json"));
 const vercel=JSON.parse(read("vercel.json"));
 
 assert.match(html,/V290-GOLF-SCORE-CARD-GT-BRAND-ICONS-CLEANUP-20260823/);
-assert.match(html,/apple-touch-icon" href="\/assets\/official-logos\/golf-score-card-gt-apple-touch-180\.png"/);
+assert.match(html,/apple-touch-icon" sizes="180x180" href="\/assets\/official-logos\/golf-score-card-gt-apple-touch-v345-180\.png"/);
 assert.match(html,/\.registration-method \.nr-mic\{width:120px;height:120px;/);
 assert.match(html,/\.registration-method \.nr-mic\{width:112px;height:112px;/);
 assert.match(html,/class="setup-mic-icon"/);
@@ -47,13 +47,16 @@ for(const dependency of ["numpy","pillow","pypdf","reportlab"]){
   assert.match(vercel.installCommand,new RegExp(`(?:^|\\s)${dependency}(?:\\s|$)`));
 }
 assert.equal(manifest.name,"Golf Score Card GT");
-for(const size of ["192x192","512x512"])assert.ok(manifest.icons.some(icon=>icon.sizes===size&&icon.type==="image/png"&&icon.purpose==="any"));
+for(const size of ["192x192","512x512"])assert.ok(manifest.icons.some(icon=>icon.sizes===size&&icon.type==="image/png"&&icon.purpose==="any"&&icon.src.includes("v345")));
 for(const icon of [
   "assets/official-logos/golf-score-card-gt-app-store-1024.png",
   "assets/official-logos/golf-score-card-gt-google-play-512.png",
   "assets/official-logos/golf-score-card-gt-pwa-512.png",
   "assets/official-logos/golf-score-card-gt-pwa-192.png",
-  "assets/official-logos/golf-score-card-gt-apple-touch-180.png"
+  "assets/official-logos/golf-score-card-gt-apple-touch-180.png",
+  "assets/official-logos/golf-score-card-gt-pwa-v345-512.png",
+  "assets/official-logos/golf-score-card-gt-pwa-v345-192.png",
+  "assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png"
 ])assert.ok(fs.existsSync(icon),icon);
 assert.match(worker,/const CACHE_NAME="gscg-mobile-v332-dual-currency-matrix"/);
 assert.match(read("assets/official-logos/README.md"),/Logos oficiales · Golf Score Card GT/);

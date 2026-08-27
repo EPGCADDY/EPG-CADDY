@@ -16,6 +16,7 @@ assert.match(html,/ÍNDICE RÁPIDO/);
 assert.match(html,/manual-search\.js/);
 assert.match(html,/Cómo corrijo un bogey que fue par/);
 assert.match(html,/apple-mobile-web-app-title" content="MANUAL SCG"/);
+assert.match(html,/apple-touch-icon" sizes="180x180" href="\/docs\/manual\/v311\/manual-scg-apple-touch-v345-180\.png"/);
 assert.match(html,/page-\$\{item\.number\}\.png/);
 assert.match(html,/\.manual-page img\{[^}]*aspect-ratio:1 \/ 2/,"Las páginas deben reservar su altura 2160×4320 antes de cargar para que el enlace exacto no salte");
 assert.match(html,/\.manual-page\{[^}]*aspect-ratio:1 \/ 2/,"La sección completa debe reservar la geometría 1:2 y no depender de la descarga de la imagen");
@@ -53,6 +54,8 @@ assert.ok(vercel.redirects.some(item=>item.source==="/manual.pdf"&&item.destinat
 assert.ok(vercel.headers.some(item=>item.source==="/manual.html"&&item.headers.some(header=>header.value.includes("no-store"))));
 assert.equal(manifest.start_url,"/manual-scg");
 assert.equal(manifest.display,"standalone");
-assert.equal(manifest.icons[0].src,"/docs/manual/v311/manual-scg-escritorio-4k.png");
+assert.equal(manifest.id,"/manual-scg");
+assert.ok(manifest.icons.some(icon=>icon.src==="/docs/manual/v311/manual-scg-pwa-v345-192.png"&&icon.sizes==="192x192"));
+assert.ok(manifest.icons.some(icon=>icon.src==="/docs/manual/v311/manual-scg-pwa-v345-512.png"&&icon.sizes==="512x512"));
 
 console.log("PASS V334 · manual web directo, anclas estables, PDF, portada y 73 páginas alojadas");

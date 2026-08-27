@@ -709,3 +709,14 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 - `test-v324-real-traffic.mjs`: prueba cero llamadas a OpenAI, Google Routes único, GPS requerido y destino ambiguo.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-017 conserva el defecto real y su candado.
 - `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad y sello reproducible V344.
+
+## V345-ICONS · accesos de escritorio de Golf Score y Manual
+
+- `assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png`, `golf-score-card-gt-pwa-v345-192.png`, `golf-score-card-gt-pwa-v345-512.png`: derivados RGB versionados del logo oficial para iPhone y PWA.
+- `docs/manual/v311/manual-scg-apple-touch-v345-180.png`, `manual-scg-pwa-v345-192.png`, `manual-scg-pwa-v345-512.png`: iconos dedicados del Manual, con logo visible y rótulo MANUAL.
+- `index-grupal.html`, `manual.html`, `manifest.webmanifest`, `manual.webmanifest`: identidad y rutas exactas de cada acceso instalado.
+- `service-worker.js`, `vercel.json`: precarga de los seis iconos, revalidación de manifiestos y caché inmutable por nombre versionado.
+- `test-v345-home-icons.mjs`: decodifica y verifica tamaño, RGB, densidad visual, diferencias, rutas y encabezados.
+- `test-v281-pwa-installation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v311-manual-hosting.mjs`, `audit-project.mjs`: integración del control V345 al banco maestro.
+- `REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-018 conserva el defecto que alcanzó al propietario y la puerta física pendiente.
+- `scripts/rebuild-inventory-pdfs.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: regeneración, estado, inventario y sello del candidato V345.

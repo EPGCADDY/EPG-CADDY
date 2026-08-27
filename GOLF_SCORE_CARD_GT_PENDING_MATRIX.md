@@ -362,3 +362,10 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 ## Próximo punto obligatorio
 
 La **1. Estabilización física de la voz** permanece en validación de campo. Al obtener PASS físico, la autorización permanente permite montar sin otra consulta y continuar automáticamente con el siguiente pendiente ejecutable. Los bloqueos externos —USGA/ASOGOLF/GHIN, licencias de campos, mapas, tiendas o proveedores— se documentan sin simulación. Ningún punto posterior debe duplicar motores ni separar General, Stableford, manual y voz.
+
+## Corte V345-ICONS · estado verificable
+
+- Golf Score y Manual SCG tienen iconos independientes, RGB y versionados en 180, 192 y 512 px.
+- El banco V345 rechaza un Manual casi blanco y obliga a mantener manifiestos, HTML, Service Worker y caché alineados.
+- RC-018 está corregido en candidato; no se cierra hasta instalar ambos accesos desde el Preview en un iPhone real.
+- Voz física prolongada, artefactos/contraste de clima y repetición real del tráfico V344 continúan abiertos. Producción permanece intacta.

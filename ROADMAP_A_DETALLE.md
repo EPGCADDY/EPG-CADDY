@@ -1448,3 +1448,23 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V344` | Registra fuentes, pruebas y frontera de responsabilidad de tráfico. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V344` | Sella las fuentes exactas después de código, prueba y ambos ROADMAPS. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Conservan el mismo candidato y Producción intacta. |
+
+## V345-ICONS · iconos instalables visibles, distintos y sin caché heredada
+
+| Archivo exacto | Control V345 | Resultado exigido |
+|---|---|---|
+| `assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png` | `APP-IOS-180-RGB` | Logo oficial completo y visible en el acceso de iPhone, sin transparencia y con nombre nuevo. |
+| `assets/official-logos/golf-score-card-gt-pwa-v345-192.png`, `assets/official-logos/golf-score-card-gt-pwa-v345-512.png` | `APP-PWA-VERSIONED` | Manifiesto web 192/512 sin reutilizar el recurso anterior. |
+| `docs/manual/v311/manual-scg-apple-touch-v345-180.png` | `MANUAL-IOS-DENSITY` | Logo oficial en primer plano y rótulo MANUAL; menos de 55% de píxeles casi blancos al tamaño real. |
+| `docs/manual/v311/manual-scg-pwa-v345-192.png`, `docs/manual/v311/manual-scg-pwa-v345-512.png` | `MANUAL-PWA-VERSIONED` | Iconos dedicados 192/512, distintos de Golf Score. |
+| `index-grupal.html`, `manual.html` | `EXPLICIT-ICON-SIZES` | Cada acceso declara favicon 192 y Apple Touch Icon 180 con su propia ruta V345. |
+| `manifest.webmanifest`, `manual.webmanifest` | `DISTINCT-IDENTITY` | IDs, nombres e iconos 192/512 correctos; Manual ya no usa la lámina 4096 mayormente blanca. |
+| `service-worker.js` | `SIX-ICON-PRECACHE` | Los seis recursos V345 quedan disponibles en la instalación y sustituyen las rutas anteriores. |
+| `vercel.json` | `MANIFEST-REVALIDATE / ICON-IMMUTABLE` | Ambos manifiestos revalidan; los nombres V345 pueden almacenarse un año sin quedar obsoletos. |
+| `test-v345-home-icons.mjs` | `PNG-DECODE / DENSITY / ROUTES` | Verifica dimensiones, RGB, densidad, identidad distinta, HTML, manifiestos, Service Worker y hosting. |
+| `test-v281-pwa-installation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v311-manual-hosting.mjs`, `audit-project.mjs` | `93-PACKAGE-BANK` | Integran la regresión nueva sin retirar los controles PWA y Manual anteriores. |
+| `assets/official-logos/README.md` | `OFFICIAL-DERIVATIVES` | Registra los tres derivados versionados de Golf Score. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-018` | Conserva causa, escape, control permanente y cierre físico pendiente. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `TRACE / DIGEST / HONEST STATUS` | Regeneran y sellan el inventario V345 y mantienen Producción intacta. |
+
+La lámina `docs/manual/v311/manual-scg-escritorio-4k.png` permanece como artefacto de descarga y no vuelve a usarse como icono. El cierre de RC-018 exige abrir los dos accesos del nuevo Preview desde Safari, agregarlos a la pantalla de inicio y comprobar físicamente que Golf Score muestra la placa cromada y Manual SCG la placa con el rótulo MANUAL.
