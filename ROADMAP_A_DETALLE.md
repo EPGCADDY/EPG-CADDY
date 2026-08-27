@@ -1302,3 +1302,14 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v337-weather-finalize.yml` | `TEMPORARY-WEATHER-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit desplegable. |
 
 <!-- V337-WEATHER-REMOTE-FINALIZED -->
+
+## V337-WEATHER-R1 · franja explícita, nunca inferida
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `api/universal-ai.js` | `USER-OWNED-TIME-PERIOD` | Sólo el texto del usuario puede limitar morning/afternoon/evening/night; el argumento no solicitado del modelo se descarta. |
+| `test-v337-universal-weather.mjs` | `FULL-DAY-WEATHER-REGRESSION` | Simula `time_period: morning` para “a qué hora lloverá hoy” y exige resumen del día completo. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-012-R1` | Conserva el rechazo del Preview `0aaf45a` hasta una nueva respuesta real completa. |
+| `.github/workflows/v337-weather-r1-finalize.yml` | `TEMPORARY-WEATHER-R1-FINALIZE` | Regenera inventario, audita 92 paquetes y se elimina antes del commit final. |
+
+<!-- V337-WEATHER-R1-REMOTE-PENDING -->

@@ -19,6 +19,15 @@ export function universalResponseProfile(query){
   return{reasoningEffort:"medium",maxOutputTokens:2400,depth:"standard"};
 }
 
+export function weatherTimePeriodFromQuery(query){
+  const text=String(query||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  if(/\b(esta|por la|en la) manana\b|\bthis morning\b/.test(text))return"morning";
+  if(/\b(esta|por la|en la) tarde\b|\bthis afternoon\b/.test(text))return"afternoon";
+  if(/\b(este|al|por el) atardecer\b|\bthis evening\b/.test(text))return"evening";
+  if(/\b(esta|por la|en la) noche\b|\btonight\b|\bthis night\b/.test(text))return"night";
+  return"";
+}
+
 const LIVE_TRAFFIC_TOOL={
   type:"function",
   name:"get_live_traffic",
@@ -174,7 +183,7 @@ export default async function handler(req,res){
         longitude:appContext?.weatherOrigin?.longitude,
         forecastStartDate:args.forecast_start_date,
         forecastEndDate:args.forecast_end_date,
-        timePeriod:args.time_period
+        timePeriod:weatherTimePeriodFromQuery(query)
       });
       const followupController=new AbortController(),followupTimeout=setTimeout(()=>followupController.abort(),UNIVERSAL_TIMEOUT_MS);
       try{

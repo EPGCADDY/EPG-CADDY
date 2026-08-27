@@ -1,12 +1,15 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import handler,{sanitizeUniversalAppContext} from "./api/universal-ai.js";
+import handler,{sanitizeUniversalAppContext,weatherTimePeriodFromQuery} from "./api/universal-ai.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const api=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 assert.match(html,/weatherOrigin:course\?\.weatherCoordinates\?\{location:course\.weatherLocation,\.\.\.course\.weatherCoordinates\}:null/);
 assert.match(api,/Para clima, lluvia, temperatura, sensación térmica o viento usa exclusivamente get_current_weather/);
 assert.match(api,/Nunca mezcles el pronóstico con búsqueda web/);
+assert.equal(weatherTimePeriodFromQuery("¿A qué hora lloverá mañana?"),"","Mañana como fecha no debe recortar el pronóstico a 06:00–11:59");
+assert.equal(weatherTimePeriodFromQuery("¿Lloverá por la mañana?"),"morning");
+assert.equal(weatherTimePeriodFromQuery("¿Cómo estará esta tarde?"),"afternoon");
 
 assert.deepEqual(sanitizeUniversalAppContext({
   course:"El Pulté",weatherOrigin:{location:"El Pulté Golf, Guatemala",latitude:"14.6164777",longitude:-90.4210559}
@@ -25,7 +28,7 @@ globalThis.fetch=async(url,options={})=>{
     })};
   }
   const body=JSON.parse(options.body);providerBodies.push(body);
-  if(providerBodies.length===1)return{ok:true,json:async()=>({output:[{type:"function_call",name:"get_current_weather",call_id:"weather-1",arguments:JSON.stringify({location:"El Pulté Golf, Guatemala",forecast_start_date:"2026-08-27"})}]})};
+  if(providerBodies.length===1)return{ok:true,json:async()=>({output:[{type:"function_call",name:"get_current_weather",call_id:"weather-1",arguments:JSON.stringify({location:"El Pulté Golf, Guatemala",forecast_start_date:"2026-08-27",time_period:"morning"})}]})};
   return{ok:true,json:async()=>({output:[{type:"message",content:[{type:"output_text",text:"Pronóstico Open-Meteo: lluvia más probable a las 15:00, con 90 %."}]}]})};
 };
 process.env.OPENAI_API_KEY="test-key";
@@ -43,6 +46,7 @@ assert.match(weatherUrl,/hourly=temperature_2m%2Capparent_temperature%2Cweather_
 const toolOutput=JSON.parse(providerBodies[1].input.at(-1).output);
 assert.equal(toolOutput.source,"Open-Meteo");
 assert.equal(toolOutput.maxRainProbability,90);
+assert.equal(toolOutput.forecastPeriod,undefined,"El modelo no puede recortar el día si el usuario no pidió una franja");
 assert.equal(toolOutput.rainTiming.peakTime,"15:00");
 assert.equal(toolOutput.rainTiming.peakProbability,90);
 assert.equal(providerBodies[1].tools.length,0,"La síntesis meteorológica no debe volver a buscar en la web");

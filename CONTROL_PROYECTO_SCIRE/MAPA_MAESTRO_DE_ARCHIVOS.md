@@ -662,6 +662,7 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `api/weather.js`, `api/universal-ai.js`, `index-grupal.html` | V337-WEATHER unifica clima de texto, voz y tarjeta sobre Open-Meteo estructurado, usando coordenadas públicas del campo y probabilidad por horario. |
 | `test-v337-universal-weather.mjs`, `audit-project.mjs` | Puerta 92: exige llamada meteorológica estructurada, hora pico, porcentaje y síntesis sin segunda búsqueda web. |
 | `.github/workflows/v337-weather-finalize.yml` | Flujo temporal V337-WEATHER: actualiza inventario, ejecuta 92 paquetes y se elimina antes del commit desplegable. |
+| `api/universal-ai.js`, `test-v337-universal-weather.mjs`, `.github/workflows/v337-weather-r1-finalize.yml` | V337-WEATHER-R1 impide que una franja sugerida por el modelo recorte el día completo si el usuario no pidió mañana, tarde, atardecer o noche. |
 
 ## Cómo usar este inventario
 
