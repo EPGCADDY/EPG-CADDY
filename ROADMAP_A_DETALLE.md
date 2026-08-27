@@ -1205,3 +1205,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 
 <!-- V334-M1-REMOTE-PENDING -->
 <!-- V334-M1-REMOTE-REBUILD-R2 -->
+<!-- V334-M1-REMOTE-REBUILD-R3 -->

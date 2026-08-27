@@ -45,7 +45,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/manual/v311 CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json ROADMAP_OVERALL.md ROADMAP_A_DETALLE.md .github/workflows/v334-m1-finalize-preview.yml
+          git add docs/manual/v311 CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json ROADMAP_OVERALL.md ROADMAP_A_DETALLE.md
           git commit -m "V334-M1 finalize rendered Manual and inventories"
 
       - name: Audit the final SHA
