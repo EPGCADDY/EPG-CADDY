@@ -1610,3 +1610,14 @@ Evidencia Neon principal: aprobación expresa recibida; migración aplicada corr
 | Causa reproducible | `FAIL ROADMAP GATE`: el commit técnico no modificó `ROADMAP_OVERALL.md` ni `ROADMAP_A_DETALLE.md`. |
 | Impacto | Cero Preview publicado; código y Producción intactos. |
 | Corrección R1 | Registrar el intento en ambos ROADMAPS, regenerar `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` y desplegar desde un commit que contenga las tres modificaciones. |
+
+### V352-PREVIEW-R2 · corrección del error remoto `42P18`
+
+| Archivo exacto | Evidencia encontrada | Control R2 |
+|---|---|---|
+| `api/live.js` | El driver HTTP separó cada interpolación; `mutationId` dentro de `jsonb_build_object` quedó sin contexto de tipo y PostgreSQL devolvió `42P18`. | Declara `::text`, `::char(64)` y `::bigint` para todos los parámetros de identidad, secreto y revisión de la CTE. |
+| `test-v352-live.mjs` | El banco temporal usó SQL literal y no reprodujo la inferencia del driver remoto. | Exige los tipos explícitos y prohíbe cualquier aparición sin cast dentro de `publish`. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` | Crear y leer revisión 0 aprobaron; publicar falló en el deployment READY. | Registra el límite honesto y exige repetir crear → leer → publicar → leer → revocar. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | La frontera driver HTTP/PostgreSQL no estaba trazada. | Mapea la causa y el candado permanente. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | R1 no puede presentarse como PASS funcional remoto. | Mantienen Producción intacta y separan READY de E2E PASS. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | El árbol cambia por R2. | Se regenera después de código, prueba y documentación. |

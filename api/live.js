@@ -146,7 +146,7 @@ async function publish(sql,req,body){
     WITH candidate AS MATERIALIZED (
       SELECT *
       FROM live_streams
-      WHERE publisher_secret_hash=${secretHash}
+      WHERE publisher_secret_hash=${secretHash}::char(64)
       FOR UPDATE
     ),
     prepared AS (
@@ -164,8 +164,8 @@ async function publish(sql,req,body){
       SELECT prepared.*,
         CASE
           WHEN status<>'active' OR expires_at<=now() THEN 'LIVE_NOT_ACTIVE'
-          WHEN last_mutation_id=${mutationId} THEN 'DUPLICATE'
-          WHEN revision<>${expected} THEN 'LIVE_REVISION_CONFLICT'
+          WHEN last_mutation_id=${mutationId}::text THEN 'DUPLICATE'
+          WHEN revision<>${expected}::bigint THEN 'LIVE_REVISION_CONFLICT'
           WHEN jsonb_array_length(visible_players)<>jsonb_array_length(selected_player_ids) THEN 'LIVE_PLAYER_SCOPE_MISMATCH'
           ELSE 'APPLY'
         END AS outcome_code
@@ -175,7 +175,7 @@ async function publish(sql,req,body){
       UPDATE live_streams AS stream
       SET current_snapshot=decision.filtered_snapshot,
           revision=decision.revision+1,
-          last_mutation_id=${mutationId},
+          last_mutation_id=${mutationId}::text,
           last_mutation_result=jsonb_build_object(
             'accepted',true,
             'duplicate',false,
@@ -198,7 +198,7 @@ async function publish(sql,req,body){
     ),
     event_log AS (
       INSERT INTO live_events (stream_id,tournament_id,event_type,actor_hash,details)
-      SELECT updated.id,updated.tournament_id,'published',${secretHash},jsonb_build_object('revision',updated.revision,'mutationId',${mutationId})
+      SELECT updated.id,updated.tournament_id,'published',${secretHash}::char(64),jsonb_build_object('revision',updated.revision,'mutationId',${mutationId}::text)
       FROM updated
       RETURNING id
     ),

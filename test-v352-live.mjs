@@ -65,6 +65,11 @@ assert.doesNotMatch(schema,/CREATE\s+(?:OR\s+REPLACE\s+)?FUNCTION/i,"la migraci�
 assert.match(api,/candidate\.selected_player_ids \? \(listed\.player->>'id'\)/,"cada publicación vuelve a filtrar el alcance autorizado");
 assert.match(api,/FOR UPDATE/);
 assert.match(api,/LIVE_PLAYER_SCOPE_MISMATCH/);
+const publishSource=api.slice(api.indexOf("async function publish"),api.indexOf("async function revokeStream"));
+assert.match(publishSource,/\$\{mutationId\}::text/,"Neon HTTP exige tipo explícito para mutationId dentro de jsonb_build_object");
+assert.match(publishSource,/\$\{secretHash\}::char\(64\)/);
+assert.match(publishSource,/\$\{expected\}::bigint/);
+assert.doesNotMatch(publishSource,/\$\{(?:mutationId|secretHash|expected)\}(?!::)/,"ningún parámetro de publicación puede quedar con tipo indeterminado 42P18");
 assert.doesNotMatch(schema,/CHECK\s*\([^)]*(?:group|player)[^)]*<=\s*\d+/i,"no debe existir máximo fijo de grupos o jugadores del torneo");
 assert.match(vercel,/live-control\|live-view/);
 assert.match(worker,/gscg-mobile-v352-live/);

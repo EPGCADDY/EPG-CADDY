@@ -79,6 +79,14 @@ Permitir que una persona sin la aplicación pueda seguir en vivo la Score Card a
 - Aplicación principal: el propietario confirmó la migración; Neon la completó correctamente y eliminó la rama temporal.
 - Verificación principal: cuatro tablas LIVE, 15 índices, cero funciones almacenadas LIVE y cero filas de prueba trasladadas.
 
+## Evidencia Preview V352-R2
+
+- `dpl_3fmsfq4BjuFzMgV3eYKGvPRWzSff` quedó `READY` desde la rama `v352-live`, commit `79398de6ef38939db757618a6dcbc1cc99846db2`.
+- Crear stream y leer revisión 0 aprobaron contra Neon principal.
+- La primera publicación remota reveló `42P18`: el driver HTTP parametrizó por separado valores usados dentro del registro JSON y PostgreSQL no pudo inferir su tipo.
+- V352-R2 declara explícitamente los tipos de `mutationId`, `secretHash` y `expected` en toda la sentencia atómica; `test-v352-live.mjs` impide reintroducir parámetros indeterminados.
+- El stream de diagnóstico se revoca y elimina antes de la repetición. Producción web permanece intacta.
+
 ## Frases para localizar este pendiente
 
 `Live`, `seguir jugador`, `seguir grupo`, `torneo en vivo`, `Score Card remota`, `enlace privado`, `visitante sin aplicación`, `rondas bilaterales`, `sin límite de grupos`, `PEND-LIVE-018`.

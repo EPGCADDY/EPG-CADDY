@@ -1304,3 +1304,7 @@ El mismo control se aplicó al nombre de caché: 16 pruebas conservan la obligac
 ### V352-PREVIEW-R1 · candado remoto correcto
 
 GitHub recibió el candidato V352 en `v352-live`. El primer webhook se activó con un commit sin cambios de árbol (`0e19b4c`) y Vercel lo rechazó correctamente mediante `FAIL ROADMAP GATE`, deployment `dpl_8ncVihJ46TWXqrMrWmKWgmcurbWh`. No se publicó ningún Preview ni cambió Producción. R1 registra el intento en ambos ROADMAPS, vuelve a sellar el inventario y obliga a que el siguiente commit remoto contenga la evidencia documental visible para el candado.
+
+### V352-PREVIEW-R2 · parámetros Neon HTTP con tipo explícito
+
+El deployment R1 `dpl_3fmsfq4BjuFzMgV3eYKGvPRWzSff` quedó READY y permitió la primera prueba contra la base principal. Crear un stream privado y leer su revisión 0 aprobaron; publicar el hoyo 1 devolvió `42P18` porque interpolaciones separadas dentro de `jsonb_build_object` no tenían tipo explícito para PostgreSQL. `api/live.js` ahora tipa `mutationId`, `secretHash` y revisión esperada en toda la sentencia atómica; `test-v352-live.mjs` agrega el candado negativo. También se actualizan `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta.
