@@ -1203,6 +1203,6 @@ Mecanismo temporal de publicación: `.github/workflows/v333-rebuild-preview.yml`
 
 Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 temas; `manual-visual-qc.py` PASS con ocupación funcional 94.2–97.5 % y densidad inferior 41.0–42.7 %; pruebas semántica, búsqueda, voz y hosting PASS. El rubro sólo se cierra después de repetir estos controles en el SHA publicado y verificar el Preview en navegador. Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
 
-<!-- V334-M1-REMOTE-PENDING -->
+<!-- V334-M1-REMOTE-FINALIZED -->
 <!-- V334-M1-REMOTE-REBUILD-R2 -->
 <!-- V334-M1-REMOTE-REBUILD-R3 -->

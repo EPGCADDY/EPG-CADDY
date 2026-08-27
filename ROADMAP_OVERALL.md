@@ -1075,6 +1075,6 @@ Se rechaza el PASS anterior del Manual porque no detectó páginas cargadas arri
 
 El escape queda registrado como RC-010 en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`. `scripts/manual-editorial-qc.py` audita las 57 páginas; `scripts/manual-visual-qc.py` mide también ocupación completa y contenido inferior en todas ellas. `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.json`, `test-v311-manual-semantic-coverage.mjs`, `test-v311-manual-search.mjs`, `test-v311-manual-voice-map.mjs` y `test-v321-ai-universal-infinity.mjs` bloquean la regresión y alinean la IA con los títulos vigentes. `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` sellan el candidato. `.github/workflows/v334-m1-finalize-preview.yml` se usa una sola vez para reconstruir los binarios dentro de GitHub, auditar el SHA final y eliminarse antes del commit desplegable. Producción continúa protegida en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`; V334-M1 no la sustituye.
 
-<!-- V334-M1-REMOTE-PENDING -->
+<!-- V334-M1-REMOTE-FINALIZED -->
 <!-- V334-M1-REMOTE-REBUILD-R2 -->
 <!-- V334-M1-REMOTE-REBUILD-R3 -->
