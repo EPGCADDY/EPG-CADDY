@@ -69,4 +69,4 @@ assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_start_failed",erro
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_applied",transcript:"privado"}),{event:"browser_fallback_setup_applied",build:"",context:"round",turn:0,elapsedMs:0});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_rejected",transcript:"privado"}),{event:"browser_fallback_setup_rejected",build:"",context:"round",turn:0,elapsedMs:0});
 
-console.log("PASS V350 · Registro de jugadores permanece local, acepta dictado natural y nunca depende del saldo de respuestas");
+console.log("PASS V351 · Registro local, matriz exacta y telemetría privada permanecen protegidos");

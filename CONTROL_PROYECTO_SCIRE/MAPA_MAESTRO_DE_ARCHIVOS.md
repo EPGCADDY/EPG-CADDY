@@ -765,3 +765,13 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `test-v336-microphone-transport.mjs` | `NO-AI-ESCAPE` | Inspecciona el cuerpo real de `processBrowserVoiceTranscript`, exige retorno local incondicional y eventos cliente. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-022` | Conserva capturas, logs, causa, escape y estado físico pendiente. |
 
+## V351-SAFARI-ROMAN-HANDICAP · separación de jugadores ante XIV
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `SETUP-ROMAN-I-LIV` | El registro interpreta números romanos canónicos de I a LIV como hándicap cuando Safari los entrega antes de una marca. |
+| `index-grupal.html` | `SCORE-X-ISOLATION` | La conversión romana vive sólo en el parser de setup; `X` no se transforma globalmente en score 10. |
+| `test-v305-registration-guides-parser-truth.mjs` | `JAIME-XIV-JORGE-VI` | La cadena real produce Jaime/14/Blanco y Jorge/6/Azul en dos cambios separados. |
+| `test-v336-microphone-transport.mjs` | `V351-VOICE-GUARD` | Conserva Registro local, matriz exacta y telemetría privada. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-023` | Registra captura, eventos 20:16:56 UTC, causa, escape y puerta física pendiente. |
+

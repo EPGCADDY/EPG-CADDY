@@ -543,7 +543,7 @@ Solicitud: **24 de agosto de 2026**. Alcance: auditar todas las pantallas, confi
 | `test-v290-brand-icons-cleanup.mjs` | Acumulada V305 | Mantiene logo, guía Stableford exacta, paquete y caché bajo el build vigente. |
 | `test-v304-homogeneous-registration-actions.mjs` | Filtro hermano acumulado | Mantiene fuente, tamaño, peso, altura, brillo y estados homologados y prohíbe HDCP o marcas en la guía Stableford. |
 | `test-v305-history-navigation-zero-error.mjs` | Filtro cero errores V305 | Recorre el vocabulario de archivos, botones de retorno, conexiones, estilos, validación Stableford y versiones. |
-| `tests/test-v305-registration-guides-parser-truth.mjs` | Filtro semántico V305 | Ejecuta los analizadores reales, valida el dictado General directo y el Stableford por posición, y compara los estados equivalentes de ambos OK. |
+| `test-v305-registration-guides-parser-truth.mjs` | Filtro semántico V305 | Ejecuta los analizadores reales, valida el dictado General directo y el Stableford por posición, y compara los estados equivalentes de ambos OK. |
 | `vercel.json` | Candado Vercel V305 | Cancela la publicación si falla el filtro V304 o V305. |
 
 ## Punto de corte y norma permanente estricta
@@ -586,7 +586,7 @@ El **24 de agosto de 2026** se incorpora Match Play como extensión aislada de l
 | `audit-project.mjs` | Ejecuta el control V306 dentro de la auditoría maestra. |
 | `.github/workflows/roadmap-gate.yml` | Ejecuta el candado Match Play en GitHub. |
 | `vercel.json` | Exige la prueba V306 y entrega el módulo sin caché obsoleta. |
-| `tests/test-v305-registration-guides-parser-truth.mjs` | Conserva General y añade el requisito exacto de dos jugadores para Match Play. |
+| `test-v305-registration-guides-parser-truth.mjs` | Conserva General y añade el requisito exacto de dos jugadores para Match Play. |
 | `test-v305-history-navigation-zero-error.mjs` | Alinea paquete y caché con V306 sin retirar controles V305. |
 | `test-stableford-ui.mjs` | Alinea únicamente la identificación del build vigente. |
 | `test-v263-compact-players-back-button.mjs` | Conserva el alta de jugadores en General y confirma que Match Play permanezca limitado a exactamente dos. |
@@ -716,7 +716,7 @@ Solicitud: **25 de agosto de 2026**. El nombre permanente de Match Play deja de 
 | `test-v272-definitive-operational-release.mjs` | Contrato de publicación | Comprueba el destino directo de los enlaces públicos. |
 | `test-v270-consecutive-hole-voice-blocks.mjs` | Simulador de voz homologado | Carga el límite operativo por pareja al aislar las funciones de avance de hoyos. |
 | `test-v255-player-registration-boxes-codes.mjs` | Registro visual homologado | Comprueba cuatro espacios disponibles para una o dos parejas en Match Play y Four Ball. |
-| `tests/test-v305-registration-guides-parser-truth.mjs` | Candado del registro homologado | Exige 2 o 4 jugadores en Match Play y Four Ball sin conservar la restricción antigua de solo dos. |
+| `test-v305-registration-guides-parser-truth.mjs` | Candado del registro homologado | Exige 2 o 4 jugadores en Match Play y Four Ball sin conservar la restricción antigua de solo dos. |
 | `test-v311-neutral-match-home-link.mjs` | Candado V311 | Verifica nombre, parejas, líneas separadoras, arriba/abajo en los tres reportes, rutas y persistencia. |
 | `audit-project.mjs` | Auditoría V311 | Ejecuta automáticamente el candado nuevo. |
 | `APP_ARCHITECTURE.md` | Reglas Match/Four Ball e inicio | Define 1/2 parejas, HCP, resultados, separación, voz y entrada sin pérdida. |
@@ -1285,7 +1285,7 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `index-grupal.html` | `ACTIONABLE-MIC-ERROR` | Distingue dispositivo, permiso, timeout y red en lugar de mostrar ERROR genérico. |
 | `api/voice-health.js` | `PRIVATE-CONNECTION-EVENTS` | Registra started/ready/interrupted/failed sin contenido hablado ni ubicación. |
 | `api/session-grupal.js` | `SESSION-RUNTIME-TRACE` | Registra creación, fallo upstream o excepción con contexto y código, sin datos personales. |
-| `tests/test-v336-microphone-transport.mjs`, `audit-project.mjs` | `91-PACKAGE-BANK` | Ejecuta el control nuevo junto con continuidad, eco, watchdogs y 550 secuencias existentes. |
+| `test-v336-microphone-transport.mjs`, `audit-project.mjs` | `91-PACKAGE-BANK` | Ejecuta el control nuevo junto con continuidad, eco, watchdogs y 550 secuencias existentes. |
 | `.github/workflows/v336-mic-finalize.yml` | `TEMPORARY-MIC-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit final. |
 
 <!-- V336-MIC-REMOTE-FINALIZED -->
@@ -1488,7 +1488,7 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 ## V346 · Micrófono real y matriz de estado · 27 de agosto de 2026
 
 - `index-grupal.html`: clasifica HTTP 429 como límite del servicio, activa reconocimiento de voz alternativo cuando está disponible y muestra `ESCUCHANDO` / `RESPONDIENDO` en la matriz principal.
-- `tests/test-v336-microphone-transport.mjs`: deja de aceptar el diagnóstico falso de Internet y bloquea regresiones del respaldo y de ambos estados visibles.
+- `test-v336-microphone-transport.mjs`: deja de aceptar el diagnóstico falso de Internet y bloquea regresiones del respaldo y de ambos estados visibles.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello recalculado para esta modificación atómica.
 
 ## V346-R1 · Corrección determinista del sello de inventario · 27 de agosto de 2026
@@ -1500,7 +1500,7 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 - `index-grupal.html`: coloca la matriz viva junto al micrófono, muestra únicamente `ESCUCHANDO` / `RESPONDIENDO` en rojo parpadeante y presenta el saldo agotado sin culpar a Internet.
 - `api/universal-ai.js`: clasifica `credit_balance_exhausted` como bloqueo no reintentable cuando no existe recuperación administrada.
 - `api/voice-health.js`: registra eventos privados del micrófono alternativo sin contenido hablado.
-- `tests/test-v336-microphone-transport.mjs`: agrega regresiones de posición, texto exacto, diagnóstico de saldo y privacidad.
+- `test-v336-microphone-transport.mjs`: agrega regresiones de posición, texto exacto, diagnóstico de saldo y privacidad.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-019 como abierto hasta credencial/saldo y PASS físico.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta la frontera entre captura, respuesta y proveedor.
 - `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: conserva V346-R1 rechazada y V347 pendiente de prueba física.
@@ -1511,7 +1511,7 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 
 - `index-grupal.html`: activa el reconocimiento alternativo ante cualquier fallo técnico recuperable, conserva aparte permiso/dispositivo y cambia la matriz de `ESCUCHANDO` a `RESPONDIENDO` desde que la transcripción entra al procesamiento.
 - `api/voice-health.js`: agrega eventos privados de solicitud, error y fallo de arranque del respaldo sin texto hablado, nombres ni ubicación.
-- `tests/test-v336-microphone-transport.mjs`: reproduce el fallo local genérico, protege permiso/dispositivo, exige la transición exacta y verifica la privacidad de los eventos.
+- `test-v336-microphone-transport.mjs`: reproduce el fallo local genérico, protege permiso/dispositivo, exige la transición exacta y verifica la privacidad de los eventos.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-020 con la evidencia física de las 07:20/07:21.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta la corrección funcional y el bloqueo externo que permanece.
 - `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: rechaza V347, registra V348 y mantiene abierta la prueba física.
@@ -1523,8 +1523,8 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 
 - `index-grupal.html`: deduplica listados repetidos, entiende “otro jugador”, separa registro de pregunta, evita enviar un registro rechazado a IA, corrige la precedencia de mensajes de matriz y recupera locks con un nuevo toque.
 - `api/voice-health.js`: registra únicamente si el listado alternativo fue aplicado o rechazado, sin contenido hablado ni datos de jugadores.
-- `tests/test-v305-registration-guides-parser-truth.mjs`: reproduce lista completa repetida, “otro jugador” y la frontera entre registro y pregunta.
-- `tests/test-v336-microphone-transport.mjs`: ejecuta la función real de texto de matriz, prohíbe `PROCESANDO` allí, verifica el mensaje exacto y la recuperación.
+- `test-v305-registration-guides-parser-truth.mjs`: reproduce lista completa repetida, “otro jugador” y la frontera entre registro y pregunta.
+- `test-v336-microphone-transport.mjs`: ejecuta la función real de texto de matriz, prohíbe `PROCESANDO` allí, verifica el mensaje exacto y la recuperación.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: rechaza V348 y registra RC-021.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta causa, frontera y candados V349.
 - `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: conserva V348 rechazada y V349 pendiente de prueba física.
@@ -1539,8 +1539,8 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 | `index-grupal.html` | `SETUP-LOCAL-ONLY` | Registro aplica filas o devuelve “NO RECONOCÍ EL LISTADO”; no puede alcanzar AI UNIVERSAL ni su saldo. |
 | `index-grupal.html` | `NATURAL-TEE-CONNECTORS` | Acepta “hándicap 14 y marcas blancas” para uno a seis jugadores. |
 | `index-grupal.html` | `CLIENT-SETUP-TELEMETRY` | Emite `browser_fallback_setup_applied` o `browser_fallback_setup_rejected` sin datos privados. |
-| `tests/test-v305-registration-guides-parser-truth.mjs` | `PHRASE-0859-CLASS` | Ejecuta dos jugadores, “otro jugador” y conectores naturales. |
-| `tests/test-v336-microphone-transport.mjs` | `UNCONDITIONAL-LOCAL-RETURN` | Prohíbe `looksLikeSetupRosterTranscript(clean)` dentro del flujo de respaldo y exige retorno antes de cualquier ruta general. |
+| `test-v305-registration-guides-parser-truth.mjs` | `PHRASE-0859-CLASS` | Ejecuta dos jugadores, “otro jugador” y conectores naturales. |
+| `test-v336-microphone-transport.mjs` | `UNCONDITIONAL-LOCAL-RETURN` | Prohíbe `looksLikeSetupRosterTranscript(clean)` dentro del flujo de respaldo y exige retorno antes de cualquier ruta general. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-022` | V349 queda rechazada; V350 permanece pendiente de Preview y PASS físico. |
 
 ## V351-SAFARI-ROMAN-HANDICAP · corte físico 14:16
@@ -1550,7 +1550,7 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 | `index-grupal.html` | `CANONICAL-ROMAN-HANDICAP` | I, VI, XIV, XXI, XL y LIV se convierten en 1, 6, 14, 21, 40 y 54 sólo durante el registro. |
 | `index-grupal.html` | `TWO-PLAYER-SPLIT` | `Jaime XIV blancas Jorge seis azules` se divide después de la primera marca y genera dos filas. |
 | `index-grupal.html` | `INVALID-ROMAN-REJECT` | IIV, VX, LV, MIX y XIVX no se aceptan como romanos canónicos. |
-| `tests/test-v305-registration-guides-parser-truth.mjs` | `PHYSICAL-TRANSCRIPT-REGRESSION` | Ejecuta la transcripción observada y exige Jaime/14/Blanco + Jorge/6/Azul. |
-| `tests/test-v305-registration-guides-parser-truth.mjs` | `GLOBAL-X-NEGATIVE` | `parseSpanishNumberTokens(["x"],0)` sigue devolviendo null. |
+| `test-v305-registration-guides-parser-truth.mjs` | `PHYSICAL-TRANSCRIPT-REGRESSION` | Ejecuta la transcripción observada y exige Jaime/14/Blanco + Jorge/6/Azul. |
+| `test-v305-registration-guides-parser-truth.mjs` | `GLOBAL-X-NEGATIVE` | `parseSpanishNumberTokens(["x"],0)` sigue devolviendo null. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-023` | V350 queda rechazada; V351 permanece pendiente de Preview y PASS físico. |
 

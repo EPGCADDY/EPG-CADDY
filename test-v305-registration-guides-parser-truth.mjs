@@ -8,7 +8,7 @@ const generalStart=html.indexOf("function normalizeTee(value)");
 const generalEnd=html.indexOf("function applySetupChanges(changes)",generalStart);
 assert.ok(generalStart>0&&generalEnd>generalStart,"No se encontró el analizador General");
 const canonicalPlayerNameKey=value=>String(value||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñ]+/g," ").trim();
-const generalApi=new Function("draftPlayers","rosterAddMode","handicapRectificationMode","round","canonicalPlayerNameKey",`${html.slice(generalStart,generalEnd)};return{parseSetupTranscript,looksLikeSetupRosterTranscript,normalizeSpeech,playerPositionToken,titleName}`)([],false,false,{players:[]},canonicalPlayerNameKey);
+const generalApi=new Function("draftPlayers","rosterAddMode","handicapRectificationMode","round","canonicalPlayerNameKey",`${html.slice(generalStart,generalEnd)};return{parseSetupTranscript,looksLikeSetupRosterTranscript,normalizeSpeech,playerPositionToken,titleName,parseSpanishNumberTokens,parseSetupNumberTokens,romanHandicapValue}`)([],false,false,{players:[]},canonicalPlayerNameKey);
 
 const direct=generalApi.parseSetupTranscript("Jaime catorce blancas Roberto veintiuno azules");
 assert.equal(direct.ok,true);
@@ -28,6 +28,12 @@ assert.deepEqual(guided.changes.map(({name,handicap,tee})=>({name,handicap,tee})
 const guidedNatural=generalApi.parseSetupTranscript("Miguel handicap catorce y marcas blancas otro jugador Roberto handicap veintiuno y marcas azules");
 assert.equal(guidedNatural.ok,true);
 assert.deepEqual(guidedNatural.changes.map(({name,handicap,tee})=>({name,handicap,tee})),[{name:"Miguel",handicap:14,tee:"Blanco"},{name:"Roberto",handicap:21,tee:"Azul"}]);
+const safariRoman=generalApi.parseSetupTranscript("Jaime xiv blancas Jorge seis azules");
+assert.equal(safariRoman.ok,true);
+assert.deepEqual(safariRoman.changes.map(({name,handicap,tee})=>({name,handicap,tee})),[{name:"Jaime",handicap:14,tee:"Blanco"},{name:"Jorge",handicap:6,tee:"Azul"}]);
+for(const [token,value] of [["i",1],["vi",6],["xiv",14],["xxi",21],["xl",40],["liv",54]])assert.deepEqual(generalApi.parseSetupNumberTokens([token],0),{value,next:1});
+for(const token of ["iiv","vx","lv","mix","xivx"])assert.equal(generalApi.romanHandicapValue(token),null);
+assert.equal(generalApi.parseSpanishNumberTokens(["x"],0),null,"La X del score no puede convertirse globalmente en diez");
 assert.equal(generalApi.looksLikeSetupRosterTranscript("Miguel catorce blancas"),true);
 assert.equal(generalApi.looksLikeSetupRosterTranscript("¿Cómo puedo ver las yardas del campo?"),false);
 
@@ -57,4 +63,4 @@ assert.match(html,/function generalSetupState\(\)[\s\S]*?\["match_play","four_ba
 assert.match(html,/function updateGeneralSetupValidity\(\)[\s\S]*?button\.disabled=!state\.ready[\s\S]*?aria-disabled/);
 assert.match(html,/#setupOk:disabled,[\s\S]*?#startStablefordRound:disabled\{/);
 
-console.log("PASS V305/V350 · guía literal, conectores naturales y dictado de jugadores local");
+console.log("PASS V305/V351 · Safari XIV se separa como handicap 14 sin alterar la X del score");
