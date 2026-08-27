@@ -1554,3 +1554,5 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 | `test-v305-registration-guides-parser-truth.mjs` | `GLOBAL-X-NEGATIVE` | `parseSpanishNumberTokens(["x"],0)` sigue devolviendo null. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-023` | V350 queda rechazada; V351 permanece pendiente de Preview y PASS físico. |
 
+
+Corrección de rutas V351: se eliminaron las rutas temporales erróneas `tests/test-v305-registration-guides-parser-truth.mjs` y `tests/test-v336-microphone-transport.mjs`; las pruebas activas permanecen en la raíz como `test-v305-registration-guides-parser-truth.mjs` y `test-v336-microphone-transport.mjs`. También se eliminaron las copias raíz temporales de los dos controles SCIRE. El árbol final conserva 349 fuentes activas más el sello.
