@@ -10,6 +10,9 @@ const errorEnd=html.indexOf("\nfunction realtimeConnectionAction",errorStart);
 const actionEnd=html.indexOf("\nfunction voiceTransportFailure",errorEnd);
 const errorMessage=new Function(`${html.slice(errorStart,errorEnd)};return voiceActivationErrorMessage`)();
 const connectionAction=new Function(`${html.slice(errorEnd+1,actionEnd)};return realtimeConnectionAction`)();
+const fallbackStart=html.indexOf("function shouldUseBrowserVoiceFallback");
+const fallbackEnd=html.indexOf("\nfunction primaryVoiceStatusTarget",fallbackStart);
+const fallbackDecision=new Function(`${html.slice(fallbackStart,fallbackEnd)};return shouldUseBrowserVoiceFallback`)();
 
 assert.equal(errorMessage({name:"NotFoundError"}),"NO HAY UN MICRÓFONO DISPONIBLE EN ESTE DISPOSITIVO");
 assert.match(errorMessage({name:"NotAllowedError"}),/PERMISO/);
@@ -17,6 +20,10 @@ assert.match(errorMessage({name:"AbortError"}),/AGOTÓ EL TIEMPO/);
 const limited=Object.assign(new Error("OpenAI no pudo crear la sesión grupal."),{status:429});
 assert.match(errorMessage(limited),/TEMPORALMENTE LIMITADO/);
 assert.doesNotMatch(errorMessage(limited),/INTERNET/);
+assert.equal(fallbackDecision(new Error("Fallo local no clasificado")),true);
+assert.equal(fallbackDecision({name:"AbortError"}),true);
+assert.equal(fallbackDecision({name:"NotAllowedError"}),false);
+assert.equal(fallbackDecision({name:"NotFoundError"}),false);
 assert.match(errorMessage(new Error("Canal Realtime no disponible")),/SERVICIO DE VOZ NO DISPONIBLE/);
 assert.deepEqual(["connected","disconnected","failed","closed","connecting"].map(connectionAction),["ready","grace","reset","reset","wait"]);
 assert.match(html,/const REALTIME_DISCONNECT_GRACE_MS=5000/);
@@ -24,7 +31,10 @@ assert.match(html,/scheduleRealtimeDisconnectRecovery\(installedPc,voiceContext\
 assert.match(html,/pc\.onconnectionstatechange=null;pc\.oniceconnectionstatechange=null;pc\.close\(\)/);
 assert.match(html,/voiceLastErrorMessage\|\|"NO SE PUDO ABRIR EL MICRÓFONO"/);
 assert.match(html,/window\.SpeechRecognition\|\|window\.webkitSpeechRecognition/);
-assert.match(html,/shouldUseBrowserVoiceFallback\(err\)&&fallbackVoiceAvailable\(\)&&startBrowserVoiceFallback\(context\)/);
+assert.match(html,/shouldUseBrowserVoiceFallback\(err\)&&fallbackVoiceAvailable\(\)/);
+assert.match(html,/if\(startBrowserVoiceFallback\(context\)\)/);
+assert.match(html,/processBrowserVoiceTranscript[\s\S]*?setPrimaryVoiceMatrix\("responding",context\)/);
+assert.match(html,/submitAiUniversalText[\s\S]*?setPrimaryVoiceMatrix\("responding",voiceContext\)/);
 assert.match(html,/failure\.status=rsp\.status/);
 assert.match(html,/setPrimaryVoiceMatrix\("listening",context\)/);
 assert.match(html,/setPrimaryVoiceMatrix\("responding",voiceContext\)/);
@@ -37,6 +47,9 @@ assert.deepEqual(universalUnavailablePayload({providerCode:"credit_balance_exhau
 assert.match(html,/utterance\.onstart=.*setPrimaryVoiceMatrix\("responding",voiceContext\)/);
 assert.match(sessionApi,/"realtime-session"/);
 assert.deepEqual(sanitizeVoiceHealth({event:"connection_interrupted",query:"privado",latitude:14.6}),{event:"connection_interrupted",build:"",context:"round",turn:0,elapsedMs:0});
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_requested",query:"privado",latitude:14.6}),{event:"browser_fallback_requested",build:"",context:"round",turn:0,elapsedMs:0});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_started",query:"privado",latitude:14.6}),{event:"browser_fallback_started",build:"",context:"round",turn:0,elapsedMs:0});
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_error",error:"network",transcript:"privado"}),{event:"browser_fallback_error",build:"",context:"round",turn:0,elapsedMs:0});
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_start_failed",error:"privado"}),{event:"browser_fallback_start_failed",build:"",context:"round",turn:0,elapsedMs:0});
 
-console.log("PASS V347 · matriz visible exacta, respaldo trazado y crédito agotado no se confunde con Internet");
+console.log("PASS V348 · fallo local recuperable y matriz ESCUCHANDO → RESPONDIENDO trazada");

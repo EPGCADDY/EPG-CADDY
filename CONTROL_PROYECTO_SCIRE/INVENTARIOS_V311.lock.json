@@ -1,8 +1,8 @@
 {
-  "version": "V347-VISIBLE-VOICE-MATRIX",
-  "generatedAt": "2026-08-27T13:13:48Z",
+  "version": "V348-VOICE-RECOVERY-MATRIX",
+  "generatedAt": "2026-08-27T13:31:08Z",
   "sourceFileCount": 349,
-  "sourceDigest": "46008e150561630c642aa199c945e3e81a49c7a32ac811645d59514af228b973",
+  "sourceDigest": "db509f092eb8c9da4213cdc608b5778396d095494e0477cf4649c7b2e41a5fe4",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",

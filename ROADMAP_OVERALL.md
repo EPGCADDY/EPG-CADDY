@@ -1236,3 +1236,15 @@ El commit `1026a3e6555077fab1af4f8f932e97a7032e0182` quedó READY en Preview com
 - `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: conserva V346-R1 rechazada y V347 pendiente de prueba física.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sella las fuentes exactas del candidato V347.
 - Producción permanece en la base protegida; ningún fallo físico se presenta como PASS.
+
+## V348 · Recuperación de apertura y transición exacta de voz · 27 de agosto de 2026
+
+- `index-grupal.html`: activa el reconocimiento alternativo ante cualquier fallo técnico recuperable, conserva aparte permiso/dispositivo y cambia la matriz de `ESCUCHANDO` a `RESPONDIENDO` desde que la transcripción entra al procesamiento.
+- `api/voice-health.js`: agrega eventos privados de solicitud, error y fallo de arranque del respaldo sin texto hablado, nombres ni ubicación.
+- `test-v336-microphone-transport.mjs`: reproduce el fallo local genérico, protege permiso/dispositivo, exige la transición exacta y verifica la privacidad de los eventos.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-020 con la evidencia física de las 07:20/07:21.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta la corrección funcional y el bloqueo externo que permanece.
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: rechaza V347, registra V348 y mantiene abierta la prueba física.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran la misma modificación dentro de V348.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sella las fuentes exactas del candidato V348.
+- Producción permanece intacta; el saldo o la credencial del proveedor sigue siendo un bloqueo externo real para respuestas generales.

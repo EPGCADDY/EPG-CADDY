@@ -733,3 +733,13 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 - `test-v336-microphone-transport.mjs`: bloquea estados con texto adicional, matriz ausente, falsa culpa a Internet, reintento por saldo y telemetría no autorizada.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-019 conserva el fallo físico y el bloqueo externo real.
 - `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: estado honesto, doble registro y sello reproducible; Producción permanece intacta.
+
+## V348-VOICE-RECOVERY · fallo local recuperable y estados exactos
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `GENERIC-LOCAL-FAILURE-FALLBACK` | Un fallo técnico no clasificado del transporte principal intenta el reconocimiento alternativo; permiso bloqueado y dispositivo ausente mantienen su diagnóstico específico. |
+| `index-grupal.html` | `LISTENING-TO-RESPONDING` | Una transcripción válida cambia la matriz visible de `ESCUCHANDO` a `RESPONDIENDO`; no vuelve a `PROCESANDO…`. |
+| `api/voice-health.js` | `PRIVATE-FALLBACK-LIFECYCLE` | Registra requested/started/error/start_failed sin pregunta, transcripción, nombre, audio ni ubicación. |
+| `test-v336-microphone-transport.mjs` | `V348-PERMANENT-REGRESSION` | Reproduce el fallo local, protege errores no recuperables y exige estados y privacidad. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-020` | Conserva la evidencia de las 07:20/07:21 y no confunde captura reconocida con respuesta fallida por saldo. |
