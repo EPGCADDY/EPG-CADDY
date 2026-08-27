@@ -1161,4 +1161,4 @@ Dos Previews documentales consecutivos fueron rechazados porque la llamada viva 
 
 La repetición final en el Preview `0684ee8` recibió HTTP 429 en `/api/universal-ai` antes de llegar a Open-Meteo. La causa restante era innecesaria: aun una consulta explícita de clima dependía del modelo para elegir `get_current_weather`. `api/universal-ai.js` reconoce clima, lluvia, temperatura, sensación y viento, resuelve hoy/mañana/fecha y franja desde el texto del usuario, llama directamente a `api/weather.js` y construye la respuesta estructurada con las horas completas. Esa ruta funciona incluso sin `OPENAI_API_KEY`, no usa búsqueda web y no consume cuota del modelo. `test-v337-universal-weather.mjs` exige cero llamadas al modelo y todos los porcentajes horarios. RC-013 permanece abierto hasta el Preview real. `.github/workflows/v339-weather-direct-finalize.yml` sella, audita 92 paquetes y se elimina. Producción no cambia.
 
-<!-- V339-WEATHER-DIRECT-REMOTE-PENDING -->
+<!-- V339-WEATHER-DIRECT-REMOTE-FINALIZED -->

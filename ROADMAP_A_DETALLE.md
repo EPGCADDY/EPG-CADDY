@@ -1369,4 +1369,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-013` | Registra el 429 real hasta confirmar el Preview sin dependencia de cuota IA. |
 | `.github/workflows/v339-weather-direct-finalize.yml` | `TEMPORARY-WEATHER-DIRECT-FINALIZE` | Actualiza inventario, audita 92 paquetes y se elimina antes del commit final. |
 
-<!-- V339-WEATHER-DIRECT-REMOTE-PENDING -->
+<!-- V339-WEATHER-DIRECT-REMOTE-FINALIZED -->
