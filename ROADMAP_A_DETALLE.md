@@ -1301,4 +1301,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-006-CLOSED / RC-012` | Cierra tráfico con evidencia real y mantiene clima abierto hasta su prueba real de Preview. |
 | `.github/workflows/v337-weather-finalize.yml` | `TEMPORARY-WEATHER-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit desplegable. |
 
-<!-- V337-WEATHER-REMOTE-PENDING -->
+<!-- V337-WEATHER-REMOTE-FINALIZED -->
