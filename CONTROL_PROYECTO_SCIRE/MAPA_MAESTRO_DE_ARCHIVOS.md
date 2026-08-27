@@ -669,6 +669,7 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `api/golf-rules.js`, `test-v328-official-golf-rules.mjs`, `test-v328-live-official-rules.mjs` | V338-RULES-GATE distingue 429 reintentable y evita que disponibilidad externa transitoria se confunda con una regresión del producto. |
 | `.github/workflows/v338-rules-gate-finalize.yml` | Sella y audita la corrección de la puerta viva antes de eliminarse. |
 | `api/universal-ai.js`, `test-v337-universal-weather.mjs`, `.github/workflows/v339-weather-direct-finalize.yml` | V339-WEATHER-DIRECT elimina la dependencia del modelo para clima explícito y responde directamente desde Open-Meteo. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | V339-WEATHER-DIRECT-CLOSE registra la prueba real final sin modificar el ejecutable aprobado. |
 
 ## Cómo usar este inventario
 

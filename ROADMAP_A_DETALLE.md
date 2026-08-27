@@ -1370,3 +1370,13 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v339-weather-direct-finalize.yml` | `TEMPORARY-WEATHER-DIRECT-FINALIZE` | Actualiza inventario, audita 92 paquetes y se elimina antes del commit final. |
 
 <!-- V339-WEATHER-DIRECT-REMOTE-FINALIZED -->
+
+## V339-WEATHER-DIRECT-CLOSE · evidencia
+
+| Evidencia | Resultado |
+|---|---|
+| Preview `8a62824` | READY y consulta real aprobada. |
+| Latencia observada | Aproximadamente 13 segundos de extremo a extremo. |
+| Integridad | 24 horas, 00:00–23:00; pico 99% a las 16:00. |
+| Dependencias | Open-Meteo directo; cero modelo y cero búsqueda web. |
+| Estado | RC-013 cerrado; Producción intacta. |
