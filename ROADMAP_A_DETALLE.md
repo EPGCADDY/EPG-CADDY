@@ -1324,3 +1324,16 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v337-weather-r2-finalize.yml` | `TEMPORARY-WEATHER-R2-FINALIZE` | Regenera inventario, audita 92 paquetes y se elimina antes del commit final. |
 
 <!-- V337-WEATHER-R2-REMOTE-FINALIZED -->
+
+## V337-WEATHER-CLOSE · cierre basado en Preview
+
+| Evidencia | Resultado |
+|---|---|
+| Preview `6a2f845` | READY; misma consulta completa ejecutada en AI UNIVERSAL. |
+| Proveedor | Open-Meteo exclusivo; sin fuentes web mezcladas. |
+| Cobertura | Día completo y 24 probabilidades desde 00:00 hasta 23:00. |
+| Pico y acción | 99% a las 16:00; recomendación de terminar antes de las 14:00. |
+| Auditoría | 92 paquetes; Producción `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` intacta. |
+| `.github/workflows/v337-weather-close-finalize.yml` | Sella inventario y se elimina antes del commit final. |
+
+<!-- V337-WEATHER-CLOSE-REMOTE-PENDING -->

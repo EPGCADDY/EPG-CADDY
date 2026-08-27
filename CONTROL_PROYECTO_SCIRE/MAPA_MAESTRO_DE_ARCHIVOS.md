@@ -664,6 +664,7 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `.github/workflows/v337-weather-finalize.yml` | Flujo temporal V337-WEATHER: actualiza inventario, ejecuta 92 paquetes y se elimina antes del commit desplegable. |
 | `api/universal-ai.js`, `test-v337-universal-weather.mjs`, `.github/workflows/v337-weather-r1-finalize.yml` | V337-WEATHER-R1 impide que una franja sugerida por el modelo recorte el día completo si el usuario no pidió mañana, tarde, atardecer o noche. |
 | `api/weather.js`, `api/universal-ai.js`, `test-v337-universal-weather.mjs`, `.github/workflows/v337-weather-r2-finalize.yml` | V337-WEATHER-R2 conserva cada hora y porcentaje de Open-Meteo para responder literalmente consultas por horario. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `.github/workflows/v337-weather-close-finalize.yml` | V337-WEATHER-CLOSE sella la evidencia real de 24 horas y cierra RC-012 sin cambiar el ejecutable. |
 
 ## Cómo usar este inventario
 
