@@ -1129,3 +1129,5 @@ Candados e inventarios: `scripts/project-quality-gate.mjs`, `test-project-qualit
 `.gitignore` excluye `tmp/` para que los renders intermedios no alteren la huella de fuentes.
 
 Mecanismo temporal de publicación: `.github/workflows/v333-rebuild-preview.yml` reconstruye en GitHub las 74 láminas y los dos PDF desde las fuentes versionadas, ejecuta la auditoría integral, publica sólo `v333-manual-operational-preview` y se elimina antes del commit final. El archivo nunca entra en Producción ni permanece en el candidato terminado.
+
+<!-- V333-REMOTE-FINALIZED -->

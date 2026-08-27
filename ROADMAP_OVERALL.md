@@ -1044,3 +1044,5 @@ Archivos integrados y auditados: `MANUAL_COBERTURA_FUNCIONAL_V311.md`, `manual.h
 `.gitignore` excluye únicamente los renders temporales de `tmp/`; los PDF finales permanecen sellados fuera del repositorio.
 
 La publicación se limita a `v333-manual-operational-preview`. El flujo temporal `.github/workflows/v333-rebuild-preview.yml` reconstruye las 74 láminas y los dos PDF, ejecuta la auditoría integral, guarda el commit final de Preview y se elimina antes de ese commit; no modifica `main` ni Producción.
+
+<!-- V333-REMOTE-FINALIZED -->
