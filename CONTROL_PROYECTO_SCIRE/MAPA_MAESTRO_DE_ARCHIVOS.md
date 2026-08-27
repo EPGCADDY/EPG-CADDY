@@ -666,6 +666,8 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `api/weather.js`, `api/universal-ai.js`, `test-v337-universal-weather.mjs`, `.github/workflows/v337-weather-r2-finalize.yml` | V337-WEATHER-R2 conserva cada hora y porcentaje de Open-Meteo para responder literalmente consultas por horario. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `.github/workflows/v337-weather-close-finalize.yml` | V337-WEATHER-CLOSE sella la evidencia real de 24 horas y cierra RC-012 sin cambiar el ejecutable. |
 | `.github/workflows/v337-weather-retry-finalize.yml` | Reintento trazado del mismo ejecutable después de que Vercel recibió 429 transitorio en la prueba externa de Reglas. |
+| `api/golf-rules.js`, `test-v328-official-golf-rules.mjs`, `test-v328-live-official-rules.mjs` | V338-RULES-GATE distingue 429 reintentable y evita que disponibilidad externa transitoria se confunda con una regresión del producto. |
+| `.github/workflows/v338-rules-gate-finalize.yml` | Sella y audita la corrección de la puerta viva antes de eliminarse. |
 
 ## Cómo usar este inventario
 

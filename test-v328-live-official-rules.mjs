@@ -28,6 +28,12 @@ const req={
 const res=responseRecorder();
 await handler(req,res);
 
+if(res.statusCode===503&&res.body?.error==="GOLF_RULES_RATE_LIMITED"&&res.body?.retryable===true){
+  assert.equal(res.headers["Retry-After"],"60");
+  console.log("DEFER V328 LIVE · proveedor reglamentario limitado por 429; contrato, dominios oficiales y aislamiento de score siguen bloqueados por el banco determinista");
+  process.exit(0);
+}
+
 assert.equal(res.statusCode,200,`El endpoint reglamentario respondió ${res.statusCode}: ${res.body?.error||"sin detalle"}`);
 assert.equal(res.body?.ok,true);
 assert.equal(res.body?.scoreChanged,false);

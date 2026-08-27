@@ -1347,3 +1347,14 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v337-weather-retry-finalize.yml` | Audita 92 paquetes, sella inventario, se elimina y vuelve a publicar únicamente Preview. |
 
 <!-- V337-WEATHER-RETRY-REMOTE-FINALIZED -->
+
+## V338-RULES-GATE · clasificación correcta del límite externo
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `api/golf-rules.js` | `RATE-LIMIT-SIGNAL` | HTTP 429 se traduce en 503 reintentable y `Retry-After: 60`; otros fallos continúan siendo error. |
+| `test-v328-official-golf-rules.mjs` | `DETERMINISTIC-429-CONTRACT` | Simula 429 y exige código, encabezado y bandera exactos. |
+| `test-v328-live-official-rules.mjs` | `LIVE-WHEN-AVAILABLE` | Sólo difiere el 429 reconocido; una respuesta inválida o no oficial sigue bloqueando la publicación. |
+| `.github/workflows/v338-rules-gate-finalize.yml` | `TEMPORARY-RULES-GATE-FINALIZE` | Sella inventario, ejecuta 92 paquetes y se elimina antes del commit final. |
+
+<!-- V338-RULES-GATE-REMOTE-PENDING -->

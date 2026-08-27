@@ -86,6 +86,12 @@ try{
     assert.equal(res.body.ok,true,query);
     assert.equal(res.body.scoreChanged,false,query);
   }
+  globalThis.fetch=async()=>({ok:false,status:429,json:async()=>({error:"rate_limit"})});
+  const rateLimitReq={method:"POST",headers:{host:"epg-caddy.vercel.app"},body:{query:scenarios[0],history:[],appContext:{course:"El Pulté",mode:"stroke_play"}}};
+  const rateLimitRes=responseRecorder();await handler(rateLimitReq,rateLimitRes);
+  assert.equal(rateLimitRes.statusCode,503);
+  assert.deepEqual(rateLimitRes.body,{ok:false,error:"GOLF_RULES_RATE_LIMITED",retryable:true});
+  assert.equal(rateLimitRes.headers["Retry-After"],"60");
 }finally{
   globalThis.fetch=originalFetch;
   if(originalKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=originalKey;

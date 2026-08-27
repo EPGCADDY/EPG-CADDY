@@ -1150,3 +1150,9 @@ El Preview `6a2f845` respondió la misma consulta rechazada sin búsqueda web: O
 El commit documental `6a3386b` pasó 92/92 en GitHub, pero su Preview falló durante `test-v328-live-official-rules.mjs` porque el proveedor reglamentario devolvió HTTP 429; clima y código no fallaron. `.github/workflows/v337-weather-retry-finalize.yml` reconstruye el mismo ejecutable, vuelve a sellar inventario y repite la auditoría completa antes de eliminarse. No cambia la respuesta meteorológica aprobada ni Producción.
 
 <!-- V337-WEATHER-RETRY-REMOTE-FINALIZED -->
+
+## V338-RULES-GATE · un 429 externo no es una regresión del producto
+
+Dos Previews documentales consecutivos fueron rechazados porque la llamada viva de Reglas recibió HTTP 429, aunque GitHub aprobó 92/92 y el ejecutable meteorológico era idéntico al ya probado. `api/golf-rules.js` distingue ahora ese límite con 503, `Retry-After: 60` y `GOLF_RULES_RATE_LIMITED`. `test-v328-official-golf-rules.mjs` bloquea ese contrato de forma determinista. `test-v328-live-official-rules.mjs` continúa bloqueando respuestas incorrectas, fuentes no oficiales, vacío y cambios de score, pero difiere únicamente el caso 429 reconocido en vez de emitir una falsa regresión. `.github/workflows/v338-rules-gate-finalize.yml` actualiza inventario, audita 92 paquetes y se elimina. El clima aprobado y Producción no cambian.
+
+<!-- V338-RULES-GATE-REMOTE-PENDING -->

@@ -125,7 +125,11 @@ export default async function handler(req,res){
       });
     }finally{clearTimeout(timeout)}
     const payload=await upstream.json().catch(()=>null);
-    if(!upstream.ok){console.error("golf rules upstream",upstream.status);return res.status(502).json({ok:false,error:"GOLF_RULES_UNAVAILABLE"})}
+    if(!upstream.ok){
+      console.error("golf rules upstream",upstream.status);
+      if(upstream.status===429){res.setHeader("Retry-After","60");return res.status(503).json({ok:false,error:"GOLF_RULES_RATE_LIMITED",retryable:true})}
+      return res.status(502).json({ok:false,error:"GOLF_RULES_UNAVAILABLE"});
+    }
     const summary=summarizeGolfRulesResponse(payload);
     return res.status(summary.ok?200:502).json(summary);
   }catch(error){
