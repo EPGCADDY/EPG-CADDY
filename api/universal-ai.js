@@ -15,6 +15,7 @@ const OPENAI_ATTEMPTS=[
   {model:"gpt-5.4",delayMs:700},
   {model:"gpt-5.6",delayMs:1800}
 ];
+const GATEWAY_MODELS=["openai/gpt-5.6-sol","anthropic/claude-opus-5","google/gemini-3.1-pro-preview"];
 const BRIEF_QUERY=/^(hola|buenos días|buenas tardes|buenas noches|gracias|ok|okay|listo|sí|si|no|entendido|perfecto)[.!?\s]*$/i;
 const DEEP_QUERY=/\b(analiza|análisis|compara|comparación|criterio|evalúa|evaluación|explica(?:me)? (?:a fondo|con detalle)|profundiza|paso a paso|ventajas y desventajas|riesgos?|escenarios?|estrategia|plan de acción|por qué|cómo funciona)\b/i;
 
@@ -38,7 +39,7 @@ function upstreamErrorCode(payload){
   return String(payload?.error?.code||payload?.error?.type||"").replace(/[^a-zA-Z0-9_.-]/g,"").slice(0,80)||null;
 }
 
-export async function requestUniversalResponse(body,{apiKey,deadlineMs=Date.now()+UNIVERSAL_TIMEOUT_MS,fetchImpl=globalThis.fetch,sleepImpl=ms=>new Promise(resolve=>setTimeout(resolve,ms)),label="universal ai"}={}){
+export async function requestUniversalResponse(body,{apiKey,gatewayToken=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN,deadlineMs=Date.now()+UNIVERSAL_TIMEOUT_MS,fetchImpl=globalThis.fetch,sleepImpl=ms=>new Promise(resolve=>setTimeout(resolve,ms)),label="universal ai"}={}){
   let lastFailure={ok:false,status:503,retryable:true,retryAfterMs:1_000,error:"UNIVERSAL_AI_UNAVAILABLE"};
   for(let index=0;index<OPENAI_ATTEMPTS.length;index++){
     const attempt=OPENAI_ATTEMPTS[index];
@@ -70,6 +71,25 @@ export async function requestUniversalResponse(body,{apiKey,deadlineMs=Date.now(
     console.warn(`${label} upstream retry`,JSON.stringify({status,providerCode,attempt:index+1,model:attempt.model,retryable,requestId:String(response?.headers?.get?.("x-request-id")||"").slice(0,120)||null}));
     if(!retryable)break;
   }
+  if(lastFailure.providerCode==="credit_balance_exhausted"&&gatewayToken&&deadlineMs-Date.now()>=500){
+    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),deadlineMs-Date.now());
+    try{
+      const response=await fetchImpl("https://ai-gateway.vercel.sh/v1/responses",{
+        method:"POST",
+        signal:controller.signal,
+        headers:{Authorization:`Bearer ${gatewayToken}`,"Content-Type":"application/json"},
+        body:JSON.stringify({...body,model:GATEWAY_MODELS[0],providerOptions:{gateway:{models:GATEWAY_MODELS,tags:["feature:ai-universal","env:preview"]}}})
+      });
+      const payload=await response.json().catch(()=>null);
+      if(response.ok)return{ok:true,status:response.status||200,payload,model:String(payload?.model||GATEWAY_MODELS[0]),attempts:OPENAI_ATTEMPTS.length+1,gateway:true};
+      const status=Number(response.status)||502,providerCode=upstreamErrorCode(payload),retryable=OPENAI_RETRYABLE_STATUS.has(status)||status===402;
+      console.warn(`${label} gateway fallback`,JSON.stringify({status,providerCode,retryable,requestId:String(response?.headers?.get?.("x-request-id")||"").slice(0,120)||null}));
+      lastFailure={ok:false,status,retryable,retryAfterMs:retryAfterMs(response)??1_000,error:"UNIVERSAL_AI_UNAVAILABLE",providerCode};
+    }catch(error){
+      console.warn(`${label} gateway fallback`,JSON.stringify({status:503,providerCode:error?.name==="AbortError"?"TIMEOUT":"NETWORK",retryable:true,requestId:null}));
+      lastFailure={ok:false,status:503,retryable:true,retryAfterMs:1_000,error:"UNIVERSAL_AI_UNAVAILABLE",providerCode:"GATEWAY_UNAVAILABLE"};
+    }finally{clearTimeout(timeout)}
+  }
   return lastFailure;
 }
 
@@ -97,6 +117,32 @@ export function isDirectWeatherQuery(query){
   const shotContext=/\b(yardas?|palo|palos|golpe|bandera|green|carry|lie|dispersion|swing|trayectoria|estrategia|atacar|agua corta)\b/.test(text);
   const analyticalIntent=/\b(analiza|analisis|afecta|conviene|compara|comparacion|riesgos?|recomienda|recomendacion|seleccion|mecanismo|alternativa)\b/.test(text);
   return !(shotContext&&analyticalIntent);
+}
+
+export function isGolfStrategyQuery(query){
+  const text=String(query||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  const golfContext=/\b(yardas?|palo|palos|golpe|bandera|green|carry|lie|dispersion|swing|trayectoria|tee|fairway|rough|bunker|agua corta)\b/.test(text);
+  const strategyIntent=/\b(analiza|analisis|afecta|conviene|compara|comparacion|riesgos?|recomienda|recomendacion|seleccion|mecanismo|alternativa|estrategia|atacar|acciones?)\b/.test(text);
+  return golfContext&&strategyIntent;
+}
+
+function golfStrategyNumber(query){
+  const match=String(query||"").match(/\b(\d{2,3})\s*(?:yardas?|yards?)\b/i);
+  return match?Number(match[1]):null;
+}
+
+export function formatLocalGolfStrategyAnswer(query){
+  const text=String(query||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase(),yards=golfStrategyNumber(query);
+  const headwind=/\b(viento de frente|contra el viento|headwind)\b/.test(text),shortWater=/\b(agua corta|agua antes|agua al frente|carry sobre agua)\b/.test(text),wetLie=/\b(lie humedo|pasto humedo|rough humedo|suelo humedo)\b/.test(text);
+  const target=yards?`las ${yards} yardas`:`la distancia indicada`;
+  return [
+    "**Conclusión:** no atacaría directamente esa bandera salvo que tu carry real y repetible supere el frente del green con margen amplio. Jugaría al centro o a la parte larga del green.",
+    `**Mecanismo:** ${headwind?"el viento de frente aumenta la resistencia y reduce el carry":"el viento puede cambiar el carry"}; ${wetLie?"el lie húmedo vuelve menos predecible el contacto y puede quitar velocidad o spin":"el lie debe permitir contacto limpio"}. Con ${shortWater?"agua corta":"un peligro corto"}, el error de quedarse corto cuesta mucho más que terminar largo o lejos de la bandera.`,
+    `**Riesgos:** elegir el palo sólo por ${target}; pegar fuerte y aumentar la dispersión; contacto pesado desde humedad; vuelo bajo que no cubra el agua; y sobrecorregir el viento sin conocer su velocidad real.`,
+    "**Límites:** sin velocidad exacta del viento, distancia de carry al frente y fondo del green, tipo de lie, elevación y tu dispersión con cada palo, no existe una selección de palo exacta y responsable.",
+    "**Alternativa segura:** toma un palo más que el habitual, haz un swing controlado de 75–85%, apunta al centro o al lado sin peligro y acepta un putt más largo.",
+    "**Acciones concretas:** 1) mide primero el carry necesario para librar el agua; 2) agrega margen por viento y humedad; 3) elige el palo que cubra ese carry con un golpe normal, no forzado; 4) apunta lejos del agua; 5) si no tienes al menos 8–10 yardas de margen sobre tu peor carry razonable, juega a la zona segura."
+  ].join("\n\n");
 }
 
 function guatemalaDate(offsetDays=0){
@@ -273,7 +319,10 @@ export default async function handler(req,res){
           ].join(" "),
           input
         },{apiKey,deadlineMs,label:"universal ai"});
-    if(!requestResult.ok)return sendUniversalUnavailable(res,requestResult);
+    if(!requestResult.ok){
+      if(isGolfStrategyQuery(query))return res.status(200).json({ok:true,answer:formatLocalGolfStrategyAnswer(query),sources:[],degraded:true,mode:"LOCAL_GOLF_STRATEGY"});
+      return sendUniversalUnavailable(res,requestResult);
+    }
     let payload=requestResult.payload;
     const trafficCall=(payload?.output||[]).find(item=>item?.type==="function_call"&&item?.name==="get_live_traffic");
     const weatherCall=(payload?.output||[]).find(item=>item?.type==="function_call"&&item?.name==="get_current_weather");

@@ -1422,3 +1422,16 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V342` | Registra el circuito completo de recuperación. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V342` | Sella las fuentes exactas después de los bancos y ambos ROADMAPS. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Documentan el mismo candidato y mantienen Producción en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. |
+
+## V343-AI-GATEWAY-FALLBACK · failover administrado y estrategia local
+
+| Archivo exacto | Control | PASS obligatorio |
+|---|---|---|
+| `api/universal-ai.js` | `CREDIT-EXHAUSTED-TO-GATEWAY` | Sólo `credit_balance_exhausted` salta al Gateway; usa OIDC/clave administrada y el endpoint OpenResponses oficial. |
+| `api/universal-ai.js` | `THREE-PROVIDER-GATEWAY` | Ordena `openai/gpt-5.6-sol`, `anthropic/claude-opus-5` y `google/gemini-3.1-pro-preview`. |
+| `api/universal-ai.js` | `LOCAL-GOLF-STRATEGY` | Si ninguna IA responde, sólo la estrategia de golf recibe un análisis local completo y sin acciones sobre la tarjeta. |
+| `test-v335-response-caliber.mjs` | `GATEWAY-AND-LOCAL-RECOVERY` | Simula saldo agotado, verifica Gateway y exige seis secciones en la consulta exacta de 140 yardas. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-016-V343` | Reemplaza la hipótesis de rate limit transitorio por la causa real `credit_balance_exhausted`. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V343` | Registra fuente, pruebas y límite honesto de la recuperación. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V343` | Sella el candidato exacto después de ambos ROADMAPS. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Conservan Producción intacta y el resultado reproducible. |

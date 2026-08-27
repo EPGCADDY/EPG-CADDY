@@ -694,3 +694,10 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 - `test-v335-response-caliber.mjs`: reproduce dos HTTP 429 antes de una respuesta 200 y verifica el agotamiento seguro.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-016 registra el defecto, su causa y el candado permanente.
 - `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad y sello reproducible V342.
+
+## V343-AI-GATEWAY-FALLBACK · saldo externo agotado
+
+- `api/universal-ai.js`: ante `credit_balance_exhausted`, usa Vercel AI Gateway con OIDC/clave administrada y tres modelos de proveedores distintos; conserva un análisis local completo para estrategia de golf si tampoco existe Gateway.
+- `test-v335-response-caliber.mjs`: prueba saldo agotado, Gateway, failover y el caso exacto de 140 yardas con seis secciones obligatorias.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-016 documenta la causa real y el nuevo control.
+- `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad y sello reproducible V343.
