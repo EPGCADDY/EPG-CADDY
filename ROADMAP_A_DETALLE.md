@@ -1265,3 +1265,14 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v335-ai-finalize.yml` | `TEMPORARY-AI-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit final. |
 
 <!-- V335-AI-REMOTE-FINALIZED -->
+
+## V335-AI-R1 · frontera entre aplicación y conversación
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `LOCAL-ONLY-IF-DIRECT` | Órdenes ejecutables y consultas breves de tarjeta siguen locales; consejo y análisis pasan al modelo. |
+| `test-v335-response-caliber.mjs` | `140-YARDS-HIJACK-REGRESSION` | Reproduce `course_info`, rechaza el atajo y conserva “¿Cómo puedo ver las yardas del campo?” local. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-011` | Registra causa, escape, control y cierre pendiente de respuesta real. |
+| `.github/workflows/v335-ai-routing-finalize.yml` | `TEMPORARY-ROUTING-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit final. |
+
+<!-- V335-AI-R1-REMOTE-PENDING -->

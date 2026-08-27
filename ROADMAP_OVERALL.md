@@ -1108,3 +1108,9 @@ La prueba de la sugerencia visible “Cómo corrijo un bogey que fue par” rech
 `api/universal-ai.js` deja de imponer razonamiento bajo y un techo único de 1,400 tokens. Saludos y confirmaciones conservan una salida breve; las consultas normales usan razonamiento medio y hasta 2,400 tokens; análisis, comparaciones, criterios, riesgos y explicaciones profundas reciben hasta 3,200. El contrato exige conclusión directa, causas o mecanismo, separación entre hechos y estimaciones, límites, supuestos, alternativas y una acción útil, sin tono infantil salvo petición expresa. `test-v335-response-caliber.mjs` convierte esos criterios en una puerta ejecutable y `audit-project.mjs` la incorpora al banco maestro. `.github/workflows/v335-ai-finalize.yml` actualiza inventario, audita el SHA exacto y se elimina antes del commit final. Producción permanece intacta.
 
 <!-- V335-AI-REMOTE-FINALIZED -->
+
+## V335-AI-R1 · la pregunta compleja sí llega al modelo
+
+La consulta real del Preview V335-AI fue interceptada antes del endpoint porque `voice-assistant.js` reconoce la palabra “yardas” como información del campo. `index-grupal.html` conserva localmente órdenes ejecutables y consultas de aplicación de hasta 12 palabras, pero deriva a AI UNIVERSAL cualquier análisis, comparación, explicación, riesgo, estrategia, efecto o recomendación. `test-v335-response-caliber.mjs` reproduce el secuestro anterior y prueba las dos rutas. RC-011 impide cerrar el calibre sin una respuesta real. `.github/workflows/v335-ai-routing-finalize.yml` sella, audita y se elimina antes del commit final. Producción no cambia.
+
+<!-- V335-AI-R1-REMOTE-PENDING -->
