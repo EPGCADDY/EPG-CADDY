@@ -1472,3 +1472,15 @@ La lámina `docs/manual/v311/manual-scg-escritorio-4k.png` permanece como artefa
 ### V345-ICONS-R1 · nombres literales en el ROADMAP general
 
 El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado correctamente por `scripts/roadmap-gate.mjs`: faltaban en `ROADMAP_OVERALL.md` las seis rutas binarias V345 y `manifest.webmanifest` escritas de manera literal. R1 añade únicamente esos siete nombres al registro general, vuelve a sellar el inventario y conserva sin cambios los iconos, la aplicación, el Manual y Producción.
+
+### V345-ICONS-PREVIEW · cierre técnico remoto
+
+| Evidencia | Resultado |
+|---|---|
+| Commit | `1026a3e6555077fab1af4f8f932e97a7032e0182` |
+| Deployment | `dpl_9DcbFH9d9Gf3qDL8rGUjQqTNNYpX` · READY |
+| Auditoría | 93 paquetes PASS; V345 iconos PASS. |
+| Manual | Editorial 74/74 y visual 74/74 PASS. |
+| Inventario | 349 fuentes y tres PDF sellados. |
+| Reglas viva | 429 externo diferido por el contrato V338; banco determinista PASS. |
+| Estado | RC-018 desplegado; instalación física de ambos iconos pendiente; Producción intacta. |

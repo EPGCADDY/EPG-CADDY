@@ -367,5 +367,5 @@ La **1. Estabilización física de la voz** permanece en validación de campo. A
 
 - Golf Score y Manual SCG tienen iconos independientes, RGB y versionados en 180, 192 y 512 px.
 - El banco V345 rechaza un Manual casi blanco y obliga a mantener manifiestos, HTML, Service Worker y caché alineados.
-- RC-018 está corregido en candidato; no se cierra hasta instalar ambos accesos desde el Preview en un iPhone real.
+- RC-018 está desplegado en el Preview READY `1026a3e`; no se cierra hasta instalar ambos accesos desde ese entorno en un iPhone real.
 - Voz física prolongada, artefactos/contraste de clima y repetición real del tráfico V344 continúan abiertos. Producción permanece intacta.

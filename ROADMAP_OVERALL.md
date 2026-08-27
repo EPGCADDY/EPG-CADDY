@@ -1210,3 +1210,7 @@ Estado operativo asociado: micrófono y respuestas generales conservan banco aut
 ### V345-ICONS-R1 · ROADMAP remoto
 
 El deployment `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue rechazado antes de publicación porque `ROADMAP_OVERALL.md` agrupaba seis archivos binarios y `manifest.webmanifest` sin escribir sus rutas literales. La corrección anterior incorpora los siete nombres exactos; no cambia PNG, HTML, manifiestos, lógica ni Producción.
+
+### V345-ICONS-PREVIEW · evidencia remota
+
+El commit `1026a3e6555077fab1af4f8f932e97a7032e0182` quedó READY en Preview como deployment `dpl_9DcbFH9d9Gf3qDL8rGUjQqTNNYpX`. El constructor aprobó Gate 0, Manual editorial 74/74, Manual visual 74/74, ROADMAP de 25 modificaciones, 349 fuentes, tres PDF sellados y 93 paquetes operativos. La llamada viva de Reglas recibió 429 y fue diferida conforme al contrato V338; no hubo error del producto. RC-018 queda desplegado y abierto únicamente para instalar físicamente ambos accesos en iPhone. Producción permanece intacta.

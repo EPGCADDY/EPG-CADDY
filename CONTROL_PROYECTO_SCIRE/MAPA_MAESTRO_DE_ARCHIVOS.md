@@ -722,3 +722,5 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 - `scripts/rebuild-inventory-pdfs.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: regeneración, estado, inventario y sello del candidato V345.
 
 V345-ICONS-R1: el primer build remoto fue bloqueado porque el ROADMAP general no contenía siete rutas literales. Ambos ROADMAPS las registran ahora; no existe cambio funcional adicional.
+
+V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deployment `dpl_9DcbFH9d9Gf3qDL8rGUjQqTNNYpX` READY, 93 paquetes, 74/74 editorial y visual, 349 fuentes; instalación física en iPhone todavía pendiente.
