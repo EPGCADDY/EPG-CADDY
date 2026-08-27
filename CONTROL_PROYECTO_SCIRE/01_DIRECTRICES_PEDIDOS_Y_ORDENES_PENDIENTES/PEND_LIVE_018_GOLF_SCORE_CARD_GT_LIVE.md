@@ -2,7 +2,7 @@
 
 **Fecha de registro:** 27 de agosto de 2026  
 **Versión de ejecución:** V352  
-**Estado real:** IMPLEMENTADO Y MIGRACIÓN PRINCIPAL PASS; PREVIEW, NAVEGADOR REAL Y PRUEBA FÍSICA PENDIENTES  
+**Estado real:** IMPLEMENTADO, MIGRACIÓN PRINCIPAL Y PREVIEW E2E PASS; INSPECCIÓN VISUAL/PRUEBA FÍSICA IPHONE PENDIENTE
 **Nombre público obligatorio:** `GOLF SCORE CARD GT. LIVE`
 
 ## Solicitud del propietario
@@ -86,6 +86,11 @@ Permitir que una persona sin la aplicación pueda seguir en vivo la Score Card a
 - La primera publicación remota reveló `42P18`: el driver HTTP parametrizó por separado valores usados dentro del registro JSON y PostgreSQL no pudo inferir su tipo.
 - V352-R2 declara explícitamente los tipos de `mutationId`, `secretHash` y `expected` en toda la sentencia atómica; `test-v352-live.mjs` impide reintroducir parámetros indeterminados.
 - El stream de diagnóstico se revoca y elimina antes de la repetición. Producción web permanece intacta.
+- V352-R2 quedó `READY` en `dpl_2BLAFZNazoogdQQS2mkxreNjBgh6`, commit `6bc9901e068cf8f2026de6b0ab8580c2546819f5`.
+- Recorrido remoto final PASS: página `200`, crear `200`, leer revisión 0 `200`, publicar `200`, leer Gross 5/Neto 4 `200`, revocar `200` y lectura posterior `410 LIVE_REVOKED`.
+- Observabilidad R2: cinco respuestas `200`, una `410` esperada y cero logs `error`/`fatal`.
+- Limpieza final: cero streams `round-v352-preview-%` en Neon principal.
+- El navegador automatizado fue redirigido por la protección de Vercel antes de cargar la app; esto no se presenta como PASS visual. La prueba física utiliza el enlace temporal protegido entregado al propietario.
 
 ## Frases para localizar este pendiente
 

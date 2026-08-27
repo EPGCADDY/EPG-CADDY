@@ -1621,3 +1621,18 @@ Evidencia Neon principal: aprobación expresa recibida; migración aplicada corr
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | La frontera driver HTTP/PostgreSQL no estaba trazada. | Mapea la causa y el candado permanente. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | R1 no puede presentarse como PASS funcional remoto. | Mantienen Producción intacta y separan READY de E2E PASS. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | El árbol cambia por R2. | Se regenera después de código, prueba y documentación. |
+
+### V352-PREVIEW-R2 · PASS remoto reproducible
+
+| Evidencia final | Resultado |
+|---|---|
+| Commit | `6bc9901e068cf8f2026de6b0ab8580c2546819f5` |
+| Deployment | `dpl_2BLAFZNazoogdQQS2mkxreNjBgh6` · READY |
+| Página protegida | `200` con build V352 y `/live-control.js` |
+| Crear / leer inicial | `200 / 200`, un jugador visible, revisión 0 |
+| Publicar / leer actualización | `200 / 200`, revisión 1, Gross 5 y Neto 4 |
+| Revocar / volver a leer | `200 / 410 LIVE_REVOKED` |
+| Logs R2 | Cinco `200`, un `410` esperado, cero `error` o `fatal` |
+| Limpieza Neon | Cero filas `round-v352-preview-%` |
+| Navegador visual | La protección Vercel redirigió el navegador automatizado al login antes de la app; permanece pendiente la inspección visual física con el enlace temporal. |
+| Producción | Intacta en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` |

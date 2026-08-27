@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V352 implementa `GOLF SCORE CARD GT. LIVE` sobre la fuente canónica V351 y aprueba la migración Neon principal después de validarla con 60 grupos en una rama aislada; faltan Preview, navegador real y prueba física
+**Corte vigente:** V352 implementa `GOLF SCORE CARD GT. LIVE` sobre la fuente canónica V351; migración Neon principal y Preview E2E PASS; falta inspección visual y prueba física iPhone
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 

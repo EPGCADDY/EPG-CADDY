@@ -1,18 +1,18 @@
 {
   "version": "V352-GOLF-SCORE-CARD-GT-LIVE",
-  "generatedAt": "2026-08-27T22:40:53Z",
+  "generatedAt": "2026-08-27T22:53:42Z",
   "sourceFileCount": 356,
-  "sourceDigest": "4d529e906ad817082e9202f683f2b26d6051fa7a8c5158abd1f488d8086f95a5",
+  "sourceDigest": "e753e6ddf47f85f41e41c6f7e889e45112afc7edf2048349d3fcbc3e4b827d15",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 176927,
-      "sha256": "e030399aea27ae87659f07670b3350f5406490f46743edc6dddba502492668b6"
+      "size": 177353,
+      "sha256": "3a93189567d0655e2bc95227e7379abc758a77e4c7147f4ae852408e39c1b0bb"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 196715,
-      "sha256": "62631dc3773582b35095af2a80c40e5cfe8ca7d1bf3c2455cd024c9498dd98fd"
+      "size": 197424,
+      "sha256": "5662d15bb5b977032b688eade415c0d6341043e5d8c8c466add3be08df9f1460"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

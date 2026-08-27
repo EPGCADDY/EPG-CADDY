@@ -23,7 +23,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 15 | `PEND-MAN-004` Guía Rápida | Falta versión web/PDF visual enlazada al Manual vigente |
 | 16 | `PEND-UBI-015` detectar el campo por GPS | Falta catálogo geográfico verificado, propuesta segura, confirmación manual y prueba física por campo |
 | 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
-| 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V352 y migración Neon principal PASS; faltan Preview, navegador real y prueba física |
+| 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V352, Neon principal y Preview E2E PASS; falta inspección visual y prueba física iPhone |
 
 La prioridad activa por orden del propietario es `PEND-LIVE-018` V352; `PEND-VOZ-003` y los demás pendientes conservan su estado registrado. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
 
