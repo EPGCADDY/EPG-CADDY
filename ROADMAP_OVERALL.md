@@ -1214,3 +1214,9 @@ El deployment `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue rechazado antes de publicac
 ### V345-ICONS-PREVIEW · evidencia remota
 
 El commit `1026a3e6555077fab1af4f8f932e97a7032e0182` quedó READY en Preview como deployment `dpl_9DcbFH9d9Gf3qDL8rGUjQqTNNYpX`. El constructor aprobó Gate 0, Manual editorial 74/74, Manual visual 74/74, ROADMAP de 25 modificaciones, 349 fuentes, tres PDF sellados y 93 paquetes operativos. La llamada viva de Reglas recibió 429 y fue diferida conforme al contrato V338; no hubo error del producto. RC-018 queda desplegado y abierto únicamente para instalar físicamente ambos accesos en iPhone. Producción permanece intacta.
+
+## V346 · Micrófono real y matriz de estado · 27 de agosto de 2026
+
+- `index-grupal.html`: clasifica HTTP 429 como límite del servicio, activa reconocimiento de voz alternativo cuando está disponible y muestra `ESCUCHANDO` / `RESPONDIENDO` en la matriz principal.
+- `test-v336-microphone-transport.mjs`: deja de aceptar el diagnóstico falso de Internet y bloquea regresiones del respaldo y de ambos estados visibles.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello recalculado para esta modificación atómica.

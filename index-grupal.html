@@ -973,6 +973,7 @@ let setupSpeechAllowed=false,sessionHasSpoken=false;
 let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelErrorUntil=0,speechPlaybackResponseId=null,pendingVoiceSpeedRestore=false,pendingVoiceAssistantAction=null,conversationIdleCloseTimer=null,conversationInputStallTimer=null,conversationInputStartedAt=0,conversationResponseStallTimer=null,conversationBargeInArmedAt=0,conversationOutputStarted=false,conversationOutputTranscript="",conversationBargeInItemId="",conversationBargeInText="",conversationEchoGuardUntil=0,conversationClearResponseId=null,voiceHealthTurn=0,voiceHealthTurnStartedAt=0;
 let realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL,realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;
 let voiceOpening=false;
+let browserVoiceRecognition=null,browserVoiceContext=null,browserVoiceActive=false,browserVoiceRequested=false,browserVoiceTranscript="",browserVoiceInterim="",browserVoiceErrored=false;
 let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null,aiUniversalRulesMode=false;
 const AI_UNIVERSAL_HISTORY_LIMIT=80;
 const processedTranscriptItems=new Set();
@@ -2343,9 +2344,9 @@ function speakAiUniversalText(text,{repeat=false}={}){
   utterance.lang=aiUniversalSpeechLanguage(clean);utterance.rate=.98;utterance.pitch=1;
   const voices=window.speechSynthesis.getVoices?.()||[],language=utterance.lang.toLowerCase().split("-")[0];
   utterance.voice=voices.find(voice=>String(voice.lang||"").toLowerCase()===utterance.lang.toLowerCase())||voices.find(voice=>String(voice.lang||"").toLowerCase().startsWith(language))||null;
-  utterance.onstart=()=>aiUniversalSetState(repeat?"REPITIENDO RESPUESTA…":"RESPONDIENDO EN VOZ…",{busy:true});
-  utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;aiUniversalSetState("LISTO · PUEDES CONTINUAR")}};
-  utterance.onerror=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;aiUniversalSetState("NO SE PUDO REPRODUCIR LA VOZ")}};
+  utterance.onstart=()=>{setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(repeat?"REPITIENDO RESPUESTA…":"RESPONDIENDO EN VOZ…",{busy:true})};
+  utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")}};
+  utterance.onerror=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;setPrimaryVoiceMatrix("error",voiceContext,"NO SE PUDO REPRODUCIR LA VOZ");aiUniversalSetState("NO SE PUDO REPRODUCIR LA VOZ")}};
   window.speechSynthesis.speak(utterance);return true;
 }
 function stopAiUniversalOutput(){
@@ -3907,11 +3908,12 @@ function teardownRealtime(){
   $("setupMicWrap").classList.remove("active","connecting");
 }
 function voiceActivationErrorMessage(error){
-  const name=String(error?.name||""),message=String(error?.message||"").toLowerCase();
+  const name=String(error?.name||""),message=String(error?.message||"").toLowerCase(),status=Number(error?.status||0);
   if(["NotAllowedError","SecurityError","PermissionDeniedError"].includes(name))return"PERMISO DE MICRÓFONO BLOQUEADO · HABILÍTALO EN EL NAVEGADOR";
   if(["NotFoundError","DevicesNotFoundError"].includes(name))return"NO HAY UN MICRÓFONO DISPONIBLE EN ESTE DISPOSITIVO";
   if(name==="AbortError"||/agot|timeout|no abrió/.test(message))return"LA CONEXIÓN DEL MICRÓFONO AGOTÓ EL TIEMPO · INTENTA DE NUEVO";
-  if(/realtime|sesión|session|canal/.test(message))return"NO SE PUDO CONECTAR EL MICRÓFONO · REVISA INTERNET E INTENTA DE NUEVO";
+  if(status===429||/\b429\b|rate.?limit|quota|cuota|l[ií]mite del servicio/.test(message))return"SERVICIO DE VOZ TEMPORALMENTE LIMITADO · INTENTA DE NUEVO";
+  if(/realtime|sesión|session|canal/.test(message))return"SERVICIO DE VOZ NO DISPONIBLE · INTENTA DE NUEVO";
   return"NO SE PUDO ABRIR EL MICRÓFONO · INTENTA DE NUEVO";
 }
 function realtimeConnectionAction(state){
@@ -3931,6 +3933,33 @@ function voiceTransportFailure(installedPc,context,message="CONEXIÓN DEL MICRÓ
 function scheduleRealtimeDisconnectRecovery(installedPc,context){
   if(realtimeDisconnectTimer)clearTimeout(realtimeDisconnectTimer);
   realtimeDisconnectTimer=setTimeout(()=>{realtimeDisconnectTimer=null;if(pc===installedPc&&installedPc.connectionState!=="connected")voiceTransportFailure(installedPc,context)},REALTIME_DISCONNECT_GRACE_MS);
+}
+
+function fallbackVoiceConstructor(){return window.SpeechRecognition||window.webkitSpeechRecognition||null}
+function fallbackVoiceAvailable(){return typeof fallbackVoiceConstructor()==="function"}
+function shouldUseBrowserVoiceFallback(error){const status=Number(error?.status||0),message=String(error?.message||"").toLowerCase();return status===429||status>=500||/realtime|sesión|session|canal/.test(message)}
+function primaryVoiceStatusTarget(context=voiceContext){return context==="setup"?$("setupStatus"):$("status")}
+function setPrimaryVoiceMatrix(state,context=voiceContext,message=""){
+  const target=primaryVoiceStatusTarget(context);if(!target)return false;target.classList.toggle("listening",state==="listening");
+  if(message)target.textContent=message;else if(state==="listening")target.textContent="● ESCUCHANDO";else if(state==="responding")target.textContent="● RESPONDIENDO";else if(state==="processing")target.textContent="PROCESANDO…";else if(state==="error")target.textContent="ERROR DE MICRÓFONO";else target.textContent=context==="setup"?(draftPlayers.length?"LISTO · PRESIONA OK PARA CONFIRMAR":""):(round.configured?roundIdleStatus():"");return true
+}
+function fallbackVoiceErrorMessage(event){const code=String(event?.error||"").toLowerCase();if(code==="not-allowed"||code==="service-not-allowed")return"PERMISO DE MICRÓFONO BLOQUEADO · HABILÍTALO EN EL NAVEGADOR";if(code==="audio-capture")return"NO HAY UN MICRÓFONO DISPONIBLE EN ESTE DISPOSITIVO";if(code==="no-speech")return"NO ESCUCHÉ NINGUNA VOZ · TOCA EL MICRÓFONO E INTENTA DE NUEVO";return"RECONOCIMIENTO DE VOZ NO DISPONIBLE · INTENTA DE NUEVO"}
+function stopBrowserVoiceFallback({keepStatus=false}={}){const recognition=browserVoiceRecognition;browserVoiceRequested=false;browserVoiceActive=false;browserVoiceRecognition=null;try{recognition?.stop()}catch{}listening=false;phase="idle";$("headerMicWrap")?.classList.remove("active","connecting");$("setupMicWrap")?.classList.remove("active","connecting");if(!keepStatus)setPrimaryVoiceMatrix("idle",browserVoiceContext||voiceContext);return true}
+async function processBrowserVoiceTranscript(context,transcript){
+  const clean=String(transcript||"").trim();if(!clean)return false;voiceContext=context;setPrimaryVoiceMatrix("processing",context);
+  if(context==="setup"){const parsed=parseSetupTranscript(clean);if(parsed?.ok){const result=applySetupChanges(parsed.changes);if(result?.ok){renderDraft();setPrimaryVoiceMatrix("idle",context,"LISTO · REVISA LOS JUGADORES Y PRESIONA OK");return true}}}
+  const local=routeAiUniversalAppText(clean);if(local?.handled){aiUniversalRemember("user",clean);aiUniversalRemember("assistant",local.answer);aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(!speakAiUniversalText(local.answer))setPrimaryVoiceMatrix("idle",context);return true}
+  const answered=await submitAiUniversalText(clean);if(!answered)setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO");return answered
+}
+function startBrowserVoiceFallback(context){
+  const Recognition=fallbackVoiceConstructor();if(typeof Recognition!=="function")return false;stopBrowserVoiceFallback({keepStatus:true});const recognition=new Recognition();
+  browserVoiceRecognition=recognition;browserVoiceContext=context;browserVoiceRequested=true;browserVoiceTranscript="";browserVoiceInterim="";browserVoiceErrored=false;
+  recognition.lang="es-GT";recognition.continuous=false;recognition.interimResults=true;recognition.maxAlternatives=1;
+  recognition.onstart=()=>{if(browserVoiceRecognition!==recognition)return;browserVoiceRequested=false;browserVoiceActive=true;listening=true;phase="listening";const wrap=context==="setup"?$("setupMicWrap"):$("headerMicWrap");wrap?.classList.remove("connecting");wrap?.classList.add("active");setPrimaryVoiceMatrix("listening",context)};
+  recognition.onresult=event=>{if(browserVoiceRecognition!==recognition)return;let interim="";for(let i=event.resultIndex;i<event.results.length;i++){const text=String(event.results[i]?.[0]?.transcript||"").trim();if(!text)continue;if(event.results[i].isFinal)browserVoiceTranscript+=(browserVoiceTranscript?" ":"")+text;else interim+=(interim?" ":"")+text}browserVoiceInterim=interim||browserVoiceInterim;setPrimaryVoiceMatrix("listening",context)};
+  recognition.onerror=event=>{if(browserVoiceRecognition!==recognition)return;browserVoiceErrored=true;browserVoiceRequested=false;browserVoiceActive=false;listening=false;phase="idle";setPrimaryVoiceMatrix("error",context,fallbackVoiceErrorMessage(event))};
+  recognition.onend=()=>{if(browserVoiceRecognition!==recognition)return;const transcript=(browserVoiceTranscript||browserVoiceInterim).trim(),failed=browserVoiceErrored;browserVoiceRecognition=null;browserVoiceRequested=false;browserVoiceActive=false;listening=false;const wrap=context==="setup"?$("setupMicWrap"):$("headerMicWrap");wrap?.classList.remove("active","connecting");if(!failed&&transcript)processBrowserVoiceTranscript(context,transcript);else if(!failed)setPrimaryVoiceMatrix("error",context,"NO ESCUCHÉ NINGUNA VOZ · TOCA EL MICRÓFONO E INTENTA DE NUEVO")};
+  try{setPrimaryVoiceMatrix("processing",context,"ABRIENDO MICRÓFONO ALTERNATIVO…");recognition.start();return true}catch(error){browserVoiceRecognition=null;browserVoiceRequested=false;browserVoiceActive=false;setPrimaryVoiceMatrix("error",context,voiceActivationErrorMessage(error));return false}
 }
 
 function setMicConnecting(context,on){
@@ -4142,7 +4171,7 @@ function handleRealtime(message){
     }
     if((e.type==="output_audio_buffer.started"||e.type==="output_audio_buffer.audio_started")&&authorizedSpeech?.reason==="conversation"){
       if(markConversationFollowupAudioStarted(e.response_id||""))reportVoiceHealth("followup_audio_started",{followupAudioStarted:true});
-      armConversationPlaybackStall();conversationOutputStarted=true;aiUniversalSetState("AI UNIVERSAL ∞ RESPONDIENDO…",{busy:true});
+      armConversationPlaybackStall();conversationOutputStarted=true;setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("AI UNIVERSAL ∞ RESPONDIENDO…",{busy:true});
     }
     if((e.type==="response.output_audio_transcript.delta"||e.type==="response.audio_transcript.delta")&&authorizedSpeech?.reason==="conversation"){
       if(markConversationFollowupAudioStarted(e.response_id||""))reportVoiceHealth("followup_audio_started",{followupAudioStarted:true});
@@ -4429,7 +4458,7 @@ async function ensureSession(){
         rsp=await fetch(window.gscgApiUrl("/api/session-grupal"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/sdp","X-GSCG-Context":voiceContext==="setup"?"setup":"round","X-GSCG-Players":round.players.map(p=>p.name).join(", ").slice(0,300)},body:localPc.localDescription.sdp,signal:controller.signal});
       }finally{clearTimeout(fetchTimer)}
       const sdp=await rsp.text();
-      if(!rsp.ok)throw new Error(sdp||"No se pudo iniciar Realtime");
+      if(!rsp.ok){const failure=new Error(sdp||"No se pudo iniciar Realtime");failure.status=rsp.status;failure.code="HTTP_"+rsp.status;throw failure}
       await localPc.setRemoteDescription({type:"answer",sdp});
       await opened;
       await sessionCreated;
@@ -4470,6 +4499,7 @@ async function ensureSession(){
 }
 async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL){
   voiceLastErrorMessage="";
+  if(browserVoiceActive||browserVoiceRequested){stopBrowserVoiceFallback();return true}
   setMicConnecting(context,true);
   if(voiceActivationPromise){
     return voiceActivationPromise;
@@ -4526,6 +4556,7 @@ async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPER
       const sameContext=voiceContext===context;
       teardownRealtime();
       setMicConnecting(context,false);
+      if(sameContext&&shouldUseBrowserVoiceFallback(err)&&fallbackVoiceAvailable()&&startBrowserVoiceFallback(context)){voiceLastErrorMessage="MICRÓFONO ALTERNATIVO ACTIVO";return true}
       if(sameContext){
         voiceContext=context;
         if(context==="setup")$("setupStatus").textContent=voiceLastErrorMessage;

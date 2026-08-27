@@ -13,13 +13,22 @@ const connectionAction=new Function(`${html.slice(errorEnd+1,actionEnd)};return 
 assert.equal(errorMessage({name:"NotFoundError"}),"NO HAY UN MICRÓFONO DISPONIBLE EN ESTE DISPOSITIVO");
 assert.match(errorMessage({name:"NotAllowedError"}),/PERMISO/);
 assert.match(errorMessage({name:"AbortError"}),/AGOTÓ EL TIEMPO/);
-assert.match(errorMessage(new Error("Canal Realtime no disponible")),/REVISA INTERNET/);
+const limited=Object.assign(new Error("OpenAI no pudo crear la sesión grupal."),{status:429});
+assert.match(errorMessage(limited),/TEMPORALMENTE LIMITADO/);
+assert.doesNotMatch(errorMessage(limited),/INTERNET/);
+assert.match(errorMessage(new Error("Canal Realtime no disponible")),/SERVICIO DE VOZ NO DISPONIBLE/);
 assert.deepEqual(["connected","disconnected","failed","closed","connecting"].map(connectionAction),["ready","grace","reset","reset","wait"]);
 assert.match(html,/const REALTIME_DISCONNECT_GRACE_MS=5000/);
 assert.match(html,/scheduleRealtimeDisconnectRecovery\(installedPc,voiceContext\)/);
 assert.match(html,/pc\.onconnectionstatechange=null;pc\.oniceconnectionstatechange=null;pc\.close\(\)/);
 assert.match(html,/voiceLastErrorMessage\|\|"NO SE PUDO ABRIR EL MICRÓFONO"/);
+assert.match(html,/window\.SpeechRecognition\|\|window\.webkitSpeechRecognition/);
+assert.match(html,/shouldUseBrowserVoiceFallback\(err\)&&fallbackVoiceAvailable\(\)&&startBrowserVoiceFallback\(context\)/);
+assert.match(html,/failure\.status=rsp\.status/);
+assert.match(html,/setPrimaryVoiceMatrix\("listening",context\)/);
+assert.match(html,/setPrimaryVoiceMatrix\("responding",voiceContext\)/);
+assert.match(html,/utterance\.onstart=.*setPrimaryVoiceMatrix\("responding",voiceContext\)/);
 assert.match(sessionApi,/"realtime-session"/);
 assert.deepEqual(sanitizeVoiceHealth({event:"connection_interrupted",query:"privado",latitude:14.6}),{event:"connection_interrupted",build:"",context:"round",turn:0,elapsedMs:0});
 
-console.log("PASS V336 · micrófono distingue causa, tolera 5 s de desconexión y limpia transporte completo");
+console.log("PASS V346 · 429 no culpa Internet, activa respaldo y muestra ESCUCHANDO / RESPONDIENDO");

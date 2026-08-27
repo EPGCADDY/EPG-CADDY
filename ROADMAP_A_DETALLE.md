@@ -1484,3 +1484,9 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 | Inventario | 349 fuentes y tres PDF sellados. |
 | Reglas viva | 429 externo diferido por el contrato V338; banco determinista PASS. |
 | Estado | RC-018 desplegado; instalación física de ambos iconos pendiente; Producción intacta. |
+
+## V346 · Micrófono real y matriz de estado · 27 de agosto de 2026
+
+- `index-grupal.html`: clasifica HTTP 429 como límite del servicio, activa reconocimiento de voz alternativo cuando está disponible y muestra `ESCUCHANDO` / `RESPONDIENDO` en la matriz principal.
+- `test-v336-microphone-transport.mjs`: deja de aceptar el diagnóstico falso de Internet y bloquea regresiones del respaldo y de ambos estados visibles.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello recalculado para esta modificación atómica.
