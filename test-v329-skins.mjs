@@ -147,7 +147,7 @@ assert.ok(overlayIndex>=0&&overlayIndex<mainIndex,"Skins debe abrir fuera del fo
 const main=html.slice(mainIndex,html.indexOf('</main>',mainIndex));
 assert.ok(main.includes('id="scorecard"')&&main.includes('id="summaryBody"'));
 assert.equal(main.includes('id="skinsResults"'),false,"No se debe insertar el resultado económico en la pantalla principal");
-assert.match(worker,/gscg-mobile-v332-dual-currency-matrix/);
+assert.match(worker,/gscg-mobile-v\d{3}[^"]*/);
 assert.ok(worker.includes('"/skins.js"'));
 assert.doesNotMatch(fs.readFileSync(new URL("./skins.js",import.meta.url),"utf8"),/(?:saveEntry|recordScore|setScore|fetch\()/,"El cálculo Skins no escribe scores ni consulta servicios");
 

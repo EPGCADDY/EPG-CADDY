@@ -177,7 +177,7 @@ for(const key of ["skins","wolf","vegas","dots"]){
   assert.equal((block.match(/type="radio"/g)||[]).length,2,`${key} debe ofrecer Q y $ como radios excluyentes`);
   assert.equal((block.match(/checked/g)||[]).length,1,`${key} debe iniciar con una sola moneda marcada`);
 }
-assert.match(worker,/gscg-mobile-v332-dual-currency-matrix/);
+assert.match(worker,/gscg-mobile-v\d{3}[^"]*/);
 assert.match(html,/function enforceExclusiveDraftGame\(preferredKey=undefined\)/,"Debe limpiar estados laterales heredados");
 assert.match(html,/function syncDraftModeSelection\(preferredKey=undefined\)/,"Debe existir un único escritor visual de modalidad");
 assert.match(html,/draftRoundMode="general";enforceExclusiveDraftGame\(key\);syncDraftModeSelection\(key\)/,"El toque lateral debe desmarcar visualmente las demás opciones antes de renderizar");

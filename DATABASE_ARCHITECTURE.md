@@ -90,3 +90,36 @@ El servidor acepta una mutación una sola vez. Si recibe nuevamente el mismo `cl
 La migración V256 debe ensayarse en una rama aislada de Neon y superar ingestión, duplicado, corrección y recuperación antes de aplicarse a Producción. Mientras falten migración y sesión autenticada, la cola conserva el último paquete pendiente y la interfaz no debe anunciar sincronización central terminada.
 
 La base central ya está alojada y responde. Hasta completar los puntos restantes, no se considera habilitada la sincronización comercial de datos personales y rondas.
+
+## V352 — publicación temporal GOLF SCORE CARD GT. LIVE
+
+V352 agrega una ruta central limitada exclusivamente a observación remota temporal. No convierte el historial comercial completo en público ni sustituye la sincronización de `PEND-NUB-011`.
+
+### Modelo
+
+- `live_streams`: una publicación autorizada de jugador o grupo, snapshot vigente, revisión, caducidad y vínculo opcional a torneo.
+- `live_tournaments`: tablero temporal, secreto del organizador, token del visitante, código de unión, revisión y caducidad.
+- `live_events`: bitácora técnica append-only de creación, publicación, unión, salida y revocación, sin guardar el token en claro.
+- `live_rate_limits`: ventana de frecuencia para proteger creación, control, publicación y lectura.
+- `api/live.js`: ejecuta una sola sentencia transaccional con CTE, bloquea la fila, exige revisión esperada y vuelve a filtrar `selected_player_ids` antes de guardar; la migración queda limitada a tablas e índices compatibles con el preparador seguro de Neon.
+
+### Capacidades y privacidad
+
+- Cada stream tiene un secreto de publicación y un token de lectura independientes, aleatorios de 256 bits. Cada torneo separa además el secreto del organizador, el token del tablero y un código de unión.
+- PostgreSQL recibe y conserva sólo SHA-256. El visitante transporta su token en el fragmento `#` de `live.html`, no en la consulta del enlace.
+- El snapshot permitido contiene únicamente identidad deportiva visible, handicap, tee, campo, modalidad, torneo, scores, cálculos y tiempos de la ronda.
+- Se excluyen teléfono, correo, WhatsApp, contactos, coordenadas, clima detallado, audio, transcripción, conversación AI, credenciales, códigos privados, juegos laterales y valores Q/$.
+- Revocar un stream elimina inmediatamente `current_snapshot`; caducidad y estado impiden lecturas posteriores.
+
+### Escala y consistencia
+
+- La Score Card operativa conserva de uno a seis jugadores. El torneo no tiene máximo fijo de grupos o jugadores agregados: se recorre con cursor estable, 25 grupos por vista y hasta 50 por respuesta API.
+- Cada persistencia local deja el snapshot más reciente en cola. La publicación usa `client_mutation_id`, revisión esperada y reintento de conflicto, sin “último dispositivo gana” a ciegas.
+- La consulta normal es cada tres segundos y devuelve `unchanged` cuando la revisión no cambió.
+- `live.html` es sólo lectura y está separado de `index-grupal.html`; no contiene escritor de scores, almacenamiento de ronda, micrófono ni audio.
+
+La migración `database/004_live_scorecards.sql` superó primero una rama temporal de Neon, incluyendo 60 grupos paginados y el filtro real de alcance. Después de la aprobación expresa del propietario se completó en la rama principal. Producción web permanece intacta hasta aprobar toda V352.
+
+### Evidencia temporal V352 · PASS
+
+La migración `1f8793a4-0dad-40a6-8016-b9b183e15b7c` fue creada en `mcp-migration-2026-08-27T21-50-34` (`br-morning-dew-avwpi96x`), hija de `br-late-wind-avhgi9s3`. Se verificaron cuatro tablas LIVE, cero funciones almacenadas, 60 grupos únicos paginados `25/25/10`, filtro de dos jugadores a uno autorizado, primera revisión atómica y reenvío idempotente sin evento adicional. Tras la aprobación expresa, Neon aplicó la migración a `br-late-wind-avhgi9s3` y eliminó la rama temporal. La comprobación final devolvió cuatro tablas, 15 índices, cero funciones LIVE y cero filas de prueba trasladadas.

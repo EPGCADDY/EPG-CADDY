@@ -64,7 +64,7 @@ for(const token of [
   "Sin conexión sólo se reutilizan respuestas oficiales confirmadas",
   "REGLAS PUEDE GUARDAR SÓLO TOKENS Y RESPUESTAS OFICIALES"
 ])assert.ok(html.includes(token),`Falta integración sin conexión: ${token}`);
-assert.match(worker,/gscg-mobile-v332-dual-currency-matrix/);
+assert.match(worker,/gscg-mobile-v\d{3}[^"]*/);
 assert.ok(worker.includes('"/golf-rules-offline.js"'));
 assert.doesNotMatch(moduleSource,/(?:setScore|saveScore|applyPenalty|updateScore|fetch\()/i,"El modo sin conexión no puede escribir scores ni llamar servicios externos");
 

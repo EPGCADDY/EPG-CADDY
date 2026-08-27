@@ -1558,3 +1558,43 @@ El primer deployment remoto `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue bloqueado cor
 Corrección de rutas V351: se eliminaron las rutas temporales erróneas `tests/test-v305-registration-guides-parser-truth.mjs` y `tests/test-v336-microphone-transport.mjs`; las pruebas activas permanecen en la raíz como `test-v305-registration-guides-parser-truth.mjs` y `test-v336-microphone-transport.mjs`. También se eliminaron las copias raíz temporales de los dos controles SCIRE. El árbol final conserva 349 fuentes activas más el sello.
 
 Sello V351: la huella del inventario se recalculó con el orden binario exacto que usa `scripts/inventory-gate.mjs`; no cambia el alcance funcional ni las 349 fuentes activas.
+
+## V352-GOLF-SCORE-CARD-GT-LIVE · seguimiento remoto autorizado
+
+| Archivo exacto | Control V352 | PASS obligatorio |
+|---|---|---|
+| `index-grupal.html` | `SINGLE-OFFICIAL-WRITER` | `persist()` guarda localmente y luego notifica LIVE; ningún visitante puede escribir la ronda. |
+| `live-control.js` | `CONSENT-SEPARATE-WINDOW-OFFLINE` | Exige permiso coincidente, abre seguimiento en otra ventana, impide enlaces ajenos al origen y conserva sólo el último snapshot pendiente. |
+| `live.html` | `PUBLIC-READ-ONLY-SHELL` | Usa el nombre `GOLF SCORE CARD GT. LIVE`, CSP, no-referrer, noindex y no requiere instalación/cuenta. |
+| `live-view.js` | `READ-ONLY-POLL-PAGINATION` | Sólo llama `read`, actualiza cada tres segundos, conserva última vista sin señal y pagina grupos. |
+| `api/live.js` | `SERVER-VALIDATION-CAPABILITIES` | Normaliza 1–6 jugadores/18 hoyos, filtra alcance, separa secretos, limita frecuencia y pagina hasta 50 por llamada. |
+| `database/004_live_scorecards.sql` | `NEON-PREPARE-COMPATIBLE` | Crea sólo tablas e índices; no usa cuerpos de funciones que el preparador seguro no pueda migrar. |
+| `api/live.js` | `IDEMPOTENT-REFILTERED-TRANSACTION` | Una sola sentencia CTE bloquea, verifica revisión, repite mutación sin duplicar, refiltra `selected_player_ids`, actualiza torneo y registra evento. |
+| `service-worker.js` | `V352-CACHE` | Actualiza nombre de caché e incluye el control sin convertir el visor Live en tarjeta offline editable. |
+| `vercel.json` | `LIVE-HEADERS` | `live.html` responde sin caché/referrer/indexación y los scripts conservan protección. |
+| `test-v352-live.mjs` | `PERMANENT-REGRESSION` | Cubre privacidad, X, Gross/Neto, consentimiento, límites de stream, hashes, visor, ventana, cambio de ronda, cola y paginación. |
+| `audit-project.mjs` | `AUDIT-INCLUSION` | La auditoría integral ejecuta V352 obligatoriamente. |
+| `DATABASE_ARCHITECTURE.md` | `LIVE-DATA-BOUNDARY` | Documenta tablas, capacidades, datos excluidos, escala y migración aislada. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` | `G0-SEVEN-INPUTS` | Fuente, alcance, aceptación, referencia, riesgos, pruebas y reversión quedan cerrados. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `HONEST-PENDING-STATE` | Registra V352 sin ocultar Neon, navegador, Preview ni prueba física pendientes. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | `PRODUCT-MATRIX-28` | Integra LIVE sin declarar cerrada la nube completa ni duplicar el motor. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `FILE-MAP-V352` | Explica cada archivo y control LIVE. |
+| `ROADMAP_OVERALL.md` | `OVERALL-V352` | Resume flujo, privacidad, escala, estado y Producción intacta. |
+| `ROADMAP_A_DETALLE.md` | `DETAIL-V352` | Conserva esta matriz reproducible y todas las rutas literales. |
+| `scripts/rebuild-inventory-pdfs.py` | `INVENTORY-BUILDER-V352` | Rotula los tres PDF y el sello como candidato V352 con Producción intacta. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `INVENTORY-SEAL` | Debe regenerarse después de cerrar código, documentación y pruebas. |
+
+Secuencia V352: banco local PASS → migración preparada en rama temporal Neon PASS → prueba real con 60 grupos y filtro de un jugador PASS → confirmación obligatoria recibida → migración principal PASS → navegador real → Preview READY → regresión final → prueba física. Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` hasta cero `FAIL` y aprobación expresa.
+
+El preparador Neon rechazó dos veces el cuerpo de la función almacenada antes de crear una rama. La corrección permanente elimina esa dependencia del esquema: `api/live.js` conserva la operación atómica mediante CTE y `test-v352-live.mjs` impide reintroducir funciones almacenadas o IDs de jugador duplicados.
+
+Evidencia Neon temporal: migración `1f8793a4-0dad-40a6-8016-b9b183e15b7c`; rama `mcp-migration-2026-08-27T21-50-34` / `br-morning-dew-avwpi96x`; rama principal `br-late-wind-avhgi9s3` inicialmente intacta. Resultado: cuatro tablas LIVE, cero funciones almacenadas, 60 grupos únicos en páginas 25/25/10, un solo jugador autorizado visible, cero fuga del segundo, revisión 1, duplicado idempotente y cero eventos adicionales.
+
+Evidencia Neon principal: aprobación expresa recibida; migración aplicada correctamente a `br-late-wind-avhgi9s3`; rama temporal eliminada. La consulta posterior confirmó cuatro tablas LIVE, 15 índices, cero funciones almacenadas LIVE y cero filas de torneo, stream o evento de prueba.
+
+### Reparación de candado de build histórico
+
+| Archivos exactos | Falla encontrada | Control V352 |
+|---|---|---|
+| `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs` | Exigían literalmente `V332-DUAL-CURRENCY-MATRIX-20260826` como build general y rechazaban V352 antes de ejecutar su función histórica. | Aceptan cualquier identificador general válido `V###`; cada prueba mantiene sus controles funcionales y `test-v352-live.mjs` exige el build exacto V352. |
+| `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v312-general-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs`, `test-v328-offline-official-rules.mjs`, `test-v329-skins.mjs`, `test-v330-side-games.mjs` | Congelaban `service-worker.js` en `gscg-mobile-v332-dual-currency-matrix` e impedían invalidar el shell para V352. | Exigen una caché versionada `gscg-mobile-v###`; `test-v352-live.mjs` exige exactamente `gscg-mobile-v352-live` y el nuevo control. |

@@ -12,7 +12,8 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/official-logos/golf-score-card-gt-pwa-v345-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V332-DUAL-CURRENCY-MATRIX-20260826">
+<meta name="gscg-build" content="V352-GOLF-SCORE-CARD-GT-LIVE-20260827">
+<meta name="gscg-live" content="V352-PRIVATE-READONLY-DYNAMIC-TOURNAMENT-20260827">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
 <meta name="gscg-match-cumulative" content="V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825">
@@ -810,7 +811,7 @@ input,textarea,select{-webkit-user-select:text!important;user-select:text!import
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
 <div class="mandatory-update" id="mandatoryUpdate" role="dialog" aria-modal="true" aria-labelledby="mandatoryUpdateTitle"><div class="mandatory-update-card"><h1 id="mandatoryUpdateTitle">ACTUALIZACIÓN OBLIGATORIA</h1><p>HAY UNA NUEVA VERSIÓN DE GOLF SCORE CARD GUATEMALA. PARA PROTEGER LOS CÁLCULOS, LOS DATOS Y LAS FUNCIONES, DEBES ACTUALIZAR ANTES DE CONTINUAR.</p><button type="button" id="mandatoryUpdateButton">ACTUALIZAR</button></div></div>
-<script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
+<script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
 "use strict";
 const GSC_API_ORIGIN=String(window.GSC_API_ORIGIN||"").replace(/\/$/,"");
@@ -1091,6 +1092,8 @@ function persist(){
     archiveRoundSnapshot(round);
     queueMasterDataSnapshot("round-state");
   }catch(e){console.error("No se pudo persistir la última ronda:",e)}
+  window.GSCLiveControl?.onRoundPersisted(round);
+  return true;
 }
 let masterSyncChain=Promise.resolve(),masterSyncFlushing=false,masterSyncBlockedUntil=0;
 function masterSyncInstallationId(){try{let id=localStorage.getItem(MASTER_SYNC_INSTALLATION_KEY);if(id)return id;const random=crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):Math.random().toString(36).slice(2)+Date.now().toString(36);id=`installation-${random}`;localStorage.setItem(MASTER_SYNC_INSTALLATION_KEY,id);return id}catch{return`installation-${Date.now()}-fallback`}}
@@ -4875,6 +4878,11 @@ $("confirmInstallApp")?.addEventListener("click",async()=>{
   const prompt=deferredInstallPrompt;deferredInstallPrompt=null;await prompt.prompt();await prompt.userChoice.catch(()=>null);closeInstallGuide();showInstallControl();
 });
 showInstallControl();
+window.GSCLiveControl?.mount({
+  getRound:()=>round,
+  getCourseName:()=>COURSE_CATALOG[ACTIVE_COURSE_KEY]?.displayName||COURSE_CATALOG[ACTIVE_COURSE_KEY]?.name||round.course,
+  getPars:()=>PAR
+});
 if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
 const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-build"]')?.content||"";

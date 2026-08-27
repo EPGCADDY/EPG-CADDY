@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V330-R3 aprobó selección única Wolf en iPhone; V331 publicó la matriz investigada; V332 agrega Q/$ excluyentes y arquitectura completa de acumulados, riesgo y liquidación
+**Corte vigente:** V352 implementa `GOLF SCORE CARD GT. LIVE` sobre la fuente canónica V351 y aprueba la migración Neon principal después de validarla con 60 grupos en una rama aislada; faltan Preview, navegador real y prueba física
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -351,6 +351,16 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Separar Reglas generales, modalidad, Comité y Reglas Locales; nunca modificar scores automáticamente.
 - Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_RSG_016_SINCRONIZACION_REGLAS_GOLF.md`.
 
+### 28. GOLF SCORE CARD GT. LIVE
+
+**Estado:** V352 IMPLEMENTADO Y MIGRACIÓN AISLADA PASS; MIGRACIÓN PRINCIPAL, PREVIEW, NAVEGADOR REAL Y PRUEBA FÍSICA PENDIENTES · `PEND-LIVE-018`
+
+- Compartir por enlace privado una vista de sólo lectura de un jugador o del grupo completo, siempre con permiso explícito y revocable.
+- Permitir visitantes sin aplicación, seguimiento bilateral en otra ventana y cola offline sin alterar la Score Card activa.
+- Reunir torneos con grupos paginados y sin máximo fijo de producto; cada grupo autoriza y publica su propia tarjeta de uno a seis jugadores.
+- Separar secretos de publicación/lectura, guardar sólo SHA-256 y excluir contactos, ubicación, audio, IA, clima detallado y apuestas.
+- Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`.
+
 ## Mejoras continuas
 
 - Cobertura de vocabulario, nombres, acentos, ruido y pausas de dictado.
@@ -371,7 +381,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ## Próximo punto obligatorio
 
-La **1. Estabilización física de la voz** permanece en validación de campo. Al obtener PASS físico, la autorización permanente permite montar sin otra consulta y continuar automáticamente con el siguiente pendiente ejecutable. Los bloqueos externos —USGA/ASOGOLF/GHIN, licencias de campos, mapas, tiendas o proveedores— se documentan sin simulación. Ningún punto posterior debe duplicar motores ni separar General, Stableford, manual y voz.
+La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V352**. La estabilización física de voz permanece registrada y no se considera cerrada. La autorización permanente permite continuar con pruebas y Preview, pero una migración Neon sólo se aplica a la base principal después de la confirmación exigida por su procedimiento seguro. Los bloqueos externos —USGA/ASOGOLF/GHIN, licencias de campos, mapas, tiendas o proveedores— se documentan sin simulación. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
 
 ## Corte V345-ICONS · estado verificable
 

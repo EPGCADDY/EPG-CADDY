@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v332-dual-currency-matrix";
+const CACHE_NAME="gscg-mobile-v352-live";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -28,6 +28,7 @@ const SHELL=[
   "/sync-queue.js",
   "/master-data-sync.js",
   "/account-backup.js",
+  "/live-control.js",
   "/match-play.js",
   "/four-ball.js",
   "/stableford.js",

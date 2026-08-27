@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V332: **325**.
+Archivos activos rastreados al corte V352: **356**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -23,6 +23,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | Autorización permanente 2026-08-26 | Se calcula al publicar | Reglas permanentes, candados ROADMAP/inventarios, ejecución autónoma sin autorizaciones intermedias y montaje sólo después de PASS completo. |
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001` a `PEND-DID-017` | Se calcula al publicar | Cola consultable completa: voz, tráfico, reglas, handicap oficial, campos mundiales, GPS de golf, detección automática del campo, sincronización reglamentaria, juegos/apuestas, fichas didácticas, relojes, nube/seguridad, estadísticas, monetización, pruebas, clima y Guía Rápida. |
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md` | `PEND-DID-017` | Se calcula al publicar | Define una hoja web/PDF por modalidad y esquema, comprensible a los 10 años, imprimible en blanco y negro, con Q/$ excluyentes, ejemplo, estrategia, glosario, acumulados, riesgo y liquidación. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` | `PEND-LIVE-018` | Se calcula al publicar | Contrato GATE 0 de GOLF SCORE CARD GT. LIVE: permisos, privacidad, visor sin aplicación, seguimiento bilateral y torneo paginado sin máximo fijo. |
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_UBI_015_DETECCION_CAMPO_POR_GPS.md` | `PEND-UBI-015` | Se calcula al publicar | Especifica detección por GPS, catálogo geográfico, perímetros, propuesta confirmable, privacidad y prueba física por campo. |
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_RSG_016_SINCRONIZACION_REGLAS_GOLF.md` | `PEND-RSG-016` | Se calcula al publicar | Especifica fuente oficial, manifiesto de versión, SHA-256, caché reglamentaria, actualización, reversión y aislamiento del score. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Se calcula al regenerar | Huella técnica que impide validar o publicar con inventarios desactualizados. |
@@ -775,3 +776,34 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `test-v336-microphone-transport.mjs` | `V351-VOICE-GUARD` | Conserva Registro local, matriz exacta y telemetría privada. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-023` | Registra captura, eventos 20:16:56 UTC, causa, escape y puerta física pendiente. |
 
+## V352-GOLF-SCORE-CARD-GT-LIVE · seguimiento remoto autorizado
+
+| Archivo exacto | Responsabilidad V352 | Control permanente |
+|---|---|---|
+| `index-grupal.html` | Enlaza el control LIVE con el único `persist()` oficial y monta la interfaz sin duplicar el motor de scores. | Cada guardado conserva primero la ronda local y luego notifica el snapshot LIVE. |
+| `live-control.js` | Autoriza jugador/grupo, crea/abre/revoca enlaces, maneja torneo, ventana separada y cola offline. | Consentimiento coincidente, misma ronda, enlace válido del mismo origen y snapshot pendiente más reciente. |
+| `live.html` | Página pública separada para visitantes sin aplicación. | Sólo lectura, CSP, `no-referrer`, `noindex` y nombre público oficial. |
+| `live-view.js` | Consulta stream o torneo cada tres segundos, pagina grupos y renderiza Gross/Neto/X. | Ninguna escritura, almacenamiento, voz, audio ni acceso a la tarjeta activa. |
+| `api/live.js` | Valida, limita frecuencia y ejecuta creación, publicación transaccional, lectura, unión y revocación. | Tokens aleatorios, sólo SHA-256, páginas con cursor y una sentencia CTE que bloquea, refiltra, exige revisión y actualiza torneo/evento. |
+| `database/004_live_scorecards.sql` | Crea streams, torneos, eventos, rate limits e índices compatibles con el preparador Neon. | No contiene cuerpos de funciones; la API ejecuta la transacción atómica. |
+| `service-worker.js` | Versiona la caché de la aplicación e incorpora el control LIVE. | El visor remoto depende de red y no se mezcla con la caché de la ronda. |
+| `vercel.json` | Protege `live.html` y los scripts LIVE mediante headers. | `no-store`, `no-referrer`, `nosniff` y no indexación. |
+| `test-v352-live.mjs` | Ejecuta regresión de permisos, privacidad, X, totales, hashes, visor, cola y paginación. | Rechaza nombre interno público, más de seis jugadores por stream, datos prohibidos y rutas de escritura en el visor. |
+| `audit-project.mjs` | Incorpora V352 a la auditoría integral. | Ningún PASS global puede omitir `test-v352-live.mjs`. |
+| `DATABASE_ARCHITECTURE.md` | Documenta el modelo temporal LIVE y su separación del historial central completo. | Migración primero en rama Neon temporal; base principal sólo con confirmación. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` | Fija fuente, alcance, aceptación, riesgos, pruebas y reversión. | Los siete insumos GATE 0 quedan cerrados antes de Preview. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Registra LIVE como prioridad V352. | Conserva el estado honesto de migración, Preview, navegador y prueba física. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Añade el punto 28 y su relación con nube/QA. | No declara LIVE cerrado antes de las puertas restantes. |
+| `ROADMAP_OVERALL.md` | Resume el alcance y estado V352. | Enumera cada archivo modificado y mantiene Producción intacta. |
+| `ROADMAP_A_DETALLE.md` | Registra controles y evidencia reproducible V352. | Exige banco local, Neon temporal, navegador, Preview e inventario. |
+| `scripts/rebuild-inventory-pdfs.py` | Regenera los tres inventarios con rótulo y sello V352. | Calcula las fuentes por Git, huella cada archivo y sella los PDF deterministas. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Mapea cada pieza V352. | El sello final reemplaza el conteo provisional. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella el árbol exacto de fuentes V352. | Se regenera sólo después de cerrar archivos, ROADMAPS y pruebas. |
+
+Evidencia Neon V352: migración `1f8793a4-0dad-40a6-8016-b9b183e15b7c`, rama temporal `mcp-migration-2026-08-27T21-50-34` (`br-morning-dew-avwpi96x`), 60 grupos paginados 25/25/10, filtro individual sin fuga e idempotencia sin evento adicional. Con aprobación expresa, Neon aplicó el esquema a la principal `br-late-wind-avhgi9s3` y eliminó la temporal; verificación final: cuatro tablas, 15 índices, cero funciones LIVE y cero filas de prueba.
+
+### V352 · pruebas históricas compatibles con releases futuras
+
+`test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs` y `test-v328-official-golf-rules.mjs` conservan sus verificaciones funcionales, pero ya no congelan toda la aplicación en V332. El identificador general debe cumplir `V###`; el build LIVE exacto queda bajo `test-v352-live.mjs`.
+
+`test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v312-general-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs`, `test-v328-offline-official-rules.mjs`, `test-v329-skins.mjs` y `test-v330-side-games.mjs` exigen una caché PWA con versión `gscg-mobile-v###` sin congelarla en V332. `test-v352-live.mjs` conserva el control exacto de `gscg-mobile-v352-live` y `/live-control.js`.

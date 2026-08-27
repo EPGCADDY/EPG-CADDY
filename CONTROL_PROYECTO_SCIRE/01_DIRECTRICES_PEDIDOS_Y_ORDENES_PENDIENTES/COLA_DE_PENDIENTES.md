@@ -2,7 +2,7 @@
 
 Este archivo concentra los trabajos que el propietario ha pedido conservar para ejecución futura. Cuando el propietario diga **“busca los pendientes por hacer”**, este documento debe revisarse primero, junto con `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`.
 
-## Resumen ejecutivo vigente · 26 de agosto de 2026
+## Resumen ejecutivo vigente · 27 de agosto de 2026
 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
@@ -23,8 +23,9 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 15 | `PEND-MAN-004` Guía Rápida | Falta versión web/PDF visual enlazada al Manual vigente |
 | 16 | `PEND-UBI-015` detectar el campo por GPS | Falta catálogo geográfico verificado, propuesta segura, confirmación manual y prueba física por campo |
 | 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
+| 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V352 y migración Neon principal PASS; faltan Preview, navegador real y prueba física |
 
-La prioridad activa por orden del propietario es terminar `PEND-SKI-006` V332; `PEND-VOZ-003` queda registrado para ejecutarse después. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
+La prioridad activa por orden del propietario es `PEND-LIVE-018` V352; `PEND-VOZ-003` y los demás pendientes conservan su estado registrado. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
 
 **Autorización de ejecución permanente:** el propietario ordenó el 26 de agosto de 2026 agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versión cuando esté realmente probada. Esta autorización no convierte un `FAIL` en `PASS` ni permite simular licencias, credenciales o integraciones externas inexistentes.
 
@@ -470,6 +471,27 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 ### Frases para localizar este pendiente
 
 `nube`, `cuenta`, `sincronización`, `Neon`, `seguridad`, `privacidad`, `respaldo`, `recuperación`, `roles`, `pendientes por hacer`.
+
+## PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
+
+**Fecha de registro:** 27 de agosto de 2026
+**Estado:** V352 IMPLEMENTADO Y MIGRACIÓN AISLADA PASS; MIGRACIÓN PRINCIPAL, PREVIEW, NAVEGADOR REAL Y PRUEBA FÍSICA PENDIENTES
+**Prioridad:** Activa por orden expresa del propietario
+
+### Objetivo y condiciones
+
+- Un visitante sin aplicación ni cuenta puede ver en vivo, y sólo leer, la Score Card que el jugador o responsable haya autorizado.
+- El permiso se define como un jugador o el grupo completo; el servidor vuelve a filtrar los jugadores en cada publicación.
+- El enlace es privado, caduca y puede revocarse. Los secretos se separan entre publicar y mirar, y la base guarda sólo huellas SHA-256.
+- El seguimiento bilateral abre una ventana distinta y no puede tocar la ronda ni el escritor oficial en curso.
+- Un torneo reúne cualquier cantidad necesaria de grupos mediante páginas y cursores, sin máximo fijo de producto; cada Score Card conserva su arquitectura actual de uno a seis jugadores.
+- La cola offline guarda sólo la actualización pendiente más reciente y reintenta al volver la señal.
+- Se excluyen contactos, ubicación, audio, IA, clima detallado, códigos privados, juegos y apuestas.
+- Especificación completa: `PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`.
+
+### Frases para localizar este pendiente
+
+`Live`, `seguir jugador`, `seguir grupo`, `torneo en vivo`, `enlace privado`, `visitante sin aplicación`, `rondas bilaterales`, `sin límite de grupos`, `pendientes por hacer`.
 
 ## PEND-EST-012 · Estadísticas avanzadas y análisis
 
