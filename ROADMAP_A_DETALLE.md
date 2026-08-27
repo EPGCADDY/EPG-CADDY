@@ -1358,3 +1358,15 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v338-rules-gate-finalize.yml` | `TEMPORARY-RULES-GATE-FINALIZE` | Sella inventario, ejecuta 92 paquetes y se elimina antes del commit final. |
 
 <!-- V338-RULES-GATE-REMOTE-FINALIZED -->
+
+## V339-WEATHER-DIRECT · respuesta determinista desde Open-Meteo
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `api/universal-ai.js` | `DIRECT-WEATHER-ROUTE` | Una consulta explícita de clima salta modelo y búsqueda web; interpreta fecha y franja y usa coordenadas públicas del campo. |
+| `api/universal-ai.js` | `STRUCTURED-WEATHER-FORMAT` | Conserva condición, temperatura, sensación, viento, lluvia, pico, acción y todas las horas recibidas. |
+| `test-v337-universal-weather.mjs` | `ZERO-AI-WEATHER` | Exige una llamada Open-Meteo, cero llamadas al modelo y porcentajes exactos por hora. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-013` | Registra el 429 real hasta confirmar el Preview sin dependencia de cuota IA. |
+| `.github/workflows/v339-weather-direct-finalize.yml` | `TEMPORARY-WEATHER-DIRECT-FINALIZE` | Actualiza inventario, audita 92 paquetes y se elimina antes del commit final. |
+
+<!-- V339-WEATHER-DIRECT-REMOTE-PENDING -->

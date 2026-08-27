@@ -28,6 +28,39 @@ export function weatherTimePeriodFromQuery(query){
   return"";
 }
 
+export function isDirectWeatherQuery(query){
+  return /\b(clima|tiempo meteorologico|lluvia|llov\w*|temperatura|sensacion termica|viento|weather|rain\w*|temperature|wind)\b/i.test(String(query||"").normalize("NFD").replace(/[\u0300-\u036f]/g,""));
+}
+
+function guatemalaDate(offsetDays=0){
+  const parts=Object.fromEntries(new Intl.DateTimeFormat("en-US",{timeZone:"America/Guatemala",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date()).filter(part=>part.type!=="literal").map(part=>[part.type,part.value]));
+  const base=new Date(`${parts.year}-${parts.month}-${parts.day}T00:00:00Z`);base.setUTCDate(base.getUTCDate()+offsetDays);
+  return base.toISOString().slice(0,10);
+}
+
+export function weatherForecastDateForQuery(query){
+  const raw=String(query||""),explicit=raw.match(/\b(20\d{2}-\d{2}-\d{2})\b/)?.[1];if(explicit)return explicit;
+  const text=raw.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  if(/\bmanana por la manana\b|\btomorrow\b/.test(text)||(/\bmanana\b/.test(text)&&!/\b(esta|por la|en la) manana\b/.test(text)))return guatemalaDate(1);
+  if(/\bhoy\b|\btoday\b|\ba que hora\b|\bpor hora(?:rio)?\b/.test(text))return guatemalaDate(0);
+  return"";
+}
+
+function weatherValue(value,digits=1){const number=Number(value);return Number.isFinite(number)?number.toFixed(digits).replace(/\.0$/,""):"sin dato"}
+
+export function formatStructuredWeatherAnswer(result){
+  if(!result?.ok)return"No pude obtener el clima estructurado en este momento. Intenta nuevamente.";
+  if(result.forecastType){
+    const temperature=result.temperatureMinC!=null||result.temperatureMaxC!=null?`${weatherValue(result.temperatureMinC)}–${weatherValue(result.temperatureMaxC)} °C`:"sin dato";
+    const feels=result.feelsLikeMinC!=null||result.feelsLikeMaxC!=null?`${weatherValue(result.feelsLikeMinC)}–${weatherValue(result.feelsLikeMaxC)} °C`:"sin dato";
+    const peak=result.rainTiming?`${weatherValue(result.rainTiming.peakProbability,0)}% a las ${result.rainTiming.peakTime}`:`${weatherValue(result.maxRainProbability,0)}%`;
+    const hourly=Array.isArray(result.hourlyForecast)&&result.hourlyForecast.length?`\n\n**Probabilidad por hora:**\n${result.hourlyForecast.map(row=>`${row.time} ${weatherValue(row.rainProbability,0)}%`).join(" · ")}`:"";
+    const recommendation=result.rainTiming?.peakTime?`\n\n**Acción:** planifica terminar al menos dos horas antes del pico de las ${result.rainTiming.peakTime}.`:"";
+    return `**Pronóstico de Open-Meteo para ${result.forecastStartDate} en ${result.location}:**\n\n- **Condición:** ${result.condition||"sin dato"}.\n- **Temperatura:** ${temperature}.\n- **Sensación térmica:** ${feels}.\n- **Viento:** hasta ${weatherValue(result.windKmh)} km/h.\n- **Lluvia prevista:** ${weatherValue(result.precipitationMm)} mm.\n- **Mayor probabilidad:** ${peak}.${hourly}${recommendation}`;
+  }
+  return `**Clima observado por Open-Meteo en ${result.location}:** ${result.condition||"sin dato"}; ${weatherValue(result.temperatureC)} °C, sensación ${weatherValue(result.feelsLikeC)} °C, viento ${weatherValue(result.windKmh)} km/h y probabilidad máxima de lluvia hoy ${weatherValue(result.maxRainProbabilityToday,0)}%.`;
+}
+
 const LIVE_TRAFFIC_TOOL={
   type:"function",
   name:"get_live_traffic",
@@ -120,14 +153,24 @@ export default async function handler(req,res){
     res.setHeader("Allow","POST");
     return res.status(405).json({ok:false,error:"METHOD_NOT_ALLOWED"});
   }
-  const apiKey=process.env.OPENAI_API_KEY;
-  if(!apiKey)return res.status(500).json({ok:false,error:"OPENAI_NOT_CONFIGURED"});
   try{
     const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):req.body||{};
     const query=String(body.query||"").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"").trim().slice(0,MAX_QUERY_LENGTH);
     if(query.length<2)return res.status(422).json({ok:false,error:"QUERY_REQUIRED"});
     const history=sanitizeUniversalHistory(body.history);
     const appContext=sanitizeUniversalAppContext(body.appContext);
+    if(isDirectWeatherQuery(query)&&appContext?.weatherOrigin){
+      const forecastDate=weatherForecastDateForQuery(query),weatherResult=await computeWeatherForecast({
+        ...appContext.weatherOrigin,
+        forecastStartDate:forecastDate,
+        forecastEndDate:forecastDate,
+        timePeriod:weatherTimePeriodFromQuery(query)
+      });
+      if(!weatherResult.ok)return res.status(weatherResult.error==="FORECAST_DATE_UNAVAILABLE"?422:502).json(weatherResult);
+      return res.status(200).json({ok:true,answer:formatStructuredWeatherAnswer(weatherResult),sources:[]});
+    }
+    const apiKey=process.env.OPENAI_API_KEY;
+    if(!apiKey)return res.status(500).json({ok:false,error:"OPENAI_NOT_CONFIGURED"});
     const responseProfile=universalResponseProfile(query);
     const promptContext=appContext?{course:appContext.course,mode:appContext.mode,weather:appContext.weather}:null;
     const input=[...history,{role:"user",content:query}];

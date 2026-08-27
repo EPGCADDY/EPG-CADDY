@@ -668,6 +668,7 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `.github/workflows/v337-weather-retry-finalize.yml` | Reintento trazado del mismo ejecutable después de que Vercel recibió 429 transitorio en la prueba externa de Reglas. |
 | `api/golf-rules.js`, `test-v328-official-golf-rules.mjs`, `test-v328-live-official-rules.mjs` | V338-RULES-GATE distingue 429 reintentable y evita que disponibilidad externa transitoria se confunda con una regresión del producto. |
 | `.github/workflows/v338-rules-gate-finalize.yml` | Sella y audita la corrección de la puerta viva antes de eliminarse. |
+| `api/universal-ai.js`, `test-v337-universal-weather.mjs`, `.github/workflows/v339-weather-direct-finalize.yml` | V339-WEATHER-DIRECT elimina la dependencia del modelo para clima explícito y responde directamente desde Open-Meteo. |
 
 ## Cómo usar este inventario
 
