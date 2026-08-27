@@ -959,10 +959,12 @@ const CONVERSATION_INPUT_STALL_MS=15000;
 const CONVERSATION_INPUT_HARD_LIMIT_MS=90000;
 const CONVERSATION_RESPONSE_STALL_MS=30000;
 const CONVERSATION_PLAYBACK_STALL_MS=60000;
+const REALTIME_DISCONNECT_GRACE_MS=5000;
 const REALTIME_TURN_PROFILE_OPERATIONAL="operational";
 const REALTIME_TURN_PROFILE_CONVERSATION="conversation";
 let pc=null,dc=null,stream=null,micTrack=null,audioEl=null,listening=false,phase="idle",voiceContext="round",activeResponseId=null;
 let sessionConnectPromise=null,voiceActivationPromise=null,voiceActivationContext=null,realtimeGeneration=0;
+let realtimeDisconnectTimer=null,voiceLastErrorMessage="";
 let appHiddenAt=0,appWasBackgrounded=false,lastRealtimeActivityAt=Date.now(),resumeCheckPromise=null;
 let realtimeShape="unknown";
 let setupSpeechAllowed=false,sessionHasSpoken=false;
@@ -2034,7 +2036,7 @@ function markConversationFollowupAudioStarted(eventResponseId=""){
   transition.followupAudioStarted=true;
   return true;
 }
-const VOICE_HEALTH_EVENTS=new Set(["speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered"]);
+const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered"]);
 function reportVoiceHealth(event,detail={}){
   if(!VOICE_HEALTH_EVENTS.has(event)||typeof fetch!=="function")return false;
   const payload={event,build:"V330",context:voiceContext==="setup"?"setup":"round",turn:Math.max(0,voiceHealthTurn),elapsedMs:voiceHealthTurnStartedAt?Math.max(0,Date.now()-voiceHealthTurnStartedAt):0};
@@ -2375,7 +2377,7 @@ async function startAiUniversalListening(){
   const setupVisible=$("setupOverlay")?.classList?.contains("visible"),context=setupVisible||!round.configured?"setup":"round";
   aiUniversalSetState("ABRIENDO MICRÓFONO…",{busy:true});
   const opened=await toggleVoice(context,REALTIME_TURN_PROFILE_CONVERSATION);
-  aiUniversalSetState(opened?"● MICRÓFONO ESCUCHANDO · HABLA CON NATURALIDAD":"NO SE PUDO ABRIR EL MICRÓFONO",{busy:!!opened});return !!opened;
+  aiUniversalSetState(opened?"● MICRÓFONO ESCUCHANDO · HABLA CON NATURALIDAD":voiceLastErrorMessage||"NO SE PUDO ABRIR EL MICRÓFONO",{busy:!!opened});return !!opened;
 }
 function aiUniversalLooksLikeSetupOrder(text){
   const value=normalizeSpeech(text);
@@ -3875,10 +3877,11 @@ function teardownRealtime(){
   clearOperationalMissingPrompt();
   clearConversationIdleCloseTimer();
   clearConversationTurnWatchdogs();
+  if(realtimeDisconnectTimer){clearTimeout(realtimeDisconnectTimer);realtimeDisconnectTimer=null}
   if(setupTranscriptionWatchdog){clearTimeout(setupTranscriptionWatchdog);setupTranscriptionWatchdog=null}
   realtimeGeneration++;
   try{if(dc){dc.onopen=null;dc.onclose=null;dc.onerror=null;dc.onmessage=null;dc.close()}}catch{}
-  try{if(pc)pc.close()}catch{}
+  try{if(pc){pc.onconnectionstatechange=null;pc.oniceconnectionstatechange=null;pc.close()}}catch{}
   try{if(stream)stream.getTracks().forEach(t=>t.stop())}catch{}
   try{if(audioEl){audioEl.pause();audioEl.srcObject=null;audioEl.remove()}}catch{}
   pc=null;dc=null;stream=null;micTrack=null;audioEl=null;
@@ -3891,6 +3894,32 @@ function teardownRealtime(){
   pendingSessionUpdate=null;realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL;realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;listening=false;phase="idle";
   $("headerMicWrap").classList.remove("active","connecting");
   $("setupMicWrap").classList.remove("active","connecting");
+}
+function voiceActivationErrorMessage(error){
+  const name=String(error?.name||""),message=String(error?.message||"").toLowerCase();
+  if(["NotAllowedError","SecurityError","PermissionDeniedError"].includes(name))return"PERMISO DE MICRÓFONO BLOQUEADO · HABILÍTALO EN EL NAVEGADOR";
+  if(["NotFoundError","DevicesNotFoundError"].includes(name))return"NO HAY UN MICRÓFONO DISPONIBLE EN ESTE DISPOSITIVO";
+  if(name==="AbortError"||/agot|timeout|no abrió/.test(message))return"LA CONEXIÓN DEL MICRÓFONO AGOTÓ EL TIEMPO · INTENTA DE NUEVO";
+  if(/realtime|sesión|session|canal/.test(message))return"NO SE PUDO CONECTAR EL MICRÓFONO · REVISA INTERNET E INTENTA DE NUEVO";
+  return"NO SE PUDO ABRIR EL MICRÓFONO · INTENTA DE NUEVO";
+}
+function realtimeConnectionAction(state){
+  if(state==="connected")return"ready";
+  if(state==="disconnected")return"grace";
+  if(state==="failed"||state==="closed")return"reset";
+  return"wait";
+}
+function voiceTransportFailure(installedPc,context,message="CONEXIÓN DEL MICRÓFONO INTERRUMPIDA · TOCA ESCUCHAR PARA RECONECTAR"){
+  if(pc!==installedPc)return false;
+  reportVoiceHealth("connection_failed");
+  teardownRealtime();voiceContext=context;voiceLastErrorMessage=message;
+  const target=context==="setup"?$("setupStatus"):$("status");if(target)target.textContent=message;
+  aiUniversalSetState(message);
+  return false;
+}
+function scheduleRealtimeDisconnectRecovery(installedPc,context){
+  if(realtimeDisconnectTimer)clearTimeout(realtimeDisconnectTimer);
+  realtimeDisconnectTimer=setTimeout(()=>{realtimeDisconnectTimer=null;if(pc===installedPc&&installedPc.connectionState!=="connected")voiceTransportFailure(installedPc,context)},REALTIME_DISCONNECT_GRACE_MS);
 }
 
 function setMicConnecting(context,on){
@@ -4348,6 +4377,7 @@ async function ensureSession(){
   sessionConnectPromise=(async()=>{
     let localStream=null,localTrack=null,localPc=null,localDc=null,localAudio=null,openTimer=null,sessionCreatedTimer=null;
     try{
+      reportVoiceHealth("connection_started");
       localStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
       if(generation!==realtimeGeneration)throw new Error("Conexión reemplazada");
       localTrack=localStream.getAudioTracks()[0];
@@ -4399,16 +4429,19 @@ async function ensureSession(){
       dc.onerror=()=>{if(dc===installedDc&&!listening)console.debug("Canal Realtime reportó error")};
       dc.onclose=()=>{
         if(dc!==installedDc)return;
-        if(listening)setVoice(false);
-        if(pc===installedPc){dc=null;pc=null;micTrack=null;stream=null;audioEl=null;sessionConnectPromise=null}
+        voiceTransportFailure(installedPc,voiceContext);
       };
       pc.onconnectionstatechange=()=>{
         if(pc!==installedPc)return;
-        if(["failed","closed","disconnected"].includes(pc.connectionState)){
-          if(listening)setVoice(false);
-          sessionConnectPromise=null;
+        const action=realtimeConnectionAction(pc.connectionState);
+        if(action==="ready"){
+          if(realtimeDisconnectTimer){clearTimeout(realtimeDisconnectTimer);realtimeDisconnectTimer=null;reportVoiceHealth("connection_ready")}
+          return;
         }
+        if(action==="grace"){reportVoiceHealth("connection_interrupted");scheduleRealtimeDisconnectRecovery(installedPc,voiceContext);return}
+        if(action==="reset")voiceTransportFailure(installedPc,voiceContext);
       };
+      reportVoiceHealth("connection_ready");
       return true;
     }catch(err){
       if(openTimer)clearTimeout(openTimer);
@@ -4425,6 +4458,7 @@ async function ensureSession(){
   return sessionConnectPromise;
 }
 async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL){
+  voiceLastErrorMessage="";
   setMicConnecting(context,true);
   if(voiceActivationPromise){
     return voiceActivationPromise;
@@ -4477,13 +4511,15 @@ async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPER
       return true;
     }catch(err){
       console.error("Activación de micrófono:",err);
+      voiceLastErrorMessage=voiceActivationErrorMessage(err);
       const sameContext=voiceContext===context;
       teardownRealtime();
       setMicConnecting(context,false);
       if(sameContext){
         voiceContext=context;
-        if(context==="setup")$("setupStatus").textContent="ERROR";
-        else $("status").textContent="ERROR";
+        if(context==="setup")$("setupStatus").textContent=voiceLastErrorMessage;
+        else $("status").textContent=voiceLastErrorMessage;
+        aiUniversalSetState(voiceLastErrorMessage);
       }
       return false;
     }

@@ -657,6 +657,8 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `api/universal-ai.js`, `test-v335-response-caliber.mjs`, `audit-project.mjs` | V335-AI reemplaza el calibre bajo uniforme por perfiles brief/standard/deep y un contrato verificable de sustancia, límites, acciones y fuentes. |
 | `.github/workflows/v335-ai-finalize.yml` | Flujo temporal V335-AI: actualiza inventario, ejecuta 90 paquetes y se elimina antes del commit desplegable. |
 | `index-grupal.html`, `test-v335-response-caliber.mjs`, `.github/workflows/v335-ai-routing-finalize.yml` | V335-AI-R1 impide que vocabulario como “yardas” secuestre análisis y recomendaciones destinados a AI UNIVERSAL. |
+| `index-grupal.html`, `api/session-grupal.js`, `api/voice-health.js`, `test-v336-microphone-transport.mjs`, `audit-project.mjs` | V336-MIC distingue causas de apertura, tolera desconexiones breves, limpia transporte fallido y agrega trazas privadas. |
+| `.github/workflows/v336-mic-finalize.yml` | Flujo temporal V336-MIC: actualiza inventario, ejecuta 91 paquetes y se elimina antes del commit desplegable. |
 
 ## Cómo usar este inventario
 

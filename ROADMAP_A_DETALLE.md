@@ -1276,3 +1276,16 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v335-ai-routing-finalize.yml` | `TEMPORARY-ROUTING-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit final. |
 
 <!-- V335-AI-R1-REMOTE-FINALIZED -->
+
+## V336-MIC · conexión, continuidad y diagnóstico
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `5S-DISCONNECT-GRACE` | Una interrupción breve no apaga la escucha; failed/closed o más de 5 s limpian todo el transporte. |
+| `index-grupal.html` | `ACTIONABLE-MIC-ERROR` | Distingue dispositivo, permiso, timeout y red en lugar de mostrar ERROR genérico. |
+| `api/voice-health.js` | `PRIVATE-CONNECTION-EVENTS` | Registra started/ready/interrupted/failed sin contenido hablado ni ubicación. |
+| `api/session-grupal.js` | `SESSION-RUNTIME-TRACE` | Registra creación, fallo upstream o excepción con contexto y código, sin datos personales. |
+| `test-v336-microphone-transport.mjs`, `audit-project.mjs` | `91-PACKAGE-BANK` | Ejecuta el control nuevo junto con continuidad, eco, watchdogs y 550 secuencias existentes. |
+| `.github/workflows/v336-mic-finalize.yml` | `TEMPORARY-MIC-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit final. |
+
+<!-- V336-MIC-REMOTE-PENDING -->
