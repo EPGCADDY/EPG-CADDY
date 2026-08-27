@@ -1095,4 +1095,4 @@ La comprobación real de R4 confirmó que `#pagina-20` ya muestra la lámina 20,
 
 La prueba de cinco anclas en el Preview `8a13f97a3fb007e2b6d3f94cb124de8958656dd4` volvió a rechazar el Manual: reservar proporción sólo en la imagen no evitó que la sección cambiara de altura durante la descarga diferida. `manual.html` fija ahora la relación 1:2 en cada `.manual-page` y obliga a la imagen a ocupar esa caja con `height:100%` y `object-fit:contain`. `test-v311-manual-hosting.mjs` exige la geometría del contenedor. `.github/workflows/v334-m1-layout-finalize.yml` sella, audita y se elimina antes del commit final. Producción permanece intacta.
 
-<!-- V334-M1-R6-REMOTE-PENDING -->
+<!-- V334-M1-R6-REMOTE-FINALIZED -->
