@@ -1083,4 +1083,4 @@ El escape queda registrado como RC-010 en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES
 
 La inspección del Preview `6778d6ff30482c4ed9dbf94eb35f228047f35982` rechazó la navegación directa: `#pagina-20` podía quedar visualmente en la página 17 porque las imágenes anteriores aún no reservaban altura. `manual.html` fija desde el primer cálculo la proporción 2160×4320 con `aspect-ratio:1 / 2`; `test-v311-manual-hosting.mjs` bloquea la regresión. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran el cambio. `.github/workflows/v334-m1-web-nav-finalize.yml` actualiza el sello, audita el SHA final y se elimina antes del commit desplegable. Producción permanece intacta.
 
-<!-- V334-M1-R4-REMOTE-PENDING -->
+<!-- V334-M1-R4-REMOTE-FINALIZED -->

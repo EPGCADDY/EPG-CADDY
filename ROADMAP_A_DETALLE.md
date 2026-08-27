@@ -1218,4 +1218,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V334-M1-R4` | Sella el SHA final sin modificar las láminas ni los PDF del Manual. |
 | `.github/workflows/v334-m1-web-nav-finalize.yml` | `TEMPORARY-WEB-NAV-FINALIZE` | Regenera inventarios, audita y se elimina antes del commit desplegable. |
 
-<!-- V334-M1-R4-REMOTE-PENDING -->
+<!-- V334-M1-R4-REMOTE-FINALIZED -->
