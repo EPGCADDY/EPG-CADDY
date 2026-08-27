@@ -1054,3 +1054,7 @@ El primer Preview del commit V333 fue bloqueado porque el checkout separado de V
 ## V333-R2 · dependencias del auditor en Preview
 
 El segundo intento alcanzó el auditor y fue bloqueado porque el constructor Vercel no incluía `numpy`. `vercel.json` instala de forma explícita `numpy`, `pillow`, `pypdf` y `reportlab` junto con las dependencias Node; `test-v290-brand-icons-cleanup.mjs` exige que las cuatro permanezcan declaradas. Son las mismas dependencias que generan y revisan las 74 páginas y los PDF. Ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran el cambio; no modifica la aplicación ni Producción.
+
+## V333-R3 · instalación Python permitida por PEP 668
+
+Vercel confirmó que su Python administrado rechaza instalaciones sin la autorización explícita de PEP 668. `vercel.json` añade `--break-system-packages` sólo dentro del constructor efímero de Preview y `test-v290-brand-icons-cleanup.mjs` exige conservar esa opción. No cambia código funcional, Manual ni Producción.

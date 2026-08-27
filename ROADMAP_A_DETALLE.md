@@ -1149,3 +1149,12 @@ Mecanismo temporal de publicación: `.github/workflows/v333-rebuild-preview.yml`
 | `test-v290-brand-icons-cleanup.mjs` | `DEPENDENCY CONFIG GATE` | Exige que el constructor conserve las cuatro dependencias Python del auditor. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REGISTRO DOBLE` | Conservan el bloqueo exacto y la corrección limitada al constructor Preview. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST V333-R2` | Sella la configuración que vuelve a desplegarse. |
+
+## V333-R3 · compatibilidad PEP 668 en el constructor efímero
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `vercel.json` | `PEP 668 EXPLICIT INSTALL` | Autoriza las dependencias Python únicamente durante el build aislado de Preview. |
+| `test-v290-brand-icons-cleanup.mjs` | `PEP 668 CONFIG GATE` | Exige `--break-system-packages` y las cuatro dependencias editoriales. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REGISTRO DOBLE` | Conservan el error real del constructor y el alcance limitado. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST V333-R3` | Sella la configuración relanzada sin alterar Producción. |

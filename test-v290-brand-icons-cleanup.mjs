@@ -42,6 +42,7 @@ assert.match(stable,/JUGADORES DETECTADOS · REVISA Y PRESIONA OK/);
 assert.doesNotMatch(stable,/PRESIONA INICIAR RONDA/);
 assert.equal(release.buildNumber,307);
 assert.match(vercel.installCommand,/^npm install --omit=dev && python3 -m pip install /);
+assert.match(vercel.installCommand,/--break-system-packages/);
 for(const dependency of ["numpy","pillow","pypdf","reportlab"]){
   assert.match(vercel.installCommand,new RegExp(`(?:^|\\s)${dependency}(?:\\s|$)`));
 }

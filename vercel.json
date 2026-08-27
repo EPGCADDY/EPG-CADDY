@@ -1,5 +1,5 @@
 {
-  "installCommand": "npm install --omit=dev && python3 -m pip install --disable-pip-version-check --no-cache-dir numpy pillow pypdf reportlab",
+  "installCommand": "npm install --omit=dev && python3 -m pip install --break-system-packages --disable-pip-version-check --no-cache-dir numpy pillow pypdf reportlab",
   "buildCommand": "node audit-project.mjs && node test-v328-live-official-rules.mjs",
   "outputDirectory": ".",
   "redirects": [
