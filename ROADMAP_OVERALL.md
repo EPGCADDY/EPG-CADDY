@@ -1149,4 +1149,4 @@ El Preview `6a2f845` respondió la misma consulta rechazada sin búsqueda web: O
 
 El commit documental `6a3386b` pasó 92/92 en GitHub, pero su Preview falló durante `test-v328-live-official-rules.mjs` porque el proveedor reglamentario devolvió HTTP 429; clima y código no fallaron. `.github/workflows/v337-weather-retry-finalize.yml` reconstruye el mismo ejecutable, vuelve a sellar inventario y repite la auditoría completa antes de eliminarse. No cambia la respuesta meteorológica aprobada ni Producción.
 
-<!-- V337-WEATHER-RETRY-REMOTE-PENDING -->
+<!-- V337-WEATHER-RETRY-REMOTE-FINALIZED -->

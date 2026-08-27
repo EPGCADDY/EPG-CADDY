@@ -1346,4 +1346,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | Ejecutable | `index-grupal.html`, `api/weather.js` y `api/universal-ai.js` permanecen idénticos al Preview aprobado `6a2f845`. |
 | `.github/workflows/v337-weather-retry-finalize.yml` | Audita 92 paquetes, sella inventario, se elimina y vuelve a publicar únicamente Preview. |
 
-<!-- V337-WEATHER-RETRY-REMOTE-PENDING -->
+<!-- V337-WEATHER-RETRY-REMOTE-FINALIZED -->
