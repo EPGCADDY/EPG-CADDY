@@ -1390,3 +1390,14 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V340-SUPPORT` | Registra el defecto, la corrección y el candado permanente. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Conservan alcance y protección de Producción. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V340-SUPPORT` | Sella exactamente las fuentes corregidas. |
+
+### Evidencia Preview V340-SUPPORT
+
+| Evidencia | Resultado |
+|---|---|
+| Commit | `43dcb2c3fa7bf97d87953c6d7195a468c250ee91` |
+| Deployment | `dpl_4MAeofErPXWFx5dK5QAEoSvycYLT` · READY |
+| Support | `href=/manual-scg`; abrió el mismo dominio Preview. |
+| Manual | 74 páginas; página 20 y 21 cargadas a 2160 × 4320. |
+| Orden | Dictado → corrección → Gross/HDCP/Neto → OUT/IN/TOTAL. |
+| Estado | RC-014 cerrado; Producción intacta. |

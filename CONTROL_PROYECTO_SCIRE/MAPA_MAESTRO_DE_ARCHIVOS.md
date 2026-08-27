@@ -684,3 +684,4 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 - `index-grupal.html`: `Support` abre `/manual-scg` dentro del mismo deployment.
 - `test-v311-live-support-link.mjs`: bloquea cualquier escape futuro de Preview hacia Producción.
 - `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran la corrección y su alcance.
+- Evidencia final: commit `43dcb2c`, deployment `dpl_4MAeofErPXWFx5dK5QAEoSvycYLT` READY y navegador real sobre el mismo dominio Preview.
