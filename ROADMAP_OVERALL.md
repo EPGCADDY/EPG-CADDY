@@ -1119,4 +1119,4 @@ La consulta real del Preview V335-AI fue interceptada antes del endpoint porque 
 
 La investigación del Preview `bbaad84` encontró `NotFoundError: Requested device not found` antes de llamar `/api/session-grupal`; el navegador automatizado no dispone de micrófono físico. La interfaz ocultaba la causa bajo un mensaje único y el transporte cerraba ante cualquier estado `disconnected`, incluso transitorio. `index-grupal.html` distingue dispositivo ausente, permiso, timeout y red; concede 5 segundos de recuperación WebRTC; limpia canal, peer, pista y audio al confirmar la caída. `api/voice-health.js` registra sólo eventos técnicos de conexión y `api/session-grupal.js` deja trazas sin audio, nombres ni transcripciones. `test-v336-microphone-transport.mjs` añade la puerta 91. `.github/workflows/v336-mic-finalize.yml` sella y se elimina antes del commit final. La prueba física de iPhone RC-007 sigue separada; Producción no cambia.
 
-<!-- V336-MIC-REMOTE-PENDING -->
+<!-- V336-MIC-REMOTE-FINALIZED -->

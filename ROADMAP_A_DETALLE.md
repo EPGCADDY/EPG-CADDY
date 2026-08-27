@@ -1288,4 +1288,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `test-v336-microphone-transport.mjs`, `audit-project.mjs` | `91-PACKAGE-BANK` | Ejecuta el control nuevo junto con continuidad, eco, watchdogs y 550 secuencias existentes. |
 | `.github/workflows/v336-mic-finalize.yml` | `TEMPORARY-MIC-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit final. |
 
-<!-- V336-MIC-REMOTE-PENDING -->
+<!-- V336-MIC-REMOTE-FINALIZED -->
