@@ -1253,3 +1253,15 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V334-M1-R7` | Sella el candidato exacto. |
 
 <!-- V334-M1-R7-REMOTE-FINALIZED -->
+
+## V335-AI · contrato operativo de profundidad
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `api/universal-ai.js` | `BRIEF/STANDARD/DEEP` | 700/2,400/3,200 tokens; razonamiento medio para contenido sustantivo; conclusión, mecanismo, límites, riesgos, alternativas y acción. |
+| `test-v335-response-caliber.mjs` | `CALIBER-CONTRACT` | Prueba clasificación, configuración enviada al proveedor y frases obligatorias del contrato. |
+| `audit-project.mjs` | `90-PACKAGE-BANK` | Ejecuta el nuevo control junto con el banco completo. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-010-CLOSED` | Cierra el Manual sólo con la evidencia del Preview `1fdf5a1`. |
+| `.github/workflows/v335-ai-finalize.yml` | `TEMPORARY-AI-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit final. |
+
+<!-- V335-AI-REMOTE-PENDING -->

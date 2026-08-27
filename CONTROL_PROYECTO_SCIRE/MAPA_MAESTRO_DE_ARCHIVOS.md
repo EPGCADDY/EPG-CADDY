@@ -654,6 +654,8 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `manual.html`, `test-v311-manual-hosting.mjs` | V334-M1-R5 sincroniza encabezado y contador con la lámina que ocupa el área útil del visor. |
 | `manual.html`, `test-v311-manual-hosting.mjs`, `.github/workflows/v334-m1-layout-finalize.yml` | V334-M1-R6 fija la caja 1:2 de cada página antes de cargar la imagen y sella el candidato exacto. |
 | `manual-search.js`, `test-v311-manual-search.mjs`, `.github/workflows/v334-m1-search-finalize.yml` | V334-M1-R7 prioriza la explicación de corrección sobre el vocabulario y conserva rutas separadas para borrar, tráfico y clima. |
+| `api/universal-ai.js`, `test-v335-response-caliber.mjs`, `audit-project.mjs` | V335-AI reemplaza el calibre bajo uniforme por perfiles brief/standard/deep y un contrato verificable de sustancia, límites, acciones y fuentes. |
+| `.github/workflows/v335-ai-finalize.yml` | Flujo temporal V335-AI: actualiza inventario, ejecuta 90 paquetes y se elimina antes del commit desplegable. |
 
 ## Cómo usar este inventario
 

@@ -1102,3 +1102,9 @@ La prueba de cinco anclas en el Preview `8a13f97a3fb007e2b6d3f94cb124de8958656dd
 La prueba de la sugerencia visible “Cómo corrijo un bogey que fue par” rechazó el orden de la lupa: ofrecía primero la página 59 de vocabulario. `manual-search.js` separa ahora corregir/rectificar/equivocarse de borrar y prioriza la página 21; `test-v311-manual-search.mjs` exige 21 para corregir, conserva 07 para borrar y exige 67 para lluvia. `.github/workflows/v334-m1-search-finalize.yml` sella y audita el candidato antes de eliminarse. Producción no cambia.
 
 <!-- V334-M1-R7-REMOTE-FINALIZED -->
+
+## V335-AI · calibre adaptable de respuestas generales
+
+`api/universal-ai.js` deja de imponer razonamiento bajo y un techo único de 1,400 tokens. Saludos y confirmaciones conservan una salida breve; las consultas normales usan razonamiento medio y hasta 2,400 tokens; análisis, comparaciones, criterios, riesgos y explicaciones profundas reciben hasta 3,200. El contrato exige conclusión directa, causas o mecanismo, separación entre hechos y estimaciones, límites, supuestos, alternativas y una acción útil, sin tono infantil salvo petición expresa. `test-v335-response-caliber.mjs` convierte esos criterios en una puerta ejecutable y `audit-project.mjs` la incorpora al banco maestro. `.github/workflows/v335-ai-finalize.yml` actualiza inventario, audita el SHA exacto y se elimina antes del commit final. Producción permanece intacta.
+
+<!-- V335-AI-REMOTE-PENDING -->
