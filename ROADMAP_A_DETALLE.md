@@ -1264,4 +1264,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-010-CLOSED` | Cierra el Manual sólo con la evidencia del Preview `1fdf5a1`. |
 | `.github/workflows/v335-ai-finalize.yml` | `TEMPORARY-AI-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit final. |
 
-<!-- V335-AI-REMOTE-PENDING -->
+<!-- V335-AI-REMOTE-FINALIZED -->

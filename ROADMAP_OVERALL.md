@@ -1107,4 +1107,4 @@ La prueba de la sugerencia visible “Cómo corrijo un bogey que fue par” rech
 
 `api/universal-ai.js` deja de imponer razonamiento bajo y un techo único de 1,400 tokens. Saludos y confirmaciones conservan una salida breve; las consultas normales usan razonamiento medio y hasta 2,400 tokens; análisis, comparaciones, criterios, riesgos y explicaciones profundas reciben hasta 3,200. El contrato exige conclusión directa, causas o mecanismo, separación entre hechos y estimaciones, límites, supuestos, alternativas y una acción útil, sin tono infantil salvo petición expresa. `test-v335-response-caliber.mjs` convierte esos criterios en una puerta ejecutable y `audit-project.mjs` la incorpora al banco maestro. `.github/workflows/v335-ai-finalize.yml` actualiza inventario, audita el SHA exacto y se elimina antes del commit final. Producción permanece intacta.
 
-<!-- V335-AI-REMOTE-PENDING -->
+<!-- V335-AI-REMOTE-FINALIZED -->
