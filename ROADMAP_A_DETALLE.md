@@ -1313,3 +1313,14 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `.github/workflows/v337-weather-r1-finalize.yml` | `TEMPORARY-WEATHER-R1-FINALIZE` | Regenera inventario, audita 92 paquetes y se elimina antes del commit final. |
 
 <!-- V337-WEATHER-R1-REMOTE-FINALIZED -->
+
+## V337-WEATHER-R2 · serie horaria íntegra
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `api/weather.js` | `HOURLY-FORECAST-PRESERVED` | Para un día conserva cada hora y sus valores; para rangos largos evita inflar el contrato. |
+| `api/universal-ai.js` | `HOURLY-ANSWER-CONTRACT` | “Por hora”, “por horario” y “a qué hora” enumeran todos los porcentajes recibidos. |
+| `test-v337-universal-weather.mjs` | `NO-HOURLY-DATA-LOSS` | Exige la serie exacta 06:00, 07:00, 14:00 y 15:00 del proveedor simulado. |
+| `.github/workflows/v337-weather-r2-finalize.yml` | `TEMPORARY-WEATHER-R2-FINALIZE` | Regenera inventario, audita 92 paquetes y se elimina antes del commit final. |
+
+<!-- V337-WEATHER-R2-REMOTE-PENDING -->

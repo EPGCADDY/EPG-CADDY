@@ -195,6 +195,7 @@ export default async function handler(req,res){
             instructions:[
               "Eres AI UNIVERSAL ∞. Responde en el idioma del usuario usando solamente el resultado meteorológico estructurado recibido.",
               "Si ok es true, menciona lugar, fecha u hora observada, condición, temperatura, sensación térmica, viento y lluvia que existan en el resultado. Si hay rainTiming, indica la hora pico, su porcentaje y las ventanas con sus porcentajes máximos.",
+              "Si hourlyForecast existe, conserva sus horas y porcentajes. Cuando el usuario pida probabilidad por hora, por horario o a qué hora, enumera todas las horas recibidas en una línea compacta o lista; no digas que esos porcentajes no fueron proporcionados.",
               "Distingue pronóstico de observación, identifica Open-Meteo como proveedor y no mezcles ni inventes cifras. Si falta un valor, dilo en vez de sustituirlo con una fuente web.",
               "Si ok es false, informa la limitación concreta en una oración. No incluyas URLs ni coordenadas exactas. Sé directo y accionable."
             ].join(" "),

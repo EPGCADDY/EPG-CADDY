@@ -49,6 +49,8 @@ assert.equal(toolOutput.maxRainProbability,90);
 assert.equal(toolOutput.forecastPeriod,undefined,"El modelo no puede recortar el día si el usuario no pidió una franja");
 assert.equal(toolOutput.rainTiming.peakTime,"15:00");
 assert.equal(toolOutput.rainTiming.peakProbability,90);
+assert.deepEqual(toolOutput.hourlyForecast.map(row=>[row.time,row.rainProbability]),[["06:00",10],["07:00",20],["14:00",65],["15:00",90]],"La herramienta debe conservar cada porcentaje horario recibido");
+assert.match(providerBodies[1].instructions,/enumera todas las horas recibidas/);
 assert.equal(providerBodies[1].tools.length,0,"La síntesis meteorológica no debe volver a buscar en la web");
 
 console.log("PASS V337 · clima de texto usa Open-Meteo estructurado con probabilidad por horario y coordenadas públicas del campo");

@@ -1132,3 +1132,9 @@ La prueba real del Preview V336-MIC rechazó la respuesta meteorológica por tex
 La prueba real del Preview `0aaf45a` confirmó Open-Meteo y redujo la espera, pero rechazó la respuesta porque el modelo envió `morning` sin que el usuario pidiera esa franja; el resultado quedó limitado a 06:00–11:59. `api/universal-ai.js` acepta una franja únicamente cuando el texto del usuario dice explícitamente esta/por la mañana, tarde, atardecer o noche; “mañana” como fecha y “a qué hora” conservan el día completo. `test-v337-universal-weather.mjs` reproduce el argumento incorrecto del modelo y exige que se ignore. `.github/workflows/v337-weather-r1-finalize.yml` sella y audita el candidato antes de eliminarse. Producción no cambia.
 
 <!-- V337-WEATHER-R1-REMOTE-FINALIZED -->
+
+## V337-WEATHER-R2 · porcentajes de lluvia hora por hora
+
+La prueba real del Preview `acd8221` confirmó el día completo y el pico de 99% a las 16:00, pero rechazó la respuesta porque `api/weather.js` resumía la serie de Open-Meteo en ventanas antes de entregarla a AI UNIVERSAL. `api/weather.js` conserva ahora cada hora con probabilidad, precipitación, temperatura, sensación, viento y condición para consultas de un día; `api/universal-ai.js` exige enumerar todas las horas recibidas cuando el usuario pide “por hora”, “por horario” o “a qué hora”. `test-v337-universal-weather.mjs` bloquea cualquier nueva pérdida de la serie. `.github/workflows/v337-weather-r2-finalize.yml` sella y audita el candidato antes de eliminarse. Producción no cambia.
+
+<!-- V337-WEATHER-R2-REMOTE-PENDING -->

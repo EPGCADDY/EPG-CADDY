@@ -127,6 +127,22 @@ function summarizeRainTiming(payload, date, notBefore = "", notAfter = "") {
   };
 }
 
+function hourlyForecastForDate(payload, date, notBefore = "", notAfter = "") {
+  const hourly = payload?.hourly || {};
+  const times = Array.isArray(hourly.time) ? hourly.time.map(String) : [];
+  return times.map((isoTime, index) => ({
+    isoTime,
+    time: isoTime.slice(11, 16),
+    rainProbability: Number.isFinite(Number(hourly.precipitation_probability?.[index])) ? Number(hourly.precipitation_probability[index]) : null,
+    precipitationMm: Number.isFinite(Number(hourly.precipitation?.[index])) ? Number(hourly.precipitation[index]) : null,
+    temperatureC: Number.isFinite(Number(hourly.temperature_2m?.[index])) ? Number(hourly.temperature_2m[index]) : null,
+    feelsLikeC: Number.isFinite(Number(hourly.apparent_temperature?.[index])) ? Number(hourly.apparent_temperature[index]) : null,
+    windKmh: Number.isFinite(Number(hourly.wind_speed_10m?.[index])) ? Number(hourly.wind_speed_10m[index]) : null,
+    condition: WEATHER_CODES[Number(hourly.weather_code?.[index])] || null
+  })).filter(item => item.isoTime.slice(0, 10) === date && (!notBefore || item.isoTime >= notBefore) && (!notAfter || item.isoTime <= notAfter))
+    .map(({ isoTime, ...item }) => item);
+}
+
 function summarizeHourlyPeriod(payload, date, periodKey) {
   const period = FORECAST_PERIODS[periodKey];
   if (!period) return null;
@@ -167,7 +183,8 @@ function summarizeHourlyPeriod(payload, date, periodKey) {
     precipitationMm: precipitation.length ? Number(precipitation.reduce((sum, value) => sum + value, 0).toFixed(1)) : null,
     maxRainProbability: probabilities.length ? Math.max(...probabilities) : null,
     windKmh: winds.length ? Math.max(...winds) : null,
-    rainTiming: summarizeRainTiming(payload, date, `${date}T${startTime}`, `${date}T${String(period.endHour).padStart(2, "0")}:59`)
+    rainTiming: summarizeRainTiming(payload, date, `${date}T${startTime}`, `${date}T${String(period.endHour).padStart(2, "0")}:59`),
+    hourlyForecast: hourlyForecastForDate(payload, date, `${date}T${startTime}`, `${date}T${String(period.endHour).padStart(2, "0")}:59`)
   };
 }
 
@@ -206,7 +223,8 @@ export function summarizeWeather(payload, label, options = {}) {
         precipitationMm: valueAt("precipitation_sum", index),
         maxRainProbability: valueAt("precipitation_probability_max", index),
         windKmh: valueAt("wind_speed_10m_max", index),
-        rainTiming: summarizeRainTiming(payload, date)
+        rainTiming: summarizeRainTiming(payload, date),
+        ...(forecastStartDate === forecastEndDate ? { hourlyForecast: hourlyForecastForDate(payload, date) } : {})
       };
       const periodSummary = summarizeHourlyPeriod(payload, date, timePeriod);
       return periodSummary ? { date, ...periodSummary } : dailySummary;
