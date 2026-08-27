@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import universalHandler from "./api/universal-ai.js";
+import universalHandler,{directTrafficRouteFromQuery,formatStructuredTrafficAnswer,isDirectTrafficQuery} from "./api/universal-ai.js";
 import trafficHandler from "./api/traffic.js";
 import {computeTrafficRoute,summarizeTrafficRoute} from "./api/_lib/traffic.js";
 
@@ -28,6 +28,8 @@ assert.match(universalApi,/needsCurrentLocation:true/);
 assert.match(universalApi,/store:false/);
 assert.match(universalApi,/Si el destino es un fragmento ambiguo/);
 assert.match(universalApi,/Si needsDestinationClarification es true, haz solamente una pregunta breve/);
+assert.equal(isDirectTrafficQuery("¿Cuánto tráfico hay ahora de El Pulté Golf a Pradera Concepción, Guatemala?"),true);
+assert.deepEqual(directTrafficRouteFromQuery("¿Cuánto tráfico hay ahora de El Pulté Golf a Pradera Concepción, Guatemala? Dame ETA."),{origin:"El Pulté Golf",destination:"Pradera Concepción, Guatemala"});
 
 const summary=summarizeTrafficRoute({routes:[{duration:"2100s",staticDuration:"1500s",distanceMeters:18640}]},{originLabel:"Ubicación GPS actual",destinationLabel:"Pradera Concepción, Guatemala",calculatedAt:"2026-08-26T14:00:00.000Z"});
 assert.equal(summary.ok,true);
@@ -39,6 +41,8 @@ assert.equal(summary.trafficLevel,"pesado");
 assert.equal(summary.source,"Google Maps Routes");
 assert.equal(summary.trafficModel,"TRAFFIC_AWARE_OPTIMAL");
 assert.doesNotMatch(JSON.stringify(summary),/14\.5|-90\.5/,"La respuesta no debe revelar coordenadas exactas");
+const directAnswer=formatStructuredTrafficAnswer(summary);
+for(const value of ["ETA","Demora por tráfico","Distancia","Hora de cálculo","Google Maps Routes","TRAFFIC_AWARE_OPTIMAL"])assert.match(directAnswer,new RegExp(value));
 
 let routesRequest=null;
 const routeResult=await computeTrafficRoute({
@@ -83,31 +87,31 @@ try{
   globalThis.fetch=async(url,options)=>{
     calls.push({url:String(url),options});
     if(String(url).includes("routes.googleapis.com"))return{ok:true,json:async()=>({routes:[{duration:"2040s",staticDuration:"1500s",distanceMeters:18400}]})};
-    const openAiCalls=calls.filter(call=>call.url.includes("api.openai.com")).length;
-    if(openAiCalls===1)return{ok:true,status:200,json:async()=>({output:[{type:"function_call",name:"get_live_traffic",call_id:"traffic_1",arguments:JSON.stringify({origin:"El Pulté, Guatemala",destination:"Pradera Concepción, Guatemala"})}]})};
-    return{ok:true,status:200,json:async()=>({output:[{type:"message",content:[{type:"output_text",text:"El viaje tarda 34 minutos, con 9 minutos de demora según Google Maps Routes.",annotations:[]}]}]})};
+    throw new Error("La consulta directa de tráfico no debe depender de OpenAI");
   };
-  const req={method:"POST",headers:{host:"epg-caddy.vercel.app"},body:{query:"¿Cómo está el tráfico de El Pulté a Pradera Concepción?",history:[],appContext:{course:"El Pulté",mode:"general"}}};
+  const req={method:"POST",headers:{host:"epg-caddy.vercel.app"},body:{query:"¿Cuánto tráfico hay ahora de El Pulté Golf a Pradera Concepción, Guatemala? Dame ETA, demora, distancia y hora de cálculo.",history:[],appContext:{course:"El Pulté",mode:"general"}}};
   const res=responseRecorder();
   await universalHandler(req,res);
   assert.equal(res.statusCode,200);
-  assert.match(res.body.answer,/34 minutos/);
-  assert.equal(calls.filter(call=>call.url.includes("api.openai.com")).length,2);
+  assert.match(res.body.answer,/ETA:\*\* 34 min/);
+  assert.match(res.body.answer,/Demora por tráfico:\*\* 9 min/);
+  assert.match(res.body.answer,/18\.4 km/);
+  assert.match(res.body.answer,/Hora de cálculo/);
+  assert.equal(calls.filter(call=>call.url.includes("api.openai.com")).length,0);
   assert.equal(calls.filter(call=>call.url.includes("routes.googleapis.com")).length,1);
-  const firstModelPayload=JSON.parse(calls[0].options.body);
-  assert.ok(firstModelPayload.tools.some(tool=>tool.name==="get_live_traffic"));
-  const finalModelPayload=JSON.parse(calls.at(-1).options.body);
-  const toolOutput=JSON.parse(finalModelPayload.input.at(-1).output);
-  assert.equal(toolOutput.durationMinutes,34);
-  assert.equal(toolOutput.delayMinutes,9);
-  assert.doesNotMatch(finalModelPayload.input.at(-1).output,/14\.6349|-90\.5069/);
+  assert.doesNotMatch(res.body.answer,/14\.6349|-90\.5069/);
 
-  globalThis.fetch=async()=>({ok:true,status:200,json:async()=>({output:[{type:"function_call",name:"get_live_traffic",call_id:"traffic_2",arguments:JSON.stringify({origin:"ubicación actual",destination:"Pradera Concepción, Guatemala"})}]})});
-  const locationReq={method:"POST",headers:{host:"epg-caddy.vercel.app"},body:{query:"¿Cuánto tráfico hay de aquí a Pradera?",history:[]}};
+  const locationReq={method:"POST",headers:{host:"epg-caddy.vercel.app"},body:{query:"¿Cuánto tráfico hay de aquí a Pradera Concepción, Guatemala?",history:[]}};
   const locationRes=responseRecorder();
   await universalHandler(locationReq,locationRes);
   assert.equal(locationRes.statusCode,428);
   assert.equal(locationRes.body.needsCurrentLocation,true);
+
+  const ambiguousReq={method:"POST",headers:{host:"epg-caddy.vercel.app"},body:{query:"¿Cuánto tráfico hay de El Pulté a Concepción?",history:[]}};
+  const ambiguousRes=responseRecorder();
+  await universalHandler(ambiguousReq,ambiguousRes);
+  assert.equal(ambiguousRes.statusCode,200);
+  assert.equal(ambiguousRes.body.needsDestinationClarification,true);
 
   globalThis.fetch=async()=>({ok:true,json:async()=>({routes:[{duration:"1200s",staticDuration:"1080s",distanceMeters:11000}]})});
   const trafficReq={method:"POST",headers:{host:"epg-caddy.vercel.app"},body:{originCoordinates:{latitude:14.6,longitude:-90.5},destination:"Pradera Concepción, Guatemala"}};

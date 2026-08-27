@@ -1435,3 +1435,16 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V343` | Registra fuente, pruebas y límite honesto de la recuperación. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V343` | Sella el candidato exacto después de ambos ROADMAPS. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Conservan Producción intacta y el resultado reproducible. |
+
+## V344-TRAFFIC-DIRECT · ruta determinista a Google Maps Routes
+
+| Archivo exacto | Control | PASS obligatorio |
+|---|---|---|
+| `api/universal-ai.js` | `DIRECT-TRAFFIC-ROUTE` | Una consulta explícita con origen y destino salta la IA y llama directamente a Google Maps Routes. |
+| `api/universal-ai.js` | `STRUCTURED-TRAFFIC-ANSWER` | Conserva ETA, demora, distancia, nivel, hora de cálculo, proveedor y `TRAFFIC_AWARE_OPTIMAL` sin exponer coordenadas. |
+| `test-v324-real-traffic.mjs` | `ZERO-AI-TRAFFIC` | La consulta literal El Pulté Golf → Pradera Concepción realiza una llamada a Routes y cero a OpenAI. |
+| `test-v324-real-traffic.mjs` | `GPS-AND-AMBIGUITY` | “Aquí” exige ubicación si falta GPS y un destino de una sola palabra exige nombre completo, zona o municipio. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-017` | Registra el 503 real, la causa, el punto de escape y el candado permanente. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V344` | Registra fuentes, pruebas y frontera de responsabilidad de tráfico. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V344` | Sella las fuentes exactas después de código, prueba y ambos ROADMAPS. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Conservan el mismo candidato y Producción intacta. |

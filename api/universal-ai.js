@@ -119,6 +119,41 @@ export function isDirectWeatherQuery(query){
   return !(shotContext&&analyticalIntent);
 }
 
+export function isDirectTrafficQuery(query){
+  const text=String(query||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  return /\b(trafico|congestion|eta|tiempo de llegada|demora vehicular|ruta vehicular)\b/.test(text);
+}
+
+export function directTrafficRouteFromQuery(query){
+  const segment=String(query||"").replace(/[\u0000-\u001F]/g," ").replace(/\s+/g," ").trim().split(/[?!](?:\s|$)/,1)[0].replace(/^[¿¡]+/,"").trim();
+  const normalized=segment.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  const toIndex=Math.max(normalized.lastIndexOf(" a "),normalized.lastIndexOf(" hasta "));
+  if(toIndex<0)return null;
+  const connectorLength=normalized.startsWith(" hasta ",toIndex)?7:3;
+  const left=segment.slice(0,toIndex),leftNormalized=normalized.slice(0,toIndex);
+  const fromIndex=Math.max(leftNormalized.lastIndexOf(" desde "),leftNormalized.lastIndexOf(" de "));
+  if(fromIndex<0)return null;
+  const fromLength=leftNormalized.startsWith(" desde ",fromIndex)?7:4;
+  const origin=left.slice(fromIndex+fromLength).trim().replace(/^[,:;\-]+|[,:;\-]+$/g,"");
+  const destination=segment.slice(toIndex+connectorLength).trim().replace(/^[,:;\-]+|[,:;\-]+$/g,"");
+  return origin&&destination?{origin,destination}:null;
+}
+
+function trafficDestinationNeedsClarification(destination){
+  const words=String(destination||"").replace(/[^\p{L}\p{N}]+/gu," ").trim().split(/\s+/).filter(Boolean);
+  return words.length<2&&!/\d/.test(String(destination||""));
+}
+
+function trafficValue(value,digits=0){const number=Number(value);return Number.isFinite(number)?number.toFixed(digits).replace(/\.0$/,""):"sin dato"}
+
+export function formatStructuredTrafficAnswer(result){
+  if(!result?.ok)return result?.message||"No pude consultar tráfico confiable en este momento.";
+  const calculated=new Intl.DateTimeFormat("es-GT",{timeZone:"America/Guatemala",dateStyle:"short",timeStyle:"short"}).format(new Date(result.calculatedAt));
+  const delay=result.delayMinutes==null?"sin dato del proveedor":`${trafficValue(result.delayMinutes)} min`;
+  const distance=result.distanceKm==null?"sin dato del proveedor":`${trafficValue(result.distanceKm,1)} km`;
+  return `**Tráfico en vivo:** ${result.origin} → ${result.destination}.\n\n- **ETA:** ${trafficValue(result.durationMinutes)} min.\n- **Demora por tráfico:** ${delay}.\n- **Distancia:** ${distance}.\n- **Nivel estimado:** ${result.trafficLevel||"no clasificado"}.\n- **Hora de cálculo:** ${calculated}.\n\n**Fuente:** Google Maps Routes, modo TRAFFIC_AWARE_OPTIMAL. La duración y la demora son datos del proveedor; el nivel es una clasificación derivada.`;
+}
+
 export function isGolfStrategyQuery(query){
   const text=String(query||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
   const golfContext=/\b(yardas?|palo|palos|golpe|bandera|green|carry|lie|dispersion|swing|trayectoria|tee|fairway|rough|bunker|agua corta)\b/.test(text);
@@ -281,6 +316,20 @@ export default async function handler(req,res){
       });
       if(!weatherResult.ok)return res.status(weatherResult.error==="FORECAST_DATE_UNAVAILABLE"?422:502).json(weatherResult);
       return res.status(200).json({ok:true,answer:formatStructuredWeatherAnswer(weatherResult),sources:[]});
+    }
+    if(isDirectTrafficQuery(query)){
+      const route=directTrafficRouteFromQuery(query);
+      if(!route)return res.status(200).json({ok:true,answer:"Indícame el origen y el destino exactos para calcular ETA, demora y distancia con tráfico real.",sources:[],needsRouteClarification:true});
+      if(trafficDestinationNeedsClarification(route.destination))return res.status(200).json({ok:true,answer:"¿Cuál es el nombre completo, zona o municipio del destino?",sources:[],needsDestinationClarification:true});
+      const trafficResult=await computeTrafficRoute({
+        origin:route.origin,
+        originCoordinates:appContext?.trafficOrigin,
+        destination:route.destination,
+        languageCode:"es-419"
+      });
+      if(trafficResult.error==="TRAFFIC_ORIGIN_REQUIRED")return res.status(428).json({ok:false,error:trafficResult.error,needsCurrentLocation:true});
+      if(!trafficResult.ok)return res.status(502).json(trafficResult);
+      return res.status(200).json({ok:true,answer:formatStructuredTrafficAnswer(trafficResult),sources:[]});
     }
     const apiKey=process.env.OPENAI_API_KEY;
     if(!apiKey)return res.status(500).json({ok:false,error:"OPENAI_NOT_CONFIGURED"});

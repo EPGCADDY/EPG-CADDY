@@ -701,3 +701,11 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 - `test-v335-response-caliber.mjs`: prueba saldo agotado, Gateway, failover y el caso exacto de 140 yardas con seis secciones obligatorias.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-016 documenta la causa real y el nuevo control.
 - `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad y sello reproducible V343.
+
+## V344-TRAFFIC-DIRECT · tráfico independiente del saldo de IA
+
+- `api/universal-ai.js`: identifica consultas explícitas de tráfico, extrae origen/destino y llama directamente a Google Maps Routes.
+- `api/universal-ai.js`: responde ETA, demora, distancia, nivel, hora de cálculo y proveedor sin repetir coordenadas exactas.
+- `test-v324-real-traffic.mjs`: prueba cero llamadas a OpenAI, Google Routes único, GPS requerido y destino ambiguo.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-017 conserva el defecto real y su candado.
+- `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad y sello reproducible V344.
