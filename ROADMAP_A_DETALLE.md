@@ -1336,4 +1336,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | Auditoría | 92 paquetes; Producción `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` intacta. |
 | `.github/workflows/v337-weather-close-finalize.yml` | Sella inventario y se elimina antes del commit final. |
 
-<!-- V337-WEATHER-CLOSE-REMOTE-PENDING -->
+<!-- V337-WEATHER-CLOSE-REMOTE-FINALIZED -->
