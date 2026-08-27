@@ -1589,3 +1589,18 @@ Sello V351: la huella del inventario se recalculó con el orden binario exacto q
 | `test-v267-scorecard-combination-matrix.mjs` | `LEGACY-GATE-MIGRATION` | La matriz histórica exige `operationalDefaultPlayer(defaultHole)` y la frontera estricta de un único jugador activo. |
 
 Artefactos externos restaurados: `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf` e `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`. Producción no cambia; Preview y prueba física iPhone siguen siendo puertas separadas.
+
+## V351-R3-SCORE-LOCAL · recorrido completo y cero IA · 27 de agosto de 2026
+
+| Archivo exacto | Control V351-R3 | PASS obligatorio |
+|---|---|---|
+| `index-grupal.html` | `SCORE-BEFORE-QUERY` | `Jaime hizo cuatro y Jorge hizo cinco` se clasifica como anotación y llega al escritor antes que cualquier consulta. |
+| `index-grupal.html` | `SCORE-NEVER-AI` | Una frase válida escribe; una incompleta muestra formato local. Ninguna puede alcanzar `submitAiUniversalText`. |
+| `index-grupal.html`, `api/voice-health.js` | `PRIVATE-SCORE-OUTCOME` | Registra sólo aplicado/rechazado, build y contexto; excluye transcripción, jugadores, golpes y ubicación. |
+| `test-v351-r1-hole1-voice-score-render.mjs` | `FULL-FALLBACK-ROUTE` | Ejecuta parser grupal, enrutador, micrófono alternativo, escritor y rechazo ambiguo con contador externo igual a cero. |
+| `test-v336-microphone-transport.mjs` | `NO-EXTERNAL-ESCAPE` | Exige que aplicado/rechazado termine antes de la llamada general y verifica sanitización. |
+| `test-v267-scorecard-combination-matrix.mjs` | `LEGACY-GATE-R3` | Conserva una sola operación de escritura bajo el nuevo orden Score → consulta. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-027` | Conserva captura, logs, causa, escape y puerta física pendiente. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `V351-R3-INVENTORY` | Regenera y sella los tres inventarios contra las fuentes exactas. |
+
+Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. V351-R3 no se presenta como aprobada hasta superar auditoría, Preview y prueba física iPhone.

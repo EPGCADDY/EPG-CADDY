@@ -74,7 +74,8 @@ assert.equal(generalConfigurations,487,"General: siete campos oficiales, marcas 
 
 // Manual, final de voz e incremental deben desembocar en la misma operación.
 assert.match(html,/function applyManualScoreEntries\(entries\)[\s\S]*?applyLiteralScores\(\{matched:true,ok:true,entries\}\)/);
-assert.match(html,/const result=parsed\.ok\?applyLiteralScores\(parsed\):parsed/);
+assert.match(html,/const result=applyLiteralScores\(scoreOrder\)/);
+assert.match(html,/scoreOrder=parseRoundScoreTranscript\(text\)[\s\S]*?applyLiteralScores\(scoreOrder\)/);
 assert.match(html,/result=applyLiteralScores\(\{matched:true,ok:true,entries:fresh\}\)/);
 assert.match(html,/parseRoundScoreTranscript=function\(transcript,options=\{\}\)\{const defaultHole=options\.defaultHole\?\?currentOperationalHole\(\),merged=\{\.\.\.options,defaultPlayer:options\.defaultPlayer\?\?operationalDefaultPlayer\(defaultHole\),defaultHole\};return isStablefordRound\(\)\?parseStablefordTranscript\(transcript,merged\):baseParseRoundScoreTranscript\(transcript,merged\)\}/);
 assert.match(html,/function operationalDefaultPlayer\(hole=currentOperationalHole\(\)\)[\s\S]*?active\.length===1\?active\[0\]:null/);

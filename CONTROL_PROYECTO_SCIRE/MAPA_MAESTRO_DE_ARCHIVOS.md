@@ -796,3 +796,14 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `scripts/rebuild-inventory-pdfs.py` | Sella el corte documental `V351-R2-IOS-TOUCH-HOLE1-RENDER`. |
 | `test-v312-general-caddie.mjs` | Exige altura y tipografía mínima para que la condición meteorológica sea visible en Score Card y Registro móvil. |
 | `test-v267-scorecard-combination-matrix.mjs` | Mantiene la matriz integral alineada con el jugador implícito sólo cuando existe exactamente uno activo. |
+
+## V351-R3-SCORE-LOCAL · frontera inviolable Score / IA
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | Procesa una anotación válida antes de consultas; toda orden de Score válida o incompleta termina localmente y emite únicamente aplicado/rechazado sin contenido privado. |
+| `api/voice-health.js` | Acepta `browser_fallback_score_applied` y `browser_fallback_score_rejected` sin transcripción, nombre ni score. |
+| `test-v351-r1-hole1-voice-score-render.mjs` | Ejecuta dos jugadores, frase natural, clasificador, escritor y micrófono alternativo; exige cero llamadas a AI UNIVERSAL. |
+| `test-v336-microphone-transport.mjs` | Bloquea el escape del Score después de la transcripción y protege la privacidad de la nueva telemetría. |
+| `test-v267-scorecard-combination-matrix.mjs` | Migra la puerta histórica al orden Score → consulta sin retirar el escritor único. |
+| `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R3-SCORE-BEFORE-QUERY-NO-AI`. |

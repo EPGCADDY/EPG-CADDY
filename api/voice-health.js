@@ -1,6 +1,6 @@
 import {handleAppPreflight,isAllowedAppOrigin} from "./_lib/cors.js";
 
-const ALLOWED_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_transcript_ready","browser_fallback_error","browser_fallback_start_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_query_failed"]);
+const ALLOWED_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_transcript_ready","browser_fallback_error","browser_fallback_start_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_query_failed"]);
 const ALLOWED_TOOLS=new Set(["get_current_weather","get_live_traffic","search_live_web"]);
 
 function boundedInteger(value,max){

@@ -50,6 +50,8 @@ const browserProcess=html.slice(browserProcessStart,browserProcessEnd);
 assert.match(browserProcess,/if\(context==="setup"\)[\s\S]*?browser_fallback_setup_applied[\s\S]*?browser_fallback_setup_rejected[\s\S]*?return false/);
 assert.doesNotMatch(browserProcess,/looksLikeSetupRosterTranscript\(clean\)/);
 assert.ok(browserProcess.indexOf("browser_fallback_setup_rejected")<browserProcess.indexOf("routeAiUniversalAppText(clean)"));
+assert.ok(browserProcess.indexOf("browser_fallback_score_applied")<browserProcess.indexOf("submitAiUniversalText(clean)"),"Score debe cerrarse localmente antes de cualquier IA");
+assert.match(browserProcess,/browser_fallback_score_applied":"browser_fallback_score_rejected/);
 assert.match(html,/VOICE_HEALTH_EVENTS=new Set\([\s\S]*?"browser_fallback_setup_applied","browser_fallback_setup_rejected"/);
 assert.match(html,/setupFinalizeRequested\|\|setupLocked[\s\S]*?resetSetupCapture\(\)[\s\S]*?LISTO PARA ESCUCHAR/);
 assert.match(html,/failure\.status=rsp\.status/);
@@ -74,5 +76,7 @@ assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_error",error:"netw
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_start_failed",error:"privado"}),{event:"browser_fallback_start_failed",build:"",context:"round",turn:0,elapsedMs:0});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_applied",transcript:"privado"}),{event:"browser_fallback_setup_applied",build:"",context:"round",turn:0,elapsedMs:0});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_rejected",transcript:"privado"}),{event:"browser_fallback_setup_rejected",build:"",context:"round",turn:0,elapsedMs:0});
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_score_applied",transcript:"privado",player:"JAIME"}),{event:"browser_fallback_score_applied",build:"",context:"round",turn:0,elapsedMs:0});
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_score_rejected",transcript:"privado",player:"JAIME"}),{event:"browser_fallback_score_rejected",build:"",context:"round",turn:0,elapsedMs:0});
 
-console.log("PASS V351 · Registro local, matriz exacta y telemetría privada permanecen protegidos");
+console.log("PASS V351-R3 · Registro y Score locales, matriz exacta y telemetría privada protegidos");

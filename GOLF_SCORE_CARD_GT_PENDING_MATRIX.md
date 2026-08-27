@@ -209,6 +209,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - **Control V351-R1:** usa como jugador implícito únicamente al único jugador activo; una ronda grupal jamás adivina. El banco ejecuta escritor, persistencia y render visible del hoyo 1, y el respaldo de score no habla durante el registro.
 - **Control V351-R2:** en Safari/iOS, si Web Speech está disponible, el reconocimiento se inicia dentro del toque antes de cualquier espera remota. Esto elimina la ruta observada 429 → gesto vencido → cierre inmediato; la prueba física iPhone sigue obligatoria.
 - **Clima visible V351-R2:** la Score Card móvil eleva la condición meteorológica de 7.7 px a 10.5 px con 40 px de altura mínima; Registro usa 11 px/44 px. El proveedor y el refresco siguen siendo Open-Meteo y no dependen del micrófono.
+- **Fallo físico V351-R2:** a las 17:12 el iPhone produjo dos transcripciones dentro del Score, pero ambas escaparon hacia AI UNIVERSAL y terminaron en 503 sin escribir Gross.
+- **Control V351-R3:** una orden válida se clasifica antes que una consulta; una orden incompleta se rechaza localmente con formato visible. En ambos casos el contador obligatorio de llamadas a IA es cero.
 - **Orden de ejecución:** registrar estas tres correcciones y retomarlas después de continuar con la configuración y prueba de SKINS, WOLF, VEGAS y DOTS.
 
 - **Candado de privacidad V312:** no hay activación automática, huella de voz ni reconocimiento biométrico; el jugador debe abrir primero el micrófono con el botón.
