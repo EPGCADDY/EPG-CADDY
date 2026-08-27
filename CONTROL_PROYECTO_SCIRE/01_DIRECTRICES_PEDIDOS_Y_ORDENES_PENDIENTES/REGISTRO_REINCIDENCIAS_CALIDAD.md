@@ -1,0 +1,16 @@
+# Registro de reincidencias de calidad
+
+Este registro conserva defectos que alcanzaron al propietario o bloquearon un cierre. Un estado ABIERTO impide el PASS del rubro afectado.
+
+| ID | Defecto | Causa raíz | Punto de escape | Control permanente | Evidencia | Estado |
+|---|---|---|---|---|---|---|
+| RC-001 | Se informó avance como si fuera cierre | Se mezcló un candidato temporal con el Manual oficial | Comunicación y ausencia de Gate 0 | Separación obligatoria candidato/oficial/Producción y lógica AND | `MATRIZ_GATE_0_PROYECTO` | CERRADO COMO CONTROL; producto aún sujeto a gate |
+| RC-002 | Matrices obligatorias no quedaron guardadas | Se describieron en conversación, pero no se versionaron | Repositorio y continuidad entre sesiones | AGENTS + matrices humana/JSON + prueba negativa de ausencia | `test-project-quality-gate.mjs` | CORREGIDO EN CANDIDATO |
+| RC-003 | 74/74 físico se confundió con cobertura completa | El conteo no evaluaba semántica ni lenguaje infantil | Auditoría del Manual | Gate gráfico, editorial y semántico sobre el mismo artefacto | `manual-editorial-qc.py` | ABIERTO HASTA PASS |
+| RC-004 | Banda y separación se revisaron a ojo | El control visual no medía todas las páginas | Hojas Vegas y Manual oficial | Métricas de encabezado, identificación y título en 74 páginas | matriz editorial JSON | ABIERTO HASTA REGENERACIÓN |
+| RC-005 | Se citaron 30 turnos/550 secuencias sin evidencia reproducible | Se reutilizó un resultado que no estaba en el repositorio | Informe final | Sólo se citan comandos y salidas presentes; prueba V322 demuestra 24 turnos | `test-v322-real-sustained-caddie.mjs` | CERRADO COMO COMUNICACIÓN |
+| RC-006 | Tráfico se trató como pendiente menor | No existe proveedor con ETA, destino validado ni prueba Guatemala | Roadmap y versión operativa | Gate de proveedor vivo; un deep link o búsqueda general no pasan | G0-08 | ABIERTO |
+| RC-007 | Voz automática se tomó como aprobación física | No hubo iPhone real con acento, ruido e interrupción | Cierre operativo | Gate físico obligatorio separado del banco automático | G0-06 | ABIERTO |
+| RC-008 | Clima vivo parcial se aproximó a cierre | Faltan snapshots, artefactos y medición comparativa de campo | Cierre operativo | Gate físico/artefactos separado | G0-09 | ABIERTO |
+| RC-009 | Se trasladó al propietario la búsqueda de matrices y accesos | Se reportó el bloqueo sin asumir control documental | Comunicación | El equipo mantiene matrices y sólo pide un acceso concreto cuando una integración externa lo exige | AGENTS y Gate 0 | CERRADO COMO RESPONSABILIDAD |
+

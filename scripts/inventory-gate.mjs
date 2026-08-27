@@ -13,7 +13,7 @@ function git(args){
 }
 
 function sourceState(){
-  const files=git(['ls-files','--cached'])
+  const files=git(['ls-files','--cached','--others','--exclude-standard'])
     .split('\n').filter(Boolean).filter(path=>path!==lockPath).sort();
   const digest=createHash('sha256');
   for(const path of files){

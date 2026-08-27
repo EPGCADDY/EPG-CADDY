@@ -1,6 +1,7 @@
 node_modules/
 mobile-www/
 native/
+tmp/
 assets/logo.png
 .DS_Store
 npm-debug.log*

@@ -1,5 +1,15 @@
 import {spawnSync} from 'node:child_process';
 
+for(const [command,args] of [
+  [process.execPath,['scripts/project-quality-gate.mjs']],
+  [process.execPath,['test-project-quality-gate.mjs']],
+  ['python3',['scripts/manual-editorial-qc.py']],
+  ['python3',['scripts/manual-visual-qc.py']]
+]){
+  const gate=spawnSync(command,args,{stdio:'inherit'});
+  if(gate.status!==0)process.exit(gate.status||1);
+}
+
 const roadmapGate=spawnSync(process.execPath,['scripts/roadmap-gate.mjs'],{stdio:'inherit'});
 if(roadmapGate.status!==0)process.exit(roadmapGate.status||1);
 

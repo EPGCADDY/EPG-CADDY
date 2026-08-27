@@ -1,0 +1,36 @@
+{
+  "schema": "gscg-gate-0/v1",
+  "version": "G0-R1-20260827",
+  "authorization": "Reconstrucción ordenada por el propietario el 27 de agosto de 2026",
+  "canonical": {
+    "repository": "https://github.com/EPGCADDY/EPG-CADDY",
+    "branch": "main",
+    "productionBaselineCommit": "0dc1ba7a62b6bd6aec92752c539ca641cf950e26",
+    "productionUrl": "https://epg-caddy.vercel.app/"
+  },
+  "logic": "all",
+  "inputs": ["canonicalSource", "exactScope", "measurableAcceptance", "approvedReferences", "knownRisks", "testPlan", "rollbackPlan"],
+  "gates": [
+    {"id":"G0-01","name":"control_documental","evidence":["node scripts/project-quality-gate.mjs","node test-project-quality-gate.mjs"]},
+    {"id":"G0-02","name":"estructura_grafica","evidence":["python3 scripts/manual-editorial-qc.py","python3 scripts/manual-visual-qc.py"]},
+    {"id":"G0-03","name":"texto_diez_anos","requiresHuman":true},
+    {"id":"G0-04","name":"manual_74_74","requiresSameArtifact":true},
+    {"id":"G0-05","name":"apuestas","requiredTopics":["Vegas","Wolf","Skins","otras apuestas documentadas"]},
+    {"id":"G0-06","name":"microfono","requiresPhysicalDevice":true},
+    {"id":"G0-07","name":"calidad_respuestas","requiresHuman":true},
+    {"id":"G0-08","name":"trafico","requiresLiveProvider":true,"requiresRealGuatemalaTest":true},
+    {"id":"G0-09","name":"clima","requiresPhysicalFieldValidation":true},
+    {"id":"G0-10","name":"integridad_operativa","evidence":["node audit-project.mjs"]},
+    {"id":"G0-11","name":"produccion_intacta","requiresOwnerApproval":true}
+  ],
+  "requiredControls": [
+    "AGENTS.md",
+    "CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md",
+    "CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md",
+    "CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json",
+    "CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md",
+    "CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.md",
+    "CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.json"
+  ]
+}
+

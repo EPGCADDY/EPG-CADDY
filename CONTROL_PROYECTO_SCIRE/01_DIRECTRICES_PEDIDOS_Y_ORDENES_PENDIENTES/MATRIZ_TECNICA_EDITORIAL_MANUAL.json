@@ -1,0 +1,12 @@
+{
+  "schema":"gscg-manual-editorial/v1",
+  "version":"MTE-R1-20260827",
+  "pages":{"first":0,"last":73,"count":74,"pdfCount":74},
+  "image":{"width":2160,"height":4320,"dpi":300,"safeMarginX":70,"edgeInk":0},
+  "spacing":{"headerToIdentificationMin":50,"identificationToTitleMin":50,"titleToSubtitleMin":17},
+  "color":{"neutralInkRatioMin":0.72,"saturatedGreenRatioMax":0.10},
+  "specialProfiles":{"cover":[0],"coursePages":[10,11,12,13,14,15,16],"frozenPages":[1,2]},
+  "didacticRequiredFields":["objective","agreements","playerInput","appCalculation","winner","settlement","commonError","glossary","scoreSeparation"],
+  "requiredTopics":["configuración","registro","scores","Stableford","Práctica","Match Play","Four Ball","Vegas","Wolf","Skins","tráfico","clima","micrófono","AI UNIVERSAL ∞"],
+  "commands":["python3 scripts/manual-editorial-qc.py","python3 scripts/manual-visual-qc.py","node test-v311-manual-hosting.mjs","node test-v311-manual-semantic-coverage.mjs"]
+}

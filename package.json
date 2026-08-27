@@ -19,7 +19,9 @@
   "scripts": {
     "roadmap:gate": "node scripts/roadmap-gate.mjs",
     "inventory:gate": "node scripts/inventory-gate.mjs",
+    "quality:gate": "node scripts/project-quality-gate.mjs",
     "audit": "node audit-project.mjs",
+    "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",
     "mobile:web": "node scripts/build-mobile-web.mjs",
     "mobile:add:ios": "npm run mobile:web && cap add ios",
