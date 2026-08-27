@@ -1087,6 +1087,6 @@ La inspección del Preview `6778d6ff30482c4ed9dbf94eb35f228047f35982` rechazó l
 
 ## V334-M1-R5 · indicador alineado con el contenido visible
 
-La comprobación real de R4 confirmó que `#pagina-20` ya muestra la lámina 20, pero rechazó el encabezado porque todavía podía conservar “PÁGINA 19” cuando sólo quedaban 58 píxeles de la lámina anterior. `manual.html` calcula la página activa desde una línea de referencia dentro del área útil, y `test-v311-manual-hosting.mjs` exige ese criterio. El cambio no altera imágenes, PDF ni Producción.
+La comprobación real de R4 confirmó que `#pagina-20` ya muestra la lámina 20, pero rechazó el encabezado porque todavía podía conservar “PÁGINA 19” cuando sólo quedaban 58 píxeles de la lámina anterior. `manual.html` calcula la página activa desde una línea de referencia dentro del área útil, y `test-v311-manual-hosting.mjs` exige ese criterio. `.github/workflows/v334-m1-header-finalize.yml` regenera el inventario, audita el SHA exacto y se elimina antes del commit final. El cambio no altera imágenes, PDF ni Producción.
 
 <!-- V334-M1-R5-REMOTE-PENDING -->
