@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import {sanitizeVoiceHealth} from "./api/voice-health.js";
+import {universalUnavailablePayload} from "./api/universal-ai.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const sessionApi=fs.readFileSync(new URL("./api/session-grupal.js",import.meta.url),"utf8");
@@ -27,8 +28,15 @@ assert.match(html,/shouldUseBrowserVoiceFallback\(err\)&&fallbackVoiceAvailable\
 assert.match(html,/failure\.status=rsp\.status/);
 assert.match(html,/setPrimaryVoiceMatrix\("listening",context\)/);
 assert.match(html,/setPrimaryVoiceMatrix\("responding",voiceContext\)/);
+assert.match(html,/id="setupVoiceMatrix"[^>]*aria-live="assertive"/);
+assert.match(html,/state==="listening"\?"ESCUCHANDO":state==="responding"\?"RESPONDIENDO"/);
+assert.match(html,/setup-voice-matrix\.listening,\.setup-voice-matrix\.responding/);
+assert.doesNotMatch(html,/CADDIE RESPONDIENDO|MICRÓFONO ESCUCHANDO|● ESCUCHANDO|● RESPONDIENDO/);
+assert.match(html,/SERVICIO DE RESPUESTAS SIN SALDO · TU INTERNET SÍ FUNCIONA/);
+assert.deepEqual(universalUnavailablePayload({providerCode:"credit_balance_exhausted",retryable:true,retryAfterMs:1000}),{status:503,body:{ok:false,error:"UNIVERSAL_AI_CREDIT_EXHAUSTED",retryable:false,configurationRequired:true}});
 assert.match(html,/utterance\.onstart=.*setPrimaryVoiceMatrix\("responding",voiceContext\)/);
 assert.match(sessionApi,/"realtime-session"/);
 assert.deepEqual(sanitizeVoiceHealth({event:"connection_interrupted",query:"privado",latitude:14.6}),{event:"connection_interrupted",build:"",context:"round",turn:0,elapsedMs:0});
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_started",query:"privado",latitude:14.6}),{event:"browser_fallback_started",build:"",context:"round",turn:0,elapsedMs:0});
 
-console.log("PASS V346 · 429 no culpa Internet, activa respaldo y muestra ESCUCHANDO / RESPONDIENDO");
+console.log("PASS V347 · matriz visible exacta, respaldo trazado y crédito agotado no se confunde con Internet");

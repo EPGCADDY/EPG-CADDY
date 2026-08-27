@@ -93,12 +93,15 @@ export async function requestUniversalResponse(body,{apiKey,gatewayToken=process
   return lastFailure;
 }
 
+export function universalUnavailablePayload(result){
+  if(result?.providerCode==="credit_balance_exhausted")return{status:503,body:{ok:false,error:"UNIVERSAL_AI_CREDIT_EXHAUSTED",retryable:false,configurationRequired:true}};
+  if(result?.retryable)return{status:503,body:{ok:false,error:"UNIVERSAL_AI_RATE_LIMITED",retryable:true}};
+  return{status:502,body:{ok:false,error:"UNIVERSAL_AI_UNAVAILABLE",retryable:false}};
+}
 function sendUniversalUnavailable(res,result){
-  if(result?.retryable){
-    res.setHeader("Retry-After",String(Math.max(1,Math.ceil(Number(result.retryAfterMs||1000)/1000))));
-    return res.status(503).json({ok:false,error:"UNIVERSAL_AI_RATE_LIMITED",retryable:true});
-  }
-  return res.status(502).json({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE",retryable:false});
+  const payload=universalUnavailablePayload(result);
+  if(payload.body.retryable)res.setHeader("Retry-After",String(Math.max(1,Math.ceil(Number(result?.retryAfterMs||1000)/1000))));
+  return res.status(payload.status).json(payload.body);
 }
 
 export function weatherTimePeriodFromQuery(query){

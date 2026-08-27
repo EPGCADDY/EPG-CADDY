@@ -724,3 +724,12 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 V345-ICONS-R1: el primer build remoto fue bloqueado porque el ROADMAP general no contenía siete rutas literales. Ambos ROADMAPS las registran ahora; no existe cambio funcional adicional.
 
 V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deployment `dpl_9DcbFH9d9Gf3qDL8rGUjQqTNNYpX` READY, 93 paquetes, 74/74 editorial y visual, 349 fuentes; instalación física en iPhone todavía pendiente.
+
+## V347 · matriz visible y diagnóstico real de respuestas
+
+- `index-grupal.html`: añade `setupVoiceMatrix` inmediatamente bajo el micrófono; `ESCUCHANDO` y `RESPONDIENDO` son exactos, rojos, visibles y parpadeantes; el respaldo reporta inicio, transcripción lista y fallo de respuesta sin guardar contenido.
+- `api/universal-ai.js`: `credit_balance_exhausted` deja de tratarse como límite transitorio y devuelve `UNIVERSAL_AI_CREDIT_EXHAUSTED` sin repetir la misma pregunta.
+- `api/voice-health.js`: acepta únicamente los tres eventos técnicos nuevos del respaldo, sin pregunta, transcripción, nombre ni ubicación.
+- `test-v336-microphone-transport.mjs`: bloquea estados con texto adicional, matriz ausente, falsa culpa a Internet, reintento por saldo y telemetría no autorizada.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-019 conserva el fallo físico y el bloqueo externo real.
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: estado honesto, doble registro y sello reproducible; Producción permanece intacta.
