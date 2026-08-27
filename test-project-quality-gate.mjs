@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
+
+assert.match(readFileSync('.gitignore','utf8'),/(?:^|\n)\.vercel\/(?:\n|$)/);
 
 const pass=spawnSync(process.execPath,['scripts/project-quality-gate.mjs'],{encoding:'utf8'});
 assert.equal(pass.status,0,pass.stderr||pass.stdout);

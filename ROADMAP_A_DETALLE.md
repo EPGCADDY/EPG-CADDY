@@ -1158,3 +1158,12 @@ Mecanismo temporal de publicación: `.github/workflows/v333-rebuild-preview.yml`
 | `test-v290-brand-icons-cleanup.mjs` | `PEP 668 CONFIG GATE` | Exige `--break-system-packages` y las cuatro dependencias editoriales. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REGISTRO DOBLE` | Conservan el error real del constructor y el alcance limitado. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST V333-R3` | Sella la configuración relanzada sin alterar Producción. |
+
+## V333-R4 · separación entre metadata de hosting y fuente inventariada
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `.gitignore` | `VERCEL BUILD METADATA` | Excluye sólo `.vercel/`, creado automáticamente fuera del commit durante el build. |
+| `test-project-quality-gate.mjs` | `IGNORE CONFIG GATE` | Exige que la exclusión permanezca declarada. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REGISTRO DOBLE` | Registra causa, alcance y ausencia de cambios funcionales. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST V333-R4` | Sella el árbol que vuelve a auditarse y desplegarse. |

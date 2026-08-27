@@ -2,6 +2,7 @@ node_modules/
 mobile-www/
 native/
 tmp/
+.vercel/
 assets/logo.png
 .DS_Store
 npm-debug.log*

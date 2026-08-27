@@ -1058,3 +1058,7 @@ El segundo intento alcanzó el auditor y fue bloqueado porque el constructor Ver
 ## V333-R3 · instalación Python permitida por PEP 668
 
 Vercel confirmó que su Python administrado rechaza instalaciones sin la autorización explícita de PEP 668. `vercel.json` añade `--break-system-packages` sólo dentro del constructor efímero de Preview y `test-v290-brand-icons-cleanup.mjs` exige conservar esa opción. No cambia código funcional, Manual ni Producción.
+
+## V333-R4 · metadata de Vercel fuera del inventario de producto
+
+El constructor crea `.vercel/project.json` después del checkout. `.gitignore` excluye esa metadata efímera para que el inventario mida únicamente fuentes y artefactos del producto; `test-project-quality-gate.mjs` bloquea su reingreso. No se excluye ningún archivo funcional ni documental.
