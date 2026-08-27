@@ -13,6 +13,9 @@ const connectionAction=new Function(`${html.slice(errorEnd+1,actionEnd)};return 
 const fallbackStart=html.indexOf("function shouldUseBrowserVoiceFallback");
 const fallbackEnd=html.indexOf("\nfunction primaryVoiceStatusTarget",fallbackStart);
 const fallbackDecision=new Function(`${html.slice(fallbackStart,fallbackEnd)};return shouldUseBrowserVoiceFallback`)();
+const matrixTextStart=html.indexOf("function primaryVoiceMatrixText");
+const matrixTextEnd=html.indexOf("\nfunction setPrimaryVoiceMatrix",matrixTextStart);
+const matrixText=new Function("draftPlayers","round","roundIdleStatus","voiceContext",`${html.slice(matrixTextStart,matrixTextEnd)};return primaryVoiceMatrixText`)([],{configured:false},()=>"", "setup");
 
 assert.equal(errorMessage({name:"NotFoundError"}),"NO HAY UN MICRÓFONO DISPONIBLE EN ESTE DISPOSITIVO");
 assert.match(errorMessage({name:"NotAllowedError"}),/PERMISO/);
@@ -35,11 +38,17 @@ assert.match(html,/shouldUseBrowserVoiceFallback\(err\)&&fallbackVoiceAvailable\
 assert.match(html,/if\(startBrowserVoiceFallback\(context\)\)/);
 assert.match(html,/processBrowserVoiceTranscript[\s\S]*?setPrimaryVoiceMatrix\("responding",context\)/);
 assert.match(html,/submitAiUniversalText[\s\S]*?setPrimaryVoiceMatrix\("responding",voiceContext\)/);
+assert.match(html,/looksLikeSetupRosterTranscript\(clean\)[\s\S]*?browser_fallback_setup_rejected[\s\S]*?return false/);
+assert.match(html,/setupFinalizeRequested\|\|setupLocked[\s\S]*?resetSetupCapture\(\)[\s\S]*?LISTO PARA ESCUCHAR/);
 assert.match(html,/failure\.status=rsp\.status/);
 assert.match(html,/setPrimaryVoiceMatrix\("listening",context\)/);
 assert.match(html,/setPrimaryVoiceMatrix\("responding",voiceContext\)/);
 assert.match(html,/id="setupVoiceMatrix"[^>]*aria-live="assertive"/);
-assert.match(html,/state==="listening"\?"ESCUCHANDO":state==="responding"\?"RESPONDIENDO"/);
+assert.equal(matrixText("listening","setup"),"ESCUCHANDO");
+assert.equal(matrixText("responding","setup"),"RESPONDIENDO");
+assert.equal(matrixText("error","setup","SERVICIO DE RESPUESTAS SIN SALDO · TU INTERNET SÍ FUNCIONA"),"SERVICIO DE RESPUESTAS SIN SALDO · TU INTERNET SÍ FUNCIONA");
+assert.equal(matrixText("idle","setup","ABRIENDO MICRÓFONO ALTERNATIVO…"),"ABRIENDO MICRÓFONO ALTERNATIVO…");
+assert.doesNotMatch(html.slice(matrixTextStart,matrixTextEnd),/PROCESANDO/);
 assert.match(html,/setup-voice-matrix\.listening,\.setup-voice-matrix\.responding/);
 assert.doesNotMatch(html,/CADDIE RESPONDIENDO|MICRÓFONO ESCUCHANDO|● ESCUCHANDO|● RESPONDIENDO/);
 assert.match(html,/SERVICIO DE RESPUESTAS SIN SALDO · TU INTERNET SÍ FUNCIONA/);
@@ -51,5 +60,7 @@ assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_requested",query:"
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_started",query:"privado",latitude:14.6}),{event:"browser_fallback_started",build:"",context:"round",turn:0,elapsedMs:0});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_error",error:"network",transcript:"privado"}),{event:"browser_fallback_error",build:"",context:"round",turn:0,elapsedMs:0});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_start_failed",error:"privado"}),{event:"browser_fallback_start_failed",build:"",context:"round",turn:0,elapsedMs:0});
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_applied",transcript:"privado"}),{event:"browser_fallback_setup_applied",build:"",context:"round",turn:0,elapsedMs:0});
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_rejected",transcript:"privado"}),{event:"browser_fallback_setup_rejected",build:"",context:"round",turn:0,elapsedMs:0});
 
-console.log("PASS V348 · fallo local recuperable y matriz ESCUCHANDO → RESPONDIENDO trazada");
+console.log("PASS V349 · registro no se desvía, repetición segura y matriz nunca oculta el resultado");

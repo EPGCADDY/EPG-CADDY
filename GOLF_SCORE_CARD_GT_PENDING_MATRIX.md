@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V347 RECHAZADA EN IPHONE A LAS 07:20/07:21; V348 corrige el rescate del fallo local y la transición visible, pero la respuesta general continúa bloqueada hasta restaurar saldo o credencial de Gateway y repetir la prueba física · `PEND-VOZ-003`
+**Estado:** V348 RECHAZADA EN IPHONE A LAS 08:36; V349 corrige repetición, enrutamiento y estado trabado, pero requiere Preview y nueva prueba física; respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -199,6 +199,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - **Control V347:** matriz viva inmediatamente debajo del micrófono, estados exactos sin texto adicional, error explícito de saldo que confirma que Internet sí funciona y telemetría privada del respaldo.
 - **Fallo físico V347:** a las 07:20 el inicio local genérico quedó fuera del respaldo; a las 07:21 el respaldo sí produjo transcripción, pero mostró `PROCESANDO…` y la respuesta terminó bloqueada por `credit_balance_exhausted`.
 - **Control V348:** cualquier fallo técnico recuperable de apertura intenta el respaldo; permiso y dispositivo siguen diferenciados; después de reconocer, la matriz pasa directamente de `ESCUCHANDO` a `RESPONDIENDO`; la telemetría privada separa solicitud, inicio y fallo.
+- **Fallo físico V348:** el respaldo entregó transcripción a las 08:36, pero la lista repetida fue rechazada, se desvió a respuestas generales y un error de precedencia ocultó el diagnóstico real bajo `PROCESANDO…`.
+- **Control V349:** acepta repeticiones idénticas, entiende “otro jugador”, bloquea la desviación de registros fallidos hacia IA, muestra el mensaje real y reinicia cualquier lock al volver a tocar.
 - **Orden de ejecución:** registrar estas tres correcciones y retomarlas después de continuar con la configuración y prueba de SKINS, WOLF, VEGAS y DOTS.
 
 - **Candado de privacidad V312:** no hay activación automática, huella de voz ni reconocimiento biométrico; el jugador debe abrir primero el micrófono con el botón.

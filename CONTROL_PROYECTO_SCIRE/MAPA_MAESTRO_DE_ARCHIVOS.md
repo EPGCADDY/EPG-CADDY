@@ -743,3 +743,13 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `api/voice-health.js` | `PRIVATE-FALLBACK-LIFECYCLE` | Registra requested/started/error/start_failed sin pregunta, transcripción, nombre, audio ni ubicación. |
 | `test-v336-microphone-transport.mjs` | `V348-PERMANENT-REGRESSION` | Reproduce el fallo local, protege errores no recuperables y exige estados y privacidad. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-020` | Conserva la evidencia de las 07:20/07:21 y no confunde captura reconocida con respuesta fallida por saldo. |
+
+## V349-ROSTER-ROUTING · registro repetido y matriz sin falso procesamiento
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `IDENTICAL-ROSTER-DEDUPE` | Repetir dos veces el mismo listado aplica una sola copia y no produce duplicados. |
+| `index-grupal.html` | `ROSTER-NEVER-GENERAL-AI` | Un dictado con jugador/handicap/marcas que no pueda aplicarse termina con error específico y cero consultas generales. |
+| `index-grupal.html` | `MATRIX-MESSAGE-PRECEDENCE` | Los mensajes personalizados conservan su texto; nunca se convierten en `PROCESANDO…`. |
+| `index-grupal.html` | `LOCK-TOUCH-RECOVERY` | Un nuevo toque limpia bloqueo transitorio de setup y permite reabrir el micrófono. |
+| `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs` | `V349-PERMANENT-REGRESSION` | Ejecutan repetición, gramática visible, frontera de intención, matriz y privacidad. |
