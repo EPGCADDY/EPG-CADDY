@@ -1167,3 +1167,12 @@ Mecanismo temporal de publicación: `.github/workflows/v333-rebuild-preview.yml`
 | `test-project-quality-gate.mjs` | `IGNORE CONFIG GATE` | Exige que la exclusión permanezca declarada. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REGISTRO DOBLE` | Registra causa, alcance y ausencia de cambios funcionales. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST V333-R4` | Sella el árbol que vuelve a auditarse y desplegarse. |
+
+## V333-R5 · instalación Node sin mutar el árbol fuente
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `vercel.json` | `NPM NO PACKAGE LOCK` | Instala dependencias sin crear un archivo nuevo fuera del commit. |
+| `test-v290-brand-icons-cleanup.mjs` | `NPM INSTALL CONFIG GATE` | Exige `--omit=dev --no-package-lock` antes del auditor. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REGISTRO DOBLE` | Conservan el bloqueo exacto y la corrección limitada al build. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST V333-R5` | Sella la configuración que vuelve a publicarse sólo en Preview. |

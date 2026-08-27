@@ -1062,3 +1062,7 @@ Vercel confirmó que su Python administrado rechaza instalaciones sin la autoriz
 ## V333-R4 · metadata de Vercel fuera del inventario de producto
 
 El constructor crea `.vercel/project.json` después del checkout. `.gitignore` excluye esa metadata efímera para que el inventario mida únicamente fuentes y artefactos del producto; `test-project-quality-gate.mjs` bloquea su reingreso. No se excluye ningún archivo funcional ni documental.
+
+## V333-R5 · instalación Node sin archivo temporal de bloqueo
+
+El comando de instalación de Vercel añade `--no-package-lock` para impedir que `npm` genere un `package-lock.json` ajeno al commit después del checkout. `test-v290-brand-icons-cleanup.mjs` exige esa instalación limpia; dependencias, aplicación, Manual y Producción permanecen sin cambios.
