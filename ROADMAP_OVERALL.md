@@ -464,7 +464,7 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 | `test-v290-brand-icons-cleanup.mjs` | Mantiene la validación acumulada y reconoce la guía Stableford exacta, el paquete y la caché V305. |
 | `test-v304-homogeneous-registration-actions.mjs` | Conserva el filtro hermano y prohíbe pedir HDCP o marcas en la guía visible Stableford. |
 | `test-v305-history-navigation-zero-error.mjs` | Bloquea vocabulario retirado, ATRÁS sin conexión, superposición, estado huérfano y versiones incoherentes. |
-| `test-v305-registration-guides-parser-truth.mjs` | Ejecuta ambos analizadores reales y exige que cada guía corresponda exactamente con su formato y con los estados equivalentes de OK. |
+| `tests/test-v305-registration-guides-parser-truth.mjs` | Ejecuta ambos analizadores reales y exige que cada guía corresponda exactamente con su formato y con los estados equivalentes de OK. |
 | `vercel.json` | Exige filtros V304 y V305 antes de publicar. |
 
 ## Regla permanente
@@ -509,7 +509,7 @@ El **24 de agosto de 2026** se incorpora Match Play como extensión aislada de l
 | `audit-project.mjs` | Ejecuta el control V306 dentro de la auditoría maestra. |
 | `.github/workflows/roadmap-gate.yml` | Ejecuta el candado Match Play en GitHub. |
 | `vercel.json` | Exige la prueba V306 y entrega el módulo sin caché obsoleta. |
-| `test-v305-registration-guides-parser-truth.mjs` | Conserva General y añade el requisito exacto de dos jugadores para Match Play. |
+| `tests/test-v305-registration-guides-parser-truth.mjs` | Conserva General y añade el requisito exacto de dos jugadores para Match Play. |
 | `test-v305-history-navigation-zero-error.mjs` | Alinea paquete y caché con V306 sin retirar controles V305. |
 | `test-stableford-ui.mjs` | Alinea únicamente la identificación del build vigente. |
 | `test-v263-compact-players-back-button.mjs` | Conserva el alta de jugadores en General y confirma que Match Play permanezca limitado a exactamente dos. |
@@ -641,7 +641,7 @@ El **25 de agosto de 2026** se deja el nombre visible de la modalidad exclusivam
 | `test-v272-definitive-operational-release.mjs` | Verifica las rutas públicas directas y conserva la ruta exclusiva Stableford. |
 | `test-v270-consecutive-hole-voice-blocks.mjs` | Conserva el simulador de voz cargando el nuevo límite operativo independiente por pareja. |
 | `test-v255-player-registration-boxes-codes.mjs` | Homologa el registro visual de Match Play y Four Ball con cuatro espacios disponibles. |
-| `test-v305-registration-guides-parser-truth.mjs` | Homologa el candado del registro para exigir 2 o 4 jugadores en Match Play y Four Ball. |
+| `tests/test-v305-registration-guides-parser-truth.mjs` | Homologa el candado del registro para exigir 2 o 4 jugadores en Match Play y Four Ball. |
 | `test-v311-neutral-match-home-link.mjs` | Candado de nombres, parejas, separación, dicción en español y apertura directa. |
 | `audit-project.mjs` | Incorpora el candado V311 a la homologación completa. |
 | `APP_ARCHITECTURE.md` | Define una o dos parejas, resultados independientes, separación, voz e inicio sin pérdida de ronda. |
@@ -1117,7 +1117,7 @@ La consulta real del Preview V335-AI fue interceptada antes del endpoint porque 
 
 ## V336-MIC · transporte resistente y errores accionables
 
-La investigación del Preview `bbaad84` encontró `NotFoundError: Requested device not found` antes de llamar `/api/session-grupal`; el navegador automatizado no dispone de micrófono físico. La interfaz ocultaba la causa bajo un mensaje único y el transporte cerraba ante cualquier estado `disconnected`, incluso transitorio. `index-grupal.html` distingue dispositivo ausente, permiso, timeout y red; concede 5 segundos de recuperación WebRTC; limpia canal, peer, pista y audio al confirmar la caída. `api/voice-health.js` registra sólo eventos técnicos de conexión y `api/session-grupal.js` deja trazas sin audio, nombres ni transcripciones. `test-v336-microphone-transport.mjs` añade la puerta 91. `.github/workflows/v336-mic-finalize.yml` sella y se elimina antes del commit final. La prueba física de iPhone RC-007 sigue separada; Producción no cambia.
+La investigación del Preview `bbaad84` encontró `NotFoundError: Requested device not found` antes de llamar `/api/session-grupal`; el navegador automatizado no dispone de micrófono físico. La interfaz ocultaba la causa bajo un mensaje único y el transporte cerraba ante cualquier estado `disconnected`, incluso transitorio. `index-grupal.html` distingue dispositivo ausente, permiso, timeout y red; concede 5 segundos de recuperación WebRTC; limpia canal, peer, pista y audio al confirmar la caída. `api/voice-health.js` registra sólo eventos técnicos de conexión y `api/session-grupal.js` deja trazas sin audio, nombres ni transcripciones. `tests/test-v336-microphone-transport.mjs` añade la puerta 91. `.github/workflows/v336-mic-finalize.yml` sella y se elimina antes del commit final. La prueba física de iPhone RC-007 sigue separada; Producción no cambia.
 
 <!-- V336-MIC-REMOTE-FINALIZED -->
 
@@ -1218,7 +1218,7 @@ El commit `1026a3e6555077fab1af4f8f932e97a7032e0182` quedó READY en Preview com
 ## V346 · Micrófono real y matriz de estado · 27 de agosto de 2026
 
 - `index-grupal.html`: clasifica HTTP 429 como límite del servicio, activa reconocimiento de voz alternativo cuando está disponible y muestra `ESCUCHANDO` / `RESPONDIENDO` en la matriz principal.
-- `test-v336-microphone-transport.mjs`: deja de aceptar el diagnóstico falso de Internet y bloquea regresiones del respaldo y de ambos estados visibles.
+- `tests/test-v336-microphone-transport.mjs`: deja de aceptar el diagnóstico falso de Internet y bloquea regresiones del respaldo y de ambos estados visibles.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello recalculado para esta modificación atómica.
 
 ## V346-R1 · Corrección determinista del sello de inventario · 27 de agosto de 2026
@@ -1230,7 +1230,7 @@ El commit `1026a3e6555077fab1af4f8f932e97a7032e0182` quedó READY en Preview com
 - `index-grupal.html`: coloca la matriz viva junto al micrófono, muestra únicamente `ESCUCHANDO` / `RESPONDIENDO` en rojo parpadeante y presenta el saldo agotado sin culpar a Internet.
 - `api/universal-ai.js`: clasifica `credit_balance_exhausted` como bloqueo no reintentable cuando no existe recuperación administrada.
 - `api/voice-health.js`: registra eventos privados del micrófono alternativo sin contenido hablado.
-- `test-v336-microphone-transport.mjs`: agrega regresiones de posición, texto exacto, diagnóstico de saldo y privacidad.
+- `tests/test-v336-microphone-transport.mjs`: agrega regresiones de posición, texto exacto, diagnóstico de saldo y privacidad.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-019 como abierto hasta credencial/saldo y PASS físico.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta la frontera entre captura, respuesta y proveedor.
 - `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: conserva V346-R1 rechazada y V347 pendiente de prueba física.
@@ -1241,7 +1241,7 @@ El commit `1026a3e6555077fab1af4f8f932e97a7032e0182` quedó READY en Preview com
 
 - `index-grupal.html`: activa el reconocimiento alternativo ante cualquier fallo técnico recuperable, conserva aparte permiso/dispositivo y cambia la matriz de `ESCUCHANDO` a `RESPONDIENDO` desde que la transcripción entra al procesamiento.
 - `api/voice-health.js`: agrega eventos privados de solicitud, error y fallo de arranque del respaldo sin texto hablado, nombres ni ubicación.
-- `test-v336-microphone-transport.mjs`: reproduce el fallo local genérico, protege permiso/dispositivo, exige la transición exacta y verifica la privacidad de los eventos.
+- `tests/test-v336-microphone-transport.mjs`: reproduce el fallo local genérico, protege permiso/dispositivo, exige la transición exacta y verifica la privacidad de los eventos.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-020 con la evidencia física de las 07:20/07:21.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta la corrección funcional y el bloqueo externo que permanece.
 - `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: rechaza V347, registra V348 y mantiene abierta la prueba física.
@@ -1253,8 +1253,8 @@ El commit `1026a3e6555077fab1af4f8f932e97a7032e0182` quedó READY en Preview com
 
 - `index-grupal.html`: deduplica listados repetidos, entiende “otro jugador”, separa registro de pregunta, evita enviar un registro rechazado a IA, corrige la precedencia de mensajes de matriz y recupera locks con un nuevo toque.
 - `api/voice-health.js`: registra únicamente si el listado alternativo fue aplicado o rechazado, sin contenido hablado ni datos de jugadores.
-- `test-v305-registration-guides-parser-truth.mjs`: reproduce lista completa repetida, “otro jugador” y la frontera entre registro y pregunta.
-- `test-v336-microphone-transport.mjs`: ejecuta la función real de texto de matriz, prohíbe `PROCESANDO` allí, verifica el mensaje exacto y la recuperación.
+- `tests/test-v305-registration-guides-parser-truth.mjs`: reproduce lista completa repetida, “otro jugador” y la frontera entre registro y pregunta.
+- `tests/test-v336-microphone-transport.mjs`: ejecuta la función real de texto de matriz, prohíbe `PROCESANDO` allí, verifica el mensaje exacto y la recuperación.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: rechaza V348 y registra RC-021.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta causa, frontera y candados V349.
 - `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: conserva V348 rechazada y V349 pendiente de prueba física.
@@ -1266,11 +1266,11 @@ El commit `1026a3e6555077fab1af4f8f932e97a7032e0182` quedó READY en Preview com
 
 V349 queda rechazada por la prueba física de las 08:59: el navegador transcribió, mostró `RESPONDIENDO`, no llenó filas y llamó al servicio general, que informó saldo agotado. V350 elimina esa dependencia: dentro de Registro de jugadores toda transcripción termina localmente, sea aplicada o rechazada, y nunca consulta AI UNIVERSAL. El parser admite conectores naturales como “hándicap catorce y marcas blancas”; la telemetría cliente incluye aplicado/rechazado sin contenido hablado.
 
-Archivos exactos V350: `index-grupal.html`, `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta; el candidato requiere build, navegador y prueba física iPhone.
+Archivos exactos V350: `index-grupal.html`, `tests/test-v305-registration-guides-parser-truth.mjs`, `tests/test-v336-microphone-transport.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta; el candidato requiere build, navegador y prueba física iPhone.
 
 ## V351 · Safari XIV y separación correcta de jugadores · 27 de agosto de 2026
 
 V350 queda rechazada por la prueba física de las 14:16. Safari convirtió “catorce” en `XIV`; el parser lo trató como nombre y escribió `JAIME XIV BLANCAS JORGE · 6 · AZULES` en una sola fila. V351 agrega romanos canónicos I–LIV únicamente al parser de hándicap del Registro. La frase real `Jaime xiv blancas Jorge seis azules` produce dos jugadores: Jaime, 14, Blanco; Jorge, 6, Azul. La `X` operacional del score permanece fuera de esta conversión.
 
-Archivos exactos V351: `index-grupal.html`, `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta; falta build, navegador y prueba física iPhone.
+Archivos exactos V351: `index-grupal.html`, `tests/test-v305-registration-guides-parser-truth.mjs`, `tests/test-v336-microphone-transport.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta; falta build, navegador y prueba física iPhone.
 
