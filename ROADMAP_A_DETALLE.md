@@ -1176,3 +1176,29 @@ Mecanismo temporal de publicación: `.github/workflows/v333-rebuild-preview.yml`
 | `test-v290-brand-icons-cleanup.mjs` | `NPM INSTALL CONFIG GATE` | Exige `--omit=dev --no-package-lock` antes del auditor. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REGISTRO DOBLE` | Conservan el bloqueo exacto y la corrección limitada al build. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST V333-R5` | Sella la configuración que vuelve a publicarse sólo en Preview. |
+
+## V334-M1 · fuente canónica y control de página completa del Manual
+
+| Archivo exacto | Control V334-M1 | Resultado exigido |
+|---|---|---|
+| `docs/manual/v311/manual-pages-17-35.json` | `CANONICAL-57` | Contiene exactamente las páginas 17–73, en orden y sin huecos, con cuatro pasos didácticos y cinco ayudas obligatorias. |
+| `docs/manual/v311/manual-pages-bets-live-data.json` | `NO-SILENT-OVERRIDE` | Permanece vacío salvo que un override futuro demuestre explícitamente que no desplaza una función. |
+| `scripts/rebuild-manual-bets-live-data.py` | `RENDER-57` | Regenera todas las páginas funcionales o una selección indicada, distribuyendo contenido hasta la zona inferior. |
+| `docs/manual/v311/page-17.png` a `docs/manual/v311/page-73.png` | `4K-300DPI-FULL-PAGE` | Conservan 2160×4320, 300 dpi, orden didáctico y ocupación vertical balanceada. |
+| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | `PDF-74-SYNC` | Contienen las mismas 74 láminas vigentes y en el mismo orden. |
+| `scripts/manual-editorial-qc.py` | `DIDACTIC-57` | Rechaza ausencia, desorden, página repetida o falta de error, recuperación, glosario, separación del score y ejemplo. |
+| `scripts/manual-visual-qc.py` | `FUNCTIONAL-FULL-HEIGHT` | Rechaza páginas 17–73 con ocupación menor de 92 %, mayor de 98.5 % o menos de 20 % de filas activas en la franja y=2700–3900. |
+| `manual.html`, `manual-search.js` | `WEB-SAME-ORDER` | Índice, títulos, lupa e intención abren la página canónica correcta. |
+| `MANUAL_COBERTURA_FUNCIONAL_V311.md` | `COVERAGE-CLOSURE` | Relaciona todas las funciones, modalidades, apuestas, voz, IA, tráfico, clima, Reglas y recuperación con páginas exactas. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.json` | `EDITORIAL-CONTRACT` | Formalizan geometría, campos didácticos y cobertura. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-010` | Conserva causa raíz, escape y control permanente del falso PASS anterior. |
+| `test-v311-manual-semantic-coverage.mjs` | `SEMANTIC-57` | Prueba las 57 páginas, su orden y la cobertura completa. |
+| `test-v311-manual-search.mjs` | `SEARCH-ORDER` | Prueba que índice y lupa abran el nuevo destino correcto. |
+| `test-v311-manual-voice-map.mjs` | `VOICE-TERMS` | Prueba frases visibles, vocabulario de score y explicación de estados de voz. |
+| `test-v321-ai-universal-infinity.mjs` | `AI-MANUAL-TITLES` | Conserva el dominio universal y exige los títulos canónicos de profundidad y datos vivos. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V334-M1` | Registra cada grupo de archivos modificado y su responsabilidad. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `DIGEST-V334-M1` | Regeneran y sellan fuentes y tres inventarios reproducibles del candidato. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Conservan causa, alcance, controles, evidencia y protección de Producción. |
+| `.github/workflows/v334-m1-finalize-preview.yml` | `TEMPORARY-REMOTE-REBUILD` | Reconstruye PNG/PDF e inventarios en GitHub, audita el SHA final y se elimina antes del commit desplegable. |
+
+Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 temas; `manual-visual-qc.py` PASS con ocupación funcional 94.2–97.5 % y densidad inferior 41.0–42.7 %; pruebas semántica, búsqueda, voz y hosting PASS. El rubro sólo se cierra después de repetir estos controles en el SHA publicado y verificar el Preview en navegador. Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.

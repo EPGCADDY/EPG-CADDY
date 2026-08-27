@@ -83,20 +83,27 @@ if OVERRIDES.exists():
 
 combined = {str(item.get("number")): item for item in source_pages}
 combined.update({str(item.get("number")): item for item in override_pages})
+effective_pages = [combined.get(str(number), {}) for number in range(17, 74)]
+if len(source_pages) != 57:
+    fail(f"La fuente funcional debe contener 57 páginas y contiene {len(source_pages)}.")
+if [str(item.get("number")) for item in effective_pages] != [str(number) for number in range(17, 74)]:
+    fail("La fuente funcional no cubre en orden continuo las páginas 17–73.")
 all_text = " ".join(json.dumps(item, ensure_ascii=False) for item in combined.values()).casefold()
 for topic in MATRIX["requiredTopics"]:
     if topic.casefold() not in all_text:
         fail(f"Cobertura ausente: {topic}.")
 
 required_fields = set(MATRIX["didacticRequiredFields"])
-for item in override_pages:
-    didactic = item.get("didactic", {})
-    missing = sorted(required_fields - set(didactic))
+expected_step_titles = ["QUÉ ES", "TÚ HACES", "LA APP HACE", "RESULTADO"]
+for item in effective_pages:
+    missing = sorted(field for field in required_fields if not str(item.get(field, "")).strip())
     if missing:
         fail(f"Página {item.get('number')}: faltan campos didácticos {', '.join(missing)}.")
     if len(item.get("steps", [])) != 4:
         fail(f"Página {item.get('number')}: debe tener exactamente cuatro pasos.")
-    for value in [item.get("title", ""), item.get("subtitle", ""), item.get("remember", ""), *[step[1] for step in item.get("steps", []) if len(step) > 1]]:
+    if [step[0] for step in item.get("steps", [])] != expected_step_titles:
+        fail(f"Página {item.get('number')}: el orden debe ser QUÉ ES → TÚ HACES → LA APP HACE → RESULTADO.")
+    for value in [item.get("title", ""), item.get("subtitle", ""), item.get("remember", ""), *[item.get(field, "") for field in required_fields], *[step[1] for step in item.get("steps", []) if len(step) > 1]]:
         for sentence in re.split(r"[.!?]+", value):
             words = sentence.split()
             if len(words) > 30:
@@ -118,6 +125,5 @@ if failures:
 print(
     "MANUAL_EDITORIAL_QC PASS "
     f"pages=74 standardProfiles={len(layout_metrics)} topics={len(MATRIX['requiredTopics'])} "
-    f"didacticOverrides={len(override_pages)} pdf=74"
+    f"didacticPages={len(effective_pages)} pdf=74"
 )
-

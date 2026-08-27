@@ -634,6 +634,22 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `ROADMAP_A_DETALLE.md` | DETALLE-V312 | Registra arquitectura, archivos y prueba. |
 | `ROADMAP_OVERALL.md` | OVERALL-V312 | Resume el resultado para revisión. |
 
+## Corte V334-M1 · Manual canónico 17–73
+
+| Grupo de archivos | Responsabilidad vigente |
+|---|---|
+| `docs/manual/v311/manual-pages-17-35.json` | Fuente única de las 57 páginas funcionales, con orden y ayudas didácticas obligatorias. |
+| `docs/manual/v311/manual-pages-bets-live-data.json` | Capa de overrides vacía; evita desplazar contenido sin control. |
+| `docs/manual/v311/page-17.png` a `docs/manual/v311/page-73.png` | Láminas 4K/300 dpi reconstruidas y distribuidas a página completa. |
+| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | PDF gemelos de 74 páginas sincronizados con las láminas. |
+| `scripts/rebuild-manual-bets-live-data.py`, `scripts/manual-editorial-qc.py`, `scripts/manual-visual-qc.py` | Generación reproducible y candados editorial/visual sobre las 57 páginas. |
+| `manual.html`, `manual-search.js`, `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Manual web, búsqueda y mapa de cobertura alineados al orden canónico. |
+| `test-v311-manual-semantic-coverage.mjs`, `test-v311-manual-search.mjs`, `test-v311-manual-voice-map.mjs`, `test-v321-ai-universal-infinity.mjs` | Regresión de cobertura, navegación, vocabulario y títulos vigentes de IA. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.json` | Contrato técnico/editorial ejecutable. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-010: falso PASS anterior y control permanente. |
+| `scripts/rebuild-inventory-pdfs.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Trazabilidad, tres inventarios y huella reproducible V334-M1. |
+| `.github/workflows/v334-m1-finalize-preview.yml` | Flujo temporal: reconstruye, audita y se elimina antes del commit final de Preview. |
+
 ## Cómo usar este inventario
 
 

@@ -13,9 +13,17 @@ BODY_START = 250
 BODY_END = 4070
 SAFE_X = 70
 ROW_INK_MINIMUM = 18
+FUNCTIONAL_START = 17
+FUNCTIONAL_END = 73
+FUNCTIONAL_OCCUPANCY_MINIMUM = 0.92
+FUNCTIONAL_OCCUPANCY_MAXIMUM = 0.985
+FUNCTIONAL_LOWER_START = 2700
+FUNCTIONAL_LOWER_END = 3900
+FUNCTIONAL_LOWER_DENSITY_MINIMUM = 0.20
 
 failures = []
 course_metrics = []
+functional_metrics = []
 
 
 def fail(page, rule, actual):
@@ -63,33 +71,59 @@ for page_number in range(0, 74):
     if green_ratio > 0.10:
         fail(page, "verde limitado a acentos", f"{green_ratio * 100:.1f} %")
 
-    if page_number < 10 or page_number > 16:
-        continue
+    if 10 <= page_number <= 16:
+        body_ink = ink[BODY_START:BODY_END + 1, :]
+        row_counts = np.count_nonzero(body_ink, axis=1)
+        active_rows = np.flatnonzero(row_counts >= ROW_INK_MINIMUM)
+        if active_rows.size == 0:
+            fail(page, "bloque editorial detectable", "sin bloque")
+            continue
 
-    body_ink = ink[BODY_START:BODY_END + 1, :]
-    row_counts = np.count_nonzero(body_ink, axis=1)
-    active_rows = np.flatnonzero(row_counts >= ROW_INK_MINIMUM)
-    if active_rows.size == 0:
-        fail(page, "bloque editorial detectable", "sin bloque")
-        continue
+        body_top = int(active_rows[0] + BODY_START)
+        body_bottom = int(active_rows[-1] + BODY_START)
+        active_pixels = np.argwhere(body_ink)
+        body_min_x = int(active_pixels[:, 1].min())
+        body_max_x = int(active_pixels[:, 1].max())
+        top_air = body_top - BODY_START
+        bottom_air = BODY_END - body_bottom
+        vertical_delta = abs(top_air - bottom_air)
+        occupancy = (body_bottom - body_top) / (BODY_END - BODY_START)
 
-    body_top = int(active_rows[0] + BODY_START)
-    body_bottom = int(active_rows[-1] + BODY_START)
-    active_pixels = np.argwhere(body_ink)
-    body_min_x = int(active_pixels[:, 1].min())
-    body_max_x = int(active_pixels[:, 1].max())
-    top_air = body_top - BODY_START
-    bottom_air = BODY_END - body_bottom
-    vertical_delta = abs(top_air - bottom_air)
-    occupancy = (body_bottom - body_top) / (BODY_END - BODY_START)
+        if vertical_delta > 420:
+            fail(page, "equilibrio vertical tipo iPhone", f"diferencia {vertical_delta}px")
+        if occupancy < 0.40 or occupancy > 0.86:
+            fail(page, "ocupación editorial equilibrada", f"{occupancy * 100:.1f} %")
+        if body_min_x < SAFE_X or body_max_x >= image.width - SAFE_X:
+            fail(page, "márgenes laterales seguros", f"{body_min_x}px / {image.width - 1 - body_max_x}px")
+        course_metrics.append((page, vertical_delta, occupancy))
 
-    if vertical_delta > 420:
-        fail(page, "equilibrio vertical tipo iPhone", f"diferencia {vertical_delta}px")
-    if occupancy < 0.40 or occupancy > 0.86:
-        fail(page, "ocupación editorial equilibrada", f"{occupancy * 100:.1f} %")
-    if body_min_x < SAFE_X or body_max_x >= image.width - SAFE_X:
-        fail(page, "márgenes laterales seguros", f"{body_min_x}px / {image.width - 1 - body_max_x}px")
-    course_metrics.append((page, vertical_delta, occupancy))
+    if FUNCTIONAL_START <= page_number <= FUNCTIONAL_END:
+        body_ink = ink[BODY_START:BODY_END + 1, :]
+        row_counts = np.count_nonzero(body_ink, axis=1)
+        active_rows = np.flatnonzero(row_counts >= ROW_INK_MINIMUM)
+        if active_rows.size == 0:
+            fail(page, "bloque funcional detectable", "sin bloque")
+            continue
+
+        body_top = int(active_rows[0] + BODY_START)
+        body_bottom = int(active_rows[-1] + BODY_START)
+        active_pixels = np.argwhere(body_ink)
+        body_min_x = int(active_pixels[:, 1].min())
+        body_max_x = int(active_pixels[:, 1].max())
+        occupancy = (body_bottom - body_top) / (BODY_END - BODY_START)
+
+        lower_ink = ink[FUNCTIONAL_LOWER_START:FUNCTIONAL_LOWER_END + 1, :]
+        lower_row_counts = np.count_nonzero(lower_ink, axis=1)
+        lower_active_rows = np.count_nonzero(lower_row_counts >= ROW_INK_MINIMUM)
+        lower_density = lower_active_rows / lower_row_counts.size
+
+        if occupancy < FUNCTIONAL_OCCUPANCY_MINIMUM or occupancy > FUNCTIONAL_OCCUPANCY_MAXIMUM:
+            fail(page, "ocupación funcional de página completa", f"{occupancy * 100:.1f} %")
+        if lower_density < FUNCTIONAL_LOWER_DENSITY_MINIMUM:
+            fail(page, "contenido funcional en la zona inferior", f"{lower_density * 100:.1f} %")
+        if body_min_x < SAFE_X or body_max_x >= image.width - SAFE_X:
+            fail(page, "márgenes laterales seguros", f"{body_min_x}px / {image.width - 1 - body_max_x}px")
+        functional_metrics.append((page, occupancy, lower_density))
 
 
 if failures:
@@ -101,8 +135,15 @@ if failures:
 max_delta = max(metric[1] for metric in course_metrics)
 min_occupancy = min(metric[2] for metric in course_metrics)
 max_occupancy = max(metric[2] for metric in course_metrics)
+min_functional_occupancy = min(metric[1] for metric in functional_metrics)
+max_functional_occupancy = max(metric[1] for metric in functional_metrics)
+min_lower_density = min(metric[2] for metric in functional_metrics)
+max_lower_density = max(metric[2] for metric in functional_metrics)
 print(
     "MANUAL_VISUAL_QC PASS "
-    f"pages=74 coursePages=7 resolution=2160x4320 density>=300dpi "
-    f"verticalDeltaMax={max_delta}px occupancy={min_occupancy * 100:.1f}-{max_occupancy * 100:.1f}%"
+    f"pages=74 coursePages=7 functionalPages=57 resolution=2160x4320 density>=300dpi "
+    f"courseVerticalDeltaMax={max_delta}px "
+    f"courseOccupancy={min_occupancy * 100:.1f}-{max_occupancy * 100:.1f}% "
+    f"functionalOccupancy={min_functional_occupancy * 100:.1f}-{max_functional_occupancy * 100:.1f}% "
+    f"functionalLowerDensity={min_lower_density * 100:.1f}-{max_lower_density * 100:.1f}%"
 )

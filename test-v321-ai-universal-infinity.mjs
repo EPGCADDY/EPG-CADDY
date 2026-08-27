@@ -93,7 +93,7 @@ assert.match(api,/tools:\[\{type:"web_search",external_web_access:true\},LIVE_TR
 assert.match(api,/tool_choice:"auto"/);
 assert.match(api,/Tu conocimiento no está limitado a una lista/);
 assert.match(api,/Diferencia información confirmada, estimaciones, opiniones e hipótesis/);
-assert.match(manual,/"ENTIENDE CADA RESPUESTA HABLADA","AI UNIVERSAL ∞"/);
+assert.match(manual,/"PIDE RESPUESTAS PROFUNDAS Y CON FUENTES",\s*"DISTINGUE PREGUNTA, ORDEN Y DATO VIVO"/);
 
 assert.deepEqual(sanitizeUniversalHistory([
   {role:"system",content:"descartar"},

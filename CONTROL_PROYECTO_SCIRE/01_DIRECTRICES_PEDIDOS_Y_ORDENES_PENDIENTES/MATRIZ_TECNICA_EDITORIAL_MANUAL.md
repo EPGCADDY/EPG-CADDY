@@ -16,13 +16,15 @@
 | Título → subtítulo | mínimo 17 px de blanco |
 | Verde saturado | máximo 10 % de la tinta; sólo acentos |
 | Tinta neutral | mínimo 72 % de la tinta |
+| Páginas funcionales 17–73 | ocupación vertical 92–98.5 % del cuerpo |
+| Zona inferior en páginas 17–73 | mínimo 20 % de filas activas entre y=2700–3900 |
 | PDF | 74 páginas físicas, mismo orden y mismas imágenes vigentes |
 
 La portada y páginas de campos usan perfiles propios. Las páginas 01–02 permanecen congeladas en contenido y retícula; una normalización sólo puede mover un bloque sin alterar texto, captura, proporciones ni color.
 
 ## Plantilla didáctica
 
-Cada función o apuesta debe contestar con palabras sencillas:
+Las páginas 17–73 se generan desde una fuente canónica única y conservan este orden visible: `QUÉ ES`, `TÚ HACES`, `LA APP HACE`, `RESULTADO`. Cada función o apuesta debe contestar con palabras sencillas:
 
 1. qué es u objetivo;
 2. qué se acuerda antes;
@@ -47,4 +49,3 @@ Las oraciones deben ser directas, los botones deben conservar su nombre visible 
 ## PASS
 
 El Manual pasa únicamente si `manual-editorial-qc.py`, `manual-visual-qc.py`, pruebas semánticas/hosting/búsqueda/voz, inspección humana y SHA del PDF corresponden al mismo candidato. Un conteo de 74 páginas aislado no pasa.
-

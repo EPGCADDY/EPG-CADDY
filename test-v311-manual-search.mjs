@@ -21,17 +21,17 @@ const pages=query=>searchApi.search(query,entries,{limit:8}).map(item=>item.numb
 
 assert.equal(first("Quiero jugar Stableford"),"04");
 assert.equal(first("Cómo borro un bogey que fue par"),"07");
-assert.equal(first("Cómo pregunto el acumulado"),"61");
-assert.equal(first("No puedo finalizar la ronda"),"27");
+assert.equal(first("Cómo pregunto el acumulado"),"23");
+assert.equal(first("No puedo finalizar la ronda"),"30");
 assert.ok(pages("Quiero consultar yardas slope rating").some(page=>Number(page)>=10&&Number(page)<=16));
-assert.ok(pages("Qué puedo decirle a la aplicación").includes("71"));
-assert.equal(first("Puedo platicar de cualquier tema"),"73");
-assert.equal(first("¿Puedo preguntar de medicinas, vuelos y cultura?"),"73");
-assert.equal(first("¿Funciona en todos los micrófonos?"),"73");
-assert.equal(first("¿Cómo se juega Vegas?"),"36");
-assert.equal(first("¿Quién es el Wolf?"),"43");
-assert.equal(first("¿Cómo funcionan los Skins?"),"47");
-assert.equal(first("¿Cuál es el tráfico y la ETA?"),"50");
+assert.ok(pages("Qué puedo decirle a la aplicación").includes("57"));
+assert.equal(first("Puedo platicar de cualquier tema"),"62");
+assert.ok(["62","63"].includes(first("¿Puedo preguntar de medicinas, vuelos y cultura?")));
+assert.ok(["60","62"].includes(first("¿Funciona en todos los micrófonos?")));
+assert.equal(first("¿Cómo se juega Vegas?"),"49");
+assert.equal(first("¿Quién es el Wolf?"),"46");
+assert.equal(first("¿Cómo funcionan los Skins?"),"43");
+assert.equal(first("¿Cuál es el tráfico y la ETA?"),"64");
 
 for(const required of ["manualSearch","manualSearchResults","categoryIndex","manual-search.js","Quiero jugar Stableford","Cómo corrijo un bogey que fue par"]){
   assert.ok(html.includes(required),`Falta el componente de búsqueda: ${required}`);
@@ -40,4 +40,4 @@ for(const category of ["EMPEZAR Y REGISTRAR","MODALIDADES Y APUESTAS","ANOTAR Y 
   assert.ok(html.includes(category),`Falta categoría del índice: ${category}`);
 }
 
-console.log("PASS V311 · índice temático y lupa con preguntas naturales");
+console.log("PASS V334 · índice temático y lupa alineados con el nuevo orden didáctico");

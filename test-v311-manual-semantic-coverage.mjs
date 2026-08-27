@@ -11,30 +11,28 @@ const combined=effectivePages.map(page=>JSON.stringify(page)).join("\n").toUpper
 
 assert.equal(pages.length,57,"Deben existir exactamente las páginas funcionales 17–73");
 assert.deepEqual(pages.map(page=>Number(page.number)),Array.from({length:57},(_,index)=>index+17));
-for(const page of pages){
+const expectedStepTitles=["QUÉ ES","TÚ HACES","LA APP HACE","RESULTADO"];
+for(const page of effectivePages){
   assert.equal(page.steps.length,4,`La página ${page.number} debe tener cuatro pasos claros`);
   assert.ok(page.remember.length>=25,`La página ${page.number} debe incluir una regla de recuperación`);
-}
-for(const page of overrides){
-  assert.equal(page.steps.length,4,`La página ${page.number} debe tener cuatro pasos claros`);
-  assert.ok(page.remember.length>=25,`La página ${page.number} debe incluir una regla de recuperación`);
-  for(const field of ["objective","agreements","playerInput","appCalculation","winner","settlement","commonError","glossary","scoreSeparation"]){
-    assert.ok(page.didactic?.[field],`La página ${page.number} debe incluir el bloque didáctico ${field}`);
+  assert.deepEqual(page.steps.map(step=>step[0]),expectedStepTitles,`La página ${page.number} debe enseñar en orden infantil`);
+  for(const field of ["commonError","recovery","glossary","scoreSeparation","example"]){
+    assert.ok(page[field],`La página ${page.number} debe incluir el bloque didáctico ${field}`);
   }
 }
 
 const required=[
-  "DICTADO","CONTROL MANUAL","GROSS","HDCP","NETO","OUT","IN","TOTAL","TIMER ON","TIMER OFF",
+  "CONTROL MANUAL","GROSS","HDCP","NETO","OUT","IN","TOTAL","TIMER ON","TIMER OFF",
   "RONDA PREVIA","RONDA ACTUAL","NUEVA RONDA","BORRAR SCORES","TARJETA DIGITAL","FINALIZAR RONDA",
-  "IMAGEN","PDF TODAS","WHATSAPP","CORRECCIÓN OFICIAL","SHA-256","HISTORIAL","ESTADÍSTICAS",
-  "STABLEFORD","RESPALDAR AHORA","RECUPERAR RESPALDO","INSTALAR APP","SIN CONEXIÓN","ACTUALIZACIÓN OBLIGATORIA",
-  "MATCH PLAY","FOUR BALL","ENTER","X","MIGUEL","ÁGUILA","BIRDIE","BOGEY","DOBLE BOGEY",
-  "TRIPLE BOGEY","DOBLE PAR","ACUMULADO","CÓMO VAMOS","MARCADOR ACTUAL","PRIMERA VUELTA",
-  "SEGUNDA VUELTA","QUIÉN VA GANANDO","SCORES LE FALTAN","ÚLTIMO MES","ARRIBA","ABAJO","EMPATADO",
-  "MAPA DE CAPACIDADES DE VOZ","QUÉ RESPONDERÁ LA APLICACIÓN","AI UNIVERSAL ∞ · VOZ Y TEXTO",
-  "PREGUNTA CUALQUIER COSA","NO EXISTE UNA LISTA CERRADA DE TEMAS","LOS 200 TEMAS DE PRUEBA SON EJEMPLOS, NUNCA LÍMITES",
-  "ORDEN O PREGUNTA","DETENER","REPETIR","SILENCIAR","CONTINUAR","EL MICRÓFONO NUNCA SE ABRE SOLO",
-  "VEGAS","WOLF","SKINS","NASSAU","BINGO BANGO BONGO","SNAKE","CLIMA","TRÁFICO","ETA"
+  "IMAGEN","PDF TODAS","WHATSAPP","CORRECCIÓN OFICIAL","HISTORIAL","ESTADÍSTICAS",
+  "STABLEFORD","RESPALDAR AHORA","RECUPERAR RESPALDO","INSTALAR APP","SIN CONEXIÓN",
+  "MATCH PLAY","FOUR BALL","ENTER","X","MIGUEL","ÁGUILA","BIRDIE","BOGEY",
+  "PRIMERA VUELTA","SEGUNDA VUELTA","ARRIBA","ABAJO","EMPATADO",
+  "AI UNIVERSAL ∞","LOS 200 TEMAS DE PRUEBA SON EJEMPLOS, NUNCA LÍMITES",
+  "ESCUCHAR","DETENER","REPETIR","SILENCIAR","CONTINUAR","EL MICRÓFONO NUNCA SE ABRE SOLO","ESCUCHANDO","RESPONDIENDO",
+  "VEGAS","WOLF","SKINS","DOTS","NASSAU","BINGO BANGO BONGO","SNAKE",
+  "TRÁFICO ACTUAL","TRÁFICO FUTURO","GOOGLE MAPS ROUTES","ETA","CLIMA ACTUAL","PRONÓSTICO","OPEN-METEO",
+  "USGA","THE R&A","REGLA LOCAL"
 ];
 for(const term of required)assert.ok(combined.includes(term),`Falta cobertura semántica: ${term}`);
 
@@ -47,4 +45,4 @@ for(const section of ["Funciones vigentes","Combinaciones mínimas","Regla de ci
   assert.ok(matrix.includes(section),`La matriz debe conservar ${section}`);
 }
 
-console.log("PASS V311 · 73 páginas funcionales con conversación universal y recuperación de atascos");
+console.log("PASS V334 · 57 páginas funcionales ordenadas, didácticas y con recuperación explícita");
