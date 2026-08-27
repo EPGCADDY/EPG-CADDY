@@ -27,6 +27,8 @@ jobs:
 
       - name: Install audit dependencies
         run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
           npm install --omit=dev --no-package-lock
           python3 -m pip install --disable-pip-version-check --no-cache-dir numpy pillow pypdf reportlab
 
