@@ -1113,4 +1113,4 @@ La prueba de la sugerencia visible “Cómo corrijo un bogey que fue par” rech
 
 La consulta real del Preview V335-AI fue interceptada antes del endpoint porque `voice-assistant.js` reconoce la palabra “yardas” como información del campo. `index-grupal.html` conserva localmente órdenes ejecutables y consultas de aplicación de hasta 12 palabras, pero deriva a AI UNIVERSAL cualquier análisis, comparación, explicación, riesgo, estrategia, efecto o recomendación. `test-v335-response-caliber.mjs` reproduce el secuestro anterior y prueba las dos rutas. RC-011 impide cerrar el calibre sin una respuesta real. `.github/workflows/v335-ai-routing-finalize.yml` sella, audita y se elimina antes del commit final. Producción no cambia.
 
-<!-- V335-AI-R1-REMOTE-PENDING -->
+<!-- V335-AI-R1-REMOTE-FINALIZED -->

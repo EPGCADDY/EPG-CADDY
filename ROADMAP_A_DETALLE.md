@@ -1275,4 +1275,4 @@ Estado local: `manual-editorial-qc.py` PASS en 74 páginas, 57 didácticas y 23 
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-011` | Registra causa, escape, control y cierre pendiente de respuesta real. |
 | `.github/workflows/v335-ai-routing-finalize.yml` | `TEMPORARY-ROUTING-FINALIZE` | Regenera inventario, audita el SHA exacto y se elimina antes del commit final. |
 
-<!-- V335-AI-R1-REMOTE-PENDING -->
+<!-- V335-AI-R1-REMOTE-FINALIZED -->
