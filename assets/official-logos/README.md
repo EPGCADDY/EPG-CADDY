@@ -12,6 +12,9 @@ Esta carpeta concentra las copias técnicas del logo oficial. Desde V297, la ver
 | `golf-score-card-gt-pwa-512.png` | 512 × 512 | Icono principal PWA/Android. |
 | `golf-score-card-gt-pwa-192.png` | 192 × 192 | Icono secundario PWA/Android. |
 | `golf-score-card-gt-apple-touch-180.png` | 180 × 180 | Acceso directo instalado en iPhone/iPad. |
+| `golf-score-card-gt-apple-touch-v345-180.png` | 180 × 180 | Acceso directo versionado para obligar a iPhone/iPad a dejar el icono anterior en caché. |
+| `golf-score-card-gt-pwa-v345-192.png` | 192 × 192 | Icono web instalable vigente V345. |
+| `golf-score-card-gt-pwa-v345-512.png` | 512 × 512 | Icono web instalable grande vigente V345. |
 | `../logo.png` | 1024 × 1024 | Fuente operativa para la generación automática de iconos nativos Capacitor. |
 
 Todos los derivados mantienen la composición completa, fondo negro, espacio de color sRGB y cero transparencia. No incluyen esquinas redondeadas: Apple y Android aplican sus propias máscaras.

@@ -83,17 +83,17 @@ for(const token of [
   'aiUniversalRemember("user",transcript)',
   'aiUniversalRemember("assistant",finishedConversationText,aiUniversalPendingSources)',
   "const CONVERSATION_INACTIVITY_CLOSE_MS=30*60*1000",
-  "CONTEXTO TEMPORAL · NO SE GUARDA EN HISTORIAL"
+  "CONTEXTO DE CHAT TEMPORAL · REGLAS PUEDE GUARDAR SÓLO TOKENS Y RESPUESTAS OFICIALES EN ESTE DISPOSITIVO"
 ])assert.ok(html.includes(token),`Falta integración AI UNIVERSAL ∞: ${token}`);
-assert.doesNotMatch(html,/localStorage[^\n]{0,120}aiUniversal|aiUniversal[^\n]{0,120}localStorage/i,"La conversación universal no debe persistirse en el dispositivo");
+assert.doesNotMatch(html,/localStorage[^\n]{0,120}aiUniversalHistory|aiUniversalHistory[^\n]{0,120}localStorage/i,"El historial temporal de conversación no debe persistirse en el dispositivo");
 assert.match(api,/https:\/\/api\.openai\.com\/v1\/responses/);
 assert.match(api,/model:"gpt-5\.6"/);
 assert.match(api,/store:false/);
-assert.match(api,/tools:\[\{type:"web_search",external_web_access:true\}\]/);
+assert.match(api,/tools:\[\{type:"web_search",external_web_access:true\},LIVE_TRAFFIC_TOOL,LIVE_WEATHER_TOOL\]/);
 assert.match(api,/tool_choice:"auto"/);
 assert.match(api,/Tu conocimiento no está limitado a una lista/);
 assert.match(api,/Diferencia información confirmada, estimaciones, opiniones e hipótesis/);
-assert.match(manual,/"ENTIENDE CADA RESPUESTA HABLADA","AI UNIVERSAL ∞"/);
+assert.match(manual,/"PIDE RESPUESTAS PROFUNDAS Y CON FUENTES",\s*"DISTINGUE PREGUNTA, ORDEN Y DATO VIVO"/);
 
 assert.deepEqual(sanitizeUniversalHistory([
   {role:"system",content:"descartar"},
@@ -119,6 +119,9 @@ assert.equal(res.body.sources.length,1);
 assert.equal(upstreamBody.model,"gpt-5.6");
 assert.equal(upstreamBody.store,false);
 assert.equal(upstreamBody.tool_choice,"auto");
+assert.ok(upstreamBody.tools.some(tool=>tool.type==="web_search"));
+assert.ok(upstreamBody.tools.some(tool=>tool.name==="get_live_traffic"));
+assert.ok(upstreamBody.tools.some(tool=>tool.name==="get_current_weather"));
 assert.deepEqual(upstreamBody.input.map(item=>item.role),["user","assistant","user"]);
 assert.equal(upstreamBody.input.at(-1).content,"¿Qué cambió hoy?");
 assert.match(upstreamBody.instructions,/El Pulté/);

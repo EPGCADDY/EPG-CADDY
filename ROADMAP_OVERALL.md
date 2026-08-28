@@ -2,6 +2,120 @@
 
 ![ROADMAP OVERALL · Golf Score Card GT](ROADMAP_OVERALL_V291.png)
 
+## V332 · moneda dual y matriz completa de seguimiento
+
+El propietario exige que Skins, Wolf, Vegas y Dots permitan elegir antes de la ronda una de dos monedas: **quetzales (`Q`/`GTQ`) o dólares (`$`/`USD`)**. Cada juego presenta dos casillas de radio mutuamente excluyentes; elegir una desmarca la otra. La moneda queda guardada en la configuración y viaja sin conversión por pantalla, voz, snapshot, corrección, tarjeta Global/personal, Historial, sincronización, restauración y liquidación. El valor es opcional para el grupo y nunca altera Gross, Neto ni el resultado deportivo.
+
+V332 homologa la arquitectura visible de los cuatro juegos para que un jugador sin experiencia no reciba sólo un saldo final. La matriz común incluye estado y hoyos resueltos/pendientes, unidades o puntos acumulados, carry abierto, registros, dinero bruto movido, neto exacto a liquidar, líder o empate, saldos individuales y quién paga a quién. Cada juego añade su riesgo útil: mayor pozo Skins; exposición del Wolf por rival y hoyo; mayor cambio y riesgo máximo por duelo Vegas; e impacto de un punto por jugador en Dots. La tarjeta final conserva los mismos acumulados para auditoría.
+
+Los bancos `test-v329-skins.mjs` y `test-v330-side-games.mjs` verifican las ocho casillas Q/$, exclusividad nativa, normalización de moneda, símbolos, métricas, cero-suma, persistencia, corrección y artefactos. La auditoría integral aprobó **89 paquetes**, **325 fuentes** y tres inventarios PDF sellados en V332. El corte visible es `V332-DUAL-CURRENCY-MATRIX-20260826` y la copia instalable usa `gscg-mobile-v332-dual-currency-matrix`. Producción permanece intacta; falta publicar el Preview y aprobar la prueba física en iPhone antes de cualquier montaje.
+
+Archivos exactos V332: `skins.js`, `wolf.js`, `vegas.js`, `dots.js`, `index-grupal.html`, `card-artifacts.js`, `test-v329-skins.mjs`, `test-v330-side-games.mjs`, `service-worker.js`, los bancos que fijan build/caché, `scripts/update-inventory-v328.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+## V331 · matriz investigada de apuestas y lenguaje operativo
+
+La prueba física de **V330-R3 quedó aprobada en iPhone**: al tocar `WOLF`, únicamente Wolf permaneció verde, `RONDA NORMAL` se desmarcó y la configuración correcta se abrió. El defecto de selección doble queda cerrado; Producción continúa intacta y `PEND-SKI-006` sigue abierto para validar el funcionamiento completo de cada juego.
+
+El nuevo `PEND-DID-017` exige una ficha independiente por cada modalidad y esquema: Ronda Normal, Stableford, Match Play, Four Ball, Práctica, Skins, Wolf, Vegas, Dots y variantes que cambian el cálculo. Cada hoja deberá ser comprensible a los 10 años, funcionar impresa en blanco y negro, incluir un ejemplo aritmético completo, estrategia, estados, acumulados, liquidación y glosario. La edad define sólo la claridad didáctica: el dinero permanece siempre dentro del alcance general de cada hoja y cada grupo decide si lo liquida o juega únicamente con puntos/unidades. La especificación vive en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md`.
+
+V331 sustituye la presentación mínima de apuestas por una matriz operativa investigada. Wolf elimina la duplicidad confusa `Solo base`/`Lone` y conserva tres decisiones comprensibles: **Con pareja**, **Lobo solitario** y **Lobo ciego**. Registra si el Wolf sale primero o último, multiplicadores configurables, tope monetario por rival/hoyo, riesgo del Wolf, decisiones y scores pendientes, acumulados, unidades netas, dinero movido y liquidación. Vegas explica cómo 4 y 5 forman 45, maneja correctamente scores de 10 o más —10 y 4 forman 104—, permite acordar qué ocurre si ambas parejas hacen birdie y muestra por hoyo números, volteos, águilas, topes, puntos movidos y saldos. Dots define cada término en español, mantiene apagadas las variantes que pueden duplicar eventos, separa puntos positivos/negativos, manuales/automáticos y muestra el detalle de cada hoyo.
+
+Las reglas universales no se inventan: las diferencias reales entre grupos quedan configurables y rotuladas. La base investigada utiliza 18Birdies y Wolf Golf Scorecard para Wolf; Mashie, 18Birdies y Golf Digest para Vegas; 18Birdies, MyScorecard y SCGA para Dots/Junk; USGA se conserva como autoridad del hándicap y score deportivo. El dinero nunca modifica el score oficial.
+
+Archivos exactos V331: `wolf.js`, `vegas.js`, `dots.js`, `index-grupal.html`, `card-artifacts.js`, `test-v330-side-games.mjs`, `service-worker.js`, `scripts/update-inventory-v328.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` y los bancos que fijan el identificador de build/caché. El corte visible es `V331-RESEARCHED-SIDE-GAMES-20260826` y la copia instalable usa `gscg-mobile-v331-researched-side-games`.
+
+## V330 · Skins, Wolf, Vegas, Dots y seis jugadores
+
+**Hotfix V330-R3 después de rechazo físico:** la captura real de iPhone demostró que al elegir `WOLF` todavía podían quedar verdes `RONDA NORMAL` y `WOLF`. V330-R2 queda rechazada. R3 incorpora un único escritor visual para las siete opciones, limpia configuraciones laterales múltiples heredadas, desmarca las otras seis antes de reconstruir la pantalla y vuelve a validar después del render. La caché instalable sube a `gscg-mobile-v330-side-games-r3`; `test-v330-side-games.mjs` simula exactamente el toque WOLF y exige `false` en Normal, Match Play, Four Ball, Skins, Vegas y Dots, con `true` únicamente en Wolf.
+
+**Pendientes registrados:** `PEND-UBI-015` separa la detección automática del campo por GPS de clima/tráfico y de las distancias al green; `PEND-RSG-016` define la sincronización versionada de Reglas de Golf desde fuentes oficiales. Se crean las especificaciones `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_UBI_015_DETECCION_CAMPO_POR_GPS.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_RSG_016_SINCRONIZACION_REGLAS_GOLF.md`, y se actualizan `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` y `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`.
+
+**Voz pospuesta y registrada:** `PEND-VOZ-003` incorpora tres observaciones físicas nuevas sin declararlas implementadas: matriz obligatoria para respuestas estudiadas, profundas y formales; corrección del corte observado en la quinta conversación; y avisos bilaterales exactos `ESCUCHANDO` / `RESPONDIENDO` en rojo parpadeante. Por orden del propietario, la ejecución vuelve primero a la configuración y prueba de SKINS, WOLF, VEGAS y DOTS.
+
+El **26 de agosto de 2026** `PEND-SKI-006` pasa de diseño a implementación comprobable. `skins.js`, `wolf.js`, `vegas.js` y `dots.js` son motores puros conectados al score oficial, no menús de respuestas fijas. La ventana de opciones se divide en dos columnas —modalidades existentes a la izquierda y juegos nuevos a la derecha— y la pantalla principal de la tarjeta conserva su formato.
+
+Skins opera Gross/Neto para dos a seis jugadores con unidad monetaria, carry, división o anulación de empates. Wolf rota decisiones para tres a seis jugadores y no permite cierre con hoyos sin pareja/Solo/Lone/Blind. Vegas trabaja con cuatro o seis jugadores; la variante de seis usa tres parejas y comparaciones par a par. Dots permite activar y valorar eventos antes de jugar, mantiene apagadas por defecto las reglas de grupo `Amigo`, izquierda y derecha, y separa el saldo económico del score deportivo. Match Play y Four Ball se amplían a las parejas Verde, Oro y Azul.
+
+El cierre, corrección oficial, tarjetas Global/personales, Historial, consultas, sincronización y restauración conservan los cuatro resultados en el snapshot firmado. `test-v329-skins.mjs` y `test-v330-side-games.mjs` cubren empates, X, límites, multiplicadores, tres parejas, cero-suma, bloqueo de cierre Wolf, corrección, artefactos, voz y persistencia. El banco local y el build real de Vercel aprobaron los 89 paquetes, el inventario de 322 fuentes, cero vulnerabilidades y la puerta viva de Reglas con modelo, búsqueda web, seis fuentes oficiales y `scoreChanged:false`. El Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` quedó `READY` desde el commit remoto `ea18aafb214731d44b41ea069fe27228407f9f47`. Producción permanece intacta; faltan revisión visual/táctil y ronda física en iPhone.
+
+Referencias profesionales consultadas: BirdieBet y Squabbit para Vegas; Wiz Golf, FLOG, Squabbit y Golf Monthly para Wolf; The 1st Tee para Dots. Las variantes que no son universales quedan rotuladas como reglas de grupo o adaptación Golf Score Card GT.
+
+Archivos funcionales V329/V330: `skins.js`, `wolf.js`, `vegas.js`, `dots.js`, `match-play.js`, `four-ball.js`, `index-grupal.html`, `round-closure.js`, `card-artifacts.js`, `card-library.js`, `historical-analytics.js`, `master-data-sync.js`, `account-backup.js`, `service-worker.js`, `scripts/build-mobile-web.mjs`, `vercel.json`, `audit-project.mjs`, `test-v329-skins.mjs` y `test-v330-side-games.mjs`. La documentación, mapa, ambos ROADMAP, tres inventarios PDF y su sello se actualizan antes de Preview.
+
+## V328-R2 · Centro de Reglas de Golf oficial con respaldo básico sin conexión
+
+El **26 de agosto de 2026** comienza la ejecución funcional de `PEND-REG-001`. La misma AI UNIVERSAL ∞ incorpora un acceso global `REGLAS`, acepta situaciones por teclado o micrófono, conserva campo y modalidad como contexto y consulta el modelo avanzado mediante `/api/golf-rules`. La herramienta limita técnicamente la Web a los dominios oficiales `usga.org` y `randa.org`, exige una fuente oficial visible y usa la edición Rules of Golf 2023 con las clarificaciones vigentes; el corte comprobado es 1 de julio de 2026. No se copia el reglamento completo ni se afirma una alianza, licencia de marca o API privada.
+
+La consulta se aísla de todos los escritores locales: dentro de REGLAS no se ejecutan órdenes de score y la respuesta nunca aplica penalidades, concede hoyos ni cierra rondas. `test-v328-official-golf-rules.mjs` cubre 15 situaciones y comprueba dominios, contexto, texto/voz y `scoreChanged:false`. El Preview V328-R1 (`dpl_3Sa4NnueMXBqB2kCm69WdwhH83bv`) quedó `READY` con 86 paquetes, puerta viva aprobada y árbol remoto exacto `f0de0f6328c34ed2788faf1009ba04a19f47e6c1`. `test-v328-live-official-rules.mjs` se ejecuta dentro de cada build Vercel y exige una llamada real del modelo, búsqueda web efectiva, al menos una fuente USGA/The R&A y cero cambio de score.
+
+V328-R2 agrega `golf-rules-offline.js`: guarda únicamente respuestas que ya aprobaron el filtro oficial, retiene hasta 24 entradas durante 90 días, conserva tokens normalizados en vez de la pregunta completa, exige coincidencia suficiente y modalidad compatible, muestra la fecha y nunca inventa si no existe una respuesta adecuada. `test-v328-offline-official-rules.mjs` comprueba fuente, privacidad, límite, caducidad, cruces negativos, integración PWA y cero escritura. Con este paquete la auditoría maestra sube a 87 paquetes más la puerta viva de Vercel. El manual visible y sus dos PDF conservan 74 páginas, página 73 actualizada, 2160 × 4320 px y 300 dpi; el control visual completo debe aprobar antes de entregar. `PEND-REG-001` continúa abierto sólo para voz física y una eventual integración comercial/licenciada; no se declara alianza oficial.
+
+Archivos exactos V328: `api/golf-rules.js`, `audit-project.mjs`, `index-grupal.html`, `service-worker.js`, `manual.html`, `scripts/update-manual-page-73.py`, `docs/manual/v311/manual-pages-17-35.json`, `docs/manual/v311/page-73.png`, `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf`, `test-v328-official-golf-rules.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-v307-match-arrows-format.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v284-native-package-generation.mjs`, `test-v281-pwa-installation.mjs`, `test-v280-local-history-insights.mjs`, `test-v279-local-card-library.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v277-official-round-corrections.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v272-definitive-operational-release.mjs`, `test-stableford-ui.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Los tres inventarios PDF externos se regeneran y verifican antes del build.
+
+Archivos adicionales del cierre V328-R1: `test-v328-live-official-rules.mjs` agrega la puerta real y `vercel.json` la vuelve obligatoria. Archivos adicionales V328-R2: `golf-rules-offline.js`, `test-v328-offline-official-rules.mjs`, `test-v321-ai-universal-infinity.mjs`, `service-worker.js`, `index-grupal.html`, `audit-project.mjs`, `scripts/update-manual-page-73.py`, `docs/manual/v311/manual-pages-17-35.json`, los artefactos de manual, `scripts/update-inventory-v328.py`, los cuatro documentos de control, el candado y ambos ROADMAP.
+
+## Actualización de control V327-R1-PEND · cola completa y ejecución permanente
+
+El **26 de agosto de 2026** el propietario ordena agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versión cuando esté realmente probada. La instrucción no elimina las puertas de calidad: un solo `FAIL` conserva Producción intacta y ninguna licencia, credencial, contrato o integración externa puede simularse. Las reglas permanentes 22–26 prohíben trasladarle trabajo técnico que las herramientas puedan resolver, dejarlo adivinando la siguiente acción, simular trabajo en segundo plano o exigirle mensajes repetidos de `sigue`; todo reporte debe cerrar con una asignación inequívoca.
+
+La cola vigente distingue lo entregado de lo abierto y agrega los faltantes expresamente acordados: hándicap oficial ASOGOLF/GHIN con índice interno separado; campos mundiales con datos oficiales; GPS deportivo por hoyo; Skins, Wolf, Vegas, Amigo, izquierda/derecha y Dots con unidad en quetzales; Apple Watch primero y Wear OS después; nube, cuentas, seguridad, estadísticas avanzadas, monetización y certificación integral. Permanecen además USGA/Reglas de Golf, clima completo en artefactos, Guía Rápida, tráfico comparado y AI UNIVERSAL ∞.
+
+V327-R1 ya aprobó en Preview 85 paquetes, 310 fuentes, 44 llamadas reales, 24 materias, ocho turnos con memoria, 550 transiciones herramienta→voz y cero errores 5xx. La puerta inmediata sigue siendo una conversación física prolongada en iPhone; sólo después de su PASS se permite montar y continuar automáticamente con el siguiente pendiente ejecutable.
+
+Archivos exactos V327-R1-PEND: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. También se regeneran y verifican `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf` e `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`.
+
+## Corrección controlada V327 · la herramienta siempre regresa a la voz
+
+La prueba física rechazó V326-R2 después de aproximadamente seis preguntas: una investigación sobre una persona conocida en Colima y una consulta de tráfico podían completar su API con HTTP 200, pero el teléfono quedaba rojo escuchando sin pronunciar el resultado. No era un vocabulario temático reducido: `search_live_web` sí recibió la consulta y devolvió datos; el corte estaba en la transición asíncrona `herramienta → segunda respuesta → audio` de Realtime en iPhone.
+
+V327 conserva la AI universal sin catálogo y corrige cuatro estados: `speech_stopped` mantiene el guardián hasta la transcripción final; un `output_audio_buffer.stopped` tardío y sin identificador ya no desautoriza el audio final antes de que empiece; la reproducción conserva un guardián de 60 segundos hasta su cierre; y una herramienta cuyo canal se perdió produce recuperación visible en vez de regresar en silencio. `api/voice-health.js` registra únicamente eventos técnicos permitidos, número de turno, etapa y tiempo —nunca preguntas, transcripciones, nombres, ubicaciones ni claves— para que una nueva anomalía física sea diagnosticable.
+
+El banco dirigido ejecuta 550 secuencias herramienta→voz, 100 eventos de privacidad, 30 turnos bilaterales y las rutas anteriores. La consulta directa `El Pulté Golf → Pradera Concepción` devolvió una ruta real válida de 15 km y aproximadamente 33 minutos en el instante de prueba; un destino que sólo diga `Concepción` debe provocar una sola pregunta breve de aclaración. Producción continúa intacta y V327 no queda autorizada para montaje hasta terminar la regresión completa, desplegar Preview y aprobar otra conversación física prolongada en iPhone.
+
+Archivos exactos V327: `index-grupal.html`, `api/_lib/traffic.js`, `api/universal-ai.js`, `api/voice-health.js`, `service-worker.js`, `audit-project.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## Control de entrega V326-R1 · redespliegue para cargar tráfico
+
+El usuario confirmó que la credencial de tráfico podría haber quedado habilitada. El despliegue V326 original no se reutiliza para aprobarla porque las variables de entorno se fijan al construir cada deployment. Se provocó un redespliegue sin modificar el código funcional; el primer intento quedó correctamente bloqueado por `ROADMAP GATE` al no registrar el movimiento en ambos ROADMAPS. V326-R1 registra ese intento, conserva producción V322 intacta y ordena construir de nuevo Preview antes de ejecutar la ruta real El Pulté → colonia Oakland zona 10 para mañana a las 12:30 PM.
+
+La aprobación continúa prohibida hasta que el nuevo Preview devuelva ETA, duración sin tráfico, demora, distancia y hora de cálculo desde Google Maps Routes, y hasta completar la conversación física prolongada en iPhone. Archivos exactos V326-R1: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+La primera construcción documentada de V326-R1 confirmó que `GOOGLE_MAPS_API_KEY` ya estaba presente en Preview: el test de ausencia recibió `TRAFFIC_ROUTE_UNAVAILABLE` en vez de `TRAFFIC_NOT_CONFIGURED`. El bloqueo pertenecía al aislamiento del test, que pasaba una cadena vacía y permitía por error el fallback hacia la credencial real. Se sustituyó únicamente ese valor inyectado por espacio en blanco, que se recorta a vacío sin consultar la red; la lógica funcional de tráfico permanece idéntica.
+
+## Corrección controlada V326 · ningún turno puede quedar rojo y mudo
+
+La prueba física en iPhone rechazó V325: después de preguntas sobre tráfico futuro y consumo eléctrico, el micrófono permanecía rojo y abierto sin producir una reacción. Los registros confirmaron que WebRTC sí abría, pero el cierre del turno no alcanzaba las herramientas ni la respuesta. La causa fue `semantic_vad` con urgencia baja sin un límite temporal anterior a `speech_stopped`; el watchdog existente comenzaba demasiado tarde y no podía recuperar ese estado.
+
+V326 usa para conversación un `server_vad` independiente con umbral 0.2, prefijo de 700 ms y 2,200 ms de silencio. Es más paciente que las órdenes de la aplicación, que conservan 1,000 ms, pero siempre posee un final determinista. Un guardián de entrada se renueva con los deltas parciales y, si no existe ningún evento durante 15 segundos, desmonta la captura atascada y apaga el rojo con una instrucción visible; mantiene un límite duro de 90 segundos por turno. Un segundo guardián recupera a los 30 segundos una respuesta del modelo que no haya comenzado. Los cálculos estables y aproximados, como el consumo eléctrico de un aire acondicionado, se responden directamente con supuestos en vez de abrir una búsqueda web innecesaria.
+
+`test-v326-no-silent-conversation.mjs` ejecuta la máquina de temporizadores y comprueba recuperación real de estado, además de 30 alternancias entre conversación y órdenes. V325 queda rechazada y V326 continúa sin autorización de montaje hasta repetir las dos preguntas exactas y una conversación física prolongada en iPhone. Tráfico tampoco queda aprobado mientras Preview responda `TRAFFIC_NOT_CONFIGURED` y falte la comparación simultánea en Guatemala.
+
+Archivos exactos V326: `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## Integración controlada V325 · tiempos ideales del micrófono bilateral
+
+V325 separa por intención los tiempos de escucha. Las órdenes de registro, navegación y score conservan `server_vad` con umbral 0.2, prefijo de 700 ms y 1,000 ms de silencio para respuesta rápida. AI UNIVERSAL ∞ cambia a `semantic_vad` con urgencia baja, por lo que una pausa natural no corta automáticamente la idea. La sesión valida el perfil confirmado antes de responder, serializa cambios concurrentes y vuelve al perfil operativo cuando detecta una acción propia de la tarjeta.
+
+La conversación conserva micrófono vivo durante la respuesta, interrupción confirmada después de 250 ms y ocho caracteres, protección de eco por 1,800 ms, reescucha inmediata, watchdog de diez segundos y cierre únicamente tras 30 minutos completos sin actividad. La prueba V325 compila el JavaScript completo y simula 30 alternancias conversación/orden. Esto no sustituye la conversación física prolongada en iPhone; el corte sigue sin autorización de montaje. También quedan registrados como pendientes el enlace oficial/autorizado con USGA y Reglas de Golf, la modalidad Skins y Apple Watch/Wear OS.
+
+Archivos exactos V325: `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## Integración controlada V324 · tráfico real dentro de AI UNIVERSAL ∞
+
+V324 incorpora tráfico vehicular actual y proyectado a la misma conversación universal. Una consulta por voz o texto se clasifica como tráfico, obtiene origen escrito o GPS efímero, exige destino suficiente y llama desde servidor a Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL`. La respuesta separa los datos del proveedor —ETA, duración sin tráfico y distancia— de la clasificación de congestión derivada. No muestra mapa, no devuelve coordenadas y no afirma integración con Waze.
+
+La prueba V324 cubre salida inmediata y futura, huso horario, ETA, demora, distancia, privacidad, origen faltante, destino faltante, credencial ausente, proveedor caído, timeout, solicitud automática de GPS, función de modelo en dos pasos, texto, voz y continuidad recuperable. Este corte es código candidato: permanece expresamente sin aprobación de montaje hasta activar credencial/facturación y completar en Guatemala la comparación simultánea contra Waze y la conversación prolongada en iPhone.
+
+Archivos exactos V324: `api/_lib/traffic.js`, `api/traffic.js`, `api/universal-ai.js`, `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v321-ai-universal-infinity.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## Corrección operativa V323 · conversación multitema prolongada
+
+V323 corrige una pérdida de contexto reproducida en producción: la comunicación continuaba, pero al turno 15 AI UNIVERSAL ∞ ya no recordaba una clave expresamente indicada al inicio. El límite efectivo era de 8 intercambios para texto y sólo 3 para el contexto compartido con voz. Ahora texto, voz y servidor conservan hasta 80 mensajes —40 intercambios completos—, suficiente para la nueva prueba de 30 temas y 63 mensajes sin perder `ORQUÍDEA 47`.
+
+La prueba `test-v323-long-multitopic-context.mjs` reproduce cambios consecutivos entre lluvia, salud, viajes, medicamentos, golf, tecnología, cocina, filosofía, ciencias, idiomas y otros temas; exige que el primer dato siga disponible en la última pregunta, valida la misma memoria en texto y voz, y comprueba el descarte controlado únicamente al superar 80 mensajes.
+
+Archivos V323: `api/universal-ai.js`, `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
 ## Corrección operativa V322 · conversación sostenida y recuperación comprobable
 
 V322 integra sin perder la AI UNIVERSAL ∞ de V321 la corrección del fallo observado en iPhone: el micrófono ya no se cierra tres segundos después de una respuesta ni destruye una sesión WebRTC sana al tocarlo nuevamente. La escucha permanece activa entre turnos y sólo se apaga después de 30 minutos completos sin actividad. Si falta una transcripción final, Inicio y Tarjeta salen del estado bloqueado y regresan a `● ESCUCHANDO`.
@@ -918,3 +1032,395 @@ El Caddie continúa aceptando cualquier tema permitido y usa Internet para infor
 Los cien rubros enumerados por el propietario se toman como banco de prueba, no como catálogo. El contrato ahora dice expresamente que cualquier materia permitida debe llegar al Caddie, aunque no aparezca en ejemplos anteriores. Puede explicar, enseñar, traducir, redactar, corregir, resumir, calcular, comparar, analizar, planificar, programar, generar ideas y orientar decisiones; los datos actuales o inciertos se investigan en Internet. Medicina, asuntos legales, finanzas, impuestos, psicología, privacidad y seguridad conservan límites responsables y nunca reciben certeza fingida.
 
 `test-v320-universal-100-domains.mjs` prueba las 100 áreas y tres temas deliberadamente fuera de lista. La prueba encontró y corrigió una colisión adicional: “Estadística” ya no abre estadísticas de golf salvo que la frase también hable de la propia ronda, tarjeta o resultados. `api/research.js`, `index-grupal.html`, `audit-project.mjs`, `service-worker.js` y `test-v312-general-caddie.mjs` aplican y verifican este contrato. `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs` y `test-v307-match-arrows-format.mjs` reconocen la firma/caché V320. `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` cierran el registro reproducible.
+
+## Candidato V333 · unión Manual 74/74 y operativa V332
+
+El candidato conserva íntegramente la operativa V332 —tráfico real, clima, voz, Skins, Wolf, Vegas y Dots— y suma el Manual didáctico sobre esa misma fuente. El cierre agrega los candados reconstruidos, exige 50 px en las dos separaciones superiores, valida 74 PNG 4K/300 dpi, decodifica las 74 imágenes completas y reconstruye los dos PDF de 74 páginas. Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
+
+Archivos de control y reproducción: `AGENTS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `docs/manual/v311/manual-pages-bets-live-data.json`, `scripts/manual-editorial-qc.py`, `scripts/manual-layout-normalize.py`, `scripts/project-quality-gate.mjs`, `scripts/rebuild-inventory-pdfs.py`, `scripts/rebuild-manual-bets-live-data.py`, `scripts/rebuild-manual-pdf-from-pages.py` y `test-project-quality-gate.mjs`.
+
+Archivos integrados y auditados: `MANUAL_COBERTURA_FUNCIONAL_V311.md`, `manual.html`, `manual-search.js`, `package.json`, `audit-project.mjs`, `scripts/inventory-gate.mjs`, `test-v311-manual-search.mjs`, `test-v311-manual-semantic-coverage.mjs`, `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Las láminas `docs/manual/v311/page-01.png` a `docs/manual/v311/page-73.png`, con las páginas de campos 10–16 sin modificación, quedan inventariadas individualmente en este ROADMAP.
+
+`.gitignore` excluye únicamente los renders temporales de `tmp/`; los PDF finales permanecen sellados fuera del repositorio.
+
+La publicación se limita a `v333-manual-operational-preview`. El flujo temporal `.github/workflows/v333-rebuild-preview.yml` reconstruye las 74 láminas y los dos PDF, ejecuta la auditoría integral, guarda el commit final de Preview y se elimina antes de ese commit; no modifica `main` ni Producción.
+
+<!-- V333-REMOTE-FINALIZED -->
+
+## V333-R1 · candado reproducible en Vercel
+
+El primer Preview del commit V333 fue bloqueado porque el checkout separado de Vercel no expone `origin/main`. La corrección conserva la misma base protegida: valida el repositorio mediante `VERCEL_GIT_REPO_OWNER`/`VERCEL_GIT_REPO_SLUG` cuando están disponibles, comprueba que el SHA declarado coincida con `HEAD` y consulta `refs/heads/main` del repositorio canónico para exigir todavía `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. `scripts/project-quality-gate.mjs`, `test-project-quality-gate.mjs`, ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` quedan sincronizados; Producción no cambia.
+
+## V333-R2 · dependencias del auditor en Preview
+
+El segundo intento alcanzó el auditor y fue bloqueado porque el constructor Vercel no incluía `numpy`. `vercel.json` instala de forma explícita `numpy`, `pillow`, `pypdf` y `reportlab` junto con las dependencias Node; `test-v290-brand-icons-cleanup.mjs` exige que las cuatro permanezcan declaradas. Son las mismas dependencias que generan y revisan las 74 páginas y los PDF. Ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran el cambio; no modifica la aplicación ni Producción.
+
+## V333-R3 · instalación Python permitida por PEP 668
+
+Vercel confirmó que su Python administrado rechaza instalaciones sin la autorización explícita de PEP 668. `vercel.json` añade `--break-system-packages` sólo dentro del constructor efímero de Preview y `test-v290-brand-icons-cleanup.mjs` exige conservar esa opción. No cambia código funcional, Manual ni Producción.
+
+## V333-R4 · metadata de Vercel fuera del inventario de producto
+
+El constructor crea `.vercel/project.json` después del checkout. `.gitignore` excluye esa metadata efímera para que el inventario mida únicamente fuentes y artefactos del producto; `test-project-quality-gate.mjs` bloquea su reingreso. No se excluye ningún archivo funcional ni documental.
+
+## V333-R5 · instalación Node sin archivo temporal de bloqueo
+
+El comando de instalación de Vercel añade `--no-package-lock` para impedir que `npm` genere un `package-lock.json` ajeno al commit después del checkout. `test-v290-brand-icons-cleanup.mjs` exige esa instalación limpia; dependencias, aplicación, Manual y Producción permanecen sin cambios.
+
+## Candidato V334-M1 · corrección integral del Manual antes de la operativa
+
+Se rechaza el PASS anterior del Manual porque no detectó páginas cargadas arriba, vacías abajo, explicaciones fuera de orden y funciones desplazadas. Las páginas 17–73 se reconstruyen desde una sola fuente canónica con cuatro pasos fijos —`QUÉ ES`, `TÚ HACES`, `LA APP HACE`, `RESULTADO`— y, en cada página, error común, recuperación, glosario, separación del score y ejemplo. El orden comienza por las dos vueltas de la ronda, continúa con registro, cálculo, lectura, continuidad y modalidades, y después explica Skins, Wolf, Vegas, Dots, voz, IA, tráfico, clima, Reglas y soporte.
+
+`docs/manual/v311/manual-pages-17-35.json` contiene las 57 páginas funcionales completas y `docs/manual/v311/manual-pages-bets-live-data.json` queda como lista de overrides vacía para impedir sustituciones silenciosas. `scripts/rebuild-manual-bets-live-data.py` genera `docs/manual/v311/page-17.png` a `docs/manual/v311/page-73.png`; `scripts/rebuild-manual-pdf-from-pages.py` sincroniza `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` y `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf`. `manual.html`, `manual-search.js` y `MANUAL_COBERTURA_FUNCIONAL_V311.md` conservan el mismo orden y cobertura.
+
+El escape queda registrado como RC-010 en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`. `scripts/manual-editorial-qc.py` audita las 57 páginas; `scripts/manual-visual-qc.py` mide también ocupación completa y contenido inferior en todas ellas. `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.json`, `test-v311-manual-semantic-coverage.mjs`, `test-v311-manual-search.mjs`, `test-v311-manual-voice-map.mjs` y `test-v321-ai-universal-infinity.mjs` bloquean la regresión y alinean la IA con los títulos vigentes. `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` sellan el candidato. `.github/workflows/v334-m1-finalize-preview.yml` se usa una sola vez para reconstruir los binarios dentro de GitHub, auditar el SHA final y eliminarse antes del commit desplegable. Producción continúa protegida en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`; V334-M1 no la sustituye.
+
+<!-- V334-M1-REMOTE-FINALIZED -->
+<!-- V334-M1-REMOTE-REBUILD-R2 -->
+<!-- V334-M1-REMOTE-REBUILD-R3 -->
+
+## V334-M1-R4 · anclas exactas sin salto por carga diferida
+
+La inspección del Preview `6778d6ff30482c4ed9dbf94eb35f228047f35982` rechazó la navegación directa: `#pagina-20` podía quedar visualmente en la página 17 porque las imágenes anteriores aún no reservaban altura. `manual.html` fija desde el primer cálculo la proporción 2160×4320 con `aspect-ratio:1 / 2`; `test-v311-manual-hosting.mjs` bloquea la regresión. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran el cambio. `.github/workflows/v334-m1-web-nav-finalize.yml` actualiza el sello, audita el SHA final y se elimina antes del commit desplegable. Producción permanece intacta.
+
+<!-- V334-M1-R4-REMOTE-FINALIZED -->
+
+## V334-M1-R5 · indicador alineado con el contenido visible
+
+La comprobación real de R4 confirmó que `#pagina-20` ya muestra la lámina 20, pero rechazó el encabezado porque todavía podía conservar “PÁGINA 19” cuando sólo quedaban 58 píxeles de la lámina anterior. `manual.html` calcula la página activa desde una línea de referencia dentro del área útil, y `test-v311-manual-hosting.mjs` exige ese criterio. `.github/workflows/v334-m1-header-finalize.yml` regenera el inventario, audita el SHA exacto y se elimina antes del commit final. El cambio no altera imágenes, PDF ni Producción.
+
+<!-- V334-M1-R5-REMOTE-FINALIZED -->
+
+## V334-M1-R6 · geometría estable en la sección completa
+
+La prueba de cinco anclas en el Preview `8a13f97a3fb007e2b6d3f94cb124de8958656dd4` volvió a rechazar el Manual: reservar proporción sólo en la imagen no evitó que la sección cambiara de altura durante la descarga diferida. `manual.html` fija ahora la relación 1:2 en cada `.manual-page` y obliga a la imagen a ocupar esa caja con `height:100%` y `object-fit:contain`. `test-v311-manual-hosting.mjs` exige la geometría del contenedor. `.github/workflows/v334-m1-layout-finalize.yml` sella, audita y se elimina antes del commit final. Producción permanece intacta.
+
+<!-- V334-M1-R6-REMOTE-FINALIZED -->
+
+## V334-M1-R7 · intención de corrección antes que vocabulario
+
+La prueba de la sugerencia visible “Cómo corrijo un bogey que fue par” rechazó el orden de la lupa: ofrecía primero la página 59 de vocabulario. `manual-search.js` separa ahora corregir/rectificar/equivocarse de borrar y prioriza la página 21; `test-v311-manual-search.mjs` exige 21 para corregir, conserva 07 para borrar y exige 67 para lluvia. `.github/workflows/v334-m1-search-finalize.yml` sella y audita el candidato antes de eliminarse. Producción no cambia.
+
+<!-- V334-M1-R7-REMOTE-FINALIZED -->
+
+## V335-AI · calibre adaptable de respuestas generales
+
+`api/universal-ai.js` deja de imponer razonamiento bajo y un techo único de 1,400 tokens. Saludos y confirmaciones conservan una salida breve; las consultas normales usan razonamiento medio y hasta 2,400 tokens; análisis, comparaciones, criterios, riesgos y explicaciones profundas reciben hasta 3,200. El contrato exige conclusión directa, causas o mecanismo, separación entre hechos y estimaciones, límites, supuestos, alternativas y una acción útil, sin tono infantil salvo petición expresa. `test-v335-response-caliber.mjs` convierte esos criterios en una puerta ejecutable y `audit-project.mjs` la incorpora al banco maestro. `.github/workflows/v335-ai-finalize.yml` actualiza inventario, audita el SHA exacto y se elimina antes del commit final. Producción permanece intacta.
+
+<!-- V335-AI-REMOTE-FINALIZED -->
+
+## V335-AI-R1 · la pregunta compleja sí llega al modelo
+
+La consulta real del Preview V335-AI fue interceptada antes del endpoint porque `voice-assistant.js` reconoce la palabra “yardas” como información del campo. `index-grupal.html` conserva localmente órdenes ejecutables y consultas de aplicación de hasta 12 palabras, pero deriva a AI UNIVERSAL cualquier análisis, comparación, explicación, riesgo, estrategia, efecto o recomendación. `test-v335-response-caliber.mjs` reproduce el secuestro anterior y prueba las dos rutas. RC-011 impide cerrar el calibre sin una respuesta real. `.github/workflows/v335-ai-routing-finalize.yml` sella, audita y se elimina antes del commit final. Producción no cambia.
+
+<!-- V335-AI-R1-REMOTE-FINALIZED -->
+
+## V336-MIC · transporte resistente y errores accionables
+
+La investigación del Preview `bbaad84` encontró `NotFoundError: Requested device not found` antes de llamar `/api/session-grupal`; el navegador automatizado no dispone de micrófono físico. La interfaz ocultaba la causa bajo un mensaje único y el transporte cerraba ante cualquier estado `disconnected`, incluso transitorio. `index-grupal.html` distingue dispositivo ausente, permiso, timeout y red; concede 5 segundos de recuperación WebRTC; limpia canal, peer, pista y audio al confirmar la caída. `api/voice-health.js` registra sólo eventos técnicos de conexión y `api/session-grupal.js` deja trazas sin audio, nombres ni transcripciones. `test-v336-microphone-transport.mjs` añade la puerta 91. `.github/workflows/v336-mic-finalize.yml` sella y se elimina antes del commit final. La prueba física de iPhone RC-007 sigue separada; Producción no cambia.
+
+<!-- V336-MIC-REMOTE-FINALIZED -->
+
+## V337-WEATHER · un solo clima estructurado para texto, voz y tarjeta
+
+La prueba real del Preview V336-MIC rechazó la respuesta meteorológica por texto: tardó cerca de 56 segundos, mezcló el snapshot de la aplicación con cinco sitios web y no pudo dar porcentajes horarios numéricos. La causa era una bifurcación de proveedores: voz y tarjeta ya usaban `api/weather.js` con Open-Meteo, mientras AI UNIVERSAL sólo disponía de búsqueda web. `api/weather.js` expone ahora el mismo cálculo estructurado al servidor; `api/universal-ai.js` incorpora `get_current_weather`, prohíbe búsqueda web para clima y sintetiza lugar, fecha, temperatura, sensación, viento, hora pico, ventanas y porcentajes sin inventar valores. `index-grupal.html` envía únicamente la ubicación pública del campo seleccionado, no el GPS personal, para esta consulta de texto. `test-v337-universal-weather.mjs` añade la puerta 92 y RC-012 conserva el rechazo hasta comprobar una respuesta real. `.github/workflows/v337-weather-finalize.yml` regenera inventario, audita y se elimina antes del commit desplegable. RC-006 queda cerrado por la evidencia real de tráfico del Preview `7679424`; RC-007 conserva separada la prueba física de iPhone. Producción continúa protegida en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
+
+<!-- V337-WEATHER-REMOTE-FINALIZED -->
+
+## V337-WEATHER-R1 · el usuario gobierna la franja horaria
+
+La prueba real del Preview `0aaf45a` confirmó Open-Meteo y redujo la espera, pero rechazó la respuesta porque el modelo envió `morning` sin que el usuario pidiera esa franja; el resultado quedó limitado a 06:00–11:59. `api/universal-ai.js` acepta una franja únicamente cuando el texto del usuario dice explícitamente esta/por la mañana, tarde, atardecer o noche; “mañana” como fecha y “a qué hora” conservan el día completo. `test-v337-universal-weather.mjs` reproduce el argumento incorrecto del modelo y exige que se ignore. `.github/workflows/v337-weather-r1-finalize.yml` sella y audita el candidato antes de eliminarse. Producción no cambia.
+
+<!-- V337-WEATHER-R1-REMOTE-FINALIZED -->
+
+## V337-WEATHER-R2 · porcentajes de lluvia hora por hora
+
+La prueba real del Preview `acd8221` confirmó el día completo y el pico de 99% a las 16:00, pero rechazó la respuesta porque `api/weather.js` resumía la serie de Open-Meteo en ventanas antes de entregarla a AI UNIVERSAL. `api/weather.js` conserva ahora cada hora con probabilidad, precipitación, temperatura, sensación, viento y condición para consultas de un día; `api/universal-ai.js` exige enumerar todas las horas recibidas cuando el usuario pide “por hora”, “por horario” o “a qué hora”. `test-v337-universal-weather.mjs` bloquea cualquier nueva pérdida de la serie. `.github/workflows/v337-weather-r2-finalize.yml` sella y audita el candidato antes de eliminarse. Producción no cambia.
+
+<!-- V337-WEATHER-R2-REMOTE-FINALIZED -->
+
+## V337-WEATHER-CLOSE · evidencia real y cierre RC-012
+
+El Preview `6a2f845` respondió la misma consulta rechazada sin búsqueda web: Open-Meteo, 27 de agosto de 2026, llovizna ligera, 16.9–27.5 °C, sensación 18–28.4 °C, viento hasta 17.8 km/h, 3 mm, pico 99% a las 16:00 y los 24 porcentajes horarios de 00:00 a 23:00. Recomendó jugar por la mañana y terminar antes de las 14:00. RC-012 queda cerrado con esta evidencia. `.github/workflows/v337-weather-close-finalize.yml` actualiza inventario, audita 92 paquetes y se elimina antes del commit documental final; el ejecutable y Producción permanecen intactos.
+
+<!-- V337-WEATHER-CLOSE-REMOTE-FINALIZED -->
+
+## V337-WEATHER-RETRY · recuperación de límite externo en Vercel
+
+El commit documental `6a3386b` pasó 92/92 en GitHub, pero su Preview falló durante `test-v328-live-official-rules.mjs` porque el proveedor reglamentario devolvió HTTP 429; clima y código no fallaron. `.github/workflows/v337-weather-retry-finalize.yml` reconstruye el mismo ejecutable, vuelve a sellar inventario y repite la auditoría completa antes de eliminarse. No cambia la respuesta meteorológica aprobada ni Producción.
+
+<!-- V337-WEATHER-RETRY-REMOTE-FINALIZED -->
+
+## V338-RULES-GATE · un 429 externo no es una regresión del producto
+
+Dos Previews documentales consecutivos fueron rechazados porque la llamada viva de Reglas recibió HTTP 429, aunque GitHub aprobó 92/92 y el ejecutable meteorológico era idéntico al ya probado. `api/golf-rules.js` distingue ahora ese límite con 503, `Retry-After: 60` y `GOLF_RULES_RATE_LIMITED`. `test-v328-official-golf-rules.mjs` bloquea ese contrato de forma determinista. `test-v328-live-official-rules.mjs` continúa bloqueando respuestas incorrectas, fuentes no oficiales, vacío y cambios de score, pero difiere únicamente el caso 429 reconocido en vez de emitir una falsa regresión. `.github/workflows/v338-rules-gate-finalize.yml` actualiza inventario, audita 92 paquetes y se elimina. El clima aprobado y Producción no cambian.
+
+<!-- V338-RULES-GATE-REMOTE-FINALIZED -->
+
+## V339-WEATHER-DIRECT · clima sin cuota de IA
+
+La repetición final en el Preview `0684ee8` recibió HTTP 429 en `/api/universal-ai` antes de llegar a Open-Meteo. La causa restante era innecesaria: aun una consulta explícita de clima dependía del modelo para elegir `get_current_weather`. `api/universal-ai.js` reconoce clima, lluvia, temperatura, sensación y viento, resuelve hoy/mañana/fecha y franja desde el texto del usuario, llama directamente a `api/weather.js` y construye la respuesta estructurada con las horas completas. Esa ruta funciona incluso sin `OPENAI_API_KEY`, no usa búsqueda web y no consume cuota del modelo. `test-v337-universal-weather.mjs` exige cero llamadas al modelo y todos los porcentajes horarios. RC-013 permanece abierto hasta el Preview real. `.github/workflows/v339-weather-direct-finalize.yml` sella, audita 92 paquetes y se elimina. Producción no cambia.
+
+<!-- V339-WEATHER-DIRECT-REMOTE-FINALIZED -->
+
+## V339-WEATHER-DIRECT-CLOSE · prueba real final
+
+El Preview `8a62824` quedó READY y respondió la misma consulta completa en aproximadamente 13 segundos de extremo a extremo: Open-Meteo, 16.9–27.5 °C, sensación 18–28.4 °C, viento 17.8 km/h, 3 mm, pico 99% a las 16:00, los 24 porcentajes de 00:00 a 23:00 y recomendación de terminar dos horas antes. La ruta hizo cero llamadas al modelo y no puede caer por su cuota. RC-013 queda cerrado; el ejecutable probado y Producción permanecen intactos.
+
+## V340-SUPPORT · Manual del mismo deployment
+
+El **27 de agosto de 2026** la verificación real del candidato detectó que el enlace fijo `Support` escapaba desde Preview hacia el Manual de Producción. Se reemplaza la URL absoluta por `/manual-scg`, de modo que Preview abre su Manual corregido y Producción conserva el suyo. `test-v311-live-support-link.mjs` rechaza permanentemente cualquier retorno al dominio absoluto de Producción. Producción permanece intacta.
+
+El Preview del commit `43dcb2c` quedó READY como `dpl_4MAeofErPXWFx5dK5QAEoSvycYLT`. En navegador real, `Support` abrió `/manual-scg` en el mismo dominio, mostró 74 páginas y llevó `#pagina-20` a `DICTA LOS GOLPES DEL HOYO`; las páginas 20 y 21 cargaron a 2160 × 4320 y conservaron el orden didáctico aprobado. RC-014 queda cerrado. Producción no cambió.
+
+## V341-WEATHER-INTENT · viento estratégico no es pronóstico
+
+La prueba real del commit final detectó que una consulta de estrategia a 140 yardas con viento, agua corta y lie húmedo era desviada al clima directo. `isDirectWeatherQuery()` excluye ahora preguntas analíticas de golpe, palo, bandera, green, carry, lie, dispersión y estrategia: esas llegan a AI UNIVERSAL; el clima explícito continúa directo a Open-Meteo. Las frases exactas quedan fijadas en los bancos V335 y V337. Producción permanece intacta.
+
+## V342-AI-RESILIENCE · recuperación automática del límite 429
+
+El Preview V341 confirmó que la intención estratégica ya llegaba a AI UNIVERSAL, pero el proveedor respondió HTTP 429 y la ruta convirtió una limitación transitoria en 502 sin recuperación. `api/universal-ai.js` instala tres intentos dentro de un plazo total de 55 segundos, alterna `gpt-5.6 → gpt-5.4 → gpt-5.6`, respeta `Retry-After` con espera limitada y registra únicamente estado, código técnico, modelo, intento e identificador de solicitud. Si todos fallan, devuelve 503 reintentable en vez de fingir una respuesta.
+
+`index-grupal.html` conserva una sola pregunta visible y ejecuta un segundo intento transparente únicamente ante ese 503; no duplica el historial ni modifica scores. `test-v335-response-caliber.mjs` demuestra dos 429 consecutivos seguidos por 200 y demuestra también el agotamiento seguro. RC-016 conserva el defecto y su control permanente. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` sellan el candidato. Producción permanece protegida en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` hasta cero FAIL.
+
+## V343-AI-GATEWAY-FALLBACK · estrategia de golf sin silencio por saldo
+
+La prueba real de V342 demostró que no era una saturación transitoria: los seis intentos recibieron `credit_balance_exhausted`. `api/universal-ai.js` conserva los intentos directos y, ante ese código exacto, usa el endpoint OpenResponses de Vercel AI Gateway con OIDC o clave administrada y failover `openai/gpt-5.6-sol → anthropic/claude-opus-5 → google/gemini-3.1-pro-preview`. Si el Gateway tampoco está disponible, una consulta analítica de estrategia de golf recibe una respuesta local sustantiva que cubre conclusión, mecanismo, riesgos, límites, alternativa y acciones; no modifica scores ni inventa viento o distancia no escritos por el usuario.
+
+`test-v335-response-caliber.mjs` prueba el salto por saldo agotado, el cuerpo exacto del Gateway, tres proveedores y la consulta literal de 140 yardas aun sin ninguna credencial funcional. RC-016 queda pendiente únicamente de la repetición real en Preview. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` sellan V343. Producción continúa intacta.
+
+## V344-TRAFFIC-DIRECT · tráfico real sin dependencia de IA
+
+La prueba de extremo a extremo del Preview V343 confirmó clima y estrategia, pero una consulta explícita de tráfico terminó en 503 porque todavía dependía del modelo para seleccionar `get_live_traffic`; el proveedor de tráfico nunca llegó a ejecutarse. `api/universal-ai.js` reconoce ahora tráfico, congestión, ETA, demora y ruta vehicular, extrae un origen y destino escritos de forma explícita, conserva la solicitud de GPS cuando el origen es “aquí” y llama directamente a Google Maps Routes. La respuesta estructurada informa ETA, demora, distancia, nivel estimado, hora de cálculo, proveedor y modo `TRAFFIC_AWARE_OPTIMAL`; no revela coordenadas ni inventa cifras.
+
+`test-v324-real-traffic.mjs` reproduce la consulta literal El Pulté Golf → Pradera Concepción, exige cero llamadas a OpenAI, prueba la aclaración de un destino ambiguo y conserva las puertas de GPS, timeout y privacidad. RC-017 registra el escape y su control permanente. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` sellan el candidato. Producción permanece intacta.
+
+## V345-ICONS · accesos de escritorio visibles y distintos
+
+La evidencia física del propietario rechazó los accesos instalados: el Manual no mostraba un logo reconocible y Golf Score podía conservar el icono anterior. La causa del Manual era medible: `manual-scg-escritorio-4k.png` es una lámina válida, pero su composición deja 89.3% del icono reducido casi blanco. En Golf Score el nombre del recurso de 180 px no cambiaba entre versiones, por lo que iOS podía reutilizarlo.
+
+V345 crea seis recursos RGB sin transparencia y con nombres nuevos: 180×180 para iPhone y 192×192/512×512 para los manifiestos de Golf Score y Manual SCG. El Manual usa el logo oficial en primer plano y el rótulo `MANUAL`; los dos accesos son visualmente distintos. `index-grupal.html` y `manual.html` declaran `sizes` explícito, favicon y Apple Touch Icon; `manual.webmanifest` recibe identidad propia; `service-worker.js` precarga los seis archivos y `vercel.json` entrega manifiestos sin caché e iconos versionados inmutables.
+
+Rutas exactas de los recursos nuevos y manifiesto modificado: `assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png`, `assets/official-logos/golf-score-card-gt-pwa-v345-192.png`, `assets/official-logos/golf-score-card-gt-pwa-v345-512.png`, `docs/manual/v311/manual-scg-apple-touch-v345-180.png`, `docs/manual/v311/manual-scg-pwa-v345-192.png`, `docs/manual/v311/manual-scg-pwa-v345-512.png` y `manifest.webmanifest`.
+
+`test-v345-home-icons.mjs` decodifica los PNG, exige dimensiones exactas, RGB, SHA distintos y menos de 55% de blanco en el icono del Manual; también comprueba HTML, manifiestos, Service Worker y encabezados. Las puertas históricas V281, V290 y V311 se actualizan al mismo contrato. `scripts/rebuild-inventory-pdfs.py` identifica y sella el mismo corte V345. RC-018 permanece abierto hasta comprobar la instalación real desde el Preview. Producción continúa en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
+
+Estado operativo asociado: micrófono y respuestas generales conservan banco automático de continuidad, interrupción, eco, recuperación y calibre, pero RC-007 sigue abierto hasta una conversación física larga en iPhone. Clima directo ya aprobó una consulta real de 24 horas con Open-Meteo; siguen abiertos snapshots, artefactos y contraste físico de campo. Tráfico directo V344 aprobó el banco sin IA; su repetición real de Preview y la comparación simultánea contra Waze siguen pendientes.
+
+### V345-ICONS-R1 · ROADMAP remoto
+
+El deployment `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue rechazado antes de publicación porque `ROADMAP_OVERALL.md` agrupaba seis archivos binarios y `manifest.webmanifest` sin escribir sus rutas literales. La corrección anterior incorpora los siete nombres exactos; no cambia PNG, HTML, manifiestos, lógica ni Producción.
+
+### V345-ICONS-PREVIEW · evidencia remota
+
+El commit `1026a3e6555077fab1af4f8f932e97a7032e0182` quedó READY en Preview como deployment `dpl_9DcbFH9d9Gf3qDL8rGUjQqTNNYpX`. El constructor aprobó Gate 0, Manual editorial 74/74, Manual visual 74/74, ROADMAP de 25 modificaciones, 349 fuentes, tres PDF sellados y 93 paquetes operativos. La llamada viva de Reglas recibió 429 y fue diferida conforme al contrato V338; no hubo error del producto. RC-018 queda desplegado y abierto únicamente para instalar físicamente ambos accesos en iPhone. Producción permanece intacta.
+
+## V346 · Micrófono real y matriz de estado · 27 de agosto de 2026
+
+- `index-grupal.html`: clasifica HTTP 429 como límite del servicio, activa reconocimiento de voz alternativo cuando está disponible y muestra `ESCUCHANDO` / `RESPONDIENDO` en la matriz principal.
+- `test-v336-microphone-transport.mjs`: deja de aceptar el diagnóstico falso de Internet y bloquea regresiones del respaldo y de ambos estados visibles.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello recalculado para esta modificación atómica.
+
+## V346-R1 · Corrección determinista del sello de inventario · 27 de agosto de 2026
+
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: recalculado con el mismo orden lexicográfico de Node usado por `scripts/inventory-gate.mjs`.
+
+## V347 · Matriz visible y fallo real de respuesta · 27 de agosto de 2026
+
+- `index-grupal.html`: coloca la matriz viva junto al micrófono, muestra únicamente `ESCUCHANDO` / `RESPONDIENDO` en rojo parpadeante y presenta el saldo agotado sin culpar a Internet.
+- `api/universal-ai.js`: clasifica `credit_balance_exhausted` como bloqueo no reintentable cuando no existe recuperación administrada.
+- `api/voice-health.js`: registra eventos privados del micrófono alternativo sin contenido hablado.
+- `test-v336-microphone-transport.mjs`: agrega regresiones de posición, texto exacto, diagnóstico de saldo y privacidad.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-019 como abierto hasta credencial/saldo y PASS físico.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta la frontera entre captura, respuesta y proveedor.
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: conserva V346-R1 rechazada y V347 pendiente de prueba física.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sella las fuentes exactas del candidato V347.
+- Producción permanece en la base protegida; ningún fallo físico se presenta como PASS.
+
+## V348 · Recuperación de apertura y transición exacta de voz · 27 de agosto de 2026
+
+- `index-grupal.html`: activa el reconocimiento alternativo ante cualquier fallo técnico recuperable, conserva aparte permiso/dispositivo y cambia la matriz de `ESCUCHANDO` a `RESPONDIENDO` desde que la transcripción entra al procesamiento.
+- `api/voice-health.js`: agrega eventos privados de solicitud, error y fallo de arranque del respaldo sin texto hablado, nombres ni ubicación.
+- `test-v336-microphone-transport.mjs`: reproduce el fallo local genérico, protege permiso/dispositivo, exige la transición exacta y verifica la privacidad de los eventos.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-020 con la evidencia física de las 07:20/07:21.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta la corrección funcional y el bloqueo externo que permanece.
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: rechaza V347, registra V348 y mantiene abierta la prueba física.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran la misma modificación dentro de V348.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sella las fuentes exactas del candidato V348.
+- Producción permanece intacta; el saldo o la credencial del proveedor sigue siendo un bloqueo externo real para respuestas generales.
+
+## V349 · Registro dictado sin desvío y matriz recuperable · 27 de agosto de 2026
+
+- `index-grupal.html`: deduplica listados repetidos, entiende “otro jugador”, separa registro de pregunta, evita enviar un registro rechazado a IA, corrige la precedencia de mensajes de matriz y recupera locks con un nuevo toque.
+- `api/voice-health.js`: registra únicamente si el listado alternativo fue aplicado o rechazado, sin contenido hablado ni datos de jugadores.
+- `test-v305-registration-guides-parser-truth.mjs`: reproduce lista completa repetida, “otro jugador” y la frontera entre registro y pregunta.
+- `test-v336-microphone-transport.mjs`: ejecuta la función real de texto de matriz, prohíbe `PROCESANDO` allí, verifica el mensaje exacto y la recuperación.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: rechaza V348 y registra RC-021.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta causa, frontera y candados V349.
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: conserva V348 rechazada y V349 pendiente de prueba física.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran las diez fuentes modificadas.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sella el candidato exacto V349.
+- Producción permanece intacta; el saldo o credencial del proveedor sigue bloqueando respuestas generales.
+
+## V350 · Registro de jugadores local y dictado natural · 27 de agosto de 2026
+
+V349 queda rechazada por la prueba física de las 08:59: el navegador transcribió, mostró `RESPONDIENDO`, no llenó filas y llamó al servicio general, que informó saldo agotado. V350 elimina esa dependencia: dentro de Registro de jugadores toda transcripción termina localmente, sea aplicada o rechazada, y nunca consulta AI UNIVERSAL. El parser admite conectores naturales como “hándicap catorce y marcas blancas”; la telemetría cliente incluye aplicado/rechazado sin contenido hablado.
+
+Archivos exactos V350: `index-grupal.html`, `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta; el candidato requiere build, navegador y prueba física iPhone.
+
+## V351 · Safari XIV y separación correcta de jugadores · 27 de agosto de 2026
+
+V350 queda rechazada por la prueba física de las 14:16. Safari convirtió “catorce” en `XIV`; el parser lo trató como nombre y escribió `JAIME XIV BLANCAS JORGE · 6 · AZULES` en una sola fila. V351 agrega romanos canónicos I–LIV únicamente al parser de hándicap del Registro. La frase real `Jaime xiv blancas Jorge seis azules` produce dos jugadores: Jaime, 14, Blanco; Jorge, 6, Azul. La `X` operacional del score permanece fuera de esta conversión.
+
+Archivos exactos V351: `index-grupal.html`, `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta; falta build, navegador y prueba física iPhone.
+
+
+Corrección de rutas V351: se eliminaron las rutas temporales erróneas `tests/test-v305-registration-guides-parser-truth.mjs` y `tests/test-v336-microphone-transport.mjs`; las pruebas activas permanecen en la raíz como `test-v305-registration-guides-parser-truth.mjs` y `test-v336-microphone-transport.mjs`. También se eliminaron las copias raíz temporales de los dos controles SCIRE. El árbol final conserva 349 fuentes activas más el sello.
+
+Sello V351: la huella del inventario se recalculó con el orden binario exacto que usa `scripts/inventory-gate.mjs`; no cambia el alcance funcional ni las 349 fuentes activas.
+
+## V352 · GOLF SCORE CARD GT. LIVE · 27 de agosto de 2026
+
+V352 agrega seguimiento remoto autorizado sin exigir que el visitante instale la aplicación. Quien lleva la Score Card puede compartir únicamente un jugador o el grupo completo; cada persona visible, o su responsable autorizado, confirma el permiso. El vínculo privado caduca, puede revocarse y abre `live.html` como visor separado y exclusivamente de lectura. Un jugador puede continuar su propia ronda y seguir bilateralmente a su esposa, amigo u otro grupo en otra ventana sin tocar el hoyo ni la tarjeta activa.
+
+Los torneos usan un enlace de tablero y un código de unión. Cada grupo crea y autoriza su stream independiente; el tablero carga páginas con cursor y no fija un máximo de producto para grupos o jugadores agregados. La tarjeta de cada ronda conserva la arquitectura existente de uno a seis jugadores. Los tokens de publicar y mirar son independientes, aleatorios de 256 bits, y PostgreSQL sólo guarda SHA-256. LIVE excluye contactos, ubicación, audio, IA, clima detallado, credenciales, códigos privados, juegos laterales y apuestas.
+
+La publicación nace del único `persist()` oficial, conserva primero la ronda local y mantiene sólo el snapshot pendiente más reciente si se pierde señal. El servidor vuelve a filtrar los jugadores autorizados en cada mutación, exige revisión esperada, acepta duplicados idempotentes y actualiza el tablero de torneo. Revocar elimina el snapshot visible. El visor consulta cada tres segundos y preserva la última lectura en pantalla durante una interrupción.
+
+Archivos exactos V352: `index-grupal.html`, `live-control.js`, `live.html`, `live-view.js`, `api/live.js`, `database/004_live_scorecards.sql`, `service-worker.js`, `vercel.json`, `test-v352-live.mjs`, `audit-project.mjs`, `DATABASE_ARCHITECTURE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+Estado de corte: implementación local terminada sobre la rama `v352-live`; migración Neon temporal y principal PASS; navegador real, Preview y prueba física permanecen pendientes. Producción `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` sigue intacta. La reversión consiste en revocar enlaces, retirar V352 y, sólo bajo procedimiento de base respaldada, eliminar exclusivamente las tablas nuevas sin tocar datos V351.
+
+Compatibilidad Neon V352: el preparador seguro rechazó cuerpos de funciones almacenadas. La transacción de publicación se trasladó a una sola sentencia CTE dentro de `api/live.js`, conservando bloqueo de fila, revisión esperada, idempotencia, filtro de jugadores, incremento de torneo y evento atómico. `database/004_live_scorecards.sql` queda limitado a tablas e índices; `test-v352-live.mjs` rechaza cualquier función almacenada y también jugadores con ID duplicado.
+
+Neon aislado PASS: migración `1f8793a4-0dad-40a6-8016-b9b183e15b7c`, rama `mcp-migration-2026-08-27T21-50-34`, ID `br-morning-dew-avwpi96x`, principal intacta `br-late-wind-avhgi9s3`. Se cargaron 60 grupos y el cursor devolvió 25/25/10 sin duplicados. Un stream individual recibió dos jugadores y conservó sólo `player-v352-001-a`; el segundo no apareció. Repetir la mutación devolvió duplicado, revisión 1 y cero eventos nuevos.
+
+Neon principal PASS: el propietario aprobó la migración y Neon la aplicó a `br-late-wind-avhgi9s3`; la rama temporal fue eliminada. La verificación posterior confirmó cuatro tablas LIVE, 15 índices, cero funciones almacenadas LIVE y cero torneos, streams o eventos de prueba trasladados.
+
+Control permanente de versiones V352: la auditoría descubrió que 18 pruebas históricas exigían literalmente el build general V332 y bloqueaban cualquier release posterior aunque su función continuara correcta. Ahora exigen un identificador `V###` válido y mantienen sus assertions funcionales propias; `test-v352-live.mjs` conserva la exigencia exacta del build LIVE V352. Archivos corregidos: `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs` y `test-v328-official-golf-rules.mjs`.
+
+El mismo control se aplicó al nombre de caché: 16 pruebas conservan la obligación de una caché `gscg-mobile-v###`, pero ya no fuerzan V332, porque cada release funcional necesita un nombre nuevo para invalidar el shell anterior. Archivos exactos: `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v312-general-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs`, `test-v328-offline-official-rules.mjs`, `test-v329-skins.mjs` y `test-v330-side-games.mjs`. V352 exige aparte `gscg-mobile-v352-live` y `/live-control.js` en `test-v352-live.mjs`.
+
+### V352-PREVIEW-R1 · candado remoto correcto
+
+GitHub recibió el candidato V352 en `v352-live`. El primer webhook se activó con un commit sin cambios de árbol (`0e19b4c`) y Vercel lo rechazó correctamente mediante `FAIL ROADMAP GATE`, deployment `dpl_8ncVihJ46TWXqrMrWmKWgmcurbWh`. No se publicó ningún Preview ni cambió Producción. R1 registra el intento en ambos ROADMAPS, vuelve a sellar el inventario y obliga a que el siguiente commit remoto contenga la evidencia documental visible para el candado.
+
+### V352-PREVIEW-R2 · parámetros Neon HTTP con tipo explícito
+
+El deployment R1 `dpl_3fmsfq4BjuFzMgV3eYKGvPRWzSff` quedó READY y permitió la primera prueba contra la base principal. Crear un stream privado y leer su revisión 0 aprobaron; publicar el hoyo 1 devolvió `42P18` porque interpolaciones separadas dentro de `jsonb_build_object` no tenían tipo explícito para PostgreSQL. `api/live.js` ahora tipa `mutationId`, `secretHash` y revisión esperada en toda la sentencia atómica; `test-v352-live.mjs` agrega el candado negativo. También se actualizan `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta.
+
+V352-R2 remoto PASS: commit `6bc9901e068cf8f2026de6b0ab8580c2546819f5`, deployment `dpl_2BLAFZNazoogdQQS2mkxreNjBgh6`, READY. La prueba protegida devolvió página 200, creación 200, lectura inicial 200, publicación 200, lectura de Gross 5/Neto 4 en revisión 1 con 200, revocación 200 y `410 LIVE_REVOKED` final. Observabilidad: cinco respuestas 200, una 410 esperada y cero `error`/`fatal`. Los streams de diagnóstico fueron eliminados; Producción sigue en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Falta únicamente inspección visual y prueba física en iPhone antes de cualquier montaje.
+
+## V353 · MONITOR GENERAL, MONITOR INDIVIDUAL y compartir mundial · 28 de agosto de 2026
+
+V353 resuelve el escenario ideal de 80 personas y 30–40 teléfonos con una regla sencilla: cada grupo nombra un `CAPITÁN DE TARJETA`; sólo ese teléfono publica y los demás miran. El organizador comparte un enlace General. El usuario lo abre y elige entre dos botones universales: `1 · MONITOR GENERAL` para todo el torneo y `2 · MONITOR INDIVIDUAL` para cualquier jugador o grupo. La Score Card propia sigue intacta en su ventana.
+
+Los jugadores elegidos para el Monitor Individual reutilizan la misma General y producen cero lecturas adicionales. Sólo una persona externa exige importar su vínculo individual como respaldo. La General recorre cursores mientras existan páginas, muestra 80 jugadores sin omisión ni duplicado y rotula posición, grupo, hoyos, Gross, Neto y +/− como resultado LIVE no oficial. El servidor serializa la unión al torneo y rechaza un segundo publicador activo del mismo grupo.
+
+`COMPARTIR ♾️` usa la hoja nativa del teléfono: WhatsApp, Mensajes, correo, AirDrop, X u otra aplicación. El mismo vínculo funciona en USA, México, Italia o cualquier país y no fija un máximo de invitados. La seguridad no cambia: posesión del vínculo, sólo lectura, vencimiento y revocación inmediata.
+
+V353 no modifica el esquema Neon: reutiliza las cuatro tablas y 15 índices LIVE V352, por lo que no existe migración nueva. Banco local PASS para 20×4 y 40×2, Monitor General + tres jugadores en el Monitor Individual con cero lecturas extra, importación externa, origen seguro, carga sin máximo fijo, privacidad, apertura separada y capitán único. Preview, E2E remoto, observabilidad y navegador están pendientes en este corte; la prueba física iPhone continúa como puerta independiente.
+
+La compuerta V353 acepta el formato legible o compactado de `vercel.json` al verificar `/live-hub.html`; esto corrige exclusivamente un falso negativo de compilación y mantiene intacta la cobertura funcional.
+
+Archivos exactos V353: `live-hub.html`, `live-hub.js`, `live.html`, `live-view.js`, `live-control.js`, `api/live.js`, `index-grupal.html`, `service-worker.js`, `vercel.json`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `audit-project.mjs`, `DATABASE_ARCHITECTURE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+Producción permanece exactamente en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Reversión V353: retirar Centro Live y sus controles, conservar la Score Card V352 y revocar los vínculos necesarios; ningún dato ni tabla requiere eliminación.
+
+## V354 · HARDENING P0 COMERCIAL Y RESTITUCIÓN V351-R1…R5 · 28 de agosto de 2026
+
+V354 cierra los P0 que sí pueden corregirse dentro del repositorio sin confundirlos con autorizaciones externas. Las APIs de voz, IA, investigación, reglas, clima, tráfico, telemetría y cuenta exigen origen válido en Vercel, aplican cuotas por función e IP anonimizada sobre PostgreSQL y fallan cerradas si la protección no está disponible. SDP queda limitado a 512 KB. La ruta Realtime histórica responde 410 y la ruta POST del score legado deja de ser un segundo motor.
+
+La cadena de construcción queda reproducible con Node 24, `package-lock.json`, `npm ci`, versiones Python fijas, SBOM CycloneDX y acciones GitHub fijadas por SHA. Se retira `@capacitor/assets`, se aplican recursos nativos con sharp controlado y el árbol npm completo queda sujeto a auditoría. Dependabot y CodeQL se incorporan; la ruleset remota de `main` continúa como aprobación externa obligatoria.
+
+La auditoría detectó que la rama V352/V353 había partido antes de las correcciones físicas V351-R1…R5. V354 porta de nuevo hoyo 1 individual, Safari IV/V, unidades naturales, hoyo al final y matriz Normal/Stableford/Match Play/Four Ball; restaura RC-024…RC-029 y los dos bancos que la auditoría maestra había omitido.
+
+El paquete legal/operativo es deliberadamente borrador. `COMMERCIAL_RELEASE_CONTROL.json` mantiene once aprobaciones externas en falso y `scripts/commercial-readiness-gate.mjs` bloquea cualquier build dirigido a Producción mientras falte una sola evidencia. Por tanto, V354 puede llegar únicamente a Preview; no autoriza cobro, oferta pública ni afirmaciones de cumplimiento. Producción permanece exactamente en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
+
+Reversión: retirar la rama/deployment Preview V354 y conservar V353; no hay migración nueva ni cambio de datos. Si la cuota compartida falla, las APIs protegidas responden 503 en lugar de permitir consumo sin control. Ningún documento externo, contrato, seguro, pentest, restore drill, licencia de IP o prueba física se presenta como PASS.
+
+Evidencia local final V354: `npm run audit` PASS con 98 paquetes; manual editorial PASS en 74 páginas; manual visual PASS en 74 páginas, resolución 2160×4320 y densidad mínima 300 dpi; gate comercial candidato PASS con 11 aprobaciones externas pendientes; gate de calidad PASS con 7 controles, 7 entradas y 11 gates; inventario PASS con 387 fuentes y tres PDF; `npm audit --audit-level=moderate` reporta cero vulnerabilidades. La evidencia Preview, navegador, logs y plataforma remota se registra sólo después de la publicación de la rama candidata.
+
+Corrección de compilación V354: `test-project-quality-gate.mjs` usa archivos del working tree sólo durante la validación local previa al commit y usa exclusivamente blobs de `HEAD` dentro de Vercel. Esto elimina el falso negativo provocado por archivos transitorios del instalador sin permitir que un deployment valide contenido distinto del commit. El primer Preview falló cerrado; el banco local completo volvió a pasar antes del siguiente commit.
+
+Corrección de telemetría V354: `/api/account` dejó de depender de `req.query` y obtiene `action` con la API WHATWG `URL` sobre `req.url`; `test-v354-commercial-hardening.mjs` bloquea la reintroducción del analizador obsoleto. La alerta Node `DEP0169` detectada en Preview se trató como fallo de calidad aunque la respuesta HTTP fuera 200. Producción permanece intacta y la corrección se valida en una nueva rama Preview antes de cualquier aprobación comercial.
+
+### Archivos exactos V354
+
+- `.github/dependabot.yml`
+- `.github/workflows/codeql.yml`
+- `.github/workflows/ios-build.yml`
+- `.github/workflows/ios-testflight.yml`
+- `.github/workflows/mobile-native-package.yml`
+- `.github/workflows/roadmap-gate.yml`
+- `.github/workflows/stableford-tournament-pass.yml`
+- `.node-version`
+- `.nvmrc`
+- `COMMERCIAL_RELEASE_CONTROL.json`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`
+- `LEGAL/AVISO_VOZ_IA_Y_DATOS_VIVOS_BORRADOR.md`
+- `LEGAL/POLITICA_DE_PRIVACIDAD_BORRADOR.md`
+- `LEGAL/REGISTRO_PERMISOS_IP.md`
+- `LEGAL/REGISTRO_PROVEEDORES.md`
+- `LEGAL/TERMINOS_DE_USO_BORRADOR.md`
+- `LICENSE`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `SECURITY.md`
+- `THIRD_PARTY_NOTICES.md`
+- `api/_lib/api-guard.js`
+- `api/_lib/cors.js`
+- `api/_lib/http.js`
+- `api/account.js`
+- `api/database-health.js`
+- `api/golf-rules.js`
+- `api/live.js`
+- `api/research.js`
+- `api/score.js`
+- `api/session-grupal.js`
+- `api/session.js`
+- `api/traffic.js`
+- `api/universal-ai.js`
+- `api/voice-health.js`
+- `api/weather.js`
+- `audit-project.mjs`
+- `docs/operations/DISASTER_RECOVERY.md`
+- `docs/operations/INCIDENT_RESPONSE.md`
+- `docs/operations/RELEASE_COMMERCIAL_CHECKLIST.md`
+- `docs/operations/REPOSITORY_PROTECTION.md`
+- `docs/operations/SERVICE_LEVEL_OBJECTIVES.md`
+- `index-grupal.html`
+- `index.html`
+- `live-control.js`
+- `package-lock.json`
+- `package.json`
+- `requirements-build.txt`
+- `sbom.cdx.json`
+- `scripts/apply-native-assets.mjs`
+- `scripts/commercial-readiness-gate.mjs`
+- `scripts/generate-sbom.mjs`
+- `scripts/inventory-gate.mjs`
+- `scripts/project-quality-gate.mjs`
+- `scripts/rebuild-inventory-pdfs.py`
+- `service-worker.js`
+- `test-sync-auth.mjs`
+- `test-project-quality-gate.mjs`
+- `test-v267-scorecard-combination-matrix.mjs`
+- `test-v267-one-operational-line.mjs`
+- `test-v270-consecutive-hole-voice-blocks.mjs`
+- `test-v284-native-package-generation.mjs`
+- `test-v290-brand-icons-cleanup.mjs`
+- `test-v305-registration-guides-parser-truth.mjs`
+- `test-v312-general-caddie.mjs`
+- `test-v327-tool-followup-no-silence.mjs`
+- `test-v336-microphone-transport.mjs`
+- `test-v351-r1-hole1-voice-score-render.mjs`
+- `test-v351-r5-voice-score-matrix.mjs`
+- `test-v352-live.mjs`
+- `test-v353-live-hub.mjs`
+- `test-v354-commercial-hardening.mjs`
+- `vercel.json`

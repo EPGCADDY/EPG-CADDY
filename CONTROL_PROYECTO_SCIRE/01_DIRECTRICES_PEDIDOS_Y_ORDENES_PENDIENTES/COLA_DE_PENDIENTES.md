@@ -2,16 +2,60 @@
 
 Este archivo concentra los trabajos que el propietario ha pedido conservar para ejecución futura. Cuando el propietario diga **“busca los pendientes por hacer”**, este documento debe revisarse primero, junto con `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`.
 
+## Resumen ejecutivo vigente · 28 de agosto de 2026
+
+| Orden | Pendiente | Estado real |
+|---:|---|---|
+| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V327-R1 aprobó banco automatizado y Preview; nueva prueba física detectó respuestas vagas, corte de conversación y estados bilaterales poco visibles |
+| 2 | `PEND-TRA-005` tráfico actual y futuro | Google Maps Routes activo y probado; faltan comparación simultánea con Waze y validación física en Guatemala |
+| 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
+| 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
+| 5 | `PEND-CAM-009` campos mundiales | Falta proveedor/catálogo licenciado y tarjetas oficiales verificables |
+| 6 | `PEND-GPS-010` GPS de golf | Clima y tráfico ya usan GPS efímero; faltan distancias deportivas por hoyo y validación de precisión |
+| 7 | `PEND-SKI-006` Skins, Wolf, Vegas y apuestas | V332 aprobó 89 paquetes y 325 fuentes; falta nuevo Preview y ronda física |
+| 8 | `PEND-DID-017` fichas para aprender cada modalidad | Falta una hoja web/PDF por modalidad y esquema, comprensible a los 10 años, imprimible en blanco y negro y validada contra el motor |
+| 9 | `PEND-WAT-007` Apple Watch y smartwatches | Falta aplicación/sincronización física; Apple Watch primero y Wear OS después |
+| 10 | `PEND-NUB-011` nube, cuentas y seguridad | V354 endurece APIs, headers, cuotas, CI y respuesta a incidentes; faltan roles completos, restore drill, pentest y validación remota |
+| 11 | `PEND-EST-012` estadísticas avanzadas | Estadística local básica entregada; faltan histórico central, tendencias y comparaciones multi-dispositivo |
+| 12 | `PEND-COM-013` monetización y operación comercial | V354 instala paquete borrador y gate; faltan 11 aprobaciones externas con evidencia antes de publicar/cobrar |
+| 13 | `PEND-QA-014` certificación integral | Falta banco final automático, visual y físico por dispositivo, modalidad, ruido, conexión y ronda completa |
+| 14 | `PEND-CLI-002` clima completo en artefactos | Clima vivo entregado; faltan proveedor comparado, snapshots, historial, PDF/imagen y prueba de campo |
+| 15 | `PEND-MAN-004` Guía Rápida | Falta versión web/PDF visual enlazada al Manual vigente |
+| 16 | `PEND-UBI-015` detectar el campo por GPS | Falta catálogo geográfico verificado, propuesta segura, confirmación manual y prueba física por campo |
+| 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
+| 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V353 CENTRO LIVE: banco local 80 jugadores PASS; Preview/E2E/navegador y prueba física iPhone pendientes |
+
+La prioridad activa por orden del propietario es `PEND-LIVE-018` V353; `PEND-VOZ-003` y los demás pendientes conservan su estado registrado. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
+
+**Autorización de ejecución permanente:** el propietario ordenó el 26 de agosto de 2026 agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versión cuando esté realmente probada. Esta autorización no convierte un `FAIL` en `PASS` ni permite simular licencias, credenciales o integraciones externas inexistentes.
+
 ## PEND-REG-001 · Adaptar las Reglas de Golf a la aplicación
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** EN PROGRESO · CONSULTA CONVERSACIONAL DISPONIBLE; FUENTES REGLAMENTARIAS Y VALIDACIÓN PENDIENTES
-**Prioridad:** Principal, pendiente de orden de ejecución del propietario  
+**Estado:** V328-R2 EN BANCO · CENTRO USGA/THE R&A Y MODO BÁSICO SIN CONEXIÓN IMPLEMENTADOS; VOZ FÍSICA PENDIENTE
+**Prioridad:** Principal, en ejecución por orden permanente del propietario
 **Solicitud original:** “Tratar de adaptar las reglas de Golf a la aplicación”.
 
 ### Objetivo
 
 Integrar las Reglas de Golf a Golf Score Card GT de forma práctica, comprensible y verificable, para que el usuario pueda consultar una situación real desde la pantalla o el micrófono y recibir orientación sin abandonar innecesariamente la ronda.
+
+La solución debe buscar un enlace oficial y autorizado con **USGA** y sus **Reglas de Golf**, respetando licencia, atribución, vigencia, condiciones de uso y capacidades técnicas reales. No se simulará una integración ni se copiarán contenidos restringidos sin autorización.
+
+### Avance real V328
+
+- La aplicación incorpora el botón global `REGLAS` dentro del mismo asistente AI UNIVERSAL ∞; no existe un segundo motor de scores.
+- Texto y voz pueden llamar `get_official_golf_rule`, que usa `/api/golf-rules` y limita técnicamente la búsqueda a `usga.org` y `randa.org`, incluidos sus subdominios oficiales.
+- Cada respuesta exige al menos una fuente oficial visible, conserva el contexto de campo y modalidad, distingue Regla general, Regla Local y Comité, y señala la edición `Rules of Golf 2023` y clarificaciones actuales.
+- El corte verificado es la clarificación oficial del **1 de julio de 2026**. Una actualización posterior publicada por USGA o The R&A prevalece automáticamente al consultarse.
+- La consulta reglamentaria no puede ejecutar órdenes locales, modificar un score, aplicar una penalidad, conceder un hoyo ni cerrar una ronda. Cualquier cambio exige otra orden separada y explícita.
+- El banco V328 cubre 15 situaciones distintas y rechaza fuentes ajenas a USGA/The R&A. El manual de 74 páginas ya explica el uso y aprobó 4K/300 dpi.
+- El primer Preview V328 quedó READY con 86 paquetes y árbol remoto idéntico. La puerta `test-v328-live-official-rules.mjs` obliga dentro de Vercel una consulta real del modelo, búsqueda web, fuente USGA/The R&A y `scoreChanged:false` antes de entregar el build.
+- V328-R2 agrega consulta básica sin conexión: conserva en el dispositivo hasta 24 respuestas previamente confirmadas con fuente USGA/The R&A, durante 90 días, almacena tokens normalizados en vez de la pregunta completa, exige coincidencia segura y misma modalidad, muestra la fecha y nunca inventa una respuesta que no esté guardada.
+- El banco `test-v328-offline-official-rules.mjs` rechaza fuentes no oficiales, resultados que pretendan tocar scores, entradas vencidas, cruces de modalidad y coincidencias débiles; el módulo no realiza llamadas externas ni escribe la tarjeta.
+- Esto es acceso a fuentes públicas oficiales, no una alianza, licencia de marca ni API privada de USGA/The R&A. La prueba física hablada permanece abierta antes del cierre total del pendiente.
+
+**Fuentes oficiales verificadas:** [USGA Rules Hub](https://www.usga.org/content/usga/home-page/rules-hub.html), [USGA Clarifications](https://rulesworkshops.usga.org/content/usga/home-page/rules-hub/clarifications-of-the-rules-of-golf.html) y [The R&A Rules Hub](https://www.randa.org/en/rules/rules-hub).
 
 ### Alcance proyectado
 
@@ -100,7 +144,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** EN PROGRESO · CADDIE UNIVERSAL V314 EN TODOS LOS MICRÓFONOS; BUSCADOR-TEXTO Y VALIDACIÓN FÍSICA PENDIENTES
+**Estado:** V326-R2 RECHAZADA EN IPHONE · V327-R1 APROBADA EN BANCO AUTOMATIZADO Y PREVIEW; VALIDACIÓN FÍSICA PROLONGADA PENDIENTE
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -139,6 +183,28 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - Las preguntas de clima usan el campo activo y `api/weather.js`; las preguntas de salud reciben límites expresos de orientación general, sin diagnóstico ni prescripción automática.
 - Continúan pendientes la conversación por texto dentro del buscador del Manual, el banco amplio de preguntas, pruebas físicas con ruido/acento y la validación práctica con golfistas.
 
+### Corrección V327 en banco
+
+- La consulta sobre una persona conocida en Colima alcanzó la búsqueda web con HTTP 200; el silencio ocurrió al devolver el resultado a Realtime, no por vocabulario limitado.
+- `speech_stopped` conserva ahora su guardián hasta la transcripción final. Un cierre tardío de audio sin identificador no puede apagar el follow-up antes de que empiece a sonar y la reproducción dispone de un límite recuperable de 60 segundos.
+- La observabilidad excluye expresamente el contenido hablado, nombres, ubicaciones y claves. Sólo registra estado técnico, turno, duración, herramienta y banderas de transición.
+- V327 permanece sin aprobación hasta que la regresión completa, el Preview y una conversación larga física en iPhone pasen sin un solo silencio.
+
+### Banco desplegado V327-R1 aprobado
+
+- El Preview de V327-R1 quedó `READY` y su compilación aprobó 85 paquetes, 310 fuentes y tres PDF sellados.
+- Se ejecutaron 44 llamadas reales: 24 materias diferentes, ocho turnos consecutivos con memoria exacta, clima futuro, investigación web con cinco fuentes, tráfico actual/futuro y cinco fallos deliberados recuperables.
+- El banco local conserva 550 secuencias `herramienta → follow-up → audio`, 100 eventos de privacidad, 30 turnos bilaterales y 30 temas/63 mensajes.
+- Los registros del deployment no mostraron errores ni advertencias y la telemetría descartó pregunta, transcripción, nombres, ubicación y credenciales.
+- Esta evidencia automática no sustituye el micrófono físico, altavoz, interrupciones, ruido ni gestión de audio de un iPhone real. La única puerta inmediata abierta es una conversación larga física sin silencio ni micrófono rojo atascado.
+
+### Observaciones físicas nuevas registradas para una fase posterior
+
+- Las respuestas generales pueden resultar vagas, básicas o demasiado breves hasta que el usuario pide expresamente una respuesta más estudiada, investigada, profunda y formal. Debe incorporarse una matriz permanente de calidad que revise pertinencia, fundamento, profundidad, precisión, aplicación práctica y claridad antes de cada respuesta, sin obligar al usuario a repetir esa orden.
+- En la quinta conversación física el estado quedó escuchando y, después de terminar la pregunta, el turno se cortó sin completar el ciclo. Debe reproducirse y corregirse la recuperación del micrófono en conversaciones consecutivas.
+- El aviso bilateral debe mostrar exactamente `ESCUCHANDO` mientras recibe voz y `RESPONDIENDO` mientras habla, ambos en rojo claramente visible y parpadeante. No debe mostrar `CADDIE RESPONDIENDO` ni textos adicionales en esos dos estados.
+- Por orden del propietario, estas correcciones quedan registradas pero pospuestas hasta continuar la configuración y prueba de las modalidades nuevas. No se consideran implementadas ni aprobadas.
+
 ### Condiciones de cierre futuro
 
 Este pendiente sólo podrá cerrarse después de un banco amplio de preguntas de golf, Manual, clima, conversación general y salud; pruebas por texto y voz con acentos y ruido de campo; validación contra fuentes; control de alucinaciones; prueba de que ninguna pregunta modifica scores; límites médicos verificados y evaluación práctica con golfistas.
@@ -150,7 +216,7 @@ Este pendiente sólo podrá cerrarse después de un banco amplio de preguntas de
 ## PEND-MAN-004 · Crear Guía Rápida desde el Manual de Funciones
 
 **Fecha de registro:** 25 de agosto de 2026
-**Estado:** PENDIENTE
+**Estado:** PENDIENTE · GUÍA RÁPIDA TODAVÍA NO IMPLEMENTADA
 **Prioridad:** Pendiente de orden de ejecución del propietario
 **Solicitud original:** “Hacer una guía rápida a partir del Manual de Funciones”.
 
@@ -177,29 +243,311 @@ La Guía Rápida se considerará terminada cuando cubra el recorrido básico com
 ## PEND-TRA-005 · Tiempo de llegada y tránsito sin mostrar mapa
 
 **Fecha de registro:** 25 de agosto de 2026
-**Estado:** PENDIENTE · WAZE NO OFRECE ESTA RESPUESTA INVISIBLE PARA UNA WEB COMÚN
-**Prioridad:** Pendiente de destino exacto y credenciales del proveedor
+**Estado:** CREDENCIAL Y GOOGLE ROUTES ACTIVOS EN PREVIEW · V327-R1 APROBADA AUTOMÁTICAMENTE; PRUEBA FÍSICA Y COMPARACIÓN WAZE PENDIENTES
+**Prioridad:** Alta · pendiente conversación física prolongada y comparación Guatemala/iPhone
 **Solicitud original:** preguntar al Caddie cuánto tráfico hay para ir a casa en Pradera y escuchar únicamente tiempo estimado y comentarios, sin abrir una gráfica de navegación.
 
 ### Objetivo
 
 Permitir una pregunta natural como `¿Cómo está el tráfico para ir a mi casa en Pradera?` y responder por voz con duración estimada, demora por tráfico y resumen de la ruta, sin modificar la tarjeta ni mostrar un mapa.
 
-### Arquitectura prevista
+### Arquitectura implementada en V324
 
 `GPS DEL TELÉFONO → DESTINO EXACTO GUARDADO CON CONSENTIMIENTO → GOOGLE MAPS ROUTES CON TRÁFICO → RESUMEN DE TIEMPO → RESPUESTA DEL CADDIE`
 
-- No afirmar que Waze está sincronizado: los Deep Links sólo abren Waze y el Transport SDK exige asociación comercial y atribución visible.
-- Usar Google Maps Routes u otro proveedor autorizado que entregue ETA con tráfico sin exigir mostrar un mapa.
+- La consulta natural de AI UNIVERSAL ∞ usa una función real de tráfico y Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL`; devuelve ETA, demora, distancia, hora de cálculo y nivel derivado, tanto a texto como a voz.
+- La medición real El Pulté Golf → Pradera Concepción devolvió 15 km y cerca de 33 minutos en el instante del diagnóstico; confirma proveedor y credencial. El problema observado fue el retorno a voz.
+- El banco desplegado V327-R1 repitió la ruta y obtuvo 16.1 km y 31 minutos en ese instante. También calculó la salida futura El Pulté Golf → colonia Oakland zona 10 para las 12:30 p. m.: 21.6 km, 48 minutos y 13 minutos de demora prevista.
+- Un destino que sólo diga `Concepción` es ambiguo: debe pedir una sola aclaración de nombre completo, zona o municipio antes de calcular.
+- El origen `aquí` solicita GPS sólo durante esa consulta y las coordenadas exactas no se incorporan a la respuesta ni al historial conversacional.
+- El destino escrito llega al proveedor; `mi casa` o `Pradera` sin identificación suficiente debe producir una sola pregunta breve, nunca una ubicación inventada.
+- No afirmar que Waze está sincronizado: los Deep Links sólo abren Waze y el Transport SDK exige asociación comercial, aplicación nativa aprobada y atribución visible.
 - Solicitar y guardar el destino exacto sólo con consentimiento; `Pradera` por sí solo no identifica una vivienda.
 - Mantener la clave en servidor y activar facturación/cuotas antes de publicar.
 - Informar origen, destino entendido, minutos estimados, demora y hora de cálculo; nunca inventar tráfico actual.
 - Permitir abrir Waze o Maps únicamente como acción separada y voluntaria si el usuario luego desea navegación.
+- Tiempo agotado, proveedor caído, cuota, falta de GPS o falta de permiso producen una explicación recuperable y permiten continuar la conversación bilateral.
 
 ### Condiciones de cierre futuro
 
-Este pendiente sólo podrá cerrarse con destino exacto validado, proveedor y facturación activos, pruebas de ETA real en Guatemala, límites de privacidad, manejo de error/sin GPS y explicación añadida al Manual.
+Este pendiente sólo podrá cerrarse con destino exacto validado, proveedor y facturación activos, varias pruebas de ETA real en Guatemala comparadas a la misma hora contra Waze, límites de privacidad, manejo de error/sin GPS, conversación bilateral prolongada en iPhone y explicación añadida al Manual. La batería simulada V324 no sustituye esa validación física.
 
 ### Frases para localizar este pendiente
 
 `tráfico`, `tránsito`, `Waze`, `Pradera`, `tiempo para llegar`, `ETA`, `ir a mi casa`, `pendientes por hacer`.
+
+## PEND-SKI-006 · Juegos y apuestas: Skins, Wolf, Vegas y Dots
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** V330-R3 APROBÓ SELECCIÓN ÚNICA EN IPHONE · V331 PREVIEW READY · V332 MONEDA DUAL Y MATRIZ COMPLETA APROBÓ BANCO INTEGRAL
+**Prioridad:** Función nueva solicitada por el propietario
+
+### Objetivo
+
+Agregar **Skins, Wolf, Vegas y el módulo maestro de apuestas** dentro de la arquitectura única de Golf Score Card GT, reutilizando registro, campos, handicap, captura manual y por voz, persistencia, historial y tarjeta final.
+
+### Avance real V329/V330/V331/V332
+
+- La ventana de Configuración quedó dividida en dos columnas: modalidades existentes a la izquierda y juegos nuevos a la derecha. La pantalla principal de la tarjeta no cambió de formato.
+- Skins admite de dos a seis jugadores, Gross o Neto, unidad monetaria configurable y tres políticas explícitas de empate: acumular, dividir o anular. Resuelve X, hoyo 18, saldos cero-suma y carry final.
+- Wolf admite de tres a seis jugadores como adaptación de grupo. V331 elimina la duplicidad `Solo base`/`Lone`: sólo ofrece Con pareja, Lobo solitario y Lobo ciego; configura Wolf primero/último, multiplicadores, unidad y tope por rival/hoyo. Muestra riesgo, decisión y score pendientes, carry, unidades netas, dinero movido y liquidación; bloquea el cierre si falta una decisión.
+- Vegas admite cuatro o seis jugadores; con seis utiliza tres parejas y compara cada pareja contra las otras dos. V331 explica y muestra cada número por hoyo, maneja 10+4 como 104, permite acordar si dos birdies cancelan o aplican ambos volteos, registra águila, tope, puntos movidos, saldo y liquidación cero-suma. La variante de seis queda identificada como adaptación propia.
+- Dots admite de dos a seis jugadores. V331 añade una definición en español a cada evento, separa puntos positivos/negativos y registros automáticos/manuales. Ferret queda apagado por defecto porque puede duplicar Chippie; `Amigo`, izquierda y derecha continúan como reglas propias del grupo apagadas.
+- Match Play y Four Ball aceptan ahora hasta seis jugadores. Cuando se arman parejas, las posiciones 1–2, 3–4 y 5–6 forman las parejas Verde, Oro y Azul; cada Match se resuelve de forma independiente y Four Ball compara el mejor Neto de cada pareja.
+- Cada resultado explica ganador, empate, multiplicador, valor de unidad, cobro/pago y saldo. El dinero se mantiene separado del score deportivo.
+- El cierre oficial guarda la configuración y liquidación en el snapshot SHA-256. Una corrección recalcula el juego, preserva el original y actualiza Global, personales, Historial, consultas, respaldo central y restauración.
+- Los bancos `test-v329-skins.mjs` y `test-v330-side-games.mjs` aprobaron reglas, empates, X, límites, tres parejas, cierre, corrección, artefactos, búsqueda, nube, recuperación, voz y ausencia de cambios estructurales en la pantalla principal.
+- La revisión V331 usa 18Birdies y Wolf Golf Scorecard para Wolf; Mashie, 18Birdies y Golf Digest para Vegas; 18Birdies, MyScorecard y SCGA para Dots/Junk; USGA queda como autoridad del hándicap y score deportivo. Las reglas que varían entre grupos se muestran como configurables, nunca como universales.
+- V332 añade a cada juego dos casillas excluyentes `Q · QUETZALES` y `$ · DÓLARES`; la selección queda guardada y se usa en pantalla, voz, snapshot, corrección, tarjeta, Historial, sincronización, restauración y liquidación sin conversión.
+- V332 homologa la matriz común: estado, resueltos/pendientes, acumulados, dinero movido, saldo por jugador/pareja, líder o empate, riesgo útil del juego, neto a liquidar y quién paga a quién.
+
+### Alcance mínimo para diseñar y aprobar
+
+- Definir Skins Gross y Neto, número de jugadores, valor por hoyo y moneda/unidad opcional.
+- Definir antes de programar si los empates acumulan el Skin al hoyo siguiente, se dividen o se anulan.
+- Calcular ganador por hoyo, acumulados pendientes, Skins ganados por jugador y resultado final.
+- Incorporar Wolf con elección de pareja, Lobo solitario, orden rotativo, Gross/Neto, multiplicadores y límites previamente configurados.
+- Incorporar Vegas con parejas, formación del número, volteos/multiplicadores y topes de riesgo definidos antes de iniciar.
+- Crear una sola casilla de **valor de la unidad** y dos radios excluyentes de moneda —Q o $— que alimenten los cálculos económicos sin alterar el score deportivo.
+- Registrar por voz o manual las apuestas de grupo: `Amigo`, caída a izquierda/derecha del fairway, elección de pareja y eventos equivalentes acordados por el grupo.
+- Incluir Dots configurables: Sandy, Greenie, Birdie, Eagle, Barkie, Arnie, Chippie, Poley, Ferret y Snake; permitir activar o desactivar cada uno antes de la ronda.
+- Mostrar saldos por jugador, quién cobra o paga, límites, multiplicadores, acumulados y liquidación final automática y auditable.
+- Mantener scores individuales intactos y separar claramente score deportivo de cualquier valor económico.
+- Permitir anotación manual y por voz mediante el mismo escritor oficial; una consulta nunca debe modificar resultados.
+- Cubrir correcciones retroactivas, X explícita, hoyo 18 con acumulado pendiente, ronda recuperada, exportación e historial.
+- Añadir pruebas automáticas, visuales y físicas antes de declararlo operativo.
+
+### Condiciones restantes para cierre
+
+- ✅ El Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` quedó `READY`: 89 paquetes, 322 fuentes, tres inventarios PDF, cero vulnerabilidades y puerta viva de Reglas con seis fuentes oficiales.
+- ❌ La prueba física V330-R2 rechazó la selección visual: al tocar `WOLF`, abrió su configuración pero `RONDA NORMAL` también permaneció verde.
+- ✅ V330-R3 demostró en iPhone que al elegir `WOLF` sólo Wolf queda verde, Ronda Normal se desmarca y la configuración se abre.
+- ✅ V331 fue publicada en Preview `READY`; la matriz investigada ya está disponible para prueba.
+- ✅ V332 aprueba 89 paquetes, 325 fuentes, tres inventarios PDF, radios Q/$, símbolos, acumulados, riesgos, neto a liquidar, persistencia y tarjetas; falta publicación Preview.
+- ⏳ Confirmar físicamente que acuerdos, estados, métricas, acumulados y liquidaciones sean legibles y operables.
+- Revisar físicamente en iPhone la ventana dividida, seis jugadores, tres parejas, selectores monetarios y controles Dots/Wolf sin tropiezos.
+- Jugar o simular una ronda completa por cada juego en el dispositivo, corregir al menos un hoyo y confirmar tarjetas, Historial y restauración.
+- Sólo después de esos PASS el propietario podrá autorizar el montaje en Producción.
+
+### Frases para localizar este pendiente
+
+`Skins`, `Wolf`, `Vegas`, `Dots`, `Sandy`, `Greenie`, `Birdie`, `Eagle`, `Barkie`, `Arnie`, `Chippie`, `Poley`, `Ferret`, `Snake`, `Amigo`, `izquierda`, `derecha`, `unidad`, `quetzales`, `liquidación`, `juego Skins`, `Skin por hoyo`, `empate acumulado`, `pozo por hoyo`, `modalidad nueva`, `pendientes por hacer`.
+
+## PEND-DID-017 · Una ficha para aprender cada modalidad y esquema
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE DE DISEÑO, REDACCIÓN, VALIDACIÓN Y PUBLICACIÓN
+**Prioridad:** Después de la validación física de V332
+
+### Objetivo
+
+Crear una hoja web/PDF por Ronda Normal, Stableford, Match Play, Four Ball, Práctica, Skins, Wolf, Vegas, Dots y por cada esquema que cambie el cálculo. El lenguaje debe poder entenderlo un niño de 10 años; la versión impresa debe funcionar en blanco y negro y cada ejemplo debe enseñar acuerdos, jugada, estrategia, estado, acumulado y liquidación sin ambigüedades.
+
+La edad de 10 años define sólo la claridad didáctica, no la edad de los jugadores. El dinero quedará siempre incluido en el alcance general de cada hoja —unidad, moneda, multiplicador, tope, cobro, pago y liquidación— con dos opciones excluyentes: **quetzales (`Q`/`GTQ`) o dólares (`$`/`USD`)**. Cada grupo decidirá cuál usa o si juega únicamente con puntos/unidades sin liquidar dinero. Cada operación deberá coincidir exactamente con el motor real de la aplicación y enseñar la matriz completa de estado, acumulado, riesgo, balance y liquidación.
+
+**Especificación completa:** `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md`.
+
+### Frases para localizar este pendiente
+
+`fichas de modalidades`, `cómo se juega`, `niño de 10 años`, `blanco y negro`, `aprender apuestas`, `estrategia`, `ejemplo completo`, `guía por modalidad`, `pendientes por hacer`.
+
+## PEND-WAT-007 · Apple Watch y smartwatches
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE
+**Prioridad:** Función nueva solicitada por el propietario
+
+### Objetivo
+
+Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posterior, con relojes **Wear OS**, para consultar y registrar información esencial durante la ronda sin sacar el teléfono.
+
+### Alcance mínimo para diseñar y aprobar
+
+- Priorizar Apple Watch por el dispositivo objetivo actual; evaluar después Wear OS sin crear motores de score separados.
+- Mostrar hoyo activo, par, jugador o turno, Gross pendiente, Neto y resultado esencial con controles grandes.
+- Permitir dictado o toque rápido de score y enviar la operación al mismo validador, cálculo y guardado de la aplicación principal.
+- Sincronizar de forma recuperable con el iPhone; impedir duplicados, saltos de hoyo o pérdida de datos cuando se interrumpa Bluetooth, Internet o la aplicación.
+- Determinar qué funciones pueden operar sin conexión y cómo reconciliar cambios al recuperar el enlace.
+- Mantener privacidad, permisos explícitos, consumo razonable de batería y pruebas físicas durante una ronda completa.
+- No declarar soporte universal de relojes hasta comprobar modelos, sistemas operativos y limitaciones reales.
+
+### Frases para localizar este pendiente
+
+`Apple Watch`, `Smart Watch`, `smartwatch`, `Wear OS`, `reloj`, `score desde el reloj`, `pendientes por hacer`.
+
+## PEND-HCP-008 · Hándicap oficial ASOGOLF/GHIN
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE DE AUTORIZACIÓN E INTEGRACIÓN OFICIAL
+**Prioridad:** Alta · identidad deportiva y competencia verificable
+
+### Objetivo y condiciones
+
+- Resolver para Guatemala una integración autorizada con **ASOGOLF/GHIN** o el mecanismo oficial que corresponda; no extraer ni presentar un índice como oficial sin permiso y trazabilidad.
+- Evaluar API autorizada, exportación periódica oficial o ingreso manual marcado expresamente como `NO VERIFICADO`.
+- Mantener siempre separado el índice oficial del índice o handicap interno calculado por la aplicación.
+- Guardar fuente, fecha de consulta, vigencia y evidencia; una actualización jamás debe reescribir rondas históricas cerradas.
+- Probar identidad, duplicados, ausencia de conexión, cambio de índice, cálculo de handicap de cancha y privacidad antes de habilitarlo.
+
+### Frases para localizar este pendiente
+
+`ASOGOLF`, `GHIN`, `USGA handicap`, `índice oficial`, `handicap oficial`, `hándicap de cancha`, `pendientes por hacer`.
+
+## PEND-CAM-009 · Campos de golf mundiales
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE
+**Prioridad:** Expansión internacional después de estabilizar voz y datos oficiales
+
+### Objetivo y condiciones
+
+- Incorporar búsqueda y selección de campos mundiales mediante proveedor autorizado, con nombre, país, ubicación, tees, pares, handicaps de hoyo, yardajes/metros, rating, slope y zona horaria verificables.
+- Conservar los campos guatemaltecos oficiales existentes y evitar duplicados, datos incompletos o tarjetas inventadas.
+- Permitir correcciones versionadas cuando un club cambie tarjeta o tees; conservar la fuente y edición usadas por cada ronda histórica.
+- No afirmar cobertura mundial hasta medir países, idiomas, unidades, licencias, actualización y disponibilidad real.
+
+### Frases para localizar este pendiente
+
+`campos mundiales`, `campos internacionales`, `course database`, `tarjetas oficiales`, `rating`, `slope`, `tees`, `pendientes por hacer`.
+
+## PEND-GPS-010 · GPS de golf y distancias por hoyo
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE · GPS EFÍMERO YA USADO ÚNICAMENTE PARA CLIMA Y TRÁFICO
+**Prioridad:** Función deportiva posterior a fuentes y precisión verificadas
+
+### Objetivo y condiciones
+
+- Mostrar distancia confiable desde la posición autorizada del jugador hacia frente, centro y fondo de green, y posteriormente objetivos aprobados del hoyo.
+- Reutilizar el mismo campo/hoyo activo y no crear otro motor de ronda.
+- Obtener mapas/coordenadas deportivas con licencia, medir precisión, batería y comportamiento sin conexión en campos reales.
+- No almacenar recorrido o ubicación exacta sin consentimiento; separar GPS de golf, GPS climático y origen efímero de tráfico.
+- Probar iPhone, Apple Watch, permisos, señal degradada, bloqueo de pantalla y una ronda completa antes de declararlo operativo.
+
+### Frases para localizar este pendiente
+
+`GPS de golf`, `distancia al green`, `frente centro fondo`, `yardas`, `ubicación del jugador`, `mapa del hoyo`, `pendientes por hacer`.
+
+## PEND-UBI-015 · Detección automática del campo por GPS
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE
+**Prioridad:** Después de verificar coordenadas/perímetros de los campos activos
+
+### Objetivo y condiciones
+
+- Detectar el campo probable con GPS autorizado y un catálogo geográfico verificado, sin confundirlo con las distancias deportivas por hoyo.
+- Proponer el campo y exigir confirmación o permitir cambio manual; nunca sustituir silenciosamente una ronda activa.
+- Resolver señal débil, campos cercanos, permiso denegado, funcionamiento offline, privacidad y pruebas físicas en Guatemala.
+- Especificación completa: `PEND_UBI_015_DETECCION_CAMPO_POR_GPS.md`.
+
+## PEND-RSG-016 · Sincronización verificable de Reglas de Golf
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** PENDIENTE DE DISEÑO/CONDICIONES DE USO
+**Prioridad:** Extensión de `PEND-REG-001`
+
+### Objetivo y condiciones
+
+- Detectar cambios oficiales USGA/The R&A y mantener edición, fecha, fuente, SHA-256, caché versionada y reversión comprobable.
+- Separar Reglas generales, clarificaciones, Comité y Reglas Locales, sin declarar licencia o API privada inexistente.
+- Mantener el modo offline rotulado y conservar la prohibición absoluta de modificar scores o penalidades sin confirmación.
+- Especificación completa: `PEND_RSG_016_SINCRONIZACION_REGLAS_GOLF.md`.
+
+## PEND-NUB-011 · Nube, cuentas, sincronización y seguridad
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** V354 HARDENING INTERNO IMPLEMENTADO; OPERACIÓN CENTRAL, PENTEST Y RESTORE DRILL PENDIENTES
+**Prioridad:** Infraestructura obligatoria antes de operación comercial
+
+### Objetivo y condiciones
+
+- Activar cuentas y roles de propietario, operador y jugador, con recuperación segura y permisos mínimos.
+- Sincronizar rondas, perfiles, torneos, historial y cola local sin duplicar, mezclar ni perder datos cuando falle Internet.
+- Endurecer autenticación, sesiones, cifrado, secretos, auditoría, respaldo, eliminación y respuesta a incidentes.
+- Mantener datos personales, deportivos, ubicación, contactos y apuestas separados por finalidad y consentimiento.
+- Eliminar información local sólo después del acuse íntegro del servidor y conservar una ruta offline recuperable.
+- V354 añade origen estricto en Vercel, cuotas persistentes por IP anonimizada para APIs costosas, límite de SDP, fallo cerrado, headers globales, lockfiles, SBOM, CodeQL y runbook de incidentes/DR. No sustituye pentest, roles, backup real ni prueba de restauración.
+
+### Frases para localizar este pendiente
+
+`nube`, `cuenta`, `sincronización`, `Neon`, `seguridad`, `privacidad`, `respaldo`, `recuperación`, `roles`, `pendientes por hacer`.
+
+## PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
+
+**Fecha de registro:** 27 de agosto de 2026
+**Estado:** V352 CENTRAL Y PREVIEW E2E PASS; V353 CENTRO LIVE LOCAL PASS; PREVIEW/E2E/NAVEGADOR V353 Y PRUEBA FÍSICA IPHONE PENDIENTES
+**Prioridad:** Activa por orden expresa del propietario
+
+### Objetivo y condiciones
+
+- Un visitante sin aplicación ni cuenta puede ver en vivo, y sólo leer, la Score Card que el jugador o responsable haya autorizado.
+- El permiso se define como un jugador o el grupo completo; el servidor vuelve a filtrar los jugadores en cada publicación.
+- El enlace es privado, caduca y puede revocarse. Los secretos se separan entre publicar y mirar, y la base guarda sólo huellas SHA-256.
+- El seguimiento bilateral abre una ventana distinta y no puede tocar la ronda ni el escritor oficial en curso.
+- Un torneo reúne cualquier cantidad necesaria de grupos mediante páginas y cursores, sin máximo fijo de producto; cada Score Card conserva su arquitectura actual de uno a seis jugadores.
+- V353 ofrece dos opciones universales en una ventana separada: `1 · MONITOR GENERAL` para todo el torneo y `2 · MONITOR INDIVIDUAL` para cualquier jugador o grupo; el Individual reutiliza la General sin lecturas adicionales.
+- Cada grupo tiene un único Capitán de Tarjeta. El servidor rechaza un segundo publicador activo con el mismo grupo dentro del torneo.
+- `COMPARTIR ♾️` permite enviar el mismo enlace por cualquier aplicación y a cualquier país, sin máximo fijo de invitados; el vínculo sigue siendo sólo lectura, revocable y con vencimiento.
+- La cola offline guarda sólo la actualización pendiente más reciente y reintenta al volver la señal.
+- Se excluyen contactos, ubicación, audio, IA, clima detallado, códigos privados, juegos y apuestas.
+- Especificación completa: `PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`.
+
+### Frases para localizar este pendiente
+
+`Live`, `seguir jugador`, `seguir grupo`, `torneo en vivo`, `enlace privado`, `visitante sin aplicación`, `rondas bilaterales`, `sin límite de grupos`, `pendientes por hacer`.
+
+## PEND-EST-012 · Estadísticas avanzadas y análisis
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** ESTADÍSTICA LOCAL BÁSICA ENTREGADA; CAPA CENTRAL Y AVANZADA PENDIENTE
+**Prioridad:** Posterior a historial central confiable
+
+### Objetivo y condiciones
+
+- Ampliar Gross, Neto, consistencia y tendencia con fairways, greens en regulación, putts, penalidades, sand saves, scrambling y rendimiento por hoyo/campo/periodo.
+- Permitir captura opcional breve por voz o manual, sin convertir cada hoyo en un formulario obligatorio.
+- Comparar jugador contra sí mismo y grupos autorizados sin exponer información privada.
+- Explicar los cálculos y distinguir dato registrado, inferencia y recomendación del Caddie.
+
+### Frases para localizar este pendiente
+
+`estadísticas`, `fairways`, `GIR`, `putts`, `scrambling`, `sand save`, `tendencia`, `análisis`, `pendientes por hacer`.
+
+## PEND-COM-013 · Monetización y operación comercial
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** V354 CONTROL INTERNO IMPLEMENTADO; PUBLICACIÓN Y COBRO BLOQUEADOS HASTA 11 APROBACIONES EXTERNAS
+**Prioridad:** Final, después de estabilidad, seguridad y cumplimiento
+
+### Objetivo y condiciones
+
+- Definir plan gratuito/pagado, funciones por nivel, pruebas, renovación, cancelación y restauración de compras sin bloquear datos del jugador.
+- Preparar términos de uso, política de privacidad, consentimiento, soporte, conservación y eliminación de datos.
+- Integrar cobro mediante proveedores reales y estados confirmados; no simular pagos ni entregas.
+- Medir costos de IA, clima, tráfico, mapas, almacenamiento y soporte para evitar una operación insostenible.
+- Validar App Store/Google Play, impuestos y reglas comerciales aplicables antes de ofrecer el servicio.
+- Mantener `COMMERCIAL_RELEASE_CONTROL.json` con evidencia y ejecutar el gate comercial; un target Producción debe fallar mientras alguna aprobación esté pendiente.
+- Los borradores LEGAL, licencia, avisos de terceros, SECURITY, SBOM, incidentes, DR, SLO y checklist no equivalen a aprobación de abogado, DPA, permiso de IP, seguro, pentest, ruleset, restore drill ni contrato de proveedor.
+
+### Frases para localizar este pendiente
+
+`monetización`, `suscripción`, `precio`, `pago`, `App Store`, `Google Play`, `términos`, `privacidad`, `soporte`, `pendientes por hacer`.
+
+## PEND-QA-014 · Banco final y certificación integral
+
+**Fecha de registro:** 26 de agosto de 2026
+**Estado:** CONTINUO · CADA MÓDULO DEBE SUPERAR SU PROPIA PUERTA
+**Prioridad:** Obligatoria antes de cada montaje
+
+### Objetivo y condiciones
+
+- Ejecutar regresión automática completa de una a seis personas, 18 hoyos, todas las modalidades, manual/voz, recuperación, historial, exportaciones y errores de proveedor.
+- Añadir pruebas visuales en tamaños reales de iPhone/Android/Apple Watch y pruebas físicas con ruido, acentos, pausas, llamadas, bloqueo, segundo plano y conexión intermitente.
+- Probar una ronda completa por cada función nueva, incluyendo correcciones retroactivas, duplicados, cierre, reapertura y batería.
+- Registrar evidencia, versión, dispositivo, fecha y resultado; ningún banco simulado sustituye la puerta física correspondiente.
+- Mantener Producción intacta hasta PASS completo y autorización expresa `MÓNTALO` del propietario.
+
+### Frases para localizar este pendiente
+
+`banco de pruebas`, `certificación`, `prueba física`, `cero errores`, `100%`, `montarlo`, `pendientes por hacer`.

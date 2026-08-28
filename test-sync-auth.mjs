@@ -1,13 +1,9 @@
 import assert from "node:assert/strict";
-import { requireSyncToken } from "./api/_lib/http.js";
+import { readFileSync } from "node:fs";
 
-const previous=process.env.SYNC_API_TOKEN;
-process.env.SYNC_API_TOKEN="test-secret-token";
-assert.doesNotThrow(()=>requireSyncToken({headers:{"x-sync-token":"test-secret-token"}}));
-assert.doesNotThrow(()=>requireSyncToken({headers:{cookie:"other=x; gscg_sync_session=test-secret-token"}}));
-assert.throws(()=>requireSyncToken({headers:{"x-sync-token":"bad"}}),/UNAUTHORIZED/);
-delete process.env.SYNC_API_TOKEN;
-assert.throws(()=>requireSyncToken({headers:{}}),/SYNC_AUTH_NOT_CONFIGURED/);
-if(previous===undefined)delete process.env.SYNC_API_TOKEN;else process.env.SYNC_API_TOKEN=previous;
+const syncApi=readFileSync("api/sync.js","utf8"),http=readFileSync("api/_lib/http.js","utf8");
+assert.match(syncApi,/requireAccountSession/);
+assert.doesNotMatch(syncApi,/requireSyncToken|SYNC_API_TOKEN|SYNC_AUTH_NOT_CONFIGURED/);
+assert.doesNotMatch(http,/requireSyncToken|SYNC_API_TOKEN|SYNC_AUTH_NOT_CONFIGURED|gscg_sync_session/);
 
-console.log("PASS autenticación sync: encabezado o sesión HttpOnly, comparación segura");
+console.log("PASS autenticación sync: sesión de cuenta Neon; mecanismo legado eliminado");

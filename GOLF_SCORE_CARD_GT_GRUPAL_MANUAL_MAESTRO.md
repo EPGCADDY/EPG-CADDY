@@ -4,8 +4,8 @@
 
 **Documento:** fuente operativa de verdad de la tarjeta grupal  
 **Estado:** vivo y obligatorio  
-**Versión documentada:** V321
-**Fecha de corte:** 25 de agosto de 2026
+**Versión documentada:** V330
+**Fecha de corte:** 26 de agosto de 2026
 **Rama operativa:** `main` (Producción vigente)
 **Aplicación:** `index-grupal.html`  
 **Responsable de producto:** Dirección de producto
@@ -1110,7 +1110,7 @@ Probar como mínimo:
 
 #### AI UNIVERSAL ∞
 
-**Estado:** `OPERATIVO` en voz y texto.
+**Estado:** `V326-R2 RECHAZADA EN IPHONE · V327 EN BANCO`; después de unas seis consultas, una búsqueda sobre una persona conocida en Colima y otra ruta de tráfico demostraron un corte al devolver herramientas a la voz. No fue una limitación de vocabulario: el servidor completó la investigación.
 
 - El botón `AI ∞` acepta texto y todos los micrófonos aceptan conversación natural después de una apertura manual.
 - La aplicación distingue primero órdenes locales de registro, navegación, score y consulta de tarjeta. Todo lo demás llega al modelo avanzado mediante API.
@@ -1120,7 +1120,25 @@ Probar como mínimo:
 - Para información cambiante puede consultar la Web y presentar fuentes; diferencia hechos confirmados, estimaciones, opiniones e hipótesis y nunca inventa datos.
 - Cambia automáticamente de idioma y profundidad. Si falta un dato indispensable, realiza una sola pregunta breve.
 - Sus límites reales son seguridad, privacidad, legalidad, veracidad, acceso disponible y capacidad técnica. Una consulta médica, legal o financiera no sustituye a un profesional.
-- El micrófono nunca se abre solo. Tras la respuesta espera tres segundos para un seguimiento; si no lo hay, se cierra.
+- El micrófono nunca se abre solo. Para órdenes de la tarjeta usa VAD operativo de 0.2, prefijo de 700 ms y cierre tras 1,000 ms de silencio. La evidencia de iPhone rechazó el VAD semántico de baja urgencia porque podía mantener el círculo rojo sin cierre. V326 usa para AI UNIVERSAL ∞ un perfil conversacional separado con los mismos umbral y prefijo, pero 2,200 ms de silencio: acepta pausas naturales y entrega un final determinista.
+- Si Realtime recibe inicio de voz pero no entrega final ni deltas durante 15 segundos, V326 desmonta la captura atascada, apaga el estado rojo e indica que debe repetirse la pregunta. Los deltas reales renuevan esa vigilancia hasta un límite duro de 90 segundos por turno. Si la transcripción ya terminó pero la respuesta no comienza, un segundo guardián recupera la conversación a los 30 segundos. Nunca debe quedar pensando o escuchando indefinidamente.
+- V327 mantiene el guardián después de `speech_stopped` hasta que llega la transcripción. En consultas de clima, tráfico o Web, distingue el cierre de la primera respuesta técnica del audio final aunque iPhone omita `response_id`; la reproducción queda vigilada durante 60 segundos y un canal perdido muestra recuperación en vez de guardar silencio.
+- V327 registra salud técnica sin contenido: etapa, build, pantalla, número de turno, tiempo, herramienta y banderas de transición. Nunca registra preguntas, transcripciones, nombres, coordenadas ni claves.
+- El tráfico real El Pulté Golf → Pradera Concepción quedó calculable; si el usuario dice solamente `Concepción`, AI UNIVERSAL ∞ hace una pregunta breve pidiendo nombre completo, zona o municipio en lugar de adivinar.
+- Los conocimientos estables y cálculos aproximados, incluido el consumo eléctrico de un aire acondicionado, se responden directamente con supuestos y fórmula. La búsqueda Web sólo se abre cuando el usuario pide tarifa, precio, modelo o dato vigente.
+- Durante la respuesta el micrófono permanece disponible para una interrupción bilateral confirmada: arma el corte a los 250 ms, exige al menos ocho caracteres reconocidos y descarta eco. Al terminar la voz vuelve inmediatamente a escuchar. Sólo 30 minutos completos de inactividad cierran la conversación.
+
+#### Centro REGLAS · USGA / The R&A
+
+- V328 agrega el botón global `REGLAS` sin crear otra aplicación ni otro motor de scores. Abre el mismo panel de AI UNIVERSAL ∞ con texto, micrófono, historial temporal y controles `ESCUCHAR`, `DETENER`, `REPETIR`, `SILENCIAR` y `CONTINUAR`.
+- Una pregunta reglamentaria hablada o escrita usa `get_official_golf_rule` y `/api/golf-rules`. La búsqueda queda restringida técnicamente a `usga.org` y `randa.org`, incluidos sus subdominios oficiales; una respuesta sin fuente oficial se rechaza.
+- La aplicación toma como base la edición **Rules of Golf 2023** y verifica las clarificaciones oficiales vigentes. El corte comprobado el 26 de agosto de 2026 corresponde a la actualización del **1 de julio de 2026**.
+- La respuesta recibe sólo el nombre del campo y la modalidad activa como contexto informativo. Debe distinguir stroke play, Match Play, Stableford, Four-Ball, Reglas Locales y decisiones del Comité.
+- Consultar una Regla nunca ejecuta el analizador local de órdenes, cambia un score, aplica una penalidad, concede un hoyo ni cierra la ronda. Si el jugador decide modificar la tarjeta, debe dar después una orden separada y explícita.
+- La interfaz muestra enlaces oficiales a USGA y The R&A y las fuentes concretas de cada respuesta. No copia el libro completo ni afirma una alianza, licencia de marca o API privada inexistente.
+- El banco V328 prueba 15 situaciones: fuera de límites, bola provisional, áreas de penalidad, bola injugable, búnker, green, bola equivocada, orden de juego, Match Play, Four-Ball, Stableford, agua temporal, bola empotrada, influencia animal y Reglas Locales.
+- V328-R2 incorpora un modo básico sin conexión honesto: reutiliza únicamente respuestas oficiales ya confirmadas y guardadas en el dispositivo, conserva hasta 24 durante 90 días, no almacena la pregunta completa, exige coincidencia y modalidad compatibles, muestra la fecha y no inventa cuando falta una respuesta adecuada.
+- La página 73 del manual fue regenerada; el PDF completo conserva 74 páginas, 2160 × 4320 px y 300 dpi. Sigue pendiente la prueba física hablada antes de cerrar `PEND-REG-001`.
 
 ### 21.5 Persistencia
 
@@ -1298,7 +1316,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 - Puntuación automática por hoyo: doble bogey o más `0`; bogey `1`; par `2`; birdie `3`; eagle, albatros o mejor `4`. El valor máximo por hoyo queda limitado a cuatro puntos.
 - `X`, `EQUIS` o `LEVANTA` registra el hoyo levantado con cero puntos y sin fabricar un Gross.
 - La voz acepta `Nombre + Gross` en el hoyo activo; el número de hoyo es opcional y únicamente reposiciona el cursor. Acepta bloques consecutivos, X explícita y la respuesta contextual posterior a `Falta NOMBRE`. No reparte tiros de handicap. El ingreso manual y el dictado terminan en la misma secuencia oficial de cálculo, guardado, render y cierre hablado. Al completar los hoyos 1–9 por cualquiera de los dos controles anuncia automáticamente `Primera vuelta` y, en orden de registro, el nombre, Gross y Puntos de cada jugador. Al completar los hoyos 10–18 anuncia `Segunda vuelta` con nombre, Gross y Puntos de cada jugador y luego `Total` con nombre, Gross y Puntos acumulados de cada jugador. Cada cierre se pronuncia una sola vez.
-- El recordatorio `Falta NOMBRE` conserva los dos segundos aprobados, pero el tiempo comienza únicamente después de una transcripción final y de comprobar inactividad real. Queda bloqueado y se cancela mientras existe voz activa, delta parcial, transcripción pendiente, watchdog, finalización, salida hablada o aplicación viva de scores. General y Stableford comparten los mismos cuatro segundos de continuidad y diez segundos de vigilancia; no existen excepciones de tiempos por modalidad.
+- El recordatorio `Falta NOMBRE` conserva dos segundos de inactividad y una confirmación adicional de 450 ms, pero el tiempo comienza únicamente después de una transcripción final y de comprobar inactividad real. Queda bloqueado y se cancela mientras existe voz activa, delta parcial, transcripción pendiente, watchdog, finalización, salida hablada o aplicación viva de scores. General y Stableford comparten VAD operativo de un segundo y vigilancia de diez segundos; AI UNIVERSAL ∞ usa por separado el cierre conversacional determinista V326 de 2.2 segundos, con guardianes de entrada y respuesta.
 - Antes de cualquier reporte de primera vuelta, segunda vuelta o total, la aplicación cierra automáticamente el micrófono. El micrófono permanece cerrado durante y después de la lectura para que conversaciones externas no interrumpan, alteren ni reinicien el reporte.
 - Todos los rótulos visuales de las tarjetas oficial, digital, General, Stableford, Control Manual y artefactos Global/personales utilizan exclusivamente `OUT`, `IN` y `TOTAL`. Las expresiones habladas `Primera vuelta` y `Segunda vuelta` se conservan únicamente dentro del vocabulario de cierre aprobado.
 - Al cierre oficial, la ronda conserva un snapshot con SHA-256 y guarda en el historial el campo, la fecha y hora, el torneo, la categoría, los jugadores, los 18 hoyos, Gross y Puntos; además actualiza la clasificación acumulada de su categoría.
@@ -1313,29 +1331,49 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 
 La modalidad se identifica en todas las pantallas únicamente como **FOUR BALL**. El nombre no incorpora una cantidad fija de parejas; la organización de la partida se muestra dentro del registro cuando corresponde.
 
-- La partida acepta una pareja de dos jugadores o dos parejas con cuatro jugadores. Jugadores 1–2 forman la **Pareja Verde** y los jugadores opcionales 3–4 forman la **Pareja Oro**.
+- La partida acepta una, dos o tres parejas: jugadores 1–2 forman la **Pareja Verde**, 3–4 la **Pareja Oro** y 5–6 la **Pareja Azul**.
 - Cada jugador juega su propia bola. La entrada manual y la voz registran exclusivamente su **Gross** individual.
 - La aplicación calcula automáticamente el handicap y el **Neto** de cada jugador; después selecciona el menor Neto de cada pareja como la bola que cuenta.
-- Con una pareja, el resultado acumula el mejor Neto de esa pareja por hoyo. Con dos parejas, el mejor Neto Verde se compara con el mejor Neto Oro; el menor gana el hoyo y resultados iguales lo empatan.
+- Con una pareja, el resultado acumula el mejor Neto de esa pareja por hoyo. Con dos o tres parejas, cada pareja se compara con las demás; el menor Neto gana la comparación y resultados iguales la empatan.
 - La tarjeta identifica con `★ MEJOR` al jugador o jugadores que aportan la mejor bola de su pareja.
 - El marcador acumulado muestra `EVEN`, `+1`, `+2`, `−1`, etc. Si un hoyo se empata, mantiene exactamente la posición anterior hasta que otro resultado la cambie. Los hoyos futuros permanecen pendientes.
-- Cuando hay dos parejas, el match termina anticipadamente si la ventaja supera los hoyos restantes; con una pareja, la tarjeta termina al completar 18.
-- Una línea vacía separa ambas parejas en registro, tarjeta, resumen y archivos exportados.
+- Cada comparación entre parejas termina anticipadamente si la ventaja supera los hoyos restantes; con una sola pareja, la tarjeta termina al completar 18.
+- Una línea vacía separa las parejas en registro, tarjeta, resumen y archivos exportados.
 - El cierre oficial guarda campo, fecha, torneo, parejas, jugadores, Gross, handicap, Neto, mejor bola y resultado. Genera una Global y una personal por jugador en Historial, imagen, PDF y paquete completo.
 
 ### Match Play por parejas de juego
 
 - La modalidad se identifica únicamente como **MATCH PLAY**, sin `HDCP` en el nombre visible.
-- Acepta una pareja de juego (jugadores 1–2) o dos parejas de juego (jugadores 1–2 y 3–4).
-- Cada pareja disputa un Match independiente por Neto; un Match puede terminar antes que el otro.
-- Con dos parejas, una línea vacía las separa en registro, tarjeta, resumen y exportación.
+- Acepta una, dos o tres parejas de juego: Verde 1–2, Oro 3–4 y Azul 5–6.
+- Cada pareja disputa un Match independiente por Neto; un Match puede terminar antes que los demás.
+- Una línea vacía separa cada pareja en registro, tarjeta, resumen y exportación.
 - Los campos HCP, Gross y Neto permanecen dentro de cada tarjeta y el cálculo no cambia.
 - En la voz de primera vuelta, segunda vuelta y total, `UP`, `DOWN` y `AS` se pronuncian respectivamente **arriba**, **abajo** y **empatado**.
+
+### Skins, Wolf, Vegas y Dots
+
+La pantalla `Configura la ronda` muestra dos columnas sin cambiar la tarjeta principal: modalidades existentes a la izquierda y juegos nuevos a la derecha. Todos los valores económicos son auxiliares; nunca reemplazan Gross, handicap, Neto ni el resultado deportivo.
+
+- **Skins:** dos a seis jugadores, Gross o Neto. Antes de empezar se elige moneda, valor por hoyo y tratamiento de empate: acumular, dividir o anular. La tarjeta muestra ganador, bolsa del hoyo, carry pendiente y saldo final.
+- **Wolf:** tres a seis jugadores como adaptación de grupo. El Wolf rota por hoyo y se define pareja, Solo, Lone o Blind. Pareja y Solo usan la unidad base, Lone multiplica ×2 y Blind ×3 de forma predeterminada. Cada ganador cobra la unidad del hoyo a cada rival perdedor. El empate vale cero salvo que se active expresamente el carry de grupo. No se permite cerrar la ronda si falta definir un hoyo.
+- **Vegas:** cuatro o seis jugadores; seis significa tres parejas. Los dos Netos de cada pareja forman el menor número posible. Cada pareja se compara contra las otras, el menor número gana y el empate no mueve dinero. Volteo, águila y tope se configuran antes de iniciar; `EAGLE` duplica la diferencia en este reglamento visible.
+- **Dots:** dos a seis jugadores. Cada evento manual activo suma o resta sus puntos configurados; Birdie y Eagle pueden calcularse automáticamente. Sandy, Greenie, Barkie, Arnie, Chippie, Poley, Ferret y Snake son configurables. `Amigo`, izquierda y derecha aparecen como reglas del grupo y empiezan apagadas.
+- **Correcciones:** cambiar oficialmente un Gross recalcula la liquidación. La versión anterior permanece disponible y la nueva recibe su propio SHA-256.
+- **Tarjetas e Historial:** la Global y las personales muestran configuración, resultado y saldo; la búsqueda, las estadísticas locales, el respaldo central y la restauración conservan el mismo snapshot.
+- **Seguridad:** ningún juego mueve dinero real ni procesa pagos. Sólo calcula unidades acordadas entre los jugadores.
 
 ## 28. Historial inicial del documento
 
 | Fecha | Versión | Registro |
 |---|---|---|
+| 2026-08-26 | Manual 3.79 / App V330 | Wolf, Vegas y Dots operativos; pantalla de opciones dividida sin alterar la tarjeta principal, hasta seis jugadores y tres parejas, unidad monetaria, empates, multiplicadores, topes, eventos configurables, cierre protegido, correcciones, tarjetas, Historial, voz, nube y restauración. Banco local y Preview técnico `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` aprobados; revisión visual/táctil y prueba física siguen pendientes. |
+| 2026-08-26 | Manual 3.78 / App V329 | Skins Gross/Neto de dos a seis jugadores con valor GTQ, empate acumulado/dividido/anulado, X, carry final, saldo cero-suma, cierre firmado y corrección versionada. |
+| 2026-08-26 | Manual 3.77 / App V328-R2 | Modo básico sin conexión para REGLAS: reutiliza respuestas oficiales confirmadas en el dispositivo, con fecha, fuente, límite de 24, vigencia de 90 días, coincidencia por modalidad y cero escritura; no conserva la consulta completa ni inventa si no existe una respuesta adecuada. Voz física permanece pendiente. |
+| 2026-08-26 | Manual 3.76 / App V328 | Centro REGLAS integrado en AI UNIVERSAL ∞ por texto y voz; búsqueda limitada a USGA/The R&A, edición 2023 y clarificaciones vigentes, fuentes visibles y aislamiento absoluto de scores/penalidades. Banco de 15 situaciones y manual de 74 páginas aprobado; continúan abiertos Preview, voz física y consulta básica offline. |
+| 2026-08-26 | Manual 3.75 / App V327 | Rechazada V326-R2 tras aproximadamente seis preguntas físicas: investigación web y tráfico completaban en servidor, pero un cierre tardío sin ID podía apagar el follow-up antes del audio. V327 conserva vigilancia hasta transcripción, protege la transición herramienta→voz, añade guardián de reproducción de 60 s y telemetría técnica sin contenido privado. El banco dirigido cubre 550 secuencias y 100 eventos; aún falta Preview, regresión completa y PASS físico prolongado. |
+| 2026-08-26 | Manual 3.74 / App V326 | Rechazada V325 después de dos silencios reales con micrófono rojo en iPhone. AI UNIVERSAL ∞ cambia de final semántico indefinido a `server_vad` conversacional 0.2/700/2,200 ms; añade guardián de entrada 15 s con límite duro 90 s, guardián de respuesta 30 s y respuesta directa para cálculos estables como consumo eléctrico de A/C. Se prohíbe montaje hasta repetir tráfico El Pulté-Oakland 12:30 PM, consumo A/C y conversación multitema prolongada. |
+| 2026-08-26 | Manual 3.73 / App V325 | Separados los tiempos del micrófono: órdenes y scores conservan VAD operativo de 0.2/700/1,000 ms; AI UNIVERSAL ∞ usa `semantic_vad` con urgencia baja para respetar pausas naturales. La interrupción bilateral conserva guardia de 250 ms, confirmación mínima de ocho caracteres, protección de eco por 1,800 ms, reescucha inmediata y cierre sólo tras 30 minutos sin actividad. Se registra además como trabajo futuro el enlace oficial/autorizado con USGA y Reglas de Golf, la modalidad Skins y soporte Apple Watch/Wear OS. La aprobación comercial sigue pendiente de prueba física prolongada en iPhone. |
+| 2026-08-26 | Manual 3.72 / App V324 | AI UNIVERSAL ∞ incorpora tráfico vehicular real o proyectado mediante Google Maps Routes en modo `TRAFFIC_AWARE_OPTIMAL`: entiende origen, destino y hora por voz o texto, solicita GPS cuando el usuario dice `aquí`, responde ETA, demora, distancia y hora de cálculo sin mostrar mapa ni conservar coordenadas en el historial. No se presenta como Waze. Fallo, timeout o permiso denegado permiten continuar la conversación. La función permanece pendiente de credencial/facturación y de comparación física en Guatemala e iPhone antes de declararse lista para montar. |
 | 2026-08-25 | Manual 3.69 / App V321 | Integrada AI UNIVERSAL ∞ mediante API de modelo avanzado: comunicación por voz y texto sin catálogo temático cerrado, contexto temporal, búsqueda Web para datos cambiantes, fuentes visibles, adaptación de idioma y nivel, separación automática entre órdenes de la tarjeta y consultas generales, y controles ESCUCHAR, DETENER, REPETIR, SILENCIAR y CONTINUAR. Las 200 áreas validadas son pruebas, nunca límites. |
 | 2026-08-25 | Manual 3.68 / App V315 | El Caddie entiende cualquier frase que no sea una operación válida de tarjeta, incluso situaciones contadas sin pregunta perfecta; conversa sobre cualquier tema, investiga datos actuales mediante búsqueda web y muestra fuentes. La respuesta normal comienza tras aproximadamente un segundo de silencio. Mientras habla puede ser interrumpido por la voz del jugador. Al terminar espera tres segundos y cierra el micrófono si no hay seguimiento; nunca lo abre solo. El pronóstico llega hasta 16 días e incluye intervalos y hora pico de lluvia. |
 | 2026-08-25 | Manual 3.67 / App V314 | El mismo Caddie universal queda disponible en todos los micrófonos visibles, incluida la primera pantalla, sin cambio de modo y siempre bajo apertura manual. La primera pantalla muestra automáticamente la condición meteorológica mediante GPS del teléfono, con respaldo del campo, sin activar el micrófono. Se registran como pendientes separados la Guía Rápida derivada del Manual y el tiempo vehicular sin mapa; este último requiere destino exacto y un servicio de rutas con tráfico, por lo que no se declara operativo. |

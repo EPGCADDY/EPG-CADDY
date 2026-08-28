@@ -1,6 +1,7 @@
 import { authCookies, neonAuthRequest, sameOriginAuthCookie } from "./_lib/account-auth.js";
-import { handleAppPreflight, isAllowedAppOrigin, isNativeAppOrigin } from "./_lib/cors.js";
+import { handleAppPreflight, isNativeAppOrigin } from "./_lib/cors.js";
 import { noStore, readJson } from "./_lib/http.js";
+import { guardAppRequest } from "./_lib/api-guard.js";
 
 const ACTIONS={
   session:{method:"GET",path:"/get-session"},
@@ -19,10 +20,10 @@ function credentials(value,signup=false){
 export default async function handler(req,res){
   noStore(res);
   if(handleAppPreflight(req,res))return;
-  const action=String(req.query?.action||"").toLowerCase(),route=ACTIONS[action];
+  const action=String(new URL(req.url||"/","https://golf-score-card.invalid").searchParams.get("action")||"").toLowerCase(),route=ACTIONS[action];
   if(!route||req.method!==route.method){res.setHeader("Allow",route?.method||"GET, POST");return res.status(405).json({ok:false,code:"METHOD_NOT_ALLOWED"})}
   try{
-    if(req.method!=="GET"&&!isAllowedAppOrigin(req))return res.status(403).json({ok:false,code:"ORIGIN_NOT_ALLOWED"});
+    if(req.method!=="GET"&&!(await guardAppRequest(req,res,{scope:`account-${action}`,maximum:action==="signout"?30:10})))return;
     let body=null;
     if(action==="signup"||action==="signin")body=credentials(await readJson(req,32_000),action==="signup");
     else if(action==="signout")body={};

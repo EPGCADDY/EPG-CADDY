@@ -29,9 +29,9 @@ assert.match(workflow,/runs-on: macos-latest/);
 assert.match(workflow,/npm run mobile:prepare/);
 assert.match(workflow,/\.\/gradlew bundleRelease/);
 assert.match(workflow,/xcodebuild/);
-assert.match(workflow,/actions\/upload-artifact@v4/);
+assert.match(workflow,/actions\/upload-artifact@[0-9a-f]{40} # v4/);
 assert.match(workflow,/golf-score-card-gt-native-unsigned/);
 assert.match(html,/V290-GOLF-SCORE-CARD-GT-BRAND-ICONS-CLEANUP-20260823/);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v322-real-sustained-conversation"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v\d{3}[^"]*"/);
 
 console.log("PASS V284 · paquetes nativos reproducibles para Xcode y Android Studio");

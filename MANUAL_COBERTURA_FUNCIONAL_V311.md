@@ -1,83 +1,78 @@
-# Matriz de cobertura funcional del Manual SCG V311
+# Matriz de cobertura funcional del Manual · candidato V334
 
-Estado: **en verificación**. Ninguna afirmación de cobertura total es válida hasta que la auditoría maestra, el control visual, la prueba semántica y las simulaciones de recuperación obtengan PASS sobre el mismo artefacto.
+Estado real: **en reconstrucción controlada**. Esta matriz enumera el orden didáctico del mismo candidato que debe superar controles gráfico, editorial, semántico, PDF, búsqueda y navegador. No equivale a aprobación física ni autoriza Producción.
 
 ## Funciones vigentes y página donde se explican
 
-| Función del usuario | Página principal | Recuperación o atasco | Prueba técnica relacionada |
-|---|---:|---:|---|
-| Selección de campo, modalidad y torneo | 01 | 36 | `test-v272-definitive-operational-release.mjs` |
-| Registro General por voz o manual | 02 y 17 | 37 | `test-v305-registration-guides-parser-truth.mjs` |
-| Confirmación antes de iniciar | 03 | 36 | `test-v304-homogeneous-registration-actions.mjs` |
-| Registro Stableford | 04 | 36–37 | `test-v252-stableford-persistence-category-course.mjs` |
-| Score Card - Práctica | 05 | 38–40 | `test-score-engine.mjs` |
-| Ronda General | 06 | 38–42 | `test-v267-scorecard-combination-matrix.mjs` |
-| Control Manual, ENTER, hoyos y X | 07 y 19 | 39–40 | `test-v276-manual-hole-navigation.mjs` |
-| Match Play de una o dos parejas | 08 | 40, 42 y 48 | `test-v306-match-play.mjs` |
-| Four Ball de una o dos parejas | 09 | 40 y 49 | `test-v309-four-ball.mjs` |
-| Información de siete campos | 10–16 | 36 | `test-course-catalog.mjs` |
-| Dictado de scores y avance automático | 18 | 38–40 | `test-v270-consecutive-hole-voice-blocks.mjs` |
-| Gross, HDCP, Neto, +/−, OUT, IN y TOTAL | 20 | 39–40 | `test-score-engine.mjs` |
-| Consultas por voz de hoyo, vuelta y total | 21 | 38 | `test-voice-continuity.mjs` |
-| Inicio, TIMER, micrófono y apagado por 30 minutos sin instrucciones | 22 | 47 | `test-round-clock.mjs` y `test-v311-timer-inactivity.mjs` |
-| Ronda Previa, Ronda Actual y persistencia | 23 | 41 | `test-v253-live-previous-round.mjs` |
-| Nueva Ronda y Borrar Scores | 24 | 41 y 50 | `test-v289-stableford-new-round-empty.mjs` |
-| Atrás, revisar datos y + Jugador | 25 | 41 | `test-v263-compact-players-back-button.mjs` |
-| Tarjeta Digital Global y personal | 26 | 42 | `test-card-artifacts.mjs` |
-| Finalización y cierre oficial | 27 | 42 | `test-round-closure.mjs` |
-| Imagen, PDF, PDF TODAS y compartir | 28 | 43 | `test-v278-card-image-pdf-export.mjs` |
-| Corrección oficial y original preservado | 29 | 42 | `test-v277-official-round-corrections.mjs` |
-| Historial y filtros | 30 | 44 | `test-v279-local-card-library.mjs` |
-| Estadísticas históricas | 31 | 45 | `test-v280-local-history-insights.mjs` |
-| Resultado oficial Stableford | 32 | 45 | `test-stableford.mjs` |
-| Cuenta, respaldo y recuperación | 33 | 46 | `test-v282-optional-account-backup.mjs` |
-| Instalación, modo sin conexión y actualización | 34 | 47 | `test-v281-pwa-installation.mjs` |
-| Seguridad, límites y glosario | 35 | 50 | `test-no-automatic-x.mjs` |
-| Registro hablado General: frase, números y marcas | 51 y 53 | 70 | `test-v305-registration-guides-parser-truth.mjs` |
-| Corrección, alta y baja de jugadores por voz | 52 | 70 | `test-v311-manual-voice-map.mjs` |
-| Registro hablado Stableford y Práctica | 54–55 | 37 y 70 | `test-v305-registration-guides-parser-truth.mjs` |
-| Score por dígito, número hablado u hoyo explícito | 56–57 | 38–40 y 70 | `test-v267-one-operational-line.mjs` |
-| Vocabulario oficial Águila–Doble Par | 58 | 38 y 70 | `test-v311-manual-voice-map.mjs` |
-| X, Equis, Sin Score y Sin Resultado | 59 | 39–40 | `test-no-automatic-x.mjs` |
-| Preguntas por hoyo y varios hoyos | 60 | 70 | `test-v311-manual-voice-map.mjs` |
-| Acumulado, marcador y resultado actual | 61 | 70 | `test-v311-manual-voice-map.mjs` |
-| Alcances: primera/segunda vuelta, hasta hoyo y rango | 62 | 70 | `test-v311-manual-voice-map.mjs` |
-| Líder, posiciones y comparación | 63 | 70 | `test-v311-manual-voice-map.mjs` |
-| Birdies, pares, bogeys, pendientes y tiros recibidos | 64 | 70 | `test-v311-manual-voice-map.mjs` |
-| Historial hablado/escrito y filtros combinables | 65–66 | 45 y 70 | `test-v280-local-history-insights.mjs` |
-| Reporte hablado Match Play en español | 67 | 48 y 70 | `test-v306-match-play.mjs` |
-| Reporte hablado Four Ball en español | 68 | 49 y 70 | `test-v309-four-ball.mjs` |
-| Navegación hablada y STOP | 69 | 70 | `test-v311-manual-voice-map.mjs` |
-| Error de voz y recuperación sin pérdida | 70 | 38–40 y 50 | `test-v311-manual-voice-map.mjs` |
-| Mapa de capacidades y significado de respuestas | 71–72 | 70 | `test-v311-manual-semantic-coverage.mjs` |
-| Índice por categorías y lupa con preguntas completas | Visor web | 71–72 | `test-v311-manual-search.mjs` |
-| Asistente de micrófono para ayuda y navegación segura | 69 y 71–72 | 70 | `test-v311-voice-assistant.mjs` |
-| AI UNIVERSAL ∞ por voz y texto, contexto, Web viva, fuentes y controles | 73 | 70 | `test-v321-ai-universal-infinity.mjs` |
-| Inclusión del asistente en el paquete móvil | Aplicación instalada | 47 | `test-v311-voice-assistant.mjs` y `test-v284-native-package-generation.mjs` |
+| Función del usuario | Página principal | Recuperación incluida |
+|---|---:|---:|
+| Seleccionar campo, modalidad y torneo | 01 | 18 y 72 |
+| Registrar jugadores por voz o manual | 02 y 19 | 18–19 |
+| Confirmar antes de iniciar | 03 | 19 |
+| Entender primera vuelta, segunda vuelta, OUT, IN y TOTAL | 17 y 23 | 17 y 23 |
+| Dictar scores | 20 y 57 | 20, 57 y 61 |
+| Control Manual, ENTER y X | 07 y 21 | 21 |
+| Gross, HDCP, Neto y resultado | 22 | 21–23 |
+| Consultar hoyo, vuelta, tramo, acumulado o posición | 24 | 24 |
+| TIMER, navegación y micrófono | 25 | 25 y 61 |
+| Ronda Actual y Ronda Previa | 26 | 26 |
+| Nueva Ronda y Borrar Scores | 27 | 27 |
+| Corregir datos o agregar jugador durante la ronda | 28 | 28 |
+| Tarjeta Digital Global y personales | 29 | 29 |
+| Cerrar oficialmente la ronda | 30 | 30 |
+| Imagen, PDF, PDF TODAS y WhatsApp | 31 | 31 |
+| Corrección Oficial con original preservado | 32 | 32 |
+| Historial y filtros | 33 | 33 |
+| Estadísticas históricas | 34 | 34 |
+| Cuenta opcional, respaldo y recuperación | 35 | 35 |
+| Instalación, caché, actualización y operación sin conexión | 36 y 70 | 36 y 70 |
+| Ronda Normal | 01, 06 y 72 | 21, 27 y 30 |
+| Stableford | 04 y 37–38 | 37–38 |
+| Match Play | 08 y 39 | 39 |
+| Four Ball | 09 y 40 | 40 |
+| Score Card - Práctica | 05 y 41 | 41 |
+| Acuerdos comunes Q/$, unidad, Gross/Neto y topes | 42 | 42 |
+| Skins: configuración, arrastre, riesgo y liquidación | 43–45 | 43–45 |
+| Wolf: turno, pareja/solitario/ciego, riesgo y liquidación | 46–48 | 46–48 |
+| Vegas: números, volteo, parejas, topes y liquidación | 49–51 | 49–51 |
+| Dots: eventos, registro, acumulado y reglas de grupo | 52–55 | 52–55 |
+| Nassau, Bingo Bango Bongo y Snake no automatizados | 56 | 56 |
+| Vocabulario, correcciones y resultados por voz | 57–59 | 57–59 |
+| Estados exactos ESCUCHANDO y RESPONDIENDO | 60 | 60–61 |
+| ESCUCHAR, DETENER, REPETIR, SILENCIAR y CONTINUAR | 61 | 61 |
+| AI UNIVERSAL ∞, profundidad, fuentes, contexto y límites | 62–63 | 62–63 |
+| Tráfico actual con Google Maps Routes | 64 | 64 |
+| Tráfico futuro, ETA y demora | 65 | 65 |
+| Clima actual por GPS o campo de respaldo | 66 | 66 |
+| Pronóstico, lluvia por hora y hora pico | 67 | 67 |
+| Reglas oficiales USGA/The R&A y Regla Local | 68 | 68 |
+| Ayuda y navegación segura por voz | 69 | 69 |
+| Privacidad, GPS, micrófono, telemetría y compartir | 71 | 71 |
+| Recorrido completo de principio a fin | 72 | 72 |
+| Soporte, búsqueda y separación Manual/AI/REGLAS | 73 | 73 |
+| Información oficial de siete campos | 10–16 | 10–16 |
 
-## Combinaciones mínimas que deben permanecer probadas
+## Combinaciones mínimas
 
-- General y Stableford.
-- Práctica con perfil y sin perfil.
-- Match Play con dos o cuatro jugadores.
-- Four Ball con una o dos parejas.
-- Voz y Control Manual escribiendo en la misma arquitectura.
-- Uno a seis jugadores cuando la modalidad lo permite.
-- Hoyos 1–9, 10–18 y total.
-- Gross válido, X explícita, corrección retroactiva y dato vacío bloqueado.
-- Ronda nueva, ronda recuperada, ronda previa y retorno a ronda actual.
-- Tarjeta Global, personal, imagen, PDF individual y PDF TODAS.
-- Con y sin torneo.
-- Con y sin cuenta opcional.
-- Con conexión, sin conexión y actualización obligatoria.
+- General, Stableford, Práctica, Match Play y Four Ball.
+- Skins, Wolf, Vegas y Dots con Q o $, topes, corrección y liquidación.
+- Uno a seis jugadores según la modalidad.
+- Hoyos 1–9, 10–18 y total, siempre en ese orden.
+- Gross válido, X explícita, corrección retroactiva y pendiente bloqueante.
+- Voz, Control Manual, texto AI, tráfico, clima y Reglas sin escritores paralelos.
+- Ronda nueva, recuperada, previa, cerrada y corregida.
+- Tarjeta Global, personales, imagen, PDF y PDF TODAS.
+- Con conexión, sin conexión y con proveedor vivo no disponible.
 
 ## Regla de cierre
 
-El manual sólo puede declararse completo cuando:
+El Manual sólo pasa cuando:
 
-1. existan portada y páginas 01–73 en 4K;
-2. el PDF contenga 74 páginas físicas;
-3. cada función de esta matriz tenga explicación normal y recuperación;
-4. las pruebas citadas y la auditoría maestra obtengan PASS;
-5. una inspección visual confirme texto legible, sin recortes ni páginas descentradas;
-6. el enlace `MANUAL SCG` abra el visor completo y no una imagen aislada.
+1. existen portada y páginas 01–73 en 2160 × 4320 px y mínimo 300 dpi;
+2. el PDF tiene exactamente 74 páginas y usa las mismas imágenes;
+3. cada página 17–73 explica en orden: QUÉ ES → TÚ HACES → LA APP HACE → RESULTADO;
+4. cada página incluye error común, recuperación, palabra difícil, ejemplo y separación del score;
+5. ninguna función pendiente se presenta como implementada;
+6. las pruebas semánticas, editoriales, visuales, búsqueda, PDF y navegador pasan sobre el mismo commit;
+7. la revisión física del propietario se mantiene separada del banco automático;
+8. Producción continúa intacta hasta aprobación expresa.

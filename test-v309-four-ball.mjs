@@ -15,8 +15,10 @@ const player=(id,name,nets)=>({id,name,handicap:12,tee:"Blanco",holes:Object.fro
 assert.equal(fourBall.validatePlayers([]),false);
 assert.equal(fourBall.validatePlayers([player("a","ANA",[]),player("b","BETO",[])]),true);
 assert.equal(fourBall.validatePlayers([player("a","ANA",[]),player("b","BETO",[]),player("c","CARLA",[]),player("d","DIEGO",[])]),true);
+assert.equal(fourBall.validatePlayers([player("a","ANA",[]),player("b","BETO",[]),player("c","CARLA",[]),player("d","DIEGO",[]),player("e","ELENA",[]),player("f","FABIO",[])]),true);
 assert.equal(fourBall.teamIndexForPlayer(0),0);
 assert.equal(fourBall.teamIndexForPlayer(3),1);
+assert.equal(fourBall.teamIndexForPlayer(5),2);
 
 {
   const players=[
@@ -47,8 +49,29 @@ assert.equal(fourBall.teamIndexForPlayer(3),1);
   assert.equal(singleClosed.ok,true);
   const singleArtifacts=cardArtifacts.build(singleClosed.snapshot);
   assert.equal(singleArtifacts.personal.length,2);
-  assert.match(singleArtifacts.global.html,/Una o dos parejas/);
+  assert.match(singleArtifacts.global.html,/una a tres parejas/i);
   assert.doesNotMatch(singleArtifacts.personal[0].html,/Rivales:/);
+}
+
+{
+  const players=[
+    player("a","ANA",Array(18).fill(4)),player("b","BETO",Array(18).fill(5)),
+    player("c","CARLA",Array(18).fill(5)),player("d","DIEGO",Array(18).fill(6)),
+    player("e","ELENA",Array(18).fill(6)),player("f","FABIO",Array(18).fill(7))
+  ];
+  const hole=fourBall.holeResult(players,1),result=fourBall.status(players);
+  assert.deepEqual(hole.teamBest.map(item=>item.score),[4,5,6]);
+  assert.deepEqual(hole.teamDeltas,[2,0,-2],"Cada pareja se compara contra las otras dos");
+  assert.equal(hole.winnerTeamIndex,0);
+  assert.deepEqual(result.teamPoints,[36,0,-36]);
+  assert.equal(result.resultLabel,"PAREJA VERDE GANA · 36 PUNTOS");
+  assert.equal(result.closed,true);
+  assert.equal(fourBall.teamStanding(players,2,[1,2,3]).position,"-6 PTS");
+  const threeClosed=await roundClosure.close({id:"four-ball-three",configured:true,mode:"four_ball",courseKey:"pulte",course:"El Pulté",players,fourBall:{...result,holes:undefined},createdAt:"2026-08-26T00:00:00.000Z"},{appVersion:"V329",closedAt:"2026-08-26T03:00:00.000Z"});
+  const threeArtifacts=cardArtifacts.build(threeClosed.snapshot);
+  assert.match(threeArtifacts.global.html,/PAREJA AZUL/);
+  assert.match(threeArtifacts.personal[5].html,/team-blue/);
+  assert.equal((threeArtifacts.global.html.match(/class="pair-divider"/g)||[]).length,2);
 }
 
 {
@@ -98,7 +121,7 @@ assert.match(artifacts.global.name,/tarjeta-global-four-ball/);
 assert.match(artifacts.global.html,/PAREJA VERDE/);
 assert.match(artifacts.global.html,/PAREJA ORO/);
 assert.match(artifacts.global.html,/★ MEJOR/);
-assert.match(artifacts.global.html,/Una o dos parejas, con HCP individual y resultado separado por pareja/);
+assert.match(artifacts.global.html,/una a tres parejas, con HCP individual y resultado separado por pareja/i);
 assert.match(artifacts.global.html,/class="pair-divider"/);
 assert.match(artifacts.personal[0].html,/NETO COMPAÑERO/);
 assert.match(artifacts.personal[0].html,/MEJOR NETO RIVAL/);
@@ -109,9 +132,9 @@ const mobile=fs.readFileSync(new URL("./scripts/build-mobile-web.mjs",import.met
 const vercel=fs.readFileSync(new URL("./vercel.json",import.meta.url),"utf8");
 assert.match(html,/gscg-four-ball" content="V309-TWO-PAIRS-BEST-NET-CUMULATIVE-MATCH-20260825"/);
 assert.match(html,/id="fourBallRoundButton"[\s\S]*?<span>FOUR BALL<\/span>/);
-assert.match(html,/FOUR BALL REQUIERE 2 O 4 JUGADORES/);
+assert.match(html,/FOUR BALL REQUIERE 2, 4 O 6 JUGADORES/);
 assert.doesNotMatch(html,/FOUR BALL · 2 PAREJAS/);
-assert.match(html,/FOUR BALL · REGISTRA UNA O DOS PAREJAS/);
+assert.match(html,/FOUR BALL · REGISTRA UNA, DOS O TRES PAREJAS/);
 assert.match(html,/team-pair-spacer/);
 assert.match(html,/function fourBallPlayerBlock/);
 assert.match(html,/function fourBallHoleStanding/);
@@ -124,4 +147,4 @@ assert.match(worker,/"\/four-ball\.js"/);
 assert.match(mobile,/"four-ball\.js"/);
 assert.match(vercel,/four-ball/);
 
-console.log("PASS V309/V310/V311 · FOUR BALL · UNA O DOS PAREJAS · HCP INDIVIDUAL · MEJOR NETO · SEPARACIÓN · EXPORTACIÓN");
+console.log("PASS V309/V310/V311/V329 · FOUR BALL · UNA, DOS O TRES PAREJAS · HCP INDIVIDUAL · MEJOR NETO · SEPARACIÓN · EXPORTACIÓN");

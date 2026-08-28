@@ -1,5 +1,16 @@
 import {spawnSync} from 'node:child_process';
 
+for(const [command,args] of [
+  [process.execPath,['scripts/commercial-readiness-gate.mjs']],
+  [process.execPath,['scripts/project-quality-gate.mjs']],
+  [process.execPath,['test-project-quality-gate.mjs']],
+  ['python3',['scripts/manual-editorial-qc.py']],
+  ['python3',['scripts/manual-visual-qc.py']]
+]){
+  const gate=spawnSync(command,args,{stdio:'inherit'});
+  if(gate.status!==0)process.exit(gate.status||1);
+}
+
 const roadmapGate=spawnSync(process.execPath,['scripts/roadmap-gate.mjs'],{stdio:'inherit'});
 if(roadmapGate.status!==0)process.exit(roadmapGate.status||1);
 
@@ -38,6 +49,22 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v312-general-caddi
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v320-universal-100-domains.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v321-ai-universal-infinity.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v322-real-sustained-caddie.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v323-long-multitopic-context.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v324-real-traffic.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v325-ideal-microphone-timings.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v326-no-silent-conversation.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v327-tool-followup-no-silence.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v328-official-golf-rules.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v328-offline-official-rules.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v335-response-caliber.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v336-microphone-transport.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v337-universal-weather.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v345-home-icons.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v329-skins.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v330-side-games.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v352-live.mjs','test-v353-live-hub.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v351-r1-hole1-voice-score-render.mjs','test-v351-r5-voice-score-matrix.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v354-commercial-hardening.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

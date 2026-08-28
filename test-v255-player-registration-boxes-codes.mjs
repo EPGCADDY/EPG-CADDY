@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
-assert.match(html,/const registrationSlots=\["match_play","four_ball"\]\.includes\(draftRoundMode\)\?4:6/);
+assert.match(html,/const registrationSlots=6/);
 assert.match(html,/for\(let i=0;i<registrationSlots;i\+\+\)/);
 assert.match(html,/data-draft-name=/);
 assert.match(html,/data-draft-hcp=/);

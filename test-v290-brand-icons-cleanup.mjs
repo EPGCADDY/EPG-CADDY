@@ -10,9 +10,10 @@ const packageJson=JSON.parse(read("package.json"));
 const apiPackage=JSON.parse(read("api/package.json"));
 const release=JSON.parse(read("mobile-release.json"));
 const vercel=JSON.parse(read("vercel.json"));
+const requirements=read("requirements-build.txt");
 
 assert.match(html,/V290-GOLF-SCORE-CARD-GT-BRAND-ICONS-CLEANUP-20260823/);
-assert.match(html,/apple-touch-icon" href="\/assets\/official-logos\/golf-score-card-gt-apple-touch-180\.png"/);
+assert.match(html,/apple-touch-icon" sizes="180x180" href="\/assets\/official-logos\/golf-score-card-gt-apple-touch-v345-180\.png"/);
 assert.match(html,/\.registration-method \.nr-mic\{width:120px;height:120px;/);
 assert.match(html,/\.registration-method \.nr-mic\{width:112px;height:112px;/);
 assert.match(html,/class="setup-mic-icon"/);
@@ -27,7 +28,7 @@ assert.match(html,/id="provisionalScorecardButton"[^>]*>[\s\S]*?<span>SCORE CARD
 assert.match(html,/REGISTRO DE TORNEO \(OPCIONAL\)/);
 assert.match(html,/id="tournamentDescription"[^>]*placeholder="DESCRIPCIÓN DE TORNEO \(OPCIONAL\)"/);
 assert.match(html,/return\{name:String\(value\.name\|\|""\)\.trim\(\),description:String\(value\.description\|\|""\)\.trim\(\)\}/);
-assert.equal(packageJson.engines.node,"22.x");
+assert.equal(packageJson.engines.node,"24.x");
 assert.equal(apiPackage.type,"module");
 assert.match(stable,/className="voice-prompt stableford-voice-prompt"/);
 assert.match(stable,/prompt\.innerHTML='<strong>REGISTRO DE JUGADORES · CADDIE UNIVERSAL<\/strong><span>REGISTRA O PREGUNTA CUALQUIER TEMA<\/span>'/);
@@ -41,17 +42,24 @@ assert.match(html,/\$\("startStablefordRound"\)\.textContent="OK"/);
 assert.match(stable,/JUGADORES DETECTADOS · REVISA Y PRESIONA OK/);
 assert.doesNotMatch(stable,/PRESIONA INICIAR RONDA/);
 assert.equal(release.buildNumber,307);
-assert.equal(vercel.installCommand,"npm install --omit=dev");
+assert.match(vercel.installCommand,/^npm ci --omit=dev && python3 -m pip install /);
+assert.match(vercel.installCommand,/--break-system-packages/);
+for(const dependency of ["numpy","pillow","pypdf","reportlab"]){
+  assert.match(requirements,new RegExp(`^${dependency}==\\d+`,"im"));
+}
 assert.equal(manifest.name,"Golf Score Card GT");
-for(const size of ["192x192","512x512"])assert.ok(manifest.icons.some(icon=>icon.sizes===size&&icon.type==="image/png"&&icon.purpose==="any"));
+for(const size of ["192x192","512x512"])assert.ok(manifest.icons.some(icon=>icon.sizes===size&&icon.type==="image/png"&&icon.purpose==="any"&&icon.src.includes("v345")));
 for(const icon of [
   "assets/official-logos/golf-score-card-gt-app-store-1024.png",
   "assets/official-logos/golf-score-card-gt-google-play-512.png",
   "assets/official-logos/golf-score-card-gt-pwa-512.png",
   "assets/official-logos/golf-score-card-gt-pwa-192.png",
-  "assets/official-logos/golf-score-card-gt-apple-touch-180.png"
+  "assets/official-logos/golf-score-card-gt-apple-touch-180.png",
+  "assets/official-logos/golf-score-card-gt-pwa-v345-512.png",
+  "assets/official-logos/golf-score-card-gt-pwa-v345-192.png",
+  "assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png"
 ])assert.ok(fs.existsSync(icon),icon);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v322-real-sustained-conversation"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-v\d{3}[^"]*"/);
 assert.match(read("assets/official-logos/README.md"),/Logos oficiales · Golf Score Card GT/);
 
 console.log("PASS V305 · historial, navegación y acciones homologadas en General y Stableford");

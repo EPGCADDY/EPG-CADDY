@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v322-real-sustained-conversation";
+const CACHE_NAME="gscg-mobile-v354-commercial-p0";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -9,12 +9,16 @@ const SHELL=[
   "/manual.webmanifest",
   "/manual-search.js",
   "/voice-assistant.js",
+  "/golf-rules-offline.js",
   "/timer-inactivity.js",
   "/docs/manual/v311/manual-pages-17-35.json",
   "/7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg",
-  "/assets/official-logos/golf-score-card-gt-pwa-192.png",
-  "/assets/official-logos/golf-score-card-gt-pwa-512.png",
-  "/assets/official-logos/golf-score-card-gt-apple-touch-180.png",
+  "/assets/official-logos/golf-score-card-gt-pwa-v345-192.png",
+  "/assets/official-logos/golf-score-card-gt-pwa-v345-512.png",
+  "/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png",
+  "/docs/manual/v311/manual-scg-pwa-v345-192.png",
+  "/docs/manual/v311/manual-scg-pwa-v345-512.png",
+  "/docs/manual/v311/manual-scg-apple-touch-v345-180.png",
   "/player-registry.js",
   "/round-closure.js",
   "/card-artifacts.js",
@@ -24,9 +28,16 @@ const SHELL=[
   "/sync-queue.js",
   "/master-data-sync.js",
   "/account-backup.js",
+  "/live-control.js",
+  "/live-hub.html",
+  "/live-hub.js",
   "/match-play.js",
   "/four-ball.js",
   "/stableford.js",
+  "/skins.js",
+  "/wolf.js",
+  "/vegas.js",
+  "/dots.js",
   "/round-navigation.js"
 ];
 

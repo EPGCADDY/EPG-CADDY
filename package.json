@@ -1,31 +1,36 @@
 {
   "name": "golf-score-card-gt",
   "private": true,
-  "engines": { "node": "22.x" },
+  "engines": { "node": "24.x" },
   "dependencies": {
     "@capacitor/android": "8.5.0",
     "@capacitor/core": "8.5.0",
     "@capacitor/ios": "8.5.0",
-    "@neondatabase/serverless": "^1.0.2",
+    "@neondatabase/serverless": "1.0.2",
     "@revenuecat/purchases-capacitor": "13.4.0",
     "@revenuecat/purchases-capacitor-ui": "13.4.0"
   },
   "devDependencies": {
-    "@capacitor/assets": "3.0.5",
     "@capacitor/cli": "8.5.0",
     "esbuild": "0.28.2",
     "sharp": "0.35.3"
   },
+  "overrides": {
+    "uuid": "11.1.1"
+  },
   "scripts": {
     "roadmap:gate": "node scripts/roadmap-gate.mjs",
     "inventory:gate": "node scripts/inventory-gate.mjs",
+    "quality:gate": "node scripts/project-quality-gate.mjs",
+    "commercial:gate": "node scripts/commercial-readiness-gate.mjs",
     "audit": "node audit-project.mjs",
+    "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",
     "mobile:web": "node scripts/build-mobile-web.mjs",
     "mobile:add:ios": "npm run mobile:web && cap add ios",
     "mobile:add:android": "npm run mobile:web && cap add android",
     "mobile:configure": "node scripts/configure-native-projects.mjs",
-    "mobile:assets": "node scripts/prepare-mobile-assets.mjs && capacitor-assets generate --iosProject native/ios/App --androidProject native/android --iconBackgroundColor '#000000' --iconBackgroundColorDark '#000000' --splashBackgroundColor '#000000' --splashBackgroundColorDark '#000000'",
+    "mobile:assets": "node scripts/prepare-mobile-assets.mjs && node scripts/apply-native-assets.mjs",
     "mobile:sync": "npm run mobile:web && cap sync && npm run mobile:configure && npm run mobile:assets",
     "mobile:prepare": "node scripts/prepare-native-release.mjs",
     "mobile:open:ios": "cap open ios",

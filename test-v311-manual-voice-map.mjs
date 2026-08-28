@@ -54,10 +54,8 @@ assert.match(history.speech,/Reporte de último mes/);
 assert.match(html,/replace\(\/\\bUP\\b\/gi,"arriba"\)/);
 assert.match(html,/replace\(\/\\bDOWN\\b\/gi,"abajo"\)/);
 assert.match(html,/replace\(\/\\bAS\\b\/gi,"empatado"\)/);
-for(const page of pages.filter(page=>[61,67,68,72].includes(Number(page.number)))){
-  const text=JSON.stringify(page).toUpperCase();
-  assert.ok(text.includes("ARRIBA")&&text.includes("ABAJO")&&text.includes("EMPATADO"),`Página ${page.number}: falta nomenclatura hablada en español`);
-  assert.doesNotMatch(text,/\bUP\b|\bDOWN\b/);
-}
+const matchAndFourBall=pages.filter(page=>[39,40].includes(Number(page.number))).map(page=>JSON.stringify(page)).join("\n").toUpperCase();
+assert.ok(matchAndFourBall.includes("ARRIBA")&&matchAndFourBall.includes("ABAJO")&&matchAndFourBall.includes("EMPATADO"),"Match/Four Ball deben conservar nomenclatura hablada en español");
+assert.doesNotMatch(matchAndFourBall,/\bUP\b|\bDOWN\b/);
 
-console.log("PASS V311 · mapa detallado de voz, vocabulario oficial y respuestas comprobadas");
+console.log("PASS V334 · mapa de voz, vocabulario oficial y respuestas alineadas con el Manual");

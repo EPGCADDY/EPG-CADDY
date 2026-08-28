@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V322: **303**.
+Archivos activos rastreados al corte V353: **359**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -20,8 +20,12 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `APP_ARCHITECTURE.md` | `48eb432665d9a880624ad6a93e852e2992cbc7ad` | 7104 bytes | Explica arquitectura, modalidades, reglas editoriales 4K y campos. |
 | `AUDITORIA_MAESTRA_V170.md` | `8dd135a84521f64c39928fadb35de0518447fe40` | 4462 bytes | Resumen de una revisión histórica del producto. |
 | `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Registro V305 | Se calcula al publicar | Manual sencillo actualizado con Historial, Regístrate y el vocabulario visible vigente. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | `54288b53e83185333276d45cca4fe41dc9f7b591` | 4948 bytes | Reglas permanentes, candados ROADMAP/inventarios, Vercel y calidad visual 4K. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001 · PEND-CLI-002 · PEND-VOZ-003` | Se calcula al publicar | Cola consultable; guarda Reglas de Golf, clima automático por GPS con respaldo del club y Caddie/Support conversacional por texto o voz para Golf, Manual, clima, conversación general y salud segura. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | Autorización permanente 2026-08-26 | Se calcula al publicar | Reglas permanentes, candados ROADMAP/inventarios, ejecución autónoma sin autorizaciones intermedias y montaje sólo después de PASS completo. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PEND-REG-001` a `PEND-DID-017` | Se calcula al publicar | Cola consultable completa: voz, tráfico, reglas, handicap oficial, campos mundiales, GPS de golf, detección automática del campo, sincronización reglamentaria, juegos/apuestas, fichas didácticas, relojes, nube/seguridad, estadísticas, monetización, pruebas, clima y Guía Rápida. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md` | `PEND-DID-017` | Se calcula al publicar | Define una hoja web/PDF por modalidad y esquema, comprensible a los 10 años, imprimible en blanco y negro, con Q/$ excluyentes, ejemplo, estrategia, glosario, acumulados, riesgo y liquidación. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` | `PEND-LIVE-018` | Se calcula al publicar | Contrato GATE 0 de GOLF SCORE CARD GT. LIVE: permisos, privacidad, visor sin aplicación, seguimiento bilateral y torneo paginado sin máximo fijo. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_UBI_015_DETECCION_CAMPO_POR_GPS.md` | `PEND-UBI-015` | Se calcula al publicar | Especifica detección por GPS, catálogo geográfico, perímetros, propuesta confirmable, privacidad y prueba física por campo. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_RSG_016_SINCRONIZACION_REGLAS_GOLF.md` | `PEND-RSG-016` | Se calcula al publicar | Especifica fuente oficial, manifiesto de versión, SHA-256, caché reglamentaria, actualización, reversión y aislamiento del score. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V311 | Se calcula al regenerar | Huella técnica que impide validar o publicar con inventarios desactualizados. |
 | `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INDICE_DOCUMENTOS_PENDIENTES.md` | `064e9201c833cb7f5c751ba5328290d8c4c2b20b` | 814 bytes | Lista de documentos todavía pendientes de usar. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | `b9815c3eae588f1f54c0e4fabbf1d51b52c75b0e` | 722 bytes | Registro de trabajos terminados. |
@@ -37,8 +41,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ECOS.md` | `43a9c6f5bacb8c758edd33c8ad31f9e59e63f84f` | 3982 bytes | Reglas de comportamiento de Golf Score Card GT. |
 | `EPG-Caddy_Master_Blueprint_v0.1.md` | `95b4c227c4e5dce7f90fede0ebc9cdd0af6ed76c` | 7990 bytes | Plano maestro; el nombre del archivo es antiguo, pero el contenido ya usa Golf Score Card GT. |
 | `EPG_CADDY_PLAN_CAMBIOS.md` | `a81981bda6522c0ab29ec5e70f6ebe557cde34bf` | 116300 bytes | Lista antigua de cambios; el nombre sólo se conserva para localizarla. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V314 | Se calcula al publicar | Manual maestro sincronizado con App V314, modalidades, portada, Caddie universal, clima inicial y pendientes de tránsito/Guía Rápida. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V305 | Se calcula al publicar | Lista ordenada de funciones terminadas y pendientes con vocabulario Historial. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registro V330 Preview PASS | Se calcula al publicar | Manual maestro con AI UNIVERSAL, Reglas oficiales, Skins, Wolf, Vegas, Dots, seis jugadores, tres parejas y estado honesto de validación. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Registro V332 banco PASS / PEND-001–017 | Se calcula al publicar | Lista ordenada: juegos V332 con Q/$ y matriz completa pendientes de Preview/prueba física, fichas por modalidad, voz/tráfico físicos, ASOGOLF/GHIN, campos, GPS, relojes, nube, seguridad, estadísticas, monetización y certificación. |
 | `MAPA_MATRIZ_BASE_MAESTRA_V256.md` | `8d0cdb23c0b1d9445f51b822ba49d385f5c71d3c` | 1718 bytes | Explica la información central incorporada en V256. |
 | `MAPA_MATRIZ_REGISTRO_JUGADORES_V255.md` | `5d0670562aa89ffa7a265820573e0e31895fe95b` | 1993 bytes | Explica el registro de jugadores de V255. |
 | `MAPA_MATRIZ_RONDA_PREVIA_V253.md` | `8194444ab5a8de1d77abaa7d39d0cb6e7a149548` | 2858 bytes | Explica Ronda previa desde V253. |
@@ -76,14 +80,18 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `api/_lib/database.js` | `1e99935741e212ff9f0043197f82348972c2263c` | 453 bytes | Abre la información central. |
 | `api/_lib/http.js` | `abf34ad0d937577da81c7cd56833eceeb231bf95` | 1625 bytes | Prepara respuestas para la app. |
 | `api/_lib/sync-validation.js` | `b90cd0193c0606448a13e06e17cb34b359d18978` | 3713 bytes | Revisa que la información enviada esté completa. |
+| `api/_lib/traffic.js` | Tráfico V324 | Se calcula al publicar | Consulta Google Maps Routes con tráfico óptimo, resume ETA/demora/distancia y excluye coordenadas de la respuesta. |
 | `api/account.js` | `eec1c7ff408316ccaff98bcab968cd66bf92120c` | 2437 bytes | Abre, crea o cierra la cuenta opcional. |
 | `api/backup.js` | `128c8f613861641f16ea5973d6592c8e50e46031` | 2174 bytes | Guarda y recupera respaldos. |
+| `api/golf-rules.js` | `V328-OFFICIAL-USGA-RANDA-SOURCES` | Se calcula al publicar | Consulta Reglas de Golf con el modelo real, restringe fuentes a USGA/The R&A y nunca escribe scores ni penalidades. |
 | `api/database-health.js` | `150c3e82b7e16d79613a2e341ac8fb1cf66de789` | 1307 bytes | Comprueba que el respaldo central responda. |
 | `api/package.json` | `3dbc1ca591c0557e35b6004aeba250e6a70b56e3` | 23 bytes | Indica el formato que usan las puertas de la aplicación. |
 | `api/score.js` | `6ecbef77ba0bd37519cd602e8c73596128f7547f` | 2545 bytes | Recibe resultados enviados por la app. |
 | `api/session-grupal.js` | `4bd02dcd9cdc1fb4fada6ddb4fd8b7400d2280ee` | 5355 bytes | Abre el reconocimiento de voz grupal. |
 | `api/session.js` | `454a914b435c6cadadd0a169fe065719eef475de` | 14431 bytes | Abre el reconocimiento de voz anterior. |
 | `api/sync.js` | `82e4bdd482531f4ee6b41254652606d9f53e2251` | 3202 bytes | Intercambia cambios entre teléfono y respaldo. |
+| `api/traffic.js` | Puerta de tráfico V324 | Se calcula al publicar | Recibe de forma protegida las solicitudes de tráfico por voz o texto y entrega un resultado recuperable sin mostrar mapa. |
+| `api/voice-health.js` | Salud de voz V327 | Se calcula al publicar | Registra sólo etapas y tiempos técnicos permitidos; excluye preguntas, transcripciones, nombres, ubicaciones y claves. |
 | `api/weather.js` | Piloto climático V312 | Se calcula al publicar | Consulta Open-Meteo por coordenadas GPS del teléfono, ubicación indicada o respaldo del campo y devuelve un resumen auditable. |
 | `assets/logo.png` | `376f6237bbdddf4245ecd3da0f080ad5462f8178` | 514891 bytes | Logo cromado 3D neón de 1024 usado para crear iconos de iPhone y Android. |
 | `assets/official-logos/README.md` | `d4c2f8e156b2f614d5992c477bc117c11a8ef2d7` | 1826 bytes | Explica que la versión cromada 3D con verde neón muy saturado es oficial y para qué sirve cada tamaño. |
@@ -93,7 +101,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | `1c3cdacf565de7b2ce42d57bb416a23c50af1b8e` | 599880 bytes | Copia maestra del logo cromado 3D con verde neón muy saturado. |
 | `assets/official-logos/golf-score-card-gt-pwa-192.png` | `e28cd92c784748a2d4ff02bf3491b96c8121ed94` | 67805 bytes | Icono cromado 3D neón pequeño de la aplicación instalable. |
 | `assets/official-logos/golf-score-card-gt-pwa-512.png` | `0e85cc6995f9bafefb49dec5a8253aef3db7fffd` | 461402 bytes | Icono cromado 3D neón grande de la aplicación instalable. |
-| `audit-project.mjs` | `baaa661c4b9d864e6d37c95a56841c534d3e613b` | 4446 bytes | Ejecuta los candados ROADMAP, inventarios y todos los filtros automáticos. |
+| `audit-project.mjs` | Auditoría V330 | Se calcula al publicar | Ejecuta 89 paquetes, candados, inventarios y filtros automáticos, incluidos Reglas, Skins, Wolf, Vegas y Dots. |
 | `capacitor.config.json` | `a5ca52fde974ea370d90dbfe422f08101ec7f7eb` | 867 bytes | Define el nombre visible y la identidad de las apps de iPhone y Android. |
 | `card-artifacts.js` | `df8ba2b09532b73701681d7de1781ca5b54baf26` | 12799 bytes | Arma la tarjeta oficial con la información de la ronda. |
 | `card-file-export.js` | `4ddbf8f36ec142114cfa965a78d97ea55365afa1` | 5919 bytes | Convierte la tarjeta en imagen o PDF. |
@@ -105,8 +113,11 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `database/test-master-data-platform-schema.mjs` | `24517be27fb31df9b91391b12b4cc9d3dace3bb0` | 1385 bytes | Comprueba los espacios de la información central. |
 | `database/test-player-profile-schema.mjs` | `32d0b6f78446a1193e8b2239b26f93738547b24b` | 817 bytes | Comprueba los espacios de la información central. |
 | `database/test-schema.mjs` | `ad64ac3b0ed21932c24ea56886124f518a7b0692` | 1099 bytes | Comprueba los espacios de la información central. |
+| `dots.js` | Motor V332 · moneda dual | Se calcula al publicar | Define cada evento en español, conserva Q/$, separa puntos positivos/negativos y automáticos/manuales, y calcula estado, impacto, acumulados y liquidación. |
+| `four-ball.js` | Motor V330 de tres parejas | Se calcula al publicar | Compara el mejor Neto de una, dos o tres parejas Verde, Oro y Azul. |
 | `historical-analytics.js` | `2a5bb2f2ef1564b09a567823efde14b54829ce86` | 8963 bytes | Resume el historial y muestra datos útiles de rondas anteriores. |
-| `index-grupal.html` | `eae87b8e6cc0629744837deabce6616fca2d6971` | 579351 bytes | Pantalla principal con firma funcional V307 protegida y firma documental V311 para el manual completo. |
+| `golf-rules-offline.js` | V328-R2 · caché oficial básica | Se calcula al publicar | Reutiliza hasta 24 respuestas USGA/The R&A confirmadas durante 90 días, por coincidencia y modalidad, sin consulta completa ni escritura de score. |
+| `index-grupal.html` | Build V332 | Se calcula al publicar | Conserva la tarjeta principal y agrega radios Q/$ excluyentes, estados, riesgos, métricas, acumulados, líder y liquidación comprensible para Skins, Wolf, Vegas y Dots. |
 | `index.html` | `7b483f1553246274920c71a10723f484d1847744` | 759569 bytes | Entrada antigua que lleva a la pantalla principal. |
 | `ios/EPGCaddy/App.swift` | `06a1c8ee89139ef87af20f07bba2496aa2b90636` | 141 bytes | Inicia la aplicación de apoyo para iPhone. |
 | `ios/EPGCaddy/ContentView.swift` | `80556289a09cc451f4e11e56f2f9d6a800a50a5f` | 208 bytes | Abre Golf Score Card GT dentro de la aplicación de iPhone. |
@@ -116,6 +127,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `ios/project.yml` | `ef15575463a1913d778c7d8b8fb3dea237b0f4c7` | 976 bytes | Prepara el proyecto antiguo de iPhone con el nombre visible Golf Score Card GT. |
 | `manifest.webmanifest` | `e1aabc9eb3e15e548b3603fbdccb6318d417e56c` | 842 bytes | Define el nombre, colores, inicio e iconos cuando la web se instala como app. |
 | `master-data-sync.js` | `be2aade4553f95b389189fcf4225ece6d16deaad` | 8202 bytes | Mantiene igual la información del teléfono y del respaldo central. |
+| `match-play.js` | Motor V330 de tres parejas | Se calcula al publicar | Resuelve hasta tres Matches independientes por Neto entre posiciones 1–2, 3–4 y 5–6. |
 | `mobile-release.json` | Registro V305 | 76 bytes | Guarda la versión y el número 305 del próximo paquete móvil. |
 | `mobile/native-runtime-entry.js` | `ffbe9107212932779e6c8e7e5017f4c178b62326` | 704 bytes | Conecta la pantalla con funciones propias del teléfono. |
 | `package.json` | `08ff6dc440023e09a84e01e3885eeb8a285a73bf` | 1523 bytes | Lista dependencias y expone candados ROADMAP, inventarios y control visual del manual. |
@@ -127,7 +139,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/prepare-mobile-assets.mjs` | `fcd2fa387095322c9731917834ad424ad3e8fd73` | 1356 bytes | Crea todos los tamaños oficiales del logo. |
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
 | `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | 2881 bytes | Bloquea cualquier modificación o publicación que no aparezca en ambos ROADMAPS. |
-| `service-worker.js` | Registro V305 | 1987 bytes | Activa la caché V305 para entregar la navegación auditada. |
+| `service-worker.js` | Caché V332 | Se calcula al publicar | Fuerza `gscg-mobile-v332-dual-currency-matrix` e incluye Reglas offline y los motores Skins, Wolf, Vegas y Dots. |
+| `skins.js` | Motor V332 · moneda dual | Se calcula al publicar | Calcula Skins Gross/Neto para dos a seis jugadores con Q/$, carry, división o anulación, X, acumulados, líder y saldo cero-suma. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |
 | `stableford-course-source-san-isidro.md` | `b370db591d5139895c9586801d55b57b3bcf0359` | 505 bytes | Fuente usada para cargar la tarjeta de San Isidro. |
@@ -199,13 +212,18 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v304-homogeneous-registration-actions.mjs` | Registro V305 | Se calcula al publicar | Conserva el control de vocabulario, guía, micrófono, fuente, peso, tamaño, altura, brillo y estado. |
 | `test-v305-history-navigation-zero-error.mjs` | Registro V305 | Se calcula al publicar | Audita Historial, Atrás, Regístrate, superposiciones, validación Stableford, versión y caché. |
 | `test-v305-registration-guides-parser-truth.mjs` | Registro V305 | Se calcula al publicar | Ejecuta ambos analizadores reales y bloquea guías falsas, HDCP o marcas visibles en Stableford y estados de OK incoherentes. |
+| `test-v329-skins.mjs` | Banco V332 | Se calcula al publicar | Prueba Skins con Q/$, acumulados, cierre, corrección, tarjetas, Historial, nube, restauración, voz y pantalla principal intacta. |
+| `test-v330-side-games.mjs` | Banco V332 | Se calcula al publicar | Prueba selección única, ocho radios Q/$, riesgo/tope Wolf, birdies y score 10+ Vegas, matriz Dots, cero-suma, cierre, corrección y persistencia integral. |
 | `test-voice-continuity.mjs` | `c837646c800161cc827e5c66927bbd682305c6e5` | 1717 bytes | Comprueba el registro y la continuidad por voz. |
-| `vercel.json` | `eb7aa74873a757c387e8c8b94e6da73f20022955` | 2516 bytes | Publica inicio, manual y acceso MANUAL SCG; ejecuta la auditoría con candados antes de publicar. |
+| `vegas.js` | Motor V332 · moneda dual | Se calcula al publicar | Calcula dos o tres parejas con Q/$, scores de 10+, birdies simultáneos configurables, volteos, águila, topes, riesgo, acumulados y liquidación cero-suma. |
+| `vercel.json` | V330 | Se calcula al publicar | Publica inicio y manual; exige auditoría integral y consulta real con fuente USGA/The R&A antes de entregar Preview. |
 | `verify-manual-sync.mjs` | `df56ae83b57d5ee4d6273f36be1db9350e1b2c9c` | 731 bytes | Comprueba que la firma documental de la aplicación coincida con la versión del manual maestro. |
+| `wolf.js` | Motor V332 · moneda dual | Se calcula al publicar | Calcula Wolf de tres a seis jugadores con Q/$, pareja/Lobo solitario/Lobo ciego, orden, riesgo, tope, carry, unidades netas, acumulados y pago por diferencia. |
 | `manual.html` | Registro V314 ampliado | Se calcula al publicar | Visor permanente con portada, 73 páginas funcionales, índice por categorías, lupa de lenguaje natural, navegación, app y descarga PDF. |
 | `manual.webmanifest` | `2c07adafaa323be295c05b927c1418c712bd514a` | 456 bytes | Instala MANUAL SCG como acceso independiente al manual completo. |
 | `scripts/manual-visual-qc.py` | Registro V314 ampliado | Se calcula al publicar | Filtro obligatorio de 74 imágenes, resolución 4K, densidad, márgenes, color y equilibrio editorial. |
 | `scripts/inventory-gate.mjs` | `3e1d28a73526c50858b68df85a64f35086efc96e` | 2234 bytes | Bloquea auditoría y publicación si los tres inventarios no coinciden con las fuentes activas. |
+| `scripts/update-inventory-v328.py` | Portadas V332 reproducibles | Se calcula al publicar | Actualiza los tres inventarios PDF con moneda Q/$, matriz de acumulados y riesgos, Skins, Wolf, Vegas, Dots y bloqueos reales, sin duplicar la portada al repetirlo. |
 | `test-v311-manual-hosting.mjs` | Registro V314 ampliado | Se calcula al publicar | Comprueba visor, acceso MANUAL SCG, PDF físico de 74 páginas, marcadores internos y las 74 imágenes 4K. |
 | `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias estable V314 | Se calcula al publicar | Copia completa de 74 páginas conservada bajo el nombre histórico para no romper enlaces existentes. |
 | `docs/manual/v311/page-00.png` | `f2558f664e2df29292a09c2ede9ef799b1f54541` | 3526431 bytes | Portada 4K aprobada con logo al 50% de saturación. |
@@ -240,6 +258,14 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `test-v311-voice-assistant.mjs` | Candado del asistente | Se calcula al publicar | Comprueba ayuda, navegación y separación de los scores reales. |
 | `test-v312-general-caddie.mjs` | Candado conversacional V322 | Se calcula al publicar | Comprueba conversación abierta, GPS primero, clima visible y periódico, respaldo por campo, micrófono manual, salud, score protegido y escucha sostenida. |
 | `test-v322-real-sustained-caddie.mjs` | `V322-24-TURNS-RECOVERY` | Se calcula al publicar | Simula 24 turnos consecutivos, reapertura de una sesión sana, cierre a los 30 minutos y fallos web recuperables sin silencio. |
+| `test-v323-long-multitopic-context.mjs` | `V323-30-TOPICS-63-MESSAGES` | Se calcula al publicar | Exige que texto y voz conserven la primera clave después de 30 cambios de tema y sólo descarten historial al superar 80 mensajes. |
+| `test-v324-real-traffic.mjs` | `V324-CURRENT-FUTURE-TRAFFIC-RECOVERY` | Se calcula al publicar | Prueba tráfico actual/futuro, ETA, demora, privacidad, GPS, texto, voz, proveedor caído, timeout y continuación bilateral. |
+| `test-v325-ideal-microphone-timings.mjs` | `V326-30-BILATERAL-TURNS` | Se calcula al publicar | Conserva 30 turnos y sustituye la expectativa semántica no determinista por la pausa conversacional fija de 2.2 segundos. |
+| `test-v326-no-silent-conversation.mjs` | `V326-INPUT-15S-HARD-90S-RESPONSE-30S` | Se calcula al publicar | Ejecuta la máquina de temporizadores y comprueba que una captura sin final apaga el rojo y que una respuesta sin inicio vuelve a escuchar. |
+| `test-v327-tool-followup-no-silence.mjs` | `V327-550-SEQUENCES-100-PRIVATE-EVENTS` | Se calcula al publicar | Prueba cierres tardíos con/sin ID, audio final, tres guardianes, ruta ambigua y telemetría sin contenido. |
+| `test-v328-official-golf-rules.mjs` | `V328-15-RULE-SCENARIOS-OFFICIAL-ONLY` | Se calcula al publicar | Prueba 15 situaciones, dominios USGA/R&A, texto/voz y que ninguna consulta modifique la tarjeta. |
+| `test-v328-live-official-rules.mjs` | `V328-REAL-MODEL-WEB-OFFICIAL-SOURCE` | Se calcula al publicar | Puerta exclusiva de Vercel: exige modelo real, búsqueda web, fuente USGA/The R&A y cero cambio de score. |
+| `test-v328-offline-official-rules.mjs` | `V328-R2-OFFICIAL-OFFLINE-PRIVACY-ZERO-SCORE` | Se calcula al publicar | Prueba 24 entradas, 90 días, fuente oficial, privacidad, modalidad, coincidencias negativas, PWA y cero escritura. |
 | `test-v311-timer-inactivity.mjs` | Candado TIMER 30 minutos | Se calcula al publicar | Comprueba el apagado en todas las modalidades, persistencia y reinicio por instrucción válida. |
 | `docs/manual/v311/page-17.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-18.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
@@ -297,7 +323,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `docs/manual/v311/page-70.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-71.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
 | `docs/manual/v311/page-72.png` | 4K · 300 dpi | Se calcula al publicar | Página funcional ampliada del manual oficial. |
-| `docs/manual/v311/page-73.png` | 4K · 300 dpi | Se calcula al publicar | Explica con ejemplos infantiles que todos los micrófonos abren el mismo Caddie universal y que el clima aparece desde el inicio. |
+| `docs/manual/v311/page-73.png` | V328 · 4K · 300 dpi | Se calcula al publicar | Explica AI UNIVERSAL y REGLAS oficiales, las fuentes y por qué una consulta no cambia la tarjeta. |
 
 ## Registro obligatorio de la documentación operativa V300
 
@@ -609,6 +635,43 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 | `ROADMAP_A_DETALLE.md` | DETALLE-V312 | Registra arquitectura, archivos y prueba. |
 | `ROADMAP_OVERALL.md` | OVERALL-V312 | Resume el resultado para revisión. |
 
+## Corte V334-M1 · Manual canónico 17–73
+
+| Grupo de archivos | Responsabilidad vigente |
+|---|---|
+| `docs/manual/v311/manual-pages-17-35.json` | Fuente única de las 57 páginas funcionales, con orden y ayudas didácticas obligatorias. |
+| `docs/manual/v311/manual-pages-bets-live-data.json` | Capa de overrides vacía; evita desplazar contenido sin control. |
+| `docs/manual/v311/page-17.png` a `docs/manual/v311/page-73.png` | Láminas 4K/300 dpi reconstruidas y distribuidas a página completa. |
+| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | PDF gemelos de 74 páginas sincronizados con las láminas. |
+| `scripts/rebuild-manual-bets-live-data.py`, `scripts/manual-editorial-qc.py`, `scripts/manual-visual-qc.py` | Generación reproducible y candados editorial/visual sobre las 57 páginas. |
+| `manual.html`, `manual-search.js`, `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Manual web, búsqueda y mapa de cobertura alineados al orden canónico. |
+| `test-v311-manual-semantic-coverage.mjs`, `test-v311-manual-search.mjs`, `test-v311-manual-voice-map.mjs`, `test-v321-ai-universal-infinity.mjs` | Regresión de cobertura, navegación, vocabulario y títulos vigentes de IA. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.json` | Contrato técnico/editorial ejecutable. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-010: falso PASS anterior y control permanente. |
+| `scripts/rebuild-inventory-pdfs.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Trazabilidad, tres inventarios y huella reproducible V334-M1. |
+| `.github/workflows/v334-m1-finalize-preview.yml` | Flujo temporal: reconstruye, audita y se elimina antes del commit final de Preview. |
+| `manual.html`, `test-v311-manual-hosting.mjs` | V334-M1-R4 reserva proporción 1:2 y evita que un enlace directo retroceda por carga diferida. |
+| `.github/workflows/v334-m1-web-nav-finalize.yml` | Flujo temporal R4: actualiza sello, audita y se elimina antes del commit final. |
+| `manual.html`, `test-v311-manual-hosting.mjs` | V334-M1-R5 sincroniza encabezado y contador con la lámina que ocupa el área útil del visor. |
+| `manual.html`, `test-v311-manual-hosting.mjs`, `.github/workflows/v334-m1-layout-finalize.yml` | V334-M1-R6 fija la caja 1:2 de cada página antes de cargar la imagen y sella el candidato exacto. |
+| `manual-search.js`, `test-v311-manual-search.mjs`, `.github/workflows/v334-m1-search-finalize.yml` | V334-M1-R7 prioriza la explicación de corrección sobre el vocabulario y conserva rutas separadas para borrar, tráfico y clima. |
+| `api/universal-ai.js`, `test-v335-response-caliber.mjs`, `audit-project.mjs` | V335-AI reemplaza el calibre bajo uniforme por perfiles brief/standard/deep y un contrato verificable de sustancia, límites, acciones y fuentes. |
+| `.github/workflows/v335-ai-finalize.yml` | Flujo temporal V335-AI: actualiza inventario, ejecuta 90 paquetes y se elimina antes del commit desplegable. |
+| `index-grupal.html`, `test-v335-response-caliber.mjs`, `.github/workflows/v335-ai-routing-finalize.yml` | V335-AI-R1 impide que vocabulario como “yardas” secuestre análisis y recomendaciones destinados a AI UNIVERSAL. |
+| `index-grupal.html`, `api/session-grupal.js`, `api/voice-health.js`, `test-v336-microphone-transport.mjs`, `audit-project.mjs` | V336-MIC distingue causas de apertura, tolera desconexiones breves, limpia transporte fallido y agrega trazas privadas. |
+| `.github/workflows/v336-mic-finalize.yml` | Flujo temporal V336-MIC: actualiza inventario, ejecuta 91 paquetes y se elimina antes del commit desplegable. |
+| `api/weather.js`, `api/universal-ai.js`, `index-grupal.html` | V337-WEATHER unifica clima de texto, voz y tarjeta sobre Open-Meteo estructurado, usando coordenadas públicas del campo y probabilidad por horario. |
+| `test-v337-universal-weather.mjs`, `audit-project.mjs` | Puerta 92: exige llamada meteorológica estructurada, hora pico, porcentaje y síntesis sin segunda búsqueda web. |
+| `.github/workflows/v337-weather-finalize.yml` | Flujo temporal V337-WEATHER: actualiza inventario, ejecuta 92 paquetes y se elimina antes del commit desplegable. |
+| `api/universal-ai.js`, `test-v337-universal-weather.mjs`, `.github/workflows/v337-weather-r1-finalize.yml` | V337-WEATHER-R1 impide que una franja sugerida por el modelo recorte el día completo si el usuario no pidió mañana, tarde, atardecer o noche. |
+| `api/weather.js`, `api/universal-ai.js`, `test-v337-universal-weather.mjs`, `.github/workflows/v337-weather-r2-finalize.yml` | V337-WEATHER-R2 conserva cada hora y porcentaje de Open-Meteo para responder literalmente consultas por horario. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `.github/workflows/v337-weather-close-finalize.yml` | V337-WEATHER-CLOSE sella la evidencia real de 24 horas y cierra RC-012 sin cambiar el ejecutable. |
+| `.github/workflows/v337-weather-retry-finalize.yml` | Reintento trazado del mismo ejecutable después de que Vercel recibió 429 transitorio en la prueba externa de Reglas. |
+| `api/golf-rules.js`, `test-v328-official-golf-rules.mjs`, `test-v328-live-official-rules.mjs` | V338-RULES-GATE distingue 429 reintentable y evita que disponibilidad externa transitoria se confunda con una regresión del producto. |
+| `.github/workflows/v338-rules-gate-finalize.yml` | Sella y audita la corrección de la puerta viva antes de eliminarse. |
+| `api/universal-ai.js`, `test-v337-universal-weather.mjs`, `.github/workflows/v339-weather-direct-finalize.yml` | V339-WEATHER-DIRECT elimina la dependencia del modelo para clima explícito y responde directamente desde Open-Meteo. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | V339-WEATHER-DIRECT-CLOSE registra la prueba real final sin modificar el ejecutable aprobado. |
+
 ## Cómo usar este inventario
 
 
@@ -616,3 +679,180 @@ Solicitud: **25 de agosto de 2026**. Alcance: aumentar la legibilidad direcciona
 2. Leer la explicación sencilla.
 3. Usar el código para confirmar la versión exacta.
 4. Ver [MAPA_MAESTRO_INFRAESTRUCTURA.md](MAPA_MAESTRO_INFRAESTRUCTURA.md) para ramas, Vercel, Apple, Android y datos.
+
+## V340-SUPPORT · corrección de enlace al Manual por entorno
+
+- `index-grupal.html`: `Support` abre `/manual-scg` dentro del mismo deployment.
+- `test-v311-live-support-link.mjs`: bloquea cualquier escape futuro de Preview hacia Producción.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran la corrección y su alcance.
+- Evidencia final: commit `43dcb2c`, deployment `dpl_4MAeofErPXWFx5dK5QAEoSvycYLT` READY y navegador real sobre el mismo dominio Preview.
+- V341-WEATHER-INTENT: `api/universal-ai.js`, `test-v335-response-caliber.mjs` y `test-v337-universal-weather.mjs` separan pronóstico explícito de estrategia de golpe con viento.
+
+## V342-AI-RESILIENCE · recuperación automática de AI UNIVERSAL
+
+- `api/universal-ai.js`: reintenta límites transitorios, alterna modelos, respeta una espera acotada y devuelve 503 reintentable sólo al agotar la recuperación.
+- `index-grupal.html`: hace un segundo intento transparente sin duplicar la pregunta ni el historial visible.
+- `test-v335-response-caliber.mjs`: reproduce dos HTTP 429 antes de una respuesta 200 y verifica el agotamiento seguro.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-016 registra el defecto, su causa y el candado permanente.
+- `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad y sello reproducible V342.
+
+## V343-AI-GATEWAY-FALLBACK · saldo externo agotado
+
+- `api/universal-ai.js`: ante `credit_balance_exhausted`, usa Vercel AI Gateway con OIDC/clave administrada y tres modelos de proveedores distintos; conserva un análisis local completo para estrategia de golf si tampoco existe Gateway.
+- `test-v335-response-caliber.mjs`: prueba saldo agotado, Gateway, failover y el caso exacto de 140 yardas con seis secciones obligatorias.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-016 documenta la causa real y el nuevo control.
+- `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad y sello reproducible V343.
+
+## V344-TRAFFIC-DIRECT · tráfico independiente del saldo de IA
+
+- `api/universal-ai.js`: identifica consultas explícitas de tráfico, extrae origen/destino y llama directamente a Google Maps Routes.
+- `api/universal-ai.js`: responde ETA, demora, distancia, nivel, hora de cálculo y proveedor sin repetir coordenadas exactas.
+- `test-v324-real-traffic.mjs`: prueba cero llamadas a OpenAI, Google Routes único, GPS requerido y destino ambiguo.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-017 conserva el defecto real y su candado.
+- `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad y sello reproducible V344.
+
+## V345-ICONS · accesos de escritorio de Golf Score y Manual
+
+- `assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png`, `golf-score-card-gt-pwa-v345-192.png`, `golf-score-card-gt-pwa-v345-512.png`: derivados RGB versionados del logo oficial para iPhone y PWA.
+- `docs/manual/v311/manual-scg-apple-touch-v345-180.png`, `manual-scg-pwa-v345-192.png`, `manual-scg-pwa-v345-512.png`: iconos dedicados del Manual, con logo visible y rótulo MANUAL.
+- `index-grupal.html`, `manual.html`, `manifest.webmanifest`, `manual.webmanifest`: identidad y rutas exactas de cada acceso instalado.
+- `service-worker.js`, `vercel.json`: precarga de los seis iconos, revalidación de manifiestos y caché inmutable por nombre versionado.
+- `test-v345-home-icons.mjs`: decodifica y verifica tamaño, RGB, densidad visual, diferencias, rutas y encabezados.
+- `test-v281-pwa-installation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v311-manual-hosting.mjs`, `audit-project.mjs`: integración del control V345 al banco maestro.
+- `REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-018 conserva el defecto que alcanzó al propietario y la puerta física pendiente.
+- `scripts/rebuild-inventory-pdfs.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: regeneración, estado, inventario y sello del candidato V345.
+
+V345-ICONS-R1: el primer build remoto fue bloqueado porque el ROADMAP general no contenía siete rutas literales. Ambos ROADMAPS las registran ahora; no existe cambio funcional adicional.
+
+V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deployment `dpl_9DcbFH9d9Gf3qDL8rGUjQqTNNYpX` READY, 93 paquetes, 74/74 editorial y visual, 349 fuentes; instalación física en iPhone todavía pendiente.
+
+## V347 · matriz visible y diagnóstico real de respuestas
+
+- `index-grupal.html`: añade `setupVoiceMatrix` inmediatamente bajo el micrófono; `ESCUCHANDO` y `RESPONDIENDO` son exactos, rojos, visibles y parpadeantes; el respaldo reporta inicio, transcripción lista y fallo de respuesta sin guardar contenido.
+- `api/universal-ai.js`: `credit_balance_exhausted` deja de tratarse como límite transitorio y devuelve `UNIVERSAL_AI_CREDIT_EXHAUSTED` sin repetir la misma pregunta.
+- `api/voice-health.js`: acepta únicamente los tres eventos técnicos nuevos del respaldo, sin pregunta, transcripción, nombre ni ubicación.
+- `test-v336-microphone-transport.mjs`: bloquea estados con texto adicional, matriz ausente, falsa culpa a Internet, reintento por saldo y telemetría no autorizada.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-019 conserva el fallo físico y el bloqueo externo real.
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: estado honesto, doble registro y sello reproducible; Producción permanece intacta.
+
+## V348-VOICE-RECOVERY · fallo local recuperable y estados exactos
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `GENERIC-LOCAL-FAILURE-FALLBACK` | Un fallo técnico no clasificado del transporte principal intenta el reconocimiento alternativo; permiso bloqueado y dispositivo ausente mantienen su diagnóstico específico. |
+| `index-grupal.html` | `LISTENING-TO-RESPONDING` | Una transcripción válida cambia la matriz visible de `ESCUCHANDO` a `RESPONDIENDO`; no vuelve a `PROCESANDO…`. |
+| `api/voice-health.js` | `PRIVATE-FALLBACK-LIFECYCLE` | Registra requested/started/error/start_failed sin pregunta, transcripción, nombre, audio ni ubicación. |
+| `test-v336-microphone-transport.mjs` | `V348-PERMANENT-REGRESSION` | Reproduce el fallo local, protege errores no recuperables y exige estados y privacidad. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-020` | Conserva la evidencia de las 07:20/07:21 y no confunde captura reconocida con respuesta fallida por saldo. |
+
+## V349-ROSTER-ROUTING · registro repetido y matriz sin falso procesamiento
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `IDENTICAL-ROSTER-DEDUPE` | Repetir dos veces el mismo listado aplica una sola copia y no produce duplicados. |
+| `index-grupal.html` | `ROSTER-NEVER-GENERAL-AI` | Un dictado con jugador/handicap/marcas que no pueda aplicarse termina con error específico y cero consultas generales. |
+| `index-grupal.html` | `MATRIX-MESSAGE-PRECEDENCE` | Los mensajes personalizados conservan su texto; nunca se convierten en `PROCESANDO…`. |
+| `index-grupal.html` | `LOCK-TOUCH-RECOVERY` | Un nuevo toque limpia bloqueo transitorio de setup y permite reabrir el micrófono. |
+| `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs` | `V349-PERMANENT-REGRESSION` | Ejecutan repetición, gramática visible, frontera de intención, matriz y privacidad. |
+
+## V350-SETUP-LOCAL · Registro de jugadores independiente de respuestas
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `SETUP-LOCAL-ONLY` | En `context=setup`, una transcripción sólo puede aplicar jugadores o mostrar la instrucción de registro; jamás llama `routeAiUniversalAppText` ni `submitAiUniversalText`. |
+| `index-grupal.html` | `NATURAL-TEE-CONNECTORS` | “Hándicap catorce y marcas blancas” y sus conectores naturales llegan a la misma marca canónica. |
+| `index-grupal.html` | `CLIENT-SETUP-TELEMETRY` | El cliente autoriza applied/rejected sin texto hablado, nombres ni ubicación. |
+| `test-v305-registration-guides-parser-truth.mjs` | `NATURAL-DICTATION-REGRESSION` | Ejecuta dos jugadores con “otro jugador” y conectores “y marcas”. |
+| `test-v336-microphone-transport.mjs` | `NO-AI-ESCAPE` | Inspecciona el cuerpo real de `processBrowserVoiceTranscript`, exige retorno local incondicional y eventos cliente. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-022` | Conserva capturas, logs, causa, escape y estado físico pendiente. |
+
+## V351-SAFARI-ROMAN-HANDICAP · separación de jugadores ante XIV
+
+| Archivo exacto | Control | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `SETUP-ROMAN-I-LIV` | El registro interpreta números romanos canónicos de I a LIV como hándicap cuando Safari los entrega antes de una marca. |
+| `index-grupal.html` | `SCORE-X-ISOLATION` | La conversión romana vive sólo en el parser de setup; `X` no se transforma globalmente en score 10. |
+| `test-v305-registration-guides-parser-truth.mjs` | `JAIME-XIV-JORGE-VI` | La cadena real produce Jaime/14/Blanco y Jorge/6/Azul en dos cambios separados. |
+| `test-v336-microphone-transport.mjs` | `V351-VOICE-GUARD` | Conserva Registro local, matriz exacta y telemetría privada. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-023` | Registra captura, eventos 20:16:56 UTC, causa, escape y puerta física pendiente. |
+
+## V352-GOLF-SCORE-CARD-GT-LIVE · seguimiento remoto autorizado
+
+| Archivo exacto | Responsabilidad V352 | Control permanente |
+|---|---|---|
+| `index-grupal.html` | Enlaza el control LIVE con el único `persist()` oficial y monta la interfaz sin duplicar el motor de scores. | Cada guardado conserva primero la ronda local y luego notifica el snapshot LIVE. |
+| `live-control.js` | Autoriza jugador/grupo, crea/abre/revoca enlaces, maneja torneo, ventana separada y cola offline. | Consentimiento coincidente, misma ronda, enlace válido del mismo origen y snapshot pendiente más reciente. |
+| `live.html` | Página pública separada para visitantes sin aplicación. | Sólo lectura, CSP, `no-referrer`, `noindex` y nombre público oficial. |
+| `live-view.js` | Consulta stream o torneo cada tres segundos, pagina grupos y renderiza Gross/Neto/X. | Ninguna escritura, almacenamiento, voz, audio ni acceso a la tarjeta activa. |
+| `api/live.js` | Valida, limita frecuencia y ejecuta creación, publicación transaccional, lectura, unión y revocación. | Tokens aleatorios, sólo SHA-256, páginas con cursor y una sentencia CTE que bloquea, refiltra, exige revisión y actualiza torneo/evento. |
+| `database/004_live_scorecards.sql` | Crea streams, torneos, eventos, rate limits e índices compatibles con el preparador Neon. | No contiene cuerpos de funciones; la API ejecuta la transacción atómica. |
+| `service-worker.js` | Versiona la caché de la aplicación e incorpora el control LIVE. | El visor remoto depende de red y no se mezcla con la caché de la ronda. |
+| `vercel.json` | Protege `live.html` y los scripts LIVE mediante headers. | `no-store`, `no-referrer`, `nosniff` y no indexación. |
+| `test-v352-live.mjs` | Ejecuta regresión de permisos, privacidad, X, totales, hashes, visor, cola y paginación. | Rechaza nombre interno público, más de seis jugadores por stream, datos prohibidos y rutas de escritura en el visor. |
+| `audit-project.mjs` | Incorpora V352 a la auditoría integral. | Ningún PASS global puede omitir `test-v352-live.mjs`. |
+| `DATABASE_ARCHITECTURE.md` | Documenta el modelo temporal LIVE y su separación del historial central completo. | Migración primero en rama Neon temporal; base principal sólo con confirmación. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` | Fija fuente, alcance, aceptación, riesgos, pruebas y reversión. | Los siete insumos GATE 0 quedan cerrados antes de Preview. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Registra LIVE como prioridad V352. | Conserva el estado honesto de migración, Preview, navegador y prueba física. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Añade el punto 28 y su relación con nube/QA. | No declara LIVE cerrado antes de las puertas restantes. |
+| `ROADMAP_OVERALL.md` | Resume el alcance y estado V352. | Enumera cada archivo modificado y mantiene Producción intacta. |
+| `ROADMAP_A_DETALLE.md` | Registra controles y evidencia reproducible V352. | Exige banco local, Neon temporal, navegador, Preview e inventario. |
+| `scripts/rebuild-inventory-pdfs.py` | Regenera los tres inventarios con rótulo y sello V352. | Calcula las fuentes por Git, huella cada archivo y sella los PDF deterministas. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Mapea cada pieza V352. | El sello final reemplaza el conteo provisional. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella el árbol exacto de fuentes V352. | Se regenera sólo después de cerrar archivos, ROADMAPS y pruebas. |
+
+Evidencia Neon V352: migración `1f8793a4-0dad-40a6-8016-b9b183e15b7c`, rama temporal `mcp-migration-2026-08-27T21-50-34` (`br-morning-dew-avwpi96x`), 60 grupos paginados 25/25/10, filtro individual sin fuga e idempotencia sin evento adicional. Con aprobación expresa, Neon aplicó el esquema a la principal `br-late-wind-avhgi9s3` y eliminó la temporal; verificación final: cuatro tablas, 15 índices, cero funciones LIVE y cero filas de prueba.
+
+V352-R2: `api/live.js` tipa explícitamente los parámetros de la sentencia CTE usados por Neon HTTP; `test-v352-live.mjs` bloquea cualquier `mutationId`, `secretHash` o revisión esperada sin tipo. La corrección nace de la prueba remota real del deployment READY `dpl_3fmsfq4BjuFzMgV3eYKGvPRWzSff`, donde crear y leer aprobaron pero publicar devolvió `42P18`.
+
+Cierre remoto V352-R2: deployment `dpl_2BLAFZNazoogdQQS2mkxreNjBgh6`, commit `6bc9901e068cf8f2026de6b0ab8580c2546819f5`, estado READY. El recorrido protegido devolvió `200/200/200/200/200/200/410` para página, crear, leer, publicar, volver a leer, revocar y confirmar revocación; Gross 5/Neto 4 apareció en revisión 1. Vercel registró cinco `200`, un `410` esperado y cero errores fatales; Neon quedó con cero streams de prueba.
+
+### V352 · pruebas históricas compatibles con releases futuras
+
+`test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs` y `test-v328-official-golf-rules.mjs` conservan sus verificaciones funcionales, pero ya no congelan toda la aplicación en V332. El identificador general debe cumplir `V###`; el build LIVE exacto queda bajo `test-v352-live.mjs`.
+
+## V353-CENTRO-LIVE-GENERAL-INDIVIDUAL · escenario amigable de 80 jugadores
+
+| Archivo exacto | Responsabilidad V353 | Control permanente |
+|---|---|---|
+| `live-hub.html` | Presenta `1 · MONITOR GENERAL` y `2 · MONITOR INDIVIDUAL` en una sola ventana separada. | Dos botones grandes, cuatro pasos, sólo lectura y compartir mundial. |
+| `live-hub.js` | Lee la General completa, ordena 80 jugadores, guarda elecciones del Monitor Individual e importa un enlace externo como respaldo. | Sólo ejecuta `read`; reutiliza la General y no fija máximo de páginas. |
+| `live.html` | Ofrece entrada directa al Centro Live desde cualquier General o tarjeta compartida. | El botón abre otra ventana y no altera el visor existente. |
+| `live-view.js` | Convierte el token de torneo o stream en una importación segura al Centro. | Conserva `_vercel_share`, usa fragmento y abre con `noopener,noreferrer`. |
+| `live-control.js` | Agrega Centro Live, compartir ♾️, Capitán de Tarjeta y respaldo individual. | Un flujo principal por General; pegar enlace deja de ser requisito normal. |
+| `api/live.js` | Impide que dos streams activos publiquen el mismo grupo dentro del torneo. | CTE atómica, fila del torneo `FOR UPDATE` y `LIVE_GROUP_ALREADY_PUBLISHING`. |
+| `index-grupal.html` | Identifica el build V353 sin cambiar el escritor oficial. | `persist()` continúa siendo la única fuente de publicación. |
+| `service-worker.js` | Versiona el shell e incorpora el Centro Live. | La Score Card mantiene su estrategia offline y LIVE sigue necesitando red para actualizar. |
+| `vercel.json` | Protege `live-hub.html` y `live-hub.js`. | Sin caché, referrer ni indexación pública. |
+| `test-v353-live-hub.mjs` | Simula 20×4 y 40×2, ambos monitores, enlace externo, privacidad y escala. | Bloquea omisiones, duplicados, parentescos específicos, escrituras, tope de páginas y doble capitán. |
+| `test-v352-live.mjs` | Conserva la regresión central V352 bajo el identificador V353. | Permisos, alcance, idempotencia y privacidad siguen obligatorios. |
+| `audit-project.mjs` | Incorpora el nuevo banco a la regresión maestra. | Ningún Preview puede omitir V353. |
+| `DATABASE_ARCHITECTURE.md` | Documenta reutilización del esquema y lectura única de la General. | V353 no crea migración ni tabla nueva. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` | Cierra el escenario, las siete entradas, riesgos, pruebas y reversión. | Separa PASS automático de prueba física iPhone. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Registra V353 como ejecución activa. | Producción permanece sin montar. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Integra Monitor General, Monitor Individual y compartir mundial al punto 28. | No duplica el motor de scores. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Mapea los 359 archivos activos y cada pieza V353. | El conteo final coincide con el sello. |
+| `ROADMAP_OVERALL.md` | Resume el escenario ideal, arquitectura y estado verificable. | Enumera todos los archivos V353. |
+| `ROADMAP_A_DETALLE.md` | Registra controles reproducibles del candidato. | La puerta remota puede comprobar cada modificación. |
+| `scripts/rebuild-inventory-pdfs.py` | Rotula y reconstruye los tres inventarios V353. | Fuentes y salidas se sellan de forma determinista. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella el árbol candidato completo. | Se regenera después de cerrar código, pruebas y documentos. |
+
+Resultado local V353: `test-v352-live.mjs`, `test-v353-live-hub.mjs` y `scripts/project-quality-gate.mjs` PASS. Se comprobaron 80 jugadores en 20 grupos de cuatro y 40 grupos de dos, Monitor General, tres jugadores elegidos en el Monitor Individual con cero lecturas extra, un vínculo externo, origen seguro, compartir en cualquier país, capitán único y Producción intacta en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Preview, E2E, observabilidad y navegador permanecen separados hasta obtener evidencia remota; el iPhone físico continúa pendiente.
+
+`test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v312-general-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs`, `test-v328-offline-official-rules.mjs`, `test-v329-skins.mjs` y `test-v330-side-games.mjs` exigen una caché PWA con versión `gscg-mobile-v###` sin congelarla en V332. `test-v352-live.mjs` conserva el control exacto de `gscg-mobile-v352-live` y `/live-control.js`.
+## V354 · mapa de hardening P0 comercial
+
+| Conjunto | Rutas | Función obligatoria |
+|---|---|---|
+| Perímetro | `api/_lib/api-guard.js`, `api/_lib/cors.js`, `api/account.js`, `api/golf-rules.js`, `api/research.js`, `api/session-grupal.js`, `api/traffic.js`, `api/universal-ai.js`, `api/voice-health.js`, `api/weather.js` | Origen estricto, cuota persistente, IP anonimizada, Retry-After y fallo cerrado. |
+| Legado/diagnóstico | `api/session.js`, `api/score.js`, `api/_lib/http.js`, `api/database-health.js`, `index.html` | Retira motores duplicados, elimina token Sync legado y reduce información pública de salud. |
+| Release web/LIVE | `index-grupal.html`, `live-control.js`, `api/live.js`, `service-worker.js`, `vercel.json` | Identifica V354, conserva Centro Live, invalida caché y aplica headers globales. |
+| Supply chain | `package.json`, `package-lock.json`, `requirements-build.txt`, `sbom.cdx.json`, `.nvmrc`, `.node-version`, `scripts/generate-sbom.mjs`, `scripts/apply-native-assets.mjs` | Node/Python/npm reproducibles, SBOM y recursos nativos sin dependencia vulnerable. |
+| CI | `.github/dependabot.yml`, `.github/workflows/codeql.yml`, `.github/workflows/ios-build.yml`, `.github/workflows/ios-testflight.yml`, `.github/workflows/mobile-native-package.yml`, `.github/workflows/roadmap-gate.yml`, `.github/workflows/stableford-tournament-pass.yml` | Acciones fijadas por SHA, npm ci, Node 24, auditoría maestra y análisis de seguridad. |
+| Comercial/legal | `COMMERCIAL_RELEASE_CONTROL.json`, `LICENSE`, `SECURITY.md`, `THIRD_PARTY_NOTICES.md`, `LEGAL/TERMINOS_DE_USO_BORRADOR.md`, `LEGAL/POLITICA_DE_PRIVACIDAD_BORRADOR.md`, `LEGAL/AVISO_VOZ_IA_Y_DATOS_VIVOS_BORRADOR.md`, `LEGAL/REGISTRO_PERMISOS_IP.md`, `LEGAL/REGISTRO_PROVEEDORES.md` | Borradores y once aprobaciones externas; no equivalen a publicación autorizada. |
+| Continuidad | `docs/operations/INCIDENT_RESPONSE.md`, `docs/operations/DISASTER_RECOVERY.md`, `docs/operations/SERVICE_LEVEL_OBJECTIVES.md`, `docs/operations/RELEASE_COMMERCIAL_CHECKLIST.md`, `docs/operations/REPOSITORY_PROTECTION.md` | Incidentes, rollback, restore, objetivos internos y ruleset requerida. |
+| Gates | `scripts/commercial-readiness-gate.mjs`, `scripts/inventory-gate.mjs`, `scripts/project-quality-gate.mjs`, `scripts/rebuild-inventory-pdfs.py`, `audit-project.mjs`, `test-project-quality-gate.mjs`, `test-v354-commercial-hardening.mjs` | Bloquea Producción, encadena inventario, separa hashes Vercel/working tree y prueba los perfiles. |
+| Regresión restituida | `test-v351-r1-hole1-voice-score-render.mjs`, `test-v351-r5-voice-score-matrix.mjs`, `test-v267-scorecard-combination-matrix.mjs`, `test-v267-one-operational-line.mjs`, `test-v270-consecutive-hole-voice-blocks.mjs`, `test-v305-registration-guides-parser-truth.mjs`, `test-v312-general-caddie.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v336-microphone-transport.mjs` | Reintegra V351-R1…R5 y protege conversación antes de ejecutar el escritor. |
+| LIVE/versionado | `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-sync-auth.mjs` | Conserva funciones V352/V353 bajo versión, toolchain y auth V354. |
+| Trazabilidad | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Estado honesto, RC-024…RC-035, archivos exactos e inventarios sellados. |
+
+Producción sigue anclada a `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. V354 no agrega migración; el release comercial continúa bloqueado hasta evidencia externa completa.

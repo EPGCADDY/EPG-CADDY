@@ -333,7 +333,7 @@ async function ensureSession(){
   dc.addEventListener("close",()=>{connected=false;listening=false;phase="idle";talkButton.classList.remove("active");talkButton.textContent="Iniciar voz"});
   pc.addEventListener("connectionstatechange",()=>{if(pc&&["failed","closed","disconnected"].includes(pc.connectionState)){connected=false;listening=false;phase="idle"}});
   const offer=await pc.createOffer();await pc.setLocalDescription(offer);await waitForIceGatheringComplete(pc);
-  const response=await fetch("/api/session",{method:"POST",headers:{"Content-Type":"application/sdp"},body:pc.localDescription.sdp});
+  const response=await fetch("/api/session-grupal",{method:"POST",headers:{"Content-Type":"application/sdp","X-GSCG-Context":"round"},body:pc.localDescription.sdp});
   const answer=await response.text();
   if(!response.ok)throw new Error(answer||"No se pudo iniciar la sesión.");
   if(!answer||!answer.trim())throw new Error("La sesión no devolvió SDP.");
@@ -382,7 +382,7 @@ loadCourse();
 <script id="epg-presentation-data-v2">
 /*
   CAPA DE PRESENTACIÓN / TARJETA OFICIAL.
-  Este bloque NO sustituye ni modifica WebRTC, Realtime, /api/session,
+  Este bloque NO sustituye ni modifica WebRTC, Realtime, /api/session-grupal,
   epg_caddy_action, startTalking, ensureSession, sendToolOutput,
   handleRealtimeEvent, scoring, handicap ni persistencia.
 */

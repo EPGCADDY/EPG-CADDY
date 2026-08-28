@@ -11,7 +11,8 @@
     const players=snapshot.players.map(player=>({id:text(player.id),name:text(player.name)})).filter(player=>player.id&&player.name);
     if(!players.length)return null;
     const mode=snapshot.mode==="stableford"?"stableford":snapshot.mode==="match_play"?"match_play":snapshot.mode==="four_ball"?"four_ball":"general";
-    return Object.freeze({roundId:text(round.id),mode,course:courseName(snapshot),courseKey:text(snapshot.courseKey||round.courseKey),tournament:tournamentName(snapshot),playedAt:snapshot.playedAt||round.createdAt||snapshot.officiallyClosedAt,closedAt:snapshot.officiallyClosedAt||round.officiallyClosedAt,version:Number(snapshot.version)||1,sha256:text(snapshot.sha256),players:Object.freeze(players),snapshot});
+    const sideGames=snapshot.sideGames&&typeof snapshot.sideGames==="object"?snapshot.sideGames:{};
+    return Object.freeze({roundId:text(round.id),mode,course:courseName(snapshot),courseKey:text(snapshot.courseKey||round.courseKey),tournament:tournamentName(snapshot),playedAt:snapshot.playedAt||round.createdAt||snapshot.officiallyClosedAt,closedAt:snapshot.officiallyClosedAt||round.officiallyClosedAt,version:Number(snapshot.version)||1,sha256:text(snapshot.sha256),players:Object.freeze(players),sideGames,snapshot});
   }
   function entries(archive){return (Array.isArray(archive)?archive:[]).map(entry).filter(Boolean).sort((a,b)=>timestamp(b.playedAt)-timestamp(a.playedAt)||b.version-a.version||a.roundId.localeCompare(b.roundId))}
   function filter(list,{mode="all",course="all",query=""}={}){
@@ -20,7 +21,8 @@
       if(wantedMode!=="all"&&item.mode!==wantedMode)return false;
       if(wantedCourse&&wantedCourse!=="ALL"&&normalized(item.course)!==wantedCourse&&normalized(item.courseKey)!==wantedCourse)return false;
       if(!needle)return true;
-      const haystack=normalized([item.course,item.courseKey,item.tournament,item.mode,item.playedAt,...item.players.map(player=>player.name)].join(" "));
+      const games=Object.entries(item.sideGames||{}).filter(([,value])=>value?.enabled===true).map(([key])=>key);
+      const haystack=normalized([item.course,item.courseKey,item.tournament,item.mode,item.playedAt,...games,...item.players.map(player=>player.name)].join(" "));
       return haystack.includes(needle);
     });
   }

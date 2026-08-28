@@ -18,8 +18,8 @@ for(const source of ["/","/index.html","/inicio"]){
 }
 assert.match(html,/function openNewRoundDraft\(\)\{[\s\S]*?persist\(\);[\s\S]*?openSetup\("new"\)/,"El inicio directo conserva la ronda guardada antes de abrir la pantalla principal");
 assert.match(html,/id="fourBallRoundButton"[\s\S]*?<span>FOUR BALL<\/span>/);
-assert.match(html,/MATCH PLAY REQUIERE 2 O 4 JUGADORES/);
-assert.match(html,/FOUR BALL REQUIERE 2 O 4 JUGADORES/);
+assert.match(html,/MATCH PLAY REQUIERE 2, 4 O 6 JUGADORES/);
+assert.match(html,/FOUR BALL REQUIERE 2, 4 O 6 JUGADORES/);
 assert.match(html,/draft-pair-divider/);
 assert.match(html,/team-pair-spacer/);
 assert.match(html,/summary-pair-divider/);
@@ -28,4 +28,4 @@ assert.match(html,/teamMatchSegmentReport\("Primera vuelta",FRONT\)/);
 assert.match(html,/teamMatchSegmentReport\("Segunda vuelta",BACK\)/);
 assert.match(html,/reports\.push\(activeTeamMatchFinalSpeech\(state\)\)/);
 
-console.log("PASS V311 · NOMBRES NEUTRALES · UNA O DOS PAREJAS · LÍNEA SEPARADORA · VOZ ARRIBA/ABAJO · INICIO DIRECTO");
+console.log("PASS V311/V329 · NOMBRES NEUTRALES · UNA, DOS O TRES PAREJAS · LÍNEAS SEPARADORAS · VOZ ARRIBA/ABAJO · INICIO DIRECTO");

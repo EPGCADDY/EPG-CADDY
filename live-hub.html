@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/official-logos/golf-score-card-gt-pwa-v345-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
+  <title>Centro Live · Golf Score Card GT</title>
+  <style>
+    :root{color-scheme:dark;--lime:#31ff00;--red:#ff5656;--gold:#e4c468;--line:#424748;--panel:#080909;--muted:#a8acad}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#000;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+    button,input{font:inherit}.hub{width:min(1500px,100%);margin:auto;padding:10px}.head{display:grid;grid-template-columns:82px 1fr auto;gap:12px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#050505}.head img{width:82px;height:82px}.head h1{margin:0;color:var(--lime);font-size:clamp(21px,4vw,34px)}.head p{margin:5px 0 0;color:var(--muted);font-size:10px}.back{min-height:44px;padding:8px 12px;border:1px solid #666;border-radius:8px;background:#111;color:#fff;font-weight:900}
+    .state{margin:10px 0;padding:11px;border:1px solid #275d20;border-radius:9px;background:#071106;color:var(--lime);font-size:11px;font-weight:900;text-align:center}.state.warning{border-color:#6b591d;background:#151103;color:#ffd565}.state.error{border-color:#6a2424;background:#160606;color:#ff8181}
+    .easy{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}.easy div{padding:10px;border:1px solid #333;border-radius:9px;background:#080808}.easy b{display:block;color:var(--lime);font-size:11px}.easy span{display:block;margin-top:4px;color:#ccc;font-size:9px;line-height:1.35}.monitor-switch{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:10px 0}.monitor-switch button{min-height:58px;border:1px solid var(--lime);border-radius:9px;background:#050505;color:var(--lime);font-weight:900}.monitor-switch button.active{background:var(--lime);color:#000}.monitor-panel.hidden{display:none}
+    .panel{margin:11px 0;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.panel h2{margin:0;color:var(--lime);font-size:17px}.panel-note{margin:5px 0 10px;color:var(--muted);font-size:9px;line-height:1.45}
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.primary,.secondary,.danger,.follow-button{min-height:46px;border-radius:8px;font-weight:900}.primary{border:0;background:var(--lime);color:#000}.secondary{border:1px solid #666;background:#0b0b0b;color:#fff}.danger{border:1px solid #7d2626;background:#1b0606;color:#ff8585}
+    .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:10px 0}.summary div{padding:8px;border:1px solid #333;border-radius:7px;text-align:center}.summary small{display:block;color:#888;font-size:7px}.summary strong{display:block;margin-top:3px;font-size:14px}
+    .search{display:grid;grid-template-columns:1fr auto;gap:7px;margin:9px 0}.search input,.import input{width:100%;min-height:48px;padding:10px;border:1px solid #666;border-radius:8px;background:#000;color:#fff;font-weight:800}.search button{padding:8px 15px}
+    .search-results{display:grid;gap:7px}.search-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:9px;border:1px solid #343838;border-radius:8px}.search-row strong{font-size:12px}.search-row small{display:block;margin-top:3px;color:#aaa;font-size:8px}.follow-button{min-width:105px;border:0;background:var(--lime);color:#000}
+    .favorites{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.favorite{position:relative;border:1px solid #3f4445;border-radius:10px;overflow:hidden;background:#030303}.favorite-head{display:flex;justify-content:space-between;gap:9px;align-items:start;padding:10px;border-bottom:1px solid #303434}.favorite-head h3{margin:0;color:var(--lime);font-size:15px}.favorite-head small{display:block;margin-top:4px;color:#aaa;font-size:8px}.remove{border:1px solid #742929;border-radius:999px;background:#180606;color:#ff8888;font-weight:900}.favorite-body{padding:9px}.favorite-totals{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.favorite-totals div{padding:6px 3px;border:1px solid #333;border-radius:6px;text-align:center}.favorite-totals small{display:block;color:#888;font-size:7px}.favorite-totals b{display:block;margin-top:2px;font-size:12px}.holes{margin-top:8px;overflow-x:auto}.holes table{min-width:720px;width:100%;border-collapse:collapse;table-layout:fixed}.holes th,.holes td{height:28px;border:1px solid #3d4142;padding:2px;text-align:center;font-size:9px}.holes th:first-child,.holes td:first-child{position:sticky;left:0;background:#050505;width:58px;text-align:left;padding-left:5px}.under{color:var(--lime)}.over{color:var(--red)}
+    .leader-wrap{overflow:auto;max-height:660px;border:1px solid #333;border-radius:8px}.leader{width:100%;min-width:720px;border-collapse:collapse}.leader th{position:sticky;top:0;z-index:2;background:#121313;color:#bbb}.leader th,.leader td{padding:8px 6px;border-bottom:1px solid #303333;text-align:center;font-size:9px}.leader td:nth-child(2),.leader th:nth-child(2),.leader td:nth-child(3),.leader th:nth-child(3){text-align:left}.leader td:nth-child(2){font-weight:900}.leader .star{border:0;background:transparent;color:var(--lime);font-size:20px}
+    .empty{padding:24px 12px;border:1px dashed #555;border-radius:9px;color:#aaa;text-align:center;font-size:11px;line-height:1.55}.import{display:grid;grid-template-columns:1fr auto;gap:7px}.picker{display:none;margin-top:10px;padding:10px;border:1px solid var(--lime);border-radius:9px}.picker.visible{display:block}.picker h3{margin:0 0 8px;color:var(--lime);font-size:14px}.picker-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.picker-grid button{min-height:48px;border:1px solid #666;border-radius:8px;background:#0b0b0b;color:#fff;font-weight:900}
+    .footer{padding:16px 5px;color:#666;text-align:center;font-size:8px;line-height:1.5}
+    @media(max-width:800px){.hub{padding:6px}.head{grid-template-columns:62px 1fr}.head img{width:62px;height:62px}.head .back{grid-column:1/-1}.easy{grid-template-columns:1fr 1fr}.actions,.favorites,.summary{grid-template-columns:1fr 1fr}.favorites{grid-template-columns:1fr}.import{grid-template-columns:1fr}.picker-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="hub">
+    <header class="head">
+      <img src="/assets/official-logos/golf-score-card-gt-pwa-v345-192.png" alt="Golf Score Card GT">
+      <div><h1>CENTRO LIVE</h1><p>1 · MONITOR GENERAL &nbsp; | &nbsp; 2 · MONITOR INDIVIDUAL</p></div>
+      <button class="back" id="hubBack" type="button">VOLVER A MI SCORE CARD</button>
+    </header>
+
+    <div class="state" id="hubState" role="status" aria-live="polite">LISTO PARA CONECTAR LA GENERAL</div>
+    <section class="easy" aria-label="Pasos fáciles">
+      <div><b>1 · ABRE EL ENLACE</b><span>El organizador o jugador te lo comparte.</span></div>
+      <div><b>2 · ELIGE MONITOR</b><span>General para todos; Individual para uno.</span></div>
+      <div><b>3 · TOCA + SEGUIR</b><span>Elige cualquier jugador de la lista.</span></div>
+      <div><b>4 · MIRA LIVE</b><span>Se actualiza solo; tu tarjeta no se toca.</span></div>
+    </section>
+
+    <nav class="monitor-switch" aria-label="Elegir monitor">
+      <button class="active" id="hubShowGeneral" type="button">1 · MONITOR GENERAL</button>
+      <button id="hubShowIndividual" type="button">2 · MONITOR INDIVIDUAL</button>
+    </nav>
+
+    <section class="panel monitor-panel" id="hubGeneralPanel">
+      <h2>1 · MONITOR GENERAL</h2>
+      <p class="panel-note">RESULTADO LIVE NO OFICIAL HASTA EL CIERRE. UNA SOLA SCORE CARD PUBLICA POR GRUPO. COMPÁRTELO ♾️ EN USA, MÉXICO, ITALIA O CUALQUIER PAÍS.</p>
+      <div class="summary" id="hubSummary"></div>
+      <div class="actions">
+        <button class="primary" id="hubShareGeneral" type="button">COMPARTIR GENERAL ♾️</button>
+        <button class="secondary" id="hubRefresh" type="button">ACTUALIZAR AHORA</button>
+        <button class="danger" id="hubRemoveGeneral" type="button">QUITAR GENERAL</button>
+      </div>
+      <div class="search">
+        <input id="hubSearch" type="search" maxlength="80" placeholder="BUSCA CUALQUIER JUGADOR O GRUPO">
+        <button class="primary" id="hubSearchButton" type="button">BUSCAR</button>
+      </div>
+      <div class="search-results" id="hubSearchResults"></div>
+      <div class="leader-wrap" id="hubLeaderWrap"><div class="empty">ABRE EL ENLACE GENERAL Y TOCA “ABRIR EN CENTRO LIVE”.</div></div>
+    </section>
+
+    <section class="panel monitor-panel hidden" id="hubIndividualPanel">
+      <h2>2 · MONITOR INDIVIDUAL</h2>
+      <p class="panel-note">AQUÍ APARECEN LOS JUGADORES O GRUPOS QUE ELEGISTE. SI ESTÁN EN LA GENERAL, NO SE HACEN CONSULTAS EXTRA.</p>
+      <div class="favorites" id="hubFavorites"><div class="empty">TODAVÍA NO SIGUES A NADIE.</div></div>
+      <div class="actions" style="margin-top:9px"><button class="danger" id="hubClearFavorites" type="button">LIMPIAR MONITOR INDIVIDUAL</button></div>
+      <h2 style="margin-top:16px">ENLACE DE RESPALDO</h2>
+      <p class="panel-note">NORMALMENTE NO NECESITAS PEGAR NADA. USA ESTA OPCIÓN SÓLO SI LA PERSONA NO APARECE EN EL TORNEO.</p>
+      <div class="import">
+        <input id="hubImportLink" type="url" placeholder="PEGA UNA VEZ SU ENLACE LIVE">
+        <button class="primary" id="hubImportButton" type="button">AGREGAR</button>
+      </div>
+      <div class="picker" id="hubPicker">
+        <h3>¿A QUIÉN QUIERES SEGUIR?</h3>
+        <div class="picker-grid" id="hubPickerGrid"></div>
+      </div>
+    </section>
+
+    <footer class="footer">VISTA SÓLO LECTURA · NO EDITA SCORES · LOS ENLACES PRIVADOS QUEDAN ÚNICAMENTE EN ESTE DISPOSITIVO · GOLF SCORE CARD GT. LIVE V353</footer>
+  </main>
+  <script src="/live-hub.js"></script>
+</body>
+</html>

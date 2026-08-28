@@ -1,3 +1,6 @@
+import { guardAppRequest } from "./_lib/api-guard.js";
+import { handleAppPreflight } from "./_lib/cors.js";
+
 async function readRawBody(req) {
   if (typeof req.body === "string") {
     return req.body;
@@ -17,6 +20,7 @@ async function readRawBody(req) {
 }
 
 export default async function handler(req, res) {
+  if (handleAppPreflight(req, res)) return;
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
 
@@ -24,7 +28,10 @@ export default async function handler(req, res) {
       error: "Usa POST."
     });
   }
+  if (!(await guardAppRequest(req, res, { scope: "legacy-realtime-session", maximum: 2 }))) return;
+  return res.status(410).json({ ok: false, error: "SESSION_ENDPOINT_RETIRED", replacement: "/api/session-grupal" });
 
+  /* istanbul ignore next -- código histórico inaccesible conservado sólo para trazabilidad hasta su retiro físico */
   const apiKey =
     process.env.OPENAI_API_KEY;
 
