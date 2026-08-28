@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v353-live-hub";
+const CACHE_NAME="gscg-mobile-v354-traffic-weather-horizons";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

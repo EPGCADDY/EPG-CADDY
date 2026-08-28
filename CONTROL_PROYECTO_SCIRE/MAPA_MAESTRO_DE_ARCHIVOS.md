@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V353: **359**.
+Archivos activos rastreados al corte V354: **360**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -837,5 +837,23 @@ Cierre remoto V352-R2: deployment `dpl_2BLAFZNazoogdQQS2mkxreNjBgh6`, commit `6b
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella el árbol candidato completo. | Se regenera después de cerrar código, pruebas y documentos. |
 
 Resultado V353: `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `scripts/project-quality-gate.mjs` y auditoría maestra de 95 paquetes PASS. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` READY; E2E remoto PASS con 20 grupos/80 jugadores, tres páginas, Monitor General, tres selecciones del Monitor Individual, vínculo externo, actualización LIVE, capitán duplicado bloqueado y revocación. Observabilidad registró cero `error`/`fatal`; Neon quedó con cero datos de prueba activos. Producción permanece intacta en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`; inspección visual e iPhone físico continúan pendientes.
+
+## V354-TRAFICO-CLIMA-HORIZONTES · corrección preventiva
+
+| Archivo exacto | Responsabilidad V354 | Control permanente |
+|---|---|---|
+| `api/universal-ai.js` | Interpreta hora Guatemala y transmite horizontes actuales/futuros a tráfico y clima. | Separa vivo/previsto, limpia el destino y no recicla clima actual. |
+| `api/_lib/traffic.js` | Conserva si la salida fue futura y si la hora se asumió. | Google Routes recibe `departureTime`; la respuesta expone la semántica real. |
+| `api/weather.js` | Selecciona la primera hora Open-Meteo igual o posterior y explica el rango disponible. | Resolución de 60 minutos y límite de 16 días visibles, sin estimación inventada. |
+| `test-v354-traffic-weather-horizons.mjs` | Reproduce 30 min, 1 h, 3 h, mañana, próxima semana, fecha/hora y fuera de rango sobre tres rutas. | Bloquea la regresión exacta de RC-024 en ruta directa y proveedor estructurado. |
+| `index-grupal.html`, `service-worker.js` | Identifican build y caché V354. | Invalida el shell anterior sin cambiar motores de score ni LIVE. |
+| `test-v352-live.mjs`, `test-v353-live-hub.mjs` | Conservan LIVE al cambiar el identificador general. | Privacidad, escritura única, 80 jugadores y dos monitores siguen obligatorios. |
+| `audit-project.mjs` | Incorpora V354 a la auditoría integral. | Ningún Preview puede omitir horizontes de tráfico/clima. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | Registra causa, escape y candado RC-024. | El mismo defecto no puede cerrarse sólo con una prueba del módulo interno. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Actualizan estado real de tráfico/clima. | Preview y comparaciones físicas siguen separadas del PASS local. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Registran todos los archivos V354 y su aceptación. | La puerta remota compara exactamente el árbol candidato. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Rotulan y sellan inventarios V354. | Tres PDF reproducibles deben coincidir con todas las fuentes. |
+
+Estado inicial V354: regresiones V324, V337, V352, V353 y V354 PASS; `scripts/project-quality-gate.mjs` PASS. Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Preview, observabilidad y comparaciones físicas contra Waze y una aplicación meteorológica independiente continúan abiertas; no se simulan.
 
 `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v312-general-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs`, `test-v328-offline-official-rules.mjs`, `test-v329-skins.mjs` y `test-v330-side-games.mjs` exigen una caché PWA con versión `gscg-mobile-v###` sin congelarla en V332. `test-v352-live.mjs` conserva el control exacto de `gscg-mobile-v352-live` y `/live-control.js`.

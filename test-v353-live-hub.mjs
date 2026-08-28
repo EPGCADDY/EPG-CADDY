@@ -46,7 +46,7 @@ assert.equal(groupKey("  Grupo   001  "),"grupo 001");
 assert.equal(groupKey("GRUPO 001"),"grupo 001");
 
 const index=read("index-grupal.html"),html=read("live-hub.html"),client=read("live-hub.js"),control=read("live-control.js"),viewer=read("live-view.js"),viewerHtml=read("live.html"),api=read("api/live.js"),worker=read("service-worker.js"),vercel=read("vercel.json");
-assert.match(index,/V353-CENTRO-LIVE-GENERAL-INDIVIDUAL-20260828/);
+assert.match(index,/V354-TRAFICO-CLIMA-HORIZONTES-20260828/);
 assert.match(html,/CENTRO LIVE/);
 assert.match(html,/1 · MONITOR GENERAL/);
 assert.match(html,/2 · MONITOR INDIVIDUAL/);
@@ -80,7 +80,7 @@ assert.match(joinSource,/WITH tournament AS MATERIALIZED/);
 assert.match(joinSource,/FOR UPDATE/,"el torneo se bloquea mientras decide el capitán único");
 assert.match(joinSource,/other\.tournament_id=tournament\.id/);
 assert.match(joinSource,/decision\.outcome_code='APPLY'/,"la unión se aplica dentro de la misma sentencia atómica");
-assert.match(worker,/gscg-mobile-v353-live-hub/);
+assert.match(worker,/gscg-mobile-v354-traffic-weather-horizons/);
 assert.match(worker,/"\/live-hub\.html"/);
 assert.match(worker,/"\/live-hub\.js"/);
 assert.match(vercel,/"source"\s*:\s*"\/live-hub\.html"/);

@@ -43,7 +43,7 @@ function futureDeparture(value,nowMs=Date.now()){
 
 function roundedMinutes(seconds){return Number.isFinite(seconds)?Math.max(0,Math.round(seconds/60)):null}
 
-export function summarizeTrafficRoute(payload,{originLabel="Ubicación GPS actual",destinationLabel="Destino",departureTime="",calculatedAt=new Date().toISOString()}={}){
+export function summarizeTrafficRoute(payload,{originLabel="Ubicación GPS actual",destinationLabel="Destino",departureTime="",departureTimeAssumed=false,calculatedAt=new Date().toISOString()}={}){
   const route=payload?.routes?.[0]||null;
   const duration=durationSeconds(route?.duration),staticDuration=durationSeconds(route?.staticDuration);
   if(!route||duration===null)return{ok:false,error:"TRAFFIC_ROUTE_UNAVAILABLE",needsDestinationClarification:true,message:"No pude identificar una ruta confiable. ¿Cuál es el nombre completo, zona o municipio del destino?"};
@@ -66,6 +66,8 @@ export function summarizeTrafficRoute(payload,{originLabel="Ubicación GPS actua
     destination:cleanPlace(destinationLabel)||"Destino indicado",
     calculatedAt,
     departureTime:departureTime||calculatedAt,
+    isFutureEstimate:Boolean(departureTime),
+    departureTimeAssumed:Boolean(departureTime&&departureTimeAssumed),
     durationMinutes,
     staticDurationMinutes,
     delayMinutes,
@@ -114,6 +116,7 @@ export async function computeTrafficRoute(request={},options={}){
       originLabel:originCoordinates?"Ubicación GPS actual":originAddress,
       destinationLabel:destinationAddress||"Destino indicado",
       departureTime,
+      departureTimeAssumed:request.departureTimeAssumed,
       calculatedAt:new Date(nowMs).toISOString()
     });
   }catch(error){

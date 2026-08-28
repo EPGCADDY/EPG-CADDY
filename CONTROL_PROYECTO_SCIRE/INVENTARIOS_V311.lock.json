@@ -1,23 +1,23 @@
 {
-  "version": "V353-CENTRO-LIVE-GENERAL-INDIVIDUAL",
-  "generatedAt": "2026-08-28T02:15:22Z",
-  "sourceFileCount": 359,
-  "sourceDigest": "be855176938564e11b83bafb00a394ed364ad736038344690705f02533453d67",
+  "version": "V354-TRAFICO-CLIMA-HORIZONTES",
+  "generatedAt": "2026-08-28T02:45:18Z",
+  "sourceFileCount": 360,
+  "sourceDigest": "c7f6165e232621e119fdf92c470d9d68183889dc938cec74f83cc04ce97efba0",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 180651,
-      "sha256": "2356a4969877b560f888bd7295fa3c4975260c903be4ce6bae031f4436d72a0e"
+      "size": 182897,
+      "sha256": "cb754b3e8afeace407f6c511342cb3fe89a8a93186ab8217d491c70040916464"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 202000,
-      "sha256": "bdeab52f2288ac79fcdb6b09a5b3241607396a751670633d77f5c55434bb7f48"
+      "size": 205426,
+      "sha256": "9ecdc748275a6aa3a7e0ad353b28f3753fb75df990d50274ecc34478c82f0706"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19260979,
-      "sha256": "d73f0baf021429a7243e8a5f6c59524820d8e7c2980aa750e07f451e3488026b"
+      "size": 19260975,
+      "sha256": "1029d778ac10e0a442d3d10f2ce2695eb4c417230dfaaaeeacdf263ca0d07c91"
     }
   ]
 }

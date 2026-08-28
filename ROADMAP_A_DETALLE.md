@@ -1668,3 +1668,30 @@ Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` READY, commit `8cc3600d25cba7185a5554
 Compatibilidad de compilación V353: `test-v353-live-hub.mjs` valida `vercel.json` con espacios o compactado mediante `\s*`; conserva la exigencia literal de `/live-hub.html` y elimina el falso negativo observado en Vercel sin reducir ninguna prueba funcional.
 
 Archivos exactos V353: `live-hub.html`, `live-hub.js`, `live.html`, `live-view.js`, `live-control.js`, `api/live.js`, `index-grupal.html`, `service-worker.js`, `vercel.json`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `audit-project.mjs`, `DATABASE_ARCHITECTURE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+## V354-TRAFICO-CLIMA-HORIZONTES · doble revisión correctiva
+
+| Archivo exacto | Control V354 | PASS obligatorio |
+|---|---|---|
+| `api/universal-ai.js` | `GT-TEMPORAL-INTENT` | 30 min, 1 h, 3 h, mañana, próxima semana y fecha/hora producen fecha local y salida ISO correctas. |
+| `api/universal-ai.js` | `HONEST-CURRENT-FUTURE` | Tráfico futuro dice previsto, muestra salida y cálculo; clima horario dice pronóstico y resolución. |
+| `api/_lib/traffic.js` | `DEPARTURE-PROPAGATION` | `departureTime` llega a `computeRoutes`; inmediato y futuro quedan diferenciados. |
+| `api/weather.js` | `OPEN-METEO-HOURLY-SELECTION` | Usa la primera hora publicada igual o posterior, con condición, temperatura, sensación, viento y lluvia. |
+| `api/weather.js` | `FORECAST-16-DAY-BOUNDARY` | Fuera del rango devuelve mensaje concreto y jamás el clima actual. |
+| `test-v354-traffic-weather-horizons.mjs` | `RC-024-PERMANENT-REGRESSION` | Tres rutas, seis horizontes, destino limpio, zona GT, proveedor, resolución y límite. |
+| `index-grupal.html`, `service-worker.js` | `V354-BUILD-CACHE` | Build y caché exactos sin alterar score, persistencia ni LIVE. |
+| `test-v352-live.mjs`, `test-v353-live-hub.mjs` | `LIVE-COMPATIBILITY` | Núcleo LIVE y escenario 80 jugadores continúan PASS bajo V354. |
+| `audit-project.mjs` | `AUDIT-V354` | Ejecuta el nuevo banco antes de cualquier Preview. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-024` | Registra causa raíz, escape y control permanente. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | `HONEST-PENDING` | No confunden banco local con Waze, campo físico ni proveedor meteorológico independiente. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `FILE-MAP-V354` | Mapea todo archivo modificado y el bloqueo físico real. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REMOTE-ROADMAP-GATE-V354` | Enumeran literalmente el árbol V354. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `INVENTORY-V354` | Tres PDF y digest de fuentes se regeneran después del cierre documental. |
+
+Casos deterministas con reloj `2026-08-28 10:15 Guatemala`: 30 min → 10:45, 1 h → 11:15, 3 h → 13:15, mañana 08:00 → `2026-08-29T14:00:00.000Z`, próxima semana sin hora → misma hora local declarada. Open-Meteo con solicitud 10:45 selecciona 11:00 y rotula resolución de una hora.
+
+Rutas de regresión: El Pulté Golf → Pradera Concepción, Guatemala Country Club → Alta Vista Golf y Mayan Golf Club → El Pulté Golf. Cada cuerpo Google conserva `TRAFFIC_AWARE_OPTIMAL` y una salida futura ISO; ninguna frase temporal queda dentro del destino.
+
+Estado inicial: `test-v324-real-traffic.mjs`, `test-v337-universal-weather.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-traffic-weather-horizons.mjs` y `scripts/project-quality-gate.mjs` PASS. Preview, navegador, observabilidad y validación física comparada permanecen pendientes. Producción sigue exactamente en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
+
+Archivos exactos V354: `api/universal-ai.js`, `api/_lib/traffic.js`, `api/weather.js`, `test-v354-traffic-weather-horizons.mjs`, `index-grupal.html`, `service-worker.js`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `audit-project.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.

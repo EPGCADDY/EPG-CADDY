@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V353 agrega `MONITOR GENERAL` y `MONITOR INDIVIDUAL` sobre LIVE V352; banco local, Preview, E2E de 80 jugadores y observabilidad PASS; inspección visual y prueba física iPhone pendientes
+**Corte vigente:** V354 corrige tráfico y clima futuros en candidato; banco local de horizontes PASS. LIVE V353 conserva Preview/E2E/observabilidad PASS; Preview V354, comparaciones físicas especializadas e iPhone pendientes
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -167,7 +167,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 12. Clima sincronizado por campo
 
-**Estado:** EN PROGRESO · GPS automático visible desde Inicio y dentro de la tarjeta V314; artefactos y validación física pendientes · `PEND-CLI-002`
+**Estado:** V354 HORIZONTES RELATIVOS Y LÍMITE OPEN-METEO CORREGIDOS EN CANDIDATO; Preview, artefactos, comparación y validación física pendientes · `PEND-CLI-002`
 
 - Asociar cada campo con coordenadas y zona horaria oficiales verificadas.
 - Mostrar el clima en Configuración inmediatamente después de elegir el campo y conservarlo dentro de la tarjeta activa.
@@ -180,6 +180,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Mantener operativa la ronda cuando el clima no esté disponible y rotular claramente cualquier dato anterior.
 - Comparar WeatherKit, Tomorrow.io y OpenWeather mediante mediciones en los clubes; WeatherKit es candidato inicial, no proveedor aprobado sin piloto.
 - Conservar el detalle operativo en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`.
+- **Control V354:** 30 min, 1 h y 3 h seleccionan la primera hora publicada por Open-Meteo y muestran resolución horaria; mañana y próxima semana producen pronóstico, y una fecha fuera de las 16 jornadas informa el límite sin reutilizar la observación actual.
 
 ### 13. Caddie/Support conversacional humano
 
@@ -227,7 +228,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 15. Tránsito y tiempo de llegada por voz
 
-**Estado:** PROVEEDOR Y CREDENCIAL ACTIVOS EN PREVIEW · V327-R1 APROBADA AUTOMÁTICAMENTE; comparación Waze/iPhone pendiente · `PEND-TRA-005`
+**Estado:** V354 SALIDAS FUTURAS CORREGIDAS EN CANDIDATO; Preview, comparación Waze/iPhone pendiente · `PEND-TRA-005`
 
 - AI UNIVERSAL ∞ ya enruta voz y texto a Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL` y resume ETA, demora, distancia y hora sin mostrar mapa ni revelar coordenadas.
 - Waze no entrega silenciosamente estos datos a una web común; sus Deep Links abren Waze y su Transport SDK requiere asociación, aplicación nativa aprobada y atribución.
@@ -235,6 +236,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - La ruta exacta El Pulté Golf → Pradera Concepción devolvió 15 km y aproximadamente 33 minutos en la medición del diagnóstico. `Concepción` por sí solo es ambiguo y debe generar una única pregunta breve.
 - En el banco desplegado V327-R1, El Pulté Golf → Pradera Concepción devolvió 16.1 km y 31 minutos; la salida futura El Pulté Golf → colonia Oakland zona 10 a las 12:30 p. m. devolvió 21.6 km, 48 minutos y 13 minutos de demora prevista.
 - No se cierra todavía: requiere pruebas físicas prolongadas en iPhone y comparación de varias rutas/horarios reales en Guatemala contra Waze.
+- **Control V354:** la ruta directa envía a Google Routes la salida ISO calculada en hora Guatemala para 30 min, 1 h, 3 h, mañana y próxima semana; la respuesta diferencia explícitamente `Tráfico en vivo` de `Tráfico previsto`, muestra salida y cálculo y no contamina el destino con la frase temporal.
 
 ### 16. Juegos y apuestas: Skins, Wolf, Vegas y Dots
 
@@ -384,7 +386,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ## Próximo punto obligatorio
 
-La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` y E2E de 20 grupos/80 jugadores quedaron PASS, con cero errores de runtime y limpieza Neon confirmada. V353 no requiere migración porque reutiliza el esquema V352. La inspección visual y la prueba física iPhone permanecen abiertas y Producción no se monta. La estabilización física de voz continúa registrada. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
+La ejecución activa es **V354 · TRÁFICO Y CLIMA A DIFERENTES HORIZONTES**, ordenada sobre `PEND-TRA-005` y `PEND-CLI-002`. El banco local determinista pasó; Preview, comparación simultánea con aplicaciones especializadas y prueba física iPhone/campo permanecen abiertas. LIVE V353 conserva su Preview/E2E aprobado sin cambio de arquitectura. Producción no se monta. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
 
 ## Corte V345-ICONS · estado verificable
 
