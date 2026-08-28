@@ -76,7 +76,7 @@ assert.equal(generalConfigurations,487,"General: siete campos oficiales, marcas 
 assert.match(html,/function applyManualScoreEntries\(entries\)[\s\S]*?applyLiteralScores\(\{matched:true,ok:true,entries\}\)/);
 assert.match(html,/const result=parsed\.ok\?applyLiteralScores\(parsed\):parsed/);
 assert.match(html,/result=applyLiteralScores\(\{matched:true,ok:true,entries:fresh\}\)/);
-assert.match(html,/parseRoundScoreTranscript=function\(transcript,options=\{\}\)\{const merged=\{\.\.\.options,defaultPlayer:options\.defaultPlayer\?\?operationalPromptPlayer\(\),defaultHole:options\.defaultHole\?\?currentOperationalHole\(\)\};return isStablefordRound\(\)\?parseStablefordTranscript\(transcript,merged\):baseParseRoundScoreTranscript\(transcript,merged\)\}/);
+assert.match(html,/parseRoundScoreTranscript=function\(transcript,options=\{\}\)\{const merged=\{\.\.\.options,defaultPlayer:options\.defaultPlayer\?\?operationalDefaultVoicePlayer\(\),defaultHole:options\.defaultHole\?\?currentOperationalHole\(\)\};return isStablefordRound\(\)\?parseStablefordTranscript\(transcript,merged\):baseParseRoundScoreTranscript\(transcript,merged\)\}/);
 assert.equal((html.match(/id="roundManualEntry"/g)||[]).length,1);
 assert.doesNotMatch(html,/id="stablefordManualEntry"/);
 

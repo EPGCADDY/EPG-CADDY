@@ -1,6 +1,6 @@
 import {handleAppPreflight,isAllowedAppOrigin} from "./_lib/cors.js";
 
-const ALLOWED_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_transcript_ready","browser_fallback_error","browser_fallback_start_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_query_failed"]);
+const ALLOWED_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_transcript_ready","browser_fallback_error","browser_fallback_start_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_query_failed","browser_fallback_round_applied","browser_fallback_round_rejected","browser_fallback_general_visible","browser_fallback_speech_started","browser_fallback_speech_failed"]);
 const ALLOWED_TOOLS=new Set(["get_current_weather","get_live_traffic","search_live_web"]);
 
 function boundedInteger(value,max){
@@ -18,6 +18,7 @@ export function sanitizeVoiceHealth(body={}){
     context:body.context==="setup"?"setup":"round",
     turn:boundedInteger(body.turn,10_000),
     elapsedMs:boundedInteger(body.elapsedMs,180_000),
+    ...(body.entryCount!==undefined?{entryCount:boundedInteger(body.entryCount,108)}:{}),
     ...(ALLOWED_TOOLS.has(tool)?{tool}:{}),
     ...(typeof body.hasResponseId==="boolean"?{hasResponseId:body.hasResponseId}:{}),
     ...(typeof body.followupCreated==="boolean"?{followupCreated:body.followupCreated}:{}),

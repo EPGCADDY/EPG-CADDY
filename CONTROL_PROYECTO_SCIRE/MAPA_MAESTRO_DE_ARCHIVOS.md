@@ -839,3 +839,19 @@ Cierre remoto V352-R2: deployment `dpl_2BLAFZNazoogdQQS2mkxreNjBgh6`, commit `6b
 Resultado V353: `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `scripts/project-quality-gate.mjs` y auditoría maestra de 95 paquetes PASS. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` READY; E2E remoto PASS con 20 grupos/80 jugadores, tres páginas, Monitor General, tres selecciones del Monitor Individual, vínculo externo, actualización LIVE, capitán duplicado bloqueado y revocación. Observabilidad registró cero `error`/`fatal`; Neon quedó con cero datos de prueba activos. Producción permanece intacta en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`; inspección visual e iPhone físico continúan pendientes.
 
 `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v312-general-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs`, `test-v328-offline-official-rules.mjs`, `test-v329-skins.mjs` y `test-v330-side-games.mjs` exigen una caché PWA con versión `gscg-mobile-v###` sin congelarla en V332. `test-v352-live.mjs` conserva el control exacto de `gscg-mobile-v352-live` y `/live-control.js`.
+
+## V354-VOICE-FALLBACK-MULTIHOLE-GENERAL
+
+| Archivo exacto | Mapa V354 | Candado |
+|---|---|---|
+| `index-grupal.html` | Jugador único implícito, plural de hoyos, lote local, panel General visible y watchdog de voz. | Tres hoyos sin repetir jugador producen tres entradas. |
+| `api/voice-health.js` | Ciclo privado y conteo acotado. | Nunca persiste contenido hablado ni identidad. |
+| `service-worker.js` | Caché V354. | Safari recibe el shell corregido. |
+| `test-v354-voice-fallback.mjs` | Regresión ejecutable del fallo físico. | Parser/procesador reales, General visible, audio recuperable y privacidad. |
+| `test-v267-scorecard-combination-matrix.mjs`, `test-v270-consecutive-hole-voice-blocks.mjs` | Compatibilidad con el jugador operacional. | Combinaciones y bloques históricos permanecen PASS. |
+| `test-v352-live.mjs`, `test-v353-live-hub.mjs` | Compatibilidad de release. | LIVE V353 no cambia su contrato. |
+| `audit-project.mjs` | Puerta maestra V354. | La regresión es obligatoria. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-024. | Candidato separado del PASS físico. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Estado de voz. | Preview y prueba iPhone siguen abiertos. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Trazabilidad literal. | Gate documental reproducible. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Inventario V354. | Se reconstruye al cerrar el candidato. |

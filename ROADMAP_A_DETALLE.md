@@ -1668,3 +1668,23 @@ Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` READY, commit `8cc3600d25cba7185a5554
 Compatibilidad de compilación V353: `test-v353-live-hub.mjs` valida `vercel.json` con espacios o compactado mediante `\s*`; conserva la exigencia literal de `/live-hub.html` y elimina el falso negativo observado en Vercel sin reducir ninguna prueba funcional.
 
 Archivos exactos V353: `live-hub.html`, `live-hub.js`, `live.html`, `live-view.js`, `live-control.js`, `api/live.js`, `index-grupal.html`, `service-worker.js`, `vercel.json`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `audit-project.mjs`, `DATABASE_ARCHITECTURE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+## V354-VOICE-FALLBACK-MULTIHOLE-GENERAL · corrección física Safari
+
+| Archivo exacto | Responsabilidad V354 | Control permanente |
+|---|---|---|
+| `index-grupal.html` | Jugador único implícito, `hoyo/hoyos`, lote local y panel General visible antes del envío. | Tres hoyos sin repetir nombre escriben tres entradas; un score inválido no consulta IA. |
+| `index-grupal.html` | Reanuda y vigila `speechSynthesis`; deja recuperación visible si no inicia. | Un fallo de audio no oculta ni pierde el texto. |
+| `api/voice-health.js` | Eventos técnicos V354 y `entryCount` acotado. | Excluye transcripción, pregunta, nombres, audio y ubicación. |
+| `service-worker.js` | Caché `gscg-mobile-v354-voice-fallback`. | El iPhone invalida la lógica anterior. |
+| `test-v354-voice-fallback.mjs` | Ejecuta parser y procesador reales con un jugador, tres hoyos, plural y General. | Exige lote 3, abrir→enviar, watchdog visible y privacidad. |
+| `test-v267-scorecard-combination-matrix.mjs`, `test-v270-consecutive-hole-voice-blocks.mjs` | Adaptan extractores al jugador operacional implícito. | 583 configuraciones y bloques consecutivos conservan cobertura. |
+| `test-v352-live.mjs`, `test-v353-live-hub.mjs` | Aceptan release V354 sin cambiar LIVE V353. | LIVE y ambos monitores conservan sus candados. |
+| `audit-project.mjs` | Incorpora el banco V354. | La auditoría integral no puede omitirlo. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | RC-024 y estado honesto. | Banco, Preview y prueba física permanecen separados. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Trazabilidad literal. | Gate remoto reproducible. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Inventario V354. | Fuentes y PDF se sellan al final. |
+
+Evidencia: Vercel registró cuatro 429 en `/api/session-grupal`, Registro aplicado a las 13:05:31 UTC, transcripciones de ronda a las 13:05:59, 13:06:10 y 13:06:19, y `/api/universal-ai` 200 a las 13:06:19. La captura `IMG_2141.png` mostró sólo el hoyo 1 escrito. El candidato no se declara aprobado físicamente hasta repetirlo en iPhone.
+
+Archivos exactos V354: `index-grupal.html`, `service-worker.js`, `api/voice-health.js`, `test-v354-voice-fallback.mjs`, `test-v267-scorecard-combination-matrix.mjs`, `test-v270-consecutive-hole-voice-blocks.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `audit-project.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.

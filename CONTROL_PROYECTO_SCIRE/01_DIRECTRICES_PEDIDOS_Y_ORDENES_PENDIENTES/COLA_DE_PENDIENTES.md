@@ -6,7 +6,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
-| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V327-R1 aprobó banco automatizado y Preview; nueva prueba física detectó respuestas vagas, corte de conversación y estados bilaterales poco visibles |
+| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V354 corrige varios hoyos y comunicación General visible en el respaldo Safari; banco local PASS, Preview y prueba física pendientes |
 | 2 | `PEND-TRA-005` tráfico actual y futuro | Google Maps Routes activo y probado; faltan comparación simultánea con Waze y validación física en Guatemala |
 | 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
@@ -25,7 +25,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
 | 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V353 CENTRO LIVE: local/Preview/E2E 80 jugadores/observabilidad PASS; inspección visual y prueba física iPhone pendientes |
 
-La prioridad activa por orden del propietario es `PEND-LIVE-018` V353; `PEND-VOZ-003` y los demás pendientes conservan su estado registrado. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
+La prioridad activa por la observación física más reciente es `PEND-VOZ-003` V354; `PEND-LIVE-018` V353 conserva su E2E aprobado y sus puertas físicas abiertas. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
 
 **Autorización de ejecución permanente:** el propietario ordenó el 26 de agosto de 2026 agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versión cuando esté realmente probada. Esta autorización no convierte un `FAIL` en `PASS` ni permite simular licencias, credenciales o integraciones externas inexistentes.
 
@@ -144,7 +144,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V326-R2 RECHAZADA EN IPHONE · V327-R1 APROBADA EN BANCO AUTOMATIZADO Y PREVIEW; VALIDACIÓN FÍSICA PROLONGADA PENDIENTE
+**Estado:** V354 CORRIGE EN CANDIDATO VARIOS HOYOS Y COMUNICACIÓN GENERAL VISIBLE; BANCO LOCAL PASS, PREVIEW Y VALIDACIÓN FÍSICA IPHONE PENDIENTES
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -199,6 +199,10 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - Esta evidencia automática no sustituye el micrófono físico, altavoz, interrupciones, ruido ni gestión de audio de un iPhone real. La única puerta inmediata abierta es una conversación larga física sin silencio ni micrófono rojo atascado.
 
 ### Observaciones físicas nuevas registradas para una fase posterior
+
+- El 28 de agosto, a las 07:05–07:06, Safari reconoció Registro y un hoyo individual, pero no aplicó varios hoyos seguidos. La consulta General alcanzó `/api/universal-ai` con HTTP 200, pero la respuesta quedó dentro del panel oculto o sin reproducción audible.
+- V354 usa al único jugador activo como jugador implícito, acepta `hoyo` y `hoyos`, aplica primero el lote local y abre automáticamente el panel AI antes de enviar una consulta General. Si Safari no inicia la síntesis, la respuesta permanece visible con recuperación manual.
+- `test-v354-voice-fallback.mjs` ejecuta las funciones reales con tres hoyos, plural, orden visible de General y telemetría sin transcripción ni nombres. El banco no sustituye la prueba física final.
 
 - Las respuestas generales pueden resultar vagas, básicas o demasiado breves hasta que el usuario pide expresamente una respuesta más estudiada, investigada, profunda y formal. Debe incorporarse una matriz permanente de calidad que revise pertinencia, fundamento, profundidad, precisión, aplicación práctica y claridad antes de cada respuesta, sin obligar al usuario a repetir esa orden.
 - En la quinta conversación física el estado quedó escuchando y, después de terminar la pregunta, el turno se cortó sin completar el ciclo. Debe reproducirse y corregirse la recuperación del micrófono en conversaciones consecutivas.

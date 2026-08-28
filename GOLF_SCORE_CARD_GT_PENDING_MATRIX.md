@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V353 agrega `MONITOR GENERAL` y `MONITOR INDIVIDUAL` sobre LIVE V352; banco local, Preview, E2E de 80 jugadores y observabilidad PASS; inspección visual y prueba física iPhone pendientes
+**Corte vigente:** V354 corrige el respaldo Safari para varios hoyos y hace visible la comunicación General; banco local PASS, Preview y prueba física iPhone pendientes. LIVE V353 conserva su E2E aprobado sin cambios de arquitectura
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V350 RECHAZADA EN IPHONE A LAS 14:16; V351 interpreta números romanos generados por Safari dentro del hándicap y conserva separados los jugadores; requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
+**Estado:** V351 REGISTRO FÍSICO FUNCIONAL; V354 corrige varios hoyos para un único jugador y abre automáticamente la respuesta General del respaldo Safari; banco local PASS, Preview y nueva prueba física pendientes · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -205,6 +205,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - **Control V350:** el micrófono de Registro de jugadores nunca sale hacia AI UNIVERSAL; admite conectores naturales, registra telemetría aplicada/rechazada desde cliente y termina localmente con resultado o instrucción.
 - **Fallo físico V350:** Safari convirtió “catorce” en `XIV`; el parser lo incorporó al nombre y aplicó `JAIME XIV BLANCAS JORGE · 6 · AZULES` en una sola fila.
 - **Control V351:** interpreta romanos canónicos I–LIV sólo como hándicap de registro, reproduce `Jaime XIV blancas Jorge seis azules` y mantiene la `X` de score fuera de esta conversión.
+- **Fallo físico posterior:** a las 07:05–07:06 el respaldo Safari aplicó Registro y un hoyo individual, pero no varios hoyos; la consulta General llegó a `/api/universal-ai` con 200 y quedó invisible o sin audio.
+- **Control V354:** si existe un solo jugador activo, `Hoyo uno cuatro, hoyo dos cinco, hoyo tres cinco` aplica tres celdas sin repetir el nombre; acepta `hoyo/hoyos`; una consulta General abre primero el panel AI, deja la respuesta visible y vigila si Safari inicia el audio.
 - **Orden de ejecución:** registrar estas tres correcciones y retomarlas después de continuar con la configuración y prueba de SKINS, WOLF, VEGAS y DOTS.
 
 - **Candado de privacidad V312:** no hay activación automática, huella de voz ni reconocimiento biométrico; el jugador debe abrir primero el micrófono con el botón.
