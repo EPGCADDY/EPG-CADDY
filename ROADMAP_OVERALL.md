@@ -1431,3 +1431,5 @@ Se autorizó la promoción de V363 a `main`. El Gate 0 conserva la base protegid
 Los tres inventarios V311 fueron regenerados y sellados después de registrar esta promoción.
 
 Sello final recalculado desde el árbol exacto V363 de 382 fuentes activas, aislado de ramas posteriores.
+
+Validación del sello: ordenamiento binario idéntico al Gate de Node.js en Vercel.

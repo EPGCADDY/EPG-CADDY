@@ -1839,3 +1839,5 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 - Inventario: tres PDF V311 regenerados y nuevo `sourceDigest` sellado antes del montaje.
 
 - Sello final: digest calculado sobre las 382 fuentes exactas del árbol V363 publicado.
+
+- Digest final: orden binario de rutas idéntico a `scripts/inventory-gate.mjs`.
