@@ -152,10 +152,11 @@ assert.ok(toggleStart > 0 && html.indexOf("setVoice(true)", toggleStart) < toggl
 assert.doesNotMatch(html, /voiceprint|speakerRecognition|voiceBiometric|enrollVoice/i, "No se permite huella, identificación ni enrolamiento de voz");
 assert.match(sessionApi, /Caddie conversacional de propósito general/, "La sesión Realtime debe aceptar respuestas conversacionales explícitas");
 assert.match(sessionApi, /Detecta y transcribe literalmente el idioma que hable el usuario/, "La transcripción no debe limitarse al vocabulario de score ni a un idioma");
-assert.match(weatherApi, /api\.open-meteo\.com\/v1\/forecast/, "Falta proveedor meteorológico vivo");
-assert.match(weatherApi, /geocoding-api\.open-meteo\.com\/v1\/search/, "Falta resolución de campos o ubicaciones");
+assert.match(weatherApi, /weather\.googleapis\.com\/v1/, "Falta Google Weather como proveedor meteorológico vivo");
+assert.match(weatherApi, /maps\.googleapis\.com\/maps\/api\/geocode\/json/, "Falta Google Geocoding para campos o ubicaciones");
 assert.match(serviceWorker, /gscg-mobile-v\d{3}[^"]*/, "La PWA debe reemplazar el shell anterior");
-assert.match(weatherApi, /forecast_days\", \"16\"/, "El pronóstico natural debe admitir el máximo confiable de 16 días");
+assert.match(weatherApi, /hours: 240/, "El pronóstico horario debe admitir el máximo oficial de 240 horas");
+assert.match(weatherApi, /days: 10/, "El pronóstico diario debe admitir el máximo oficial de 10 días");
 assert.match(weatherApi,/const FORECAST_PERIODS/,"El pronóstico debe resumir la franja horaria pedida");
 assert.match(researchApi,/https:\/\/api\.openai\.com\/v1\/responses/,"La investigación universal debe usar Responses API");
 assert.match(researchApi,/type: \"web_search\"/,"La investigación debe consultar la web viva");
@@ -173,66 +174,69 @@ assert.equal(new Date(`${nextWeekend.endDate}T12:00:00Z`).getUTCDay(),0,"El fin 
 assert.equal(inferConversationForecastRange("¿Cómo estará mañana?").startDate.length,10,"Mañana debe convertirse en fecha ISO");
 assert.equal(inferConversationTimePeriod("¿Cómo estará mañana por la mañana?"),"morning","La mañana debe conservarse como franja horaria");
 
-const summary = summarizeWeather({
-  timezone: "America/Guatemala",
-  current: { time: "2026-08-25T12:00", temperature_2m: 21.4, apparent_temperature: 20.1, precipitation: 0, weather_code: 61, wind_speed_10m: 8.2 },
-  hourly: { time: ["2026-08-25T11:00", "2026-08-25T12:00", "2026-08-25T13:00"], precipitation_probability: [10, 35, 70] }
-}, "Mayan Golf");
-assert.deepEqual(summary, {
-  ok: true,
-  source: "Open-Meteo",
-  location: "Mayan Golf",
-  observedAt: "2026-08-25T12:00",
-  timezone: "America/Guatemala",
-  temperatureC: 21.4,
-  feelsLikeC: 20.1,
-  precipitationMm: 0,
-  windKmh: 8.2,
-  condition: "lluvia ligera",
-  maxRainProbabilityToday: 70,
-  rainTiming: {
-    date: "2026-08-25",
-    peakProbability: 70,
-    peakTime: "13:00",
-    windows: [{ startTime: "12:00", endTime: "13:00", maxProbability: 70, peakTime: "13:00", precipitationMm: 0 }]
-  }
+const googleHour=(date,time,rainProbability,precipitationMm,temperatureC=22,feelsLikeC=23,windKmh=8,condition="lluvia ligera")=>({
+  date,time,rainProbability,precipitationMm,temperatureC,feelsLikeC,windKmh,condition
 });
+const googleDay=(year,month,day,conditionText,rainProbability,precipitationMm,windKmh,min,max)=>({
+  displayDate:{year,month,day},
+  daytimeForecast:{weatherCondition:{description:{text:conditionText}},precipitation:{probability:{percent:rainProbability},qpf:{quantity:precipitationMm}},wind:{speed:{value:windKmh}}},
+  nighttimeForecast:{precipitation:{probability:{percent:Math.max(0,rainProbability-20)},qpf:{quantity:0}},wind:{speed:{value:Math.max(0,windKmh-2)}}},
+  minTemperature:{degrees:min},maxTemperature:{degrees:max},feelsLikeMinTemperature:{degrees:min-1},feelsLikeMaxTemperature:{degrees:max+1}
+});
+const summary = summarizeWeather({
+  currentTime:"2026-08-25T18:00:00Z",timeZone:{id:"America/Guatemala"},
+  temperature:{degrees:21.4},feelsLikeTemperature:{degrees:20.1},
+  precipitation:{probability:{percent:35},qpf:{quantity:0}},
+  wind:{speed:{value:8.2}},weatherCondition:{description:{text:"Lluvia ligera"}}
+}, "Mayan Golf", {hourlyRows:[
+  googleHour("2026-08-25","11:00",10,0),
+  googleHour("2026-08-25","12:00",35,0),
+  googleHour("2026-08-25","13:00",70,0)
+]});
+assert.equal(summary.ok,true);
+assert.equal(summary.source,"Google Weather API");
+assert.equal(summary.location,"Mayan Golf");
+assert.equal(summary.observedAt,"2026-08-25T18:00:00Z");
+assert.equal(summary.timezone,"America/Guatemala");
+assert.equal(summary.temperatureC,21.4);
+assert.equal(summary.maxRainProbabilityToday,70);
+assert.equal(summary.rainTiming.peakTime,"13:00");
 
 const weekend = summarizeWeather({
-  timezone: "America/Guatemala",
-  daily: {
-    time: ["2026-08-29", "2026-08-30"],
-    weather_code: [61, 2],
-    temperature_2m_min: [15, 16],
-    temperature_2m_max: [24, 25],
-    apparent_temperature_min: [14, 15],
-    apparent_temperature_max: [25, 26],
-    precipitation_sum: [4.2, 0.3],
-    precipitation_probability_max: [80, 25],
-    wind_speed_10m_max: [18, 12]
-  },
-  hourly: {
-    time: ["2026-08-29T14:00", "2026-08-29T15:00", "2026-08-29T16:00", "2026-08-30T10:00"],
-    precipitation_probability: [40, 75, 55, 20],
-    precipitation: [0.1, 1.2, 0.4, 0]
-  }
-}, "El Pulté", { forecastStartDate: "2026-08-29", forecastEndDate: "2026-08-30" });
+  timeZone:{id:"America/Guatemala"},
+  forecastDays:[
+    googleDay(2026,8,29,"Lluvia ligera",80,4.2,18,15,24),
+    googleDay(2026,8,30,"Parcialmente nublado",25,0.3,12,16,25)
+  ]
+}, "El Pulté", {
+  forecastStartDate:"2026-08-29",forecastEndDate:"2026-08-30",
+  hourlyRows:[
+    googleHour("2026-08-29","14:00",40,0.1),
+    googleHour("2026-08-29","15:00",75,1.2),
+    googleHour("2026-08-29","16:00",55,0.4),
+    googleHour("2026-08-30","10:00",20,0)
+  ]
+});
 assert.equal(weekend.ok, true);
 assert.equal(weekend.forecastType, "range");
 assert.equal(weekend.days.length, 2);
 assert.equal(weekend.days[0].condition, "lluvia ligera");
-assert.equal(weekend.days[1].maxRainProbability, 25);
+assert.equal(weekend.days[1].maxRainProbability, 20);
 assert.equal(weekend.days[0].rainTiming.peakTime, "15:00");
 assert.equal(weekend.days[0].rainTiming.windows[0].maxProbability, 75);
 
 const morning = summarizeWeather({
-  timezone:"America/Guatemala",
-  daily:{time:["2026-08-26"],weather_code:[95],temperature_2m_min:[17],temperature_2m_max:[29],apparent_temperature_min:[18],apparent_temperature_max:[31],precipitation_sum:[9],precipitation_probability_max:[90],wind_speed_10m_max:[18]},
-  hourly:{
-    time:["2026-08-26T06:00","2026-08-26T08:00","2026-08-26T11:00","2026-08-26T17:00"],
-    temperature_2m:[18,20,24,28],apparent_temperature:[19,21,25,30],weather_code:[2,2,61,95],wind_speed_10m:[4,6,8,18],precipitation_probability:[5,10,45,90],precipitation:[0,0,0.4,4]
-  }
-},"GPS del teléfono",{forecastStartDate:"2026-08-26",forecastEndDate:"2026-08-26",timePeriod:"morning"});
+  timeZone:{id:"America/Guatemala"},
+  forecastDays:[googleDay(2026,8,26,"Tormenta",90,9,18,17,29)]
+},"GPS del teléfono",{
+  forecastStartDate:"2026-08-26",forecastEndDate:"2026-08-26",timePeriod:"morning",
+  hourlyRows:[
+    googleHour("2026-08-26","06:00",5,0,18,19,4,"parcialmente nublado"),
+    googleHour("2026-08-26","08:00",10,0,20,21,6,"parcialmente nublado"),
+    googleHour("2026-08-26","11:00",45,0.4,24,25,8,"lluvia ligera"),
+    googleHour("2026-08-26","17:00",90,4,28,30,18,"tormenta")
+  ]
+});
 assert.equal(morning.forecastPeriod,"morning");
 assert.equal(morning.periodStartTime,"06:00");
 assert.equal(morning.periodEndTime,"11:59");

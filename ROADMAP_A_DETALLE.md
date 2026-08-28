@@ -1679,7 +1679,11 @@ La configuración usa `GOOGLE_MAPS_WEATHER_API_KEY` para clima y `GOOGLE_MAPS_GE
 | `api/weather.js` | Integra Google Weather y Geocoding desde servidor, normaliza condiciones actuales, días, horas, lluvia, temperatura y viento, y conserva errores seguros. |
 | `api/universal-ai.js` | Identifica Google Weather como proveedor estructurado sin búsqueda web ni cifras inventadas. |
 | `test-v337-universal-weather.mjs` | Prueba coordenadas, credencial protegida, dos endpoints oficiales, probabilidades horarias y ausencia de llamada al modelo. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Registra la huella exacta de las 359 fuentes y los tres PDF V354. |
+| `scripts/rebuild-inventory-pdfs.py` | Sella los tres inventarios reproducibles como V354 sin alterar Producción. |
+| `test-v312-general-caddie.mjs` | Actualiza el candado histórico al proveedor Google y a sus horizontes oficiales de 240 horas y 10 días. |
 | `ROADMAP_OVERALL.md` | Registra el alcance, credenciales, privacidad y límites reales del candidato V354. |
 | `ROADMAP_A_DETALLE.md` | Registra el mismo candidato V354 en el control técnico detallado. |
 
 <!-- V354-GOOGLE-INTEGRATION-ROADMAPS-SYNC -->
+<!-- V354-INVENTORY-SYNC -->
