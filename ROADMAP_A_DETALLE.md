@@ -1853,3 +1853,5 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 | `service-worker.js`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Caché `gscg-mobile-v363-recorded-mobile-behavior-v365-active-round-recovery` y compatibilidad acumulada de voz. | Safari no conserva el shell que aceptaba la ronda vacía ni pierde candados V357/V361. |
 | `audit-project.mjs`, `package.json` | Incorporan el banco V365 a la auditoría maestra y a un comando directo. | El caso físico pasa a ser regresión ejecutable permanente. |
 | RC-036, cola, matriz, mapa, reporte, ambos ROADMAPS, reconstrucción e inventario | Registran causa, escape, control y estado real. | Automático, Preview y físico se reportan por separado; Producción intacta hasta cierre. |
+
+Evidencia exacta V365: `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_RECUPERACION_RONDA_ACTIVA/REPORTE_V365_RC036.md`.
