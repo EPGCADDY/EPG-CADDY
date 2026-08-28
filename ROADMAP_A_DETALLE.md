@@ -1867,3 +1867,11 @@ La aceptación exige en el mismo Preview: consulta general 200 mediante Gateway 
 |---|---|---|
 | `scripts/project-quality-gate.mjs` | Recupera `refs/heads/main` desde la URL pública canónica con profundidad 512 y `GIT_TERMINAL_PROMPT=0`. | No depende del remoto efímero ni solicita credenciales durante el build. |
 | `test-project-quality-gate.mjs` | Exige URL canónica, referencia exacta, profundidad y modo no interactivo. | Si el objeto no está disponible, la entrega sigue bloqueada. |
+
+## V365-R3 · REX EXACTO Y DIAGNÓSTICO
+
+| Archivo exacto | Corrección | Candado |
+|---|---|---|
+| `api/voice-speech.js` | Envía `Rex` al modelo xAI, publica `rex` al cliente y sanea mensaje/código de error. | Nunca expone token, texto hablado ni respuesta cruda del proveedor. |
+| `test-v365-multiprovider-male-voice.mjs` | Exige mayúscula exacta en el payload, cadena Cedar→Onyx→Rex y cabecera masculina normalizada. | Un JSON de error o audio vacío jamás devuelve 200. |
+| `Intocables/intocables-gate.mjs` | Duplica el contrato exacto de Rex dentro del cierre preventivo global. | Una edición paralela no puede devolver el identificador inválido en minúsculas. |

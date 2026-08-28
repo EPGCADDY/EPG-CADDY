@@ -1440,3 +1440,7 @@ El primer despliegue integrado `0390972` fue bloqueado antes de publicar porque 
 ### V365-R2 · recuperación canónica sin credenciales
 
 El despliegue R1 `0c1339a` confirmó que el remoto interno del clon Vercel no podía recuperar el objeto de `main`. `scripts/project-quality-gate.mjs` usa ahora la URL pública canónica ya fijada por la matriz, solicita directamente `refs/heads/main`, desactiva cualquier solicitud interactiva de credenciales y conserva el bloqueo si la recuperación falla. `test-project-quality-gate.mjs` exige esos cuatro elementos.
+
+### V365-R3 · Rex exacto y diagnóstico seguro
+
+La primera verificación externa del deployment `dpl_FrXPhgMr77wN98vm2K5LtMb8cjGz` aprobó página, AI, Google Routes y Open-Meteo, pero bloqueó la entrega por voz 502: Cedar 429, Onyx 400 y Rex 400. `api/voice-speech.js` envía ahora el identificador oficial sensible a mayúsculas `Rex`, conserva la cabecera pública normalizada `rex` y registra únicamente código y mensaje saneados del proveedor. `test-v365-multiprovider-male-voice.mjs` e `Intocables/intocables-gate.mjs` exigen el payload exacto y audio real simulado antes de un nuevo Preview.

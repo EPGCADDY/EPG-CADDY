@@ -5,8 +5,8 @@ const MAX_SPEECH_TEXT=4000;
 const VOICE="cedar";
 const SPEED=1.15;
 const GATEWAY_SPEECH_MODELS=[
-  {model:"openai/tts-1",voice:"onyx"},
-  {model:"spacexai/grok-tts",voice:"rex"}
+  {model:"openai/tts-1",voice:"onyx",deliveredVoice:"onyx"},
+  {model:"spacexai/grok-tts",voice:"Rex",deliveredVoice:"rex"}
 ];
 const INSTRUCTIONS="Locutor masculino adulto, serio, sobrio y profesional. Español internacional neutro, sin acento regional marcado, sin Spanglish, sin tono comercial ni entusiasmo artificial. Dicción clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";
 
@@ -51,7 +51,11 @@ async function requestGatewaySpeech(token,text,signal,{model,voice}){
 
 async function gatewayFailure(response){
   const payload=await response?.clone?.().json().catch(()=>null);
-  return{status:Number(response?.status)||0,providerCode:String(payload?.error?.code||payload?.error?.type||"").replace(/[^a-zA-Z0-9_.-]/g,"").slice(0,80)||null};
+  return{
+    status:Number(response?.status)||0,
+    providerCode:String(payload?.error?.code||payload?.error?.type||"").replace(/[^a-zA-Z0-9_.-]/g,"").slice(0,80)||null,
+    providerMessage:String(payload?.error?.message||payload?.message||"").replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ .,;:_-]/g,"").slice(0,180)||null
+  };
 }
 
 export default async function handler(req,res){
@@ -75,7 +79,7 @@ export default async function handler(req,res){
       if(!upstream?.ok&&gatewayToken){
         console.warn("cedar speech direct fallback",JSON.stringify({status:upstream?.status||0}));
         for(const candidate of GATEWAY_SPEECH_MODELS){
-          upstream=await requestGatewaySpeech(gatewayToken,text,controller.signal,candidate);fromGateway=true;gatewayVoice=candidate.voice;
+          upstream=await requestGatewaySpeech(gatewayToken,text,controller.signal,candidate);fromGateway=true;gatewayVoice=candidate.deliveredVoice;
           if(upstream.ok)break;
           console.warn("cedar speech gateway failed",JSON.stringify({...await gatewayFailure(upstream),model:candidate.model}));
         }
