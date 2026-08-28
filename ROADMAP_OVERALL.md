@@ -1448,3 +1448,7 @@ La primera verificación externa del deployment `dpl_FrXPhgMr77wN98vm2K5LtMb8cjG
 ### V365-R4 · protocolo Speech V4 obligatorio
 
 El Preview R3 aisló la causa exacta de ambos 400: `Unsupported gateway protocol version`. La implementación oficial de `@ai-sdk/gateway` exige `ai-speech-model-specification-version: 4` además del modelo. `api/voice-speech.js` incorpora ese encabezado en Onyx y Rex; `test-v365-multiprovider-male-voice.mjs` e `Intocables/intocables-gate.mjs` lo bloquean. No se reanuda el conteo 1/3 hasta obtener MP3 200 externo.
+
+### V365-R5 · contrato completo de autenticación Gateway
+
+R4 confirmó que la versión del modelo no sustituye la versión del transporte. El cliente oficial `@ai-sdk/gateway` agrega también `ai-gateway-protocol-version: 0.0.1` y `ai-gateway-auth-method`; `api/voice-speech.js` reproduce ahora ambos, distinguiendo API key de OIDC sin registrar credenciales. `test-v365-multiprovider-male-voice.mjs` e `Intocables/intocables-gate.mjs` exigen el contrato completo antes de volver a probar MP3.

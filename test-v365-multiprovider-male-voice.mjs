@@ -14,6 +14,8 @@ assert.match(worker,/gscg-mobile-v365-multiprovider-male-voice/);
 assert.match(speech,/model:"openai\/tts-1",voice:"onyx"/);
 assert.match(speech,/model:"spacexai\/grok-tts",voice:"Rex",deliveredVoice:"rex"/);
 assert.match(speech,/"ai-speech-model-specification-version":"4"/);
+assert.match(speech,/"ai-gateway-protocol-version":"0\.0\.1"/);
+assert.match(speech,/"ai-gateway-auth-method":authMethod/);
 assert.match(speech,/for\(const candidate of GATEWAY_SPEECH_MODELS\)/);
 assert.match(speech,/"X-GSCG-Voice",fromGateway\?gatewayVoice:VOICE/);
 assert.ok(audit.includes("test-v365-multiprovider-male-voice.mjs"));
@@ -22,7 +24,7 @@ function responseRecorder(){return{statusCode:0,headers:{},body:null,setHeader(n
 const previousFetch=globalThis.fetch,previousOpenAI=process.env.OPENAI_API_KEY,previousGateway=process.env.AI_GATEWAY_API_KEY,calls=[];
 process.env.OPENAI_API_KEY="direct-test";process.env.AI_GATEWAY_API_KEY="gateway-test";
 globalThis.fetch=async(url,options)=>{
-  calls.push({url:String(url),model:options?.headers?.["ai-model-id"],protocol:options?.headers?.["ai-speech-model-specification-version"],body:options?.body?JSON.parse(options.body):null});
+  calls.push({url:String(url),model:options?.headers?.["ai-model-id"],protocol:options?.headers?.["ai-speech-model-specification-version"],gatewayProtocol:options?.headers?.["ai-gateway-protocol-version"],authMethod:options?.headers?.["ai-gateway-auth-method"],body:options?.body?JSON.parse(options.body):null});
   if(String(url).includes("api.openai.com"))return{ok:false,status:429};
   if(options?.headers?.["ai-model-id"]==="openai/tts-1")return{ok:false,status:400,clone(){return this},json:async()=>({error:{code:"provider_unavailable"}})};
   return{ok:true,status:200,json:async()=>({audio:Buffer.from("rex-audio").toString("base64"),warnings:[]})};
@@ -35,6 +37,8 @@ try{
   assert.equal(res.body.toString(),"rex-audio");
   assert.deepEqual(calls.map(call=>call.model),[undefined,"openai/tts-1","spacexai/grok-tts"]);
   assert.deepEqual(calls.slice(1).map(call=>call.protocol),["4","4"]);
+  assert.deepEqual(calls.slice(1).map(call=>call.gatewayProtocol),["0.0.1","0.0.1"]);
+  assert.deepEqual(calls.slice(1).map(call=>call.authMethod),["api-key","api-key"]);
   assert.equal(calls[2].body.voice,"Rex");
 }finally{
   globalThis.fetch=previousFetch;

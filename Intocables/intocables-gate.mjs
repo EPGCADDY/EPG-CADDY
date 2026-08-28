@@ -27,6 +27,8 @@ assert.match(speech,/model:"gpt-4o-mini-tts"/);
 assert.match(speech,/model:"openai\/tts-1",voice:"onyx"/);
 assert.match(speech,/model:"spacexai\/grok-tts",voice:"Rex",deliveredVoice:"rex"/);
 assert.match(speech,/"ai-speech-model-specification-version":"4"/);
+assert.match(speech,/"ai-gateway-protocol-version":"0\.0\.1"/);
+assert.match(speech,/"ai-gateway-auth-method":authMethod/);
 assert.doesNotMatch(speech,/openai\/gpt-4o-mini-tts/);
 assert.match(html,/function sealBrowserVoiceProgress\([\s\S]*?consumeLiveRoundClosures\(\)/);
 assert.match(html,/if\(progressive\.closure\)void speakClosure\(progressive\.closure\)/);

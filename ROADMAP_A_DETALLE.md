@@ -1882,3 +1882,10 @@ La aceptación exige en el mismo Preview: consulta general 200 mediante Gateway 
 |---|---|---|
 | `api/voice-speech.js` | Declara `ai-speech-model-specification-version: 4` en cada llamada al endpoint `/v4/ai/speech-model`. | El Gateway no vuelve a rechazar Onyx/Rex por versión de protocolo ausente. |
 | `test-v365-multiprovider-male-voice.mjs`, `Intocables/intocables-gate.mjs` | Exigen protocolo 4 en ambos intentos Gateway. | El encabezado oficial no puede desaparecer en una edición paralela. |
+
+## V365-R5 · GATEWAY AUTH PROTOCOL
+
+| Archivo exacto | Corrección | Candado |
+|---|---|---|
+| `api/voice-speech.js` | Agrega protocolo Gateway `0.0.1` y método `api-key`/`oidc`, además del protocolo Speech 4. | Las credenciales nunca se imprimen y el transporte coincide con el cliente oficial. |
+| `test-v365-multiprovider-male-voice.mjs`, `Intocables/intocables-gate.mjs` | Exigen los tres encabezados en Onyx y Rex. | Un contrato incompleto vuelve a bloquear la entrega. |

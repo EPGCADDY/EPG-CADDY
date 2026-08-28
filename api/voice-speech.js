@@ -42,9 +42,10 @@ async function requestDirectSpeech(apiKey,payload,signal){
 
 async function requestGatewaySpeech(token,text,signal,{model,voice}){
   if(!token)return null;
+  const authMethod=String(process.env.AI_GATEWAY_API_KEY||"").trim()?"api-key":"oidc";
   return fetch("https://ai-gateway.vercel.sh/v4/ai/speech-model",{
     method:"POST",signal,
-    headers:{Authorization:`Bearer ${token}`,"ai-model-id":model,"ai-speech-model-specification-version":"4","Content-Type":"application/json"},
+    headers:{Authorization:`Bearer ${token}`,"ai-gateway-protocol-version":"0.0.1","ai-gateway-auth-method":authMethod,"ai-model-id":model,"ai-speech-model-specification-version":"4","Content-Type":"application/json"},
     body:JSON.stringify(cedarGatewayPayload(text,voice))
   });
 }
