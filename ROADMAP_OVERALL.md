@@ -1326,3 +1326,18 @@ La compuerta V353 acepta el formato legible o compactado de `vercel.json` al ver
 Archivos exactos V353: `live-hub.html`, `live-hub.js`, `live.html`, `live-view.js`, `live-control.js`, `api/live.js`, `index-grupal.html`, `service-worker.js`, `vercel.json`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `audit-project.mjs`, `DATABASE_ARCHITECTURE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 
 Producción permanece exactamente en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Reversión V353: retirar Centro Live y sus controles, conservar la Score Card V352 y revocar los vínculos necesarios; ningún dato ni tabla requiere eliminación.
+
+
+## Candidato V354 · tráfico y clima integrados con Google
+
+El **28 de agosto de 2026** se crea el candidato de Preview `v354-google-traffic-weather-integrated` desde el control recuperado `8cc3600d25cba7185a55548104cac609b341117c`. Tráfico conserva Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL`; clima sustituye Open-Meteo por Google Weather API para condiciones actuales, pronóstico diario de hasta 10 días y probabilidades horarias de hasta 240 horas. Las llaves permanecen sólo en el servidor, las coordenadas no aparecen en la respuesta conversacional y los fallos devuelven códigos seguros.
+
+La configuración usa `GOOGLE_MAPS_WEATHER_API_KEY` para clima y `GOOGLE_MAPS_GEOCODING_API_KEY` para lugares escritos; ambas aceptan `GOOGLE_MAPS_API_KEY` como credencial común. Producción permanece intacta en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. La aprobación de código depende de la auditoría de Preview. La aprobación operativa total continúa condicionada a habilitar Weather API/Geocoding en Google Cloud, ejecutar respuestas reales desde Guatemala y completar la comparación física de tráfico con iPhone/Waze y clima observado; esos hechos no se simulan.
+
+| Archivo nuevo o modificado | Registro V354 |
+|---|---|
+| `api/weather.js` | Integra Google Weather y Geocoding desde servidor, normaliza condiciones actuales, días, horas, lluvia, temperatura y viento, y conserva errores seguros. |
+| `api/universal-ai.js` | Identifica Google Weather como proveedor estructurado sin búsqueda web ni cifras inventadas. |
+| `test-v337-universal-weather.mjs` | Prueba coordenadas, credencial protegida, dos endpoints oficiales, probabilidades horarias y ausencia de llamada al modelo. |
+| `ROADMAP_OVERALL.md` | Registra el alcance, credenciales, privacidad y límites reales del candidato V354. |
+| `ROADMAP_A_DETALLE.md` | Registra el mismo candidato V354 en el control técnico detallado. |
