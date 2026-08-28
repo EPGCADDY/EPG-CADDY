@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V355 corrige la respuesta hablada automática de Safari y distribuye el dictado azul del teclado en Nombre/HDCP/Marcas; banco local PASS; Preview y prueba física iPhone pendientes. LIVE V353 conserva su E2E aprobado sin cambios de arquitectura
+**Corte vigente:** V355 corrige audio automático Safari y dictado Nombre/HDCP/Marcas; banco, Preview READY y navegador real PASS; prueba física iPhone pendiente. LIVE V353 conserva su E2E aprobado
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V351 REGISTRO FÍSICO FUNCIONAL; V354 corrigió varios hoyos y visibilidad General, pero falló el audio automático; V355 habilita audio desde el toque y distribuye el dictado del teclado; banco local PASS, Preview y prueba física iPhone pendientes · `PEND-VOZ-003`
+**Estado:** V355 banco, Preview READY y navegador real PASS; audio desde el toque y dictado del teclado distribuidos; prueba física iPhone pendiente · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.

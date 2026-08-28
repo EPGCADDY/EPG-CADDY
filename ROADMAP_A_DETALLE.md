@@ -1702,4 +1702,4 @@ Archivos exactos V354: `index-grupal.html`, `service-worker.js`, `api/voice-heal
 | `test-v354-voice-fallback.mjs`, `audit-project.mjs` | Conservan varios hoyos y General visible. | Regresión acumulada. |
 | documentos rectores e inventarios | Registran RC-025 y estado honesto. | Banco, Preview y PASS físico separados. |
 
-Estado V355: banco específico PASS; auditoría maestra, Preview, navegador y prueba física iPhone pendientes. Producción permanece intacta.
+Estado remoto V355: commit `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, Preview `dpl_7AaXsHMV7msb6f2dizQECu3ES55F` READY, 97 paquetes PASS y navegador real PASS para build, AI ∞ y distribución Nombre/HDCP/Marcas. Producción intacta; falta PASS físico iPhone.

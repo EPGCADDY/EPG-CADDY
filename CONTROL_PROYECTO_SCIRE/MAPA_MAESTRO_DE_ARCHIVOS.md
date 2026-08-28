@@ -866,3 +866,5 @@ Resultado remoto V354: commit `d7deb09be3826430afc8e1f3d379f0a1137d215b`, deploy
 | `api/voice-health.js`, `service-worker.js` | Telemetría privada y shell V355. | Sin contenido personal; actualización obligatoria. |
 | `test-v355-ios-audio-dictation.mjs`, `test-v354-voice-fallback.mjs`, `audit-project.mjs` | Reproducción y regresión acumulada. | Ambos fallos físicos son obligatorios. |
 | documentos rectores e inventarios | RC-025, estado y lista literal. | Trazabilidad previa a Preview. |
+
+Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV7msb6f2dizQECu3ES55F` READY, 97 paquetes y navegador PASS. Producción intacta; prueba física iPhone pendiente.

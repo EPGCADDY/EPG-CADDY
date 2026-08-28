@@ -6,7 +6,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
-| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V355 corrige audio automático Safari y distribuye dictado del teclado en Nombre/HDCP/Marcas; banco local PASS; Preview y prueba física pendientes |
+| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V355 corrige audio automático Safari y dictado Nombre/HDCP/Marcas; banco, Preview READY y navegador PASS; prueba física pendiente |
 | 2 | `PEND-TRA-005` tráfico actual y futuro | Google Maps Routes activo y probado; faltan comparación simultánea con Waze y validación física en Guatemala |
 | 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
@@ -144,7 +144,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V355 EN CANDIDATO; AUDIO AUTOMÁTICO Y DICTADO DEL TECLADO CORREGIDOS; BANCO LOCAL PASS; PREVIEW Y VALIDACIÓN FÍSICA IPHONE PENDIENTES
+**Estado:** V355 DESPLEGADA EN PREVIEW; BANCO, BUILD Y NAVEGADOR PASS; VALIDACIÓN FÍSICA IPHONE PENDIENTE
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -206,6 +206,7 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - Preview V354: commit `d7deb09be3826430afc8e1f3d379f0a1137d215b`, deployment `dpl_CgqzYpVABY9djJehtFmH5cyFXHdn` READY. Vercel aprobó 96 paquetes; el navegador confirmó build/voz V354, AI ∞ y LIVE visibles, y cero errores propios de la aplicación. Producción no cambió.
 - La prueba física posterior rechazó el audio de V354: la respuesta General quedó escrita. V355 habilita la síntesis dentro del toque original antes de esperar Internet y no considera la recuperación manual como aprobación automática.
 - V355 distribuye `ANCAS GUSTAVO, 15 BLANCAS` dictado dentro de NOMBRE en Nombre/HDCP/Marcas sin cerrar el teclado; una frase incompleta o HDCP fuera de 0–54 permanece manual.
+- Preview V355: commit `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, deployment `dpl_7AaXsHMV7msb6f2dizQECu3ES55F` READY. Vercel aprobó 97 paquetes; navegador confirmó build/voz V355, AI ∞ y distribución Prueba V355/15/Blanco con OK habilitado.
 
 - Las respuestas generales pueden resultar vagas, básicas o demasiado breves hasta que el usuario pide expresamente una respuesta más estudiada, investigada, profunda y formal. Debe incorporarse una matriz permanente de calidad que revise pertinencia, fundamento, profundidad, precisión, aplicación práctica y claridad antes de cada respuesta, sin obligar al usuario a repetir esa orden.
 - En la quinta conversación física el estado quedó escuchando y, después de terminar la pregunta, el turno se cortó sin completar el ciclo. Debe reproducirse y corregirse la recuperación del micrófono en conversaciones consecutivas.

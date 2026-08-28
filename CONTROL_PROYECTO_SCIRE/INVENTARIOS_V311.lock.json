@@ -1,18 +1,18 @@
 {
   "version": "V355-IOS-AUDIO-DICTATION",
-  "generatedAt": "2026-08-28T14:18:52Z",
+  "generatedAt": "2026-08-28T14:28:51Z",
   "sourceFileCount": 361,
-  "sourceDigest": "f29678afacd38dfcb0b594e6650e3b511fcb2a7c195d9f5e22c96850a7401ea3",
+  "sourceDigest": "05c49da44c88bbcc240f1a01e4aca63266302ad51c75deafb2eec3d7255949c6",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 183723,
-      "sha256": "9c82dc68ab3666ecccc2a7854e8e3b6f753a4b700aba37cfdb68dd56eaa8f443"
+      "size": 184086,
+      "sha256": "b7af6621ef436f052f166170c705b8c9514350b885d2b4bfc2271cb3f8d7a047"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 206010,
-      "sha256": "68de1c9cfd839e671bbf3e46341564e00ad65d9d8a98e9f0e72741325aeaaab9"
+      "size": 206081,
+      "sha256": "c2985e55a8efd873192563917166944c78d2adafa4817bb633c1990041c865a8"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
