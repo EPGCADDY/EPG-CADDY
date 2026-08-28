@@ -143,7 +143,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V351-R8 RECHAZADA EN IPHONE · V351-R9 EN CANDIDATO CON ALTERNATIVAS SAFARI Y PUERTA VIVA DE PROVEEDOR; PREVIEW Y VALIDACIÓN FÍSICA PENDIENTES
+**Estado:** V351-R9 RECHAZADA EN IPHONE · V351-R10 EN CANDIDATO CON CAPTURA CONTINUA SAFARI, CIERRE SIN PÉRDIDA Y TRÁFICO ABREVIADO CANÓNICO; PREVIEW, TRÁFICO VIVO Y VALIDACIÓN FÍSICA PENDIENTES
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -211,6 +211,14 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - AI Gateway se consulta antes del proveedor directo; saldo agotado no se reintenta y una prueba viva del build exige una respuesta externa real.
 - La primera verificación visual R9 detectó que el OIDC disponible durante el build no se recuperaba desde el contexto de la Function. `@vercel/oidc` y `getVercelOidcToken()` quedan obligatorios en runtime; clima/tráfico reutilizan el mismo token en sus follow-ups.
 - Clima explícito continúa por Open-Meteo sin consumir IA. Las preguntas generales no se declaran operativas mientras la puerta viva no obtenga HTTP 200.
+
+### Corrección activa V351-R10
+
+- Los logs R9 confirmaron apertura y transcripción: la tanda larga terminó en `missing_score`, mientras un score individual posterior sí se aplicó. La consulta de tráfico llegó por separado a `/api/universal-ai` y respondió HTTP 502.
+- Safari usa captura continua y acumula resultados hasta tres segundos de silencio; el segundo toque deja de descartar la cola pendiente y la procesa una sola vez.
+- La escritura conserva transacción completa: si falta un jugador, hoyo o Gross, no se aplica una parte ni se adivina el dato.
+- La frase abreviada de tráfico se convierte a lugares completos antes del proveedor. El panel muestra resultado, error seguro o timeout y no queda indefinidamente en `RESPONDIENDO`.
+- Producción permanece intacta; R10 necesita Preview READY, tráfico vivo y PASS físico iPhone.
 
 ### Condiciones de cierre futuro
 

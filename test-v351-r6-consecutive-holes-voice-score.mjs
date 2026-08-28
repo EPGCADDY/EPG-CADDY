@@ -10,7 +10,7 @@ const sourceBetween=(start,end)=>{
 
 assert.match(html,/gscg-consecutive-hole-voice" content="V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
 assert.match(html,/gscg-hybrid-consecutive-hole-voice" content="V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
-assert.match(html,/gscg-ios-voice-tail" content="V351-R9-MULTI-ALTERNATIVE-GATEWAY-FIRST-20260828"/);
+assert.match(html,/gscg-ios-voice-tail" content="V351-R10-LONG-CAPTURE-TRAFFIC-ALIAS-20260828"/);
 assert.match(html,/function parseMultiHoleScoreSegments[\s\S]*?parseHoleListScoreSegments[\s\S]*?parseHoleFirstScoreBlocks/);
 assert.match(html,/const listed=parseHoleListScoreSegments[\s\S]*?if\(listed\?\.ok\)return listed[\s\S]*?const blocked=parseHoleFirstScoreBlocks[\s\S]*?if\(blocked\?\.ok\)return blocked/);
 
@@ -168,7 +168,10 @@ assert.equal(selectedAlternative.ambiguous,false);
 assert.match(selectedAlternative.transcript,/hoyo cinco jaime cinco gustavo cinco$/,"Una alternativa completa y válida debe ganar sobre la principal ambigua");
 const conflictingPhysical=physicalPhrase.replace("hoyo cinco Jaime cinco","hoyo cinco Jaime seis");
 assert.equal(selectBrowserVoiceCandidate("round",[physicalPhrase,conflictingPhysical]).ambiguous,true,"Dos alternativas válidas con Gross distintos deben rechazarse sin adivinar");
-assert.match(html,/recognition\.onend=[^\n]*mergeBrowserVoiceSegments\(browserVoiceTranscript,browserVoiceInterim\)/);
+assert.match(html,/recognition\.continuous=true/);
+assert.match(html,/scheduleBrowserVoiceFinalize\(recognition,context\)/);
+assert.match(html,/recognition\.onend=\(\)=>\{finalizeBrowserVoiceFallback\(recognition,context\)\}/);
+assert.match(html,/stopBrowserVoiceFallback\(\{keepStatus:true,processPending:true\}\)/);
 assert.match(html,/recognition\.maxAlternatives=5/);
 assert.match(html,/browserVoiceCandidates=browserVoiceAlternativeBeams\(event\.results\)/);
 assert.match(html,/processBrowserVoiceTranscript\(context,transcript\)\.catch/);
@@ -191,4 +194,4 @@ assert.deepEqual({ok:duplicateMulti.ok,failureCode:duplicateMulti.failureCode},{
 const invalidMulti=physicalParser("hoyos tres cuatro 19 Jaime cuatro cinco seis Gustavo cinco cinco cinco",{defaultPlayer:null,defaultHole:3});
 assert.deepEqual({ok:invalidMulti.ok,failureCode:invalidMulti.failureCode},{ok:false,failureCode:"invalid_hole"},"Un hoyo fuera de 1–18 debe rechazarse");
 
-console.log("PASS V351-R9 · 18 configuraciones · 108 tandas 3-4-5 · 1188 Gross · 5 alternativas Safari · conflicto rechazado · cero IA para Score");
+console.log("PASS V351-R10 · 18 configuraciones · 108 tandas 3-4-5 · 1188 Gross · captura continua Safari · parada conserva dictado · cero IA para Score");

@@ -147,8 +147,14 @@ export function directTrafficRouteFromQuery(query){
   const fromIndex=Math.max(leftNormalized.lastIndexOf(" desde "),leftNormalized.lastIndexOf(" de "));
   if(fromIndex<0)return null;
   const fromLength=leftNormalized.startsWith(" desde ",fromIndex)?7:4;
-  const origin=left.slice(fromIndex+fromLength).trim().replace(/^[,:;\-]+|[,:;\-]+$/g,"");
-  const destination=segment.slice(toIndex+connectorLength).trim().replace(/^[,:;\-]+|[,:;\-]+$/g,"");
+  const canonicalPlace=value=>{
+    const clean=String(value||"").trim().replace(/^[,:;\-]+|[,:;\-]+$/g,""),key=clean.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+    if(/^(?:el )?pulte$/.test(key))return"El Pulté Golf, Guatemala";
+    if(/^(?:centro comercial )?pradera concepcion$/.test(key))return"Pradera Concepción, Guatemala";
+    return clean
+  };
+  const origin=canonicalPlace(left.slice(fromIndex+fromLength));
+  const destination=canonicalPlace(segment.slice(toIndex+connectorLength));
   return origin&&destination?{origin,destination}:null;
 }
 

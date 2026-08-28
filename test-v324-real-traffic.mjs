@@ -30,6 +30,7 @@ assert.match(universalApi,/Si el destino es un fragmento ambiguo/);
 assert.match(universalApi,/Si needsDestinationClarification es true, haz solamente una pregunta breve/);
 assert.equal(isDirectTrafficQuery("¿Cuánto tráfico hay ahora de El Pulté Golf a Pradera Concepción, Guatemala?"),true);
 assert.deepEqual(directTrafficRouteFromQuery("¿Cuánto tráfico hay ahora de El Pulté Golf a Pradera Concepción, Guatemala? Dame ETA."),{origin:"El Pulté Golf",destination:"Pradera Concepción, Guatemala"});
+assert.deepEqual(directTrafficRouteFromQuery("como esta el trafico para ir de pulte a pradera concepcion"),{origin:"El Pulté Golf, Guatemala",destination:"Pradera Concepción, Guatemala"});
 
 const summary=summarizeTrafficRoute({routes:[{duration:"2100s",staticDuration:"1500s",distanceMeters:18640}]},{originLabel:"Ubicación GPS actual",destinationLabel:"Pradera Concepción, Guatemala",calculatedAt:"2026-08-26T14:00:00.000Z"});
 assert.equal(summary.ok,true);

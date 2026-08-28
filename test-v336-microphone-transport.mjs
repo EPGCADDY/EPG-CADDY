@@ -54,7 +54,9 @@ assert.ok(browserProcess.indexOf("browser_fallback_score_applied")<browserProces
 assert.match(browserProcess,/browser_fallback_score_applied":"browser_fallback_score_rejected/);
 assert.match(browserProcess,/openAiUniversalPanel\(false,\{focus:false\}\)[\s\S]*?browser_fallback_query_answered/);
 assert.match(html,/function mergeBrowserVoiceSegments[\s\S]*?overlap/);
-assert.match(html,/recognition\.onend=[^\n]*mergeBrowserVoiceSegments\(browserVoiceTranscript,browserVoiceInterim\)/);
+assert.match(html,/function finalizeBrowserVoiceFallback[\s\S]*?mergeBrowserVoiceSegments\(browserVoiceTranscript,browserVoiceInterim\)/);
+assert.match(html,/recognition\.continuous=true/);
+assert.match(html,/processPending:true/);
 assert.match(html,/VOICE_HEALTH_EVENTS=new Set\([\s\S]*?"browser_fallback_setup_applied","browser_fallback_setup_rejected"/);
 assert.match(html,/setupFinalizeRequested\|\|setupLocked[\s\S]*?resetSetupCapture\(\)[\s\S]*?LISTO PARA ESCUCHAR/);
 assert.match(html,/failure\.status=rsp\.status/);

@@ -1707,3 +1707,18 @@ Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R8 no queda
 | `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAP e inventario lock | Registro doble del candidato. | Candados documental, ROADMAP e inventario en PASS. |
 
 Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R9 no queda aprobada hasta puerta viva, Preview READY y PASS físico iPhone.
+
+## V351-R10 · captura sostenida y tráfico abreviado · 28 de agosto de 2026
+
+| Archivo exacto | Cambio V351-R10 | Evidencia exigida |
+|---|---|---|
+| `index-grupal.html` | Web Speech continuo; ventana de silencio de tres segundos; el toque de cierre procesa la cola pendiente; timeout y error del proveedor quedan visibles. | Tanda completa llega una sola vez al escritor; `RESPONDIENDO` siempre termina. |
+| `api/universal-ai.js` | Canonicaliza los alias locales inequívocos antes de Google Maps Routes. | La consulta corta produce los mismos lugares completos que la consulta canónica. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Mantiene 18 configuraciones, 108 tandas, 1,188 Gross y agrega candados de captura/cierre. | PASS con cero IA y una sola transacción por tanda. |
+| `test-v336-microphone-transport.mjs` | Sustituye el candado de una sola emisión por captura continua y finalización común. | El segundo toque no descarta transcripción. |
+| `test-v324-real-traffic.mjs` | Agrega la consulta abreviada reportada. | Origen/destino completos; ETA vivo sólo se declara con proveedor real. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-034 rechaza R9 y registra causa, escape, control y evidencia. | Logs 12:21–12:23 UTC sin contenido privado. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAP | Registran el mismo alcance R10. | `roadmap-gate` PASS. |
+| `scripts/rebuild-inventory-pdfs.py`, tres PDF y `INVENTARIOS_V311.lock.json` | Corte `V351-R10-LONG-CAPTURE-TRAFFIC-ALIAS`. | Inventario y sello PASS sobre el árbol exacto. |
+
+Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R10 no queda aprobada hasta Preview READY, tráfico vivo y PASS físico iPhone.

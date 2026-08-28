@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V351-R8 RECHAZADA EN IPHONE A LAS 02:29 DEL 28 DE AGOSTO: la tanda multi-hoyo terminó en `ambiguous_score`; el hoyo individual posterior sí se aplicó y la consulta general visible terminó en HTTP 503 por `credit_balance_exhausted`. V351-R9 conserva hasta cinco alternativas de Safari, sólo acepta una semántica única y usa AI Gateway antes del proveedor directo. Requiere puerta viva, Preview y nueva prueba física · `PEND-VOZ-003`
+**Estado:** V351-R9 RECHAZADA EN IPHONE A LAS 06:23 DEL 28 DE AGOSTO: la tanda multi-hoyo terminó en `missing_score`; el score individual sí se aplicó y la consulta de tráfico devolvió HTTP 502. V351-R10 conserva la captura larga hasta silencio o cierre manual, canonicaliza los dos alias locales comprobados y obliga una respuesta textual visible incluso ante timeout/proveedor caído. Requiere Preview, tráfico vivo y nueva prueba física · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -450,3 +450,13 @@ La consulta posterior llegó a `/api/universal-ai`, pero el proveedor directo de
 El primer Preview R9 aprobó la puerta del build, pero la comprobación visual real todavía devolvió saldo agotado: la Function no recuperaba el OIDC desde su contexto de ejecución. R9 incorpora `@vercel/oidc`, usa `getVercelOidcToken()` en runtime y conserva el mismo token en los follow-ups de clima y tráfico. El candidato sólo puede aprobarse después de repetir la pregunta general contra el deployment ya `READY`.
 
 Producción permanece intacta; R9 no se aprueba hasta puerta viva, Preview READY y PASS físico iPhone del dictado corrido más una pregunta general.
+
+## V351-R10-LONG-CAPTURE-TRAFFIC-ALIAS · captura sostenida y tráfico visible · 28 de agosto de 2026
+
+Los logs del Preview R9 separan las dos incidencias. A las 12:21:35 UTC la tanda del Score llegó al procesador pero terminó en `missing_score`; dieciocho segundos después un score individual sí fue aplicado. A las 12:23:51 UTC la consulta de tráfico llegó a `/api/universal-ai` y devolvió HTTP 502. No fue un fallo de permiso ni de apertura del micrófono.
+
+R10 cambia el transporte alternativo de Safari de una sola emisión a captura continua. Cada resultado reinicia una ventana de tres segundos; al vencerla o al tocar el micrófono para cerrarlo, la cola completa pasa una sola vez por las alternativas, el parser y el escritor oficial. No se permiten escrituras parciales ni se adivina un Gross faltante.
+
+La consulta hablada abreviada se canonicaliza a los lugares completos antes de Google Maps Routes. El cliente conserva el mensaje seguro del proveedor, agrega un límite de 60 segundos y siempre pinta una respuesta final o un error visible; `RESPONDIENDO` no puede quedar indefinido.
+
+`test-v351-r6-consecutive-holes-voice-score.mjs` mantiene 18 configuraciones, 108 tandas, 1,188 Gross y cero IA para Score, y ahora bloquea `continuous=true`, el cierre con cola pendiente y la finalización única. `test-v324-real-traffic.mjs` reproduce la frase corta reportada sin guardar ubicación del propietario. Producción permanece intacta hasta Preview READY, tráfico vivo y PASS físico iPhone.

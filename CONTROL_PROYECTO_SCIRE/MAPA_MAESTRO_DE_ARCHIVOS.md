@@ -879,3 +879,15 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `audit-project.mjs` | Ejecuta la puerta viva R9 dentro de la auditoría maestra. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-033 rechaza R8 con horas y códigos privados. |
 | `COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, ambos ROADMAP y `scripts/rebuild-inventory-pdfs.py` | Registran y sellan el mismo candidato R9. |
+
+## V351-R10-LONG-CAPTURE-TRAFFIC-ALIAS · captura sostenida y ruta corta
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | Mantiene Web Speech continuo, acumula final/interino/alternativas durante la frase larga, finaliza tras silencio o toque manual y nunca descarta la cola pendiente; AI UNIVERSAL muestra timeout o mensaje seguro del proveedor. |
+| `api/universal-ai.js` | Canonicaliza únicamente los alias locales inequívocos usados en la prueba física antes de llamar a Google Maps Routes. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Conserva 18 configuraciones, 108 tandas y 1,188 Gross; bloquea captura continua, finalización por silencio y cierre manual con procesamiento. |
+| `test-v336-microphone-transport.mjs` | Protege el transporte Safari, la transición visible y la prohibición de perder una transcripción al cerrar. |
+| `test-v324-real-traffic.mjs` | Reproduce la frase abreviada reportada y exige origen/destino completos sin exponer ubicación personal. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-034 rechaza R9 con logs privados y fija los controles permanentes R10. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, ambos ROADMAP y `scripts/rebuild-inventory-pdfs.py` | Registran y sellan el mismo candidato R10. |
