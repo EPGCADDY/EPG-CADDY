@@ -52,3 +52,6 @@ jobs:
 
       - name: Preserve honest AI Universal live calibre status
         run: node test-v356-ai-universal-live-calibre-evidence.mjs
+
+      - name: Block incomplete repository inventory or nomenclature
+        run: node test-v356-complete-repository-inventory.mjs

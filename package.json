@@ -19,6 +19,7 @@
   "scripts": {
     "roadmap:gate": "node scripts/roadmap-gate.mjs",
     "inventory:gate": "node scripts/inventory-gate.mjs",
+    "inventory:complete": "node scripts/rebuild-complete-repository-inventory.mjs && node test-v356-complete-repository-inventory.mjs",
     "quality:gate": "node scripts/project-quality-gate.mjs",
     "voice:ios-gate": "node test-v357-ios-voice-transport-recovery.mjs",
     "audit": "node audit-project.mjs",

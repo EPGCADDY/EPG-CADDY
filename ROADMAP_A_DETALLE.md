@@ -1764,3 +1764,21 @@ Evidencia raíz: 16:43:01, 16:43:23, 16:43:54, 16:44:06, 16:45:44 y 16:45:58 UTC
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | Índice simple de ambos expedientes. | Localización independiente del historial de chat. |
 
 Base sincronizada: `5ba0ff1ddb5860561edd9b90a9f6e0a83ba5d75f`. Preview examinado: `dpl_5pvjUjCc1Vhm1WmeGzASacGQZSsN` sobre `daa00a0690977bad75e4ab792cf13e35a8997568`. Producción continúa en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
+
+## V356-INVENTARIO-COMPLETO · árbol total, nomenclatura y descripciones
+
+| Ruta exacta | Responsabilidad | Candado |
+|---|---|---|
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_INVENTARIO_REPOSITORIO/` | Carpeta canónica del inventario integral del corte. | Separada de código funcional y de Producción. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_INVENTARIO_REPOSITORIO/INVENTARIO_MAESTRO_COMPLETO_V356.md` | Enumera todas las carpetas y todos los archivos activos con nombre, categoría, bytes, SHA-256/sello, descripción y nomenclatura. | Cobertura Git 1:1; cero rutas omitidas. |
+| `scripts/rebuild-complete-repository-inventory.mjs` | Reconstruye el inventario desde `git ls-files` y clasifica cada entrada. | Salida determinista y Unicode NFC. |
+| `test-v356-complete-repository-inventory.mjs` | Recalcula el árbol, tamaños, hashes, nombres y descripciones. | FAIL ante omisión, duplicado, colisión o descripción vacía. |
+| `audit-project.mjs` | Incorpora la prueba al banco maestro. | Ningún cierre local puede saltarla. |
+| `package.json` | Expone `inventory:complete`. | Regeneración y validación en un solo comando. |
+| `.github/workflows/roadmap-gate.yml` | Ejecuta el candado en GitHub. | Ningún commit remoto incompleto aprueba. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra el expediente, generador, prueba y regla de cobertura. | Mapa humano complementario al listado 1:1. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | Añade acceso directo al inventario integral. | Localización sin depender del chat. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Doble registro obligatorio del mismo corte. | Ambos deben cambiar en el mismo commit. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella el digest de todas las fuentes salvo su propia autorreferencia y los tres PDF. | `inventory-gate` detiene cualquier diferencia. |
+
+Garantía objetiva del corte: 100% de rutas Git listadas, 100% con nombre y descripción, cero omisiones, cero duplicados y cero colisiones de mayúsculas/minúsculas. Los dos metaarchivos autorreferenciales se identifican expresamente con `META-GIT-LOCK` y quedan protegidos por el árbol del commit y el sello global. Producción continúa exactamente en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.

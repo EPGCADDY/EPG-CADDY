@@ -916,3 +916,14 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `test-v356-traffic-weather-report-evidence.mjs` | Comprueba 4K, dpi, hashes e inventario. | FAIL ante degradación u omisión. |
 | `test-v356-ai-universal-live-calibre-evidence.mjs` | Comprueba estado honesto e inventario en siete documentos. | FAIL si se oculta el rechazo vivo. |
 | `audit-project.mjs`, `.github/workflows/roadmap-gate.yml` | Ejecutan los dos candados. | Evidencia obligatoria local y GitHub. |
+
+## V356-INVENTARIO-COMPLETO
+
+| Ruta exacta | Descripción | Control |
+|---|---|---|
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_INVENTARIO_REPOSITORIO/` | Expediente canónico de cobertura total del repositorio. | No mezcla evidencia con código funcional. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_INVENTARIO_REPOSITORIO/INVENTARIO_MAESTRO_COMPLETO_V356.md` | Lista 1:1 todas las carpetas y archivos Git con nomenclatura, categoría, tamaño, SHA-256/sello y descripción. | Cero omisiones permitidas. |
+| `scripts/rebuild-complete-repository-inventory.mjs` | Generador determinista del inventario maestro. | Lee directamente el árbol Git. |
+| `test-v356-complete-repository-inventory.mjs` | Verifica cobertura, nombres, descripciones, tamaños, hashes y colisiones. | Integrado en auditoría y CI. |
+| `package.json`, `audit-project.mjs`, `.github/workflows/roadmap-gate.yml` | Comando, banco local y puerta remota. | Un FAIL bloquea construcción y publicación. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Doble registro, índice y sello final. | Cobertura humana y criptográfica del mismo corte. |
