@@ -26,6 +26,7 @@ assert.equal(`Primera vuelta. ${["JAIME, 7 arriba","GUSTAVO, 7 abajo"].join(". "
 assert.match(speech,/model:"gpt-4o-mini-tts"/);
 assert.match(speech,/model:"openai\/tts-1",voice:"onyx"/);
 assert.match(speech,/model:"spacexai\/grok-tts",voice:"Rex",deliveredVoice:"rex"/);
+assert.match(speech,/"ai-speech-model-specification-version":"4"/);
 assert.doesNotMatch(speech,/openai\/gpt-4o-mini-tts/);
 assert.match(html,/function sealBrowserVoiceProgress\([\s\S]*?consumeLiveRoundClosures\(\)/);
 assert.match(html,/if\(progressive\.closure\)void speakClosure\(progressive\.closure\)/);

@@ -1875,3 +1875,10 @@ La aceptación exige en el mismo Preview: consulta general 200 mediante Gateway 
 | `api/voice-speech.js` | Envía `Rex` al modelo xAI, publica `rex` al cliente y sanea mensaje/código de error. | Nunca expone token, texto hablado ni respuesta cruda del proveedor. |
 | `test-v365-multiprovider-male-voice.mjs` | Exige mayúscula exacta en el payload, cadena Cedar→Onyx→Rex y cabecera masculina normalizada. | Un JSON de error o audio vacío jamás devuelve 200. |
 | `Intocables/intocables-gate.mjs` | Duplica el contrato exacto de Rex dentro del cierre preventivo global. | Una edición paralela no puede devolver el identificador inválido en minúsculas. |
+
+## V365-R4 · SPEECH PROTOCOL V4
+
+| Archivo exacto | Corrección | Candado |
+|---|---|---|
+| `api/voice-speech.js` | Declara `ai-speech-model-specification-version: 4` en cada llamada al endpoint `/v4/ai/speech-model`. | El Gateway no vuelve a rechazar Onyx/Rex por versión de protocolo ausente. |
+| `test-v365-multiprovider-male-voice.mjs`, `Intocables/intocables-gate.mjs` | Exigen protocolo 4 en ambos intentos Gateway. | El encabezado oficial no puede desaparecer en una edición paralela. |
