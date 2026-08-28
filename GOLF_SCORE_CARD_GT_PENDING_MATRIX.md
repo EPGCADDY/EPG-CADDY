@@ -366,6 +366,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ## Mejoras continuas
 
+- V354-R2 corrige RC-024 en candidato mundial: GPS autorizado aporta ciudad, estado y país para tráfico/clima; no existe país fijo y la regresión cubre seis regiones globales. Preview y respuesta hablada en iPhone siguen pendientes.
+
 - Cobertura de vocabulario, nombres, acentos, ruido y pausas de dictado.
 - Funcionamiento estable en iPhone, Android, pantalla bloqueada, segundo plano y reconexión.
 - Incorporación de nuevos campos únicamente con información oficial completa.

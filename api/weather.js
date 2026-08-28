@@ -39,7 +39,6 @@ async function resolvePlace(location) {
   if (!query || !key) return null;
   const url = new URL(GOOGLE_GEOCODING_URL);
   url.searchParams.set("address", query);
-  url.searchParams.set("region", "gt");
   url.searchParams.set("language", "es-419");
   url.searchParams.set("key", key);
   const payload = await fetchJson(url);

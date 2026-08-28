@@ -1347,3 +1347,7 @@ La configuración usa `GOOGLE_MAPS_WEATHER_API_KEY` para clima y `GOOGLE_MAPS_GE
 
 <!-- V354-GOOGLE-INTEGRATION-ROADMAPS-SYNC -->
 <!-- V354-INVENTORY-SYNC -->
+
+### V354-R2 · tráfico por voz con destino local no calificado
+
+La prueba física del 28 de agosto transcribió “cómo está el tráfico para ir del club de Golf El Pulte a Pradera Concepcion”, pero Realtime devolvió 429 y el respaldo determinista terminó en 502 porque Google Routes no resolvió `Pradera Concepcion` sin contexto geográfico. La corrección usa el GPS autorizado para obtener de forma privada ciudad, estado y país, sin exigir que el usuario los dicte, sin fijar ningún país y sin reemplazar un origen escrito. También admite una orden con sólo destino: el GPS funciona como origen automáticamente. `api/_lib/traffic.js`, `api/traffic.js`, `api/universal-ai.js` e `index-grupal.html` aplican el mismo flujo; `test-v324-real-traffic.mjs` reproduce la frase y valida destinos de América, Europa, Asia, África, Oceanía y Medio Oriente sin depender de OpenAI. `api/weather.js` elimina el sesgo regional `gt` para lugares escritos. `RC-024` conserva causa, escape y evidencia. Producción permanece intacta; el cierre exige Preview real y respuesta hablada física en iPhone.

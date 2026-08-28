@@ -1,9 +1,21 @@
 const ROUTES_ENDPOINT="https://routes.googleapis.com/directions/v2:computeRoutes";
+const GEOCODING_ENDPOINT="https://maps.googleapis.com/maps/api/geocode/json";
 const ROUTES_TIMEOUT_MS=15_000;
 const MAX_PLACE_LENGTH=240;
 
 function cleanPlace(value){
   return String(value||"").replace(/[\u0000-\u001F]/g," ").replace(/\s+/g," ").trim().slice(0,MAX_PLACE_LENGTH);
+}
+
+export function trafficPlaceIsQualified(value){
+  return /,\s*[^,]+$/.test(cleanPlace(value));
+}
+
+export function qualifyTrafficPlace(value,context={}){
+  const place=cleanPlace(value);
+  if(!place||trafficPlaceIsQualified(place))return place;
+  const parts=[context.city,context.region,context.country].map(cleanPlace).filter((part,index,list)=>part&&list.indexOf(part)===index);
+  return parts.length?`${place}, ${parts.join(", ")}`:place;
 }
 
 function finiteCoordinate(value,min,max){
@@ -15,6 +27,31 @@ function cleanCoordinates(value){
   const latitude=finiteCoordinate(value?.latitude,-90,90);
   const longitude=finiteCoordinate(value?.longitude,-180,180);
   return latitude===null||longitude===null?null:{latitude,longitude};
+}
+
+function addressComponent(result,type){
+  return cleanPlace((result?.address_components||[]).find(component=>component?.types?.includes(type))?.long_name);
+}
+
+export async function resolveTrafficLocationContext(coordinates,options={}){
+  const point=cleanCoordinates(coordinates);
+  const apiKey=String(options.apiKey||process.env.GOOGLE_MAPS_GEOCODING_API_KEY||process.env.GOOGLE_MAPS_API_KEY||"").trim();
+  if(!point||!apiKey)return null;
+  try{
+    const url=new URL(GEOCODING_ENDPOINT);
+    url.searchParams.set("latlng",`${point.latitude},${point.longitude}`);
+    url.searchParams.set("language","es-419");
+    url.searchParams.set("key",apiKey);
+    const response=await (options.fetchImpl||fetch)(url,{headers:{Accept:"application/json"}});
+    const payload=await response.json().catch(()=>null),result=payload?.results?.[0];
+    if(!response.ok||!result)return null;
+    const context={
+      city:addressComponent(result,"locality")||addressComponent(result,"administrative_area_level_2"),
+      region:addressComponent(result,"administrative_area_level_1"),
+      country:addressComponent(result,"country")
+    };
+    return context.city||context.region||context.country?context:null;
+  }catch{return null}
 }
 
 function deicticOrigin(value){
@@ -80,7 +117,11 @@ export async function computeTrafficRoute(request={},options={}){
   if(!apiKey)return{ok:false,error:"TRAFFIC_NOT_CONFIGURED",message:"El servicio de tráfico todavía no tiene una credencial activa. Puedes continuar con otra pregunta."};
   const originCoordinates=cleanCoordinates(request.originCoordinates);
   const originAddress=cleanPlace(request.origin);
-  const destinationAddress=cleanPlace(request.destination);
+  const rawDestination=cleanPlace(request.destination);
+  const locationContext=!trafficPlaceIsQualified(rawDestination)&&request.contextCoordinates
+    ?await resolveTrafficLocationContext(request.contextCoordinates,{apiKey:options.geocodingApiKey,fetchImpl:options.fetchImpl})
+    :null;
+  const destinationAddress=qualifyTrafficPlace(rawDestination,locationContext||{});
   const origin=waypoint(originAddress,originCoordinates);
   const destination=waypoint(destinationAddress,request.destinationCoordinates);
   if(!origin)return{ok:false,error:"TRAFFIC_ORIGIN_REQUIRED",needsCurrentLocation:true,message:"Necesito tu ubicación actual o un punto de salida para calcular el tráfico."};

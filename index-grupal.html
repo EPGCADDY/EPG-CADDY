@@ -2256,9 +2256,10 @@ async function trafficToolResult(argumentsText){
   let args={};try{args=JSON.parse(argumentsText||"{}")||{}}catch{}
   const rawOrigin=String(args.origin||"").trim();
   const asksDevice=!rawOrigin||/^(?:aqu[ií]|ac[aá]|mi ubicaci[oó]n|ubicaci[oó]n actual|donde estoy|current location|here)$/i.test(rawOrigin);
-  const deviceCoordinates=asksDevice?await currentBrowserCoordinates():null;
+  const deviceCoordinates=await currentBrowserCoordinates();
   const payload={
-    ...(deviceCoordinates?{originCoordinates:{latitude:deviceCoordinates.latitude,longitude:deviceCoordinates.longitude}}:{origin:rawOrigin}),
+    ...(asksDevice&&deviceCoordinates?{originCoordinates:{latitude:deviceCoordinates.latitude,longitude:deviceCoordinates.longitude}}:{origin:rawOrigin}),
+    ...(deviceCoordinates?{contextCoordinates:{latitude:deviceCoordinates.latitude,longitude:deviceCoordinates.longitude}}:{}),
     destination:String(args.destination||"").trim(),
     departureTime:String(args.departure_time||"").trim(),
     languageCode:"es-419"

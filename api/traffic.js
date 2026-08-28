@@ -11,7 +11,7 @@ export default async function handler(req,res){
   }
   try{
     const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):req.body||{};
-    const result=await computeTrafficRoute(body);
+    const result=await computeTrafficRoute({...body,contextCoordinates:body.contextCoordinates||body.originCoordinates});
     const status=result.ok?200:["TRAFFIC_ORIGIN_REQUIRED","TRAFFIC_DESTINATION_REQUIRED"].includes(result.error)?422:result.error==="TRAFFIC_NOT_CONFIGURED"?503:200;
     return res.status(status).json(result);
   }catch{

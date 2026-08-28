@@ -1,5 +1,5 @@
 import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
-import { computeTrafficRoute } from "./_lib/traffic.js";
+import { computeTrafficRoute,trafficPlaceIsQualified } from "./_lib/traffic.js";
 import { computeWeatherForecast } from "./weather.js";
 
 const MAX_QUERY_LENGTH=4000;
@@ -135,7 +135,10 @@ export function directTrafficRouteFromQuery(query){
   const connectorLength=normalized.startsWith(" hasta ",toIndex)?7:3;
   const left=segment.slice(0,toIndex),leftNormalized=normalized.slice(0,toIndex);
   const fromIndex=Math.max(leftNormalized.lastIndexOf(" desde "),leftNormalized.lastIndexOf(" de "));
-  if(fromIndex<0)return null;
+  if(fromIndex<0){
+    const destination=segment.slice(toIndex+connectorLength).trim().replace(/^[,:;\-]+|[,:;\-]+$/g,"");
+    return destination&&/\b(?:para ir|voy|ir|llegar|como llegar)\b/.test(leftNormalized)?{origin:"mi ubicación",destination}:null;
+  }
   const fromLength=leftNormalized.startsWith(" desde ",fromIndex)?7:4;
   const origin=left.slice(fromIndex+fromLength).trim().replace(/^[,:;\-]+|[,:;\-]+$/g,"");
   const destination=segment.slice(toIndex+connectorLength).trim().replace(/^[,:;\-]+|[,:;\-]+$/g,"");
@@ -144,7 +147,12 @@ export function directTrafficRouteFromQuery(query){
 
 function trafficDestinationNeedsClarification(destination){
   const words=String(destination||"").replace(/[^\p{L}\p{N}]+/gu," ").trim().split(/\s+/).filter(Boolean);
-  return words.length<2&&!/\d/.test(String(destination||""));
+  const normalized=words.join(" ").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  return words.length===0||(words.length===1&&!/\d/.test(String(destination||""))&&/^(?:concepcion|pradera|centro|zona|club)$/.test(normalized));
+}
+
+function trafficOriginNeedsDevice(origin){
+  return /^(?:aqu[ií]|ac[aá]|mi ubicaci[oó]n|ubicaci[oó]n actual|donde estoy|current location|here)$/i.test(String(origin||"").trim());
 }
 
 function trafficValue(value,digits=0){const number=Number(value);return Number.isFinite(number)?number.toFixed(digits).replace(/\.0$/,""):"sin dato"}
@@ -324,9 +332,11 @@ export default async function handler(req,res){
       const route=directTrafficRouteFromQuery(query);
       if(!route)return res.status(200).json({ok:true,answer:"Indícame el origen y el destino exactos para calcular ETA, demora y distancia con tráfico real.",sources:[],needsRouteClarification:true});
       if(trafficDestinationNeedsClarification(route.destination))return res.status(200).json({ok:true,answer:"¿Cuál es el nombre completo, zona o municipio del destino?",sources:[],needsDestinationClarification:true});
+      if(!trafficPlaceIsQualified(route.destination)&&!appContext?.trafficOrigin)return res.status(428).json({ok:false,error:"TRAFFIC_CONTEXT_REQUIRED",needsCurrentLocation:true});
       const trafficResult=await computeTrafficRoute({
         origin:route.origin,
-        originCoordinates:appContext?.trafficOrigin,
+        originCoordinates:trafficOriginNeedsDevice(route.origin)?appContext?.trafficOrigin:null,
+        contextCoordinates:appContext?.trafficOrigin,
         destination:route.destination,
         languageCode:"es-419"
       });
@@ -405,7 +415,8 @@ export default async function handler(req,res){
       let args={};try{args=JSON.parse(trafficCall.arguments||"{}")||{}}catch{}
       const trafficResult=await computeTrafficRoute({
         origin:args.origin,
-        originCoordinates:appContext?.trafficOrigin,
+        originCoordinates:trafficOriginNeedsDevice(args.origin)?appContext?.trafficOrigin:null,
+        contextCoordinates:appContext?.trafficOrigin,
         destination:args.destination,
         departureTime:args.departure_time,
         languageCode:"es-419"

@@ -1687,3 +1687,18 @@ La configuración usa `GOOGLE_MAPS_WEATHER_API_KEY` para clima y `GOOGLE_MAPS_GE
 
 <!-- V354-GOOGLE-INTEGRATION-ROADMAPS-SYNC -->
 <!-- V354-INVENTORY-SYNC -->
+
+## V354-R2 · recuperación determinista de tráfico local por voz
+
+| Archivo exacto | Control | Evidencia exigida |
+|---|---|---|
+| `api/_lib/traffic.js` | `GPS-DYNAMIC-LOCATION-CONTEXT` | Geocodificación inversa autorizada obtiene ciudad/estado/país; un destino ya calificado no se modifica y las coordenadas no salen en la respuesta. |
+| `api/traffic.js` | `DEVICE-CONTEXT-SEPARATE-FROM-ORIGIN` | La herramienta usa GPS como contexto mundial y sólo como origen cuando la orden dice aquí/ubicación actual. |
+| `api/universal-ai.js` | `DIRECT-TRAFFIC-CONTEXT` | Un destino local sin contexto solicita GPS una vez y reintenta automáticamente; un origen escrito permanece escrito y una orden con sólo destino usa GPS como origen. |
+| `index-grupal.html` | `TRAFFIC-GPS-AUTOMATIC` | Texto/voz obtienen ubicación autorizada sin exigir ciudad, estado o país en la orden. |
+| `test-v324-real-traffic.mjs` | `PHYSICAL-PHRASE-RC024-WORLDWIDE` | La frase física y la orden con sólo destino validan América, Europa, Asia, África, Oceanía y Medio Oriente sin país fijo ni OpenAI. |
+| `api/weather.js` | `WORLDWIDE-WRITTEN-PLACE` | La geocodificación de clima escrito elimina el sesgo regional Guatemala y conserva GPS mundial. |
+| `test-v337-universal-weather.mjs` | `NO-FIXED-WEATHER-REGION` | Rechaza cualquier reintroducción de `region=gt` en el proveedor meteorológico. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-024` | Mantiene el fallo abierto hasta Preview y respuesta hablada en iPhone. |
+
+Diagnóstico reproducido: `/api/session-grupal` 429, transcripción alternativa lista, `/api/universal-ai` 502 y respuesta `TRAFFIC_ROUTE_UNAVAILABLE`. La solución es mundial: GPS → ciudad/estado/país → Routes/Weather; no existe país codificado. Producción `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` permanece intacta.

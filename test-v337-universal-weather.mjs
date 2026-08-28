@@ -9,6 +9,7 @@ assert.match(html,/weatherOrigin:course\?\.weatherCoordinates\?\{location:course
 assert.match(api,/Para clima, lluvia, temperatura, sensación térmica o viento usa exclusivamente get_current_weather/);
 assert.match(api,/Nunca mezcles el pronóstico con búsqueda web/);
 assert.match(weatherApi,/rows\.at\(-1\)\?\.date > throughDate/,"El paginado debe completar el día solicitado, no detenerse en su primera hora");
+assert.doesNotMatch(weatherApi,/searchParams\.set\("region",\s*"gt"\)/,"Clima escrito no debe fijar Guatemala: la geocodificación es mundial");
 assert.equal(weatherTimePeriodFromQuery("¿A qué hora lloverá mañana?"),"","Mañana como fecha no debe recortar el pronóstico a 06:00–11:59");
 assert.equal(weatherTimePeriodFromQuery("¿Lloverá por la mañana?"),"morning");
 assert.equal(weatherTimePeriodFromQuery("¿Cómo estará esta tarde?"),"afternoon");
