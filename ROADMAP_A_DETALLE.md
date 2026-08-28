@@ -1824,8 +1824,15 @@ Evidencia y soporte móvil exactos: `.gitignore`, `scripts/v363-silent-speech-re
 - `index-grupal.html`: `nueva_ronda=1` llama la ruta oficial `openNewRoundDraft()` aunque exista tarjeta activa; esa ruta persiste primero y no borra datos.
 - `service-worker.js`: caché renovado para que Safari reciba la corrección.
 - `test-v364-explicit-new-round-entry.mjs`: valida entrada, apertura y ausencia de borrado.
+- `test-v357-ios-voice-transport-recovery.mjs` y `test-v361-synchronized-voice.mjs`: aceptan la extensión V364 de la firma de caché sin retirar el prefijo/candado V363.
 - `audit-project.mjs` y `package.json`: incorporan el banco V364.
 - `scripts/project-quality-gate.mjs`: conserva el control sincronizado recibido en el árbol compartido.
 - `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registro doble del cambio.
 
 Producción no se toca. El Preview se entrega únicamente después de tres comprobaciones externas del mismo artefacto.
+### Promoción pública autorizada V363 — 28 de agosto de 2026
+
+- Alcance técnico: `scripts/project-quality-gate.mjs` y registro documental obligatorio.
+- Integridad: la base `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` debe seguir siendo ancestro fuera de Vercel.
+- Vercel: repositorio `EPGCADDY/EPG-CADDY` y SHA expuesto deben coincidir exactamente con `HEAD`.
+- Fuera de alcance: tarjeta, persistencia de ronda, Match Play, Ronda Normal, voz y comunicación universal permanecen idénticos al candidato V363 probado.
