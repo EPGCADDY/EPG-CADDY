@@ -1,18 +1,18 @@
 {
   "version": "V354-COMMERCIAL-P0-HARDENING",
-  "generatedAt": "2026-08-28T05:19:17Z",
+  "generatedAt": "2026-08-28T08:55:46Z",
   "sourceFileCount": 387,
-  "sourceDigest": "1a79c868d7e2b3a53cab218d55ecf3fcce657450d958bae5f6123e8052e52055",
+  "sourceDigest": "d5f29afd14d0d113b18fb7aea6fc89b18876ed930ac90dc7981a8e26dfe9ed78",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 186971,
-      "sha256": "6312018e8b2caa682b2b891e3ea15c1c9e329283ed4408075fa26a197f9e64da"
+      "size": 187317,
+      "sha256": "eb3fc2701572e4867fa219266d4ca6ec651aec0ef0ad9f1c52293c137faa9215"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 208299,
-      "sha256": "ea668fcfcaca9963537a36ac5cb3072184b8625dcf85defb5ff25f73129426a5"
+      "size": 208631,
+      "sha256": "6a18ab7d479949153815519cf3c13ec5a2a9d0ddb9ce45ec90618b1cae3d3c55"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

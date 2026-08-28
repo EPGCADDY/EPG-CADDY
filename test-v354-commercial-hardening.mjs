@@ -45,6 +45,9 @@ for (const file of ["session", "session-grupal", "research", "universal-ai", "we
   const source = readFileSync(`api/${file}.js`, "utf8");
   assert.match(source, /guardAppRequest/);
 }
+const account = readFileSync("api/account.js", "utf8");
+assert.match(account, /new URL\(req\.url/);
+assert.doesNotMatch(account, /req\.query/);
 const session = readFileSync("api/session-grupal.js", "utf8");
 assert.match(session, /MAX_SDP_BYTES\s*=\s*512_000/);
 assert.match(session, /status\(413\)/);

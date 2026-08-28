@@ -20,7 +20,7 @@ function credentials(value,signup=false){
 export default async function handler(req,res){
   noStore(res);
   if(handleAppPreflight(req,res))return;
-  const action=String(req.query?.action||"").toLowerCase(),route=ACTIONS[action];
+  const action=String(new URL(req.url||"/","https://golf-score-card.invalid").searchParams.get("action")||"").toLowerCase(),route=ACTIONS[action];
   if(!route||req.method!==route.method){res.setHeader("Allow",route?.method||"GET, POST");return res.status(405).json({ok:false,code:"METHOD_NOT_ALLOWED"})}
   try{
     if(req.method!=="GET"&&!(await guardAppRequest(req,res,{scope:`account-${action}`,maximum:action==="signout"?30:10})))return;

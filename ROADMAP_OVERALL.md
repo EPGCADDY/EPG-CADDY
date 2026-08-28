@@ -1343,6 +1343,8 @@ Evidencia local final V354: `npm run audit` PASS con 98 paquetes; manual editori
 
 Corrección de compilación V354: `test-project-quality-gate.mjs` usa archivos del working tree sólo durante la validación local previa al commit y usa exclusivamente blobs de `HEAD` dentro de Vercel. Esto elimina el falso negativo provocado por archivos transitorios del instalador sin permitir que un deployment valide contenido distinto del commit. El primer Preview falló cerrado; el banco local completo volvió a pasar antes del siguiente commit.
 
+Corrección de telemetría V354: `/api/account` dejó de depender de `req.query` y obtiene `action` con la API WHATWG `URL` sobre `req.url`; `test-v354-commercial-hardening.mjs` bloquea la reintroducción del analizador obsoleto. La alerta Node `DEP0169` detectada en Preview se trató como fallo de calidad aunque la respuesta HTTP fuera 200. Producción permanece intacta y la corrección se valida en una nueva rama Preview antes de cualquier aprobación comercial.
+
 ### Archivos exactos V354
 
 - `.github/dependabot.yml`

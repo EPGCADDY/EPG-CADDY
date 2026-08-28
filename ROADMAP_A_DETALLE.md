@@ -1688,6 +1688,8 @@ Evidencia local final V354: `npm run audit` PASS con 98 paquetes; manual editori
 
 Corrección de compilación V354: `test-project-quality-gate.mjs` selecciona `GSCG_INVENTORY_WORKTREE=1` únicamente en la prueba local no confirmada y `GSCG_INVENTORY_WORKTREE=0` cuando el propio test corre bajo Vercel. En plataforma, `scripts/inventory-gate.mjs` calcula cada objeto desde `HEAD`; ningún archivo transitorio de instalación puede alterar o sustituir el contenido auditado. El primer Preview falló cerrado y esta causa quedó corregida sin reducir la puerta negativa de repositorio equivocado.
 
+Corrección de telemetría V354: la única advertencia del Preview `READY` anterior fue `DEP0169` en `/api/account`, aun con respuesta 200. `api/account.js` ahora extrae `action` mediante `new URL(req.url, base).searchParams`, sin tocar `req.query`; la prueba V354 exige el patrón WHATWG y rechaza cualquier regresión a `req.query`. El cambio no modifica contrato, autenticación, cookies ni rutas; se resella el inventario y se exige otro Preview `READY` con telemetría limpia. Producción no cambia.
+
 ### Archivos exactos V354
 
 - `.github/dependabot.yml`
