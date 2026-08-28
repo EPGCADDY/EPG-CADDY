@@ -855,3 +855,5 @@ Resultado V353: `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `scripts/project
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Estado de voz. | Preview y prueba iPhone siguen abiertos. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Trazabilidad literal. | Gate documental reproducible. |
 | `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Inventario V354. | Se reconstruye al cerrar el candidato. |
+
+Resultado remoto V354: commit `d7deb09be3826430afc8e1f3d379f0a1137d215b`, deployment Preview `dpl_CgqzYpVABY9djJehtFmH5cyFXHdn` READY, auditoría Vercel de 96 paquetes PASS y navegador real sin errores propios. Build general y voz V354, AI ∞ y LIVE quedaron visibles. Producción continúa en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`; falta únicamente el PASS físico iPhone de esta corrección.

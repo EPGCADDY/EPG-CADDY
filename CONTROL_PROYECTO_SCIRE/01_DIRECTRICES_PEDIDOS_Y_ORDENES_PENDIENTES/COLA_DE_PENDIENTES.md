@@ -6,7 +6,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
-| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V354 corrige varios hoyos y comunicación General visible en el respaldo Safari; banco local PASS, Preview y prueba física pendientes |
+| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V354 corrige varios hoyos y comunicación General visible; banco local, Preview READY y navegador real PASS; prueba física iPhone pendiente |
 | 2 | `PEND-TRA-005` tráfico actual y futuro | Google Maps Routes activo y probado; faltan comparación simultánea con Waze y validación física en Guatemala |
 | 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
@@ -144,7 +144,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V354 CORRIGE EN CANDIDATO VARIOS HOYOS Y COMUNICACIÓN GENERAL VISIBLE; BANCO LOCAL PASS, PREVIEW Y VALIDACIÓN FÍSICA IPHONE PENDIENTES
+**Estado:** V354 DESPLEGADA EN PREVIEW; BANCO LOCAL, BUILD Y NAVEGADOR REAL PASS; VALIDACIÓN FÍSICA IPHONE PENDIENTE
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -203,6 +203,7 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - El 28 de agosto, a las 07:05–07:06, Safari reconoció Registro y un hoyo individual, pero no aplicó varios hoyos seguidos. La consulta General alcanzó `/api/universal-ai` con HTTP 200, pero la respuesta quedó dentro del panel oculto o sin reproducción audible.
 - V354 usa al único jugador activo como jugador implícito, acepta `hoyo` y `hoyos`, aplica primero el lote local y abre automáticamente el panel AI antes de enviar una consulta General. Si Safari no inicia la síntesis, la respuesta permanece visible con recuperación manual.
 - `test-v354-voice-fallback.mjs` ejecuta las funciones reales con tres hoyos, plural, orden visible de General y telemetría sin transcripción ni nombres. El banco no sustituye la prueba física final.
+- Preview V354: commit `d7deb09be3826430afc8e1f3d379f0a1137d215b`, deployment `dpl_CgqzYpVABY9djJehtFmH5cyFXHdn` READY. Vercel aprobó 96 paquetes; el navegador confirmó build/voz V354, AI ∞ y LIVE visibles, y cero errores propios de la aplicación. Producción no cambió.
 
 - Las respuestas generales pueden resultar vagas, básicas o demasiado breves hasta que el usuario pide expresamente una respuesta más estudiada, investigada, profunda y formal. Debe incorporarse una matriz permanente de calidad que revise pertinencia, fundamento, profundidad, precisión, aplicación práctica y claridad antes de cada respuesta, sin obligar al usuario a repetir esa orden.
 - En la quinta conversación física el estado quedó escuchando y, después de terminar la pregunta, el turno se cortó sin completar el ciclo. Debe reproducirse y corregirse la recuperación del micrófono en conversaciones consecutivas.
