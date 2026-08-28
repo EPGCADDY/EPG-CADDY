@@ -1321,6 +1321,8 @@ Los jugadores elegidos para el Monitor Individual reutilizan la misma General y 
 
 V353 no modifica el esquema Neon: reutiliza las cuatro tablas y 15 índices LIVE V352, por lo que no existe migración nueva. Banco local PASS para 20×4 y 40×2, Monitor General + tres jugadores en el Monitor Individual con cero lecturas extra, importación externa, origen seguro, carga sin máximo fijo, privacidad, apertura separada y capitán único. Preview, E2E remoto, observabilidad y navegador están pendientes en este corte; la prueba física iPhone continúa como puerta independiente.
 
+La compuerta V353 acepta el formato legible o compactado de `vercel.json` al verificar `/live-hub.html`; esto corrige exclusivamente un falso negativo de compilación y mantiene intacta la cobertura funcional.
+
 Archivos exactos V353: `live-hub.html`, `live-hub.js`, `live.html`, `live-view.js`, `live-control.js`, `api/live.js`, `index-grupal.html`, `service-worker.js`, `vercel.json`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `audit-project.mjs`, `DATABASE_ARCHITECTURE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 
 Producción permanece exactamente en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Reversión V353: retirar Centro Live y sus controles, conservar la Score Card V352 y revocar los vínculos necesarios; ningún dato ni tabla requiere eliminación.

@@ -83,7 +83,7 @@ assert.match(joinSource,/decision\.outcome_code='APPLY'/,"la unión se aplica de
 assert.match(worker,/gscg-mobile-v353-live-hub/);
 assert.match(worker,/"\/live-hub\.html"/);
 assert.match(worker,/"\/live-hub\.js"/);
-assert.match(vercel,/"source": "\/live-hub\.html"/);
+assert.match(vercel,/"source"\s*:\s*"\/live-hub\.html"/);
 assert.match(vercel,/live-control\|live-view\|live-hub/);
 assert.doesNotMatch(`${html}\n${client}\n${control}\n${viewerHtml}\n${viewer}`,/\bEPG\b/i,"el nombre interno no aparece en V353 LIVE");
 
