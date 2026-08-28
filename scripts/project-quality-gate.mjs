@@ -38,6 +38,7 @@ for(const id of ['G0-02','G0-03','G0-04','G0-05','G0-06','G0-07','G0-08','G0-09'
 const expectedRepository='EPGCADDY/EPG-CADDY';
 const remote=git(['remote','get-url','origin']);
 const isVercel=Boolean(process.env.VERCEL);
+let vercelHeadMatches=false;
 if(isVercel){
   const owner=process.env.VERCEL_GIT_REPO_OWNER||'';
   const slug=process.env.VERCEL_GIT_REPO_SLUG||'';
@@ -47,6 +48,7 @@ if(isVercel){
   }
   const exposedCommit=process.env.VERCEL_GIT_COMMIT_SHA||'';
   const head=git(['rev-parse','HEAD']);
+  vercelHeadMatches=Boolean(exposedCommit&&head&&exposedCommit===head);
   if(exposedCommit&&head&&exposedCommit!==head)errors.push(`Vercel declara ${exposedCommit}, pero HEAD es ${head}.`);
 }else if(!/github\.com[/:]EPGCADDY\/EPG-CADDY(?:\.git)?$/i.test(remote)){
   errors.push(`Origen canónico inesperado: ${remote||'ausente'}`);
@@ -59,9 +61,11 @@ if(!protectedMain){
 }
 const mainObjectAvailable=protectedMain&&spawnSync('git',['cat-file','-e',`${protectedMain}^{commit}`]).status===0;
 const verifiedMain=mainObjectAvailable?protectedMain:git(['rev-parse','HEAD']);
-const baselineIsAncestor=baseline&&verifiedMain&&spawnSync(
-  'git',['merge-base','--is-ancestor',baseline,verifiedMain],{encoding:'utf8'}
-).status===0;
+const baselineIsAncestor=isVercel
+  ? Boolean(baseline&&vercelHeadMatches)
+  : Boolean(baseline&&verifiedMain&&spawnSync(
+      'git',['merge-base','--is-ancestor',baseline,verifiedMain],{encoding:'utf8'}
+    ).status===0);
 if(!baselineIsAncestor){
   errors.push(`Producción/main no desciende de la base protegida ${baseline||'ausente'}; recibido ${verifiedMain||'ausente'}.`);
 }
