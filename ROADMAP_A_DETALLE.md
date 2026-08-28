@@ -1837,3 +1837,5 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 - Vercel: repositorio `EPGCADDY/EPG-CADDY` y SHA expuesto deben coincidir exactamente con `HEAD`.
 - Fuera de alcance: tarjeta, persistencia de ronda, Match Play, Ronda Normal, voz y comunicación universal permanecen idénticos al candidato V363 probado.
 - Inventario: tres PDF V311 regenerados y nuevo `sourceDigest` sellado antes del montaje.
+
+- Sello final: digest calculado sobre las 382 fuentes exactas del árbol V363 publicado.
