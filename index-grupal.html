@@ -14,6 +14,7 @@
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
+<meta name="gscg-universal-audio-only" content="V366-UNIVERSAL-AUDIO-ONLY-CONTEXT-20260828">
 <meta name="gscg-ai-voice" content="CEDAR-1.15-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -2139,7 +2140,7 @@ function markConversationFollowupAudioStarted(eventResponseId=""){
   transition.followupAudioStarted=true;
   return true;
 }
-const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_restarted","browser_fallback_restart_failed","browser_fallback_error","browser_fallback_start_failed","browser_fallback_no_result_timeout","browser_fallback_retry_scheduled","browser_fallback_retry_started","browser_fallback_retry_failed","browser_fallback_transcript_ready","browser_fallback_query_answered","browser_fallback_query_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_round_progressive","browser_fallback_round_applied","browser_fallback_round_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_general_visible","browser_fallback_speech_primed","browser_fallback_speech_started","browser_fallback_speech_failed","keyboard_dictation_setup_applied"]);
+const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_restarted","browser_fallback_restart_failed","browser_fallback_error","browser_fallback_start_failed","browser_fallback_no_result_timeout","browser_fallback_retry_scheduled","browser_fallback_retry_started","browser_fallback_retry_failed","browser_fallback_transcript_ready","browser_fallback_query_answered","browser_fallback_query_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_round_progressive","browser_fallback_round_applied","browser_fallback_round_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_general_audio_only","browser_fallback_speech_primed","browser_fallback_speech_started","browser_fallback_speech_failed","keyboard_dictation_setup_applied"]);
 function reportVoiceHealth(event,detail={}){
   if(!VOICE_HEALTH_EVENTS.has(event)||typeof fetch!=="function")return false;
   const payload={event,build:"V363",context:voiceContext==="setup"?"setup":"round",turn:Math.max(0,voiceHealthTurn),elapsedMs:voiceHealthTurnStartedAt?Math.max(0,Date.now()-voiceHealthTurnStartedAt):0};
@@ -4245,7 +4246,7 @@ async function processBrowserVoiceTranscript(context,transcript){
   return answerBrowserVoiceQuery(context,clean)
 }
 async function answerBrowserVoiceQuery(context,clean){
-  openAiUniversalPanel(false,{focus:false});reportVoiceHealth("browser_fallback_general_visible");let answered=false;
+  closeAiUniversalPanel();reportVoiceHealth("browser_fallback_general_audio_only");let answered=false;
   try{answered=await submitAiUniversalText(clean,{voiceOnly:true})}catch(error){console.error("Browser voice query:",error)}
   if(answered){phase="idle";reportVoiceHealth("browser_fallback_query_answered");return true}
   reportVoiceHealth("browser_fallback_query_failed");setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO");return false
@@ -4895,7 +4896,7 @@ let lastAiUniversalGestureAt=0;
 function openAiUniversalAndListen(event){
   if(event?.cancelable)event.preventDefault();event?.stopPropagation?.();
   const now=Date.now();if(now-lastAiUniversalGestureAt<350)return false;lastAiUniversalGestureAt=now;
-  openAiUniversalPanel(false,{focus:false});primeAiUniversalSpeechFromGesture();void startAiUniversalListening();return true
+  closeAiUniversalPanel();primeAiUniversalSpeechFromGesture();void startAiUniversalListening();return true
 }
 if(window.PointerEvent)$("openAiUniversal").addEventListener("pointerdown",openAiUniversalAndListen,{passive:false,capture:true});
 $("openAiUniversal").addEventListener("click",openAiUniversalAndListen,{passive:false,capture:true});

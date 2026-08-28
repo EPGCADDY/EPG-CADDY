@@ -980,3 +980,16 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `api/voice-speech.js` | Usa la misma identidad administrada para recuperar el audio. | No cambia Cedar/Onyx ni contenido hablado. |
 | `test-v364-vercel-oidc-recovery.mjs` | Simula tres fallos directos y exige una llamada Gateway autenticada. | Un salto ausente bloquea auditoría y Preview. |
 | `audit-project.mjs`, `package.json` | Instalan y ejecutan el control OIDC. | Sin aprobación sólo existe candidato local. |
+
+## V366 · AI UNIVERSAL sólo audio sin abandonar la pantalla actual
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Mantiene tarjeta, Registro o modalidad visible y ejecuta preguntas de voz con `voiceOnly:true`. | Las dos rutas habladas cierran el panel y jamás lo abren. |
+| `api/voice-health.js` | Registra `browser_fallback_general_audio_only` sin contenido hablado. | No conserva pregunta, respuesta, nombre, audio ni ubicación. |
+| `test-v354-voice-fallback.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs` | Corrigen el contrato histórico visible y ejecutan cerrar→escuchar/responder. | La regresión anterior deja de exigir la pantalla equivocada. |
+| `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Conservan el prefijo V363/V364 y aceptan el sufijo de caché V366. | La renovación del shell no retira transporte ni sincronización. |
+| `test-v366-universal-audio-only-context.mjs` | Inspecciona ambas rutas de voz y la privacidad de la telemetría. | Cualquier `openAiUniversalPanel()` hablado produce FAIL. |
+| `service-worker.js` | Renueva el shell V366. | El acceso directo iPhone no conserva la navegación anterior. |
+| `audit-project.mjs`, `package.json` | Incorporan el nuevo banco al Gate integral. | Un FAIL bloquea candidato y despliegue. |
+| registro RC-037, cola, matriz, ambos ROADMAPS e inventario | Documentan causa, alcance, evidencia y rollback. | Producción permanece en `194a4af` hasta cerrar Preview y prueba física. |

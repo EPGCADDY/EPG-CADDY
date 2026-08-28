@@ -71,6 +71,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v357-synchronized-
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v361-synchronized-voice.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v362-physical-voice-recovery.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v364-vercel-oidc-recovery.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v366-universal-audio-only-context.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v363-recorded-mobile-behavior.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v363-intocables-behavior.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v364-explicit-new-round-entry.mjs');

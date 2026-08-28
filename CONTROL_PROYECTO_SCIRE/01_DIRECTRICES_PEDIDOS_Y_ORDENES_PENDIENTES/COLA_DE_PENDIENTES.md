@@ -202,6 +202,7 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 
 - El 28 de agosto, a las 07:05–07:06, Safari reconoció Registro y un hoyo individual, pero no aplicó varios hoyos seguidos. La consulta General alcanzó `/api/universal-ai` con HTTP 200, pero la respuesta quedó dentro del panel oculto o sin reproducción audible.
 - V354 usa al único jugador activo como jugador implícito, acepta `hoyo` y `hoyos`, aplica primero el lote local y abre automáticamente el panel AI antes de enviar una consulta General. Si Safari no inicia la síntesis, la respuesta permanece visible con recuperación manual.
+- V366 sustituye únicamente la navegación de voz heredada de V354: las consultas habladas permanecen sobre la pantalla actual, no abren el panel AI y entregan la respuesta sólo por audio. Texto y Reglas conservan su interfaz explícita.
 - `test-v354-voice-fallback.mjs` ejecuta las funciones reales con tres hoyos, plural, orden visible de General y telemetría sin transcripción ni nombres. El banco no sustituye la prueba física final.
 - Preview V354: commit `d7deb09be3826430afc8e1f3d379f0a1137d215b`, deployment `dpl_CgqzYpVABY9djJehtFmH5cyFXHdn` READY. Vercel aprobó 96 paquetes; el navegador confirmó build/voz V354, AI ∞ y LIVE visibles, y cero errores propios de la aplicación. Producción no cambió.
 - La prueba física posterior rechazó el audio de V354: la respuesta General quedó escrita. V355 habilita la síntesis dentro del toque original antes de esperar Internet y no considera la recuperación manual como aprobación automática.

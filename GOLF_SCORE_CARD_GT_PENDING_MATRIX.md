@@ -209,6 +209,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - **Control V354:** si existe un solo jugador activo, `Hoyo uno cuatro, hoyo dos cinco, hoyo tres cinco` aplica tres celdas sin repetir el nombre; acepta `hoyo/hoyos`; una consulta General abre primero el panel AI, deja la respuesta visible y vigila si Safari inicia el audio.
 - **Control V355:** ENVIAR y los micrófonos habilitan la síntesis dentro del gesto original; `Ancas Gustavo, 15 blancas` dictado dentro de NOMBRE se distribuye en NOMBRE/HDCP/MARCAS. Frases incompletas y HDCP inválidos no se autocompletan.
 - **Control V356:** una consulta hablada no muestra pregunta ni respuesta en el historial visible. Realtime y respaldo usan `Cedar`, velocidad `1.15`, locutor masculino adulto y español internacional neutro. El respaldo llama `/api/voice-speech`, intenta OpenAI directo y recupera mediante AI Gateway; nunca elige una voz femenina o una voz española genérica. Las consultas escritas conservan respuesta escrita.
+- **Control V366:** una pregunta hablada desde la tarjeta, Registro o cualquier modalidad nunca abre AI UNIVERSAL ni sustituye la pantalla actual. Los turnos permanecen `voiceOnly`, no visibles, y el resultado se entrega únicamente por audio. El panel se conserva sólo para una interacción explícita de texto o Reglas.
 - **Calidad V356:** tráfico directo se calcula con Google Maps Routes `TRAFFIC_AWARE_OPTIMAL`; clima directo usa Open-Meteo estructurado; AI UNIVERSAL usa GPT-5.6, perfil deep cuando corresponde, búsqueda web para datos cambiantes y respuesta hablada concisa sin perder conclusión, evidencia, límite ni recomendación.
 - **Control V357:** Safari/iPhone inicia `webkitSpeechRecognition` dentro del toque y no después del `await` de Realtime. Captura continua, cinco alternativas, cierre tras tres segundos de silencio, reinicio por final natural y dos reintentos de transporte conservan Registro, multi-hoyos y preguntas universales incluso cuando `/api/session-grupal` devuelve 429. La telemetría no guarda transcripción, nombres, audio ni ubicación.
 - **Control V358:** cada score completo reconocido pasa durante `onresult` al escritor incremental oficial, se persiste y aparece sin esperar el cierre del micrófono. Una ambigüedad revierte; AI UNIVERSAL nunca toca scores; la ronda activa sólo cambia al confirmar `INICIAR RONDA`.
@@ -419,3 +420,11 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - Producción V363 confirma tarjeta/persistencia pero falla AI UNIVERSAL con 503 por saldo agotado.
 - `api/_lib/vercel-gateway-auth.js` obtiene el token OIDC administrado sin exponer credenciales; AI UNIVERSAL y voz lo usan como respaldo.
 - Estado: código y banco local preparados; Preview, tres corridas externas del mismo deployment y conversación física iPhone continúan bloqueantes. Producción no cambia.
+
+## V366 · conversación universal sólo audio sobre la pantalla actual
+
+- `answerBrowserVoiceQuery()` cierra cualquier panel residual y llama `submitAiUniversalText(...,{voiceOnly:true})` sin navegación.
+- El gesto AI ∞ habilita audio y escucha sin abrir el overlay.
+- La tarjeta, Registro y cada modalidad permanecen visibles durante pregunta, respuesta y reproducción.
+- `test-v366-universal-audio-only-context.mjs` rechaza cualquier reaparición de `openAiUniversalPanel()` en las rutas de voz.
+- Preview, tres pruebas externas y repetición física iPhone permanecen obligatorios; Producción continúa intacta.

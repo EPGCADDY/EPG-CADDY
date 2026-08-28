@@ -1853,3 +1853,19 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 - Control: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
 
 Producción no se toca. El candidato necesita auditoría local, Preview, tres corridas externas del mismo deployment y conversación física iPhone.
+
+## V366-UNIVERSAL-AUDIO-ONLY-CONTEXT
+
+| Archivo exacto | Responsabilidad V366 | Candado |
+|---|---|---|
+| `index-grupal.html` | `answerBrowserVoiceQuery()` y el gesto AI ∞ cierran el panel, conservan la pantalla actual y entregan la consulta con `voiceOnly:true`. | Una pregunta hablada no puede abrir otra pantalla ni mostrar pregunta/respuesta. |
+| `api/voice-health.js` | Sustituye `browser_fallback_general_visible` por `browser_fallback_general_audio_only`. | Telemetría técnica sin contenido, nombres, audio ni ubicación. |
+| `test-v354-voice-fallback.mjs` | Ejecuta una consulta general después del lote de scores y exige cerrar→enviar sólo audio. | Se preserva el orden score local antes de conversación. |
+| `test-v358-ios-score-universal-physical-recovery.mjs` | Ejecuta el gesto AI ∞ y exige cerrar→habilitar→escuchar. | No se pierde el inicio de un toque ni se reemplaza la tarjeta. |
+| `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Aceptan el sufijo V366 sin retirar la firma acumulada V363/V364. | Transporte Safari, persistencia progresiva y circuito de voz permanecen obligatorios. |
+| `test-v366-universal-audio-only-context.mjs` | Inspección negativa de ambas rutas, `visible:false`, TTS y panel explícito de Reglas. | Cualquier apertura automática del overlay produce FAIL. |
+| `service-worker.js` | Caché `v366-universal-audio-only-context`. | Safari recibe el comportamiento corregido. |
+| `audit-project.mjs`, `package.json` | Ejecutan obligatoriamente el banco V366. | Un FAIL detiene Preview y montaje. |
+| RC-037, cola, matriz, mapa, ambos ROADMAPS e inventario | Trazabilidad completa del defecto físico y su corrección. | Producción `194a4af` permanece como rollback hasta cero FAIL. |
+
+Aceptación medible: desde tarjeta, Registro y cualquier modalidad, una pregunta por voz no agrega `visible` al overlay, no muestra transcripción/respuesta, llama `/api/universal-ai`, recibe audio y conserva intacta la ronda. Reglas o texto explícitos mantienen su panel propio. Archivos exactos V366: `index-grupal.html`, `api/voice-health.js`, `service-worker.js`, `test-v354-voice-fallback.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v366-universal-audio-only-context.mjs`, `audit-project.mjs`, `package.json`, registro, cola, matriz, mapa, inventario y ambos ROADMAPS.

@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry";
+const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v366-universal-audio-only-context";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

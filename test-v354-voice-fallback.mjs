@@ -46,20 +46,21 @@ assert.ok(processSource.indexOf("parseRoundScoreTranscript(clean)")<processSourc
 assert.match(processSource,/browser_fallback_round_applied/);
 assert.match(processSource,/entryCount:count/);
 assert.match(processSource,/NO RECONOCÍ LA TANDA/);
-assert.ok(processSource.indexOf('openAiUniversalPanel(false,{focus:false})')<processSource.indexOf('submitAiUniversalText(clean,{voiceOnly:true})'));
-assert.match(processSource,/browser_fallback_general_visible/);
+assert.doesNotMatch(processSource,/openAiUniversalPanel\(false/);
+assert.ok(processSource.indexOf('closeAiUniversalPanel()')<processSource.indexOf('submitAiUniversalText(clean,{voiceOnly:true})'));
+assert.match(processSource,/browser_fallback_general_audio_only/);
 assert.match(html,/speechSynthesis\.resume\?\.\(\)/);
 
 const runtimeEvents=[],runtimeOrder=[],runtimeMatrices=[];
 const makeBrowserProcessor=(parseResult,submitResult=true)=>new Function(
-  "setPrimaryVoiceMatrix","parseSetupTranscript","applySetupChanges","reportVoiceHealth","renderDraft","resetSetupCapture","parseRoundScoreTranscript","isGeneralConversationIntent","aiUniversalLooksLikeScoreOrder","applyLiteralScores","routeAiUniversalAppText","aiUniversalRemember","aiUniversalSetState","speakAiUniversalText","openAiUniversalPanel","submitAiUniversalText","primaryVoiceStatusTarget","round",
+  "setPrimaryVoiceMatrix","parseSetupTranscript","applySetupChanges","reportVoiceHealth","renderDraft","resetSetupCapture","parseRoundScoreTranscript","isGeneralConversationIntent","aiUniversalLooksLikeScoreOrder","applyLiteralScores","routeAiUniversalAppText","aiUniversalRemember","aiUniversalSetState","speakAiUniversalText","closeAiUniversalPanel","submitAiUniversalText","primaryVoiceStatusTarget","round",
   `let voiceContext="round",phase="idle";${processSource};return processBrowserVoiceTranscript`,
 )(
   (...args)=>runtimeMatrices.push(args),()=>({ok:false}),()=>({ok:false}),
   (event,detail={})=>{runtimeEvents.push({event,detail});return true},()=>{},()=>{},
   ()=>parseResult,query=>/^como\b/i.test(query),query=>/\bhoyos?\b/i.test(query),
   parsed=>{runtimeOrder.push(`apply:${parsed.entries.length}`);return{ok:true}},()=>({handled:false}),()=>{},()=>{},()=>false,
-  ()=>runtimeOrder.push("open"),async()=>{runtimeOrder.push("submit");return submitResult},()=>({textContent:""}),{configured:true},
+  ()=>runtimeOrder.push("close"),async()=>{runtimeOrder.push("submit");return submitResult},()=>({textContent:""}),{configured:true},
 );
 const dynamicBatch=makeBrowserProcessor(natural);
 assert.equal(await dynamicBatch("round","hoyo 1 cuatro, hoyo 2 cinco, hoyo 3 cinco"),true);
@@ -70,11 +71,11 @@ assert.match(runtimeMatrices.at(-1)[2],/3 HOYOS REGISTRADOS/);
 runtimeOrder.length=0;runtimeEvents.length=0;runtimeMatrices.length=0;
 const dynamicGeneral=makeBrowserProcessor({matched:false,ok:false});
 assert.equal(await dynamicGeneral("round","Cómo está el tráfico para ir de El Pulté a Pradera Concepción"),true);
-assert.deepEqual(runtimeOrder,["open","submit"]);
-assert.equal(runtimeEvents.some(item=>item.event==="browser_fallback_general_visible"),true);
+assert.deepEqual(runtimeOrder,["close","submit"]);
+assert.equal(runtimeEvents.some(item=>item.event==="browser_fallback_general_audio_only"),true);
 
 const applied=sanitizeVoiceHealth({event:"browser_fallback_round_applied",build:"V355",context:"round",entryCount:3,transcript:"PROHIBIDO",name:"JAIME"});
 assert.deepEqual(applied,{event:"browser_fallback_round_applied",build:"V355",context:"round",turn:0,elapsedMs:0,entryCount:3});
 assert.equal(sanitizeVoiceHealth({event:"browser_fallback_unknown"}),null);
 
-console.log("PASS V354 VOZ: un jugador registra 3 hoyos, plural aceptado, consulta general visible y telemetría privada");
+console.log("PASS V354 VOZ: un jugador registra 3 hoyos, plural aceptado, consulta general sólo audio y telemetría privada");
