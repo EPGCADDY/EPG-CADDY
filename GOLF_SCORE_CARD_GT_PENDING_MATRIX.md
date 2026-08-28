@@ -385,3 +385,16 @@ La **1. Estabilización física de la voz** permanece en validación de campo. A
 - El banco V345 rechaza un Manual casi blanco y obliga a mantener manifiestos, HTML, Service Worker y caché alineados.
 - RC-018 está desplegado en el Preview READY `1026a3e`; no se cierra hasta instalar ambos accesos desde ese entorno en un iPhone real.
 - Voz física prolongada, artefactos/contraste de clima y repetición real del tráfico V344 continúan abiertos. Producción permanece intacta.
+
+## V351-R4-MATCH-ROMAN-SCORE · Match Play y números Safari · 28 de agosto de 2026
+
+| Archivo exacto | Control V351-R4 | PASS obligatorio |
+|---|---|---|
+| `index-grupal.html` | `MATCH-ROMAN-GROSS` | `Jaime IV Gustavo V` produce Gross 4/5 en el hoyo activo de Match Play. |
+| `index-grupal.html` | `X-OMISSION-BOUNDARY` | `X` nunca se convierte en Gross 10; conserva exclusivamente la omisión oficial. |
+| `index-grupal.html` | `NATURAL-SCORE-UNITS` | Acepta `golpe`, `golpes`, `tiro` y `tiros` sin crear otro escritor. |
+| `test-v351-r1-hole1-voice-score-render.mjs` | `MATCH-FULL-WRITER` | Ejecuta dos jugadores reales del fallo, parser, escritor grupal, persistencia, render y cero IA. |
+| `test-v305-registration-guides-parser-truth.mjs` | `ROMAN-SCOPE` | Mantiene XIV para hándicap, IV/V para Gross y `X` como omisión. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-028` | Conserva capturas, logs, causa, escape y puerta física. |
+
+V351-R3 queda rechazada por la prueba física de Match Play de las 18:21. Producción permanece intacta; V351-R4 requiere auditoría integral, Preview nuevo y PASS físico iPhone.

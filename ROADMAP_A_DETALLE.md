@@ -1604,3 +1604,17 @@ Artefactos externos restaurados: `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf
 | `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `V351-R3-INVENTORY` | Regenera y sella los tres inventarios contra las fuentes exactas. |
 
 Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. V351-R3 no se presenta como aprobada hasta superar auditoría, Preview y prueba física iPhone.
+
+## V351-R4 · Match Play: transcripción Safari IV/V llega al escritor · 28 de agosto de 2026
+
+La evidencia `IMG_2109.png`–`IMG_2113.png` muestra Registro correcto, clima visible, Match Play activo, micrófono escuchando y Gross vacíos. Los logs del deployment V351-R3 registran `browser_fallback_started` 00:21:43 UTC, `browser_fallback_transcript_ready` y `browser_fallback_score_rejected` 00:21:51 UTC, sin llamada a AI UNIVERSAL. La captura funcionó; falló la gramática local.
+
+- `index-grupal.html`: agrega `romanScoreValue`/`parseScoreNumberTokens`; acepta I–XXX en Gross salvo `X`; agrega `golpe/golpes/tiro/tiros` y verbos naturales como relleno autorizado; telemetría build V351-R4.
+- `test-v351-r1-hole1-voice-score-render.mjs`: reproduce Jaime/Gustavo, modo `match_play`, `IV/V`, unidades naturales, escritor grupal, persistencia, render y cero llamadas externas.
+- `test-v305-registration-guides-parser-truth.mjs`: exige XIV→14 en Registro, IV→4 y V→5 en Gross, y `X`→omisión.
+- `test-v336-microphone-transport.mjs`: conserva la frontera local y actualiza la identificación del banco.
+- `scripts/rebuild-inventory-pdfs.py`: cambia el corte a `V351-R4-MATCH-ROMAN-SCORE-LOCAL`.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: agrega RC-028.
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: documentan y sellan el mismo candidato.
+
+Producción continúa en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. V351-R4 no es oficial hasta auditoría, Preview y PASS físico iPhone.

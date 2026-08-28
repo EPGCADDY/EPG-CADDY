@@ -807,3 +807,13 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `test-v336-microphone-transport.mjs` | Bloquea el escape del Score después de la transcripción y protege la privacidad de la nueva telemetría. |
 | `test-v267-scorecard-combination-matrix.mjs` | Migra la puerta histórica al orden Score → consulta sin retirar el escritor único. |
 | `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R3-SCORE-BEFORE-QUERY-NO-AI`. |
+
+## V351-R4-MATCH-ROMAN-SCORE · Score Match Play recibido por Safari
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | `romanScoreValue` y `parseScoreNumberTokens` convierten romanos canónicos I–XXX dentro de Gross; `X` sigue siendo omisión; unidades `golpes/tiros` son relleno autorizado. |
+| `test-v351-r1-hole1-voice-score-render.mjs` | Reproduce Match Play Jaime/Gustavo con `IV/V`, ejecuta escritor oficial, persistencia, render y frontera cero IA. |
+| `test-v305-registration-guides-parser-truth.mjs` | Protege simultáneamente XIV de Registro, IV/V del Score y `X` operacional. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-028 documenta la prueba física de las 18:21 y el evento `browser_fallback_score_rejected`. |
+| `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R4-MATCH-ROMAN-SCORE-LOCAL`. |

@@ -79,4 +79,4 @@ assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_rejected",tr
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_score_applied",transcript:"privado",player:"JAIME"}),{event:"browser_fallback_score_applied",build:"",context:"round",turn:0,elapsedMs:0});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_score_rejected",transcript:"privado",player:"JAIME"}),{event:"browser_fallback_score_rejected",build:"",context:"round",turn:0,elapsedMs:0});
 
-console.log("PASS V351-R3 · Registro y Score locales, matriz exacta y telemetría privada protegidos");
+console.log("PASS V351-R4 · Registro y Score locales, matriz exacta y telemetría privada protegidos");

@@ -30,7 +30,7 @@ OVERALL = OUTPUT / "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf"
 DETAIL = OUTPUT / "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf"
 IMAGES = OUTPUT / "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf"
 LOCK = ROOT / "CONTROL_PROYECTO_SCIRE" / "INVENTARIOS_V311.lock.json"
-INVENTORY_VERSION = "V351-R3-SCORE-BEFORE-QUERY-NO-AI"
+INVENTORY_VERSION = "V351-R4-MATCH-ROMAN-SCORE-LOCAL"
 REGULAR = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
