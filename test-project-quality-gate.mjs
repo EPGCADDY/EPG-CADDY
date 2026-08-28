@@ -4,7 +4,8 @@ import {readFileSync} from 'node:fs';
 
 assert.match(readFileSync('.gitignore','utf8'),/(?:^|\n)\.vercel\/(?:\n|$)/);
 const gateSource=readFileSync('scripts/project-quality-gate.mjs','utf8');
-assert.match(gateSource,/fetch','--no-tags','--depth=512','origin','main'/,'Vercel shallow debe recuperar main real antes de validar ascendencia.');
+assert.match(gateSource,/fetch','--no-tags','--depth=512',canonicalUrl,'refs\/heads\/main'/,'Vercel shallow debe recuperar main desde el repositorio canónico antes de validar ascendencia.');
+assert.match(gateSource,/GIT_TERMINAL_PROMPT:'0'/,'La recuperación canónica no puede quedar esperando credenciales.');
 assert.doesNotMatch(gateSource,/mainObjectAvailable\?protectedMain:git\(\['rev-parse','HEAD'\]\)/,'Una rama Preview no puede sustituir silenciosamente a main.');
 
 const pass=spawnSync(process.execPath,['scripts/project-quality-gate.mjs'],{encoding:'utf8'});

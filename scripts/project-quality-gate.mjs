@@ -59,8 +59,11 @@ if(isVercel||!protectedMain){
   if(remoteMain)protectedMain=remoteMain;
 }
 if(isVercel&&protectedMain&&spawnSync('git',['cat-file','-e',`${protectedMain}^{commit}`]).status!==0){
-  const fetched=spawnSync('git',['fetch','--no-tags','--depth=512','origin','main'],{encoding:'utf8'});
+  const fetched=spawnSync('git',['fetch','--no-tags','--depth=512',canonicalUrl,'refs/heads/main'],{
+    encoding:'utf8',env:{...process.env,GIT_TERMINAL_PROMPT:'0'}
+  });
   if(fetched.status===0)protectedMain=git(['rev-parse','FETCH_HEAD'])||protectedMain;
+  else console.warn(`PROJECT_QUALITY_GATE main fetch unavailable status=${fetched.status??'unknown'}`);
 }
 const mainObjectAvailable=protectedMain&&spawnSync('git',['cat-file','-e',`${protectedMain}^{commit}`]).status===0;
 const verifiedMain=mainObjectAvailable?protectedMain:'';

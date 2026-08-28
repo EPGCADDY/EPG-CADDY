@@ -1436,3 +1436,7 @@ La línea paralela `4e60842` se integra sin descartar V363–V365: incorpora `AC
 ### V365-R1 · validación de `main` en checkout superficial
 
 El primer despliegue integrado `0390972` fue bloqueado antes de publicar porque el checkout superficial de Preview no contenía el objeto de `main` y el gate confundió `HEAD` de la rama con Producción. `scripts/project-quality-gate.mjs` consulta el SHA real de `main`, recupera su historia limitada cuando el objeto no existe y rechaza la compilación si no puede demostrar la ascendencia de la base protegida. `test-project-quality-gate.mjs` prohíbe volver a sustituir silenciosamente `main` por la rama Preview.
+
+### V365-R2 · recuperación canónica sin credenciales
+
+El despliegue R1 `0c1339a` confirmó que el remoto interno del clon Vercel no podía recuperar el objeto de `main`. `scripts/project-quality-gate.mjs` usa ahora la URL pública canónica ya fijada por la matriz, solicita directamente `refs/heads/main`, desactiva cualquier solicitud interactiva de credenciales y conserva el bloqueo si la recuperación falla. `test-project-quality-gate.mjs` exige esos cuatro elementos.

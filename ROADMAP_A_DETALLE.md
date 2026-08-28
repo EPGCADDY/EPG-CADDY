@@ -1860,3 +1860,10 @@ La aceptación exige en el mismo Preview: consulta general 200 mediante Gateway 
 |---|---|---|
 | `scripts/project-quality-gate.mjs` | Resuelve el SHA remoto actual de `main` y ejecuta `git fetch --depth=512 origin main` si el checkout superficial no contiene ese objeto. | Una rama Preview nunca vuelve a sustituir a Producción para validar ascendencia. |
 | `test-project-quality-gate.mjs` | Exige recuperación explícita de `main` y prohíbe el fallback a `HEAD`. | Un fallo de red o historia insuficiente bloquea; no se aprueba por aproximación. |
+
+## V365-R2 · FETCH CANÓNICO DE MAIN
+
+| Archivo exacto | Corrección | Candado |
+|---|---|---|
+| `scripts/project-quality-gate.mjs` | Recupera `refs/heads/main` desde la URL pública canónica con profundidad 512 y `GIT_TERMINAL_PROMPT=0`. | No depende del remoto efímero ni solicita credenciales durante el build. |
+| `test-project-quality-gate.mjs` | Exige URL canónica, referencia exacta, profundidad y modo no interactivo. | Si el objeto no está disponible, la entrega sigue bloqueada. |
