@@ -1853,3 +1853,17 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 - Control: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
 
 Producción no se toca. El candidato necesita auditoría local, Preview, tres corridas externas del mismo deployment y conversación física iPhone.
+
+## V365/V366 · integración sobre producción con voz OIDC
+
+| Archivo exacto | Responsabilidad | Candado |
+|---|---|---|
+| `index-grupal.html` | `isRecoverableStoredRound()` exige 1–6 jugadores; `ensurePrincipalEntry()` impone `Inicio` sin ronda operativa en arranque y ciclo de vida. | Copias vacías no vencen a Score Cabo; tarjeta válida permanece visible. |
+| `index-grupal.html` | Conserva `nueva_ronda=1` y `openNewRoundDraft()` sin borrado previo. | Sólo `INICIAR RONDA` sustituye la tarjeta. |
+| `test-v365-active-round-empty-recovery.mjs` | Ejecuta clave canónica vacía, copias vacías y tarjeta archivada con score. | Exige recuperación y resellado canónico. |
+| `test-v366-principal-entry-recovery.mjs` | Ejecuta sin ronda, ronda vacía, Registro visible, tarjeta válida, eventos y startup. | Entrada principal idempotente y compatibilidad V364. |
+| `service-worker.js` | Firma acumulada V363/V364/V365/V366. | Actualización efectiva sin retirar voz ni entrada explícita. |
+| `Intocables/`, pruebas históricas, `audit-project.mjs`, `package.json` | Regresión acumulada de persistencia, Match, Normal, voz, multihoyos, cierres y LIVE. | Un solo FAIL detiene el candidato. |
+| reportes RC-037/RC-038, cola, matriz, mapa, ROADMAPS e inventario | Trazabilidad del defecto y estado real. | Automático, Preview, externo y físico se reportan por separado. |
+
+Base de integración: `main` con recuperación OIDC de comunicación universal. Los archivos `api/` y `@vercel/oidc` permanecen intactos. Producción no cambia hasta aprobar el Preview integrado y el recorrido físico iPhone.

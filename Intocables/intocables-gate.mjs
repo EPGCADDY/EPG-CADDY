@@ -12,10 +12,16 @@ assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT
 assert.ok(rules.rules.every(rule=>rule.mandatory===true));
 
 assert.match(html,/const ACTIVE_ROUND_KEY="golf-score-card-guatemala-active-round-v1"/);
-assert.match(html,/const canonical=readStoredRound\(ACTIVE_ROUND_KEY\)[\s\S]*?if\(canonical\?\.configured&&canonical\.mode!=="stableford"&&canonical\.players\?\.length\)return canonical/);
-assert.match(html,/if\(round\.configured&&round\.mode!=="stableford"&&round\.players\?\.length\)localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)/);
+assert.match(html,/function isRecoverableStoredRound\(value,modeHint=null\)[\s\S]*?value\.players\.length>=1&&value\.players\.length<=6/);
+assert.match(html,/const canonical=readStoredRound\(ACTIVE_ROUND_KEY\)[\s\S]*?if\(isRecoverableStoredRound\(canonical\)&&storedRoundMode\(canonical\)!=="stableford"\)return canonical/);
+assert.match(html,/if\(isRecoverableStoredRound\(round\)&&storedRoundMode\(round\)!=="stableford"\)localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(ACTIVE_ROUND_KEY\)/);
 assert.match(html,/ÚNICO punto autorizado para sustituir la última ronda persistida por una nueva:[\s\S]*?INICIAR RONDA/);
+assert.match(html,/function ensurePrincipalEntry\(\)[\s\S]*?isRecoverableStoredRound\(round\)[\s\S]*?openNewRoundDraft\(\)[\s\S]*?classList\.add\("visible"\)/);
+for(const event of ["visibilitychange","pageshow","focus"]){
+  const start=html.indexOf(`addEventListener("${event}"`);
+  assert.ok(start>0&&html.slice(start,start+1500).includes("ensurePrincipalEntry();"),`${event} debe imponer Inicio sin ronda operativa`);
+}
 
 assert.match(html,/function teamMatchSegmentReport\(title,holes\)[\s\S]*?fourBallSegment\(index,holes\)\.position[\s\S]*?matchPlaySegment\(index,holes\)\.position/);
 assert.match(html,/return status\?`\$\{player\.name\}, \$\{status\}`:""/);
@@ -32,5 +38,6 @@ assert.match(html,/if\(progressive\.closure\)void speakClosure\(progressive\.clo
 assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=18000/);
 
 assert.match(audit,/Intocables\/intocables-gate\.mjs/);
+assert.match(audit,/test-v366-principal-entry-recovery\.mjs/);
 assert.match(worker,/gscg-mobile-v363-/);
 console.log("INTOCABLES PASS INT-01…INT-04");

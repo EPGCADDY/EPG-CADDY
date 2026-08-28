@@ -980,3 +980,15 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `api/voice-speech.js` | Usa la misma identidad administrada para recuperar el audio. | No cambia Cedar/Onyx ni contenido hablado. |
 | `test-v364-vercel-oidc-recovery.mjs` | Simula tres fallos directos y exige una llamada Gateway autenticada. | Un salto ausente bloquea auditoría y Preview. |
 | `audit-project.mjs`, `package.json` | Instalan y ejecutan el control OIDC. | Sin aprobación sólo existe candidato local. |
+
+## V365/V366 · recuperación e Inicio principal
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Descarta rondas vacías, recupera tarjeta viva y exige `Inicio` cuando no existe ronda operativa. | Jugadores y scores sobreviven; no aparece tarjeta vacía. |
+| `service-worker.js` | Caché acumulada V363–V366. | Safari recibe el árbol integrado sin retirar V364 ni voz. |
+| `test-v365-active-round-empty-recovery.mjs` | Reproduce copia vacía más nueva y tarjeta válida archivada. | Recupera scores y repara `ACTIVE_ROUND_KEY`. |
+| `test-v366-principal-entry-recovery.mjs` | Ejecuta cuatro estados de entrada, ciclo de vida y compatibilidad `nueva_ronda=1`. | Inicio idempotente; tarjeta válida intacta. |
+| `Intocables/`, `audit-project.mjs`, `package.json` | Gares acumulativos y comandos directos. | Un FAIL bloquea Preview o producción. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_RECUPERACION_RONDA_ACTIVA/REPORTE_V365_RC037.md` | Evidencia RC-037. | Distingue PASS automático de prueba física. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V366_ENTRADA_PRINCIPAL/REPORTE_V366_RC038.md` | Evidencia RC-038. | Registra el Preview rechazado y el control nuevo. |

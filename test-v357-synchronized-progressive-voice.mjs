@@ -44,7 +44,7 @@ assert.ok(process.indexOf("parseSetupTranscript(clean)")<process.indexOf("isGene
 assert.ok(process.indexOf("isGeneralConversationIntent(clean)")<process.indexOf("browser_fallback_setup_rejected"),"Registro debe enrutar preguntas generales antes de rechazar un listado");
 assert.ok(process.indexOf("parseRoundScoreTranscript(clean)")<process.indexOf("routeAiUniversalAppText(clean)"),"Score local debe conservar prioridad sobre conversación");
 
-assert.match(html,/if\(!round\.configured\)\{[\s\S]*?else if\(directHome\)openNewRoundDraft\(\)/);
+assert.match(html,/if\(!isRecoverableStoredRound\(round\)\)\{[\s\S]*?ensurePrincipalEntry\(\)/);
 assert.doesNotMatch(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
 
 assert.deepEqual(

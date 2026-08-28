@@ -6,11 +6,11 @@ const worker=readFileSync("service-worker.js","utf8");
 
 assert.match(html,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
 assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
-assert.match(html,/if\(!round\.configured\)\{[\s\S]*?else if\(directHome\)openNewRoundDraft\(\)/);
+assert.match(html,/if\(!isRecoverableStoredRound\(round\)\)\{[\s\S]*?ensurePrincipalEntry\(\)/);
 assert.doesNotMatch(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
 
-const opensRegistration=({directHome=true,sfEmergency=false,demo=false,configured=false}={})=>directHome&&!sfEmergency&&!demo&&!configured;
-assert.equal(opensRegistration({configured:true}),false);
+const opensRegistration=({sfEmergency=false,demo=false,configured=false,players=[]}={})=>!sfEmergency&&!demo&&!(configured&&players.length>=1&&players.length<=6);
+assert.equal(opensRegistration({configured:true,players:[{name:"JAIME"}]}),false);
 assert.equal(opensRegistration({configured:false}),true);
 
 for(const lock of [

@@ -419,3 +419,10 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - Producción V363 confirma tarjeta/persistencia pero falla AI UNIVERSAL con 503 por saldo agotado.
 - `api/_lib/vercel-gateway-auth.js` obtiene el token OIDC administrado sin exponer credenciales; AI UNIVERSAL y voz lo usan como respaldo.
 - Estado: código y banco local preparados; Preview, tres corridas externas del mismo deployment y conversación física iPhone continúan bloqueantes. Producción no cambia.
+
+## V365/V366 · continuidad y entrada principal
+
+- **RC-037:** `IMG_2186.png` demuestra que una copia vacía podía vencer a la tarjeta viva de Score Cabo. V365 exige 1–6 jugadores, recupera la tarjeta archivada con sus scores y repara la clave canónica.
+- **RC-038:** `IMG_2193.png` demuestra que el Preview anterior mostraba `RONDA EN CURSO` vacía. V366 impone `Inicio` sin ronda operativa en arranque y ciclo de vida, sin cubrir una tarjeta válida.
+- Registro, uno/múltiples hoyos, comunicación universal, cierres de primera/segunda vuelta, acumulados y LIVE Match Play permanecen en el mismo árbol integrado y en la auditoría.
+- Estado: PASS automático; Preview integrado, comprobación externa y recorrido físico iPhone pendientes. Producción no cambia.

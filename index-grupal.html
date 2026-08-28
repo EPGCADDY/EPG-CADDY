@@ -14,6 +14,8 @@
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
+<meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
+<meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
 <meta name="gscg-ai-voice" content="CEDAR-1.15-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -1074,31 +1076,32 @@ function normalizeStoredRound(x){
   const courseKey=COURSE_DATA[x.courseKey]?x.courseKey:courseKeyForName(x.course);
   return{...x,id:x.id||`legacy_${String(x.createdAt||Date.now()).replace(/\W/g,"")}`,courseKey,provisional:x.provisional===true,tournament:normalizeTournament(x.tournament),sideGames:normalizeSideGames(x.sideGames),players:assignStablePlayerSlots(x.players),announced:x.announced&&typeof x.announced==="object"?x.announced:{front:false,back:false,complete:false}};
 }
+function storedRoundMode(value){return value?.mode==="stableford"?"stableford":value?.mode==="match_play"?"match_play":value?.mode==="four_ball"?"four_ball":"general"}
+function isRecoverableStoredRound(value,modeHint=null){
+  return !!(value?.configured&&Array.isArray(value.players)&&value.players.length>=1&&value.players.length<=6&&(!modeHint||storedRoundMode(value)===modeHint));
+}
 function readStoredRound(key){
   try{return normalizeStoredRound(JSON.parse(localStorage.getItem(key)||"null"))}catch{return null}
 }
 function latestStoredRound(modeHint){
   const primary=readStoredRound(STORAGE_KEY),backup=readStoredRound(STORAGE_BACKUP_KEY),stableford=readStoredRound(STABLEFORD_ACTIVE_KEY),matchPlay=readStoredRound(MATCH_PLAY_ACTIVE_KEY),fourBall=readStoredRound(FOUR_BALL_ACTIVE_KEY);
-  if(modeHint==="stableford"&&stableford&&!stableford.configured)return null;
   const timestamp=value=>new Date(value?.updatedAt||value?.createdAt||0).getTime()||0;
-  const mode=value=>value?.mode==="stableford"?"stableford":value?.mode==="match_play"?"match_play":value?.mode==="four_ball"?"four_ball":"general";
-  const legacyActive=[primary,backup,stableford,matchPlay].filter(value=>value?.configured&&mode(value)===modeHint).sort((a,b)=>timestamp(b)-timestamp(a))[0];
-  const active=[legacyActive,fourBall].filter(value=>value?.configured&&mode(value)===modeHint).sort((a,b)=>timestamp(b)-timestamp(a))[0];
+  const active=[primary,backup,stableford,matchPlay,fourBall].filter(value=>isRecoverableStoredRound(value,modeHint)).sort((a,b)=>timestamp(b)-timestamp(a))[0];
   if(active){
     if(active.mode!=="stableford"&&active!==primary){try{const payload=JSON.stringify(active);localStorage.setItem(STORAGE_KEY,payload);localStorage.setItem(STORAGE_BACKUP_KEY,payload)}catch{}}
     return active;
   }
-  const archived=readRoundArchive().filter(value=>value?.configured&&mode(value)===modeHint).sort((a,b)=>timestamp(b)-timestamp(a))[0];
+  const archived=readRoundArchive().filter(value=>isRecoverableStoredRound(value,modeHint)).sort((a,b)=>timestamp(b)-timestamp(a))[0];
   if(archived)return archived;
   return null;
 }
 function loadRound(){
   const canonical=readStoredRound(ACTIVE_ROUND_KEY);
-  if(canonical?.configured&&canonical.mode!=="stableford"&&canonical.players?.length)return canonical;
+  if(isRecoverableStoredRound(canonical)&&storedRoundMode(canonical)!=="stableford")return canonical;
   const candidates=[latestStoredRound("general"),latestStoredRound("match_play")],fourBallRound=latestStoredRound("four_ball");
   if(fourBallRound)candidates.push(fourBallRound);
   const migrated=candidates.filter(Boolean).sort((a,b)=>new Date(b.updatedAt||b.createdAt)-new Date(a.updatedAt||a.createdAt))[0]||blankRound();
-  if(migrated.configured&&migrated.mode!=="stableford"&&migrated.players?.length){try{localStorage.setItem(ACTIVE_ROUND_KEY,JSON.stringify(migrated))}catch{}}
+  if(isRecoverableStoredRound(migrated)&&storedRoundMode(migrated)!=="stableford"){try{localStorage.setItem(ACTIVE_ROUND_KEY,JSON.stringify(migrated))}catch{}}
   return migrated
 }
 const SIDE_GAME_KEYS=["skins","wolf","vegas","dots"];
@@ -1115,7 +1118,7 @@ function persist(){
   const payload=JSON.stringify(round);
   try{
     if(demoControlManual){localStorage.setItem(DEMO_CONTROL_MANUAL_KEY,payload);archiveRoundSnapshot(round);return true}
-    if(round.configured&&round.mode!=="stableford"&&round.players?.length)localStorage.setItem(ACTIVE_ROUND_KEY,payload);
+    if(isRecoverableStoredRound(round)&&storedRoundMode(round)!=="stableford")localStorage.setItem(ACTIVE_ROUND_KEY,payload);
     if(round.mode==="stableford")localStorage.setItem(STABLEFORD_ACTIVE_KEY,payload);
     else if(round.mode==="match_play")localStorage.setItem(MATCH_PLAY_ACTIVE_KEY,payload);
     else if(round.mode==="four_ball")localStorage.setItem(FOUR_BALL_ACTIVE_KEY,payload);
@@ -1278,7 +1281,7 @@ function updateGeneralSetupValidity(){
 }
 function restorePersistedRound(){
   const stored=loadRound();
-  if(stored.configured&&stored.players.length){
+  if(isRecoverableStoredRound(stored)){
     round=stored;
     enforceCanonicalRoundNames();
     voiceContext="round";
@@ -3705,6 +3708,14 @@ function openNewRoundDraft(){
   openSetup("new");
   return true;
 }
+function ensurePrincipalEntry(){
+  if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
+  const overlay=$("setupOverlay");if(!overlay)return false;
+  if(!overlay.classList.contains("visible"))openNewRoundDraft();
+  document.body?.classList.add("gsc-setup-open");
+  overlay.classList.add("visible");
+  return true;
+}
 function closeSetup(){
   if(!round.configured)return;
   if(listening)setVoice(false);
@@ -5009,20 +5020,23 @@ document.addEventListener("visibilitychange",()=>{
     recoverRealtimeAfterResumeSync();
     scheduleRoundTimerIdleShutdown();
     render();
+    ensurePrincipalEntry();
   }
 });
 window.addEventListener("pageshow",e=>{
   if(voiceOpening)return;
-  if(!round.configured)restorePersistedRound();
+  if(!isRecoverableStoredRound(round))restorePersistedRound();
   if(e.persisted||appWasBackgrounded||appHiddenAt||realtimeLooksStale())recoverRealtimeAfterResumeSync();
   scheduleRoundTimerIdleShutdown();
   render();
+  ensurePrincipalEntry();
 });
 window.addEventListener("focus",()=>{
   if(voiceOpening)return;
-  if(!round.configured&&restorePersistedRound())render();
+  if(!isRecoverableStoredRound(round)&&restorePersistedRound())render();
   if(appWasBackgrounded||appHiddenAt||realtimeLooksStale())recoverRealtimeAfterResumeSync();
   scheduleRoundTimerIdleShutdown();
+  ensurePrincipalEntry();
 });
 window.addEventListener("pagehide",()=>{
   persist();
@@ -5053,16 +5067,15 @@ phase="idle";listening=false;resetRoundCapture();resetSetupCapture();
 render();
 scheduleRoundTimerIdleShutdown();
 dateSetup();
-if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
 // La entrada explícita abre Registro sin borrar la ronda activa. La sustitución
 // continúa ocurriendo únicamente después de confirmar INICIAR RONDA.
 if(explicitNewRound){
   openNewRoundDraft();
-}else if(!round.configured){
+}else if(!isRecoverableStoredRound(round)){
   if(sfEmergency)window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
-  else if(directHome)openNewRoundDraft();
-  else openSetup("new");
+  else ensurePrincipalEntry();
 }
+if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
 window.GSC_ACCOUNT_SIGNED_IN=false;
 let centralAccountUser=null;
 function centralAccountMessage(code){

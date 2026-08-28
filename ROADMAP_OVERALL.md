@@ -1445,3 +1445,11 @@ Validación del sello: ordenamiento binario idéntico al Gate de Node.js en Verc
 La comprobación real de producción confirmó HTTP 200 para la V363 publicada y 503 `UNIVERSAL_AI_CREDIT_EXHAUSTED` para una consulta general. Los logs demostraron tres intentos directos y cero intento Gateway: el token OIDC administrado no se resolvía dinámicamente. El candidato incorpora `@vercel/oidc`, obtiene el token sólo después del bloqueo de saldo y aplica la misma identidad administrada a AI UNIVERSAL y voz, sin registrar credenciales.
 
 Archivos exactos: `api/_lib/vercel-gateway-auth.js`, `api/universal-ai.js`, `api/voice-speech.js`, `test-v364-vercel-oidc-recovery.mjs`, `audit-project.mjs`, `package.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Producción no cambia; Preview, 3/3 externo sobre el mismo deployment y PASS físico iPhone siguen bloqueantes.
+
+## V365/V366 · tarjeta viva e Inicio principal · 28 de agosto de 2026
+
+`IMG_2186.png` y `IMG_2193.png` prueban dos fallas distintas: una copia configurada vacía podía vencer a Score Cabo, y sin ronda operativa el Preview podía dejar expuesta una tarjeta vacía en vez de `Inicio`.
+
+V365 define una ronda recuperable como configurada con uno a seis jugadores, excluye copias vacías de todas las fuentes, rescata la tarjeta archivada con sus scores y repara `ACTIVE_ROUND_KEY`. V366 añade `ensurePrincipalEntry()` en arranque, regreso, `pageshow` y foco; no reinicia un Registro ya visible, no cubre una tarjeta válida y conserva `nueva_ronda=1` para la entrada explícita sin sustitución antes de `INICIAR RONDA`.
+
+La integración parte del `main` con recuperación OIDC/voz ya promovida; no sustituye `api/`, dependencias ni bancos de comunicación universal. La auditoría acumulada incluye Registro, score individual y multihoyo, cierres/acumulados, Match Play y LIVE. Producción continúa intacta hasta Preview READY, comprobación externa y PASS físico iPhone.
