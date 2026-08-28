@@ -1319,7 +1319,7 @@ Los jugadores elegidos para el Monitor Individual reutilizan la misma General y 
 
 `COMPARTIR ♾️` usa la hoja nativa del teléfono: WhatsApp, Mensajes, correo, AirDrop, X u otra aplicación. El mismo vínculo funciona en USA, México, Italia o cualquier país y no fija un máximo de invitados. La seguridad no cambia: posesión del vínculo, sólo lectura, vencimiento y revocación inmediata.
 
-V353 no modifica el esquema Neon: reutiliza las cuatro tablas y 15 índices LIVE V352, por lo que no existe migración nueva. Banco local PASS para 20×4 y 40×2, Monitor General + tres jugadores en el Monitor Individual con cero lecturas extra, importación externa, origen seguro, carga sin máximo fijo, privacidad, apertura separada y capitán único. Preview, E2E remoto, observabilidad y navegador están pendientes en este corte; la prueba física iPhone continúa como puerta independiente.
+V353 no modifica el esquema Neon: reutiliza las cuatro tablas y 15 índices LIVE V352, por lo que no existe migración nueva. Banco local PASS para 20×4 y 40×2, Monitor General + tres jugadores en el Monitor Individual con cero lecturas extra, importación externa, origen seguro, carga sin máximo fijo, privacidad, apertura separada y capitán único. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` READY y E2E remoto PASS: 20 grupos, 80 jugadores, tres páginas, vínculo individual, revisión LIVE 1, `409` duplicado, `410` revocado, cero runtime `error`/`fatal` y cero datos de prueba activos. Inspección visual y prueba física iPhone continúan como puertas independientes.
 
 La compuerta V353 acepta el formato legible o compactado de `vercel.json` al verificar `/live-hub.html`; esto corrige exclusivamente un falso negativo de compilación y mantiene intacta la cobertura funcional.
 

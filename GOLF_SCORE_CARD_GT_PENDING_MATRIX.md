@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V353 agrega `MONITOR GENERAL` y `MONITOR INDIVIDUAL` sobre LIVE V352; banco local de 80 jugadores PASS; Preview/E2E/navegador V353 y prueba física iPhone pendientes
+**Corte vigente:** V353 agrega `MONITOR GENERAL` y `MONITOR INDIVIDUAL` sobre LIVE V352; banco local, Preview, E2E de 80 jugadores y observabilidad PASS; inspección visual y prueba física iPhone pendientes
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -353,7 +353,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 28. GOLF SCORE CARD GT. LIVE
 
-**Estado:** V352 CENTRAL Y PREVIEW E2E PASS; V353 CENTRO LIVE LOCAL PASS; PREVIEW/E2E/NAVEGADOR V353 Y PRUEBA FÍSICA IPHONE PENDIENTES · `PEND-LIVE-018`
+**Estado:** V352 CENTRAL Y PREVIEW E2E PASS; V353 CENTRO LIVE LOCAL/PREVIEW/E2E/OBSERVABILIDAD PASS; INSPECCIÓN VISUAL Y PRUEBA FÍSICA IPHONE PENDIENTES · `PEND-LIVE-018`
 
 - Compartir por enlace privado una vista de sólo lectura de un jugador o del grupo completo, siempre con permiso explícito y revocable.
 - Permitir visitantes sin aplicación, seguimiento bilateral en otra ventana y cola offline sin alterar la Score Card activa.
@@ -384,7 +384,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ## Próximo punto obligatorio
 
-La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. V353 no requiere migración Neon porque reutiliza el esquema V352. La estabilización física de voz permanece registrada y no se considera cerrada. Los bloqueos externos —USGA/ASOGOLF/GHIN, licencias de campos, mapas, tiendas o proveedores— se documentan sin simulación. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
+La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` y E2E de 20 grupos/80 jugadores quedaron PASS, con cero errores de runtime y limpieza Neon confirmada. V353 no requiere migración porque reutiliza el esquema V352. La inspección visual y la prueba física iPhone permanecen abiertas y Producción no se monta. La estabilización física de voz continúa registrada. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
 
 ## Corte V345-ICONS · estado verificable
 

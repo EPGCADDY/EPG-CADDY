@@ -2,7 +2,7 @@
 
 **Fecha de registro:** 27 de agosto de 2026  
 **Versión de ejecución:** V352 + V353 CENTRO LIVE
-**Estado real:** V352 IMPLEMENTADO, MIGRACIÓN PRINCIPAL Y PREVIEW E2E PASS; V353 CENTRO LIVE EN EJECUCIÓN; INSPECCIÓN VISUAL/PRUEBA FÍSICA IPHONE PENDIENTE
+**Estado real:** V352 IMPLEMENTADO, MIGRACIÓN PRINCIPAL Y PREVIEW E2E PASS; V353 CENTRO LIVE PREVIEW/E2E/OBSERVABILIDAD PASS; INSPECCIÓN VISUAL Y PRUEBA FÍSICA IPHONE PENDIENTES
 **Nombre público obligatorio:** `GOLF SCORE CARD GT. LIVE`
 
 ## Solicitud del propietario
@@ -106,7 +106,7 @@ Un torneo reúne 80 jugadores y entre 30 y 40 teléfonos usan la aplicación. El
 
 | Entrada | Definición cerrada |
 |---|---|
-| Fuente canónica | rama `v352-live`, corte local `c9a6001`, API y modelo LIVE V352 ya migrados y comprobados. |
+| Fuente canónica | rama `v352-live`, commit remoto V353 `8cc3600d25cba7185a55548104cac609b341117c`, API y modelo LIVE V352 ya migrados y comprobados. |
 | Alcance exacto | `CENTRO LIVE` separado con Monitor General, Monitor Individual, búsqueda de jugadores, importación por enlace como respaldo y una sola publicación por grupo. |
 | Aceptación medible | 80 jugadores visibles sin omisión ni duplicado; cambio claro entre Monitor General e Individual; cero escritura; actualización 3–5 s; ronda propia intacta; conexión explicable en cuatro acciones. |
 | Referencias | esta especificación, `DATABASE_ARCHITECTURE.md`, `live-control.js`, `live-view.js`, `api/live.js` y la prueba V352 comprobada. |
@@ -140,3 +140,14 @@ Un torneo reúne 80 jugadores y entre 30 y 40 teléfonos usan la aplicación. El
 - La Score Card propia conserva ronda, hoyo, modalidad, scores y escritor oficial.
 
 V353 sólo puede llamarse `100 % automático aprobado` después de superar todos los bancos, Preview, E2E, observabilidad y navegador. El `PASS físico iPhone` continúa siendo una puerta independiente y no se simula.
+
+### Evidencia Preview V353 · 28 de agosto de 2026
+
+- Commit remoto: `8cc3600d25cba7185a55548104cac609b341117c`; deployment Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F`; URL protegida sin token: `https://epg-caddy-3f7wac1g1-epgcaddys-projects.vercel.app`.
+- Build `READY`: `PROJECT_QUALITY_GATE`, Manual editorial/visual, ROADMAP, inventario de 359 fuentes, V352, V353 y auditoría maestra de 95 paquetes PASS.
+- E2E remoto PASS: 20 grupos, 80 jugadores, tres páginas de siete/siete/seis, cero omisiones o duplicados y tres selecciones del Monitor Individual reutilizadas desde la General.
+- Un enlace individual externo cargó cuatro jugadores; una publicación cambió de revisión 0 a 1 y el Monitor General recibió Gross 3 en el hoyo 1.
+- El segundo capitán del mismo grupo normalizado recibió `409 LIVE_GROUP_ALREADY_PUBLISHING`; después de revocar, la General recibió `410 LIVE_REVOKED`.
+- Observabilidad de las dos ejecuciones: 103 respuestas `200`, dos `409` esperadas, una `410` esperada y cero logs `error`/`fatal`.
+- Limpieza verificada directamente en Neon: cero streams de prueba activos, cero snapshots de prueba retenidos y cero torneos de prueba activos.
+- La inspección visual del navegador protegido no se simula ni se marca PASS. Producción continúa exactamente en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`; el iPhone físico permanece como puerta independiente.
