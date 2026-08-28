@@ -7,7 +7,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
 | 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V327-R1 aprobó banco automatizado y Preview; nueva prueba física detectó respuestas vagas, corte de conversación y estados bilaterales poco visibles |
-| 2 | `PEND-TRA-005` tráfico actual y futuro | V354 corrige y prueba `departureTime` en 30 min, 1 h, 3 h, mañana y próxima semana; faltan Preview, comparación simultánea con Waze y validación física en Guatemala |
+| 2 | `PEND-TRA-005` tráfico actual y futuro | V354 Preview/E2E PASS: ahora, 30 min, 1 h, 3 h, mañana y próxima semana; Google Maps UI 3/3 dentro de 0–1 min y 0–0.1 km; faltan Waze/iPhone y validación física en Guatemala |
 | 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
 | 5 | `PEND-CAM-009` campos mundiales | Falta proveedor/catálogo licenciado y tarjetas oficiales verificables |
@@ -19,7 +19,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 11 | `PEND-EST-012` estadísticas avanzadas | Estadística local básica entregada; faltan histórico central, tendencias y comparaciones multi-dispositivo |
 | 12 | `PEND-COM-013` monetización y operación comercial | Falta modelo comercial, términos, privacidad, soporte y proveedores de pago/entrega |
 | 13 | `PEND-QA-014` certificación integral | Falta banco final automático, visual y físico por dispositivo, modalidad, ruido, conexión y ronda completa |
-| 14 | `PEND-CLI-002` clima completo en artefactos | V354 separa observación/pronóstico, resuelve horizontes relativos y declara el máximo Open-Meteo de 16 días; faltan Preview, proveedor comparado, snapshots, historial, PDF/imagen y prueba de campo |
+| 14 | `PEND-CLI-002` clima completo en artefactos | V354 Preview/E2E PASS en siete horizontes; AccuWeather y meteoblue confirman rango térmico y tendencia de lluvia; faltan medición física en campos, proveedor ganador, snapshots, historial y PDF/imagen |
 | 15 | `PEND-MAN-004` Guía Rápida | Falta versión web/PDF visual enlazada al Manual vigente |
 | 16 | `PEND-UBI-015` detectar el campo por GPS | Falta catálogo geográfico verificado, propuesta segura, confirmación manual y prueba física por campo |
 | 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
@@ -87,7 +87,7 @@ Este pendiente sólo podrá declararse terminado cuando exista fuente reglamenta
 ## PEND-CLI-002 · Clima sincronizado por campo y guardado en la tarjeta
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V354 CORRIGE HORIZONTES RELATIVOS Y LÍMITE DE 16 DÍAS EN CANDIDATO; PREVIEW, ARTEFACTOS, COMPARACIÓN Y VALIDACIÓN FÍSICA PENDIENTES
+**Estado:** V354 PREVIEW/E2E Y COMPARACIÓN ACCUWEATHER + METEOBLUE PASS; ARTEFACTOS, ELECCIÓN DE PROVEEDOR Y VALIDACIÓN FÍSICA PENDIENTES
 **Prioridad:** Principal, pendiente de orden de ejecución del propietario  
 **Solicitud original:** “Guardar el clima, también sincronizarlo en la tarjeta dependiendo del campo que se seleccione y su locación”.
 
@@ -245,7 +245,7 @@ La Guía Rápida se considerará terminada cuando cubra el recorrido básico com
 ## PEND-TRA-005 · Tiempo de llegada y tránsito sin mostrar mapa
 
 **Fecha de registro:** 25 de agosto de 2026
-**Estado:** V354 CORRIGE SALIDAS FUTURAS EN CANDIDATO; PREVIEW, PRUEBA FÍSICA Y COMPARACIÓN WAZE PENDIENTES
+**Estado:** V354 PREVIEW/E2E Y GOOGLE MAPS UI 3/3 PASS; PRUEBA WAZE/IPHONE Y VALIDACIÓN FÍSICA PENDIENTES
 **Prioridad:** Alta · pendiente conversación física prolongada y comparación Guatemala/iPhone
 **Solicitud original:** preguntar al Caddie cuánto tráfico hay para ir a casa en Pradera y escuchar únicamente tiempo estimado y comentarios, sin abrir una gráfica de navegación.
 

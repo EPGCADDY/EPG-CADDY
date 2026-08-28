@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V354 corrige tráfico y clima futuros en candidato; banco local de horizontes PASS. LIVE V353 conserva Preview/E2E/observabilidad PASS; Preview V354, comparaciones físicas especializadas e iPhone pendientes
+**Corte vigente:** V354 tráfico/clima futuros: Preview, E2E, navegador, observabilidad y comparación web especializada PASS. Google Maps UI coincide 3/3; AccuWeather y meteoblue confirman la tendencia climática. Waze/iPhone y campo físico permanecen pendientes
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -167,7 +167,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 12. Clima sincronizado por campo
 
-**Estado:** V354 HORIZONTES RELATIVOS Y LÍMITE OPEN-METEO CORREGIDOS EN CANDIDATO; Preview, artefactos, comparación y validación física pendientes · `PEND-CLI-002`
+**Estado:** V354 PREVIEW/E2E + ACCUWEATHER/METEOBLUE PASS; artefactos, proveedor ganador y validación física pendientes · `PEND-CLI-002`
 
 - Asociar cada campo con coordenadas y zona horaria oficiales verificadas.
 - Mostrar el clima en Configuración inmediatamente después de elegir el campo y conservarlo dentro de la tarjeta activa.
@@ -228,7 +228,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 15. Tránsito y tiempo de llegada por voz
 
-**Estado:** V354 SALIDAS FUTURAS CORREGIDAS EN CANDIDATO; Preview, comparación Waze/iPhone pendiente · `PEND-TRA-005`
+**Estado:** V354 PREVIEW/E2E + GOOGLE MAPS UI 3/3 PASS; comparación Waze/iPhone física pendiente · `PEND-TRA-005`
 
 - AI UNIVERSAL ∞ ya enruta voz y texto a Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL` y resume ETA, demora, distancia y hora sin mostrar mapa ni revelar coordenadas.
 - Waze no entrega silenciosamente estos datos a una web común; sus Deep Links abren Waze y su Transport SDK requiere asociación, aplicación nativa aprobada y atribución.
@@ -386,7 +386,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ## Próximo punto obligatorio
 
-La ejecución activa es **V354 · TRÁFICO Y CLIMA A DIFERENTES HORIZONTES**, ordenada sobre `PEND-TRA-005` y `PEND-CLI-002`. El banco local determinista pasó; Preview, comparación simultánea con aplicaciones especializadas y prueba física iPhone/campo permanecen abiertas. LIVE V353 conserva su Preview/E2E aprobado sin cambio de arquitectura. Producción no se monta. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
+La ejecución activa es **V354 · TRÁFICO Y CLIMA A DIFERENTES HORIZONTES**, ordenada sobre `PEND-TRA-005` y `PEND-CLI-002`. Banco local, Preview, 13 escenarios E2E, navegador y observabilidad pasaron. Google Maps UI coincidió en las tres rutas; AccuWeather y meteoblue confirmaron rangos y tendencia climática. Waze web no produjo ETA por reCAPTCHA; iPhone/campo físicos permanecen abiertos. LIVE V353 conserva su Preview/E2E aprobado sin cambio de arquitectura. Producción no se monta. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
 
 ## Corte V345-ICONS · estado verificable
 

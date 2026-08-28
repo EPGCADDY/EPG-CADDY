@@ -1,18 +1,18 @@
 {
   "version": "V354-TRAFICO-CLIMA-HORIZONTES",
-  "generatedAt": "2026-08-28T02:45:18Z",
+  "generatedAt": "2026-08-28T03:11:01Z",
   "sourceFileCount": 360,
-  "sourceDigest": "c7f6165e232621e119fdf92c470d9d68183889dc938cec74f83cc04ce97efba0",
+  "sourceDigest": "633d99614013959fc02ea8423488c8bc6517326297fc6e939e6d23dde51a8aea",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 182897,
-      "sha256": "cb754b3e8afeace407f6c511342cb3fe89a8a93186ab8217d491c70040916464"
+      "size": 183635,
+      "sha256": "f257dd48aef36b05a81dcd4f1403294dc019dccda4e2601410253b81da321773"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 205426,
-      "sha256": "9ecdc748275a6aa3a7e0ad353b28f3753fb75df990d50274ecc34478c82f0706"
+      "size": 206239,
+      "sha256": "5bca5a4733ee3db0338cc1d9266fd61fe0227de28360a67b4e3e3552cbfa3018"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

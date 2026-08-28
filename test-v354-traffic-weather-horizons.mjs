@@ -46,6 +46,7 @@ assert.doesNotMatch(formatStructuredTrafficAnswer(currentTraffic),/Salida solici
 const futureTraffic=summarizeTrafficRoute({routes:[{duration:"1800s",staticDuration:"1680s",distanceMeters:16100}]},{originLabel:"El Pulté Golf",destinationLabel:"Pradera Concepción",departureTime:"2026-08-29T14:00:00.000Z",calculatedAt:"2026-08-28T16:15:00.000Z"});
 assert.equal(futureTraffic.isFutureEstimate,true);
 for(const token of ["Tráfico previsto","Salida solicitada","Hora de cálculo","predicción de tráfico","no es una medición en vivo del futuro"])assert.match(formatStructuredTrafficAnswer(futureTraffic),new RegExp(token));
+assert.doesNotMatch(formatStructuredTrafficAnswer(futureTraffic),/[ap]\.\s*m\.\./i);
 
 const dates=Array.from({length:16},(_,index)=>{
   const date=new Date("2026-08-28T00:00:00.000Z");date.setUTCDate(date.getUTCDate()+index);return date.toISOString().slice(0,10);

@@ -158,9 +158,9 @@ export function formatStructuredTrafficAnswer(result){
   const delay=result.delayMinutes==null?"sin dato del proveedor":`${trafficValue(result.delayMinutes)} min`;
   const distance=result.distanceKm==null?"sin dato del proveedor":`${trafficValue(result.distanceKm,1)} km`;
   const heading=result.isFutureEstimate?`**Tráfico previsto para salida ${departure}:**`:`**Tráfico en vivo:**`;
-  const departureLine=result.isFutureEstimate?`\n- **Salida solicitada:** ${departure}${result.departureTimeAssumed?" (se asumió la misma hora actual)":""}.`:"";
+  const departureLine=result.isFutureEstimate?`\n- **Salida solicitada:** ${departure}${result.departureTimeAssumed?" (se asumió la misma hora actual)":""}`:"";
   const providerNote=result.isFutureEstimate?" La ETA usa la predicción de tráfico disponible para esa salida futura; no es una medición en vivo del futuro.":"";
-  return `${heading} ${result.origin} → ${result.destination}.\n\n- **ETA:** ${trafficValue(result.durationMinutes)} min.\n- **Demora por tráfico:** ${delay}.\n- **Distancia:** ${distance}.\n- **Nivel estimado:** ${result.trafficLevel||"no clasificado"}.${departureLine}\n- **Hora de cálculo:** ${calculated}.\n\n**Fuente:** Google Maps Routes, modo TRAFFIC_AWARE_OPTIMAL. La duración y la demora son datos del proveedor; el nivel es una clasificación derivada.${providerNote}`;
+  return `${heading} ${result.origin} → ${result.destination}.\n\n- **ETA:** ${trafficValue(result.durationMinutes)} min.\n- **Demora por tráfico:** ${delay}.\n- **Distancia:** ${distance}.\n- **Nivel estimado:** ${result.trafficLevel||"no clasificado"}.${departureLine}\n- **Hora de cálculo:** ${calculated}\n\n**Fuente:** Google Maps Routes, modo TRAFFIC_AWARE_OPTIMAL. La duración y la demora son datos del proveedor; el nivel es una clasificación derivada.${providerNote}`;
 }
 
 export function isGolfStrategyQuery(query){
