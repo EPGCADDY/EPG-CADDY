@@ -8,6 +8,7 @@ const speech=fs.readFileSync("api/voice-speech.js","utf8");
 
 assert.match(universal,/await resolveGatewayToken\(gatewayToken\)/);
 assert.match(speech,/gatewayToken=await resolveGatewayToken\(\)/);
+assert.match(speech,/"ai-speech-model-specification-version":"4"/);
 assert.equal(await resolveGatewayToken(undefined,{env:{AI_GATEWAY_API_KEY:" managed-key "},oidcGetter:()=>{throw new Error("must not run")}}),"managed-key");
 assert.equal(await resolveGatewayToken(undefined,{env:{},oidcGetter:()=>"oidc-token"}),"oidc-token");
 assert.equal(await resolveGatewayToken("",{env:{AI_GATEWAY_API_KEY:"ignored"},oidcGetter:()=>"ignored"}),"");

@@ -42,7 +42,12 @@ async function requestGatewaySpeech(token,text,language,signal){
   if(!token)return null;
   return fetch("https://ai-gateway.vercel.sh/v4/ai/speech-model",{
     method:"POST",signal,
-    headers:{Authorization:`Bearer ${token}`,"ai-model-id":GATEWAY_SPEECH_MODEL,"Content-Type":"application/json"},
+    headers:{
+      Authorization:`Bearer ${token}`,
+      "ai-model-id":GATEWAY_SPEECH_MODEL,
+      "ai-speech-model-specification-version":"4",
+      "Content-Type":"application/json"
+    },
     body:JSON.stringify(cedarGatewayPayload(text,language))
   });
 }

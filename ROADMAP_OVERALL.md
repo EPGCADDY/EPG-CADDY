@@ -1434,6 +1434,8 @@ Sello atómico V364: ambos ROADMAPS quedan registrados juntos en el mismo commit
 
 Sello final V364: los dos ROADMAPS y el inventario regenerado se publican juntos después de aprobar la auditoría externa de ROADMAP.
 
+Verificación externa del candidato OIDC: AI UNIVERSAL aprobó tres POST reales sobre el mismo Preview. La voz reveló un 400 reproducible por ausencia de la cabecera obligatoria `ai-speech-model-specification-version: 4`; el candidato la incorpora según el contrato Speech V4 de `@ai-sdk/gateway` 4.0.68 y exige repetir Preview, voz externa y prueba física iPhone antes de producción.
+
 Validación del sello: ordenamiento binario idéntico al Gate de Node.js en Vercel.
 
 ## Hotfix final OIDC · comunicación universal · 28 de agosto de 2026

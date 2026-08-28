@@ -1826,6 +1826,7 @@ Evidencia y soporte móvil exactos: `.gitignore`, `scripts/v363-silent-speech-re
 - `test-v364-explicit-new-round-entry.mjs`: valida entrada, apertura y ausencia de borrado.
 - `test-v357-ios-voice-transport-recovery.mjs` y `test-v361-synchronized-voice.mjs`: aceptan la extensión V364 de la firma de caché sin retirar el prefijo/candado V363.
 - `audit-project.mjs` y `package.json`: incorporan el banco V364.
+- Corrección externa OIDC/voz: la petición Gateway añade `ai-speech-model-specification-version: 4`, cabecera obligatoria del contrato Speech V4 comprobada por `test-v364-vercel-oidc-recovery.mjs`; requiere nuevo Preview y prueba física iPhone.
 - `scripts/project-quality-gate.mjs`: conserva el control sincronizado recibido en el árbol compartido.
 - `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registro doble del cambio.
 
