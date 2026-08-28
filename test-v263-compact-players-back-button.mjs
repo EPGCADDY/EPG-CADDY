@@ -59,7 +59,7 @@ const harness=new Function("initialRound","setupInputs","controls",`
   const stablefordDuplicateMessage=()=>"NO REPITAS EL MISMO JUGADOR";
   const stablefordCourseRoundNumber=()=>1,isStablefordRound=(value=round)=>value?.mode==="stableford";
   const normalizePlayer=(value,index)=>({...value,slot:index+1});
-  const teardownRealtime=()=>{},activateCourse=()=>{},savePlayersToDirectory=()=>{},resetRoundCapture=()=>{},persist=()=>{},render=()=>{},scheduleRoundTimerIdleShutdown=()=>{};
+  const teardownRealtime=()=>{},activateCourse=()=>{},savePlayersToDirectory=()=>{},resetRoundCapture=()=>{},persist=()=>{},render=()=>{},showInstallControl=()=>{},scheduleRoundTimerIdleShutdown=()=>{};
   const newRoundId=()=>"unused";
   ${startStablefordSource}
   return {run:startStablefordRoundMode,getRound:()=>round};

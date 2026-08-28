@@ -8,10 +8,10 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 const speech=fs.readFileSync("api/voice-speech.js","utf8");
 const audit=fs.readFileSync("audit-project.mjs","utf8");
 
-assert.match(html,/V362-PHYSICAL-VOICE-RECOVERY-20260828/);
-assert.match(html,/V362-ONE-TOUCH-WATCHDOG-MALE-FALLBACK-20260828/);
-assert.match(html,/V362-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828/);
-assert.match(worker,/gscg-mobile-v362-physical-voice-recovery/);
+assert.match(html,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
+assert.match(html,/V363-STOP-GUARD-NO-STUCK-LISTENING-20260828/);
+assert.match(html,/V363-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828/);
+assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
 for(const file of ["test-v358-ios-score-universal-physical-recovery.mjs","test-v362-physical-voice-recovery.mjs"])assert.ok(audit.includes(file),file);
 
 const direct=cedarSpeechPayload("Respuesta", "es-GT");
@@ -30,7 +30,10 @@ const watchdogStart=html.indexOf("function scheduleBrowserVoiceFirstResultTimeou
 const watchdogEnd=html.indexOf("\nfunction browserVoiceCombinedTranscript",watchdogStart);
 const watchdog=html.slice(watchdogStart,watchdogEnd);
 assert.match(watchdog,/browser_fallback_no_result_timeout/);
-assert.match(watchdog,/recognition\.stop\(\)/);
+assert.match(watchdog,/stopBrowserVoiceRecognitionSafely\(recognition,context\)/);
+const stopGuard=html.slice(html.indexOf("function stopBrowserVoiceRecognitionSafely"),html.indexOf("\nfunction scheduleBrowserVoiceFinalize",html.indexOf("function stopBrowserVoiceRecognitionSafely")));
+assert.match(stopGuard,/BROWSER_VOICE_STOP_GUARD_MS/);
+assert.match(stopGuard,/recognition\.stop\(\)/);
 const begin=html.slice(html.indexOf("function beginBrowserVoiceRecognition"),html.indexOf("\nfunction startBrowserVoiceFallback"));
 assert.match(begin,/onstart=[\s\S]*scheduleBrowserVoiceFirstResultTimeout/);
 assert.match(begin,/onresult=[\s\S]*clearBrowserVoiceFirstResultTimer/);
@@ -43,6 +46,6 @@ assert.match(finalize,/progressive\.closure[\s\S]*speakClosure\(progressive\.clo
 const spokenClosure=html.slice(html.indexOf("async function speakClosure"),html.indexOf("\nasync function speakQuery"));
 assert.match(spokenClosure,/return speakAiUniversalText\(text\)/);
 
-assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_no_result_timeout",build:"V362",transportFailure:"no_speech",transcript:"PRIVADO"}),{event:"browser_fallback_no_result_timeout",build:"V362",context:"round",turn:0,elapsedMs:0,transportFailure:"no_speech"});
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_no_result_timeout",build:"V363",transportFailure:"no_speech",transcript:"PRIVADO"}),{event:"browser_fallback_no_result_timeout",build:"V363",context:"round",turn:0,elapsedMs:0,transportFailure:"no_speech"});
 
 console.log("PASS V362 · un toque + watchdog + Cedar/Onyx + cierre hablado y persistencia progresiva");

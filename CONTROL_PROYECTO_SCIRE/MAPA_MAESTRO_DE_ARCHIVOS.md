@@ -956,3 +956,17 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `service-worker.js` | `gscg-mobile-v362-physical-voice-recovery`. | Safari invalida V361. |
 | `AGENTS.md`, cola, matriz, registro RC-032 y ambos ROADMAPS | Trazabilidad, estado honesto y protección entre conversaciones. | Producción intacta; Preview y físico siguen separados. |
 | `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello final V362. | El árbol exacto se regenera después de toda modificación. |
+
+## V363-RECORDED-MOBILE-BEHAVIOR + INTOCABLES
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Ronda canónica, reporte Match con nombres, cierre Normal y guard móvil. | INT-01 e INT-02. |
+| `Intocables/` | Reglas y gate permanente. | INT-01…INT-04, lógica AND. |
+| `test-v363-intocables-behavior.mjs`, `test-v363-recorded-mobile-behavior.mjs` | Persistencia, frase Match y Safari/modal. | Un FAIL detiene la versión. |
+| `audit-project.mjs`, `package.json`, `service-worker.js` | Ejecución y shell V363. | Caché y banco alineados. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/` | Dos capturas físicas FAIL, MP4 automático, póster y reporte RC-035 con SHA-256. | Evidencia automática y física se distinguen; el iPhone sigue pendiente. |
+
+Inventario exacto V363: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `Intocables/README.md`, `Intocables/REGLAS_INTOCABLES.json`, `Intocables/intocables-gate.mjs`, `audit-project.mjs`, `index-grupal.html`, `live-control.js`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, `service-worker.js`, `test-v260-round-points-player-return.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v362-physical-voice-recovery.mjs`, `test-v363-intocables-behavior.mjs` y `test-v363-recorded-mobile-behavior.mjs`. `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` documentan el mismo corte.
+
+Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speech-recognition.js` y los cinco archivos de `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/`, incluido `REPORTE_PRUEBAS_COMPORTAMIENTO_V363_RC035.md`.

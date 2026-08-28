@@ -35,7 +35,11 @@ assert.match(html,/let round=sfEmergency\?\(latestStoredRound\("stableford"\)\|\
 assert.match(html,/stableford=readStoredRound\(STABLEFORD_ACTIVE_KEY\)/);
 assert.match(html,/\[primary,backup,stableford,matchPlay\]\.filter\(value=>value\?\.configured&&mode\(value\)===modeHint\)\.sort/);
 assert.match(html,/readRoundArchive\(\)\.filter\(value=>value\?\.configured&&mode\(value\)===modeHint\)\.sort/);
-assert.match(html,/function loadRound\(\)\{const candidates=\[latestStoredRound\("general"\),latestStoredRound\("match_play"\)\]/);
+assert.match(html,/const ACTIVE_ROUND_KEY="golf-score-card-guatemala-active-round-v1"/);
+assert.match(html,/function loadRound\(\)\{[\s\S]*?const canonical=readStoredRound\(ACTIVE_ROUND_KEY\)[\s\S]*?return canonical/);
+assert.match(html,/const candidates=\[latestStoredRound\("general"\),latestStoredRound\("match_play"\)\]/);
+assert.match(html,/localStorage\.setItem\(ACTIVE_ROUND_KEY,JSON\.stringify\(migrated\)\)/);
+assert.match(html,/localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)/);
 assert.match(html,/if\(round\.mode==="stableford"\)localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,payload\)/);
 assert.match(html,/function openFreshStablefordSetup\(\)[\s\S]*?localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,JSON\.stringify\(round\)\)/);
 assert.doesNotMatch(html,/function openFreshStablefordSetup\(\)[\s\S]*?localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)/);
