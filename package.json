@@ -29,6 +29,7 @@
     "external:oidc-gate": "node test-v364-vercel-oidc-recovery.mjs",
     "behavior:recorded-gate": "node test-v363-recorded-mobile-behavior.mjs",
     "entry:new-round-gate": "node test-v364-explicit-new-round-entry.mjs",
+    "physical:startup-playback-gate": "node test-v365-iphone-startup-playback.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

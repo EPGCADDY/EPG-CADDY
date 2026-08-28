@@ -14,6 +14,7 @@
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
+<meta name="gscg-physical-startup-playback" content="V365-IPHONE-VALID-ROUND-AUDIO-COMPLETION-20260828">
 <meta name="gscg-ai-voice" content="CEDAR-1.15-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -1008,7 +1009,7 @@ let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelE
 let realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL,realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;
 let voiceOpening=false;
 let browserVoiceRecognition=null,browserVoiceContext=null,browserVoiceActive=false,browserVoiceRequested=false,browserVoiceTranscript="",browserVoiceInterim="",browserVoiceCandidates=[],browserVoiceErrored=false,browserVoiceStopping=false,browserVoiceSilenceTimer=null,browserVoiceFirstResultTimer=null,browserVoiceStopGuardTimer=null,browserVoiceRetryTimer=null,browserVoiceRestartCount=0,browserVoiceTransportRetryCount=0,browserVoiceItemId="",browserVoiceAppliedEntryCount=0;
-let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null,aiUniversalSpeechPrimed=false,aiUniversalSpeechPrimer=null,aiUniversalTtsAudio=null,aiUniversalTtsObjectUrl="",aiUniversalRulesMode=false,cedarSpeechServerBlockedUntil=0;
+let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null,aiUniversalSpeechPrimed=false,aiUniversalSpeechPrimer=null,aiUniversalTtsAudio=null,aiUniversalTtsObjectUrl="",aiUniversalTtsPlaybackCancel=null,aiUniversalRulesMode=false,cedarSpeechServerBlockedUntil=0;
 const AI_UNIVERSAL_HISTORY_LIMIT=80;
 const processedTranscriptItems=new Set();
 const WEATHER_REFRESH_MS=10*60*1000;
@@ -1069,6 +1070,7 @@ function playersByVisualSlot(players=round.players){const slots=Array(6).fill(nu
 function validStoredRound(x){
   return !!(x&&typeof x==="object"&&Array.isArray(x.players)&&typeof x.configured==="boolean");
 }
+function playableStoredRound(x){return !!(validStoredRound(x)&&x.configured&&x.players.length>0)}
 function normalizeStoredRound(x){
   if(!validStoredRound(x))return null;
   const courseKey=COURSE_DATA[x.courseKey]?x.courseKey:courseKeyForName(x.course);
@@ -1082,24 +1084,24 @@ function latestStoredRound(modeHint){
   if(modeHint==="stableford"&&stableford&&!stableford.configured)return null;
   const timestamp=value=>new Date(value?.updatedAt||value?.createdAt||0).getTime()||0;
   const mode=value=>value?.mode==="stableford"?"stableford":value?.mode==="match_play"?"match_play":value?.mode==="four_ball"?"four_ball":"general";
-  const legacyActive=[primary,backup,stableford,matchPlay].filter(value=>value?.configured&&mode(value)===modeHint).sort((a,b)=>timestamp(b)-timestamp(a))[0];
-  const active=[legacyActive,fourBall].filter(value=>value?.configured&&mode(value)===modeHint).sort((a,b)=>timestamp(b)-timestamp(a))[0];
+  const legacyActive=[primary,backup,stableford,matchPlay].filter(value=>playableStoredRound(value)&&mode(value)===modeHint).sort((a,b)=>timestamp(b)-timestamp(a))[0];
+  const active=[legacyActive,fourBall].filter(value=>playableStoredRound(value)&&mode(value)===modeHint).sort((a,b)=>timestamp(b)-timestamp(a))[0];
   if(active){
     if(active.mode!=="stableford"&&active!==primary){try{const payload=JSON.stringify(active);localStorage.setItem(STORAGE_KEY,payload);localStorage.setItem(STORAGE_BACKUP_KEY,payload)}catch{}}
     return active;
   }
-  const archived=readRoundArchive().filter(value=>value?.configured&&mode(value)===modeHint).sort((a,b)=>timestamp(b)-timestamp(a))[0];
+  const archived=readRoundArchive().filter(value=>playableStoredRound(value)&&mode(value)===modeHint).sort((a,b)=>timestamp(b)-timestamp(a))[0];
   if(archived)return archived;
   return null;
 }
 function loadRound(){
   const canonical=readStoredRound(ACTIVE_ROUND_KEY);
-  if(canonical?.configured&&canonical.mode!=="stableford"&&canonical.players?.length)return canonical;
+  if(playableStoredRound(canonical)&&canonical.mode!=="stableford")return canonical;
   const candidates=[latestStoredRound("general"),latestStoredRound("match_play")],fourBallRound=latestStoredRound("four_ball");
   if(fourBallRound)candidates.push(fourBallRound);
   const migrated=candidates.filter(Boolean).sort((a,b)=>new Date(b.updatedAt||b.createdAt)-new Date(a.updatedAt||a.createdAt))[0]||blankRound();
-  if(migrated.configured&&migrated.mode!=="stableford"&&migrated.players?.length){try{localStorage.setItem(ACTIVE_ROUND_KEY,JSON.stringify(migrated))}catch{}}
-  return migrated
+  if(playableStoredRound(migrated)&&migrated.mode!=="stableford"){try{localStorage.setItem(ACTIVE_ROUND_KEY,JSON.stringify(migrated))}catch{};return migrated}
+  return blankRound()
 }
 const SIDE_GAME_KEYS=["skins","wolf","vegas","dots"];
 function activeSideGameKey(value=round){return SIDE_GAME_KEYS.find(key=>value?.sideGames?.[key]?.enabled===true)||null}
@@ -1278,7 +1280,7 @@ function updateGeneralSetupValidity(){
 }
 function restorePersistedRound(){
   const stored=loadRound();
-  if(stored.configured&&stored.players.length){
+  if(playableStoredRound(stored)){
     round=stored;
     enforceCanonicalRoundNames();
     voiceContext="round";
@@ -2139,7 +2141,7 @@ function markConversationFollowupAudioStarted(eventResponseId=""){
   transition.followupAudioStarted=true;
   return true;
 }
-const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_restarted","browser_fallback_restart_failed","browser_fallback_error","browser_fallback_start_failed","browser_fallback_no_result_timeout","browser_fallback_retry_scheduled","browser_fallback_retry_started","browser_fallback_retry_failed","browser_fallback_transcript_ready","browser_fallback_query_answered","browser_fallback_query_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_round_progressive","browser_fallback_round_applied","browser_fallback_round_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_general_visible","browser_fallback_speech_primed","browser_fallback_speech_started","browser_fallback_speech_failed","keyboard_dictation_setup_applied"]);
+const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_restarted","browser_fallback_restart_failed","browser_fallback_error","browser_fallback_start_failed","browser_fallback_no_result_timeout","browser_fallback_retry_scheduled","browser_fallback_retry_started","browser_fallback_retry_failed","browser_fallback_transcript_ready","browser_fallback_query_answered","browser_fallback_query_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_round_progressive","browser_fallback_round_applied","browser_fallback_round_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_general_visible","browser_fallback_speech_primed","browser_fallback_speech_started","browser_fallback_speech_completed","browser_fallback_speech_failed","keyboard_dictation_setup_applied"]);
 function reportVoiceHealth(event,detail={}){
   if(!VOICE_HEALTH_EVENTS.has(event)||typeof fetch!=="function")return false;
   const payload={event,build:"V363",context:voiceContext==="setup"?"setup":"round",turn:Math.max(0,voiceHealthTurn),elapsedMs:voiceHealthTurnStartedAt?Math.max(0,Date.now()-voiceHealthTurnStartedAt):0};
@@ -2464,10 +2466,28 @@ async function speakAiUniversalMaleBrowserFallback(clean){
   const language=aiUniversalSpeechLanguage(clean),voice=await waitForPreferredMaleBrowserVoice(language);if(!voice)return false;
   window.speechSynthesis.cancel();window.speechSynthesis.resume?.();
   const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;utterance.lang=language;utterance.rate=VOICE_POLICY.speed;utterance.pitch=.92;utterance.voice=voice;
-  utterance.onstart=()=>{reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true})};
-  utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")}};
-  utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")};
-  window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);return true;
+  return new Promise(resolve=>{let settled=false,timer=null;const finish=ok=>{if(settled)return;settled=true;if(timer)clearTimeout(timer);if(aiUniversalTtsPlaybackCancel===cancel)aiUniversalTtsPlaybackCancel=null;resolve(ok)};const cancel=()=>{window.speechSynthesis.cancel();finish(false)};aiUniversalTtsPlaybackCancel?.();aiUniversalTtsPlaybackCancel=cancel;
+    utterance.onstart=()=>{reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true})};
+    utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_completed");setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")}finish(true)};
+    utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA");finish(false)};
+    timer=setTimeout(()=>{reportVoiceHealth("browser_fallback_speech_failed");cancel()},Math.max(12000,Math.min(90000,String(clean||"").length*160+8000)));
+    window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50)
+  });
+}
+function playAiUniversalServerAudio(player,clean,deliveredVoice){
+  const timeoutMs=Math.max(12000,Math.min(90000,String(clean||"").length*140+8000));
+  return new Promise((resolve,reject)=>{
+    let settled=false,timer=null,started=false;
+    const clear=()=>{if(timer)clearTimeout(timer);timer=null;if(aiUniversalTtsPlaybackCancel===cancel)aiUniversalTtsPlaybackCancel=null};
+    const finish=(ok,error)=>{if(settled)return;settled=true;clear();ok?resolve(true):reject(error||new Error("AUDIO_PLAYBACK_FAILED"))};
+    const cancel=()=>{try{player.pause()}catch{}finish(false,new Error("AUDIO_STOPPED"))};
+    aiUniversalTtsPlaybackCancel?.();aiUniversalTtsPlaybackCancel=cancel;
+    player.onplay=player.onplaying=()=>{if(started)return;started=true;aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(deliveredVoice==="onyx"?"RESPONDIENDO EN VOZ · ONYX 1.15 · RESPALDO":"RESPONDIENDO EN VOZ · CEDAR 1.15",{busy:true})};
+    player.onended=()=>{reportVoiceHealth("browser_fallback_speech_completed");setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR");finish(true)};
+    player.onerror=()=>finish(false,new Error("AUDIO_PLAYBACK_ERROR"));
+    timer=setTimeout(()=>finish(false,new Error(started?"AUDIO_PLAYBACK_INCOMPLETE":"AUDIO_PLAYBACK_NOT_STARTED")),timeoutMs);
+    try{const played=player.play();if(played?.catch)played.catch(error=>finish(false,error))}catch(error){finish(false,error)}
+  })
 }
 async function speakAiUniversalText(text,{repeat=false}={}){
   const clean=String(text||"").trim();if(!clean||aiUniversalMuted)return false;
@@ -2484,12 +2504,10 @@ async function speakAiUniversalText(text,{repeat=false}={}){
     const blob=await response.blob();if(!blob.size)throw new Error("CEDAR_TTS_EMPTY");
     if(typeof Audio!=="function")throw new Error("AUDIO_UNAVAILABLE");
     if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(blob);
-    const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.volume=1;player.playbackRate=1;
-    player.onplay=()=>{aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(deliveredVoice==="onyx"?"RESPONDIENDO EN VOZ · ONYX 1.15 · RESPALDO":"RESPONDIENDO EN VOZ · CEDAR 1.15",{busy:true})};
-    player.onended=()=>{setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
-    player.onerror=async()=>{reportVoiceHealth("browser_fallback_speech_failed");if(!await speakAiUniversalMaleBrowserFallback(clean))aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")};
-    await player.play();return true;
+    const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.playsInline=true;player.muted=false;player.volume=1;player.playbackRate=1;player.load?.();
+    await playAiUniversalServerAudio(player,clean,deliveredVoice);return true;
   }catch(error){
+    if(error?.message==="AUDIO_STOPPED")return false;
     reportVoiceHealth("browser_fallback_speech_failed");
     cedarSpeechServerBlockedUntil=Math.max(cedarSpeechServerBlockedUntil,Date.now()+CEDAR_SPEECH_RETRY_MS);
     if(await speakAiUniversalMaleBrowserFallback(clean))return true;
@@ -2499,7 +2517,7 @@ async function speakAiUniversalText(text,{repeat=false}={}){
 function stopAiUniversalOutput(){
   aiUniversalTextAbortController?.abort();aiUniversalTextAbortController=null;aiUniversalTextBusy=false;
   if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;
-  if(aiUniversalTtsAudio){aiUniversalTtsAudio.pause();aiUniversalTtsAudio.currentTime=0}
+  aiUniversalTtsPlaybackCancel?.();aiUniversalTtsPlaybackCancel=null;if(aiUniversalTtsAudio){aiUniversalTtsAudio.pause();aiUniversalTtsAudio.currentTime=0}
   if(authorizedSpeech?.reason==="conversation"||activeResponseId||stopMonitorActive)stopAuthorizedSpeech();
   if(browserVoiceActive||browserVoiceRequested)stopBrowserVoiceFallback();else if(listening)setVoice(false);
   $("sendAiUniversal").disabled=false;aiUniversalSetState("DETENIDO · PUEDES ESCRIBIR O ESCUCHAR");return true;

@@ -419,3 +419,11 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - Producción V363 confirma tarjeta/persistencia pero falla AI UNIVERSAL con 503 por saldo agotado.
 - `api/_lib/vercel-gateway-auth.js` obtiene el token OIDC administrado sin exponer credenciales; AI UNIVERSAL y voz lo usan como respaldo.
 - Estado: código y banco local preparados; Preview, tres corridas externas del mismo deployment y conversación física iPhone continúan bloqueantes. Producción no cambia.
+
+## V365 · inicio válido y reproducción acreditada
+
+- Las capturas físicas `IMG_2190.jpeg` y `IMG_2191.png` rechazan el Preview anterior: abrió una ronda configurada sin jugadores y no demostró que el audio terminara.
+- Sólo una ronda configurada con al menos un jugador puede restaurarse; cualquier residuo vacío abre Registro.
+- AI UNIVERSAL registra inicio y terminación por separado y no muestra éxito antes de `ended`/`onend`; un watchdog impide espera indefinida.
+- `test-v365-iphone-startup-playback.mjs` queda en la auditoría obligatoria y la caché móvil sube a V365.
+- Estado: PASS automático local; Preview nuevo y prueba física iPhone pendientes. Producción permanece intacta.

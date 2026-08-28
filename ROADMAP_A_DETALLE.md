@@ -1853,3 +1853,14 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 - Control: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
 
 Producción no se toca. El candidato necesita auditoría local, Preview, tres corridas externas del mismo deployment y conversación física iPhone.
+
+## V365 · inicio válido y audio terminado · 28 de agosto de 2026
+
+- `index-grupal.html`: centraliza `playableStoredRound()`; una ronda vacía ya no sobrevive por claves canónicas, heredadas, backups ni archivo.
+- `index-grupal.html`: audio servidor espera `ended`; síntesis Safari espera `onend`; ambos incluyen cancelación y watchdog antes de acreditar `LISTO`.
+- `api/voice-health.js`: admite el evento privado `browser_fallback_speech_completed`, separado de `browser_fallback_speech_started`.
+- `service-worker.js`: firma V365 para invalidar el shell anterior en Safari/PWA.
+- `test-v365-iphone-startup-playback.mjs`: reproduce la ronda vacía y demuestra que `play()` no equivale a reproducción terminada.
+- `Intocables/intocables-gate.mjs`, `test-v260-round-points-player-return.mjs`, `test-v267-one-operational-line.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v363-intocables-behavior.mjs`, `audit-project.mjs` y `package.json`: integran el control, actualizan los candados de restauración y aceptan sólo el sufijo exacto V365 sin retirar Intocables.
+
+RC-037 queda corregida localmente. Producción no cambia; faltan Preview nuevo y reproducción física completa en iPhone.

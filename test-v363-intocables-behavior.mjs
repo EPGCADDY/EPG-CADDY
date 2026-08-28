@@ -10,7 +10,8 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const canonicalIndex=html.indexOf("const canonical=readStoredRound(ACTIVE_ROUND_KEY)");
 const legacyIndex=html.indexOf('const candidates=[latestStoredRound("general"),latestStoredRound("match_play")]');
 assert.ok(canonicalIndex>0&&legacyIndex>canonicalIndex,"La ronda canónica debe cargarse antes que las claves heredadas");
-assert.match(html,/if\(canonical\?\.configured&&canonical\.mode!=="stableford"&&canonical\.players\?\.length\)return canonical/);
+assert.match(html,/if\(playableStoredRound\(canonical\)&&canonical\.mode!=="stableford"\)return canonical/);
+assert.match(html,/function playableStoredRound\(x\)\{return !!\(validStoredRound\(x\)&&x\.configured&&x\.players\.length>0\)\}/);
 assert.match(html,/if\(round\.configured&&round\.mode!=="stableford"&&round\.players\?\.length\)localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(ACTIVE_ROUND_KEY\)/);
 

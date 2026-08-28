@@ -980,3 +980,14 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `api/voice-speech.js` | Usa la misma identidad administrada para recuperar el audio. | No cambia Cedar/Onyx ni contenido hablado. |
 | `test-v364-vercel-oidc-recovery.mjs` | Simula tres fallos directos y exige una llamada Gateway autenticada. | Un salto ausente bloquea auditoría y Preview. |
 | `audit-project.mjs`, `package.json` | Instalan y ejecutan el control OIDC. | Sin aprobación sólo existe candidato local. |
+
+## V365 · inicio válido y audio terminado
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Rechaza rondas configuradas sin jugadores y espera el final real del audio. | Registro inicial correcto; `play()` por sí solo nunca acredita comunicación. |
+| `api/voice-health.js` | Registra `browser_fallback_speech_completed`. | Inicio y terminación quedan diferenciados sin guardar contenido. |
+| `service-worker.js` | Shell V365. | Safari/PWA invalida el cliente rechazado. |
+| `test-v365-iphone-startup-playback.mjs` | Simula almacenamiento heredado vacío y reproducción asincrónica. | Un FAIL detiene auditoría y Preview. |
+| `Intocables/intocables-gate.mjs`, `test-v260-round-points-player-return.mjs`, `test-v267-one-operational-line.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v363-intocables-behavior.mjs`, `audit-project.mjs`, `package.json` | Conservan Intocables, exigen restauración jugable, aceptan sólo el sufijo V365 e instalan el nuevo banco. | No se sacrifica persistencia válida para corregir residuos inválidos. |
+| registro RC-037, matriz y ambos ROADMAPS | Trazabilidad del rechazo físico. | PASS automático, Preview y PASS iPhone permanecen separados. |
