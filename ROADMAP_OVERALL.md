@@ -1433,3 +1433,15 @@ Los tres inventarios V311 fueron regenerados y sellados después de registrar es
 Sello atómico V364: ambos ROADMAPS quedan registrados juntos en el mismo commit externo para que la auditoría de publicación sea reproducible.
 
 Sello final V364: los dos ROADMAPS y el inventario regenerado se publican juntos después de aprobar la auditoría externa de ROADMAP.
+
+Verificación externa del candidato OIDC: AI UNIVERSAL aprobó tres POST reales sobre el mismo Preview. La voz reveló un 400 reproducible por ausencia de la cabecera obligatoria `ai-speech-model-specification-version: 4`; el candidato la incorpora según el contrato Speech V4 de `@ai-sdk/gateway` 4.0.68 y exige repetir Preview, voz externa y prueba física iPhone antes de producción.
+
+La repetición externa confirmó que Speech V4 no basta: el cliente oficial agrega también `ai-gateway-protocol-version: 0.0.1` y `ai-gateway-auth-method`. Un Preview independiente con el contrato completo entregó MP3 200 y locutor Onyx; V364 incorpora ahora esas dos cabeceras sin registrar credenciales y vuelve a empezar su propia prueba externa.
+
+Validación del sello: ordenamiento binario idéntico al Gate de Node.js en Vercel.
+
+## Hotfix final OIDC · comunicación universal · 28 de agosto de 2026
+
+La comprobación real de producción confirmó HTTP 200 para la V363 publicada y 503 `UNIVERSAL_AI_CREDIT_EXHAUSTED` para una consulta general. Los logs demostraron tres intentos directos y cero intento Gateway: el token OIDC administrado no se resolvía dinámicamente. El candidato incorpora `@vercel/oidc`, obtiene el token sólo después del bloqueo de saldo y aplica la misma identidad administrada a AI UNIVERSAL y voz, sin registrar credenciales.
+
+Archivos exactos: `api/_lib/vercel-gateway-auth.js`, `api/universal-ai.js`, `api/voice-speech.js`, `test-v364-vercel-oidc-recovery.mjs`, `audit-project.mjs`, `package.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Producción no cambia; Preview, 3/3 externo sobre el mismo deployment y PASS físico iPhone siguen bloqueantes.

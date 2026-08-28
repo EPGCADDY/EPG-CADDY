@@ -1,4 +1,5 @@
 import {handleAppPreflight,isAllowedAppOrigin} from "./_lib/cors.js";
+import {resolveGatewayToken} from "./_lib/vercel-gateway-auth.js";
 
 const MAX_SPEECH_TEXT=4000;
 const VOICE="cedar";
@@ -39,9 +40,17 @@ async function requestDirectSpeech(apiKey,payload,signal){
 
 async function requestGatewaySpeech(token,text,language,signal){
   if(!token)return null;
+  const authMethod=String(process.env.AI_GATEWAY_API_KEY||"").trim()?"api-key":"oidc";
   return fetch("https://ai-gateway.vercel.sh/v4/ai/speech-model",{
     method:"POST",signal,
-    headers:{Authorization:`Bearer ${token}`,"ai-model-id":GATEWAY_SPEECH_MODEL,"Content-Type":"application/json"},
+    headers:{
+      Authorization:`Bearer ${token}`,
+      "ai-gateway-protocol-version":"0.0.1",
+      "ai-gateway-auth-method":authMethod,
+      "ai-model-id":GATEWAY_SPEECH_MODEL,
+      "ai-speech-model-specification-version":"4",
+      "Content-Type":"application/json"
+    },
     body:JSON.stringify(cedarGatewayPayload(text,language))
   });
 }
@@ -54,7 +63,7 @@ export default async function handler(req,res){
     res.setHeader("Allow","POST");
     return res.status(405).json({ok:false,error:"METHOD_NOT_ALLOWED"});
   }
-  const apiKey=process.env.OPENAI_API_KEY,gatewayToken=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN;
+  const apiKey=process.env.OPENAI_API_KEY,gatewayToken=await resolveGatewayToken();
   if(!apiKey&&!gatewayToken)return res.status(500).json({ok:false,error:"VOICE_NOT_CONFIGURED"});
   try{
     const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):req.body||{};
