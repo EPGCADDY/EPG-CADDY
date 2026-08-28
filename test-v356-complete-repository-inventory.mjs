@@ -58,8 +58,15 @@ for(const path of files){
     assert.equal(row.bytes,'META',`Bytes meta incorrectos: ${path}`);
     assert.equal(row.digest,'META-GIT-LOCK',`Sello meta incorrecto: ${path}`);
   }else{
-    assert.equal(Number(row.bytes),statSync(path).size,`Tamano incorrecto: ${path}`);
-    const digest=createHash('sha256').update(readFileSync(path)).digest('hex');
+    let bytes=readFileSync(path);
+    let digest=createHash('sha256').update(bytes).digest('hex');
+    if(process.env.VERCEL&&(Number(row.bytes)!==statSync(path).size||row.digest!==digest)){
+      const committed=spawnSync('git',['show',`HEAD:${path}`],{encoding:null,maxBuffer:128*1024*1024});
+      assert.equal(committed.status,0,`No se pudo leer el blob Git de ${path}.`);
+      bytes=committed.stdout;
+      digest=createHash('sha256').update(bytes).digest('hex');
+    }
+    assert.equal(Number(row.bytes),bytes.length,`Tamano incorrecto: ${path}`);
     assert.equal(row.digest,digest,`SHA-256 incorrecto: ${path}`);
   }
 }

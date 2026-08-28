@@ -1782,3 +1782,7 @@ Base sincronizada: `5ba0ff1ddb5860561edd9b90a9f6e0a83ba5d75f`. Preview examinado
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella el digest de todas las fuentes salvo su propia autorreferencia y los tres PDF. | `inventory-gate` detiene cualquier diferencia. |
 
 Garantía objetiva del corte: 100% de rutas Git listadas, 100% con nombre y descripción, cero omisiones, cero duplicados y cero colisiones de mayúsculas/minúsculas. Los dos metaarchivos autorreferenciales se identifican expresamente con `META-GIT-LOCK` y quedan protegidos por el árbol del commit y el sello global. Producción continúa exactamente en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
+
+### V356-INVENTARIO-COMPLETO-R1 · blob Git frente a transformación de Vercel
+
+El deployment `dpl_Ard4yqvbz7Tss7wToqghRxLpCAFm` aprobó 74 páginas, ambos ROADMAPS y 374 fuentes, y luego rechazó correctamente el nuevo control porque el constructor redujo su copia temporal de `vercel.json` de 3,867 a 2,567 bytes. `test-v356-complete-repository-inventory.mjs` compara archivos físicos en local; bajo `VERCEL`, únicamente si detecta una diferencia, lee `HEAD:ruta` y recalcula tamaño y SHA-256 del blob comprometido. El expediente continúa describiendo el árbol Git exacto, no archivos derivados de la plataforma. `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se vuelven a sellar; Producción no cambia.
