@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v358-voice-round-continuity";
+const CACHE_NAME="gscg-mobile-v359-ios-score-parser-recovery";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

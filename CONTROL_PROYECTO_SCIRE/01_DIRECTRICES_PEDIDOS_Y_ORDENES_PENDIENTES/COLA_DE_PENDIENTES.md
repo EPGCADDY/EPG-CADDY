@@ -6,7 +6,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
-| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V358 conserva V357 y mantiene visible la ronda activa al reabrir hasta tocar NUEVA RONDA; banco, Preview y prueba física obligatorios |
+| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V358 fue rechazado físicamente por parser; V359 amplía frases naturales de dos jugadores sin adivinar; banco, Preview y prueba física obligatorios |
 | 2 | `PEND-TRA-005` tráfico actual y futuro | V356 corrige horizontes 30 min/1 h/3 h/mañana/próxima semana; faltan Preview, comparación simultánea independiente con Waze y validación física en Guatemala |
 | 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
@@ -25,7 +25,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
 | 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V353 CENTRO LIVE: local/Preview/E2E 80 jugadores/observabilidad PASS; inspección visual y prueba física iPhone pendientes |
 
-La prioridad activa por la observación física más reciente es `PEND-VOZ-003` V358; `PEND-LIVE-018` V353 conserva su E2E aprobado y sus puertas físicas abiertas. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
+La prioridad activa por la observación física más reciente es `PEND-VOZ-003` V359; `PEND-LIVE-018` V353 conserva su E2E aprobado y sus puertas físicas abiertas. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
 
 **Autorización de ejecución permanente:** el propietario ordenó el 26 de agosto de 2026 agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versión cuando esté realmente probada. Esta autorización no convierte un `FAIL` en `PASS` ni permite simular licencias, credenciales o integraciones externas inexistentes.
 
@@ -144,7 +144,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V358 CONTINUIDAD INTEGRADA SOBRE V357; PREVIEW Y VALIDACIÓN FÍSICA IPHONE PENDIENTES
+**Estado:** V358 RECHAZADA EN IPHONE; V359 RECUPERACIÓN DEL PARSER EN AUDITORÍA; PREVIEW Y VALIDACIÓN FÍSICA PENDIENTES
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 

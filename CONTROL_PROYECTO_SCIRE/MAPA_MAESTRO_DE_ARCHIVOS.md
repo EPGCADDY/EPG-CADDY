@@ -912,3 +912,13 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `test-v358-active-round-reopen.mjs`, `audit-project.mjs` | Reproduce reapertura, persistencia y flujo explícito de nueva ronda. | RC-029 queda dentro de la auditoría maestra. |
 | `test-v311-neutral-match-home-link.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs` | Inicio condicionado e identificador acumulado V358. | Match/Four Ball, LIVE, Registro, multihoyos, Cedar y recuperación Safari siguen obligatorios. |
 | documentos rectores, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-029, estado y árbol exacto V358. | Producción y PASS físico permanecen puertas separadas. |
+
+## V359-IOS-SCORE-PARSER-RECOVERY
+
+| Archivo exacto | Mapa V359 | Control |
+|---|---|---|
+| `index-grupal.html` | Interpreta frases físicas con `hoyo número`, `golpes`, `tiró` y hoyo final para dos jugadores. | Sólo reubica el bloque cuando todas las entradas comparten un único hoyo; lo desconocido se rechaza. |
+| `service-worker.js` | Shell V359. | Invalida V358 en iPhone. |
+| `test-v359-ios-score-parser-recovery.mjs`, `audit-project.mjs` | Reproduce Jaime/Gustavo en tres órdenes naturales y una negativa. | RC-030 queda obligatorio. |
+| bancos V270 y V354–V358 | Regresión acumulada de score, voz, Cedar y continuidad. | Ninguna corrección anterior se elimina. |
+| documentos rectores, ambos ROADMAPS, inventario y reconstrucción PDF | Rechazo V358 y trazabilidad V359. | Producción continúa intacta. |

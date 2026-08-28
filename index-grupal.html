@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/official-logos/golf-score-card-gt-pwa-v345-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V358-VOICE-ROUND-CONTINUITY-20260828">
+<meta name="gscg-build" content="V359-IOS-SCORE-PARSER-RECOVERY-20260828">
 <meta name="gscg-ai-voice" content="CEDAR-1.15-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -2915,7 +2915,7 @@ function matchPlayerAt(tokens,start){
   return null
 }
 const SCORE_WORDS=new Set(["gross","gros","score","scores","scor","escor"]);
-const SCORE_FILLERS=new Set(["con","un","una","de","en","el","del","para","hizo","hace","anota","anotar","registro","registrar","es","y","luego","despues","después","jugador","jugadora"]);
+const SCORE_FILLERS=new Set(["con","un","una","de","en","el","del","para","hizo","hace","anota","anotar","registro","registrar","es","y","luego","despues","después","jugador","jugadora","numero","no","golpe","golpes","tiro","tiros","marco","marca","saco","saque","metio","puso","pone","le","fue","fueron"]);
 const CORRECTION_WORDS=new Set(["correccion","corrijo","corrigiendo","corregir","corrige","corregido"]);
 const GOLF_SCORE_WORDS=new Set(["aguila","eagle","igle","aguiler","birdie","birdy","berdie","verdi","verde","pajaro","verdura","bogey","boggy","bogui","bogi","par","parinelo","paraso","parcuato","even","doble","double","w","doblete","triple","triplete","espanol","español"]);
 function readGolfGrossAt(tokens,i,hole){
@@ -3123,12 +3123,19 @@ function parseScoreSequenceTranscript(transcript,{defaultPlayer=null,readScoreAt
   while(i<tokens.length){
     if(CORRECTION_WORDS.has(tokens[i])||SCORE_FILLERS.has(tokens[i])||SCORE_WORDS.has(tokens[i])){sawRelevant=true;i++;continue}
     if(tokens[i]==="hoyo"||tokens[i]==="hoyos"){
-      sawRelevant=true;const hn=parseSpanishNumberTokens(tokens,i+1);
+      sawRelevant=true;let holeAt=i+1;while(["numero","no"].includes(tokens[holeAt]))holeAt++;const hn=parseSpanishNumberTokens(tokens,holeAt);
       if(!hn||hn.value<1||hn.value>18)return{matched:true,ok:false,speech:"Error"};
-      explicitHole=true;sequenceClosed=false;currentHole=hn.value;let j=skipScoreFillers(tokens,hn.next),named=matchPlayerAt(tokens,j);
+      const previouslyExplicit=explicitHole;sequenceClosed=false;currentHole=hn.value;let j=skipScoreFillers(tokens,hn.next),named=matchPlayerAt(tokens,j);
       if(named){activePlayer=named.player;j=skipScoreFillers(tokens,named.next)}
       if(!activePlayer)return fail();
-      const score=scoreReader(tokens,j,currentHole);if(!score)return fail();
+      const score=scoreReader(tokens,j,currentHole);
+      if(!score&&!named&&entries.length&&!previouslyExplicit){
+        const priorHoles=new Set(entries.map(entry=>Number(entry.hole)));
+        if(priorHoles.size!==1)return fail();
+        for(const entry of entries)entry.hole=hn.value;
+        explicitHole=true;currentHole=nextOperationalHole(hn.value,entries,{ignoreRecordedKeys});i=j;continue
+      }
+      if(!score)return fail();explicitHole=true;
       addEntry(activePlayer,currentHole,score);i=score.next;continue;
     }
     const m=matchPlayerAt(tokens,i);
@@ -3136,7 +3143,7 @@ function parseScoreSequenceTranscript(transcript,{defaultPlayer=null,readScoreAt
       if(sequenceClosed)return fail();
       sawRelevant=true;activePlayer=m.player;let j=skipScoreFillers(tokens,m.next),hole=currentHole;
       if(tokens[j]==="hoyo"||tokens[j]==="hoyos"){
-        const hn=parseSpanishNumberTokens(tokens,j+1);if(!hn||hn.value<1||hn.value>18)return{matched:true,ok:false,speech:"Error"};
+        let holeAt=j+1;while(["numero","no"].includes(tokens[holeAt]))holeAt++;const hn=parseSpanishNumberTokens(tokens,holeAt);if(!hn||hn.value<1||hn.value>18)return{matched:true,ok:false,speech:"Error"};
         explicitHole=true;sequenceClosed=false;hole=hn.value;j=skipScoreFillers(tokens,hn.next);
       }
       if(!hole)return fail();

@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 const html=readFileSync("index-grupal.html","utf8");
 const worker=readFileSync("service-worker.js","utf8");
 
-assert.match(html,/V358-VOICE-ROUND-CONTINUITY-20260828/);
-assert.match(worker,/gscg-mobile-v358-voice-round-continuity/);
+assert.match(html,/V359-IOS-SCORE-PARSER-RECOVERY-20260828/);
+assert.match(worker,/gscg-mobile-v359-ios-score-parser-recovery/);
 assert.match(html,/if\(directHome&&!sfEmergency&&!demoControlManual&&!round\.configured\)openNewRoundDraft\(\)/);
 assert.doesNotMatch(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
 

@@ -1758,3 +1758,13 @@ Evidencia raíz: 16:43:01, 16:43:23, 16:43:54, 16:44:06, 16:45:44 y 16:45:58 UTC
 | `test-v311-neutral-match-home-link.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs` | Conservan inicio directo condicionado y regresión acumulada con el identificador V358. | Match/Four Ball, LIVE, Registro, multihoyos, Cedar, privacidad y gesto Safari siguen activos. |
 | `audit-project.mjs` | Ejecuta V358 dentro de la puerta maestra. | Un FAIL detiene publicación. |
 | documentos rectores, mapa, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-029 y sello reproducible. | Preview no equivale a PASS físico ni autoriza Producción. |
+
+## V359-IOS-SCORE-PARSER-RECOVERY
+
+| Archivo exacto | Responsabilidad V359 | Candado |
+|---|---|---|
+| `index-grupal.html` | Amplía vocabulario físico seguro y acepta hoyo al final de un único bloque. | No adivina jugadores, hoyos ni scores; palabras desconocidas invalidan la tanda. |
+| `test-v359-ios-score-parser-recovery.mjs` | Ejecuta tres formas Jaime/Gustavo y un caso negativo. | Exige pares jugador-score exactos. |
+| `service-worker.js` | Caché `gscg-mobile-v359-ios-score-parser-recovery`. | El iPhone recibe el parser nuevo. |
+| `audit-project.mjs`, bancos V270 y V354–V358 | Puerta maestra y regresión acumulada. | Un FAIL detiene Preview. |
+| registro, cola, matrices, ROADMAPS, reconstrucción e inventario | RC-030 y V358 rechazada. | Sólo `browser_fallback_score_applied` físico puede cerrar V359. |
