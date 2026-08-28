@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V351-R11 RECHAZADA EN IPHONE: Registro y un hoyo individual funcionaron, pero las alternativas secundarias anularon el multihoyos con `ambiguous_score` y después Safari devolvió `audio-capture`. V351-R12 prioriza la hipótesis principal completa, crea una instancia nueva y recupera el transporte de forma acotada. Requiere Preview y nueva prueba física · `PEND-VOZ-003`
+**Estado:** V351-R12 RECHAZADA: el propietario confirmó Registro, dictado multi-hoyo y clima visible, pero al reabrir se montó Registro vacío y la conversación general no operó allí. V351-R13 restaura la ronda viva, reserva el reemplazo para `INICIAR RONDA` y permite preguntas generales explícitas desde Registro sin desviar listados inválidos. Requiere Preview y prueba física · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -476,3 +476,13 @@ Los logs R11 muestran Registro aplicado, score individual aplicado a las 13:39:4
 R12 identifica por separado la hipótesis principal `result[i][0]`: si forma una orden completa y determinista, una alternativa secundaria no puede vetarla. Las alternativas sólo recuperan una principal inválida; si dos recuperaciones completas discrepan, la tanda sigue sin escribirse. Tras `onend` o `audio-capture`, se liberan manejadores y se abre una instancia nueva; el error físico admite como máximo dos reintentos.
 
 `test-v351-r12-ios-primary-transport-recovery.mjs` verifica principal contra alternativa conflictiva, rechazo seguro sin principal y telemetría privada; `test-v351-r11-ios-natural-end-recovery.mjs` reproduce `onend` y `audio-capture` con instancias nuevas y una sola pregunta general; el banco multi-hoyo conserva 1,188 Gross y cero IA para Score. Producción permanece intacta hasta Preview READY y PASS físico iPhone.
+
+## V351-R13-LIVE-ROUND-RELOAD · tarjeta activa al cerrar y reabrir · 28 de agosto de 2026
+
+La prueba física aprobó en R12 el Registro, dos hoyos dictados juntos y una consulta visible de clima. R12 queda rechazada porque el enlace raíz `?inicio=1` abría automáticamente un borrador de Registro aunque existiera una ronda configurada; el usuario veía una tarjeta en blanco al volver a la aplicación.
+
+R13 monta directamente la ronda configurada y sus scores. Registro sólo se abre automáticamente cuando no existe ronda activa; pulsar `NUEVA RONDA` conserva la tarjeta vigente y únicamente `INICIAR RONDA` puede reemplazarla. `pagehide`, `beforeunload`, almacenamiento principal/respaldo, Match Play, Four Ball y Stableford mantienen sus escritores existentes.
+
+La ruta Web Speech de Registro distingue ahora dos fronteras: un listado válido se aplica localmente; una pregunta explícita se entrega a AI UNIVERSAL y queda visible. Una frase ambigua que no cumple ninguno de los dos contratos se rechaza localmente y jamás se usa como consulta.
+
+`test-v351-r13-live-round-reload.mjs` persiste una tarjeta Match Play con dos jugadores y múltiples hoyos, simula cierre/reapertura con `?inicio=1`, exige la misma ronda y los mismos Gross y verifica que abrir el borrador no sustituya el objeto activo. La matriz R12 de 1,188 Gross, clima y consultas permanece obligatoria. Producción continúa intacta hasta Preview READY y PASS físico de cierre/reapertura.

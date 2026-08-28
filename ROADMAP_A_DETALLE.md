@@ -1752,3 +1752,19 @@ Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R11 no qued
 | `scripts/rebuild-inventory-pdfs.py`, tres PDF y `INVENTARIOS_V311.lock.json` | Corte `V351-R12-IOS-PRIMARY-TRANSPORT-RECOVERY`. | Inventario y sello PASS sobre el árbol exacto. |
 
 Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R12 no queda aprobada hasta Preview READY y PASS físico iPhone de Registro, multihoyos y una pregunta general.
+
+## V351-R13 · rechazo R12 y restauración de tarjeta viva · 28 de agosto de 2026
+
+| Archivo exacto | Cambio V351-R13 | Evidencia exigida |
+|---|---|---|
+| `index-grupal.html` | Meta/build R13; `?inicio=1` abre Registro sólo si `round.configured` es falso; una pregunta inequívoca desde Registro usa `answerBrowserVoiceQuery`. | Cerrar/reabrir monta la tarjeta; clima, tráfico y pregunta general llegan a AI, pero un listado inválido queda local. |
+| `service-worker.js` | Revisión de shell `V351-R13-LIVE-ROUND-RELOAD` con namespace histórico compatible. | La PWA instalada detecta el script nuevo, recarga la entrada y conserva la compatibilidad de sus bancos acumulados. |
+| `test-v351-r13-live-round-reload.mjs` | Persiste Match Play de dos jugadores con hoyos múltiples, simula reapertura, prueba `NUEVA RONDA` no destructiva y clasifica preguntas generales frente a listados. | Mismo id, jugadores, hoyos y Gross; ninguna pantalla de Registro automática; preguntas explícitas reconocidas. |
+| `test-v311-neutral-match-home-link.mjs` | Cambia el candado histórico que obligaba a abrir configuración en cada entrada raíz. | `?inicio=1` respeta la ronda viva. |
+| `test-v281-pwa-installation.mjs` | Alinea la caché instalable. | Actualización de red y fallback offline conservados. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` y bancos R11/R12 | Conservan multi-hoyos, transporte y consultas. | 1,188 Gross y cero IA para Score siguen aprobando. |
+| `scripts/rebuild-inventory-pdfs.py` y tres inventarios PDF | Genera el inventario visual en temporal, lo compacta antes del sello y elimina el temporal. | Tres PDF no vacíos, hashes coincidentes y render legible de portada, página alta y cierre. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-037. | R12 rechazada; causa, escape, evidencia y control permanente. |
+| `COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAP e inventario lock | Registro y sello del candidato R13. | Candados documental, ROADMAP e inventario en PASS. |
+
+Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R13 no queda aprobada hasta Preview READY y prueba física iPhone de cerrar y reabrir la misma tarjeta.

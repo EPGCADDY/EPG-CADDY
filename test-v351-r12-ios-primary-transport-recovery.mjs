@@ -3,7 +3,7 @@ import fs from "node:fs";
 import {sanitizeVoiceHealth} from "./api/voice-health.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-assert.match(html,/gscg-ios-voice-tail" content="V351-R12-IOS-PRIMARY-TRANSPORT-RECOVERY-20260828"/);
+assert.match(html,/gscg-ios-voice-tail" content="V351-R13-LIVE-ROUND-RELOAD-20260828"/);
 
 const normalizeSpeech=value=>String(value||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñ]+/g," ").replace(/\s+/g," ").trim();
 const from=html.indexOf("function mergeBrowserVoiceSegments"),to=html.indexOf("\nfunction clearBrowserVoiceSilenceTimer",from);

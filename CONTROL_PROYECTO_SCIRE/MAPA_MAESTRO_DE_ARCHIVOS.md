@@ -915,3 +915,18 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `audit-project.mjs` | Incorpora la regresión R12 a la auditoría maestra. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-036 rechaza R11 y fija causa, escape, evidencia y control permanente. |
 | `COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, ambos ROADMAP y `scripts/rebuild-inventory-pdfs.py` | Registran y sellan el mismo candidato R12. |
+
+## V351-R13-LIVE-ROUND-RELOAD · tarjeta activa persistente
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | Restaura y monta la ronda configurada al abrir el enlace raíz; Registro automático sólo se abre cuando no existe ronda activa; preguntas explícitas desde Registro llegan a AI UNIVERSAL sin desviar listados inválidos. |
+| `service-worker.js` | Renueva la revisión del shell instalable R13 y actualiza la entrada de red conservando el namespace histórico compatible. |
+| `test-v351-r13-live-round-reload.mjs` | Simula persistencia, cierre/reapertura, multi-hoyos, borrador no destructivo y frontera pregunta/listado. |
+| `test-v311-neutral-match-home-link.mjs` | Impide que `?inicio=1` vuelva a cubrir una tarjeta activa con Registro vacío. |
+| `test-v281-pwa-installation.mjs` | Exige la revisión R13 y conserva el namespace compatible de la PWA. |
+| `audit-project.mjs` | Incorpora la regresión R13 a la auditoría maestra. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-037 rechaza R12 y fija el control permanente de reapertura. |
+| `test-v336-microphone-transport.mjs` | Exige conversación general desde Registro antes del rechazo local y conserva la prohibición de enviar un listado fallido a IA. |
+| `scripts/rebuild-inventory-pdfs.py` | Compacta con Ghostscript el inventario visual antes de sellarlo para impedir un PDF truncado, conservando legibilidad verificada. |
+| `COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, ambos ROADMAP y `scripts/rebuild-inventory-pdfs.py` | Registran y sellan el mismo candidato R13. |

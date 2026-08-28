@@ -29,8 +29,9 @@ TMP = ROOT / "tmp" / "pdfs"
 OVERALL = OUTPUT / "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf"
 DETAIL = OUTPUT / "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf"
 IMAGES = OUTPUT / "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf"
+IMAGES_RAW = TMP / "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.raw.pdf"
 LOCK = ROOT / "CONTROL_PROYECTO_SCIRE" / "INVENTARIOS_V311.lock.json"
-INVENTORY_VERSION = "V351-R12-IOS-PRIMARY-TRANSPORT-RECOVERY"
+INVENTORY_VERSION = "V351-R13-LIVE-ROUND-RELOAD"
 REGULAR = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
@@ -124,6 +125,23 @@ def image_inventory_pdf(target):
     document.save()
 
 
+def compact_image_inventory(source, target):
+    subprocess.run(
+        [
+            "gs", "-dSAFER", "-dBATCH", "-dNOPAUSE", "-sDEVICE=pdfwrite",
+            "-dCompatibilityLevel=1.7", "-dPDFSETTINGS=/ebook",
+            "-dDetectDuplicateImages=true", "-dCompressFonts=true",
+            "-dColorImageResolution=144", "-dGrayImageResolution=144",
+            "-dMonoImageResolution=300", f"-sOutputFile={target}", str(source),
+        ],
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    source.unlink(missing_ok=True)
+
+
 def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -171,7 +189,8 @@ def main():
     register_fonts()
     markdown_pdf(ROOT / "ROADMAP_OVERALL.md", OVERALL, "Inventario Golf Score Card GT - OVERALL V311")
     markdown_pdf(ROOT / "ROADMAP_A_DETALLE.md", DETAIL, "Inventario Golf Score Card GT - A DETALLE V311")
-    image_inventory_pdf(IMAGES)
+    image_inventory_pdf(IMAGES_RAW)
+    compact_image_inventory(IMAGES_RAW, IMAGES)
     paths = [OVERALL, DETAIL, IMAGES]
     write_lock(paths)
     for path in paths:

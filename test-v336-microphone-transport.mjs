@@ -47,12 +47,12 @@ assert.match(html,/submitAiUniversalText[\s\S]*?setPrimaryVoiceMatrix\("respondi
 const browserProcessStart=html.indexOf("function processBrowserVoiceTranscript");
 const browserProcessEnd=html.indexOf("\nfunction startBrowserVoiceFallback",browserProcessStart);
 const browserProcess=html.slice(browserProcessStart,browserProcessEnd);
-assert.match(browserProcess,/if\(context==="setup"\)[\s\S]*?browser_fallback_setup_applied[\s\S]*?browser_fallback_setup_rejected[\s\S]*?return false/);
+assert.match(browserProcess,/if\(context==="setup"\)[\s\S]*?browser_fallback_setup_applied[\s\S]*?isGeneralConversationIntent\(clean\)[\s\S]*?answerBrowserVoiceQuery\(context,clean\)[\s\S]*?browser_fallback_setup_rejected[\s\S]*?return false/);
 assert.doesNotMatch(browserProcess,/looksLikeSetupRosterTranscript\(clean\)/);
-assert.ok(browserProcess.indexOf("browser_fallback_setup_rejected")<browserProcess.indexOf("routeAiUniversalAppText(clean)"));
+assert.ok(browserProcess.indexOf("isGeneralConversationIntent(clean)")<browserProcess.indexOf("browser_fallback_setup_rejected"),"Una pregunta explícita en Registro debe llegar al Caddie antes del rechazo local");
 assert.ok(browserProcess.indexOf("browser_fallback_score_applied")<browserProcess.indexOf("submitAiUniversalText(clean)"),"Score debe cerrarse localmente antes de cualquier IA");
 assert.match(browserProcess,/browser_fallback_score_applied":"browser_fallback_score_rejected/);
-assert.match(browserProcess,/openAiUniversalPanel\(false,\{focus:false\}\)[\s\S]*?browser_fallback_query_answered/);
+assert.match(browserProcess,/function answerBrowserVoiceQuery[\s\S]*?openAiUniversalPanel\(false,\{focus:false\}\)[\s\S]*?browser_fallback_query_answered/);
 assert.match(html,/function mergeBrowserVoiceSegments[\s\S]*?overlap/);
 assert.match(html,/function finalizeBrowserVoiceFallback[\s\S]*?mergeBrowserVoiceSegments\(browserVoiceTranscript,browserVoiceInterim\)/);
 assert.match(html,/recognition\.continuous=true/);

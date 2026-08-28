@@ -10,7 +10,7 @@ const sourceBetween=(start,end)=>{
 
 assert.match(html,/gscg-consecutive-hole-voice" content="V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
 assert.match(html,/gscg-hybrid-consecutive-hole-voice" content="V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
-assert.match(html,/gscg-ios-voice-tail" content="V351-R12-IOS-PRIMARY-TRANSPORT-RECOVERY-20260828"/);
+assert.match(html,/gscg-ios-voice-tail" content="V351-R13-LIVE-ROUND-RELOAD-20260828"/);
 assert.match(html,/function parseMultiHoleScoreSegments[\s\S]*?parseHoleListScoreSegments[\s\S]*?parseHoleFirstScoreBlocks/);
 assert.match(html,/const listed=parseHoleListScoreSegments[\s\S]*?if\(listed\?\.ok\)return listed[\s\S]*?const blocked=parseHoleFirstScoreBlocks[\s\S]*?if\(blocked\?\.ok\)return blocked/);
 

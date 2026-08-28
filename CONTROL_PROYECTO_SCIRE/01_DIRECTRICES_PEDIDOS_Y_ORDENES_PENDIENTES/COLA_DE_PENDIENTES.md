@@ -143,7 +143,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V351-R11 RECHAZADA EN IPHONE · V351-R12 EN CANDIDATO CON HIPÓTESIS PRINCIPAL AUTORITATIVA, INSTANCIA NUEVA Y RECUPERACIÓN ACOTADA DE `AUDIO-CAPTURE`; PREVIEW Y VALIDACIÓN FÍSICA PENDIENTES
+**Estado:** V351-R12 RECHAZADA DESPUÉS DE APROBAR REGISTRO, MULTI-HOYOS Y CLIMA: FALLARON REAPERTURA Y CONVERSACIÓN GENERAL DESDE REGISTRO · V351-R13 EN CANDIDATO; PREVIEW Y VALIDACIÓN FÍSICA PENDIENTES
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -234,6 +234,14 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - Cada `onend` natural y cada recuperación de `audio-capture` usa una instancia nueva de reconocimiento. El transporte libera manejadores anteriores, reintenta como máximo dos veces y nunca queda indefinidamente en `RESPONDIENDO`.
 - Cliente y servidor aceptan el mismo catálogo de eventos de inicio, reinicio, error y recuperación. Sólo salen códigos cerrados; nunca transcripción, jugadores, scores ni ubicación.
 - `test-v351-r12-ios-primary-transport-recovery.mjs`, el banco de 1,188 Gross y la simulación `audio-capture → instancia nueva → consulta general` quedan obligatorios. Producción permanece intacta hasta Preview READY y PASS físico iPhone.
+
+### Corrección activa V351-R13
+
+- R12 sí aplicó Registro y dictado multi-hoyo, y respondió clima por escrito. El defecto nuevo fue de arranque: `?inicio=1` abría Registro vacío aunque la ronda configurada siguiera persistida.
+- R13 muestra primero la tarjeta activa al cerrar/reabrir. Sólo abre Registro automático cuando no existe una ronda configurada.
+- `NUEVA RONDA` conserva y persiste la tarjeta vigente; únicamente `INICIAR RONDA` confirma el reemplazo.
+- Una pregunta explícita desde Registro pasa a AI UNIVERSAL; un listado inválido continúa rechazado localmente y nunca se disfraza de pregunta.
+- `test-v351-r13-live-round-reload.mjs` fija el caso Match Play, dos jugadores, varios hoyos, almacenamiento, cierre/reapertura y borrador no destructivo. Producción permanece intacta hasta Preview READY y PASS físico.
 
 ### Condiciones de cierre futuro
 

@@ -1,6 +1,7 @@
 "use strict";
 
 const CACHE_NAME="gscg-mobile-v332-dual-currency-matrix";
+const SHELL_REVISION="V351-R13-LIVE-ROUND-RELOAD";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
