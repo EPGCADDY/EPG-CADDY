@@ -1341,6 +1341,8 @@ Reversión: retirar la rama/deployment Preview V354 y conservar V353; no hay mig
 
 Evidencia local final V354: `npm run audit` PASS con 98 paquetes; manual editorial PASS en 74 páginas; manual visual PASS en 74 páginas, resolución 2160×4320 y densidad mínima 300 dpi; gate comercial candidato PASS con 11 aprobaciones externas pendientes; gate de calidad PASS con 7 controles, 7 entradas y 11 gates; inventario PASS con 387 fuentes y tres PDF; `npm audit --audit-level=moderate` reporta cero vulnerabilidades. La evidencia Preview, navegador, logs y plataforma remota se registra sólo después de la publicación de la rama candidata.
 
+Corrección de compilación V354: `test-project-quality-gate.mjs` usa archivos del working tree sólo durante la validación local previa al commit y usa exclusivamente blobs de `HEAD` dentro de Vercel. Esto elimina el falso negativo provocado por archivos transitorios del instalador sin permitir que un deployment valide contenido distinto del commit. El primer Preview falló cerrado; el banco local completo volvió a pasar antes del siguiente commit.
+
 ### Archivos exactos V354
 
 - `.github/dependabot.yml`

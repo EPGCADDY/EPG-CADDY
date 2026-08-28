@@ -1686,6 +1686,8 @@ Archivos exactos V353: `live-hub.html`, `live-hub.js`, `live.html`, `live-view.j
 
 Evidencia local final V354: `npm run audit` PASS con 98 paquetes; manual editorial PASS en 74 páginas; manual visual PASS en 74 páginas, resolución 2160×4320 y densidad mínima 300 dpi; gate comercial candidato PASS con 11 aprobaciones externas pendientes; gate de calidad PASS con 7 controles, 7 entradas y 11 gates; inventario PASS con 387 fuentes y tres PDF; `npm audit --audit-level=moderate` reporta cero vulnerabilidades. Preview, navegador, logs y CodeQL remotos continúan separados hasta generar evidencia en la plataforma. Producción no cambia. El rollback no exige migración.
 
+Corrección de compilación V354: `test-project-quality-gate.mjs` selecciona `GSCG_INVENTORY_WORKTREE=1` únicamente en la prueba local no confirmada y `GSCG_INVENTORY_WORKTREE=0` cuando el propio test corre bajo Vercel. En plataforma, `scripts/inventory-gate.mjs` calcula cada objeto desde `HEAD`; ningún archivo transitorio de instalación puede alterar o sustituir el contenido auditado. El primer Preview falló cerrado y esta causa quedó corregida sin reducir la puerta negativa de repositorio equivocado.
+
 ### Archivos exactos V354
 
 - `.github/dependabot.yml`
