@@ -1427,3 +1427,5 @@ La URL explícita `nueva_ronda=1` abre Registro aun con una ronda activa, conser
 ### Promoción pública autorizada V363 — 28 de agosto de 2026
 
 Se autorizó la promoción de V363 a `main`. El Gate 0 conserva la base protegida como ancestro obligatorio y, en el checkout superficial de Vercel, valida repositorio canónico y coincidencia exacta entre `VERCEL_GIT_COMMIT_SHA` y `HEAD`. No se modificó lógica de tarjeta, Match Play, Ronda Normal ni micrófono.
+
+Los tres inventarios V311 fueron regenerados y sellados después de registrar esta promoción.
