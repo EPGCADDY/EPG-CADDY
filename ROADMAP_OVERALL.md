@@ -1432,3 +1432,7 @@ La prueba viva V364 aprobó AI UNIVERSAL 200 y la consulta corta El Pulté Golf 
 ### Integración autorizada de `main` Intocables en V365
 
 La línea paralela `4e60842` se integra sin descartar V363–V365: incorpora `ACTIVE_ROUND_KEY`, reportes Match con nombres/posición, cierre Normal intacto, safe areas, aislamiento de Registro/LIVE/instalación y guard Safari de 1.2 s aunque falte `onend`. `Intocables/` y los bancos de comportamiento grabado se ejecutan junto con OIDC, tráfico exacto y voz multiproveedor. La base protegida sigue siendo ancestro de `main`; ningún cambio revierte Producción. La entrega exige tres pruebas externas consecutivas y después iPhone físico.
+
+### V365-R1 · validación de `main` en checkout superficial
+
+El primer despliegue integrado `0390972` fue bloqueado antes de publicar porque el checkout superficial de Preview no contenía el objeto de `main` y el gate confundió `HEAD` de la rama con Producción. `scripts/project-quality-gate.mjs` consulta el SHA real de `main`, recupera su historia limitada cuando el objeto no existe y rechaza la compilación si no puede demostrar la ascendencia de la base protegida. `test-project-quality-gate.mjs` prohíbe volver a sustituir silenciosamente `main` por la rama Preview.

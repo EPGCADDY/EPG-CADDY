@@ -1853,3 +1853,10 @@ La aceptación exige en el mismo Preview: consulta general 200 mediante Gateway 
 | `Intocables/`, `test-v363-intocables-behavior.mjs`, `test-v363-recorded-mobile-behavior.mjs` | INT-01…INT-04 y reproducción del cierre sin `onend`. | Un FAIL bloquea build y entrega. |
 | evidencia `V363_PRUEBAS_COMPORTAMIENTO/` | Capturas FAIL, reporte, póster y MP4 automático inventariados. | Evidencia automática no sustituye iPhone físico. |
 | gates V363–V365 | OIDC, privacidad Routes, destino local, Onyx/Rex y regresión histórica. | Tres pruebas externas consecutivas antes del enlace. |
+
+## V365-R1 · GATE DE MAIN EN VERCEL SHALLOW
+
+| Archivo exacto | Corrección | Candado |
+|---|---|---|
+| `scripts/project-quality-gate.mjs` | Resuelve el SHA remoto actual de `main` y ejecuta `git fetch --depth=512 origin main` si el checkout superficial no contiene ese objeto. | Una rama Preview nunca vuelve a sustituir a Producción para validar ascendencia. |
+| `test-project-quality-gate.mjs` | Exige recuperación explícita de `main` y prohíbe el fallback a `HEAD`. | Un fallo de red o historia insuficiente bloquea; no se aprueba por aproximación. |

@@ -53,17 +53,22 @@ if(isVercel){
 }
 const baseline=matrix.canonical?.productionBaselineCommit||'';
 let protectedMain=git(['rev-parse','origin/main']);
-if(!protectedMain){
-  const canonicalUrl=matrix.canonical?.repository||'https://github.com/EPGCADDY/EPG-CADDY';
-  protectedMain=git(['ls-remote',canonicalUrl,'refs/heads/main']).split(/\s+/)[0]||'';
+const canonicalUrl=matrix.canonical?.repository||'https://github.com/EPGCADDY/EPG-CADDY';
+if(isVercel||!protectedMain){
+  const remoteMain=git(['ls-remote',canonicalUrl,'refs/heads/main']).split(/\s+/)[0]||'';
+  if(remoteMain)protectedMain=remoteMain;
+}
+if(isVercel&&protectedMain&&spawnSync('git',['cat-file','-e',`${protectedMain}^{commit}`]).status!==0){
+  const fetched=spawnSync('git',['fetch','--no-tags','--depth=512','origin','main'],{encoding:'utf8'});
+  if(fetched.status===0)protectedMain=git(['rev-parse','FETCH_HEAD'])||protectedMain;
 }
 const mainObjectAvailable=protectedMain&&spawnSync('git',['cat-file','-e',`${protectedMain}^{commit}`]).status===0;
-const verifiedMain=mainObjectAvailable?protectedMain:git(['rev-parse','HEAD']);
+const verifiedMain=mainObjectAvailable?protectedMain:'';
 const baselineIsAncestor=baseline&&verifiedMain&&spawnSync(
   'git',['merge-base','--is-ancestor',baseline,verifiedMain],{encoding:'utf8'}
 ).status===0;
 if(!baselineIsAncestor){
-  errors.push(`Producción/main no desciende de la base protegida ${baseline||'ausente'}; recibido ${verifiedMain||'ausente'}.`);
+  errors.push(`Producción/main no está disponible o no desciende de la base protegida ${baseline||'ausente'}; recibido ${verifiedMain||protectedMain||'ausente'}.`);
 }
 
 for(const path of ['ROADMAP_OVERALL.md','ROADMAP_A_DETALLE.md','GOLF_SCORE_CARD_GT_PENDING_MATRIX.md','audit-project.mjs','scripts/roadmap-gate.mjs','scripts/inventory-gate.mjs']){

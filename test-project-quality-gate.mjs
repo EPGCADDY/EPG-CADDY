@@ -3,6 +3,9 @@ import {spawnSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 
 assert.match(readFileSync('.gitignore','utf8'),/(?:^|\n)\.vercel\/(?:\n|$)/);
+const gateSource=readFileSync('scripts/project-quality-gate.mjs','utf8');
+assert.match(gateSource,/fetch','--no-tags','--depth=512','origin','main'/,'Vercel shallow debe recuperar main real antes de validar ascendencia.');
+assert.doesNotMatch(gateSource,/mainObjectAvailable\?protectedMain:git\(\['rev-parse','HEAD'\]\)/,'Una rama Preview no puede sustituir silenciosamente a main.');
 
 const pass=spawnSync(process.execPath,['scripts/project-quality-gate.mjs'],{encoding:'utf8'});
 assert.equal(pass.status,0,pass.stderr||pass.stdout);
