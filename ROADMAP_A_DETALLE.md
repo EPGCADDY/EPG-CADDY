@@ -1836,3 +1836,4 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 - Integridad: la base `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` debe seguir siendo ancestro fuera de Vercel.
 - Vercel: repositorio `EPGCADDY/EPG-CADDY` y SHA expuesto deben coincidir exactamente con `HEAD`.
 - Fuera de alcance: tarjeta, persistencia de ronda, Match Play, Ronda Normal, voz y comunicación universal permanecen idénticos al candidato V363 probado.
+- Inventario: tres PDF V311 regenerados y nuevo `sourceDigest` sellado antes del montaje.
