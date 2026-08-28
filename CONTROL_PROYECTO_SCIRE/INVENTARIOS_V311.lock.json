@@ -1,18 +1,18 @@
 {
   "version": "V363-EXTERNAL-SERVICE-RECOVERY",
-  "generatedAt": "2026-08-28T20:48:13Z",
+  "generatedAt": "2026-08-28T20:57:43Z",
   "sourceFileCount": 373,
-  "sourceDigest": "ef88bd8a3080d6677cbdd1ea4bd1541a9e3f59df4ddc1ed51353ea16c23611f8",
+  "sourceDigest": "de7ba02f7c3e981690dbd1d33d478156a069a735df1631617b1951c070a0251e",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 195675,
-      "sha256": "2ed07d131b2bedbfb8e861fe2afe25e0afa62367e044b77d13a3f5eaa54f554c"
+      "size": 196891,
+      "sha256": "4712fb3345a9d29addcea010e1faed4b1fae4392896e6c65a053ae8f723d458b"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 218874,
-      "sha256": "fbc3d8991f0be97b929c1078f8bdc8414bee2e2c0811a9a060235e87965cc353"
+      "size": 220190,
+      "sha256": "679647f788fc70af5a8b99fcbd1a598d83413dd13c7aa7b07b5250267f140137"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

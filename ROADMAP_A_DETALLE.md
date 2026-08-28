@@ -1818,3 +1818,11 @@ Archivos exactos V361: `.github/workflows/roadmap-gate.yml`, `audit-project.mjs`
 | `scripts/rebuild-inventory-pdfs.py`, `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Constructor, inventarios y sello del candidato. | Se regeneran sólo después de cerrar código, pruebas y documentación. |
 
 La aceptación exige en el mismo Preview: consulta general 200 mediante Gateway cuando OpenAI directo esté sin saldo, `/api/voice-speech` 200 con `X-GSCG-Voice: onyx` o `cedar`, y tráfico real con ETA/demora/distancia o diagnóstico upstream concreto. Después exige iPhone físico para escucha, respuesta masculina y scores. Producción `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` permanece intacta.
+
+### V363-R1 · transferencia completa del archivo mayor
+
+| Archivo exacto | Causa y corrección | Control |
+|---|---|---|
+| `index-grupal.html` | El blob GitHub V363 inicial quedó truncado durante la transferencia programática; R1 vuelve a cargar exactamente los 764,642 bytes del candidato local ya auditado. | SHA/árbol final deben coincidir entre local y GitHub antes de reconstruir Preview. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Registran el rechazo `FAIL INVENTORY GATE` y la causa de transporte. | El nuevo commit satisface el candado remoto sin ocultar el intento fallido. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Recalcula la huella después del registro R1. | Vercel debe aprobar las 373 fuentes y tres PDF sellados. |
