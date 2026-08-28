@@ -1747,3 +1747,19 @@ Fuentes vivas: Google Maps Routes `TRAFFIC_AWARE_OPTIMAL` para tráfico; Open-Me
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Trazabilidad y sello del árbol V357. | Otra conversación localiza y conserva esta corrección. |
 
 Evidencia raíz: 16:43:01, 16:43:23, 16:43:54, 16:44:06, 16:45:44 y 16:45:58 UTC devolvieron 429 en `/api/session-grupal`; `/api/universal-ai` respondió 200. V357 elimina esa dependencia para escuchar en Safari. Producción permanece intacta.
+
+## V358-SYNCHRONIZED-PROGRESSIVE-VOICE
+
+| Archivo exacto | Responsabilidad V358 | Candado |
+|---|---|---|
+| `index-grupal.html` | Integra recuperación iPhone V357 con aplicación progresiva por hoyo, AI UNIVERSAL desde Registro/Score y persistencia de la ronda. | Cada resultado reconocido se renderiza antes del cierre; ambigüedad revierte; una pregunta nunca escribe score. |
+| `api/voice-health.js` | Añade `browser_fallback_round_progressive` al conjunto privado. | Sólo build, contexto, tiempo y cantidad; nunca contenido, nombres o ubicación. |
+| `service-worker.js` | Caché `gscg-mobile-v358-synchronized-progressive-voice`. | El iPhone invalida todos los shells V357. |
+| `test-v357-ios-voice-transport-recovery.mjs` | Conserva gesto, alternativas, reinicios, reintentos y `voiceOnly`. | La integración no pierde la recuperación concurrente. |
+| `test-v357-synchronized-progressive-voice.mjs` | Exige render incremental, reversión ambigua, frontera General y ronda viva al reabrir. | El lote no puede volver a esperar `onend`. |
+| `.github/workflows/roadmap-gate.yml`, `AGENTS.md`, `audit-project.mjs`, `package.json` | Ejecutan ambos bancos de voz y bloquean sustituciones entre ramas. | V354–V358 y tráfico/clima son acumulativos. |
+| `test-v311-neutral-match-home-link.mjs`, `test-v336-microphone-transport.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs` | Compatibilidad de inicio, transporte, LIVE, Registro, multi-hoyos y Cedar. | Ninguna función aprobada se remueve para reparar otra. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello V358 y tres PDF de inventario. | Árbol fuente y artefactos vuelven a contarse al final. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Estado único y trazabilidad literal. | Otra conversación debe partir de este corte sincronizado. |
+
+Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. La auditoría automática, el Preview, la inspección de navegador y la prueba física iPhone son puertas independientes.

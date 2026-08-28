@@ -43,6 +43,8 @@ const browserProcessEnd=html.indexOf("\nfunction startBrowserVoiceFallback",brow
 const browserProcess=html.slice(browserProcessStart,browserProcessEnd);
 assert.match(browserProcess,/if\(context==="setup"\)[\s\S]*?browser_fallback_setup_applied[\s\S]*?browser_fallback_setup_rejected[\s\S]*?return false/);
 assert.doesNotMatch(browserProcess,/looksLikeSetupRosterTranscript\(clean\)/);
+assert.ok(browserProcess.indexOf("isGeneralConversationIntent(clean)")<browserProcess.indexOf("browser_fallback_setup_rejected"));
+assert.match(browserProcess,/isGeneralConversationIntent\(clean\)[\s\S]*?answerBrowserVoiceQuery\(context,clean\)/);
 assert.ok(browserProcess.indexOf("browser_fallback_setup_rejected")<browserProcess.indexOf("routeAiUniversalAppText(clean)"));
 assert.match(html,/VOICE_HEALTH_EVENTS=new Set\([\s\S]*?"browser_fallback_setup_applied","browser_fallback_setup_rejected"/);
 assert.match(html,/setupFinalizeRequested\|\|setupLocked[\s\S]*?resetSetupCapture\(\)[\s\S]*?LISTO PARA ESCUCHAR/);

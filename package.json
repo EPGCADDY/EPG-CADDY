@@ -21,6 +21,7 @@
     "inventory:gate": "node scripts/inventory-gate.mjs",
     "quality:gate": "node scripts/project-quality-gate.mjs",
     "voice:ios-gate": "node test-v357-ios-voice-transport-recovery.mjs",
+    "voice:progressive-gate": "node test-v357-synchronized-progressive-voice.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

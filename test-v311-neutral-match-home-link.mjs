@@ -11,12 +11,13 @@ for(const obsolete of ["MATCH PLAY · CON HDCP","MATCH PLAY CON HDCP","NETO CON 
 }
 assert.doesNotMatch(artifacts,/Neto con handicap/i);
 assert.match(html,/const directHome=startupParams\.get\("inicio"\)==="1"/);
-assert.match(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
+assert.match(html,/if\(!round\.configured\)\{[\s\S]*?else if\(directHome\)openNewRoundDraft\(\)/);
+assert.doesNotMatch(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
 for(const source of ["/","/index.html","/inicio"]){
   const route=hosting.redirects?.find(item=>item.source===source);
   assert.equal(route?.destination,"/index-grupal.html?inicio=1",`${source} debe abrir Configura la ronda`);
 }
-assert.match(html,/function openNewRoundDraft\(\)\{[\s\S]*?persist\(\);[\s\S]*?openSetup\("new"\)/,"El inicio directo conserva la ronda guardada antes de abrir la pantalla principal");
+assert.match(html,/function openNewRoundDraft\(\)\{[\s\S]*?persist\(\);[\s\S]*?openSetup\("new"\)/,"Una nueva ronda confirmada conserva la transición antes de abrir Registro");
 assert.match(html,/id="fourBallRoundButton"[\s\S]*?<span>FOUR BALL<\/span>/);
 assert.match(html,/MATCH PLAY REQUIERE 2, 4 O 6 JUGADORES/);
 assert.match(html,/FOUR BALL REQUIERE 2, 4 O 6 JUGADORES/);

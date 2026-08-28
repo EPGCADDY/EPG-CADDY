@@ -902,3 +902,15 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `.github/workflows/roadmap-gate.yml`, `AGENTS.md`, `audit-project.mjs`, `package.json` | Candado entre conversaciones y ejecución obligatoria. | Voz V354–V357 y tráfico/clima V324/V337/V356 no pueden omitirse. |
 | `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs` | Compatibilidad acumulada. | LIVE, Registro, multi-hoyos y Cedar intactos. |
 | documentos rectores, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-028, estado y árbol exacto V357. | Continuidad verificable sin depender del historial de chat. |
+
+## V358-SYNCHRONIZED-PROGRESSIVE-VOICE
+
+| Archivo exacto | Mapa V358 | Control |
+|---|---|---|
+| `index-grupal.html` | Recuperación iPhone V357 + escritura visual progresiva + Universal + ronda persistente. | Un hoyo completo aparece mientras se siguen dictando los siguientes. |
+| `api/voice-health.js`, `service-worker.js` | Evento progresivo privado y shell V358. | Sin contenido personal; invalidación efectiva. |
+| `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs` | Bancos complementarios de transporte y tiempo de escritura. | Ambos son obligatorios y no se sustituyen. |
+| `.github/workflows/roadmap-gate.yml`, `AGENTS.md`, `audit-project.mjs`, `package.json` | Sincronización, CI y auditoría acumulada. | Bloquea volver a cruzar conversaciones o ramas. |
+| `test-v311-neutral-match-home-link.mjs`, `test-v336-microphone-transport.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs` | Compatibilidad histórica. | Inicio, LIVE, Registro, multi-hoyos y Cedar permanecen. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Inventario V358. | Conteo y hash reproducibles. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Trazabilidad única V358. | El siguiente trabajo parte del mismo corte. |
