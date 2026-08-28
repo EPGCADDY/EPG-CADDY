@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "release": "V354",
+  "status": "BLOCKED_EXTERNAL_APPROVALS",
+  "productionBaseline": "0dc1ba7a62b6bd6aec92752c539ca641cf950e26",
+  "policy": "No se permite una publicación comercial ni un deployment de producción mientras alguna aprobación obligatoria siga pendiente o carezca de evidencia.",
+  "approvals": [
+    { "id": "legal_terms_privacy", "owner": "abogado responsable", "approved": false, "evidence": "" },
+    { "id": "data_protection_dpa", "owner": "responsable de privacidad", "approved": false, "evidence": "" },
+    { "id": "intellectual_property", "owner": "abogado de propiedad intelectual", "approved": false, "evidence": "" },
+    { "id": "payments_tax_stores", "owner": "finanzas y abogado fiscal", "approved": false, "evidence": "" },
+    { "id": "cybersecurity_pentest", "owner": "auditor independiente", "approved": false, "evidence": "" },
+    { "id": "insurance_and_entity", "owner": "administración", "approved": false, "evidence": "" },
+    { "id": "backup_restore_drill", "owner": "operaciones", "approved": false, "evidence": "" },
+    { "id": "physical_iphone_field_test", "owner": "QA físico independiente", "approved": false, "evidence": "" },
+    { "id": "live_provider_contracts", "owner": "administración y operaciones", "approved": false, "evidence": "" },
+    { "id": "repository_protection", "owner": "administrador GitHub", "approved": false, "evidence": "" },
+    { "id": "production_change", "owner": "propietario del producto", "approved": false, "evidence": "" }
+  ]
+}

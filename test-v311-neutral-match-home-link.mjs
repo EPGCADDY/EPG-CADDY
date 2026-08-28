@@ -11,7 +11,7 @@ for(const obsolete of ["MATCH PLAY · CON HDCP","MATCH PLAY CON HDCP","NETO CON 
 }
 assert.doesNotMatch(artifacts,/Neto con handicap/i);
 assert.match(html,/const directHome=startupParams\.get\("inicio"\)==="1"/);
-assert.match(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
+assert.match(html,/if\(directHome&&!sfEmergency&&!demoControlManual&&!round\.configured\)openNewRoundDraft\(\)/,"El acceso principal sólo abre Registro si no hay ronda activa");
 for(const source of ["/","/index.html","/inicio"]){
   const route=hosting.redirects?.find(item=>item.source===source);
   assert.equal(route?.destination,"/index-grupal.html?inicio=1",`${source} debe abrir Configura la ronda`);

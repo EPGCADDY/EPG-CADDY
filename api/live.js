@@ -81,7 +81,7 @@ export function normalizeLiveSnapshot(value){
   if(!ID_PATTERN.test(roundId)||players.length<1)throw liveError("LIVE_INVALID_SNAPSHOT");
   return{
     schemaVersion:1,
-    appVersion:"V353",
+    appVersion:"V354",
     roundId,
     groupLabel:cleanText(value.groupLabel,120)||`GRUPO ${players[0].name}`,
     course:cleanText(value.course,120)||"CAMPO",

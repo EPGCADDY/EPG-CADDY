@@ -1,6 +1,7 @@
 import {spawnSync} from 'node:child_process';
 
 for(const [command,args] of [
+  [process.execPath,['scripts/commercial-readiness-gate.mjs']],
   [process.execPath,['scripts/project-quality-gate.mjs']],
   [process.execPath,['test-project-quality-gate.mjs']],
   ['python3',['scripts/manual-editorial-qc.py']],
@@ -62,6 +63,9 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v345-home-icons.mj
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v329-skins.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v330-side-games.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v352-live.mjs','test-v353-live-hub.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v351-r1-hole1-voice-score-render.mjs','test-v351-r5-voice-score-matrix.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v354-commercial-hardening.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v355-microphone-round-continuity.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

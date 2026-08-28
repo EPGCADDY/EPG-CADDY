@@ -1,4 +1,5 @@
-import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
+import { handleAppPreflight } from "./_lib/cors.js";
+import { guardAppRequest } from "./_lib/api-guard.js";
 import { computeTrafficRoute } from "./_lib/traffic.js";
 import { computeWeatherForecast } from "./weather.js";
 
@@ -299,11 +300,11 @@ export function sanitizeUniversalAppContext(value){
 export default async function handler(req,res){
   if(handleAppPreflight(req,res))return;
   res.setHeader("Cache-Control","no-store");
-  if(!isAllowedAppOrigin(req))return res.status(403).json({ok:false,error:"ORIGIN_NOT_ALLOWED"});
   if(req.method!=="POST"){
     res.setHeader("Allow","POST");
     return res.status(405).json({ok:false,error:"METHOD_NOT_ALLOWED"});
   }
+  if(!(await guardAppRequest(req,res,{scope:"universal-ai",maximum:12})))return;
   try{
     const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):req.body||{};
     const query=String(body.query||"").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"").trim().slice(0,MAX_QUERY_LENGTH);

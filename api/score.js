@@ -35,67 +35,10 @@ export default async function handler(req, res) {
     });
   }
 
-  // POST calcula una ronda completa.
+  // El escritor/calculador oficial vive únicamente en el cliente V354.
+  // Esta ruta histórica sólo conserva lectura del catálogo para index.html.
   if (req.method === "POST") {
-    const { scores } = req.body || {};
-
-    if (!Array.isArray(scores) || scores.length !== 18) {
-      return res.status(400).json({
-        ok: false,
-        error: "scores debe contener exactamente 18 resultados."
-      });
-    }
-
-    const validScores = scores.every(
-      score => Number.isInteger(score) && score > 0
-    );
-
-    if (!validScores) {
-      return res.status(400).json({
-        ok: false,
-        error: "Cada score debe ser un número entero mayor que cero."
-      });
-    }
-
-    const holes = course.holes.map((hole, index) => {
-      const strokes = scores[index];
-      const toPar = strokes - hole.par;
-
-      return {
-        ...hole,
-        strokes,
-        toPar
-      };
-    });
-
-    const front9 = holes
-      .slice(0, 9)
-      .reduce((total, hole) => total + hole.strokes, 0);
-
-    const back9 = holes
-      .slice(9, 18)
-      .reduce((total, hole) => total + hole.strokes, 0);
-
-    const total = front9 + back9;
-    const toPar = total - course.par;
-
-    return res.status(200).json({
-      ok: true,
-      engine: "EPG Caddy Scoring Engine",
-      version: "1.1",
-      course: {
-        name: course.name,
-        tees: course.tees,
-        par: course.par
-      },
-      round: {
-        holes,
-        front9,
-        back9,
-        total,
-        toPar
-      }
-    });
+    return res.status(410).json({ ok: false, error: "LEGACY_SCORE_WRITER_RETIRED", replacement: "/index-grupal.html" });
   }
 
   res.setHeader("Allow", ["GET", "POST"]);

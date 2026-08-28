@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V353 agrega `MONITOR GENERAL` y `MONITOR INDIVIDUAL` sobre LIVE V352; banco local de 80 jugadores PASS; Preview/E2E/navegador V353 y prueba física iPhone pendientes
+**Corte vigente:** V355 conserva el hardening V354 y corrige la continuidad de ronda al reabrir el acceso principal; la candidata permanece bloqueada para Producción hasta 11 aprobaciones externas con evidencia; Preview, pentest, CodeQL remoto, restore drill y prueba física iPhone pendientes
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -205,6 +205,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - **Control V350:** el micrófono de Registro de jugadores nunca sale hacia AI UNIVERSAL; admite conectores naturales, registra telemetría aplicada/rechazada desde cliente y termina localmente con resultado o instrucción.
 - **Fallo físico V350:** Safari convirtió “catorce” en `XIV`; el parser lo incorporó al nombre y aplicó `JAIME XIV BLANCAS JORGE · 6 · AZULES` en una sola fila.
 - **Control V351:** interpreta romanos canónicos I–LIV sólo como hándicap de registro, reproduce `Jaime XIV blancas Jorge seis azules` y mantiene la `X` de score fuera de esta conversión.
+- **Control V355:** el acceso principal con `inicio=1` conserva visible la tarjeta activa y sus scores; Registro sólo se abre automáticamente si no existe ronda configurada o por toque explícito en `NUEVA RONDA`.
 - **Orden de ejecución:** registrar estas tres correcciones y retomarlas después de continuar con la configuración y prueba de SKINS, WOLF, VEGAS y DOTS.
 
 - **Candado de privacidad V312:** no hay activación automática, huella de voz ni reconocimiento biométrico; el jugador debe abrir primero el micrófono con el botón.
@@ -319,11 +320,15 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 24. Monetización y operación comercial
 
-**Estado:** PENDIENTE · `PEND-COM-013`
+**Estado:** V354 CONTROL INTERNO IMPLEMENTADO; PUBLICACIÓN COMERCIAL BLOQUEADA POR APROBACIONES EXTERNAS · `PEND-COM-013`
 
-- Definir niveles, precios, restauración/cancelación, términos, privacidad y soporte.
-- Integrar proveedores reales de cobro y medir costos de IA, clima, tráfico, mapas y almacenamiento.
-- Validar App Store, Google Play, impuestos y continuidad antes de ofrecer el servicio.
+- ✅ Gate comercial separado: cualquier build con target Producción falla mientras una aprobación obligatoria carezca de evidencia.
+- ✅ Borradores de términos, privacidad y avisos de voz/IA/ubicación/Live; licencia propietaria, SECURITY, SBOM y avisos de terceros.
+- ✅ Runbooks de incidentes, DR, SLO, release y protección del repositorio.
+- ⏳ Abogado: entidad, términos, privacidad, propiedad intelectual, apuestas/premios, límites y jurisdicciones.
+- ⏳ Privacidad/contratos: DPA, transferencias, retención, proveedores, SLA y soporte.
+- ⏳ Comercio: precios, cobro real, impuestos, reembolsos, App Store y Google Play.
+- ⏳ Aseguramiento: pentest independiente, seguro, ruleset GitHub, restore drill y prueba física firmada.
 
 ### 25. Banco final y certificación integral
 
@@ -384,7 +389,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ## Próximo punto obligatorio
 
-La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. V353 no requiere migración Neon porque reutiliza el esquema V352. La estabilización física de voz permanece registrada y no se considera cerrada. Los bloqueos externos —USGA/ASOGOLF/GHIN, licencias de campos, mapas, tiendas o proveedores— se documentan sin simulación. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
+La ejecución activa es **V354 · hardening comercial P0** en Preview aislado. Después del banco local deben comprobarse CI/CodeQL, deployment, headers, respuestas 403/429/503, logs y rollback sin cambiar Producción. La función activa de producto continúa siendo **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE** y conserva pendiente la prueba física iPhone. Los bloqueos externos —legal, privacidad, IP, contratos, seguro, pentest, ruleset GitHub, restore, tiendas, Waze y campo físico— no se simulan ni se marcan PASS sin evidencia.
 
 ## Corte V345-ICONS · estado verificable
 

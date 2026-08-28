@@ -1,4 +1,5 @@
-import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
+import { handleAppPreflight } from "./_lib/cors.js";
+import { guardAppRequest } from "./_lib/api-guard.js";
 
 const WEATHER_CODES = Object.freeze({
   0: "cielo despejado",
@@ -314,11 +315,11 @@ export async function computeWeatherForecast(body = {}) {
 export default async function handler(req, res) {
   if (handleAppPreflight(req, res)) return;
   res.setHeader("Cache-Control", "no-store");
-  if (!isAllowedAppOrigin(req)) return res.status(403).json({ ok: false, error: "ORIGIN_NOT_ALLOWED" });
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ ok: false, error: "METHOD_NOT_ALLOWED" });
   }
+  if (!(await guardAppRequest(req, res, { scope: "weather", maximum: 60 }))) return;
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
     const summary = await computeWeatherForecast(body);

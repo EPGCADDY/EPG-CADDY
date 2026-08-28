@@ -1666,3 +1666,127 @@ Banco local V353 PASS: 80 jugadores en 20 grupos de cuatro y 40 grupos de dos; c
 Compatibilidad de compilación V353: `test-v353-live-hub.mjs` valida `vercel.json` con espacios o compactado mediante `\s*`; conserva la exigencia literal de `/live-hub.html` y elimina el falso negativo observado en Vercel sin reducir ninguna prueba funcional.
 
 Archivos exactos V353: `live-hub.html`, `live-hub.js`, `live.html`, `live-view.js`, `live-control.js`, `api/live.js`, `index-grupal.html`, `service-worker.js`, `vercel.json`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `audit-project.mjs`, `DATABASE_ARCHITECTURE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+## V354-COMMERCIAL-P0-HARDENING · controles reproducibles · 28 de agosto de 2026
+
+| Rubro | Implementación | Aceptación |
+|---|---|---|
+| Perímetro API | `api/_lib/api-guard.js`, CORS estricto, cuotas PostgreSQL, IP con hash y fallo cerrado | Origen ausente/hostil 403; exceso 429 + Retry-After; guard no disponible 503 |
+| Costos/estabilidad | Voz 10/min, IA 12/min, investigación 6/min, reglas 30/min, tráfico 30/min, clima 60/min, telemetría 120/min y autenticación 10/min | Ninguna ruta costosa activa queda sin `guardAppRequest`; SDP máximo 512 KB |
+| Motores únicos | `/api/session` y POST `/api/score` quedan retirados | 410 con reemplazo explícito; Score oficial continúa en la arquitectura común |
+| Privacidad/salud | `api/database-health.js` ya no expone nombre, hora ni conteo de tablas | Sólo estado booleano y nombre genérico de servicio |
+| Navegador | CSP, HSTS, nosniff, DENY, COOP/CORP, Permissions-Policy y Referrer-Policy | Encabezados presentes sobre todas las rutas sin romper el shell propio |
+| Supply chain | Node 24, npm/Python fijados, SBOM, acciones por SHA, Dependabot y CodeQL | `npm ci` reproducible; auditoría npm completa sin vulnerabilidad conocida |
+| Móvil | generador propio aplica logo oficial sobre catálogos nativos existentes | Sin dependencia vulnerable `@capacitor/assets`; dimensiones/formatos originales preservados |
+| Sync | token legado eliminado | `requireAccountSession` obligatorio; cadenas `SYNC_AUTH_NOT_CONFIGURED` ausentes |
+| Voz R1…R5 | delta físico portado sobre Centro Live V353 | 18 configuraciones, 72 recorridos, 264 Gross y fronteras negativas reinsertadas al banco maestro |
+| Legal/operación | borradores, licencia, SECURITY, terceros, incidentes, DR, SLO, providers/IP y release checklist | Once aprobaciones siguen pendientes con dueño y evidencia obligatoria |
+| Release | gate comercial detecta target Production | Candidata Preview puede validar; Producción falla mientras exista cualquier aprobación pendiente |
+| Inventario | Gate 0 invoca el inventario sellado | Ya no existe PASS aislado si faltan o divergen los tres PDF |
+
+Evidencia local final V354: `npm run audit` PASS con 98 paquetes; manual editorial PASS en 74 páginas; manual visual PASS en 74 páginas, resolución 2160×4320 y densidad mínima 300 dpi; gate comercial candidato PASS con 11 aprobaciones externas pendientes; gate de calidad PASS con 7 controles, 7 entradas y 11 gates; inventario PASS con 387 fuentes y tres PDF; `npm audit --audit-level=moderate` reporta cero vulnerabilidades. Preview, navegador, logs y CodeQL remotos continúan separados hasta generar evidencia en la plataforma. Producción no cambia. El rollback no exige migración.
+
+Corrección de compilación V354: `test-project-quality-gate.mjs` selecciona `GSCG_INVENTORY_WORKTREE=1` únicamente en la prueba local no confirmada y `GSCG_INVENTORY_WORKTREE=0` cuando el propio test corre bajo Vercel. En plataforma, `scripts/inventory-gate.mjs` calcula cada objeto desde `HEAD`; ningún archivo transitorio de instalación puede alterar o sustituir el contenido auditado. El primer Preview falló cerrado y esta causa quedó corregida sin reducir la puerta negativa de repositorio equivocado.
+
+Corrección de telemetría V354: la única advertencia del Preview `READY` anterior fue `DEP0169` en `/api/account`, aun con respuesta 200. `api/account.js` ahora extrae `action` mediante `new URL(req.url, base).searchParams`, sin tocar `req.query`; la prueba V354 exige el patrón WHATWG y rechaza cualquier regresión a `req.query`. El cambio no modifica contrato, autenticación, cookies ni rutas; se resella el inventario y se exige otro Preview `READY` con telemetría limpia. Producción no cambia.
+
+### Archivos exactos V354
+
+- `.github/dependabot.yml`
+- `.github/workflows/codeql.yml`
+- `.github/workflows/ios-build.yml`
+- `.github/workflows/ios-testflight.yml`
+- `.github/workflows/mobile-native-package.yml`
+- `.github/workflows/roadmap-gate.yml`
+- `.github/workflows/stableford-tournament-pass.yml`
+- `.node-version`
+- `.nvmrc`
+- `COMMERCIAL_RELEASE_CONTROL.json`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`
+- `LEGAL/AVISO_VOZ_IA_Y_DATOS_VIVOS_BORRADOR.md`
+- `LEGAL/POLITICA_DE_PRIVACIDAD_BORRADOR.md`
+- `LEGAL/REGISTRO_PERMISOS_IP.md`
+- `LEGAL/REGISTRO_PROVEEDORES.md`
+- `LEGAL/TERMINOS_DE_USO_BORRADOR.md`
+- `LICENSE`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `SECURITY.md`
+- `THIRD_PARTY_NOTICES.md`
+- `api/_lib/api-guard.js`
+- `api/_lib/cors.js`
+- `api/_lib/http.js`
+- `api/account.js`
+- `api/database-health.js`
+- `api/golf-rules.js`
+- `api/live.js`
+- `api/research.js`
+- `api/score.js`
+- `api/session-grupal.js`
+- `api/session.js`
+- `api/traffic.js`
+- `api/universal-ai.js`
+- `api/voice-health.js`
+- `api/weather.js`
+- `audit-project.mjs`
+- `docs/operations/DISASTER_RECOVERY.md`
+- `docs/operations/INCIDENT_RESPONSE.md`
+- `docs/operations/RELEASE_COMMERCIAL_CHECKLIST.md`
+- `docs/operations/REPOSITORY_PROTECTION.md`
+- `docs/operations/SERVICE_LEVEL_OBJECTIVES.md`
+- `index-grupal.html`
+- `index.html`
+- `live-control.js`
+- `package-lock.json`
+- `package.json`
+- `requirements-build.txt`
+- `sbom.cdx.json`
+- `scripts/apply-native-assets.mjs`
+- `scripts/commercial-readiness-gate.mjs`
+- `scripts/generate-sbom.mjs`
+- `scripts/inventory-gate.mjs`
+- `scripts/project-quality-gate.mjs`
+- `scripts/rebuild-inventory-pdfs.py`
+- `service-worker.js`
+- `test-sync-auth.mjs`
+- `test-project-quality-gate.mjs`
+- `test-v267-scorecard-combination-matrix.mjs`
+- `test-v267-one-operational-line.mjs`
+- `test-v270-consecutive-hole-voice-blocks.mjs`
+- `test-v284-native-package-generation.mjs`
+- `test-v290-brand-icons-cleanup.mjs`
+- `test-v305-registration-guides-parser-truth.mjs`
+- `test-v312-general-caddie.mjs`
+- `test-v327-tool-followup-no-silence.mjs`
+- `test-v336-microphone-transport.mjs`
+- `test-v351-r1-hole1-voice-score-render.mjs`
+- `test-v351-r5-voice-score-matrix.mjs`
+- `test-v352-live.mjs`
+- `test-v353-live-hub.mjs`
+- `test-v354-commercial-hardening.mjs`
+- `vercel.json`
+
+## V355-MICROPHONE-ROUND-CONTINUITY · control reproducible
+
+| Archivo exacto | Control V355 | PASS obligatorio |
+|---|---|---|
+| `index-grupal.html` | `ACTIVE-ROUND-WINS-STARTUP` | `?inicio=1` no abre Registro cuando `round.configured` es verdadero; persist, restore, pagehide, pageshow y beforeunload siguen activos. |
+| `service-worker.js` | `V355-CACHE` | El shell anterior se invalida y la corrección llega a la PWA. |
+| `test-v355-microphone-round-continuity.mjs` | `REOPEN-ROUND-REGRESSION` | Ronda activa visible; sin ronda abre Registro; `NUEVA RONDA` conserva guardado antes de abrir el borrador. |
+| `test-v311-neutral-match-home-link.mjs` | `HISTORICAL-HOME-GUARD` | Conserva el acceso neutral y agrega prioridad de ronda activa. |
+| `test-v354-commercial-hardening.mjs` | `V354-CONTROLS-UNDER-V355` | Hardening comercial, versión y caché continúan verificándose. |
+| `test-v352-live.mjs`, `test-v353-live-hub.mjs` | `LIVE-CONTROLS-UNDER-V355` | LIVE central y Centro LIVE conservan sus puertas bajo el nuevo build y caché. |
+| `audit-project.mjs` | `AUDIT-INCLUSION` | El banco maestro no puede omitir V355. |
+| `scripts/rebuild-inventory-pdfs.py` | `INVENTORY-LABEL-V355` | Los tres inventarios y el sello identifican exactamente el candidato V355. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | `HONEST-V355-STATE` | Separa corrección local, Preview y prueba física. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | `PHYSICAL-GATE-PENDING` | Mantiene iPhone físico como puerta obligatoria. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-036` | Conserva causa, escape, control y evidencia. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `FILE-MAP-V355` | Mapea cada archivo y responsabilidad. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DUAL-ROADMAP-V355` | Todo archivo modificado aparece en ambos registros. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `INVENTARIO_GENERAL_ARCHIVOS_GOLF_SCORE_CARD_GT.pdf`, `INVENTARIO_MOTORES_CRITICOS_GOLF_SCORE_CARD_GT.pdf`, `MATRIZ_MAESTRA_AUDITORIA_GOLF_SCORE_CARD_GT.pdf` | `SEALED-INVENTORY-V355` | Fuentes, PDFs y hashes coinciden después del banco final. |
+
+Reversión: retirar el candidato V355 y conservar V354; no hay migración ni eliminación de datos. Producción permanece anclada a `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` hasta cero FAIL y aprobación expresa.

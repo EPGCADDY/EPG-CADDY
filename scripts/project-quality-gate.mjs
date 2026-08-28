@@ -64,4 +64,6 @@ for(const path of ['ROADMAP_OVERALL.md','ROADMAP_A_DETALLE.md','GOLF_SCORE_CARD_
 }
 
 if(errors.length)fail(errors);
+const inventoryGate=spawnSync(process.execPath,['scripts/inventory-gate.mjs'],{encoding:'utf8',env:process.env});
+if(inventoryGate.status!==0)fail(['El inventario obligatorio no coincide con el código activo.',inventoryGate.stderr.trim()||inventoryGate.stdout.trim()]);
 console.log(`PROJECT_QUALITY_GATE PASS controls=${controls.length} inputs=7 gates=11 production=${baseline.slice(0,12)}`);

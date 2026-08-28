@@ -15,9 +15,9 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 7 | `PEND-SKI-006` Skins, Wolf, Vegas y apuestas | V332 aprobó 89 paquetes y 325 fuentes; falta nuevo Preview y ronda física |
 | 8 | `PEND-DID-017` fichas para aprender cada modalidad | Falta una hoja web/PDF por modalidad y esquema, comprensible a los 10 años, imprimible en blanco y negro y validada contra el motor |
 | 9 | `PEND-WAT-007` Apple Watch y smartwatches | Falta aplicación/sincronización física; Apple Watch primero y Wear OS después |
-| 10 | `PEND-NUB-011` nube, cuentas y seguridad | Base preparada; faltan sincronización central, roles, recuperación, privacidad y endurecimiento |
+| 10 | `PEND-NUB-011` nube, cuentas y seguridad | V354 endurece APIs, headers, cuotas, CI y respuesta a incidentes; faltan roles completos, restore drill, pentest y validación remota |
 | 11 | `PEND-EST-012` estadísticas avanzadas | Estadística local básica entregada; faltan histórico central, tendencias y comparaciones multi-dispositivo |
-| 12 | `PEND-COM-013` monetización y operación comercial | Falta modelo comercial, términos, privacidad, soporte y proveedores de pago/entrega |
+| 12 | `PEND-COM-013` monetización y operación comercial | V354 instala paquete borrador y gate; faltan 11 aprobaciones externas con evidencia antes de publicar/cobrar |
 | 13 | `PEND-QA-014` certificación integral | Falta banco final automático, visual y físico por dispositivo, modalidad, ruido, conexión y ronda completa |
 | 14 | `PEND-CLI-002` clima completo en artefactos | Clima vivo entregado; faltan proveedor comparado, snapshots, historial, PDF/imagen y prueba de campo |
 | 15 | `PEND-MAN-004` Guía Rápida | Falta versión web/PDF visual enlazada al Manual vigente |
@@ -457,7 +457,7 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 ## PEND-NUB-011 · Nube, cuentas, sincronización y seguridad
 
 **Fecha de registro:** 26 de agosto de 2026
-**Estado:** BASE PREPARADA; OPERACIÓN CENTRAL PENDIENTE
+**Estado:** V354 HARDENING INTERNO IMPLEMENTADO; OPERACIÓN CENTRAL, PENTEST Y RESTORE DRILL PENDIENTES
 **Prioridad:** Infraestructura obligatoria antes de operación comercial
 
 ### Objetivo y condiciones
@@ -467,6 +467,7 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - Endurecer autenticación, sesiones, cifrado, secretos, auditoría, respaldo, eliminación y respuesta a incidentes.
 - Mantener datos personales, deportivos, ubicación, contactos y apuestas separados por finalidad y consentimiento.
 - Eliminar información local sólo después del acuse íntegro del servidor y conservar una ruta offline recuperable.
+- V354 añade origen estricto en Vercel, cuotas persistentes por IP anonimizada para APIs costosas, límite de SDP, fallo cerrado, headers globales, lockfiles, SBOM, CodeQL y runbook de incidentes/DR. No sustituye pentest, roles, backup real ni prueba de restauración.
 
 ### Frases para localizar este pendiente
 
@@ -516,7 +517,7 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 ## PEND-COM-013 · Monetización y operación comercial
 
 **Fecha de registro:** 26 de agosto de 2026
-**Estado:** PENDIENTE
+**Estado:** V354 CONTROL INTERNO IMPLEMENTADO; PUBLICACIÓN Y COBRO BLOQUEADOS HASTA 11 APROBACIONES EXTERNAS
 **Prioridad:** Final, después de estabilidad, seguridad y cumplimiento
 
 ### Objetivo y condiciones
@@ -526,6 +527,8 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - Integrar cobro mediante proveedores reales y estados confirmados; no simular pagos ni entregas.
 - Medir costos de IA, clima, tráfico, mapas, almacenamiento y soporte para evitar una operación insostenible.
 - Validar App Store/Google Play, impuestos y reglas comerciales aplicables antes de ofrecer el servicio.
+- Mantener `COMMERCIAL_RELEASE_CONTROL.json` con evidencia y ejecutar el gate comercial; un target Producción debe fallar mientras alguna aprobación esté pendiente.
+- Los borradores LEGAL, licencia, avisos de terceros, SECURITY, SBOM, incidentes, DR, SLO y checklist no equivalen a aprobación de abogado, DPA, permiso de IP, seguro, pentest, ruleset, restore drill ni contrato de proveedor.
 
 ### Frases para localizar este pendiente
 
@@ -548,3 +551,12 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 ### Frases para localizar este pendiente
 
 `banco de pruebas`, `certificación`, `prueba física`, `cero errores`, `100%`, `montarlo`, `pendientes por hacer`.
+
+## V355 · continuidad del micrófono y ronda activa
+
+**Estado:** CORREGIDO EN CANDIDATO LOCAL; PREVIEW Y PRUEBA FÍSICA IPHONE PENDIENTES
+
+- Conserva la tarjeta activa al salir y reabrir el acceso principal con `inicio=1`.
+- Registro se abre automáticamente sólo si no existe una ronda configurada; una ronda nueva requiere `NUEVA RONDA`.
+- Repite el banco de Registro Safari, transporte, 18 configuraciones, 72 recorridos y 264 escrituras de score.
+- Mantiene Producción intacta y exige navegador real, Preview y prueba física antes de declarar PASS integral.
