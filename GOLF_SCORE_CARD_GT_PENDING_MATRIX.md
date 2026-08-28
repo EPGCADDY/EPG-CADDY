@@ -413,3 +413,9 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - El banco V345 rechaza un Manual casi blanco y obliga a mantener manifiestos, HTML, Service Worker y caché alineados.
 - RC-018 está desplegado en el Preview READY `1026a3e`; no se cierra hasta instalar ambos accesos desde ese entorno en un iPhone real.
 - Voz física prolongada, artefactos/contraste de clima y repetición real del tráfico V344 continúan abiertos. Producción permanece intacta.
+
+## Hotfix final OIDC · comunicación universal
+
+- Producción V363 confirma tarjeta/persistencia pero falla AI UNIVERSAL con 503 por saldo agotado.
+- `api/_lib/vercel-gateway-auth.js` obtiene el token OIDC administrado sin exponer credenciales; AI UNIVERSAL y voz lo usan como respaldo.
+- Estado: código y banco local preparados; Preview, tres corridas externas del mismo deployment y conversación física iPhone continúan bloqueantes. Producción no cambia.

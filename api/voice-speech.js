@@ -1,4 +1,5 @@
 import {handleAppPreflight,isAllowedAppOrigin} from "./_lib/cors.js";
+import {resolveGatewayToken} from "./_lib/vercel-gateway-auth.js";
 
 const MAX_SPEECH_TEXT=4000;
 const VOICE="cedar";
@@ -54,7 +55,7 @@ export default async function handler(req,res){
     res.setHeader("Allow","POST");
     return res.status(405).json({ok:false,error:"METHOD_NOT_ALLOWED"});
   }
-  const apiKey=process.env.OPENAI_API_KEY,gatewayToken=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN;
+  const apiKey=process.env.OPENAI_API_KEY,gatewayToken=await resolveGatewayToken();
   if(!apiKey&&!gatewayToken)return res.status(500).json({ok:false,error:"VOICE_NOT_CONFIGURED"});
   try{
     const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):req.body||{};

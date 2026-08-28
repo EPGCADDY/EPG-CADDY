@@ -1839,3 +1839,15 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 - Inventario: tres PDF V311 regenerados y nuevo `sourceDigest` sellado antes del montaje.
 - Sello atómico externo: `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` se actualizan juntos en el mismo commit; el Gate ROADMAP debe aprobar en Vercel.
 - Sello final externo: ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` quedan juntos en el commit posterior a regenerar los tres PDF.
+
+## Hotfix final OIDC · comunicación universal · 28 de agosto de 2026
+
+- Evidencia: producción V363 devolvió HTTP 200 para la aplicación y 503 `UNIVERSAL_AI_CREDIT_EXHAUSTED` para `/api/universal-ai`; Vercel registró tres intentos directos y ninguno Gateway.
+- `api/_lib/vercel-gateway-auth.js`: resuelve `AI_GATEWAY_API_KEY`, `VERCEL_OIDC_TOKEN` o `getVercelOidcToken()` en ese orden, sin exponer valores.
+- `api/universal-ai.js`: solicita OIDC sólo al activar la recuperación posterior a saldo agotado.
+- `api/voice-speech.js`: usa el mismo resolvedor para la voz de respaldo.
+- `test-v364-vercel-oidc-recovery.mjs`: exige tres rechazos directos, un salto Gateway y cabecera Bearer administrada.
+- `audit-project.mjs` y `package.json`: instalan `@vercel/oidc` y hacen obligatorio el banco.
+- Control: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+Producción no se toca. El candidato necesita auditoría local, Preview, tres corridas externas del mismo deployment y conversación física iPhone.

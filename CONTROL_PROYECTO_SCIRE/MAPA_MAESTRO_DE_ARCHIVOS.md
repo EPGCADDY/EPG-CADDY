@@ -970,3 +970,13 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 Inventario exacto V363: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `Intocables/README.md`, `Intocables/REGLAS_INTOCABLES.json`, `Intocables/intocables-gate.mjs`, `audit-project.mjs`, `index-grupal.html`, `live-control.js`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, `service-worker.js`, `test-v260-round-points-player-return.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v362-physical-voice-recovery.mjs`, `test-v363-intocables-behavior.mjs` y `test-v363-recorded-mobile-behavior.mjs`. `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` documentan el mismo corte.
 
 Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speech-recognition.js` y los cinco archivos de `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/`, incluido `REPORTE_PRUEBAS_COMPORTAMIENTO_V363_RC035.md`.
+
+## Hotfix final OIDC · comunicación universal
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `api/_lib/vercel-gateway-auth.js` | Resuelve clave administrada, token inyectado o token OIDC dinámico. | Nunca registra ni expone el token. |
+| `api/universal-ai.js` | Activa el respaldo Gateway después de saldo directo agotado. | El proveedor directo conserva prioridad y los errores permanecen explícitos. |
+| `api/voice-speech.js` | Usa la misma identidad administrada para recuperar el audio. | No cambia Cedar/Onyx ni contenido hablado. |
+| `test-v364-vercel-oidc-recovery.mjs` | Simula tres fallos directos y exige una llamada Gateway autenticada. | Un salto ausente bloquea auditoría y Preview. |
+| `audit-project.mjs`, `package.json` | Instalan y ejecutan el control OIDC. | Sin aprobación sólo existe candidato local. |

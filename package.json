@@ -8,7 +8,8 @@
     "@capacitor/ios": "8.5.0",
     "@neondatabase/serverless": "^1.0.2",
     "@revenuecat/purchases-capacitor": "13.4.0",
-    "@revenuecat/purchases-capacitor-ui": "13.4.0"
+    "@revenuecat/purchases-capacitor-ui": "13.4.0",
+    "@vercel/oidc": "3.8.5"
   },
   "devDependencies": {
     "@capacitor/assets": "3.0.5",
@@ -25,6 +26,7 @@
     "voice:progressive-gate": "node test-v357-synchronized-progressive-voice.mjs",
     "voice:synchronized-gate": "node test-v361-synchronized-voice.mjs",
     "voice:physical-gate": "node test-v362-physical-voice-recovery.mjs",
+    "external:oidc-gate": "node test-v364-vercel-oidc-recovery.mjs",
     "behavior:recorded-gate": "node test-v363-recorded-mobile-behavior.mjs",
     "entry:new-round-gate": "node test-v364-explicit-new-round-entry.mjs",
     "audit": "node audit-project.mjs",
