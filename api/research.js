@@ -1,4 +1,5 @@
-import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
+import { handleAppPreflight } from "./_lib/cors.js";
+import { guardAppRequest } from "./_lib/api-guard.js";
 
 const MAX_QUERY_LENGTH = 900;
 const MAX_SOURCES = 5;
@@ -57,11 +58,11 @@ export function summarizeResearchResponse(payload) {
 export default async function handler(req, res) {
   if (handleAppPreflight(req, res)) return;
   res.setHeader("Cache-Control", "no-store");
-  if (!isAllowedAppOrigin(req)) return res.status(403).json({ ok: false, error: "ORIGIN_NOT_ALLOWED" });
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ ok: false, error: "METHOD_NOT_ALLOWED" });
   }
+  if (!(await guardAppRequest(req, res, { scope: "research", maximum: 6 }))) return;
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) return res.status(500).json({ ok: false, error: "OPENAI_NOT_CONFIGURED" });
   try {

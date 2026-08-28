@@ -1666,3 +1666,102 @@ Banco local V353 PASS: 80 jugadores en 20 grupos de cuatro y 40 grupos de dos; c
 Compatibilidad de compilación V353: `test-v353-live-hub.mjs` valida `vercel.json` con espacios o compactado mediante `\s*`; conserva la exigencia literal de `/live-hub.html` y elimina el falso negativo observado en Vercel sin reducir ninguna prueba funcional.
 
 Archivos exactos V353: `live-hub.html`, `live-hub.js`, `live.html`, `live-view.js`, `live-control.js`, `api/live.js`, `index-grupal.html`, `service-worker.js`, `vercel.json`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `audit-project.mjs`, `DATABASE_ARCHITECTURE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+## V354-COMMERCIAL-P0-HARDENING · controles reproducibles · 28 de agosto de 2026
+
+| Rubro | Implementación | Aceptación |
+|---|---|---|
+| Perímetro API | `api/_lib/api-guard.js`, CORS estricto, cuotas PostgreSQL, IP con hash y fallo cerrado | Origen ausente/hostil 403; exceso 429 + Retry-After; guard no disponible 503 |
+| Costos/estabilidad | Voz 10/min, IA 12/min, investigación 6/min, reglas 30/min, tráfico 30/min, clima 60/min, telemetría 120/min y autenticación 10/min | Ninguna ruta costosa activa queda sin `guardAppRequest`; SDP máximo 512 KB |
+| Motores únicos | `/api/session` y POST `/api/score` quedan retirados | 410 con reemplazo explícito; Score oficial continúa en la arquitectura común |
+| Privacidad/salud | `api/database-health.js` ya no expone nombre, hora ni conteo de tablas | Sólo estado booleano y nombre genérico de servicio |
+| Navegador | CSP, HSTS, nosniff, DENY, COOP/CORP, Permissions-Policy y Referrer-Policy | Encabezados presentes sobre todas las rutas sin romper el shell propio |
+| Supply chain | Node 24, npm/Python fijados, SBOM, acciones por SHA, Dependabot y CodeQL | `npm ci` reproducible; auditoría npm completa sin vulnerabilidad conocida |
+| Móvil | generador propio aplica logo oficial sobre catálogos nativos existentes | Sin dependencia vulnerable `@capacitor/assets`; dimensiones/formatos originales preservados |
+| Sync | token legado eliminado | `requireAccountSession` obligatorio; cadenas `SYNC_AUTH_NOT_CONFIGURED` ausentes |
+| Voz R1…R5 | delta físico portado sobre Centro Live V353 | 18 configuraciones, 72 recorridos, 264 Gross y fronteras negativas reinsertadas al banco maestro |
+| Legal/operación | borradores, licencia, SECURITY, terceros, incidentes, DR, SLO, providers/IP y release checklist | Once aprobaciones siguen pendientes con dueño y evidencia obligatoria |
+| Release | gate comercial detecta target Production | Candidata Preview puede validar; Producción falla mientras exista cualquier aprobación pendiente |
+| Inventario | Gate 0 invoca el inventario sellado | Ya no existe PASS aislado si faltan o divergen los tres PDF |
+
+Evidencia local final V354: `npm run audit` PASS con 98 paquetes; manual editorial PASS en 74 páginas; manual visual PASS en 74 páginas, resolución 2160×4320 y densidad mínima 300 dpi; gate comercial candidato PASS con 11 aprobaciones externas pendientes; gate de calidad PASS con 7 controles, 7 entradas y 11 gates; inventario PASS con 387 fuentes y tres PDF; `npm audit --audit-level=moderate` reporta cero vulnerabilidades. Preview, navegador, logs y CodeQL remotos continúan separados hasta generar evidencia en la plataforma. Producción no cambia. El rollback no exige migración.
+
+### Archivos exactos V354
+
+- `.github/dependabot.yml`
+- `.github/workflows/codeql.yml`
+- `.github/workflows/ios-build.yml`
+- `.github/workflows/ios-testflight.yml`
+- `.github/workflows/mobile-native-package.yml`
+- `.github/workflows/roadmap-gate.yml`
+- `.github/workflows/stableford-tournament-pass.yml`
+- `.node-version`
+- `.nvmrc`
+- `COMMERCIAL_RELEASE_CONTROL.json`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`
+- `LEGAL/AVISO_VOZ_IA_Y_DATOS_VIVOS_BORRADOR.md`
+- `LEGAL/POLITICA_DE_PRIVACIDAD_BORRADOR.md`
+- `LEGAL/REGISTRO_PERMISOS_IP.md`
+- `LEGAL/REGISTRO_PROVEEDORES.md`
+- `LEGAL/TERMINOS_DE_USO_BORRADOR.md`
+- `LICENSE`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `SECURITY.md`
+- `THIRD_PARTY_NOTICES.md`
+- `api/_lib/api-guard.js`
+- `api/_lib/cors.js`
+- `api/_lib/http.js`
+- `api/account.js`
+- `api/database-health.js`
+- `api/golf-rules.js`
+- `api/live.js`
+- `api/research.js`
+- `api/score.js`
+- `api/session-grupal.js`
+- `api/session.js`
+- `api/traffic.js`
+- `api/universal-ai.js`
+- `api/voice-health.js`
+- `api/weather.js`
+- `audit-project.mjs`
+- `docs/operations/DISASTER_RECOVERY.md`
+- `docs/operations/INCIDENT_RESPONSE.md`
+- `docs/operations/RELEASE_COMMERCIAL_CHECKLIST.md`
+- `docs/operations/REPOSITORY_PROTECTION.md`
+- `docs/operations/SERVICE_LEVEL_OBJECTIVES.md`
+- `index-grupal.html`
+- `index.html`
+- `live-control.js`
+- `package-lock.json`
+- `package.json`
+- `requirements-build.txt`
+- `sbom.cdx.json`
+- `scripts/apply-native-assets.mjs`
+- `scripts/commercial-readiness-gate.mjs`
+- `scripts/generate-sbom.mjs`
+- `scripts/inventory-gate.mjs`
+- `scripts/project-quality-gate.mjs`
+- `scripts/rebuild-inventory-pdfs.py`
+- `service-worker.js`
+- `test-sync-auth.mjs`
+- `test-project-quality-gate.mjs`
+- `test-v267-scorecard-combination-matrix.mjs`
+- `test-v267-one-operational-line.mjs`
+- `test-v270-consecutive-hole-voice-blocks.mjs`
+- `test-v284-native-package-generation.mjs`
+- `test-v290-brand-icons-cleanup.mjs`
+- `test-v305-registration-guides-parser-truth.mjs`
+- `test-v312-general-caddie.mjs`
+- `test-v327-tool-followup-no-silence.mjs`
+- `test-v336-microphone-transport.mjs`
+- `test-v351-r1-hole1-voice-score-render.mjs`
+- `test-v351-r5-voice-score-matrix.mjs`
+- `test-v352-live.mjs`
+- `test-v353-live-hub.mjs`
+- `test-v354-commercial-hardening.mjs`
+- `vercel.json`

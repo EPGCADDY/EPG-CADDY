@@ -14,7 +14,7 @@ const round={
 };
 
 const clientSnapshot=control.buildLiveSnapshot(round,{course:"EL PULTÉ GOLF",pars:Array(18).fill(4)});
-assert.equal(clientSnapshot.appVersion,"V353");
+assert.equal(clientSnapshot.appVersion,"V354");
 assert.equal(clientSnapshot.players.length,2);
 assert.equal(clientSnapshot.players[0].totals.gross,5);
 assert.equal(clientSnapshot.players[1].holes[0].explicitX,true);
@@ -40,7 +40,7 @@ assert.deepEqual(viewer.parseLiveHash(`#tournament=${"B".repeat(43)}`),{kind:"to
 assert.equal(viewer.parseLiveHash("#stream=short"),null);
 
 const index=read("index-grupal.html"),liveHtml=read("live.html"),liveControl=read("live-control.js"),liveView=read("live-view.js"),api=read("api/live.js"),schema=read("database/004_live_scorecards.sql"),vercel=read("vercel.json"),worker=read("service-worker.js");
-assert.match(index,/V353-CENTRO-LIVE-GENERAL-INDIVIDUAL/);
+assert.match(index,/V354-COMMERCIAL-P0-HARDENING/);
 assert.match(index,/window\.GSCLiveControl\?\.onRoundPersisted\(round\)/,"el escritor oficial publica LIVE");
 assert.match(index,/<script src="\.\/live-control\.js"><\/script>/);
 assert.match(liveHtml,/GOLF SCORE CARD GT\. LIVE/);
@@ -72,7 +72,7 @@ assert.match(publishSource,/\$\{expected\}::bigint/);
 assert.doesNotMatch(publishSource,/\$\{(?:mutationId|secretHash|expected)\}(?!::)/,"ningún parámetro de publicación puede quedar con tipo indeterminado 42P18");
 assert.doesNotMatch(schema,/CHECK\s*\([^)]*(?:group|player)[^)]*<=\s*\d+/i,"no debe existir máximo fijo de grupos o jugadores del torneo");
 assert.match(vercel,/live-control\|live-view\|live-hub/);
-assert.match(worker,/gscg-mobile-v353-live-hub/);
+assert.match(worker,/gscg-mobile-v354-commercial-p0/);
 assert.match(worker,/"\/live-control\.js"/);
 
 console.log("PASS V352 LIVE: permiso, privacidad, cola offline, visor separado y torneo paginado sin máximo fijo");

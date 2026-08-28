@@ -10,6 +10,7 @@ const packageJson=JSON.parse(read("package.json"));
 const apiPackage=JSON.parse(read("api/package.json"));
 const release=JSON.parse(read("mobile-release.json"));
 const vercel=JSON.parse(read("vercel.json"));
+const requirements=read("requirements-build.txt");
 
 assert.match(html,/V290-GOLF-SCORE-CARD-GT-BRAND-ICONS-CLEANUP-20260823/);
 assert.match(html,/apple-touch-icon" sizes="180x180" href="\/assets\/official-logos\/golf-score-card-gt-apple-touch-v345-180\.png"/);
@@ -27,7 +28,7 @@ assert.match(html,/id="provisionalScorecardButton"[^>]*>[\s\S]*?<span>SCORE CARD
 assert.match(html,/REGISTRO DE TORNEO \(OPCIONAL\)/);
 assert.match(html,/id="tournamentDescription"[^>]*placeholder="DESCRIPCIÓN DE TORNEO \(OPCIONAL\)"/);
 assert.match(html,/return\{name:String\(value\.name\|\|""\)\.trim\(\),description:String\(value\.description\|\|""\)\.trim\(\)\}/);
-assert.equal(packageJson.engines.node,"22.x");
+assert.equal(packageJson.engines.node,"24.x");
 assert.equal(apiPackage.type,"module");
 assert.match(stable,/className="voice-prompt stableford-voice-prompt"/);
 assert.match(stable,/prompt\.innerHTML='<strong>REGISTRO DE JUGADORES · CADDIE UNIVERSAL<\/strong><span>REGISTRA O PREGUNTA CUALQUIER TEMA<\/span>'/);
@@ -41,10 +42,10 @@ assert.match(html,/\$\("startStablefordRound"\)\.textContent="OK"/);
 assert.match(stable,/JUGADORES DETECTADOS · REVISA Y PRESIONA OK/);
 assert.doesNotMatch(stable,/PRESIONA INICIAR RONDA/);
 assert.equal(release.buildNumber,307);
-assert.match(vercel.installCommand,/^npm install --omit=dev --no-package-lock && python3 -m pip install /);
+assert.match(vercel.installCommand,/^npm ci --omit=dev && python3 -m pip install /);
 assert.match(vercel.installCommand,/--break-system-packages/);
 for(const dependency of ["numpy","pillow","pypdf","reportlab"]){
-  assert.match(vercel.installCommand,new RegExp(`(?:^|\\s)${dependency}(?:\\s|$)`));
+  assert.match(requirements,new RegExp(`^${dependency}==\\d+`,"im"));
 }
 assert.equal(manifest.name,"Golf Score Card GT");
 for(const size of ["192x192","512x512"])assert.ok(manifest.icons.some(icon=>icon.sizes===size&&icon.type==="image/png"&&icon.purpose==="any"&&icon.src.includes("v345")));

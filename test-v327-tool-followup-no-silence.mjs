@@ -77,7 +77,7 @@ const previousInfo=console.info,logs=[];console.info=(...args)=>logs.push(args.j
 try{
   for(let turn=1;turn<=100;turn++){
     const req={method:"POST",headers:{host:"epg-caddy.vercel.app"},body:{event:turn%2?"speech_started":"response_stopped",build:"V327",context:turn%3?"round":"setup",turn,elapsedMs:turn*100,query:`pregunta-${turn}`,transcript:`voz-${turn}`}};
-    const res=responseRecorder();voiceHealthHandler(req,res);assert.equal(res.statusCode,202);assert.deepEqual(res.body,{ok:true});
+    const res=responseRecorder();await voiceHealthHandler(req,res);assert.equal(res.statusCode,202);assert.deepEqual(res.body,{ok:true});
   }
 }finally{console.info=previousInfo}
 assert.equal(logs.length,100);

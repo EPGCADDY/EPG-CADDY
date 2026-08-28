@@ -54,8 +54,8 @@ for (const token of [
 ]) assert.ok(html.includes(token), `Falta integración conversacional: ${token}`);
 
 assert.ok(
-  html.indexOf("if(isGeneralConversationIntent(transcript))") < html.indexOf("const parsed=parseRoundScoreTranscript(transcript)"),
-  "Una conversación inequívoca debe protegerse antes del escritor de scores"
+  html.indexOf("if(isGeneralConversationIntent(transcript))") < html.indexOf("if(scoreOrder.matched&&scoreOrder.ok){"),
+  "Una conversación inequívoca debe protegerse antes de ejecutar el escritor de scores"
 );
 assert.match(html, /if\(!speakConversation\(transcript\)\)/, "Toda frase operacionalmente desconocida debe llegar al Caddie");
 const localIntentSource=html.slice(html.indexOf("function isLocalRoundQueryIntent"),html.indexOf("\nfunction parseRoundQueryTranscript"));

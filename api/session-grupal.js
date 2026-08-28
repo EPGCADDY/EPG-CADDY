@@ -1,10 +1,24 @@
 import { handleAppPreflight } from "./_lib/cors.js";
+import { guardAppRequest } from "./_lib/api-guard.js";
+
+const MAX_SDP_BYTES = 512_000;
 
 async function readRawBody(req) {
-  if (typeof req.body === "string") return req.body;
-  if (Buffer.isBuffer(req.body)) return req.body.toString("utf8");
+  if (typeof req.body === "string") {
+    if (Buffer.byteLength(req.body) > MAX_SDP_BYTES) throw Object.assign(new Error("SDP_TOO_LARGE"), { code: "SDP_TOO_LARGE" });
+    return req.body;
+  }
+  if (Buffer.isBuffer(req.body)) {
+    if (req.body.length > MAX_SDP_BYTES) throw Object.assign(new Error("SDP_TOO_LARGE"), { code: "SDP_TOO_LARGE" });
+    return req.body.toString("utf8");
+  }
   let body = "";
-  for await (const chunk of req) body += Buffer.isBuffer(chunk) ? chunk.toString("utf8") : String(chunk);
+  let bytes = 0;
+  for await (const chunk of req) {
+    bytes += Buffer.isBuffer(chunk) ? chunk.length : Buffer.byteLength(String(chunk));
+    if (bytes > MAX_SDP_BYTES) throw Object.assign(new Error("SDP_TOO_LARGE"), { code: "SDP_TOO_LARGE" });
+    body += Buffer.isBuffer(chunk) ? chunk.toString("utf8") : String(chunk);
+  }
   return body;
 }
 
@@ -24,6 +38,7 @@ export default async function handler(req, res) {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Usa POST." });
   }
+  if (!(await guardAppRequest(req, res, { scope: "realtime-session", maximum: 10 }))) return;
 
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
@@ -114,6 +129,7 @@ export default async function handler(req, res) {
     console.info("realtime-session",JSON.stringify({event:"created",context,status:200}));
     return res.status(200).send(body);
   } catch (error) {
+    if (error?.code === "SDP_TOO_LARGE") return res.status(413).json({ error: "SDP_TOO_LARGE" });
     console.error("realtime-session",JSON.stringify({event:"exception",status:500}));
     res.setHeader("Cache-Control", "no-store");
     return res.status(500).json({ error: "No se pudo iniciar la sesión grupal." });
