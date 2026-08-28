@@ -106,7 +106,7 @@ function normalizeHourly(payload) {
   })).filter(row => row.date && row.time);
 }
 
-async function hourlyThrough(latitude, longitude, throughDate) {
+export async function hourlyThrough(latitude, longitude, throughDate) {
   const rows = [];
   let pageToken = "";
   for (let page = 0; page < 10; page += 1) {
@@ -116,7 +116,7 @@ async function hourlyThrough(latitude, longitude, throughDate) {
       pageToken
     }));
     rows.push(...normalizeHourly(payload));
-    if (!payload?.nextPageToken || rows.some(row => row.date >= throughDate)) break;
+    if (!payload?.nextPageToken || rows.at(-1)?.date > throughDate) break;
     pageToken = payload.nextPageToken;
   }
   return rows;

@@ -1676,7 +1676,7 @@ La configuración usa `GOOGLE_MAPS_WEATHER_API_KEY` para clima y `GOOGLE_MAPS_GE
 
 | Archivo nuevo o modificado | Registro V354 |
 |---|---|
-| `api/weather.js` | Integra Google Weather y Geocoding desde servidor, normaliza condiciones actuales, días, horas, lluvia, temperatura y viento, y conserva errores seguros. |
+| `api/weather.js` | Integra Google Weather y Geocoding desde servidor, normaliza condiciones actuales, días, horas, lluvia, temperatura y viento, completa todas las páginas horarias del día solicitado y conserva errores seguros. |
 | `api/universal-ai.js` | Identifica Google Weather como proveedor estructurado sin búsqueda web ni cifras inventadas. |
 | `test-v337-universal-weather.mjs` | Prueba coordenadas, credencial protegida, dos endpoints oficiales, probabilidades horarias y ausencia de llamada al modelo. |
 | `test-v312-general-caddie.mjs` | Actualiza el candado histórico al proveedor Google y a sus horizontes oficiales de 240 horas y 10 días. |

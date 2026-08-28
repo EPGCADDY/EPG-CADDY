@@ -4,9 +4,11 @@ import handler,{isDirectWeatherQuery,sanitizeUniversalAppContext,weatherForecast
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const api=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
+const weatherApi=fs.readFileSync(new URL("./api/weather.js",import.meta.url),"utf8");
 assert.match(html,/weatherOrigin:course\?\.weatherCoordinates\?\{location:course\.weatherLocation,\.\.\.course\.weatherCoordinates\}:null/);
 assert.match(api,/Para clima, lluvia, temperatura, sensación térmica o viento usa exclusivamente get_current_weather/);
 assert.match(api,/Nunca mezcles el pronóstico con búsqueda web/);
+assert.match(weatherApi,/rows\.at\(-1\)\?\.date > throughDate/,"El paginado debe completar el día solicitado, no detenerse en su primera hora");
 assert.equal(weatherTimePeriodFromQuery("¿A qué hora lloverá mañana?"),"","Mañana como fecha no debe recortar el pronóstico a 06:00–11:59");
 assert.equal(weatherTimePeriodFromQuery("¿Lloverá por la mañana?"),"morning");
 assert.equal(weatherTimePeriodFromQuery("¿Cómo estará esta tarde?"),"afternoon");
