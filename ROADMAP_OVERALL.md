@@ -2,6 +2,14 @@
 
 ![ROADMAP OVERALL · Golf Score Card GT](ROADMAP_OVERALL_V291.png)
 
+## V359 · scores visibles mientras continúa el dictado
+
+V359 consolida las líneas V357 y V358 en un solo sucesor. Safari escribe, guarda y muestra cada score válido desde `onresult`, antes de esperar el silencio final, y continúa escuchando los siguientes hoyos. El turno conserva un ID estable para no duplicar, acepta correcciones de la transcripción y revierte el bloque si dos alternativas completas son incompatibles.
+
+AI UNIVERSAL hablado sigue sin imprimir la conversación. El respaldo espera que iOS entregue su catálogo, selecciona sólo una voz masculina conocida y evita repetir por diez minutos un Cedar que devolvió 429/503. La ronda activa sigue visible al reabrir con `inicio=1`; LIVE, Monitor General/Individual, tráfico y clima no cambian. Producción permanece intacta hasta Preview y PASS físico iPhone.
+
+Registro literal del cambio V359: `api/voice-health.js`, `audit-project.mjs`, `index-grupal.html`, `service-worker.js`, `test-v267-one-operational-line.mjs`, `test-v270-consecutive-hole-voice-blocks.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v358-active-round-reopen.mjs`, `test-v359-progressive-universal-voice.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
 ## V332 · moneda dual y matriz completa de seguimiento
 
 El propietario exige que Skins, Wolf, Vegas y Dots permitan elegir antes de la ronda una de dos monedas: **quetzales (`Q`/`GTQ`) o dólares (`$`/`USD`)**. Cada juego presenta dos casillas de radio mutuamente excluyentes; elegir una desmarca la otra. La moneda queda guardada en la configuración y viaja sin conversión por pantalla, voz, snapshot, corrección, tarjeta Global/personal, Historial, sincronización, restauración y liquidación. El valor es opcional para el grupo y nunca altera Gross, Neto ni el resultado deportivo.

@@ -12,6 +12,7 @@ const matchPlayerAt=(tokens,index)=>{const player=players.find(item=>item.name.t
 const playerByRef=value=>players.find(player=>player.id===value||player.name===value)||null;
 const QUERY_WORDS=new Set(["consulta","dime","resultado"]),CORRECTION_WORDS=new Set(["corrijo"]),SCORE_FILLERS=new Set(["y","luego","gross","score"]),SCORE_WORDS=new Set(["scores"]);
 const skipScoreFillers=(tokens,index)=>{while(index<tokens.length&&(SCORE_FILLERS.has(tokens[index])||CORRECTION_WORDS.has(tokens[index])||SCORE_WORDS.has(tokens[index])))index++;return index};
+const parseSpokenHoleNumber=(tokens,index)=>{while(["numero","num","nro"].includes(tokens[index]))index++;return parseSpanishNumberTokens(tokens,index)};
 const readGrossAt=(tokens,index)=>{index=skipScoreFillers(tokens,index);const parsed=parseSpanishNumberTokens(tokens,index);return parsed&&parsed.value>=1&&parsed.value<=30?{gross:parsed.value,next:parsed.next}:null};
 
 const omissionStart=html.indexOf("const OMITTED_SCORE_PHRASES=");
@@ -38,7 +39,7 @@ const operational=new Function("round","playerByRef","manualHoleResult","documen
 const parserStart=html.indexOf("function parseScoreSequenceTranscript");
 const parserEnd=html.indexOf("\nfunction parseProvisionalScoreTranscript",parserStart);
 assert.ok(parserStart>0&&parserEnd>parserStart,"No se encontró el parser V270");
-const parseScoreSequenceTranscript=new Function("normalizeSpeech","QUERY_WORDS","CORRECTION_WORDS","SCORE_FILLERS","SCORE_WORDS","skipScoreFillers","parseSpanishNumberTokens","matchPlayerAt","readOperationalScoreAt","readOmittedScoreAt","operationalHoleComplete","playerByRef","hasNamedOmissionIntent",`${html.slice(parserStart,parserEnd)};return parseScoreSequenceTranscript`)(normalizeSpeech,QUERY_WORDS,CORRECTION_WORDS,SCORE_FILLERS,SCORE_WORDS,skipScoreFillers,parseSpanishNumberTokens,matchPlayerAt,readOperationalScoreAt,readOmittedScoreAt,operational.operationalHoleComplete,playerByRef,hasNamedOmissionIntent);
+const parseScoreSequenceTranscript=new Function("normalizeSpeech","QUERY_WORDS","CORRECTION_WORDS","SCORE_FILLERS","SCORE_WORDS","skipScoreFillers","parseSpokenHoleNumber","parseSpanishNumberTokens","matchPlayerAt","readOperationalScoreAt","readOmittedScoreAt","operationalHoleComplete","playerByRef","hasNamedOmissionIntent",`${html.slice(parserStart,parserEnd)};return parseScoreSequenceTranscript`)(normalizeSpeech,QUERY_WORDS,CORRECTION_WORDS,SCORE_FILLERS,SCORE_WORDS,skipScoreFillers,parseSpokenHoleNumber,parseSpanishNumberTokens,matchPlayerAt,readOperationalScoreAt,readOmittedScoreAt,operational.operationalHoleComplete,playerByRef,hasNamedOmissionIntent);
 
 const twoHoles=parseScoreSequenceTranscript("Fito cinco Jaime cuatro Nelson seis Junior cinco Pedro cuatro Carlos cero Fito cuatro Jaime cinco Nelson cinco Junior cuatro Pedro seis Carlos cuatro",{defaultHole:2});
 assert.equal(twoHoles.ok,true);

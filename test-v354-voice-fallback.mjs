@@ -6,8 +6,8 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 const audit=fs.readFileSync(new URL("./audit-project.mjs",import.meta.url),"utf8");
 
-assert.match(html,/V358-VOICE-ROUND-CONTINUITY-20260828/);
-assert.match(worker,/gscg-mobile-v358-voice-round-continuity/);
+assert.match(html,/V359-PROGRESSIVE-UNIVERSAL-VOICE-20260828/);
+assert.match(worker,/gscg-mobile-v359-progressive-universal-voice/);
 assert.match(audit,/test-v354-voice-fallback\.mjs/);
 assert.match(html,/function operationalDefaultVoicePlayer\(\)\{return operationalPromptPlayer\(\)\?\?\(\(round\?\.players\|\|\[\]\)\.length===1\?round\.players\[0\]:null\)\}/);
 
@@ -20,12 +20,13 @@ const numberWords={uno:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nue
 const parseSpanishNumberTokens=(tokens,index)=>{const raw=tokens[index],value=/^\d+$/.test(raw)?Number(raw):numberWords[raw];return Number.isInteger(value)?{value,next:index+1}:null};
 const matchPlayerAt=(tokens,index)=>{const player=players.find(item=>item.name.toLowerCase()===tokens[index]);return player?{player,next:index+1}:null};
 const normalizeSpeech=value=>String(value||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñü]+/gi," ").trim();
-const QUERY_WORDS=new Set(["como","que","dime","consulta"]),CORRECTION_WORDS=new Set(["corrijo"]),SCORE_FILLERS=new Set(["y","luego","gross","score"]),SCORE_WORDS=new Set(["scores"]);
+const QUERY_WORDS=new Set(["como","que","dime","consulta"]),CORRECTION_WORDS=new Set(["corrijo"]),SCORE_FILLERS=new Set(["y","luego","gross","score","golpe","golpes"]),SCORE_WORDS=new Set(["scores"]);
 const skipScoreFillers=(tokens,index)=>{while(index<tokens.length&&(SCORE_FILLERS.has(tokens[index])||CORRECTION_WORDS.has(tokens[index])||SCORE_WORDS.has(tokens[index])))index++;return index};
+const parseSpokenHoleNumber=(tokens,index)=>{while(["numero","num","nro"].includes(tokens[index]))index++;return parseSpanishNumberTokens(tokens,index)};
 const readOperationalScoreAt=(tokens,index)=>{if(tokens[index]==="par")return{gross:4,status:null,next:index+1};const number=parseSpanishNumberTokens(tokens,index);return number&&number.value>=1&&number.value<=30?{gross:number.value,status:null,next:number.next}:null};
 const readOmittedScoreAt=()=>null,hasNamedOmissionIntent=()=>false,playerByRef=value=>players.find(player=>player.name===value)||null;
 const operationalHoleComplete=(hole,entries)=>entries.some(entry=>entry.player==="JAIME"&&entry.hole===hole);
-const parseScoreSequenceTranscript=new Function("normalizeSpeech","QUERY_WORDS","CORRECTION_WORDS","SCORE_FILLERS","SCORE_WORDS","skipScoreFillers","parseSpanishNumberTokens","matchPlayerAt","readOperationalScoreAt","readOmittedScoreAt","operationalHoleComplete","playerByRef","hasNamedOmissionIntent",`${parserSource};return parseScoreSequenceTranscript`)(normalizeSpeech,QUERY_WORDS,CORRECTION_WORDS,SCORE_FILLERS,SCORE_WORDS,skipScoreFillers,parseSpanishNumberTokens,matchPlayerAt,readOperationalScoreAt,readOmittedScoreAt,operationalHoleComplete,playerByRef,hasNamedOmissionIntent);
+const parseScoreSequenceTranscript=new Function("normalizeSpeech","QUERY_WORDS","CORRECTION_WORDS","SCORE_FILLERS","SCORE_WORDS","skipScoreFillers","parseSpokenHoleNumber","parseSpanishNumberTokens","matchPlayerAt","readOperationalScoreAt","readOmittedScoreAt","operationalHoleComplete","playerByRef","hasNamedOmissionIntent",`${parserSource};return parseScoreSequenceTranscript`)(normalizeSpeech,QUERY_WORDS,CORRECTION_WORDS,SCORE_FILLERS,SCORE_WORDS,skipScoreFillers,parseSpokenHoleNumber,parseSpanishNumberTokens,matchPlayerAt,readOperationalScoreAt,readOmittedScoreAt,operationalHoleComplete,playerByRef,hasNamedOmissionIntent);
 
 const natural=parseScoreSequenceTranscript("hoyo 1 cuatro, hoyo 2 cinco, hoyo 3 cinco",{defaultPlayer:players[0],defaultHole:1});
 assert.equal(natural.ok,true);
@@ -37,6 +38,9 @@ assert.deepEqual(natural.entries.map(({player,hole,gross})=>({player,hole,gross}
 const plural=parseScoreSequenceTranscript("hoyos 4 seis, hoyo 5 cuatro",{defaultPlayer:players[0],defaultHole:4});
 assert.equal(plural.ok,true);
 assert.deepEqual(plural.entries.map(({hole,gross})=>({hole,gross})),[{hole:4,gross:6},{hole:5,gross:4}]);
+const spokenNatural=parseScoreSequenceTranscript("hoyo número dos cuatro golpes, hoyo número tres cinco golpes",{defaultPlayer:players[0],defaultHole:2});
+assert.equal(spokenNatural.ok,true);
+assert.deepEqual(spokenNatural.entries.map(({hole,gross})=>({hole,gross})),[{hole:2,gross:4},{hole:3,gross:5}]);
 
 const processStart=html.indexOf("async function processBrowserVoiceTranscript");
 const processEnd=html.indexOf("\nfunction startBrowserVoiceFallback",processStart);

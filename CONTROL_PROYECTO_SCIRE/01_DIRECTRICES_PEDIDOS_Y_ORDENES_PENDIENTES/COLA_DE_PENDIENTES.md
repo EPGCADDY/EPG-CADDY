@@ -560,3 +560,14 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 ### Frases para localizar este pendiente
 
 `banco de pruebas`, `certificación`, `prueba física`, `cero errores`, `100%`, `montarlo`, `pendientes por hacer`.
+
+## Corte sincronizado V359 · scores progresivos y voz universal recuperable
+
+**Estado:** CANDIDATO EN VALIDACIÓN · RC-030
+
+- V359 se construye sobre V358 y es la única línea siguiente; conserva la captura iPhone V357, la ronda visible V358, LIVE V353 y tráfico/clima V356.
+- Cada score completo recibido por Safari se escribe, guarda y muestra inmediatamente mientras el reconocimiento continúa abierto para los siguientes hoyos.
+- Un mismo ID de turno evita duplicados; una alternativa posterior puede corregir el mismo score y una ambigüedad real restaura los valores anteriores.
+- La frase natural `hoyo número dos, cuatro golpes` y tandas equivalentes forman parte del banco permanente.
+- AI UNIVERSAL hablado permanece sin texto visible, espera el catálogo masculino de iOS y evita repetir durante diez minutos un servidor Cedar que devolvió 429/503.
+- Producción continúa intacta. Banco automático, Preview y prueba física iPhone son puertas distintas.

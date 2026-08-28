@@ -1,5 +1,15 @@
 # ROADMAP A DETALLE
 
+## V359 · voz progresiva sincronizada · 28 de agosto de 2026
+
+V359 es el sucesor único de V358 y reúne las correcciones que estaban siendo trabajadas en conversaciones paralelas. No cambia Producción ni crea un motor nuevo: conecta el `onresult` continuo de Safari con `applyLiveRoundTranscript`, el mismo escritor oficial usado por la tarjeta. Cada hoyo válido se guarda y renderiza en cuanto llega; el micrófono permanece abierto, un ID estable evita duplicados y una selección ambigua revierte todo el turno.
+
+La recuperación de AI UNIVERSAL espera `voiceschanged` para escoger únicamente un locutor masculino conocido. Si `/api/voice-speech` devuelve 429/503, activa un circuito de diez minutos y usa la voz masculina local sin repetir una solicitud fallida en cada respuesta. Los turnos hablados continúan fuera del historial visible. La gramática acepta `hoyo número dos, cuatro golpes` y tandas consecutivas.
+
+Archivos V359: `index-grupal.html`, `service-worker.js`, `api/voice-health.js`, `test-v359-progressive-universal-voice.mjs`, regresiones V267/V270/V352–V358, `audit-project.mjs`, documentos rectores, mapa e inventario. El banco automático, Preview, navegador y prueba física iPhone permanecen puertas separadas; Producción queda intacta.
+
+Registro literal del cambio V359: `api/voice-health.js`, `audit-project.mjs`, `index-grupal.html`, `service-worker.js`, `test-v267-one-operational-line.mjs`, `test-v270-consecutive-hole-voice-blocks.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v358-active-round-reopen.mjs`, `test-v359-progressive-universal-voice.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
 ## Registro técnico V332 · moneda dual y matriz común de información
 
 El propietario amplía `PEND-SKI-006`: todos los juegos nuevos deben ofrecer dos casillas excluyentes, `Q · QUETZALES` y `$ · DÓLARES`, guardar la selección y usarla sin conversiones ni mezclas en todo resultado. También exige una arquitectura de información completa y comprensible para quien desconoce las apuestas de golf.

@@ -89,6 +89,7 @@ const matchPlayerAt=(tokens,index)=>{
 const normalizeSpeech=value=>String(value||"").toLowerCase().replace(/[^a-z0-9áéíóúñü]+/gi," ").trim();
 const QUERY_WORDS=new Set(["consulta","dime","resultado"]),CORRECTION_WORDS=new Set(["corrijo"]),SCORE_FILLERS=new Set(["y","luego","gross","score"]),SCORE_WORDS=new Set(["scores"]);
 const skipScoreFillers=(tokens,index)=>{while(index<tokens.length&&(SCORE_FILLERS.has(tokens[index])||CORRECTION_WORDS.has(tokens[index])||SCORE_WORDS.has(tokens[index])))index++;return index};
+const parseSpokenHoleNumber=(tokens,index)=>{while(["numero","num","nro"].includes(tokens[index]))index++;return parseSpanishNumberTokens(tokens,index)};
 const readGrossAt=(tokens,index,hole)=>{
   if(tokens[index]==="par")return{gross:4,next:index+1};
   const number=parseSpanishNumberTokens(tokens,index);
@@ -100,7 +101,7 @@ const playerByRef=value=>players.find(player=>player.name===value)||null;
 const operationalHoleComplete=(hole,entries)=>players.every(player=>entries.some(entry=>entry.hole===hole&&entry.player===player.name));
 const hasNamedOmissionIntent=()=>false;
 const readOmittedScoreAt=()=>null;
-const parseScoreSequenceTranscript=new Function("normalizeSpeech","QUERY_WORDS","CORRECTION_WORDS","SCORE_FILLERS","SCORE_WORDS","skipScoreFillers","parseSpanishNumberTokens","matchPlayerAt","readOperationalScoreAt","readOmittedScoreAt","operationalHoleComplete","playerByRef","hasNamedOmissionIntent",`${parserSource};return parseScoreSequenceTranscript`)(normalizeSpeech,QUERY_WORDS,CORRECTION_WORDS,SCORE_FILLERS,SCORE_WORDS,skipScoreFillers,parseSpanishNumberTokens,matchPlayerAt,readOperationalScoreAt,readOmittedScoreAt,operationalHoleComplete,playerByRef,hasNamedOmissionIntent);
+const parseScoreSequenceTranscript=new Function("normalizeSpeech","QUERY_WORDS","CORRECTION_WORDS","SCORE_FILLERS","SCORE_WORDS","skipScoreFillers","parseSpokenHoleNumber","parseSpanishNumberTokens","matchPlayerAt","readOperationalScoreAt","readOmittedScoreAt","operationalHoleComplete","playerByRef","hasNamedOmissionIntent",`${parserSource};return parseScoreSequenceTranscript`)(normalizeSpeech,QUERY_WORDS,CORRECTION_WORDS,SCORE_FILLERS,SCORE_WORDS,skipScoreFillers,parseSpokenHoleNumber,parseSpanishNumberTokens,matchPlayerAt,readOperationalScoreAt,readOmittedScoreAt,operationalHoleComplete,playerByRef,hasNamedOmissionIntent);
 
 const consecutive=parseScoreSequenceTranscript("Jaime hoyo 1 cuatro, hoyo 2 cinco, 3 par");
 assert.equal(consecutive.ok,true);

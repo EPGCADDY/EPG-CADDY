@@ -912,3 +912,15 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `test-v358-active-round-reopen.mjs`, `audit-project.mjs` | Reproduce reapertura, persistencia y flujo explícito de nueva ronda. | RC-029 queda dentro de la auditoría maestra. |
 | `test-v311-neutral-match-home-link.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs` | Inicio condicionado e identificador acumulado V358. | Match/Four Ball, LIVE, Registro, multihoyos, Cedar y recuperación Safari siguen obligatorios. |
 | documentos rectores, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-029, estado y árbol exacto V358. | Producción y PASS físico permanecen puertas separadas. |
+
+## V359-PROGRESSIVE-UNIVERSAL-VOICE
+
+| Archivo exacto | Mapa V359 | Control |
+|---|---|---|
+| `index-grupal.html` | Aplica cada score desde `onresult`, conserva escucha continua, deduplica/corrige por ID estable y recupera voz masculina. | Escritura inmediata antes de silencio; ambigüedad revierte; voz hablada no aparece como texto. |
+| `api/voice-health.js` | Admite `browser_fallback_round_progressive` con conteo acotado. | No recibe transcripción, nombres, audio ni ubicación. |
+| `service-worker.js` | Shell V359. | Invalida V358 en iPhone. |
+| `test-v359-progressive-universal-voice.mjs` | Ejecuta orden `onresult`→escritura→persistencia→render, catálogo masculino y privacidad. | RC-030 queda dentro de la auditoría maestra. |
+| `test-v267-one-operational-line.mjs`, `test-v270-consecutive-hole-voice-blocks.mjs`, `test-v354-voice-fallback.mjs` | Incorporan `hoyo número N` y `golpes` al parser extraído. | Gramática natural y tandas históricas permanecen PASS. |
+| `test-v352-live.mjs`–`test-v358-active-round-reopen.mjs`, `audit-project.mjs` | Identificador V359 y regresión acumulada. | LIVE, Registro, Cedar, tráfico/clima, gesto Safari y ronda activa siguen obligatorios. |
+| documentos rectores, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-030, sincronización entre conversaciones y árbol V359. | Producción, Preview y PASS físico permanecen puertas separadas. |
