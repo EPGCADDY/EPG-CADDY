@@ -23,6 +23,7 @@
     "voice:ios-gate": "node test-v357-ios-voice-transport-recovery.mjs",
     "voice:progressive-gate": "node test-v357-synchronized-progressive-voice.mjs",
     "voice:synchronized-gate": "node test-v361-synchronized-voice.mjs",
+    "voice:physical-gate": "node test-v362-physical-voice-recovery.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

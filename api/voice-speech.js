@@ -2,8 +2,9 @@ import {handleAppPreflight,isAllowedAppOrigin} from "./_lib/cors.js";
 
 const MAX_SPEECH_TEXT=4000;
 const VOICE="cedar";
+const GATEWAY_VOICE="onyx";
 const SPEED=1.15;
-const GATEWAY_SPEECH_MODEL="openai/gpt-4o-mini-tts";
+const GATEWAY_SPEECH_MODEL="openai/tts-1-hd";
 const INSTRUCTIONS="Locutor masculino adulto, serio, sobrio y profesional. Español internacional neutro, sin acento regional marcado, sin Spanglish, sin tono comercial ni entusiasmo artificial. Dicción clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";
 
 export function sanitizeSpeechRequest(body={}){
@@ -23,8 +24,8 @@ export function cedarSpeechPayload(text,language="es-GT"){
   };
 }
 
-export function cedarGatewayPayload(text,language="es-GT"){
-  return{text,voice:VOICE,speed:SPEED,outputFormat:"mp3",language,instructions:INSTRUCTIONS};
+export function cedarGatewayPayload(text){
+  return{text,voice:GATEWAY_VOICE,speed:SPEED,outputFormat:"mp3"};
 }
 
 async function requestDirectSpeech(apiKey,payload,signal){
@@ -68,7 +69,12 @@ export default async function handler(req,res){
         upstream=await requestGatewaySpeech(gatewayToken,text,language,controller.signal);fromGateway=true;
       }
     }finally{clearTimeout(timeout)}
+    if(!upstream){
+      console.warn("cedar speech upstream",JSON.stringify({status:0}));
+      return res.status(502).json({ok:false,error:"CEDAR_SPEECH_UNAVAILABLE",retryable:false});
+    }
     if(!upstream.ok){
+      if(fromGateway)console.warn("cedar speech gateway failed",JSON.stringify({status:upstream.status,model:GATEWAY_SPEECH_MODEL}));
       console.warn("cedar speech upstream",JSON.stringify({status:upstream.status}));
       return res.status(upstream.status===429?503:502).json({ok:false,error:"CEDAR_SPEECH_UNAVAILABLE",retryable:upstream.status===429});
     }
@@ -79,6 +85,7 @@ export default async function handler(req,res){
     if(!audio.length)return res.status(502).json({ok:false,error:"CEDAR_SPEECH_EMPTY"});
     res.setHeader("Content-Type","audio/mpeg");
     res.setHeader("Content-Length",String(audio.length));
+    res.setHeader("X-GSCG-Voice",fromGateway?GATEWAY_VOICE:VOICE);
     return res.status(200).send(audio);
   }catch(error){
     console.error("cedar speech",error?.name==="AbortError"?"timeout":"failed");

@@ -16,4 +16,4 @@ Estas reglas aplican a todo el repositorio.
 7. Un solo FAIL bloquea el resultado integral. No redondear un PASS parcial.
 8. Producción permanece intacta hasta cero FAIL y aprobación expresa del propietario.
 9. Toda modificación se registra en ambos ROADMAPS dentro de la misma versión.
-10. Antes de trabajar desde otra conversación, sincronizar la rama canónica remota y conservar obligatoriamente los bancos V354–V357 de voz y V324/V337/V356 de tráfico-clima. No sustituir archivos completos con versiones de otra rama: cualquier cambio debe ser incremental, mantener `test-v357-ios-voice-transport-recovery.mjs` y ejecutar la auditoría integral. Producción no se toca.
+10. Antes de trabajar desde otra conversación, sincronizar la rama canónica remota y conservar obligatoriamente los bancos V354–V362 de voz —incluidos `test-v358-ios-score-universal-physical-recovery.mjs` y `test-v362-physical-voice-recovery.mjs`— y V324/V337/V356 de tráfico-clima. No sustituir archivos completos con versiones de otra rama: cualquier cambio debe ser incremental y ejecutar la auditoría integral. Producción no se toca.

@@ -64,9 +64,11 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v330-side-games.mj
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v352-live.mjs','test-v353-live-hub.mjs','test-v354-voice-fallback.mjs','test-v355-ios-audio-dictation.mjs','test-v356-voice-only-cedar-quality.mjs','test-v356-traffic-weather-accuracy.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v357-ios-voice-transport-recovery.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v358-active-round-reopen.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v358-ios-score-universal-physical-recovery.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v359-ios-score-parser-recovery.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v357-synchronized-progressive-voice.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v361-synchronized-voice.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v362-physical-voice-recovery.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

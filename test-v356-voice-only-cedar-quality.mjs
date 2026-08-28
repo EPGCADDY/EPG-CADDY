@@ -8,9 +8,9 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 const universal=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 const speech=fs.readFileSync(new URL("./api/voice-speech.js",import.meta.url),"utf8");
 
-assert.match(html,/V361-SYNCHRONIZED-VOICE-20260828/);
+assert.match(html,/V362-PHYSICAL-VOICE-RECOVERY-20260828/);
 assert.match(html,/CEDAR-1\.15-MALE-INTERNATIONAL-SPANISH/);
-assert.match(worker,/gscg-mobile-v361-synchronized-voice/);
+assert.match(worker,/gscg-mobile-v362-physical-voice-recovery/);
 
 for(const contract of [
   'aiUniversalRemember("user",transcript,[],{visible:false})',
@@ -30,10 +30,10 @@ assert.equal(direct.voice,"cedar");
 assert.equal(direct.speed,1.15);
 assert.match(direct.instructions,/Locutor masculino adulto/);
 const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
-assert.equal(gateway.voice,"cedar");
+assert.equal(gateway.voice,"onyx");
 assert.equal(gateway.speed,1.15);
 assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
-assert.match(speech,/openai\/gpt-4o-mini-tts/);
+assert.match(speech,/openai\/tts-1-hd/);
 
 function responseRecorder(){return{statusCode:0,headers:{},body:null,setHeader(name,value){this.headers[name]=value},status(code){this.statusCode=code;return this},json(value){this.body=value;return this},send(value){this.body=value;return this}}}
 const previousFetch=globalThis.fetch,previousOpenAI=process.env.OPENAI_API_KEY,previousGateway=process.env.AI_GATEWAY_API_KEY;
@@ -53,7 +53,9 @@ try{
   assert.equal(res.body.toString(),"cedar-audio");
   assert.equal(calls.length,2);
   assert.equal(calls[1].url,"https://ai-gateway.vercel.sh/v4/ai/speech-model");
-  assert.equal(calls[1].options.headers["ai-model-id"],"openai/gpt-4o-mini-tts");
+  assert.equal(calls[1].options.headers["ai-model-id"],"openai/tts-1-hd");
+  assert.equal(JSON.parse(calls[1].options.body).voice,"onyx");
+  assert.equal(res.headers["X-GSCG-Voice"],"onyx");
 }finally{
   globalThis.fetch=previousFetch;
   if(previousOpenAI===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=previousOpenAI;
