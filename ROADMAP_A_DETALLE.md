@@ -1722,3 +1722,17 @@ Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R9 no queda
 | `scripts/rebuild-inventory-pdfs.py`, tres PDF y `INVENTARIOS_V311.lock.json` | Corte `V351-R10-LONG-CAPTURE-TRAFFIC-ALIAS`. | Inventario y sello PASS sobre el árbol exacto. |
 
 Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R10 no queda aprobada hasta Preview READY, tráfico vivo y PASS físico iPhone.
+
+## V351-R11 · rechazo R10 y continuidad entre sesiones Safari · 28 de agosto de 2026
+
+| Archivo exacto | Cambio V351-R11 | Evidencia exigida |
+|---|---|---|
+| `index-grupal.html` | Meta/build R11; reinicia reconocimiento ante `onend` natural, conserva interino, limita reinicios, acumula alternativas y prioriza el candidato completo. | Una tanda o pregunta fragmentada cruza dos sesiones Safari y se procesa una sola vez al finalizar por silencio. |
+| `test-v351-r11-ios-natural-end-recovery.mjs` | Simula `resultado → onend → reinicio → resultado → silencio`. | Pregunta completa enviada una vez; eventos de reinicio/transcripción/respuesta sin contenido privado. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Agrega prioridad de tanda completa sobre candidato parcial y pregunta completa sobre fragmento corto. | 18 configuraciones, 108 tandas, 1,188 Gross, contradicción completa rechazada y cero IA para Score. |
+| `audit-project.mjs` | Incorpora el banco R11. | La auditoría maestra no puede omitir la frontera real `onend`. |
+| `scripts/rebuild-inventory-pdfs.py` | Corte `V351-R11-IOS-NATURAL-END-RECOVERY`. | Tres PDF y sello actualizados. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-035. | R10 rechazada; causa, escape, control y evidencia conservados. |
+| `COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAP e inventario lock | Registro y sello del mismo candidato. | Candados documental, ROADMAP e inventario en PASS. |
+
+Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R11 no queda aprobada hasta Preview READY y PASS físico iPhone de multihoyos y una pregunta general.

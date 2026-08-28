@@ -143,7 +143,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V351-R9 RECHAZADA EN IPHONE · V351-R10 EN CANDIDATO CON CAPTURA CONTINUA SAFARI, CIERRE SIN PÉRDIDA Y TRÁFICO ABREVIADO CANÓNICO; PREVIEW, TRÁFICO VIVO Y VALIDACIÓN FÍSICA PENDIENTES
+**Estado:** V351-R10 RECHAZADA EN IPHONE · V351-R11 EN CANDIDATO CON REINICIO ANTE `ONEND` NATURAL, FRAGMENTOS ACUMULADOS Y PREGUNTA COMPLETA; PREVIEW Y VALIDACIÓN FÍSICA PENDIENTES
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -219,6 +219,13 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - La escritura conserva transacción completa: si falta un jugador, hoyo o Gross, no se aplica una parte ni se adivina el dato.
 - La frase abreviada de tráfico se convierte a lugares completos antes del proveedor. El panel muestra resultado, error seguro o timeout y no queda indefinidamente en `RESPONDIENDO`.
 - Producción permanece intacta; R10 necesita Preview READY, tráfico vivo y PASS físico iPhone.
+
+### Corrección activa V351-R11
+
+- La prueba física rechazó R10: Registro y un hoyo individual funcionaron, pero Safari volvió a cortar el dictado multi-hoyo y la pregunta general antes de enviarlos completos.
+- `continuous=true` no garantiza continuidad en iOS. Cuando Safari emite un `onend` natural antes de los tres segundos, R11 conserva el bloque y reinicia la captura sin cerrar la orden.
+- Las hipótesis de todas las sesiones se acumulan. Score elige únicamente la interpretación válida con mayor cantidad de jugador+hoyo; una contradicción completa continúa bloqueada. El Caddy recibe el texto general más completo, no el primer fragmento corto.
+- `test-v351-r11-ios-natural-end-recovery.mjs` simula dos sesiones Safari y exige un solo envío final. Producción permanece intacta hasta Preview READY y PASS físico iPhone.
 
 ### Condiciones de cierre futuro
 

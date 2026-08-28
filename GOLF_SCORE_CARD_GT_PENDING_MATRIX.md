@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V351-R9 RECHAZADA EN IPHONE A LAS 06:23 DEL 28 DE AGOSTO: la tanda multi-hoyo terminó en `missing_score`; el score individual sí se aplicó y la consulta de tráfico devolvió HTTP 502. V351-R10 conserva la captura larga hasta silencio o cierre manual, canonicaliza los dos alias locales comprobados y obliga una respuesta textual visible incluso ante timeout/proveedor caído. Requiere Preview, tráfico vivo y nueva prueba física · `PEND-VOZ-003`
+**Estado:** V351-R10 RECHAZADA EN IPHONE: Registro y un hoyo individual funcionaron, pero `onend` natural de Safari cerró el dictado antes de completar multihoyos o la pregunta general. V351-R11 reinicia la captura, conserva fragmentos entre sesiones y selecciona sólo el candidato completo. Requiere Preview y nueva prueba física · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -460,3 +460,11 @@ R10 cambia el transporte alternativo de Safari de una sola emisión a captura co
 La consulta hablada abreviada se canonicaliza a los lugares completos antes de Google Maps Routes. El cliente conserva el mensaje seguro del proveedor, agrega un límite de 60 segundos y siempre pinta una respuesta final o un error visible; `RESPONDIENDO` no puede quedar indefinido.
 
 `test-v351-r6-consecutive-holes-voice-score.mjs` mantiene 18 configuraciones, 108 tandas, 1,188 Gross y cero IA para Score, y ahora bloquea `continuous=true`, el cierre con cola pendiente y la finalización única. `test-v324-real-traffic.mjs` reproduce la frase corta reportada sin guardar ubicación del propietario. Producción permanece intacta hasta Preview READY, tráfico vivo y PASS físico iPhone.
+
+## V351-R11-IOS-NATURAL-END-RECOVERY · continuidad real entre sesiones Safari · 28 de agosto de 2026
+
+R10 configuró `continuous=true`, pero Safari/iOS puede cerrar internamente el reconocimiento después del primer bloque hablado. El manejador `onend` trataba ese cierre natural como final definitivo, por lo que un hoyo individual funcionaba mientras una tanda 3→4→5 o una pregunta general quedaban truncadas antes del parser/API.
+
+R11 distingue cierre natural de cierre por silencio o segundo toque. Si existe voz pendiente, compromete el fragmento interino, reinicia el reconocimiento y mantiene la misma orden hasta tres segundos reales de silencio. Las alternativas se acumulan entre sesiones; Score prioriza la interpretación válida con más pares jugador+hoyo y conserva el rechazo si dos tandas completas discrepan. Para Caddy/AI elige la pregunta completa más larga.
+
+`test-v351-r11-ios-natural-end-recovery.mjs` reproduce `resultado → onend natural → reinicio → resultado → silencio`, exige una sola consulta completa y telemetría privada del reinicio. `test-v351-r6-consecutive-holes-voice-score.mjs` mantiene 18 configuraciones, 108 tandas, 1,188 Gross y cero IA para Score. Producción permanece intacta hasta Preview READY y PASS físico iPhone.

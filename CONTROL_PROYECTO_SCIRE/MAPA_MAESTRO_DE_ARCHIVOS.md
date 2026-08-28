@@ -891,3 +891,14 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `test-v324-real-traffic.mjs` | Reproduce la frase abreviada reportada y exige origen/destino completos sin exponer ubicación personal. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-034 rechaza R9 con logs privados y fija los controles permanentes R10. |
 | `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, ambos ROADMAP y `scripts/rebuild-inventory-pdfs.py` | Registran y sellan el mismo candidato R10. |
+
+## V351-R11-IOS-NATURAL-END-RECOVERY · continuidad entre cierres internos Safari
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | Distingue `onend` natural del cierre solicitado, conserva el interino, reinicia la captura, acumula alternativas y entrega sólo el candidato más completo al parser o al Caddy. |
+| `test-v351-r11-ios-natural-end-recovery.mjs` | Simula dos sesiones de reconocimiento separadas por `onend`, verifica un solo envío completo y telemetría privada del reinicio. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Exige que una hipótesis parcial de un hoyo no gane sobre la tanda completa y conserva 1,188 escrituras verificadas. |
+| `audit-project.mjs` | Incorpora la regresión R11 a la auditoría maestra. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-035 rechaza R10 y registra causa, escape, control y evidencia. |
+| `COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, ambos ROADMAP y `scripts/rebuild-inventory-pdfs.py` | Registran y sellan el mismo candidato R11. |

@@ -10,7 +10,7 @@ const sourceBetween=(start,end)=>{
 
 assert.match(html,/gscg-consecutive-hole-voice" content="V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
 assert.match(html,/gscg-hybrid-consecutive-hole-voice" content="V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
-assert.match(html,/gscg-ios-voice-tail" content="V351-R10-LONG-CAPTURE-TRAFFIC-ALIAS-20260828"/);
+assert.match(html,/gscg-ios-voice-tail" content="V351-R11-IOS-NATURAL-END-RECOVERY-20260828"/);
 assert.match(html,/function parseMultiHoleScoreSegments[\s\S]*?parseHoleListScoreSegments[\s\S]*?parseHoleFirstScoreBlocks/);
 assert.match(html,/const listed=parseHoleListScoreSegments[\s\S]*?if\(listed\?\.ok\)return listed[\s\S]*?const blocked=parseHoleFirstScoreBlocks[\s\S]*?if\(blocked\?\.ok\)return blocked/);
 
@@ -170,11 +170,19 @@ const conflictingPhysical=physicalPhrase.replace("hoyo cinco Jaime cinco","hoyo 
 assert.equal(selectBrowserVoiceCandidate("round",[physicalPhrase,conflictingPhysical]).ambiguous,true,"Dos alternativas válidas con Gross distintos deben rechazarse sin adivinar");
 assert.match(html,/recognition\.continuous=true/);
 assert.match(html,/scheduleBrowserVoiceFinalize\(recognition,context\)/);
-assert.match(html,/recognition\.onend=\(\)=>\{finalizeBrowserVoiceFallback\(recognition,context\)\}/);
+assert.match(html,/function restartBrowserVoiceAfterNaturalEnd/);
+assert.match(html,/browserVoiceTranscript=pending;browserVoiceInterim="";browserVoiceRestartCount\+\+/);
+assert.match(html,/recognition\.onend=\(\)=>\{if\(restartBrowserVoiceAfterNaturalEnd\(recognition,context\)\)return;finalizeBrowserVoiceFallback\(recognition,context\)\}/);
 assert.match(html,/stopBrowserVoiceFallback\(\{keepStatus:true,processPending:true\}\)/);
 assert.match(html,/recognition\.maxAlternatives=5/);
-assert.match(html,/browserVoiceCandidates=browserVoiceAlternativeBeams\(event\.results\)/);
+assert.ok(html.includes('browserVoiceCandidates=[...new Set([...browserVoiceCandidates,...alternatives])].slice(-48)'),"Safari debe acumular alternativas de todos los reinicios naturales");
 assert.match(html,/processBrowserVoiceTranscript\(context,transcript\)\.catch/);
+
+const singleHoleCandidate="hoyo tres Jaime cinco Gustavo cinco";
+assert.equal(selectBrowserVoiceCandidate("round",[singleHoleCandidate,physicalPhrase]).transcript,normalizeSpeech(physicalPhrase),"Una hipótesis parcial de un hoyo no puede ganar sobre la tanda completa 3-4-5");
+const partialQuestion="como esta el trafico";
+const completeQuestion="como esta el trafico para ir de pulte a pradera concepcion";
+assert.equal(selectBrowserVoiceCandidate("round",[partialQuestion,completeQuestion]).transcript,completeQuestion,"El Caddy debe recibir la pregunta general completa, no el primer fragmento corto de Safari");
 
 let visiblePanel=null,queryHealth="",queryCalls=0;
 const processVisibleQuery=new Function(
@@ -194,4 +202,4 @@ assert.deepEqual({ok:duplicateMulti.ok,failureCode:duplicateMulti.failureCode},{
 const invalidMulti=physicalParser("hoyos tres cuatro 19 Jaime cuatro cinco seis Gustavo cinco cinco cinco",{defaultPlayer:null,defaultHole:3});
 assert.deepEqual({ok:invalidMulti.ok,failureCode:invalidMulti.failureCode},{ok:false,failureCode:"invalid_hole"},"Un hoyo fuera de 1–18 debe rechazarse");
 
-console.log("PASS V351-R10 · 18 configuraciones · 108 tandas 3-4-5 · 1188 Gross · captura continua Safari · parada conserva dictado · cero IA para Score");
+console.log("PASS V351-R11 · 18 configuraciones · 108 tandas 3-4-5 · 1188 Gross · reinicio natural Safari · candidato completo · cero IA para Score");
