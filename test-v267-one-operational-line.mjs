@@ -72,7 +72,7 @@ assert.doesNotMatch(html,/if\(final&&roundLiveOriginal\.has\(id\)\)\{rollbackLiv
 assert.match(html,/if\(final\)\{persist\(\);render\(\)\}/);
 
 // Ejecuta el parser único real para General y Stableford.
-const parserStart=html.indexOf("function parseScoreSequenceTranscript");
+const parserStart=html.indexOf("function scoreHoleMentions");
 const parserEnd=html.indexOf("\nfunction parseProvisionalScoreTranscript",parserStart);
 assert.ok(parserStart>0&&parserEnd>parserStart,"No se encontró el parser operacional único");
 const parserSource=html.slice(parserStart,parserEnd);

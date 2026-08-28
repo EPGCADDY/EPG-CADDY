@@ -817,3 +817,17 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `test-v305-registration-guides-parser-truth.mjs` | Protege simultáneamente XIV de Registro, IV/V del Score y `X` operacional. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-028 documenta la prueba física de las 18:21 y el evento `browser_fallback_score_rejected`. |
 | `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R4-MATCH-ROMAN-SCORE-LOCAL`. |
+
+## V351-R5-ALL-MODES-VOICE-SCORE · voz completa por modalidad y cantidad
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | `parseNamedScoreSegments` recupera tandas con nombres y un Gross inequívoco por segmento, con el hoyo antes o después; conserva el parser estricto, el escritor único y la prohibición de adivinar datos. |
+| `api/voice-health.js` | Acepta únicamente códigos cerrados de etapa para un rechazo de Score; descarta transcripción, nombres, Gross, ubicación y cualquier texto libre. |
+| `test-v351-r5-voice-score-matrix.mjs` | Ejecuta 18 configuraciones, 72 recorridos de voz y 264 escrituras mediante el escritor oficial: Normal/Stableford 1–6 y Match/Four Ball 2/4/6. |
+| `test-v351-r1-hole1-voice-score-render.mjs` | Reproduce además Match Play físico con Safari IV/V y la variante natural que declara el hoyo al final; verifica persistencia, render y cero IA. |
+| `test-v270-consecutive-hole-voice-blocks.mjs`, `test-v267-one-operational-line.mjs` | Integran la recuperación R5 sin permitir hoyo 19, duplicados después del cierre ni contaminación de una tanda inválida. |
+| `test-v336-microphone-transport.mjs` | Verifica que sólo un código enumerado pueda salir en telemetría y que el texto privado sea descartado. |
+| `audit-project.mjs` | Incorpora la matriz R5 al banco integral sin retirar pruebas históricas. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-029 rechaza R4 con capturas y logs de las 18:46; conserva el límite honesto de no almacenar transcripciones. |
+| `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R5-ALL-MODES-VOICE-SCORE`. |

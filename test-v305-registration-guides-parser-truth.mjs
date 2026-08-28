@@ -66,4 +66,4 @@ assert.match(html,/function generalSetupState\(\)[\s\S]*?\["match_play","four_ba
 assert.match(html,/function updateGeneralSetupValidity\(\)[\s\S]*?button\.disabled=!state\.ready[\s\S]*?aria-disabled/);
 assert.match(html,/#setupOk:disabled,[\s\S]*?#startStablefordRound:disabled\{/);
 
-console.log("PASS V305/V351-R4 · Safari XIV registra handicap; IV/V registran Gross; X conserva omisión");
+console.log("PASS V305/V351-R5 · Safari XIV registra handicap; IV/V registran Gross; X conserva omisión");

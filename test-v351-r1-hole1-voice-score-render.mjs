@@ -10,11 +10,12 @@ function sourceBetween(start,end){
 }
 
 assert.match(html,/gscg-hole1-voice" content="V351-R2-IOS-TOUCH-HOLE1-RENDER-20260827"/);
-assert.match(html,/gscg-score-local-boundary" content="V351-R4-MATCH-ROMAN-SCORE-LOCAL-20260828"/);
-assert.match(html,/gscg-match-score-roman" content="V351-R4-SAFARI-IV-V-GROSS-X-OMISSION-20260828"/);
+assert.match(html,/gscg-score-local-boundary" content="V351-R5-ALL-MODES-VOICE-SCORE-20260828"/);
+assert.match(html,/gscg-match-score-roman" content="V351-R5-SAFARI-ROMAN-GROSS-X-OMISSION-20260828"/);
+assert.match(html,/gscg-score-voice-matrix" content="V351-R5-NORMAL-STABLEFORD-MATCH-FOURBALL-1-6-20260828"/);
 assert.match(html,/function operationalDefaultPlayer\(hole=currentOperationalHole\(\)\)[\s\S]*?active\.length===1\?active\[0\]:null/);
 assert.match(html,/return\{handled:true,scoreOrder:true,ok:result\.ok,silent:result\.ok,answer:result\.ok\?"Score registrado en la tarjeta\."/);
-assert.match(html,/if\(local\.scoreOrder\)\{phase="idle";reportVoiceHealth\(local\.ok\?"browser_fallback_score_applied":"browser_fallback_score_rejected"\)/);
+assert.match(html,/if\(local\.scoreOrder\)\{phase="idle";reportVoiceHealth\(local\.ok\?"browser_fallback_score_applied":"browser_fallback_score_rejected",local\.ok\?\{\}:\{scoreFailure:/);
 
 const singlePlayer={id:"p1",name:"JAIME",handicap:0,tee:"Blanco",holes:{},lastHole:0,activeFrom:1};
 const defaultSource=sourceBetween("function operationalDefaultPlayer","\nfunction operationalCaptureQuiet");
@@ -40,7 +41,7 @@ const playerByRef=value=>players.find(player=>player.id===value||player.name===v
 const QUERY_WORDS=new Set(["consulta","dime","resultado"]),CORRECTION_WORDS=new Set(["corrijo"]),SCORE_FILLERS=new Set(["y","luego","hizo","hace","gross","score","golpe","golpes","tiro","tiros","ponle","anotale"]),SCORE_WORDS=new Set(["scores"]);
 const skipScoreFillers=(tokens,index)=>{while(index<tokens.length&&(SCORE_FILLERS.has(tokens[index])||CORRECTION_WORDS.has(tokens[index])||SCORE_WORDS.has(tokens[index])))index++;return index};
 const readOperationalScoreAt=(tokens,index)=>{index=skipScoreFillers(tokens,index);const parsed=parseScoreNumberTokens(tokens,index);return parsed&&parsed.value>=1&&parsed.value<=30?{gross:parsed.value,status:null,next:parsed.next}:null};
-const parseSource=sourceBetween("function parseScoreSequenceTranscript","\nfunction parseProvisionalScoreTranscript");
+const parseSource=[sourceBetween("function scoreHoleMentions","\nfunction parseNamedScoreSegments"),sourceBetween("function parseNamedScoreSegments","\nfunction parseScoreSequenceTranscript"),sourceBetween("function parseScoreSequenceTranscript","\nfunction parseProvisionalScoreTranscript")].join("\n");
 const parseScoreSequenceTranscript=new Function(
   "normalizeSpeech","QUERY_WORDS","CORRECTION_WORDS","SCORE_FILLERS","SCORE_WORDS","skipScoreFillers","parseSpanishNumberTokens","matchPlayerAt","readOperationalScoreAt","readOmittedScoreAt","operationalHoleComplete","playerByRef","hasNamedOmissionIntent",
   `${parseSource};return parseScoreSequenceTranscript`
@@ -72,6 +73,9 @@ assert.deepEqual(matchPlaySafariRoman.entries,naturalGroup.entries);
 const matchPlayNaturalUnits=groupParser("Jaime hizo IV golpes y Gustavo hizo V golpes",{defaultPlayer:null,defaultHole:1});
 assert.equal(matchPlayNaturalUnits.ok,true,"Match Play debe aceptar golpes/tiros como unidades naturales");
 assert.deepEqual(matchPlayNaturalUnits.entries,naturalGroup.entries);
+const physicalTrailingHole=groupParser("Jaime cuatro golpes y Gustavo cinco golpes en el hoyo uno",{defaultPlayer:null,defaultHole:1});
+assert.equal(physicalTrailingHole.ok,true,"La ubicación del hoyo al final no puede rechazar el dictado físico");
+assert.deepEqual(physicalTrailingHole.entries,naturalGroup.entries);
 
 const matchRound={configured:true,mode:"match_play",provisional:false,officiallyClosedAt:null,players:groupPlayers.map(player=>({...player,holes:{}})),announced:{front:false,back:false,complete:false}};
 const matchPlayerByRef=value=>matchRound.players.find(player=>player.id===value||player.name===value)||null;
@@ -136,6 +140,9 @@ assert.equal(lastHealth,"browser_fallback_score_applied");
 assert.equal(await processBrowserVoiceTranscript("round","Jaime IV Gustavo V"),true);
 assert.equal(universalCalls,0,"El Score Match Play con romanos de Safari no puede llamar AI UNIVERSAL");
 assert.equal(lastHealth,"browser_fallback_score_applied");
+assert.equal(await processBrowserVoiceTranscript("round","Jaime cuatro golpes y Gustavo cinco golpes en el hoyo uno"),true);
+assert.equal(universalCalls,0,"La frase física con el hoyo al final tampoco puede llamar AI UNIVERSAL");
+assert.equal(lastHealth,"browser_fallback_score_applied");
 
 const round={configured:true,provisional:false,officiallyClosedAt:null,players,announced:{front:false,back:false,complete:false}};
 const PAR=Array(18).fill(4),isOmittedScore=score=>score?.status==="x";
@@ -169,4 +176,4 @@ const playerBlock=new Function(
 const cardHtml=playerBlock(singlePlayer,1);
 assert.match(cardHtml,/data-round-player="p1" data-round-hole="1"[^>]*>4<\/td>/,"El Gross 4 debe aparecer visualmente en la casilla del hoyo 1");
 
-console.log("PASS V351-R4 · Match Play Safari IV/V -> clasificador -> escritor local -> persistencia/render; X conserva omisión; cero llamadas IA");
+console.log("PASS V351-R5 · Match Play Safari IV/V y hoyo final -> clasificador -> escritor local -> persistencia/render; X conserva omisión; cero llamadas IA");

@@ -1,23 +1,23 @@
 {
-  "version": "V351-R4-MATCH-ROMAN-SCORE-LOCAL",
-  "generatedAt": "2026-08-28T00:32:30Z",
-  "sourceFileCount": 350,
-  "sourceDigest": "1073c154063247a7d9e4ab00c0797355f54040f6e440b1cf2eef0ed418604f4e",
+  "version": "V351-R5-ALL-MODES-VOICE-SCORE",
+  "generatedAt": "2026-08-28T01:04:00Z",
+  "sourceFileCount": 351,
+  "sourceDigest": "5a712e84c558f233c0432637af0c5dcfbac78d91b6de50b4b844bf84197f4e31",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 177203,
-      "sha256": "07bebf3bd26b74617f88a5f4b7b01c7efd6f8409feb377629dab392c0e1e632e"
+      "size": 179112,
+      "sha256": "79fe767c4aa65ec4e4a81ebd5a37c7db872f3ad335a8cd59c487c7f9d07d9a87"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 196809,
-      "sha256": "5647678ff2e13981dfd05724a1c5c91a6ced4e63d6c2f5ccc3f82dc131237ca7"
+      "size": 198657,
+      "sha256": "73fd0ff8619a3bfa0b8bff7bde5aebdac67f3967682fefb17a57028467ba14fe"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19260981,
-      "sha256": "dd7f6378c064841dd58580742fd145c3ea1b43a511e83b73a00e0da39f4e1a90"
+      "size": 19260979,
+      "sha256": "ea77ca99b819689fc4cf04c7ad5b0c990057a3e4753935217b279ea6aed088b6"
     }
   ]
 }

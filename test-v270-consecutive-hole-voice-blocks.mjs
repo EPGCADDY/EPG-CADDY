@@ -27,7 +27,7 @@ for(const phrase of ["cero","sin score","sin dato","sin resultado","no informó"
 }
 
 const operationalStart=html.indexOf("function operationalPlayersForHole");
-const operationalEnd=html.indexOf("\nfunction parseScoreSequenceTranscript",operationalStart);
+const operationalEnd=html.indexOf("\nfunction scoreHoleMentions",operationalStart);
 assert.ok(operationalStart>0&&operationalEnd>operationalStart,"No se encontró el criterio operacional común");
 const document={getElementById:()=>null};
 const ALL=Array.from({length:18},(_,index)=>index+1);
@@ -35,9 +35,9 @@ const manualHoleResult=(player,hole)=>({recorded:!!player?.holes?.[hole],status:
 const teamMatchPlayerLimit=()=>18;
 const operational=new Function("round","playerByRef","manualHoleResult","document","ALL","teamMatchPlayerLimit",`${html.slice(operationalStart,operationalEnd)};return{operationalHoleComplete,nextOperationalHole}`)(round,playerByRef,manualHoleResult,document,ALL,teamMatchPlayerLimit);
 
-const parserStart=html.indexOf("function parseScoreSequenceTranscript");
+const parserStart=html.indexOf("function scoreHoleMentions");
 const parserEnd=html.indexOf("\nfunction parseProvisionalScoreTranscript",parserStart);
-assert.ok(parserStart>0&&parserEnd>parserStart,"No se encontró el parser V270");
+assert.ok(parserStart>0&&parserEnd>parserStart,"No se encontró el parser V270/R5");
 const parseScoreSequenceTranscript=new Function("normalizeSpeech","QUERY_WORDS","CORRECTION_WORDS","SCORE_FILLERS","SCORE_WORDS","skipScoreFillers","parseSpanishNumberTokens","matchPlayerAt","readOperationalScoreAt","readOmittedScoreAt","operationalHoleComplete","playerByRef","hasNamedOmissionIntent",`${html.slice(parserStart,parserEnd)};return parseScoreSequenceTranscript`)(normalizeSpeech,QUERY_WORDS,CORRECTION_WORDS,SCORE_FILLERS,SCORE_WORDS,skipScoreFillers,parseSpanishNumberTokens,matchPlayerAt,readOperationalScoreAt,readOmittedScoreAt,operational.operationalHoleComplete,playerByRef,hasNamedOmissionIntent);
 
 const twoHoles=parseScoreSequenceTranscript("Fito cinco Jaime cuatro Nelson seis Junior cinco Pedro cuatro Carlos cero Fito cuatro Jaime cinco Nelson cinco Junior cuatro Pedro seis Carlos cuatro",{defaultHole:2});

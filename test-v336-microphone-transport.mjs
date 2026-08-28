@@ -77,6 +77,7 @@ assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_start_failed",erro
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_applied",transcript:"privado"}),{event:"browser_fallback_setup_applied",build:"",context:"round",turn:0,elapsedMs:0});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_rejected",transcript:"privado"}),{event:"browser_fallback_setup_rejected",build:"",context:"round",turn:0,elapsedMs:0});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_score_applied",transcript:"privado",player:"JAIME"}),{event:"browser_fallback_score_applied",build:"",context:"round",turn:0,elapsedMs:0});
-assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_score_rejected",transcript:"privado",player:"JAIME"}),{event:"browser_fallback_score_rejected",build:"",context:"round",turn:0,elapsedMs:0});
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_score_rejected",transcript:"privado",player:"JAIME",score:"4",scoreFailure:"missing_score"}),{event:"browser_fallback_score_rejected",build:"",context:"round",turn:0,elapsedMs:0,scoreFailure:"missing_score"});
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_score_rejected",scoreFailure:"texto_privado"}),{event:"browser_fallback_score_rejected",build:"",context:"round",turn:0,elapsedMs:0},"Sólo códigos cerrados pueden salir; nunca texto libre");
 
-console.log("PASS V351-R4 · Registro y Score locales, matriz exacta y telemetría privada protegidos");
+console.log("PASS V351-R5 · Registro y Score locales, matriz exacta y diagnóstico privado protegido");

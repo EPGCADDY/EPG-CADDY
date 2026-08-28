@@ -1618,3 +1618,27 @@ La evidencia `IMG_2109.png`–`IMG_2113.png` muestra Registro correcto, clima vi
 - `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: documentan y sellan el mismo candidato.
 
 Producción continúa en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. V351-R4 no es oficial hasta auditoría, Preview y PASS físico iPhone.
+
+## V351-R5 · rechazo R4 y candado de voz completo · 28 de agosto de 2026
+
+Evidencia física: `IMG_2116.png` registra correctamente; `IMG_2117.jpeg` muestra Score escuchando; `IMG_2118.jpeg`/`IMG_2119.png` conservan ambos Gross vacíos. Los logs del deployment R4 registran setup aplicado a las 00:46:05 UTC, Score iniciado a las 00:46:14 y transcripción recibida/rechazada a las 00:46:21. No hubo prueba física aprobada.
+
+| Archivo exacto | Cambio V351-R5 | Evidencia exigida |
+|---|---|---|
+| `index-grupal.html` | Metas R5; recuperación `parseNamedScoreSegments`; hoyo inicial/final; un Gross inequívoco por jugador; duplicados y preguntas rechazados; código privado de etapa. | Ronda Normal/Stableford 1–6; Match/Four Ball 2/4/6; escritor único. |
+| `api/voice-health.js` | Lista cerrada `scoreFailure`; texto libre, transcripción, jugador, Gross y ubicación se descartan. | `test-v336-microphone-transport.mjs`. |
+| `test-v351-r5-voice-score-matrix.mjs` | Nuevo banco integral por modalidad y cantidad. | 18 configuraciones, 72 recorridos y 264 escrituras persistidas/renderizadas. |
+| `test-v351-r1-hole1-voice-score-render.mjs` | Agrega frase con hoyo al final y conserva IV/V, X y cero IA. | Parser → router → reconocimiento alternativo → escritor → persistencia/render. |
+| `test-v270-consecutive-hole-voice-blocks.mjs` | Integra helpers R5 al banco histórico. | Hoyo 18 no desborda; tandas y cursor permanecen correctos. |
+| `test-v267-one-operational-line.mjs` | Ejecuta el parser único con la recuperación R5. | 35 scores incrementales y una sola línea operacional. |
+| `test-v305-registration-guides-parser-truth.mjs` | Identificación de corte R5. | XIV en Registro; IV/V en Gross; X como omisión. |
+| `test-v336-microphone-transport.mjs` | Diagnóstico cerrado y privacidad. | `missing_score` permitido; texto arbitrario descartado. |
+| `audit-project.mjs` | Agrega `test-v351-r5-voice-score-matrix.mjs`. | Banco maestro completo sin retirar paquetes anteriores. |
+| `scripts/rebuild-inventory-pdfs.py` | Corte `V351-R5-ALL-MODES-VOICE-SCORE`. | Tres PDF y sello actualizados. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-029. | R4 rechazada; causa no inventada por límite de privacidad. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Estado real V351-R5. | Preview y PASS físico siguen pendientes. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Mapa de funciones y controles R5. | Rutas exactas registradas. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Doble registro obligatorio. | Mismo alcance y mismo corte. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello final. | Huellas posteriores a todos los cambios. |
+
+Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Ningún resultado automático convierte R5 en aprobación física.

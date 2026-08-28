@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V350 RECHAZADA EN IPHONE A LAS 14:16; V351 interpreta números romanos generados por Safari dentro del hándicap. V351-R1 corrige el fallo individual `hoyo uno + score` que no se reflejaba visualmente; requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
+**Estado:** V351-R4 RECHAZADA EN IPHONE A LAS 18:46; V351-R5 amplía el Score por voz a todas las modalidades y cantidades admitidas, acepta el hoyo antes o después de la tanda y agrega diagnóstico privado por etapa. Requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -398,3 +398,16 @@ La **1. Estabilización física de la voz** permanece en validación de campo. A
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-028` | Conserva capturas, logs, causa, escape y puerta física. |
 
 V351-R3 queda rechazada por la prueba física de Match Play de las 18:21. Producción permanece intacta; V351-R4 requiere auditoría integral, Preview nuevo y PASS físico iPhone.
+
+## V351-R5-ALL-MODES-VOICE-SCORE · matriz real de voz y jugadores · 28 de agosto de 2026
+
+| Modalidad | Cantidades ejecutadas | Recorrido obligatorio |
+|---|---:|---|
+| Ronda Normal | 1, 2, 3, 4, 5 y 6 | transcripción → parser → escritor oficial → persistencia → render |
+| Stableford | 1, 2, 3, 4, 5 y 6 | misma ruta; el cálculo de puntos permanece en el motor Stableford |
+| Match Play | 2, 4 y 6 | una, dos o tres parejas; Gross individual y resultado por hoyos |
+| Four Ball | 2, 4 y 6 | una, dos o tres parejas; Gross individual y mejor Neto por pareja |
+
+El banco nuevo ejecuta 18 configuraciones, 72 recorridos de voz y 264 escrituras de Gross. Cada configuración acepta palabras, dígitos, romanos Safari y el hoyo al principio o al final; una pregunta continúa sin escribir. Los rechazos publican únicamente un código cerrado como `missing_score` o `ambiguous_hole`, nunca transcripción, nombres, Gross ni ubicación.
+
+V351-R4 queda rechazada por las capturas `IMG_2116.png`–`IMG_2119.png` y los eventos `browser_fallback_transcript_ready` + `browser_fallback_score_rejected` de las 00:46:21 UTC. Producción permanece intacta; V351-R5 requiere auditoría integral, Preview y PASS físico iPhone.
