@@ -890,3 +890,15 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `api/_lib/traffic.js`, `api/universal-ai.js`, `api/weather.js` | Salida futura, rótulo previsto, pronóstico horario y límite de proveedor. | Actual nunca sustituye futuro. |
 | `test-v356-traffic-weather-accuracy.mjs`, `audit-project.mjs` | Cinco horizontes y regresión acumulada. | RC-027 obligatorio en cada release. |
 | registro, cola, matrices y roadmaps | Causa raíz y estado verificable. | Comparación externa y campo permanecen puertas separadas. |
+
+## V357-IOS-VOICE-TRANSPORT-RECOVERY
+
+| Archivo exacto | Mapa V357 | Control |
+|---|---|---|
+| `index-grupal.html` | Captura iPhone en gesto antes de Realtime; multi-hoyo y General por el mismo transporte local. | 429 no bloquea; score local antes que conversación. |
+| `api/voice-health.js` | Eventos de reinicio/reintento/resultado sin contenido. | Privacidad técnica. |
+| `service-worker.js` | Shell V357. | Actualización efectiva en acceso directo iPhone. |
+| `test-v357-ios-voice-transport-recovery.mjs` | Banco raíz RC-028. | Gesto, alternativas, ambigüedad, `voiceOnly` y privacidad. |
+| `.github/workflows/roadmap-gate.yml`, `AGENTS.md`, `audit-project.mjs`, `package.json` | Candado entre conversaciones y ejecución obligatoria. | Voz V354–V357 y tráfico/clima V324/V337/V356 no pueden omitirse. |
+| `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs` | Compatibilidad acumulada. | LIVE, Registro, multi-hoyos y Cedar intactos. |
+| documentos rectores, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-028, estado y árbol exacto V357. | Continuidad verificable sin depender del historial de chat. |

@@ -6,8 +6,8 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 const audit=fs.readFileSync(new URL("./audit-project.mjs",import.meta.url),"utf8");
 
-assert.match(html,/V356-VOICE-TRAFFIC-WEATHER-QUALITY-20260828/);
-assert.match(worker,/gscg-mobile-v356-voice-traffic-weather-quality/);
+assert.match(html,/V357-IOS-VOICE-TRANSPORT-RECOVERY-20260828/);
+assert.match(worker,/gscg-mobile-v357-ios-voice-transport-recovery/);
 assert.match(audit,/test-v354-voice-fallback\.mjs/);
 assert.match(html,/function operationalDefaultVoicePlayer\(\)\{return operationalPromptPlayer\(\)\?\?\(\(round\?\.players\|\|\[\]\)\.length===1\?round\.players\[0\]:null\)\}/);
 
@@ -64,7 +64,7 @@ const makeBrowserProcessor=(parseResult,submitResult=true)=>new Function(
 const dynamicBatch=makeBrowserProcessor(natural);
 assert.equal(await dynamicBatch("round","hoyo 1 cuatro, hoyo 2 cinco, hoyo 3 cinco"),true);
 assert.deepEqual(runtimeOrder,["apply:3"]);
-assert.deepEqual(runtimeEvents.at(-1),{event:"browser_fallback_round_applied",detail:{entryCount:3}});
+assert.deepEqual(runtimeEvents.find(item=>item.event==="browser_fallback_round_applied"),{event:"browser_fallback_round_applied",detail:{entryCount:3}});
 assert.match(runtimeMatrices.at(-1)[2],/3 HOYOS REGISTRADOS/);
 
 runtimeOrder.length=0;runtimeEvents.length=0;runtimeMatrices.length=0;

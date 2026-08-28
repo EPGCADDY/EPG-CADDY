@@ -5,8 +5,8 @@ import {sanitizeVoiceHealth} from "./api/voice-health.js";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/V356-VOICE-TRAFFIC-WEATHER-QUALITY-20260828/);
-assert.match(worker,/gscg-mobile-v356-voice-traffic-weather-quality/);
+assert.match(html,/V357-IOS-VOICE-TRANSPORT-RECOVERY-20260828/);
+assert.match(worker,/gscg-mobile-v357-ios-voice-transport-recovery/);
 
 const setupStart=html.indexOf("function normalizeTee");
 const setupEnd=html.indexOf("\nfunction applySetupChanges",setupStart);

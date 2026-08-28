@@ -1729,3 +1729,21 @@ Estado remoto V355: commit `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, Preview `
 | documentos rectores, mapa e inventarios | RC-026, estado, rutas y sello V356. | Trazabilidad reproducible y Producción intacta. |
 
 Fuentes vivas: Google Maps Routes `TRAFFIC_AWARE_OPTIMAL` para tráfico; Open-Meteo estructurado para clima; GPT-5.6 y búsqueda web para AI UNIVERSAL. La salida hablada exige conclusión, evidencia, límite y recomendación sin leer fichas extensas. Preview y PASS físico iPhone permanecen pendientes hasta completar las puertas técnicas.
+
+## V357-IOS-VOICE-TRANSPORT-RECOVERY
+
+| Archivo exacto | Responsabilidad V357 | Candado |
+|---|---|---|
+| `index-grupal.html` | Abre reconocimiento local dentro del toque de iPhone; captura continua, alternativas, silencio, reinicio y reintentos. | Un 429 de Realtime no bloquea Registro, multi-hoyos ni AI UNIVERSAL. |
+| `api/voice-health.js` | Acepta estado técnico, causa de transporte y rechazo seguro. | Nunca recibe transcripción, nombres, audio ni coordenadas. |
+| `service-worker.js` | Caché `gscg-mobile-v357-ios-voice-transport-recovery`. | El iPhone invalida el shell V356. |
+| `test-v357-ios-voice-transport-recovery.mjs` | Ejecuta orden gesto→captura antes de Realtime, selector de alternativas, ambigüedad, privacidad y `voiceOnly`. | RC-028 no puede reaparecer. |
+| `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs` | Conservan multi-hoyos, Registro, voz sin texto y Cedar. | Regresión acumulada obligatoria. |
+| `test-v324-real-traffic.mjs`, `test-v337-universal-weather.mjs`, `test-v356-traffic-weather-accuracy.mjs` | Conservan tráfico y clima mientras se corrige voz. | La rama de micrófono no altera datos aprobados. |
+| `.github/workflows/roadmap-gate.yml`, `AGENTS.md` | Sincronización y compuerta contra cruces de ramas/conversaciones. | No sustituir archivos completos ni omitir bancos V354–V357. |
+| `audit-project.mjs`, `package.json` | Auditoría maestra y ejecución directa del candado. | Un FAIL detiene candidato y Preview. |
+| `test-v352-live.mjs`, `test-v353-live-hub.mjs` | Ajustan sólo el identificador de build. | LIVE y Centro LIVE siguen intactos. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | RC-028 y estado honesto. | Banco, Preview, navegador y prueba física separados. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Trazabilidad y sello del árbol V357. | Otra conversación localiza y conserva esta corrección. |
+
+Evidencia raíz: 16:43:01, 16:43:23, 16:43:54, 16:44:06, 16:45:44 y 16:45:58 UTC devolvieron 429 en `/api/session-grupal`; `/api/universal-ai` respondió 200. V357 elimina esa dependencia para escuchar en Safari. Producción permanece intacta.

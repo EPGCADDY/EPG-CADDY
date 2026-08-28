@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V356 separa voz y texto, fija Cedar masculino 1.15 también en respaldo, resume clima hablado y conserva tráfico Google Maps Routes y clima Open-Meteo; candidato en banco, Preview y prueba física pendientes. LIVE V353 conserva su E2E aprobado
+**Corte vigente:** V357 abre el reconocimiento local de iPhone dentro del toque, antes de esperar Realtime; el 429 deja de bloquear Registro, scores multi-hoyo y AI UNIVERSAL. Cedar 1.15, voz sin texto y tráfico/clima V356 permanecen intactos; banco PASS, Preview y prueba física pendientes. LIVE V353 conserva su E2E aprobado
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V356 candidato en banco; voz pronunciada sin transcripción visible, Cedar masculino 1.15 y calibre universal reforzado; Preview y prueba física iPhone pendientes · `PEND-VOZ-003`
+**Estado:** V357 candidato en banco PASS; transporte local inmediato, multi-hoyo, AI UNIVERSAL hablada y reintentos protegidos; Preview y prueba física iPhone pendientes · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -210,6 +210,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - **Control V355:** ENVIAR y los micrófonos habilitan la síntesis dentro del gesto original; `Ancas Gustavo, 15 blancas` dictado dentro de NOMBRE se distribuye en NOMBRE/HDCP/MARCAS. Frases incompletas y HDCP inválidos no se autocompletan.
 - **Control V356:** una consulta hablada no muestra pregunta ni respuesta en el historial visible. Realtime y respaldo usan `Cedar`, velocidad `1.15`, locutor masculino adulto y español internacional neutro. El respaldo llama `/api/voice-speech`, intenta OpenAI directo y recupera mediante AI Gateway; nunca elige una voz femenina o una voz española genérica. Las consultas escritas conservan respuesta escrita.
 - **Calidad V356:** tráfico directo se calcula con Google Maps Routes `TRAFFIC_AWARE_OPTIMAL`; clima directo usa Open-Meteo estructurado; AI UNIVERSAL usa GPT-5.6, perfil deep cuando corresponde, búsqueda web para datos cambiantes y respuesta hablada concisa sin perder conclusión, evidencia, límite ni recomendación.
+- **Control V357:** Safari/iPhone inicia `webkitSpeechRecognition` dentro del toque y no después del `await` de Realtime. Captura continua, cinco alternativas, cierre tras tres segundos de silencio, reinicio por final natural y dos reintentos de transporte conservan Registro, multi-hoyos y preguntas universales incluso cuando `/api/session-grupal` devuelve 429. La telemetría no guarda transcripción, nombres, audio ni ubicación.
 - **Orden de ejecución:** registrar estas tres correcciones y retomarlas después de continuar con la configuración y prueba de SKINS, WOLF, VEGAS y DOTS.
 
 - **Candado de privacidad V312:** no hay activación automática, huella de voz ni reconocimiento biométrico; el jugador debe abrir primero el micrófono con el botón.
