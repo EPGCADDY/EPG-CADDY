@@ -8,9 +8,9 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 const universal=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 const speech=fs.readFileSync(new URL("./api/voice-speech.js",import.meta.url),"utf8");
 
-assert.match(html,/V364-VOICE-TRAFFIC-LIVE-RECOVERY-20260828/);
+assert.match(html,/V365-MULTIPROVIDER-MALE-VOICE-20260828/);
 assert.match(html,/CEDAR-1\.15-MALE-INTERNATIONAL-SPANISH/);
-assert.match(worker,/gscg-mobile-v364-voice-traffic-live-recovery/);
+assert.match(worker,/gscg-mobile-v365-multiprovider-male-voice/);
 
 for(const contract of [
   'aiUniversalRemember("user",transcript,[],{visible:false})',
@@ -29,13 +29,13 @@ assert.equal(direct.model,"gpt-4o-mini-tts");
 assert.equal(direct.voice,"cedar");
 assert.equal(direct.speed,1.15);
 assert.match(direct.instructions,/Locutor masculino adulto/);
-const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
+const gateway=cedarGatewayPayload("Respuesta confiable.","onyx");
 assert.equal(gateway.voice,"onyx");
 assert.equal(gateway.outputFormat,"mp3");
 assert.equal(gateway.speed,undefined);
 assert.match(html,/player\.playbackRate=VOICE_POLICY\.speed/);
-assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
-assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1"/);
+assert.match(speech,/"ai-model-id":model/);
+assert.match(speech,/model:"openai\/tts-1",voice:"onyx"/);
 
 function responseRecorder(){return{statusCode:0,headers:{},body:null,setHeader(name,value){this.headers[name]=value},status(code){this.statusCode=code;return this},json(value){this.body=value;return this},send(value){this.body=value;return this}}}
 const previousFetch=globalThis.fetch,previousOpenAI=process.env.OPENAI_API_KEY,previousGateway=process.env.AI_GATEWAY_API_KEY;

@@ -69,7 +69,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v359-ios-score-par
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v357-synchronized-progressive-voice.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v361-synchronized-voice.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v362-physical-voice-recovery.mjs');
-checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v363-external-service-recovery.mjs','test-v364-voice-traffic-live-recovery.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v363-external-service-recovery.mjs','test-v364-voice-traffic-live-recovery.mjs','test-v365-multiprovider-male-voice.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

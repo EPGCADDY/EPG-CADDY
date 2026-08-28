@@ -1836,3 +1836,11 @@ La aceptación exige en el mismo Preview: consulta general 200 mediante Gateway 
 | `api/_lib/traffic.js` | Expande únicamente El Pulté Golf y Pradera Concepción a sus nombres completos; el resto conserva texto/GPS mundial sin país forzado. | La consulta local no exige que el jugador diga Guatemala; México y cualquier otro país siguen abiertos por GPS y dirección libre. |
 | `test-v364-voice-traffic-live-recovery.mjs`, bancos V352–V363, auditoría y workflow | Regresión acumulada y prueba negativa de destino mundial intacto. | Sólo Preview 200 de TTS y ruta exacta permiten pasar a iPhone. |
 | documentos rectores, constructor, PDFs y lock | RC-034 y árbol reproducible. | Producción permanece intacta hasta PASS físico y orden de montaje. |
+
+## V365-MULTIPROVIDER-MALE-VOICE
+
+| Archivo exacto | Responsabilidad V365 | Candado |
+|---|---|---|
+| `api/voice-speech.js` | Cedar directo → Onyx/OpenAI → Rex/xAI; sólo éxito produce MP3 y cabecera de voz real. | Un proveedor 400 no silencia al segundo proveedor masculino ni cae en voz femenina. |
+| `index-grupal.html`, `service-worker.js` | Identifica Rex/Onyx/Cedar y renueva caché V365. | Velocidad 1.15, un toque, score inmediato y cierre hablado permanecen. |
+| `test-v365-multiprovider-male-voice.mjs`, auditoría y workflow | Simula Cedar 429 + Onyx 400 + Rex 200 y exige audio/cabecera Rex. | Preview real e iPhone físico siguen separados del banco. |

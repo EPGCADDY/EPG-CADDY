@@ -405,6 +405,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 **Recuperación viva V364:** el Preview V363 confirmó AI UNIVERSAL 200 por OIDC, tráfico 200 al recibir GPS + destino geográfico completo y dos fallas precisas: `openai/tts-1-hd` 400 y `Pradera Concepción` sin municipio no produjo ruta. V364 usa `openai/tts-1` + Onyx con payload oficial mínimo, reproduce a 1.15 en cliente y expande sólo los dos alias locales conocidos. GPS y direcciones libres continúan mundiales. Faltan Preview real V364 y prueba física iPhone; Producción permanece intacta.
 
+**Voz multiproveedor V365:** V364 confirmó AI y tráfico 200, pero `openai/tts-1` continuó en 400. V365 conserva Cedar y Onyx, y agrega Rex masculino por `spacexai/grok-tts` como segundo proveedor Gateway vivo. Sólo un MP3 real autoriza el salto a prueba física iPhone; Producción permanece intacta.
+
 La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` y E2E de 20 grupos/80 jugadores quedaron PASS, con cero errores de runtime y limpieza Neon confirmada. V353 no requiere migración porque reutiliza el esquema V352. La inspección visual y la prueba física iPhone permanecen abiertas y Producción no se monta. La estabilización física de voz continúa registrada. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
 
 ## Corte V345-ICONS · estado verificable

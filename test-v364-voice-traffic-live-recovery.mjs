@@ -8,12 +8,12 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 const speech=fs.readFileSync("api/voice-speech.js","utf8");
 const audit=fs.readFileSync("audit-project.mjs","utf8");
 
-assert.match(html,/V364-VOICE-TRAFFIC-LIVE-RECOVERY-20260828/);
+assert.match(html,/V365-MULTIPROVIDER-MALE-VOICE-20260828/);
 assert.match(html,/V364-CANONICAL-TTS-LOCAL-POI-20260828/);
 assert.match(html,/player\.playbackRate=VOICE_POLICY\.speed/);
-assert.match(worker,/gscg-mobile-v364-voice-traffic-live-recovery/);
-assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1"/);
-assert.doesNotMatch(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1-hd"/);
+assert.match(worker,/gscg-mobile-v365-multiprovider-male-voice/);
+assert.match(speech,/model:"openai\/tts-1",voice:"onyx"/);
+assert.doesNotMatch(speech,/model:"openai\/tts-1-hd"/);
 assert.deepEqual(cedarGatewayPayload("Prueba"),{text:"Prueba",voice:"onyx",outputFormat:"mp3"});
 assert.equal(expandKnownTrafficPlace("El Pulté Golf"),"El Pulté Golf, Guatemala");
 assert.equal(expandKnownTrafficPlace("Pradera Concepción"),"Pradera Concepción, Santa Catarina Pinula, Guatemala");

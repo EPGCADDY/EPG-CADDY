@@ -593,3 +593,9 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - Voz servidor cambia del modelo HD rechazado con 400 al ejemplo oficial `openai/tts-1`, Onyx, MP3; la velocidad 1.15 queda en reproducción cliente.
 - Tráfico conserva GPS mundial y expande únicamente los alias confirmados El Pulté Golf y Pradera Concepción a sus nombres completos.
 - La aceptación exige `/api/voice-speech` 200, tráfico exacto 200 y luego voz/score físicos en iPhone. Producción permanece intacta.
+
+## V365-MULTIPROVIDER-MALE-VOICE · control activo de `PEND-VOZ-003`
+
+- La prueba real V364 cerró IA universal y tráfico, pero no voz: Onyx/OpenAI devolvió 400.
+- V365 intenta Cedar → Onyx → Rex; Rex usa `spacexai/grok-tts`, catálogo vivo y voz masculina.
+- Sólo MP3 200 con cabecera de voz permite entregar el enlace para prueba física. Producción permanece intacta.
