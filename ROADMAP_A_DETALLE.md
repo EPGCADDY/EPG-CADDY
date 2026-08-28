@@ -1826,3 +1826,13 @@ La aceptación exige en el mismo Preview: consulta general 200 mediante Gateway 
 | `index-grupal.html` | El blob GitHub V363 inicial quedó truncado durante la transferencia programática; R1 vuelve a cargar exactamente los 764,642 bytes del candidato local ya auditado. | SHA/árbol final deben coincidir entre local y GitHub antes de reconstruir Preview. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Registran el rechazo `FAIL INVENTORY GATE` y la causa de transporte. | El nuevo commit satisface el candado remoto sin ocultar el intento fallido. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Recalcula la huella después del registro R1. | Vercel debe aprobar las 373 fuentes y tres PDF sellados. |
+
+## V364-VOICE-TRAFFIC-LIVE-RECOVERY
+
+| Archivo exacto | Responsabilidad V364 | Candado |
+|---|---|---|
+| `api/voice-speech.js` | Respaldo Gateway canónico `openai/tts-1`, voz Onyx y payload mínimo MP3; Cedar directo conserva prioridad. | Un 400 de la variante HD no puede volver a dejar la comunicación sin audio servidor. |
+| `index-grupal.html` | Reproduce el MP3 de Onyx a velocidad aprobada 1.15. | No cambia micrófono, parser, escritor, persistencia ni cierre hablado. |
+| `api/_lib/traffic.js` | Expande únicamente El Pulté Golf y Pradera Concepción a sus nombres completos; el resto conserva texto/GPS mundial sin país forzado. | La consulta local no exige que el jugador diga Guatemala; México y cualquier otro país siguen abiertos por GPS y dirección libre. |
+| `test-v364-voice-traffic-live-recovery.mjs`, bancos V352–V363, auditoría y workflow | Regresión acumulada y prueba negativa de destino mundial intacto. | Sólo Preview 200 de TTS y ruta exacta permiten pasar a iPhone. |
+| documentos rectores, constructor, PDFs y lock | RC-034 y árbol reproducible. | Producción permanece intacta hasta PASS físico y orden de montaje. |

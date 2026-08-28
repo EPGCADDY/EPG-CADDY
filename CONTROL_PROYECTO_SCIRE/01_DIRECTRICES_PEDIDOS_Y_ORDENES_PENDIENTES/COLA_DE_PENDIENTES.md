@@ -586,3 +586,10 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - Google Routes conserva un diagnóstico técnico reproducible de estado/código sin guardar origen, destino, GPS, clave ni mensaje privado.
 - El banco automático no cierra el pendiente: faltan consulta general, TTS y tráfico reales en Preview, más escucha/respuesta/score físicos en iPhone.
 - Producción permanece intacta.
+
+## V364-VOICE-TRAFFIC-LIVE-RECOVERY · control activo de `PEND-VOZ-003` y `PEND-TRA-005`
+
+- La prueba real V363 aprobó AI UNIVERSAL 200 por OIDC/Gateway.
+- Voz servidor cambia del modelo HD rechazado con 400 al ejemplo oficial `openai/tts-1`, Onyx, MP3; la velocidad 1.15 queda en reproducción cliente.
+- Tráfico conserva GPS mundial y expande únicamente los alias confirmados El Pulté Golf y Pradera Concepción a sus nombres completos.
+- La aceptación exige `/api/voice-speech` 200, tráfico exacto 200 y luego voz/score físicos en iPhone. Producción permanece intacta.

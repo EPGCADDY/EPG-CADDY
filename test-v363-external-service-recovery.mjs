@@ -9,9 +9,9 @@ const universal=fs.readFileSync("api/universal-ai.js","utf8");
 const speech=fs.readFileSync("api/voice-speech.js","utf8");
 const audit=fs.readFileSync("audit-project.mjs","utf8");
 
-assert.match(html,/V363-EXTERNAL-SERVICE-RECOVERY-20260828/);
+assert.match(html,/V364-VOICE-TRAFFIC-LIVE-RECOVERY-20260828/);
 assert.match(html,/V363-OIDC-TRAFFIC-DIAGNOSTICS-20260828/);
-assert.match(worker,/gscg-mobile-v363-external-service-recovery/);
+assert.match(worker,/gscg-mobile-v364-voice-traffic-live-recovery/);
 assert.ok(audit.includes("test-v363-external-service-recovery.mjs"));
 assert.match(universal,/await resolveGatewayToken\(gatewayToken\)/);
 assert.match(speech,/gatewayToken=await resolveGatewayToken\(\)/);

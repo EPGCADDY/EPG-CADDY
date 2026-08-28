@@ -1418,3 +1418,9 @@ Archivos exactos V363: `.github/workflows/roadmap-gate.yml`, `api/_lib/traffic.j
 ### V363-R1 · restauración íntegra del HTML en GitHub
 
 El primer commit remoto V363 `cbf6c92211fe1c7211f39f2aec3c8881a3fc3ebc` quedó rechazado por `FAIL INVENTORY GATE`. La transferencia programática del archivo grande `index-grupal.html` fue truncada antes de crear el blob remoto, aunque el candidato local y sus 107 paquetes estaban completos. R1 vuelve a transferir el HTML íntegro de 764,642 bytes, registra la incidencia en `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`, y recalcula `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. No modifica lógica respecto al candidato local V363 aprobado; Producción continúa intacta.
+
+## V364 · recuperación viva de voz y destino local · 28 de agosto de 2026
+
+La prueba real del Preview V363 separó los tres servicios: AI UNIVERSAL respondió 200 mediante OIDC/Gateway; Google Routes respondió 200 con GPS y destino completo —38 min, 15.1 km y 3 min de demora— pero no resolvió el rótulo corto `Pradera Concepción`; voz llegó al Gateway autenticado y recibió 400 con `openai/tts-1-hd`. V364 usa el ejemplo canónico documentado por Vercel: `openai/tts-1`, Onyx y payload mínimo MP3. La velocidad 1.15 se aplica al reproductor del cliente.
+
+Tráfico conserva GPS mundial y cualquier dirección libre. Sólo expande dos alias locales ya confirmados —El Pulté Golf y Pradera Concepción— a nombres geográficos completos antes de Google Routes; no fuerza Guatemala para otras consultas ni registra ubicación. `test-v364-voice-traffic-live-recovery.mjs` bloquea regresión de modelo, voz, caché, velocidad y libertad de destinos mundiales. Producción continúa en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`; Preview real y prueba física iPhone siguen siendo puertas separadas.

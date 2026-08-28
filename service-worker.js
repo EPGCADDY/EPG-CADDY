@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v363-external-service-recovery";
+const CACHE_NAME="gscg-mobile-v364-voice-traffic-live-recovery";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

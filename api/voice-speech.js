@@ -5,7 +5,10 @@ const MAX_SPEECH_TEXT=4000;
 const VOICE="cedar";
 const GATEWAY_VOICE="onyx";
 const SPEED=1.15;
-const GATEWAY_SPEECH_MODEL="openai/tts-1-hd";
+// Use the canonical model and minimal payload documented by Vercel AI Gateway.
+// Playback speed is applied by the client, avoiding provider-specific validation
+// differences while retaining the approved Onyx male voice.
+const GATEWAY_SPEECH_MODEL="openai/tts-1";
 const INSTRUCTIONS="Locutor masculino adulto, serio, sobrio y profesional. Español internacional neutro, sin acento regional marcado, sin Spanglish, sin tono comercial ni entusiasmo artificial. Dicción clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";
 
 export function sanitizeSpeechRequest(body={}){
@@ -26,7 +29,7 @@ export function cedarSpeechPayload(text,language="es-GT"){
 }
 
 export function cedarGatewayPayload(text){
-  return{text,voice:GATEWAY_VOICE,speed:SPEED,outputFormat:"mp3"};
+  return{text,voice:GATEWAY_VOICE,outputFormat:"mp3"};
 }
 
 async function requestDirectSpeech(apiKey,payload,signal){

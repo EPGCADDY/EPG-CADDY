@@ -8,9 +8,9 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 const universal=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 const speech=fs.readFileSync(new URL("./api/voice-speech.js",import.meta.url),"utf8");
 
-assert.match(html,/V363-EXTERNAL-SERVICE-RECOVERY-20260828/);
+assert.match(html,/V364-VOICE-TRAFFIC-LIVE-RECOVERY-20260828/);
 assert.match(html,/CEDAR-1\.15-MALE-INTERNATIONAL-SPANISH/);
-assert.match(worker,/gscg-mobile-v363-external-service-recovery/);
+assert.match(worker,/gscg-mobile-v364-voice-traffic-live-recovery/);
 
 for(const contract of [
   'aiUniversalRemember("user",transcript,[],{visible:false})',
@@ -31,9 +31,11 @@ assert.equal(direct.speed,1.15);
 assert.match(direct.instructions,/Locutor masculino adulto/);
 const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
 assert.equal(gateway.voice,"onyx");
-assert.equal(gateway.speed,1.15);
+assert.equal(gateway.outputFormat,"mp3");
+assert.equal(gateway.speed,undefined);
+assert.match(html,/player\.playbackRate=VOICE_POLICY\.speed/);
 assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
-assert.match(speech,/openai\/tts-1-hd/);
+assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1"/);
 
 function responseRecorder(){return{statusCode:0,headers:{},body:null,setHeader(name,value){this.headers[name]=value},status(code){this.statusCode=code;return this},json(value){this.body=value;return this},send(value){this.body=value;return this}}}
 const previousFetch=globalThis.fetch,previousOpenAI=process.env.OPENAI_API_KEY,previousGateway=process.env.AI_GATEWAY_API_KEY;
@@ -53,7 +55,7 @@ try{
   assert.equal(res.body.toString(),"cedar-audio");
   assert.equal(calls.length,2);
   assert.equal(calls[1].url,"https://ai-gateway.vercel.sh/v4/ai/speech-model");
-  assert.equal(calls[1].options.headers["ai-model-id"],"openai/tts-1-hd");
+  assert.equal(calls[1].options.headers["ai-model-id"],"openai/tts-1");
   assert.equal(JSON.parse(calls[1].options.body).voice,"onyx");
   assert.equal(res.headers["X-GSCG-Voice"],"onyx");
 }finally{

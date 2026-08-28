@@ -6,9 +6,9 @@ const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 const audit=fs.readFileSync("audit-project.mjs","utf8");
 
-assert.match(html,/gscg-build" content="V363-EXTERNAL-SERVICE-RECOVERY-20260828"/);
+assert.match(html,/gscg-build" content="V364-VOICE-TRAFFIC-LIVE-RECOVERY-20260828"/);
 assert.match(html,/gscg-progressive-voice" content="V362-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828"/);
-assert.match(worker,/CACHE_NAME="gscg-mobile-v363-external-service-recovery"/);
+assert.match(worker,/CACHE_NAME="gscg-mobile-v364-voice-traffic-live-recovery"/);
 for(const test of ["test-v357-synchronized-progressive-voice.mjs","test-v359-ios-score-parser-recovery.mjs","test-v361-synchronized-voice.mjs"])assert.ok(audit.includes(test),test);
 
 const progressAt=html.indexOf("function applyBrowserVoiceProgressiveScore");

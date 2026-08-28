@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 const html=readFileSync("index-grupal.html","utf8");
 const worker=readFileSync("service-worker.js","utf8");
 
-assert.match(html,/V363-EXTERNAL-SERVICE-RECOVERY-20260828/);
-assert.match(worker,/gscg-mobile-v363-external-service-recovery/);
+assert.match(html,/V364-VOICE-TRAFFIC-LIVE-RECOVERY-20260828/);
+assert.match(worker,/gscg-mobile-v364-voice-traffic-live-recovery/);
 assert.match(html,/if\(!round\.configured\)\{[\s\S]*?else if\(directHome\)openNewRoundDraft\(\)/);
 assert.doesNotMatch(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
 

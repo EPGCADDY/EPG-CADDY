@@ -6,6 +6,16 @@ function cleanPlace(value){
   return String(value||"").replace(/[\u0000-\u001F]/g," ").replace(/\s+/g," ").trim().slice(0,MAX_PLACE_LENGTH);
 }
 
+const KNOWN_LOCAL_PLACES=[
+  [/^el pult[eé](?: golf(?: club)?)?$/i,"El Pulté Golf, Guatemala"],
+  [/^pradera concepci[oó]n$/i,"Pradera Concepción, Santa Catarina Pinula, Guatemala"]
+];
+
+export function expandKnownTrafficPlace(value){
+  const place=cleanPlace(value);
+  return KNOWN_LOCAL_PLACES.find(([pattern])=>pattern.test(place))?.[1]||place;
+}
+
 function finiteCoordinate(value,min,max){
   const number=Number(value);
   return Number.isFinite(number)&&number>=min&&number<=max?number:null;
@@ -89,8 +99,8 @@ export async function computeTrafficRoute(request={},options={}){
   const apiKey=String(options.apiKey||process.env.GOOGLE_MAPS_ROUTES_API_KEY||process.env.GOOGLE_MAPS_API_KEY||"").trim();
   if(!apiKey)return{ok:false,error:"TRAFFIC_NOT_CONFIGURED",message:"El servicio de tráfico todavía no tiene una credencial activa. Puedes continuar con otra pregunta."};
   const originCoordinates=cleanCoordinates(request.originCoordinates);
-  const originAddress=cleanPlace(request.origin);
-  const destinationAddress=cleanPlace(request.destination);
+  const originAddress=expandKnownTrafficPlace(request.origin);
+  const destinationAddress=expandKnownTrafficPlace(request.destination);
   const origin=waypoint(originAddress,originCoordinates);
   const destination=waypoint(destinationAddress,request.destinationCoordinates);
   if(!origin)return{ok:false,error:"TRAFFIC_ORIGIN_REQUIRED",needsCurrentLocation:true,message:"Necesito tu ubicación actual o un punto de salida para calcular el tráfico."};

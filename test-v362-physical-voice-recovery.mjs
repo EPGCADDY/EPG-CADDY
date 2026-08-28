@@ -8,18 +8,19 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 const speech=fs.readFileSync("api/voice-speech.js","utf8");
 const audit=fs.readFileSync("audit-project.mjs","utf8");
 
-assert.match(html,/V363-EXTERNAL-SERVICE-RECOVERY-20260828/);
+assert.match(html,/V364-VOICE-TRAFFIC-LIVE-RECOVERY-20260828/);
 assert.match(html,/V362-ONE-TOUCH-WATCHDOG-MALE-FALLBACK-20260828/);
 assert.match(html,/V362-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828/);
-assert.match(worker,/gscg-mobile-v363-external-service-recovery/);
+assert.match(worker,/gscg-mobile-v364-voice-traffic-live-recovery/);
 for(const file of ["test-v358-ios-score-universal-physical-recovery.mjs","test-v362-physical-voice-recovery.mjs"])assert.ok(audit.includes(file),file);
 
 const direct=cedarSpeechPayload("Respuesta", "es-GT");
 assert.equal(direct.model,"gpt-4o-mini-tts");
 assert.equal(direct.voice,"cedar");
 const gateway=cedarGatewayPayload("Respuesta", "es-GT");
-assert.deepEqual(gateway,{text:"Respuesta",voice:"onyx",speed:1.15,outputFormat:"mp3"});
-assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1-hd"/);
+assert.deepEqual(gateway,{text:"Respuesta",voice:"onyx",outputFormat:"mp3"});
+assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1"/);
+assert.match(html,/player\.playbackRate=VOICE_POLICY\.speed/);
 assert.match(speech,/X-GSCG-Voice/);
 assert.match(html,/X-GSCG-Voice/);
 assert.match(html,/RESPONDIENDO EN VOZ · ONYX 1\.15 · RESPALDO/);
