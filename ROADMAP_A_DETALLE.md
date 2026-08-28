@@ -1673,3 +1673,19 @@ Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R6 no se pr
 | `MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAP e inventario lock | Registro y sello de la misma versión. | Candados documental, ROADMAP e inventario en PASS. |
 
 Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R7 no queda aprobada hasta superar auditoría, Preview y la prueba física corrido 3→4→5.
+
+## V351-R8 · rechazo R7, cola Safari completa y respuestas visibles · 28 de agosto de 2026
+
+| Archivo exacto | Cambio V351-R8 | Evidencia exigida |
+|---|---|---|
+| `index-grupal.html` | Meta/build R8; une final+interino con deduplicación; maneja rechazos asíncronos; abre AI UNIVERSAL visible sin teclado para preguntas del micrófono. | Tanda fragmentada 3→4→5 aplicada y respuesta general perceptible aun sin audio. |
+| `api/voice-health.js` | Permite `browser_fallback_query_answered` sin conservar pregunta ni respuesta. | Sanitización privada y HTTP 202. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Reproduce final hasta mitad del hoyo 4 y cola interina hasta el hoyo 5; prueba panel visible de clima. | Seis Gross, una transacción, cero IA para Score y una consulta visible. |
+| `test-v351-r1-hole1-voice-score-render.mjs` | Mantiene hoyo individual, dos jugadores, romanos Safari y hoyo al final bajo R8. | Cero escapes del Score hacia IA. |
+| `test-v336-microphone-transport.mjs` | Exige unión final+interino, captura asíncrona, panel visible y privacidad del éxito. | No puede regresar `final || interim` ni respuesta oculta. |
+| `scripts/rebuild-inventory-pdfs.py` | Corte `V351-R8-IOS-FINAL-INTERIM-VISIBLE-ANSWERS`. | Tres PDF y sello actualizados. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-032. | R7 rechazada con horas, deployment, causa, escape y control permanente. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Estado real R8. | PASS automático separado de PASS físico iPhone. |
+| `MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAP e inventario lock | Registro y sello del mismo corte. | Candados documental, ROADMAP e inventario en PASS. |
+
+Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R8 no queda aprobada hasta auditoría, Preview y PASS físico de la tanda 3→4→5 más una pregunta de clima.

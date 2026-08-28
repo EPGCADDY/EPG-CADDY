@@ -852,3 +852,16 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-031 rechaza R6 con logs privados y fija el control híbrido permanente. |
 | `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Mantiene R7 pendiente de PASS físico iPhone y Producción intacta. |
 | `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE`. |
+
+## V351-R8-IOS-FINAL-INTERIM-VISIBLE-ANSWERS · frase completa y respuesta perceptible
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | `mergeBrowserVoiceSegments` conserva y deduplica final+interino de Safari; el panel AI UNIVERSAL se abre visible sin teclado para preguntas hechas desde el micrófono de la Score Card. |
+| `api/voice-health.js` | Acepta `browser_fallback_query_answered` sin pregunta, respuesta, nombres, scores ni ubicación. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Reproduce una tanda 3→4→5 partida entre final e interino, exige los seis Gross y comprueba que una pregunta de clima abra el panel visible. |
+| `test-v351-r1-hole1-voice-score-render.mjs` | Mantiene el recorrido individual y grupal anterior bajo la nueva firma visible del procesamiento. |
+| `test-v336-microphone-transport.mjs` | Bloquea el regreso a `final || interim`, exige manejo asíncrono seguro y protege la privacidad del evento de respuesta. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-032 separa el rechazo real del Score del HTTP 200 real de las dos consultas que no se mostraron. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Rechaza R7, registra R8 y mantiene Producción intacta hasta PASS físico. |
+| `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R8-IOS-FINAL-INTERIM-VISIBLE-ANSWERS`. |

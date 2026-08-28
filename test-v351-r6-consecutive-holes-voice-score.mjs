@@ -10,6 +10,7 @@ const sourceBetween=(start,end)=>{
 
 assert.match(html,/gscg-consecutive-hole-voice" content="V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
 assert.match(html,/gscg-hybrid-consecutive-hole-voice" content="V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
+assert.match(html,/gscg-ios-voice-tail" content="V351-R8-FINAL-INTERIM-MERGE-VISIBLE-ANSWERS-20260828"/);
 assert.match(html,/function parseMultiHoleScoreSegments[\s\S]*?parseHoleListScoreSegments[\s\S]*?parseHoleFirstScoreBlocks/);
 assert.match(html,/const listed=parseHoleListScoreSegments[\s\S]*?if\(listed\?\.ok\)return listed[\s\S]*?const blocked=parseHoleFirstScoreBlocks[\s\S]*?if\(blocked\?\.ok\)return blocked/);
 
@@ -130,15 +131,39 @@ const routeAiUniversalAppText=new Function(
 const browserSource=sourceBetween("async function processBrowserVoiceTranscript","\nfunction startBrowserVoiceFallback");
 let universalCalls=0,lastHealth="";
 const processBrowserVoiceTranscript=new Function(
-  "voiceContext","setPrimaryVoiceMatrix","parseSetupTranscript","applySetupChanges","phase","reportVoiceHealth","renderDraft","resetSetupCapture","routeAiUniversalAppText","aiUniversalRemember","aiUniversalSetState","speakAiUniversalText","submitAiUniversalText","primaryVoiceStatusTarget",
+  "voiceContext","setPrimaryVoiceMatrix","parseSetupTranscript","applySetupChanges","phase","reportVoiceHealth","renderDraft","resetSetupCapture","routeAiUniversalAppText","aiUniversalRemember","aiUniversalSetState","speakAiUniversalText","openAiUniversalPanel","submitAiUniversalText","primaryVoiceStatusTarget",
   `${browserSource};return processBrowserVoiceTranscript`
-)("round",()=>true,()=>({ok:false}),()=>({ok:false}),"idle",event=>{lastHealth=event;return true},()=>{},()=>{},routeAiUniversalAppText,()=>{},()=>{},()=>false,async()=>{universalCalls++;return false},()=>({textContent:""}));
+)("round",()=>true,()=>({ok:false}),()=>({ok:false}),"idle",event=>{lastHealth=event;return true},()=>{},()=>{},routeAiUniversalAppText,()=>{},()=>{},()=>false,()=>{},async()=>{universalCalls++;return false},()=>({textContent:""}));
 const physicalPhrase="hoyos tres cuatro y cinco corridos hoyo tres Jaime cinco Gustavo cinco hoyo cuatro Jaime cuatro Gustavo cinco hoyo cinco Jaime cinco Gustavo cinco";
 assert.equal(await processBrowserVoiceTranscript("round",physicalPhrase),true);
 assert.equal(lastHealth,"browser_fallback_score_applied","La tanda física 3-4-5 debe terminar aplicada");
 assert.equal(universalCalls,0,"La tanda de Score nunca puede salir a AI UNIVERSAL");
 assert.equal(physicalRenders,1,"El fallback debe pintar una sola vez los seis Gross");
 assert.deepEqual(JSON.parse(physicalPersisted).players.map(player=>HOLES.map(hole=>player.holes[hole].gross)),[[5,4,5],[5,5,5]]);
+const mergeSource=sourceBetween("function mergeBrowserVoiceSegments","\nfunction stopBrowserVoiceFallback");
+const mergeBrowserVoiceSegments=new Function("normalizeSpeech",`${mergeSource};return mergeBrowserVoiceSegments`)(normalizeSpeech);
+const committed="hoyos tres cuatro y cinco corridos hoyo tres Jaime cinco Gustavo cinco hoyo cuatro Jaime cuatro";
+const interim="hoyo cuatro Jaime cuatro Gustavo cinco hoyo cinco Jaime cinco Gustavo cinco";
+const mergedPhysical=mergeBrowserVoiceSegments(committed,interim);
+assert.equal(mergedPhysical,physicalPhrase.toLowerCase(),"Safari debe conservar el final confirmado y la cola interina sin duplicar el solapamiento");
+for(const player of physicalPlayers)player.holes={};
+assert.equal(await processBrowserVoiceTranscript("round",mergedPhysical),true,"La tanda fragmentada real debe llegar completa al escritor");
+assert.equal(lastHealth,"browser_fallback_score_applied");
+assert.equal(physicalRenders,2,"La tanda fragmentada debe pintar una sola transacción adicional");
+assert.deepEqual(JSON.parse(physicalPersisted).players.map(player=>HOLES.map(hole=>player.holes[hole].gross)),[[5,4,5],[5,5,5]]);
+assert.equal(mergeBrowserVoiceSegments("hoyos tres cuatro","hoyos tres cuatro y cinco"),"hoyos tres cuatro y cinco","Un interino acumulado no puede duplicar la parte final");
+assert.match(html,/recognition\.onend=[^\n]*mergeBrowserVoiceSegments\(browserVoiceTranscript,browserVoiceInterim\)/);
+assert.match(html,/processBrowserVoiceTranscript\(context,transcript\)\.catch/);
+
+let visiblePanel=null,queryHealth="",queryCalls=0;
+const processVisibleQuery=new Function(
+  "voiceContext","setPrimaryVoiceMatrix","parseSetupTranscript","applySetupChanges","phase","reportVoiceHealth","renderDraft","resetSetupCapture","routeAiUniversalAppText","aiUniversalRemember","aiUniversalSetState","speakAiUniversalText","openAiUniversalPanel","submitAiUniversalText","primaryVoiceStatusTarget","console",
+  `${browserSource};return processBrowserVoiceTranscript`
+)("round",()=>true,()=>({ok:false}),()=>({ok:false}),"idle",event=>{queryHealth=event;return true},()=>{},()=>{},()=>({handled:false}),()=>{},()=>{},()=>false,(rules,options)=>{visiblePanel={rules,options}},async()=>{queryCalls++;return true},()=>({textContent:""}),{error:()=>{}});
+assert.equal(await processVisibleQuery("round","como esta el clima hoy"),true);
+assert.deepEqual(visiblePanel,{rules:false,options:{focus:false}},"La respuesta hablada debe abrir el panel visible sin levantar el teclado");
+assert.equal(queryCalls,1);
+assert.equal(queryHealth,"browser_fallback_query_answered");
 const missingMulti=physicalParser("hoyos tres cuatro cinco Jaime cuatro cinco Gustavo cinco cinco cinco",{defaultPlayer:null,defaultHole:3});
 assert.deepEqual({ok:missingMulti.ok,failureCode:missingMulti.failureCode},{ok:false,failureCode:"missing_score"},"Un Gross faltante debe rechazar toda la tanda");
 const extraMulti=physicalParser("hoyos tres cuatro cinco Jaime cuatro cinco seis siete Gustavo cinco cinco cinco",{defaultPlayer:null,defaultHole:3});
@@ -148,4 +173,4 @@ assert.deepEqual({ok:duplicateMulti.ok,failureCode:duplicateMulti.failureCode},{
 const invalidMulti=physicalParser("hoyos tres cuatro 19 Jaime cuatro cinco seis Gustavo cinco cinco cinco",{defaultPlayer:null,defaultHole:3});
 assert.deepEqual({ok:invalidMulti.ok,failureCode:invalidMulti.failureCode},{ok:false,failureCode:"invalid_hole"},"Un hoyo fuera de 1–18 debe rechazarse");
 
-console.log("PASS V351-R7 · 18 configuraciones · 108 tandas 3-4-5 · 1188 Gross · frases híbridas físicas · fallback real · cero IA · escritor/persistencia/render transaccional");
+console.log("PASS V351-R8 · 18 configuraciones · 108 tandas 3-4-5 · 1188 Gross · final+interino Safari unido · respuestas visibles · cero IA para Score");

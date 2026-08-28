@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V351-R6 RECHAZADA EN IPHONE A LAS 20:30 DEL 27 DE AGOSTO: el dictado corrido volvió a terminar en `ambiguous_score` y el hoyo individual posterior sí se aplicó. V351-R7 corrige la combinación híbrida de prefacio/lista con bloques por hoyo o jugador. Requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
+**Estado:** V351-R7 RECHAZADA EN IPHONE A LAS 23:15 DEL 27 DE AGOSTO: la tanda multi-hoyo terminó en `ambiguous_score`; el hoyo individual posterior sí se aplicó. Dos preguntas generales/clima recibieron HTTP 200, pero no mostraron respuesta. V351-R8 conserva la cola interina de Safari y abre visiblemente AI UNIVERSAL para las preguntas del micrófono. Requiere Preview y nueva prueba física · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -432,3 +432,11 @@ R6 recibía primero el formato de lista. Si la misma frase continuaba con bloque
 `test-v351-r6-consecutive-holes-voice-score.mjs` ejecuta seis formas en las mismas 18 configuraciones: las cuatro formas R6, prefijo+bloques y prefijo+filas por jugador. Resultado obligatorio: 108 tandas 3→4→5, 1,188 Gross, una transacción de persistencia/render, fallback real y cero IA. Los casos negativos de score faltante, adicional, duplicado y hoyo inválido permanecen rechazados.
 
 El deployment R6 `dpl_29fy1Znkw6BsQuT1z4yQLDa5vhft` registró a las 02:30:34 UTC `ambiguous_score` y a las 02:30:51 UTC el hoyo individual aplicado, sin 4xx/5xx. Producción permanece intacta; R7 requiere auditoría integral, Preview y PASS físico iPhone.
+
+## V351-R8-IOS-FINAL-INTERIM-VISIBLE-ANSWERS · cola completa y respuesta visible · 28 de agosto de 2026
+
+R7 procesaba `(final || interim)` al terminar el reconocimiento de Safari. En frases largas, cualquier fragmento final hacía que se descartara la cola interina todavía válida; el parser recibía una tanda truncada. R8 usa `mergeBrowserVoiceSegments`, deduplica el solapamiento y entrega al escritor la frase completa. El banco reproduce una parte final que termina a mitad del hoyo 4 más una cola interina que continúa hasta el hoyo 5, y exige los seis Gross en una sola transacción.
+
+Las consultas de las 05:16:05 y 05:16:15 UTC sí obtuvieron HTTP 200 de `/api/universal-ai`; no fueron un fallo de clima ni de servidor. El defecto era de presentación: AI UNIVERSAL permanecía oculto y la respuesta dependía de audio. R8 abre el panel visible sin levantar el teclado, conserva el texto aunque iOS no reproduzca audio y registra únicamente `browser_fallback_query_answered` o `browser_fallback_query_failed`, sin pregunta ni respuesta.
+
+Producción permanece intacta; V351-R8 requiere auditoría integral, Preview y PASS físico iPhone de la tanda 3→4→5 y de una pregunta de clima.

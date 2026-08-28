@@ -52,6 +52,9 @@ assert.doesNotMatch(browserProcess,/looksLikeSetupRosterTranscript\(clean\)/);
 assert.ok(browserProcess.indexOf("browser_fallback_setup_rejected")<browserProcess.indexOf("routeAiUniversalAppText(clean)"));
 assert.ok(browserProcess.indexOf("browser_fallback_score_applied")<browserProcess.indexOf("submitAiUniversalText(clean)"),"Score debe cerrarse localmente antes de cualquier IA");
 assert.match(browserProcess,/browser_fallback_score_applied":"browser_fallback_score_rejected/);
+assert.match(browserProcess,/openAiUniversalPanel\(false,\{focus:false\}\)[\s\S]*?browser_fallback_query_answered/);
+assert.match(html,/function mergeBrowserVoiceSegments[\s\S]*?overlap/);
+assert.match(html,/recognition\.onend=[^\n]*mergeBrowserVoiceSegments\(browserVoiceTranscript,browserVoiceInterim\)/);
 assert.match(html,/VOICE_HEALTH_EVENTS=new Set\([\s\S]*?"browser_fallback_setup_applied","browser_fallback_setup_rejected"/);
 assert.match(html,/setupFinalizeRequested\|\|setupLocked[\s\S]*?resetSetupCapture\(\)[\s\S]*?LISTO PARA ESCUCHAR/);
 assert.match(html,/failure\.status=rsp\.status/);
@@ -79,5 +82,6 @@ assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_setup_rejected",tr
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_score_applied",transcript:"privado",player:"JAIME"}),{event:"browser_fallback_score_applied",build:"",context:"round",turn:0,elapsedMs:0});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_score_rejected",transcript:"privado",player:"JAIME",score:"4",scoreFailure:"missing_score"}),{event:"browser_fallback_score_rejected",build:"",context:"round",turn:0,elapsedMs:0,scoreFailure:"missing_score"});
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_score_rejected",scoreFailure:"texto_privado"}),{event:"browser_fallback_score_rejected",build:"",context:"round",turn:0,elapsedMs:0},"Sólo códigos cerrados pueden salir; nunca texto libre");
+assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_query_answered",transcript:"privado",answer:"privada"}),{event:"browser_fallback_query_answered",build:"",context:"round",turn:0,elapsedMs:0});
 
 console.log("PASS V351-R5 · Registro y Score locales, matriz exacta y diagnóstico privado protegido");

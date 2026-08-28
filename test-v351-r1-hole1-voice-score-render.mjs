@@ -127,9 +127,9 @@ assert.deepEqual({handled:routedAmbiguous.handled,scoreOrder:routedAmbiguous.sco
 const browserSource=sourceBetween("async function processBrowserVoiceTranscript","\nfunction startBrowserVoiceFallback");
 let universalCalls=0,lastHealth="",lastMatrix={};
 const processBrowserVoiceTranscript=new Function(
-  "voiceContext","setPrimaryVoiceMatrix","parseSetupTranscript","applySetupChanges","phase","reportVoiceHealth","renderDraft","resetSetupCapture","routeAiUniversalAppText","aiUniversalRemember","aiUniversalSetState","speakAiUniversalText","submitAiUniversalText","primaryVoiceStatusTarget",
+  "voiceContext","setPrimaryVoiceMatrix","parseSetupTranscript","applySetupChanges","phase","reportVoiceHealth","renderDraft","resetSetupCapture","routeAiUniversalAppText","aiUniversalRemember","aiUniversalSetState","speakAiUniversalText","openAiUniversalPanel","submitAiUniversalText","primaryVoiceStatusTarget",
   `${browserSource};return processBrowserVoiceTranscript`
-)("round",(state,context,message)=>{lastMatrix={state,context,message};return true},()=>({ok:false}),()=>({ok:false}),"idle",event=>{lastHealth=event;return true},()=>{},()=>{},routeAiUniversalAppText,()=>{},()=>{},()=>false,async()=>{universalCalls++;return false},()=>({textContent:""}));
+)("round",(state,context,message)=>{lastMatrix={state,context,message};return true},()=>({ok:false}),()=>({ok:false}),"idle",event=>{lastHealth=event;return true},()=>{},()=>{},routeAiUniversalAppText,()=>{},()=>{},()=>false,()=>{},async()=>{universalCalls++;return false},()=>({textContent:""}));
 assert.equal(await processBrowserVoiceTranscript("round","hoyo uno cuatro"),true);
 assert.equal(universalCalls,0,"Un score ambiguo no puede llamar AI UNIVERSAL");
 assert.equal(lastHealth,"browser_fallback_score_rejected");
