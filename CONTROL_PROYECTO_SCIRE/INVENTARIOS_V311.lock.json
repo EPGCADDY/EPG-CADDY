@@ -1,11 +1,23 @@
 {
   "version": "V363-RECORDED-MOBILE-BEHAVIOR-INTOCABLES",
-  "generatedAt": "2026-08-28T21:50:00Z",
-  "sourceFileCount": 382,
-  "sourceDigest": "4beb154e765e5d0297eca7f515292995de87f55ea5930a0e834ccea1f987a026",
+  "generatedAt": "2026-08-28T21:59:19Z",
+  "sourceFileCount": 383,
+  "sourceDigest": "c2117c5796a893d67c5836e052ee676e2edf1bdc5f6cde908dbb513cad62af21",
   "outputs": [
-    {"name":"Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf","size":197666,"sha256":"a9b22180ecc64e3023a87fb2e139a044d735a52938bce117f9aac26ba4a1f900"},
-    {"name":"Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf","size":220676,"sha256":"dd90d863efea79140d6acd5ddb4f72e38351a0ccad405d6209fbe40f8ade1639"},
-    {"name":"Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf","size":19260998,"sha256":"789fd839e7931ecdee57cc1e08560ae56d7560f1788af85bfc9fc5a55b6d9de9"}
+    {
+      "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
+      "size": 197856,
+      "sha256": "693cec22773076e40b4b2908ccd2c488b2480b1bdb67d2b8f09f894bf690bf6e"
+    },
+    {
+      "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
+      "size": 220882,
+      "sha256": "be39d5ef9e321a4480bd0e16ed85c7dfeb6508f6725cc98aad3074b2ae9bc20f"
+    },
+    {
+      "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
+      "size": 19260995,
+      "sha256": "cb4f51c065e6bb3734b5939602a4bcd91526b7cdcfc117708a3fc5bf0b19e556"
+    }
   ]
 }

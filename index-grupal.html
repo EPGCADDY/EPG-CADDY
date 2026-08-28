@@ -13,6 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
+<meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-ai-voice" content="CEDAR-1.15-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -951,6 +952,7 @@ const startupParams=new URLSearchParams(location.search);
 const sfEmergency=startupParams.get("stableford_emergency")==="countryclub";
 const demoControlManual=startupParams.get("demo_control_manual")==="v269";
 const directHome=startupParams.get("inicio")==="1";
+const explicitNewRound=startupParams.get("nueva_ronda")==="1";
 const DEMO_CONTROL_MANUAL_KEY="golf-score-card-guatemala-demo-control-manual-v269";
 const DEMO_CONTROL_MANUAL_DRAFT_KEY="golf-score-card-guatemala-demo-control-manual-draft-v269";
 const DEMO_CONTROL_MANUAL_ARCHIVE_KEY="golf-score-card-guatemala-demo-control-manual-archive-v269";
@@ -5052,7 +5054,11 @@ render();
 scheduleRoundTimerIdleShutdown();
 dateSetup();
 if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
-if(!round.configured){
+// La entrada explícita abre Registro sin borrar la ronda activa. La sustitución
+// continúa ocurriendo únicamente después de confirmar INICIAR RONDA.
+if(explicitNewRound){
+  openNewRoundDraft();
+}else if(!round.configured){
   if(sfEmergency)window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
   else if(directHome)openNewRoundDraft();
   else openSetup("new");

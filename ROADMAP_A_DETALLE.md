@@ -1837,7 +1837,5 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 - Vercel: repositorio `EPGCADDY/EPG-CADDY` y SHA expuesto deben coincidir exactamente con `HEAD`.
 - Fuera de alcance: tarjeta, persistencia de ronda, Match Play, Ronda Normal, voz y comunicación universal permanecen idénticos al candidato V363 probado.
 - Inventario: tres PDF V311 regenerados y nuevo `sourceDigest` sellado antes del montaje.
-
-- Sello final: digest calculado sobre las 382 fuentes exactas del árbol V363 publicado.
-
-- Digest final: orden binario de rutas idéntico a `scripts/inventory-gate.mjs`.
+- Sello atómico externo: `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` se actualizan juntos en el mismo commit; el Gate ROADMAP debe aprobar en Vercel.
+- Sello final externo: ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` quedan juntos en el commit posterior a regenerar los tres PDF.
