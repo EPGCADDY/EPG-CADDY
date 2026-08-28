@@ -207,9 +207,9 @@ export function formatStructuredWeatherAnswer(result){
     const peak=result.rainTiming?`${weatherValue(result.rainTiming.peakProbability,0)}% a las ${result.rainTiming.peakTime}`:`${weatherValue(result.maxRainProbability,0)}%`;
     const hourly=Array.isArray(result.hourlyForecast)&&result.hourlyForecast.length?`\n\n**Probabilidad por hora:**\n${result.hourlyForecast.map(row=>`${row.time} ${weatherValue(row.rainProbability,0)}%`).join(" · ")}`:"";
     const recommendation=result.rainTiming?.peakTime?`\n\n**Acción:** planifica terminar al menos dos horas antes del pico de las ${result.rainTiming.peakTime}.`:"";
-    return `**Pronóstico de Open-Meteo para ${result.forecastStartDate} en ${result.location}:**\n\n- **Condición:** ${result.condition||"sin dato"}.\n- **Temperatura:** ${temperature}.\n- **Sensación térmica:** ${feels}.\n- **Viento:** hasta ${weatherValue(result.windKmh)} km/h.\n- **Lluvia prevista:** ${weatherValue(result.precipitationMm)} mm.\n- **Mayor probabilidad:** ${peak}.${hourly}${recommendation}`;
+    return `**Pronóstico de ${result.source||"Google Weather API"} para ${result.forecastStartDate} en ${result.location}:**\n\n- **Condición:** ${result.condition||"sin dato"}.\n- **Temperatura:** ${temperature}.\n- **Sensación térmica:** ${feels}.\n- **Viento:** hasta ${weatherValue(result.windKmh)} km/h.\n- **Lluvia prevista:** ${weatherValue(result.precipitationMm)} mm.\n- **Mayor probabilidad:** ${peak}.${hourly}${recommendation}`;
   }
-  return `**Clima observado por Open-Meteo en ${result.location}:** ${result.condition||"sin dato"}; ${weatherValue(result.temperatureC)} °C, sensación ${weatherValue(result.feelsLikeC)} °C, viento ${weatherValue(result.windKmh)} km/h y probabilidad máxima de lluvia hoy ${weatherValue(result.maxRainProbabilityToday,0)}%.`;
+  return `**Clima observado por ${result.source||"Google Weather API"} en ${result.location}:** ${result.condition||"sin dato"}; ${weatherValue(result.temperatureC)} °C, sensación ${weatherValue(result.feelsLikeC)} °C, viento ${weatherValue(result.windKmh)} km/h y probabilidad máxima de lluvia hoy ${weatherValue(result.maxRainProbabilityToday,0)}%.`;
 }
 
 const LIVE_TRAFFIC_TOOL={
@@ -226,7 +226,7 @@ const LIVE_TRAFFIC_TOOL={
 const LIVE_WEATHER_TOOL={
   type:"function",
   name:"get_current_weather",
-  description:"Obtiene clima actual o pronóstico estructurado de Open-Meteo. Úsala exclusivamente para clima, lluvia, temperatura, sensación térmica o viento; no uses búsqueda web para esos datos. Para hoy o una fecha concreta incluye forecast_start_date en YYYY-MM-DD para recibir detalle y probabilidad por horario.",
+  description:"Obtiene clima actual o pronóstico estructurado de Google Weather API. Úsala exclusivamente para clima, lluvia, temperatura, sensación térmica o viento; no uses búsqueda web para esos datos. Para hoy o una fecha concreta incluye forecast_start_date en YYYY-MM-DD para recibir detalle y probabilidad por horario.",
   parameters:{type:"object",properties:{
     location:{type:"string",description:"Lugar del pronóstico. Si el usuario se refiere al campo actual, usa el nombre del campo del contexto."},
     forecast_start_date:{type:"string",description:"Fecha inicial YYYY-MM-DD. Inclúyela para hoy, mañana o cualquier pronóstico solicitado."},
@@ -354,7 +354,7 @@ export default async function handler(req,res){
             "Interpreta la intención real, conserva el contexto recibido, adapta la profundidad al usuario y responde en su idioma; usa español de forma predeterminada.",
             "Puedes explicar, enseñar, traducir, redactar, corregir, resumir, calcular, comparar, analizar, planificar, programar, generar ideas y orientar decisiones.",
             "Cuando la consulta dependa de noticias, precios, leyes, productos, resultados, ubicaciones u otro dato cambiante, usa búsqueda web y prioriza fuentes primarias, oficiales y recientes.",
-            "Para clima, lluvia, temperatura, sensación térmica o viento usa exclusivamente get_current_weather, que consulta Open-Meteo. Para hoy, mañana o una fecha concreta envía la fecha YYYY-MM-DD para obtener probabilidad por horario. Nunca mezcles el pronóstico con búsqueda web.",
+            "Para clima, lluvia, temperatura, sensación térmica o viento usa exclusivamente get_current_weather, que consulta Google Weather API. Para hoy, mañana o una fecha concreta envía la fecha YYYY-MM-DD para obtener probabilidad por horario. Nunca mezcles el pronóstico con búsqueda web.",
             "Para tráfico vehicular, congestión, ruta o tiempo de llegada usa exclusivamente get_live_traffic. Puede calcular tráfico actual o una salida futura. Si el destino es un fragmento ambiguo —por ejemplo sólo Concepción— pide una sola aclaración breve de nombre completo, zona o municipio antes de usar la herramienta; no adivines. Nunca presentes una búsqueda web como ETA real ni afirmes que el dato viene de Waze.",
             "Diferencia información confirmada, estimaciones, opiniones e hipótesis. Nunca inventes datos ni presentes una suposición como hecho.",
             "Si falta un dato indispensable, formula solamente una pregunta breve. Si no tienes una herramienta necesaria, dilo y ofrece la mejor alternativa real.",
@@ -394,7 +394,7 @@ export default async function handler(req,res){
               "Eres AI UNIVERSAL ∞. Responde en el idioma del usuario usando solamente el resultado meteorológico estructurado recibido.",
               "Si ok es true, menciona lugar, fecha u hora observada, condición, temperatura, sensación térmica, viento y lluvia que existan en el resultado. Si hay rainTiming, indica la hora pico, su porcentaje y las ventanas con sus porcentajes máximos.",
               "Si hourlyForecast existe, conserva sus horas y porcentajes. Cuando el usuario pida probabilidad por hora, por horario o a qué hora, enumera todas las horas recibidas en una línea compacta o lista; no digas que esos porcentajes no fueron proporcionados.",
-              "Distingue pronóstico de observación, identifica Open-Meteo como proveedor y no mezcles ni inventes cifras. Si falta un valor, dilo en vez de sustituirlo con una fuente web.",
+              "Distingue pronóstico de observación, identifica el proveedor indicado por el resultado y no mezcles ni inventes cifras. Si falta un valor, dilo en vez de sustituirlo con una fuente web.",
               "Si ok es false, informa la limitación concreta en una oración. No incluyas URLs ni coordenadas exactas. Sé directo y accionable."
             ].join(" "),
             input:[...input,...(payload?.output||[]),{type:"function_call_output",call_id:weatherCall.call_id,output:JSON.stringify(weatherResult)}]
