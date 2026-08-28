@@ -10,6 +10,8 @@ assert.match(api,/Para clima, lluvia, temperatura, sensación térmica o viento 
 assert.match(api,/Nunca mezcles el pronóstico con búsqueda web/);
 assert.match(weatherApi,/rows\.at\(-1\)\?\.date > throughDate/,"El paginado debe completar el día solicitado, no detenerse en su primera hora");
 assert.doesNotMatch(weatherApi,/searchParams\.set\("region",\s*"gt"\)/,"Clima escrito no debe fijar Guatemala: la geocodificación es mundial");
+assert.match(weatherApi,/Open-Meteo \(respaldo mundial\)/,"Clima mundial debe conservar un segundo proveedor cuando Google no cubra una coordenada");
+assert.match(weatherApi,/weather primary unavailable; using worldwide fallback/,"El respaldo debe activarse automáticamente sin pedir otra orden al usuario");
 assert.equal(weatherTimePeriodFromQuery("¿A qué hora lloverá mañana?"),"","Mañana como fecha no debe recortar el pronóstico a 06:00–11:59");
 assert.equal(weatherTimePeriodFromQuery("¿Lloverá por la mañana?"),"morning");
 assert.equal(weatherTimePeriodFromQuery("¿Cómo estará esta tarde?"),"afternoon");

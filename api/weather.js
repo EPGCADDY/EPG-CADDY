@@ -2,6 +2,7 @@ import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 
 const GOOGLE_WEATHER_BASE = "https://weather.googleapis.com/v1";
 const GOOGLE_GEOCODING_URL = "https://maps.googleapis.com/maps/api/geocode/json";
+const OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast";
 const FORECAST_PERIODS = Object.freeze({
   morning: { label: "mañana", startHour: 6, endHour: 11 },
   afternoon: { label: "tarde", startHour: 12, endHour: 17 },
@@ -31,6 +32,94 @@ async function fetchJson(url) {
   const response = await fetch(url, { headers: { Accept: "application/json" } });
   if (!response.ok) throw new Error(`Google weather upstream ${response.status}`);
   return response.json();
+}
+
+function openMeteoCondition(code) {
+  const value = Number(code);
+  if (value === 0) return "despejado";
+  if ([1, 2].includes(value)) return "parcialmente nublado";
+  if (value === 3) return "nublado";
+  if ([45, 48].includes(value)) return "niebla";
+  if ([51, 53, 55, 56, 57].includes(value)) return "llovizna";
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(value)) return "lluvia";
+  if ([71, 73, 75, 77, 85, 86].includes(value)) return "nieve";
+  if ([95, 96, 99].includes(value)) return "tormenta";
+  return "condición no clasificada";
+}
+
+async function openMeteoFallback(latitude, longitude, label, options = {}) {
+  const url = new URL(OPEN_METEO_URL);
+  url.searchParams.set("latitude", String(latitude));
+  url.searchParams.set("longitude", String(longitude));
+  url.searchParams.set("timezone", "auto");
+  url.searchParams.set("current", "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m");
+  url.searchParams.set("hourly", "temperature_2m,apparent_temperature,precipitation,precipitation_probability,weather_code,wind_speed_10m");
+  url.searchParams.set("forecast_days", "16");
+  const response = await fetch(url, { headers: { Accept: "application/json" } });
+  if (!response.ok) throw new Error(`Open-Meteo upstream ${response.status}`);
+  const payload = await response.json();
+  const times = Array.isArray(payload?.hourly?.time) ? payload.hourly.time : [];
+  const rows = times.map((timestamp, index) => ({
+    date: String(timestamp).slice(0, 10),
+    time: String(timestamp).slice(11, 16),
+    temperatureC: finite(payload?.hourly?.temperature_2m?.[index]),
+    feelsLikeC: finite(payload?.hourly?.apparent_temperature?.[index]),
+    precipitationMm: finite(payload?.hourly?.precipitation?.[index]),
+    rainProbability: finite(payload?.hourly?.precipitation_probability?.[index]),
+    windKmh: finite(payload?.hourly?.wind_speed_10m?.[index]),
+    condition: openMeteoCondition(payload?.hourly?.weather_code?.[index])
+  }));
+  const startDate = String(options.forecastStartDate || "");
+  const endDate = String(options.forecastEndDate || startDate);
+  if (startDate) {
+    const dates = [...new Set(rows.map(row => row.date))].filter(date => date >= startDate && date <= endDate);
+    if (!dates.length) return { ok: false, error: "FORECAST_DATE_UNAVAILABLE" };
+    const period = FORECAST_PERIODS[options.timePeriod];
+    const days = dates.map(date => {
+      let hours = rows.filter(row => row.date === date);
+      if (period) hours = hours.filter(row => {
+        const hour = Number(row.time.slice(0, 2));
+        return hour >= period.startHour && hour <= period.endHour;
+      });
+      const values = key => hours.map(row => finite(row[key])).filter(value => value != null);
+      const temperatures = values("temperatureC"), feels = values("feelsLikeC"), rain = values("rainProbability"), precipitation = values("precipitationMm"), winds = values("windKmh");
+      const representative = [...hours].sort((a, b) => (b.rainProbability ?? -1) - (a.rainProbability ?? -1))[0];
+      return {
+        date,
+        ...(period ? { forecastPeriod: options.timePeriod, periodLabel: period.label, periodStartTime: `${String(period.startHour).padStart(2, "0")}:00`, periodEndTime: `${String(period.endHour).padStart(2, "0")}:59` } : {}),
+        condition: representative?.condition || "condición no clasificada",
+        temperatureMinC: temperatures.length ? Math.min(...temperatures) : null,
+        temperatureMaxC: temperatures.length ? Math.max(...temperatures) : null,
+        feelsLikeMinC: feels.length ? Math.min(...feels) : null,
+        feelsLikeMaxC: feels.length ? Math.max(...feels) : null,
+        precipitationMm: precipitation.length ? Number(precipitation.reduce((sum, value) => sum + value, 0).toFixed(1)) : null,
+        maxRainProbability: rain.length ? Math.max(...rain) : null,
+        windKmh: winds.length ? Math.max(...winds) : null,
+        rainTiming: summarizeRainTiming(hours, date),
+        hourlyForecast: hours.map(({ date: ignored, ...item }) => item)
+      };
+    });
+    return { ok: true, source: "Open-Meteo (respaldo mundial)", providerUpdatedAt: new Date().toISOString(), location: label, timezone: payload?.timezone || null, forecastType: days.length > 1 ? "range" : "day", forecastStartDate: startDate, forecastEndDate: endDate, ...(days.length === 1 ? days[0] : { days }) };
+  }
+  const current = payload?.current || {};
+  const today = String(current.time || "").slice(0, 10);
+  const todayRows = rows.filter(row => row.date === today);
+  const rain = todayRows.map(row => row.rainProbability).filter(value => value != null);
+  return {
+    ok: true,
+    source: "Open-Meteo (respaldo mundial)",
+    providerUpdatedAt: new Date().toISOString(),
+    location: label,
+    observedAt: current.time || null,
+    timezone: payload?.timezone || null,
+    temperatureC: finite(current.temperature_2m),
+    feelsLikeC: finite(current.apparent_temperature),
+    precipitationMm: finite(current.precipitation),
+    windKmh: finite(current.wind_speed_10m),
+    condition: openMeteoCondition(current.weather_code),
+    maxRainProbabilityToday: rain.length ? Math.max(...rain) : null,
+    rainTiming: today ? summarizeRainTiming(todayRows, today) : null
+  };
 }
 
 async function resolvePlace(location) {
@@ -263,18 +352,23 @@ export async function computeWeatherForecast(body = {}) {
       (timePeriod && !FORECAST_PERIODS[timePeriod])) {
     return { ok: false, error: "INVALID_FORECAST_DATE" };
   }
-  if (forecastStartDate) {
-    const [daily, hourlyRows] = await Promise.all([
-      fetchJson(googleUrl("forecast/days:lookup", latitude, longitude, { days: 10, pageSize: 10 })),
-      hourlyThrough(latitude, longitude, forecastEndDate)
+  try {
+    if (forecastStartDate) {
+      const [daily, hourlyRows] = await Promise.all([
+        fetchJson(googleUrl("forecast/days:lookup", latitude, longitude, { days: 10, pageSize: 10 })),
+        hourlyThrough(latitude, longitude, forecastEndDate)
+      ]);
+      return summarizeWeather(daily, label, { forecastStartDate, forecastEndDate, timePeriod, hourlyRows });
+    }
+    const [current, hourly] = await Promise.all([
+      fetchJson(googleUrl("currentConditions:lookup", latitude, longitude)),
+      fetchJson(googleUrl("forecast/hours:lookup", latitude, longitude, { hours: 24, pageSize: 24 }))
     ]);
-    return summarizeWeather(daily, label, { forecastStartDate, forecastEndDate, timePeriod, hourlyRows });
+    return summarizeWeather(current, label, { hourlyRows: normalizeHourly(hourly) });
+  } catch (error) {
+    console.warn("weather primary unavailable; using worldwide fallback", error instanceof Error ? error.message : String(error));
+    return openMeteoFallback(latitude, longitude, label, { forecastStartDate, forecastEndDate, timePeriod });
   }
-  const [current, hourly] = await Promise.all([
-    fetchJson(googleUrl("currentConditions:lookup", latitude, longitude)),
-    fetchJson(googleUrl("forecast/hours:lookup", latitude, longitude, { hours: 24, pageSize: 24 }))
-  ]);
-  return summarizeWeather(current, label, { hourlyRows: normalizeHourly(hourly) });
 }
 
 export default async function handler(req, res) {

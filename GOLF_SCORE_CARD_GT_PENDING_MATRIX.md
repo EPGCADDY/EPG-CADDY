@@ -367,6 +367,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 ## Mejoras continuas
 
 - V354-R2 corrige RC-024 en candidato mundial: GPS autorizado aporta ciudad, estado y país para tráfico/clima; no existe país fijo y la regresión cubre seis regiones globales. Preview y respuesta hablada en iPhone siguen pendientes.
+- V354-R3 agrega continuidad climática mundial: Google Weather es primario y Open-Meteo entra automáticamente donde Google devuelve ausencia de cobertura. La prueba física hablada en iPhone permanece pendiente.
 
 - Cobertura de vocabulario, nombres, acentos, ruido y pausas de dictado.
 - Funcionamiento estable en iPhone, Android, pantalla bloqueada, segundo plano y reconexión.

@@ -1702,3 +1702,7 @@ La configuración usa `GOOGLE_MAPS_WEATHER_API_KEY` para clima y `GOOGLE_MAPS_GE
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-024` | Mantiene el fallo abierto hasta Preview y respuesta hablada en iPhone. |
 
 Diagnóstico reproducido: `/api/session-grupal` 429, transcripción alternativa lista, `/api/universal-ai` 502 y respuesta `TRAFFIC_ROUTE_UNAVAILABLE`. La solución es mundial: GPS → ciudad/estado/país → Routes/Weather; no existe país codificado. Producción `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` permanece intacta.
+
+## V354-R3 · continuidad climática mundial con dos proveedores
+
+El Preview real respondió con Google Weather en Roma, Sídney y Ciudad del Cabo, pero Google devolvió 404 en Tokio. `api/weather.js` usa ahora Google como primario y Open-Meteo como respaldo automático mundial para condiciones actuales y pronósticos. La aplicación no pide otra orden, no fija país y no expone coordenadas. `test-v337-universal-weather.mjs` exige el respaldo; Producción sigue intacta y la prueba hablada física permanece pendiente.
