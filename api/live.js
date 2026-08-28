@@ -23,6 +23,7 @@ function authorizationSecret(req){
   return match?.[1]||"";
 }
 function requestAddress(req){return cleanText(String(req?.headers?.["x-forwarded-for"]||req?.headers?.["x-real-ip"]||"unknown").split(",")[0],80)}
+function groupKey(value){return cleanText(value,120).toLocaleLowerCase("es").replace(/\s+/g," ")}
 function boundedInteger(value,min,max,fallback){const number=Number(value);return Number.isInteger(number)&&number>=min&&number<=max?number:fallback}
 function isoDate(value,fallback=new Date().toISOString()){
   const date=new Date(value||fallback);if(!Number.isFinite(date.getTime()))throw liveError("LIVE_INVALID_DATE");return date.toISOString();
@@ -80,7 +81,7 @@ export function normalizeLiveSnapshot(value){
   if(!ID_PATTERN.test(roundId)||players.length<1)throw liveError("LIVE_INVALID_SNAPSHOT");
   return{
     schemaVersion:1,
-    appVersion:"V352",
+    appVersion:"V353",
     roundId,
     groupLabel:cleanText(value.groupLabel,120)||`GRUPO ${players[0].name}`,
     course:cleanText(value.course,120)||"CAMPO",
@@ -248,18 +249,74 @@ async function createTournament(sql,req,body){
 async function joinTournament(sql,req,body){
   const secret=authorizationSecret(req),joinCode=cleanText(body.joinCode,20).toUpperCase(),groupLabel=cleanText(body.groupLabel,120);
   if(!SECRET_PATTERN.test(secret)||joinCode.length!==10)throw liveError("LIVE_JOIN_UNAUTHORIZED",401);
+  if(!groupLabel)throw liveError("LIVE_GROUP_LABEL_REQUIRED");
   await rateLimit(sql,req,"join",tokenHash(secret),30);
-  const tournaments=await sql`SELECT id FROM live_tournaments WHERE join_code_hash=${tokenHash(joinCode)} AND status='active' AND expires_at>now() LIMIT 1`;
-  if(!tournaments.length)throw liveError("LIVE_JOIN_CODE_INVALID",404);
-  const rows=await sql`
-    UPDATE live_streams SET tournament_id=${tournaments[0].id}, group_label=coalesce(nullif(${groupLabel},''),group_label), updated_at=now()
-    WHERE publisher_secret_hash=${tokenHash(secret)} AND status='active' AND expires_at>now()
-    RETURNING id, tournament_id, group_label
-  `;
-  if(!rows.length)throw liveError("LIVE_NOT_ACTIVE",410);
-  await sql`UPDATE live_tournaments SET revision=revision+1,updated_at=now() WHERE id=${tournaments[0].id}`;
-  await sql`INSERT INTO live_events (stream_id, tournament_id, event_type, actor_hash) VALUES (${rows[0].id}, ${rows[0].tournament_id}, 'joined_tournament', ${tokenHash(secret)})`;
-  return{ok:true,joined:true,tournamentId:rows[0].tournament_id,groupLabel:rows[0].group_label};
+  const secretHash=tokenHash(secret),rows=await sql`
+    WITH tournament AS MATERIALIZED (
+      SELECT id
+      FROM live_tournaments
+      WHERE join_code_hash=${tokenHash(joinCode)}::char(64) AND status='active' AND expires_at>now()
+      LIMIT 1
+      FOR UPDATE
+    ),
+    candidate AS MATERIALIZED (
+      SELECT id,group_label
+      FROM live_streams
+      WHERE publisher_secret_hash=${secretHash}::char(64)
+      LIMIT 1
+      FOR UPDATE
+    ),
+    decision AS MATERIALIZED (
+      SELECT tournament.id AS tournament_id,candidate.id AS stream_id,
+        CASE
+          WHEN tournament.id IS NULL THEN 'LIVE_JOIN_CODE_INVALID'
+          WHEN candidate.id IS NULL OR NOT EXISTS (
+            SELECT 1 FROM live_streams active WHERE active.id=candidate.id AND active.status='active' AND active.expires_at>now()
+          ) THEN 'LIVE_NOT_ACTIVE'
+          WHEN EXISTS (
+            SELECT 1
+            FROM live_streams other
+            WHERE other.tournament_id=tournament.id AND other.id<>candidate.id
+              AND other.status='active' AND other.expires_at>now()
+              AND lower(regexp_replace(btrim(other.group_label),'[[:space:]]+',' ','g'))=${groupKey(groupLabel)}::text
+          ) THEN 'LIVE_GROUP_ALREADY_PUBLISHING'
+          ELSE 'APPLY'
+        END AS outcome_code
+      FROM (VALUES (1)) AS seed(one)
+      LEFT JOIN tournament ON true
+      LEFT JOIN candidate ON true
+    ),
+    updated AS (
+      UPDATE live_streams AS stream
+      SET tournament_id=decision.tournament_id,group_label=${groupLabel}::text,updated_at=now()
+      FROM decision
+      WHERE stream.id=decision.stream_id AND decision.outcome_code='APPLY'
+      RETURNING stream.id,stream.tournament_id,stream.group_label
+    ),
+    tournament_bump AS (
+      UPDATE live_tournaments AS tournament
+      SET revision=tournament.revision+1,updated_at=now()
+      FROM updated
+      WHERE tournament.id=updated.tournament_id
+      RETURNING tournament.id
+    ),
+    event_log AS (
+      INSERT INTO live_events (stream_id,tournament_id,event_type,actor_hash,details)
+      SELECT updated.id,updated.tournament_id,'joined_tournament',${secretHash}::char(64),jsonb_build_object('groupLabel',updated.group_label)
+      FROM updated
+      RETURNING id
+    ),
+    effects AS (
+      SELECT (SELECT count(*) FROM tournament_bump)+(SELECT count(*) FROM event_log) AS completed
+    )
+    SELECT coalesce(
+      (SELECT jsonb_build_object('applied',true,'streamId',id,'tournamentId',tournament_id,'groupLabel',group_label) FROM updated),
+      (SELECT jsonb_build_object('applied',false,'code',outcome_code) FROM decision)
+    ) AS applied
+    FROM effects
+  `,applied=rows[0]?.applied||{};
+  if(!applied.applied){const code=String(applied.code||"LIVE_JOIN_FAILED");throw liveError(code,code==="LIVE_JOIN_CODE_INVALID"?404:code==="LIVE_GROUP_ALREADY_PUBLISHING"?409:code==="LIVE_NOT_ACTIVE"?410:400)}
+  return{ok:true,joined:true,tournamentId:applied.tournamentId,groupLabel:applied.groupLabel};
 }
 
 async function leaveTournament(sql,req){
@@ -331,4 +388,4 @@ export default async function handler(req,res){
   }
 }
 
-export { LIVE_POLICY_VERSION, TOKEN_PATTERN, ID_PATTERN, filterSnapshot, validateScope, validateConsent, newJoinCode, tokenHash };
+export { LIVE_POLICY_VERSION, TOKEN_PATTERN, ID_PATTERN, filterSnapshot, validateScope, validateConsent, newJoinCode, tokenHash, groupKey };

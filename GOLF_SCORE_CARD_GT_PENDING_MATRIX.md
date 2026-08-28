@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V352 implementa `GOLF SCORE CARD GT. LIVE` sobre la fuente canónica V351; migración Neon principal y Preview E2E PASS; falta inspección visual y prueba física iPhone
+**Corte vigente:** V353 agrega `MONITOR GENERAL` y `MONITOR INDIVIDUAL` sobre LIVE V352; banco local de 80 jugadores PASS; Preview/E2E/navegador V353 y prueba física iPhone pendientes
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -353,11 +353,14 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 28. GOLF SCORE CARD GT. LIVE
 
-**Estado:** V352 IMPLEMENTADO Y MIGRACIÓN AISLADA PASS; MIGRACIÓN PRINCIPAL, PREVIEW, NAVEGADOR REAL Y PRUEBA FÍSICA PENDIENTES · `PEND-LIVE-018`
+**Estado:** V352 CENTRAL Y PREVIEW E2E PASS; V353 CENTRO LIVE LOCAL PASS; PREVIEW/E2E/NAVEGADOR V353 Y PRUEBA FÍSICA IPHONE PENDIENTES · `PEND-LIVE-018`
 
 - Compartir por enlace privado una vista de sólo lectura de un jugador o del grupo completo, siempre con permiso explícito y revocable.
 - Permitir visitantes sin aplicación, seguimiento bilateral en otra ventana y cola offline sin alterar la Score Card activa.
 - Reunir torneos con grupos paginados y sin máximo fijo de producto; cada grupo autoriza y publica su propia tarjeta de uno a seis jugadores.
+- Ofrecer `1 · MONITOR GENERAL` para todo el torneo y `2 · MONITOR INDIVIDUAL` para cualquier jugador o grupo; buscar por nombre, seguir con un toque y reutilizar la General sin consultas extra.
+- Asegurar un Capitán de Tarjeta por grupo y rechazar un segundo publicador activo del mismo grupo.
+- Compartir ♾️ el vínculo con invitados en cualquier país por WhatsApp, Mensajes, correo, AirDrop, X u otra aplicación.
 - Separar secretos de publicación/lectura, guardar sólo SHA-256 y excluir contactos, ubicación, audio, IA, clima detallado y apuestas.
 - Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`.
 
@@ -381,7 +384,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ## Próximo punto obligatorio
 
-La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V352**. La estabilización física de voz permanece registrada y no se considera cerrada. La autorización permanente permite continuar con pruebas y Preview, pero una migración Neon sólo se aplica a la base principal después de la confirmación exigida por su procedimiento seguro. Los bloqueos externos —USGA/ASOGOLF/GHIN, licencias de campos, mapas, tiendas o proveedores— se documentan sin simulación. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
+La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. V353 no requiere migración Neon porque reutiliza el esquema V352. La estabilización física de voz permanece registrada y no se considera cerrada. Los bloqueos externos —USGA/ASOGOLF/GHIN, licencias de campos, mapas, tiendas o proveedores— se documentan sin simulación. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
 
 ## Corte V345-ICONS · estado verificable
 

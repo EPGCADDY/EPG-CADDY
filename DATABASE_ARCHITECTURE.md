@@ -123,3 +123,16 @@ La migración `database/004_live_scorecards.sql` superó primero una rama tempor
 ### Evidencia temporal V352 · PASS
 
 La migración `1f8793a4-0dad-40a6-8016-b9b183e15b7c` fue creada en `mcp-migration-2026-08-27T21-50-34` (`br-morning-dew-avwpi96x`), hija de `br-late-wind-avhgi9s3`. Se verificaron cuatro tablas LIVE, cero funciones almacenadas, 60 grupos únicos paginados `25/25/10`, filtro de dos jugadores a uno autorizado, primera revisión atómica y reenvío idempotente sin evento adicional. Tras la aprobación expresa, Neon aplicó la migración a `br-late-wind-avhgi9s3` y eliminó la rama temporal. La comprobación final devolvió cuatro tablas, 15 índices, cero funciones LIVE y cero filas de prueba trasladadas.
+
+## V353 — MONITOR GENERAL e INDIVIDUAL mundial
+
+V353 no agrega tablas, columnas, índices ni funciones. Reutiliza exactamente `live_tournaments` y `live_streams`; por ello no requiere migración Neon y su reversión no toca datos ni esquema.
+
+- Un torneo de 80 personas se representa normalmente como 20 streams de cuatro jugadores. Un solo `CAPITÁN DE TARJETA` publica cada grupo; los otros teléfonos miran.
+- `live-hub.html` ofrece dos vistas: `MONITOR GENERAL` para todo el torneo y `MONITOR INDIVIDUAL` para cualquier jugador o grupo elegido. La búsqueda, clasificación y los elegidos se resuelven en memoria desde la General, sin lecturas adicionales.
+- Un jugador fuera del torneo puede agregarse con su token individual; ésa es la única lectura externa adicional.
+- `join_tournament` bloquea la fila del torneo con `FOR UPDATE`, normaliza el nombre de grupo y decide dentro de una sola sentencia CTE. Un segundo stream activo del mismo grupo recibe `LIVE_GROUP_ALREADY_PUBLISHING` y no se incorpora.
+- La General es LIVE no oficial hasta el cierre. Muestra posición, grupo, hoyos, Gross, Neto y relación con par; nunca escribe un score.
+- El enlace funciona desde cualquier país y puede compartirse con cualquier cantidad de invitados por la hoja nativa del teléfono. El control de acceso sigue siendo posesión del vínculo, vencimiento y revocación; quien recibe el vínculo sólo puede leer.
+
+La prueba local `test-v353-live-hub.mjs` cubre 20×4 y 40×2, 80 jugadores sin omisión ni duplicado, Monitor General más tres jugadores elegidos en el Monitor Individual sin lecturas extra, enlace externo, origen seguro, carga paginada sin máximo fijo, capitán único, privacidad y apertura en ventana separada. Preview, E2E remoto, observabilidad y navegador se registran por separado; la prueba física iPhone no se simula.

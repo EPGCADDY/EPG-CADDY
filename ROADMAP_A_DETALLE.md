@@ -1636,3 +1636,31 @@ Evidencia Neon principal: aprobación expresa recibida; migración aplicada corr
 | Limpieza Neon | Cero filas `round-v352-preview-%` |
 | Navegador visual | La protección Vercel redirigió el navegador automatizado al login antes de la app; permanece pendiente la inspección visual física con el enlace temporal. |
 | Producción | Intacta en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` |
+
+## V353-CENTRO-LIVE-GENERAL-INDIVIDUAL · escenario ideal de 80 jugadores
+
+| Archivo exacto | Control V353 | PASS obligatorio |
+|---|---|---|
+| `live-hub.html` | `TWO-MONITORS-FOUR-STEPS` | Monitor General e Individual en una ventana separada, botones grandes y explicación para diez años. |
+| `live-hub.js` | `ONE-GENERAL-READ` | Todas las páginas, búsqueda, clasificación y jugadores elegidos; el Monitor Individual genera cero lecturas extra dentro del torneo. |
+| `live.html`, `live-view.js` | `OPEN-HUB-SEPARATE` | Torneo y stream abren Centro Live con `_blank`, `noopener,noreferrer`; visor simple no almacena tokens. |
+| `live-control.js` | `CAPTAIN-WORLD-SHARE` | Centro Live principal, Capitán único, respaldo individual y `COMPARTIR ♾️` mundial. |
+| `api/live.js` | `ATOMIC-UNIQUE-GROUP-PUBLISHER` | Una sola CTE con torneo `FOR UPDATE`; segundo publicador devuelve `409 LIVE_GROUP_ALREADY_PUBLISHING`. |
+| `index-grupal.html` | `V353-BUILD` | Identificador exacto sin alterar el `persist()` oficial. |
+| `service-worker.js` | `V353-CACHE` | Nuevo shell con `live-hub.html` y `live-hub.js`; Score Card conserva su funcionamiento offline. |
+| `vercel.json` | `HUB-PRIVACY-HEADERS` | Centro sin caché, sin referrer y sin indexación. |
+| `test-v353-live-hub.mjs` | `80-PLAYER-TWO-MONITORS-WORLD` | 20×4, 40×2, ambos monitores, tres jugadores, externo, privacidad, páginas sin tope, compartir mundial y doble capitán. |
+| `test-v352-live.mjs` | `LIVE-CORE-REGRESSION` | Permiso, filtro de alcance, tokens, idempotencia, offline y visor separado siguen aprobados. |
+| `audit-project.mjs` | `AUDIT-95` | Ejecuta V353 dentro de la auditoría integral. |
+| `DATABASE_ARCHITECTURE.md` | `NO-NEW-MIGRATION` | V353 reutiliza cuatro tablas y 15 índices; cero cambio de esquema. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` | `GATE-0-V353` | Siete entradas, escenario, riesgo, pruebas, compartir mundial y reversión cerrados. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | `HONEST-STATE` | Distinguen banco local, Preview, navegador y prueba física. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `FILE-MAP-359` | Mapea cada pieza nueva y el conteo sellado. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `REMOTE-GATE-V353` | Los dos ROADMAPS enumeran literalmente toda modificación. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `INVENTORY-V353` | Tres PDF y fuente exacta quedan sellados antes de publicar. |
+
+Flujo amistoso: 1) abre el enlace; 2) elige Monitor General o Individual; 3) en la General busca un nombre y toca `+ SEGUIR`; 4) mira LIVE mientras todo se actualiza solo. `COMPARTIR ♾️` funciona por WhatsApp, Mensajes, correo, AirDrop, X u otra aplicación en USA, México, Italia o cualquier país. El vínculo conserva sólo lectura, vencimiento y revocación.
+
+Banco local V353 PASS: 80 jugadores en 20 grupos de cuatro y 40 grupos de dos; cero omisiones o duplicados; Monitor General + tres jugadores elegidos en el Monitor Individual desde una sola respuesta; un externo mediante un token adicional; origen seguro; cursor sin máximo fijo; sólo `action:"read"`; token retirado del fragmento; doble grupo bloqueado por sentencia atómica. Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Preview, E2E, observabilidad y navegador permanecen pendientes en este corte; iPhone físico es una puerta aparte.
+
+Archivos exactos V353: `live-hub.html`, `live-hub.js`, `live.html`, `live-view.js`, `live-control.js`, `api/live.js`, `index-grupal.html`, `service-worker.js`, `vercel.json`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `audit-project.mjs`, `DATABASE_ARCHITECTURE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.

@@ -14,7 +14,7 @@ const round={
 };
 
 const clientSnapshot=control.buildLiveSnapshot(round,{course:"EL PULTÉ GOLF",pars:Array(18).fill(4)});
-assert.equal(clientSnapshot.appVersion,"V352");
+assert.equal(clientSnapshot.appVersion,"V353");
 assert.equal(clientSnapshot.players.length,2);
 assert.equal(clientSnapshot.players[0].totals.gross,5);
 assert.equal(clientSnapshot.players[1].holes[0].explicitX,true);
@@ -40,7 +40,7 @@ assert.deepEqual(viewer.parseLiveHash(`#tournament=${"B".repeat(43)}`),{kind:"to
 assert.equal(viewer.parseLiveHash("#stream=short"),null);
 
 const index=read("index-grupal.html"),liveHtml=read("live.html"),liveControl=read("live-control.js"),liveView=read("live-view.js"),api=read("api/live.js"),schema=read("database/004_live_scorecards.sql"),vercel=read("vercel.json"),worker=read("service-worker.js");
-assert.match(index,/V352-GOLF-SCORE-CARD-GT-LIVE/);
+assert.match(index,/V353-CENTRO-LIVE-GENERAL-INDIVIDUAL/);
 assert.match(index,/window\.GSCLiveControl\?\.onRoundPersisted\(round\)/,"el escritor oficial publica LIVE");
 assert.match(index,/<script src="\.\/live-control\.js"><\/script>/);
 assert.match(liveHtml,/GOLF SCORE CARD GT\. LIVE/);
@@ -50,7 +50,7 @@ assert.doesNotMatch(`${liveHtml}\n${liveControl}\n${liveView}`,/\bEPG\b/i,"el no
 assert.doesNotMatch(liveView,/localStorage|sessionStorage|microphone|micrófono|audio/i,"el visor no toca tarjeta, almacenamiento ni audio");
 assert.match(liveView,/action:"read"/);
 assert.doesNotMatch(liveView,/action:"(?:publish|create_stream|revoke_stream)"/);
-assert.match(liveControl,/root\.open\(url\.toString\(\),"_blank"/,"seguimiento bilateral abre otra ventana");
+assert.match(liveControl,/root\.open\(hubUrl\(kind,token\),"_blank"/,"seguimiento bilateral abre el Centro Live en otra ventana");
 assert.match(liveControl,/url\.origin!==root\.location\.origin/,"el seguidor sólo abre enlaces LIVE de esta aplicación");
 assert.match(liveControl,/belongsToCurrentRound/,"un enlace de otra ronda debe revocarse antes de crear el nuevo");
 assert.match(liveControl,/pendingSnapshot/);
@@ -71,8 +71,8 @@ assert.match(publishSource,/\$\{secretHash\}::char\(64\)/);
 assert.match(publishSource,/\$\{expected\}::bigint/);
 assert.doesNotMatch(publishSource,/\$\{(?:mutationId|secretHash|expected)\}(?!::)/,"ningún parámetro de publicación puede quedar con tipo indeterminado 42P18");
 assert.doesNotMatch(schema,/CHECK\s*\([^)]*(?:group|player)[^)]*<=\s*\d+/i,"no debe existir máximo fijo de grupos o jugadores del torneo");
-assert.match(vercel,/live-control\|live-view/);
-assert.match(worker,/gscg-mobile-v352-live/);
+assert.match(vercel,/live-control\|live-view\|live-hub/);
+assert.match(worker,/gscg-mobile-v353-live-hub/);
 assert.match(worker,/"\/live-control\.js"/);
 
 console.log("PASS V352 LIVE: permiso, privacidad, cola offline, visor separado y torneo paginado sin máximo fijo");

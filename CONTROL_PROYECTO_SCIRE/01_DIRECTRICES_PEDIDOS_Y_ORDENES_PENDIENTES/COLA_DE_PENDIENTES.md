@@ -2,7 +2,7 @@
 
 Este archivo concentra los trabajos que el propietario ha pedido conservar para ejecución futura. Cuando el propietario diga **“busca los pendientes por hacer”**, este documento debe revisarse primero, junto con `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`.
 
-## Resumen ejecutivo vigente · 27 de agosto de 2026
+## Resumen ejecutivo vigente · 28 de agosto de 2026
 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
@@ -23,9 +23,9 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 15 | `PEND-MAN-004` Guía Rápida | Falta versión web/PDF visual enlazada al Manual vigente |
 | 16 | `PEND-UBI-015` detectar el campo por GPS | Falta catálogo geográfico verificado, propuesta segura, confirmación manual y prueba física por campo |
 | 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
-| 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V352, Neon principal y Preview E2E PASS; falta inspección visual y prueba física iPhone |
+| 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V353 CENTRO LIVE: banco local 80 jugadores PASS; Preview/E2E/navegador y prueba física iPhone pendientes |
 
-La prioridad activa por orden del propietario es `PEND-LIVE-018` V352; `PEND-VOZ-003` y los demás pendientes conservan su estado registrado. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
+La prioridad activa por orden del propietario es `PEND-LIVE-018` V353; `PEND-VOZ-003` y los demás pendientes conservan su estado registrado. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
 
 **Autorización de ejecución permanente:** el propietario ordenó el 26 de agosto de 2026 agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versión cuando esté realmente probada. Esta autorización no convierte un `FAIL` en `PASS` ni permite simular licencias, credenciales o integraciones externas inexistentes.
 
@@ -475,7 +475,7 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 ## PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
 **Fecha de registro:** 27 de agosto de 2026
-**Estado:** V352 IMPLEMENTADO Y MIGRACIÓN AISLADA PASS; MIGRACIÓN PRINCIPAL, PREVIEW, NAVEGADOR REAL Y PRUEBA FÍSICA PENDIENTES
+**Estado:** V352 CENTRAL Y PREVIEW E2E PASS; V353 CENTRO LIVE LOCAL PASS; PREVIEW/E2E/NAVEGADOR V353 Y PRUEBA FÍSICA IPHONE PENDIENTES
 **Prioridad:** Activa por orden expresa del propietario
 
 ### Objetivo y condiciones
@@ -485,6 +485,9 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - El enlace es privado, caduca y puede revocarse. Los secretos se separan entre publicar y mirar, y la base guarda sólo huellas SHA-256.
 - El seguimiento bilateral abre una ventana distinta y no puede tocar la ronda ni el escritor oficial en curso.
 - Un torneo reúne cualquier cantidad necesaria de grupos mediante páginas y cursores, sin máximo fijo de producto; cada Score Card conserva su arquitectura actual de uno a seis jugadores.
+- V353 ofrece dos opciones universales en una ventana separada: `1 · MONITOR GENERAL` para todo el torneo y `2 · MONITOR INDIVIDUAL` para cualquier jugador o grupo; el Individual reutiliza la General sin lecturas adicionales.
+- Cada grupo tiene un único Capitán de Tarjeta. El servidor rechaza un segundo publicador activo con el mismo grupo dentro del torneo.
+- `COMPARTIR ♾️` permite enviar el mismo enlace por cualquier aplicación y a cualquier país, sin máximo fijo de invitados; el vínculo sigue siendo sólo lectura, revocable y con vencimiento.
 - La cola offline guarda sólo la actualización pendiente más reciente y reintenta al volver la señal.
 - Se excluyen contactos, ubicación, audio, IA, clima detallado, códigos privados, juegos y apuestas.
 - Especificación completa: `PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`.

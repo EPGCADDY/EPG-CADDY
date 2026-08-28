@@ -2,7 +2,7 @@
 
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
-Archivos activos rastreados al corte V352: **356**.
+Archivos activos rastreados al corte V353: **359**.
 
 Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el historial de GitHub.
 
@@ -809,5 +809,33 @@ Cierre remoto V352-R2: deployment `dpl_2BLAFZNazoogdQQS2mkxreNjBgh6`, commit `6b
 ### V352 · pruebas históricas compatibles con releases futuras
 
 `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs` y `test-v328-official-golf-rules.mjs` conservan sus verificaciones funcionales, pero ya no congelan toda la aplicación en V332. El identificador general debe cumplir `V###`; el build LIVE exacto queda bajo `test-v352-live.mjs`.
+
+## V353-CENTRO-LIVE-GENERAL-INDIVIDUAL · escenario amigable de 80 jugadores
+
+| Archivo exacto | Responsabilidad V353 | Control permanente |
+|---|---|---|
+| `live-hub.html` | Presenta `1 · MONITOR GENERAL` y `2 · MONITOR INDIVIDUAL` en una sola ventana separada. | Dos botones grandes, cuatro pasos, sólo lectura y compartir mundial. |
+| `live-hub.js` | Lee la General completa, ordena 80 jugadores, guarda elecciones del Monitor Individual e importa un enlace externo como respaldo. | Sólo ejecuta `read`; reutiliza la General y no fija máximo de páginas. |
+| `live.html` | Ofrece entrada directa al Centro Live desde cualquier General o tarjeta compartida. | El botón abre otra ventana y no altera el visor existente. |
+| `live-view.js` | Convierte el token de torneo o stream en una importación segura al Centro. | Conserva `_vercel_share`, usa fragmento y abre con `noopener,noreferrer`. |
+| `live-control.js` | Agrega Centro Live, compartir ♾️, Capitán de Tarjeta y respaldo individual. | Un flujo principal por General; pegar enlace deja de ser requisito normal. |
+| `api/live.js` | Impide que dos streams activos publiquen el mismo grupo dentro del torneo. | CTE atómica, fila del torneo `FOR UPDATE` y `LIVE_GROUP_ALREADY_PUBLISHING`. |
+| `index-grupal.html` | Identifica el build V353 sin cambiar el escritor oficial. | `persist()` continúa siendo la única fuente de publicación. |
+| `service-worker.js` | Versiona el shell e incorpora el Centro Live. | La Score Card mantiene su estrategia offline y LIVE sigue necesitando red para actualizar. |
+| `vercel.json` | Protege `live-hub.html` y `live-hub.js`. | Sin caché, referrer ni indexación pública. |
+| `test-v353-live-hub.mjs` | Simula 20×4 y 40×2, ambos monitores, enlace externo, privacidad y escala. | Bloquea omisiones, duplicados, parentescos específicos, escrituras, tope de páginas y doble capitán. |
+| `test-v352-live.mjs` | Conserva la regresión central V352 bajo el identificador V353. | Permisos, alcance, idempotencia y privacidad siguen obligatorios. |
+| `audit-project.mjs` | Incorpora el nuevo banco a la regresión maestra. | Ningún Preview puede omitir V353. |
+| `DATABASE_ARCHITECTURE.md` | Documenta reutilización del esquema y lectura única de la General. | V353 no crea migración ni tabla nueva. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` | Cierra el escenario, las siete entradas, riesgos, pruebas y reversión. | Separa PASS automático de prueba física iPhone. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Registra V353 como ejecución activa. | Producción permanece sin montar. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Integra Monitor General, Monitor Individual y compartir mundial al punto 28. | No duplica el motor de scores. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Mapea los 359 archivos activos y cada pieza V353. | El conteo final coincide con el sello. |
+| `ROADMAP_OVERALL.md` | Resume el escenario ideal, arquitectura y estado verificable. | Enumera todos los archivos V353. |
+| `ROADMAP_A_DETALLE.md` | Registra controles reproducibles del candidato. | La puerta remota puede comprobar cada modificación. |
+| `scripts/rebuild-inventory-pdfs.py` | Rotula y reconstruye los tres inventarios V353. | Fuentes y salidas se sellan de forma determinista. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella el árbol candidato completo. | Se regenera después de cerrar código, pruebas y documentos. |
+
+Resultado local V353: `test-v352-live.mjs`, `test-v353-live-hub.mjs` y `scripts/project-quality-gate.mjs` PASS. Se comprobaron 80 jugadores en 20 grupos de cuatro y 40 grupos de dos, Monitor General, tres jugadores elegidos en el Monitor Individual con cero lecturas extra, un vínculo externo, origen seguro, compartir en cualquier país, capitán único y Producción intacta en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Preview, E2E, observabilidad y navegador permanecen separados hasta obtener evidencia remota; el iPhone físico continúa pendiente.
 
 `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v312-general-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs`, `test-v328-offline-official-rules.mjs`, `test-v329-skins.mjs` y `test-v330-side-games.mjs` exigen una caché PWA con versión `gscg-mobile-v###` sin congelarla en V332. `test-v352-live.mjs` conserva el control exacto de `gscg-mobile-v352-live` y `/live-control.js`.

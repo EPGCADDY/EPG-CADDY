@@ -85,6 +85,23 @@
       ]
     },
     {
+      "source": "/live-hub.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/docs/manual/v311/(.*)",
       "headers": [
         {
@@ -94,7 +111,7 @@
       ]
     },
     {
-      "source": "/(player-registry|round-closure|card-artifacts|card-file-export|card-library|historical-analytics|match-play|four-ball|skins|wolf|vegas|dots|stableford|sync-queue|master-data-sync|account-backup|commerce|round-navigation|live-control|live-view).js",
+      "source": "/(player-registry|round-closure|card-artifacts|card-file-export|card-library|historical-analytics|match-play|four-ball|skins|wolf|vegas|dots|stableford|sync-queue|master-data-sync|account-backup|commerce|round-navigation|live-control|live-view|live-hub).js",
       "headers": [
         {
           "key": "Cache-Control",

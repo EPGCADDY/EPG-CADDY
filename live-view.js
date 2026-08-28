@@ -3,6 +3,7 @@
   const POLL_MS=3000;let access=null,revision=null,timer=null,loading=false,nextCursor=null,pagesLoaded=1,streams=new Map(),tournament=null;
   const $=id=>root.document.getElementById(id),escapeHtml=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
   function parseLiveHash(value){const params=new URLSearchParams(String(value||"").replace(/^#/,""));for(const kind of ["stream","tournament"]){const token=String(params.get(kind)||"");if(/^[A-Za-z0-9_-]{40,100}$/.test(token))return{kind,token}}return null}
+  function hubUrl(value){if(!value)return"";const url=new URL("/live-hub.html",root.location.origin),share=new URL(root.location.href).searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);url.hash=`${value.kind==="tournament"?"general":"stream"}=${encodeURIComponent(value.token)}`;return url.toString()}
   function modeLabel(value){return({general:"SCORE CARD",match_play:"MATCH PLAY",four_ball:"FOUR BALL",stableford:"STABLEFORD"})[value]||"SCORE CARD"}
   function statusLabel(value){return value==="officially_closed"?"RONDA FINALIZADA":value==="corrected"?"CORREGIDA":"RONDA EN CURSO"}
   function relation(value){const number=Number(value);if(!Number.isFinite(number))return"";return number===0?"E":number>0?`+${number}`:String(number)}
@@ -26,6 +27,6 @@
     clearTimeout(timer);timer=setTimeout(refresh,POLL_MS);
   }
   async function loadMore(){if(!nextCursor||loading)return;loading=true;const result=await loadTournamentPage(nextCursor,true);loading=false;if(result.ok){pagesLoaded++;render();setState("MÁS GRUPOS CARGADOS","",result.serverAt)}else setState(errorMessage(result.code),"warning")}
-  function start(){access=parseLiveHash(root.location.hash);$("liveLoadMore").addEventListener("click",loadMore);root.addEventListener("hashchange",()=>root.location.reload());root.document.addEventListener("visibilitychange",()=>{if(root.document.visibilityState==="visible")refresh()});root.addEventListener("online",refresh);if(!access){setState("ENLACE LIVE INVÁLIDO","error");$("liveViewerGroups").innerHTML=`<div class="live-empty">SOLICITA UN NUEVO ENLACE A QUIEN LLEVA LA SCORE CARD.</div>`;return false}refresh();return true}
-  return{POLL_MS,parseLiveHash,modeLabel,statusLabel,relation,streamCard,start};
+  function start(){access=parseLiveHash(root.location.hash);$("liveLoadMore").addEventListener("click",loadMore);root.addEventListener("hashchange",()=>root.location.reload());root.document.addEventListener("visibilitychange",()=>{if(root.document.visibilityState==="visible")refresh()});root.addEventListener("online",refresh);if(!access){setState("ENLACE LIVE INVÁLIDO","error");$("liveViewerGroups").innerHTML=`<div class="live-empty">SOLICITA UN NUEVO ENLACE A QUIEN LLEVA LA SCORE CARD.</div>`;return false}const hub=$("liveAddHub");if(hub){hub.hidden=false;hub.textContent=access.kind==="tournament"?"ABRIR EN CENTRO LIVE":"AGREGAR A MI CENTRO LIVE";hub.onclick=()=>root.open(hubUrl(access),"_blank","noopener,noreferrer")}refresh();return true}
+  return{POLL_MS,parseLiveHash,hubUrl,modeLabel,statusLabel,relation,streamCard,start};
 });

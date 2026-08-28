@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v352-live";
+const CACHE_NAME="gscg-mobile-v353-live-hub";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -29,6 +29,8 @@ const SHELL=[
   "/master-data-sync.js",
   "/account-backup.js",
   "/live-control.js",
+  "/live-hub.html",
+  "/live-hub.js",
   "/match-play.js",
   "/four-ball.js",
   "/stableford.js",

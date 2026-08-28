@@ -1,8 +1,8 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
 **Fecha de registro:** 27 de agosto de 2026  
-**Versión de ejecución:** V352  
-**Estado real:** IMPLEMENTADO, MIGRACIÓN PRINCIPAL Y PREVIEW E2E PASS; INSPECCIÓN VISUAL/PRUEBA FÍSICA IPHONE PENDIENTE
+**Versión de ejecución:** V352 + V353 CENTRO LIVE
+**Estado real:** V352 IMPLEMENTADO, MIGRACIÓN PRINCIPAL Y PREVIEW E2E PASS; V353 CENTRO LIVE EN EJECUCIÓN; INSPECCIÓN VISUAL/PRUEBA FÍSICA IPHONE PENDIENTE
 **Nombre público obligatorio:** `GOLF SCORE CARD GT. LIVE`
 
 ## Solicitud del propietario
@@ -95,3 +95,48 @@ Permitir que una persona sin la aplicación pueda seguir en vivo la Score Card a
 ## Frases para localizar este pendiente
 
 `Live`, `seguir jugador`, `seguir grupo`, `torneo en vivo`, `Score Card remota`, `enlace privado`, `visitante sin aplicación`, `rondas bilaterales`, `sin límite de grupos`, `PEND-LIVE-018`.
+
+## V353 · escenario de 80 jugadores y dos monitores universales
+
+### Solicitud nueva del propietario · 28 de agosto de 2026
+
+Un torneo reúne 80 jugadores y entre 30 y 40 teléfonos usan la aplicación. El propietario quiere conservar su Score Card activa y elegir entre dos vistas separadas y simples: `1 · MONITOR GENERAL` para todo el torneo y `2 · MONITOR INDIVIDUAL` para cualquier jugador o grupo. La operación debe ser comprensible para un niño de diez años.
+
+### GATE 0 · siete entradas V353
+
+| Entrada | Definición cerrada |
+|---|---|
+| Fuente canónica | rama `v352-live`, corte local `c9a6001`, API y modelo LIVE V352 ya migrados y comprobados. |
+| Alcance exacto | `CENTRO LIVE` separado con Monitor General, Monitor Individual, búsqueda de jugadores, importación por enlace como respaldo y una sola publicación por grupo. |
+| Aceptación medible | 80 jugadores visibles sin omisión ni duplicado; cambio claro entre Monitor General e Individual; cero escritura; actualización 3–5 s; ronda propia intacta; conexión explicable en cuatro acciones. |
+| Referencias | esta especificación, `DATABASE_ARCHITECTURE.md`, `live-control.js`, `live-view.js`, `api/live.js` y la prueba V352 comprobada. |
+| Riesgos conocidos | tarjetas duplicadas por dos publicadores del mismo grupo, demasiadas consultas, filtración de tokens, favoritos huérfanos, pérdida de señal, mezclar General con tarjeta activa. |
+| Plan de prueba | 20 grupos × 4 jugadores y 40 grupos × 2 jugadores; paginación; duplicado de grupo; Monitor General + tres jugadores elegidos; importación; offline; privacidad; navegador móvil/escritorio; Preview y observabilidad. |
+| Reversión | retirar únicamente los archivos y controles V353; la base V352 no requiere tabla nueva; revocar enlaces; Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. |
+
+### Arquitectura amigable aprobada para construir
+
+1. Existe **una sola Score Card que publica por grupo**. Si cuatro personas usan la aplicación dentro del mismo grupo, una es `CAPITÁN DE TARJETA`; las otras miran. El servidor bloquea que dos publicaciones activas ocupen el mismo nombre de grupo dentro del torneo.
+2. El organizador comparte **un solo enlace GENERAL**. Al abrirlo, el visitante toca `ABRIR EN CENTRO LIVE`; el token queda en el fragmento y después se limpia de la barra.
+3. `CENTRO LIVE` consulta la General una vez y arma localmente la lista completa. Los jugadores elegidos para el Monitor Individual reutilizan esa misma respuesta y no producen consultas adicionales.
+4. El usuario elige `1 · MONITOR GENERAL` o `2 · MONITOR INDIVIDUAL`. En la General escribe un nombre y toca `+ SEGUIR`; el Centro abre ese jugador en el Monitor Individual y lo recuerda únicamente en ese dispositivo.
+5. Si una persona no pertenece a la General, su enlace privado se puede importar una sola vez como respaldo. El Centro sólo llama `read`; nunca publica, corrige, usa micrófono ni toca la Score Card activa.
+6. La General muestra posición LIVE, jugador, grupo, hoyos jugados, Gross, Neto y relación con par. Se rotula como resultado vivo no oficial hasta el cierre.
+7. El Centro abre siempre en otra ventana. En iPhone se alterna entre `MI SCORE CARD` y `CENTRO LIVE`; en iPad/computadora pueden verse simultáneamente.
+8. `COMPARTIR ♾️` usa la hoja normal del teléfono para WhatsApp, Mensajes, correo, AirDrop, X u otra aplicación. El mismo enlace funciona en USA, México, Italia o cualquier país y no fija un máximo de invitados; su vencimiento, revocación y sólo lectura permanecen obligatorios.
+
+### Prueba obligatoria del escenario
+
+- 80 jugadores en 20 grupos de cuatro y 80 jugadores en 40 grupos de dos.
+- Páginas sin omisiones, duplicados ni máximo fijo de producto.
+- Monitor General más tres jugadores elegidos de tres streams diferentes.
+- Cero consultas extra para jugadores del Monitor Individual encontrados dentro de la General.
+- Rechazo del segundo publicador con el mismo grupo normalizado.
+- Orden General estable y empates reproducibles.
+- Enlace importado eliminado del fragmento después de guardarse.
+- Favorito revocado/caducado visible como no disponible, sin borrar los demás.
+- Sin señal: conserva la última General y las últimas tarjetas visibles.
+- Un visitante sin aplicación puede seguir mirando sin cuenta.
+- La Score Card propia conserva ronda, hoyo, modalidad, scores y escritor oficial.
+
+V353 sólo puede llamarse `100 % automático aprobado` después de superar todos los bancos, Preview, E2E, observabilidad y navegador. El `PASS físico iPhone` continúa siendo una puerta independiente y no se simula.
