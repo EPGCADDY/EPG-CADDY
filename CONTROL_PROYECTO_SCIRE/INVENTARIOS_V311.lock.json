@@ -1,23 +1,23 @@
 {
-  "version": "V351-R8-IOS-FINAL-INTERIM-VISIBLE-ANSWERS",
-  "generatedAt": "2026-08-28T05:27:26Z",
-  "sourceFileCount": 352,
-  "sourceDigest": "c7aed50d375ddf3b6e6d997e6918637fa0b22b85e04d10e30f1689b27c761a18",
+  "version": "V351-R9-MULTI-ALTERNATIVE-GATEWAY-FIRST",
+  "generatedAt": "2026-08-28T08:46:49Z",
+  "sourceFileCount": 353,
+  "sourceDigest": "441f71d7747c23f1fe06317afe84740d311a524b3a72e63531b14468fb029969",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 183532,
-      "sha256": "9b3338a40d0b9168a9fb0c2f867f9baaa86657eda7bae48295f01c1ab0b16605"
+      "size": 184546,
+      "sha256": "378d5f3976c7973111bbad05c7de08325250b5c91b4a14ec8bbeb55d0571f412"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 204741,
-      "sha256": "41f337bc08453124cd671fabd20a9f46eb8c69b8a84f24c9a3a650b1cd09104a"
+      "size": 205983,
+      "sha256": "69d5a94ff4d6dd1bb19f071e8775d3a3de829d9349978f666b0bb9a51919877f"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19260993,
-      "sha256": "789e7dc49f797f4f6116a76a5bd4e8ff264c4ab4970f241fc5b2ccf0a089c1ee"
+      "size": 19260992,
+      "sha256": "192f63bd9481d5555f2fbe1ed80a5645c0308e9ee2568779a3e569c1a0b39458"
     }
   ]
 }

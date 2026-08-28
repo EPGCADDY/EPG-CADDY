@@ -143,7 +143,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V326-R2 RECHAZADA EN IPHONE · V327-R1 APROBADA EN BANCO AUTOMATIZADO Y PREVIEW; VALIDACIÓN FÍSICA PROLONGADA PENDIENTE
+**Estado:** V351-R8 RECHAZADA EN IPHONE · V351-R9 EN CANDIDATO CON ALTERNATIVAS SAFARI Y PUERTA VIVA DE PROVEEDOR; PREVIEW Y VALIDACIÓN FÍSICA PENDIENTES
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -203,6 +203,13 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - En la quinta conversación física el estado quedó escuchando y, después de terminar la pregunta, el turno se cortó sin completar el ciclo. Debe reproducirse y corregirse la recuperación del micrófono en conversaciones consecutivas.
 - El aviso bilateral debe mostrar exactamente `ESCUCHANDO` mientras recibe voz y `RESPONDIENDO` mientras habla, ambos en rojo claramente visible y parpadeante. No debe mostrar `CADDIE RESPONDIENDO` ni textos adicionales en esos dos estados.
 - Por orden del propietario, estas correcciones quedan registradas pero pospuestas hasta continuar la configuración y prueba de las modalidades nuevas. No se consideran implementadas ni aprobadas.
+
+### Corrección activa V351-R9
+
+- La prueba física de R8 volvió a rechazar el dictado multi-hoyo y después confirmó HTTP 503 por `credit_balance_exhausted` en una consulta general visible.
+- Safari deja de limitarse a una hipótesis: R9 evalúa hasta cinco alternativas y sólo escribe cuando existe una única interpretación válida de jugadores, hoyos y Gross.
+- AI Gateway se consulta antes del proveedor directo; saldo agotado no se reintenta y una prueba viva del build exige una respuesta externa real.
+- Clima explícito continúa por Open-Meteo sin consumir IA. Las preguntas generales no se declaran operativas mientras la puerta viva no obtenga HTTP 200.
 
 ### Condiciones de cierre futuro
 

@@ -10,7 +10,7 @@ const sourceBetween=(start,end)=>{
 
 assert.match(html,/gscg-consecutive-hole-voice" content="V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
 assert.match(html,/gscg-hybrid-consecutive-hole-voice" content="V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
-assert.match(html,/gscg-ios-voice-tail" content="V351-R8-FINAL-INTERIM-MERGE-VISIBLE-ANSWERS-20260828"/);
+assert.match(html,/gscg-ios-voice-tail" content="V351-R9-MULTI-ALTERNATIVE-GATEWAY-FIRST-20260828"/);
 assert.match(html,/function parseMultiHoleScoreSegments[\s\S]*?parseHoleListScoreSegments[\s\S]*?parseHoleFirstScoreBlocks/);
 assert.match(html,/const listed=parseHoleListScoreSegments[\s\S]*?if\(listed\?\.ok\)return listed[\s\S]*?const blocked=parseHoleFirstScoreBlocks[\s\S]*?if\(blocked\?\.ok\)return blocked/);
 
@@ -142,6 +142,11 @@ assert.equal(physicalRenders,1,"El fallback debe pintar una sola vez los seis Gr
 assert.deepEqual(JSON.parse(physicalPersisted).players.map(player=>HOLES.map(hole=>player.holes[hole].gross)),[[5,4,5],[5,5,5]]);
 const mergeSource=sourceBetween("function mergeBrowserVoiceSegments","\nfunction stopBrowserVoiceFallback");
 const mergeBrowserVoiceSegments=new Function("normalizeSpeech",`${mergeSource};return mergeBrowserVoiceSegments`)(normalizeSpeech);
+const browserVoiceAlternativeBeams=new Function("normalizeSpeech",`${mergeSource};return browserVoiceAlternativeBeams`)(normalizeSpeech);
+const selectBrowserVoiceCandidate=new Function(
+  "normalizeSpeech","parseSetupTranscript","aiUniversalLooksLikeScoreOrder","parseRoundScoreTranscript","isGeneralConversationIntent","canonicalPlayerNameKey",
+  `${mergeSource};return selectBrowserVoiceCandidate`
+)(normalizeSpeech,()=>({ok:false}),aiUniversalLooksLikeScoreOrder,text=>physicalParser(text,{defaultPlayer:null,defaultHole:3}),()=>false,normalizeSpeech);
 const committed="hoyos tres cuatro y cinco corridos hoyo tres Jaime cinco Gustavo cinco hoyo cuatro Jaime cuatro";
 const interim="hoyo cuatro Jaime cuatro Gustavo cinco hoyo cinco Jaime cinco Gustavo cinco";
 const mergedPhysical=mergeBrowserVoiceSegments(committed,interim);
@@ -152,7 +157,20 @@ assert.equal(lastHealth,"browser_fallback_score_applied");
 assert.equal(physicalRenders,2,"La tanda fragmentada debe pintar una sola transacción adicional");
 assert.deepEqual(JSON.parse(physicalPersisted).players.map(player=>HOLES.map(hole=>player.holes[hole].gross)),[[5,4,5],[5,5,5]]);
 assert.equal(mergeBrowserVoiceSegments("hoyos tres cuatro","hoyos tres cuatro y cinco"),"hoyos tres cuatro y cinco","Un interino acumulado no puede duplicar la parte final");
+const alternativeResults=[
+  Object.assign([{transcript:"hoyos tres cuatro cinco jaime cinco cuatro cinco gustavo cinco cinco"},{transcript:"hoyos tres cuatro y cinco corridos hoyo tres jaime cinco gustavo cinco"}],{isFinal:true}),
+  Object.assign([{transcript:"hoyo cuatro jaime cuatro gustavo cinco hoyo cinco jaime cinco gustavo cinco"}],{isFinal:true})
+];
+const alternativeBeams=browserVoiceAlternativeBeams(alternativeResults);
+assert.ok(alternativeBeams.length>=2,"Safari debe conservar alternativas acotadas, no sólo la hipótesis principal");
+const selectedAlternative=selectBrowserVoiceCandidate("round",alternativeBeams);
+assert.equal(selectedAlternative.ambiguous,false);
+assert.match(selectedAlternative.transcript,/hoyo cinco jaime cinco gustavo cinco$/,"Una alternativa completa y válida debe ganar sobre la principal ambigua");
+const conflictingPhysical=physicalPhrase.replace("hoyo cinco Jaime cinco","hoyo cinco Jaime seis");
+assert.equal(selectBrowserVoiceCandidate("round",[physicalPhrase,conflictingPhysical]).ambiguous,true,"Dos alternativas válidas con Gross distintos deben rechazarse sin adivinar");
 assert.match(html,/recognition\.onend=[^\n]*mergeBrowserVoiceSegments\(browserVoiceTranscript,browserVoiceInterim\)/);
+assert.match(html,/recognition\.maxAlternatives=5/);
+assert.match(html,/browserVoiceCandidates=browserVoiceAlternativeBeams\(event\.results\)/);
 assert.match(html,/processBrowserVoiceTranscript\(context,transcript\)\.catch/);
 
 let visiblePanel=null,queryHealth="",queryCalls=0;
@@ -173,4 +191,4 @@ assert.deepEqual({ok:duplicateMulti.ok,failureCode:duplicateMulti.failureCode},{
 const invalidMulti=physicalParser("hoyos tres cuatro 19 Jaime cuatro cinco seis Gustavo cinco cinco cinco",{defaultPlayer:null,defaultHole:3});
 assert.deepEqual({ok:invalidMulti.ok,failureCode:invalidMulti.failureCode},{ok:false,failureCode:"invalid_hole"},"Un hoyo fuera de 1–18 debe rechazarse");
 
-console.log("PASS V351-R8 · 18 configuraciones · 108 tandas 3-4-5 · 1188 Gross · final+interino Safari unido · respuestas visibles · cero IA para Score");
+console.log("PASS V351-R9 · 18 configuraciones · 108 tandas 3-4-5 · 1188 Gross · 5 alternativas Safari · conflicto rechazado · cero IA para Score");

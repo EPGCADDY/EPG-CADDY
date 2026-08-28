@@ -45,7 +45,7 @@ assert.match(providerPayload.instructions,/fuentes que la aplicación mostrará 
 
 const retryCalls=[];
 const recovered=await requestUniversalResponse({model:"gpt-5.6",input:[{role:"user",content:"Consulta estratégica"}]},{
-  apiKey:"test-key",deadlineMs:Date.now()+5_000,sleepImpl:async()=>{},fetchImpl:async(_url,options)=>{
+  apiKey:"test-key",gatewayToken:null,deadlineMs:Date.now()+5_000,sleepImpl:async()=>{},fetchImpl:async(_url,options)=>{
     const body=JSON.parse(options.body);retryCalls.push(body.model);
     if(retryCalls.length<3)return{ok:false,status:429,headers:{get:name=>name.toLowerCase()==="retry-after"?"0":null},json:async()=>({error:{code:"rate_limit_exceeded"}})};
     return{ok:true,status:200,headers:{get:()=>null},json:async()=>({output:[{type:"message",content:[{type:"output_text",text:"Respuesta recuperada con calibre completo."}]}]})};
@@ -55,7 +55,7 @@ assert.equal(recovered.ok,true,"Dos límites 429 deben recuperarse automáticame
 assert.deepEqual(retryCalls,["gpt-5.6","gpt-5.4","gpt-5.6"],"La recuperación debe alternar el modelo antes del último reintento");
 
 const exhausted=await requestUniversalResponse({model:"gpt-5.6",input:[{role:"user",content:"Consulta estratégica"}]},{
-  apiKey:"test-key",deadlineMs:Date.now()+5_000,sleepImpl:async()=>{},fetchImpl:async()=>({ok:false,status:429,headers:{get:name=>name.toLowerCase()==="retry-after"?"0":null},json:async()=>({error:{code:"rate_limit_exceeded"}})})
+  apiKey:"test-key",gatewayToken:null,deadlineMs:Date.now()+5_000,sleepImpl:async()=>{},fetchImpl:async()=>({ok:false,status:429,headers:{get:name=>name.toLowerCase()==="retry-after"?"0":null},json:async()=>({error:{code:"rate_limit_exceeded"}})})
 });
 assert.equal(exhausted.ok,false);
 assert.equal(exhausted.retryable,true);
@@ -63,17 +63,28 @@ assert.equal(exhausted.status,429);
 
 const gatewayUrls=[],gatewayBodies=[];
 const gatewayRecovered=await requestUniversalResponse({model:"gpt-5.6",input:[{role:"user",content:"Consulta profunda"}],tools:[]},{
-  apiKey:"empty-credit",gatewayToken:"vercel-oidc",deadlineMs:Date.now()+5_000,sleepImpl:async()=>{},fetchImpl:async(url,options)=>{
+  apiKey:"",gatewayToken:"vercel-oidc",deadlineMs:Date.now()+5_000,sleepImpl:async()=>{},fetchImpl:async(url,options)=>{
     gatewayUrls.push(String(url));gatewayBodies.push(JSON.parse(options.body));
     if(String(url).includes("api.openai.com"))return{ok:false,status:429,headers:{get:name=>name.toLowerCase()==="retry-after"?"0":null},json:async()=>({error:{code:"credit_balance_exhausted"}})};
     return{ok:true,status:200,headers:{get:()=>null},json:async()=>({model:"anthropic/claude-opus-5",output:[{type:"message",content:[{type:"output_text",text:"Respuesta del Gateway."}]}]})};
   }
 });
-assert.equal(gatewayRecovered.ok,true,"El saldo agotado de OpenAI debe saltar al Gateway administrado");
+assert.equal(gatewayRecovered.ok,true,"OIDC debe permitir Gateway aun sin una clave directa configurada");
 assert.equal(gatewayRecovered.gateway,true);
-assert.equal(gatewayUrls.filter(url=>url.includes("api.openai.com")).length,3);
-assert.equal(gatewayUrls.at(-1),"https://ai-gateway.vercel.sh/v1/responses");
-assert.deepEqual(gatewayBodies.at(-1).providerOptions.gateway.models,["openai/gpt-5.6-sol","anthropic/claude-opus-5","google/gemini-3.1-pro-preview"]);
+assert.equal(gatewayUrls.filter(url=>url.includes("api.openai.com")).length,0,"Con OIDC el Gateway debe responder antes de gastar intentos directos");
+assert.equal(gatewayUrls[0],"https://ai-gateway.vercel.sh/v1/responses");
+assert.deepEqual(gatewayBodies[0].providerOptions.gateway.models,["openai/gpt-5.6-sol","anthropic/claude-opus-5","google/gemini-3.1-pro-preview"]);
+
+const failoverUrls=[];
+const directAfterGateway=await requestUniversalResponse({model:"gpt-5.6",input:[{role:"user",content:"Consulta profunda"}]},{
+  apiKey:"direct-key",gatewayToken:"vercel-oidc",deadlineMs:Date.now()+5_000,sleepImpl:async()=>{},fetchImpl:async(url)=>{
+    failoverUrls.push(String(url));
+    if(String(url).includes("ai-gateway"))return{ok:false,status:503,headers:{get:()=>null},json:async()=>({error:{code:"gateway_unavailable"}})};
+    return{ok:true,status:200,headers:{get:()=>null},json:async()=>({output:[{type:"message",content:[{type:"output_text",text:"Respuesta directa recuperada."}]}]})};
+  }
+});
+assert.equal(directAfterGateway.ok,true,"Una falla del Gateway debe conservar el proveedor directo como recuperación");
+assert.deepEqual(failoverUrls,["https://ai-gateway.vercel.sh/v1/responses","https://api.openai.com/v1/responses"]);
 
 const exactStrategicQuestion="Analiza si conviene atacar una bandera a 140 yardas con viento de frente, agua corta y lie húmedo. Dame conclusión, mecanismo, riesgos, límites, alternativa y acciones concretas.";
 assert.equal(isGolfStrategyQuery(exactStrategicQuestion),true);

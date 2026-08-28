@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V351-R7 RECHAZADA EN IPHONE A LAS 23:15 DEL 27 DE AGOSTO: la tanda multi-hoyo terminó en `ambiguous_score`; el hoyo individual posterior sí se aplicó. Dos preguntas generales/clima recibieron HTTP 200, pero no mostraron respuesta. V351-R8 conserva la cola interina de Safari y abre visiblemente AI UNIVERSAL para las preguntas del micrófono. Requiere Preview y nueva prueba física · `PEND-VOZ-003`
+**Estado:** V351-R8 RECHAZADA EN IPHONE A LAS 02:29 DEL 28 DE AGOSTO: la tanda multi-hoyo terminó en `ambiguous_score`; el hoyo individual posterior sí se aplicó y la consulta general visible terminó en HTTP 503 por `credit_balance_exhausted`. V351-R9 conserva hasta cinco alternativas de Safari, sólo acepta una semántica única y usa AI Gateway antes del proveedor directo. Requiere puerta viva, Preview y nueva prueba física · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -440,3 +440,11 @@ R7 procesaba `(final || interim)` al terminar el reconocimiento de Safari. En fr
 Las consultas de las 05:16:05 y 05:16:15 UTC sí obtuvieron HTTP 200 de `/api/universal-ai`; no fueron un fallo de clima ni de servidor. El defecto era de presentación: AI UNIVERSAL permanecía oculto y la respuesta dependía de audio. R8 abre el panel visible sin levantar el teclado, conserva el texto aunque iOS no reproduzca audio y registra únicamente `browser_fallback_query_answered` o `browser_fallback_query_failed`, sin pregunta ni respuesta.
 
 Producción permanece intacta; V351-R8 requiere auditoría integral, Preview y PASS físico iPhone de la tanda 3→4→5 y de una pregunta de clima.
+
+## V351-R9-MULTI-ALTERNATIVE-GATEWAY-FIRST · hipótesis segura y proveedor vivo · 28 de agosto de 2026
+
+R8 volvió a registrar `ambiguous_score` en la tanda larga y sólo aplicó el intento individual. El reconocimiento pedía `maxAlternatives=1`; una única hipótesis imperfecta llegaba al parser aunque Safari dispusiera de alternativas. R9 solicita hasta cinco, construye como máximo 16 combinaciones y sólo selecciona una cuando las alternativas válidas producen exactamente los mismos jugadores, hoyos y Gross. Dos resultados válidos distintos bloquean toda escritura.
+
+La consulta posterior llegó a `/api/universal-ai`, pero el proveedor directo devolvió saldo agotado. R9 intenta primero AI Gateway con tres modelos, conserva el proveedor directo como recuperación, clasifica `credit_balance_exhausted` como no reintentable y agrega `test-v351-r9-live-universal-ai.mjs`: el build sólo puede aprobar la ruta general cuando obtiene HTTP 200 real. Las consultas explícitas de clima continúan directas a Open-Meteo y no consumen IA.
+
+Producción permanece intacta; R9 no se aprueba hasta puerta viva, Preview READY y PASS físico iPhone del dictado corrido más una pregunta general.

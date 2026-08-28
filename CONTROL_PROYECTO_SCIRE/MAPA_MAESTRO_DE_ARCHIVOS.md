@@ -865,3 +865,16 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-032 separa el rechazo real del Score del HTTP 200 real de las dos consultas que no se mostraron. |
 | `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Rechaza R7, registra R8 y mantiene Producción intacta hasta PASS físico. |
 | `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R8-IOS-FINAL-INTERIM-VISIBLE-ANSWERS`. |
+
+## V351-R9-MULTI-ALTERNATIVE-GATEWAY-FIRST · recuperación verificable
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | Solicita cinco alternativas de Safari, construye combinaciones acotadas y sólo permite una interpretación única antes del escritor oficial. |
+| `api/universal-ai.js` | Usa AI Gateway primero, detiene inmediatamente saldo agotado y conserva la ruta directa como respaldo. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Prueba una hipótesis principal inválida, una alternativa válida y el rechazo de dos alternativas con Gross diferentes. |
+| `test-v335-response-caliber.mjs` | Prueba Gateway primero, failover directo y crédito agotado no reintentable. |
+| `test-v351-r9-live-universal-ai.mjs` | Exige una respuesta externa real antes de aprobar un build con credenciales. |
+| `audit-project.mjs` | Ejecuta la puerta viva R9 dentro de la auditoría maestra. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-033 rechaza R8 con horas y códigos privados. |
+| `COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, ambos ROADMAP y `scripts/rebuild-inventory-pdfs.py` | Registran y sellan el mismo candidato R9. |

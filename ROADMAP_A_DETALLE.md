@@ -1689,3 +1689,20 @@ Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R7 no queda
 | `MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAP e inventario lock | Registro y sello del mismo corte. | Candados documental, ROADMAP e inventario en PASS. |
 
 Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R8 no queda aprobada hasta auditoría, Preview y PASS físico de la tanda 3→4→5 más una pregunta de clima.
+
+## V351-R9 · rechazo R8, alternativas Safari y Gateway primero · 28 de agosto de 2026
+
+| Archivo exacto | Cambio V351-R9 | Evidencia exigida |
+|---|---|---|
+| `index-grupal.html` | Meta/build R9; `maxAlternatives=5`, haz máximo 16 y selección por firma semántica única. | Alternativa válida recuperada; conflicto de Gross rechazado; cero IA para Score. |
+| `api/universal-ai.js` | Gateway con tres modelos antes del proveedor directo; saldo agotado no reintentable. | Gateway 200, failover directo y ausencia de tres reintentos inútiles. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Agrega hipótesis principal ambigua, alternativa completa y conflicto negativo. | 108 tandas, 1,188 Gross y nuevas fronteras de alternativas. |
+| `test-v335-response-caliber.mjs` | Actualiza orden Gateway→directo y recuperación inversa. | Modelos actuales y respuesta sustantiva conservados. |
+| `test-v351-r9-live-universal-ai.mjs` | Llamada real mínima sin contenido privado. | HTTP 200 obligatorio cuando el entorno aporta credenciales. |
+| `audit-project.mjs` | Incorpora la puerta viva R9. | El build no puede aprobar una AI Universal sin proveedor real. |
+| `scripts/rebuild-inventory-pdfs.py` | Corte `V351-R9-MULTI-ALTERNATIVE-GATEWAY-FIRST`. | Tres PDF y sello actualizados. |
+| `COLA_DE_PENDIENTES.md` | Actualiza el estado real de `PEND-VOZ-003` y separa clima directo de respuestas generales externas. | R8 rechazada; R9 pendiente de puerta viva y prueba física. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-033. | R8 rechazada con deployment, horas, código y control permanente. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAP e inventario lock | Registro doble del candidato. | Candados documental, ROADMAP e inventario en PASS. |
+
+Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R9 no queda aprobada hasta puerta viva, Preview READY y PASS físico iPhone.
