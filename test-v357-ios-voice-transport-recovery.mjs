@@ -6,7 +6,7 @@ const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
 assert.match(html,/gscg-build" content="V365-MULTIPROVIDER-MALE-VOICE-20260828"/);
-assert.match(html,/gscg-ios-voice-recovery" content="V362-ONE-TOUCH-WATCHDOG-MALE-FALLBACK-20260828"/);
+assert.match(html,/gscg-ios-voice-recovery" content="V363-STOP-GUARD-NO-STUCK-LISTENING-20260828"/);
 assert.match(worker,/const CACHE_NAME="gscg-mobile-v365-multiprovider-male-voice"/);
 
 const gestureStart=html.indexOf("function gestureSafeBrowserVoicePreferred");

@@ -1427,4 +1427,8 @@ Tráfico conserva GPS mundial y cualquier dirección libre. Sólo expande dos al
 
 ## V365 · voz masculina multiproveedor · 28 de agosto de 2026
 
-La prueba viva V364 aprobó AI UNIVERSAL 200 y la consulta corta El Pulté Golf → Pradera Concepción 200 —41 min, 15 km y 5 min de demora—, pero `openai/tts-1` repitió HTTP 400. V365 conserva Cedar directo, intenta Onyx/OpenAI primero y, ante rechazo, intenta `spacexai/grok-tts` con Rex masculino, ambos presentes en el catálogo vivo del AI Gateway. Sólo audio real devuelve 200 y la cabecera `X-GSCG-Voice` identifica Cedar, Onyx o Rex. Producción permanece intacta; Preview real y escucha física iPhone siguen obligatorios.
+La prueba viva V364 aprobó AI UNIVERSAL 200 y la consulta corta El Pulté Golf → Pradera Concepción 200 —41 min, 15 km y 5 min de demora—, pero `openai/tts-1` repitió HTTP 400. V365 conserva Cedar directo, intenta Onyx/OpenAI primero y, ante rechazo, intenta `spacexai/grok-tts` con Rex masculino, ambos presentes en el catálogo vivo del AI Gateway. Sólo audio real devuelve 200 y la cabecera `X-GSCG-Voice` identifica Cedar, Onyx o Rex. `test-v365-multiprovider-male-voice.mjs` exige esa cadena, comprueba el audio MP3 real y bloquea cualquier respuesta falsa. Producción permanece intacta; Preview real y escucha física iPhone siguen obligatorios.
+
+### Integración autorizada de `main` Intocables en V365
+
+La línea paralela `4e60842` se integra sin descartar V363–V365: incorpora `ACTIVE_ROUND_KEY`, reportes Match con nombres/posición, cierre Normal intacto, safe areas, aislamiento de Registro/LIVE/instalación y guard Safari de 1.2 s aunque falte `onend`. `Intocables/` y los bancos de comportamiento grabado se ejecutan junto con OIDC, tráfico exacto y voz multiproveedor. La base protegida sigue siendo ancestro de `main`; ningún cambio revierte Producción. La entrega exige tres pruebas externas consecutivas y después iPhone físico.

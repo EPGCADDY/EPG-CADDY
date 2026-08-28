@@ -6,9 +6,9 @@ const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
 assert.match(html,/gscg-build" content="V365-MULTIPROVIDER-MALE-VOICE-20260828"/);
-assert.match(html,/gscg-ios-voice-recovery" content="V362-ONE-TOUCH-WATCHDOG-MALE-FALLBACK-20260828"/);
+assert.match(html,/gscg-ios-voice-recovery" content="V363-STOP-GUARD-NO-STUCK-LISTENING-20260828"/);
 assert.match(worker,/gscg-mobile-v365-multiprovider-male-voice/);
-assert.match(html,/build:"V362"/);
+assert.match(html,/build:"V363"/);
 
 const oneTouchStart=html.indexOf("let lastAiUniversalGestureAt=0");
 const oneTouchEnd=html.indexOf("\n$(\"openGolfRules\")",oneTouchStart);

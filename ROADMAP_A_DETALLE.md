@@ -1844,3 +1844,12 @@ La aceptación exige en el mismo Preview: consulta general 200 mediante Gateway 
 | `api/voice-speech.js` | Cedar directo → Onyx/OpenAI → Rex/xAI; sólo éxito produce MP3 y cabecera de voz real. | Un proveedor 400 no silencia al segundo proveedor masculino ni cae en voz femenina. |
 | `index-grupal.html`, `service-worker.js` | Identifica Rex/Onyx/Cedar y renueva caché V365. | Velocidad 1.15, un toque, score inmediato y cierre hablado permanecen. |
 | `test-v365-multiprovider-male-voice.mjs`, auditoría y workflow | Simula Cedar 429 + Onyx 400 + Rex 200 y exige audio/cabecera Rex. | Preview real e iPhone físico siguen separados del banco. |
+
+## INTEGRACIÓN V365 + INTOCABLES
+
+| Archivo exacto | Integración | Candado |
+|---|---|---|
+| `index-grupal.html`, `live-control.js` | Ronda canónica, Match con nombres, Normal intacta, safe area y guard Safari; conserva OIDC/voz/tráfico V365. | Cerrar/recargar no borra; sólo `INICIAR RONDA` sustituye. |
+| `Intocables/`, `test-v363-intocables-behavior.mjs`, `test-v363-recorded-mobile-behavior.mjs` | INT-01…INT-04 y reproducción del cierre sin `onend`. | Un FAIL bloquea build y entrega. |
+| evidencia `V363_PRUEBAS_COMPORTAMIENTO/` | Capturas FAIL, reporte, póster y MP4 automático inventariados. | Evidencia automática no sustituye iPhone físico. |
+| gates V363–V365 | OIDC, privacidad Routes, destino local, Onyx/Rex y regresión histórica. | Tres pruebas externas consecutivas antes del enlace. |

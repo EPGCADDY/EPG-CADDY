@@ -9,8 +9,8 @@ const speech=fs.readFileSync("api/voice-speech.js","utf8");
 const audit=fs.readFileSync("audit-project.mjs","utf8");
 
 assert.match(html,/V365-MULTIPROVIDER-MALE-VOICE-20260828/);
-assert.match(html,/V362-ONE-TOUCH-WATCHDOG-MALE-FALLBACK-20260828/);
-assert.match(html,/V362-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828/);
+assert.match(html,/V363-STOP-GUARD-NO-STUCK-LISTENING-20260828/);
+assert.match(html,/V363-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828/);
 assert.match(worker,/gscg-mobile-v365-multiprovider-male-voice/);
 for(const file of ["test-v358-ios-score-universal-physical-recovery.mjs","test-v362-physical-voice-recovery.mjs"])assert.ok(audit.includes(file),file);
 
@@ -31,7 +31,7 @@ const watchdogStart=html.indexOf("function scheduleBrowserVoiceFirstResultTimeou
 const watchdogEnd=html.indexOf("\nfunction browserVoiceCombinedTranscript",watchdogStart);
 const watchdog=html.slice(watchdogStart,watchdogEnd);
 assert.match(watchdog,/browser_fallback_no_result_timeout/);
-assert.match(watchdog,/recognition\.stop\(\)/);
+assert.match(watchdog,/stopBrowserVoiceRecognitionSafely\(recognition,context\)/);
 const begin=html.slice(html.indexOf("function beginBrowserVoiceRecognition"),html.indexOf("\nfunction startBrowserVoiceFallback"));
 assert.match(begin,/onstart=[\s\S]*scheduleBrowserVoiceFirstResultTimeout/);
 assert.match(begin,/onresult=[\s\S]*clearBrowserVoiceFirstResultTimer/);

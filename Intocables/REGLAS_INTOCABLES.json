@@ -1,0 +1,10 @@
+{
+  "version": "V365",
+  "logic": "all",
+  "rules": [
+    {"id": "INT-01", "name": "ronda_activa_persistente", "mandatory": true},
+    {"id": "INT-02", "name": "match_play_con_nombres_y_ronda_normal_intacta", "mandatory": true},
+    {"id": "INT-03", "name": "voz_universal_y_cierres_v362_intactos", "mandatory": true},
+    {"id": "INT-04", "name": "cualquier_falla_bloquea_version", "mandatory": true}
+  ]
+}

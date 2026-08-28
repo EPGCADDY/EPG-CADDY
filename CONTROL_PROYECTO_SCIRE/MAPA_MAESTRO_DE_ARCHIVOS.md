@@ -969,3 +969,12 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Firma/caché V363 en bancos históricos. | Cambia sólo identificación; cada comportamiento histórico continúa obligatorio. |
 | `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | RC-033, estado y trazabilidad. | No confunde banco con proveedor vivo o iPhone físico. |
 | `scripts/rebuild-inventory-pdfs.py`, `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Constructor e inventario final V363. | Se reconstruye y sella después de toda modificación. |
+
+## INTEGRACIÓN INTOCABLES + V365
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `Intocables/`, `test-v363-intocables-behavior.mjs` | Ronda canónica y frontera Match/Normal. | INT-01…INT-04 AND. |
+| `test-v363-recorded-mobile-behavior.mjs`, `scripts/v363-silent-speech-recognition.js`, evidencia RC035 | Safe area, aislamiento modal y guard Safari. | Un FAIL bloquea entrega. |
+| `api/_lib/vercel-gateway-auth.js`, `api/_lib/traffic.js`, `api/universal-ai.js`, `api/voice-speech.js` | OIDC, tráfico mundial/local exacto y Cedar→Onyx→Rex. | Secretos privados y sólo proveedores reales. |
+| bancos V363–V365, auditoría y workflow | Regresión completa acumulada. | Tres pruebas externas y prueba física separadas. |

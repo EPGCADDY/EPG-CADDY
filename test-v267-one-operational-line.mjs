@@ -15,7 +15,9 @@ assert.match(stable,/applySetupChanges=applyToActiveRegistration/);
 assert.match(html,/stableford=readStoredRound\(STABLEFORD_ACTIVE_KEY\)/);
 assert.match(html,/function latestStoredRound\(modeHint\)/);
 assert.match(html,/value\?\.configured&&mode\(value\)===modeHint/);
-assert.match(html,/function loadRound\(\)\{const candidates=\[latestStoredRound\("general"\),latestStoredRound\("match_play"\)\]/);
+assert.match(html,/function loadRound\(\)\{\s*const canonical=readStoredRound\(ACTIVE_ROUND_KEY\)/);
+assert.match(html,/if\(canonical\?\.configured&&canonical\.mode!=="stableford"&&canonical\.players\?\.length\)return canonical/);
+assert.match(html,/const candidates=\[latestStoredRound\("general"\),latestStoredRound\("match_play"\)\]/);
 
 // Todas las combinaciones de Score Card comparten el mismo control manual,
 // las mismas celdas editables y el mismo escritor usado por la voz.

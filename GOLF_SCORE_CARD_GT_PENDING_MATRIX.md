@@ -407,6 +407,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 **Voz multiproveedor V365:** V364 confirmó AI y tráfico 200, pero `openai/tts-1` continuó en 400. V365 conserva Cedar y Onyx, y agrega Rex masculino por `spacexai/grok-tts` como segundo proveedor Gateway vivo. Sólo un MP3 real autoriza el salto a prueba física iPhone; Producción permanece intacta.
 
+**Intocables integrado:** `ACTIVE_ROUND_KEY` protege reapertura hasta `INICIAR RONDA`; Match Play mantiene nombre/posición y Ronda Normal Gross/Neto/par; safe area, modales y cierre Safari sin `onend` quedan en gates bloqueantes. V365 no se entrega hasta tres rondas externas de IA, tráfico y audio masculino, más prueba física iPhone.
+
 La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` y E2E de 20 grupos/80 jugadores quedaron PASS, con cero errores de runtime y limpieza Neon confirmada. V353 no requiere migración porque reutiliza el esquema V352. La inspección visual y la prueba física iPhone permanecen abiertas y Producción no se monta. La estabilización física de voz continúa registrada. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
 
 ## Corte V345-ICONS · estado verificable

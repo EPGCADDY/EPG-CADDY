@@ -7,7 +7,7 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 const audit=fs.readFileSync("audit-project.mjs","utf8");
 
 assert.match(html,/gscg-build" content="V365-MULTIPROVIDER-MALE-VOICE-20260828"/);
-assert.match(html,/gscg-progressive-voice" content="V362-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828"/);
+assert.match(html,/gscg-progressive-voice" content="V363-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828"/);
 assert.match(worker,/CACHE_NAME="gscg-mobile-v365-multiprovider-male-voice"/);
 for(const test of ["test-v357-synchronized-progressive-voice.mjs","test-v359-ios-score-parser-recovery.mjs","test-v361-synchronized-voice.mjs"])assert.ok(audit.includes(test),test);
 

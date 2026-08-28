@@ -48,7 +48,7 @@ jobs:
         run: node test-v357-synchronized-progressive-voice.mjs
 
       - name: Block synchronized parser, persistence and male-voice regressions
-        run: node test-v359-ios-score-parser-recovery.mjs && node test-v361-synchronized-voice.mjs && node test-v362-physical-voice-recovery.mjs && node test-v363-external-service-recovery.mjs && node test-v364-voice-traffic-live-recovery.mjs && node test-v365-multiprovider-male-voice.mjs
+        run: npm run intocables:gate && npm run behavior:recorded-gate && node test-v359-ios-score-parser-recovery.mjs && node test-v361-synchronized-voice.mjs && node test-v362-physical-voice-recovery.mjs && node test-v363-external-service-recovery.mjs && node test-v364-voice-traffic-live-recovery.mjs && node test-v365-multiprovider-male-voice.mjs
 
       - name: Preserve approved voice behavior V354 through V356
         run: node test-v354-voice-fallback.mjs && node test-v355-ios-audio-dictation.mjs && node test-v356-voice-only-cedar-quality.mjs
