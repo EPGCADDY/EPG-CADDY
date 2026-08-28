@@ -143,7 +143,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V351-R10 RECHAZADA EN IPHONE · V351-R11 EN CANDIDATO CON REINICIO ANTE `ONEND` NATURAL, FRAGMENTOS ACUMULADOS Y PREGUNTA COMPLETA; PREVIEW Y VALIDACIÓN FÍSICA PENDIENTES
+**Estado:** V351-R11 RECHAZADA EN IPHONE · V351-R12 EN CANDIDATO CON HIPÓTESIS PRINCIPAL AUTORITATIVA, INSTANCIA NUEVA Y RECUPERACIÓN ACOTADA DE `AUDIO-CAPTURE`; PREVIEW Y VALIDACIÓN FÍSICA PENDIENTES
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -226,6 +226,14 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - `continuous=true` no garantiza continuidad en iOS. Cuando Safari emite un `onend` natural antes de los tres segundos, R11 conserva el bloque y reinicia la captura sin cerrar la orden.
 - Las hipótesis de todas las sesiones se acumulan. Score elige únicamente la interpretación válida con mayor cantidad de jugador+hoyo; una contradicción completa continúa bloqueada. El Caddy recibe el texto general más completo, no el primer fragmento corto.
 - `test-v351-r11-ios-natural-end-recovery.mjs` simula dos sesiones Safari y exige un solo envío final. Producción permanece intacta hasta Preview READY y PASS físico iPhone.
+
+### Corrección activa V351-R12
+
+- La prueba física rechazó R11: Registro y un hoyo individual se aplicaron; la tanda multi-hoyo terminó en `ambiguous_score` y el siguiente intento mostró que Safari había perdido la captura del micrófono.
+- R11 trataba las cinco alternativas de Safari como votos equivalentes. R12 acepta la hipótesis principal cuando forma una orden completa y determinista; las alternativas quedan sólo como recuperación. Sin principal identificada, dos scores completos discrepantes continúan bloqueados.
+- Cada `onend` natural y cada recuperación de `audio-capture` usa una instancia nueva de reconocimiento. El transporte libera manejadores anteriores, reintenta como máximo dos veces y nunca queda indefinidamente en `RESPONDIENDO`.
+- Cliente y servidor aceptan el mismo catálogo de eventos de inicio, reinicio, error y recuperación. Sólo salen códigos cerrados; nunca transcripción, jugadores, scores ni ubicación.
+- `test-v351-r12-ios-primary-transport-recovery.mjs`, el banco de 1,188 Gross y la simulación `audio-capture → instancia nueva → consulta general` quedan obligatorios. Producción permanece intacta hasta Preview READY y PASS físico iPhone.
 
 ### Condiciones de cierre futuro
 

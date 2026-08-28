@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V351-R10 RECHAZADA EN IPHONE: Registro y un hoyo individual funcionaron, pero `onend` natural de Safari cerró el dictado antes de completar multihoyos o la pregunta general. V351-R11 reinicia la captura, conserva fragmentos entre sesiones y selecciona sólo el candidato completo. Requiere Preview y nueva prueba física · `PEND-VOZ-003`
+**Estado:** V351-R11 RECHAZADA EN IPHONE: Registro y un hoyo individual funcionaron, pero las alternativas secundarias anularon el multihoyos con `ambiguous_score` y después Safari devolvió `audio-capture`. V351-R12 prioriza la hipótesis principal completa, crea una instancia nueva y recupera el transporte de forma acotada. Requiere Preview y nueva prueba física · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -468,3 +468,11 @@ R10 configuró `continuous=true`, pero Safari/iOS puede cerrar internamente el r
 R11 distingue cierre natural de cierre por silencio o segundo toque. Si existe voz pendiente, compromete el fragmento interino, reinicia el reconocimiento y mantiene la misma orden hasta tres segundos reales de silencio. Las alternativas se acumulan entre sesiones; Score prioriza la interpretación válida con más pares jugador+hoyo y conserva el rechazo si dos tandas completas discrepan. Para Caddy/AI elige la pregunta completa más larga.
 
 `test-v351-r11-ios-natural-end-recovery.mjs` reproduce `resultado → onend natural → reinicio → resultado → silencio`, exige una sola consulta completa y telemetría privada del reinicio. `test-v351-r6-consecutive-holes-voice-score.mjs` mantiene 18 configuraciones, 108 tandas, 1,188 Gross y cero IA para Score. Producción permanece intacta hasta Preview READY y PASS físico iPhone.
+
+## V351-R12-IOS-PRIMARY-TRANSPORT-RECOVERY · principal autoritativa y captura recuperable · 28 de agosto de 2026
+
+Los logs R11 muestran Registro aplicado, score individual aplicado a las 13:39:43 UTC, tanda rechazada como `ambiguous_score` a las 13:40:06 y una nueva apertura a las 13:40:19 sin evento posterior. La captura física terminó con “NO HAY UN MICRÓFONO DISPONIBLE”. R11 no enviaba al servidor los eventos de error que habrían identificado esa frontera.
+
+R12 identifica por separado la hipótesis principal `result[i][0]`: si forma una orden completa y determinista, una alternativa secundaria no puede vetarla. Las alternativas sólo recuperan una principal inválida; si dos recuperaciones completas discrepan, la tanda sigue sin escribirse. Tras `onend` o `audio-capture`, se liberan manejadores y se abre una instancia nueva; el error físico admite como máximo dos reintentos.
+
+`test-v351-r12-ios-primary-transport-recovery.mjs` verifica principal contra alternativa conflictiva, rechazo seguro sin principal y telemetría privada; `test-v351-r11-ios-natural-end-recovery.mjs` reproduce `onend` y `audio-capture` con instancias nuevas y una sola pregunta general; el banco multi-hoyo conserva 1,188 Gross y cero IA para Score. Producción permanece intacta hasta Preview READY y PASS físico iPhone.

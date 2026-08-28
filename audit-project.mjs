@@ -62,7 +62,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v345-home-icons.mj
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v351-r1-hole1-voice-score-render.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v351-r5-voice-score-matrix.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v351-r6-consecutive-holes-voice-score.mjs');
-checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v351-r11-ios-natural-end-recovery.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v351-r11-ios-natural-end-recovery.mjs','test-v351-r12-ios-primary-transport-recovery.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v351-r9-live-universal-ai.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v329-skins.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v330-side-games.mjs');

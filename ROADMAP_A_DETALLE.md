@@ -1736,3 +1736,19 @@ Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R10 no qued
 | `COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAP e inventario lock | Registro y sello del mismo candidato. | Candados documental, ROADMAP e inventario en PASS. |
 
 Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R11 no queda aprobada hasta Preview READY y PASS físico iPhone de multihoyos y una pregunta general.
+
+## V351-R12 · rechazo R11, principal Safari y transporte recuperable · 28 de agosto de 2026
+
+| Archivo exacto | Cambio V351-R12 | Evidencia exigida |
+|---|---|---|
+| `index-grupal.html` | Meta/build R12; distingue la hipótesis principal de alternativas, crea instancias nuevas ante `onend`/`audio-capture`, limita reintentos y libera manejadores. | Principal completa aplicada aunque una alternativa numérica discrepe; captura recuperada sin duplicar consulta ni escritura. |
+| `api/voice-health.js` | Iguala eventos cliente/servidor y acepta sólo códigos cerrados de transporte. | Inicio, error, reinicio y recuperación observables sin transcripción, nombres, scores ni ubicación. |
+| `test-v351-r12-ios-primary-transport-recovery.mjs` | Inyecta principal correcta, alternativa conflictiva y prueba privacidad de cada evento nuevo. | Principal autoritativa; contradicción sin principal bloqueada; `audio_capture` conservado como código. |
+| `test-v351-r11-ios-natural-end-recovery.mjs` | Sustituye reinicio de la misma instancia por instancia nueva y reproduce `audio-capture → reintento → pregunta general`. | Dos consultas completas enviadas una sola vez; recuperación observable. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Mantiene 18 configuraciones y agrega el caso principal versus alternativa secundaria. | 108 tandas, 1,188 Gross, una transacción por tanda y cero IA para Score. |
+| `audit-project.mjs` | Incorpora el banco R12. | La auditoría maestra no puede omitir alternativa conflictiva, transporte ni privacidad. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-036. | R11 rechazada con deployment, horas, escape y control permanente. |
+| `COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAP | Registran el mismo alcance R12. | `roadmap-gate` y controles documentales en PASS. |
+| `scripts/rebuild-inventory-pdfs.py`, tres PDF y `INVENTARIOS_V311.lock.json` | Corte `V351-R12-IOS-PRIMARY-TRANSPORT-RECOVERY`. | Inventario y sello PASS sobre el árbol exacto. |
+
+Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R12 no queda aprobada hasta Preview READY y PASS físico iPhone de Registro, multihoyos y una pregunta general.

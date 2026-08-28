@@ -1,8 +1,9 @@
 import {handleAppPreflight,isAllowedAppOrigin} from "./_lib/cors.js";
 
-const ALLOWED_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_transcript_ready","browser_fallback_error","browser_fallback_start_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_query_answered","browser_fallback_query_failed"]);
+const ALLOWED_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_restarted","browser_fallback_restart_failed","browser_fallback_error","browser_fallback_start_failed","browser_fallback_retry_scheduled","browser_fallback_retry_started","browser_fallback_retry_failed","browser_fallback_transcript_ready","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_query_answered","browser_fallback_query_failed"]);
 const ALLOWED_TOOLS=new Set(["get_current_weather","get_live_traffic","search_live_web"]);
 const ALLOWED_SCORE_FAILURES=new Set(["invalid_hole","ambiguous_hole","missing_hole","ambiguous_score","missing_score","missing_player","duplicate_score","unexpected_tokens","writer_rejected","parser_rejected"]);
+const ALLOWED_TRANSPORT_FAILURES=new Set(["audio_capture","network","no_speech","not_allowed","aborted","other"]);
 
 function boundedInteger(value,max){
   const number=Number(value);
@@ -23,7 +24,8 @@ export function sanitizeVoiceHealth(body={}){
     ...(typeof body.hasResponseId==="boolean"?{hasResponseId:body.hasResponseId}:{}),
     ...(typeof body.followupCreated==="boolean"?{followupCreated:body.followupCreated}:{}),
     ...(typeof body.followupAudioStarted==="boolean"?{followupAudioStarted:body.followupAudioStarted}:{}),
-    ...(ALLOWED_SCORE_FAILURES.has(String(body.scoreFailure||""))?{scoreFailure:String(body.scoreFailure)}:{})
+    ...(ALLOWED_SCORE_FAILURES.has(String(body.scoreFailure||""))?{scoreFailure:String(body.scoreFailure)}:{}),
+    ...(ALLOWED_TRANSPORT_FAILURES.has(String(body.transportFailure||""))?{transportFailure:String(body.transportFailure)}:{})
   };
 }
 

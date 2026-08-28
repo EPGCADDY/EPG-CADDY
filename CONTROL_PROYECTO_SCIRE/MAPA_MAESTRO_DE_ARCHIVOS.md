@@ -902,3 +902,16 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `audit-project.mjs` | Incorpora la regresión R11 a la auditoría maestra. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-035 rechaza R10 y registra causa, escape, control y evidencia. |
 | `COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, ambos ROADMAP y `scripts/rebuild-inventory-pdfs.py` | Registran y sellan el mismo candidato R11. |
+
+## V351-R12-IOS-PRIMARY-TRANSPORT-RECOVERY · principal autoritativa y captura nueva
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | Entrega la hipótesis principal completa al parser, conserva alternativas sólo para recuperación, libera la instancia anterior y recupera `audio-capture` de forma acotada. |
+| `api/voice-health.js` | Mantiene el mismo catálogo de eventos que el cliente y limita fallos de transporte a códigos privados cerrados. |
+| `test-v351-r12-ios-primary-transport-recovery.mjs` | Bloquea la regresión principal versus alternativa, el conflicto seguro y la privacidad de cada evento de transporte. |
+| `test-v351-r11-ios-natural-end-recovery.mjs` | Simula instancias nuevas tras `onend` y `audio-capture`, conserva fragmentos y exige una sola consulta completa. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Conserva 108 tandas, 1,188 Gross, todas las configuraciones de jugadores/modalidades y cero IA para Score. |
+| `audit-project.mjs` | Incorpora la regresión R12 a la auditoría maestra. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-036 rechaza R11 y fija causa, escape, evidencia y control permanente. |
+| `COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, ambos ROADMAP y `scripts/rebuild-inventory-pdfs.py` | Registran y sellan el mismo candidato R12. |
