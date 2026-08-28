@@ -4,7 +4,8 @@ const MAX_SPEECH_TEXT=4000;
 const VOICE="cedar";
 const GATEWAY_VOICE="onyx";
 const SPEED=1.15;
-const GATEWAY_SPEECH_MODEL="openai/tts-1-hd";
+const DIRECT_FALLBACK_MODEL="tts-1";
+const GATEWAY_SPEECH_MODEL="openai/tts-1";
 const INSTRUCTIONS="Locutor masculino adulto, serio, sobrio y profesional. Español internacional neutro, sin acento regional marcado, sin Spanglish, sin tono comercial ni entusiasmo artificial. Dicción clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";
 
 export function sanitizeSpeechRequest(body={}){
@@ -24,8 +25,12 @@ export function cedarSpeechPayload(text,language="es-GT"){
   };
 }
 
-export function cedarGatewayPayload(text){
-  return{text,voice:GATEWAY_VOICE,speed:SPEED,outputFormat:"mp3"};
+export function onyxSpeechPayload(text){
+  return{model:DIRECT_FALLBACK_MODEL,voice:GATEWAY_VOICE,speed:SPEED,response_format:"mp3",input:text};
+}
+
+export function cedarGatewayPayload(text,language="es-GT"){
+  return{text,voice:GATEWAY_VOICE,speed:SPEED,outputFormat:"mp3",language};
 }
 
 async function requestDirectSpeech(apiKey,payload,signal){
@@ -61,12 +66,16 @@ export default async function handler(req,res){
     const {text,language}=sanitizeSpeechRequest(body);
     if(text.length<2)return res.status(422).json({ok:false,error:"TEXT_REQUIRED"});
     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),45_000);
-    let upstream,fromGateway=false;
+    let upstream,fromGateway=false,deliveredVoice=VOICE;
     try{
       upstream=await requestDirectSpeech(apiKey,cedarSpeechPayload(text,language),controller.signal);
+      if(!upstream?.ok&&apiKey){
+        console.warn("cedar speech direct fallback",JSON.stringify({status:upstream?.status||0,next:"direct_onyx"}));
+        upstream=await requestDirectSpeech(apiKey,onyxSpeechPayload(text),controller.signal);deliveredVoice=GATEWAY_VOICE;
+      }
       if(!upstream?.ok&&gatewayToken){
-        console.warn("cedar speech direct fallback",JSON.stringify({status:upstream?.status||0}));
-        upstream=await requestGatewaySpeech(gatewayToken,text,language,controller.signal);fromGateway=true;
+        console.warn("cedar speech provider fallback",JSON.stringify({status:upstream?.status||0,next:"gateway_onyx"}));
+        upstream=await requestGatewaySpeech(gatewayToken,text,language,controller.signal);fromGateway=true;deliveredVoice=GATEWAY_VOICE;
       }
     }finally{clearTimeout(timeout)}
     if(!upstream){
@@ -85,7 +94,7 @@ export default async function handler(req,res){
     if(!audio.length)return res.status(502).json({ok:false,error:"CEDAR_SPEECH_EMPTY"});
     res.setHeader("Content-Type","audio/mpeg");
     res.setHeader("Content-Length",String(audio.length));
-    res.setHeader("X-GSCG-Voice",fromGateway?GATEWAY_VOICE:VOICE);
+    res.setHeader("X-GSCG-Voice",deliveredVoice);
     return res.status(200).send(audio);
   }catch(error){
     console.error("cedar speech",error?.name==="AbortError"?"timeout":"failed");

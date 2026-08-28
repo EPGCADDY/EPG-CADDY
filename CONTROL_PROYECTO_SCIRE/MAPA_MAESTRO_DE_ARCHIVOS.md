@@ -970,3 +970,15 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 Inventario exacto V363: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `Intocables/README.md`, `Intocables/REGLAS_INTOCABLES.json`, `Intocables/intocables-gate.mjs`, `audit-project.mjs`, `index-grupal.html`, `live-control.js`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, `service-worker.js`, `test-v260-round-points-player-return.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v362-physical-voice-recovery.mjs`, `test-v363-intocables-behavior.mjs` y `test-v363-recorded-mobile-behavior.mjs`. `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` documentan el mismo corte.
 
 Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speech-recognition.js` y los cinco archivos de `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/`, incluido `REPORTE_PRUEBAS_COMPORTAMIENTO_V363_RC035.md`.
+
+## V365-UNIVERSAL-MALE-VOICE-RECOVERY
+
+| Archivo exacto | Mapa V365 | Control |
+|---|---|---|
+| `api/voice-speech.js` | Cedar primario, Onyx directo `tts-1` y Gateway `openai/tts-1`. | Un 429 de Cedar ya no salta directamente a una credencial Gateway ausente. |
+| `index-grupal.html` | Precarga, espera y selecciona sólo locutores masculinos aprobados, primero por idioma y después locales/alternos. | Recupera Safari sin volver a usar una voz femenina genérica. |
+| `api/voice-health.js` | Evento privado `browser_fallback_local_voice_selected`. | Sólo cantidad de voces; sin nombres, pregunta, respuesta ni audio. |
+| `test-v365-universal-male-voice-recovery.mjs` | Reproduce 429 sin Gateway, Onyx directo, Reed local y rechazo de Mónica/Samantha. | RC-036 queda bloqueado en la auditoría maestra. |
+| `service-worker.js`, `package.json`, `audit-project.mjs` | Caché y ejecución V365. | El iPhone recibe el shell corregido y el banco no puede omitirse. |
+| `Intocables/README.md`, `Intocables/REGLAS_INTOCABLES.json`, `Intocables/intocables-gate.mjs` | INT-03 actualizado a la cascada V365. | El candado exige Onyx directo y Gateway oficial `tts-1`. |
+| registro RC-036, cola, matriz pendiente, reporte, ambos ROADMAPS e inventario | Evidencia y trazabilidad. | PASS automático, Preview y físico permanecen separados. |

@@ -1839,3 +1839,18 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 - Inventario: tres PDF V311 regenerados y nuevo `sourceDigest` sellado antes del montaje.
 - Sello atómico externo: `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` se actualizan juntos en el mismo commit; el Gate ROADMAP debe aprobar en Vercel.
 - Sello final externo: ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` quedan juntos en el commit posterior a regenerar los tres PDF.
+
+## V365 · recuperación del locutor de AI UNIVERSAL · 28 de agosto de 2026
+
+| Archivo exacto | Responsabilidad V365 | Candado |
+|---|---|---|
+| `api/voice-speech.js` | Cedar → Onyx directo `tts-1` → Gateway `openai/tts-1`; devuelve `X-GSCG-Voice`. | Cedar 429 sin token Gateway ya tiene una segunda ruta masculina del servidor. |
+| `index-grupal.html` | Precarga el catálogo Safari, espera 4.8 s y selecciona hombre aprobado por idioma, español, local o alterno. | Nunca acepta Mónica, Samantha ni otra voz femenina genérica. |
+| `api/voice-health.js` | Acepta `browser_fallback_local_voice_selected` con `entryCount`. | Sin nombre de voz, transcripción, respuesta ni audio. |
+| `test-v365-universal-male-voice-recovery.mjs` | Simula el fallo físico RC-036 y sus cuatro recuperaciones. | Obligatorio en `audit-project.mjs` y `package.json`. |
+| `service-worker.js` | Caché V365 sobre prefijos V363/V364. | Safari invalida el shell que mostró el error. |
+| `Intocables/README.md`, `Intocables/REGLAS_INTOCABLES.json`, `Intocables/intocables-gate.mjs` | INT-03 incorpora la cascada V365. | El gate ya no exige el modelo histórico `tts-1-hd`; exige Onyx directo y `openai/tts-1`. |
+| bancos V356/V357/V361/V362 | Se alinean al modelo oficial y conservan todo el historial de voz. | Una corrección nueva no borra el banco previo. |
+| registro RC-036, cola, matriz, mapa, reporte, ambos ROADMAPS e inventario | Causa, evidencia y estado honesto. | Preview y físico siguen separados del PASS automático. |
+
+Evidencia de entrada: `IMG_2187.png` SHA-256 `af6f2982993cfa7d40fe1ac23513b7d2d57cb2c2aadb30f61c47624385a11ef6`; Producción `dpl_6NDKdNNvLmthVeWP6QS5WKbFPodU`; 22:37:13 UTC `/api/universal-ai` 200 y `/api/voice-speech` 503 con Cedar 429. Archivos exactos V365: `api/voice-speech.js`, `api/voice-health.js`, `index-grupal.html`, `service-worker.js`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v362-physical-voice-recovery.mjs`, `test-v365-universal-male-voice-recovery.mjs`, `audit-project.mjs`, `package.json`, `Intocables/README.md`, `Intocables/REGLAS_INTOCABLES.json`, `Intocables/intocables-gate.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_UNIVERSAL_VOICE_RECOVERY/REPORTE_V365_RC036.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.

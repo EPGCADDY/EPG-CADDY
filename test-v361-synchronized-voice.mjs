@@ -8,7 +8,7 @@ const audit=fs.readFileSync("audit-project.mjs","utf8");
 
 assert.match(html,/gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
 assert.match(html,/gscg-progressive-voice" content="V363-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828"/);
-assert.match(worker,/CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior(?:-v364-explicit-new-round-entry)?"/);
+assert.match(worker,/CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior(?:-v364-explicit-new-round-entry)?(?:-v365-universal-voice-recovery)?"/);
 for(const test of ["test-v357-synchronized-progressive-voice.mjs","test-v359-ios-score-parser-recovery.mjs","test-v361-synchronized-voice.mjs"])assert.ok(audit.includes(test),test);
 
 const progressAt=html.indexOf("function applyBrowserVoiceProgressiveScore");
@@ -30,12 +30,12 @@ assert.equal(persisted,1);assert.equal(rendered,1);
 assert.deepEqual(events,[{event:"browser_fallback_round_progressive",detail:{entryCount:1}}]);
 assert.match(matrices.at(-1)[2],/HOYO 1 REGISTRADO · ESCUCHANDO/);
 
-const preferredAt=html.indexOf("function preferredMaleBrowserVoice");
+const preferredAt=html.indexOf("function refreshAiUniversalBrowserVoices");
 const preferredEnd=html.indexOf("\nasync function speakAiUniversalMaleBrowserFallback",preferredAt);
 assert.ok(preferredAt>0&&preferredEnd>preferredAt);
 let voices=[],voiceChanged=null;
 const speechSynthesis={getVoices:()=>voices,addEventListener:(event,handler)=>{if(event==="voiceschanged")voiceChanged=handler},removeEventListener:(event,handler)=>{if(event==="voiceschanged"&&voiceChanged===handler)voiceChanged=null}};
-const waitForVoice=new Function("window",`${html.slice(preferredAt,preferredEnd)};return waitForPreferredMaleBrowserVoice`)({speechSynthesis});
+const waitForVoice=new Function("window",`${html.slice(preferredAt,preferredEnd)};let aiUniversalBrowserVoices=[];return waitForPreferredMaleBrowserVoice`)({speechSynthesis});
 const delayed=waitForVoice("es-GT",200);voices=[{name:"Mónica",lang:"es-ES",voiceURI:"Monica"},{name:"Jorge",lang:"es-MX",voiceURI:"Jorge"}];voiceChanged?.();
 assert.equal((await delayed)?.name,"Jorge");
 

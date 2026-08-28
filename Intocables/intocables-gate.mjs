@@ -24,7 +24,8 @@ assert.match(html,/segmentSpeech\("Primera vuelta\.",FRONT\)/);
 assert.equal(`Primera vuelta. ${["JAIME, 7 arriba","GUSTAVO, 7 abajo"].join(". ")}.`,"Primera vuelta. JAIME, 7 arriba. GUSTAVO, 7 abajo.");
 
 assert.match(speech,/model:"gpt-4o-mini-tts"/);
-assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1-hd"/);
+assert.match(speech,/DIRECT_FALLBACK_MODEL="tts-1"/);
+assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1"/);
 assert.match(speech,/GATEWAY_VOICE="onyx"/);
 assert.doesNotMatch(speech,/openai\/gpt-4o-mini-tts/);
 assert.match(html,/function sealBrowserVoiceProgress\([\s\S]*?consumeLiveRoundClosures\(\)/);

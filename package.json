@@ -27,6 +27,7 @@
     "voice:physical-gate": "node test-v362-physical-voice-recovery.mjs",
     "behavior:recorded-gate": "node test-v363-recorded-mobile-behavior.mjs",
     "entry:new-round-gate": "node test-v364-explicit-new-round-entry.mjs",
+    "voice:universal-recovery-gate": "node test-v365-universal-male-voice-recovery.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

@@ -33,7 +33,7 @@ const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
 assert.equal(gateway.voice,"onyx");
 assert.equal(gateway.speed,1.15);
 assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
-assert.match(speech,/openai\/tts-1-hd/);
+assert.match(speech,/openai\/tts-1/);
 
 function responseRecorder(){return{statusCode:0,headers:{},body:null,setHeader(name,value){this.headers[name]=value},status(code){this.statusCode=code;return this},json(value){this.body=value;return this},send(value){this.body=value;return this}}}
 const previousFetch=globalThis.fetch,previousOpenAI=process.env.OPENAI_API_KEY,previousGateway=process.env.AI_GATEWAY_API_KEY;
@@ -51,10 +51,12 @@ try{
   assert.equal(res.headers["Content-Type"],"audio/mpeg");
   assert.equal(Buffer.isBuffer(res.body),true);
   assert.equal(res.body.toString(),"cedar-audio");
-  assert.equal(calls.length,2);
-  assert.equal(calls[1].url,"https://ai-gateway.vercel.sh/v4/ai/speech-model");
-  assert.equal(calls[1].options.headers["ai-model-id"],"openai/tts-1-hd");
+  assert.equal(calls.length,3);
+  assert.equal(JSON.parse(calls[1].options.body).model,"tts-1");
   assert.equal(JSON.parse(calls[1].options.body).voice,"onyx");
+  assert.equal(calls[2].url,"https://ai-gateway.vercel.sh/v4/ai/speech-model");
+  assert.equal(calls[2].options.headers["ai-model-id"],"openai/tts-1");
+  assert.equal(JSON.parse(calls[2].options.body).voice,"onyx");
   assert.equal(res.headers["X-GSCG-Voice"],"onyx");
 }finally{
   globalThis.fetch=previousFetch;

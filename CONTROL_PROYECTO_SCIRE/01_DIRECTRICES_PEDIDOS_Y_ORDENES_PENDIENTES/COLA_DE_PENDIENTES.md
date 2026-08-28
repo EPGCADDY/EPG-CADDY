@@ -587,3 +587,11 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - RC-035 convierte `IMG_2168`/`IMG_2169` en regresiones bloqueantes: safe area LIVE, cero lanzadores/instalación sobre Registro y salida segura si Safari omite `onend`.
 - La grabación MP4 es evidencia automática controlada, no prueba física. El cierre exige repetir esos cuatro puntos en el nuevo Preview desde Safari/iPhone.
 - `Intocables/intocables-gate.mjs` es bloqueante. Preview, reapertura física y audio físico iPhone permanecen pendientes; Producción intacta.
+
+## V365-UNIVERSAL-MALE-VOICE-RECOVERY · control activo de `PEND-VOZ-003`
+
+- La evidencia física de Producción a las 16:37 de Guatemala rechazó el cierre: escucha y respuesta 200 funcionaron, pero `/api/voice-speech` devolvió 503 y Safari mostró `VOZ MASCULINA NO DISPONIBLE`.
+- El servidor intenta Cedar, Onyx directo `tts-1` y después Gateway `openai/tts-1`; ninguna ruta registra el contenido hablado.
+- Safari precarga su catálogo, espera hasta 4.8 segundos y puede elegir un locutor masculino aprobado aunque el sistema no publique uno en español; nunca acepta Mónica, Samantha ni otra voz femenina genérica.
+- `test-v365-universal-male-voice-recovery.mjs` reproduce Cedar 429 sin token Gateway y exige recuperación Onyx directa, catálogo Reed y rechazo femenino.
+- La versión no se declara definitiva: faltan auditoría integral, Preview y PASS físico iPhone con respuesta audible.
