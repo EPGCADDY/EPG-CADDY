@@ -447,4 +447,6 @@ R8 volvió a registrar `ambiguous_score` en la tanda larga y sólo aplicó el in
 
 La consulta posterior llegó a `/api/universal-ai`, pero el proveedor directo devolvió saldo agotado. R9 intenta primero AI Gateway con tres modelos, conserva el proveedor directo como recuperación, clasifica `credit_balance_exhausted` como no reintentable y agrega `test-v351-r9-live-universal-ai.mjs`: el build sólo puede aprobar la ruta general cuando obtiene HTTP 200 real. Las consultas explícitas de clima continúan directas a Open-Meteo y no consumen IA.
 
+El primer Preview R9 aprobó la puerta del build, pero la comprobación visual real todavía devolvió saldo agotado: la Function no recuperaba el OIDC desde su contexto de ejecución. R9 incorpora `@vercel/oidc`, usa `getVercelOidcToken()` en runtime y conserva el mismo token en los follow-ups de clima y tráfico. El candidato sólo puede aprobarse después de repetir la pregunta general contra el deployment ya `READY`.
+
 Producción permanece intacta; R9 no se aprueba hasta puerta viva, Preview READY y PASS físico iPhone del dictado corrido más una pregunta general.

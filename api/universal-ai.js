@@ -1,6 +1,7 @@
 import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 import { computeTrafficRoute } from "./_lib/traffic.js";
 import { computeWeatherForecast } from "./weather.js";
+import { getVercelOidcToken } from "@vercel/oidc";
 
 const MAX_QUERY_LENGTH=4000;
 // Conserva hasta 40 intercambios completos para que una conversación extensa
@@ -39,7 +40,15 @@ function upstreamErrorCode(payload){
   return String(payload?.error?.code||payload?.error?.type||"").replace(/[^a-zA-Z0-9_.-]/g,"").slice(0,80)||null;
 }
 
-export async function requestUniversalResponse(body,{apiKey,gatewayToken=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN,deadlineMs=Date.now()+UNIVERSAL_TIMEOUT_MS,fetchImpl=globalThis.fetch,sleepImpl=ms=>new Promise(resolve=>setTimeout(resolve,ms)),label="universal ai"}={}){
+export async function resolveGatewayToken(explicitToken){
+  if(explicitToken!==undefined)return String(explicitToken||"");
+  const configured=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN;
+  if(configured)return configured;
+  try{return String(await getVercelOidcToken()||"")}catch{return""}
+}
+
+export async function requestUniversalResponse(body,{apiKey,gatewayToken,deadlineMs=Date.now()+UNIVERSAL_TIMEOUT_MS,fetchImpl=globalThis.fetch,sleepImpl=ms=>new Promise(resolve=>setTimeout(resolve,ms)),label="universal ai"}={}){
+  gatewayToken=await resolveGatewayToken(gatewayToken);
   let lastFailure={ok:false,status:503,retryable:true,retryAfterMs:1_000,error:"UNIVERSAL_AI_UNAVAILABLE"};
   if(gatewayToken&&deadlineMs-Date.now()>=500){
     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),deadlineMs-Date.now());
@@ -335,7 +344,7 @@ export default async function handler(req,res){
       if(!trafficResult.ok)return res.status(502).json(trafficResult);
       return res.status(200).json({ok:true,answer:formatStructuredTrafficAnswer(trafficResult),sources:[]});
     }
-    const apiKey=process.env.OPENAI_API_KEY||"",gatewayToken=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN||"";
+    const apiKey=process.env.OPENAI_API_KEY||"",gatewayToken=await resolveGatewayToken();
     if(!apiKey&&!gatewayToken)return res.status(500).json({ok:false,error:"UNIVERSAL_AI_NOT_CONFIGURED"});
     const responseProfile=universalResponseProfile(query);
     const promptContext=appContext?{course:appContext.course,mode:appContext.mode,weather:appContext.weather}:null;
@@ -399,7 +408,7 @@ export default async function handler(req,res){
               "Si ok es false, informa la limitación concreta en una oración. No incluyas URLs ni coordenadas exactas. Sé directo y accionable."
             ].join(" "),
             input:[...input,...(payload?.output||[]),{type:"function_call_output",call_id:weatherCall.call_id,output:JSON.stringify(weatherResult)}]
-          },{apiKey,deadlineMs,label:"universal weather followup"});
+          },{apiKey,gatewayToken,deadlineMs,label:"universal weather followup"});
       if(!requestResult.ok)return sendUniversalUnavailable(res,requestResult);
       payload=requestResult.payload;
     }else if(trafficCall){
@@ -421,7 +430,7 @@ export default async function handler(req,res){
               "No repitas coordenadas exactas ni incluyas URLs. Responde normalmente en dos o tres oraciones completas."
             ].join(" "),
             input:[...input,...(payload?.output||[]),{type:"function_call_output",call_id:trafficCall.call_id,output:JSON.stringify(trafficResult)}]
-          },{apiKey,deadlineMs,label:"universal traffic followup"});
+          },{apiKey,gatewayToken,deadlineMs,label:"universal traffic followup"});
       if(!requestResult.ok)return sendUniversalUnavailable(res,requestResult);
       payload=requestResult.payload;
     }

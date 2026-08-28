@@ -871,7 +871,7 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | Archivo exacto | Responsabilidad |
 |---|---|
 | `index-grupal.html` | Solicita cinco alternativas de Safari, construye combinaciones acotadas y sólo permite una interpretación única antes del escritor oficial. |
-| `api/universal-ai.js` | Usa AI Gateway primero, detiene inmediatamente saldo agotado y conserva la ruta directa como respaldo. |
+| `api/universal-ai.js`, `package.json` | Usa AI Gateway primero, recupera el OIDC en runtime mediante `@vercel/oidc`, reutiliza el token en follow-ups, detiene saldo agotado y conserva la ruta directa como respaldo. |
 | `test-v351-r6-consecutive-holes-voice-score.mjs` | Prueba una hipótesis principal inválida, una alternativa válida y el rechazo de dos alternativas con Gross diferentes. |
 | `test-v335-response-caliber.mjs` | Prueba Gateway primero, failover directo y crédito agotado no reintentable. |
 | `test-v321-ai-universal-infinity.mjs` | Aísla el fallback directo de las credenciales automáticas del Gateway; la puerta viva R9 cubre por separado la ruta Gateway real. |

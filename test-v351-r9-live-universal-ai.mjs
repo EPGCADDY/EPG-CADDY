@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
-import {requestUniversalResponse} from "./api/universal-ai.js";
+import {requestUniversalResponse,resolveGatewayToken} from "./api/universal-ai.js";
 
 const apiKey=process.env.OPENAI_API_KEY||"";
-const gatewayToken=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN||"";
+const gatewayToken=await resolveGatewayToken();
 
 if(!apiKey&&!gatewayToken){
   console.log("DEFER V351-R9 · prueba viva AI Universal sin credenciales en entorno local");

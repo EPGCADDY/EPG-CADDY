@@ -113,5 +113,8 @@ assert.match(localRes.body.answer,/Conclusión/);
 for(const recoveryToken of ["OPENAI_ATTEMPTS","GATEWAY_MODELS","LOCAL_GOLF_STRATEGY","UNIVERSAL_AI_RATE_LIMITED","RECUPERANDO CONEXIÓN CON AI UNIVERSAL ∞"]){
   assert.ok(api.includes(recoveryToken)||html.includes(recoveryToken),`Falta control permanente de recuperación: ${recoveryToken}`);
 }
+assert.match(api,/getVercelOidcToken/,"La función runtime debe recuperar el OIDC desde el contexto de Vercel");
+assert.match(api,/universal weather followup"\}\)/);
+assert.match(api,/\{apiKey,gatewayToken,deadlineMs,label:"universal traffic followup"\}/);
 
 console.log("PASS V335 · calibre adaptable: directo, sustantivo, no infantil, con límites, acciones y fuentes");

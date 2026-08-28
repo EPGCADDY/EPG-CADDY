@@ -1695,7 +1695,7 @@ Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R8 no queda
 | Archivo exacto | Cambio V351-R9 | Evidencia exigida |
 |---|---|---|
 | `index-grupal.html` | Meta/build R9; `maxAlternatives=5`, haz máximo 16 y selección por firma semántica única. | Alternativa válida recuperada; conflicto de Gross rechazado; cero IA para Score. |
-| `api/universal-ai.js` | Gateway con tres modelos antes del proveedor directo; saldo agotado no reintentable. | Gateway 200, failover directo y ausencia de tres reintentos inútiles. |
+| `api/universal-ai.js`, `package.json` | Gateway con tres modelos antes del proveedor directo; `@vercel/oidc` recupera el token desde la Function y se reutiliza en follow-ups; saldo agotado no reintentable. | Gateway 200 en runtime, failover directo y ausencia de tres reintentos inútiles. |
 | `test-v351-r6-consecutive-holes-voice-score.mjs` | Agrega hipótesis principal ambigua, alternativa completa y conflicto negativo. | 108 tandas, 1,188 Gross y nuevas fronteras de alternativas. |
 | `test-v335-response-caliber.mjs` | Actualiza orden Gateway→directo y recuperación inversa. | Modelos actuales y respuesta sustantiva conservados. |
 | `test-v321-ai-universal-infinity.mjs` | Aísla el fallback directo de las credenciales automáticas del Gateway y las restaura al terminar. | Gateway y proveedor directo quedan cubiertos por puertas separadas sin confundir sus modelos. |

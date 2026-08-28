@@ -209,6 +209,7 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - La prueba física de R8 volvió a rechazar el dictado multi-hoyo y después confirmó HTTP 503 por `credit_balance_exhausted` en una consulta general visible.
 - Safari deja de limitarse a una hipótesis: R9 evalúa hasta cinco alternativas y sólo escribe cuando existe una única interpretación válida de jugadores, hoyos y Gross.
 - AI Gateway se consulta antes del proveedor directo; saldo agotado no se reintenta y una prueba viva del build exige una respuesta externa real.
+- La primera verificación visual R9 detectó que el OIDC disponible durante el build no se recuperaba desde el contexto de la Function. `@vercel/oidc` y `getVercelOidcToken()` quedan obligatorios en runtime; clima/tráfico reutilizan el mismo token en sus follow-ups.
 - Clima explícito continúa por Open-Meteo sin consumir IA. Las preguntas generales no se declaran operativas mientras la puerta viva no obtenga HTTP 200.
 
 ### Condiciones de cierre futuro
