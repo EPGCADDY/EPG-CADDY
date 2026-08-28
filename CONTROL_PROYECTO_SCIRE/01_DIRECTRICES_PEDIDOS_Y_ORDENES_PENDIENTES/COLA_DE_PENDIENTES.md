@@ -578,3 +578,12 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - Safari tiene un watchdog de 18 segundos hasta el primer resultado y conserva después el silencio operacional de tres segundos.
 - El score sigue guardándose y dibujándose inmediatamente; al completar hoyo 9 u 18, el cierre encolado se consume y se habla incluso si Realtime requiere el TTS de respaldo.
 - Candidato V362 sujeto a auditoría integral, Preview y prueba física iPhone; Producción permanece intacta.
+
+## V363-RECORDED-MOBILE-BEHAVIOR + INTOCABLES · control activo
+
+- Persistencia canónica obligatoria de la ronda activa hasta confirmar `INICIAR RONDA`.
+- Match Play: primera/segunda vuelta y total con nombre + arriba/abajo; Ronda Normal no se modifica.
+- Se conservan el guard de cierre Safari y aislamiento móvil V363 ya integrados, junto con toda la recuperación de voz V362.
+- RC-035 convierte `IMG_2168`/`IMG_2169` en regresiones bloqueantes: safe area LIVE, cero lanzadores/instalación sobre Registro y salida segura si Safari omite `onend`.
+- La grabación MP4 es evidencia automática controlada, no prueba física. El cierre exige repetir esos cuatro puntos en el nuevo Preview desde Safari/iPhone.
+- `Intocables/intocables-gate.mjs` es bloqueante. Preview, reapertura física y audio físico iPhone permanecen pendientes; Producción intacta.

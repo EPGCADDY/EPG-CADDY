@@ -5,8 +5,8 @@ import {sanitizeVoiceHealth} from "./api/voice-health.js";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/V362-PHYSICAL-VOICE-RECOVERY-20260828/);
-assert.match(worker,/gscg-mobile-v362-physical-voice-recovery/);
+assert.match(html,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
+assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
 
 const setupStart=html.indexOf("function normalizeTee");
 const setupEnd=html.indexOf("\nfunction applySetupChanges",setupStart);
