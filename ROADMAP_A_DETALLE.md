@@ -1869,3 +1869,14 @@ Producción no se toca. El candidato necesita auditoría local, Preview, tres co
 Base de integración: `main` con recuperación OIDC de comunicación universal. Los archivos `api/` y `@vercel/oidc` permanecen intactos. Producción no cambia hasta aprobar el Preview integrado y el recorrido físico iPhone.
 
 Inventario literal del cambio: `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_RECUPERACION_RONDA_ACTIVA/REPORTE_V365_RC037.md`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V366_ENTRADA_PRINCIPAL/REPORTE_V366_RC038.md`, `test-v289-stableford-new-round-empty.mjs`, `test-v365-active-round-empty-recovery.mjs` y `test-v366-principal-entry-recovery.mjs`.
+
+## V367 · comunicación universal hablada en la misma pantalla
+
+| Archivo exacto | Responsabilidad | Candado |
+|---|---|---|
+| `index-grupal.html` | Pregunta hablada → `voiceOnly:true` → audio, sin `openAiUniversalPanel()`. | Inicio, Registro y tarjeta permanecen visibles. |
+| `api/voice-health.js` | Evento privado `browser_fallback_general_in_place`. | Cero transcripción, nombre o ubicación. |
+| `test-v367-universal-voice-in-place.mjs` | Valida respuesta, acceso de un toque y contexto setup/round sin apertura visual. | RC-039 bloqueante. |
+| `test-v354-voice-fallback.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs` | Conservan multihoyos y gesto iPhone con la nueva frontera visual. | No se pierde voz ni score. |
+
+Archivos literales V367: `index-grupal.html`, `api/voice-health.js`, `service-worker.js`, `test-v354-voice-fallback.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v364-explicit-new-round-entry.mjs`, `test-v367-universal-voice-in-place.mjs`, `Intocables/README.md`, `Intocables/intocables-gate.mjs`, `audit-project.mjs`, `package.json`, documentos rectores e inventario.

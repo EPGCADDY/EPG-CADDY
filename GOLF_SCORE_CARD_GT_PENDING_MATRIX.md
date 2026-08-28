@@ -426,3 +426,9 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - **RC-038:** `IMG_2193.png` demuestra que el Preview anterior mostraba `RONDA EN CURSO` vacía. V366 impone `Inicio` sin ronda operativa en arranque y ciclo de vida, sin cubrir una tarjeta válida.
 - Registro, uno/múltiples hoyos, comunicación universal, cierres de primera/segunda vuelta, acumulados y LIVE Match Play permanecen en el mismo árbol integrado y en la auditoría.
 - Estado: PASS automático; Preview integrado, comprobación externa y recorrido físico iPhone pendientes. Producción no cambia.
+
+## V367 · comunicación universal audible sin cambiar pantalla
+
+- RC-039 elimina la apertura automática del panel AI en consultas habladas desde Inicio, Registro o tarjeta.
+- La misma ruta `voiceOnly:true` conserva contexto, respuesta Cedar/Onyx, privacidad y acceso de un toque.
+- Estado: PASS automático; nuevo Preview y recorrido físico iPhone pendientes. Producción no cambia.

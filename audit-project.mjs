@@ -76,6 +76,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v363-intocables-be
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v364-explicit-new-round-entry.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v365-active-round-empty-recovery.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v366-principal-entry-recovery.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v367-universal-voice-in-place.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

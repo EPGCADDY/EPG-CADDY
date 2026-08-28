@@ -14,18 +14,18 @@ const oneTouchStart=html.indexOf("let lastAiUniversalGestureAt=0");
 const oneTouchEnd=html.indexOf("\n$(\"openGolfRules\")",oneTouchStart);
 assert.ok(oneTouchStart>0&&oneTouchEnd>oneTouchStart,"Falta AI UNIVERSAL de un toque");
 const oneTouchSource=html.slice(oneTouchStart,oneTouchEnd);
-assert.ok(oneTouchSource.indexOf("openAiUniversalPanel(false,{focus:false})")<oneTouchSource.indexOf("startAiUniversalListening()"),"El panel debe abrir antes de escuchar");
+assert.doesNotMatch(oneTouchSource,/openAiUniversalPanel\(false/);
 assert.match(oneTouchSource,/pointerdown/);
 assert.match(oneTouchSource,/primeAiUniversalSpeechFromGesture\(\)/);
 
 const order=[],listeners={};
-const openAndListen=new Function("$","window","openAiUniversalPanel","primeAiUniversalSpeechFromGesture","startAiUniversalListening",`${oneTouchSource};return openAiUniversalAndListen`)(
+const openAndListen=new Function("$","window","primeAiUniversalSpeechFromGesture","startAiUniversalListening",`${oneTouchSource};return openAiUniversalAndListen`)(
   ()=>({addEventListener:(type,handler)=>{listeners[type]=handler}}),{PointerEvent:function PointerEvent(){}},
-  ()=>order.push("open"),()=>order.push("prime"),()=>order.push("listen")
+  ()=>order.push("prime"),()=>order.push("listen")
 );
 assert.equal(typeof listeners.pointerdown,"function");
 openAndListen({cancelable:true,preventDefault(){},stopPropagation(){}});
-assert.deepEqual(order,["open","prime","listen"],"AI ∞ debe abrir la escucha en el mismo toque");
+assert.deepEqual(order,["prime","listen"],"AI ∞ debe escuchar en el mismo toque sin cambiar de pantalla");
 
 assert.match(html,/function parseScoreSequenceTranscript/);
 assert.match(html,/"golpe","golpes","tiro","tiros"/);

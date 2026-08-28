@@ -36,8 +36,12 @@ assert.doesNotMatch(speech,/openai\/gpt-4o-mini-tts/);
 assert.match(html,/function sealBrowserVoiceProgress\([\s\S]*?consumeLiveRoundClosures\(\)/);
 assert.match(html,/if\(progressive\.closure\)void speakClosure\(progressive\.closure\)/);
 assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=18000/);
+assert.match(html,/async function answerBrowserVoiceQuery\(context,clean\)[\s\S]*?browser_fallback_general_in_place[\s\S]*?submitAiUniversalText\(clean,\{voiceOnly:true\}\)/);
+const voiceInPlace=html.slice(html.indexOf("async function answerBrowserVoiceQuery"),html.indexOf("function scheduleBrowserVoiceTransportRetry"));
+assert.doesNotMatch(voiceInPlace,/openAiUniversalPanel|classList\.add\("visible"\)/);
 
 assert.match(audit,/Intocables\/intocables-gate\.mjs/);
 assert.match(audit,/test-v366-principal-entry-recovery\.mjs/);
+assert.match(audit,/test-v367-universal-voice-in-place\.mjs/);
 assert.match(worker,/gscg-mobile-v363-/);
 console.log("INTOCABLES PASS INT-01…INT-04");

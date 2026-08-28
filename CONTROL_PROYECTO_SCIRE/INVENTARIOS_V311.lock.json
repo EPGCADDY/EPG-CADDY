@@ -1,23 +1,23 @@
 {
-  "version": "V366-PRINCIPAL-ENTRY-RECOVERY-OIDC-INTOCABLES",
-  "generatedAt": "2026-08-28T23:38:17Z",
-  "sourceFileCount": 389,
-  "sourceDigest": "1763ee18d719ce00648c0acca66aa635c1469aa2f136c06dc42844fafccfa61a",
+  "version": "V367-UNIVERSAL-VOICE-IN-PLACE-OIDC-INTOCABLES",
+  "generatedAt": "2026-08-28T23:49:51Z",
+  "sourceFileCount": 390,
+  "sourceDigest": "812394594b60407b1d29293ca571e6b2b52c651ddab3ee2c790788b13a0ba5ac",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 200964,
-      "sha256": "add87bc03148e1771e16db066a16ba99f0973274750b30cdc45b1a1530f7a72c"
+      "size": 201597,
+      "sha256": "becbabb5bc4ee0be8bd61495433baae1a98c0e8e5709badbfcacdf452ded26a4"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 224406,
-      "sha256": "67a158e37eeca7571d418a73a2fb4f100e9c2eac3ea627c32e0677c88e3fe948"
+      "size": 225103,
+      "sha256": "6094a04b437dd47dea1200b00f974c4b4ae72288d519f2f4fc988de50824d89c"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19260982,
-      "sha256": "9b83cc23956b30618d936f830a6aed51c0143f3d20cbff5467231423f3ed25c5"
+      "size": 19260986,
+      "sha256": "67c73df0e654b8dcbe07c6e5e99e72e9ebb15b3931ca16383bd22d3b051d7c4f"
     }
   ]
 }

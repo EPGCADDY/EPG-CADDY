@@ -10,5 +10,5 @@ const start=html.indexOf("function openNewRoundDraft(){"),end=html.indexOf("func
 assert.ok(start>0&&end>start);
 assert.match(source,/persist\(\);[\s\S]*?openSetup\("new"\)/);
 assert.doesNotMatch(source,/localStorage\.removeItem|round\s*=\s*blankRound|clearRound/);
-assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery/);
+assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place/);
 console.log("V364_EXPLICIT_NEW_ROUND_ENTRY PASS external_contract=ready");

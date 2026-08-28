@@ -601,3 +601,10 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - `Inicio` se impone en arranque, regreso, `pageshow` y foco; una tarjeta válida permanece viva.
 - Un Registro visible no se reinicia y `nueva_ronda=1` conserva su función explícita.
 - PASS automático: `test-v366-principal-entry-recovery.mjs`, Intocables y auditoría maestra. Falta Preview integrado y prueba física iPhone.
+
+## V367-UNIVERSAL-VOICE-IN-PLACE · control activo de RC-039
+
+- Inicio, Registro y tarjeta permanecen visualmente inmóviles durante una pregunta universal por voz.
+- La respuesta se solicita con `voiceOnly:true` y se reproduce con Cedar/Onyx sin abrir el panel AI.
+- El acceso AI de un toque habilita audio y escucha sobre la misma pantalla.
+- PASS automático: `test-v367-universal-voice-in-place.mjs` y bancos V354/V358/V362/V364. Preview y audio físico iPhone pendientes.

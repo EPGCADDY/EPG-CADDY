@@ -992,3 +992,12 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `Intocables/`, `audit-project.mjs`, `package.json` | Gares acumulativos y comandos directos. | Un FAIL bloquea Preview o producción. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_RECUPERACION_RONDA_ACTIVA/REPORTE_V365_RC037.md` | Evidencia RC-037. | Distingue PASS automático de prueba física. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V366_ENTRADA_PRINCIPAL/REPORTE_V366_RC038.md` | Evidencia RC-038. | Registra el Preview rechazado y el control nuevo. |
+
+## V367 · comunicación universal en la misma pantalla
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Quita la apertura visual del panel en preguntas habladas y conserva `voiceOnly:true`. | Inicio, Registro y tarjeta no cambian. |
+| `api/voice-health.js` | Registra `browser_fallback_general_in_place` sin texto ni nombres. | Privacidad y diagnóstico verificable. |
+| `test-v367-universal-voice-in-place.mjs` | Inspecciona respuesta, acceso de un toque, contexto inicial y telemetría. | Bloquea la reaparición del panel AI. |
+| `test-v354-voice-fallback.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs` | Actualizan la expectativa histórica al mandato físico más reciente. | Multihoyos y gesto iPhone permanecen acumulados. |

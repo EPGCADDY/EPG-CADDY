@@ -1455,3 +1455,9 @@ V365 define una ronda recuperable como configurada con uno a seis jugadores, exc
 La integración parte del `main` con recuperación OIDC/voz ya promovida; no sustituye `api/`, dependencias ni bancos de comunicación universal. La auditoría acumulada incluye Registro, score individual y multihoyo, cierres/acumulados, Match Play y LIVE. Producción continúa intacta hasta Preview READY, comprobación externa y PASS físico iPhone.
 
 Inventario literal del cambio: `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_RECUPERACION_RONDA_ACTIVA/REPORTE_V365_RC037.md`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V366_ENTRADA_PRINCIPAL/REPORTE_V366_RC038.md`, `test-v289-stableford-new-round-empty.mjs`, `test-v365-active-round-empty-recovery.mjs` y `test-v366-principal-entry-recovery.mjs`.
+
+## V367 · comunicación universal hablada en la misma pantalla
+
+La condición física más reciente sustituye la expectativa visual anterior: una pregunta universal pronunciada desde Inicio, Registro o tarjeta no abre otra pantalla. `answerBrowserVoiceQuery()` conserva la vista, utiliza `voiceOnly:true` y reproduce la respuesta audible; el acceso AI de un toque prepara audio y escucha sin montar el panel.
+
+Archivos literales V367: `index-grupal.html`, `api/voice-health.js`, `service-worker.js`, `test-v354-voice-fallback.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v364-explicit-new-round-entry.mjs`, `test-v367-universal-voice-in-place.mjs`, `Intocables/README.md`, `Intocables/intocables-gate.mjs`, `audit-project.mjs`, `package.json`, documentos rectores e inventario. Producción no cambia hasta Preview READY y PASS físico iPhone.
