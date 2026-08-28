@@ -6,7 +6,7 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
 assert.match(html,/V365-ACTIVE-ROUND-RECOVERY/);
-assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior-v365-active-round-recovery/);
+assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior-v365-active-round-recovery-v366-principal-entry-recovery/);
 assert.match(html,/if\(!isRecoverableStoredRound\(round\)\)restorePersistedRound\(\)/);
 assert.match(html,/if\(!isRecoverableStoredRound\(round\)&&restorePersistedRound\(\)\)render\(\)/);
 

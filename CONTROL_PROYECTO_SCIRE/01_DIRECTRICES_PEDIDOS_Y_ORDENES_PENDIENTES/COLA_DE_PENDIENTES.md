@@ -596,3 +596,12 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - `pageshow`, `focus` y el arranque usan la misma condición; cerrar la aplicación no termina ni sustituye la ronda.
 - La sustitución continúa autorizada únicamente al confirmar `INICIAR RONDA`.
 - PASS automático obligatorio: `test-v365-active-round-empty-recovery.mjs`, banco Intocables y auditoría maestra. Preview y reapertura física Safari/iPhone permanecen separados de Producción.
+
+## V366-PRINCIPAL-ENTRY-RECOVERY · control activo de RC-037
+
+- `IMG_2193.png` rechaza el Preview V365: sin jugadores ni scores mostró `RONDA EN CURSO` en vez de `Inicio`.
+- Sin ronda recuperable, `Inicio` se impone en arranque, regreso desde segundo plano, `pageshow` y foco.
+- Una ronda operativa con 1–6 jugadores conserva prioridad y nunca abre Registro automáticamente.
+- Un Registro principal ya visible no se reinicia al recuperar el foco.
+- El montaje de `Inicio` ocurre antes de sincronizaciones opcionales.
+- PASS automático obligatorio: `test-v366-principal-entry-recovery.mjs`, Intocables y auditoría maestra. Preview y prueba física Safari/iPhone permanecen pendientes; Producción intacta.

@@ -1855,3 +1855,18 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 | RC-036, cola, matriz, mapa, reporte, ambos ROADMAPS, reconstrucción e inventario | Registran causa, escape, control y estado real. | Automático, Preview y físico se reportan por separado; Producción intacta hasta cierre. |
 
 Evidencia exacta V365: `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_RECUPERACION_RONDA_ACTIVA/REPORTE_V365_RC036.md`.
+
+## V366-PRINCIPAL-ENTRY-RECOVERY
+
+| Archivo exacto | Responsabilidad V366 | Candado |
+|---|---|---|
+| `index-grupal.html` | `ensurePrincipalEntry()` impone `Inicio` sin ronda operativa en arranque, regreso, `pageshow` y foco, antes de sincronización opcional. | La tarjeta vacía de `IMG_2193.png` no puede quedar expuesta; una tarjeta válida permanece viva. |
+| `test-v366-principal-entry-recovery.mjs` | Ejecuta ronda no configurada, configurada vacía, Inicio ya visible y tarjeta con jugador. | Exige apertura idempotente, cero reinicio del Registro y cero interferencia con ronda operativa. |
+| `test-v365-active-round-empty-recovery.mjs`, `test-v358-active-round-reopen.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v311-neutral-match-home-link.mjs` | Alinean persistencia y navegación histórica con el guard único V366. | No se retiran Score Cabo, multihoyos, voz ni modalidades. |
+| `service-worker.js` | Caché acumulada `...v365-active-round-recovery-v366-principal-entry-recovery`. | Safari invalida el shell rechazado. |
+| `Intocables/README.md`, `Intocables/intocables-gate.mjs`, `audit-project.mjs`, `package.json` | Incorporan el banco V366 a los gates obligatorios. | Un FAIL detiene Preview y montaje. |
+| RC-037, cola, matriz, mapa, reporte, ambos ROADMAPS, reconstrucción e inventario | Registran evidencia física, causa, escape, control y estado. | PASS automático, Preview y físico se reportan por separado; Producción intacta. |
+
+Evidencia exacta V366: `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V366_ENTRADA_PRINCIPAL/REPORTE_V366_RC037.md`.
+
+Inventario exacto V366: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V366_ENTRADA_PRINCIPAL/REPORTE_V366_RC037.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `Intocables/README.md`, `Intocables/intocables-gate.mjs`, `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `audit-project.mjs`, `index-grupal.html`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, `service-worker.js`, `test-v311-neutral-match-home-link.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v361-synchronized-voice.mjs`, `test-v365-active-round-empty-recovery.mjs` y `test-v366-principal-entry-recovery.mjs`.

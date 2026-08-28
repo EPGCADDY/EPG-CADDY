@@ -983,3 +983,14 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `audit-project.mjs`, `package.json` | Gate y comando directo V365. | RC-036 queda obligatorio. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_RECUPERACION_RONDA_ACTIVA/REPORTE_V365_RC036.md` | Evidencia física recibida, causa y banco. | No confunde automático con PASS físico. |
 | documentos rectores, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` e inventario | Estado y árbol exacto V365. | Trazabilidad completa antes de Preview o publicación. |
+
+## V366-PRINCIPAL-ENTRY-RECOVERY
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Añade `ensurePrincipalEntry()` y lo aplica en arranque, regreso, `pageshow` y foco antes de sincronización opcional. | Sin ronda operativa siempre aparece `Inicio`; una tarjeta válida permanece viva. |
+| `test-v366-principal-entry-recovery.mjs` | Ejecuta sin ronda, ronda configurada vacía, Inicio ya visible y tarjeta válida. | Bloquea tarjeta vacía, reinicio del Registro y ocultamiento de la ronda activa. |
+| `service-worker.js` | Renueva la caché acumulada V363/V365 con V366. | Safari recibe la corrección de entrada sin perder persistencia ni voz. |
+| `Intocables/README.md`, `Intocables/intocables-gate.mjs`, `audit-project.mjs`, `package.json` | Hacen obligatoria la entrada principal y el banco V366. | Un FAIL bloquea Preview o montaje. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V366_ENTRADA_PRINCIPAL/REPORTE_V366_RC037.md` | Registra `IMG_2193.png`, causa, escape y control. | Automático, Preview y físico permanecen separados. |
+| RC-037, cola, matriz, mapa, ambos ROADMAPS, reconstrucción e inventario | Trazabilidad V366. | Producción intacta hasta PASS físico. |

@@ -14,6 +14,7 @@
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
+<meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
 <meta name="gscg-ai-voice" content="CEDAR-1.15-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -3705,6 +3706,14 @@ function openNewRoundDraft(){
   openSetup("new");
   return true;
 }
+function ensurePrincipalEntry(){
+  if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
+  const overlay=$("setupOverlay");if(!overlay)return false;
+  if(!overlay.classList.contains("visible"))openNewRoundDraft();
+  document.body?.classList.add("gsc-setup-open");
+  overlay.classList.add("visible");
+  return true;
+}
 function closeSetup(){
   if(!round.configured)return;
   if(listening)setVoice(false);
@@ -5009,6 +5018,7 @@ document.addEventListener("visibilitychange",()=>{
     recoverRealtimeAfterResumeSync();
     scheduleRoundTimerIdleShutdown();
     render();
+    ensurePrincipalEntry();
   }
 });
 window.addEventListener("pageshow",e=>{
@@ -5017,12 +5027,14 @@ window.addEventListener("pageshow",e=>{
   if(e.persisted||appWasBackgrounded||appHiddenAt||realtimeLooksStale())recoverRealtimeAfterResumeSync();
   scheduleRoundTimerIdleShutdown();
   render();
+  ensurePrincipalEntry();
 });
 window.addEventListener("focus",()=>{
   if(voiceOpening)return;
   if(!isRecoverableStoredRound(round)&&restorePersistedRound())render();
   if(appWasBackgrounded||appHiddenAt||realtimeLooksStale())recoverRealtimeAfterResumeSync();
   scheduleRoundTimerIdleShutdown();
+  ensurePrincipalEntry();
 });
 window.addEventListener("pagehide",()=>{
   persist();
@@ -5053,12 +5065,11 @@ phase="idle";listening=false;resetRoundCapture();resetSetupCapture();
 render();
 scheduleRoundTimerIdleShutdown();
 dateSetup();
-if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
 if(!isRecoverableStoredRound(round)){
   if(sfEmergency)window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
-  else if(directHome)openNewRoundDraft();
-  else openSetup("new");
+  else ensurePrincipalEntry();
 }
+if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
 window.GSC_ACCOUNT_SIGNED_IN=false;
 let centralAccountUser=null;
 function centralAccountMessage(code){

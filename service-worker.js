@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v365-active-round-recovery";
+const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v365-active-round-recovery-v366-principal-entry-recovery";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

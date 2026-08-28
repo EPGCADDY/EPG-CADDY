@@ -11,7 +11,7 @@ for(const obsolete of ["MATCH PLAY · CON HDCP","MATCH PLAY CON HDCP","NETO CON 
 }
 assert.doesNotMatch(artifacts,/Neto con handicap/i);
 assert.match(html,/const directHome=startupParams\.get\("inicio"\)==="1"/);
-assert.match(html,/if\(!round\.configured\)\{[\s\S]*?else if\(directHome\)openNewRoundDraft\(\)/);
+assert.match(html,/if\(!isRecoverableStoredRound\(round\)\)\{[\s\S]*?ensurePrincipalEntry\(\)/);
 assert.doesNotMatch(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
 for(const source of ["/","/index.html","/inicio"]){
   const route=hosting.redirects?.find(item=>item.source===source);

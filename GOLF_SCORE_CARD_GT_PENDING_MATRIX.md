@@ -407,6 +407,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 **RC-036 continuidad V365:** `IMG_2186.png` demuestra que Producción abrió una ronda configurada vacía en lugar de la tarjeta viva de Score Cabo. V365 declara no recuperable cualquier ronda sin jugadores, descarta copias vacías canónicas/heredadas, rescata la última tarjeta operativa archivada con sus scores y repara la identidad canónica. El banco automático reproduce exactamente vacío más nuevo + tarjeta válida archivada; Preview y reapertura física iPhone siguen pendientes.
 
+**RC-037 entrada principal V366:** `IMG_2193.png` rechaza el Preview V365 porque, sin una tarjeta operativa, dejó expuesta `RONDA EN CURSO` vacía en vez de `Inicio`. V366 impone `Inicio` de forma idempotente en arranque, regreso, `pageshow` y foco, antes de sincronizaciones opcionales; no reinicia un Registro ya visible y no toca una tarjeta válida. Preview y prueba física iPhone siguen pendientes.
+
 La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` y E2E de 20 grupos/80 jugadores quedaron PASS, con cero errores de runtime y limpieza Neon confirmada. V353 no requiere migración porque reutiliza el esquema V352. La inspección visual y la prueba física iPhone permanecen abiertas y Producción no se monta. La estabilización física de voz continúa registrada. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
 
 ## Corte V345-ICONS · estado verificable
