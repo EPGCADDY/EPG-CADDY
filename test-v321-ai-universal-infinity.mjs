@@ -103,16 +103,23 @@ assert.deepEqual(sanitizeUniversalHistory([
 assert.deepEqual(sanitizeUniversalAppContext({course:"El Pulté",mode:"match_play",weather:{location:"GPS",condition:"lluvia",temperatureC:"22",feelsLikeC:21,rainProbability:75,windKmh:9}}),{course:"El Pulté",mode:"match_play",weather:{location:"GPS",condition:"lluvia",observedAt:"",temperatureC:22,feelsLikeC:21,rainProbability:75,windKmh:9}});
 assert.deepEqual(summarizeUniversalResponse({output:[{type:"message",content:[{type:"output_text",text:"Respuesta completa."},{type:"refusal",refusal:""}]}]}),{ok:true,answer:"Respuesta completa.",sources:[]});
 
-const originalFetch=globalThis.fetch,originalKey=process.env.OPENAI_API_KEY;
+const originalFetch=globalThis.fetch,originalKey=process.env.OPENAI_API_KEY,originalGatewayKey=process.env.AI_GATEWAY_API_KEY,originalOidcToken=process.env.VERCEL_OIDC_TOKEN;
 let upstreamBody=null;
 globalThis.fetch=async(_url,options)=>{
   upstreamBody=JSON.parse(options.body);
   return{ok:true,json:async()=>({output:[{type:"web_search_call",action:{sources:[{title:"Fuente oficial",url:"https://example.com/oficial"}]}},{type:"message",content:[{type:"output_text",text:"Dato vigente confirmado."}]}]})};
 };
 process.env.OPENAI_API_KEY="test-key";
+delete process.env.AI_GATEWAY_API_KEY;
+delete process.env.VERCEL_OIDC_TOKEN;
 const req={method:"POST",headers:{host:"epg-caddy.vercel.app"},body:{query:"¿Qué cambió hoy?",history:[{role:"user",content:"Contexto anterior"},{role:"assistant",content:"Respuesta anterior"}],appContext:{course:"El Pulté",mode:"general",weather:{location:"GPS",condition:"despejado",temperatureC:24}}}};
 const res={headers:{},statusCode:200,setHeader(name,value){this.headers[name]=value},status(code){this.statusCode=code;return this},json(value){this.body=value;return this}};
-try{await handler(req,res)}finally{globalThis.fetch=originalFetch;if(originalKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=originalKey}
+try{await handler(req,res)}finally{
+  globalThis.fetch=originalFetch;
+  if(originalKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=originalKey;
+  if(originalGatewayKey===undefined)delete process.env.AI_GATEWAY_API_KEY;else process.env.AI_GATEWAY_API_KEY=originalGatewayKey;
+  if(originalOidcToken===undefined)delete process.env.VERCEL_OIDC_TOKEN;else process.env.VERCEL_OIDC_TOKEN=originalOidcToken;
+}
 assert.equal(res.statusCode,200);
 assert.equal(res.body.answer,"Dato vigente confirmado.");
 assert.equal(res.body.sources.length,1);

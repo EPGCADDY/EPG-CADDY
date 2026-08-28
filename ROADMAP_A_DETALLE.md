@@ -1698,6 +1698,7 @@ Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R8 no queda
 | `api/universal-ai.js` | Gateway con tres modelos antes del proveedor directo; saldo agotado no reintentable. | Gateway 200, failover directo y ausencia de tres reintentos inútiles. |
 | `test-v351-r6-consecutive-holes-voice-score.mjs` | Agrega hipótesis principal ambigua, alternativa completa y conflicto negativo. | 108 tandas, 1,188 Gross y nuevas fronteras de alternativas. |
 | `test-v335-response-caliber.mjs` | Actualiza orden Gateway→directo y recuperación inversa. | Modelos actuales y respuesta sustantiva conservados. |
+| `test-v321-ai-universal-infinity.mjs` | Aísla el fallback directo de las credenciales automáticas del Gateway y las restaura al terminar. | Gateway y proveedor directo quedan cubiertos por puertas separadas sin confundir sus modelos. |
 | `test-v351-r9-live-universal-ai.mjs` | Llamada real mínima sin contenido privado. | HTTP 200 obligatorio cuando el entorno aporta credenciales. |
 | `audit-project.mjs` | Incorpora la puerta viva R9. | El build no puede aprobar una AI Universal sin proveedor real. |
 | `scripts/rebuild-inventory-pdfs.py` | Corte `V351-R9-MULTI-ALTERNATIVE-GATEWAY-FIRST`. | Tres PDF y sello actualizados. |
