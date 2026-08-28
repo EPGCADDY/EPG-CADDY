@@ -587,3 +587,12 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - RC-035 convierte `IMG_2168`/`IMG_2169` en regresiones bloqueantes: safe area LIVE, cero lanzadores/instalación sobre Registro y salida segura si Safari omite `onend`.
 - La grabación MP4 es evidencia automática controlada, no prueba física. El cierre exige repetir esos cuatro puntos en el nuevo Preview desde Safari/iPhone.
 - `Intocables/intocables-gate.mjs` es bloqueante. Preview, reapertura física y audio físico iPhone permanecen pendientes; Producción intacta.
+
+## V365-ACTIVE-ROUND-RECOVERY · control activo de RC-036
+
+- `configured:true` no basta: una ronda operativa recuperable debe contener de uno a seis jugadores.
+- Si las claves canónica o heredadas contienen la pantalla vacía observada en `IMG_2186.png`, se descartan antes de seleccionar la ronda.
+- La última tarjeta operativa archivada recupera jugadores y scores y vuelve a sellarse en `ACTIVE_ROUND_KEY`.
+- `pageshow`, `focus` y el arranque usan la misma condición; cerrar la aplicación no termina ni sustituye la ronda.
+- La sustitución continúa autorizada únicamente al confirmar `INICIAR RONDA`.
+- PASS automático obligatorio: `test-v365-active-round-empty-recovery.mjs`, banco Intocables y auditoría maestra. Preview y reapertura física Safari/iPhone permanecen separados de Producción.

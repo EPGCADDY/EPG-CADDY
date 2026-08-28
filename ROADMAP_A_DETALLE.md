@@ -1841,3 +1841,15 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 - Sello final: digest calculado sobre las 382 fuentes exactas del árbol V363 publicado.
 
 - Digest final: orden binario de rutas idéntico a `scripts/inventory-gate.mjs`.
+
+## V365-ACTIVE-ROUND-RECOVERY
+
+| Archivo exacto | Responsabilidad V365 | Candado |
+|---|---|---|
+| `index-grupal.html` | `isRecoverableStoredRound()` exige 1–6 jugadores; filtra todas las fuentes vacías, rescata archivo válido y repara `ACTIVE_ROUND_KEY`; arranque, `pageshow` y `focus` usan la misma regla. | La pantalla de `IMG_2186.png` no puede bloquear una tarjeta con jugadores y scores. |
+| `test-v365-active-round-empty-recovery.mjs` | Ejecuta en memoria clave canónica vacía + principal/respaldo vacíos más nuevos + tarjeta archivada válida. | Exige recuperar `score-cabo-viva`, su gross del hoyo 1 y el resellado canónico. |
+| `Intocables/intocables-gate.mjs`, `test-v363-intocables-behavior.mjs` | Amplían INT-01 sin retirar Match Play, Ronda Normal ni voz. | Cualquier regresión acumulada bloquea el candidato. |
+| `test-v289-stableford-new-round-empty.mjs`, `test-v267-one-operational-line.mjs`, `test-v252-stableford-persistence-category-course.mjs`, `test-v260-round-points-player-return.mjs` | Ajustan candados históricos a la regla compartida de recuperabilidad. | Registro Stableford vacío sigue permitido, el arranque lo reconoce correctamente y todas las modalidades conservan un solo selector operacional sin mezclar rondas. |
+| `service-worker.js`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Caché `gscg-mobile-v363-recorded-mobile-behavior-v365-active-round-recovery` y compatibilidad acumulada de voz. | Safari no conserva el shell que aceptaba la ronda vacía ni pierde candados V357/V361. |
+| `audit-project.mjs`, `package.json` | Incorporan el banco V365 a la auditoría maestra y a un comando directo. | El caso físico pasa a ser regresión ejecutable permanente. |
+| RC-036, cola, matriz, mapa, reporte, ambos ROADMAPS, reconstrucción e inventario | Registran causa, escape, control y estado real. | Automático, Preview y físico se reportan por separado; Producción intacta hasta cierre. |

@@ -3,7 +3,8 @@ import fs from "node:fs";
 
 const html=fs.readFileSync("index-grupal.html","utf8");
 
-assert.match(html,/if\(modeHint==="stableford"&&stableford&&!stableford\.configured\)return null;/);
+assert.match(html,/function isRecoverableStoredRound\(value,modeHint=null\)[\s\S]*?value\.players\.length>=1&&value\.players\.length<=6/);
+assert.match(html,/const active=\[primary,backup,stableford,matchPlay,fourBall\]\.filter\(value=>isRecoverableStoredRound\(value,modeHint\)\)/);
 assert.match(html,/function openFreshStablefordSetup\(\)[\s\S]*?round=\{\.\.\.blankRound\(\),mode:"stableford"\};[\s\S]*?localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,JSON\.stringify\(round\)\)/);
 assert.doesNotMatch(html,/function openFreshStablefordSetup\(\)[\s\S]*?localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\)/);
 
@@ -33,4 +34,4 @@ assert.equal(harness.getRound().mode,"stableford");
 assert.deepEqual(JSON.parse(storage.get("active")).players,[]);
 assert.deepEqual(calls,["persist","reset","render","show"]);
 
-console.log("PASS V289 · NUEVA RONDA deja Stableford sin nombres y conserva el vacío al reabrir");
+console.log("PASS V289 · NUEVA RONDA deja Registro Stableford vacío sin sustituir una ronda recuperable");

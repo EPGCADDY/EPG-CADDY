@@ -12,8 +12,9 @@ assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT
 assert.ok(rules.rules.every(rule=>rule.mandatory===true));
 
 assert.match(html,/const ACTIVE_ROUND_KEY="golf-score-card-guatemala-active-round-v1"/);
-assert.match(html,/const canonical=readStoredRound\(ACTIVE_ROUND_KEY\)[\s\S]*?if\(canonical\?\.configured&&canonical\.mode!=="stableford"&&canonical\.players\?\.length\)return canonical/);
-assert.match(html,/if\(round\.configured&&round\.mode!=="stableford"&&round\.players\?\.length\)localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)/);
+assert.match(html,/function isRecoverableStoredRound\(value,modeHint=null\)[\s\S]*?value\.players\.length>=1&&value\.players\.length<=6/);
+assert.match(html,/const canonical=readStoredRound\(ACTIVE_ROUND_KEY\)[\s\S]*?if\(isRecoverableStoredRound\(canonical\)&&storedRoundMode\(canonical\)!=="stableford"\)return canonical/);
+assert.match(html,/if\(isRecoverableStoredRound\(round\)&&storedRoundMode\(round\)!=="stableford"\)localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(ACTIVE_ROUND_KEY\)/);
 assert.match(html,/ÚNICO punto autorizado para sustituir la última ronda persistida por una nueva:[\s\S]*?INICIAR RONDA/);
 

@@ -1433,3 +1433,11 @@ Los tres inventarios V311 fueron regenerados y sellados después de registrar es
 Sello final recalculado desde el árbol exacto V363 de 382 fuentes activas, aislado de ramas posteriores.
 
 Validación del sello: ordenamiento binario idéntico al Gate de Node.js en Vercel.
+
+## V365 · recuperación de tarjeta viva ante ronda vacía · 28 de agosto de 2026
+
+La evidencia física `IMG_2186.png` reabre RC-033 como RC-036: Producción mostró campo, hora y `RONDA EN CURSO`, pero sin jugadores ni scores. La causa exacta era una copia heredada más reciente con `configured:true` y `players:[]`; esa copia ganaba la selección y evitaba consultar la tarjeta operativa archivada. Además, `pageshow` y `focus` no reintentaban porque consideraban suficiente la bandera `configured`.
+
+V365 centraliza `isRecoverableStoredRound()`: sólo una ronda configurada con uno a seis jugadores puede participar en la recuperación. Las copias vacías se excluyen de claves canónica, principal, respaldo y modalidad; si existe una tarjeta operativa en el archivo local, vuelve completa —incluidos scores— y repara `ACTIVE_ROUND_KEY`. Cerrar, recargar, volver por foco o abrir el enlace no sustituye la ronda; únicamente `INICIAR RONDA` crea la siguiente.
+
+Archivos exactos: `index-grupal.html`, `service-worker.js`, `test-v365-active-round-empty-recovery.mjs`, `test-v363-intocables-behavior.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v289-stableford-new-round-empty.mjs`, `test-v267-one-operational-line.mjs`, `test-v252-stableford-persistence-category-course.mjs`, `test-v260-round-points-player-return.mjs`, `Intocables/README.md`, `Intocables/intocables-gate.mjs`, `audit-project.mjs`, `package.json`, registro RC-036, cola, matriz de pendientes, mapa maestro, reporte de evidencia, ambos ROADMAPS, reconstrucción PDF e inventario. Producción permanece intacta hasta PASS automático, Preview READY, verificación externa y reapertura física iPhone.
