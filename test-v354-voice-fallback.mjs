@@ -6,8 +6,8 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 const audit=fs.readFileSync(new URL("./audit-project.mjs",import.meta.url),"utf8");
 
-assert.match(html,/V359-IOS-SCORE-PARSER-RECOVERY-20260828/);
-assert.match(worker,/gscg-mobile-v359-ios-score-parser-recovery/);
+assert.match(html,/V360-INTEGRATED-PROGRESSIVE-PARSER-20260828/);
+assert.match(worker,/gscg-mobile-v360-integrated-progressive-parser/);
 assert.match(audit,/test-v354-voice-fallback\.mjs/);
 assert.match(html,/function operationalDefaultVoicePlayer\(\)\{return operationalPromptPlayer\(\)\?\?\(\(round\?\.players\|\|\[\]\)\.length===1\?round\.players\[0\]:null\)\}/);
 

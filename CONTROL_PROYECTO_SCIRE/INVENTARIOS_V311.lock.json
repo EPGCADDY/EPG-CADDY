@@ -1,23 +1,23 @@
 {
-  "version": "V359-IOS-SCORE-PARSER-RECOVERY",
-  "generatedAt": "2026-08-28T17:39:39Z",
-  "sourceFileCount": 367,
-  "sourceDigest": "48edf5c6e7d0845ef1a5c32b851d67fb451b4c8b63942f59542b43b692e38fba",
+  "version": "V360-INTEGRATED-PROGRESSIVE-PARSER",
+  "generatedAt": "2026-08-28T17:48:32Z",
+  "sourceFileCount": 368,
+  "sourceDigest": "476fd139c2f9c78e0b0f0836f4cd9edc382a8212d7b90e480a56967724b2d1c9",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 190725,
-      "sha256": "41a6db5443c11163a5c37ccfb5f866447ceb4eb857f96c50a29c25641469b689"
+      "size": 191307,
+      "sha256": "65f4ffd5a0e022809a497c6960450daf78bc9d089235e5589408b98c3a3fb25c"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 213150,
-      "sha256": "3b37d14fe777bb661b7f3f0572e7a0ffa1c784300059d62459f3302698a259e8"
+      "size": 213739,
+      "sha256": "b3c89e9d6409fa94f69404c61dfae6c607c100a938066d53168950d30e6df7bc"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19260980,
-      "sha256": "7e2b0effd7826f3a760c61499b1a4ad01acaaf418cac6bf5e3fbe8e6a479b088"
+      "size": 19260984,
+      "sha256": "25b34ba3cf19f7da6a0f0bf256adf4a8c1d18ae65e6ea0fa13fccc7e832c96c1"
     }
   ]
 }

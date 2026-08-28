@@ -65,6 +65,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v352-live.mjs','te
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v357-ios-voice-transport-recovery.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v358-active-round-reopen.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v359-ios-score-parser-recovery.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v357-synchronized-progressive-voice.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

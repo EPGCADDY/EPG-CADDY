@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v359-ios-score-parser-recovery";
+const CACHE_NAME="gscg-mobile-v360-integrated-progressive-parser";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

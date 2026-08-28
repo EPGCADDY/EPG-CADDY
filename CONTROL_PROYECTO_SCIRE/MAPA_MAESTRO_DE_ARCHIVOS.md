@@ -922,3 +922,13 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `test-v359-ios-score-parser-recovery.mjs`, `audit-project.mjs` | Reproduce Jaime/Gustavo en tres órdenes naturales y una negativa. | RC-030 queda obligatorio. |
 | bancos V270 y V354–V358 | Regresión acumulada de score, voz, Cedar y continuidad. | Ninguna corrección anterior se elimina. |
 | documentos rectores, ambos ROADMAPS, inventario y reconstrucción PDF | Rechazo V358 y trazabilidad V359. | Producción continúa intacta. |
+
+## V360-INTEGRATED-PROGRESSIVE-PARSER
+
+| Archivo exacto | Mapa V360 | Control |
+|---|---|---|
+| `index-grupal.html` | Une captura Safari, escritura progresiva visible, parser natural y ronda persistente. | Cada score válido aparece mientras se dicta; ambigüedad revierte el bloque. |
+| `api/voice-health.js` | Evento progresivo privado. | Sólo cantidad y estado; nunca transcripción ni nombres. |
+| `test-v357-synchronized-progressive-voice.mjs`, `test-v359-ios-score-parser-recovery.mjs` | Bancos de ambas ramas sincronizadas. | Progreso visual y lenguaje natural son inseparables. |
+| `.github/workflows/roadmap-gate.yml`, `package.json`, `audit-project.mjs` | Ejecución obligatoria local y remota. | Ninguna conversación puede omitir el banco combinado. |
+| documentos, ROADMAPS, inventario, caché y reconstrucción PDF | Árbol único V360. | V358/V359 aisladas no se presentan como aprobación. |

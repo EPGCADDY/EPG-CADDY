@@ -1768,3 +1768,13 @@ Evidencia raíz: 16:43:01, 16:43:23, 16:43:54, 16:44:06, 16:45:44 y 16:45:58 UTC
 | `service-worker.js` | Caché `gscg-mobile-v359-ios-score-parser-recovery`. | El iPhone recibe el parser nuevo. |
 | `audit-project.mjs`, bancos V270 y V354–V358 | Puerta maestra y regresión acumulada. | Un FAIL detiene Preview. |
 | registro, cola, matrices, ROADMAPS, reconstrucción e inventario | RC-030 y V358 rechazada. | Sólo `browser_fallback_score_applied` físico puede cerrar V359. |
+
+## V360-INTEGRATED-PROGRESSIVE-PARSER
+
+| Archivo exacto | Responsabilidad V360 | Candado |
+|---|---|---|
+| `index-grupal.html` | Integra progreso visual por score, parser natural, alternativas Safari y persistencia. | Ambigüedad revierte; frase válida se ve antes de cerrar el micrófono. |
+| `api/voice-health.js` | Acepta `browser_fallback_round_progressive`. | Privacidad técnica sin contenido hablado. |
+| `test-v357-synchronized-progressive-voice.mjs`, `test-v359-ios-score-parser-recovery.mjs` | Verifican las dos correcciones paralelas juntas. | Ninguna puede reemplazar a la otra. |
+| `.github/workflows/roadmap-gate.yml`, `package.json`, `audit-project.mjs` | Ejecutan el banco combinado. | Un FAIL bloquea Preview. |
+| documentos, caché, ROADMAPS, reconstrucción e inventario | Sello V360 único. | Producción intacta y PASS físico pendiente. |

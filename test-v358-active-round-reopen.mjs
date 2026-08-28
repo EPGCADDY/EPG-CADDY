@@ -4,9 +4,9 @@ import {readFileSync} from "node:fs";
 const html=readFileSync("index-grupal.html","utf8");
 const worker=readFileSync("service-worker.js","utf8");
 
-assert.match(html,/V359-IOS-SCORE-PARSER-RECOVERY-20260828/);
-assert.match(worker,/gscg-mobile-v359-ios-score-parser-recovery/);
-assert.match(html,/if\(directHome&&!sfEmergency&&!demoControlManual&&!round\.configured\)openNewRoundDraft\(\)/);
+assert.match(html,/V360-INTEGRATED-PROGRESSIVE-PARSER-20260828/);
+assert.match(worker,/gscg-mobile-v360-integrated-progressive-parser/);
+assert.match(html,/if\(!round\.configured\)\{[\s\S]*?else if\(directHome\)openNewRoundDraft\(\)/);
 assert.doesNotMatch(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
 
 const opensRegistration=({directHome=true,sfEmergency=false,demo=false,configured=false}={})=>directHome&&!sfEmergency&&!demo&&!configured;
