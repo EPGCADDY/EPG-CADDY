@@ -1423,7 +1423,9 @@ Evidencia y soporte móvil exactos incorporados en el mismo candidato: `.gitigno
 
 ## V364 · entrada final Nueva ronda · 28 de agosto de 2026
 
-La URL explícita `nueva_ronda=1` abre Registro aun con una ronda activa, conserva la ronda anterior y sólo la sustituye al confirmar `INICIAR RONDA`. Archivos: `index-grupal.html`, `service-worker.js`, `test-v364-explicit-new-round-entry.mjs`, `audit-project.mjs`, `package.json`, `scripts/project-quality-gate.mjs`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Producción permanece intacta; el enlace final requiere 3/3 verificaciones externas.
+La URL explícita `nueva_ronda=1` abre Registro aun con una ronda activa, conserva la ronda anterior y sólo la sustituye al confirmar `INICIAR RONDA`. La caché V364 conserva la firma V363 como prefijo para mantener comprobables todos los candados acumulados. Archivos: `index-grupal.html`, `service-worker.js`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v364-explicit-new-round-entry.mjs`, `audit-project.mjs`, `package.json`, `scripts/project-quality-gate.mjs`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Producción permanece intacta; el enlace final requiere 3/3 verificaciones externas.
 ### Promoción pública autorizada V363 — 28 de agosto de 2026
 
 Se autorizó la promoción de V363 a `main`. El Gate 0 conserva la base protegida como ancestro obligatorio y, en el checkout superficial de Vercel, valida repositorio canónico y coincidencia exacta entre `VERCEL_GIT_COMMIT_SHA` y `HEAD`. No se modificó lógica de tarjeta, Match Play, Ronda Normal ni micrófono.
+
+Los tres inventarios V311 fueron regenerados y sellados después de registrar esta promoción.
