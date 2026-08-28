@@ -956,3 +956,16 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `service-worker.js` | `gscg-mobile-v362-physical-voice-recovery`. | Safari invalida V361. |
 | `AGENTS.md`, cola, matriz, registro RC-032 y ambos ROADMAPS | Trazabilidad, estado honesto y protección entre conversaciones. | Producción intacta; Preview y físico siguen separados. |
 | `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello final V362. | El árbol exacto se regenera después de toda modificación. |
+
+## V363-EXTERNAL-SERVICE-RECOVERY
+
+| Archivo exacto | Mapa V363 | Control |
+|---|---|---|
+| `api/_lib/vercel-gateway-auth.js`, `package.json` | Resolvedor OIDC contextual y dependencia oficial `@vercel/oidc` 3.8.5. | Sin secretos en cliente o logs. |
+| `api/universal-ai.js`, `api/voice-speech.js` | Failover administrado de texto y voz mediante el mismo token resuelto. | OpenAI directo conserva prioridad; Cedar/Onyx y privacidad intactos. |
+| `api/_lib/traffic.js` | Diagnóstico seguro de Google Routes. | Sólo HTTP, `providerStatus` y código; nunca origen, destino, GPS, clave o mensaje. |
+| `index-grupal.html`, `service-worker.js` | Build y caché V363. | Invalida V362 y conserva toda la línea física de voz/score. |
+| `test-v362-physical-voice-recovery.mjs`, `test-v363-external-service-recovery.mjs`, `audit-project.mjs`, `.github/workflows/roadmap-gate.yml` | Regresión V362 y puerta V363 local/remota. | Un FAIL bloquea Preview. |
+| `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Firma/caché V363 en bancos históricos. | Cambia sólo identificación; cada comportamiento histórico continúa obligatorio. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | RC-033, estado y trazabilidad. | No confunde banco con proveedor vivo o iPhone físico. |
+| `scripts/rebuild-inventory-pdfs.py`, `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Constructor e inventario final V363. | Se reconstruye y sella después de toda modificación. |

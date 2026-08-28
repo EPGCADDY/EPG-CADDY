@@ -5,9 +5,9 @@ import {sanitizeVoiceHealth} from "./api/voice-health.js";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/gscg-build" content="V362-PHYSICAL-VOICE-RECOVERY-20260828"/);
+assert.match(html,/gscg-build" content="V363-EXTERNAL-SERVICE-RECOVERY-20260828"/);
 assert.match(html,/gscg-ios-voice-recovery" content="V362-ONE-TOUCH-WATCHDOG-MALE-FALLBACK-20260828"/);
-assert.match(worker,/gscg-mobile-v362-physical-voice-recovery/);
+assert.match(worker,/gscg-mobile-v363-external-service-recovery/);
 assert.match(html,/build:"V362"/);
 
 const oneTouchStart=html.indexOf("let lastAiUniversalGestureAt=0");

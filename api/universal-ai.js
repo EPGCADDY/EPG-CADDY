@@ -1,6 +1,7 @@
 import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 import { computeTrafficRoute } from "./_lib/traffic.js";
 import { computeWeatherForecast } from "./weather.js";
+import { resolveGatewayToken } from "./_lib/vercel-gateway-auth.js";
 
 const MAX_QUERY_LENGTH=4000;
 // Conserva hasta 40 intercambios completos para que una conversación extensa
@@ -39,7 +40,7 @@ function upstreamErrorCode(payload){
   return String(payload?.error?.code||payload?.error?.type||"").replace(/[^a-zA-Z0-9_.-]/g,"").slice(0,80)||null;
 }
 
-export async function requestUniversalResponse(body,{apiKey,gatewayToken=process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN,deadlineMs=Date.now()+UNIVERSAL_TIMEOUT_MS,fetchImpl=globalThis.fetch,sleepImpl=ms=>new Promise(resolve=>setTimeout(resolve,ms)),label="universal ai"}={}){
+export async function requestUniversalResponse(body,{apiKey,gatewayToken,deadlineMs=Date.now()+UNIVERSAL_TIMEOUT_MS,fetchImpl=globalThis.fetch,sleepImpl=ms=>new Promise(resolve=>setTimeout(resolve,ms)),label="universal ai"}={}){
   let lastFailure={ok:false,status:503,retryable:true,retryAfterMs:1_000,error:"UNIVERSAL_AI_UNAVAILABLE"};
   for(let index=0;index<OPENAI_ATTEMPTS.length;index++){
     const attempt=OPENAI_ATTEMPTS[index];
@@ -70,6 +71,9 @@ export async function requestUniversalResponse(body,{apiKey,gatewayToken=process
     lastFailure={ok:false,status,retryable,retryAfterMs:retryAfterMs(response)??attempt.delayMs,error:"UNIVERSAL_AI_UNAVAILABLE",providerCode};
     console.warn(`${label} upstream retry`,JSON.stringify({status,providerCode,attempt:index+1,model:attempt.model,retryable,requestId:String(response?.headers?.get?.("x-request-id")||"").slice(0,120)||null}));
     if(!retryable)break;
+  }
+  if(lastFailure.providerCode==="credit_balance_exhausted"&&deadlineMs-Date.now()>=500){
+    gatewayToken=await resolveGatewayToken(gatewayToken);
   }
   if(lastFailure.providerCode==="credit_balance_exhausted"&&gatewayToken&&deadlineMs-Date.now()>=500){
     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),deadlineMs-Date.now());

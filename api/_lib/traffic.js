@@ -43,6 +43,14 @@ function futureDeparture(value,nowMs=Date.now()){
 
 function roundedMinutes(seconds){return Number.isFinite(seconds)?Math.max(0,Math.round(seconds/60)):null}
 
+export function trafficProviderFailure(response,payload){
+  return{
+    status:Number(response?.status)||0,
+    providerStatus:String(payload?.error?.status||"").replace(/[^a-zA-Z0-9_.-]/g,"").slice(0,80)||null,
+    providerCode:Number.isFinite(Number(payload?.error?.code))?Number(payload.error.code):null
+  };
+}
+
 export function summarizeTrafficRoute(payload,{originLabel="Ubicación GPS actual",destinationLabel="Destino",departureTime="",departureTimeAssumed=false,calculatedAt=new Date().toISOString()}={}){
   const route=payload?.routes?.[0]||null;
   const duration=durationSeconds(route?.duration),staticDuration=durationSeconds(route?.staticDuration);
@@ -111,7 +119,10 @@ export async function computeTrafficRoute(request={},options={}){
       })
     });
     const payload=await response.json().catch(()=>null);
-    if(!response.ok)return{ok:false,error:"TRAFFIC_UPSTREAM_UNAVAILABLE",message:"No pude consultar tráfico confiable en este momento. Puedes continuar con otra pregunta."};
+    if(!response.ok){
+      console.warn("traffic routes upstream",JSON.stringify(trafficProviderFailure(response,payload)));
+      return{ok:false,error:"TRAFFIC_UPSTREAM_UNAVAILABLE",message:"No pude consultar tráfico confiable en este momento. Puedes continuar con otra pregunta."};
+    }
     return summarizeTrafficRoute(payload,{
       originLabel:originCoordinates?"Ubicación GPS actual":originAddress,
       destinationLabel:destinationAddress||"Destino indicado",
@@ -120,6 +131,7 @@ export async function computeTrafficRoute(request={},options={}){
       calculatedAt:new Date(nowMs).toISOString()
     });
   }catch(error){
+    console.warn("traffic routes transport",JSON.stringify({code:error?.name==="AbortError"?"TIMEOUT":"NETWORK"}));
     return{ok:false,error:error?.name==="AbortError"?"TRAFFIC_TIMEOUT":"TRAFFIC_UNAVAILABLE",message:"No pude consultar tráfico confiable en este momento. Puedes continuar con otra pregunta."};
   }finally{clearTimeout(timeout)}
 }

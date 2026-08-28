@@ -401,6 +401,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 **Recuperación física V362:** conserva V354–V361, restaura AI ∞ de un toque y corrige el respaldo hablado con un modelo realmente disponible: Cedar directo primero y Onyx masculino por `openai/tts-1-hd` si el directo falla. Safari deja de poder quedar indefinidamente en `ESCUCHANDO` sin primer resultado. El score progresivo conserva guardado/render inmediato y ahora consume y reproduce el resultado de primera vuelta y ronda completa. Banco automático, Preview y prueba física iPhone son puertas separadas; Producción permanece intacta.
 
+**Recuperación externa V363:** V362 quedó desplegado, pero la comprobación viva confirmó OpenAI sin saldo, Gateway sin token estático y Google Routes con fallo upstream no clasificado. V363 obtiene OIDC desde el contexto oficial de la función para AI/voz y registra sólo estado/código de tráfico. No se cierra hasta tres consultas reales de Preview y la prueba física iPhone; Producción permanece intacta.
+
 La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` y E2E de 20 grupos/80 jugadores quedaron PASS, con cero errores de runtime y limpieza Neon confirmada. V353 no requiere migración porque reutiliza el esquema V352. La inspección visual y la prueba física iPhone permanecen abiertas y Producción no se monta. La estabilización física de voz continúa registrada. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
 
 ## Corte V345-ICONS · estado verificable

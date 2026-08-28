@@ -8,10 +8,10 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 const speech=fs.readFileSync("api/voice-speech.js","utf8");
 const audit=fs.readFileSync("audit-project.mjs","utf8");
 
-assert.match(html,/V362-PHYSICAL-VOICE-RECOVERY-20260828/);
+assert.match(html,/V363-EXTERNAL-SERVICE-RECOVERY-20260828/);
 assert.match(html,/V362-ONE-TOUCH-WATCHDOG-MALE-FALLBACK-20260828/);
 assert.match(html,/V362-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828/);
-assert.match(worker,/gscg-mobile-v362-physical-voice-recovery/);
+assert.match(worker,/gscg-mobile-v363-external-service-recovery/);
 for(const file of ["test-v358-ios-score-universal-physical-recovery.mjs","test-v362-physical-voice-recovery.mjs"])assert.ok(audit.includes(file),file);
 
 const direct=cedarSpeechPayload("Respuesta", "es-GT");

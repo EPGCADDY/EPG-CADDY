@@ -1802,3 +1802,19 @@ Archivos exactos V361: `.github/workflows/roadmap-gate.yml`, `audit-project.mjs`
 | `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v362-physical-voice-recovery.mjs` | Restauran el banco de un toque y cubren modelo/voz, watchdog y cierre hablado. | Las integraciones posteriores no pueden retirar silenciosamente V358 ni simular un modelo Gateway no publicado. |
 | bancos V352–V361, `audit-project.mjs`, `package.json`, workflow y Service Worker | Regresión acumulada y shell V362. | Un FAIL detiene Preview; Producción continúa intacta. |
 | documentos rectores, ambos ROADMAPS, mapa, reconstrucción e inventario | RC-032 y árbol reproducible. | PASS automático, Preview y PASS físico se reportan separadamente. |
+
+## V363-EXTERNAL-SERVICE-RECOVERY
+
+| Archivo exacto | Responsabilidad V363 | Candado |
+|---|---|---|
+| `api/_lib/vercel-gateway-auth.js`, `package.json` | Obtiene primero clave administrada y, si falta, solicita OIDC desde el contexto oficial de la función mediante `@vercel/oidc` 3.8.5. | Nunca registra ni devuelve el token; una cadena vacía explícita permite desactivar el respaldo en pruebas. |
+| `api/universal-ai.js`, `api/voice-speech.js` | Usan el mismo resolvedor sólo en servidor para AI Gateway de texto y voz. | OpenAI directo conserva prioridad; Gateway sólo recupera una caída real y no simula saldo. |
+| `api/_lib/traffic.js` | Conserva clasificación de fallo de Google Routes con HTTP, estado y código. | Logs sin origen, destino, GPS, clave ni mensaje del proveedor. |
+| `index-grupal.html`, `service-worker.js` | Build y shell V363. | El iPhone invalida V362 sin perder un toque, parser, guardado, cierre hablado ni voz masculina. |
+| `test-v362-physical-voice-recovery.mjs`, `test-v363-external-service-recovery.mjs` | Regresión V362 y banco nuevo de OIDC/privacidad de tráfico. | Reproduce `PERMISSION_DENIED`, exige token contextual y bloquea secretos en logs. |
+| `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Alinean únicamente build/caché con V363. | LIVE, multihoyos, un toque, parser, persistencia y voz masculina conservan sus assertions funcionales. |
+| `audit-project.mjs`, `.github/workflows/roadmap-gate.yml` | Ejecutan V363 en local, GitHub y Vercel. | Un FAIL detiene Preview. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | RC-033, estado honesto y trazabilidad completa. | READY no equivale a proveedor vivo ni PASS físico. |
+| `scripts/rebuild-inventory-pdfs.py`, `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Constructor, inventarios y sello del candidato. | Se regeneran sólo después de cerrar código, pruebas y documentación. |
+
+La aceptación exige en el mismo Preview: consulta general 200 mediante Gateway cuando OpenAI directo esté sin saldo, `/api/voice-speech` 200 con `X-GSCG-Voice: onyx` o `cedar`, y tráfico real con ETA/demora/distancia o diagnóstico upstream concreto. Después exige iPhone físico para escucha, respuesta masculina y scores. Producción `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` permanece intacta.

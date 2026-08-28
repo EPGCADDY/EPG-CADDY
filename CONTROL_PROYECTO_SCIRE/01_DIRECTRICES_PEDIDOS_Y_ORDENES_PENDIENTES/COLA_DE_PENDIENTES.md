@@ -578,3 +578,11 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - Safari tiene un watchdog de 18 segundos hasta el primer resultado y conserva después el silencio operacional de tres segundos.
 - El score sigue guardándose y dibujándose inmediatamente; al completar hoyo 9 u 18, el cierre encolado se consume y se habla incluso si Realtime requiere el TTS de respaldo.
 - Candidato V362 sujeto a auditoría integral, Preview y prueba física iPhone; Producción permanece intacta.
+
+## V363-EXTERNAL-SERVICE-RECOVERY · control activo de `PEND-VOZ-003` y `PEND-TRA-005`
+
+- AI UNIVERSAL y voz servidor recuperan OIDC desde el contexto Vercel mediante `@vercel/oidc`, sin depender exclusivamente de una variable estática.
+- Cedar directo conserva prioridad y Onyx por Gateway sigue siendo el único respaldo servidor masculino.
+- Google Routes conserva un diagnóstico técnico reproducible de estado/código sin guardar origen, destino, GPS, clave ni mensaje privado.
+- El banco automático no cierra el pendiente: faltan consulta general, TTS y tráfico reales en Preview, más escucha/respuesta/score físicos en iPhone.
+- Producción permanece intacta.
