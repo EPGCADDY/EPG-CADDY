@@ -1818,3 +1818,20 @@ Regresión histórica ajustada al almacenamiento canónico: `test-v267-one-opera
 Archivos exactos V363: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `Intocables/README.md`, `Intocables/REGLAS_INTOCABLES.json`, `Intocables/intocables-gate.mjs`, `audit-project.mjs`, `index-grupal.html`, `live-control.js`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, `service-worker.js`, `test-v260-round-points-player-return.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v362-physical-voice-recovery.mjs`, `test-v363-intocables-behavior.mjs` y `test-v363-recorded-mobile-behavior.mjs`. Ambos ROADMAPS también se actualizan en el mismo cambio.
 
 Evidencia y soporte móvil exactos: `.gitignore`, `scripts/v363-silent-speech-recognition.js`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/REPORTE_PRUEBAS_COMPORTAMIENTO_V363_RC035.md`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/PRUEBA_COMPORTAMIENTO_V363_RC035.mp4`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/PRUEBA_COMPORTAMIENTO_V363_RC035_POSTER.png`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/RC035_IMG_2168_LIVE_SAFE_AREA_FAIL.png` y `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/RC035_IMG_2169_MIC_OVERLAYS_FAIL.png`.
+
+## V364 · entrada final Nueva ronda · 28 de agosto de 2026
+
+- `index-grupal.html`: `nueva_ronda=1` llama la ruta oficial `openNewRoundDraft()` aunque exista tarjeta activa; esa ruta persiste primero y no borra datos.
+- `service-worker.js`: caché renovado para que Safari reciba la corrección.
+- `test-v364-explicit-new-round-entry.mjs`: valida entrada, apertura y ausencia de borrado.
+- `audit-project.mjs` y `package.json`: incorporan el banco V364.
+- `scripts/project-quality-gate.mjs`: conserva el control sincronizado recibido en el árbol compartido.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registro doble del cambio.
+
+Producción no se toca. El Preview se entrega únicamente después de tres comprobaciones externas del mismo artefacto.
+### Promoción pública autorizada V363 — 28 de agosto de 2026
+
+- Alcance técnico: `scripts/project-quality-gate.mjs` y registro documental obligatorio.
+- Integridad: la base `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` debe seguir siendo ancestro fuera de Vercel.
+- Vercel: repositorio `EPGCADDY/EPG-CADDY` y SHA expuesto deben coincidir exactamente con `HEAD`.
+- Fuera de alcance: tarjeta, persistencia de ronda, Match Play, Ronda Normal, voz y comunicación universal permanecen idénticos al candidato V363 probado.
