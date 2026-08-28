@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V351-R4 RECHAZADA EN IPHONE A LAS 18:46; V351-R5 amplía el Score por voz a todas las modalidades y cantidades admitidas, acepta el hoyo antes o después de la tanda y agrega diagnóstico privado por etapa. Requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
+**Estado:** V351-R5 RECHAZADA EN IPHONE A LAS 19:29: Registro y hoyos individuales pasan, pero una tanda continua 3→4→5 no se aplicó. V351-R6 agrega parsing transaccional de varios hoyos para todas las modalidades y cantidades admitidas. Requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -411,3 +411,16 @@ V351-R3 queda rechazada por la prueba física de Match Play de las 18:21. Produc
 El banco nuevo ejecuta 18 configuraciones, 72 recorridos de voz y 264 escrituras de Gross. Cada configuración acepta palabras, dígitos, romanos Safari y el hoyo al principio o al final; una pregunta continúa sin escribir. Los rechazos publican únicamente un código cerrado como `missing_score` o `ambiguous_hole`, nunca transcripción, nombres, Gross ni ubicación.
 
 V351-R4 queda rechazada por las capturas `IMG_2116.png`–`IMG_2119.png` y los eventos `browser_fallback_transcript_ready` + `browser_fallback_score_rejected` de las 00:46:21 UTC. Producción permanece intacta; V351-R5 requiere auditoría integral, Preview y PASS físico iPhone.
+
+## V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE · tanda continua 3→4→5 · 28 de agosto de 2026
+
+| Forma de dictado | PASS obligatorio |
+|---|---|
+| `hoyo 3 … hoyo 4 … hoyo 5 …` | Un Gross inequívoco por jugador y hoyo; una sola transacción. |
+| `hoyo 3 … 4 … 5 …` | Los números abreviados abren el siguiente bloque sólo después de un score nombrado. |
+| `hoyos 3 4 y 5 …` | Cada jugador aporta exactamente tres Gross en el mismo orden. |
+| `JUGADOR hoyo 3 … hoyo 4 … hoyo 5 …` | Conserva el parser estricto anterior y el mismo escritor oficial. |
+
+`test-v351-r6-consecutive-holes-voice-score.mjs` ejecuta las cuatro formas en Ronda Normal/Stableford con 1–6 jugadores y Match Play/Four Ball con 2/4/6: 18 configuraciones, 72 tandas, 792 Gross, persistencia y render. El recorrido físico reproducido pasa además por `processBrowserVoiceTranscript`, termina en `browser_fallback_score_applied` y realiza cero llamadas a AI UNIVERSAL. Preguntas, jugadores ausentes, scores faltantes, duplicados y hoyos inválidos continúan rechazados sin adivinar datos.
+
+V351-R5 queda rechazada por `IMG_2124.png`/`IMG_2125.png` y los eventos privados 01:29:17 `missing_score`, 01:29:39 `ambiguous_score` y 01:29:54 `score_applied` individual, UTC. Producción permanece intacta; V351-R6 requiere auditoría integral, Preview y PASS físico iPhone.

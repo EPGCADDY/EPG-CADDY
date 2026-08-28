@@ -1318,3 +1318,13 @@ V351-R5 conserva el parser estricto y agrega una recuperación segura por segmen
 `test-v351-r5-voice-score-matrix.mjs` ejecuta 18 configuraciones, 72 recorridos de voz y 264 escrituras: Ronda Normal y Stableford con 1–6 jugadores; Match Play y Four Ball con 2, 4 y 6. Usa palabras, dígitos, romanos Safari, hoyo inicial/final, persistencia y render. Las pruebas V270/V267 conservan hoyo 18, cursor, X, tandas, corrección y rechazo transaccional. Producción permanece intacta hasta auditoría, Preview y PASS físico iPhone.
 
 Archivos exactos V351-R5: `index-grupal.html`, `api/voice-health.js`, `test-v351-r5-voice-score-matrix.mjs`, `test-v351-r1-hole1-voice-score-render.mjs`, `test-v270-consecutive-hole-voice-blocks.mjs`, `test-v267-one-operational-line.mjs`, `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs`, `audit-project.mjs`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+## V351-R6 · tres hoyos consecutivos en una sola tanda de voz · 28 de agosto de 2026
+
+La prueba física de las 19:28–19:29 rechazó V351-R5 como solución completa. Registro y hoyos individuales funcionaron, pero dos tandas destinadas a los hoyos 3, 4 y 5 terminaron en `missing_score` y `ambiguous_score`; el intento individual posterior sí terminó en `browser_fallback_score_applied`. No hubo 4xx/5xx y la privacidad impide conservar la transcripción.
+
+V351-R6 agrega recuperación transaccional para bloques `hoyo 3 … hoyo 4 … hoyo 5 …`, continuidad abreviada `hoyo 3 … 4 … 5 …` y listas `hoyos 3 4 y 5 …`, sin adivinar jugadores, hoyos ni Gross. El parser estricto anterior, el escritor oficial, `X`, correcciones, cursor, persistencia y render permanecen comunes.
+
+`test-v351-r6-consecutive-holes-voice-score.mjs` ejecuta cuatro formas de la tanda 3→4→5 en 18 configuraciones: Normal/Stableford 1–6 y Match/Four Ball 2/4/6. Verifica 72 tandas, 792 Gross, fallback real, cero IA y una sola transacción de persistencia/render. Producción permanece intacta hasta auditoría, Preview y PASS físico iPhone.
+
+Archivos exactos V351-R6: `index-grupal.html`, `test-v351-r6-consecutive-holes-voice-score.mjs`, `audit-project.mjs`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.

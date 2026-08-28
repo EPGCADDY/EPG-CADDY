@@ -831,3 +831,14 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `audit-project.mjs` | Incorpora la matriz R5 al banco integral sin retirar pruebas históricas. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-029 rechaza R4 con capturas y logs de las 18:46; conserva el límite honesto de no almacenar transcripciones. |
 | `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R5-ALL-MODES-VOICE-SCORE`. |
+
+## V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE · tres hoyos en una sola transcripción
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | `parseMultiHoleScoreSegments` enruta listas de hoyos y bloques repetidos/abreviados; cada jugador+hoyo conserva un único Gross y la escritura sigue siendo transaccional. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Ejecuta 18 configuraciones, cuatro formas de dictado 3→4→5, 72 tandas y 792 Gross; incluye fallback real, cero IA, escritor, persistencia y render. |
+| `audit-project.mjs` | Agrega el banco R6 sin retirar R5 ni controles históricos de cursor, `X`, corrección o modalidades. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-030 rechaza R5 con evidencia física y códigos privados de etapa; no almacena ni inventa la transcripción. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Separa PASS individual de FAIL multi-hoyo y conserva la prueba física como puerta obligatoria. |
+| `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE`. |

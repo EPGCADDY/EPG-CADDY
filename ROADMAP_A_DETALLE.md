@@ -1642,3 +1642,21 @@ Evidencia física: `IMG_2116.png` registra correctamente; `IMG_2117.jpeg` muestr
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello final. | Huellas posteriores a todos los cambios. |
 
 Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Ningún resultado automático convierte R5 en aprobación física.
+
+## V351-R6 · rechazo R5 y tanda continua de hoyos 3→4→5 · 28 de agosto de 2026
+
+Evidencia física: `IMG_2124.png`/`IMG_2125.png` confirman que Registro e ingreso individual funcionaron, pero los hoyos 3, 4 y 5 dentro de una sola tanda no se aplicaron. Los logs R5 separan dos rechazos de parser (`missing_score`, `ambiguous_score`) del intento individual posterior aplicado; no hubo error HTTP ni salida a IA.
+
+| Archivo exacto | Cambio V351-R6 | Evidencia exigida |
+|---|---|---|
+| `index-grupal.html` | Meta R6, `hoyos?` en el clasificador, `parseHoleListScoreSegments`, `parseHoleFirstScoreBlocks` y `parseMultiHoleScoreSegments`; un único mapa jugador+hoyo. | Bloques repetidos, continuidad abreviada, lista de hoyos y filas por jugador. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Banco multi-hoyo integral. | 18 configuraciones, 72 tandas 3→4→5, 792 Gross, fallback real, cero IA, escritor/persistencia/render. |
+| `audit-project.mjs` | Incorpora R6 al banco maestro sin retirar R5. | Regresión completa ejecutable. |
+| `scripts/rebuild-inventory-pdfs.py` | Corte `V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE`. | Tres PDF y sello actualizados. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-030. | R5 rechazada; causa, escape, control y límite de privacidad conservados. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Estado real R6. | PASS automático separado de PASS físico iPhone. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Mapa de funciones y banco R6. | Rutas exactas registradas. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Doble registro obligatorio. | Mismo alcance y mismo corte. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello final. | Huellas posteriores a todos los cambios. |
+
+Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R6 no se presenta como aprobada hasta superar auditoría, Preview y la prueba física de la misma tanda 3→4→5.
