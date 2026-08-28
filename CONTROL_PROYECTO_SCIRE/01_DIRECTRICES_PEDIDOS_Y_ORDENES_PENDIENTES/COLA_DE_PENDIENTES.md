@@ -7,7 +7,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
 | 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V327-R1 aprobó banco automatizado y Preview; nueva prueba física detectó respuestas vagas, corte de conversación y estados bilaterales poco visibles |
-| 2 | `PEND-TRA-005` tráfico actual y futuro | Google Maps Routes activo y probado; faltan comparación simultánea con Waze y validación física en Guatemala |
+| 2 | `PEND-TRA-005` tráfico actual y futuro | Motor mundial V354 aprobado y blindado: 3/3 comparaciones PASS; la reproducción física de voz queda separada en G0-06 |
 | 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
 | 5 | `PEND-CAM-009` campos mundiales | Falta proveedor/catálogo licenciado y tarjetas oficiales verificables |
@@ -19,7 +19,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 11 | `PEND-EST-012` estadísticas avanzadas | Estadística local básica entregada; faltan histórico central, tendencias y comparaciones multi-dispositivo |
 | 12 | `PEND-COM-013` monetización y operación comercial | Falta modelo comercial, términos, privacidad, soporte y proveedores de pago/entrega |
 | 13 | `PEND-QA-014` certificación integral | Falta banco final automático, visual y físico por dispositivo, modalidad, ruido, conexión y ronda completa |
-| 14 | `PEND-CLI-002` clima completo en artefactos | Clima vivo entregado; faltan proveedor comparado, snapshots, historial, PDF/imagen y prueba de campo |
+| 14 | `PEND-CLI-002` clima completo en artefactos | Motor mundial V354 aprobado y blindado: 3/3 comparaciones PASS; siguen pendientes snapshots, historial y artefactos |
 | 15 | `PEND-MAN-004` Guía Rápida | Falta versión web/PDF visual enlazada al Manual vigente |
 | 16 | `PEND-UBI-015` detectar el campo por GPS | Falta catálogo geográfico verificado, propuesta segura, confirmación manual y prueba física por campo |
 | 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
@@ -87,7 +87,7 @@ Este pendiente sólo podrá declararse terminado cuando exista fuente reglamenta
 ## PEND-CLI-002 · Clima sincronizado por campo y guardado en la tarjeta
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** EN PROGRESO · GPS AUTOMÁTICO Y CLIMA VISIBLE EN TARJETA V312 IMPLEMENTADOS; ARTEFACTOS Y VALIDACIÓN FÍSICA PENDIENTES
+**Estado:** MOTOR DE DATOS MUNDIAL V354 APROBADO Y BLINDADO · GPS/GOOGLE WEATHER/OPEN-METEO PASS; ARTEFACTOS HISTÓRICOS PENDIENTES
 **Prioridad:** Principal, pendiente de orden de ejecución del propietario  
 **Solicitud original:** “Guardar el clima, también sincronizarlo en la tarjeta dependiendo del campo que se seleccione y su locación”.
 
@@ -132,6 +132,15 @@ El clima será un dato contextual de la ronda. No podrá alterar automáticament
 - La misma ruta se ejecuta en General, Match Play, Four Ball, Stableford y Práctica; una tarjeta cerrada oficialmente no vuelve a actualizarse.
 - El Caddie usa el GPS como primera opción para preguntas de clima y nunca escribe scores.
 - Continúan pendientes la vista previa en Configuración, snapshots formales de inicio/cierre, historial y artefactos PDF/imagen, comparación física de proveedores y validación final en campo.
+
+### Aprobación V354 del motor mundial · 28 de agosto de 2026
+
+- Google Weather permanece como proveedor primario y Open-Meteo entra automáticamente donde el primario no cubre una coordenada.
+- Ciudad de Guatemala, Roma y Tokio aprobaron 3/3 contrastes contra AccuWeather, Weather.com y Meteoblue; diferencia térmica observada de 0.6–3.0 °C con condición y precipitación coherentes.
+- GPS, lugar escrito y respaldo del campo funcionan sin `region=gt`, país fijo ni exposición de coordenadas.
+- El código funcional aprobado es `f36ff684a0f778aadc58099923781d2d524330fc`, Preview `dpl_F24mYA2iYLpj9esQKp2dHHpGwv4s`.
+- `APROBACION_V354_TRAFICO_CLIMA_MUNDIAL.md`, el lock JSON y `test-v354-approved-traffic-weather-lock.mjs` bloquean cambios accidentales entre conversaciones.
+- Esta aprobación cierra el motor de datos; snapshots, historial y artefactos siguen dentro del pendiente sin reabrir el proveedor ni la arquitectura aprobados.
 
 ### Condiciones de cierre futuro
 
@@ -243,7 +252,7 @@ La Guía Rápida se considerará terminada cuando cubra el recorrido básico com
 ## PEND-TRA-005 · Tiempo de llegada y tránsito sin mostrar mapa
 
 **Fecha de registro:** 25 de agosto de 2026
-**Estado:** CREDENCIAL Y GOOGLE ROUTES ACTIVOS EN PREVIEW · V327-R1 APROBADA AUTOMÁTICAMENTE; PRUEBA FÍSICA Y COMPARACIÓN WAZE PENDIENTES
+**Estado:** MOTOR MUNDIAL V354 APROBADO Y BLINDADO · GOOGLE ROUTES/GPS/PRIVACIDAD 3 DE 3 PASS; VOZ FÍSICA ES PUERTA INDEPENDIENTE
 **Prioridad:** Alta · pendiente conversación física prolongada y comparación Guatemala/iPhone
 **Solicitud original:** preguntar al Caddie cuánto tráfico hay para ir a casa en Pradera y escuchar únicamente tiempo estimado y comentarios, sin abrir una gráfica de navegación.
 
@@ -271,6 +280,15 @@ Permitir una pregunta natural como `¿Cómo está el tráfico para ir a mi casa 
 ### Condiciones de cierre futuro
 
 Este pendiente sólo podrá cerrarse con destino exacto validado, proveedor y facturación activos, varias pruebas de ETA real en Guatemala comparadas a la misma hora contra Waze, límites de privacidad, manejo de error/sin GPS, conversación bilateral prolongada en iPhone y explicación añadida al Manual. La batería simulada V324 no sustituye esa validación física.
+
+### Aprobación V354 del motor mundial · 28 de agosto de 2026
+
+- El Pulté Golf → Pradera Concepción, Piazza Navona → Colosseo y Tokyo Station → Shibuya Crossing aprobaron 3/3 comparaciones simultáneas, con igualdad de minutos y distancia frente a Google Maps.
+- El GPS autorizado aporta ciudad, estado y país dinámicos; un origen escrito se conserva y una orden con sólo destino usa GPS como origen.
+- La respuesta incluye ETA, demora, distancia, nivel, hora, proveedor y `TRAFFIC_AWARE_OPTIMAL`; nunca devuelve coordenadas.
+- El código funcional aprobado es `f36ff684a0f778aadc58099923781d2d524330fc`, Preview `dpl_F24mYA2iYLpj9esQKp2dHHpGwv4s`.
+- `APROBACION_V354_TRAFICO_CLIMA_MUNDIAL.md`, el lock JSON, el banco V324 y el nuevo candado V354 impiden cambios accidentales entre conversaciones.
+- La exactitud y arquitectura del motor quedan cerradas. La reproducción de audio pertenece a G0-06 y no reabre este PASS de datos.
 
 ### Frases para localizar este pendiente
 

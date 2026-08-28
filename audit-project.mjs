@@ -58,6 +58,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v328-offline-offic
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v335-response-caliber.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v336-microphone-transport.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v337-universal-weather.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v354-approved-traffic-weather-lock.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v345-home-icons.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v329-skins.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v330-side-games.mjs');

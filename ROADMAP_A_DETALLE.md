@@ -1706,3 +1706,24 @@ Diagnóstico reproducido: `/api/session-grupal` 429, transcripción alternativa 
 ## V354-R3 · continuidad climática mundial con dos proveedores
 
 El Preview real respondió con Google Weather en Roma, Sídney y Ciudad del Cabo, pero Google devolvió 404 en Tokio. `api/weather.js` usa ahora Google como primario y Open-Meteo como respaldo automático mundial para condiciones actuales y pronósticos. La aplicación no pide otra orden, no fija país y no expone coordenadas. `test-v337-universal-weather.mjs` exige el respaldo; Producción sigue intacta y la prueba hablada física permanece pendiente.
+
+## V354-LOCK · aprobación, hashes y control entre conversaciones
+
+| Archivo exacto | Control permanente | PASS obligatorio |
+|---|---|---|
+| `AGENTS.md` | `NO-PARALLEL-REGRESSION` | Toda conversación debe preservar V354 salvo orden nueva y explícita del propietario que nombre tráfico/clima. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/APROBACION_V354_TRAFICO_CLIMA_MUNDIAL.md` | `OWNER-APPROVAL-EVIDENCE` | Código `f36ff684…`, Preview `dpl_F24…`, 3/3 tráfico, 3/3 clima, tolerancia 0.6–3.0 °C, siete entradas y rollback visibles. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/V354_TRAFFIC_WEATHER_APPROVAL.lock.json` | `EXACT-HASH-LOCK` | Los módulos/pruebas dedicados coinciden byte por byte; invariantes compartidos y política de cambio permanecen declarados. |
+| `test-v354-approved-traffic-weather-lock.mjs` | `V354-APPROVAL-GATE` | Verifica hashes, Google Routes, GPS mundial, origen escrito, destino-only, privacidad, Google Weather, Open-Meteo y cero `region=gt`. |
+| `scripts/project-quality-gate.mjs` | `PRE-CANDIDATE-V354-GATE` | Un cambio no autorizado produce FAIL antes del candidato. |
+| `audit-project.mjs` | `AUDIT-PACKAGE-96` | La regresión integral no puede omitir el módulo aprobado. |
+| `.github/workflows/roadmap-gate.yml` | `GITHUB-PUSH-PR-GATE` | Cada push/PR ejecuta el candado y detiene una regresión. |
+| `package.json` | `traffic-weather:approval-gate` | El control puede repetirse de forma directa y estable. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json` | `REQUIRED-CONTROLS-10` | Aprobación, lock y test son obligatorios; ausencia o corrupción bloquean Gate 0. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-024/RC-025-CLOSED-DATA` | Cierra los defectos del motor mundial sin confundir voz/artefactos. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | `APPROVED-BASE-SEPARATE-PENDING` | El motor deja de figurar como incierto; sólo continúan las puertas distintas. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | `MAP-V354-LOCK` | Permite localizar aprobación, lock, prueba y responsabilidades sin revisar conversaciones. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `DOUBLE-REGISTER` | Todas las rutas modificadas constan literalmente en ambos ROADMAPS. |
+| `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `SEALED-FINAL-TREE` | Los tres inventarios y su SHA-256 corresponden al árbol blindado final. |
+
+Evidencia aprobada: El Pulté Golf → Pradera Concepción 37 min/15.0 km; Piazza Navona → Colosseo 16 min/3.8 km; Tokyo Station → Shibuya Crossing 17 min/10.7 km, todos iguales al comparador simultáneo. Ciudad de Guatemala, Roma y Tokio aprobaron el contraste climático con AccuWeather, Weather.com y Meteoblue. La aprobación corresponde al motor de datos en Preview; G0-06 de voz física, artefactos históricos y Producción permanecen independientes. Rollback: restaurar el bloque funcional desde `f36ff684a0f778aadc58099923781d2d524330fc`; Producción continúa en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.

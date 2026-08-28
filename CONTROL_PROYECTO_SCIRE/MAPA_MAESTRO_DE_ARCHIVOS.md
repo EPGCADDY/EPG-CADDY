@@ -847,3 +847,25 @@ Resultado local V353: `test-v352-live.mjs`, `test-v353-live-hub.mjs` y `scripts/
 `api/weather.js` conserva Google Weather como fuente primaria y añade Open-Meteo como respaldo automático para coordenadas sin cobertura del primario; `test-v337-universal-weather.mjs`, ambos ROADMAPS, matriz y reincidencias registran el candado. Producción permanece intacta.
 
 `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v312-general-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs`, `test-v328-offline-official-rules.mjs`, `test-v329-skins.mjs` y `test-v330-side-games.mjs` exigen una caché PWA con versión `gscg-mobile-v###` sin congelarla en V332. `test-v352-live.mjs` conserva el control exacto de `gscg-mobile-v352-live` y `/live-control.js`.
+
+## V354-LOCK · aprobación y blindaje mundial de tráfico/clima
+
+| Archivo exacto | Responsabilidad protegida |
+|---|---|
+| `AGENTS.md` | Prohíbe tocar el bloque V354 desde mantenimiento adyacente u otra conversación sin orden explícita del propietario. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/APROBACION_V354_TRAFICO_CLIMA_MUNDIAL.md` | Conserva dictamen, código aprobado, deployment, 3/3 casos de tráfico, 3/3 de clima, siete entradas, límites y rollback. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/V354_TRAFFIC_WEATHER_APPROVAL.lock.json` | Guarda hashes exactos de módulos/pruebas dedicados, invariantes compartidos y política de cambio. |
+| `test-v354-approved-traffic-weather-lock.mjs` | Recalcula hashes, comprueba GPS mundial, proveedores, privacidad, cero `region=gt` y presencia en las puertas obligatorias. |
+| `scripts/project-quality-gate.mjs` | Ejecuta el candado V354 antes de aceptar cualquier candidato. |
+| `audit-project.mjs` | Incorpora el candado como paquete 96 de la auditoría integral. |
+| `.github/workflows/roadmap-gate.yml` | Ejecuta el candado en cada push, pull request o despacho manual de GitHub. |
+| `package.json` | Expone `traffic-weather:approval-gate` como comando reproducible. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md` | Define el alcance aprobado y separa el motor de datos de la puerta física de voz. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json` | Convierte aprobación, lock y prueba en controles obligatorios; su ausencia produce FAIL. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | Cierra RC-024 y RC-025 para el motor aprobado sin ocultar las puertas independientes. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Conserva datos aprobados y separa voz/artefactos todavía pendientes. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Pasa tráfico/clima mundial a base cerrada y registra la prohibición de regresión. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Registran esta aprobación y todos los archivos exactos en el mismo cambio. |
+| `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Inventarios y sello regenerados sobre el árbol final aprobado. |
+
+Código funcional congelado: `f36ff684a0f778aadc58099923781d2d524330fc`. Preview verificado: `dpl_F24mYA2iYLpj9esQKp2dHHpGwv4s`. Producción continúa en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.

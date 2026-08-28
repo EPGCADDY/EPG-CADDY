@@ -20,6 +20,7 @@
     "roadmap:gate": "node scripts/roadmap-gate.mjs",
     "inventory:gate": "node scripts/inventory-gate.mjs",
     "quality:gate": "node scripts/project-quality-gate.mjs",
+    "traffic-weather:approval-gate": "node test-v354-approved-traffic-weather-lock.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

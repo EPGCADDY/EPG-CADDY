@@ -32,9 +32,12 @@
 | G0-10 | Integridad operativa | escritor único, estados, cálculos, persistencia, corrección, historial, modalidades y navegador real | auditoría maestra y recorrido real sin errores |
 | G0-11 | Producción | sin cambios mientras exista un FAIL; despliegue sólo con aprobación expresa y rollback | commit/deployment exactos y hashes antes/después |
 
+## Candado aprobado V354 · tráfico, clima y GPS mundial
+
+La integración de datos vivos aprobada por el propietario el 28 de agosto de 2026 queda bajo `APROBACION_V354_TRAFICO_CLIMA_MUNDIAL.md`, `V354_TRAFFIC_WEATHER_APPROVAL.lock.json` y `test-v354-approved-traffic-weather-lock.mjs`. El candado protege Google Maps Routes `TRAFFIC_AWARE_OPTIMAL`, GPS con contexto mundial dinámico, privacidad de coordenadas, Google Weather primario y Open-Meteo como respaldo mundial automático. Una conversación distinta no puede retirar, regionalizar ni sustituir este bloque sin una orden nueva y explícita del propietario que nombre tráfico o clima y sin repetir la auditoría integral. La aprobación corresponde al motor de datos en Preview; la puerta física del micrófono y el montaje de Producción permanecen controles independientes.
+
 ## Lógica de resultado
 
 `PASS INTEGRAL = G0-01 AND G0-02 AND ... AND G0-11`
 
 Un PASS automático parcial no sustituye prueba física o humana exigida. Si falta una evidencia, el rubro permanece FAIL. Producción no se toca.
-

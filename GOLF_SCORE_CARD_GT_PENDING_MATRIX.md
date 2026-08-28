@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V353 agrega `MONITOR GENERAL` y `MONITOR INDIVIDUAL` sobre LIVE V352; banco local de 80 jugadores PASS; Preview/E2E/navegador V353 y prueba física iPhone pendientes
+**Corte vigente:** V354 aprueba y blinda en repositorio el motor mundial de tráfico, clima y GPS; 3/3 casos de tráfico y 3/3 de clima PASS; Producción permanece intacta
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -38,6 +38,9 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - ✅ Stableford calcula Gross y puntos por jugador para `OUT`, `IN` y `TOTAL`.
 - ✅ Stableford conserva localmente el torneo de cuatro fechas y clasificación por mejores tres resultados.
 - ✅ Una ronda cerrada puede corregirse mediante versión oficial nueva, conservando original, motivo, responsable, fecha, SHA-256 y recálculo General/Stableford.
+- ✅ Motor mundial de tráfico V354 aprobado: Google Maps Routes `TRAFFIC_AWARE_OPTIMAL`, GPS dinámico, destino local contextual, 3/3 comparaciones exactas y coordenadas privadas.
+- ✅ Motor mundial de clima V354 aprobado: Google Weather primario, Open-Meteo de respaldo automático, 3/3 ciudades contrastadas y cero país fijo.
+- ✅ Candado V354 obligatorio en Gate 0, auditoría y GitHub impide cambios accidentales desde conversaciones paralelas.
 
 ## Orden real de ejecución
 
@@ -167,7 +170,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 12. Clima sincronizado por campo
 
-**Estado:** EN PROGRESO · GPS automático visible desde Inicio y dentro de la tarjeta V314; artefactos y validación física pendientes · `PEND-CLI-002`
+**Estado:** MOTOR MUNDIAL V354 APROBADO Y BLINDADO · artefactos históricos aún pendientes · `PEND-CLI-002`
 
 - Asociar cada campo con coordenadas y zona horaria oficiales verificadas.
 - Mostrar el clima en Configuración inmediatamente después de elegir el campo y conservarlo dentro de la tarjeta activa.
@@ -176,6 +179,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Conservar snapshots climáticos de inicio y cierre sin reescribir una tarjeta histórica.
 - Compartir la misma integración entre General, Stableford, Match Play, Four Ball y Práctica.
 - Permitir consultas climáticas por micrófono sin modificar scores ni resultados.
+- **Aprobación V354:** Ciudad de Guatemala, Roma y Tokio aprobaron 3/3 contrastes; Google Weather primario y Open-Meteo automático quedan congelados por lock y regresión. La voz física y los artefactos son puertas independientes.
 - **Implementado V314:** la primera pantalla muestra condición, temperatura, sensación, lluvia, viento y hora usando primero el GPS. Al abrir una tarjeta activa también muestra y guarda el clima, lo renueva cada diez minutos y nunca actualiza una tarjeta cerrada; si no hay GPS usa el campo seleccionado como respaldo.
 - Mantener operativa la ronda cuando el clima no esté disponible y rotular claramente cualquier dato anterior.
 - Comparar WeatherKit, Tomorrow.io y OpenWeather mediante mediciones en los clubes; WeatherKit es candidato inicial, no proveedor aprobado sin piloto.
@@ -227,14 +231,14 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 15. Tránsito y tiempo de llegada por voz
 
-**Estado:** PROVEEDOR Y CREDENCIAL ACTIVOS EN PREVIEW · V327-R1 APROBADA AUTOMÁTICAMENTE; comparación Waze/iPhone pendiente · `PEND-TRA-005`
+**Estado:** MOTOR MUNDIAL V354 APROBADO Y BLINDADO · 3/3 comparaciones exactas; voz física independiente · `PEND-TRA-005`
 
 - AI UNIVERSAL ∞ ya enruta voz y texto a Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL` y resume ETA, demora, distancia y hora sin mostrar mapa ni revelar coordenadas.
 - Waze no entrega silenciosamente estos datos a una web común; sus Deep Links abren Waze y su Transport SDK requiere asociación, aplicación nativa aprobada y atribución.
 - Timeout, proveedor caído, falta de GPS o permiso regresan una respuesta recuperable para que el micrófono pueda continuar.
 - La ruta exacta El Pulté Golf → Pradera Concepción devolvió 15 km y aproximadamente 33 minutos en la medición del diagnóstico. `Concepción` por sí solo es ambiguo y debe generar una única pregunta breve.
 - En el banco desplegado V327-R1, El Pulté Golf → Pradera Concepción devolvió 16.1 km y 31 minutos; la salida futura El Pulté Golf → colonia Oakland zona 10 a las 12:30 p. m. devolvió 21.6 km, 48 minutos y 13 minutos de demora prevista.
-- No se cierra todavía: requiere pruebas físicas prolongadas en iPhone y comparación de varias rutas/horarios reales en Guatemala contra Waze.
+- El motor de datos queda cerrado y protegido en V354: 3/3 rutas simultáneas coincidieron en minutos y distancia; GPS dinámico y privacidad PASS. La conversación física prolongada sigue en G0-06 y no reabre este PASS.
 
 ### 16. Juegos y apuestas: Skins, Wolf, Vegas y Dots
 
@@ -366,8 +370,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ## Mejoras continuas
 
-- V354-R2 corrige RC-024 en candidato mundial: GPS autorizado aporta ciudad, estado y país para tráfico/clima; no existe país fijo y la regresión cubre seis regiones globales. Preview y respuesta hablada en iPhone siguen pendientes.
-- V354-R3 agrega continuidad climática mundial: Google Weather es primario y Open-Meteo entra automáticamente donde Google devuelve ausencia de cobertura. La prueba física hablada en iPhone permanece pendiente.
+- V354-R2/R3 queda aprobado para el motor mundial de datos: GPS autorizado aporta ciudad, estado y país; Google Routes, Google Weather y Open-Meteo automático aprobaron la batería comparativa y el Preview.
+- V354-LOCK registra código `f36ff684…`, deployment `dpl_F24mYA2iYLpj9esQKp2dHHpGwv4s`, evidencia 3/3 + 3/3, hashes e invariantes. Gate 0, auditoría y GitHub lo ejecutan obligatoriamente; otra conversación no puede tocarlo sin orden explícita del propietario.
 
 - Cobertura de vocabulario, nombres, acentos, ruido y pausas de dictado.
 - Funcionamiento estable en iPhone, Android, pantalla bloqueada, segundo plano y reconexión.

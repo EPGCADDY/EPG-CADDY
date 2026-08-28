@@ -1,0 +1,39 @@
+{
+  "schema": "gscg-approved-module-lock/v1",
+  "version": "V354-TRAFFIC-WEATHER-WORLDWIDE-APPROVED-20260828",
+  "status": "APPROVED_AND_LOCKED_IN_REPOSITORY",
+  "ownerApprovalDate": "2026-08-28",
+  "repository": "EPGCADDY/EPG-CADDY",
+  "branch": "v354-google-traffic-weather-integrated",
+  "approvedCodeBaselineCommit": "f36ff684a0f778aadc58099923781d2d524330fc",
+  "productionBaselineCommit": "0dc1ba7a62b6bd6aec92752c539ca641cf950e26",
+  "previewDeployment": "dpl_F24mYA2iYLpj9esQKp2dHHpGwv4s",
+  "approvalScope": "Motor mundial de tráfico vehicular y clima, GPS contextual y privacidad de coordenadas en Preview.",
+  "excludedIndependentGates": [
+    "Transporte y reproducción física de voz en iPhone",
+    "Artefactos históricos de clima de inicio/cierre",
+    "Montaje en Producción y lanzamiento comercial integral"
+  ],
+  "exactFileSha256": {
+    "api/_lib/traffic.js": "7424b4c5acf549c532d6a152ee85daddaec9e488ad3bd2e7b2450dca0fca2a31",
+    "api/traffic.js": "bb66b8d4caade2155d186d113886e3565116194d180d57688bdc89e70052c5ba",
+    "api/weather.js": "7ecf2afc3432eae5474b42ac181bae0a3432d2c52995298f91d54cc341a1e246",
+    "test-v324-real-traffic.mjs": "b20b4a4581e7b99a641197de0c0301827d5c6664501ee50577cc811aef45f023",
+    "test-v337-universal-weather.mjs": "77c2317524015ce256abc2ae07d7a0995d9d47a2911a8a5f516b2dfe0ec467e3"
+  },
+  "protectedSharedFiles": [
+    "api/universal-ai.js",
+    "index-grupal.html"
+  ],
+  "mandatoryInvariants": [
+    "Google Maps Routes usa TRAFFIC_AWARE_OPTIMAL y no depende de OpenAI para consultas explícitas de tráfico.",
+    "GPS autorizado obtiene ciudad, estado y país dinámicos sin país fijo.",
+    "Un origen escrito se conserva y una consulta con sólo destino usa GPS como origen.",
+    "Las coordenadas exactas no aparecen en la respuesta ni en el historial conversacional.",
+    "Google Weather permanece como proveedor primario.",
+    "Open-Meteo permanece como respaldo mundial automático para clima actual y pronóstico.",
+    "No se reintroduce region=gt ni otro sesgo territorial fijo."
+  ],
+  "changePolicy": "No modificar este bloque por mantenimiento adyacente ni por otra conversación. Sólo una orden nueva y explícita del propietario que nombre tráfico o clima permite cambiarlo; después deben actualizarse este lock, ambos ROADMAPS, el mapa maestro, la evidencia y la auditoría integral.",
+  "rollback": "Restaurar los cinco archivos de hash exacto desde f36ff684a0f778aadc58099923781d2d524330fc; conservar Producción en 0dc1ba7a62b6bd6aec92752c539ca641cf950e26."
+}

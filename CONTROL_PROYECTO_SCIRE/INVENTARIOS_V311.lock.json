@@ -1,18 +1,18 @@
 {
   "version": "V354-GOOGLE-TRAFFIC-WEATHER",
-  "generatedAt": "2026-08-28T13:45:35Z",
-  "sourceFileCount": 359,
-  "sourceDigest": "2030d33e42af257e891e142e03023283d9c92e4349e7936827a951b46c7286ef",
+  "generatedAt": "2026-08-28T16:35:46Z",
+  "sourceFileCount": 362,
+  "sourceDigest": "c9b2b13e352aedf75b0c0acbae5407b90dd1181b547fc29587a8fe6c704a834e",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 184217,
-      "sha256": "abeabde0c0142193a64cdced80311e6683c3b738b350fb1371b3c0b1a0b6f258"
+      "size": 185676,
+      "sha256": "d479f5bb3bc0b04918503a830e9c72f8a5c5d54242db4729680d951c05afabe8"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 206002,
-      "sha256": "e63457223e40009d1b96190abb883cf751a5d9421839bccd36b706b69b7810b7"
+      "size": 209382,
+      "sha256": "481675f7c67412b20527b8964f25a9fb4ccae1024e7b373ef007fe5979744dd5"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

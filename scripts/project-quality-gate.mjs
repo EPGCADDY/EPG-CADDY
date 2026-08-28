@@ -63,5 +63,10 @@ for(const path of ['ROADMAP_OVERALL.md','ROADMAP_A_DETALLE.md','GOLF_SCORE_CARD_
   if(!existsSync(path))errors.push(`Falta archivo de control del proyecto: ${path}`);
 }
 
+if(!errors.length&&!simulatedMissing){
+  const approvalGate=spawnSync(process.execPath,['test-v354-approved-traffic-weather-lock.mjs'],{encoding:'utf8'});
+  if(approvalGate.status!==0)errors.push(`Falló el candado V354 tráfico/clima: ${approvalGate.stderr||approvalGate.stdout||'sin detalle'}`.trim());
+}
+
 if(errors.length)fail(errors);
 console.log(`PROJECT_QUALITY_GATE PASS controls=${controls.length} inputs=7 gates=11 production=${baseline.slice(0,12)}`);

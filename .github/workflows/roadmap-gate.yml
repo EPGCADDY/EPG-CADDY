@@ -40,3 +40,6 @@ jobs:
 
       - name: Block thin Match Play arrows and verbose format labels
         run: node test-v307-match-arrows-format.mjs
+
+      - name: Block unauthorized traffic and weather changes
+        run: node test-v354-approved-traffic-weather-lock.mjs
