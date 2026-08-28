@@ -8,9 +8,9 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 const universal=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 const speech=fs.readFileSync(new URL("./api/voice-speech.js",import.meta.url),"utf8");
 
-assert.match(html,/V357-IOS-VOICE-TRANSPORT-RECOVERY-20260828/);
+assert.match(html,/V358-IOS-SCORE-UNIVERSAL-PHYSICAL-RECOVERY-20260828/);
 assert.match(html,/CEDAR-1\.15-MALE-INTERNATIONAL-SPANISH/);
-assert.match(worker,/gscg-mobile-v357-ios-voice-transport-recovery/);
+assert.match(worker,/gscg-mobile-v358-ios-score-universal-physical-recovery/);
 
 for(const contract of [
   'aiUniversalRemember("user",transcript,[],{visible:false})',

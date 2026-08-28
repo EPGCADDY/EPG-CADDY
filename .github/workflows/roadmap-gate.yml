@@ -41,8 +41,8 @@ jobs:
       - name: Block thin Match Play arrows and verbose format labels
         run: node test-v307-match-arrows-format.mjs
 
-      - name: Block iPhone microphone and universal voice regressions
-        run: node test-v357-ios-voice-transport-recovery.mjs
+      - name: Block physical iPhone score and AI Universal regressions
+        run: node test-v358-ios-score-universal-physical-recovery.mjs && node test-v357-ios-voice-transport-recovery.mjs
 
       - name: Preserve approved voice behavior V354 through V356
         run: node test-v354-voice-fallback.mjs && node test-v355-ios-audio-dictation.mjs && node test-v356-voice-only-cedar-quality.mjs

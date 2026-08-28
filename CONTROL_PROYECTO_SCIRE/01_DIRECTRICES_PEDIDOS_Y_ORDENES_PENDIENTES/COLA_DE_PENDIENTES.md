@@ -6,7 +6,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
-| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V357 corrige el 429 físico: iPhone abre reconocimiento local en el mismo toque; multi-hoyos y AI UNIVERSAL sobreviven sin depender de Realtime; banco PASS, Preview y prueba física pendientes |
+| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V358 corrige el rechazo físico posterior: score natural con jugador pendiente y AI ∞ de un toque; conserva transporte V357, Cedar y datos V356; banco, Preview y prueba física separados |
 | 2 | `PEND-TRA-005` tráfico actual y futuro | V356 corrige horizontes 30 min/1 h/3 h/mañana/próxima semana; faltan Preview, comparación simultánea independiente con Waze y validación física en Guatemala |
 | 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
@@ -25,7 +25,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
 | 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V353 CENTRO LIVE: local/Preview/E2E 80 jugadores/observabilidad PASS; inspección visual y prueba física iPhone pendientes |
 
-La prioridad activa por la observación física más reciente es `PEND-VOZ-003` V357; `PEND-LIVE-018` V353 conserva su E2E aprobado y sus puertas físicas abiertas. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
+La prioridad activa por la observación física más reciente es `PEND-VOZ-003` V358; `PEND-LIVE-018` V353 conserva su E2E aprobado y sus puertas físicas abiertas. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
 
 **Autorización de ejecución permanente:** el propietario ordenó el 26 de agosto de 2026 agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versión cuando esté realmente probada. Esta autorización no convierte un `FAIL` en `PASS` ni permite simular licencias, credenciales o integraciones externas inexistentes.
 
@@ -144,7 +144,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V357 RECUPERACIÓN DE TRANSPORTE IPHONE EN BANCO PASS; PREVIEW Y VALIDACIÓN FÍSICA IPHONE PENDIENTES
+**Estado:** V358 SCORE NATURAL Y AI UNIVERSAL DE UN TOQUE EN BANCO; PREVIEW Y VALIDACIÓN FÍSICA IPHONE PENDIENTES
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -210,6 +210,8 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - La prueba física posterior confirmó que V355 habló, pero mostró la consulta y respuesta como texto y Safari eligió una voz femenina ajena a la matriz. V356 marca los turnos hablados como contexto no visible y conserva texto únicamente para consultas escritas.
 - V356 recupera la matriz aprobada: voz `Cedar`, velocidad `1.15`, locutor masculino adulto, serio, profesional y español internacional neutro. `/api/voice-speech` intenta OpenAI TTS y usa AI Gateway como respaldo; la selección local sólo admite voces masculinas conocidas y jamás toma la primera voz española disponible.
 - V356 conserva Google Maps Routes `TRAFFIC_AWARE_OPTIMAL` como fuente exclusiva de ETA/demora/distancia, Open-Meteo estructurado para clima y GPT-5.6 con búsqueda web y profundidad adaptable para vocabulario universal. La voz meteorológica resume el resultado sin leer las 24 horas completas.
+- La prueba física V357 de las 11:12 hora Guatemala confirmó Registro aplicado, pero la ronda terminó en `parser_rejected` con cero entradas; el botón `AI ∞` no produjo una solicitud porque sólo abría el panel.
+- V358 acepta pronunciaciones naturales de Safari para hoyo/número/ordinal/golpes, usa al siguiente jugador pendiente cuando se omite el nombre y mantiene bloqueo ante dos scores posibles. Tocar `AI ∞` abre el panel y el micrófono en el mismo gesto; la pregunta hablada permanece `voiceOnly` y Cedar 1.15.
 
 - Las respuestas generales pueden resultar vagas, básicas o demasiado breves hasta que el usuario pide expresamente una respuesta más estudiada, investigada, profunda y formal. Debe incorporarse una matriz permanente de calidad que revise pertinencia, fundamento, profundidad, precisión, aplicación práctica y claridad antes de cada respuesta, sin obligar al usuario a repetir esa orden.
 - En la quinta conversación física el estado quedó escuchando y, después de terminar la pregunta, el turno se cortó sin completar el ciclo. Debe reproducirse y corregirse la recuperación del micrófono en conversaciones consecutivas.

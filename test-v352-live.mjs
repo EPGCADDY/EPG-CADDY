@@ -40,7 +40,7 @@ assert.deepEqual(viewer.parseLiveHash(`#tournament=${"B".repeat(43)}`),{kind:"to
 assert.equal(viewer.parseLiveHash("#stream=short"),null);
 
 const index=read("index-grupal.html"),liveHtml=read("live.html"),liveControl=read("live-control.js"),liveView=read("live-view.js"),api=read("api/live.js"),schema=read("database/004_live_scorecards.sql"),vercel=read("vercel.json"),worker=read("service-worker.js");
-assert.match(index,/V357-IOS-VOICE-TRANSPORT-RECOVERY/);
+assert.match(index,/V358-IOS-SCORE-UNIVERSAL-PHYSICAL-RECOVERY/);
 assert.match(index,/window\.GSCLiveControl\?\.onRoundPersisted\(round\)/,"el escritor oficial publica LIVE");
 assert.match(index,/<script src="\.\/live-control\.js"><\/script>/);
 assert.match(liveHtml,/GOLF SCORE CARD GT\. LIVE/);
@@ -72,7 +72,7 @@ assert.match(publishSource,/\$\{expected\}::bigint/);
 assert.doesNotMatch(publishSource,/\$\{(?:mutationId|secretHash|expected)\}(?!::)/,"ningún parámetro de publicación puede quedar con tipo indeterminado 42P18");
 assert.doesNotMatch(schema,/CHECK\s*\([^)]*(?:group|player)[^)]*<=\s*\d+/i,"no debe existir máximo fijo de grupos o jugadores del torneo");
 assert.match(vercel,/live-control\|live-view\|live-hub/);
-assert.match(worker,/gscg-mobile-v357-ios-voice-transport-recovery/);
+assert.match(worker,/gscg-mobile-v358-ios-score-universal-physical-recovery/);
 assert.match(worker,/"\/live-control\.js"/);
 
 console.log("PASS V352 LIVE: permiso, privacidad, cola offline, visor separado y torneo paginado sin máximo fijo");

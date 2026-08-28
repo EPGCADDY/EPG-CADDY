@@ -1747,3 +1747,18 @@ Fuentes vivas: Google Maps Routes `TRAFFIC_AWARE_OPTIMAL` para tráfico; Open-Me
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Trazabilidad y sello del árbol V357. | Otra conversación localiza y conserva esta corrección. |
 
 Evidencia raíz: 16:43:01, 16:43:23, 16:43:54, 16:44:06, 16:45:44 y 16:45:58 UTC devolvieron 429 en `/api/session-grupal`; `/api/universal-ai` respondió 200. V357 elimina esa dependencia para escuchar en Safari. Producción permanece intacta.
+
+## V358-IOS-SCORE-UNIVERSAL-PHYSICAL-RECOVERY
+
+| Archivo exacto | Responsabilidad V358 | Candado |
+|---|---|---|
+| `index-grupal.html` | Repara variantes Safari de hoyo, acepta número/ordinal/golpes y selecciona al siguiente jugador pendiente. | Un dictado natural válido escribe; dos interpretaciones distintas no escriben. |
+| `index-grupal.html` | `AI ∞` abre el panel y la escucha en el mismo `pointerdown/click`; Cedar se prepara antes del trabajo asíncrono. | Un solo toque produce captura; `voiceOnly` conserva cero texto visible. |
+| `service-worker.js` | Caché `gscg-mobile-v358-ios-score-universal-physical-recovery`. | El acceso directo iPhone invalida V357. |
+| `test-v358-ios-score-universal-physical-recovery.mjs` | Ejecuta `hoy/oy`, `hoyo número`, ordinales, golpes, multi-hoyo, jugador pendiente, AI de un toque y privacidad. | RC-029 no puede reaparecer. |
+| `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs` | Conservan Registro, multi-hoyo, Cedar, `voiceOnly`, transporte y reintentos. | Regresión acumulada V354–V358. |
+| `test-v352-live.mjs`, `test-v353-live-hub.mjs` | Ajustan sólo el build/caché esperado. | LIVE y Centro LIVE permanecen intactos. |
+| `.github/workflows/roadmap-gate.yml`, `AGENTS.md`, `audit-project.mjs`, `package.json` | Hacen V358 obligatorio y bloquean cruces de conversaciones. | Ningún candidato omite el caso físico rechazado. |
+| documentos rectores, mapa, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-029, árbol exacto y estado honesto. | Banco, Preview, navegador y prueba física separados. |
+
+Evidencia física: 17:12:15–17:12:26 UTC Registro inició y aplicó. A las 17:12:33 inició ronda; a las 17:12:44 hubo transcripción seguida de `parser_rejected`, `entryCount:0` y cero llamada a `/api/universal-ai`. V358 corrige ambos puntos sin tocar Producción.

@@ -6,10 +6,10 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 const audit=fs.readFileSync(new URL("./audit-project.mjs",import.meta.url),"utf8");
 
-assert.match(html,/V357-IOS-VOICE-TRANSPORT-RECOVERY-20260828/);
-assert.match(worker,/gscg-mobile-v357-ios-voice-transport-recovery/);
+assert.match(html,/V358-IOS-SCORE-UNIVERSAL-PHYSICAL-RECOVERY-20260828/);
+assert.match(worker,/gscg-mobile-v358-ios-score-universal-physical-recovery/);
 assert.match(audit,/test-v354-voice-fallback\.mjs/);
-assert.match(html,/function operationalDefaultVoicePlayer\(\)\{return operationalPromptPlayer\(\)\?\?\(\(round\?\.players\|\|\[\]\)\.length===1\?round\.players\[0\]:null\)\}/);
+assert.match(html,/function operationalDefaultVoicePlayer\(\)\{const prompted=operationalPromptPlayer\(\);if\(prompted\)return prompted;const missing=operationalMissingPlayers\(currentOperationalHole\(\)\);if\(missing\.length\)return missing\[0\]/);
 
 const parserStart=html.indexOf("function parseScoreSequenceTranscript");
 const parserEnd=html.indexOf("\nfunction parseProvisionalScoreTranscript",parserStart);
@@ -25,7 +25,8 @@ const skipScoreFillers=(tokens,index)=>{while(index<tokens.length&&(SCORE_FILLER
 const readOperationalScoreAt=(tokens,index)=>{if(tokens[index]==="par")return{gross:4,status:null,next:index+1};const number=parseSpanishNumberTokens(tokens,index);return number&&number.value>=1&&number.value<=30?{gross:number.value,status:null,next:number.next}:null};
 const readOmittedScoreAt=()=>null,hasNamedOmissionIntent=()=>false,playerByRef=value=>players.find(player=>player.name===value)||null;
 const operationalHoleComplete=(hole,entries)=>entries.some(entry=>entry.player==="JAIME"&&entry.hole===hole);
-const parseScoreSequenceTranscript=new Function("normalizeSpeech","QUERY_WORDS","CORRECTION_WORDS","SCORE_FILLERS","SCORE_WORDS","skipScoreFillers","parseSpanishNumberTokens","matchPlayerAt","readOperationalScoreAt","readOmittedScoreAt","operationalHoleComplete","playerByRef","hasNamedOmissionIntent",`${parserSource};return parseScoreSequenceTranscript`)(normalizeSpeech,QUERY_WORDS,CORRECTION_WORDS,SCORE_FILLERS,SCORE_WORDS,skipScoreFillers,parseSpanishNumberTokens,matchPlayerAt,readOperationalScoreAt,readOmittedScoreAt,operationalHoleComplete,playerByRef,hasNamedOmissionIntent);
+const normalizeScoreSpeech=normalizeSpeech,parseHoleNumberTokens=parseSpanishNumberTokens;
+const parseScoreSequenceTranscript=new Function("normalizeScoreSpeech","QUERY_WORDS","CORRECTION_WORDS","SCORE_FILLERS","SCORE_WORDS","skipScoreFillers","parseSpanishNumberTokens","parseHoleNumberTokens","matchPlayerAt","readOperationalScoreAt","readOmittedScoreAt","operationalHoleComplete","playerByRef","hasNamedOmissionIntent",`${parserSource};return parseScoreSequenceTranscript`)(normalizeScoreSpeech,QUERY_WORDS,CORRECTION_WORDS,SCORE_FILLERS,SCORE_WORDS,skipScoreFillers,parseSpanishNumberTokens,parseHoleNumberTokens,matchPlayerAt,readOperationalScoreAt,readOmittedScoreAt,operationalHoleComplete,playerByRef,hasNamedOmissionIntent);
 
 const natural=parseScoreSequenceTranscript("hoyo 1 cuatro, hoyo 2 cinco, hoyo 3 cinco",{defaultPlayer:players[0],defaultHole:1});
 assert.equal(natural.ok,true);
