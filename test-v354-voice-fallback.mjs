@@ -46,8 +46,8 @@ assert.ok(processSource.indexOf("parseRoundScoreTranscript(clean)")<processSourc
 assert.match(processSource,/browser_fallback_round_applied/);
 assert.match(processSource,/entryCount:count/);
 assert.match(processSource,/NO RECONOCÍ LA TANDA/);
-assert.ok(processSource.indexOf('openAiUniversalPanel(false,{focus:false})')<processSource.indexOf('submitAiUniversalText(clean,{voiceOnly:true})'));
-assert.match(processSource,/browser_fallback_general_visible/);
+assert.doesNotMatch(processSource,/openAiUniversalPanel\(false,\{focus:false\}\)/);
+assert.doesNotMatch(processSource,/browser_fallback_general_visible/);
 assert.match(html,/speechSynthesis\.resume\?\.\(\)/);
 
 const runtimeEvents=[],runtimeOrder=[],runtimeMatrices=[];
@@ -70,11 +70,11 @@ assert.match(runtimeMatrices.at(-1)[2],/3 HOYOS REGISTRADOS/);
 runtimeOrder.length=0;runtimeEvents.length=0;runtimeMatrices.length=0;
 const dynamicGeneral=makeBrowserProcessor({matched:false,ok:false});
 assert.equal(await dynamicGeneral("round","Cómo está el tráfico para ir de El Pulté a Pradera Concepción"),true);
-assert.deepEqual(runtimeOrder,["open","submit"]);
-assert.equal(runtimeEvents.some(item=>item.event==="browser_fallback_general_visible"),true);
+assert.deepEqual(runtimeOrder,["submit"]);
+assert.equal(runtimeEvents.some(item=>item.event==="browser_fallback_general_visible"),false);
 
 const applied=sanitizeVoiceHealth({event:"browser_fallback_round_applied",build:"V355",context:"round",entryCount:3,transcript:"PROHIBIDO",name:"JAIME"});
 assert.deepEqual(applied,{event:"browser_fallback_round_applied",build:"V355",context:"round",turn:0,elapsedMs:0,entryCount:3});
 assert.equal(sanitizeVoiceHealth({event:"browser_fallback_unknown"}),null);
 
-console.log("PASS V354 VOZ: un jugador registra 3 hoyos, plural aceptado, consulta general visible y telemetría privada");
+console.log("PASS V354/V366 VOZ: multi-hoyo y consulta universal audible sin cambiar pantalla");

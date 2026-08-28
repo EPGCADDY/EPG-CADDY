@@ -8,7 +8,7 @@ const audit=fs.readFileSync("audit-project.mjs","utf8");
 
 assert.match(html,/gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
 assert.match(html,/gscg-progressive-voice" content="V363-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828"/);
-assert.match(worker,/CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior(?:-v364-explicit-new-round-entry)?(?:-v365-iphone-playback)?"/);
+assert.match(worker,/CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior(?:-v364-explicit-new-round-entry)?(?:-v365-iphone-playback)?(?:-v366-universal-audio-only)?"/);
 for(const test of ["test-v357-synchronized-progressive-voice.mjs","test-v359-ios-score-parser-recovery.mjs","test-v361-synchronized-voice.mjs"])assert.ok(audit.includes(test),test);
 
 const progressAt=html.indexOf("function applyBrowserVoiceProgressiveScore");

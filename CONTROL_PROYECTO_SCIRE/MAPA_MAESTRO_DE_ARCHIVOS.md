@@ -991,3 +991,13 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `test-v365-iphone-startup-playback.mjs` | Simula almacenamiento heredado vacío y reproducción asincrónica. | Un FAIL detiene auditoría y Preview. |
 | `Intocables/intocables-gate.mjs`, `test-v260-round-points-player-return.mjs`, `test-v267-one-operational-line.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v363-intocables-behavior.mjs`, `audit-project.mjs`, `package.json` | Conservan Intocables, exigen restauración jugable, aceptan sólo el sufijo V365 e instalan el nuevo banco. | No se sacrifica persistencia válida para corregir residuos inválidos. |
 | registro RC-037, matriz y ambos ROADMAPS | Trazabilidad del rechazo físico. | PASS automático, Preview y PASS iPhone permanecen separados. |
+
+## V366 · comunicación universal audible sin pantalla
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Voz universal desde tarjeta sin overlay y retorno a `LISTO`. | No cambia de pantalla ni muestra transcripción/respuesta. |
+| `test-v354-voice-fallback.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs` | Corrigen candados históricos que exigían abrir el panel. | La regresión anterior no puede volver. |
+| `test-v366-universal-audio-only.mjs` | Gate específico de gesto, `voiceOnly` y pantalla intacta. | Un FAIL detiene Preview. |
+| `service-worker.js`, V357/V361, `audit-project.mjs`, `package.json` | Shell V366 y banco obligatorio. | Safari recibe el cliente corregido. |
+| registro RC-038, matriz y ambos ROADMAPS | Trazabilidad del requisito físico. | Producción permanece intacta hasta PASS iPhone. |

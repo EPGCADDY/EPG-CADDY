@@ -1864,3 +1864,12 @@ Producción no se toca. El candidato necesita auditoría local, Preview, tres co
 - `Intocables/intocables-gate.mjs`, `test-v260-round-points-player-return.mjs`, `test-v267-one-operational-line.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v363-intocables-behavior.mjs`, `audit-project.mjs` y `package.json`: integran el control, actualizan los candados de restauración y aceptan sólo el sufijo exacto V365 sin retirar Intocables.
 
 RC-037 queda corregida localmente. Producción no cambia; faltan Preview nuevo y reproducción física completa en iPhone.
+
+## V366 · AI UNIVERSAL audible sin cambiar pantalla · 28 de agosto de 2026
+
+- `index-grupal.html`: `openAiUniversalAndListen()` ya no abre overlay; `answerBrowserVoiceQuery()` permanece `voiceOnly` y vuelve a `LISTO` tras terminar el audio.
+- `test-v354-voice-fallback.mjs` y `test-v358-ios-score-universal-physical-recovery.mjs`: invierten el candado equivocado y ahora prohíben el panel en voz.
+- `test-v366-universal-audio-only.mjs`: prueba dedicada de gesto, pantalla intacta, respuesta audible y estado final.
+- `service-worker.js`, V357/V361, `audit-project.mjs` y `package.json`: caché V366 y ejecución obligatoria.
+
+RC-038 queda corregida localmente. Producción no cambia; faltan Preview nuevo y prueba física iPhone.

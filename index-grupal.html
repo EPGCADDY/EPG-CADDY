@@ -15,6 +15,7 @@
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-physical-startup-playback" content="V365-IPHONE-VALID-ROUND-AUDIO-COMPLETION-20260828">
+<meta name="gscg-universal-audio-only" content="V366-NO-SCREEN-CHANGE-AUDIBLE-COMPLETION-20260828">
 <meta name="gscg-ai-voice" content="CEDAR-1.15-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -4259,13 +4260,13 @@ async function processBrowserVoiceTranscript(context,transcript){
     if(result?.ok){const count=scoreParsed.entries.length;reportVoiceHealth("browser_fallback_round_applied",{entryCount:count});reportVoiceHealth("browser_fallback_score_applied");setPrimaryVoiceMatrix("idle",context,count===1?"LISTO · 1 HOYO REGISTRADO":`LISTO · ${count} HOYOS REGISTRADOS`);return true}
     reportVoiceHealth("browser_fallback_round_rejected",{entryCount:0});reportVoiceHealth("browser_fallback_score_rejected",{scoreFailure:scoreParsed?.failureCode||"parser_rejected"});setPrimaryVoiceMatrix("error",context,"NO RECONOCÍ LA TANDA · DI: HOYO 1 CUATRO, HOYO 2 CINCO");return false
   }
-  const local=routeAiUniversalAppText(clean);if(local?.handled){aiUniversalRemember("user",clean,[],{visible:false});aiUniversalRemember("assistant",local.answer,[],{visible:false});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(!await speakAiUniversalText(local.answer))setPrimaryVoiceMatrix("idle",context);return true}
+  const local=routeAiUniversalAppText(clean);if(local?.handled){aiUniversalRemember("user",clean,[],{visible:false});aiUniversalRemember("assistant",local.answer,[],{visible:false});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");const spoken=await speakAiUniversalText(local.answer);setPrimaryVoiceMatrix(spoken?"idle":"error",context,spoken?"LISTO":"NO PUDE REPRODUCIR LA RESPUESTA");return spoken}
   return answerBrowserVoiceQuery(context,clean)
 }
 async function answerBrowserVoiceQuery(context,clean){
-  openAiUniversalPanel(false,{focus:false});reportVoiceHealth("browser_fallback_general_visible");let answered=false;
+  let answered=false;
   try{answered=await submitAiUniversalText(clean,{voiceOnly:true})}catch(error){console.error("Browser voice query:",error)}
-  if(answered){phase="idle";reportVoiceHealth("browser_fallback_query_answered");return true}
+  if(answered){phase="idle";setPrimaryVoiceMatrix("idle",context,"LISTO");reportVoiceHealth("browser_fallback_query_answered");return true}
   reportVoiceHealth("browser_fallback_query_failed");setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO");return false
 }
 function scheduleBrowserVoiceTransportRetry(recognition,context,event){
@@ -4913,7 +4914,7 @@ let lastAiUniversalGestureAt=0;
 function openAiUniversalAndListen(event){
   if(event?.cancelable)event.preventDefault();event?.stopPropagation?.();
   const now=Date.now();if(now-lastAiUniversalGestureAt<350)return false;lastAiUniversalGestureAt=now;
-  openAiUniversalPanel(false,{focus:false});primeAiUniversalSpeechFromGesture();void startAiUniversalListening();return true
+  primeAiUniversalSpeechFromGesture();void startAiUniversalListening();return true
 }
 if(window.PointerEvent)$("openAiUniversal").addEventListener("pointerdown",openAiUniversalAndListen,{passive:false,capture:true});
 $("openAiUniversal").addEventListener("click",openAiUniversalAndListen,{passive:false,capture:true});

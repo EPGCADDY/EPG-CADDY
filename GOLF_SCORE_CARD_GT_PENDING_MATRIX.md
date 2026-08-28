@@ -427,3 +427,10 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - AI UNIVERSAL registra inicio y terminación por separado y no muestra éxito antes de `ended`/`onend`; un watchdog impide espera indefinida.
 - `test-v365-iphone-startup-playback.mjs` queda en la auditoría obligatoria y la caché móvil sube a V365.
 - Estado: PASS automático local; Preview nuevo y prueba física iPhone pendientes. Producción permanece intacta.
+
+## V366 · comunicación universal audible sin cambio de pantalla
+
+- AI ∞ desde la Score Card habilita audio y escucha en el mismo toque sin abrir el overlay de chat.
+- Las consultas de voz se envían con `voiceOnly:true`; no muestran transcripción ni respuesta y vuelven a `LISTO` sólo después de terminar el audio.
+- El panel escrito y Reglas de Golf conservan sus accesos separados.
+- Estado: PASS automático local; Preview nuevo y prueba física iPhone pendientes. Producción permanece intacta.

@@ -75,6 +75,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v363-recorded-mobi
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v363-intocables-behavior.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v364-explicit-new-round-entry.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v365-iphone-startup-playback.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v366-universal-audio-only.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);
