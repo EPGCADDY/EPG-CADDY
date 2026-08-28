@@ -48,4 +48,7 @@ jobs:
         run: node test-v354-voice-fallback.mjs && node test-v355-ios-audio-dictation.mjs && node test-v356-voice-only-cedar-quality.mjs
 
       - name: Preserve approved traffic and weather behavior
-        run: node test-v324-real-traffic.mjs && node test-v337-universal-weather.mjs && node test-v356-traffic-weather-accuracy.mjs
+        run: node test-v324-real-traffic.mjs && node test-v337-universal-weather.mjs && node test-v356-traffic-weather-accuracy.mjs && node test-v356-traffic-weather-report-evidence.mjs
+
+      - name: Preserve honest AI Universal live calibre status
+        run: node test-v356-ai-universal-live-calibre-evidence.mjs

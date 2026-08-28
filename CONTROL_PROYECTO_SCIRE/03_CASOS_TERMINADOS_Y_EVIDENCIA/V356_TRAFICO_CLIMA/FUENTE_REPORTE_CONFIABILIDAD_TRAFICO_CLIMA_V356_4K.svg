@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="4320" viewBox="0 0 2160 4320">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#050807"/><stop offset="0.55" stop-color="#101713"/><stop offset="1" stop-color="#030504"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8f9994"/><stop offset="0.5" stop-color="#f3f6f4"/><stop offset="1" stop-color="#8b9590"/>
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <style>
+      .brand{font:800 42px 'DejaVu Sans',Arial,sans-serif;letter-spacing:7px;fill:#d8dfdc}
+      .title{font:900 78px 'DejaVu Sans',Arial,sans-serif;fill:white;letter-spacing:1px}
+      .subtitle{font:500 33px 'DejaVu Sans',Arial,sans-serif;fill:#aab6b0}
+      .section{font:800 39px 'DejaVu Sans',Arial,sans-serif;fill:#72ff86;letter-spacing:2px}
+      .body{font:500 31px 'DejaVu Sans',Arial,sans-serif;fill:#e8eeeb}
+      .small{font:500 27px 'DejaVu Sans',Arial,sans-serif;fill:#b9c4bf}
+      .label{font:800 28px 'DejaVu Sans',Arial,sans-serif;fill:#96a49d;letter-spacing:1px}
+      .score{font:900 164px 'DejaVu Sans',Arial,sans-serif;fill:#61ff78}
+      .metric{font:900 52px 'DejaVu Sans',Arial,sans-serif;fill:white}
+      .pass{font:800 28px 'DejaVu Sans',Arial,sans-serif;fill:#61ff78}
+      .warn{font:800 29px 'DejaVu Sans',Arial,sans-serif;fill:#ffd166}
+      .card{fill:#111915;stroke:#2b3b33;stroke-width:3}
+      .line{stroke:#2d4437;stroke-width:2}
+    </style>
+  </defs>
+
+  <rect width="2160" height="4320" fill="url(#bg)"/>
+  <rect x="0" y="0" width="24" height="4320" fill="#61ff78"/>
+  <rect x="90" y="88" width="1980" height="6" rx="3" fill="#61ff78" filter="url(#glow)"/>
+
+  <text x="110" y="175" class="brand">GOLF SCORE CARD GT</text>
+  <text x="110" y="285" class="title">REPORTE DE CONFIABILIDAD</text>
+  <text x="110" y="350" class="subtitle">TRÁFICO VEHICULAR + CLIMA · REVISIÓN V356 · 28 AGOSTO 2026</text>
+
+  <rect x="90" y="420" width="1980" height="430" rx="38" class="card"/>
+  <text x="150" y="510" class="label">VEREDICTO MEDIDO</text>
+  <text x="150" y="690" class="score">93.75%</text>
+  <text x="980" y="565" class="metric">CONCORDANCIA TÉCNICA</text>
+  <text x="980" y="630" class="body">30 de 32 criterios comparativos aprobados</text>
+  <text x="980" y="690" class="body">Umbral exigido: 90% · Resultado: APROBADO</text>
+  <text x="980" y="750" class="warn">NO ES 100% NI GARANTÍA DEL FUTURO REAL</text>
+  <text x="150" y="810" class="small">Aprobado para Preview. Producción permanece intacta hasta validación física.</text>
+
+  <text x="110" y="950" class="section">01 · DESCRIPCIÓN DE LA REVISIÓN</text>
+  <rect x="90" y="990" width="1980" height="300" rx="28" class="card"/>
+  <text x="145" y="1060" class="body">
+    <tspan x="145" dy="0">Doble revisión funcional, temporal y comparativa de respuestas reales.</tspan>
+    <tspan x="145" dy="54">Horizontes probados: AHORA · 30 MIN · 1 HORA · 3 HORAS · MAÑANA · PRÓXIMA SEMANA.</tspan>
+    <tspan x="145" dy="54">Se verificaron ETA, distancia, demora, hora de salida, temperatura, viento y lluvia.</tspan>
+    <tspan x="145" dy="54">La prueba bloquea presentar información actual como si fuera una estimación futura.</tspan>
+  </text>
+
+  <text x="110" y="1400" class="section">02 · PRODUCTOS Y FUENTES ESPECIALIZADAS</text>
+  <rect x="90" y="1440" width="950" height="330" rx="28" class="card"/>
+  <text x="145" y="1515" class="label">PRODUCTO REVISADO</text>
+  <text x="145" y="1580" class="metric">GOLF SCORE CARD GT · V356</text>
+  <text x="145" y="1640" class="body">Google Maps Routes · Open-Meteo</text>
+  <text x="145" y="1695" class="small">Voz Cedar 1.15 · tráfico y clima estructurados</text>
+
+  <rect x="1070" y="1440" width="1000" height="330" rx="28" class="card"/>
+  <text x="1125" y="1515" class="label">COMPARADORES</text>
+  <text x="1125" y="1580" class="body">Google Maps · AccuWeather</text>
+  <text x="1125" y="1635" class="body">Meteoblue · The Weather Channel</text>
+  <text x="1125" y="1690" class="small">Waze: destinos reconocidos; cálculo bloqueado</text>
+  <text x="1125" y="1730" class="small">por verificación humana. No fue contado como PASS.</text>
+
+  <text x="110" y="1880" class="section">03 · RESULTADOS PRINCIPALES</text>
+  <rect x="90" y="1920" width="470" height="235" rx="26" class="card"/>
+  <text x="140" y="1995" class="label">BANCO TOTAL</text><text x="140" y="2080" class="metric">99 / 99</text><text x="140" y="2125" class="pass">PASS</text>
+  <rect x="585" y="1920" width="470" height="235" rx="26" class="card"/>
+  <text x="635" y="1995" class="label">ESCENARIOS REALES</text><text x="635" y="2080" class="metric">12 / 12</text><text x="635" y="2125" class="pass">PASS</text>
+  <rect x="1080" y="1920" width="470" height="235" rx="26" class="card"/>
+  <text x="1130" y="1995" class="label">CRITERIOS</text><text x="1130" y="2080" class="metric">30 / 32</text><text x="1130" y="2125" class="pass">93.75%</text>
+  <rect x="1575" y="1920" width="495" height="235" rx="26" class="card"/>
+  <text x="1625" y="1995" class="label">PRODUCCIÓN</text><text x="1625" y="2080" class="metric">INTACTA</text><text x="1625" y="2125" class="pass">CONTROLADA</text>
+
+  <text x="110" y="2265" class="section">04 · EJEMPLOS DE TRÁFICO VEHICULAR</text>
+  <rect x="90" y="2305" width="1980" height="440" rx="28" class="card"/>
+  <text x="145" y="2375" class="label">RUTA / HORIZONTE</text><text x="1080" y="2375" class="label">GSC GT V356</text><text x="1570" y="2375" class="label">COMPARACIÓN / ESTADO</text>
+  <line x1="145" y1="2405" x2="2015" y2="2405" class="line"/>
+  <text x="145" y="2475" class="body">El Pulté → Pradera · AHORA</text><text x="1080" y="2475" class="body">36 min · 15.1 km</text><text x="1570" y="2475" class="pass">Maps 37 min · 15.0 km · PASS</text>
+  <text x="145" y="2550" class="body">Country Club → Alta Vista · +1 H</text><text x="1080" y="2550" class="body">74 min · 30.1 km</text><text x="1570" y="2550" class="pass">Maps 55–110 min · 30.1 km · PASS</text>
+  <text x="145" y="2625" class="body">Mayan Golf → El Pulté · +3 H</text><text x="1080" y="2625" class="body">61 min · 38.7 km</text><text x="1570" y="2625" class="pass">FUTURO BIEN ROTULADO · PASS</text>
+  <text x="145" y="2700" class="body">El Pulté → Oakland · MAÑANA 08:00</text><text x="1080" y="2700" class="body">32 min · 21.6 km</text><text x="1570" y="2700" class="pass">SALIDA EXACTA · PASS</text>
+
+  <text x="110" y="2855" class="section">05 · EJEMPLOS CLIMÁTICOS</text>
+  <rect x="90" y="2895" width="1980" height="390" rx="28" class="card"/>
+  <text x="145" y="2965" class="body">AHORA</text><text x="520" y="2965" class="body">25.5 °C · viento 12.5 km/h · parcialmente nublado</text>
+  <text x="145" y="3030" class="body">30 MIN / 1 H</text><text x="520" y="3030" class="body">27.7 °C · lluvia 18% · viento 11.7 km/h</text>
+  <text x="145" y="3095" class="body">3 HORAS</text><text x="520" y="3095" class="body">28.0 °C · lluvia 14% · viento 16.8 km/h</text>
+  <text x="145" y="3160" class="body">MAÑANA</text><text x="520" y="3160" class="body">16.7–28.0 °C · pico lluvia 72% a las 17:00</text>
+  <text x="145" y="3225" class="body">PRÓXIMA SEMANA</text><text x="520" y="3225" class="body">16.8–27.6 °C · pico lluvia 100% a las 17:00</text>
+
+  <text x="110" y="3395" class="section">06 · OPINIÓN, CRITERIO Y RECOMENDACIÓN</text>
+  <rect x="90" y="3435" width="1980" height="305" rx="28" class="card"/>
+  <text x="145" y="3510" class="body"><tspan font-weight="800" fill="#ffffff">CALIFICACIÓN GENERAL: 9.4 / 10.</tspan> Confiable para Preview bajo el umbral ≥90%.</text>
+  <text x="145" y="3570" class="body">La integración temporal quedó corregida y blindada contra reincidencia.</text>
+  <text x="145" y="3630" class="body">Recomendación: prueba simultánea física en iPhone con Waze y verificación posterior del clima.</text>
+  <text x="145" y="3690" class="warn">La aprobación anterior al 100% queda invalidada. No se volverá a usar sin evidencia física.</text>
+
+  <text x="110" y="3855" class="section">07 · TRAZABILIDAD Y BLINDAJE</text>
+  <rect x="90" y="3895" width="1980" height="285" rx="28" class="card"/>
+  <text x="145" y="3970" class="body">Rama fuente: v356-voice-traffic-weather-quality · Evidencia documental separada.</text>
+  <text x="145" y="4030" class="body">RC-027 · Google Maps Routes + Open-Meteo · umbral de aceptación ≥90%.</text>
+  <text x="145" y="4090" class="body">Inventariado en ROADMAP OVERALL, ROADMAP A DETALLE y Mapa Maestro de Archivos.</text>
+  <text x="145" y="4150" class="warn">Producción no fue modificada. La validación física futura continúa siendo una puerta separada.</text>
+
+  <text x="110" y="4255" class="small">REPORTE_CONFIABILIDAD_TRAFICO_CLIMA_V356_4K · 2160 × 4320 px · 300 dpi · 28 AGO 2026</text>
+</svg>

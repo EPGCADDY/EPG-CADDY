@@ -1747,3 +1747,20 @@ Fuentes vivas: Google Maps Routes `TRAFFIC_AWARE_OPTIMAL` para tráfico; Open-Me
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Trazabilidad y sello del árbol V357. | Otra conversación localiza y conserva esta corrección. |
 
 Evidencia raíz: 16:43:01, 16:43:23, 16:43:54, 16:44:06, 16:45:44 y 16:45:58 UTC devolvieron 429 en `/api/session-grupal`; `/api/universal-ai` respondió 200. V357 elimina esa dependencia para escuchar en Safari. Producción permanece intacta.
+
+## V356-QUALITY-EVIDENCE · tráfico/clima 4K y calibre AI UNIVERSAL
+
+| Ruta exacta | Responsabilidad | Candado |
+|---|---|---|
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_TRAFICO_CLIMA/` | Carpeta canónica del expediente visual V356. | Separada de V357 y Producción. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_TRAFICO_CLIMA/REPORTE_CONFIABILIDAD_TRAFICO_CLIMA_V356_4K.png` | Imagen final 2160 × 4320 px, 300 dpi; 30/32 = 93.75%. | SHA-256 `6e513e163793a55cabd3248f64eb07551d9d98a3f979ff88978f945a65ba5ca4`. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_TRAFICO_CLIMA/FUENTE_REPORTE_CONFIABILIDAD_TRAFICO_CLIMA_V356_4K.svg` | Fuente editorial reproducible. | SHA-256 `1a641e71dfbdf731097492dd2c761e4b49e350b9cf50913f35f2faf58078cc2d`. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_TRAFICO_CLIMA/MANIFIESTO_REPORTE_CONFIABILIDAD_TRAFICO_CLIMA_V356.md` | Fuentes, cifras, límites, commits y Producción intacta. | No convierte concordancia en garantía futura. |
+| `test-v356-traffic-weather-report-evidence.mjs` | Valida 4K, 300 dpi, hashes y cuádruple inventario. | Un cambio no registrado produce FAIL. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_AI_UNIVERSAL_CALIBRE/` | Carpeta canónica de la batería general viva. | Separa disponibilidad real de pruebas simuladas. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_AI_UNIVERSAL_CALIBRE/REPORTE_BATERIA_CALIBRE_AI_UNIVERSAL_V356.md` | Nueve preguntas: ocho generales FAIL y una Golf local PASS 8.5/10. | Registra 0/8 general, 1/9 total y logs del deployment exacto. |
+| `test-v356-ai-universal-live-calibre-evidence.mjs` | Conserva RC-029, estado FAIL y nombres en siete controles. | No permite declarar AI UNIVERSAL aprobada hasta rebatería viva. |
+| `audit-project.mjs`, `.github/workflows/roadmap-gate.yml` | Ejecutan ambos candados de evidencia. | Ningún candidato posterior puede omitirlos. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | Índice simple de ambos expedientes. | Localización independiente del historial de chat. |
+
+Base sincronizada: `5ba0ff1ddb5860561edd9b90a9f6e0a83ba5d75f`. Preview examinado: `dpl_5pvjUjCc1Vhm1WmeGzASacGQZSsN` sobre `daa00a0690977bad75e4ab792cf13e35a8997568`. Producción continúa en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.

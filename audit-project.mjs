@@ -61,7 +61,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v337-universal-wea
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v345-home-icons.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v329-skins.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v330-side-games.mjs');
-checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v352-live.mjs','test-v353-live-hub.mjs','test-v354-voice-fallback.mjs','test-v355-ios-audio-dictation.mjs','test-v356-voice-only-cedar-quality.mjs','test-v356-traffic-weather-accuracy.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v352-live.mjs','test-v353-live-hub.mjs','test-v354-voice-fallback.mjs','test-v355-ios-audio-dictation.mjs','test-v356-voice-only-cedar-quality.mjs','test-v356-traffic-weather-accuracy.mjs','test-v356-traffic-weather-report-evidence.mjs','test-v356-ai-universal-live-calibre-evidence.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v357-ios-voice-transport-recovery.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});

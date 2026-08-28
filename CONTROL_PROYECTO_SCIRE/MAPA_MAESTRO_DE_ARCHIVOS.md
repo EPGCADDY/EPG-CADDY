@@ -902,3 +902,17 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `.github/workflows/roadmap-gate.yml`, `AGENTS.md`, `audit-project.mjs`, `package.json` | Candado entre conversaciones y ejecución obligatoria. | Voz V354–V357 y tráfico/clima V324/V337/V356 no pueden omitirse. |
 | `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs` | Compatibilidad acumulada. | LIVE, Registro, multi-hoyos y Cedar intactos. |
 | documentos rectores, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-028, estado y árbol exacto V357. | Continuidad verificable sin depender del historial de chat. |
+
+## V356-QUALITY-EVIDENCE
+
+| Carpeta o archivo exacto | Mapa | Control permanente |
+|---|---|---|
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_TRAFICO_CLIMA/` | Expediente canónico del reporte de confiabilidad. | Contiene PNG, SVG y manifiesto exactos. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_TRAFICO_CLIMA/REPORTE_CONFIABILIDAD_TRAFICO_CLIMA_V356_4K.png` | Imagen 4K vertical, 300 dpi, 93.75%. | Hash fijo; no afirma 100%. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_TRAFICO_CLIMA/FUENTE_REPORTE_CONFIABILIDAD_TRAFICO_CLIMA_V356_4K.svg` | Fuente reproducible 2160 × 4320. | Hash fijo. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_TRAFICO_CLIMA/MANIFIESTO_REPORTE_CONFIABILIDAD_TRAFICO_CLIMA_V356.md` | Identifica fuentes, límites, cifras y commits. | Producción separada. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_AI_UNIVERSAL_CALIBRE/` | Expediente de preguntas generales comparadas. | Contiene el reporte vivo único. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V356_AI_UNIVERSAL_CALIBRE/REPORTE_BATERIA_CALIBRE_AI_UNIVERSAL_V356.md` | Batería multidominio: general 0/8, total 1/9. | RC-029 y proveedor real obligatorios. |
+| `test-v356-traffic-weather-report-evidence.mjs` | Comprueba 4K, dpi, hashes e inventario. | FAIL ante degradación u omisión. |
+| `test-v356-ai-universal-live-calibre-evidence.mjs` | Comprueba estado honesto e inventario en siete documentos. | FAIL si se oculta el rechazo vivo. |
+| `audit-project.mjs`, `.github/workflows/roadmap-gate.yml` | Ejecutan los dos candados. | Evidencia obligatoria local y GitHub. |

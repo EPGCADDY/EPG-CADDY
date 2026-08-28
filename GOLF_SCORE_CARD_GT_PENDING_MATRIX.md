@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V357 abre el reconocimiento local de iPhone dentro del toque, antes de esperar Realtime; el 429 deja de bloquear Registro, scores multi-hoyo y AI UNIVERSAL. Cedar 1.15, voz sin texto y tráfico/clima V356 permanecen intactos; banco PASS, Preview y prueba física pendientes. LIVE V353 conserva su E2E aprobado
+**Corte vigente:** V357 abre el reconocimiento local de iPhone dentro del toque, antes de esperar Realtime. La batería viva del Preview V356 rechaza AI UNIVERSAL general: 0/8 materias por `credit_balance_exhausted`; sólo Golf respondió mediante respaldo local. Cedar 1.15 y tráfico/clima V356 permanecen intactos; Producción no cambia. LIVE V353 conserva su E2E aprobado
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V357 candidato en banco PASS; transporte local inmediato, multi-hoyo, AI UNIVERSAL hablada y reintentos protegidos; Preview y prueba física iPhone pendientes · `PEND-VOZ-003`
+**Estado:** V357 candidato de transporte en banco PASS; AI UNIVERSAL general permanece FAIL 0/8 en batería viva hasta proveedor con saldo o AI Gateway operativo; Preview y prueba física iPhone pendientes · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -193,6 +193,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - **Aprobado en Preview V327-R1:** 44 llamadas reales, 24 materias, ocho turnos de memoria, clima futuro, investigación web, tráfico actual/futuro y cinco fallos controlados; compilación de 85 paquetes, 310 fuentes, 550 transiciones de voz y cero errores 5xx. La prueba física del micrófono de iPhone sigue siendo obligatoria.
 - **Aceptación pendiente obligatoria:** repetir en iPhone tráfico mañana desde El Pulté hacia colonia Oakland zona 10 a las 12:30 PM, tráfico actual El Pulté Golf → Pradera Concepción, consumo eléctrico aproximado de aire acondicionado, persona conocida en Colima y conversación multitema prolongada. No montar antes del PASS físico.
 - **Calidad permanente pendiente:** programar una matriz interna obligatoria para que cada respuesta sustantiva sea estudiada, investigada cuando corresponda, profunda, formal, precisa y accionable sin que el usuario tenga que pedirlo nuevamente.
+- **Fallo vivo de calibre V356:** ocho preguntas escritas de ciencia, arquitectura, historia, economía, tecnología, salud, legal y actualidad devolvieron servicio sin saldo; disponibilidad general 0/8. La estrategia de Golf respondió 8.5/10 mediante `LOCAL_GOLF_STRATEGY`, no mediante AI UNIVERSAL. Evidencia: carpeta `V356_AI_UNIVERSAL_CALIBRE` y `REPORTE_BATERIA_CALIBRE_AI_UNIVERSAL_V356.md`.
 - **Corte físico pendiente:** reproducir y corregir el fallo observado en la quinta conversación, cuando dejó de completar el ciclo después de terminar la pregunta.
 - **Aviso bilateral pendiente:** mostrar únicamente `ESCUCHANDO` y `RESPONDIENDO` en rojo visible y parpadeante; eliminar `CADDIE RESPONDIENDO` y cualquier texto adicional de esos dos estados.
 - **Fallo físico V346-R1:** Safari activó el respaldo y envió la pregunta, pero la matriz quedó debajo de las seis filas manuales; OpenAI agotó saldo y no existió un intento de Gateway utilizable.

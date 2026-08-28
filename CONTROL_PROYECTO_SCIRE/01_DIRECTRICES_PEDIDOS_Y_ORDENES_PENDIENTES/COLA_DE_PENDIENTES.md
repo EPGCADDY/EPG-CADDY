@@ -6,7 +6,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
-| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V357 corrige el 429 físico: iPhone abre reconocimiento local en el mismo toque; multi-hoyos y AI UNIVERSAL sobreviven sin depender de Realtime; banco PASS, Preview y prueba física pendientes |
+| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | Transporte V357 en banco; AI UNIVERSAL general FAIL 0/8 en batería viva V356 por `credit_balance_exhausted`; sólo Golf respondió localmente; falta proveedor/Gateway operativo, nueva batería, Preview y prueba física |
 | 2 | `PEND-TRA-005` tráfico actual y futuro | V356 corrige horizontes 30 min/1 h/3 h/mañana/próxima semana; faltan Preview, comparación simultánea independiente con Waze y validación física en Guatemala |
 | 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
@@ -25,7 +25,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
 | 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V353 CENTRO LIVE: local/Preview/E2E 80 jugadores/observabilidad PASS; inspección visual y prueba física iPhone pendientes |
 
-La prioridad activa por la observación física más reciente es `PEND-VOZ-003` V357; `PEND-LIVE-018` V353 conserva su E2E aprobado y sus puertas físicas abiertas. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
+La prioridad activa es `PEND-VOZ-003`: transporte V357 y disponibilidad/calibre general registrados en `V356_AI_UNIVERSAL_CALIBRE/REPORTE_BATERIA_CALIBRE_AI_UNIVERSAL_V356.md`. El proveedor general quedó 0/8 y no puede aprobarse hasta repetir la batería con saldo o Gateway operativo. `PEND-LIVE-018` V353 conserva su E2E aprobado. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
 
 **Autorización de ejecución permanente:** el propietario ordenó el 26 de agosto de 2026 agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versión cuando esté realmente probada. Esta autorización no convierte un `FAIL` en `PASS` ni permite simular licencias, credenciales o integraciones externas inexistentes.
 
