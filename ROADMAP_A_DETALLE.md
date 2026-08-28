@@ -1837,3 +1837,4 @@ Producción no se toca. El Preview se entrega únicamente después de tres compr
 - Vercel: repositorio `EPGCADDY/EPG-CADDY` y SHA expuesto deben coincidir exactamente con `HEAD`.
 - Fuera de alcance: tarjeta, persistencia de ronda, Match Play, Ronda Normal, voz y comunicación universal permanecen idénticos al candidato V363 probado.
 - Inventario: tres PDF V311 regenerados y nuevo `sourceDigest` sellado antes del montaje.
+- Sello atómico externo: `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` se actualizan juntos en el mismo commit; el Gate ROADMAP debe aprobar en Vercel.
