@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V358 integra reconocimiento iPhone dentro del toque y score progresivo visible por hoyo durante el mismo dictado. Registro, AI UNIVERSAL `voiceOnly`, Cedar 1.15, ronda persistente y tráfico/clima V356 permanecen acumulados; auditoría final, Preview y prueba física son puertas separadas. LIVE V353 conserva su E2E aprobado
+**Corte vigente:** V361 sincroniza el parser natural V360 con score visible y persistido inmediatamente durante el mismo dictado, continuidad de ronda, AI UNIVERSAL `voiceOnly`, voz masculina recuperable y circuito Cedar. Auditoría, Preview y prueba física son puertas separadas. LIVE V353 conserva su E2E aprobado
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V358 sincronizado; transporte local inmediato, render progresivo por hoyo, multi-hoyo, AI UNIVERSAL hablada, persistencia y reintentos protegidos; auditoría final, Preview y prueba física iPhone separados · `PEND-VOZ-003`
+**Estado:** V361 sincronizado; transporte local inmediato, render y persistencia por cada score mientras continúa el dictado, multi-hoyo/dos jugadores, AI UNIVERSAL hablada sin texto, voz masculina recuperable y reintentos protegidos; Preview y prueba física iPhone separados · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -396,6 +396,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 **Control V359 del parser físico:** V358 queda rechazado por `parser_rejected` en dos tandas reales con Jaime y Gustavo. V359 admite `hoyo número`, `golpes`, `tiró` y el hoyo al final sólo con asignación inequívoca; una palabra desconocida continúa bloqueando toda escritura. Falta PASS físico iPhone.
 
 **Integración V360:** une sobre un solo árbol la escritura visual progresiva de cada score, continuidad de tarjeta V358 y parser natural V359. Ninguna rama paralela queda fuera. Sólo `browser_fallback_score_applied` observado en el iPhone cierra la puerta.
+
+**Consolidación V361:** conserva íntegra V360 y exige `persist()` + `render()` inmediatamente después de cada score recibido, sin esperar que cierre el micrófono. AI UNIVERSAL de voz permanece sin transcripción visible; la recuperación espera el catálogo masculino de iOS y evita repetir durante diez minutos un Cedar que ya respondió 429/503. El cierre sigue requiriendo prueba física iPhone.
 
 La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` y E2E de 20 grupos/80 jugadores quedaron PASS, con cero errores de runtime y limpieza Neon confirmada. V353 no requiere migración porque reutiliza el esquema V352. La inspección visual y la prueba física iPhone permanecen abiertas y Producción no se monta. La estabilización física de voz continúa registrada. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
 

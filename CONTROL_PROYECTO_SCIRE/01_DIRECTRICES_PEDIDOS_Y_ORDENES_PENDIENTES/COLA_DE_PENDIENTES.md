@@ -6,7 +6,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
-| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V358 fue rechazado físicamente; V360 integra escritura progresiva visible y parser natural de dos jugadores; banco, Preview y prueba física obligatorios |
+| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V358 fue rechazado físicamente; V361 consolida V360 con escritura y guardado inmediato por score, parser natural de dos jugadores, voz masculina tardía y circuito Cedar; Preview y prueba física obligatorios |
 | 2 | `PEND-TRA-005` tráfico actual y futuro | V356 corrige horizontes 30 min/1 h/3 h/mañana/próxima semana; faltan Preview, comparación simultánea independiente con Waze y validación física en Guatemala |
 | 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
@@ -25,7 +25,7 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
 | 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V353 CENTRO LIVE: local/Preview/E2E 80 jugadores/observabilidad PASS; inspección visual y prueba física iPhone pendientes |
 
-La prioridad activa por la observación física más reciente es `PEND-VOZ-003` V360; `PEND-LIVE-018` V353 conserva su E2E aprobado y sus puertas físicas abiertas. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
+La prioridad activa por la observación física más reciente es `PEND-VOZ-003` V361; `PEND-LIVE-018` V353 conserva su E2E aprobado y sus puertas físicas abiertas. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
 
 **Autorización de ejecución permanente:** el propietario ordenó el 26 de agosto de 2026 agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versión cuando esté realmente probada. Esta autorización no convierte un `FAIL` en `PASS` ni permite simular licencias, credenciales o integraciones externas inexistentes.
 
@@ -560,3 +560,12 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 ### Frases para localizar este pendiente
 
 `banco de pruebas`, `certificación`, `prueba física`, `cero errores`, `100%`, `montarlo`, `pendientes por hacer`.
+
+## V361-SYNCHRONIZED-VOICE · control activo de `PEND-VOZ-003`
+
+- Base única: V360; no se utiliza ni se presenta una rama anterior.
+- Cada score válido se ve y se guarda inmediatamente mientras siguen llegando los hoyos siguientes.
+- El parser conserva frases naturales para uno o varios jugadores sin adivinar resultados ambiguos.
+- AI UNIVERSAL por micrófono no muestra pregunta ni respuesta escrita.
+- La recuperación espera la voz masculina de iOS; un 429/503 de Cedar activa respaldo local durante diez minutos.
+- Banco automático, Preview y prueba física iPhone continúan siendo tres puertas separadas; Producción queda intacta.

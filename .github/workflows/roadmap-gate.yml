@@ -47,6 +47,9 @@ jobs:
       - name: Block delayed multi-hole rendering and round-loss regressions
         run: node test-v357-synchronized-progressive-voice.mjs
 
+      - name: Block synchronized parser, persistence and male-voice regressions
+        run: node test-v359-ios-score-parser-recovery.mjs && node test-v361-synchronized-voice.mjs
+
       - name: Preserve approved voice behavior V354 through V356
         run: node test-v354-voice-fallback.mjs && node test-v355-ios-audio-dictation.mjs && node test-v356-voice-only-cedar-quality.mjs
 

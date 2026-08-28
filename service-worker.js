@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v360-integrated-progressive-parser";
+const CACHE_NAME="gscg-mobile-v361-synchronized-voice";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

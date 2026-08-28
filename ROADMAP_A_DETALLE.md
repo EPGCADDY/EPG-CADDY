@@ -1778,3 +1778,15 @@ Evidencia raíz: 16:43:01, 16:43:23, 16:43:54, 16:44:06, 16:45:44 y 16:45:58 UTC
 | `test-v357-synchronized-progressive-voice.mjs`, `test-v359-ios-score-parser-recovery.mjs` | Verifican las dos correcciones paralelas juntas. | Ninguna puede reemplazar a la otra. |
 | `.github/workflows/roadmap-gate.yml`, `package.json`, `audit-project.mjs` | Ejecutan el banco combinado. | Un FAIL bloquea Preview. |
 | documentos, caché, ROADMAPS, reconstrucción e inventario | Sello V360 único. | Producción intacta y PASS físico pendiente. |
+
+## V361-SYNCHRONIZED-VOICE
+
+| Archivo exacto | Responsabilidad V361 | Candado |
+|---|---|---|
+| `index-grupal.html` | Conserva el parser natural V360 y confirma visual y persistentemente cada score parcial mientras la escucha continúa. | Cada aplicación válida ejecuta `persist()` + `render()`; una alternativa ambigua revierte antes de continuar. |
+| `index-grupal.html` | Espera el catálogo `voiceschanged`, selecciona sólo una voz masculina aprobada y abre circuito local diez minutos tras 429/503 de Cedar. | Una caída de TTS no bloquea AI UNIVERSAL ni provoca voz femenina genérica o reintentos continuos. |
+| `test-v357-synchronized-progressive-voice.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Ejecutan progreso, vocabulario natural, persistencia inmediata, voz masculina tardía, circuito Cedar y privacidad `voiceOnly`. | Las correcciones de conversaciones paralelas quedan unidas en un solo banco. |
+| `.github/workflows/roadmap-gate.yml`, `package.json`, `audit-project.mjs` | Hacen obligatorio el banco V361 local, GitHub y Vercel. | Un FAIL detiene la publicación. |
+| `service-worker.js` | Caché `gscg-mobile-v361-synchronized-voice`. | Safari no conserva el shell V360. |
+
+Archivos exactos V361: `.github/workflows/roadmap-gate.yml`, `audit-project.mjs`, `index-grupal.html`, `package.json`, `service-worker.js`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta; Preview y prueba física iPhone son puertas independientes.

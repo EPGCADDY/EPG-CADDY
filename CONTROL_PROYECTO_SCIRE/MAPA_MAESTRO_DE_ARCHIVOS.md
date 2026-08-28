@@ -932,3 +932,13 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `test-v357-synchronized-progressive-voice.mjs`, `test-v359-ios-score-parser-recovery.mjs` | Bancos de ambas ramas sincronizadas. | Progreso visual y lenguaje natural son inseparables. |
 | `.github/workflows/roadmap-gate.yml`, `package.json`, `audit-project.mjs` | Ejecución obligatoria local y remota. | Ninguna conversación puede omitir el banco combinado. |
 | documentos, ROADMAPS, inventario, caché y reconstrucción PDF | Árbol único V360. | V358/V359 aisladas no se presentan como aprobación. |
+
+## V361-SYNCHRONIZED-VOICE
+
+| Archivo exacto | Mapa V361 | Control |
+|---|---|---|
+| `index-grupal.html` | Resultado parcial → escritor oficial → `persist()` → `render()` sin cerrar el reconocimiento. | Los siguientes hoyos pueden seguir llegando y lo ya recibido permanece visible y guardado. |
+| `index-grupal.html` | Catálogo iOS tardío de voces masculinas y circuito Cedar 429/503 de diez minutos. | Respaldo hablado sin mujer genérica y sin repetir un proveedor temporalmente bloqueado. |
+| `test-v357-synchronized-progressive-voice.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Banco sincronizado de progreso, parser, persistencia, TTS y privacidad. | Ninguna rama paralela puede sustituir otra corrección. |
+| `.github/workflows/roadmap-gate.yml`, `package.json`, `audit-project.mjs`, `service-worker.js` | Gate único y shell V361. | Un FAIL detiene Preview; Producción queda intacta. |
+| documentos rectores, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-031 y árbol reproducible. | PASS automático, Preview y PASS físico se reportan por separado. |

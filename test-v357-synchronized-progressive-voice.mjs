@@ -6,10 +6,10 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 const audit=fs.readFileSync(new URL("./audit-project.mjs",import.meta.url),"utf8");
 
-assert.match(html,/gscg-build" content="V360-INTEGRATED-PROGRESSIVE-PARSER-20260828"/);
+assert.match(html,/gscg-build" content="V361-SYNCHRONIZED-VOICE-20260828"/);
 assert.match(html,/gscg-ios-voice-recovery" content="V357-GESTURE-FIRST-MULTIHOLE-UNIVERSAL-20260828"/);
-assert.match(html,/gscg-progressive-voice" content="V360-HOLE-BY-HOLE-VISUAL-COMMIT-20260828"/);
-assert.match(worker,/gscg-mobile-v360-integrated-progressive-parser/);
+assert.match(html,/gscg-progressive-voice" content="V361-IMMEDIATE-PERSISTENT-VISUAL-COMMIT-20260828"/);
+assert.match(worker,/gscg-mobile-v361-synchronized-voice/);
 assert.match(audit,/test-v357-ios-voice-transport-recovery\.mjs/);
 assert.match(audit,/test-v357-synchronized-progressive-voice\.mjs/);
 
