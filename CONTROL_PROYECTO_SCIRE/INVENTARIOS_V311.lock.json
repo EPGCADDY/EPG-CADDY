@@ -1,23 +1,23 @@
 {
-  "version": "V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE",
-  "generatedAt": "2026-08-28T01:53:09Z",
+  "version": "V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE",
+  "generatedAt": "2026-08-28T02:42:36Z",
   "sourceFileCount": 352,
-  "sourceDigest": "9f0f56f8cf47d49ec34ac8ec9ec4246f373aa54183b167bc057f11ddd15e531f",
+  "sourceDigest": "90872c920ae43316b44aac5bd79c74053dea34d8877c9a5c13fabc1c5715160d",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 180547,
-      "sha256": "12fb18162b0f359e2cd324b3d5b50bcf1171d31a2c3ba3013b76a3a5ee738746"
+      "size": 181668,
+      "sha256": "994fc32be7632f2980e040a25f1c15ef5a71121f15bf5c4422bc9674eb1aabcc"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 201654,
-      "sha256": "c0929fe83dcbf4613f7b25f5db3e2eba11591cb110cf148eaeb20f33092b5501"
+      "size": 202675,
+      "sha256": "b4f63e078749e1afa78247a6b320c66f671e9448d1a87050e58bf65706873cff"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19260984,
-      "sha256": "78489448e181287d51d7fc255a77373cbe00f471a203a8d150b6ebb1156c09db"
+      "size": 6291456,
+      "sha256": "be2080086103dd6cdd70e45b3c2e18ff719e40e609893e6bb2349f53dcdc07d6"
     }
   ]
 }

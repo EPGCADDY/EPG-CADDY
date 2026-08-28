@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V351-R5 RECHAZADA EN IPHONE A LAS 19:29: Registro y hoyos individuales pasan, pero una tanda continua 3→4→5 no se aplicó. V351-R6 agrega parsing transaccional de varios hoyos para todas las modalidades y cantidades admitidas. Requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
+**Estado:** V351-R6 RECHAZADA EN IPHONE A LAS 20:30 DEL 27 DE AGOSTO: el dictado corrido volvió a terminar en `ambiguous_score` y el hoyo individual posterior sí se aplicó. V351-R7 corrige la combinación híbrida de prefacio/lista con bloques por hoyo o jugador. Requiere Preview y nueva prueba física. Las respuestas generales siguen bloqueadas hasta restaurar saldo o credencial de Gateway · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -424,3 +424,11 @@ V351-R4 queda rechazada por las capturas `IMG_2116.png`–`IMG_2119.png` y los e
 `test-v351-r6-consecutive-holes-voice-score.mjs` ejecuta las cuatro formas en Ronda Normal/Stableford con 1–6 jugadores y Match Play/Four Ball con 2/4/6: 18 configuraciones, 72 tandas, 792 Gross, persistencia y render. El recorrido físico reproducido pasa además por `processBrowserVoiceTranscript`, termina en `browser_fallback_score_applied` y realiza cero llamadas a AI UNIVERSAL. Preguntas, jugadores ausentes, scores faltantes, duplicados y hoyos inválidos continúan rechazados sin adivinar datos.
 
 V351-R5 queda rechazada por `IMG_2124.png`/`IMG_2125.png` y los eventos privados 01:29:17 `missing_score`, 01:29:39 `ambiguous_score` y 01:29:54 `score_applied` individual, UTC. Producción permanece intacta; V351-R6 requiere auditoría integral, Preview y PASS físico iPhone.
+
+## V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE · prefijo y bloques combinados · 28 de agosto de 2026
+
+R6 recibía primero el formato de lista. Si la misma frase continuaba con bloques completos por hoyo o por jugador, el fallo de esa primera lectura detenía el parser aunque una segunda lectura determinista fuera válida. R7 cambia la regla: una interpretación fallida nunca tapa otra interpretación válida; la recuperación híbrida sólo se activa cuando existe el prefijo plural y después al menos dos marcadores explícitos `hoyo`.
+
+`test-v351-r6-consecutive-holes-voice-score.mjs` ejecuta seis formas en las mismas 18 configuraciones: las cuatro formas R6, prefijo+bloques y prefijo+filas por jugador. Resultado obligatorio: 108 tandas 3→4→5, 1,188 Gross, una transacción de persistencia/render, fallback real y cero IA. Los casos negativos de score faltante, adicional, duplicado y hoyo inválido permanecen rechazados.
+
+El deployment R6 `dpl_29fy1Znkw6BsQuT1z4yQLDa5vhft` registró a las 02:30:34 UTC `ambiguous_score` y a las 02:30:51 UTC el hoyo individual aplicado, sin 4xx/5xx. Producción permanece intacta; R7 requiere auditoría integral, Preview y PASS físico iPhone.

@@ -1328,3 +1328,11 @@ V351-R6 agrega recuperación transaccional para bloques `hoyo 3 … hoyo 4 … h
 `test-v351-r6-consecutive-holes-voice-score.mjs` ejecuta cuatro formas de la tanda 3→4→5 en 18 configuraciones: Normal/Stableford 1–6 y Match/Four Ball 2/4/6. Verifica 72 tandas, 792 Gross, fallback real, cero IA y una sola transacción de persistencia/render. Producción permanece intacta hasta auditoría, Preview y PASS físico iPhone.
 
 Archivos exactos V351-R6: `index-grupal.html`, `test-v351-r6-consecutive-holes-voice-score.mjs`, `audit-project.mjs`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+## V351-R7 · prefijo “hoyos corridos” más bloques completos · 28 de agosto de 2026
+
+La prueba física de las 20:30 del 27 de agosto rechazó R6: el dictado corrido terminó en `ambiguous_score` y el hoyo individual posterior sí fue aplicado. El micrófono y Registro funcionaron; no hubo 4xx/5xx. La causa fue la prioridad del parser: el fallo de la primera gramática detenía otra lectura determinista válida cuando una frase mezclaba `hoyos 3, 4 y 5 corridos` con bloques por hoyo o por jugador.
+
+R7 prioriza el primer resultado válido y sólo recupera el prefacio híbrido cuando después existen al menos dos marcadores explícitos `hoyo`. El banco crece a seis formas, 18 configuraciones, 108 tandas 3→4→5 y 1,188 Gross mediante el fallback, escritor, persistencia y render reales, con cero IA. La telemetría interna ahora identifica correctamente `V351-R7`.
+
+Archivos exactos V351-R7: `index-grupal.html`, `test-v351-r6-consecutive-holes-voice-score.mjs`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta hasta PASS físico iPhone.

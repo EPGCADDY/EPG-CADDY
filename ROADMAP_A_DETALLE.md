@@ -1660,3 +1660,16 @@ Evidencia física: `IMG_2124.png`/`IMG_2125.png` confirman que Registro e ingres
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello final. | Huellas posteriores a todos los cambios. |
 
 Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R6 no se presenta como aprobada hasta superar auditoría, Preview y la prueba física de la misma tanda 3→4→5.
+
+## V351-R7 · rechazo R6 y prioridad segura para frase híbrida · 28 de agosto de 2026
+
+| Archivo exacto | Cambio V351-R7 | Evidencia exigida |
+|---|---|---|
+| `index-grupal.html` | Meta/build R7; `parseMultiHoleScoreSegments` conserva la primera lectura válida y `hybridMultiHoleRecoveryTokens` retira únicamente un prefacio plural seguido por dos o más bloques explícitos. | Prefijo+bloques y prefijo+filas por jugador terminan aplicados; entradas ambiguas continúan rechazadas. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Amplía el candado R6 con dos formas híbridas. | 18 configuraciones, 108 tandas, 1,188 Gross, fallback real, cero IA, persistencia/render transaccional. |
+| `scripts/rebuild-inventory-pdfs.py` | Corte `V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE`. | Tres PDF y sello actualizados. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-031. | R6 rechazada con deployment, horas y códigos privados; causa y escape cerrados. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Estado real R7. | PASS automático separado de PASS físico iPhone. |
+| `MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAP e inventario lock | Registro y sello de la misma versión. | Candados documental, ROADMAP e inventario en PASS. |
+
+Producción permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. R7 no queda aprobada hasta superar auditoría, Preview y la prueba física corrido 3→4→5.

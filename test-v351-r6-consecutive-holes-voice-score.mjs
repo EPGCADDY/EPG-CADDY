@@ -9,7 +9,9 @@ const sourceBetween=(start,end)=>{
 };
 
 assert.match(html,/gscg-consecutive-hole-voice" content="V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
+assert.match(html,/gscg-hybrid-consecutive-hole-voice" content="V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE-20260828"/);
 assert.match(html,/function parseMultiHoleScoreSegments[\s\S]*?parseHoleListScoreSegments[\s\S]*?parseHoleFirstScoreBlocks/);
+assert.match(html,/const listed=parseHoleListScoreSegments[\s\S]*?if\(listed\?\.ok\)return listed[\s\S]*?const blocked=parseHoleFirstScoreBlocks[\s\S]*?if\(blocked\?\.ok\)return blocked/);
 
 const normalizeSpeech=value=>String(value||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñ]+/g," ").replace(/\s+/g," ").trim();
 const WORD_NUMBERS={cero:0,un:1,uno:1,una:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,trece:13,catorce:14,quince:15,dieciseis:16,diecisiete:17,dieciocho:18};
@@ -55,6 +57,14 @@ function playerRows(players){
   return players.map((player,playerIndex)=>`${player.name} ${HOLES.map((hole,holeIndex)=>`hoyo ${HOLE_WORDS[holeIndex]} ${scoreFor(playerIndex,holeIndex)}`).join(" ")}`).join(" luego ");
 }
 
+function hybridPrefaceAndBlocks(players){
+  return`hoyos tres cuatro y cinco corridos ${repeatedHoleBlocks(players)}`;
+}
+
+function hybridPrefaceAndPlayerRows(players){
+  return`hoyos tres cuatro y cinco corridos ${playerRows(players)}`;
+}
+
 let configurations=0,voiceFlows=0,scoreWrites=0;
 for(const [mode,counts] of Object.entries(allowedCounts))for(const count of counts){
   const players=NAMES.slice(0,count).map((name,index)=>({id:`${mode}-${count}-${index+1}`,name,handicap:index*3,tee:"Blanco",holes:{},lastHole:0,activeFrom:1}));
@@ -66,7 +76,7 @@ for(const [mode,counts] of Object.entries(allowedCounts))for(const count of coun
     "normalizeSpeech","QUERY_WORDS","hasNamedOmissionIntent","readOmittedScoreAt","readOperationalScoreAt","parseSpanishNumberTokens","matchPlayerAt","SCORE_FILLERS","CORRECTION_WORDS","SCORE_WORDS","skipScoreFillers","playerByRef","operationalHoleComplete",
     `${parserSource};return parseScoreSequenceTranscript`
   )(normalizeSpeech,QUERY_WORDS,hasNamedOmissionIntent,readOmittedScoreAt,readOperationalScoreAt,parseSpanishNumberTokens,matchPlayerAt,SCORE_FILLERS,CORRECTION_WORDS,SCORE_WORDS,skipScoreFillers,playerByRef,operationalHoleComplete);
-  const variants=[repeatedHoleBlocks(players),repeatedHoleBlocks(players,{bareContinuation:true}),listedHolesByPlayer(players),playerRows(players)];
+  const variants=[repeatedHoleBlocks(players),repeatedHoleBlocks(players,{bareContinuation:true}),listedHolesByPlayer(players),playerRows(players),hybridPrefaceAndBlocks(players),hybridPrefaceAndPlayerRows(players)];
   for(const transcript of variants){
     for(const player of players)player.holes={};
     const parsed=parseScoreSequenceTranscript(transcript,{defaultPlayer:count===1?players[0]:null,defaultHole:3});
@@ -91,8 +101,8 @@ for(const [mode,counts] of Object.entries(allowedCounts))for(const count of coun
 }
 
 assert.equal(configurations,18);
-assert.equal(voiceFlows,72);
-assert.equal(scoreWrites,792);
+assert.equal(voiceFlows,108);
+assert.equal(scoreWrites,1188);
 
 const physicalPlayers=NAMES.slice(0,2).map((name,index)=>({id:`physical-${index+1}`,name,handicap:index?15:14,tee:"Blanco",holes:{},lastHole:0,activeFrom:1}));
 const physicalRound={configured:true,mode:"match_play",officiallyClosedAt:null,provisional:false,players:physicalPlayers,announced:{front:false,back:false,complete:false}};
@@ -123,7 +133,7 @@ const processBrowserVoiceTranscript=new Function(
   "voiceContext","setPrimaryVoiceMatrix","parseSetupTranscript","applySetupChanges","phase","reportVoiceHealth","renderDraft","resetSetupCapture","routeAiUniversalAppText","aiUniversalRemember","aiUniversalSetState","speakAiUniversalText","submitAiUniversalText","primaryVoiceStatusTarget",
   `${browserSource};return processBrowserVoiceTranscript`
 )("round",()=>true,()=>({ok:false}),()=>({ok:false}),"idle",event=>{lastHealth=event;return true},()=>{},()=>{},routeAiUniversalAppText,()=>{},()=>{},()=>false,async()=>{universalCalls++;return false},()=>({textContent:""}));
-const physicalPhrase="hoyo tres Jaime cinco Gustavo cinco cuatro Jaime cuatro Gustavo cinco cinco Jaime cinco Gustavo cinco";
+const physicalPhrase="hoyos tres cuatro y cinco corridos hoyo tres Jaime cinco Gustavo cinco hoyo cuatro Jaime cuatro Gustavo cinco hoyo cinco Jaime cinco Gustavo cinco";
 assert.equal(await processBrowserVoiceTranscript("round",physicalPhrase),true);
 assert.equal(lastHealth,"browser_fallback_score_applied","La tanda física 3-4-5 debe terminar aplicada");
 assert.equal(universalCalls,0,"La tanda de Score nunca puede salir a AI UNIVERSAL");
@@ -138,4 +148,4 @@ assert.deepEqual({ok:duplicateMulti.ok,failureCode:duplicateMulti.failureCode},{
 const invalidMulti=physicalParser("hoyos tres cuatro 19 Jaime cuatro cinco seis Gustavo cinco cinco cinco",{defaultPlayer:null,defaultHole:3});
 assert.deepEqual({ok:invalidMulti.ok,failureCode:invalidMulti.failureCode},{ok:false,failureCode:"invalid_hole"},"Un hoyo fuera de 1–18 debe rechazarse");
 
-console.log("PASS V351-R6 · 18 configuraciones · 72 tandas 3-4-5 · 792 Gross · fallback real · cero IA · escritor/persistencia/render transaccional");
+console.log("PASS V351-R7 · 18 configuraciones · 108 tandas 3-4-5 · 1188 Gross · frases híbridas físicas · fallback real · cero IA · escritor/persistencia/render transaccional");

@@ -842,3 +842,13 @@ V345-ICONS-PREVIEW: commit `1026a3e6555077fab1af4f8f932e97a7032e0182`, deploymen
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-030 rechaza R5 con evidencia física y códigos privados de etapa; no almacena ni inventa la transcripción. |
 | `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Separa PASS individual de FAIL multi-hoyo y conserva la prueba física como puerta obligatoria. |
 | `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R6-CONSECUTIVE-HOLES-VOICE-SCORE`. |
+
+## V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE · prioridad segura entre gramáticas
+
+| Archivo exacto | Responsabilidad |
+|---|---|
+| `index-grupal.html` | Si una frase combina el prefijo `hoyos 3, 4 y 5 corridos` con bloques completos, una lectura fallida no puede tapar otra lectura válida; la telemetría privada identifica R7. |
+| `test-v351-r6-consecutive-holes-voice-score.mjs` | Conserva cuatro formas R6 y agrega prefijo+bloques/prefijo+filas: 108 tandas y 1,188 Gross en 18 configuraciones. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-031 rechaza R6 con logs privados y fija el control híbrido permanente. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Mantiene R7 pendiente de PASS físico iPhone y Producción intacta. |
+| `scripts/rebuild-inventory-pdfs.py` | Sella el corte `V351-R7-HYBRID-CONSECUTIVE-HOLES-VOICE-SCORE`. |
