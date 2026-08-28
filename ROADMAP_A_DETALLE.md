@@ -1681,3 +1681,5 @@ La configuración usa `GOOGLE_MAPS_WEATHER_API_KEY` para clima y `GOOGLE_MAPS_GE
 | `test-v337-universal-weather.mjs` | Prueba coordenadas, credencial protegida, dos endpoints oficiales, probabilidades horarias y ausencia de llamada al modelo. |
 | `ROADMAP_OVERALL.md` | Registra el alcance, credenciales, privacidad y límites reales del candidato V354. |
 | `ROADMAP_A_DETALLE.md` | Registra el mismo candidato V354 en el control técnico detallado. |
+
+<!-- V354-GOOGLE-INTEGRATION-ROADMAPS-SYNC -->
