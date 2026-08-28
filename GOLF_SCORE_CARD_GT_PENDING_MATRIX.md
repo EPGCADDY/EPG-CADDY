@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V355 corrige audio automático Safari y dictado Nombre/HDCP/Marcas; banco, Preview READY y navegador real PASS; prueba física iPhone pendiente. LIVE V353 conserva su E2E aprobado
+**Corte vigente:** V356 separa voz y texto, fija Cedar masculino 1.15 también en respaldo, resume clima hablado y conserva tráfico Google Maps Routes y clima Open-Meteo; candidato en banco, Preview y prueba física pendientes. LIVE V353 conserva su E2E aprobado
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -167,7 +167,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 12. Clima sincronizado por campo
 
-**Estado:** EN PROGRESO · GPS automático visible desde Inicio y dentro de la tarjeta V314; artefactos y validación física pendientes · `PEND-CLI-002`
+**Estado:** EN PROGRESO · V356 corrige 30 min/1 h/3 h/mañana/próxima semana y prohíbe sustituir futuro por actual; comparación externa, artefactos y validación física pendientes · `PEND-CLI-002`
 
 - Asociar cada campo con coordenadas y zona horaria oficiales verificadas.
 - Mostrar el clima en Configuración inmediatamente después de elegir el campo y conservarlo dentro de la tarjeta activa.
@@ -183,7 +183,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 13. Caddie/Support conversacional humano
 
-**Estado:** V355 banco, Preview READY y navegador real PASS; audio desde el toque y dictado del teclado distribuidos; prueba física iPhone pendiente · `PEND-VOZ-003`
+**Estado:** V356 candidato en banco; voz pronunciada sin transcripción visible, Cedar masculino 1.15 y calibre universal reforzado; Preview y prueba física iPhone pendientes · `PEND-VOZ-003`
 
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
@@ -208,6 +208,8 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - **Fallo físico posterior:** a las 07:05–07:06 el respaldo Safari aplicó Registro y un hoyo individual, pero no varios hoyos; la consulta General llegó a `/api/universal-ai` con 200 y quedó invisible o sin audio.
 - **Control V354:** si existe un solo jugador activo, `Hoyo uno cuatro, hoyo dos cinco, hoyo tres cinco` aplica tres celdas sin repetir el nombre; acepta `hoyo/hoyos`; una consulta General abre primero el panel AI, deja la respuesta visible y vigila si Safari inicia el audio.
 - **Control V355:** ENVIAR y los micrófonos habilitan la síntesis dentro del gesto original; `Ancas Gustavo, 15 blancas` dictado dentro de NOMBRE se distribuye en NOMBRE/HDCP/MARCAS. Frases incompletas y HDCP inválidos no se autocompletan.
+- **Control V356:** una consulta hablada no muestra pregunta ni respuesta en el historial visible. Realtime y respaldo usan `Cedar`, velocidad `1.15`, locutor masculino adulto y español internacional neutro. El respaldo llama `/api/voice-speech`, intenta OpenAI directo y recupera mediante AI Gateway; nunca elige una voz femenina o una voz española genérica. Las consultas escritas conservan respuesta escrita.
+- **Calidad V356:** tráfico directo se calcula con Google Maps Routes `TRAFFIC_AWARE_OPTIMAL`; clima directo usa Open-Meteo estructurado; AI UNIVERSAL usa GPT-5.6, perfil deep cuando corresponde, búsqueda web para datos cambiantes y respuesta hablada concisa sin perder conclusión, evidencia, límite ni recomendación.
 - **Orden de ejecución:** registrar estas tres correcciones y retomarlas después de continuar con la configuración y prueba de SKINS, WOLF, VEGAS y DOTS.
 
 - **Candado de privacidad V312:** no hay activación automática, huella de voz ni reconocimiento biométrico; el jugador debe abrir primero el micrófono con el botón.
@@ -230,7 +232,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 ### 15. Tránsito y tiempo de llegada por voz
 
-**Estado:** PROVEEDOR Y CREDENCIAL ACTIVOS EN PREVIEW · V327-R1 APROBADA AUTOMÁTICAMENTE; comparación Waze/iPhone pendiente · `PEND-TRA-005`
+**Estado:** PROVEEDOR Y CREDENCIAL ACTIVOS · V356 corrige salida futura y rótulo previsto; Preview, comparación independiente Waze/iPhone y campo pendientes · `PEND-TRA-005`
 
 - AI UNIVERSAL ∞ ya enruta voz y texto a Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL` y resume ETA, demora, distancia y hora sin mostrar mapa ni revelar coordenadas.
 - Waze no entrega silenciosamente estos datos a una web común; sus Deep Links abren Waze y su Transport SDK requiere asociación, aplicación nativa aprobada y atribución.

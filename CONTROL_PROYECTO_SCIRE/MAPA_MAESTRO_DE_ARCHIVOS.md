@@ -868,3 +868,25 @@ Resultado remoto V354: commit `d7deb09be3826430afc8e1f3d379f0a1137d215b`, deploy
 | documentos rectores e inventarios | RC-025, estado y lista literal. | Trazabilidad previa a Preview. |
 
 Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV7msb6f2dizQECu3ES55F` READY, 97 paquetes y navegador PASS. Producción intacta; prueba física iPhone pendiente.
+
+## V356-VOICE-ONLY-CEDAR-QUALITY
+
+| Archivo exacto | Mapa V356 | Control |
+|---|---|---|
+| `index-grupal.html` | Turnos hablados no visibles, turnos escritos visibles y reproducción Cedar. | Origen de modalidad y voz masculina estricta. |
+| `api/voice-speech.js` | Convierte texto a audio con Cedar 1.15 mediante OpenAI o AI Gateway. | Clave sólo servidor, `no-store`, límite 4000 y sin voz femenina. |
+| `api/universal-ai.js` | Perfil hablado conciso y clima resumido; perfil escrito completo. | Google Routes/Open-Meteo no se sustituyen por prosa generativa. |
+| `service-worker.js` | `gscg-mobile-v356-voice-only-cedar-quality`. | Invalida el shell anterior. |
+| `test-v356-voice-only-cedar-quality.mjs` | Reproduce RC-026 y valida matriz, Gateway, tráfico, clima y profundidad. | Banco obligatorio en `audit-project.mjs`. |
+| `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs` | Compatibilidad acumulada. | Multihoyos, Registro y LIVE permanecen activos. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-026. | Candidato separado del PASS físico. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Estado y trazabilidad V356. | Gate documental reproducible. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Inventario V356. | Se reconstruye y sella al cerrar archivos. |
+
+### Extensión V356 · exactitud temporal tráfico/clima
+
+| Archivo exacto | Mapa | Candado |
+|---|---|---|
+| `api/_lib/traffic.js`, `api/universal-ai.js`, `api/weather.js` | Salida futura, rótulo previsto, pronóstico horario y límite de proveedor. | Actual nunca sustituye futuro. |
+| `test-v356-traffic-weather-accuracy.mjs`, `audit-project.mjs` | Cinco horizontes y regresión acumulada. | RC-027 obligatorio en cada release. |
+| registro, cola, matrices y roadmaps | Causa raíz y estado verificable. | Comparación externa y campo permanecen puertas separadas. |

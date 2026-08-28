@@ -5,8 +5,8 @@ import {sanitizeVoiceHealth} from "./api/voice-health.js";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/V355-IOS-AUDIO-DICTATION-20260828/);
-assert.match(worker,/gscg-mobile-v355-ios-audio-dictation/);
+assert.match(html,/V356-VOICE-TRAFFIC-WEATHER-QUALITY-20260828/);
+assert.match(worker,/gscg-mobile-v356-voice-traffic-weather-quality/);
 
 const setupStart=html.indexOf("function normalizeTee");
 const setupEnd=html.indexOf("\nfunction applySetupChanges",setupStart);
@@ -29,19 +29,17 @@ assert.equal(parseInline("Ancas Gustavo",0),null);
 assert.equal(parseInline("Ancas Gustavo 60 blancas",0),null);
 
 const primeStart=html.indexOf("function primeAiUniversalSpeechFromGesture");
-const primeEnd=html.indexOf("\nfunction speakAiUniversalText",primeStart);
+const primeEnd=html.indexOf("\nfunction preferredMaleBrowserVoice",primeStart);
 assert.ok(primeStart>0&&primeEnd>primeStart);
 const primeSource=html.slice(primeStart,primeEnd);
-const events=[],spoken=[];
-class FakeUtterance{constructor(text){this.text=text}}
-const fakeWindow={speechSynthesis:{cancel(){},resume(){},speak(utterance){spoken.push(utterance)}}};
+const events=[],played=[];
+class FakeAudio{constructor(src){this.src=src}play(){played.push(this);this.onplay?.();return Promise.resolve()}}
 const prime=new Function(
-  "window","SpeechSynthesisUtterance","reportVoiceHealth",
-  `let aiUniversalSpeechPrimed=false,aiUniversalMuted=false,aiUniversalSpeechPrimer=null;${primeSource};return primeAiUniversalSpeechFromGesture`,
-)(fakeWindow,FakeUtterance,event=>events.push(event));
+  "Audio","reportVoiceHealth",
+  `let aiUniversalSpeechPrimed=false,aiUniversalMuted=false,aiUniversalSpeechPrimer=null,aiUniversalTtsAudio=null;${primeSource};return primeAiUniversalSpeechFromGesture`,
+)(FakeAudio,event=>events.push(event));
 assert.equal(prime(),true);
-assert.equal(spoken.length,1);
-spoken[0].onstart();
+assert.equal(played.length,1);
 assert.deepEqual(events,["browser_fallback_speech_primed"]);
 assert.equal(prime(),false);
 

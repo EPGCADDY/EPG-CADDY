@@ -143,6 +143,23 @@ function hourlyForecastForDate(payload, date, notBefore = "", notAfter = "") {
     .map(({ isoTime, ...item }) => item);
 }
 
+function hourlyForecastAtOrAfter(payload, requestedTime) {
+  const hourly = payload?.hourly || {};
+  const times = Array.isArray(hourly.time) ? hourly.time.map(String) : [];
+  const index = times.findIndex(time => time >= requestedTime);
+  if (index < 0) return null;
+  const numberAt = key => Number.isFinite(Number(hourly[key]?.[index])) ? Number(hourly[key][index]) : null;
+  return {
+    forecastAt: times[index],
+    condition: WEATHER_CODES[numberAt("weather_code")] || "condición no clasificada",
+    temperatureC: numberAt("temperature_2m"),
+    feelsLikeC: numberAt("apparent_temperature"),
+    windKmh: numberAt("wind_speed_10m"),
+    rainProbability: numberAt("precipitation_probability"),
+    precipitationMm: numberAt("precipitation")
+  };
+}
+
 function summarizeHourlyPeriod(payload, date, periodKey) {
   const period = FORECAST_PERIODS[periodKey];
   if (!period) return null;
@@ -191,6 +208,7 @@ function summarizeHourlyPeriod(payload, date, periodKey) {
 export function summarizeWeather(payload, label, options = {}) {
   const forecastStartDate = String(options.forecastStartDate || "").trim();
   const forecastEndDate = String(options.forecastEndDate || forecastStartDate).trim();
+  const forecastTargetTime = String(options.forecastTargetTime || "").trim();
   const timePeriod = FORECAST_PERIODS[options.timePeriod] ? String(options.timePeriod) : "";
   if (forecastStartDate) {
     const daily = payload?.daily || {};
@@ -204,7 +222,37 @@ export function summarizeWeather(payload, label, options = {}) {
         requestedStartDate: forecastStartDate,
         requestedEndDate: forecastEndDate,
         availableFrom: dates[0] || null,
-        availableThrough: dates.at(-1) || null
+        availableThrough: dates.at(-1) || null,
+        providerForecastLimitDays: 16,
+        message: `Open-Meteo sólo ofrece pronóstico en esta consulta desde ${dates[0] || "la fecha actual"} hasta ${dates.at(-1) || "16 días"}. No existe una estimación meteorológica verificable para ${forecastStartDate}; no presentaré datos actuales como si fueran futuros.`
+      };
+    }
+    if (forecastTargetTime) {
+      const hourlyTarget = hourlyForecastAtOrAfter(payload, forecastTargetTime);
+      if (!hourlyTarget) {
+        return {
+          ok: false,
+          error: "FORECAST_DATE_UNAVAILABLE",
+          requestedStartDate: forecastStartDate,
+          requestedEndDate: forecastEndDate,
+          availableFrom: dates[0] || null,
+          availableThrough: dates.at(-1) || null,
+          providerForecastLimitDays: 16,
+          message: `Open-Meteo no publicó una hora utilizable para ${forecastTargetTime.replace("T", " ")}. El rango disponible termina el ${dates.at(-1) || "día 16"}; no sustituiré ese pronóstico por el clima actual.`
+        };
+      }
+      return {
+        ok: true,
+        source: "Open-Meteo",
+        location: label,
+        timezone: payload?.timezone || null,
+        forecastType: "hour",
+        forecastStartDate,
+        forecastEndDate,
+        requestedForecastTime: forecastTargetTime,
+        forecastResolutionMinutes: 60,
+        forecastSelection: "first_available_hour_at_or_after_request",
+        ...hourlyTarget
       };
     }
     const valueAt = (key, index) => {
@@ -282,9 +330,12 @@ export async function computeWeatherForecast(body = {}) {
   const datePattern = /^\d{4}-\d{2}-\d{2}$/;
   const rawForecastStartDate = String(body.forecastStartDate || body.forecastDate || "").trim();
   const rawForecastEndDate = String(body.forecastEndDate || rawForecastStartDate).trim();
+  const rawForecastTargetTime = String(body.forecastTargetTime || "").trim();
   const timePeriod = String(body.timePeriod || "").trim().toLowerCase();
   if ((rawForecastStartDate && !datePattern.test(rawForecastStartDate)) ||
       (rawForecastEndDate && !datePattern.test(rawForecastEndDate)) ||
+      (rawForecastTargetTime && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(rawForecastTargetTime)) ||
+      (rawForecastTargetTime && rawForecastStartDate && !rawForecastTargetTime.startsWith(`${rawForecastStartDate}T`)) ||
       (rawForecastStartDate && rawForecastEndDate < rawForecastStartDate) ||
       (timePeriod && !FORECAST_PERIODS[timePeriod])) {
     return { ok: false, error: "INVALID_FORECAST_DATE" };
@@ -307,6 +358,7 @@ export async function computeWeatherForecast(body = {}) {
   return summarizeWeather(payload, label, {
     forecastStartDate: rawForecastStartDate,
     forecastEndDate: rawForecastEndDate,
+    forecastTargetTime: rawForecastTargetTime,
     timePeriod
   });
 }

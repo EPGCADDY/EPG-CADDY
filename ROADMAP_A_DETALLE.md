@@ -1703,3 +1703,29 @@ Archivos exactos V354: `index-grupal.html`, `service-worker.js`, `api/voice-heal
 | documentos rectores e inventarios | Registran RC-025 y estado honesto. | Banco, Preview y PASS físico separados. |
 
 Estado remoto V355: commit `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, Preview `dpl_7AaXsHMV7msb6f2dizQECu3ES55F` READY, 97 paquetes PASS y navegador real PASS para build, AI ∞ y distribución Nombre/HDCP/Marcas. Producción intacta; falta PASS físico iPhone.
+
+### Extensión V356 · horizontes de tráfico y clima
+
+| Archivo exacto | Responsabilidad | Control permanente |
+|---|---|---|
+| `api/universal-ai.js` | Interpreta 30 min, 1 h, 3 h, mañana, fecha y próxima semana en hora Guatemala; separa vivo de previsto. | El sufijo temporal no contamina el destino ni puede rotular futuro como vivo. |
+| `api/_lib/traffic.js` | Propaga salida solicitada y si la hora fue asumida. | La respuesta conserva hora de cálculo y hora de salida. |
+| `api/weather.js` | Selecciona la primera hora disponible igual o posterior y declara límite de 16 días. | Nunca sustituye una fecha futura no disponible por observación actual. |
+| `test-v356-traffic-weather-accuracy.mjs` | Ejecuta cinco horizontes, tres rutas, clima horario/diario y límite del proveedor. | RC-027 queda en la auditoría maestra. |
+| documentos rectores e inventarios | Registran causa, punto de escape y estado externo honesto. | 90% requiere comparación cuantificada; no basta PASS interno. |
+
+## V356-VOICE-ONLY-CEDAR-QUALITY
+
+| Archivo exacto | Responsabilidad V356 | Candado |
+|---|---|---|
+| `index-grupal.html` | Oculta turnos originados por micrófono, conserva texto escrito y reproduce el respaldo con Cedar. | Voz y texto tienen origen explícito; no existe voz española genérica. |
+| `api/voice-speech.js` | TTS servidor `Cedar` 1.15 con OpenAI directo y Vercel AI Gateway. | Misma matriz masculina, sin clave en cliente, sin caché ni registro del contenido. |
+| `api/universal-ai.js` | Distingue salida hablada y escrita; clima hablado conciso y calibre profundo conservado. | Voz sin Markdown y de tres a seis oraciones; texto mantiene detalle. |
+| `service-worker.js` | Caché V356. | El iPhone invalida V355. |
+| `test-v356-voice-only-cedar-quality.mjs` | Ejecuta ocultamiento, matriz, respaldo Gateway, clima conciso, tráfico estructurado y perfil deep. | RC-026 no puede reaparecer. |
+| `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs` | Conservan multihoyos, General y dictado azul. | La corrección nueva no rompe las anteriores. |
+| `test-v352-live.mjs`, `test-v353-live-hub.mjs` | Conservan LIVE y Centro LIVE. | Monitores y privacidad no cambian. |
+| `audit-project.mjs` | Incorpora V356 a la auditoría maestra. | Ningún Preview puede omitir el banco. |
+| documentos rectores, mapa e inventarios | RC-026, estado, rutas y sello V356. | Trazabilidad reproducible y Producción intacta. |
+
+Fuentes vivas: Google Maps Routes `TRAFFIC_AWARE_OPTIMAL` para tráfico; Open-Meteo estructurado para clima; GPT-5.6 y búsqueda web para AI UNIVERSAL. La salida hablada exige conclusión, evidencia, límite y recomendación sin leer fichas extensas. Preview y PASS físico iPhone permanecen pendientes hasta completar las puertas técnicas.

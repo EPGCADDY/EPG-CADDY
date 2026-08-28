@@ -75,13 +75,13 @@ for(const id of ["openAiUniversal","aiUniversalInput","sendAiUniversal","listenA
 }
 for(const token of [
   "function routeAiUniversalAppText(text)",
-  "function submitAiUniversalText(forcedText=\"\")",
+  "function submitAiUniversalText(forcedText=\"\",{voiceOnly=false}={})",
   'window.gscgApiUrl("/api/universal-ai")',
   "function startAiUniversalListening()",
   "function speakAiUniversalText(text",
   "function renderAiUniversalHistory()",
-  'aiUniversalRemember("user",transcript)',
-  'aiUniversalRemember("assistant",finishedConversationText,aiUniversalPendingSources)',
+  'aiUniversalRemember("user",transcript,[],{visible:false})',
+  'aiUniversalRemember("assistant",finishedConversationText,aiUniversalPendingSources,{visible:false})',
   "const CONVERSATION_INACTIVITY_CLOSE_MS=30*60*1000",
   "CONTEXTO DE CHAT TEMPORAL · REGLAS PUEDE GUARDAR SÓLO TOKENS Y RESPUESTAS OFICIALES EN ESTE DISPOSITIVO"
 ])assert.ok(html.includes(token),`Falta integración AI UNIVERSAL ∞: ${token}`);

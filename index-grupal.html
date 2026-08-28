@@ -12,7 +12,8 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/official-logos/golf-score-card-gt-pwa-v345-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V355-IOS-AUDIO-DICTATION-20260828">
+<meta name="gscg-build" content="V356-VOICE-TRAFFIC-WEATHER-QUALITY-20260828">
+<meta name="gscg-ai-voice" content="CEDAR-1.15-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
@@ -983,7 +984,7 @@ let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelE
 let realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL,realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;
 let voiceOpening=false;
 let browserVoiceRecognition=null,browserVoiceContext=null,browserVoiceActive=false,browserVoiceRequested=false,browserVoiceTranscript="",browserVoiceInterim="",browserVoiceErrored=false;
-let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null,aiUniversalSpeechPrimed=false,aiUniversalSpeechPrimer=null,aiUniversalRulesMode=false;
+let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null,aiUniversalSpeechPrimed=false,aiUniversalSpeechPrimer=null,aiUniversalTtsAudio=null,aiUniversalTtsObjectUrl="",aiUniversalRulesMode=false;
 const AI_UNIVERSAL_HISTORY_LIMIT=80;
 const processedTranscriptItems=new Set();
 const WEATHER_REFRESH_MS=10*60*1000;
@@ -2349,16 +2350,17 @@ function aiUniversalSetState(text,{busy=false}={}){
   const target=$("aiUniversalState");if(!target)return;
   target.textContent=String(text||"");target.classList.toggle("busy",!!busy);
 }
-function aiUniversalRemember(role,content,sources=[]){
+function aiUniversalRemember(role,content,sources=[],{visible=true}={}){
   const clean=String(content||"").trim();if(!clean)return null;
   const safeRole=role==="assistant"?"assistant":"user";
   const safeSources=Array.isArray(sources)?sources.filter(source=>/^https:\/\//i.test(String(source?.url||""))).slice(0,5).map(source=>({title:String(source.title||"Fuente web").slice(0,120),url:String(source.url)})):[];
   const previous=aiUniversalHistory.at(-1);
   if(previous?.role===safeRole&&previous.content===clean){
     if(safeSources.length)previous.sources=safeSources;
+    if(visible===false)previous.visible=false;
     renderAiUniversalHistory();return previous;
   }
-  const entry={role:safeRole,content:clean,...(safeSources.length?{sources:safeSources}:{})};
+  const entry={role:safeRole,content:clean,visible:visible!==false,...(safeSources.length?{sources:safeSources}:{})};
   aiUniversalHistory.push(entry);
   if(aiUniversalHistory.length>AI_UNIVERSAL_HISTORY_LIMIT)aiUniversalHistory=aiUniversalHistory.slice(-AI_UNIVERSAL_HISTORY_LIMIT);
   if(safeRole==="assistant")aiUniversalLastAnswer=clean;
@@ -2367,10 +2369,11 @@ function aiUniversalRemember(role,content,sources=[]){
 function renderAiUniversalHistory(){
   const target=$("aiUniversalMessages");if(!target)return;
   target.replaceChildren();
-  if(!aiUniversalHistory.length){
+  const visibleHistory=aiUniversalHistory.filter(item=>item.visible!==false);
+  if(!visibleHistory.length){
     const empty=document.createElement("div");empty.className="ai-universal-empty";empty.textContent="Pregunta por voz con el micrófono de la tarjeta o escribe aquí. No existe una lista cerrada de temas.";target.append(empty);return;
   }
-  for(const item of aiUniversalHistory){
+  for(const item of visibleHistory){
     const card=document.createElement("article");card.className=`ai-message ${item.role}`;
     const label=document.createElement("strong");label.textContent=item.role==="assistant"?"AI UNIVERSAL ∞":"TÚ";
     const text=document.createElement("div");text.textContent=item.content;card.append(label,text);
@@ -2401,42 +2404,64 @@ function realtimeResponseTranscript(response){
   return(response?.output||[]).flatMap(item=>item?.content||[]).map(content=>String(content?.transcript||content?.text||"").trim()).filter(Boolean).join(" ").trim();
 }
 function primeAiUniversalSpeechFromGesture(){
-  if(aiUniversalSpeechPrimed||aiUniversalMuted||!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance!=="function")return false;
+  if(aiUniversalSpeechPrimed||aiUniversalMuted)return false;
   try{
-    window.speechSynthesis.cancel();window.speechSynthesis.resume?.();
-    const primer=new SpeechSynthesisUtterance("listo");aiUniversalSpeechPrimer=primer;
-    primer.lang="es-GT";primer.volume=.01;primer.rate=10;primer.pitch=1;
-    const ready=()=>{if(aiUniversalSpeechPrimer===primer)aiUniversalSpeechPrimer=null;if(!aiUniversalSpeechPrimed){aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_primed")}};
-    primer.onstart=ready;primer.onend=ready;primer.onerror=()=>{if(aiUniversalSpeechPrimer===primer)aiUniversalSpeechPrimer=null};
-    window.speechSynthesis.speak(primer);return true;
+    if(typeof Audio==="function"){
+      const primer=new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=");aiUniversalSpeechPrimer=primer;aiUniversalTtsAudio=primer;primer.volume=.01;
+      const ready=()=>{if(aiUniversalSpeechPrimer===primer)aiUniversalSpeechPrimer=null;if(!aiUniversalSpeechPrimed){aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_primed")}};
+      primer.onplay=ready;primer.onended=ready;primer.onerror=()=>{if(aiUniversalSpeechPrimer===primer)aiUniversalSpeechPrimer=null};
+      const played=primer.play();if(played?.then)played.then(ready).catch(()=>{});return true;
+    }
+    return false;
   }catch{return false}
 }
-function speakAiUniversalText(text,{repeat=false}={}){
-  const clean=String(text||"").trim();if(!clean||aiUniversalMuted)return false;
-  if(!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance!=="function"){
-    aiUniversalSetState("ESTE NAVEGADOR NO OFRECE LECTURA EN VOZ");return false;
-  }
+function preferredMaleBrowserVoice(language){
+  if(!("speechSynthesis" in window))return null;
+  const voices=window.speechSynthesis.getVoices?.()||[],base=String(language||"es").toLowerCase().split("-")[0];
+  const maleName=/\b(cedar|jorge|diego|carlos|enrique|alberto|antonio|pablo|raul|male|masculino|hombre)\b/i;
+  return voices.find(voice=>String(voice.lang||"").toLowerCase().startsWith(base)&&maleName.test(`${voice.name||""} ${voice.voiceURI||""}`))||null;
+}
+function speakAiUniversalMaleBrowserFallback(clean){
+  if(!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance!=="function")return false;
+  const language=aiUniversalSpeechLanguage(clean),voice=preferredMaleBrowserVoice(language);if(!voice)return false;
   window.speechSynthesis.cancel();window.speechSynthesis.resume?.();
-  const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;
-  utterance.lang=aiUniversalSpeechLanguage(clean);utterance.rate=.98;utterance.pitch=1;
-  const voices=window.speechSynthesis.getVoices?.()||[],language=utterance.lang.toLowerCase().split("-")[0];
-  utterance.voice=voices.find(voice=>String(voice.lang||"").toLowerCase()===utterance.lang.toLowerCase())||voices.find(voice=>String(voice.lang||"").toLowerCase().startsWith(language))||null;
-  let started=false;const startWatchdog=setTimeout(()=>{if(aiUniversalUtterance!==utterance||started)return;reportVoiceHealth("browser_fallback_speech_failed");setPrimaryVoiceMatrix("idle",voiceContext,"RESPUESTA LISTA EN AI ∞ · TOCA REPETIR PARA OÍRLA");aiUniversalSetState("RESPUESTA VISIBLE · TOCA REPETIR PARA OÍRLA")},1800);
-  utterance.onstart=()=>{started=true;aiUniversalSpeechPrimed=true;clearTimeout(startWatchdog);reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true})};
-  utterance.onend=()=>{clearTimeout(startWatchdog);if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")}};
-  utterance.onerror=()=>{clearTimeout(startWatchdog);reportVoiceHealth("browser_fallback_speech_failed");if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;setPrimaryVoiceMatrix("error",voiceContext,"RESPUESTA VISIBLE EN AI ∞ · TOCA REPETIR PARA OÍRLA");aiUniversalSetState("RESPUESTA VISIBLE · TOCA REPETIR PARA OÍRLA")}};
+  const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;utterance.lang=language;utterance.rate=VOICE_POLICY.speed;utterance.pitch=.92;utterance.voice=voice;
+  utterance.onstart=()=>{reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true})};
+  utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")}};
+  utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")};
   window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);return true;
+}
+async function speakAiUniversalText(text,{repeat=false}={}){
+  const clean=String(text||"").trim();if(!clean||aiUniversalMuted)return false;
+  try{
+    aiUniversalSetState("PREPARANDO VOZ CEDAR…",{busy:true});
+    const response=await fetch(window.gscgApiUrl("/api/voice-speech"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:clean,language:aiUniversalSpeechLanguage(clean)})});
+    if(!response.ok)throw new Error("CEDAR_TTS_UNAVAILABLE");
+    const blob=await response.blob();if(!blob.size)throw new Error("CEDAR_TTS_EMPTY");
+    if(typeof Audio!=="function")throw new Error("AUDIO_UNAVAILABLE");
+    if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(blob);
+    const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.volume=1;player.playbackRate=1;
+    player.onplay=()=>{aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ · CEDAR 1.15",{busy:true})};
+    player.onended=()=>{setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
+    player.onerror=()=>{reportVoiceHealth("browser_fallback_speech_failed");if(!speakAiUniversalMaleBrowserFallback(clean))aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")};
+    await player.play();return true;
+  }catch(error){
+    reportVoiceHealth("browser_fallback_speech_failed");
+    if(speakAiUniversalMaleBrowserFallback(clean))return true;
+    setPrimaryVoiceMatrix("error",voiceContext,"VOZ MASCULINA NO DISPONIBLE · INTENTA DE NUEVO");aiUniversalSetState("VOZ MASCULINA NO DISPONIBLE · INTENTA DE NUEVO");return false;
+  }
 }
 function stopAiUniversalOutput(){
   aiUniversalTextAbortController?.abort();aiUniversalTextAbortController=null;aiUniversalTextBusy=false;
   if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;
+  if(aiUniversalTtsAudio){aiUniversalTtsAudio.pause();aiUniversalTtsAudio.currentTime=0}
   if(authorizedSpeech?.reason==="conversation"||activeResponseId||stopMonitorActive)stopAuthorizedSpeech();
   if(listening)setVoice(false);
   $("sendAiUniversal").disabled=false;aiUniversalSetState("DETENIDO · PUEDES ESCRIBIR O ESCUCHAR");return true;
 }
 function toggleAiUniversalMute(){
   aiUniversalMuted=!aiUniversalMuted;
-  if(aiUniversalMuted){if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;if(audioEl){audioEl.muted=true;audioEl.volume=0}}
+  if(aiUniversalMuted){if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;if(aiUniversalTtsAudio)aiUniversalTtsAudio.pause();if(audioEl){audioEl.muted=true;audioEl.volume=0}}
   else if(audioEl&&authorizedSpeech?.reason==="conversation"){audioEl.muted=false;audioEl.volume=1}
   const button=$("muteAiUniversal");button.classList.toggle("active",aiUniversalMuted);button.textContent=aiUniversalMuted?"ACTIVAR VOZ":"SILENCIAR";
   aiUniversalSetState(aiUniversalMuted?"VOZ SILENCIADA · EL TEXTO SIGUE ACTIVO":"VOZ ACTIVADA");return aiUniversalMuted;
@@ -2503,19 +2528,19 @@ function aiUniversalAppContext(trafficOrigin=null){
     trafficOrigin:trafficOrigin?{latitude:trafficOrigin.latitude,longitude:trafficOrigin.longitude}:null
   };
 }
-async function submitAiUniversalText(forcedText=""){
+async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
   if(aiUniversalTextBusy)return false;
   const input=$("aiUniversalInput"),query=String(forcedText||input.value||"").trim();if(!query){input.focus();return false}
-  input.value="";aiUniversalRemember("user",query);
+  input.value="";aiUniversalRemember("user",query,[],{visible:!voiceOnly});
   const local=aiUniversalRulesMode?{handled:false}:routeAiUniversalAppText(query);
-  if(local.handled){aiUniversalRemember("assistant",local.answer);aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");speakAiUniversalText(local.answer);return true}
+  if(local.handled){aiUniversalRemember("assistant",local.answer,[],{visible:!voiceOnly});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(voiceOnly)await speakAiUniversalText(local.answer);return true}
   aiUniversalTextBusy=true;$("sendAiUniversal").disabled=true;setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO",{busy:true});
   const controller=new AbortController();aiUniversalTextAbortController=controller;
   try{
     const history=aiUniversalHistory.slice(0,-1).slice(-AI_UNIVERSAL_HISTORY_LIMIT).map(item=>({role:item.role,content:item.content}));
     const requestUniversal=async trafficOrigin=>{
       const endpoint=aiUniversalRulesMode?window.gscgApiUrl("/api/golf-rules"):window.gscgApiUrl("/api/universal-ai");
-      const options={method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,appContext:aiUniversalAppContext(trafficOrigin)})};
+      const options={method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,responseMode:voiceOnly?"voice":"text",appContext:aiUniversalAppContext(trafficOrigin)})};
       let response=await fetch(endpoint,options),result=await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}));
       if(!aiUniversalRulesMode&&response.status===503&&result?.retryable){
         aiUniversalSetState("RECUPERANDO CONEXIÓN CON AI UNIVERSAL ∞…",{busy:true});
@@ -2534,14 +2559,14 @@ async function submitAiUniversalText(forcedText=""){
     }
     if(!response.ok||!result.ok){const requestError=new Error(result.error||"UNIVERSAL_AI_UNAVAILABLE");requestError.code=result.error||"UNIVERSAL_AI_UNAVAILABLE";throw requestError}
     if(aiUniversalRulesMode)saveOfficialGolfRuleForOffline(query,result);
-    aiUniversalRemember("assistant",result.answer,result.sources);aiUniversalSetState("LISTO · PUEDES CONTINUAR");speakAiUniversalText(result.answer);return true;
+    aiUniversalRemember("assistant",result.answer,result.sources,{visible:!voiceOnly});aiUniversalSetState("LISTO · PUEDES CONTINUAR");if(voiceOnly)await speakAiUniversalText(result.answer);return true;
   }catch(error){
     if(error?.name==="AbortError"){if(!aiUniversalTextAbortController||aiUniversalTextAbortController===controller)aiUniversalSetState("DETENIDO · PUEDES CONTINUAR");return false}
     if(aiUniversalRulesMode){
       const offline=officialGolfRuleOfflineResult(query);
-      if(offline){aiUniversalRemember("assistant",offline.answer,offline.sources);renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");speakAiUniversalText(offline.answer);return true}
+      if(offline){aiUniversalRemember("assistant",offline.answer,offline.sources,{visible:!voiceOnly});renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");if(voiceOnly)await speakAiUniversalText(offline.answer);return true}
     }
-    const creditBlocked=error?.code==="UNIVERSAL_AI_CREDIT_EXHAUSTED";const message=error?.code==="TRAFFIC_LOCATION_DENIED"?"Necesito permiso de ubicación o un punto de salida escrito para calcular el tráfico.":creditBlocked?"El servicio de respuestas no tiene saldo disponible. Tu conexión a Internet sí funciona.":aiUniversalRulesMode?"No pude verificar la regla en las fuentes oficiales USGA / The R&A en este momento. Intenta nuevamente.":"No pude completar la respuesta en este momento.";aiUniversalRemember("assistant",message);const visibleState=creditBlocked?"SERVICIO DE RESPUESTAS SIN SALDO · TU INTERNET SÍ FUNCIONA":error?.code==="TRAFFIC_LOCATION_DENIED"?"UBICACIÓN NECESARIA":"SERVICIO DE RESPUESTAS NO DISPONIBLE";setPrimaryVoiceMatrix("error",voiceContext,visibleState);aiUniversalSetState(visibleState);return false;
+    const creditBlocked=error?.code==="UNIVERSAL_AI_CREDIT_EXHAUSTED";const message=error?.code==="TRAFFIC_LOCATION_DENIED"?"Necesito permiso de ubicación o un punto de salida escrito para calcular el tráfico.":creditBlocked?"El servicio de respuestas no tiene saldo disponible. Tu conexión a Internet sí funciona.":aiUniversalRulesMode?"No pude verificar la regla en las fuentes oficiales USGA / The R&A en este momento. Intenta nuevamente.":"No pude completar la respuesta en este momento.";aiUniversalRemember("assistant",message,[],{visible:!voiceOnly});const visibleState=creditBlocked?"SERVICIO DE RESPUESTAS SIN SALDO · TU INTERNET SÍ FUNCIONA":error?.code==="TRAFFIC_LOCATION_DENIED"?"UBICACIÓN NECESARIA":"SERVICIO DE RESPUESTAS NO DISPONIBLE";setPrimaryVoiceMatrix("error",voiceContext,visibleState);aiUniversalSetState(visibleState);return false;
   }finally{
     if(aiUniversalTextAbortController===controller){aiUniversalTextAbortController=null;aiUniversalTextBusy=false;$("sendAiUniversal").disabled=false}
   }
@@ -2577,7 +2602,7 @@ function speakConversation(transcript){
   if(!dc||dc.readyState!=="open"||!String(transcript||"").trim())return false;
   clearConversationIdleCloseTimer();
   renderCaddieSources(null);
-  aiUniversalRemember("user",transcript);
+  aiUniversalRemember("user",transcript,[],{visible:false});
   const token=`speech_${++speechTokenSeq}`;
   authorizedSpeech={reason:"conversation",token,text:String(transcript)};
   sessionHasSpoken=true;
@@ -4046,9 +4071,9 @@ async function processBrowserVoiceTranscript(context,transcript){
     if(result?.ok){const count=scoreParsed.entries.length;reportVoiceHealth("browser_fallback_round_applied",{entryCount:count});setPrimaryVoiceMatrix("idle",context,count===1?"LISTO · 1 HOYO REGISTRADO":`LISTO · ${count} HOYOS REGISTRADOS`);return true}
     reportVoiceHealth("browser_fallback_round_rejected",{entryCount:0});setPrimaryVoiceMatrix("error",context,"NO RECONOCÍ LA TANDA · DI: HOYO 1 CUATRO, HOYO 2 CINCO");return false
   }
-  const local=routeAiUniversalAppText(clean);if(local?.handled){aiUniversalRemember("user",clean);aiUniversalRemember("assistant",local.answer);aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(!speakAiUniversalText(local.answer))setPrimaryVoiceMatrix("idle",context);return true}
+  const local=routeAiUniversalAppText(clean);if(local?.handled){aiUniversalRemember("user",clean,[],{visible:false});aiUniversalRemember("assistant",local.answer,[],{visible:false});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(!await speakAiUniversalText(local.answer))setPrimaryVoiceMatrix("idle",context);return true}
   openAiUniversalPanel(false,{focus:false});reportVoiceHealth("browser_fallback_general_visible");
-  const answered=await submitAiUniversalText(clean);if(!answered){reportVoiceHealth("browser_fallback_query_failed");if(!primaryVoiceStatusTarget(context)?.textContent)setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO")}return answered
+  const answered=await submitAiUniversalText(clean,{voiceOnly:true});if(!answered){reportVoiceHealth("browser_fallback_query_failed");if(!primaryVoiceStatusTarget(context)?.textContent)setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO")}return answered
 }
 function startBrowserVoiceFallback(context){
   const Recognition=fallbackVoiceConstructor();if(typeof Recognition!=="function")return false;stopBrowserVoiceFallback({keepStatus:true});const recognition=new Recognition();
@@ -4464,7 +4489,7 @@ function handleRealtime(message){
       reportVoiceHealth("response_stopped",{hasResponseId:!!e.response_id});
       const finishedReason=authorizedSpeech?.reason||null;
       const finishedConversationText=finishedReason==="conversation"?String(conversationOutputTranscript||"").trim():"";
-      if(finishedConversationText){aiUniversalRemember("assistant",finishedConversationText,aiUniversalPendingSources);aiUniversalPendingSources=[]}
+      if(finishedConversationText){aiUniversalRemember("assistant",finishedConversationText,aiUniversalPendingSources,{visible:false});aiUniversalPendingSources=[]}
       if(finishedReason==="conversation"&&conversationBargeInItemId)conversationEchoGuardUntil=Date.now()+1800;
       if(audioEl){audioEl.muted=true;audioEl.volume=0;}
       if(micTrack&&!listening)micTrack.enabled=false;

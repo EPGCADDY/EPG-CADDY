@@ -6,8 +6,8 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 
 | Orden | Pendiente | Estado real |
 |---:|---|---|
-| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V355 corrige audio automático Safari y dictado Nombre/HDCP/Marcas; banco, Preview READY y navegador PASS; prueba física pendiente |
-| 2 | `PEND-TRA-005` tráfico actual y futuro | Google Maps Routes activo y probado; faltan comparación simultánea con Waze y validación física en Guatemala |
+| 1 | `PEND-VOZ-003` AI UNIVERSAL ∞ y micrófono bilateral | V356 separa voz/texto, fija Cedar masculino 1.15 y refuerza calidad; banco, Preview y prueba física pendientes |
+| 2 | `PEND-TRA-005` tráfico actual y futuro | V356 corrige horizontes 30 min/1 h/3 h/mañana/próxima semana; faltan Preview, comparación simultánea independiente con Waze y validación física en Guatemala |
 | 3 | `PEND-REG-001` USGA y Reglas de Golf | V328-R2: Preview oficial y modo básico offline entregados en banco; falta voz física en iPhone |
 | 4 | `PEND-HCP-008` hándicap oficial | Falta autorización o mecanismo con ASOGOLF/GHIN; el índice interno seguirá separado |
 | 5 | `PEND-CAM-009` campos mundiales | Falta proveedor/catálogo licenciado y tarjetas oficiales verificables |
@@ -19,13 +19,13 @@ Este archivo concentra los trabajos que el propietario ha pedido conservar para 
 | 11 | `PEND-EST-012` estadísticas avanzadas | Estadística local básica entregada; faltan histórico central, tendencias y comparaciones multi-dispositivo |
 | 12 | `PEND-COM-013` monetización y operación comercial | Falta modelo comercial, términos, privacidad, soporte y proveedores de pago/entrega |
 | 13 | `PEND-QA-014` certificación integral | Falta banco final automático, visual y físico por dispositivo, modalidad, ruido, conexión y ronda completa |
-| 14 | `PEND-CLI-002` clima completo en artefactos | Clima vivo entregado; faltan proveedor comparado, snapshots, historial, PDF/imagen y prueba de campo |
+| 14 | `PEND-CLI-002` clima completo en artefactos | V356 distingue observación y pronóstico horario/diario hasta 16 días; faltan Preview, comparación externa temporal, snapshots, historial, PDF/imagen y prueba de campo |
 | 15 | `PEND-MAN-004` Guía Rápida | Falta versión web/PDF visual enlazada al Manual vigente |
 | 16 | `PEND-UBI-015` detectar el campo por GPS | Falta catálogo geográfico verificado, propuesta segura, confirmación manual y prueba física por campo |
 | 17 | `PEND-RSG-016` sincronización de Reglas de Golf | Falta mecanismo permitido, manifiesto versionado, actualización/reversión y prueba física |
 | 18 | `PEND-LIVE-018` GOLF SCORE CARD GT. LIVE | V353 CENTRO LIVE: local/Preview/E2E 80 jugadores/observabilidad PASS; inspección visual y prueba física iPhone pendientes |
 
-La prioridad activa por la observación física más reciente es `PEND-VOZ-003` V355; `PEND-LIVE-018` V353 conserva su E2E aprobado y sus puertas físicas abiertas. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
+La prioridad activa por la observación física más reciente es `PEND-VOZ-003` V356; `PEND-LIVE-018` V353 conserva su E2E aprobado y sus puertas físicas abiertas. **Producción permanece intacta y no existe montaje hasta obtener los PASS técnicos y físicos correspondientes.**
 
 **Autorización de ejecución permanente:** el propietario ordenó el 26 de agosto de 2026 agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versión cuando esté realmente probada. Esta autorización no convierte un `FAIL` en `PASS` ni permite simular licencias, credenciales o integraciones externas inexistentes.
 
@@ -144,7 +144,7 @@ Sólo podrá declararse terminado cuando todos los campos operativos tengan loca
 ## PEND-VOZ-003 · Caddie/Support conversacional humano
 
 **Fecha de registro:** 25 de agosto de 2026  
-**Estado:** V355 DESPLEGADA EN PREVIEW; BANCO, BUILD Y NAVEGADOR PASS; VALIDACIÓN FÍSICA IPHONE PENDIENTE
+**Estado:** V356 CANDIDATO EN BANCO; PREVIEW Y VALIDACIÓN FÍSICA IPHONE PENDIENTES
 **Prioridad:** Principal, conectado con `PEND-REG-001`  
 **Solicitud original ampliada:** lograr que el micrófono y el buscador sean lo más cercanos posible a conversar con un humano especialista en golf, pero que también permitan preguntas abiertas de clima, vida diaria, salud y conocimiento general.
 
@@ -207,6 +207,9 @@ Los modelos Realtime permiten audio de entrada y salida en tiempo real; los arch
 - La prueba física posterior rechazó el audio de V354: la respuesta General quedó escrita. V355 habilita la síntesis dentro del toque original antes de esperar Internet y no considera la recuperación manual como aprobación automática.
 - V355 distribuye `ANCAS GUSTAVO, 15 BLANCAS` dictado dentro de NOMBRE en Nombre/HDCP/Marcas sin cerrar el teclado; una frase incompleta o HDCP fuera de 0–54 permanece manual.
 - Preview V355: commit `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, deployment `dpl_7AaXsHMV7msb6f2dizQECu3ES55F` READY. Vercel aprobó 97 paquetes; navegador confirmó build/voz V355, AI ∞ y distribución Prueba V355/15/Blanco con OK habilitado.
+- La prueba física posterior confirmó que V355 habló, pero mostró la consulta y respuesta como texto y Safari eligió una voz femenina ajena a la matriz. V356 marca los turnos hablados como contexto no visible y conserva texto únicamente para consultas escritas.
+- V356 recupera la matriz aprobada: voz `Cedar`, velocidad `1.15`, locutor masculino adulto, serio, profesional y español internacional neutro. `/api/voice-speech` intenta OpenAI TTS y usa AI Gateway como respaldo; la selección local sólo admite voces masculinas conocidas y jamás toma la primera voz española disponible.
+- V356 conserva Google Maps Routes `TRAFFIC_AWARE_OPTIMAL` como fuente exclusiva de ETA/demora/distancia, Open-Meteo estructurado para clima y GPT-5.6 con búsqueda web y profundidad adaptable para vocabulario universal. La voz meteorológica resume el resultado sin leer las 24 horas completas.
 
 - Las respuestas generales pueden resultar vagas, básicas o demasiado breves hasta que el usuario pide expresamente una respuesta más estudiada, investigada, profunda y formal. Debe incorporarse una matriz permanente de calidad que revise pertinencia, fundamento, profundidad, precisión, aplicación práctica y claridad antes de cada respuesta, sin obligar al usuario a repetir esa orden.
 - En la quinta conversación física el estado quedó escuchando y, después de terminar la pregunta, el turno se cortó sin completar el ciclo. Debe reproducirse y corregirse la recuperación del micrófono en conversaciones consecutivas.

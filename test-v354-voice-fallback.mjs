@@ -6,8 +6,8 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 const audit=fs.readFileSync(new URL("./audit-project.mjs",import.meta.url),"utf8");
 
-assert.match(html,/V355-IOS-AUDIO-DICTATION-20260828/);
-assert.match(worker,/gscg-mobile-v355-ios-audio-dictation/);
+assert.match(html,/V356-VOICE-TRAFFIC-WEATHER-QUALITY-20260828/);
+assert.match(worker,/gscg-mobile-v356-voice-traffic-weather-quality/);
 assert.match(audit,/test-v354-voice-fallback\.mjs/);
 assert.match(html,/function operationalDefaultVoicePlayer\(\)\{return operationalPromptPlayer\(\)\?\?\(\(round\?\.players\|\|\[\]\)\.length===1\?round\.players\[0\]:null\)\}/);
 
@@ -46,9 +46,8 @@ assert.ok(processSource.indexOf("parseRoundScoreTranscript(clean)")<processSourc
 assert.match(processSource,/browser_fallback_round_applied/);
 assert.match(processSource,/entryCount:count/);
 assert.match(processSource,/NO RECONOCÍ LA TANDA/);
-assert.ok(processSource.indexOf('openAiUniversalPanel(false,{focus:false})')<processSource.indexOf('submitAiUniversalText(clean)'));
+assert.ok(processSource.indexOf('openAiUniversalPanel(false,{focus:false})')<processSource.indexOf('submitAiUniversalText(clean,{voiceOnly:true})'));
 assert.match(processSource,/browser_fallback_general_visible/);
-assert.match(html,/RESPUESTA VISIBLE · TOCA REPETIR PARA OÍRLA/);
 assert.match(html,/speechSynthesis\.resume\?\.\(\)/);
 
 const runtimeEvents=[],runtimeOrder=[],runtimeMatrices=[];
