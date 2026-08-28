@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/official-logos/golf-score-card-gt-pwa-v345-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
-<meta name="gscg-build" content="V357-IOS-VOICE-TRANSPORT-RECOVERY-20260828">
+<meta name="gscg-build" content="V358-VOICE-ROUND-CONTINUITY-20260828">
 <meta name="gscg-ai-voice" content="CEDAR-1.15-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -4958,7 +4958,9 @@ render();
 scheduleRoundTimerIdleShutdown();
 dateSetup();
 if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
-if(directHome&&!sfEmergency&&!demoControlManual)openNewRoundDraft();
+// El acceso principal usa ?inicio=1. Una ronda configurada permanece montada
+// y visible hasta que el jugador toque explícitamente NUEVA RONDA.
+if(directHome&&!sfEmergency&&!demoControlManual&&!round.configured)openNewRoundDraft();
 else if(!round.configured){
   if(sfEmergency)window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
   else openSetup("new");

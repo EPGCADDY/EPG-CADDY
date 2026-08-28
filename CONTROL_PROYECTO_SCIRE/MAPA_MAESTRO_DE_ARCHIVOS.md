@@ -902,3 +902,13 @@ Resultado remoto V355: `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, `dpl_7AaXsHMV
 | `.github/workflows/roadmap-gate.yml`, `AGENTS.md`, `audit-project.mjs`, `package.json` | Candado entre conversaciones y ejecución obligatoria. | Voz V354–V357 y tráfico/clima V324/V337/V356 no pueden omitirse. |
 | `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs` | Compatibilidad acumulada. | LIVE, Registro, multi-hoyos y Cedar intactos. |
 | documentos rectores, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-028, estado y árbol exacto V357. | Continuidad verificable sin depender del historial de chat. |
+
+## V358-VOICE-ROUND-CONTINUITY
+
+| Archivo exacto | Mapa V358 | Control |
+|---|---|---|
+| `index-grupal.html` | Conserva la tarjeta configurada al abrir con `?inicio=1`; Registro aparece sólo si todavía no existe ronda. | Cerrar o reabrir no sustituye la ronda; `NUEVA RONDA` sigue siendo la única acción explícita para empezar otra. |
+| `service-worker.js` | Shell V358. | Invalida la caché V357 en iPhone. |
+| `test-v358-active-round-reopen.mjs`, `audit-project.mjs` | Reproduce reapertura, persistencia y flujo explícito de nueva ronda. | RC-029 queda dentro de la auditoría maestra. |
+| `test-v311-neutral-match-home-link.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs` | Inicio condicionado e identificador acumulado V358. | Match/Four Ball, LIVE, Registro, multihoyos, Cedar y recuperación Safari siguen obligatorios. |
+| documentos rectores, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-029, estado y árbol exacto V358. | Producción y PASS físico permanecen puertas separadas. |

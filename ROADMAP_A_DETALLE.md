@@ -1747,3 +1747,14 @@ Fuentes vivas: Google Maps Routes `TRAFFIC_AWARE_OPTIMAL` para tráfico; Open-Me
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Trazabilidad y sello del árbol V357. | Otra conversación localiza y conserva esta corrección. |
 
 Evidencia raíz: 16:43:01, 16:43:23, 16:43:54, 16:44:06, 16:45:44 y 16:45:58 UTC devolvieron 429 en `/api/session-grupal`; `/api/universal-ai` respondió 200. V357 elimina esa dependencia para escuchar en Safari. Producción permanece intacta.
+
+## V358-VOICE-ROUND-CONTINUITY
+
+| Archivo exacto | Responsabilidad V358 | Candado |
+|---|---|---|
+| `index-grupal.html` | Condiciona el borrador inicial a `!round.configured`. | Una ronda activa reaparece con jugadores, modalidad, hoyo y scores; no se abre Registro automáticamente. |
+| `service-worker.js` | Caché `gscg-mobile-v358-voice-round-continuity`. | El acceso directo iPhone recibe la corrección. |
+| `test-v358-active-round-reopen.mjs` | Inspecciona inicio, `pagehide`, `beforeunload`, `pageshow`, persistencia, archivo y `NUEVA RONDA`. | RC-029 no puede reaparecer. |
+| `test-v311-neutral-match-home-link.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs` | Conservan inicio directo condicionado y regresión acumulada con el identificador V358. | Match/Four Ball, LIVE, Registro, multihoyos, Cedar, privacidad y gesto Safari siguen activos. |
+| `audit-project.mjs` | Ejecuta V358 dentro de la puerta maestra. | Un FAIL detiene publicación. |
+| documentos rectores, mapa, `scripts/rebuild-inventory-pdfs.py` e inventario | RC-029 y sello reproducible. | Preview no equivale a PASS físico ni autoriza Producción. |
