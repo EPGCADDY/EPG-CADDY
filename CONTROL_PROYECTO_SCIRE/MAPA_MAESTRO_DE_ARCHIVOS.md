@@ -857,3 +857,12 @@ Resultado V353: `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `scripts/project
 | `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Inventario V354. | Se reconstruye al cerrar el candidato. |
 
 Resultado remoto V354: commit `d7deb09be3826430afc8e1f3d379f0a1137d215b`, deployment Preview `dpl_CgqzYpVABY9djJehtFmH5cyFXHdn` READY, auditoría Vercel de 96 paquetes PASS y navegador real sin errores propios. Build general y voz V354, AI ∞ y LIVE quedaron visibles. Producción continúa en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`; falta únicamente el PASS físico iPhone de esta corrección.
+
+## V355-IOS-AUDIO-DICTATION
+
+| Archivo exacto | Mapa V355 | Candado |
+|---|---|---|
+| `index-grupal.html` | Audio desde gesto y distribución del dictado azul. | Safari asíncrono y registro alternativo cubiertos. |
+| `api/voice-health.js`, `service-worker.js` | Telemetría privada y shell V355. | Sin contenido personal; actualización obligatoria. |
+| `test-v355-ios-audio-dictation.mjs`, `test-v354-voice-fallback.mjs`, `audit-project.mjs` | Reproducción y regresión acumulada. | Ambos fallos físicos son obligatorios. |
+| documentos rectores e inventarios | RC-025, estado y lista literal. | Trazabilidad previa a Preview. |

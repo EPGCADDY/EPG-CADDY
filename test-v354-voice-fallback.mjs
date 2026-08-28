@@ -6,8 +6,8 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 const audit=fs.readFileSync(new URL("./audit-project.mjs",import.meta.url),"utf8");
 
-assert.match(html,/V354-VOICE-FALLBACK-MULTIHOLE-GENERAL-20260828/);
-assert.match(worker,/gscg-mobile-v354-voice-fallback/);
+assert.match(html,/V355-IOS-AUDIO-DICTATION-20260828/);
+assert.match(worker,/gscg-mobile-v355-ios-audio-dictation/);
 assert.match(audit,/test-v354-voice-fallback\.mjs/);
 assert.match(html,/function operationalDefaultVoicePlayer\(\)\{return operationalPromptPlayer\(\)\?\?\(\(round\?\.players\|\|\[\]\)\.length===1\?round\.players\[0\]:null\)\}/);
 
@@ -74,8 +74,8 @@ assert.equal(await dynamicGeneral("round","Cómo está el tráfico para ir de El
 assert.deepEqual(runtimeOrder,["open","submit"]);
 assert.equal(runtimeEvents.some(item=>item.event==="browser_fallback_general_visible"),true);
 
-const applied=sanitizeVoiceHealth({event:"browser_fallback_round_applied",build:"V354",context:"round",entryCount:3,transcript:"PROHIBIDO",name:"JAIME"});
-assert.deepEqual(applied,{event:"browser_fallback_round_applied",build:"V354",context:"round",turn:0,elapsedMs:0,entryCount:3});
+const applied=sanitizeVoiceHealth({event:"browser_fallback_round_applied",build:"V355",context:"round",entryCount:3,transcript:"PROHIBIDO",name:"JAIME"});
+assert.deepEqual(applied,{event:"browser_fallback_round_applied",build:"V355",context:"round",turn:0,elapsedMs:0,entryCount:3});
 assert.equal(sanitizeVoiceHealth({event:"browser_fallback_unknown"}),null);
 
 console.log("PASS V354 VOZ: un jugador registra 3 hoyos, plural aceptado, consulta general visible y telemetría privada");

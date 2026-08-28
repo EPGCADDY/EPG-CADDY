@@ -1,23 +1,23 @@
 {
-  "version": "V354-VOICE-FALLBACK-MULTIHOLE-GENERAL",
-  "generatedAt": "2026-08-28T13:43:12Z",
-  "sourceFileCount": 360,
-  "sourceDigest": "f82f9cab1de6f7f596afd8761e767ce47e3f12a9ad39b376d75e8720288d68b0",
+  "version": "V355-IOS-AUDIO-DICTATION",
+  "generatedAt": "2026-08-28T14:18:52Z",
+  "sourceFileCount": 361,
+  "sourceDigest": "f29678afacd38dfcb0b594e6650e3b511fcb2a7c195d9f5e22c96850a7401ea3",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 181945,
-      "sha256": "924d6eeb017ff0b508fdaefbace83d1541d134542075a86c1e336be33e80520b"
+      "size": 183723,
+      "sha256": "9c82dc68ab3666ecccc2a7854e8e3b6f753a4b700aba37cfdb68dd56eaa8f443"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 205279,
-      "sha256": "f4bd32636a097b35697dd3a0801944a2f36b61f6b7b1fb3677bd1877d3a08194"
+      "size": 206010,
+      "sha256": "68de1c9cfd839e671bbf3e46341564e00ad65d9d8a98e9f0e72741325aeaaab9"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19260985,
-      "sha256": "4a3887991d6be7fec11d99cd2d10ccef9b23f40657a25ffbae9588d0c8b4f938"
+      "size": 19260987,
+      "sha256": "56f56f981ba5c3eccd1d2d488dfdf6e5a56a24e8f56290a481da69dbce5a2f21"
     }
   ]
 }

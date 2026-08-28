@@ -1690,3 +1690,16 @@ Evidencia: Vercel registró cuatro 429 en `/api/session-grupal`, Registro aplica
 Preview V354: commit `d7deb09be3826430afc8e1f3d379f0a1137d215b`, deployment `dpl_CgqzYpVABY9djJehtFmH5cyFXHdn`, estado READY y `target:null` (Preview). El build remoto aprobó auditoría maestra de 96 paquetes, incluido `PASS V354 VOZ`, 583 configuraciones, LIVE V352 y Centro LIVE V353. El navegador real abrió la rama, confirmó `V354-VOICE-FALLBACK-MULTIHOLE-GENERAL-20260828`, voz V354, AI ∞ y LIVE visibles, con cero errores originados por la aplicación. Producción permanece intacta; falta la prueba física iPhone del micrófono.
 
 Archivos exactos V354: `index-grupal.html`, `service-worker.js`, `api/voice-health.js`, `test-v354-voice-fallback.mjs`, `test-v267-scorecard-combination-matrix.mjs`, `test-v270-consecutive-hole-voice-blocks.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `audit-project.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+## V355-IOS-AUDIO-DICTATION
+
+| Archivo exacto | Responsabilidad | Control permanente |
+|---|---|---|
+| `index-grupal.html` | Habilita voz en el gesto original y distribuye dictado azul en Nombre/HDCP/Marcas. | Safari asíncrono, positivos y negativos de registro. |
+| `api/voice-health.js` | Eventos técnicos privados V355. | Sin transcripción, nombre, pregunta, audio ni ubicación. |
+| `service-worker.js` | Caché V355. | Invalida V354 en iPhone. |
+| `test-v355-ios-audio-dictation.mjs` | Reproduce `Ancas Gustavo, 15 blancas` y el bloqueo de activación. | Obligatorio en auditoría. |
+| `test-v354-voice-fallback.mjs`, `audit-project.mjs` | Conservan varios hoyos y General visible. | Regresión acumulada. |
+| documentos rectores e inventarios | Registran RC-025 y estado honesto. | Banco, Preview y PASS físico separados. |
+
+Estado V355: banco específico PASS; auditoría maestra, Preview, navegador y prueba física iPhone pendientes. Producción permanece intacta.
