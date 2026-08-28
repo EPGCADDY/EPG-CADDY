@@ -198,3 +198,214 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - **Fallo físico V346-R1:** Safari activó el respaldo y envió la pregunta, pero la matriz quedó debajo de las seis filas manuales; OpenAI agotó saldo y no existió un intento de Gateway utilizable.
 - **Control V347:** matriz viva inmediatamente debajo del micrófono, estados exactos sin texto adicional, error explícito de saldo que confirma que Internet sí funciona y telemetría privada del respaldo.
 - **Fallo físico V347:** a las 07:20 el inicio local genérico quedó fuera del respaldo; a las 07:21 el respaldo sí produjo transcripción, pero mostró `PROCESANDO…` y la respuesta terminó bloqueada por `credit_balance_exhausted`.
+- **Control V348:** cualquier fallo técnico recuperable de apertura intenta el respaldo; permiso y dispositivo siguen diferenciados; después de reconocer, la matriz pasa directamente de `ESCUCHANDO` a `RESPONDIENDO`; la telemetría privada separa solicitud, inicio y fallo.
+- **Fallo físico V348:** el respaldo entregó transcripción a las 08:36, pero la lista repetida fue rechazada, se desvió a respuestas generales y un error de precedencia ocultó el diagnóstico real bajo `PROCESANDO…`.
+- **Control V349:** acepta repeticiones idénticas, entiende “otro jugador”, muestra el mensaje real y reinicia cualquier lock al volver a tocar.
+- **Fallo físico V349:** a las 08:59 mostró `RESPONDIENDO`, no llenó jugadores y desvió el dictado a respuestas generales, que informó saldo agotado.
+- **Control V350:** el micrófono de Registro de jugadores nunca sale hacia AI UNIVERSAL; admite conectores naturales, registra telemetría aplicada/rechazada desde cliente y termina localmente con resultado o instrucción.
+- **Fallo físico V350:** Safari convirtió “catorce” en `XIV`; el parser lo incorporó al nombre y aplicó `JAIME XIV BLANCAS JORGE · 6 · AZULES` en una sola fila.
+- **Control V351:** interpreta romanos canónicos I–LIV sólo como hándicap de registro, reproduce `Jaime XIV blancas Jorge seis azules` y mantiene la `X` de score fuera de esta conversión.
+- **Fallo físico posterior:** a las 07:05–07:06 el respaldo Safari aplicó Registro y un hoyo individual, pero no varios hoyos; la consulta General llegó a `/api/universal-ai` con 200 y quedó invisible o sin audio.
+- **Control V354:** si existe un solo jugador activo, `Hoyo uno cuatro, hoyo dos cinco, hoyo tres cinco` aplica tres celdas sin repetir el nombre; acepta `hoyo/hoyos`; una consulta General abre primero el panel AI, deja la respuesta visible y vigila si Safari inicia el audio.
+- **Control V355:** ENVIAR y los micrófonos habilitan la síntesis dentro del gesto original; `Ancas Gustavo, 15 blancas` dictado dentro de NOMBRE se distribuye en NOMBRE/HDCP/MARCAS. Frases incompletas y HDCP inválidos no se autocompletan.
+- **Control V356:** una consulta hablada no muestra pregunta ni respuesta en el historial visible. Realtime y respaldo usan `Cedar`, velocidad `1.15`, locutor masculino adulto y español internacional neutro. El respaldo llama `/api/voice-speech`, intenta OpenAI directo y recupera mediante AI Gateway; nunca elige una voz femenina o una voz española genérica. Las consultas escritas conservan respuesta escrita.
+- **Calidad V356:** tráfico directo se calcula con Google Maps Routes `TRAFFIC_AWARE_OPTIMAL`; clima directo usa Open-Meteo estructurado; AI UNIVERSAL usa GPT-5.6, perfil deep cuando corresponde, búsqueda web para datos cambiantes y respuesta hablada concisa sin perder conclusión, evidencia, límite ni recomendación.
+- **Control V357:** Safari/iPhone inicia `webkitSpeechRecognition` dentro del toque y no después del `await` de Realtime. Captura continua, cinco alternativas, cierre tras tres segundos de silencio, reinicio por final natural y dos reintentos de transporte conservan Registro, multi-hoyos y preguntas universales incluso cuando `/api/session-grupal` devuelve 429. La telemetría no guarda transcripción, nombres, audio ni ubicación.
+- **Control V358:** cada score completo reconocido pasa durante `onresult` al escritor incremental oficial, se persiste y aparece sin esperar el cierre del micrófono. Una ambigüedad revierte; AI UNIVERSAL nunca toca scores; la ronda activa sólo cambia al confirmar `INICIAR RONDA`.
+- **Orden de ejecución:** registrar estas tres correcciones y retomarlas después de continuar con la configuración y prueba de SKINS, WOLF, VEGAS y DOTS.
+
+- **Candado de privacidad V312:** no hay activación automática, huella de voz ni reconocimiento biométrico; el jugador debe abrir primero el micrófono con el botón.
+- Separar rigurosamente score, consulta, navegación, conocimiento de golf, clima vivo, conversación general y orientación de salud.
+- Abrir la página exacta cuando la pregunta pertenezca al Manual y mantener el buscador local como recuperación inmediata.
+- Consultar clima actual por ubicación autorizada o campo activo mediante `PEND-CLI-002`; no inventar datos vivos.
+- Responder salud con límites médicos seguros: orientación general, preguntas mínimas, señales de alarma y derivación profesional; nunca diagnóstico o prescripción automática.
+- Responder con conocimiento aprobado y fuente; reconocer cuando no exista respaldo suficiente.
+- Exigir confirmación independiente antes de toda acción que cambie la ronda.
+- Conservar score y navegación básica sin conexión y reservar respuestas abiertas para la capa conectada.
+- Validar texto, voz, preguntas de Golf, Manual, clima, conversación general y salud, además de ruido, acentos, latencia, exactitud y falsas acciones.
+- Conservar el detalle operativo en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`.
+
+### 14. Guía Rápida del Manual
+
+**Estado:** PENDIENTE · `PEND-MAN-004`
+
+- Crear una versión corta, visual y entendible para un niño de 10 años a partir del Manual vigente.
+- Incluir los recorridos principales, enlaces exactos al Manual completo, versión web, PDF y acceso desde Support.
+
+### 15. Tránsito y tiempo de llegada por voz
+
+**Estado:** PROVEEDOR Y CREDENCIAL ACTIVOS · V356 corrige salida futura y rótulo previsto; Preview, comparación independiente Waze/iPhone y campo pendientes · `PEND-TRA-005`
+
+- AI UNIVERSAL ∞ ya enruta voz y texto a Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL` y resume ETA, demora, distancia y hora sin mostrar mapa ni revelar coordenadas.
+- Waze no entrega silenciosamente estos datos a una web común; sus Deep Links abren Waze y su Transport SDK requiere asociación, aplicación nativa aprobada y atribución.
+- Timeout, proveedor caído, falta de GPS o permiso regresan una respuesta recuperable para que el micrófono pueda continuar.
+- La ruta exacta El Pulté Golf → Pradera Concepción devolvió 15 km y aproximadamente 33 minutos en la medición del diagnóstico. `Concepción` por sí solo es ambiguo y debe generar una única pregunta breve.
+- En el banco desplegado V327-R1, El Pulté Golf → Pradera Concepción devolvió 16.1 km y 31 minutos; la salida futura El Pulté Golf → colonia Oakland zona 10 a las 12:30 p. m. devolvió 21.6 km, 48 minutos y 13 minutos de demora prevista.
+- No se cierra todavía: requiere pruebas físicas prolongadas en iPhone y comparación de varias rutas/horarios reales en Guatemala contra Waze.
+
+### 16. Juegos y apuestas: Skins, Wolf, Vegas y Dots
+
+**Estado:** V330-R3 APROBÓ SELECCIÓN ÚNICA EN IPHONE; V331 PREVIEW READY; V332 BANCO INTEGRAL PASS, PREVIEW PENDIENTE · `PEND-SKI-006`
+
+- ✅ Skins Gross/Neto, Wolf, Vegas y Dots reutilizan el score oficial, de dos a seis jugadores según el juego, sin segundo capturador.
+- ✅ La ventana de opciones conserva a la izquierda las modalidades anteriores y ubica a la derecha los juegos nuevos; la tarjeta principal no cambia de formato.
+- ✅ Match Play y Four Ball aceptan hasta tres parejas: Verde 1–2, Oro 3–4 y Azul 5–6.
+- ✅ V332 ofrece dos radios excluyentes por juego: `Q · QUETZALES` o `$ · DÓLARES`; la moneda elegida se conserva sin conversión en toda la arquitectura.
+- ✅ V331 documenta Wolf como Con pareja/Lobo solitario/Lobo ciego; muestra riesgo, pendientes, carry, unidades netas, dinero movido y pago por diferencia.
+- ✅ V331 muestra el cálculo Vegas por hoyo, birdies simultáneos configurables, score de 10 o más, volteos, águilas, topes y puntos movidos.
+- ✅ Dots configura eventos y valores con definición en español, puntos positivos/negativos y registros automáticos/manuales; Ferret, `Amigo`, izquierda y derecha son reglas de grupo apagadas por defecto.
+- ✅ Correcciones, X, cierre, snapshot SHA-256, Global, personales, Historial, voz, respaldo y restauración cubiertos por V329/V330.
+- ✅ Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` READY: 89 paquetes, 322 fuentes, tres PDF, cero vulnerabilidades y puerta viva de Reglas aprobados.
+- ❌ Prueba física R2: `WOLF` abrió su configuración, pero `RONDA NORMAL` permaneció verde simultáneamente.
+- ✅ Prueba física R3: únicamente `WOLF` quedó verde, Ronda Normal se desmarcó y la configuración se abrió.
+- ✅ V331 publicada en Preview desde `35898aaaee0c1b32510f47bebb88a2c823e605a6`; despliegue `dpl_7UZ7uKSJQz9hiDdGzrPE2JGDPLKk` en estado `READY`.
+- ✅ Banco dirigido V332: moneda, símbolos, estados, acumulados, dinero movido, líder, riesgo, neto a liquidar, cierre, corrección, tarjetas y persistencia aprobados.
+- ✅ Auditoría integral V332: 89 paquetes, 325 fuentes y tres inventarios PDF sellados.
+- ⏳ Falta publicación del Preview V332.
+- ⏳ Falta probar físicamente acuerdos, estados, métricas, acumulados, corrección y liquidación por juego.
+- ⏳ Falta revisión visual táctil y una ronda física por juego en iPhone antes de montar.
+
+### 17. Fichas didácticas por modalidad y esquema
+
+**Estado:** PENDIENTE DE DISEÑO, REDACCIÓN, VALIDACIÓN Y PUBLICACIÓN · `PEND-DID-017`
+
+- Crear una hoja web/PDF para Ronda Normal, Stableford, Match Play, Four Ball, Práctica, Skins, Wolf, Vegas, Dots y cada variante que cambie el cálculo.
+- Escribir para comprensión de 10 años, con ejemplo completo, estrategia, glosario, errores comunes, estados, acumulados y liquidación.
+- Garantizar impresión real en blanco y negro: no depender del color para entender jugadores, ganadores, riesgos ni estados.
+- Mantener siempre visible el cálculo monetario general —casillas excluyentes Q/$, unidad, multiplicador, tope y liquidación—; cada grupo decide cuál moneda usa o si juega sólo con puntos/unidades sin liquidar dinero.
+- Validar cada ejemplo contra el motor real y versionar las hojas junto con las reglas.
+- Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md`.
+
+### 18. Apple Watch y otros smartwatches
+
+**Estado:** PENDIENTE · `PEND-WAT-007`
+
+- Priorizar Apple Watch enlazado con iPhone y evaluar después Wear OS.
+- Consultar hoyo y resultado esencial, y registrar scores con toque o voz mediante el mismo motor oficial.
+- Resolver sincronización interrumpida, duplicados, funcionamiento sin conexión, batería, permisos y pruebas de ronda completa.
+
+### 19. Hándicap oficial ASOGOLF/GHIN
+
+**Estado:** PENDIENTE DE AUTORIZACIÓN/INTEGRACIÓN · `PEND-HCP-008`
+
+- Resolver API autorizada, exportación oficial o ingreso manual marcado `NO VERIFICADO` para Guatemala.
+- Mantener separados índice oficial e índice interno, con fuente, vigencia, fecha y trazabilidad.
+- No presentar como oficial ningún dato sin permiso verificable de ASOGOLF/GHIN o la autoridad correspondiente.
+
+### 20. Campos de golf mundiales
+
+**Estado:** PENDIENTE · `PEND-CAM-009`
+
+- Seleccionar proveedor licenciado con tarjetas, tees, par, handicap de hoyo, yardajes/metros, rating, slope, ubicación y zona horaria.
+- Conservar fuentes y versiones, evitar duplicados y no inventar datos faltantes.
+- Mantener intacta la matriz oficial de Guatemala y aplicar el mismo motor a cualquier país.
+
+### 21. GPS de golf
+
+**Estado:** PENDIENTE; GPS efímero de clima/tráfico ya existe · `PEND-GPS-010`
+
+- Mostrar distancia a frente, centro y fondo de green usando posición autorizada y datos deportivos licenciados.
+- Medir precisión, batería, privacidad, señal degradada y operación offline en rondas físicas.
+- Enlazar posteriormente con Apple Watch sin duplicar campo, hoyo ni scores.
+
+### 22. Nube, cuentas y seguridad
+
+**Estado:** BASE PREPARADA; OPERACIÓN CENTRAL PENDIENTE · `PEND-NUB-011`
+
+- Activar roles, autenticación, recuperación, sincronización idempotente, respaldo, auditoría y privacidad.
+- Recuperar rondas y perfiles autorizados entre dispositivos sin duplicar, mezclar ni perder datos.
+- Endurecer secretos, sesiones, cifrado, eliminación y respuesta a incidentes antes de comercializar.
+
+### 23. Estadísticas avanzadas
+
+**Estado:** CONSULTA LOCAL BÁSICA ENTREGADA; CAPA CENTRAL PENDIENTE · `PEND-EST-012`
+
+- Agregar fairways, GIR, putts, penalidades, sand saves, scrambling y análisis por periodo/campo/hoyo.
+- Mantener captura opcional breve por voz/manual y explicar todo dato inferido.
+- Sincronizar y comparar únicamente datos autorizados cuando exista historial central.
+
+### 24. Monetización y operación comercial
+
+**Estado:** PENDIENTE · `PEND-COM-013`
+
+- Definir niveles, precios, restauración/cancelación, términos, privacidad y soporte.
+- Integrar proveedores reales de cobro y medir costos de IA, clima, tráfico, mapas y almacenamiento.
+- Validar App Store, Google Play, impuestos y continuidad antes de ofrecer el servicio.
+
+### 25. Banco final y certificación integral
+
+**Estado:** OBLIGATORIO Y CONTINUO · `PEND-QA-014`
+
+- Cada versión debe pasar regresión automática, visual y física en sus dispositivos y modalidades reales.
+- Probar ruido, acentos, pausas, conexión intermitente, bloqueo, segundo plano, recuperación y ronda completa.
+- Un solo `FAIL` impide montaje; Producción sólo cambia después de PASS completo conforme a la autorización permanente del propietario.
+
+### 26. Detección automática del campo por GPS
+
+**Estado:** PENDIENTE · `PEND-UBI-015`
+
+- Comparar la ubicación autorizada del iPhone contra coordenadas y perímetros verificados de los campos disponibles.
+- Proponer el campo probable, exigir confirmación o permitir selección manual y no cambiar una ronda activa.
+- Mantener separado este objetivo de clima/tráfico y de las distancias deportivas frente/centro/fondo.
+- Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_UBI_015_DETECCION_CAMPO_POR_GPS.md`.
+
+### 27. Sincronización verificable de Reglas de Golf
+
+**Estado:** PENDIENTE DE DISEÑO/CONDICIONES DE USO · `PEND-RSG-016`
+
+- Detectar ediciones y clarificaciones oficiales USGA/The R&A mediante un mecanismo permitido y verificable.
+- Guardar manifiesto de versión, fecha efectiva, fuente, SHA-256, caché local y reversión.
+- Separar Reglas generales, modalidad, Comité y Reglas Locales; nunca modificar scores automáticamente.
+- Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_RSG_016_SINCRONIZACION_REGLAS_GOLF.md`.
+
+### 28. GOLF SCORE CARD GT. LIVE
+
+**Estado:** V352 CENTRAL Y PREVIEW E2E PASS; V353 CENTRO LIVE LOCAL/PREVIEW/E2E/OBSERVABILIDAD PASS; INSPECCIÓN VISUAL Y PRUEBA FÍSICA IPHONE PENDIENTES · `PEND-LIVE-018`
+
+- Compartir por enlace privado una vista de sólo lectura de un jugador o del grupo completo, siempre con permiso explícito y revocable.
+- Permitir visitantes sin aplicación, seguimiento bilateral en otra ventana y cola offline sin alterar la Score Card activa.
+- Reunir torneos con grupos paginados y sin máximo fijo de producto; cada grupo autoriza y publica su propia tarjeta de uno a seis jugadores.
+- Ofrecer `1 · MONITOR GENERAL` para todo el torneo y `2 · MONITOR INDIVIDUAL` para cualquier jugador o grupo; buscar por nombre, seguir con un toque y reutilizar la General sin consultas extra.
+- Asegurar un Capitán de Tarjeta por grupo y rechazar un segundo publicador activo del mismo grupo.
+- Compartir ♾️ el vínculo con invitados en cualquier país por WhatsApp, Mensajes, correo, AirDrop, X u otra aplicación.
+- Separar secretos de publicación/lectura, guardar sólo SHA-256 y excluir contactos, ubicación, audio, IA, clima detallado y apuestas.
+- Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`.
+
+## Mejoras continuas
+
+- Cobertura de vocabulario, nombres, acentos, ruido y pausas de dictado.
+- Funcionamiento estable en iPhone, Android, pantalla bloqueada, segundo plano y reconexión.
+- Incorporación de nuevos campos únicamente con información oficial completa.
+- Coherencia visual y operacional entre Registro, General, Stableford, Control Manual, tarjeta y resultados.
+- Rendimiento con seis jugadores, dieciocho hoyos, historial amplio y conexión intermitente.
+
+## No reabrir ni duplicar
+
+- No crear arquitecturas separadas para General y Stableford.
+- No crear escritores separados para control manual y voz.
+- No volver a exigir el número del hoyo durante el dictado normal.
+- No colocar `X` automáticamente por tiempo ni por silencio.
+- No crear una tarjeta personal independiente de la Tarjeta Global oficial.
+- No cambiar la línea gráfica aprobada salvo orden expresa.
+- No crear una segunda ruta para una operación que ya existe en el motor común.
+
+## Próximo punto obligatorio
+
+**Control V358 de continuidad:** conserva íntegro V357 y da prioridad visual a la ronda persistida; entrar por `inicio=1` no abre Registro cuando ya existe tarjeta activa. Preview y prueba física iPhone permanecen obligatorios.
+
+**Control V359 del parser físico:** V358 queda rechazado por `parser_rejected` en dos tandas reales con Jaime y Gustavo. V359 admite `hoyo número`, `golpes`, `tiró` y el hoyo al final sólo con asignación inequívoca; una palabra desconocida continúa bloqueando toda escritura. Falta PASS físico iPhone.
+
+**Integración V360:** une sobre un solo árbol la escritura visual progresiva de cada score, continuidad de tarjeta V358 y parser natural V359. Ninguna rama paralela queda fuera. Sólo `browser_fallback_score_applied` observado en el iPhone cierra la puerta.
+
+**Consolidación V361:** conserva íntegra V360 y exige `persist()` + `render()` inmediatamente después de cada score recibido, sin esperar que cierre el micrófono. AI UNIVERSAL de voz permanece sin transcripción visible; la recuperación espera el catálogo masculino de iOS y evita repetir durante diez minutos un Cedar que ya respondió 429/503. El cierre sigue requiriendo prueba física iPhone.
+
+**Recuperación física V362:** conserva V354–V361, restaura AI ∞ de un toque y corrige el respaldo hablado con un modelo realmente disponible: Cedar directo primero y Onyx masculino por `openai/tts-1-hd` si el directo falla. Safari deja de poder quedar indefinidamente en `ESCUCHANDO` sin primer resultado. El score progresivo conserva guardado/render inmediato y ahora consume y reproduce el resultado de primera vuelta y ronda completa. Banco automático, Preview y prueba física iPhone son puertas separadas; Producción permanece intacta.
+
+La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` y E2E de 20 grupos/80 jugadores quedaron PASS, con cero errores de runtime y limpieza Neon confirmada. V353 no requiere migración porque reutiliza el esquema V352. La inspección visual y la prueba física iPhone permanecen abiertas y Producción no se monta. La estabilización física de voz continúa registrada. Ningún punto debe duplicar motores ni separar General, Stableford, manual y voz.
+
+## Corte V345-ICONS · estado verificable
+
+- Golf Score y Manual SCG tienen iconos independientes, RGB y versionados en 180, 192 y 512 px.
+- El banco V345 rechaza un Manual casi blanco y obliga a mantener manifiestos, HTML, Service Worker y caché alineados.
+- RC-018 está desplegado en el Preview READY `1026a3e`; no se cierra hasta instalar ambos accesos desde ese entorno en un iPhone real.
+- Voz física prolongada, artefactos/contraste de clima y repetición real del tráfico V344 continúan abiertos. Producción permanece intacta.
