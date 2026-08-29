@@ -24,6 +24,7 @@ for(const forbidden of ["whatsapp","registrationCode","private@example.com","sid
 const serverSnapshot=normalizeLiveSnapshot(clientSnapshot);
 assert.equal(serverSnapshot.courseHoles.length,18);
 assert.deepEqual(serverSnapshot.players.map(player=>player.name),["JUNIOR UNO","JUNIOR DOS"]);
+assert.doesNotThrow(()=>normalizeLiveSnapshot({...clientSnapshot,players:clientSnapshot.players.map((player,index)=>({...player,id:`p${index+1}`}))}),"LIVE accepts the stable legacy p1..p6 player IDs used by Score Card");
 assert.throws(()=>normalizeLiveSnapshot({...clientSnapshot,players:Array(7).fill(clientSnapshot.players[0]).map((player,index)=>({...player,id:`player-live-${1000+index}`}))}),/LIVE_INVALID_PLAYERS/);
 assert.throws(()=>normalizeLiveSnapshot({...clientSnapshot,players:[clientSnapshot.players[0],{...clientSnapshot.players[1],id:clientSnapshot.players[0].id}]}),/LIVE_INVALID_PLAYERS/);
 assert.throws(()=>normalizeLiveSnapshot({...clientSnapshot,players:[{...clientSnapshot.players[0],holes:Array(19).fill(clientSnapshot.players[0].holes[0])}]}),/LIVE_INVALID_HOLES/);

@@ -440,3 +440,9 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - `standaloneApp` se inicializa antes de `openSetup()` y elimina el `ReferenceError` reproducido por navegador.
 - V368 nace sobre `fix-v366-integrated-main` (`03ca12e`) y conserva recuperación de ronda, OIDC, AI UNIVERSAL sin pantalla, Match Play, multihoyos, reportes y LIVE.
 - Estado: navegador local PASS y banco enfocado pendiente de auditoría integral; Preview y prueba física iPhone pendientes. Producción no se modifica en V368.
+
+## V369 · activación LIVE de rondas existentes
+
+- Corrige RC-041: `p1..p6` dejan de ser rechazados por la API LIVE.
+- Mantiene privados los enlaces, secretos y datos prohibidos; sólo amplía compatibilidad de IDs internos ya generados por Score Card.
+- Banco enfocado `test-v352-live.mjs` PASS; publicación y prueba física del enlace quedan como cierre.

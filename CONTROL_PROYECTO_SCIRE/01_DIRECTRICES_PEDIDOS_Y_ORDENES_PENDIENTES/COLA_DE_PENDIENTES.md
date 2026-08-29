@@ -608,3 +608,8 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - La respuesta se solicita con `voiceOnly:true` y se reproduce con Cedar/Onyx sin abrir el panel AI.
 - El acceso AI de un toque habilita audio y escucha sobre la misma pantalla.
 - PASS automático: `test-v367-universal-voice-in-place.mjs` y bancos V354/V358/V362/V364. Preview y audio físico iPhone pendientes.
+
+## Urgente V369 · activar LIVE de ronda Match Play
+
+- Corregir el rechazo 400 causado por IDs `p1..p6` sin tocar micrófono ni Score.
+- Publicar, repetir activación desde la pantalla ya abierta y verificar que el enlace sólo lectura pueda compartirse.

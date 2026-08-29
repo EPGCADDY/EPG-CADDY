@@ -1888,3 +1888,11 @@ V368 se construye sobre la línea multiconversación más reciente `fix-v366-int
 Archivos literales: `AGENTS.md`, `DIRECTRICES_MANDATORIAS.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V368_ENTRADA_CANONICA/REPORTE_V368_RC040.md`, `index-grupal.html`, `service-worker.js`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v364-explicit-new-round-entry.mjs`, `test-v366-principal-entry-recovery.mjs`, `test-v368-canonical-home-entry.mjs`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, ambos ROADMAPS e inventario. Producción no cambia; Preview y PASS físico iPhone siguen bloqueantes.
 
 Sello remoto atómico: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se modifican juntos. Los builds rechazados por Gate permanecen descartados y no generan enlace para el usuario.
+
+## V369 · hotfix LIVE `p1..p6` · 29 de agosto de 2026
+
+- Entrada física: `NO SE PUDO COMPLETAR LIVE`; observabilidad: tres `POST /api/live 400`.
+- Causa: `normalizePlayer()` conserva `p1..p6`, pero `api/live.js` rechazaba todo ID menor de ocho caracteres.
+- Cambio mínimo: `ID_PATTERN` LIVE admite 1–160 caracteres seguros; tokens y secretos mantienen sus 40–100 caracteres.
+- Prueba permanente: `test-v352-live.mjs` normaliza explícitamente jugadores `p1` y `p2`.
+- Frontera: cero cambios en voz, Registro, Score, clima, tarjeta o escritor oficial.

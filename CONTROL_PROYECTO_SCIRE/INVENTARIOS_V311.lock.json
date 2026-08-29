@@ -1,18 +1,18 @@
 {
   "version": "V368-CANONICAL-HOME-ENTRY-OIDC-INTOCABLES",
-  "generatedAt": "2026-08-29T00:27:21Z",
+  "generatedAt": "2026-08-29T01:25:51Z",
   "sourceFileCount": 392,
-  "sourceDigest": "f00efbb90fcd3d3b75aeaefc7b1813618a30447ee9ffb03b366c4cf81feed2a1",
+  "sourceDigest": "ebe3a84c70b8cf8d069926967a71f2307140175d2d14cf9ea821cf29459724f5",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 202269,
-      "sha256": "d12081402bf8dc478192cce3ad25d6f7ef6556e3600fae4e4c3388cc0f5284e0"
+      "size": 202616,
+      "sha256": "27ad49fa3ac6e467bfb46ee25949cd825f0fd6a004c7e3c1815383e0179fba40"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 226772,
-      "sha256": "75681e2bcda624b3c944c2d6e0f15bee360bf068f3f8f0695fc1546665d565c0"
+      "size": 227315,
+      "sha256": "3c1498a76efaafd711117ba7422734dbf7148e28f48607073402e6cc28d22fb0"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

@@ -1467,3 +1467,7 @@ Archivos literales V367: `index-grupal.html`, `api/voice-health.js`, `service-wo
 RC-040 consolida las conversaciones sobre `fix-v366-integrated-main` (`03ca12e`). El enlace web oficial abre Registro aun con Match Play persistido, sin borrar la tarjeta; la app instalada conserva su entrada PWA y reabre la tarjeta viva. El navegador reprodujo y V368 eliminó `Cannot access 'standaloneApp' before initialization`. `test-v368-canonical-home-entry.mjs`, los contratos V364/V366 actualizados, la caché, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V368_ENTRADA_CANONICA/REPORTE_V368_RC040.md`, controles y ambos ROADMAPS bloquean enlaces V365–V367. Producción no se modifica; Preview y PASS físico iPhone continúan obligatorios.
 
 El Gate remoto exige que `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` viajen juntos en todo resellado V368; el build rechazado no se presenta como enlace de prueba.
+
+## V369 · compatibilidad LIVE con jugadores activos heredados · 29 de agosto de 2026
+
+La prueba física produjo tres `POST /api/live 400` al activar el enlace de la ronda de Jaime y Gustavo. La tarjeta usa identificadores estables `p1..p6`, mientras el servidor LIVE exigía ocho caracteres mínimos. V369 acepta esos identificadores internos de 1–160 caracteres, conserva el filtro de caracteres permitidos y añade la regresión exacta `p1/p2`. No modifica micrófono, Registro, Score, ronda ni persistencia.
