@@ -110,7 +110,15 @@ function validateConsent(value,selectedPlayerIds){
   return{confirmed:true,playerIds:consentIds,policyVersion:LIVE_POLICY_VERSION,confirmedAt:isoDate(value?.confirmedAt),authority:cleanText(value?.authority,40)||"scorekeeper"};
 }
 function filterSnapshot(snapshot,selectedPlayerIds){const allowed=new Set(selectedPlayerIds);return{...snapshot,players:snapshot.players.filter(player=>allowed.has(player.id))}}
-function publicStream(row){return{id:row.id,scope:row.scope,groupLabel:row.group_label,status:row.status,revision:Number(row.revision)||0,expiresAt:row.expires_at,updatedAt:row.updated_at,snapshot:row.current_snapshot||null}}
+function jsonSafe(value){
+  if(value===null||value===undefined)return value??null;
+  if(typeof value==="bigint")return value.toString();
+  if(value instanceof Date)return value.toISOString();
+  if(Array.isArray(value))return value.map(jsonSafe);
+  if(typeof value==="object")return Object.fromEntries(Object.entries(value).map(([key,item])=>[key,jsonSafe(item)]));
+  return value;
+}
+function publicStream(row){return{id:String(row.id||""),scope:String(row.scope||"group"),groupLabel:cleanText(row.group_label,120),status:String(row.status||"active"),revision:Number(row.revision)||0,expiresAt:jsonSafe(row.expires_at),updatedAt:jsonSafe(row.updated_at),snapshot:jsonSafe(row.current_snapshot)||null}}
 
 async function rateLimit(sql,req,scope,secretHash,maximum){
   const key=tokenHash(`${scope}:${secretHash}:${requestAddress(req)}`),rows=await sql`
@@ -339,20 +347,20 @@ async function revokeTournament(sql,req){
 
 async function readStream(sql,req,body,viewerToken){
   const hash=tokenHash(viewerToken);await rateLimit(sql,req,"read-stream",hash,240);
-  const rows=await sql`SELECT id,scope,group_label,status,revision,expires_at,updated_at,current_snapshot FROM live_streams WHERE viewer_token_hash=${hash} LIMIT 1`;
+  const rows=await sql`SELECT id,scope,group_label,status,revision,expires_at,updated_at,current_snapshot FROM live_streams WHERE viewer_token_hash=${hash}::char(64) LIMIT 1`;
   if(!rows.length)throw liveError("LIVE_LINK_INVALID",404);const row=rows[0];
   if(row.status==="revoked")throw liveError("LIVE_REVOKED",410);if(new Date(row.expires_at)<=new Date())throw liveError("LIVE_EXPIRED",410);
-  if(Number(body.sinceRevision)===Number(row.revision))return{ok:true,kind:"stream",unchanged:true,revision:Number(row.revision),serverAt:new Date().toISOString()};
+  if(body.sinceRevision!==null&&body.sinceRevision!==undefined&&Number(body.sinceRevision)===Number(row.revision))return{ok:true,kind:"stream",unchanged:true,revision:Number(row.revision),serverAt:new Date().toISOString()};
   return{ok:true,kind:"stream",stream:publicStream(row),serverAt:new Date().toISOString()};
 }
 
 async function readTournament(sql,req,body,viewerToken){
   const hash=tokenHash(viewerToken);await rateLimit(sql,req,"read-tournament",hash,240);
-  const tournaments=await sql`SELECT id,name,status,revision,expires_at,updated_at FROM live_tournaments WHERE viewer_token_hash=${hash} LIMIT 1`;
+  const tournaments=await sql`SELECT id,name,status,revision,expires_at,updated_at FROM live_tournaments WHERE viewer_token_hash=${hash}::char(64) LIMIT 1`;
   if(!tournaments.length)throw liveError("LIVE_LINK_INVALID",404);const tournament=tournaments[0];
   if(tournament.status==="revoked")throw liveError("LIVE_REVOKED",410);if(new Date(tournament.expires_at)<=new Date())throw liveError("LIVE_EXPIRED",410);
   const cursor=cleanText(body.cursor,50);if(cursor&&!UUID_PATTERN.test(cursor))throw liveError("LIVE_INVALID_CURSOR");
-  if(!cursor&&Number(body.sinceRevision)===Number(tournament.revision))return{ok:true,kind:"tournament",unchanged:true,revision:Number(tournament.revision),serverAt:new Date().toISOString()};
+  if(!cursor&&body.sinceRevision!==null&&body.sinceRevision!==undefined&&Number(body.sinceRevision)===Number(tournament.revision))return{ok:true,kind:"tournament",unchanged:true,revision:Number(tournament.revision),serverAt:new Date().toISOString()};
   const limit=boundedInteger(body.limit,1,50,25),rows=await sql`
     SELECT id,scope,group_label,status,revision,expires_at,updated_at,current_snapshot
     FROM live_streams
@@ -382,10 +390,10 @@ export default async function handler(req,res){
     return res.status(200).json(result);
   }catch(error){
     const code=String(error?.code||"LIVE_REQUEST_FAILED"),status=Number(error?.status)||(["DATABASE_NOT_CONFIGURED","DATABASE_MIGRATION_REQUIRED"].includes(code)||String(error?.message||"").includes("does not exist")?503:400);
-    if(status>=500)console.error("live",code);
+    if(status>=500||code==="LIVE_REQUEST_FAILED")console.error("live",JSON.stringify({action:cleanText((typeof req.body==="object"&&req.body?.action)||"",40),code,name:String(error?.name||"Error"),message:cleanText(error?.message||code,180)}));
     if(status===429)res.setHeader("Retry-After","60");
     return res.status(status).json({ok:false,code});
   }
 }
 
-export { LIVE_POLICY_VERSION, TOKEN_PATTERN, ID_PATTERN, filterSnapshot, validateScope, validateConsent, newJoinCode, tokenHash, groupKey };
+export { LIVE_POLICY_VERSION, TOKEN_PATTERN, ID_PATTERN, filterSnapshot, validateScope, validateConsent, newJoinCode, tokenHash, groupKey, jsonSafe, publicStream, readStream, readTournament };

@@ -1455,3 +1455,11 @@ V365 define una ronda recuperable como configurada con uno a seis jugadores, exc
 La integración parte del `main` con recuperación OIDC/voz ya promovida; no sustituye `api/`, dependencias ni bancos de comunicación universal. La auditoría acumulada incluye Registro, score individual y multihoyo, cierres/acumulados, Match Play y LIVE. Producción continúa intacta hasta Preview READY, comprobación externa y PASS físico iPhone.
 
 Inventario literal del cambio: `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_RECUPERACION_RONDA_ACTIVA/REPORTE_V365_RC037.md`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V366_ENTRADA_PRINCIPAL/REPORTE_V366_RC038.md`, `test-v289-stableford-new-round-empty.mjs`, `test-v365-active-round-empty-recovery.mjs` y `test-v366-principal-entry-recovery.mjs`.
+
+## V367 · voz inicial y LIVE Match Play para tres seguidores · 28 de agosto de 2026
+
+La verificación real rechazó el enlace anterior: crear y publicar funcionaron con HTTP 200, pero esposa, Coach y tercer lector fueron reproducidos como tres lecturas `400 LIVE_REQUEST_FAILED`. V367 corrige la respuesta inicial del visor, tipa el hash, distingue revisión ausente de cero y convierte `bigint`, fechas y snapshot a JSON seguro.
+
+Desde Inicio, el fallo agotado `audio_capture` cambia a micrófono Realtime directo. AI UNIVERSAL hablado no abre otra pantalla y sólo vuelve a `LISTO` después de terminar el MP3 Cedar/Onyx o la voz masculina local. Registro, uno/múltiples hoyos, primera/segunda vuelta, ronda completa, acumulado y Match Play permanecen en el mismo árbol.
+
+Archivos exactos V367: `index-grupal.html`, `api/live.js`, `api/voice-health.js`, `service-worker.js`, `test-v354-voice-fallback.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v367-voice-live-match-play-final.mjs`, `Intocables/intocables-gate.mjs`, `Intocables/README.md`, `audit-project.mjs`, `package.json`, documentación rectora, reporte RC-039, script e inventario. Las pruebas históricas V354/V358 quedan actualizadas al nuevo contrato explícito de voz sin pantalla. Producción permanece intacta; auditoría, Preview, tres ciclos externos y PASS físico iPhone son puertas separadas.

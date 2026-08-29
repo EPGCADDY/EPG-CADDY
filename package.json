@@ -29,6 +29,7 @@
     "external:oidc-gate": "node test-v364-vercel-oidc-recovery.mjs",
     "behavior:recorded-gate": "node test-v363-recorded-mobile-behavior.mjs",
     "entry:new-round-gate": "node test-v364-explicit-new-round-entry.mjs",
+    "tournament:final-gate": "node test-v367-voice-live-match-play-final.mjs",
     "round:recovery-gate": "node test-v365-active-round-empty-recovery.mjs",
     "principal:entry-gate": "node test-v366-principal-entry-recovery.mjs",
     "audit": "node audit-project.mjs",

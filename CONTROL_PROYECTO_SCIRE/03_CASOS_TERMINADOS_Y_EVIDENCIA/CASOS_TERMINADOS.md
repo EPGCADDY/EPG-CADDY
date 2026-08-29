@@ -9,3 +9,4 @@
 | Hacienda Nueva | Fuente localizada y archivada | Tarjeta física y reenvíos documentados |
 | San Isidro | Fuente localizada y archivada | Tarjeta física, portada y vistas adicionales |
 | Alta Vista | Fuente localizada y archivada | Tarjeta física y reenvíos documentados |
+| V367 voz inicial + LIVE Match Play | Candidato automático PASS; físico pendiente | `V367_TORNEO_MATCH_PLAY_LIVE/REPORTE_V367_RC039.md` |

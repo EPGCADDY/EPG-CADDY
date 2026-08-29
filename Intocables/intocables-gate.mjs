@@ -4,6 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("../index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("../service-worker.js",import.meta.url),"utf8");
 const speech=fs.readFileSync(new URL("../api/voice-speech.js",import.meta.url),"utf8");
+const live=fs.readFileSync(new URL("../api/live.js",import.meta.url),"utf8");
 const audit=fs.readFileSync(new URL("../audit-project.mjs",import.meta.url),"utf8");
 const rules=JSON.parse(fs.readFileSync(new URL("./REGLAS_INTOCABLES.json",import.meta.url),"utf8"));
 
@@ -39,5 +40,14 @@ assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=18000/);
 
 assert.match(audit,/Intocables\/intocables-gate\.mjs/);
 assert.match(audit,/test-v366-principal-entry-recovery\.mjs/);
+assert.match(audit,/test-v367-voice-live-match-play-final\.mjs/);
+const voiceQuery=html.slice(html.indexOf("async function answerBrowserVoiceQuery"),html.indexOf("function scheduleBrowserVoiceTransportRetry"));
+const universalButton=html.slice(html.indexOf("function openAiUniversalAndListen"),html.indexOf('if(window.PointerEvent)$("openAiUniversal")'));
+assert.doesNotMatch(voiceQuery,/openAiUniversalPanel/);
+assert.doesNotMatch(universalButton,/openAiUniversalPanel/);
+assert.match(html,/browser_fallback_speech_completed/);
+assert.match(html,/transportFailure==="audio_capture"[\s\S]*?skipBrowserFallback:true/);
+assert.match(live,/body\.sinceRevision!==null&&body\.sinceRevision!==undefined/);
+assert.match(live,/viewer_token_hash=\$\{hash\}::char\(64\)/);
 assert.match(worker,/gscg-mobile-v363-/);
 console.log("INTOCABLES PASS INT-01…INT-04");

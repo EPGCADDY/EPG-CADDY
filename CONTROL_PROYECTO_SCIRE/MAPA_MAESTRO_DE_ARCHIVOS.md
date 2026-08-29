@@ -992,3 +992,14 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `Intocables/`, `audit-project.mjs`, `package.json` | Gares acumulativos y comandos directos. | Un FAIL bloquea Preview o producción. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_RECUPERACION_RONDA_ACTIVA/REPORTE_V365_RC037.md` | Evidencia RC-037. | Distingue PASS automático de prueba física. |
 | `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V366_ENTRADA_PRINCIPAL/REPORTE_V366_RC038.md` | Evidencia RC-038. | Registra el Preview rechazado y el control nuevo. |
+
+## V367 · voz inicial y LIVE Match Play
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Voz desde Inicio sin cambio de pantalla y reproducción completa. | Recupera `audio_capture` por Realtime directo. |
+| `api/live.js` | Devuelve stream/torneo con tipos JSON seguros. | Tres seguidores reciben snapshot inicial, no `unchanged` vacío. |
+| `api/voice-health.js` | Admite término real de reproducción. | Telemetría técnica sin contenido. |
+| `test-v367-voice-live-match-play-final.mjs` | Banco integrado de los cuatro requisitos. | Tres lectores, Match Play, vueltas y acumulado. |
+| `Intocables/intocables-gate.mjs` | Candado permanente V367. | Cualquier regresión detiene auditoría. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V367_TORNEO_MATCH_PLAY_LIVE/REPORTE_V367_RC039.md` | Evidencia y criterio. | Diferencia automático, externo y físico. |

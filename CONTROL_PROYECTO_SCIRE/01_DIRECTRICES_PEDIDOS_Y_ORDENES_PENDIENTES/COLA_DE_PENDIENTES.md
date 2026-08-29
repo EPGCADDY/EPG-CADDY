@@ -601,3 +601,10 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - `Inicio` se impone en arranque, regreso, `pageshow` y foco; una tarjeta válida permanece viva.
 - Un Registro visible no se reinicia y `nueva_ronda=1` conserva su función explícita.
 - PASS automático: `test-v366-principal-entry-recovery.mjs`, Intocables y auditoría maestra. Falta Preview integrado y prueba física iPhone.
+
+## V367-VOICE-LIVE-MATCH-PLAY · prioridad inmediata RC-039
+
+- Requisito: voz desde Inicio, Registro, scores uno/multihoyo, Universal sólo audible, cierres/acumulado y LIVE Match Play para esposa, Coach y tercer seguidor.
+- Hallazgo externo: crear/publicar 200; tres lecturas de seguidor 400. El enlace anterior queda rechazado.
+- Corrección: reproducción completa, recuperación Realtime directa y lectura LIVE JSON segura con revisión inicial correcta.
+- Aceptación: banco 3/3, auditoría integral, Preview READY, API externa 3/3 y recorrido físico iPhone con dos dispositivos seguidores. Producción permanece intacta hasta cerrar todas las puertas.

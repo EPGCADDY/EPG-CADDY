@@ -1,6 +1,6 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
-**Corte vigente:** V361 sincroniza el parser natural V360 con score visible y persistido inmediatamente durante el mismo dictado, continuidad de ronda, AI UNIVERSAL `voiceOnly`, voz masculina recuperable y circuito Cedar. Auditoría, Preview y prueba física son puertas separadas. LIVE V353 conserva su E2E aprobado
+**Corte vigente:** V367 integra Inicio, Registro, uno/múltiples hoyos, Universal audible sin pantalla, cierres/acumulados y lectura LIVE Match Play para tres seguidores. El enlace anterior quedó rechazado por tres lecturas 400; auditoría, Preview, tres ciclos externos y prueba física son puertas separadas.
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`
 
@@ -425,4 +425,12 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - **RC-037:** `IMG_2186.png` demuestra que una copia vacía podía vencer a la tarjeta viva de Score Cabo. V365 exige 1–6 jugadores, recupera la tarjeta archivada con sus scores y repara la clave canónica.
 - **RC-038:** `IMG_2193.png` demuestra que el Preview anterior mostraba `RONDA EN CURSO` vacía. V366 impone `Inicio` sin ronda operativa en arranque y ciclo de vida, sin cubrir una tarjeta válida.
 - Registro, uno/múltiples hoyos, comunicación universal, cierres de primera/segunda vuelta, acumulados y LIVE Match Play permanecen en el mismo árbol integrado y en la auditoría.
+
+## V367 · torneo Match Play inmediato
+
+- El banco reproduce tres lectores independientes y exige snapshot revisión 1 serializable.
+- Universal por voz permanece en la pantalla actual y espera el final audible completo.
+- `audio_capture` agotado cambia a Realtime directo.
+- El enlace anterior no está aprobado: Producción dio tres `400 LIVE_REQUEST_FAILED`; RC-039 conserva la evidencia.
+- Estado honesto: candidato automático en validación; Preview, tres ciclos externos y prueba física iPhone pendientes.
 - Estado: PASS automático; Preview integrado, comprobación externa y recorrido físico iPhone pendientes. Producción no cambia.

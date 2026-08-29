@@ -7,4 +7,6 @@ Controles obligatorios que bloquean cualquier candidato que vuelva a romper cond
 3. AI UNIVERSAL conserva Cedar directo, Onyx masculino por `openai/tts-1-hd`, acceso de un toque, watchdog y cierres progresivos hablados.
 4. Una sola falla impide aprobar, publicar o montar la versión.
 
+V367 añade como candados acumulativos la comunicación universal hablada sin abrir otra pantalla, la reproducción completa antes de volver a `LISTO`, la recuperación directa tras `audio_capture` y la lectura LIVE inicial serializable para tres seguidores.
+
 Ejecutar: `npm run intocables:gate`.

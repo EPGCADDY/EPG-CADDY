@@ -1869,3 +1869,16 @@ Producción no se toca. El candidato necesita auditoría local, Preview, tres co
 Base de integración: `main` con recuperación OIDC de comunicación universal. Los archivos `api/` y `@vercel/oidc` permanecen intactos. Producción no cambia hasta aprobar el Preview integrado y el recorrido físico iPhone.
 
 Inventario literal del cambio: `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_RECUPERACION_RONDA_ACTIVA/REPORTE_V365_RC037.md`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V366_ENTRADA_PRINCIPAL/REPORTE_V366_RC038.md`, `test-v289-stableford-new-round-empty.mjs`, `test-v365-active-round-empty-recovery.mjs` y `test-v366-principal-entry-recovery.mjs`.
+
+## V367 · voz inicial + LIVE Match Play final
+
+| Archivo | Responsabilidad | Candado |
+|---|---|---|
+| `index-grupal.html` | Universal audible sin pantalla, audio completo y salto de `audio_capture` a Realtime directo. | No vuelve a `LISTO` antes de `ended/onend`; no reabre el panel. |
+| `api/live.js` | Lectura inicial JSON segura para stream y torneo. | Hash `char(64)`, revisión ausente distinta de cero y normalización de valores. |
+| `test-v367-voice-live-match-play-final.mjs` | Ejecuta tres lectores Match Play y cubre Registro, multihoyos, cierres y acumulado. | Un fallo bloquea el candidato. |
+| `test-v354-voice-fallback.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs` | Sustituyen el contrato histórico de panel visible por voz audible sin pantalla. | El toque conserva `prime` + escucha y prohíbe navegación visual. |
+| `Intocables/intocables-gate.mjs` | Protege voz sin pantalla, recuperación directa y lectura LIVE. | Lógica AND con todos los controles previos. |
+| `V367_TORNEO_MATCH_PLAY_LIVE/REPORTE_V367_RC039.md` | Registra el `400` real anterior y las puertas restantes. | Prohíbe llamar final o garantizado a un Preview sin prueba física. |
+
+Producción sigue intacta. El orden obligatorio es auditoría integral → Preview READY → tres ciclos externos → prueba física iPhone y apertura en los dispositivos de esposa y Coach.
