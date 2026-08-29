@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import crypto from "node:crypto";
+import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("../index-grupal.html",import.meta.url),"utf8");
@@ -6,10 +8,21 @@ const worker=fs.readFileSync(new URL("../service-worker.js",import.meta.url),"ut
 const speech=fs.readFileSync(new URL("../api/voice-speech.js",import.meta.url),"utf8");
 const audit=fs.readFileSync(new URL("../audit-project.mjs",import.meta.url),"utf8");
 const rules=JSON.parse(fs.readFileSync(new URL("./REGLAS_INTOCABLES.json",import.meta.url),"utf8"));
+const microphoneLock=JSON.parse(fs.readFileSync(new URL("./MICROFONO_APROBADO.lock.json",import.meta.url),"utf8"));
 
 assert.equal(rules.logic,"all");
-assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT-04"]);
+assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT-04","INT-05"]);
 assert.ok(rules.rules.every(rule=>rule.mandatory===true));
+assert.equal(microphoneLock.schema,"gscg-microphone-lock/v1");
+for(const [file,expected] of Object.entries(microphoneLock.sha256)){
+  const bytes=fs.readFileSync(new URL(`../${file}`,import.meta.url)),actual=crypto.createHash("sha256").update(bytes).digest("hex");
+  assert.equal(actual,expected,`MICRÓFONO INTOCABLE: cambió ${file}`);
+}
+for(const test of microphoneLock.tests){
+  assert.match(audit,new RegExp(test.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")),`auditoría debe conservar ${test}`);
+  const result=spawnSync(process.execPath,[test],{cwd:new URL("..",import.meta.url),encoding:"utf8"});
+  assert.equal(result.status,0,`MICRÓFONO INTOCABLE FAIL ${test}\n${result.stdout||""}${result.stderr||""}`);
+}
 
 assert.match(html,/const ACTIVE_ROUND_KEY="golf-score-card-guatemala-active-round-v1"/);
 assert.match(html,/function isRecoverableStoredRound\(value,modeHint=null\)[\s\S]*?value\.players\.length>=1&&value\.players\.length<=6/);
@@ -44,4 +57,4 @@ assert.match(audit,/Intocables\/intocables-gate\.mjs/);
 assert.match(audit,/test-v366-principal-entry-recovery\.mjs/);
 assert.match(audit,/test-v367-universal-voice-in-place\.mjs/);
 assert.match(worker,/gscg-mobile-v363-/);
-console.log("INTOCABLES PASS INT-01…INT-04");
+console.log("INTOCABLES PASS INT-01…INT-05 · MICRÓFONO REGISTRO/SCORE/MULTIHOYO SELLADO");

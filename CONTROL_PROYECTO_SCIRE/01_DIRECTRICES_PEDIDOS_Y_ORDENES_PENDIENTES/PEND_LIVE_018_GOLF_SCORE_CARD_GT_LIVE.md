@@ -159,3 +159,7 @@ La activación física de una ronda existente devolvió tres `POST /api/live 400
 ## V370 · Match Play exclusivo en el visor · 29 de agosto de 2026
 
 El enlace V369 se creó correctamente, pero `live-view.js` sólo usaba `mode` para el rótulo y dibujaba siempre la tabla General. V370 reutiliza el motor oficial `match-play.js` en modo sólo lectura. Antes del hoyo 1 muestra parejas y nombres con casillas vacías; durante la ronda muestra ganados, perdidos, empates y OUT/IN/TOTAL Match. La plantilla Gross/Neto General queda excluida cuando `mode=match_play`. El enlace, token, ronda activa y escritor de scores no cambian.
+
+## V371 · Gross visible y posición Match sin contar flechas · 29 de agosto de 2026
+
+El visor muestra el Gross individual dentro de cada hoyo y el acumulado de ambos jugadores en el encabezado. Una flecha se dibuja únicamente en el hoyo con ganador/perdedor y se acompaña de `UP`, `DOWN` o `AS`; los hoyos empatados muestran `—`. Se conserva el mismo enlace, token, snapshot y cadencia de tres segundos. La Score Card y el micrófono no cambian.

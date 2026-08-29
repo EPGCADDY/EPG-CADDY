@@ -1904,3 +1904,14 @@ Sello remoto atómico: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_P
 - Cada score posterior actualiza únicamente estado de hoyo y posición `UP/DOWN/AS`; no muestra Gross/Neto General.
 - `live.html` carga el motor Match antes del visor con versión V370 y mantiene `no-store`.
 - `test-v352-live.mjs` exige nombres, estado inicial vacío y ausencia de `GROSS`, `NETO` y `SCORE CARD` dentro del bloque Match.
+
+## V371 · lectura Match directa y candado físico del micrófono · 29 de agosto de 2026
+
+- `live-view.js`: cada hoyo publica Gross y, sólo cuando existe ganador/perdedor, flecha más posición acumulada; el empate publica `—`.
+- `live-view.js`: el encabezado muestra ambos lados, por ejemplo `JAIME 1 UP · GUSTAVO 1 DOWN`, sin obligar a contar flechas.
+- `live.html`: usa activos V371 sin caché y aumenta la altura de casilla para Gross + resultado.
+- `test-v352-live.mjs`: prueba Gross 4/5, `▲ 1 UP`, `▼ 1 DOWN`, empate con guion y cero flecha repetida.
+- `Intocables/MICROFONO_APROBADO.lock.json`: manifiesto SHA-256 de voz aprobada y once bancos inmutables.
+- `Intocables/intocables-gate.mjs`, `README.md` y `REGLAS_INTOCABLES.json`: nueva regla INT-05; una diferencia de hash o un banco fallido bloquea la versión.
+- `scripts/rebuild-inventory-pdfs.py`, lock y tres PDF V311: sello `V371-MATCH-GROSS-MICROPHONE-LOCK` con las nuevas fuentes.
+- Frontera: `index-grupal.html`, Registro, Score, parsers, captura, micrófono, AI UNIVERSAL y ronda activa no cambian.

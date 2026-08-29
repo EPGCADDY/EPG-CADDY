@@ -1,0 +1,39 @@
+{
+  "schema": "gscg-microphone-lock/v1",
+  "version": "V371",
+  "approvedBehavior": [
+    "registro_de_jugadores_por_voz",
+    "score_de_un_hoyo_por_voz",
+    "score_de_varios_hoyos_seguidos_por_voz",
+    "persistencia_inmediata_de_scores",
+    "comunicacion_universal_audible_sin_cambiar_pantalla"
+  ],
+  "policy": "Los bancos y el transporte de voz aprobados no se modifican. Cualquier hash o prueba diferente bloquea auditoría, build y despliegue hasta autorización expresa del propietario.",
+  "sha256": {
+    "api/voice-speech.js": "a78920db06cb61dd333b5dcc20786b73b565029c0646455fb8a81b25cf4ce563",
+    "test-v336-microphone-transport.mjs": "cfc36abd5f743726a435ff13ef9eddefc567b9e2a6a10488c096b1bff5852a37",
+    "test-v354-voice-fallback.mjs": "41d3a14dacaf183e321ce04b61e86511b5d247582785ba966c90b5732282fce2",
+    "test-v355-ios-audio-dictation.mjs": "29675d8991ea4735e34f449ac4109d6b1e37375fd8740edfe99512d1334e051e",
+    "test-v356-voice-only-cedar-quality.mjs": "f18891492d2bbddf8d9d36765fe175747b9d9e941d13cc0d08336124e53f5c36",
+    "test-v357-ios-voice-transport-recovery.mjs": "087fb630d2e6851901a6dfdae42a6b3b1f4066cf8575bedd7066e6bced7a7c23",
+    "test-v358-ios-score-universal-physical-recovery.mjs": "6a787ec011ff5459518f1ab9f3d32d79dbd10de4365a3e2f3cffbb14d45e7618",
+    "test-v359-ios-score-parser-recovery.mjs": "a9ef038dd8ba49e31278c1e6e096c9f8ddc9eccdcacd1afe90c51af225fc9515",
+    "test-v357-synchronized-progressive-voice.mjs": "ad7ba5e426dbde712f2d965e1a33a2af35aa75b3d7a176bf8982d52441bce84d",
+    "test-v361-synchronized-voice.mjs": "ead1297e3f3f93185a56c5a883b366805fac35b85169dbacb5271d69c3ecca43",
+    "test-v362-physical-voice-recovery.mjs": "3065d51fc1913484a1ca40c0364cfbfa0daa68b1b61e92cece649ffaba8fcee6",
+    "test-v367-universal-voice-in-place.mjs": "ef5c659d69851f7f018116ae7252ad4efff36728472cbb87db1598a33c5dbd49"
+  },
+  "tests": [
+    "test-v336-microphone-transport.mjs",
+    "test-v354-voice-fallback.mjs",
+    "test-v355-ios-audio-dictation.mjs",
+    "test-v356-voice-only-cedar-quality.mjs",
+    "test-v357-ios-voice-transport-recovery.mjs",
+    "test-v358-ios-score-universal-physical-recovery.mjs",
+    "test-v359-ios-score-parser-recovery.mjs",
+    "test-v357-synchronized-progressive-voice.mjs",
+    "test-v361-synchronized-voice.mjs",
+    "test-v362-physical-voice-recovery.mjs",
+    "test-v367-universal-voice-in-place.mjs"
+  ]
+}

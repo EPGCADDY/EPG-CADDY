@@ -1475,3 +1475,11 @@ La prueba física produjo tres `POST /api/live 400` al activar el enlace de la r
 ## V370 · visor LIVE exclusivo Match Play · 29 de agosto de 2026
 
 RC-042 registró que el enlace Match Play activo mostraba la plantilla General. V370 conserva el mismo enlace y la misma ronda, pero cuando `mode=match_play` dibuja únicamente parejas, nombres, HCP, hoyos y posiciones Match. Antes de comenzar muestra `MATCH POR INICIAR` con casillas vacías; después usa exclusivamente `UP`, `DOWN`, `AS` y el cierre Match, sin tabla Gross/Neto General.
+
+## V371 · Gross por hoyo + marcador Match explícito + micrófono sellado · 29 de agosto de 2026
+
+La prueba física `IMG_90B5C8C0-8E86-43B7-8C3E-3CE4B7E8A35D.jpeg` confirmó actualización LIVE, pero obligaba al visitante a interpretar flechas y no mostraba el Gross. V371 conserva el enlace y muestra en cada casilla el Gross; una flecha aparece únicamente cuando ese hoyo tuvo ganador/perdedor y lleva la posición acumulada (`▲ 1 UP`, `▼ 1 DOWN`). Un hoyo empatado usa `—`, sin repetir flechas. El encabezado declara simultáneamente la posición de ambos jugadores.
+
+El micrófono aprobado no se refactoriza ni se toca. `Intocables/MICROFONO_APROBADO.lock.json` sella por SHA-256 el transporte de voz y once bancos de Registro, Score individual, multihoyos, persistencia y AI UNIVERSAL; `intocables-gate.mjs` verifica hashes y ejecuta esos bancos antes de permitir build o despliegue.
+
+El inventario V311 se reconstruye con sello `V371-MATCH-GROSS-MICROPHONE-LOCK`; `scripts/rebuild-inventory-pdfs.py`, el lock y los tres PDF quedan sincronizados con ambos ROADMAPS.

@@ -1,18 +1,18 @@
 {
-  "version": "V368-CANONICAL-HOME-ENTRY-OIDC-INTOCABLES",
-  "generatedAt": "2026-08-29T01:44:02Z",
-  "sourceFileCount": 392,
-  "sourceDigest": "1e25054f5409491e0940f6b9277c9185c200a4558787afa68fe2d0950eb57ca0",
+  "version": "V371-MATCH-GROSS-MICROPHONE-LOCK",
+  "generatedAt": "2026-08-29T02:25:54Z",
+  "sourceFileCount": 393,
+  "sourceDigest": "3c21340f249a9131569893c5f8f4b8f73a8473d77276f1f897c943e3d1a32d4a",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 203662,
-      "sha256": "50003c1e1c62b4b976cb475963c2866852490ee61a462f09524c4c802f0c1506"
+      "size": 204623,
+      "sha256": "a3eac15d93d25375a39dd91bb65be2b156c539bf05b7c6b07f417b46d3c7d01a"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 227775,
-      "sha256": "3ce8ce81604508ed69174098f3bfa7b9a24fe469de22dd20b1a83134e37b7e04"
+      "size": 228650,
+      "sha256": "8c17a3746e922063b839e47a1e8341d03b47e9b72d22dc1d042e7c8d0bdd3794"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

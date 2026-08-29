@@ -1027,3 +1027,15 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `live-view.js` | Renderiza pareja, nombres, hoyos y posición Match desde el snapshot vigente. | `mode=match_play` no pasa por `playerCard()` General. |
 | `live.html` | Carga `match-play.js` y el visor V370 sin caché. | El enlace vigente recibe la presentación nueva al reabrirse. |
 | `test-v352-live.mjs` | Ejecuta Match Play sin scores con Jaime/Gustavo equivalentes. | Exige nombres y casillas vacías; prohíbe Gross/Neto General. |
+
+## V371 · Gross Match y candado de micrófono
+
+| Archivo | Función | Control |
+|---|---|---|
+| `live-view.js` | Gross por hoyo, flecha sólo cuando hay ganador/perdedor y acumulado de ambos jugadores. | Empate `—`; no repite flechas ni usa tabla General. |
+| `live.html` | CSS de doble línea y activos `?v=371`. | Reapertura del mismo enlace recibe la vista nueva. |
+| `test-v352-live.mjs` | Ejecuta victoria 4/5 y empate 4/4. | Exige `1 UP/1 DOWN`, Gross y ausencia de flecha en empate. |
+| `Intocables/MICROFONO_APROBADO.lock.json` | Sella hashes del transporte y once bancos de voz. | Cambiar un byte bloquea INT-05. |
+| `Intocables/intocables-gate.mjs` | Valida hashes y ejecuta cada banco sellado. | Registro, Score individual/multihoyo y AI UNIVERSAL permanecen intocables. |
+| `Intocables/README.md`, `Intocables/REGLAS_INTOCABLES.json` | Documentan y activan INT-05. | Ningún build pasa con regresión de micrófono. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, tres PDF V311 | Sellan el inventario V371. | Fuentes, hashes y versión permanecen sincronizados. |

@@ -619,3 +619,10 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - Conservar el enlace LIVE ya enviado.
 - Mostrar sólo Match Play con nombres y casillas vacías antes del hoyo 1.
 - Reabrir el mismo enlace en el teléfono de la esposa después de Producción.
+
+## Urgente V371 · Gross + posición Match sin flechas repetidas
+
+- Mostrar Gross de cada jugador en cada hoyo.
+- Mostrar ambos acumulados `UP/DOWN/AS` en el encabezado.
+- Flecha sólo en hoyo ganado/perdido; empate `—`.
+- Conservar enlace, ronda activa y micrófono aprobado bajo INT-05.

@@ -452,3 +452,11 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - El mismo enlace activo debe mostrar Jaime VS Gustavo y `MATCH POR INICIAR` sin scores al inicio.
 - Match Play no reutiliza la plantilla General; al jugar sólo publica estados `UP`, `DOWN` o `AS`.
 - Estado: bancos enfocados PASS; despliegue y reapertura física del enlace pendientes.
+
+## V371 · visor Match completo y micrófono intocable
+
+- Cada casilla LIVE Match muestra Gross y resultado del hoyo sin revelar Neto.
+- El encabezado declara la posición de ambos jugadores; no se cuentan flechas.
+- Hoyo ganado/perdido: flecha + posición acumulada. Hoyo empatado: `—`, sin flecha repetida.
+- `MICROFONO_APROBADO.lock.json` y INT-05 bloquean cualquier cambio en el transporte o los once bancos aprobados de Registro/Score/multihoyos.
+- Producción sólo cambia después de auditoría integral, despliegue READY y verificación externa del visor.

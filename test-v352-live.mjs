@@ -32,7 +32,15 @@ const matchStart=control.buildLiveSnapshot({...round,mode:"match_play",players:r
 assert.equal(matchPlay.validatePlayers(matchStart.players.map(player=>({...player,holes:{}}))),true);
 assert.match(matchStartHtml,/JUNIOR UNO[\s\S]*?VS[\s\S]*?JUNIOR DOS/);
 assert.match(matchStartHtml,/MATCH POR INICIAR/);
-assert.doesNotMatch(matchStartHtml,/GROSS|NETO|SCORE CARD/,"LIVE Match Play inicia sólo con nombres y casillas vacías");
+assert.doesNotMatch(matchStartHtml,/NETO|SCORE CARD/,"LIVE Match Play no usa la plantilla General");
+assert.doesNotMatch(matchStartHtml,/match-hole-gross">\d/,"LIVE Match Play inicia con casillas Gross vacías");
+const matchScored=control.buildLiveSnapshot({...round,mode:"match_play",players:[{...round.players[0],id:"p1",holes:{1:{hole:1,par:4,gross:4,net:3},2:{hole:2,par:4,gross:4,net:4}}},{...round.players[1],id:"p2",holes:{1:{hole:1,par:4,gross:5,net:4},2:{hole:2,par:4,gross:4,net:4}}}]},{course:"EL PULTÉ GOLF",pars:Array(18).fill(4)}),matchScoredHtml=viewer.matchPlayCard({id:"stream-match-scored"},matchScored);
+assert.match(matchScoredHtml,/MATCH ACTIVO · JUNIOR UNO 1 UP · JUNIOR DOS 1 DOWN/);
+assert.match(matchScoredHtml,/match-hole-gross">4<\/span><span class="match-hole-result">▲ 1 UP/);
+assert.match(matchScoredHtml,/match-hole-gross">5<\/span><span class="match-hole-result">▼ 1 DOWN/);
+assert.match(matchScoredHtml,/match-tied"><span class="match-hole-gross">4<\/span><span class="match-hole-result">—/);
+assert.doesNotMatch(matchScoredHtml,/match-tied[\s\S]{0,120}[▲▼]/,"los hoyos empatados no repiten flechas");
+assert.match(matchScoredHtml,/NÚMERO = GROSS/);
 
 assert.deepEqual(validateScope(serverSnapshot,"player",["player-live-0001"]),{scope:"player",selectedPlayerIds:["player-live-0001"]});
 assert.deepEqual(validateScope(serverSnapshot,"group",["player-live-0001","player-live-0002"]).selectedPlayerIds,["player-live-0001","player-live-0002"]);
