@@ -32,6 +32,7 @@
     "round:recovery-gate": "node test-v365-active-round-empty-recovery.mjs",
     "principal:entry-gate": "node test-v366-principal-entry-recovery.mjs",
     "universal:in-place-gate": "node test-v367-universal-voice-in-place.mjs",
+    "entry:canonical-home-gate": "node test-v368-canonical-home-entry.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

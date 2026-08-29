@@ -70,6 +70,8 @@ Solamente cuando sea necesario un nuevo turno debe indicarse expresamente. Cualq
 
 ## Secuencia vigente
 
+0. Sincronización obligatoria entre conversaciones: la única continuación autorizada es V368/RC-040 sobre `fix-v366-integrated-main` (`03ca12e`). El enlace web abre Registro; la app instalada reabre la tarjeta viva; AI UNIVERSAL permanece audible sin cambio de pantalla. Queda prohibido reutilizar o declarar final cualquier Preview V365–V367 anterior.
+
 1. Cerrar V327-R1 con conversación física prolongada en iPhone; hasta entonces Producción permanece en V322.
 2. Al obtener PASS físico completo, montar la versión aprobada y registrar deployment, commit y evidencia exactos.
 3. Continuar automáticamente la cola oficial en su orden vigente, sin pedir autorización intermedia ni volver a solicitar información ya entregada.

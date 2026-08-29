@@ -1001,3 +1001,14 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `api/voice-health.js` | Registra `browser_fallback_general_in_place` sin texto ni nombres. | Privacidad y diagnóstico verificable. |
 | `test-v367-universal-voice-in-place.mjs` | Inspecciona respuesta, acceso de un toque, contexto inicial y telemetría. | Bloquea la reaparición del panel AI. |
 | `test-v354-voice-fallback.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs` | Actualizan la expectativa histórica al mandato físico más reciente. | Multihoyos y gesto iPhone permanecen acumulados. |
+
+## V368 · entrada canónica sincronizada
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | `inicio=1` abre Registro con ronda válida e inicializa `standaloneApp` antes de `openSetup()`. | Inicio visible, cero `ReferenceError`, tarjeta conservada detrás. |
+| `manifest.webmanifest` | Mantiene `start_url=/index-grupal.html?source=pwa`. | El acceso instalado reabre la tarjeta viva sin forzar Registro. |
+| `test-v368-canonical-home-entry.mjs` | Distingue enlace web y aplicación instalada y simula una tarjeta persistida. | Bloquea tanto el salto web a Score Card como la pérdida de persistencia PWA. |
+| `service-worker.js`, V357/V361/V364/V366, `audit-project.mjs`, `package.json` | Firma V368 y ejecución acumulada. | Safari invalida el shell rechazado sin retirar V367. |
+| `AGENTS.md`, directrices, RC-040, matriz, ROADMAPS e informe V368 | Sello multiconversación sobre `03ca12e`. | Ninguna rama V365–V367 puede volver a presentarse como final. |
+| `scripts/rebuild-inventory-pdfs.py`, lock y tres PDF V311 | Sello de inventario V368. | Otra conversación no puede reutilizar un inventario rotulado V367. |

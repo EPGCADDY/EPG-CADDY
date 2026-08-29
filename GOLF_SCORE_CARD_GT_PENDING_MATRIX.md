@@ -432,3 +432,11 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - RC-039 elimina la apertura automática del panel AI en consultas habladas desde Inicio, Registro o tarjeta.
 - La misma ruta `voiceOnly:true` conserva contexto, respuesta Cedar/Onyx, privacidad y acceso de un toque.
 - Estado: PASS automático; nuevo Preview y recorrido físico iPhone pendientes. Producción no cambia.
+
+## V368 · entrada web canónica y tarjeta viva instalada
+
+- `/`, `/index.html` y `/inicio` abren Registro aunque exista una ronda válida guardada; abrir Inicio no borra ni sustituye esa tarjeta.
+- La aplicación instalada conserva `/index-grupal.html?source=pwa`, por lo que cerrar y reabrir el acceso del escritorio devuelve la tarjeta viva.
+- `standaloneApp` se inicializa antes de `openSetup()` y elimina el `ReferenceError` reproducido por navegador.
+- V368 nace sobre `fix-v366-integrated-main` (`03ca12e`) y conserva recuperación de ronda, OIDC, AI UNIVERSAL sin pantalla, Match Play, multihoyos, reportes y LIVE.
+- Estado: navegador local PASS y banco enfocado pendiente de auditoría integral; Preview y prueba física iPhone pendientes. Producción no se modifica en V368.

@@ -51,6 +51,6 @@ const startupStart=html.indexOf("// Regla de continuidad: al abrir/reabrir");
 const startup=html.slice(startupStart,html.indexOf("window.GSC_ACCOUNT_SIGNED_IN",startupStart));
 assert.match(startup,/if\(!isRecoverableStoredRound\(round\)\)[\s\S]*?ensurePrincipalEntry\(\)/);
 assert.ok(startup.indexOf("ensurePrincipalEntry()")<startup.indexOf('queueMasterDataSnapshot("app-open")'),"Inicio debe montarse antes de sincronizaciones opcionales");
-assert.match(startup,/if\(explicitNewRound\)\{\s*openNewRoundDraft\(\)/,"NUEVA RONDA explícita debe conservarse al integrar V366");
+assert.match(startup,/if\(explicitNewRound\|\|directHome\)\{\s*openNewRoundDraft\(\)/,"NUEVA RONDA o entrada web principal deben abrir Registro sin borrar la tarjeta viva");
 
 console.log("PASS V366 · Inicio principal obligatorio sin ronda + tarjeta operativa intacta");
