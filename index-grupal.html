@@ -16,6 +16,7 @@
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-physical-startup-playback" content="V365-IPHONE-VALID-ROUND-AUDIO-COMPLETION-20260828">
 <meta name="gscg-universal-audio-only" content="V366-NO-SCREEN-CHANGE-AUDIBLE-COMPLETION-20260828">
+<meta name="gscg-home-entry" content="V367-HOME-ALWAYS-OPENS-REGISTRATION-20260828">
 <meta name="gscg-ai-voice" content="CEDAR-1.15-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -937,6 +938,7 @@ function activateCourse(key){
   return data;
 }
 const $=id=>document.getElementById(id);
+const standaloneApp=()=>Boolean(window.GSC_NATIVE_PLATFORM)||window.matchMedia?.("(display-mode: standalone)")?.matches||window.navigator.standalone===true;
 if(!document.querySelector('#cardLibraryMode option[value="match_play"]'))$("cardLibraryMode")?.insertAdjacentHTML("beforeend",'<option value="match_play">MATCH PLAY</option>');
 if(!document.querySelector('#cardLibraryMode option[value="four_ball"]'))$("cardLibraryMode")?.insertAdjacentHTML("beforeend",'<option value="four_ball">FOUR BALL</option>');
 const OFFICIAL_LOGO_SRC=document.querySelector(".official-round-header .logo")?.src||"";
@@ -5075,11 +5077,10 @@ dateSetup();
 if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
 // La entrada explícita abre Registro sin borrar la ronda activa. La sustitución
 // continúa ocurriendo únicamente después de confirmar INICIAR RONDA.
-if(explicitNewRound){
+if(explicitNewRound||directHome){
   openNewRoundDraft();
 }else if(!round.configured){
   if(sfEmergency)window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
-  else if(directHome)openNewRoundDraft();
   else openSetup("new");
 }
 window.GSC_ACCOUNT_SIGNED_IN=false;
@@ -5137,7 +5138,6 @@ async function refreshCommercialAccess(){
 $("commercialProButton")?.addEventListener("click",async()=>{const button=$("commercialProButton");button.disabled=true;const state=await window.GSCCommerce.presentPaywall();button.disabled=false;button.classList.toggle("active",state.entitlementActive===true);button.textContent=state.entitlementActive?"PRO ✓":"PRO"});
 window.addEventListener("gsc-native-ready",refreshCommercialAccess);setTimeout(refreshCommercialAccess,800);
 let deferredInstallPrompt=null;
-const standaloneApp=()=>Boolean(window.GSC_NATIVE_PLATFORM)||window.matchMedia?.("(display-mode: standalone)")?.matches||window.navigator.standalone===true;
 const iosDevice=()=>/iphone|ipad|ipod/i.test(navigator.userAgent);
 function setInstallGuide(){
   const steps=$("installAppSteps"),confirm=$("confirmInstallApp");if(!steps||!confirm)return;

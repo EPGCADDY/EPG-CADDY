@@ -1873,3 +1873,16 @@ RC-037 queda corregida localmente. Producción no cambia; faltan Preview nuevo y
 - `service-worker.js`, V357/V361, `audit-project.mjs` y `package.json`: caché V366 y ejecución obligatoria.
 
 RC-038 queda corregida localmente. Producción no cambia; faltan Preview nuevo y prueba física iPhone.
+
+## V367 · enlace principal abre Registro · 28 de agosto de 2026
+
+- `index-grupal.html`: `directHome` comparte la condición prioritaria de `explicitNewRound`; `/`, `/index.html` y `/inicio` muestran Registro aun cuando exista una ronda válida.
+- `index-grupal.html`: `standaloneApp` se inicializa antes de `openSetup()`; se elimina el `ReferenceError` que el navegador reprodujo antes de agregar `.visible` al Registro.
+- La ronda activa se persiste antes de abrir Registro y sólo se sustituye al confirmar `INICIAR RONDA`.
+- `test-v311-neutral-match-home-link.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs` y `test-v364-explicit-new-round-entry.mjs`: se alinean con la navegación aprobada sin retirar Match Play, voz progresiva, persistencia ni Nueva Ronda.
+- `test-v367-home-entry.mjs`: reproduce entrada con una ronda activa y exige Registro visible más datos intactos.
+- `service-worker.js`, V357/V361, `audit-project.mjs` y `package.json`: caché V367 y ejecución obligatoria.
+- Registro RC-039, matriz pendiente, mapa maestro, inventario y ambos ROADMAPS: trazabilidad completa de `IMG_2197.jpeg`.
+- `AGENTS.md` y `DIRECTRICES_MANDATORIAS.md`: fijan V367/RC-039 como única continuidad multiconversación y prohíben reutilizar V366 o sus enlaces.
+
+Producción no cambia; faltan auditoría integral, Preview y prueba física iPhone.

@@ -11,11 +11,11 @@ for(const obsolete of ["MATCH PLAY · CON HDCP","MATCH PLAY CON HDCP","NETO CON 
 }
 assert.doesNotMatch(artifacts,/Neto con handicap/i);
 assert.match(html,/const directHome=startupParams\.get\("inicio"\)==="1"/);
-assert.match(html,/if\(!round\.configured\)\{[\s\S]*?else if\(directHome\)openNewRoundDraft\(\)/);
-assert.doesNotMatch(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
+assert.match(html,/if\(explicitNewRound\|\|directHome\)\{\s*openNewRoundDraft\(\)/);
+assert.doesNotMatch(html,/else if\(!round\.configured\)\{[\s\S]{0,180}else if\(directHome\)/);
 for(const source of ["/","/index.html","/inicio"]){
   const route=hosting.redirects?.find(item=>item.source===source);
-  assert.equal(route?.destination,"/index-grupal.html?inicio=1",`${source} debe abrir la aplicación y Configura la ronda sólo cuando no existe ronda activa`);
+  assert.equal(route?.destination,"/index-grupal.html?inicio=1",`${source} debe abrir siempre la pantalla principal y conservar cualquier ronda activa detrás`);
 }
 assert.match(html,/function openNewRoundDraft\(\)\{[\s\S]*?persist\(\);[\s\S]*?openSetup\("new"\)/,"El inicio directo conserva la ronda guardada antes de abrir la pantalla principal");
 assert.match(html,/id="fourBallRoundButton"[\s\S]*?<span>FOUR BALL<\/span>/);

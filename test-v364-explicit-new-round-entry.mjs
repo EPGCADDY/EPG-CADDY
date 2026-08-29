@@ -5,7 +5,7 @@ const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 assert.match(html,/V364-EXPLICIT-NEW-ROUND-ENTRY-20260828/);
 assert.match(html,/const explicitNewRound=startupParams\.get\("nueva_ronda"\)==="1"/);
-assert.match(html,/if\(explicitNewRound\)\{\s*openNewRoundDraft\(\);\s*\}else if\(!round\.configured\)/);
+assert.match(html,/if\(explicitNewRound\|\|directHome\)\{\s*openNewRoundDraft\(\);\s*\}else if\(!round\.configured\)/);
 const start=html.indexOf("function openNewRoundDraft(){"),end=html.indexOf("function closeSetup(){",start),source=html.slice(start,end);
 assert.ok(start>0&&end>start);
 assert.match(source,/persist\(\);[\s\S]*?openSetup\("new"\)/);

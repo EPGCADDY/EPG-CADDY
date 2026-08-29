@@ -6,11 +6,11 @@ const worker=readFileSync("service-worker.js","utf8");
 
 assert.match(html,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
 assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
-assert.match(html,/if\(!round\.configured\)\{[\s\S]*?else if\(directHome\)openNewRoundDraft\(\)/);
-assert.doesNotMatch(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
+assert.match(html,/if\(explicitNewRound\|\|directHome\)\{\s*openNewRoundDraft\(\)/);
+assert.doesNotMatch(html,/else if\(!round\.configured\)\{[\s\S]{0,180}else if\(directHome\)/);
 
-const opensRegistration=({directHome=true,sfEmergency=false,demo=false,configured=false}={})=>directHome&&!sfEmergency&&!demo&&!configured;
-assert.equal(opensRegistration({configured:true}),false);
+const opensRegistration=({directHome=true,sfEmergency=false,demo=false,configured=false}={})=>directHome&&!sfEmergency&&!demo;
+assert.equal(opensRegistration({configured:true}),true);
 assert.equal(opensRegistration({configured:false}),true);
 
 for(const lock of [
@@ -24,4 +24,4 @@ for(const lock of [
 const audit=readFileSync("audit-project.mjs","utf8");
 for(const required of ["test-v354-voice-fallback.mjs","test-v355-ios-audio-dictation.mjs","test-v356-voice-only-cedar-quality.mjs","test-v357-ios-voice-transport-recovery.mjs","test-v358-active-round-reopen.mjs"])assert.ok(audit.includes(required),required);
 
-console.log("PASS V358 · V357 completo + ronda activa visible hasta NUEVA RONDA");
+console.log("PASS V358/V367 · ronda activa persistida y enlace principal abre Registro");

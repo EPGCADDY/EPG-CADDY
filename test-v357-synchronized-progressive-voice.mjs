@@ -44,12 +44,12 @@ assert.ok(process.indexOf("parseSetupTranscript(clean)")<process.indexOf("isGene
 assert.ok(process.indexOf("isGeneralConversationIntent(clean)")<process.indexOf("browser_fallback_setup_rejected"),"Registro debe enrutar preguntas generales antes de rechazar un listado");
 assert.ok(process.indexOf("parseRoundScoreTranscript(clean)")<process.indexOf("routeAiUniversalAppText(clean)"),"Score local debe conservar prioridad sobre conversación");
 
-assert.match(html,/if\(!round\.configured\)\{[\s\S]*?else if\(directHome\)openNewRoundDraft\(\)/);
-assert.doesNotMatch(html,/if\(directHome&&!sfEmergency&&!demoControlManual\)openNewRoundDraft\(\)/);
+assert.match(html,/if\(explicitNewRound\|\|directHome\)\{\s*openNewRoundDraft\(\)/);
+assert.doesNotMatch(html,/else if\(!round\.configured\)\{[\s\S]{0,180}else if\(directHome\)/);
 
 assert.deepEqual(
   sanitizeVoiceHealth({event:"browser_fallback_round_progressive",build:"V358",context:"round",entryCount:2,transcript:"PRIVADO",player:"PRIVADO",latitude:0}),
   {event:"browser_fallback_round_progressive",build:"V358",context:"round",turn:0,elapsedMs:0,entryCount:2}
 );
 
-console.log("PASS V358 · recuperación iPhone + hoyos visibles durante el dictado + Universal + ronda persistente");
+console.log("PASS V358/V367 · recuperación iPhone + hoyos visibles + Universal + ronda persistente detrás de Inicio");

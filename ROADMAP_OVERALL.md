@@ -1453,3 +1453,9 @@ Las capturas físicas `IMG_2190.jpeg`/`IMG_2191.png` rechazaron el candidato ant
 ## V366 · AI UNIVERSAL audible sin cambiar pantalla · 28 de agosto de 2026
 
 RC-038 corrige la conducta visible rechazada: AI ∞ desde la tarjeta ya no abre el overlay. El mismo toque prepara audio y escucha; la consulta se procesa como `voiceOnly`, la respuesta termina audible y la matriz vuelve a `LISTO`. El panel escrito y Reglas permanecen disponibles por sus accesos separados. `test-v366-universal-audio-only.mjs` y las regresiones V354/V358 hacen permanente la ausencia de cambio de pantalla. La caché sube a V366. Producción permanece intacta; Preview y PASS físico iPhone siguen bloqueantes.
+
+## V367 · enlace principal abre Registro · 28 de agosto de 2026
+
+RC-039 corrige la entrada rechazada en `IMG_2197.jpeg`/`IMG_2199.png`: las rutas `/`, `/index.html` y `/inicio` muestran siempre Registro aunque exista una ronda activa. El navegador además reprodujo `Cannot access 'standaloneApp' before initialization`; V367 adelanta esa inicialización para que el arranque no se detenga antes de mostrar el overlay. La tarjeta anterior permanece persistida y únicamente cambia al confirmar `INICIAR RONDA`. `test-v367-home-entry.mjs` y las regresiones V358/V364 bloquean el salto directo a Score Card; la caché sube a V367. Producción permanece intacta; auditoría, Preview y PASS físico iPhone siguen bloqueantes.
+
+Sello multiconversación: `AGENTS.md` y `DIRECTRICES_MANDATORIAS.md` declaran V366 y todos sus enlaces rechazados; V367/RC-039 en `fix-final-universal-oidc` es la única línea autorizada para continuar.

@@ -70,6 +70,8 @@ Solamente cuando sea necesario un nuevo turno debe indicarse expresamente. Cualq
 
 ## Secuencia vigente
 
+0. Continuidad multiconversación: V366 y todos sus enlaces quedan rechazados por abrir directamente la Score Card con una ronda persistida. La única continuación canónica es V367/RC-039 en `fix-final-universal-oidc`; cualquier conversación debe sincronizar esa rama y sus controles antes de actuar. Está prohibido volver a declarar READY/final un artefacto anterior.
+
 1. Cerrar V327-R1 con conversación física prolongada en iPhone; hasta entonces Producción permanece en V322.
 2. Al obtener PASS físico completo, montar la versión aprobada y registrar deployment, commit y evidencia exactos.
 3. Continuar automáticamente la cola oficial en su orden vigente, sin pedir autorización intermedia ni volver a solicitar información ya entregada.

@@ -434,3 +434,12 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - Las consultas de voz se envían con `voiceOnly:true`; no muestran transcripción ni respuesta y vuelven a `LISTO` sólo después de terminar el audio.
 - El panel escrito y Reglas de Golf conservan sus accesos separados.
 - Estado: PASS automático local; Preview nuevo y prueba física iPhone pendientes. Producción permanece intacta.
+
+## V367 · enlace principal abre Registro y conserva la ronda
+
+- La captura `IMG_2197.jpeg` rechaza V366 porque la entrada oficial mostró directamente la Score Card persistida.
+- `/`, `/index.html` y `/inicio` abren siempre Registro mediante `inicio=1`, aunque exista una ronda activa.
+- `standaloneApp` se inicializa antes de `openSetup()`; el arranque ya no puede detenerse con `Cannot access 'standaloneApp' before initialization` antes de mostrar el overlay.
+- La ronda anterior continúa persistida detrás de Registro y sólo se sustituye al confirmar `INICIAR RONDA`.
+- `test-v358-active-round-reopen.mjs` deja de proteger la navegación rechazada y `test-v367-home-entry.mjs` bloquea su regreso.
+- Estado: PASS automático enfocado; auditoría integral, Preview y prueba física iPhone pendientes. Producción permanece intacta.

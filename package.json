@@ -31,6 +31,7 @@
     "entry:new-round-gate": "node test-v364-explicit-new-round-entry.mjs",
     "physical:startup-playback-gate": "node test-v365-iphone-startup-playback.mjs",
     "physical:universal-audio-only-gate": "node test-v366-universal-audio-only.mjs",
+    "entry:home-gate": "node test-v367-home-entry.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

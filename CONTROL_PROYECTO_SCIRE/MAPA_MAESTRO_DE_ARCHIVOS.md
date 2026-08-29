@@ -1001,3 +1001,13 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `test-v366-universal-audio-only.mjs` | Gate específico de gesto, `voiceOnly` y pantalla intacta. | Un FAIL detiene Preview. |
 | `service-worker.js`, V357/V361, `audit-project.mjs`, `package.json` | Shell V366 y banco obligatorio. | Safari recibe el cliente corregido. |
 | registro RC-038, matriz y ambos ROADMAPS | Trazabilidad del requisito físico. | Producción permanece intacta hasta PASS iPhone. |
+
+## V367 · entrada principal visible con ronda conservada
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Hace que `inicio=1` abra Registro aun con ronda persistida e inicializa `standaloneApp` antes de cualquier apertura. | La tarjeta no se borra ni se sustituye; cero `ReferenceError` impide mostrar el overlay. |
+| `test-v311-neutral-match-home-link.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v364-explicit-new-round-entry.mjs` | Alinean los candados históricos con la entrada oficial vigente. | Match Play, voz progresiva, persistencia y Nueva Ronda siguen cubiertos. |
+| `test-v367-home-entry.mjs` | Reproduce una ronda activa al abrir `/`, `/index.html` o `/inicio`. | Un salto directo a Score Card bloquea auditoría y Preview. |
+| `service-worker.js`, V357/V361, `audit-project.mjs`, `package.json` | Shell V367 y banco obligatorio. | Safari/PWA recibe el cliente corregido. |
+| registro RC-039, matriz y ambos ROADMAPS | Trazabilidad de `IMG_2197.jpeg`. | Producción permanece intacta hasta PASS físico. |
