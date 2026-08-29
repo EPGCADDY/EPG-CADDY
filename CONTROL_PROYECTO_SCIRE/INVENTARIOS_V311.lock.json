@@ -1,18 +1,18 @@
 {
   "version": "V367-VOICE-LIVE-MATCH-PLAY-OIDC-INTOCABLES",
-  "generatedAt": "2026-08-29T00:04:04Z",
+  "generatedAt": "2026-08-29T00:14:11Z",
   "sourceFileCount": 391,
-  "sourceDigest": "64c802c4eff9b8be7ed7b91181689e18df3451327dbc41ed6fbb217bf7a6f8d7",
+  "sourceDigest": "e40c6c9db4b1fa6fdf5aea34d05a40ef59c4a34910b72604a8cf08aed153c8b8",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 202053,
-      "sha256": "dc7675f85d5f11b30b6e62cabc60ad13945e9fe11837b4466d6d686b8706f835"
+      "size": 202090,
+      "sha256": "cdd3111d88acd71c4ce005cac62d42540f0c6158d47f06e168ddeb753ca891be"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 225386,
-      "sha256": "0f1e9d5226d8301f73059e301419158799eae855805345b329c9ca3548bd6235"
+      "size": 225453,
+      "sha256": "49f2c1ae4a1ea0048daf1e8be7ec228b030a003fbcd6a107ea44c340df4586fb"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

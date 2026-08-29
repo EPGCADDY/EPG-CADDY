@@ -1879,6 +1879,7 @@ Inventario literal del cambio: `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVI
 | `test-v367-voice-live-match-play-final.mjs` | Ejecuta tres lectores Match Play y cubre Registro, multihoyos, cierres y acumulado. | Un fallo bloquea el candidato. |
 | `test-v354-voice-fallback.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs` | Sustituyen el contrato histórico de panel visible por voz audible sin pantalla. | El toque conserva `prime` + escucha y prohíbe navegación visual. |
 | `Intocables/intocables-gate.mjs` | Protege voz sin pantalla, recuperación directa y lectura LIVE. | Lógica AND con todos los controles previos. |
-| `V367_TORNEO_MATCH_PLAY_LIVE/REPORTE_V367_RC039.md` | Registra el `400` real anterior y las puertas restantes. | Prohíbe llamar final o garantizado a un Preview sin prueba física. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/CASOS_TERMINADOS.md` | Indexa el expediente V367. | Ningún caso queda fuera del inventario general. |
+| `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V367_TORNEO_MATCH_PLAY_LIVE/REPORTE_V367_RC039.md` | Registra el `400` real anterior y las puertas restantes. | Prohíbe llamar final o garantizado a un Preview sin prueba física. |
 
 Producción sigue intacta. El orden obligatorio es auditoría integral → Preview READY → tres ciclos externos → prueba física iPhone y apertura en los dispositivos de esposa y Coach.
