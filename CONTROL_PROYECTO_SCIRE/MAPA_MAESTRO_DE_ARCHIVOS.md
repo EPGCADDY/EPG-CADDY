@@ -1019,3 +1019,11 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 |---|---|---|
 | `api/live.js` | Acepta identificadores seguros históricos `p1..p6` al crear/publicar LIVE. | No relaja patrones de tokens ni secretos. |
 | `test-v352-live.mjs` | Reproduce la ronda real con `p1` y `p2`. | Bloquea la reincidencia RC-041. |
+
+## V370 · salida Match Play LIVE
+
+| Archivo | Función | Control |
+|---|---|---|
+| `live-view.js` | Renderiza pareja, nombres, hoyos y posición Match desde el snapshot vigente. | `mode=match_play` no pasa por `playerCard()` General. |
+| `live.html` | Carga `match-play.js` y el visor V370 sin caché. | El enlace vigente recibe la presentación nueva al reabrirse. |
+| `test-v352-live.mjs` | Ejecuta Match Play sin scores con Jaime/Gustavo equivalentes. | Exige nombres y casillas vacías; prohíbe Gross/Neto General. |

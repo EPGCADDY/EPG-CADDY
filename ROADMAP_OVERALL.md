@@ -1471,3 +1471,7 @@ El Gate remoto exige que `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL
 ## V369 · compatibilidad LIVE con jugadores activos heredados · 29 de agosto de 2026
 
 La prueba física produjo tres `POST /api/live 400` al activar el enlace de la ronda de Jaime y Gustavo. La tarjeta usa identificadores estables `p1..p6`, mientras el servidor LIVE exigía ocho caracteres mínimos. V369 acepta esos identificadores internos de 1–160 caracteres, conserva el filtro de caracteres permitidos y añade la regresión exacta `p1/p2`. No modifica micrófono, Registro, Score, ronda ni persistencia.
+
+## V370 · visor LIVE exclusivo Match Play · 29 de agosto de 2026
+
+RC-042 registró que el enlace Match Play activo mostraba la plantilla General. V370 conserva el mismo enlace y la misma ronda, pero cuando `mode=match_play` dibuja únicamente parejas, nombres, HCP, hoyos y posiciones Match. Antes de comenzar muestra `MATCH POR INICIAR` con casillas vacías; después usa exclusivamente `UP`, `DOWN`, `AS` y el cierre Match, sin tabla Gross/Neto General.

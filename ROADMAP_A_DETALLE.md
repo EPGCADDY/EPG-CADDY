@@ -1896,3 +1896,11 @@ Sello remoto atómico: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_P
 - Cambio mínimo: `ID_PATTERN` LIVE admite 1–160 caracteres seguros; tokens y secretos mantienen sus 40–100 caracteres.
 - Prueba permanente: `test-v352-live.mjs` normaliza explícitamente jugadores `p1` y `p2`.
 - Frontera: cero cambios en voz, Registro, Score, clima, tarjeta o escritor oficial.
+
+## V370 · Match Play LIVE sin plantilla General · 29 de agosto de 2026
+
+- `live-view.js` transforma el snapshot sólo lectura a la estructura del motor `match-play.js`.
+- Una ronda sin scores muestra nombres emparejados y `MATCH POR INICIAR`.
+- Cada score posterior actualiza únicamente estado de hoyo y posición `UP/DOWN/AS`; no muestra Gross/Neto General.
+- `live.html` carga el motor Match antes del visor con versión V370 y mantiene `no-store`.
+- `test-v352-live.mjs` exige nombres, estado inicial vacío y ausencia de `GROSS`, `NETO` y `SCORE CARD` dentro del bloque Match.

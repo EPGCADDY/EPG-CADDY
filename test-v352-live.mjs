@@ -3,7 +3,7 @@ import fs from "node:fs";
 import { createRequire } from "node:module";
 import { normalizeLiveSnapshot, validateScope, validateConsent, tokenHash, newJoinCode } from "./api/live.js";
 
-const require=createRequire(import.meta.url),control=require("./live-control.js"),viewer=require("./live-view.js"),read=file=>fs.readFileSync(file,"utf8");
+const require=createRequire(import.meta.url),control=require("./live-control.js"),matchPlay=require("./match-play.js"),viewer=require("./live-view.js"),read=file=>fs.readFileSync(file,"utf8");
 const round={
   id:"round-live-0001",configured:true,provisional:false,course:"EL PULTÉ GOLF",mode:"general",createdAt:"2026-08-27T12:00:00Z",updatedAt:"2026-08-27T12:05:00Z",
   tournament:{name:"TORNEO JUNIOR"},sideGames:{skins:{enabled:true,unitValue:100}},weather:{latitude:14.6,longitude:-90.4},
@@ -28,6 +28,11 @@ assert.doesNotThrow(()=>normalizeLiveSnapshot({...clientSnapshot,players:clientS
 assert.throws(()=>normalizeLiveSnapshot({...clientSnapshot,players:Array(7).fill(clientSnapshot.players[0]).map((player,index)=>({...player,id:`player-live-${1000+index}`}))}),/LIVE_INVALID_PLAYERS/);
 assert.throws(()=>normalizeLiveSnapshot({...clientSnapshot,players:[clientSnapshot.players[0],{...clientSnapshot.players[1],id:clientSnapshot.players[0].id}]}),/LIVE_INVALID_PLAYERS/);
 assert.throws(()=>normalizeLiveSnapshot({...clientSnapshot,players:[{...clientSnapshot.players[0],holes:Array(19).fill(clientSnapshot.players[0].holes[0])}]}),/LIVE_INVALID_HOLES/);
+const matchStart=control.buildLiveSnapshot({...round,mode:"match_play",players:round.players.map((player,index)=>({...player,id:`p${index+1}`,holes:{}}))},{course:"EL PULTÉ GOLF",pars:Array(18).fill(4)}),matchStartHtml=viewer.matchPlayCard({id:"stream-match-start"},matchStart);
+assert.equal(matchPlay.validatePlayers(matchStart.players.map(player=>({...player,holes:{}}))),true);
+assert.match(matchStartHtml,/JUNIOR UNO[\s\S]*?VS[\s\S]*?JUNIOR DOS/);
+assert.match(matchStartHtml,/MATCH POR INICIAR/);
+assert.doesNotMatch(matchStartHtml,/GROSS|NETO|SCORE CARD/,"LIVE Match Play inicia sólo con nombres y casillas vacías");
 
 assert.deepEqual(validateScope(serverSnapshot,"player",["player-live-0001"]),{scope:"player",selectedPlayerIds:["player-live-0001"]});
 assert.deepEqual(validateScope(serverSnapshot,"group",["player-live-0001","player-live-0002"]).selectedPlayerIds,["player-live-0001","player-live-0002"]);

@@ -613,3 +613,9 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 
 - Corregir el rechazo 400 causado por IDs `p1..p6` sin tocar micrófono ni Score.
 - Publicar, repetir activación desde la pantalla ya abierta y verificar que el enlace sólo lectura pueda compartirse.
+
+## Urgente V370 · visor Match Play correcto
+
+- Conservar el enlace LIVE ya enviado.
+- Mostrar sólo Match Play con nombres y casillas vacías antes del hoyo 1.
+- Reabrir el mismo enlace en el teléfono de la esposa después de Producción.

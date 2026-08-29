@@ -446,3 +446,9 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - Corrige RC-041: `p1..p6` dejan de ser rechazados por la API LIVE.
 - Mantiene privados los enlaces, secretos y datos prohibidos; sólo amplía compatibilidad de IDs internos ya generados por Score Card.
 - Banco enfocado `test-v352-live.mjs` PASS; publicación y prueba física del enlace quedan como cierre.
+
+## V370 · presentación LIVE Match Play
+
+- El mismo enlace activo debe mostrar Jaime VS Gustavo y `MATCH POR INICIAR` sin scores al inicio.
+- Match Play no reutiliza la plantilla General; al jugar sólo publica estados `UP`, `DOWN` o `AS`.
+- Estado: bancos enfocados PASS; despliegue y reapertura física del enlace pendientes.

@@ -155,3 +155,7 @@ V353 sólo puede llamarse `100 % automático aprobado` después de superar todos
 ## V369 · compatibilidad con IDs históricos de la tarjeta · 29 de agosto de 2026
 
 La activación física de una ronda existente devolvió tres `POST /api/live 400`. El cliente Score Card genera y conserva jugadores `p1..p6`; la API LIVE sólo aceptaba IDs de ocho o más caracteres. V369 reduce únicamente el mínimo de identificadores internos a un carácter, conserva el alfabeto seguro y mantiene sin cambios los patrones fuertes de tokens/secretos. `test-v352-live.mjs` ejecuta el caso exacto `p1/p2`. Micrófono, Registro, Score y persistencia no se modifican.
+
+## V370 · Match Play exclusivo en el visor · 29 de agosto de 2026
+
+El enlace V369 se creó correctamente, pero `live-view.js` sólo usaba `mode` para el rótulo y dibujaba siempre la tabla General. V370 reutiliza el motor oficial `match-play.js` en modo sólo lectura. Antes del hoyo 1 muestra parejas y nombres con casillas vacías; durante la ronda muestra ganados, perdidos, empates y OUT/IN/TOTAL Match. La plantilla Gross/Neto General queda excluida cuando `mode=match_play`. El enlace, token, ronda activa y escritor de scores no cambian.
