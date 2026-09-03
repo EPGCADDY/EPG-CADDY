@@ -35,6 +35,7 @@
     "entry:canonical-home-gate": "node test-v368-canonical-home-entry.mjs",
     "voice:weather-traffic-recovery-gate": "node test-v369-physical-voice-weather-traffic-recovery.mjs",
     "voice:native-spanish-fast-close-gate": "node test-v370-native-spanish-fast-close.mjs",
+    "universal:spanish-only-gate": "node test-v371-spanish-only-universal.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",
