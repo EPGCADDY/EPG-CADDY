@@ -1497,3 +1497,7 @@ V371-R1 queda rechazada por las capturas físicas: Safari recibió la respuesta 
 ### V371-R3 · salida universal audible independiente de Web Speech
 
 Evidencia física R2: tres consultas recibieron respuesta HTTP 200, pero Safari no inició `SpeechSynthesisUtterance` y el cliente mostró error. R3 restaura únicamente el transporte MP3 de `/api/voice-speech`, ahora con voz Onyx, velocidad 0.90 e instrucción explícita de español mexicano neutro sin Spanglish. El éxito requiere `Audio.onplay`; el respaldo local nunca selecciona voces inglesas. Registro, Score, motores deportivos, persistencia, diseño y Producción permanecen intocables.
+
+### V371-R4 · voz Gateway Echo en español mexicano
+
+La prueba física R3 rechazó el timbre/acento Spanglish. El log real confirmó que el proveedor directo cayó por 429 y el audio 200 fue generado por `tts-1-hd + Onyx`, ruta que no aplica las instrucciones mexicanas como el modelo directo. R4 sustituye exclusivamente Onyx por Echo masculino, envía `language="es-MX"`, conserva 0.90 y fuerza caché nueva. Registro, Score, motores, persistencia, clima, tráfico y Producción permanecen intocables.

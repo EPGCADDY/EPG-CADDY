@@ -1936,3 +1936,7 @@ Las capturas físicas rechazaron V371-R1: la consulta transitó `ESCUCHANDO → 
 ### V371-R3 · audio mexicano servidor para Safari
 
 Las pruebas físicas del Preview R2 y los logs de las 15:06–15:07 Guatemala confirmaron `/api/universal-ai` 200 seguido de `browser_fallback_query_failed`: la respuesta existía, pero Safari no disparó `utterance.onstart`. El cambio se limita a la salida audible universal. `/api/voice-speech` genera MP3 con Onyx a 0.90 e instrucciones estrictas de español mexicano neutro; el elemento `Audio` activado en el toque reproduce el MP3 y sólo declara éxito después de `onplay`. La voz local `es-*` queda como último respaldo. Registro, dictado y aplicación de scores, cálculos, persistencia y tarjeta no se modifican. Producción permanece intacta.
+
+### V371-R4 · reemplazo puntual de la voz anglófona del Gateway
+
+El log físico del Preview R3 registró `POST /api/voice-speech 200` después de `cedar speech direct fallback {"status":429}`. Por tanto, la voz escuchada no provenía de las instrucciones mexicanas del modelo directo, sino del respaldo `tts-1-hd + Onyx`, que el propietario rechazó por acento Spanglish. R4 cambia únicamente ese respaldo a la voz masculina `echo`, agrega `language="es-MX"`, conserva velocidad 0.90 y actualiza el rótulo/caché. Registro, Score, cálculos, persistencia, clima, tráfico y Producción permanecen intactos.

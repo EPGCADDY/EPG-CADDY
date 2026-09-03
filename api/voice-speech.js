@@ -3,7 +3,7 @@ import {resolveGatewayToken} from "./_lib/vercel-gateway-auth.js";
 
 const MAX_SPEECH_TEXT=4000;
 const VOICE="onyx";
-const GATEWAY_VOICE="onyx";
+const GATEWAY_VOICE="echo";
 const SPEED=.9;
 const GATEWAY_SPEECH_MODEL="openai/tts-1-hd";
 const INSTRUCTIONS="Locutor masculino adulto mexicano, serio, sobrio y profesional. Habla exclusivamente en español mexicano neutro y natural, con pronunciación castellana clara; nunca uses acento anglosajón, Spanglish ni palabras en inglés salvo nombres propios inevitables. Dicción muy clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";
@@ -26,7 +26,7 @@ export function cedarSpeechPayload(text,language="es-GT"){
 }
 
 export function cedarGatewayPayload(text){
-  return{text,voice:GATEWAY_VOICE,speed:SPEED,outputFormat:"mp3"};
+  return{text,voice:GATEWAY_VOICE,speed:SPEED,language:"es-MX",outputFormat:"mp3"};
 }
 
 async function requestDirectSpeech(apiKey,payload,signal){

@@ -32,7 +32,8 @@ assert.equal(direct.speed,.9);
 assert.match(direct.instructions,/Locutor masculino adulto/);
 assert.match(direct.instructions,/español mexicano neutro/);
 const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
-assert.equal(gateway.voice,"onyx");
+assert.equal(gateway.voice,"echo");
+assert.equal(gateway.language,"es-MX");
 assert.equal(gateway.speed,.9);
 assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
 assert.match(speech,/openai\/tts-1-hd/);
@@ -56,8 +57,9 @@ try{
   assert.equal(calls.length,2);
   assert.equal(calls[1].url,"https://ai-gateway.vercel.sh/v4/ai/speech-model");
   assert.equal(calls[1].options.headers["ai-model-id"],"openai/tts-1-hd");
-  assert.equal(JSON.parse(calls[1].options.body).voice,"onyx");
-  assert.equal(res.headers["X-GSCG-Voice"],"onyx");
+  assert.equal(JSON.parse(calls[1].options.body).voice,"echo");
+  assert.equal(JSON.parse(calls[1].options.body).language,"es-MX");
+  assert.equal(res.headers["X-GSCG-Voice"],"echo");
 }finally{
   globalThis.fetch=previousFetch;
   if(previousOpenAI===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=previousOpenAI;

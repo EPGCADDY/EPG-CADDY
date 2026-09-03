@@ -18,7 +18,7 @@ const direct=cedarSpeechPayload("Respuesta", "es-GT");
 assert.equal(direct.model,"gpt-4o-mini-tts");
 assert.equal(direct.voice,"onyx");
 const gateway=cedarGatewayPayload("Respuesta", "es-GT");
-assert.deepEqual(gateway,{text:"Respuesta",voice:"onyx",speed:.9,outputFormat:"mp3"});
+assert.deepEqual(gateway,{text:"Respuesta",voice:"echo",speed:.9,language:"es-MX",outputFormat:"mp3"});
 assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1-hd"/);
 assert.match(speech,/X-GSCG-Voice/);
 assert.match(html,/IOS-ES-MX-0\.90-NATIVE-MEXICAN-SPANISH/);
