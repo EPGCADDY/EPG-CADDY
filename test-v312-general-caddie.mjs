@@ -81,9 +81,8 @@ assert.equal(echoBeforeAudio("Cambia mi pregunta"),false,"Durante la espera web 
 assert.equal(echoDuringAudio("ruido del altavoz"),true,"Al comenzar audio sin transcripción debe protegerse contra eco");
 assert.match(html,/conversation\.item\.input_audio_transcription\.completed"&&listening[\s\S]*?conversationInputLooksLikeEcho\(heard\)[\s\S]*?consumeLiveRoundItem/ ,"El eco del altavoz debe descartarse sin cortar la respuesta");
 const conversationStart=html.slice(html.indexOf("function speakConversation(transcript)"),html.indexOf("async function setSessionVoiceSpeed"));
-assert.match(conversationStart,/conversationBargeInArmedAt=Date\.now\(\)\+250/,"La interrupción debe ignorar sólo el arranque inmediato del altavoz");
-assert.match(conversationStart,/if\(micTrack\)micTrack\.enabled=listening/,"El micrófono debe permanecer disponible mientras habla el Caddie");
-assert.doesNotMatch(conversationStart,/micTrack\.enabled=false/,"La respuesta no puede bloquear la interrupción por voz");
+assert.match(conversationStart,/conversationBargeInArmedAt=0/,"La consulta universal debe cancelar la escucha simultánea");
+assert.match(conversationStart,/if\(micTrack\)micTrack\.enabled=false/,"El micrófono debe cerrarse antes de pensar o hablar");
 assert.match(html,/echoCancellation:true,noiseSuppression:true,autoGainControl:true/,"La escucha simultánea debe conservar cancelación de eco");
 const outputStopped=html.slice(html.indexOf('if(e.type==="output_audio_buffer.stopped")'),html.indexOf('if(e.type==="output_audio_buffer.cleared")'));
 assert.ok(outputStopped.indexOf("conversationToolTransition")<outputStopped.indexOf("clearSpeechAuthorization()"),"El cierre de la consulta no puede desautorizar la respuesta climática final");
@@ -95,9 +94,9 @@ assert.equal(conversationToolStopIsPreFollowup(null,{sourceResponseId:"source",f
 assert.equal(conversationToolStopIsPreFollowup(null,{sourceResponseId:"source",followupResponseId:"final",followupAudioStarted:false}),true,"Un cierre tardío sin ID no puede apagar la respuesta final antes de su audio");
 assert.equal(conversationToolStopIsPreFollowup(null,{sourceResponseId:"source",followupResponseId:"final",followupAudioStarted:true}),false,"Sólo el cierre posterior al audio final reactiva el micrófono");
 assert.match(html,/Cuando necesites una herramienta, no pronuncies un preámbulo/,"El clima debe responder una sola vez y completo");
-assert.match(html, /phase=listening\?"listening":"idle"/, "La conversación debe volver a escuchar automáticamente");
+assert.match(conversationStart,/submitAiUniversalText\(clean,\{voiceOnly:true\}\)/,"La conversación debe usar la ruta universal profunda de un turno");
 assert.match(html, /En salud ofrece únicamente orientación general/, "Faltan límites seguros para preguntas médicas");
-assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=30\*60\*1000/,"El micrófono debe mantenerse abierto y cerrarse sólo tras treinta minutos sin actividad");
+assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=12\*1000/,"La captura universal debe tener cierre breve de seguridad");
 assert.match(html,/const ROUND_VAD_SILENCE_MS=1000/,"Un segundo de silencio debe iniciar la respuesta sin demora artificial");
 assert.match(html,/silence_duration_ms:ROUND_VAD_SILENCE_MS/,"Cliente y sesión deben compartir el cierre rápido del turno");
 assert.match(html,/start_date:[\s\S]*?end_date:/,"La herramienta debe aceptar fechas y rangos futuros");

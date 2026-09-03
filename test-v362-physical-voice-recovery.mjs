@@ -25,7 +25,7 @@ assert.match(html,/X-GSCG-Voice/);
 assert.match(html,/RESPONDIENDO EN VOZ · ONYX 0\.90 · RESPALDO/);
 assert.match(html,/cedar\|onyx\|jorge/);
 
-assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=18000/);
+assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000/);
 const watchdogStart=html.indexOf("function scheduleBrowserVoiceFirstResultTimeout");
 const watchdogEnd=html.indexOf("\nfunction browserVoiceCombinedTranscript",watchdogStart);
 const watchdog=html.slice(watchdogStart,watchdogEnd);

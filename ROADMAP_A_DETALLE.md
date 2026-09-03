@@ -1905,3 +1905,13 @@ El fallo de Vercel se limita al control documental: `ROADMAP_OVERALL.md` llegó 
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md`, ambos ROADMAPS e inventario | RC-041 y trazabilidad exacta. | Automático, Preview y físico se reportan por separado. |
 
 Producción e Individual no se modifican. La evidencia automática no sustituye la prueba física iPhone ni la comparación viva de clima/tráfico.
+## V370 · recuperación de español nativo y turno físico cerrado · 3 de septiembre de 2026
+
+| Archivo | Cambio verificable | Criterio |
+|---|---|---|
+| `index-grupal.html` | Voz local obligatoriamente `es-*` y masculina, con prioridad latinoamericana/castellana; sin caída a Cedar/Onyx/inglés/Spanglish; conversación universal por endpoint profundo; `micTrack.enabled=false` antes de pensar; VAD 900 ms, silencio 1200 ms, primer resultado 8000 ms, respuesta 15000 ms e inactividad 12000 ms. | Ninguna respuesta universal vuelve automáticamente a `ESCUCHANDO`; el próximo turno exige un nuevo toque. Si no existe locutor español masculino, se bloquea el audio con mensaje explícito. |
+| `service-worker.js` | Caché acumulada V370. | El iPhone no conserva la ruta V369. |
+| `test-v370-native-spanish-fast-close.mjs` | Fija prioridad española, orden de respaldos, cierre físico y ausencia de `response.create` Realtime dentro de conversación universal. | Un FAIL bloquea Preview. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-042 conserva tiempos observados, 429 del TTS, causa, escape y candado. | No declarar equivalente a ChatGPT sin medición física comparable. |
+
+Estado: candidato local; Producción intacta; auditoría completa, Preview y PASS audible iPhone pendientes.

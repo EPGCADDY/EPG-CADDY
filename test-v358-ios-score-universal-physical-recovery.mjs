@@ -8,7 +8,7 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 assert.match(html,/gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
 assert.match(html,/gscg-ios-voice-recovery" content="V363-STOP-GUARD-NO-STUCK-LISTENING-20260828"/);
 assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
-assert.match(html,/build:"V363"/);
+assert.match(html,/build:"V370"/);
 
 const oneTouchStart=html.indexOf("let lastAiUniversalGestureAt=0");
 const oneTouchEnd=html.indexOf("\n$(\"openGolfRules\")",oneTouchStart);

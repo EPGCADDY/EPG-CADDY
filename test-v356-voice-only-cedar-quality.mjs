@@ -13,7 +13,7 @@ assert.match(html,/CEDAR-0\.90-MALE-INTERNATIONAL-SPANISH/);
 assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
 
 for(const contract of [
-  'aiUniversalRemember("user",transcript,[],{visible:false})',
+  'aiUniversalRemember("user",query,[],{visible:!voiceOnly})',
   'aiUniversalRemember("assistant",finishedConversationText,aiUniversalPendingSources,{visible:false})',
   'submitAiUniversalText(clean,{voiceOnly:true})',
   'aiUniversalHistory.filter(item=>item.visible!==false)',

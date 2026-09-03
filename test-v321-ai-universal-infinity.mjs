@@ -80,9 +80,9 @@ for(const token of [
   "function startAiUniversalListening()",
   "function speakAiUniversalText(text",
   "function renderAiUniversalHistory()",
-  'aiUniversalRemember("user",transcript,[],{visible:false})',
+  'aiUniversalRemember("user",query,[],{visible:!voiceOnly})',
   'aiUniversalRemember("assistant",finishedConversationText,aiUniversalPendingSources,{visible:false})',
-  "const CONVERSATION_INACTIVITY_CLOSE_MS=30*60*1000",
+  "const CONVERSATION_INACTIVITY_CLOSE_MS=12*1000",
   "CONTEXTO DE CHAT TEMPORAL · REGLAS PUEDE GUARDAR SÓLO TOKENS Y RESPUESTAS OFICIALES EN ESTE DISPOSITIVO"
 ])assert.ok(html.includes(token),`Falta integración AI UNIVERSAL ∞: ${token}`);
 assert.doesNotMatch(html,/localStorage[^\n]{0,120}aiUniversalHistory|aiUniversalHistory[^\n]{0,120}localStorage/i,"El historial temporal de conversación no debe persistirse en el dispositivo");

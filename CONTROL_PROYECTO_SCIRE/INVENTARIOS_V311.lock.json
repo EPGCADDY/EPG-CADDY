@@ -1,23 +1,23 @@
 {
-  "version": "V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-OIDC-INTOCABLES",
-  "generatedAt": "2026-09-03T17:02:45Z",
-  "sourceFileCount": 393,
-  "sourceDigest": "6a306c8d3aa9dd7c1bb46a265bb8806540526d357edfa28c488fd30a440dc574",
+  "version": "V370-NATIVE-SPANISH-FAST-CLOSE-OIDC-INTOCABLES",
+  "generatedAt": "2026-09-03T17:55:56Z",
+  "sourceFileCount": 394,
+  "sourceDigest": "26d0733e91599966995f8c0a85bf9b49427313c1579a7a9cea1dbef320ddc516",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 204289,
-      "sha256": "e698d7af49341e799e94dfac66344af5eeb3327be1e7c3b33b4836ec17f16d8d"
+      "size": 205450,
+      "sha256": "f5d636c0a4a382bf6659f111c25113c02b8ea07bd5175b123f752d536686b5f5"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 228535,
-      "sha256": "6206f95356c85d9d1309fe796063c40a5cba962ba2fcb947cfb4cc5886abf06b"
+      "size": 229376,
+      "sha256": "c3ebe05c59f69fd055e4a77d234bc591f773cade0f7e1e8f9caee43f267e06bb"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19260985,
-      "sha256": "d9c607429ac98cb40ba8b9967eebe10969c1995d061afc8b36fdf759607a5feb"
+      "size": 19260986,
+      "sha256": "5fc1efa8d7957e2a50f321a071c32296a5f0323775876329f1d659f8ca92a43e"
     }
   ]
 }

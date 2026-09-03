@@ -19,6 +19,7 @@
 <meta name="gscg-universal-voice-in-place" content="V367-UNIVERSAL-VOICE-IN-PLACE-20260828">
 <meta name="gscg-canonical-home-entry" content="V368-CANONICAL-HOME-ENTRY-20260829">
 <meta name="gscg-voice-weather-traffic-recovery" content="V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-20260903">
+<meta name="gscg-native-spanish-one-shot-voice" content="V370-NATIVE-SPANISH-FAST-CLOSE-20260903">
 <meta name="gscg-ai-voice" content="CEDAR-0.90-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -982,10 +983,10 @@ let roundLiveItemText=new Map(),roundLiveCommitted=new Map(),roundLiveOriginal=n
 let roundMissingPromptTimer=null,roundMissingPrompt=null,roundOperationalActivityAt=Date.now();
 const ROUND_TRANSCRIPTION_WATCHDOG_MS=10000;
 const ROUND_CONTINUOUS_FINALIZE_MS=3000;
-const CONVERSATION_INACTIVITY_CLOSE_MS=30*60*1000;
+const CONVERSATION_INACTIVITY_CLOSE_MS=12*1000;
 const CLIENT_RESEARCH_TIMEOUT_MS=45*1000;
-const BROWSER_VOICE_SILENCE_MS=3000;
-const BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=18000;
+const BROWSER_VOICE_SILENCE_MS=1200;
+const BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000;
 const BROWSER_VOICE_STOP_GUARD_MS=1200;
 const BROWSER_VOICE_MAX_RESTARTS=12;
 const BROWSER_VOICE_MAX_TRANSPORT_RETRIES=2;
@@ -996,11 +997,11 @@ const ROUND_MISSING_CONFIRM_MS=450;
 const ROUND_VAD_THRESHOLD=0.2;
 const ROUND_VAD_PREFIX_MS=700;
 const ROUND_VAD_SILENCE_MS=1000;
-const CONVERSATION_VAD_SILENCE_MS=2200;
-const CONVERSATION_INPUT_STALL_MS=15000;
-const CONVERSATION_INPUT_HARD_LIMIT_MS=90000;
-const CONVERSATION_RESPONSE_STALL_MS=30000;
-const CONVERSATION_PLAYBACK_STALL_MS=60000;
+const CONVERSATION_VAD_SILENCE_MS=900;
+const CONVERSATION_INPUT_STALL_MS=8000;
+const CONVERSATION_INPUT_HARD_LIMIT_MS=12000;
+const CONVERSATION_RESPONSE_STALL_MS=15000;
+const CONVERSATION_PLAYBACK_STALL_MS=45000;
 const REALTIME_DISCONNECT_GRACE_MS=5000;
 const REALTIME_TURN_PROFILE_OPERATIONAL="operational";
 const REALTIME_TURN_PROFILE_CONVERSATION="conversation";
@@ -2149,7 +2150,7 @@ function markConversationFollowupAudioStarted(eventResponseId=""){
 const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_restarted","browser_fallback_restart_failed","browser_fallback_error","browser_fallback_start_failed","browser_fallback_no_result_timeout","browser_fallback_retry_scheduled","browser_fallback_retry_started","browser_fallback_retry_failed","browser_fallback_transcript_ready","browser_fallback_query_answered","browser_fallback_query_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_round_progressive","browser_fallback_round_applied","browser_fallback_round_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_general_visible","browser_fallback_speech_primed","browser_fallback_speech_started","browser_fallback_speech_failed","keyboard_dictation_setup_applied"]);
 function reportVoiceHealth(event,detail={}){
   if(!VOICE_HEALTH_EVENTS.has(event)||typeof fetch!=="function")return false;
-  const payload={event,build:"V363",context:voiceContext==="setup"?"setup":"round",turn:Math.max(0,voiceHealthTurn),elapsedMs:voiceHealthTurnStartedAt?Math.max(0,Date.now()-voiceHealthTurnStartedAt):0};
+  const payload={event,build:"V370",context:voiceContext==="setup"?"setup":"round",turn:Math.max(0,voiceHealthTurn),elapsedMs:voiceHealthTurnStartedAt?Math.max(0,Date.now()-voiceHealthTurnStartedAt):0};
   for(const key of ["tool","hasResponseId","followupCreated","followupAudioStarted","entryCount","scoreFailure","transportFailure"]){
     const value=detail?.[key];if(typeof value==="boolean"||typeof value==="number"||typeof value==="string")payload[key]=value;
   }
@@ -2459,7 +2460,10 @@ function preferredMaleBrowserVoice(language){
   if(!("speechSynthesis" in window))return null;
   const voices=window.speechSynthesis.getVoices?.()||[],base=String(language||"es").toLowerCase().split("-")[0];
   const maleName=/\b(cedar|onyx|jorge|diego|carlos|enrique|alberto|antonio|pablo|raul|juan|felipe|andres|ángel|angel|alex|mario|ricardo|oscar|martin|male|masculino|hombre)\b/i;
-  return voices.find(voice=>String(voice.lang||"").toLowerCase().startsWith(base)&&maleName.test(`${voice.name||""} ${voice.voiceURI||""}`))||null;
+  const native=voices.filter(voice=>String(voice.lang||"").toLowerCase().startsWith(base)&&maleName.test(`${voice.name||""} ${voice.voiceURI||""}`));
+  const localeRank=lang=>/^es-(mx|us|419)/i.test(lang)?40:/^es-(gt|cr|co|ar|cl|pe|uy)/i.test(lang)?35:/^es-es/i.test(lang)?30:10;
+  const ranked=native.map((voice,index)=>({voice,index,score:localeRank(String(voice.lang||""))+(voice.localService?5:0)})).sort((a,b)=>b.score-a.score||a.index-b.index);
+  return ranked[0]?.voice||null;
 }
 function waitForPreferredMaleBrowserVoice(language,timeoutMs=1600){
   const first=preferredMaleBrowserVoice(language);if(first)return Promise.resolve(first);
@@ -2478,6 +2482,16 @@ async function speakAiUniversalMaleBrowserFallback(clean){
 }
 async function speakAiUniversalText(text,{repeat=false}={}){
   const clean=String(text||"").trim();if(!clean||aiUniversalMuted)return false;
+  // La experiencia física aprobada para Caddie es exclusivamente española.
+  // No se permite caer a Cedar/Onyx ni inferir inglés por una palabra aislada:
+  // si iOS no expone una voz es-*, se informa el bloqueo y no se reproduce
+  // Spanglish con un locutor multilingüe.
+  const speechLanguage="es-MX";
+  if(await speakAiUniversalMaleBrowserFallback(clean))return true;
+  setPrimaryVoiceMatrix("error",voiceContext,"VOZ ESPAÑOLA NATIVA NO DISPONIBLE · REVISA LAS VOCES DE iOS");
+  aiUniversalSetState("VOZ ESPAÑOLA NATIVA NO DISPONIBLE · REVISA LAS VOCES DE iOS");
+  return false;
+  /* istanbul ignore next -- los demás idiomas no forman parte del perfil físico Caddie V370 */
   if(Date.now()<cedarSpeechServerBlockedUntil){
     aiUniversalSetState("PREPARANDO LOCUTOR MASCULINO…",{busy:true});
     if(await speakAiUniversalMaleBrowserFallback(clean))return true;
@@ -2651,31 +2665,23 @@ async function continueConversationAfterTool(call){
   armConversationResponseStall();
 }
 function speakConversation(transcript){
-  if(!dc||dc.readyState!=="open"||!String(transcript||"").trim())return false;
+  const clean=String(transcript||"").trim();if(!clean)return false;
   clearConversationIdleCloseTimer();
   renderCaddieSources(null);
-  aiUniversalRemember("user",transcript,[],{visible:false});
-  const token=`speech_${++speechTokenSeq}`;
-  authorizedSpeech={reason:"conversation",token,text:String(transcript)};
-  sessionHasSpoken=true;
-  stopMonitorActive=true;
+  clearConversationTurnWatchdogs();
   conversationToolTransition=null;
-  phase="speaking";
-  // El micrófono permanece disponible para que el jugador pueda interrumpir
-  // naturalmente la respuesta. WebRTC conserva cancelación de eco; el cliente
-  // cancela la voz sólo después de confirmar que no es el eco del propio Caddie.
-  conversationBargeInArmedAt=Date.now()+250;
+  // Ruta única para conversación, clima y tráfico: cierra físicamente la
+  // captura, obtiene la respuesta profunda por el endpoint universal y la lee
+  // con una voz nativa española del dispositivo. No usa el locutor Realtime
+  // multilingüe que en iPhone produjo acento anglófono.
+  listening=false;stopMonitorActive=false;phase="processing";conversationBargeInArmedAt=0;
   conversationOutputStarted=false;conversationOutputTranscript="";conversationEchoGuardUntil=0;resetConversationBargeInCandidate();
-  if(micTrack)micTrack.enabled=listening;
-  if(audioEl){audioEl.volume=aiUniversalMuted?0:1;audioEl.muted=aiUniversalMuted}
+  if(micTrack)micTrack.enabled=false;
+  $("headerMicWrap")?.classList.remove("active","connecting");$("setupMicWrap")?.classList.remove("active","connecting");
+  if(audioEl){audioEl.muted=true;audioEl.volume=0}
   const statusTarget=conversationStatusTarget();if(statusTarget)statusTarget.textContent="RESPONDIENDO";
   aiUniversalSetState("AI UNIVERSAL ∞ PENSANDO…",{busy:true});
-  const beginConversationResponse=()=>{
-    if(!dc||dc.readyState!=="open"||authorizedSpeech?.token!==token||authorizedSpeech?.reason!=="conversation")return false;
-    sendEvent({type:"response.create",response:responseForConversation(token)});armConversationResponseStall();return true;
-  };
-  if(realtimeTurnProfile===REALTIME_TURN_PROFILE_CONVERSATION&&realtimeTurnProfileRequested===REALTIME_TURN_PROFILE_CONVERSATION&&!pendingSessionUpdate)beginConversationResponse();
-  else setRealtimeTurnProfile(REALTIME_TURN_PROFILE_CONVERSATION).then(beginConversationResponse).catch(error=>{console.error("Perfil conversacional:",error);beginConversationResponse()});
+  void submitAiUniversalText(clean,{voiceOnly:true}).then(ok=>{phase="idle";if(!ok)setPrimaryVoiceMatrix("error",voiceContext,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO")}).catch(error=>{console.error("Conversación universal:",error);phase="idle";setPrimaryVoiceMatrix("error",voiceContext,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO")});
   return true;
 }
 
