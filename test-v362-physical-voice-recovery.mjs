@@ -18,11 +18,11 @@ const direct=cedarSpeechPayload("Respuesta", "es-GT");
 assert.equal(direct.model,"gpt-4o-mini-tts");
 assert.equal(direct.voice,"cedar");
 const gateway=cedarGatewayPayload("Respuesta", "es-GT");
-assert.deepEqual(gateway,{text:"Respuesta",voice:"onyx",speed:1.15,outputFormat:"mp3"});
+assert.deepEqual(gateway,{text:"Respuesta",voice:"onyx",speed:.9,outputFormat:"mp3"});
 assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1-hd"/);
 assert.match(speech,/X-GSCG-Voice/);
 assert.match(html,/X-GSCG-Voice/);
-assert.match(html,/RESPONDIENDO EN VOZ · ONYX 1\.15 · RESPALDO/);
+assert.match(html,/RESPONDIENDO EN VOZ · ONYX 0\.90 · RESPALDO/);
 assert.match(html,/cedar\|onyx\|jorge/);
 
 assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=18000/);

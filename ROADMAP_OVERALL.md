@@ -1471,3 +1471,9 @@ Evidencia literal V368: `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/
 ### V368-LAB-R1 · reparación documental del despliegue
 
 Se restaura `ROADMAP_OVERALL.md` como UTF-8 válido, se registra simultáneamente `ROADMAP_A_DETALLE.md` y se recalcula `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. No cambia código funcional, Producción ni Individual.
+
+## V369 · voz comprensible, micrófono universal de un turno y tráfico GPS · 3 de septiembre de 2026
+
+RC-041 corrige exclusivamente el LAB: baja Cedar/Onyx/Realtime y el respaldo masculino local de 1.15 a 0.90; cuando Safari termina naturalmente una pregunta universal, la procesa sin reabrir hasta 12 capturas; y convierte “aquí”, “acá”, “mi ubicación” o equivalentes en una solicitud de GPS consentida antes de recalcular Google Maps Routes. El clima conserva Open-Meteo y ahora se reproduce con la misma voz masculina neutral más lenta. AI UNIVERSAL hablada conserva el mismo razonamiento, investigación, comparación, contexto, evidencia y profundidad de la salida escrita; sólo cambia el formato para ser audible, sin límite artificial de 3–6 oraciones. La caché V369 impide que el iPhone conserve el JavaScript anterior.
+
+Archivos literales V369: `index-grupal.html`, `api/voice-speech.js`, `api/universal-ai.js`, `service-worker.js`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v362-physical-voice-recovery.mjs`, `test-v369-physical-voice-weather-traffic-recovery.mjs`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción permanece intacta; Preview READY y prueba física iPhone siguen separados del PASS automático.

@@ -1890,3 +1890,18 @@ Archivos literales: `AGENTS.md`, `DIRECTRICES_MANDATORIAS.md`, `REGISTRO_REINCID
 ### V368-LAB-R1 · reparación documental del despliegue
 
 El fallo de Vercel se limita al control documental: `ROADMAP_OVERALL.md` llegó con codificación inválida y el commit anterior no incluyó `ROADMAP_A_DETALLE.md`. Este corte publica ambos ROADMAPS en UTF-8 y recalcula `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, sin modificar la aplicación, Producción ni Individual.
+
+## V369 · recuperación física de voz, clima y tráfico · 3 de septiembre de 2026
+
+| Archivo exacto | Cambio localizado | Candado |
+|---|---|---|
+| `index-grupal.html` | Política de voz masculina neutral a 0.90; la intención universal finaliza en el primer `onend` con transcripción y no reabre el micrófono; firma V369. | Clima audible y comprensible; comunicación universal devuelve el control a Score. |
+| `api/voice-speech.js` | Cedar directo y Onyx Gateway generan audio a 0.90. | Los dos proveedores respetan la misma velocidad. |
+| `api/universal-ai.js` | “aquí/acá/mi ubicación/ubicación actual/donde estoy” se resuelve mediante GPS consentido; la voz conserva la profundidad, investigación, comparación, evidencia y matices del texto, cambiando sólo el formato audible. | La ruta se reintenta con coordenadas del teléfono; destino exacto continúa obligatorio; queda prohibido comprimir universal a 3–6 oraciones. |
+| `service-worker.js` | Caché acumulada V369. | Safari no reutiliza el shell V368. |
+| `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v362-physical-voice-recovery.mjs`, `test-v369-physical-voice-weather-traffic-recovery.mjs` | Regresión de 0.90, locutores Cedar/Onyx, cierre universal de un turno y origen GPS. | Un FAIL bloquea Preview. |
+| `audit-project.mjs`, `package.json` | V369 forma parte de la auditoría maestra y tiene comando explícito. | No puede omitirse en el candidato. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Portadas y sello identifican V369 y recalculan el árbol exacto. | El inventario no puede presentarse como V368. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md`, ambos ROADMAPS e inventario | RC-041 y trazabilidad exacta. | Automático, Preview y físico se reportan por separado. |
+
+Producción e Individual no se modifican. La evidencia automática no sustituye la prueba física iPhone ni la comparación viva de clima/tráfico.

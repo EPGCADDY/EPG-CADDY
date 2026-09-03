@@ -4,7 +4,7 @@ import {resolveGatewayToken} from "./_lib/vercel-gateway-auth.js";
 const MAX_SPEECH_TEXT=4000;
 const VOICE="cedar";
 const GATEWAY_VOICE="onyx";
-const SPEED=1.15;
+const SPEED=.9;
 const GATEWAY_SPEECH_MODEL="openai/tts-1-hd";
 const INSTRUCTIONS="Locutor masculino adulto, serio, sobrio y profesional. Español internacional neutro, sin acento regional marcado, sin Spanglish, sin tono comercial ni entusiasmo artificial. Dicción clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";
 

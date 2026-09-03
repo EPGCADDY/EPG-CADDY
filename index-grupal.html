@@ -18,7 +18,8 @@
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
 <meta name="gscg-universal-voice-in-place" content="V367-UNIVERSAL-VOICE-IN-PLACE-20260828">
 <meta name="gscg-canonical-home-entry" content="V368-CANONICAL-HOME-ENTRY-20260829">
-<meta name="gscg-ai-voice" content="CEDAR-1.15-MALE-INTERNATIONAL-SPANISH">
+<meta name="gscg-voice-weather-traffic-recovery" content="V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-20260903">
+<meta name="gscg-ai-voice" content="CEDAR-0.90-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
@@ -2047,8 +2048,8 @@ setInterval(()=>{if(round.configured&&$("status")&&phase==="idle"&&!listening&&!
 const ALLOWED_SPEECH_REASONS=new Set(["closure","query","query_accumulated","missing_score","conversation"]);
 const VOICE_POLICY=Object.freeze({
   voice:"cedar",
-  speed:1.15,
-  accumulatedSpeed:1.15,
+  speed:.9,
+  accumulatedSpeed:.9,
   language:"es",
   style:"Locutor masculino adulto, serio, sobrio y profesional. Español internacional neutro. Sin acento regional marcado. Sin Spanglish. Sin entonación comercial. Sin entusiasmo artificial. Dicción clara, ritmo medio-lento y constante. Pronuncia Gross como «gros», con fonética española. No traduzcas nombres propios. No agregues introducciones, comentarios ni despedidas."
 });
@@ -2491,7 +2492,7 @@ async function speakAiUniversalText(text,{repeat=false}={}){
     if(typeof Audio!=="function")throw new Error("AUDIO_UNAVAILABLE");
     if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(blob);
     const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.volume=1;player.playbackRate=1;
-    player.onplay=()=>{aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(deliveredVoice==="onyx"?"RESPONDIENDO EN VOZ · ONYX 1.15 · RESPALDO":"RESPONDIENDO EN VOZ · CEDAR 1.15",{busy:true})};
+    player.onplay=()=>{aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(deliveredVoice==="onyx"?"RESPONDIENDO EN VOZ · ONYX 0.90 · RESPALDO":"RESPONDIENDO EN VOZ · CEDAR 0.90",{busy:true})};
     player.onended=()=>{setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
     player.onerror=async()=>{reportVoiceHealth("browser_fallback_speech_failed");if(!await speakAiUniversalMaleBrowserFallback(clean))aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")};
     await player.play();return true;
@@ -4231,6 +4232,7 @@ function finalizeBrowserVoiceFallback(recognition,context){
 function restartBrowserVoiceAfterNaturalEnd(recognition,context){
   if(browserVoiceRecognition!==recognition||browserVoiceStopping||!browserVoiceSilenceTimer||browserVoiceRestartCount>=BROWSER_VOICE_MAX_RESTARTS)return false;
   const pending=mergeBrowserVoiceSegments(browserVoiceTranscript,browserVoiceInterim);if(!pending)return false;
+  if(isGeneralConversationIntent(pending))return false;
   clearBrowserVoiceSilenceTimer();clearBrowserVoiceFirstResultTimer();detachBrowserVoiceRecognition(recognition);browserVoiceRecognition=null;browserVoiceTranscript=pending;browserVoiceInterim="";browserVoiceRestartCount++;browserVoiceRequested=true;browserVoiceActive=false;
   setPrimaryVoiceMatrix("idle",context,"RECONECTANDO MICRÓFONO…");const opened=beginBrowserVoiceRecognition(context,"natural");if(!opened)reportVoiceHealth("browser_fallback_restart_failed",{transportFailure:"other"});return opened
 }

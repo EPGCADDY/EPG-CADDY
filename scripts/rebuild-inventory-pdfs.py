@@ -65,7 +65,7 @@ def markdown_pdf(source, target, title):
     h3 = ParagraphStyle("H3", parent=base, fontName="InventorySans-Bold", fontSize=9.5, leading=12, textColor=HexColor("#101010"), spaceBefore=5, spaceAfter=3)
     code = ParagraphStyle("Code", parent=base, fontName="InventorySans", fontSize=6.5, leading=8.2, leftIndent=4 * mm, rightIndent=2 * mm, backColor=HexColor("#f2f2f2"), borderPadding=3)
     cover = ParagraphStyle("Cover", parent=h1, alignment=TA_CENTER, fontSize=24, leading=29, spaceAfter=14)
-    story = [Spacer(1, 45 * mm), Paragraph(html.escape(title), cover), Paragraph("Fuente: candidato V367-UNIVERSAL-VOICE-IN-PLACE integrado con V366 y voz OIDC + INTOCABLES - Produccion intacta", ParagraphStyle("CoverSub", parent=base, alignment=TA_CENTER, fontSize=10)), PageBreak()]
+    story = [Spacer(1, 45 * mm), Paragraph(html.escape(title), cover), Paragraph("Fuente: candidato V369-VOICE-090-ONE-TURN-GPS-TRAFFIC integrado con V368, voz OIDC e INTOCABLES - Produccion intacta", ParagraphStyle("CoverSub", parent=base, alignment=TA_CENTER, fontSize=10)), PageBreak()]
     for raw in source.read_text(encoding="utf-8").splitlines():
         line = clean(raw.rstrip())
         if not line:
@@ -99,7 +99,7 @@ def image_inventory_pdf(target):
     document.setFont("InventorySans-Bold", 21)
     document.drawCentredString(A4[0] / 2, A4[1] - 58 * mm, "INVENTARIO POR IMAGENES Y RUBROS")
     document.setFont("InventorySans", 10)
-    document.drawCentredString(A4[0] / 2, A4[1] - 70 * mm, "Base visual V292 + candidato V367 integrado con V366, voz OIDC e INTOCABLES")
+    document.drawCentredString(A4[0] / 2, A4[1] - 70 * mm, "Base visual V292 + candidato V369 integrado con V368, voz OIDC e INTOCABLES")
     document.showPage()
     for index, path in enumerate(paths, start=1):
         with Image.open(path) as image:
@@ -152,7 +152,7 @@ def source_state():
 def write_lock(paths):
     files, digest = source_state()
     payload = {
-        "version": "V368-CANONICAL-HOME-ENTRY-OIDC-INTOCABLES",
+        "version": "V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-OIDC-INTOCABLES",
         "generatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
         "sourceFileCount": len(files),
         "sourceDigest": digest,
@@ -175,7 +175,7 @@ def main():
     write_lock(paths)
     for path in paths:
         print(f"{path.name}\t{path.stat().st_size}\t{sha256(path)}")
-    print(f"INVENTORY_LOCK PASS version=V368-CANONICAL-HOME-ENTRY-OIDC-INTOCABLES sources={json.loads(LOCK.read_text(encoding='utf-8'))['sourceFileCount']}")
+    print(f"INVENTORY_LOCK PASS version=V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-OIDC-INTOCABLES sources={json.loads(LOCK.read_text(encoding='utf-8'))['sourceFileCount']}")
 
 
 if __name__ == "__main__":

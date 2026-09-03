@@ -9,7 +9,7 @@ const universal=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url)
 const speech=fs.readFileSync(new URL("./api/voice-speech.js",import.meta.url),"utf8");
 
 assert.match(html,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
-assert.match(html,/CEDAR-1\.15-MALE-INTERNATIONAL-SPANISH/);
+assert.match(html,/CEDAR-0\.90-MALE-INTERNATIONAL-SPANISH/);
 assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
 
 for(const contract of [
@@ -27,11 +27,11 @@ assert.deepEqual(sanitizeSpeechRequest({text:"  Hola\n mundo  ",language:"es-GT<
 const direct=cedarSpeechPayload("Respuesta confiable.","es-GT");
 assert.equal(direct.model,"gpt-4o-mini-tts");
 assert.equal(direct.voice,"cedar");
-assert.equal(direct.speed,1.15);
+assert.equal(direct.speed,.9);
 assert.match(direct.instructions,/Locutor masculino adulto/);
 const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
 assert.equal(gateway.voice,"onyx");
-assert.equal(gateway.speed,1.15);
+assert.equal(gateway.speed,.9);
 assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
 assert.match(speech,/openai\/tts-1-hd/);
 
@@ -73,7 +73,7 @@ assert.ok(spokenWeather.length<detailedWeather.length/2,"La voz debe ser sustant
 const traffic=formatStructuredTrafficAnswer({ok:true,origin:"El Pulté Golf",destination:"Pradera Concepción",durationMinutes:30,delayMinutes:5,distanceKm:16.1,trafficLevel:"moderado",calculatedAt:"2026-08-28T16:00:00.000Z"});
 for(const datum of ["ETA","Demora por tráfico","Distancia","Hora de cálculo","Google Maps Routes","TRAFFIC_AWARE_OPTIMAL"])assert.match(traffic,new RegExp(datum));
 assert.match(universal,/responseMode==="voice"/);
-assert.match(universal,/tres a seis oraciones concisas pero sustantivas/);
+assert.match(universal,/conserva exactamente el mismo razonamiento, investigación, comparación, contexto, evidencia, matices y profundidad que entregarías por texto/);
 assert.deepEqual(universalResponseProfile("Analiza a fondo causas, riesgos, alternativas y dame una recomendación accionable."),{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"});
 
-console.log("PASS V356 · voz hablada sin transcripción, Cedar masculino 1.15, tráfico/clima estructurados y respuesta universal sustantiva");
+console.log("PASS V356/V369 · voz hablada sin transcripción, Cedar masculino 0.90, tráfico/clima estructurados y respuesta universal sustantiva");
