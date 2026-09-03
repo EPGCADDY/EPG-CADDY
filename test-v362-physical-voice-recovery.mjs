@@ -26,7 +26,7 @@ assert.match(html,/PREPARANDO VOZ MEXICANA/);
 const mexicanSpeech=html.slice(html.indexOf("async function speakAiUniversalText"),html.indexOf("function stopAiUniversalOutput"));
 assert.doesNotMatch(mexicanSpeech,/X-GSCG-Voice|CEDAR|ONYX|\/api\/voice-speech/);
 
-assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=6000/);
+assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000/);
 const watchdogStart=html.indexOf("function scheduleBrowserVoiceFirstResultTimeout");
 const watchdogEnd=html.indexOf("\nfunction browserVoiceCombinedTranscript",watchdogStart);
 const watchdog=html.slice(watchdogStart,watchdogEnd);

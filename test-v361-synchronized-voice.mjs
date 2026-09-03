@@ -8,7 +8,7 @@ const audit=fs.readFileSync("audit-project.mjs","utf8");
 
 assert.match(html,/gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
 assert.match(html,/gscg-progressive-voice" content="V363-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828"/);
-assert.match(worker,/CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v369-voice-090-one-turn-gps-traffic-v371-ios-mexican-voice"/);
+assert.match(worker,/CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v369-voice-090-one-turn-gps-traffic-v371-r1-ios-spanish-voice"/);
 for(const test of ["test-v357-synchronized-progressive-voice.mjs","test-v359-ios-score-parser-recovery.mjs","test-v361-synchronized-voice.mjs"])assert.ok(audit.includes(test),test);
 
 const progressAt=html.indexOf("function applyBrowserVoiceProgressiveScore");
@@ -38,8 +38,10 @@ const speechSynthesis={getVoices:()=>voices,addEventListener:(event,handler)=>{i
 const waitForVoice=new Function("window",`${html.slice(preferredAt,preferredEnd)};return waitForPreferredMaleBrowserVoice`)({speechSynthesis});
 const delayed=waitForVoice("es-GT",200);voices=[{name:"Mónica",lang:"es-ES",voiceURI:"Monica"},{name:"Jorge",lang:"es-MX",voiceURI:"Jorge"}];voiceChanged?.();
 assert.equal((await delayed)?.name,"Jorge");
+voices=[{name:"Daniel",lang:"en-US",voiceURI:"Daniel"},{name:"Mónica",lang:"es-ES",voiceURI:"Monica"}];
+assert.equal((await waitForVoice("es-MX",20))?.name,"Mónica");
 
-for(const contract of ['const language="es-MX"','toLowerCase()==="es-mx"',"PREPARANDO VOZ MEXICANA","await speakAiUniversalMaleBrowserFallback(clean)",'submitAiUniversalText(clean,{voiceOnly:true})','aiUniversalRemember("user",query,[],{visible:!voiceOnly})'])assert.ok(html.includes(contract),contract);
+for(const contract of ['const language="es-MX"','locale==="es-mx"',"PREPARANDO VOZ MEXICANA","await speakAiUniversalMaleBrowserFallback(clean)",'submitAiUniversalText(clean,{voiceOnly:true})','aiUniversalRemember("user",query,[],{visible:!voiceOnly})'])assert.ok(html.includes(contract),contract);
 const mexicanSpeech=html.slice(html.indexOf("async function speakAiUniversalText"),html.indexOf("function stopAiUniversalOutput"));
 assert.doesNotMatch(mexicanSpeech,/CEDAR|ONYX|\/api\/voice-speech/);
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_round_progressive",build:"V361",context:"round",entryCount:3,transcript:"PRIVADO",player:"PRIVADO"}),{event:"browser_fallback_round_progressive",build:"V361",context:"round",turn:0,elapsedMs:0,entryCount:3});

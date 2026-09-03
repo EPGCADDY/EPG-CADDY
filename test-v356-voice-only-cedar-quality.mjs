@@ -20,8 +20,9 @@ for(const contract of [
   'responseMode:voiceOnly?"voice":"text"'
 ])assert.ok(html.includes(contract),`Falta contrato voz sin texto: ${contract}`);
 assert.match(html,/function preferredMaleBrowserVoice/);
-assert.match(html,/if\(!voice\)return false/);
-assert.doesNotMatch(html,/voices\.find\(voice=>String\(voice\.lang\|\|""\).*\|\|voices\.find/,"No se permite seleccionar cualquier voz española porque puede ser femenina");
+assert.match(html,/utterance\.lang=voice\?\.lang\|\|language/);
+assert.match(html,/if\(voice\)utterance\.voice=voice/);
+assert.doesNotMatch(html,/startsWith\("en-"\)/,"Nunca se permite seleccionar una voz inglesa");
 
 assert.deepEqual(sanitizeSpeechRequest({text:"  Hola\n mundo  ",language:"es-GT<script>"}),{text:"Hola mundo",language:"es-GTscript"});
 const direct=cedarSpeechPayload("Respuesta confiable.","es-GT");
