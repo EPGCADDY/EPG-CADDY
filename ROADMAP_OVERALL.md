@@ -1489,3 +1489,7 @@ Archivos literales V370: `index-grupal.html`, `service-worker.js`, `test-v370-na
 ### V371-R1 · voz española con México prioritario y respuesta restaurada
 
 La salida hablada de Comunicación Universal, clima y tráfico deja de usar Cedar/Onyx porque la prueba física reportó acento Spanglish. El primer V371 exigió que Safari publicara una voz `es-MX`; cuando el catálogo llegó vacío, ocultó el texto por `voiceOnly` y quedó sin audio. V371-R1 conserva intactos los tiempos y el transporte V370, prioriza `es-MX`, acepta únicamente otra voz `es-*` como respaldo y, aun si Safari demora el catálogo, crea el `SpeechSynthesisUtterance` con `lang="es-MX"` sin devolver `false`. Registro, Score, cálculos, persistencia, APIs de clima/tráfico y Producción no cambian.
+
+### V371-R2 · voz iniciada, no sólo solicitada
+
+V371-R1 queda rechazada por las capturas físicas: Safari recibió la respuesta pero no inició la síntesis. R2 activa `speechSynthesis` en el mismo toque del micrófono y sólo declara éxito desde `onstart`; un guard de 2 s cancela una cola muda y deja un error recuperable. El parche no modifica Registro, scores, cálculos, persistencia, tarjeta ni proveedores de clima/tráfico. Producción permanece intacta.

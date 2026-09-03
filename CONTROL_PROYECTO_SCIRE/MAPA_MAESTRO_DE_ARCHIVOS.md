@@ -140,6 +140,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `scripts/prepare-native-release.mjs` | `447a576c6e370646166be976a6ec5ebcb2f7171d` | 2371 bytes | Prepara en un solo paso los proyectos de iPhone y Android. |
 | `scripts/roadmap-gate.mjs` | `94694d94a956dc7a62fb17697447f5fb4916617c` | 2881 bytes | Bloquea cualquier modificación o publicación que no aparezca en ambos ROADMAPS. |
 | `service-worker.js` | Caché V332 | Se calcula al publicar | Fuerza `gscg-mobile-v332-dual-currency-matrix` e incluye Reglas offline y los motores Skins, Wolf, Vegas y Dots. |
+| `index-grupal.html` · V371-R2 | Salida universal Safari | Se calcula al publicar | Activa síntesis en el gesto y sólo acepta éxito audible desde `onstart`; Registro y Score quedan intocables. |
+| `test-v370-native-spanish-fast-close.mjs` · V371-R2 | Regresión de voz | Se calcula al publicar | Bloquea cebado ausente, falso éxito sin `onstart` y caché R1. |
 | `skins.js` | Motor V332 · moneda dual | Se calcula al publicar | Calcula Skins Gross/Neto para dos a seis jugadores con Q/$, carry, división o anulación, X, acumulados, líder y saldo cero-suma. |
 | `stableford-countryclub-emergency.html` | `99b1f8b17f1bc077bbfe43e6af668eff6ebb33d7` | 688 bytes | Acceso antiguo de emergencia; se conserva para no romper enlaces. |
 | `stableford-course-source-mayan-golf.md` | `bd6b7632cc2da5d964ecd8358062cd06a7a564fc` | 660 bytes | Fuente usada para cargar la tarjeta de Mayan Golf. |

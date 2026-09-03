@@ -19,7 +19,7 @@
 <meta name="gscg-universal-voice-in-place" content="V367-UNIVERSAL-VOICE-IN-PLACE-20260828">
 <meta name="gscg-canonical-home-entry" content="V368-CANONICAL-HOME-ENTRY-20260829">
 <meta name="gscg-voice-weather-traffic-recovery" content="V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-20260903">
-<meta name="gscg-native-spanish-one-shot-voice" content="V371-R1-IOS-SPANISH-VOICE-20260903">
+<meta name="gscg-native-spanish-one-shot-voice" content="V371-R2-IOS-SPEECH-START-CONTRACT-20260903">
 <meta name="gscg-ai-voice" content="IOS-ES-MX-0.90-NATIVE-MEXICAN-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -2447,6 +2447,13 @@ function realtimeResponseTranscript(response){
 function primeAiUniversalSpeechFromGesture(){
   if(aiUniversalSpeechPrimed||aiUniversalMuted)return false;
   try{
+    if(typeof window!=="undefined"&&"speechSynthesis" in window&&typeof SpeechSynthesisUtterance==="function"){
+      window.speechSynthesis.cancel();window.speechSynthesis.resume?.();
+      const speechPrimer=new SpeechSynthesisUtterance("\u00a0");speechPrimer.lang="es-MX";speechPrimer.volume=.01;speechPrimer.rate=10;
+      speechPrimer.onstart=()=>{aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_primed")};
+      speechPrimer.onend=()=>{aiUniversalSpeechPrimed=true};speechPrimer.onerror=()=>{};
+      window.speechSynthesis.speak(speechPrimer);
+    }
     if(typeof Audio==="function"){
       const primer=new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=");aiUniversalSpeechPrimer=primer;aiUniversalTtsAudio=primer;primer.volume=.01;
       const ready=()=>{if(aiUniversalSpeechPrimer===primer)aiUniversalSpeechPrimer=null;if(!aiUniversalSpeechPrimed){aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_primed")}};
@@ -2471,13 +2478,16 @@ function waitForPreferredMaleBrowserVoice(language,timeoutMs=1600){
 }
 async function speakAiUniversalMaleBrowserFallback(clean){
   if(!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance!=="function")return false;
-  const language="es-MX",voice=await waitForPreferredMaleBrowserVoice(language);
-  window.speechSynthesis.cancel();window.speechSynthesis.resume?.();
+  const language="es-MX",voice=preferredMaleBrowserVoice(language);
+  window.speechSynthesis.resume?.();
   const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;utterance.lang=voice?.lang||language;utterance.rate=VOICE_POLICY.speed;utterance.pitch=.92;if(voice)utterance.voice=voice;
-  utterance.onstart=()=>{reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true})};
-  utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")}};
-  utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ EN ESPAÑOL")};
-  window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);return true;
+  return new Promise(resolve=>{let settled=false,started=false;const finish=value=>{if(settled)return;settled=true;clearTimeout(startGuard);resolve(value)};
+    utterance.onstart=()=>{started=true;aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true});finish(true)};
+    utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};if(!started)finish(false)};
+    utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ EN ESPAÑOL");finish(false)};
+    const startGuard=setTimeout(()=>{if(started)return;if(aiUniversalUtterance===utterance){window.speechSynthesis.cancel();aiUniversalUtterance=null}reportVoiceHealth("browser_fallback_speech_start_timeout");setPrimaryVoiceMatrix("error",voiceContext,"LA VOZ NO INICIÓ · TOCA EL MICRÓFONO E INTENTA DE NUEVO");aiUniversalSetState("LA VOZ NO INICIÓ · INTENTA DE NUEVO");finish(false)},2000);
+    window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);
+  });
 }
 async function speakAiUniversalText(text,{repeat=false}={}){
   const clean=String(text||"").trim();if(!clean||aiUniversalMuted)return false;
@@ -2568,7 +2578,7 @@ async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
   const input=$("aiUniversalInput"),query=String(forcedText||input.value||"").trim();if(!query){input.focus();return false}
   input.value="";aiUniversalRemember("user",query,[],{visible:!voiceOnly});
   const local=aiUniversalRulesMode?{handled:false}:routeAiUniversalAppText(query);
-  if(local.handled){aiUniversalRemember("assistant",local.answer,[],{visible:!voiceOnly});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(voiceOnly)await speakAiUniversalText(local.answer);return true}
+  if(local.handled){aiUniversalRemember("assistant",local.answer,[],{visible:!voiceOnly});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(voiceOnly)return await speakAiUniversalText(local.answer);return true}
   aiUniversalTextBusy=true;$("sendAiUniversal").disabled=true;setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO",{busy:true});
   const controller=new AbortController();aiUniversalTextAbortController=controller;
   try{
@@ -2594,12 +2604,12 @@ async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
     }
     if(!response.ok||!result.ok){const requestError=new Error(result.error||"UNIVERSAL_AI_UNAVAILABLE");requestError.code=result.error||"UNIVERSAL_AI_UNAVAILABLE";throw requestError}
     if(aiUniversalRulesMode)saveOfficialGolfRuleForOffline(query,result);
-    aiUniversalRemember("assistant",result.answer,result.sources,{visible:!voiceOnly});aiUniversalSetState("LISTO · PUEDES CONTINUAR");if(voiceOnly)await speakAiUniversalText(result.answer);return true;
+    aiUniversalRemember("assistant",result.answer,result.sources,{visible:!voiceOnly});aiUniversalSetState("LISTO · PUEDES CONTINUAR");if(voiceOnly)return await speakAiUniversalText(result.answer);return true;
   }catch(error){
     if(error?.name==="AbortError"){if(!aiUniversalTextAbortController||aiUniversalTextAbortController===controller)aiUniversalSetState("DETENIDO · PUEDES CONTINUAR");return false}
     if(aiUniversalRulesMode){
       const offline=officialGolfRuleOfflineResult(query);
-      if(offline){aiUniversalRemember("assistant",offline.answer,offline.sources,{visible:!voiceOnly});renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");if(voiceOnly)await speakAiUniversalText(offline.answer);return true}
+      if(offline){aiUniversalRemember("assistant",offline.answer,offline.sources,{visible:!voiceOnly});renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");if(voiceOnly)return await speakAiUniversalText(offline.answer);return true}
     }
     const creditBlocked=error?.code==="UNIVERSAL_AI_CREDIT_EXHAUSTED";const message=error?.code==="TRAFFIC_LOCATION_DENIED"?"Necesito permiso de ubicación o un punto de salida escrito para calcular el tráfico.":creditBlocked?"El servicio de respuestas no tiene saldo disponible. Tu conexión a Internet sí funciona.":aiUniversalRulesMode?"No pude verificar la regla en las fuentes oficiales USGA / The R&A en este momento. Intenta nuevamente.":"No pude completar la respuesta en este momento.";aiUniversalRemember("assistant",message,[],{visible:!voiceOnly});const visibleState=creditBlocked?"SERVICIO DE RESPUESTAS SIN SALDO · TU INTERNET SÍ FUNCIONA":error?.code==="TRAFFIC_LOCATION_DENIED"?"UBICACIÓN NECESARIA":"SERVICIO DE RESPUESTAS NO DISPONIBLE";setPrimaryVoiceMatrix("error",voiceContext,visibleState);aiUniversalSetState(visibleState);return false;
   }finally{

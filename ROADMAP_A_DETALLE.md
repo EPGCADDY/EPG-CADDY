@@ -1928,3 +1928,7 @@ Estado: candidato local; Producción intacta; auditoría completa, Preview y PAS
 ### V371-R1 · restauración estricta del flujo y cambio exclusivo de voz
 
 Alcance funcional: `index-grupal.html` y caché de `service-worker.js`. Se restauran sin variación los tiempos V370: silencio Safari 1.2 s, primer resultado 8 s, cierre conversacional inactivo 12 s, entrada bloqueada 8/12 s y respuesta bloqueada 15 s. La única diferencia operativa es la voz: velocidad 0.90, prioridad `es-MX`, respaldo limitado a `es-*`, prohibición de `en-*`, Cedar y Onyx, y reproducción con `lang="es-MX"` aunque la lista de voces todavía no esté disponible. Las APIs y el transporte de Comunicación Universal, clima y tráfico no cambian. Las pruebas afectadas sólo sincronizan los contratos restaurados y bloquean el retorno silencioso por catálogo vacío. Producción permanece intacta.
+
+### V371-R2 · contrato real de inicio de voz Safari
+
+Las capturas físicas rechazaron V371-R1: la consulta transitó `ESCUCHANDO → RESPONDIENDO`, pero Safari no inició audio. El cambio queda limitado a la salida universal: `speechSynthesis` se activa dentro del toque original y una respuesta sólo cuenta como hablada después de `utterance.onstart`; si no comienza en 2 s, se cancela y muestra error recuperable. Registro, dictado de scores, escritor, cálculos, persistencia, tarjeta, clima, tráfico y Producción permanecen intactos. `service-worker.js` invalida la copia R1 y `test-v370-native-spanish-fast-close.mjs` bloquea el falso éxito sin `onstart`.
