@@ -21,11 +21,12 @@ const gateway=cedarGatewayPayload("Respuesta", "es-GT");
 assert.deepEqual(gateway,{text:"Respuesta",voice:"onyx",speed:.9,outputFormat:"mp3"});
 assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1-hd"/);
 assert.match(speech,/X-GSCG-Voice/);
-assert.match(html,/X-GSCG-Voice/);
-assert.match(html,/RESPONDIENDO EN VOZ · ONYX 0\.90 · RESPALDO/);
-assert.match(html,/cedar\|onyx\|jorge/);
+assert.match(html,/IOS-ES-MX-0\.90-NATIVE-MEXICAN-SPANISH/);
+assert.match(html,/PREPARANDO VOZ MEXICANA/);
+const mexicanSpeech=html.slice(html.indexOf("async function speakAiUniversalText"),html.indexOf("function stopAiUniversalOutput"));
+assert.doesNotMatch(mexicanSpeech,/X-GSCG-Voice|CEDAR|ONYX|\/api\/voice-speech/);
 
-assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000/);
+assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=6000/);
 const watchdogStart=html.indexOf("function scheduleBrowserVoiceFirstResultTimeout");
 const watchdogEnd=html.indexOf("\nfunction browserVoiceCombinedTranscript",watchdogStart);
 const watchdog=html.slice(watchdogStart,watchdogEnd);
@@ -48,4 +49,4 @@ assert.match(spokenClosure,/return speakAiUniversalText\(text\)/);
 
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_no_result_timeout",build:"V363",transportFailure:"no_speech",transcript:"PRIVADO"}),{event:"browser_fallback_no_result_timeout",build:"V363",context:"round",turn:0,elapsedMs:0,transportFailure:"no_speech"});
 
-console.log("PASS V362 · un toque + watchdog + Cedar/Onyx + cierre hablado y persistencia progresiva");
+console.log("PASS V362/V371 · un toque + watchdog + voz iOS es-MX + cierre hablado y persistencia progresiva");

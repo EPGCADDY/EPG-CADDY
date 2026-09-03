@@ -1925,3 +1925,6 @@ Producción e Individual no se modifican. La evidencia automática no sustituye 
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-042 conserva tiempos observados, 429 del TTS, causa, escape y candado. | No declarar equivalente a ChatGPT sin medición física comparable. |
 
 Estado: candidato local; Producción intacta; auditoría completa, Preview y PASS audible iPhone pendientes.
+### V371 · voz mexicana nativa de iOS
+
+Archivos modificados: `index-grupal.html`, `service-worker.js`, `Intocables/intocables-gate.mjs`, pruebas V312, V321, V322, V323, V325, V326, V356, V357, V361, V362, V369 y V370, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Alcance: Comunicación Universal, clima y tráfico hablados. Contrato: sólo `speechSynthesis` con locale exacto `es-MX`, velocidad 0.90 y prioridad masculina por nombre; Cedar/Onyx y el endpoint servidor quedan fuera de `speakAiUniversalText`. Tiempos: cierre por silencio 1 s, primer resultado 6 s, cierre conversacional inactivo 3 s, entrada bloqueada 6/9 s y respuesta bloqueada 12 s. El candado intocable se sincroniza de 8 a 6 s exclusivamente por la orden expresa de reducir tiempos. Si no existe `es-MX`, la interfaz indica instalar Español (México). Registro, Score, persistencia y Producción permanecen intocables.

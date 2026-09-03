@@ -81,7 +81,7 @@ assert.equal(limited.length,80);
 assert.doesNotMatch(limited[0].content,/debe salir/);
 assert.equal(limited.at(-1).content,"turno vigente 80");
 
-assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=12\*1000/);
+assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=3\*1000/);
 assert.doesNotMatch(html,/CONVERSATION_IDLE_CLOSE_MS=3000/);
 assert.match(html,/conversationBargeInArmedAt=0/);
 assert.match(html,/if\(micTrack\)micTrack\.enabled=false/);
@@ -93,7 +93,7 @@ const timingSource=html.slice(timingStart,timingEnd);
 const timingHarness=new Function(`
   let conversationIdleCloseTimer=null,listening=true,authorizedSpeech=null,stopMonitorActive=false,phase="listening",setupSpeechActive=false,roundSpeechActive=false;
   const setupPendingItems=new Set(),roundPendingItems=new Set();
-  const CONVERSATION_INACTIVITY_CLOSE_MS=12*1000;
+  const CONVERSATION_INACTIVITY_CLOSE_MS=3*1000;
   let timerSeq=0,scheduled=new Map(),closed=0;
   const setTimeout=(fn,ms)=>{const id=++timerSeq;scheduled.set(id,{fn,ms});return id};
   const clearTimeout=id=>scheduled.delete(id);
@@ -114,7 +114,7 @@ for(let turn=1;turn<=30;turn++){
   assert.equal(timingHarness.nextTurn(),true,`Turno bilateral ${turn} no reabrió la escucha`);
   const state=timingHarness.state();
   assert.deepEqual({listening:state.listening,enabled:state.enabled,phase:state.phase,closed:state.closed},{listening:true,enabled:true,phase:"listening",closed:0});
-  assert.deepEqual(state.delays,[12*1000]);
+  assert.deepEqual(state.delays,[3*1000]);
 }
 timingHarness.expire();
 assert.equal(timingHarness.state().closed,1,"Sólo la inactividad real de 30 minutos debe cerrar el micrófono");

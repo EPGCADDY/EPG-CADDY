@@ -24,7 +24,7 @@ for(const contract of [
   /restoreOperationalTurnProfile\(\)/,
   /sessionUpdateQueue\.catch\(\(\)=>\{\}\)\.then/,
   /pendingSessionUpdate\.expectedProfile/,
-  /const CONVERSATION_INACTIVITY_CLOSE_MS=12\*1000/,
+  /const CONVERSATION_INACTIVITY_CLOSE_MS=3\*1000/,
   /conversationBargeInArmedAt=0/,
   /normalizeSpeech\(heard\)\.length>=8/,
   /conversationEchoGuardUntil=Date\.now\(\)\+1800/,

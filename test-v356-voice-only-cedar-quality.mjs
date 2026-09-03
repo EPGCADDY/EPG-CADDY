@@ -9,7 +9,7 @@ const universal=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url)
 const speech=fs.readFileSync(new URL("./api/voice-speech.js",import.meta.url),"utf8");
 
 assert.match(html,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
-assert.match(html,/CEDAR-0\.90-MALE-INTERNATIONAL-SPANISH/);
+assert.match(html,/IOS-ES-MX-0\.90-NATIVE-MEXICAN-SPANISH/);
 assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
 
 for(const contract of [
@@ -76,4 +76,4 @@ assert.match(universal,/responseMode==="voice"/);
 assert.match(universal,/conserva exactamente el mismo razonamiento, investigación, comparación, contexto, evidencia, matices y profundidad que entregarías por texto/);
 assert.deepEqual(universalResponseProfile("Analiza a fondo causas, riesgos, alternativas y dame una recomendación accionable."),{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"});
 
-console.log("PASS V356/V369 · voz hablada sin transcripción, Cedar masculino 0.90, tráfico/clima estructurados y respuesta universal sustantiva");
+console.log("PASS V356/V371 · voz hablada sin transcripción, iOS es-MX 0.90, tráfico/clima estructurados y respuesta universal sustantiva");

@@ -12,9 +12,9 @@ assert.doesNotThrow(()=>new Function(script),"El JavaScript principal V326 debe 
 
 for(const contract of [
   /const CONVERSATION_VAD_SILENCE_MS=900/,
-  /const CONVERSATION_INPUT_STALL_MS=8000/,
-  /const CONVERSATION_INPUT_HARD_LIMIT_MS=12000/,
-  /const CONVERSATION_RESPONSE_STALL_MS=15000/,
+  /const CONVERSATION_INPUT_STALL_MS=6000/,
+  /const CONVERSATION_INPUT_HARD_LIMIT_MS=9000/,
+  /const CONVERSATION_RESPONSE_STALL_MS=12000/,
   /const CONVERSATION_PLAYBACK_STALL_MS=45000/,
   /silence_duration_ms:CONVERSATION_VAD_SILENCE_MS,create_response:false,interrupt_response:false/,
   /armConversationInputStall\(\{newTurn:true\}\)/,
@@ -58,7 +58,7 @@ function createWatchdogHarness(){
     let conversationToolTransition=null,activeResponseId=null,speechPlaybackResponseId=null,stopMonitorActive=false;
     let authorizedSpeech=null,listening=true,voiceContext="round",realtimeTurnProfileRequested="conversation";
     const REALTIME_TURN_PROFILE_CONVERSATION="conversation";
-    const CONVERSATION_INPUT_STALL_MS=8000,CONVERSATION_INPUT_HARD_LIMIT_MS=12000,CONVERSATION_RESPONSE_STALL_MS=15000,CONVERSATION_PLAYBACK_STALL_MS=45000;
+    const CONVERSATION_INPUT_STALL_MS=6000,CONVERSATION_INPUT_HARD_LIMIT_MS=9000,CONVERSATION_RESPONSE_STALL_MS=12000,CONVERSATION_PLAYBACK_STALL_MS=45000;
     let timers=[],teardownCount=0,resumeCount=0,states=[];
     const target={textContent:"",classList:{remove(){}}};
     const setTimeout=(fn,delay)=>{const timer={fn,delay,active:true};timers.push(timer);return timer};
@@ -86,9 +86,9 @@ function createWatchdogHarness(){
 
 const inputGuard=createWatchdogHarness();
 assert.equal(inputGuard.armConversationInputStall({newTurn:true}),true);
-assert.equal(inputGuard.fireLatest(),8000);
+assert.equal(inputGuard.fireLatest(),6000);
 assert.deepEqual(inputGuard.snapshot(),{
-  timers:[{delay:8000,active:false}],
+  timers:[{delay:6000,active:false}],
   teardownCount:1,
   resumeCount:0,
   state:"MICRÓFONO REINICIADO · TOCA ESCUCHAR Y REPITE LA PREGUNTA",
@@ -99,7 +99,7 @@ assert.deepEqual(inputGuard.snapshot(),{
 const responseGuard=createWatchdogHarness();
 responseGuard.authorizeConversation();
 assert.equal(responseGuard.armConversationResponseStall(),true);
-assert.equal(responseGuard.fireLatest(),15000);
+assert.equal(responseGuard.fireLatest(),12000);
 assert.equal(responseGuard.snapshot().teardownCount,0);
 assert.equal(responseGuard.snapshot().resumeCount,1);
 assert.equal(responseGuard.snapshot().state,"NO PUDE COMPLETAR ESA RESPUESTA · PUEDES CONTINUAR");

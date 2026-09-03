@@ -6,7 +6,7 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const researchApi=fs.readFileSync(new URL("./api/research.js",import.meta.url),"utf8");
 
 assert.match(html,/gscg-build" content="V\d{3}[^"]*"/);
-assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=12\*1000/);
+assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=3\*1000/);
 assert.doesNotMatch(html,/CONVERSATION_IDLE_CLOSE_MS=3000/);
 assert.match(html,/if\(on\)scheduleConversationIdleClose\(\)/);
 assert.match(html,/if\(listening\)scheduleConversationIdleClose\(\)/);
@@ -29,7 +29,7 @@ const idleSource=html.slice(html.indexOf("function clearConversationIdleCloseTim
 const idleHarness=new Function(`
   let conversationIdleCloseTimer=null,listening=true,authorizedSpeech=null,stopMonitorActive=false,phase="listening",setupSpeechActive=false,roundSpeechActive=false;
   const setupPendingItems=new Set(),roundPendingItems=new Set();
-  const CONVERSATION_INACTIVITY_CLOSE_MS=12*1000;
+  const CONVERSATION_INACTIVITY_CLOSE_MS=3*1000;
   let callback=null,delay=null,closed=0,status={textContent:""};
   const setTimeout=(fn,ms)=>{callback=fn;delay=ms;return 1};
   const clearTimeout=()=>{callback=null};
@@ -40,7 +40,7 @@ const idleHarness=new Function(`
   return {scheduleConversationIdleClose,fire:()=>callback?.(),delay:()=>delay,closed:()=>closed,status:()=>status.textContent};
 `)();
 assert.equal(idleHarness.scheduleConversationIdleClose(),true);
-assert.equal(idleHarness.delay(),12*1000);
+assert.equal(idleHarness.delay(),3*1000);
 idleHarness.fire();
 assert.equal(idleHarness.closed(),1);
 assert.match(idleHarness.status(),/MICRÓFONO CERRADO/);

@@ -19,8 +19,8 @@
 <meta name="gscg-universal-voice-in-place" content="V367-UNIVERSAL-VOICE-IN-PLACE-20260828">
 <meta name="gscg-canonical-home-entry" content="V368-CANONICAL-HOME-ENTRY-20260829">
 <meta name="gscg-voice-weather-traffic-recovery" content="V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-20260903">
-<meta name="gscg-native-spanish-one-shot-voice" content="V370-R1-IOS-SPANISH-VOICE-20260903">
-<meta name="gscg-ai-voice" content="CEDAR-0.90-MALE-INTERNATIONAL-SPANISH">
+<meta name="gscg-native-spanish-one-shot-voice" content="V371-IOS-MEXICAN-VOICE-20260903">
+<meta name="gscg-ai-voice" content="IOS-ES-MX-0.90-NATIVE-MEXICAN-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
 <meta name="gscg-match-play" content="V307-THICK-SVG-ARROWS-MATCH-ONLY-FORMAT-20260825">
@@ -983,10 +983,10 @@ let roundLiveItemText=new Map(),roundLiveCommitted=new Map(),roundLiveOriginal=n
 let roundMissingPromptTimer=null,roundMissingPrompt=null,roundOperationalActivityAt=Date.now();
 const ROUND_TRANSCRIPTION_WATCHDOG_MS=10000;
 const ROUND_CONTINUOUS_FINALIZE_MS=3000;
-const CONVERSATION_INACTIVITY_CLOSE_MS=12*1000;
+const CONVERSATION_INACTIVITY_CLOSE_MS=3*1000;
 const CLIENT_RESEARCH_TIMEOUT_MS=45*1000;
-const BROWSER_VOICE_SILENCE_MS=1200;
-const BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000;
+const BROWSER_VOICE_SILENCE_MS=1000;
+const BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=6000;
 const BROWSER_VOICE_STOP_GUARD_MS=1200;
 const BROWSER_VOICE_MAX_RESTARTS=12;
 const BROWSER_VOICE_MAX_TRANSPORT_RETRIES=2;
@@ -998,9 +998,9 @@ const ROUND_VAD_THRESHOLD=0.2;
 const ROUND_VAD_PREFIX_MS=700;
 const ROUND_VAD_SILENCE_MS=1000;
 const CONVERSATION_VAD_SILENCE_MS=900;
-const CONVERSATION_INPUT_STALL_MS=8000;
-const CONVERSATION_INPUT_HARD_LIMIT_MS=12000;
-const CONVERSATION_RESPONSE_STALL_MS=15000;
+const CONVERSATION_INPUT_STALL_MS=6000;
+const CONVERSATION_INPUT_HARD_LIMIT_MS=9000;
+const CONVERSATION_RESPONSE_STALL_MS=12000;
 const CONVERSATION_PLAYBACK_STALL_MS=45000;
 const REALTIME_DISCONNECT_GRACE_MS=5000;
 const REALTIME_TURN_PROFILE_OPERATIONAL="operational";
@@ -2458,11 +2458,10 @@ function primeAiUniversalSpeechFromGesture(){
 }
 function preferredMaleBrowserVoice(language){
   if(!("speechSynthesis" in window))return null;
-  const voices=window.speechSynthesis.getVoices?.()||[],base=String(language||"es").toLowerCase().split("-")[0];
-  const maleName=/\b(cedar|onyx|jorge|diego|carlos|enrique|alberto|antonio|pablo|raul|juan|felipe|andres|ángel|angel|alex|mario|ricardo|oscar|martin|male|masculino|hombre)\b/i;
-  const native=voices.filter(voice=>String(voice.lang||"").toLowerCase().startsWith(base));
-  const localeRank=lang=>/^es-(mx|us|419)/i.test(lang)?40:/^es-(gt|cr|co|ar|cl|pe|uy)/i.test(lang)?35:/^es-es/i.test(lang)?30:10;
-  const ranked=native.map((voice,index)=>({voice,index,score:(maleName.test(`${voice.name||""} ${voice.voiceURI||""}`)?100:0)+localeRank(String(voice.lang||""))+(voice.localService!==false?5:0)})).sort((a,b)=>b.score-a.score||a.index-b.index);
+  const voices=window.speechSynthesis.getVoices?.()||[];
+  const maleName=/\b(jorge|diego|carlos|enrique|alberto|antonio|pablo|raul|juan|felipe|andres|ángel|angel|alex|mario|ricardo|oscar|martin|male|masculino|hombre)\b/i;
+  const native=voices.filter(voice=>String(voice.lang||"").toLowerCase()==="es-mx");
+  const ranked=native.map((voice,index)=>({voice,index,score:(maleName.test(`${voice.name||""} ${voice.voiceURI||""}`)?100:0)+(voice.localService!==false?5:0)})).sort((a,b)=>b.score-a.score||a.index-b.index);
   return ranked[0]?.voice||null;
 }
 function waitForPreferredMaleBrowserVoice(language,timeoutMs=1600){
@@ -2472,7 +2471,7 @@ function waitForPreferredMaleBrowserVoice(language,timeoutMs=1600){
 }
 async function speakAiUniversalMaleBrowserFallback(clean){
   if(!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance!=="function")return false;
-  const language=aiUniversalSpeechLanguage(clean),voice=await waitForPreferredMaleBrowserVoice(language);if(!voice)return false;
+  const language="es-MX",voice=await waitForPreferredMaleBrowserVoice(language);if(!voice)return false;
   window.speechSynthesis.cancel();window.speechSynthesis.resume?.();
   const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;utterance.lang=language;utterance.rate=VOICE_POLICY.speed;utterance.pitch=.92;utterance.voice=voice;
   utterance.onstart=()=>{reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true})};
@@ -2482,33 +2481,10 @@ async function speakAiUniversalMaleBrowserFallback(clean){
 }
 async function speakAiUniversalText(text,{repeat=false}={}){
   const clean=String(text||"").trim();if(!clean||aiUniversalMuted)return false;
-  // Cedar 0.90 es el locutor principal; Safari usa exclusivamente una voz es-*
-  // como recuperación para que iOS nunca deje la respuesta muda.
-  const speechLanguage="es-MX";
-  if(Date.now()<cedarSpeechServerBlockedUntil){
-    aiUniversalSetState("PREPARANDO LOCUTOR MASCULINO…",{busy:true});
-    if(await speakAiUniversalMaleBrowserFallback(clean))return true;
-    setPrimaryVoiceMatrix("error",voiceContext,"VOZ MASCULINA NO DISPONIBLE · INTENTA DE NUEVO");aiUniversalSetState("VOZ MASCULINA NO DISPONIBLE · INTENTA DE NUEVO");return false;
-  }
-  try{
-    aiUniversalSetState("PREPARANDO VOZ CEDAR…",{busy:true});
-    const response=await fetch(window.gscgApiUrl("/api/voice-speech"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:clean,language:speechLanguage})});
-    if(!response.ok){if(response.status===429||response.status===503)cedarSpeechServerBlockedUntil=Date.now()+CEDAR_SPEECH_RETRY_MS;throw new Error("CEDAR_TTS_UNAVAILABLE")}
-    const deliveredVoice=String(response.headers?.get?.("X-GSCG-Voice")||"cedar").toLowerCase();
-    const blob=await response.blob();if(!blob.size)throw new Error("CEDAR_TTS_EMPTY");
-    if(typeof Audio!=="function")throw new Error("AUDIO_UNAVAILABLE");
-    if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(blob);
-    const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.volume=1;player.playbackRate=1;
-    player.onplay=()=>{aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(deliveredVoice==="onyx"?"RESPONDIENDO EN VOZ · ONYX 0.90 · RESPALDO":"RESPONDIENDO EN VOZ · CEDAR 0.90",{busy:true})};
-    player.onended=()=>{setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
-    player.onerror=async()=>{reportVoiceHealth("browser_fallback_speech_failed");if(!await speakAiUniversalMaleBrowserFallback(clean))aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")};
-    await player.play();return true;
-  }catch(error){
-    reportVoiceHealth("browser_fallback_speech_failed");
-    cedarSpeechServerBlockedUntil=Math.max(cedarSpeechServerBlockedUntil,Date.now()+CEDAR_SPEECH_RETRY_MS);
-    if(await speakAiUniversalMaleBrowserFallback(clean))return true;
-    setPrimaryVoiceMatrix("error",voiceContext,"VOZ MASCULINA NO DISPONIBLE · INTENTA DE NUEVO");aiUniversalSetState("VOZ MASCULINA NO DISPONIBLE · INTENTA DE NUEVO");return false;
-  }
+  aiUniversalSetState("PREPARANDO VOZ MEXICANA…",{busy:true});
+  if(await speakAiUniversalMaleBrowserFallback(clean))return true;
+  setPrimaryVoiceMatrix("error",voiceContext,"VOZ ESPAÑOL MÉXICO NO INSTALADA · AJUSTES DE iOS > ACCESIBILIDAD > CONTENIDO LEÍDO > VOCES > ESPAÑOL (MÉXICO)");
+  aiUniversalSetState("VOZ ESPAÑOL MÉXICO NO INSTALADA · INSTÁLALA EN AJUSTES DE iOS");return false;
 }
 function stopAiUniversalOutput(){
   aiUniversalTextAbortController?.abort();aiUniversalTextAbortController=null;aiUniversalTextBusy=false;

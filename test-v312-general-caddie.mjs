@@ -96,7 +96,7 @@ assert.equal(conversationToolStopIsPreFollowup(null,{sourceResponseId:"source",f
 assert.match(html,/Cuando necesites una herramienta, no pronuncies un preámbulo/,"El clima debe responder una sola vez y completo");
 assert.match(conversationStart,/submitAiUniversalText\(clean,\{voiceOnly:true\}\)/,"La conversación debe usar la ruta universal profunda de un turno");
 assert.match(html, /En salud ofrece únicamente orientación general/, "Faltan límites seguros para preguntas médicas");
-assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=12\*1000/,"La captura universal debe tener cierre breve de seguridad");
+assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=3\*1000/,"La captura universal debe cerrar en tres segundos de inactividad");
 assert.match(html,/const ROUND_VAD_SILENCE_MS=1000/,"Un segundo de silencio debe iniciar la respuesta sin demora artificial");
 assert.match(html,/silence_duration_ms:ROUND_VAD_SILENCE_MS/,"Cliente y sesión deben compartir el cierre rápido del turno");
 assert.match(html,/start_date:[\s\S]*?end_date:/,"La herramienta debe aceptar fechas y rangos futuros");

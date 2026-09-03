@@ -10,8 +10,8 @@ assert.equal(cedarSpeechPayload("Clima actual").speed,.9);
 assert.equal(cedarGatewayPayload("Clima actual").speed,.9);
 assert.match(html,/speed:\.9,[\s\S]*?accumulatedSpeed:\.9/);
 assert.match(html,/utterance\.rate=VOICE_POLICY\.speed/);
-assert.match(html,/CEDAR 0\.90/);
-assert.match(html,/ONYX 0\.90/);
+assert.match(html,/IOS-ES-MX-0\.90-NATIVE-MEXICAN-SPANISH/);
+assert.match(html,/PREPARANDO VOZ MEXICANA/);
 
 const restartStart=html.indexOf("function restartBrowserVoiceAfterNaturalEnd");
 const restartEnd=html.indexOf("\nfunction stopBrowserVoiceFallback",restartStart);
@@ -30,4 +30,4 @@ assert.match(universal,/conserva exactamente el mismo razonamiento, investigaci�
 assert.match(universal,/no impongas un límite artificial de oraciones/);
 assert.doesNotMatch(universal,/normalmente en tres a seis oraciones/);
 
-console.log("PASS V369 · voz 0.90 masculina neutral + consulta universal de un turno + tráfico desde GPS");
+console.log("PASS V369/V371 · voz iOS es-MX 0.90 + consulta universal de un turno + tráfico desde GPS");
