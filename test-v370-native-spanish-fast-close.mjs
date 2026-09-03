@@ -9,6 +9,12 @@ assert.match(worker,/v371-r4-echo-mexican-voice/);
 assert.match(html,/CONVERSATION_VAD_SILENCE_MS=900/);
 assert.match(html,/BROWSER_VOICE_SILENCE_MS=1200/);
 assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000/);
+const firstResultRecovery=html.slice(html.indexOf("function scheduleBrowserVoiceFirstResultTimeout"),html.indexOf("function browserVoiceCombinedTranscript"));
+assert.match(firstResultRecovery,/browserVoiceTransportRetryCount<BROWSER_VOICE_MAX_TRANSPORT_RETRIES/);
+assert.match(firstResultRecovery,/detachBrowserVoiceRecognition\(recognition\)/);
+assert.match(firstResultRecovery,/recognition\.abort\(\)/);
+assert.match(firstResultRecovery,/beginBrowserVoiceRecognition\(context,"transport"\)/);
+assert.match(firstResultRecovery,/browser_fallback_retry_scheduled/);
 assert.match(html,/CONVERSATION_INACTIVITY_CLOSE_MS=12\*1000/);
 assert.match(html,/CONVERSATION_RESPONSE_STALL_MS=15000/);
 

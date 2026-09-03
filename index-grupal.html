@@ -4201,7 +4201,10 @@ function scheduleBrowserVoiceFinalize(recognition,context){
 }
 function scheduleBrowserVoiceFirstResultTimeout(recognition,context){
   clearBrowserVoiceFirstResultTimer();if(browserVoiceRecognition!==recognition||browserVoiceStopping||browserVoiceTranscript||browserVoiceInterim)return false;
-  browserVoiceFirstResultTimer=setTimeout(()=>{browserVoiceFirstResultTimer=null;if(browserVoiceRecognition!==recognition||browserVoiceStopping||browserVoiceTranscript||browserVoiceInterim)return;reportVoiceHealth("browser_fallback_no_result_timeout",{transportFailure:"no_speech"});stopBrowserVoiceRecognitionSafely(recognition,context)},BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS);return true
+  browserVoiceFirstResultTimer=setTimeout(()=>{browserVoiceFirstResultTimer=null;if(browserVoiceRecognition!==recognition||browserVoiceStopping||browserVoiceTranscript||browserVoiceInterim)return;reportVoiceHealth("browser_fallback_no_result_timeout",{transportFailure:"no_speech"});
+    if(browserVoiceTransportRetryCount<BROWSER_VOICE_MAX_TRANSPORT_RETRIES){detachBrowserVoiceRecognition(recognition);browserVoiceRecognition=null;browserVoiceTransportRetryCount++;browserVoiceRequested=true;browserVoiceActive=false;listening=false;phase="idle";try{recognition.abort()}catch{try{recognition.stop()}catch{}}setPrimaryVoiceMatrix("idle",context,"RECUPERANDO MICRÓFONO…");reportVoiceHealth("browser_fallback_retry_scheduled",{transportFailure:"no_speech"});browserVoiceRetryTimer=setTimeout(()=>{browserVoiceRetryTimer=null;if(!browserVoiceRequested||browserVoiceStopping)return;beginBrowserVoiceRecognition(context,"transport")},BROWSER_VOICE_TRANSPORT_RETRY_MS*browserVoiceTransportRetryCount);return}
+    stopBrowserVoiceRecognitionSafely(recognition,context)
+  },BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS);return true
 }
 function browserVoiceCombinedTranscript(){return mergeBrowserVoiceSegments(browserVoiceTranscript,browserVoiceInterim)}
 function applyBrowserVoiceProgressiveScore(context,transcript=browserVoiceCombinedTranscript()){

@@ -1505,3 +1505,7 @@ La prueba física R3 rechazó el timbre/acento Spanglish. El log real confirmó 
 ### V371-R5 · salida universal exclusivamente en español neutral
 
 La prueba física R4 rechazó una respuesta hablada en inglés. La causa quedó localizada en `api/universal-ai.js`: conversación universal y los seguimientos de clima/tráfico todavía autorizaban responder en el idioma detectado del usuario. R5 cambia exclusivamente esas tres instrucciones para exigir español neutral latinoamericano y prohibir inglés o Spanglish incluso ante transcripción mixta. `test-v371-spanish-only-universal.mjs` bloquea la reaparición de las instrucciones permisivas; `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py` y el inventario sellan el control. Registro, Score, cálculos, persistencia, interfaz y Producción permanecen intactos.
+
+### V371-R6 · recuperación automática del micrófono sin primer resultado
+
+Los logs físicos de R5 prueban que Safari abrió `SpeechRecognition`, pero después emitió `no_speech` y `aborted` sin entregar transcripción. El watchdog de ocho segundos cerraba la captura sin reutilizar los dos reintentos ya limitados. R6 modifica exclusivamente `scheduleBrowserVoiceFirstResultTimeout`: recicla limpiamente la instancia y reabre el transporte hasta dos veces antes del cierre definitivo. No cambia parser, Registro, Scores, cálculos, persistencia, interfaz ni Producción.

@@ -1944,3 +1944,7 @@ El log físico del Preview R3 registró `POST /api/voice-speech 200` después de
 ### V371-R5 · candado de idioma del contenido universal
 
 La salida audible R4 reprodujo texto en inglés porque `api/universal-ai.js` aún ordenaba responder en el idioma detectado del usuario. Se reemplazan únicamente las tres instrucciones permisivas —conversación universal, seguimiento meteorológico y seguimiento de tráfico— por español neutral latinoamericano obligatorio, con prohibición expresa de inglés y Spanglish aun cuando Safari entregue una transcripción mixta. `test-v371-spanish-only-universal.mjs` verifica las tres rutas y se integra a `audit-project.mjs` y `package.json`; `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` sellan el árbol. No cambia `index-grupal.html`, Registro, Score, cálculos, persistencia, clima estructurado, tráfico estructurado ni Producción.
+
+### V371-R6 · reciclaje acotado ante `no_speech` de Safari
+
+Evidencia real del Preview R5: la primera captura llegó a transcripción y respuesta; las siguientes registraron `browser_fallback_started`, luego `browser_fallback_no_result_timeout` y `aborted`, sin evento `transcript_ready`. El único cambio funcional está en el watchdog compartido: al agotarse ocho segundos sin resultado, separa los handlers, aborta la instancia muda y crea otra tras 350/700 ms, con máximo de dos reintentos. `test-v370-native-spanish-fast-close.mjs` fija el reciclaje y el límite existente. Registro, aplicación de jugadores, parser y aplicación de Scores permanecen intocables.
