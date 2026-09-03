@@ -27,9 +27,10 @@ assert.doesNotMatch(html,/startsWith\("en-"\)/,"Nunca se permite seleccionar una
 assert.deepEqual(sanitizeSpeechRequest({text:"  Hola\n mundo  ",language:"es-GT<script>"}),{text:"Hola mundo",language:"es-GTscript"});
 const direct=cedarSpeechPayload("Respuesta confiable.","es-GT");
 assert.equal(direct.model,"gpt-4o-mini-tts");
-assert.equal(direct.voice,"cedar");
+assert.equal(direct.voice,"onyx");
 assert.equal(direct.speed,.9);
 assert.match(direct.instructions,/Locutor masculino adulto/);
+assert.match(direct.instructions,/español mexicano neutro/);
 const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
 assert.equal(gateway.voice,"onyx");
 assert.equal(gateway.speed,.9);

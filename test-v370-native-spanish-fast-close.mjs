@@ -4,8 +4,8 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/V371-R2-IOS-SPEECH-START-CONTRACT-20260903/);
-assert.match(worker,/v371-r2-ios-speech-start/);
+assert.match(html,/V371-R3-SERVER-MEXICAN-AUDIO-20260903/);
+assert.match(worker,/v371-r3-server-mexican-voice/);
 assert.match(html,/CONVERSATION_VAD_SILENCE_MS=900/);
 assert.match(html,/BROWSER_VOICE_SILENCE_MS=1200/);
 assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000/);
@@ -19,10 +19,12 @@ assert.match(preference,/locale==="es-mx"\?1000/);
 assert.doesNotMatch(preference,/startsWith\("en-"\)/);
 
 const speech=html.slice(html.indexOf("async function speakAiUniversalText"),html.indexOf("function stopAiUniversalOutput"));
-assert.match(speech,/if\(await speakAiUniversalMaleBrowserFallback\(clean\)\)return true/);
+assert.match(speech,/\/api\/voice-speech/);
 assert.match(speech,/PREPARANDO VOZ MEXICANA/);
 assert.match(speech,/VOZ EN ESPAÑOL NO DISPONIBLE/);
-assert.doesNotMatch(speech,/CEDAR|ONYX|\/api\/voice-speech/);
+assert.match(speech,/RESPONDIENDO EN VOZ MEXICANA · ONYX 0\.90/);
+assert.match(speech,/await player\.play\(\)/);
+assert.match(speech,/if\(!started\)throw new Error\("MEXICAN_TTS_NOT_STARTED"\)/);
 
 const browserSpeech=html.slice(html.indexOf("async function speakAiUniversalMaleBrowserFallback"),html.indexOf("async function speakAiUniversalText"));
 assert.match(browserSpeech,/const language="es-MX"/);

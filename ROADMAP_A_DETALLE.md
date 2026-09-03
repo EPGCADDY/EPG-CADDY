@@ -1932,3 +1932,7 @@ Alcance funcional: `index-grupal.html` y caché de `service-worker.js`. Se resta
 ### V371-R2 · contrato real de inicio de voz Safari
 
 Las capturas físicas rechazaron V371-R1: la consulta transitó `ESCUCHANDO → RESPONDIENDO`, pero Safari no inició audio. El cambio queda limitado a la salida universal: `speechSynthesis` se activa dentro del toque original y una respuesta sólo cuenta como hablada después de `utterance.onstart`; si no comienza en 2 s, se cancela y muestra error recuperable. Registro, dictado de scores, escritor, cálculos, persistencia, tarjeta, clima, tráfico y Producción permanecen intactos. `service-worker.js` invalida la copia R1 y `test-v370-native-spanish-fast-close.mjs` bloquea el falso éxito sin `onstart`.
+
+### V371-R3 · audio mexicano servidor para Safari
+
+Las pruebas físicas del Preview R2 y los logs de las 15:06–15:07 Guatemala confirmaron `/api/universal-ai` 200 seguido de `browser_fallback_query_failed`: la respuesta existía, pero Safari no disparó `utterance.onstart`. El cambio se limita a la salida audible universal. `/api/voice-speech` genera MP3 con Onyx a 0.90 e instrucciones estrictas de español mexicano neutro; el elemento `Audio` activado en el toque reproduce el MP3 y sólo declara éxito después de `onplay`. La voz local `es-*` queda como último respaldo. Registro, dictado y aplicación de scores, cálculos, persistencia y tarjeta no se modifican. Producción permanece intacta.

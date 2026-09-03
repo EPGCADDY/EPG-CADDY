@@ -19,7 +19,7 @@
 <meta name="gscg-universal-voice-in-place" content="V367-UNIVERSAL-VOICE-IN-PLACE-20260828">
 <meta name="gscg-canonical-home-entry" content="V368-CANONICAL-HOME-ENTRY-20260829">
 <meta name="gscg-voice-weather-traffic-recovery" content="V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-20260903">
-<meta name="gscg-native-spanish-one-shot-voice" content="V371-R2-IOS-SPEECH-START-CONTRACT-20260903">
+<meta name="gscg-native-spanish-one-shot-voice" content="V371-R3-SERVER-MEXICAN-AUDIO-20260903">
 <meta name="gscg-ai-voice" content="IOS-ES-MX-0.90-NATIVE-MEXICAN-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -2491,10 +2491,28 @@ async function speakAiUniversalMaleBrowserFallback(clean){
 }
 async function speakAiUniversalText(text,{repeat=false}={}){
   const clean=String(text||"").trim();if(!clean||aiUniversalMuted)return false;
-  aiUniversalSetState("PREPARANDO VOZ MEXICANA…",{busy:true});
-  if(await speakAiUniversalMaleBrowserFallback(clean))return true;
-  setPrimaryVoiceMatrix("error",voiceContext,"VOZ EN ESPAÑOL NO DISPONIBLE · REVISA LAS VOCES DE iOS");
-  aiUniversalSetState("VOZ EN ESPAÑOL NO DISPONIBLE · REVISA LAS VOCES DE iOS");return false;
+  try{
+    aiUniversalSetState("PREPARANDO VOZ MEXICANA…",{busy:true});
+    const response=await fetch(window.gscgApiUrl("/api/voice-speech"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:clean,language:"es-MX"})});
+    if(!response.ok)throw new Error("MEXICAN_TTS_UNAVAILABLE");
+    const blob=await response.blob();if(!blob.size)throw new Error("MEXICAN_TTS_EMPTY");
+    if(typeof Audio!=="function")throw new Error("AUDIO_UNAVAILABLE");
+    if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(blob);
+    const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.volume=1;player.playbackRate=1;
+    let started=false;
+    player.onplay=()=>{started=true;aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ MEXICANA · ONYX 0.90",{busy:true})};
+    player.onended=()=>{setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
+    player.onerror=()=>{reportVoiceHealth("browser_fallback_speech_failed");setPrimaryVoiceMatrix("error",voiceContext,"NO PUDE REPRODUCIR LA VOZ")};
+    await player.play();
+    if(!started)await new Promise(resolve=>setTimeout(resolve,80));
+    if(!started)throw new Error("MEXICAN_TTS_NOT_STARTED");
+    return true;
+  }catch(error){
+    reportVoiceHealth("browser_fallback_speech_failed");
+    if(await speakAiUniversalMaleBrowserFallback(clean))return true;
+    setPrimaryVoiceMatrix("error",voiceContext,"VOZ EN ESPAÑOL NO DISPONIBLE · INTENTA DE NUEVO");
+    aiUniversalSetState("VOZ EN ESPAÑOL NO DISPONIBLE · INTENTA DE NUEVO");return false;
+  }
 }
 function stopAiUniversalOutput(){
   aiUniversalTextAbortController?.abort();aiUniversalTextAbortController=null;aiUniversalTextBusy=false;

@@ -1,18 +1,18 @@
 {
   "version": "V370-NATIVE-SPANISH-FAST-CLOSE-OIDC-INTOCABLES",
-  "generatedAt": "2026-09-03T20:37:45Z",
+  "generatedAt": "2026-09-03T21:14:27Z",
   "sourceFileCount": 394,
-  "sourceDigest": "64d7227f56a03e625fbaef99d5ce7e4b80f75613c7777098f34d780bfb1a1110",
+  "sourceDigest": "98c2fbec0b43f6b5d98f187d81f4f8395ca692496dd4ff960a5e7db84eb5e112",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 206565,
-      "sha256": "d66c9009f833739ccef60a5df4a91a3c0e6e0cd0013a8c9b003d9cd08a44c4a3"
+      "size": 206892,
+      "sha256": "c33e99fff5e594160163d7aea52499898311eed56e22ad76e820a45fcddb17c9"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 233120,
-      "sha256": "ba62d15c2343e4eda48baf3c3964afdf9541e591e262d7f4ab42972dac031344"
+      "size": 233529,
+      "sha256": "4b3df310d48e0c2e8bc6de4ac3daf81aaf13a0b4a19c8cd34c3736dbda1c90b4"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

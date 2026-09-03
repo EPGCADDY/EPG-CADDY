@@ -16,7 +16,7 @@ for(const file of ["test-v358-ios-score-universal-physical-recovery.mjs","test-v
 
 const direct=cedarSpeechPayload("Respuesta", "es-GT");
 assert.equal(direct.model,"gpt-4o-mini-tts");
-assert.equal(direct.voice,"cedar");
+assert.equal(direct.voice,"onyx");
 const gateway=cedarGatewayPayload("Respuesta", "es-GT");
 assert.deepEqual(gateway,{text:"Respuesta",voice:"onyx",speed:.9,outputFormat:"mp3"});
 assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1-hd"/);
@@ -24,7 +24,7 @@ assert.match(speech,/X-GSCG-Voice/);
 assert.match(html,/IOS-ES-MX-0\.90-NATIVE-MEXICAN-SPANISH/);
 assert.match(html,/PREPARANDO VOZ MEXICANA/);
 const mexicanSpeech=html.slice(html.indexOf("async function speakAiUniversalText"),html.indexOf("function stopAiUniversalOutput"));
-assert.doesNotMatch(mexicanSpeech,/X-GSCG-Voice|CEDAR|ONYX|\/api\/voice-speech/);
+assert.match(mexicanSpeech,/ONYX 0\.90|\/api\/voice-speech/);
 
 assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000/);
 const watchdogStart=html.indexOf("function scheduleBrowserVoiceFirstResultTimeout");

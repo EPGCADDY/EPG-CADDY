@@ -1493,3 +1493,7 @@ La salida hablada de Comunicación Universal, clima y tráfico deja de usar Ceda
 ### V371-R2 · voz iniciada, no sólo solicitada
 
 V371-R1 queda rechazada por las capturas físicas: Safari recibió la respuesta pero no inició la síntesis. R2 activa `speechSynthesis` en el mismo toque del micrófono y sólo declara éxito desde `onstart`; un guard de 2 s cancela una cola muda y deja un error recuperable. El parche no modifica Registro, scores, cálculos, persistencia, tarjeta ni proveedores de clima/tráfico. Producción permanece intacta.
+
+### V371-R3 · salida universal audible independiente de Web Speech
+
+Evidencia física R2: tres consultas recibieron respuesta HTTP 200, pero Safari no inició `SpeechSynthesisUtterance` y el cliente mostró error. R3 restaura únicamente el transporte MP3 de `/api/voice-speech`, ahora con voz Onyx, velocidad 0.90 e instrucción explícita de español mexicano neutro sin Spanglish. El éxito requiere `Audio.onplay`; el respaldo local nunca selecciona voces inglesas. Registro, Score, motores deportivos, persistencia, diseño y Producción permanecen intocables.
