@@ -19,7 +19,7 @@
 <meta name="gscg-universal-voice-in-place" content="V367-UNIVERSAL-VOICE-IN-PLACE-20260828">
 <meta name="gscg-canonical-home-entry" content="V368-CANONICAL-HOME-ENTRY-20260829">
 <meta name="gscg-voice-weather-traffic-recovery" content="V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-20260903">
-<meta name="gscg-native-spanish-one-shot-voice" content="V370-NATIVE-SPANISH-FAST-CLOSE-20260903">
+<meta name="gscg-native-spanish-one-shot-voice" content="V370-R1-IOS-SPANISH-VOICE-20260903">
 <meta name="gscg-ai-voice" content="CEDAR-0.90-MALE-INTERNATIONAL-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -2460,9 +2460,9 @@ function preferredMaleBrowserVoice(language){
   if(!("speechSynthesis" in window))return null;
   const voices=window.speechSynthesis.getVoices?.()||[],base=String(language||"es").toLowerCase().split("-")[0];
   const maleName=/\b(cedar|onyx|jorge|diego|carlos|enrique|alberto|antonio|pablo|raul|juan|felipe|andres|ángel|angel|alex|mario|ricardo|oscar|martin|male|masculino|hombre)\b/i;
-  const native=voices.filter(voice=>String(voice.lang||"").toLowerCase().startsWith(base)&&maleName.test(`${voice.name||""} ${voice.voiceURI||""}`));
+  const native=voices.filter(voice=>String(voice.lang||"").toLowerCase().startsWith(base));
   const localeRank=lang=>/^es-(mx|us|419)/i.test(lang)?40:/^es-(gt|cr|co|ar|cl|pe|uy)/i.test(lang)?35:/^es-es/i.test(lang)?30:10;
-  const ranked=native.map((voice,index)=>({voice,index,score:localeRank(String(voice.lang||""))+(voice.localService?5:0)})).sort((a,b)=>b.score-a.score||a.index-b.index);
+  const ranked=native.map((voice,index)=>({voice,index,score:(maleName.test(`${voice.name||""} ${voice.voiceURI||""}`)?100:0)+localeRank(String(voice.lang||""))+(voice.localService!==false?5:0)})).sort((a,b)=>b.score-a.score||a.index-b.index);
   return ranked[0]?.voice||null;
 }
 function waitForPreferredMaleBrowserVoice(language,timeoutMs=1600){
@@ -2482,16 +2482,9 @@ async function speakAiUniversalMaleBrowserFallback(clean){
 }
 async function speakAiUniversalText(text,{repeat=false}={}){
   const clean=String(text||"").trim();if(!clean||aiUniversalMuted)return false;
-  // La experiencia física aprobada para Caddie es exclusivamente española.
-  // No se permite caer a Cedar/Onyx ni inferir inglés por una palabra aislada:
-  // si iOS no expone una voz es-*, se informa el bloqueo y no se reproduce
-  // Spanglish con un locutor multilingüe.
+  // Cedar 0.90 es el locutor principal; Safari usa exclusivamente una voz es-*
+  // como recuperación para que iOS nunca deje la respuesta muda.
   const speechLanguage="es-MX";
-  if(await speakAiUniversalMaleBrowserFallback(clean))return true;
-  setPrimaryVoiceMatrix("error",voiceContext,"VOZ ESPAÑOLA NATIVA NO DISPONIBLE · REVISA LAS VOCES DE iOS");
-  aiUniversalSetState("VOZ ESPAÑOLA NATIVA NO DISPONIBLE · REVISA LAS VOCES DE iOS");
-  return false;
-  /* istanbul ignore next -- los demás idiomas no forman parte del perfil físico Caddie V370 */
   if(Date.now()<cedarSpeechServerBlockedUntil){
     aiUniversalSetState("PREPARANDO LOCUTOR MASCULINO…",{busy:true});
     if(await speakAiUniversalMaleBrowserFallback(clean))return true;
@@ -2499,7 +2492,7 @@ async function speakAiUniversalText(text,{repeat=false}={}){
   }
   try{
     aiUniversalSetState("PREPARANDO VOZ CEDAR…",{busy:true});
-    const response=await fetch(window.gscgApiUrl("/api/voice-speech"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:clean,language:aiUniversalSpeechLanguage(clean)})});
+    const response=await fetch(window.gscgApiUrl("/api/voice-speech"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:clean,language:speechLanguage})});
     if(!response.ok){if(response.status===429||response.status===503)cedarSpeechServerBlockedUntil=Date.now()+CEDAR_SPEECH_RETRY_MS;throw new Error("CEDAR_TTS_UNAVAILABLE")}
     const deliveredVoice=String(response.headers?.get?.("X-GSCG-Voice")||"cedar").toLowerCase();
     const blob=await response.blob();if(!blob.size)throw new Error("CEDAR_TTS_EMPTY");

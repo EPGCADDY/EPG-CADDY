@@ -1,5 +1,9 @@
 # ROADMAP OVERALL
 
+## V370-R1 · Cedar principal y recuperación española compatible con iOS
+
+La prueba física del 3 de septiembre mostró que Safari no exponía ninguna voz que coincidiera con la lista cerrada de nombres masculinos y la aplicación quedaba muda. V370-R1 conserva Cedar 0.90 como locutor principal, fuerza español `es-MX` y, si el servicio está limitado, elige cualquier voz `es-*` que iOS exponga, priorizando nombre masculino y español latino. No cambia Registro, Score Card, cálculos, persistencia ni Producción. El caché instalable cambia a `v370-r1-ios-spanish-voice`.
+
 ![ROADMAP OVERALL · Golf Score Card GT](ROADMAP_OVERALL_V291.png)
 
 ## V332 · moneda dual y matriz completa de seguimiento

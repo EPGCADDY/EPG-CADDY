@@ -1,5 +1,15 @@
 # ROADMAP A DETALLE
 
+## Registro técnico V370-R1 · recuperación de voz española en Safari iOS
+
+| Archivo | Cambio limitado | Verificación |
+|---|---|---|
+| `index-grupal.html` | Cedar 0.90 primero; respaldo `es-*` sin filtro masculino excluyente; idioma `es-MX`. | Nunca usar una voz inglesa ni dejar la respuesta muda porque iOS no publique género. |
+| `service-worker.js` | Caché `v370-r1-ios-spanish-voice`. | El iPhone recibe el shell corregido. |
+| `test-v370-native-spanish-fast-close.mjs` | Fija prioridad Cedar, español y respaldo Safari. | Regresión junto con V358, V362 y V369. |
+
+Producción permanece intacta. La dicción física final sólo puede aprobarse en el iPhone del propietario.
+
 ## Registro técnico V332 · moneda dual y matriz común de información
 
 El propietario amplía `PEND-SKI-006`: todos los juegos nuevos deben ofrecer dos casillas excluyentes, `Q · QUETZALES` y `$ · DÓLARES`, guardar la selección y usarla sin conversiones ni mezclas en todo resultado. También exige una arquitectura de información completa y comprensible para quien desconoce las apuestas de golf.
