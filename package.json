@@ -1,11 +1,8 @@
 {
   "name": "golf-score-card-gt",
   "private": true,
-  "engines": {
-    "node": "22.x"
-  },
+  "engines": { "node": "22.x" },
   "dependencies": {
-    "@ai-sdk/gateway": "^4.0.74",
     "@capacitor/android": "8.5.0",
     "@capacitor/core": "8.5.0",
     "@capacitor/ios": "8.5.0",
@@ -39,7 +36,6 @@
     "voice:weather-traffic-recovery-gate": "node test-v369-physical-voice-weather-traffic-recovery.mjs",
     "voice:native-spanish-fast-close-gate": "node test-v370-native-spanish-fast-close.mjs",
     "universal:spanish-only-gate": "node test-v371-spanish-only-universal.mjs",
-    "voice:gateway-realtime-gate": "node test-v372-gateway-realtime-streaming.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

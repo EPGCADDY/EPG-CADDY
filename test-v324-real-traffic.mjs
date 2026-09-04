@@ -52,10 +52,7 @@ const routeResult=await computeTrafficRoute({
 },{
   apiKey:"google-test-key",
   nowMs:Date.parse("2026-08-26T20:00:00Z"),
-  fetchImpl:async(url,options)=>{
-    if(String(url).startsWith("https://maps.googleapis.com/maps/api/geocode/json"))return{ok:true,json:async()=>({results:[{address_components:[{short_name:"GT",types:["country"]}]}]})};
-    routesRequest={url,options};return{ok:true,json:async()=>({routes:[{duration:"1800s",staticDuration:"1440s",distanceMeters:17200}]})}
-  }
+  fetchImpl:async(url,options)=>{routesRequest={url,options};return{ok:true,json:async()=>({routes:[{duration:"1800s",staticDuration:"1440s",distanceMeters:17200}]})}}
 });
 assert.equal(routeResult.ok,true);
 assert.equal(routeResult.delayMinutes,6);
@@ -68,7 +65,6 @@ assert.equal(routePayload.travelMode,"DRIVE");
 assert.equal(routePayload.departureTime,"2026-08-27T00:00:00.000Z");
 assert.deepEqual(routePayload.origin.location.latLng,{latitude:14.6349,longitude:-90.5069});
 assert.equal(routePayload.destination.address,"Pradera Concepción, Guatemala");
-assert.equal(routePayload.regionCode,"GT");
 
 assert.equal((await computeTrafficRoute({destination:"Pradera"},{apiKey:"google-test-key"})).error,"TRAFFIC_ORIGIN_REQUIRED");
 assert.equal((await computeTrafficRoute({origin:"El Pulté"},{apiKey:"google-test-key"})).error,"TRAFFIC_DESTINATION_REQUIRED");
@@ -90,7 +86,6 @@ try{
   const calls=[];
   globalThis.fetch=async(url,options)=>{
     calls.push({url:String(url),options});
-    if(String(url).includes("maps.googleapis.com/maps/api/geocode"))return{ok:true,json:async()=>({results:[{address_components:[{short_name:"GT",types:["country"]}]}]})};
     if(String(url).includes("routes.googleapis.com"))return{ok:true,json:async()=>({routes:[{duration:"2040s",staticDuration:"1500s",distanceMeters:18400}]})};
     throw new Error("La consulta directa de tráfico no debe depender de OpenAI");
   };

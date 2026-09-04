@@ -1,18 +1,18 @@
 {
-  "version": "V372-GATEWAY-REALTIME-STREAMING-INTOCABLES",
-  "generatedAt": "2026-09-04T03:27:12Z",
-  "sourceFileCount": 399,
-  "sourceDigest": "dd2c3a9ba8789d05a36ff4dada7408cbbcf9dba3db88622a9a32b115d59c54ff",
+  "version": "V371-R10-TURN-AUDIO-RESET-INTOCABLES",
+  "generatedAt": "2026-09-04T02:13:01Z",
+  "sourceFileCount": 395,
+  "sourceDigest": "83a210d2012001eb1115b94ea98a312ba05fe29ecc53b3fd183b18b033c13226",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 212473,
-      "sha256": "dcf6d7008fd9a257727099593503dd9f21b805c52cf091a91960a4d0ec1debc2"
+      "size": 210550,
+      "sha256": "26ff4b32b0cfa0cac0e52d5079fbdc5d5e53627389fea2745184b7e18f862ff1"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 240047,
-      "sha256": "a3964b62fb05a92c7f3e40244287a84f6eed793cb6db06f6a54002e98fb3f582"
+      "size": 237587,
+      "sha256": "f77685d3288322030c5d65c1cc38549c7321a967db0b4a44361809e227f15a77"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

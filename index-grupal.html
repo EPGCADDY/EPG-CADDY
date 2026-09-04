@@ -19,7 +19,7 @@
 <meta name="gscg-universal-voice-in-place" content="V367-UNIVERSAL-VOICE-IN-PLACE-20260828">
 <meta name="gscg-canonical-home-entry" content="V368-CANONICAL-HOME-ENTRY-20260829">
 <meta name="gscg-voice-weather-traffic-recovery" content="V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-20260903">
-<meta name="gscg-native-spanish-one-shot-voice" content="V372-GATEWAY-REALTIME-STREAMING-20260904">
+<meta name="gscg-native-spanish-one-shot-voice" content="V371-R10-TURN-AUDIO-RESET-20260904">
 <meta name="gscg-ai-voice" content="IOS-ES-MX-0.90-NATIVE-MEXICAN-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -833,7 +833,7 @@ body.gsc-live-open .gsc-live-launch{display:none!important}
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
 <div class="mandatory-update" id="mandatoryUpdate" role="dialog" aria-modal="true" aria-labelledby="mandatoryUpdateTitle"><div class="mandatory-update-card"><h1 id="mandatoryUpdateTitle">ACTUALIZACIÓN OBLIGATORIA</h1><p>HAY UNA NUEVA VERSIÓN DE GOLF SCORE CARD GUATEMALA. PARA PROTEGER LOS CÁLCULOS, LOS DATOS Y LAS FUNCIONES, DEBES ACTUALIZAR ANTES DE CONTINUAR.</p><button type="button" id="mandatoryUpdateButton">ACTUALIZAR</button></div></div>
-<script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script><script src="./gateway-realtime.js"></script>
+<script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
 "use strict";
 const GSC_API_ORIGIN=String(window.GSC_API_ORIGIN||"").replace(/\/$/,"");
@@ -2501,12 +2501,6 @@ async function speakAiUniversalMaleBrowserFallback(clean){
 }
 async function speakAiUniversalText(text,{repeat=false}={}){
   const clean=String(text||"").trim();if(!clean||aiUniversalMuted)return false;
-  if(window.GSCGatewayRealtime){
-    try{
-      await window.GSCGatewayRealtime.speakExact(clean);
-      reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true});return true
-    }catch(error){console.error("Gateway Realtime TTS:",error)}
-  }
   try{
     aiUniversalSetState("PREPARANDO VOZ MEXICANA…",{busy:true});
     const response=await fetch(window.gscgApiUrl("/api/voice-speech"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:clean,language:"es-MX"})});
@@ -4844,13 +4838,8 @@ async function ensureSession(){
 }
 async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL){
   voiceLastErrorMessage="";
-  if(window.GSCGatewayRealtime?.listening){window.GSCGatewayRealtime.stopCapture();setPrimaryVoiceMatrix("responding",context);return true}
   if(browserVoiceActive||browserVoiceRequested){stopBrowserVoiceFallback({keepStatus:true,processPending:true});return true}
   releaseAiUniversalPlaybackForListening();
-  if(!listening&&gestureSafeBrowserVoicePreferred()&&window.GSCGatewayRealtime){
-    voiceContext=context;setMicConnecting(context,false);if(context==="round")resetRoundCapture();if(context==="setup"&&(setupFinalizeRequested||setupLocked))resetSetupCapture();
-    try{await window.GSCGatewayRealtime.startCapture(context);listening=true;phase="listening";setPrimaryVoiceMatrix("listening",context);voiceLastErrorMessage="MICRÓFONO REALTIME ACTIVO";return true}catch(error){console.error("Gateway Realtime:",error);voiceLastErrorMessage=""}
-  }
   // En Safari/iPhone la autorización del gesto se pierde si primero esperamos
   // la sesión Realtime. La captura local debe abrirse en el mismo toque para
   // que un 429 remoto no deje sin score ni comunicación universal.
@@ -4934,13 +4923,6 @@ async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPER
     voiceActivationContext=null;
   }
 }
-if(window.GSCGatewayRealtime)window.GSCGatewayRealtime.configure({
-  transcript:({text,context})=>{listening=false;phase="processing";document.querySelectorAll(".mic-wrap.active,.mic-round-wrap.active").forEach(node=>node.classList.remove("active"));setPrimaryVoiceMatrix("responding",context);void processBrowserVoiceTranscript(context,text).catch(error=>{console.error("Gateway transcript:",error);setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA")})},
-  state:state=>{if(state==="listening"){listening=true;phase="listening";setPrimaryVoiceMatrix("listening",voiceContext)}},
-  audioStart:()=>{setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true})},
-  audioEnd:()=>{phase="idle";setPrimaryVoiceMatrix("idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")},
-  error:error=>{console.error("Gateway Realtime:",error);listening=false;phase="idle";setPrimaryVoiceMatrix("error",voiceContext,"RECONOCIMIENTO DE VOZ NO DISPONIBLE")}
-});
 function dateSetup(){const d=new Date(),date=new Intl.DateTimeFormat("es-GT",{day:"2-digit",month:"long",year:"numeric"}).format(d).toUpperCase();$("confirmDate").textContent=date}
 let lastAiUniversalGestureAt=0;
 function openAiUniversalAndListen(event){

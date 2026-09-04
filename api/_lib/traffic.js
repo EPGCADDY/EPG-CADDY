@@ -1,5 +1,4 @@
 const ROUTES_ENDPOINT="https://routes.googleapis.com/directions/v2:computeRoutes";
-const GEOCODING_ENDPOINT="https://maps.googleapis.com/maps/api/geocode/json";
 const ROUTES_TIMEOUT_MS=15_000;
 const MAX_PLACE_LENGTH=240;
 
@@ -27,29 +26,6 @@ function waypoint(place,coordinates){
   if(point)return{location:{latLng:point}};
   const address=cleanPlace(place);
   return address&&!deicticOrigin(address)?{address}:null;
-}
-
-function countryCodeFromGeocoding(payload){
-  for(const result of Array.isArray(payload?.results)?payload.results:[]){
-    for(const component of Array.isArray(result?.address_components)?result.address_components:[]){
-      if(Array.isArray(component?.types)&&component.types.includes("country")){
-        const code=String(component.short_name||"").trim().toUpperCase();
-        if(/^[A-Z]{2}$/.test(code))return code;
-      }
-    }
-  }
-  return"";
-}
-
-export async function resolveTrafficRegionCode(coordinates,{apiKey,fetchImpl=fetch,signal}={}){
-  const point=cleanCoordinates(coordinates);
-  if(!point||!apiKey)return"";
-  const query=new URLSearchParams({latlng:`${point.latitude},${point.longitude}`,result_type:"country",key:apiKey});
-  try{
-    const response=await fetchImpl(`${GEOCODING_ENDPOINT}?${query}`,{method:"GET",signal});
-    if(!response.ok)return"";
-    return countryCodeFromGeocoding(await response.json().catch(()=>null));
-  }catch{return""}
 }
 
 function durationSeconds(value){
@@ -116,10 +92,6 @@ export async function computeTrafficRoute(request={},options={}){
   const timeoutMs=Number.isFinite(Number(options.timeoutMs))?Math.max(1,Number(options.timeoutMs)):ROUTES_TIMEOUT_MS;
   const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),timeoutMs);
   try{
-    const requestedRegion=cleanPlace(request.regionCode).toUpperCase();
-    const regionCode=/^[A-Z]{2}$/.test(requestedRegion)
-      ?requestedRegion
-      :await resolveTrafficRegionCode(originCoordinates,{apiKey,fetchImpl:options.fetchImpl||fetch,signal:controller.signal});
     const response=await (options.fetchImpl||fetch)(ROUTES_ENDPOINT,{
       method:"POST",
       signal:controller.signal,
@@ -134,7 +106,6 @@ export async function computeTrafficRoute(request={},options={}){
         routingPreference:"TRAFFIC_AWARE_OPTIMAL",
         computeAlternativeRoutes:false,
         languageCode:cleanPlace(request.languageCode)||"es-419",
-        ...(regionCode?{regionCode}:{}),
         units:"METRIC",
         ...(departureTime?{departureTime}:{})
       })
