@@ -1982,3 +1982,5 @@ La candidata incorporó `api/realtime-gateway-token.js`, `gateway-realtime.js`, 
 | `test-v324-real-traffic.mjs` | Simula geocodificación inversa en Guatemala. | Exige `regionCode="GT"` antes de aceptar la ruta. |
 
 Evidencia de causa: los tokens Realtime 2.1 y Realtime mini fueron rechazados con 403, mientras el panel AI Gateway mostró crédito disponible. El reporte completo está en `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V373_TRANSPORTE_VOZ_SERVIDOR/REPORTE_V373_RC042.md`. Producción permanece intacta.
+
+Sello de publicación: V373 se despliega únicamente como Preview de `lab/recovery-production-approved-v363`; `main` y Producción quedan excluidos.

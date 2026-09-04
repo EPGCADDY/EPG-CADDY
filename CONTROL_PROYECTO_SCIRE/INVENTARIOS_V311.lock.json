@@ -1,18 +1,18 @@
 {
   "version": "V371-R10-TURN-AUDIO-RESET-INTOCABLES",
-  "generatedAt": "2026-09-04T05:59:22Z",
+  "generatedAt": "2026-09-04T06:11:36Z",
   "sourceFileCount": 399,
-  "sourceDigest": "19d66734040c9f463f4f1f223af3170af2efefce967d8ee81bd1fea40788ba4e",
+  "sourceDigest": "4cb0abcdbe8bbe3ced619d3b8fdbbda4892a2c4ed3e2c32d6bf5c9cd2ec9913d",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 212571,
-      "sha256": "b486f29ff255fc51df446911d2521f0cd18d35d9d4a6ce27626f7dc58a16a6e8"
+      "size": 212691,
+      "sha256": "204090145ddaa92805629e77617d8d84210e9d5a7f33a332b0e2b5a2ceb1f309"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 240351,
-      "sha256": "7981bafa768cd72d2d68911761bd78021491813bdf2fdfa28756be571638d4f6"
+      "size": 240481,
+      "sha256": "54b4bb02b125aff59dc438864e0aacca07820ddb87726bdbd162043a3bd0a2cc"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
