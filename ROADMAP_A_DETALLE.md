@@ -1,5 +1,20 @@
 # ROADMAP A DETALLE
 
+## Registro técnico V376-R1 · instalación iPhone con Historial recuperado
+
+| Archivo | Control V376-R1 | Resultado exigido |
+|---|---|---|
+| `index-grupal.html` | `EMPTY INSTALLED PREVIEW RECOVERY` | `source=pwa` recupera la ronda del 4 de septiembre sólo en el hostname del Preview V376 y únicamente cuando la instalación no posee una ronda activa recuperable. |
+| `index-grupal.html` | `NO DUPLICATE / NO OVERWRITE` | Una tarjeta recuperada ya cerrada no se duplica y una ronda activa posterior jamás se reemplaza por la recuperación histórica. |
+| `service-worker.js` | `V376-R1 INSTALLED RECOVERY` | Renueva la caché para que el mismo ícono instalado reciba el arranque corregido mediante la estrategia de navegación network-first. |
+| `test-v376-stableford-continuity-recovery.mjs` | Regresión instalada | Exige origen PWA, hostname Preview, instalación vacía y bloqueo de duplicados oficiales. |
+| `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Regresión de caché | Fijan la revisión R1 del shell instalado sin modificar los controles de voz. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | `RC-051` | Registra la separación de almacenamiento observada físicamente y su candado permanente. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Inventario funcional | Registra el alcance exacto del hotfix instalado. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Trazabilidad | Ambos ROADMAPS y el sello se publican juntos. |
+
+Producción permanece intacta. El propietario no debe borrar ni reinstalar el ícono: la misma instalación recibe la corrección al volver a abrir con conexión.
+
 ## Registro técnico V376 · continuidad e Historial Stableford
 
 | Archivo | Control V376 | Resultado exigido |

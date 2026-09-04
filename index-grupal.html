@@ -1305,7 +1305,12 @@ function restorePersistedRound(){
   return false;
 }
 function recoverStablefordRoundSeptember4(){
-  if(startupParams.get("recover_stableford")!=="20260904")return false;
+  const recoveryId="round-stableford-20260904-recovered";
+  const requestedByLink=startupParams.get("recover_stableford")==="20260904";
+  const requestedByEmptyInstalledPreview=startupParams.get("source")==="pwa"&&location.hostname.startsWith("epg-caddy-git-v376-stableford-continu-")&&!isRecoverableStoredRound(loadRound());
+  if(!requestedByLink&&!requestedByEmptyInstalledPreview)return false;
+  const alreadyArchived=readRoundArchive().some(item=>item?.id===recoveryId&&item?.officiallyClosedAt&&item?.officialSnapshot?.status==="officially_closed");
+  if(alreadyArchived)return false;
   activateCourse("pulte");
   const scores={
     [["JAI","ME"].join("")]:[4,5,4,6,3,6,7,5,5,3,6,4,4,6,5,5,3,4],
@@ -1319,7 +1324,7 @@ function recoverStablefordRoundSeptember4(){
     values.forEach((gross,offset)=>{const hole=offset+1;player.holes[hole]={...scoreObject(player,hole,gross),points:GSCStableford.pointsFor(gross,PAR[offset])}});
     player.lastHole=18;return player;
   });
-  round={id:"round-stableford-20260904-recovered",version:2,mode:"stableford",stablefordCategory:"senior",stablefordRoundNumber:1,configured:true,provisional:false,courseKey:"pulte",course:"El Pulté",tournament:null,sideGames:normalizeSideGames(),players,announced:{front:true,back:true,complete:true},weather:null,createdAt,updatedAt:new Date().toISOString(),endedAt:createdAt,durationSeconds:null,timerLastInstructionAt:createdAt,recoveredFrom:"capturas-2026-09-04"};
+  round={id:recoveryId,version:2,mode:"stableford",stablefordCategory:"senior",stablefordRoundNumber:1,configured:true,provisional:false,courseKey:"pulte",course:"El Pulté",tournament:null,sideGames:normalizeSideGames(),players,announced:{front:true,back:true,complete:true},weather:null,createdAt,updatedAt:new Date().toISOString(),endedAt:createdAt,durationSeconds:null,timerLastInstructionAt:createdAt,recoveredFrom:"capturas-2026-09-04"};
   persist();
   try{const clean=new URL(location.href);clean.searchParams.delete("recover_stableford");history.replaceState(null,"",clean.toString())}catch{}
   return true;

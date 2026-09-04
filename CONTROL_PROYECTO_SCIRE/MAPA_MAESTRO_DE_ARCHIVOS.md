@@ -1,5 +1,9 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## V376-R1 · recuperación en la aplicación instalada
+
+`index-grupal.html`, `service-worker.js` y `test-v376-stableford-continuity-recovery.mjs` corrigen y bloquean el primer arranque vacío del ícono instalado en el Preview V376. `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` registra `RC-051`; `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` conservan la trazabilidad reproducible. Producción permanece intacta.
+
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
 Archivos activos rastreados al corte V353: **359**.

@@ -1,5 +1,11 @@
 # ROADMAP OVERALL
 
+## V376-R1 · recuperación dentro del ícono instalado · 4 de septiembre de 2026
+
+La prueba física del propietario confirmó que Safari archivaba la ronda recuperada, pero el ícono agregado a la pantalla de inicio abría con `source=pwa` dentro de un almacenamiento separado y mostraba Historial vacío. V376-R1 permite que únicamente el Preview V376, al abrirse como aplicación instalada y no encontrar ninguna ronda recuperable, reconstruya una sola vez la ronda Stableford del 4 de septiembre. Si existe una ronda activa no la sustituye; si la ronda recuperada ya está oficialmente archivada no la duplica; después de `NUEVA RONDA` conserva el archivo anterior y reabre la ronda vigente. Producción permanece intacta.
+
+Archivos exactos V376-R1: `index-grupal.html`, `service-worker.js`, `test-v376-stableford-continuity-recovery.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
 ## V376 · continuidad, Historial automático y recuperación Stableford · 4 de septiembre de 2026
 
 Stableford deja de ser excluido de la llave canónica de ronda activa. Cerrar o reabrir la PWA conserva la última ronda configurada —completa o parcial— hasta que el propietario pulse `NUEVA RONDA`. Una ronda de 18 hoyos completos se cierra oficialmente y entra al Historial automáticamente al tocar `TARJETA DIGITAL` o `NUEVA RONDA`; ninguna ronda parcial aparece en el Historial oficial.
