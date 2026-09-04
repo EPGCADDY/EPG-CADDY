@@ -6,7 +6,7 @@ La evidencia real del Preview V374-R2 separó dos causas. En Score Card, la capt
 
 AI UNIVERSAL tenía una credencial Gateway operativa, pero ejecutaba primero tres intentos directos; ante saldo agotado, esa secuencia podía consumir casi todo el límite de 55 segundos. V375 usa primero el Gateway ya configurado y conserva OpenAI directo como recuperación si el Gateway falla. No reduce profundidad, idioma español neutral ni capacidad universal.
 
-Archivos funcionales exactos: `server-voice-capture.js`, `api/universal-ai.js` y `service-worker.js`. Control: `test-v375-fast-universal-sensitive-score.mjs`, auditoría, paquete, ambos ROADMAPS, RC-055 e inventario. Registro de Jugadores, parser/escritor de Score, cálculos, persistencia, navegación, interfaz aprobada y Producción permanecen intactos.
+Archivos funcionales exactos: `server-voice-capture.js`, `api/universal-ai.js` y `service-worker.js`. Control: `test-v375-fast-universal-sensitive-score.mjs`, `test-v321-ai-universal-infinity.mjs`, auditoría, paquete, ambos ROADMAPS, RC-055 e inventario. La prueba V321 acepta determinísticamente el modelo directo o el modelo Gateway según la credencial del entorno; V375 exige que LAB use Gateway primero. Registro de Jugadores, parser/escritor de Score, cálculos, persistencia, navegación, interfaz aprobada y Producción permanecen intactos.
 
 ## V370-R1 · Cedar principal y recuperación española compatible con iOS
 

@@ -8,6 +8,7 @@
 | `api/universal-ai.js` | Si existe token Gateway, lo intenta antes de los tres proveedores directos; ante fallo recuperable conserva la cadena directa. | Mantiene GPT-5.6, profundidad adaptable y español neutral; no introduce espera artificial. |
 | `service-worker.js` | Invalida la copia V374 para que Safari reciba el transporte corregido. | Sin cambios de pantalla ni navegación. |
 | `test-v375-fast-universal-sensitive-score.mjs` | Exige Gateway como primera y única llamada exitosa, umbrales separados y la frase exacta `Hoyo 1 Juan cuatro Pedro cinco Luis seis Tomás cuatro`. | Los cuatro scores deben quedar en el hoyo 1 sin repetirlo. |
+| `test-v321-ai-universal-infinity.mjs` | Valida el modelo real del transporte seleccionado por el entorno. | V375 sigue exigiendo Gateway primero cuando LAB tiene credencial. |
 
 La entrega exige tres auditorías completas consecutivas sobre el mismo commit, Preview READY, comprobación viva y Producción intacta. La prueba física final del iPhone continúa separada.
 

@@ -104,8 +104,9 @@ assert.deepEqual(sanitizeUniversalAppContext({course:"El Pulté",mode:"match_pla
 assert.deepEqual(summarizeUniversalResponse({output:[{type:"message",content:[{type:"output_text",text:"Respuesta completa."},{type:"refusal",refusal:""}]}]}),{ok:true,answer:"Respuesta completa.",sources:[]});
 
 const originalFetch=globalThis.fetch,originalKey=process.env.OPENAI_API_KEY;
-let upstreamBody=null;
-globalThis.fetch=async(_url,options)=>{
+let upstreamBody=null,upstreamUrl="";
+globalThis.fetch=async(url,options)=>{
+  upstreamUrl=String(url);
   upstreamBody=JSON.parse(options.body);
   return{ok:true,json:async()=>({output:[{type:"web_search_call",action:{sources:[{title:"Fuente oficial",url:"https://example.com/oficial"}]}},{type:"message",content:[{type:"output_text",text:"Dato vigente confirmado."}]}]})};
 };
@@ -116,7 +117,7 @@ try{await handler(req,res)}finally{globalThis.fetch=originalFetch;if(originalKey
 assert.equal(res.statusCode,200);
 assert.equal(res.body.answer,"Dato vigente confirmado.");
 assert.equal(res.body.sources.length,1);
-assert.equal(upstreamBody.model,"gpt-5.6");
+assert.equal(upstreamBody.model,upstreamUrl.includes("ai-gateway.vercel.sh")?"openai/gpt-5.6-sol":"gpt-5.6");
 assert.equal(upstreamBody.store,false);
 assert.equal(upstreamBody.tool_choice,"auto");
 assert.ok(upstreamBody.tools.some(tool=>tool.type==="web_search"));
