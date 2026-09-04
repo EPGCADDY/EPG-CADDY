@@ -2048,3 +2048,4 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `api/voice-speech.js`: registra longitud y tiempo de cada bloque sin cambiar modelo, idioma ni velocidad aprobados.
 - `test-v379-fast-chunked-r7-speech.mjs`: exige bloques progresivos, prefetch, telemetría y candado V378.
 - Aceptación: primer audio no más tarde que ChatGPT con misma pregunta, iPhone y red; 22 segundos es FAIL. Producción permanece intacta.
+- Publicación: el SHA del archivo principal remoto debe coincidir con el artefacto local auditado antes de declarar READY.

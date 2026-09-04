@@ -1578,3 +1578,7 @@ La revisión de la evidencia preservada confirmó que R7 fue la voz aprobada fí
 ## V379 · primera voz progresiva y blindaje físico V378 · 4 de septiembre de 2026
 
 La prueba física aprobó Registro de Jugadores y Scores individual/múltiple en V378; seis regiones exactas y sus parámetros de captura quedan sellados por SHA-256. Comunicación Universal fue rechazada por 22 segundos hasta la respuesta audible. V379 no toca esas regiones: divide únicamente la salida R7 en un primer bloque máximo de 80 caracteres y bloques posteriores de 240, prepara tres bloques en paralelo y mide milisegundos hasta `Audio.onplay`. La aceptación física exige empezar a hablar al mismo tiempo que ChatGPT o antes, comparando consecutivamente la misma pregunta en el mismo iPhone y red. Producción permanece intacta.
+
+La publicación exige además verificar que el blob remoto de `index-grupal.html` sea idéntico al auditado; una transferencia incompleta bloquea el Preview.
+
+Controles exactos: `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`, `Intocables/CONFIRMACION_ESCRITA_V378.md` y `test-v379-fast-chunked-r7-speech.mjs`.

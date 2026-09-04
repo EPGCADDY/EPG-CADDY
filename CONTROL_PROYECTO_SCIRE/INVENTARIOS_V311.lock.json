@@ -1,18 +1,18 @@
 {
   "version": "V379-FAST-CHUNKED-R7-SPEECH-AND-V378-LOCK",
-  "generatedAt": "2026-09-04T22:24:17Z",
+  "generatedAt": "2026-09-04T22:35:35Z",
   "sourceFileCount": 406,
-  "sourceDigest": "537168edbe7f991e304b9aebf4c6e6e9e86a183be340c158fdb47607f618e212",
+  "sourceDigest": "fae5ce663ae5494277b663180a15218d7c1ee1d7f63cf953f0bb21b67163e573",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 217499,
-      "sha256": "7cc73334f9de5ebffbc9e54072764203e06157c7724dbc9d36784a0bfd0b4d95"
+      "size": 218405,
+      "sha256": "bfbc8f0bbbdb97b48d01727c99d9f945a38d010917eaa620acffa73efbe4cbf9"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 247897,
-      "sha256": "3cd11bfc9d7b8817876b31625e0c116c39d23853169ce361ff5d39ee4467a38e"
+      "size": 248000,
+      "sha256": "35796621f351fc3ea8e061eace21b9518c0cab2c2f1f5499ebd2850369b3b9a8"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
