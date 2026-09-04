@@ -157,3 +157,7 @@ El snapshot LIVE incorpora únicamente el yardaje deportivo ya visible en la tar
 - Observabilidad de las dos ejecuciones: 103 respuestas `200`, dos `409` esperadas, una `410` esperada y cero logs `error`/`fatal`.
 - Limpieza verificada directamente en Neon: cero streams de prueba activos, cero snapshots de prueba retenidos y cero torneos de prueba activos.
 - La inspección visual del navegador protegido no se simula ni se marca PASS. Producción continúa exactamente en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`; el iPhone físico permanece como puerta independiente.
+
+## V375 · arquitectura móvil del espejo Stableford LIVE · 4 de septiembre de 2026
+
+La observación física del propietario rechaza las dos columnas `sticky`: al desplazar los hoyos, GROSS/PUNTOS se superponía a los nombres y el resumen perdía referencia visual. La solución obligatoria separa la tarjeta en dos paneles alineados: `JUGADOR + HOYO/PAR/YDS/GROSS/PUNTOS` permanece como tabla fija real y los 18 hoyos viven en un carril horizontal independiente. El resumen conserva el título verde `PUNTOS` fuera del desplazamiento, fija únicamente los nombres y desplaza sus seis columnas en orden IN→OUT→TOTAL. Quedan prohibidas las celdas Sticky dentro de Stableford y cualquier regreso a la tabla única V372.

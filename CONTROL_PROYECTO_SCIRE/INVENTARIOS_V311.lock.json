@@ -1,23 +1,23 @@
 {
-  "version": "V372-STABLEFORD-LIVE-MIRROR-INTOCABLES",
-  "generatedAt": "2026-09-04T02:44:41Z",
-  "sourceFileCount": 397,
-  "sourceDigest": "8341243485dd59c43de1667fdb97687055076e916a883f06fc5c0de6aa0d5e65",
+  "version": "V375-STABLEFORD-LIVE-MOBILE-INTOCABLES",
+  "generatedAt": "2026-09-04T03:37:22Z",
+  "sourceFileCount": 398,
+  "sourceDigest": "e4fa4ee148f79b1b163863c5a7fd98f14c2a31182dd2745e7bda90da92893d2a",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 210761,
-      "sha256": "660ddfaec2b6d5b57739b0bbbd624a2552f75c5126a32e57acb810aafb887c16"
+      "size": 212138,
+      "sha256": "7289296945719c2a4f3bff7995cf8a86d072fe983a1a0ebd717dad01ba37dd98"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 237874,
-      "sha256": "5b9860767c7eeb9057ce3425faeff910ec53a3f0e715627a14b13a4f321ac984"
+      "size": 239163,
+      "sha256": "089bf7ab4aa20f379c35015092aee49120146c06457b9105c14b7fdd256f14d3"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19261006,
-      "sha256": "5d5a854b88db899c0ff4ef2c0056748329805acd10a49a2bbaf6fe8bc961f171"
+      "size": 19261009,
+      "sha256": "8393e88704524d85c7e2a127639b9fc7d3307c981deadb110a5acba8beb7d3fc"
     }
   ]
 }

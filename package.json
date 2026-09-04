@@ -38,6 +38,7 @@
     "universal:spanish-only-gate": "node test-v371-spanish-only-universal.mjs",
     "live:stableford-mirror-gate": "node test-v372-stableford-live-mirror.mjs",
     "live:short-player-id-gate": "node test-v374-live-short-player-ids.mjs",
+    "live:mobile-layout-gate": "node test-v375-stableford-live-mobile-layout.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

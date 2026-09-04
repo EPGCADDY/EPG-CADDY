@@ -24,5 +24,5 @@ const general={...safe,mode:"general"},generalMarkup=viewer.streamCard({id:"stre
 assert.match(generalMarkup,/NETO/,"las demás modalidades conservan su visor");
 assert.doesNotMatch(generalMarkup,/stableford-live-card/,"el espejo se limita a Stableford");
 const html=read("live.html"),liveControl=read("live-control.js"),api=read("api/live.js"),index=read("index-grupal.html"),worker=read("service-worker.js");
-assert.match(html,/stable-live/);assert.match(liveControl,/getYardages/);assert.match(api,/yards:boundedInteger/);assert.match(index,/getYardages:value=>TEES/);assert.match(worker,/v372-stableford-live-mirror/);
+assert.match(html,/stable-score-shell/);assert.match(liveControl,/getYardages/);assert.match(api,/yards:boundedInteger/);assert.match(index,/getYardages:value=>TEES/);assert.match(worker,/v372-stableford-live-mirror/);
 console.log("PASS V372 · Stableford LIVE refleja Gross/Puntos, yardas y resumen IN→OUT sin alterar otras modalidades");

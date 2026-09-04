@@ -1968,3 +1968,14 @@ El log físico de R6 demuestra `POST /api/voice-speech 200` después de `cedar s
 Archivos exactos V374: `live-control.js`, `test-v372-stableford-live-mirror.mjs`, `test-v374-live-short-player-ids.mjs`, `audit-project.mjs`, `package.json`, `service-worker.js`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 
 Archivos documentales del mismo cambio: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción no cambia.
+
+## V375 · Stableford LIVE móvil sin capas flotantes
+
+| Archivo | Control V375 | Resultado exigido |
+|---|---|---|
+| `live-view.js` | `FIXED IDENTITY / SCROLLABLE HOLES` | JUGADOR, HOYO, PAR, YDS, GROSS y PUNTOS forman el panel izquierdo; los 18 valores forman el único carril horizontal. |
+| `live.html` | `NO STICKY OVERLAP` | En iPhone el panel fijo mide 180 px y no se monta sobre nombres; las alturas compartidas mantienen todas las filas alineadas. |
+| `test-v375-stableford-live-mobile-layout.mjs` | Regresión estructural móvil | Prohíbe la tabla única y las reglas Sticky Stableford; exige paneles de tarjeta y resumen separados. |
+| `service-worker.js`, V357/V361 | Caché V375 | El invitado no conserva el CSS V374/V372 después de abrir el nuevo Preview. |
+
+Producción, cálculo Stableford, activación LIVE, permisos, API y demás modalidades permanecen intactos.

@@ -1523,3 +1523,9 @@ Archivos exactos V372: `index-grupal.html`, `live-control.js`, `api/live.js`, `l
 ## V374 · activación real del enlace Stableford LIVE · 4 de septiembre de 2026
 
 Cuatro intentos físicos con todas las autorizaciones marcadas alcanzaron `/api/live` y recibieron HTTP 400. Stableford usa IDs internos cortos `sf1…sf6`, pero LIVE exigía un mínimo de ocho caracteres. `live-control.js` genera ahora identificadores LIVE largos, estables y privados sin modificar los IDs deportivos. `test-v374-live-short-player-ids.mjs` reproduce GRUPO LIVE con `sf1…sf4` y `p1…p2`, valida permisos y bloquea el rechazo. La caché V374 reemplaza el JavaScript defectuoso. Producción permanece intacta.
+
+## V375 · visor Stableford LIVE móvil sin superposición · 4 de septiembre de 2026
+
+La prueba física del invitado rechazó el desplazamiento V372: las columnas flotantes GROSS/PUNTOS cubrían nombres y el resumen se desordenaba. `live-view.js` y `live.html` sustituyen la tabla única con Sticky por dos paneles de filas idénticas: identificación fija real y hoyos desplazables. El resumen mantiene `PUNTOS` centrado fuera del carril, fija los jugadores y conserva `GROSS IN`, `GROSS OUT`, `GROSS TOTAL`, `PUNTOS IN`, `PUNTOS OUT`, `PUNTOS TOTAL`. `test-v375-stableford-live-mobile-layout.mjs` bloquea las clases antiguas, la superposición Sticky y cualquier cambio a General. Producción permanece intacta.
+
+Archivos exactos V375: `live-view.js`, `live.html`, `service-worker.js`, `test-v372-stableford-live-mirror.mjs`, `test-v375-stableford-live-mobile-layout.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `audit-project.mjs`, `package.json`, especificación LIVE, registro RC-050, ambos ROADMAPS, mapa maestro, reconstrucción de inventario y lock V311.

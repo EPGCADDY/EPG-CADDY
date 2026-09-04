@@ -1020,3 +1020,10 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | Archivo | Función |
 |---|---|
 | `test-v372-stableford-live-mirror.mjs` | Impide que la vista invitada Stableford vuelva a mostrar Neto/Resultado, exige HOYO/PAR/YDS/GROSS/PUNTOS y conserva IN antes de OUT. |
+
+## V375 · Stableford LIVE móvil sin superposición
+
+| Archivo | Función |
+|---|---|
+| `live-view.js`, `live.html` | Separan físicamente el panel de identidad del carril de hoyos y el resumen de nombres del carril de totales. |
+| `test-v375-stableford-live-mobile-layout.mjs` | Bloquea Sticky Stableford, tabla única, pérdida de nombres y desorden IN/OUT. |
