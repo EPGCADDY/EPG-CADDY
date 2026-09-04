@@ -90,4 +90,13 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa refinada: el reproductor descargado continuaba reteniendo la sesión de salida de iOS.
 - Control V381: transición serial exclusiva después de una respuesta Universal: destruir salida, crear autorización nueva dentro del toque, descargarla y abrir entrada 300 ms después.
 - Límite: no modifica ninguna de las seis regiones V378 selladas ni la voz R7 aprobada.
-- Estado: candidato V381 pendiente de prueba física de tres preguntas consecutivas; Producción intacta.
+- Estado: V381 RECHAZADA físicamente; sustituida por V382 sin reproducción silenciosa. Producción intacta.
+
+## RC-062 · V381 reproduce silencio y bloquea nuevamente la segunda captura · 4 de septiembre de 2026
+
+- Evidencia física: tras una primera respuesta correcta, la siguiente captura terminó otra vez en `RECONOCIMIENTO DE VOZ NO DISPONIBLE`.
+- Logs: primera pregunta transcrita y hablada en 1.829 s; segundo toque abrió SpeechRecognition y terminó `no_speech/aborted`.
+- Causa: V381 destruyó la salida anterior, pero reprodujo otro audio silencioso dentro del mismo toque antes de abrir entrada.
+- Control V382: destruir y descargar la salida, no reproducir absolutamente ningún audio y abrir únicamente SpeechRecognition después de 300 ms; telemetría explícita de inicio/fin del reset.
+- Límite: seis regiones V378, Registro, Scores, voz R7 y velocidad `0.90` permanecen intactos.
+- Estado: candidato V382 pendiente de tres preguntas físicas consecutivas; Producción intacta.

@@ -10,10 +10,10 @@ const speech=html.slice(html.indexOf("async function speakAiUniversalText"),html
 assert.match(speech,/releaseAiUniversalPlaybackForListening\(\);aiUniversalInputResetRequired=true/);
 assert.match(reset,/previous\.removeAttribute\("src"\);previous\.load\?\.\(\)/);
 assert.match(reset,/aiUniversalTtsAudio=null;aiUniversalSpeechPrimer=null/);
-assert.match(reset,/primer\.onplay=finish;primer\.onended=finish;primer\.onerror=finish/);
-assert.match(reset,/setTimeout\(\(\)=>resolve\(true\),300\)/);
+assert.doesNotMatch(reset,/primer\.onplay|new Audio|\.play\(\)/);
+assert.match(reset,/reset_ready[^}]*resolve\(true\)[^}]*\},300\)/);
 assert.match(gesture,/if\(aiUniversalInputResetRequired\)\{setMicConnecting\(context,true\);void resetAiUniversalAudioSessionFromGesture\(\)\.then\(\(\)=>toggleVoice\(context\)\);return true\}/);
 assert.ok(gesture.indexOf("resetAiUniversalAudioSessionFromGesture()")<gesture.indexOf("toggleVoice(context)"));
 assert.match(worker,/v381-serial-audio-input-reset/);
 
-console.log("PASS V381 · después de voz Universal: salida destruida, nueva autorización descargada y micrófono abierto 300 ms después");
+console.log("PASS V381 RETIRADA · el cebado silencioso rechazado ya no puede reaparecer entre preguntas");

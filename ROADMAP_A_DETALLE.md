@@ -2068,3 +2068,12 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-060 actualizado y RC-061 registra el nuevo defecto físico.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` e inventario: trazabilidad V381.
 - Registro, Scores, seis regiones V378, R7 `es-419` a `0.90` y Producción permanecen intactos.
+
+## V382 · entrada exclusiva sin cebado silencioso · 4 de septiembre de 2026
+
+- Evidencia física: V381 respondió la primera pregunta y falló la segunda; logs `no_speech/aborted` después del cebado silencioso.
+- `index-grupal.html`: destruye salida, deja `aiUniversalTtsAudio=null`, no crea ni reproduce audio y abre SpeechRecognition 300 ms después.
+- `test-v382-input-only-reset.mjs` y `test-v381-serial-audio-input-reset.mjs`: prohíben `new Audio()`, `.play()`, WAV silencioso o primer dentro del reset.
+- `service-worker.js`, `audit-project.mjs`, `package.json`: caché y puerta V382.
+- RC-062, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` e inventario documentan el rechazo y la corrección.
+- Registro, Scores, seis hashes V378, R7 `es-419`/`0.90` y Producción permanecen intactos.

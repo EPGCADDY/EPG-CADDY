@@ -1058,3 +1058,11 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `index-grupal.html` | Destruye la salida Universal anterior, autoriza y descarga una nueva dentro del toque y abre entrada 300 ms después. | La transición sólo se activa después de voz Universal. |
 | `test-v381-serial-audio-input-reset.mjs`, `test-v380-three-turn-audio-release.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Verifican secuencia V381, acotan controles históricos y admiten caché posterior. | Impiden abrir micrófono antes de liberar la sesión iOS. |
 | `service-worker.js`, `audit-project.mjs`, `package.json`, RC-061, ROADMAPS e inventario | Publica y documenta V381. | Registro/Scores V378, voz R7 y Producción permanecen intactos. |
+
+## V382 · entrada exclusiva sin audio silencioso
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Destruye y descarga la salida, espera 300 ms y abre sólo SpeechRecognition. | Prohíbe reproducir silencio sobre la nueva captura. |
+| `test-v382-input-only-reset.mjs`, `test-v381-serial-audio-input-reset.mjs` | Bloquean `new Audio`, `play`, WAV y primer dentro del reset. | V381 no puede reaparecer. |
+| `service-worker.js`, `audit-project.mjs`, `package.json`, RC-062, ROADMAPS e inventario | Publica y documenta V382. | Registro/Scores V378, R7 y Producción permanecen intactos. |

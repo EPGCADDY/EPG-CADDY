@@ -87,6 +87,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v378-approved-r7-v
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v379-fast-chunked-r7-speech.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v380-three-turn-audio-release.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v381-serial-audio-input-reset.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v382-input-only-reset.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);
