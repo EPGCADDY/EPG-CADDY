@@ -3,6 +3,7 @@ import {experimental_transcribe as transcribe} from "ai";
 import {gateway} from "@ai-sdk/gateway";
 
 const MAX_AUDIO_BYTES=7_500_000;
+const STREAM_MODEL="openai/gpt-realtime-whisper";
 
 function safeText(value,max){return String(value||"").replace(/[\r\n]+/g," ").replace(/\s+/g," ").trim().slice(0,max)}
 function promptFor(context,players){
@@ -18,6 +19,10 @@ export default async function handler(req,res){
   if(req.method!=="POST")return res.status(405).json({ok:false,error:"METHOD_NOT_ALLOWED"});
   try{
     const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):req.body||{};
+    if(body.action==="stream-token"){
+      const secret=await gateway.experimental_transcription.getToken({model:STREAM_MODEL,expiresAfterSeconds:300});
+      return res.status(200).json({ok:true,model:STREAM_MODEL,token:secret.token,url:secret.url,expiresAt:secret.expiresAt||null});
+    }
     const audioBase64=String(body.audioBase64||""),mimeType=safeText(body.mimeType,80).toLowerCase().split(";")[0]||"audio/mp4";
     if(!/^[A-Za-z0-9+/=]+$/.test(audioBase64))return res.status(422).json({ok:false,error:"AUDIO_REQUIRED"});
     const audio=Buffer.from(audioBase64,"base64");

@@ -1539,3 +1539,7 @@ Rutas nuevas inventariadas literalmente: `server-voice-capture.js`, `api/voice-t
 Sello de publicación: V373 se despliega únicamente como Preview de la rama LAB; `main` y el dominio de Producción quedan excluidos.
 
 La prueba viva del primer Preview V373 rechazó OpenAI directo con `429`; el endpoint se retiró antes de entregar enlace. `api/voice-transcribe.js` usa ahora la interfaz oficial `experimental_transcribe` de AI SDK 7 contra AI Gateway, con `openai/gpt-4o-mini-transcribe`, idioma español y el crédito administrado del equipo. `package.json` fija `ai@7.0.92` y `@ai-sdk/gateway@4.0.74`; `test-v373-server-voice-transcription.mjs` valida URL Gateway, modelo, credencial protegida e idioma.
+
+### V374 · transcripción transmitida con primera respuesta rápida
+
+La medición viva de V373 confirmó transcripción correcta pero 11.9–14.1 s de espera porque el audio completo se enviaba sólo después del silencio. V374 conserva `processBrowserVoiceTranscript()` y todos los parsers/escritores intactos, pero transmite PCM mono de 24 kHz mientras el usuario habla mediante la ruta específica `experimental_transcription` de AI Gateway y `openai/gpt-realtime-whisper`. El token es efímero, dura cinco minutos y nunca expone la credencial del proyecto. `server-voice-capture.js`, `api/voice-transcribe.js`, `service-worker.js`, `test-v373-server-voice-transcription.mjs`, `test-v357-ios-voice-transport-recovery.mjs` y `test-v361-synchronized-voice.mjs` son los únicos archivos funcionales/de control modificados. Producción permanece intacta.

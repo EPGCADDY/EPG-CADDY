@@ -14,6 +14,11 @@ assert.match(capture,/SILENCE_MS=1000/);
 assert.match(capture,/getUserMedia\(\{audio:/);
 assert.match(capture,/track=>track\.stop\(\)/);
 assert.match(capture,/\/api\/voice-transcribe/);
+assert.match(capture,/ai-gateway-transcription\.v1/);
+assert.match(capture,/transcription-stream\.start/);
+assert.match(capture,/transcription-stream\.audio-done/);
+assert.match(capture,/TARGET_RATE=24000/);
+assert.doesNotMatch(capture,/new MediaRecorder/);
 assert.match(serviceWorker,/server-voice-capture\.js/);
 assert.equal(packageJson.dependencies.ai,"7.0.92");
 assert.equal(packageJson.dependencies["@ai-sdk/gateway"],"4.0.74");
@@ -25,6 +30,19 @@ function response(){
 const previousGatewayKey=process.env.AI_GATEWAY_API_KEY,previousFetch=globalThis.fetch;
 process.env.AI_GATEWAY_API_KEY="test-gateway-key";
 try{
+  let tokenBody=null;
+  globalThis.fetch=async(url,options)=>{
+    tokenBody=JSON.parse(options.body);
+    return new Response(JSON.stringify({token:"vcst_test",expiresAt:1234567890}),{status:200,headers:{"Content-Type":"application/json"}});
+  };
+  const token=response();
+  await handler({method:"POST",headers:{origin:"https://epg-caddy.vercel.app",host:"epg-caddy.vercel.app"},body:{action:"stream-token"}},token);
+  assert.equal(token.statusCode,200);
+  assert.equal(token.payload.model,"openai/gpt-realtime-whisper");
+  assert.equal(token.payload.token,"vcst_test");
+  assert.match(token.payload.url,/transcription-model/);
+  assert.deepEqual(tokenBody,{model:"openai/gpt-realtime-whisper",routeKind:"transcription",expiresIn:300});
+
   const invalid=response();
   await handler({method:"POST",headers:{origin:"https://epg-caddy.vercel.app",host:"epg-caddy.vercel.app"},body:{}},invalid);
   assert.equal(invalid.statusCode,422);
