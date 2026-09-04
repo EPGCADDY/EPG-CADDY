@@ -1952,3 +1952,13 @@ Evidencia real del Preview R5: la primera captura llegó a transcripción y resp
 ### V371-R7 · respaldo hablado español latino
 
 El log físico de R6 demuestra `POST /api/voice-speech 200` después de `cedar speech direct fallback {"status":429}`: la respuesta escrita era española, pero el respaldo `openai/tts-1-hd` con voz `echo` produjo pronunciación anglófona y Spanglish. R7 modifica únicamente `api/voice-speech.js`: sustituye ese respaldo por `fish-audio/s2.1-pro-free`, fija `es-419` y transmite la instrucción completa de español mexicano neutro, sin acento anglosajón ni Spanglish. Las pruebas V356 y V362 impiden restaurar Echo o `tts-1-hd`. Registro, Scores, cálculos, persistencia, interfaz y Producción permanecen intactos.
+## V372 · espejo LIVE de Stableford · 4 de septiembre de 2026
+
+| Archivo | Control V372 | Resultado exigido |
+|---|---|---|
+| `live-view.js`, `live.html` | `STABLEFORD LIVE MIRROR / IN→OUT` | La vista invitada replica HOYO, PAR, YDS, GROSS y PUNTOS; el resumen ordena IN antes de OUT y excluye Neto/Resultado. |
+| `live-control.js`, `api/live.js`, `index-grupal.html` | `LIVE YARDAGES / ALLOWLIST` | Las yardas de la marca activa atraviesan el snapshot permitido sin incorporar datos privados. |
+| `test-v372-stableford-live-mirror.mjs`, `audit-project.mjs`, `package.json` | `MODALITY BOUNDARY` | Stableford usa el espejo; General conserva Neto y no recibe la plantilla Stableford. |
+| `service-worker.js`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs` | `CACHE V372` | El iPhone solicita el visor actualizado y los candados acumulados reconocen únicamente la nueva firma completa. |
+
+Archivos documentales del mismo cambio: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción no cambia.

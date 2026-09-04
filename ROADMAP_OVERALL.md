@@ -1513,3 +1513,9 @@ Los logs físicos de R5 prueban que Safari abrió `SpeechRecognition`, pero desp
 ### V371-R7 · eliminación del respaldo de voz anglófono
 
 R6 fue rechazado porque, tras el 429 del proveedor directo, el respaldo `openai/tts-1-hd` con voz `echo` leyó español con pronunciación inglesa. R7 sustituye sólo ese respaldo por el modelo multilingüe `fish-audio/s2.1-pro-free`, con idioma `es-419` e instrucciones expresas de español mexicano neutro sin Spanglish. Los contratos automáticos rechazan Echo y `tts-1-hd`. Registro, Scores, interfaz, datos y Producción no cambian.
+
+## V372 · espejo LIVE de Stableford · 4 de septiembre de 2026
+
+La vista compartida de Stableford deja de utilizar el visor genérico de Gross/Neto/relación con par. `live-view.js` presenta HOYO, PAR, YDS y las filas GROSS/PUNTOS de todos los jugadores, seguidas por el resumen exclusivo en orden `GROSS IN`, `GROSS OUT`, `GROSS TOTAL`, `PUNTOS IN`, `PUNTOS OUT`, `PUNTOS TOTAL`. IN representa hoyos 1–9 y OUT hoyos 10–18. `live-control.js` entrega yardajes desde la marca activa y `api/live.js` los normaliza dentro del snapshot permitido. General, Match Play y Four Ball permanecen intactos.
+
+Archivos exactos V372: `index-grupal.html`, `live-control.js`, `api/live.js`, `live-view.js`, `live.html`, `service-worker.js`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v372-stableford-live-mirror.mjs`, `audit-project.mjs`, `package.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, ambos ROADMAPS, mapa maestro, reconstrucción e inventario. Producción permanece intacta; Preview, navegador real y prueba física iPhone son puertas separadas.

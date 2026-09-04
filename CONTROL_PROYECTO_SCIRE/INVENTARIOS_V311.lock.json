@@ -1,23 +1,23 @@
 {
-  "version": "V371-R7-LATAM-VOICE-MIC-RECOVERY-INTOCABLES",
-  "generatedAt": "2026-09-04T00:40:37Z",
-  "sourceFileCount": 395,
-  "sourceDigest": "472b809cf20a3a763dbbe2d751a78ccd68f52f690342020cfd5a0543868ab3a9",
+  "version": "V372-STABLEFORD-LIVE-MIRROR-INTOCABLES",
+  "generatedAt": "2026-09-04T01:28:27Z",
+  "sourceFileCount": 396,
+  "sourceDigest": "ae0f30f2e4f7123be7cb66fd2067691d3c88166ad8666385f9db3947f44f313b",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 209443,
-      "sha256": "87a5576d9d69cdf0a360f275e8d9ac8654af47920a50a5ad2ad10706670350bc"
+      "size": 210310,
+      "sha256": "50d1ec897b5d931ad8c3c52bd513b99c32478f660bc934a250ccf05fa49b7b8b"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 236158,
-      "sha256": "9845465f88f34fbed3e31de8ba4978578076f27baf0efbec41378b206d6de492"
+      "size": 237359,
+      "sha256": "c9740db6f210c1f6fc34ae59e84ab827a0d8359d1f3b9f036d5f95505137d237"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19261009,
-      "sha256": "9e51ddb3d1a90a2e695e19d6ab1893c09cb36b78bdda2697ece732f32f62d366"
+      "size": 19261006,
+      "sha256": "5d5a854b88db899c0ff4ef2c0056748329805acd10a49a2bbaf6fe8bc961f171"
     }
   ]
 }

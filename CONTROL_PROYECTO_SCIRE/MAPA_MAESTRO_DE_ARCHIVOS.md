@@ -1015,3 +1015,8 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `service-worker.js`, V357/V361/V364/V366, `audit-project.mjs`, `package.json` | Firma V368 y ejecución acumulada. | Safari invalida el shell rechazado sin retirar V367. |
 | `AGENTS.md`, directrices, RC-040, matriz, ROADMAPS e informe V368 | Sello multiconversación sobre `03ca12e`. | Ninguna rama V365–V367 puede volver a presentarse como final. |
 | `scripts/rebuild-inventory-pdfs.py`, lock y tres PDF V311 | Sello de inventario V368. | Otra conversación no puede reutilizar un inventario rotulado V367. |
+## V372 · Stableford LIVE espejo
+
+| Archivo | Función |
+|---|---|
+| `test-v372-stableford-live-mirror.mjs` | Impide que la vista invitada Stableford vuelva a mostrar Neto/Resultado, exige HOYO/PAR/YDS/GROSS/PUNTOS y conserva IN antes de OUT. |

@@ -141,6 +141,12 @@ Un torneo reúne 80 jugadores y entre 30 y 40 teléfonos usan la aplicación. El
 
 V353 sólo puede llamarse `100 % automático aprobado` después de superar todos los bancos, Preview, E2E, observabilidad y navegador. El `PASS físico iPhone` continúa siendo una puerta independiente y no se simula.
 
+## V372 · espejo LIVE de Stableford · 4 de septiembre de 2026
+
+Cuando la ronda publicada es Stableford, el invitado recibe la misma estructura deportiva de la tarjeta activa: encabezado HOYO, PAR y YDS; dos filas por jugador, GROSS y PUNTOS; y resumen exclusivo de puntos. Queda prohibido mostrar NETO, relación con par o RESULTADO dentro de esa vista Stableford. El resumen conserva el orden solicitado por el propietario: `GROSS IN`, `GROSS OUT`, `GROSS TOTAL`, `PUNTOS IN`, `PUNTOS OUT`, `PUNTOS TOTAL`. IN corresponde a hoyos 1–9 y OUT a hoyos 10–18. General, Match Play y Four Ball conservan su visor anterior sin cambios.
+
+El snapshot LIVE incorpora únicamente el yardaje deportivo ya visible en la tarjeta; no agrega información privada. `test-v372-stableford-live-mirror.mjs` bloquea NETO/RESULTADO en Stableford, exige IN antes de OUT y prueba la frontera negativa de las demás modalidades.
+
 ### Evidencia Preview V353 · 28 de agosto de 2026
 
 - Commit remoto: `8cc3600d25cba7185a55548104cac609b341117c`; deployment Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F`; URL protegida sin token: `https://epg-caddy-3f7wac1g1-epgcaddys-projects.vercel.app`.

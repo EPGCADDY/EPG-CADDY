@@ -5171,7 +5171,8 @@ showInstallControl();
 window.GSCLiveControl?.mount({
   getRound:()=>round,
   getCourseName:()=>COURSE_CATALOG[ACTIVE_COURSE_KEY]?.displayName||COURSE_CATALOG[ACTIVE_COURSE_KEY]?.name||round.course,
-  getPars:()=>PAR
+  getPars:()=>PAR,
+  getYardages:value=>TEES[value?.players?.[0]?.tee]?.yds||TEES[stablefordConfig()?.tee]?.yds||[]
 });
 if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
