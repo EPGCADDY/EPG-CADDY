@@ -1537,3 +1537,5 @@ La comprobación adicional confirmó `403 GatewayForbiddenError` también para `
 Rutas nuevas inventariadas literalmente: `server-voice-capture.js`, `api/voice-transcribe.js`, `test-v373-server-voice-transcription.mjs` y `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V373_TRANSPORTE_VOZ_SERVIDOR/REPORTE_V373_RC042.md`.
 
 Sello de publicación: V373 se despliega únicamente como Preview de la rama LAB; `main` y el dominio de Producción quedan excluidos.
+
+La prueba viva del primer Preview V373 rechazó OpenAI directo con `429`; el endpoint se retiró antes de entregar enlace. `api/voice-transcribe.js` usa ahora la interfaz oficial `experimental_transcribe` de AI SDK 7 contra AI Gateway, con `openai/gpt-4o-mini-transcribe`, idioma español y el crédito administrado del equipo. `package.json` fija `ai@7.0.92` y `@ai-sdk/gateway@4.0.74`; `test-v373-server-voice-transcription.mjs` valida URL Gateway, modelo, credencial protegida e idioma.

@@ -9,12 +9,13 @@ En iPhone, la cadena basada en `SpeechRecognition` queda subordinada al servicio
 ## Intervención mínima
 
 - `server-voice-capture.js`: captura local por `MediaRecorder`, detección única de silencio a 1 segundo y liberación completa de pista, contexto y grabador en cada turno.
-- `api/voice-transcribe.js`: transcribe el audio con `gpt-4o-mini-transcribe`, idioma `es` y vocabulario contextual; no responde ni modifica datos.
+- `api/voice-transcribe.js`: transcribe el audio con AI SDK 7 + AI Gateway, modelo `openai/gpt-4o-mini-transcribe`, idioma `es` y vocabulario contextual; no responde ni modifica datos.
 - `index-grupal.html`: en iPhone selecciona el transporte nuevo y entrega el texto a `processBrowserVoiceTranscript()`, frontera existente que conserva Registro, Score y AI UNIVERSAL.
 - `service-worker.js`: incorpora únicamente el archivo de transporte a la shell.
 - `test-v373-server-voice-transcription.mjs`: valida contrato, cierre físico, idioma, endpoint y reutilización de la frontera existente.
 - `api/_lib/traffic.js`: obtiene el país desde el GPS y envía ese `regionCode` a Google Routes para desambiguar destinos locales como Oakland Mall zona 10.
 - `test-v324-real-traffic.mjs`: demuestra que un origen GPS en Guatemala obliga `regionCode="GT"`.
+- `package.json`: fija `ai@7.0.92` y `@ai-sdk/gateway@4.0.74`; la credencial Gateway permanece sólo en Vercel.
 
 ## Módulos preservados
 

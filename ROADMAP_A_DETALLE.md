@@ -1984,3 +1984,5 @@ La candidata incorporó `api/realtime-gateway-token.js`, `gateway-realtime.js`, 
 Evidencia de causa: los tokens Realtime 2.1 y Realtime mini fueron rechazados con 403, mientras el panel AI Gateway mostró crédito disponible. El reporte completo está en `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V373_TRANSPORTE_VOZ_SERVIDOR/REPORTE_V373_RC042.md`. Producción permanece intacta.
 
 Sello de publicación: V373 se despliega únicamente como Preview de `lab/recovery-production-approved-v363`; `main` y Producción quedan excluidos.
+
+La comprobación HTTP real del primer Preview devolvió `503` porque OpenAI directo respondió `429`. La intervención final queda limitada a `api/voice-transcribe.js`, `package.json` y `test-v373-server-voice-transcription.mjs`: transcripción grabada mediante AI SDK 7 + AI Gateway, modelo `openai/gpt-4o-mini-transcribe`, español explícito, credencial sólo del servidor y una respuesta de texto que vuelve a la frontera existente. No modifica Registro, Score, cálculos, persistencia ni interfaz.
