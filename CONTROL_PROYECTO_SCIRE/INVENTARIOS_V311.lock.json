@@ -1,23 +1,23 @@
 {
   "version": "V371-R10-TURN-AUDIO-RESET-INTOCABLES",
-  "generatedAt": "2026-09-04T02:13:01Z",
+  "generatedAt": "2026-09-04T03:48:19Z",
   "sourceFileCount": 395,
-  "sourceDigest": "83a210d2012001eb1115b94ea98a312ba05fe29ecc53b3fd183b18b033c13226",
+  "sourceDigest": "604193fee8f1762bf63e98e9cd4dd31ebb3524b5bbd147db084681426fe2aa44",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 210550,
-      "sha256": "26ff4b32b0cfa0cac0e52d5079fbdc5d5e53627389fea2745184b7e18f862ff1"
+      "size": 210944,
+      "sha256": "88772d119326a1562490a69b5f9fb114ede0e13a0eece3fbd5bf15b4d423f7e3"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 237587,
-      "sha256": "f77685d3288322030c5d65c1cc38549c7321a967db0b4a44361809e227f15a77"
+      "size": 238194,
+      "sha256": "bef60d12e0056a429b413ff5cd2684f6dc5ada4d19dbfea5e077d8a7391bbbf9"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19261015,
-      "sha256": "5ff58b73b67680a155ac198e9c817d05846a6c82e640f1a0d9abec71f62e250a"
+      "size": 19261008,
+      "sha256": "8cd34d392d9430565cc4ab6e970b0dad51a4d4bd22719606f6eeadbb63a5d283"
     }
   ]
 }

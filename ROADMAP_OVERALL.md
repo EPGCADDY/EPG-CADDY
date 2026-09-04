@@ -1525,3 +1525,7 @@ R8 reconoció consultas consecutivas y obtuvo respuestas universales y de tráfi
 ### V371-R10 · audio por turno y ruta “de acá para”
 
 La prueba física R9 confirmó dos fallos: `de acá para Oakland Mall zona 10` no entraba al parser directo porque sólo aceptaba `a/hasta`, y conservar el mismo reproductor entre turnos mantenía ocupada la sesión de salida de iOS, dejando las capturas siguientes en `no_speech/aborted`. R10 admite `para`, responde tráfico por voz con un resumen corto y usa un reproductor nuevo autorizado dentro de cada toque: destruye el del turno anterior antes de abrir el micrófono y prepara el siguiente en ese mismo gesto. Registro, Scores, cálculos, persistencia, diseño y Producción permanecen intocables.
+
+### V372 RETIRADA · Gateway Realtime bloqueado por acceso
+
+La candidata que agregaba `api/realtime-gateway-token.js`, `gateway-realtime.js`, `package-lock.json` y `test-v372-gateway-realtime-streaming.mjs` superó tres auditorías locales, pero la comprobación real del endpoint devolvió `503` porque AI Gateway rechazó el modelo Realtime con `403`. Conforme a la orden del propietario, esos archivos y sus integraciones se retiraron antes de entregar enlace. Se conserva R10 mientras el propietario del equipo habilita acceso o créditos para un modelo Realtime compatible. Registro, Scores y Producción permanecen intactos.
