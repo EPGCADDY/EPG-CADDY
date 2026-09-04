@@ -83,6 +83,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v373-server-voice-
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v375-fast-universal-sensitive-score.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v376-native-mic-first.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v377-no-speech-clean-close.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v378-approved-r7-voice-lock.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

@@ -25,8 +25,8 @@ assert.doesNotMatch(preference,/startsWith\("en-"\)/);
 const speech=html.slice(html.indexOf("async function speakAiUniversalText"),html.indexOf("function stopAiUniversalOutput"));
 assert.match(speech,/\/api\/voice-speech/);
 assert.match(speech,/PREPARANDO VOZ MEXICANA/);
-assert.match(speech,/VOZ EN ESPAÑOL NO DISPONIBLE/);
-assert.match(speech,/RESPONDIENDO EN VOZ MEXICANA · ECHO 0\.90/);
+assert.match(speech,/VOZ R7 APROBADA NO DISPONIBLE/);
+assert.match(speech,/RESPONDIENDO CON VOZ R7 APROBADA · 0\.90/);
 assert.match(speech,/await player\.play\(\)/);
 assert.match(speech,/if\(!started\)throw new Error\("MEXICAN_TTS_NOT_STARTED"\)/);
 

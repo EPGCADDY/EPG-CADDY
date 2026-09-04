@@ -2030,3 +2030,12 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `service-worker.js`: invalida V376 para que el iPhone reciba V377.
 - `REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-057 registra el defecto físico y el control permanente.
 - Producción permanece intacta.
+
+## V378 · blindaje determinista de la voz R7 aprobada · 4 de septiembre de 2026
+
+- `api/voice-speech.js`: usa como única ruta audible `fish-audio/s2.1-pro-free`, `es-419`, velocidad `0.90` y cabecera `s2.1-es-419`; deja de intentar Onyx.
+- `index-grupal.html`: deja de sustituir una falla del servidor por una voz local no aprobada.
+- `test-v378-approved-r7-voice-lock.mjs`: ejecuta el endpoint con ambas credenciales presentes, exige una sola llamada al Gateway aprobado y prohíbe respaldo audible local.
+- `service-worker.js`: invalida V377 para que el iPhone reciba el blindaje V378.
+- RC-058 registra por qué el blindaje previo falló: protegía valores, pero no la ruta completa que realmente producía el audio.
+- Registro, Score, parsers, cálculos, persistencia, interfaz y Producción permanecen intactos. Preview y prueba audible física siguen pendientes.

@@ -46,7 +46,6 @@ const calls=[];
 process.env.OPENAI_API_KEY="direct-test";process.env.AI_GATEWAY_API_KEY="gateway-test";
 globalThis.fetch=async(url,options)=>{
   calls.push({url:String(url),options});
-  if(String(url).includes("api.openai.com"))return{ok:false,status:429};
   return{ok:true,status:200,json:async()=>({audio:Buffer.from("cedar-audio").toString("base64"),warnings:[]})};
 };
 try{
@@ -56,11 +55,11 @@ try{
   assert.equal(res.headers["Content-Type"],"audio/mpeg");
   assert.equal(Buffer.isBuffer(res.body),true);
   assert.equal(res.body.toString(),"cedar-audio");
-  assert.equal(calls.length,2);
-  assert.equal(calls[1].url,"https://ai-gateway.vercel.sh/v4/ai/speech-model");
-  assert.equal(calls[1].options.headers["ai-model-id"],"fish-audio/s2.1-pro-free");
-  assert.equal(JSON.parse(calls[1].options.body).language,"es-419");
-  assert.match(JSON.parse(calls[1].options.body).instructions,/español mexicano neutro/);
+  assert.equal(calls.length,1);
+  assert.equal(calls[0].url,"https://ai-gateway.vercel.sh/v4/ai/speech-model");
+  assert.equal(calls[0].options.headers["ai-model-id"],"fish-audio/s2.1-pro-free");
+  assert.equal(JSON.parse(calls[0].options.body).language,"es-419");
+  assert.match(JSON.parse(calls[0].options.body).instructions,/español mexicano neutro/);
   assert.equal(res.headers["X-GSCG-Voice"],"s2.1-es-419");
 }finally{
   globalThis.fetch=previousFetch;

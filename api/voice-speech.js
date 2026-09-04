@@ -63,39 +63,33 @@ export default async function handler(req,res){
     res.setHeader("Allow","POST");
     return res.status(405).json({ok:false,error:"METHOD_NOT_ALLOWED"});
   }
-  const apiKey=process.env.OPENAI_API_KEY,gatewayToken=await resolveGatewayToken();
-  if(!apiKey&&!gatewayToken)return res.status(500).json({ok:false,error:"VOICE_NOT_CONFIGURED"});
+  const gatewayToken=await resolveGatewayToken();
+  if(!gatewayToken)return res.status(500).json({ok:false,error:"APPROVED_VOICE_NOT_CONFIGURED"});
   try{
     const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):req.body||{};
     const {text,language}=sanitizeSpeechRequest(body);
     if(text.length<2)return res.status(422).json({ok:false,error:"TEXT_REQUIRED"});
     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),45_000);
-    let upstream,fromGateway=false;
+    let upstream;
     try{
-      upstream=await requestDirectSpeech(apiKey,cedarSpeechPayload(text,language),controller.signal);
-      if(!upstream?.ok&&gatewayToken){
-        console.warn("cedar speech direct fallback",JSON.stringify({status:upstream?.status||0}));
-        upstream=await requestGatewaySpeech(gatewayToken,text,language,controller.signal);fromGateway=true;
-      }
+      upstream=await requestGatewaySpeech(gatewayToken,text,language,controller.signal);
     }finally{clearTimeout(timeout)}
     if(!upstream){
       console.warn("cedar speech upstream",JSON.stringify({status:0}));
       return res.status(502).json({ok:false,error:"CEDAR_SPEECH_UNAVAILABLE",retryable:false});
     }
     if(!upstream.ok){
-      if(fromGateway)console.warn("cedar speech gateway failed",JSON.stringify({status:upstream.status,model:GATEWAY_SPEECH_MODEL}));
+      console.warn("cedar speech gateway failed",JSON.stringify({status:upstream.status,model:GATEWAY_SPEECH_MODEL}));
       console.warn("cedar speech upstream",JSON.stringify({status:upstream.status}));
       return res.status(upstream.status===429?503:502).json({ok:false,error:"CEDAR_SPEECH_UNAVAILABLE",retryable:upstream.status===429});
     }
-    let audio;
-    if(fromGateway){
-      const payload=await upstream.json().catch(()=>null);audio=Buffer.from(String(payload?.audio||""),"base64");
-    }else audio=Buffer.from(await upstream.arrayBuffer());
+    const payload=await upstream.json().catch(()=>null);
+    const audio=Buffer.from(String(payload?.audio||""),"base64");
     if(!audio.length)return res.status(502).json({ok:false,error:"CEDAR_SPEECH_EMPTY"});
-    if(fromGateway)console.info("cedar spanish speech gateway",JSON.stringify({model:GATEWAY_SPEECH_MODEL,language:"es-419"}));
+    console.info("cedar spanish speech gateway",JSON.stringify({model:GATEWAY_SPEECH_MODEL,language:"es-419",speed:SPEED,locked:true}));
     res.setHeader("Content-Type","audio/mpeg");
     res.setHeader("Content-Length",String(audio.length));
-    res.setHeader("X-GSCG-Voice",fromGateway?GATEWAY_VOICE:VOICE);
+    res.setHeader("X-GSCG-Voice",GATEWAY_VOICE);
     return res.status(200).send(audio);
   }catch(error){
     console.error("cedar speech",error?.name==="AbortError"?"timeout":"failed");

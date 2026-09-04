@@ -42,6 +42,7 @@
     "voice:v375-gate": "node test-v375-fast-universal-sensitive-score.mjs",
     "voice:v376-gate": "node test-v376-native-mic-first.mjs",
     "voice:v377-gate": "node test-v377-no-speech-clean-close.mjs",
+    "voice:v378-gate": "node test-v378-approved-r7-voice-lock.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

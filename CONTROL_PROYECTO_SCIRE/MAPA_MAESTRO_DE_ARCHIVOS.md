@@ -1024,3 +1024,12 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `test-v377-no-speech-clean-close.mjs` | Verifica cierre terminal por silencio y recuperación sólo para fallos reales de transporte. | Un reintento de `no_speech` bloquea auditoría y Preview. |
 | `service-worker.js`, V357/V361/V370, `audit-project.mjs`, `package.json` | Invalida caché y conserva los controles históricos compatibles. | El candidato V377 sólo se publica con regresión acumulada. |
 | RC-057, ambos ROADMAPS e inventario | Registra el fallo físico de las 15:31–15:32 y su causa. | Producción permanece intacta hasta PASS físico. |
+
+## V378 · blindaje determinista de la voz R7 aprobada
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `api/voice-speech.js` | Genera audio únicamente con `fish-audio/s2.1-pro-free`, `es-419` y velocidad `0.90`. | Onyx no puede sustituir el timbre aprobado por disponibilidad del proveedor. |
+| `index-grupal.html` | Ante fallo del audio R7 muestra indisponibilidad explícita. | Prohíbe cambiar silenciosamente a una voz local de Safari. |
+| `test-v378-approved-r7-voice-lock.mjs` | Ejecuta el endpoint y exige una sola llamada Gateway, modelo, idioma, velocidad y cabecera exactos. | Cualquier segunda ruta audible bloquea auditoría y Preview. |
+| `service-worker.js`, `audit-project.mjs`, `package.json`, RC-058, ambos ROADMAPS e inventario | Invalida caché y deja trazabilidad ejecutable. | Producción permanece intacta hasta PASS físico. |

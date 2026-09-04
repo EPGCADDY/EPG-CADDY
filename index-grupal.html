@@ -2511,7 +2511,7 @@ async function speakAiUniversalText(text,{repeat=false}={}){
     if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(blob);
     const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.volume=1;player.playbackRate=1;
     let started=false;
-    player.onplay=()=>{started=true;aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ MEXICANA · ECHO 0.90",{busy:true})};
+    player.onplay=()=>{started=true;aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO CON VOZ R7 APROBADA · 0.90",{busy:true})};
     player.onended=()=>{setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR");releaseAiUniversalPlaybackForListening()};
     player.onerror=()=>{reportVoiceHealth("browser_fallback_speech_failed");setPrimaryVoiceMatrix("error",voiceContext,"NO PUDE REPRODUCIR LA VOZ")};
     await player.play();
@@ -2520,9 +2520,8 @@ async function speakAiUniversalText(text,{repeat=false}={}){
     return true;
   }catch(error){
     reportVoiceHealth("browser_fallback_speech_failed");
-    if(await speakAiUniversalMaleBrowserFallback(clean))return true;
-    setPrimaryVoiceMatrix("error",voiceContext,"VOZ EN ESPAÑOL NO DISPONIBLE · INTENTA DE NUEVO");
-    aiUniversalSetState("VOZ EN ESPAÑOL NO DISPONIBLE · INTENTA DE NUEVO");return false;
+    setPrimaryVoiceMatrix("error",voiceContext,"VOZ R7 APROBADA NO DISPONIBLE · INTENTA DE NUEVO");
+    aiUniversalSetState("VOZ R7 APROBADA NO DISPONIBLE · INTENTA DE NUEVO");return false;
   }
 }
 function stopAiUniversalOutput(){
