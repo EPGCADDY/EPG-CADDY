@@ -12,20 +12,29 @@ function promptFor(context,players){
   return `${base} Puede ser registro de jugadores o una pregunta universal, de clima o tráfico.`;
 }
 
+async function mintStreamSecret(){
+  let failure;
+  for(const model of STREAM_MODELS)try{
+    const secret=await gateway.experimental_transcription.getToken({model,expiresAfterSeconds:300});
+    return{...secret,model};
+  }catch(error){failure=error;console.warn("voice-transcribe-token",JSON.stringify({event:"provider_unavailable",model,status:Number(error?.statusCode)||undefined}))}
+  throw failure||new Error("TRANSCRIPTION_UNAVAILABLE");
+}
+
 export default async function handler(req,res){
   if(handleAppPreflight(req,res))return;
   res.setHeader("Cache-Control","no-store");
   if(!isAllowedAppOrigin(req))return res.status(403).json({ok:false,error:"ORIGIN_NOT_ALLOWED"});
-  if(req.method!=="POST")return res.status(405).json({ok:false,error:"METHOD_NOT_ALLOWED"});
   try{
+    if(req.method==="GET"&&req.query?.health==="stream-token"&&process.env.VERCEL_ENV!=="production"){
+      const started=Date.now(),secret=await mintStreamSecret();
+      return res.status(200).json({ok:true,model:secret.model,tokenLatencyMs:Date.now()-started});
+    }
+    if(req.method!=="POST")return res.status(405).json({ok:false,error:"METHOD_NOT_ALLOWED"});
     const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):req.body||{};
     if(body.action==="stream-token"){
-      let failure;
-      for(const model of STREAM_MODELS)try{
-        const secret=await gateway.experimental_transcription.getToken({model,expiresAfterSeconds:300});
-        return res.status(200).json({ok:true,model,token:secret.token,url:secret.url,expiresAt:secret.expiresAt||null});
-      }catch(error){failure=error;console.warn("voice-transcribe-token",JSON.stringify({event:"provider_unavailable",model,status:Number(error?.statusCode)||undefined}))}
-      throw failure||new Error("TRANSCRIPTION_UNAVAILABLE");
+      const secret=await mintStreamSecret();
+      return res.status(200).json({ok:true,model:secret.model,token:secret.token,url:secret.url,expiresAt:secret.expiresAt||null});
     }
     const audioBase64=String(body.audioBase64||""),mimeType=safeText(body.mimeType,80).toLowerCase().split(";")[0]||"audio/mp4";
     if(!/^[A-Za-z0-9+/=]+$/.test(audioBase64))return res.status(422).json({ok:false,error:"AUDIO_REQUIRED"});

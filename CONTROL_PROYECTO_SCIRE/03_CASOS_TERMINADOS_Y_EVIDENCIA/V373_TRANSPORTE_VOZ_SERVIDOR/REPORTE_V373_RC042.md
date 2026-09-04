@@ -24,3 +24,9 @@ No se modifican parsers de jugadores, parsers de Scores, cálculo Gross/Neto, ap
 ## Validación
 
 La prueba automática valida estructura y contrato con upstream simulado. La publicación sólo puede declararse entregada después de Preview READY, transcripción real de audio español, tres auditorías completas consecutivas sobre el mismo commit y la prueba física final del iPhone.
+
+## V374-R2 · autenticación y sonda real de Preview
+
+Los logs del deployment `dpl_G57WZne2vPkRi6rHdFRHHsXAaEA3` demostraron 403 consecutivo para OpenAI, Google y xAI al emitir tokens de transcripción con OIDC, mientras otras solicitudes Gateway y el saldo continuaban operativos. La dirección de facturación no es requisito del flujo: el aviso se omite con `Add Later` conforme a la operación habitual del titular.
+
+Se creó una clave AI Gateway secreta y se limitó a la rama Preview `lab/recovery-production-approved-v363`; Producción no recibe esa variable. `api/voice-transcribe.js` agrega una sonda no secreta, disponible sólo fuera de Producción, que emite y descarta un token y devuelve únicamente modelo y latencia. El banco exige ausencia del campo `token` y 405 en Producción.

@@ -55,6 +55,22 @@ try{
   assert.equal(fallback.payload.model,"google/gemini-3.5-transcribe-live");
   assert.deepEqual(attempts,["openai/gpt-realtime-whisper","google/gemini-3.5-transcribe-live"]);
 
+  const previousVercelEnv=process.env.VERCEL_ENV;
+  process.env.VERCEL_ENV="preview";
+  globalThis.fetch=async()=>new Response(JSON.stringify({token:"vcst_health",expiresAt:1234567890}),{status:200,headers:{"Content-Type":"application/json"}});
+  const health=response();
+  await handler({method:"GET",headers:{host:"epg-caddy.vercel.app"},query:{health:"stream-token"}},health);
+  assert.equal(health.statusCode,200);
+  assert.equal(health.payload.ok,true);
+  assert.equal(health.payload.model,"openai/gpt-realtime-whisper");
+  assert.equal(typeof health.payload.tokenLatencyMs,"number");
+  assert.equal(Object.hasOwn(health.payload,"token"),false);
+  process.env.VERCEL_ENV="production";
+  const protectedHealth=response();
+  await handler({method:"GET",headers:{host:"epg-caddy.vercel.app"},query:{health:"stream-token"}},protectedHealth);
+  assert.equal(protectedHealth.statusCode,405);
+  if(previousVercelEnv===undefined)delete process.env.VERCEL_ENV;else process.env.VERCEL_ENV=previousVercelEnv;
+
   const invalid=response();
   await handler({method:"POST",headers:{origin:"https://epg-caddy.vercel.app",host:"epg-caddy.vercel.app"},body:{}},invalid);
   assert.equal(invalid.statusCode,422);
