@@ -1,5 +1,13 @@
 # ROADMAP OVERALL
 
+## V375 · respuesta universal inmediata y Score sensible · 4 de septiembre de 2026
+
+La evidencia real del Preview V374-R2 separó dos causas. En Score Card, la captura del servidor conservaba un umbral RMS fijo de `0.009`; los registros mostraron `no_speech` y una transcripción anterior rechazada por el parser. V375 conserva exactamente `0.009` en Registro y reduce exclusivamente Score a `0.0045`. El prompt de transcripción de ronda fija que un número de hoyo pronunciado una vez aplica a todos los jugadores siguientes hasta que se diga otro hoyo; el escritor, cálculos y persistencia no cambian.
+
+AI UNIVERSAL tenía una credencial Gateway operativa, pero ejecutaba primero tres intentos directos; ante saldo agotado, esa secuencia podía consumir casi todo el límite de 55 segundos. V375 usa primero el Gateway ya configurado y conserva OpenAI directo como recuperación si el Gateway falla. No reduce profundidad, idioma español neutral ni capacidad universal.
+
+Archivos funcionales exactos: `server-voice-capture.js`, `api/universal-ai.js` y `service-worker.js`. Control: `test-v375-fast-universal-sensitive-score.mjs`, auditoría, paquete, ambos ROADMAPS, RC-055 e inventario. Registro de Jugadores, parser/escritor de Score, cálculos, persistencia, navegación, interfaz aprobada y Producción permanecen intactos.
+
 ## V370-R1 · Cedar principal y recuperación española compatible con iOS
 
 La prueba física del 3 de septiembre mostró que Safari no exponía ninguna voz que coincidiera con la lista cerrada de nombres masculinos y la aplicación quedaba muda. V370-R1 conserva Cedar 0.90 como locutor principal, fuerza español `es-MX` y, si el servicio está limitado, elige cualquier voz `es-*` que iOS exponga, priorizando nombre masculino y español latino. No cambia Registro, Score Card, cálculos, persistencia ni Producción. El caché instalable cambia a `v370-r1-ios-spanish-voice`.

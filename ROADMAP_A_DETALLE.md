@@ -1,5 +1,16 @@
 # ROADMAP A DETALLE
 
+## Registro técnico V375 · Gateway primero y sensibilidad exclusiva de Score
+
+| Archivo exacto | Intervención limitada | Candado permanente |
+|---|---|---|
+| `server-voice-capture.js` | Mantiene Registro en RMS `0.009`; sólo `context=round` usa `0.0045`. El prompt indica que un hoyo aplica al bloque completo de jugadores. | Prohibido alterar parser, escritor, cálculos, persistencia o comportamiento aprobado de Registro. |
+| `api/universal-ai.js` | Si existe token Gateway, lo intenta antes de los tres proveedores directos; ante fallo recuperable conserva la cadena directa. | Mantiene GPT-5.6, profundidad adaptable y español neutral; no introduce espera artificial. |
+| `service-worker.js` | Invalida la copia V374 para que Safari reciba el transporte corregido. | Sin cambios de pantalla ni navegación. |
+| `test-v375-fast-universal-sensitive-score.mjs` | Exige Gateway como primera y única llamada exitosa, umbrales separados y la frase exacta `Hoyo 1 Juan cuatro Pedro cinco Luis seis Tomás cuatro`. | Los cuatro scores deben quedar en el hoyo 1 sin repetirlo. |
+
+La entrega exige tres auditorías completas consecutivas sobre el mismo commit, Preview READY, comprobación viva y Producción intacta. La prueba física final del iPhone continúa separada.
+
 ## Registro técnico V370-R1 · recuperación de voz española en Safari iOS
 
 | Archivo | Cambio limitado | Verificación |

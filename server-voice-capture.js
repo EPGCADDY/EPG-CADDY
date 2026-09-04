@@ -1,6 +1,6 @@
 (function(){
   "use strict";
-  const TARGET_RATE=24000,SILENCE_MS=1000,NO_SPEECH_MS=8000,MAX_CAPTURE_MS=30000,MIN_SPEECH_MS=180;
+  const TARGET_RATE=24000,SILENCE_MS=1000,NO_SPEECH_MS=8000,MAX_CAPTURE_MS=30000,MIN_SPEECH_MS=180,SETUP_SPEECH_THRESHOLD=.009,ROUND_SPEECH_THRESHOLD=.0045;
   let socket=null,stream=null,context=null,source=null,analyser=null,processor=null,raf=0,pendingAudio=[],audioDonePending=false,speechAt=0,speechStartedAt=0,openedAt=0,stopping=false,requestContext="setup",players="",transcript="";
   let handlers={state:null,transcript:null,error:null};
   function emit(name,value){try{handlers[name]?.(value)}catch{}}
@@ -12,7 +12,8 @@
   function monitor(){
     if(!stream||stopping)return;
     const values=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(values);let energy=0;for(const value of values)energy+=value*value;const rms=Math.sqrt(energy/values.length),now=performance.now();
-    if(rms>=.009){if(!speechStartedAt)speechStartedAt=now;speechAt=now}
+    const speechThreshold=requestContext==="round"?ROUND_SPEECH_THRESHOLD:SETUP_SPEECH_THRESHOLD;
+    if(rms>=speechThreshold){if(!speechStartedAt)speechStartedAt=now;speechAt=now}
     if(speechStartedAt&&now-speechStartedAt>=MIN_SPEECH_MS&&now-speechAt>=SILENCE_MS){stop(true);return}
     if(!speechStartedAt&&now-openedAt>=NO_SPEECH_MS){stop(true);return}
     if(now-openedAt>=MAX_CAPTURE_MS){stop(true);return}
@@ -23,7 +24,7 @@
     if(!response.ok||!result.token||!result.url)throw Object.assign(new Error(result.error||"TRANSCRIPTION_UNAVAILABLE"),{code:result.error||"TRANSCRIPTION_UNAVAILABLE"});
     await new Promise((resolve,reject)=>{const ws=new WebSocket(result.url,["ai-gateway-transcription.v1",`ai-gateway-auth.${result.token}`]);const timer=setTimeout(()=>{try{ws.close()}catch{}reject(Object.assign(new Error("TRANSCRIPTION_CONNECT_TIMEOUT"),{code:"TRANSCRIPTION_CONNECT_TIMEOUT"}))},5000);ws.binaryType="arraybuffer";ws.onopen=()=>{clearTimeout(timer);socket=ws;ws.send(JSON.stringify({type:"transcription-stream.start",inputAudioFormat:{type:"audio/pcm",rate:TARGET_RATE},providerOptions:{openai:{language:"es",prompt:prompt()}}}));for(const bytes of pendingAudio)ws.send(bytes);pendingAudio=[];if(audioDonePending){ws.send(JSON.stringify({type:"transcription-stream.audio-done"}));audioDonePending=false}resolve()};ws.onerror=()=>{clearTimeout(timer);reject(Object.assign(new Error("TRANSCRIPTION_UNAVAILABLE"),{code:"TRANSCRIPTION_UNAVAILABLE"}))};ws.onmessage=event=>{if(typeof event.data!=="string")return;let part;try{part=JSON.parse(event.data)}catch{return}if(part.type==="transcript-delta"||part.type==="transcript-partial"||part.type==="transcript-final")transcript=String(part.text||part.transcript||transcript);if(part.type==="error")emit("error",Object.assign(new Error(part.error?.message||"TRANSCRIPTION_UNAVAILABLE"),{code:"TRANSCRIPTION_UNAVAILABLE"}));if(part.type==="finish"){const finalText=String(part.text||transcript).trim();try{ws.close(1000)}catch{}socket=null;release();stopping=false;if(finalText)emit("transcript",finalText);else emit("error",Object.assign(new Error("NO_SPEECH"),{code:"NO_SPEECH"}));emit("state","idle")}};ws.onclose=()=>{if(socket===ws){socket=null;if(stream||stopping){release();stopping=false;emit("error",Object.assign(new Error("TRANSCRIPTION_UNAVAILABLE"),{code:"TRANSCRIPTION_UNAVAILABLE"}));emit("state","idle")}}}})
   }
-  function prompt(){const base="Transcribe literalmente en español latinoamericano. Conserva nombres propios, números, hoyos, handicap, colores de marcas, lugares, zonas y preguntas completas. Jessie se escribe Jessie.";return requestContext==="round"?`${base} Vocabulario de golf: hoyo, gross, par, birdie, bogey, doble bogey, triple bogey, eagle, águila, albatros, equis, sin score. Jugadores: ${players||"los registrados"}.`: `${base} Puede ser registro de jugadores o una pregunta universal, de clima o tráfico.`}
+  function prompt(){const base="Transcribe literalmente en español latinoamericano. Conserva nombres propios, números, hoyos, handicap, colores de marcas, lugares, zonas y preguntas completas. Jessie se escribe Jessie.";return requestContext==="round"?`${base} Vocabulario de golf: hoyo, gross, par, birdie, bogey, doble bogey, triple bogey, eagle, águila, albatros, equis, sin score. Jugadores: ${players||"los registrados"}. El número de hoyo dicho una vez se aplica a todos los jugadores siguientes hasta que se diga otro hoyo.`: `${base} Puede ser registro de jugadores o una pregunta universal, de clima o tráfico.`}
   async function start(options={}){
     if(!available()||stream)return false;requestContext=options.context==="round"?"round":"setup";players=String(options.players||"");stopping=false;pendingAudio=[];audioDonePending=false;transcript="";speechAt=0;speechStartedAt=0;openedAt=0;
     try{

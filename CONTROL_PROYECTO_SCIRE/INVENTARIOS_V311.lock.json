@@ -1,23 +1,23 @@
 {
-  "version": "V374-R2-STREAMING-VOICE-AUTH-INTOCABLES",
-  "generatedAt": "2026-09-04T12:45:14Z",
-  "sourceFileCount": 399,
-  "sourceDigest": "2c6134f681d0dd80b2066ed1b5bf75769e7e9940799d380fdebe74dc4b19b426",
+  "version": "V375-FAST-UNIVERSAL-SENSITIVE-SCORE-INTOCABLES",
+  "generatedAt": "2026-09-04T20:05:21Z",
+  "sourceFileCount": 400,
+  "sourceDigest": "92d01b627b1a1ff694081d5b5c3e1290bccd6aadf8b2a9942da920c12592943e",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 214205,
-      "sha256": "5e2feb7ce79426f14a5cac1185584bae5cbf8080ac58dec2802f32e06f5f305c"
+      "size": 214988,
+      "sha256": "48db01e350946cea8a5eda46213a5cb38046194aba3bc0f38b3575bc5b3b761f"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 242069,
-      "sha256": "113a061ac61dfe0874a9f948fbdbcf6264682874c847437a7efc3f2b7f5d5378"
+      "size": 244232,
+      "sha256": "c782081b04af48e6f12d6eeb7895bcacfc6e7138ee934a3bd73570773243c9a9"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19261017,
-      "sha256": "c0242c3db95b2e4cfadaf78125023baf5dc48e05bdd9ad5e423f653a3d8417d8"
+      "size": 19261002,
+      "sha256": "b2e9e6d07ebaaa7f176b9f7d46113ec358c70d05735169edf47955605fa5a31b"
     }
   ]
 }
