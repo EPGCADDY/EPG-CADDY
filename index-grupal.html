@@ -19,7 +19,7 @@
 <meta name="gscg-universal-voice-in-place" content="V367-UNIVERSAL-VOICE-IN-PLACE-20260828">
 <meta name="gscg-canonical-home-entry" content="V368-CANONICAL-HOME-ENTRY-20260829">
 <meta name="gscg-voice-weather-traffic-recovery" content="V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-20260903">
-<meta name="gscg-native-spanish-one-shot-voice" content="V371-R8-IOS-AUDIO-SESSION-RELEASE-20260904">
+<meta name="gscg-native-spanish-one-shot-voice" content="V371-R9-IOS-AUTHORIZED-PLAYER-REUSE-20260904">
 <meta name="gscg-ai-voice" content="IOS-ES-MX-0.90-NATIVE-MEXICAN-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -2468,7 +2468,7 @@ function releaseAiUniversalPlaybackForListening(){
   const player=aiUniversalTtsAudio;
   if(player){try{player.pause();player.currentTime=0;player.onplay=null;player.onended=null;player.onerror=null;player.removeAttribute("src");player.load?.()}catch{}}
   try{URL.revokeObjectURL(aiUniversalTtsObjectUrl)}catch{}
-  aiUniversalTtsObjectUrl="";aiUniversalTtsAudio=null;return true
+  aiUniversalTtsObjectUrl="";return true
 }
 function preferredMaleBrowserVoice(language){
   if(!("speechSynthesis" in window))return null;

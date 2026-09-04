@@ -1956,3 +1956,7 @@ El log físico de R6 demuestra `POST /api/voice-speech 200` después de `cedar s
 ### V371-R8 · liberación de sesión de audio antes de reescuchar
 
 La prueba física R7 confirmó voz correcta, pero los logs posteriores registraron tres ciclos `no_speech/aborted` después de la primera respuesta. El reproductor MP3 conservaba la sesión de audio de salida al intentar abrir de nuevo SpeechRecognition; además `visibilitychange/pagehide` apagaban el capturador dejando visible `ESCUCHANDO`. R8 libera `Audio.src` y su Object URL antes de cada nueva captura y al terminar de hablar, y limpia el estado al salir de la página. Sólo cambia el transporte compartido; parser, Registro, aplicación de jugadores, Scores, cálculos y persistencia permanecen intactos.
+
+### V371-R9 · reutilización del reproductor autorizado por iOS
+
+Los logs físicos R8 demostraron que inteligencia universal y tráfico respondieron HTTP 200 y generaron MP3 HTTP 200, pero la reproducción posterior emitió `browser_fallback_speech_failed`. R8 liberaba correctamente la fuente anterior, pero también descartaba el objeto `Audio` autorizado por el primer gesto; el siguiente `new Audio()` quedó sujeto al bloqueo de reproducción asíncrona de iOS. R9 conserva el mismo reproductor autorizado y sólo libera su fuente/Object URL. Registro, Scores, cálculos, persistencia e interfaz permanecen intactos.

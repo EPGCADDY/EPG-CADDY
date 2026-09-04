@@ -4,8 +4,8 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/V371-R8-IOS-AUDIO-SESSION-RELEASE-20260904/);
-assert.match(worker,/v371-r8-ios-audio-session-release/);
+assert.match(html,/V371-R9-IOS-AUTHORIZED-PLAYER-REUSE-20260904/);
+assert.match(worker,/v371-r9-ios-authorized-player-reuse/);
 assert.match(html,/CONVERSATION_VAD_SILENCE_MS=900/);
 assert.match(html,/BROWSER_VOICE_SILENCE_MS=1200/);
 assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000/);
@@ -36,7 +36,8 @@ const playbackRelease=html.slice(html.indexOf("function releaseAiUniversalPlayba
 assert.match(playbackRelease,/player\.pause\(\)/);
 assert.match(playbackRelease,/player\.removeAttribute\("src"\)/);
 assert.match(playbackRelease,/URL\.revokeObjectURL\(aiUniversalTtsObjectUrl\)/);
-assert.match(playbackRelease,/aiUniversalTtsAudio=null/);
+assert.doesNotMatch(playbackRelease,/aiUniversalTtsAudio=null/);
+assert.match(speech,/const player=aiUniversalTtsAudio\|\|new Audio\(\)/);
 const toggle=html.slice(html.indexOf("async function toggleVoice"),html.indexOf("function fireMicActivation"));
 assert.match(toggle,/releaseAiUniversalPlaybackForListening\(\);[\s\S]*startBrowserVoiceFallback\(context\)/);
 const lifecycle=html.slice(html.indexOf('document.addEventListener("visibilitychange"'),html.indexOf('window.addEventListener("beforeunload"'));
