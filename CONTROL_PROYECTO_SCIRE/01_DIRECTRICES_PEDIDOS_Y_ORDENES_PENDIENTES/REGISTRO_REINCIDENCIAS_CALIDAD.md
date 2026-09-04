@@ -74,3 +74,11 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Control permanente: primer bloque máximo de 80 caracteres, tres solicitudes R7 anticipadas, telemetría hasta `onplay` y prueba física consecutiva contra ChatGPT.
 - Criterio: 22 segundos es FAIL; Universal debe empezar a hablar al mismo tiempo que ChatGPT o antes, con igual pregunta, iPhone y red.
 - Límite: Registro y Scores aprobados en V378 están sellados por SHA-256 y no se modifican.
+
+## RC-060 · segundo y tercer turno Universal terminan en no_speech/aborted · 4 de septiembre de 2026
+
+- Evidencia física: la primera consulta respondió con voz aprobada y comenzó en 2.8 s; las consultas segunda y tercera abrieron SpeechRecognition, pero agotaron ocho segundos sin transcripción y terminaron `no_speech`/`aborted`.
+- Causa raíz: después de descargar el reproductor R7, se destruía el elemento autorizado; el siguiente toque reproducía otro audio silencioso para autorizarlo y reabría la sesión de salida sobre la nueva captura.
+- Control permanente: descargar por completo `src` y Object URL, conservar inerte el mismo elemento autorizado y prohibir un segundo primer silencioso.
+- Evidencia automática: `test-v380-three-turn-audio-release.mjs`; Intocables debe conservar seis hashes V378 sin cambio.
+- Estado: corregido en candidato V380; pendiente Preview READY y tres preguntas físicas consecutivas. Producción intacta.

@@ -1582,3 +1582,7 @@ La prueba física aprobó Registro de Jugadores y Scores individual/múltiple en
 La publicación exige además verificar que el blob remoto de `index-grupal.html` sea idéntico al auditado; una transferencia incompleta bloquea el Preview.
 
 Controles exactos: `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`, `Intocables/CONFIRMACION_ESCRITA_V378.md` y `test-v379-fast-chunked-r7-speech.mjs`.
+
+## V380 · continuidad Universal de tres turnos · 4 de septiembre de 2026
+
+Los logs físicos V379 confirmaron primera voz en 2.8 s, seguida por dos capturas `no_speech/aborted`. `index-grupal.html` descarga completamente el audio R7 al terminar, pero conserva inerte el mismo elemento ya autorizado; el segundo toque deja de reproducir un primer silencioso que reabría la salida sobre SpeechRecognition. `test-v380-three-turn-audio-release.mjs` bloquea la regresión y `service-worker.js` invalida V379. Registro, Scores, sus parámetros sellados, voz R7, velocidad y Producción permanecen intactos.

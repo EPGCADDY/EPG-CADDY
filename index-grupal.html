@@ -2473,7 +2473,10 @@ function releaseAiUniversalPlaybackForListening(){
   if(player){try{player.pause();player.currentTime=0;player.onplay=null;player.onended=null;player.onerror=null;player.removeAttribute("src");player.load?.()}catch{}}
   try{URL.revokeObjectURL(aiUniversalTtsObjectUrl)}catch{}
   if(aiUniversalSpeechPrimer===player)aiUniversalSpeechPrimer=null;
-  aiUniversalTtsObjectUrl="";aiUniversalTtsAudio=null;return true
+  // Conserva el elemento ya autorizado, pero completamente descargado. En iOS
+  // destruirlo obligaba a reproducir otro audio silencioso en el siguiente toque,
+  // reabría la sesión de salida y dejaba SpeechRecognition en no_speech/aborted.
+  aiUniversalTtsObjectUrl="";aiUniversalTtsAudio=player;return true
 }
 function preferredMaleBrowserVoice(language){
   if(!("speechSynthesis" in window))return null;

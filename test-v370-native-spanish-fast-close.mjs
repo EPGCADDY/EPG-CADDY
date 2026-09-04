@@ -34,7 +34,7 @@ const playbackRelease=html.slice(html.indexOf("function releaseAiUniversalPlayba
 assert.match(playbackRelease,/player\.pause\(\)/);
 assert.match(playbackRelease,/player\.removeAttribute\("src"\)/);
 assert.match(playbackRelease,/URL\.revokeObjectURL\(aiUniversalTtsObjectUrl\)/);
-assert.match(playbackRelease,/aiUniversalTtsAudio=null/);
+assert.match(playbackRelease,/aiUniversalTtsAudio=player/);
 assert.match(speech,/const player=aiUniversalTtsAudio\|\|new Audio\(\)/);
 const toggle=html.slice(html.indexOf("async function toggleVoice"),html.indexOf("function fireMicActivation"));
 assert.match(toggle,/releaseAiUniversalPlaybackForListening\(\);[\s\S]*startBrowserVoiceFallback\(context\)/);

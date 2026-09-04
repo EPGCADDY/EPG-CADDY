@@ -2049,3 +2049,12 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `test-v379-fast-chunked-r7-speech.mjs`: exige bloques progresivos, prefetch, telemetría y candado V378.
 - Aceptación: primer audio no más tarde que ChatGPT con misma pregunta, iPhone y red; 22 segundos es FAIL. Producción permanece intacta.
 - Publicación: el SHA del archivo principal remoto debe coincidir con el artefacto local auditado antes de declarar READY.
+
+## V380 · continuidad Universal de tres turnos · 4 de septiembre de 2026
+
+- `index-grupal.html`: conserva el elemento `Audio` autorizado después de pausar, retirar `src`, ejecutar `load()` y revocar la Object URL.
+- El segundo y tercer toque reutilizan ese elemento inerte; no reproducen otro primer silencioso sobre el micrófono.
+- `test-v380-three-turn-audio-release.mjs`: exige liberación completa, conservación de autorización y orden liberar→cebar.
+- `service-worker.js`: caché V380; `audit-project.mjs` y `package.json`: puerta V380 obligatoria.
+- RC-060 conserva logs de 22:43–22:44 UTC: primera voz 2.8 s, dos ciclos posteriores `no_speech/aborted`.
+- Registro y Scores V378 siguen sellados byte por byte; Producción permanece intacta.

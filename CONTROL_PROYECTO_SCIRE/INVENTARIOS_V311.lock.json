@@ -1,18 +1,18 @@
 {
-  "version": "V379-FAST-CHUNKED-R7-SPEECH-AND-V378-LOCK",
-  "generatedAt": "2026-09-04T22:35:35Z",
-  "sourceFileCount": 406,
-  "sourceDigest": "fae5ce663ae5494277b663180a15218d7c1ee1d7f63cf953f0bb21b67163e573",
+  "version": "V380-THREE-TURN-AUDIO-RELEASE-AND-V378-LOCK",
+  "generatedAt": "2026-09-04T22:48:58Z",
+  "sourceFileCount": 407,
+  "sourceDigest": "c338e5b1352f536ca2c00f1c9339ab810268aa6fb86347d81362d4310872c713",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 218405,
-      "sha256": "bfbc8f0bbbdb97b48d01727c99d9f945a38d010917eaa620acffa73efbe4cbf9"
+      "size": 218957,
+      "sha256": "433a0ba73ddd003628a9c76a4e43f622399ca430561cc5693d12e0d8ba07809a"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 248000,
-      "sha256": "35796621f351fc3ea8e061eace21b9518c0cab2c2f1f5499ebd2850369b3b9a8"
+      "size": 248558,
+      "sha256": "62f0a22a8e7418b782d3d16d3f95b7602259a24d7afb531736694beeb63c199b"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
