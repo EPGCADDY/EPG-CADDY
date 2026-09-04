@@ -1968,3 +1968,17 @@ Los logs físicos R9 de las 20:01–20:02 Guatemala muestran una primera respues
 ### V372 RETIRADA · evidencia y única dependencia externa
 
 La candidata incorporó `api/realtime-gateway-token.js`, `gateway-realtime.js`, `package-lock.json` y `test-v372-gateway-realtime-streaming.mjs`, con captura PCM, silencio de 1.2 segundos y audio Cedar progresivo. Tres ejecuciones completas de `npm run audit` dieron 118/118 PASS, pero `POST /api/realtime-gateway-token` en `dpl_Fs1KucVwdEFq9x8oCgUsty5FPtD5` respondió `503`; el log de Vercel registró `gateway-realtime-token {event:failed,code:403}`. La documentación oficial identifica ese 403 como falta de acceso al modelo, créditos/verificación de pago o restricción del equipo. La candidata se retira y no se entrega. Única dependencia para reabrirla: habilitar AI Gateway Realtime en el equipo Vercel. Producción `786021b4d8a715bda3ffa84fe3944a12917ed824` permanece intacta.
+
+### V373 · transporte grabado independiente de SpeechRecognition y Realtime
+
+| Archivo exacto | Responsabilidad | Candado |
+|---|---|---|
+| `server-voice-capture.js` | Abre `getUserMedia` en el gesto, graba, detecta un segundo de silencio y libera todos los recursos antes de transcribir. | Ninguna sesión anterior puede dejar el micrófono trabado. |
+| `api/voice-transcribe.js` | Envía audio limitado a `gpt-4o-mini-transcribe` con `language=es` y vocabulario contextual. | Sólo devuelve texto; no escribe Registro ni Scores. |
+| `index-grupal.html` | Selecciona el transporte V373 en iPhone y reutiliza `processBrowserVoiceTranscript()`. | Los parsers, aplicadores, cálculos y persistencia existentes no se sustituyen. |
+| `test-v373-server-voice-transcription.mjs` | Prueba contrato, idioma, cierre de pista e integración. | Un fallo detiene auditoría y despliegue. |
+| `service-worker.js` | Incluye el transporte en la shell existente. | Conserva la firma histórica exigida por V357. |
+| `api/_lib/traffic.js` | Resuelve el país del GPS y fija `regionCode` en Google Routes. | Un destino local ambiguo permanece en el país de origen. |
+| `test-v324-real-traffic.mjs` | Simula geocodificación inversa en Guatemala. | Exige `regionCode="GT"` antes de aceptar la ruta. |
+
+Evidencia de causa: los tokens Realtime 2.1 y Realtime mini fueron rechazados con 403, mientras el panel AI Gateway mostró crédito disponible. El reporte completo está en `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V373_TRANSPORTE_VOZ_SERVIDOR/REPORTE_V373_RC042.md`. Producción permanece intacta.

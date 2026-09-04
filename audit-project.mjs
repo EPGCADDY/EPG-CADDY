@@ -79,6 +79,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v366-principal-ent
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v367-universal-voice-in-place.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v368-canonical-home-entry.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v369-physical-voice-weather-traffic-recovery.mjs','test-v370-native-spanish-fast-close.mjs','test-v371-spanish-only-universal.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v373-server-voice-transcription.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

@@ -833,7 +833,7 @@ body.gsc-live-open .gsc-live-launch{display:none!important}
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
 <div class="mandatory-update" id="mandatoryUpdate" role="dialog" aria-modal="true" aria-labelledby="mandatoryUpdateTitle"><div class="mandatory-update-card"><h1 id="mandatoryUpdateTitle">ACTUALIZACIÓN OBLIGATORIA</h1><p>HAY UNA NUEVA VERSIÓN DE GOLF SCORE CARD GUATEMALA. PARA PROTEGER LOS CÁLCULOS, LOS DATOS Y LAS FUNCIONES, DEBES ACTUALIZAR ANTES DE CONTINUAR.</p><button type="button" id="mandatoryUpdateButton">ACTUALIZAR</button></div></div>
-<script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
+<script src="./server-voice-capture.js"></script><script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
 "use strict";
 const GSC_API_ORIGIN=String(window.GSC_API_ORIGIN||"").replace(/\/$/,"");
@@ -1015,6 +1015,7 @@ let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelE
 let realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL,realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;
 let voiceOpening=false;
 let browserVoiceRecognition=null,browserVoiceContext=null,browserVoiceActive=false,browserVoiceRequested=false,browserVoiceTranscript="",browserVoiceInterim="",browserVoiceCandidates=[],browserVoiceErrored=false,browserVoiceStopping=false,browserVoiceSilenceTimer=null,browserVoiceFirstResultTimer=null,browserVoiceStopGuardTimer=null,browserVoiceRetryTimer=null,browserVoiceRestartCount=0,browserVoiceTransportRetryCount=0,browserVoiceItemId="",browserVoiceAppliedEntryCount=0;
+let serverVoiceCaptureActive=false,serverVoiceCaptureRequested=false,serverVoiceCaptureContext=null;
 let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null,aiUniversalSpeechPrimed=false,aiUniversalSpeechPrimer=null,aiUniversalTtsAudio=null,aiUniversalTtsObjectUrl="",aiUniversalRulesMode=false,cedarSpeechServerBlockedUntil=0;
 const AI_UNIVERSAL_HISTORY_LIMIT=80;
 const processedTranscriptItems=new Set();
@@ -1892,7 +1893,7 @@ function parseRoundNavigationCommand(transcript){
     :{matched:false};
 }
 function executeVoiceAssistantAction(action){
-  if(browserVoiceActive||browserVoiceRequested)stopBrowserVoiceFallback();else if(listening)setVoice(false);
+  if(serverVoiceCaptureActive||serverVoiceCaptureRequested)stopServerVoiceCapture({process:false});else if(browserVoiceActive||browserVoiceRequested)stopBrowserVoiceFallback();else if(listening)setVoice(false);
   switch(action){
     case"open_stableford":return openFreshStablefordSetup();
     case"open_match":openNewRoundDraft();return selectGeneralRoundMode("match_play");
@@ -2529,7 +2530,7 @@ function stopAiUniversalOutput(){
   if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;
   if(aiUniversalTtsAudio){aiUniversalTtsAudio.pause();aiUniversalTtsAudio.currentTime=0}
   if(authorizedSpeech?.reason==="conversation"||activeResponseId||stopMonitorActive)stopAuthorizedSpeech();
-  if(browserVoiceActive||browserVoiceRequested)stopBrowserVoiceFallback();else if(listening)setVoice(false);
+  if(serverVoiceCaptureActive||serverVoiceCaptureRequested)stopServerVoiceCapture({process:false});else if(browserVoiceActive||browserVoiceRequested)stopBrowserVoiceFallback();else if(listening)setVoice(false);
   $("sendAiUniversal").disabled=false;aiUniversalSetState("DETENIDO · PUEDES ESCRIBIR O ESCUCHAR");return true;
 }
 function toggleAiUniversalMute(){
@@ -4129,6 +4130,40 @@ function scheduleRealtimeDisconnectRecovery(installedPc,context){
   realtimeDisconnectTimer=setTimeout(()=>{realtimeDisconnectTimer=null;if(pc===installedPc&&installedPc.connectionState!=="connected")voiceTransportFailure(installedPc,context)},REALTIME_DISCONNECT_GRACE_MS);
 }
 
+function serverVoiceCapturePreferred(){
+  const userAgent=String(navigator.userAgent||""),platform=String(navigator.platform||""),touchMac=platform==="MacIntel"&&Number(navigator.maxTouchPoints||0)>1;
+  return(/iPad|iPhone|iPod/i.test(userAgent)||touchMac)&&!!window.GSCServerVoiceCapture?.available?.()
+}
+function stopServerVoiceCapture({process=true,keepStatus=false}={}){
+  if(!serverVoiceCaptureActive&&!serverVoiceCaptureRequested)return false;
+  const context=serverVoiceCaptureContext||voiceContext;serverVoiceCaptureRequested=false;
+  const stopped=window.GSCServerVoiceCapture?.stop?.(process);
+  if(stopped){setPrimaryVoiceMatrix(process?"responding":"idle",context,process?"TRANSCRIBIENDO…":"");return true}
+  serverVoiceCaptureActive=false;listening=false;phase="idle";
+  (context==="setup"?$("setupMicWrap"):$("headerMicWrap"))?.classList.remove("active","connecting");
+  if(!keepStatus)setPrimaryVoiceMatrix("idle",context);return false
+}
+async function startServerVoiceCapture(context){
+  const transport=window.GSCServerVoiceCapture;if(!transport?.available?.())return false;
+  if(serverVoiceCaptureActive||serverVoiceCaptureRequested)stopServerVoiceCapture({process:false,keepStatus:true});
+  serverVoiceCaptureContext=context;serverVoiceCaptureRequested=true;voiceContext=context;
+  const wrap=context==="setup"?$("setupMicWrap"):$("headerMicWrap");wrap?.classList.add("active","connecting");
+  setPrimaryVoiceMatrix("idle",context,"ABRIENDO MICRÓFONO…");
+  transport.configure({
+    state:state=>{
+      if(context!==serverVoiceCaptureContext)return;
+      if(state==="listening"){serverVoiceCaptureRequested=false;serverVoiceCaptureActive=true;listening=true;phase="listening";wrap?.classList.remove("connecting");wrap?.classList.add("active");setPrimaryVoiceMatrix("listening",context);reportVoiceHealth("server_capture_started")}
+      else if(state==="transcribing"){serverVoiceCaptureActive=false;listening=false;phase="processing";wrap?.classList.remove("active","connecting");setPrimaryVoiceMatrix("responding",context,"TRANSCRIBIENDO…")}
+      else if(state==="idle"){serverVoiceCaptureRequested=false;serverVoiceCaptureActive=false;listening=false;if(phase==="listening")phase="idle";wrap?.classList.remove("active","connecting")}
+    },
+    transcript:transcript=>{serverVoiceCaptureRequested=false;serverVoiceCaptureActive=false;listening=false;reportVoiceHealth("server_capture_transcript_ready");void processBrowserVoiceTranscript(context,transcript).catch(error=>{console.error("Server voice transcript:",error);phase="idle";setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO")})},
+    error:error=>{serverVoiceCaptureRequested=false;serverVoiceCaptureActive=false;listening=false;phase="idle";wrap?.classList.remove("active","connecting");const message=error?.code==="NO_SPEECH"?"NO ESCUCHÉ NINGUNA VOZ · TOCA EL MICRÓFONO E INTENTA DE NUEVO":"RECONOCIMIENTO DE VOZ NO DISPONIBLE · INTENTA DE NUEVO";reportVoiceHealth("server_capture_failed",{transportFailure:String(error?.code||error?.name||"other")});setPrimaryVoiceMatrix("error",context,message)}
+  });
+  const players=context==="round"?(round?.players||[]).map(player=>player.name).filter(Boolean).join(", "):draftPlayers.map(player=>player.name).filter(Boolean).join(", ");
+  const opened=await transport.start({context,players});
+  if(!opened){serverVoiceCaptureRequested=false;serverVoiceCaptureActive=false;wrap?.classList.remove("active","connecting")}return !!opened
+}
+
 function fallbackVoiceConstructor(){return window.SpeechRecognition||window.webkitSpeechRecognition||null}
 function fallbackVoiceAvailable(){return typeof fallbackVoiceConstructor()==="function"}
 function gestureSafeBrowserVoicePreferred(){
@@ -4838,11 +4873,18 @@ async function ensureSession(){
 }
 async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL){
   voiceLastErrorMessage="";
+  if(serverVoiceCaptureActive||serverVoiceCaptureRequested){stopServerVoiceCapture({process:true,keepStatus:true});return true}
   if(browserVoiceActive||browserVoiceRequested){stopBrowserVoiceFallback({keepStatus:true,processPending:true});return true}
   releaseAiUniversalPlaybackForListening();
   // En Safari/iPhone la autorización del gesto se pierde si primero esperamos
   // la sesión Realtime. La captura local debe abrirse en el mismo toque para
   // que un 429 remoto no deje sin score ni comunicación universal.
+  if(!listening&&serverVoiceCapturePreferred()){
+    voiceContext=context;setMicConnecting(context,false);
+    if(context==="round")resetRoundCapture();
+    if(context==="setup"&&(setupFinalizeRequested||setupLocked))resetSetupCapture();
+    if(await startServerVoiceCapture(context)){voiceLastErrorMessage="MICRÓFONO ACTIVO";return true}
+  }
   if(!listening&&gestureSafeBrowserVoicePreferred()){
     voiceContext=context;setMicConnecting(context,false);
     if(context==="round")resetRoundCapture();
@@ -5037,7 +5079,7 @@ document.addEventListener("visibilitychange",()=>{
     // micrófono. Durante esa apertura no invalidamos la conexión que se está creando.
     if(voiceOpening)return;
     appHiddenAt=Date.now();appWasBackgrounded=true;
-    if(browserVoiceActive||browserVoiceRequested)stopBrowserVoiceFallback();else if(listening)setVoice(false);
+    if(serverVoiceCaptureActive||serverVoiceCaptureRequested)stopServerVoiceCapture({process:false});else if(browserVoiceActive||browserVoiceRequested)stopBrowserVoiceFallback();else if(listening)setVoice(false);
   }else{
     if(voiceOpening)return;
     recoverRealtimeAfterResumeSync();
@@ -5065,7 +5107,7 @@ window.addEventListener("pagehide",()=>{
   persist();
   if(voiceOpening)return;
   appHiddenAt=Date.now();appWasBackgrounded=true;
-  if(browserVoiceActive||browserVoiceRequested)stopBrowserVoiceFallback();else if(listening)setVoice(false);
+  if(serverVoiceCaptureActive||serverVoiceCaptureRequested)stopServerVoiceCapture({process:false});else if(browserVoiceActive||browserVoiceRequested)stopBrowserVoiceFallback();else if(listening)setVoice(false);
 });
 window.addEventListener("beforeunload",persist);
 window.addEventListener("online",()=>{if(!demoControlManual){masterSyncBlockedUntil=0;flushMasterSyncQueue()}});
