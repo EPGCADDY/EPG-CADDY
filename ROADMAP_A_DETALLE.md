@@ -1952,3 +1952,7 @@ Evidencia real del Preview R5: la primera captura llegó a transcripción y resp
 ### V371-R7 · respaldo hablado español latino
 
 El log físico de R6 demuestra `POST /api/voice-speech 200` después de `cedar speech direct fallback {"status":429}`: la respuesta escrita era española, pero el respaldo `openai/tts-1-hd` con voz `echo` produjo pronunciación anglófona y Spanglish. R7 modifica únicamente `api/voice-speech.js`: sustituye ese respaldo por `fish-audio/s2.1-pro-free`, fija `es-419` y transmite la instrucción completa de español mexicano neutro, sin acento anglosajón ni Spanglish. Las pruebas V356 y V362 impiden restaurar Echo o `tts-1-hd`. Registro, Scores, cálculos, persistencia, interfaz y Producción permanecen intactos.
+
+### V371-R8 · liberación de sesión de audio antes de reescuchar
+
+La prueba física R7 confirmó voz correcta, pero los logs posteriores registraron tres ciclos `no_speech/aborted` después de la primera respuesta. El reproductor MP3 conservaba la sesión de audio de salida al intentar abrir de nuevo SpeechRecognition; además `visibilitychange/pagehide` apagaban el capturador dejando visible `ESCUCHANDO`. R8 libera `Audio.src` y su Object URL antes de cada nueva captura y al terminar de hablar, y limpia el estado al salir de la página. Sólo cambia el transporte compartido; parser, Registro, aplicación de jugadores, Scores, cálculos y persistencia permanecen intactos.

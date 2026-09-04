@@ -1513,3 +1513,7 @@ Los logs físicos de R5 prueban que Safari abrió `SpeechRecognition`, pero desp
 ### V371-R7 · eliminación del respaldo de voz anglófono
 
 R6 fue rechazado porque, tras el 429 del proveedor directo, el respaldo `openai/tts-1-hd` con voz `echo` leyó español con pronunciación inglesa. R7 sustituye sólo ese respaldo por el modelo multilingüe `fish-audio/s2.1-pro-free`, con idioma `es-419` e instrucciones expresas de español mexicano neutro sin Spanglish. Los contratos automáticos rechazan Echo y `tts-1-hd`. Registro, Scores, interfaz, datos y Producción no cambian.
+
+### V371-R8 · reapertura del micrófono después de audio
+
+La voz R7 quedó aprobada físicamente, pero la segunda consulta falló: tras hablar, Safari abrió reconocimiento sin captar audio y devolvió `no_speech/aborted`; al cambiar de aplicación, el capturador se detenía conservando el rótulo `ESCUCHANDO`. R8 libera completamente el reproductor MP3 antes de reabrir el micrófono y limpia el estado al ocultar la página. No modifica Registro, Scores, cálculos, persistencia ni Producción.
