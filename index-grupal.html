@@ -1016,7 +1016,7 @@ let realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL,realtimeTurnProfileReq
 let voiceOpening=false;
 let browserVoiceRecognition=null,browserVoiceContext=null,browserVoiceActive=false,browserVoiceRequested=false,browserVoiceTranscript="",browserVoiceInterim="",browserVoiceCandidates=[],browserVoiceErrored=false,browserVoiceStopping=false,browserVoiceSilenceTimer=null,browserVoiceFirstResultTimer=null,browserVoiceStopGuardTimer=null,browserVoiceRetryTimer=null,browserVoiceRestartCount=0,browserVoiceTransportRetryCount=0,browserVoiceItemId="",browserVoiceAppliedEntryCount=0;
 let serverVoiceCaptureActive=false,serverVoiceCaptureRequested=false,serverVoiceCaptureContext=null;
-let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null,aiUniversalSpeechPrimed=false,aiUniversalSpeechPrimer=null,aiUniversalTtsAudio=null,aiUniversalTtsObjectUrl="",aiUniversalRulesMode=false,cedarSpeechServerBlockedUntil=0;
+let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null,aiUniversalSpeechPrimed=false,aiUniversalSpeechPrimer=null,aiUniversalTtsAudio=null,aiUniversalTtsObjectUrl="",aiUniversalInputResetRequired=false,aiUniversalRulesMode=false,cedarSpeechServerBlockedUntil=0;
 const AI_UNIVERSAL_HISTORY_LIMIT=80;
 const processedTranscriptItems=new Set();
 const WEATHER_REFRESH_MS=10*60*1000;
@@ -2478,6 +2478,17 @@ function releaseAiUniversalPlaybackForListening(){
   // reabría la sesión de salida y dejaba SpeechRecognition en no_speech/aborted.
   aiUniversalTtsObjectUrl="";aiUniversalTtsAudio=player;return true
 }
+function resetAiUniversalAudioSessionFromGesture(){
+  if(!aiUniversalInputResetRequired)return Promise.resolve(false);
+  const previous=aiUniversalTtsAudio;
+  if(previous){try{previous.pause();previous.currentTime=0;previous.onplay=null;previous.onended=null;previous.onerror=null;previous.removeAttribute("src");previous.load?.()}catch{}}
+  aiUniversalTtsAudio=null;aiUniversalSpeechPrimer=null;
+  try{if(navigator.audioSession)navigator.audioSession.type="auto"}catch{}
+  if(typeof Audio!=="function"){aiUniversalInputResetRequired=false;return Promise.resolve(false)}
+  const primer=new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=");aiUniversalTtsAudio=primer;aiUniversalSpeechPrimer=primer;primer.volume=.01;
+  reportVoiceHealth("browser_fallback_audio_session_reset_requested");
+  return new Promise(resolve=>{let settled=false,guard=null;const finish=()=>{if(settled)return;settled=true;if(guard)clearTimeout(guard);try{primer.pause();primer.currentTime=0;primer.onplay=null;primer.onended=null;primer.onerror=null;primer.removeAttribute("src");primer.load?.()}catch{}if(aiUniversalSpeechPrimer===primer)aiUniversalSpeechPrimer=null;aiUniversalInputResetRequired=false;try{if(navigator.audioSession)navigator.audioSession.type="auto"}catch{}reportVoiceHealth("browser_fallback_audio_session_reset_ready");setTimeout(()=>resolve(true),300)};primer.onplay=finish;primer.onended=finish;primer.onerror=finish;guard=setTimeout(finish,700);const played=primer.play();if(played?.catch)played.catch(finish)})
+}
 function preferredMaleBrowserVoice(language){
   if(!("speechSynthesis" in window))return null;
   const voices=window.speechSynthesis.getVoices?.()||[];
@@ -2525,7 +2536,7 @@ async function speakAiUniversalText(text,{repeat=false}={}){
       const prepared=await prepare(index);if(prepared.error)throw prepared.error;prepare(index+prefetch);if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(prepared.blob);player.src=aiUniversalTtsObjectUrl;
       await new Promise((resolve,reject)=>{let started=false,settled=false,startGuard=null;const finish=(callback,value)=>{if(settled)return;settled=true;if(startGuard)clearTimeout(startGuard);callback(value)};player.onplay=()=>{started=true;if(!firstStarted){firstStarted=true;aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started",{elapsedMs:Math.round(performance.now()-speechRequestedAt)});setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO CON VOZ R7 APROBADA · 0.90",{busy:true})}};player.onended=()=>finish(resolve);player.onerror=()=>finish(reject,new Error("MEXICAN_TTS_PLAYBACK_FAILED"));const played=player.play();if(played?.catch)played.catch(error=>finish(reject,error));startGuard=setTimeout(()=>{if(!started)finish(reject,new Error("MEXICAN_TTS_NOT_STARTED"))},8000)})
     }
-    setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR");releaseAiUniversalPlaybackForListening();
+    setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR");releaseAiUniversalPlaybackForListening();aiUniversalInputResetRequired=true;
     return true;
   }catch(error){
     reportVoiceHealth("browser_fallback_speech_failed");
@@ -5068,6 +5079,7 @@ function fireMicActivation(context,e){
   const now=Date.now();
   if(now-lastMicGestureAt<350)return false;
   lastMicGestureAt=now;
+  if(aiUniversalInputResetRequired){setMicConnecting(context,true);void resetAiUniversalAudioSessionFromGesture().then(()=>toggleVoice(context));return true}
   releaseAiUniversalPlaybackForListening();
   primeAiUniversalSpeechFromGesture();
   setMicConnecting(context,true);

@@ -78,7 +78,16 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 ## RC-060 · segundo y tercer turno Universal terminan en no_speech/aborted · 4 de septiembre de 2026
 
 - Evidencia física: la primera consulta respondió con voz aprobada y comenzó en 2.8 s; las consultas segunda y tercera abrieron SpeechRecognition, pero agotaron ocho segundos sin transcripción y terminaron `no_speech`/`aborted`.
-- Causa raíz: después de descargar el reproductor R7, se destruía el elemento autorizado; el siguiente toque reproducía otro audio silencioso para autorizarlo y reabría la sesión de salida sobre la nueva captura.
-- Control permanente: descargar por completo `src` y Object URL, conservar inerte el mismo elemento autorizado y prohibir un segundo primer silencioso.
-- Evidencia automática: `test-v380-three-turn-audio-release.mjs`; Intocables debe conservar seis hashes V378 sin cambio.
-- Estado: corregido en candidato V380; pendiente Preview READY y tres preguntas físicas consecutivas. Producción intacta.
+- Causa V380 descartada físicamente: conservar inerte el elemento evitó el segundo primer silencioso, pero retuvo la sesión de salida de iOS; el segundo toque volvió a terminar `no_speech/aborted`.
+- Control V381: dentro del nuevo gesto, destruir la salida anterior, autorizar un reproductor nuevo, descargarlo, esperar 300 ms y sólo entonces abrir SpeechRecognition.
+- Evidencia automática: `test-v380-three-turn-audio-release.mjs`, `test-v381-serial-audio-input-reset.mjs`; Intocables debe conservar seis hashes V378 sin cambio.
+- Estado: V380 RECHAZADA; corregido en candidato V381, pendiente Preview READY y tres preguntas físicas consecutivas. Producción intacta.
+
+## RC-061 · V380 falla otra vez en la segunda pregunta · 4 de septiembre de 2026
+
+- Evidencia física: la primera pregunta respondió correctamente; al formular la segunda, Safari mostró `RECONOCIMIENTO DE VOZ NO DISPONIBLE`.
+- Logs: V380 eliminó el segundo evento de cebado, pero la segunda captura terminó `no_speech` y `aborted`.
+- Causa refinada: el reproductor descargado continuaba reteniendo la sesión de salida de iOS.
+- Control V381: transición serial exclusiva después de una respuesta Universal: destruir salida, crear autorización nueva dentro del toque, descargarla y abrir entrada 300 ms después.
+- Límite: no modifica ninguna de las seis regiones V378 selladas ni la voz R7 aprobada.
+- Estado: candidato V381 pendiente de prueba física de tres preguntas consecutivas; Producción intacta.

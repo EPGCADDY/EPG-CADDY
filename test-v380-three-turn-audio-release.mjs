@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
-const release=html.slice(html.indexOf("function releaseAiUniversalPlaybackForListening"),html.indexOf("function preferredMaleBrowserVoice"));
+const release=html.slice(html.indexOf("function releaseAiUniversalPlaybackForListening"),html.indexOf("function resetAiUniversalAudioSessionFromGesture"));
 const prime=html.slice(html.indexOf("function primeAiUniversalSpeechFromGesture"),html.indexOf("function releaseAiUniversalPlaybackForListening"));
 const gesture=html.slice(html.indexOf("function fireMicActivation"),html.indexOf("function bindMicActivation"));
 

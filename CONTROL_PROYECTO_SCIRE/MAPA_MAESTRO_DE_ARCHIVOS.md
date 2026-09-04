@@ -1050,3 +1050,11 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `index-grupal.html` | Descarga el MP3 terminado y conserva inerte el reproductor autorizado. | Evita reabrir una salida silenciosa durante el segundo y tercer micrófono. |
 | `test-v380-three-turn-audio-release.mjs` | Verifica liberación, autorización conservada y orden del gesto. | Un retorno a `aiUniversalTtsAudio=null` bloquea auditoría y Preview. |
 | `service-worker.js`, `audit-project.mjs`, `package.json`, RC-060, ROADMAPS e inventario | Publica y documenta V380. | Registro/Scores V378 y Producción permanecen intactos. |
+
+## V381 · reinicio serial de salida antes de entrada
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Destruye la salida Universal anterior, autoriza y descarga una nueva dentro del toque y abre entrada 300 ms después. | La transición sólo se activa después de voz Universal. |
+| `test-v381-serial-audio-input-reset.mjs`, `test-v380-three-turn-audio-release.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Verifican secuencia V381, acotan controles históricos y admiten caché posterior. | Impiden abrir micrófono antes de liberar la sesión iOS. |
+| `service-worker.js`, `audit-project.mjs`, `package.json`, RC-061, ROADMAPS e inventario | Publica y documenta V381. | Registro/Scores V378, voz R7 y Producción permanecen intactos. |

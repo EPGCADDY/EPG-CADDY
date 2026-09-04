@@ -2058,3 +2058,13 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `service-worker.js`: caché V380; `audit-project.mjs` y `package.json`: puerta V380 obligatoria.
 - RC-060 conserva logs de 22:43–22:44 UTC: primera voz 2.8 s, dos ciclos posteriores `no_speech/aborted`.
 - Registro y Scores V378 siguen sellados byte por byte; Producción permanece intacta.
+
+## V381 · reinicio serial de la sesión de audio · 4 de septiembre de 2026
+
+- Evidencia física: V380 volvió a fallar en la segunda pregunta con `RECONOCIMIENTO DE VOZ NO DISPONIBLE`; logs `no_speech/aborted`.
+- `index-grupal.html`: sólo después de voz Universal, el siguiente toque destruye el reproductor anterior, crea una autorización nueva, la descarga y espera 300 ms antes de `toggleVoice()`.
+- `test-v381-serial-audio-input-reset.mjs`: exige la secuencia completa y la bandera exclusiva posterior a voz; `test-v380-three-turn-audio-release.mjs` conserva el control histórico V380 con alcance preciso; `test-v355-ios-audio-dictation.mjs`, `test-v357-ios-voice-transport-recovery.mjs` y `test-v361-synchronized-voice.mjs` aceptan la transición y caché posteriores sin retirar sus controles originales.
+- `service-worker.js`: caché V381; `audit-project.mjs` y `package.json`: puerta V381 obligatoria.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-060 actualizado y RC-061 registra el nuevo defecto físico.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` e inventario: trazabilidad V381.
+- Registro, Scores, seis regiones V378, R7 `es-419` a `0.90` y Producción permanecen intactos.
