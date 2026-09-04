@@ -1,18 +1,18 @@
 {
-  "version": "V382-INPUT-ONLY-RESET-AND-V378-LOCK",
-  "generatedAt": "2026-09-04T23:21:33Z",
-  "sourceFileCount": 409,
-  "sourceDigest": "67a28686b52cf580ddb041321f80dce34a0ed7722f089cd71fb7ef16ceb87830",
+  "version": "V384-FULL-INPUT-CHAIN-LOCK-AND-FIXED-MALE-VOICE",
+  "generatedAt": "2026-09-04T23:39:51Z",
+  "sourceFileCount": 411,
+  "sourceDigest": "51da7c5a66b5534fca7f01ec5cdfc6bd57515648aa302812bde03c6df99c7799",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 219958,
-      "sha256": "5cd3eacceab127eeef0da8145416828e3dd20d720bae12c766dea03f5850e4ab"
+      "size": 221641,
+      "sha256": "af20806758eb12204845aa94ba21a1f6bbd3ecbc09dbe258b3b553036bb64747"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 250844,
-      "sha256": "c8fe962a7c71bc5a01510722a6784e75f1c34ddefe75827b582d4d8d555bddcb"
+      "size": 252179,
+      "sha256": "797d8d04b9ea97971daed12a25e29b27c4b99830a359d7136ad31542f0d14b97"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

@@ -100,3 +100,18 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Control V382: destruir y descargar la salida, no reproducir absolutamente ningún audio y abrir únicamente SpeechRecognition después de 300 ms; telemetría explícita de inicio/fin del reset.
 - Límite: seis regiones V378, Registro, Scores, voz R7 y velocidad `0.90` permanecen intactos.
 - Estado: candidato V382 pendiente de tres preguntas físicas consecutivas; Producción intacta.
+
+## RC-063 · la salida R7 cambió físicamente a voz femenina · 4 de septiembre de 2026
+
+- Evidencia física: el propietario identificó voz femenina en el último Preview aunque modelo, idioma y velocidad coincidían con R7.
+- Causa raíz: el payload Fish fijaba instrucciones masculinas, pero omitía `voice`; el modelo podía variar el timbre entre generaciones.
+- Control V383: `voice=f0325cd11aac4fa983eb41ca2d371660` obligatorio, además de `fish-audio/s2.1-pro-free`, `es-419` y `0.90`; la auditoría compara los cuatro valores exactos.
+- Evidencia automática: `test-v378-approved-r7-voice-lock.mjs` y `test-v383-fixed-male-voice.mjs`.
+- Estado: V382 no se entrega; V383 pendiente de Preview y verificación física. Producción intacta.
+
+## RC-064 · la confirmación V378 no cubría la activación compartida · 4 de septiembre de 2026
+
+- Evidencia: V381/V382 modificaron `fireMicActivation()` y degradaron Registro aunque los seis hashes del supuesto blindaje V378 continuaron pasando.
+- Causa raíz: el sello cubría parsers, escritores y bloques de captura, pero omitía el punto de entrada compartido por Registro, Scores y Universal.
+- Control V384: restauración byte por byte de `fireMicActivation()` desde V378; séptimo SHA-256 obligatorio; prueba de orden liberar→cebar→conectar→`toggleVoice()` y prohibición de esperas o reset Universal dentro del gesto.
+- Estado: defecto del blindaje corregido en candidato V384; auditoría completa y Preview pendientes. Producción intacta.

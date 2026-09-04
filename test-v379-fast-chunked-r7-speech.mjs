@@ -22,7 +22,7 @@ assert.match(worker,/v379-fast-chunked-r7-speech/);
 
 assert.equal(approval.policy.status,"INTOCABLE_REGISTRO_Y_SCORES");
 assert.match(approval.evidence.timer,/22 segundos.*rechazada/);
-assert.equal(approval.scopes.length,6);
+assert.equal(approval.scopes.length,7);
 assert.match(confirmation,/Registro de Jugadores por micrófono/);
 assert.match(confirmation,/Registro de Scores por micrófono, tanto individual como múltiple/);
 assert.match(confirmation,/22 segundos de Comunicación Universal está rechazado/);

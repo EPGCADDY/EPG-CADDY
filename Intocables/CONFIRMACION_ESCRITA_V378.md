@@ -17,3 +17,7 @@ Queda terminantemente prohibido modificar, reemplazar, reinterpretar o “mejora
 El tiempo de **22 segundos de Comunicación Universal está rechazado** y queda expresamente fuera de esta aprobación. Su corrección no autoriza tocar Registro de Jugadores ni Registro de Scores.
 
 La métrica obligatoria de aceptación para Comunicación Universal es el **tiempo hasta el primer audio audible de ChatGPT**, comparado consecutivamente con la misma pregunta, en el mismo iPhone y la misma red. Si la aplicación empieza a responder más tarde que ChatGPT, la prueba falla.
+
+## Corrección obligatoria del blindaje · V384
+
+La protección inicial de seis regiones fue insuficiente porque omitió `fireMicActivation()`, la función compartida que recibe el toque de Registro y Score. V381/V382 demostraron físicamente que esa omisión permitía alterar el comportamiento sin romper los hashes. V384 restaura esa función byte por byte desde el commit V378 y agrega una séptima región SHA-256. Desde V384, cambiar su orden `release → prime → connecting → toggleVoice` bloquea auditoría y despliegue.

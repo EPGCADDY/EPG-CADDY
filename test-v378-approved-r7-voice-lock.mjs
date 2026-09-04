@@ -17,7 +17,7 @@ assert.match(spoken,/VOZ R7 APROBADA NO DISPONIBLE/);
 assert.doesNotMatch(spoken,/speakAiUniversalMaleBrowserFallback/);
 
 const payload=cedarGatewayPayload("Hoy Jaime cuatro.");
-assert.deepEqual({speed:payload.speed,language:payload.language,outputFormat:payload.outputFormat},{speed:.9,language:"es-419",outputFormat:"mp3"});
+assert.deepEqual({voice:payload.voice,speed:payload.speed,language:payload.language,outputFormat:payload.outputFormat},{voice:"f0325cd11aac4fa983eb41ca2d371660",speed:.9,language:"es-419",outputFormat:"mp3"});
 assert.match(payload.instructions,/masculino adulto mexicano/);
 assert.match(payload.instructions,/nunca uses acento anglosajón, Spanglish/);
 

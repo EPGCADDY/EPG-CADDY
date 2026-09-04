@@ -47,6 +47,8 @@
     "voice:v380-gate": "node test-v380-three-turn-audio-release.mjs",
     "voice:v381-gate": "node test-v381-serial-audio-input-reset.mjs",
     "voice:v382-gate": "node test-v382-input-only-reset.mjs",
+    "voice:v383-gate": "node test-v383-fixed-male-voice.mjs",
+    "voice:v384-gate": "node test-v384-full-input-chain-lock.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

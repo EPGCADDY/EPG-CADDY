@@ -1066,3 +1066,21 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `index-grupal.html` | Destruye y descarga la salida, espera 300 ms y abre sólo SpeechRecognition. | Prohíbe reproducir silencio sobre la nueva captura. |
 | `test-v382-input-only-reset.mjs`, `test-v381-serial-audio-input-reset.mjs` | Bloquean `new Audio`, `play`, WAV y primer dentro del reset. | V381 no puede reaparecer. |
 | `service-worker.js`, `audit-project.mjs`, `package.json`, RC-062, ROADMAPS e inventario | Publica y documenta V382. | Registro/Scores V378, R7 y Producción permanecen intactos. |
+
+## V383 · locutor masculino fijo
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `api/voice-speech.js` | Envía un voice ID masculino fijo junto con Fish, `es-419` y `0.90`. | El proveedor no puede seleccionar otro género por interpretación. |
+| `test-v378-approved-r7-voice-lock.mjs`, `test-v383-fixed-male-voice.mjs`, `test-v362-physical-voice-recovery.mjs` | Comparan cuatro parámetros exactos del audio. | Una voz variable bloquea auditoría. |
+| `service-worker.js`, `audit-project.mjs`, `package.json`, RC-063, ROADMAPS e inventario | Publica y documenta V383. | Registro/Scores y Producción permanecen intactos. |
+
+## V384 · cadena completa de activación V378
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Restaura byte por byte `fireMicActivation()` de V378 y limpia la salida Universal al terminar de hablar. | Ningún cambio Universal puede introducir espera, reset o audio nuevo antes del micrófono compartido. |
+| `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`, `Intocables/CONFIRMACION_ESCRITA_V378.md` | Amplían el sello de seis a siete regiones y corrigen el alcance de la confirmación. | Incluye la activación que antes quedó omitida. |
+| `Intocables/intocables-gate.mjs`, `test-v384-full-input-chain-lock.mjs` | Verifican SHA, orden y ausencia de reset asíncrono. | Cualquier cambio detiene auditoría y publicación. |
+| `test-v381-serial-audio-input-reset.mjs`, `test-v382-input-only-reset.mjs` | Marcan como retirados los dos mecanismos rechazados. | Impiden reintroducir las regresiones V381/V382. |
+| `service-worker.js`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, RC-064, ROADMAPS e inventario | Publican y documentan V384. | Producción permanece intacta. |

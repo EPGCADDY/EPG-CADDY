@@ -88,6 +88,8 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v379-fast-chunked-
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v380-three-turn-audio-release.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v381-serial-audio-input-reset.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v382-input-only-reset.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v383-fixed-male-voice.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v384-full-input-chain-lock.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

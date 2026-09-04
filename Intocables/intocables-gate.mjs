@@ -14,6 +14,8 @@ assert.equal(rules.logic,"all");
 assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT-04","INT-05","INT-06","INT-07"]);
 assert.ok(rules.rules.every(rule=>rule.mandatory===true));
 assert.equal(physicalApproval.approvedVersion,"V378");
+assert.equal(physicalApproval.schema,"gscg-physical-approval-lock/v2");
+assert.equal(physicalApproval.scopes.length,7);
 assert.equal(physicalApproval.approvedBy,"Jaime Kirste");
 assert.equal(physicalApproval.policy.status,"INTOCABLE_REGISTRO_Y_SCORES");
 assert.equal(physicalApproval.policy.changeWithoutNewExplicitOwnerOrder,"PROHIBITED");
@@ -25,6 +27,12 @@ for(const scope of physicalApproval.scopes){
   const actual=createHash("sha256").update(html.slice(start,end)).digest("hex");
   assert.equal(actual,scope.sha256,`INTOCABLE V378 modificado: ${scope.id}`);
 }
+const activationScope=physicalApproval.scopes.find(scope=>scope.id==="activacion_compartida");
+assert.ok(activationScope,"Falta el blindaje de la activación compartida");
+const activation=html.slice(html.indexOf(activationScope.start),html.indexOf(activationScope.end,html.indexOf(activationScope.start)));
+for(const fragment of ["releaseAiUniversalPlaybackForListening();","primeAiUniversalSpeechFromGesture();","setMicConnecting(context,true);","toggleVoice(context);"])assert.ok(activation.includes(fragment),`Activación compartida incompleta: ${fragment}`);
+assert.ok(activation.indexOf("releaseAiUniversalPlaybackForListening();")<activation.indexOf("toggleVoice(context);"),"La entrada debe abrir después de liberar la salida");
+assert.doesNotMatch(activation,/await|\.then\(|resetAiUniversalAudioSessionFromGesture|aiUniversalInputResetRequired/);
 for(const [name,value] of Object.entries(physicalApproval.approvedCaptureParameters))assert.match(html,new RegExp(`const ${name}=${String(value).replace(".","\\.")};`),`INTOCABLE V378 modificado: ${name}`);
 
 assert.match(html,/const ACTIVE_ROUND_KEY="golf-score-card-guatemala-active-round-v1"/);
@@ -63,4 +71,4 @@ assert.match(audit,/Intocables\/intocables-gate\.mjs/);
 assert.match(audit,/test-v366-principal-entry-recovery\.mjs/);
 assert.match(audit,/test-v367-universal-voice-in-place\.mjs/);
 assert.match(worker,/gscg-mobile-v363-/);
-console.log("INTOCABLES PASS INT-01…INT-07 · Registro, Scores y parámetros de captura V378 sellados por SHA-256");
+console.log("INTOCABLES PASS INT-01…INT-07 · 7 regiones de Registro, Scores y activación V378 selladas por SHA-256");

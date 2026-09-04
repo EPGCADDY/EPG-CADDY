@@ -2077,3 +2077,23 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `service-worker.js`, `audit-project.mjs`, `package.json`: caché y puerta V382.
 - RC-062, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` e inventario documentan el rechazo y la corrección.
 - Registro, Scores, seis hashes V378, R7 `es-419`/`0.90` y Producción permanecen intactos.
+
+## V383 · identidad masculina fija · 4 de septiembre de 2026
+
+- Evidencia física: el último Preview habló con voz femenina.
+- Causa: `api/voice-speech.js` enviaba instrucciones masculinas, pero no el parámetro `voice`; el timbre no era determinista.
+- `api/voice-speech.js`: fija `voice=f0325cd11aac4fa983eb41ca2d371660`, Fish S2.1, `es-419` y `0.90`.
+- `test-v378-approved-r7-voice-lock.mjs`, `test-v383-fixed-male-voice.mjs` y `test-v362-physical-voice-recovery.mjs`: comparan la identidad y parámetros exactos.
+- `service-worker.js`, `audit-project.mjs`, `package.json`, RC-063, mapa maestro, `scripts/rebuild-inventory-pdfs.py` e inventario: sello V383.
+- V382 queda descartada para entrega; Registro, Scores y Producción permanecen intactos.
+
+## V384 · cadena completa de entrada V378 · 4 de septiembre de 2026
+
+- Falla del control anterior: `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json` tenía seis hashes, pero no incluía `fireMicActivation()`; V381/V382 pudieron cambiar el gesto compartido sin que la auditoría fallara.
+- `index-grupal.html`: restaura exactamente la activación V378 —liberar salida, cebar el reproductor autorizado, marcar conexión y llamar `toggleVoice()`— y traslada la limpieza Universal al final de la locución.
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: esquema 2 y séptimo hash `activacion_compartida`.
+- `Intocables/intocables-gate.mjs` y `test-v384-full-input-chain-lock.mjs`: exigen siete regiones, el SHA exacto, el orden de activación y ausencia de espera/reset en el gesto.
+- `Intocables/CONFIRMACION_ESCRITA_V378.md`: corrige expresamente el alcance documental anterior.
+- `test-v355-ios-audio-dictation.mjs`, `test-v381-serial-audio-input-reset.mjs` y `test-v382-input-only-reset.mjs`: fijan el gesto restaurado y retiran como rechazadas las arquitecturas que tocaron la activación compartida.
+- `service-worker.js`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, RC-064, ambos ROADMAPS, mapa maestro e inventario: puerta y trazabilidad V384.
+- `api/voice-speech.js`, `test-v378-approved-r7-voice-lock.mjs`, `test-v383-fixed-male-voice.mjs` y `test-v362-physical-voice-recovery.mjs` conservan el candidato masculino fijo V383. Producción permanece intacta.
