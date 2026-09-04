@@ -13,6 +13,8 @@
 
 Producción permanece intacta. La entrega automática por WhatsApp requiere proveedor WhatsApp Business y credenciales verificables; no se simula como enviada desde el navegador.
 
+Cierre documental V376: este detalle, el OVERALL y el sello reproducible se publican en el mismo corte técnico.
+
 ## Registro técnico V370-R1 · recuperación de voz española en Safari iOS
 
 | Archivo | Cambio limitado | Verificación |

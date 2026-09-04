@@ -8,6 +8,8 @@ La ronda del 4 de septiembre se reconstruye hoyo por hoyo desde las capturas med
 
 Archivos exactos V376: `index-grupal.html`, `player-registry.js`, `api/whatsapp-card.js`, `service-worker.js`, `test-v376-stableford-continuity-recovery.mjs`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` y los bancos de regresión que fijan el nuevo build y caché.
 
+Cierre documental V376: ambos ROADMAPS y el sello reproducible se publican juntos para impedir una construcción con inventario desfasado.
+
 ## V370-R1 · Cedar principal y recuperación española compatible con iOS
 
 La prueba física del 3 de septiembre mostró que Safari no exponía ninguna voz que coincidiera con la lista cerrada de nombres masculinos y la aplicación quedaba muda. V370-R1 conserva Cedar 0.90 como locutor principal, fuerza español `es-MX` y, si el servicio está limitado, elige cualquier voz `es-*` que iOS exponga, priorizando nombre masculino y español latino. No cambia Registro, Score Card, cálculos, persistencia ni Producción. El caché instalable cambia a `v370-r1-ios-spanish-voice`.

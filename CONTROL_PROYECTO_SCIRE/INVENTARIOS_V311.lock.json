@@ -1,18 +1,18 @@
 {
   "version": "V376-STABLEFORD-CONTINUITY-INTOCABLES",
-  "generatedAt": "2026-09-04T22:17:56Z",
+  "generatedAt": "2026-09-04T22:21:04Z",
   "sourceFileCount": 400,
-  "sourceDigest": "7b4511f9b974a7585d6744b7b26ddcc40e253d8a369b392233083a043f1d9b6f",
+  "sourceDigest": "12efa2d3a3fc8487b7d14be275dbd90131d5850773d4ae7c4da215a1f09011ff",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 212385,
-      "sha256": "b3bf1e0299201fa9c2abe86cec00c8b1de0ee08944687a93893bf3404d96ce22"
+      "size": 212482,
+      "sha256": "85de66fe57ed99011e9f2fab5e5660a4bee27b249ba482d892bd0c28179c4d02"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
       "size": 241003,
-      "sha256": "7682e7207d737a1d68ac3a68d38105a2997782f3ef8888dc5685601c8ee920cf"
+      "sha256": "03ac8d36ee4fdc4d93347633863813db87bab45d26569f07e60d0aaaa8ae6d12"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
