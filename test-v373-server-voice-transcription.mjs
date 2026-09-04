@@ -43,6 +43,18 @@ try{
   assert.match(token.payload.url,/transcription-model/);
   assert.deepEqual(tokenBody,{model:"openai/gpt-realtime-whisper",routeKind:"transcription",expiresIn:300});
 
+  const attempts=[];
+  globalThis.fetch=async(url,options)=>{
+    const body=JSON.parse(options.body);attempts.push(body.model);
+    if(body.model==="openai/gpt-realtime-whisper")return new Response(JSON.stringify({error:{message:"forbidden"}}),{status:403,headers:{"Content-Type":"application/json"}});
+    return new Response(JSON.stringify({token:"vcst_google",expiresAt:1234567890}),{status:200,headers:{"Content-Type":"application/json"}});
+  };
+  const fallback=response();
+  await handler({method:"POST",headers:{origin:"https://epg-caddy.vercel.app",host:"epg-caddy.vercel.app"},body:{action:"stream-token"}},fallback);
+  assert.equal(fallback.statusCode,200);
+  assert.equal(fallback.payload.model,"google/gemini-3.5-transcribe-live");
+  assert.deepEqual(attempts,["openai/gpt-realtime-whisper","google/gemini-3.5-transcribe-live"]);
+
   const invalid=response();
   await handler({method:"POST",headers:{origin:"https://epg-caddy.vercel.app",host:"epg-caddy.vercel.app"},body:{}},invalid);
   assert.equal(invalid.statusCode,422);
