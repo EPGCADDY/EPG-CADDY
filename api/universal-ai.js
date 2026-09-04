@@ -134,9 +134,9 @@ export function isDirectTrafficQuery(query){
 export function directTrafficRouteFromQuery(query){
   const segment=String(query||"").replace(/[\u0000-\u001F]/g," ").replace(/\s+/g," ").trim().split(/[?!](?:\s|$)/,1)[0].replace(/^[¿¡]+/,"").trim();
   const normalized=segment.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
-  const toIndex=Math.max(normalized.lastIndexOf(" a "),normalized.lastIndexOf(" hasta "));
+  const toIndex=Math.max(normalized.lastIndexOf(" a "),normalized.lastIndexOf(" hasta "),normalized.lastIndexOf(" para "));
   if(toIndex<0)return null;
-  const connectorLength=normalized.startsWith(" hasta ",toIndex)?7:3;
+  const connectorLength=normalized.startsWith(" hasta ",toIndex)?7:normalized.startsWith(" para ",toIndex)?6:3;
   const left=segment.slice(0,toIndex),leftNormalized=normalized.slice(0,toIndex);
   const fromIndex=Math.max(leftNormalized.lastIndexOf(" desde "),leftNormalized.lastIndexOf(" de "));
   if(fromIndex<0)return null;
@@ -160,7 +160,7 @@ function trafficDestinationNeedsClarification(destination){
 
 function trafficValue(value,digits=0){const number=Number(value);return Number.isFinite(number)?number.toFixed(digits).replace(/\.0$/,""):"sin dato"}
 
-export function formatStructuredTrafficAnswer(result){
+export function formatStructuredTrafficAnswer(result,{concise=false}={}){
   if(!result?.ok)return result?.message||"No pude consultar tráfico confiable en este momento.";
   const calculated=new Intl.DateTimeFormat("es-GT",{timeZone:"America/Guatemala",dateStyle:"short",timeStyle:"short"}).format(new Date(result.calculatedAt));
   const departure=new Intl.DateTimeFormat("es-GT",{timeZone:"America/Guatemala",dateStyle:"short",timeStyle:"short"}).format(new Date(result.departureTime||result.calculatedAt));
@@ -169,6 +169,7 @@ export function formatStructuredTrafficAnswer(result){
   const heading=result.isFutureEstimate?`**Tráfico previsto para salida ${departure}:**`:`**Tráfico en vivo:**`;
   const departureLine=result.isFutureEstimate?`\n- **Salida solicitada:** ${departure}${result.departureTimeAssumed?" (se asumió la misma hora actual)":""}`:"";
   const providerNote=result.isFutureEstimate?" La ETA usa la predicción de tráfico disponible para esa salida futura; no es una medición en vivo del futuro.":"";
+  if(concise)return `De ${result.origin} a ${result.destination}: aproximadamente ${trafficValue(result.durationMinutes)} minutos, ${distance} y ${delay} de demora por tráfico. Fuente: Google Maps Routes.`;
   return `${heading} ${result.origin} → ${result.destination}.\n\n- **ETA:** ${trafficValue(result.durationMinutes)} min.\n- **Demora por tráfico:** ${delay}.\n- **Distancia:** ${distance}.\n- **Nivel estimado:** ${result.trafficLevel||"no clasificado"}.${departureLine}\n- **Hora de cálculo:** ${calculated}\n\n**Fuente:** Google Maps Routes, modo TRAFFIC_AWARE_OPTIMAL. La duración y la demora son datos del proveedor; el nivel es una clasificación derivada.${providerNote}`;
 }
 
@@ -416,7 +417,7 @@ export default async function handler(req,res){
       });
       if(trafficResult.error==="TRAFFIC_ORIGIN_REQUIRED")return res.status(428).json({ok:false,error:trafficResult.error,needsCurrentLocation:true});
       if(!trafficResult.ok)return res.status(502).json(trafficResult);
-      return res.status(200).json({ok:true,answer:formatStructuredTrafficAnswer(trafficResult),sources:[]});
+      return res.status(200).json({ok:true,answer:formatStructuredTrafficAnswer(trafficResult,{concise:responseMode==="voice"}),sources:[]});
     }
     const apiKey=process.env.OPENAI_API_KEY;
     if(!apiKey)return res.status(500).json({ok:false,error:"OPENAI_NOT_CONFIGURED"});

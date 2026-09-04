@@ -1,18 +1,18 @@
 {
-  "version": "V371-R9-IOS-AUTHORIZED-PLAYER-REUSE-INTOCABLES",
-  "generatedAt": "2026-09-04T01:28:17Z",
+  "version": "V371-R10-TURN-AUDIO-RESET-INTOCABLES",
+  "generatedAt": "2026-09-04T02:13:01Z",
   "sourceFileCount": 395,
-  "sourceDigest": "12114656645dd64606c727b8c97cdfe8abcc833d1c9ec129ae04b515d8a8d0c5",
+  "sourceDigest": "83a210d2012001eb1115b94ea98a312ba05fe29ecc53b3fd183b18b033c13226",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 210035,
-      "sha256": "f18a929f9f73454596c208e49cd2ef97e68c6d92462fecaf29f15cd386e94a6d"
+      "size": 210550,
+      "sha256": "26ff4b32b0cfa0cac0e52d5079fbdc5d5e53627389fea2745184b7e18f862ff1"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 236991,
-      "sha256": "e0ab217127d67202e85ecc055b31fb3055c0fd872f1fa9bb5bf40cb6d6fcadc7"
+      "size": 237587,
+      "sha256": "f77685d3288322030c5d65c1cc38549c7321a967db0b4a44361809e227f15a77"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

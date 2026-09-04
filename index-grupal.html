@@ -19,7 +19,7 @@
 <meta name="gscg-universal-voice-in-place" content="V367-UNIVERSAL-VOICE-IN-PLACE-20260828">
 <meta name="gscg-canonical-home-entry" content="V368-CANONICAL-HOME-ENTRY-20260829">
 <meta name="gscg-voice-weather-traffic-recovery" content="V369-VOICE-090-ONE-TURN-GPS-TRAFFIC-20260903">
-<meta name="gscg-native-spanish-one-shot-voice" content="V371-R9-IOS-AUTHORIZED-PLAYER-REUSE-20260904">
+<meta name="gscg-native-spanish-one-shot-voice" content="V371-R10-TURN-AUDIO-RESET-20260904">
 <meta name="gscg-ai-voice" content="IOS-ES-MX-0.90-NATIVE-MEXICAN-SPANISH">
 <meta name="gscg-live" content="V353-PRIVATE-READONLY-WORLDWIDE-HUB-20260828">
 <meta name="gscg-manual" content="V330-SIDE-GAMES-MANUAL-20260826">
@@ -2445,22 +2445,24 @@ function realtimeResponseTranscript(response){
   return(response?.output||[]).flatMap(item=>item?.content||[]).map(content=>String(content?.transcript||content?.text||"").trim()).filter(Boolean).join(" ").trim();
 }
 function primeAiUniversalSpeechFromGesture(){
-  if(aiUniversalSpeechPrimed||aiUniversalMuted)return false;
+  if(aiUniversalMuted)return false;
+  let primed=false;
   try{
-    if(typeof window!=="undefined"&&"speechSynthesis" in window&&typeof SpeechSynthesisUtterance==="function"){
+    if(!aiUniversalSpeechPrimed&&typeof window!=="undefined"&&"speechSynthesis" in window&&typeof SpeechSynthesisUtterance==="function"){
       window.speechSynthesis.cancel();window.speechSynthesis.resume?.();
       const speechPrimer=new SpeechSynthesisUtterance("\u00a0");speechPrimer.lang="es-MX";speechPrimer.volume=.01;speechPrimer.rate=10;
       speechPrimer.onstart=()=>{aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_primed")};
       speechPrimer.onend=()=>{aiUniversalSpeechPrimed=true};speechPrimer.onerror=()=>{};
       window.speechSynthesis.speak(speechPrimer);
+      primed=true;
     }
-    if(typeof Audio==="function"){
+    if(typeof Audio==="function"&&!aiUniversalTtsAudio){
       const primer=new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=");aiUniversalSpeechPrimer=primer;aiUniversalTtsAudio=primer;primer.volume=.01;
       const ready=()=>{if(aiUniversalSpeechPrimer===primer)aiUniversalSpeechPrimer=null;if(!aiUniversalSpeechPrimed){aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_primed")}};
       primer.onplay=ready;primer.onended=ready;primer.onerror=()=>{if(aiUniversalSpeechPrimer===primer)aiUniversalSpeechPrimer=null};
       const played=primer.play();if(played?.then)played.then(ready).catch(()=>{});return true;
     }
-    return false;
+    return primed;
   }catch{return false}
 }
 function releaseAiUniversalPlaybackForListening(){
@@ -2468,7 +2470,8 @@ function releaseAiUniversalPlaybackForListening(){
   const player=aiUniversalTtsAudio;
   if(player){try{player.pause();player.currentTime=0;player.onplay=null;player.onended=null;player.onerror=null;player.removeAttribute("src");player.load?.()}catch{}}
   try{URL.revokeObjectURL(aiUniversalTtsObjectUrl)}catch{}
-  aiUniversalTtsObjectUrl="";return true
+  if(aiUniversalSpeechPrimer===player)aiUniversalSpeechPrimer=null;
+  aiUniversalTtsObjectUrl="";aiUniversalTtsAudio=null;return true
 }
 function preferredMaleBrowserVoice(language){
   if(!("speechSynthesis" in window))return null;
@@ -5012,6 +5015,7 @@ function fireMicActivation(context,e){
   const now=Date.now();
   if(now-lastMicGestureAt<350)return false;
   lastMicGestureAt=now;
+  releaseAiUniversalPlaybackForListening();
   primeAiUniversalSpeechFromGesture();
   setMicConnecting(context,true);
   toggleVoice(context);

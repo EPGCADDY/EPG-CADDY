@@ -4,8 +4,8 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/V371-R9-IOS-AUTHORIZED-PLAYER-REUSE-20260904/);
-assert.match(worker,/v371-r9-ios-authorized-player-reuse/);
+assert.match(html,/V371-R10-TURN-AUDIO-RESET-20260904/);
+assert.match(worker,/v371-r10-turn-audio-reset/);
 assert.match(html,/CONVERSATION_VAD_SILENCE_MS=900/);
 assert.match(html,/BROWSER_VOICE_SILENCE_MS=1200/);
 assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000/);
@@ -36,7 +36,7 @@ const playbackRelease=html.slice(html.indexOf("function releaseAiUniversalPlayba
 assert.match(playbackRelease,/player\.pause\(\)/);
 assert.match(playbackRelease,/player\.removeAttribute\("src"\)/);
 assert.match(playbackRelease,/URL\.revokeObjectURL\(aiUniversalTtsObjectUrl\)/);
-assert.doesNotMatch(playbackRelease,/aiUniversalTtsAudio=null/);
+assert.match(playbackRelease,/aiUniversalTtsAudio=null/);
 assert.match(speech,/const player=aiUniversalTtsAudio\|\|new Audio\(\)/);
 const toggle=html.slice(html.indexOf("async function toggleVoice"),html.indexOf("function fireMicActivation"));
 assert.match(toggle,/releaseAiUniversalPlaybackForListening\(\);[\s\S]*startBrowserVoiceFallback\(context\)/);
@@ -55,9 +55,13 @@ assert.match(browserSpeech,/finish\(false\)/);
 assert.doesNotMatch(browserSpeech,/speak\(utterance\);[^}]*return true/);
 
 const primer=html.slice(html.indexOf("function primeAiUniversalSpeechFromGesture"),html.indexOf("function preferredMaleBrowserVoice"));
+assert.doesNotMatch(primer,/if\(aiUniversalSpeechPrimed\|\|aiUniversalMuted\)return false/);
+assert.match(primer,/typeof Audio==="function"&&!aiUniversalTtsAudio/);
 assert.match(primer,/new SpeechSynthesisUtterance\("\\u00a0"\)/);
 assert.match(primer,/speechPrimer\.lang="es-MX"/);
 assert.match(primer,/window\.speechSynthesis\.speak\(speechPrimer\)/);
+const gesture=html.slice(html.indexOf("function fireMicActivation"),html.indexOf("function bindMicActivation"));
+assert.ok(gesture.indexOf("releaseAiUniversalPlaybackForListening()")<gesture.indexOf("primeAiUniversalSpeechFromGesture()"));
 
 const submit=html.slice(html.indexOf("async function submitAiUniversalText"),html.indexOf("async function continueConversationAfterTool"));
 assert.equal((submit.match(/if\(voiceOnly\)return await speakAiUniversalText/g)||[]).length,3);

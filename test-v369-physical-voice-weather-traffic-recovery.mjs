@@ -21,11 +21,13 @@ assert.ok(restartSource.indexOf("isGeneralConversationIntent(pending)")<restartS
 
 const route=directTrafficRouteFromQuery("¿Cómo está el tráfico de aquí a Pradera Concepción?");
 assert.deepEqual(route,{origin:"aquí",destination:"Pradera Concepción"});
+assert.deepEqual(directTrafficRouteFromQuery("Dime cómo está el tráfico de acá para Oakland Mall zona 10"),{origin:"acá",destination:"Oakland Mall zona 10"});
 for(const origin of ["aquí","acá","mi ubicación","ubicación actual","donde estoy","here","current location"]){
   assert.equal(trafficOriginNeedsDeviceLocation(origin),true,origin);
 }
 assert.equal(trafficOriginNeedsDeviceLocation("El Pulté Golf"),false);
 assert.match(fs.readFileSync("api/universal-ai.js","utf8"),/origin:trafficOriginNeedsDeviceLocation\(route\.origin\)\?"":route\.origin/);
+assert.match(universal,/formatStructuredTrafficAnswer\(trafficResult,\{concise:responseMode==="voice"\}\)/);
 assert.match(universal,/conserva exactamente el mismo razonamiento, investigación, comparación, contexto, evidencia, matices y profundidad que entregarías por texto/);
 assert.match(universal,/no impongas un límite artificial de oraciones/);
 assert.doesNotMatch(universal,/normalmente en tres a seis oraciones/);

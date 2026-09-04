@@ -1521,3 +1521,7 @@ La voz R7 quedó aprobada físicamente, pero la segunda consulta falló: tras ha
 ### V371-R9 · continuidad audible de consultas consecutivas
 
 R8 reconoció consultas consecutivas y obtuvo respuestas universales y de tráfico, pero descartó el objeto `Audio` que iOS había autorizado en el gesto inicial; los nuevos reproductores fueron bloqueados. R9 conserva ese objeto autorizado entre respuestas y continúa liberando únicamente el MP3 anterior. No cambia Registro, Scores, datos ni Producción.
+
+### V371-R10 · audio por turno y ruta “de acá para”
+
+La prueba física R9 confirmó dos fallos: `de acá para Oakland Mall zona 10` no entraba al parser directo porque sólo aceptaba `a/hasta`, y conservar el mismo reproductor entre turnos mantenía ocupada la sesión de salida de iOS, dejando las capturas siguientes en `no_speech/aborted`. R10 admite `para`, responde tráfico por voz con un resumen corto y usa un reproductor nuevo autorizado dentro de cada toque: destruye el del turno anterior antes de abrir el micrófono y prepara el siguiente en ese mismo gesto. Registro, Scores, cálculos, persistencia, diseño y Producción permanecen intocables.

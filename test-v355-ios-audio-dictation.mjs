@@ -44,7 +44,7 @@ assert.deepEqual(events,["browser_fallback_speech_primed"]);
 assert.equal(prime(),false);
 
 assert.match(html,/sendAiUniversal"\)\.addEventListener\("click",\(\)=>\{primeAiUniversalSpeechFromGesture\(\);submitAiUniversalText\(\)\}/);
-assert.match(html,/lastMicGestureAt=now;\s*primeAiUniversalSpeechFromGesture\(\);/);
+assert.match(html,/lastMicGestureAt=now;\s*releaseAiUniversalPlaybackForListening\(\);\s*primeAiUniversalSpeechFromGesture\(\);/);
 assert.match(html,/if\(name\)\{if\(applyInlineManualRosterPhrase\(name,idx\)\)return;/);
 assert.match(html,/RESPONDIENDO EN VOZ/);
 
