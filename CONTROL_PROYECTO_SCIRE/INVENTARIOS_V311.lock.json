@@ -1,18 +1,18 @@
 {
   "version": "V372-STABLEFORD-LIVE-MIRROR-INTOCABLES",
-  "generatedAt": "2026-09-04T01:28:27Z",
-  "sourceFileCount": 396,
-  "sourceDigest": "ae0f30f2e4f7123be7cb66fd2067691d3c88166ad8666385f9db3947f44f313b",
+  "generatedAt": "2026-09-04T02:44:41Z",
+  "sourceFileCount": 397,
+  "sourceDigest": "8341243485dd59c43de1667fdb97687055076e916a883f06fc5c0de6aa0d5e65",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 210310,
-      "sha256": "50d1ec897b5d931ad8c3c52bd513b99c32478f660bc934a250ccf05fa49b7b8b"
+      "size": 210761,
+      "sha256": "660ddfaec2b6d5b57739b0bbbd624a2552f75c5126a32e57acb810aafb887c16"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 237359,
-      "sha256": "c9740db6f210c1f6fc34ae59e84ab827a0d8359d1f3b9f036d5f95505137d237"
+      "size": 237874,
+      "sha256": "5b9860767c7eeb9057ce3425faeff910ec53a3f0e715627a14b13a4f321ac984"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

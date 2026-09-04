@@ -9,6 +9,7 @@ for(let hole=1;hole<=18;hole++)holes[hole]={hole,par:4,gross:hole<=9?5:4,points:
 const round={id:"round-stable-live-v372",configured:true,provisional:false,mode:"stableford",course:"EL PULTÉ GOLF",createdAt:"2026-09-04T00:00:00Z",updatedAt:"2026-09-04T01:00:00Z",players:[{id:"player-stable-v372",name:"JAIME KIRSTE",handicap:0,tee:"Blanco",holes}]};
 const yards=Array.from({length:18},(_,index)=>300+index),snapshot=control.buildLiveSnapshot(round,{course:round.course,pars:Array(18).fill(4),yardages:yards}),safe=normalizeLiveSnapshot(snapshot);
 assert.equal(safe.mode,"stableford");
+assert.equal(safe.players[0].id,"player-stable-v372");
 assert.equal(safe.courseHoles[0].yards,300,"LIVE conserva las yardas oficiales");
 assert.equal(viewer.segmentTotal(safe.players[0],"gross",1,9),45);
 assert.equal(viewer.segmentTotal(safe.players[0],"gross",10,18),36);

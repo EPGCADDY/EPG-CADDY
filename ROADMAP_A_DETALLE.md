@@ -1961,4 +1961,10 @@ El log físico de R6 demuestra `POST /api/voice-speech 200` después de `cedar s
 | `test-v372-stableford-live-mirror.mjs`, `audit-project.mjs`, `package.json` | `MODALITY BOUNDARY` | Stableford usa el espejo; General conserva Neto y no recibe la plantilla Stableford. |
 | `service-worker.js`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs` | `CACHE V372` | El iPhone solicita el visor actualizado y los candados acumulados reconocen únicamente la nueva firma completa. |
 
+## V374 · contrato de IDs para activar y compartir Stableford LIVE
+
+`buildLiveSnapshot()` deja de enviar directamente IDs deportivos cortos como `sf1` o `p1` y construye IDs privados estables `live-player-{posición}-{id-origen}`. `normalizeLiveSnapshot()`, `validateScope()` y `validateConsent()` reciben así el mismo conjunto autorizado y `create_stream` puede insertar la ronda. La prueba dirigida reproduce los dos formatos reales y confirma la validación completa previa a la base de datos. No cambia la visualización V372, el cálculo Stableford, los scores ni Producción.
+
+Archivos exactos V374: `live-control.js`, `test-v372-stableford-live-mirror.mjs`, `test-v374-live-short-player-ids.mjs`, `audit-project.mjs`, `package.json`, `service-worker.js`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
 Archivos documentales del mismo cambio: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producción no cambia.

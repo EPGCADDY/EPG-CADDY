@@ -37,6 +37,7 @@
     "voice:native-spanish-fast-close-gate": "node test-v370-native-spanish-fast-close.mjs",
     "universal:spanish-only-gate": "node test-v371-spanish-only-universal.mjs",
     "live:stableford-mirror-gate": "node test-v372-stableford-live-mirror.mjs",
+    "live:short-player-id-gate": "node test-v374-live-short-player-ids.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",
