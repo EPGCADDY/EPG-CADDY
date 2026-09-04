@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-061 · ramas V376 y V380 podían cruzarse y perder funciones · 4 de septiembre de 2026
+
+- Evidencia: Historial/Stableford/WhatsApp evolucionaron en V376-R1 mientras voz universal y micrófono evolucionaron hasta V380 sobre otra línea.
+- Riesgo raíz: continuar una rama sin integrar la otra podía reemplazar lógica aprobada, caché, pruebas o documentación al publicar una versión posterior.
+- Control permanente: V381 parte de V380 y registra V376-R1 como segundo padre; resuelve por función, conserva los candados V378 y ejecuta conjuntamente las pruebas V372–V381 aplicables.
+- Criterio: ninguna continuación parte nuevamente de V376 o V380 aisladas; debe partir de V381 o de un descendiente verificado.
+- Estado: corregido en candidato V381; Producción intacta y prueba física pendiente.
+
 Este registro conserva defectos que alcanzaron al propietario o bloquearon un cierre. Un estado ABIERTO impide el PASS del rubro afectado.
 
 | ID | Defecto | Causa raíz | Punto de escape | Control permanente | Evidencia | Estado |

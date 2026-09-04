@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v369-voice-090-one-turn-gps-traffic-v371-r10-turn-audio-reset-v374-stream-transcription-v375-fast-universal-sensitive-score-v376-native-mic-first-v377-no-speech-clean-close-v378-approved-r7-voice-lock-v379-fast-chunked-r7-speech-v380-three-turn-audio-release";
+const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v369-voice-090-one-turn-gps-traffic-v371-r10-turn-audio-reset-v374-stream-transcription-v375-fast-universal-sensitive-score-v376-native-mic-first-v377-no-speech-clean-close-v378-approved-r7-voice-lock-v379-fast-chunked-r7-speech-v380-three-turn-audio-release-v372-stableford-live-mirror-v374-live-short-player-ids-v375-stableford-live-mobile-layout-v376-stableford-continuity-r1-installed-recovery-v381-unified";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

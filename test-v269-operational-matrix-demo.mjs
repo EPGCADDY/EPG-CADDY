@@ -35,7 +35,7 @@ assert.doesNotMatch(html,/\$\("backToRegistrationButton"\)\.addEventListener\("c
 assert.doesNotMatch(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>demoControlManual\?false:/);
 assert.match(html,/\$\("backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)\)/);
 assert.match(html,/\$\("previousRoundButton"\)\.addEventListener\("click",\(\)=>activatePreviousOperationalRound\(\)\)/);
-assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\|\|sfEmergency\?openFreshStablefordSetup\(\):openNewRoundDraft\(\)\)/);
+assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",openNewRoundWithAutomaticHistory\)/);
 
 const builderStart=html.indexOf("function controlManualDemoRound(");
 const builderEnd=html.indexOf("\nfunction derivedScoreForHole",builderStart);

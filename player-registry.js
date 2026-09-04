@@ -75,7 +75,7 @@
     const lastName=text(value?.lastName)||fullName.split(/\s+/).slice(1).join(" ");
     const shortName=text(value?.shortName)||firstName||fullName;
     const countryCode=normalizeCountryCode(value?.whatsapp?.countryCode||value?.countryCode||"502");
-    const nationalNumber=normalizeNationalNumber(value?.whatsapp?.nationalNumber||value?.whatsapp||"",countryCode);
+    const nationalNumber=normalizeNationalNumber(value?.whatsapp?.nationalNumber||value?.whatsapp||"",countryCode),countryIso=text(value?.whatsapp?.countryIso||value?.countryIso||(countryCode==="502"?"GT":""));
     const preference=DELIVERY_PREFERENCES.has(value?.deliveryPreference)?value.deliveryPreference:"none";
     return{
       schemaVersion:SCHEMA_VERSION,
@@ -86,7 +86,7 @@
       handicap:normalizeHandicap(value?.handicap),
       tee:normalizeTee(value?.tee),
       email:normalizeEmail(value?.email)||null,
-      whatsapp:nationalNumber?{countryCode,nationalNumber,e164:`+${countryCode}${nationalNumber}`}:{countryCode,nationalNumber:"",e164:null},
+      whatsapp:nationalNumber?{countryCode,countryIso,nationalNumber,e164:`+${countryCode}${nationalNumber}`}:{countryCode,countryIso,nationalNumber:"",e164:null},
       deliveryPreference:preference,
       consent:normalizeConsent(value?.consent),
       roundIds:unique(value?.roundIds),
@@ -101,8 +101,7 @@
   function migrateDirectory(raw){return Array.isArray(raw)?raw.filter(Boolean).map(normalizeProfile):[]}
   function findByRegistrationCode(raw,code){const key=normalizeRegistrationCode(code);return key?migrateDirectory(raw).find(profile=>profile.registrationCode===key)||null:null}
   function canDeliver(profile,channel){
-    const p=normalizeProfile(profile),allowed=p.consent.active===true;
-    if(!allowed)return{ok:false,reason:"NOT_AUTHORIZED"};
+    const p=normalizeProfile(profile);
     if(channel==="email"&&!p.email)return{ok:false,reason:"NO_DESTINATION"};
     if(channel==="whatsapp"&&!p.whatsapp.e164)return{ok:false,reason:"NO_DESTINATION"};
     if(!["email","whatsapp"].includes(channel))return{ok:false,reason:"INVALID_CHANNEL"};
@@ -113,7 +112,7 @@
   function upsertProfiles(raw,players,context={}){
     const profiles=migrateDirectory(raw),byKey=new Map(profiles.map(p=>[p.identityKey,p])),byCode=new Map(profiles.filter(p=>p.registrationCode).map(p=>[p.registrationCode,p])),taken=new Set(profiles.map(p=>p.registrationCode).filter(Boolean));
     for(const [index,player] of (players||[]).entries()){
-      const incoming=normalizeProfile({...player,fullName:player?.name||player?.fullName,whatsapp:{countryCode:player?.countryCode||"502",nationalNumber:player?.whatsapp?.nationalNumber||player?.whatsapp||""}},index);
+      const incoming=normalizeProfile({...player,fullName:player?.name||player?.fullName,whatsapp:{countryCode:player?.countryCode||"502",countryIso:player?.countryIso||"GT",nationalNumber:player?.whatsapp?.nationalNumber||player?.whatsapp||""}},index);
       const requestedCode=normalizeRegistrationCode(player?.registrationCode),previous=requestedCode?byCode.get(requestedCode)||byKey.get(incoming.identityKey):byKey.get(incoming.identityKey);
       let registrationCode=requestedCode||previous?.registrationCode;
       if(!registrationCode)registrationCode=generateRegistrationCode(incoming.identityKey,taken);
@@ -123,7 +122,7 @@
       const handicap=incoming.handicap??previous?.handicap??null,tee=incoming.tee||previous?.tee||null;
       const now=text(context.occurredAt)||new Date().toISOString(),history=normalizeHistory(previous?.profileHistory);
       if(previous&&!history.length)history.push(snapshotForProfile(previous,"migration",previous.updatedAt||previous.createdAt||now));
-      let merged=normalizeProfile({...previous,...incoming,id:previous?.id||incoming.id,registrationCode,handicap,tee,whatsapp,email:previous?.email||incoming.email,deliveryPreference:previous?.deliveryPreference||"none",consent:previous?.consent||incoming.consent,roundIds:unique([...(previous?.roundIds||[]),context.roundId]),coursesPlayed:unique([...(previous?.coursesPlayed||[]),context.course]),profileHistory:history,createdAt:previous?.createdAt||now,updatedAt:now},index);
+      let merged=normalizeProfile({...previous,...incoming,id:previous?.id||incoming.id,registrationCode,handicap,tee,whatsapp,email:previous?.email||incoming.email,deliveryPreference:whatsapp?.nationalNumber?"whatsapp":previous?.deliveryPreference||"none",consent:previous?.consent||incoming.consent,roundIds:unique([...(previous?.roundIds||[]),context.roundId]),coursesPlayed:unique([...(previous?.coursesPlayed||[]),context.course]),profileHistory:history,createdAt:previous?.createdAt||now,updatedAt:now},index);
       const latest=history[history.length-1],snapshot=snapshotForProfile(merged,text(context.source)||"registration",now);
       if(!latest||snapshotKey(latest)!==snapshotKey(snapshot))merged=normalizeProfile({...merged,profileHistory:[...history,snapshot]},index);
       if(previous&&previous.identityKey!==merged.identityKey)byKey.delete(previous.identityKey);

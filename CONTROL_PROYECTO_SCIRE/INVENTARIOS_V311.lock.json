@@ -1,23 +1,23 @@
 {
-  "version": "V380-THREE-TURN-AUDIO-RELEASE-AND-V378-LOCK",
-  "generatedAt": "2026-09-04T22:48:58Z",
-  "sourceFileCount": 407,
-  "sourceDigest": "c338e5b1352f536ca2c00f1c9339ab810268aa6fb86347d81362d4310872c713",
+  "version": "V381-UNIFIED-VOICE-HISTORY-STABLEFORD",
+  "generatedAt": "2026-09-04T23:20:33Z",
+  "sourceFileCount": 413,
+  "sourceDigest": "765739d232a8acb2ec56d5d56bf0049b994d05b89e8beebd9d1b12d6e939a6a8",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 218957,
-      "sha256": "433a0ba73ddd003628a9c76a4e43f622399ca430561cc5693d12e0d8ba07809a"
+      "size": 220308,
+      "sha256": "19728c2f800b3e54556a69b8971050b62f8792dc2db026f492ae284bdadc04b9"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 248558,
-      "sha256": "62f0a22a8e7418b782d3d16d3f95b7602259a24d7afb531736694beeb63c199b"
+      "size": 249119,
+      "sha256": "9fcff07a7661bec74a916ca0e80ba97bcbf87f62a1de945a600c4fa51838f9e2"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19261002,
-      "sha256": "b2e9e6d07ebaaa7f176b9f7d46113ec358c70d05735169edf47955605fa5a31b"
+      "size": 19261013,
+      "sha256": "5e49ca8c32beec68b80e3de51fe892663ce11f4edb626269b0c84f3d7f42c284"
     }
   ]
 }

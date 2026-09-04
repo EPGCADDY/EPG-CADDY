@@ -1,5 +1,13 @@
 # ROADMAP OVERALL
 
+## V381 · unificación segura de Voz V380 con Historial/Stableford/WhatsApp V376 · 4 de septiembre de 2026
+
+V381 nace desde el commit aprobado de V380 y une, mediante un merge trazable, la línea V376-R1. Conserva la primera respuesta universal medida en 2.8 segundos, la reapertura del micrófono y el reproductor R7 inerte entre turnos. Incorpora simultáneamente la vista LIVE Stableford por Gross/Puntos, nombres fijos en móvil, orden `GROSS IN` antes de `GROSS OUT`, recuperación exacta de la ronda del 4 de septiembre, continuidad de la ronda activa, archivo automático únicamente al completar 18 hoyos y campos de WhatsApp con Guatemala `+502` preseleccionado.
+
+La integración no sustituye archivos completos de una línea por la otra. Los conflictos de caché, auditoría, inventario y documentación se resuelven acumulando los controles de ambas ramas; Registro y escritores/cálculos de Score aprobados permanecen bajo sus candados. `test-v381-unified-voice-history-stableford.mjs` exige que convivan el contrato de audio V380 y el de continuidad V376. Producción permanece intacta.
+
+Archivos funcionales integrados: `index-grupal.html`, `player-registry.js`, `api/whatsapp-card.js`, `api/live.js`, `live-control.js`, `live-view.js`, `live.html` y `service-worker.js`. Controles: pruebas V372, V374, V375 Stableford, V376-R1, V378, V380, V381, auditoría maestra, ROADMAPS, RC-061 e inventario.
+
 ## V375 · respuesta universal inmediata y Score sensible · 4 de septiembre de 2026
 
 La evidencia real del Preview V374-R2 separó dos causas. En Score Card, la captura del servidor conservaba un umbral RMS fijo de `0.009`; los registros mostraron `no_speech` y una transcripción anterior rechazada por el parser. V375 conserva exactamente `0.009` en Registro y reduce exclusivamente Score a `0.0045`. El prompt de transcripción de ronda fija que un número de hoyo pronunciado una vez aplica a todos los jugadores siguientes hasta que se diga otro hoyo; el escritor, cálculos y persistencia no cambian.

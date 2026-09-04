@@ -1,5 +1,17 @@
 # ROADMAP A DETALLE
 
+## Registro técnico V381 · convergencia sin cruces entre ramas
+
+| Área | Base conservada | Aporte integrado | Control bloqueante |
+|---|---|---|---|
+| Voz universal | V380: primer audio R7 rápido, elemento autorizado conservado e inerte y reapertura limpia del micrófono | Ningún cambio funcional proveniente de V376 reemplaza esta ruta | `test-v378-approved-r7-voice-lock.mjs`, `test-v380-three-turn-audio-release.mjs` |
+| Ronda e Historial | Persistencia y entrada canónica aprobadas en V365–V368 | V376-R1: Stableford también usa la ronda canónica; `NUEVA RONDA` archiva sólo con 18 hoyos completos; la ronda activa sobrevive al cierre | `test-v376-stableford-continuity-recovery.mjs` |
+| LIVE Stableford | API LIVE y permisos existentes | Matriz Gross/Puntos, yardas, nombres y etiquetas fijas; resumen con `IN` antes de `OUT` | V372, V374 y V375 Stableford |
+| WhatsApp | Registro de jugador existente | País/bandera y prefijo `+502` editables; envío solicitado al pulsar Tarjeta Digital mediante endpoint autenticado | V376-R1; credenciales Meta siguen siendo requisito externo para entrega comercial real |
+| Integración | Commit V380 como primera base y V376-R1 como segundo padre | Un único árbol V381, un único caché y una auditoría que incluye ambas series | `test-v381-unified-voice-history-stableford.mjs`; puerta integral |
+
+Regla de versión: toda continuación funcional debe partir de V381; no se continúa por separado sobre V376 o V380. Producción permanece intacta hasta aprobación física expresa.
+
 ## Registro técnico V375 · Gateway primero y sensibilidad exclusiva de Score
 
 | Archivo exacto | Intervención limitada | Candado permanente |

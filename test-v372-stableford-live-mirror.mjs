@@ -1,0 +1,28 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import {createRequire} from "node:module";
+import {normalizeLiveSnapshot} from "./api/live.js";
+
+const require=createRequire(import.meta.url),control=require("./live-control.js"),viewer=require("./live-view.js"),read=file=>fs.readFileSync(file,"utf8");
+const holes={};
+for(let hole=1;hole<=18;hole++)holes[hole]={hole,par:4,gross:hole<=9?5:4,points:hole<=9?1:2,updatedAt:"2026-09-04T01:00:00Z"};
+const round={id:"round-stable-live-v372",configured:true,provisional:false,mode:"stableford",course:"EL PULTÉ GOLF",createdAt:"2026-09-04T00:00:00Z",updatedAt:"2026-09-04T01:00:00Z",players:[{id:"player-stable-v372",name:"JAIME KIRSTE",handicap:0,tee:"Blanco",holes}]};
+const yards=Array.from({length:18},(_,index)=>300+index),snapshot=control.buildLiveSnapshot(round,{course:round.course,pars:Array(18).fill(4),yardages:yards}),safe=normalizeLiveSnapshot(snapshot);
+assert.equal(safe.mode,"stableford");
+assert.equal(safe.players[0].id,"player-stable-v372");
+assert.equal(safe.courseHoles[0].yards,300,"LIVE conserva las yardas oficiales");
+assert.equal(viewer.segmentTotal(safe.players[0],"gross",1,9),45);
+assert.equal(viewer.segmentTotal(safe.players[0],"gross",10,18),36);
+assert.equal(viewer.segmentTotal(safe.players[0],"stablefordPoints",1,9),9);
+assert.equal(viewer.segmentTotal(safe.players[0],"stablefordPoints",10,18),18);
+const markup=viewer.streamCard({id:"stream-v372",snapshot:safe});
+for(const required of ["STABLEFORD","JUGADOR","HOYO","PAR","YDS","GROSS","PUNTOS","GROSS IN","GROSS OUT","GROSS TOTAL","PUNTOS IN","PUNTOS OUT","PUNTOS TOTAL"])assert.ok(markup.includes(required),`falta ${required}`);
+assert.ok(markup.indexOf("GROSS IN")<markup.indexOf("GROSS OUT"),"IN debe aparecer antes de OUT");
+assert.ok(markup.indexOf("PUNTOS IN")<markup.indexOf("PUNTOS OUT"),"Puntos IN debe aparecer antes de OUT");
+assert.doesNotMatch(markup,/NETO|\+ \/ −|RESULTADO/,"Stableford LIVE no usa el resumen genérico");
+const general={...safe,mode:"general"},generalMarkup=viewer.streamCard({id:"stream-general",snapshot:general});
+assert.match(generalMarkup,/NETO/,"las demás modalidades conservan su visor");
+assert.doesNotMatch(generalMarkup,/stableford-live-card/,"el espejo se limita a Stableford");
+const html=read("live.html"),liveControl=read("live-control.js"),api=read("api/live.js"),index=read("index-grupal.html"),worker=read("service-worker.js");
+assert.match(html,/stable-score-shell/);assert.match(liveControl,/getYardages/);assert.match(api,/yards:boundedInteger/);assert.match(index,/getYardages:value=>TEES/);assert.match(worker,/v372-stableford-live-mirror/);
+console.log("PASS V372 · Stableford LIVE refleja Gross/Puntos, yardas y resumen IN→OUT sin alterar otras modalidades");
