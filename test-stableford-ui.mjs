@@ -19,7 +19,7 @@ assert.match(html,/\$\("courseOptions"\)\.innerHTML=Object\.entries\(COURSE_CATA
 assert.doesNotMatch(html,/class="stableford-entry"/);
 assert.match(html,/function selectStablefordSetupCategory\(category\)/);
 assert.match(html,/function selectStablefordSetupCourse\(courseKey\)/);
-assert.match(html,/names\.slice\(0,6\)/);
+assert.match(html,/contacts\.slice\(0,6\)/);
 assert.match(html,/handicap:0,tee:cfg\.tee/);
 assert.match(html,/stablefordTeeLabel\(cfg\)/);
 assert.match(html,/row\("gross","GROSS",true\).*row\("points","PUNTOS",false\)/s);

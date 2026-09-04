@@ -20,11 +20,13 @@ assert.match(html,/id="setupMic" aria-label="Abrir Caddie universal o dictar jug
 assert.match(html,/<div class="registration-method-title">2 · MANUAL OPCIONAL<\/div>/);
 assert.equal((html.match(/<div class="registration-method-fields">NOMBRE \+ HDCP \+ MARCAS<\/div>/g)||[]).length,1);
 assert.doesNotMatch(html,/data-draft-code=/);
-assert.doesNotMatch(html,/data-draft-whatsapp=/);
+assert.match(html,/data-draft-whatsapp=/);
+assert.match(html,/data-draft-whatsapp-country=/);
+assert.doesNotMatch(html,/data-draft-whatsapp-consent=/);
 assert.doesNotMatch(html,/id="openShareProject"/);
 assert.doesNotMatch(html,/id="shareProjectPanel"/);
 assert.doesNotMatch(html,/>CÓDIGO<\/span>/);
-assert.doesNotMatch(html,/WHATSAPP OPCIONAL/);
+assert.match(html,/NÚMERO WHATSAPP/);
 assert.doesNotMatch(html,/NO SE RECONOCIÓ · DICTA NOMBRE, HDCP Y MARCAS/);
 assert.match(html,/target\.textContent="ERROR"/);
 

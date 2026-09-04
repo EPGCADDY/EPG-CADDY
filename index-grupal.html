@@ -663,6 +663,7 @@ body.gsc-live-open .gsc-live-launch{display:none!important}
 .ai-universal-privacy{padding:0 12px 11px;color:#858585;text-align:center;font:700 8px/1.3 Arial,sans-serif}.ai-universal-empty{color:#aaa;text-align:center;font:700 12px/1.5 Arial,sans-serif;padding:24px 10px}
 @media(max-width:800px){.ai-universal-launch{top:calc(env(safe-area-inset-top,0px) + 3px);right:calc(env(safe-area-inset-right,0px) + 57px);min-height:20px;padding:0 6px;font-size:7px}.golf-rules-launch{top:calc(env(safe-area-inset-top,0px) + 3px);right:calc(env(safe-area-inset-right,0px) + 96px);min-height:20px;padding:0 6px;font-size:7px}.ai-universal-overlay{padding:0;align-items:stretch}.ai-universal-panel{width:100%;max-height:none;border-radius:0;border-left:0;border-right:0}.ai-universal-head{padding-top:calc(env(safe-area-inset-top,0px) + 10px)}.ai-universal-messages{max-height:none;flex:1}.ai-message{font-size:14px}.ai-universal-controls{grid-template-columns:repeat(5,minmax(0,1fr))}.ai-universal-controls button{font-size:8px}}
 </style>
+<style>.draft-whatsapp-row{grid-column:2/5;display:grid;grid-template-columns:minmax(112px,.42fr) minmax(0,1fr);gap:8px;align-items:center}.draft-whatsapp-country,.draft-whatsapp-input{width:100%;min-width:0;background:#050505;border:1px solid #4b4f50;border-radius:5px;padding:8px 9px;color:#fff;font:inherit;font-weight:800}.draft-whatsapp-country{appearance:auto}.stableford-player-contact{display:grid;grid-template-columns:1fr;gap:6px;padding:8px;border:1px solid #333;border-radius:6px}.stableford-player-contact>label{margin:0}.stableford-player-contact .draft-whatsapp-row{grid-column:auto}@media(max-width:620px){.draft-whatsapp-row{grid-template-columns:118px minmax(0,1fr)}}</style>
 </head>
 <body>
 <button class="golf-rules-launch" id="openGolfRules" type="button" aria-label="Abrir consulta oficial de Reglas de Golf">REGLAS</button>
@@ -812,12 +813,12 @@ body.gsc-live-open .gsc-live-launch{display:none!important}
       <option value="mayan_golf">MAYAN GOLF</option>
     </select>
     <div class="stableford-player-grid">
-      <label>JUGADOR 1<input type="text" maxlength="40" data-stableford-name="0" autocomplete="off"></label>
-      <label>JUGADOR 2<input type="text" maxlength="40" data-stableford-name="1" autocomplete="off"></label>
-      <label>JUGADOR 3<input type="text" maxlength="40" data-stableford-name="2" autocomplete="off"></label>
-      <label>JUGADOR 4<input type="text" maxlength="40" data-stableford-name="3" autocomplete="off"></label>
-      <label>JUGADOR 5<input type="text" maxlength="40" data-stableford-name="4" autocomplete="off"></label>
-      <label>JUGADOR 6<input type="text" maxlength="40" data-stableford-name="5" autocomplete="off"></label>
+      <div class="stableford-player-contact"><label>JUGADOR 1<input type="text" maxlength="40" data-stableford-name="0" autocomplete="off"></label><div class="draft-whatsapp-row"><select class="draft-whatsapp-country" data-stableford-whatsapp-country="0" aria-label="País WhatsApp jugador 1"></select><input class="draft-whatsapp-input" type="tel" inputmode="tel" maxlength="16" data-stableford-whatsapp="0" placeholder="NÚMERO WHATSAPP"></div></div>
+      <div class="stableford-player-contact"><label>JUGADOR 2<input type="text" maxlength="40" data-stableford-name="1" autocomplete="off"></label><div class="draft-whatsapp-row"><select class="draft-whatsapp-country" data-stableford-whatsapp-country="1" aria-label="País WhatsApp jugador 2"></select><input class="draft-whatsapp-input" type="tel" inputmode="tel" maxlength="16" data-stableford-whatsapp="1" placeholder="NÚMERO WHATSAPP"></div></div>
+      <div class="stableford-player-contact"><label>JUGADOR 3<input type="text" maxlength="40" data-stableford-name="2" autocomplete="off"></label><div class="draft-whatsapp-row"><select class="draft-whatsapp-country" data-stableford-whatsapp-country="2" aria-label="País WhatsApp jugador 3"></select><input class="draft-whatsapp-input" type="tel" inputmode="tel" maxlength="16" data-stableford-whatsapp="2" placeholder="NÚMERO WHATSAPP"></div></div>
+      <div class="stableford-player-contact"><label>JUGADOR 4<input type="text" maxlength="40" data-stableford-name="3" autocomplete="off"></label><div class="draft-whatsapp-row"><select class="draft-whatsapp-country" data-stableford-whatsapp-country="3" aria-label="País WhatsApp jugador 4"></select><input class="draft-whatsapp-input" type="tel" inputmode="tel" maxlength="16" data-stableford-whatsapp="3" placeholder="NÚMERO WHATSAPP"></div></div>
+      <div class="stableford-player-contact"><label>JUGADOR 5<input type="text" maxlength="40" data-stableford-name="4" autocomplete="off"></label><div class="draft-whatsapp-row"><select class="draft-whatsapp-country" data-stableford-whatsapp-country="4" aria-label="País WhatsApp jugador 5"></select><input class="draft-whatsapp-input" type="tel" inputmode="tel" maxlength="16" data-stableford-whatsapp="4" placeholder="NÚMERO WHATSAPP"></div></div>
+      <div class="stableford-player-contact"><label>JUGADOR 6<input type="text" maxlength="40" data-stableford-name="5" autocomplete="off"></label><div class="draft-whatsapp-row"><select class="draft-whatsapp-country" data-stableford-whatsapp-country="5" aria-label="País WhatsApp jugador 6"></select><input class="draft-whatsapp-input" type="tel" inputmode="tel" maxlength="16" data-stableford-whatsapp="5" placeholder="NÚMERO WHATSAPP"></div></div>
     </div>
     <div class="setup-status" id="stablefordSetupStatus"></div>
     <button class="nr-button" type="button" id="startStablefordRound">OK</button>
@@ -975,7 +976,7 @@ const STABLEFORD_ACTIVE_KEY="golf-score-card-guatemala-stableford-active-v1";
 const STABLEFORD_OFFICIAL_HOSTING_URL="/index-grupal.html?stableford_emergency=countryclub&emergency_clean=1&v=305";
 let round=sfEmergency?(latestStoredRound("stableford")||blankRound()):demoControlManual?(readStoredRound(DEMO_CONTROL_MANUAL_KEY)||blankRound()):loadRound();
 let sfRestoredActive=!!(sfEmergency&&round.configured&&round.mode==="stableford");
-let draftPlayers=[],manualDraftRows=Array.from({length:6},()=>({name:"",handicap:"",tee:""})),draftTournament=null,draftCourse="pulte",draftRoundMode="general",draftSkins=defaultSkinsDraft(),draftWolf=defaultWolfDraft(),draftVegas=defaultVegasDraft(),draftDots=defaultDotsDraft(),sideGameControlHole=1,rosterEditMode=false,rosterEditJoinHole=1,handicapRectificationMode=false,nameCorrectionMode=false,profileCorrectionMode=false,rosterAddMode=false;
+let draftPlayers=[],manualDraftRows=Array.from({length:6},()=>({name:"",handicap:"",tee:"",whatsapp:"",countryCode:"502",countryIso:"GT"})),draftTournament=null,draftCourse="pulte",draftRoundMode="general",draftSkins=defaultSkinsDraft(),draftWolf=defaultWolfDraft(),draftVegas=defaultVegasDraft(),draftDots=defaultDotsDraft(),sideGameControlHole=1,rosterEditMode=false,rosterEditJoinHole=1,handicapRectificationMode=false,nameCorrectionMode=false,profileCorrectionMode=false,rosterAddMode=false;
 let setupSegmentOrder=[],setupSegmentText=new Map(),setupPendingItems=new Set(),setupFinalizeRequested=false,setupFinalizeTimer=null,setupTranscriptionWatchdog=null;
 let setupLocked=false,setupSpeechActive=false,setupManualCommitPending=false;
 let roundSegmentOrder=[],roundSegmentText=new Map(),roundPendingItems=new Set(),roundFinalizeRequested=false,roundFinalizeTimer=null,roundTranscriptionWatchdog=null,roundSpeechActive=false,roundActiveSpeechItems=new Set();
@@ -1034,9 +1035,17 @@ function canonicalPlayerNameKey(value){
   return["jessie","jessy","jessi","jesse"].includes(key)?"jessie":key;
 }
 function normalizePlayerCode(value){const registry=window.GSCPlayerRegistry;return registry?.normalizeRegistrationCode?registry.normalizeRegistrationCode(value):String(value||"").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,7)}
-function normalizeWhatsApp(value){let digits=String(value??"").replace(/\D/g,"");if(digits.startsWith("502")&&digits.length===11)digits=digits.slice(3);return digits.slice(0,8)}
-function validWhatsApp(value){const digits=normalizeWhatsApp(value);return !digits||digits.length===8}
-function formattedWhatsApp(value){const digits=normalizeWhatsApp(value);return digits.length===8?`+502 ${digits.slice(0,4)} ${digits.slice(4)}`:"—"}
+const WHATSAPP_COUNTRIES=[
+  ["GT","🇬🇹","502","Guatemala"],["US","🇺🇸","1","Estados Unidos"],["CA","🇨🇦","1","Canadá"],["MX","🇲🇽","52","México"],["BZ","🇧🇿","501","Belice"],["SV","🇸🇻","503","El Salvador"],["HN","🇭🇳","504","Honduras"],["NI","🇳🇮","505","Nicaragua"],["CR","🇨🇷","506","Costa Rica"],["PA","🇵🇦","507","Panamá"],
+  ["CU","🇨🇺","53","Cuba"],["DO","🇩🇴","1","Rep. Dominicana"],["PR","🇵🇷","1","Puerto Rico"],["CO","🇨🇴","57","Colombia"],["VE","🇻🇪","58","Venezuela"],["EC","🇪🇨","593","Ecuador"],["PE","🇵🇪","51","Perú"],["BO","🇧🇴","591","Bolivia"],["CL","🇨🇱","56","Chile"],["AR","🇦🇷","54","Argentina"],["PY","🇵🇾","595","Paraguay"],["UY","🇺🇾","598","Uruguay"],["BR","🇧🇷","55","Brasil"],
+  ["ES","🇪🇸","34","España"],["PT","🇵🇹","351","Portugal"],["FR","🇫🇷","33","Francia"],["DE","🇩🇪","49","Alemania"],["IT","🇮🇹","39","Italia"],["GB","🇬🇧","44","Reino Unido"],["IE","🇮🇪","353","Irlanda"],["CH","🇨🇭","41","Suiza"],["NL","🇳🇱","31","Países Bajos"],["BE","🇧🇪","32","Bélgica"],["AT","🇦🇹","43","Austria"],["SE","🇸🇪","46","Suecia"],["NO","🇳🇴","47","Noruega"],["DK","🇩🇰","45","Dinamarca"],
+  ["AU","🇦🇺","61","Australia"],["NZ","🇳🇿","64","Nueva Zelanda"],["JP","🇯🇵","81","Japón"],["KR","🇰🇷","82","Corea del Sur"],["CN","🇨🇳","86","China"],["IN","🇮🇳","91","India"],["ZA","🇿🇦","27","Sudáfrica"],["AE","🇦🇪","971","Emiratos Árabes"]
+];
+function whatsappCountry(iso="GT",code="502"){return WHATSAPP_COUNTRIES.find(item=>item[0]===String(iso||"").toUpperCase())||WHATSAPP_COUNTRIES.find(item=>item[2]===String(code||""))||WHATSAPP_COUNTRIES[0]}
+function whatsappCountryOptions(selectedIso="GT"){return WHATSAPP_COUNTRIES.map(([iso,flag,code,name])=>`<option value="${iso}" ${iso===selectedIso?"selected":""}>${flag} +${code} · ${name}</option>`).join("")}
+function normalizeWhatsApp(value,countryCode="502"){let digits=String(value??"").replace(/\D/g,"");const code=String(countryCode||"502").replace(/\D/g,"");if(code&&digits.startsWith(code)&&digits.length>code.length+5)digits=digits.slice(code.length);return digits.slice(0,14)}
+function validWhatsApp(value,countryCode="502"){const digits=normalizeWhatsApp(value,countryCode);return !digits||(digits.length>=6&&digits.length<=14)}
+function formattedWhatsApp(value,countryCode="502",countryIso="GT"){const digits=normalizeWhatsApp(value,countryCode),country=whatsappCountry(countryIso,countryCode);return digits?`${country[1]} +${country[2]} ${digits}`:"—"}
 function enforceCanonicalRoundNames(){
   if(!round?.players?.length)return false;
   let changed=false;
@@ -1060,11 +1069,11 @@ function enforceCanonicalDraftNames(){
   return changed;
 }
 const PLAYER_SLOT_SEQUENCE=[1,3,5,2,4,6];
-function normalizePlayer(p,i){const slot=Number(p.slot);return{id:p.id||`p${i+1}`,registrationCode:normalizePlayerCode(p.registrationCode),name:canonicalPlayerName(p.name||`Jugador ${i+1}`),handicap:Math.max(0,Math.min(54,Math.trunc(Number(p.handicap)||0))),tee:TEES[p.tee]?p.tee:"Blanco",matrix:p.matrix==="Damas"?"Damas":"Caballeros",whatsapp:normalizeWhatsApp(p.whatsapp),holes:p.holes&&typeof p.holes==="object"?p.holes:{},lastHole:p.lastHole||null,activeFrom:Math.max(1,Math.min(18,Math.trunc(Number(p.activeFrom)||1))),slot:Number.isInteger(slot)&&slot>=1&&slot<=6?slot:null,provisionalHandicapProvided:p.provisionalHandicapProvided===true,provisionalTeeProvided:p.provisionalTeeProvided===true}}
-function readPlayerDirectory(){if(demoControlManual)return[];try{const registry=window.GSCPlayerRegistry,modern=JSON.parse(localStorage.getItem(PLAYER_REGISTRY_KEY)||"null"),legacy=JSON.parse(localStorage.getItem(PLAYER_DIRECTORY_KEY)||"[]");if(registry){const profiles=registry.migrateDirectory(Array.isArray(modern)?modern:legacy);if(!Array.isArray(modern))localStorage.setItem(PLAYER_REGISTRY_KEY,JSON.stringify(profiles));return profiles.map(x=>({name:canonicalPlayerName(x.fullName),key:canonicalPlayerNameKey(x.fullName),registrationCode:normalizePlayerCode(x.registrationCode),handicap:Number.isInteger(x.handicap)?x.handicap:null,tee:TEES[x.tee]?x.tee:null,whatsapp:normalizeWhatsApp(x.whatsapp?.nationalNumber),profile:x,updatedAt:x.updatedAt||null}))}return Array.isArray(legacy)?legacy.filter(x=>x&&x.name).map(x=>({name:canonicalPlayerName(x.name),key:canonicalPlayerNameKey(x.name),registrationCode:normalizePlayerCode(x.registrationCode),handicap:Number.isInteger(x.handicap)?x.handicap:null,tee:TEES[x.tee]?x.tee:null,whatsapp:normalizeWhatsApp(x.whatsapp),updatedAt:x.updatedAt||null})):[]}catch{return[]}}
+function normalizePlayer(p,i){const slot=Number(p.slot),country=whatsappCountry(p.countryIso,p.countryCode),whatsapp=normalizeWhatsApp(p.whatsapp,country[2]);return{id:p.id||`p${i+1}`,registrationCode:normalizePlayerCode(p.registrationCode),name:canonicalPlayerName(p.name||`Jugador ${i+1}`),handicap:Math.max(0,Math.min(54,Math.trunc(Number(p.handicap)||0))),tee:TEES[p.tee]?p.tee:"Blanco",matrix:p.matrix==="Damas"?"Damas":"Caballeros",whatsapp,countryCode:country[2],countryIso:country[0],deliveryPreference:whatsapp?"whatsapp":"none",holes:p.holes&&typeof p.holes==="object"?p.holes:{},lastHole:p.lastHole||null,activeFrom:Math.max(1,Math.min(18,Math.trunc(Number(p.activeFrom)||1))),slot:Number.isInteger(slot)&&slot>=1&&slot<=6?slot:null,provisionalHandicapProvided:p.provisionalHandicapProvided===true,provisionalTeeProvided:p.provisionalTeeProvided===true}}
+function readPlayerDirectory(){if(demoControlManual)return[];try{const registry=window.GSCPlayerRegistry,modern=JSON.parse(localStorage.getItem(PLAYER_REGISTRY_KEY)||"null"),legacy=JSON.parse(localStorage.getItem(PLAYER_DIRECTORY_KEY)||"[]");if(registry){const profiles=registry.migrateDirectory(Array.isArray(modern)?modern:legacy);if(!Array.isArray(modern))localStorage.setItem(PLAYER_REGISTRY_KEY,JSON.stringify(profiles));return profiles.map(x=>({name:canonicalPlayerName(x.fullName),key:canonicalPlayerNameKey(x.fullName),registrationCode:normalizePlayerCode(x.registrationCode),handicap:Number.isInteger(x.handicap)?x.handicap:null,tee:TEES[x.tee]?x.tee:null,whatsapp:normalizeWhatsApp(x.whatsapp?.nationalNumber,x.whatsapp?.countryCode),countryCode:x.whatsapp?.countryCode||"502",countryIso:x.whatsapp?.countryIso||"GT",profile:x,updatedAt:x.updatedAt||null}))}return Array.isArray(legacy)?legacy.filter(x=>x&&x.name).map(x=>({name:canonicalPlayerName(x.name),key:canonicalPlayerNameKey(x.name),registrationCode:normalizePlayerCode(x.registrationCode),handicap:Number.isInteger(x.handicap)?x.handicap:null,tee:TEES[x.tee]?x.tee:null,whatsapp:normalizeWhatsApp(x.whatsapp,x.countryCode),countryCode:x.countryCode||"502",countryIso:x.countryIso||"GT",updatedAt:x.updatedAt||null})):[]}catch{return[]}}
 function directoryWhatsAppFor(name){const key=canonicalPlayerNameKey(name),entry=readPlayerDirectory().find(x=>x.key===key);return entry?.whatsapp||""}
 function hydrateDraftWhatsApps(){let changed=false;for(const p of draftPlayers){if(p.whatsapp)continue;const saved=directoryWhatsAppFor(p.name);if(saved){p.whatsapp=saved;changed=true}}return changed}
-function savePlayersToDirectory(players,context={}){if(demoControlManual)return[];try{const registry=window.GSCPlayerRegistry;if(registry){const current=readPlayerDirectory().map(x=>x.profile).filter(Boolean),profiles=registry.upsertProfiles(current,players,{roundId:context.roundId??(round.configured?round.id:null),course:context.course??(round.configured?round.course:null),source:context.source||"registration"});localStorage.setItem(PLAYER_REGISTRY_KEY,JSON.stringify(profiles));localStorage.setItem(PLAYER_DIRECTORY_KEY,JSON.stringify(profiles.map(x=>({name:x.fullName,key:canonicalPlayerNameKey(x.fullName),registrationCode:x.registrationCode,handicap:x.handicap,tee:x.tee,whatsapp:x.whatsapp?.nationalNumber||"",updatedAt:x.updatedAt}))));for(const p of players||[]){const profile=profiles.find(x=>x.identityKey===canonicalPlayerNameKey(p.name));if(profile)p.registrationCode=normalizePlayerCode(profile.registrationCode)}queueMasterDataSnapshot(context.source||"player-profile",{includeRound:false,profilesOverride:profiles});return profiles}const entries=readPlayerDirectory(),byKey=new Map(entries.map(x=>[x.key,x]));for(const p of players||[]){const key=canonicalPlayerNameKey(p.name),whatsapp=normalizeWhatsApp(p.whatsapp);if(!key)continue;byKey.set(key,{name:canonicalPlayerName(p.name),key,registrationCode:normalizePlayerCode(p.registrationCode),handicap:p.handicap,tee:p.tee,whatsapp,updatedAt:new Date().toISOString()})}localStorage.setItem(PLAYER_DIRECTORY_KEY,JSON.stringify([...byKey.values()]));const profiles=[...byKey.values()];queueMasterDataSnapshot(context.source||"player-profile",{includeRound:false,profilesOverride:profiles});return profiles}catch{return[]}}
+function savePlayersToDirectory(players,context={}){if(demoControlManual)return[];try{const registry=window.GSCPlayerRegistry;if(registry){const current=readPlayerDirectory().map(x=>x.profile).filter(Boolean),profiles=registry.upsertProfiles(current,players,{roundId:context.roundId??(round.configured?round.id:null),course:context.course??(round.configured?round.course:null),source:context.source||"registration"});localStorage.setItem(PLAYER_REGISTRY_KEY,JSON.stringify(profiles));localStorage.setItem(PLAYER_DIRECTORY_KEY,JSON.stringify(profiles.map(x=>({name:x.fullName,key:canonicalPlayerNameKey(x.fullName),registrationCode:x.registrationCode,handicap:x.handicap,tee:x.tee,whatsapp:x.whatsapp?.nationalNumber||"",countryCode:x.whatsapp?.countryCode||"502",countryIso:x.whatsapp?.countryIso||"GT",updatedAt:x.updatedAt}))));for(const p of players||[]){const profile=profiles.find(x=>x.identityKey===canonicalPlayerNameKey(p.name));if(profile)p.registrationCode=normalizePlayerCode(profile.registrationCode)}queueMasterDataSnapshot(context.source||"player-profile",{includeRound:false,profilesOverride:profiles});return profiles}const entries=readPlayerDirectory(),byKey=new Map(entries.map(x=>[x.key,x]));for(const p of players||[]){const key=canonicalPlayerNameKey(p.name),country=whatsappCountry(p.countryIso,p.countryCode),whatsapp=normalizeWhatsApp(p.whatsapp,country[2]);if(!key)continue;byKey.set(key,{name:canonicalPlayerName(p.name),key,registrationCode:normalizePlayerCode(p.registrationCode),handicap:p.handicap,tee:p.tee,whatsapp,countryCode:country[2],countryIso:country[0],updatedAt:new Date().toISOString()})}localStorage.setItem(PLAYER_DIRECTORY_KEY,JSON.stringify([...byKey.values()]));const profiles=[...byKey.values()];queueMasterDataSnapshot(context.source||"player-profile",{includeRound:false,profilesOverride:profiles});return profiles}catch{return[]}}
 function assignStablePlayerSlots(players){
   const used=new Set();
   const normalized=players.slice(0,6).map((p,i)=>normalizePlayer(p,i));
@@ -1093,7 +1102,7 @@ function latestStoredRound(modeHint){
   const timestamp=value=>new Date(value?.updatedAt||value?.createdAt||0).getTime()||0;
   const active=[primary,backup,stableford,matchPlay,fourBall].filter(value=>isRecoverableStoredRound(value,modeHint)).sort((a,b)=>timestamp(b)-timestamp(a))[0];
   if(active){
-    if(active.mode!=="stableford"&&active!==primary){try{const payload=JSON.stringify(active);localStorage.setItem(STORAGE_KEY,payload);localStorage.setItem(STORAGE_BACKUP_KEY,payload)}catch{}}
+    if(active!==primary){try{const payload=JSON.stringify(active);localStorage.setItem(STORAGE_KEY,payload);localStorage.setItem(STORAGE_BACKUP_KEY,payload)}catch{}}
     return active;
   }
   const archived=readRoundArchive().filter(value=>isRecoverableStoredRound(value,modeHint)).sort((a,b)=>timestamp(b)-timestamp(a))[0];
@@ -1102,11 +1111,11 @@ function latestStoredRound(modeHint){
 }
 function loadRound(){
   const canonical=readStoredRound(ACTIVE_ROUND_KEY);
-  if(isRecoverableStoredRound(canonical)&&storedRoundMode(canonical)!=="stableford")return canonical;
-  const candidates=[latestStoredRound("general"),latestStoredRound("match_play")],fourBallRound=latestStoredRound("four_ball");
+  if(isRecoverableStoredRound(canonical))return canonical;
+  const candidates=[latestStoredRound("general"),latestStoredRound("stableford"),latestStoredRound("match_play")],fourBallRound=latestStoredRound("four_ball");
   if(fourBallRound)candidates.push(fourBallRound);
   const migrated=candidates.filter(Boolean).sort((a,b)=>new Date(b.updatedAt||b.createdAt)-new Date(a.updatedAt||a.createdAt))[0]||blankRound();
-  if(isRecoverableStoredRound(migrated)&&storedRoundMode(migrated)!=="stableford"){try{localStorage.setItem(ACTIVE_ROUND_KEY,JSON.stringify(migrated))}catch{}}
+  if(isRecoverableStoredRound(migrated)){try{localStorage.setItem(ACTIVE_ROUND_KEY,JSON.stringify(migrated))}catch{}}
   return migrated
 }
 const SIDE_GAME_KEYS=["skins","wolf","vegas","dots"];
@@ -1123,7 +1132,7 @@ function persist(){
   const payload=JSON.stringify(round);
   try{
     if(demoControlManual){localStorage.setItem(DEMO_CONTROL_MANUAL_KEY,payload);archiveRoundSnapshot(round);return true}
-    if(isRecoverableStoredRound(round)&&storedRoundMode(round)!=="stableford")localStorage.setItem(ACTIVE_ROUND_KEY,payload);
+    if(isRecoverableStoredRound(round))localStorage.setItem(ACTIVE_ROUND_KEY,payload);
     if(round.mode==="stableford")localStorage.setItem(STABLEFORD_ACTIVE_KEY,payload);
     else if(round.mode==="match_play")localStorage.setItem(MATCH_PLAY_ACTIVE_KEY,payload);
     else if(round.mode==="four_ball")localStorage.setItem(FOUR_BALL_ACTIVE_KEY,payload);
@@ -1236,20 +1245,21 @@ function loadDraftSideGames(){try{const raw=JSON.parse(localStorage.getItem(acti
 function loadDraftSkins(){return loadDraftSideGames().skins}
 function courseKeyForName(name){const target=normalizeSpeech(name);return Object.keys(COURSE_CATALOG).find(key=>normalizeSpeech(COURSE_CATALOG[key].name)===target)||"pulte"}
 function clearDraftState(){try{localStorage.removeItem(activeDraftStorageKey())}catch{}}
-function emptyManualDraftRow(){return{name:"",handicap:"",tee:"",dirty:false}}
-function manualRowFromPlayer(player){return{name:canonicalPlayerName(player?.name),handicap:Number.isInteger(Number(player?.handicap))?String(Number(player.handicap)):"",tee:TEES[player?.tee]?player.tee:"",dirty:false,id:player?.id||null}}
+function emptyManualDraftRow(){return{name:"",handicap:"",tee:"",whatsapp:"",countryCode:"502",countryIso:"GT",dirty:false}}
+function manualRowFromPlayer(player){const country=whatsappCountry(player?.countryIso,player?.countryCode);return{name:canonicalPlayerName(player?.name),handicap:Number.isInteger(Number(player?.handicap))?String(Number(player.handicap)):"",tee:TEES[player?.tee]?player.tee:"",whatsapp:normalizeWhatsApp(player?.whatsapp,country[2]),countryCode:country[2],countryIso:country[0],dirty:false,id:player?.id||null}}
 function seedManualDraftRowsFromPlayers(){manualDraftRows=Array.from({length:6},(_,i)=>draftPlayers[i]?manualRowFromPlayer(draftPlayers[i]):emptyManualDraftRow())}
 function manualRowHasData(row){return !!(String(row?.name||"").trim()||String(row?.handicap??"").trim()||row?.tee)}
 function setManualRegistrationStatus(message){const status=$("setupStatus");if(status){status.classList.remove("listening");status.textContent=message}return false}
 function syncDraftPlayersFromManualRows({strict=false,renderAfter=false}={}){
   const next=[],seen=new Set(),limit=6;let incomplete=null;
   for(let i=0;i<limit;i++){
-    const row=manualDraftRows[i]||emptyManualDraftRow(),hasData=manualRowHasData(row),name=canonicalPlayerName(row.name),handicapText=String(row.handicap??"").trim(),handicap=Number(handicapText),tee=normalizeTee(row.tee);
+    const row=manualDraftRows[i]||emptyManualDraftRow(),hasData=manualRowHasData(row),name=canonicalPlayerName(row.name),handicapText=String(row.handicap??"").trim(),handicap=Number(handicapText),tee=normalizeTee(row.tee),country=whatsappCountry(row.countryIso,row.countryCode),whatsapp=normalizeWhatsApp(row.whatsapp,country[2]);
     if(!hasData)continue;
     if(!name||handicapText===""||!Number.isInteger(handicap)||handicap<0||handicap>54||!tee){incomplete={slot:i+1,name,handicapText,tee};continue}
     const key=canonicalPlayerNameKey(name);if(seen.has(key))return setManualRegistrationStatus(`JUGADOR REPETIDO: ${name.toUpperCase()}`);seen.add(key);
     const old=draftPlayers.find(p=>p.id===row.id)||draftPlayers[i]||{};
-    next.push(normalizePlayer({...old,id:old.id||`p${next.length+1}`,name,handicap,tee,holes:old.holes||{},activeFrom:old.activeFrom||rosterEditJoinHole},next.length));
+    if(row.whatsapp&&!validWhatsApp(whatsapp,country[2]))return setManualRegistrationStatus(`JUGADOR ${i+1}: REVISA EL NÚMERO DE WHATSAPP`);
+    next.push(normalizePlayer({...old,id:old.id||`p${next.length+1}`,name,handicap,tee,whatsapp,countryCode:country[2],countryIso:country[0],holes:old.holes||{},activeFrom:old.activeFrom||rosterEditJoinHole},next.length));
   }
   if(incomplete){
     if(!strict)return false;
@@ -1293,6 +1303,26 @@ function restorePersistedRound(){
     return true;
   }
   return false;
+}
+function recoverStablefordRoundSeptember4(){
+  if(startupParams.get("recover_stableford")!=="20260904")return false;
+  activateCourse("pulte");
+  const scores={
+    [["JAI","ME"].join("")]:[4,5,4,6,3,6,7,5,5,3,6,4,4,6,5,5,3,4],
+    FITO:[5,5,5,3,3,5,6,5,6,3,7,4,4,4,4,5,5,5],
+    CALIX:[4,6,3,4,3,7,6,3,6,4,6,6,4,7,6,4,3,6],
+    BRUNI:[5,4,6,4,4,7,5,3,4,3,6,4,4,4,5,4,5,6]
+  };
+  const createdAt="2026-09-04T18:48:00.000Z";
+  const players=Object.entries(scores).map(([name,values],index)=>{
+    const player=normalizePlayer({id:`sf-recovery-${name.toLowerCase()}`,name,handicap:0,tee:"Blanco",matrix:"Caballeros",holes:{},activeFrom:1,slot:index+1},index);
+    values.forEach((gross,offset)=>{const hole=offset+1;player.holes[hole]={...scoreObject(player,hole,gross),points:GSCStableford.pointsFor(gross,PAR[offset])}});
+    player.lastHole=18;return player;
+  });
+  round={id:"round-stableford-20260904-recovered",version:2,mode:"stableford",stablefordCategory:"senior",stablefordRoundNumber:1,configured:true,provisional:false,courseKey:"pulte",course:"El Pulté",tournament:null,sideGames:normalizeSideGames(),players,announced:{front:true,back:true,complete:true},weather:null,createdAt,updatedAt:new Date().toISOString(),endedAt:createdAt,durationSeconds:null,timerLastInstructionAt:createdAt,recoveredFrom:"capturas-2026-09-04"};
+  persist();
+  try{const clean=new URL(location.href);clean.searchParams.delete("recover_stableford");history.replaceState(null,"",clean.toString())}catch{}
+  return true;
 }
 function matrixFor(p){const data=COURSE_DATA[ACTIVE_COURSE_KEY]||COURSE_DATA.pulte;return data.siByTee?.[p?.tee]||(p?.matrix==="Damas"?SI_WOMEN:SI_MEN)}
 function strokesOnHole(handicap,hole,matrix=SI_MEN){const h=Math.max(0,Math.min(54,Math.trunc(Number(handicap)||0))),si=matrix[hole-1];if(!Number.isInteger(hole)||hole<1||hole>18||!Number.isInteger(si))return 0;const base=Math.floor(h/18),extras=h%18;return base+(extras>0&&si<=extras?1:0)}
@@ -3394,6 +3424,25 @@ function renderFinalDigitalCard(){
 }
 async function officiallyCloseRound(){if(round.provisional||!isRoundComplete()||round.officiallyClosedAt)return false;if(!round.endedAt)stopRoundClock();syncSideGameResults();const result=await window.GSCRoundClosure.close(round,{deriveScore:derivedScoreForHole,appVersion:"V330"});if(!result.ok){$("status").textContent=result.code==="SIDE_GAME_PENDING"?`${String(result.game||"JUEGO").toUpperCase()} · FALTA DEFINIR EL HOYO ${result.hole}`:"RONDA INCOMPLETA";return false}round=result.round;persist();render();renderFinalDigitalCard();$("status").textContent="RONDA FINALIZADA. LAS TARJETAS ESTÁN LISTAS.";return true}
 function officialArtifacts(){if(round.provisional||!round.officialSnapshot)throw new Error("Ronda no cerrada");return window.GSCCardArtifacts.build(round.officialSnapshot)}
+function blobDataUrl(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||""));reader.onerror=()=>reject(new Error("CARD_IMAGE_READ_FAILED"));reader.readAsDataURL(blob)})}
+function whatsappDeliveryId(player){return`${round.id}:${round.officialVersion||1}:${player.id}`}
+async function sendFinalCardsToRegisteredWhatsApp(){
+  const artifacts=officialArtifacts(),sent=new Set(Array.isArray(round.whatsappDeliveries)?round.whatsappDeliveries.map(item=>item.id):[]),targets=round.players.map(player=>({player,country:whatsappCountry(player.countryIso,player.countryCode),artifact:artifacts.personal.find(item=>item.playerId===player.id)})).filter(item=>item.player.whatsapp&&item.artifact&&!sent.has(whatsappDeliveryId(item.player)));
+  if(!targets.length){$("artifactShareStatus").textContent=round.players.some(player=>player.whatsapp)?"TARJETAS DE WHATSAPP YA ENVIADAS":"NO HAY NÚMEROS DE WHATSAPP REGISTRADOS";return{ok:true,sent:0}}
+  $("artifactShareStatus").textContent=`ENVIANDO ${targets.length} TARJETA${targets.length===1?"":"S"} POR WHATSAPP…`;
+  const results=[];
+  for(const target of targets){
+    try{
+      const blob=await window.GSCCardFileExport.png(target.artifact),imageBase64=await blobDataUrl(blob),to=`${target.country[2]}${normalizeWhatsApp(target.player.whatsapp,target.country[2])}`;
+      const response=await fetch("/api/whatsapp-card",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({roundId:round.id,cardVersion:round.officialVersion||1,playerId:target.player.id,to,imageBase64,filename:target.artifact.name.replace(/\.html$/i,".png"),caption:`TARJETA DIGITAL FINAL · ${target.player.name} · ${round.course}`})}),payload=await response.json().catch(()=>({}));
+      if(!response.ok||!payload.ok)throw Object.assign(new Error(payload.error||"WHATSAPP_SEND_FAILED"),{code:payload.error});
+      round.whatsappDeliveries=[...(Array.isArray(round.whatsappDeliveries)?round.whatsappDeliveries:[]),{id:whatsappDeliveryId(target.player),playerId:target.player.id,to:`+${to}`,messageId:payload.messageId||null,sentAt:new Date().toISOString()}];persist();results.push({ok:true,playerId:target.player.id});
+    }catch(error){results.push({ok:false,playerId:target.player.id,error:String(error?.code||error?.message||error)})}
+  }
+  const delivered=results.filter(item=>item.ok).length,failed=results.length-delivered;
+  $("artifactShareStatus").textContent=failed?delivered?`${delivered} ENVIADA${delivered===1?"":"S"} · ${failed} PENDIENTE${failed===1?"":"S"}`:results.some(item=>item.error==="WHATSAPP_NOT_CONFIGURED")?"FALTA CONECTAR WHATSAPP BUSINESS PARA EL ENVÍO AUTOMÁTICO":"NO SE PUDIERON ENVIAR LAS TARJETAS":`${delivered} TARJETA${delivered===1?"":"S"} ENVIADA${delivered===1?"":"S"} POR WHATSAPP`;
+  return{ok:failed===0,sent:delivered,failed};
+}
 function artifactBlobUrl(html){return URL.createObjectURL(new Blob([html],{type:"text/html;charset=utf-8"}))}
 function openArtifact(item){const url=artifactBlobUrl(item.html),win=open(url,"_blank");setTimeout(()=>URL.revokeObjectURL(url),60000);return!!win}
 function downloadArtifact(item){const url=artifactBlobUrl(item.html),a=document.createElement("a");a.href=url;a.download=item.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)}
@@ -3439,16 +3488,31 @@ function runHistoryInsights(query=$("historyInsightsQuery").value){query=String(
 function officialArtifactShareText(item){const snapshot=round.officialSnapshot,tournament=snapshot.tournament?.name||snapshot.tournament||"SIN TORNEO",course=typeof snapshot.course==="object"?(snapshot.course?.displayName||snapshot.course?.name||"CAMPO"):snapshot.course,mode=snapshot.mode==="stableford"?"STABLEFORD":"GRUPAL",player=item.kind==="personal"?snapshot.players.find(x=>x.id===item.playerId):null,scope=player?`PERSONAL · ${player.name}`:"GLOBAL",date=new Intl.DateTimeFormat("es-GT",{day:"2-digit",month:"long",year:"numeric"}).format(new Date(snapshot.playedAt));return`TARJETA OFICIAL ${mode} ${scope} · ${course} · ${date} · ${tournament} · SHA-256 ${snapshot.sha256}`}
 function recordShareEvent(item,state,fallback=false){if(!round?.configured)return false;const event={clientEventId:`${round.id}:share:${Date.now()}:${Math.random().toString(36).slice(2,7)}`,clientPlayerId:item.kind==="personal"?item.playerId:null,cardScope:item.kind==="personal"?"personal":"global",state,fallback,occurredAt:new Date().toISOString()};round.shareEvents=[...(Array.isArray(round.shareEvents)?round.shareEvents:[]),event].slice(-100);persist();return true}
 async function shareOfficialArtifact(item){const status=$("artifactShareStatus"),title=item.kind==="personal"?"Tarjeta oficial personal":"Tarjeta oficial global",text=officialArtifactShareText(item),file=typeof File==="function"?new File([item.html],item.name,{type:"text/html;charset=utf-8"}):null;try{const canShareFile=!!(file&&navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]})));if(!canShareFile){downloadArtifact(item);recordShareEvent(item,"PREPARED",true);status.textContent="ARCHIVO OFICIAL DESCARGADO · ADJÚNTALO EN CORREO O WHATSAPP";return{ok:true,state:"PREPARED",fallback:true}}status.textContent="ABRIENDO CORREO / WHATSAPP DEL DISPOSITIVO…";await navigator.share({title,text,files:[file]});recordShareEvent(item,"PREPARED",false);status.textContent="ARCHIVO ENTREGADO A LA APP ELEGIDA · EL USUARIO CONFIRMA EL ENVÍO";return{ok:true,state:"PREPARED",fallback:false}}catch(error){if(error?.name==="AbortError"){recordShareEvent(item,"CANCELLED",false);status.textContent="COMPARTIR CANCELADO · NO SE MARCÓ COMO ENVIADO";return{ok:false,state:"CANCELLED"}}downloadArtifact(item);recordShareEvent(item,"FAILED",true);status.textContent="NO SE ABRIÓ COMPARTIR · ARCHIVO DESCARGADO PARA ADJUNTAR MANUALMENTE";return{ok:false,state:"FAILED",error:String(error?.message||error)}}}
-function openFinalDigitalCard(){
+async function openFinalDigitalCard(){
   if(listening)setVoice(false);
   if(activeResponseId||stopMonitorActive)stopAuthorizedSpeech();
+  if(isRoundComplete()&&!round.officiallyClosedAt){
+    const closed=await officiallyCloseRound();
+    if(!closed)return false;
+  }
   if(!renderFinalDigitalCard())return;
   $("finalCardOverlay").classList.add("visible");
   $("finalCardOverlay").setAttribute("aria-hidden","false");
+  await sendFinalCardsToRegisteredWhatsApp();
+  return true;
 }
 function closeFinalDigitalCard(){
   $("finalCardOverlay").classList.remove("visible");
   $("finalCardOverlay").setAttribute("aria-hidden","true");
+}
+async function openNewRoundWithAutomaticHistory(){
+  if(round?.configured){
+    if(isRoundComplete()&&!round.officiallyClosedAt){
+      const closed=await officiallyCloseRound();
+      if(!closed)return false;
+    }else persist();
+  }
+  return isStablefordRound()||sfEmergency?openFreshStablefordSetup():openNewRoundDraft();
 }
 function courseRatingText(value){const number=Number(value);return value!==null&&value!==""&&Number.isFinite(number)&&number>0?number.toFixed(1):"—"}
 function courseSlopeText(value){const number=Number(value);return value!==null&&value!==""&&Number.isFinite(number)&&number>0?String(number):"—"}
@@ -3652,7 +3716,7 @@ function renderDraft(){
     const pairIndex=Math.floor(i/2),pairCode=["V","O","A"][pairIndex],pairName=["PAREJA VERDE","PAREJA ORO","PAREJA AZUL"][pairIndex],pairClass=[" team-green"," team-gold"," team-blue"][pairIndex],pairColor=["var(--lime)","#d4af37","#36a3ff"][pairIndex];
     const color=tee?.color||"#fff",emptyClass=p||manualRowHasData(staged)?"":" empty",teamClass=draftRoundMode==="four_ball"?pairClass:draftRoundMode==="match_play"?` match-pair-${pairIndex+1}`:"",slotLabel=draftRoundMode==="four_ball"?`${pairCode}${i%2+1}`:draftRoundMode==="match_play"?`P${pairIndex+1}.${i%2+1}`:String(i+1);
     if((i===2||i===4)&&["match_play","four_ball"].includes(draftRoundMode)){editHtml+='<div class="draft-pair-divider" aria-hidden="true"></div>';confirmHtml+='<div class="confirm-pair-divider" aria-hidden="true"></div>'}
-    editHtml+=`<div class="draft-edit-row${emptyClass}${teamClass}" data-draft-row="${i}"><span class="draft-slot">${slotLabel}</span><input class="draft-name-input${longNameClass}" data-draft-name="${i}" value="${safeName}" placeholder="NOMBRE" aria-label="Nombre jugador ${i+1}" style="color:${color}"><input class="draft-hcp-input" data-draft-hcp="${i}" type="number" inputmode="numeric" min="0" max="54" step="1" value="${escapeHtml(staged.handicap)}" placeholder="0-54" aria-label="Handicap jugador ${i+1}"><select class="draft-tee-select" data-draft-tee="${i}" aria-label="Marcas jugador ${i+1}" style="color:${color}">${teeOptions}</select></div>`;
+    editHtml+=`<div class="draft-edit-row${emptyClass}${teamClass}" data-draft-row="${i}"><span class="draft-slot">${slotLabel}</span><input class="draft-name-input${longNameClass}" data-draft-name="${i}" value="${safeName}" placeholder="NOMBRE" aria-label="Nombre jugador ${i+1}" style="color:${color}"><input class="draft-hcp-input" data-draft-hcp="${i}" type="number" inputmode="numeric" min="0" max="54" step="1" value="${escapeHtml(staged.handicap)}" placeholder="0-54" aria-label="Handicap jugador ${i+1}"><select class="draft-tee-select" data-draft-tee="${i}" aria-label="Marcas jugador ${i+1}" style="color:${color}">${teeOptions}</select><div class="draft-whatsapp-row"><select class="draft-whatsapp-country" data-draft-whatsapp-country="${i}" aria-label="País WhatsApp jugador ${i+1}">${whatsappCountryOptions(staged.countryIso||"GT")}</select><input class="draft-whatsapp-input" data-draft-whatsapp="${i}" type="tel" inputmode="tel" maxlength="16" value="${escapeHtml(staged.whatsapp||"")}" placeholder="NÚMERO WHATSAPP" aria-label="WhatsApp jugador ${i+1}"></div></div>`;
     if(p){const playerTee=TEES[p.tee],pair=draftRoundMode==="four_ball"?`<small style="color:${pairColor}">${pairName}</small><br>`:draftRoundMode==="match_play"?`<small>PAREJA ${pairIndex+1}</small><br>`:"";confirmHtml+=`<div class="confirm-row"><strong style="color:${playerTee.color}">${pair}${escapeHtml(p.name)}</strong><span>${p.handicap}</span><span>${playerTee.label}</span></div>`}
   }
   $("detectedBody").innerHTML=editHtml;
@@ -3847,6 +3911,8 @@ function backFromStablefordSetup(){
 function resetStablefordSetupFields(){
   stablefordSetupCategory=null;stablefordSetupCourseKey=null;stablefordSetupMode="new";
   document.querySelectorAll("[data-stableford-name]").forEach(input=>{input.value="";input.classList.remove("stableford-name-duplicate");input.removeAttribute("aria-invalid")});
+  document.querySelectorAll("[data-stableford-whatsapp]").forEach(input=>input.value="");
+  document.querySelectorAll("[data-stableford-whatsapp-country]").forEach(select=>{select.innerHTML=whatsappCountryOptions("GT");select.value="GT"});
   const tournament=document.getElementById("stablefordTournamentName");if(tournament)tournament.value="";
   $("startStablefordRound").textContent="OK";
 }
@@ -3916,6 +3982,8 @@ function openStablefordDataEditor(){
   if(!isStablefordRound())return openNewRoundDraft();
   stablefordSetupMode="edit";stablefordSetupCategory=round.stablefordCategory;stablefordSetupCourseKey=round.courseKey;
   const inputs=[...document.querySelectorAll("[data-stableford-name]")];inputs.forEach((input,i)=>input.value=round.players[i]?.name||"");
+  document.querySelectorAll("[data-stableford-whatsapp-country]").forEach((select,i)=>{select.innerHTML=whatsappCountryOptions(round.players[i]?.countryIso||"GT");select.value=round.players[i]?.countryIso||"GT"});
+  document.querySelectorAll("[data-stableford-whatsapp]").forEach((input,i)=>input.value=round.players[i]?.whatsapp||"");
   const tournament=document.getElementById("stablefordTournamentName");if(tournament)tournament.value=round.tournament?.name||"";
   $("startStablefordRound").textContent="ACTUALIZAR DATOS";return showStablefordSetup()
 }
@@ -3928,14 +3996,17 @@ function startStablefordRoundMode(){
   if(!course?.configured)return fail(`${course?.name?.toUpperCase()||"CAMPO"} · PENDIENTE CARGAR TARJETA OFICIAL`);
   if(!names.length)return fail("INGRESA AL MENOS UN JUGADOR");
   if(state.duplicates.length)return fail(stablefordDuplicateMessage(state.duplicates));
+  const contacts=state.inputs.map((input,index)=>{const country=whatsappCountry(document.querySelector(`[data-stableford-whatsapp-country="${index}"]`)?.value);return{name:GSCStableford.cleanName(input.value),whatsapp:normalizeWhatsApp(document.querySelector(`[data-stableford-whatsapp="${index}"]`)?.value,country[2]),countryCode:country[2],countryIso:country[0]}}).filter(item=>item.name);
+  const invalidContact=contacts.find(item=>item.whatsapp&&!validWhatsApp(item.whatsapp,item.countryCode));
+  if(invalidContact)return fail(`${invalidContact.name} · REVISA EL NÚMERO DE WHATSAPP`);
   const roundNumber=stablefordCourseRoundNumber(stablefordSetupCategory,stablefordSetupCourseKey);
   if(!roundNumber)return fail("LAS CUATRO FECHAS YA ESTÁN REGISTRADAS");
   teardownRealtime();draftCourse=stablefordSetupCourseKey;activateCourse(stablefordSetupCourseKey);const now=new Date().toISOString(),tournamentName=GSCStableford.cleanName(document.getElementById("stablefordTournamentName")?.value||"");
   if(stablefordSetupMode==="edit"&&isStablefordRound()){
     const previous=round.players;
-    round={...round,stablefordCategory:stablefordSetupCategory,stablefordRoundNumber:roundNumber,courseKey:stablefordSetupCourseKey,course:course.name,tournament:tournamentName?{name:tournamentName}:null,players:names.slice(0,6).map((name,i)=>normalizePlayer({...previous[i],id:previous[i]?.id||`sf${i+1}`,name,handicap:0,tee:cfg.tee,matrix:"Caballeros",holes:previous[i]?.holes||{},activeFrom:previous[i]?.activeFrom||1,slot:i+1},i)),weather:round.courseKey===stablefordSetupCourseKey?(round.weather||null):null,updatedAt:now};
+    round={...round,stablefordCategory:stablefordSetupCategory,stablefordRoundNumber:roundNumber,courseKey:stablefordSetupCourseKey,course:course.name,tournament:tournamentName?{name:tournamentName}:null,players:contacts.slice(0,6).map((contact,i)=>normalizePlayer({...previous[i],id:previous[i]?.id||`sf${i+1}`,...contact,handicap:0,tee:cfg.tee,matrix:"Caballeros",holes:previous[i]?.holes||{},activeFrom:previous[i]?.activeFrom||1,slot:i+1},i)),weather:round.courseKey===stablefordSetupCourseKey?(round.weather||null):null,updatedAt:now};
   }else{
-    round={id:newRoundId(),version:2,mode:"stableford",stablefordCategory:stablefordSetupCategory,stablefordRoundNumber:roundNumber,configured:true,provisional:false,courseKey:stablefordSetupCourseKey,course:course.name,tournament:tournamentName?{name:tournamentName}:null,players:names.slice(0,6).map((name,i)=>normalizePlayer({id:`sf${i+1}`,name,handicap:0,tee:cfg.tee,matrix:"Caballeros",holes:{},activeFrom:1,slot:i+1},i)),announced:{front:false,back:false,complete:false},weather:null,createdAt:now,updatedAt:now,endedAt:null,durationSeconds:null,timerLastInstructionAt:now};
+    round={id:newRoundId(),version:2,mode:"stableford",stablefordCategory:stablefordSetupCategory,stablefordRoundNumber:roundNumber,configured:true,provisional:false,courseKey:stablefordSetupCourseKey,course:course.name,tournament:tournamentName?{name:tournamentName}:null,players:contacts.slice(0,6).map((contact,i)=>normalizePlayer({id:`sf${i+1}`,...contact,handicap:0,tee:cfg.tee,matrix:"Caballeros",holes:{},activeFrom:1,slot:i+1},i)),announced:{front:false,back:false,complete:false},weather:null,createdAt:now,updatedAt:now,endedAt:null,durationSeconds:null,timerLastInstructionAt:now};
   }
   savePlayersToDirectory(round.players);voiceContext="round";resetRoundCapture();persist();
   $("stablefordSetupOverlay").classList.remove("visible");$("stablefordSetupOverlay").setAttribute("aria-hidden","true");$("setupOverlay").classList.remove("visible");document.body?.classList.remove("gsc-setup-open");showInstallControl();render();scheduleRoundTimerIdleShutdown();return true
@@ -4059,6 +4130,8 @@ function saveStablefordManualResult(){try{const name=GSCStableford.cleanName($("
 document.querySelectorAll("[data-stableford-category]").forEach(button=>button.addEventListener("click",()=>selectStablefordSetupCategory(button.dataset.stablefordCategory)));
 document.querySelectorAll("[data-stableford-course]").forEach(button=>button.addEventListener("click",()=>selectStablefordSetupCourse(button.dataset.stablefordCourse)));
 document.querySelectorAll("[data-stableford-name]").forEach(input=>input.addEventListener("input",()=>updateStablefordSetupValidity()));
+document.querySelectorAll("[data-stableford-whatsapp]").forEach(input=>input.addEventListener("change",()=>{const country=whatsappCountry(document.querySelector(`[data-stableford-whatsapp-country="${input.dataset.stablefordWhatsapp}"]`)?.value);input.value=normalizeWhatsApp(input.value,country[2]);updateStablefordSetupValidity()}));
+document.querySelectorAll("[data-stableford-whatsapp-country]").forEach(select=>{select.innerHTML=whatsappCountryOptions("GT");select.value="GT";select.addEventListener("change",()=>updateStablefordSetupValidity())});
 $("stablefordSetupCourse").addEventListener("change",event=>selectStablefordSetupCourse(event.target.value));
 $("startStablefordRound").addEventListener("click",startStablefordRoundMode);$("backStablefordSetup").addEventListener("click",backFromStablefordSetup);$("cancelStablefordSetup").addEventListener("click",closeStablefordSetup);
 $("stablefordSeniorTab").addEventListener("click",()=>{stablefordRankingCategory="senior";renderStablefordSeries()});$("stablefordSuperSeniorTab").addEventListener("click",()=>{stablefordRankingCategory="super_senior";renderStablefordSeries()});
@@ -4954,23 +5027,26 @@ $("addPlayerButton").addEventListener("click",()=>isStablefordRound()?openStable
 $("scorecard").addEventListener("input",e=>{const input=e.target.closest?.("[data-provisional-player]");if(!input||!round.provisional)return;const p=round.players.find(x=>x.id===input.dataset.provisionalPlayer);if(p)p.name=String(input.value||"").toUpperCase().trimStart()||`JUGADOR ${p.slot}`});
 $("scorecard").addEventListener("change",e=>{if(!round.provisional)return;const name=e.target.closest?.("[data-provisional-player]"),hcp=e.target.closest?.("[data-provisional-hcp]"),tee=e.target.closest?.("[data-provisional-tee]"),control=name||hcp||tee;if(!control)return;const id=name?.dataset.provisionalPlayer||hcp?.dataset.provisionalHcp||tee?.dataset.provisionalTee,p=round.players.find(x=>x.id===id);if(!p)return;if(name){const value=String(name.value||"").trim().toUpperCase();p.name=value||`JUGADOR ${p.slot}`;name.value=value}if(hcp){const value=String(hcp.value||"").trim(),number=Number(value),valid=value!==""&&Number.isInteger(number)&&number>=0&&number<=54;p.provisionalHandicapProvided=valid;p.handicap=valid?number:0}if(tee){const value=normalizeTee(tee.value);p.provisionalTeeProvided=!!value;p.tee=value||"Blanco"}recomputePlayerScores(p);persist();render()});
 $("previousRoundButton").addEventListener("click",()=>activatePreviousOperationalRound());$("previousRoundSetupButton").addEventListener("click",()=>activatePreviousOperationalRound("general",true));$("previousStablefordRoundButton").addEventListener("click",()=>activatePreviousOperationalRound("stableford",true));
-$("newRoundButton").addEventListener("click",()=>isStablefordRound()||sfEmergency?openFreshStablefordSetup():openNewRoundDraft());$("cancelSetup").addEventListener("click",closeSetup);$("backSetup").addEventListener("click",()=>{resetSetupCapture();showStep1();$("setupStatus").textContent=draftPlayers.length?"CORRIGE CON: CORRIJO / CORRIGIENDO / CORREGIR · LUEGO PRESIONA OK":""});
+$("newRoundButton").addEventListener("click",openNewRoundWithAutomaticHistory);$("cancelSetup").addEventListener("click",closeSetup);$("backSetup").addEventListener("click",()=>{resetSetupCapture();showStep1();$("setupStatus").textContent=draftPlayers.length?"CORRIGE CON: CORRIJO / CORRIGIENDO / CORREGIR · LUEGO PRESIONA OK":""});
 $("detectedBody").addEventListener("input",e=>{
-  const name=e.target.closest?.("[data-draft-name]"),hcp=e.target.closest?.("[data-draft-hcp]");
-  const target=name||hcp;if(!target)return;
-  const idx=Number(name?.dataset.draftName??hcp?.dataset.draftHcp);if(!Number.isInteger(idx)||!manualDraftRows[idx])return;
+  const name=e.target.closest?.("[data-draft-name]"),hcp=e.target.closest?.("[data-draft-hcp]"),whatsapp=e.target.closest?.("[data-draft-whatsapp]");
+  const target=name||hcp||whatsapp;if(!target)return;
+  const idx=Number(name?.dataset.draftName??hcp?.dataset.draftHcp??whatsapp?.dataset.draftWhatsapp);if(!Number.isInteger(idx)||!manualDraftRows[idx])return;
   const row=manualDraftRows[idx];row.dirty=true;
   if(name){if(applyInlineManualRosterPhrase(name,idx))return;row.name=String(name.value||"").trimStart()}
   if(hcp)row.handicap=String(hcp.value??"");
+  if(whatsapp)row.whatsapp=normalizeWhatsApp(whatsapp.value,row.countryCode);
   updateGeneralSetupValidity();
 });
 $("detectedBody").addEventListener("change",e=>{
-  const name=e.target.closest?.("[data-draft-name]"),hcp=e.target.closest?.("[data-draft-hcp]"),teeInput=e.target.closest?.("[data-draft-tee]");
-  const target=name||hcp||teeInput;if(!target)return;
-  const idx=Number(name?.dataset.draftName??hcp?.dataset.draftHcp??teeInput?.dataset.draftTee);if(!Number.isInteger(idx)||!manualDraftRows[idx])return;
+  const name=e.target.closest?.("[data-draft-name]"),hcp=e.target.closest?.("[data-draft-hcp]"),teeInput=e.target.closest?.("[data-draft-tee]"),whatsapp=e.target.closest?.("[data-draft-whatsapp]"),countryInput=e.target.closest?.("[data-draft-whatsapp-country]");
+  const target=name||hcp||teeInput||whatsapp||countryInput;if(!target)return;
+  const idx=Number(name?.dataset.draftName??hcp?.dataset.draftHcp??teeInput?.dataset.draftTee??whatsapp?.dataset.draftWhatsapp??countryInput?.dataset.draftWhatsappCountry);if(!Number.isInteger(idx)||!manualDraftRows[idx])return;
   const row=manualDraftRows[idx];row.dirty=true;
   if(name){row.name=canonicalPlayerName(name.value);name.value=row.name}
   if(hcp)row.handicap=String(hcp.value??"");
+  if(countryInput){const country=whatsappCountry(countryInput.value);row.countryIso=country[0];row.countryCode=country[2]}
+  if(whatsapp){row.whatsapp=normalizeWhatsApp(whatsapp.value,row.countryCode);whatsapp.value=row.whatsapp}
   if(teeInput){row.tee=normalizeTee(teeInput.value)||"";const color=TEES[row.tee]?.color||"#fff";teeInput.style.color=color;const nameField=target.closest(".draft-edit-row")?.querySelector("[data-draft-name]");if(nameField)nameField.style.color=color}
   const saved=syncDraftPlayersFromManualRows({strict:false,renderAfter:false});
   // No reconstruir detectedBody al cambiar de campo: en móvil el blur del
@@ -5059,7 +5135,9 @@ window.addEventListener("beforeunload",persist);
 window.addEventListener("online",()=>{if(!demoControlManual){masterSyncBlockedUntil=0;flushMasterSyncQueue()}});
 // Regla de continuidad: al abrir/reabrir, la última ronda válida es la actividad activa.
 // No se crea ni se sustituye una ronda hasta confirmar expresamente INICIAR RONDA.
-if(demoControlManual)activateControlManualDemo();
+const recoveredStablefordSeptember4=recoverStablefordRoundSeptember4();
+if(recoveredStablefordSeptember4)activateCourse(round.courseKey);
+else if(demoControlManual)activateControlManualDemo();
 else if(!sfEmergency)restorePersistedRound();
 else if(round.configured)activateCourse(round.courseKey);
 (function repairAutomaticOmissionsV155(){
@@ -5076,6 +5154,9 @@ else if(round.configured)activateCourse(round.courseKey);
 // siempre parte limpio. Nunca se hereda un phase/pending congelado entre sesiones.
 phase="idle";listening=false;resetRoundCapture();resetSetupCapture();
 render();
+// La recuperación confirmada contiene los 18 hoyos de los cuatro jugadores:
+// se oficializa y archiva de inmediato para que aparezca también en Historial.
+if(recoveredStablefordSeptember4&&!round.officiallyClosedAt)void officiallyCloseRound();
 scheduleRoundTimerIdleShutdown();
 dateSetup();
 // La entrada explícita abre Registro sin borrar la ronda activa. La sustitución

@@ -32,7 +32,10 @@ assert.equal((html.match(/id="provisionalScorecardButton"/g)||[]).length,1);
 assert.doesNotMatch(html,/class="provisional-entry"|class="provisional-entry-button"/);
 assert.equal((html.match(/>NOMBRE \+ HDCP \+ MARCAS<\/div>/g)||[]).length,1);
 assert.doesNotMatch(html,/data-draft-code=/);
-assert.doesNotMatch(html,/data-draft-whatsapp=/);
+assert.match(html,/data-draft-whatsapp=/);
+assert.match(html,/data-stableford-whatsapp=/);
+assert.match(html,/data-stableford-whatsapp-country=/);
+assert.doesNotMatch(html,/AUTORIZA RECIBIR TARJETA/);
 assert.doesNotMatch(html,/id="openShareProject"|id="shareProjectPanel"/);
 
 // Nombres autorizados dentro de Stableford dentro del control operacional común.

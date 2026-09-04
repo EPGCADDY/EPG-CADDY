@@ -1,23 +1,23 @@
 {
-  "version": "V375-STABLEFORD-LIVE-MOBILE-INTOCABLES",
-  "generatedAt": "2026-09-04T03:37:22Z",
-  "sourceFileCount": 398,
-  "sourceDigest": "e4fa4ee148f79b1b163863c5a7fd98f14c2a31182dd2745e7bda90da92893d2a",
+  "version": "V376-STABLEFORD-CONTINUITY-INTOCABLES",
+  "generatedAt": "2026-09-04T21:52:35Z",
+  "sourceFileCount": 400,
+  "sourceDigest": "8b8b3944c49645a42e2897a1634e496530775cd2522283bddfde584f5cae8a58",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 212138,
-      "sha256": "7289296945719c2a4f3bff7995cf8a86d072fe983a1a0ebd717dad01ba37dd98"
+      "size": 212497,
+      "sha256": "fddc1347e7047e64f7034fa56bea6f5f5815390c531d6a559d7a09c618eeca29"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 239163,
-      "sha256": "089bf7ab4aa20f379c35015092aee49120146c06457b9105c14b7fdd256f14d3"
+      "size": 240891,
+      "sha256": "4c63867b267e04a4c86b9ada2995ebc46182dede531e112a6983d769dda2b364"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19261009,
-      "sha256": "8393e88704524d85c7e2a127639b9fc7d3307c981deadb110a5acba8beb7d3fc"
+      "size": 19261010,
+      "sha256": "56e4b366021361ca68cf459dcda177b62555316b58494e2a82231dff3309db7f"
     }
   ]
 }

@@ -51,10 +51,14 @@ const harness=new Function("initialRound","setupInputs","controls",`
   };
   const document={
     querySelectorAll:selector=>selector==="[data-stableford-name]"?setupInputs:[],
+    querySelector:()=>null,
     getElementById:id=>id==="stablefordTournamentName"?{value:"TORNEO"}:null
   };
   const $=id=>controls[id];
-  const updateStablefordSetupValidity=()=>({names:setupInputs.map(input=>GSCStableford.cleanName(input.value)).filter(Boolean),duplicates:[]});
+  const updateStablefordSetupValidity=()=>({inputs:setupInputs,names:setupInputs.map(input=>GSCStableford.cleanName(input.value)).filter(Boolean),duplicates:[]});
+  const whatsappCountry=()=>["GT","🇬🇹","502","Guatemala"];
+  const normalizeWhatsApp=value=>String(value||"").replace(/\D/g,"").slice(-8);
+  const validWhatsApp=value=>!value||String(value).length>=6;
   const setStablefordSetupError=message=>{controls.stablefordSetupStatus.textContent=message;return false};
   const stablefordDuplicateMessage=()=>"NO REPITAS EL MISMO JUGADOR";
   const stablefordCourseRoundNumber=()=>1,isStablefordRound=(value=round)=>value?.mode==="stableford";

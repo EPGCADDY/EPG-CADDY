@@ -22,7 +22,7 @@ assert.match(html,/function openStablefordDataEditor\(\)/);
 assert.match(html,/inputs\.forEach\(\(input,i\)=>input\.value=round\.players\[i\]\?\.name\|\|""\)/);
 assert.match(html,/stablefordSetupMode==="edit"&&isStablefordRound\(\)/);
 assert.match(html,/holes:previous\[i\]\?\.holes\|\|\{\}/);
-assert.match(html,/names\.slice\(0,6\)/);
+assert.match(html,/contacts\.slice\(0,6\)/);
 
 // ATRÁS queda pequeño y en el flujo; nunca tapa la tarjeta ni sus resultados.
 assert.match(html,/\.back-registration-control\{position:static;/);
@@ -37,7 +37,7 @@ assert.match(html,/\[primary,backup,stableford,matchPlay,fourBall\]\.filter\(val
 assert.match(html,/readRoundArchive\(\)\.filter\(value=>isRecoverableStoredRound\(value,modeHint\)\)\.sort/);
 assert.match(html,/const ACTIVE_ROUND_KEY="golf-score-card-guatemala-active-round-v1"/);
 assert.match(html,/function loadRound\(\)\{[\s\S]*?const canonical=readStoredRound\(ACTIVE_ROUND_KEY\)[\s\S]*?return canonical/);
-assert.match(html,/const candidates=\[latestStoredRound\("general"\),latestStoredRound\("match_play"\)\]/);
+assert.match(html,/const candidates=\[latestStoredRound\("general"\),latestStoredRound\("stableford"\),latestStoredRound\("match_play"\)\]/);
 assert.match(html,/localStorage\.setItem\(ACTIVE_ROUND_KEY,JSON\.stringify\(migrated\)\)/);
 assert.match(html,/localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)/);
 assert.match(html,/if\(round\.mode==="stableford"\)localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,payload\)/);

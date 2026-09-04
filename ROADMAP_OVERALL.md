@@ -1,5 +1,11 @@
 # ROADMAP OVERALL
 
+## V376 · continuidad, Historial automático y recuperación Stableford · 4 de septiembre de 2026
+
+Stableford deja de ser excluido de la llave canónica de ronda activa. Cerrar o reabrir la PWA conserva la última ronda configurada —completa o parcial— hasta que el propietario pulse `NUEVA RONDA`. Una ronda de 18 hoyos completos se cierra oficialmente y entra al Historial automáticamente al tocar `TARJETA DIGITAL` o `NUEVA RONDA`; ninguna ronda parcial aparece en el Historial oficial.
+
+La ronda del 4 de septiembre se reconstruye hoyo por hoyo desde las capturas mediante el enlace de recuperación controlado `recover_stableford=20260904`: Jaime 85/23, Fito 84/24, Calix 88/20 y Bruni 83/25. El Registro General y Stableford incorporan el número WhatsApp de cada jugador, incluido el capitán, con `🇬🇹 +502` preconfigurado y selector editable de país con bandera; no existe una casilla adicional de autorización. La entrega automática externa queda separada de la preparación local hasta configurar un proveedor WhatsApp Business verificable. Producción permanece intacta.
+
 ## V370-R1 · Cedar principal y recuperación española compatible con iOS
 
 La prueba física del 3 de septiembre mostró que Safari no exponía ninguna voz que coincidiera con la lista cerrada de nombres masculinos y la aplicación quedaba muda. V370-R1 conserva Cedar 0.90 como locutor principal, fuerza español `es-MX` y, si el servicio está limitado, elige cualquier voz `es-*` que iOS exponga, priorizando nombre masculino y español latino. No cambia Registro, Score Card, cálculos, persistencia ni Producción. El caché instalable cambia a `v370-r1-ios-spanish-voice`.
