@@ -1564,3 +1564,9 @@ V374-R2 localiza el 403 en la autenticación automática OIDC del método experi
 Los logs físicos del Preview V375 confirmaron tres respuestas 403 del transporte experimental antes del error visible en Registro. `index-grupal.html` vuelve a usar primero el mismo SpeechRecognition nativo aprobado para Registro, Score y Comunicación Universal; la captura servidor queda sólo como respaldo cuando Safari no ofrece esa función. `service-worker.js` invalida V375 y `test-v376-native-mic-first.mjs` impide volver a anteponer el transporte experimental. Producción permanece intacta.
 
 V376-R1 publica el artefacto completo de `index-grupal.html` y vuelve a sellar el inventario del candidato; Producción permanece intacta.
+
+## V377 · cierre limpio después de silencio · 4 de septiembre de 2026
+
+Los logs físicos del iPhone mostraron que Registro sí reconocía y aplicaba voz, pero el watchdog convertía ocho segundos sin resultado en dos reaperturas automáticas y dejaba visible `RECUPERANDO MICRÓFONO…`. V377 elimina ese bucle: el silencio cierra limpio y requiere otro toque; sólo errores reales de transporte conservan reintento. Producción permanece intacta.
+
+Archivos del control: `index-grupal.html`, `service-worker.js`, `test-v377-no-speech-clean-close.mjs`, `test-v370-native-spanish-fast-close.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `audit-project.mjs`, `package.json`, RC-057, ambos ROADMAPS, mapa maestro e inventario.

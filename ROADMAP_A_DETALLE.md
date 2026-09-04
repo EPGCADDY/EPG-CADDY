@@ -2021,3 +2021,12 @@ V374-R2: la causa del rechazo quedó aislada en la autenticación OIDC del token
 - `package.json`, `audit-project.mjs`, ambos ROADMAPS e inventario: trazabilidad integral. Producción intacta.
 
 V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el sello de inventario y mantiene Producción intacta.
+
+## V377 · cierre limpio después de silencio · 4 de septiembre de 2026
+
+- `index-grupal.html`: `scheduleBrowserVoiceFirstResultTimeout()` deja de reabrir SpeechRecognition cuando no hubo voz; detiene y muestra un estado terminal.
+- Los errores `audio_capture` y `network` conservan recuperación acotada; `no_speech` no se clasifica como transporte recuperable.
+- `test-v377-no-speech-clean-close.mjs`: impide reintroducir `RECUPERANDO MICRÓFONO…` en el watchdog de silencio.
+- `service-worker.js`: invalida V376 para que el iPhone reciba V377.
+- `REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-057 registra el defecto físico y el control permanente.
+- Producción permanece intacta.

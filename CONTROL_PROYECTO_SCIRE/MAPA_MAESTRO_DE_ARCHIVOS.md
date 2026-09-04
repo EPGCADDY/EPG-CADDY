@@ -1015,3 +1015,12 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `service-worker.js`, V357/V361/V364/V366, `audit-project.mjs`, `package.json` | Firma V368 y ejecución acumulada. | Safari invalida el shell rechazado sin retirar V367. |
 | `AGENTS.md`, directrices, RC-040, matriz, ROADMAPS e informe V368 | Sello multiconversación sobre `03ca12e`. | Ninguna rama V365–V367 puede volver a presentarse como final. |
 | `scripts/rebuild-inventory-pdfs.py`, lock y tres PDF V311 | Sello de inventario V368. | Otra conversación no puede reutilizar un inventario rotulado V367. |
+
+## V377 · cierre limpio del micrófono después de silencio
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Cierra SpeechRecognition cuando no recibe voz en ocho segundos. | Prohíbe reabrir automáticamente y quedar en `RECUPERANDO MICRÓFONO…`. |
+| `test-v377-no-speech-clean-close.mjs` | Verifica cierre terminal por silencio y recuperación sólo para fallos reales de transporte. | Un reintento de `no_speech` bloquea auditoría y Preview. |
+| `service-worker.js`, V357/V361/V370, `audit-project.mjs`, `package.json` | Invalida caché y conserva los controles históricos compatibles. | El candidato V377 sólo se publica con regresión acumulada. |
+| RC-057, ambos ROADMAPS e inventario | Registra el fallo físico de las 15:31–15:32 y su causa. | Producción permanece intacta hasta PASS físico. |
