@@ -1562,3 +1562,5 @@ V374-R2 localiza el 403 en la autenticación automática OIDC del método experi
 ## V376 · restauración del micrófono nativo aprobado · 4 de septiembre de 2026
 
 Los logs físicos del Preview V375 confirmaron tres respuestas 403 del transporte experimental antes del error visible en Registro. `index-grupal.html` vuelve a usar primero el mismo SpeechRecognition nativo aprobado para Registro, Score y Comunicación Universal; la captura servidor queda sólo como respaldo cuando Safari no ofrece esa función. `service-worker.js` invalida V375 y `test-v376-native-mic-first.mjs` impide volver a anteponer el transporte experimental. Producción permanece intacta.
+
+V376-R1 publica el artefacto completo de `index-grupal.html` y vuelve a sellar el inventario del candidato; Producción permanece intacta.

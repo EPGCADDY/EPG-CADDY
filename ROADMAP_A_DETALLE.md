@@ -2019,3 +2019,5 @@ V374-R2: la causa del rechazo quedó aislada en la autenticación OIDC del token
 - `test-v376-native-mic-first.mjs`: fija el orden, los tres contextos comunes y la prohibición de abrir el transporte experimental antes del micrófono aprobado.
 - `REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-056 documenta el 403 triple y el escape a prueba física.
 - `package.json`, `audit-project.mjs`, ambos ROADMAPS e inventario: trazabilidad integral. Producción intacta.
+
+V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el sello de inventario y mantiene Producción intacta.
