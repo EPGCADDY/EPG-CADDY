@@ -2010,3 +2010,12 @@ V374-R2: la causa del rechazo quedó aislada en la autenticación OIDC del token
 
 - `test-v328-live-official-rules.mjs`: en Preview sin `OPENAI_API_KEY` registra `DEFER`; en Producción la ausencia sigue siendo un fallo bloqueante.
 - No modifica `index-grupal.html`, `server-voice-capture.js`, `api/voice-speech.js`, parsers, cálculos, persistencia, interfaz ni Producción.
+
+## V376 · restauración del micrófono nativo aprobado · 4 de septiembre de 2026
+
+- `index-grupal.html`: `gestureSafeBrowserVoicePreferred()` se ejecuta antes de `serverVoiceCapturePreferred()` para que Registro, Score y Universal compartan primero el reconocimiento nativo aprobado del iPhone.
+- `server-voice-capture.js`: permanece sin cambios y sólo puede actuar como respaldo si Safari no expone SpeechRecognition.
+- `service-worker.js`: caché V376 para impedir que el iPhone conserve la ruta V375.
+- `test-v376-native-mic-first.mjs`: fija el orden, los tres contextos comunes y la prohibición de abrir el transporte experimental antes del micrófono aprobado.
+- `REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-056 documenta el 403 triple y el escape a prueba física.
+- `package.json`, `audit-project.mjs`, ambos ROADMAPS e inventario: trazabilidad integral. Producción intacta.

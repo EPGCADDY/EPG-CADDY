@@ -1,18 +1,18 @@
 {
   "version": "V375-FAST-UNIVERSAL-SENSITIVE-SCORE-INTOCABLES",
-  "generatedAt": "2026-09-04T20:47:54Z",
-  "sourceFileCount": 400,
-  "sourceDigest": "d79936d0723738059b648745ad5ce6f0e89a30d562bac1102b8bb5f37d92ae72",
+  "generatedAt": "2026-09-04T21:11:32Z",
+  "sourceFileCount": 401,
+  "sourceDigest": "75c6d387b335af046c2e4c673a6a29dba0bb89bc62df016c02e22f7bf969887e",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 215324,
-      "sha256": "e2b95b2d0c189d0c7d56a76133dd7ccfdc915aa8180259b85c29f0ef6832b162"
+      "size": 215766,
+      "sha256": "8a1c2f0ca31057a94988ecb6e56beafd9ed8de1cf7448b104825b7723b9c758c"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 244692,
-      "sha256": "a3b81aa6617bb75587af53e0ffed713585ee2571bff0b6a664181c2a961b2755"
+      "size": 245348,
+      "sha256": "d80f26a2fc0e01e79a66940dd72380a89fba43845ae90208e4985119fcee5807"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
