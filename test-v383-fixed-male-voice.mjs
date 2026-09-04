@@ -6,7 +6,7 @@ const speech=fs.readFileSync("api/voice-speech.js","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 const payload=cedarGatewayPayload("La capital de Australia es Canberra.");
 
-assert.equal(payload.voice,"f0325cd11aac4fa983eb41ca2d371660");
+assert.equal(payload.voice,"06ddea79e86a412aa4babdd69917331a");
 assert.equal(payload.language,"es-419");
 assert.equal(payload.speed,.9);
 assert.match(payload.instructions,/Locutor masculino adulto mexicano/);

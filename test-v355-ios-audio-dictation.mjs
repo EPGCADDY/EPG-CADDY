@@ -35,9 +35,9 @@ const primeSource=html.slice(primeStart,primeEnd);
 const events=[],played=[];
 class FakeAudio{constructor(src){this.src=src}play(){played.push(this);this.onplay?.();return Promise.resolve()}}
 const prime=new Function(
-  "Audio","reportVoiceHealth",
+  "Audio","reportVoiceHealth","setAiUniversalAudioSessionType",
   `let aiUniversalSpeechPrimed=false,aiUniversalMuted=false,aiUniversalSpeechPrimer=null,aiUniversalTtsAudio=null;${primeSource};return primeAiUniversalSpeechFromGesture`,
-)(FakeAudio,event=>events.push(event));
+)(FakeAudio,event=>events.push(event),()=>true);
 assert.equal(prime(),true);
 assert.equal(played.length,1);
 assert.deepEqual(events,["browser_fallback_speech_primed"]);

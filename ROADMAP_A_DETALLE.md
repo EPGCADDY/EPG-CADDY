@@ -2082,7 +2082,7 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 
 - Evidencia física: el último Preview habló con voz femenina.
 - Causa: `api/voice-speech.js` enviaba instrucciones masculinas, pero no el parámetro `voice`; el timbre no era determinista.
-- `api/voice-speech.js`: fija `voice=f0325cd11aac4fa983eb41ca2d371660`, Fish S2.1, `es-419` y `0.90`.
+- `api/voice-speech.js`: el ID V383 quedó rechazado por timbre ahogado; V385 fija `voice=06ddea79e86a412aa4babdd69917331a`, Fish S2.1, `es-419` y `0.90`, descrito por el catálogo como masculino, claro y conversacional.
 - `test-v378-approved-r7-voice-lock.mjs`, `test-v383-fixed-male-voice.mjs` y `test-v362-physical-voice-recovery.mjs`: comparan la identidad y parámetros exactos.
 - `service-worker.js`, `audit-project.mjs`, `package.json`, RC-063, mapa maestro, `scripts/rebuild-inventory-pdfs.py` e inventario: sello V383.
 - V382 queda descartada para entrega; Registro, Scores y Producción permanecen intactos.
@@ -2097,3 +2097,11 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `test-v355-ios-audio-dictation.mjs`, `test-v381-serial-audio-input-reset.mjs` y `test-v382-input-only-reset.mjs`: fijan el gesto restaurado y retiran como rechazadas las arquitecturas que tocaron la activación compartida.
 - `service-worker.js`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, RC-064, ambos ROADMAPS, mapa maestro e inventario: puerta y trazabilidad V384.
 - `api/voice-speech.js`, `test-v378-approved-r7-voice-lock.mjs`, `test-v383-fixed-male-voice.mjs` y `test-v362-physical-voice-recovery.mjs` conservan el candidato masculino fijo V383. Producción permanece intacta.
+
+## V385 · Audio Session de Safari · 4 de septiembre de 2026
+
+- Evidencia: V384 respondió la primera pregunta con voz masculina; 20 segundos después, el segundo toque abrió reconocimiento pero terminó `no_speech/aborted`.
+- `index-grupal.html`: fija `transient-solo` sólo durante TTS y cambia a `play-and-record` al terminar y antes de abrir SpeechRecognition.
+- `test-v385-ios-audio-session.mjs`: exige ambas categorías y su orden; `test-v355-ios-audio-dictation.mjs` conserva la validación del cebado inicial.
+- `service-worker.js`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, RC-065, ambos ROADMAPS, mapa maestro e inventario: caché, puerta y trazabilidad V385.
+- Las siete regiones V378 y la voz masculina fija V383 no cambian. Producción intacta.

@@ -2446,8 +2446,19 @@ function aiUniversalSpeechLanguage(text){
 function realtimeResponseTranscript(response){
   return(response?.output||[]).flatMap(item=>item?.content||[]).map(content=>String(content?.transcript||content?.text||"").trim()).filter(Boolean).join(" ").trim();
 }
+function setAiUniversalAudioSessionType(type){
+  try{
+    if(typeof navigator!=="undefined"&&navigator.audioSession&&"type" in navigator.audioSession){
+      navigator.audioSession.type=type;
+      reportVoiceHealth("browser_audio_session_type",{audioSessionType:type});
+      return navigator.audioSession.type===type;
+    }
+  }catch{}
+  return false;
+}
 function primeAiUniversalSpeechFromGesture(){
   if(aiUniversalMuted)return false;
+  setAiUniversalAudioSessionType("play-and-record");
   let primed=false;
   try{
     if(!aiUniversalSpeechPrimed&&typeof window!=="undefined"&&"speechSynthesis" in window&&typeof SpeechSynthesisUtterance==="function"){
@@ -2518,6 +2529,7 @@ async function speakAiUniversalText(text,{repeat=false}={}){
   try{
     aiUniversalSetState("PREPARANDO VOZ MEXICANA…",{busy:true});
     if(typeof Audio!=="function")throw new Error("AUDIO_UNAVAILABLE");
+    setAiUniversalAudioSessionType("transient-solo");
     const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.preload="auto";player.volume=1;player.playbackRate=1;let firstStarted=false;const pending=new Map(),prefetch=3;
     const prepare=index=>{if(index>=chunks.length)return null;if(!pending.has(index))pending.set(index,fetchApprovedVoiceAudio(chunks[index]).then(blob=>({blob}),error=>({error})));return pending.get(index)};
     for(let index=0;index<Math.min(prefetch,chunks.length);index++)prepare(index);
@@ -2525,7 +2537,7 @@ async function speakAiUniversalText(text,{repeat=false}={}){
       const prepared=await prepare(index);if(prepared.error)throw prepared.error;prepare(index+prefetch);if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(prepared.blob);player.src=aiUniversalTtsObjectUrl;
       await new Promise((resolve,reject)=>{let started=false,settled=false,startGuard=null;const finish=(callback,value)=>{if(settled)return;settled=true;if(startGuard)clearTimeout(startGuard);callback(value)};player.onplay=()=>{started=true;if(!firstStarted){firstStarted=true;aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started",{elapsedMs:Math.round(performance.now()-speechRequestedAt)});setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO CON VOZ R7 APROBADA · 0.90",{busy:true})}};player.onended=()=>finish(resolve);player.onerror=()=>finish(reject,new Error("MEXICAN_TTS_PLAYBACK_FAILED"));const played=player.play();if(played?.catch)played.catch(error=>finish(reject,error));startGuard=setTimeout(()=>{if(!started)finish(reject,new Error("MEXICAN_TTS_NOT_STARTED"))},8000)})
     }
-    setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR");releaseAiUniversalPlaybackForListening();aiUniversalTtsAudio=null;aiUniversalSpeechPrimer=null;aiUniversalSpeechPrimed=true;
+    setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR");releaseAiUniversalPlaybackForListening();aiUniversalTtsAudio=null;aiUniversalSpeechPrimer=null;aiUniversalSpeechPrimed=true;setAiUniversalAudioSessionType("play-and-record");
     return true;
   }catch(error){
     reportVoiceHealth("browser_fallback_speech_failed");
@@ -4883,6 +4895,7 @@ async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPER
   if(serverVoiceCaptureActive||serverVoiceCaptureRequested){stopServerVoiceCapture({process:true,keepStatus:true});return true}
   if(browserVoiceActive||browserVoiceRequested){stopBrowserVoiceFallback({keepStatus:true,processPending:true});return true}
   releaseAiUniversalPlaybackForListening();
+  setAiUniversalAudioSessionType("play-and-record");
   // En Safari/iPhone la autorización del gesto se pierde si primero esperamos
   // la sesión Realtime. La captura local debe abrirse en el mismo toque para
   // que un 429 remoto no deje sin score ni comunicación universal.

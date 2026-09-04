@@ -4,7 +4,7 @@ import {resolveGatewayToken} from "./_lib/vercel-gateway-auth.js";
 const MAX_SPEECH_TEXT=4000;
 const VOICE="onyx";
 const GATEWAY_VOICE="s2.1-es-419";
-const FIXED_MALE_VOICE="f0325cd11aac4fa983eb41ca2d371660";
+const FIXED_MALE_VOICE="06ddea79e86a412aa4babdd69917331a";
 const SPEED=.9;
 const GATEWAY_SPEECH_MODEL="fish-audio/s2.1-pro-free";
 const INSTRUCTIONS="Locutor masculino adulto mexicano, serio, sobrio y profesional. Habla exclusivamente en español mexicano neutro y natural, con pronunciación castellana clara; nunca uses acento anglosajón, Spanglish ni palabras en inglés salvo nombres propios inevitables. Dicción muy clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";

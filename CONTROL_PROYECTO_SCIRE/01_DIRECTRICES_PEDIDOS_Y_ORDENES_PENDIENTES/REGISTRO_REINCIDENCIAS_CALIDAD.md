@@ -105,7 +105,7 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 
 - Evidencia física: el propietario identificó voz femenina en el último Preview aunque modelo, idioma y velocidad coincidían con R7.
 - Causa raíz: el payload Fish fijaba instrucciones masculinas, pero omitía `voice`; el modelo podía variar el timbre entre generaciones.
-- Control V383: `voice=f0325cd11aac4fa983eb41ca2d371660` obligatorio, además de `fish-audio/s2.1-pro-free`, `es-419` y `0.90`; la auditoría compara los cuatro valores exactos.
+- Control: el ID V383 fue rechazado físicamente por timbre ahogado; V385 lo sustituye por `voice=06ddea79e86a412aa4babdd69917331a`, además de `fish-audio/s2.1-pro-free`, `es-419` y `0.90`; la auditoría compara los cuatro valores exactos.
 - Evidencia automática: `test-v378-approved-r7-voice-lock.mjs` y `test-v383-fixed-male-voice.mjs`.
 - Estado: V382 no se entrega; V383 pendiente de Preview y verificación física. Producción intacta.
 
@@ -115,3 +115,10 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa raíz: el sello cubría parsers, escritores y bloques de captura, pero omitía el punto de entrada compartido por Registro, Scores y Universal.
 - Control V384: restauración byte por byte de `fireMicActivation()` desde V378; séptimo SHA-256 obligatorio; prueba de orden liberar→cebar→conectar→`toggleVoice()` y prohibición de esperas o reset Universal dentro del gesto.
 - Estado: defecto del blindaje corregido en candidato V384; auditoría completa y Preview pendientes. Producción intacta.
+
+## RC-065 · Safari conserva salida después de la primera respuesta · 4 de septiembre de 2026
+
+- Evidencia: V384 reconoció la primera consulta y habló; el segundo toque abrió SpeechRecognition pero agotó ocho segundos y terminó `no_speech/aborted`.
+- Causa: liberar el elemento HTML no cambia explícitamente la categoría de sesión de audio administrada por iOS.
+- Control V385: `navigator.audioSession.type="transient-solo"` durante voz y `"play-and-record"` al finalizar y antes de reconocimiento; respaldo seguro cuando la API no existe.
+- Estado: V384 rechazada; V385 pendiente de auditoría, Preview y prueba física. Producción intacta.

@@ -1084,3 +1084,11 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `Intocables/intocables-gate.mjs`, `test-v384-full-input-chain-lock.mjs` | Verifican SHA, orden y ausencia de reset asíncrono. | Cualquier cambio detiene auditoría y publicación. |
 | `test-v381-serial-audio-input-reset.mjs`, `test-v382-input-only-reset.mjs` | Marcan como retirados los dos mecanismos rechazados. | Impiden reintroducir las regresiones V381/V382. |
 | `service-worker.js`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, RC-064, ROADMAPS e inventario | Publican y documentan V384. | Producción permanece intacta. |
+
+## V385 · transición Audio Session iOS
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Usa `transient-solo` al hablar y `play-and-record` al escuchar. | Safari no conserva la categoría de salida sobre la captura siguiente. |
+| `test-v385-ios-audio-session.mjs`, `test-v355-ios-audio-dictation.mjs` | Verifican categorías, orden y cebado. | No modifican las siete regiones V378. |
+| `service-worker.js`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, RC-065, ROADMAPS e inventario | Publican y documentan V385. | Producción permanece intacta. |
