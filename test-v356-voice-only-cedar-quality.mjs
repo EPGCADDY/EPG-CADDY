@@ -32,11 +32,13 @@ assert.equal(direct.speed,.9);
 assert.match(direct.instructions,/Locutor masculino adulto/);
 assert.match(direct.instructions,/español mexicano neutro/);
 const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
-assert.equal(gateway.voice,"echo");
-assert.equal(gateway.language,"es-MX");
+assert.equal(gateway.language,"es-419");
 assert.equal(gateway.speed,.9);
+assert.match(gateway.instructions,/español mexicano neutro/);
+assert.match(gateway.instructions,/nunca uses acento anglosajón, Spanglish/);
 assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
-assert.match(speech,/openai\/tts-1-hd/);
+assert.match(speech,/fish-audio\/s2\.1-pro-free/);
+assert.doesNotMatch(speech,/openai\/tts-1-hd|GATEWAY_VOICE="echo"/);
 
 function responseRecorder(){return{statusCode:0,headers:{},body:null,setHeader(name,value){this.headers[name]=value},status(code){this.statusCode=code;return this},json(value){this.body=value;return this},send(value){this.body=value;return this}}}
 const previousFetch=globalThis.fetch,previousOpenAI=process.env.OPENAI_API_KEY,previousGateway=process.env.AI_GATEWAY_API_KEY;
@@ -56,10 +58,10 @@ try{
   assert.equal(res.body.toString(),"cedar-audio");
   assert.equal(calls.length,2);
   assert.equal(calls[1].url,"https://ai-gateway.vercel.sh/v4/ai/speech-model");
-  assert.equal(calls[1].options.headers["ai-model-id"],"openai/tts-1-hd");
-  assert.equal(JSON.parse(calls[1].options.body).voice,"echo");
-  assert.equal(JSON.parse(calls[1].options.body).language,"es-MX");
-  assert.equal(res.headers["X-GSCG-Voice"],"echo");
+  assert.equal(calls[1].options.headers["ai-model-id"],"fish-audio/s2.1-pro-free");
+  assert.equal(JSON.parse(calls[1].options.body).language,"es-419");
+  assert.match(JSON.parse(calls[1].options.body).instructions,/español mexicano neutro/);
+  assert.equal(res.headers["X-GSCG-Voice"],"s2.1-es-419");
 }finally{
   globalThis.fetch=previousFetch;
   if(previousOpenAI===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=previousOpenAI;

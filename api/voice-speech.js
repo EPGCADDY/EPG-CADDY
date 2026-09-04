@@ -3,9 +3,9 @@ import {resolveGatewayToken} from "./_lib/vercel-gateway-auth.js";
 
 const MAX_SPEECH_TEXT=4000;
 const VOICE="onyx";
-const GATEWAY_VOICE="echo";
+const GATEWAY_VOICE="s2.1-es-419";
 const SPEED=.9;
-const GATEWAY_SPEECH_MODEL="openai/tts-1-hd";
+const GATEWAY_SPEECH_MODEL="fish-audio/s2.1-pro-free";
 const INSTRUCTIONS="Locutor masculino adulto mexicano, serio, sobrio y profesional. Habla exclusivamente en español mexicano neutro y natural, con pronunciación castellana clara; nunca uses acento anglosajón, Spanglish ni palabras en inglés salvo nombres propios inevitables. Dicción muy clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";
 
 export function sanitizeSpeechRequest(body={}){
@@ -26,7 +26,7 @@ export function cedarSpeechPayload(text,language="es-GT"){
 }
 
 export function cedarGatewayPayload(text){
-  return{text,voice:GATEWAY_VOICE,speed:SPEED,language:"es-MX",outputFormat:"mp3"};
+  return{text,speed:SPEED,language:"es-419",outputFormat:"mp3",instructions:INSTRUCTIONS};
 }
 
 async function requestDirectSpeech(apiKey,payload,signal){
@@ -92,6 +92,7 @@ export default async function handler(req,res){
       const payload=await upstream.json().catch(()=>null);audio=Buffer.from(String(payload?.audio||""),"base64");
     }else audio=Buffer.from(await upstream.arrayBuffer());
     if(!audio.length)return res.status(502).json({ok:false,error:"CEDAR_SPEECH_EMPTY"});
+    if(fromGateway)console.info("cedar spanish speech gateway",JSON.stringify({model:GATEWAY_SPEECH_MODEL,language:"es-419"}));
     res.setHeader("Content-Type","audio/mpeg");
     res.setHeader("Content-Length",String(audio.length));
     res.setHeader("X-GSCG-Voice",fromGateway?GATEWAY_VOICE:VOICE);

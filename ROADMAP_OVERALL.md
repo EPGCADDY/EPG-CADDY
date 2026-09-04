@@ -1509,3 +1509,7 @@ La prueba física R4 rechazó una respuesta hablada en inglés. La causa quedó 
 ### V371-R6 · recuperación automática del micrófono sin primer resultado
 
 Los logs físicos de R5 prueban que Safari abrió `SpeechRecognition`, pero después emitió `no_speech` y `aborted` sin entregar transcripción. El watchdog de ocho segundos cerraba la captura sin reutilizar los dos reintentos ya limitados. R6 modifica exclusivamente `scheduleBrowserVoiceFirstResultTimeout`: recicla limpiamente la instancia y reabre el transporte hasta dos veces antes del cierre definitivo. No cambia parser, Registro, Scores, cálculos, persistencia, interfaz ni Producción.
+
+### V371-R7 · eliminación del respaldo de voz anglófono
+
+R6 fue rechazado porque, tras el 429 del proveedor directo, el respaldo `openai/tts-1-hd` con voz `echo` leyó español con pronunciación inglesa. R7 sustituye sólo ese respaldo por el modelo multilingüe `fish-audio/s2.1-pro-free`, con idioma `es-419` e instrucciones expresas de español mexicano neutro sin Spanglish. Los contratos automáticos rechazan Echo y `tts-1-hd`. Registro, Scores, interfaz, datos y Producción no cambian.

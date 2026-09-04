@@ -1948,3 +1948,7 @@ La salida audible R4 reprodujo texto en inglés porque `api/universal-ai.js` aú
 ### V371-R6 · reciclaje acotado ante `no_speech` de Safari
 
 Evidencia real del Preview R5: la primera captura llegó a transcripción y respuesta; las siguientes registraron `browser_fallback_started`, luego `browser_fallback_no_result_timeout` y `aborted`, sin evento `transcript_ready`. El único cambio funcional está en el watchdog compartido: al agotarse ocho segundos sin resultado, separa los handlers, aborta la instancia muda y crea otra tras 350/700 ms, con máximo de dos reintentos. `test-v370-native-spanish-fast-close.mjs` fija el reciclaje y el límite existente. Registro, aplicación de jugadores, parser y aplicación de Scores permanecen intocables.
+
+### V371-R7 · respaldo hablado español latino
+
+El log físico de R6 demuestra `POST /api/voice-speech 200` después de `cedar speech direct fallback {"status":429}`: la respuesta escrita era española, pero el respaldo `openai/tts-1-hd` con voz `echo` produjo pronunciación anglófona y Spanglish. R7 modifica únicamente `api/voice-speech.js`: sustituye ese respaldo por `fish-audio/s2.1-pro-free`, fija `es-419` y transmite la instrucción completa de español mexicano neutro, sin acento anglosajón ni Spanglish. Las pruebas V356 y V362 impiden restaurar Echo o `tts-1-hd`. Registro, Scores, cálculos, persistencia, interfaz y Producción permanecen intactos.

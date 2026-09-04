@@ -30,9 +30,11 @@ assert.match(html,/segmentSpeech\("Primera vuelta\.",FRONT\)/);
 assert.equal(`Primera vuelta. ${["JAIME, 7 arriba","GUSTAVO, 7 abajo"].join(". ")}.`,"Primera vuelta. JAIME, 7 arriba. GUSTAVO, 7 abajo.");
 
 assert.match(speech,/model:"gpt-4o-mini-tts"/);
-assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1-hd"/);
-assert.match(speech,/GATEWAY_VOICE="echo"/);
-assert.match(speech,/language:"es-MX"/);
+assert.match(speech,/GATEWAY_SPEECH_MODEL="fish-audio\/s2\.1-pro-free"/);
+assert.match(speech,/GATEWAY_VOICE="s2\.1-es-419"/);
+assert.match(speech,/language:"es-419"/);
+assert.match(speech,/nunca uses acento anglosajón, Spanglish/);
+assert.doesNotMatch(speech,/openai\/tts-1-hd|GATEWAY_VOICE="echo"/);
 assert.doesNotMatch(speech,/openai\/gpt-4o-mini-tts/);
 assert.match(html,/function sealBrowserVoiceProgress\([\s\S]*?consumeLiveRoundClosures\(\)/);
 assert.match(html,/if\(progressive\.closure\)void speakClosure\(progressive\.closure\)/);
