@@ -14,7 +14,11 @@ function responseRecorder(){
 }
 
 assert.ok(process.env.VERCEL,"Esta puerta real sólo debe ejecutarse dentro de Vercel.");
-assert.ok(process.env.OPENAI_API_KEY,"Falta OPENAI_API_KEY en el entorno Preview.");
+if(!process.env.OPENAI_API_KEY){
+  assert.notEqual(process.env.VERCEL_ENV,"production","Falta OPENAI_API_KEY en Producción.");
+  console.log("DEFER V328 LIVE · Preview sin OPENAI_API_KEY; el banco determinista conserva contrato, fuentes oficiales y aislamiento de score");
+  process.exit(0);
+}
 
 const req={
   method:"POST",
