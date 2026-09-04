@@ -1,18 +1,18 @@
 {
-  "version": "V371-R10-TURN-AUDIO-RESET-INTOCABLES",
-  "generatedAt": "2026-09-04T02:13:01Z",
-  "sourceFileCount": 395,
-  "sourceDigest": "83a210d2012001eb1115b94ea98a312ba05fe29ecc53b3fd183b18b033c13226",
+  "version": "V372-GATEWAY-REALTIME-STREAMING-INTOCABLES",
+  "generatedAt": "2026-09-04T03:05:39Z",
+  "sourceFileCount": 399,
+  "sourceDigest": "1c4f5664eacd25ef606364b824fd25bb77e62037c58f4e7d252553ab3fbc3f56",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 210550,
-      "sha256": "26ff4b32b0cfa0cac0e52d5079fbdc5d5e53627389fea2745184b7e18f862ff1"
+      "size": 212056,
+      "sha256": "4ab98d4353697a99aa37230ab0323213616e2481373ce4ed529b602c614e476a"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 237587,
-      "sha256": "f77685d3288322030c5d65c1cc38549c7321a967db0b4a44361809e227f15a77"
+      "size": 239482,
+      "sha256": "510aa1928d5c8348c05d4663d4803fc4eb30fcc95f662a5c74a5c95b744f4dd1"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

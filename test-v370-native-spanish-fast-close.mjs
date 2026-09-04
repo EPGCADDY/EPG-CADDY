@@ -4,8 +4,8 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
-assert.match(html,/V371-R10-TURN-AUDIO-RESET-20260904/);
-assert.match(worker,/v371-r10-turn-audio-reset/);
+assert.match(html,/V372-GATEWAY-REALTIME-STREAMING-20260904/);
+assert.match(worker,/v372-gateway-realtime-streaming/);
 assert.match(html,/CONVERSATION_VAD_SILENCE_MS=900/);
 assert.match(html,/BROWSER_VOICE_SILENCE_MS=1200/);
 assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000/);
