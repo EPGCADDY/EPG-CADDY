@@ -1033,3 +1033,12 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `index-grupal.html` | Ante fallo del audio R7 muestra indisponibilidad explícita. | Prohíbe cambiar silenciosamente a una voz local de Safari. |
 | `test-v378-approved-r7-voice-lock.mjs` | Ejecuta el endpoint y exige una sola llamada Gateway, modelo, idioma, velocidad y cabecera exactos. | Cualquier segunda ruta audible bloquea auditoría y Preview. |
 | `service-worker.js`, `audit-project.mjs`, `package.json`, RC-058, ambos ROADMAPS e inventario | Invalida caché y deja trazabilidad ejecutable. | Producción permanece intacta hasta PASS físico. |
+
+## V379 · inicio audible progresivo y sello físico V378
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`, `Intocables/CONFIRMACION_ESCRITA_V378.md` | Registra aprobación física y seis hashes exactos. | Cualquier byte cambiado en Registro, Scores o captura bloquea auditoría y despliegue. |
+| `index-grupal.html` | Fragmenta únicamente la salida Universal: 80 caracteres iniciales, 240 posteriores y tres prefetched. | Conserva sin cambios las seis regiones V378 selladas. |
+| `api/voice-speech.js` | Genera cada bloque con la misma R7 y registra latencia. | Modelo, español `es-419` y velocidad `0.90` siguen fijados. |
+| `test-v379-fast-chunked-r7-speech.mjs`, Intocables, auditoría e inventario | Verifica progresividad y candado. | 22 segundos no puede registrarse como aprobado; Producción permanece intacta. |

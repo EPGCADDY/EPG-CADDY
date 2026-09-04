@@ -2039,3 +2039,12 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `service-worker.js`: invalida V377 para que el iPhone reciba el blindaje V378.
 - RC-058 registra por qué el blindaje previo falló: protegía valores, pero no la ruta completa que realmente producía el audio.
 - Registro, Score, parsers, cálculos, persistencia, interfaz y Producción permanecen intactos. Preview y prueba audible física siguen pendientes.
+
+## V379 · respuesta audible progresiva y candado V378 · 4 de septiembre de 2026
+
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: sella por SHA-256 Registro, Scores y parámetros de captura aprobados físicamente.
+- `Intocables/CONFIRMACION_ESCRITA_V378.md`: deja la confirmación solicitada por el propietario y excluye los 22 segundos de Universal.
+- `index-grupal.html`: sólo en salida de Universal, solicita primero hasta 80 caracteres y prepara tres bloques R7 en paralelo.
+- `api/voice-speech.js`: registra longitud y tiempo de cada bloque sin cambiar modelo, idioma ni velocidad aprobados.
+- `test-v379-fast-chunked-r7-speech.mjs`: exige bloques progresivos, prefetch, telemetría y candado V378.
+- Aceptación: primer audio no más tarde que ChatGPT con misma pregunta, iPhone y red; 22 segundos es FAIL. Producción permanece intacta.

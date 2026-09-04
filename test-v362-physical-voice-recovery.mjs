@@ -24,7 +24,7 @@ assert.doesNotMatch(speech,/openai\/tts-1-hd|GATEWAY_VOICE="echo"/);
 assert.match(speech,/X-GSCG-Voice/);
 assert.match(html,/IOS-ES-MX-0\.90-NATIVE-MEXICAN-SPANISH/);
 assert.match(html,/PREPARANDO VOZ MEXICANA/);
-const mexicanSpeech=html.slice(html.indexOf("async function speakAiUniversalText"),html.indexOf("function stopAiUniversalOutput"));
+const mexicanSpeech=html.slice(html.indexOf("function approvedVoiceChunks"),html.indexOf("function stopAiUniversalOutput"));
 assert.match(mexicanSpeech,/ONYX 0\.90|\/api\/voice-speech/);
 
 assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000/);

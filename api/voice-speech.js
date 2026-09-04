@@ -69,6 +69,7 @@ export default async function handler(req,res){
     const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):req.body||{};
     const {text,language}=sanitizeSpeechRequest(body);
     if(text.length<2)return res.status(422).json({ok:false,error:"TEXT_REQUIRED"});
+    const speechStartedAt=Date.now();
     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),45_000);
     let upstream;
     try{
@@ -86,7 +87,7 @@ export default async function handler(req,res){
     const payload=await upstream.json().catch(()=>null);
     const audio=Buffer.from(String(payload?.audio||""),"base64");
     if(!audio.length)return res.status(502).json({ok:false,error:"CEDAR_SPEECH_EMPTY"});
-    console.info("cedar spanish speech gateway",JSON.stringify({model:GATEWAY_SPEECH_MODEL,language:"es-419",speed:SPEED,locked:true}));
+    console.info("cedar spanish speech gateway",JSON.stringify({model:GATEWAY_SPEECH_MODEL,language:"es-419",speed:SPEED,locked:true,characters:text.length,elapsedMs:Date.now()-speechStartedAt}));
     res.setHeader("Content-Type","audio/mpeg");
     res.setHeader("Content-Length",String(audio.length));
     res.setHeader("X-GSCG-Voice",GATEWAY_VOICE);

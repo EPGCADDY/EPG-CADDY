@@ -22,13 +22,13 @@ assert.match(preference,/startsWith\("es-"\)/);
 assert.match(preference,/locale==="es-mx"\?1000/);
 assert.doesNotMatch(preference,/startsWith\("en-"\)/);
 
-const speech=html.slice(html.indexOf("async function speakAiUniversalText"),html.indexOf("function stopAiUniversalOutput"));
+const speech=html.slice(html.indexOf("function approvedVoiceChunks"),html.indexOf("function stopAiUniversalOutput"));
 assert.match(speech,/\/api\/voice-speech/);
 assert.match(speech,/PREPARANDO VOZ MEXICANA/);
 assert.match(speech,/VOZ R7 APROBADA NO DISPONIBLE/);
 assert.match(speech,/RESPONDIENDO CON VOZ R7 APROBADA · 0\.90/);
-assert.match(speech,/await player\.play\(\)/);
-assert.match(speech,/if\(!started\)throw new Error\("MEXICAN_TTS_NOT_STARTED"\)/);
+assert.match(speech,/player\.play\(\)/);
+assert.match(speech,/if\(!started\)finish\(reject,new Error\("MEXICAN_TTS_NOT_STARTED"\)\)/);
 
 const playbackRelease=html.slice(html.indexOf("function releaseAiUniversalPlaybackForListening"),html.indexOf("function preferredMaleBrowserVoice"));
 assert.match(playbackRelease,/player\.pause\(\)/);

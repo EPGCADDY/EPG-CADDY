@@ -1,0 +1,38 @@
+{
+  "schema": "gscg-physical-approval-lock/v1",
+  "approvedVersion": "V378",
+  "approvedDate": "2026-09-04",
+  "approvedBy": "Jaime Kirste",
+  "evidence": {
+    "statement": "Funcionó perfecto el Registro de Jugadores y la función de Scores; no se tocan y se blindan.",
+    "timer": "El cronómetro confirmó 22 segundos en Comunicación Universal: latencia rechazada y expresamente excluida de esta aprobación.",
+    "previewCommit": "8a84b4f1241d110fd53d106f8b253a882df8b1ba",
+    "previewDeployment": "dpl_7MvGAmBkSVJnsqDC7vnaPebrsEn8",
+    "previewUrl": "epg-caddy-lab-v363-recovery-d4g3kkkf2-epgcaddys-projects.vercel.app"
+  },
+  "policy": {
+    "status": "INTOCABLE_REGISTRO_Y_SCORES",
+    "changeWithoutNewExplicitOwnerOrder": "PROHIBITED",
+    "failureEffect": "BLOCK_AUDIT_PREVIEW_AND_PRODUCTION"
+  },
+  "source": "index-grupal.html",
+  "scopes": [
+    {"id":"registro_parser","start":"function parseSetupTranscript(transcript){","end":"\nfunction parseInlineManualRosterPhrase","sha256":"ee542714500cf3ccb601a68c7a5dbe5ec32f65add0ca153c648a42e2226103c8"},
+    {"id":"registro_aplicador","start":"function applySetupChanges(changes){","end":"\nfunction resetSetupCapture","sha256":"5d3ff7dec0bbc275876080394597882f488cd43df4ba1aad4b4c87410eeef288"},
+    {"id":"score_progresivo","start":"function parseLiveRoundScorePrefix(transcript,options={}){","end":"\nfunction appendLiveRoundDelta","sha256":"1924d2ad8bc7822252106c547b5afd07ebc9005f1ee32da3b8b3534dfd0aeeb6"},
+    {"id":"score_parser","start":"function parseScoreSequenceTranscript(transcript,{defaultPlayer=null,readScoreAt=null,defaultHole=null,ignoreRecordedKeys=null}={}){","end":"\nfunction parseProvisionalScoreTranscript","sha256":"88ab308538d368e940a4a4e1249edb9a2079c0339aecafe995a74ad4c82166e6"},
+    {"id":"score_escritor","start":"function applyLiteralScores(parsed){","end":"\nfunction speechForHole","sha256":"25531ea9b43b7db219c29efceff5e8ebfa30582ff09a07cd58296beeb8ff95f6"},
+    {"id":"microfono_compartido","start":"function gestureSafeBrowserVoicePreferred(){","end":"\nfunction setMicConnecting","sha256":"9195b7804b8b224db2df1ac3ef3a76be0a90065e253b08c8f507caa9d86aeb19"}
+  ],
+  "approvedCaptureParameters": {
+    "BROWSER_VOICE_SILENCE_MS": 1200,
+    "BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS": 8000,
+    "BROWSER_VOICE_STOP_GUARD_MS": 1200,
+    "BROWSER_VOICE_MAX_RESTARTS": 12,
+    "BROWSER_VOICE_MAX_TRANSPORT_RETRIES": 2,
+    "BROWSER_VOICE_TRANSPORT_RETRY_MS": 350,
+    "ROUND_VAD_THRESHOLD": 0.2,
+    "ROUND_VAD_PREFIX_MS": 700,
+    "ROUND_VAD_SILENCE_MS": 1000
+  }
+}
