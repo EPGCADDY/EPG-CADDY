@@ -1533,3 +1533,7 @@ R10 reconoció `Oakland Mall zona 10`, pero Routes lo ubicó en Estados Unidos p
 ### V372 · voz continua y audio progresivo mediante AI Gateway
 
 La autorización del propietario permite cambiar únicamente el transporte de voz. V372 deja de depender primero de Safari: transmite PCM al Gateway Realtime, cierra por silencio real, entrega la transcripción a los mismos parsers/escritores y reproduce Cedar por fragmentos sin esperar un MP3 completo. Safari y el MP3 español quedan como respaldo. El nuevo endpoint usa secretos efímeros; el banco V372 y la auditoría fijan precedencia, privacidad, idioma, continuidad y protección de Registro/Scores. Producción permanece intacta.
+
+### V372-R1 · sello íntegro del artefacto LAB
+
+El primer empaquetado remoto truncó `index-grupal.html` durante la transferencia y Vercel lo rechazó antes de publicarlo. R1 reemplaza ese blob por su SHA íntegro `37e5c24f0e8bfd26d4543cd4976b525365f2e215`, exige que el árbol remoto coincida con el árbol auditado y vuelve a sellar ambos ROADMAPS e inventarios. No cambia lógica, interfaz, Registro, Scores, persistencia ni Producción.
