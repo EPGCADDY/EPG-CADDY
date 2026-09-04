@@ -8,6 +8,7 @@
 | `index-grupal.html`, `card-library.js` | `18 HOLES ONLY` | `TARJETA DIGITAL` y `NUEVA RONDA` cierran automáticamente una ronda completa; Historial continúa excluyendo parciales. |
 | `index-grupal.html` | `RECOVERY 20260904` | Reconstruye los 72 scores de las capturas y comprueba 85/23, 84/24, 88/20 y 83/25. |
 | `index-grupal.html`, `player-registry.js` | `WHATSAPP INTERNACIONAL` | Cada jugador, incluido el capitán, registra su número; Guatemala aparece como `🇬🇹 +502` y puede cambiarse mediante selector de país con bandera, sin casilla adicional de autorización. |
+| `api/whatsapp-card.js` | `ENVÍO AUTOMÁTICO` | Al tocar `TARJETA DIGITAL FINAL`, prepara y entrega la tarjeta individual mediante WhatsApp Cloud API cuando las credenciales Business estén configuradas. |
 | `test-v376-stableford-continuity-recovery.mjs` | Regresión dirigida | Fija continuidad, cierre automático y los cuatro totales recuperados. |
 
 Producción permanece intacta. La entrega automática por WhatsApp requiere proveedor WhatsApp Business y credenciales verificables; no se simula como enviada desde el navegador.
