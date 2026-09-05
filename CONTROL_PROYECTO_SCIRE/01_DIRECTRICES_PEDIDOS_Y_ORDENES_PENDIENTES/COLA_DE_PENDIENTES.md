@@ -615,3 +615,7 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - La voz y velocidad se restauran exactamente desde V378; el ID V383 queda retirado y un hash de archivo completo impide otra reinterpretación.
 - Después de TTS se conserva el reproductor autorizado descargado y el siguiente turno Universal utiliza captura PCM independiente sin acceso a los escritores; Registro/Scores conservan exclusivamente su ruta V378.
 - Cierre obligatorio: auditoría integral, Preview READY, voz V378, Historial visible y tres preguntas físicas consecutivas. Producción intacta.
+# V391 · estado
+
+- [x] Blindaje técnico integrado de Historial, Tarjeta Digital/WhatsApp y voz V378/0.90.
+- [ ] Prueba física: tres preguntas Universales consecutivas, mismo iPhone, sin recargar ni cambiar pantalla.

@@ -1148,3 +1148,7 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `service-worker.js` | Fuerza el shell V390 en el iPhone. |
 | `audit-project.mjs`, `package.json` | Ejecutan permanentemente el gate V390. |
 | ROADMAPS, matriz/cola, reincidencias, mapa e inventario | Registran el cambio y mantienen Producción intacta. |
+# V391 · base técnica integrada
+
+- `Intocables/BASE_TECNICA_INTEGRADA_V391.json`: contrato SHA-256 de Historial, Tarjeta Digital/WhatsApp y voz V378/0.90.
+- `test-v391-integrated-technical-lock.mjs`: gate permanente de integración; toda versión posterior debe conservarlo.

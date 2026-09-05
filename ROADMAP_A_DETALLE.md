@@ -2186,3 +2186,13 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - Estado: V389 RECHAZADA; V390 pendiente de auditoría integral, Preview vivo y prueba física voz V378 + Historial + 3/3. Producción intacta.
 - Control de publicación: el ROADMAP gate bloqueó el primer build porque la transferencia remota de `index-grupal.html` estaba incompleta; se restauró el blob completo auditado `be334ad716a09def0b317f44e1448692c26309f5` y sólo el nuevo build puede avanzar. Producción intacta.
 - `Intocables/CONFIRMACION_ESCRITA_V378.md`: agrega literalmente voz V378/velocidad `0.90`, Historial oficial, ronda Stableford 04-09-2026, persistencia de rondas con scores y descarte de rondas vacías como puntos que no pueden tocarse.
+
+## V391 · blindaje integrado definitivo · 5 de septiembre de 2026
+
+- `Intocables/BASE_TECNICA_INTEGRADA_V391.json`: sella por SHA-256 voz V378/0.90, cierre y firma, Historial oficial, backend WhatsApp y cinco regiones críticas del flujo integrado.
+- `Intocables/REGLAS_INTOCABLES.json`: INT-09 Historial, INT-10 Tarjeta/WhatsApp e INT-11 base integrada obligatoria.
+- `test-v391-integrated-technical-lock.mjs`: prueba permanente y bloqueante dentro de `audit-project.mjs`.
+- Sólo una ronda completa de 18 hoyos se archiva automáticamente; una activa con scores persiste; una vacía se descarta; la Stableford oficial se recupera idempotentemente sin hostname.
+- Tarjeta Digital limpia la ronda únicamente después de entregar con éxito todas las tarjetas WhatsApp; fallo o número ausente conserva la ronda y no anuncia éxito.
+- Producción intacta. Universal queda `PENDING_PHYSICAL_TEST` hasta tres preguntas consecutivas en el mismo iPhone.
+- El segundo turno Universal usa captura directa independiente; si iOS no entrega señal, libera y reabre una vez. Si la primera apertura falla, reintenta la adquisición tras 250 ms. Los tres eventos `server_capture_*` quedan aceptados en `/api/voice-health` para que la siguiente evidencia nunca vuelva a quedar oculta.

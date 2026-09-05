@@ -1,5 +1,5 @@
 {
-  "version": "V379",
+  "version": "V391",
   "logic": "all",
   "rules": [
     {"id": "INT-01", "name": "ronda_activa_persistente", "mandatory": true},
@@ -9,6 +9,9 @@
     {"id": "INT-05", "name": "registro_jugadores_v378_fisicamente_aprobado_intocable", "mandatory": true},
     {"id": "INT-06", "name": "registro_scores_individual_multiple_v378_fisicamente_aprobado_intocable", "mandatory": true},
     {"id": "INT-07", "name": "sensibilidad_umbrales_cierre_tiempos_v378_fisicamente_aprobados_intocables", "mandatory": true},
-    {"id": "INT-08", "name": "voz_y_velocidad_v378_fisicamente_aprobadas_intocables", "mandatory": true}
+    {"id": "INT-08", "name": "voz_y_velocidad_v378_fisicamente_aprobadas_intocables", "mandatory": true},
+    {"id": "INT-09", "name": "historial_oficial_persistencia_y_recuperacion_v391_intocables", "mandatory": true},
+    {"id": "INT-10", "name": "tarjeta_digital_y_entrega_whatsapp_v391_intocables", "mandatory": true},
+    {"id": "INT-11", "name": "base_integrada_v391_obligatoria_en_toda_version_posterior", "mandatory": true}
   ]
 }

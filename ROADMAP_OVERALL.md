@@ -1660,3 +1660,7 @@ Control permanente: `test-v390-physical-history-voice-recovery.mjs`. Archivos: `
 Control remoto: el primer envío incompleto de `index-grupal.html` fue bloqueado por el ROADMAP gate; el blob completo auditado `be334ad716a09def0b317f44e1448692c26309f5` fue restaurado antes de generar un nuevo Preview. Ningún candidato incompleto se entrega.
 
 La confirmación escrita V378 incorpora como puntos explícitamente intocables la voz/velocidad exactas y el Historial oficial, incluida la ronda Stableford del 4 de septiembre, la conservación de rondas con scores y el descarte de rondas vacías.
+
+## V391 · base técnica integrada e intocable · 5 de septiembre de 2026
+
+V391 convierte en un solo contrato técnico obligatorio el Historial oficial, la persistencia de rondas, la recuperación Stableford del 4 de septiembre, Tarjeta Digital/WhatsApp y la voz exacta V378 a velocidad 0.90. `Intocables/BASE_TECNICA_INTEGRADA_V391.json` sella archivos y regiones por SHA-256; INT-09, INT-10 e INT-11 bloquean cualquier versión posterior que pierda parte de esta integración. `test-v391-integrated-technical-lock.mjs` se ejecuta dentro de la auditoría maestra. Producción permanece intacta. Comunicación Universal continúa pendiente de prueba física 3/3.

@@ -1,0 +1,32 @@
+{
+  "schema": "gscg-integrated-baseline-lock/v1",
+  "version": "V391",
+  "date": "2026-09-05",
+  "orderedBy": "Jaime Kirste",
+  "branch": "lab/recovery-production-approved-v363",
+  "policy": {
+    "status": "INTOCABLE_HISTORIAL_TARJETA_WHATSAPP_VOZ",
+    "changeWithoutNewExplicitOwnerOrder": "PROHIBITED",
+    "failureEffect": "BLOCK_AUDIT_PREVIEW_AND_PRODUCTION"
+  },
+  "files": [
+    {"id":"voz_v378_velocidad_090","path":"api/voice-speech.js","sha256":"dd4597f6c60b0800adc990c7d99256ea5dfd13ac219b70292587718704ca5fee"},
+    {"id":"cierre_y_firma_historial","path":"round-closure.js","sha256":"6170c99af370714f37b93c8c0d4efe8b2df9d84a22a10b44963cf25a171f4479"},
+    {"id":"historial_tarjetas_oficiales","path":"card-library.js","sha256":"46f8ef426f93b19e035c02ad23c8d5271c8432b5e45faf6c3df304c998e06f79"},
+    {"id":"entrega_whatsapp_backend","path":"api/whatsapp-card.js","sha256":"cbbdefd42715f2cbabcdd87a71f09a75f9eba78204e1052af5958323c3c731ce"}
+  ],
+  "source": "index-grupal.html",
+  "scopes": [
+    {"id":"historial_recuperabilidad","start":"function storedRoundHasAnyScore(value){","end":"\nconst SIDE_GAME_KEYS=","sha256":"3d65c3a1113c46c32e9117a0de4411e3e9b57362f8e8a22eefcfe3ffe1853c13"},
+    {"id":"historial_archivo_completo","start":"function activeRoundArchiveKey(){","end":"\nfunction operationalRoundMode","sha256":"2cb154a78324de1974f28e0aa559e0dc2e49c0ef8aa7fe0160587e9f253f06f4"},
+    {"id":"historial_stableford_oficial","start":"function restorePersistedRound(){","end":"\nfunction matrixFor","sha256":"8e33aa7c15a4931973a375e19a9fa25a06b15688237b1477f82a97f2e8516f72"},
+    {"id":"tarjeta_whatsapp_transaccion","start":"function isRoundComplete(){","end":"\nfunction artifactBlobUrl","sha256":"51c969107ce63e673967ad7565278e1f5000724e6c831f544700cfa4c050dcf4"},
+    {"id":"tarjeta_un_toque","start":"async function openFinalDigitalCard(){","end":"\nfunction closeFinalDigitalCard","sha256":"0431d0d2a4e43e6694c4c48872502cf5d58b1602e38fdfa41ac7a18f5ec88df9"}
+  ],
+  "acceptance": {
+    "history": "TECHNICALLY_LOCKED",
+    "digitalCardWhatsApp": "TECHNICALLY_LOCKED",
+    "voiceAndSpeed": "TECHNICALLY_LOCKED_TO_V378",
+    "universalThreeTurns": "PENDING_PHYSICAL_TEST"
+  }
+}

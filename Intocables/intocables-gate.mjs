@@ -8,10 +8,11 @@ const speech=fs.readFileSync(new URL("../api/voice-speech.js",import.meta.url),"
 const audit=fs.readFileSync(new URL("../audit-project.mjs",import.meta.url),"utf8");
 const rules=JSON.parse(fs.readFileSync(new URL("./REGLAS_INTOCABLES.json",import.meta.url),"utf8"));
 const physicalApproval=JSON.parse(fs.readFileSync(new URL("./APROBACION_FISICA_REGISTRO_SCORES_V378.json",import.meta.url),"utf8"));
+const integratedLock=JSON.parse(fs.readFileSync(new URL("./BASE_TECNICA_INTEGRADA_V391.json",import.meta.url),"utf8"));
 const writtenConfirmation=fs.readFileSync(new URL("./CONFIRMACION_ESCRITA_V378.md",import.meta.url),"utf8");
 
 assert.equal(rules.logic,"all");
-assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT-04","INT-05","INT-06","INT-07","INT-08"]);
+assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT-04","INT-05","INT-06","INT-07","INT-08","INT-09","INT-10","INT-11"]);
 assert.ok(rules.rules.every(rule=>rule.mandatory===true));
 assert.equal(physicalApproval.approvedVersion,"V378");
 assert.equal(physicalApproval.schema,"gscg-physical-approval-lock/v3");
@@ -30,6 +31,18 @@ for(const scope of physicalApproval.scopes){
 for(const approved of physicalApproval.approvedFiles||[]){
   const actual=createHash("sha256").update(fs.readFileSync(new URL(`../${approved.path}`,import.meta.url))).digest("hex");
   assert.equal(actual,approved.sha256,`INTOCABLE V378 modificado: ${approved.id}`);
+}
+assert.equal(integratedLock.schema,"gscg-integrated-baseline-lock/v1");
+assert.equal(integratedLock.version,"V391");
+assert.equal(integratedLock.policy.changeWithoutNewExplicitOwnerOrder,"PROHIBITED");
+for(const approved of integratedLock.files){
+  const actual=createHash("sha256").update(fs.readFileSync(new URL(`../${approved.path}`,import.meta.url))).digest("hex");
+  assert.equal(actual,approved.sha256,`BASE V391 modificada: ${approved.id}`);
+}
+for(const scope of integratedLock.scopes){
+  const start=html.indexOf(scope.start),end=html.indexOf(scope.end,start);
+  assert.ok(start>=0&&end>start,`INT-09/10/11 no pudo localizar ${scope.id}`);
+  assert.equal(createHash("sha256").update(html.slice(start,end)).digest("hex"),scope.sha256,`BASE V391 modificada: ${scope.id}`);
 }
 const activationScope=physicalApproval.scopes.find(scope=>scope.id==="activacion_compartida");
 assert.ok(activationScope,"Falta el blindaje de la activación compartida");
@@ -75,4 +88,4 @@ assert.match(audit,/Intocables\/intocables-gate\.mjs/);
 assert.match(audit,/test-v366-principal-entry-recovery\.mjs/);
 assert.match(audit,/test-v367-universal-voice-in-place\.mjs/);
 assert.match(worker,/gscg-mobile-v363-/);
-console.log("INTOCABLES PASS INT-01…INT-08 · 7 regiones de Registro/Scores y voz/velocidad V378 selladas por SHA-256");
+console.log("INTOCABLES PASS INT-01…INT-11 · Registro/Scores V378, Historial, Tarjeta/WhatsApp y voz 0.90 sellados por SHA-256");
