@@ -187,3 +187,11 @@ V391 impide repetir la pérdida de Historial, Tarjeta Digital/WhatsApp o voz apr
 # RC-073 · telemetría del segundo turno directo rechazada
 
 V390 emitía `server_capture_started`, `server_capture_transcript_ready` y `server_capture_failed`, pero `/api/voice-health` no los aceptaba. Por eso los registros del despliegue sólo mostraban clima/cuenta y ocultaban el punto de falla. V391 autoriza los tres eventos y añade una reapertura única ante `NO_SPEECH` y un segundo intento de adquisición ante fallo de apertura, exclusivamente para el seguimiento Universal; Registro y Scores V378 permanecen intocables.
+
+# RC-074 · V391 repitió la misma captura sin señal en el segundo turno
+
+Los logs físicos V391 muestran cuatro aperturas reales seguidas de `no_speech`: el reintento repetía el mismo procesador Web Audio que iOS había dejado sin muestras. V392 captura el archivo directo con MediaRecorder, conserva una ventana fija de seis segundos aun si el analizador marca cero y usa el umbral de Registro `0.009`. `test-v392-universal-mediarecorder.mjs` exige tres turnos en una misma instancia; el cierre continúa pendiente de prueba física 3/3.
+
+# RC-075 · confirmación falsa de revisión total OUT/IN
+
+La tarjeta principal todavía rotulaba 1–9 como OUT y 10–18 como IN pese a haberse informado una revisión total. V392 fija la convención del propietario IN=1–9 y OUT=10–18, con IN primero, y corrige etiquetas y valores en todas las superficies inventariadas. `test-v392-all-scorecards-in-first.mjs` más INT-13 bloquean cualquier inversión futura.

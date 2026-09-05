@@ -1,5 +1,5 @@
 {
-  "version": "V391",
+  "version": "V392",
   "logic": "all",
   "rules": [
     {"id": "INT-01", "name": "ronda_activa_persistente", "mandatory": true},
@@ -12,6 +12,8 @@
     {"id": "INT-08", "name": "voz_y_velocidad_v378_fisicamente_aprobadas_intocables", "mandatory": true},
     {"id": "INT-09", "name": "historial_oficial_persistencia_y_recuperacion_v391_intocables", "mandatory": true},
     {"id": "INT-10", "name": "tarjeta_digital_y_entrega_whatsapp_v391_intocables", "mandatory": true},
-    {"id": "INT-11", "name": "base_integrada_v391_obligatoria_en_toda_version_posterior", "mandatory": true}
+    {"id": "INT-11", "name": "base_integrada_v391_obligatoria_en_toda_version_posterior", "mandatory": true},
+    {"id": "INT-12", "name": "comunicacion_universal_mediarecorder_tres_turnos_umbral_registro", "mandatory": true},
+    {"id": "INT-13", "name": "todas_las_tarjetas_in_1_9_antes_de_out_10_18", "mandatory": true}
   ]
 }

@@ -26,9 +26,9 @@ for(const label of ["GROSS OUT","GROSS IN","PTS OUT","PTS IN"])assert.ok(stablef
 for(const obsolete of ["GROSS PRIMERA VUELTA","GROSS SEGUNDA VUELTA","PUNTOS PRIMERA VUELTA","PUNTOS SEGUNDA VUELTA","GROSS 1V","GROSS 2V","PUNTOS 1V","PUNTOS 2V",">IDA<",">VTA<","GROSS IDA","GROSS VTA"]){
   assert.equal([html,stableford,artifacts,individual].some(source=>source.includes(obsolete)),false,`Rótulo visual obsoleto: ${obsolete}`);
 }
-assert.match(artifacts,/OUT: \$\{stats\.front\.points\} puntos\. IN: \$\{stats\.back\.points\} puntos\./);
-assert.match(individual,/<strong>OUT<\/strong>/);
-assert.match(individual,/<strong>IN<\/strong>/);
+assert.match(artifacts,/IN: \$\{stats\.front\.points\} puntos\. OUT: \$\{stats\.back\.points\} puntos\./);
+assert.ok(individual.indexOf("<strong>IN</strong>")<individual.indexOf("<strong>OUT</strong>"));
+assert.match(individual,/renderNineScorecard\(FRONT[^]*?,"IN"\);renderNineScorecard\(BACK[^]*?,"OUT"\)/);
 
 const quietStart=html.indexOf("function operationalCaptureQuiet"),quietEnd=html.indexOf("\nfunction scheduleOperationalMissingPrompt",quietStart);
 assert.ok(quietStart>0&&quietEnd>quietStart,"No se encontró la puerta de silencio operacional");

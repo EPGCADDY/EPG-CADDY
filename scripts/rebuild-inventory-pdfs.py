@@ -152,7 +152,7 @@ def source_state():
 def write_lock(paths):
     files, digest = source_state()
     payload = {
-        "version": "V391-INTEGRATED-TECHNICAL-LOCK",
+        "version": "V392-MEDIARECORDER-IN-FIRST",
         "generatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
         "sourceFileCount": len(files),
         "sourceDigest": digest,
@@ -175,7 +175,7 @@ def main():
     write_lock(paths)
     for path in paths:
         print(f"{path.name}\t{path.stat().st_size}\t{sha256(path)}")
-    print(f"INVENTORY_LOCK PASS version=V391-INTEGRATED-TECHNICAL-LOCK sources={json.loads(LOCK.read_text(encoding='utf-8'))['sourceFileCount']}")
+    print(f"INVENTORY_LOCK PASS version=V392-MEDIARECORDER-IN-FIRST sources={json.loads(LOCK.read_text(encoding='utf-8'))['sourceFileCount']}")
 
 
 if __name__ == "__main__":

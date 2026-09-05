@@ -3,8 +3,7 @@ import fs from "node:fs";
 import vm from "node:vm";
 
 const source=fs.readFileSync("server-voice-capture.js","utf8");
-assert.match(source,/audioBase64:base64\(wavBytes\(chunks\)\)/);
-assert.match(source,/mimeType:"audio\/wav"/);
+assert.match(source,/transcribeAudio\(base64\(wavBytes\(chunks\)\),"audio\/wav"\)/);
 assert.doesNotMatch(source,/action:"stream-token"/);
 assert.doesNotMatch(source,/new WebSocket/);
 

@@ -2197,3 +2197,11 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - Producción intacta. Universal queda `PENDING_PHYSICAL_TEST` hasta tres preguntas consecutivas en el mismo iPhone.
 - El segundo turno Universal usa captura directa independiente; si iOS no entrega señal, libera y reabre una vez. Si la primera apertura falla, reintenta la adquisición tras 250 ms. Los tres eventos `server_capture_*` quedan aceptados en `/api/voice-health` para que la siguiente evidencia nunca vuelva a quedar oculta.
 - Sello remoto: `index-grupal.html`, ambos ROADMAPS e inventario se publican juntos; el gate rechaza cualquier commit de reparación parcial.
+## V392 · RC-074/RC-075 · MediaRecorder Universal y convención IN→OUT global
+
+- Evidencia V391: a las 16:50:27 y 16:50:35, y nuevamente 16:51:00 y 16:51:08 UTC, la captura directa abrió pero terminó `no_speech`; reabrir la misma arquitectura Web Audio no corrigió la segunda pregunta.
+- `server-voice-capture.js`: sólo Comunicación Universal usa `MediaRecorder` directo; conserva `audio/mp4` real durante seis segundos y lo envía a `/api/voice-transcribe`. Su detector usa exactamente `UNIVERSAL_SPEECH_THRESHOLD=SETUP_SPEECH_THRESHOLD=.009`. Registro continúa en `.009`; Scores en `.0045`.
+- `index-grupal.html`: `universalOnly` se entrega al transporte sin acceder a parsers/escritores de Registro o Scores.
+- Convención única: IN=FRONT=1–9; OUT=BACK=10–18. Orden IN antes de OUT en tarjeta principal/final, resúmenes General/Práctica/Stableford/Match/Four Ball, control manual, artefactos Global/personal, Historial, `stableford-torneo.html` y LIVE.
+- `test-v392-universal-mediarecorder.mjs` y `test-v392-all-scorecards-in-first.mjs`: regresiones bloqueantes permanentes; audit e Intocables INT-12/13 las exigen.
+- Estado: V391 RECHAZADA. V392 requiere auditoría integral, Preview READY y después prueba física 3/3 en el mismo iPhone. Producción intacta.

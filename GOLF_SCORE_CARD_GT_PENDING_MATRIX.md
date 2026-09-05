@@ -445,3 +445,11 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - Estado: navegador local PASS y banco enfocado pendiente de auditoría integral; Preview y prueba física iPhone pendientes. Producción no se modifica en V368.
 - **Fallo físico V389:** Historial vacío y segundo turno `no_speech/aborted` después de una primera respuesta completa 200/200.
 - **Control V390:** recuperación Stableford firmada/archivada sincrónicamente; voz/velocidad restauradas byte por byte desde V378 y selladas por archivo completo; seguimiento Universal post-TTS por captura PCM independiente sin acceso a escritores, con telemetría. Pendiente Preview e iPhone: voz V378 + Historial visible + 3/3.
+
+## V392 · estado
+
+- [x] Universal por MediaRecorder directo, tres ciclos técnicos y umbral igual a Registro (`0.009`).
+- [x] IN=1–9 antes de OUT=10–18 en el 100% de superficies de tarjeta inventariadas.
+- [x] INT-12/INT-13 agregados al gate bloqueante.
+- [ ] Preview READY y comprobación viva.
+- [ ] Prueba física Universal 3/3 en el mismo iPhone; no declarar PASS antes.

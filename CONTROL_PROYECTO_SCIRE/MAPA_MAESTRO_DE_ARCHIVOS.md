@@ -1152,3 +1152,9 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 
 - `Intocables/BASE_TECNICA_INTEGRADA_V391.json`: contrato SHA-256 de Historial, Tarjeta Digital/WhatsApp y voz V378/0.90.
 - `test-v391-integrated-technical-lock.mjs`: gate permanente de integración; toda versión posterior debe conservarlo.
+# Corte V392 · 5 de septiembre de 2026
+
+- `server-voice-capture.js`: captura Universal MediaRecorder; umbral idéntico a Registro.
+- `index-grupal.html`, `index.html`, `stableford-torneo.html`, `card-artifacts.js`, `live-view.js`: IN=1–9 antes de OUT=10–18 en todas las tarjetas.
+- `test-v392-universal-mediarecorder.mjs`, `test-v392-all-scorecards-in-first.mjs`: controles bloqueantes.
+- `Intocables/REGLAS_INTOCABLES.json`, `Intocables/intocables-gate.mjs`: INT-12 e INT-13.

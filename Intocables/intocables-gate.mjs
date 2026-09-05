@@ -6,13 +6,18 @@ const html=fs.readFileSync(new URL("../index-grupal.html",import.meta.url),"utf8
 const worker=fs.readFileSync(new URL("../service-worker.js",import.meta.url),"utf8");
 const speech=fs.readFileSync(new URL("../api/voice-speech.js",import.meta.url),"utf8");
 const audit=fs.readFileSync(new URL("../audit-project.mjs",import.meta.url),"utf8");
+const capture=fs.readFileSync(new URL("../server-voice-capture.js",import.meta.url),"utf8");
+const artifacts=fs.readFileSync(new URL("../card-artifacts.js",import.meta.url),"utf8");
+const stablefordStandalone=fs.readFileSync(new URL("../stableford-torneo.html",import.meta.url),"utf8");
+const liveView=fs.readFileSync(new URL("../live-view.js",import.meta.url),"utf8");
+const individualCard=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const rules=JSON.parse(fs.readFileSync(new URL("./REGLAS_INTOCABLES.json",import.meta.url),"utf8"));
 const physicalApproval=JSON.parse(fs.readFileSync(new URL("./APROBACION_FISICA_REGISTRO_SCORES_V378.json",import.meta.url),"utf8"));
 const integratedLock=JSON.parse(fs.readFileSync(new URL("./BASE_TECNICA_INTEGRADA_V391.json",import.meta.url),"utf8"));
 const writtenConfirmation=fs.readFileSync(new URL("./CONFIRMACION_ESCRITA_V378.md",import.meta.url),"utf8");
 
 assert.equal(rules.logic,"all");
-assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT-04","INT-05","INT-06","INT-07","INT-08","INT-09","INT-10","INT-11"]);
+assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT-04","INT-05","INT-06","INT-07","INT-08","INT-09","INT-10","INT-11","INT-12","INT-13"]);
 assert.ok(rules.rules.every(rule=>rule.mandatory===true));
 assert.equal(physicalApproval.approvedVersion,"V378");
 assert.equal(physicalApproval.schema,"gscg-physical-approval-lock/v3");
@@ -87,5 +92,17 @@ assert.doesNotMatch(voiceInPlace,/openAiUniversalPanel|classList\.add\("visible"
 assert.match(audit,/Intocables\/intocables-gate\.mjs/);
 assert.match(audit,/test-v366-principal-entry-recovery\.mjs/);
 assert.match(audit,/test-v367-universal-voice-in-place\.mjs/);
+assert.match(audit,/test-v392-universal-mediarecorder\.mjs/);
+assert.match(audit,/test-v392-all-scorecards-in-first\.mjs/);
+assert.match(capture,/SETUP_SPEECH_THRESHOLD=\.009,ROUND_SPEECH_THRESHOLD=\.0045,UNIVERSAL_SPEECH_THRESHOLD=SETUP_SPEECH_THRESHOLD/);
+assert.match(capture,/requestUniversalOnly&&typeof MediaRecorder==="function"/);
+assert.match(capture,/recorder\.start\(250\)/);
+assert.match(capture,/setTimeout\(\(\)=>stop\(true\),UNIVERSAL_RECORDER_MS\)/);
+assert.match(html,/<th class="sum-col">IN<\/th>\$\{BACK\.map[\s\S]*?<th class="sum-col">OUT<\/th>/);
+assert.match(html,/<th>GROSS IN<\/th><th>GROSS OUT<\/th>/);
+assert.match(artifacts,/IN_HOLES\.map[\s\S]*?<th>IN<\/th>\$\{OUT_HOLES\.map[\s\S]*?<th>OUT<\/th>/);
+assert.match(stablefordStandalone,/<th class="sum">IN<\/th>'\+backCells[\s\S]*?<th class="sum">OUT<\/th>/);
+assert.match(liveView,/inside\.map[\s\S]*?<th>IN<\/th>\$\{out\.map[\s\S]*?<th>OUT<\/th>/);
+assert.match(individualCard,/renderNineScorecard\(FRONT[\s\S]*?,"IN"\);renderNineScorecard\(BACK[\s\S]*?,"OUT"\)/);
 assert.match(worker,/gscg-mobile-v363-/);
-console.log("INTOCABLES PASS INT-01…INT-11 · Registro/Scores V378, Historial, Tarjeta/WhatsApp y voz 0.90 sellados por SHA-256");
+console.log("INTOCABLES PASS INT-01…INT-13 · base V391, Universal V392 e IN→OUT global sellados");

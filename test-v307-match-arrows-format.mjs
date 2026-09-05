@@ -23,7 +23,7 @@ assert.doesNotMatch(html,/label:"MODALIDAD",value:[^\n]*isMatchPlayRound\(\)\?"M
 assert.match(html,/id="matchPlayRoundButton"[\s\S]*?<span>MATCH PLAY<\/span>/);
 assert.doesNotMatch(html,/MATCH PLAY · CON HDCP/);
 assert.match(html,/RESULTADO MATCH PLAY/);
-assert.match(html,/MATCH OUT<\/th><th>MATCH IN<\/th><th>MATCH TOTAL/);
+assert.match(html,/MATCH IN<\/th><th>MATCH OUT<\/th><th>MATCH TOTAL/);
 assert.match(html,/matchStandingMarkup\(out\)[\s\S]*?matchStandingMarkup\(inside\)[\s\S]*?matchStandingMarkup\(total\)/);
 assert.match(html,/FIN DEL MATCH/);
 assert.match(html,/matchPlayFinalSpeech/);
@@ -35,4 +35,4 @@ assert.match(artifacts,/stroke-width:4\.5/);
 assert.match(artifacts,/Flecha verde hacia arriba = ganó · flecha roja hacia abajo = perdió/);
 assert.doesNotMatch(artifacts,/status==="won"\?"↑":status==="lost"\?"↓":""/);
 
-console.log("PASS V307 · FLECHAS GRUESAS · FORMATO MATCH PLAY · OUT/IN/TOTAL UP-DOWN · FIN ANTICIPADO · PAQUETE Y CACHÉ");
+console.log("PASS V307/V392 · FLECHAS GRUESAS · FORMATO MATCH PLAY · IN/OUT/TOTAL UP-DOWN · FIN ANTICIPADO · PAQUETE Y CACHÉ");

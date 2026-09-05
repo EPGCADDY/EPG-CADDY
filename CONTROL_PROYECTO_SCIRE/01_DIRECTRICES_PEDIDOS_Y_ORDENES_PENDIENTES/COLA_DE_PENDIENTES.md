@@ -619,3 +619,9 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 
 - [x] Blindaje técnico integrado de Historial, Tarjeta Digital/WhatsApp y voz V378/0.90.
 - [ ] Prueba física: tres preguntas Universales consecutivas, mismo iPhone, sin recargar ni cambiar pantalla.
+
+# V392 · cierre físico pendiente
+
+- [x] Universal MediaRecorder con umbral `0.009` y tres turnos automáticos.
+- [x] IN=1–9 antes de OUT=10–18 en todas las tarjetas inventariadas.
+- [ ] Preview READY y prueba física 3/3 sin recargar, cambiar pantalla ni perder Registro, Scores o Historial.
