@@ -1,18 +1,18 @@
 {
   "version": "V388-COMPLETE-HISTORY-THREE-TURN-DIRECT-CAPTURE",
-  "generatedAt": "2026-09-05T01:23:28Z",
+  "generatedAt": "2026-09-05T01:27:31Z",
   "sourceFileCount": 422,
-  "sourceDigest": "77a59febf40ff9035efa10127bdc1a7e4839c776c14754c46779904a64e85163",
+  "sourceDigest": "3d68a3d6a74687ec92bc7b4872111020d24b223a84701e9bd89e948b4483029a",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 228092,
-      "sha256": "2fad673450f669c1b771d888a1b5f9b14690b7791526a2a334927fab043f8b05"
+      "size": 227929,
+      "sha256": "47e43a47918b4a1871f0b37c7f1e60f0167c67d3a3f6adf51c60451b5a6611b8"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 258178,
-      "sha256": "79d4dee4973eaecf05f22afb17a5fafbe75dc7614df4441739a20276180d0684"
+      "size": 258266,
+      "sha256": "d6557cef6a47218facb3db20512a4fbd128931bfd9374c489f4abb88b8830be5"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
