@@ -1,18 +1,18 @@
 {
   "version": "V394-IOS-MEDIARECORDER-FINAL-BLOB",
-  "generatedAt": "2026-09-05T20:17:11Z",
+  "generatedAt": "2026-09-05T20:32:50Z",
   "sourceFileCount": 430,
-  "sourceDigest": "535d42aeb2ffa89705d337fac9a5abc35b843cecea9d15d52e64f7bdf179077c",
+  "sourceDigest": "326d73da32e5cb2346010f7234ec64e1aaa8f28c2607e642732df5416e752013",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 235521,
-      "sha256": "b656d972d53d5922819dc5028da57636912ddb451ea9722d62f843e512e39383"
+      "size": 235773,
+      "sha256": "4caed34b8351b57b22ce3686bcebb01ac43c9b7c396b3cda00d1a8b3e265d538"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 267175,
-      "sha256": "670b51a515685dd650ee0103dc5581fb2bf8df84a6c2e5c706d6427462ff405e"
+      "size": 268120,
+      "sha256": "1de4ede1102cd6dd687ecb61531e47e46d816a12772f13ab6402e6d49468daf1"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

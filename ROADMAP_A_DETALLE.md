@@ -2222,3 +2222,4 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `index-grupal.html`: limpia `universalServerCaptureRetryCount` al abrir y después de un fallo final; conserva captura nativa común primero y frontera Universal sin escritores.
 - `test-v392-universal-mediarecorder.mjs`: tres turnos consecutivos con el orden real de cierre y aserciones negativas contra `timeslice` y `requestData`.
 - `service-worker.js`: caché V394. Producción, cálculos, persistencia, diseño, navegación, Registro/Score aprobados y voz R7/0.90 permanecen intactos.
+- Publicación remota: `6336ad1` fue rechazado por blob truncado y `51f7182` restauró `index-grupal.html` con SHA Git exacto `3cf766c23fc54ba2c17107793e18b7fb0c457b84`; el cierre atómico siguiente registra ambos ROADMAPS e inventario para superar el candado de publicación. Ninguno se entrega como candidato.
