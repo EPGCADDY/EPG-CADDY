@@ -2214,3 +2214,11 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `test-v393-manual-hole-start.mjs`, `test-v393-universal-response-continuity.mjs`, `audit-project.mjs`, `package.json`, `service-worker.js` e Intocables INT-14/15 forman el control permanente.
 - La voz V378, velocidad 0.90, Registro, Scores, Historial, Tarjeta Digital/WhatsApp y la convención IN=1–9 antes de OUT=10–18 no cambian. Producción intacta. Universal pendiente de prueba física 3/3.
 - Trazabilidad doble: `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran y sellan V393.
+
+## V394 · RC-078 · segunda captura iOS sin blob
+
+- Evidencia: Preview V393 `dpl_4rALbgNEtBMtaFpDdcdNA6hnzy3i`, commit `74441fbf09468fa5fb2b167ccbacbce30105173f`; primera interacción 200/200 y audible, seguida de dos ventanas de seis segundos `server_capture_started` → `server_capture_failed/no_speech`, sin `/api/voice-transcribe`.
+- `server-voice-capture.js`: reemplaza `MediaRecorder.start(250)` + `requestData()` por `MediaRecorder.start()` + blob final.
+- `index-grupal.html`: limpia `universalServerCaptureRetryCount` al abrir y después de un fallo final; conserva captura nativa común primero y frontera Universal sin escritores.
+- `test-v392-universal-mediarecorder.mjs`: tres turnos consecutivos con el orden real de cierre y aserciones negativas contra `timeslice` y `requestData`.
+- `service-worker.js`: caché V394. Producción, cálculos, persistencia, diseño, navegación, Registro/Score aprobados y voz R7/0.90 permanecen intactos.

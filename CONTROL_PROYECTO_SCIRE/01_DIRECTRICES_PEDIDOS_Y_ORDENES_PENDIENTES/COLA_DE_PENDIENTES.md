@@ -631,3 +631,10 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - [x] Universal MediaRecorder con umbral `0.009` y tres turnos automáticos.
 - [x] IN=1–9 antes de OUT=10–18 en todas las tarjetas inventariadas.
 - [ ] Preview READY y prueba física 3/3 sin recargar, cambiar pantalla ni perder Registro, Scores o Historial.
+
+# V394 · reemplazo obligatorio de V393 rechazada
+
+- [x] RC-078 documentada con logs físicos del 5 de septiembre de 2026.
+- [x] Eliminada la combinación causal `start(250)` + `requestData()` de Safari.
+- [ ] Auditoría, deployment LAB nuevo y verificación técnica reproducible.
+- [ ] Una única prueba física final 3/3 en iPhone; ninguna prueba adicional sobre V393.

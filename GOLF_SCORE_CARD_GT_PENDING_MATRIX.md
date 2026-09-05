@@ -459,3 +459,11 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - [x] INT-12/INT-13 agregados al gate bloqueante.
 - [ ] Preview READY y comprobación viva.
 - [ ] Prueba física Universal 3/3 en el mismo iPhone; no declarar PASS antes.
+
+## V394 · RC-078
+
+- [x] V393 y commit `74441fbf09468fa5fb2b167ccbacbce30105173f` marcados `FAIL / RECHAZADOS`.
+- [x] Causa comprobada: cero llamada a `/api/voice-transcribe` después de dos cierres `server_capture_failed/no_speech`.
+- [x] Corrección limitada a finalización `MediaRecorder`, limpieza de contador y caché.
+- [ ] Auditoría integral, LAB READY y revisión reproducible.
+- [ ] Única prueba física final: tres turnos consecutivos en el mismo iPhone.

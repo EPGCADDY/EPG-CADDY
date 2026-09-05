@@ -1,18 +1,18 @@
 {
-  "version": "V393-MANUAL-HOLE-UNIVERSAL-RESPONSE",
-  "generatedAt": "2026-09-05T19:40:21Z",
+  "version": "V394-IOS-MEDIARECORDER-FINAL-BLOB",
+  "generatedAt": "2026-09-05T20:17:11Z",
   "sourceFileCount": 430,
-  "sourceDigest": "bcc8c6396ee269039906abdd429bd89022be60ab1038660fa1f179f65a50080b",
+  "sourceDigest": "535d42aeb2ffa89705d337fac9a5abc35b843cecea9d15d52e64f7bdf179077c",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 234833,
-      "sha256": "4164185bf3768852ac7f7a3f11f2fa989cbddf8a7091e35af957d5cbc0f6f574"
+      "size": 235521,
+      "sha256": "b656d972d53d5922819dc5028da57636912ddb451ea9722d62f843e512e39383"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 266560,
-      "sha256": "ecf2fa717cce647ed07f5c77dc89ddaf25a9f0da60d9b8c6fced050b826de997"
+      "size": 267175,
+      "sha256": "670b51a515685dd650ee0103dc5581fb2bf8df84a6c2e5c706d6427462ff405e"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

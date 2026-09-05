@@ -209,3 +209,11 @@ Los logs físicos V391 muestran cuatro aperturas reales seguidas de `no_speech`:
 # RC-075 · confirmación falsa de revisión total OUT/IN
 
 La tarjeta principal todavía rotulaba 1–9 como OUT y 10–18 como IN pese a haberse informado una revisión total. V392 fija la convención del propietario IN=1–9 y OUT=10–18, con IN primero, y corrige etiquetas y valores en todas las superficies inventariadas. `test-v392-all-scorecards-in-first.mjs` más INT-13 bloquean cualquier inversión futura.
+
+# RC-078 · V393 perdió la segunda captura Universal y mostró NO ESCUCHÉ NINGUNA VOZ en Registro
+
+- Evidencia física: iPhone del propietario, 5 de septiembre de 2026, 14:04 Guatemala; Preview `dpl_4rALbgNEtBMtaFpDdcdNA6hnzy3i`, commit `74441fbf09468fa5fb2b167ccbacbce30105173f`. La primera interacción completó transcripción, `/api/universal-ai` 200, `/api/voice-speech` 200 y audio; las capturas siguientes abrieron a las 20:04:47 y 20:04:53 UTC y terminaron a los seis segundos como `server_capture_failed/no_speech`. No apareció ninguna solicitud `/api/voice-transcribe`.
+- Causa raíz: V392 llamaba `MediaRecorder.start(250)` y, al cerrar, ejecutaba `requestData()` inmediatamente antes de `stop()`. Safari dejó `recorderChunks` vacío; `finishRecorder()` declaró `NO_SPEECH` antes de llegar al backend. El reintento final conservaba además el contador en `1`.
+- Escape: el simulador V392 fabricaba el blob desde `requestData()`, exactamente la conducta que Safari no entregó; por eso tres ciclos automáticos daban un PASS falso.
+- Control V394: grabación única con `MediaRecorder.start()` sin `timeslice`, consumo del blob final emitido al detener y prohibición de `requestData`; limpieza del contador al iniciar y después del fallo final. El reconocimiento nativo común de Registro/Score continúa primero; el seguimiento Universal permanece aislado de escritores.
+- Estado: V393 RECHAZADA. V394 requiere auditoría integral, LAB nuevo y una única prueba física final 3/3 en iPhone. Producción intacta.

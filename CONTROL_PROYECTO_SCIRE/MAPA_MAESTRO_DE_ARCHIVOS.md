@@ -1165,3 +1165,11 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 - `index-grupal.html`, `index.html`, `stableford-torneo.html`, `card-artifacts.js`, `live-view.js`: IN=1–9 antes de OUT=10–18 en todas las tarjetas.
 - `test-v392-universal-mediarecorder.mjs`, `test-v392-all-scorecards-in-first.mjs`: controles bloqueantes.
 - `Intocables/REGLAS_INTOCABLES.json`, `Intocables/intocables-gate.mjs`: INT-12 e INT-13.
+
+# Corte V394 · 5 de septiembre de 2026
+
+- `server-voice-capture.js`: cierre iOS por blob final de MediaRecorder, sin `timeslice` ni `requestData`.
+- `index-grupal.html`: reinicia el contador del seguimiento Universal sin alterar la entrada nativa común.
+- `test-v392-universal-mediarecorder.mjs`: reproduce tres turnos con `dataavailable` final y bloquea la causa RC-078.
+- `service-worker.js`: invalida la caché V393 rechazada.
+- RC-078, ROADMAPS, matriz, cola e inventario: trazabilidad obligatoria; Producción intacta.

@@ -40,7 +40,7 @@
       stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
       if(requestUniversalOnly&&typeof MediaRecorder==="function"){
         const preferred=typeof MediaRecorder.isTypeSupported==="function"&&MediaRecorder.isTypeSupported("audio/mp4")?"audio/mp4":"",settings=preferred?{mimeType:preferred}:undefined;
-        recorder=new MediaRecorder(stream,settings);recorderChunks=[];recorderProcess=false;recorder.ondataavailable=event=>{if(event.data?.size)recorderChunks.push(event.data)};recorder.onstop=finishRecorder;recorder.start(250);
+        recorder=new MediaRecorder(stream,settings);recorderChunks=[];recorderProcess=false;recorder.ondataavailable=event=>{if(event.data?.size)recorderChunks.push(event.data)};recorder.onstop=finishRecorder;recorder.start();
         const AudioContextClass=audioContextConstructor();context=new AudioContextClass();await context.resume();source=context.createMediaStreamSource(stream);analyser=context.createAnalyser();analyser.fftSize=2048;source.connect(analyser);
         openedAt=performance.now();emit("state","listening");monitor();recorderTimer=setTimeout(()=>stop(true),UNIVERSAL_RECORDER_MS);return true
       }
@@ -48,7 +48,7 @@
       openedAt=performance.now();emit("state","listening");monitor();return true;
     }catch(error){release();emit("error",error);emit("state","idle");return false}
   }
-  function stop(process=true){if(!stream||stopping)return false;stopping=true;cancelAnimationFrame(raf);raf=0;if(recorder&&recorder.state!=="inactive"){recorderProcess=process;try{recorder.requestData?.()}catch{}recorder.stop();return true}const chunks=capturedAudio.slice();release();capturedAudio=[];if(!process||!speechStartedAt){stopping=false;if(process)emit("error",Object.assign(new Error("NO_SPEECH"),{code:"NO_SPEECH"}));emit("state","idle");return true}emit("state","transcribing");void transcribeCapturedAudio(chunks).then(finalText=>{stopping=false;if(finalText)emit("transcript",finalText);else emit("error",Object.assign(new Error("NO_SPEECH"),{code:"NO_SPEECH"}));emit("state","idle")}).catch(error=>{stopping=false;emit("error",error);emit("state","idle")});return true}
+  function stop(process=true){if(!stream||stopping)return false;stopping=true;cancelAnimationFrame(raf);raf=0;if(recorder&&recorder.state!=="inactive"){recorderProcess=process;recorder.stop();return true}const chunks=capturedAudio.slice();release();capturedAudio=[];if(!process||!speechStartedAt){stopping=false;if(process)emit("error",Object.assign(new Error("NO_SPEECH"),{code:"NO_SPEECH"}));emit("state","idle");return true}emit("state","transcribing");void transcribeCapturedAudio(chunks).then(finalText=>{stopping=false;if(finalText)emit("transcript",finalText);else emit("error",Object.assign(new Error("NO_SPEECH"),{code:"NO_SPEECH"}));emit("state","idle")}).catch(error=>{stopping=false;emit("error",error);emit("state","idle")});return true}
   function configure(next={}){handlers={...handlers,...next};return api}
   const api={available,configure,start,stop,get active(){return !!stream},get stopping(){return stopping}};window.GSCServerVoiceCapture=api;
 })();

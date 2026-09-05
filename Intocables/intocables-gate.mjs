@@ -98,7 +98,8 @@ assert.match(audit,/test-v393-manual-hole-start\.mjs/);
 assert.match(audit,/test-v393-universal-response-continuity\.mjs/);
 assert.match(capture,/SETUP_SPEECH_THRESHOLD=\.009,ROUND_SPEECH_THRESHOLD=\.0045,UNIVERSAL_SPEECH_THRESHOLD=SETUP_SPEECH_THRESHOLD/);
 assert.match(capture,/requestUniversalOnly&&typeof MediaRecorder==="function"/);
-assert.match(capture,/recorder\.start\(250\)/);
+assert.match(capture,/recorder\.start\(\)/);
+assert.doesNotMatch(capture,/recorder\.requestData/);
 assert.match(capture,/setTimeout\(\(\)=>stop\(true\),UNIVERSAL_RECORDER_MS\)/);
 assert.match(html,/<th class="sum-col">IN<\/th>\$\{BACK\.map[\s\S]*?<th class="sum-col">OUT<\/th>/);
 assert.match(html,/<th>GROSS IN<\/th><th>GROSS OUT<\/th>/);
@@ -108,5 +109,6 @@ assert.match(liveView,/inside\.map[\s\S]*?<th>IN<\/th>\$\{out\.map[\s\S]*?<th>OU
 assert.match(individualCard,/renderNineScorecard\(FRONT[\s\S]*?,"IN"\);renderNineScorecard\(BACK[\s\S]*?,"OUT"\)/);
 assert.match(worker,/gscg-mobile-v363-/);
 assert.match(worker,/v393-manual-hole-universal-response/);
+assert.match(worker,/v394-ios-recorder-final-blob/);
 assert.match(html,/function syncRoundManualHole\(manual,maxHole=18\)/);
-console.log("INTOCABLES PASS INT-01…INT-15 · base V391, tarjetas V392 y correcciones V393 selladas");
+console.log("INTOCABLES PASS INT-01…INT-15 · base V391, tarjetas V392 y cierre iOS V394 sellados");
