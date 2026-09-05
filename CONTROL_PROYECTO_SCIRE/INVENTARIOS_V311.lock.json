@@ -1,23 +1,23 @@
 {
-  "version": "V387-UNIFIED-V386-VOICE-HISTORY-STABLEFORD-WHATSAPP-CARD",
-  "generatedAt": "2026-09-05T00:20:50Z",
-  "sourceFileCount": 420,
-  "sourceDigest": "5ca5d016d1fbf2ee44115f3ef855c6389838dd46eb4d782bc2530a1ee0016a10",
+  "version": "V388-COMPLETE-HISTORY-THREE-TURN-DIRECT-CAPTURE",
+  "generatedAt": "2026-09-05T01:08:47Z",
+  "sourceFileCount": 422,
+  "sourceDigest": "05bb57a80df18ba710e8e0b4a3845ebcf76f7e6defac0748d6343c972834b27c",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 225636,
-      "sha256": "c48cfdbcd5b1bc42a71859723a3395b9668913661e8ece7e70fcd39c411f3b1c"
+      "size": 227942,
+      "sha256": "3de39a512eec09fa5f68c2d8acb80ea6f66a722db5432967b98df884997086ba"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 257651,
-      "sha256": "bc0175af257e85bafa0a79eadf8a049793b6d102ed13d07960d6100e9d0baa64"
+      "size": 257858,
+      "sha256": "355fd6008e6ab0c07a1dc2e878e034f738d858306175094ec038a792fe2aaf68"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19261013,
-      "sha256": "5e49ca8c32beec68b80e3de51fe892663ce11f4edb626269b0c84f3d7f42c284"
+      "size": 19261005,
+      "sha256": "a6de50e1cc52395d500e604ffa480a018a8cf3d7a5ba452f4750aca32ce00f62"
     }
   ]
 }

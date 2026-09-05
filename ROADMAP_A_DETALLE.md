@@ -1,5 +1,17 @@
 # ROADMAP A DETALLE
 
+## V388 · corrección conjunta RC-068/RC-069 · 5 de septiembre de 2026
+
+- `index-grupal.html`: `isRecoverableStoredRound()` exige al menos un Gross; `storedRoundIsComplete()` gobierna el archivo automático de 18 hoyos; `openNewRoundDraft()` elimina el roster del borrador pero conserva el directorio; `recoverStablefordRoundSeptember4()` deja de depender de hostnames y archiva una sola vez la ronda oficial sin reemplazar la activa.
+- `server-voice-capture.js`: conserva los umbrales aprobados de Registro/Score, adquiere una pista nueva por turno, captura PCM 24 kHz, cierra la pista antes de transcribir, genera WAV y llama la transcripción batch comprobada. Se elimina de esta ruta la dependencia del token streaming 403.
+- `api/voice-transcribe.js`: conserva en la ruta batch la regla de un solo número de hoyo aplicado a los jugadores siguientes.
+- `service-worker.js`: invalida V387 y fuerza el shell V388.
+- `scripts/rebuild-inventory-pdfs.py`: sella inventarios con la identidad exacta V388.
+- `test-v388-history-empty-round.mjs`: prueba negativa de JAIME/DIEGO/JESSIE/ALAN sin scores, conservación de ronda parcial, archivo sólo completo, recuperación idempotente y registro nuevo vacío.
+- `test-v388-universal-three-turn-capture.mjs`: ejecuta tres ciclos consecutivos start/capture/stop/transcribe en una sola instancia y exige tres transcripciones independientes.
+- `test-v357-ios-voice-transport-recovery.mjs` y `test-v361-synchronized-voice.mjs`: conservan todos los cortes de caché aprobados y exigen además la identidad V388.
+- Puerta física: tres preguntas consecutivas reconocidas y contestadas por voz en el mismo iPhone, sin recargar ni perder estado. Estado: pendiente; Producción intacta.
+
 ## Registro técnico V387 · convergencia obligatoria de V386 y la línea Historial/Tarjeta
 
 | Área | Base V386 voz | Base V382-CARD | Resultado V387 |

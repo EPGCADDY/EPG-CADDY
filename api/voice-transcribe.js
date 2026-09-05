@@ -8,7 +8,7 @@ const STREAM_MODELS=["openai/gpt-realtime-whisper","google/gemini-3.5-transcribe
 function safeText(value,max){return String(value||"").replace(/[\r\n]+/g," ").replace(/\s+/g," ").trim().slice(0,max)}
 function promptFor(context,players){
   const base="Transcribe literalmente en español latinoamericano. Conserva nombres propios, números, hoyos, handicap, colores de marcas, lugares, zonas y preguntas completas. Jessie se escribe Jessie.";
-  if(context==="round")return `${base} Vocabulario de golf: hoyo, gross, par, birdie, bogey, doble bogey, triple bogey, eagle, águila, albatros, equis, sin score. Jugadores: ${players||"los registrados"}.`.slice(0,1000);
+  if(context==="round")return `${base} Vocabulario de golf: hoyo, gross, par, birdie, bogey, doble bogey, triple bogey, eagle, águila, albatros, equis, sin score. Jugadores: ${players||"los registrados"}. El número de hoyo dicho una vez se aplica a todos los jugadores siguientes hasta que se diga otro hoyo.`.slice(0,1000);
   return `${base} Puede ser registro de jugadores o una pregunta universal, de clima o tráfico.`;
 }
 

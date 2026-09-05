@@ -1,5 +1,16 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## V388 · Historial y Comunicación Universal consecutiva
+
+| Archivo | Función |
+|---|---|
+| `index-grupal.html` | Excluye rondas vacías, conserva activas con score, archiva sólo 18 hoyos, recupera Stableford idempotente y abre Nueva Ronda sin jugadores heredados. |
+| `server-voice-capture.js` | Captura PCM/WAV independiente y transcripción batch después de cada respuesta Universal. |
+| `api/voice-transcribe.js` | Transcribe el WAV batch con vocabulario de ronda y continuidad del número de hoyo. |
+| `test-v388-history-empty-round.mjs` | Regresión permanente de persistencia, Historial y roster vacío. |
+| `test-v388-universal-three-turn-capture.mjs` | Regresión permanente de tres turnos consecutivos del transporte directo. |
+| `scripts/rebuild-inventory-pdfs.py` | Regenera y sella los inventarios bajo la identidad V388. |
+
 ## V386 · Seguimiento universal directo
 
 - `index-grupal.html`: captura directa exclusiva del turno posterior a voz universal.

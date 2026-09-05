@@ -1,5 +1,13 @@
 # ROADMAP OVERALL
 
+## V388 · Historial íntegro y captura Universal consecutiva · 5 de septiembre de 2026
+
+V388 corrige conjuntamente los dos defectos físicos abiertos de V387. Una ronda configurada sin ningún Gross deja de ser recuperable; una ronda parcial con al menos un score continúa siendo la ronda activa al cerrar y reabrir; y el archivo automático acepta únicamente rondas completas de 18 hoyos. Abrir Nueva Ronda limpia los jugadores del borrador sin eliminar sus perfiles del directorio.
+
+La ronda Stableford oficial del 4 de septiembre —JAIME, FITO, CALIX y BRUNI— se incorpora idempotentemente al Historial del origen canónico, sin depender del hostname, sin duplicarse y sin sustituir una ronda activa con scores. Comunicación Universal deja de depender del token streaming que había devuelto 403: después de cada respuesta hablada, la captura directa adquiere audio PCM nuevo, libera físicamente la pista, construye WAV y usa la ruta batch comprobada de `/api/voice-transcribe`. El banco nuevo ejecuta tres capturas consecutivas en la misma instancia; el PASS físico de tres preguntas en el mismo iPhone permanece pendiente y no se sustituye por automatización.
+
+Archivos funcionales: `index-grupal.html`, `server-voice-capture.js`, `api/voice-transcribe.js`, `service-worker.js`. Controles: `test-v388-history-empty-round.mjs`, `test-v388-universal-three-turn-capture.mjs`, `test-v373-server-voice-transcription.mjs`, `test-v375-fast-universal-sensitive-score.mjs`, `test-v376-stableford-continuity-recovery.mjs`, `test-v381-unified-voice-history-stableford.mjs`, `test-v386-universal-direct-capture.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, ambos ROADMAPS, mapa maestro, reincidencias e inventario. Producción permanece intacta.
+
 ## V387 · línea única V386 + Historial/Stableford/WhatsApp/Tarjeta · 5 de septiembre de 2026
 
 V387 integra en un solo árbol la captura directa posterior a voz universal de V386 con Historial, recuperación de ronda, LIVE Stableford, WhatsApp y Tarjeta Digital de un toque de V382-CARD. Corrige la divergencia comprobada en el enlace de voz, cuyo Historial aparecía vacío por haber partido de una rama anterior. Desde este corte, toda versión posterior debe descender de V387 o integrar su último commit antes de publicarse; una rama aislada no puede presentarse como sincronizada.

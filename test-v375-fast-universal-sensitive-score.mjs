@@ -3,13 +3,14 @@ import fs from "node:fs";
 import {requestUniversalResponse} from "./api/universal-ai.js";
 
 const capture=fs.readFileSync("server-voice-capture.js","utf8");
+const transcriptionApi=fs.readFileSync("api/voice-transcribe.js","utf8");
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 const audit=fs.readFileSync("audit-project.mjs","utf8");
 
 assert.match(capture,/SETUP_SPEECH_THRESHOLD=\.009,ROUND_SPEECH_THRESHOLD=\.0045/);
 assert.match(capture,/requestContext==="round"\?ROUND_SPEECH_THRESHOLD:SETUP_SPEECH_THRESHOLD/);
-assert.match(capture,/El número de hoyo dicho una vez se aplica a todos los jugadores siguientes hasta que se diga otro hoyo/);
+assert.match(transcriptionApi,/El número de hoyo dicho una vez se aplica a todos los jugadores siguientes hasta que se diga otro hoyo/);
 assert.match(worker,/v375-fast-universal-sensitive-score/);
 assert.match(audit,/test-v375-fast-universal-sensitive-score\.mjs/);
 

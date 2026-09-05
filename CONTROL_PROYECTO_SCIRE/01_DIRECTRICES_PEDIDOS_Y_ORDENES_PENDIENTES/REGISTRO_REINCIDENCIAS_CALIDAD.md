@@ -1,5 +1,21 @@
 # Registro de reincidencias de calidad
 
+## RC-069 · V386 volvió al reconocimiento Safari después de fallar el streaming · 5 de septiembre de 2026
+
+- Evidencia: V387 reconoció y respondió la primera pregunta; después registró `browser_fallback_no_result_timeout` y `browser_fallback_error` con `no_speech/aborted`.
+- Causa raíz: V386 seleccionaba captura directa, pero ésta dependía del token de transcripción streaming que ya había devuelto 403; al no abrirse, caía al mismo SpeechRecognition afectado por la sesión de audio de iOS.
+- Control permanente: captura PCM independiente por turno, cierre de pista antes de transcribir, WAV batch por `/api/voice-transcribe` y regresión de tres ciclos consecutivos.
+- Evidencia automática: `test-v388-universal-three-turn-capture.mjs` y `test-v373-server-voice-transcription.mjs`.
+- Estado: corregido técnicamente en V388; PENDIENTE PRUEBA FÍSICA DE TRES PREGUNTAS EN EL MISMO IPHONE. Producción intacta.
+
+## RC-068 · ronda vacía restaurada y recuperación Stableford dependiente del hostname · 5 de septiembre de 2026
+
+- Evidencia: reapareció una Score Card sin scores con JAIME, DIEGO, JESSIE y ALAN; la ronda oficial JAIME/FITO/CALIX/BRUNI no apareció en Historial del origen instalado.
+- Causa raíz: una ronda se consideraba recuperable sólo por estar configurada, todo estado configurado se archivaba y la recuperación oficial exigía hostnames antiguos además de ausencia de otra ronda recuperable.
+- Control permanente: recuperación exige al menos un Gross; archivo automático exige 18 hoyos completos; Nueva Ronda comienza sin roster; recuperación oficial idempotente y agnóstica al hostname que no sustituye la ronda activa.
+- Evidencia automática: `test-v388-history-empty-round.mjs` y banco Stableford V376 actualizado.
+- Estado: corregido técnicamente en V388; Preview/origen real pendiente. Producción intacta.
+
 ## RC-066 · V385 se publicó desde una rama sin Historial integrado · 5 de septiembre de 2026
 
 - Evidencia: el enlace V385 mostró `NO HAY TARJETAS OFICIALES` aunque la línea V382-CARD contenía la ronda oficial recuperada.

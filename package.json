@@ -57,6 +57,8 @@
     "voice:v384-gate": "node test-v384-full-input-chain-lock.mjs",
     "voice:v385-gate": "node test-v385-ios-audio-session.mjs",
     "voice:v386-gate": "node test-v386-universal-direct-capture.mjs",
+    "history:v388-gate": "node test-v388-history-empty-round.mjs",
+    "voice:v388-gate": "node test-v388-universal-three-turn-capture.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

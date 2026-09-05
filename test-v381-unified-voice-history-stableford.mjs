@@ -8,7 +8,7 @@ const audit=fs.readFileSync("audit-project.mjs","utf8");
 assert.doesNotMatch(html,/^(<<<<<<<|=======|>>>>>>>)/m);
 assert.match(html,/function releaseAiUniversalPlaybackForListening\(\)[\s\S]*?aiUniversalTtsAudio=player/);
 assert.match(html,/async function openNewRoundWithAutomaticHistory\(\)[\s\S]*?isRoundComplete\(\)[\s\S]*?officiallyCloseRound/);
-assert.match(html,/location\.hostname\.startsWith\("epg-caddy-git-v381-unified-"\)/);
+assert.doesNotMatch(html,/recoveryPreviewHost/);
 assert.match(html,/async function sendFinalCardsToRegisteredWhatsApp\(\)/);
 assert.match(html,/data-stableford-whatsapp-country=/);
 assert.match(worker,/v380-three-turn-audio-release/);
