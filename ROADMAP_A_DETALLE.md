@@ -2185,3 +2185,4 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `service-worker.js`: invalida V389. `audit-project.mjs` y `package.json`: incorporan el gate. Documentación e inventario mantienen trazabilidad doble.
 - Estado: V389 RECHAZADA; V390 pendiente de auditoría integral, Preview vivo y prueba física voz V378 + Historial + 3/3. Producción intacta.
 - Control de publicación: el ROADMAP gate bloqueó el primer build porque la transferencia remota de `index-grupal.html` estaba incompleta; se restauró el blob completo auditado `be334ad716a09def0b317f44e1448692c26309f5` y sólo el nuevo build puede avanzar. Producción intacta.
+- `Intocables/CONFIRMACION_ESCRITA_V378.md`: agrega literalmente voz V378/velocidad `0.90`, Historial oficial, ronda Stableford 04-09-2026, persistencia de rondas con scores y descarte de rondas vacías como puntos que no pueden tocarse.

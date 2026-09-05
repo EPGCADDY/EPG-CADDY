@@ -20,7 +20,7 @@ assert.equal(physicalApproval.approvedBy,"Jaime Kirste");
 assert.equal(physicalApproval.policy.status,"INTOCABLE_REGISTRO_Y_SCORES");
 assert.equal(physicalApproval.policy.changeWithoutNewExplicitOwnerOrder,"PROHIBITED");
 assert.equal(physicalApproval.policy.failureEffect,"BLOCK_AUDIT_PREVIEW_AND_PRODUCTION");
-for(const text of ["Registro de Jugadores por micrófono","Registro de Scores por micrófono","22 segundos de Comunicación Universal está rechazado","sin una nueva orden expresa de Jaime Kirste"])assert.ok(writtenConfirmation.includes(text),`Falta confirmación escrita: ${text}`);
+for(const text of ["Registro de Jugadores por micrófono","Registro de Scores por micrófono","Voz aprobada en V378 y su velocidad exacta `0.90`","Historial de tarjetas oficiales","JAIME, FITO, CALIX y BRUNI","una ronda activa con scores se conserva","una ronda configurada sin ningún score se descarta","22 segundos de Comunicación Universal está rechazado","sin una nueva orden expresa de Jaime Kirste"])assert.ok(writtenConfirmation.includes(text),`Falta confirmación escrita: ${text}`);
 for(const scope of physicalApproval.scopes){
   const start=html.indexOf(scope.start),end=html.indexOf(scope.end,start);
   assert.ok(start>=0&&end>start,`INT-05/06/07 no pudo localizar ${scope.id}`);
