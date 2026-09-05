@@ -1,5 +1,11 @@
 # ROADMAP OVERALL
 
+## V386 · Captura directa después de voz universal · 5 de septiembre de 2026
+
+La evidencia física V385 confirmó primera pregunta correcta y segundo reconocimiento abierto pero terminado en `no_speech/aborted`. V386 usa captura directa únicamente en el turno posterior a una respuesta hablada. Registro y Scores conservan su ruta V378.
+
+Archivos: `index-grupal.html`, `service-worker.js`, `test-v386-universal-direct-capture.mjs`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, ambos ROADMAPS, mapa maestro y registro de reincidencias.
+
 ## V375 · respuesta universal inmediata y Score sensible · 4 de septiembre de 2026
 
 La evidencia real del Preview V374-R2 separó dos causas. En Score Card, la captura del servidor conservaba un umbral RMS fijo de `0.009`; los registros mostraron `no_speech` y una transcripción anterior rechazada por el parser. V375 conserva exactamente `0.009` en Registro y reduce exclusivamente Score a `0.0045`. El prompt de transcripción de ronda fija que un número de hoyo pronunciado una vez aplica a todos los jugadores siguientes hasta que se diga otro hoyo; el escritor, cálculos y persistencia no cambian.

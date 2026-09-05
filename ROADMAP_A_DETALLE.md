@@ -1,5 +1,15 @@
 # ROADMAP A DETALLE
 
+## Registro técnico V386 · Seguimiento universal por captura directa
+
+| Archivo exacto | Intervención limitada | Protección |
+|---|---|---|
+| `index-grupal.html` | Marca el turno posterior al TTS y lo abre con `GSCServerVoiceCapture`. | Registro y Scores siguen por la ruta V378. |
+| `service-worker.js` | Caché V386. | No modifica datos ni interfaz. |
+| `test-v386-universal-direct-capture.mjs` | Comprueba la separación. | Impide devolver el seguimiento al transporte fallido. |
+| `audit-project.mjs`, `package.json` | Incorporan la prueba V386. | Ejecución obligatoria en auditoría. |
+| `scripts/rebuild-inventory-pdfs.py` | Sella inventario V386. | Inventario reproducible. |
+
 ## Registro técnico V375 · Gateway primero y sensibilidad exclusiva de Score
 
 | Archivo exacto | Intervención limitada | Candado permanente |

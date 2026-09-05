@@ -1,5 +1,11 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## V386 · Seguimiento universal directo
+
+- `index-grupal.html`: captura directa exclusiva del turno posterior a voz universal.
+- `server-voice-capture.js`: transporte existente reutilizado sin cambiar sus umbrales.
+- `test-v386-universal-direct-capture.mjs`: prueba de separación respecto de Registro/Scores.
+
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
 Archivos activos rastreados al corte V353: **359**.

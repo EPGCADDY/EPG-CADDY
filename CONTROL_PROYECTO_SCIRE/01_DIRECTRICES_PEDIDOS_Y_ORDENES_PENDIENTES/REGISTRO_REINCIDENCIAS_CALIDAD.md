@@ -1,5 +1,9 @@
 # Registro de reincidencias de calidad
 
+## RC-066 · Segundo turno universal sin captura en V385 · 5 de septiembre de 2026
+
+Primera pregunta correcta; segundo reconocimiento terminó `no_speech/aborted`. V386 reserva captura directa para el seguimiento posterior a TTS y mantiene Registro/Scores en V378.
+
 Este registro conserva defectos que alcanzaron al propietario o bloquearon un cierre. Un estado ABIERTO impide el PASS del rubro afectado.
 
 | ID | Defecto | Causa raíz | Punto de escape | Control permanente | Evidencia | Estado |

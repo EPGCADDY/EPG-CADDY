@@ -1,18 +1,18 @@
 {
-  "version": "V385-IOS-AUDIO-SESSION-AND-FULL-INPUT-LOCK",
-  "generatedAt": "2026-09-04T23:52:42Z",
-  "sourceFileCount": 412,
-  "sourceDigest": "5e6607028936d96ccc4ca31cebc1bb9656833ab61bf3582bbf78489224089719",
+  "version": "V386-UNIVERSAL-DIRECT-CAPTURE-AND-FULL-INPUT-LOCK",
+  "generatedAt": "2026-09-05T00:09:30Z",
+  "sourceFileCount": 413,
+  "sourceDigest": "4fe4f8bfc98093d6a12d85b3df9c01ea26e97bc43e643903d8a2a4cb7d552b0c",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 222205,
-      "sha256": "fad4d56e116f29c6f004b9599f846758fdb9ddde427ed4edac519a9bc757fbd4"
+      "size": 222944,
+      "sha256": "0a6b41f0bf751ab64fd2b6b07bec2e61a8d2f0a04f6bd0cbb1f56deaf1d661c1"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 253578,
-      "sha256": "fd9cdf29a19ed3837134e3ec269ed3ca7879e6d78b1efac1b760e2b24d58c741"
+      "size": 253732,
+      "sha256": "e75faf652537268fefd6b346101481158ee2e6c8d082d4966bcab8adade56038"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

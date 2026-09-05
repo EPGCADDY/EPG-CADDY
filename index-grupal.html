@@ -1015,6 +1015,7 @@ let authorizedSpeech=null,speechTokenSeq=0,stopMonitorActive=false,ignoreCancelE
 let realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL,realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;
 let voiceOpening=false;
 let browserVoiceRecognition=null,browserVoiceContext=null,browserVoiceActive=false,browserVoiceRequested=false,browserVoiceTranscript="",browserVoiceInterim="",browserVoiceCandidates=[],browserVoiceErrored=false,browserVoiceStopping=false,browserVoiceSilenceTimer=null,browserVoiceFirstResultTimer=null,browserVoiceStopGuardTimer=null,browserVoiceRetryTimer=null,browserVoiceRestartCount=0,browserVoiceTransportRetryCount=0,browserVoiceItemId="",browserVoiceAppliedEntryCount=0;
+let aiUniversalDirectCaptureAfterSpeech=false;
 let serverVoiceCaptureActive=false,serverVoiceCaptureRequested=false,serverVoiceCaptureContext=null;
 let aiUniversalHistory=[],aiUniversalLastAnswer="",aiUniversalPendingSources=[],aiUniversalTextAbortController=null,aiUniversalTextBusy=false,aiUniversalMuted=false,aiUniversalUtterance=null,aiUniversalSpeechPrimed=false,aiUniversalSpeechPrimer=null,aiUniversalTtsAudio=null,aiUniversalTtsObjectUrl="",aiUniversalRulesMode=false,cedarSpeechServerBlockedUntil=0;
 const AI_UNIVERSAL_HISTORY_LIMIT=80;
@@ -2537,7 +2538,7 @@ async function speakAiUniversalText(text,{repeat=false}={}){
       const prepared=await prepare(index);if(prepared.error)throw prepared.error;prepare(index+prefetch);if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(prepared.blob);player.src=aiUniversalTtsObjectUrl;
       await new Promise((resolve,reject)=>{let started=false,settled=false,startGuard=null;const finish=(callback,value)=>{if(settled)return;settled=true;if(startGuard)clearTimeout(startGuard);callback(value)};player.onplay=()=>{started=true;if(!firstStarted){firstStarted=true;aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started",{elapsedMs:Math.round(performance.now()-speechRequestedAt)});setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO CON VOZ R7 APROBADA · 0.90",{busy:true})}};player.onended=()=>finish(resolve);player.onerror=()=>finish(reject,new Error("MEXICAN_TTS_PLAYBACK_FAILED"));const played=player.play();if(played?.catch)played.catch(error=>finish(reject,error));startGuard=setTimeout(()=>{if(!started)finish(reject,new Error("MEXICAN_TTS_NOT_STARTED"))},8000)})
     }
-    setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR");releaseAiUniversalPlaybackForListening();aiUniversalTtsAudio=null;aiUniversalSpeechPrimer=null;aiUniversalSpeechPrimed=true;setAiUniversalAudioSessionType("play-and-record");
+    setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR");releaseAiUniversalPlaybackForListening();aiUniversalTtsAudio=null;aiUniversalSpeechPrimer=null;aiUniversalSpeechPrimed=true;setAiUniversalAudioSessionType("play-and-record");aiUniversalDirectCaptureAfterSpeech=true;
     return true;
   }catch(error){
     reportVoiceHealth("browser_fallback_speech_failed");
@@ -4901,6 +4902,12 @@ async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPER
   // que un 429 remoto no deje sin score ni comunicación universal.
   if(!listening&&gestureSafeBrowserVoicePreferred()){
     voiceContext=context;setMicConnecting(context,false);
+    // Safari puede abrir SpeechRecognition después del TTS y aun devolver
+    // no_speech/aborted. Sólo ese seguimiento universal usa captura directa.
+    if(aiUniversalDirectCaptureAfterSpeech&&serverVoiceCapturePreferred()){
+      aiUniversalDirectCaptureAfterSpeech=false;
+      if(await startServerVoiceCapture(context)){voiceLastErrorMessage="MICRÓFONO DEL IPHONE ACTIVO";return true}
+    }
     if(context==="round")resetRoundCapture();
     if(context==="setup"&&(setupFinalizeRequested||setupLocked))resetSetupCapture();
     if(startBrowserVoiceFallback(context)){voiceLastErrorMessage="MICRÓFONO DEL IPHONE ACTIVO";return true}
