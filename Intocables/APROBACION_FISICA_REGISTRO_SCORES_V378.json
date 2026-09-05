@@ -1,5 +1,5 @@
 {
-  "schema": "gscg-physical-approval-lock/v2",
+  "schema": "gscg-physical-approval-lock/v3",
   "approvedVersion": "V378",
   "approvedDate": "2026-09-04",
   "approvedBy": "Jaime Kirste",
@@ -16,6 +16,9 @@
     "failureEffect": "BLOCK_AUDIT_PREVIEW_AND_PRODUCTION"
   },
   "source": "index-grupal.html",
+  "approvedFiles": [
+    {"id":"voz_y_velocidad_v378","path":"api/voice-speech.js","sha256":"dd4597f6c60b0800adc990c7d99256ea5dfd13ac219b70292587718704ca5fee"}
+  ],
   "scopes": [
     {"id":"registro_parser","start":"function parseSetupTranscript(transcript){","end":"\nfunction parseInlineManualRosterPhrase","sha256":"ee542714500cf3ccb601a68c7a5dbe5ec32f65add0ca153c648a42e2226103c8"},
     {"id":"registro_aplicador","start":"function applySetupChanges(changes){","end":"\nfunction resetSetupCapture","sha256":"5d3ff7dec0bbc275876080394597882f488cd43df4ba1aad4b4c87410eeef288"},

@@ -17,7 +17,7 @@ assert.match(chunking,/const prepared=await prepare\(index\);if\(prepared\.error
 assert.match(chunking,/reportVoiceHealth\("browser_fallback_speech_started",\{elapsedMs:/);
 assert.match(html,/if\(Number\.isFinite\(Number\(detail\?\.elapsedMs\)\)\)payload\.elapsedMs=/);
 assert.doesNotMatch(chunking,/speakAiUniversalMaleBrowserFallback/);
-assert.match(speechApi,/characters:text\.length,elapsedMs:Date\.now\(\)-speechStartedAt/);
+assert.doesNotMatch(speechApi,/FIXED_MALE_VOICE|06ddea79e86a412aa4babdd69917331a/);
 assert.match(worker,/v379-fast-chunked-r7-speech/);
 
 assert.equal(approval.policy.status,"INTOCABLE_REGISTRO_Y_SCORES");

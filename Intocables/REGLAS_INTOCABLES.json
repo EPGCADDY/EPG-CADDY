@@ -8,6 +8,7 @@
     {"id": "INT-04", "name": "cualquier_falla_bloquea_version", "mandatory": true},
     {"id": "INT-05", "name": "registro_jugadores_v378_fisicamente_aprobado_intocable", "mandatory": true},
     {"id": "INT-06", "name": "registro_scores_individual_multiple_v378_fisicamente_aprobado_intocable", "mandatory": true},
-    {"id": "INT-07", "name": "sensibilidad_umbrales_cierre_tiempos_v378_fisicamente_aprobados_intocables", "mandatory": true}
+    {"id": "INT-07", "name": "sensibilidad_umbrales_cierre_tiempos_v378_fisicamente_aprobados_intocables", "mandatory": true},
+    {"id": "INT-08", "name": "voz_y_velocidad_v378_fisicamente_aprobadas_intocables", "mandatory": true}
   ]
 }

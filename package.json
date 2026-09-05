@@ -60,6 +60,7 @@
     "history:v388-gate": "node test-v388-history-empty-round.mjs",
     "voice:v388-gate": "node test-v388-universal-three-turn-capture.mjs",
     "voice:v389-gate": "node test-v389-universal-runtime-availability.mjs",
+    "recovery:v390-gate": "node test-v390-physical-history-voice-recovery.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

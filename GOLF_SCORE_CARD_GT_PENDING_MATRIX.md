@@ -443,3 +443,5 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - `standaloneApp` se inicializa antes de `openSetup()` y elimina el `ReferenceError` reproducido por navegador.
 - V368 nace sobre `fix-v366-integrated-main` (`03ca12e`) y conserva recuperación de ronda, OIDC, AI UNIVERSAL sin pantalla, Match Play, multihoyos, reportes y LIVE.
 - Estado: navegador local PASS y banco enfocado pendiente de auditoría integral; Preview y prueba física iPhone pendientes. Producción no se modifica en V368.
+- **Fallo físico V389:** Historial vacío y segundo turno `no_speech/aborted` después de una primera respuesta completa 200/200.
+- **Control V390:** recuperación Stableford firmada/archivada sincrónicamente; voz/velocidad restauradas byte por byte desde V378 y selladas por archivo completo; seguimiento Universal post-TTS por captura PCM independiente sin acceso a escritores, con telemetría. Pendiente Preview e iPhone: voz V378 + Historial visible + 3/3.

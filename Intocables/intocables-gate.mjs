@@ -11,10 +11,10 @@ const physicalApproval=JSON.parse(fs.readFileSync(new URL("./APROBACION_FISICA_R
 const writtenConfirmation=fs.readFileSync(new URL("./CONFIRMACION_ESCRITA_V378.md",import.meta.url),"utf8");
 
 assert.equal(rules.logic,"all");
-assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT-04","INT-05","INT-06","INT-07"]);
+assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT-04","INT-05","INT-06","INT-07","INT-08"]);
 assert.ok(rules.rules.every(rule=>rule.mandatory===true));
 assert.equal(physicalApproval.approvedVersion,"V378");
-assert.equal(physicalApproval.schema,"gscg-physical-approval-lock/v2");
+assert.equal(physicalApproval.schema,"gscg-physical-approval-lock/v3");
 assert.equal(physicalApproval.scopes.length,7);
 assert.equal(physicalApproval.approvedBy,"Jaime Kirste");
 assert.equal(physicalApproval.policy.status,"INTOCABLE_REGISTRO_Y_SCORES");
@@ -26,6 +26,10 @@ for(const scope of physicalApproval.scopes){
   assert.ok(start>=0&&end>start,`INT-05/06/07 no pudo localizar ${scope.id}`);
   const actual=createHash("sha256").update(html.slice(start,end)).digest("hex");
   assert.equal(actual,scope.sha256,`INTOCABLE V378 modificado: ${scope.id}`);
+}
+for(const approved of physicalApproval.approvedFiles||[]){
+  const actual=createHash("sha256").update(fs.readFileSync(new URL(`../${approved.path}`,import.meta.url))).digest("hex");
+  assert.equal(actual,approved.sha256,`INTOCABLE V378 modificado: ${approved.id}`);
 }
 const activationScope=physicalApproval.scopes.find(scope=>scope.id==="activacion_compartida");
 assert.ok(activationScope,"Falta el blindaje de la activación compartida");
@@ -71,4 +75,4 @@ assert.match(audit,/Intocables\/intocables-gate\.mjs/);
 assert.match(audit,/test-v366-principal-entry-recovery\.mjs/);
 assert.match(audit,/test-v367-universal-voice-in-place\.mjs/);
 assert.match(worker,/gscg-mobile-v363-/);
-console.log("INTOCABLES PASS INT-01…INT-07 · 7 regiones de Registro, Scores y activación V378 selladas por SHA-256");
+console.log("INTOCABLES PASS INT-01…INT-08 · 7 regiones de Registro/Scores y voz/velocidad V378 selladas por SHA-256");

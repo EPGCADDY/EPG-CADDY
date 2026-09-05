@@ -13,7 +13,7 @@ assert.match(html,/async function openFinalDigitalCard\(\)[\s\S]*?await official
 assert.doesNotMatch(html,/recoveryPreviewHost/);
 assert.doesNotMatch(html,/requestedByEmptyInstalledPreview/);
 assert.match(html,/alreadyArchived=readRoundArchive\(\)\.some\(item=>item\?\.id===recoveryId&&item\?\.officiallyClosedAt&&item\?\.officialSnapshot\?\.status==="officially_closed"\)/);
-assert.match(html,/GSCRoundClosure\.close\(recovered/);
+assert.match(html,/GSCRoundClosure\.closeSync\(recovered/);
 assert.match(html,/\["GT","🇬🇹","502","Guatemala"\]/);
 assert.match(html,/data-stableford-whatsapp-country=/);
 assert.doesNotMatch(html,/AUTORIZA RECIBIR TARJETA|data-stableford-whatsapp-consent=/);

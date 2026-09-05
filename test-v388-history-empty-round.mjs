@@ -17,7 +17,7 @@ assert.equal(context.result.isRecoverableStoredRound(active),true,"una ronda act
 assert.equal(context.result.storedRoundIsComplete(active),false,"una ronda parcial no se archiva automáticamente");
 assert.equal(context.result.storedRoundIsComplete(complete),true,"una ronda completa sí puede archivarse");
 assert.match(html,/function archiveRoundSnapshot\(value\)\{if\(!storedRoundIsComplete\(value\)\)return false/);
-assert.match(html,/function recoverStablefordRoundSeptember4\(\)[\s\S]*alreadyArchived[\s\S]*GSCRoundClosure\.close\(recovered/);
+assert.match(html,/function recoverStablefordRoundSeptember4\(\)[\s\S]*alreadyArchived[\s\S]*GSCRoundClosure\.closeSync\(recovered/);
 assert.doesNotMatch(html,/recoveryPreviewHost/);
 assert.doesNotMatch(html,/requestedByEmptyInstalledPreview/);
 assert.match(html,/function openNewRoundDraft\(\)[\s\S]*clearDraftState\(\);draftPlayers=\[\]/);

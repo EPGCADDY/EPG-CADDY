@@ -608,3 +608,10 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - La respuesta se solicita con `voiceOnly:true` y se reproduce con Cedar/Onyx sin abrir el panel AI.
 - El acceso AI de un toque habilita audio y escucha sobre la misma pantalla.
 - PASS automático: `test-v367-universal-voice-in-place.mjs` y bancos V354/V358/V362/V364. Preview y audio físico iPhone pendientes.
+## V390-PHYSICAL-HISTORY-VOICE-RECOVERY · control activo de RC-071
+
+- V389 queda rechazada: el Historial siguió vacío y el segundo reconocimiento terminó `no_speech/aborted`.
+- La ronda oficial Stableford del 4 de septiembre se firma y archiva sincrónicamente, idempotente y sin sustituir la ronda activa.
+- La voz y velocidad se restauran exactamente desde V378; el ID V383 queda retirado y un hash de archivo completo impide otra reinterpretación.
+- Después de TTS se conserva el reproductor autorizado descargado y el siguiente turno Universal utiliza captura PCM independiente sin acceso a los escritores; Registro/Scores conservan exclusivamente su ruta V378.
+- Cierre obligatorio: auditoría integral, Preview READY, voz V378, Historial visible y tres preguntas físicas consecutivas. Producción intacta.

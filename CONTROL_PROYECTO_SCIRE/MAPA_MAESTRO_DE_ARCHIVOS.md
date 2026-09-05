@@ -1136,3 +1136,15 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 |---|---|---|
 | V385 | Audio Session iOS y cadena completa de micrófono V378. | Toda versión de voz posterior debe partir de V386 o integrar V386 antes de publicarse. |
 | V382-CARD | Historial, ronda recuperada, LIVE Stableford, WhatsApp y Tarjeta Digital de un toque. | Ninguna versión de voz puede reemplazar estos módulos con una rama anterior. |
+## V390 · Historial inmediato y segundo turno por captura directa
+
+| Archivo | Función V390 |
+|---|---|
+| `api/voice-speech.js` | Restaura exactamente la voz/velocidad del commit V378 y retira el ID V383. |
+| `round-closure.js` | Firma SHA-256 y cierra sincrónicamente la recuperación oficial de arranque. |
+| `index-grupal.html` | Archiva inmediatamente la Stableford recuperada y aísla el seguimiento Universal sin escribir Registro/Scores. |
+| `Intocables/*V378*`, `Intocables/intocables-gate.mjs` | Agregan hash de archivo completo para voz y velocidad V378. |
+| `test-v390-physical-history-voice-recovery.mjs` | Bloquea las dos reincidencias físicas V389. |
+| `service-worker.js` | Fuerza el shell V390 en el iPhone. |
+| `audit-project.mjs`, `package.json` | Ejecutan permanentemente el gate V390. |
+| ROADMAPS, matriz/cola, reincidencias, mapa e inventario | Registran el cambio y mantienen Producción intacta. |

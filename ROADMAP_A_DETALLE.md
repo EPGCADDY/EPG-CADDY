@@ -2175,3 +2175,12 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `test-v385-ios-audio-session.mjs`: exige ambas categorías y su orden; `test-v355-ios-audio-dictation.mjs` conserva la validación del cebado inicial.
 - `service-worker.js`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, RC-065, ambos ROADMAPS, mapa maestro e inventario: caché, puerta y trazabilidad V385.
 - Las siete regiones V378 y la voz masculina fija V383 no cambian. Producción intacta.
+## V390 · RC-071 Historial síncrono y captura directa posterior a TTS · 5 de septiembre de 2026
+
+- Evidencia física: Historial vacío; primera pregunta reconocida/respondida; segunda captura `no_speech/aborted` en los logs del deployment V389.
+- `round-closure.js`: agrega `sha256Sync()` comprobado contra SHA-256 nativo y `closeSync()` sin cambiar el cierre asíncrono oficial existente.
+- `index-grupal.html`: archiva sincrónicamente la ronda Stableford JAIME/FITO/CALIX/BRUNI; conserva su reproductor autorizado ya descargado; el turno Universal posterior a TTS usa captura PCM aislada que llama directamente a `answerBrowserVoiceQuery()` y no puede escribir Registro ni Scores; registra telemetría de captura.
+- `api/voice-speech.js`: restaurado byte por byte desde V378; retira el ID V383 que cambió físicamente el timbre y conserva `es-419`/`0.90` exactos. `Intocables/REGLAS_INTOCABLES.json` agrega INT-08 e Intocables v3 protege el SHA-256 completo.
+- `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v376-stableford-continuity-recovery.mjs`, `test-v379-fast-chunked-r7-speech.mjs`, `test-v381-serial-audio-input-reset.mjs`, `test-v382-input-only-reset.mjs`, `test-v390-physical-history-voice-recovery.mjs`, `test-v385-ios-audio-session.mjs` y `test-v386-universal-direct-capture.mjs`: sellan la nueva caché y verifican hash real, snapshot oficial inmediato, cuatro jugadores, ausencia de promesa, voz V378 sin ID reinterpretado, conservación del reproductor y frontera directa observable.
+- `service-worker.js`: invalida V389. `audit-project.mjs` y `package.json`: incorporan el gate. Documentación e inventario mantienen trazabilidad doble.
+- Estado: V389 RECHAZADA; V390 pendiente de auditoría integral, Preview vivo y prueba física voz V378 + Historial + 3/3. Producción intacta.

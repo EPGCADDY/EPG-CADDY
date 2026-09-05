@@ -8,7 +8,8 @@ const speech=html.slice(html.indexOf("async function speakAiUniversalText"),html
 const toggle=html.slice(html.indexOf("async function toggleVoice"),html.indexOf("function fireMicActivation"));
 assert.match(helper,/navigator\.audioSession\.type=type/);
 assert.match(speech,/setAiUniversalAudioSessionType\("transient-solo"\)/);
-assert.match(speech,/releaseAiUniversalPlaybackForListening\(\);aiUniversalTtsAudio=null;[\s\S]*setAiUniversalAudioSessionType\("play-and-record"\)/);
+assert.match(speech,/releaseAiUniversalPlaybackForListening\(\);aiUniversalSpeechPrimer=null;[\s\S]*setAiUniversalAudioSessionType\("play-and-record"\)/);
+assert.doesNotMatch(speech,/releaseAiUniversalPlaybackForListening\(\);aiUniversalTtsAudio=null/);
 assert.match(toggle,/releaseAiUniversalPlaybackForListening\(\);\s*setAiUniversalAudioSessionType\("play-and-record"\)/);
 assert.match(worker,/v385-ios-audio-session/);
 console.log("PASS V385 · Safari cambia salida transient-solo a entrada play-and-record antes de cada reconocimiento");

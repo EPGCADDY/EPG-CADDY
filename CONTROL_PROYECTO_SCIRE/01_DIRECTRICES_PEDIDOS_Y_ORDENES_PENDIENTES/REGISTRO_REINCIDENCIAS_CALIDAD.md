@@ -173,3 +173,10 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa: liberar el elemento HTML no cambia explícitamente la categoría de sesión de audio administrada por iOS.
 - Control V385: `navigator.audioSession.type="transient-solo"` durante voz y `"play-and-record"` al finalizar y antes de reconocimiento; respaldo seguro cuando la API no existe.
 - Estado: V384 rechazada; V385 pendiente de auditoría, Preview y prueba física. Producción intacta.
+## RC-071 · V389 volvió a fallar en segundo turno y no mostró Historial · 5 de septiembre de 2026
+
+- Evidencia: captura física con Historial vacío y `RECONOCIMIENTO DE VOZ NO DISPONIBLE`; logs `dpl_9v8z35uczWbmM7KM5Tg3CY4kAFrf` con primera transcripción + AI 200 + TTS 200, luego `browser_fallback_no_result_timeout` y `no_speech/aborted` a los ocho segundos.
+- Causa raíz: al terminar TTS se descargaba el reproductor y después se anulaba, por lo que el siguiente gesto volvía a cebar salida; la recuperación histórica se archivaba sólo dentro de una promesa asíncrona no comprobada; y V383 agregó un ID de locutor que no existía en el payload físicamente aprobado V378, cambiando la voz sin autorización.
+- Control permanente V390: restaurar `api/voice-speech.js` byte por byte desde V378 y sellar su SHA completo; conservar el reproductor autorizado descargado; capturar sólo el seguimiento Universal con PCM independiente sin acceso a escritores; telemetría servidor y cierre Stableford síncrono con SHA-256 real.
+- Evidencia automática: `test-v390-physical-history-voice-recovery.mjs`, V388 y `test-round-closure.mjs`.
+- Estado: V389 RECHAZADA. V390 pendiente de auditoría, Preview y prueba física voz V378 + Historial + 3/3. Producción intacta.
