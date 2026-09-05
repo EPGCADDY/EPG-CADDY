@@ -1,5 +1,12 @@
 # Registro de reincidencias de calidad
 
+## RC-070 · V388 reconoció la voz pero el backend devolvió 502/500 · 5 de septiembre de 2026
+
+- Evidencia: prueba física **0/3**; capturas `RESPONDIENDO` → `NO PUDE COMPLETAR ESA RESPUESTA`. Logs del deployment `dpl_Am8VyXkGurxZZhAWzNMaBZjyFnNf`: `browser_fallback_transcript_ready`, `/api/universal-ai` 502 y `Weather upstream 500`.
+- Causa raíz: el handler exigía `OPENAI_API_KEY` antes de resolver Vercel OIDC y una excepción de Open-Meteo salía al catch general. El banco V388 probó transporte/transcripción, pero no ejecutó el handler real sin clave directa ni la caída del proveedor climático.
+- Control permanente: Gateway-only autorizado con OIDC; cero llamada directa sin clave; clima degradado desde snapshot rotulado; prueba de handler `test-v389-universal-runtime-availability.mjs` incorporada a auditoría.
+- Estado: V388 RECHAZADA. Corregido técnicamente en V389; pendiente Preview vivo y PASS físico 3/3. Producción intacta.
+
 ## RC-069 · V386 volvió al reconocimiento Safari después de fallar el streaming · 5 de septiembre de 2026
 
 - Evidencia: V387 reconoció y respondió la primera pregunta; después registró `browser_fallback_no_result_timeout` y `browser_fallback_error` con `no_speech/aborted`.

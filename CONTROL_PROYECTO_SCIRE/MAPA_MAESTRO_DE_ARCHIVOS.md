@@ -1,5 +1,17 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## V389 · Disponibilidad real de Comunicación Universal
+
+| Archivo | Función |
+|---|---|
+| `api/universal-ai.js` | Permite Gateway OIDC sin clave directa y contiene caídas de Open-Meteo con respuesta degradada honesta. |
+| `test-v389-universal-runtime-availability.mjs` | Reproduce el backend real sin `OPENAI_API_KEY` y el error `Weather upstream 500`. |
+| `service-worker.js` | Fuerza el shell V389 en iPhone. |
+| `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs` | Sellan la nueva caché conservando los controles históricos de voz. |
+| `audit-project.mjs`, `package.json` | Ejecutan permanentemente el gate V389. |
+| `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Regeneran y sellan el inventario V389. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Registran 0/3, causa, control y estado físico pendiente. |
+
 ## V388 · Historial y Comunicación Universal consecutiva
 
 | Archivo | Función |

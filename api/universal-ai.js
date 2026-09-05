@@ -70,7 +70,7 @@ export async function requestUniversalResponse(body,{apiKey,gatewayToken,preferG
     if(gatewayResult?.ok)return gatewayResult;
     if(gatewayResult)lastFailure=gatewayResult;
   }
-  for(let index=0;index<OPENAI_ATTEMPTS.length;index++){
+  for(let index=0;apiKey&&index<OPENAI_ATTEMPTS.length;index++){
     const attempt=OPENAI_ATTEMPTS[index];
     const waitMs=index===0?0:(lastFailure.retryAfterMs??attempt.delayMs);
     if(waitMs>0){
@@ -307,6 +307,23 @@ export function formatStructuredWeatherAnswer(result,{concise=false}={}){
   return `**Clima observado por Open-Meteo en ${result.location}:** ${result.condition||"sin dato"}; ${weatherValue(result.temperatureC)} °C, sensación ${weatherValue(result.feelsLikeC)} °C, viento ${weatherValue(result.windKmh)} km/h y probabilidad máxima de lluvia hoy ${weatherValue(result.maxRainProbabilityToday,0)}%.`;
 }
 
+export function formatCachedWeatherFallback(weather,{forecastRequested=false}={}){
+  const location=String(weather?.location||"el campo actual").trim()||"el campo actual";
+  const observed=String(weather?.observedAt||"").trim();
+  const condition=String(weather?.condition||"condición no clasificada").trim();
+  const temperature=weatherValue(weather?.temperatureC),feels=weatherValue(weather?.feelsLikeC),wind=weatherValue(weather?.windKmh),rain=weatherValue(weather?.rainProbability,0);
+  const timing=observed?` registrado ${observed}`:" registrado previamente en la aplicación";
+  const limit=forecastRequested?" Open-Meteo no respondió al pronóstico solicitado; estos son únicamente los últimos datos observados y no un pronóstico.":" Open-Meteo no respondió a la actualización; estos son los últimos datos observados disponibles.";
+  return `Último clima disponible para ${location}${timing}: ${condition}, ${temperature} grados, sensación ${feels} grados, viento ${wind} kilómetros por hora y lluvia ${rain} por ciento.${limit}`;
+}
+
+async function computeWeatherForecastSafe(options){
+  try{return await computeWeatherForecast(options)}catch(error){
+    console.warn("universal weather upstream",JSON.stringify({error:String(error?.message||error||"WEATHER_UNAVAILABLE").slice(0,160)}));
+    return{ok:false,error:"WEATHER_UNAVAILABLE"};
+  }
+}
+
 const LIVE_TRAFFIC_TOOL={
   type:"function",
   name:"get_live_traffic",
@@ -406,7 +423,7 @@ export default async function handler(req,res){
     const history=sanitizeUniversalHistory(body.history),responseMode=body.responseMode==="voice"?"voice":"text";
     const appContext=sanitizeUniversalAppContext(body.appContext);
     if(isDirectWeatherQuery(query)&&appContext?.weatherOrigin){
-      const forecastIntent=weatherForecastIntentForQuery(query),forecastDate=forecastIntent.forecastDate,weatherResult=await computeWeatherForecast({
+      const forecastIntent=weatherForecastIntentForQuery(query),forecastDate=forecastIntent.forecastDate,weatherResult=await computeWeatherForecastSafe({
         ...appContext.weatherOrigin,
         forecastStartDate:forecastDate,
         forecastEndDate:forecastDate,
@@ -414,7 +431,8 @@ export default async function handler(req,res){
         timePeriod:weatherTimePeriodFromQuery(query)
       });
       if(!weatherResult.ok&&weatherResult.error==="FORECAST_DATE_UNAVAILABLE")return res.status(200).json({ok:true,answer:weatherResult.message,sources:[],forecastAvailable:false,provider:"Open-Meteo"});
-      if(!weatherResult.ok)return res.status(502).json(weatherResult);
+      if(!weatherResult.ok&&appContext.weather)return res.status(200).json({ok:true,answer:formatCachedWeatherFallback(appContext.weather,{forecastRequested:!!forecastDate||!!forecastIntent.forecastTargetTime||!!weatherTimePeriodFromQuery(query)}),sources:[],degraded:true,provider:"Open-Meteo",upstreamError:weatherResult.error||"WEATHER_UNAVAILABLE"});
+      if(!weatherResult.ok)return res.status(200).json({ok:true,answer:"Open-Meteo no respondió en este momento y no existe una observación previa segura para sustituirlo. Puedes continuar con otra pregunta.",sources:[],degraded:true,provider:"Open-Meteo",upstreamError:weatherResult.error||"WEATHER_UNAVAILABLE"});
       return res.status(200).json({ok:true,answer:formatStructuredWeatherAnswer(weatherResult,{concise:responseMode==="voice"}),sources:[]});
     }
     if(isDirectTrafficQuery(query)){
@@ -433,9 +451,9 @@ export default async function handler(req,res){
       if(!trafficResult.ok)return res.status(502).json(trafficResult);
       return res.status(200).json({ok:true,answer:formatStructuredTrafficAnswer(trafficResult,{concise:responseMode==="voice"}),sources:[]});
     }
-    const apiKey=process.env.OPENAI_API_KEY;
-    if(!apiKey)return res.status(500).json({ok:false,error:"OPENAI_NOT_CONFIGURED"});
+    const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
     const gatewayToken=await resolveGatewayToken();
+    if(!apiKey&&!gatewayToken)return res.status(503).json({ok:false,error:"UNIVERSAL_AI_NOT_CONFIGURED",retryable:false});
     const responseProfile=universalResponseProfile(query);
     const promptContext=appContext?{course:appContext.course,mode:appContext.mode,weather:appContext.weather}:null;
     const input=[...history,{role:"user",content:query}];
@@ -481,7 +499,7 @@ export default async function handler(req,res){
     const weatherCall=(payload?.output||[]).find(item=>item?.type==="function_call"&&item?.name==="get_current_weather");
     if(weatherCall){
       let args={};try{args=JSON.parse(weatherCall.arguments||"{}")||{}}catch{}
-      const forecastIntent=weatherForecastIntentForQuery(query),weatherResult=await computeWeatherForecast({
+      const forecastIntent=weatherForecastIntentForQuery(query),weatherResult=await computeWeatherForecastSafe({
         location:args.location||appContext?.weatherOrigin?.location||appContext?.course,
         latitude:appContext?.weatherOrigin?.latitude,
         longitude:appContext?.weatherOrigin?.longitude,

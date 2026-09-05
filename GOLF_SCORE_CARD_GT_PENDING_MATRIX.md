@@ -185,6 +185,9 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 
 **Estado:** V361 sincronizado; transporte local inmediato, render y persistencia por cada score mientras continúa el dictado, multi-hoyo/dos jugadores, AI UNIVERSAL hablada sin texto, voz masculina recuperable y reintentos protegidos; Preview y prueba física iPhone separados · `PEND-VOZ-003`
 
+- **Fallo físico V388:** resultado 0/3. Safari entregó transcripción, pero `/api/universal-ai` respondió 502/500 por exigir una clave directa ausente antes de usar OIDC/Gateway y por no contener `Weather upstream 500`.
+- **Control V389:** Gateway OIDC funciona sin `OPENAI_API_KEY`; la ruta directa se omite sin credencial; una caída de Open-Meteo usa el snapshot visible rotulado como anterior y no corta el ciclo hablado. Pendiente Preview y prueba física 3/3.
+
 - Convertir el micrófono y el buscador del Manual vivo en conversación natural por texto o voz, con especialidad prioritaria en golf.
 - **Fallo real V325:** tráfico futuro y consumo eléctrico dejaron el micrófono rojo abierto sin reacción. La detección semántica paciente no entregó el final del turno y el watchdog existente todavía no había comenzado.
 - **Implementado V326:** las órdenes de registro y score conservan cierre rápido de un segundo; AI UNIVERSAL ∞ usa cierre conversacional de 2.2 segundos, guardián de entrada de 15 segundos con límite duro de 90 segundos y guardián de respuesta de 30 segundos. La captura atascada se desmonta y el rojo se apaga; nunca queda escuchando indefinidamente. El micrófono sigue disponible durante respuestas sanas, permite interrupción confirmada, vuelve inmediatamente a escuchar y sólo se cierra por 30 minutos reales de inactividad.

@@ -1,5 +1,11 @@
 # ROADMAP OVERALL
 
+## V389 · Disponibilidad real de Comunicación Universal · 5 de septiembre de 2026
+
+La prueba física V388 obtuvo **0/3**: Safari sí entregó transcripciones (`browser_fallback_transcript_ready`), pero `/api/universal-ai` respondió 502/500. Los logs del mismo deployment identificaron dos fallos de servidor: el handler bloqueaba toda consulta general cuando `OPENAI_API_KEY` no estaba configurada aunque Vercel OIDC/Gateway estuviera disponible, y una caída `Weather upstream 500` escapaba hasta el error general en vez de usar el clima ya visible en la aplicación.
+
+V389 permite Gateway OIDC sin clave directa y evita llamadas OpenAI inválidas cuando no existe esa credencial. Para clima, captura la caída del proveedor y responde por voz con el último snapshot observado, claramente rotulado como dato previo y nunca como pronóstico; si no existe snapshot, informa la indisponibilidad sin romper el ciclo. `test-v389-universal-runtime-availability.mjs` reproduce ambos fallos. Archivos: `api/universal-ai.js`, `service-worker.js`, `test-v389-universal-runtime-availability.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Producción permanece intacta; el PASS físico 3/3 continúa pendiente.
+
 Sello de publicación V388: el commit final conserva íntegro `index-grupal.html`, actualiza `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, ejecuta los gates desde la rama canónica y mantiene Producción intacta.
 
 ## V388 · Historial íntegro y captura Universal consecutiva · 5 de septiembre de 2026

@@ -7,7 +7,7 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 
 assert.match(html,/gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
 assert.match(html,/gscg-ios-voice-recovery" content="V363-STOP-GUARD-NO-STUCK-LISTENING-20260828"/);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-[^"]*v380-three-turn-audio-release[^"]*v381-unified[^"]*v388-history-three-turn-batch-capture"/);
+assert.match(worker,/const CACHE_NAME="gscg-mobile-[^"]*v380-three-turn-audio-release[^"]*v381-unified[^"]*v388-history-three-turn-batch-capture[^"]*v389-universal-runtime-availability"/);
 
 const gestureStart=html.indexOf("function gestureSafeBrowserVoicePreferred");
 const gestureEnd=html.indexOf("\nfunction shouldUseBrowserVoiceFallback",gestureStart);

@@ -1,5 +1,14 @@
 # ROADMAP A DETALLE
 
+## V389 · corrección del 0/3 físico de V388 · 5 de septiembre de 2026
+
+- Evidencia real: dos transcripciones completas llegaron desde el iPhone, seguidas por `/api/universal-ai` 502; el log exacto incluyó `Weather upstream 500`. Por tanto, el micrófono reconoció y el servidor de respuestas falló.
+- `api/universal-ai.js`: acepta Vercel OIDC/Gateway aunque falte `OPENAI_API_KEY`, omite la ruta directa sin credencial y encapsula las caídas de Open-Meteo. Un snapshot previo produce respuesta degradada rotulada; sin snapshot se informa el límite con HTTP 200 para conservar la conversación.
+- `test-v389-universal-runtime-availability.mjs`: reproduce Gateway-only y caída meteorológica, exigiendo respuesta válida en ambos casos.
+- `service-worker.js`, `test-v357-ios-voice-transport-recovery.mjs` y `test-v361-synchronized-voice.mjs`: fuerzan y sellan el shell V389 sin alterar Registro ni Scores.
+- `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: regresión, estado honesto, trazabilidad y sello atómico.
+- Estado: V388 rechazada 0/3; V389 exige Preview real y después tres preguntas consecutivas en el mismo iPhone. Producción intacta.
+
 Sello de publicación V388: fuente funcional íntegra, ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` incluidos atómicamente en el commit final; Producción permanece intacta.
 
 ## V388 · corrección conjunta RC-068/RC-069 · 5 de septiembre de 2026
