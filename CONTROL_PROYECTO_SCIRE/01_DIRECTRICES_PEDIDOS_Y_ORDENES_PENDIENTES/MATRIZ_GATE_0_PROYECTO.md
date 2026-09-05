@@ -31,10 +31,14 @@
 | G0-09 | Clima | GPS primero, campo como respaldo, actual/pronóstico, inicio/cierre, artefactos, proveedor identificado y validación física | escenarios automáticos + comparación/medición de campo |
 | G0-10 | Integridad operativa | escritor único, estados, cálculos, persistencia, corrección, historial, modalidades y navegador real | auditoría maestra y recorrido real sin errores |
 | G0-11 | Producción | sin cambios mientras exista un FAIL; despliegue sólo con aprobación expresa y rollback | commit/deployment exactos y hashes antes/después |
+| G0-12 | Revisión física total de cambios | el 100% de cada cambio pedido e implementado debe recorrerse físicamente en el Preview real, en todas las pantallas, modalidades y salidas afectadas; una muestra parcial no vale | lista cerrada cambio→recorrido→evidencia física→PASS/FAIL; cualquier punto no revisado bloquea la versión |
 
 ## Lógica de resultado
 
-`PASS INTEGRAL = G0-01 AND G0-02 AND ... AND G0-11`
+`PASS INTEGRAL = G0-01 AND G0-02 AND ... AND G0-12`
 
 Un PASS automático parcial no sustituye prueba física o humana exigida. Si falta una evidencia, el rubro permanece FAIL. Producción no se toca.
 
+## Norma permanente de revisión física al 100%
+
+Todo cambio solicitado —funcional, visual, cálculo, voz, persistencia, Historial, tarjeta, archivo, LIVE, WhatsApp o navegación— debe comprobarse físicamente en el mismo Preview que se pretende entregar. La revisión debe cubrir el **100% de los puntos modificados y pedidos**, no una muestra ni una inferencia desde el código. Está prohibido afirmar “revisado”, “confirmado”, “listo”, “100%” o `PASS` si falta un solo recorrido físico aplicable. Las pruebas automáticas son obligatorias, pero complementarias; nunca sustituyen esta puerta.

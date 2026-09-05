@@ -1,6 +1,6 @@
 {
   "schema": "gscg-gate-0/v1",
-  "version": "G0-R1-20260827",
+  "version": "G0-R2-20260905-PHYSICAL-100",
   "authorization": "Reconstrucción ordenada por el propietario el 27 de agosto de 2026",
   "canonical": {
     "repository": "https://github.com/EPGCADDY/EPG-CADDY",
@@ -21,8 +21,18 @@
     {"id":"G0-08","name":"trafico","requiresLiveProvider":true,"requiresRealGuatemalaTest":true},
     {"id":"G0-09","name":"clima","requiresPhysicalFieldValidation":true},
     {"id":"G0-10","name":"integridad_operativa","evidence":["node audit-project.mjs"]},
-    {"id":"G0-11","name":"produccion_intacta","requiresOwnerApproval":true}
+    {"id":"G0-11","name":"produccion_intacta","requiresOwnerApproval":true},
+    {"id":"G0-12","name":"revision_fisica_100_por_ciento_de_cambios","requiresPhysicalPreview":true,"coveragePercent":100,"samplingAllowed":false,"automaticTestsDoNotReplacePhysicalReview":true,"missingItemBlocksVersion":true}
   ],
+  "physicalVerificationPolicy": {
+    "mandatory": true,
+    "coveragePercent": 100,
+    "scope": "cada cambio solicitado e implementado en todas las pantallas, modalidades y salidas afectadas",
+    "evidence": "lista cambio-recorrido-evidencia-PASS/FAIL sobre el mismo Preview entregable",
+    "samplingAllowed": false,
+    "automaticEvidenceIsComplementaryOnly": true,
+    "unverifiedItemResult": "BLOCK_VERSION"
+  },
   "requiredControls": [
     "AGENTS.md",
     "CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md",

@@ -2205,3 +2205,12 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - Convención única: IN=FRONT=1–9; OUT=BACK=10–18. Orden IN antes de OUT en tarjeta principal/final, resúmenes General/Práctica/Stableford/Match/Four Ball, control manual, artefactos Global/personal, Historial, `stableford-torneo.html` y LIVE.
 - `test-v392-universal-mediarecorder.mjs` y `test-v392-all-scorecards-in-first.mjs`: regresiones bloqueantes permanentes; audit e Intocables INT-12/13 las exigen.
 - Estado: V391 RECHAZADA. V392 requiere auditoría integral, Preview READY y después prueba física 3/3 en el mismo iPhone. Producción intacta.
+
+## V393 · RC-076/RC-077 · hoyo manual por ronda y parser Universal multiformato
+
+- `index-grupal.html`: `syncRoundManualHole()` identifica la ronda activa. Una ronda nueva sin scores fuerza hoyo 1; una recuperada abre el primer hoyo incompleto; una selección manual válida de la misma ronda se conserva.
+- `api/universal-ai.js`: `responseText()` acepta las representaciones válidas `output_text`, `text`, contenido de mensaje y respuesta compatible; evita convertir una respuesta correcta del Gateway en 502 vacío.
+- Evidencia real: V392 registró `/api/voice-transcribe` 200 y `server_capture_transcript_ready`, seguido por `/api/universal-ai` 502 y `browser_fallback_query_failed` en tarjeta e Inicio.
+- `test-v393-manual-hole-start.mjs`, `test-v393-universal-response-continuity.mjs`, `audit-project.mjs`, `package.json`, `service-worker.js` e Intocables INT-14/15 forman el control permanente.
+- La voz V378, velocidad 0.90, Registro, Scores, Historial, Tarjeta Digital/WhatsApp y la convención IN=1–9 antes de OUT=10–18 no cambian. Producción intacta. Universal pendiente de prueba física 3/3.
+- Trazabilidad doble: `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran y sellan V393.

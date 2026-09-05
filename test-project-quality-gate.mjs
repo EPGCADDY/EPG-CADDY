@@ -7,6 +7,11 @@ assert.match(readFileSync('.gitignore','utf8'),/(?:^|\n)\.vercel\/(?:\n|$)/);
 const pass=spawnSync(process.execPath,['scripts/project-quality-gate.mjs'],{encoding:'utf8'});
 assert.equal(pass.status,0,pass.stderr||pass.stdout);
 assert.match(pass.stdout,/PROJECT_QUALITY_GATE PASS/);
+assert.match(pass.stdout,/gates=12 physical=100%/);
+const matrix=JSON.parse(readFileSync('CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json','utf8'));
+assert.equal(matrix.physicalVerificationPolicy.coveragePercent,100);
+assert.equal(matrix.physicalVerificationPolicy.samplingAllowed,false);
+assert.equal(matrix.physicalVerificationPolicy.unverifiedItemResult,'BLOCK_VERSION');
 
 const head=spawnSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).stdout.trim();
 const vercelPass=spawnSync(process.execPath,['scripts/project-quality-gate.mjs'],{

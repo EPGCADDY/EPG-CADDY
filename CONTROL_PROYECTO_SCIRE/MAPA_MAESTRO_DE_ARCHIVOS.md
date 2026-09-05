@@ -1,5 +1,12 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## V393 · Control Manual y Universal
+
+- `index-grupal.html`: sincroniza el hoyo manual con el ID de ronda.
+- `api/universal-ai.js`: normaliza formatos válidos de texto del Gateway.
+- `test-v393-manual-hole-start.mjs`: regresión de hoyo 1/primer pendiente.
+- `test-v393-universal-response-continuity.mjs`: regresión de tres formatos de respuesta.
+
 ## V389 · Disponibilidad real de Comunicación Universal
 
 | Archivo | Función |

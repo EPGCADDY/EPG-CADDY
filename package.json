@@ -64,6 +64,8 @@
     "integration:v391-lock-gate": "node test-v391-integrated-technical-lock.mjs",
     "voice:v392-gate": "node test-v392-universal-mediarecorder.mjs",
     "cards:v392-gate": "node test-v392-all-scorecards-in-first.mjs",
+    "manual:v393-gate": "node test-v393-manual-hole-start.mjs",
+    "universal:v393-gate": "node test-v393-universal-response-continuity.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

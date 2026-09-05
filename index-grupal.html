@@ -3208,6 +3208,13 @@ function currentOperationalHole(){
   const selected=Number(document.getElementById("roundManualEntry")?.dataset?.hole);if(Number.isInteger(selected)&&selected>=1&&selected<=18)return selected;
   return ALL.find(hole=>!operationalHoleComplete(hole))||18
 }
+function syncRoundManualHole(manual,maxHole=18){
+  const limit=Math.max(1,Math.min(18,Number(maxHole)||18)),firstPending=Math.min(limit,ALL.find(hole=>hole<=limit&&!operationalHoleComplete(hole))||limit),roundIdentity=String(round.id||round.createdAt||"");
+  const selected=Number(manual?.dataset?.hole),sameRound=manual?.dataset?.roundId===roundIdentity;
+  if(!sameRound||!Number.isInteger(selected)||selected<1||selected>limit)manual.dataset.hole=String(firstPending);
+  manual.dataset.roundId=roundIdentity;
+  return Number(manual.dataset.hole)
+}
 function operationalTargetHoleForEntries(entries){const last=Array.isArray(entries)?entries.at(-1):null,hole=Number(last?.hole);return Number.isInteger(hole)&&hole>=1&&hole<=18?nextOperationalHole(hole,entries):currentOperationalHole()}
 function operationalMissingPlayers(hole){return operationalPlayersForHole(hole).filter(player=>!manualHoleResult(player,hole).recorded)}
 function operationalHoleStarted(hole){return operationalPlayersForHole(hole).some(player=>manualHoleResult(player,hole).recorded)}
@@ -4140,8 +4147,7 @@ function renderRoundManualEntry(){
   let manual=document.getElementById("roundManualEntry");
   if(!round.configured||!round.players.length){manual?.remove();return}
   if(!manual){manual=document.createElement("div");manual.id="roundManualEntry";manual.style.cssText="position:relative;z-index:9;margin:10px 0;padding:10px;border:2px solid #31ff00;background:#000;pointer-events:auto;touch-action:manipulation";document.querySelector(".card-shell").before(manual)}
-  const matchState=activeTeamMatchStatus(),matchLimit=matchState?.closed?matchState.decidedAt:18,firstPending=Math.min(matchLimit,ALL.find(hole=>!operationalHoleComplete(hole))||18);if(!manual.dataset.hole)manual.dataset.hole=String(firstPending);
-  const selectedHole=Math.max(1,Math.min(matchLimit,Number(manual.dataset.hole)||firstPending)),stable=isStablefordRound(),course=COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte,cfg=stable?stablefordConfig():null,locked=!!round.officiallyClosedAt;
+  const matchState=activeTeamMatchStatus(),matchLimit=matchState?.closed?matchState.decidedAt:18,selectedHole=syncRoundManualHole(manual,matchLimit),stable=isStablefordRound(),course=COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte,cfg=stable?stablefordConfig():null,locked=!!round.officiallyClosedAt;
   const detailOne=stable?{label:"TORNEO",value:round.tournament?.name||STABLEFORD_DEFAULT_TOURNAMENT}:{label:"CAMPO",value:course.displayName||course.name};
   const generalMatchDetail={label:"MODALIDAD",value:round.provisional?"SCORE CARD - PRÁCTICA":isMatchPlayRound()?"MATCH PLAY":"RONDA NORMAL"};
   const detailTwo=stable?{label:"CATEGORÍA",value:`${cfg.label} · ${stablefordTeeLabel(cfg)}`}:generalMatchDetail;

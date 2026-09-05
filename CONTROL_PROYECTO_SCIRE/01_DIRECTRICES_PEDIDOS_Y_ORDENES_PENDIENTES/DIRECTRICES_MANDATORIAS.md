@@ -57,6 +57,12 @@ Solamente cuando sea necesario un nuevo turno debe indicarse expresamente. Cualq
 
 ## Norma permanente y estricta de ROADMAPS
 
+## Norma permanente — revisión física obligatoria del 100% de los cambios
+
+Antes de entregar o declarar terminada cualquier versión, se debe revisar físicamente en el Preview real el **100% de todos los cambios pedidos e implementados**, recorriendo cada pantalla, modalidad, tarjeta, cálculo, persistencia, voz, Historial, LIVE, WhatsApp, archivo y navegación afectada. Queda prohibida la revisión por muestra. Las pruebas automáticas no sustituyen esta comprobación. Un solo punto sin evidencia física queda `FAIL` y bloquea la versión y Producción.
+
+## Norma permanente y estricta de ROADMAPS
+
 1. Punto de activación oficial: directorio registrado hasta la **línea 183**.
 2. Punto de corte vigente después de instalar el candado técnico: **línea 185**.
 3. Activación oficial: **23 de agosto de 2026, 17:05:00, hora de Guatemala**.

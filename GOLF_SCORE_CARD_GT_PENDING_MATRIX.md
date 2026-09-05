@@ -1,5 +1,11 @@
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
+## V393 · verificación física pendiente
+
+- Control Manual General y Stableford: técnicamente corregido para iniciar en hoyo 1 sin scores o primer hoyo pendiente con scores.
+- Comunicación Universal en Inicio y tarjeta: parser del Gateway corregido; aceptación pendiente de tres preguntas consecutivas en el mismo iPhone.
+- Producción permanece intacta.
+
 **Corte vigente:** V361 sincroniza el parser natural V360 con score visible y persistido inmediatamente durante el mismo dictado, continuidad de ronda, AI UNIVERSAL `voiceOnly`, voz masculina recuperable y circuito Cedar. Auditoría, Preview y prueba física son puertas separadas. LIVE V353 conserva su E2E aprobado
 
 **Fuente normativa:** `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`

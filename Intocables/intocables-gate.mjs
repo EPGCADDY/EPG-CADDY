@@ -17,7 +17,7 @@ const integratedLock=JSON.parse(fs.readFileSync(new URL("./BASE_TECNICA_INTEGRAD
 const writtenConfirmation=fs.readFileSync(new URL("./CONFIRMACION_ESCRITA_V378.md",import.meta.url),"utf8");
 
 assert.equal(rules.logic,"all");
-assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT-04","INT-05","INT-06","INT-07","INT-08","INT-09","INT-10","INT-11","INT-12","INT-13"]);
+assert.deepEqual(rules.rules.map(rule=>rule.id),["INT-01","INT-02","INT-03","INT-04","INT-05","INT-06","INT-07","INT-08","INT-09","INT-10","INT-11","INT-12","INT-13","INT-14","INT-15"]);
 assert.ok(rules.rules.every(rule=>rule.mandatory===true));
 assert.equal(physicalApproval.approvedVersion,"V378");
 assert.equal(physicalApproval.schema,"gscg-physical-approval-lock/v3");
@@ -94,6 +94,8 @@ assert.match(audit,/test-v366-principal-entry-recovery\.mjs/);
 assert.match(audit,/test-v367-universal-voice-in-place\.mjs/);
 assert.match(audit,/test-v392-universal-mediarecorder\.mjs/);
 assert.match(audit,/test-v392-all-scorecards-in-first\.mjs/);
+assert.match(audit,/test-v393-manual-hole-start\.mjs/);
+assert.match(audit,/test-v393-universal-response-continuity\.mjs/);
 assert.match(capture,/SETUP_SPEECH_THRESHOLD=\.009,ROUND_SPEECH_THRESHOLD=\.0045,UNIVERSAL_SPEECH_THRESHOLD=SETUP_SPEECH_THRESHOLD/);
 assert.match(capture,/requestUniversalOnly&&typeof MediaRecorder==="function"/);
 assert.match(capture,/recorder\.start\(250\)/);
@@ -105,4 +107,6 @@ assert.match(stablefordStandalone,/<th class="sum">IN<\/th>'\+backCells[\s\S]*?<
 assert.match(liveView,/inside\.map[\s\S]*?<th>IN<\/th>\$\{out\.map[\s\S]*?<th>OUT<\/th>/);
 assert.match(individualCard,/renderNineScorecard\(FRONT[\s\S]*?,"IN"\);renderNineScorecard\(BACK[\s\S]*?,"OUT"\)/);
 assert.match(worker,/gscg-mobile-v363-/);
-console.log("INTOCABLES PASS INT-01…INT-13 · base V391, Universal V392 e IN→OUT global sellados");
+assert.match(worker,/v393-manual-hole-universal-response/);
+assert.match(html,/function syncRoundManualHole\(manual,maxHole=18\)/);
+console.log("INTOCABLES PASS INT-01…INT-15 · base V391, tarjetas V392 y correcciones V393 selladas");

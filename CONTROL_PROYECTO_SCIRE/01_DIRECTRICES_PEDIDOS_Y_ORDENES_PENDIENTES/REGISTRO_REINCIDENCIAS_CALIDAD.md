@@ -1,5 +1,19 @@
 # Registro de reincidencias de calidad
 
+## RC-077 · V392 convirtió respuestas válidas del Gateway en 502 · 5 de septiembre de 2026
+
+- Evidencia: en Inicio y tarjeta, la transcripción respondió 200 y registró transcript listo; `/api/universal-ai` terminó 502.
+- Causa raíz: el extractor aceptaba sólo contenido `output_text`; respuestas válidas con `text` u `output_text` directo quedaban vacías.
+- Control permanente: `test-v393-universal-response-continuity.mjs` prueba tres formatos y queda dentro de auditoría e Intocables.
+- Estado: corregido técnicamente en V393; pendiente prueba física 3/3. Producción intacta.
+
+## RC-076 · Control Manual heredó hoyo 18 de otra ronda · 5 de septiembre de 2026
+
+- Evidencia: rondas General y Stableford sin scores abrieron Control Manual en hoyo 18.
+- Causa raíz: el nodo DOM conservaba `dataset.hole=18` aunque cambiara el ID de ronda.
+- Control permanente: `syncRoundManualHole()` vincula selección e ID; `test-v393-manual-hole-start.mjs` exige hoyo 1 vacío, primer pendiente con scores y navegación estable dentro de la misma ronda.
+- Estado: corregido técnicamente en V393. Producción intacta.
+
 ## RC-070 · V388 reconoció la voz pero el backend devolvió 502/500 · 5 de septiembre de 2026
 
 - Evidencia: prueba física **0/3**; capturas `RESPONDIENDO` → `NO PUDE COMPLETAR ESA RESPUESTA`. Logs del deployment `dpl_Am8VyXkGurxZZhAWzNMaBZjyFnNf`: `browser_fallback_transcript_ready`, `/api/universal-ai` 502 y `Weather upstream 500`.

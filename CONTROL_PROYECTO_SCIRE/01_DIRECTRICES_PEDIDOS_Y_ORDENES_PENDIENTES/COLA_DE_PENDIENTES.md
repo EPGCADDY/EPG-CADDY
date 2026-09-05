@@ -1,5 +1,11 @@
 # Cola oficial de pendientes · Golf Score Card GT
 
+## V393 · puerta física
+
+- Probar tres preguntas consecutivas en Inicio y tarjeta, sin recarga ni pérdida de Registro, Scores o Historial.
+- Confirmar Control Manual en hoyo 1 para ronda vacía y en primer hoyo pendiente para ronda con scores.
+- No montar Producción hasta aprobación expresa.
+
 Este archivo concentra los trabajos que el propietario ha pedido conservar para ejecución futura. Cuando el propietario diga **“busca los pendientes por hacer”**, este documento debe revisarse primero, junto con `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`.
 
 ## Resumen ejecutivo vigente · 28 de agosto de 2026

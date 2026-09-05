@@ -348,11 +348,15 @@ const LIVE_WEATHER_TOOL={
 };
 
 function responseText(payload){
-  return(payload?.output||[])
-    .filter(item=>item?.type==="message")
-    .flatMap(item=>item.content||[])
-    .filter(item=>item?.type==="output_text")
-    .map(item=>String(item.text||"").trim())
+  const values=[payload?.output_text,payload?.text,payload?.choices?.[0]?.message?.content];
+  for(const item of payload?.output||[]){
+    values.push(item?.output_text,item?.text);
+    if(typeof item?.content==="string")values.push(item.content);
+    for(const content of Array.isArray(item?.content)?item.content:[])values.push(content?.text?.value,content?.text,content?.output_text,content?.content);
+  }
+  return values
+    .flatMap(value=>Array.isArray(value)?value:[value])
+    .map(value=>String(value||"").trim())
     .filter(Boolean)
     .join("\n")
     .replace(/\s*\(\[[^\]]*\]\(https:\/\/[^)]+\)\)/gi,"")
