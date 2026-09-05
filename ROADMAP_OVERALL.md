@@ -1693,3 +1693,7 @@ Control de publicación: el primer commit V394 quedó rechazado por transferenci
 ## V395 · elimina el cierre anticipado de seis segundos · 5 de septiembre de 2026
 
 La causa comprobada de la reincidencia era un temporizador fijo todavía activo en server-voice-capture.js: Universal detenía MediaRecorder a los 6000 ms aunque la cadena común admitía hasta 30 s y ya disponía de cierre por silencio. V395 elimina exclusivamente ese corte, conserva MediaRecorder.start() sin timeslice ni requestData, y deja el cierre gobernado por silencio, ausencia real de voz o máximo de 30 s. La prueba permanente de tres turnos ahora prohíbe el límite de seis segundos. No cambian Registro, Score, multi-hoyos, cálculos, persistencia, navegación, diseño, voz R7/0.90 ni Producción.
+
+## V396 · evidencia ejecutable de tres turnos completos · 5 de septiembre de 2026
+
+`test-v392-universal-mediarecorder.mjs` reproduce tres sesiones consecutivas completas: voz detectada, 1.1 s de silencio, blob MP4 no vacío, POST real del flujo a `/api/voice-transcribe`, transcripción, liberación de pista y AudioContext, estado idle y rearme. También prohíbe cualquier temporizador fijo y valida la secuencia `listening → transcribing → idle` tres veces. No cambia código funcional ni Producción.

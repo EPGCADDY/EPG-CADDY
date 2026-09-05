@@ -2231,4 +2231,11 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - service-worker.js: invalida caché con V395 conservando todos los marcadores anteriores.
 - Intocables/intocables-gate.mjs: bloquea la reintroducción del corte de 6000 ms.
 - Controles: RC-079, cola, mapa maestro, ROADMAPS e inventario V395. Producción y módulos aprobados permanecen intactos.
+
+## V396 · cierre probatorio de RC-079
+
+- `test-v392-universal-mediarecorder.mjs`: reemplaza el stop manual del banco por energía de voz seguida de 1100 ms de silencio en cada uno de tres turnos.
+- El banco exige audio Base64 decodificable y no vacío, endpoint `/api/voice-transcribe`, tres transcripciones, tres cierres de pista, tres cierres de AudioContext, cero errores y tres ciclos completos `listening/transcribing/idle`.
+- El `setTimeout` del sandbox lanza error: cualquier reintroducción de un corte fijo vuelve a fallar permanentemente.
+- Sin cambios en `server-voice-capture.js`, UI, cálculos, persistencia, navegación, diseño ni Producción.
 - Publicación remota: `6336ad1` fue rechazado por blob truncado y `51f7182` restauró `index-grupal.html` con SHA Git exacto `3cf766c23fc54ba2c17107793e18b7fb0c457b84`; el cierre atómico siguiente registra ambos ROADMAPS e inventario para superar el candado de publicación. Ninguno se entrega como candidato.

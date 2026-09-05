@@ -645,3 +645,9 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - [x] Eliminado exclusivamente el cierre fijo de seis segundos; se conservan silencio, no-voz y máximo de 30 s.
 - [ ] Auditoría integral, deployment LAB nuevo y verificación técnica reproducible.
 - [ ] Una única validación física final 3/3 en iPhone; no entregar V394.
+
+# V396 · evidencia completa previa a la única prueba física
+
+- [x] Banco permanente 3/3 con audio no vacío, cierre por silencio, POST de transcripción, transcripción, limpieza y rearme.
+- [ ] Auditoría integral y deployment LAB exacto V396.
+- [ ] Única validación física final 3/3 en iPhone.

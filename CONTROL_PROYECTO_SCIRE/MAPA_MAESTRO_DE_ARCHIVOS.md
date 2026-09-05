@@ -1170,6 +1170,13 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 
 # Corte V395 · 5 de septiembre de 2026
 
+# Corte V396 · 5 de septiembre de 2026
+
+- test-v392-universal-mediarecorder.mjs: prueba ejecutable 3/3 de voz, silencio, blob no vacío, transcripción, limpieza y rearme.
+- ROADMAP_OVERALL.md y ROADMAP_A_DETALLE.md: trazabilidad V396.
+- scripts/rebuild-inventory-pdfs.py e INVENTARIOS_V311.lock.json: sello documental V396.
+- Código funcional y Producción: sin cambios.
+
 - server-voice-capture.js: captura Universal sin cierre fijo de seis segundos; conserva silencio, no-voz y máximo general de treinta segundos.
 - test-v392-universal-mediarecorder.mjs: regresión permanente de tres turnos y prohibición del temporizador de 6000 ms.
 - index-grupal.html y service-worker.js: marcador y caché V395 del mismo artefacto LAB.
