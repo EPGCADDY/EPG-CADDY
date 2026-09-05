@@ -1664,3 +1664,5 @@ La confirmación escrita V378 incorpora como puntos explícitamente intocables l
 ## V391 · base técnica integrada e intocable · 5 de septiembre de 2026
 
 V391 convierte en un solo contrato técnico obligatorio el Historial oficial, la persistencia de rondas, la recuperación Stableford del 4 de septiembre, Tarjeta Digital/WhatsApp y la voz exacta V378 a velocidad 0.90. `Intocables/BASE_TECNICA_INTEGRADA_V391.json` sella archivos y regiones por SHA-256; INT-09, INT-10 e INT-11 bloquean cualquier versión posterior que pierda parte de esta integración. `test-v391-integrated-technical-lock.mjs` se ejecuta dentro de la auditoría maestra. Producción permanece intacta. Comunicación Universal continúa pendiente de prueba física 3/3.
+
+Sello remoto V391: la reposición del shell completo y estos ROADMAPS viajan atómicamente en el candidato final; cualquier transferencia incompleta queda bloqueada.

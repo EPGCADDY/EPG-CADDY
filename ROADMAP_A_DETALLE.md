@@ -2196,3 +2196,4 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - Tarjeta Digital limpia la ronda únicamente después de entregar con éxito todas las tarjetas WhatsApp; fallo o número ausente conserva la ronda y no anuncia éxito.
 - Producción intacta. Universal queda `PENDING_PHYSICAL_TEST` hasta tres preguntas consecutivas en el mismo iPhone.
 - El segundo turno Universal usa captura directa independiente; si iOS no entrega señal, libera y reabre una vez. Si la primera apertura falla, reintenta la adquisición tras 250 ms. Los tres eventos `server_capture_*` quedan aceptados en `/api/voice-health` para que la siguiente evidencia nunca vuelva a quedar oculta.
+- Sello remoto: `index-grupal.html`, ambos ROADMAPS e inventario se publican juntos; el gate rechaza cualquier commit de reparación parcial.
