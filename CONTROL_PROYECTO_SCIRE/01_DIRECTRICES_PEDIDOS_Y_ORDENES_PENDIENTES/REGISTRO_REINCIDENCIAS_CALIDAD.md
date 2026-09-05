@@ -217,3 +217,11 @@ La tarjeta principal todavía rotulaba 1–9 como OUT y 10–18 como IN pese a h
 - Escape: el simulador V392 fabricaba el blob desde `requestData()`, exactamente la conducta que Safari no entregó; por eso tres ciclos automáticos daban un PASS falso.
 - Control V394: grabación única con `MediaRecorder.start()` sin `timeslice`, consumo del blob final emitido al detener y prohibición de `requestData`; limpieza del contador al iniciar y después del fallo final. El reconocimiento nativo común de Registro/Score continúa primero; el seguimiento Universal permanece aislado de escritores.
 - Estado: V393 RECHAZADA. V394 requiere auditoría integral, LAB nuevo y una única prueba física final 3/3 en iPhone. Producción intacta.
+
+# RC-079 · V394 conservó un corte fijo de seis segundos en Comunicación Universal
+
+- Evidencia: server-voice-capture.js mantenía UNIVERSAL_RECORDER_MS=6000 y ejecutaba setTimeout(()=>stop(true),UNIVERSAL_RECORDER_MS); test-v392-universal-mediarecorder.mjs exigía literalmente conservar ese límite.
+- Causa raíz: el cierre fijo de seis segundos competía con el cierre real por silencio y podía detener una segunda o tercera pregunta antes de finalizar, aunque el límite general autorizado era de treinta segundos.
+- Escape: la prueba de tres turnos detenía manualmente cada grabador de inmediato y nunca ejecutaba ni rechazaba el temporizador de seis segundos.
+- Control V395: se elimina únicamente el temporizador fijo de Universal. Cada sesión cierra por un segundo de silencio después de detectar voz, por ocho segundos sin inicio de voz o por el máximo general de treinta segundos. La regresión prohíbe UNIVERSAL_RECORDER_MS y cualquier setTimeout de 6000 ms.
+- Estado: V394 RECHAZADA. Producción intacta. V395 requiere auditoría integral, LAB nuevo y una única validación física final 3/3 en iPhone.

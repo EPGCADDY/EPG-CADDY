@@ -638,3 +638,10 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - [x] Eliminada la combinación causal `start(250)` + `requestData()` de Safari.
 - [ ] Auditoría, deployment LAB nuevo y verificación técnica reproducible.
 - [ ] Una única prueba física final 3/3 en iPhone; ninguna prueba adicional sobre V393.
+
+# V395 · reemplazo obligatorio de V394 rechazada
+
+- [x] RC-079 documentada: el corte fijo de 6000 ms seguía activo y estaba blindado erróneamente por la prueba.
+- [x] Eliminado exclusivamente el cierre fijo de seis segundos; se conservan silencio, no-voz y máximo de 30 s.
+- [ ] Auditoría integral, deployment LAB nuevo y verificación técnica reproducible.
+- [ ] Una única validación física final 3/3 en iPhone; no entregar V394.

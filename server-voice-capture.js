@@ -1,13 +1,13 @@
 (function(){
   "use strict";
-  const TARGET_RATE=24000,SILENCE_MS=1000,NO_SPEECH_MS=8000,MAX_CAPTURE_MS=30000,MIN_SPEECH_MS=180,SETUP_SPEECH_THRESHOLD=.009,ROUND_SPEECH_THRESHOLD=.0045,UNIVERSAL_SPEECH_THRESHOLD=SETUP_SPEECH_THRESHOLD,UNIVERSAL_RECORDER_MS=6000;
+  const TARGET_RATE=24000,SILENCE_MS=1000,NO_SPEECH_MS=8000,MAX_CAPTURE_MS=30000,MIN_SPEECH_MS=180,SETUP_SPEECH_THRESHOLD=.009,ROUND_SPEECH_THRESHOLD=.0045,UNIVERSAL_SPEECH_THRESHOLD=SETUP_SPEECH_THRESHOLD;
   let stream=null,context=null,source=null,analyser=null,processor=null,raf=0,capturedAudio=[],speechAt=0,speechStartedAt=0,openedAt=0,stopping=false,requestContext="setup",players="";
-  let recorder=null,recorderChunks=[],recorderTimer=0,recorderProcess=false,requestUniversalOnly=false;
+  let recorder=null,recorderChunks=[],recorderProcess=false,requestUniversalOnly=false;
   let handlers={state:null,transcript:null,error:null};
   function emit(name,value){try{handlers[name]?.(value)}catch{}}
   function audioContextConstructor(){return window.AudioContext||window.webkitAudioContext||null}
   function available(){return !!(navigator.mediaDevices?.getUserMedia&&audioContextConstructor())}
-  function release(){cancelAnimationFrame(raf);raf=0;if(recorderTimer)clearTimeout(recorderTimer);recorderTimer=0;try{processor?.disconnect()}catch{}try{source?.disconnect()}catch{}try{analyser?.disconnect()}catch{}try{stream?.getTracks().forEach(track=>track.stop())}catch{}try{context?.close()}catch{}stream=null;context=null;source=null;analyser=null;processor=null}
+  function release(){cancelAnimationFrame(raf);raf=0;try{processor?.disconnect()}catch{}try{source?.disconnect()}catch{}try{analyser?.disconnect()}catch{}try{stream?.getTracks().forEach(track=>track.stop())}catch{}try{context?.close()}catch{}stream=null;context=null;source=null;analyser=null;processor=null}
   function downsample(input,fromRate){if(fromRate===TARGET_RATE)return input;const ratio=fromRate/TARGET_RATE,length=Math.max(1,Math.round(input.length/ratio)),output=new Float32Array(length);for(let i=0;i<length;i++){const start=Math.floor(i*ratio),end=Math.min(input.length,Math.floor((i+1)*ratio));let sum=0;for(let j=start;j<end;j++)sum+=input[j];output[i]=sum/Math.max(1,end-start)}return output}
   function pcm16(input){const out=new Int16Array(input.length);for(let i=0;i<input.length;i++){const sample=Math.max(-1,Math.min(1,input[i]));out[i]=sample<0?sample*32768:sample*32767}return new Uint8Array(out.buffer)}
   function sendAudio(bytes){if(capturedAudio.length<360)capturedAudio.push(bytes)}
@@ -42,7 +42,7 @@
         const preferred=typeof MediaRecorder.isTypeSupported==="function"&&MediaRecorder.isTypeSupported("audio/mp4")?"audio/mp4":"",settings=preferred?{mimeType:preferred}:undefined;
         recorder=new MediaRecorder(stream,settings);recorderChunks=[];recorderProcess=false;recorder.ondataavailable=event=>{if(event.data?.size)recorderChunks.push(event.data)};recorder.onstop=finishRecorder;recorder.start();
         const AudioContextClass=audioContextConstructor();context=new AudioContextClass();await context.resume();source=context.createMediaStreamSource(stream);analyser=context.createAnalyser();analyser.fftSize=2048;source.connect(analyser);
-        openedAt=performance.now();emit("state","listening");monitor();recorderTimer=setTimeout(()=>stop(true),UNIVERSAL_RECORDER_MS);return true
+        openedAt=performance.now();emit("state","listening");monitor();return true
       }
       const AudioContextClass=audioContextConstructor();context=new AudioContextClass();await context.resume();source=context.createMediaStreamSource(stream);analyser=context.createAnalyser();analyser.fftSize=2048;processor=context.createScriptProcessor(2048,1,1);source.connect(analyser);source.connect(processor);processor.connect(context.destination);processor.onaudioprocess=event=>{if(stopping)return;sendAudio(pcm16(downsample(event.inputBuffer.getChannelData(0),context.sampleRate)))};
       openedAt=performance.now();emit("state","listening");monitor();return true;

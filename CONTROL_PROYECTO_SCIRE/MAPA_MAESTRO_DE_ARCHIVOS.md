@@ -1168,6 +1168,14 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 
 # Corte V394 · 5 de septiembre de 2026
 
+# Corte V395 · 5 de septiembre de 2026
+
+- server-voice-capture.js: captura Universal sin cierre fijo de seis segundos; conserva silencio, no-voz y máximo general de treinta segundos.
+- test-v392-universal-mediarecorder.mjs: regresión permanente de tres turnos y prohibición del temporizador de 6000 ms.
+- index-grupal.html y service-worker.js: marcador y caché V395 del mismo artefacto LAB.
+- Intocables/intocables-gate.mjs: candado contra la reintroducción del corte anticipado.
+- Producción, Registro, Score, multi-hoyos, cálculos, persistencia, navegación, diseño y voz aprobada permanecen sin cambios.
+
 - `server-voice-capture.js`: cierre iOS por blob final de MediaRecorder, sin `timeslice` ni `requestData`.
 - `index-grupal.html`: reinicia el contador del seguimiento Universal sin alterar la entrada nativa común.
 - `test-v392-universal-mediarecorder.mjs`: reproduce tres turnos con `dataavailable` final y bloquea la causa RC-078.

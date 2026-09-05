@@ -6,7 +6,8 @@ const source=fs.readFileSync("server-voice-capture.js","utf8"),html=fs.readFileS
 assert.match(source,/requestUniversalOnly&&typeof MediaRecorder==="function"/);
 assert.match(source,/recorder\.start\(\)/);
 assert.doesNotMatch(source,/recorder\.requestData/);
-assert.match(source,/UNIVERSAL_RECORDER_MS=6000/);
+assert.doesNotMatch(source,/UNIVERSAL_RECORDER_MS|setTimeout\(\(\)=>stop\(true\),6000\)/);
+assert.match(source,/MAX_CAPTURE_MS=30000/);
 assert.match(source,/UNIVERSAL_SPEECH_THRESHOLD=SETUP_SPEECH_THRESHOLD/);
 assert.match(source,/requestUniversalOnly\?UNIVERSAL_SPEECH_THRESHOLD/);
 assert.match(html,/transport\.start\(\{context,players,universalOnly\}\)/);
@@ -30,4 +31,4 @@ for(let turn=0;turn<3;turn++){
   await new Promise(resolve=>setTimeout(resolve,0));
 }
 assert.equal(fetchCount,3);assert.deepEqual(received,["Pregunta 1","Pregunta 2","Pregunta 3"]);
-console.log("PASS V394 · tres turnos usan el blob final de MediaRecorder sin requestData ni timeslice en Safari");
+console.log("PASS V395 · tres turnos usan cierre por silencio o máximo 30 s, sin corte fijo de 6 s ni blob vacío");

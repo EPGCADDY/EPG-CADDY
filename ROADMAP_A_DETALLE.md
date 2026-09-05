@@ -2222,4 +2222,13 @@ V376-R1 corrige la transferencia íntegra de `index-grupal.html`, regenera el se
 - `index-grupal.html`: limpia `universalServerCaptureRetryCount` al abrir y después de un fallo final; conserva captura nativa común primero y frontera Universal sin escritores.
 - `test-v392-universal-mediarecorder.mjs`: tres turnos consecutivos con el orden real de cierre y aserciones negativas contra `timeslice` y `requestData`.
 - `service-worker.js`: caché V394. Producción, cálculos, persistencia, diseño, navegación, Registro/Score aprobados y voz R7/0.90 permanecen intactos.
+
+## V395 · RC-079 · eliminación del corte fijo de 6000 ms
+
+- server-voice-capture.js: elimina UNIVERSAL_RECORDER_MS=6000 y su temporizador; conserva cierre por silencio, no-voz a 8 s y máximo general de 30 s.
+- test-v392-universal-mediarecorder.mjs: tres turnos consecutivos y prohibición permanente del corte fijo de seis segundos.
+- index-grupal.html: marcador técnico V395 sin cambios funcionales adicionales.
+- service-worker.js: invalida caché con V395 conservando todos los marcadores anteriores.
+- Intocables/intocables-gate.mjs: bloquea la reintroducción del corte de 6000 ms.
+- Controles: RC-079, cola, mapa maestro, ROADMAPS e inventario V395. Producción y módulos aprobados permanecen intactos.
 - Publicación remota: `6336ad1` fue rechazado por blob truncado y `51f7182` restauró `index-grupal.html` con SHA Git exacto `3cf766c23fc54ba2c17107793e18b7fb0c457b84`; el cierre atómico siguiente registra ambos ROADMAPS e inventario para superar el candado de publicación. Ninguno se entrega como candidato.
