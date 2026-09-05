@@ -77,7 +77,7 @@ export function normalizeLiveSnapshot(value){
   const rawPlayers=Array.isArray(value.players)?value.players:[];if(rawPlayers.length<1||rawPlayers.length>6)throw liveError("LIVE_INVALID_PLAYERS");
   const roundId=cleanText(value.roundId,160),players=rawPlayers.map(safePlayer);
   if(new Set(players.map(player=>player.id)).size!==players.length)throw liveError("LIVE_INVALID_PLAYERS");
-  const courseHoles=(Array.isArray(value.courseHoles)?value.courseHoles:[]).slice(0,18).map((item,index)=>({hole:boundedInteger(item?.hole,1,18,index+1),par:boundedInteger(item?.par,3,6,null)})).filter(item=>item.par!==null);
+  const courseHoles=(Array.isArray(value.courseHoles)?value.courseHoles:[]).slice(0,18).map((item,index)=>({hole:boundedInteger(item?.hole,1,18,index+1),par:boundedInteger(item?.par,3,6,null),yards:boundedInteger(item?.yards,1,999,null)})).filter(item=>item.par!==null);
   if(!ID_PATTERN.test(roundId)||players.length<1)throw liveError("LIVE_INVALID_SNAPSHOT");
   return{
     schemaVersion:1,

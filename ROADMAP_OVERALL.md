@@ -1,9 +1,28 @@
 # ROADMAP OVERALL
 
+## V387 · línea única V386 + Historial/Stableford/WhatsApp/Tarjeta · 5 de septiembre de 2026
+
+V387 integra en un solo árbol la captura directa posterior a voz universal de V386 con Historial, recuperación de ronda, LIVE Stableford, WhatsApp y Tarjeta Digital de un toque de V382-CARD. Corrige la divergencia comprobada en el enlace de voz, cuyo Historial aparecía vacío por haber partido de una rama anterior. Desde este corte, toda versión posterior debe descender de V387 o integrar su último commit antes de publicarse; una rama aislada no puede presentarse como sincronizada.
+
+Archivos y controles exactos: `index-grupal.html`, `api/voice-speech.js`, `player-registry.js`, `api/whatsapp-card.js`, `live-control.js`, `live-view.js`, `service-worker.js`, `test-v376-stableford-continuity-recovery.mjs`, `test-v382-simple-digital-card.mjs`, `test-v383-fixed-male-voice.mjs`, `test-v384-full-input-chain-lock.mjs`, `test-v385-ios-audio-session.mjs`, `test-v386-universal-direct-capture.mjs`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, ambos ROADMAPS, mapa maestro, reincidencias e inventario. Producción permanece intacta.
+
 ## V386 · Captura directa después de voz universal · 5 de septiembre de 2026
 
 La evidencia física V385 confirmó primera pregunta correcta y segundo reconocimiento abierto pero terminado en `no_speech/aborted`. V386 usa captura directa únicamente en el turno posterior a una respuesta hablada. Registro y Scores conservan su ruta V378.
 
+## V382 · Tarjeta Digital de un solo toque · 4 de septiembre de 2026
+
+`TARJETA DIGITAL` deja de abrir la pantalla técnica de artefactos. En una ronda completa, el mismo toque cierra y archiva la tarjeta oficial, envía automáticamente las tarjetas personales a todos los WhatsApp registrados, muestra `TARJETA ENVIADA EXITOSAMENTE` con tres destellos sobre la misma pantalla y después limpia únicamente la ronda activa. La copia oficial del Historial no se borra. Si falta un número, la integración comercial no está configurada o falla cualquier entrega, la ronda permanece visible y recuperable y no aparece un éxito falso.
+
+Archivos exactos: `index-grupal.html`, `service-worker.js`, `test-v250-stableford-delivery-matrix.mjs`, `test-v382-simple-digital-card.mjs`, `audit-project.mjs`, `package.json`, ambos ROADMAPS, RC-062, mapa maestro e inventario. V382 continúa sobre la rama unificada V381 y no modifica Producción.
+
+## V381 · unificación segura de Voz V380 con Historial/Stableford/WhatsApp V376 · 4 de septiembre de 2026
+
+V381 nace desde el commit aprobado de V380 y une, mediante un merge trazable, la línea V376-R1. Conserva la primera respuesta universal medida en 2.8 segundos, la reapertura del micrófono y el reproductor R7 inerte entre turnos. Incorpora simultáneamente la vista LIVE Stableford por Gross/Puntos, nombres fijos en móvil, orden `GROSS IN` antes de `GROSS OUT`, recuperación exacta de la ronda del 4 de septiembre, continuidad de la ronda activa, archivo automático únicamente al completar 18 hoyos y campos de WhatsApp con Guatemala `+502` preseleccionado.
+
+La integración no sustituye archivos completos de una línea por la otra. Los conflictos de caché, auditoría, inventario y documentación se resuelven acumulando los controles de ambas ramas; Registro y escritores/cálculos de Score aprobados permanecen bajo sus candados. `test-v381-unified-voice-history-stableford.mjs` exige que convivan el contrato de audio V380 y el de continuidad V376. Producción permanece intacta.
+
+Archivos funcionales integrados: `index-grupal.html`, `player-registry.js`, `api/whatsapp-card.js`, `api/live.js`, `live-control.js`, `live-view.js`, `live.html` y `service-worker.js`. Controles exactos: `test-v372-stableford-live-mirror.mjs`, `test-v374-live-short-player-ids.mjs`, `test-v375-stableford-live-mobile-layout.mjs`, `test-v376-stableford-continuity-recovery.mjs`, `test-v378-approved-r7-voice-lock.mjs`, `test-v380-three-turn-audio-release.mjs`, `test-v381-unified-voice-history-stableford.mjs`, auditoría maestra, ROADMAPS, RC-061 e inventario.
 Archivos: `index-grupal.html`, `service-worker.js`, `test-v386-universal-direct-capture.mjs`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, ambos ROADMAPS, mapa maestro y registro de reincidencias.
 
 ## V375 · respuesta universal inmediata y Score sensible · 4 de septiembre de 2026

@@ -1057,6 +1057,14 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `test-v380-three-turn-audio-release.mjs` | Verifica liberación, autorización conservada y orden del gesto. | Un retorno a `aiUniversalTtsAudio=null` bloquea auditoría y Preview. |
 | `service-worker.js`, `audit-project.mjs`, `package.json`, RC-060, ROADMAPS e inventario | Publica y documenta V380. | Registro/Scores V378 y Producción permanecen intactos. |
 
+## V382-CARD · Tarjeta Digital de un solo toque
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html` | Cierra, archiva, envía, confirma con tres destellos y limpia la ronda activa sin abrir otra pantalla. | Sólo limpia después de entrega total; Historial permanece intacto. |
+| `test-v382-simple-digital-card.mjs` | Fija ausencia de navegación, tres destellos, envío automático y orden seguro de limpieza. | Un fallo o la falta de WhatsApp debe conservar la ronda. |
+| `service-worker.js`, `audit-project.mjs`, `package.json`, RC-062 y ROADMAPS | Invalida caché y documenta el flujo comercial simple. | Continúa sobre la línea unificada; Producción permanece intacta. |
+
 ## V381 · reinicio serial de salida antes de entrada
 
 | Archivo | Función | Protección |
@@ -1098,3 +1106,10 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `index-grupal.html` | Usa `transient-solo` al hablar y `play-and-record` al escuchar. | Safari no conserva la categoría de salida sobre la captura siguiente. |
 | `test-v385-ios-audio-session.mjs`, `test-v355-ios-audio-dictation.mjs` | Verifican categorías, orden y cebado. | No modifican las siete regiones V378. |
 | `service-worker.js`, `audit-project.mjs`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, RC-065, ROADMAPS e inventario | Publican y documentan V385. | Producción permanece intacta. |
+
+## V386 · unión canónica V385 + Historial/Stableford/WhatsApp
+
+| Línea | Contenido conservado | Regla permanente |
+|---|---|---|
+| V385 | Audio Session iOS y cadena completa de micrófono V378. | Toda versión de voz posterior debe partir de V386 o integrar V386 antes de publicarse. |
+| V382-CARD | Historial, ronda recuperada, LIVE Stableford, WhatsApp y Tarjeta Digital de un toque. | Ninguna versión de voz puede reemplazar estos módulos con una rama anterior. |

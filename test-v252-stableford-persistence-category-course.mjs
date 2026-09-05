@@ -32,12 +32,12 @@ assert.doesNotMatch(html,/function openFreshStablefordSetup\(\)[\s\S]*?localStor
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\);localStorage\.removeItem\(STORAGE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(ROUND_ARCHIVE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_SERIES_KEY\)/);
-assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\|\|sfEmergency\?openFreshStablefordSetup\(\):openNewRoundDraft\(\)\)/);
+assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",openNewRoundWithAutomaticHistory\)/);
 assert.match(html,/if\(!isRecoverableStoredRound\(round\)\)\{\s*if\(sfEmergency\)window\.addEventListener\("DOMContentLoaded",openFreshStablefordSetup,\{once:true\}\)/);
 assert.match(html,/if\(!GSCStableford\.isAllowedCourse\(stablefordSetupCourseKey\)\)return fail\("SELECCIONA EL CAMPO"\)/);
 assert.match(html,/if\(!cfg\)return fail\("SELECCIONA SENIOR O SÚPER SENIOR"\)/);
 assert.match(html,/if\(!names\.length\)return fail\("INGRESA AL MENOS UN JUGADOR"\)/);
-assert.match(html,/names\.slice\(0,6\)/);
+assert.match(html,/contacts\.slice\(0,6\)/);
 assert.match(html,/tee:cfg\.tee/);
 
 console.log("PASS V252 · persistencia normal, NUEVA RONDA limpia, 4 campos y categorías por tee");

@@ -1,8 +1,32 @@
 # Registro de reincidencias de calidad
 
-## RC-066 · Segundo turno universal sin captura en V385 · 5 de septiembre de 2026
+## RC-066 · V385 se publicó desde una rama sin Historial integrado · 5 de septiembre de 2026
 
-Primera pregunta correcta; segundo reconocimiento terminó `no_speech/aborted`. V386 reserva captura directa para el seguimiento posterior a TTS y mantiene Registro/Scores en V378.
+- Evidencia: el enlace V385 mostró `NO HAY TARJETAS OFICIALES` aunque la línea V382-CARD contenía la ronda oficial recuperada.
+- Causa raíz: dos conversaciones continuaron sobre ramas distintas; V385 descendió de la línea de voz y no de la integración V381/V382-CARD.
+- Control permanente: V387 fusiona ambas líneas; cualquier versión posterior debe descender de V387 o integrar su último commit antes de publicarse.
+- Prueba: auditoría conjunta V376, V382-CARD, V383, V384 y V385, más verificación del Historial en el mismo origen del Preview.
+- Estado: corregido en candidato V387; no declarar sincronización hasta publicación y verificación del Preview único.
+
+## RC-067 · Segundo turno universal sin captura en V385 · 5 de septiembre de 2026
+
+Primera pregunta correcta; segundo reconocimiento terminó `no_speech/aborted`. V386 reserva captura directa para el seguimiento posterior a TTS y mantiene Registro/Scores en V378. V387 conserva íntegramente este control.
+
+## RC-062 · Tarjeta Digital abrió una pantalla técnica al consumidor · 4 de septiembre de 2026
+
+- Evidencia: el botón mostraba múltiples acciones Global/Personal/PDF/Corrección antes de completar la intención principal.
+- Causa: se reutilizó la consola de artefactos como destino del botón comercial.
+- Prevención: el botón principal no navega; cierra, archiva y envía en el mismo flujo, muestra tres destellos y limpia sólo tras confirmación total.
+- Protección de datos: ante falta de WhatsApp o fallo de entrega, no borra la ronda ni afirma éxito.
+- Prueba bloqueante: `test-v382-simple-digital-card.mjs`.
+
+## RC-061 · ramas V376 y V380 podían cruzarse y perder funciones · 4 de septiembre de 2026
+
+- Evidencia: Historial/Stableford/WhatsApp evolucionaron en V376-R1 mientras voz universal y micrófono evolucionaron hasta V380 sobre otra línea.
+- Riesgo raíz: continuar una rama sin integrar la otra podía reemplazar lógica aprobada, caché, pruebas o documentación al publicar una versión posterior.
+- Control permanente: V381 parte de V380 y registra V376-R1 como segundo padre; resuelve por función, conserva los candados V378 y ejecuta conjuntamente las pruebas V372–V381 aplicables.
+- Criterio: ninguna continuación parte nuevamente de V376 o V380 aisladas; debe partir de V381 o de un descendiente verificado.
+- Estado: corregido en candidato V381; Producción intacta y prueba física pendiente.
 
 Este registro conserva defectos que alcanzaron al propietario o bloquearon un cierre. Un estado ABIERTO impide el PASS del rubro afectado.
 

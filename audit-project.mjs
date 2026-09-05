@@ -79,6 +79,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v366-principal-ent
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v367-universal-voice-in-place.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v368-canonical-home-entry.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v369-physical-voice-weather-traffic-recovery.mjs','test-v370-native-spanish-fast-close.mjs','test-v371-spanish-only-universal.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v372-stableford-live-mirror.mjs','test-v374-live-short-player-ids.mjs','test-v375-stableford-live-mobile-layout.mjs','test-v376-stableford-continuity-recovery.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v373-server-voice-transcription.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v375-fast-universal-sensitive-score.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v376-native-mic-first.mjs');
@@ -86,6 +87,8 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v377-no-speech-cle
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v378-approved-r7-voice-lock.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v379-fast-chunked-r7-speech.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v380-three-turn-audio-release.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v381-unified-voice-history-stableford.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v382-simple-digital-card.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v381-serial-audio-input-reset.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v382-input-only-reset.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v383-fixed-male-voice.mjs');

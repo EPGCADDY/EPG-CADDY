@@ -1,23 +1,23 @@
 {
-  "version": "V386-UNIVERSAL-DIRECT-CAPTURE-AND-FULL-INPUT-LOCK",
-  "generatedAt": "2026-09-05T00:09:30Z",
-  "sourceFileCount": 413,
-  "sourceDigest": "4fe4f8bfc98093d6a12d85b3df9c01ea26e97bc43e643903d8a2a4cb7d552b0c",
+  "version": "V387-UNIFIED-V386-VOICE-HISTORY-STABLEFORD-WHATSAPP-CARD",
+  "generatedAt": "2026-09-05T00:20:50Z",
+  "sourceFileCount": 420,
+  "sourceDigest": "5ca5d016d1fbf2ee44115f3ef855c6389838dd46eb4d782bc2530a1ee0016a10",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 222944,
-      "sha256": "0a6b41f0bf751ab64fd2b6b07bec2e61a8d2f0a04f6bd0cbb1f56deaf1d661c1"
+      "size": 225636,
+      "sha256": "c48cfdbcd5b1bc42a71859723a3395b9668913661e8ece7e70fcd39c411f3b1c"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 253732,
-      "sha256": "e75faf652537268fefd6b346101481158ee2e6c8d082d4966bcab8adade56038"
+      "size": 257651,
+      "sha256": "bc0175af257e85bafa0a79eadf8a049793b6d102ed13d07960d6100e9d0baa64"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19261002,
-      "sha256": "b2e9e6d07ebaaa7f176b9f7d46113ec358c70d05735169edf47955605fa5a31b"
+      "size": 19261013,
+      "sha256": "5e49ca8c32beec68b80e3de51fe892663ce11f4edb626269b0c84f3d7f42c284"
     }
   ]
 }

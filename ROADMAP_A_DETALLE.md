@@ -1,5 +1,16 @@
 # ROADMAP A DETALLE
 
+## Registro técnico V387 · convergencia obligatoria de V386 y la línea Historial/Tarjeta
+
+| Área | Base V386 voz | Base V382-CARD | Resultado V387 |
+|---|---|---|---|
+| Micrófono/voz | Audio Session iOS, voz masculina fijada, cadena V378 y captura directa posterior a TTS | Sin reemplazo de voz | Se conserva V386 completo. |
+| Historial | Ausente en el enlace aislado comprobado | Archivo oficial, ronda recuperada y filtros | Se conserva Historial y su snapshot local. |
+| Stableford/LIVE | Sin cambios V376 en la rama aislada | Gross/Puntos, nombres fijos y orden IN→OUT | Se integra la presentación aprobada. |
+| WhatsApp/Tarjeta Digital | Pantalla técnica anterior | Envío automático, tres destellos y limpieza sólo tras éxito | Se integra el flujo de un toque. |
+
+Control permanente: ninguna conversación puede generar una versión publicable desde una rama aislada. Debe comenzar desde V387 o fusionar el último commit de esta rama antes de ejecutar pruebas y Preview.
+
 ## Registro técnico V386 · Seguimiento universal por captura directa
 
 | Archivo exacto | Intervención limitada | Protección |
@@ -9,6 +20,32 @@
 | `test-v386-universal-direct-capture.mjs` | Comprueba la separación. | Impide devolver el seguimiento al transporte fallido. |
 | `audit-project.mjs`, `package.json` | Incorporan la prueba V386. | Ejecución obligatoria en auditoría. |
 | `scripts/rebuild-inventory-pdfs.py` | Sella inventario V386. | Inventario reproducible. |
+
+## Registro técnico V382 · cierre, envío y limpieza en un toque
+
+| Estado | Conducta obligatoria |
+|---|---|
+| Ronda incompleta | No envía ni limpia; exige completar los 18 hoyos. |
+| Sin WhatsApp | No muestra éxito y conserva la ronda activa. |
+| Fallo parcial o total | Conserva la ronda y deja visibles las entregas pendientes. |
+| Entrega confirmada | Archiva primero, muestra tres destellos `TARJETA ENVIADA EXITOSAMENTE` y limpia la ronda activa. |
+| Historial | Conserva el snapshot oficial firmado y sus tarjetas; nunca se elimina al limpiar la pantalla. |
+
+`openFinalDigitalCard()` ya no abre `finalCardOverlay`. `clearActiveRoundAfterDelivery()` sólo se ejecuta después de `delivery.ok`; escribe un estado vacío recuperable sin usar `removeItem(ACTIVE_ROUND_KEY)` y mantiene el archivo oficial. Los controles bloqueantes son `test-v250-stableford-delivery-matrix.mjs` y `test-v382-simple-digital-card.mjs`, sumados a V381, V376-R1 e Intocables.
+
+## Registro técnico V381 · convergencia sin cruces entre ramas
+
+| Área | Base conservada | Aporte integrado | Control bloqueante |
+|---|---|---|---|
+| Voz universal | V380: primer audio R7 rápido, elemento autorizado conservado e inerte y reapertura limpia del micrófono | Ningún cambio funcional proveniente de V376 reemplaza esta ruta | `test-v378-approved-r7-voice-lock.mjs`, `test-v380-three-turn-audio-release.mjs` |
+| Ronda e Historial | Persistencia y entrada canónica aprobadas en V365–V368 | V376-R1: Stableford también usa la ronda canónica; `NUEVA RONDA` archiva sólo con 18 hoyos completos; la ronda activa sobrevive al cierre | `test-v376-stableford-continuity-recovery.mjs` |
+| LIVE Stableford | API LIVE y permisos existentes | Matriz Gross/Puntos, yardas, nombres y etiquetas fijas; resumen con `IN` antes de `OUT` | V372, V374 y V375 Stableford |
+| WhatsApp | Registro de jugador existente | País/bandera y prefijo `+502` editables; envío solicitado al pulsar Tarjeta Digital mediante endpoint autenticado | V376-R1; credenciales Meta siguen siendo requisito externo para entrega comercial real |
+| Integración | Commit V380 como primera base y V376-R1 como segundo padre | Un único árbol V381, un único caché y una auditoría que incluye ambas series | `test-v381-unified-voice-history-stableford.mjs`; puerta integral |
+
+Archivos integrados y controles exactos V381: `player-registry.js`, `api/whatsapp-card.js`, `api/live.js`, `live-control.js`, `live-view.js`, `live.html`, `test-v372-stableford-live-mirror.mjs`, `test-v374-live-short-player-ids.mjs`, `test-v375-stableford-live-mobile-layout.mjs` y `test-v376-stableford-continuity-recovery.mjs`.
+
+Regla de versión: toda continuación funcional debe partir de V387; no se continúa por separado sobre V376, V380, V382 ni V386. Producción permanece intacta hasta aprobación física expresa.
 
 ## Registro técnico V375 · Gateway primero y sensibilidad exclusiva de Score
 
