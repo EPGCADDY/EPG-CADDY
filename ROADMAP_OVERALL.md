@@ -1513,3 +1513,6 @@ Resellado RC-046-R3: el primer transporte remoto truncó `index-grupal.html` y f
 ## V398 LAB · hoyo inicial por ronda · 6 de septiembre de 2026
 
 RC-048 corrige únicamente la selección inicial del Control Manual. Al cambiar/restaurar ronda, General, Stableford, Match Play y Four Ball abren en hoyo 1 si no existen scores o en el primer hoyo pendiente si ya existen; una selección manual permanece mientras se siga en la misma ronda. `test-v398-manual-opening-hole.mjs` bloquea la reutilización del hoyo 18 residual. Producción permanece intacta y no existe PASS visual hasta comprobar las cuatro modalidades en el LAB nuevo.
+# V398 · APERTURA DE HOYO E HISTORIAL ELIMINABLE — 06 SEPTIEMBRE 2026
+
+LAB: las rondas vacías abren en hoyo 1, las parciales en el primer hoyo pendiente y las completas en su límite correcto. En Historial, una pulsación de 650 ms ofrece `ELIMINAR` con confirmación; el borrado se limita al archivo histórico y no reaparece durante la persistencia de la ronda activa. Producción permanece intacta.

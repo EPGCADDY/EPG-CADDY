@@ -26,6 +26,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v281-pwa-installat
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v282-optional-account-backup.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v397-card-in-out-back-contract.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v398-manual-opening-hole.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v398-history-long-press-delete.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v283-native-commercial-readiness.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v284-native-package-generation.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v285-stableford-back-navigation.mjs');

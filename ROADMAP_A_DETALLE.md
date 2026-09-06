@@ -1961,3 +1961,10 @@ Configuración LAB: `vercel.json` ejecuta `node audit-project.mjs`. V328 LIVE no
 | `test-v398-manual-opening-hole.mjs` | Ejecuta el contrato para General, Stableford, Match Play y Four Ball. | Rechaza que una ronda nueva herede hoyo 18 de otra ronda. |
 
 Frontera: no cambian cálculos, scores, persistencia, voz, Registro, comunicación universal, artefactos ni Producción. La pulsación prolongada para eliminar desde Historial queda registrada como trabajo posterior y no se mezcla con RC-048.
+# V398 · APERTURA DE HOYO E HISTORIAL ELIMINABLE — 06 SEPTIEMBRE 2026
+
+| Fuente | Cambio verificable |
+|---|---|
+| `index-grupal.html` | Identidad de ronda gobierna hoyo inicial; pulsación prolongada abre confirmación de eliminación; IDs eliminados quedan excluidos del rearchivo automático. |
+| `test-v398-manual-opening-hole.mjs` | Verifica General, Stableford, Match Play y Four Ball: vacía→1, parcial→pendiente, misma ronda→selección conservada. |
+| `test-v398-history-long-press-delete.mjs` | Verifica gesto, confirmación, eliminación local y no reaparición. |
