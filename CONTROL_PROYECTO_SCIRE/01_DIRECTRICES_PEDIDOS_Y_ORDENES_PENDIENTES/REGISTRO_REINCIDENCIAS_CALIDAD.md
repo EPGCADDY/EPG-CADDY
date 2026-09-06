@@ -80,3 +80,5 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa raíz: `renderPlayerEditControls()` limitaba el control a rondas no provisionales.
 - Medida permanente: mostrar `ATRÁS` en toda ronda configurada y hacer que Práctica vuelva a principal mediante `openNewRoundDraft()`; banco V397 positivo.
 - Estado: corregido en candidato LAB; repetición visual obligatoria; Producción intacta.
+
+| RC-057 | NUEVA RONDA conservaba jugadores/scores y no garantizaba regreso limpio a Registro; Historial perdió acciones de imagen | La transición difería el reemplazo hasta INICIAR RONDA y una integración posterior eliminó el panel de artefactos | Ronda Normal V401 e Historial | Archivar primero; limpiar todas las claves activas y el borrador; crear blankRound; abrir Registro; restaurar acciones Global/Personal | Preview LAB posterior a commit atómico de código + ambos ROADMAPS | ABIERTO HASTA PRUEBA FÍSICA |

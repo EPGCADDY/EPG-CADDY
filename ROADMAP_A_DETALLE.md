@@ -2027,3 +2027,10 @@ RC-055-R2 · `shareOfficialArtifactImage()` convierte la tarjeta oficial a PNG a
 - `test-v397-card-in-out-back-contract.mjs`: exige que la función llamada exista.
 - `service-worker.js` y `test-v365-active-round-empty-recovery.mjs`: caché V401 para actualizar la PWA instalada.
 - No cambian umbrales, sensibilidad, cierre, registro/scores, voz Fish Audio V378 ni Producción.
+
+
+## RC-057 · NUEVA RONDA limpia y vuelve a Registro · 6 de septiembre de 2026
+
+- `index-grupal.html`: `NUEVA RONDA` archiva la ronda anterior, elimina las claves activas de todas las modalidades, crea `blankRound()` sin jugadores ni scores, reinicia hoyo 1 y abre Registro.
+- La ronda archivada permanece disponible en Historial; Producción permanece intacta.
+- El mismo cambio restaura las acciones ABRIR/IMAGEN/PDF Global y Personal del Historial para recuperar las tarjetas oficiales guardadas.

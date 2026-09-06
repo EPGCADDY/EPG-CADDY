@@ -3748,10 +3748,16 @@ function openCurrentRoundDataEditor(){
   return openSetup(round.mode==="match_play"?"correction":round.players.length<6?"add":"correction");
 }
 function openNewRoundDraft(){
-  // Regla mandatoria: abrir el registro de NUEVA RONDA nunca borra ni reemplaza
-  // la última ronda persistida. El reemplazo ocurre exclusivamente en startConfirmedRound().
-  persist();
+  // NUEVA RONDA conserva la ronda anterior únicamente en HISTORIAL y limpia
+  // de inmediato jugadores, scores y hoyo activo antes de volver a REGISTRO.
+  if(round.configured){persist();archiveRoundSnapshot(round)}
+  teardownRealtime();
+  for(const key of [ACTIVE_ROUND_KEY,STORAGE_KEY,STORAGE_BACKUP_KEY,MATCH_PLAY_ACTIVE_KEY,FOUR_BALL_ACTIVE_KEY,STABLEFORD_ACTIVE_KEY]){try{localStorage.removeItem(key)}catch{}}
+  clearDraftState();
+  round=blankRound();
+  draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());draftTournament=null;draftCourse="pulte";draftRoundMode="general";resetDraftGames();resetRoundCapture();
   if(sfEmergency)window.history.replaceState(null,"",window.location.pathname);
+  render();
   dateSetup();
   openSetup("new");
   return true;

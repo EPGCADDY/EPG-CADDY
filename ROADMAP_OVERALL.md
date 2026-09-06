@@ -1563,3 +1563,10 @@ RC-056 · V401: la prueba física de Inicio detectó `ReferenceError` al tocar e
 
 
 Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs`.
+
+
+## RC-057 · NUEVA RONDA limpia y vuelve a Registro · 6 de septiembre de 2026
+
+- `index-grupal.html`: `NUEVA RONDA` archiva la ronda anterior, elimina las claves activas de todas las modalidades, crea `blankRound()` sin jugadores ni scores, reinicia hoyo 1 y abre Registro.
+- La ronda archivada permanece disponible en Historial; Producción permanece intacta.
+- El mismo cambio restaura las acciones ABRIR/IMAGEN/PDF Global y Personal del Historial para recuperar las tarjetas oficiales guardadas.
