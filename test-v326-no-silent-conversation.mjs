@@ -11,7 +11,7 @@ const script=html.slice(html.indexOf("<script>")+8,html.lastIndexOf("</script>")
 assert.doesNotThrow(()=>new Function(script),"El JavaScript principal V326 debe compilar completo");
 
 for(const contract of [
-  /const CONVERSATION_VAD_SILENCE_MS=2200/,
+  /const CONVERSATION_VAD_SILENCE_MS=1100/,
   /const CONVERSATION_INPUT_STALL_MS=15000/,
   /const CONVERSATION_INPUT_HARD_LIMIT_MS=90000/,
   /const CONVERSATION_RESPONSE_STALL_MS=30000/,
@@ -32,7 +32,7 @@ const profileSource=html.slice(profileStart,profileEnd);
 const profiles=new Function(`
   const REALTIME_TURN_PROFILE_OPERATIONAL="operational";
   const REALTIME_TURN_PROFILE_CONVERSATION="conversation";
-  const ROUND_VAD_THRESHOLD=0.2,ROUND_VAD_PREFIX_MS=700,ROUND_VAD_SILENCE_MS=1000,CONVERSATION_VAD_SILENCE_MS=2200;
+  const ROUND_VAD_THRESHOLD=0.2,ROUND_VAD_PREFIX_MS=700,ROUND_VAD_SILENCE_MS=1000,CONVERSATION_VAD_SILENCE_MS=1100;
   const VOICE_POLICY={voice:"cedar",speed:1.15};
   const detectRealtimeShape=session=>session?.audio?.input?"ga":session?.object==="realtime.session"?"beta":"unknown";
   ${profileSource}
@@ -43,7 +43,7 @@ const operational=profiles.turnDetectionForProfile("operational");
 const conversation=profiles.turnDetectionForProfile("conversation");
 assert.equal(operational.silence_duration_ms,1000);
 assert.equal(conversation.type,"server_vad");
-assert.equal(conversation.silence_duration_ms,2200);
+assert.equal(conversation.silence_duration_ms,1100);
 assert.equal(conversation.create_response,false);
 assert.equal(conversation.interrupt_response,false);
 
@@ -105,7 +105,7 @@ assert.equal(responseGuard.snapshot().resumeCount,1);
 assert.equal(responseGuard.snapshot().state,"NO PUDE COMPLETAR ESA RESPUESTA · PUEDES CONTINUAR");
 
 for(let turn=1;turn<=30;turn++){
-  assert.equal(profiles.turnDetectionForProfile("conversation").silence_duration_ms,2200,`Turno ${turn}: la conversación volvió a quedar sin tiempo determinista`);
+  assert.equal(profiles.turnDetectionForProfile("conversation").silence_duration_ms,1100,`Turno ${turn}: la conversación volvió a quedar sin tiempo determinista`);
   assert.equal(profiles.turnDetectionForProfile("operational").silence_duration_ms,1000,`Turno ${turn}: se alteró la captura rápida de órdenes`);
 }
 

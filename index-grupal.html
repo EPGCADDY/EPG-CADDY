@@ -1001,7 +1001,7 @@ const ROUND_MISSING_CONFIRM_MS=450;
 const ROUND_VAD_THRESHOLD=0.2;
 const ROUND_VAD_PREFIX_MS=700;
 const ROUND_VAD_SILENCE_MS=1000;
-const CONVERSATION_VAD_SILENCE_MS=2200;
+const CONVERSATION_VAD_SILENCE_MS=1100;
 const CONVERSATION_INPUT_STALL_MS=15000;
 const CONVERSATION_INPUT_HARD_LIMIT_MS=90000;
 const CONVERSATION_RESPONSE_STALL_MS=30000;
@@ -2321,7 +2321,7 @@ async function trafficToolResult(argumentsText){
   aiUniversalSetState("CALCULANDO TRÁFICO REAL…",{busy:true});
   let args={};try{args=JSON.parse(argumentsText||"{}")||{}}catch{}
   const rawOrigin=String(args.origin||"").trim();
-  const asksDevice=!rawOrigin||/^(?:aqu[ií]|ac[aá]|mi ubicaci[oó]n|ubicaci[oó]n actual|donde estoy|current location|here)$/i.test(rawOrigin);
+  const asksDevice=!rawOrigin||/^(?:aqu[ií](?: mismo)?|ac[aá](?: mismo)?|desde aqu[ií]|desde ac[aá]|de aqu[ií]|de ac[aá]|mi ubicaci[oó]n(?: actual)?|ubicaci[oó]n actual|donde (?:yo )?estoy|desde donde (?:yo )?estoy|este lugar|desde este lugar|mi posici[oó]n(?: actual)?|punto actual|current location|from here|here)$/i.test(rawOrigin);
   const deviceCoordinates=asksDevice?await currentBrowserCoordinates():null;
   const payload={
     ...(deviceCoordinates?{originCoordinates:{latitude:deviceCoordinates.latitude,longitude:deviceCoordinates.longitude}}:{origin:rawOrigin}),
@@ -4767,7 +4767,7 @@ function handleRealtime(message){
       const assistantAction=finishedReason==="query"?pendingVoiceAssistantAction:null;
       pendingVoiceAssistantAction=null;
       if(finishedReason==="missing_score"){phase=listening?"listening":"idle";if(micTrack&&listening)micTrack.enabled=true;const pending=operationalPromptPlayer();if(voiceContext==="round"&&pending)$("status").textContent=`FALTA ${playerVoiceAlias(pending).toUpperCase()}`}
-      else if(finishedReason==="conversation"){if(resumeConversationListening())aiUniversalSetState("ESCUCHANDO",{busy:true});else{phase="idle";aiUniversalSetState("LISTO · TOCA ESCUCHAR PARA HABLAR");if(voiceContext==="round")$("status").textContent=roundIdleStatus();else if(!listening)$("setupStatus").textContent=draftPlayers.length?"LISTO · PRESIONA OK PARA CONFIRMAR":""}}
+      else if(finishedReason==="conversation"){setVoice(false);phase="idle";setPrimaryVoiceMatrix("idle",voiceContext);aiUniversalSetState("LISTO · TOCA ESCUCHAR PARA HABLAR")}
       else if(finishedReason==="error"){phase="idle";if(voiceContext==="round")$("status").textContent=roundIdleStatus()}
       else if(phase==="speaking"||phase==="processing"||phase==="error")phase="idle";
       if(assistantAction)setTimeout(()=>executeVoiceAssistantAction(assistantAction),0);

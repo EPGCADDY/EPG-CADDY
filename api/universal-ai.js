@@ -145,7 +145,8 @@ export function directTrafficRouteFromQuery(query){
   const destination=segment.slice(toIndex+connectorLength).trim()
     .replace(/\s+(?:(?:dentro de|en)\s+(?:media|un(?:a)?|dos|tres|cuatro|seis|doce|\d+)\s+(?:minutos?|horas?)|(?:hoy|ma[nñ]ana|tomorrow|la (?:otra|pr[oó]xima) semana|next week)(?:\s+(?:a\s+las?|at)\s+\d{1,2}(?::\d{2})?\s*(?:a\.?\s*m\.?|p\.?\s*m\.?)?)?|(?:el\s+)?20\d{2}-\d{2}-\d{2}(?:\s+(?:a\s+las?|at)\s+\d{1,2}(?::\d{2})?\s*(?:a\.?\s*m\.?|p\.?\s*m\.?)?)?)$/i,"")
     .replace(/^[,:;\-]+|[,:;\-]+$/g,"");
-  return origin&&destination?{origin,destination}:null;
+  const localOrigin=/^(?:aqu[ií](?: mismo)?|ac[aá](?: mismo)?|mi ubicaci[oó]n(?: actual)?|ubicaci[oó]n actual|donde (?:yo )?estoy|este lugar|mi posici[oó]n(?: actual)?|punto actual|current location|here)$/i.test(origin);
+  return origin&&destination?{origin:localOrigin?"Ubicación GPS actual":origin,destination}:null;
 }
 
 function trafficDestinationNeedsClarification(destination){
@@ -402,7 +403,7 @@ export default async function handler(req,res){
       if(!route)return res.status(200).json({ok:true,answer:"Indícame el origen y el destino exactos para calcular ETA, demora y distancia con tráfico real.",sources:[],needsRouteClarification:true});
       if(trafficDestinationNeedsClarification(route.destination))return res.status(200).json({ok:true,answer:"¿Cuál es el nombre completo, zona o municipio del destino?",sources:[],needsDestinationClarification:true});
       const departure=trafficDepartureForQuery(query),trafficResult=await computeTrafficRoute({
-        origin:route.origin,
+        origin:route.origin==="Ubicación GPS actual"?"":route.origin,
         originCoordinates:appContext?.trafficOrigin,
         destination:route.destination,
         departureTime:departure.departureTime,

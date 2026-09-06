@@ -15,7 +15,7 @@ for(const contract of [
   /const ROUND_VAD_THRESHOLD=0\.2/,
   /const ROUND_VAD_PREFIX_MS=700/,
   /const ROUND_VAD_SILENCE_MS=1000/,
-  /const CONVERSATION_VAD_SILENCE_MS=2200/,
+  /const CONVERSATION_VAD_SILENCE_MS=1100/,
   /type:"server_vad",threshold:ROUND_VAD_THRESHOLD,prefix_padding_ms:ROUND_VAD_PREFIX_MS,silence_duration_ms:CONVERSATION_VAD_SILENCE_MS,create_response:false,interrupt_response:false/,
   /type:"server_vad",threshold:ROUND_VAD_THRESHOLD,prefix_padding_ms:ROUND_VAD_PREFIX_MS,silence_duration_ms:ROUND_VAD_SILENCE_MS,create_response:false,interrupt_response:false/,
   /toggleVoice\(context,REALTIME_TURN_PROFILE_CONVERSATION\)/,
@@ -32,7 +32,7 @@ for(const contract of [
   /const ROUND_MISSING_IDLE_MS=2000/,
   /const ROUND_MISSING_CONFIRM_MS=450/,
   /getUserMedia\(\{audio:\{echoCancellation:true,noiseSuppression:true,autoGainControl:true\}\}\)/,
-  /else if\(finishedReason==="conversation"\)\{if\(resumeConversationListening\(\)\)/
+  /else if\(finishedReason==="conversation"\)\{setVoice\(false\);phase="idle";setPrimaryVoiceMatrix\("idle",voiceContext\)/
 ])assert.match(html,contract);
 
 assert.match(sessionApi,/type: "server_vad"/,"La sesión inicial debe conservar captura operativa rápida");
@@ -47,7 +47,7 @@ const profileSource=html.slice(profileStart,profileEnd);
 const profiles=new Function(`
   const REALTIME_TURN_PROFILE_OPERATIONAL="operational";
   const REALTIME_TURN_PROFILE_CONVERSATION="conversation";
-  const ROUND_VAD_THRESHOLD=0.2,ROUND_VAD_PREFIX_MS=700,ROUND_VAD_SILENCE_MS=1000,CONVERSATION_VAD_SILENCE_MS=2200;
+  const ROUND_VAD_THRESHOLD=0.2,ROUND_VAD_PREFIX_MS=700,ROUND_VAD_SILENCE_MS=1000,CONVERSATION_VAD_SILENCE_MS=1100;
   const VOICE_POLICY={voice:"cedar",speed:1.15};
   const detectRealtimeShape=session=>session?.audio?.input?"ga":session?.object==="realtime.session"?"beta":"unknown";
   ${profileSource}
@@ -57,7 +57,7 @@ const profiles=new Function(`
 const operational=profiles.turnDetectionForProfile("operational");
 assert.deepEqual(operational,{type:"server_vad",threshold:0.2,prefix_padding_ms:700,silence_duration_ms:1000,create_response:false,interrupt_response:false});
 const conversational=profiles.turnDetectionForProfile("conversation");
-assert.deepEqual(conversational,{type:"server_vad",threshold:0.2,prefix_padding_ms:700,silence_duration_ms:2200,create_response:false,interrupt_response:false});
+assert.deepEqual(conversational,{type:"server_vad",threshold:0.2,prefix_padding_ms:700,silence_duration_ms:1100,create_response:false,interrupt_response:false});
 
 const gaSession=turnDetection=>({type:"realtime",audio:{input:{turn_detection:turnDetection},output:{voice:"cedar",speed:1.15}},tools:[],tool_choice:"none"});
 assert.equal(profiles.effectiveSessionCheck(gaSession(operational),"round",1.15,"operational"),true);
@@ -68,7 +68,7 @@ assert.equal(profiles.effectiveSessionCheck(gaSession(conversational),"round",1.
 for(let turn=1;turn<=30;turn++){
   const listeningProfile=profiles.turnDetectionForProfile("conversation");
   assert.equal(listeningProfile.type,"server_vad",`Turno conversacional ${turn} perdió VAD determinista`);
-  assert.equal(listeningProfile.silence_duration_ms,2200,`Turno conversacional ${turn} perdió la pausa natural de 2.2 segundos`);
+  assert.equal(listeningProfile.silence_duration_ms,1100,`Turno conversacional ${turn} perdió la pausa natural de 1.1 segundos`);
   const appOrderProfile=profiles.turnDetectionForProfile("operational");
   assert.equal(appOrderProfile.silence_duration_ms,1000,`Orden de aplicación ${turn} perdió respuesta rápida`);
 }
