@@ -460,3 +460,12 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - Hoyo ganado/perdido: flecha + posición acumulada. Hoyo empatado: `—`, sin flecha repetida.
 - `MICROFONO_APROBADO.lock.json` y INT-05 bloquean cualquier cambio en el transporte o los once bancos aprobados de Registro/Score/multihoyos.
 - Producción sólo cambia después de auditoría integral, despliegue READY y verificación externa del visor.
+
+## V397 · Historial simplificado por fecha
+
+- Mostrar hasta ocho rondas por página, ordenadas de más reciente a más antigua; `ANTERIOR` y `SIGUIENTE` son navegación, no acciones de tarjeta.
+- Doble toque sobre cualquier ronda abre su Score Card Global original.
+- La única acción visible debajo es `ENVIAR TARJETA DIGITAL`; abre el compartir nativo con PNG para elegir WhatsApp.
+- `ATRÁS` permanece libre de LIVE, REGLAS, AI ∞ y Support mientras el Historial está abierto.
+- Nombre/correo se recuerdan al escribir; la contraseña puede mostrarse, pero nunca se almacena.
+- Pendiente: Preview LAB READY y recorrido físico en iPhone. Producción permanece intacta.

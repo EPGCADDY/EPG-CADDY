@@ -5,6 +5,7 @@
   const courseName=snapshot=>typeof snapshot?.course==="object"?text(snapshot.course.displayName||snapshot.course.name||snapshot.courseKey||"CAMPO"):text(snapshot?.course||snapshot?.courseKey||"CAMPO");
   const tournamentName=snapshot=>text(snapshot?.tournament?.name||snapshot?.tournament||"SIN TORNEO");
   const timestamp=value=>{const parsed=new Date(value||0).getTime();return Number.isFinite(parsed)?parsed:0};
+  const dateTerms=value=>{const date=new Date(value||0);if(!Number.isFinite(date.getTime()))return"";const day=String(date.getUTCDate()).padStart(2,"0"),year=date.getUTCFullYear(),monthLong=new Intl.DateTimeFormat("es-GT",{month:"long",timeZone:"UTC"}).format(date),monthShort=new Intl.DateTimeFormat("es-GT",{month:"short",timeZone:"UTC"}).format(date).replace(".","");return[date.toISOString().slice(0,10),`${day}/${String(date.getUTCMonth()+1).padStart(2,"0")}/${year}`,`${day} ${monthShort} ${year}`,`${day} ${monthLong} ${year}`].join(" ")};
   function entry(round){
     const snapshot=round?.officialSnapshot;
     if(!round?.id||!snapshot?.sha256||!["officially_closed","corrected"].includes(snapshot.status)||!Array.isArray(snapshot.players)||!snapshot.players.length)return null;
@@ -22,7 +23,7 @@
       if(wantedCourse&&wantedCourse!=="ALL"&&normalized(item.course)!==wantedCourse&&normalized(item.courseKey)!==wantedCourse)return false;
       if(!needle)return true;
       const games=Object.entries(item.sideGames||{}).filter(([,value])=>value?.enabled===true).map(([key])=>key);
-      const haystack=normalized([item.course,item.courseKey,item.tournament,item.mode,item.playedAt,...games,...item.players.map(player=>player.name)].join(" "));
+      const haystack=normalized([item.course,item.courseKey,item.tournament,item.mode,item.playedAt,dateTerms(item.playedAt),...games,...item.players.map(player=>player.name)].join(" "));
       return haystack.includes(needle);
     });
   }

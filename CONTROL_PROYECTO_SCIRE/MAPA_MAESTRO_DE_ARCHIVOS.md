@@ -1036,6 +1036,9 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `index-grupal.html` | Recorre todo el historial oficial al respaldar y muestra la cantidad; recuerda correo sin guardar contraseña. | Cinco tarjetas no pueden reducirse silenciosamente a una; sesión sólo se cierra explícitamente. |
 | `test-v282-optional-account-backup.mjs` | Ejecuta cinco rondas, duplicado, borrador y contrato seguro de autocomplete/localStorage. | RC-044 permanente. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resella las fuentes V397 después del rechazo preventivo del primer build. | `inventory-gate` debe pasar antes del nuevo Preview LAB. |
+| `card-library.js` | Conserva orden descendente por fecha y acepta fecha ISO, numérica y visible en español. | Buscar una fecha devuelve las rondas correspondientes. |
+| `index-grupal.html` | Pagina ocho rondas; doble toque abre Global original; sólo muestra `ENVIAR TARJETA DIGITAL`. | RC-045: sin ocho botones antiguos ni quinta ronda oculta. |
+| `test-v279-local-card-library.mjs`, `test-v282-optional-account-backup.mjs` | Fijan el contrato visible del Historial y la cuenta recordada. | Contraseña visible sólo bajo control local y nunca almacenada; micrófono intacto. |
 
 ## V371 · Gross Match y candado de micrófono
 

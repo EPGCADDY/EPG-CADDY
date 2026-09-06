@@ -626,3 +626,10 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - Mostrar ambos acumulados `UP/DOWN/AS` en el encabezado.
 - Flecha sólo en hoyo ganado/perdido; empate `—`.
 - Conservar enlace, ronda activa y micrófono aprobado bajo INT-05.
+
+## V397 · cierre visual del Historial y cuenta
+
+- Publicar sólo en LAB el Historial de hasta ocho rondas por página.
+- Verificar en iPhone: doble toque abre Global original, `ENVIAR TARJETA DIGITAL` ofrece WhatsApp con PNG y `ATRÁS` queda libre.
+- Verificar que nombre/correo reaparezcan al cerrar y abrir; mostrar contraseña no debe almacenarla.
+- Producción no se modifica.
