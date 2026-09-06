@@ -1968,3 +1968,5 @@ Frontera: no cambian cálculos, scores, persistencia, voz, Registro, comunicaci�
 | `index-grupal.html` | Identidad de ronda gobierna hoyo inicial; pulsación prolongada abre confirmación de eliminación; IDs eliminados quedan excluidos del rearchivo automático. |
 | `test-v398-manual-opening-hole.mjs` | Verifica General, Stableford, Match Play y Four Ball: vacía→1, parcial→pendiente, misma ronda→selección conservada. |
 | `test-v398-history-long-press-delete.mjs` | Verifica gesto, confirmación, eliminación local y no reaparición. |
+
+El primer build V398 fue rechazado porque ROADMAP OVERALL no nombraba literalmente la prueba nueva; el segundo, porque el resellado no actualizó ambos ROADMAPS. Ambos rechazos permanecen registrados y Producción no cambió.

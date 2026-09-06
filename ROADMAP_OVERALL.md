@@ -1516,3 +1516,5 @@ RC-048 corrige únicamente la selección inicial del Control Manual. Al cambiar/
 # V398 · APERTURA DE HOYO E HISTORIAL ELIMINABLE — 06 SEPTIEMBRE 2026
 
 LAB: las rondas vacías abren en hoyo 1, las parciales en el primer hoyo pendiente y las completas en su límite correcto. En Historial, una pulsación de 650 ms ofrece `ELIMINAR` con confirmación; el borrado se limita al archivo histórico y no reaparece durante la persistencia de la ronda activa. Pruebas: `test-v398-manual-opening-hole.mjs` y `test-v398-history-long-press-delete.mjs`. Producción permanece intacta.
+
+Trazabilidad: dos builds V398 fueron rechazados por el gate documental (nombre literal de prueba y actualización conjunta de ROADMAPS); ninguno llegó al alias LAB ni a Producción.
