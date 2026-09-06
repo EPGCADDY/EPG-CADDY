@@ -1972,3 +1972,5 @@ Frontera: no cambian cálculos, scores, persistencia, voz, Registro, comunicaci�
 El primer build V398 fue rechazado porque ROADMAP OVERALL no nombraba literalmente la prueba nueva; el segundo, porque el resellado no actualizó ambos ROADMAPS. Ambos rechazos permanecen registrados y Producción no cambió.
 
 La revisión en Chrome remoto móvil detectó que `pointerleave` podía cancelar una pulsación todavía sostenida. Se eliminó únicamente esa cancelación; `pointerup` y `pointercancel` permanecen como terminaciones explícitas.
+
+Se añadió `contextmenu` como evento compatible de pulsación prolongada; comparte el mismo diálogo y conserva la confirmación obligatoria.

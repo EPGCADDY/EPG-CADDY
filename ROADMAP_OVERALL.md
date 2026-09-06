@@ -1520,3 +1520,5 @@ LAB: las rondas vacías abren en hoyo 1, las parciales en el primer hoyo pendien
 Trazabilidad: dos builds V398 fueron rechazados por el gate documental (nombre literal de prueba y actualización conjunta de ROADMAPS); ninguno llegó al alias LAB ni a Producción.
 
 Revisión Chrome remoto móvil: se retiró la cancelación por `pointerleave`; la pulsación sólo termina en `pointerup` o `pointercancel`, evitando falsos cortes por desplazamiento mínimo.
+
+Compatibilidad: `contextmenu` abre la misma confirmación como respaldo del gesto prolongado nativo, sin ejecutar el borrado automáticamente.

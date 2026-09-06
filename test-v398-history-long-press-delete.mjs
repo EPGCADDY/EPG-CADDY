@@ -14,5 +14,5 @@ if(!context.archiveRoundSnapshot(round))throw new Error("No archivó fixture");
 if(!context.deleteRoundFromArchive(round.id))throw new Error("No eliminó fixture");
 if(context.readRoundArchive().some(item=>item.id===round.id))throw new Error("La ronda permanece en historial");
 if(context.archiveRoundSnapshot(round)!==false)throw new Error("La ronda eliminada reapareció al persistir");
-for(const required of ["pointerdown","650","openCardLibraryDelete","confirmCardLibraryDelete","CANCELAR","ELIMINAR"]){if(!html.includes(required))throw new Error(`Falta UI ${required}`)}
+for(const required of ["pointerdown","pointerup","pointercancel","contextmenu","650","openCardLibraryDelete","confirmCardLibraryDelete","CANCELAR","ELIMINAR"]){if(!html.includes(required))throw new Error(`Falta UI ${required}`)}
 console.log("PASS V398 · pulsación prolongada, confirmación y borrado persistente del historial");
