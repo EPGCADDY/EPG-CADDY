@@ -1553,5 +1553,7 @@ Los contratos heredados `test-v260-round-points-player-return.mjs`, `test-v267-o
 
 `service-worker.js` usa la firma `v400-active-round-multimodal` para que una app instalada reemplace el HTML anterior; los bancos V357, V361, V364, V365 y V368 conservan sus controles acumulados y exigen la nueva caché.
 
+Corrección física RC-054-R2: al elegir Stableford desde `NUEVA RONDA`, una Stableford activa podía impedir el formulario limpio y reabrir sus jugadores/scores. La entrada explícita `sfEmergency` queda por delante de la recuperación normal y ejecuta siempre `openFreshStablefordSetup()`; la tarjeta viva sólo se sustituye al confirmar la nueva. `test-stableford-ui.mjs` fija esa prioridad.
+
 
 Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs`.

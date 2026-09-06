@@ -2011,3 +2011,4 @@ Compatibilidad RC-053: `test-v252-stableford-persistence-category-course.mjs` ve
 - `service-worker.js` y pruebas V357/V361/V364/V365/V368: renuevan la caché instalada con la firma V400 sin retirar ninguna protección anterior.
 - Aceptación física pendiente del nuevo Preview: scores → reapertura PWA → primer pendiente; Nueva Ronda confirmada → reapertura → cero datos viejos y hoyo 1.
 - Producción, voz V378, Comunicación Universal, cálculos y tarjetas digitales permanecen intactos.
+- RC-054-R2 · `index-grupal.html` y `test-stableford-ui.mjs`: la selección explícita Stableford desde Nueva Ronda abre siempre registro limpio aun cuando exista una Stableford recuperable; no borra la anterior hasta confirmar OK.

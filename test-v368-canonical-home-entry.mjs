@@ -8,7 +8,7 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 
 assert.match(html,/gscg-canonical-home-entry" content="V368-CANONICAL-HOME-ENTRY-20260829"/);
 assert.match(html,/const directHome=startupParams\.get\("inicio"\)==="1"/);
-assert.match(html,/if\(explicitNewRound\|\|directHome\)\{\s*openNewRoundDraft\(\);\s*\}else if\(!isRecoverableStoredRound\(round\)\)\{/);
+assert.match(html,/if\(explicitNewRound\|\|directHome\)\{\s*openNewRoundDraft\(\);\s*\}else if\(sfEmergency\)\{[\s\S]*?openFreshStablefordSetup\(\);[\s\S]*?\}else if\(!isRecoverableStoredRound\(round\)\)\{/);
 assert.ok(html.indexOf("const standaloneApp=")<html.indexOf("function openSetup("),"standaloneApp debe existir antes de la apertura inicial");
 
 for(const source of ["/","/index.html","/inicio"]){

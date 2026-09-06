@@ -5109,12 +5109,11 @@ dateSetup();
 // continúa ocurriendo únicamente después de confirmar INICIAR RONDA.
 if(explicitNewRound||directHome){
   openNewRoundDraft();
+}else if(sfEmergency){
+  if(document.readyState==="loading")window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
+  else openFreshStablefordSetup();
 }else if(!isRecoverableStoredRound(round)){
-  if(sfEmergency){
-    if(document.readyState==="loading")window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
-    else openFreshStablefordSetup();
-  }
-  else ensurePrincipalEntry();
+  ensurePrincipalEntry();
 }
 if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
 window.GSC_ACCOUNT_SIGNED_IN=false;
