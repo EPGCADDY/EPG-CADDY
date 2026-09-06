@@ -46,5 +46,7 @@ assert.equal((html.match(/>REGÍSTRATE<\/button>/g)||[]).length,1,"REGÍSTRATE d
 assert.match(html,/id="accountBackupButtonSetup"[^>]*data-account-entry>REGÍSTRATE<\/button>/,"REGÍSTRATE debe permanecer únicamente en la pantalla principal");
 assert.doesNotMatch(html,/id="accountBackupButton"(?:\s|>)/,"La tarjeta operativa no puede mostrar REGÍSTRATE");
 assert.doesNotMatch(html,/id="accountBackupButtonStableford"(?:\s|>)/,"Stableford no puede mostrar REGÍSTRATE dentro de su tarjeta");
+assert.match(html,/if\(back\)back\.classList\.toggle\("hidden",!round\.configured\)/,"Práctica debe mostrar ATRÁS");
+assert.match(html,/isStablefordRound\(\)\|\|round\.provisional\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)/,"ATRÁS de Práctica debe volver a principal");
 
 console.log("PASS V397 · 8 artefactos con IN 1–9, OUT 10–18, TOTAL 1–18; visor con ATRÁS + ENVÍO; REGÍSTRATE sólo en principal");

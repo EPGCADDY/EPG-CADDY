@@ -1534,3 +1534,7 @@ Pruebas automáticas: `test-v397-card-in-out-back-contract.mjs`, `test-v398-manu
 Evidencia y sellos incorporados: `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`, `Intocables/CONFIRMACION_ESCRITA_V378.md` e `Intocables/EVIDENCIA_V378/CONFIRMACION_FISICA_V378_JAIME_KIRSTE.jpeg`.
 
 Trazabilidad del cierre: los dos primeros builds V399 fueron rechazados por el gate documental —primero por no enumerar las tres evidencias en OVERALL y después por no modificar ambos roadmaps en el mismo resellado—. Ninguno alcanzó READY ni modificó Producción.
+
+Corrección visual RC-051: el primer Preview READY V399 permitió abrir Práctica y confirmó que ocultaba `ATRÁS`. Se habilita el mismo control visible para toda ronda configurada; en Práctica regresa a principal sin convertirla en ronda oficial. El contrato V397 bloquea nuevamente esta ausencia.
+
+Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs`.

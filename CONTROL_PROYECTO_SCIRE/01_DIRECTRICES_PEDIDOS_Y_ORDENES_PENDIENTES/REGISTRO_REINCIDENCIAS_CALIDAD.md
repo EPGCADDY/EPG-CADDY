@@ -70,3 +70,10 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa raíz: pruebas heredadas comprobaban la existencia de botones y parámetros de versiones previas, pero no unicidad por pantalla ni comparación exacta contra V378.
 - Medida permanente: una sola acción `REGÍSTRATE` en principal; prueba negativa en tarjetas; restauración exacta del transporte y siete regiones V378; evidencia, hashes y once bancos ejecutables dentro de `intocables-gate.mjs`.
 - Estado: PASS automático; Preview LAB y revisión visual/física tarjeta por tarjeta pendientes; Producción intacta.
+
+## RC-051 · PRÁCTICA SIN ATRÁS — 06 SEPTIEMBRE 2026
+
+- Defecto físico: la tarjeta Práctica del Preview READY mostraba Historial, Ronda actual, Nueva ronda y Borrar scores, pero ocultaba `ATRÁS`.
+- Causa raíz: `renderPlayerEditControls()` limitaba el control a rondas no provisionales.
+- Medida permanente: mostrar `ATRÁS` en toda ronda configurada y hacer que Práctica vuelva a principal mediante `openNewRoundDraft()`; banco V397 positivo.
+- Estado: corregido en candidato LAB; repetición visual obligatoria; Producción intacta.

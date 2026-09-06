@@ -1989,3 +1989,7 @@ Se añadió `contextmenu` como evento compatible de pulsación prolongada; compa
 Estado: contratos automáticos PASS; Producción intacta; revisión visual/física 1×1 en Preview LAB todavía obligatoria antes de declarar tarjetas PASS.
 
 Trazabilidad del cierre: los dos primeros builds V399 fueron rechazados por el gate documental —primero por no enumerar las tres evidencias en OVERALL y después por no modificar ambos roadmaps en el mismo resellado—. Ninguno alcanzó READY ni modificó Producción.
+
+Corrección visual RC-051: `renderPlayerEditControls()` muestra `backToRegistrationButton` también en Práctica y su manejador ejecuta `openNewRoundDraft()`. `test-v397-card-in-out-back-contract.mjs` exige visibilidad y retorno. Producción permanece intacta.
+
+Bancos heredados alineados: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs` ahora exigen Stableford o Práctica → principal, conservando General → editor.

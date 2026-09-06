@@ -7,7 +7,7 @@ assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
 assert.match(html,/<button class="back-registration-button" id="backToRegistrationButton" aria-label="Atrás: volver a la pantalla principal" title="Volver a la pantalla principal">ATRÁS<\/button>/);
 assert.match(html,/function openNewRoundDraft\(\)[\s\S]*?persist\(\);[\s\S]*?if\(sfEmergency\)window\.history\.replaceState\(null,"",window\.location\.pathname\);[\s\S]*?dateSetup\(\);[\s\S]*?openSetup\("new"\);[\s\S]*?return true;/);
 assert.match(html,/function openSetup\(mode="new"\)[\s\S]*?renderDraft\(\);[\s\S]*?showStep1\(\);[\s\S]*?\$\("setupOverlay"\)\.classList\.add\("visible"\);/);
-assert.match(html,/\$\("backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)\);/);
+assert.match(html,/\$\("backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\|\|round\.provisional\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)\);/);
 assert.doesNotMatch(html,/\$\("backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openStablefordDataEditor\(\)/);
 
 const functionStart=html.indexOf("function openNewRoundDraft(){");

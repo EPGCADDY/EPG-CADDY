@@ -24,7 +24,7 @@ assert.match(html,/editable&&round\.mode!=="match_play"&&round\.players\.length<
 assert.match(html,/addPlayerButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openStablefordDataEditor\(\):openRosterEditor\(\)\)/);
 
 // ATRÁS vuelve al inicio en Stableford; + JUGADOR conserva el editor y los scores.
-assert.match(html,/backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)\)/);
+assert.match(html,/backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\|\|round\.provisional\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)\)/);
 assert.match(html,/function openNewRoundDraft\(\)[\s\S]*?persist\(\);[\s\S]*?openSetup\("new"\)/);
 assert.match(html,/holes:previous\[i\]\?\.holes\|\|\{\}/);
 

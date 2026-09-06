@@ -1196,7 +1196,7 @@ function renderPreviousRoundControls(){
 }
 function renderPlayerEditControls(){
   const add=$("addPlayerButton"),back=$("backToRegistrationButton"),editable=!!(round.configured&&!round.provisional&&!round.officiallyClosedAt);
-  if(back)back.classList.toggle("hidden",!(round.configured&&!round.provisional));
+  if(back)back.classList.toggle("hidden",!round.configured);
   const canAddPlayer=editable&&round.mode!=="match_play"&&round.players.length<6;
   if(add)add.classList.toggle("hidden",!(canAddPlayer&&round.mode!=="four_ball"));
 }
@@ -4976,7 +4976,7 @@ const lockScorecardSelection=e=>{if(e.target?.closest?.(".provisional-player-con
 document.addEventListener("selectionstart",lockScorecardSelection,{capture:true});
 document.addEventListener("contextmenu",lockScorecardSelection,{capture:true});
 document.addEventListener("dragstart",lockScorecardSelection,{capture:true});
-$("backToRegistrationButton").addEventListener("click",()=>isStablefordRound()?openNewRoundDraft():openCurrentRoundDataEditor());
+$("backToRegistrationButton").addEventListener("click",()=>isStablefordRound()||round.provisional?openNewRoundDraft():openCurrentRoundDataEditor());
 $("addPlayerButton").addEventListener("click",()=>isStablefordRound()?openStablefordDataEditor():openRosterEditor());
 $("scorecard").addEventListener("input",e=>{const input=e.target.closest?.("[data-provisional-player]");if(!input||!round.provisional)return;const p=round.players.find(x=>x.id===input.dataset.provisionalPlayer);if(p)p.name=String(input.value||"").toUpperCase().trimStart()||`JUGADOR ${p.slot}`});
 $("scorecard").addEventListener("change",e=>{if(!round.provisional)return;const name=e.target.closest?.("[data-provisional-player]"),hcp=e.target.closest?.("[data-provisional-hcp]"),tee=e.target.closest?.("[data-provisional-tee]"),control=name||hcp||tee;if(!control)return;const id=name?.dataset.provisionalPlayer||hcp?.dataset.provisionalHcp||tee?.dataset.provisionalTee,p=round.players.find(x=>x.id===id);if(!p)return;if(name){const value=String(name.value||"").trim().toUpperCase();p.name=value||`JUGADOR ${p.slot}`;name.value=value}if(hcp){const value=String(hcp.value||"").trim(),number=Number(value),valid=value!==""&&Number.isInteger(number)&&number>=0&&number<=54;p.provisionalHandicapProvided=valid;p.handicap=valid?number:0}if(tee){const value=normalizeTee(tee.value);p.provisionalTeeProvided=!!value;p.tee=value||"Blanco"}recomputePlayerScores(p);persist();render()});
