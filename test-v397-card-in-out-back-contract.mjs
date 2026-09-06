@@ -42,5 +42,9 @@ assert.match(html,/<th>PUNTOS IN<\/th><th>PUNTOS OUT<\/th><th>PUNTOS TOTAL<\/th>
 assert.match(html,/FRONT\.map[\s\S]{0,180}<th class="sum-col">IN<\/th>\$\{BACK\.map[\s\S]{0,180}<th class="sum-col">OUT<\/th><th class="sum-col">TOTAL<\/th>/,"La tabla principal debe colocar IN después del hoyo 9 y OUT después del hoyo 18");
 assert.match(html,/\$\{metric\} IN<\/b><b[^>]*>\$\{metric\} OUT<\/b><b[^>]*>\$\{metric\} TOTAL<\/b>/,"El control manual debe rotular el primer acumulado como IN y el segundo como OUT");
 assert.doesNotMatch(html,/\$\{metric\} OUT<\/b><b[^>]*>\$\{metric\} IN<\/b>/,"El control manual no puede volver a invertir OUT e IN");
+assert.equal((html.match(/>REGÍSTRATE<\/button>/g)||[]).length,1,"REGÍSTRATE debe existir una sola vez");
+assert.match(html,/id="accountBackupButtonSetup"[^>]*data-account-entry>REGÍSTRATE<\/button>/,"REGÍSTRATE debe permanecer únicamente en la pantalla principal");
+assert.doesNotMatch(html,/id="accountBackupButton"(?:\s|>)/,"La tarjeta operativa no puede mostrar REGÍSTRATE");
+assert.doesNotMatch(html,/id="accountBackupButtonStableford"(?:\s|>)/,"Stableford no puede mostrar REGÍSTRATE dentro de su tarjeta");
 
-console.log("PASS V397 · 8 artefactos con IN 1–9, OUT 10–18, TOTAL 1–18 y visor con ATRÁS + ENVÍO");
+console.log("PASS V397 · 8 artefactos con IN 1–9, OUT 10–18, TOTAL 1–18; visor con ATRÁS + ENVÍO; REGÍSTRATE sólo en principal");

@@ -9,7 +9,8 @@ const syncApi=fs.readFileSync(new URL("./api/sync.js",import.meta.url),"utf8");
 const backupApi=fs.readFileSync(new URL("./api/backup.js",import.meta.url),"utf8");
 
 assert.match(html,/V282-NEON-AUTH-BACKUP-RECOVERY-20260823/);
-for(const id of ["accountBackupButton","accountBackupOverlay","accountName","accountEmail","accountPassword","accountPasswordVisible","accountRemember","accountSignUp","accountSignIn","accountBackupNow","accountRestoreNow","accountSignOut"])assert.match(html,new RegExp(`id="${id}"`));
+for(const id of ["accountBackupButtonSetup","accountBackupOverlay","accountName","accountEmail","accountPassword","accountPasswordVisible","accountRemember","accountSignUp","accountSignIn","accountBackupNow","accountRestoreNow","accountSignOut"])assert.match(html,new RegExp(`id="${id}"`));
+assert.equal((html.match(/>REGÍSTRATE<\/button>/g)||[]).length,1,"REGÍSTRATE debe existir únicamente en la pantalla principal");
 assert.doesNotMatch(html,/id="librarySendDigital"/,"El Historial principal queda sin botón de envío");
 assert.match(html,/id="artifactViewerBack"[\s\S]{0,220}>ATRÁS<\/button>/);
 assert.match(html,/id="artifactViewerSend"[\s\S]{0,240}>ENVIAR TARJETA DIGITAL<\/button>/);

@@ -25,6 +25,15 @@ assert.equal(library.filter(entries,{query:"serie senior"})[0].roundId,"r2","Bú
 assert.equal(library.filter(entries,{query:"2026-05-03"})[0].roundId,"r1","Búsqueda por fecha");
 assert.equal(library.filter(entries,{query:"03 mayo 2026"})[0].roundId,"r1","Búsqueda por fecha visible en español");
 assert.match(html,/CARD_LIBRARY_PAGE_SIZE=8/);
+const modes=["general","stableford","match_play","four_ball"];
+const courses=["El Pulté","San Isidro","Country Club","Mayan Golf"];
+const recentArchive=Array.from({length:12},(_,index)=>snapshot(`recent-${index+1}`,modes[index%4],courses[index%4],`TORNEO ${index+1}`,new Date(Date.UTC(2026,7,index+1)).toISOString(),["JAIME"]));
+const recentEntries=library.entries(recentArchive);
+assert.equal(recentEntries.slice(0,8).length,8,"El Historial muestra como máximo las ocho rondas más recientes");
+assert.deepEqual(recentEntries.slice(0,8).map(item=>item.roundId),["recent-12","recent-11","recent-10","recent-9","recent-8","recent-7","recent-6","recent-5"],"Las ocho rondas deben ordenarse de más reciente a más antigua");
+assert.deepEqual(library.filter(recentEntries,{mode:"match_play"}).map(item=>item.mode),["match_play","match_play","match_play"],"Filtro Modalidad devuelve sólo Match Play");
+assert.deepEqual(library.filter(recentEntries,{course:"Mayan Golf"}).map(item=>item.course),["Mayan Golf","Mayan Golf","Mayan Golf"],"Filtro Campo devuelve sólo Mayan Golf");
+assert.deepEqual(library.filter(recentEntries,{mode:"stableford",course:"San Isidro"}).map(item=>item.roundId),["recent-10","recent-6","recent-2"],"Modalidad y Campo funcionan combinados y conservan orden reciente");
 for(const control of ["live-support-link","ai-universal-launch","golf-rules-launch","skins-launch","gsc-live-launch"])assert.match(html,new RegExp(`body\\.gsc-history-open \\.${control}`),`Historial debe ocultar ${control}`);
 assert.match(html,/classList\.add\("gsc-history-open"\)/);
 assert.match(html,/classList\.remove\("gsc-history-open"\)/);

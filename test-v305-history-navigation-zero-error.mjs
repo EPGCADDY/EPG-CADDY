@@ -29,10 +29,11 @@ for(const id of ["closeFinalCard","cancelOfficialCorrection","closeCardLibrary",
 assert.match(html,/\.screen-back-row\{position:sticky;top:0;z-index:12;/);
 assert.match(html,/\.screen-back-button\{[\s\S]*?min-height:44px[\s\S]*?border:1px solid var\(--lime\)/);
 
-for(const id of ["accountBackupButton","accountBackupButtonSetup","accountBackupButtonStableford"]){
-  assert.equal(buttonText(id),"REGÍSTRATE",`${id} debe decir REGÍSTRATE`);
-  assert.match(html,new RegExp(`id="${id}"[^>]*data-account-entry`));
-}
+assert.equal(buttonText("accountBackupButtonSetup"),"REGÍSTRATE","La pantalla principal debe decir REGÍSTRATE");
+assert.match(html,/id="accountBackupButtonSetup"[^>]*data-account-entry/);
+assert.equal((html.match(/>REGÍSTRATE<\/button>/g)||[]).length,1,"REGÍSTRATE debe existir únicamente en principal");
+assert.doesNotMatch(html,/id="accountBackupButton"(?:\s|>)/);
+assert.doesNotMatch(html,/id="accountBackupButtonStableford"(?:\s|>)/);
 assert.doesNotMatch(html,/\.account-backup-button\{position:fixed/);
 assert.match(html,/\.account-entry-control\{position:static;/);
 assert.match(html,/document\.querySelectorAll\("\[data-account-entry\]"\)\.forEach\(button=>button\.addEventListener\("click",openCentralAccount\)\)/);
@@ -59,4 +60,4 @@ for(const file of textFiles(root)){
 assert.equal(release.buildNumber,307);
 assert.match(worker,/const CACHE_NAME="gscg-mobile-v\d{3}[^"]*"/);
 
-console.log("PASS V305 · HISTORIAL, ATRÁS, REGÍSTRATE, Stableford limpio y cero vocabulario retirado");
+console.log("PASS V305/V399 · HISTORIAL, ATRÁS, REGÍSTRATE sólo principal, Stableford limpio y cero vocabulario retirado");

@@ -30,7 +30,8 @@ assert.match(toggle,/stopBrowserVoiceFallback\(\{keepStatus:true,processPending:
 for(const contract of [
   "recognition.continuous=true",
   "recognition.maxAlternatives=5",
-  "BROWSER_VOICE_SILENCE_MS=3000",
+  "BROWSER_VOICE_SILENCE_MS=1200",
+  "BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000",
   "BROWSER_VOICE_MAX_RESTARTS=12",
   "BROWSER_VOICE_MAX_TRANSPORT_RETRIES=2",
   'beginBrowserVoiceRecognition(context,"natural")',

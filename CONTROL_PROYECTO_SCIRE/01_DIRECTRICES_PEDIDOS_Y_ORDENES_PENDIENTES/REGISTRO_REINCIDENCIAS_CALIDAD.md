@@ -62,3 +62,11 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Punto de fallo: sólo existían selección y doble toque; `persist()` rearchivaba la ronda activa.
 - Causa raíz: ausencia de contrato de borrado y exclusión por ID.
 - Medida permanente: confirmación explícita, borrado limitado al archivo, registro de IDs excluidos y prueba automática de no reaparición.
+
+## RC-050 · REGISTRO DUPLICADO Y VOZ V378 REGRESADA — 06 SEPTIEMBRE 2026
+
+- Defecto: tarjetas internas mostraban `REGÍSTRATE` y la rama V397 identificaba/reproducía Cedar/Onyx 1.15 en lugar de la voz V378 aprobada.
+- Punto de fallo: acciones de respaldo replicadas dentro de tarjeta/Stableford y ausencia de evidencia/hash V378 en la compuerta Intocables de la rama integrada.
+- Causa raíz: pruebas heredadas comprobaban la existencia de botones y parámetros de versiones previas, pero no unicidad por pantalla ni comparación exacta contra V378.
+- Medida permanente: una sola acción `REGÍSTRATE` en principal; prueba negativa en tarjetas; restauración exacta del transporte y siete regiones V378; evidencia, hashes y once bancos ejecutables dentro de `intocables-gate.mjs`.
+- Estado: PASS automático; Preview LAB y revisión visual/física tarjeta por tarjeta pendientes; Producción intacta.

@@ -1974,3 +1974,16 @@ El primer build V398 fue rechazado porque ROADMAP OVERALL no nombraba literalmen
 La revisión en Chrome remoto móvil detectó que `pointerleave` podía cancelar una pulsación todavía sostenida. Se eliminó únicamente esa cancelación; `pointerup` y `pointercancel` permanecen como terminaciones explícitas.
 
 Se añadió `contextmenu` como evento compatible de pulsación prolongada; comparte el mismo diálogo y conserva la confirmación obligatoria.
+
+## V399 LAB · REGÍSTRATE sólo principal + filtros exactos + restauración V378 · 6 de septiembre de 2026
+
+- `index-grupal.html`: se retiran `accountBackupButton` y `accountBackupButtonStableford`; sólo permanece `accountBackupButtonSetup` en la pantalla principal.
+- `test-v397-card-in-out-back-contract.mjs`: exige una sola aparición de `REGÍSTRATE`, ubicada en principal, y conserva el contrato IN 1–9, OUT 10–18, TOTAL y ATRÁS.
+- `test-v279-local-card-library.mjs`: ejecuta límite máximo de ocho, orden descendente y filtros por modalidad, campo y combinación modalidad+campo.
+- `test-v398-manual-opening-hole.mjs`: ejecuta cuatro modalidades con vacía→hoyo 1, parcial→primer pendiente y navegación interna conservada.
+- `api/voice-speech.js`: restauración exacta SHA-256 `dd4597f6c60b0800adc990c7d99256ea5dfd13ac219b70292587718704ca5fee`, Fish Audio `s2.1-pro-free`, `es-419`, velocidad `0.90`, sin ID fijo.
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json` y `Intocables/CONFIRMACION_ESCRITA_V378.md`: fijan la aprobación del 4 de septiembre de 2026 y excluyen el tiempo de 22 segundos de Comunicación Universal.
+- `Intocables/intocables-gate.mjs`: compara siete regiones funcionales contra V378, valida la evidencia y ejecuta once bancos sellados.
+- `Intocables/EVIDENCIA_V378/CONFIRMACION_FISICA_V378_JAIME_KIRSTE.jpeg`: evidencia escrita suministrada por el propietario.
+
+Estado: contratos automáticos PASS; Producción intacta; revisión visual/física 1×1 en Preview LAB todavía obligatoria antes de declarar tarjetas PASS.

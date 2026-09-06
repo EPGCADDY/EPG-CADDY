@@ -9,7 +9,7 @@ const universal=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url)
 const speech=fs.readFileSync(new URL("./api/voice-speech.js",import.meta.url),"utf8");
 
 assert.match(html,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
-assert.match(html,/CEDAR-1\.15-MALE-INTERNATIONAL-SPANISH/);
+assert.match(html,/FISH-AUDIO-S2\.1-PRO-FREE-ES-419-0\.90/);
 assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
 
 for(const contract of [
@@ -26,14 +26,17 @@ assert.doesNotMatch(html,/voices\.find\(voice=>String\(voice\.lang\|\|""\).*\|\|
 assert.deepEqual(sanitizeSpeechRequest({text:"  Hola\n mundo  ",language:"es-GT<script>"}),{text:"Hola mundo",language:"es-GTscript"});
 const direct=cedarSpeechPayload("Respuesta confiable.","es-GT");
 assert.equal(direct.model,"gpt-4o-mini-tts");
-assert.equal(direct.voice,"cedar");
-assert.equal(direct.speed,1.15);
+assert.equal(direct.voice,"onyx");
+assert.equal(direct.speed,.9);
 assert.match(direct.instructions,/Locutor masculino adulto/);
 const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
-assert.equal(gateway.voice,"onyx");
-assert.equal(gateway.speed,1.15);
+assert.equal(gateway.language,"es-419");
+assert.equal(gateway.speed,.9);
+assert.equal(Object.hasOwn(gateway,"voice"),false);
+assert.match(gateway.instructions,/español mexicano neutro/);
 assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
-assert.match(speech,/openai\/tts-1-hd/);
+assert.match(speech,/fish-audio\/s2\.1-pro-free/);
+assert.doesNotMatch(speech,/openai\/tts-1-hd|GATEWAY_VOICE="echo"/);
 
 function responseRecorder(){return{statusCode:0,headers:{},body:null,setHeader(name,value){this.headers[name]=value},status(code){this.statusCode=code;return this},json(value){this.body=value;return this},send(value){this.body=value;return this}}}
 const previousFetch=globalThis.fetch,previousOpenAI=process.env.OPENAI_API_KEY,previousGateway=process.env.AI_GATEWAY_API_KEY;
@@ -41,7 +44,6 @@ const calls=[];
 process.env.OPENAI_API_KEY="direct-test";process.env.AI_GATEWAY_API_KEY="gateway-test";
 globalThis.fetch=async(url,options)=>{
   calls.push({url:String(url),options});
-  if(String(url).includes("api.openai.com"))return{ok:false,status:429};
   return{ok:true,status:200,json:async()=>({audio:Buffer.from("cedar-audio").toString("base64"),warnings:[]})};
 };
 try{
@@ -51,11 +53,12 @@ try{
   assert.equal(res.headers["Content-Type"],"audio/mpeg");
   assert.equal(Buffer.isBuffer(res.body),true);
   assert.equal(res.body.toString(),"cedar-audio");
-  assert.equal(calls.length,2);
-  assert.equal(calls[1].url,"https://ai-gateway.vercel.sh/v4/ai/speech-model");
-  assert.equal(calls[1].options.headers["ai-model-id"],"openai/tts-1-hd");
-  assert.equal(JSON.parse(calls[1].options.body).voice,"onyx");
-  assert.equal(res.headers["X-GSCG-Voice"],"onyx");
+  assert.equal(calls.length,1);
+  assert.equal(calls[0].url,"https://ai-gateway.vercel.sh/v4/ai/speech-model");
+  assert.equal(calls[0].options.headers["ai-model-id"],"fish-audio/s2.1-pro-free");
+  assert.equal(JSON.parse(calls[0].options.body).language,"es-419");
+  assert.equal(Object.hasOwn(JSON.parse(calls[0].options.body),"voice"),false);
+  assert.equal(res.headers["X-GSCG-Voice"],"s2.1-es-419");
 }finally{
   globalThis.fetch=previousFetch;
   if(previousOpenAI===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=previousOpenAI;
@@ -76,4 +79,4 @@ assert.match(universal,/responseMode==="voice"/);
 assert.match(universal,/tres a seis oraciones concisas pero sustantivas/);
 assert.deepEqual(universalResponseProfile("Analiza a fondo causas, riesgos, alternativas y dame una recomendación accionable."),{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"});
 
-console.log("PASS V356 · voz hablada sin transcripción, Cedar masculino 1.15, tráfico/clima estructurados y respuesta universal sustantiva");
+console.log("PASS V356/V378 · voz hablada Fish Audio es-419 0.90 sin ID fijo; tráfico/clima estructurados");

@@ -1522,3 +1522,11 @@ Trazabilidad: dos builds V398 fueron rechazados por el gate documental (nombre l
 Revisión Chrome remoto móvil: se retiró la cancelación por `pointerleave`; la pulsación sólo termina en `pointerup` o `pointercancel`, evitando falsos cortes por desplazamiento mínimo.
 
 Compatibilidad: `contextmenu` abre la misma confirmación como respaldo del gesto prolongado nativo, sin ejecutar el borrado automáticamente.
+
+## V399 LAB · limpieza de tarjetas, filtros e Intocables V378 · 6 de septiembre de 2026
+
+Se elimina `REGÍSTRATE` de todas las tarjetas y de Stableford; queda una única acción de registro en la pantalla principal. El Historial mantiene hasta ocho rondas recientes en orden descendente y aplica filtros comprobados por modalidad, campo o ambos. General, Stableford, Match Play y Four Ball abren el Control Manual en hoyo 1 cuando están vacías o en el primer hoyo pendiente cuando ya tienen scores.
+
+La auditoría detectó que V397 había sustituido indebidamente la voz físicamente aprobada. Se restaura byte por byte `api/voice-speech.js` de V378 y se sellan los siete bloques funcionales aprobados: registro de jugadores, score individual/múltiple, sensibilidad, umbrales y cierre. La voz queda fijada a Fish Audio `fish-audio/s2.1-pro-free`, `es-419`, velocidad `0.90`, sin ID fijo; la Comunicación Universal de 22 segundos continúa expresamente fuera de la aprobación.
+
+Pruebas automáticas: `test-v397-card-in-out-back-contract.mjs`, `test-v398-manual-opening-hole.mjs`, `test-v279-local-card-library.mjs`, `test-v282-optional-account-backup.mjs` e `Intocables/intocables-gate.mjs`. Producción permanece intacta. Los PASS visuales de tarjetas siguen revocados hasta completar una nueva inspección física 1×1 sobre Preview LAB.
