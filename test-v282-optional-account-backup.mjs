@@ -9,10 +9,17 @@ const syncApi=fs.readFileSync(new URL("./api/sync.js",import.meta.url),"utf8");
 const backupApi=fs.readFileSync(new URL("./api/backup.js",import.meta.url),"utf8");
 
 assert.match(html,/V282-NEON-AUTH-BACKUP-RECOVERY-20260823/);
-for(const id of ["accountBackupButton","accountBackupOverlay","accountName","accountEmail","accountPassword","accountSignUp","accountSignIn","accountBackupNow","accountRestoreNow","accountSignOut"])assert.match(html,new RegExp(`id="${id}"`));
+for(const id of ["accountBackupButton","accountBackupOverlay","accountName","accountEmail","accountPassword","accountRemember","accountSignUp","accountSignIn","accountBackupNow","accountRestoreNow","accountSignOut"])assert.match(html,new RegExp(`id="${id}"`));
 assert.match(html,/window\.GSC_ACCOUNT_SIGNED_IN=false/);
 assert.match(html,/window\.GSC_ACCOUNT_SIGNED_IN!==true/);
-assert.match(html,/queueMasterDataSnapshot\("manual-central-backup"\)/);
+assert.match(html,/autocomplete="username"/);
+assert.match(html,/autocomplete="current-password"/);
+assert.match(html,/ACCOUNT_REMEMBER_KEY/);
+assert.doesNotMatch(html,/localStorage\.setItem\([^\n]+password/i);
+assert.match(html,/options\.roundOverride\|\|round/);
+assert.match(html,/GSCAccountBackup\.officialRoundsForBackup\(readRoundArchive\(\),round\)/);
+assert.match(html,/for\(const storedRound of uniqueRounds\)queueMasterDataSnapshot\("manual-central-backup",\{roundOverride:storedRound\}\)/);
+assert.match(html,/RESPALDO CENTRAL COMPLETO · \$\{uniqueRounds\.length\} RONDAS/);
 assert.match(html,/GSCAccountBackup\.recover\(\)/);
 assert.match(accountApi,/\/sign-up\/email/);
 assert.match(accountApi,/\/sign-in\/email/);
@@ -30,5 +37,10 @@ assert.equal(restored.players[0].holes[1].gross,5);
 assert.equal(restored.players[0].holes[1].points,2);
 assert.equal(restored.officiallyClosedAt,"2026-08-23T16:00:00Z");
 assert.equal(accountBackup.mergeRounds([{id:"a",updatedAt:"2026-01-01"}],[{id:"a",updatedAt:"2026-02-01"},{id:"b",updatedAt:"2026-01-15"}]).length,2);
+
+const officialRound=id=>({id,configured:true,provisional:false,officiallyClosedAt:"2026-09-06T18:00:00Z",officialSnapshot:{id},players:[{name:"JAIME"}]});
+const fiveRounds=Array.from({length:5},(_,index)=>officialRound(`round-${index+1}`));
+assert.deepEqual(accountBackup.officialRoundsForBackup([...fiveRounds,fiveRounds[0]],fiveRounds[4]).map(item=>item.id),["round-1","round-2","round-3","round-4","round-5"]);
+assert.equal(accountBackup.officialRoundsForBackup([...fiveRounds,{...officialRound("draft"),officialSnapshot:null}],null).length,5);
 
 console.log("PASS V282 · cuenta opcional, respaldo autenticado y recuperación central");

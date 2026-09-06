@@ -1483,3 +1483,9 @@ La prueba física `IMG_90B5C8C0-8E86-43B7-8C3E-3CE4B7E8A35D.jpeg` confirmó actu
 El micrófono aprobado no se refactoriza ni se toca. `Intocables/MICROFONO_APROBADO.lock.json` sella por SHA-256 el transporte de voz y once bancos de Registro, Score individual, multihoyos, persistencia y AI UNIVERSAL; `intocables-gate.mjs` verifica hashes y ejecuta esos bancos antes de permitir build o despliegue.
 
 El inventario V311 se reconstruye con sello `V371-MATCH-GROSS-MICROPHONE-LOCK`; `scripts/rebuild-inventory-pdfs.py`, el lock y los tres PDF quedan sincronizados con ambos ROADMAPS.
+
+## V397 local · respaldo integral de historial y acceso recordado · 6 de septiembre de 2026
+
+RC-044 reproduce que una cuenta conectada recuperaba 1 ronda aunque el dispositivo origen tenía 5 tarjetas oficiales. La causa era puntual: `backupCentralNow()` sólo enviaba la ronda global activa. V397 local recorre las rondas oficiales archivadas más la actual, deduplica por ID y crea una mutación central independiente para cada tarjeta. El banco permanente construye cinco IDs, repite uno y añade un borrador sin tarjeta; exige exactamente cinco.
+
+El formulario añade `RECORDAR CORREO Y MANTENER SESIÓN`: sólo nombre/correo se guardan localmente; la contraseña permanece a cargo del gestor seguro del navegador mediante `autocomplete="username"` y `autocomplete="current-password"`. La sesión ya se revalida al abrir y sólo se cierra con la acción explícita. Archivos funcionales: `index-grupal.html`, `account-backup.js`, `test-v282-optional-account-backup.mjs`. Producción permanece intacta; el ZIP carece de `.git` y `@vercel/oidc`, por lo que Gate canónico y regresión dependiente de OIDC quedan bloqueados antes de un candidato.

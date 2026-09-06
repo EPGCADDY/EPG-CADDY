@@ -33,5 +33,9 @@
     for(const item of remote||[]){if(!item?.id)continue;const current=byId.get(item.id),currentAt=Date.parse(current?.updatedAt||current?.createdAt||0)||0,nextAt=Date.parse(item.updatedAt||item.createdAt||0)||0;if(!current||nextAt>=currentAt)byId.set(item.id,item)}
     return[...byId.values()].sort((a,b)=>(Date.parse(a.createdAt)||0)-(Date.parse(b.createdAt)||0)).slice(-120);
   }
-  return{account,recover,localRound,playerFromProfile,mergeRounds};
+  function officialRoundsForBackup(archive,current=null){
+    const candidates=[...(Array.isArray(archive)?archive:[]),current].filter(value=>value?.id&&value?.configured===true&&value?.provisional!==true&&value?.officiallyClosedAt&&value?.officialSnapshot&&Array.isArray(value?.players)&&value.players.length>=1&&value.players.length<=6);
+    return[...new Map(candidates.map(value=>[value.id,value])).values()];
+  }
+  return{account,recover,localRound,playerFromProfile,mergeRounds,officialRoundsForBackup};
 });

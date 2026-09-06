@@ -1028,6 +1028,14 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `live.html` | Carga `match-play.js` y el visor V370 sin caché. | El enlace vigente recibe la presentación nueva al reabrirse. |
 | `test-v352-live.mjs` | Ejecuta Match Play sin scores con Jaime/Gustavo equivalentes. | Exige nombres y casillas vacías; prohíbe Gross/Neto General. |
 
+## V397 local · respaldo de historial y acceso recordado
+
+| Archivo | Responsabilidad | Candado |
+|---|---|---|
+| `account-backup.js` | Selección canónica de rondas oficiales respaldables, deduplicada por ID. | Una tarjeta oficial equivale a una mutación central. |
+| `index-grupal.html` | Recorre todo el historial oficial al respaldar y muestra la cantidad; recuerda correo sin guardar contraseña. | Cinco tarjetas no pueden reducirse silenciosamente a una; sesión sólo se cierra explícitamente. |
+| `test-v282-optional-account-backup.mjs` | Ejecuta cinco rondas, duplicado, borrador y contrato seguro de autocomplete/localStorage. | RC-044 permanente. |
+
 ## V371 · Gross Match y candado de micrófono
 
 | Archivo | Función | Control |
