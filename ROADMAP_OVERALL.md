@@ -1570,3 +1570,5 @@ Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-o
 - `index-grupal.html`: `NUEVA RONDA` archiva la ronda anterior, elimina las claves activas de todas las modalidades, crea `blankRound()` sin jugadores ni scores, reinicia hoyo 1 y abre Registro.
 - La ronda archivada permanece disponible en Historial; Producción permanece intacta.
 - El mismo cambio restaura las acciones ABRIR/IMAGEN/PDF Global y Personal del Historial para recuperar las tarjetas oficiales guardadas.
+
+RC-057-S1: sello de inventario atómico posterior a la corrección de NUEVA RONDA e Historial; 400 fuentes verificadas. Producción intacta.
