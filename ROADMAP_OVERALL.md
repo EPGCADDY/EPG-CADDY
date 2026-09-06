@@ -1539,4 +1539,6 @@ Corrección visual RC-051: el primer Preview READY V399 permitió abrir Práctic
 
 Corrección RC-052: la prueba HTTPS real detectó `OPENAI_NOT_CONFIGURED` en Comunicación Universal y Reglas dentro del Preview, mientras la voz Fish Audio sí respondió. `api/universal-ai.js` y `api/golf-rules.js` usan ahora el OIDC administrado de Vercel cuando no existe llave directa; `test-v364-vercel-oidc-recovery.mjs` y `test-v328-official-golf-rules.mjs` bloquean esa regresión. No cambian micrófono V378, sus umbrales, tarjetas ni Producción.
 
+Resellado RC-052: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se regeneró con el script oficial después del cambio de seis archivos; los tres inventarios validan 400 fuentes y los PDF mantienen su contenido. El primer build RC-052 quedó rechazado por el inventario anterior y nunca sustituyó el LAB listo ni Producción.
+
 Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs`.
