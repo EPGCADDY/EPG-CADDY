@@ -3961,7 +3961,10 @@ function selectStablefordSetupCategory(category){
   stablefordSetupCategory=category;renderStablefordSetup();return true
 }
 function openFreshStablefordSetup(){
-  if(round.configured)persist();
+  if(round.configured){persist();archiveRoundSnapshot(round)}
+  teardownRealtime();
+  for(const key of [ACTIVE_ROUND_KEY,STORAGE_KEY,STORAGE_BACKUP_KEY,MATCH_PLAY_ACTIVE_KEY,FOUR_BALL_ACTIVE_KEY,STABLEFORD_ACTIVE_KEY]){try{localStorage.removeItem(key)}catch{}}
+  clearDraftState();draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());draftTournament=null;resetDraftGames();resetRoundCapture();
   round={...blankRound(),mode:"stableford"};
   try{localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round))}catch{}
   resetStablefordSetupFields();render();return showStablefordSetup()
