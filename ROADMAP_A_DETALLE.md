@@ -2042,3 +2042,5 @@ RC-057-S2: el build de S1 fue rechazado porque el digest se calculó antes de in
 RC-057-S3: la auditoría integral rechazó el panel de acciones múltiples restaurado en Historial porque contradecía el contrato V397. Se conserva el flujo aprobado: doble toque abre la tarjeta Global real y el visor ofrece únicamente `ENVIAR TARJETA DIGITAL` y `ATRÁS`. V278–V282 y V397 PASS; Producción intacta.
 
 RC-057-S4: `test-v364-explicit-new-round-entry.mjs` deja de exigir la conservación activa anterior y fija la orden vigente: archivar, eliminar las seis claves activas, limpiar borrador, crear `blankRound()` sin jugadores/scores y abrir Registro. V358/V363/V365/V366/V368 e Intocables continúan PASS; Producción intacta.
+
+RC-057-S5: `inicio=1` usa `openRegistrationPreservingActiveRound()`; sólo `nueva_ronda=1` o el botón ejecutan `openNewRoundDraft()`. Pruebas dirigidas V358/V364/V365/V366/V368/V397 e Intocables PASS. Producción intacta.

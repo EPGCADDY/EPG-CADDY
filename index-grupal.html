@@ -3760,6 +3760,15 @@ function openNewRoundDraft(){
   openSetup("new");
   return true;
 }
+function openRegistrationPreservingActiveRound(){
+  if(round.configured)persist();
+  teardownRealtime();
+  clearDraftState();
+  draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());draftTournament=null;draftCourse="pulte";draftRoundMode="general";resetDraftGames();resetRoundCapture();
+  dateSetup();
+  openSetup("new");
+  return true;
+}
 function ensurePrincipalEntry(){
   if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
   const overlay=$("setupOverlay");if(!overlay)return false;
@@ -5131,8 +5140,10 @@ scheduleRoundTimerIdleShutdown();
 dateSetup();
 // La entrada explícita abre Registro sin borrar la ronda activa. La sustitución
 // continúa ocurriendo únicamente después de confirmar INICIAR RONDA.
-if(explicitNewRound||directHome){
+if(explicitNewRound){
   openNewRoundDraft();
+}else if(directHome){
+  openRegistrationPreservingActiveRound();
 }else if(sfEmergency){
   if(document.readyState==="loading")window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
   else openFreshStablefordSetup();
