@@ -4015,6 +4015,11 @@ function applyManualScoreEntries(entries){
   if(result.closure)speakClosure(result.closure);
   return result
 }
+function preferredManualHole({roundId,renderedRoundId,selectedHole,firstPending,maxHole=18}){
+  const limit=Math.max(1,Math.min(18,Number(maxHole)||18)),pending=Math.max(1,Math.min(limit,Number(firstPending)||1));
+  if(String(renderedRoundId||"")!==String(roundId||""))return pending;
+  return Math.max(1,Math.min(limit,Number(selectedHole)||pending))
+}
 function resetAnnouncementsAfterRemoval(hole){ensureAnnouncedState();if(FRONT.includes(hole))round.announced.front=false;if(BACK.includes(hole))round.announced.back=false;round.announced.complete=false}
 function removeManualScore(player,hole){
   if(round.officiallyClosedAt||!player?.holes?.[hole])return false;
@@ -4024,8 +4029,9 @@ function renderRoundManualEntry(){
   let manual=document.getElementById("roundManualEntry");
   if(!round.configured||!round.players.length){manual?.remove();return}
   if(!manual){manual=document.createElement("div");manual.id="roundManualEntry";manual.style.cssText="position:relative;z-index:9;margin:10px 0;padding:10px;border:2px solid #31ff00;background:#000;pointer-events:auto;touch-action:manipulation";document.querySelector(".card-shell").before(manual)}
-  const matchState=activeTeamMatchStatus(),matchLimit=matchState?.closed?matchState.decidedAt:18,firstPending=Math.min(matchLimit,ALL.find(hole=>!operationalHoleComplete(hole))||18);if(!manual.dataset.hole)manual.dataset.hole=String(firstPending);
-  const selectedHole=Math.max(1,Math.min(matchLimit,Number(manual.dataset.hole)||firstPending)),stable=isStablefordRound(),course=COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte,cfg=stable?stablefordConfig():null,locked=!!round.officiallyClosedAt;
+  const matchState=activeTeamMatchStatus(),matchLimit=matchState?.closed?matchState.decidedAt:18,firstPending=Math.min(matchLimit,ALL.find(hole=>!operationalHoleComplete(hole))||18);
+  const selectedHole=preferredManualHole({roundId:round.id,renderedRoundId:manual.dataset.roundId,selectedHole:manual.dataset.hole,firstPending,maxHole:matchLimit});manual.dataset.roundId=String(round.id||"");manual.dataset.hole=String(selectedHole);
+  const stable=isStablefordRound(),course=COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte,cfg=stable?stablefordConfig():null,locked=!!round.officiallyClosedAt;
   const detailOne=stable?{label:"TORNEO",value:round.tournament?.name||STABLEFORD_DEFAULT_TOURNAMENT}:{label:"CAMPO",value:course.displayName||course.name};
   const generalMatchDetail={label:"MODALIDAD",value:round.provisional?"SCORE CARD - PRÁCTICA":isMatchPlayRound()?"MATCH PLAY":"RONDA NORMAL"};
   const detailTwo=stable?{label:"CATEGORÍA",value:`${cfg.label} · ${stablefordTeeLabel(cfg)}`}:generalMatchDetail;

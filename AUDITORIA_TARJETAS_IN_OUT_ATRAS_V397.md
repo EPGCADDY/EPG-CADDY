@@ -53,3 +53,7 @@ Esta regla particular del proyecto prevalece sobre la convención tradicional de
 Las capturas del propietario demuestran FAIL en dos tarjetas, pero no se reutilizarán como evidencia posterior. La tabla final PASS/FAIL y las capturas nuevas se agregarán únicamente después de abrir cada vista corregida en el LAB real.
 
 El despliegue `ba6e8df` dejó FOUR BALL operativa en PASS visual con IN=36, OUT=45, TOTAL=81, `ATRÁS` separado y persistencia tras recarga/regreso. La Tarjeta Digital Final FOUR BALL quedó FAIL porque faltaba `ENVIAR TARJETA DIGITAL`; RC-046-R3 corrige sólo esa cabecera y mantiene el FAIL hasta nueva evidencia posterior al despliegue.
+
+## RC-048 — hoyo inicial incorrecto
+
+La captura `IMG_2924.png` revoca cualquier PASS sobre el hoyo inicial: una ronda General sin scores abrió en hoyo 18. La causa es que `roundManualEntry.dataset.hole` sobrevivía al cambio/restauración de ronda y tenía prioridad sobre el primer hoyo pendiente. `preferredManualHole()` asocia ahora el panel al `round.id`: una ronda distinta abre en 1 cuando está vacía o en el primer hoyo pendiente cuando contiene scores; la navegación elegida se conserva solamente dentro de la misma ronda. La evidencia automática abarca General, Stableford, Match Play y Four Ball, pero el PASS visual continúa pendiente hasta abrir cada modalidad en el LAB posterior al despliegue.

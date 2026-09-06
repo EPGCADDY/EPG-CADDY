@@ -1509,3 +1509,7 @@ Corrección RC-046-R2: la inspección real del Preview `4b1c04f` rechazó FOUR B
 Corrección RC-046-R3: la tarjeta final abierta reduce sus acciones visibles a `ENVIAR TARJETA DIGITAL` y `ATRÁS`; el envío toma el Global oficial y abre la hoja nativa del dispositivo para seleccionar WhatsApp. El bloque anterior de múltiples opciones queda oculto sin modificar artefactos, resultados ni persistencia.
 
 Resellado RC-046-R3: el primer transporte remoto truncó `index-grupal.html` y fue rechazado por Intocables; el blob completo `b4e2412e…` restauró el archivo sin cambios funcionales adicionales. El commit documental posterior vuelve a modificar ambos ROADMAPS para satisfacer el gate de atomicidad; Producción permanece intacta.
+
+## V398 LAB · hoyo inicial por ronda · 6 de septiembre de 2026
+
+RC-048 corrige únicamente la selección inicial del Control Manual. Al cambiar/restaurar ronda, General, Stableford, Match Play y Four Ball abren en hoyo 1 si no existen scores o en el primer hoyo pendiente si ya existen; una selección manual permanece mientras se siga en la misma ronda. `test-v398-manual-opening-hole.mjs` bloquea la reutilización del hoyo 18 residual. Producción permanece intacta y no existe PASS visual hasta comprobar las cuatro modalidades en el LAB nuevo.

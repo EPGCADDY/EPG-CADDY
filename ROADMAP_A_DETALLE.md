@@ -1952,3 +1952,12 @@ Configuración LAB: `vercel.json` ejecuta `node audit-project.mjs`. V328 LIVE no
 | `card-library.js` | Orden por `playedAt` y búsqueda por fecha ISO, numérica, mes corto o completo. | Una fecha visible localiza la ronda guardada sin alterar el snapshot. |
 | `index-grupal.html` | Ocho rondas por página, navegación anterior/siguiente, doble toque para abrir Global original y único botón `ENVIAR TARJETA DIGITAL`. | Elimina Global/PDF/Personal/Estadísticas como controles visibles del Historial. |
 | `test-v279-local-card-library.mjs`, `test-v282-optional-account-backup.mjs` | Fijan interfaz, paginación, fecha, envío, aislamiento de `ATRÁS`, contraseña visible y recuerdo inmediato de nombre/correo. | La contraseña nunca se guarda; Producción no cambia. |
+
+## V398 · apertura del Control Manual en el hoyo correcto
+
+| Fuente | Cambio limitado | Control |
+|---|---|---|
+| `index-grupal.html` · `preferredManualHole()` | Invalida el hoyo visual residual cuando cambia `round.id`; abre en el primer pendiente y mantiene navegación dentro de la misma ronda. | Vacía→1; parcial→primer pendiente; completa/Match limitada→límite aplicable. |
+| `test-v398-manual-opening-hole.mjs` | Ejecuta el contrato para General, Stableford, Match Play y Four Ball. | Rechaza que una ronda nueva herede hoyo 18 de otra ronda. |
+
+Frontera: no cambian cálculos, scores, persistencia, voz, Registro, comunicación universal, artefactos ni Producción. La pulsación prolongada para eliminar desde Historial queda registrada como trabajo posterior y no se mezcla con RC-048.
