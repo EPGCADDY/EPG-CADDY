@@ -2036,3 +2036,9 @@ RC-055-R2 · `shareOfficialArtifactImage()` convierte la tarjeta oficial a PNG a
 - El mismo cambio restaura las acciones ABRIR/IMAGEN/PDF Global y Personal del Historial para recuperar las tarjetas oficiales guardadas.
 
 RC-057-S1: sello de inventario atómico posterior a la corrección de NUEVA RONDA e Historial; 400 fuentes verificadas. Producción intacta.
+
+RC-057-S2: el build de S1 fue rechazado porque el digest se calculó antes de incorporar la edición final de ambos ROADMAPS. Se recalcula el sello desde el árbol completo ya actualizado y se versionan juntos `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. No cambia código funcional ni Producción.
+
+RC-057-S3: la auditoría integral rechazó el panel de acciones múltiples restaurado en Historial porque contradecía el contrato V397. Se conserva el flujo aprobado: doble toque abre la tarjeta Global real y el visor ofrece únicamente `ENVIAR TARJETA DIGITAL` y `ATRÁS`. V278–V282 y V397 PASS; Producción intacta.
+
+RC-057-S4: `test-v364-explicit-new-round-entry.mjs` deja de exigir la conservación activa anterior y fija la orden vigente: archivar, eliminar las seis claves activas, limpiar borrador, crear `blankRound()` sin jugadores/scores y abrir Registro. V358/V363/V365/V366/V368 e Intocables continúan PASS; Producción intacta.
