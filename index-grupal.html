@@ -3350,7 +3350,7 @@ function playerHole10AliasClass(p){
   return length>=5?" long-alias":"";
 }
 function yds10NameSafe(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
-function tableHeader(){return`<tr><th class="player-col">JUGADOR</th><th class="concept-col">HOYO</th>${FRONT.map(h=>`<th class="hole-col" data-hole="${h}">${h}</th>`).join("")}<th class="sum-col">OUT</th>${BACK.map(h=>`<th class="hole-col" data-hole="${h}">${h}</th>`).join("")}<th class="sum-col">IN</th><th class="sum-col">TOTAL</th></tr>`}
+function tableHeader(){return`<tr><th class="player-col">JUGADOR</th><th class="concept-col">HOYO</th>${FRONT.map(h=>`<th class="hole-col" data-hole="${h}">${h}</th>`).join("")}<th class="sum-col">IN</th>${BACK.map(h=>`<th class="hole-col" data-hole="${h}">${h}</th>`).join("")}<th class="sum-col">OUT</th><th class="sum-col">TOTAL</th></tr>`}
 function generalRow(label,values,front,back,total){return`<tr class="general"><td></td><td class="concept">${label}</td>${values.slice(0,9).map(v=>`<td>${v}</td>`).join("")}<td>${front}</td>${values.slice(9).map(v=>`<td>${v}</td>`).join("")}<td>${back}</td><td>${total}</td></tr>`}
 function firstPlayerSpacer(){return`<tr class="first-player-spacer" aria-hidden="true">${Array(22).fill("<td></td>").join("")}</tr>`}
 function teamPairSpacer(){return`<tbody class="team-pair-spacer" aria-hidden="true"><tr>${Array(22).fill("<td></td>").join("")}</tr></tbody>`}

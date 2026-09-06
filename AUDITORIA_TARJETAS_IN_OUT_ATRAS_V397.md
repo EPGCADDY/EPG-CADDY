@@ -43,6 +43,7 @@ Esta regla particular del proyecto prevalece sobre la convención tradicional de
 - Tarjetas no comprobadas: no existió evidencia individual completa para las 16 vistas inventariadas.
 - Punto de fallo: el control aceptó búsquedas de código y pruebas compartidas como sustituto de apertura visual por tarjeta.
 - Causa raíz funcional: las etiquetas de resumen asociaban `FRONT` con OUT y `BACK` con IN; los artefactos HTML no incluían subtotales IN/OUT y se abrían sin barra de navegación.
+- Hallazgo preventivo antes de capturas: el primer candidato corrigió resúmenes pero conservó `OUT` después del hoyo 9 e `IN` después del 18 en `tableHeader()`; ese deployment fue rechazado sin usarlo como evidencia.
 - Medida permanente: una tarjeta sólo puede quedar PASS con captura posterior a la corrección donde aparezcan modalidad, IN 1–9, OUT 10–18, TOTAL y ATRÁS sin superposición, más prueba de regreso y persistencia.
 
 ## Estado de evidencia
