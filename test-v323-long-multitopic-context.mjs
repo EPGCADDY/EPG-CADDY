@@ -85,7 +85,7 @@ assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=30\*60\*1000/);
 assert.doesNotMatch(html,/CONVERSATION_IDLE_CLOSE_MS=3000/);
 assert.match(html,/conversationBargeInArmedAt=Date\.now\(\)\+250/);
 assert.match(html,/if\(micTrack\)micTrack\.enabled=listening/);
-assert.match(html,/else if\(finishedReason==="conversation"\)\{if\(resumeConversationListening\(\)\)/);
+assert.match(html,/else if\(finishedReason==="conversation"\)\{setVoice\(false\);phase="idle";setPrimaryVoiceMatrix\("idle",voiceContext\)/);
 
 const timingStart=html.indexOf("function clearConversationIdleCloseTimer");
 const timingEnd=html.indexOf("\nfunction handleRealtime",timingStart);

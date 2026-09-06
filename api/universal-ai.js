@@ -24,7 +24,7 @@ export function universalResponseProfile(query){
   const text=String(query||"").trim();
   if(BRIEF_QUERY.test(text))return{reasoningEffort:"low",maxOutputTokens:700,depth:"brief"};
   if(text.length>=160||DEEP_QUERY.test(text))return{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"};
-  return{reasoningEffort:"medium",maxOutputTokens:2400,depth:"standard"};
+  return{reasoningEffort:"low",maxOutputTokens:1400,depth:"standard"};
 }
 
 function retryAfterMs(response){

@@ -10,7 +10,7 @@ const guardSource=html.slice(html.indexOf("function aiUniversalCommandShouldRema
 const commandShouldRemainLocal=new Function("normalizeSpeech",`${guardSource};return aiUniversalCommandShouldRemainLocal`)(normalizeSpeech);
 
 assert.deepEqual(universalResponseProfile("Gracias"),{reasoningEffort:"low",maxOutputTokens:700,depth:"brief"});
-assert.deepEqual(universalResponseProfile("¿Qué ventajas tiene caminar el campo?"),{reasoningEffort:"medium",maxOutputTokens:2400,depth:"standard"});
+assert.deepEqual(universalResponseProfile("¿Qué ventajas tiene caminar el campo?"),{reasoningEffort:"low",maxOutputTokens:1400,depth:"standard"});
 assert.deepEqual(universalResponseProfile("Analiza a fondo las opciones, riesgos y alternativas antes de recomendarme una decisión."),{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"});
 const complexGolfQuestion="Analiza cómo el viento cruzado, la humedad y la elevación afectan la selección de palo para un golpe de 140 yardas. Compara riesgos y dame una recomendación.";
 assert.equal(isDirectWeatherQuery(complexGolfQuestion),false,"Una consulta estratégica con viento debe llegar al modelo, no al pronóstico");

@@ -1580,3 +1580,5 @@ RC-057-S3: la auditoría integral rechazó el panel de acciones múltiples resta
 RC-057-S4: `test-v364-explicit-new-round-entry.mjs` deja de exigir la conservación activa anterior y fija la orden vigente: archivar, eliminar las seis claves activas, limpiar borrador, crear `blankRound()` sin jugadores/scores y abrir Registro. V358/V363/V365/V366/V368 e Intocables continúan PASS; Producción intacta.
 
 RC-057-S5: `inicio=1` usa `openRegistrationPreservingActiveRound()`; sólo `nueva_ronda=1` o el botón ejecutan `openNewRoundDraft()`. Pruebas dirigidas V358/V364/V365/V366/V368/V397 e Intocables PASS. Producción intacta.
+
+RC-057-S6: Comunicación Universal reconoce referencias amplias a la ubicación actual y solicita GPS; su VAD pasa de 2.2 s a 1.1 s, las consultas normales usan perfil bajo de 1,400 tokens y el micrófono se cierra en verde al terminar cada respuesta. Las consultas profundas conservan perfil medio. V312/V324–V327/V335/V356 e Intocables PASS; Producción intacta.
