@@ -13,6 +13,7 @@ for(const id of [
 assert.match(html,/data-stableford-category="senior">SENIOR · BLANCAS/);
 assert.match(html,/data-stableford-category="super_senior">SÚPER SENIOR · AMARILLAS/);
 assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=305"/);
+assert.match(html,/if\(document\.readyState==="loading"\)window\.addEventListener\("DOMContentLoaded",openFreshStablefordSetup,\{once:true\}\);\s*else openFreshStablefordSetup\(\);/);
 assert.match(html,/id="stableCourseOption" href="\$\{STABLEFORD_OFFICIAL_HOSTING_URL\}"[^>]*>[\s\S]*?<span>STABLEFORD<\/span>/);
 assert.doesNotMatch(html,/closest\("#stableCourseOption"\)[\s\S]{0,180}openFreshStablefordSetup/);
 assert.match(html,/\$\("courseOptions"\)\.innerHTML=Object\.entries\(COURSE_CATALOG\)[\s\S]*?\.join\(""\);\$\("stablefordModeOption"\)\.innerHTML=stableOption/);

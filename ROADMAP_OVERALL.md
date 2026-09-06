@@ -1541,4 +1541,6 @@ Corrección RC-052: la prueba HTTPS real detectó `OPENAI_NOT_CONFIGURED` en Com
 
 Resellado RC-052: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se regeneró con el script oficial después del cambio de seis archivos; los tres inventarios validan 400 fuentes y los PDF mantienen su contenido. El primer build RC-052 quedó rechazado por el inventario anterior y nunca sustituyó el LAB listo ni Producción.
 
+Corrección física RC-053: la navegación visible desde Principal hacia Stableford podía conservar Práctica/General cuando `DOMContentLoaded` ya había ocurrido. `index-grupal.html` abre inmediatamente el registro Stableford si el documento ya está cargado y conserva el listener sólo durante carga; `test-stableford-ui.mjs` bloquea la regresión. El defecto fue detectado en navegador real antes de entregar el enlace; Producción permanece intacta.
+
 Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs`.

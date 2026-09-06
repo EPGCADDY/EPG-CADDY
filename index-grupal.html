@@ -5111,7 +5111,10 @@ dateSetup();
 if(explicitNewRound||directHome){
   openNewRoundDraft();
 }else if(!isRecoverableStoredRound(round)){
-  if(sfEmergency)window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
+  if(sfEmergency){
+    if(document.readyState==="loading")window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
+    else openFreshStablefordSetup();
+  }
   else ensurePrincipalEntry();
 }
 if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
