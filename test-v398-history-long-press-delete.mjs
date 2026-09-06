@@ -15,4 +15,6 @@ if(!context.deleteRoundFromArchive(round.id))throw new Error("No eliminó fixtur
 if(context.readRoundArchive().some(item=>item.id===round.id))throw new Error("La ronda permanece en historial");
 if(context.archiveRoundSnapshot(round)!==false)throw new Error("La ronda eliminada reapareció al persistir");
 for(const required of ["pointerdown","pointerup","pointercancel","contextmenu","650","openCardLibraryDelete","confirmCardLibraryDelete","CANCELAR","ELIMINAR"]){if(!html.includes(required))throw new Error(`Falta UI ${required}`)}
+if(!/#cardLibraryDeleteOverlay\{[^}]*-webkit-user-select:none;user-select:none;-webkit-touch-callout:none/.test(html))throw new Error("El diálogo permite seleccionar/copiar texto en iPhone");
+if(!/\.card-library-delete-actions button\{[^}]*-webkit-user-select:none;user-select:none;-webkit-touch-callout:none/.test(html))throw new Error("Los botones de confirmación permiten selección de texto en iPhone");
 console.log("PASS V398 · pulsación prolongada, confirmación y borrado persistente del historial");
