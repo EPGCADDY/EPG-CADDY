@@ -1,1493 +1,1 @@
-# ROADMAP OVERALL
-
-![ROADMAP OVERALL ¬∑ Golf Score Card GT](ROADMAP_OVERALL_V291.png)
-
-## V332 ¬∑ moneda dual y matriz completa de seguimiento
-
-El propietario exige que Skins, Wolf, Vegas y Dots permitan elegir antes de la ronda una de dos monedas: **quetzales (`Q`/`GTQ`) o d√≥lares (`$`/`USD`)**. Cada juego presenta dos casillas de radio mutuamente excluyentes; elegir una desmarca la otra. La moneda queda guardada en la configuraci√≥n y viaja sin conversi√≥n por pantalla, voz, snapshot, correcci√≥n, tarjeta Global/personal, Historial, sincronizaci√≥n, restauraci√≥n y liquidaci√≥n. El valor es opcional para el grupo y nunca altera Gross, Neto ni el resultado deportivo.
-
-V332 homologa la arquitectura visible de los cuatro juegos para que un jugador sin experiencia no reciba s√≥lo un saldo final. La matriz com√∫n incluye estado y hoyos resueltos/pendientes, unidades o puntos acumulados, carry abierto, registros, dinero bruto movido, neto exacto a liquidar, l√≠der o empate, saldos individuales y qui√©n paga a qui√©n. Cada juego a√±ade su riesgo √∫til: mayor pozo Skins; exposici√≥n del Wolf por rival y hoyo; mayor cambio y riesgo m√°ximo por duelo Vegas; e impacto de un punto por jugador en Dots. La tarjeta final conserva los mismos acumulados para auditor√≠a.
-
-Los bancos `test-v329-skins.mjs` y `test-v330-side-games.mjs` verifican las ocho casillas Q/$, exclusividad nativa, normalizaci√≥n de moneda, s√≠mbolos, m√©tricas, cero-suma, persistencia, correcci√≥n y artefactos. La auditor√≠a integral aprob√≥ **89 paquetes**, **325 fuentes** y tres inventarios PDF sellados en V332. El corte visible es `V332-DUAL-CURRENCY-MATRIX-20260826` y la copia instalable usa `gscg-mobile-v332-dual-currency-matrix`. Producci√≥n permanece intacta; falta publicar el Preview y aprobar la prueba f√≠sica en iPhone antes de cualquier montaje.
-
-Archivos exactos V332: `skins.js`, `wolf.js`, `vegas.js`, `dots.js`, `index-grupal.html`, `card-artifacts.js`, `test-v329-skins.mjs`, `test-v330-side-games.mjs`, `service-worker.js`, los bancos que fijan build/cach√©, `scripts/update-inventory-v328.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
-
-## V331 ¬∑ matriz investigada de apuestas y lenguaje operativo
-
-La prueba f√≠sica de **V330-R3 qued√≥ aprobada en iPhone**: al tocar `WOLF`, √∫nicamente Wolf permaneci√≥ verde, `RONDA NORMAL` se desmarc√≥ y la configuraci√≥n correcta se abri√≥. El defecto de selecci√≥n doble queda cerrado; Producci√≥n contin√∫a intacta y `PEND-SKI-006` sigue abierto para validar el funcionamiento completo de cada juego.
-
-El nuevo `PEND-DID-017` exige una ficha independiente por cada modalidad y esquema: Ronda Normal, Stableford, Match Play, Four Ball, Pr√°ctica, Skins, Wolf, Vegas, Dots y variantes que cambian el c√°lculo. Cada hoja deber√° ser comprensible a los 10 a√±os, funcionar impresa en blanco y negro, incluir un ejemplo aritm√©tico completo, estrategia, estados, acumulados, liquidaci√≥n y glosario. La edad define s√≥lo la claridad did√°ctica: el dinero permanece siempre dentro del alcance general de cada hoja y cada grupo decide si lo liquida o juega √∫nicamente con puntos/unidades. La especificaci√≥n vive en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md`.
-
-V331 sustituye la presentaci√≥n m√≠nima de apuestas por una matriz operativa investigada. Wolf elimina la duplicidad confusa `Solo base`/`Lone` y conserva tres decisiones comprensibles: **Con pareja**, **Lobo solitario** y **Lobo ciego**. Registra si el Wolf sale primero o √∫ltimo, multiplicadores configurables, tope monetario por rival/hoyo, riesgo del Wolf, decisiones y scores pendientes, acumulados, unidades netas, dinero movido y liquidaci√≥n. Vegas explica c√≥mo 4 y 5 forman 45, maneja correctamente scores de 10 o m√°s ‚Äî10 y 4 forman 104‚Äî, permite acordar qu√© ocurre si ambas parejas hacen birdie y muestra por hoyo n√∫meros, volteos, √°guilas, topes, puntos movidos y saldos. Dots define cada t√©rmino en espa√±ol, mantiene apagadas las variantes que pueden duplicar eventos, separa puntos positivos/negativos, manuales/autom√°ticos y muestra el detalle de cada hoyo.
-
-Las reglas universales no se inventan: las diferencias reales entre grupos quedan configurables y rotuladas. La base investigada utiliza 18Birdies y Wolf Golf Scorecard para Wolf; Mashie, 18Birdies y Golf Digest para Vegas; 18Birdies, MyScorecard y SCGA para Dots/Junk; USGA se conserva como autoridad del h√°ndicap y score deportivo. El dinero nunca modifica el score oficial.
-
-Archivos exactos V331: `wolf.js`, `vegas.js`, `dots.js`, `index-grupal.html`, `card-artifacts.js`, `test-v330-side-games.mjs`, `service-worker.js`, `scripts/update-inventory-v328.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` y los bancos que fijan el identificador de build/cach√©. El corte visible es `V331-RESEARCHED-SIDE-GAMES-20260826` y la copia instalable usa `gscg-mobile-v331-researched-side-games`.
-
-## V330 ¬∑ Skins, Wolf, Vegas, Dots y seis jugadores
-
-**Hotfix V330-R3 despu√©s de rechazo f√≠sico:** la captura real de iPhone demostr√≥ que al elegir `WOLF` todav√≠a pod√≠an quedar verdes `RONDA NORMAL` y `WOLF`. V330-R2 queda rechazada. R3 incorpora un √∫nico escritor visual para las siete opciones, limpia configuraciones laterales m√∫ltiples heredadas, desmarca las otras seis antes de reconstruir la pantalla y vuelve a validar despu√©s del render. La cach√© instalable sube a `gscg-mobile-v330-side-games-r3`; `test-v330-side-games.mjs` simula exactamente el toque WOLF y exige `false` en Normal, Match Play, Four Ball, Skins, Vegas y Dots, con `true` √∫nicamente en Wolf.
-
-**Pendientes registrados:** `PEND-UBI-015` separa la detecci√≥n autom√°tica del campo por GPS de clima/tr√°fico y de las distancias al green; `PEND-RSG-016` define la sincronizaci√≥n versionada de Reglas de Golf desde fuentes oficiales. Se crean las especificaciones `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_UBI_015_DETECCION_CAMPO_POR_GPS.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_RSG_016_SINCRONIZACION_REGLAS_GOLF.md`, y se actualizan `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` y `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`.
-
-**Voz pospuesta y registrada:** `PEND-VOZ-003` incorpora tres observaciones f√≠sicas nuevas sin declararlas implementadas: matriz obligatoria para respuestas estudiadas, profundas y formales; correcci√≥n del corte observado en la quinta conversaci√≥n; y avisos bilaterales exactos `ESCUCHANDO` / `RESPONDIENDO` en rojo parpadeante. Por orden del propietario, la ejecuci√≥n vuelve primero a la configuraci√≥n y prueba de SKINS, WOLF, VEGAS y DOTS.
-
-El **26 de agosto de 2026** `PEND-SKI-006` pasa de dise√±o a implementaci√≥n comprobable. `skins.js`, `wolf.js`, `vegas.js` y `dots.js` son motores puros conectados al score oficial, no men√∫s de respuestas fijas. La ventana de opciones se divide en dos columnas ‚Äîmodalidades existentes a la izquierda y juegos nuevos a la derecha‚Äî y la pantalla principal de la tarjeta conserva su formato.
-
-Skins opera Gross/Neto para dos a seis jugadores con unidad monetaria, carry, divisi√≥n o anulaci√≥n de empates. Wolf rota decisiones para tres a seis jugadores y no permite cierre con hoyos sin pareja/Solo/Lone/Blind. Vegas trabaja con cuatro o seis jugadores; la variante de seis usa tres parejas y comparaciones par a par. Dots permite activar y valorar eventos antes de jugar, mantiene apagadas por defecto las reglas de grupo `Amigo`, izquierda y derecha, y separa el saldo econ√≥mico del score deportivo. Match Play y Four Ball se ampl√≠an a las parejas Verde, Oro y Azul.
-
-El cierre, correcci√≥n oficial, tarjetas Global/personales, Historial, consultas, sincronizaci√≥n y restauraci√≥n conservan los cuatro resultados en el snapshot firmado. `test-v329-skins.mjs` y `test-v330-side-games.mjs` cubren empates, X, l√≠mites, multiplicadores, tres parejas, cero-suma, bloqueo de cierre Wolf, correcci√≥n, artefactos, voz y persistencia. El banco local y el build real de Vercel aprobaron los 89 paquetes, el inventario de 322 fuentes, cero vulnerabilidades y la puerta viva de Reglas con modelo, b√∫squeda web, seis fuentes oficiales y `scoreChanged:false`. El Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` qued√≥ `READY` desde el commit remoto `ea18aafb214731d44b41ea069fe27228407f9f47`. Producci√≥n permanece intacta; faltan revisi√≥n visual/t√°ctil y ronda f√≠sica en iPhone.
-
-Referencias profesionales consultadas: BirdieBet y Squabbit para Vegas; Wiz Golf, FLOG, Squabbit y Golf Monthly para Wolf; The 1st Tee para Dots. Las variantes que no son universales quedan rotuladas como reglas de grupo o adaptaci√≥n Golf Score Card GT.
-
-Archivos funcionales V329/V330: `skins.js`, `wolf.js`, `vegas.js`, `dots.js`, `match-play.js`, `four-ball.js`, `index-grupal.html`, `round-closure.js`, `card-artifacts.js`, `card-library.js`, `historical-analytics.js`, `master-data-sync.js`, `account-backup.js`, `service-worker.js`, `scripts/build-mobile-web.mjs`, `vercel.json`, `audit-project.mjs`, `test-v329-skins.mjs` y `test-v330-side-games.mjs`. La documentaci√≥n, mapa, ambos ROADMAP, tres inventarios PDF y su sello se actualizan antes de Preview.
-
-## V328-R2 ¬∑ Centro de Reglas de Golf oficial con respaldo b√°sico sin conexi√≥n
-
-El **26 de agosto de 2026** comienza la ejecuci√≥n funcional de `PEND-REG-001`. La misma AI UNIVERSAL ‚àû incorpora un acceso global `REGLAS`, acepta situaciones por teclado o micr√≥fono, conserva campo y modalidad como contexto y consulta el modelo avanzado mediante `/api/golf-rules`. La herramienta limita t√©cnicamente la Web a los dominios oficiales `usga.org` y `randa.org`, exige una fuente oficial visible y usa la edici√≥n Rules of Golf 2023 con las clarificaciones vigentes; el corte comprobado es 1 de julio de 2026. No se copia el reglamento completo ni se afirma una alianza, licencia de marca o API privada.
-
-La consulta se a√≠sla de todos los escritores locales: dentro de REGLAS no se ejecutan √≥rdenes de score y la respuesta nunca aplica penalidades, concede hoyos ni cierra rondas. `test-v328-official-golf-rules.mjs` cubre 15 situaciones y comprueba dominios, contexto, texto/voz y `scoreChanged:false`. El Preview V328-R1 (`dpl_3Sa4NnueMXBqB2kCm69WdwhH83bv`) qued√≥ `READY` con 86 paquetes, puerta viva aprobada y √°rbol remoto exacto `f0de0f6328c34ed2788faf1009ba04a19f47e6c1`. `test-v328-live-official-rules.mjs` se ejecuta dentro de cada build Vercel y exige una llamada real del modelo, b√∫squeda web efectiva, al menos una fuente USGA/The R&A y cero cambio de score.
-
-V328-R2 agrega `golf-rules-offline.js`: guarda √∫nicamente respuestas que ya aprobaron el filtro oficial, retiene hasta 24 entradas durante 90 d√≠as, conserva tokens normalizados en vez de la pregunta completa, exige coincidencia suficiente y modalidad compatible, muestra la fecha y nunca inventa si no existe una respuesta adecuada. `test-v328-offline-official-rules.mjs` comprueba fuente, privacidad, l√≠mite, caducidad, cruces negativos, integraci√≥n PWA y cero escritura. Con este paquete la auditor√≠a maestra sube a 87 paquetes m√°s la puerta viva de Vercel. El manual visible y sus dos PDF conservan 74 p√°ginas, p√°gina 73 actualizada, 2160 √ó 4320 px y 300 dpi; el control visual completo debe aprobar antes de entregar. `PEND-REG-001` contin√∫a abierto s√≥lo para voz f√≠sica y una eventual integraci√≥n comercial/licenciada; no se declara alianza oficial.
-
-Archivos exactos V328: `api/golf-rules.js`, `audit-project.mjs`, `index-grupal.html`, `service-worker.js`, `manual.html`, `scripts/update-manual-page-73.py`, `docs/manual/v311/manual-pages-17-35.json`, `docs/manual/v311/page-73.png`, `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf`, `test-v328-official-golf-rules.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-v307-match-arrows-format.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v284-native-package-generation.mjs`, `test-v281-pwa-installation.mjs`, `test-v280-local-history-insights.mjs`, `test-v279-local-card-library.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v277-official-round-corrections.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v272-definitive-operational-release.mjs`, `test-stableford-ui.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Los tres inventarios PDF externos se regeneran y verifican antes del build.
-
-Archivos adicionales del cierre V328-R1: `test-v328-live-official-rules.mjs` agrega la puerta real y `vercel.json` la vuelve obligatoria. Archivos adicionales V328-R2: `golf-rules-offline.js`, `test-v328-offline-official-rules.mjs`, `test-v321-ai-universal-infinity.mjs`, `service-worker.js`, `index-grupal.html`, `audit-project.mjs`, `scripts/update-manual-page-73.py`, `docs/manual/v311/manual-pages-17-35.json`, los artefactos de manual, `scripts/update-inventory-v328.py`, los cuatro documentos de control, el candado y ambos ROADMAP.
-
-## Actualizaci√≥n de control V327-R1-PEND ¬∑ cola completa y ejecuci√≥n permanente
-
-El **26 de agosto de 2026** el propietario ordena agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versi√≥n cuando est√© realmente probada. La instrucci√≥n no elimina las puertas de calidad: un solo `FAIL` conserva Producci√≥n intacta y ninguna licencia, credencial, contrato o integraci√≥n externa puede simularse. Las reglas permanentes 22‚Äì26 proh√≠ben trasladarle trabajo t√©cnico que las herramientas puedan resolver, dejarlo adivinando la siguiente acci√≥n, simular trabajo en segundo plano o exigirle mensajes repetidos de `sigue`; todo reporte debe cerrar con una asignaci√≥n inequ√≠voca.
-
-La cola vigente distingue lo entregado de lo abierto y agrega los faltantes expresamente acordados: h√°ndicap oficial ASOGOLF/GHIN con √≠ndice interno separado; campos mundiales con datos oficiales; GPS deportivo por hoyo; Skins, Wolf, Vegas, Amigo, izquierda/derecha y Dots con unidad en quetzales; Apple Watch primero y Wear OS despu√©s; nube, cuentas, seguridad, estad√≠sticas avanzadas, monetizaci√≥n y certificaci√≥n integral. Permanecen adem√°s USGA/Reglas de Golf, clima completo en artefactos, Gu√≠a R√°pida, tr√°fico comparado y AI UNIVERSAL ‚àû.
-
-V327-R1 ya aprob√≥ en Preview 85 paquetes, 310 fuentes, 44 llamadas reales, 24 materias, ocho turnos con memoria, 550 transiciones herramienta‚Üívoz y cero errores 5xx. La puerta inmediata sigue siendo una conversaci√≥n f√≠sica prolongada en iPhone; s√≥lo despu√©s de su PASS se permite montar y continuar autom√°ticamente con el siguiente pendiente ejecutable.
-
-Archivos exactos V327-R1-PEND: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Tambi√©n se regeneran y verifican `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf` e `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`.
-
-## Correcci√≥n controlada V327 ¬∑ la herramienta siempre regresa a la voz
-
-La prueba f√≠sica rechaz√≥ V326-R2 despu√©s de aproximadamente seis preguntas: una investigaci√≥n sobre una persona conocida en Colima y una consulta de tr√°fico pod√≠an completar su API con HTTP 200, pero el tel√©fono quedaba rojo escuchando sin pronunciar el resultado. No era un vocabulario tem√°tico reducido: `search_live_web` s√≠ recibi√≥ la consulta y devolvi√≥ datos; el corte estaba en la transici√≥n as√≠ncrona `herramienta ‚Üí segunda respuesta ‚Üí audio` de Realtime en iPhone.
-
-V327 conserva la AI universal sin cat√°logo y corrige cuatro estados: `speech_stopped` mantiene el guardi√°n hasta la transcripci√≥n final; un `output_audio_buffer.stopped` tard√≠o y sin identificador ya no desautoriza el audio final antes de que empiece; la reproducci√≥n conserva un guardi√°n de 60 segundos hasta su cierre; y una herramienta cuyo canal se perdi√≥ produce recuperaci√≥n visible en vez de regresar en silencio. `api/voice-health.js` registra √∫nicamente eventos t√©cnicos permitidos, n√∫mero de turno, etapa y tiempo ‚Äînunca preguntas, transcripciones, nombres, ubicaciones ni claves‚Äî para que una nueva anomal√≠a f√≠sica sea diagnosticable.
-
-El banco dirigido ejecuta 550 secuencias herramienta‚Üívoz, 100 eventos de privacidad, 30 turnos bilaterales y las rutas anteriores. La consulta directa `El Pult√© Golf ‚Üí Pradera Concepci√≥n` devolvi√≥ una ruta real v√°lida de 15 km y aproximadamente 33 minutos en el instante de prueba; un destino que s√≥lo diga `Concepci√≥n` debe provocar una sola pregunta breve de aclaraci√≥n. Producci√≥n contin√∫a intacta y V327 no queda autorizada para montaje hasta terminar la regresi√≥n completa, desplegar Preview y aprobar otra conversaci√≥n f√≠sica prolongada en iPhone.
-
-Archivos exactos V327: `index-grupal.html`, `api/_lib/traffic.js`, `api/universal-ai.js`, `api/voice-health.js`, `service-worker.js`, `audit-project.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
-
-## Control de entrega V326-R1 ¬∑ redespliegue para cargar tr√°fico
-
-El usuario confirm√≥ que la credencial de tr√°fico podr√≠a haber quedado habilitada. El despliegue V326 original no se reutiliza para aprobarla porque las variables de entorno se fijan al construir cada deployment. Se provoc√≥ un redespliegue sin modificar el c√≥digo funcional; el primer intento qued√≥ correctamente bloqueado por `ROADMAP GATE` al no registrar el movimiento en ambos ROADMAPS. V326-R1 registra ese intento, conserva producci√≥n V322 intacta y ordena construir de nuevo Preview antes de ejecutar la ruta real El Pult√© ‚Üí colonia Oakland zona 10 para ma√±ana a las 12:30 PM.
-
-La aprobaci√≥n contin√∫a prohibida hasta que el nuevo Preview devuelva ETA, duraci√≥n sin tr√°fico, demora, distancia y hora de c√°lculo desde Google Maps Routes, y hasta completar la conversaci√≥n f√≠sica prolongada en iPhone. Archivos exactos V326-R1: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
-
-La primera construcci√≥n documentada de V326-R1 confirm√≥ que `GOOGLE_MAPS_API_KEY` ya estaba presente en Preview: el test de ausencia recibi√≥ `TRAFFIC_ROUTE_UNAVAILABLE` en vez de `TRAFFIC_NOT_CONFIGURED`. El bloqueo pertenec√≠a al aislamiento del test, que pasaba una cadena vac√≠a y permit√≠a por error el fallback hacia la credencial real. Se sustituy√≥ √∫nicamente ese valor inyectado por espacio en blanco, que se recorta a vac√≠o sin consultar la red; la l√≥gica funcional de tr√°fico permanece id√©ntica.
-
-## Correcci√≥n controlada V326 ¬∑ ning√∫n turno puede quedar rojo y mudo
-
-La prueba f√≠sica en iPhone rechaz√≥ V325: despu√©s de preguntas sobre tr√°fico futuro y consumo el√©ctrico, el micr√≥fono permanec√≠a rojo y abierto sin producir una reacci√≥n. Los registros confirmaron que WebRTC s√≠ abr√≠a, pero el cierre del turno no alcanzaba las herramientas ni la respuesta. La causa fue `semantic_vad` con urgencia baja sin un l√≠mite temporal anterior a `speech_stopped`; el watchdog existente comenzaba demasiado tarde y no pod√≠a recuperar ese estado.
-
-V326 usa para conversaci√≥n un `server_vad` independiente con umbral 0.2, prefijo de 700 ms y 2,200 ms de silencio. Es m√°s paciente que las √≥rdenes de la aplicaci√≥n, que conservan 1,000 ms, pero siempre posee un final determinista. Un guardi√°n de entrada se renueva con los deltas parciales y, si no existe ning√∫n evento durante 15 segundos, desmonta la captura atascada y apaga el rojo con una instrucci√≥n visible; mantiene un l√≠mite duro de 90 segundos por turno. Un segundo guardi√°n recupera a los 30 segundos una respuesta del modelo que no haya comenzado. Los c√°lculos estables y aproximados, como el consumo el√©ctrico de un aire acondicionado, se responden directamente con supuestos en vez de abrir una b√∫squeda web innecesaria.
-
-`test-v326-no-silent-conversation.mjs` ejecuta la m√°quina de temporizadores y comprueba recuperaci√≥n real de estado, adem√°s de 30 alternancias entre conversaci√≥n y √≥rdenes. V325 queda rechazada y V326 contin√∫a sin autorizaci√≥n de montaje hasta repetir las dos preguntas exactas y una conversaci√≥n f√≠sica prolongada en iPhone. Tr√°fico tampoco queda aprobado mientras Preview responda `TRAFFIC_NOT_CONFIGURED` y falte la comparaci√≥n simult√°nea en Guatemala.
-
-Archivos exactos V326: `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
-
-## Integraci√≥n controlada V325 ¬∑ tiempos ideales del micr√≥fono bilateral
-
-V325 separa por intenci√≥n los tiempos de escucha. Las √≥rdenes de registro, navegaci√≥n y score conservan `server_vad` con umbral 0.2, prefijo de 700 ms y 1,000 ms de silencio para respuesta r√°pida. AI UNIVERSAL ‚àû cambia a `semantic_vad` con urgencia baja, por lo que una pausa natural no corta autom√°ticamente la idea. La sesi√≥n valida el perfil confirmado antes de responder, serializa cambios concurrentes y vuelve al perfil operativo cuando detecta una acci√≥n propia de la tarjeta.
-
-La conversaci√≥n conserva micr√≥fono vivo durante la respuesta, interrupci√≥n confirmada despu√©s de 250 ms y ocho caracteres, protecci√≥n de eco por 1,800 ms, reescucha inmediata, watchdog de diez segundos y cierre √∫nicamente tras 30 minutos completos sin actividad. La prueba V325 compila el JavaScript completo y simula 30 alternancias conversaci√≥n/orden. Esto no sustituye la conversaci√≥n f√≠sica prolongada en iPhone; el corte sigue sin autorizaci√≥n de montaje. Tambi√©n quedan registrados como pendientes el enlace oficial/autorizado con USGA y Reglas de Golf, la modalidad Skins y Apple Watch/Wear OS.
-
-Archivos exactos V325: `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
-
-## Integraci√≥n controlada V324 ¬∑ tr√°fico real dentro de AI UNIVERSAL ‚àû
-
-V324 incorpora tr√°fico vehicular actual y proyectado a la misma conversaci√≥n universal. Una consulta por voz o texto se clasifica como tr√°fico, obtiene origen escrito o GPS ef√≠mero, exige destino suficiente y llama desde servidor a Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL`. La respuesta separa los datos del proveedor ‚ÄîETA, duraci√≥n sin tr√°fico y distancia‚Äî de la clasificaci√≥n de congesti√≥n derivada. No muestra mapa, no devuelve coordenadas y no afirma integraci√≥n con Waze.
-
-La prueba V324 cubre salida inmediata y futura, huso horario, ETA, demora, distancia, privacidad, origen faltante, destino faltante, credencial ausente, proveedor ca√≠do, timeout, solicitud autom√°tica de GPS, funci√≥n de modelo en dos pasos, texto, voz y continuidad recuperable. Este corte es c√≥digo candidato: permanece expresamente sin aprobaci√≥n de montaje hasta activar credencial/facturaci√≥n y completar en Guatemala la comparaci√≥n simult√°nea contra Waze y la conversaci√≥n prolongada en iPhone.
-
-Archivos exactos V324: `api/_lib/traffic.js`, `api/traffic.js`, `api/universal-ai.js`, `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v321-ai-universal-infinity.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
-
-## Correcci√≥n operativa V323 ¬∑ conversaci√≥n multitema prolongada
-
-V323 corrige una p√©rdida de contexto reproducida en producci√≥n: la comunicaci√≥n continuaba, pero al turno 15 AI UNIVERSAL ‚àû ya no recordaba una clave expresamente indicada al inicio. El l√≠mite efectivo era de 8 intercambios para texto y s√≥lo 3 para el contexto compartido con voz. Ahora texto, voz y servidor conservan hasta 80 mensajes ‚Äî40 intercambios completos‚Äî, suficiente para la nueva prueba de 30 temas y 63 mensajes sin perder `ORQU√çDEA 47`.
-
-La prueba `test-v323-long-multitopic-context.mjs` reproduce cambios consecutivos entre lluvia, salud, viajes, medicamentos, golf, tecnolog√≠a, cocina, filosof√≠a, ciencias, idiomas y otros temas; exige que el primer dato siga disponible en la √∫ltima pregunta, valida la misma memoria en texto y voz, y comprueba el descarte controlado √∫nicamente al superar 80 mensajes.
-
-Archivos V323: `api/universal-ai.js`, `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
-
-## Correcci√≥n operativa V322 ¬∑ conversaci√≥n sostenida y recuperaci√≥n comprobable
-
-V322 integra sin perder la AI UNIVERSAL ‚àû de V321 la correcci√≥n del fallo observado en iPhone: el micr√≥fono ya no se cierra tres segundos despu√©s de una respuesta ni destruye una sesi√≥n WebRTC sana al tocarlo nuevamente. La escucha permanece activa entre turnos y s√≥lo se apaga despu√©s de 30 minutos completos sin actividad. Si falta una transcripci√≥n final, Inicio y Tarjeta salen del estado bloqueado y regresan a `‚óè ESCUCHANDO`.
-
-La investigaci√≥n web dispone de 40 segundos en servidor y 45 segundos en cliente. √âxito, timeout, proveedor no disponible o respuesta vac√≠a producen siempre una salida utilizable; un fallo recuperable no apaga el transporte de voz ni deja al usuario sin respuesta. `test-v322-real-sustained-caddie.mjs` simula 24 turnos consecutivos, reapertura, cierre reglamentario y los distintos resultados del servicio; la auditor√≠a maestra conserva adem√°s las 200 √°reas y las modalidades completas.
-
-Archivos: `index-grupal.html`, `api/research.js`, `service-worker.js`, `audit-project.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v321-ai-universal-infinity.mjs`, `test-v312-general-caddie.mjs`, los candados de build/cach√©, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
-
-## Actualizaci√≥n operativa V321 ¬∑ AI UNIVERSAL ‚àû
-
-AI UNIVERSAL ‚àû queda integrada mediante API de modelo avanzado, con voz y texto, contexto temporal compartido, b√∫squeda Web para datos cambiantes, idioma autom√°tico, respuesta escrita y hablada, separaci√≥n entre √≥rdenes locales y consultas generales, y controles `ESCUCHAR`, `DETENER`, `REPETIR`, `SILENCIAR` y `CONTINUAR`. Las 200 √°reas verificadas son pruebas, nunca una lista l√≠mite. El Manual conserva la portada como primera p√°gina y documenta la funci√≥n en la p√°gina 73.
-
-Revisi√≥n final publicada: el √≠ndice y el encabezado del visor nombran la p√°gina 73 como **AI UNIVERSAL ‚àû**, y la prueba V321 bloquea cualquier regreso al t√≠tulo anterior.
-
-| Archivo | Registro V321 |
-|---|---|
-| `api/universal-ai.js` | Endpoint real de AI UNIVERSAL ‚àû con Responses API, modelo avanzado, contexto, Web, fuentes y `store:false`. |
-| `api/session-grupal.js` | Realtime conserva Golf y habilita detecci√≥n autom√°tica del idioma hablado. |
-| `index-grupal.html` | Panel AI ‚àû, teclado, respuestas escritas, contexto voz-texto, clasificaci√≥n orden/pregunta y cinco controles. |
-| `service-worker.js` | Cach√© V321 para entregar inmediatamente la integraci√≥n. |
-| `audit-project.mjs` | Incorpora la bater√≠a obligatoria V321. |
-| `test-v321-ai-universal-infinity.mjs` | Verifica API real, 200 √°reas sin lista cerrada, texto, voz, contexto, Web y controles. |
-| `test-v267-one-operational-line.mjs` | Alinea el contrato de transcripci√≥n con idioma autom√°tico. |
-| `test-v271-realtime-prompt-limit.mjs` | Conserva el l√≠mite Realtime con idioma autom√°tico. |
-| `test-v312-general-caddie.mjs` | Ampl√≠a la verificaci√≥n universal a idioma autom√°tico y cach√© V321. |
-| `test-stableford-ui.mjs` | Alinea el build esperado con V321. |
-| `test-v272-definitive-operational-release.mjs` | Alinea el build esperado con V321. |
-| `test-v274-complete-courses-voice-operations.mjs` | Alinea el build esperado con V321. |
-| `test-v275-stable-live-voice-turns.mjs` | Alinea el build esperado con V321. |
-| `test-v276-manual-hole-navigation.mjs` | Alinea el build esperado con V321. |
-| `test-v277-official-round-corrections.mjs` | Alinea el build esperado con V321. |
-| `test-v278-card-image-pdf-export.mjs` | Alinea el build esperado con V321. |
-| `test-v279-local-card-library.mjs` | Alinea el build esperado con V321. |
-| `test-v280-local-history-insights.mjs` | Alinea el build esperado con V321. |
-| `test-v281-pwa-installation.mjs` | Alinea la cach√© instalable esperada con V321. |
-| `test-v284-native-package-generation.mjs` | Alinea el paquete web esperado con V321. |
-| `test-v290-brand-icons-cleanup.mjs` | Alinea el build esperado con V321. |
-| `test-v304-homogeneous-registration-actions.mjs` | Alinea el build esperado con V321. |
-| `test-v305-history-navigation-zero-error.mjs` | Alinea el build esperado con V321. |
-| `test-v307-match-arrows-format.mjs` | Alinea el build esperado con V321. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registra la especificaci√≥n y estado operativo de AI UNIVERSAL ‚àû. |
-| `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Ubica AI UNIVERSAL ‚àû en la p√°gina 73 y su prueba t√©cnica. |
-| `docs/manual/v311/manual-pages-17-35.json` | Explicaci√≥n para un ni√±o de diez a√±os: voz, texto, √≥rdenes, contexto y l√≠mites reales. |
-| `scripts/update-manual-page-73.py` | Genera la p√°gina 73 V321 sin alterar portada ni p√°ginas anteriores. |
-| `docs/manual/v311/page-73.png` | Imagen 4K verificada de AI UNIVERSAL ‚àû. |
-| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` | Manual completo actualizado; portada primero y p√°gina 73 AI UNIVERSAL ‚àû. |
-| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias PDF completo actualizado con el mismo orden correcto. |
-| `test-v311-manual-semantic-coverage.mjs` | Exige la explicaci√≥n V321 y los cinco controles en el Manual. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello de inventario recalculado sobre las fuentes V321. |
-
-## Golf Score Card GT
-
-Este es el mapa general y sencillo del proyecto. El nombre comercial √∫nico es **Golf Score Card GT**.
-
-Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` s√≥lo permanecen como c√≥digos internos antiguos porque cambiarlos romper√≠a enlaces, publicaciones o la identidad futura de las apps. No se muestran como nombre comercial al consumidor.
-
-## Estado actual
-
-- Corte consolidado de este inventario: **V311 ¬∑ 25 de agosto de 2026**.
-- C√≥digo oficial GitHub en `main`: `e938fd4d1f1815fdfac3a4babc68c3beedfd96c5`.
-- Vercel: **READY**.
-- Publicaci√≥n Vercel vigente: `dpl_FkfVRcQVUK8AnWdgtW5gU6eG9KEh`.
-- Aplicaci√≥n oficial: https://epg-caddy.vercel.app/
-- Errores de publicaci√≥n actuales: **0**.
-- Advertencias actuales: **0**.
-- Auditor√≠a maestra: **PASS ¬∑ 69 paquetes**.
-
-## Aplicaci√≥n Apple y Android
-
-- Nombre visible: **Golf Score Card GT**.
-- Identidad t√©cnica compartida: `com.epgcaddy.app`.
-- Versi√≥n m√≥vil preparada: `0.9.0`.
-- N√∫mero de paquete preparado: `290`.
-- Paquete para iPhone: preparado para Xcode y futura firma.
-- Paquete para Android: preparado para Android Studio y futura firma.
-- Compras y suscripciones: ruta preparada con RevenueCat.
-- Icono App Store: 1024 √ó 1024.
-- Icono Google Play: 512 √ó 512.
-- Iconos PWA: 512 √ó 512 y 192 √ó 192.
-- Icono de acceso directo Apple: 180 √ó 180.
-
-## Organizaci√≥n actual
-
-- Archivos activos rastreados en Git al corte V311: **197**.
-- Base visual original V292: **160 archivos activos** distribuidos en nueve p√°ginas.
-- Continuaci√≥n documentada despu√©s de crear la base visual: **V294 a V311**.
-- Corte solicitado para revisi√≥n: **desde la l√≠nea 160 hacia abajo se considera nuevo**.
-- Archivos de la colecci√≥n `ROADMAP_IMAGES`: **22**.
-- Archivos hist√≥ricos retirados del uso diario: **89**.
-- Procesos autom√°ticos actuales conservados: **4**.
-- Ramas GitHub inventariadas: **80**.
-- Ramas ya incluidas en main: **70**.
-- Ramas con cambios propios conservadas: **9**.
-- Publicaciones Vercel de la base visual hist√≥rica: **622**; los despliegues V306-V311 quedan identificados en la continuaci√≥n documental.
-- Base central preparada: **22 grupos de informaci√≥n**.
-- Nombres internos de guardado en el tel√©fono identificados: **14**.
-
-## Limpieza completada
-
-- Retirados 88 procesos autom√°ticos hist√≥ricos.
-- Retirado un script antiguo V112.
-- Todo permanece recuperable en el historial de GitHub.
-- El nombre visible EPG Caddy fue sustituido por Golf Score Card GT.
-- README, documentaci√≥n, PWA, Apple, Android y procesos actuales usan la marca oficial.
-- Los iconos oficiales quedaron centralizados dentro de `assets/official-logos/`.
-- La instalaci√≥n de Vercel qued√≥ sin errores ni advertencias.
-
-## Mapas detallados
-
-- [ROADMAP A DETALLE ¬∑ Directorio visual en nueve p√°ginas](ROADMAP_A_DETALLE.md)
-- [Mapa de todos los archivos](CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md)
-- [Mapa de GitHub, Vercel, Apple, Android y datos](CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_INFRAESTRUCTURA.md)
-- [Inventario de publicaciones Vercel](CONTROL_PROYECTO_SCIRE/INVENTARIO_DESPLIEGUES_VERCEL.md)
-- [√çndice de logos oficiales](assets/official-logos/README.md)
-
-## Im√°genes l√≠nea por l√≠nea
-
-- [01 ¬∑ Archivos activos](ROADMAP_IMAGES/01_ARCHIVOS_ACTIVOS_COMPLETO.png)
-- [02 ¬∑ Archivos retirados](ROADMAP_IMAGES/02_ARCHIVOS_RETIRADOS_COMPLETO.png)
-- [03 ¬∑ Infraestructura e IDs](ROADMAP_IMAGES/03_INFRAESTRUCTURA_COMPLETO.png)
-- [04 ¬∑ Ramas GitHub](ROADMAP_IMAGES/04_RAMAS_GITHUB_COMPLETO.png)
-- [05A ¬∑ Vercel ¬∑ publicaciones 1 a 78](ROADMAP_IMAGES/05_VERCEL_01_A_COMPLETO.png)
-- [05B ¬∑ Vercel ¬∑ publicaciones 79 a 156](ROADMAP_IMAGES/05_VERCEL_01_B_COMPLETO.png)
-- [06A ¬∑ Vercel ¬∑ publicaciones 157 a 234](ROADMAP_IMAGES/06_VERCEL_02_A_COMPLETO.png)
-- [06B ¬∑ Vercel ¬∑ publicaciones 235 a 312](ROADMAP_IMAGES/06_VERCEL_02_B_COMPLETO.png)
-- [07A ¬∑ Vercel ¬∑ publicaciones 313 a 390](ROADMAP_IMAGES/07_VERCEL_03_A_COMPLETO.png)
-- [07B ¬∑ Vercel ¬∑ publicaciones 391 a 468](ROADMAP_IMAGES/07_VERCEL_03_B_COMPLETO.png)
-- [08A ¬∑ Vercel ¬∑ publicaciones 469 a 545](ROADMAP_IMAGES/08_VERCEL_04_A_COMPLETO.png)
-- [08B ¬∑ Vercel ¬∑ publicaciones 546 a 622](ROADMAP_IMAGES/08_VERCEL_04_B_COMPLETO.png)
-- [√çndice de la colecci√≥n visual](ROADMAP_IMAGES/README.md)
-
-## Punto de corte del directorio
-
-- Punto de activaci√≥n original: **l√≠nea 183**.
-- Registro vigente despu√©s de instalar el candado: **l√≠nea 185**.
-- Activaci√≥n de seguimiento obligatorio: **23 de agosto de 2026, 17:05:00, hora de Guatemala**.
-- Desde este punto, cualquier creaci√≥n, modificaci√≥n, cambio de nombre, movimiento o eliminaci√≥n se registra directamente y dentro de la misma versi√≥n en **ROADMAP OVERALL** y **ROADMAP A DETALLE**.
-
-## Registro obligatorio V294 ¬∑ Candado t√©cnico
-
-| Archivo o modificaci√≥n | Qu√© qued√≥ registrado |
-|---|---|
-| `.github/workflows/ios-build.yml` | La construcci√≥n de iPhone exige primero ambos ROADMAPS. |
-| `.github/workflows/ios-testflight.yml` | La preparaci√≥n para TestFlight exige primero ambos ROADMAPS. |
-| `.github/workflows/mobile-native-package.yml` | El paquete Apple/Android se bloquea si los ROADMAPS est√°n incompletos. |
-| `.github/workflows/roadmap-gate.yml` | Nuevo control autom√°tico obligatorio en GitHub. |
-| `.github/workflows/stableford-tournament-pass.yml` | Las pruebas de Stableford exigen primero ambos ROADMAPS. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | Norma permanente, l√≠nea de corte y hora de activaci√≥n. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | C√≥digos y archivos del directorio actualizados. |
-| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_01.png` | P√°gina visual 1 de 9. |
-| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_02.png` | P√°gina visual 2 de 9. |
-| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_03.png` | P√°gina visual 3 de 9. |
-| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_04.png` | P√°gina visual 4 de 9. |
-| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_05.png` | P√°gina visual 5 de 9. |
-| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_06.png` | P√°gina visual 6 de 9. |
-| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_07.png` | P√°gina visual 7 de 9. |
-| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_08.png` | P√°gina visual 8 de 9. |
-| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_09.png` | P√°gina visual 9 de 9. |
-| `audit-project.mjs` | La auditor√≠a maestra ejecuta primero el candado. |
-| `package.json` | Agrega el comando `roadmap:gate`. |
-| `scripts/roadmap-gate.mjs` | Comprueba que cada cambio aparezca en ambos ROADMAPS. |
-
-## Refuerzo t√©cnico V295 ¬∑ Publicaci√≥n tambi√©n bloqueada
-
-| Archivo o modificaci√≥n | Qu√© qued√≥ registrado |
-|---|---|
-| `vercel.json` | Vercel ejecuta obligatoriamente el candado antes de publicar. |
-| `scripts/roadmap-gate.mjs` | Si Vercel no puede identificar los cambios, la publicaci√≥n queda bloqueada por seguridad. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | La publicaci√≥n de Vercel se incorpora a la norma permanente. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra los c√≥digos y explicaciones actualizados. |
-| `ROADMAP_A_DETALLE.md` | Guarda el refuerzo dentro del directorio detallado. |
-| `ROADMAP_OVERALL.md` | Guarda el refuerzo dentro de este resumen general. |
-
-## Ajuste de publicaci√≥n V296 ¬∑ Salida Vercel
-
-| Archivo o modificaci√≥n | Qu√© qued√≥ registrado |
-|---|---|
-| `vercel.json` | Conserva el candado y se√±ala correctamente la carpeta que Vercel debe publicar. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el c√≥digo y la explicaci√≥n del ajuste. |
-| `ROADMAP_A_DETALLE.md` | Guarda el ajuste dentro del directorio detallado. |
-| `ROADMAP_OVERALL.md` | Guarda el ajuste dentro de este resumen general. |
-
-## Actualizaci√≥n operativa V297 ¬∑ Icono cromado 3D ne√≥n y micr√≥fono compacto
-
-Autorizaci√≥n recibida el **24 de agosto de 2026** para instalar como icono oficial la versi√≥n cuadrada cromada, con relieve profundo, apariencia de metal troquelado y verde ne√≥n muy saturado. Tambi√©n se reduce 50 % el di√°metro visible del micr√≥fono de registro y se coloca una figura clara de micr√≥fono en el centro. No cambia su funcionamiento ni su √°rea c√≥moda de toque.
-
-| Archivo o modificaci√≥n | Qu√© queda registrado |
-|---|---|
-| `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | Fuente cuadrada hist√≥rica actualizada con el logo autorizado, conservando su nombre t√©cnico. |
-| `assets/logo.png` | Fuente operativa de 1024 √ó 1024 para los paquetes Apple y Android. |
-| `assets/official-logos/README.md` | Identifica la nueva versi√≥n cromada 3D como oficial. |
-| `assets/official-logos/golf-score-card-gt-app-store-1024.png` | Icono preparado para App Store. |
-| `assets/official-logos/golf-score-card-gt-apple-touch-180.png` | Icono preparado para el acceso directo de iPhone y iPad. |
-| `assets/official-logos/golf-score-card-gt-google-play-512.png` | Icono preparado para Google Play. |
-| `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | Copia maestra oficial en m√°xima medida. |
-| `assets/official-logos/golf-score-card-gt-pwa-192.png` | Icono peque√±o de la aplicaci√≥n instalable. |
-| `assets/official-logos/golf-score-card-gt-pwa-512.png` | Icono grande de la aplicaci√≥n instalable. |
-| `index-grupal.html` | Micr√≥fono de registro 50 % m√°s peque√±o, con s√≠mbolo central claro para el usuario nuevo. |
-| `mobile-release.json` | N√∫mero de paquete preparado actualizado a V297. |
-| `service-worker.js` | Cach√© renovada para entregar el icono V297 y retirar el anterior. |
-| `test-v290-brand-icons-cleanup.mjs` | Comprobaci√≥n operativa alineada con el paquete y la cach√© V297. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | C√≥digos, tama√±os y explicaciones de los archivos actualizados. |
-| `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de esta modificaci√≥n. |
-| `ROADMAP_OVERALL.md` | Registro general obligatorio de esta modificaci√≥n. |
-
-## Actualizaci√≥n operativa V298 ¬∑ Instrucciones de registro para newbies
-
-Autorizaci√≥n recibida el **24 de agosto de 2026** para sustituir √∫nicamente los textos situados arriba del micr√≥fono por una gu√≠a m√°s grande, alineada a la izquierda y ordenada: **DICTA O ESCRIBE, 1-NOMBRE, 2-HDCP, 3-MARCAS, DE CADA JUGADOR, 4-OK**. El micr√≥fono y el registro conservan exactamente su funcionamiento.
-
-| Archivo o modificaci√≥n | Qu√© queda registrado |
-|---|---|
-| `index-grupal.html` | Muestra la gu√≠a para usuarios nuevos en el orden autorizado, a la izquierda y con letra mayor. |
-| `mobile-release.json` | N√∫mero de paquete preparado actualizado a V298. |
-| `service-worker.js` | Cach√© V298 para entregar inmediatamente las instrucciones nuevas. |
-| `test-v290-brand-icons-cleanup.mjs` | Comprueba el texto, orden, alineaci√≥n, tama√±o, paquete y cach√© V298. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza c√≥digos, tama√±os y explicaciones sencillas. |
-| `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de V298. |
-| `ROADMAP_OVERALL.md` | Registro general obligatorio de V298. |
-
-## Correcci√≥n operativa V299 ¬∑ Logo completo dentro del iPhone
-
-Correcci√≥n solicitada el **24 de agosto de 2026** despu√©s de comprobar la aplicaci√≥n instalada en iPhone. Se elimina √∫nicamente el exceso de ancho del logo superior y se respeta el espacio de seguridad de la barra del tel√©fono. El texto para newbies, el micr√≥fono y todas las funciones permanecen iguales.
-
-| Archivo o modificaci√≥n | Qu√© queda registrado |
-|---|---|
-| `index-grupal.html` | Limita el logo al 100 % del espacio disponible y lo baja debajo de la barra superior del iPhone. |
-| `mobile-release.json` | N√∫mero de paquete preparado actualizado a V299. |
-| `service-worker.js` | Cach√© V299 para entregar inmediatamente la correcci√≥n del logo. |
-| `test-v290-brand-icons-cleanup.mjs` | Comprueba el ancho del logo, el espacio seguro, el paquete y la cach√© V299. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza c√≥digos, tama√±os y explicaciones sencillas. |
-| `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de V299. |
-| `ROADMAP_OVERALL.md` | Registro general obligatorio de V299. |
-
-## Documentaci√≥n operativa V300 ¬∑ Compendio final para el usuario
-
-El **24 de agosto de 2026** se crea el compendio final de funciones reales para el consumidor. Est√° escrito con palabras sencillas, usa los nombres visibles de los botones y separa expresamente las funciones disponibles de las que todav√≠a siguen en preparaci√≥n. No modifica la aplicaci√≥n ni reabre funciones ya aprobadas.
-
-| Archivo o modificaci√≥n | Qu√© queda registrado |
-|---|---|
-| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Manual amigable que explica desde la selecci√≥n del campo hasta la tarjeta final, historial, correcciones, respaldo e instalaci√≥n. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Agrega el compendio al inventario y actualiza las explicaciones de ambos ROADMAPS. |
-| `ROADMAP_A_DETALLE.md` | Registra a detalle la creaci√≥n documental V300. |
-| `ROADMAP_OVERALL.md` | Registra esta creaci√≥n dentro del resumen general. |
-
-## Actualizaci√≥n operativa V301 ¬∑ Modalidades claras y torneo opcional
-
-El **24 de agosto de 2026** se cierra el vac√≠o de orientaci√≥n de la pantalla principal. La ruta que ya funcionaba como ronda general ahora tiene una opci√≥n visible llamada **RONDA NORMAL**; la modalidad r√°pida cambia su nombre comercial a **SCORE CARD - PR√ÅCTICA**. El registro de torneo se identifica como opcional y permite guardar una descripci√≥n tambi√©n opcional. No se modifica ninguna regla de c√°lculo, score, voz, tarjeta o navegaci√≥n.
-
-| Archivo o modificaci√≥n | Qu√© queda registrado |
-|---|---|
-| `index-grupal.html` | Presenta las tres modalidades, cambia el nombre de Pr√°ctica y agrega la descripci√≥n opcional del torneo. |
-| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Actualiza el manual con los nombres visibles y el nuevo campo opcional. |
-| `mobile-release.json` | N√∫mero de paquete preparado actualizado a V301. |
-| `service-worker.js` | Cach√© V301 para entregar la pantalla nueva. |
-| `test-v290-brand-icons-cleanup.mjs` | Comprueba las tres modalidades, el registro opcional y el guardado de la descripci√≥n. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza c√≥digos y explicaciones sencillas de V301. |
-| `ROADMAP_A_DETALLE.md` | Registra V301 a detalle. |
-| `ROADMAP_OVERALL.md` | Registra V301 en este resumen general. |
-
-## Actualizaci√≥n operativa V302 ¬∑ Micr√≥fonos hermanos en General y Stableford
-
-El **24 de agosto de 2026** se unifica el registro visual de Stableford con la Score Card General. Stableford deja de mostrar el c√≠rculo de 240 px con emoji y adopta el mismo encabezado REGISTRO DE JUGADORES, bloque de instrucciones, micr√≥fono SVG compacto de 120 px en escritorio y 112 px en iPhone, color ne√≥n y estado rojo de escucha. El enlace con el motor oficial de voz permanece intacto.
-
-| Archivo o modificaci√≥n | Qu√© queda registrado |
-|---|---|
-| `stableford.js` | Reutiliza la l√≠nea gr√°fica y descriptiva aprobada de la Score Card General sin cambiar la l√≥gica de registro. |
-| `mobile-release.json` | N√∫mero de paquete preparado actualizado a V302. |
-| `service-worker.js` | Cach√© V302 para entregar inmediatamente el componente unificado. |
-| `test-v290-brand-icons-cleanup.mjs` | Comprueba la estructura hermana, el SVG, la ausencia del emoji grande, el paquete y la cach√©. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el inventario de todos los archivos modificados. |
-| `ROADMAP_A_DETALLE.md` | Registra V302 a detalle. |
-| `ROADMAP_OVERALL.md` | Registra V302 en este resumen general. |
-
-## Actualizaci√≥n operativa V303 ¬∑ Paso 4-OK tambi√©n en Stableford
-
-El **24 de agosto de 2026** se completa la hermandad de vocabulario entre General y Stableford. El bot√≥n final de una nueva ronda Stableford ahora dice **OK**, tal como indica el paso 4. Su operaci√≥n no cambia: sigue validando los datos e iniciando la ronda. Cuando se edita una ronda existente, el bot√≥n conserva **ACTUALIZAR DATOS**.
-
-| Archivo o modificaci√≥n | Qu√© queda registrado |
-|---|---|
-| `index-grupal.html` | Muestra OK como acci√≥n final de una nueva ronda Stableford. |
-| `stableford.js` | Orienta al usuario con REVISA Y PRESIONA OK despu√©s del dictado. |
-| `mobile-release.json` | N√∫mero de paquete preparado actualizado a V303. |
-| `service-worker.js` | Cach√© V303 para entregar inmediatamente el texto homologado. |
-| `test-v290-brand-icons-cleanup.mjs` | Comprueba OK en pantalla, OK en el aviso, paquete y cach√©. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el inventario de todos los archivos modificados. |
-| `ROADMAP_A_DETALLE.md` | Registra V303 a detalle. |
-| `ROADMAP_OVERALL.md` | Registra V303 en este resumen general. |
-
-## Actualizaci√≥n operativa V304 ¬∑ Acciones hermanas y control visual
-
-El **24 de agosto de 2026** se corrige la diferencia que obligaba al usuario a revisar manualmente las dos tarjetas. Registro General y Registro Stableford comparten ahora un √∫nico tratamiento para sus acciones inferiores: misma familia, peso 900, tama√±o aproximadamente 30 % mayor y la misma altura para OK. Cuando Stableford todav√≠a no est√° listo, OK permanece funcionalmente bloqueado, pero se muestra con texto y borde ne√≥n legibles en lugar de gris desvanecido. Ninguna regla de juego, validaci√≥n o navegaci√≥n cambia.
-
-| Archivo nuevo o modificaci√≥n | Qu√© queda registrado |
-|---|---|
-| `index-grupal.html` | Instala el sistema visual compartido para OK, Ronda previa, Historial, Atr√°s y Cancelar en ambas tarjetas. |
-| `mobile-release.json` | N√∫mero de paquete preparado actualizado a V304. |
-| `service-worker.js` | Cach√© V304 para entregar inmediatamente la homologaci√≥n. |
-| `test-v290-brand-icons-cleanup.mjs` | Mantiene la validaci√≥n acumulada alineada con V304. |
-| `test-v304-homogeneous-registration-actions.mjs` | Impide autom√°ticamente diferencias futuras de fuente, peso, tama√±o, altura o brillo entre las acciones hermanas. |
-| `audit-project.mjs` | Ejecuta la comparaci√≥n V304 dentro del control maestro. |
-| `.github/workflows/roadmap-gate.yml` | Vuelve obligatorio el filtro hermano en GitHub. |
-| `vercel.json` | Vuelve obligatorio el filtro hermano antes de cada publicaci√≥n Vercel. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el inventario completo e incorpora la nueva prueba. |
-| `ROADMAP_A_DETALLE.md` | Registra V304 a detalle. |
-| `ROADMAP_OVERALL.md` | Registra V304 en este resumen general. |
-
-## Actualizaci√≥n operativa V305 ¬∑ Historial, navegaci√≥n y cero superposiciones
-
-El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base V304. Todo acceso visible al archivo de tarjetas usa **HISTORIAL**; cada pantalla con retorno ofrece **ATR√ÅS** conectado y situado arriba del contenido; el acceso opcional de cuenta pasa a **REG√çSTRATE** dentro del flujo y deja de cubrir controles. En Stableford se elimina el aviso hu√©rfano bajo los jugadores, se conserva su validaci√≥n interna y la gu√≠a visible se corrige para pedir √∫nicamente n√∫mero de jugador y nombre. Los OK General y Stableford comparten geometr√≠a, tipograf√≠a, color y estados equivalentes: delineados mientras el registro est√° incompleto y s√≥lidos cuando ya puede confirmarse. C√°lculos y reglas no solicitadas permanecen congelados.
-
-| Archivo nuevo o modificado | Qu√© queda registrado |
-|---|---|
-| `.github/workflows/roadmap-gate.yml` | Ejecuta tambi√©n el filtro obligatorio V305 en GitHub. |
-| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Usa HISTORIAL y REG√çSTRATE y explica los formatos reales de dictado General y Stableford. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Sincroniza el manual vivo con App V305, el estado de los OK y las gu√≠as operativas reales. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Homologa el vocabulario del historial en la matriz funcional. |
-| `ROADMAP_A_DETALLE.md` | Registra individualmente la intervenci√≥n V305. |
-| `ROADMAP_OVERALL.md` | Incorpora este resumen general V305. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Eleva el inventario activo e incorpora todos los archivos V305. |
-| `audit-project.mjs` | A√±ade la prueba V305 a la auditor√≠a maestra. |
-| `index-grupal.html` | Homologa HISTORIAL, ATR√ÅS, REG√çSTRATE y los estados del OK General; evita superposiciones y conserva las validaciones. |
-| `mobile-release.json` | Prepara el paquete m√≥vil 305. |
-| `service-worker.js` | Activa la cach√© `gscg-mobile-v305`. |
-| `stableford.js` | Muestra √∫nicamente `1-# JUGADOR`, `2-NOMBRE`, `HASTA 6 JUGADORES` y `3-OK`; el motor exige la posici√≥n y asigna HCP y marcas por categor√≠a. |
-| `test-course-catalog.mjs` | Conserva la eliminaci√≥n de las falsas casillas hist√≥ricas y reconoce la gu√≠a vigente del l√≠mite real de seis jugadores. |
-| `test-stableford-ui.mjs` | Alinea la prueba de UI con el build vigente V305. |
-| `test-stableford-clean-roster-history.mjs` | Alinea la prueba limpia con la regla V289 de persistir la nueva ronda vac√≠a. |
-| `test-v255-player-registration-boxes-codes.mjs` | Alinea la prueba hist√≥rica con la gu√≠a visual vigente: Dicta o escribe, Nombre, HDCP, Marcas y OK. |
-| `test-v260-round-points-player-return.mjs` | Alinea la recuperaci√≥n con la regla V289 de persistir Stableford vac√≠o para impedir que reaparezcan nombres anteriores. |
-| `test-v261-registration-stableford-modality.mjs` | Alinea la prueba hist√≥rica con Ronda Normal, Stableford, Score Card - Pr√°ctica y la gu√≠a homologada vigente. |
-| `test-v262-provisional-optional-profile.mjs` | Conserva los perfiles opcionales y reconoce el nombre comercial vigente `SCORE CARD - PR√ÅCTICA` sin recuperar `RONDA SIN REGISTRO`. |
-| `test-v253-live-previous-round.mjs` | Alinea la ruta Stableford oficial con `v=305`. |
-| `test-v252-stableford-persistence-category-course.mjs` | Alinea la persistencia con la regla V289 de guardar vac√≠a la nueva ronda Stableford. |
-| `test-v272-definitive-operational-release.mjs` | Alinea build, snapshot y ruta oficial con V305. |
-| `test-v274-complete-courses-voice-operations.mjs` | Alinea la identificaci√≥n de versi√≥n sin cambiar la cobertura de voz. |
-| `test-v275-stable-live-voice-turns.mjs` | Alinea la identificaci√≥n de versi√≥n sin cambiar la cobertura viva. |
-| `test-v276-manual-hole-navigation.mjs` | Alinea la identificaci√≥n de versi√≥n sin cambiar la navegaci√≥n por hoyos. |
-| `test-v277-official-round-corrections.mjs` | Alinea correcciones y snapshots oficiales con V305. |
-| `test-v278-card-image-pdf-export.mjs` | Alinea los artefactos de tarjeta con V305. |
-| `test-v279-local-card-library.mjs` | Homologa la redacci√≥n de Historial y la versi√≥n vigente. |
-| `test-v280-local-history-insights.mjs` | Alinea las estad√≠sticas del Historial con V305. |
-| `test-v281-pwa-installation.mjs` | Comprueba la cach√© m√≥vil V305. |
-| `test-v284-native-package-generation.mjs` | Comprueba paquete m√≥vil y cach√© V305. |
-| `test-v285-stableford-back-navigation.mjs` | Comprueba el ATR√ÅS superior de Stableford. |
-| `test-v287-stableford-back-controls-clear.mjs` | Comprueba que REG√çSTRATE est√© en flujo y no tape controles. |
-| `test-v290-brand-icons-cleanup.mjs` | Mantiene la validaci√≥n acumulada y reconoce la gu√≠a Stableford exacta, el paquete y la cach√© V305. |
-| `test-v304-homogeneous-registration-actions.mjs` | Conserva el filtro hermano y proh√≠be pedir HDCP o marcas en la gu√≠a visible Stableford. |
-| `test-v305-history-navigation-zero-error.mjs` | Bloquea vocabulario retirado, ATR√ÅS sin conexi√≥n, superposici√≥n, estado hu√©rfano y versiones incoherentes. |
-| `test-v305-registration-guides-parser-truth.mjs` | Ejecuta ambos analizadores reales y exige que cada gu√≠a corresponda exactamente con su formato y con los estados equivalentes de OK. |
-| `vercel.json` | Exige filtros V304 y V305 antes de publicar. |
-
-## Regla permanente
-
-1. Todo nombre visible ser√° **Golf Score Card GT**.
-2. No se cambian c√≥digos internos antiguos si el cambio puede romper la aplicaci√≥n.
-3. Cada archivo nuevo se registra en el mapa maestro.
-4. Cada publicaci√≥n oficial se comprueba en GitHub y Vercel.
-5. Nunca se guardan contrase√±as, correos personales o llaves privadas dentro de estos mapas.
-6. Cada carpeta, archivo o modificaci√≥n se agrega autom√°ticamente, en la misma versi√≥n, a **ROADMAP OVERALL** y **ROADMAP A DETALLE**.
-7. Ninguna versi√≥n se cierra ni se publica si falta ese registro doble.
-
-## Manual editorial autorizado ¬∑ p√°ginas 01‚Äì02
-
-El **24 de agosto de 2026** quedan autorizadas y congeladas las dos primeras p√°ginas del manual visual para iPhone. Ambas usan la misma ret√≠cula editorial de dos columnas, SF Pro, fondo blanco, identidad horizontal oficial y exportaci√≥n PNG de **2160 √ó 4320 px a 300 dpi**.
-
-| P√°gina | Funci√≥n cerrada |
-|---|---|
-| `01 ¬∑ Configura la ronda` | Campo, Ronda Normal, Stableford, Pr√°ctica, Match Play, Four Ball y Torneo opcional. |
-| `02 ¬∑ Registra jugadores` | Registro por voz o manual, siguiente jugador, correcci√≥n manual y confirmaci√≥n con OK. |
-
-Las p√°ginas 01‚Äì02 quedan bloqueadas como patr√≥n gr√°fico. La siguiente hoja del manual comienza con la **tarjeta General** y explica el ingreso de scores y la lectura de resultados.
-
-## Actualizaci√≥n operativa V306 ¬∑ Match Play sobre la tarjeta Normal
-
-El **24 de agosto de 2026** se incorpora Match Play como extensi√≥n aislada de la Ronda Normal. La modalidad exige exactamente dos jugadores y conserva sin cambios el registro de nombre, HDCP y marcas; la distribuci√≥n oficial de tiros; Gross, Neto, resultado, dictado por voz, ingreso manual, correcciones y resumen. El motor Match Play solo lee el Neto ya calculado: muestra **‚Üë verde** al ganador del hoyo, **‚Üì roja** al perdedor y no a√±ade s√≠mbolo cuando existe empate. El marcador permanente informa AS, 1 UP, 2 UP y el cierre reglamentario anticipado, por ejemplo 3 & 2.
-
-| Archivo nuevo o modificado | Registro V306 |
-|---|---|
-| `match-play.js` | Motor puro de comparaci√≥n Neto, estados por hoyo, AS/UP y cierre anticipado. |
-| `test-v306-match-play.mjs` | Prueba tarjeta Normal intacta, dos jugadores, Neto, ‚Üë/‚Üì, empate sin s√≠mbolo, 3 & 2, cierre, artefactos e Historial. |
-| `index-grupal.html` | A√±ade selecci√≥n Match Play, exige dos jugadores y superpone √∫nicamente el rubro MATCH a la tarjeta Normal. |
-| `round-closure.js` | Permite cierre oficial anticipado y recalcula Match Play despu√©s de una correcci√≥n oficial. |
-| `card-artifacts.js` | Genera tarjeta global y personales Match Play con Gross/Neto e indicadores ‚Üë/‚Üì. |
-| `card-library.js` | Conserva Match Play como modalidad propia en Historial. |
-| `round-navigation.js` | Conserva la modalidad al recuperar una ronda Match Play. |
-| `master-data-sync.js` | Sincroniza Match Play sin convertirlo en General. |
-| `account-backup.js` | Restaura Match Play, su snapshot y su marcador. |
-| `mobile-release.json` | Prepara el paquete m√≥vil 306. |
-| `service-worker.js` | Activa cach√© V306 e incluye el motor Match Play para uso sin conexi√≥n. |
-| `scripts/build-mobile-web.mjs` | Incluye `match-play.js` en el paquete nativo iPhone/Android. |
-| `audit-project.mjs` | Ejecuta el control V306 dentro de la auditor√≠a maestra. |
-| `.github/workflows/roadmap-gate.yml` | Ejecuta el candado Match Play en GitHub. |
-| `vercel.json` | Exige la prueba V306 y entrega el m√≥dulo sin cach√© obsoleta. |
-| `test-v305-registration-guides-parser-truth.mjs` | Conserva General y a√±ade el requisito exacto de dos jugadores para Match Play. |
-| `test-v305-history-navigation-zero-error.mjs` | Alinea paquete y cach√© con V306 sin retirar controles V305. |
-| `test-stableford-ui.mjs` | Alinea √∫nicamente la identificaci√≥n del build vigente. |
-| `test-v263-compact-players-back-button.mjs` | Conserva el alta de jugadores en General y confirma que Match Play permanezca limitado a exactamente dos. |
-| `test-v267-one-operational-line.mjs` | Conserva una sola l√≠nea operacional y reconoce Match Play como modalidad persistida independiente. |
-| `test-v272-definitive-operational-release.mjs` | Alinea √∫nicamente la identificaci√≥n del build vigente. |
-| `test-v274-complete-courses-voice-operations.mjs` | Alinea √∫nicamente la identificaci√≥n del build vigente. |
-| `test-v275-stable-live-voice-turns.mjs` | Alinea √∫nicamente la identificaci√≥n del build vigente. |
-| `test-v276-manual-hole-navigation.mjs` | Alinea √∫nicamente la identificaci√≥n del build vigente. |
-| `test-v277-official-round-corrections.mjs` | Alinea √∫nicamente la identificaci√≥n del build vigente. |
-| `test-v278-card-image-pdf-export.mjs` | Alinea √∫nicamente la identificaci√≥n del build vigente. |
-| `test-v279-local-card-library.mjs` | Alinea √∫nicamente la identificaci√≥n del build vigente. |
-| `test-v280-local-history-insights.mjs` | Alinea √∫nicamente la identificaci√≥n del build vigente. |
-| `docs/manual/MANUAL_GOLF_SCORE_CARD_GT_IPHONE_01_INICIO_4K.png` | P√°gina 01 autorizada y congelada en 2160 √ó 4320 px a 300 dpi. |
-| `docs/manual/MANUAL_GOLF_SCORE_CARD_GT_IPHONE_02_REGISTRO_4K.png` | P√°gina 02 autorizada y congelada en 2160 √ó 4320 px a 300 dpi. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra el inventario V306 completo. |
-| `ROADMAP_A_DETALLE.md` | Registra esta actualizaci√≥n a detalle. |
-| `ROADMAP_OVERALL.md` | Registra esta actualizaci√≥n en el resumen general. |
-
-## Actualizaci√≥n operativa V307 ¬∑ Flechas Match Play legibles y formato limpio
-
-El **25 de agosto de 2026** se reemplazan los caracteres tipogr√°ficos delgados de Match Play por flechas SVG de **30 √ó 36 px**, trazo **4.5**, extremos redondeados, tallo largo y punta amplia. La flecha verde ascendente identifica al ganador; la roja descendente identifica al perdedor; el empate conserva el score normal sin s√≠mbolo. En el control de captura, el campo **MODALIDAD** muestra exclusivamente **MATCH PLAY**. La f√≥rmula Gross, HDCP, Neto y asignaci√≥n de tiros permanecen congeladas. Los resultados escritos de OUT, IN y TOTAL dejan de sumar Neto: muestran `NOMBRE ¬∑ X UP`, `NOMBRE ¬∑ X DOWN` o `NOMBRE ¬∑ AS`. Cuando la ventaja supera los hoyos restantes, la aplicaci√≥n declara y anuncia inmediatamente `FIN DEL MATCH`, bloquea los hoyos posteriores y conserva la correcci√≥n de los ya jugados.
-
-| Archivo nuevo o modificado | Registro V307 |
-|---|---|
-| `match-play.js` | Calcula la posici√≥n escrita UP/DOWN/AS de cada jugador por OUT, IN y total. |
-| `index-grupal.html` | Instala flechas SVG gruesas, deja MODALIDAD en MATCH PLAY, sustituye totales Neto por posiciones de hoyos, anuncia el cierre anticipado y firma snapshots V307. |
-| `card-artifacts.js` | Homologa las flechas gruesas en tarjetas globales y personales exportadas. |
-| `mobile-release.json` | Prepara el paquete m√≥vil 307. |
-| `service-worker.js` | Activa la cach√© `gscg-mobile-v307`. |
-| `test-v307-match-arrows-format.mjs` | Bloquea glifos delgados, tama√±os menores, direcciones ambiguas, totales Neto indebidos y ausencia de cierre anticipado. |
-| `test-v306-match-play.mjs` | Mantiene el contrato funcional Match Play y verifica UP/DOWN por vuelta, bloqueo posterior y anuncio final. |
-| `test-round-information.mjs` | Conserva los t√≠tulos General/Stableford y exige `RESULTADO MATCH PLAY` en el resumen final. |
-| `test-v261-registration-stableford-modality.mjs` | Conserva el aislamiento de Stableford y reconoce el t√≠tulo propio del resumen Match Play. |
-| `test-stableford-ui.mjs` | Alinea la identificaci√≥n del build vigente. |
-| `test-v272-definitive-operational-release.mjs` | Alinea build y snapshots con V307. |
-| `test-v274-complete-courses-voice-operations.mjs` | Alinea la identificaci√≥n del build vigente. |
-| `test-v275-stable-live-voice-turns.mjs` | Alinea la identificaci√≥n del build vigente. |
-| `test-v276-manual-hole-navigation.mjs` | Alinea la identificaci√≥n del build vigente. |
-| `test-v277-official-round-corrections.mjs` | Alinea correcciones y snapshots con V307. |
-| `test-v278-card-image-pdf-export.mjs` | Alinea artefactos oficiales con V307. |
-| `test-v279-local-card-library.mjs` | Alinea Historial con V307. |
-| `test-v280-local-history-insights.mjs` | Alinea estad√≠sticas del Historial con V307. |
-| `test-v281-pwa-installation.mjs` | Comprueba la cach√© m√≥vil V307. |
-| `test-v284-native-package-generation.mjs` | Comprueba paquete 307 y cach√© V307. |
-| `test-v290-brand-icons-cleanup.mjs` | Mantiene el control acumulado bajo V307. |
-| `test-v304-homogeneous-registration-actions.mjs` | Mantiene la homologaci√≥n de acciones bajo V307. |
-| `test-v305-history-navigation-zero-error.mjs` | Mantiene navegaci√≥n e Historial bajo V307. |
-| `audit-project.mjs` | Incorpora el candado V307 en la auditor√≠a maestra. |
-| `.github/workflows/roadmap-gate.yml` | Ejecuta el candado V307 en GitHub. |
-| `vercel.json` | Exige el candado V307 antes de publicar. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Documenta App V307 y la regla visual de flechas. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra el inventario V307 completo. |
-| `ROADMAP_A_DETALLE.md` | Registra V307 a detalle. |
-| `ROADMAP_OVERALL.md` | Registra V307 en este resumen general. |
-
-**Hotfix de publicaci√≥n V307:** `vercel.json` ejecuta `node audit-project.mjs` como √∫nico `buildCommand` de 22 caracteres. Conserva los 67 paquetes de control y cumple el l√≠mite m√°ximo de 256 caracteres del esquema Vercel; este ajuste queda registrado simult√°neamente en ambos ROADMAPS y en el inventario maestro.
-
-
-## V308 ¬∑ Marcador acumulado persistente en cada hoyo Match Play
-
-La fila MATCH de cada jugador ya no muestra √∫nicamente qui√©n gan√≥, empat√≥ o perdi√≥ el hoyo aislado. Desde esta versi√≥n, cada columna conserva el marcador acumulado vigente despu√©s de ese hoyo: `+1`, `+2`, `EVEN`, `‚àí1`, etc. Si los hoyos siguientes se empatan, la misma ventaja y su flecha permanecen visibles hasta que un resultado posterior cambie el estado.
-
-| Archivo modificado | Registro V308 |
-|---|---|
-| `index-grupal.html` | Calcula y dibuja en cada hoyo el estado Match Play acumulado, mantiene la flecha durante empates posteriores y muestra la nomenclatura `+N`, `‚àíN` o `EVEN`. |
-| `ROADMAP_A_DETALLE.md` | Registra la regla funcional V308. |
-| `ROADMAP_OVERALL.md` | Registra la entrega V308 y mantiene el ROADMAP Gate. |
-
-**Compatibilidad V308:** se conserva la firma base V307 exigida por los 67 controles acumulados y se a√±ade la firma espec√≠fica `gscg-match-cumulative = V308-CUMULATIVE-STANDING-EVERY-HOLE-20260825`; el comportamiento nuevo permanece identificado sin romper los contratos anteriores.
-
-**Validaci√≥n funcional V308:** la persistencia acumulada se limita estrictamente a hoyos ya registrados; los hoyos futuros contin√∫an como `PENDIENTE` y no heredan anticipadamente la ventaja actual.
-
-## V309 ¬∑ Four Ball homologado como partida de dos parejas
-
-El **25 de agosto de 2026** se implementa Four Ball como modalidad operativa propia: exactamente cuatro jugadores, Pareja Verde en posiciones 1‚Äì2 y Pareja Oro en posiciones 3‚Äì4. Cada jugador registra Gross; el motor compartido calcula handicap y Neto; `four-ball.js` toma el mejor Neto de cada pareja y decide el hoyo. El marcador `EVEN`, `+N` o `‚àíN` permanece acumulado durante hoyos empatados y los hoyos futuros contin√∫an pendientes. Incluye cierre anticipado, correcci√≥n oficial, recuperaci√≥n, sincronizaci√≥n, Historial y exportaciones Global/personales.
-
-| Archivo nuevo o modificado | Registro V309 |
-|---|---|
-| `four-ball.js` | Motor puro Four Ball para dos parejas, mejor Neto, marcador acumulado y cierre. |
-| `index-grupal.html` | Registro 2 √ó 2, colores Verde/Oro, voz/manual, tarjeta, acumulado, cierre y tarjeta digital. |
-| `round-closure.js` | Snapshot y correcci√≥n oficial Four Ball. |
-| `card-artifacts.js` | Global y cuatro personales con mejor bola y resultado acumulado. |
-| `card-library.js` | Filtro e identidad Four Ball dentro de Historial. |
-| `round-navigation.js` | Recuperaci√≥n de rondas Four Ball sin convertirlas en General. |
-| `master-data-sync.js` | Conserva `four_ball` en la arquitectura central. |
-| `account-backup.js` | Restaura modalidad, snapshot y marcador Four Ball. |
-| `historical-analytics.js` | Reconoce Four Ball como modalidad propia en las consultas. |
-| `service-worker.js` | Incluye el motor Four Ball en el paquete sin conexi√≥n. |
-| `scripts/build-mobile-web.mjs` | Incluye `four-ball.js` en iPhone/Android. |
-| `vercel.json` | Entrega `four-ball.js` con pol√≠tica sin cach√© obsoleta. |
-| `test-v309-four-ball.mjs` | Prueba 2 parejas, cuatro Gross, mejor Neto, empate persistente, cierre, Historial y exportaci√≥n. |
-| `audit-project.mjs` | Incorpora el candado V309 a la auditor√≠a maestra. |
-| `APP_ARCHITECTURE.md` | Define oficialmente Four Ball 2 vs 2 y sus l√≠mites de responsabilidad. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.62 con operaci√≥n completa Four Ball. |
-| `ROADMAP_A_DETALLE.md` | Matriz t√©cnica V309. |
-| `ROADMAP_OVERALL.md` | Resumen y puerta ROADMAP V309. |
-
-**Compatibilidad V309:** se conserva la firma acumulada V307/V308 y se a√±ade `gscg-four-ball = V309-TWO-PAIRS-BEST-NET-CUMULATIVE-MATCH-20260825` para identificar la modalidad nueva sin retirar los contratos anteriores.
-
-## V310 ¬∑ Nombre Four Ball neutral
-
-El **25 de agosto de 2026** se homologa el nombre visible de la modalidad como `FOUR BALL`, sin a√±adir `2 PAREJAS`. La cantidad de parejas deja de formar parte del t√≠tulo permanente y queda reservada a la configuraci√≥n operativa de cada partida. No cambia el c√°lculo Gross/HDCP/Neto, la mejor bola, el acumulado ni el cierre.
-
-| Archivo modificado | Registro V310 |
-|---|---|
-| `index-grupal.html` | Muestra √∫nicamente FOUR BALL en selecci√≥n, encabezado, control manual y tarjeta final; las validaciones solicitan jugadores sin convertir la cantidad de parejas en nombre. |
-| `four-ball.js` | Neutraliza el mensaje de configuraci√≥n sin alterar el motor de resultados. |
-| `test-v309-four-ball.mjs` | Bloquea el regreso del sufijo `2 PAREJAS` en la interfaz. |
-| `APP_ARCHITECTURE.md` | Define la separaci√≥n entre nombre permanente y configuraci√≥n de partida. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.63 con denominaci√≥n neutral. |
-| `ROADMAP_A_DETALLE.md` | Registra la homologaci√≥n t√©cnica V310. |
-| `ROADMAP_OVERALL.md` | Registra esta entrega V310. |
-
-## V311 ¬∑ Match Play neutral y enlace directo de inicio
-
-El **25 de agosto de 2026** se deja el nombre visible de la modalidad exclusivamente como `MATCH PLAY`; la arquitectura conserva HCP, Gross y Neto como datos de c√°lculo, pero no agrega `HDCP` al nombre, los estados ni la tarjeta final. Match Play y Four Ball aceptan una o dos parejas, con una l√≠nea vac√≠a entre ellas cuando hay cuatro jugadores. Los reportes hablados de primera vuelta, segunda vuelta y total dicen `arriba`, `abajo` y `empatado`, sin pronunciar UP/DOWN/AS. El dominio p√∫blico ra√≠z y `/inicio` abren directamente `Configura la ronda` sin borrar una ronda activa guardada.
-
-| Archivo nuevo o modificado | Registro V311 |
-|---|---|
-| `index-grupal.html` | Neutraliza el nombre Match Play; admite 2 o 4 jugadores en ambos formatos; separa parejas en registro, tarjeta y resumen; habla arriba/abajo/empatado; reconoce `inicio=1`. |
-| `match-play.js` | Organiza uno o dos Matches independientes: jugadores 1‚Äì2 y, opcionalmente, 3‚Äì4. |
-| `four-ball.js` | Admite una o dos parejas; con una acumula mejor Neto y con dos conserva la comparaci√≥n acumulada. |
-| `round-closure.js` | Cierra y corrige configuraciones de 2 o 4 jugadores, respetando el hoyo final independiente de cada Match. |
-| `card-artifacts.js` | Exporta una o dos parejas con HCP individual, resultado propio y l√≠nea separadora. |
-| `vercel.json` | Env√≠a `/`, `/index.html` y `/inicio` a `/index-grupal.html?inicio=1`. |
-| `test-v306-match-play.mjs` | Prueba nombre neutral, uno o dos Matches, cierres independientes y exportaci√≥n separada. |
-| `test-v307-match-arrows-format.mjs` | Conserva flechas, formato y bloqueo individual posterior al cierre. |
-| `test-v309-four-ball.mjs` | Prueba una o dos parejas, mejor Neto, cierre, HCP, l√≠nea y exportaci√≥n. |
-| `test-v272-definitive-operational-release.mjs` | Verifica las rutas p√∫blicas directas y conserva la ruta exclusiva Stableford. |
-| `test-v270-consecutive-hole-voice-blocks.mjs` | Conserva el simulador de voz cargando el nuevo l√≠mite operativo independiente por pareja. |
-| `test-v255-player-registration-boxes-codes.mjs` | Homologa el registro visual de Match Play y Four Ball con cuatro espacios disponibles. |
-| `test-v305-registration-guides-parser-truth.mjs` | Homologa el candado del registro para exigir 2 o 4 jugadores en Match Play y Four Ball. |
-| `test-v311-neutral-match-home-link.mjs` | Candado de nombres, parejas, separaci√≥n, dicci√≥n en espa√±ol y apertura directa. |
-| `audit-project.mjs` | Incorpora el candado V311 a la homologaci√≥n completa. |
-| `APP_ARCHITECTURE.md` | Define una o dos parejas, resultados independientes, separaci√≥n, voz e inicio sin p√©rdida de ronda. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Manual 3.64 / App V311 con el contrato operativo completo. |
-| `ROADMAP_A_DETALLE.md` | Registra la matriz t√©cnica V311. |
-| `ROADMAP_OVERALL.md` | Registra esta entrega V311 y satisface el ROADMAP Gate. |
-
-## Cierre documental V311 ¬∑ Inventarios consolidados en PDF
-
-Solicitud: **25 de agosto de 2026**. Se actualizan los inventarios hasta el √∫ltimo cambio publicado de V311 y se fija, para revisi√≥n, que todo lo situado desde la l√≠nea 160 hacia abajo se considera nuevo. La base visual V292 no se sustituye ni se borra: queda incorporada como antecedente dentro del PDF A Detalle. Se generan fuera del repositorio tres archivos para guardar: Overall, A Detalle y Por im√°genes y rubros.
-
-| Archivo modificado | Registro documental |
-|---|---|
-| `ROADMAP_OVERALL.md` | Actualiza versi√≥n, commit, despliegue, auditor√≠a, cantidades y corte desde l√≠nea 160. |
-| `ROADMAP_A_DETALLE.md` | Consolida V311, repite la l√≠nea 160 como inicio del bloque nuevo y conserva V294-V311. |
-| `ROADMAP_IMAGES/README.md` | Aclara que las im√°genes V292 son base hist√≥rica y que el PDF incorpora la continuaci√≥n. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el total activo rastreado a 197 archivos. |
-
-## Integraci√≥n editorial V311 ¬∑ manual completo 4K y enlace permanente
-
-El **25 de agosto de 2026** se incorpora el corte editorial inicial de 16 p√°ginas, ampliado posteriormente a **73 p√°ginas funcionales m√°s portada**. El PDF y el visor web directo en `/manual` conservan nombres permanentes. Todas las im√°genes maestras son verticales 4K de `2160 √ó 4320 px` a `300 dpi`. Las p√°ginas 10‚Äì16 documentan los campos con composici√≥n vertical equilibrada; La Reuni√≥n queda como plantilla totalmente vac√≠a mientras el campo permanece en reconstrucci√≥n.
-
-| Archivo nuevo o modificado | Registro editorial V311 |
-|---|---|
-| `APP_ARCHITECTURE.md` | Fija la l√≠nea editorial tipo iPhone, la regla 4K y La Reuni√≥n sin datos. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | Convierte resoluci√≥n, composici√≥n y filtro visual en normas obligatorias. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Sincroniza V311 y documenta el contrato editorial permanente. |
-| `audit-project.mjs` | Ejecuta el candado del alojamiento del manual dentro de la auditor√≠a maestra. |
-| `package.json` | A√±ade el comando de control `manual:visual-qc`. |
-| `vercel.json` | Crea `/manual` y `/manual.pdf`; entrega siempre la versi√≥n vigente sin cach√© anual inmutable. |
-| `manual.html` | Visor web responsivo con portada, 73 p√°ginas funcionales, √≠ndice por categor√≠as, lupa, navegaci√≥n, aplicaci√≥n y descarga PDF. |
-| `manual.webmanifest` | Acceso directo MANUAL SCG | Instala el manual completo como acceso independiente en el escritorio del iPhone. |
-| `scripts/manual-visual-qc.py` | Rechaza resoluci√≥n, densidad, m√°rgenes, recortes, color o equilibrio editorial incorrectos en las 74 im√°genes. |
-| `scripts/inventory-gate.mjs` | Bloquea auditor√≠a, construcci√≥n y publicaci√≥n si los inventarios no fueron regenerados y sellados; en Vercel compara los blobs del commit para ignorar archivos transitorios o reescritos por el instalador. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Conserva huella de fuentes y c√≥digos SHA-256 de los tres inventarios vigentes. |
-| `test-v311-manual-hosting.mjs` | Comprueba rutas, portada, 73 p√°ginas funcionales, PDF f√≠sico de 74 p√°ginas, marcadores y dimensiones 4K. |
-| `verify-manual-sync.mjs` | Comprueba que la firma documental V311 de la aplicaci√≥n coincida con el manual maestro. |
-| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias estable del manual completo de 73 p√°ginas para conservar enlaces hist√≥ricos. |
-| `docs/manual/v311/page-00.png` | Portada 4K aprobada con logo al 50% de saturaci√≥n. |
-| `docs/manual/v311/manual-scg-escritorio-4k.png` | PNG maestro 4K del acceso MANUAL SCG. |
-| `docs/manual/v311/manual-scg-escritorio-4k.jpg` | JPG 4K optimizado para descarga desde iPhone. |
-| `docs/manual/v311/page-01.png` | P√°gina 01 4K ¬∑ Configura la ronda. |
-| `docs/manual/v311/page-02.png` | P√°gina 02 4K ¬∑ Registra jugadores. |
-| `docs/manual/v311/page-03.png` | P√°gina 03 4K ¬∑ Confirma la ronda. |
-| `docs/manual/v311/page-04.png` | P√°gina 04 4K ¬∑ Configura Stableford. |
-| `docs/manual/v311/page-05.png` | P√°gina 05 4K ¬∑ Score Card - Pr√°ctica. |
-| `docs/manual/v311/page-06.png` | P√°gina 06 4K ¬∑ Ronda General. |
-| `docs/manual/v311/page-07.png` | P√°gina 07 4K ¬∑ Control Manual. |
-| `docs/manual/v311/page-08.png` | P√°gina 08 4K ¬∑ Match Play. |
-| `docs/manual/v311/page-09.png` | P√°gina 09 4K ¬∑ Four Ball. |
-| `docs/manual/v311/page-10.png` | P√°gina 10 4K ¬∑ El Pult√© Golf. |
-| `docs/manual/v311/page-11.png` | P√°gina 11 4K ¬∑ Guatemala Country Club. |
-| `docs/manual/v311/page-12.png` | P√°gina 12 4K ¬∑ San Isidro. |
-| `docs/manual/v311/page-13.png` | P√°gina 13 4K ¬∑ Mayan Golf. |
-| `docs/manual/v311/page-14.png` | P√°gina 14 4K ¬∑ Hacienda Nueva Country Club. |
-| `docs/manual/v311/page-15.png` | P√°gina 15 4K ¬∑ Alta Vista Golf & Tennis Club. |
-| `docs/manual/v311/page-16.png` | P√°gina 16 4K ¬∑ plantilla vac√≠a de La Reuni√≥n Golf Resort. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Eleva el inventario activo a 223 archivos y registra cada artefacto nuevo. |
-| `ROADMAP_A_DETALLE.md` | Registra individualmente toda la integraci√≥n. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen y satisface el ROADMAP Gate. |
-
-**Inventarios externos actualizados sin cambiar de nombre:** `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf` e `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`.
-
-## Pendiente reglamentario PEND-REG-001 ¬∑ Reglas de Golf integradas
-
-El **25 de agosto de 2026** se registra, sin iniciar implementaci√≥n, el futuro bloque principal para adaptar las Reglas de Golf a Golf Score Card GT. La proyecci√≥n incluye consultas naturales por micr√≥fono y buscador, orientaci√≥n seg√∫n modalidad y Regla Local, fuente reglamentaria vigente y confirmaci√≥n obligatoria antes de que una respuesta pueda modificar scores o penalidades.
-
-| Archivo nuevo o modificado | Registro del pendiente |
-|---|---|
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Crea `PEND-REG-001`, su alcance, arquitectura, condiciones de cierre y palabras para localizarlo. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Agrega Reglas de Golf integradas al roadmap funcional proyectado. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Incorpora el archivo de cola al mapa maestro. |
-| `ROADMAP_A_DETALLE.md` | Conserva el registro t√©cnico detallado. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen general. |
-
-
-## Cierre ampliado V311 ¬∑ manual localizable y asistente por micr√≥fono
-
-El **25 de agosto de 2026** el manual se ampl√≠a a **portada m√°s 73 p√°ginas funcionales**. El visor incorpora √≠ndice por categor√≠as y una lupa que acepta preguntas naturales. La aplicaci√≥n incorpora un asistente local de micr√≥fono para explicar procedimientos y abrir destinos seguros, sin convertir preguntas en scores ni ejecutar cierres o modificaciones peligrosas. El PDF contiene 74 marcadores internos y todas las p√°ginas conservan 2160 √ó 4320 px y 300 dpi.
-
-### Archivos registrados por el candado ROADMAP
-
-- `api/session.js`
-- `test-v268-control-manual-demo-link.mjs`
-- `test-v269-operational-matrix-demo.mjs`
-- `MANUAL_COBERTURA_FUNCIONAL_V311.md`
-- `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`
-- `docs/manual/v311/manual-pages-17-35.json`
-- `docs/manual/v311/page-17.png`
-- `docs/manual/v311/page-18.png`
-- `docs/manual/v311/page-19.png`
-- `docs/manual/v311/page-20.png`
-- `docs/manual/v311/page-21.png`
-- `docs/manual/v311/page-22.png`
-- `docs/manual/v311/page-23.png`
-- `docs/manual/v311/page-24.png`
-- `docs/manual/v311/page-25.png`
-- `docs/manual/v311/page-26.png`
-- `docs/manual/v311/page-27.png`
-- `docs/manual/v311/page-28.png`
-- `docs/manual/v311/page-29.png`
-- `docs/manual/v311/page-30.png`
-- `docs/manual/v311/page-31.png`
-- `docs/manual/v311/page-32.png`
-- `docs/manual/v311/page-33.png`
-- `docs/manual/v311/page-34.png`
-- `docs/manual/v311/page-35.png`
-- `docs/manual/v311/page-36.png`
-- `docs/manual/v311/page-37.png`
-- `docs/manual/v311/page-38.png`
-- `docs/manual/v311/page-39.png`
-- `docs/manual/v311/page-40.png`
-- `docs/manual/v311/page-41.png`
-- `docs/manual/v311/page-42.png`
-- `docs/manual/v311/page-43.png`
-- `docs/manual/v311/page-44.png`
-- `docs/manual/v311/page-45.png`
-- `docs/manual/v311/page-46.png`
-- `docs/manual/v311/page-47.png`
-- `docs/manual/v311/page-48.png`
-- `docs/manual/v311/page-49.png`
-- `docs/manual/v311/page-50.png`
-- `docs/manual/v311/page-51.png`
-- `docs/manual/v311/page-52.png`
-- `docs/manual/v311/page-53.png`
-- `docs/manual/v311/page-54.png`
-- `docs/manual/v311/page-55.png`
-- `docs/manual/v311/page-56.png`
-- `docs/manual/v311/page-57.png`
-- `docs/manual/v311/page-58.png`
-- `docs/manual/v311/page-59.png`
-- `docs/manual/v311/page-60.png`
-- `docs/manual/v311/page-61.png`
-- `docs/manual/v311/page-62.png`
-- `docs/manual/v311/page-63.png`
-- `docs/manual/v311/page-64.png`
-- `docs/manual/v311/page-65.png`
-- `docs/manual/v311/page-66.png`
-- `docs/manual/v311/page-67.png`
-- `docs/manual/v311/page-68.png`
-- `docs/manual/v311/page-69.png`
-- `docs/manual/v311/page-70.png`
-- `docs/manual/v311/page-71.png`
-- `docs/manual/v311/page-72.png`
-- `manual-search.js`
-- `scripts/publish-manual-pages.py`
-- `test-v311-manual-search.mjs`
-- `test-v311-manual-semantic-coverage.mjs`
-- `test-v311-manual-voice-map.mjs`
-- `test-v311-voice-assistant.mjs`
-- `voice-assistant.js`
-
-
-## Pendiente clim√°tico PEND-CLI-002 ¬∑ Clima por campo en la tarjeta
-
-El **25 de agosto de 2026** se registra la sincronizaci√≥n del clima. La fase V312 obtiene autom√°ticamente el GPS autorizado al abrir una tarjeta activa, muestra y guarda la lectura de Open-Meteo y la renueva cada diez minutos. Las coordenadas propias del campo activo s√≥lo sirven de respaldo si no hay GPS. La vista previa en Configuraci√≥n, artefactos oficiales, snapshots formales de inicio/cierre y comparaci√≥n final de proveedores siguen pendientes.
-
-| Archivo nuevo o modificado | Registro del pendiente |
-|---|---|
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Agrega `PEND-CLI-002`, alcance, arquitectura, estados sin conexi√≥n y condiciones de cierre. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Incorpora el clima sincronizado como punto 12 del roadmap funcional. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Ampl√≠a el registro de la cola con el c√≥digo clim√°tico. |
-| `ROADMAP_A_DETALLE.md` | Conserva el registro t√©cnico detallado. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen general. |
-
-## Pendiente PEND-VOZ-003 ¬∑ Caddie/Support conversacional humano
-
-El **25 de agosto de 2026** se registra y ampl√≠a una conversaci√≥n por voz con especialidad prioritaria en golf. La fase V314 ya conversa desde todos los micr√≥fonos visibles, sin palabra clave, sobre Golf, ronda, clima vivo y temas generales, con l√≠mites de salud y escritura de score separada. El buscador escrito del Manual localiza la explicaci√≥n correspondiente; un chat escrito interactivo y la validaci√≥n f√≠sica amplia contin√∫an pendientes.
-
-| Archivo nuevo o modificado | Registro del pendiente |
-|---|---|
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Ampl√≠a `PEND-VOZ-003` a texto, voz, Golf, Manual, clima, conversaci√≥n general y salud segura. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Actualiza el Caddie/Support conversacional como punto 13. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Ampl√≠a los c√≥digos localizables de la cola. |
-| `ROADMAP_A_DETALLE.md` | Conserva el registro t√©cnico detallado. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen general. |
-
-## Cierre V311 ¬∑ TIMER OFF autom√°tico por inactividad
-
-El **25 de agosto de 2026** se fija una regla com√∫n para General, Stableford, Match Play, Four Ball y Pr√°ctica: despu√©s de 30 minutos completos sin una instrucci√≥n v√°lida, el TIMER activo pasa autom√°ticamente a OFF. Scores, consultas reconocidas y controles v√°lidos reinician el plazo. El apagado conserva la ronda y no modifica scores.
-
-| Archivo nuevo o modificado | Registro funcional |
-|---|---|
-| `timer-inactivity.js` | Motor puro del l√≠mite de 30 minutos. |
-| `index-grupal.html` | Programa, reinicia, persiste y ejecuta el apagado com√∫n. |
-| `service-worker.js` | Conserva el motor disponible en la instalaci√≥n web. |
-| `scripts/build-mobile-web.mjs` | Incluye el motor en iPhone y Android. |
-| `test-v311-timer-inactivity.mjs` | Prueba el l√≠mite exacto y la integraci√≥n f√≠sica. |
-| `test-v263-compact-players-back-button.mjs` | Actualiza el simulador aislado de Stableford para incluir el programador del TIMER sin alterar jugadores ni scores. |
-| `audit-project.mjs` | Incorpora el candado a la auditor√≠a maestra. |
-| `docs/manual/v311/manual-pages-17-35.json` | Explica la regla en la p√°gina 22. |
-| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | A√±ade la explicaci√≥n sencilla. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registra el contrato t√©cnico completo. |
-| `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Relaciona funci√≥n, p√°gina y prueba. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra motor y prueba nuevos. |
-| `ROADMAP_A_DETALLE.md` | Conserva el detalle t√©cnico. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen general. |
-
-## Correcci√≥n editorial V311 ¬∑ portada real como primera pantalla
-
-El **25 de agosto de 2026** se corrige el orden visible del Manual SCG. Al abrir `/manual`, la primera pantalla es la imagen de portada `page-00.png`; el compendio, buscador e √≠ndice dejan de aparecer antes de ella. La portada no muestra la palabra `PORTADA` como etiqueta, t√≠tulo superpuesto ni texto central del pie. El bot√≥n **SIGUIENTE** avanza directamente a la p√°gina 01.
-
-| Archivo nuevo o modificado | Registro funcional |
-|---|---|
-| `manual.html` | Coloca la portada antes del compendio, retira sus textos superpuestos y conserva la secuencia 00 ‚Üí 01. |
-| `test-v311-manual-hosting.mjs` | Bloquea regresiones de orden y textos visibles en la portada. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
-| `ROADMAP_A_DETALLE.md` | Conserva el detalle t√©cnico de la correcci√≥n. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen general. |
-
-## Correcci√≥n funcional V311 ¬∑ navegaci√≥n estable del Manual SCG
-
-El **25 de agosto de 2026** se elimina el desplazamiento vertical accidental que, despu√©s de mostrar la portada, arrastraba el visor hasta la p√°gina 72 y el compendio. El √≠ndice num√©rico ahora se centra √∫nicamente dentro de su propia barra horizontal. Los resultados del buscador fijan la p√°gina elegida mediante su ancla, sueltan el teclado del tel√©fono y abren exactamente la explicaci√≥n seleccionada.
-
-| Archivo nuevo o modificado | Registro funcional |
-|---|---|
-| `manual.html` | Impide el salto autom√°tico al final y fija los destinos del buscador, √≠ndice y botones. |
-| `test-v311-manual-hosting.mjs` | Bloquea el desplazamiento vertical del √≠ndice y comprueba anclas y navegaci√≥n m√≥vil. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
-| `ROADMAP_A_DETALLE.md` | Conserva el detalle t√©cnico de la correcci√≥n. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen general. |
-
-## Acceso permanente V311 ¬∑ Support al Manual vivo
-
-El **25 de agosto de 2026** se incorpora en GOLF Score Card GT un enlace fijo y m√≠nimo llamado **Support**. Permanece visible por encima de Inicio, Registro, General, Stableford, Pr√°ctica, Match Play, Four Ball, Historial, Tarjeta Digital y dem√°s ventanas. Abre en otra pesta√±a el Manual vivo `https://epg-caddy.vercel.app/manual-scg`, por lo que la ronda activa permanece intacta.
-
-| Archivo nuevo o modificado | Registro funcional |
-|---|---|
-| `index-grupal.html` | A√±ade el Support global, fijo, peque√±o y exterior a todas las vistas. |
-| `test-v311-live-support-link.mjs` | Comprueba URL exacta, visibilidad global, tama√±o m√≥vil y herencia nativa. |
-| `audit-project.mjs` | Incorpora el nuevo candado a la auditor√≠a maestra. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
-| `ROADMAP_A_DETALLE.md` | Conserva el detalle t√©cnico del acceso permanente. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen general. |
-
-## Implementaci√≥n V312 ¬∑ Caddie de voz de prop√≥sito general y clima vivo
-
-El **25 de agosto de 2026** el micr√≥fono de la ronda deja de exigir comandos o cambios de tema despu√©s de que el jugador lo abre voluntariamente. Un solo micr√≥fono abierto distingue operaciones de Score Card, consultas de ronda, navegaci√≥n y conversaci√≥n libre. Una frase general nunca escribe scores; pasa a OpenAI Realtime y conserva el contexto. Para evitar cortes por eco o ruido, la entrada local se pausa √∫nicamente mientras habla el Caddie y vuelve a escuchar al terminar si el bot√≥n contin√∫a abierto. No existe activaci√≥n autom√°tica, huella ni identificaci√≥n biom√©trica de voz.
-
-Al abrir o reabrir una tarjeta activa, la aplicaci√≥n solicita el GPS del tel√©fono con el permiso normal del sistema, consulta Open-Meteo y presenta autom√°ticamente condici√≥n, temperatura, sensaci√≥n, lluvia, viento y hora. La lectura se conserva en la ronda y se renueva cada diez minutos sin guardar las coordenadas exactas. Si no existe GPS, usa las coordenadas del campo como respaldo; una tarjeta cerrada nunca se reescribe. Contin√∫an pendientes la vista previa en Configuraci√≥n, los snapshots formales de inicio/cierre, historial y artefactos oficiales, adem√°s de la comparaci√≥n f√≠sica de proveedores.
-
-| Archivo nuevo o modificado | Registro funcional |
-|---|---|
-| `index-grupal.html` | Clasifica sin modo manual, conversa, mantiene el micr√≥fono bajo pulsaci√≥n voluntaria y sincroniza autom√°ticamente el clima por GPS en la tarjeta activa. |
-| `api/session-grupal.js` | Abre la transcripci√≥n a espa√±ol natural y autoriza √∫nicamente respuestas conversacionales expl√≠citas. |
-| `api/weather.js` | Consulta clima vivo por coordenadas o lugar y devuelve fuente, hora, temperatura, sensaci√≥n, lluvia y viento. |
-| `voice-assistant.js` | Entrega al Caddie las preguntas abiertas en vez de convertirlas en un men√∫ de comandos. |
-| `service-worker.js` | Renueva el shell V312 para iPhone, Android y PWA. |
-| `test-v312-general-caddie.mjs` | Bloquea regresiones de conversaci√≥n, salud segura, GPS primero, respaldo por campo, renovaci√≥n autom√°tica, micr√≥fono manual y score protegido. |
-| `test-course-catalog.mjs` | Conserva los siete campos habilitados y acepta su ubicaci√≥n meteorol√≥gica propia dentro del cat√°logo. |
-| `test-v267-one-operational-line.mjs` | Mantiene un solo escritor de score y reconoce `conversation` como salida hablada autorizada y separada. |
-| `test-v270-consecutive-hole-voice-blocks.mjs` | Conserva los bloques consecutivos de score y admite la raz√≥n conversacional sin mezclar escritores. |
-| `test-voice-continuity.mjs` | Sustituye el antiguo silencio de frases desconocidas por conversaci√≥n sin mutaciones. |
-| `test-v272-definitive-operational-release.mjs` | Conserva continuidad y admite interrupci√≥n del Caddie. |
-| `test-v274-complete-courses-voice-operations.mjs` | Conserva score en vivo y valida la nueva ruta conversacional. |
-| `audit-project.mjs` | Ejecuta el candado V312 en la auditor√≠a maestra. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Marca como implementada la fase de micr√≥fono y mantiene claramente los cierres futuros. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | Separa lo entregado de lo a√∫n pendiente en voz y clima. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra los archivos nuevos y la fase V312. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible de las fuentes vigentes. |
-| `ROADMAP_A_DETALLE.md` | Conserva el detalle t√©cnico V312. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen V312. |
-
-## Correcci√≥n V313 ¬∑ respuesta completa y p√°gina 73 del Manual
-
-El **25 de agosto de 2026** se corrige la transici√≥n de una consulta con herramienta a su respuesta hablada. El cierre t√©cnico de la consulta clim√°tica ya no puede desautorizar ni silenciar la segunda respuesta que contiene el resultado. Mientras habla el Caddie, el micr√≥fono local se pausa para impedir que el eco o el ruido de campo corte palabras; al terminar vuelve a escuchar solamente si el jugador lo dej√≥ abierto. El Manual a√±ade una p√°gina infantil y directa sobre conversaci√≥n universal, clima y cambio de tema, y el PDF queda con portada m√°s 73 p√°ginas.
-
-| Archivo nuevo o modificado | Registro funcional |
-|---|---|
-| `index-grupal.html` | Protege la transici√≥n de herramientas y entrega respuestas completas antes de reabrir la escucha. |
-| `service-worker.js` | Publica el shell V313 para reemplazar la copia anterior. |
-| `manual.html` | A√±ade la p√°gina 73 al visor, √≠ndice, buscador y contador. |
-| `manual-search.js` | Lleva preguntas de conversaci√≥n universal directamente a la p√°gina 73. |
-| `docs/manual/v311/manual-pages-17-35.json` | Conserva el texto sencillo y los ejemplos aprobados. |
-| `docs/manual/v311/page-73.png` | Nueva l√°mina 4K/300 dpi: conversaci√≥n universal. |
-| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` | PDF vigente de 74 p√°ginas f√≠sicas. |
-| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias hist√≥rico sincronizado con el PDF vigente. |
-| `scripts/manual-visual-qc.py` | Revisa las 74 p√°ginas visuales. |
-| `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Relaciona conversaci√≥n universal con la p√°gina 73 y su prueba. |
-| `test-v312-general-caddie.mjs` | Bloquea el corte por eco y el cierre prematuro de la transici√≥n clim√°tica. |
-| `test-v311-manual-hosting.mjs` | Exige 74 PNG/PDF f√≠sicos y portada primero. |
-| `test-v311-manual-semantic-coverage.mjs` | Exige texto universal, clima, fr√≠o y micr√≥fono manual. |
-| `test-v311-manual-search.mjs` | Comprueba que la b√∫squeda universal abre la p√°gina 73. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Actualiza la huella reproducible final. |
-| `ROADMAP_A_DETALLE.md` | Conserva el detalle V313. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen V313. |
-
-## Implementaci√≥n V314 ¬∑ todos los micr√≥fonos universales, clima inicial y pendientes claros
-
-El **25 de agosto de 2026** todos los botones de micr√≥fono, incluida la primera pantalla, abren el mismo Caddie universal despu√©s de un toque voluntario. La pantalla inicial muestra autom√°ticamente la condici√≥n meteorol√≥gica mediante GPS del tel√©fono, con respaldo del campo seleccionado; esto no abre ni modifica el micr√≥fono. Se registra la **Gu√≠a R√°pida** como pendiente. El tiempo de tr√°nsito sin mapa tambi√©n queda pendiente: no se declara conectado con Waze y requiere un destino exacto, credencial protegida y servicio de rutas con tr√°fico.
-
-| Archivo nuevo o modificado | Registro V314 |
-|---|---|
-| `index-grupal.html` | Une todos los micr√≥fonos al Caddie universal y muestra clima en la primera pantalla. |
-| `stableford.js` | Homologa el micr√≥fono inicial de Stableford con el Caddie universal. |
-| `api/session-grupal.js` | Acepta conversaci√≥n natural desde registro y ronda. |
-| `service-worker.js` | Renueva la cach√© V314. |
-| `manual.html` | Conserva portada primero e integra la p√°gina 73. |
-| `manual-search.js` | Localiza vocabulario universal en la p√°gina 73. |
-| `docs/manual/v311/manual-pages-17-35.json` | Fuente textual de la explicaci√≥n V314. |
-| `docs/manual/v311/page-73.png` | L√°mina 4K de todos los micr√≥fonos y clima inicial. |
-| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` | Manual oficial de 74 p√°ginas f√≠sicas. |
-| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias PDF sincronizado. |
-| `scripts/manual-visual-qc.py` | Revisa 74 l√°minas. |
-| `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Relaciona la p√°gina 73 con las pruebas. |
-| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registra App V312‚ÄìV314 y los pendientes reales. |
-| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Separa clima inicial entregado, Gu√≠a R√°pida y tr√°nsito pendiente. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md` | A√±ade PEND-MAN-004 y PEND-TRA-005. |
-| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza V314, 295 fuentes y p√°gina 73. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella el estado exacto publicado. |
-| `test-v312-general-caddie.mjs` | Prueba todos los micr√≥fonos, clima inicial, audio completo y score protegido. |
-| `test-v254-remove-registration-guide.mjs` | Alinea la cabecera inicial con el Caddie universal sin restaurar gu√≠as retiradas. |
-| `test-v311-manual-hosting.mjs` | Prueba 74 PNG/PDF y portada primero. |
-| `test-v311-manual-search.mjs` | Prueba destino 73 desde lenguaje natural. |
-| `test-v311-manual-semantic-coverage.mjs` | Prueba ejemplos de medicinas, vuelos, cultura y micr√≥fono manual. |
-| `test-stableford-ui.mjs` | Alinea firma V314. |
-| `test-v272-definitive-operational-release.mjs` | Alinea firma V314. |
-| `test-v274-complete-courses-voice-operations.mjs` | Alinea firma V314. |
-| `test-v275-stable-live-voice-turns.mjs` | Alinea firma V314. |
-| `test-v276-manual-hole-navigation.mjs` | Alinea firma V314. |
-| `test-v277-official-round-corrections.mjs` | Alinea firma V314. |
-| `test-v278-card-image-pdf-export.mjs` | Alinea firma V314. |
-| `test-v279-local-card-library.mjs` | Alinea firma V314. |
-| `test-v280-local-history-insights.mjs` | Alinea firma V314. |
-| `test-v281-pwa-installation.mjs` | Alinea cach√© V314. |
-| `test-v284-native-package-generation.mjs` | Alinea paquete V314. |
-| `test-v290-brand-icons-cleanup.mjs` | Alinea firma V314. |
-| `test-v304-homogeneous-registration-actions.mjs` | Alinea firma V314. |
-| `test-v305-history-navigation-zero-error.mjs` | Alinea firma y cach√© V314. |
-| `test-v307-match-arrows-format.mjs` | Alinea firma V314. |
-| `ROADMAP_A_DETALLE.md` | Conserva el detalle V314. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen V314. |
-
-## Correcci√≥n V315 ¬∑ asistente universal, interrupci√≥n natural, web viva y pron√≥stico futuro
-
-El **25 de agosto de 2026** se corrige la secuencia observada en iPhone despu√©s de una respuesta meteorol√≥gica: un cierre de audio sin identificador ya no deja el bot√≥n rojo con la pista del micr√≥fono apagada. Al terminar de hablar, el Caddie reactiva la escucha durante tres segundos; si el jugador no contin√∫a, el micr√≥fono se cierra y s√≥lo vuelve a abrirse mediante un toque voluntario. El final de cada frase se detecta tras aproximadamente un segundo de silencio para reducir la espera. Mientras el Caddie responde, la pista conserva cancelaci√≥n de eco y una nueva intervenci√≥n del jugador corta el audio para atender inmediatamente el mensaje siguiente.
-
-La conversaci√≥n deja de depender de palabras clave: cualquier frase que no sea un registro, score u orden v√°lida se env√≠a al asistente universal. Esto incluye situaciones contadas sin una pregunta perfecta, como pedir consejo durante un Match Play inc√≥modo. Para datos actuales o que necesitan verificaci√≥n, `search_live_web` consulta `api/research.js`, que usa Responses API con b√∫squeda web viva, devuelve una respuesta breve y muestra enlaces clicables a sus fuentes. La consulta directa sigue siendo r√°pida; la investigaci√≥n web puede tardar m√°s porque consulta fuentes externas.
-
-La herramienta meteorol√≥gica acepta fechas y rangos naturales, incluidos ‚Äúma√±ana‚Äù, ‚Äúpr√≥ximo mi√©rcoles‚Äù y ‚Äúpr√≥ximo fin de semana‚Äù. El cliente convierte esas expresiones a fechas, conserva GPS primero y campo como respaldo, y `api/weather.js` devuelve datos diarios de Open-Meteo dentro de su alcance oficial m√°ximo de 16 d√≠as. Tambi√©n resume intervalos y hora de mayor probabilidad para contestar ‚Äú¬øa qu√© hora llover√°?‚Äù sin remitir a otra aplicaci√≥n. Fuera del periodo disponible responde con l√≠mite expl√≠cito y no inventa.
-
-| Archivo nuevo o modificado | Registro V315 |
-|---|---|
-| `index-grupal.html` | Comprende frases abiertas, permite interrumpir al Caddie hablando, muestra fuentes, corrige la reactivaci√≥n Realtime, interpreta fechas naturales y apaga la escucha tras tres segundos sin seguimiento. |
-| `api/session-grupal.js` | Configura un segundo de silencio para comenzar a responder con menor demora. |
-| `api/research.js` | Investiga informaci√≥n actual de cualquier tema mediante b√∫squeda web viva y devuelve fuentes verificables. |
-| `.gitattributes` | Trata los manuales PDF como archivos binarios para proteger su contenido durante la publicaci√≥n. |
-| `scripts/update-manual-page-73.py` | Regenera la p√°gina 73 y la inserta en los dos PDF oficiales del Manual. |
-| `api/weather.js` | Entrega pron√≥stico diario de una fecha o rango dentro de 16 d√≠as, con intervalos y hora pico de lluvia. |
-| `service-worker.js` | Renueva la cach√© V315 para sustituir la copia defectuosa. |
-| `test-v312-general-caddie.mjs` | Simula cierre sin ID, segunda pregunta, web viva, fuentes, interrupci√≥n, frase universal, respuesta r√°pida y clima futuro. |
-| `test-voice-continuity.mjs` | Conserva el cierre operacional independiente. |
-| `test-v275-stable-live-voice-turns.mjs` | Exige VAD uniforme de un segundo. |
-| `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs` y `test-v307-match-arrows-format.mjs` | Alinean firma y cach√© V315 sin cambiar sus reglas funcionales. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella la huella reproducible V315. |
-| `ROADMAP_A_DETALLE.md` | Conserva el detalle t√©cnico V315. |
-| `ROADMAP_OVERALL.md` | Conserva este resumen V315. |
-
-## Correcci√≥n V316 ¬∑ respuesta completa sin cortarse por su propio eco
-
-El micr√≥fono ya no corta al Caddie s√≥lo porque detect√≥ sonido mientras hablaba. Primero compara la transcripci√≥n captada con la respuesta del propio Caddie: si es eco, la descarta; si es la voz real del jugador, permite la interrupci√≥n y recibe el siguiente mensaje. `index-grupal.html` contiene la protecci√≥n, `service-worker.js` obliga al iPhone a recibirla, `test-v312-general-caddie.mjs` la verifica y los dem√°s candados de interfaz conservan la firma vigente. `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` registran el cambio.
-
-## Correcci√≥n V317 ¬∑ el micr√≥fono de Inicio reconoce la voz
-
-El registro de producci√≥n confirm√≥ que el micr√≥fono de las 16:27 s√≠ abri√≥, pero no detect√≥ la frase. `api/session-grupal.js` iguala Inicio con la sensibilidad funcional de la ronda: umbral 0.2, 700 ms de inicio protegido, reducci√≥n para voz a distancia y `gpt-live-transcribe` en espa√±ol. La conversaci√≥n universal, la activaci√≥n manual y el cierre posterior de tres segundos no cambian.
-
-## Correcci√≥n V318 ¬∑ prueba multitema completa
-
-La prueba viva mezcl√≥ golf, salud, viajes, cultura, arquitectura, planetas, oc√©anos, veh√≠culos, clima y equipo de golf. Detect√≥ dos fallas antes de aprobar: una comparaci√≥n de zapatos pod√≠a cortarse y ‚Äúma√±ana por la ma√±ana‚Äù devolv√≠a el d√≠a completo. `api/research.js` limita la respuesta hablada, elimina citas largas y reserva margen para terminar; `api/weather.js` e `index-grupal.html` distinguen ma√±ana, tarde, atardecer y noche. `test-v312-general-caddie.mjs`, `service-worker.js`, los candados de versi√≥n y el inventario sellan V318.
-
-## Correcci√≥n V319 ¬∑ lenguaje universal sin desv√≠os por palabras de golf
-
-El Caddie contin√∫a aceptando cualquier tema permitido y usa Internet para informaci√≥n actual. La falla no estaba en el vocabulario del modelo: el cliente interpretaba palabras aisladas como `ronda`, `Match Play` o `mejor` como √≥rdenes de la tarjeta y algunas preguntas nunca llegaban a la inteligencia artificial. `index-grupal.html` ahora reserva la ruta local √∫nicamente para preguntas inequ√≠vocas del marcador, historial, hoyos o jugadores; `voice-assistant.js` s√≥lo abre modalidades mediante una orden directa como ‚Äúabre Match Play‚Äù. Tambi√©n se conserva la voz del jugador mientras una consulta web sigue proces√°ndose, antes de que empiece el audio del Caddie.
-
-| Archivo nuevo o modificado | Resultado V319 |
-|---|---|
-| `index-grupal.html` | Clasificador estricto de consultas de tarjeta y turno humano protegido durante la espera web. |
-| `voice-assistant.js` | Las menciones conversacionales de Stableford, Match Play, Four Ball o Pr√°ctica ya no se confunden con navegaci√≥n. |
-| `service-worker.js` | Cach√© V319 para que el tel√©fono reciba la correcci√≥n. |
-| `test-v311-voice-assistant.mjs` y `test-v312-general-caddie.mjs` | Prueban preguntas reales de salud, viajes, clima, equipo y manejo de un rival en Match Play, adem√°s de conservar las consultas verdaderas de score. |
-| `test-v268-control-manual-demo-link.mjs` | Retira el candado hist√≥rico V268 y confirma que la demostraci√≥n vigente contin√∫a en V269. |
-| `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs` y `test-v307-match-arrows-format.mjs` | Alinean la firma y la cach√© del build V319 sin alterar sus reglas funcionales. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella la huella reproducible de la publicaci√≥n. |
-| `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` | Registran la causa, la correcci√≥n y las verificaciones. |
-
-## Ampliaci√≥n V320 ¬∑ universal significa sin lista cerrada
-
-Los cien rubros enumerados por el propietario se toman como banco de prueba, no como cat√°logo. El contrato ahora dice expresamente que cualquier materia permitida debe llegar al Caddie, aunque no aparezca en ejemplos anteriores. Puede explicar, ense√±ar, traducir, redactar, corregir, resumir, calcular, comparar, analizar, planificar, programar, generar ideas y orientar decisiones; los datos actuales o inciertos se investigan en Internet. Medicina, asuntos legales, finanzas, impuestos, psicolog√≠a, privacidad y seguridad conservan l√≠mites responsables y nunca reciben certeza fingida.
-
-`test-v320-universal-100-domains.mjs` prueba las 100 √°reas y tres temas deliberadamente fuera de lista. La prueba encontr√≥ y corrigi√≥ una colisi√≥n adicional: ‚ÄúEstad√≠stica‚Äù ya no abre estad√≠sticas de golf salvo que la frase tambi√©n hable de la propia ronda, tarjeta o resultados. `api/research.js`, `index-grupal.html`, `audit-project.mjs`, `service-worker.js` y `test-v312-general-caddie.mjs` aplican y verifican este contrato. `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs` y `test-v307-match-arrows-format.mjs` reconocen la firma/cach√© V320. `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` cierran el registro reproducible.
-
-## Candidato V333 ¬∑ uni√≥n Manual 74/74 y operativa V332
-
-El candidato conserva √≠ntegramente la operativa V332 ‚Äîtr√°fico real, clima, voz, Skins, Wolf, Vegas y Dots‚Äî y suma el Manual did√°ctico sobre esa misma fuente. El cierre agrega los candados reconstruidos, exige 50 px en las dos separaciones superiores, valida 74 PNG 4K/300 dpi, decodifica las 74 im√°genes completas y reconstruye los dos PDF de 74 p√°ginas. Producci√≥n permanece en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
-
-Archivos de control y reproducci√≥n: `AGENTS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `docs/manual/v311/manual-pages-bets-live-data.json`, `scripts/manual-editorial-qc.py`, `scripts/manual-layout-normalize.py`, `scripts/project-quality-gate.mjs`, `scripts/rebuild-inventory-pdfs.py`, `scripts/rebuild-manual-bets-live-data.py`, `scripts/rebuild-manual-pdf-from-pages.py` y `test-project-quality-gate.mjs`.
-
-Archivos integrados y auditados: `MANUAL_COBERTURA_FUNCIONAL_V311.md`, `manual.html`, `manual-search.js`, `package.json`, `audit-project.mjs`, `scripts/inventory-gate.mjs`, `test-v311-manual-search.mjs`, `test-v311-manual-semantic-coverage.mjs`, `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Las l√°minas `docs/manual/v311/page-01.png` a `docs/manual/v311/page-73.png`, con las p√°ginas de campos 10‚Äì16 sin modificaci√≥n, quedan inventariadas individualmente en este ROADMAP.
-
-`.gitignore` excluye √∫nicamente los renders temporales de `tmp/`; los PDF finales permanecen sellados fuera del repositorio.
-
-La publicaci√≥n se limita a `v333-manual-operational-preview`. El flujo temporal `.github/workflows/v333-rebuild-preview.yml` reconstruye las 74 l√°minas y los dos PDF, ejecuta la auditor√≠a integral, guarda el commit final de Preview y se elimina antes de ese commit; no modifica `main` ni Producci√≥n.
-
-<!-- V333-REMOTE-FINALIZED -->
-
-## V333-R1 ¬∑ candado reproducible en Vercel
-
-El primer Preview del commit V333 fue bloqueado porque el checkout separado de Vercel no expone `origin/main`. La correcci√≥n conserva la misma base protegida: valida el repositorio mediante `VERCEL_GIT_REPO_OWNER`/`VERCEL_GIT_REPO_SLUG` cuando est√°n disponibles, comprueba que el SHA declarado coincida con `HEAD` y consulta `refs/heads/main` del repositorio can√≥nico para exigir todav√≠a `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. `scripts/project-quality-gate.mjs`, `test-project-quality-gate.mjs`, ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` quedan sincronizados; Producci√≥n no cambia.
-
-## V333-R2 ¬∑ dependencias del auditor en Preview
-
-El segundo intento alcanz√≥ el auditor y fue bloqueado porque el constructor Vercel no inclu√≠a `numpy`. `vercel.json` instala de forma expl√≠cita `numpy`, `pillow`, `pypdf` y `reportlab` junto con las dependencias Node; `test-v290-brand-icons-cleanup.mjs` exige que las cuatro permanezcan declaradas. Son las mismas dependencias que generan y revisan las 74 p√°ginas y los PDF. Ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran el cambio; no modifica la aplicaci√≥n ni Producci√≥n.
-
-## V333-R3 ¬∑ instalaci√≥n Python permitida por PEP 668
-
-Vercel confirm√≥ que su Python administrado rechaza instalaciones sin la autorizaci√≥n expl√≠cita de PEP 668. `vercel.json` a√±ade `--break-system-packages` s√≥lo dentro del constructor ef√≠mero de Preview y `test-v290-brand-icons-cleanup.mjs` exige conservar esa opci√≥n. No cambia c√≥digo funcional, Manual ni Producci√≥n.
-
-## V333-R4 ¬∑ metadata de Vercel fuera del inventario de producto
-
-El constructor crea `.vercel/project.json` despu√©s del checkout. `.gitignore` excluye esa metadata ef√≠mera para que el inventario mida √∫nicamente fuentes y artefactos del producto; `test-project-quality-gate.mjs` bloquea su reingreso. No se excluye ning√∫n archivo funcional ni documental.
-
-## V333-R5 ¬∑ instalaci√≥n Node sin archivo temporal de bloqueo
-
-El comando de instalaci√≥n de Vercel a√±ade `--no-package-lock` para impedir que `npm` genere un `package-lock.json` ajeno al commit despu√©s del checkout. `test-v290-brand-icons-cleanup.mjs` exige esa instalaci√≥n limpia; dependencias, aplicaci√≥n, Manual y Producci√≥n permanecen sin cambios.
-
-## Candidato V334-M1 ¬∑ correcci√≥n integral del Manual antes de la operativa
-
-Se rechaza el PASS anterior del Manual porque no detect√≥ p√°ginas cargadas arriba, vac√≠as abajo, explicaciones fuera de orden y funciones desplazadas. Las p√°ginas 17‚Äì73 se reconstruyen desde una sola fuente can√≥nica con cuatro pasos fijos ‚Äî`QU√â ES`, `T√ö HACES`, `LA APP HACE`, `RESULTADO`‚Äî y, en cada p√°gina, error com√∫n, recuperaci√≥n, glosario, separaci√≥n del score y ejemplo. El orden comienza por las dos vueltas de la ronda, contin√∫a con registro, c√°lculo, lectura, continuidad y modalidades, y despu√©s explica Skins, Wolf, Vegas, Dots, voz, IA, tr√°fico, clima, Reglas y soporte.
-
-`docs/manual/v311/manual-pages-17-35.json` contiene las 57 p√°ginas funcionales completas y `docs/manual/v311/manual-pages-bets-live-data.json` queda como lista de overrides vac√≠a para impedir sustituciones silenciosas. `scripts/rebuild-manual-bets-live-data.py` genera `docs/manual/v311/page-17.png` a `docs/manual/v311/page-73.png`; `scripts/rebuild-manual-pdf-from-pages.py` sincroniza `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` y `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf`. `manual.html`, `manual-search.js` y `MANUAL_COBERTURA_FUNCIONAL_V311.md` conservan el mismo orden y cobertura.
-
-El escape queda registrado como RC-010 en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`. `scripts/manual-editorial-qc.py` audita las 57 p√°ginas; `scripts/manual-visual-qc.py` mide tambi√©n ocupaci√≥n completa y contenido inferior en todas ellas. `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.json`, `test-v311-manual-semantic-coverage.mjs`, `test-v311-manual-search.mjs`, `test-v311-manual-voice-map.mjs` y `test-v321-ai-universal-infinity.mjs` bloquean la regresi√≥n y alinean la IA con los t√≠tulos vigentes. `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` sellan el candidato. `.github/workflows/v334-m1-finalize-preview.yml` se usa una sola vez para reconstruir los binarios dentro de GitHub, auditar el SHA final y eliminarse antes del commit desplegable. Producci√≥n contin√∫a protegida en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`; V334-M1 no la sustituye.
-
-<!-- V334-M1-REMOTE-FINALIZED -->
-<!-- V334-M1-REMOTE-REBUILD-R2 -->
-<!-- V334-M1-REMOTE-REBUILD-R3 -->
-
-## V334-M1-R4 ¬∑ anclas exactas sin salto por carga diferida
-
-La inspecci√≥n del Preview `6778d6ff30482c4ed9dbf94eb35f228047f35982` rechaz√≥ la navegaci√≥n directa: `#pagina-20` pod√≠a quedar visualmente en la p√°gina 17 porque las im√°genes anteriores a√∫n no reservaban altura. `manual.html` fija desde el primer c√°lculo la proporci√≥n 2160√ó4320 con `aspect-ratio:1 / 2`; `test-v311-manual-hosting.mjs` bloquea la regresi√≥n. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran el cambio. `.github/workflows/v334-m1-web-nav-finalize.yml` actualiza el sello, audita el SHA final y se elimina antes del commit desplegable. Producci√≥n permanece intacta.
-
-<!-- V334-M1-R4-REMOTE-FINALIZED -->
-
-## V334-M1-R5 ¬∑ indicador alineado con el contenido visible
-
-La comprobaci√≥n real de R4 confirm√≥ que `#pagina-20` ya muestra la l√°mina 20, pero rechaz√≥ el encabezado porque todav√≠a pod√≠a conservar ‚ÄúP√ÅGINA 19‚Äù cuando s√≥lo quedaban 58 p√≠xeles de la l√°mina anterior. `manual.html` calcula la p√°gina activa desde una l√≠nea de referencia dentro del √°rea √∫til, y `test-v311-manual-hosting.mjs` exige ese criterio. `.github/workflows/v334-m1-header-finalize.yml` regenera el inventario, audita el SHA exacto y se elimina antes del commit final. El cambio no altera im√°genes, PDF ni Producci√≥n.
-
-<!-- V334-M1-R5-REMOTE-FINALIZED -->
-
-## V334-M1-R6 ¬∑ geometr√≠a estable en la secci√≥n completa
-
-La prueba de cinco anclas en el Preview `8a13f97a3fb007e2b6d3f94cb124de8958656dd4` volvi√≥ a rechazar el Manual: reservar proporci√≥n s√≥lo en la imagen no evit√≥ que la secci√≥n cambiara de altura durante la descarga diferida. `manual.html` fija ahora la relaci√≥n 1:2 en cada `.manual-page` y obliga a la imagen a ocupar esa caja con `height:100%` y `object-fit:contain`. `test-v311-manual-hosting.mjs` exige la geometr√≠a del contenedor. `.github/workflows/v334-m1-layout-finalize.yml` sella, audita y se elimina antes del commit final. Producci√≥n permanece intacta.
-
-<!-- V334-M1-R6-REMOTE-FINALIZED -->
-
-## V334-M1-R7 ¬∑ intenci√≥n de correcci√≥n antes que vocabulario
-
-La prueba de la sugerencia visible ‚ÄúC√≥mo corrijo un bogey que fue par‚Äù rechaz√≥ el orden de la lupa: ofrec√≠a primero la p√°gina 59 de vocabulario. `manual-search.js` separa ahora corregir/rectificar/equivocarse de borrar y prioriza la p√°gina 21; `test-v311-manual-search.mjs` exige 21 para corregir, conserva 07 para borrar y exige 67 para lluvia. `.github/workflows/v334-m1-search-finalize.yml` sella y audita el candidato antes de eliminarse. Producci√≥n no cambia.
-
-<!-- V334-M1-R7-REMOTE-FINALIZED -->
-
-## V335-AI ¬∑ calibre adaptable de respuestas generales
-
-`api/universal-ai.js` deja de imponer razonamiento bajo y un techo √∫nico de 1,400 tokens. Saludos y confirmaciones conservan una salida breve; las consultas normales usan razonamiento medio y hasta 2,400 tokens; an√°lisis, comparaciones, criterios, riesgos y explicaciones profundas reciben hasta 3,200. El contrato exige conclusi√≥n directa, causas o mecanismo, separaci√≥n entre hechos y estimaciones, l√≠mites, supuestos, alternativas y una acci√≥n √∫til, sin tono infantil salvo petici√≥n expresa. `test-v335-response-caliber.mjs` convierte esos criterios en una puerta ejecutable y `audit-project.mjs` la incorpora al banco maestro. `.github/workflows/v335-ai-finalize.yml` actualiza inventario, audita el SHA exacto y se elimina antes del commit final. Producci√≥n permanece intacta.
-
-<!-- V335-AI-REMOTE-FINALIZED -->
-
-## V335-AI-R1 ¬∑ la pregunta compleja s√≠ llega al modelo
-
-La consulta real del Preview V335-AI fue interceptada antes del endpoint porque `voice-assistant.js` reconoce la palabra ‚Äúyardas‚Äù como informaci√≥n del campo. `index-grupal.html` conserva localmente √≥rdenes ejecutables y consultas de aplicaci√≥n de hasta 12 palabras, pero deriva a AI UNIVERSAL cualquier an√°lisis, comparaci√≥n, explicaci√≥n, riesgo, estrategia, efecto o recomendaci√≥n. `test-v335-response-caliber.mjs` reproduce el secuestro anterior y prueba las dos rutas. RC-011 impide cerrar el calibre sin una respuesta real. `.github/workflows/v335-ai-routing-finalize.yml` sella, audita y se elimina antes del commit final. Producci√≥n no cambia.
-
-<!-- V335-AI-R1-REMOTE-FINALIZED -->
-
-## V336-MIC ¬∑ transporte resistente y errores accionables
-
-La investigaci√≥n del Preview `bbaad84` encontr√≥ `NotFoundError: Requested device not found` antes de llamar `/api/session-grupal`; el navegador automatizado no dispone de micr√≥fono f√≠sico. La interfaz ocultaba la causa bajo un mensaje √∫nico y el transporte cerraba ante cualquier estado `disconnected`, incluso transitorio. `index-grupal.html` distingue dispositivo ausente, permiso, timeout y red; concede 5 segundos de recuperaci√≥n WebRTC; limpia canal, peer, pista y audio al confirmar la ca√≠da. `api/voice-health.js` registra s√≥lo eventos t√©cnicos de conexi√≥n y `api/session-grupal.js` deja trazas sin audio, nombres ni transcripciones. `test-v336-microphone-transport.mjs` a√±ade la puerta 91. `.github/workflows/v336-mic-finalize.yml` sella y se elimina antes del commit final. La prueba f√≠sica de iPhone RC-007 sigue separada; Producci√≥n no cambia.
-
-<!-- V336-MIC-REMOTE-FINALIZED -->
-
-## V337-WEATHER ¬∑ un solo clima estructurado para texto, voz y tarjeta
-
-La prueba real del Preview V336-MIC rechaz√≥ la respuesta meteorol√≥gica por texto: tard√≥ cerca de 56 segundos, mezcl√≥ el snapshot de la aplicaci√≥n con cinco sitios web y no pudo dar porcentajes horarios num√©ricos. La causa era una bifurcaci√≥n de proveedores: voz y tarjeta ya usaban `api/weather.js` con Open-Meteo, mientras AI UNIVERSAL s√≥lo dispon√≠a de b√∫squeda web. `api/weather.js` expone ahora el mismo c√°lculo estructurado al servidor; `api/universal-ai.js` incorpora `get_current_weather`, proh√≠be b√∫squeda web para clima y sintetiza lugar, fecha, temperatura, sensaci√≥n, viento, hora pico, ventanas y porcentajes sin inventar valores. `index-grupal.html` env√≠a √∫nicamente la ubicaci√≥n p√∫blica del campo seleccionado, no el GPS personal, para esta consulta de texto. `test-v337-universal-weather.mjs` a√±ade la puerta 92 y RC-012 conserva el rechazo hasta comprobar una respuesta real. `.github/workflows/v337-weather-finalize.yml` regenera inventario, audita y se elimina antes del commit desplegable. RC-006 queda cerrado por la evidencia real de tr√°fico del Preview `7679424`; RC-007 conserva separada la prueba f√≠sica de iPhone. Producci√≥n contin√∫a protegida en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
-
-<!-- V337-WEATHER-REMOTE-FINALIZED -->
-
-## V337-WEATHER-R1 ¬∑ el usuario gobierna la franja horaria
-
-La prueba real del Preview `0aaf45a` confirm√≥ Open-Meteo y redujo la espera, pero rechaz√≥ la respuesta porque el modelo envi√≥ `morning` sin que el usuario pidiera esa franja; el resultado qued√≥ limitado a 06:00‚Äì11:59. `api/universal-ai.js` acepta una franja √∫nicamente cuando el texto del usuario dice expl√≠citamente esta/por la ma√±ana, tarde, atardecer o noche; ‚Äúma√±ana‚Äù como fecha y ‚Äúa qu√© hora‚Äù conservan el d√≠a completo. `test-v337-universal-weather.mjs` reproduce el argumento incorrecto del modelo y exige que se ignore. `.github/workflows/v337-weather-r1-finalize.yml` sella y audita el candidato antes de eliminarse. Producci√≥n no cambia.
-
-<!-- V337-WEATHER-R1-REMOTE-FINALIZED -->
-
-## V337-WEATHER-R2 ¬∑ porcentajes de lluvia hora por hora
-
-La prueba real del Preview `acd8221` confirm√≥ el d√≠a completo y el pico de 99% a las 16:00, pero rechaz√≥ la respuesta porque `api/weather.js` resum√≠a la serie de Open-Meteo en ventanas antes de entregarla a AI UNIVERSAL. `api/weather.js` conserva ahora cada hora con probabilidad, precipitaci√≥n, temperatura, sensaci√≥n, viento y condici√≥n para consultas de un d√≠a; `api/universal-ai.js` exige enumerar todas las horas recibidas cuando el usuario pide ‚Äúpor hora‚Äù, ‚Äúpor horario‚Äù o ‚Äúa qu√© hora‚Äù. `test-v337-universal-weather.mjs` bloquea cualquier nueva p√©rdida de la serie. `.github/workflows/v337-weather-r2-finalize.yml` sella y audita el candidato antes de eliminarse. Producci√≥n no cambia.
-
-<!-- V337-WEATHER-R2-REMOTE-FINALIZED -->
-
-## V337-WEATHER-CLOSE ¬∑ evidencia real y cierre RC-012
-
-El Preview `6a2f845` respondi√≥ la misma consulta rechazada sin b√∫squeda web: Open-Meteo, 27 de agosto de 2026, llovizna ligera, 16.9‚Äì27.5 ¬∞C, sensaci√≥n 18‚Äì28.4 ¬∞C, viento hasta 17.8 km/h, 3 mm, pico 99% a las 16:00 y los 24 porcentajes horarios de 00:00 a 23:00. Recomend√≥ jugar por la ma√±ana y terminar antes de las 14:00. RC-012 queda cerrado con esta evidencia. `.github/workflows/v337-weather-close-finalize.yml` actualiza inventario, audita 92 paquetes y se elimina antes del commit documental final; el ejecutable y Producci√≥n permanecen intactos.
-
-<!-- V337-WEATHER-CLOSE-REMOTE-FINALIZED -->
-
-## V337-WEATHER-RETRY ¬∑ recuperaci√≥n de l√≠mite externo en Vercel
-
-El commit documental `6a3386b` pas√≥ 92/92 en GitHub, pero su Preview fall√≥ durante `test-v328-live-official-rules.mjs` porque el proveedor reglamentario devolvi√≥ HTTP 429; clima y c√≥digo no fallaron. `.github/workflows/v337-weather-retry-finalize.yml` reconstruye el mismo ejecutable, vuelve a sellar inventario y repite la auditor√≠a completa antes de eliminarse. No cambia la respuesta meteorol√≥gica aprobada ni Producci√≥n.
-
-<!-- V337-WEATHER-RETRY-REMOTE-FINALIZED -->
-
-## V338-RULES-GATE ¬∑ un 429 externo no es una regresi√≥n del producto
-
-Dos Previews documentales consecutivos fueron rechazados porque la llamada viva de Reglas recibi√≥ HTTP 429, aunque GitHub aprob√≥ 92/92 y el ejecutable meteorol√≥gico era id√©ntico al ya probado. `api/golf-rules.js` distingue ahora ese l√≠mite con 503, `Retry-After: 60` y `GOLF_RULES_RATE_LIMITED`. `test-v328-official-golf-rules.mjs` bloquea ese contrato de forma determinista. `test-v328-live-official-rules.mjs` contin√∫a bloqueando respuestas incorrectas, fuentes no oficiales, vac√≠o y cambios de score, pero difiere √∫nicamente el caso 429 reconocido en vez de emitir una falsa regresi√≥n. `.github/workflows/v338-rules-gate-finalize.yml` actualiza inventario, audita 92 paquetes y se elimina. El clima aprobado y Producci√≥n no cambian.
-
-<!-- V338-RULES-GATE-REMOTE-FINALIZED -->
-
-## V339-WEATHER-DIRECT ¬∑ clima sin cuota de IA
-
-La repetici√≥n final en el Preview `0684ee8` recibi√≥ HTTP 429 en `/api/universal-ai` antes de llegar a Open-Meteo. La causa restante era innecesaria: aun una consulta expl√≠cita de clima depend√≠a del modelo para elegir `get_current_weather`. `api/universal-ai.js` reconoce clima, lluvia, temperatura, sensaci√≥n y viento, resuelve hoy/ma√±ana/fecha y franja desde el texto del usuario, llama directamente a `api/weather.js` y construye la respuesta estructurada con las horas completas. Esa ruta funciona incluso sin `OPENAI_API_KEY`, no usa b√∫squeda web y no consume cuota del modelo. `test-v337-universal-weather.mjs` exige cero llamadas al modelo y todos los porcentajes horarios. RC-013 permanece abierto hasta el Preview real. `.github/workflows/v339-weather-direct-finalize.yml` sella, audita 92 paquetes y se elimina. Producci√≥n no cambia.
-
-<!-- V339-WEATHER-DIRECT-REMOTE-FINALIZED -->
-
-## V339-WEATHER-DIRECT-CLOSE ¬∑ prueba real final
-
-El Preview `8a62824` qued√≥ READY y respondi√≥ la misma consulta completa en aproximadamente 13 segundos de extremo a extremo: Open-Meteo, 16.9‚Äì27.5 ¬∞C, sensaci√≥n 18‚Äì28.4 ¬∞C, viento 17.8 km/h, 3 mm, pico 99% a las 16:00, los 24 porcentajes de 00:00 a 23:00 y recomendaci√≥n de terminar dos horas antes. La ruta hizo cero llamadas al modelo y no puede caer por su cuota. RC-013 queda cerrado; el ejecutable probado y Producci√≥n permanecen intactos.
-
-## V340-SUPPORT ¬∑ Manual del mismo deployment
-
-El **27 de agosto de 2026** la verificaci√≥n real del candidato detect√≥ que el enlace fijo `Support` escapaba desde Preview hacia el Manual de Producci√≥n. Se reemplaza la URL absoluta por `/manual-scg`, de modo que Preview abre su Manual corregido y Producci√≥n conserva el suyo. `test-v311-live-support-link.mjs` rechaza permanentemente cualquier retorno al dominio absoluto de Producci√≥n. Producci√≥n permanece intacta.
-
-El Preview del commit `43dcb2c` qued√≥ READY como `dpl_4MAeofErPXWFx5dK5QAEoSvycYLT`. En navegador real, `Support` abri√≥ `/manual-scg` en el mismo dominio, mostr√≥ 74 p√°ginas y llev√≥ `#pagina-20` a `DICTA LOS GOLPES DEL HOYO`; las p√°ginas 20 y 21 cargaron a 2160 √ó 4320 y conservaron el orden did√°ctico aprobado. RC-014 queda cerrado. Producci√≥n no cambi√≥.
-
-## V341-WEATHER-INTENT ¬∑ viento estrat√©gico no es pron√≥stico
-
-La prueba real del commit final detect√≥ que una consulta de estrategia a 140 yardas con viento, agua corta y lie h√∫medo era desviada al clima directo. `isDirectWeatherQuery()` excluye ahora preguntas anal√≠ticas de golpe, palo, bandera, green, carry, lie, dispersi√≥n y estrategia: esas llegan a AI UNIVERSAL; el clima expl√≠cito contin√∫a directo a Open-Meteo. Las frases exactas quedan fijadas en los bancos V335 y V337. Producci√≥n permanece intacta.
-
-## V342-AI-RESILIENCE ¬∑ recuperaci√≥n autom√°tica del l√≠mite 429
-
-El Preview V341 confirm√≥ que la intenci√≥n estrat√©gica ya llegaba a AI UNIVERSAL, pero el proveedor respondi√≥ HTTP 429 y la ruta convirti√≥ una limitaci√≥n transitoria en 502 sin recuperaci√≥n. `api/universal-ai.js` instala tres intentos dentro de un plazo total de 55 segundos, alterna `gpt-5.6 ‚Üí gpt-5.4 ‚Üí gpt-5.6`, respeta `Retry-After` con espera limitada y registra √∫nicamente estado, c√≥digo t√©cnico, modelo, intento e identificador de solicitud. Si todos fallan, devuelve 503 reintentable en vez de fingir una respuesta.
-
-`index-grupal.html` conserva una sola pregunta visible y ejecuta un segundo intento transparente √∫nicamente ante ese 503; no duplica el historial ni modifica scores. `test-v335-response-caliber.mjs` demuestra dos 429 consecutivos seguidos por 200 y demuestra tambi√©n el agotamiento seguro. RC-016 conserva el defecto y su control permanente. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` sellan el candidato. Producci√≥n permanece protegida en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` hasta cero FAIL.
-
-## V343-AI-GATEWAY-FALLBACK ¬∑ estrategia de golf sin silencio por saldo
-
-La prueba real de V342 demostr√≥ que no era una saturaci√≥n transitoria: los seis intentos recibieron `credit_balance_exhausted`. `api/universal-ai.js` conserva los intentos directos y, ante ese c√≥digo exacto, usa el endpoint OpenResponses de Vercel AI Gateway con OIDC o clave administrada y failover `openai/gpt-5.6-sol ‚Üí anthropic/claude-opus-5 ‚Üí google/gemini-3.1-pro-preview`. Si el Gateway tampoco est√° disponible, una consulta anal√≠tica de estrategia de golf recibe una respuesta local sustantiva que cubre conclusi√≥n, mecanismo, riesgos, l√≠mites, alternativa y acciones; no modifica scores ni inventa viento o distancia no escritos por el usuario.
-
-`test-v335-response-caliber.mjs` prueba el salto por saldo agotado, el cuerpo exacto del Gateway, tres proveedores y la consulta literal de 140 yardas aun sin ninguna credencial funcional. RC-016 queda pendiente √∫nicamente de la repetici√≥n real en Preview. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` sellan V343. Producci√≥n contin√∫a intacta.
-
-## V344-TRAFFIC-DIRECT ¬∑ tr√°fico real sin dependencia de IA
-
-La prueba de extremo a extremo del Preview V343 confirm√≥ clima y estrategia, pero una consulta expl√≠cita de tr√°fico termin√≥ en 503 porque todav√≠a depend√≠a del modelo para seleccionar `get_live_traffic`; el proveedor de tr√°fico nunca lleg√≥ a ejecutarse. `api/universal-ai.js` reconoce ahora tr√°fico, congesti√≥n, ETA, demora y ruta vehicular, extrae un origen y destino escritos de forma expl√≠cita, conserva la solicitud de GPS cuando el origen es ‚Äúaqu√≠‚Äù y llama directamente a Google Maps Routes. La respuesta estructurada informa ETA, demora, distancia, nivel estimado, hora de c√°lculo, proveedor y modo `TRAFFIC_AWARE_OPTIMAL`; no revela coordenadas ni inventa cifras.
-
-`test-v324-real-traffic.mjs` reproduce la consulta literal El Pult√© Golf ‚Üí Pradera Concepci√≥n, exige cero llamadas a OpenAI, prueba la aclaraci√≥n de un destino ambiguo y conserva las puertas de GPS, timeout y privacidad. RC-017 registra el escape y su control permanente. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` sellan el candidato. Producci√≥n permanece intacta.
-
-## V345-ICONS ¬∑ accesos de escritorio visibles y distintos
-
-La evidencia f√≠sica del propietario rechaz√≥ los accesos instalados: el Manual no mostraba un logo reconocible y Golf Score pod√≠a conservar el icono anterior. La causa del Manual era medible: `manual-scg-escritorio-4k.png` es una l√°mina v√°lida, pero su composici√≥n deja 89.3% del icono reducido casi blanco. En Golf Score el nombre del recurso de 180 px no cambiaba entre versiones, por lo que iOS pod√≠a reutilizarlo.
-
-V345 crea seis recursos RGB sin transparencia y con nombres nuevos: 180√ó180 para iPhone y 192√ó192/512√ó512 para los manifiestos de Golf Score y Manual SCG. El Manual usa el logo oficial en primer plano y el r√≥tulo `MANUAL`; los dos accesos son visualmente distintos. `index-grupal.html` y `manual.html` declaran `sizes` expl√≠cito, favicon y Apple Touch Icon; `manual.webmanifest` recibe identidad propia; `service-worker.js` precarga los seis archivos y `vercel.json` entrega manifiestos sin cach√© e iconos versionados inmutables.
-
-Rutas exactas de los recursos nuevos y manifiesto modificado: `assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png`, `assets/official-logos/golf-score-card-gt-pwa-v345-192.png`, `assets/official-logos/golf-score-card-gt-pwa-v345-512.png`, `docs/manual/v311/manual-scg-apple-touch-v345-180.png`, `docs/manual/v311/manual-scg-pwa-v345-192.png`, `docs/manual/v311/manual-scg-pwa-v345-512.png` y `manifest.webmanifest`.
-
-`test-v345-home-icons.mjs` decodifica los PNG, exige dimensiones exactas, RGB, SHA distintos y menos de 55% de blanco en el icono del Manual; tambi√©n comprueba HTML, manifiestos, Service Worker y encabezados. Las puertas hist√≥ricas V281, V290 y V311 se actualizan al mismo contrato. `scripts/rebuild-inventory-pdfs.py` identifica y sella el mismo corte V345. RC-018 permanece abierto hasta comprobar la instalaci√≥n real desde el Preview. Producci√≥n contin√∫a en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
-
-Estado operativo asociado: micr√≥fono y respuestas generales conservan banco autom√°tico de continuidad, interrupci√≥n, eco, recuperaci√≥n y calibre, pero RC-007 sigue abierto hasta una conversaci√≥n f√≠sica larga en iPhone. Clima directo ya aprob√≥ una consulta real de 24 horas con Open-Meteo; siguen abiertos snapshots, artefactos y contraste f√≠sico de campo. Tr√°fico directo V344 aprob√≥ el banco sin IA; su repetici√≥n real de Preview y la comparaci√≥n simult√°nea contra Waze siguen pendientes.
-
-### V345-ICONS-R1 ¬∑ ROADMAP remoto
-
-El deployment `dpl_GTgzu9fmLFaJxniXFhjPy9FzGnqd` fue rechazado antes de publicaci√≥n porque `ROADMAP_OVERALL.md` agrupaba seis archivos binarios y `manifest.webmanifest` sin escribir sus rutas literales. La correcci√≥n anterior incorpora los siete nombres exactos; no cambia PNG, HTML, manifiestos, l√≥gica ni Producci√≥n.
-
-### V345-ICONS-PREVIEW ¬∑ evidencia remota
-
-El commit `1026a3e6555077fab1af4f8f932e97a7032e0182` qued√≥ READY en Preview como deployment `dpl_9DcbFH9d9Gf3qDL8rGUjQqTNNYpX`. El constructor aprob√≥ Gate 0, Manual editorial 74/74, Manual visual 74/74, ROADMAP de 25 modificaciones, 349 fuentes, tres PDF sellados y 93 paquetes operativos. La llamada viva de Reglas recibi√≥ 429 y fue diferida conforme al contrato V338; no hubo error del producto. RC-018 queda desplegado y abierto √∫nicamente para instalar f√≠sicamente ambos accesos en iPhone. Producci√≥n permanece intacta.
-
-## V346 ¬∑ Micr√≥fono real y matriz de estado ¬∑ 27 de agosto de 2026
-
-- `index-grupal.html`: clasifica HTTP 429 como l√≠mite del servicio, activa reconocimiento de voz alternativo cuando est√° disponible y muestra `ESCUCHANDO` / `RESPONDIENDO` en la matriz principal.
-- `test-v336-microphone-transport.mjs`: deja de aceptar el diagn√≥stico falso de Internet y bloquea regresiones del respaldo y de ambos estados visibles.
-- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello recalculado para esta modificaci√≥n at√≥mica.
-
-## V346-R1 ¬∑ Correcci√≥n determinista del sello de inventario ¬∑ 27 de agosto de 2026
-
-- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: recalculado con el mismo orden lexicogr√°fico de Node usado por `scripts/inventory-gate.mjs`.
-
-## V347 ¬∑ Matriz visible y fallo real de respuesta ¬∑ 27 de agosto de 2026
-
-- `index-grupal.html`: coloca la matriz viva junto al micr√≥fono, muestra √∫nicamente `ESCUCHANDO` / `RESPONDIENDO` en rojo parpadeante y presenta el saldo agotado sin culpar a Internet.
-- `api/universal-ai.js`: clasifica `credit_balance_exhausted` como bloqueo no reintentable cuando no existe recuperaci√≥n administrada.
-- `api/voice-health.js`: registra eventos privados del micr√≥fono alternativo sin contenido hablado.
-- `test-v336-microphone-transport.mjs`: agrega regresiones de posici√≥n, texto exacto, diagn√≥stico de saldo y privacidad.
-- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-019 como abierto hasta credencial/saldo y PASS f√≠sico.
-- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta la frontera entre captura, respuesta y proveedor.
-- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: conserva V346-R1 rechazada y V347 pendiente de prueba f√≠sica.
-- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sella las fuentes exactas del candidato V347.
-- Producci√≥n permanece en la base protegida; ning√∫n fallo f√≠sico se presenta como PASS.
-
-## V348 ¬∑ Recuperaci√≥n de apertura y transici√≥n exacta de voz ¬∑ 27 de agosto de 2026
-
-- `index-grupal.html`: activa el reconocimiento alternativo ante cualquier fallo t√©cnico recuperable, conserva aparte permiso/dispositivo y cambia la matriz de `ESCUCHANDO` a `RESPONDIENDO` desde que la transcripci√≥n entra al procesamiento.
-- `api/voice-health.js`: agrega eventos privados de solicitud, error y fallo de arranque del respaldo sin texto hablado, nombres ni ubicaci√≥n.
-- `test-v336-microphone-transport.mjs`: reproduce el fallo local gen√©rico, protege permiso/dispositivo, exige la transici√≥n exacta y verifica la privacidad de los eventos.
-- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-020 con la evidencia f√≠sica de las 07:20/07:21.
-- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta la correcci√≥n funcional y el bloqueo externo que permanece.
-- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: rechaza V347, registra V348 y mantiene abierta la prueba f√≠sica.
-- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran la misma modificaci√≥n dentro de V348.
-- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sella las fuentes exactas del candidato V348.
-- Producci√≥n permanece intacta; el saldo o la credencial del proveedor sigue siendo un bloqueo externo real para respuestas generales.
-
-## V349 ¬∑ Registro dictado sin desv√≠o y matriz recuperable ¬∑ 27 de agosto de 2026
-
-- `index-grupal.html`: deduplica listados repetidos, entiende ‚Äúotro jugador‚Äù, separa registro de pregunta, evita enviar un registro rechazado a IA, corrige la precedencia de mensajes de matriz y recupera locks con un nuevo toque.
-- `api/voice-health.js`: registra √∫nicamente si el listado alternativo fue aplicado o rechazado, sin contenido hablado ni datos de jugadores.
-- `test-v305-registration-guides-parser-truth.mjs`: reproduce lista completa repetida, ‚Äúotro jugador‚Äù y la frontera entre registro y pregunta.
-- `test-v336-microphone-transport.mjs`: ejecuta la funci√≥n real de texto de matriz, proh√≠be `PROCESANDO` all√≠, verifica el mensaje exacto y la recuperaci√≥n.
-- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: rechaza V348 y registra RC-021.
-- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: documenta causa, frontera y candados V349.
-- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: conserva V348 rechazada y V349 pendiente de prueba f√≠sica.
-- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran las diez fuentes modificadas.
-- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sella el candidato exacto V349.
-- Producci√≥n permanece intacta; el saldo o credencial del proveedor sigue bloqueando respuestas generales.
-
-## V350 ¬∑ Registro de jugadores local y dictado natural ¬∑ 27 de agosto de 2026
-
-V349 queda rechazada por la prueba f√≠sica de las 08:59: el navegador transcribi√≥, mostr√≥ `RESPONDIENDO`, no llen√≥ filas y llam√≥ al servicio general, que inform√≥ saldo agotado. V350 elimina esa dependencia: dentro de Registro de jugadores toda transcripci√≥n termina localmente, sea aplicada o rechazada, y nunca consulta AI UNIVERSAL. El parser admite conectores naturales como ‚Äúh√°ndicap catorce y marcas blancas‚Äù; la telemetr√≠a cliente incluye aplicado/rechazado sin contenido hablado.
-
-Archivos exactos V350: `index-grupal.html`, `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producci√≥n permanece intacta; el candidato requiere build, navegador y prueba f√≠sica iPhone.
-
-## V351 ¬∑ Safari XIV y separaci√≥n correcta de jugadores ¬∑ 27 de agosto de 2026
-
-V350 queda rechazada por la prueba f√≠sica de las 14:16. Safari convirti√≥ ‚Äúcatorce‚Äù en `XIV`; el parser lo trat√≥ como nombre y escribi√≥ `JAIME XIV BLANCAS JORGE ¬∑ 6 ¬∑ AZULES` en una sola fila. V351 agrega romanos can√≥nicos I‚ÄìLIV √∫nicamente al parser de h√°ndicap del Registro. La frase real `Jaime xiv blancas Jorge seis azules` produce dos jugadores: Jaime, 14, Blanco; Jorge, 6, Azul. La `X` operacional del score permanece fuera de esta conversi√≥n.
-
-Archivos exactos V351: `index-grupal.html`, `test-v305-registration-guides-parser-truth.mjs`, `test-v336-microphone-transport.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producci√≥n permanece intacta; falta build, navegador y prueba f√≠sica iPhone.
-
-
-Correcci√≥n de rutas V351: se eliminaron las rutas temporales err√≥neas `tests/test-v305-registration-guides-parser-truth.mjs` y `tests/test-v336-microphone-transport.mjs`; las pruebas activas permanecen en la ra√≠z como `test-v305-registration-guides-parser-truth.mjs` y `test-v336-microphone-transport.mjs`. Tambi√©n se eliminaron las copias ra√≠z temporales de los dos controles SCIRE. El √°rbol final conserva 349 fuentes activas m√°s el sello.
-
-Sello V351: la huella del inventario se recalcul√≥ con el orden binario exacto que usa `scripts/inventory-gate.mjs`; no cambia el alcance funcional ni las 349 fuentes activas.
-
-## V352 ¬∑ GOLF SCORE CARD GT. LIVE ¬∑ 27 de agosto de 2026
-
-V352 agrega seguimiento remoto autorizado sin exigir que el visitante instale la aplicaci√≥n. Quien lleva la Score Card puede compartir √∫nicamente un jugador o el grupo completo; cada persona visible, o su responsable autorizado, confirma el permiso. El v√≠nculo privado caduca, puede revocarse y abre `live.html` como visor separado y exclusivamente de lectura. Un jugador puede continuar su propia ronda y seguir bilateralmente a su esposa, amigo u otro grupo en otra ventana sin tocar el hoyo ni la tarjeta activa.
-
-Los torneos usan un enlace de tablero y un c√≥digo de uni√≥n. Cada grupo crea y autoriza su stream independiente; el tablero carga p√°ginas con cursor y no fija un m√°ximo de producto para grupos o jugadores agregados. La tarjeta de cada ronda conserva la arquitectura existente de uno a seis jugadores. Los tokens de publicar y mirar son independientes, aleatorios de 256 bits, y PostgreSQL s√≥lo guarda SHA-256. LIVE excluye contactos, ubicaci√≥n, audio, IA, clima detallado, credenciales, c√≥digos privados, juegos laterales y apuestas.
-
-La publicaci√≥n nace del √∫nico `persist()` oficial, conserva primero la ronda local y mantiene s√≥lo el snapshot pendiente m√°s reciente si se pierde se√±al. El servidor vuelve a filtrar los jugadores autorizados en cada mutaci√≥n, exige revisi√≥n esperada, acepta duplicados idempotentes y actualiza el tablero de torneo. Revocar elimina el snapshot visible. El visor consulta cada tres segundos y preserva la √∫ltima lectura en pantalla durante una interrupci√≥n.
-
-Archivos exactos V352: `index-grupal.html`, `live-control.js`, `live.html`, `live-view.js`, `api/live.js`, `database/004_live_scorecards.sql`, `service-worker.js`, `vercel.json`, `test-v352-live.mjs`, `audit-project.mjs`, `DATABASE_ARCHITECTURE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
-
-Estado de corte: implementaci√≥n local terminada sobre la rama `v352-live`; migraci√≥n Neon temporal y principal PASS; navegador real, Preview y prueba f√≠sica permanecen pendientes. Producci√≥n `0dc1ba7a62b6bd6aec92752c539ca641cf950e26` sigue intacta. La reversi√≥n consiste en revocar enlaces, retirar V352 y, s√≥lo bajo procedimiento de base respaldada, eliminar exclusivamente las tablas nuevas sin tocar datos V351.
-
-Compatibilidad Neon V352: el preparador seguro rechaz√≥ cuerpos de funciones almacenadas. La transacci√≥n de publicaci√≥n se traslad√≥ a una sola sentencia CTE dentro de `api/live.js`, conservando bloqueo de fila, revisi√≥n esperada, idempotencia, filtro de jugadores, incremento de torneo y evento at√≥mico. `database/004_live_scorecards.sql` queda limitado a tablas e √≠ndices; `test-v352-live.mjs` rechaza cualquier funci√≥n almacenada y tambi√©n jugadores con ID duplicado.
-
-Neon aislado PASS: migraci√≥n `1f8793a4-0dad-40a6-8016-b9b183e15b7c`, rama `mcp-migration-2026-08-27T21-50-34`, ID `br-morning-dew-avwpi96x`, principal intacta `br-late-wind-avhgi9s3`. Se cargaron 60 grupos y el cursor devolvi√≥ 25/25/10 sin duplicados. Un stream individual recibi√≥ dos jugadores y conserv√≥ s√≥lo `player-v352-001-a`; el segundo no apareci√≥. Repetir la mutaci√≥n devolvi√≥ duplicado, revisi√≥n 1 y cero eventos nuevos.
-
-Neon principal PASS: el propietario aprob√≥ la migraci√≥n y Neon la aplic√≥ a `br-late-wind-avhgi9s3`; la rama temporal fue eliminada. La verificaci√≥n posterior confirm√≥ cuatro tablas LIVE, 15 √≠ndices, cero funciones almacenadas LIVE y cero torneos, streams o eventos de prueba trasladados.
-
-Control permanente de versiones V352: la auditor√≠a descubri√≥ que 18 pruebas hist√≥ricas exig√≠an literalmente el build general V332 y bloqueaban cualquier release posterior aunque su funci√≥n continuara correcta. Ahora exigen un identificador `V###` v√°lido y mantienen sus assertions funcionales propias; `test-v352-live.mjs` conserva la exigencia exacta del build LIVE V352. Archivos corregidos: `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs` y `test-v328-official-golf-rules.mjs`.
-
-El mismo control se aplic√≥ al nombre de cach√©: 16 pruebas conservan la obligaci√≥n de una cach√© `gscg-mobile-v###`, pero ya no fuerzan V332, porque cada release funcional necesita un nombre nuevo para invalidar el shell anterior. Archivos exactos: `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `test-v312-general-caddie.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v324-real-traffic.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v328-official-golf-rules.mjs`, `test-v328-offline-official-rules.mjs`, `test-v329-skins.mjs` y `test-v330-side-games.mjs`. V352 exige aparte `gscg-mobile-v352-live` y `/live-control.js` en `test-v352-live.mjs`.
-
-### V352-PREVIEW-R1 ¬∑ candado remoto correcto
-
-GitHub recibi√≥ el candidato V352 en `v352-live`. El primer webhook se activ√≥ con un commit sin cambios de √°rbol (`0e19b4c`) y Vercel lo rechaz√≥ correctamente mediante `FAIL ROADMAP GATE`, deployment `dpl_8ncVihJ46TWXqrMrWmKWgmcurbWh`. No se public√≥ ning√∫n Preview ni cambi√≥ Producci√≥n. R1 registra el intento en ambos ROADMAPS, vuelve a sellar el inventario y obliga a que el siguiente commit remoto contenga la evidencia documental visible para el candado.
-
-### V352-PREVIEW-R2 ¬∑ par√°metros Neon HTTP con tipo expl√≠cito
-
-El deployment R1 `dpl_3fmsfq4BjuFzMgV3eYKGvPRWzSff` qued√≥ READY y permiti√≥ la primera prueba contra la base principal. Crear un stream privado y leer su revisi√≥n 0 aprobaron; publicar el hoyo 1 devolvi√≥ `42P18` porque interpolaciones separadas dentro de `jsonb_build_object` no ten√≠an tipo expl√≠cito para PostgreSQL. `api/live.js` ahora tipa `mutationId`, `secretHash` y revisi√≥n esperada en toda la sentencia at√≥mica; `test-v352-live.mjs` agrega el candado negativo. Tambi√©n se actualizan `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producci√≥n permanece intacta.
-
-V352-R2 remoto PASS: commit `6bc9901e068cf8f2026de6b0ab8580c2546819f5`, deployment `dpl_2BLAFZNazoogdQQS2mkxreNjBgh6`, READY. La prueba protegida devolvi√≥ p√°gina 200, creaci√≥n 200, lectura inicial 200, publicaci√≥n 200, lectura de Gross 5/Neto 4 en revisi√≥n 1 con 200, revocaci√≥n 200 y `410 LIVE_REVOKED` final. Observabilidad: cinco respuestas 200, una 410 esperada y cero `error`/`fatal`. Los streams de diagn√≥stico fueron eliminados; Producci√≥n sigue en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Falta √∫nicamente inspecci√≥n visual y prueba f√≠sica en iPhone antes de cualquier montaje.
-
-## V353 ¬∑ MONITOR GENERAL, MONITOR INDIVIDUAL y compartir mundial ¬∑ 28 de agosto de 2026
-
-V353 resuelve el escenario ideal de 80 personas y 30‚Äì40 tel√©fonos con una regla sencilla: cada grupo nombra un `CAPIT√ÅN DE TARJETA`; s√≥lo ese tel√©fono publica y los dem√°s miran. El organizador comparte un enlace General. El usuario lo abre y elige entre dos botones universales: `1 ¬∑ MONITOR GENERAL` para todo el torneo y `2 ¬∑ MONITOR INDIVIDUAL` para cualquier jugador o grupo. La Score Card propia sigue intacta en su ventana.
-
-Los jugadores elegidos para el Monitor Individual reutilizan la misma General y producen cero lecturas adicionales. S√≥lo una persona externa exige importar su v√≠nculo individual como respaldo. La General recorre cursores mientras existan p√°ginas, muestra 80 jugadores sin omisi√≥n ni duplicado y rotula posici√≥n, grupo, hoyos, Gross, Neto y +/‚àí como resultado LIVE no oficial. El servidor serializa la uni√≥n al torneo y rechaza un segundo publicador activo del mismo grupo.
-
-`COMPARTIR ‚ôæÔ∏è` usa la hoja nativa del tel√©fono: WhatsApp, Mensajes, correo, AirDrop, X u otra aplicaci√≥n. El mismo v√≠nculo funciona en USA, M√©xico, Italia o cualquier pa√≠s y no fija un m√°ximo de invitados. La seguridad no cambia: posesi√≥n del v√≠nculo, s√≥lo lectura, vencimiento y revocaci√≥n inmediata.
-
-V353 no modifica el esquema Neon: reutiliza las cuatro tablas y 15 √≠ndices LIVE V352, por lo que no existe migraci√≥n nueva. Banco local PASS para 20√ó4 y 40√ó2, Monitor General + tres jugadores en el Monitor Individual con cero lecturas extra, importaci√≥n externa, origen seguro, carga sin m√°ximo fijo, privacidad, apertura separada y capit√°n √∫nico. Preview `dpl_2g6KPHDjaWbXuRfR8Ky88ai2U24F` READY y E2E remoto PASS: 20 grupos, 80 jugadores, tres p√°ginas, v√≠nculo individual, revisi√≥n LIVE 1, `409` duplicado, `410` revocado, cero runtime `error`/`fatal` y cero datos de prueba activos. Inspecci√≥n visual y prueba f√≠sica iPhone contin√∫an como puertas independientes.
-
-La compuerta V353 acepta el formato legible o compactado de `vercel.json` al verificar `/live-hub.html`; esto corrige exclusivamente un falso negativo de compilaci√≥n y mantiene intacta la cobertura funcional.
-
-Archivos exactos V353: `live-hub.html`, `live-hub.js`, `live.html`, `live-view.js`, `live-control.js`, `api/live.js`, `index-grupal.html`, `service-worker.js`, `vercel.json`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `audit-project.mjs`, `DATABASE_ARCHITECTURE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
-
-Producci√≥n permanece exactamente en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`. Reversi√≥n V353: retirar Centro Live y sus controles, conservar la Score Card V352 y revocar los v√≠nculos necesarios; ning√∫n dato ni tabla requiere eliminaci√≥n.
-
-## V354 ¬∑ Respaldo Safari: varios hoyos y General visible ¬∑ 28 de agosto de 2026
-
-La prueba f√≠sica de las 07:05‚Äì07:06 rechaz√≥ el cierre de voz anterior: Registro y un hoyo individual funcionaron, pero varios hoyos no se aplicaron y una consulta General con HTTP 200 no produjo una respuesta visible o audible. V354 corrige esa ruta sin modificar el motor de scores: cuando la ronda tiene un solo jugador, el dictado puede omitir su nombre; `hoyo` y `hoyos` son equivalentes; cada lote v√°lido se escribe mediante el flujo operacional existente. Una frase con forma de score pero inv√°lida termina localmente y nunca se desv√≠a a General.
-
-La comunicaci√≥n General abre el panel AI antes de enviar la consulta. La respuesta queda visible aunque Safari no arranque el sintetizador; un watchdog conserva una recuperaci√≥n manual y la telemetr√≠a s√≥lo registra estado t√©cnico y cantidad de entradas, nunca transcripci√≥n, nombres, audio ni ubicaci√≥n. El banco din√°mico ejecuta tres hoyos, plural, aplicaci√≥n en lote, orden abrir‚Üíenviar, respuesta visible y sanitizaci√≥n privada.
-
-Archivos exactos V354: `index-grupal.html`, `service-worker.js`, `api/voice-health.js`, `test-v354-voice-fallback.mjs`, `test-v267-scorecard-combination-matrix.mjs`, `test-v270-consecutive-hole-voice-blocks.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `audit-project.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
-
-Estado de corte V354: banco local y auditor√≠a integral PASS. Commit remoto `d7deb09be3826430afc8e1f3d379f0a1137d215b`; Preview `dpl_CgqzYpVABY9djJehtFmH5cyFXHdn` READY. Vercel aprob√≥ 96 paquetes; el navegador real abri√≥ Golf Score Card GT, confirm√≥ build y voz V354, AI ‚àû y LIVE visibles, y cero errores de la aplicaci√≥n. La prueba f√≠sica iPhone permanece abierta. LIVE V353 conserva su arquitectura y E2E. Producci√≥n contin√∫a intacta en `0dc1ba7a62b6bd6aec92752c539ca641cf950e26`.
-
-## V355 ¬∑ Audio autom√°tico iPhone y dictado distribuido ¬∑ 28 de agosto de 2026
-
-La prueba f√≠sica de las 07:49 rechaz√≥ el audio de V354: la respuesta General apareci√≥ escrita, pero Safari no habl√≥ despu√©s de esperar Internet. V355 habilita `speechSynthesis` dentro del toque original de ENVIAR o del micr√≥fono; el √©xito exige `RESPONDIENDO EN VOZ` y la recuperaci√≥n manual deja de contarse como aprobaci√≥n.
-
-La captura de las 07:51 mostr√≥ el dictado azul del teclado escribiendo `ANCAS GUSTAVO, 15 BLANCAS` dentro de NOMBRE. V355 distribuye la frase en Nombre, HDCP y Marcas sin reconstruir la pantalla ni cerrar el teclado. S√≥lo act√∫a con nombre, HDCP entero 0‚Äì54 y marcas v√°lidas; una frase incompleta o inv√°lida permanece manual.
-
-Archivos exactos V355: `index-grupal.html`, `service-worker.js`, `api/voice-health.js`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `audit-project.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producci√≥n permanece intacta; Preview y PASS f√≠sico iPhone son puertas separadas.
-
-Estado remoto V355: commit `b965ec4d87c1f0400bf655e5f8bdba6f003f5cc9`, deployment `dpl_7AaXsHMV7msb6f2dizQECu3ES55F` READY, `target:null`, auditor√≠a Vercel de 97 paquetes PASS. Navegador real confirm√≥ Golf Score Card GT, build/voz V355, AI UNIVERSAL ‚àû visible y distribuci√≥n autom√°tica `Prueba V355, 15 blancas` a Nombre/HDCP/Marcas con OK habilitado. Producci√≥n contin√∫a intacta; falta exclusivamente el PASS f√≠sico iPhone de audio y dictado.
-
-## V356 ¬∑ Voz Cedar y correcci√≥n temporal de tr√°fico/clima ¬∑ 28 de agosto de 2026
-
-V356 integra dos controles inseparables: voz originada por micr√≥fono sin transcripci√≥n visible y consultas temporales confiables. Tr√°fico y clima distinguen ahora, en zona Guatemala, datos actuales de estimaciones a 30 minutos, 1 hora, 3 horas, ma√±ana y pr√≥xima semana. El clima usa la primera hora publicada igual o posterior a la solicitada y declara resoluci√≥n de una hora; fuera del l√≠mite de 16 d√≠as informa que no existe pron√≥stico en vez de reutilizar el clima actual.
-
-La reincidencia RC-027 documenta que V355 perdi√≥ una correcci√≥n existente en otra rama. `test-v356-traffic-weather-accuracy.mjs` queda incorporado a la auditor√≠a junto con V324, V337 y las pruebas de voz V354‚ÄìV356. La aceptaci√≥n externa exige al menos 90% con tolerancias publicadas; coincidencia entre proveedores no se presenta como exactitud futura observada. Producci√≥n permanece intacta.
-
-## V356 ¬∑ conversaci√≥n hablada sin texto, Cedar masculino y calidad verificable ¬∑ 28 de agosto de 2026
-
-La captura f√≠sica `IMG_2160.png` confirm√≥ que V355 ya hablaba, pero el turno pronunciado tambi√©n aparec√≠a escrito y Safari utilizaba una voz femenina distinta de la matriz aprobada. V356 separa las modalidades: una consulta iniciada por micr√≥fono conserva pregunta y respuesta √∫nicamente como contexto interno no visible; una consulta escrita conserva su historial escrito. Ninguna transcripci√≥n hablada aparece en el panel.
-
-La matriz exacta recuperada es `Cedar`, velocidad `1.15`, locutor masculino adulto, serio, sobrio y profesional, con espa√±ol internacional neutro. Realtime ya usaba esa matriz. El respaldo Safari deja de seleccionar la primera voz espa√±ola del tel√©fono: `/api/voice-speech` genera `gpt-4o-mini-tts` con Cedar, intenta primero OpenAI directo y recupera por el endpoint oficial de voz de Vercel AI Gateway. S√≥lo si ambos fallan acepta una voz local cuyo nombre est√© expresamente reconocido como masculino; nunca utiliza una voz femenina gen√©rica.
-
-La calidad no depende de respuestas improvisadas. Tr√°fico directo consulta exclusivamente Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL` y entrega ETA, demora, distancia, nivel derivado y hora de c√°lculo. Clima directo consulta Open-Meteo estructurado; la ficha escrita puede mostrar el horario completo, mientras la voz resume condici√≥n, temperatura, viento, lluvia, pico y acci√≥n. AI UNIVERSAL usa GPT-5.6, profundidad adaptable, b√∫squeda web para datos cambiantes, l√≠mites expl√≠citos y salida con conclusi√≥n, evidencia, riesgo y recomendaci√≥n. El banco conserva 100 de 100 √°reas universales enrutadas, tr√°fico, clima, respuesta profunda, multihoyos, Registro y LIVE.
-
-Archivos exactos V356: `index-grupal.html`, `api/universal-ai.js`, `api/voice-speech.js`, `service-worker.js`, `test-v356-voice-only-cedar-quality.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v354-voice-fallback.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `audit-project.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producci√≥n permanece intacta; banco completo, Preview, navegador y prueba f√≠sica siguen como puertas separadas.
-
-## V357 ¬∑ recuperaci√≥n real del micr√≥fono iPhone ¬∑ 28 de agosto de 2026
-
-Los registros del Preview V356 localizaron la causa com√∫n de Score Card y AI UNIVERSAL: seis aperturas de Registro/Ronda devolvieron `POST /api/session-grupal 429`, mientras `/api/universal-ai` respondi√≥ 200. Safari intentaba abrir el reconocimiento alternativo s√≥lo despu√©s de esperar Realtime y para entonces el gesto f√≠sico ya no conservaba autorizaci√≥n.
-
-V357 abre `webkitSpeechRecognition` dentro del mismo toque en iPhone/iPad, antes del primer `await`. La captura local usa modo continuo, cinco alternativas, tres segundos de silencio para cerrar el lote, reinicio cuando Safari termina naturalmente y dos reintentos ante `audio-capture` o red. Los scores contin√∫an primero por el parser y escritor local; AI UNIVERSAL conserva `voiceOnly`, Cedar masculino 1.15 y cero transcripci√≥n visible. Un score ambiguo no se escribe. La telemetr√≠a guarda √∫nicamente estados acotados.
-
-El control entre conversaciones queda incorporado en `AGENTS.md` y GitHub: la rama can√≥nica debe sincronizarse antes de editar; los bancos V354‚ÄìV357 de voz y V324/V337/V356 de tr√°fico-clima son obligatorios. Ninguna correcci√≥n sustituye archivos completos desde una rama paralela.
-
-Archivos exactos V357: `.github/workflows/roadmap-gate.yml`, `AGENTS.md`, `api/voice-health.js`, `audit-project.mjs`, `index-grupal.html`, `package.json`, `service-worker.js`, `scripts/rebuild-inventory-pdfs.py`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producci√≥n permanece intacta; banco autom√°tico, Preview, navegador y PASS f√≠sico iPhone son puertas separadas.
-
-## V358 ¬∑ micr√≥fono integrado y continuidad de ronda ¬∑ 28 de agosto de 2026
-
-V358 parte del √°rbol sincronizado V357 y conserva en una sola l√≠nea el dictado de Registro, scores de uno o varios hoyos, AI UNIVERSAL sin texto hablado, Cedar masculino 1.15 y las correcciones V356 de tr√°fico y clima. Corrige RC-029: abrir nuevamente la aplicaci√≥n con `?inicio=1` ya no coloca Registro encima de una tarjeta activa. Si existe una ronda configurada, la tarjeta y sus scores permanecen visibles; s√≥lo `NUEVA RONDA` abre el registro para reemplazarla.
-
-Archivos exactos V358: `index-grupal.html`, `service-worker.js`, `test-v358-active-round-reopen.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v354-voice-fallback.mjs`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `test-v311-neutral-match-home-link.mjs`, `audit-project.mjs`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Producci√≥n permanece intacta; auditor√≠a, Preview y PASS f√≠sico iPhone son puertas separadas.
-
-## V359 ¬∑ recuperaci√≥n del parser f√≠sico iPhone ¬∑ 28 de agosto de 2026
-
-La prueba f√≠sica `IMG_2165.png` rechaz√≥ V358: a las 17:33:23 y 17:33:41 UTC Safari entreg√≥ transcripciones completas, pero el parser emiti√≥ `parser_rejected` y dej√≥ en blanco los scores de Jaime y Gustavo. V359 admite las formas naturales `hoyo n√∫mero`, `golpes`, `tir√≥` y el hoyo pronunciado al final. El traslado del hoyo se permite √∫nicamente cuando todas las entradas previas pertenecen inequ√≠vocamente a un solo bloque; cualquier palabra desconocida conserva el rechazo total.
-
-Archivos exactos V359: `index-grupal.html`, `service-worker.js`, `test-v359-ios-score-parser-recovery.mjs`, `test-v358-active-round-reopen.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v354-voice-fallback.mjs`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `audit-project.mjs`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. V358 queda rechazado; V359 no se aprueba hasta `score_applied` f√≠sico.
-
-## V360 ¬∑ integraci√≥n definitiva de ramas de voz ¬∑ 28 de agosto de 2026
-
-V360 combina la rama paralela `v358-synchronized-progressive-voice` con V359. Conserva la tarjeta al reabrir, escribe cada score v√°lido visualmente durante el dictado, revierte una alternativa ambigua y acepta las formas f√≠sicas `hoyo n√∫mero`, `golpes`, `tir√≥` y hoyo al final. Registro, Cedar 1.15, AI UNIVERSAL sin texto hablado, tr√°fico y clima permanecen en el mismo √°rbol.
-
-Archivos exactos V360: `.github/workflows/roadmap-gate.yml`, `api/voice-health.js`, `audit-project.mjs`, `index-grupal.html`, `package.json`, `service-worker.js`, `test-v336-microphone-transport.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v358-active-round-reopen.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v354-voice-fallback.mjs`, `test-v353-live-hub.mjs`, `test-v352-live.mjs`, `test-v311-neutral-match-home-link.mjs`, documentos rectores, ambos ROADMAPS, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. S√≥lo evidencia f√≠sica `score_applied` autoriza el cierre.
-
-## V361 ¬∑ voz sincronizada, score inmediato y persistente ¬∑ 28 de agosto de 2026
-
-V361 toma como √∫nica base la integraci√≥n V360 y no reabre ninguna rama antigua. Cada resultado parcial v√°lido del reconocimiento se aplica mediante el escritor oficial y ejecuta `persist()` + `render()` inmediatamente, por lo que aparece y queda guardado aunque el jugador contin√∫e dictando los siguientes hoyos. Conserva las √≥rdenes naturales para uno o varios jugadores, la reversi√≥n total de alternativas ambiguas, la continuidad de ronda y AI UNIVERSAL hablado sin mostrar la conversaci√≥n de voz.
-
-La recuperaci√≥n de audio espera hasta 1.6 segundos el evento `voiceschanged` de iOS antes de seleccionar exclusivamente una voz masculina aprobada. Si Cedar servidor responde 429 o 503, abre un circuito de diez minutos y usa el locutor masculino local sin repetir la llamada fallida en cada contestaci√≥n. Producci√≥n permanece intacta y la aprobaci√≥n f√≠sica del iPhone contin√∫a separada del PASS autom√°tico.
-
-Archivos exactos V361: `.github/workflows/roadmap-gate.yml`, `audit-project.mjs`, `index-grupal.html`, `package.json`, `service-worker.js`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `scripts/rebuild-inventory-pdfs.py` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
-
-## V362 ¬∑ recuperaci√≥n f√≠sica de voz, AI de un toque y cierre hablado ¬∑ 28 de agosto de 2026
-
-La evidencia del iPhone sobre V358 separ√≥ escucha de reproducci√≥n: entre 18:09:08 y 18:09:20 UTC Safari inici√≥ el respaldo, entreg√≥ transcripci√≥n, `/api/universal-ai` respondi√≥ 200 y abri√≥ el panel, pero `/api/voice-speech` devolvi√≥ 503 despu√©s de Cedar 429. La configuraci√≥n de respaldo usaba `openai/gpt-4o-mini-tts`, modelo ausente del cat√°logo publicado del Vercel AI Gateway. V362 mantiene Cedar directo con `gpt-4o-mini-tts` 1.15 y cambia s√≥lo el respaldo Gateway a `openai/tts-1-hd` con Onyx masculino; la respuesta informa mediante `X-GSCG-Voice` cu√°l locutor produjo el audio.
-
-V362 restaura el contrato V358 de AI ‚àû: el mismo `pointerdown` abre el panel, habilita audio y comienza a escuchar. Agrega un l√≠mite de 18 segundos hasta el primer resultado para que Safari no quede indefinidamente en rojo. Conserva el escritor V361 (`persist()` + `render()` por score) y corrige la salida del hoyo 9/18: el cierre encolado se consume al sellar el dictado progresivo y se habla; si Realtime no est√° disponible, usa el mismo TTS servidor masculino.
-
-Archivos exactos V362: `AGENTS.md`, `.github/workflows/roadmap-gate.yml`, `api/voice-health.js`, `api/voice-speech.js`, `audit-project.mjs`, `index-grupal.html`, `package.json`, `service-worker.js`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v362-physical-voice-recovery.mjs`, ambos ROADMAPS, cola, matriz de pendientes, registro de reincidencias, mapa maestro, reconstrucci√≥n e inventario. Producci√≥n permanece intacta; Preview y PASS f√≠sico iPhone contin√∫an como puertas separadas.
-
-## V363 ¬∑ comportamiento m√≥vil registrado + Intocables ¬∑ 28 de agosto de 2026
-
-Regresi√≥n hist√≥rica ajustada al almacenamiento can√≥nico: `test-v267-one-operational-line.mjs`.
-
-V363 conserva la recuperaci√≥n V362 y el comportamiento m√≥vil integrado: guard de cierre Safari, aislamiento de controles durante Registro/LIVE y safe areas. A√±ade una identidad can√≥nica para que General, Match Play y Four Ball sobrevivan cierre o recarga hasta confirmar `INICIAR RONDA`. Match Play anuncia nombre y posici√≥n; Ronda Normal conserva su reporte Gross/Neto/par.
-
-`Intocables/` aplica cuatro reglas AND y bloquea regresiones. Producci√≥n permanece intacta; PASS autom√°tico, Preview y prueba f√≠sica iPhone son puertas separadas.
-
-RC-035 nace de `IMG_2168`/`IMG_2169`: LIVE anulaba la zona segura, lanzadores e instalaci√≥n invad√≠an Registro y el cierre de voz depend√≠a de `onend`. V363 aplica safe areas, aislamiento modal y un guard independiente de 1.2 s. El MP4 inventariado registra la entrada f√≠sica FAIL y la simulaci√≥n controlada sin `onend`; no se presenta como PASS f√≠sico.
-
-Archivos exactos V363: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `Intocables/README.md`, `Intocables/REGLAS_INTOCABLES.json`, `Intocables/intocables-gate.mjs`, `audit-project.mjs`, `index-grupal.html`, `live-control.js`, `package.json`, `scripts/rebuild-inventory-pdfs.py`, `service-worker.js`, `test-v260-round-points-player-return.mjs`, `test-v352-live.mjs`, `test-v353-live-hub.mjs`, `test-v354-voice-fallback.mjs`, `test-v355-ios-audio-dictation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v357-synchronized-progressive-voice.mjs`, `test-v358-active-round-reopen.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v359-ios-score-parser-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v362-physical-voice-recovery.mjs`, `test-v363-intocables-behavior.mjs` y `test-v363-recorded-mobile-behavior.mjs`. Ambos ROADMAPS tambi√©n se actualizan en el mismo cambio.
-
-Evidencia y soporte m√≥vil exactos incorporados en el mismo candidato: `.gitignore`, `scripts/v363-silent-speech-recognition.js`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/REPORTE_PRUEBAS_COMPORTAMIENTO_V363_RC035.md`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/PRUEBA_COMPORTAMIENTO_V363_RC035.mp4`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/PRUEBA_COMPORTAMIENTO_V363_RC035_POSTER.png`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/RC035_IMG_2168_LIVE_SAFE_AREA_FAIL.png` y `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V363_PRUEBAS_COMPORTAMIENTO/RC035_IMG_2169_MIC_OVERLAYS_FAIL.png`.
-
-## V364 ¬∑ entrada final Nueva ronda ¬∑ 28 de agosto de 2026
-
-La URL expl√≠cita `nueva_ronda=1` abre Registro aun con una ronda activa, conserva la ronda anterior y s√≥lo la sustituye al confirmar `INICIAR RONDA`. La cach√© V364 conserva la firma V363 como prefijo para mantener comprobables todos los candados acumulados. Archivos: `index-grupal.html`, `service-worker.js`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v364-explicit-new-round-entry.mjs`, `audit-project.mjs`, `package.json`, `scripts/project-quality-gate.mjs`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Producci√≥n permanece intacta; el enlace final requiere 3/3 verificaciones externas.
-### Promoci√≥n p√∫blica autorizada V363 ‚Äî 28 de agosto de 2026
-
-Se autoriz√≥ la promoci√≥n de V363 a `main`. El Gate 0 conserva la base protegida como ancestro obligatorio y, en el checkout superficial de Vercel, valida repositorio can√≥nico y coincidencia exacta entre `VERCEL_GIT_COMMIT_SHA` y `HEAD`. No se modific√≥ l√≥gica de tarjeta, Match Play, Ronda Normal ni micr√≥fono.
-
-Los tres inventarios V311 fueron regenerados y sellados despu√©s de registrar esta promoci√≥n.
-
-Sello at√≥mico V364: ambos ROADMAPS quedan registrados juntos en el mismo commit externo para que la auditor√≠a de publicaci√≥n sea reproducible.
-
-Sello final V364: los dos ROADMAPS y el inventario regenerado se publican juntos despu√©s de aprobar la auditor√≠a externa de ROADMAP.
-
-Verificaci√≥n externa del candidato OIDC: AI UNIVERSAL aprob√≥ tres POST reales sobre el mismo Preview. La voz revel√≥ un 400 reproducible por ausencia de la cabecera obligatoria `ai-speech-model-specification-version: 4`; el candidato la incorpora seg√∫n el contrato Speech V4 de `@ai-sdk/gateway` 4.0.68 y exige repetir Preview, voz externa y prueba f√≠sica iPhone antes de producci√≥n.
-
-La repetici√≥n externa confirm√≥ que Speech V4 no basta: el cliente oficial agrega tambi√©n `ai-gateway-protocol-version: 0.0.1` y `ai-gateway-auth-method`. Un Preview independiente con el contrato completo entreg√≥ MP3 200 y locutor Onyx; V364 incorpora ahora esas dos cabeceras sin registrar credenciales y vuelve a empezar su propia prueba externa.
-
-Validaci√≥n del sello: ordenamiento binario id√©ntico al Gate de Node.js en Vercel.
-
-## Hotfix final OIDC ¬∑ comunicaci√≥n universal ¬∑ 28 de agosto de 2026
-
-La comprobaci√≥n real de producci√≥n confirm√≥ HTTP 200 para la V363 publicada y 503 `UNIVERSAL_AI_CREDIT_EXHAUSTED` para una consulta general. Los logs demostraron tres intentos directos y cero intento Gateway: el token OIDC administrado no se resolv√≠a din√°micamente. El candidato incorpora `@vercel/oidc`, obtiene el token s√≥lo despu√©s del bloqueo de saldo y aplica la misma identidad administrada a AI UNIVERSAL y voz, sin registrar credenciales.
-
-Archivos exactos: `api/_lib/vercel-gateway-auth.js`, `api/universal-ai.js`, `api/voice-speech.js`, `test-v364-vercel-oidc-recovery.mjs`, `audit-project.mjs`, `package.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Producci√≥n no cambia; Preview, 3/3 externo sobre el mismo deployment y PASS f√≠sico iPhone siguen bloqueantes.
-
-## V365/V366 ¬∑ tarjeta viva e Inicio principal ¬∑ 28 de agosto de 2026
-
-`IMG_2186.png` y `IMG_2193.png` prueban dos fallas distintas: una copia configurada vac√≠a pod√≠a vencer a Score Cabo, y sin ronda operativa el Preview pod√≠a dejar expuesta una tarjeta vac√≠a en vez de `Inicio`.
-
-V365 define una ronda recuperable como configurada con uno a seis jugadores, excluye copias vac√≠as de todas las fuentes, rescata la tarjeta archivada con sus scores y repara `ACTIVE_ROUND_KEY`. V366 a√±ade `ensurePrincipalEntry()` en arranque, regreso, `pageshow` y foco; no reinicia un Registro ya visible, no cubre una tarjeta v√°lida y conserva `nueva_ronda=1` para la entrada expl√≠cita sin sustituci√≥n antes de `INICIAR RONDA`.
-
-La integraci√≥n parte del `main` con recuperaci√≥n OIDC/voz ya promovida; no sustituye `api/`, dependencias ni bancos de comunicaci√≥n universal. La auditor√≠a acumulada incluye Registro, score individual y multihoyo, cierres/acumulados, Match Play y LIVE. Producci√≥n contin√∫a intacta hasta Preview READY, comprobaci√≥n externa y PASS f√≠sico iPhone.
-
-Inventario literal del cambio: `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V365_RECUPERACION_RONDA_ACTIVA/REPORTE_V365_RC037.md`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V366_ENTRADA_PRINCIPAL/REPORTE_V366_RC038.md`, `test-v289-stableford-new-round-empty.mjs`, `test-v365-active-round-empty-recovery.mjs` y `test-v366-principal-entry-recovery.mjs`.
-
-## V367 ¬∑ comunicaci√≥n universal hablada en la misma pantalla
-
-La condici√≥n f√≠sica m√°s reciente sustituye la expectativa visual anterior: una pregunta universal pronunciada desde Inicio, Registro o tarjeta no abre otra pantalla. `answerBrowserVoiceQuery()` conserva la vista, utiliza `voiceOnly:true` y reproduce la respuesta audible; el acceso AI de un toque prepara audio y escucha sin montar el panel.
-
-Archivos literales V367: `index-grupal.html`, `api/voice-health.js`, `service-worker.js`, `test-v354-voice-fallback.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs`, `test-v357-ios-voice-transport-recovery.mjs`, `test-v361-synchronized-voice.mjs`, `test-v364-explicit-new-round-entry.mjs`, `test-v367-universal-voice-in-place.mjs`, `Intocables/README.md`, `Intocables/intocables-gate.mjs`, `audit-project.mjs`, `package.json`, documentos rectores e inventario. Producci√≥n no cambia hasta Preview READY y PASS f√≠sico iPhone.
-
-## V368 ¬∑ entrada web can√≥nica sincronizada ¬∑ 29 de agosto de 2026
-
-RC-040 consolida las conversaciones sobre `fix-v366-integrated-main` (`03ca12e`). El enlace web oficial abre Registro aun con Match Play persistido, sin borrar la tarjeta; la app instalada conserva su entrada PWA y reabre la tarjeta viva. El navegador reprodujo y V368 elimin√≥ `Cannot access 'standaloneApp' before initialization`. `test-v368-canonical-home-entry.mjs`, los contratos V364/V366 actualizados, la cach√©, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V368_ENTRADA_CANONICA/REPORTE_V368_RC040.md`, controles y ambos ROADMAPS bloquean enlaces V365‚ÄìV367. Producci√≥n no se modifica; Preview y PASS f√≠sico iPhone contin√∫an obligatorios.
-
-El Gate remoto exige que `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` viajen juntos en todo resellado V368; el build rechazado no se presenta como enlace de prueba.
-
-## V369 ¬∑ compatibilidad LIVE con jugadores activos heredados ¬∑ 29 de agosto de 2026
-
-La prueba f√≠sica produjo tres `POST /api/live 400` al activar el enlace de la ronda de Jaime y Gustavo. La tarjeta usa identificadores estables `p1..p6`, mientras el servidor LIVE exig√≠a ocho caracteres m√≠nimos. V369 acepta esos identificadores internos de 1‚Äì160 caracteres, conserva el filtro de caracteres permitidos y a√±ade la regresi√≥n exacta `p1/p2`. No modifica micr√≥fono, Registro, Score, ronda ni persistencia.
-
-## V370 ¬∑ visor LIVE exclusivo Match Play ¬∑ 29 de agosto de 2026
-
-RC-042 registr√≥ que el enlace Match Play activo mostraba la plantilla General. V370 conserva el mismo enlace y la misma ronda, pero cuando `mode=match_play` dibuja √∫nicamente parejas, nombres, HCP, hoyos y posiciones Match. Antes de comenzar muestra `MATCH POR INICIAR` con casillas vac√≠as; despu√©s usa exclusivamente `UP`, `DOWN`, `AS` y el cierre Match, sin tabla Gross/Neto General.
-
-## V371 ¬∑ Gross por hoyo + marcador Match expl√≠cito + micr√≥fono sellado ¬∑ 29 de agosto de 2026
-
-La prueba f√≠sica `IMG_90B5C8C0-8E86-43B7-8C3E-3CE4B7E8A35D.jpeg` confirm√≥ actualizaci√≥n LIVE, pero obligaba al visitante a interpretar flechas y no mostraba el Gross. V371 conserva el enlace y muestra en cada casilla el Gross; una flecha aparece √∫nicamente cuando ese hoyo tuvo ganador/perdedor y lleva la posici√≥n acumulada (`‚ñ≤ 1 UP`, `‚ñº 1 DOWN`). Un hoyo empatado usa `‚Äî`, sin repetir flechas. El encabezado declara simult√°neamente la posici√≥n de ambos jugadores.
-
-El micr√≥fono aprobado no se refactoriza ni se toca. `Intocables/MICROFONO_APROBADO.lock.json` sella por SHA-256 el transporte de voz y once bancos de Registro, Score individual, multihoyos, persistencia y AI UNIVERSAL; `intocables-gate.mjs` verifica hashes y ejecuta esos bancos antes de permitir build o despliegue.
-
-El inventario V311 se reconstruye con sello `V371-MATCH-GROSS-MICROPHONE-LOCK`; `scripts/rebuild-inventory-pdfs.py`, el lock y los tres PDF quedan sincronizados con ambos ROADMAPS.
-
-## V397 LAB ¬∑ respaldo integral de historial y acceso recordado ¬∑ 6 de septiembre de 2026
-
-RC-044 reproduce que una cuenta conectada recuperaba 1 ronda aunque el dispositivo origen ten√≠a 5 tarjetas oficiales. La causa era puntual: `backupCentralNow()` s√≥lo enviaba la ronda global activa. V397 local recorre las rondas oficiales archivadas m√°s la actual, deduplica por ID y crea una mutaci√≥n central independiente para cada tarjeta. El banco permanente construye cinco IDs, repite uno y a√±ade un borrador sin tarjeta; exige exactamente cinco.
-
-El formulario a√±ade `RECORDAR CORREO Y MANTENER SESI√ìN`: s√≥lo nombre/correo se guardan localmente; la contrase√±a permanece a cargo del gestor seguro del navegador mediante `autocomplete="username"` y `autocomplete="current-password"`. La sesi√≥n ya se revalida al abrir y s√≥lo se cierra con la acci√≥n expl√≠cita. Archivos funcionales: `index-grupal.html`, `account-backup.js`, `test-v282-optional-account-backup.mjs`.
-
-El commit remoto `59ce0183e085175b9609c93a5962ff2baa58b123` fue rechazado correctamente por `FAIL INVENTORY GATE`. El candado `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se regener√≥ desde ese √°rbol limpio y se versiona junto con este cierre documental antes de repetir el Preview LAB. Producci√≥n permanece intacta.
+Y™Áäx-ÆÈ‹j◊ù¢Îi∫⁄+äßj[hëÈ‹¢ÈÌÎçtÂ:-jZ.∂õ≠ñ)ﬁ≥R2$ÙD‘ıdU$ƒ¿†¢µ$ÙD‘ıdU$ƒ¬+rvˆ∆b66˜&R6&BuE“Ö$ÙD‘ÙıdU$ƒ≈ıc#ìÁÊrê†¢22c33"+r÷ˆÊVFGV¬í÷G&ó¢6ˆ◊∆WFFR6VwVñ÷ñVÁF†§V¬&˜ñWF&ñÚWÜñvRVR6∂ñÁ2¬vˆ∆b¬fVv2íF˜G2W&÷óF‚V∆Vvó"ÁFW2FR∆&ˆÊFVÊFRF˜2÷ˆÊVF3¢¢ßVWG¶∆W2ÜˆuEíÚL;6∆&W2ÜFˆU4Fí¢¢‚6FßVVvÚ&W6VÁFF˜266ñ∆∆2FR&FñÚ◊WGV÷VÁFRWÜ6«WñVÁFW3≤V∆Vvó"VÊFW6÷&6∆˜G&‚∆÷ˆÊVFVVFwV&FFV‚∆6ˆÊfñwW&6ú;6‚ífñ¶6ñ‚6ˆÁfW'6ú;6‚˜"ÁF∆∆¬f˜¢¬6Ê6Ü˜B¬6˜'&V66ú;6‚¬F&¶WFv∆ˆ&¬˜W'6ˆÊ¬¬Üó7F˜&ñ¬¬6ñÊ7&ˆÊó¶6ú;6‚¬&W7FW&6ú;6‚í∆óVñF6ú;6‚‚V¬f∆˜"W2˜6ñˆÊ¬&V¬w'WÚíÁVÊ6«FW&w&˜72¬ÊWFÚÊíV¬&W7V«FFÚFW˜'FófÚ‡†•c33"Üˆ÷ˆ∆ˆv∆'VóFV7GW&fó6ñ&∆RFR∆˜27VG&ÚßVVv˜2&VRV‚ßVvF˜"6ñ‚WáW&ñVÊ6ñÊÚ&V6ñ&<;6∆ÚV‚6∆FÚfñÊ¬‚∆÷G&ó¢6ˆ‹;¶‚ñÊ6«WñRW7FFÚíÜ˜ñ˜2&W7VV«F˜2˜VÊFñVÁFW2¬VÊñFFW2ÚVÁF˜27V◊V∆F˜2¬6''í&ñW'FÚ¬&Vvó7G&˜2¬FñÊW&Ú''WFÚ÷˜fñFÚ¬ÊWFÚWÜ7FÚ∆óVñF"¬Ã:÷FW"ÚV◊FR¬6∆F˜2ñÊFófñGV∆W2íVú:ñ‚vVú:ñ‚‚6FßVVvÚ;FR7R&ñW6vÚ;ßFñ√¢÷ñ˜"˜¶Ú6∂ñÁ3≤Wá˜6ñ6ú;6‚FV¬vˆ∆b˜"&óf¬íÜ˜ñÛ≤÷ñ˜"6÷&ñÚí&ñW6vÚ‹:Üñ÷Ú˜"GVV∆ÚfVv3≤Rñ◊7FÚFRV‚VÁFÚ˜"ßVvF˜"V‚F˜G2‚∆F&¶WFfñÊ¬6ˆÁ6W'f∆˜2÷ó6÷˜27V◊V∆F˜2&VFóF˜,:÷‡†§∆˜2&Ê6˜2FW7B◊c3#í◊6∂ñÁ2Ê÷ß6íFW7B◊c33◊6ñFR÷v÷W2Ê÷ß6fW&ñfñ6‚∆2ˆ6ÜÚ66ñ∆∆2ÚB¬WÜ6«W6ófñFBÊFóf¬Ê˜&÷∆ó¶6ú;6‚FR÷ˆÊVF¬<:÷÷&ˆ∆˜2¬‹:óG&ñ62¬6W&Ú◊7V÷¬W'6ó7FVÊ6ñ¬6˜'&V66ú;6‚í'FVf7F˜2‚∆VFóF˜,:÷ñÁFVw&¬&ˆ,;2¢£ÉíVWFW2¢¢¬¢£3#RgVVÁFW2¢¢íG&W2ñÁfVÁF&ñ˜2Db6V∆∆F˜2V‚c33"‚V¬6˜'FRfó6ñ&∆RW2c33"‘ET¬‘5U%$T‰5í‘‘E$ïÇ”##cÉ#fí∆6˜ññÁ7F∆&∆RW6w66r÷÷ˆ&ñ∆R◊c33"÷GV¬÷7W'&VÊ7í÷÷G&óÜ‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F≤f«FV&∆ñ6"V¬&WfñWrí&ˆ&"∆'VV&l:◊6ñ6V‚ïÜˆÊRÁFW2FR7V«VñW"÷ˆÁF¶R‡†§&6Üóf˜2WÜ7F˜2c33#¢6∂ñÁ2Êß6¬vˆ∆bÊß6¬fVv2Êß6¬F˜G2Êß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬6&B÷'Fñf7G2Êß6¬FW7B◊c3#í◊6∂ñÁ2Ê÷ß6¬FW7B◊c33◊6ñFR÷v÷W2Ê÷ß6¬6W'fñ6R◊v˜&∂W"Êß6¬∆˜2&Ê6˜2VRfñ¶‚'Vñ∆Bˆ66å:í¬67&óG2˜WFFR÷ñÁfVÁF˜'í◊c3#ÇÁñ¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ıT‰EÙDîEÛuÙdî4Ñ5Ù‘ÙDƒîDDU5ı$Ù$T‰DU"Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷Fí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‡†¢22c33+r÷G&ó¢ñÁfW7FñvFFRVW7F2í∆VÊwV¶R˜W&Fóf†§∆'VV&l:◊6ñ6FR¢•c33’#2VVL;2&ˆ&FV‚ïÜˆÊR¢£¢¬Fˆ6"tÙƒf¬;¶Êñ6÷VÁFRvˆ∆bW&÷ÊV6ú;2fW&FR¬$Ù‰D‰ı$‘∆6RFW6÷&<;2í∆6ˆÊfñwW&6ú;6‚6˜'&V7F6R'&ú;2‚V¬FVfV7FÚFR6V∆V66ú;6‚Fˆ&∆RVVF6W'&FÛ≤&ˆGV66ú;6‚6ˆÁFñÏ;¶ñÁF7FíT‰B’4¥í”f6ñwVR&ñW'FÚ&f∆ñF"V¬gVÊ6ñˆÊ÷ñVÁFÚ6ˆ◊∆WFÚFR6FßVVvÚ‡†§V¬ÁVWfÚT‰B‘DîB”vWÜñvRVÊfñ6ÜñÊFWVÊFñVÁFR˜"6F÷ˆF∆ñFBíW7VV÷¢&ˆÊFÊ˜&÷¬¬7F&∆Vf˜&B¬÷F6Ç∆í¬f˜W"&∆¬¬,:7Fñ6¬6∂ñÁ2¬vˆ∆b¬fVv2¬F˜G2íf&ñÁFW2VR6÷&ñ‚V¬<:∆7V∆Ú‚6FÜˆ¶FV&W,:6W"6ˆ◊&VÁ6ñ&∆R∆˜2;˜2¬gVÊ6ñˆÊ"ñ◊&W6V‚&∆Ê6ÚíÊVw&Ú¬ñÊ6«Vó"V‚V¶V◊∆Ú&óF‹:óFñ6Ú6ˆ◊∆WFÚ¬W7G&FVvñ¬W7FF˜2¬7V◊V∆F˜2¬∆óVñF6ú;6‚ív∆˜6&ñÚ‚∆VFBFVfñÊR<;6∆Ú∆6∆&ñFBFñL:7Fñ6¢V¬FñÊW&ÚW&÷ÊV6R6ñV◊&RFVÁG&ÚFV¬∆6Ê6RvVÊW&¬FR6FÜˆ¶í6Fw'WÚFV6ñFR6í∆Ú∆óVñFÚßVVv;¶Êñ6÷VÁFR6ˆ‚VÁF˜2˜VÊñFFW2‚∆W7V6ñfñ66ú;6‚fófRV‚4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ıT‰EÙDîEÛuÙdî4Ñ5Ù‘ÙDƒîDDU5ı$Ù$T‰DU"Ê÷F‡†•c337W7FóGWñR∆&W6VÁF6ú;6‚‹:÷Êñ÷FRVW7F2˜"VÊ÷G&ó¢˜W&FófñÁfW7FñvF‚vˆ∆bV∆ñ÷ñÊ∆GW∆ñ6ñFB6ˆÊgW66ˆ∆Ú&6Vˆ∆ˆÊVí6ˆÁ6W'fG&W2FV6ó6ñˆÊW26ˆ◊&VÁ6ñ&∆W3¢¢§6ˆ‚&V¶¢¢¬¢§∆ˆ&Ú6ˆ∆óF&ñÚ¢¢í¢§∆ˆ&Ú6ñVvÚ¢¢‚&Vvó7G&6íV¬vˆ∆b6∆R&ñ÷W&ÚÚ;¶«Fñ÷Ú¬◊V«Fó∆ñ6F˜&W26ˆÊfñwW&&∆W2¬F˜R÷ˆÊWF&ñÚ˜"&óf¬ˆÜ˜ñÚ¬&ñW6vÚFV¬vˆ∆b¬FV6ó6ñˆÊW2í66˜&W2VÊFñVÁFW2¬7V◊V∆F˜2¬VÊñFFW2ÊWF2¬FñÊW&Ú÷˜fñFÚí∆óVñF6ú;6‚‚fVv2Wá∆ñ6<;6÷ÚBíRf˜&÷‚CR¬÷ÊV¶6˜'&V7F÷VÁFR66˜&W2FRÚ‹:2(	CíBf˜&÷‚N(	B¬W&÷óFR6˜&F"\:íˆ7W'&R6í÷&2&V¶2Ü6V‚&ó&FñRí◊VW7G&˜"Ü˜ñÚÏ;¶÷W&˜2¬fˆ«FV˜2¬:wVñ∆2¬F˜W2¬VÁF˜2÷˜fñF˜2í6∆F˜2‚F˜G2FVfñÊR6FL:ó&÷ñÊÚV‚W7;ˆ¬¬÷ÁFñVÊRvF2∆2f&ñÁFW2VRVVFV‚GW∆ñ6"WfVÁF˜2¬6W&VÁF˜2˜6óFóf˜2ˆÊVvFóf˜2¬÷ÁV∆W2ˆWFˆ‹:Fñ6˜2í◊VW7G&V¬FWF∆∆RFR6FÜ˜ñÚ‡†§∆2&Vv∆2VÊófW'6∆W2ÊÚ6RñÁfVÁF„¢∆2FñfW&VÊ6ñ2&V∆W2VÁG&Rw'W˜2VVF‚6ˆÊfñwW&&∆W2í&˜GV∆F2‚∆&6RñÁfW7FñvFWFñ∆ó¶Ñ&ó&FñW2ívˆ∆bvˆ∆b66˜&V6&B&vˆ∆c≤÷6ÜñR¬Ñ&ó&FñW2ívˆ∆bFñvW7B&fVv3≤Ñ&ó&FñW2¬◊ï66˜&V6&Bí44t&F˜G2ÙßVÊ≥≤U4t6R6ˆÁ6W'f6ˆ÷ÚWF˜&ñFBFV¬å:ÊFñ6í66˜&RFW˜'FófÚ‚V¬FñÊW&ÚÁVÊ6÷ˆFñfñ6V¬66˜&Rˆfñ6ñ¬‡†§&6Üóf˜2WÜ7F˜2c33¢vˆ∆bÊß6¬fVv2Êß6¬F˜G2Êß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬6&B÷'Fñf7G2Êß6¬FW7B◊c33◊6ñFR÷v÷W2Ê÷ß6¬6W'fñ6R◊v˜&∂W"Êß6¬67&óG2˜WFFR÷ñÁfVÁF˜'í◊c3#ÇÁñ¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊí∆˜2&Ê6˜2VRfñ¶‚V¬ñFVÁFñfñ6F˜"FR'Vñ∆Bˆ66å:í‚V¬6˜'FRfó6ñ&∆RW2c33’$U4T$4ÑTB’4îDR‘t‘U2”##cÉ#fí∆6˜ññÁ7F∆&∆RW6w66r÷÷ˆ&ñ∆R◊c33◊&W6V&6ÜVB◊6ñFR÷v÷W6‡†¢22c33+r6∂ñÁ2¬vˆ∆b¬fVv2¬F˜G2í6Vó2ßVvF˜&W0†¢¢§Ü˜FfóÇc33’#2FW7\:ó2FR&V6Ü¶Úl:◊6ñ6Û¢¢¢∆6GW&&V¬FRïÜˆÊRFV÷˜7G,;2VR¬V∆Vvó"tÙƒfFˆFl:÷ˆL:÷‚VVF"fW&FW2$Ù‰D‰ı$‘∆ítÙƒf‚c33’#"VVF&V6Ü¶F‚#2ñÊ6˜'˜&V‚;¶Êñ6ÚW67&óF˜"fó7V¬&∆26ñWFR˜6ñˆÊW2¬∆ñ◊ñ6ˆÊfñwW&6ñˆÊW2∆FW&∆W2‹;¶«Fó∆W2ÜW&VFF2¬FW6÷&6∆2˜G&26Vó2ÁFW2FR&V6ˆÁ7G'Vó"∆ÁF∆∆ígVV«fRf∆ñF"FW7\:ó2FV¬&VÊFW"‚∆66å:íñÁ7F∆&∆R7V&Rw66r÷÷ˆ&ñ∆R◊c33◊6ñFR÷v÷W2◊#6≤FW7B◊c33◊6ñFR÷v÷W2Ê÷ß66ñ◊V∆WÜ7F÷VÁFRV¬F˜VRtÙƒbíWÜñvRf«6VV‚Ê˜&÷¬¬÷F6Ç∆í¬f˜W"&∆¬¬6∂ñÁ2¬fVv2íF˜G2¬6ˆ‚G'VV;¶Êñ6÷VÁFRV‚vˆ∆b‡†¢¢•VÊFñVÁFW2&Vvó7G&F˜3¢¢¢T‰B’T$í”V6W&∆FWFV66ú;6‚WFˆ‹:Fñ6FV¬6◊Ú˜"u2FR6∆ñ÷˜G,:fñ6ÚíFR∆2Fó7FÊ6ñ2¬w&VV„≤T‰B’%4r”fFVfñÊR∆6ñÊ7&ˆÊó¶6ú;6‚fW'6ñˆÊFFR&Vv∆2FRvˆ∆bFW6FRgVVÁFW2ˆfñ6ñ∆W2‚6R7&V‚∆2W7V6ñfñ66ñˆÊW24ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ıT‰EıT$ïÛUÙDUDT44îÙÂÙ4’ııı%Ùu2Ê÷Fí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ıT‰Eı%4uÛeı4î‰5$Ù‰ï§4îÙÂı$Ttƒ5ÙtÙƒbÊ÷F¬í6R7GV∆ó¶‚4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷Fí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F‡†¢¢•f˜¢˜7VW7Fí&Vvó7G&F¢¢¢T‰B’dı¢”6ñÊ6˜'˜&G&W2ˆ'6W'f6ñˆÊW2l:◊6ñ62ÁVWf26ñ‚FV6∆&&∆2ñ◊∆V÷VÁFF3¢÷G&ó¢ˆ&∆ñvF˜&ñ&&W7VW7F2W7GVFñF2¬&ˆgVÊF2íf˜&÷∆W3≤6˜'&V66ú;6‚FV¬6˜'FRˆ'6W'fFÚV‚∆VñÁF6ˆÁfW'66ú;6„≤ífó6˜2&ñ∆FW&∆W2WÜ7F˜2U45T4Ñ‰DˆÚ$U5Ù‰DîT‰DˆV‚&ˆ¶Ú'FVÁFR‚˜"˜&FV‚FV¬&˜ñWF&ñÚ¬∆V¶V7V6ú;6‚gVV«fR&ñ÷W&Ú∆6ˆÊfñwW&6ú;6‚í'VV&FR4¥îÂ2¬tÙƒb¬dTt2íDıE2‡†§V¬¢£#bFRv˜7FÚFR##b¢¢T‰B’4¥í”f6FRFó6\;Úñ◊∆V÷VÁF6ú;6‚6ˆ◊&ˆ&&∆R‚6∂ñÁ2Êß6¬vˆ∆bÊß6¬fVv2Êß6íF˜G2Êß66ˆ‚÷˜F˜&W2W&˜26ˆÊV7FF˜2¬66˜&Rˆfñ6ñ¬¬ÊÚ÷VÏ;ß2FR&W7VW7F2fñ¶2‚∆fVÁFÊFR˜6ñˆÊW26RFófñFRV‚F˜26ˆ«V÷Ê2(	F÷ˆF∆ñFFW2WÜó7FVÁFW2∆óßVñW&FíßVVv˜2ÁVWf˜2∆FW&V6Ü(	Bí∆ÁF∆∆&ñÊ6ó¬FR∆F&¶WF6ˆÁ6W'f7Rf˜&÷FÚ‡†•6∂ñÁ2˜W&w&˜72ÙÊWFÚ&F˜26Vó2ßVvF˜&W26ˆ‚VÊñFB÷ˆÊWF&ñ¬6''í¬Fófó6ú;6‚ÚÁV∆6ú;6‚FRV◊FW2‚vˆ∆b&˜FFV6ó6ñˆÊW2&G&W26Vó2ßVvF˜&W2íÊÚW&÷óFR6ñW'&R6ˆ‚Ü˜ñ˜26ñ‚&V¶ı6ˆ∆ÚÙ∆ˆÊRÙ&∆ñÊB‚fVv2G&&¶6ˆ‚7VG&ÚÚ6Vó2ßVvF˜&W3≤∆f&ñÁFRFR6Vó2W6G&W2&V¶2í6ˆ◊&6ñˆÊW2""‚F˜G2W&÷óFR7Fóf"íf∆˜&"WfVÁF˜2ÁFW2FRßVv"¬÷ÁFñVÊRvF2˜"FVfV7FÚ∆2&Vv∆2FRw'WÚ÷ñvˆ¬óßVñW&FíFW&V6Ü¬í6W&V¬6∆FÚV6ˆÏ;6÷ñ6ÚFV¬66˜&RFW˜'FófÚ‚÷F6Ç∆ííf˜W"&∆¬6R◊Ã:÷‚∆2&V¶2fW&FR¬˜&ÚíßV¬‡†§V¬6ñW'&R¬6˜'&V66ú;6‚ˆfñ6ñ¬¬F&¶WF2v∆ˆ&¬˜W'6ˆÊ∆W2¬Üó7F˜&ñ¬¬6ˆÁ7V«F2¬6ñÊ7&ˆÊó¶6ú;6‚í&W7FW&6ú;6‚6ˆÁ6W'f‚∆˜27VG&Ú&W7V«FF˜2V‚V¬6Ê6Ü˜Bfó&÷FÚ‚FW7B◊c3#í◊6∂ñÁ2Ê÷ß6íFW7B◊c33◊6ñFR÷v÷W2Ê÷ß67V'&V‚V◊FW2¬Ç¬Ã:÷÷óFW2¬◊V«Fó∆ñ6F˜&W2¬G&W2&V¶2¬6W&Ú◊7V÷¬&∆˜VVÚFR6ñW'&Rvˆ∆b¬6˜'&V66ú;6‚¬'FVf7F˜2¬f˜¢íW'6ó7FVÊ6ñ‚V¬&Ê6Ú∆ˆ6¬íV¬'Vñ∆B&V¬FRfW&6V¬&ˆ&&ˆ‚∆˜2ÉíVWFW2¬V¬ñÁfVÁF&ñÚFR3#"gVVÁFW2¬6W&ÚgV∆ÊW&&ñ∆ñFFW2í∆VW'FfófFR&Vv∆26ˆ‚÷ˆFV∆Ú¬,;ß7VVFvV"¬6Vó2gVVÁFW2ˆfñ6ñ∆W2í66˜&T6ÜÊvVC¶f«6V‚V¬&WfñWrG≈ÛF≥Ucó$gvµeÖgwU'v∑D&ßFtsF$fVVL;2$TEñFW6FRV¬6ˆ÷÷óB&V÷˜FÚVÜf##Cs3CCF#CVcñfS#s##ÉCvcñcCv‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F≤f«F‚&Wfó6ú;6‚fó7V¬˜L:7Fñ¬í&ˆÊFl:◊6ñ6V‚ïÜˆÊR‡†•&VfW&VÊ6ñ2&ˆfW6ñˆÊ∆W26ˆÁ7V«FF3¢&ó&FñT&WBí7V&&óB&fVv3≤vó¢vˆ∆b¬dƒÙr¬7V&&óBívˆ∆b÷ˆÁFÜ«í&vˆ∆c≤FÜR7BFVR&F˜G2‚∆2f&ñÁFW2VRÊÚ6ˆ‚VÊófW'6∆W2VVF‚&˜GV∆F26ˆ÷Ú&Vv∆2FRw'WÚÚFF6ú;6‚vˆ∆b66˜&R6&BuB‡†§&6Üóf˜2gVÊ6ñˆÊ∆W2c3#íıc33¢6∂ñÁ2Êß6¬vˆ∆bÊß6¬fVv2Êß6¬F˜G2Êß6¬÷F6Ç◊∆íÊß6¬f˜W"÷&∆¬Êß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬&˜VÊB÷6∆˜7W&RÊß6¬6&B÷'Fñf7G2Êß6¬6&B÷∆ñ'&'íÊß6¬Üó7F˜&ñ6¬÷Ê«óFñ72Êß6¬÷7FW"÷FF◊7ñÊ2Êß6¬66˜VÁB÷&6∑WÊß6¬6W'fñ6R◊v˜&∂W"Êß6¬67&óG2ˆ'Vñ∆B÷÷ˆ&ñ∆R◊vV"Ê÷ß6¬fW&6V¬Êß6ˆÊ¬VFóB◊&ˆ¶V7BÊ÷ß6¬FW7B◊c3#í◊6∂ñÁ2Ê÷ß6íFW7B◊c33◊6ñFR÷v÷W2Ê÷ß6‚∆Fˆ7V÷VÁF6ú;6‚¬÷¬÷&˜2$ÙD‘¬G&W2ñÁfVÁF&ñ˜2Dbí7R6V∆∆Ú6R7GV∆ó¶‚ÁFW2FR&WfñWr‡†¢22c3#Ç’#"+r6VÁG&ÚFR&Vv∆2FRvˆ∆bˆfñ6ñ¬6ˆ‚&W7∆FÚ,:6ñ6Ú6ñ‚6ˆÊWÜú;6‡†§V¬¢£#bFRv˜7FÚFR##b¢¢6ˆ÷ñVÁ¶∆V¶V7V6ú;6‚gVÊ6ñˆÊ¬FRT‰B’$Tr”‚∆÷ó6÷íT‰ïdU%4¬(â‚ñÊ6˜'˜&V‚66W6Úv∆ˆ&¬$Ttƒ6¬6WF6óGV6ñˆÊW2˜"FV6∆FÚÚ÷ñ7,;6fˆÊÚ¬6ˆÁ6W'f6◊Úí÷ˆF∆ñFB6ˆ÷Ú6ˆÁFWáFÚí6ˆÁ7V«FV¬÷ˆFV∆ÚfÁ¶FÚ÷VFñÁFRˆíˆvˆ∆b◊'V∆W6‚∆ÜW'&÷ñVÁF∆ñ÷óFL:ñ6Êñ6÷VÁFR∆vV"∆˜2Fˆ÷ñÊñ˜2ˆfñ6ñ∆W2W6vÊ˜&ví&ÊFÊ˜&v¬WÜñvRVÊgVVÁFRˆfñ6ñ¬fó6ñ&∆RíW6∆VFñ6ú;6‚'V∆W2ˆbvˆ∆b##26ˆ‚∆26∆&ñfñ66ñˆÊW2fñvVÁFW3≤V¬6˜'FR6ˆ◊&ˆ&FÚW2FRßV∆ñÚFR##b‚ÊÚ6R6˜ñV¬&Vv∆÷VÁFÚ6ˆ◊∆WFÚÊí6Rfó&÷VÊ∆ñÁ¶¬∆ñ6VÊ6ñFR÷&6Úí&ófF‡†§∆6ˆÁ7V«F6R:◊6∆FRFˆF˜2∆˜2W67&óF˜&W2∆ˆ6∆W3¢FVÁG&ÚFR$Ttƒ2ÊÚ6RV¶V7WF‚;7&FVÊW2FR66˜&Rí∆&W7VW7FÁVÊ6∆ñ6VÊ∆ñFFW2¬6ˆÊ6VFRÜ˜ñ˜2Êí6ñW'&&ˆÊF2‚FW7B◊c3#Ç÷ˆffñ6ñ¬÷vˆ∆b◊'V∆W2Ê÷ß67V'&RR6óGV6ñˆÊW2í6ˆ◊'VV&Fˆ÷ñÊñ˜2¬6ˆÁFWáFÚ¬FWáFÚ˜f˜¢í66˜&T6ÜÊvVC¶f«6V‚V¬&WfñWrc3#Ç’#ÜG≈Û56DÊÁVT’Ñ'#&¥6”cïvGvÑÉÉ6'fíVVL;2$TEñ6ˆ‚ÉbVWFW2¬VW'Ffóf&ˆ&Fí:&&ˆ¬&V÷˜FÚWÜ7FÚcFScc3#Ü33FVC#sÉÜfcñ&FñcCvSf3‚FW7B◊c3#Ç÷∆ófR÷ˆffñ6ñ¬◊'V∆W2Ê÷ß66RV¶V7WFFVÁG&ÚFR6F'Vñ∆BfW&6V¬íWÜñvRVÊ∆∆÷F&V¬FV¬÷ˆFV∆Ú¬,;ß7VVFvV"VfV7Fóf¬¬÷VÊ˜2VÊgVVÁFRU4tıFÜR"dí6W&Ú6÷&ñÚFR66˜&R‡†•c3#Ç’#"w&Vvvˆ∆b◊'V∆W2÷ˆff∆ñÊRÊß6¢wV&F;¶Êñ6÷VÁFR&W7VW7F2VRñ&ˆ&&ˆ‚V¬fñ«G&Úˆfñ6ñ¬¬&WFñVÊRÜ7F#BVÁG&F2GW&ÁFRìL:÷2¬6ˆÁ6W'fFˆ∂VÁ2Ê˜&÷∆ó¶F˜2V‚fW¢FR∆&VwVÁF6ˆ◊∆WF¬WÜñvR6ˆñÊ6ñFVÊ6ñ7Vfñ6ñVÁFRí÷ˆF∆ñFB6ˆ◊Fñ&∆R¬◊VW7G&∆fV6ÜíÁVÊ6ñÁfVÁF6íÊÚWÜó7FRVÊ&W7VW7FFV7VF‚FW7B◊c3#Ç÷ˆff∆ñÊR÷ˆffñ6ñ¬◊'V∆W2Ê÷ß66ˆ◊'VV&gVVÁFR¬&óf6ñFB¬Ã:÷÷óFR¬6GV6ñFB¬7'V6W2ÊVvFóf˜2¬ñÁFVw&6ú;6‚tí6W&ÚW67&óGW&‚6ˆ‚W7FRVWFR∆VFóF˜,:÷÷W7G&7V&RÉrVWFW2‹:2∆VW'FfófFRfW&6V¬‚V¬÷ÁV¬fó6ñ&∆Rí7W2F˜2Db6ˆÁ6W'f‚sB:vñÊ2¬:vñÊs27GV∆ó¶F¬#c9rC3#Çí3Gì≤V¬6ˆÁG&ˆ¬fó7V¬6ˆ◊∆WFÚFV&R&ˆ&"ÁFW2FRVÁG&Vv"‚T‰B’$Tr”6ˆÁFñÏ;¶&ñW'FÚ<;6∆Ú&f˜¢l:◊6ñ6íVÊWfVÁGV¬ñÁFVw&6ú;6‚6ˆ÷W&6ñ¬ˆ∆ñ6VÊ6ñF≤ÊÚ6RFV6∆&∆ñÁ¶ˆfñ6ñ¬‡†§&6Üóf˜2WÜ7F˜2c3#É¢íˆvˆ∆b◊'V∆W2Êß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬6W'fñ6R◊v˜&∂W"Êß6¬÷ÁV¬ÊáF÷∆¬67&óG2˜WFFR÷÷ÁV¬◊vR”s2Áñ¬Fˆ72ˆ÷ÁV¬˜c3ˆ÷ÁV¬◊vW2”r”3RÊß6ˆÊ¬Fˆ72ˆ÷ÁV¬˜c3˜vR”s2ÁÊv¬Fˆ72ˆ÷ÁV¬˜c3Ù÷ÁV≈Ùvˆ∆eı66˜&UÙ6&EÙuEÙ4Ù’ƒUDÚÁFf¬Fˆ72ˆ÷ÁV¬˜c3Ù÷ÁV≈ˆFUÙgVÊ6ñˆÊW5Ùvˆ∆eı66˜&UÙ6&EÙuEÛ”bÁFf¬FW7B◊c3#Ç÷ˆffñ6ñ¬÷vˆ∆b◊'V∆W2Ê÷ß6¬FW7B◊c3#r◊Fˆˆ¬÷fˆ∆∆˜wW÷ÊÚ◊6ñ∆VÊ6RÊ÷ß6¬FW7B◊c3#b÷ÊÚ◊6ñ∆VÁB÷6ˆÁfW'6Fñˆ‚Ê÷ß6¬FW7B◊c3#R÷ñFV¬÷÷ñ7&˜ÜˆÊR◊Fñ÷ñÊw2Ê÷ß6¬FW7B◊c3#B◊&V¬◊G&ffñ2Ê÷ß6¬FW7B◊c3#2÷∆ˆÊr÷◊V«FóF˜ñ2÷6ˆÁFWáBÊ÷ß6¬FW7B◊c3#"◊&V¬◊7W7FñÊVB÷6FFñRÊ÷ß6¬FW7B◊c3"÷vVÊW&¬÷6FFñRÊ÷ß6¬FW7B◊c3r÷÷F6Ç÷'&˜w2÷f˜&÷BÊ÷ß6¬FW7B◊c3R÷Üó7F˜'í÷ÊfñvFñˆ‚◊¶W&Ú÷W'&˜"Ê÷ß6¬FW7B◊c3B÷Üˆ÷ˆvVÊV˜W2◊&Vvó7G&Fñˆ‚÷7FñˆÁ2Ê÷ß6¬FW7B◊c#ì÷'&ÊB÷ñ6ˆÁ2÷6∆VÁWÊ÷ß6¬FW7B◊c#ÉB÷ÊFófR◊6∂vR÷vVÊW&Fñˆ‚Ê÷ß6¬FW7B◊c#É◊v÷ñÁ7F∆∆Fñˆ‚Ê÷ß6¬FW7B◊c#É÷∆ˆ6¬÷Üó7F˜'í÷ñÁ6ñváG2Ê÷ß6¬FW7B◊c#sí÷∆ˆ6¬÷6&B÷∆ñ'&'íÊ÷ß6¬FW7B◊c#sÇ÷6&B÷ñ÷vR◊Fb÷Wá˜'BÊ÷ß6¬FW7B◊c#sr÷ˆffñ6ñ¬◊&˜VÊB÷6˜'&V7FñˆÁ2Ê÷ß6¬FW7B◊c#sb÷÷ÁV¬÷Üˆ∆R÷ÊfñvFñˆ‚Ê÷ß6¬FW7B◊c#sR◊7F&∆R÷∆ófR◊fˆñ6R◊GW&Á2Ê÷ß6¬FW7B◊c#sB÷6ˆ◊∆WFR÷6˜W'6W2◊fˆñ6R÷˜W&FñˆÁ2Ê÷ß6¬FW7B◊c#s"÷FVfñÊóFófR÷˜W&FñˆÊ¬◊&V∆V6RÊ÷ß6¬FW7B◊7F&∆Vf˜&B◊VíÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬tÙƒeı44ı$UÙ4$EÙuEÙu%U≈Ù‘ÂT≈Ù‘U5E$ÚÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ¬$ÙD‘ÙıdU$ƒ¬Ê÷Fí$ÙD‘ÙÙDUDƒƒRÊ÷F‚∆˜2G&W2ñÁfVÁF&ñ˜2DbWáFW&Ê˜26R&VvVÊW&‚ífW&ñfñ6‚ÁFW2FV¬'Vñ∆B‡†§&6Üóf˜2Fñ6ñˆÊ∆W2FV¬6ñW'&Rc3#Ç’#¢FW7B◊c3#Ç÷∆ófR÷ˆffñ6ñ¬◊'V∆W2Ê÷ß6w&Vv∆VW'F&V¬ífW&6V¬Êß6ˆÊ∆gVV«fRˆ&∆ñvF˜&ñ‚&6Üóf˜2Fñ6ñˆÊ∆W2c3#Ç’##¢vˆ∆b◊'V∆W2÷ˆff∆ñÊRÊß6¬FW7B◊c3#Ç÷ˆff∆ñÊR÷ˆffñ6ñ¬◊'V∆W2Ê÷ß6¬FW7B◊c3#÷í◊VÊófW'6¬÷ñÊfñÊóGíÊ÷ß6¬6W'fñ6R◊v˜&∂W"Êß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬VFóB◊&ˆ¶V7BÊ÷ß6¬67&óG2˜WFFR÷÷ÁV¬◊vR”s2Áñ¬Fˆ72ˆ÷ÁV¬˜c3ˆ÷ÁV¬◊vW2”r”3RÊß6ˆÊ¬∆˜2'FVf7F˜2FR÷ÁV¬¬67&óG2˜WFFR÷ñÁfVÁF˜'í◊c3#ÇÁñ¬∆˜27VG&ÚFˆ7V÷VÁF˜2FR6ˆÁG&ˆ¬¬V¬6ÊFFÚí÷&˜2$ÙD‘‡†¢227GV∆ó¶6ú;6‚FR6ˆÁG&ˆ¬c3#r’#’T‰B+r6ˆ∆6ˆ◊∆WFíV¶V7V6ú;6‚W&÷ÊVÁFP†§V¬¢£#bFRv˜7FÚFR##b¢¢V¬&˜ñWF&ñÚ˜&FVÊw&Vv"íFF"FˆF˜2∆˜2VÊFñVÁFW2¬6ˆÁFñÁV"6ñ‚6ˆ∆ñ6óF"WF˜&ó¶6ñˆÊW2ñÁFW&÷VFñ2í÷ˆÁF"6FfW'6ú;6‚7VÊFÚW7L:í&V∆÷VÁFR&ˆ&F‚∆ñÁ7G'V66ú;6‚ÊÚV∆ñ÷ñÊ∆2VW'F2FR6∆ñFC¢V‚6ˆ∆Údî∆6ˆÁ6W'f&ˆGV66ú;6‚ñÁF7FíÊñÊwVÊ∆ñ6VÊ6ñ¬7&VFVÊ6ñ¬¬6ˆÁG&FÚÚñÁFVw&6ú;6‚WáFW&ÊVVFR6ñ◊V∆'6R‚∆2&Vv∆2W&÷ÊVÁFW2#.(	3#b&ˆå:÷&V‚G&6∆F&∆RG&&¶ÚL:ñ6Êñ6ÚVR∆2ÜW'&÷ñVÁF2VVF‚&W6ˆ«fW"¬FV¶&∆ÚFófñÊÊFÚ∆6ñwVñVÁFR66ú;6‚¬6ñ◊V∆"G&&¶ÚV‚6VwVÊFÚ∆ÊÚÚWÜñvó&∆R÷VÁ6¶W2&WWFñF˜2FR6ñwVV≤FˆFÚ&W˜'FRFV&R6W'&"6ˆ‚VÊ6ñvÊ6ú;6‚ñÊW\:◊fˆ6‡†§∆6ˆ∆fñvVÁFRFó7FñÊwVR∆ÚVÁG&VvFÚFR∆Ú&ñW'FÚíw&Vv∆˜2f«FÁFW2Wá&W6÷VÁFR6˜&FF˜3¢å:ÊFñ6ˆfñ6ñ¬4ÙtÙƒbÙtÑî‚6ˆ‚:÷ÊFñ6RñÁFW&ÊÚ6W&FÛ≤6◊˜2◊VÊFñ∆W26ˆ‚FF˜2ˆfñ6ñ∆W3≤u2FW˜'FófÚ˜"Ü˜ñÛ≤6∂ñÁ2¬vˆ∆b¬fVv2¬÷ñvÚ¬óßVñW&FˆFW&V6ÜíF˜G26ˆ‚VÊñFBV‚VWG¶∆W3≤∆RvF6Ç&ñ÷W&ÚívV"ı2FW7\:ó3≤ÁV&R¬7VVÁF2¬6VwW&ñFB¬W7FL:◊7Fñ62fÁ¶F2¬÷ˆÊWFó¶6ú;6‚í6W'Fñfñ66ú;6‚ñÁFVw&¬‚W&÷ÊV6V‚FV‹:2U4tı&Vv∆2FRvˆ∆b¬6∆ñ÷6ˆ◊∆WFÚV‚'FVf7F˜2¬w\:÷,:ñF¬G,:fñ6Ú6ˆ◊&FÚííT‰ïdU%4¬(â‚‡†•c3#r’#ñ&ˆ,;2V‚&WfñWrÉRVWFW2¬3gVVÁFW2¬CB∆∆÷F2&V∆W2¬#B÷FW&ñ2¬ˆ6ÜÚGW&Ê˜26ˆ‚÷V÷˜&ñ¬SSG&Á6ñ6ñˆÊW2ÜW'&÷ñVÁF(i'f˜¢í6W&ÚW'&˜&W2WáÇ‚∆VW'FñÊ÷VFñF6ñwVR6ñVÊFÚVÊ6ˆÁfW'66ú;6‚l:◊6ñ6&ˆ∆ˆÊvFV‚ïÜˆÊS≤<;6∆ÚFW7\:ó2FR7R526RW&÷óFR÷ˆÁF"í6ˆÁFñÁV"WFˆ‹:Fñ6÷VÁFR6ˆ‚V¬6ñwVñVÁFRVÊFñVÁFRV¶V7WF&∆R‡†§&6Üóf˜2WÜ7F˜2c3#r’#’T‰C¢4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ÙDï$T5E$î4U5Ù‘‰DDı$î2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ¬$ÙD‘ÙıdU$ƒ¬Ê÷Fí$ÙD‘ÙÙDUDƒƒRÊ÷F‚F÷&ú:ñ‚6R&VvVÊW&‚ífW&ñfñ6‚ñÁfVÁF&ñıÙvˆ∆eı66˜&UÙ6&EÙuEÙıdU$ƒ≈ıc3ÁFf¬ñÁfVÁF&ñıÙvˆ∆eı66˜&UÙ6&EÙuEÙÙDUDƒƒUıc3ÁFfRñÁfVÁF&ñıÙvˆ∆eı66˜&UÙ6&EÙuEıı%Ùî‘tT‰U5ıïı%T%$ı5ıc3ÁFf‡†¢226˜'&V66ú;6‚6ˆÁG&ˆ∆Fc3#r+r∆ÜW'&÷ñVÁF6ñV◊&R&Vw&W6∆f˜††§∆'VV&l:◊6ñ6&V6Ü¨;2c3#b’#"FW7\:ó2FR&˜Üñ÷F÷VÁFR6Vó2&VwVÁF3¢VÊñÁfW7Fñv6ú;6‚6ˆ'&RVÊW'6ˆÊ6ˆÊˆ6ñFV‚6ˆ∆ñ÷íVÊ6ˆÁ7V«FFRG,:fñ6ÚˆL:÷‚6ˆ◊∆WF"7Rí6ˆ‚ÖEE#¬W&ÚV¬FVÃ:ñfˆÊÚVVF&&ˆ¶ÚW67V6ÜÊFÚ6ñ‚&ˆÁVÊ6ñ"V¬&W7V«FFÚ‚ÊÚW&V‚fˆ6'V∆&ñÚFV‹:Fñ6Ú&VGV6ñFÛ¢6V&6Öˆ∆ófU˜vV&<:“&V6ñ&ú;2∆6ˆÁ7V«FíFWfˆ«fú;2FF˜3≤V¬6˜'FRW7F&V‚∆G&Á6ñ6ú;6‚<:÷Ê7&ˆÊÜW'&÷ñVÁF(i"6VwVÊF&W7VW7F(i"VFñˆFR&V«Fñ÷RV‚ïÜˆÊR‡†•c3#r6ˆÁ6W'f∆íVÊófW'6¬6ñ‚6L:∆ˆvÚí6˜'&ñvR7VG&ÚW7FF˜3¢7VV6Ö˜7F˜VF÷ÁFñVÊRV¬wV&Fú:‚Ü7F∆G&Á67&ó6ú;6‚fñÊ√≤V‚˜WGWEˆVFñıˆ'VffW"Á7F˜VFF&L:÷Úí6ñ‚ñFVÁFñfñ6F˜"ñÊÚFW6WF˜&ó¶V¬VFñÚfñÊ¬ÁFW2FRVRV◊ñV6S≤∆&W&ˆGV66ú;6‚6ˆÁ6W'fV‚wV&Fú:‚FRc6VwVÊF˜2Ü7F7R6ñW'&S≤íVÊÜW'&÷ñVÁF7WñÚ6Ê¬6RW&Fú;2&ˆGV6R&V7WW&6ú;6‚fó6ñ&∆RV‚fW¢FR&Vw&W6"V‚6ñ∆VÊ6ñÚ‚í˜fˆñ6R÷ÜV«FÇÊß6&Vvó7G&;¶Êñ6÷VÁFRWfVÁF˜2L:ñ6Êñ6˜2W&÷óFñF˜2¬Ï;¶÷W&ÚFRGW&ÊÚ¬WFíFñV◊Ú(	FÁVÊ6&VwVÁF2¬G&Á67&ó6ñˆÊW2¬Êˆ÷'&W2¬V&ñ66ñˆÊW2Êí6∆fW>(	B&VRVÊÁVWfÊˆ÷Ã:÷l:◊6ñ66VFñvÊ˜7Fñ6&∆R‡†§V¬&Ê6ÚFó&ñvñFÚV¶V7WFSS6V7VVÊ6ñ2ÜW'&÷ñVÁF(i'f˜¢¬WfVÁF˜2FR&óf6ñFB¬3GW&Ê˜2&ñ∆FW&∆W2í∆2'WF2ÁFW&ñ˜&W2‚∆6ˆÁ7V«FFó&V7FV¬V«L:ívˆ∆b(i"&FW&6ˆÊ6W6ú;6ÊFWfˆ«fú;2VÊ'WF&V¬l:∆ñFFRR∂“í&˜Üñ÷F÷VÁFR32÷ñÁWF˜2V‚V¬ñÁ7FÁFRFR'VV&≤V‚FW7FñÊÚVR<;6∆ÚFñv6ˆÊ6W6ú;6ÊFV&R&˜fˆ6"VÊ6ˆ∆&VwVÁF'&WfRFR6∆&6ú;6‚‚&ˆGV66ú;6‚6ˆÁFñÏ;¶ñÁF7Fíc3#rÊÚVVFWF˜&ó¶F&÷ˆÁF¶RÜ7FFW&÷ñÊ"∆&Vw&W6ú;6‚6ˆ◊∆WF¬FW7∆Vv"&WfñWrí&ˆ&"˜G&6ˆÁfW'66ú;6‚l:◊6ñ6&ˆ∆ˆÊvFV‚ïÜˆÊR‡†§&6Üóf˜2WÜ7F˜2c3#s¢ñÊFWÇ÷w'W¬ÊáF÷∆¬íıˆ∆ñ"˜G&ffñ2Êß6¬í˜VÊófW'6¬÷íÊß6¬í˜fˆñ6R÷ÜV«FÇÊß6¬6W'fñ6R◊v˜&∂W"Êß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬FW7B◊c3#r◊Fˆˆ¬÷fˆ∆∆˜wW÷ÊÚ◊6ñ∆VÊ6RÊ÷ß6¬FW7B◊c3#b÷ÊÚ◊6ñ∆VÁB÷6ˆÁfW'6Fñˆ‚Ê÷ß6¬FW7B◊c3#R÷ñFV¬÷÷ñ7&˜ÜˆÊR◊Fñ÷ñÊw2Ê÷ß6¬FW7B◊c3#B◊&V¬◊G&ffñ2Ê÷ß6¬FW7B◊c3#2÷∆ˆÊr÷◊V«FóF˜ñ2÷6ˆÁFWáBÊ÷ß6¬FW7B◊c3#"◊&V¬◊7W7FñÊVB÷6FFñRÊ÷ß6¬FW7B◊c3"÷vVÊW&¬÷6FFñRÊ÷ß6¬FW7B◊7F&∆Vf˜&B◊VíÊ÷ß6¬FW7B◊c#s"÷FVfñÊóFófR÷˜W&FñˆÊ¬◊&V∆V6RÊ÷ß6¬FW7B◊c#sB÷6ˆ◊∆WFR÷6˜W'6W2◊fˆñ6R÷˜W&FñˆÁ2Ê÷ß6¬FW7B◊c#sR◊7F&∆R÷∆ófR◊fˆñ6R◊GW&Á2Ê÷ß6¬FW7B◊c#sb÷÷ÁV¬÷Üˆ∆R÷ÊfñvFñˆ‚Ê÷ß6¬FW7B◊c#sr÷ˆffñ6ñ¬◊&˜VÊB÷6˜'&V7FñˆÁ2Ê÷ß6¬FW7B◊c#sÇ÷6&B÷ñ÷vR◊Fb÷Wá˜'BÊ÷ß6¬FW7B◊c#sí÷∆ˆ6¬÷6&B÷∆ñ'&'íÊ÷ß6¬FW7B◊c#É÷∆ˆ6¬÷Üó7F˜'í÷ñÁ6ñváG2Ê÷ß6¬FW7B◊c#É◊v÷ñÁ7F∆∆Fñˆ‚Ê÷ß6¬FW7B◊c#ÉB÷ÊFófR◊6∂vR÷vVÊW&Fñˆ‚Ê÷ß6¬FW7B◊c#ì÷'&ÊB÷ñ6ˆÁ2÷6∆VÁWÊ÷ß6¬FW7B◊c3B÷Üˆ÷ˆvVÊV˜W2◊&Vvó7G&Fñˆ‚÷7FñˆÁ2Ê÷ß6¬FW7B◊c3R÷Üó7F˜'í÷ÊfñvFñˆ‚◊¶W&Ú÷W'&˜"Ê÷ß6¬FW7B◊c3r÷÷F6Ç÷'&˜w2÷f˜&÷BÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬tÙƒeı44ı$UÙ4$EÙuEÙu%U≈Ù‘ÂT≈Ù‘U5E$ÚÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ¬$ÙD‘ÙıdU$ƒ¬Ê÷Fí$ÙD‘ÙÙDUDƒƒRÊ÷F‡†¢226ˆÁG&ˆ¬FRVÁG&Vvc3#b’#+r&VFW7∆ñVwVR&6&v"G,:fñ6†§V¬W7V&ñÚ6ˆÊfó&‹;2VR∆7&VFVÊ6ñ¬FRG,:fñ6ÚˆG,:÷Ü&W"VVFFÚÜ&ñ∆óFF‚V¬FW7∆ñVwVRc3#b˜&ñvñÊ¬ÊÚ6R&WWFñ∆ó¶&&ˆ&&∆˜'VR∆2f&ñ&∆W2FRVÁF˜&ÊÚ6Rfñ¶‚¬6ˆÁ7G'Vó"6FFW∆˜ñ÷VÁB‚6R&˜fˆ<;2V‚&VFW7∆ñVwVR6ñ‚÷ˆFñfñ6"V¬<;6FñvÚgVÊ6ñˆÊ√≤V¬&ñ÷W"ñÁFVÁFÚVVL;26˜'&V7F÷VÁFR&∆˜VVFÚ˜"$ÙD‘tDV¬ÊÚ&Vvó7G&"V¬÷˜fñ÷ñVÁFÚV‚÷&˜2$ÙD‘2‚c3#b’#&Vvó7G&W6RñÁFVÁFÚ¬6ˆÁ6W'f&ˆGV66ú;6‚c3#"ñÁF7Fí˜&FVÊ6ˆÁ7G'Vó"FRÁVWfÚ&WfñWrÁFW2FRV¶V7WF"∆'WF&V¬V¬V«L:í(i"6ˆ∆ˆÊñˆ∂∆ÊB¶ˆÊ&÷;Ê∆2#£3“‡†§∆&ˆ&6ú;6‚6ˆÁFñÏ;¶&ˆÜñ&ñFÜ7FVRV¬ÁVWfÚ&WfñWrFWgVV«fUD¬GW&6ú;6‚6ñ‚G,:fñ6Ú¬FV÷˜&¬Fó7FÊ6ñíÜ˜&FR<:∆7V∆ÚFW6FRvˆˆv∆R÷2&˜WFW2¬íÜ7F6ˆ◊∆WF"∆6ˆÁfW'66ú;6‚l:◊6ñ6&ˆ∆ˆÊvFV‚ïÜˆÊR‚&6Üóf˜2WÜ7F˜2c3#b’#¢$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷Fí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‡†§∆&ñ÷W&6ˆÁ7G'V66ú;6‚Fˆ7V÷VÁFFFRc3#b’#6ˆÊfó&‹;2VRtÙÙtƒUÙ‘5ÙïÙ¥UññW7F&&W6VÁFRV‚&WfñWs¢V¬FW7BFRW6VÊ6ñ&V6ñ&ú;2E$ddî5ı$ıUDUıT‰dîƒ$ƒVV‚fW¢FRE$ddî5Ù‰ıEÙ4Ù‰dîuU$TF‚V¬&∆˜VVÚW'FVÊV<:÷¬ó6∆÷ñVÁFÚFV¬FW7B¬VR6&VÊ6FVÊf<:÷íW&÷óL:÷˜"W'&˜"V¬f∆∆&6≤Ü6ñ∆7&VFVÊ6ñ¬&V¬‚6R7W7FóGWú;2;¶Êñ6÷VÁFRW6Rf∆˜"ñÁñV7FFÚ˜"W76ñÚV‚&∆Ê6Ú¬VR6R&V6˜'Ff<:÷Ú6ñ‚6ˆÁ7V«F"∆&VC≤∆Ã;6vñ6gVÊ6ñˆÊ¬FRG,:fñ6ÚW&÷ÊV6RñL:ñÁFñ6‡†¢226˜'&V66ú;6‚6ˆÁG&ˆ∆Fc3#b+rÊñÊ|;¶‚GW&ÊÚVVFRVVF"&ˆ¶Úí◊VF†§∆'VV&l:◊6ñ6V‚ïÜˆÊR&V6Ü¨;2c3#S¢FW7\:ó2FR&VwVÁF26ˆ'&RG,:fñ6ÚgWGW&Úí6ˆÁ7V÷ÚVÃ:ñ7G&ñ6Ú¬V¬÷ñ7,;6fˆÊÚW&÷ÊV<:÷&ˆ¶Úí&ñW'FÚ6ñ‚&ˆGV6ó"VÊ&V66ú;6‚‚∆˜2&Vvó7G&˜26ˆÊfó&÷&ˆ‚VRvV%%D2<:“',:÷¬W&ÚV¬6ñW'&RFV¬GW&ÊÚÊÚ∆6Á¶&∆2ÜW'&÷ñVÁF2Êí∆&W7VW7F‚∆6W6gVR6V÷ÁFñ5˜fF6ˆ‚W&vVÊ6ñ&¶6ñ‚V‚Ã:÷÷óFRFV◊˜&¬ÁFW&ñ˜"7VV6Ö˜7F˜VF≤V¬vF6ÜFˆrWÜó7FVÁFR6ˆ÷VÁ¶&FV÷6ñFÚF&FRíÊÚˆL:÷&V7WW&"W6RW7FFÚ‡†•c3#bW6&6ˆÁfW'66ú;6‚V‚6W'fW%˜fFñÊFWVÊFñVÁFR6ˆ‚V÷'&¬„"¬&Vfñ¶ÚFRs◊2í"√#◊2FR6ñ∆VÊ6ñÚ‚W2‹:26ñVÁFRVR∆2;7&FVÊW2FR∆∆ñ66ú;6‚¬VR6ˆÁ6W'f‚√◊2¬W&Ú6ñV◊&R˜6VRV‚fñÊ¬FWFW&÷ñÊó7F‚V‚wV&Fú:‚FRVÁG&F6R&VÁVWf6ˆ‚∆˜2FV«F2&6ñ∆W2í¬6íÊÚWÜó7FRÊñÊ|;¶‚WfVÁFÚGW&ÁFRR6VwVÊF˜2¬FW6÷ˆÁF∆6GW&F66FívV¬&ˆ¶Ú6ˆ‚VÊñÁ7G'V66ú;6‚fó6ñ&∆S≤÷ÁFñVÊRV‚Ã:÷÷óFRGW&ÚFRì6VwVÊF˜2˜"GW&ÊÚ‚V‚6VwVÊFÚwV&Fú:‚&V7WW&∆˜236VwVÊF˜2VÊ&W7VW7FFV¬÷ˆFV∆ÚVRÊÚÜñ6ˆ÷VÁ¶FÚ‚∆˜2<:∆7V∆˜2W7F&∆W2í&˜Üñ÷F˜2¬6ˆ÷ÚV¬6ˆÁ7V÷ÚVÃ:ñ7G&ñ6ÚFRV‚ó&R6ˆÊFñ6ñˆÊFÚ¬6R&W7ˆÊFV‚Fó&V7F÷VÁFR6ˆ‚7WVW7F˜2V‚fW¢FR'&ó"VÊ,;ß7VVFvV"ñÊÊV6W6&ñ‡†¶FW7B◊c3#b÷ÊÚ◊6ñ∆VÁB÷6ˆÁfW'6Fñˆ‚Ê÷ß6V¶V7WF∆‹:VñÊFRFV◊˜&ó¶F˜&W2í6ˆ◊'VV&&V7WW&6ú;6‚&V¬FRW7FFÚ¬FV‹:2FR3«FW&ÊÊ6ñ2VÁG&R6ˆÁfW'66ú;6‚í;7&FVÊW2‚c3#RVVF&V6Ü¶Fíc3#b6ˆÁFñÏ;¶6ñ‚WF˜&ó¶6ú;6‚FR÷ˆÁF¶RÜ7F&WWFó"∆2F˜2&VwVÁF2WÜ7F2íVÊ6ˆÁfW'66ú;6‚l:◊6ñ6&ˆ∆ˆÊvFV‚ïÜˆÊR‚G,:fñ6ÚF◊ˆ6ÚVVF&ˆ&FÚ÷ñVÁG&2&WfñWr&W7ˆÊFE$ddî5Ù‰ıEÙ4Ù‰dîuU$TFíf«FR∆6ˆ◊&6ú;6‚6ñ◊V«L:ÊVV‚wVFV÷∆‡†§&6Üóf˜2WÜ7F˜2c3#c¢ñÊFWÇ÷w'W¬ÊáF÷∆¬6W'fñ6R◊v˜&∂W"Êß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬FW7B◊c3#b÷ÊÚ◊6ñ∆VÁB÷6ˆÁfW'6Fñˆ‚Ê÷ß6¬FW7B◊c3#R÷ñFV¬÷÷ñ7&˜ÜˆÊR◊Fñ÷ñÊw2Ê÷ß6¬FW7B◊c3#B◊&V¬◊G&ffñ2Ê÷ß6¬FW7B◊c3#2÷∆ˆÊr÷◊V«FóF˜ñ2÷6ˆÁFWáBÊ÷ß6¬FW7B◊c3#"◊&V¬◊7W7FñÊVB÷6FFñRÊ÷ß6¬FW7B◊c3"÷vVÊW&¬÷6FFñRÊ÷ß6¬FW7B◊7F&∆Vf˜&B◊VíÊ÷ß6¬FW7B◊c#s"÷FVfñÊóFófR÷˜W&FñˆÊ¬◊&V∆V6RÊ÷ß6¬FW7B◊c#sB÷6ˆ◊∆WFR÷6˜W'6W2◊fˆñ6R÷˜W&FñˆÁ2Ê÷ß6¬FW7B◊c#sR◊7F&∆R÷∆ófR◊fˆñ6R◊GW&Á2Ê÷ß6¬FW7B◊c#sb÷÷ÁV¬÷Üˆ∆R÷ÊfñvFñˆ‚Ê÷ß6¬FW7B◊c#sr÷ˆffñ6ñ¬◊&˜VÊB÷6˜'&V7FñˆÁ2Ê÷ß6¬FW7B◊c#sÇ÷6&B÷ñ÷vR◊Fb÷Wá˜'BÊ÷ß6¬FW7B◊c#sí÷∆ˆ6¬÷6&B÷∆ñ'&'íÊ÷ß6¬FW7B◊c#É÷∆ˆ6¬÷Üó7F˜'í÷ñÁ6ñváG2Ê÷ß6¬FW7B◊c#É◊v÷ñÁ7F∆∆Fñˆ‚Ê÷ß6¬FW7B◊c#ÉB÷ÊFófR◊6∂vR÷vVÊW&Fñˆ‚Ê÷ß6¬FW7B◊c#ì÷'&ÊB÷ñ6ˆÁ2÷6∆VÁWÊ÷ß6¬FW7B◊c3B÷Üˆ÷ˆvVÊV˜W2◊&Vvó7G&Fñˆ‚÷7FñˆÁ2Ê÷ß6¬FW7B◊c3R÷Üó7F˜'í÷ÊfñvFñˆ‚◊¶W&Ú÷W'&˜"Ê÷ß6¬FW7B◊c3r÷÷F6Ç÷'&˜w2÷f˜&÷BÊ÷ß6¬tÙƒeı44ı$UÙ4$EÙuEÙu%U≈Ù‘ÂT≈Ù‘U5E$ÚÊ÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ¬$ÙD‘ÙıdU$ƒ¬Ê÷Fí$ÙD‘ÙÙDUDƒƒRÊ÷F‡†¢22ñÁFVw&6ú;6‚6ˆÁG&ˆ∆Fc3#R+rFñV◊˜2ñFV∆W2FV¬÷ñ7,;6fˆÊÚ&ñ∆FW&¿†•c3#R6W&˜"ñÁFVÊ6ú;6‚∆˜2FñV◊˜2FRW67V6Ü‚∆2;7&FVÊW2FR&Vvó7G&Ú¬ÊfVv6ú;6‚í66˜&R6ˆÁ6W'f‚6W'fW%˜fF6ˆ‚V÷'&¬„"¬&Vfñ¶ÚFRs◊2í√◊2FR6ñ∆VÊ6ñÚ&&W7VW7F,:ñF‚íT‰ïdU%4¬(â‚6÷&ñ6V÷ÁFñ5˜fF6ˆ‚W&vVÊ6ñ&¶¬˜"∆ÚVRVÊW6ÊGW&¬ÊÚ6˜'FWFˆ‹:Fñ6÷VÁFR∆ñFV‚∆6W6ú;6‚f∆ñFV¬W&fñ¬6ˆÊfó&÷FÚÁFW2FR&W7ˆÊFW"¬6W&ñ∆ó¶6÷&ñ˜26ˆÊ7W'&VÁFW2ígVV«fR¬W&fñ¬˜W&FófÚ7VÊFÚFWFV7FVÊ66ú;6‚&˜ñFR∆F&¶WF‡†§∆6ˆÁfW'66ú;6‚6ˆÁ6W'f÷ñ7,;6fˆÊÚfófÚGW&ÁFR∆&W7VW7F¬ñÁFW''W6ú;6‚6ˆÊfó&÷FFW7\:ó2FR#S◊2íˆ6ÜÚ6&7FW&W2¬&˜FV66ú;6‚FRV6Ú˜"√É◊2¬&VW67V6ÜñÊ÷VFñF¬vF6ÜFˆrFRFñW¢6VwVÊF˜2í6ñW'&R;¶Êñ6÷VÁFRG&23÷ñÁWF˜26ˆ◊∆WF˜26ñ‚7FófñFB‚∆'VV&c3#R6ˆ◊ñ∆V¬¶f67&óB6ˆ◊∆WFÚí6ñ◊V∆3«FW&ÊÊ6ñ26ˆÁfW'66ú;6‚ˆ˜&FV‚‚W7FÚÊÚ7W7FóGWñR∆6ˆÁfW'66ú;6‚l:◊6ñ6&ˆ∆ˆÊvFV‚ïÜˆÊS≤V¬6˜'FR6ñwVR6ñ‚WF˜&ó¶6ú;6‚FR÷ˆÁF¶R‚F÷&ú:ñ‚VVF‚&Vvó7G&F˜26ˆ÷ÚVÊFñVÁFW2V¬VÊ∆6Rˆfñ6ñ¬ˆWF˜&ó¶FÚ6ˆ‚U4tí&Vv∆2FRvˆ∆b¬∆÷ˆF∆ñFB6∂ñÁ2í∆RvF6ÇıvV"ı2‡†§&6Üóf˜2WÜ7F˜2c3#S¢ñÊFWÇ÷w'W¬ÊáF÷∆¬6W'fñ6R◊v˜&∂W"Êß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬FW7B◊c3#R÷ñFV¬÷÷ñ7&˜ÜˆÊR◊Fñ÷ñÊw2Ê÷ß6¬FW7B◊c3#B◊&V¬◊G&ffñ2Ê÷ß6¬FW7B◊c3#2÷∆ˆÊr÷◊V«FóF˜ñ2÷6ˆÁFWáBÊ÷ß6¬FW7B◊c3#"◊&V¬◊7W7FñÊVB÷6FFñRÊ÷ß6¬FW7B◊c3"÷vVÊW&¬÷6FFñRÊ÷ß6¬FW7B◊7F&∆Vf˜&B◊VíÊ÷ß6¬FW7B◊c#s"÷FVfñÊóFófR÷˜W&FñˆÊ¬◊&V∆V6RÊ÷ß6¬FW7B◊c#sB÷6ˆ◊∆WFR÷6˜W'6W2◊fˆñ6R÷˜W&FñˆÁ2Ê÷ß6¬FW7B◊c#sR◊7F&∆R÷∆ófR◊fˆñ6R◊GW&Á2Ê÷ß6¬FW7B◊c#sb÷÷ÁV¬÷Üˆ∆R÷ÊfñvFñˆ‚Ê÷ß6¬FW7B◊c#sr÷ˆffñ6ñ¬◊&˜VÊB÷6˜'&V7FñˆÁ2Ê÷ß6¬FW7B◊c#sÇ÷6&B÷ñ÷vR◊Fb÷Wá˜'BÊ÷ß6¬FW7B◊c#sí÷∆ˆ6¬÷6&B÷∆ñ'&'íÊ÷ß6¬FW7B◊c#É÷∆ˆ6¬÷Üó7F˜'í÷ñÁ6ñváG2Ê÷ß6¬FW7B◊c#É◊v÷ñÁ7F∆∆Fñˆ‚Ê÷ß6¬FW7B◊c#ÉB÷ÊFófR◊6∂vR÷vVÊW&Fñˆ‚Ê÷ß6¬FW7B◊c#ì÷'&ÊB÷ñ6ˆÁ2÷6∆VÁWÊ÷ß6¬FW7B◊c3B÷Üˆ÷ˆvVÊV˜W2◊&Vvó7G&Fñˆ‚÷7FñˆÁ2Ê÷ß6¬FW7B◊c3R÷Üó7F˜'í÷ÊfñvFñˆ‚◊¶W&Ú÷W'&˜"Ê÷ß6¬FW7B◊c3r÷÷F6Ç÷'&˜w2÷f˜&÷BÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬tÙƒeı44ı$UÙ4$EÙuEÙu%U≈Ù‘ÂT≈Ù‘U5E$ÚÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ¬$ÙD‘ÙıdU$ƒ¬Ê÷Fí$ÙD‘ÙÙDUDƒƒRÊ÷F‡†¢22ñÁFVw&6ú;6‚6ˆÁG&ˆ∆Fc3#B+rG,:fñ6Ú&V¬FVÁG&ÚFRíT‰ïdU%4¬(â‡†•c3#BñÊ6˜'˜&G,:fñ6ÚfVÜñ7V∆"7GV¬í&˜ñV7FFÚ∆÷ó6÷6ˆÁfW'66ú;6‚VÊófW'6¬‚VÊ6ˆÁ7V«F˜"f˜¢ÚFWáFÚ6R6∆6ñfñ66ˆ÷ÚG,:fñ6Ú¬ˆ'FñVÊR˜&ñvV‚W67&óFÚÚu2Vl:÷÷W&Ú¬WÜñvRFW7FñÊÚ7Vfñ6ñVÁFRí∆∆÷FW6FR6W'fñF˜"vˆˆv∆R÷2&˜WFW26ˆ‚E$ddî5Ùt$UÙıDî‘∆‚∆&W7VW7F6W&∆˜2FF˜2FV¬&˜fVVF˜"(	DUD¬GW&6ú;6‚6ñ‚G,:fñ6ÚíFó7FÊ6ñ(	BFR∆6∆6ñfñ66ú;6‚FR6ˆÊvW7Fú;6‚FW&ófF‚ÊÚ◊VW7G&÷¬ÊÚFWgVV«fR6ˆ˜&FVÊF2íÊÚfó&÷ñÁFVw&6ú;6‚6ˆ‚v¶R‡†§∆'VV&c3#B7V'&R6∆ñFñÊ÷VFñFígWGW&¬áW6ÚÜ˜&&ñÚ¬UD¬FV÷˜&¬Fó7FÊ6ñ¬&óf6ñFB¬˜&ñvV‚f«FÁFR¬FW7FñÊÚf«FÁFR¬7&VFVÊ6ñ¬W6VÁFR¬&˜fVVF˜"6:÷FÚ¬Fñ÷V˜WB¬6ˆ∆ñ6óGVBWFˆ‹:Fñ6FRu2¬gVÊ6ú;6‚FR÷ˆFV∆ÚV‚F˜26˜2¬FWáFÚ¬f˜¢í6ˆÁFñÁVñFB&V7WW&&∆R‚W7FR6˜'FRW2<;6FñvÚ6ÊFñFFÛ¢W&÷ÊV6RWá&W6÷VÁFR6ñ‚&ˆ&6ú;6‚FR÷ˆÁF¶RÜ7F7Fóf"7&VFVÊ6ñ¬ˆf7GW&6ú;6‚í6ˆ◊∆WF"V‚wVFV÷∆∆6ˆ◊&6ú;6‚6ñ◊V«L:ÊV6ˆÁG&v¶Rí∆6ˆÁfW'66ú;6‚&ˆ∆ˆÊvFV‚ïÜˆÊR‡†§&6Üóf˜2WÜ7F˜2c3#C¢íıˆ∆ñ"˜G&ffñ2Êß6¬í˜G&ffñ2Êß6¬í˜VÊófW'6¬÷íÊß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬6W'fñ6R◊v˜&∂W"Êß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬FW7B◊c3#B◊&V¬◊G&ffñ2Ê÷ß6¬FW7B◊c3#2÷∆ˆÊr÷◊V«FóF˜ñ2÷6ˆÁFWáBÊ÷ß6¬FW7B◊c3#"◊&V¬◊7W7FñÊVB÷6FFñRÊ÷ß6¬FW7B◊c3#÷í◊VÊófW'6¬÷ñÊfñÊóGíÊ÷ß6¬FW7B◊c3"÷vVÊW&¬÷6FFñRÊ÷ß6¬FW7B◊7F&∆Vf˜&B◊VíÊ÷ß6¬FW7B◊c#s"÷FVfñÊóFófR÷˜W&FñˆÊ¬◊&V∆V6RÊ÷ß6¬FW7B◊c#sB÷6ˆ◊∆WFR÷6˜W'6W2◊fˆñ6R÷˜W&FñˆÁ2Ê÷ß6¬FW7B◊c#sR◊7F&∆R÷∆ófR◊fˆñ6R◊GW&Á2Ê÷ß6¬FW7B◊c#sb÷÷ÁV¬÷Üˆ∆R÷ÊfñvFñˆ‚Ê÷ß6¬FW7B◊c#sr÷ˆffñ6ñ¬◊&˜VÊB÷6˜'&V7FñˆÁ2Ê÷ß6¬FW7B◊c#sÇ÷6&B÷ñ÷vR◊Fb÷Wá˜'BÊ÷ß6¬FW7B◊c#sí÷∆ˆ6¬÷6&B÷∆ñ'&'íÊ÷ß6¬FW7B◊c#É÷∆ˆ6¬÷Üó7F˜'í÷ñÁ6ñváG2Ê÷ß6¬FW7B◊c#É◊v÷ñÁ7F∆∆Fñˆ‚Ê÷ß6¬FW7B◊c#ÉB÷ÊFófR◊6∂vR÷vVÊW&Fñˆ‚Ê÷ß6¬FW7B◊c#ì÷'&ÊB÷ñ6ˆÁ2÷6∆VÁWÊ÷ß6¬FW7B◊c3B÷Üˆ÷ˆvVÊV˜W2◊&Vvó7G&Fñˆ‚÷7FñˆÁ2Ê÷ß6¬FW7B◊c3R÷Üó7F˜'í÷ÊfñvFñˆ‚◊¶W&Ú÷W'&˜"Ê÷ß6¬FW7B◊c3r÷÷F6Ç÷'&˜w2÷f˜&÷BÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬tÙƒeı44ı$UÙ4$EÙuEÙu%U≈Ù‘ÂT≈Ù‘U5E$ÚÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ¬$ÙD‘ÙıdU$ƒ¬Ê÷Fí$ÙD‘ÙÙDUDƒƒRÊ÷F‡†¢226˜'&V66ú;6‚˜W&Fófc3#2+r6ˆÁfW'66ú;6‚◊V«FóFV÷&ˆ∆ˆÊvF†•c3#26˜'&ñvRVÊ:ó&FñFFR6ˆÁFWáFÚ&W&ˆGV6ñFV‚&ˆGV66ú;6„¢∆6ˆ◊VÊñ66ú;6‚6ˆÁFñÁV&¬W&Ú¬GW&ÊÚRíT‰ïdU%4¬(â‚ñÊÚ&V6˜&F&VÊ6∆fRWá&W6÷VÁFRñÊFñ6F¬ñÊñ6ñÚ‚V¬Ã:÷÷óFRVfV7FófÚW&FRÇñÁFW&6÷&ñ˜2&FWáFÚí<;6∆Ú2&V¬6ˆÁFWáFÚ6ˆ◊'FñFÚ6ˆ‚f˜¢‚Ü˜&FWáFÚ¬f˜¢í6W'fñF˜"6ˆÁ6W'f‚Ü7FÉ÷VÁ6¶W2(	CCñÁFW&6÷&ñ˜26ˆ◊∆WF˜>(	B¬7Vfñ6ñVÁFR&∆ÁVWf'VV&FR3FV÷2íc2÷VÁ6¶W26ñ‚W&FW"ı%\8‘DTCv‡†§∆'VV&FW7B◊c3#2÷∆ˆÊr÷◊V«FóF˜ñ2÷6ˆÁFWáBÊ÷ß6&W&ˆGV6R6÷&ñ˜26ˆÁ6V7WFóf˜2VÁG&R∆«Wfñ¬6«VB¬fñ¶W2¬÷VFñ6÷VÁF˜2¬vˆ∆b¬FV6Êˆ∆ˆ|:÷¬6ˆ6ñÊ¬fñ∆˜6ˆl:÷¬6ñVÊ6ñ2¬ñFñˆ÷2í˜G&˜2FV÷3≤WÜñvRVRV¬&ñ÷W"FFÚ6ñvFó7ˆÊñ&∆RV‚∆;¶«Fñ÷&VwVÁF¬f∆ñF∆÷ó6÷÷V÷˜&ñV‚FWáFÚíf˜¢¬í6ˆ◊'VV&V¬FW66'FR6ˆÁG&ˆ∆FÚ;¶Êñ6÷VÁFR¬7WW&"É÷VÁ6¶W2‡†§&6Üóf˜2c3#3¢í˜VÊófW'6¬÷íÊß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬6W'fñ6R◊v˜&∂W"Êß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬FW7B◊c3#2÷∆ˆÊr÷◊V«FóF˜ñ2÷6ˆÁFWáBÊ÷ß6¬FW7B◊c3#"◊&V¬◊7W7FñÊVB÷6FFñRÊ÷ß6¬FW7B◊c3"÷vVÊW&¬÷6FFñRÊ÷ß6¬FW7B◊7F&∆Vf˜&B◊VíÊ÷ß6¬FW7B◊c#s"÷FVfñÊóFófR÷˜W&FñˆÊ¬◊&V∆V6RÊ÷ß6¬FW7B◊c#sB÷6ˆ◊∆WFR÷6˜W'6W2◊fˆñ6R÷˜W&FñˆÁ2Ê÷ß6¬FW7B◊c#sR◊7F&∆R÷∆ófR◊fˆñ6R◊GW&Á2Ê÷ß6¬FW7B◊c#sb÷÷ÁV¬÷Üˆ∆R÷ÊfñvFñˆ‚Ê÷ß6¬FW7B◊c#sr÷ˆffñ6ñ¬◊&˜VÊB÷6˜'&V7FñˆÁ2Ê÷ß6¬FW7B◊c#sÇ÷6&B÷ñ÷vR◊Fb÷Wá˜'BÊ÷ß6¬FW7B◊c#sí÷∆ˆ6¬÷6&B÷∆ñ'&'íÊ÷ß6¬FW7B◊c#É÷∆ˆ6¬÷Üó7F˜'í÷ñÁ6ñváG2Ê÷ß6¬FW7B◊c#É◊v÷ñÁ7F∆∆Fñˆ‚Ê÷ß6¬FW7B◊c#ÉB÷ÊFófR◊6∂vR÷vVÊW&Fñˆ‚Ê÷ß6¬FW7B◊c#ì÷'&ÊB÷ñ6ˆÁ2÷6∆VÁWÊ÷ß6¬FW7B◊c3B÷Üˆ÷ˆvVÊV˜W2◊&Vvó7G&Fñˆ‚÷7FñˆÁ2Ê÷ß6¬FW7B◊c3R÷Üó7F˜'í÷ÊfñvFñˆ‚◊¶W&Ú÷W'&˜"Ê÷ß6¬FW7B◊c3r÷÷F6Ç÷'&˜w2÷f˜&÷BÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ¬$ÙD‘ÙıdU$ƒ¬Ê÷Fí$ÙD‘ÙÙDUDƒƒRÊ÷F‡†¢226˜'&V66ú;6‚˜W&Fófc3#"+r6ˆÁfW'66ú;6‚6˜7FVÊñFí&V7WW&6ú;6‚6ˆ◊&ˆ&&∆P†•c3#"ñÁFVw&6ñ‚W&FW"∆íT‰ïdU%4¬(â‚FRc3#∆6˜'&V66ú;6‚FV¬f∆∆Úˆ'6W'fFÚV‚ïÜˆÊS¢V¬÷ñ7,;6fˆÊÚñÊÚ6R6ñW'&G&W26VwVÊF˜2FW7\:ó2FRVÊ&W7VW7FÊíFW7G'WñRVÊ6W6ú;6‚vV%%D26Ê¬Fˆ6&∆ÚÁVWf÷VÁFR‚∆W67V6ÜW&÷ÊV6R7FófVÁG&RGW&Ê˜2í<;6∆Ú6RvFW7\:ó2FR3÷ñÁWF˜26ˆ◊∆WF˜26ñ‚7FófñFB‚6íf«FVÊG&Á67&ó6ú;6‚fñÊ¬¬ñÊñ6ñÚíF&¶WF6∆V‚FV¬W7FFÚ&∆˜VVFÚí&Vw&W6‚)xÚU45T4Ñ‰Dˆ‡†§∆ñÁfW7Fñv6ú;6‚vV"Fó7ˆÊRFRC6VwVÊF˜2V‚6W'fñF˜"íCR6VwVÊF˜2V‚6∆ñVÁFR‚8óÜóFÚ¬Fñ÷V˜WB¬&˜fVVF˜"ÊÚFó7ˆÊñ&∆RÚ&W7VW7Ff<:÷&ˆGV6V‚6ñV◊&RVÊ6∆ñFWFñ∆ó¶&∆S≤V‚f∆∆Ú&V7WW&&∆RÊÚvV¬G&Á7˜'FRFRf˜¢ÊíFV¶¬W7V&ñÚ6ñ‚&W7VW7F‚FW7B◊c3#"◊&V¬◊7W7FñÊVB÷6FFñRÊ÷ß66ñ◊V∆#BGW&Ê˜26ˆÁ6V7WFóf˜2¬&VW'GW&¬6ñW'&R&Vv∆÷VÁF&ñÚí∆˜2Fó7FñÁF˜2&W7V«FF˜2FV¬6W'fñ6ñÛ≤∆VFóF˜,:÷÷W7G&6ˆÁ6W'fFV‹:2∆2#:&V2í∆2÷ˆF∆ñFFW26ˆ◊∆WF2‡†§&6Üóf˜3¢ñÊFWÇ÷w'W¬ÊáF÷∆¬í˜&W6V&6ÇÊß6¬6W'fñ6R◊v˜&∂W"Êß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬FW7B◊c3#"◊&V¬◊7W7FñÊVB÷6FFñRÊ÷ß6¬FW7B◊c3#÷í◊VÊófW'6¬÷ñÊfñÊóGíÊ÷ß6¬FW7B◊c3"÷vVÊW&¬÷6FFñRÊ÷ß6¬∆˜26ÊFF˜2FR'Vñ∆Bˆ66å:í¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ¬$ÙD‘ÙıdU$ƒ¬Ê÷Fí$ÙD‘ÙÙDUDƒƒRÊ÷F‡†¢227GV∆ó¶6ú;6‚˜W&Fófc3#+ríT‰ïdU%4¬(â‡†§íT‰ïdU%4¬(â‚VVFñÁFVw&F÷VFñÁFRíFR÷ˆFV∆ÚfÁ¶FÚ¬6ˆ‚f˜¢íFWáFÚ¬6ˆÁFWáFÚFV◊˜&¬6ˆ◊'FñFÚ¬,;ß7VVFvV"&FF˜26÷&ñÁFW2¬ñFñˆ÷WFˆ‹:Fñ6Ú¬&W7VW7FW67&óFíÜ&∆F¬6W&6ú;6‚VÁG&R;7&FVÊW2∆ˆ6∆W2í6ˆÁ7V«F2vVÊW&∆W2¬í6ˆÁG&ˆ∆W2U45T4Ñ&¬DUDT‰U&¬$UUDï&¬4îƒT‰4î&í4ÙÂDîÂT&‚∆2#:&V2fW&ñfñ6F26ˆ‚'VV&2¬ÁVÊ6VÊ∆ó7FÃ:÷÷óFR‚V¬÷ÁV¬6ˆÁ6W'f∆˜'FF6ˆ÷Ú&ñ÷W&:vñÊíFˆ7V÷VÁF∆gVÊ6ú;6‚V‚∆:vñÊs2‡†•&Wfó6ú;6‚fñÊ¬V&∆ñ6F¢V¬:÷ÊFñ6RíV¬VÊ6&W¶FÚFV¬fó6˜"Êˆ÷'&‚∆:vñÊs26ˆ÷Ú¢§íT‰ïdU%4¬(â‚¢¢¬í∆'VV&c3#&∆˜VV7V«VñW"&Vw&W6Ú¬L:◊GV∆ÚÁFW&ñ˜"‡†ß¬&6ÜófÚ¬&Vvó7G&Úc3#¿ß¬““◊¬““◊¿ß¬í˜VÊófW'6¬÷íÊß6¬VÊGˆñÁB&V¬FRíT‰ïdU%4¬(â‚6ˆ‚&W7ˆÁ6W2í¬÷ˆFV∆ÚfÁ¶FÚ¬6ˆÁFWáFÚ¬vV"¬gVVÁFW2í7F˜&S¶f«6V‚¿ß¬í˜6W76ñˆ‚÷w'W¬Êß6¬&V«Fñ÷R6ˆÁ6W'fvˆ∆bíÜ&ñ∆óFFWFV66ú;6‚WFˆ‹:Fñ6FV¬ñFñˆ÷Ü&∆FÚ‚¿ß¬ñÊFWÇ÷w'W¬ÊáF÷∆¬ÊV¬í(â‚¬FV6∆FÚ¬&W7VW7F2W67&óF2¬6ˆÁFWáFÚf˜¢◊FWáFÚ¬6∆6ñfñ66ú;6‚˜&FV‚˜&VwVÁFí6ñÊ6Ú6ˆÁG&ˆ∆W2‚¿ß¬6W'fñ6R◊v˜&∂W"Êß6¬66å:íc3#&VÁG&Vv"ñÊ÷VFñF÷VÁFR∆ñÁFVw&6ú;6‚‚¿ß¬VFóB◊&ˆ¶V7BÊ÷ß6¬ñÊ6˜'˜&∆&FW,:÷ˆ&∆ñvF˜&ñc3#‚¿ß¬FW7B◊c3#÷í◊VÊófW'6¬÷ñÊfñÊóGíÊ÷ß6¬fW&ñfñ6í&V¬¬#:&V26ñ‚∆ó7F6W'&F¬FWáFÚ¬f˜¢¬6ˆÁFWáFÚ¬vV"í6ˆÁG&ˆ∆W2‚¿ß¬FW7B◊c#cr÷ˆÊR÷˜W&FñˆÊ¬÷∆ñÊRÊ÷ß6¬∆ñÊVV¬6ˆÁG&FÚFRG&Á67&ó6ú;6‚6ˆ‚ñFñˆ÷WFˆ‹:Fñ6Ú‚¿ß¬FW7B◊c#s◊&V«Fñ÷R◊&ˆ◊B÷∆ñ÷óBÊ÷ß6¬6ˆÁ6W'fV¬Ã:÷÷óFR&V«Fñ÷R6ˆ‚ñFñˆ÷WFˆ‹:Fñ6Ú‚¿ß¬FW7B◊c3"÷vVÊW&¬÷6FFñRÊ÷ß6¬◊Ã:÷∆fW&ñfñ66ú;6‚VÊófW'6¬ñFñˆ÷WFˆ‹:Fñ6Úí66å:íc3#‚¿ß¬FW7B◊7F&∆Vf˜&B◊VíÊ÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c#s"÷FVfñÊóFófR÷˜W&FñˆÊ¬◊&V∆V6RÊ÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c#sB÷6ˆ◊∆WFR÷6˜W'6W2◊fˆñ6R÷˜W&FñˆÁ2Ê÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c#sR◊7F&∆R÷∆ófR◊fˆñ6R◊GW&Á2Ê÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c#sb÷÷ÁV¬÷Üˆ∆R÷ÊfñvFñˆ‚Ê÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c#sr÷ˆffñ6ñ¬◊&˜VÊB÷6˜'&V7FñˆÁ2Ê÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c#sÇ÷6&B÷ñ÷vR◊Fb÷Wá˜'BÊ÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c#sí÷∆ˆ6¬÷6&B÷∆ñ'&'íÊ÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c#É÷∆ˆ6¬÷Üó7F˜'í÷ñÁ6ñváG2Ê÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c#É◊v÷ñÁ7F∆∆Fñˆ‚Ê÷ß6¬∆ñÊV∆66å:íñÁ7F∆&∆RW7W&F6ˆ‚c3#‚¿ß¬FW7B◊c#ÉB÷ÊFófR◊6∂vR÷vVÊW&Fñˆ‚Ê÷ß6¬∆ñÊVV¬VWFRvV"W7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c#ì÷'&ÊB÷ñ6ˆÁ2÷6∆VÁWÊ÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c3B÷Üˆ÷ˆvVÊV˜W2◊&Vvó7G&Fñˆ‚÷7FñˆÁ2Ê÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c3R÷Üó7F˜'í÷ÊfñvFñˆ‚◊¶W&Ú÷W'&˜"Ê÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬FW7B◊c3r÷÷F6Ç÷'&˜w2÷f˜&÷BÊ÷ß6¬∆ñÊVV¬'Vñ∆BW7W&FÚ6ˆ‚c3#‚¿ß¬tÙƒeı44ı$UÙ4$EÙuEÙu%U≈Ù‘ÂT≈Ù‘U5E$ÚÊ÷F¬&Vvó7G&∆W7V6ñfñ66ú;6‚íW7FFÚ˜W&FófÚFRíT‰ïdU%4¬(â‚‚¿ß¬‘ÂT≈Ù4Ù$U%EU$ÙeT‰4îÙ‰≈ıc3Ê÷F¬V&ñ6íT‰ïdU%4¬(â‚V‚∆:vñÊs2í7R'VV&L:ñ6Êñ6‚¿ß¬Fˆ72ˆ÷ÁV¬˜c3ˆ÷ÁV¬◊vW2”r”3RÊß6ˆÊ¬Wá∆ñ66ú;6‚&V‚Êú;ÚFRFñW¢;˜3¢f˜¢¬FWáFÚ¬;7&FVÊW2¬6ˆÁFWáFÚíÃ:÷÷óFW2&V∆W2‚¿ß¬67&óG2˜WFFR÷÷ÁV¬◊vR”s2Áñ¬vVÊW&∆:vñÊs2c3#6ñ‚«FW&"˜'FFÊí:vñÊ2ÁFW&ñ˜&W2‚¿ß¬Fˆ72ˆ÷ÁV¬˜c3˜vR”s2ÁÊv¬ñ÷vV‚D≤fW&ñfñ6FFRíT‰ïdU%4¬(â‚‚¿ß¬Fˆ72ˆ÷ÁV¬˜c3Ù÷ÁV≈Ùvˆ∆eı66˜&UÙ6&EÙuEÙ4Ù’ƒUDÚÁFf¬÷ÁV¬6ˆ◊∆WFÚ7GV∆ó¶FÛ≤˜'FF&ñ÷W&Úí:vñÊs2íT‰ïdU%4¬(â‚‚¿ß¬Fˆ72ˆ÷ÁV¬˜c3Ù÷ÁV≈ˆFUÙgVÊ6ñˆÊW5Ùvˆ∆eı66˜&UÙ6&EÙuEÛ”bÁFf¬∆ñ2Db6ˆ◊∆WFÚ7GV∆ó¶FÚ6ˆ‚V¬÷ó6÷Ú˜&FV‚6˜'&V7FÚ‚¿ß¬FW7B◊c3÷÷ÁV¬◊6V÷ÁFñ2÷6˜fW&vRÊ÷ß6¬WÜñvR∆Wá∆ñ66ú;6‚c3#í∆˜26ñÊ6Ú6ˆÁG&ˆ∆W2V‚V¬÷ÁV¬‚¿ß¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ¬6V∆∆ÚFRñÁfVÁF&ñÚ&V6∆7V∆FÚ6ˆ'&R∆2gVVÁFW2c3#‚¿†¢22vˆ∆b66˜&R6&Bu@†§W7FRW2V¬÷vVÊW&¬í6VÊ6ñ∆∆ÚFV¬&˜ñV7FÚ‚V¬Êˆ÷'&R6ˆ÷W&6ñ¬;¶Êñ6ÚW2¢§vˆ∆b66˜&R6&BuB¢¢‡†§∆˜2Êˆ÷'&W2Ur‘4DEñ¬Wr÷6FGñ¬Ut6FGñí6ˆ“ÊWv6FGíÊ<;6∆ÚW&÷ÊV6V‚6ˆ÷Ú<;6Fñv˜2ñÁFW&Ê˜2ÁFñwV˜2˜'VR6÷&ñ&∆˜2&ˆ◊W,:÷VÊ∆6W2¬V&∆ñ66ñˆÊW2Ú∆ñFVÁFñFBgWGW&FR∆22‚ÊÚ6R◊VW7G&‚6ˆ÷ÚÊˆ÷'&R6ˆ÷W&6ñ¬¬6ˆÁ7V÷ñF˜"‡†¢22W7FFÚ7GV¿†¢“6˜'FR6ˆÁ6ˆ∆ñFFÚFRW7FRñÁfVÁF&ñÛ¢¢•c3+r#RFRv˜7FÚFR##b¢¢‡¢“<;6FñvÚˆfñ6ñ¬vóDáV"V‚÷ñÊ¢Sì3ÜfCFCcÉVfFf36F&&3cÜ36&VVFfCìf3V‡¢“fW&6V√¢¢•$TEí¢¢‡¢“V&∆ñ66ú;6‚fW&6V¬fñvVÁFS¢G≈Ùf∂ee&5eT≥ÑÂvFwEsVuSfTsî¥VÜ‡¢“∆ñ66ú;6‚ˆfñ6ñ√¢áGG3¢ÚˆWr÷6FGíÁfW&6V¬Ê¢“W'&˜&W2FRV&∆ñ66ú;6‚7GV∆W3¢¢£¢¢‡¢“GfW'FVÊ6ñ27GV∆W3¢¢£¢¢‡¢“VFóF˜,:÷÷W7G&¢¢•52+rcíVWFW2¢¢‡†¢22∆ñ66ú;6‚∆RíÊG&ˆñ@†¢“Êˆ÷'&Rfó6ñ&∆S¢¢§vˆ∆b66˜&R6&BuB¢¢‡¢“ñFVÁFñFBL:ñ6Êñ66ˆ◊'FñF¢6ˆ“ÊWv6FGíÊ‡¢“fW'6ú;6‚‹;7fñ¬&W&F¢„í„‡¢“Ï;¶÷W&ÚFRVWFR&W&FÛ¢#ì‡¢“VWFR&ïÜˆÊS¢&W&FÚ&Ü6ˆFRígWGW&fó&÷‡¢“VWFR&ÊG&ˆñC¢&W&FÚ&ÊG&ˆñB7GVFñÚígWGW&fó&÷‡¢“6ˆ◊&2í7W67&ó6ñˆÊW3¢'WF&W&F6ˆ‚&WfVÁVT6B‡¢“ñ6ˆÊÚ7F˜&S¢#B9r#B‡¢“ñ6ˆÊÚvˆˆv∆R∆ì¢S"9rS"‡¢“ñ6ˆÊ˜2t¢S"9rS"íì"9rì"‡¢“ñ6ˆÊÚFR66W6ÚFó&V7FÚ∆S¢É9rÉ‡†¢22˜&vÊó¶6ú;6‚7GV¿†¢“&6Üóf˜27Fóf˜2&7G&VF˜2V‚vóB¬6˜'FRc3¢¢£ìr¢¢‡¢“&6Rfó7V¬˜&ñvñÊ¬c#ì#¢¢£c&6Üóf˜27Fóf˜2¢¢Fó7G&ñ'VñF˜2V‚ÁVWfR:vñÊ2‡¢“6ˆÁFñÁV6ú;6‚Fˆ7V÷VÁFFFW7\:ó2FR7&V"∆&6Rfó7V√¢¢•c#ìBc3¢¢‡¢“6˜'FR6ˆ∆ñ6óFFÚ&&Wfó6ú;6„¢¢¶FW6FR∆Ã:÷ÊVcÜ6ñ&¶Ú6R6ˆÁ6ñFW&ÁVWfÚ¢¢‡¢“&6Üóf˜2FR∆6ˆ∆V66ú;6‚$ÙD‘Ùî‘tU6¢¢£#"¢¢‡¢“&6Üóf˜2Üó7L;7&ñ6˜2&WFó&F˜2FV¬W6ÚFñ&ñÛ¢¢£Éí¢¢‡¢“&ˆ6W6˜2WFˆ‹:Fñ6˜27GV∆W26ˆÁ6W'fF˜3¢¢£B¢¢‡¢“&÷2vóDáV"ñÁfVÁF&ñF3¢¢£É¢¢‡¢“&÷2ññÊ6«VñF2V‚÷ñ„¢¢£s¢¢‡¢“&÷26ˆ‚6÷&ñ˜2&˜ñ˜26ˆÁ6W'fF3¢¢£í¢¢‡¢“V&∆ñ66ñˆÊW2fW&6V¬FR∆&6Rfó7V¬Üó7L;7&ñ6¢¢£c#"¢£≤∆˜2FW7∆ñVwVW2c3b’c3VVF‚ñFVÁFñfñ6F˜2V‚∆6ˆÁFñÁV6ú;6‚Fˆ7V÷VÁF¬‡¢“&6R6VÁG&¬&W&F¢¢£#"w'W˜2FRñÊf˜&÷6ú;6‚¢¢‡¢“Êˆ÷'&W2ñÁFW&Ê˜2FRwV&FFÚV‚V¬FVÃ:ñfˆÊÚñFVÁFñfñ6F˜3¢¢£B¢¢‡†¢22∆ñ◊ñW¶6ˆ◊∆WFF†¢“&WFó&F˜2ÉÇ&ˆ6W6˜2WFˆ‹:Fñ6˜2Üó7L;7&ñ6˜2‡¢“&WFó&FÚV‚67&óBÁFñwVÚc"‡¢“FˆFÚW&÷ÊV6R&V7WW&&∆RV‚V¬Üó7F˜&ñ¬FRvóDáV"‡¢“V¬Êˆ÷'&Rfó6ñ&∆RUr6FGígVR7W7FóGVñFÚ˜"vˆ∆b66˜&R6&BuB‡¢“$TD‘R¬Fˆ7V÷VÁF6ú;6‚¬t¬∆R¬ÊG&ˆñBí&ˆ6W6˜27GV∆W2W6‚∆÷&6ˆfñ6ñ¬‡¢“∆˜2ñ6ˆÊ˜2ˆfñ6ñ∆W2VVF&ˆ‚6VÁG&∆ó¶F˜2FVÁG&ÚFR76WG2ˆˆffñ6ñ¬÷∆ˆv˜2ˆ‡¢“∆ñÁ7F∆6ú;6‚FRfW&6V¬VVL;26ñ‚W'&˜&W2ÊíGfW'FVÊ6ñ2‡†¢22÷2FWF∆∆F˜0†¢“µ$ÙD‘DUDƒƒR+rFó&V7F˜&ñÚfó7V¬V‚ÁVWfR:vñÊ5“Ö$ÙD‘ÙÙDUDƒƒRÊ÷Bê¢“¥÷FRFˆF˜2∆˜2&6Üóf˜5“Ñ4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷Bê¢“¥÷FRvóDáV"¬fW&6V¬¬∆R¬ÊG&ˆñBíFF˜5“Ñ4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙî‰e$U5E%T5EU$Ê÷Bê¢“¥ñÁfVÁF&ñÚFRV&∆ñ66ñˆÊW2fW&6V≈“Ñ4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îıÙDU5ƒîTuTU5ıdU$4T¬Ê÷Bê¢“º8÷ÊFñ6RFR∆ˆv˜2ˆfñ6ñ∆W5“Ü76WG2ˆˆffñ6ñ¬÷∆ˆv˜2ı$TD‘RÊ÷Bê†¢22ñ‹:vVÊW2Ã:÷ÊV˜"Ã:÷ÊV†¢“≥+r&6Üóf˜27Fóf˜5“Ö$ÙD‘Ùî‘tU2ÛÙ$4Ñïdı5Ù5Dïdı5Ù4Ù’ƒUDÚÁÊrê¢“≥"+r&6Üóf˜2&WFó&F˜5“Ö$ÙD‘Ùî‘tU2Û%Ù$4Ñïdı5ı$UDï$Dı5Ù4Ù’ƒUDÚÁÊrê¢“≥2+rñÊg&W7G'V7GW&RîG5“Ö$ÙD‘Ùî‘tU2Û5Ùî‰e$U5E%T5EU$Ù4Ù’ƒUDÚÁÊrê¢“≥B+r&÷2vóDáV%“Ö$ÙD‘Ùî‘tU2ÛEı$‘5ÙtïDÖT%Ù4Ù’ƒUDÚÁÊrê¢“≥T+rfW&6V¬+rV&∆ñ66ñˆÊW2sÖ“Ö$ÙD‘Ùî‘tU2ÛUıdU$4T≈ÛÙÙ4Ù’ƒUDÚÁÊrê¢“≥T"+rfW&6V¬+rV&∆ñ66ñˆÊW2síSe“Ö$ÙD‘Ùî‘tU2ÛUıdU$4T≈ÛÙ%Ù4Ù’ƒUDÚÁÊrê¢“≥d+rfW&6V¬+rV&∆ñ66ñˆÊW2Sr#3E“Ö$ÙD‘Ùî‘tU2ÛeıdU$4T≈Û%ÙÙ4Ù’ƒUDÚÁÊrê¢“≥d"+rfW&6V¬+rV&∆ñ66ñˆÊW2#3R3%“Ö$ÙD‘Ùî‘tU2ÛeıdU$4T≈Û%Ù%Ù4Ù’ƒUDÚÁÊrê¢“≥t+rfW&6V¬+rV&∆ñ66ñˆÊW2323ì“Ö$ÙD‘Ùî‘tU2ÛuıdU$4T≈Û5ÙÙ4Ù’ƒUDÚÁÊrê¢“≥t"+rfW&6V¬+rV&∆ñ66ñˆÊW23ìCcÖ“Ö$ÙD‘Ùî‘tU2ÛuıdU$4T≈Û5Ù%Ù4Ù’ƒUDÚÁÊrê¢“≥Ñ+rfW&6V¬+rV&∆ñ66ñˆÊW2CcíSCU“Ö$ÙD‘Ùî‘tU2ÛÖıdU$4T≈ÛEÙÙ4Ù’ƒUDÚÁÊrê¢“≥Ñ"+rfW&6V¬+rV&∆ñ66ñˆÊW2SCbc#%“Ö$ÙD‘Ùî‘tU2ÛÖıdU$4T≈ÛEÙ%Ù4Ù’ƒUDÚÁÊrê¢“º8÷ÊFñ6RFR∆6ˆ∆V66ú;6‚fó7V≈“Ö$ÙD‘Ùî‘tU2ı$TD‘RÊ÷Bê†¢22VÁFÚFR6˜'FRFV¬Fó&V7F˜&ñ†¢“VÁFÚFR7Fóf6ú;6‚˜&ñvñÊ√¢¢¶Ã:÷ÊVÉ2¢¢‡¢“&Vvó7G&ÚfñvVÁFRFW7\:ó2FRñÁ7F∆"V¬6ÊFFÛ¢¢¶Ã:÷ÊVÉR¢¢‡¢“7Fóf6ú;6‚FR6VwVñ÷ñVÁFÚˆ&∆ñvF˜&ñÛ¢¢£#2FRv˜7FÚFR##b¬s£S£¬Ü˜&FRwVFV÷∆¢¢‡¢“FW6FRW7FRVÁFÚ¬7V«VñW"7&V6ú;6‚¬÷ˆFñfñ66ú;6‚¬6÷&ñÚFRÊˆ÷'&R¬÷˜fñ÷ñVÁFÚÚV∆ñ÷ñÊ6ú;6‚6R&Vvó7G&Fó&V7F÷VÁFRíFVÁG&ÚFR∆÷ó6÷fW'6ú;6‚V‚¢•$ÙD‘ıdU$ƒ¬¢¢í¢•$ÙD‘DUDƒƒR¢¢‡†¢22&Vvó7G&Úˆ&∆ñvF˜&ñÚc#ìB+r6ÊFFÚL:ñ6Êñ6†ß¬&6ÜófÚÚ÷ˆFñfñ66ú;6‚¬\:íVVL;2&Vvó7G&FÚ¿ß¬““◊¬““◊¿ß¬ÊvóFáV"˜v˜&∂f∆˜w2ˆñ˜2÷'Vñ∆BÁñ÷∆¬∆6ˆÁ7G'V66ú;6‚FRïÜˆÊRWÜñvR&ñ÷W&Ú÷&˜2$ÙD‘2‚¿ß¬ÊvóFáV"˜v˜&∂f∆˜w2ˆñ˜2◊FW7Ff∆ñváBÁñ÷∆¬∆&W&6ú;6‚&FW7Df∆ñváBWÜñvR&ñ÷W&Ú÷&˜2$ÙD‘2‚¿ß¬ÊvóFáV"˜v˜&∂f∆˜w2ˆ÷ˆ&ñ∆R÷ÊFófR◊6∂vRÁñ÷∆¬V¬VWFR∆RÙÊG&ˆñB6R&∆˜VV6í∆˜2$ÙD‘2W7L:‚ñÊ6ˆ◊∆WF˜2‚¿ß¬ÊvóFáV"˜v˜&∂f∆˜w2˜&ˆF÷÷vFRÁñ÷∆¬ÁVWfÚ6ˆÁG&ˆ¬WFˆ‹:Fñ6Úˆ&∆ñvF˜&ñÚV‚vóDáV"‚¿ß¬ÊvóFáV"˜v˜&∂f∆˜w2˜7F&∆Vf˜&B◊F˜W&Ê÷VÁB◊72Áñ÷∆¬∆2'VV&2FR7F&∆Vf˜&BWÜñvV‚&ñ÷W&Ú÷&˜2$ÙD‘2‚¿ß¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ÙDï$T5E$î4U5Ù‘‰DDı$î2Ê÷F¬Ê˜&÷W&÷ÊVÁFR¬Ã:÷ÊVFR6˜'FRíÜ˜&FR7Fóf6ú;6‚‚¿ß¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬<;6Fñv˜2í&6Üóf˜2FV¬Fó&V7F˜&ñÚ7GV∆ó¶F˜2‚¿ß¬$ÙD‘Ùî‘tU2ı$ÙD‘ÙÙDUDƒƒUÛÁÊv¬:vñÊfó7V¬FRí‚¿ß¬$ÙD‘Ùî‘tU2ı$ÙD‘ÙÙDUDƒƒUÛ"ÁÊv¬:vñÊfó7V¬"FRí‚¿ß¬$ÙD‘Ùî‘tU2ı$ÙD‘ÙÙDUDƒƒUÛ2ÁÊv¬:vñÊfó7V¬2FRí‚¿ß¬$ÙD‘Ùî‘tU2ı$ÙD‘ÙÙDUDƒƒUÛBÁÊv¬:vñÊfó7V¬BFRí‚¿ß¬$ÙD‘Ùî‘tU2ı$ÙD‘ÙÙDUDƒƒUÛRÁÊv¬:vñÊfó7V¬RFRí‚¿ß¬$ÙD‘Ùî‘tU2ı$ÙD‘ÙÙDUDƒƒUÛbÁÊv¬:vñÊfó7V¬bFRí‚¿ß¬$ÙD‘Ùî‘tU2ı$ÙD‘ÙÙDUDƒƒUÛrÁÊv¬:vñÊfó7V¬rFRí‚¿ß¬$ÙD‘Ùî‘tU2ı$ÙD‘ÙÙDUDƒƒUÛÇÁÊv¬:vñÊfó7V¬ÇFRí‚¿ß¬$ÙD‘Ùî‘tU2ı$ÙD‘ÙÙDUDƒƒUÛíÁÊv¬:vñÊfó7V¬íFRí‚¿ß¬VFóB◊&ˆ¶V7BÊ÷ß6¬∆VFóF˜,:÷÷W7G&V¶V7WF&ñ÷W&ÚV¬6ÊFFÚ‚¿ß¬6∂vRÊß6ˆÊ¬w&VvV¬6ˆ÷ÊFÚ&ˆF÷¶vFV‚¿ß¬67&óG2˜&ˆF÷÷vFRÊ÷ß6¬6ˆ◊'VV&VR6F6÷&ñÚ&W¶6V‚÷&˜2$ÙD‘2‚¿†¢22&VgVW'¶ÚL:ñ6Êñ6Úc#ìR+rV&∆ñ66ú;6‚F÷&ú:ñ‚&∆˜VVF†ß¬&6ÜófÚÚ÷ˆFñfñ66ú;6‚¬\:íVVL;2&Vvó7G&FÚ¿ß¬““◊¬““◊¿ß¬fW&6V¬Êß6ˆÊ¬fW&6V¬V¶V7WFˆ&∆ñvF˜&ñ÷VÁFRV¬6ÊFFÚÁFW2FRV&∆ñ6"‚¿ß¬67&óG2˜&ˆF÷÷vFRÊ÷ß6¬6ífW&6V¬ÊÚVVFRñFVÁFñfñ6"∆˜26÷&ñ˜2¬∆V&∆ñ66ú;6‚VVF&∆˜VVF˜"6VwW&ñFB‚¿ß¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ÙDï$T5E$î4U5Ù‘‰DDı$î2Ê÷F¬∆V&∆ñ66ú;6‚FRfW&6V¬6RñÊ6˜'˜&∆Ê˜&÷W&÷ÊVÁFR‚¿ß¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬&Vvó7G&∆˜2<;6Fñv˜2íWá∆ñ66ñˆÊW27GV∆ó¶F˜2‚¿ß¬$ÙD‘ÙÙDUDƒƒRÊ÷F¬wV&FV¬&VgVW'¶ÚFVÁG&ÚFV¬Fó&V7F˜&ñÚFWF∆∆FÚ‚¿ß¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬wV&FV¬&VgVW'¶ÚFVÁG&ÚFRW7FR&W7V÷V‚vVÊW&¬‚¿†¢22ßW7FRFRV&∆ñ66ú;6‚c#ìb+r6∆ñFfW&6V¿†ß¬&6ÜófÚÚ÷ˆFñfñ66ú;6‚¬\:íVVL;2&Vvó7G&FÚ¿ß¬““◊¬““◊¿ß¬fW&6V¬Êß6ˆÊ¬6ˆÁ6W'fV¬6ÊFFÚí6\;∆6˜'&V7F÷VÁFR∆6'WFVRfW&6V¬FV&RV&∆ñ6"‚¿ß¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬7GV∆ó¶V¬<;6FñvÚí∆Wá∆ñ66ú;6‚FV¬ßW7FR‚¿ß¬$ÙD‘ÙÙDUDƒƒRÊ÷F¬wV&FV¬ßW7FRFVÁG&ÚFV¬Fó&V7F˜&ñÚFWF∆∆FÚ‚¿ß¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬wV&FV¬ßW7FRFVÁG&ÚFRW7FR&W7V÷V‚vVÊW&¬‚¿†¢227GV∆ó¶6ú;6‚˜W&Fófc#ìr+rñ6ˆÊÚ7&ˆ÷FÚ4BÊ\;6‚í÷ñ7,;6fˆÊÚ6ˆ◊7F†§WF˜&ó¶6ú;6‚&V6ñ&ñFV¬¢£#BFRv˜7FÚFR##b¢¢&ñÁ7F∆"6ˆ÷Úñ6ˆÊÚˆfñ6ñ¬∆fW'6ú;6‚7VG&F7&ˆ÷F¬6ˆ‚&V∆ñWfR&ˆgVÊFÚ¬&ñVÊ6ñFR÷WF¬G&˜VV∆FÚífW&FRÊ\;6‚◊Wí6GW&FÚ‚F÷&ú:ñ‚6R&VGV6RSRV¬Fú:÷WG&Úfó6ñ&∆RFV¬÷ñ7,;6fˆÊÚFR&Vvó7G&Úí6R6ˆ∆ˆ6VÊfñwW&6∆&FR÷ñ7,;6fˆÊÚV‚V¬6VÁG&Ú‚ÊÚ6÷&ñ7RgVÊ6ñˆÊ÷ñVÁFÚÊí7R:&V<;6÷ˆFFRF˜VR‡†ß¬&6ÜófÚÚ÷ˆFñfñ66ú;6‚¬\:íVVF&Vvó7G&FÚ¿ß¬““◊¬““◊¿ß¬t#3C4r‘T#Ñ”C44"‘#4R”4Sì#s4c$"ÊßVv¬gVVÁFR7VG&FÜó7L;7&ñ67GV∆ó¶F6ˆ‚V¬∆ˆvÚWF˜&ó¶FÚ¬6ˆÁ6W'fÊFÚ7RÊˆ÷'&RL:ñ6Êñ6Ú‚¿ß¬76WG2ˆ∆ˆvÚÁÊv¬gVVÁFR˜W&FófFR#B9r#B&∆˜2VWFW2∆RíÊG&ˆñB‚¿ß¬76WG2ˆˆffñ6ñ¬÷∆ˆv˜2ı$TD‘RÊ÷F¬ñFVÁFñfñ6∆ÁVWffW'6ú;6‚7&ˆ÷F4M¯◊Nm¢Gß≤⁄Óù∆≠y÷V∆V÷WG,:÷6∆ñVÁFRñÊ6«WñR∆ñ6FÚ˜&V6Ü¶FÚ6ñ‚6ˆÁFVÊñFÚÜ&∆FÚ‡†§&6Üóf˜2WÜ7F˜2c3S¢ñÊFWÇ÷w'W¬ÊáF÷∆¬FW7B◊c3R◊&Vvó7G&Fñˆ‚÷wVñFW2◊'6W"◊G'WFÇÊ÷ß6¬FW7B◊c33b÷÷ñ7&˜ÜˆÊR◊G&Á7˜'BÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ı$Ttï5E$ıı$Tî‰4îDT‰4î5Ù4ƒîDBÊ÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷Fí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F≤V¬6ÊFñFFÚ&WVñW&R'Vñ∆B¬ÊfVvF˜"í'VV&l:◊6ñ6ïÜˆÊR‡†¢22c3S+r6f&íÑïbí6W&6ú;6‚6˜'&V7FFRßVvF˜&W2+r#rFRv˜7FÚFR##`†•c3SVVF&V6Ü¶F˜"∆'VV&l:◊6ñ6FR∆2C£b‚6f&í6ˆÁfó'Fú;2(	∆6F˜&6^(	“V‚Ñïf≤V¬'6W"∆ÚG&L;26ˆ÷ÚÊˆ÷'&RíW67&ñ&ú;2§î‘RÑïb$ƒ‰42§ı$tR+rb+r•TƒU6V‚VÊ6ˆ∆fñ∆‚c3Sw&Vv&ˆ÷Ê˜26Ï;6Êñ6˜2û(	4ƒïb;¶Êñ6÷VÁFR¬'6W"FRå:ÊFñ6FV¬&Vvó7G&Ú‚∆g&6R&V¬¶ñ÷RÜób&∆Ê62¶˜&vR6Vó2ßV∆W6&ˆGV6RF˜2ßVvF˜&W3¢¶ñ÷R¬B¬&∆Ê6Û≤¶˜&vR¬b¬ßV¬‚∆Ü˜W&6ñˆÊ¬FV¬66˜&RW&÷ÊV6RgVW&FRW7F6ˆÁfW'6ú;6‚‡†§&6Üóf˜2WÜ7F˜2c3S¢ñÊFWÇ÷w'W¬ÊáF÷∆¬FW7B◊c3R◊&Vvó7G&Fñˆ‚÷wVñFW2◊'6W"◊G'WFÇÊ÷ß6¬FW7B◊c33b÷÷ñ7&˜ÜˆÊR◊G&Á7˜'BÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ı$Ttï5E$ıı$Tî‰4îDT‰4î5Ù4ƒîDBÊ÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷Fí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F≤f«F'Vñ∆B¬ÊfVvF˜"í'VV&l:◊6ñ6ïÜˆÊR‡††§6˜'&V66ú;6‚FR'WF2c3S¢6RV∆ñ÷ñÊ&ˆ‚∆2'WF2FV◊˜&∆W2W',;6ÊV2FW7G2˜FW7B◊c3R◊&Vvó7G&Fñˆ‚÷wVñFW2◊'6W"◊G'WFÇÊ÷ß6íFW7G2˜FW7B◊c33b÷÷ñ7&˜ÜˆÊR◊G&Á7˜'BÊ÷ß6≤∆2'VV&27Fóf2W&÷ÊV6V‚V‚∆&:◊¢6ˆ÷ÚFW7B◊c3R◊&Vvó7G&Fñˆ‚÷wVñFW2◊'6W"◊G'WFÇÊ÷ß6íFW7B◊c33b÷÷ñ7&˜ÜˆÊR◊G&Á7˜'BÊ÷ß6‚F÷&ú:ñ‚6RV∆ñ÷ñÊ&ˆ‚∆26˜ñ2&:◊¢FV◊˜&∆W2FR∆˜2F˜26ˆÁG&ˆ∆W244ï$R‚V¬:&&ˆ¬fñÊ¬6ˆÁ6W'f3CígVVÁFW27Fóf2‹:2V¬6V∆∆Ú‡†•6V∆∆Úc3S¢∆áVV∆∆FV¬ñÁfVÁF&ñÚ6R&V6∆7VÃ;26ˆ‚V¬˜&FV‚&ñÊ&ñÚWÜ7FÚVRW667&óG2ˆñÁfVÁF˜'í÷vFRÊ÷ß6≤ÊÚ6÷&ñV¬∆6Ê6RgVÊ6ñˆÊ¬Êí∆23CígVVÁFW27Fóf2‡†¢22c3S"+rtÙƒb44ı$R4$BuB‚ƒïdR+r#rFRv˜7FÚFR##`†•c3S"w&Vv6VwVñ÷ñVÁFÚ&V÷˜FÚWF˜&ó¶FÚ6ñ‚WÜñvó"VRV¬fó6óFÁFRñÁ7F∆R∆∆ñ66ú;6‚‚VñV‚∆∆Wf∆66˜&R6&BVVFR6ˆ◊'Fó";¶Êñ6÷VÁFRV‚ßVvF˜"ÚV¬w'WÚ6ˆ◊∆WFÛ≤6FW'6ˆÊfó6ñ&∆R¬Ú7R&W7ˆÁ6&∆RWF˜&ó¶FÚ¬6ˆÊfó&÷V¬W&÷ó6Ú‚V¬l:÷Ê7V∆Ú&ófFÚ6GV6¬VVFR&Wfˆ6'6Rí'&R∆ófRÊáF÷∆6ˆ÷Úfó6˜"6W&FÚíWÜ6«W6óf÷VÁFRFR∆V7GW&‚V‚ßVvF˜"VVFR6ˆÁFñÁV"7R&˜ñ&ˆÊFí6VwVó"&ñ∆FW&∆÷VÁFR7RW7˜6¬÷ñvÚR˜G&Úw'WÚV‚˜G&fVÁFÊ6ñ‚Fˆ6"V¬Ü˜ñÚÊí∆F&¶WF7Fóf‡†§∆˜2F˜&ÊV˜2W6‚V‚VÊ∆6RFRF&∆W&ÚíV‚<;6FñvÚFRVÊú;6‚‚6Fw'WÚ7&VíWF˜&ó¶7R7G&V“ñÊFWVÊFñVÁFS≤V¬F&∆W&Ú6&v:vñÊ26ˆ‚7W'6˜"íÊÚfñ¶V‚‹:Üñ÷ÚFR&ˆGV7FÚ&w'W˜2ÚßVvF˜&W2w&VvF˜2‚∆F&¶WFFR6F&ˆÊF6ˆÁ6W'f∆'VóFV7GW&WÜó7FVÁFRFRVÊÚ6Vó2ßVvF˜&W2‚∆˜2Fˆ∂VÁ2FRV&∆ñ6"í÷ó&"6ˆ‚ñÊFWVÊFñVÁFW2¬∆VF˜&ñ˜2FR#Sb&óG2¬í˜7Fw&U5¬<;6∆ÚwV&F4Ñ”#Sb‚ƒïdRWÜ6«WñR6ˆÁF7F˜2¬V&ñ66ú;6‚¬VFñÚ¬î¬6∆ñ÷FWF∆∆FÚ¬7&VFVÊ6ñ∆W2¬<;6Fñv˜2&ófF˜2¬ßVVv˜2∆FW&∆W2íVW7F2‡†§∆V&∆ñ66ú;6‚Ê6RFV¬;¶Êñ6ÚW'6ó7BÇñˆfñ6ñ¬¬6ˆÁ6W'f&ñ÷W&Ú∆&ˆÊF∆ˆ6¬í÷ÁFñVÊR<;6∆ÚV¬6Ê6Ü˜BVÊFñVÁFR‹:2&V6ñVÁFR6í6RñW&FR6\;¬‚V¬6W'fñF˜"gVV«fRfñ«G&"∆˜2ßVvF˜&W2WF˜&ó¶F˜2V‚6F◊WF6ú;6‚¬WÜñvR&Wfó6ú;6‚W7W&F¬6WFGW∆ñ6F˜2ñFV◊˜FVÁFW2í7GV∆ó¶V¬F&∆W&ÚFRF˜&ÊVÚ‚&Wfˆ6"V∆ñ÷ñÊV¬6Ê6Ü˜Bfó6ñ&∆R‚V¬fó6˜"6ˆÁ7V«F6FG&W26VwVÊF˜2í&W6W'f∆;¶«Fñ÷∆V7GW&V‚ÁF∆∆GW&ÁFRVÊñÁFW''W6ú;6‚‡†§&6Üóf˜2WÜ7F˜2c3S#¢ñÊFWÇ÷w'W¬ÊáF÷∆¬∆ófR÷6ˆÁG&ˆ¬Êß6¬∆ófRÊáF÷∆¬∆ófR◊fñWrÊß6¬íˆ∆ófRÊß6¬FF&6RÛEˆ∆ófU˜66˜&V6&G2Á7∆¬6W'fñ6R◊v˜&∂W"Êß6¬fW&6V¬Êß6ˆÊ¬FW7B◊c3S"÷∆ófRÊ÷ß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬DD$4UÙ$4ÑïDT5EU$RÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ıT‰EÙƒïdUÛÖÙtÙƒeı44ı$UÙ4$EÙuEÙƒïdRÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷F¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‡†§W7FFÚFR6˜'FS¢ñ◊∆V÷VÁF6ú;6‚∆ˆ6¬FW&÷ñÊF6ˆ'&R∆&÷c3S"÷∆ófV≤÷ñw&6ú;6‚ÊVˆ‚FV◊˜&¬í&ñÊ6ó¬53≤ÊfVvF˜"&V¬¬&WfñWrí'VV&l:◊6ñ6W&÷ÊV6V‚VÊFñVÁFW2‚&ˆGV66ú;6‚F3&vc&#f&CfV3ì#sS&3S3ñ6cC6cìSS#f6ñwVRñÁF7F‚∆&WfW'6ú;6‚6ˆÁ6ó7FRV‚&Wfˆ6"VÊ∆6W2¬&WFó&"c3S"í¬<;6∆Ú&¶Ú&ˆ6VFñ÷ñVÁFÚFR&6R&W7∆FF¬V∆ñ÷ñÊ"WÜ6«W6óf÷VÁFR∆2F&∆2ÁVWf26ñ‚Fˆ6"FF˜2c3S‡†§6ˆ◊Fñ&ñ∆ñFBÊVˆ‚c3S#¢V¬&W&F˜"6VwW&Ú&V6Ü¨;27VW'˜2FRgVÊ6ñˆÊW2∆÷6VÊF2‚∆G&Á666ú;6‚FRV&∆ñ66ú;6‚6RG&6∆L;2VÊ6ˆ∆6VÁFVÊ6ñ5DRFVÁG&ÚFRíˆ∆ófRÊß6¬6ˆÁ6W'fÊFÚ&∆˜VVÚFRfñ∆¬&Wfó6ú;6‚W7W&F¬ñFV◊˜FVÊ6ñ¬fñ«G&ÚFRßVvF˜&W2¬ñÊ7&V÷VÁFÚFRF˜&ÊVÚíWfVÁFÚL;6÷ñ6Ú‚FF&6RÛEˆ∆ófU˜66˜&V6&G2Á7∆VVF∆ñ÷óFFÚF&∆2R:÷ÊFñ6W3≤FW7B◊c3S"÷∆ófRÊ÷ß6&V6Ü¶7V«VñW"gVÊ6ú;6‚∆÷6VÊFíF÷&ú:ñ‚ßVvF˜&W26ˆ‚îBGW∆ñ6FÚ‡†§ÊVˆ‚ó6∆FÚ53¢÷ñw&6ú;6‚cÉsì6B”FB”Cb”Éb÷#ñ#É6SV#v6¬&÷÷7÷÷ñw&Fñˆ‚”##b”Ç”#uC#”S”3F¬îB'"÷÷˜&ÊñÊr÷FWr÷gwììgÜ¬&ñÊ6ó¬ñÁF7F'"÷∆FR◊vñÊB÷fÜvìó36‚6R6&v&ˆ‚cw'W˜2íV¬7W'6˜"FWfˆ«fú;2#RÛ#RÛ6ñ‚GW∆ñ6F˜2‚V‚7G&V“ñÊFófñGV¬&V6ñ&ú;2F˜2ßVvF˜&W2í6ˆÁ6W'l;2<;6∆Ú∆ñW"◊c3S"”÷≤V¬6VwVÊFÚÊÚ&V6ú;2‚&WWFó"∆◊WF6ú;6‚FWfˆ«fú;2GW∆ñ6FÚ¬&Wfó6ú;6‚í6W&ÚWfVÁF˜2ÁVWf˜2‡†§ÊVˆ‚&ñÊ6ó¬53¢V¬&˜ñWF&ñÚ&ˆ,;2∆÷ñw&6ú;6‚íÊVˆ‚∆∆ñ<;2'"÷∆FR◊vñÊB÷fÜvìó36≤∆&÷FV◊˜&¬gVRV∆ñ÷ñÊF‚∆fW&ñfñ66ú;6‚˜7FW&ñ˜"6ˆÊfó&‹;27VG&ÚF&∆2ƒïdR¬R:÷ÊFñ6W2¬6W&ÚgVÊ6ñˆÊW2∆÷6VÊF2ƒïdRí6W&ÚF˜&ÊV˜2¬7G&V◊2ÚWfVÁF˜2FR'VV&G&6∆FF˜2‡†§6ˆÁG&ˆ¬W&÷ÊVÁFRFRfW'6ñˆÊW2c3S#¢∆VFóF˜,:÷FW67V'&ú;2VRÇ'VV&2Üó7L;7&ñ62WÜñ|:÷‚∆óFW&∆÷VÁFRV¬'Vñ∆BvVÊW&¬c33"í&∆˜VV&‚7V«VñW"&V∆V6R˜7FW&ñ˜"VÁVR7RgVÊ6ú;6‚6ˆÁFñÁV&6˜'&V7F‚Ü˜&WÜñvV‚V‚ñFVÁFñfñ6F˜"b226l:∆ñFÚí÷ÁFñVÊV‚7W276W'FñˆÁ2gVÊ6ñˆÊ∆W2&˜ñ3≤FW7B◊c3S"÷∆ófRÊ÷ß66ˆÁ6W'f∆WÜñvVÊ6ñWÜ7FFV¬'Vñ∆BƒïdRc3S"‚&6Üóf˜26˜'&VvñF˜3¢FW7B◊7F&∆Vf˜&B◊VíÊ÷ß6¬FW7B◊c#s"÷FVfñÊóFófR÷˜W&FñˆÊ¬◊&V∆V6RÊ÷ß6¬FW7B◊c#sB÷6ˆ◊∆WFR÷6˜W'6W2◊fˆñ6R÷˜W&FñˆÁ2Ê÷ß6¬FW7B◊c#sR◊7F&∆R÷∆ófR◊fˆñ6R◊GW&Á2Ê÷ß6¬FW7B◊c#sb÷÷ÁV¬÷Üˆ∆R÷ÊfñvFñˆ‚Ê÷ß6¬FW7B◊c#sr÷ˆffñ6ñ¬◊&˜VÊB÷6˜'&V7FñˆÁ2Ê÷ß6¬FW7B◊c#sÇ÷6&B÷ñ÷vR◊Fb÷Wá˜'BÊ÷ß6¬FW7B◊c#sí÷∆ˆ6¬÷6&B÷∆ñ'&'íÊ÷ß6¬FW7B◊c#É÷∆ˆ6¬÷Üó7F˜'í÷ñÁ6ñváG2Ê÷ß6¬FW7B◊c3R÷Üó7F˜'í÷ÊfñvFñˆ‚◊¶W&Ú÷W'&˜"Ê÷ß6¬FW7B◊c3r÷÷F6Ç÷'&˜w2÷f˜&÷BÊ÷ß6¬FW7B◊c3#"◊&V¬◊7W7FñÊVB÷6FFñRÊ÷ß6¬FW7B◊c3#2÷∆ˆÊr÷◊V«FóF˜ñ2÷6ˆÁFWáBÊ÷ß6¬FW7B◊c3#B◊&V¬◊G&ffñ2Ê÷ß6¬FW7B◊c3#R÷ñFV¬÷÷ñ7&˜ÜˆÊR◊Fñ÷ñÊw2Ê÷ß6¬FW7B◊c3#b÷ÊÚ◊6ñ∆VÁB÷6ˆÁfW'6Fñˆ‚Ê÷ß6¬FW7B◊c3#r◊Fˆˆ¬÷fˆ∆∆˜wW÷ÊÚ◊6ñ∆VÊ6RÊ÷ß6íFW7B◊c3#Ç÷ˆffñ6ñ¬÷vˆ∆b◊'V∆W2Ê÷ß6‡†§V¬÷ó6÷Ú6ˆÁG&ˆ¬6R∆ñ<;2¬Êˆ÷'&RFR66å:ì¢b'VV&26ˆÁ6W'f‚∆ˆ&∆ñv6ú;6‚FRVÊ66å:íw66r÷÷ˆ&ñ∆R◊b226¬W&ÚñÊÚgVW'¶‚c33"¬˜'VR6F&V∆V6RgVÊ6ñˆÊ¬ÊV6W6óFV‚Êˆ÷'&RÁVWfÚ&ñÁf∆ñF"V¬6ÜV∆¬ÁFW&ñ˜"‚&6Üóf˜2WÜ7F˜3¢FW7B◊c#É◊v÷ñÁ7F∆∆Fñˆ‚Ê÷ß6¬FW7B◊c#ÉB÷ÊFófR◊6∂vR÷vVÊW&Fñˆ‚Ê÷ß6¬FW7B◊c#ì÷'&ÊB÷ñ6ˆÁ2÷6∆VÁWÊ÷ß6¬FW7B◊c3B÷Üˆ÷ˆvVÊV˜W2◊&Vvó7G&Fñˆ‚÷7FñˆÁ2Ê÷ß6¬FW7B◊c3R÷Üó7F˜'í÷ÊfñvFñˆ‚◊¶W&Ú÷W'&˜"Ê÷ß6¬FW7B◊c3r÷÷F6Ç÷'&˜w2÷f˜&÷BÊ÷ß6¬FW7B◊c3"÷vVÊW&¬÷6FFñRÊ÷ß6¬FW7B◊c3#2÷∆ˆÊr÷◊V«FóF˜ñ2÷6ˆÁFWáBÊ÷ß6¬FW7B◊c3#B◊&V¬◊G&ffñ2Ê÷ß6¬FW7B◊c3#R÷ñFV¬÷÷ñ7&˜ÜˆÊR◊Fñ÷ñÊw2Ê÷ß6¬FW7B◊c3#b÷ÊÚ◊6ñ∆VÁB÷6ˆÁfW'6Fñˆ‚Ê÷ß6¬FW7B◊c3#r◊Fˆˆ¬÷fˆ∆∆˜wW÷ÊÚ◊6ñ∆VÊ6RÊ÷ß6¬FW7B◊c3#Ç÷ˆffñ6ñ¬÷vˆ∆b◊'V∆W2Ê÷ß6¬FW7B◊c3#Ç÷ˆff∆ñÊR÷ˆffñ6ñ¬◊'V∆W2Ê÷ß6¬FW7B◊c3#í◊6∂ñÁ2Ê÷ß6íFW7B◊c33◊6ñFR÷v÷W2Ê÷ß6‚c3S"WÜñvR'FRw66r÷÷ˆ&ñ∆R◊c3S"÷∆ófVíˆ∆ófR÷6ˆÁG&ˆ¬Êß6V‚FW7B◊c3S"÷∆ófRÊ÷ß6‡†¢222c3S"’$UdîUr’#+r6ÊFFÚ&V÷˜FÚ6˜'&V7F†§vóDáV"&V6ñ&ú;2V¬6ÊFñFFÚc3S"V‚c3S"÷∆ófV‚V¬&ñ÷W"vV&Üˆˆ≤6R7Fól;26ˆ‚V‚6ˆ÷÷óB6ñ‚6÷&ñ˜2FR:&&ˆ¬ÜSñ#F6íífW&6V¬∆Ú&V6Ü¨;26˜'&V7F÷VÁFR÷VFñÁFRdî¬$ÙD‘tDV¬FW∆˜ñ÷VÁBG≈ÛÜÊ5fñÑ£CeEuá$◊%v‘µvv÷7W&%vÜ‚ÊÚ6RV&∆ñ<;2ÊñÊ|;¶‚&WfñWrÊí6÷&ú;2&ˆGV66ú;6‚‚#&Vvó7G&V¬ñÁFVÁFÚV‚÷&˜2$ÙD‘2¬gVV«fR6V∆∆"V¬ñÁfVÁF&ñÚíˆ&∆ñvVRV¬6ñwVñVÁFR6ˆ÷÷óB&V÷˜FÚ6ˆÁFVÊv∆WfñFVÊ6ñFˆ7V÷VÁF¬fó6ñ&∆R&V¬6ÊFFÚ‡†¢222c3S"’$UdîUr’#"+r,:÷WG&˜2ÊVˆ‚ÖEE6ˆ‚FóÚWáÃ:÷6óF†§V¬FW∆˜ñ÷VÁB#G≈Û6f◊6gD&ßTg§÷uc6Uî¥we%w•6ffVVL;2$TEííW&÷óFú;2∆&ñ÷W&'VV&6ˆÁG&∆&6R&ñÊ6ó¬‚7&V"V‚7G&V“&ófFÚí∆VW"7R&Wfó6ú;6‚&ˆ&&ˆ„≤V&∆ñ6"V¬Ü˜ñÚFWfˆ«fú;2C%Ü˜'VRñÁFW'ˆ∆6ñˆÊW26W&F2FVÁG&ÚFRß6ˆÊ%ˆ'Vñ∆Eˆˆ&¶V7FÊÚFVÏ:÷‚FóÚWáÃ:÷6óFÚ&˜7Fw&U5¬‚íˆ∆ófRÊß6Ü˜&Fó◊WFFñˆ‰ñF¬6V7&WDÜ6Üí&Wfó6ú;6‚W7W&FV‚FˆF∆6VÁFVÊ6ñL;6÷ñ6≤FW7B◊c3S"÷∆ófRÊ÷ß6w&VvV¬6ÊFFÚÊVvFófÚ‚F÷&ú:ñ‚6R7GV∆ó¶‚4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ıT‰EÙƒïdUÛÖÙtÙƒeı44ı$UÙ4$EÙuEÙƒïdRÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷Fí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F‡†•c3S"’#"&V÷˜FÚ53¢6ˆ÷÷óBf&3ììScÜ6cÜc##fFSf##ÉSÉ3#SCcÉñcV¬FW∆˜ñ÷VÁBG≈Û$$ƒe§Ê¶ˆˆvE3&÷∑á&TÊ§&vÉf¬$TEí‚∆'VV&&˜FVvñFFWfˆ«fú;2:vñÊ#¬7&V6ú;6‚#¬∆V7GW&ñÊñ6ñ¬#¬V&∆ñ66ú;6‚#¬∆V7GW&FRw&˜72RÙÊWFÚBV‚&Wfó6ú;6‚6ˆ‚#¬&Wfˆ66ú;6‚#íCƒïdUı$UdÙ¥TFfñÊ¬‚ˆ'6W'f&ñ∆ñFC¢6ñÊ6Ú&W7VW7F2#¬VÊCW7W&Fí6W&ÚW'&˜&ˆfF∆‚∆˜27G&V◊2FRFñvÏ;77Fñ6ÚgVW&ˆ‚V∆ñ÷ñÊF˜3≤&ˆGV66ú;6‚6ñwVRV‚F3&vc&#f&CfV3ì#sS&3S3ñ6cC6cìSS#f‚f«F;¶Êñ6÷VÁFRñÁ7V66ú;6‚fó7V¬í'VV&l:◊6ñ6V‚ïÜˆÊRÁFW2FR7V«VñW"÷ˆÁF¶R‡†¢22c3S2+r‘Ù‰ïDı"tT‰U$¬¬‘Ù‰ïDı"î‰DïdîET¬í6ˆ◊'Fó"◊VÊFñ¬+r#ÇFRv˜7FÚFR##`†•c3S2&W7VV«fRV¬W66VÊ&ñÚñFV¬FRÉW'6ˆÊ2í3(	3CFVÃ:ñfˆÊ˜26ˆ‚VÊ&Vv∆6VÊ6ñ∆∆¢6Fw'WÚÊˆ÷'&V‚4ïL8‚DRD$§UD≤<;6∆ÚW6RFVÃ:ñfˆÊÚV&∆ñ6í∆˜2FV‹:2÷ó&‚‚V¬˜&vÊó¶F˜"6ˆ◊'FRV‚VÊ∆6RvVÊW&¬‚V¬W7V&ñÚ∆Ú'&RíV∆ñvRVÁG&RF˜2&˜FˆÊW2VÊófW'6∆W3¢+r‘Ù‰ïDı"tT‰U$∆&FˆFÚV¬F˜&ÊVÚí"+r‘Ù‰ïDı"î‰DïdîET∆&7V«VñW"ßVvF˜"Úw'WÚ‚∆66˜&R6&B&˜ñ6ñwVRñÁF7FV‚7RfVÁFÊ‡†§∆˜2ßVvF˜&W2V∆VvñF˜2&V¬÷ˆÊóF˜"ñÊFófñGV¬&WWFñ∆ó¶‚∆÷ó6÷vVÊW&¬í&ˆGV6V‚6W&Ú∆V7GW&2Fñ6ñˆÊ∆W2‚<;6∆ÚVÊW'6ˆÊWáFW&ÊWÜñvRñ◊˜'F"7Rl:÷Ê7V∆ÚñÊFófñGV¬6ˆ÷Ú&W7∆FÚ‚∆vVÊW&¬&V6˜'&R7W'6˜&W2÷ñVÁG&2WÜó7F‚:vñÊ2¬◊VW7G&ÉßVvF˜&W26ñ‚ˆ÷ó6ú;6‚ÊíGW∆ñ6FÚí&˜GV∆˜6ñ6ú;6‚¬w'WÚ¬Ü˜ñ˜2¬w&˜72¬ÊWFÚí≤˛(â"6ˆ÷Ú&W7V«FFÚƒïdRÊÚˆfñ6ñ¬‚V¬6W'fñF˜"6W&ñ∆ó¶∆VÊú;6‚¬F˜&ÊVÚí&V6Ü¶V‚6VwVÊFÚV&∆ñ6F˜"7FófÚFV¬÷ó6÷Úw'WÚ‡†¶4Ù’%Dï")õÓ˚àˆW6∆Üˆ¶ÊFófFV¬FVÃ:ñfˆÊÛ¢vÜG4¬÷VÁ6¶W2¬6˜'&VÚ¬ó$G&˜¬ÇR˜G&∆ñ66ú;6‚‚V¬÷ó6÷Úl:÷Ê7V∆ÚgVÊ6ñˆÊV‚U4¬‹:óÜñ6Ú¬óF∆ñÚ7V«VñW":◊2íÊÚfñ¶V‚‹:Üñ÷ÚFRñÁfóFF˜2‚∆6VwW&ñFBÊÚ6÷&ñ¢˜6W6ú;6‚FV¬l:÷Ê7V∆Ú¬<;6∆Ú∆V7GW&¬fVÊ6ñ÷ñVÁFÚí&Wfˆ66ú;6‚ñÊ÷VFñF‡†•c3S2ÊÚ÷ˆFñfñ6V¬W7VV÷ÊVˆ„¢&WWFñ∆ó¶∆27VG&ÚF&∆2íR:÷ÊFñ6W2ƒïdRc3S"¬˜"∆ÚVRÊÚWÜó7FR÷ñw&6ú;6‚ÁVWf‚&Ê6Ú∆ˆ6¬52&#9sBíC9s"¬÷ˆÊóF˜"vVÊW&¬≤G&W2ßVvF˜&W2V‚V¬÷ˆÊóF˜"ñÊFófñGV¬6ˆ‚6W&Ú∆V7GW&2WáG&¬ñ◊˜'F6ú;6‚WáFW&Ê¬˜&ñvV‚6VwW&Ú¬6&v6ñ‚‹:Üñ÷Úfñ¶Ú¬&óf6ñFB¬W'GW&6W&Fí6óL:‚;¶Êñ6Ú‚&WfñWrG≈Û&sdµÑF¶v%áU&e#Ñ∑ìÉÜì%S#Df$TEííS$R&V÷˜FÚ53¢#w'W˜2¬ÉßVvF˜&W2¬G&W2:vñÊ2¬l:÷Ê7V∆ÚñÊFófñGV¬¬&Wfó6ú;6‚ƒïdR¬CñGW∆ñ6FÚ¬C&Wfˆ6FÚ¬6W&Ú'VÁFñ÷RW'&˜&ˆfF∆í6W&ÚFF˜2FR'VV&7Fóf˜2‚ñÁ7V66ú;6‚fó7V¬í'VV&l:◊6ñ6ïÜˆÊR6ˆÁFñÏ;¶‚6ˆ÷ÚVW'F2ñÊFWVÊFñVÁFW2‡†§∆6ˆ◊VW'Fc3S26WFV¬f˜&÷FÚ∆Vvñ&∆RÚ6ˆ◊7FFÚFRfW&6V¬Êß6ˆÊ¬fW&ñfñ6"ˆ∆ófR÷áV"ÊáF÷∆≤W7FÚ6˜'&ñvRWÜ6«W6óf÷VÁFRV‚f«6ÚÊVvFófÚFR6ˆ◊ñ∆6ú;6‚í÷ÁFñVÊRñÁF7F∆6ˆ&W'GW&gVÊ6ñˆÊ¬‡†§&6Üóf˜2WÜ7F˜2c3S3¢∆ófR÷áV"ÊáF÷∆¬∆ófR÷áV"Êß6¬∆ófRÊáF÷∆¬∆ófR◊fñWrÊß6¬∆ófR÷6ˆÁG&ˆ¬Êß6¬íˆ∆ófRÊß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬6W'fñ6R◊v˜&∂W"Êß6¬fW&6V¬Êß6ˆÊ¬FW7B◊c3S2÷∆ófR÷áV"Ê÷ß6¬FW7B◊c3S"÷∆ófRÊ÷ß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬DD$4UÙ$4ÑïDT5EU$RÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ıT‰EÙƒïdUÛÖÙtÙƒeı44ı$UÙ4$EÙuEÙƒïdRÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷F¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‡†•&ˆGV66ú;6‚W&÷ÊV6RWÜ7F÷VÁFRV‚F3&vc&#f&CfV3ì#sS&3S3ñ6cC6cìSS#f‚&WfW'6ú;6‚c3S3¢&WFó&"6VÁG&Ú∆ófRí7W26ˆÁG&ˆ∆W2¬6ˆÁ6W'f"∆66˜&R6&Bc3S"í&Wfˆ6"∆˜2l:÷Ê7V∆˜2ÊV6W6&ñ˜3≤ÊñÊ|;¶‚FFÚÊíF&∆&WVñW&RV∆ñ÷ñÊ6ú;6‚‡†¢22c3SB+r&W7∆FÚ6f&ì¢f&ñ˜2Ü˜ñ˜2ívVÊW&¬fó6ñ&∆R+r#ÇFRv˜7FÚFR##`†§∆'VV&l:◊6ñ6FR∆2s£^(	3s£b&V6Ü¨;2V¬6ñW'&RFRf˜¢ÁFW&ñ˜#¢&Vvó7G&ÚíV‚Ü˜ñÚñÊFófñGV¬gVÊ6ñˆÊ&ˆ‚¬W&Úf&ñ˜2Ü˜ñ˜2ÊÚ6R∆ñ6&ˆ‚íVÊ6ˆÁ7V«FvVÊW&¬6ˆ‚ÖEE#ÊÚ&ˆGV¶ÚVÊ&W7VW7Ffó6ñ&∆RÚVFñ&∆R‚c3SB6˜'&ñvRW6'WF6ñ‚÷ˆFñfñ6"V¬÷˜F˜"FR66˜&W3¢7VÊFÚ∆&ˆÊFFñVÊRV‚6ˆ∆ÚßVvF˜"¬V¬Fñ7FFÚVVFRˆ÷óFó"7RÊˆ÷'&S≤Ü˜ñˆíÜ˜ñ˜66ˆ‚WVóf∆VÁFW3≤6F∆˜FRl:∆ñFÚ6RW67&ñ&R÷VFñÁFRV¬f«V¶Ú˜W&6ñˆÊ¬WÜó7FVÁFR‚VÊg&6R6ˆ‚f˜&÷FR66˜&RW&ÚñÁl:∆ñFFW&÷ñÊ∆ˆ6∆÷VÁFRíÁVÊ66RFW7l:÷vVÊW&¬‡†§∆6ˆ◊VÊñ66ú;6‚vVÊW&¬'&RV¬ÊV¬íÁFW2FRVÁfñ"∆6ˆÁ7V«F‚∆&W7VW7FVVFfó6ñ&∆RVÁVR6f&íÊÚ'&ÁVRV¬6ñÁFWFó¶F˜#≤V‚vF6ÜFˆr6ˆÁ6W'fVÊ&V7WW&6ú;6‚÷ÁV¬í∆FV∆V÷WG,:÷<;6∆Ú&Vvó7G&W7FFÚL:ñ6Êñ6Úí6ÁFñFBFRVÁG&F2¬ÁVÊ6G&Á67&ó6ú;6‚¬Êˆ÷'&W2¬VFñÚÊíV&ñ66ú;6‚‚V¬&Ê6ÚFñÏ:÷ñ6ÚV¶V7WFG&W2Ü˜ñ˜2¬«W&¬¬∆ñ66ú;6‚V‚∆˜FR¬˜&FV‚'&ó.(i&VÁfñ"¬&W7VW7Ffó6ñ&∆Rí6ÊóFó¶6ú;6‚&ófF‡†§&6Üóf˜2WÜ7F˜2c3SC¢ñÊFWÇ÷w'W¬ÊáF÷∆¬6W'fñ6R◊v˜&∂W"Êß6¬í˜fˆñ6R÷ÜV«FÇÊß6¬FW7B◊c3SB◊fˆñ6R÷f∆∆&6≤Ê÷ß6¬FW7B◊c#cr◊66˜&V6&B÷6ˆ÷&ñÊFñˆ‚÷÷G&óÇÊ÷ß6¬FW7B◊c#s÷6ˆÁ6V7WFófR÷Üˆ∆R◊fˆñ6R÷&∆ˆ6∑2Ê÷ß6¬FW7B◊c3S"÷∆ófRÊ÷ß6¬FW7B◊c3S2÷∆ófR÷áV"Ê÷ß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ı$Ttï5E$ıı$Tî‰4îDT‰4î5Ù4ƒîDBÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷F¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‡†§W7FFÚFR6˜'FRc3SC¢&Ê6Ú∆ˆ6¬íVFóF˜,:÷ñÁFVw&¬52‚6ˆ÷÷óB&V÷˜FÚCvFV#ñ&S3É#cC3f3ÜSc6C3sñc3vC#V&≤&WfñWrG≈Ù6w•ód%ìñF§¶VáDf‘ÉV7îeÑÜFÊ$TEí‚fW&6V¬&ˆ,;2ìbVWFW3≤V¬ÊfVvF˜"&V¬'&ú;2vˆ∆b66˜&R6&BuB¬6ˆÊfó&‹;2'Vñ∆Bíf˜¢c3SB¬í(â‚íƒïdRfó6ñ&∆W2¬í6W&ÚW'&˜&W2FR∆∆ñ66ú;6‚‚∆'VV&l:◊6ñ6ïÜˆÊRW&÷ÊV6R&ñW'F‚ƒïdRc3S26ˆÁ6W'f7R'VóFV7GW&íS$R‚&ˆGV66ú;6‚6ˆÁFñÏ;¶ñÁF7FV‚F3&vc&#f&CfV3ì#sS&3S3ñ6cC6cìSS#f‡†¢22c3SR+rVFñÚWFˆ‹:Fñ6ÚïÜˆÊRíFñ7FFÚFó7G&ñ'VñFÚ+r#ÇFRv˜7FÚFR##`†§∆'VV&l:◊6ñ6FR∆2s£Cí&V6Ü¨;2V¬VFñÚFRc3SC¢∆&W7VW7FvVÊW&¬&V6ú;2W67&óF¬W&Ú6f&íÊÚÜ&Ã;2FW7\:ó2FRW7W&"ñÁFW&ÊWB‚c3SRÜ&ñ∆óF7VV6Ö7ñÁFÜW6ó6FVÁG&ÚFV¬F˜VR˜&ñvñÊ¬FRTÂdî"ÚFV¬÷ñ7,;6fˆÊÛ≤V¬:óÜóFÚWÜñvR$U5Ù‰DîT‰DÚT‚dı¶í∆&V7WW&6ú;6‚÷ÁV¬FV¶FR6ˆÁF'6R6ˆ÷Ú&ˆ&6ú;6‚‡†§∆6GW&FR∆2s£S÷˜7G,;2V¬Fñ7FFÚßV¬FV¬FV6∆FÚW67&ñ&ñVÊFÚ‰42uU5DdÚ¬R$ƒ‰46FVÁG&ÚFR‰Ù‘%$R‚c3SRFó7G&ñ'WñR∆g&6RV‚Êˆ÷'&R¬ÑD5í÷&626ñ‚&V6ˆÁ7G'Vó"∆ÁF∆∆Êí6W'&"V¬FV6∆FÚ‚<;6∆Ú7L;¶6ˆ‚Êˆ÷'&R¬ÑD5VÁFW&Ú(	3SBí÷&62l:∆ñF3≤VÊg&6RñÊ6ˆ◊∆WFÚñÁl:∆ñFW&÷ÊV6R÷ÁV¬‡†§&6Üóf˜2WÜ7F˜2c3SS¢ñÊFWÇ÷w'W¬ÊáF÷∆¬6W'fñ6R◊v˜&∂W"Êß6¬í˜fˆñ6R÷ÜV«FÇÊß6¬FW7B◊c3SB◊fˆñ6R÷f∆∆&6≤Ê÷ß6¬FW7B◊c3SR÷ñ˜2÷VFñÚ÷Fñ7FFñˆ‚Ê÷ß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ı$Ttï5E$ıı$Tî‰4îDT‰4î5Ù4ƒîDBÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷F¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F≤&WfñWrí52l:◊6ñ6ÚïÜˆÊR6ˆ‚VW'F26W&F2‡†§W7FFÚ&V÷˜FÚc3SS¢6ˆ÷÷óB#ìcVV3FCÉv3cC&ccSVSVcÜ&F&fc6cV63ñ¬FW∆˜ñ÷VÁBG≈Ûtá4Ñ’cv◊6#fc&Fó•T7S4U3STf$TEí¬F&vWC¶ÁV∆∆¬VFóF˜,:÷fW&6V¬FRìrVWFW252‚ÊfVvF˜"&V¬6ˆÊfó&‹;2vˆ∆b66˜&R6&BuB¬'Vñ∆B˜f˜¢c3SR¬íT‰ïdU%4¬(â‚fó6ñ&∆RíFó7G&ñ'V6ú;6‚WFˆ‹:Fñ6'VV&c3SR¬R&∆Ê66Êˆ÷'&RÙÑD5Ù÷&626ˆ‚Ù≤Ü&ñ∆óFFÚ‚&ˆGV66ú;6‚6ˆÁFñÏ;¶ñÁF7F≤f«FWÜ6«W6óf÷VÁFRV¬52l:◊6ñ6ÚïÜˆÊRFRVFñÚíFñ7FFÚ‡†¢22c3Sb+rf˜¢6VF"í6˜'&V66ú;6‚FV◊˜&¬FRG,:fñ6Úˆ6∆ñ÷+r#ÇFRv˜7FÚFR##`†•c3SbñÁFVw&F˜26ˆÁG&ˆ∆W2ñÁ6W&&∆W3¢f˜¢˜&ñvñÊF˜"÷ñ7,;6fˆÊÚ6ñ‚G&Á67&ó6ú;6‚fó6ñ&∆Rí6ˆÁ7V«F2FV◊˜&∆W26ˆÊfñ&∆W2‚G,:fñ6Úí6∆ñ÷Fó7FñÊwVV‚Ü˜&¬V‚¶ˆÊwVFV÷∆¬FF˜27GV∆W2FRW7Fñ÷6ñˆÊW23÷ñÁWF˜2¬Ü˜&¬2Ü˜&2¬÷;Êí,;7Üñ÷6V÷Ê‚V¬6∆ñ÷W6∆&ñ÷W&Ü˜&V&∆ñ6FñwV¬Ú˜7FW&ñ˜"∆6ˆ∆ñ6óFFíFV6∆&&W6ˆ«V6ú;6‚FRVÊÜ˜&≤gVW&FV¬Ã:÷÷óFRFRbL:÷2ñÊf˜&÷VRÊÚWÜó7FR&ˆÏ;77Fñ6ÚV‚fW¢FR&WWFñ∆ó¶"V¬6∆ñ÷7GV¬‡†§∆&VñÊ6ñFVÊ6ñ$2”#rFˆ7V÷VÁFVRc3SRW&Fú;2VÊ6˜'&V66ú;6‚WÜó7FVÁFRV‚˜G&&÷‚FW7B◊c3Sb◊G&ffñ2◊vVFÜW"÷67W&7íÊ÷ß6VVFñÊ6˜'˜&FÚ∆VFóF˜,:÷ßVÁFÚ6ˆ‚c3#B¬c33rí∆2'VV&2FRf˜¢c3SN(	5c3Sb‚∆6WF6ú;6‚WáFW&ÊWÜñvR¬÷VÊ˜2ìR6ˆ‚Fˆ∆W&Ê6ñ2V&∆ñ6F3≤6ˆñÊ6ñFVÊ6ñVÁG&R&˜fVVF˜&W2ÊÚ6R&W6VÁF6ˆ÷ÚWÜ7FóGVBgWGW&ˆ'6W'fF‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F‡†¢22c3Sb+r6ˆÁfW'66ú;6‚Ü&∆F6ñ‚FWáFÚ¬6VF"÷67V∆ñÊÚí6∆ñFBfW&ñfñ6&∆R+r#ÇFRv˜7FÚFR##`†§∆6GW&l:◊6ñ6î‘uÛ#cÁÊv6ˆÊfó&‹;2VRc3SRñÜ&∆&¬W&ÚV¬GW&ÊÚ&ˆÁVÊ6ñFÚF÷&ú:ñ‚&V<:÷W67&óFÚí6f&íWFñ∆ó¶&VÊf˜¢fV÷VÊñÊFó7FñÁFFR∆÷G&ó¢&ˆ&F‚c3Sb6W&∆2÷ˆF∆ñFFW3¢VÊ6ˆÁ7V«FñÊñ6ñF˜"÷ñ7,;6fˆÊÚ6ˆÁ6W'f&VwVÁFí&W7VW7F;¶Êñ6÷VÁFR6ˆ÷Ú6ˆÁFWáFÚñÁFW&ÊÚÊÚfó6ñ&∆S≤VÊ6ˆÁ7V«FW67&óF6ˆÁ6W'f7RÜó7F˜&ñ¬W67&óFÚ‚ÊñÊwVÊG&Á67&ó6ú;6‚Ü&∆F&V6RV‚V¬ÊV¬‡†§∆÷G&ó¢WÜ7F&V7WW&FW26VF&¬fV∆ˆ6ñFB„V¬∆ˆ7WF˜"÷67V∆ñÊÚGV«FÚ¬6W&ñÚ¬6ˆ'&ñÚí&ˆfW6ñˆÊ¬¬6ˆ‚W7;ˆ¬ñÁFW&Ê6ñˆÊ¬ÊWWG&Ú‚&V«Fñ÷RñW6&W6÷G&ó¢‚V¬&W7∆FÚ6f&íFV¶FR6V∆V66ñˆÊ"∆&ñ÷W&f˜¢W7;ˆ∆FV¬FVÃ:ñfˆÊÛ¢ˆí˜fˆñ6R◊7VV6ÜvVÊW&wB”FÚ÷÷ñÊí◊GG66ˆ‚6VF"¬ñÁFVÁF&ñ÷W&Ú˜V‰íFó&V7FÚí&V7WW&˜"V¬VÊGˆñÁBˆfñ6ñ¬FRf˜¢FRfW&6V¬ívFWví‚<;6∆Ú6í÷&˜2f∆∆‚6WFVÊf˜¢∆ˆ6¬7WñÚÊˆ÷'&RW7L:íWá&W6÷VÁFR&V6ˆÊˆ6ñFÚ6ˆ÷Ú÷67V∆ñÊÛ≤ÁVÊ6WFñ∆ó¶VÊf˜¢fV÷VÊñÊvVÏ:ó&ñ6‡†§∆6∆ñFBÊÚFWVÊFRFR&W7VW7F2ñ◊&˜fó6F2‚G,:fñ6ÚFó&V7FÚ6ˆÁ7V«FWÜ6«W6óf÷VÁFRvˆˆv∆R÷2&˜WFW26ˆ‚E$ddî5Ùt$UÙıDî‘∆íVÁG&VvUD¬FV÷˜&¬Fó7FÊ6ñ¬ÊófV¬FW&ófFÚíÜ˜&FR<:∆7V∆Ú‚6∆ñ÷Fó&V7FÚ6ˆÁ7V«F˜V‚‘÷WFVÚW7G'V7GW&FÛ≤∆fñ6ÜW67&óFVVFR÷˜7G&"V¬Ü˜&&ñÚ6ˆ◊∆WFÚ¬÷ñVÁG&2∆f˜¢&W7V÷R6ˆÊFñ6ú;6‚¬FV◊W&GW&¬fñVÁFÚ¬∆«Wfñ¬ñ6Úí66ú;6‚‚íT‰ïdU%4¬W6uB”R„b¬&ˆgVÊFñFBFF&∆R¬,;ß7VVFvV"&FF˜26÷&ñÁFW2¬Ã:÷÷óFW2WáÃ:÷6óF˜2í6∆ñF6ˆ‚6ˆÊ6«W6ú;6‚¬WfñFVÊ6ñ¬&ñW6vÚí&V6ˆ÷VÊF6ú;6‚‚V¬&Ê6Ú6ˆÁ6W'fFR:&V2VÊófW'6∆W2VÁ'WFF2¬G,:fñ6Ú¬6∆ñ÷¬&W7VW7F&ˆgVÊF¬◊V«FñÜ˜ñ˜2¬&Vvó7G&ÚíƒïdR‡†§&6Üóf˜2WÜ7F˜2c3Sc¢ñÊFWÇ÷w'W¬ÊáF÷∆¬í˜VÊófW'6¬÷íÊß6¬í˜fˆñ6R◊7VV6ÇÊß6¬6W'fñ6R◊v˜&∂W"Êß6¬FW7B◊c3Sb◊fˆñ6R÷ˆÊ«í÷6VF"◊V∆óGíÊ÷ß6¬FW7B◊c3SR÷ñ˜2÷VFñÚ÷Fñ7FFñˆ‚Ê÷ß6¬FW7B◊c3SB◊fˆñ6R÷f∆∆&6≤Ê÷ß6¬FW7B◊c3S"÷∆ófRÊ÷ß6¬FW7B◊c3S2÷∆ófR÷áV"Ê÷ß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ı$Ttï5E$ıı$Tî‰4îDT‰4î5Ù4ƒîDBÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷F¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F≤&Ê6Ú6ˆ◊∆WFÚ¬&WfñWr¬ÊfVvF˜"í'VV&l:◊6ñ66ñwVV‚6ˆ÷ÚVW'F26W&F2‡†¢22c3Sr+r&V7WW&6ú;6‚&V¬FV¬÷ñ7,;6fˆÊÚïÜˆÊR+r#ÇFRv˜7FÚFR##`†§∆˜2&Vvó7G&˜2FV¬&WfñWrc3Sb∆ˆ6∆ó¶&ˆ‚∆6W66ˆ‹;¶‚FR66˜&R6&BííT‰ïdU%4√¢6Vó2W'GW&2FR&Vvó7G&Úı&ˆÊFFWfˆ«fñW&ˆ‚ı5Bˆí˜6W76ñˆ‚÷w'W¬C#ñ¬÷ñVÁG&2ˆí˜VÊófW'6¬÷ñ&W7ˆÊFú;2#‚6f&íñÁFVÁF&'&ó"V¬&V6ˆÊˆ6ñ÷ñVÁFÚ«FW&ÊFófÚ<;6∆ÚFW7\:ó2FRW7W&"&V«Fñ÷Rí&VÁFˆÊ6W2V¬vW7FÚl:◊6ñ6ÚñÊÚ6ˆÁ6W'f&WF˜&ó¶6ú;6‚‡†•c3Sr'&RvV&∂óE7VV6Ö&V6ˆvÊóFñˆÊFVÁG&ÚFV¬÷ó6÷ÚF˜VRV‚ïÜˆÊRˆïB¬ÁFW2FV¬&ñ÷W"vóF‚∆6GW&∆ˆ6¬W6÷ˆFÚ6ˆÁFñÁVÚ¬6ñÊ6Ú«FW&ÊFóf2¬G&W26VwVÊF˜2FR6ñ∆VÊ6ñÚ&6W'&"V¬∆˜FR¬&VñÊñ6ñÚ7VÊFÚ6f&íFW&÷ñÊÊGW&∆÷VÁFRíF˜2&VñÁFVÁF˜2ÁFRVFñÚ÷6GW&VÚ&VB‚∆˜266˜&W26ˆÁFñÏ;¶‚&ñ÷W&Ú˜"V¬'6W"íW67&óF˜"∆ˆ6√≤íT‰ïdU%4¬6ˆÁ6W'ffˆñ6TˆÊ«ñ¬6VF"÷67V∆ñÊÚ„Rí6W&ÚG&Á67&ó6ú;6‚fó6ñ&∆R‚V‚66˜&R÷&ñwVÚÊÚ6RW67&ñ&R‚∆FV∆V÷WG,:÷wV&F;¶Êñ6÷VÁFRW7FF˜26˜FF˜2‡†§V¬6ˆÁG&ˆ¬VÁG&R6ˆÁfW'66ñˆÊW2VVFñÊ6˜'˜&FÚV‚tTÂE2Ê÷FívóDáV#¢∆&÷6Ï;6Êñ6FV&R6ñÊ7&ˆÊó¶'6RÁFW2FRVFóF#≤∆˜2&Ê6˜2c3SN(	5c3SrFRf˜¢íc3#Bıc33rıc3SbFRG,:fñ6Ú÷6∆ñ÷6ˆ‚ˆ&∆ñvF˜&ñ˜2‚ÊñÊwVÊ6˜'&V66ú;6‚7W7FóGWñR&6Üóf˜26ˆ◊∆WF˜2FW6FRVÊ&÷&∆V∆‡†§&6Üóf˜2WÜ7F˜2c3Ss¢ÊvóFáV"˜v˜&∂f∆˜w2˜&ˆF÷÷vFRÁñ÷∆¬tTÂE2Ê÷F¬í˜fˆñ6R÷ÜV«FÇÊß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬6∂vRÊß6ˆÊ¬6W'fñ6R◊v˜&∂W"Êß6¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñ¬FW7B◊c3S"÷∆ófRÊ÷ß6¬FW7B◊c3S2÷∆ófR÷áV"Ê÷ß6¬FW7B◊c3SB◊fˆñ6R÷f∆∆&6≤Ê÷ß6¬FW7B◊c3SR÷ñ˜2÷VFñÚ÷Fñ7FFñˆ‚Ê÷ß6¬FW7B◊c3Sb◊fˆñ6R÷ˆÊ«í÷6VF"◊V∆óGíÊ÷ß6¬FW7B◊c3Sr÷ñ˜2◊fˆñ6R◊G&Á7˜'B◊&V6˜fW'íÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ı$Ttï5E$ıı$Tî‰4îDT‰4î5Ù4ƒîDBÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F≤&Ê6ÚWFˆ‹:Fñ6Ú¬&WfñWr¬ÊfVvF˜"í52l:◊6ñ6ÚïÜˆÊR6ˆ‚VW'F26W&F2‡†¢22c3SÇ+r÷ñ7,;6fˆÊÚñÁFVw&FÚí6ˆÁFñÁVñFBFR&ˆÊF+r#ÇFRv˜7FÚFR##`†•c3SÇ'FRFV¬:&&ˆ¬6ñÊ7&ˆÊó¶FÚc3Srí6ˆÁ6W'fV‚VÊ6ˆ∆Ã:÷ÊVV¬Fñ7FFÚFR&Vvó7G&Ú¬66˜&W2FRVÊÚÚf&ñ˜2Ü˜ñ˜2¬íT‰ïdU%4¬6ñ‚FWáFÚÜ&∆FÚ¬6VF"÷67V∆ñÊÚ„Rí∆26˜'&V66ñˆÊW2c3SbFRG,:fñ6Úí6∆ñ÷‚6˜'&ñvR$2”#ì¢'&ó"ÁVWf÷VÁFR∆∆ñ66ú;6‚6ˆ‚ˆñÊñ6ñÛ”ñÊÚ6ˆ∆ˆ6&Vvó7G&ÚVÊ6ñ÷FRVÊF&¶WF7Fóf‚6íWÜó7FRVÊ&ˆÊF6ˆÊfñwW&F¬∆F&¶WFí7W266˜&W2W&÷ÊV6V‚fó6ñ&∆W3≤<;6∆ÚÂTUd$Ù‰D'&RV¬&Vvó7G&Ú&&VV◊∆¶&∆‡†§&6Üóf˜2WÜ7F˜2c3SÉ¢ñÊFWÇ÷w'W¬ÊáF÷∆¬6W'fñ6R◊v˜&∂W"Êß6¬FW7B◊c3SÇ÷7FófR◊&˜VÊB◊&V˜V‚Ê÷ß6¬FW7B◊c3Sr÷ñ˜2◊fˆñ6R◊G&Á7˜'B◊&V6˜fW'íÊ÷ß6¬FW7B◊c3Sb◊fˆñ6R÷ˆÊ«í÷6VF"◊V∆óGíÊ÷ß6¬FW7B◊c3SR÷ñ˜2÷VFñÚ÷Fñ7FFñˆ‚Ê÷ß6¬FW7B◊c3SB◊fˆñ6R÷f∆∆&6≤Ê÷ß6¬FW7B◊c3S2÷∆ófR÷áV"Ê÷ß6¬FW7B◊c3S"÷∆ófRÊ÷ß6¬FW7B◊c3÷ÊWWG&¬÷÷F6Ç÷Üˆ÷R÷∆ñÊ≤Ê÷ß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñ¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ı$Ttï5E$ıı$Tî‰4îDT‰4î5Ù4ƒîDBÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷Fí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F≤VFóF˜,:÷¬&WfñWrí52l:◊6ñ6ÚïÜˆÊR6ˆ‚VW'F26W&F2‡†¢22c3Sí+r&V7WW&6ú;6‚FV¬'6W"l:◊6ñ6ÚïÜˆÊR+r#ÇFRv˜7FÚFR##`†§∆'VV&l:◊6ñ6î‘uÛ#cRÁÊv&V6Ü¨;2c3SÉ¢∆2s£33£#2ís£33£CUD26f&íVÁG&V|;2G&Á67&ó6ñˆÊW26ˆ◊∆WF2¬W&ÚV¬'6W"V÷óFú;2'6W%˜&V¶V7FVFíFV¨;2V‚&∆Ê6Ú∆˜266˜&W2FR¶ñ÷RíwW7FfÚ‚c3SíF÷óFR∆2f˜&÷2ÊGW&∆W2Ü˜ñÚÏ;¶÷W&ˆ¬vˆ«W6¬Fó,;6íV¬Ü˜ñÚ&ˆÁVÊ6ñFÚ¬fñÊ¬‚V¬G&6∆FÚFV¬Ü˜ñÚ6RW&÷óFR;¶Êñ6÷VÁFR7VÊFÚFˆF2∆2VÁG&F2&Wfñ2W'FVÊV6V‚ñÊW\:◊fˆ6÷VÁFRV‚6ˆ∆Ú&∆˜VS≤7V«VñW"∆'&FW66ˆÊˆ6ñF6ˆÁ6W'fV¬&V6Ü¶ÚF˜F¬‡†§&6Üóf˜2WÜ7F˜2c3Sì¢ñÊFWÇ÷w'W¬ÊáF÷∆¬6W'fñ6R◊v˜&∂W"Êß6¬FW7B◊c3Sí÷ñ˜2◊66˜&R◊'6W"◊&V6˜fW'íÊ÷ß6¬FW7B◊c3SÇ÷7FófR◊&˜VÊB◊&V˜V‚Ê÷ß6¬FW7B◊c3Sr÷ñ˜2◊fˆñ6R◊G&Á7˜'B◊&V6˜fW'íÊ÷ß6¬FW7B◊c3Sb◊fˆñ6R÷ˆÊ«í÷6VF"◊V∆óGíÊ÷ß6¬FW7B◊c3SR÷ñ˜2÷VFñÚ÷Fñ7FFñˆ‚Ê÷ß6¬FW7B◊c3SB◊fˆñ6R÷f∆∆&6≤Ê÷ß6¬FW7B◊c3S2÷∆ófR÷áV"Ê÷ß6¬FW7B◊c3S"÷∆ófRÊ÷ß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñ¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ı$Ttï5E$ıı$Tî‰4îDT‰4î5Ù4ƒîDBÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷Fí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‚c3SÇVVF&V6Ü¶FÛ≤c3SíÊÚ6R'VV&Ü7F66˜&Uˆ∆ñVFl:◊6ñ6Ú‡†¢22c3c+rñÁFVw&6ú;6‚FVfñÊóFófFR&÷2FRf˜¢+r#ÇFRv˜7FÚFR##`†•c3c6ˆ÷&ñÊ∆&÷&∆V∆c3SÇ◊7ñÊ6á&ˆÊó¶VB◊&ˆw&W76ófR◊fˆñ6V6ˆ‚c3Sí‚6ˆÁ6W'f∆F&¶WF¬&V'&ó"¬W67&ñ&R6F66˜&Rl:∆ñFÚfó7V∆÷VÁFRGW&ÁFRV¬Fñ7FFÚ¬&WfñW'FRVÊ«FW&ÊFóf÷&ñwVí6WF∆2f˜&÷2l:◊6ñ62Ü˜ñÚÏ;¶÷W&ˆ¬vˆ«W6¬Fó,;6íÜ˜ñÚ¬fñÊ¬‚&Vvó7G&Ú¬6VF"„R¬íT‰ïdU%4¬6ñ‚FWáFÚÜ&∆FÚ¬G,:fñ6Úí6∆ñ÷W&÷ÊV6V‚V‚V¬÷ó6÷Ú:&&ˆ¬‡†§&6Üóf˜2WÜ7F˜2c3c¢ÊvóFáV"˜v˜&∂f∆˜w2˜&ˆF÷÷vFRÁñ÷∆¬í˜fˆñ6R÷ÜV«FÇÊß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬6∂vRÊß6ˆÊ¬6W'fñ6R◊v˜&∂W"Êß6¬FW7B◊c33b÷÷ñ7&˜ÜˆÊR◊G&Á7˜'BÊ÷ß6¬FW7B◊c3Sr◊7ñÊ6á&ˆÊó¶VB◊&ˆw&W76ófR◊fˆñ6RÊ÷ß6¬FW7B◊c3Sí÷ñ˜2◊66˜&R◊'6W"◊&V6˜fW'íÊ÷ß6¬FW7B◊c3SÇ÷7FófR◊&˜VÊB◊&V˜V‚Ê÷ß6¬FW7B◊c3Sr÷ñ˜2◊fˆñ6R◊G&Á7˜'B◊&V6˜fW'íÊ÷ß6¬FW7B◊c3Sb◊fˆñ6R÷ˆÊ«í÷6VF"◊V∆óGíÊ÷ß6¬FW7B◊c3SR÷ñ˜2÷VFñÚ÷Fñ7FFñˆ‚Ê÷ß6¬FW7B◊c3SB◊fˆñ6R÷f∆∆&6≤Ê÷ß6¬FW7B◊c3S2÷∆ófR÷áV"Ê÷ß6¬FW7B◊c3S"÷∆ófRÊ÷ß6¬FW7B◊c3÷ÊWWG&¬÷÷F6Ç÷Üˆ÷R÷∆ñÊ≤Ê÷ß6¬Fˆ7V÷VÁF˜2&V7F˜&W2¬÷&˜2$ÙD‘2¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‚<;6∆ÚWfñFVÊ6ñl:◊6ñ666˜&Uˆ∆ñVFWF˜&ó¶V¬6ñW'&R‡†¢22c3c+rf˜¢6ñÊ7&ˆÊó¶F¬66˜&RñÊ÷VFñFÚíW'6ó7FVÁFR+r#ÇFRv˜7FÚFR##`†•c3cFˆ÷6ˆ÷Ú;¶Êñ6&6R∆ñÁFVw&6ú;6‚c3cíÊÚ&V'&RÊñÊwVÊ&÷ÁFñwV‚6F&W7V«FFÚ&6ñ¬l:∆ñFÚFV¬&V6ˆÊˆ6ñ÷ñVÁFÚ6R∆ñ6÷VFñÁFRV¬W67&óF˜"ˆfñ6ñ¬íV¶V7WFW'6ó7BÇñ≤&VÊFW"ÇññÊ÷VFñF÷VÁFR¬˜"∆ÚVR&V6RíVVFwV&FFÚVÁVRV¬ßVvF˜"6ˆÁFñÏ;¶RFñ7FÊFÚ∆˜26ñwVñVÁFW2Ü˜ñ˜2‚6ˆÁ6W'f∆2;7&FVÊW2ÊGW&∆W2&VÊÚÚf&ñ˜2ßVvF˜&W2¬∆&WfW'6ú;6‚F˜F¬FR«FW&ÊFóf2÷&ñwV2¬∆6ˆÁFñÁVñFBFR&ˆÊFííT‰ïdU%4¬Ü&∆FÚ6ñ‚÷˜7G&"∆6ˆÁfW'66ú;6‚FRf˜¢‡†§∆&V7WW&6ú;6‚FRVFñÚW7W&Ü7F„b6VwVÊF˜2V¬WfVÁFÚfˆñ6W66ÜÊvVFFRîı2ÁFW2FR6V∆V66ñˆÊ"WÜ6«W6óf÷VÁFRVÊf˜¢÷67V∆ñÊ&ˆ&F‚6í6VF"6W'fñF˜"&W7ˆÊFRC#íÚS2¬'&RV‚6ó&7VóFÚFRFñW¢÷ñÁWF˜2íW6V¬∆ˆ7WF˜"÷67V∆ñÊÚ∆ˆ6¬6ñ‚&WWFó"∆∆∆÷Ff∆∆ñFV‚6F6ˆÁFW7F6ú;6‚‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7Fí∆&ˆ&6ú;6‚l:◊6ñ6FV¬ïÜˆÊR6ˆÁFñÏ;¶6W&FFV¬52WFˆ‹:Fñ6Ú‡†§&6Üóf˜2WÜ7F˜2c3c¢ÊvóFáV"˜v˜&∂f∆˜w2˜&ˆF÷÷vFRÁñ÷∆¬VFóB◊&ˆ¶V7BÊ÷ß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬6∂vRÊß6ˆÊ¬6W'fñ6R◊v˜&∂W"Êß6¬FW7B◊c3S"÷∆ófRÊ÷ß6¬FW7B◊c3S2÷∆ófR÷áV"Ê÷ß6¬FW7B◊c3SB◊fˆñ6R÷f∆∆&6≤Ê÷ß6¬FW7B◊c3SR÷ñ˜2÷VFñÚ÷Fñ7FFñˆ‚Ê÷ß6¬FW7B◊c3Sb◊fˆñ6R÷ˆÊ«í÷6VF"◊V∆óGíÊ÷ß6¬FW7B◊c3Sr÷ñ˜2◊fˆñ6R◊G&Á7˜'B◊&V6˜fW'íÊ÷ß6¬FW7B◊c3Sr◊7ñÊ6á&ˆÊó¶VB◊&ˆw&W76ófR◊fˆñ6RÊ÷ß6¬FW7B◊c3SÇ÷7FófR◊&˜VÊB◊&V˜V‚Ê÷ß6¬FW7B◊c3Sí÷ñ˜2◊66˜&R◊'6W"◊&V6˜fW'íÊ÷ß6¬FW7B◊c3c◊7ñÊ6á&ˆÊó¶VB◊fˆñ6RÊ÷ß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ı$Ttï5E$ıı$Tî‰4îDT‰4î5Ù4ƒîDBÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ‡†¢22c3c"+r&V7WW&6ú;6‚l:◊6ñ6FRf˜¢¬íFRV‚F˜VRí6ñW'&RÜ&∆FÚ+r#ÇFRv˜7FÚFR##`†§∆WfñFVÊ6ñFV¬ïÜˆÊR6ˆ'&Rc3SÇ6W,;2W67V6ÜFR&W&ˆGV66ú;6„¢VÁG&RÉ£ì£ÇíÉ£ì£#UD26f&íñÊñ6ú;2V¬&W7∆FÚ¬VÁG&V|;2G&Á67&ó6ú;6‚¬ˆí˜VÊófW'6¬÷ñ&W7ˆÊFú;2#í'&ú;2V¬ÊV¬¬W&Úˆí˜fˆñ6R◊7VV6ÜFWfˆ«fú;2S2FW7\:ó2FR6VF"C#í‚∆6ˆÊfñwW&6ú;6‚FR&W7∆FÚW6&˜VÊíˆwB”FÚ÷÷ñÊí◊GG6¬÷ˆFV∆ÚW6VÁFRFV¬6L:∆ˆvÚV&∆ñ6FÚFV¬fW&6V¬ívFWví‚c3c"÷ÁFñVÊR6VF"Fó&V7FÚ6ˆ‚wB”FÚ÷÷ñÊí◊GG6„Rí6÷&ñ<;6∆ÚV¬&W7∆FÚvFWví˜VÊí˜GG2”÷ÜF6ˆ‚ˆÁóÇ÷67V∆ñÊÛ≤∆&W7VW7FñÊf˜&÷÷VFñÁFRÇ‘u44r’fˆñ6V7\:¬∆ˆ7WF˜"&ˆGV¶ÚV¬VFñÚ‡†•c3c"&W7FW&V¬6ˆÁG&FÚc3SÇFRí(â„¢V¬÷ó6÷ÚˆñÁFW&F˜vÊ'&RV¬ÊV¬¬Ü&ñ∆óFVFñÚí6ˆ÷ñVÁ¶W67V6Ü"‚w&VvV‚Ã:÷÷óFRFRÇ6VwVÊF˜2Ü7FV¬&ñ÷W"&W7V«FFÚ&VR6f&íÊÚVVFRñÊFVfñÊñF÷VÁFRV‚&ˆ¶Ú‚6ˆÁ6W'fV¬W67&óF˜"c3cÜW'6ó7BÇñ≤&VÊFW"Çñ˜"66˜&Ríí6˜'&ñvR∆6∆ñFFV¬Ü˜ñÚíÛÉ¢V¬6ñW'&RVÊ6ˆ∆FÚ6R6ˆÁ7V÷R¬6V∆∆"V¬Fñ7FFÚ&ˆw&W6ófÚí6RÜ&∆≤6í&V«Fñ÷RÊÚW7L:Fó7ˆÊñ&∆R¬W6V¬÷ó6÷ÚEE26W'fñF˜"÷67V∆ñÊÚ‡†§&6Üóf˜2WÜ7F˜2c3c#¢tTÂE2Ê÷F¬ÊvóFáV"˜v˜&∂f∆˜w2˜&ˆF÷÷vFRÁñ÷∆¬í˜fˆñ6R÷ÜV«FÇÊß6¬í˜fˆñ6R◊7VV6ÇÊß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬6∂vRÊß6ˆÊ¬6W'fñ6R◊v˜&∂W"Êß6¬FW7B◊c3S"÷∆ófRÊ÷ß6¬FW7B◊c3S2÷∆ófR÷áV"Ê÷ß6¬FW7B◊c3SB◊fˆñ6R÷f∆∆&6≤Ê÷ß6¬FW7B◊c3SR÷ñ˜2÷VFñÚ÷Fñ7FFñˆ‚Ê÷ß6¬FW7B◊c3Sb◊fˆñ6R÷ˆÊ«í÷6VF"◊V∆óGíÊ÷ß6¬FW7B◊c3Sr÷ñ˜2◊fˆñ6R◊G&Á7˜'B◊&V6˜fW'íÊ÷ß6¬FW7B◊c3Sr◊7ñÊ6á&ˆÊó¶VB◊&ˆw&W76ófR◊fˆñ6RÊ÷ß6¬FW7B◊c3SÇ÷7FófR◊&˜VÊB◊&V˜V‚Ê÷ß6¬FW7B◊c3SÇ÷ñ˜2◊66˜&R◊VÊófW'6¬◊áó6ñ6¬◊&V6˜fW'íÊ÷ß6¬FW7B◊c3Sí÷ñ˜2◊66˜&R◊'6W"◊&V6˜fW'íÊ÷ß6¬FW7B◊c3c◊7ñÊ6á&ˆÊó¶VB◊fˆñ6RÊ÷ß6¬FW7B◊c3c"◊áó6ñ6¬◊fˆñ6R◊&V6˜fW'íÊ÷ß6¬÷&˜2$ÙD‘2¬6ˆ∆¬÷G&ó¢FRVÊFñVÁFW2¬&Vvó7G&ÚFR&VñÊ6ñFVÊ6ñ2¬÷÷W7G&Ú¬&V6ˆÁ7G'V66ú;6‚RñÁfVÁF&ñÚ‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F≤&WfñWrí52l:◊6ñ6ÚïÜˆÊR6ˆÁFñÏ;¶‚6ˆ÷ÚVW'F26W&F2‡†¢22c3c2+r6ˆ◊˜'F÷ñVÁFÚ‹;7fñ¬&Vvó7G&FÚ≤ñÁFˆ6&∆W2+r#ÇFRv˜7FÚFR##`†•&Vw&W6ú;6‚Üó7L;7&ñ6ßW7FF¬∆÷6VÊ÷ñVÁFÚ6Ï;6Êñ6Û¢FW7B◊c#cr÷ˆÊR÷˜W&FñˆÊ¬÷∆ñÊRÊ÷ß6‡†•c3c26ˆÁ6W'f∆&V7WW&6ú;6‚c3c"íV¬6ˆ◊˜'F÷ñVÁFÚ‹;7fñ¬ñÁFVw&FÛ¢wV&BFR6ñW'&R6f&í¬ó6∆÷ñVÁFÚFR6ˆÁG&ˆ∆W2GW&ÁFR&Vvó7G&ÚÙƒïdRí6fR&V2‚;FRVÊñFVÁFñFB6Ï;6Êñ6&VRvVÊW&¬¬÷F6Ç∆ííf˜W"&∆¬6ˆ'&Wfóf‚6ñW'&RÚ&V6&vÜ7F6ˆÊfó&÷"î‰î4î"$Ù‰D‚÷F6Ç∆íÁVÊ6ñÊˆ÷'&Rí˜6ñ6ú;6„≤&ˆÊFÊ˜&÷¬6ˆÁ6W'f7R&W˜'FRw&˜72ÙÊWFÚ˜"‡†¶ñÁFˆ6&∆W2ˆ∆ñ67VG&Ú&Vv∆2‰Bí&∆˜VV&Vw&W6ñˆÊW2‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F≤52WFˆ‹:Fñ6Ú¬&WfñWrí'VV&l:◊6ñ6ïÜˆÊR6ˆ‚VW'F26W&F2‡†•$2”3RÊ6RFRî‘uÛ#cÜˆî‘uÛ#cñ¢ƒïdRÁV∆&∆¶ˆÊ6VwW&¬∆Á¶F˜&W2RñÁ7F∆6ú;6‚ñÁfL:÷‚&Vvó7G&ÚíV¬6ñW'&RFRf˜¢FWVÊL:÷FRˆÊVÊF‚c3c2∆ñ66fR&V2¬ó6∆÷ñVÁFÚ÷ˆF¬íV‚wV&BñÊFWVÊFñVÁFRFR„"2‚V¬’BñÁfVÁF&ñFÚ&Vvó7G&∆VÁG&Fl:◊6ñ6dî¬í∆6ñ◊V∆6ú;6‚6ˆÁG&ˆ∆F6ñ‚ˆÊVÊF≤ÊÚ6R&W6VÁF6ˆ÷Ú52l:◊6ñ6Ú‡†§&6Üóf˜2WÜ7F˜2c3c3¢4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù4ÙƒÙDUıT‰DîTÂDU2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2Ù‘E$ï•ÙtDUÛı$ıîT5DÚÊß6ˆÊ¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ı$Ttï5E$ıı$Tî‰4îDT‰4î5Ù4ƒîDBÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬ñÁFˆ6&∆W2ı$TD‘RÊ÷F¬ñÁFˆ6&∆W2ı$Ttƒ5ÙîÂDÙ4$ƒU2Êß6ˆÊ¬ñÁFˆ6&∆W2ˆñÁFˆ6&∆W2÷vFRÊ÷ß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬ñÊFWÇ÷w'W¬ÊáF÷∆¬∆ófR÷6ˆÁG&ˆ¬Êß6¬6∂vRÊß6ˆÊ¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñ¬6W'fñ6R◊v˜&∂W"Êß6¬FW7B◊c#c◊&˜VÊB◊ˆñÁG2◊∆ñW"◊&WGW&‚Ê÷ß6¬FW7B◊c3S"÷∆ófRÊ÷ß6¬FW7B◊c3S2÷∆ófR÷áV"Ê÷ß6¬FW7B◊c3SB◊fˆñ6R÷f∆∆&6≤Ê÷ß6¬FW7B◊c3SR÷ñ˜2÷VFñÚ÷Fñ7FFñˆ‚Ê÷ß6¬FW7B◊c3Sb◊fˆñ6R÷ˆÊ«í÷6VF"◊V∆óGíÊ÷ß6¬FW7B◊c3Sr÷ñ˜2◊fˆñ6R◊G&Á7˜'B◊&V6˜fW'íÊ÷ß6¬FW7B◊c3Sr◊7ñÊ6á&ˆÊó¶VB◊&ˆw&W76ófR◊fˆñ6RÊ÷ß6¬FW7B◊c3SÇ÷7FófR◊&˜VÊB◊&V˜V‚Ê÷ß6¬FW7B◊c3SÇ÷ñ˜2◊66˜&R◊VÊófW'6¬◊áó6ñ6¬◊&V6˜fW'íÊ÷ß6¬FW7B◊c3Sí÷ñ˜2◊66˜&R◊'6W"◊&V6˜fW'íÊ÷ß6¬FW7B◊c3c◊7ñÊ6á&ˆÊó¶VB◊fˆñ6RÊ÷ß6¬FW7B◊c3c"◊áó6ñ6¬◊fˆñ6R◊&V6˜fW'íÊ÷ß6¬FW7B◊c3c2÷ñÁFˆ6&∆W2÷&VÜfñ˜"Ê÷ß6íFW7B◊c3c2◊&V6˜&FVB÷÷ˆ&ñ∆R÷&VÜfñ˜"Ê÷ß6‚÷&˜2$ÙD‘2F÷&ú:ñ‚6R7GV∆ó¶‚V‚V¬÷ó6÷Ú6÷&ñÚ‡†§WfñFVÊ6ñí6˜˜'FR‹;7fñ¬WÜ7F˜2ñÊ6˜'˜&F˜2V‚V¬÷ó6÷Ú6ÊFñFFÛ¢ÊvóFñvÊ˜&V¬67&óG2˜c3c2◊6ñ∆VÁB◊7VV6Ç◊&V6ˆvÊóFñˆ‚Êß6¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛ5Ù44ı5ıDU$‘î‰Dı5ıïÙUdîDT‰4îıc3c5ı%TT$5Ù4Ù’ı%D‘îTÂDÚı$Uı%DUı%TT$5Ù4Ù’ı%D‘îTÂDııc3c5ı$33RÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛ5Ù44ı5ıDU$‘î‰Dı5ıïÙUdîDT‰4îıc3c5ı%TT$5Ù4Ù’ı%D‘îTÂDÚı%TT$Ù4Ù’ı%D‘îTÂDııc3c5ı$33RÊ◊F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛ5Ù44ı5ıDU$‘î‰Dı5ıïÙUdîDT‰4îıc3c5ı%TT$5Ù4Ù’ı%D‘îTÂDÚı%TT$Ù4Ù’ı%D‘îTÂDııc3c5ı$33Uıı5DU"ÁÊv¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛ5Ù44ı5ıDU$‘î‰Dı5ıïÙUdîDT‰4îıc3c5ı%TT$5Ù4Ù’ı%D‘îTÂDÚı$33UÙî‘uÛ#cÖÙƒïdUı4dUÙ$TÙdî¬ÁÊví4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛ5Ù44ı5ıDU$‘î‰Dı5ıïÙUdîDT‰4îıc3c5ı%TT$5Ù4Ù’ı%D‘îTÂDÚı$33UÙî‘uÛ#cïÙ‘î5ÙıdU$ƒï5Ùdî¬ÁÊv‡†¢22c3cB+rVÁG&FfñÊ¬ÁVWf&ˆÊF+r#ÇFRv˜7FÚFR##`†§∆U$¬WáÃ:÷6óFÁVWf˜&ˆÊF”'&R&Vvó7G&ÚV‚6ˆ‚VÊ&ˆÊF7Fóf¬6ˆÁ6W'f∆&ˆÊFÁFW&ñ˜"í<;6∆Ú∆7W7FóGWñR¬6ˆÊfó&÷"î‰î4î"$Ù‰D‚∆66å:íc3cB6ˆÁ6W'f∆fó&÷c3c26ˆ÷Ú&Vfñ¶Ú&÷ÁFVÊW"6ˆ◊&ˆ&&∆W2FˆF˜2∆˜26ÊFF˜27V◊V∆F˜2‚&6Üóf˜3¢ñÊFWÇ÷w'W¬ÊáF÷∆¬6W'fñ6R◊v˜&∂W"Êß6¬FW7B◊c3Sr÷ñ˜2◊fˆñ6R◊G&Á7˜'B◊&V6˜fW'íÊ÷ß6¬FW7B◊c3c◊7ñÊ6á&ˆÊó¶VB◊fˆñ6RÊ÷ß6¬FW7B◊c3cB÷Wá∆ñ6óB÷ÊWr◊&˜VÊB÷VÁG'íÊ÷ß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬6∂vRÊß6ˆÊ¬67&óG2˜&ˆ¶V7B◊V∆óGí÷vFRÊ÷ß6¬$ÙD‘ÙıdU$ƒ¬Ê÷Fí$ÙD‘ÙÙDUDƒƒRÊ÷F‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F≤V¬VÊ∆6RfñÊ¬&WVñW&R2Û2fW&ñfñ66ñˆÊW2WáFW&Ê2‡¢222&ˆ÷ˆ6ú;6‚;¶&∆ñ6WF˜&ó¶Fc3c2(	B#ÇFRv˜7FÚFR##`†•6RWF˜&ó¨;2∆&ˆ÷ˆ6ú;6‚FRc3c2÷ñÊ‚V¬vFR6ˆÁ6W'f∆&6R&˜FVvñF6ˆ÷ÚÊ6W7G&Úˆ&∆ñvF˜&ñÚí¬V‚V¬6ÜV6∂˜WB7WW&fñ6ñ¬FRfW&6V¬¬f∆ñF&W˜6óF˜&ñÚ6Ï;6Êñ6Úí6ˆñÊ6ñFVÊ6ñWÜ7FVÁG&RdU$4T≈ÙtïEÙ4Ù‘‘ïEı4ÑíÑTF‚ÊÚ6R÷ˆFñfñ<;2Ã;6vñ6FRF&¶WF¬÷F6Ç∆í¬&ˆÊFÊ˜&÷¬Êí÷ñ7,;6fˆÊÚ‡†§∆˜2G&W2ñÁfVÁF&ñ˜2c3gVW&ˆ‚&VvVÊW&F˜2í6V∆∆F˜2FW7\:ó2FR&Vvó7G&"W7F&ˆ÷ˆ6ú;6‚‡†•6V∆∆ÚL;6÷ñ6Úc3cC¢÷&˜2$ÙD‘2VVF‚&Vvó7G&F˜2ßVÁF˜2V‚V¬÷ó6÷Ú6ˆ÷÷óBWáFW&ÊÚ&VR∆VFóF˜,:÷FRV&∆ñ66ú;6‚6V&W&ˆGV6ñ&∆R‡†•6V∆∆ÚfñÊ¬c3cC¢∆˜2F˜2$ÙD‘2íV¬ñÁfVÁF&ñÚ&VvVÊW&FÚ6RV&∆ñ6‚ßVÁF˜2FW7\:ó2FR&ˆ&"∆VFóF˜,:÷WáFW&ÊFR$ÙD‘‡†•fW&ñfñ66ú;6‚WáFW&ÊFV¬6ÊFñFFÚÙîD3¢íT‰ïdU%4¬&ˆ,;2G&W2ı5B&V∆W26ˆ'&RV¬÷ó6÷Ú&WfñWr‚∆f˜¢&WfVÃ;2V‚C&W&ˆGV6ñ&∆R˜"W6VÊ6ñFR∆6&V6W&ˆ&∆ñvF˜&ñí◊7VV6Ç÷÷ˆFV¬◊7V6ñfñ6Fñˆ‚◊fW'6ñˆ„¢F≤V¬6ÊFñFFÚ∆ñÊ6˜'˜&6V|;¶‚V¬6ˆÁG&FÚ7VV6ÇcBFRí◊6F≤ˆvFWvñB„„cÇíWÜñvR&WWFó"&WfñWr¬f˜¢WáFW&Êí'VV&l:◊6ñ6ïÜˆÊRÁFW2FR&ˆGV66ú;6‚‡†§∆&WWFñ6ú;6‚WáFW&Ê6ˆÊfó&‹;2VR7VV6ÇcBÊÚ&7F¢V¬6∆ñVÁFRˆfñ6ñ¬w&VvF÷&ú:ñ‚í÷vFWví◊&˜Fˆ6ˆ¬◊fW'6ñˆ„¢„„íí÷vFWví÷WFÇ÷÷WFÜˆF‚V‚&WfñWrñÊFWVÊFñVÁFR6ˆ‚V¬6ˆÁG&FÚ6ˆ◊∆WFÚVÁG&V|;2’2#í∆ˆ7WF˜"ˆÁóÉ≤c3cBñÊ6˜'˜&Ü˜&W62F˜26&V6W&26ñ‚&Vvó7G&"7&VFVÊ6ñ∆W2ígVV«fRV◊W¶"7R&˜ñ'VV&WáFW&Ê‡†•f∆ñF6ú;6‚FV¬6V∆∆Û¢˜&FVÊ÷ñVÁFÚ&ñÊ&ñÚñL:ñÁFñ6Ú¬vFRFRÊˆFRÊß2V‚fW&6V¬‡†¢22Ü˜FfóÇfñÊ¬ÙîD2+r6ˆ◊VÊñ66ú;6‚VÊófW'6¬+r#ÇFRv˜7FÚFR##`†§∆6ˆ◊&ˆ&6ú;6‚&V¬FR&ˆGV66ú;6‚6ˆÊfó&‹;2ÖEE#&∆c3c2V&∆ñ6FíS2T‰ïdU%4≈ÙïÙ5$TDïEÙUÑÑU5DTF&VÊ6ˆÁ7V«FvVÊW&¬‚∆˜2∆ˆw2FV÷˜7G&&ˆ‚G&W2ñÁFVÁF˜2Fó&V7F˜2í6W&ÚñÁFVÁFÚvFWvì¢V¬Fˆ∂V‚ÙîD2F÷ñÊó7G&FÚÊÚ6R&W6ˆ«l:÷FñÏ:÷ñ6÷VÁFR‚V¬6ÊFñFFÚñÊ6˜'˜&fW&6V¬ˆˆñF6¬ˆ'FñVÊRV¬Fˆ∂V‚<;6∆ÚFW7\:ó2FV¬&∆˜VVÚFR6∆FÚí∆ñ6∆÷ó6÷ñFVÁFñFBF÷ñÊó7G&FíT‰ïdU%4¬íf˜¢¬6ñ‚&Vvó7G&"7&VFVÊ6ñ∆W2‡†§&6Üóf˜2WÜ7F˜3¢íıˆ∆ñ"˜fW&6V¬÷vFWví÷WFÇÊß6¬í˜VÊófW'6¬÷íÊß6¬í˜fˆñ6R◊7VV6ÇÊß6¬FW7B◊c3cB◊fW&6V¬÷ˆñF2◊&V6˜fW'íÊ÷ß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬6∂vRÊß6ˆÊ¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛÙDï$T5E$î4U5ıTDîDı5ıïÙı$DT‰U5ıT‰DîTÂDU2ı$Ttï5E$ıı$Tî‰4îDT‰4î5Ù4ƒîDBÊ÷F¬tÙƒeı44ı$UÙ4$EÙuEıT‰Dî‰uÙ‘E$ïÇÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙ‘Ù‘U5E$ıÙDUÙ$4Ñïdı2Ê÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ¬$ÙD‘ÙıdU$ƒ¬Ê÷Fí$ÙD‘ÙÙDUDƒƒRÊ÷F‚&ˆGV66ú;6‚ÊÚ6÷&ñ≤&WfñWr¬2Û2WáFW&ÊÚ6ˆ'&RV¬÷ó6÷ÚFW∆˜ñ÷VÁBí52l:◊6ñ6ÚïÜˆÊR6ñwVV‚&∆˜VVÁFW2‡†¢22c3cRıc3cb+rF&¶WFfófRñÊñ6ñÚ&ñÊ6ó¬+r#ÇFRv˜7FÚFR##`†¶î‘uÛ#ÉbÁÊvíî‘uÛ#ì2ÁÊv'VV&‚F˜2f∆∆2Fó7FñÁF3¢VÊ6˜ñ6ˆÊfñwW&Ff<:÷ˆL:÷fVÊ6W"66˜&R6&Ú¬í6ñ‚&ˆÊF˜W&FófV¬&WfñWrˆL:÷FV¶"WáVW7FVÊF&¶WFf<:÷V‚fW¢FRñÊñ6ñˆ‡†•c3cRFVfñÊRVÊ&ˆÊF&V7WW&&∆R6ˆ÷Ú6ˆÊfñwW&F6ˆ‚VÊÚ6Vó2ßVvF˜&W2¬WÜ6«WñR6˜ñ2f<:÷2FRFˆF2∆2gVVÁFW2¬&W66F∆F&¶WF&6ÜófF6ˆ‚7W266˜&W2í&W&5DïdUı$ıT‰EÙ¥Uñ‚c3cb;FRVÁ7W&U&ñÊ6óƒVÁG'íÇñV‚'&ÁVR¬&Vw&W6Ú¬vW6Ü˜vífˆ6Û≤ÊÚ&VñÊñ6ñV‚&Vvó7G&Úñfó6ñ&∆R¬ÊÚ7V'&RVÊF&¶WFl:∆ñFí6ˆÁ6W'fÁVWf˜&ˆÊF”&∆VÁG&FWáÃ:÷6óF6ñ‚7W7FóGV6ú;6‚ÁFW2FRî‰î4î"$Ù‰D‡†§∆ñÁFVw&6ú;6‚'FRFV¬÷ñÊ6ˆ‚&V7WW&6ú;6‚ÙîD2˜f˜¢ñ&ˆ÷˜fñF≤ÊÚ7W7FóGWñRíˆ¬FWVÊFVÊ6ñ2Êí&Ê6˜2FR6ˆ◊VÊñ66ú;6‚VÊófW'6¬‚∆VFóF˜,:÷7V◊V∆FñÊ6«WñR&Vvó7G&Ú¬66˜&RñÊFófñGV¬í◊V«FñÜ˜ñÚ¬6ñW'&W2ˆ7V◊V∆F˜2¬÷F6Ç∆ííƒïdR‚&ˆGV66ú;6‚6ˆÁFñÏ;¶ñÁF7FÜ7F&WfñWr$TEí¬6ˆ◊&ˆ&6ú;6‚WáFW&Êí52l:◊6ñ6ÚïÜˆÊR‡†§ñÁfVÁF&ñÚ∆óFW&¬FV¬6÷&ñÛ¢4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛ5Ù44ı5ıDU$‘î‰Dı5ıïÙUdîDT‰4îıc3cUı$T5UU$4îÙÂı$Ù‰DÙ5Dïdı$Uı%DUıc3cUı$33rÊ÷F¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛ5Ù44ı5ıDU$‘î‰Dı5ıïÙUdîDT‰4îıc3ceÙTÂE$Dı$î‰4ï¬ı$Uı%DUıc3ceı$33ÇÊ÷F¬FW7B◊c#Éí◊7F&∆Vf˜&B÷ÊWr◊&˜VÊB÷V◊GíÊ÷ß6¬FW7B◊c3cR÷7FófR◊&˜VÊB÷V◊Gí◊&V6˜fW'íÊ÷ß6íFW7B◊c3cb◊&ñÊ6ó¬÷VÁG'í◊&V6˜fW'íÊ÷ß6‡†¢22c3cr+r6ˆ◊VÊñ66ú;6‚VÊófW'6¬Ü&∆FV‚∆÷ó6÷ÁF∆∆†§∆6ˆÊFñ6ú;6‚l:◊6ñ6‹:2&V6ñVÁFR7W7FóGWñR∆WáV7FFóffó7V¬ÁFW&ñ˜#¢VÊ&VwVÁFVÊófW'6¬&ˆÁVÊ6ñFFW6FRñÊñ6ñÚ¬&Vvó7G&ÚÚF&¶WFÊÚ'&R˜G&ÁF∆∆‚Á7vW$'&˜w6W%fˆñ6UVW'íÇñ6ˆÁ6W'f∆fó7F¬WFñ∆ó¶fˆñ6TˆÊ«ìßG'VVí&W&ˆGV6R∆&W7VW7FVFñ&∆S≤V¬66W6ÚíFRV‚F˜VR&W&VFñÚíW67V6Ü6ñ‚÷ˆÁF"V¬ÊV¬‡†§&6Üóf˜2∆óFW&∆W2c3cs¢ñÊFWÇ÷w'W¬ÊáF÷∆¬í˜fˆñ6R÷ÜV«FÇÊß6¬6W'fñ6R◊v˜&∂W"Êß6¬FW7B◊c3SB◊fˆñ6R÷f∆∆&6≤Ê÷ß6¬FW7B◊c3SÇ÷ñ˜2◊66˜&R◊VÊófW'6¬◊áó6ñ6¬◊&V6˜fW'íÊ÷ß6¬FW7B◊c3Sr÷ñ˜2◊fˆñ6R◊G&Á7˜'B◊&V6˜fW'íÊ÷ß6¬FW7B◊c3c◊7ñÊ6á&ˆÊó¶VB◊fˆñ6RÊ÷ß6¬FW7B◊c3cB÷Wá∆ñ6óB÷ÊWr◊&˜VÊB÷VÁG'íÊ÷ß6¬FW7B◊c3cr◊VÊófW'6¬◊fˆñ6R÷ñ‚◊∆6RÊ÷ß6¬ñÁFˆ6&∆W2ı$TD‘RÊ÷F¬ñÁFˆ6&∆W2ˆñÁFˆ6&∆W2÷vFRÊ÷ß6¬VFóB◊&ˆ¶V7BÊ÷ß6¬6∂vRÊß6ˆÊ¬Fˆ7V÷VÁF˜2&V7F˜&W2RñÁfVÁF&ñÚ‚&ˆGV66ú;6‚ÊÚ6÷&ñÜ7F&WfñWr$TEíí52l:◊6ñ6ÚïÜˆÊR‡†¢22c3cÇ+rVÁG&FvV"6Ï;6Êñ66ñÊ7&ˆÊó¶F+r#íFRv˜7FÚFR##`†•$2”C6ˆÁ6ˆ∆ñF∆26ˆÁfW'66ñˆÊW26ˆ'&RfóÇ◊c3cb÷ñÁFVw&FVB÷÷ñÊÜ66&Ví‚V¬VÊ∆6RvV"ˆfñ6ñ¬'&R&Vvó7G&ÚV‚6ˆ‚÷F6Ç∆íW'6ó7FñFÚ¬6ñ‚&˜'&"∆F&¶WF≤∆ñÁ7F∆F6ˆÁ6W'f7RVÁG&Ftí&V'&R∆F&¶WFfóf‚V¬ÊfVvF˜"&W&ˆGV¶Úíc3cÇV∆ñ÷ñÏ;26ÊÊ˜B66W72w7FÊF∆ˆÊTr&Vf˜&RñÊóFñ∆ó¶FñˆÊ‚FW7B◊c3cÇ÷6ÊˆÊñ6¬÷Üˆ÷R÷VÁG'íÊ÷ß6¬∆˜26ˆÁG&F˜2c3cBıc3cb7GV∆ó¶F˜2¬∆66å:í¬67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñ¬4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÛ5Ù44ı5ıDU$‘î‰Dı5ıïÙUdîDT‰4îıc3cÖÙTÂE$DÙ4‰Ù‰î4ı$Uı%DUıc3cÖı$3CÊ÷F¬6ˆÁG&ˆ∆W2í÷&˜2$ÙD‘2&∆˜VV‚VÊ∆6W2c3c^(	5c3cr‚&ˆGV66ú;6‚ÊÚ6R÷ˆFñfñ6≤&WfñWrí52l:◊6ñ6ÚïÜˆÊR6ˆÁFñÏ;¶‚ˆ&∆ñvF˜&ñ˜2‡†§V¬vFR&V÷˜FÚWÜñvRVR$ÙD‘ÙıdU$ƒ¬Ê÷F¬$ÙD‘ÙÙDUDƒƒRÊ÷Fí4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊfñ¶V‚ßVÁF˜2V‚FˆFÚ&W6V∆∆FÚc3cÉ≤V¬'Vñ∆B&V6Ü¶FÚÊÚ6R&W6VÁF6ˆ÷ÚVÊ∆6RFR'VV&‡†¢22c3cí+r6ˆ◊Fñ&ñ∆ñFBƒïdR6ˆ‚ßVvF˜&W27Fóf˜2ÜW&VFF˜2+r#íFRv˜7FÚFR##`†§∆'VV&l:◊6ñ6&ˆGV¶ÚG&W2ı5Bˆíˆ∆ófRC¬7Fóf"V¬VÊ∆6RFR∆&ˆÊFFR¶ñ÷RíwW7FfÚ‚∆F&¶WFW6ñFVÁFñfñ6F˜&W2W7F&∆W2‚Áf¬÷ñVÁG&2V¬6W'fñF˜"ƒïdRWÜñ|:÷ˆ6ÜÚ6&7FW&W2‹:÷Êñ÷˜2‚c3cí6WFW6˜2ñFVÁFñfñ6F˜&W2ñÁFW&Ê˜2FR(	3c6&7FW&W2¬6ˆÁ6W'fV¬fñ«G&ÚFR6&7FW&W2W&÷óFñF˜2í;FR∆&Vw&W6ú;6‚WÜ7F˜&‚ÊÚ÷ˆFñfñ6÷ñ7,;6fˆÊÚ¬&Vvó7G&Ú¬66˜&R¬&ˆÊFÊíW'6ó7FVÊ6ñ‡†¢22c3s+rfó6˜"ƒïdRWÜ6«W6ófÚ÷F6Ç∆í+r#íFRv˜7FÚFR##`†•$2”C"&Vvó7G,;2VRV¬VÊ∆6R÷F6Ç∆í7FófÚ÷˜7G&&∆∆ÁFñ∆∆vVÊW&¬‚c3s6ˆÁ6W'fV¬÷ó6÷ÚVÊ∆6Rí∆÷ó6÷&ˆÊF¬W&Ú7VÊFÚ÷ˆFS÷÷F6Ö˜∆ñFñ'V¶;¶Êñ6÷VÁFR&V¶2¬Êˆ÷'&W2¬Ñ5¬Ü˜ñ˜2í˜6ñ6ñˆÊW2÷F6Ç‚ÁFW2FR6ˆ÷VÁ¶"◊VW7G&‘D4Çı"î‰î4î&6ˆ‚66ñ∆∆2f<:÷3≤FW7\:ó2W6WÜ6«W6óf÷VÁFRU¬DıtÊ¬6íV¬6ñW'&R÷F6Ç¬6ñ‚F&∆w&˜72ÙÊWFÚvVÊW&¬‡†¢22c3s+rw&˜72˜"Ü˜ñÚ≤÷&6F˜"÷F6ÇWáÃ:÷6óFÚ≤÷ñ7,;6fˆÊÚ6V∆∆FÚ+r#íFRv˜7FÚFR##`†§∆'VV&l:◊6ñ6î‘uÛì#T3Ñ3”ÑSÉb”C4#r”Ñ34R”44SD#tSÑ3TBÊßVv6ˆÊfó&‹;27GV∆ó¶6ú;6‚ƒïdR¬W&Úˆ&∆ñv&¬fó6óFÁFRñÁFW'&WF"f∆V6Ü2íÊÚ÷˜7G&&V¬w&˜72‚c3s6ˆÁ6W'fV¬VÊ∆6Rí◊VW7G&V‚6F66ñ∆∆V¬w&˜73≤VÊf∆V6Ü&V6R;¶Êñ6÷VÁFR7VÊFÚW6RÜ˜ñÚGWfÚvÊF˜"˜W&FVF˜"í∆∆Wf∆˜6ñ6ú;6‚7V◊V∆FÜ)k"U¬)k¬DıtÊí‚V‚Ü˜ñÚV◊FFÚW6(	F¬6ñ‚&WWFó"f∆V6Ü2‚V¬VÊ6&W¶FÚFV6∆&6ñ◊V«L:ÊV÷VÁFR∆˜6ñ6ú;6‚FR÷&˜2ßVvF˜&W2‡†§V¬÷ñ7,;6fˆÊÚ&ˆ&FÚÊÚ6R&Vf7F˜&ó¶Êí6RFˆ6‚ñÁFˆ6&∆W2Ù‘î5$ÙdÙ‰ıÙ$Ù$DÚÊ∆ˆ6≤Êß6ˆÊ6V∆∆˜"4Ñ”#SbV¬G&Á7˜'FRFRf˜¢íˆÊ6R&Ê6˜2FR&Vvó7G&Ú¬66˜&RñÊFófñGV¬¬◊V«FñÜ˜ñ˜2¬W'6ó7FVÊ6ñííT‰ïdU%4√≤ñÁFˆ6&∆W2÷vFRÊ÷ß6fW&ñfñ6Ü6ÜW2íV¶V7WFW6˜2&Ê6˜2ÁFW2FRW&÷óFó"'Vñ∆BÚFW7∆ñVwVR‡†§V¬ñÁfVÁF&ñÚc36R&V6ˆÁ7G'WñR6ˆ‚6V∆∆Úc3s‘‘D4Ç‘u$ı52‘‘î5$ıÑÙ‰R‘ƒÙ4∂≤67&óG2˜&V'Vñ∆B÷ñÁfVÁF˜'í◊Fg2Áñ¬V¬∆ˆ6≤í∆˜2G&W2DbVVF‚6ñÊ7&ˆÊó¶F˜26ˆ‚÷&˜2$ÙD‘2‡†¢22c3ìrƒ"+r&W7∆FÚñÁFVw&¬FRÜó7F˜&ñ¬í66W6Ú&V6˜&FFÚ+rbFR6WFñV÷'&RFR##`†•$2”CB&W&ˆGV6RVRVÊ7VVÁF6ˆÊV7FF&V7WW&&&ˆÊFVÁVRV¬Fó7˜6óFófÚ˜&ñvV‚FVÏ:÷RF&¶WF2ˆfñ6ñ∆W2‚∆6W6W&VÁGV√¢&6∑W6VÁG&ƒÊ˜rÇñ<;6∆ÚVÁfñ&∆&ˆÊFv∆ˆ&¬7Fóf‚c3ìr∆ˆ6¬&V6˜'&R∆2&ˆÊF2ˆfñ6ñ∆W2&6ÜófF2‹:2∆7GV¬¬FVGW∆ñ6˜"îBí7&VVÊ◊WF6ú;6‚6VÁG&¬ñÊFWVÊFñVÁFR&6FF&¶WF‚V¬&Ê6ÚW&÷ÊVÁFR6ˆÁ7G'WñR6ñÊ6ÚîG2¬&WóFRVÊÚí;FRV‚&˜'&F˜"6ñ‚F&¶WF≤WÜñvRWÜ7F÷VÁFR6ñÊ6Ú‡†§V¬f˜&◊V∆&ñÚ;FR$T4ı$D"4ı%$TÚí‘ÂDT‰U"4U4ú94Ê¢<;6∆ÚÊˆ÷'&Rˆ6˜'&VÚ6RwV&F‚∆ˆ6∆÷VÁFS≤∆6ˆÁG&6\;W&÷ÊV6R6&vÚFV¬vW7F˜"6VwW&ÚFV¬ÊfVvF˜"÷VFñÁFRWFˆ6ˆ◊∆WFS“'W6W&Ê÷R&íWFˆ6ˆ◊∆WFS“&7W'&VÁB◊77v˜&B&‚∆6W6ú;6‚ñ6R&Wf∆ñF¬'&ó"í<;6∆Ú6R6ñW'&6ˆ‚∆66ú;6‚WáÃ:÷6óF‚&6Üóf˜2gVÊ6ñˆÊ∆W3¢ñÊFWÇ÷w'W¬ÊáF÷∆¬66˜VÁB÷&6∑WÊß6¬FW7B◊c#É"÷˜FñˆÊ¬÷66˜VÁB÷&6∑WÊ÷ß6‡†§V¬6ˆ÷÷óB&V÷˜FÚSñ6SÉ6SÉSsV#ìcñ3ì6Sìc&fc&&SÜ##6gVR&V6Ü¶FÚ6˜'&V7F÷VÁFR˜"dî¬îÂdTÂDı%ítDV‚V¬6ÊFFÚ4ÙÂE$Ù≈ı$ıîT5Dıı44ï$RÙîÂdTÂD$îı5ıc3Ê∆ˆ6≤Êß6ˆÊ6R&VvVÊW,;2FW6FRW6R:&&ˆ¬∆ñ◊ñÚí6RfW'6ñˆÊßVÁFÚ6ˆ‚W7FR6ñW'&RFˆ7V÷VÁF¬ÁFW2FR&WWFó"V¬&WfñWrƒ"‚&ˆGV66ú;6‚W&÷ÊV6RñÁF7F‡†§V¬'Vñ∆Bƒ"V¶V7WFÊˆFRVFóB◊&ˆ¶V7BÊ÷ß6≤∆'VV&WáFW&Êc3#ÇƒïdRVVFgVW&FV¬'Vñ∆B˜'VR&WVñW&RVÊ6∆fRÊÚ6ˆÊfñwW&F‚∆˜2BVWFW2FWFW&÷ñÊó7F26ˆÁFñÏ;¶‚ˆ&∆ñvF˜&ñ˜2í&ˆGV66ú;6‚W&÷ÊV6RñÁF7F‡†
