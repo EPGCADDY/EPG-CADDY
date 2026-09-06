@@ -1987,3 +1987,5 @@ Se añadió `contextmenu` como evento compatible de pulsación prolongada; compa
 - `Intocables/EVIDENCIA_V378/CONFIRMACION_FISICA_V378_JAIME_KIRSTE.jpeg`: evidencia escrita suministrada por el propietario.
 
 Estado: contratos automáticos PASS; Producción intacta; revisión visual/física 1×1 en Preview LAB todavía obligatoria antes de declarar tarjetas PASS.
+
+Trazabilidad del cierre: los dos primeros builds V399 fueron rechazados por el gate documental —primero por no enumerar las tres evidencias en OVERALL y después por no modificar ambos roadmaps en el mismo resellado—. Ninguno alcanzó READY ni modificó Producción.

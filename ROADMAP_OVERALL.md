@@ -1532,3 +1532,5 @@ La auditoría detectó que V397 había sustituido indebidamente la voz físicame
 Pruebas automáticas: `test-v397-card-in-out-back-contract.mjs`, `test-v398-manual-opening-hole.mjs`, `test-v279-local-card-library.mjs`, `test-v282-optional-account-backup.mjs` e `Intocables/intocables-gate.mjs`. Producción permanece intacta. Los PASS visuales de tarjetas siguen revocados hasta completar una nueva inspección física 1×1 sobre Preview LAB.
 
 Evidencia y sellos incorporados: `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`, `Intocables/CONFIRMACION_ESCRITA_V378.md` e `Intocables/EVIDENCIA_V378/CONFIRMACION_FISICA_V378_JAIME_KIRSTE.jpeg`.
+
+Trazabilidad del cierre: los dos primeros builds V399 fueron rechazados por el gate documental —primero por no enumerar las tres evidencias en OVERALL y después por no modificar ambos roadmaps en el mismo resellado—. Ninguno alcanzó READY ni modificó Producción.
