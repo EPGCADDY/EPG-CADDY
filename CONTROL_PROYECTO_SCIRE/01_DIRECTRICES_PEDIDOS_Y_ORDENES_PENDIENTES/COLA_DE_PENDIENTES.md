@@ -630,6 +630,15 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 ## V397 · cierre visual del Historial y cuenta
 
 - Publicar sólo en LAB el Historial de hasta ocho rondas por página.
-- Verificar en iPhone: doble toque abre Global original, `ENVIAR TARJETA DIGITAL` ofrece WhatsApp con PNG y `ATRÁS` queda libre.
+- Verificar en LAB: doble toque abre Global original; sólo la tarjeta abierta contiene `ENVIAR TARJETA DIGITAL` y `ATRÁS`.
 - Verificar que nombre/correo reaparezcan al cerrar y abrir; mostrar contraseña no debe almacenarla.
 - Producción no se modifica.
+
+## V397 · auditoría revocatoria IN/OUT y ATRÁS
+
+- Inventariar y abrir 16/16 vistas: operativa, Final, Global y Personal en General, Stableford, Match Play y Four Ball.
+- Aplicar IN=1–9, OUT=10–18 y TOTAL=1–18 sin modificar el motor de cálculo.
+- Capturar cada vista corregida con modalidad, acumulados y `ATRÁS` visibles a la vez.
+- Probar retorno y persistencia por vista; cero superposiciones y cero certificaciones inferidas.
+- Registrar medio exacto de prueba. El navegador Chrome remoto no equivale a iPhone físico.
+- Mantener Producción intacta.

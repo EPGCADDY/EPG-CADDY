@@ -1,0 +1,40 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import "./match-play.js";
+import "./four-ball.js";
+import artifacts from "./card-artifacts.js";
+
+const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+const holes=Object.fromEntries(Array.from({length:18},(_,index)=>{
+  const hole=index+1,gross=hole<=9?4:5,net=gross;
+  return[hole,{hole,par:4,gross,net,strokes:0,status:null,points:hole<=9?2:1}];
+}));
+const players=["JAIME","FITO"].map((name,index)=>({id:`p${index+1}`,name,handicap:0,tee:"Blanco",holes}));
+const base={status:"officially_closed",sha256:"c".repeat(64),version:1,course:"El Pulté",tournament:{name:"AUDITORÍA V397"},playedAt:"2026-09-06T18:00:00.000Z",players};
+const cases=[
+  ["GENERAL",{...base,mode:"general"}],
+  ["STABLEFORD",{...base,mode:"stableford",stablefordCategory:"senior",stablefordRoundNumber:1}],
+  ["MATCH PLAY",{...base,mode:"match_play",matchPlay:{resultLabel:"MATCH EMPATADO",decidedAt:18}}],
+  ["FOUR BALL",{...base,mode:"four_ball",fourBall:{resultLabel:"PAREJA VERDE",decidedAt:18}}]
+];
+
+for(const [label,snapshot] of cases){
+  const generated=artifacts.build(snapshot);
+  for(const [kind,item] of [["GLOBAL",generated.global],["PERSONAL",generated.personal[0]]]){
+    assert.match(item.html,/GROSS IN<br>1–9<\/th><th>GROSS OUT<br>10–18<\/th><th>GROSS TOTAL<br>1–18/);
+    assert.match(item.html,/<td>36<\/td><td>45<\/td><td>81<\/td>/,`${label} ${kind}: IN=36, OUT=45, TOTAL=81`);
+    if(label==="STABLEFORD")assert.match(item.html,/<td>18<\/td><td>9<\/td><td class="points">27<\/td>/);
+  }
+}
+
+assert.doesNotMatch(html,/id="librarySendDigital"/);
+assert.match(html,/id="artifactViewerBack"/);
+assert.match(html,/id="artifactViewerSend"/);
+assert.match(html,/window\.opener\.focus\(\);window\.close\(\)/);
+assert.match(html,/GSCCardFileExport\.png\(item\)/);
+assert.match(html,/navigator\.canShare/);
+assert.match(html,/round\.configured&&!round\.provisional/);
+assert.match(html,/<th>GROSS IN<\/th><th>GROSS OUT<\/th><th>GROSS TOTAL<\/th>/);
+assert.match(html,/<th>PUNTOS IN<\/th><th>PUNTOS OUT<\/th><th>PUNTOS TOTAL<\/th>/);
+
+console.log("PASS V397 · 8 artefactos con IN 1–9, OUT 10–18, TOTAL 1–18 y visor con ATRÁS + ENVÍO");

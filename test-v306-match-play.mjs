@@ -117,7 +117,7 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   assert.match(html,/teamPairSpacer\(\)\+block/);
   assert.match(html,/mode:draftRoundMode/);
   assert.match(html,/matchPlayStatus\(\)\.closed/);
-  assert.match(html,/function matchPlaySummaryRows\(\)[\s\S]*?MATCH TOTAL/,'El resumen Match debe escribir OUT, IN y TOTAL como posición UP/DOWN');
+  assert.match(html,/function matchPlaySummaryRows\(\)[\s\S]*?MATCH TOTAL/,'El resumen Match debe escribir IN, OUT y TOTAL como posición UP/DOWN');
   assert.match(html,/function matchPlayFinalSpeech\(state=matchPlayStatus\(\)\)/,'El cierre anticipado debe preparar el anuncio hablado con resultado y posiciones');
   assert.match(html,/FIN DEL MATCH · <strong>/,'La tarjeta debe cantar visualmente el final anticipado');
   assert.match(html,/hole>limit/,'Los hoyos posteriores a la decisión de cada pareja deben quedar bloqueados');

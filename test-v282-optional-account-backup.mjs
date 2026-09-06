@@ -10,12 +10,15 @@ const backupApi=fs.readFileSync(new URL("./api/backup.js",import.meta.url),"utf8
 
 assert.match(html,/V282-NEON-AUTH-BACKUP-RECOVERY-20260823/);
 for(const id of ["accountBackupButton","accountBackupOverlay","accountName","accountEmail","accountPassword","accountPasswordVisible","accountRemember","accountSignUp","accountSignIn","accountBackupNow","accountRestoreNow","accountSignOut"])assert.match(html,new RegExp(`id="${id}"`));
-assert.match(html,/id="librarySendDigital">ENVIAR TARJETA DIGITAL<\/button>/);
+assert.doesNotMatch(html,/id="librarySendDigital"/,"El Historial principal queda sin botón de envío");
+assert.match(html,/id="artifactViewerBack"[\s\S]{0,220}>ATRÁS<\/button>/);
+assert.match(html,/id="artifactViewerSend"[\s\S]{0,240}>ENVIAR TARJETA DIGITAL<\/button>/);
+assert.match(html,/function shareOpenedArtifact[\s\S]{0,1200}navigator\.canShare/);
 assert.match(html,/now-cardLibraryLastTapAt<=600/);
 assert.match(html,/if\(openGlobal\)openArtifact\(cardLibraryArtifacts\(\)\.global\)/);
 assert.match(html,/\.card-library-list\{display:grid;gap:8px\}/);
 assert.doesNotMatch(html,/\.card-library-list\{[^}]*max-height/);
-for(const removedId of ["libraryOpenGlobal","libraryImageGlobal","libraryPdfGlobal","cardLibraryPlayer","libraryOpenPersonal","libraryImagePersonal","libraryPdfPersonal","libraryPdfAll","openHistoryInsights"])assert.doesNotMatch(html,new RegExp(`id="${removedId}"`));
+for(const removedId of ["libraryOpenGlobal","libraryImageGlobal","libraryPdfGlobal","cardLibraryPlayer","libraryOpenPersonal","libraryImagePersonal","libraryPdfPersonal","libraryPdfAll","openHistoryInsights","cardLibraryActions","cardLibrarySelected"])assert.doesNotMatch(html,new RegExp(`id="${removedId}"`));
 assert.match(html,/window\.GSC_ACCOUNT_SIGNED_IN=false/);
 assert.match(html,/window\.GSC_ACCOUNT_SIGNED_IN!==true/);
 assert.match(html,/autocomplete="username"/);

@@ -26,7 +26,7 @@ for(const label of ["GROSS OUT","GROSS IN","PTS OUT","PTS IN"])assert.ok(stablef
 for(const obsolete of ["GROSS PRIMERA VUELTA","GROSS SEGUNDA VUELTA","PUNTOS PRIMERA VUELTA","PUNTOS SEGUNDA VUELTA","GROSS 1V","GROSS 2V","PUNTOS 1V","PUNTOS 2V",">IDA<",">VTA<","GROSS IDA","GROSS VTA"]){
   assert.equal([html,stableford,artifacts,individual].some(source=>source.includes(obsolete)),false,`Rótulo visual obsoleto: ${obsolete}`);
 }
-assert.match(artifacts,/OUT: \$\{stats\.front\.points\} puntos\. IN: \$\{stats\.back\.points\} puntos\./);
+assert.match(artifacts,/IN, hoyos 1 al 9: \$\{stats\.front\.points\} puntos\. OUT, hoyos 10 al 18: \$\{stats\.back\.points\} puntos\./);
 assert.match(individual,/<strong>OUT<\/strong>/);
 assert.match(individual,/<strong>IN<\/strong>/);
 
@@ -62,4 +62,4 @@ assert.match(html,/segmentSpeech\("Segunda vuelta\.",BACK\)/,"IN visual no debe 
 assert.match(html,/Todo lo que no sea una operación reconocida de la tarjeta pasa al Caddie/);
 assert.match(html,/Esta ruta nunca modifica jugadores, hoyos ni scores/);
 
-console.log("PASS V274 · recepción continua sin avisos superpuestos, cierre con micrófono apagado, OUT/IN/TOTAL y campos oficiales nuevos");
+console.log("PASS V274 · recepción continua sin avisos superpuestos, cierre con micrófono apagado, IN/OUT/TOTAL y campos oficiales nuevos");

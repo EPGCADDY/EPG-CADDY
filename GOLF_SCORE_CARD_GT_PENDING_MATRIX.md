@@ -465,7 +465,17 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 
 - Mostrar hasta ocho rondas por página, ordenadas de más reciente a más antigua; `ANTERIOR` y `SIGUIENTE` son navegación, no acciones de tarjeta.
 - Doble toque sobre cualquier ronda abre su Score Card Global original.
-- La única acción visible debajo es `ENVIAR TARJETA DIGITAL`; abre el compartir nativo con PNG para elegir WhatsApp.
+- La pantalla principal del Historial no muestra acciones de tarjeta. `ENVIAR TARJETA DIGITAL` aparece únicamente dentro de la Score Card Global abierta y usa compartir nativo con PNG para elegir WhatsApp.
 - `ATRÁS` permanece libre de LIVE, REGLAS, AI ∞ y Support mientras el Historial está abierto.
 - Nombre/correo se recuerdan al escribir; la contraseña puede mostrarse, pero nunca se almacena.
 - Pendiente: Preview LAB READY y recorrido físico en iPhone. Producción permanece intacta.
+
+## V397 · control bloqueante IN/OUT y ATRÁS
+
+- Revocados todos los PASS anteriores de tarjetas.
+- Regla del propietario: IN = hoyos 1–9; OUT = hoyos 10–18; TOTAL = 1–18.
+- Inventario inicial: 16 vistas, 16 FAIL, cero PASS hasta evidencia visual individual posterior.
+- Cada captura debe mostrar modalidad, IN, OUT, TOTAL y `ATRÁS` simultáneamente.
+- El retorno debe conservar datos y no montar, duplicar, reiniciar ni borrar controles.
+- Medio de esta ejecución: navegador real Chrome remoto; no se presentará como iPhone físico.
+- Producción queda excluida e intacta.

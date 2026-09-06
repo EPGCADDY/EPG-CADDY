@@ -24,6 +24,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v279-local-card-li
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v280-local-history-insights.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v281-pwa-installation.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v282-optional-account-backup.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v397-card-in-out-back-contract.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v283-native-commercial-readiness.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v284-native-package-generation.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v285-stableford-back-navigation.mjs');

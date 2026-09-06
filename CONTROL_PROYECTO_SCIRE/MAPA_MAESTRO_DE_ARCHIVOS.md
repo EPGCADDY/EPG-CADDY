@@ -1037,8 +1037,11 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `test-v282-optional-account-backup.mjs` | Ejecuta cinco rondas, duplicado, borrador y contrato seguro de autocomplete/localStorage. | RC-044 permanente. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resella las fuentes V397 después del rechazo preventivo del primer build. | `inventory-gate` debe pasar antes del nuevo Preview LAB. |
 | `card-library.js` | Conserva orden descendente por fecha y acepta fecha ISO, numérica y visible en español. | Buscar una fecha devuelve las rondas correspondientes. |
-| `index-grupal.html` | Pagina ocho rondas; doble toque abre Global original; sólo muestra `ENVIAR TARJETA DIGITAL`. | RC-045: sin ocho botones antiguos ni quinta ronda oculta. |
+| `index-grupal.html` | Pagina ocho rondas; doble toque abre Global original; el Historial no muestra acciones y el visor abierto contiene `ATRÁS` + `ENVIAR TARJETA DIGITAL`. | RC-045: sin ocho botones antiguos ni quinta ronda oculta. |
 | `test-v279-local-card-library.mjs`, `test-v282-optional-account-backup.mjs` | Fijan el contrato visible del Historial y la cuenta recordada. | Contraseña visible sólo bajo control local y nunca almacenada; micrófono intacto. |
+| `AUDITORIA_TARJETAS_IN_OUT_ATRAS_V397.md` | Inventario revocatorio de 16 vistas y matriz de evidencia posterior. | Ninguna vista pasa sin captura individual, retorno y persistencia. |
+| `test-v397-card-in-out-back-contract.mjs` | Contrato IN=1–9, OUT=10–18, TOTAL=1–18 para ocho artefactos y controles del visor. | RC-046; el banco no sustituye inspección visual. |
+| `card-artifacts.js` | Tabla aprobada IN/OUT/TOTAL en Global y Personal de las cuatro modalidades. | Conserva cálculos y cambia presentación/artefacto. |
 
 ## V371 · Gross Match y candado de micrófono
 
