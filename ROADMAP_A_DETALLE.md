@@ -2001,3 +2001,13 @@ Resellado de inventario RC-052: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.js
 RC-053 · reparación de entrada Stableford comprobada físicamente: `index-grupal.html` evalúa `document.readyState`; si la carga terminó ejecuta `openFreshStablefordSetup()` de inmediato y si continúa cargando conserva `DOMContentLoaded` con una sola ejecución. `test-stableford-ui.mjs` exige ambas ramas. No cambian scores, voz V378, umbrales, historial, otras modalidades ni Producción.
 
 Compatibilidad RC-053: `test-v252-stableford-persistence-category-course.mjs` verifica el mismo contrato de carga inmediata y mantiene sus controles de persistencia, categoría y campo.
+
+## V400 LAB · ronda activa multimodal persistente · 6 de septiembre de 2026
+
+- `index-grupal.html` · `persist()`: toda ronda recuperable escribe `ACTIVE_ROUND_KEY`, incluida Stableford.
+- `index-grupal.html` · `loadRound()`: la clave canónica acepta General, Stableford, Match Play y Four Ball; la migración secundaria compara las cuatro por fecha.
+- `test-v365-active-round-empty-recovery.mjs`: prueba Stableford con scores 4/5 frente a una Práctica antigua y exige que sobrevivan jugador, modalidad y scores.
+- `test-v260-round-points-player-return.mjs`, `test-v267-one-operational-line.mjs`, `test-v363-intocables-behavior.mjs` e `Intocables/intocables-gate.mjs`: alinean el candado heredado y prohíben volver a excluir Stableford de la clave canónica.
+- `service-worker.js` y pruebas V357/V361/V364/V365/V368: renuevan la caché instalada con la firma V400 sin retirar ninguna protección anterior.
+- Aceptación física pendiente del nuevo Preview: scores → reapertura PWA → primer pendiente; Nueva Ronda confirmada → reapertura → cero datos viejos y hoyo 1.
+- Producción, voz V378, Comunicación Universal, cálculos y tarjetas digitales permanecen intactos.

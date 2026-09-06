@@ -1545,5 +1545,13 @@ Corrección física RC-053: la navegación visible desde Principal hacia Stablef
 
 Compatibilidad RC-053: `test-v252-stableford-persistence-category-course.mjs` exige también la apertura inmediata segura, sin conservar el patrón heredado que esperaba únicamente `DOMContentLoaded`.
 
+## V400 LAB · ronda activa multimodal persistente · 6 de septiembre de 2026
+
+RC-054 corrige el FAIL físico en reapertura instalada: una Stableford viva con scores podía ser desplazada por una Práctica antigua porque la clave canónica excluía esa modalidad. `index-grupal.html` guarda y recupera ahora como ronda activa cualquiera de las cuatro modalidades válidas; `test-v365-active-round-empty-recovery.mjs` bloquea que una Práctica vieja reaparezca sobre Stableford. La tarjeta viva conserva jugadores, scores y primer hoyo pendiente; una ronda nueva confirmada sustituye la clave activa y la anterior queda únicamente en Historial. Producción permanece intacta.
+
+Los contratos heredados `test-v260-round-points-player-return.mjs`, `test-v267-one-operational-line.mjs`, `test-v363-intocables-behavior.mjs` e `Intocables/intocables-gate.mjs` rechazan ahora expresamente la exclusión anterior de Stableford y exigen recuperación canónica para cualquier modalidad válida.
+
+`service-worker.js` usa la firma `v400-active-round-multimodal` para que una app instalada reemplace el HTML anterior; los bancos V357, V361, V364, V365 y V368 conservan sus controles acumulados y exigen la nueva caché.
+
 
 Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs`.

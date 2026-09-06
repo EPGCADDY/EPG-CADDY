@@ -1106,11 +1106,10 @@ function latestStoredRound(modeHint){
 }
 function loadRound(){
   const canonical=readStoredRound(ACTIVE_ROUND_KEY);
-  if(isRecoverableStoredRound(canonical)&&storedRoundMode(canonical)!=="stableford")return canonical;
-  const candidates=[latestStoredRound("general"),latestStoredRound("match_play")],fourBallRound=latestStoredRound("four_ball");
-  if(fourBallRound)candidates.push(fourBallRound);
+  if(isRecoverableStoredRound(canonical))return canonical;
+  const candidates=[latestStoredRound("general"),latestStoredRound("stableford"),latestStoredRound("match_play"),latestStoredRound("four_ball")];
   const migrated=candidates.filter(Boolean).sort((a,b)=>new Date(b.updatedAt||b.createdAt)-new Date(a.updatedAt||a.createdAt))[0]||blankRound();
-  if(isRecoverableStoredRound(migrated)&&storedRoundMode(migrated)!=="stableford"){try{localStorage.setItem(ACTIVE_ROUND_KEY,JSON.stringify(migrated))}catch{}}
+  if(isRecoverableStoredRound(migrated)){try{localStorage.setItem(ACTIVE_ROUND_KEY,JSON.stringify(migrated))}catch{}}
   return migrated
 }
 const SIDE_GAME_KEYS=["skins","wolf","vegas","dots"];
@@ -1127,7 +1126,7 @@ function persist(){
   const payload=JSON.stringify(round);
   try{
     if(demoControlManual){localStorage.setItem(DEMO_CONTROL_MANUAL_KEY,payload);archiveRoundSnapshot(round);return true}
-    if(isRecoverableStoredRound(round)&&storedRoundMode(round)!=="stableford")localStorage.setItem(ACTIVE_ROUND_KEY,payload);
+    if(isRecoverableStoredRound(round))localStorage.setItem(ACTIVE_ROUND_KEY,payload);
     if(round.mode==="stableford")localStorage.setItem(STABLEFORD_ACTIVE_KEY,payload);
     else if(round.mode==="match_play")localStorage.setItem(MATCH_PLAY_ACTIVE_KEY,payload);
     else if(round.mode==="four_ball")localStorage.setItem(FOUR_BALL_ACTIVE_KEY,payload);

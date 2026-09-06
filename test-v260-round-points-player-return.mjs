@@ -37,7 +37,7 @@ assert.match(html,/\[primary,backup,stableford,matchPlay,fourBall\]\.filter\(val
 assert.match(html,/readRoundArchive\(\)\.filter\(value=>isRecoverableStoredRound\(value,modeHint\)\)\.sort/);
 assert.match(html,/const ACTIVE_ROUND_KEY="golf-score-card-guatemala-active-round-v1"/);
 assert.match(html,/function loadRound\(\)\{[\s\S]*?const canonical=readStoredRound\(ACTIVE_ROUND_KEY\)[\s\S]*?return canonical/);
-assert.match(html,/const candidates=\[latestStoredRound\("general"\),latestStoredRound\("match_play"\)\]/);
+assert.match(html,/const candidates=\[latestStoredRound\("general"\),latestStoredRound\("stableford"\),latestStoredRound\("match_play"\),latestStoredRound\("four_ball"\)\]/);
 assert.match(html,/localStorage\.setItem\(ACTIVE_ROUND_KEY,JSON\.stringify\(migrated\)\)/);
 assert.match(html,/localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)/);
 assert.match(html,/if\(round\.mode==="stableford"\)localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,payload\)/);

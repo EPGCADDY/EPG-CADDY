@@ -7,8 +7,10 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 
 assert.match(html,/V365-ACTIVE-ROUND-RECOVERY/);
 assert.match(worker,/v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery/);
+assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v400-active-round-multimodal`/);
 assert.match(html,/if\(!isRecoverableStoredRound\(round\)\)restorePersistedRound\(\)/);
 assert.match(html,/if\(!isRecoverableStoredRound\(round\)&&restorePersistedRound\(\)\)render\(\)/);
+assert.match(html,/if\(isRecoverableStoredRound\(round\)\)localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)/,"Toda modalidad operativa debe sustituir la ronda activa canónica");
 
 const start=html.indexOf("function validStoredRound(x)");
 const end=html.indexOf("const SIDE_GAME_KEYS",start);
@@ -58,4 +60,18 @@ assert.equal(context.recovered.id,"score-cabo-viva","La ronda vacía no puede ga
 assert.equal(context.recovered.players[0].holes[1].gross,5,"Los scores deben sobrevivir la recuperación");
 assert.equal(JSON.parse(localStorage.getItem(keys.ACTIVE_ROUND_KEY)).id,"score-cabo-viva","La recuperación debe reparar la identidad canónica");
 
-console.log("PASS V365 · ronda configurada vacía descartada + tarjeta viva y scores recuperados");
+const stableford={id:"stableford-viva",mode:"stableford",configured:true,players:[{...player,name:"ANA",holes:{1:{gross:4},2:{gross:5}}}],courseKey:"pulte",course:"El Pulté",createdAt:"2026-09-06T17:00:00.000Z",updatedAt:"2026-09-06T17:02:00.000Z"};
+const oldPractice={...valid,id:"practica-vieja",provisional:true,updatedAt:"2026-09-06T16:00:00.000Z"};
+const stableStorage=new MemoryStorage({
+  [keys.STORAGE_KEY]:JSON.stringify(oldPractice),
+  [keys.STORAGE_BACKUP_KEY]:JSON.stringify(oldPractice),
+  [keys.ACTIVE_ROUND_KEY]:JSON.stringify(stableford),
+  [keys.STABLEFORD_ACTIVE_KEY]:JSON.stringify(stableford)
+});
+const stableContext={...context,localStorage:stableStorage,readRoundArchive:()=>[]};
+vm.createContext(stableContext);
+vm.runInContext(`${source};globalThis.recovered=loadRound();`,stableContext);
+assert.equal(stableContext.recovered.id,"stableford-viva","La ronda Stableford activa debe ganar sobre una Práctica antigua");
+assert.equal(stableContext.recovered.players[0].holes[2].gross,5,"Stableford debe conservar scores al reabrir");
+
+console.log("PASS V365/V400 · ronda activa multimodal, tarjeta viva y scores recuperados");

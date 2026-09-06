@@ -1,6 +1,7 @@
 "use strict";
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v400-active-round-multimodal`;
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -42,16 +43,16 @@ const SHELL=[
 ];
 
 async function refreshShell(){
-  const cache=await caches.open(CACHE_NAME);
+  const cache=await caches.open(ACTIVE_CACHE_NAME);
   await Promise.all(SHELL.map(async url=>{try{const response=await fetch(url,{cache:"reload"});if(response.ok)await cache.put(url,response)}catch{}}));
 }
 
 self.addEventListener("install",event=>event.waitUntil(refreshShell().then(()=>self.skipWaiting())));
-self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith("gscg-mobile-")&&key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
+self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith("gscg-mobile-")&&key!==ACTIVE_CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener("message",event=>{if(event.data?.type==="SKIP_WAITING")self.skipWaiting()});
 
 async function networkFirst(request){
-  const cache=await caches.open(CACHE_NAME);
+  const cache=await caches.open(ACTIVE_CACHE_NAME);
   try{
     const response=await fetch(request);
     if(response.ok&&response.type==="basic")await cache.put(request,response.clone());
