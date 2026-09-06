@@ -1941,6 +1941,8 @@ RC-046-R2: el navegador real remoto abrió FOUR BALL sobre el deployment `4b1c04
 
 RC-046-R3: en la Tarjeta Digital Final se ocultan `artifactActions` y `officialCloseButton`; la cabecera muestra únicamente `ENVIAR TARJETA DIGITAL` y `ATRÁS`. `sendFinalCard` llama `shareOfficialArtifact(officialArtifacts().global)`, preservando el selector nativo para WhatsApp y sin intervenir en cálculos, voz, registro, persistencia o Producción.
 
+Resellado de transporte RC-046-R3: el blob remoto inicial de `index-grupal.html` no coincidió con el blob Git local `b4e2412e2fef7594aee27d1a4b305f14b9c78b8b`; Intocables bloqueó ese despliegue. La reposición exacta recuperó todos los gates funcionales y manuales, y este registro simultáneo en ambos ROADMAPS cierra el requisito de atomicidad documental antes de un nuevo Preview.
+
 Regresión ejecutada: cuenta/respaldo, payload maestro, cola idempotente, motor Score y 74 paquetes funcionales consecutivos PASS. El deployment automático del commit `59ce0183e085175b9609c93a5962ff2baa58b123` fue rechazado por inventario desactualizado; `scripts/rebuild-inventory-pdfs.py` regeneró `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` desde el árbol remoto limpio. El resellado documental se prueba y publica únicamente en el proyecto LAB; Producción no se modifica.
 
 Configuración LAB: `vercel.json` ejecuta `node audit-project.mjs`. V328 LIVE no forma parte del build mientras Preview carezca de clave; 114 paquetes deterministas, Intocables, controles editorial/visual, Roadmap e inventario permanecen obligatorios.
