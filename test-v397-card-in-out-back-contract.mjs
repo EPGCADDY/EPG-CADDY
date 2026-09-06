@@ -37,5 +37,7 @@ assert.match(html,/round\.configured&&!round\.provisional/);
 assert.match(html,/<th>GROSS IN<\/th><th>GROSS OUT<\/th><th>GROSS TOTAL<\/th>/);
 assert.match(html,/<th>PUNTOS IN<\/th><th>PUNTOS OUT<\/th><th>PUNTOS TOTAL<\/th>/);
 assert.match(html,/FRONT\.map[\s\S]{0,180}<th class="sum-col">IN<\/th>\$\{BACK\.map[\s\S]{0,180}<th class="sum-col">OUT<\/th><th class="sum-col">TOTAL<\/th>/,"La tabla principal debe colocar IN después del hoyo 9 y OUT después del hoyo 18");
+assert.match(html,/\$\{metric\} IN<\/b><b[^>]*>\$\{metric\} OUT<\/b><b[^>]*>\$\{metric\} TOTAL<\/b>/,"El control manual debe rotular el primer acumulado como IN y el segundo como OUT");
+assert.doesNotMatch(html,/\$\{metric\} OUT<\/b><b[^>]*>\$\{metric\} IN<\/b>/,"El control manual no puede volver a invertir OUT e IN");
 
 console.log("PASS V397 · 8 artefactos con IN 1–9, OUT 10–18, TOTAL 1–18 y visor con ATRÁS + ENVÍO");

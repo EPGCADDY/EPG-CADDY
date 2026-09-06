@@ -44,7 +44,9 @@ Esta regla particular del proyecto prevalece sobre la convención tradicional de
 - Punto de fallo: el control aceptó búsquedas de código y pruebas compartidas como sustituto de apertura visual por tarjeta.
 - Causa raíz funcional: las etiquetas de resumen asociaban `FRONT` con OUT y `BACK` con IN; los artefactos HTML no incluían subtotales IN/OUT y se abrían sin barra de navegación.
 - Hallazgo preventivo antes de capturas: el primer candidato corrigió resúmenes pero conservó `OUT` después del hoyo 9 e `IN` después del 18 en `tableHeader()`; ese deployment fue rechazado sin usarlo como evidencia.
+- Hallazgo visual post-deploy `4b1c04f`: FOUR BALL mostró correctamente la tabla principal `IN=36`, `OUT=45`, `TOTAL=81`, pero el Control Manual rotuló esos mismos valores como `GROSS OUT=36` y `GROSS IN=45`. La captura `V397-FAIL-04-operativa-four-ball.jpg` invalida ese candidato. La causa puntual es el orden de dos etiquetas en `renderRoundManualEntry()`; los valores y cálculos no se modifican.
 - Medida permanente: una tarjeta sólo puede quedar PASS con captura posterior a la corrección donde aparezcan modalidad, IN 1–9, OUT 10–18, TOTAL y ATRÁS sin superposición, más prueba de regreso y persistencia.
+- Medida automática adicional: `test-v397-card-in-out-back-contract.mjs` exige en el Control Manual `${metric} IN` antes de `${metric} OUT` y rechaza expresamente el orden inverso.
 
 ## Estado de evidencia
 
