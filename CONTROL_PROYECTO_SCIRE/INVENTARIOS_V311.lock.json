@@ -1,18 +1,18 @@
 {
   "version": "V371-MATCH-GROSS-MICROPHONE-LOCK",
-  "generatedAt": "2026-09-06T17:21:31Z",
+  "generatedAt": "2026-09-06T17:31:26Z",
   "sourceFileCount": 400,
-  "sourceDigest": "74f8afc5a40b8eb508b23ee6b466d983205fb82f6f9008bb717cc06ffceb0d50",
+  "sourceDigest": "f1fae2ea0a080eadc6110d0cdeffaf78998e2c0754af6b572b5f131252d51e51",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 213165,
-      "sha256": "cebe3c3d0e085783264878104dc683db2383ceb43cc39579feecc590ed070710"
+      "size": 213318,
+      "sha256": "fabbd7cf936c9fcadb6e2f2e2d6c806920c22e19b78336d15d2e07f034cc70de"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 239147,
-      "sha256": "0c0b6c75aa9b2f5397061866a8fe482f39dc5741f14fd13295286eb3b7f3fe13"
+      "size": 239259,
+      "sha256": "da93287d3ee0760ef1d4471f3eeee669e6347a79a15119c514ee45caffeaf5cc"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

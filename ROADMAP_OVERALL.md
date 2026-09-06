@@ -1543,4 +1543,7 @@ Resellado RC-052: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se regener
 
 Corrección física RC-053: la navegación visible desde Principal hacia Stableford podía conservar Práctica/General cuando `DOMContentLoaded` ya había ocurrido. `index-grupal.html` abre inmediatamente el registro Stableford si el documento ya está cargado y conserva el listener sólo durante carga; `test-stableford-ui.mjs` bloquea la regresión. El defecto fue detectado en navegador real antes de entregar el enlace; Producción permanece intacta.
 
+Compatibilidad RC-053: `test-v252-stableford-persistence-category-course.mjs` exige también la apertura inmediata segura, sin conservar el patrón heredado que esperaba únicamente `DOMContentLoaded`.
+
+
 Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs`.

@@ -1999,3 +1999,5 @@ RC-052 · recuperación real de respuestas en Preview: `api/universal-ai.js` dej
 Resellado de inventario RC-052: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` incorpora los hashes actuales de las 400 fuentes. Los tres inventarios fueron regenerados por `scripts/rebuild-inventory-pdfs.py`; el primer deployment RC-052 permanece rechazado por `FAIL INVENTORY GATE` y no alcanzó ningún alias operativo.
 
 RC-053 · reparación de entrada Stableford comprobada físicamente: `index-grupal.html` evalúa `document.readyState`; si la carga terminó ejecuta `openFreshStablefordSetup()` de inmediato y si continúa cargando conserva `DOMContentLoaded` con una sola ejecución. `test-stableford-ui.mjs` exige ambas ramas. No cambian scores, voz V378, umbrales, historial, otras modalidades ni Producción.
+
+Compatibilidad RC-053: `test-v252-stableford-persistence-category-course.mjs` verifica el mismo contrato de carga inmediata y mantiene sus controles de persistencia, categoría y campo.
