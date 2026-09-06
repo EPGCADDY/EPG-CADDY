@@ -1,9 +1,9 @@
 # CONFIRMACIÓN ESCRITA · V378 · REGISTRO, SCORES Y VOZ INTOCABLES
 
-**Fecha de aprobación física:** 4 de septiembre de 2026  
-**Propietario y aprobador físico:** Jaime Kirste  
-**Versión físicamente aprobada:** V378  
-**Commit del Preview aprobado:** `8a84b4f1241d110fd53d106f8b253a882df8b1ba`  
+**Fecha de aprobación física:** 4 de septiembre de 2026
+**Propietario y aprobador físico:** Jaime Kirste
+**Versión físicamente aprobada:** V378
+**Commit del Preview aprobado:** `8a84b4f1241d110fd53d106f8b253a882df8b1ba`
 **Deployment probado:** `dpl_7MvGAmBkSVJnsqDC7vnaPebrsEn8`
 
 Yo, Codex, confirmo que la versión V378, probada físicamente por Jaime Kirste el 4 de septiembre de 2026, queda aprobada e **INTOCABLE** en:

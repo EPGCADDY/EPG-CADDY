@@ -1530,3 +1530,5 @@ Se elimina `REGÍSTRATE` de todas las tarjetas y de Stableford; queda una única
 La auditoría detectó que V397 había sustituido indebidamente la voz físicamente aprobada. Se restaura byte por byte `api/voice-speech.js` de V378 y se sellan los siete bloques funcionales aprobados: registro de jugadores, score individual/múltiple, sensibilidad, umbrales y cierre. La voz queda fijada a Fish Audio `fish-audio/s2.1-pro-free`, `es-419`, velocidad `0.90`, sin ID fijo; la Comunicación Universal de 22 segundos continúa expresamente fuera de la aprobación.
 
 Pruebas automáticas: `test-v397-card-in-out-back-contract.mjs`, `test-v398-manual-opening-hole.mjs`, `test-v279-local-card-library.mjs`, `test-v282-optional-account-backup.mjs` e `Intocables/intocables-gate.mjs`. Producción permanece intacta. Los PASS visuales de tarjetas siguen revocados hasta completar una nueva inspección física 1×1 sobre Preview LAB.
+
+Evidencia y sellos incorporados: `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`, `Intocables/CONFIRMACION_ESCRITA_V378.md` e `Intocables/EVIDENCIA_V378/CONFIRMACION_FISICA_V378_JAIME_KIRSTE.jpeg`.
