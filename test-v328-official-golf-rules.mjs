@@ -71,7 +71,7 @@ const scenarios=[
   "¿Cuándo interviene una Regla Local?",
   "No estoy seguro si mi bola causó que otra se moviera"
 ];
-const originalFetch=globalThis.fetch,originalKey=process.env.OPENAI_API_KEY;
+const originalFetch=globalThis.fetch,originalKey=process.env.OPENAI_API_KEY,originalGatewayKey=process.env.AI_GATEWAY_API_KEY;
 process.env.OPENAI_API_KEY="test-key";
 const upstreamBodies=[];
 try{
@@ -92,9 +92,25 @@ try{
   assert.equal(rateLimitRes.statusCode,503);
   assert.deepEqual(rateLimitRes.body,{ok:false,error:"GOLF_RULES_RATE_LIMITED",retryable:true});
   assert.equal(rateLimitRes.headers["Retry-After"],"60");
+
+  delete process.env.OPENAI_API_KEY;
+  process.env.AI_GATEWAY_API_KEY="oidc-test-token";
+  let gatewayRequest=null;
+  globalThis.fetch=async(url,options)=>{
+    gatewayRequest={url,options,body:JSON.parse(options.body)};
+    return{ok:true,status:200,json:async()=>validPayload};
+  };
+  const gatewayReq={method:"POST",headers:{host:"epg-caddy.vercel.app"},body:{query:scenarios[0],history:[],appContext:{course:"El Pulté",mode:"stroke_play"}}};
+  const gatewayRes=responseRecorder();await handler(gatewayReq,gatewayRes);
+  assert.equal(gatewayRes.statusCode,200);
+  assert.equal(gatewayRes.body.ok,true);
+  assert.match(gatewayRequest.url,/ai-gateway\.vercel\.sh/);
+  assert.equal(gatewayRequest.options.headers.Authorization,"Bearer oidc-test-token");
+  assert.equal(gatewayRequest.body.model,"openai/gpt-5.6-sol");
 }finally{
   globalThis.fetch=originalFetch;
   if(originalKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=originalKey;
+  if(originalGatewayKey===undefined)delete process.env.AI_GATEWAY_API_KEY;else process.env.AI_GATEWAY_API_KEY=originalGatewayKey;
 }
 assert.equal(upstreamBodies.length,scenarios.length);
 for(const [index,body] of upstreamBodies.entries()){

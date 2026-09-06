@@ -1537,4 +1537,6 @@ Trazabilidad del cierre: los dos primeros builds V399 fueron rechazados por el g
 
 Corrección visual RC-051: el primer Preview READY V399 permitió abrir Práctica y confirmó que ocultaba `ATRÁS`. Se habilita el mismo control visible para toda ronda configurada; en Práctica regresa a principal sin convertirla en ronda oficial. El contrato V397 bloquea nuevamente esta ausencia.
 
+Corrección RC-052: la prueba HTTPS real detectó `OPENAI_NOT_CONFIGURED` en Comunicación Universal y Reglas dentro del Preview, mientras la voz Fish Audio sí respondió. `api/universal-ai.js` y `api/golf-rules.js` usan ahora el OIDC administrado de Vercel cuando no existe llave directa; `test-v364-vercel-oidc-recovery.mjs` y `test-v328-official-golf-rules.mjs` bloquean esa regresión. No cambian micrófono V378, sus umbrales, tarjetas ni Producción.
+
 Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs`.

@@ -42,7 +42,7 @@ function upstreamErrorCode(payload){
 
 export async function requestUniversalResponse(body,{apiKey,gatewayToken,deadlineMs=Date.now()+UNIVERSAL_TIMEOUT_MS,fetchImpl=globalThis.fetch,sleepImpl=ms=>new Promise(resolve=>setTimeout(resolve,ms)),label="universal ai"}={}){
   let lastFailure={ok:false,status:503,retryable:true,retryAfterMs:1_000,error:"UNIVERSAL_AI_UNAVAILABLE"};
-  for(let index=0;index<OPENAI_ATTEMPTS.length;index++){
+  for(let index=0;apiKey&&index<OPENAI_ATTEMPTS.length;index++){
     const attempt=OPENAI_ATTEMPTS[index];
     const waitMs=index===0?0:(lastFailure.retryAfterMs??attempt.delayMs);
     if(waitMs>0){
@@ -72,10 +72,10 @@ export async function requestUniversalResponse(body,{apiKey,gatewayToken,deadlin
     console.warn(`${label} upstream retry`,JSON.stringify({status,providerCode,attempt:index+1,model:attempt.model,retryable,requestId:String(response?.headers?.get?.("x-request-id")||"").slice(0,120)||null}));
     if(!retryable)break;
   }
-  if(lastFailure.providerCode==="credit_balance_exhausted"&&deadlineMs-Date.now()>=500){
+  if((!apiKey||lastFailure.providerCode==="credit_balance_exhausted")&&deadlineMs-Date.now()>=500){
     gatewayToken=await resolveGatewayToken(gatewayToken);
   }
-  if(lastFailure.providerCode==="credit_balance_exhausted"&&gatewayToken&&deadlineMs-Date.now()>=500){
+  if((!apiKey||lastFailure.providerCode==="credit_balance_exhausted")&&gatewayToken&&deadlineMs-Date.now()>=500){
     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),deadlineMs-Date.now());
     try{
       const response=await fetchImpl("https://ai-gateway.vercel.sh/v1/responses",{
@@ -413,8 +413,7 @@ export default async function handler(req,res){
       if(!trafficResult.ok)return res.status(502).json(trafficResult);
       return res.status(200).json({ok:true,answer:formatStructuredTrafficAnswer(trafficResult),sources:[]});
     }
-    const apiKey=process.env.OPENAI_API_KEY;
-    if(!apiKey)return res.status(500).json({ok:false,error:"OPENAI_NOT_CONFIGURED"});
+    const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
     const responseProfile=universalResponseProfile(query);
     const promptContext=appContext?{course:appContext.course,mode:appContext.mode,weather:appContext.weather}:null;
     const input=[...history,{role:"user",content:query}];

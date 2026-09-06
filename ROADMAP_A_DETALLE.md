@@ -1993,3 +1993,5 @@ Trazabilidad del cierre: los dos primeros builds V399 fueron rechazados por el g
 Corrección visual RC-051: `renderPlayerEditControls()` muestra `backToRegistrationButton` también en Práctica y su manejador ejecuta `openNewRoundDraft()`. `test-v397-card-in-out-back-contract.mjs` exige visibilidad y retorno. Producción permanece intacta.
 
 Bancos heredados alineados: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs` ahora exigen Stableford o Práctica → principal, conservando General → editor.
+
+RC-052 · recuperación real de respuestas en Preview: `api/universal-ai.js` deja de abortar cuando falta `OPENAI_API_KEY` y entra directamente por AI Gateway con OIDC; `api/golf-rules.js` aplica la misma autenticación conservando búsqueda obligatoria y dominios USGA/R&A. `test-v364-vercel-oidc-recovery.mjs` verifica Universal sin llave directa y `test-v328-official-golf-rules.mjs` verifica Reglas con token administrado. La voz V378, velocidad 0.90, umbrales, score, persistencia, tarjetas y Producción permanecen intactos.

@@ -42,4 +42,20 @@ assert.equal(calls.filter(call=>call.url.includes("api.openai.com")).length,3);
 assert.equal(calls.filter(call=>call.url.includes("ai-gateway.vercel.sh")).length,1);
 assert.equal(calls.at(-1).options.headers.Authorization,"Bearer oidc-token");
 
+const gatewayOnlyCalls=[];
+const gatewayOnly=await requestUniversalResponse({input:[{role:"user",content:"Prueba sin llave directa"}]},{
+  apiKey:"",
+  gatewayToken:"oidc-token",
+  deadlineMs:Date.now()+10_000,
+  fetchImpl:async(url,options)=>{
+    gatewayOnlyCalls.push({url,options});
+    return{ok:true,status:200,headers:{get:()=>null},json:async()=>({model:"gateway-only",output:[{type:"message",content:[{type:"output_text",text:"Respuesta por OIDC."}]}]})};
+  }
+});
+assert.equal(gatewayOnly.ok,true);
+assert.equal(gatewayOnly.gateway,true);
+assert.equal(gatewayOnlyCalls.length,1);
+assert.match(gatewayOnlyCalls[0].url,/ai-gateway\.vercel\.sh/);
+assert.equal(gatewayOnlyCalls[0].options.headers.Authorization,"Bearer oidc-token");
+
 console.log("PASS V364 · OIDC dinámico recupera AI UNIVERSAL y voz sin exponer claves");

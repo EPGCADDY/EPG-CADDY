@@ -1,4 +1,5 @@
 import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
+import { resolveGatewayToken } from "./_lib/vercel-gateway-auth.js";
 
 const MAX_QUERY_LENGTH=1600;
 const MAX_HISTORY_TURNS=40;
@@ -85,8 +86,9 @@ export default async function handler(req,res){
     res.setHeader("Allow","POST");
     return res.status(405).json({ok:false,error:"METHOD_NOT_ALLOWED"});
   }
-  const apiKey=process.env.OPENAI_API_KEY;
-  if(!apiKey)return res.status(500).json({ok:false,error:"OPENAI_NOT_CONFIGURED"});
+  const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
+  const gatewayToken=apiKey?"":await resolveGatewayToken();
+  if(!apiKey&&!gatewayToken)return res.status(500).json({ok:false,error:"AI_GATEWAY_NOT_CONFIGURED"});
   try{
     const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):req.body||{};
     const query=cleanText(body.query,MAX_QUERY_LENGTH);
@@ -95,12 +97,12 @@ export default async function handler(req,res){
     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),RULES_TIMEOUT_MS);
     let upstream;
     try{
-      upstream=await fetch("https://api.openai.com/v1/responses",{
+      upstream=await fetch(apiKey?"https://api.openai.com/v1/responses":"https://ai-gateway.vercel.sh/v1/responses",{
         method:"POST",
         signal:controller.signal,
-        headers:{Authorization:`Bearer ${apiKey}`,"Content-Type":"application/json","OpenAI-Safety-Identifier":"golf-score-card-guatemala-official-rules"},
+        headers:{Authorization:`Bearer ${apiKey||gatewayToken}`,"Content-Type":"application/json",...(apiKey?{"OpenAI-Safety-Identifier":"golf-score-card-guatemala-official-rules"}:{})},
         body:JSON.stringify({
-          model:"gpt-5.6",
+          model:apiKey?"gpt-5.6":"openai/gpt-5.6-sol",
           reasoning:{effort:"low"},
           store:false,
           tools:[{type:"web_search",external_web_access:true,search_context_size:"high",filters:{allowed_domains:OFFICIAL_RULE_DOMAINS}}],
