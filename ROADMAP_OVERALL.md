@@ -1501,3 +1501,5 @@ Refinamiento V397 de Historial: las rondas se mantienen ordenadas por `playedAt`
 Se revocan todas las certificaciones visuales anteriores. El propietario comprobó etiquetas IN/OUT invertidas y tarjetas cerradas u originales sin `ATRÁS` o con superposición. La regla exclusiva del proyecto queda fijada: IN = hoyos 1–9, OUT = hoyos 10–18 y TOTAL = hoyos 1–18.
 
 El inventario obligatorio contiene 16 vistas: cuatro operativas, cuatro Tarjetas Digitales Finales y ocho artefactos Global/Personal para General, Stableford, Match Play y Four Ball. Todas parten en FAIL. `AUDITORIA_TARJETAS_IN_OUT_ATRAS_V397.md` es el registro rector y `test-v397-card-in-out-back-contract.mjs` bloquea el orden IN/OUT/TOTAL tanto en la tabla principal como en los ocho artefactos; ninguna fila puede pasar a PASS sin captura posterior, modalidad, tres acumulados y `ATRÁS` visibles a la vez, más retorno y persistencia comprobados en navegador real. Producción permanece intacta.
+
+Resellado remoto: la cabecera visible coloca IN después del hoyo 9 y OUT después del hoyo 18; ambos ROADMAPS viajan juntos en el commit que habilita un nuevo Preview.

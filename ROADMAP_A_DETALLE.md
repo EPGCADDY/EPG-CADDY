@@ -1935,6 +1935,8 @@ Sello remoto atómico: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_P
 | `test-v397-card-in-out-back-contract.mjs` | Genera ocho variantes con 1–9=36, 10–18=45, total=81; Stableford 18/9/27. | Bloquea etiquetas invertidas; no sustituye la inspección visual. |
 | `AUDITORIA_TARJETAS_IN_OUT_ATRAS_V397.md` | Revoca el PASS anterior e inventaría 16/16 FAIL iniciales. | Sin captura individual no existe PASS. |
 
+Resellado remoto RC-046: `tableHeader()` queda incluido expresamente en el contrato IN=1–9, OUT=10–18. ROADMAP general y detallado se actualizan juntos antes del nuevo Preview; el deployment anterior queda rechazado y no aporta evidencia.
+
 Regresión ejecutada: cuenta/respaldo, payload maestro, cola idempotente, motor Score y 74 paquetes funcionales consecutivos PASS. El deployment automático del commit `59ce0183e085175b9609c93a5962ff2baa58b123` fue rechazado por inventario desactualizado; `scripts/rebuild-inventory-pdfs.py` regeneró `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` desde el árbol remoto limpio. El resellado documental se prueba y publica únicamente en el proyecto LAB; Producción no se modifica.
 
 Configuración LAB: `vercel.json` ejecuta `node audit-project.mjs`. V328 LIVE no forma parte del build mientras Preview carezca de clave; 114 paquetes deterministas, Intocables, controles editorial/visual, Roadmap e inventario permanecen obligatorios.
