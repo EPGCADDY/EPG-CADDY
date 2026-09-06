@@ -1916,7 +1916,7 @@ Sello remoto atómico: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_P
 - `scripts/rebuild-inventory-pdfs.py`, lock y tres PDF V311: sello `V371-MATCH-GROSS-MICROPHONE-LOCK` con las nuevas fuentes.
 - Frontera: `index-grupal.html`, Registro, Score, parsers, captura, micrófono, AI UNIVERSAL y ronda activa no cambian.
 
-## V397 local · cinco tarjetas centrales y sesión persistente · 6 de septiembre de 2026
+## V397 LAB · cinco tarjetas centrales y sesión persistente · 6 de septiembre de 2026
 
 | Archivo | Función | Control |
 |---|---|---|
@@ -1925,4 +1925,4 @@ Sello remoto atómico: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_P
 | `index-grupal.html` | Recuerda nombre/correo, conserva cookie de sesión y habilita el gestor de contraseñas Safari. | Cero contraseña en `localStorage`; desconexión sólo por botón explícito. |
 | `test-v282-optional-account-backup.mjs` | Caso permanente 5 + duplicado + borrador y controles de credenciales. | Bloquea reincidencia RC-044 y almacenamiento inseguro de contraseña. |
 
-Regresión ejecutada: cuenta/respaldo, payload maestro, cola idempotente, motor Score y 74 paquetes funcionales consecutivos PASS. Gate integral bloqueado por ausencia de `.git` en el ZIP y la continuación por ausencia de `@vercel/oidc`; no se creó commit ni despliegue y Producción no se modificó.
+Regresión ejecutada: cuenta/respaldo, payload maestro, cola idempotente, motor Score y 74 paquetes funcionales consecutivos PASS. El deployment automático del commit `59ce0183e085175b9609c93a5962ff2baa58b123` fue rechazado por inventario desactualizado; `scripts/rebuild-inventory-pdfs.py` regeneró `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` desde el árbol remoto limpio. El resellado documental se prueba y publica únicamente en el proyecto LAB; Producción no se modifica.
