@@ -1557,5 +1557,7 @@ Corrección física RC-054-R2: al elegir Stableford desde `NUEVA RONDA`, una Sta
 
 RC-055: la revisión física de imágenes WhatsApp detectó `FINALIZAR RONDA` oculto permanentemente. `index-grupal.html` ahora lo muestra antes del cierre y habilita `ENVIAR TARJETA DIGITAL` después; `test-v397-card-in-out-back-contract.mjs` fija la transición. Producción permanece intacta.
 
+RC-055-R2: el envío principal dejó de preparar HTML y usa `GSCCardFileExport.png()`; entrega un archivo `image/png` al selector del dispositivo o descarga el mismo PNG como respaldo. El contrato V397 exige esta ruta exacta.
+
 
 Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs`.

@@ -2018,3 +2018,5 @@ Compatibilidad RC-053: `test-v252-stableford-persistence-category-course.mjs` ve
 - `index-grupal.html`: muestra `FINALIZAR RONDA` mientras la tarjeta completa aún no es oficial; tras cerrarla lo oculta y muestra `ENVIAR TARJETA DIGITAL`.
 - `test-v397-card-in-out-back-contract.mjs`: bloquea una tarjeta completa imposible de cerrar o compartir.
 - Producción no cambia; las cuatro imágenes requieren reprueba física en LAB.
+
+RC-055-R2 · `shareOfficialArtifactImage()` convierte la tarjeta oficial a PNG antes de compartir. `sendFinalCard` apunta obligatoriamente a esa función y el respaldo también descarga PNG.
