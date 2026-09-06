@@ -2020,3 +2020,10 @@ Compatibilidad RC-053: `test-v252-stableford-persistence-category-course.mjs` ve
 - Producción no cambia; las cuatro imágenes requieren reprueba física en LAB.
 
 RC-055-R2 · `shareOfficialArtifactImage()` convierte la tarjeta oficial a PNG antes de compartir. `sendFinalCard` apunta obligatoriamente a esa función y el respaldo también descarga PNG.
+
+## V401 · RC-056 · restauración física del micrófono principal
+
+- `index-grupal.html`: repone `releaseAiUniversalPlaybackForListening()` antes de `fireMicActivation()`, descargando únicamente el audio de salida previo para permitir escucha.
+- `test-v397-card-in-out-back-contract.mjs`: exige que la función llamada exista.
+- `service-worker.js` y `test-v365-active-round-empty-recovery.mjs`: caché V401 para actualizar la PWA instalada.
+- No cambian umbrales, sensibilidad, cierre, registro/scores, voz Fish Audio V378 ni Producción.

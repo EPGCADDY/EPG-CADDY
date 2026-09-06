@@ -5,6 +5,7 @@ import "./four-ball.js";
 import artifacts from "./card-artifacts.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+assert.match(html,/function releaseAiUniversalPlaybackForListening\(\)\{[\s\S]{0,700}aiUniversalTtsObjectUrl=""[\s\S]{0,100}return true/,"El micrófono principal debe conservar la liberación V378 antes de escuchar");
 const holes=Object.fromEntries(Array.from({length:18},(_,index)=>{
   const hole=index+1,gross=hole<=9?4:5,net=gross;
   return[hole,{hole,par:4,gross,net,strokes:0,status:null,points:hole<=9?2:1}];

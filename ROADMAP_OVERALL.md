@@ -1559,5 +1559,7 @@ RC-055: la revisión física de imágenes WhatsApp detectó `FINALIZAR RONDA` oc
 
 RC-055-R2: el envío principal dejó de preparar HTML y usa `GSCCardFileExport.png()`; entrega un archivo `image/png` al selector del dispositivo o descarga el mismo PNG como respaldo. El contrato V397 exige esta ruta exacta.
 
+RC-056 · V401: la prueba física de Inicio detectó `ReferenceError` al tocar el micrófono. Se restaura `releaseAiUniversalPlaybackForListening()` desde la implementación aprobada V378, se añade control de definición y se renueva sólo la caché LAB. Umbrales, sensibilidad, cierre, parsers y Fish Audio 0.90 permanecen intactos.
+
 
 Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs`.

@@ -2462,6 +2462,14 @@ function primeAiUniversalSpeechFromGesture(){
     return false;
   }catch{return false}
 }
+function releaseAiUniversalPlaybackForListening(){
+  if(!aiUniversalTtsObjectUrl)return false;
+  const player=aiUniversalTtsAudio;
+  if(player){try{player.pause();player.currentTime=0;player.onplay=null;player.onended=null;player.onerror=null;player.removeAttribute("src");player.load?.()}catch{}}
+  try{URL.revokeObjectURL(aiUniversalTtsObjectUrl)}catch{}
+  if(aiUniversalSpeechPrimer===player)aiUniversalSpeechPrimer=null;
+  aiUniversalTtsObjectUrl="";aiUniversalTtsAudio=player;return true
+}
 function preferredMaleBrowserVoice(language){
   if(!("speechSynthesis" in window))return null;
   const voices=window.speechSynthesis.getVoices?.()||[],base=String(language||"es").toLowerCase().split("-")[0];
