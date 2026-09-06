@@ -51,3 +51,5 @@ Esta regla particular del proyecto prevalece sobre la convención tradicional de
 ## Estado de evidencia
 
 Las capturas del propietario demuestran FAIL en dos tarjetas, pero no se reutilizarán como evidencia posterior. La tabla final PASS/FAIL y las capturas nuevas se agregarán únicamente después de abrir cada vista corregida en el LAB real.
+
+El despliegue `ba6e8df` dejó FOUR BALL operativa en PASS visual con IN=36, OUT=45, TOTAL=81, `ATRÁS` separado y persistencia tras recarga/regreso. La Tarjeta Digital Final FOUR BALL quedó FAIL porque faltaba `ENVIAR TARJETA DIGITAL`; RC-046-R3 corrige sólo esa cabecera y mantiene el FAIL hasta nueva evidencia posterior al despliegue.

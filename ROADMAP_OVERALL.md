@@ -1505,3 +1505,5 @@ El inventario obligatorio contiene 16 vistas: cuatro operativas, cuatro Tarjetas
 Resellado remoto: la cabecera visible coloca IN después del hoyo 9 y OUT después del hoyo 18; ambos ROADMAPS viajan juntos en el commit que habilita un nuevo Preview.
 
 Corrección RC-046-R2: la inspección real del Preview `4b1c04f` rechazó FOUR BALL porque el Control Manual aún rotulaba 36 de los hoyos 1–9 como OUT y 45 de los hoyos 10–18 como IN. `renderRoundManualEntry()` cambia únicamente el orden de esas dos etiquetas a IN/OUT; valores, cálculos, persistencia y módulos intocables permanecen idénticos. El banco V397 añade controles positivo y negativo específicos. Todos los PASS visuales continúan revocados hasta nuevas capturas post-deploy.
+
+Corrección RC-046-R3: la tarjeta final abierta reduce sus acciones visibles a `ENVIAR TARJETA DIGITAL` y `ATRÁS`; el envío toma el Global oficial y abre la hoja nativa del dispositivo para seleccionar WhatsApp. El bloque anterior de múltiples opciones queda oculto sin modificar artefactos, resultados ni persistencia.
