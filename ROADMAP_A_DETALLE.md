@@ -1927,5 +1927,4 @@ Sello remoto atómico: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_P
 
 Regresión ejecutada: cuenta/respaldo, payload maestro, cola idempotente, motor Score y 74 paquetes funcionales consecutivos PASS. El deployment automático del commit `59ce0183e085175b9609c93a5962ff2baa58b123` fue rechazado por inventario desactualizado; `scripts/rebuild-inventory-pdfs.py` regeneró `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` desde el árbol remoto limpio. El resellado documental se prueba y publica únicamente en el proyecto LAB; Producción no se modifica.
 
-
 Configuración LAB: `vercel.json` ejecuta `node audit-project.mjs`. V328 LIVE no forma parte del build mientras Preview carezca de clave; 114 paquetes deterministas, Intocables, controles editorial/visual, Roadmap e inventario permanecen obligatorios.

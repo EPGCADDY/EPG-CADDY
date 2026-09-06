@@ -1492,5 +1492,4 @@ El formulario añade `RECORDAR CORREO Y MANTENER SESIÓN`: sólo nombre/correo s
 
 El commit remoto `59ce0183e085175b9609c93a5962ff2baa58b123` fue rechazado correctamente por `FAIL INVENTORY GATE`. El candado `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se regeneró desde ese árbol limpio y se versiona junto con este cierre documental antes de repetir el Preview LAB. Producción permanece intacta.
 
-
 El build LAB ejecuta `node audit-project.mjs`; la prueba externa V328 LIVE queda fuera del build porque requiere una clave no configurada. Los 114 paquetes deterministas continúan obligatorios y Producción permanece intacta.
