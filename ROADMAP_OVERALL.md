@@ -1555,5 +1555,7 @@ Los contratos heredados `test-v260-round-points-player-return.mjs`, `test-v267-o
 
 Corrección física RC-054-R2: al elegir Stableford desde `NUEVA RONDA`, una Stableford activa podía impedir el formulario limpio y reabrir sus jugadores/scores. La entrada explícita `sfEmergency` queda por delante de la recuperación normal y ejecuta siempre `openFreshStablefordSetup()`; la tarjeta viva sólo se sustituye al confirmar la nueva. `test-stableford-ui.mjs` fija esa prioridad.
 
+RC-055: la revisión física de imágenes WhatsApp detectó `FINALIZAR RONDA` oculto permanentemente. `index-grupal.html` ahora lo muestra antes del cierre y habilita `ENVIAR TARJETA DIGITAL` después; `test-v397-card-in-out-back-contract.mjs` fija la transición. Producción permanece intacta.
+
 
 Bancos heredados alineados con el retorno de Práctica: `test-v262-provisional-optional-profile.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v269-operational-matrix-demo.mjs`, `test-v288-stableford-one-touch-home.mjs` y `test-round-clock.mjs`.

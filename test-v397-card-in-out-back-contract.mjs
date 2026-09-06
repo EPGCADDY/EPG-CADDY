@@ -30,7 +30,8 @@ for(const [label,snapshot] of cases){
 assert.doesNotMatch(html,/id="librarySendDigital"/);
 assert.match(html,/id="artifactViewerBack"/);
 assert.match(html,/id="artifactViewerSend"/);
-assert.match(html,/id="sendFinalCard">ENVIAR TARJETA DIGITAL<\/button><button class="screen-back-button" id="closeFinalCard">ATRÁS<\/button>/);
+assert.match(html,/id="sendFinalCard" hidden>ENVIAR TARJETA DIGITAL<\/button><button class="screen-back-button" id="closeFinalCard">ATRÁS<\/button>/);
+assert.match(html,/closeButton\.hidden=!!round\.officiallyClosedAt/,"FINALIZAR RONDA debe estar visible antes del cierre y desaparecer sólo después");
 assert.match(html,/\$\("sendFinalCard"\)\.addEventListener\("click",\(\)=>shareOfficialArtifact\(officialArtifacts\(\)\.global\)\)/);
 assert.match(html,/const actions=\$\("artifactActions"\);actions\.hidden=true/);
 assert.match(html,/window\.opener\.focus\(\);window\.close\(\)/);

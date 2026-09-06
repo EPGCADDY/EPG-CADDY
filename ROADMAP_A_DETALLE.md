@@ -2012,3 +2012,9 @@ Compatibilidad RC-053: `test-v252-stableford-persistence-category-course.mjs` ve
 - Aceptación física pendiente del nuevo Preview: scores → reapertura PWA → primer pendiente; Nueva Ronda confirmada → reapertura → cero datos viejos y hoyo 1.
 - Producción, voz V378, Comunicación Universal, cálculos y tarjetas digitales permanecen intactos.
 - RC-054-R2 · `index-grupal.html` y `test-stableford-ui.mjs`: la selección explícita Stableford desde Nueva Ronda abre siempre registro limpio aun cuando exista una Stableford recuperable; no borra la anterior hasta confirmar OK.
+
+## RC-055 · cierre visible previo al envío WhatsApp · 6 de septiembre de 2026
+
+- `index-grupal.html`: muestra `FINALIZAR RONDA` mientras la tarjeta completa aún no es oficial; tras cerrarla lo oculta y muestra `ENVIAR TARJETA DIGITAL`.
+- `test-v397-card-in-out-back-contract.mjs`: bloquea una tarjeta completa imposible de cerrar o compartir.
+- Producción no cambia; las cuatro imágenes requieren reprueba física en LAB.

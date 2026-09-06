@@ -708,7 +708,7 @@ body.gsc-history-open .gsc-live-launch{display:none!important}
 
 <div class="overlay" id="finalCardOverlay" aria-hidden="true">
   <section class="final-card-panel">
-    <div class="final-card-head"><h1>TARJETA DIGITAL FINAL</h1><div><button id="officialCloseButton" hidden>FINALIZAR RONDA</button><button id="sendFinalCard">ENVIAR TARJETA DIGITAL</button><button class="screen-back-button" id="closeFinalCard">ATRÁS</button></div></div>
+    <div class="final-card-head"><h1>TARJETA DIGITAL FINAL</h1><div><button id="officialCloseButton">FINALIZAR RONDA</button><button id="sendFinalCard" hidden>ENVIAR TARJETA DIGITAL</button><button class="screen-back-button" id="closeFinalCard">ATRÁS</button></div></div>
     <div class="artifact-actions" id="artifactActions" hidden><button id="openGlobalCard">ABRIR GLOBAL</button><button id="imageGlobalCard">IMAGEN GLOBAL</button><button id="pdfGlobalCard">PDF GLOBAL</button><button id="shareGlobalCard">CORREO / WHATSAPP GLOBAL</button><select id="personalCardPlayer" aria-label="Jugador de tarjeta personal"></select><button id="openPersonalCard">ABRIR PERSONAL</button><button id="imagePersonalCard">IMAGEN PERSONAL</button><button id="pdfPersonalCard">PDF PERSONAL</button><button id="sharePersonalCard">CORREO / WHATSAPP PERSONAL</button><button id="downloadAllCards">PDF TODAS</button><button id="openOfficialCorrection">CORREGIR RONDA</button><button class="hidden" id="openOriginalGlobal">ABRIR ORIGINAL</button><div class="artifact-share-status" id="artifactShareStatus" role="status" aria-live="polite"></div></div>
     <div class="final-card-meta"><span id="finalDate">—</span><span>EL PULTÉ GOLF · PAR 72</span><span id="finalTournament"></span><span id="finalPlayers">—</span></div>
     <section class="final-card-shell"><table class="scorecard" id="finalScorecard"></table></section>
@@ -3391,7 +3391,7 @@ function renderFinalDigitalCard(){
   $("finalPlayers").textContent=`${round.players.length} JUGADOR${round.players.length===1?"":"ES"} · ${complete?"RONDA COMPLETA":"RONDA EN CURSO"}`;
   document.querySelector(".final-card-head h1").textContent=complete?"TARJETA DIGITAL FINAL":"TARJETA DIGITAL";
   document.querySelector(".final-card-readonly").textContent=complete?"TARJETA FINAL · SOLO CONSULTA · LOS DATOS DE LA RONDA NO SE MODIFICAN DESDE ESTA VISTA":"TARJETA DIGITAL · RONDA EN CURSO · SOLO CONSULTA";
-  const corrected=Number(round.officialVersion||1)>1,closeButton=$("officialCloseButton");closeButton.disabled=!complete||!!round.officiallyClosedAt;closeButton.textContent=round.officiallyClosedAt?(corrected?`RONDA CORREGIDA V${round.officialVersion}`:"RONDA CERRADA"):"FINALIZAR RONDA";
+  const corrected=Number(round.officialVersion||1)>1,closeButton=$("officialCloseButton");closeButton.hidden=!!round.officiallyClosedAt;closeButton.disabled=!complete||!!round.officiallyClosedAt;closeButton.textContent=round.officiallyClosedAt?(corrected?`RONDA CORREGIDA V${round.officialVersion}`:"RONDA CERRADA"):"FINALIZAR RONDA";
   if(corrected)document.querySelector(".final-card-head h1").textContent=`TARJETA DIGITAL CORREGIDA · V${round.officialVersion}`;
   const actions=$("artifactActions");actions.hidden=true;$("sendFinalCard").hidden=!round.officiallyClosedAt;$("artifactShareStatus").textContent="";$("openOriginalGlobal").classList.toggle("hidden",!corrected);if(round.officiallyClosedAt)$("personalCardPlayer").innerHTML=round.officialSnapshot.players.map(p=>`<option value="${yds10NameSafe(p.id)}">${yds10NameSafe(p.name)}</option>`).join("");
   return true;
