@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V406-R5 · 7 de septiembre de 2026
+
+`index-grupal.html` incorpora el acceso directo a Torneo Live. `live-control.js` conserva la operación del organizador dentro de un panel cerrado y presenta primero `VER JUGADORES`. `live-hub.html`, `live-hub.js` y `gsc-design-system.css` reducen la experiencia del invitado a pegar enlace, buscar nombre, filtrar categoría y elegir favoritos. `test-v406-r5-simple-tournament-live.mjs` impide que vuelva el flujo saturado.
+
 - V406-R4 amplía `test-v406-tournament-categories.mjs` con 67 jugadores de prueba y la distribución exacta solicitada (7 Campeonato, 6 A, 24 B, 11 C, 7 Femenina, 7 Senior y 5 S.Senior); valida el total y cada filtro de categoría sin persistir datos de prueba.
 
 ## V406-R4 · 7 de septiembre de 2026

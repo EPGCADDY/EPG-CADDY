@@ -1,5 +1,15 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## Delta V406-R5 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| index-grupal.html | Entrada directa TORNEO LIVE desde Inicio. |
+| live-control.js | Visor primero; administración cerrada por defecto. |
+| live-hub.html / live-hub.js / gsc-design-system.css | Flujo BUSCA · ELIGE · MIRA y herramientas progresivas. |
+| service-worker.js | Caché V406-R5. |
+| test-v406-r5-simple-tournament-live.mjs | Candado contra saturación del invitado. |
+
 ## Delta V406-R4 · 7 de septiembre de 2026
 
 | Archivo | Función |

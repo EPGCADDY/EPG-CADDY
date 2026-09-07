@@ -1,5 +1,11 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
+## Simplificación V406-R5
+
+- El invitado entra desde `TORNEO LIVE`, pega el enlace sólo cuando no llegó desde uno compartido y busca por nombre o categoría.
+- Crear, unir, autorizar y revocar permanecen en `ORGANIZAR TORNEO`, cerrado al abrir.
+- La general y Mi Tablero se mantienen sincronizados y sólo lectura; no se crea una tarjeta adicional.
+
 ## Corrección V406-R4
 
 - Barra estructural para LIVE, REGLAS, AI ∞ y Support.

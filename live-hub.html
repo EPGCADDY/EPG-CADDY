@@ -15,54 +15,51 @@
   <main class="hub">
     <header class="head">
       <img src="/assets/official-logos/golf-score-card-gt-pwa-v345-192.png" alt="Golf Score Card GT">
-      <div><h1>TORNEO LIVE</h1><p>1 · CATEGORÍAS &nbsp; | &nbsp; 2 · MI TABLERO</p></div>
+      <div><h1>TORNEO LIVE</h1><p>BUSCA · ELIGE · MIRA</p></div>
       <button class="back" id="hubBack" type="button">VOLVER A MI SCORE CARD</button>
     </header>
 
     <div class="state" id="hubState" role="status" aria-live="polite">LISTO PARA CONECTAR LA GENERAL</div>
-    <section class="easy" aria-label="Pasos fáciles">
-      <div><b>1 · ABRE EL ENLACE</b><span>El organizador o jugador te lo comparte.</span></div>
-      <div><b>2 · ELIGE MONITOR</b><span>General para todos; Individual para uno.</span></div>
-      <div><b>3 · TOCA + SEGUIR</b><span>Elige cualquier jugador de la lista.</span></div>
-      <div><b>4 · MIRA LIVE</b><span>Se actualiza solo; tu tarjeta no se toca.</span></div>
+    <section class="viewer-entry" id="hubTournamentEntry">
+      <h2>VER TORNEO</h2>
+      <p>PEGA EL ENLACE QUE TE COMPARTIERON.</p>
+      <div><input id="hubTournamentLink" type="url" placeholder="ENLACE DEL TORNEO" aria-label="Enlace del torneo"><button class="primary" id="hubOpenTournament" type="button">ENTRAR</button></div>
     </section>
 
     <nav class="monitor-switch" aria-label="Elegir monitor">
-      <button class="active" id="hubShowGeneral" type="button">1 · MONITOR GENERAL</button>
-      <button id="hubShowIndividual" type="button">2 · MI TABLERO</button>
+      <button class="active" id="hubShowGeneral" type="button">JUGADORES</button>
+      <button id="hubShowIndividual" type="button">MI TABLERO</button>
     </nav>
 
     <section class="panel monitor-panel" id="hubGeneralPanel">
-      <h2>1 · MONITOR GENERAL</h2>
-      <p class="panel-note">RESULTADO LIVE NO OFICIAL HASTA EL CIERRE. UNA SOLA SCORE CARD PUBLICA POR GRUPO. COMPÁRTELO ♾️ EN USA, MÉXICO, ITALIA O CUALQUIER PAÍS.</p>
+      <h2>JUGADORES EN VIVO</h2>
+      <p class="panel-note">ESCRIBE UN NOMBRE O ELIGE UNA CATEGORÍA.</p>
+      <div class="search">
+        <input id="hubSearch" type="search" maxlength="80" placeholder="NOMBRE DEL JUGADOR">
+        <button class="primary" id="hubSearchButton" type="button">BUSCAR</button>
+      </div>
+      <div class="search-results" id="hubSearchResults"></div>
       <div class="summary" id="hubSummary"></div>
       <div class="category-filter"><select id="hubCategory" aria-label="Categoría del torneo"><option value="all">TODAS LAS CATEGORÍAS</option><option value="championship">CAMPEONATO</option><option value="a">A</option><option value="b">B</option><option value="c">C</option><option value="d">D</option><option value="female">FEMENINA</option><option value="senior">SENIOR</option><option value="super_senior">S.SENIOR</option></select><small>ABRE UNA CATEGORÍA SIN MEZCLARLA CON LAS DEMÁS.</small></div>
       <button class="secondary category-card-toggle" id="hubCategoryCardToggle" type="button" aria-expanded="false">VER DETALLE LIVE DE CATEGORÍA</button>
       <div class="category-card hidden" id="hubCategoryCard" aria-live="polite"></div>
-      <div class="actions">
-        <button class="primary" id="hubShareGeneral" type="button">COMPARTIR GENERAL ♾️</button>
-        <button class="secondary" id="hubRefresh" type="button">ACTUALIZAR AHORA</button>
-        <button class="danger" id="hubRemoveGeneral" type="button">QUITAR GENERAL</button>
-      </div>
-      <div class="search">
-        <input id="hubSearch" type="search" maxlength="80" placeholder="BUSCA CUALQUIER JUGADOR O GRUPO">
-        <button class="primary" id="hubSearchButton" type="button">BUSCAR</button>
-      </div>
-      <div class="search-results" id="hubSearchResults"></div>
+      <details class="viewer-tools"><summary>MÁS OPCIONES</summary><div class="actions">
+        <button class="primary" id="hubShareGeneral" type="button">COMPARTIR</button>
+        <button class="secondary" id="hubRefresh" type="button">ACTUALIZAR</button>
+        <button class="danger" id="hubRemoveGeneral" type="button">SALIR DEL TORNEO</button>
+      </div></details>
       <div class="leader-wrap" id="hubLeaderWrap"><div class="empty">ABRE EL ENLACE GENERAL Y TOCA “ABRIR EN CENTRO LIVE”.</div></div>
     </section>
 
     <section class="panel monitor-panel hidden" id="hubIndividualPanel">
-      <h2>2 · MI TABLERO</h2>
+      <h2>MI TABLERO</h2>
       <p class="panel-note">AQUÍ APARECEN LOS JUGADORES O GRUPOS QUE ELEGISTE. SI ESTÁN EN LA GENERAL, NO SE HACEN CONSULTAS EXTRA.</p>
       <div class="favorites" id="hubFavorites"><div class="empty">TODAVÍA NO SIGUES A NADIE.</div></div>
       <div class="actions" style="margin-top:9px"><button class="danger" id="hubClearFavorites" type="button">LIMPIAR MONITOR INDIVIDUAL</button></div>
-      <h2 style="margin-top:16px">ENLACE DE RESPALDO</h2>
-      <p class="panel-note">NORMALMENTE NO NECESITAS PEGAR NADA. USA ESTA OPCIÓN SÓLO SI LA PERSONA NO APARECE EN EL TORNEO.</p>
-      <div class="import">
+      <details class="viewer-tools"><summary>AGREGAR JUGADOR EXTERNO</summary><div class="import">
         <input id="hubImportLink" type="url" placeholder="PEGA UNA VEZ SU ENLACE LIVE">
         <button class="primary" id="hubImportButton" type="button">AGREGAR</button>
-      </div>
+      </div></details>
       <div class="picker" id="hubPicker">
         <h3>¿A QUIÉN QUIERES SEGUIR?</h3>
         <div class="picker-grid" id="hubPickerGrid"></div>

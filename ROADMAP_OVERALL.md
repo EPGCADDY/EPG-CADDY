@@ -1,5 +1,12 @@
 # ROADMAP OVERALL
 
+## V406-R5 · Torneo Live simple · 7 de septiembre de 2026
+
+- Acceso directo `TORNEO LIVE` desde la pantalla inicial.
+- El invitado sólo ve el flujo `BUSCA · ELIGE · MIRA`; nombre y categoría quedan primero.
+- Crear, unir, autorizar y administrar el torneo siguen disponibles bajo `ORGANIZAR TORNEO`, cerrado de forma predeterminada.
+- Compartir, actualizar, salir y agregar enlaces externos quedan en `MÁS OPCIONES`.
+
 - V406-R4 fija como regresión permanente la verificación solicitada de 67 participantes: 7 Campeonato, 6 A, 24 B, 11 C, 7 Femenina, 7 Senior y 5 S.Senior, agrupados en foursomes y visibles por categoría sin cantidades artificialmente fijas.
 
 ## V406-R4 · Controles móviles sin traslape · 7 de septiembre de 2026
