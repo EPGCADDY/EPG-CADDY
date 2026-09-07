@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V406-R19-MY-BOARD-DEMO-FOLLOW-20260907">
+  <meta name="gscg-release" content="V406-R20-IOS-SCROLL-RECOVERY-20260907">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -643,6 +643,10 @@ body.gsc-final-card-open .mandatory-update{display:block!important}
 .draft-edit-row.match-pair-two{border-left:4px solid #fff}
 .draft-pair-divider,.confirm-pair-divider{height:18px;border:0;border-top:2px solid #444;border-bottom:2px solid #181818;background:#000}
 .scorecard .team-pair-spacer td,.summary .summary-pair-divider td{height:18px!important;border-color:#202323!important;background:#000!important}
+</style>
+<style id="gscg-ios-scroll-recovery-v406-r20">
+html,body{overflow-y:auto;-webkit-overflow-scrolling:touch}
+.overlay{overscroll-behavior-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
 </style>
 <style id="gscg-live-support-link-v311">
 .live-support-link{position:fixed;top:calc(env(safe-area-inset-top,0px) + 5px);right:calc(env(safe-area-inset-right,0px) + 5px);z-index:11000;display:inline-flex;min-height:22px;align-items:center;justify-content:center;padding:0 7px;border:1px solid #4b4f50;border-radius:999px;background:rgba(0,0,0,.92);color:var(--lime);font:800 8px/1 Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:.45px;text-decoration:none;box-shadow:0 0 8px rgba(49,255,0,.12);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -5302,6 +5306,14 @@ window.GSCLiveControl?.mount({
   getPars:()=>PAR
 });
 if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});
+function recoverInstalledAppScrolling(){
+  document.documentElement.style.overflowY="auto";document.body.style.overflowY="auto";
+  for(const overlay of document.querySelectorAll(".overlay.visible")){overlay.style.overflowY="auto";overlay.style.webkitOverflowScrolling="touch"}
+}
+window.addEventListener("pageshow",recoverInstalledAppScrolling);
+window.addEventListener("focus",recoverInstalledAppScrolling);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)recoverInstalledAppScrolling()});
+setTimeout(recoverInstalledAppScrolling,0);
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
 const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"";
 let appBuildCheckRunning=false,appBuildReloading=false,pendingPublishedBuild=CURRENT_APP_BUILD;

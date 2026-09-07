@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V406-R20 · 7 de septiembre de 2026
+
+El propietario reportó dos fallos físicos en iPhone: el acceso instalado puede abrir como una imagen inmóvil sin desplazamiento y `ACTUALIZAR` permanece oscuro sin aviso. R20 restaura `overflow-y:auto` al cargar, volver desde segundo plano y recuperar foco; las capas de Registro reciben desplazamiento táctil nativo. Release y caché avanzan juntos para forzar la renovación del shell. `ACTUALIZAR` oscuro sigue significando release cargado vigente; verde y parpadeante significa release distinto publicado. Revisión física publicada pendiente; Producción intacta.
+
 ## Continuidad V406-R19 · 7 de septiembre de 2026
 
 La captura física `IMG_3034.png` demostró que elegir `S.SENIOR 04` no abría al jugador: MI TABLERO mostraba `ENLACE NO DISPONIBLE, CADUCADO O REVOCADO`. La causa fue que el render individual resolvía únicamente `generalStreams`, vacío en la demostración, aunque el jugador visible provenía correctamente de `displayStreams()`. R19 usa la misma colección visible para seleccionar y resolver favoritos; la regresión reproduce exactamente `S.SENIOR 04`. R18 del control ACTUALIZAR queda integrado. Revisión física publicada pendiente; Producción intacta.

@@ -1,5 +1,12 @@
 # ROADMAP A DETALLE
 
+## V406-R20 · 7 de septiembre de 2026
+
+- `index-grupal.html`: recupera `overflow-y:auto` al iniciar, `pageshow`, foco y visibilidad; las capas visibles restauran desplazamiento táctil con inercia iOS.
+- `service-worker.js`: caché R20 independiente para retirar el shell anterior.
+- `test-v365-active-round-empty-recovery.mjs`: fija release, caché, eventos de recuperación y CSS táctil.
+- Continuidad y RC-077 conservan el reporte físico; Preview y recorrido físico permanecen obligatorios.
+
 ## V406-R19 · 7 de septiembre de 2026
 
 - `live-hub.js`: `renderFavorites()` usa `displayStreams()` tanto para resolver favoritos como para calcular posiciones; corrige demostración sin alterar LIVE real.

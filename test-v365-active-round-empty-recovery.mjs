@@ -7,7 +7,7 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 
 assert.match(html,/V365-ACTIVE-ROUND-RECOVERY/);
 assert.match(worker,/v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery/);
-assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v406-r19-my-board-demo-follow`/);
+assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v406-r20-ios-scroll-recovery`/);
 assert.match(html,/id="mandatoryUpdate"[^>]*class="mandatory-update"|class="mandatory-update"[^>]*id="mandatoryUpdate"/);
 assert.doesNotMatch(html,/id="mandatoryUpdate"[^>]*class="mandatory-update available"|class="mandatory-update available"[^>]*id="mandatoryUpdate"/);
 assert.match(html,/id="mandatoryUpdateButton" aria-disabled="true" disabled>ACTUALIZAR/);
@@ -15,7 +15,10 @@ assert.match(html,/\.mandatory-update\.available \.mandatory-update-card button\
 assert.match(html,/button\.disabled=false;button\.setAttribute\("aria-disabled","false"\)/);
 assert.doesNotMatch(html,/document\.querySelector\("main\.app"\)\?\.setAttribute\("inert"/);
 assert.match(html,/meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
-assert.match(html,/meta name="gscg-release" content="V406-R19-MY-BOARD-DEMO-FOLLOW-20260907"/);
+assert.match(html,/meta name="gscg-release" content="V406-R20-IOS-SCROLL-RECOVERY-20260907"/);
+assert.match(html,/function recoverInstalledAppScrolling\(\)/);
+assert.match(html,/window\.addEventListener\("pageshow",recoverInstalledAppScrolling\)/);
+assert.match(html,/\.overlay\{overscroll-behavior-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y\}/);
 assert.match(html,/meta\[name="gscg-release"\]/);
 assert.match(html,/\.mandatory-update\{position:fixed/);
 assert.match(html,/body\.gsc-final-card-open \.mandatory-update\{display:block!important\}/);

@@ -1,5 +1,9 @@
 # ROADMAP OVERALL
 
+## V406-R20 · recuperación de desplazamiento iPhone · 7 de septiembre de 2026
+
+La aplicación instalada recupera el desplazamiento vertical en apertura, `pageshow`, foco y retorno desde segundo plano. Las capas móviles usan inercia táctil de iOS y `pan-y`; release y caché R20 obligan a renovar el shell. El reporte físico de congelamiento y ausencia de aviso queda en RC-077. Producción intacta.
+
 ## V406-R19 · jugador elegido aparece en MI TABLERO · 7 de septiembre de 2026
 
 `live-hub.js` resuelve MI TABLERO con la misma colección que muestra JUGADORES, incluida la demostración. `test-v353-live-hub.mjs` reproduce `S.SENIOR 04` y exige que abra su tarjeta en vez de `ENLACE NO DISPONIBLE`. Release y caché avanzan a R19; R18 ACTUALIZAR permanece integrado. `IMG_3034.png`, continuidad y RC-076 documentan el fallo físico. Producción intacta.
