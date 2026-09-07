@@ -2050,3 +2050,5 @@ RC-057-S6: Comunicación Universal reconoce referencias amplias a la ubicación 
 RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/Buscar en iPhone mediante `user-select:none` y `-webkit-touch-callout:none`; confirmación y borrado permanecen iguales. `service-worker.js` usa `v401-rc058-fresh-shell` para que el dispositivo reciba también el flujo vigente de `NUEVA RONDA`. V364/V365/V368/V397/V398 e Intocables PASS. Producción intacta.
 
 * RC-059 · `openFreshStablefordSetup()` archiva la ronda anterior, elimina todas las claves activas y limpia jugadores, scores, borradores y captura antes de mostrar Registro Stableford. Verificación física requerida en LAB; Producción intacta.
+
+* RC-059 ATÓMICO · Ambos roadmaps registran conjuntamente la corrección Stableford derivada de prueba física; pendiente de repetición publicada antes de aprobación.
