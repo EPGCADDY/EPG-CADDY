@@ -1,5 +1,11 @@
 # ROADMAP OVERALL
 
+## V406-R16 · LIVE aplica HCP individual · 7 de septiembre de 2026
+
+- La evidencia física `IMG_3032.png` rechazó la General demostrativa: siete jugadores finalizados mostraban 90/72/E aunque tenían HCP distintos.
+- El demo distribuye ahora los golpes de cada HCP por hoyo; al finalizar exige `Neto = Gross − HCP` y `Resultado = Neto − Par`.
+- Caso sellado: `C 08 · HCP 20 · Gross 90 · Neto 70 · −2`. Producción permanece intacta.
+
 ## V406-R15 · BORRAR TODO unificado y confirmado · 7 de septiembre de 2026
 
 - Registro y tarjeta muestran la misma acción `BORRAR TODO`.

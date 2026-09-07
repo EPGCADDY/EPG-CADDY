@@ -69,7 +69,12 @@
   }
   function demoTournamentStreams(){
     const players=[];let sequence=0;
-    for(const [category,count] of Object.entries(DEMO_DISTRIBUTION))for(let index=1;index<=count;index++){sequence+=1;const played=sequence%9===0?18:Math.max(1,(sequence*3)%18);players.push({id:`demo-${sequence}`,name:`${CATEGORY_LABELS[category]} ${String(index).padStart(2,"0")}`,tournamentCategory:category,handicap:sequence%25,tee:CATEGORY_DEFAULT_TEES[category],holes:Array.from({length:played},(_,hole)=>({hole:hole+1,par:4,gross:4+(sequence+hole)%3,net:3+(sequence+hole)%3,relativeToPar:-1+(sequence+hole)%3}))})}
+    for(const [category,count] of Object.entries(DEMO_DISTRIBUTION))for(let index=1;index<=count;index++){
+      sequence+=1;
+      const played=sequence%9===0?18:Math.max(1,(sequence*3)%18),handicap=sequence%25,baseStrokes=Math.floor(handicap/18),extraStrokes=handicap%18;
+      const holes=Array.from({length:played},(_,hole)=>{const par=4,gross=4+(sequence+hole)%3,strokes=baseStrokes+(hole<extraStrokes?1:0),net=gross-strokes;return{hole:hole+1,par,gross,net,relativeToPar:net-par}});
+      players.push({id:`demo-${sequence}`,name:`${CATEGORY_LABELS[category]} ${String(index).padStart(2,"0")}`,tournamentCategory:category,handicap,tee:CATEGORY_DEFAULT_TEES[category],holes});
+    }
     return new Map(Array.from({length:Math.ceil(players.length/4)},(_,group)=>{const id=`demo-group-${group+1}`;return[id,{id,groupLabel:`GRUPO ${group+1}`,snapshot:{tournament:"TORNEO DEMOSTRACIÓN",playedAt:new Date().toISOString(),course:"EL PULTÉ GOLF",mode:"general",status:"active",courseHoles:Array.from({length:18},(_,hole)=>({hole:hole+1,par:4})),players:players.slice(group*4,group*4+4)}}]}));
   }
   function displayStreams(){return generalStreams.size||!demoMode()?generalStreams:demoTournamentStreams()}

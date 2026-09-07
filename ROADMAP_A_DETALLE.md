@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V406-R16 · 7 de septiembre de 2026
+
+`demoTournamentStreams()` deja de fabricar Neto y resultado mediante un patrón independiente del handicap. Cada hoyo calcula golpes recibidos desde el HCP individual, luego `net=gross-strokes` y `relativeToPar=net-par`. La regresión V406 fija el caso físico C 08 (20, FINAL, 90, 70, −2) y recorre todos los jugadores finalizados comprobando `Neto=Gross−HCP` y `Resultado=Neto−72`. RC-073 conserva `IMG_3032.png`. MAIN/Producción intacta.
+
 ## V406-R15 · 7 de septiembre de 2026
 
 `clearAllRegistrationPlayers()` incorpora confirmación obligatoria y se convierte en el único escritor de borrado total desde Registro y tarjeta. `clearRoundScores` cambia su etiqueta a BORRAR TODO y delega en esa función. La confirmación negativa retorna sin mutar; la positiva elimina ronda/jugadores/scores y ejecuta `openSetup("new")`. Manual 27, V287, V365, V405 y V406 se alinean. Release/caché R15; Producción intacta.

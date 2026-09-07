@@ -70,4 +70,10 @@ for(const [category,count] of Object.entries(requestedDistribution))assert.equal
 const demoStreams=hub.demoTournamentStreams();
 assert.equal(hub.tournamentPlayers(demoStreams).length,67,"la pantalla demostrativa carga los 67 jugadores sin enlace externo");
 for(const [category,count] of Object.entries(requestedDistribution))assert.equal(hub.categoryScoreboardRows(demoStreams,category).length,count,`demo ${hub.CATEGORY_LABELS[category]} muestra ${count}`);
+const demoPlayers=hub.tournamentPlayers(demoStreams),c08=demoPlayers.find(player=>player.name==="C 08");
+assert.deepEqual({handicap:c08.player.handicap,holes:c08.holes,gross:c08.gross,net:c08.net,relativeToPar:c08.relativeToPar},{handicap:20,holes:18,gross:90,net:70,relativeToPar:-2},"C 08 debe mostrar HCP 20 · FINAL · Gross 90 · Neto 70 · -2");
+for(const player of demoPlayers.filter(item=>item.finished)){
+  assert.equal(player.net,player.gross-player.player.handicap,`${player.name}: Neto final = Gross - HCP`);
+  assert.equal(player.relativeToPar,player.net-72,`${player.name}: resultado final = Neto - Par 72`);
+}
 console.log("PASS V406 · categoría individual, índice oculto, filtro TORNEO LIVE y Mi Tablero");
