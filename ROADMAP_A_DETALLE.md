@@ -2283,3 +2283,12 @@ Frontera: no se modifica MAIN, Producción, lógica funcional, datos, caché, vo
 - `test-v406-r4-mobile-controls.mjs` y `test-v406-r5-simple-tournament-live.mjs`: avanzan el release a R22; R4 exige que sólo los campos editables puedan seleccionar texto.
 - `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`: registra alcance, estado físico pendiente y Producción intacta.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: agrega RC-079, RC-080 y RC-081 con causa, escape y control permanente.
+
+# V406-R23 · detalle técnico
+
+- `index-grupal.html`: `appVersionId` muestra `V406 · R23` pequeño y blanco arriba del logo; el botón presenta `ACTUALIZADO` en estado vigente y `ACTUALIZAR` con pulso verde ante un candidato.
+- `service-worker.js`: release y caché avanzan juntos a R23, conservando `APPROVED_CACHE_NAME` y la promoción exclusiva por `app_version` tras el toque.
+- `test-v406-r23-visible-version.mjs`: exige indicador permanente, cambio visual ante candidato y ausencia de promoción automática.
+- Los candados de release R2, R4, R5 y recuperación de ronda avanzan a R23; MAIN/Producción no cambian.
+- `speakClosure` intenta el transporte de audio dedicado antes de abrir una sesión Realtime; si ningún transporte inicia, restablece `announced.front/back/complete` y persiste el reintento. `saveManualHole` prima el audio dentro del gesto ENTER.
+- `test-v406-r23-turn-closure-audio.mjs` exige cierre hablado y recuperación para hoyos 9 y 18.

@@ -1777,3 +1777,11 @@ La captura física `IMG_2949.png` rechaza la Tarjeta Digital anterior: accesos g
 - `live-hub.html`, `live.html`, `index.html`, `api/score.js`, `api/session.js`: marca pública GOLF SCORE CARD GT y previews para enlaces compartidos.
 - `test-v353-live-hub.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v406-r22-public-brand.mjs`, `test-v406-r22-share-live.mjs`: regresión de los cambios anteriores, incluida la selección exclusiva de campos editables.
 - `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: continuidad y RC-079–RC-081.
+
+# V406-R23 · versión visible en ACTUALIZAR
+
+- Arriba del logo queda visible en blanco el release compacto `V406 · R23`.
+- La tecla apagada muestra `ACTUALIZADO`; al detectar una versión posterior muestra `ACTUALIZAR` y parpadea.
+- La descarga no sustituye el shell aprobado: sólo el toque del usuario promueve la versión candidata.
+- `test-v406-r23-visible-version.mjs` fija permanentemente los tres estados anteriores; Producción permanece intacta.
+- ENTER habilita el audio en el gesto del usuario; los cierres de 9/18 priorizan la voz dedicada y un fallo de reproducción rearma el anuncio en vez de perderlo.
