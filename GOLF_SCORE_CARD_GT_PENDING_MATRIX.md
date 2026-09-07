@@ -479,3 +479,7 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - El retorno debe conservar datos y no montar, duplicar, reiniciar ni borrar controles.
 - Medio de esta ejecución: navegador real Chrome remoto; no se presentará como iPhone físico.
 - Producción queda excluida e intacta.
+# V404 LAB · eliminación sin selección nativa
+
+- ✅ La ronda del Historial y todos sus textos quedan no seleccionables desde el inicio de la pulsación prolongada; Safari no debe mostrar `Copiar / Buscar selección` antes ni después de abrir `ELIMINAR RONDA`.
+- ⏳ Pendiente: confirmar físicamente en iPhone sobre el Preview LAB V404.

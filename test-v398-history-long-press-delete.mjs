@@ -17,4 +17,6 @@ if(context.archiveRoundSnapshot(round)!==false)throw new Error("La ronda elimina
 for(const required of ["pointerdown","pointerup","pointercancel","contextmenu","650","openCardLibraryDelete","confirmCardLibraryDelete","CANCELAR","ELIMINAR"]){if(!html.includes(required))throw new Error(`Falta UI ${required}`)}
 if(!/#cardLibraryDeleteOverlay\{[^}]*-webkit-user-select:none;user-select:none;-webkit-touch-callout:none/.test(html))throw new Error("El diálogo permite seleccionar/copiar texto en iPhone");
 if(!/\.card-library-delete-actions button\{[^}]*-webkit-user-select:none;user-select:none;-webkit-touch-callout:none/.test(html))throw new Error("Los botones de confirmación permiten selección de texto en iPhone");
+if(!/\.card-library-round,\.card-library-round \*\{[^}]*-webkit-user-select:none;user-select:none;-webkit-touch-callout:none/.test(html))throw new Error("La pulsación puede seleccionar texto antes de abrir el diálogo");
+if(!/cardLibraryList"\)\.addEventListener\("selectstart",event=>\{if\(event\.target\.closest\?\.\("\[data-library-round\]"\)\)event\.preventDefault\(\)\}/.test(html))throw new Error("Falta bloquear selectstart dentro de las rondas del historial");
 console.log("PASS V398 · pulsación prolongada, confirmación y borrado persistente del historial");

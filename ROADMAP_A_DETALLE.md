@@ -2079,3 +2079,13 @@ RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/
 * RC-060 · Registro Stableford oculta físicamente el main anterior mientras el overlay está visible; evita mostrar jugadores/scores archivados debajo del formulario vacío.
 
 * RC-061 · Tráfico GPS acepta el conector «de acá para DESTINO»; la frase exacta «de acá para el parque central de la zona uno» resuelve origen GPS sin pedirlo al usuario.
+# V404 LAB · RC-058-R2 · bloqueo de selección antes del diálogo · 7 de septiembre de 2026
+
+| Archivo | Cambio limitado | Evidencia |
+|---|---|---|
+| `index-grupal.html` | Hace no seleccionable `.card-library-round` y sus descendientes; cancela `selectstart` solamente cuando el origen pertenece a `[data-library-round]`. | La pulsación de 650 ms conserva el gesto de eliminar sin abrir Copiar/Buscar. |
+| `test-v398-history-long-press-delete.mjs` | Exige el candado CSS previo y el bloqueo de `selectstart`, además del diálogo y borrado persistente ya existentes. | `PASS V398`. |
+| `service-worker.js` | Cambia únicamente `ACTIVE_CACHE_NAME` a `v404-rc058-prepress-selection-lock`. | Fuerza recepción del shell corregido en iPhone. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | Corrige causa raíz, punto de escape y estado de RC-058. | Captura física `IMG_2946.png`. |
+
+Frontera: no cambian MAIN, Producción, voz V378, registro, scores, cálculos, tarjetas, persistencia ni confirmación de borrado. Puertas automáticas dirigidas, Intocables y Gate 0 PASS; Preview LAB y reprueba física iPhone permanecen pendientes.

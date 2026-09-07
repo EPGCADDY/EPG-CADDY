@@ -1604,3 +1604,6 @@ RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/
 * RC-060 · Registro Stableford oculta físicamente el main anterior mientras el overlay está visible; evita mostrar jugadores/scores archivados debajo del formulario vacío.
 
 * RC-061 · Tráfico GPS acepta el conector «de acá para DESTINO»; la frase exacta «de acá para el parque central de la zona uno» resuelve origen GPS sin pedirlo al usuario.
+# V404 LAB · bloqueo previo de selección al eliminar historial · 7 de septiembre de 2026
+
+La captura física `IMG_2946.png` demostró que Safari seleccionaba el texto de la ronda durante los 650 ms anteriores a abrir `ELIMINAR RONDA`, por lo que aparecía el menú `Copiar / Buscar selección` aunque el diálogo ya estuviera protegido. `index-grupal.html` aplica `-webkit-user-select:none`, `user-select:none` y `-webkit-touch-callout:none` a `.card-library-round` y todos sus descendientes, además de cancelar `selectstart` exclusivamente dentro de `[data-library-round]`. `test-v398-history-long-press-delete.mjs` bloquea la regresión y `service-worker.js` renueva la caché a `v404-rc058-prepress-selection-lock`. El borrado, doble toque, tarjetas, scores, voz y MAIN no cambian. Automático PASS; prueba física iPhone pendiente en Preview LAB.
