@@ -1146,6 +1146,13 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 
 ## Continuidad maestra permanente de LAB
 
+## V406-R11 · borrado persistente
+
+| Archivo | Función | Control |
+|---|---|---|
+| `index-grupal.html` | Limpia todas las copias activas, marca el ID borrado, filtra recuperación central y fija Inicio. | No rescata ni restaura la ronda eliminada mientras conserva otras rondas. |
+| `test-v405-registration-clear-final-mobile.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v363-intocables-behavior.mjs`, `Intocables/intocables-gate.mjs` | Simulan borrado/reapertura y validan la nueva persistencia canónica. | Ronda vacía, sin clave activa, otras rondas preservadas e Intocables PASS. |
+
 ## V406-R10 · Centro multitorneo y scorecards concurrentes
 
 | Archivo | Función | Control |

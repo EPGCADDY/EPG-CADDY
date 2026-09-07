@@ -1,5 +1,9 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
+## Corrección transversal V406-R11
+
+`BORRAR TODO` elimina la ronda activa y obliga reapertura en Inicio sin afectar los demás torneos LIVE ni otras rondas oficiales del Historial. Prueba física iPhone pendiente.
+
 ## Centro multitorneo V406-R10
 
 - Centro independiente para elegir hasta cinco torneos simultáneos.

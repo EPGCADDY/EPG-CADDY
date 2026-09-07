@@ -1,5 +1,13 @@
 # ROADMAP OVERALL
 
+## V406-R11 · BORRAR TODO persistente y reapertura en Inicio · 7 de septiembre de 2026
+
+- `index-grupal.html` elimina la ronda actual de sus seis copias activas, marca siempre su ID como borrado, sustituye el estado en memoria por `blankRound()` y fija `PRINCIPAL_RESET_KEY` para impedir que `loadRound()` rescate una ronda antigua al reabrir.
+- La recuperación central filtra los IDs eliminados y ya no puede revivir la ronda borrada en el dispositivo.
+- Al iniciar una ronda válida, `persist()` retira la bandera y vuelve a conservar normalmente la tarjeta viva.
+- `test-v405-registration-clear-final-mobile.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v363-intocables-behavior.mjs` e `Intocables/intocables-gate.mjs` fijan borrado, no reaparición, Inicio y conservación de otras rondas oficiales.
+- `service-worker.js` activa la caché `v406-r11-persistent-clear-home`; MAIN permanece intacta.
+
 ## V406-R9 · selector GENERAL restaurado · 7 de septiembre de 2026
 
 - El selector principal de TORNEO LIVE muestra `GENERAL`, conserva las categorías y mantiene el esquema gráfico R6 restaurado en R8.

@@ -7,7 +7,7 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 
 assert.match(html,/V365-ACTIVE-ROUND-RECOVERY/);
 assert.match(worker,/v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery/);
-assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v406-r10-center-multi-tournament`/);
+assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v406-r11-persistent-clear-home`/);
 assert.match(html,/id="mandatoryUpdateButton" disabled aria-disabled="true">ACTUALIZAR/);
 assert.match(html,/\.mandatory-update\.available \.mandatory-update-card button\{[^}]*animation:gscUpdatePulse/);
 assert.match(html,/button\.disabled=false;button\.setAttribute\("aria-disabled","false"\)/);
@@ -17,7 +17,8 @@ assert.match(html,/meta name="gscg-release" content="V406-R9-RESTORE-LIVE-GENERA
 assert.match(html,/meta\[name="gscg-release"\]/);
 assert.match(html,/if\(!isRecoverableStoredRound\(round\)\)restorePersistedRound\(\)/);
 assert.match(html,/if\(!isRecoverableStoredRound\(round\)&&restorePersistedRound\(\)\)render\(\)/);
-assert.match(html,/if\(isRecoverableStoredRound\(round\)\)localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)/,"Toda modalidad operativa debe sustituir la ronda activa canónica");
+assert.match(html,/if\(isRecoverableStoredRound\(round\)\)\{localStorage\.removeItem\(PRINCIPAL_RESET_KEY\);localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)\}/,"Toda modalidad operativa debe sustituir la ronda activa canónica y retirar la bandera de borrado");
+assert.match(html,/if\(localStorage\.getItem\(PRINCIPAL_RESET_KEY\)==="1"\)return blankRound\(\)/,"un borrado explícito debe impedir rescatar una ronda archivada");
 
 const start=html.indexOf("function validStoredRound(x)");
 const end=html.indexOf("const SIDE_GAME_KEYS",start);
@@ -38,6 +39,7 @@ const keys={
   MATCH_PLAY_ACTIVE_KEY:"match-play",
   FOUR_BALL_ACTIVE_KEY:"four-ball",
   ROUND_ARCHIVE_KEY:"archive"
+  ,PRINCIPAL_RESET_KEY:"principal-reset"
 };
 const player={id:"p1",name:"JAIME",handicap:12,tee:"Blanco",holes:{1:{gross:5,net:4}},slot:1};
 const valid={id:"score-cabo-viva",mode:"general",configured:true,players:[player],courseKey:"pulte",course:"El Pulté",createdAt:"2026-08-28T15:00:00.000Z",updatedAt:"2026-08-28T15:59:00.000Z"};
@@ -66,6 +68,16 @@ vm.runInContext(`${source};globalThis.recovered=loadRound();`,context);
 assert.equal(context.recovered.id,"score-cabo-viva","La ronda vacía no puede ganar sobre la tarjeta operativa archivada");
 assert.equal(context.recovered.players[0].holes[1].gross,5,"Los scores deben sobrevivir la recuperación");
 assert.equal(JSON.parse(localStorage.getItem(keys.ACTIVE_ROUND_KEY)).id,"score-cabo-viva","La recuperación debe reparar la identidad canónica");
+
+const clearedStorage=new MemoryStorage({
+  [keys.PRINCIPAL_RESET_KEY]:"1",
+  [keys.ROUND_ARCHIVE_KEY]:JSON.stringify([valid])
+});
+const clearedContext={...context,localStorage:clearedStorage,readRoundArchive:()=>JSON.parse(clearedStorage.getItem(keys.ROUND_ARCHIVE_KEY)||"[]")};
+vm.createContext(clearedContext);
+vm.runInContext(`${source};globalThis.recovered=loadRound();`,clearedContext);
+assert.equal(clearedContext.recovered.configured,false,"BORRAR TODO debe abrir Inicio aunque exista una ronda antigua en Historial");
+assert.equal(clearedStorage.getItem(keys.ACTIVE_ROUND_KEY),null,"la reapertura no puede reconstruir la ronda eliminada");
 
 const stableford={id:"stableford-viva",mode:"stableford",configured:true,players:[{...player,name:"ANA",holes:{1:{gross:4},2:{gross:5}}}],courseKey:"pulte",course:"El Pulté",createdAt:"2026-09-06T17:00:00.000Z",updatedAt:"2026-09-06T17:02:00.000Z"};
 const oldPractice={...valid,id:"practica-vieja",provisional:true,updatedAt:"2026-09-06T16:00:00.000Z"};

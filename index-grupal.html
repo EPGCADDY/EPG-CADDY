@@ -868,6 +868,7 @@ const DRAFT_STORAGE_KEY="golf-score-card-guatemala-group-draft-v1";
 const PLAYER_DIRECTORY_KEY="golf-score-card-guatemala-player-directory-v1";
 const PLAYER_REGISTRY_KEY="golf-score-card-guatemala-player-registry-v2";
 const ROUND_ARCHIVE_KEY="golf-score-card-guatemala-round-archive-v1";
+const PRINCIPAL_RESET_KEY="golf-score-card-guatemala-principal-reset-v1";
 const MASTER_SYNC_QUEUE_KEY="golf-score-card-guatemala-master-sync-queue-v1";
 const MASTER_SYNC_INSTALLATION_KEY="golf-score-card-guatemala-installation-v1";
 const MASTER_SYNC_SEQUENCE_KEY="golf-score-card-guatemala-master-sync-sequence-v1";
@@ -1130,6 +1131,7 @@ function latestStoredRound(modeHint){
 function loadRound(){
   const canonical=readStoredRound(ACTIVE_ROUND_KEY);
   if(isRecoverableStoredRound(canonical))return canonical;
+  try{if(localStorage.getItem(PRINCIPAL_RESET_KEY)==="1")return blankRound()}catch{}
   const candidates=[latestStoredRound("general"),latestStoredRound("stableford"),latestStoredRound("match_play"),latestStoredRound("four_ball")];
   const migrated=candidates.filter(Boolean).sort((a,b)=>new Date(b.updatedAt||b.createdAt)-new Date(a.updatedAt||a.createdAt))[0]||blankRound();
   if(isRecoverableStoredRound(migrated)){try{localStorage.setItem(ACTIVE_ROUND_KEY,JSON.stringify(migrated))}catch{}}
@@ -1149,7 +1151,7 @@ function persist(){
   const payload=JSON.stringify(round);
   try{
     if(demoControlManual){localStorage.setItem(DEMO_CONTROL_MANUAL_KEY,payload);archiveRoundSnapshot(round);return true}
-    if(isRecoverableStoredRound(round))localStorage.setItem(ACTIVE_ROUND_KEY,payload);
+    if(isRecoverableStoredRound(round)){localStorage.removeItem(PRINCIPAL_RESET_KEY);localStorage.setItem(ACTIVE_ROUND_KEY,payload)}
     if(round.mode==="stableford")localStorage.setItem(STABLEFORD_ACTIVE_KEY,payload);
     else if(round.mode==="match_play")localStorage.setItem(MATCH_PLAY_ACTIVE_KEY,payload);
     else if(round.mode==="four_ball")localStorage.setItem(FOUR_BALL_ACTIVE_KEY,payload);
@@ -1205,7 +1207,7 @@ function activeRoundArchiveDeletedKey(){return`${activeRoundArchiveKey()}:delete
 function readRoundArchiveDeleted(){try{const raw=JSON.parse(localStorage.getItem(activeRoundArchiveDeletedKey())||"[]");return new Set(Array.isArray(raw)?raw.map(String):[])}catch{return new Set()}}
 function readRoundArchive(){try{const raw=JSON.parse(localStorage.getItem(activeRoundArchiveKey())||"[]");return Array.isArray(raw)?raw.map(normalizeStoredRound).filter(Boolean):[]}catch{return[]}}
 function archiveRoundSnapshot(value){if(!value?.configured||value.provisional||!value.players?.length)return false;try{const snapshot=normalizeStoredRound(JSON.parse(JSON.stringify(value)));if(readRoundArchiveDeleted().has(String(snapshot.id)))return false;const archive=readRoundArchive(),idx=archive.findIndex(x=>x.id===snapshot.id);if(idx>=0)archive[idx]=snapshot;else archive.push(snapshot);archive.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));localStorage.setItem(activeRoundArchiveKey(),JSON.stringify(archive.slice(-120)));return true}catch(e){console.error("No se pudo archivar la ronda:",e);return false}}
-function deleteRoundFromArchive(roundId){const id=String(roundId||"");if(!id)return false;try{const archive=readRoundArchive(),next=archive.filter(item=>String(item.id)!==id);if(next.length===archive.length)return false;localStorage.setItem(activeRoundArchiveKey(),JSON.stringify(next));const deleted=readRoundArchiveDeleted();deleted.add(id);localStorage.setItem(activeRoundArchiveDeletedKey(),JSON.stringify([...deleted].slice(-120)));return true}catch(e){console.error("No se pudo eliminar la ronda del historial:",e);return false}}
+function deleteRoundFromArchive(roundId){const id=String(roundId||"");if(!id)return false;try{const archive=readRoundArchive(),next=archive.filter(item=>String(item.id)!==id);localStorage.setItem(activeRoundArchiveKey(),JSON.stringify(next));const deleted=readRoundArchiveDeleted();deleted.add(id);localStorage.setItem(activeRoundArchiveDeletedKey(),JSON.stringify([...deleted].slice(-120)));return true}catch(e){console.error("No se pudo eliminar la ronda del historial:",e);return false}}
 function operationalRoundMode(value=round){return value?.mode==="stableford"?"stableford":value?.mode==="match_play"?"match_play":value?.mode==="four_ball"?"four_ball":"general"}
 function previousRoundState(modeHint=null,includeCurrent=true){return window.GSCPreviousRound.resolve(readRoundArchive(),includeCurrent?round:null,modeHint||operationalRoundMode())}
 function setPreviousRoundControl(id,state,visible,showWhenUnavailable=false){const control=$(id);if(!control)return;control.textContent=state.label;control.classList.toggle("hidden",!visible||(!showWhenUnavailable&&!state.available));control.disabled=!state.available;control.setAttribute("aria-disabled",String(!state.available))}
@@ -3517,12 +3519,20 @@ function closeFinalDigitalCard(){
   document.body?.classList.remove("gsc-final-card-open");
 }
 function clearAllRegistrationPlayers(){
+  const removedRoundId=round?.configured?String(round.id||""):"";
+  teardownRealtime();
+  if(removedRoundId)deleteRoundFromArchive(removedRoundId);
+  for(const key of [ACTIVE_ROUND_KEY,STORAGE_KEY,STORAGE_BACKUP_KEY,MATCH_PLAY_ACTIVE_KEY,FOUR_BALL_ACTIVE_KEY,STABLEFORD_ACTIVE_KEY]){try{localStorage.removeItem(key)}catch{}}
+  try{localStorage.setItem(PRINCIPAL_RESET_KEY,"1")}catch{}
+  round=blankRound();
   draftPlayers=[];
   manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());
+  draftTournament=null;draftCourse="pulte";draftRoundMode="general";resetDraftGames();resetRoundCapture();
   clearDraftState();
   resetSetupCapture();
+  render();
   renderDraft();
-  $("setupStatus").textContent="REGISTRO DE JUGADORES BORRADO";
+  $("setupStatus").textContent="RONDA Y REGISTRO BORRADOS · INICIO LIMPIO";
   return true;
 }
 function courseRatingText(value){const number=Number(value);return value!==null&&value!==""&&Number.isFinite(number)&&number>0?number.toFixed(1):"—"}
@@ -3788,6 +3798,7 @@ function openNewRoundDraft(){
   if(round.configured){persist();archiveRoundSnapshot(round)}
   teardownRealtime();
   for(const key of [ACTIVE_ROUND_KEY,STORAGE_KEY,STORAGE_BACKUP_KEY,MATCH_PLAY_ACTIVE_KEY,FOUR_BALL_ACTIVE_KEY,STABLEFORD_ACTIVE_KEY]){try{localStorage.removeItem(key)}catch{}}
+  try{localStorage.setItem(PRINCIPAL_RESET_KEY,"1")}catch{}
   clearDraftState();
   round=blankRound();
   draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());draftTournament=null;draftCourse="pulte";draftRoundMode="general";resetDraftGames();resetRoundCapture();
@@ -5245,7 +5256,7 @@ function restoreCentralProfiles(profiles){
 async function restoreCentralBackup(){
   if(window.GSC_ACCOUNT_SIGNED_IN!==true){setCentralAccountStatus("INICIA SESIÓN PARA RECUPERAR");return false}
   setCentralAccountStatus("RECUPERANDO RESPALDO…");const result=await window.GSCAccountBackup.recover();if(!result.ok){setCentralAccountStatus(centralAccountMessage(result.code));return false}
-  const restored=(result.rounds||[]).map(window.GSCAccountBackup.localRound).map(normalizeStoredRound).filter(Boolean),archive=window.GSCAccountBackup.mergeRounds(readRoundArchive(),restored);localStorage.setItem(ROUND_ARCHIVE_KEY,JSON.stringify(archive));const profiles=restoreCentralProfiles(result.profiles||[]);render();renderPreviousRoundControls();setCentralAccountStatus(`RECUPERACIÓN COMPLETA · ${restored.length} RONDAS · ${profiles} JUGADORES`);return true;
+  const deleted=readRoundArchiveDeleted(),restored=(result.rounds||[]).map(window.GSCAccountBackup.localRound).map(normalizeStoredRound).filter(item=>item&&!deleted.has(String(item.id))),archive=window.GSCAccountBackup.mergeRounds(readRoundArchive(),restored);localStorage.setItem(ROUND_ARCHIVE_KEY,JSON.stringify(archive));const profiles=restoreCentralProfiles(result.profiles||[]);render();renderPreviousRoundControls();setCentralAccountStatus(`RECUPERACIÓN COMPLETA · ${restored.length} RONDAS · ${profiles} JUGADORES`);return true;
 }
 document.querySelectorAll("[data-account-entry]").forEach(button=>button.addEventListener("click",openCentralAccount));$("closeAccountBackup")?.addEventListener("click",closeCentralAccount);$("accountPasswordVisible")?.addEventListener("change",event=>{$("accountPassword").type=event.target.checked?"text":"password"});for(const id of ["accountName","accountEmail"])$(id)?.addEventListener("input",persistCentralAccountDraft);$("accountRemember")?.addEventListener("change",persistCentralAccountDraft);$("accountSignUp")?.addEventListener("click",()=>submitCentralAccount("signup"));$("accountSignIn")?.addEventListener("click",()=>submitCentralAccount("signin"));$("accountBackupNow")?.addEventListener("click",backupCentralNow);$("accountRestoreNow")?.addEventListener("click",restoreCentralBackup);$("accountSignOut")?.addEventListener("click",async()=>{await window.GSCAccountBackup.account("signout");await window.GSCCommerce?.signOut();window.GSC_ACCOUNT_SIGNED_IN=false;centralAccountUser=null;renderCentralAccount();setCentralAccountStatus("SESIÓN CERRADA · EL JUEGO LOCAL SIGUE ACTIVO")});
 applyRememberedAccount();renderCentralAccount();setTimeout(()=>refreshCentralAccount(true),500);

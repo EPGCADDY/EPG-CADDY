@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V406-R11 · 7 de septiembre de 2026
+
+`clearAllRegistrationPlayers()` deja de limitarse al borrador: elimina `ACTIVE_ROUND_KEY`, General primaria/respaldo, Match Play, Four Ball y Stableford; usa `deleteRoundFromArchive()` para marcar el ID actual incluso si todavía no estaba archivado; asigna `blankRound()` antes de cualquier `pagehide/beforeunload`; y guarda `PRINCIPAL_RESET_KEY=1`. `loadRound()` respeta esa decisión antes de consultar Historial, `restoreCentralBackup()` filtra IDs eliminados y `persist()` borra la bandera sólo cuando ya existe una ronda nueva recuperable. Pruebas V405/V365/V364/V366/V368/V398, `test-v363-intocables-behavior.mjs` e `Intocables/intocables-gate.mjs` cubren el flujo; caché R11 fuerza recepción en PWA. Producción no cambia.
+
 ## V406-R9 · 7 de septiembre de 2026
 
 `live-hub.html` cambia exclusivamente la opción `all` a `GENERAL`. `test-v406-tournament-categories.mjs` exige la nueva etiqueta y proscribe la anterior. Release `V406-R9-RESTORE-LIVE-GENERAL-20260907`; caché `v406-r9-restore-live-general`. MAIN no cambia.
