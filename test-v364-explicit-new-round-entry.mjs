@@ -12,5 +12,10 @@ assert.match(source,/if\(round\.configured\)\{persist\(\);archiveRoundSnapshot\(
 assert.match(source,/for\(const key of \[ACTIVE_ROUND_KEY,STORAGE_KEY,STORAGE_BACKUP_KEY,MATCH_PLAY_ACTIVE_KEY,FOUR_BALL_ACTIVE_KEY,STABLEFORD_ACTIVE_KEY\]\)\{try\{localStorage\.removeItem\(key\)\}/,"NUEVA RONDA debe limpiar todas las claves activas");
 assert.match(source,/clearDraftState\(\);[\s\S]*?round=blankRound\(\);[\s\S]*?draftPlayers=\[\]/,"NUEVA RONDA debe dejar cero scores y cero jugadores");
 assert.match(source,/render\(\);[\s\S]*?dateSetup\(\);[\s\S]*?openSetup\("new"\)/,"NUEVA RONDA debe volver a Registro");
+const stableStart=html.indexOf("function openFreshStablefordSetup(){"),stableEnd=html.indexOf("function openStablefordDataEditor(){",stableStart),stableSource=html.slice(stableStart,stableEnd);
+assert.ok(stableStart>0&&stableEnd>stableStart);
+assert.match(stableSource,/if\(round\.configured\)\{persist\(\);archiveRoundSnapshot\(round\)\}/,"NUEVA RONDA Stableford debe archivar la ronda anterior");
+assert.match(stableSource,/for\(const key of \[ACTIVE_ROUND_KEY,STORAGE_KEY,STORAGE_BACKUP_KEY,MATCH_PLAY_ACTIVE_KEY,FOUR_BALL_ACTIVE_KEY,STABLEFORD_ACTIVE_KEY\]\)\{try\{localStorage\.removeItem\(key\)\}/,"NUEVA RONDA Stableford debe limpiar todas las modalidades activas");
+assert.match(stableSource,/clearDraftState\(\);[\s\S]*?draftPlayers=\[\][\s\S]*?resetRoundCapture\(\)/,"NUEVA RONDA Stableford debe limpiar jugadores, scores y captura");
 assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry/);
 console.log("V364_EXPLICIT_NEW_ROUND_ENTRY PASS external_contract=ready");
