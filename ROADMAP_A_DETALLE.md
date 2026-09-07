@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V406-R12 · 7 de septiembre de 2026
+
+`gscg-release` avanza a `V406-R12-PERSISTENT-CLEAR-UPDATE-20260907` y `ACTIVE_CACHE_NAME` a `v406-r12-persistent-clear-update`. Así `syncPublishedAppVersion()` obtiene por `no-store` un identificador distinto al R9/R11 que quedó cargado en iPhone, ejecuta `showMandatoryUpdate()` y enciende el parpadeo. Tras cargar R12, la misma comprobación muestra `ACTUALIZADO`. V365 y las pruebas V406 R2/R4/R5 exigen el release/caché vigentes; V405/V368 conservan borrado e Inicio. RC-070 documenta que R11 no cambió el release y que la sesión limpia no sustituyó una migración visual con ronda persistida. Producción no cambia.
+
 ## V406-R11 · 7 de septiembre de 2026
 
 `clearAllRegistrationPlayers()` deja de limitarse al borrador: elimina `ACTIVE_ROUND_KEY`, General primaria/respaldo, Match Play, Four Ball y Stableford; usa `deleteRoundFromArchive()` para marcar el ID actual incluso si todavía no estaba archivado; asigna `blankRound()` antes de cualquier `pagehide/beforeunload`; y guarda `PRINCIPAL_RESET_KEY=1`. `loadRound()` respeta esa decisión antes de consultar Historial, `restoreCentralBackup()` filtra IDs eliminados y `persist()` borra la bandera sólo cuando ya existe una ronda nueva recuperable. Pruebas V405/V365/V364/V366/V368/V398, `test-v363-intocables-behavior.mjs` e `Intocables/intocables-gate.mjs` cubren el flujo; caché R11 fuerza recepción en PWA. Producción no cambia.

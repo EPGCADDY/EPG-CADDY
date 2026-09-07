@@ -7,14 +7,15 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 
 assert.match(html,/V365-ACTIVE-ROUND-RECOVERY/);
 assert.match(worker,/v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery/);
-assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v406-r11-persistent-clear-home`/);
+assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v406-r12-persistent-clear-update`/);
 assert.match(html,/id="mandatoryUpdateButton" disabled aria-disabled="true">ACTUALIZAR/);
 assert.match(html,/\.mandatory-update\.available \.mandatory-update-card button\{[^}]*animation:gscUpdatePulse/);
 assert.match(html,/button\.disabled=false;button\.setAttribute\("aria-disabled","false"\)/);
 assert.doesNotMatch(html,/document\.querySelector\("main\.app"\)\?\.setAttribute\("inert"/);
 assert.match(html,/meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
-assert.match(html,/meta name="gscg-release" content="V406-R9-RESTORE-LIVE-GENERAL-20260907"/);
+assert.match(html,/meta name="gscg-release" content="V406-R12-PERSISTENT-CLEAR-UPDATE-20260907"/);
 assert.match(html,/meta\[name="gscg-release"\]/);
+assert.match(html,/if\(published===CURRENT_APP_BUILD\)\{const button=\$\("mandatoryUpdateButton"\);button\.textContent="ACTUALIZADO"/);
 assert.match(html,/if\(!isRecoverableStoredRound\(round\)\)restorePersistedRound\(\)/);
 assert.match(html,/if\(!isRecoverableStoredRound\(round\)&&restorePersistedRound\(\)\)render\(\)/);
 assert.match(html,/if\(isRecoverableStoredRound\(round\)\)\{localStorage\.removeItem\(PRINCIPAL_RESET_KEY\);localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)\}/,"Toda modalidad operativa debe sustituir la ronda activa canónica y retirar la bandera de borrado");

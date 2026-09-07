@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V406-R12 · 7 de septiembre de 2026
+
+R11 quedó desplegado con `gscg-release` R9 y por eso una instalación anterior no activó el parpadeo. R12 debe verificarse visualmente desde una sesión con ronda persistida: ACTUALIZAR parpadea, R12 carga, BORRAR TODO elimina la ronda, una recarga y una reapertura muestran Inicio sin JUJUAN/PEDRO/LUIS. MAIN/Producción permanecen intactas.
+
 ## Continuidad V406-R11 · 7 de septiembre de 2026
 
 Corrección candidata: `BORRAR TODO` elimina la ronda activa y evita su recuperación desde Historial; cerrar y abrir debe mostrar Inicio limpio. Otras rondas oficiales permanecen en Historial. Caché R11; MAIN intacta; prueba física iPhone pendiente.

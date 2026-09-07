@@ -1,5 +1,12 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## Delta V406-R12 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| `index-grupal.html`, `service-worker.js` | Publican release/caché R12; una instalación vencida muestra ACTUALIZAR parpadeante y la vigente muestra ACTUALIZADO. |
+| `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs` | Impiden publicar cambios funcionales o visuales conservando el identificador anterior. |
+
 ## Delta V406-R9 · 7 de septiembre de 2026
 
 | Archivo | Función |
