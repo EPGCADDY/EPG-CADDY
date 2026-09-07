@@ -6,7 +6,7 @@
 |---|---|
 | `gsc-design-system.css` | Hoja canónica de TORNEO LIVE, sin `!important`: tokens, componentes, estados y detalle de categoría con columnas fijas. |
 | `index-grupal.html` | Consolida Registro móvil en dos líneas dentro de su CSS histórico, sin hoja externa de sobrescrituras; identifica V406-R2. |
-| `live-hub.html` / `live-hub.js` | Vista temporal de categoría con cantidad dinámica (14/20/22/30 son ejemplos), jugadores mezclados y ordenados de líder a peor, 18 hoyos, Gross/Neto/resultado e IN/OUT/TOTAL. No genera tarjeta. |
+| `live-hub.html` / `live-hub.js` | Vista temporal con cantidad dinámica, fecha/torneo/modalidad/categoría y ranking POS/NOMBRE/HDCP/MARCAS/GROSS/NETO/+/−; debajo conserva 18 hoyos e IN/OUT/TOTAL. No genera tarjeta. |
 | `api/live.js` / `live-control.js` | Límite transaccional de 100 jugadores por torneo y estado visible `TORNEO COMPLETO`; el conteo se repite bajo bloqueo al publicar y unir. |
 | `DATABASE_ARCHITECTURE.md` | Formaliza categorías como proyección de snapshots LIVE y máximo 100 protegido sin migración ni segundo escritor. |
 | `service-worker.js` | Caché V406-R2 e inclusión de la nueva hoja compartida. |

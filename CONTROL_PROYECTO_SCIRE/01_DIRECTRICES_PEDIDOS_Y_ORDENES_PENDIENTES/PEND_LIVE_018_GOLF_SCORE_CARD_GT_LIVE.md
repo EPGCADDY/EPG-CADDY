@@ -6,6 +6,7 @@
 - La categoría se asigna a cada jugador desde Registro: Campeonato, A, B, C, D, Femenina, Senior o S.Senior.
 - Al filtrar una categoría, TORNEO LIVE mezcla los jugadores de todos los foursomes y los ordena continuamente de líder a peor resultado. El grupo no crea secciones; sólo aparece como referencia secundaria.
 - La vista detallada muestra todos los jugadores reales de la categoría, sin cantidad fija ni relleno; 14, 20, 22 y 30 son escenarios posibles. Conserva hoyos 1–18 con Gross/Neto/resultado y cortes IN/OUT/TOTAL.
+- La cabecera muestra fecha automática Guatemala, nombre de torneo, modalidad y categoría grande. La clasificación compacta usa POS, NOMBRE, HDCP, MARCAS, GROSS, NETO y +/−.
 - Esta vista es temporal, derivada y de sólo lectura. No crea tarjeta, PDF, archivo, historial ni segundo escritor.
 - Capacidad inicial protegida: 100 jugadores por torneo. V406-R2 prueba 25 foursomes de cuatro y `api/live.js` rechaza transaccionalmente al jugador 101 al publicar o unir un grupo (`409 LIVE_TOURNAMENT_CAPACITY_REACHED`).
 
