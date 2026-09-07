@@ -1589,6 +1589,8 @@ RC-057-S6: Comunicación Universal reconoce referencias amplias a la ubicación 
 
 V402-S1: sello de inventario alineado con los tres PDF remotos existentes y publicado junto con ambos ROADMAPS; no cambia código funcional ni Producción.
 
+V403 LAB · continuidad tras primer turno: `index-grupal.html` distingue el `aborted` que Safari emite durante un cierre solicitado por la propia aplicación. Ese evento finaliza limpio y vuelve a verde en lugar de mostrar falsamente “reconocimiento no disponible”. `test-v357-ios-voice-transport-recovery.mjs` fija la frontera; la autorización expresa actualiza únicamente el hash `microfono_compartido`. Voz Fish, velocidad, sensibilidad, umbrales, Registro, scores y Producción permanecen intactos.
+
 RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/Buscar en iPhone mediante `user-select:none` y `-webkit-touch-callout:none`; confirmación y borrado permanecen iguales. `service-worker.js` usa `v401-rc058-fresh-shell` para que el dispositivo reciba también el flujo vigente de `NUEVA RONDA`. V364/V365/V368/V397/V398 e Intocables PASS. Producción intacta.
 
 * RC-059 · NUEVA RONDA Stableford limpia estado activo heredado de General, Match Play y Four Ball antes de abrir Registro; prueba física cruzada originó la corrección y V364 cubre la regresión. Producción intacta.

@@ -2059,6 +2059,13 @@ RC-057-S6: Comunicación Universal reconoce referencias amplias a la ubicación 
 
 V402-S1 · `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: resellado atómico contra los PDF remotos existentes; sin cambios funcionales ni de Producción.
 
+## V403 LAB · cierre interno `aborted` sin falso error · 7 de septiembre de 2026
+
+- `index-grupal.html`: dentro de `recognition.onerror`, sólo `transportFailure==="aborted" && browserVoiceStopping` limpia `browserVoiceErrored` y llama `finalizeBrowserVoiceFallback`; cualquier aborto externo mantiene la ruta de error.
+- `test-v357-ios-voice-transport-recovery.mjs`: exige ambas condiciones y la finalización limpia.
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json` y `Intocables/MICROFONO_APROBADO.lock.json`: registran la autorización expresa y los dos hashes afectados.
+- No cambian VAD, sensibilidad, umbrales, tiempos de captura, Fish Audio `es-419` `0.90`, Registro, scores ni Producción.
+
 RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/Buscar en iPhone mediante `user-select:none` y `-webkit-touch-callout:none`; confirmación y borrado permanecen iguales. `service-worker.js` usa `v401-rc058-fresh-shell` para que el dispositivo reciba también el flujo vigente de `NUEVA RONDA`. V364/V365/V368/V397/V398 e Intocables PASS. Producción intacta.
 
 * RC-059 · `openFreshStablefordSetup()` archiva la ronda anterior, elimina todas las claves activas y limpia jugadores, scores, borradores y captura antes de mostrar Registro Stableford. Verificación física requerida en LAB; Producción intacta.

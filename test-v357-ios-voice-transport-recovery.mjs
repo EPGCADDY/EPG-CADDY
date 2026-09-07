@@ -42,6 +42,8 @@ for(const contract of [
 
 const processStart=html.indexOf("async function processBrowserVoiceTranscript");
 const processEnd=html.indexOf("\nfunction scheduleBrowserVoiceTransportRetry",processStart);
+assert.match(html,/transportFailure==="aborted"&&browserVoiceStopping/);
+assert.match(html,/browserVoiceErrored=false;finalizeBrowserVoiceFallback\(recognition,context\);return/);
 const process=html.slice(processStart,processEnd);
 assert.ok(processStart>0&&processEnd>processStart);
 assert.ok(process.indexOf("parseSetupTranscript(clean)")<process.indexOf("isGeneralConversationIntent(clean)"));
