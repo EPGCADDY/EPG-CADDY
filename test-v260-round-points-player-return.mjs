@@ -25,9 +25,9 @@ assert.match(html,/holes:previous\[i\]\?\.holes\|\|\{\}/);
 assert.match(html,/names\.slice\(0,6\)/);
 
 // ATRÁS queda pequeño y en el flujo; nunca tapa la tarjeta ni sus resultados.
-assert.match(html,/\.back-registration-control\{position:static;/);
+assert.match(html,/\.round-secondary-actions\{position:static;/);
 assert.match(html,/>ATRÁS<\/button>/);
-assert.doesNotMatch(html,/\.back-registration-control\{position:fixed;/);
+assert.doesNotMatch(html,/\.round-secondary-actions\{position:fixed;/);
 
 // General y Stableford usan una sola política con filtro de modalidad: comparten arquitectura, nunca mezclan rondas.
 assert.match(html,/function latestStoredRound\(modeHint\)/);

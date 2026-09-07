@@ -13,10 +13,10 @@ assert.match(html,/provisional\?playersByVisualSlot\(\)/);
 
 // El antiguo flotante se sustituye por un único botón pequeño ATRÁS.
 assert.match(html,/id="backToRegistrationButton"[^>]*>ATRÁS<\/button>/);
-assert.match(html,/\.back-registration-control\{position:static;/);
-assert.match(html,/\.back-registration-button\{min-width:68px;height:30px/);
+assert.match(html,/\.round-secondary-actions\{position:static;/);
+assert.match(html,/\.back-registration-button,\.clear-round-scores\{width:100%;min-width:0;height:34px/);
 assert.doesNotMatch(html,/REGRESAR A DATOS/);
-assert.doesNotMatch(html,/\.back-registration-control\{position:fixed;/);
+assert.doesNotMatch(html,/\.round-secondary-actions\{position:fixed;/);
 
 // Agregar jugador es explícito, sólo aparece con cupo y usa el editor que conserva la ronda.
 assert.match(html,/id="addPlayerButton"[^>]*>\+ JUGADOR<\/button>/);

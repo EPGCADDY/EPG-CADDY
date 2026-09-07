@@ -7,7 +7,7 @@ assert.doesNotMatch(html,/\.account-backup-button\{position:fixed;/);
 assert.match(html,/\.account-entry-control\{position:static;/);
 assert.doesNotMatch(html,/id="accountBackupButtonStableford"/);
 assert.match(html,/id="accountBackupButtonSetup"[^>]*data-account-entry>REGÍSTRATE<\/button>/);
-assert.match(html,/<div class="back-registration-control"><button class="back-registration-button" id="backToRegistrationButton"[\s\S]*?>ATRÁS<\/button><button class="back-registration-button add-player-button/);
+assert.match(html,/<div class="round-secondary-actions" id="roundSecondaryActions"><button class="back-registration-button" id="backToRegistrationButton"[\s\S]*?>ATRÁS<\/button><button class="clear-round-scores" id="clearRoundScores"[\s\S]*?>BORRAR SCORES<\/button><button class="back-registration-button add-player-button/);
 assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
 
 console.log("PASS V305/V399 · REGÍSTRATE sólo en principal y no traslapa ATRÁS ni + JUGADOR");

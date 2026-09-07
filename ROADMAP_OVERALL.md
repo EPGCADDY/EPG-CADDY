@@ -1,5 +1,12 @@
 # ROADMAP OVERALL
 
+## V406-R4 · Controles móviles sin traslape · 7 de septiembre de 2026
+
+- LIVE, REGLAS, AI ∞ y Support pasan a una barra estructural debajo del encabezado.
+- Registro nombra explícitamente los selectores vacíos CATEGORÍA y MARCAS.
+- ATRÁS, BORRAR SCORES y + JUGADOR comparten una fila compacta.
+- El banco visual temporal usa 67 participantes repartidos 7/6/24/11/7/7/5; test-v406-r4-mobile-controls.mjs conserva el candado de regresión.
+
 - V406-R3 renueva exclusivamente el identificador publicado y la caché PWA para que los accesos instalados con V406-R2 detecten la actualización y activen el botón `ACTUALIZAR`; no modifica rondas, scores ni persistencia.
 
 ## V406-R2 LAB candidato · Diseño profesional, categorías y TORNEO LIVE · 7 de septiembre de 2026

@@ -33,7 +33,7 @@ assert.ok(html.includes('if(!round.configured||round.endedAt)return false'),'El 
 assert.ok(html.includes('id="backToRegistrationButton"'),'Falta el botón ATRÁS');
 assert.ok(html.includes('>ATRÁS</button>'),'El control debe ser un botón pequeño y legible que diga ATRÁS');
 assert.ok(html.includes('$("backToRegistrationButton").addEventListener("click",()=>isStablefordRound()||round.provisional?openNewRoundDraft():openCurrentRoundDataEditor())'),'ATRÁS debe volver al inicio desde Stableford o Práctica sin borrar la ronda activa');
-assert.ok(html.includes('.back-registration-control{position:static;'),'ATRÁS debe formar parte del flujo y no flotar sobre la tarjeta');
-assert.ok(!html.includes('.back-registration-control{position:fixed;'),'No debe quedar el antiguo control flotante invasivo');
-assert.ok(html.includes('.back-registration-button{min-width:68px;height:30px'),'ATRÁS debe conservar un tamaño pequeño');
+assert.ok(html.includes('.round-secondary-actions{position:static;'),'ATRÁS debe formar parte de la fila secundaria y no flotar sobre la tarjeta');
+assert.ok(!html.includes('.round-secondary-actions{position:fixed;'),'No debe quedar un control secundario flotante invasivo');
+assert.ok(html.includes('.back-registration-button,.clear-round-scores{width:100%;min-width:0;height:34px'),'ATRÁS debe conservar un tamaño compacto y homogéneo');
 console.log('PASS V197: INICIO izquierda, TIMER centro con toque ampliado, cronómetro derecha y micrófono aislado');

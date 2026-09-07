@@ -1,5 +1,15 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## Delta V406-R4 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| index-grupal.html | Barra no flotante, CATEGORÍA/MARCAS y fila secundaria. |
+| live-control.js | Monta LIVE dentro de roundUtilityBar. |
+| service-worker.js | Caché V406-R4. |
+| test-v406-r4-mobile-controls.mjs | Candado de traslape, etiquetas y acciones. |
+| Pruebas históricas, ROADMAPS, pendiente LIVE, continuidad, reincidencias e inventario | Trazabilidad V406-R4. |
+
 ## Delta V406-R2 · 7 de septiembre de 2026
 
 | Archivo | Función V406-R2 |

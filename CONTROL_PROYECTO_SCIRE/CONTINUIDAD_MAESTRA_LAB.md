@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V406-R4 · 7 de septiembre de 2026
+
+LIVE, REGLAS, AI ∞ y Support quedan dentro del flujo. Registro diferencia CATEGORÍA y MARCAS. ATRÁS, BORRAR SCORES y + JUGADOR comparten fila. La escala se verifica con 67 nombres temporales por categorías 7/6/24/11/7/7/5, sin alterar datos reales ni fijar cantidades.
+
 ## Continuidad V406-R2 · 7 de septiembre de 2026
 
 V406-R2 mantiene la categoría individual de V406-R1, consolida Registro sin hoja de sobrescrituras y asigna a TORNEO LIVE una hoja canónica propia. En móvil, cada jugador usa dos líneas: Nombre + Categoría y luego HDCP + Marcas, con campos de 48 px y tipografía legible.

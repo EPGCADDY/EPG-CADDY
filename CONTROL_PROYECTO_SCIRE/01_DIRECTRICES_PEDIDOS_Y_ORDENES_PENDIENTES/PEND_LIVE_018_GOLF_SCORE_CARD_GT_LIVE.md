@@ -1,5 +1,12 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
+## Corrección V406-R4
+
+- Barra estructural para LIVE, REGLAS, AI ∞ y Support.
+- Selectores CATEGORÍA y MARCAS explícitos.
+- Fila ATRÁS, BORRAR SCORES y + JUGADOR.
+- Banco visual: 67 participantes, distribución 7/6/24/11/7/7/5.
+
 ## Ampliación V406-R2 · categorías de torneo
 
 - La captura oficial continúa en Score Cards independientes de hasta 6 jugadores; en torneos el caso normal es un foursome de 4 con un capitán/publicador.
