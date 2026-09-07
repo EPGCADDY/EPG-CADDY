@@ -1,5 +1,10 @@
 # ROADMAP OVERALL
 
+## V406-R14-S1 · recuperación atómica del deployment · 7 de septiembre de 2026
+
+- El primer upload R14 llegó truncado; el segundo restauró el árbol exacto, pero Vercel exigió una modificación nueva y simultánea de ambos ROADMAPS.
+- Este sello registra la recuperación en la misma modificación y mantiene sin cambios la lógica R14 ya auditada. Producción permanece intacta.
+
 ## V406-R14 · ACTUALIZAR se apaga al quedar vigente · 7 de septiembre de 2026
 
 - La revisión visual real rechazó R13 porque el botón seguía verde y parpadeando después de cargar el mismo release.

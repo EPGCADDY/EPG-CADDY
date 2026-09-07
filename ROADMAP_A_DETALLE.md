@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V406-R14-S1 · 7 de septiembre de 2026
+
+El blob remoto inicial de `index-grupal.html` no coincidió con SHA local; fue sustituido por SHA Git `0e2ecc8db5ab5e0ad97e4aa3482d9fdae103242d` y el árbol completo por `1ced8ee7a18002e3ad905c44eedcc6c1c678fd42`. Este resellado modifica conjuntamente ambos ROADMAPS y `INVENTARIOS_V311.lock.json` para que el gate de Vercel evalúe una unidad atómica posterior al commit corrupto. No cambia la lógica R14 ni Producción.
+
 ## V406-R14 · 7 de septiembre de 2026
 
 `gscg-release` avanza a `V406-R14-UPDATE-PULSE-SETTLES-20260907` y `ACTIVE_CACHE_NAME` a `v406-r14-update-pulse-settles`. `mandatoryUpdate` nace sin `.available`; el botón nace `disabled` y `aria-disabled=true`. `syncPublishedAppVersion()` delega exclusivamente en `showMandatoryUpdate(published)`, que sólo habilita y anima cuando el release remoto difiere de `CURRENT_APP_BUILD`. La recarga posterior al toque conserva `persist()` y apaga el control al comprobar igualdad. V365 y V406-R2 fijan el contrato; RC-071 registra el fallo físico de R13. Producción no cambia.
