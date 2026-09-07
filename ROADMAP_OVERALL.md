@@ -1,15 +1,18 @@
-Warning: truncated output (original token count: 54504)
-Total output lines: 1678
+Warning: truncated output (original token count: 54561)
+Total output lines: 1681
 
 # ROADMAP OVERALL
 
 ## V406-R5 · Torneo Live simple · 7 de septiembre de 2026
+
+Control maestro preservado: punto de corte `línea 185`; activación `23 de agosto de 2026, 17:05:00, hora de Guatemala`.
 
 - Acceso directo `TORNEO LIVE` desde la pantalla inicial.
 - El invitado sólo ve el flujo `BUSCA · ELIGE · MIRA`; nombre y categoría quedan primero.
 - Crear, unir, autorizar y administrar el torneo siguen disponibles bajo `ORGANIZAR TORNEO`, cerrado de forma predeterminada.
 - Compartir, actualizar, salir y agregar enlaces externos quedan en `MÁS OPCIONES`.
 - `test-v406-r5-simple-tournament-live.mjs` bloquea el regreso del proceso saturado.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` sella el inventario regenerado de esta entrega.
 
 - V406-R4 fija como regresión permanente la verificación solicitada de 67 participantes: 7 Campeonato, 6 A, 24 B, 11 C, 7 Femenina, 7 Senior y 5 S.Senior, agrupados en foursomes y visibles por categoría sin cantidades artificialmente fijas.
 
@@ -197,9 +200,7 @@ Revisión final publicada: el índice y el encabezado del visor nombran la pági
 | `service-worker.js` | Caché V321 para entregar inmediatamente la integración. |
 | `audit-project.mjs` | Incorpora la batería obligatoria V321. |
 | `test-v321-ai-universal-infinity.mjs` | Verifica API real, 200 áreas sin lista cerrada, texto, voz, contexto, Web y controles. |
-| `test-v267-one-operational-line.mjs` | Alinea el contrato de transcripción con idioma automático. |
-| `test-v271-realtime-prompt-limit.mjs` | Conserva el límite Realtime con idioma automático. |
-| `test-v312-general-caddie.mjs` | Amplía la verificación univer…34504 tokens truncated…S físico iPhone son puertas separadas.
+| `test-v267-one-operational-line.mjs` | A…34561 tokens truncated…S físico iPhone son puertas separadas.
 
 ## V359 · recuperación del parser físico iPhone · 28 de agosto de 2026
 
