@@ -2086,6 +2086,7 @@ RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/
 | `index-grupal.html` | Hace no seleccionable `.card-library-round` y sus descendientes; cancela `selectstart` solamente cuando el origen pertenece a `[data-library-round]`. | La pulsación de 650 ms conserva el gesto de eliminar sin abrir Copiar/Buscar. |
 | `test-v398-history-long-press-delete.mjs` | Exige el candado CSS previo y el bloqueo de `selectstart`, además del diálogo y borrado persistente ya existentes. | `PASS V398`. |
 | `service-worker.js` | Cambia únicamente `ACTIVE_CACHE_NAME` a `v404-rc058-prepress-selection-lock`. | Fuerza recepción del shell corregido en iPhone. |
+| `test-v365-active-round-empty-recovery.mjs` | Actualiza el contrato de caché a la identificación V404 vigente. | Impide que el build acepte un shell anterior. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | Corrige causa raíz, punto de escape y estado de RC-058. | Captura física `IMG_2946.png`. |
 
 Frontera: no cambian MAIN, Producción, voz V378, registro, scores, cálculos, tarjetas, persistencia ni confirmación de borrado. Puertas automáticas dirigidas, Intocables y Gate 0 PASS; Preview LAB y reprueba física iPhone permanecen pendientes.
