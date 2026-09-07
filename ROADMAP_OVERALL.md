@@ -1,5 +1,11 @@
 # ROADMAP OVERALL
 
+## V406-R17 · MI TABLERO permanece visible · 7 de septiembre de 2026
+
+- `IMG_3033.png` mostró MI TABLERO activo en verde mientras la pantalla seguía enseñando JUGADORES EN VIVO.
+- El monitor seleccionado se conserva durante cada actualización automática de tres segundos.
+- Escenario sellado con cinco jugadores elegidos; sus tarjetas permanecen en MI TABLERO. Producción intacta.
+
 ## V406-R16 · LIVE aplica HCP individual · 7 de septiembre de 2026
 
 - La evidencia física `IMG_3032.png` rechazó la General demostrativa: siete jugadores finalizados mostraban 90/72/E aunque tenían HCP distintos.

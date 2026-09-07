@@ -7,7 +7,7 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 
 assert.match(html,/V365-ACTIVE-ROUND-RECOVERY/);
 assert.match(worker,/v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery/);
-assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v406-r16-live-handicap`/);
+assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v406-r17-live-my-board`/);
 assert.match(html,/id="mandatoryUpdate"[^>]*class="mandatory-update"|class="mandatory-update"[^>]*id="mandatoryUpdate"/);
 assert.doesNotMatch(html,/id="mandatoryUpdate"[^>]*class="mandatory-update available"|class="mandatory-update available"[^>]*id="mandatoryUpdate"/);
 assert.match(html,/id="mandatoryUpdateButton" aria-disabled="true" disabled>ACTUALIZAR/);
@@ -15,7 +15,7 @@ assert.match(html,/\.mandatory-update\.available \.mandatory-update-card button\
 assert.match(html,/button\.disabled=false;button\.setAttribute\("aria-disabled","false"\)/);
 assert.doesNotMatch(html,/document\.querySelector\("main\.app"\)\?\.setAttribute\("inert"/);
 assert.match(html,/meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
-assert.match(html,/meta name="gscg-release" content="V406-R16-LIVE-HANDICAP-20260907"/);
+assert.match(html,/meta name="gscg-release" content="V406-R17-LIVE-MY-BOARD-20260907"/);
 assert.match(html,/meta\[name="gscg-release"\]/);
 assert.match(html,/pendingPublishedBuild=CURRENT_APP_BUILD/);
 assert.match(html,/showMandatoryUpdate\(published\)/);

@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V406-R17 · 7 de septiembre de 2026
+
+MI TABLERO guarda y muestra los jugadores seguidos. `IMG_3033.png` evidenció el botón individual activo pero la General visible porque cada refresco de tres segundos restablecía los paneles. R17 conserva `activeMonitor`; escenario obligatorio: agregar cinco jugadores, esperar varios refrescos y confirmar que las cinco tarjetas continúan visibles. Revisión física publicada pendiente.
+
 ## Continuidad V406-R16 · 7 de septiembre de 2026
 
 La General LIVE demostrativa debe calcular cada jugador individualmente. Evidencia física rechazada: C 08 mostró HCP 20, Gross 90, Neto 72 y E. Resultado obligatorio R16: Gross 90, Neto 70 y −2. Todos los finalizados cumplen Neto=Gross−HCP y Resultado=Neto−Par. La liberación sigue bloqueada hasta revisar físicamente cada tarjeta, apuesta, LIVE, WhatsApp y gráfica.

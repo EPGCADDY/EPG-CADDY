@@ -36,6 +36,8 @@ assert.equal(hub.unresolvedFollowTokens(monitorState,generalMap).length,0,"el Mo
 const externalState=hub.addFollowToState(monitorState,{key:"outside:p1",kind:"player",token:token("B"),streamId:"outside",playerId:"p1",label:"JUGADOR EXTERNO",groupLabel:"OTRO TORNEO"});
 assert.deepEqual(hub.unresolvedFollowTokens(externalState,generalMap),[token("B")],"sólo la persona fuera de la General necesita otra lectura");
 assert.equal(hub.addFollowToState(externalState,externalState.follows[0]).follows.length,4,"agregar de nuevo no duplica favoritos");
+let fivePlayers=hub.normalizeHubState(null);for(let index=1;index<=5;index++)fivePlayers=hub.addFollowToState(fivePlayers,{key:`stream-${index}:player-${index}`,kind:"player",streamId:`stream-${index}`,playerId:`player-${index}`,label:`SEGUIDO ${index}`,groupLabel:`GRUPO ${index}`});
+assert.equal(fivePlayers.follows.length,5,"Mi Tablero conserva exactamente los cinco jugadores elegidos");
 
 assert.deepEqual(hub.parseHubHash(`#general=${token("C")}`),{kind:"general",token:token("C")});
 assert.deepEqual(hub.parseHubHash(`#stream=${token("D")}`),{kind:"stream",token:token("D")});
@@ -67,6 +69,9 @@ assert.equal(groupKey("  Grupo   001  "),"grupo 001");
 assert.equal(groupKey("GRUPO 001"),"grupo 001");
 
 const index=read("index-grupal.html"),html=read("live-hub.html"),client=read("live-hub.js"),control=read("live-control.js"),viewer=read("live-view.js"),viewerHtml=read("live.html"),api=read("api/live.js"),worker=read("service-worker.js"),vercel=read("vercel.json");
+assert.match(client,/activeMonitor="general"/);
+assert.match(client,/activeMonitor=individual\?"individual":"general"/,"el selector guarda el monitor activo");
+assert.match(client,/portal\|\|activeMonitor==="individual"/,"cada refresco conserva Mi Tablero visible");
 assert.match(index,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
 assert.match(html,/TORNEO LIVE/);
 assert.match(html,/JUGADORES EN VIVO/);

@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V406-R17 · 7 de septiembre de 2026
+
+`activeMonitor` conserva `general` o `individual`. `showMonitor()` actualiza ese estado y `renderTournamentShelf()` respeta la selección al ejecutar `refresh() → renderAll()` cada tres segundos. La regresión V353 añade cinco seguidos y prohíbe que el refresco vuelva a General mientras MI TABLERO permanece activo. RC-074 conserva `IMG_3033.png`. MAIN/Producción intacta.
+
 ## V406-R16 · 7 de septiembre de 2026
 
 `demoTournamentStreams()` deja de fabricar Neto y resultado mediante un patrón independiente del handicap. Cada hoyo calcula golpes recibidos desde el HCP individual, luego `net=gross-strokes` y `relativeToPar=net-par`. La regresión V406 fija el caso físico C 08 (20, FINAL, 90, 70, −2) y recorre todos los jugadores finalizados comprobando `Neto=Gross−HCP` y `Resultado=Neto−72`. RC-073 conserva `IMG_3032.png`. MAIN/Producción intacta.
