@@ -1,0 +1,86 @@
+# EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
+
+**Identificador:** `EPG-CADDY-LAB-CONTINUITY-V1`  
+**Fecha:** 7 de septiembre de 2026  
+**Autoridad:** instrucción expresa del propietario  
+**Alcance:** continuidad entre conversaciones, ramas, pruebas y Preview de LAB.
+
+## 1. Separación absoluta
+
+- `MAIN NO SE TOCA NUNCA` durante el trabajo LAB.
+- MAIN/Producción queda congelada en `f24af2dd954ef11a87c885f9db15d34dfd7b65bf`.
+- Deployment MAIN: `dpl_FuDVeY79yoTgjdsJwLRBsXSfR3L7`.
+- Enlace MAIN: `https://epg-caddy.vercel.app/index-grupal.html?inicio=1`.
+- Todo trabajo, prueba, commit y deployment nuevo se ejecuta exclusivamente en la rama `LAB`.
+- Ninguna aprobación de LAB autoriza por sí sola modificar MAIN.
+
+## 2. Último LAB publicado
+
+- Versión: `V404 LAB`.
+- Commit remoto: `6ca572ccdf74054a618fd473519edc6342fcc74c`.
+- Deployment: `dpl_4AGM3JUoxkR6UGVJv7kuDqrfr8es`.
+- Estado registrado: `READY`.
+- Enlace permanente: `https://epg-caddy-git-lab-epgcaddys-projects.vercel.app/index-grupal.html`.
+- V404 bloquea selección y `Copiar / Buscar selección` durante la pulsación prolongada sobre una ronda del Historial, sin alterar diálogo, borrado persistente ni doble toque.
+- Pendiente físico: confirmar en iPhone que la pulsación prolongada abre `ELIMINAR` sin menú nativo.
+
+## 3. Trabajo vigente V405
+
+- Botón `ACTUALIZAR` visible, oscuro y deshabilitado sin versión nueva.
+- Verde y parpadeante cuando el release publicado difiere del instalado.
+- Al tocarlo ejecuta `persist()` antes de recargar el mismo dominio.
+- No borra sesión, ronda, scores, jugadores, perfil ni Historial.
+- El dominio LAB permanente recibirá futuras versiones sin cambiar enlace ni reinstalar el icono.
+- La migración única desde el origen fijo V403 al LAB permanente es un trabajo separado.
+- No se borra el icono LAB antiguo hasta transferir y comprobar los datos.
+- MAIN no se borra ni se modifica.
+
+## 4. Sesión del iPhone
+
+- El icono LAB antiguo apunta al deployment fijo V403 y conserva sesión, Historial y ronda.
+- El dominio LAB permanente es otro origen y aparece vacío antes de la migración.
+- Actualizar dentro del mismo origen no migra datos entre orígenes.
+- No se promete conservación entre orígenes sin exportación, importación y comprobación física.
+
+## 5. Reglas permanentes
+
+1. Continuar desde el último commit remoto confirmado de LAB; nunca reconstruir desde una versión anterior.
+2. Comprobar rama, ancestro, árbol sucio, remoto y diferencia exacta antes de escribir.
+3. Preservar cambios locales preexistentes; no sustituir archivos completos desde otra rama.
+4. Aplicar `CAMBIO MÍNIMO → PRUEBA REAL → REGRESIÓN → EVIDENCIA → TERMINAR`.
+5. Ejecutar Gate 0, Intocables, banco dirigido, ROADMAP e inventario antes de publicar.
+6. Registrar cada archivo modificado en ambos ROADMAPS dentro de la misma versión.
+7. No actualizar hashes para encubrir cambios no aprobados.
+8. No declarar PASS físico sin evidencia obtenida en el dispositivo real.
+9. No afirmar apertura del selector de WhatsApp si Safari no permite comprobarla.
+10. No tocar módulos Intocables sin autorización expresa y literal.
+11. Producción permanece intacta hasta una autorización expresa y literal independiente.
+
+## 6. Pendientes que sobreviven al cambio de conversación
+
+- V404: pulsación prolongada abre `ELIMINAR` sin `Copiar / Buscar selección`.
+- V405: botón apagado sin actualización y verde/parpadeante al publicar el release siguiente.
+- Migración única V403 fijo → LAB permanente sin pérdida de datos.
+- PNG real mediante `ENVIAR TARJETA DIGITAL` en Normal, Stableford, Match Play y Four Ball; entregar las cuatro imágenes guardadas en Historial.
+- Verificar filtros, `NUEVA RONDA`, reapertura en hoyo pendiente, `IN = 1–9`, `OUT = 10–18`, `ATRÁS` y ausencia de `REGÍSTRATE` dentro de tarjetas.
+- Comunicación Universal: turnos consecutivos, interrupción del audio anterior, cero superposición, micrófono verde, latencia medida, voz `es-419` a `0.90` sin ceceo y tráfico GPS con expresiones de ubicación actual.
+
+## 7. Mensaje único para toda conversación nueva
+
+> **CONTINUACIÓN EPG CADDY LAB — Lee primero `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` y continúa desde su estado vigente. No reinicies, no pidas antecedentes ya registrados y no regreses a versiones anteriores. Trabaja exclusivamente en LAB. MAIN no se toca nunca. Ejecuta el siguiente pendiente real con cambio mínimo, pruebas, regresión y evidencia.**
+
+No hay que reescribir commits, deployments, enlaces ni pendientes: este archivo es la fuente permanente. Cuando cambie el estado, se actualiza en el mismo commit que ambos ROADMAPS y sus controles.
+
+## 8. Blindaje
+
+- Sólo se actualiza después de confirmar el nuevo estado con Git, Vercel o evidencia física aplicable.
+- Cada versión nueva indica commit, deployment, enlace, estado automático, estado físico y rollback.
+- `test-lab-continuity-master.mjs` bloquea la ausencia o alteración de las anclas permanentes.
+- Este archivo pertenece a `requiredControls` de Gate 0; si falta, el candidato queda bloqueado.
+
+## 9. V405-R2 en validación
+
+- Registro incorpora `BORRAR TODO` para nombre, HDCP y marcas de los seis espacios, sin tocar Historial ni rondas.
+- Tarjeta Digital móvil aísla controles flotantes, apila acciones y limita el desplazamiento horizontal a la tabla.
+- Evidencia física de origen: `IMG_2949.png`, estado FAIL previo a la corrección.
+- Pendiente obligatorio: inspección renderizada y prueba física iPhone de Normal, Stableford, Match Play y Four Ball.

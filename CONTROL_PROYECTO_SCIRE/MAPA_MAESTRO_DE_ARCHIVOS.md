@@ -1054,3 +1054,17 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `Intocables/intocables-gate.mjs` | Valida hashes y ejecuta cada banco sellado. | Registro, Score individual/multihoyo y AI UNIVERSAL permanecen intocables. |
 | `Intocables/README.md`, `Intocables/REGLAS_INTOCABLES.json` | Documentan y activan INT-05. | Ningún build pasa con regresión de micrófono. |
 | `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, tres PDF V311 | Sellan el inventario V371. | Fuentes, hashes y versión permanecen sincronizados. |
+
+## Continuidad maestra permanente de LAB
+
+| Archivo | Función | Control |
+|---|---|---|
+| `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` | Fuente única para trasladar estado, límites, versiones, enlaces y pendientes entre conversaciones. | Gate 0 exige su presencia; MAIN permanece congelada. |
+| `test-lab-continuity-master.mjs` | Verifica las anclas permanentes y el mensaje reutilizable de continuidad. | La auditoría integral falla si una ancla desaparece o cambia sin control. |
+
+## V405-R2 · Registro y Tarjeta Digital móvil
+
+| Archivo | Función | Control |
+|---|---|---|
+| `test-v405-registration-clear-final-mobile.mjs` | Sella `BORRAR TODO`, aislamiento modal, cabecera móvil y scroll contenido de la tarjeta. | Prohíbe borrar Historial y detecta reaparición de controles montados. |
+| `index-grupal.html` | Limpia los seis jugadores del borrador y corrige la presentación móvil de Tarjeta Digital. | Ronda activa, Historial, scores y módulos Intocables permanecen fuera del borrado. |

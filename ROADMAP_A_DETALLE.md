@@ -2090,3 +2090,36 @@ RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | Corrige causa raíz, punto de escape y estado de RC-058. | Captura física `IMG_2946.png`. |
 
 Frontera: no cambian MAIN, Producción, voz V378, registro, scores, cálculos, tarjetas, persistencia ni confirmación de borrado. Puertas automáticas dirigidas, Intocables y Gate 0 PASS; Preview LAB y reprueba física iPhone permanecen pendientes.
+# V405 LAB · actualización visible sin reinstalar · 7 de septiembre de 2026
+
+| Archivo | Cambio | Control |
+|---|---|---|
+| `index-grupal.html` | Release separado `V405-LAB-UPDATE-BUTTON-20260907`; conserva intacto `gscg-build` V363; botón apagado por defecto y verde/parpadeante sólo cuando el release remoto cambia; actualización no bloqueante y `persist()` previo. | `test-v365-active-round-empty-recovery.mjs` e Intocables. |
+| `service-worker.js` | Caché `v405-lab-update-button`. | Recepción del shell actualizado en el mismo dominio LAB. |
+| `test-v365-active-round-empty-recovery.mjs` | Verifica botón deshabilitado, activación, animación, ausencia de `inert` y caché exacta. | Regresión permanente. |
+
+Frontera: no cambia MAIN, Producción, almacenamiento, registro, scores, voz, historial ni tarjetas. La migración inicial desde un deployment de origen distinto permanece separada y debe comprobarse antes de borrar el icono LAB antiguo.
+
+## Blindaje permanente de continuidad LAB · 7 de septiembre de 2026
+
+| Archivo | Función | Control |
+|---|---|---|
+| `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` | Fuente única de MAIN congelada, último LAB, V405, sesión/migración iPhone, pendientes y mensaje reutilizable. | Sólo se actualiza con evidencia y junto con ambos ROADMAPS. |
+| `test-lab-continuity-master.mjs` | Exige commits, deployments, enlaces, separación MAIN/LAB, evidencia física y texto de relevo. | Un ancla ausente o alterada produce FAIL. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json` | Incorpora el maestro a `requiredControls`. | Su ausencia bloquea Gate 0. |
+| `audit-project.mjs` | Ejecuta el candado dentro de la auditoría integral. | La publicación LAB no puede omitirlo. |
+| `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` | Registran el blindaje en la misma modificación. | Conservan atomicidad documental. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Inventaría el maestro y su prueba. | Mantiene localizables las fuentes de continuidad. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` y tres PDF `Inventario_Golf_Score_Card_GT_*_V311.pdf` | Resellan 402 fuentes después del alta de los dos archivos. | `inventory-gate` bloquea cualquier diferencia posterior. |
+
+Frontera: no se modifica MAIN, Producción, lógica funcional, datos, caché, voz, scores ni Historial.
+
+## V405-R2 LAB · limpieza de Registro y reparación móvil de Tarjeta Digital
+
+| Archivo | Cambio | Evidencia/control |
+|---|---|---|
+| `index-grupal.html` | `BORRAR TODO` limpia seis borradores; `gsc-final-card-open` oculta accesos globales; cabecera apilada y tabla con scroll interno en móvil. | `IMG_2949.png` es FAIL previo; no se borra archivo ni ronda activa. |
+| `test-v405-registration-clear-final-mobile.mjs` | Comprueba borrado limitado, seis filas, aislamiento modal y geometría móvil. | Banco dirigido obligatorio en `audit-project.mjs`. |
+| `service-worker.js`, `test-v365-active-round-empty-recovery.mjs` | Release/caché V405-R2. | El dominio LAB recibe el shell nuevo. |
+| `REGISTRO_REINCIDENCIAS_CALIDAD.md` | Registra RC-062. | PASS físico permanece abierto hasta 4/4 modalidades en iPhone. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Conservan alcance, continuidad e inventario. | MAIN intacta. |

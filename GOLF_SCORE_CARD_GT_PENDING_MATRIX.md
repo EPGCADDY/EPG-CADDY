@@ -483,3 +483,16 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 
 - ✅ La ronda del Historial y todos sus textos quedan no seleccionables desde el inicio de la pulsación prolongada; Safari no debe mostrar `Copiar / Buscar selección` antes ni después de abrir `ELIMINAR RONDA`.
 - ⏳ Pendiente: confirmar físicamente en iPhone sobre el Preview LAB V404.
+# V405 LAB · actualización permanente
+
+- ✅ Botón `ACTUALIZAR` apagado cuando no existe versión nueva.
+- ✅ Botón verde y parpadeante cuando el build publicado difiere del instalado.
+- ✅ Al actualizar, persiste la ronda antes de recargar el mismo dominio.
+- ⏳ Pendiente: Preview LAB y comprobación visible del estado apagado; la activación real requiere publicar el siguiente build.
+
+## V405-R2 LAB · limpieza total de Registro y Tarjeta Digital móvil
+
+- ✅ `BORRAR TODO` vacía conjuntamente nombre, HDCP y marcas de los seis espacios del Registro.
+- ✅ El borrado queda limitado al borrador de Registro; no elimina Historial, ronda previa ni ronda activa.
+- ✅ La Tarjeta Digital móvil oculta controles flotantes, apila sus acciones y contiene la tabla dentro de desplazamiento horizontal propio.
+- ⏳ Pendiente físico: abrir y capturar Normal, Stableford, Match Play y Four Ball en iPhone; una prueba automática no sustituye esas cuatro vistas.
