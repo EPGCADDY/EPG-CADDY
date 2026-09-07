@@ -1,5 +1,13 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V406-R19 · 7 de septiembre de 2026
+
+La captura física `IMG_3034.png` demostró que elegir `S.SENIOR 04` no abría al jugador: MI TABLERO mostraba `ENLACE NO DISPONIBLE, CADUCADO O REVOCADO`. La causa fue que el render individual resolvía únicamente `generalStreams`, vacío en la demostración, aunque el jugador visible provenía correctamente de `displayStreams()`. R19 usa la misma colección visible para seleccionar y resolver favoritos; la regresión reproduce exactamente `S.SENIOR 04`. R18 del control ACTUALIZAR queda integrado. Revisión física publicada pendiente; Producción intacta.
+
+## Continuidad V406-R18 · 7 de septiembre de 2026
+
+El control `ACTUALIZAR` es permanente y visible también dentro de la Tarjeta Digital Final. Permanece oscuro y deshabilitado cuando el release cargado coincide con el publicado; únicamente se vuelve verde y parpadeante cuando existe otro `gscg-release`. R18 cambia la caché para que instalaciones R17 detecten el release nuevo sin borrar sesión. La ausencia del control reportada por el propietario queda registrada como FAIL físico; LAB no se entrega hasta repetir el recorrido publicado. MAIN/Producción permanecen intactas en `4009f79f50987f8bf105189bce9c5e90b2857363`.
+
 ## Continuidad V406-R17 · 7 de septiembre de 2026
 
 MI TABLERO guarda y muestra los jugadores seguidos. `IMG_3033.png` evidenció el botón individual activo pero la General visible porque cada refresco de tres segundos restablecía los paneles. R17 conserva `activeMonitor`; escenario obligatorio: agregar cinco jugadores, esperar varios refrescos y confirmar que las cinco tarjetas continúan visibles. Revisión física publicada pendiente.

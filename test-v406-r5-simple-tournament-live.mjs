@@ -7,7 +7,7 @@ const control=fs.readFileSync("live-control.js","utf8");
 const hubJs=fs.readFileSync("live-hub.js","utf8");
 const css=fs.readFileSync("gsc-design-system.css","utf8");
 
-assert.match(html,/V406-R17-LIVE-MY-BOARD-20260907/);
+assert.match(html,/V406-R19-MY-BOARD-DEMO-FOLLOW-20260907/);
 assert.match(html,/id="tournamentLiveHome"[^>]*aria-label="Ver jugadores de un torneo en vivo"/);
 assert.match(control,/const home=\$\("tournamentLiveHome"\);if\(home\)home\.onclick=\(\)=>openHub\(\)/);
 assert.doesNotMatch(control,/if\(!token\)url\.searchParams\.set\("demo","1"\)/,"TORNEO LIVE abre primero el Centro de Torneos");

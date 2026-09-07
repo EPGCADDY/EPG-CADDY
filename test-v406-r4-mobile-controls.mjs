@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const live=fs.readFileSync("live-control.js","utf8");
 
-assert.match(html,/V406-R17-LIVE-MY-BOARD-20260907/);
+assert.match(html,/V406-R19-MY-BOARD-DEMO-FOLLOW-20260907/);
 assert.match(html,/<\/header>\s*<nav class="round-utility-bar" id="roundUtilityBar"/);
 assert.match(html,/\.round-utility-bar\{position:static/);
 assert.match(live,/getElementById\("roundUtilityBar"\);if\(toolbar\)toolbar\.prepend\(launch\)/);

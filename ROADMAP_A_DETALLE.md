@@ -1,5 +1,21 @@
 # ROADMAP A DETALLE
 
+## V406-R19 · 7 de septiembre de 2026
+
+- `live-hub.js`: `renderFavorites()` usa `displayStreams()` tanto para resolver favoritos como para calcular posiciones; corrige demostración sin alterar LIVE real.
+- `test-v353-live-hub.mjs`: reproduce selección y resolución exacta de `S.SENIOR 04`.
+- `index-grupal.html` y `service-worker.js`: release/caché R19 para entregar el arreglo al acceso instalado.
+- `test-v365-active-round-empty-recovery.mjs`: actualiza candados de release y caché.
+- Continuidad y reincidencias: registran `IMG_3034.png`, causa, escape, control y estado físico pendiente.
+
+## V406-R18 · 7 de septiembre de 2026
+
+- `index-grupal.html`: avanza `gscg-release` a `V406-R18-PERSISTENT-UPDATE-CONTROL-20260907` y mantiene `.mandatory-update` visible incluso con `gsc-final-card-open`.
+- `service-worker.js`: avanza `ACTIVE_CACHE_NAME` a `v406-r18-persistent-update-control` para renovar el shell instalado.
+- `test-v365-active-round-empty-recovery.mjs`: exige release/caché R18, presencia fija y prohíbe ocultar el control en la tarjeta final.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`: registra alcance, pendiente físico y ancla de Producción.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: añade RC-075 con causa, escape y control permanente.
+
 ## V406-R17 · 7 de septiembre de 2026
 
 `activeMonitor` conserva `general` o `individual`. `showMonitor()` actualiza ese estado y `renderTournamentShelf()` respeta la selección al ejecutar `refresh() → renderAll()` cada tres segundos. La regresión V353 añade cinco seguidos y prohíbe que el refresco vuelva a General mientras MI TABLERO permanece activo. RC-074 conserva `IMG_3033.png`. MAIN/Producción intacta.

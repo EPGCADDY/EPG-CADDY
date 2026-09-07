@@ -1,5 +1,13 @@
 # ROADMAP OVERALL
 
+## V406-R19 · jugador elegido aparece en MI TABLERO · 7 de septiembre de 2026
+
+`live-hub.js` resuelve MI TABLERO con la misma colección que muestra JUGADORES, incluida la demostración. `test-v353-live-hub.mjs` reproduce `S.SENIOR 04` y exige que abra su tarjeta en vez de `ENLACE NO DISPONIBLE`. Release y caché avanzan a R19; R18 ACTUALIZAR permanece integrado. `IMG_3034.png`, continuidad y RC-076 documentan el fallo físico. Producción intacta.
+
+## V406-R18 · ACTUALIZAR visible permanentemente · 7 de septiembre de 2026
+
+El botón `ACTUALIZAR` permanece visible en Registro, tarjetas, modalidades, apuestas, LIVE y Tarjeta Digital Final. Se muestra oscuro y deshabilitado cuando el release está vigente; sólo se habilita en verde y parpadea al detectar un release publicado distinto. `index-grupal.html`, `service-worker.js` y `test-v365-active-round-empty-recovery.mjs` fijan el contrato y la caché R18. Continuidad y reincidencias registran el FAIL físico reportado. Producción permanece intacta en `4009f79f50987f8bf105189bce9c5e90b2857363`.
+
 ## V406-R17 · MI TABLERO permanece visible · 7 de septiembre de 2026
 
 - `IMG_3033.png` mostró MI TABLERO activo en verde mientras la pantalla seguía enseñando JUGADORES EN VIVO.

@@ -38,6 +38,11 @@ assert.deepEqual(hub.unresolvedFollowTokens(externalState,generalMap),[token("B"
 assert.equal(hub.addFollowToState(externalState,externalState.follows[0]).follows.length,4,"agregar de nuevo no duplica favoritos");
 let fivePlayers=hub.normalizeHubState(null);for(let index=1;index<=5;index++)fivePlayers=hub.addFollowToState(fivePlayers,{key:`stream-${index}:player-${index}`,kind:"player",streamId:`stream-${index}`,playerId:`player-${index}`,label:`SEGUIDO ${index}`,groupLabel:`GRUPO ${index}`});
 assert.equal(fivePlayers.follows.length,5,"Mi Tablero conserva exactamente los cinco jugadores elegidos");
+const demoStreams=hub.demoTournamentStreams(),demoPlayer=hub.tournamentPlayers(demoStreams).find(item=>item.name==="S.SENIOR 04");
+const demoFollow=hub.addFollowToState(null,{key:demoPlayer.streamId+":"+demoPlayer.playerId,kind:"player",streamId:demoPlayer.streamId,playerId:demoPlayer.playerId,label:demoPlayer.name,groupLabel:demoPlayer.groupLabel});
+const resolvedDemo=hub.resolveFollows(demoFollow,demoStreams,new Map());
+assert.equal(resolvedDemo.length,1,"Mi Tablero recibe al jugador elegido en la demostración");
+assert.equal(resolvedDemo[0].players[0].name,"S.SENIOR 04","el jugador elegido se muestra operativo y no como enlace no disponible");
 
 assert.deepEqual(hub.parseHubHash(`#general=${token("C")}`),{kind:"general",token:token("C")});
 assert.deepEqual(hub.parseHubHash(`#stream=${token("D")}`),{kind:"stream",token:token("D")});
@@ -72,6 +77,7 @@ const index=read("index-grupal.html"),html=read("live-hub.html"),client=read("li
 assert.match(client,/activeMonitor="general"/);
 assert.match(client,/activeMonitor=individual\?"individual":"general"/,"el selector guarda el monitor activo");
 assert.match(client,/portal\|\|activeMonitor==="individual"/,"cada refresco conserva Mi Tablero visible");
+assert.match(client,/resolved=resolveFollows\(state,streams,externalStreams\)/,"Mi Tablero resuelve contra los jugadores visibles, incluida la demostración");
 assert.match(index,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
 assert.match(html,/TORNEO LIVE/);
 assert.match(html,/JUGADORES EN VIVO/);
