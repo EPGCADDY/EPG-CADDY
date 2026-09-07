@@ -2047,6 +2047,16 @@ RC-057-S5: `inicio=1` usa `openRegistrationPreservingActiveRound()`; sólo `nuev
 
 RC-057-S6: Comunicación Universal reconoce referencias amplias a la ubicación actual y solicita GPS; su VAD pasa de 2.2 s a 1.1 s, las consultas normales usan perfil bajo de 1,400 tokens y el micrófono se cierra en verde al terminar cada respuesta. Las consultas profundas conservan perfil medio. V312/V324–V327/V335/V356 e Intocables PASS; Producción intacta.
 
+## V402 LAB · Fish Audio es-419 sin ceceo y latencia acotada · 7 de septiembre de 2026
+
+- `api/voice-speech.js`: conserva `fish-audio/s2.1-pro-free`, `es-419`, velocidad `0.90` y ausencia de ID fijo; cambia sólo la dirección vocal a español latinoamericano natural para Guatemala, prohíbe ceceo/acento de España y reduce el timeout `45,000→22,500 ms`.
+- `index-grupal.html`: el respaldo local queda prohibido para respuestas en español; una falla de Fish ya no puede sustituirse por la voz castellana instalada en Safari.
+- `api/universal-ai.js`: timeout `55,000→27,500 ms`; en modo voz, `maxOutputTokens` se reduce exactamente a la mitad (`brief 350`, `standard 700`, `deep 1,600`) manteniendo `low/medium` según profundidad.
+- `test-v356-voice-only-cedar-quality.mjs` e `Intocables/intocables-gate.mjs`: exigen latinoamericano `es-419`, ausencia de ceceo/acento español, velocidad `0.90`, límites reducidos y bloqueo del respaldo castellano.
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`, `Intocables/MICROFONO_APROBADO.lock.json` y `Intocables/CONFIRMACION_ESCRITA_V378.md`: registran la autorización expresa del cambio limitado; aprobación auditiva del candidato queda pendiente.
+- `service-worker.js`: permanece byte compatible con V401; su estrategia `networkFirst` obtiene el HTML vigente sin romper los candados V357/V365.
+- Producción permanece intacta; no cambian Registro, scores, sensibilidad, umbrales ni cálculo.
+
 RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/Buscar en iPhone mediante `user-select:none` y `-webkit-touch-callout:none`; confirmación y borrado permanecen iguales. `service-worker.js` usa `v401-rc058-fresh-shell` para que el dispositivo reciba también el flujo vigente de `NUEVA RONDA`. V364/V365/V368/V397/V398 e Intocables PASS. Producción intacta.
 
 * RC-059 · `openFreshStablefordSetup()` archiva la ronda anterior, elimina todas las claves activas y limpia jugadores, scores, borradores y captura antes de mostrar Registro Stableford. Verificación física requerida en LAB; Producción intacta.

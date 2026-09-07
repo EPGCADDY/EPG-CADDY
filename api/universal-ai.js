@@ -9,7 +9,7 @@ const MAX_QUERY_LENGTH=4000;
 const MAX_HISTORY_TURNS=80;
 const MAX_HISTORY_TEXT=2400;
 const MAX_SOURCES=5;
-const UNIVERSAL_TIMEOUT_MS=55_000;
+const UNIVERSAL_TIMEOUT_MS=27_500;
 const OPENAI_RETRYABLE_STATUS=new Set([408,409,425,429,500,502,503,504]);
 const OPENAI_ATTEMPTS=[
   {model:"gpt-5.6",delayMs:0},
@@ -415,7 +415,10 @@ export default async function handler(req,res){
       return res.status(200).json({ok:true,answer:formatStructuredTrafficAnswer(trafficResult),sources:[]});
     }
     const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
-    const responseProfile=universalResponseProfile(query);
+    const baseResponseProfile=universalResponseProfile(query);
+    const responseProfile=responseMode==="voice"
+      ?{...baseResponseProfile,maxOutputTokens:Math.max(350,Math.ceil(baseResponseProfile.maxOutputTokens/2))}
+      :baseResponseProfile;
     const promptContext=appContext?{course:appContext.course,mode:appContext.mode,weather:appContext.weather}:null;
     const input=[...history,{role:"user",content:query}];
     const deadlineMs=Date.now()+UNIVERSAL_TIMEOUT_MS;

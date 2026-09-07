@@ -33,9 +33,12 @@ const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
 assert.equal(gateway.language,"es-419");
 assert.equal(gateway.speed,.9);
 assert.equal(Object.hasOwn(gateway,"voice"),false);
-assert.match(gateway.instructions,/español mexicano neutro/);
+assert.match(gateway.instructions,/español latinoamericano es-419/);
 assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
 assert.match(speech,/fish-audio\/s2\.1-pro-free/);
+assert.match(speech,/sin ceceo español/);
+assert.match(speech,/Nunca uses acento de España/);
+assert.match(html,/if\(aiUniversalSpeechLanguage\(clean\)\.startsWith\("es"\)\)return false/);
 assert.doesNotMatch(speech,/openai\/tts-1-hd|GATEWAY_VOICE="echo"/);
 
 function responseRecorder(){return{statusCode:0,headers:{},body:null,setHeader(name,value){this.headers[name]=value},status(code){this.statusCode=code;return this},json(value){this.body=value;return this},send(value){this.body=value;return this}}}
@@ -77,6 +80,9 @@ const traffic=formatStructuredTrafficAnswer({ok:true,origin:"El Pulté Golf",des
 for(const datum of ["ETA","Demora por tráfico","Distancia","Hora de cálculo","Google Maps Routes","TRAFFIC_AWARE_OPTIMAL"])assert.match(traffic,new RegExp(datum));
 assert.match(universal,/responseMode==="voice"/);
 assert.match(universal,/tres a seis oraciones concisas pero sustantivas/);
+assert.match(universal,/const UNIVERSAL_TIMEOUT_MS=27_500/);
+assert.match(universal,/Math\.ceil\(baseResponseProfile\.maxOutputTokens\/2\)/);
+assert.match(speech,/controller\.abort\(\),22_500/);
 assert.deepEqual(universalResponseProfile("Analiza a fondo causas, riesgos, alternativas y dame una recomendación accionable."),{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"});
 
 console.log("PASS V356/V378 · voz hablada Fish Audio es-419 0.90 sin ID fijo; tráfico/clima estructurados");

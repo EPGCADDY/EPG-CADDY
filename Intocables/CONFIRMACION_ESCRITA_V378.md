@@ -17,4 +17,4 @@ Queda terminantemente prohibido modificar, reemplazar, reinterpretar o “mejora
 
 El tiempo de **22 segundos de Comunicación Universal está rechazado** y queda expresamente fuera de esta aprobación y de este blindaje.
 
-La fuente vigente debe coincidir byte por byte con el archivo servidor de voz físicamente aprobado, SHA-256 `dd4597f6c60b0800adc990c7d99256ea5dfd13ac219b70292587718704ca5fee`. Un solo cambio bloquea auditoría, Preview y Producción.
+La fuente vigente debe coincidir byte por byte con el archivo servidor de voz autorizado, SHA-256 `96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01`. El 7 de septiembre de 2026 Jaime Kirste ordenó expresamente corregir únicamente la pronunciación a español latinoamericano `es-419` sin ceceo, conservar velocidad exacta `0.90` y reducir a la mitad los límites de espera de Comunicación Universal. La aprobación auditiva del candidato corregido sigue pendiente; Registro, Scores, sensibilidad y umbrales permanecen intocables. Un solo cambio no autorizado bloquea auditoría, Preview y Producción.

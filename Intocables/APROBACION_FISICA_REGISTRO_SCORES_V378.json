@@ -16,7 +16,7 @@
   },
   "source": "index-grupal.html",
   "approvedFiles": [
-    {"id":"voz_y_velocidad_v378","path":"api/voice-speech.js","sha256":"dd4597f6c60b0800adc990c7d99256ea5dfd13ac219b70292587718704ca5fee"}
+    {"id":"voz_y_velocidad_v378","path":"api/voice-speech.js","sha256":"96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01","authorizedAdjustment":"2026-09-07: español latinoamericano es-419 sin ceceo, velocidad 0.90 conservada y timeout 45s→22.5s; aprobación auditiva del candidato pendiente"}
   ],
   "scopes": [
     {"id":"registro_parser","start":"function parseSetupTranscript(transcript){","end":"\nfunction parseInlineManualRosterPhrase","sha256":"ee542714500cf3ccb601a68c7a5dbe5ec32f65add0ca153c648a42e2226103c8"},

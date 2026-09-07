@@ -10,11 +10,11 @@
   ],
   "policy": "Los bancos y el transporte de voz aprobados no se modifican. Cualquier hash o prueba diferente bloquea auditoría, build y despliegue hasta autorización expresa del propietario.",
   "sha256": {
-    "api/voice-speech.js": "dd4597f6c60b0800adc990c7d99256ea5dfd13ac219b70292587718704ca5fee",
+    "api/voice-speech.js": "96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01",
     "test-v336-microphone-transport.mjs": "cfc36abd5f743726a435ff13ef9eddefc567b9e2a6a10488c096b1bff5852a37",
     "test-v354-voice-fallback.mjs": "41d3a14dacaf183e321ce04b61e86511b5d247582785ba966c90b5732282fce2",
     "test-v355-ios-audio-dictation.mjs": "aa528474beaa42acd913dfa56b5c59f8cf0616187a5c8430d34ac338764a54a5",
-    "test-v356-voice-only-cedar-quality.mjs": "313bf0815b6c9f53d294429f1081a013c20a094926cdf564734705bc767d4ced",
+    "test-v356-voice-only-cedar-quality.mjs": "d2d03663121cb0d84c53db243d17c055315581a189a1a69de0302eb29e394643",
     "test-v357-ios-voice-transport-recovery.mjs": "42679cae1a271cb8be38732ebbe5f42dc7ebeb5c97e5a15b9b92fedecc1b84be",
     "test-v358-ios-score-universal-physical-recovery.mjs": "6a787ec011ff5459518f1ab9f3d32d79dbd10de4365a3e2f3cffbb14d45e7618",
     "test-v359-ios-score-parser-recovery.mjs": "a9ef038dd8ba49e31278c1e6e096c9f8ddc9eccdcacd1afe90c51af225fc9515",
