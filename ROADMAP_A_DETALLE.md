@@ -1,8 +1,8 @@
 # ROADMAP A DETALLE
 
-## V406-R12 · 7 de septiembre de 2026
+## V406-R13 · 7 de septiembre de 2026
 
-`gscg-release` avanza a `V406-R12-PERSISTENT-CLEAR-UPDATE-20260907` y `ACTIVE_CACHE_NAME` a `v406-r12-persistent-clear-update`. Así `syncPublishedAppVersion()` obtiene por `no-store` un identificador distinto al R9/R11 que quedó cargado en iPhone, ejecuta `showMandatoryUpdate()` y enciende el parpadeo. Tras cargar R12, la misma comprobación muestra `ACTUALIZADO`. V365 y las pruebas V406 R2/R4/R5 exigen el release/caché vigentes; V405/V368 conservan borrado e Inicio. RC-070 documenta que R11 no cambió el release y que la sesión limpia no sustituyó una migración visual con ronda persistida. Producción no cambia.
+`gscg-release` avanza a `V406-R13-ALWAYS-UPDATE-PULSE-20260907` y `ACTIVE_CACHE_NAME` a `v406-r13-always-update-pulse`. `pendingPublishedBuild` inicia con el release cargado; el botón `ACTUALIZAR` nace habilitado dentro de `.mandatory-update.available`; cada consulta `no-store` conserva ese estado y cada toque recarga el release publicado preservando la sesión. V365 y las pruebas V406 R2/R4/R5 exigen release, caché, animación y habilitación permanentes; V405/V368 conservan borrado e Inicio. RC-070 documenta el escape R11 y la corrección R13. Producción no cambia.
 
 ## V406-R11 · 7 de septiembre de 2026
 

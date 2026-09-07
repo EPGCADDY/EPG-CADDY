@@ -1,11 +1,11 @@
 # ROADMAP OVERALL
 
-## V406-R12 · actualización visible y verificable para el borrado persistente · 7 de septiembre de 2026
+## V406-R13 · actualización siempre visible y verificable · 7 de septiembre de 2026
 
-- `index-grupal.html` cambia el release público de R9 a `V406-R12-PERSISTENT-CLEAR-UPDATE-20260907`, de modo que las instalaciones antiguas detecten la versión nueva y activen el parpadeo de `ACTUALIZAR`.
-- Cuando el HTML publicado y el cargado coinciden, el botón queda deshabilitado con la leyenda inequívoca `ACTUALIZADO`.
-- `service-worker.js` usa caché R12; V365 y las pruebas V406 R2/R4/R5 bloquean nuevas publicaciones funcionales o visuales sin cambio de release.
-- RC-070 registra el escape de R11: las pruebas validaron código nuevo, pero no una actualización desde el release anterior en navegador con estado persistido. MAIN/Producción permanecen intactas.
+- `index-grupal.html` cambia el release público a `V406-R13-ALWAYS-UPDATE-PULSE-20260907` y mantiene `ACTUALIZAR` verde, habilitado y parpadeante aun cuando ya se cargó la última versión.
+- Cada toque vuelve a consultar y cargar el release publicado preservando la sesión, eliminando la duda entre un botón gris y una versión vencida.
+- `service-worker.js` usa caché R13; V365 y las pruebas V406 R2/R4/R5 bloquean nuevas publicaciones funcionales o visuales sin cambio de release.
+- RC-070 registra el escape de R11 y la decisión R13 de mantener el control siempre activo. MAIN/Producción permanecen intactas.
 
 ## V406-R11 · BORRAR TODO persistente y reapertura en Inicio · 7 de septiembre de 2026
 
