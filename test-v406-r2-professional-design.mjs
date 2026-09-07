@@ -6,7 +6,7 @@ const hub=fs.readFileSync("live-hub.html","utf8");
 const css=fs.readFileSync("gsc-design-system.css","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/V406-R10-CENTER-MULTI-TOURNAMENT-20260907/);
+assert.match(html,/V406-R9-RESTORE-LIVE-GENERAL-20260907/);
 assert.doesNotMatch(html,/href="\/gsc-design-system\.css"/,"Registro no debe depender de una hoja de sobreescritura externa");
 assert.match(hub,/href="\/gsc-design-system\.css"/);
 assert.match(worker,/v406-r10-center-multi-tournament/);

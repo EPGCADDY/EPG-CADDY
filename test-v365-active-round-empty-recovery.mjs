@@ -13,7 +13,7 @@ assert.match(html,/\.mandatory-update\.available \.mandatory-update-card button\
 assert.match(html,/button\.disabled=false;button\.setAttribute\("aria-disabled","false"\)/);
 assert.doesNotMatch(html,/document\.querySelector\("main\.app"\)\?\.setAttribute\("inert"/);
 assert.match(html,/meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
-assert.match(html,/meta name="gscg-release" content="V406-R10-CENTER-MULTI-TOURNAMENT-20260907"/);
+assert.match(html,/meta name="gscg-release" content="V406-R9-RESTORE-LIVE-GENERAL-20260907"/);
 assert.match(html,/meta\[name="gscg-release"\]/);
 assert.match(html,/if\(!isRecoverableStoredRound\(round\)\)restorePersistedRound\(\)/);
 assert.match(html,/if\(!isRecoverableStoredRound\(round\)&&restorePersistedRound\(\)\)render\(\)/);
