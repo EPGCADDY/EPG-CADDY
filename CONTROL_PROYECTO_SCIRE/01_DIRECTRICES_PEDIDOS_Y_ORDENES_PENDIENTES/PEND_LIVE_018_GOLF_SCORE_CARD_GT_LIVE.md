@@ -1,5 +1,12 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
+## Demostración visible V406-R6
+
+- TORNEO LIVE abierto sin enlace carga 67 jugadores temporales en las categorías 7/6/24/11/7/7/5.
+- Clasificación, búsqueda y detalle usan la misma colección en memoria y de sólo lectura.
+- Ningún jugador demostrativo se guarda, publica en la API, incorpora al historial ni altera la ronda activa.
+- El modo real sigue usando exclusivamente el enlace GENERAL y los datos LIVE autorizados.
+
 ## Simplificación V406-R5
 
 - El invitado entra desde `TORNEO LIVE`, pega el enlace sólo cuando no llegó desde uno compartido y busca por nombre o categoría.

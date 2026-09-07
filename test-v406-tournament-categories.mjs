@@ -47,4 +47,7 @@ const requestedPlayers=Object.entries(requestedDistribution).flatMap(([category,
 const requestedStreams=new Map(Array.from({length:Math.ceil(requestedPlayers.length/4)},(_,group)=>[`requested-${group+1}`,{id:`requested-${group+1}`,groupLabel:`FOURSOME ${group+1}`,snapshot:{players:requestedPlayers.slice(group*4,group*4+4)}}]));
 assert.equal(hub.tournamentPlayers(requestedStreams).length,67,"la verificación visual solicitada reúne exactamente 67 jugadores");
 for(const [category,count] of Object.entries(requestedDistribution))assert.equal(hub.categoryScoreboardRows(requestedStreams,category).length,count,`${hub.CATEGORY_LABELS[category]} conserva ${count} jugadores`);
+const demoStreams=hub.demoTournamentStreams();
+assert.equal(hub.tournamentPlayers(demoStreams).length,67,"la pantalla demostrativa carga los 67 jugadores sin enlace externo");
+for(const [category,count] of Object.entries(requestedDistribution))assert.equal(hub.categoryScoreboardRows(demoStreams,category).length,count,`demo ${hub.CATEGORY_LABELS[category]} muestra ${count}`);
 console.log("PASS V406 · categoría individual, índice oculto, filtro TORNEO LIVE y Mi Tablero");

@@ -1,5 +1,19 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## Delta V406-R6 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| index-grupal.html | Release visible V406-R6 para activar ACTUALIZAR. |
+| live-control.js | Abre TORNEO LIVE sin token en demostración de sólo lectura. |
+| live-hub.js | Construye y muestra 67 participantes temporales por categoría. |
+| service-worker.js | Caché V406-R6. |
+| test-v406-r5-simple-tournament-live.mjs | Exige el acceso demostrativo directo. |
+| test-v406-tournament-categories.mjs | Exige total 67 y distribución 7/6/24/11/7/7/5. |
+| test-v365-active-round-empty-recovery.mjs | Fija release/caché V406-R6 y conserva recuperación de ronda. |
+| test-v406-r2-professional-design.mjs / test-v406-r4-mobile-controls.mjs | Conservan diseño y geometría bajo el release V406-R6. |
+| Pendiente LIVE, continuidad, reincidencias, ROADMAPS e inventario | Trazabilidad V406-R6. |
+
 ## Delta V406-R5 · 7 de septiembre de 2026
 
 | Archivo | Función |

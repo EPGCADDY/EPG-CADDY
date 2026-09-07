@@ -1,5 +1,13 @@
 # ROADMAP OVERALL
 
+## V406-R6 · categorías LIVE visibles para prueba · 7 de septiembre de 2026
+
+- `live-control.js` abre TORNEO LIVE sin enlace en modo demostración temporal y de sólo lectura.
+- `live-hub.js` presenta 67 jugadores temporales: 7 Campeonato, 6 A, 24 B, 11 C, 7 Femenina, 7 Senior y 5 S.Senior; no escribe scores, historial ni datos reales.
+- `service-worker.js` renueva la caché a V406-R6 para activar `ACTUALIZAR` en el acceso LAB instalado.
+- `index-grupal.html` publica el release V406-R6; las pruebas V406-R2/R4/R5 y V365 fijan release/caché, y `test-v406-tournament-categories.mjs` exige entrada directa y distribución exacta.
+- Pendiente LIVE, continuidad, mapa maestro, reincidencias e inventario registran el cambio. MAIN permanece intacto.
+
 ## V406-R5 · Torneo Live simple · 7 de septiembre de 2026
 
 Control maestro preservado: punto de corte `línea 185`; activación `23 de agosto de 2026, 17:05:00, hora de Guatemala`.

@@ -1,5 +1,11 @@
 # ROADMAP A DETALLE
 
+## V406-R6 · 7 de septiembre de 2026
+
+`live-control.js` agrega `demo=1` únicamente cuando TORNEO LIVE se abre sin token. `live-hub.js` usa ese indicador para construir en memoria 67 participantes temporales, repartidos 7 Campeonato, 6 A, 24 B, 11 C, 7 Femenina, 7 Senior y 5 S.Senior, agrupados de cuatro en cuatro. Clasificación, búsqueda y detalle consumen la misma colección de sólo lectura; ningún participante se persiste ni llega a la API LIVE.
+
+`index-grupal.html` publica `V406-R6-TOURNAMENT-DEMO-PLAYERS-20260907` y `service-worker.js` identifica la caché `v406-r6-tournament-demo-players`. Las pruebas V406-R2/R4/R5 y V365 bloquean release o caché anteriores; `test-v406-tournament-categories.mjs` comprueba total y cantidades exactas. Se actualizan pendiente LIVE, continuidad, mapa maestro, reincidencias, ambos ROADMAPS y el sello de inventario. MAIN no cambia.
+
 ## V406-R5 · 7 de septiembre de 2026
 
 Control maestro preservado: punto de corte `línea 185`; activación `23 de agosto de 2026, 17:05:00, hora de Guatemala`.
