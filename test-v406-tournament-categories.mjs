@@ -42,4 +42,9 @@ const mixedGroups=new Map([
 assert.deepEqual(hub.categoryScoreboardRows(mixedGroups,"b").map(player=>player.name),["JUGADOR 3","JUGADOR 4","JUGADOR 2","JUGADOR 1"],"la categoría mezcla foursomes y ordena líder a peor resultado");
 const hundredStreams=new Map(Array.from({length:25},(_,group)=>[`t${group+1}`,{id:`t${group+1}`,groupLabel:`FOURSOME ${group+1}`,snapshot:{players:Array.from({length:4},(_,slot)=>makePlayer(group*4+slot+1,slot%2?"a":"b"))}}]));
 assert.equal(hub.tournamentPlayers(hundredStreams).length,100,"la vista inicial soporta 100 jugadores en 25 foursomes");
+const requestedDistribution={championship:7,a:6,b:24,c:11,female:7,senior:7,super_senior:5};
+const requestedPlayers=Object.entries(requestedDistribution).flatMap(([category,count])=>Array.from({length:count},(_,index)=>makePlayer(`${category}-${index+1}`,category)));
+const requestedStreams=new Map(Array.from({length:Math.ceil(requestedPlayers.length/4)},(_,group)=>[`requested-${group+1}`,{id:`requested-${group+1}`,groupLabel:`FOURSOME ${group+1}`,snapshot:{players:requestedPlayers.slice(group*4,group*4+4)}}]));
+assert.equal(hub.tournamentPlayers(requestedStreams).length,67,"la verificación visual solicitada reúne exactamente 67 jugadores");
+for(const [category,count] of Object.entries(requestedDistribution))assert.equal(hub.categoryScoreboardRows(requestedStreams,category).length,count,`${hub.CATEGORY_LABELS[category]} conserva ${count} jugadores`);
 console.log("PASS V406 · categoría individual, índice oculto, filtro TORNEO LIVE y Mi Tablero");

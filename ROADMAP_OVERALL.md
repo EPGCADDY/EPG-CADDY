@@ -1,5 +1,7 @@
 # ROADMAP OVERALL
 
+- V406-R4 fija como regresión permanente la verificación solicitada de 67 participantes: 7 Campeonato, 6 A, 24 B, 11 C, 7 Femenina, 7 Senior y 5 S.Senior, agrupados en foursomes y visibles por categoría sin cantidades artificialmente fijas.
+
 ## V406-R4 · Controles móviles sin traslape · 7 de septiembre de 2026
 
 - LIVE, REGLAS, AI ∞ y Support pasan a una barra estructural debajo del encabezado.

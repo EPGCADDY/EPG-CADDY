@@ -1,5 +1,7 @@
 # ROADMAP A DETALLE
 
+- V406-R4 amplía `test-v406-tournament-categories.mjs` con 67 jugadores de prueba y la distribución exacta solicitada (7 Campeonato, 6 A, 24 B, 11 C, 7 Femenina, 7 Senior y 5 S.Senior); valida el total y cada filtro de categoría sin persistir datos de prueba.
+
 ## V406-R4 · 7 de septiembre de 2026
 
 index-grupal.html crea roundUtilityBar, rotula CATEGORÍA/MARCAS y crea roundSecondaryActions. live-control.js inserta LIVE en esa barra. service-worker.js activa v406-r4-mobile-controls. test-v406-r4-mobile-controls.mjs bloquea regresiones. El banco temporal suma 67 jugadores: 7 Campeonato, 6 A, 24 B, 11 C, 7 Femenina, 7 Senior y 5 S. Senior.
