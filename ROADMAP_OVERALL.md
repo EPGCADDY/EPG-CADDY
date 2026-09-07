@@ -1,5 +1,13 @@
 # ROADMAP OVERALL
 
+## V406-R7 · categorías y posiciones LIVE por hoyo · 7 de septiembre de 2026
+
+- GENERAL, cada categoría y Mi Tablero recalculan y reordenan cada tres segundos por resultado acumulado; en empate pesa más quien ha jugado más hoyos.
+- Cada jugador muestra HOYO ACTUAL o FINAL. Los hoyos se normalizan por número antes de sumar para impedir doble operación.
+- La columna visible usa categoría, no color de marcas; las marcas iniciales se asignan por categoría. “TODAS LAS CATEGORÍAS” cambia a “GENERAL”.
+- El listado para agregar a Mi Tablero queda visible y ordenado alfabéticamente por nombre; muestra la categoría coloreada y Campeonato como C en cuadro blanco.
+- MAIN permanece intacto.
+
 ## V406-R6 · categorías LIVE visibles para prueba · 7 de septiembre de 2026
 
 - `live-control.js` abre TORNEO LIVE sin enlace en modo demostración temporal y de sólo lectura.

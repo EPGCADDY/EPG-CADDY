@@ -30,16 +30,33 @@ assert.equal(hub.categoryScoreboardRows(new Map([...categoryStreams].slice(0,5).
 assert.equal(hub.modeLabel("stableford"),"STABLEFORD");
 assert.equal(hub.liveDate("2026-09-07T12:00:00Z"),"07/09/2026");
 assert.match(hubHtml,/id="hubCategoryCard"/);
-assert.match(fs.readFileSync("live-hub.js","utf8"),/POS<\/th><th>NOMBRE<\/th><th>HDCP<\/th><th>MARCAS<\/th><th>GROSS<\/th><th>NETO<\/th><th>\+\/−/);
+assert.match(fs.readFileSync("live-hub.js","utf8"),/POS<\/th><th>NOMBRE<\/th><th>HDCP<\/th><th>CATEGORÍA<\/th><th>HOYO<\/th><th>GROSS<\/th><th>NETO<\/th><th>\+\/−/);
+assert.match(fs.readFileSync("live-hub.js","utf8"),/category==="all"\?"GENERAL"/);
+assert.deepEqual(hub.CATEGORY_DEFAULT_TEES,{championship:"NEGRAS",a:"AZULES",b:"BLANCAS",c:"BLANCAS",d:"BLANCAS",female:"ROJAS",senior:"BLANCAS",super_senior:"AMARILLAS"});
+assert.equal(hub.categoryShortLabel("championship"),"C","Campeonato se identifica con una sola C");
+assert.match(html,/CATEGORY_DEFAULT_TEES=\{championship:"Negro",a:"Azul",b:"Blanco",c:"Blanco",d:"Blanco",female:"Rojo",senior:"Blanco",super_senior:"Amarillo"\}/);
+assert.match(fs.readFileSync("gsc-design-system.css","utf8"),/\.category-championship\{min-width:28px;width:28px;[^}]*border-radius:4px\}/,"la C de Campeonato usa cuadro blanco");
+assert.match(fs.readFileSync("live-hub.js","utf8"),/sort\(\(left,right\)=>fold\(left\.name\)\.localeCompare\(fold\(right\.name\),"es"\)\)\.slice\(0,query\?20:100\)/,"Mi Tablero lista hasta 100 jugadores por primer nombre");
 assert.equal(categoryB[0].holeValues.length,18,"cada jugador conserva los 18 hoyos");
 assert.deepEqual(categoryB[0].inTotals,{gross:45,net:36,result:0,holes:9});
 assert.deepEqual(categoryB[0].outTotals,{gross:45,net:36,result:0,holes:9});
 assert.deepEqual(categoryB[0].totalTotals,{gross:90,net:72,result:0,holes:18});
+const scoredPlayer=(number,result)=>({...makePlayer(number),holes:Array.from({length:18},(_,hole)=>({hole:hole+1,par:4,gross:4,net:4+(hole===0?result:0),relativeToPar:hole===0?result:0,explicitX:false}))});
 const mixedGroups=new Map([
-  ["g1",{id:"g1",groupLabel:"FOURSOME 1",snapshot:{players:[{...makePlayer(1),totals:{holes:18,gross:80,net:74,relativeToPar:2}},{...makePlayer(2),totals:{holes:18,gross:78,net:72,relativeToPar:0}}]}}],
-  ["g2",{id:"g2",groupLabel:"FOURSOME 2",snapshot:{players:[{...makePlayer(3),totals:{holes:18,gross:70,net:68,relativeToPar:-4}},{...makePlayer(4),totals:{holes:18,gross:76,net:71,relativeToPar:-1}}]}}]
+  ["g1",{id:"g1",groupLabel:"FOURSOME 1",snapshot:{players:[scoredPlayer(1,2),scoredPlayer(2,0)]}}],
+  ["g2",{id:"g2",groupLabel:"FOURSOME 2",snapshot:{players:[scoredPlayer(3,-4),scoredPlayer(4,-1)]}}]
 ]);
 assert.deepEqual(hub.categoryScoreboardRows(mixedGroups,"b").map(player=>player.name),["JUGADOR 3","JUGADOR 4","JUGADOR 2","JUGADOR 1"],"la categoría mezcla foursomes y ordena líder a peor resultado");
+const tiedProgress=new Map([["tie",{id:"tie",groupLabel:"GRUPO EMPATE",snapshot:{players:[
+  {...makePlayer("six"),name:"HOYO 6",holes:Array.from({length:6},(_,hole)=>({hole:hole+1,par:4,gross:4,net:hole<3?3:4,relativeToPar:hole<3?-1:0}))},
+  {...makePlayer("nine"),name:"HOYO 9",holes:Array.from({length:9},(_,hole)=>({hole:hole+1,par:4,gross:4,net:hole<3?3:4,relativeToPar:hole<3?-1:0}))}
+]}}]]);
+const tiedRanks=hub.buildLeaderboard(tiedProgress);
+assert.deepEqual(tiedRanks.map(player=>player.name),["HOYO 9","HOYO 6"],"a igual -3 pesa más quien lleva más hoyos");
+assert.deepEqual(tiedRanks.map(player=>player.rank),[1,2],"el avance por hoyos define posiciones distintas");
+const duplicateHole={id:"duplicate",name:"SIN DOBLE CONTEO",tournamentCategory:"a",holes:[{hole:1,par:4,gross:5,net:4,relativeToPar:0},{hole:1,par:4,gross:9,net:8,relativeToPar:4},{hole:2,par:4,gross:4,net:3,relativeToPar:-1}]};
+assert.deepEqual(hub.livePlayerTotals(duplicateHole),{holes:2,currentHole:2,gross:13,net:11,relativeToPar:3,finished:false},"un hoyo repetido se opera exactamente una vez");
+assert.equal(hub.POLL_MS,3000,"general, categoría e individual actualizan automáticamente cada tres segundos");
 const hundredStreams=new Map(Array.from({length:25},(_,group)=>[`t${group+1}`,{id:`t${group+1}`,groupLabel:`FOURSOME ${group+1}`,snapshot:{players:Array.from({length:4},(_,slot)=>makePlayer(group*4+slot+1,slot%2?"a":"b"))}}]));
 assert.equal(hub.tournamentPlayers(hundredStreams).length,100,"la vista inicial soporta 100 jugadores en 25 foursomes");
 const requestedDistribution={championship:7,a:6,b:24,c:11,female:7,senior:7,super_senior:5};

@@ -1,5 +1,15 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## Delta V406-R7 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| index-grupal.html | Release R7 y marcas predeterminadas por categoría. |
+| live-hub.js | Posición por score/hoyos, HOYO ACTUAL/FINAL, deduplicación, GENERAL y lista alfabética. |
+| gsc-design-system.css | Colores de categoría y C de Campeonato en cuadro blanco. |
+| service-worker.js | Caché V406-R7. |
+| test-v406-tournament-categories.mjs | Candados de desempate, hoyo único, frecuencia, categorías y marcas. |
+
 ## Delta V406-R6 · 7 de septiembre de 2026
 
 | Archivo | Función |

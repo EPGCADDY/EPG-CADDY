@@ -1,5 +1,11 @@
 # ROADMAP A DETALLE
 
+## V406-R7 · 7 de septiembre de 2026
+
+`live-hub.js` deriva hoyos, Gross, Neto y +/− desde una colección única por número de hoyo, publica HOYO ACTUAL/FINAL y ordena por resultado, luego mayor cantidad de hoyos. Esa misma regla alimenta GENERAL, categoría e Individual y se vuelve a ejecutar en cada sondeo de tres segundos. La lista para Mi Tablero se muestra completa, ordenada por primer nombre y con categoría coloreada; Campeonato usa C sobre fondo blanco.
+
+`index-grupal.html` asigna al seleccionar categoría las marcas iniciales Campeonato/Negro, A/Azul, B-C-D/Blanco, Femenina/Rojo, Senior/Blanco y S.Senior/Amarillo, conservando la posibilidad de modificación manual posterior. `test-v406-tournament-categories.mjs` fija desempate −3 hoyo 9 sobre −3 hoyo 6, deduplicación de hoyos, colores, GENERAL y frecuencia. Release `V406-R7-LIVE-CATEGORIES-BY-HOLE-20260907`; caché `v406-r7-live-categories-by-hole`. MAIN no cambia.
+
 ## V406-R6 · 7 de septiembre de 2026
 
 `live-control.js` agrega `demo=1` únicamente cuando TORNEO LIVE se abre sin token. `live-hub.js` usa ese indicador para construir en memoria 67 participantes temporales, repartidos 7 Campeonato, 6 A, 24 B, 11 C, 7 Femenina, 7 Senior y 5 S.Senior, agrupados de cuatro en cuatro. Clasificación, búsqueda y detalle consumen la misma colección de sólo lectura; ningún participante se persiste ni llega a la API LIVE.

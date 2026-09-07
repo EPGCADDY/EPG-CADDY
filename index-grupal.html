@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V406-R6-TOURNAMENT-DEMO-PLAYERS-20260907">
+  <meta name="gscg-release" content="V406-R7-LIVE-CATEGORIES-BY-HOLE-20260907">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1083,8 +1083,10 @@ function enforceCanonicalDraftNames(){
 }
 const PLAYER_SLOT_SEQUENCE=[1,3,5,2,4,6];
 const TOURNAMENT_CATEGORIES={championship:"CAMPEONATO",a:"A",b:"B",c:"C",d:"D",female:"FEMENINA",senior:"SENIOR",super_senior:"S.SENIOR"};
+const CATEGORY_DEFAULT_TEES={championship:"Negro",a:"Azul",b:"Blanco",c:"Blanco",d:"Blanco",female:"Rojo",senior:"Blanco",super_senior:"Amarillo"};
 function normalizeTournamentCategory(value){const raw=String(value||"").trim().toLowerCase().replace(/[.\s-]+/g,"_");return TOURNAMENT_CATEGORIES[raw]?raw:""}
 function tournamentCategoryLabel(value){const key=normalizeTournamentCategory(value);return key?TOURNAMENT_CATEGORIES[key]:"SIN CATEGORÍA"}
+function defaultTeeForTournamentCategory(value){const preferred=CATEGORY_DEFAULT_TEES[normalizeTournamentCategory(value)]||"Blanco";return TEES[preferred]?preferred:(TEES.Blanco?"Blanco":Object.keys(TEES)[0]||"")}
 function normalizePlayer(p,i){const slot=Number(p.slot);return{id:p.id||`p${i+1}`,registrationCode:normalizePlayerCode(p.registrationCode),name:canonicalPlayerName(p.name||`Jugador ${i+1}`),tournamentCategory:normalizeTournamentCategory(p.tournamentCategory),handicap:Math.max(0,Math.min(54,Math.trunc(Number(p.handicap)||0))),tee:TEES[p.tee]?p.tee:"Blanco",matrix:p.matrix==="Damas"?"Damas":"Caballeros",whatsapp:normalizeWhatsApp(p.whatsapp),holes:p.holes&&typeof p.holes==="object"?p.holes:{},lastHole:p.lastHole||null,activeFrom:Math.max(1,Math.min(18,Math.trunc(Number(p.activeFrom)||1))),slot:Number.isInteger(slot)&&slot>=1&&slot<=6?slot:null,provisionalHandicapProvided:p.provisionalHandicapProvided===true,provisionalTeeProvided:p.provisionalTeeProvided===true}}
 function readPlayerDirectory(){if(demoControlManual)return[];try{const registry=window.GSCPlayerRegistry,modern=JSON.parse(localStorage.getItem(PLAYER_REGISTRY_KEY)||"null"),legacy=JSON.parse(localStorage.getItem(PLAYER_DIRECTORY_KEY)||"[]");if(registry){const profiles=registry.migrateDirectory(Array.isArray(modern)?modern:legacy);if(!Array.isArray(modern))localStorage.setItem(PLAYER_REGISTRY_KEY,JSON.stringify(profiles));return profiles.map(x=>({name:canonicalPlayerName(x.fullName),key:canonicalPlayerNameKey(x.fullName),registrationCode:normalizePlayerCode(x.registrationCode),handicap:Number.isInteger(x.handicap)?x.handicap:null,tee:TEES[x.tee]?x.tee:null,whatsapp:normalizeWhatsApp(x.whatsapp?.nationalNumber),profile:x,updatedAt:x.updatedAt||null}))}return Array.isArray(legacy)?legacy.filter(x=>x&&x.name).map(x=>({name:canonicalPlayerName(x.name),key:canonicalPlayerNameKey(x.name),registrationCode:normalizePlayerCode(x.registrationCode),handicap:Number.isInteger(x.handicap)?x.handicap:null,tee:TEES[x.tee]?x.tee:null,whatsapp:normalizeWhatsApp(x.whatsapp),updatedAt:x.updatedAt||null})):[]}catch{return[]}}
 function directoryWhatsAppFor(name){const key=canonicalPlayerNameKey(name),entry=readPlayerDirectory().find(x=>x.key===key);return entry?.whatsapp||""}
@@ -5067,7 +5069,7 @@ $("detectedBody").addEventListener("change",e=>{
   const idx=Number(name?.dataset.draftName??categoryInput?.dataset.draftCategory??hcp?.dataset.draftHcp??teeInput?.dataset.draftTee);if(!Number.isInteger(idx)||!manualDraftRows[idx])return;
   const row=manualDraftRows[idx];row.dirty=true;
   if(name){row.name=canonicalPlayerName(name.value);name.value=row.name}
-  if(categoryInput)row.category=normalizeTournamentCategory(categoryInput.value);
+  if(categoryInput){row.category=normalizeTournamentCategory(categoryInput.value);row.tee=row.category?defaultTeeForTournamentCategory(row.category):"";const teeField=target.closest(".draft-edit-row")?.querySelector("[data-draft-tee]");if(teeField){teeField.value=row.tee;teeField.style.color=TEES[row.tee]?.color||"#fff"}const nameField=target.closest(".draft-edit-row")?.querySelector("[data-draft-name]");if(nameField)nameField.style.color=TEES[row.tee]?.color||"#fff"}
   if(hcp)row.handicap=String(hcp.value??"");
   if(teeInput){row.tee=normalizeTee(teeInput.value)||"";const color=TEES[row.tee]?.color||"#fff";teeInput.style.color=color;const nameField=target.closest(".draft-edit-row")?.querySelector("[data-draft-name]");if(nameField)nameField.style.color=color}
   const saved=syncDraftPlayersFromManualRows({strict:false,renderAfter:false});

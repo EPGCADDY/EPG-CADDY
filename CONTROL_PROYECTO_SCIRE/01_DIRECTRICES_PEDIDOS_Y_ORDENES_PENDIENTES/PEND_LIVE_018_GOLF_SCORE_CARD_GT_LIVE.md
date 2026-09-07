@@ -1,5 +1,14 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
+## Clasificación activa V406-R7
+
+- GENERAL, categoría e Individual: actualización automática cada tres segundos y posición por score acumulado.
+- Desempate: a igual resultado, mayor cantidad de hoyos jugados ocupa la posición superior.
+- Estado por jugador: HOYO ACTUAL durante juego y FINAL al completar 18.
+- Antiduplicado: un número de hoyo se normaliza y se opera una sola vez.
+- Categoría visible en vez de marcas; valores predeterminados por categoría y selector GENERAL.
+- Mi Tablero: listado alfabético por primer nombre, categoría en color y C de Campeonato en cuadro blanco.
+
 ## Demostración visible V406-R6
 
 - TORNEO LIVE abierto sin enlace carga 67 jugadores temporales en las categorías 7/6/24/11/7/7/5.
