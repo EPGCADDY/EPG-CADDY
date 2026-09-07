@@ -6,10 +6,10 @@ const hub=fs.readFileSync("live-hub.html","utf8");
 const css=fs.readFileSync("gsc-design-system.css","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/V406-R21-PERSISTENT-DEMO-ROUNDS-20260907/);
+assert.match(html,/V406-R22-EXPLICIT-UPDATE-20260907/);
 assert.doesNotMatch(html,/href="\/gsc-design-system\.css"/,"Registro no debe depender de una hoja de sobreescritura externa");
 assert.match(hub,/href="\/gsc-design-system\.css"/);
-assert.match(worker,/v406-r21-persistent-demo-rounds/);
+assert.match(worker,/v406-r22-explicit-update/);
 assert.match(worker,/"\/gsc-design-system\.css"/);
 assert.doesNotMatch(hub,/<style[\s>]/,"TORNEO LIVE debe tener una sola hoja CSS canónica");
 assert.doesNotMatch(css,/!important/,"el sistema visual canónico no acepta parches !important");

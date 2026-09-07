@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V406-R22 · 7 de septiembre de 2026
+
+R22 corrige cinco fallos físicos y de coherencia pública: la actualización instalada ya no debe sustituirse sola, sino conservar el shell aprobado hasta tocar ACTUALIZAR; la recuperación de desplazamiento restablece el elemento de scroll y neutraliza capas invisibles; correlativos y textos fijos no pueden seleccionarse accidentalmente, pero nombre, score y datos editables sí; toda superficie pública y preview de WhatsApp usa GOLF SCORE CARD GT; y todas las Score Cards —incluida Tarjeta Digital— incorporan el botón homogéneo COMPARTIR LIVE para crear o reutilizar un enlace de sólo lectura con el grupo completo. GENERAL conserva todos los jugadores publicados y los empates muestran T antes de la posición deportiva, por ejemplo T34. Revisión física publicada pendiente; Producción intacta.
+
 ## Continuidad V406-R21 · 7 de septiembre de 2026
 
 `IMG_3041.png` confirmó que S.SENIOR 04, FEMENINA 01 y A 05 seguían guardados pero volvían a `ENLACE NO DISPONIBLE` al entrar por TORNEO GUARDADO. R19 sólo añadía las rondas demo mientras la URL conservaba `demo=1`. R21 mantiene el catálogo demo como fuente local de respaldo y superpone cualquier stream LIVE vigente; los favoritos demo conservan su tarjeta al cambiar de pantalla o torneo, sin consultas extra. Revisión física publicada pendiente; Producción intacta.

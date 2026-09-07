@@ -1768,3 +1768,12 @@ El registro se incorpora también a `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCH
 ## V405-R2 LAB · BORRAR TODO y Tarjeta Digital móvil · 7 de septiembre de 2026
 
 La captura física `IMG_2949.png` rechaza la Tarjeta Digital anterior: accesos globales estaban montados sobre `FINALIZAR RONDA` y `ATRÁS`, mientras el ancho exterior de 1500 px desbordaba el iPhone. `index-grupal.html` añade `BORRAR TODO` para vaciar únicamente los seis jugadores del Registro y crea aislamiento `gsc-final-card-open`; en móvil apila título/acciones y confina el desplazamiento a la tabla. `test-v405-registration-clear-final-mobile.mjs` fija ambos contratos, `audit-project.mjs` lo vuelve obligatorio, `service-worker.js` publica la caché `v405-r2-registration-clear-mobile-card` y `test-v365-active-round-empty-recovery.mjs` sella release/caché. `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` y `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` registran el estado. MAIN permanece intacta; prueba física iPhone 4/4 pendiente.
+# V406-R22 · actualización explícita, scroll iOS, marca pública y COMPARTIR LIVE
+
+- `index-grupal.html`: release R22, recuperación completa de desplazamiento y botón COMPARTIR LIVE en la tarjeta activa y digital.
+- `service-worker.js`: separa candidato y shell aprobado; una versión nueva no se instala hasta tocar ACTUALIZAR.
+- `live-control.js`: comparte en un toque el grupo completo y homologa el nombre COMPARTIR LIVE.
+- `live-hub.js`: muestra T en posiciones empatadas sin perder el ranking deportivo ni jugadores de GENERAL.
+- `live-hub.html`, `live.html`, `index.html`, `api/score.js`, `api/session.js`: marca pública GOLF SCORE CARD GT y previews para enlaces compartidos.
+- `test-v353-live-hub.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v406-r22-public-brand.mjs`, `test-v406-r22-share-live.mjs`: regresión de los cambios anteriores, incluida la selección exclusiva de campos editables.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: continuidad y RC-079–RC-081.

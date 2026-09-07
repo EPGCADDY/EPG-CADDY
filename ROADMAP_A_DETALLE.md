@@ -2267,3 +2267,19 @@ Frontera: no se modifica MAIN, Producción, lógica funcional, datos, caché, vo
 | `service-worker.js`, `test-v365-active-round-empty-recovery.mjs` | Release/caché V405-R2. | El dominio LAB recibe el shell nuevo. |
 | `REGISTRO_REINCIDENCIAS_CALIDAD.md` | Registra RC-062. | PASS físico permanece abierto hasta 4/4 modalidades en iPhone. |
 | `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Conservan alcance, continuidad e inventario. | MAIN intacta. |
+# V406-R22 · detalle técnico
+
+- `index-grupal.html`: agrega `shareRoundLiveButton` y `shareFinalLiveButton`, ambos delegados a `GSCLiveControl.quickShareGroup`; endurece la recuperación táctil del documento y overlays; bloquea selección de correlativos y texto fijo, preservando inputs, selects y datos editables.
+- `service-worker.js`: crea `APPROVED_CACHE_NAME`, descarga R22 como candidato, sirve el shell aprobado en navegación normal y promueve R22 únicamente al recibir `app_version=V406-R22-EXPLICIT-UPDATE-20260907` tras el toque del usuario.
+- `live-control.js`: `quickShareGroup()` toma todos los IDs del snapshot, registra consentimiento directo del responsable, reutiliza el stream grupal vigente y abre `navigator.share`; todos los controles públicos se titulan COMPARTIR LIVE.
+- `live-hub.js`: conserva `rank` numérico para lógica y añade `rankLabel`; todo grupo con la misma pareja resultado+hoyos muestra `T{rank}`.
+- `live-hub.html` y `live.html`: metadatos Open Graph anuncian GOLF SCORE CARD GT al compartir enlaces.
+- `index.html`, `api/score.js`, `api/session.js`: elimina la marca anterior de superficies públicas sin renombrar claves internas que conservan sesiones.
+- `test-v406-r22-share-live.mjs`: cubre presencia en ambas tarjetas, grupo completo, 24 horas, Web Share y texto homogéneo.
+- `test-v406-r22-public-brand.mjs`: impide reaparición visible de la marca anterior.
+- `test-v353-live-hub.mjs`: exige 67/67 jugadores y T34 para el empate reportado.
+- `test-v365-active-round-empty-recovery.mjs`: exige caché aprobada, consulta sin promoción, toque explícito y recuperación iOS ampliada.
+- `test-v406-r2-professional-design.mjs`: avanza los candados de release y caché a R22.
+- `test-v406-r4-mobile-controls.mjs` y `test-v406-r5-simple-tournament-live.mjs`: avanzan el release a R22; R4 exige que sólo los campos editables puedan seleccionar texto.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`: registra alcance, estado físico pendiente y Producción intacta.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: agrega RC-079, RC-080 y RC-081 con causa, escape y control permanente.

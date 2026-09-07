@@ -20,6 +20,12 @@ assert.equal(eightyPlayers.length,80,"la General conserva los 80 jugadores");
 assert.equal(new Set(eightyPlayers.map(item=>`${item.streamId}:${item.playerId}`)).size,80,"ningún jugador se duplica");
 assert.ok(eightyPlayers.every(item=>Number.isInteger(item.rank)&&item.groupLabel),"cada jugador tiene posición y grupo");
 
+const demoRows=hub.buildLeaderboard(hub.demoTournamentStreams());
+assert.equal(demoRows.length,67,"GENERAL muestra los 67 jugadores publicados");
+const tiedDemo=demoRows.filter(item=>demoRows.some(other=>other!==item&&other.rank===item.rank));
+assert.ok(tiedDemo.length>0&&tiedDemo.every(item=>item.rankLabel===`T${item.rank}`),"cada empate visible usa T antes de la posición");
+assert.ok(demoRows.filter(item=>item.rank===34).every(item=>item.rankLabel==="T34"),"el empate reportado se muestra como T34");
+
 const fortyGroups=Array.from({length:40},(_,index)=>makeStream(index+1,2));
 const firstPage=fortyGroups.slice(0,25),secondPage=fortyGroups.slice(25),pagedMap=new Map([...firstPage,...secondPage].map(stream=>[stream.id,stream]));
 assert.equal(pagedMap.size,40,"la General une páginas sin perder grupos");
@@ -99,7 +105,7 @@ assert.doesNotMatch(viewer,/localStorage|sessionStorage/i,"el visor simple no pe
 assert.match(viewerHtml,/id="liveAddHub"/);
 assert.match(viewer,/root\.open\(hubUrl\(access\),"_blank","noopener,noreferrer"\)/,"Centro Live abre separado de la Score Card");
 assert.match(control,/VER TORNEO LIVE/);
-assert.match(control,/COMPARTIR ♾️ · MUNDIAL/);
+assert.match(control,/COMPARTIR LIVE · MUNDIAL/);
 assert.match(control,/WHATSAPP, MENSAJES, CORREO, AIRDROP, X O CUALQUIER APP/);
 assert.match(control,/NOMBRE O NÚMERO DEL GRUPO · OBLIGATORIO/);
 assert.match(api,/LIVE_GROUP_LABEL_REQUIRED/);

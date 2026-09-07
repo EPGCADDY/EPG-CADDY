@@ -4,7 +4,9 @@ import assert from "node:assert/strict";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const live=fs.readFileSync("live-control.js","utf8");
 
-assert.match(html,/V406-R21-PERSISTENT-DEMO-ROUNDS-20260907/);
+assert.match(html,/V406-R22-EXPLICIT-UPDATE-20260907/);
+assert.match(html,/body\{-webkit-user-select:none;user-select:none\}/,"los correlativos y textos fijos no se seleccionan");
+assert.match(html,/input,textarea,select,\[contenteditable="true"\]\{-webkit-user-select:text;user-select:text\}/,"nombre, score y datos editables conservan selección");
 assert.match(html,/<\/header>\s*<nav class="round-utility-bar" id="roundUtilityBar"/);
 assert.match(html,/\.round-utility-bar\{position:static/);
 assert.match(live,/getElementById\("roundUtilityBar"\);if\(toolbar\)toolbar\.prepend\(launch\)/);
