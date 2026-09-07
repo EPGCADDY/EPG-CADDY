@@ -1,0 +1,41 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import {createRequire} from "node:module";
+const require=createRequire(import.meta.url),html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"),live=fs.readFileSync(new URL("./live-control.js",import.meta.url),"utf8"),api=fs.readFileSync(new URL("./api/live.js",import.meta.url),"utf8"),hubHtml=fs.readFileSync(new URL("./live-hub.html",import.meta.url),"utf8"),hub=require("./live-hub.js");
+for(const label of ["CAMPEONATO","A","B","C","D","FEMENINA","SENIOR","S.SENIOR"])assert.ok(html.includes(label),`Falta ${label} en Registro`);
+assert.match(html,/NOMBRE<\/span><span>CATEGORÍA<\/span><span>HDCP<\/span><span>MARCAS/);
+assert.match(html,/data-draft-category/);
+assert.match(html,/draftTournament&&!category/);
+assert.match(live,/tournamentCategory:text\(player\.tournamentCategory/);
+assert.match(api,/tournamentCategory:\["championship","a","b","c","d","female","senior","super_senior"\]/);
+assert.match(api,/const MAX_TOURNAMENT_PLAYERS=100/);
+const publishSource=api.slice(api.indexOf("async function publish"),api.indexOf("async function revokeStream"));
+assert.match(publishSource,/FROM live_tournaments AS tournament[\s\S]*FOR UPDATE/,"publicar bloquea el torneo antes de contar");
+assert.match(publishSource,/other_players\+jsonb_array_length\(visible_players\)>\$\{MAX_TOURNAMENT_PLAYERS\}/,"publicar rechaza al jugador 101");
+const joinSource=api.slice(api.indexOf("async function joinTournament"),api.indexOf("async function leaveTournament"));
+assert.match(joinSource,/WITH tournament AS MATERIALIZED[\s\S]*FOR UPDATE/,"unir grupo bloquea el torneo antes de contar");
+assert.match(joinSource,/LIVE_TOURNAMENT_CAPACITY_REACHED/);
+assert.match(live,/LIVE_TOURNAMENT_CAPACITY_REACHED:"TORNEO COMPLETO · MÁXIMO 100 JUGADORES"/);
+assert.match(hubHtml,/id="hubCategory"/);
+assert.match(hubHtml,/VER DETALLE LIVE DE CATEGORÍA/);
+assert.match(hubHtml,/NO CREA TARJETA NI EDITA SCORES/);
+const streams=new Map([["g1",{id:"g1",groupLabel:"GRUPO 1",snapshot:{players:[{id:"p1",name:"PAPÁ",tournamentCategory:"senior",totals:{holes:4,net:18,relativeToPar:1}},{id:"p2",name:"MAMÁ",tournamentCategory:"female",totals:{holes:4,net:17,relativeToPar:0}}]}}]]);
+const index=hub.categoryIndex(streams);assert.equal(index.senior[0].name,"PAPÁ");assert.equal(index.female[0].name,"MAMÁ");
+const makePlayer=(number,category="b")=>({id:`p${number}`,name:`JUGADOR ${number}`,tournamentCategory:category,holes:Array.from({length:18},(_,hole)=>({hole:hole+1,par:4,gross:5,net:4,relativeToPar:0,explicitX:false})),totals:{holes:18,gross:90,net:72,relativeToPar:0}});
+const categoryStreams=new Map(Array.from({length:8},(_,group)=>[`g${group+1}`,{id:`g${group+1}`,groupLabel:`GRUPO ${group+1}`,snapshot:{courseHoles:Array.from({length:18},(_,hole)=>({hole:hole+1,par:4})),players:Array.from({length:group===7?2:4},(_,slot)=>makePlayer(group*4+slot+1))}}]));
+const categoryB=hub.categoryScoreboardRows(categoryStreams,"b");
+assert.equal(categoryB.length,30,"Categoría B reúne 30 jugadores corridos desde ocho grupos");
+assert.equal(hub.categoryScoreboardRows(new Map([...categoryStreams].slice(0,5)),"b").length,20,"la categoría muestra 20 cuando sólo existen 20");
+assert.equal(hub.categoryScoreboardRows(new Map([...categoryStreams].slice(0,5).concat([["extra",{id:"extra",groupLabel:"GRUPO EXTRA",snapshot:{players:[makePlayer(21),makePlayer(22)]}}]])),"b").length,22,"la categoría muestra 22 cuando existen 22, sin rellenar a 30");
+assert.equal(categoryB[0].holeValues.length,18,"cada jugador conserva los 18 hoyos");
+assert.deepEqual(categoryB[0].inTotals,{gross:45,net:36,result:0,holes:9});
+assert.deepEqual(categoryB[0].outTotals,{gross:45,net:36,result:0,holes:9});
+assert.deepEqual(categoryB[0].totalTotals,{gross:90,net:72,result:0,holes:18});
+const mixedGroups=new Map([
+  ["g1",{id:"g1",groupLabel:"FOURSOME 1",snapshot:{players:[{...makePlayer(1),totals:{holes:18,gross:80,net:74,relativeToPar:2}},{...makePlayer(2),totals:{holes:18,gross:78,net:72,relativeToPar:0}}]}}],
+  ["g2",{id:"g2",groupLabel:"FOURSOME 2",snapshot:{players:[{...makePlayer(3),totals:{holes:18,gross:70,net:68,relativeToPar:-4}},{...makePlayer(4),totals:{holes:18,gross:76,net:71,relativeToPar:-1}}]}}]
+]);
+assert.deepEqual(hub.categoryScoreboardRows(mixedGroups,"b").map(player=>player.name),["JUGADOR 3","JUGADOR 4","JUGADOR 2","JUGADOR 1"],"la categoría mezcla foursomes y ordena líder a peor resultado");
+const hundredStreams=new Map(Array.from({length:25},(_,group)=>[`t${group+1}`,{id:`t${group+1}`,groupLabel:`FOURSOME ${group+1}`,snapshot:{players:Array.from({length:4},(_,slot)=>makePlayer(group*4+slot+1,slot%2?"a":"b"))}}]));
+assert.equal(hub.tournamentPlayers(hundredStreams).length,100,"la vista inicial soporta 100 jugadores en 25 foursomes");
+console.log("PASS V406 · categoría individual, índice oculto, filtro TORNEO LIVE y Mi Tablero");

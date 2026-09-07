@@ -85,8 +85,8 @@
   }
 
   function globalCard(snapshot){
-    const rows=snapshot.players.map(player=>{const stats=playerStats(player);return`<tr><td>${esc(player.name)}</td><td>${esc(player.tee)}</td><td>${player.handicap}</td>${stats.holes.map(hole=>`<td>${hole.gross}/${hole.net}</td>`).join("")}<td>${stats.gross}</td><td>${stats.net}</td><td class="${stats.relative<0?'under':stats.relative>0?'over':''}">${rel(stats.relative)}</td></tr>`}).join("");
-    return shell(snapshot.version>1?"Tarjeta Global corregida":"Tarjeta Global",snapshot,`<div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>MARCAS</th><th>HCP</th>${Array.from({length:18},(_,i)=>`<th>${i+1}</th>`).join("")}<th>GROSS</th><th>NETO</th><th>+/-</th></tr></thead><tbody>${rows}</tbody></table></div>`);
+    const rows=snapshot.players.map(player=>{const stats=playerStats(player),category=({championship:"CAMPEONATO",a:"A",b:"B",c:"C",d:"D",female:"FEMENINA",senior:"SENIOR",super_senior:"S.SENIOR"})[player.tournamentCategory]||"—";return`<tr><td>${esc(player.name)}</td><td>${esc(category)}</td><td>${esc(player.tee)}</td><td>${player.handicap}</td>${stats.holes.map(hole=>`<td>${hole.gross}/${hole.net}</td>`).join("")}<td>${stats.gross}</td><td>${stats.net}</td><td class="${stats.relative<0?'under':stats.relative>0?'over':''}">${rel(stats.relative)}</td></tr>`}).join("");
+    return shell(snapshot.version>1?"Tarjeta Global corregida":"Tarjeta Global",snapshot,`<div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>CATEGORÍA</th><th>MARCAS</th><th>HCP</th>${Array.from({length:18},(_,i)=>`<th>${i+1}</th>`).join("")}<th>GROSS</th><th>NETO</th><th>+/-</th></tr></thead><tbody>${rows}</tbody></table></div>`);
   }
 
   function personalCard(snapshot,player){

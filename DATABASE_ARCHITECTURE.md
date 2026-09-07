@@ -113,7 +113,7 @@ V352 agrega una ruta central limitada exclusivamente a observación remota tempo
 
 ### Escala y consistencia
 
-- La Score Card operativa conserva de uno a seis jugadores. El torneo no tiene máximo fijo de grupos o jugadores agregados: se recorre con cursor estable, 25 grupos por vista y hasta 50 por respuesta API.
+- La Score Card operativa conserva de uno a seis jugadores. Un torneo admite hasta 100 jugadores activos, distribuidos en cualquier combinación de grupos de uno a seis; se recorre con cursor estable, 25 grupos por vista y hasta 50 por respuesta API. Publicar y unir bloquean la fila de `live_tournaments`, cuentan nuevamente los jugadores visibles activos dentro de esa transacción y rechazan el resultado 101 con `LIVE_TOURNAMENT_CAPACITY_REACHED`.
 - Cada persistencia local deja el snapshot más reciente en cola. La publicación usa `client_mutation_id`, revisión esperada y reintento de conflicto, sin “último dispositivo gana” a ciegas.
 - La consulta normal es cada tres segundos y devuelve `unchanged` cuando la revisión no cambió.
 - `live.html` es sólo lectura y está separado de `index-grupal.html`; no contiene escritor de scores, almacenamiento de ronda, micrófono ni audio.
@@ -136,3 +136,9 @@ V353 no agrega tablas, columnas, índices ni funciones. Reutiliza exactamente `l
 - El enlace funciona desde cualquier país y puede compartirse con cualquier cantidad de invitados por la hoja nativa del teléfono. El control de acceso sigue siendo posesión del vínculo, vencimiento y revocación; quien recibe el vínculo sólo puede leer.
 
 La prueba local `test-v353-live-hub.mjs` cubre 20×4 y 40×2, 80 jugadores sin omisión ni duplicado, Monitor General más tres jugadores elegidos en el Monitor Individual sin lecturas extra, enlace externo, origen seguro, carga paginada sin máximo fijo, capitán único, privacidad y apertura en ventana separada. Preview, E2E remoto, observabilidad y navegador se registran por separado; la prueba física iPhone no se simula.
+
+## V406 — categorías y capacidad comercial protegida
+
+V406 no agrega tablas ni duplica scores. `tournamentCategory` viaja dentro de cada jugador del snapshot LIVE y el Centro deriva en memoria el índice, la clasificación por categoría y Mi Tablero. El detalle usa la cantidad real de jugadores filtrados, sin máximo propio ni filas de relleno; mezcla todos los foursomes, ordena de líder a peor y presenta hoyos 1–18 con Gross/Neto/resultado e IN/OUT/TOTAL como lectura temporal.
+
+El máximo de 100 no depende de la interfaz: `publish` y `join_tournament` reutilizan el bloqueo transaccional de la fila del torneo y cuentan los snapshots visibles activos antes de aplicar la operación. Las lecturas, invitados y favoritos no consumen plazas; una Score Card revocada, caducada o fuera del torneo deja de contarse.

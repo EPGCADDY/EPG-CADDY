@@ -18,7 +18,7 @@ assert.match(html,/<div class="newbie-guide-player">HASTA 6 JUGADORES<\/div>/);
 assert.match(html,/<div>LUEGO TOCA OK<\/div>/);
 assert.match(html,/id="setupMic" aria-label="Abrir Caddie universal o dictar jugadores"/);
 assert.match(html,/<div class="registration-method-title">2 · MANUAL OPCIONAL<\/div>/);
-assert.equal((html.match(/<div class="registration-method-fields">NOMBRE \+ HDCP \+ MARCAS<\/div>/g)||[]).length,1);
+assert.equal((html.match(/<div class="registration-method-fields">NOMBRE \+ CATEGORÍA \+ HDCP \+ MARCAS<\/div>/g)||[]).length,1);
 assert.doesNotMatch(html,/data-draft-code=/);
 assert.doesNotMatch(html,/data-draft-whatsapp=/);
 assert.doesNotMatch(html,/id="openShareProject"/);

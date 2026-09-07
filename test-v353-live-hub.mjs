@@ -47,9 +47,9 @@ assert.equal(groupKey("GRUPO 001"),"grupo 001");
 
 const index=read("index-grupal.html"),html=read("live-hub.html"),client=read("live-hub.js"),control=read("live-control.js"),viewer=read("live-view.js"),viewerHtml=read("live.html"),api=read("api/live.js"),worker=read("service-worker.js"),vercel=read("vercel.json");
 assert.match(index,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
-assert.match(html,/CENTRO LIVE/);
+assert.match(html,/TORNEO LIVE/);
 assert.match(html,/1 · MONITOR GENERAL/);
-assert.match(html,/2 · MONITOR INDIVIDUAL/);
+assert.match(html,/2 · MI TABLERO/);
 assert.match(html,/1 · ABRE EL ENLACE/);
 assert.match(html,/2 · ELIGE MONITOR/);
 assert.match(html,/3 · TOCA \+ SEGUIR/);

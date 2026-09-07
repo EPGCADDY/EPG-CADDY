@@ -1,5 +1,22 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
+## Ampliación V406-R2 · categorías de torneo
+
+- La captura oficial continúa en Score Cards independientes de hasta 6 jugadores; en torneos el caso normal es un foursome de 4 con un capitán/publicador.
+- La categoría se asigna a cada jugador desde Registro: Campeonato, A, B, C, D, Femenina, Senior o S.Senior.
+- Al filtrar una categoría, TORNEO LIVE mezcla los jugadores de todos los foursomes y los ordena continuamente de líder a peor resultado. El grupo no crea secciones; sólo aparece como referencia secundaria.
+- La vista detallada muestra todos los jugadores reales de la categoría, sin cantidad fija ni relleno; 14, 20, 22 y 30 son escenarios posibles. Conserva hoyos 1–18 con Gross/Neto/resultado y cortes IN/OUT/TOTAL.
+- Esta vista es temporal, derivada y de sólo lectura. No crea tarjeta, PDF, archivo, historial ni segundo escritor.
+- Capacidad inicial protegida: 100 jugadores por torneo. V406-R2 prueba 25 foursomes de cuatro y `api/live.js` rechaza transaccionalmente al jugador 101 al publicar o unir un grupo (`409 LIVE_TOURNAMENT_CAPACITY_REACHED`).
+
+## Avance V406-R1 · categorías y tablero personal
+
+- Cada jugador porta `tournamentCategory` desde Registro.
+- TORNEO LIVE mantiene un índice interno de participantes por categoría y permite filtrar la clasificación sin mezclar jugadores.
+- El buscador localiza por nombre, grupo o categoría.
+- `MI TABLERO` reúne jugadores elegidos de distintas categorías, incluyendo el caso de una familia.
+- Pendiente para cierre: prueba física completa en iPhone/Safari y comparación de hasta tres categorías en pantalla amplia.
+
 **Fecha de registro:** 27 de agosto de 2026  
 **Versión de ejecución:** V352 + V353 CENTRO LIVE
 **Estado real:** V352 IMPLEMENTADO, MIGRACIÓN PRINCIPAL Y PREVIEW E2E PASS; V353 CENTRO LIVE PREVIEW/E2E/OBSERVABILIDAD PASS; INSPECCIÓN VISUAL Y PRUEBA FÍSICA IPHONE PENDIENTES

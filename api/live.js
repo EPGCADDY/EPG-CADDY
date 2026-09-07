@@ -4,6 +4,7 @@ import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 import { noStore, readJson } from "./_lib/http.js";
 
 const LIVE_POLICY_VERSION="gsc-gt-live-v1";
+const MAX_TOURNAMENT_PLAYERS=100;
 const TOKEN_PATTERN=/^[A-Za-z0-9_-]{40,100}$/;
 const SECRET_PATTERN=/^[A-Za-z0-9_-]{40,100}$/;
 // Score Card keeps stable legacy player IDs such as p1..p6. They are valid
@@ -66,6 +67,7 @@ function safePlayer(value,index){
   return{
     id,
     name,
+    tournamentCategory:["championship","a","b","c","d","female","senior","super_senior"].includes(cleanText(value?.tournamentCategory,24))?cleanText(value.tournamentCategory,24):"",
     handicap:boundedInteger(value?.handicap,0,54,0),
     tee:cleanText(value?.tee,40)||"—",
     visualSlot:boundedInteger(value?.visualSlot,1,6,index+1),
@@ -153,15 +155,28 @@ async function publish(sql,req,body){
       FOR UPDATE
     ),
     prepared AS (
-      SELECT candidate.*,
+      SELECT candidate.*, tournament_guard.id AS locked_tournament_id,
         visible.visible_players,
+        capacity.other_players,
         jsonb_set(${snapshotJson}::jsonb, '{players}', visible.visible_players, true) AS filtered_snapshot
       FROM candidate
+      LEFT JOIN LATERAL (
+        SELECT tournament.id
+        FROM live_tournaments AS tournament
+        WHERE tournament.id=candidate.tournament_id
+        FOR UPDATE
+      ) AS tournament_guard ON true
       CROSS JOIN LATERAL (
         SELECT coalesce(jsonb_agg(listed.player ORDER BY listed.ordinal), '[]'::jsonb) AS visible_players
         FROM jsonb_array_elements(coalesce(${snapshotJson}::jsonb->'players', '[]'::jsonb)) WITH ORDINALITY AS listed(player,ordinal)
         WHERE candidate.selected_player_ids ? (listed.player->>'id')
       ) AS visible
+      CROSS JOIN LATERAL (
+        SELECT coalesce(sum(jsonb_array_length(coalesce(other.current_snapshot->'players','[]'::jsonb))),0)::integer AS other_players
+        FROM live_streams AS other
+        WHERE other.tournament_id=candidate.tournament_id AND other.id<>candidate.id
+          AND other.status='active' AND other.expires_at>now()
+      ) AS capacity
     ),
     decision AS (
       SELECT prepared.*,
@@ -170,6 +185,7 @@ async function publish(sql,req,body){
           WHEN last_mutation_id=${mutationId}::text THEN 'DUPLICATE'
           WHEN revision<>${expected}::bigint THEN 'LIVE_REVISION_CONFLICT'
           WHEN jsonb_array_length(visible_players)<>jsonb_array_length(selected_player_ids) THEN 'LIVE_PLAYER_SCOPE_MISMATCH'
+          WHEN tournament_id IS NOT NULL AND other_players+jsonb_array_length(visible_players)>${MAX_TOURNAMENT_PLAYERS} THEN 'LIVE_TOURNAMENT_CAPACITY_REACHED'
           ELSE 'APPLY'
         END AS outcome_code
       FROM prepared
@@ -218,7 +234,7 @@ async function publish(sql,req,body){
     ) AS applied
     FROM effects
   `,applied=rows[0]?.applied||{};
-  if(!applied.accepted)throw liveError(String(applied.code||"LIVE_PUBLISH_FAILED"),applied.code==="LIVE_PUBLISHER_UNAUTHORIZED"?401:applied.code==="LIVE_REVISION_CONFLICT"?409:410);
+  if(!applied.accepted)throw liveError(String(applied.code||"LIVE_PUBLISH_FAILED"),applied.code==="LIVE_PUBLISHER_UNAUTHORIZED"?401:["LIVE_REVISION_CONFLICT","LIVE_TOURNAMENT_CAPACITY_REACHED"].includes(applied.code)?409:410);
   return{ok:true,...applied};
 }
 
@@ -262,7 +278,7 @@ async function joinTournament(sql,req,body){
       FOR UPDATE
     ),
     candidate AS MATERIALIZED (
-      SELECT id,group_label
+      SELECT id,group_label,current_snapshot
       FROM live_streams
       WHERE publisher_secret_hash=${secretHash}::char(64)
       LIMIT 1
@@ -275,6 +291,12 @@ async function joinTournament(sql,req,body){
           WHEN candidate.id IS NULL OR NOT EXISTS (
             SELECT 1 FROM live_streams active WHERE active.id=candidate.id AND active.status='active' AND active.expires_at>now()
           ) THEN 'LIVE_NOT_ACTIVE'
+          WHEN (
+            SELECT coalesce(sum(jsonb_array_length(coalesce(active.current_snapshot->'players','[]'::jsonb))),0)
+            FROM live_streams active
+            WHERE active.tournament_id=tournament.id AND active.id<>candidate.id
+              AND active.status='active' AND active.expires_at>now()
+          )+jsonb_array_length(coalesce(candidate.current_snapshot->'players','[]'::jsonb))>${MAX_TOURNAMENT_PLAYERS} THEN 'LIVE_TOURNAMENT_CAPACITY_REACHED'
           WHEN EXISTS (
             SELECT 1
             FROM live_streams other
@@ -317,7 +339,7 @@ async function joinTournament(sql,req,body){
     ) AS applied
     FROM effects
   `,applied=rows[0]?.applied||{};
-  if(!applied.applied){const code=String(applied.code||"LIVE_JOIN_FAILED");throw liveError(code,code==="LIVE_JOIN_CODE_INVALID"?404:code==="LIVE_GROUP_ALREADY_PUBLISHING"?409:code==="LIVE_NOT_ACTIVE"?410:400)}
+  if(!applied.applied){const code=String(applied.code||"LIVE_JOIN_FAILED");throw liveError(code,code==="LIVE_JOIN_CODE_INVALID"?404:["LIVE_GROUP_ALREADY_PUBLISHING","LIVE_TOURNAMENT_CAPACITY_REACHED"].includes(code)?409:code==="LIVE_NOT_ACTIVE"?410:400)}
   return{ok:true,joined:true,tournamentId:applied.tournamentId,groupLabel:applied.groupLabel};
 }
 

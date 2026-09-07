@@ -30,7 +30,7 @@ assert.match(html,/>2 · MANUAL OPCIONAL<\/div>/);
 assert.match(html,/<section class="game-mode-column" aria-label="Modalidades existentes">[\s\S]*?<div class="stableford-mode-option" id="stablefordModeOption"><\/div>\s*<div class="provisional-mode-option"><button[^>]+id="provisionalScorecardButton"[^>]*>[\s\S]*?SCORE CARD - PRÁCTICA[\s\S]*?<\/button><\/div>[\s\S]*?<section class="skins-config" id="skinsConfig"[\s\S]*?<div class="setup-facts"/);
 assert.equal((html.match(/id="provisionalScorecardButton"/g)||[]).length,1);
 assert.doesNotMatch(html,/class="provisional-entry"|class="provisional-entry-button"/);
-assert.equal((html.match(/>NOMBRE \+ HDCP \+ MARCAS<\/div>/g)||[]).length,1);
+assert.equal((html.match(/>NOMBRE \+ CATEGORÍA \+ HDCP \+ MARCAS<\/div>/g)||[]).length,1);
 assert.doesNotMatch(html,/data-draft-code=/);
 assert.doesNotMatch(html,/data-draft-whatsapp=/);
 assert.doesNotMatch(html,/id="openShareProject"|id="shareProjectPanel"/);

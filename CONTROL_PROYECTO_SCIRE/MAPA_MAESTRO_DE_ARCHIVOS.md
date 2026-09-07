@@ -1,5 +1,32 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## Delta V406-R2 · 7 de septiembre de 2026
+
+| Archivo | Función V406-R2 |
+|---|---|
+| `gsc-design-system.css` | Hoja canónica de TORNEO LIVE, sin `!important`: tokens, componentes, estados y detalle de categoría con columnas fijas. |
+| `index-grupal.html` | Consolida Registro móvil en dos líneas dentro de su CSS histórico, sin hoja externa de sobrescrituras; identifica V406-R2. |
+| `live-hub.html` / `live-hub.js` | Vista temporal de categoría con cantidad dinámica (14/20/22/30 son ejemplos), jugadores mezclados y ordenados de líder a peor, 18 hoyos, Gross/Neto/resultado e IN/OUT/TOTAL. No genera tarjeta. |
+| `api/live.js` / `live-control.js` | Límite transaccional de 100 jugadores por torneo y estado visible `TORNEO COMPLETO`; el conteo se repite bajo bloqueo al publicar y unir. |
+| `DATABASE_ARCHITECTURE.md` | Formaliza categorías como proyección de snapshots LIVE y máximo 100 protegido sin migración ni segundo escritor. |
+| `service-worker.js` | Caché V406-R2 e inclusión de la nueva hoja compartida. |
+| `test-v406-tournament-categories.mjs` | Prueba cantidades variables y usa 30 como escenario visual poblado; mezcla de foursomes, orden deportivo y capacidad total de 100. |
+| `test-v406-r2-professional-design.mjs` | Candado de retícula móvil, controles táctiles y simplificación de TORNEO LIVE. |
+| `test-v365-active-round-empty-recovery.mjs` | Actualiza únicamente las etiquetas de release/cache esperadas. |
+| `ROADMAP_OVERALL.md` / `ROADMAP_A_DETALLE.md` | Estado, alcance, riesgo y evidencia V406-R2. |
+| `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` | Punto exacto para continuidad entre conversaciones. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` | Fija que categorías son visualizaciones LIVE, no tarjetas nuevas. |
+
+## Delta V406-R1 · 7 de septiembre de 2026
+
+| Archivo | Función V406 |
+|---|---|
+| `index-grupal.html` | Captura, valida, guarda y recupera la categoría por jugador. |
+| `live-control.js` / `api/live.js` | Transportan y validan `tournamentCategory`. |
+| `live-hub.html` / `live-hub.js` | TORNEO LIVE, filtro, índice por categoría y MI TABLERO. |
+| `card-artifacts.js` | Incluye categoría en la tarjeta global. |
+| `test-v406-tournament-categories.mjs` | Candado del catálogo, ruta de datos, índice y filtro. |
+
 Este mapa explica cada archivo con palabras sencillas. Los nombres raros, números y códigos se conservan para no romper nada; aquí se indica para qué sirve cada uno.
 
 Archivos activos rastreados al corte V353: **359**.
