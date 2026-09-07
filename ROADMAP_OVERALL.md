@@ -1592,3 +1592,5 @@ RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/
 * RC-059 SELLO FINAL · Código, regresión, Roadmap Overall, Roadmap A Detalle e inventario quedan unidos en el mismo commit preventivo.
 
 * RC-059 CIERRE V289 · El arnés aislado declara archivado, limpieza de claves y captura; V289/V364 validan NUEVA RONDA Stableford sin herencia cruzada.
+
+* RC-060 · Registro Stableford oculta físicamente el main anterior mientras el overlay está visible; evita mostrar jugadores/scores archivados debajo del formulario vacío.

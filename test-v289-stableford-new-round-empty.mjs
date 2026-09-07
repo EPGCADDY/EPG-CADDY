@@ -6,6 +6,7 @@ const html=fs.readFileSync("index-grupal.html","utf8");
 assert.match(html,/function isRecoverableStoredRound\(value,modeHint=null\)[\s\S]*?value\.players\.length>=1&&value\.players\.length<=6/);
 assert.match(html,/const active=\[primary,backup,stableford,matchPlay,fourBall\]\.filter\(value=>isRecoverableStoredRound\(value,modeHint\)\)/);
 assert.match(html,/function openFreshStablefordSetup\(\)[\s\S]*?round=\{\.\.\.blankRound\(\),mode:"stableford"\};[\s\S]*?localStorage\.setItem\(STABLEFORD_ACTIVE_KEY,JSON\.stringify\(round\)\)/);
+assert.match(html,/body\.gsc-setup-open:has\(#stablefordSetupOverlay\.visible\) main\{visibility:hidden\}/,"Registro Stableford debe ocultar físicamente la tarjeta anterior");
 assert.match(html,/function openFreshStablefordSetup\(\)[\s\S]*?localStorage\.removeItem\(key\)/);
 
 const start=html.indexOf("function openFreshStablefordSetup(){");
