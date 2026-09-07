@@ -1,5 +1,12 @@
 # ROADMAP OVERALL
 
+## V406-R8 · restauración del esquema LIVE · 7 de septiembre de 2026
+
+- Se restaura la composición visual V406-R6: al abrir no se despliega el listado individual, de modo que General, selector de categorías y posiciones permanecen visibles en su ubicación anterior.
+- Los 67 jugadores simulados y las siete reglas funcionales R7 se conservan sin alterar la estructura gráfica.
+- El listado alfabético con categoría en color aparece únicamente al buscar/agregar un jugador a Mi Tablero.
+- MAIN permanece intacto.
+
 ## V406-R7 · categorías y posiciones LIVE por hoyo · 7 de septiembre de 2026
 
 - GENERAL, cada categoría y Mi Tablero recalculan y reordenan cada tres segundos por resultado acumulado; en empate pesa más quien ha jugado más hoyos.

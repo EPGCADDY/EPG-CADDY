@@ -36,7 +36,8 @@ assert.deepEqual(hub.CATEGORY_DEFAULT_TEES,{championship:"NEGRAS",a:"AZULES",b:"
 assert.equal(hub.categoryShortLabel("championship"),"C","Campeonato se identifica con una sola C");
 assert.match(html,/CATEGORY_DEFAULT_TEES=\{championship:"Negro",a:"Azul",b:"Blanco",c:"Blanco",d:"Blanco",female:"Rojo",senior:"Blanco",super_senior:"Amarillo"\}/);
 assert.match(fs.readFileSync("gsc-design-system.css","utf8"),/\.category-championship\{min-width:28px;width:28px;[^}]*border-radius:4px\}/,"la C de Campeonato usa cuadro blanco");
-assert.match(fs.readFileSync("live-hub.js","utf8"),/sort\(\(left,right\)=>fold\(left\.name\)\.localeCompare\(fold\(right\.name\),"es"\)\)\.slice\(0,query\?20:100\)/,"Mi Tablero lista hasta 100 jugadores por primer nombre");
+assert.match(fs.readFileSync("live-hub.js","utf8"),/if\(!query\)\{target\.innerHTML="";return\}/,"el listado individual no desplaza la General antes de buscar");
+assert.match(fs.readFileSync("live-hub.js","utf8"),/sort\(\(left,right\)=>fold\(left\.name\)\.localeCompare\(fold\(right\.name\),"es"\)\)\.slice\(0,100\)/,"la búsqueda lista hasta 100 jugadores por primer nombre");
 assert.equal(categoryB[0].holeValues.length,18,"cada jugador conserva los 18 hoyos");
 assert.deepEqual(categoryB[0].inTotals,{gross:45,net:36,result:0,holes:9});
 assert.deepEqual(categoryB[0].outTotals,{gross:45,net:36,result:0,holes:9});

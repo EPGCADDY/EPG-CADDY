@@ -1,5 +1,15 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## Delta V406-R8 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| live-hub.js | Restaura búsqueda cerrada y mantiene General/categorías visibles. |
+| index-grupal.html | Release visible V406-R8. |
+| service-worker.js | Caché V406-R8. |
+| test-v406-tournament-categories.mjs | Impide que el listado individual vuelva a desplazar la General. |
+| ROADMAPS, continuidad, pendiente, reincidencias e inventario | Trazabilidad y sello R8. |
+
 ## Delta V406-R7 · 7 de septiembre de 2026
 
 | Archivo | Función |

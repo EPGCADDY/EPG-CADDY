@@ -1,5 +1,12 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
+## Restauración de formato V406-R8
+
+- Al abrir TORNEO LIVE, el listado individual permanece vacío hasta realizar una búsqueda.
+- General, selector de categorías, detalle y tabla de posiciones conservan el esquema anterior.
+- Se conservan los 67 jugadores simulados y todas las reglas operativas V406-R7.
+- Mi Tablero no sustituye la finalidad principal de seguimiento de grupos y posiciones.
+
 ## Clasificación activa V406-R7
 
 - GENERAL, categoría e Individual: actualización automática cada tres segundos y posición por score acumulado.

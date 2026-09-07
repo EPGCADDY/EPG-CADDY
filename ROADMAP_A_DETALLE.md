@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V406-R8 · 7 de septiembre de 2026
+
+`live-hub.js` recupera el estado vacío original de `hubSearchResults` cuando no existe consulta. Así evita que las 67 tarjetas individuales empujen hacia abajo `hubSummary`, `hubCategory`, `hubCategoryCardToggle` y `hubLeaderWrap`. La búsqueda conserva orden por primer nombre, color de categoría y C de Campeonato; el motor R7 conserva hoyos únicos, actualización cada tres segundos, posición por score/mayor avance y estado HOYO/FINAL. Release `V406-R8-RESTORE-LIVE-LAYOUT-20260907`; caché `v406-r8-restore-live-layout`. MAIN no cambia.
+
 ## V406-R7 · 7 de septiembre de 2026
 
 `live-hub.js` deriva hoyos, Gross, Neto y +/− desde una colección única por número de hoyo, publica HOYO ACTUAL/FINAL y ordena por resultado, luego mayor cantidad de hoyos. Esa misma regla alimenta GENERAL, categoría e Individual y se vuelve a ejecutar en cada sondeo de tres segundos. La lista para Mi Tablero se muestra completa, ordenada por primer nombre y con categoría coloreada; Campeonato usa C sobre fondo blanco.
