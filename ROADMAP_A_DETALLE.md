@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V406-R10 · 7 de septiembre de 2026
+
+`live-hub.html/js` añade la portada Centro de Torneos, estado local para cinco accesos y enlaces `shared=1` de sólo lectura. `live-control.js` dirige TORNEO LIVE al Centro y permite que varias scorecards del mismo grupo se conecten sin nombrar capitán. `api/live.js` elimina la exclusividad por nombre de grupo; `tournamentPlayers()` consolida por grupo, jugador y hoyo, conserva el primer valor recibido por el agregador e identifica discrepancias. Release `V406-R10-CENTER-MULTI-TOURNAMENT-20260907`; caché `v406-r10-center-multi-tournament`. MAIN no cambia.
+
 ## V406-R9 · 7 de septiembre de 2026
 
 `live-hub.html` cambia exclusivamente la opción `all` a `GENERAL`. `test-v406-tournament-categories.mjs` exige la nueva etiqueta y proscribe la anterior. Release `V406-R9-RESTORE-LIVE-GENERAL-20260907`; caché `v406-r9-restore-live-general`. MAIN no cambia.

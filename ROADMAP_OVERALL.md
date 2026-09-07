@@ -1,5 +1,12 @@
 # ROADMAP OVERALL
 
+## V406-R10 · Centro de hasta 5 torneos y scorecards multiteléfono · 7 de septiembre de 2026
+
+- `TORNEO LIVE` abre un Centro separado que conserva hasta cinco torneos y permite entrar a cada General/categorías sin compartir la aplicación completa.
+- El enlace público abre únicamente el torneo elegido. La demostración conserva sus 67 jugadores y el esquema visual aprobado.
+- Varios teléfonos del mismo grupo pueden llevar su tarjeta personal; la General consolida una sola vez cada combinación grupo, jugador y hoyo y marca diferencias para chequeo cruzado.
+- MAIN permanece intacta.
+
 ## V406-R9 · selector GENERAL restaurado · 7 de septiembre de 2026
 
 - El selector principal de TORNEO LIVE muestra `GENERAL`, conserva las categorías y mantiene el esquema gráfico R6 restaurado en R8.

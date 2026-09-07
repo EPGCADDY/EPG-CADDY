@@ -1146,6 +1146,14 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 
 ## Continuidad maestra permanente de LAB
 
+## V406-R10 · Centro multitorneo y scorecards concurrentes
+
+| Archivo | Función | Control |
+|---|---|---|
+| `live-hub.html`, `live-hub.js`, `gsc-design-system.css` | Centro de hasta cinco torneos, enlace exclusivo y presentación General/categorías. | La vista compartida no expone la aplicación; 67 jugadores demo permanecen. |
+| `live-control.js`, `api/live.js` | Permiten varias scorecards del mismo grupo sin capitán. | El agregador computa una sola vez cada grupo/jugador/hoyo y conserva discrepancias. |
+| `test-v353-live-hub.mjs` | Simula dos teléfonos con el mismo jugador y hoyo. | Segundo cómputo no altera el total; un hoyo nuevo sí se incorpora. |
+
 | Archivo | Función | Control |
 |---|---|---|
 | `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` | Fuente única para trasladar estado, límites, versiones, enlaces y pendientes entre conversaciones. | Gate 0 exige su presencia; MAIN permanece congelada. |

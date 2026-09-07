@@ -20,6 +20,12 @@
     </header>
 
     <div class="state" id="hubState" role="status" aria-live="polite">LISTO PARA CONECTAR LA GENERAL</div>
+    <section class="tournament-shelf" id="hubTournamentShelf" aria-label="Mis torneos guardados">
+      <h2>CENTRO DE TORNEOS</h2>
+      <p>ELIGE EL TORNEO QUE QUIERES VER.</p>
+      <div class="tournament-cards" id="hubTournamentCards"></div>
+      <button class="secondary" id="hubAddTournament" type="button">+ AGREGAR OTRO TORNEO</button>
+    </section>
     <section class="viewer-entry" id="hubTournamentEntry">
       <h2>VER TORNEO</h2>
       <p>PEGA EL ENLACE QUE TE COMPARTIERON.</p>
@@ -30,6 +36,7 @@
       <button class="active" id="hubShowGeneral" type="button">JUGADORES</button>
       <button id="hubShowIndividual" type="button">MI TABLERO</button>
     </nav>
+    <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← CENTRO DE TORNEOS</button>
 
     <section class="panel monitor-panel" id="hubGeneralPanel">
       <h2>JUGADORES EN VIVO</h2>
@@ -46,7 +53,7 @@
       <details class="viewer-tools"><summary>MÁS OPCIONES</summary><div class="actions">
         <button class="primary" id="hubShareGeneral" type="button">COMPARTIR</button>
         <button class="secondary" id="hubRefresh" type="button">ACTUALIZAR</button>
-        <button class="danger" id="hubRemoveGeneral" type="button">SALIR DEL TORNEO</button>
+        <button class="danger" id="hubRemoveGeneral" type="button">QUITAR ESTE TORNEO</button>
       </div></details>
       <div class="leader-wrap" id="hubLeaderWrap"><div class="empty">ABRE EL ENLACE GENERAL Y TOCA “ABRIR EN CENTRO LIVE”.</div></div>
     </section>

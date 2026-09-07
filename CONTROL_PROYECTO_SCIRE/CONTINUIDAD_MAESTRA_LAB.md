@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V406-R10 · 7 de septiembre de 2026
+
+LAB incorpora Centro de Torneos (máximo cinco), enlace exclusivo por torneo y alimentación multiteléfono sin capitán. La tarjeta de cada teléfono sigue siendo personal; General/categorías deduplican por grupo, jugador y hoyo. Pendiente de cierre: validación física LAB antes de cualquier promoción a MAIN.
+
 ## Continuidad V406-R9 · 7 de septiembre de 2026
 
 El selector de posiciones de TORNEO LIVE se denomina GENERAL; conserva Campeonato, A, B, C, D, Femenina, Senior y S.Senior. Esquema visual R6/R8 y reglas operativas R7 preservados. MAIN intacto.

@@ -71,6 +71,13 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 | RC-048 | Una ronda General vacía abrió el Control Manual en hoyo 18 | El elemento visual conservaba `dataset.hole` de la ronda anterior y no lo invalidaba al restaurar otra identidad de ronda | La prueba anterior cubría ANTERIOR/SIGUIENTE, pero no cambio de ronda con selección residual | Asociar la selección visual a `round.id`; al cambiar de ronda usar primer hoyo pendiente (1 si vacía) y conservar selección sólo dentro de la misma ronda; comprobar las cuatro modalidades | `IMG_2924.png`; `test-v398-manual-opening-hole.mjs` | CORREGIDO EN CANDIDATO; PREVIEW LAB Y EVIDENCIA VISUAL 4/4 PENDIENTES; PRODUCCIÓN INTACTA |
 # RC-049 · HISTORIAL SIN ELIMINACIÓN PERSISTENTE — 06 SEPTIEMBRE 2026
 
+## RC-052 · CAPITÁN ÚNICO CONTRARIO AL USO REAL — 07 SEPTIEMBRE 2026
+
+- Defecto: el mismo grupo rechazaba una segunda scorecard aunque varios jugadores necesitaban anotar y verificar personalmente.
+- Causa raíz: `joinTournament()` bloqueaba por nombre de grupo y el panel imponía un capitán.
+- Medida permanente: permitir conexiones concurrentes; conservar cada tarjeta local; consolidar General/categorías por grupo, jugador y hoyo; un segundo valor no se suma y queda como discrepancia.
+- Evidencia: `test-v353-live-hub.mjs` ejecuta dos teléfonos, mismo jugador/hoyo y un hoyo adicional.
+
 - Defecto: el Historial no ofrecía eliminar mediante pulsación prolongada.
 - Punto de fallo: sólo existían selección y doble toque; `persist()` rearchivaba la ronda activa.
 - Causa raíz: ausencia de contrato de borrado y exclusión por ID.

@@ -1,5 +1,12 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
+## Centro multitorneo V406-R10
+
+- Centro independiente para elegir hasta cinco torneos simultáneos.
+- Enlace compartible restringido al torneo seleccionado.
+- Conexión de varias scorecards por grupo sin capitán y consolidación de cada jugador/hoyo una sola vez en la clasificación.
+- Pendiente: validación física con dos teléfonos reales reportando el mismo hoyo y revisión de discrepancias por organización.
+
 ## Selector V406-R9
 
 - La opción global se llama GENERAL.

@@ -40,8 +40,29 @@ assert.equal(hub.addFollowToState(externalState,externalState.follows[0]).follow
 assert.deepEqual(hub.parseHubHash(`#general=${token("C")}`),{kind:"general",token:token("C")});
 assert.deepEqual(hub.parseHubHash(`#stream=${token("D")}`),{kind:"stream",token:token("D")});
 assert.deepEqual(hub.parseShareLink(`https://golf.example/live.html#tournament=${token("E")}`,"https://golf.example"),{kind:"general",token:token("E")});
+assert.deepEqual(hub.parseShareLink(`https://golf.example/live-hub.html?shared=1#general=${token("E")}`,"https://golf.example"),{kind:"general",token:token("E")});
+assert.deepEqual(hub.parseShareLink("https://golf.example/live-hub.html?shared=1&demo=1","https://golf.example"),{kind:"demo",token:""});
 assert.deepEqual(hub.parseShareLink(`https://golf.example/live.html#stream=${token("F")}`,"https://golf.example"),{kind:"stream",token:token("F")});
 assert.equal(hub.parseShareLink(`https://evil.example/live.html#stream=${token("F")}`,"https://golf.example"),null,"no se importan enlaces de otro origen");
+assert.equal(hub.MAX_SAVED_TOURNAMENTS,5);
+const migrated=hub.normalizeHubState({version:1,generalToken:token("A"),follows:[]});
+assert.equal(migrated.version,2);assert.equal(migrated.tournaments.length,1);assert.equal(migrated.tournaments[0].token,token("A"));
+let multi=hub.normalizeHubState(null);for(const letter of ["A","B","C","D","E"]){const saved=hub.upsertTournamentState(multi,token(letter),`TORNEO ${letter}`);assert.equal(saved.full,false);multi=saved.state}
+assert.equal(multi.tournaments.length,5);const sixth=hub.upsertTournamentState(multi,token("F"),"TORNEO F");assert.equal(sixth.full,true);assert.equal(sixth.state.tournaments.length,5);
+const removedTournament=hub.removeTournamentFromState(multi,token("C"));assert.equal(removedTournament.tournaments.length,4);assert.equal(removedTournament.tournaments.some(item=>item.token===token("C")),false);
+assert.equal(hub.tournamentHubShareUrl(token("A"),"https://golf.example","https://golf.example/live-hub.html"),`https://golf.example/live-hub.html?shared=1#general=${token("A")}`);
+assert.equal(hub.tournamentHubShareUrl("","https://golf.example","https://golf.example/live-hub.html",true),"https://golf.example/live-hub.html?shared=1&demo=1");
+assert.equal(hub.tournamentHubOpenUrl("","https://golf.example","https://golf.example/live-hub.html?_vercel_share=ok",true),"https://golf.example/live-hub.html?_vercel_share=ok&demo=1");
+const phoneOne=makeStream(50,1),phoneTwo=makeStream(50,1);
+phoneOne.id="phone-one";phoneTwo.id="phone-two";phoneOne.groupLabel=phoneTwo.groupLabel="GRUPO 50";
+phoneOne.snapshot.players[0].name=phoneTwo.snapshot.players[0].name="JUGADOR COMPARTIDO";
+phoneOne.snapshot.players[0].holes=[{hole:1,par:4,gross:4,net:3,relativeToPar:-1}];
+phoneTwo.snapshot.players[0].holes=[{hole:1,par:4,gross:5,net:4,relativeToPar:0},{hole:2,par:4,gross:4,net:3,relativeToPar:-1}];
+const consolidated=hub.tournamentPlayers([phoneOne,phoneTwo]);
+assert.equal(consolidated.length,1,"dos teléfonos del mismo grupo no duplican al jugador");
+assert.equal(consolidated[0].holes,2,"cada hoyo se computa una sola vez y los hoyos nuevos sí se incorporan");
+assert.equal(consolidated[0].gross,8,"el segundo cómputo distinto del hoyo 1 no reemplaza al primero");
+assert.equal(consolidated[0].conflicts,1,"la diferencia queda marcada para chequeo cruzado");
 assert.equal(groupKey("  Grupo   001  "),"grupo 001");
 assert.equal(groupKey("GRUPO 001"),"grupo 001");
 
@@ -67,15 +88,12 @@ assert.match(viewer,/root\.open\(hubUrl\(access\),"_blank","noopener,noreferrer"
 assert.match(control,/VER TORNEO LIVE/);
 assert.match(control,/COMPARTIR ♾️ · MUNDIAL/);
 assert.match(control,/WHATSAPP, MENSAJES, CORREO, AIRDROP, X O CUALQUIER APP/);
-assert.match(control,/UN SOLO CAPITÁN DE TARJETA/);
 assert.match(control,/NOMBRE O NÚMERO DEL GRUPO · OBLIGATORIO/);
-assert.match(control,/LIVE_GROUP_ALREADY_PUBLISHING/);
 assert.match(api,/LIVE_GROUP_LABEL_REQUIRED/);
-assert.match(api,/LIVE_GROUP_ALREADY_PUBLISHING/);
+assert.doesNotMatch(`${control}\n${api}`,/CAPITÁN|LIVE_GROUP_ALREADY_PUBLISHING/i,"varios teléfonos del mismo grupo pueden alimentar y verificar el torneo");
 const joinSource=api.slice(api.indexOf("async function joinTournament"),api.indexOf("async function leaveTournament"));
 assert.match(joinSource,/WITH tournament AS MATERIALIZED/);
-assert.match(joinSource,/FOR UPDATE/,"el torneo se bloquea mientras decide el capitán único");
-assert.match(joinSource,/other\.tournament_id=tournament\.id/);
+assert.match(joinSource,/FOR UPDATE/,"el torneo se bloquea mientras conecta cada scorecard");
 assert.match(joinSource,/decision\.outcome_code='APPLY'/,"la unión se aplica dentro de la misma sentencia atómica");
 assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
 assert.match(worker,/"\/live-hub\.html"/);
@@ -84,4 +102,4 @@ assert.match(vercel,/"source"\s*:\s*"\/live-hub\.html"/);
 assert.match(vercel,/live-control\|live-view\|live-hub/);
 assert.doesNotMatch(`${html}\n${client}\n${control}\n${viewerHtml}\n${viewer}`,/\bEPG\b/i,"el nombre interno no aparece en V353 LIVE");
 
-console.log("PASS V353 CENTRO LIVE: 80 jugadores, Monitor General e Individual, compartir mundial, capitán único, privacidad y carga sin máximo fijo");
+console.log("PASS V353 CENTRO LIVE: 80 jugadores, hasta 5 torneos, multiteléfono sin doble cómputo, privacidad y carga sin máximo fijo");

@@ -297,13 +297,6 @@ async function joinTournament(sql,req,body){
             WHERE active.tournament_id=tournament.id AND active.id<>candidate.id
               AND active.status='active' AND active.expires_at>now()
           )+jsonb_array_length(coalesce(candidate.current_snapshot->'players','[]'::jsonb))>${MAX_TOURNAMENT_PLAYERS} THEN 'LIVE_TOURNAMENT_CAPACITY_REACHED'
-          WHEN EXISTS (
-            SELECT 1
-            FROM live_streams other
-            WHERE other.tournament_id=tournament.id AND other.id<>candidate.id
-              AND other.status='active' AND other.expires_at>now()
-              AND lower(regexp_replace(btrim(other.group_label),'[[:space:]]+',' ','g'))=${groupKey(groupLabel)}::text
-          ) THEN 'LIVE_GROUP_ALREADY_PUBLISHING'
           ELSE 'APPLY'
         END AS outcome_code
       FROM (VALUES (1)) AS seed(one)
@@ -339,7 +332,7 @@ async function joinTournament(sql,req,body){
     ) AS applied
     FROM effects
   `,applied=rows[0]?.applied||{};
-  if(!applied.applied){const code=String(applied.code||"LIVE_JOIN_FAILED");throw liveError(code,code==="LIVE_JOIN_CODE_INVALID"?404:["LIVE_GROUP_ALREADY_PUBLISHING","LIVE_TOURNAMENT_CAPACITY_REACHED"].includes(code)?409:code==="LIVE_NOT_ACTIVE"?410:400)}
+  if(!applied.applied){const code=String(applied.code||"LIVE_JOIN_FAILED");throw liveError(code,code==="LIVE_JOIN_CODE_INVALID"?404:code==="LIVE_TOURNAMENT_CAPACITY_REACHED"?409:code==="LIVE_NOT_ACTIVE"?410:400)}
   return{ok:true,joined:true,tournamentId:applied.tournamentId,groupLabel:applied.groupLabel};
 }
 
