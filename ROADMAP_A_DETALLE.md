@@ -2292,3 +2292,4 @@ Frontera: no se modifica MAIN, Producción, lógica funcional, datos, caché, vo
 - Los candados de release R2, R4, R5 y recuperación de ronda avanzan a R23; MAIN/Producción no cambian.
 - `speakClosure` intenta el transporte de audio dedicado antes de abrir una sesión Realtime; si ningún transporte inicia, restablece `announced.front/back/complete` y persiste el reintento. `saveManualHole` prima el audio dentro del gesto ENTER.
 - `test-v406-r23-turn-closure-audio.mjs` exige cierre hablado y recuperación para hoyos 9 y 18.
+<!-- V406-R23 audit evidence: test-v265-first-nine-automatic-result.mjs · test-v406-r23-turn-closure-audio.mjs -->

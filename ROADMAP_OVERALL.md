@@ -1785,3 +1785,4 @@ La captura física `IMG_2949.png` rechaza la Tarjeta Digital anterior: accesos g
 - La descarga no sustituye el shell aprobado: sólo el toque del usuario promueve la versión candidata.
 - `test-v406-r23-visible-version.mjs` fija permanentemente los tres estados anteriores; Producción permanece intacta.
 - ENTER habilita el audio en el gesto del usuario; los cierres de 9/18 priorizan la voz dedicada y un fallo de reproducción rearma el anuncio en vez de perderlo.
+<!-- V406-R23 audit evidence: test-v265-first-nine-automatic-result.mjs · test-v406-r23-turn-closure-audio.mjs -->
