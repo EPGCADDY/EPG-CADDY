@@ -1,5 +1,12 @@
 # ROADMAP OVERALL
 
+## V405-R3 LAB · prueba física del parpadeo ACTUALIZAR · 7 de septiembre de 2026
+
+- `index-grupal.html`: identificación `V405-R3-LAB-UPDATE-BLINK-TEST-20260907` para que V405-R2 detecte automáticamente la actualización y active el botón verde/parpadeante.
+- `service-worker.js`: caché `v405-r3-update-blink-test`.
+- `test-v365-active-round-empty-recovery.mjs`: fija ambos identificadores y conserva detección automática, `persist()` y actualización en el mismo dominio.
+- Prueba temporal sólo en LAB; no cambia lógica, sesión, jugadores, scores, historial, voz ni MAIN.
+
 ![ROADMAP OVERALL · Golf Score Card GT](ROADMAP_OVERALL_V291.png)
 
 ## V332 · moneda dual y matriz completa de seguimiento
