@@ -34,6 +34,8 @@ for(const phrase of ["aquí","acá","aquí mismo","mi ubicación actual","donde 
   assert.deepEqual(directTrafficRouteFromQuery(`¿Cuánto tráfico hay de ${phrase} a Pradera Concepción, Guatemala?`),{origin:"Ubicación GPS actual",destination:"Pradera Concepción, Guatemala"});
 }
 
+assert.deepEqual(directTrafficRouteFromQuery("¿Cuánto tiempo hay de acá para el parque central de la zona uno?"),{origin:"Ubicación GPS actual",destination:"el parque central de la zona uno"});
+
 const summary=summarizeTrafficRoute({routes:[{duration:"2100s",staticDuration:"1500s",distanceMeters:18640}]},{originLabel:"Ubicación GPS actual",destinationLabel:"Pradera Concepción, Guatemala",calculatedAt:"2026-08-26T14:00:00.000Z"});
 assert.equal(summary.ok,true);
 assert.equal(summary.durationMinutes,35);

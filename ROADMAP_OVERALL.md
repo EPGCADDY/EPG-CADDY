@@ -1594,3 +1594,5 @@ RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/
 * RC-059 CIERRE V289 · El arnés aislado declara archivado, limpieza de claves y captura; V289/V364 validan NUEVA RONDA Stableford sin herencia cruzada.
 
 * RC-060 · Registro Stableford oculta físicamente el main anterior mientras el overlay está visible; evita mostrar jugadores/scores archivados debajo del formulario vacío.
+
+* RC-061 · Tráfico GPS acepta el conector «de acá para DESTINO»; la frase exacta «de acá para el parque central de la zona uno» resuelve origen GPS sin pedirlo al usuario.
