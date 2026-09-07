@@ -1588,3 +1588,5 @@ RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/
 * RC-059 · NUEVA RONDA Stableford limpia estado activo heredado de General, Match Play y Four Ball antes de abrir Registro; prueba física cruzada originó la corrección y V364 cubre la regresión. Producción intacta.
 
 * RC-059 ATÓMICO · Ambos roadmaps registran conjuntamente la corrección Stableford derivada de prueba física; pendiente de repetición publicada antes de aprobación.
+
+* RC-059 SELLO FINAL · Código, regresión, Roadmap Overall, Roadmap A Detalle e inventario quedan unidos en el mismo commit preventivo.

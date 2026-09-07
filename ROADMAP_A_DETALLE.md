@@ -2052,3 +2052,5 @@ RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/
 * RC-059 · `openFreshStablefordSetup()` archiva la ronda anterior, elimina todas las claves activas y limpia jugadores, scores, borradores y captura antes de mostrar Registro Stableford. Verificación física requerida en LAB; Producción intacta.
 
 * RC-059 ATÓMICO · Ambos roadmaps registran conjuntamente la corrección Stableford derivada de prueba física; pendiente de repetición publicada antes de aprobación.
+
+* RC-059 SELLO FINAL · Código, regresión, Roadmap Overall, Roadmap A Detalle e inventario quedan unidos en el mismo commit preventivo.
