@@ -1,5 +1,13 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## Delta V406-R9 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| live-hub.html | Selector global rotulado GENERAL. |
+| index-grupal.html / service-worker.js | Release y caché R9. |
+| test-v406-tournament-categories.mjs | Candado positivo GENERAL y negativo del texto anterior. |
+
 ## Delta V406-R8 · 7 de septiembre de 2026
 
 | Archivo | Función |

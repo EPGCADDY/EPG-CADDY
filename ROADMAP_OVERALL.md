@@ -1,5 +1,10 @@
 # ROADMAP OVERALL
 
+## V406-R9 · selector GENERAL restaurado · 7 de septiembre de 2026
+
+- El selector principal de TORNEO LIVE muestra `GENERAL`, conserva las categorías y mantiene el esquema gráfico R6 restaurado en R8.
+- Prueba negativa prohíbe el regreso de `TODAS LAS CATEGORÍAS`. MAIN permanece intacto.
+
 ## V406-R8 · restauración del esquema LIVE · 7 de septiembre de 2026
 
 - Se restaura la composición visual V406-R6: al abrir no se despliega el listado individual, de modo que General, selector de categorías y posiciones permanecen visibles en su ubicación anterior.

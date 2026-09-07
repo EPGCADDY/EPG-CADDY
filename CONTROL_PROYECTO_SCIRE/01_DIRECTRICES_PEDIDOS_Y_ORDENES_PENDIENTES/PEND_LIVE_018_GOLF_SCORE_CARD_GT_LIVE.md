@@ -1,5 +1,10 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
+## Selector V406-R9
+
+- La opción global se llama GENERAL.
+- La etiqueta anterior TODAS LAS CATEGORÍAS queda prohibida por prueba automática.
+
 ## Restauración de formato V406-R8
 
 - Al abrir TORNEO LIVE, el listado individual permanece vacío hasta realizar una búsqueda.

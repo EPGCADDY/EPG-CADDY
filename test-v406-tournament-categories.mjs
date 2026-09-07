@@ -17,6 +17,8 @@ assert.match(joinSource,/WITH tournament AS MATERIALIZED[\s\S]*FOR UPDATE/,"unir
 assert.match(joinSource,/LIVE_TOURNAMENT_CAPACITY_REACHED/);
 assert.match(live,/LIVE_TOURNAMENT_CAPACITY_REACHED:"TORNEO COMPLETO · MÁXIMO 100 JUGADORES"/);
 assert.match(hubHtml,/id="hubCategory"/);
+assert.match(hubHtml,/<option value="all">GENERAL<\/option>/);
+assert.doesNotMatch(hubHtml,/<option value="all">TODAS LAS CATEGORÍAS<\/option>/);
 assert.match(hubHtml,/VER DETALLE LIVE DE CATEGORÍA/);
 assert.match(hubHtml,/NO CREA TARJETA NI EDITA SCORES/);
 const streams=new Map([["g1",{id:"g1",groupLabel:"GRUPO 1",snapshot:{players:[{id:"p1",name:"PAPÁ",tournamentCategory:"senior",totals:{holes:4,net:18,relativeToPar:1}},{id:"p2",name:"MAMÁ",tournamentCategory:"female",totals:{holes:4,net:17,relativeToPar:0}}]}}]]);

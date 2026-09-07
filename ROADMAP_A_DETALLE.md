@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V406-R9 · 7 de septiembre de 2026
+
+`live-hub.html` cambia exclusivamente la opción `all` a `GENERAL`. `test-v406-tournament-categories.mjs` exige la nueva etiqueta y proscribe la anterior. Release `V406-R9-RESTORE-LIVE-GENERAL-20260907`; caché `v406-r9-restore-live-general`. MAIN no cambia.
+
 ## V406-R8 · 7 de septiembre de 2026
 
 `live-hub.js` recupera el estado vacío original de `hubSearchResults` cuando no existe consulta. Así evita que las 67 tarjetas individuales empujen hacia abajo `hubSummary`, `hubCategory`, `hubCategoryCardToggle` y `hubLeaderWrap`. La búsqueda conserva orden por primer nombre, color de categoría y C de Campeonato; el motor R7 conserva hoyos únicos, actualización cada tres segundos, posición por score/mayor avance y estado HOYO/FINAL. Release `V406-R8-RESTORE-LIVE-LAYOUT-20260907`; caché `v406-r8-restore-live-layout`. MAIN no cambia.
