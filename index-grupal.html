@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V406-R14-UPDATE-PULSE-SETTLES-20260907">
+  <meta name="gscg-release" content="V406-R15-CONFIRMED-CLEAR-ALL-20260907">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -719,7 +719,7 @@ body.gsc-final-card-open .mandatory-update{display:none!important}
   <section class="summary"><div class="summary-title" id="summaryTitle">INFORMACIÓN DE RONDA</div><table><thead><tr id="summaryHeadRow"><th class="summary-player">JUGADOR</th><th>GROSS IN</th><th>GROSS OUT</th><th>GROSS TOTAL</th><th>HCP</th><th>NETO TOTAL</th><th>+/- NETO</th></tr></thead><tbody id="summaryBody"></tbody></table></section>
   <section class="stableford-series hidden" id="stablefordSeriesSection"><div class="summary-title">CLASIFICACIÓN ACUMULADA · MEJORES 3 DE 4</div><div class="stableford-series-tabs"><button type="button" id="stablefordSeniorTab">SENIOR</button><button type="button" id="stablefordSuperSeniorTab">S. SENIOR</button></div><table><thead><tr><th>POS.</th><th>JUGADOR</th><th>F1</th><th>F2</th><th>F3</th><th>F4</th><th>MEJORES 3</th></tr></thead><tbody id="stablefordStandingsBody"></tbody></table><div class="stableford-series-actions"><button type="button" id="openStablefordResult">AGREGAR RESULTADO OFICIAL</button></div></section>
   <div class="round-actions"><button id="finalCardButton">TARJETA DIGITAL</button><button id="openCardLibraryButton">HISTORIAL</button><button class="hidden" id="previousRoundButton">RONDA PREVIA</button><button id="newRoundButton">NUEVA RONDA</button></div>
-  <div class="round-secondary-actions" id="roundSecondaryActions"><button class="back-registration-button" id="backToRegistrationButton" aria-label="Atrás: volver a la pantalla principal" title="Volver a la pantalla principal">ATRÁS</button><button class="clear-round-scores" id="clearRoundScores" type="button">BORRAR SCORES</button><button class="back-registration-button add-player-button hidden" id="addPlayerButton" aria-label="Agregar jugador a la ronda" title="Agregar jugador">+ JUGADOR</button></div>
+  <div class="round-secondary-actions" id="roundSecondaryActions"><button class="back-registration-button" id="backToRegistrationButton" aria-label="Atrás: volver a la pantalla principal" title="Volver a la pantalla principal">ATRÁS</button><button class="clear-round-scores" id="clearRoundScores" type="button">BORRAR TODO</button><button class="back-registration-button add-player-button hidden" id="addPlayerButton" aria-label="Agregar jugador a la ronda" title="Agregar jugador">+ JUGADOR</button></div>
 </main>
 
 <div class="overlay" id="finalCardOverlay" aria-hidden="true">
@@ -3519,6 +3519,7 @@ function closeFinalDigitalCard(){
   document.body?.classList.remove("gsc-final-card-open");
 }
 function clearAllRegistrationPlayers(){
+  if(!window.confirm("¿CONFIRMAS BORRAR JUGADORES, SCORES Y RONDA ACTIVA?\n\nEsta acción no se puede deshacer."))return false;
   const removedRoundId=round?.configured?String(round.id||""):"";
   teardownRealtime();
   if(removedRoundId)deleteRoundFromArchive(removedRoundId);
@@ -3532,6 +3533,8 @@ function clearAllRegistrationPlayers(){
   resetSetupCapture();
   render();
   renderDraft();
+  dateSetup();
+  openSetup("new");
   $("setupStatus").textContent="RONDA Y REGISTRO BORRADOS · INICIO LIMPIO";
   return true;
 }
@@ -4136,7 +4139,7 @@ function renderRoundManualEntry(){
   manual.querySelector("#roundGridNext").onclick=()=>navigateManualHole(selectedHole+1);
   const saveManualHole=()=>{const entries=[];for(const input of manual.querySelectorAll(".round-grid-gross")){if(input.value.trim()==="")continue;const entry=manualScoreEntry(input.dataset.playerId,selectedHole,input.value);if(!entry)return roundGridStatus("SCORE INVÁLIDO");entries.push(entry)}const result=applyManualScoreEntries(entries);return!!result?.ok};
   manual.querySelector("#roundGridEnter").onclick=saveManualHole;manual.querySelectorAll(".round-grid-gross").forEach(input=>input.onkeydown=event=>{if(event.key==="Enter"){event.preventDefault();saveManualHole()}});
-  const clearButton=document.getElementById("clearRoundScores");clearButton.disabled=locked;clearButton.setAttribute("aria-disabled",String(locked));clearButton.onclick=()=>{if(locked||!window.confirm("¿BORRAR ÚNICAMENTE TODOS LOS SCORES DE LOS HOYOS?\nSe conservarán jugadores, campo, categoría, marcas y configuración."))return;round.players.forEach(player=>{player.holes={};player.lastHole=0});round.announced={front:false,back:false,complete:false};manual.dataset.hole="1";persist();render()}
+  const clearButton=document.getElementById("clearRoundScores");clearButton.disabled=locked;clearButton.setAttribute("aria-disabled",String(locked));clearButton.onclick=()=>{if(locked)return;clearAllRegistrationPlayers()}
 }
 function bindRoundManualCells(){
   const matchState=activeTeamMatchStatus();

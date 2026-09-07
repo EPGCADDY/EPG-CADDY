@@ -2,7 +2,7 @@
 
 ## Corrección transversal V406-R11
 
-`BORRAR TODO` elimina la ronda activa y obliga reapertura en Inicio sin afectar los demás torneos LIVE ni otras rondas oficiales del Historial. Prueba física iPhone pendiente.
+`BORRAR TODO`, visible en Registro y en todas las tarjetas/modos, elimina jugadores, scores y ronda activa sólo después de confirmación; obliga reapertura en Inicio sin afectar los demás torneos LIVE ni otras rondas oficiales del Historial. Prueba física iPhone pendiente.
 
 ## Centro multitorneo V406-R10
 
@@ -49,7 +49,7 @@
 
 - Barra estructural para LIVE, REGLAS, AI ∞ y Support.
 - Selectores CATEGORÍA y MARCAS explícitos.
-- Fila ATRÁS, BORRAR SCORES y + JUGADOR.
+- Fila ATRÁS, BORRAR TODO y + JUGADOR, con confirmación obligatoria antes de borrar.
 - Banco visual: 67 participantes, distribución 7/6/24/11/7/7/5.
 
 ## Ampliación V406-R2 · categorías de torneo

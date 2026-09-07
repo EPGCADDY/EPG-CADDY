@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V406-R15 · 7 de septiembre de 2026
+
+Todas las modalidades comparten en la tarjeta el control `BORRAR TODO`, nunca `BORRAR SCORES`. Registro y tarjeta delegan en `clearAllRegistrationPlayers()` y exigen confirmación antes de eliminar jugadores, scores y ronda activa. CANCELAR no modifica datos; aceptar vuelve a Registro nuevo y la ronda eliminada no puede reaparecer desde almacenamiento ni Historial. La liberación exige abrir físicamente General, Stableford, Match Play, Four Ball, Práctica, Skins, Wolf, Vegas y Dots y comprobar el control compartido en cada recorrido.
+
 ## Continuidad V406-R14 · 7 de septiembre de 2026
 
 R13 fue rechazado en recorrido visual real: después de tocar ACTUALIZAR continuaba verde/parpadeante aun con el mismo release. R14 restaura el contrato obligatorio: apagado cuando está vigente, verde/parpadeante sólo ante un release remoto distinto, con `persist()` antes de recargar. Pendientes bloqueantes: regresión integral R14, Preview LAB READY y recorrido visual publicado actualización→conservación→apagado. MAIN/Producción permanecen intactas.
@@ -34,7 +38,7 @@ TORNEO LIVE abierto desde LAB sin enlace muestra una demostración temporal de 6
 
 ## Continuidad V406-R4 · 7 de septiembre de 2026
 
-LIVE, REGLAS, AI ∞ y Support quedan dentro del flujo. Registro diferencia CATEGORÍA y MARCAS. ATRÁS, BORRAR SCORES y + JUGADOR comparten fila. La escala se verifica con 67 nombres temporales por categorías 7/6/24/11/7/7/5, sin alterar datos reales ni fijar cantidades.
+LIVE, REGLAS, AI ∞ y Support quedan dentro del flujo. Registro diferencia CATEGORÍA y MARCAS. ATRÁS, BORRAR TODO y + JUGADOR comparten fila. La escala se verifica con 67 nombres temporales por categorías 7/6/24/11/7/7/5, sin alterar datos reales ni fijar cantidades.
 
 ## Continuidad V406-R2 · 7 de septiembre de 2026
 

@@ -1,5 +1,11 @@
 # ROADMAP OVERALL
 
+## V406-R15 · BORRAR TODO unificado y confirmado · 7 de septiembre de 2026
+
+- Registro y tarjeta muestran la misma acción `BORRAR TODO`.
+- Ambos piden confirmación explícita antes de eliminar jugadores, scores y ronda activa; CANCELAR no cambia datos.
+- Al confirmar, la app elimina las seis claves activas, marca el ID borrado y abre Inicio limpio. Producción permanece intacta.
+
 ## V406-R14-S1 · recuperación atómica del deployment · 7 de septiembre de 2026
 
 - El primer upload R14 llegó truncado; el segundo restauró el árbol exacto, pero Vercel exigió una modificación nueva y simultánea de ambos ROADMAPS.

@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V406-R15 · 7 de septiembre de 2026
+
+`clearAllRegistrationPlayers()` incorpora confirmación obligatoria y se convierte en el único escritor de borrado total desde Registro y tarjeta. `clearRoundScores` cambia su etiqueta a BORRAR TODO y delega en esa función. La confirmación negativa retorna sin mutar; la positiva elimina ronda/jugadores/scores y ejecuta `openSetup("new")`. Manual 27, V287, V365, V405 y V406 se alinean. Release/caché R15; Producción intacta.
+
 ## V406-R14-S1 · 7 de septiembre de 2026
 
 El blob remoto inicial de `index-grupal.html` no coincidió con SHA local; fue sustituido por SHA Git `0e2ecc8db5ab5e0ad97e4aa3482d9fdae103242d` y el árbol completo por `1ced8ee7a18002e3ad905c44eedcc6c1c678fd42`. Este resellado modifica conjuntamente ambos ROADMAPS y `INVENTARIOS_V311.lock.json` para que el gate de Vercel evalúe una unidad atómica posterior al commit corrupto. No cambia la lógica R14 ni Producción.
