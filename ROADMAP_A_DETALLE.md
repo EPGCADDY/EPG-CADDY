@@ -1,5 +1,12 @@
 # ROADMAP A DETALLE
 
+## V406-R21 · 7 de septiembre de 2026
+
+- `live-hub.js`: `favoriteStreams()` combina respaldo demo y streams visibles; lo vigente reemplaza al respaldo por ID.
+- `renderFavorites()` resuelve favoritos contra esa colección persistente y conserva posiciones separadas por fuente.
+- `test-v353-live-hub.mjs`: exige que S.SENIOR 04 conserve la ronda al cambiar a un torneo ajeno/TORNEO GUARDADO.
+- Release, caché, continuidad y RC-078 avanzan juntos; Preview y recorrido físico siguen obligatorios.
+
 ## V406-R20 · 7 de septiembre de 2026
 
 - `index-grupal.html`: recupera `overflow-y:auto` al iniciar, `pageshow`, foco y visibilidad; las capas visibles restauran desplazamiento táctil con inercia iOS.

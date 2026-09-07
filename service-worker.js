@@ -1,7 +1,7 @@
 "use strict";
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v406-r20-ios-scroll-recovery`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v406-r21-persistent-demo-rounds`;
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,

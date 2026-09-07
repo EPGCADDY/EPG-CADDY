@@ -43,6 +43,8 @@ const demoFollow=hub.addFollowToState(null,{key:demoPlayer.streamId+":"+demoPlay
 const resolvedDemo=hub.resolveFollows(demoFollow,demoStreams,new Map());
 assert.equal(resolvedDemo.length,1,"Mi Tablero recibe al jugador elegido en la demostración");
 assert.equal(resolvedDemo[0].players[0].name,"S.SENIOR 04","el jugador elegido se muestra operativo y no como enlace no disponible");
+const unrelatedTournament=new Map([["real-group",makeStream(99,2)]]),persistentDemo=hub.resolveFollows(demoFollow,hub.favoriteStreams(unrelatedTournament),new Map());
+assert.equal(persistentDemo[0].players[0].name,"S.SENIOR 04","el jugador demo conserva su ronda al volver a TORNEO GUARDADO");
 
 assert.deepEqual(hub.parseHubHash(`#general=${token("C")}`),{kind:"general",token:token("C")});
 assert.deepEqual(hub.parseHubHash(`#stream=${token("D")}`),{kind:"stream",token:token("D")});

@@ -1,5 +1,9 @@
 # ROADMAP OVERALL
 
+## V406-R21 · rondas demo persistentes en MI TABLERO · 7 de septiembre de 2026
+
+S.SENIOR 04, FEMENINA 01 y A 05 conservan sus rondas simuladas aunque MI TABLERO se abra desde TORNEO GUARDADO. El catálogo demo actúa como respaldo local y los datos LIVE vigentes tienen prioridad. `IMG_3041.png` y RC-078 documentan el escape de R19. Producción intacta.
+
 ## V406-R20 · recuperación de desplazamiento iPhone · 7 de septiembre de 2026
 
 La aplicación instalada recupera el desplazamiento vertical en apertura, `pageshow`, foco y retorno desde segundo plano. Las capas móviles usan inercia táctil de iOS y `pan-y`; release y caché R20 obligan a renovar el shell. El reporte físico de congelamiento y ausencia de aviso queda en RC-077. Producción intacta.

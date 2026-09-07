@@ -78,6 +78,7 @@
     return new Map(Array.from({length:Math.ceil(players.length/4)},(_,group)=>{const id=`demo-group-${group+1}`;return[id,{id,groupLabel:`GRUPO ${group+1}`,snapshot:{tournament:"TORNEO DEMOSTRACIÓN",playedAt:new Date().toISOString(),course:"EL PULTÉ GOLF",mode:"general",status:"active",courseHoles:Array.from({length:18},(_,hole)=>({hole:hole+1,par:4})),players:players.slice(group*4,group*4+4)}}]}));
   }
   function displayStreams(){return generalStreams.size||!demoMode()?generalStreams:demoTournamentStreams()}
+  function favoriteStreams(streams){const combined=demoTournamentStreams();for(const [id,stream] of generalStreamMap(streams))combined.set(id,stream);return combined}
   function categoryIndex(streams){const index={};for(const item of tournamentPlayers(streams)){const key=item.tournamentCategory||"uncategorized";(index[key]||(index[key]=[])).push(item)}return index}
   function visibleTournamentPlayers(streams){const category=selectedCategory();return tournamentPlayers(streams).filter(item=>category==="all"||item.tournamentCategory===category)}
   function buildLeaderboard(streams){
@@ -138,7 +139,7 @@
     return resolved.players.map(player=>{const totals=livePlayerTotals(player),rank=rankByPlayer.get(resolved.stream.id+":"+player.id)||"—";return'<article class="favorite"><header class="favorite-head"><div><h3>#'+escapeHtml(rank)+' · '+escapeHtml(player.name)+'</h3><small>'+escapeHtml(resolved.stream.groupLabel||snapshot.groupLabel)+' · '+escapeHtml(snapshot.course||"CAMPO")+'</small></div><button class="remove" data-remove="'+escapeHtml(resolved.item.key)+'">×</button></header><div class="favorite-body"><div class="favorite-totals"><div><small>HOYO ACTUAL</small><b>'+(totals.finished?'FINAL':escapeHtml(totals.currentHole||'—'))+'</b></div><div><small>GROSS</small><b>'+escapeHtml(totals.gross)+'</b></div><div><small>NETO</small><b>'+escapeHtml(totals.net)+'</b></div><div><small>+/−</small><b class="'+(totals.relativeToPar<0?"under":totals.relativeToPar>0?"over":"")+'">'+relation(totals.relativeToPar)+'</b></div></div>'+scoreRows(player,snapshot)+'</div></article>'}).join("");
   }
   function renderFavorites(){
-    const streams=displayStreams(),target=$("hubFavorites"),resolved=resolveFollows(state,streams,externalStreams);if(!target)return;const rankByPlayer=new Map(buildLeaderboard(streams).map(item=>[item.streamId+":"+item.playerId,item.rank]));
+    const visible=displayStreams(),streams=favoriteStreams(visible),target=$("hubFavorites"),resolved=resolveFollows(state,streams,externalStreams);if(!target)return;const rankByPlayer=new Map([...buildLeaderboard(demoTournamentStreams()),...buildLeaderboard(visible)].map(item=>[item.streamId+":"+item.playerId,item.rank]));
     target.innerHTML=resolved.length?resolved.map(item=>favoriteCard(item,rankByPlayer)).join(""):'<div class="empty">EN EL MONITOR GENERAL, BUSCA UN JUGADOR Y TOCA + SEGUIR.</div>';
     target.querySelectorAll("[data-remove]").forEach(button=>button.onclick=()=>{state=removeFollowFromState(state,button.dataset.remove);saveState();renderAll()});
   }
@@ -236,5 +237,5 @@
     renderAll();if(imported)await importAccess(imported);else if(tournamentPortalOpen)setStatus("ELIGE UN TORNEO · PUEDES GUARDAR HASTA 5","");else await refresh();return true;
   }
 
-  return{STORAGE_KEY,POLL_MS,MAX_SAVED_TOURNAMENTS,TOKEN_PATTERN,CATEGORY_LABELS,CATEGORY_DEFAULT_TEES,DEMO_DISTRIBUTION,demoTournamentStreams,parseHubHash,parseShareLink,generalShareUrl,tournamentHubShareUrl,tournamentHubOpenUrl,normalizeHubState,upsertTournamentState,removeTournamentFromState,addFollowToState,removeFollowFromState,uniquePlayerHoles,livePlayerTotals,tournamentPlayers,categoryIndex,categoryShortLabel,buildLeaderboard,categoryScoreboardRows,liveDate,modeLabel,unresolvedFollowTokens,resolveFollows,start};
+  return{STORAGE_KEY,POLL_MS,MAX_SAVED_TOURNAMENTS,TOKEN_PATTERN,CATEGORY_LABELS,CATEGORY_DEFAULT_TEES,DEMO_DISTRIBUTION,demoTournamentStreams,favoriteStreams,parseHubHash,parseShareLink,generalShareUrl,tournamentHubShareUrl,tournamentHubOpenUrl,normalizeHubState,upsertTournamentState,removeTournamentFromState,addFollowToState,removeFollowFromState,uniquePlayerHoles,livePlayerTotals,tournamentPlayers,categoryIndex,categoryShortLabel,buildLeaderboard,categoryScoreboardRows,liveDate,modeLabel,unresolvedFollowTokens,resolveFollows,start};
 });

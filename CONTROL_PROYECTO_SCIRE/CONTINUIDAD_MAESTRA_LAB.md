@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V406-R21 · 7 de septiembre de 2026
+
+`IMG_3041.png` confirmó que S.SENIOR 04, FEMENINA 01 y A 05 seguían guardados pero volvían a `ENLACE NO DISPONIBLE` al entrar por TORNEO GUARDADO. R19 sólo añadía las rondas demo mientras la URL conservaba `demo=1`. R21 mantiene el catálogo demo como fuente local de respaldo y superpone cualquier stream LIVE vigente; los favoritos demo conservan su tarjeta al cambiar de pantalla o torneo, sin consultas extra. Revisión física publicada pendiente; Producción intacta.
+
 ## Continuidad V406-R20 · 7 de septiembre de 2026
 
 El propietario reportó dos fallos físicos en iPhone: el acceso instalado puede abrir como una imagen inmóvil sin desplazamiento y `ACTUALIZAR` permanece oscuro sin aviso. R20 restaura `overflow-y:auto` al cargar, volver desde segundo plano y recuperar foco; las capas de Registro reciben desplazamiento táctil nativo. Release y caché avanzan juntos para forzar la renovación del shell. `ACTUALIZAR` oscuro sigue significando release cargado vigente; verde y parpadeante significa release distinto publicado. Revisión física publicada pendiente; Producción intacta.
