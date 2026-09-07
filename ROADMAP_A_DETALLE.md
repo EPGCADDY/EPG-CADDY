@@ -1,5 +1,16 @@
 # ROADMAP A DETALLE
 
+## V405-R4 LAB estable · 7 de septiembre de 2026
+
+| Control | Evidencia/resultado |
+|---|---|
+| Identificación final | `index-grupal.html` usa `V405-R4-LAB-STABLE-20260907`; `service-worker.js` usa `v405-r4-lab-stable`; la prueba V365 fija ambos. |
+| ACTUALIZAR físico | En iPhone detectó R3 sin refresco, parpadeó verde, actualizó y volvió a oscuro. |
+| BORRAR TODO físico | El propietario confirmó funcionamiento correcto en Registro iPhone. |
+| Vercel Toolbar | Preview/Preproducción `Off`; Producción `Default`; la configuración se aplica mediante un deployment nuevo de LAB. |
+
+Pendiente: comprobar físicamente que V405-R4 ya no inyecte Toolbar y continuar tarjetas digitales 4/4. MAIN no cambia.
+
 ## V405-R3 LAB · prueba física del parpadeo ACTUALIZAR · 7 de septiembre de 2026
 
 | Archivo | Cambio mínimo | Aceptación |

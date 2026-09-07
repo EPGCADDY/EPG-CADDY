@@ -1,5 +1,13 @@
 # ROADMAP OVERALL
 
+## V405-R4 LAB estable · cierre de prueba ACTUALIZAR y Toolbar apagada · 7 de septiembre de 2026
+
+- Retira la identificación temporal R3 y publica `V405-R4-LAB-STABLE-20260907` con caché `v405-r4-lab-stable`.
+- Evidencia física del propietario: `ACTUALIZAR` detectó sin refresco, se mostró verde/parpadeante y, al pulsarlo, instaló R3 y volvió a oscuro.
+- Evidencia física del propietario: `BORRAR TODO` funcionó correctamente en Registro iPhone.
+- Configuración Vercel del proyecto `epg-caddy`: Toolbar `Off` en Preview/Preproducción y Producción conservada en `Default`; requiere este deployment LAB nuevo para entrar en vigor.
+- MAIN permanece intacta.
+
 ## V405-R3 LAB · prueba física del parpadeo ACTUALIZAR · 7 de septiembre de 2026
 
 - `index-grupal.html`: identificación `V405-R3-LAB-UPDATE-BLINK-TEST-20260907` para que V405-R2 detecte automáticamente la actualización y active el botón verde/parpadeante.
