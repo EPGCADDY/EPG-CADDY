@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V406-R14 · 7 de septiembre de 2026
+
+`gscg-release` avanza a `V406-R14-UPDATE-PULSE-SETTLES-20260907` y `ACTIVE_CACHE_NAME` a `v406-r14-update-pulse-settles`. `mandatoryUpdate` nace sin `.available`; el botón nace `disabled` y `aria-disabled=true`. `syncPublishedAppVersion()` delega exclusivamente en `showMandatoryUpdate(published)`, que sólo habilita y anima cuando el release remoto difiere de `CURRENT_APP_BUILD`. La recarga posterior al toque conserva `persist()` y apaga el control al comprobar igualdad. V365 y V406-R2 fijan el contrato; RC-071 registra el fallo físico de R13. Producción no cambia.
+
 ## V406-R13 · 7 de septiembre de 2026
 
 `gscg-release` avanza a `V406-R13-ALWAYS-UPDATE-PULSE-20260907` y `ACTIVE_CACHE_NAME` a `v406-r13-always-update-pulse`. `pendingPublishedBuild` inicia con el release cargado; el botón `ACTUALIZAR` nace habilitado dentro de `.mandatory-update.available`; cada consulta `no-store` conserva ese estado y cada toque recarga el release publicado preservando la sesión. V365 y las pruebas V406 R2/R4/R5 exigen release, caché, animación y habilitación permanentes; V405/V368 conservan borrado e Inicio. RC-070 documenta el escape R11 y la corrección R13. Producción no cambia.

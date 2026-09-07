@@ -1,5 +1,13 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## Delta V406-R14 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| `index-grupal.html`, `service-worker.js` | Apagan ACTUALIZAR cuando el release cargado coincide y lo encienden sólo ante una versión remota distinta; caché R14. |
+| `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs` | Fijan release/caché R14, estado inicial apagado y activación condicionada. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTINUIDAD_MAESTRA_LAB.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md` | Registran el rechazo físico de R13, corrección R14, evidencia y pendientes. |
+
 ## Delta V406-R13 · 7 de septiembre de 2026
 
 | Archivo | Función |

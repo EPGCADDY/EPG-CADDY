@@ -1,5 +1,12 @@
 # ROADMAP OVERALL
 
+## V406-R14 · ACTUALIZAR se apaga al quedar vigente · 7 de septiembre de 2026
+
+- La revisión visual real rechazó R13 porque el botón seguía verde y parpadeando después de cargar el mismo release.
+- `index-grupal.html` inicia `ACTUALIZAR` apagado y deshabilitado; sólo `showMandatoryUpdate()` lo enciende cuando el release publicado difiere del cargado.
+- Después de actualizar, la nueva carga compara el mismo release y mantiene el botón apagado, conservando la ronda mediante `persist()`.
+- `service-worker.js` usa caché R14 y las pruebas V365/V406 bloquean el regreso al pulso permanente. MAIN/Producción permanecen intactas.
+
 ## V406-R13 · actualización siempre visible y verificable · 7 de septiembre de 2026
 
 - `index-grupal.html` cambia el release público a `V406-R13-ALWAYS-UPDATE-PULSE-20260907` y mantiene `ACTUALIZAR` verde, habilitado y parpadeante aun cuando ya se cargó la última versión.
