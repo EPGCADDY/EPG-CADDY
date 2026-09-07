@@ -1587,6 +1587,8 @@ RC-057-S6: Comunicación Universal reconoce referencias amplias a la ubicación 
 
 `api/voice-speech.js` conserva Fish Audio `s2.1-pro-free`, `es-419`, sin ID fijo y velocidad exacta `0.90`, pero elimina la instrucción contradictoria “pronunciación castellana”: exige español latinoamericano natural para Guatemala, sin ceceo ni acento de España. `index-grupal.html` prohíbe que una respuesta española caiga a `speechSynthesis` local; si Fish falla, muestra error en vez de reproducir un locutor español no autorizado. Los límites máximos bajan exactamente a la mitad: AI Universal `55→27.5 s`, Fish `45→22.5 s`, y el máximo de salida hablado se reduce 50% sin bajar el razonamiento de preguntas profundas. Registro, scores, sensibilidad, umbrales y `service-worker.js` no cambian. Producción intacta; aprobación auditiva física del Preview pendiente.
 
+V402-S1: sello de inventario alineado con los tres PDF remotos existentes y publicado junto con ambos ROADMAPS; no cambia código funcional ni Producción.
+
 RC-058: el diálogo `ELIMINAR RONDA` bloquea selección de texto y menú Copiar/Buscar en iPhone mediante `user-select:none` y `-webkit-touch-callout:none`; confirmación y borrado permanecen iguales. `service-worker.js` usa `v401-rc058-fresh-shell` para que el dispositivo reciba también el flujo vigente de `NUEVA RONDA`. V364/V365/V368/V397/V398 e Intocables PASS. Producción intacta.
 
 * RC-059 · NUEVA RONDA Stableford limpia estado activo heredado de General, Match Play y Four Ball antes de abrir Registro; prueba física cruzada originó la corrección y V364 cubre la regresión. Producción intacta.
