@@ -620,3 +620,9 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Release de caché `V407-R5A-MOBILE-GRIDS-20260908`: `service-worker.js`, versión visible y pruebas de versión obligan al iPhone a descargar esta corrección en lugar de reutilizar R5.
 - Corrección APP-32–37: Historial, vacío, filtros, eliminación y Estadísticas comparten área segura, superficies grafito, controles de 52 px, retículas contenidas y ritmo móvil homogéneo; la auditoría maestra incorpora `test-v407-r5a-history-visual-system.mjs` como paquete 124.
 - Regresión R5A: `test-v260-round-points-player-return.mjs` se sincroniza con la retícula móvil contenida de seis columnas; el primer build `dpl_8SSK4fASsW8PBGnPasaK7gP8gT37` queda rechazado y no sustituye el alias LAB hasta publicar el árbol corregido.
+## V407-R13 · Categorías en Score Cards y puntos Universales · 8 de septiembre de 2026
+
+- Todas las tarjetas Global y Personal muestran la categoría guardada arriba del nombre, con tamaño 25% menor, sólo cuando existe; el HCP permanece visible.
+- Universales muestra en rojo la leyenda PUNTOS, los puntos por hoyo y sus acumulados.
+- La cabecera móvil separa logotipo, modalidad, fecha, hora y campo para evitar montajes en formato iPhone.
+- Release y caché avanzan juntos a `V407-R13-UNIVERSALES-CATEGORIES-RED-20260908`.

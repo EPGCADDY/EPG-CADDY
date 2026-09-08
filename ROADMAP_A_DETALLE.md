@@ -649,3 +649,12 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `index-grupal.html`: APP-32–37 reciben área segura superior/inferior, paneles contenidos, filtros móviles en una columna, entradas del Historial en dos filas, paginación sin desbordamiento, confirmación destructiva apilada y cinco consultas rápidas simétricas.
 - `test-v407-r5a-history-visual-system.mjs`: bloquea la geometría premium de Historial y Estadísticas en escritorio e iPhone; `audit-project.mjs` lo incorpora como paquete 124. La aprobación física continúa pendiente y no se infiere del PASS automático.
 - `test-v260-round-points-player-return.mjs`: sustituye la expectativa obsoleta `78/44/66/47 px` por la retícula R5A `70/36/58/40 px`; el deployment `dpl_8SSK4fASsW8PBGnPasaK7gP8gT37` evidenció el fallo y fue rechazado antes de mover el alias LAB.
+## V407-R13 · Categorías y Universales rojo · 8 de septiembre de 2026
+
+| Archivo | Cambio verificable |
+|---|---|
+| `card-artifacts.js` | Categoría opcional sobre el nombre y HCP conservado en Global/Personal de General, Stableford, Match Play, Four Ball y Universales; puntos Universales rojos. |
+| `index-grupal.html` | Categoría opcional y HCP en Score Cards activas; PUNTOS y acumulados Universales rojos; cabecera iPhone sin textos montados; identidad visible R13. |
+| `scripts/card-audit-fixtures.mjs` | Fixtures reproducibles de las diez vistas de tarjeta en ancho iPhone. |
+| `test-card-artifacts.mjs` | Candados de categoría opcional, HCP y puntos Universales rojos. |
+| `service-worker.js` | Caché e identidad de release R13 sincronizadas para la actualización instalable. |
