@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-090 · ACTUALIZAR DEJABA DE PARPADEAR DESPUÉS DE RECONFIGURAR · 08 SEPTIEMBRE 2026
+
+- Defecto físico: en V407-R12 el control funcionaba una vez después de reconfigurar y luego volvía a `ACTUALIZADO` sin señal visible.
+- Causa raíz: `showCurrentBuild()` retiraba la clase `available` y cambiaba la leyenda a `ACTUALIZADO` cuando la versión publicada coincidía con la instalada.
+- Control permanente: V407-R14 conserva `ACTUALIZAR` verde, parpadeante, habilitado y con recarga real en cada toque, incluso cuando el release coincide; release y caché avanzan juntos.
+- Evidencia: `test-v407-r9-manual-update.mjs`, pruebas V365/V406/V407 y auditoría física de navegador previa a publicación.
+- Estado: CORREGIDO EN RAMA `codex/v407-r14-safe-update-cards`; PRODUCCIÓN INTACTA.
+
 ## RC-089 · ACTUALIZADO VISIBLE PERO TECLA DESHABILITADA · 08 SEPTIEMBRE 2026
 
 - Defecto físico: R9 cargó la pantalla correcta, pero `ACTUALIZADO` no aceptaba toque.

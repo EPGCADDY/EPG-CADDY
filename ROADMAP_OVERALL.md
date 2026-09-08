@@ -620,3 +620,8 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Release de caché `V407-R5A-MOBILE-GRIDS-20260908`: `service-worker.js`, versión visible y pruebas de versión obligan al iPhone a descargar esta corrección en lugar de reutilizar R5.
 - Corrección APP-32–37: Historial, vacío, filtros, eliminación y Estadísticas comparten área segura, superficies grafito, controles de 52 px, retículas contenidas y ritmo móvil homogéneo; la auditoría maestra incorpora `test-v407-r5a-history-visual-system.mjs` como paquete 124.
 - Regresión R5A: `test-v260-round-points-player-return.mjs` se sincroniza con la retícula móvil contenida de seis columnas; el primer build `dpl_8SSK4fASsW8PBGnPasaK7gP8gT37` queda rechazado y no sustituye el alias LAB hasta publicar el árbol corregido.
+# V407-R14 · Actualización manual permanente y tarjetas seguras · 08 de septiembre de 2026
+
+- Se consolida en una rama limpia el botón ACTUALIZAR siempre visible/parpadeante, las categorías opcionales sobre nombres y los puntos rojos de Universales.
+- Se rechaza la sustitución truncada de `index-grupal.html` encontrada en R13 y se preserva el HTML canónico completo de main R10.
+- Release/caché R14, pruebas y evidencia se mantienen coordinados; Producción no cambia mientras exista un FAIL físico o documental.
