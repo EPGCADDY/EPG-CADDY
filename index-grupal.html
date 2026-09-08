@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V407-R6-UNIVERSALES-20260908">
+  <meta name="gscg-release" content="V407-R7-IOS-SCROLL-20260908">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -796,8 +796,8 @@ body.gsc-final-card-open .mandatory-update{display:block!important}
 .scorecard .team-pair-spacer td,.summary .summary-pair-divider td{height:18px!important;border-color:#202323!important;background:#000!important}
 </style>
 <style id="gscg-ios-scroll-recovery-v406-r20">
-html,body{height:auto!important;min-height:100%;overflow-y:auto!important;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom}
-.overlay{overscroll-behavior-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom}
+html,body{height:auto!important;min-height:100%;overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom}
+.overlay{height:100dvh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom}
 .overlay:not(.visible){pointer-events:none!important}
 </style>
 <style id="gscg-live-support-link-v311">
@@ -905,24 +905,24 @@ html,body{height:auto!important;min-height:100%;overflow-y:auto!important;-webki
     <div class="nr-head"><img class="official-logo-target" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Golf Score Card Guatemala"></div>
     <div class="field-title course-selection-title">SELECCIONA CAMPO</div><div class="course-options" id="courseOptions" role="radiogroup" aria-label="Campo de golf"></div>
     <div class="course-weather setup-weather weather-unavailable" id="setupWeather" role="status" aria-live="polite">CLIMA GPS · SINCRONIZANDO…</div>
-    <div class="field-title">SELECCIONA MODALIDAD</div>
-    <div class="game-mode-columns">
-      <section class="game-mode-column" aria-label="Modalidades existentes">
-        <div class="game-mode-column-title">MODALIDADES EXISTENTES</div>
+    <div class="field-title">MODALIDADES</div>
+    <div class="game-mode-columns" aria-label="Modalidades">
+      <section class="game-mode-column" aria-label="Modalidades">
         <div class="normal-mode-option"><button type="button" class="course-option stable-course-option normal-round-option" id="normalRoundButton" aria-label="Seleccionar Medal Play Normal" aria-pressed="true"><span class="stable-course-dot">N</span><span>MEDAL PLAY NORMAL</span></button></div>
         <div class="match-play-mode-option"><button type="button" class="course-option stable-course-option match-play-round-option" id="matchPlayRoundButton" aria-label="Seleccionar Match Play" aria-pressed="false"><span class="stable-course-dot">M</span><span>MATCH PLAY</span></button></div>
         <div class="four-ball-mode-option"><button type="button" class="course-option stable-course-option four-ball-round-option" id="fourBallRoundButton" aria-label="Seleccionar Four Ball" aria-pressed="false"><span class="stable-course-dot">4</span><span>FOUR BALL</span></button></div>
         <div class="stableford-mode-option" id="stablefordModeOption"></div>
-        <div class="provisional-mode-option"><button type="button" class="course-option stable-course-option provisional-scorecard-option" id="provisionalScorecardButton" aria-label="Abrir Score Card de práctica"><span class="stable-course-dot">➜</span><span>SCORE CARD - PRÁCTICA</span></button></div>
       </section>
-      <section class="game-mode-column" aria-label="Nuevos juegos">
-        <div class="game-mode-column-title">NUEVOS JUEGOS</div>
+      <section class="game-mode-column" aria-label="Modalidades">
         <div class="skins-mode-option"><button type="button" class="course-option stable-course-option skins-round-option" id="skinsRoundButton" aria-label="Seleccionar juego Skins" aria-pressed="false"><span class="stable-course-dot">$</span><span>SKINS</span></button></div>
         <div class="skins-mode-option"><button type="button" class="course-option stable-course-option skins-round-option" id="wolfRoundButton" aria-label="Seleccionar juego Wolf" aria-pressed="false"><span class="stable-course-dot">W</span><span>WOLF</span></button></div>
         <div class="skins-mode-option"><button type="button" class="course-option stable-course-option skins-round-option" id="vegasRoundButton" aria-label="Seleccionar juego Vegas" aria-pressed="false"><span class="stable-course-dot">V</span><span>VEGAS</span></button></div>
         <div class="universales-mode-option"><button type="button" class="course-option stable-course-option universales-round-option" id="universalesRoundButton" aria-label="Seleccionar modalidad Universales" aria-pressed="false"><span class="stable-course-dot">U</span><span>UNIVERSALES</span></button></div>
-        <div class="skins-mode-option"><button type="button" class="course-option stable-course-option" id="tournamentLiveHome" aria-label="Ver jugadores de un torneo en vivo"><span class="stable-course-dot">●</span><span>TORNEO LIVE</span></button></div>
       </section>
+    </div>
+    <div class="game-mode-columns" aria-label="Funciones de Score Card y Live">
+      <section class="game-mode-column"><div class="provisional-mode-option"><button type="button" class="course-option stable-course-option provisional-scorecard-option" id="provisionalScorecardButton" aria-label="Abrir Score Card de práctica"><span class="stable-course-dot">➜</span><span>SCORE CARD - PRÁCTICA</span></button></div></section>
+      <section class="game-mode-column"><div class="skins-mode-option"><button type="button" class="course-option stable-course-option" id="tournamentLiveHome" aria-label="Compartir o ver jugadores en vivo"><span class="stable-course-dot">●</span><span>COMPARTE LIVE</span></button></div></section>
     </div>
     <section class="skins-config" id="skinsConfig" aria-label="Configuración Skins"><div class="skins-config-title">SKINS · CONFIGURACIÓN ANTES DE LA RONDA</div><div class="skins-config-grid"><label>CÁLCULO<select id="skinsScoreType"><option value="net">NETO</option><option value="gross">GROSS</option></select></label><label>EMPATE<select id="skinsTiePolicy"><option value="carry">ACUMULA</option><option value="split">DIVIDE</option><option value="void">ANULA</option></select></label><fieldset class="currency-choice"><legend>MONEDA · ELIGE UNA</legend><label class="currency-option"><input id="skinsCurrencyGTQ" type="radio" name="skinsCurrency" value="GTQ" checked>Q · QUETZALES</label><label class="currency-option"><input id="skinsCurrencyUSD" type="radio" name="skinsCurrency" value="USD">$ · DÓLARES</label></fieldset><label>VALOR UNIDAD · <span data-currency-symbol="skins">Q</span><input id="skinsUnitValue" type="number" inputmode="decimal" min="0.01" max="100000" step="0.01" value="10"></label></div><div class="skins-config-note">CADA JUGADOR ARRIESGA UNA UNIDAD POR SKIN · EL DINERO NO MODIFICA GROSS, NETO NI RESULTADOS DEPORTIVOS.</div></section>
     <section class="skins-config" id="wolfConfig" aria-label="Configuración Wolf"><div class="skins-config-title">WOLF · ACUERDOS ANTES DE LA RONDA</div><div class="skins-config-grid"><label>CÁLCULO<select id="wolfScoreType"><option value="net">NETO</option><option value="gross">GROSS</option></select></label><label>EL WOLF SALE<select id="wolfTeePosition"><option value="first">PRIMERO</option><option value="last">ÚLTIMO · REGLA DEL GRUPO</option></select></label><label>EMPATE<select id="wolfTiePolicy"><option value="push">PUSH · SIN CAMBIO</option><option value="carry">ACUMULA · REGLA DEL GRUPO</option></select></label><label>LOBO SOLITARIO ×<input id="wolfLoneMultiplier" type="number" inputmode="numeric" min="1" max="9" step="1" value="2"></label><label>LOBO CIEGO ×<input id="wolfBlindMultiplier" type="number" inputmode="numeric" min="1" max="9" step="1" value="3"></label><fieldset class="currency-choice"><legend>MONEDA · ELIGE UNA</legend><label class="currency-option"><input id="wolfCurrencyGTQ" type="radio" name="wolfCurrency" value="GTQ" checked>Q · QUETZALES</label><label class="currency-option"><input id="wolfCurrencyUSD" type="radio" name="wolfCurrency" value="USD">$ · DÓLARES</label></fieldset><label>VALOR UNIDAD · <span data-currency-symbol="wolf">Q</span><input id="wolfUnitValue" type="number" inputmode="decimal" min="0.01" max="100000" step="0.01" value="10"></label><label>TOPE POR RIVAL/HOYO · <span data-currency-symbol="wolf">Q</span><input id="wolfHoleCap" type="number" inputmode="decimal" min="0" max="100000" step="0.01" value="0"></label></div><div class="skins-config-note">FORMATO BASE: EL WOLF ROTA Y GANA LA MEJOR BOLA DEL LADO. CON PAREJA ×1 · LOBO SOLITARIO: DECIDE DESPUÉS DE VER LOS DRIVES · LOBO CIEGO: SE DECLARA ANTES DEL PRIMER DRIVE. CERO EN EL TOPE SIGNIFICA SIN LÍMITE. EL ORDEN PRIMERO/ÚLTIMO Y LAS VARIANTES DE 3, 5 O 6 JUGADORES DEBEN QUEDAR ACORDADAS ANTES DE SALIR.</div></section>
@@ -1010,7 +1010,7 @@ html,body{height:auto!important;min-height:100%;overflow-y:auto!important;-webki
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>ACTUALIZACIÓN DISPONIBLE</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R6</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>ACTUALIZACIÓN DISPONIBLE</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R7</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
 "use strict";
@@ -5494,14 +5494,13 @@ for(const id of ["shareRoundLiveButton","shareFinalLiveButton"])$(id)?.addEventL
 if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});
 function recoverInstalledAppScrolling(){
   const root=document.scrollingElement||document.documentElement;
-  for(const element of [document.documentElement,document.body,root]){element.style.setProperty("overflow-y","auto","important");element.style.setProperty("height","auto","important");element.style.webkitOverflowScrolling="touch"}
-  for(const overlay of document.querySelectorAll(".overlay.visible")){overlay.style.setProperty("overflow-y","auto","important");overlay.style.webkitOverflowScrolling="touch"}
+  for(const element of new Set([document.documentElement,document.body,root])){element.style.setProperty("overflow-y","auto","important");element.style.setProperty("height","auto","important");element.style.webkitOverflowScrolling="touch"}
+  for(const overlay of document.querySelectorAll(".overlay.visible")){overlay.style.setProperty("height","100dvh");overlay.style.setProperty("overflow-y","auto","important");overlay.style.webkitOverflowScrolling="touch"}
 }
 window.addEventListener("pageshow",recoverInstalledAppScrolling);
 window.addEventListener("focus",recoverInstalledAppScrolling);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)recoverInstalledAppScrolling()});
 setTimeout(recoverInstalledAppScrolling,0);
-document.addEventListener("touchstart",recoverInstalledAppScrolling,{passive:true});
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
 const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"";
 let appBuildCheckRunning=false,appBuildReloading=false,pendingPublishedBuild=CURRENT_APP_BUILD;

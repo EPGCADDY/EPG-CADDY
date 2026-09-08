@@ -87,6 +87,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v406-r4-mobile-con
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r5-visual-inventory.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r5a-history-visual-system.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r6-universales-coordination.mjs','test-v407-r6-universales.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r7-ios-scroll.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);
