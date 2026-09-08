@@ -1,5 +1,13 @@
 # ROADMAP A DETALLE
 
+## V406-R24 · 8 de septiembre de 2026
+
+- `index-grupal.html`: mueve el único `appVersionId` al contenedor de actualización, inmediatamente antes de la tecla.
+- El ID permanece blanco y visible tanto cuando la tecla está apagada como cuando parpadea.
+- `service-worker.js`: release/caché R24 separados; la actualización continúa siendo explícita.
+- `test-v406-r23-visible-version.mjs`: exige posición DOM, estilo y promoción sólo por `app_version`.
+- `IMG_3054.png`: confirma físicamente parpadeo R23, toque manual y estado ACTUALIZADO; ubicación R24 pendiente de revisión publicada.
+
 ## V406-R21 · 7 de septiembre de 2026
 
 - `live-hub.js`: `favoriteStreams()` combina respaldo demo y streams visibles; lo vigente reemplaza al respaldo por ID.

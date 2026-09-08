@@ -1,5 +1,9 @@
 # ROADMAP OVERALL
 
+## V406-R24 · ID de versión sobre ACTUALIZAR · 8 de septiembre de 2026
+
+Un único ID blanco de versión queda inmediatamente encima de la tecla permanente ACTUALIZADO/ACTUALIZAR. Se conserva el parpadeo exclusivamente ante un candidato nuevo y la promoción solamente por toque. `IMG_3054.png` aporta la evidencia del flujo R23 y del defecto de ubicación corregido. `test-v406-r23-visible-version.mjs` blinda R24. Producción intacta.
+
 ## V406-R21 · rondas demo persistentes en MI TABLERO · 7 de septiembre de 2026
 
 S.SENIOR 04, FEMENINA 01 y A 05 conservan sus rondas simuladas aunque MI TABLERO se abra desde TORNEO GUARDADO. El catálogo demo actúa como respaldo local y los datos LIVE vigentes tienen prioridad. `IMG_3041.png` y RC-078 documentan el escape de R19. Producción intacta.

@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V406-R24 · 8 de septiembre de 2026
+
+La evidencia física `IMG_3054.png` confirmó que R23 sí parpadea únicamente cuando hay actualización y, después del toque, queda oscuro en `ACTUALIZADO`; también mostró que el ID estaba casi invisible detrás de la barra superior. R24 conserva ese flujo manual confirmado y coloca un único `V406 · R24` blanco inmediatamente encima de la misma tecla oscura. `test-v406-r23-visible-version.mjs` exige la relación DOM y el estilo blanco. Revisión física R24 publicada pendiente; Producción intacta.
+
 ## Continuidad V406-R23 · 7 de septiembre de 2026
 
 R23 añade el identificador compacto blanco `V406 · R23` arriba del logo. La tecla permanente apagada muestra `ACTUALIZADO`; cuando el detector encuentra otro release, cambia a `ACTUALIZAR` y parpadea. La promoción del candidato continúa ocurriendo únicamente después del toque. El cierre de hoyos 9/18 habilita audio desde ENTER, prioriza la voz dedicada y rearma cualquier anuncio cuya reproducción no haya comenzado. `test-v406-r23-visible-version.mjs` y `test-v406-r23-turn-closure-audio.mjs` blindan ambos contratos. Revisión física publicada pendiente; Producción intacta.
