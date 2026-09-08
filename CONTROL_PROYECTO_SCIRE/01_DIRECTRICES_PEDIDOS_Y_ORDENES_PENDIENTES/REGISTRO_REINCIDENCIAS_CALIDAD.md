@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-086 · SCROLL IPHONE INTERMITENTE · 08 SEPTIEMBRE 2026
+
+- Defecto físico: el desplazamiento vertical se trababa intermitentemente en la pantalla principal/Registro V407-R6.
+- Causa: `recoverInstalledAppScrolling` reescribía estilos de `html`, `body` y overlay durante cada `touchstart`, provocando recálculo de layout en el inicio del gesto; además página y overlay competían como scrollers.
+- Control permanente: V407-R7 elimina la mutación por toque, asigna `100dvh` y scroll propio a overlays, mantiene scroll nativo de página y ejecuta `test-v407-r7-ios-scroll.mjs`.
+- Evidencia: `IMG_3133.jpeg` y prueba dirigida V407-R7.
+- Estado: CORREGIDO EN CANDIDATO; PRODUCCIÓN PENDIENTE DE GATES Y VERIFICACIÓN.
+
 ## RC-085 · BARRA DE ESTADO IPHONE SOBRE ENCABEZADO · 08 SEPTIEMBRE 2026
 
 - Defecto físico: la hora, conectividad y batería del iPhone cruzaban logo, ronda, fecha, hora y ACTUALIZADO en la Pantalla Principal.
