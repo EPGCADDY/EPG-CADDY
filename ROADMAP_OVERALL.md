@@ -630,3 +630,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Evidencia automatizada de tarjetas: `scripts/card-audit-fixtures.mjs`.
 - R15: actualización remota parpadea sólo ante una versión nueva y confirma ACTUALIZADO al instalarla.
 - R16: Medal Play y Universales reflejan visualmente una sola modalidad activa; sirve como segunda actualización remota consecutiva.
+- R17: la categoría elegida aparece pequeña sobre el nombre de cada jugador; sin categoría no aparece texto. La fila PUNTOS y sus valores por hoyo/totales quedan rojos, y una fila vacía con categoría o marcas preseleccionadas no bloquea OK.

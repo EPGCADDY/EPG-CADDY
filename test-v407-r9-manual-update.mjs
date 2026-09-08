@@ -4,8 +4,8 @@ import fs from "node:fs";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/meta name="gscg-release" content="V407-R16-MODE-SELECTION-20260908"/);
-assert.match(worker,/const RELEASE="V407-R16-MODE-SELECTION-20260908"/);
+assert.match(html,/meta name="gscg-release" content="V407-R17-EMPTY-ROWS-OK-20260908"/);
+assert.match(worker,/const RELEASE="V407-R17-EMPTY-ROWS-OK-20260908"/);
 assert.match(html,/class="mandatory-update" id="mandatoryUpdate"/);
 assert.match(html,/aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO<\/span>/);
 assert.match(html,/function showCurrentBuild\(\)[\s\S]*?button\.disabled=true[\s\S]*?classList\.remove\("available"\)/);
@@ -17,5 +17,9 @@ assert.match(html,/if\(key\.startsWith\("gscg-mobile-"\)\)await caches\.delete\(
 assert.match(html,/nextUrl\.searchParams\.set\("app_version",pendingPublishedBuild\)/);
 assert.match(worker,/self\.addEventListener\("activate",event=>event\.waitUntil\(ensureApprovedShell\(\)\.then\(\(\)=>self\.clients\.claim\(\)\)\)\)/);
 assert.doesNotMatch(worker,/client\.navigate/);
+assert.match(html,/const categoryLabel=normalizeTournamentCategory\(p\.tournamentCategory\)\?tournamentCategoryLabel\(p\.tournamentCategory\):""/);
+assert.match(html,/categoryLabel\?`<span class="player-category">\$\{escapeHtml\(categoryLabel\)\}<\/span>`:""/);
+assert.match(html,/\.scorecard \.universales-row \.concept,\.scorecard \.universales-row td\{color:var\(--red\);font-weight:900\}/);
+assert.match(html,/function manualRowHasData\(row\)\{return !!\(String\(row\?\.name\|\|""\)\.trim\(\)\|\|String\(row\?\.handicap\?\?""\)\.trim\(\)\)\}/);
 
-console.log("PASS V407-R16 · ACTUALIZAR parpadea sólo con versión nueva y se apaga al actualizar");
+console.log("PASS V407-R17 · actualización, categoría condicional, puntos rojos y filas vacías");
