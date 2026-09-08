@@ -178,3 +178,11 @@ No hay que reescribir commits, deployments, enlaces ni pendientes: este archivo 
 - Tarjeta Digital móvil aísla controles flotantes, apila acciones y limita el desplazamiento horizontal a la tabla.
 - Evidencia física de origen: `IMG_2949.png`, estado FAIL previo a la corrección.
 - Pendiente obligatorio: inspección renderizada y prueba física iPhone de Normal, Stableford, Match Play y Four Ball.
+
+## 10. V407-R5 · auditoría visual total en ejecución
+
+- Inventario canónico: 67 pantallas y estados en `CONTROL_PROYECTO_SCIRE/AUDITORIA_VISUAL_V407/INVENTARIO_PANTALLAS_ESTADOS_V407_R5.md`.
+- Matriz física: 9 ID con evidencia FAIL y 58 pendientes; ningún PASS físico concedido todavía.
+- Primera corrección R5: tarjeta Stableford Global responsive con metadatos y SHA contenidos y hoyos separados IN/OUT.
+- Pruebas dirigidas PASS: inventario visual, artefactos, sistema premium, diseño profesional, controles móviles, versión visible y recuperación de ronda.
+- LAB pendiente de publicación y recorrido físico R5; Producción permanece en `4009f79f50987f8bf105189bce9c5e90b2857363`.

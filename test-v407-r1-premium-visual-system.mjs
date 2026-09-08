@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 const html=fs.readFileSync("index-grupal.html","utf8");
 
-assert.match(html,/V407-R4-IOS-SAFE-AREA-HEADER-20260908/);
+assert.match(html,/V407-R5-STABLEFORD-GLOBAL-CARD-20260908/);
 assert.match(html,/\.app\{padding:max\(10px,calc\(env\(safe-area-inset-top\) \+ 10px\)\)/);
 assert.match(html,/\.official-round-header \.round-meta\{[^}]*text-align:center;transform:translateX\(-36px\)/);
 assert.match(html,/\.mandatory-update\{top:calc\(env\(safe-area-inset-top\) \+ 12px\);right:58px\}/);
@@ -37,4 +37,4 @@ assert.match(html,/#roundGridEnter\{[^}]*background:var\(--lime\)!important;colo
 assert.doesNotMatch(html,/#roundManualEntry\{[^}]*background:(?:linear-gradient|radial-gradient)/);
 assert.doesNotMatch(html,/\.round-actions\{[^}]*display:flex[^}]*\}\s*\/\* V407-R1/);
 
-console.log("PASS V407-R4 · área segura iPhone y encabezado centrado");
+console.log("PASS V407-R5 · área segura iPhone y encabezado centrado");

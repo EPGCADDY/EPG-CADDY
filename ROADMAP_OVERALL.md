@@ -545,3 +545,11 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `index-grupal.html`: encuadra la tarjeta operativa con título, borde continuo, fondo original y desplazamiento horizontal visible; conserva la paleta negro, verde, blanco y rojo funcional.
 - `test-v407-r1-premium-visual-system.mjs`: bloquea regresiones de título, contenedor, barra de desplazamiento y colores de la tarjeta, además de las retículas homogéneas de acciones.
 - Producción permanece intacta; el candidato se limita a la rama `lab/premium-ui-v407`.
+
+## V407-R5 · Inventario visual total y tarjeta Stableford responsive · 08 de septiembre de 2026
+
+- Se inventariaron 67 pantallas y estados verificables en seis familias; el alcance y sus diez criterios están en `CONTROL_PROYECTO_SCIRE/AUDITORIA_VISUAL_V407/`.
+- Las capturas físicas `IMG_3120`–`IMG_3126` se registraron como 9 ID FAIL; quedan 58 ID pendientes y cero PASS físicos hasta repetir el recorrido R5.
+- La tarjeta Stableford Global divide los hoyos en IN 1–9 y OUT 10–18, repliega metadatos y contiene el SHA-256 dentro del ancho móvil.
+- La auditoría maestra incorpora el inventario como paquete obligatorio; el banco integral queda en 123 paquetes.
+- Producción permanece intacta; R5 continúa como candidato exclusivo de `lab/premium-ui-v407`.
