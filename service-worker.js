@@ -1,9 +1,9 @@
 "use strict";
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r10-active-update-button`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r13-universales-categories-red`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved`;
-const RELEASE="V407-R10-ACTIVE-UPDATE-BUTTON-20260908";
+const RELEASE="V407-R13-UNIVERSALES-CATEGORIES-RED-20260908";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
