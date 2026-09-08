@@ -73,7 +73,19 @@ async function promoteCandidate(){
 }
 
 self.addEventListener("install",event=>event.waitUntil(refreshShell().then(()=>self.skipWaiting())));
-self.addEventListener("activate",event=>event.waitUntil(ensureApprovedShell().then(()=>self.clients.claim())));
+self.addEventListener("activate",event=>event.waitUntil((async()=>{
+  await promoteCandidate();
+  await self.clients.claim();
+  const clients=await self.clients.matchAll({type:"window",includeUncontrolled:true});
+  for(const client of clients){
+    try{
+      const url=new URL(client.url);
+      url.searchParams.set("app_version",RELEASE);
+      url.searchParams.set("update_check",String(Date.now()));
+      await client.navigate(url.toString());
+    }catch{}
+  }
+})()));
 self.addEventListener("message",event=>{
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
   if(event.data?.type==="PROMOTE_BUILD"&&event.data?.build===RELEASE)event.waitUntil(promoteCandidate());
