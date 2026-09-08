@@ -626,3 +626,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Universales muestra en rojo la leyenda PUNTOS, los puntos por hoyo y sus acumulados.
 - La cabecera móvil separa logotipo, modalidad, fecha, hora y campo para evitar montajes en formato iPhone.
 - Release y caché avanzan juntos a `V407-R13-UNIVERSALES-CATEGORIES-RED-20260908`.
+- El sello de inventario se regeneró para las 437 fuentes activas, incluida la nueva prueba reproducible.

@@ -658,3 +658,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 | `scripts/card-audit-fixtures.mjs` | Fixtures reproducibles de las diez vistas de tarjeta en ancho iPhone. |
 | `test-card-artifacts.mjs` | Candados de categoría opcional, HCP y puntos Universales rojos. |
 | `service-worker.js` | Caché e identidad de release R13 sincronizadas para la actualización instalable. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello actualizado a 437 fuentes después de incorporar el fixture de auditoría R13. |
