@@ -553,3 +553,5 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - La tarjeta Stableford Global divide los hoyos en IN 1–9 y OUT 10–18, repliega metadatos y contiene el SHA-256 dentro del ancho móvil.
 - La auditoría maestra incorpora el inventario como paquete obligatorio; el banco integral queda en 123 paquetes.
 - Producción permanece intacta; R5 continúa como candidato exclusivo de `lab/premium-ui-v407`.
+- Publicación R5: el primer transporte remoto truncó `index-grupal.html`; el commit LAB `bb21de0` restauró el blob íntegro con SHA Git exacto y conservó el árbol R5 local completo. El deployment reparador alcanzó Manual visual PASS y fue detenido por el propio `roadmap:gate`, por lo que se registra esta reparación antes de reintentar.
+- Fuentes de control exactas: `CONTROL_PROYECTO_SCIRE/AUDITORIA_VISUAL_V407/INVENTARIO_PANTALLAS_ESTADOS_V407_R5.md`, `CONTROL_PROYECTO_SCIRE/AUDITORIA_VISUAL_V407/MATRIZ_AUDITORIA_VISUAL_V407_R5.md`, `test-v407-r5-visual-inventory.mjs` y `test-card-artifacts.mjs`.
