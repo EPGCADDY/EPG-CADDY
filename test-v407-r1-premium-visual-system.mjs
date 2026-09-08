@@ -21,6 +21,8 @@ assert.match(html,/#finalCardOverlay \.final-card-meta\{display:grid;grid-templa
 assert.match(html,/\.final-card-panel \.scorecard\{width:1360px;min-width:1360px\}/);
 assert.match(html,/body\.gsc-final-card-open \.gsc-live-launch\{display:none!important\}/);
 assert.match(html,/body\.gsc-final-card-open \.mandatory-update\{display:block!important\}/);
+assert.match(html,/\.gsc-final-card-open \.pwa-install-button\{display:none!important\}/);
+assert.match(html,/#finalTournament:empty::before\{content:"RONDA CASUAL"\}/);
 assert.match(html,/@media\(max-width:800px\)[\s\S]*\.round-utility-bar\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
 assert.match(html,/\.new-round-card\{padding:18px 14px;margin:8px auto;border-radius:18px\}/);
 assert.match(html,/#roundManualEntry\{margin:18px 0!important;padding:22px!important;border:1px solid #4b4f50!important/);
