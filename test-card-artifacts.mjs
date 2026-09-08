@@ -35,3 +35,20 @@ assert.equal(stablefordOut.personal[0].stats.points,36);
 assert.equal(stablefordOut.personal[0].stats.front.points,18);
 assert.equal(stablefordOut.personal[0].stats.back.points,18);
 console.log('PASS matriz oficial Stableford: Global y seis personales con Gross/Puntos');
+
+const optionalCategoryPlayers=[
+  {...snapshot.players[0],id:'with-category',name:'CON CATEGORÍA',tournamentCategory:'championship'},
+  {...snapshot.players[0],id:'without-category',name:'SIN REGISTRO',tournamentCategory:''}
+];
+for(const mode of ['general','stableford','match_play','four_ball','universales']){
+  const modeSnapshot={...snapshot,mode,players:optionalCategoryPlayers,stablefordCategory:'',matchPlay:{},fourBall:{}};
+  const cards=artifacts.build(modeSnapshot);
+  assert.match(cards.global.html,/CAMPEONATO[\s\S]*CON CATEGORÍA/,`${mode}: la Global debe mostrar la categoría guardada arriba del nombre`);
+  assert.match(cards.personal[0].html,/CAMPEONATO[\s\S]*CON CATEGORÍA[\s\S]*HCP 14/,`${mode}: la Personal debe conservar categoría, nombre y HCP`);
+  assert.doesNotMatch(cards.personal[1].html,/SIN CATEGORÍA/,`${mode}: no debe inventar categoría cuando el registro quedó vacío`);
+}
+console.log('PASS categoría opcional arriba del nombre en las diez tarjetas; HCP conservado');
+const universalesCards=artifacts.build({...snapshot,mode:'universales',players:optionalCategoryPlayers});
+assert.match(universalesCards.global.html,/color:#ff3030[\s\S]*PUNTOS/,'Universales Global debe identificar los puntos en rojo');
+assert.match(universalesCards.personal[0].html,/<th style="color:#ff3030">PUNTOS<\/th>[\s\S]*color:#ff3030/,'Universales Personal debe mostrar leyenda y valores de puntos en rojo');
+console.log('PASS leyenda, puntos por hoyo y totales Universales en rojo');
