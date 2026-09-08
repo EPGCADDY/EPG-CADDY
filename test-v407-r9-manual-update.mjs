@@ -4,8 +4,8 @@ import fs from "node:fs";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/meta name="gscg-release" content="V407-R17-EMPTY-ROWS-OK-20260908"/);
-assert.match(worker,/const RELEASE="V407-R17-EMPTY-ROWS-OK-20260908"/);
+assert.match(html,/meta name="gscg-release" content="V407-R18-LIVE-POINTS-HEADER-20260908"/);
+assert.match(worker,/const RELEASE="V407-R18-LIVE-POINTS-HEADER-20260908"/);
 assert.match(html,/class="mandatory-update" id="mandatoryUpdate"/);
 assert.match(html,/aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO<\/span>/);
 assert.match(html,/function showCurrentBuild\(\)[\s\S]*?button\.disabled=true[\s\S]*?classList\.remove\("available"\)/);
@@ -22,4 +22,4 @@ assert.match(html,/categoryLabel\?`<span class="player-category">\$\{escapeHtml\
 assert.match(html,/\.scorecard \.universales-row \.concept,\.scorecard \.universales-row td\{color:var\(--red\);font-weight:900\}/);
 assert.match(html,/function manualRowHasData\(row\)\{return !!\(String\(row\?\.name\|\|""\)\.trim\(\)\|\|String\(row\?\.handicap\?\?""\)\.trim\(\)\)\}/);
 
-console.log("PASS V407-R17 · actualización, categoría condicional, puntos rojos y filas vacías");
+console.log("PASS V407-R18 · actualización, categorías, puntos rojos y encabezado móvil");
