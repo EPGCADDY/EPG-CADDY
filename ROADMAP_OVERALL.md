@@ -629,3 +629,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - El sello de inventario se regeneró para las 437 fuentes activas, incluida la nueva prueba reproducible.
 - Los candados heredados de R10 ahora comprueban la identidad y caché R13 sin alterar sus contratos funcionales.
 - Las tres aserciones visibles restantes quedaron sincronizadas con `V407 · R13`.
+- Reintento de producción R13 registrado después de validar el árbol exacto publicado.
