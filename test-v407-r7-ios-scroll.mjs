@@ -6,6 +6,8 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 
 assert.match(html,/V407-R8-SINGLE-SCROLL-20260908/);
 assert.match(worker,/v407-r8-single-scroll/);
+assert.match(worker,/self\.clients\.matchAll\(\{type:"window",includeUncontrolled:true\}\)/);
+assert.match(worker,/await client\.navigate\(url\.toString\(\)\)/);
 assert.match(html,/\.overlay\{height:100dvh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain/);
 assert.match(html,/body\.gsc-setup-open #setupOverlay\.visible\{position:relative;inset:auto;width:100%;height:auto!important;min-height:100dvh;overflow:visible!important/);
 assert.match(html,/body\.gsc-setup-open:has\(#setupOverlay\.visible\) main\{display:none\}/);
