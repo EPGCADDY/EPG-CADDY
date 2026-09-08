@@ -588,6 +588,15 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
 .new-round-card .nr-button{margin-top:12px}.new-round-card #setupOk{height:64px;border-radius:14px}
 .overlay{background:rgba(0,0,0,.96);backdrop-filter:blur(12px)}
 .card-library-round,.history-insights-result,.skins-config,.skins-results{border-radius:12px;background:linear-gradient(145deg,#0d1010,#050606)}
+#roundManualEntry{margin:18px 0!important;padding:20px!important;border:1px solid var(--premium-line-bright)!important;border-radius:var(--premium-radius)!important;background:linear-gradient(145deg,#0d1010,#040505)!important;box-shadow:var(--premium-shadow),inset 0 1px rgba(255,255,255,.04)!important}
+#roundManualTitle{margin-bottom:12px!important;color:var(--lime)!important;font-size:20px!important;letter-spacing:.7px!important}
+#roundGridInstruction{margin-bottom:16px!important;padding:11px 8px!important;border-color:var(--premium-line)!important;color:#c8cece!important;font-size:11px!important;letter-spacing:.35px!important}
+#roundGridNavigation{grid-template-columns:minmax(0,1fr) 118px minmax(0,1fr)!important;gap:12px!important;margin-bottom:14px!important}
+#roundGridNavigation button,#roundGridHole{min-height:var(--premium-control)!important;border:1px solid var(--premium-line-bright)!important;border-radius:12px!important;background:linear-gradient(180deg,#111515,#060707)!important;color:#eef2f2!important;box-shadow:none!important}
+#roundGridNavigation button:not(:disabled){border-color:rgba(49,255,0,.72)!important;color:var(--lime)!important}
+#roundGridNavigation label{color:#b9c0c0!important;letter-spacing:.5px!important}
+#roundManualEntry [aria-readonly="true"],#roundManualEntry .round-grid-name,#roundManualEntry .round-grid-gross{min-height:48px!important;border:1px solid var(--premium-line-bright)!important;border-radius:10px!important;background:#080a0a!important;color:#fff!important;box-shadow:inset 0 1px rgba(255,255,255,.03)!important}
+#roundGridEnter{min-height:56px!important;margin-top:14px!important;border:1px solid var(--lime)!important;border-radius:12px!important;background:linear-gradient(180deg,#55ff32,#27dc08)!important;box-shadow:0 10px 26px rgba(49,255,0,.18)!important;font-size:17px!important;letter-spacing:1px!important}
 
 @media(max-width:800px){
   .app{padding:10px 10px calc(22px + env(safe-area-inset-bottom))}
@@ -607,6 +616,7 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
   .round-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:14px}.round-actions button{height:52px;border-radius:11px;font-size:10px;padding:0 7px}.round-actions #newRoundButton{grid-column:1/-1}
   .round-secondary-actions{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}.back-registration-button,.clear-round-scores{height:50px;border-radius:11px;font-size:9px}
   .overlay{padding:10px}.new-round-card{padding:18px 14px;margin:8px auto;border-radius:18px}.new-round-card .course-options,.game-mode-columns{gap:9px}.game-mode-columns{grid-template-columns:1fr}.new-round-card .course-option{min-height:54px;border-radius:12px;padding:10px 12px;font-size:12px!important}.new-round-card .nr-button,.screen-back-button{min-height:52px;border-radius:12px}
+  #roundManualEntry{padding:16px 12px!important;border-radius:16px!important}#roundManualTitle{font-size:18px!important}#roundGridInstruction{font-size:10px!important;line-height:1.35!important}#roundGridNavigation{grid-template-columns:minmax(0,1fr) 92px minmax(0,1fr)!important;gap:8px!important}#roundGridNavigation button,#roundGridHole{min-height:50px!important;font-size:12px!important}#roundGridEnter{min-height:56px!important}
   #setupOverlay .screen-back-row{padding-right:118px}.mandatory-update{top:max(10px,env(safe-area-inset-top));right:10px}.mandatory-update-card button{min-width:108px;min-height:40px;border-radius:11px}
 }
 </style>
