@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-087 · INSTALACIÓN R6 EN DOMINIO HISTÓRICO SIN ACTUALIZAR · 08 SEPTIEMBRE 2026
+
+- Defecto físico: `IMG_3137.jpeg` conserva V407-R6 y `ACTUALIZADO` gris después de publicar R8.
+- Causa raíz: el icono instalado usa `golf-sc-gt-lab.vercel.app`, proyecto separado de `epg-caddy.vercel.app`, donde se habían realizado las publicaciones R8.
+- Control permanente: `golf-sc-gt-lab.vercel.app` se convierte en espejo sin caché del dominio canónico y entrega desde el mismo origen el HTML y `service-worker.js` vigentes; configuración reproducible en `vercel.legacy-mirror.json`.
+- Evidencia: deployment `dpl_DvQz3eDu6DPGkFn9f9t8ZQxkJinh`, estado READY, alias `golf-sc-gt-lab.vercel.app`.
+- Estado: CORREGIDO EN PRODUCCIÓN; CONFIRMACIÓN FÍSICA IPHONE R8 PENDIENTE.
+
 ## RC-086 · SCROLL IPHONE INTERMITENTE · 08 SEPTIEMBRE 2026
 
 - Defecto físico: el desplazamiento vertical se trababa intermitentemente en la pantalla principal/Registro V407-R6.
