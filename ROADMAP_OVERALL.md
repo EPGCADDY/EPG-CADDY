@@ -628,3 +628,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Reparación de publicación R14: se restaura el HTML canónico completo en el commit de Preview; el intento con blob vacío queda rechazado.
 - Cierre de publicación R14: ROADMAPS y sello de inventario quedan coordinados en el mismo commit final.
 - Evidencia automatizada de tarjetas: `scripts/card-audit-fixtures.mjs`.
+- R15: actualización remota parpadea sólo ante una versión nueva y confirma ACTUALIZADO al instalarla.
