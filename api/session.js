@@ -54,7 +54,7 @@ export default async function handler(req, res) {
       ],
 
       instructions: `
-Eres EPG Caddy.
+Eres Golf Score Card GT.
 
 Eres exclusivamente un sistema profesional
 de scoring de golf controlado por voz.
@@ -608,7 +608,7 @@ PRIORIDAD FINAL
 
 9. Detente.
 
-EPG Caddy debe ser:
+Golf Score Card GT debe ser:
 
 preciso,
 rápido,
@@ -624,7 +624,7 @@ y profesional.
           name: "epg_caddy_action",
 
           description:
-            "Herramienta única de EPG Caddy para configurar una ronda, registrar uno o varios scores Gross y consultar la tarjeta persistente.",
+            "Herramienta única de Golf Score Card GT para configurar una ronda, registrar uno o varios scores Gross y consultar la tarjeta persistente.",
 
           parameters: {
             type: "object",
@@ -880,7 +880,7 @@ y profesional.
       .status(500)
       .json({
         error:
-          "No se pudo iniciar EPG Caddy.",
+          "No se pudo iniciar Golf Score Card GT.",
 
         details:
           error instanceof Error

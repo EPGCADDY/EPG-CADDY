@@ -1,7 +1,9 @@
 "use strict";
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v406-r3-production-update`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r6-universales`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved`;
+const RELEASE="V407-R6-UNIVERSALES-20260908";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -36,6 +38,7 @@ const SHELL=[
   "/match-play.js",
   "/four-ball.js",
   "/stableford.js",
+  "/universales.js",
   "/skins.js",
   "/wolf.js",
   "/vegas.js",
@@ -48,9 +51,33 @@ async function refreshShell(){
   await Promise.all(SHELL.map(async url=>{try{const response=await fetch(url,{cache:"reload"});if(response.ok)await cache.put(url,response)}catch{}}));
 }
 
+async function copyCache(sourceName,targetName){
+  const source=await caches.open(sourceName),target=await caches.open(targetName);
+  for(const request of await source.keys()){
+    const response=await source.match(request);
+    if(response)await target.put(request,response);
+  }
+}
+
+async function ensureApprovedShell(){
+  const approved=await caches.open(APPROVED_CACHE_NAME);
+  if(await approved.match(OFFLINE_ENTRY))return;
+  const keys=await caches.keys();
+  const previous=keys.filter(key=>key.startsWith(`${CACHE_NAME}-v406-`)&&key!==ACTIVE_CACHE_NAME).pop();
+  if(previous)await copyCache(previous,APPROVED_CACHE_NAME);
+  else await copyCache(ACTIVE_CACHE_NAME,APPROVED_CACHE_NAME);
+}
+
+async function promoteCandidate(){
+  await copyCache(ACTIVE_CACHE_NAME,APPROVED_CACHE_NAME);
+}
+
 self.addEventListener("install",event=>event.waitUntil(refreshShell().then(()=>self.skipWaiting())));
-self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith("gscg-mobile-")&&key!==ACTIVE_CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
-self.addEventListener("message",event=>{if(event.data?.type==="SKIP_WAITING")self.skipWaiting()});
+self.addEventListener("activate",event=>event.waitUntil(ensureApprovedShell().then(()=>self.clients.claim())));
+self.addEventListener("message",event=>{
+  if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
+  if(event.data?.type==="PROMOTE_BUILD"&&event.data?.build===RELEASE)event.waitUntil(promoteCandidate());
+});
 
 async function networkFirst(request){
   const cache=await caches.open(ACTIVE_CACHE_NAME);
@@ -68,5 +95,14 @@ self.addEventListener("fetch",event=>{
   if(request.method!=="GET")return;
   const url=new URL(request.url);
   if(url.origin!==self.location.origin||url.pathname.startsWith("/api/"))return;
-  if(request.mode==="navigate"||SHELL.includes(url.pathname))event.respondWith(networkFirst(request));
+  if(url.searchParams.has("__gscg_build_check")){event.respondWith(fetch(request,{cache:"no-store"}));return}
+  if(request.mode==="navigate"){
+    event.respondWith((async()=>{
+      if(url.searchParams.get("app_version")===RELEASE){await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}
+      await ensureApprovedShell();
+      return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request);
+    })());
+    return;
+  }
+  if(SHELL.includes(url.pathname))event.respondWith((async()=>{await ensureApprovedShell();return await caches.match(url.pathname,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)})());
 });

@@ -9,6 +9,7 @@ const parse=phrase=>assistant.parse(phrase);
 assert.deepEqual(parse("Quiero jugar Stableford").action,"open_stableford");
 assert.deepEqual(parse("Llévame a Match Play").action,"open_match");
 assert.deepEqual(parse("Quiero abrir Four Ball").action,"open_four_ball");
+assert.deepEqual(parse("Quiero jugar Universales").action,"open_universales");
 assert.deepEqual(parse("Quiero ir a ver mis tarjetas guardadas").action,"open_history");
 assert.deepEqual(parse("Abre la tarjeta digital").action,"open_final_card");
 assert.deepEqual(parse("Muéstrame el control manual").action,"open_manual_entry");
@@ -28,5 +29,6 @@ assert.match(html,/speakQuery\(command\.speech,"assistant"\)\.then\(spoken=>\{/,
 assert.match(html,/pendingVoiceAssistantAction!==action/,"Una respuesta anterior no debe ejecutar una navegación nueva");
 assert.match(mobileBuild,/"voice-assistant\.js"/,"El paquete móvil debe copiar el asistente de voz");
 assert.match(html,/case"open_statistics":return openHistoryInsights\(\)/,"Estadísticas debe abrir un solo panel, sin superponer Historial");
+assert.match(html,/case"open_universales":openNewRoundDraft\(\);return selectGeneralRoundMode\("universales"\)/);
 
 console.log("PASS V311 · asistente de voz para ayuda y navegación segura");

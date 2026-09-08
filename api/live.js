@@ -44,7 +44,8 @@ function safeHole(value){
     handicapStrokes:boundedInteger(value?.handicapStrokes??value?.strokes,0,3,0),
     net:explicitX?null:boundedInteger(value?.net,-10,30,gross),
     relativeToPar:explicitX?null:boundedInteger(value?.relativeToPar??value?.diff,-20,30,null),
-    stablefordPoints:boundedInteger(value?.stablefordPoints??value?.points,0,20,null),
+    stablefordPoints:boundedInteger(value?.stablefordPoints,0,20,null),
+    universalesPoints:boundedInteger(value?.universalesPoints,0,6,null),
     explicitX,
     updatedAt:isoDate(value?.updatedAt)
   };
@@ -56,7 +57,8 @@ function safeTotals(value){
     net:boundedInteger(value?.net,-100,540,0),
     par:boundedInteger(value?.par,0,108,0),
     relativeToPar:boundedInteger(value?.relativeToPar,-108,432,0),
-    stablefordPoints:boundedInteger(value?.stablefordPoints,0,360,null)
+    stablefordPoints:boundedInteger(value?.stablefordPoints,0,360,null),
+    universalesPoints:boundedInteger(value?.universalesPoints,0,108,null)
   };
 }
 function safePlayer(value,index){
@@ -91,7 +93,7 @@ export function normalizeLiveSnapshot(value){
     course:cleanText(value.course,120)||"CAMPO",
     courseHoles,
     tournament:cleanText(value.tournament,120)||null,
-    mode:["general","match_play","four_ball","stableford"].includes(value.mode)?value.mode:"general",
+    mode:["general","match_play","four_ball","stableford","universales"].includes(value.mode)?value.mode:"general",
     status:["active","officially_closed","corrected","finished"].includes(value.status)?value.status:"active",
     playedAt:isoDate(value.playedAt),
     updatedAt:isoDate(value.updatedAt),
@@ -253,15 +255,16 @@ async function revokeStream(sql,req){
 
 async function createTournament(sql,req,body){
   const name=cleanText(body.name,120);if(!name)throw liveError("LIVE_TOURNAMENT_NAME_REQUIRED");
+  const mode=["general","match_play","four_ball","stableford","universales"].includes(body.mode)?body.mode:"general";
   if(body?.consent?.confirmed!==true)throw liveError("LIVE_CONSENT_REQUIRED");
   await rateLimit(sql,req,"create-tournament",tokenHash(requestAddress(req)),10);
   const organizerSecret=newToken(),viewerToken=newToken(),joinCode=newJoinCode(),days=boundedInteger(body.durationDays,1,8,2),rows=await sql`
-    INSERT INTO live_tournaments (name, organizer_secret_hash, viewer_token_hash, join_code_hash, expires_at)
-    VALUES (${name}, ${tokenHash(organizerSecret)}, ${tokenHash(viewerToken)}, ${tokenHash(joinCode)}, now() + (${days}::text || ' days')::interval)
+    INSERT INTO live_tournaments (name, mode, organizer_secret_hash, viewer_token_hash, join_code_hash, expires_at)
+    VALUES (${name}, ${mode}, ${tokenHash(organizerSecret)}, ${tokenHash(viewerToken)}, ${tokenHash(joinCode)}, now() + (${days}::text || ' days')::interval)
     RETURNING id, revision, expires_at, created_at
   `,row=rows[0];
   await sql`INSERT INTO live_events (tournament_id, event_type, actor_hash, details) VALUES (${row.id}, 'created', ${tokenHash(organizerSecret)}, ${JSON.stringify({policyVersion:LIVE_POLICY_VERSION})}::jsonb)`;
-  return{ok:true,kind:"tournament",tournamentId:row.id,name,organizerSecret,viewerToken,joinCode,revision:Number(row.revision)||0,expiresAt:row.expires_at,serverAt:row.created_at};
+  return{ok:true,kind:"tournament",tournamentId:row.id,name,mode,organizerSecret,viewerToken,joinCode,revision:Number(row.revision)||0,expiresAt:row.expires_at,serverAt:row.created_at};
 }
 
 async function joinTournament(sql,req,body){
@@ -271,7 +274,7 @@ async function joinTournament(sql,req,body){
   await rateLimit(sql,req,"join",tokenHash(secret),30);
   const secretHash=tokenHash(secret),rows=await sql`
     WITH tournament AS MATERIALIZED (
-      SELECT id
+      SELECT id,mode
       FROM live_tournaments
       WHERE join_code_hash=${tokenHash(joinCode)}::char(64) AND status='active' AND expires_at>now()
       LIMIT 1
@@ -291,19 +294,13 @@ async function joinTournament(sql,req,body){
           WHEN candidate.id IS NULL OR NOT EXISTS (
             SELECT 1 FROM live_streams active WHERE active.id=candidate.id AND active.status='active' AND active.expires_at>now()
           ) THEN 'LIVE_NOT_ACTIVE'
+          WHEN coalesce(candidate.current_snapshot->>'mode','general')<>tournament.mode THEN 'LIVE_TOURNAMENT_MODE_MISMATCH'
           WHEN (
             SELECT coalesce(sum(jsonb_array_length(coalesce(active.current_snapshot->'players','[]'::jsonb))),0)
             FROM live_streams active
             WHERE active.tournament_id=tournament.id AND active.id<>candidate.id
               AND active.status='active' AND active.expires_at>now()
           )+jsonb_array_length(coalesce(candidate.current_snapshot->'players','[]'::jsonb))>${MAX_TOURNAMENT_PLAYERS} THEN 'LIVE_TOURNAMENT_CAPACITY_REACHED'
-          WHEN EXISTS (
-            SELECT 1
-            FROM live_streams other
-            WHERE other.tournament_id=tournament.id AND other.id<>candidate.id
-              AND other.status='active' AND other.expires_at>now()
-              AND lower(regexp_replace(btrim(other.group_label),'[[:space:]]+',' ','g'))=${groupKey(groupLabel)}::text
-          ) THEN 'LIVE_GROUP_ALREADY_PUBLISHING'
           ELSE 'APPLY'
         END AS outcome_code
       FROM (VALUES (1)) AS seed(one)
@@ -339,7 +336,7 @@ async function joinTournament(sql,req,body){
     ) AS applied
     FROM effects
   `,applied=rows[0]?.applied||{};
-  if(!applied.applied){const code=String(applied.code||"LIVE_JOIN_FAILED");throw liveError(code,code==="LIVE_JOIN_CODE_INVALID"?404:["LIVE_GROUP_ALREADY_PUBLISHING","LIVE_TOURNAMENT_CAPACITY_REACHED"].includes(code)?409:code==="LIVE_NOT_ACTIVE"?410:400)}
+  if(!applied.applied){const code=String(applied.code||"LIVE_JOIN_FAILED");throw liveError(code,code==="LIVE_JOIN_CODE_INVALID"?404:["LIVE_TOURNAMENT_CAPACITY_REACHED","LIVE_TOURNAMENT_MODE_MISMATCH"].includes(code)?409:code==="LIVE_NOT_ACTIVE"?410:400)}
   return{ok:true,joined:true,tournamentId:applied.tournamentId,groupLabel:applied.groupLabel};
 }
 
@@ -372,7 +369,7 @@ async function readStream(sql,req,body,viewerToken){
 
 async function readTournament(sql,req,body,viewerToken){
   const hash=tokenHash(viewerToken);await rateLimit(sql,req,"read-tournament",hash,240);
-  const tournaments=await sql`SELECT id,name,status,revision,expires_at,updated_at FROM live_tournaments WHERE viewer_token_hash=${hash} LIMIT 1`;
+  const tournaments=await sql`SELECT id,name,mode,status,revision,expires_at,updated_at FROM live_tournaments WHERE viewer_token_hash=${hash} LIMIT 1`;
   if(!tournaments.length)throw liveError("LIVE_LINK_INVALID",404);const tournament=tournaments[0];
   if(tournament.status==="revoked")throw liveError("LIVE_REVOKED",410);if(new Date(tournament.expires_at)<=new Date())throw liveError("LIVE_EXPIRED",410);
   const cursor=cleanText(body.cursor,50);if(cursor&&!UUID_PATTERN.test(cursor))throw liveError("LIVE_INVALID_CURSOR");
@@ -385,7 +382,7 @@ async function readTournament(sql,req,body,viewerToken){
     ORDER BY id ASC
     LIMIT ${limit+1}
   `,hasMore=rows.length>limit,page=rows.slice(0,limit);
-  return{ok:true,kind:"tournament",tournament:{id:tournament.id,name:tournament.name,status:tournament.status,revision:Number(tournament.revision),expiresAt:tournament.expires_at,updatedAt:tournament.updated_at},streams:page.map(publicStream),nextCursor:hasMore?page.at(-1)?.id:null,serverAt:new Date().toISOString()};
+  return{ok:true,kind:"tournament",tournament:{id:tournament.id,name:tournament.name,mode:tournament.mode,status:tournament.status,revision:Number(tournament.revision),expiresAt:tournament.expires_at,updatedAt:tournament.updated_at},streams:page.map(publicStream),nextCursor:hasMore?page.at(-1)?.id:null,serverAt:new Date().toISOString()};
 }
 
 async function readLive(sql,req,body){

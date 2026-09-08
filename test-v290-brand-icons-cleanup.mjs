@@ -22,7 +22,7 @@ assert.match(html,/\.newbie-registration-guide\{text-align:left;/);
 assert.match(html,/\.newbie-registration-guide,\.newbie-registration-guide \*\{font-size:13px!important\}/);
 assert.match(html,/#setupOverlay\{padding-top:max\(8px,calc\(env\(safe-area-inset-top\) \+ 4px\)\)\}/);
 assert.match(html,/#setupOverlay \.nr-head img\{width:100%;max-width:100%;height:auto;margin-left:0\}/);
-assert.match(html,/id="normalRoundButton"[^>]*aria-pressed="true"[^>]*>[\s\S]*?<span>RONDA NORMAL<\/span>/);
+assert.match(html,/id="normalRoundButton"[^>]*aria-pressed="true"[^>]*>[\s\S]*?<span>MEDAL PLAY NORMAL<\/span>/);
 assert.match(html,/id="provisionalScorecardButton"[^>]*>[\s\S]*?<span>SCORE CARD - PRÁCTICA<\/span>/);
 assert.match(html,/REGISTRO DE TORNEO \(OPCIONAL\)/);
 assert.match(html,/id="tournamentDescription"[^>]*placeholder="DESCRIPCIÓN DE TORNEO \(OPCIONAL\)"/);

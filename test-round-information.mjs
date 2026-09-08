@@ -10,7 +10,7 @@ assert.match(html,/\$\("summaryTitle"\)\.textContent="INFORMACIÓN DE RONDA"/);
 assert.match(html,/<div class="summary-title" id="summaryTitle">INFORMACIÓN DE RONDA<\/div>/);
 assert.match(html,/<div class="summary-title" id="finalSummaryTitle">INFORMACIÓN DE RONDA<\/div>/);
 assert.match(html,/\$\("summaryTitle"\)\.textContent="PUNTOS"/);
-assert.match(html,/\$\("finalSummaryTitle"\)\.textContent=isStablefordRound\(\)\?"PUNTOS":isMatchPlayRound\(\)\?"RESULTADO MATCH PLAY":"INFORMACIÓN DE RONDA"/);
+assert.match(html,/\$\("finalSummaryTitle"\)\.textContent=isStablefordRound\(\)\?"PUNTOS":isMatchPlayRound\(\)\?"RESULTADO MATCH PLAY":isUniversalesRound\(\)\?"PUNTOS UNIVERSALES":"INFORMACIÓN DE RONDA"/);
 
 for(const label of [
   "GROSS OUT",

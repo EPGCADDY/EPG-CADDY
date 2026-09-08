@@ -29,6 +29,7 @@ const assets=[
   "wolf.js",
   "vegas.js",
   "dots.js",
+  "universales.js",
   "voice-assistant.js",
   "timer-inactivity.js",
   "round-navigation.js"

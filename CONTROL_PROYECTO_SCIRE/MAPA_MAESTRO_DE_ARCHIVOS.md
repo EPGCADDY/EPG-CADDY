@@ -1,5 +1,82 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## Delta V406-R14 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| `index-grupal.html`, `service-worker.js` | Apagan ACTUALIZAR cuando el release cargado coincide y lo encienden sólo ante una versión remota distinta; caché R14. |
+| `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs` | Fijan release/caché R14, estado inicial apagado y activación condicionada. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTINUIDAD_MAESTRA_LAB.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md` | Registran el rechazo físico de R13, corrección R14, evidencia y pendientes. |
+
+## Delta V406-R13 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| `index-grupal.html`, `service-worker.js` | Publican release/caché R13 y mantienen ACTUALIZAR verde, habilitado y parpadeante en todo momento. |
+| `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs` | Impiden publicar cambios funcionales o visuales conservando el identificador anterior. |
+
+## Delta V406-R9 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| live-hub.html | Selector global rotulado GENERAL. |
+| index-grupal.html / service-worker.js | Release y caché R9. |
+| test-v406-tournament-categories.mjs | Candado positivo GENERAL y negativo del texto anterior. |
+
+## Delta V406-R8 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| live-hub.js | Restaura búsqueda cerrada y mantiene General/categorías visibles. |
+| index-grupal.html | Release visible V406-R8. |
+| service-worker.js | Caché V406-R8. |
+| test-v406-tournament-categories.mjs | Impide que el listado individual vuelva a desplazar la General. |
+| ROADMAPS, continuidad, pendiente, reincidencias e inventario | Trazabilidad y sello R8. |
+
+## Delta V406-R7 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| index-grupal.html | Release R7 y marcas predeterminadas por categoría. |
+| live-hub.js | Posición por score/hoyos, HOYO ACTUAL/FINAL, deduplicación, GENERAL y lista alfabética. |
+| gsc-design-system.css | Colores de categoría y C de Campeonato en cuadro blanco. |
+| service-worker.js | Caché V406-R7. |
+| test-v406-tournament-categories.mjs | Candados de desempate, hoyo único, frecuencia, categorías y marcas. |
+
+## Delta V406-R6 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| index-grupal.html | Release visible V406-R6 para activar ACTUALIZAR. |
+| live-control.js | Abre TORNEO LIVE sin token en demostración de sólo lectura. |
+| live-hub.js | Construye y muestra 67 participantes temporales por categoría. |
+| service-worker.js | Caché V406-R6. |
+| test-v406-r5-simple-tournament-live.mjs | Exige el acceso demostrativo directo. |
+| test-v406-tournament-categories.mjs | Exige total 67 y distribución 7/6/24/11/7/7/5. |
+| test-v365-active-round-empty-recovery.mjs | Fija release/caché V406-R6 y conserva recuperación de ronda. |
+| test-v406-r2-professional-design.mjs / test-v406-r4-mobile-controls.mjs | Conservan diseño y geometría bajo el release V406-R6. |
+| Pendiente LIVE, continuidad, reincidencias, ROADMAPS e inventario | Trazabilidad V406-R6. |
+
+## Delta V406-R5 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| index-grupal.html | Entrada directa TORNEO LIVE desde Inicio. |
+| live-control.js | Visor primero; administración cerrada por defecto. |
+| live-hub.html / live-hub.js / gsc-design-system.css | Flujo BUSCA · ELIGE · MIRA y herramientas progresivas. |
+| service-worker.js | Caché V406-R5. |
+| test-v406-r5-simple-tournament-live.mjs | Candado contra saturación del invitado. |
+
+## Delta V406-R4 · 7 de septiembre de 2026
+
+| Archivo | Función |
+|---|---|
+| index-grupal.html | Barra no flotante, CATEGORÍA/MARCAS y fila secundaria. |
+| live-control.js | Monta LIVE dentro de roundUtilityBar. |
+| service-worker.js | Caché V406-R4. |
+| test-v406-r4-mobile-controls.mjs | Candado de traslape, etiquetas y acciones. |
+| Pruebas históricas, ROADMAPS, pendiente LIVE, continuidad, reincidencias e inventario | Trazabilidad V406-R4. |
+
 ## Delta V406-R2 · 7 de septiembre de 2026
 
 | Archivo | Función V406-R2 |
@@ -1084,6 +1161,21 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 
 ## Continuidad maestra permanente de LAB
 
+## V406-R11 · borrado persistente
+
+| Archivo | Función | Control |
+|---|---|---|
+| `index-grupal.html` | Limpia todas las copias activas, marca el ID borrado, filtra recuperación central y fija Inicio. | No rescata ni restaura la ronda eliminada mientras conserva otras rondas. |
+| `test-v405-registration-clear-final-mobile.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v363-intocables-behavior.mjs`, `Intocables/intocables-gate.mjs` | Simulan borrado/reapertura y validan la nueva persistencia canónica. | Ronda vacía, sin clave activa, otras rondas preservadas e Intocables PASS. |
+
+## V406-R10 · Centro multitorneo y scorecards concurrentes
+
+| Archivo | Función | Control |
+|---|---|---|
+| `live-hub.html`, `live-hub.js`, `gsc-design-system.css` | Centro de hasta cinco torneos, enlace exclusivo y presentación General/categorías. | La vista compartida no expone la aplicación; 67 jugadores demo permanecen. |
+| `live-control.js`, `api/live.js` | Permiten varias scorecards del mismo grupo sin capitán. | El agregador computa una sola vez cada grupo/jugador/hoyo y conserva discrepancias. |
+| `test-v353-live-hub.mjs` | Simula dos teléfonos con el mismo jugador y hoyo. | Segundo cómputo no altera el total; un hoyo nuevo sí se incorpora. |
+
 | Archivo | Función | Control |
 |---|---|---|
 | `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` | Fuente única para trasladar estado, límites, versiones, enlaces y pendientes entre conversaciones. | Gate 0 exige su presencia; MAIN permanece congelada. |
@@ -1095,3 +1187,16 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 |---|---|---|
 | `test-v405-registration-clear-final-mobile.mjs` | Sella `BORRAR TODO`, aislamiento modal, cabecera móvil y scroll contenido de la tarjeta. | Prohíbe borrar Historial y detecta reaparición de controles montados. |
 | `index-grupal.html` | Limpia los seis jugadores del borrador y corrige la presentación móvil de Tarjeta Digital. | Ronda activa, Historial, scores y módulos Intocables permanecen fuera del borrado. |
+# V407-R6 · UNIVERSALES · 08 de septiembre de 2026
+
+- `universales.js`: motor único de 12 puntos por hoyo para 3/4 jugadores y empates.
+- `test-v407-r6-universales.mjs`: matriz matemática, paridad funcional y retiro activo de DOTS.
+- `test-v407-r6-universales-coordination.mjs`: contrato entre la línea gráfica R5 y la integración R6.
+- `CONTROL_PROYECTO_SCIRE/COORDINACION_V407_R6_UNIVERSALES.md`: ramas, propiedad de archivos, snapshot y secuencia sin cruces.
+- `index-grupal.html`: selector, validación, Score Card y Tarjeta Digital UNIVERSALES.
+- `card-library.js`: modo UNIVERSALES en Historial.
+- `service-worker.js`: release/caché R6 y motor offline.
+- `audit-project.mjs`: ejecución obligatoria de los bancos R6.
+- `test-v330-side-games.mjs`: DOTS histórico sin superficie activa; Skins/Wolf/Vegas preservados.
+- `test-v405-registration-clear-final-mobile.mjs`: Control Manual común con UNIVERSALES.
+- `test-v407-r1-premium-visual-system.mjs`: identificación visual R6 sobre geometría R5.

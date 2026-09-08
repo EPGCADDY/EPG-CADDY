@@ -10,8 +10,9 @@ assert.match(html,/id="roundManualTitle"[^>]*>CONTROL MANUAL · \$\{stable\?"STA
 assert.doesNotMatch(html,/>ANOTACIÓN MANUAL · PLAN B</);
 assert.doesNotMatch(html,/>SCORE MANUAL</);
 
-// La columna del nombre crece de 82 px a 103 px (+25.6%) y los tres acumulados se angostan.
-assert.match(html,/grid-template-columns:103px 72px 72px \.65fr \.65fr \.75fr/);
+// La retícula conserva seis columnas y permite que nombre, score y acumulados respiren sin desbordar móvil.
+assert.match(html,/\.round-player-grid\{display:grid!important;grid-template-columns:minmax\(116px,1\.3fr\) 72px minmax\(88px,1fr\) repeat\(3,minmax\(76px,\.8fr\)\)!important/);
+assert.match(html,/@media\(max-width:800px\)[\s\S]*\.round-player-grid\{min-width:0!important;grid-template-columns:minmax\(70px,1\.2fr\) 36px minmax\(58px,1fr\) repeat\(3,minmax\(40px,\.72fr\)\)!important/);
 
 // En el resumen inferior sólo la última columna PUNTOS TOTAL usa verde neón.
 assert.match(html,/class="stableford-points-total">\$\{t\.count\?t\.points:""\}<\/td>/);
@@ -25,9 +26,9 @@ assert.match(html,/holes:previous\[i\]\?\.holes\|\|\{\}/);
 assert.match(html,/names\.slice\(0,6\)/);
 
 // ATRÁS queda pequeño y en el flujo; nunca tapa la tarjeta ni sus resultados.
-assert.match(html,/\.back-registration-control\{position:static;/);
+assert.match(html,/\.round-secondary-actions\{position:static;/);
 assert.match(html,/>ATRÁS<\/button>/);
-assert.doesNotMatch(html,/\.back-registration-control\{position:fixed;/);
+assert.doesNotMatch(html,/\.round-secondary-actions\{position:fixed;/);
 
 // General y Stableford usan una sola política con filtro de modalidad: comparten arquitectura, nunca mezclan rondas.
 assert.match(html,/function latestStoredRound\(modeHint\)/);

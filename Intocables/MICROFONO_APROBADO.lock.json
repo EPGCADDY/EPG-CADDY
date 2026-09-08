@@ -1,12 +1,13 @@
 {
   "schema": "gscg-microphone-lock/v1",
-  "version": "V378",
+  "version": "V406-R23",
   "approvedBehavior": [
     "registro_de_jugadores_por_voz",
     "score_de_un_hoyo_por_voz",
     "score_de_varios_hoyos_seguidos_por_voz",
     "persistencia_inmediata_de_scores",
-    "comunicacion_universal_audible_sin_cambiar_pantalla"
+    "comunicacion_universal_audible_sin_cambiar_pantalla",
+    "cierre_hablado_hoyos_9_y_18_con_reintento"
   ],
   "policy": "Los bancos y el transporte de voz aprobados no se modifican. Cualquier hash o prueba diferente bloquea auditoría, build y despliegue hasta autorización expresa del propietario.",
   "sha256": {
@@ -20,7 +21,7 @@
     "test-v359-ios-score-parser-recovery.mjs": "a9ef038dd8ba49e31278c1e6e096c9f8ddc9eccdcacd1afe90c51af225fc9515",
     "test-v357-synchronized-progressive-voice.mjs": "ad7ba5e426dbde712f2d965e1a33a2af35aa75b3d7a176bf8982d52441bce84d",
     "test-v361-synchronized-voice.mjs": "ead1297e3f3f93185a56c5a883b366805fac35b85169dbacb5271d69c3ecca43",
-    "test-v362-physical-voice-recovery.mjs": "dd961db5c3f886f2b380dfaa744883a01501c25f7133a853b80dfbef5a578b42",
+    "test-v362-physical-voice-recovery.mjs": "1fcb521ef6b6b9c89c077b6e3bcb125ccaf46335687e2ab6a8f95e722158eafa",
     "test-v367-universal-voice-in-place.mjs": "ef5c659d69851f7f018116ae7252ad4efff36728472cbb87db1598a33c5dbd49"
   },
   "tests": [

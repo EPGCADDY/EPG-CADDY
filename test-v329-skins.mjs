@@ -137,7 +137,7 @@ for(const token of [
   'NUEVOS JUEGOS',
   'id="wolfRoundButton"',
   'id="vegasRoundButton"',
-  'id="dotsRoundButton"',
+  'id="universalesRoundButton"',
   'function skinsSpeechSummary()',
   'function syncSkinsResult(value=round)',
   'SCORE DEPORTIVO INTACTO'
