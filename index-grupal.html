@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V407-R7-IOS-SCROLL-20260908">
+  <meta name="gscg-release" content="V407-R8-SINGLE-SCROLL-20260908">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -798,6 +798,8 @@ body.gsc-final-card-open .mandatory-update{display:block!important}
 <style id="gscg-ios-scroll-recovery-v406-r20">
 html,body{height:auto!important;min-height:100%;overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom}
 .overlay{height:100dvh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom}
+body.gsc-setup-open #setupOverlay.visible{position:relative;inset:auto;width:100%;height:auto!important;min-height:100dvh;overflow:visible!important;overscroll-behavior:auto;-webkit-overflow-scrolling:auto}
+body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 .overlay:not(.visible){pointer-events:none!important}
 </style>
 <style id="gscg-live-support-link-v311">
@@ -1010,7 +1012,7 @@ html,body{height:auto!important;min-height:100%;overflow-x:hidden!important;over
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>ACTUALIZACIÓN DISPONIBLE</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R7</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update available" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R8</span><button type="button" id="mandatoryUpdateButton" aria-disabled="false"><span id="mandatoryUpdateAction">ACTUALIZAR</span></button></div></div>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
 "use strict";
@@ -5495,7 +5497,10 @@ if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator)window.addEventList
 function recoverInstalledAppScrolling(){
   const root=document.scrollingElement||document.documentElement;
   for(const element of new Set([document.documentElement,document.body,root])){element.style.setProperty("overflow-y","auto","important");element.style.setProperty("height","auto","important");element.style.webkitOverflowScrolling="touch"}
-  for(const overlay of document.querySelectorAll(".overlay.visible")){overlay.style.setProperty("height","100dvh");overlay.style.setProperty("overflow-y","auto","important");overlay.style.webkitOverflowScrolling="touch"}
+  for(const overlay of document.querySelectorAll(".overlay.visible")){
+    if(overlay.id==="setupOverlay"){overlay.style.removeProperty("height");overlay.style.removeProperty("overflow-y");overlay.style.removeProperty("-webkit-overflow-scrolling");continue}
+    overlay.style.setProperty("height","100dvh");overlay.style.setProperty("overflow-y","auto","important");overlay.style.webkitOverflowScrolling="touch"
+  }
 }
 window.addEventListener("pageshow",recoverInstalledAppScrolling);
 window.addEventListener("focus",recoverInstalledAppScrolling);
@@ -5514,7 +5519,7 @@ function showMandatoryUpdate(build){
 function installMandatoryUpdate(){
   if(appBuildReloading||!pendingPublishedBuild)return;
   appBuildReloading=true;persist();
-  const nextUrl=new URL(location.href);nextUrl.searchParams.delete("__gscg_build_check");nextUrl.searchParams.set("app_version",pendingPublishedBuild);location.replace(nextUrl.toString());
+  const nextUrl=new URL(location.href);nextUrl.searchParams.delete("__gscg_build_check");nextUrl.searchParams.set("app_version",pendingPublishedBuild);nextUrl.searchParams.set("update_check",String(Date.now()));location.replace(nextUrl.toString());
 }
 async function syncPublishedAppVersion(){
   if(appBuildCheckRunning||appBuildReloading||document.hidden)return;
