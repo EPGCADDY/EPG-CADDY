@@ -29,7 +29,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     return res.status(200).json({
       ok: true,
-      engine: "EPG Caddy Scoring Engine",
+      engine: "Golf Score Card GT Scoring Engine",
       version: "1.1",
       course
     });
@@ -81,7 +81,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       ok: true,
-      engine: "EPG Caddy Scoring Engine",
+      engine: "Golf Score Card GT Scoring Engine",
       version: "1.1",
       course: {
         name: course.name,

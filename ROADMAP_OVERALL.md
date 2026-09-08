@@ -1,5 +1,122 @@
 # ROADMAP OVERALL
 
+## V406-R25 · encabezado móvil sin superposición · 8 de septiembre de 2026
+
+La revisión física `IMG_3076.png` confirmó `V406 · R24` visible sobre ACTUALIZADO y detectó que la hora duplicada `05:31 P. M.` invadía el botón. R25 oculta únicamente `#timeText` dentro del encabezado móvil; la hora permanece visible en la fila `INICIO`, sin cambiar temporizador, ronda, scoring ni actualización explícita. Producción permanece intacta.
+
+## V406-R24 · ID de versión sobre ACTUALIZAR · 8 de septiembre de 2026
+
+Un único ID blanco de versión queda inmediatamente encima de la tecla permanente ACTUALIZADO/ACTUALIZAR. Se conserva el parpadeo exclusivamente ante un candidato nuevo y la promoción solamente por toque. `IMG_3054.png` aporta la evidencia del flujo R23 y del defecto de ubicación corregido. `test-v406-r23-visible-version.mjs` blinda R24. Producción intacta.
+
+## V406-R21 · rondas demo persistentes en MI TABLERO · 7 de septiembre de 2026
+
+S.SENIOR 04, FEMENINA 01 y A 05 conservan sus rondas simuladas aunque MI TABLERO se abra desde TORNEO GUARDADO. El catálogo demo actúa como respaldo local y los datos LIVE vigentes tienen prioridad. `IMG_3041.png` y RC-078 documentan el escape de R19. Producción intacta.
+
+## V406-R20 · recuperación de desplazamiento iPhone · 7 de septiembre de 2026
+
+La aplicación instalada recupera el desplazamiento vertical en apertura, `pageshow`, foco y retorno desde segundo plano. Las capas móviles usan inercia táctil de iOS y `pan-y`; release y caché R20 obligan a renovar el shell. El reporte físico de congelamiento y ausencia de aviso queda en RC-077. Producción intacta.
+
+## V406-R19 · jugador elegido aparece en MI TABLERO · 7 de septiembre de 2026
+
+`live-hub.js` resuelve MI TABLERO con la misma colección que muestra JUGADORES, incluida la demostración. `test-v353-live-hub.mjs` reproduce `S.SENIOR 04` y exige que abra su tarjeta en vez de `ENLACE NO DISPONIBLE`. Release y caché avanzan a R19; R18 ACTUALIZAR permanece integrado. `IMG_3034.png`, continuidad y RC-076 documentan el fallo físico. Producción intacta.
+
+## V406-R18 · ACTUALIZAR visible permanentemente · 7 de septiembre de 2026
+
+El botón `ACTUALIZAR` permanece visible en Registro, tarjetas, modalidades, apuestas, LIVE y Tarjeta Digital Final. Se muestra oscuro y deshabilitado cuando el release está vigente; sólo se habilita en verde y parpadea al detectar un release publicado distinto. `index-grupal.html`, `service-worker.js` y `test-v365-active-round-empty-recovery.mjs` fijan el contrato y la caché R18. Continuidad y reincidencias registran el FAIL físico reportado. Producción permanece intacta en `4009f79f50987f8bf105189bce9c5e90b2857363`.
+
+## V406-R17 · MI TABLERO permanece visible · 7 de septiembre de 2026
+
+- `IMG_3033.png` mostró MI TABLERO activo en verde mientras la pantalla seguía enseñando JUGADORES EN VIVO.
+- El monitor seleccionado se conserva durante cada actualización automática de tres segundos.
+- Escenario sellado con cinco jugadores elegidos; sus tarjetas permanecen en MI TABLERO. Producción intacta.
+
+## V406-R16 · LIVE aplica HCP individual · 7 de septiembre de 2026
+
+- La evidencia física `IMG_3032.png` rechazó la General demostrativa: siete jugadores finalizados mostraban 90/72/E aunque tenían HCP distintos.
+- El demo distribuye ahora los golpes de cada HCP por hoyo; al finalizar exige `Neto = Gross − HCP` y `Resultado = Neto − Par`.
+- Caso sellado: `C 08 · HCP 20 · Gross 90 · Neto 70 · −2`. Producción permanece intacta.
+
+## V406-R15 · BORRAR TODO unificado y confirmado · 7 de septiembre de 2026
+
+- Registro y tarjeta muestran la misma acción `BORRAR TODO`.
+- Ambos piden confirmación explícita antes de eliminar jugadores, scores y ronda activa; CANCELAR no cambia datos.
+- Al confirmar, la app elimina las seis claves activas, marca el ID borrado y abre Inicio limpio. Producción permanece intacta.
+
+## V406-R14-S1 · recuperación atómica del deployment · 7 de septiembre de 2026
+
+- El primer upload R14 llegó truncado; el segundo restauró el árbol exacto, pero Vercel exigió una modificación nueva y simultánea de ambos ROADMAPS.
+- Este sello registra la recuperación en la misma modificación y mantiene sin cambios la lógica R14 ya auditada. Producción permanece intacta.
+
+## V406-R14 · ACTUALIZAR se apaga al quedar vigente · 7 de septiembre de 2026
+
+- La revisión visual real rechazó R13 porque el botón seguía verde y parpadeando después de cargar el mismo release.
+- `index-grupal.html` inicia `ACTUALIZAR` apagado y deshabilitado; sólo `showMandatoryUpdate()` lo enciende cuando el release publicado difiere del cargado.
+- Después de actualizar, la nueva carga compara el mismo release y mantiene el botón apagado, conservando la ronda mediante `persist()`.
+- `service-worker.js` usa caché R14 y las pruebas V365/V406 bloquean el regreso al pulso permanente. MAIN/Producción permanecen intactas.
+
+## V406-R13 · actualización siempre visible y verificable · 7 de septiembre de 2026
+
+- `index-grupal.html` cambia el release público a `V406-R13-ALWAYS-UPDATE-PULSE-20260907` y mantiene `ACTUALIZAR` verde, habilitado y parpadeante aun cuando ya se cargó la última versión.
+- Cada toque vuelve a consultar y cargar el release publicado preservando la sesión, eliminando la duda entre un botón gris y una versión vencida.
+- `service-worker.js` usa caché R13; V365 y las pruebas V406 R2/R4/R5 bloquean nuevas publicaciones funcionales o visuales sin cambio de release.
+- RC-070 registra el escape de R11 y la decisión R13 de mantener el control siempre activo. MAIN/Producción permanecen intactas.
+
+## V406-R11 · BORRAR TODO persistente y reapertura en Inicio · 7 de septiembre de 2026
+
+- `index-grupal.html` elimina la ronda actual de sus seis copias activas, marca siempre su ID como borrado, sustituye el estado en memoria por `blankRound()` y fija `PRINCIPAL_RESET_KEY` para impedir que `loadRound()` rescate una ronda antigua al reabrir.
+- La recuperación central filtra los IDs eliminados y ya no puede revivir la ronda borrada en el dispositivo.
+- Al iniciar una ronda válida, `persist()` retira la bandera y vuelve a conservar normalmente la tarjeta viva.
+- `test-v405-registration-clear-final-mobile.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v363-intocables-behavior.mjs` e `Intocables/intocables-gate.mjs` fijan borrado, no reaparición, Inicio y conservación de otras rondas oficiales.
+- `service-worker.js` activa la caché `v406-r11-persistent-clear-home`; MAIN permanece intacta.
+
+## V406-R9 · selector GENERAL restaurado · 7 de septiembre de 2026
+
+- El selector principal de TORNEO LIVE muestra `GENERAL`, conserva las categorías y mantiene el esquema gráfico R6 restaurado en R8.
+- Prueba negativa prohíbe el regreso de `TODAS LAS CATEGORÍAS`. MAIN permanece intacto.
+
+## V406-R8 · restauración del esquema LIVE · 7 de septiembre de 2026
+
+- Se restaura la composición visual V406-R6: al abrir no se despliega el listado individual, de modo que General, selector de categorías y posiciones permanecen visibles en su ubicación anterior.
+- Los 67 jugadores simulados y las siete reglas funcionales R7 se conservan sin alterar la estructura gráfica.
+- El listado alfabético con categoría en color aparece únicamente al buscar/agregar un jugador a Mi Tablero.
+- MAIN permanece intacto.
+
+## V406-R7 · categorías y posiciones LIVE por hoyo · 7 de septiembre de 2026
+
+- GENERAL, cada categoría y Mi Tablero recalculan y reordenan cada tres segundos por resultado acumulado; en empate pesa más quien ha jugado más hoyos.
+- Cada jugador muestra HOYO ACTUAL o FINAL. Los hoyos se normalizan por número antes de sumar para impedir doble operación.
+- La columna visible usa categoría, no color de marcas; las marcas iniciales se asignan por categoría. “TODAS LAS CATEGORÍAS” cambia a “GENERAL”.
+- El listado para agregar a Mi Tablero queda visible y ordenado alfabéticamente por nombre; muestra la categoría coloreada y Campeonato como C en cuadro blanco.
+- MAIN permanece intacto.
+
+## V406-R6 · categorías LIVE visibles para prueba · 7 de septiembre de 2026
+
+- `live-control.js` abre TORNEO LIVE sin enlace en modo demostración temporal y de sólo lectura.
+- `live-hub.js` presenta 67 jugadores temporales: 7 Campeonato, 6 A, 24 B, 11 C, 7 Femenina, 7 Senior y 5 S.Senior; no escribe scores, historial ni datos reales.
+- `service-worker.js` renueva la caché a V406-R6 para activar `ACTUALIZAR` en el acceso LAB instalado.
+- `index-grupal.html` publica el release V406-R6; las pruebas V406-R2/R4/R5 y V365 fijan release/caché, y `test-v406-tournament-categories.mjs` exige entrada directa y distribución exacta.
+- Pendiente LIVE, continuidad, mapa maestro, reincidencias e inventario registran el cambio. MAIN permanece intacto.
+
+## V406-R5 · Torneo Live simple · 7 de septiembre de 2026
+
+Control maestro preservado: punto de corte `línea 185`; activación `23 de agosto de 2026, 17:05:00, hora de Guatemala`.
+
+- Acceso directo `TORNEO LIVE` desde la pantalla inicial.
+- El invitado sólo ve el flujo `BUSCA · ELIGE · MIRA`; nombre y categoría quedan primero.
+- Crear, unir, autorizar y administrar el torneo siguen disponibles bajo `ORGANIZAR TORNEO`, cerrado de forma predeterminada.
+- Compartir, actualizar, salir y agregar enlaces externos quedan en `MÁS OPCIONES`.
+- `test-v406-r5-simple-tournament-live.mjs` bloquea el regreso del proceso saturado.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` sella el inventario regenerado de esta entrega.
+
+- V406-R4 fija como regresión permanente la verificación solicitada de 67 participantes: 7 Campeonato, 6 A, 24 B, 11 C, 7 Femenina, 7 Senior y 5 S.Senior, agrupados en foursomes y visibles por categoría sin cantidades artificialmente fijas.
+
+## V406-R4 · Controles móviles sin traslape · 7 de septiembre de 2026
+
+- LIVE, REGLAS, AI ∞ y Support pasan a una barra estructural debajo del encabezado.
+- Registro nombra explícitamente los selectores vacíos CATEGORÍA y MARCAS.
+- ATRÁS, BORRAR SCORES y + JUGADOR comparten una fila compacta.
+- El banco visual temporal usa 67 participantes repartidos 7/6/24/11/7/7/5; test-v406-r4-mobile-controls.mjs conserva el candado de regresión.
+
 - V406-R3 renueva exclusivamente el identificador publicado y la caché PWA para que los accesos instalados con V406-R2 detecten la actualización y activen el botón `ACTUALIZAR`; no modifica rondas, scores ni persistencia.
 
 ## V406-R2 LAB candidato · Diseño profesional, categorías y TORNEO LIVE · 7 de septiembre de 2026
@@ -1659,3 +1776,21 @@ El registro se incorpora también a `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCH
 ## V405-R2 LAB · BORRAR TODO y Tarjeta Digital móvil · 7 de septiembre de 2026
 
 La captura física `IMG_2949.png` rechaza la Tarjeta Digital anterior: accesos globales estaban montados sobre `FINALIZAR RONDA` y `ATRÁS`, mientras el ancho exterior de 1500 px desbordaba el iPhone. `index-grupal.html` añade `BORRAR TODO` para vaciar únicamente los seis jugadores del Registro y crea aislamiento `gsc-final-card-open`; en móvil apila título/acciones y confina el desplazamiento a la tabla. `test-v405-registration-clear-final-mobile.mjs` fija ambos contratos, `audit-project.mjs` lo vuelve obligatorio, `service-worker.js` publica la caché `v405-r2-registration-clear-mobile-card` y `test-v365-active-round-empty-recovery.mjs` sella release/caché. `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` y `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` registran el estado. MAIN permanece intacta; prueba física iPhone 4/4 pendiente.
+# V406-R22 · actualización explícita, scroll iOS, marca pública y COMPARTIR LIVE
+
+- `index-grupal.html`: release R22, recuperación completa de desplazamiento y botón COMPARTIR LIVE en la tarjeta activa y digital.
+- `service-worker.js`: separa candidato y shell aprobado; una versión nueva no se instala hasta tocar ACTUALIZAR.
+- `live-control.js`: comparte en un toque el grupo completo y homologa el nombre COMPARTIR LIVE.
+- `live-hub.js`: muestra T en posiciones empatadas sin perder el ranking deportivo ni jugadores de GENERAL.
+- `live-hub.html`, `live.html`, `index.html`, `api/score.js`, `api/session.js`: marca pública GOLF SCORE CARD GT y previews para enlaces compartidos.
+- `test-v353-live-hub.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v406-r22-public-brand.mjs`, `test-v406-r22-share-live.mjs`: regresión de los cambios anteriores, incluida la selección exclusiva de campos editables.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: continuidad y RC-079–RC-081.
+
+# V406-R23 · versión visible en ACTUALIZAR
+
+- Arriba del logo queda visible en blanco el release compacto `V406 · R23`.
+- La tecla apagada muestra `ACTUALIZADO`; al detectar una versión posterior muestra `ACTUALIZAR` y parpadea.
+- La descarga no sustituye el shell aprobado: sólo el toque del usuario promueve la versión candidata.
+- `test-v406-r23-visible-version.mjs` fija permanentemente los tres estados anteriores; Producción permanece intacta.
+- ENTER habilita el audio en el gesto del usuario; los cierres de 9/18 priorizan la voz dedicada y un fallo de reproducción rearma el anuncio en vez de perderlo.
+<!-- V406-R23 audit evidence: test-v265-first-nine-automatic-result.mjs · test-v406-r23-turn-closure-audio.mjs -->

@@ -1,5 +1,57 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
+## Corrección transversal V406-R11
+
+`BORRAR TODO`, visible en Registro y en todas las tarjetas/modos, elimina jugadores, scores y ronda activa sólo después de confirmación; obliga reapertura en Inicio sin afectar los demás torneos LIVE ni otras rondas oficiales del Historial. Prueba física iPhone pendiente.
+
+## Centro multitorneo V406-R10
+
+- Centro independiente para elegir hasta cinco torneos simultáneos.
+- Enlace compartible restringido al torneo seleccionado.
+- Conexión de varias scorecards por grupo sin capitán y consolidación de cada jugador/hoyo una sola vez en la clasificación.
+- Pendiente: validación física con dos teléfonos reales reportando el mismo hoyo y revisión de discrepancias por organización.
+
+## Selector V406-R9
+
+- La opción global se llama GENERAL.
+- La etiqueta anterior TODAS LAS CATEGORÍAS queda prohibida por prueba automática.
+
+## Restauración de formato V406-R8
+
+- Al abrir TORNEO LIVE, el listado individual permanece vacío hasta realizar una búsqueda.
+- General, selector de categorías, detalle y tabla de posiciones conservan el esquema anterior.
+- Se conservan los 67 jugadores simulados y todas las reglas operativas V406-R7.
+- Mi Tablero no sustituye la finalidad principal de seguimiento de grupos y posiciones.
+
+## Clasificación activa V406-R7
+
+- GENERAL, categoría e Individual: actualización automática cada tres segundos y posición por score acumulado.
+- Desempate: a igual resultado, mayor cantidad de hoyos jugados ocupa la posición superior.
+- Estado por jugador: HOYO ACTUAL durante juego y FINAL al completar 18.
+- Antiduplicado: un número de hoyo se normaliza y se opera una sola vez.
+- Categoría visible en vez de marcas; valores predeterminados por categoría y selector GENERAL.
+- Mi Tablero: listado alfabético por primer nombre, categoría en color y C de Campeonato en cuadro blanco.
+
+## Demostración visible V406-R6
+
+- TORNEO LIVE abierto sin enlace carga 67 jugadores temporales en las categorías 7/6/24/11/7/7/5.
+- Clasificación, búsqueda y detalle usan la misma colección en memoria y de sólo lectura.
+- Ningún jugador demostrativo se guarda, publica en la API, incorpora al historial ni altera la ronda activa.
+- El modo real sigue usando exclusivamente el enlace GENERAL y los datos LIVE autorizados.
+
+## Simplificación V406-R5
+
+- El invitado entra desde `TORNEO LIVE`, pega el enlace sólo cuando no llegó desde uno compartido y busca por nombre o categoría.
+- Crear, unir, autorizar y revocar permanecen en `ORGANIZAR TORNEO`, cerrado al abrir.
+- La general y Mi Tablero se mantienen sincronizados y sólo lectura; no se crea una tarjeta adicional.
+
+## Corrección V406-R4
+
+- Barra estructural para LIVE, REGLAS, AI ∞ y Support.
+- Selectores CATEGORÍA y MARCAS explícitos.
+- Fila ATRÁS, BORRAR TODO y + JUGADOR, con confirmación obligatoria antes de borrar.
+- Banco visual: 67 participantes, distribución 7/6/24/11/7/7/5.
+
 ## Ampliación V406-R2 · categorías de torneo
 
 - La captura oficial continúa en Score Cards independientes de hasta 6 jugadores; en torneos el caso normal es un foursome de 4 con un capitán/publicador.

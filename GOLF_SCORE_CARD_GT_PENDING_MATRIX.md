@@ -31,7 +31,7 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - ✅ Los scores válidos ya capturados se conservan aunque después se escuche conversación ajena al vocabulario.
 - ✅ El aviso `Falta NOMBRE` depende de inactividad real y el micrófono se cierra durante reportes.
 - ✅ Todas las tarjetas muestran `OUT`, `IN` y `TOTAL`.
-- ✅ Existen regreso a datos, ronda previa, regreso a ronda actual, nueva ronda y borrar scores.
+- ✅ Existen regreso a datos, ronda previa, regreso a ronda actual, nueva ronda y BORRAR TODO confirmado en Registro y tarjeta compartida.
 - ✅ Existen Tarjeta Global y tarjetas personales con exportación PNG, PDF individual, PDF conjunto y hoja nativa para guardar o compartir.
 - ✅ El historial privado local permite buscar tarjetas oficiales por ronda, fecha, campo, torneo, modalidad y jugador sin reemplazar la ronda actual.
 - ✅ El historial incluye consultas estadísticas escritas de Gross, Neto, consistencia, tendencia, comparación y puntos Stableford sobre el historial local.

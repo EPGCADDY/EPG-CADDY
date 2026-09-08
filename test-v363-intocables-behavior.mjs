@@ -12,7 +12,7 @@ const legacyIndex=html.indexOf('const candidates=[latestStoredRound("general"),l
 assert.ok(canonicalIndex>0&&legacyIndex>canonicalIndex,"La ronda canónica debe cargarse antes que las claves heredadas");
 assert.match(html,/if\(isRecoverableStoredRound\(canonical\)\)return canonical/);
 assert.doesNotMatch(html,/storedRoundMode\(canonical\)!=="stableford"/);
-assert.match(html,/if\(isRecoverableStoredRound\(round\)\)localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)/);
+assert.match(html,/if\(isRecoverableStoredRound\(round\)\)\{localStorage\.removeItem\(PRINCIPAL_RESET_KEY\);localStorage\.setItem\(ACTIVE_ROUND_KEY,payload\)\}/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(ACTIVE_ROUND_KEY\)/);
 
 const holes={};

@@ -48,7 +48,10 @@ assert.match(seal,/return\{handled:true,count,closure\}/);
 const finalize=html.slice(html.indexOf("function finalizeBrowserVoiceFallback"),html.indexOf("\nfunction restartBrowserVoiceAfterNaturalEnd"));
 assert.match(finalize,/progressive\.closure[\s\S]*speakClosure\(progressive\.closure\)/);
 const spokenClosure=html.slice(html.indexOf("async function speakClosure"),html.indexOf("\nasync function speakQuery"));
-assert.match(spokenClosure,/return speakAiUniversalText\(text\)/);
+assert.match(spokenClosure,/if\(await speakAiUniversalText\(text\)\)return true/);
+assert.match(spokenClosure,/round\.announced\.front=false/);
+assert.match(spokenClosure,/round\.announced\.back=false/);
+assert.match(spokenClosure,/round\.announced\.complete=false/);
 
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_no_result_timeout",build:"V363",transportFailure:"no_speech",transcript:"PRIVADO"}),{event:"browser_fallback_no_result_timeout",build:"V363",context:"round",turn:0,elapsedMs:0,transportFailure:"no_speech"});
 
