@@ -546,6 +546,35 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `test-v407-r1-premium-visual-system.mjs`: bloquea regresiones de título, contenedor, barra de desplazamiento y colores de la tarjeta, además de las retículas homogéneas de acciones.
 - Producción permanece intacta; el candidato se limita a la rama `lab/premium-ui-v407`.
 
+## V407-R6 · Coordinación de Universales · 08 de septiembre de 2026
+
+- La modalidad general visible se renombra **MEDAL PLAY NORMAL** en Inicio, detalle de ronda y Torneo LIVE; su motor permanece intacto.
+
+- `CONTROL_PROYECTO_SCIRE/COORDINACION_V407_R6_UNIVERSALES.md` separa motor/reglas de diseño/plantillas para impedir cruces entre conversaciones.
+- `lab/v407-r6-universales` queda como única rama de integración de la modalidad; `lab/premium-ui-v407` conserva la auditoría R5.
+- UNIVERSALES reemplaza el slot completo de DOTS en APP-22/23; DOTS se retira de Score Card, Tarjeta Digital, WhatsApp, Historial, Manual y superficies activas. CARD-09/10 quedan para Global/Personal Universales.
+- `test-v407-r6-universales-coordination.mjs` impide crear APP-43–45, conserva 12 puntos por hoyo y bloquea cruces entre motor, gráfica y Producción.
+- `universales.js` implementa el motor aislado 6–4–2–0 / 6–4–2, comparte posiciones empatadas y exige 12 puntos exactos por hoyo.
+- `index-grupal.html` sustituye la casilla visible de DOTS por UNIVERSALES, limita el registro a 3 o 4 jugadores y añade PUNTOS por hoyo e IN/OUT/TOTAL a la Score Card y Tarjeta Digital.
+- `card-library.js` conserva UNIVERSALES como modalidad propia en Historial; `service-worker.js` incorpora el motor a la copia instalable R6.
+- `card-artifacts.js` genera Global y Personal específicas con Gross/Neto/Puntos y elimina el panel digital activo de DOTS; `scripts/build-mobile-web.mjs` incluye el motor en iOS/Android.
+- `api/live.js` y `live-hub.js` preservan y rotulan UNIVERSALES en Torneo LIVE; `voice-assistant.js` abre su registro por voz.
+- `live-control.js` calcula y publica los 12 puntos por grupo; `live-view.js` muestra PUNTOS por hoyo y TOTAL; el Centro LIVE ordena UNIVERSALES de mayor a menor puntaje.
+- `database/005_live_tournament_mode.sql` fija modalidad por torneo dinámico; el API rechaza grupos cuyo modo no coincide con el torneo creado.
+- `test-v311-voice-assistant.mjs`, `test-round-information.mjs` y `test-v261-registration-stableford-modality.mjs` fijan navegación y títulos compartidos del release R6.
+- `test-v406-r23-visible-version.mjs` fija el identificador visible `V407 · R6` sobre ACTUALIZAR.
+- `test-v260-round-points-player-return.mjs` conserva la retícula móvil contenida heredada de R5A.
+- `test-v407-r6-universales.mjs` prueba 12 escenarios de empate, 3/4 jugadores, el caso 5–5–1–1, retiro de la superficie DOTS y paridad de configuraciones.
+- `test-v405-registration-clear-final-mobile.mjs` y `test-v407-r1-premium-visual-system.mjs` amplían los candados compartidos a UNIVERSALES y al release R6.
+- `test-v330-side-games.mjs` conserva la cobertura histórica del motor DOTS, pero prohíbe sus accesos/configuración activos y mantiene Skins, Wolf y Vegas.
+- `test-v307-match-arrows-format.mjs` conserva Match Play y amplía el rótulo compartido de modalidad a UNIVERSALES.
+- `test-v329-skins.mjs` conserva Skins y exige UNIVERSALES en el antiguo espacio visual de DOTS.
+- Los candados V365 y V406 de recuperación, diseño, controles móviles y Torneo LIVE conservan sus contratos y reconocen el release R6.
+- `audit-project.mjs` incorpora obligatoriamente ambos bancos R6 a la regresión maestra.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` registra el conjunto exacto de fuentes R6.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` resella 431 fuentes y los tres inventarios PDF después de la integración R6.
+- Producción `main` permanece congelada en `4009f79f50987f8bf105189bce9c5e90b2857363`.
+
 ## V407-R5 · Inventario visual total y tarjeta Stableford responsive · 08 de septiembre de 2026
 
 - Se inventariaron 67 pantallas y estados verificables en seis familias; el alcance y sus diez criterios están en `CONTROL_PROYECTO_SCIRE/AUDITORIA_VISUAL_V407/`.

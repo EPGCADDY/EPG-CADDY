@@ -13,7 +13,7 @@
   const HELP=/\b(como hago|como puedo|como se|donde|que debo|que tengo que|que le digo|que puedo decir|ayuda|explica|ensenam|quiero saber)\b/;
   const ASSISTANT_CUE=/\b(abrir|abre|muestrame|mostrar|muestra|llevame|llevarme|ir|ve|vete|entrar|quiero|necesito|como|donde|ayuda|explica|ensenam|que debo|que tengo que|que le digo|que puedo decir)\b/;
   const LIVE_RESULT=/\b(como voy|como vamos|como va|quien va|quien gana|quien esta ganando)\b/;
-  const NAVIGATION_ONLY=new Set(["stableford","match_play","four_ball","practice"]);
+  const NAVIGATION_ONLY=new Set(["stableford","match_play","four_ball","universales","practice"]);
 
   const rules=[
     {id:"correct_score",match:/\b(borr|elimin|quit|cambi|corrig|rectific|equivoc)\w*\b.*\b(score|gross|golpe|aguila|birdie|par|bogey)\b|\b(score|gross|golpe|aguila|birdie|par|bogey)\b.*\b(borr|elimin|quit|cambi|corrig|rectific|equivoc)\w*\b/,speech:"Abre Control Manual, elige el hoyo, cambia el Gross del jugador y toca Enter. El cálculo se actualiza sin perder los demás scores.",action:"open_manual_entry"},
@@ -23,6 +23,7 @@
     {id:"stableford",match:/\bstableford\b/,speech:"Abriendo el registro Stableford. Selecciona campo y categoría, registra los nombres y toca OK para iniciar.",action:"open_stableford"},
     {id:"match_play",match:/\bmatch(?: play)?\b/,speech:"Abriendo el registro Match Play. Registra dos o cuatro jugadores y confirma la ronda.",action:"open_match"},
     {id:"four_ball",match:/\bfour ?ball\b/,speech:"Abriendo el registro Four Ball. Registra dos o cuatro jugadores; cada jugador conserva su handicap y sus marcas.",action:"open_four_ball"},
+    {id:"universales",match:/\buniversales?\b/,speech:"Abriendo el registro Universales. Registra tres o cuatro jugadores; cada jugador conserva su handicap y se reparten doce puntos por hoyo según el Neto.",action:"open_universales"},
     {id:"practice",match:/\bpractica\b|\bsin perfil\b|\bsin registro\b/,speech:"Abriendo Score Card Práctica. Puedes anotar Gross inmediatamente y completar el perfil sólo si lo necesitas.",action:"open_practice"},
     {id:"new_round",match:/\b(nueva|nuevo|iniciar|comenzar|empezar)\b.*\b(ronda|partida)\b|\bregistro de jugadores\b/,speech:"Abriendo el registro de una nueva ronda. La ronda guardada no se reemplaza hasta que confirmes Iniciar ronda.",action:"open_registration"},
     {id:"history",match:/\b(historial|rondas anteriores|tarjetas guardadas|tarjeta guardada|ronda previa)\b/,speech:"Abriendo el Historial de tarjetas. Elige una ronda para ver, guardar o compartir sus archivos oficiales.",action:"open_history"},

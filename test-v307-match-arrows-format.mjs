@@ -18,7 +18,7 @@ assert.match(html,/\.scorecard \.match-arrow\{[^}]*width:30px;height:36px/);
 assert.match(html,/\.scorecard \.match-arrow path\{[^}]*stroke-width:4\.5;stroke-linecap:round;stroke-linejoin:round/);
 assert.doesNotMatch(html,/state==="won"\?"↑":state==="lost"\?"↓":""/);
 
-assert.match(html,/label:"MODALIDAD",value:round\.provisional\?"SCORE CARD - PRÁCTICA":isMatchPlayRound\(\)\?"MATCH PLAY":"RONDA NORMAL"/);
+assert.match(html,/label:"MODALIDAD",value:round\.provisional\?"SCORE CARD - PRÁCTICA":isMatchPlayRound\(\)\?"MATCH PLAY":isUniversalesRound\(\)\?"UNIVERSALES":"MEDAL PLAY NORMAL"/);
 assert.doesNotMatch(html,/label:"MODALIDAD",value:[^\n]*isMatchPlayRound\(\)\?"MATCH PLAY · CON HDCP"/);
 assert.match(html,/id="matchPlayRoundButton"[\s\S]*?<span>MATCH PLAY<\/span>/);
 assert.doesNotMatch(html,/MATCH PLAY · CON HDCP/);

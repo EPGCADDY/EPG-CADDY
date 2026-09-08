@@ -8,7 +8,7 @@ assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
 // Campo y modalidad son decisiones distintas en la Tarjeta Oficial.
 assert.match(html,/<div class="field-title course-selection-title">SELECCIONA CAMPO<\/div><div class="course-options" id="courseOptions"/);
 assert.match(html,/<div class="field-title">SELECCIONA MODALIDAD<\/div>/);
-assert.match(html,/id="normalRoundButton"[^>]*>[\s\S]*?<span>RONDA NORMAL<\/span>/);
+assert.match(html,/id="normalRoundButton"[^>]*>[\s\S]*?<span>MEDAL PLAY NORMAL<\/span>/);
 assert.match(html,/<div class="stableford-mode-option" id="stablefordModeOption"><\/div>/);
 assert.match(html,/\$\("courseOptions"\)\.innerHTML=Object\.entries\(COURSE_CATALOG\)[\s\S]*?\.join\(""\);\$\("stablefordModeOption"\)\.innerHTML=stableOption/);
 assert.match(html,/aria-label="Seleccionar modalidad Stableford"/);
@@ -38,6 +38,6 @@ assert.doesNotMatch(html,/id="openShareProject"|id="shareProjectPanel"/);
 // Nombres autorizados dentro de Stableford dentro del control operacional común.
 assert.match(html,/id="roundManualTitle"[^>]*>CONTROL MANUAL · \$\{stable\?"STABLEFORD":"GENERAL"\}<\/div>/);
 assert.match(html,/\$\("summaryTitle"\)\.textContent="PUNTOS"/);
-assert.match(html,/\$\("finalSummaryTitle"\)\.textContent=isStablefordRound\(\)\?"PUNTOS":isMatchPlayRound\(\)\?"RESULTADO MATCH PLAY":"INFORMACIÓN DE RONDA"/);
+assert.match(html,/\$\("finalSummaryTitle"\)\.textContent=isStablefordRound\(\)\?"PUNTOS":isMatchPlayRound\(\)\?"RESULTADO MATCH PLAY":isUniversalesRound\(\)\?"PUNTOS UNIVERSALES":"INFORMACIÓN DE RONDA"/);
 
 console.log("PASS V262 · campo separado, modalidad Stableford neutral y registro Dictado/Manual Opcional depurado");

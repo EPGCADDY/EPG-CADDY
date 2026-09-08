@@ -128,9 +128,9 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
 {
   const names=["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"],ids=["a","b","c","d","e","f"],officialPlayers=firstScores=>names.map((name,index)=>player(ids[index],name,Array(18).fill(firstScores[index]))),decisions=Object.fromEntries(Array.from({length:18},(_,index)=>{const wolfIndex=index%6;return[index+1,{type:"partner",partnerPlayerId:ids[(wolfIndex+1)%6]}]}));
   const cases=[
-    {key:"wolf",players:officialPlayers([3,4,5,6,7,8]),config:{enabled:true,scoreType:"gross",tiePolicy:"push",unitValue:10,currency:"USD",decisions},heading:/WOLF · GROSS/},
-    {key:"vegas",players:officialPlayers([4,5,5,6,6,7]),config:{enabled:true,scoreType:"gross",unitValue:2,currency:"USD",birdieFlip:true,eagleDouble:false,holeCapPoints:20},heading:/VEGAS · 3 PAREJAS/},
-    {key:"dots",players:officialPlayers([3,4,4,4,4,4]),config:dots.toggleEvent(dots.toggleEvent({enabled:true,unitValue:5,currency:"USD"},1,"a","sandy"),1,"f","snake"),heading:/DOTS/}
+    {key:"wolf",players:officialPlayers([3,4,5,6,7,8]),config:{enabled:true,scoreType:"gross",tiePolicy:"push",unitValue:10,currency:"USD",decisions},heading:/WOLF · GROSS/,activeArtifact:true},
+    {key:"vegas",players:officialPlayers([4,5,5,6,6,7]),config:{enabled:true,scoreType:"gross",unitValue:2,currency:"USD",birdieFlip:true,eagleDouble:false,holeCapPoints:20},heading:/VEGAS · 3 PAREJAS/,activeArtifact:true},
+    {key:"dots",players:officialPlayers([3,4,4,4,4,4]),config:dots.toggleEvent(dots.toggleEvent({enabled:true,unitValue:5,currency:"USD"},1,"a","sandy"),1,"f","snake"),heading:/DOTS/,activeArtifact:false}
   ];
   const pendingWolf=await roundClosure.close({id:"wolf-pending",configured:true,mode:"general",courseKey:"pulte",course:"El Pulté",createdAt:"2026-08-26T10:00:00.000Z",sideGames:{wolf:{enabled:true}},players:officialPlayers([3,4,5,6,7,8])},{appVersion:"V330"});
   assert.equal(pendingWolf.code,"SIDE_GAME_PENDING","Wolf no debe cerrar sin decisión por hoyo");
@@ -142,10 +142,15 @@ const six=values=>["ANA","BETO","CARLA","DIEGO","ELENA","FABIO"].map((name,index
     assert.equal(closed.snapshot.sideGames[item.key].currency,"USD",`${item.key} debe conservar la moneda elegida`);
     assert.ok(closed.snapshot.sideGames[item.key].result.settlements.length,`${item.key} debe producir liquidación`);
     const artifacts=cardArtifacts.build(closed.snapshot);
-    assert.match(artifacts.global.html,item.heading);
-    assert.match(artifacts.global.html,/LIQUIDACIÓN:/);
-    assert.match(artifacts.global.html,/\$\d/,`${item.key} debe usar dólares en toda la tarjeta cuando se eligió USD`);
-    assert.match(artifacts.personal[0].html,item.heading,`${item.key} también debe aparecer en tarjeta personal`);
+    if(item.activeArtifact){
+      assert.match(artifacts.global.html,item.heading);
+      assert.match(artifacts.global.html,/LIQUIDACIÓN:/);
+      assert.match(artifacts.global.html,/\$\d/,`${item.key} debe usar dólares en toda la tarjeta cuando se eligió USD`);
+      assert.match(artifacts.personal[0].html,item.heading,`${item.key} también debe aparecer en tarjeta personal`);
+    }else{
+      assert.doesNotMatch(artifacts.global.html,item.heading,"DOTS ya no debe aparecer en la Tarjeta Global R6");
+      assert.doesNotMatch(artifacts.personal[0].html,item.heading,"DOTS ya no debe aparecer en la Tarjeta Personal R6");
+    }
     const entry=cardLibrary.entry(closed.round);
     assert.equal(cardLibrary.filter([entry],{query:item.key}).length,1,`${item.key} debe localizarse en historial`);
     const history=historicalAnalytics.run(`historial de ${item.key}`,[closed.round],{now:new Date("2026-08-26T18:00:00.000Z")});
@@ -169,8 +174,9 @@ for(const file of ["wolf.js","vegas.js","dots.js"]){
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"),worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8"),mobile=fs.readFileSync(new URL("./scripts/build-mobile-web.mjs",import.meta.url),"utf8");
 for(const file of ["wolf.js","vegas.js","dots.js"]){assert.ok(html.includes(`<script src="./${file}"></script>`));assert.ok(worker.includes(`"/${file}"`));assert.ok(mobile.includes(`"${file}"`))}
-for(const token of ['id="wolfConfig"','id="wolfTeePosition"','id="wolfLoneMultiplier"','id="wolfBlindMultiplier"','id="wolfHoleCap"','LOBO SOLITARIO','LOBO CIEGO','UNIDADES NETAS','data-wolf-save','id="vegasConfig"','id="vegasBothBirdies"','SCORE DE 10 O MÁS','PUNTOS MOVIDOS','id="dotsConfig"','id="dotsEventConfig"','data-dots-enabled','NO EXISTE UN PAQUETE UNIVERSAL DE DOTS','PUNTOS + / −','AMIGO · GRUPO','IZQUIERDA · GRUPO','DERECHA · GRUPO','function sideGameSpeechSummary()','MODALIDADES EXISTENTES','NUEVOS JUEGOS','DINERO MOVIDO','NETO A LIQUIDAR','LÍDER ACTUAL','RIESGO MÁXIMO POR DUELO','IMPACTO DE 1 PUNTO'])assert.ok(html.includes(token)||fs.readFileSync(new URL("./dots.js",import.meta.url),"utf8").includes(token),`Falta integración V332: ${token}`);
-for(const key of ["skins","wolf","vegas","dots"]){
+for(const token of ['id="wolfConfig"','id="wolfTeePosition"','id="wolfLoneMultiplier"','id="wolfBlindMultiplier"','id="wolfHoleCap"','LOBO SOLITARIO','LOBO CIEGO','UNIDADES NETAS','data-wolf-save','id="vegasConfig"','id="vegasBothBirdies"','SCORE DE 10 O MÁS','PUNTOS MOVIDOS','function sideGameSpeechSummary()','MODALIDADES EXISTENTES','NUEVOS JUEGOS','DINERO MOVIDO','NETO A LIQUIDAR','LÍDER ACTUAL','RIESGO MÁXIMO POR DUELO'])assert.ok(html.includes(token),`Falta integración V332 conservada: ${token}`);
+assert.doesNotMatch(html,/id="dotsConfig"|id="dotsRoundButton"|data-dots-enabled/,"DOTS debe permanecer fuera de la interfaz activa R6");
+for(const key of ["skins","wolf","vegas"]){
   for(const currency of ["GTQ","USD"])assert.ok(html.includes(`id="${key}Currency${currency}"`),`Falta casilla ${currency} en ${key}`);
   assert.equal((html.match(new RegExp(`name="${key}Currency"`,"g"))||[]).length,2,`${key} debe tener exactamente dos casillas de una misma familia`);
   const block=html.slice(html.indexOf(`id="${key}Config"`),html.indexOf(`</section>`,html.indexOf(`id="${key}Config"`)));
@@ -189,7 +195,7 @@ assert.match(html,/draftRoundMode="general";enforceExclusiveDraftGame\(key\);syn
     const normalizeConfig=value=>({...value,enabled:!!value?.enabled});
     const window={GSCSkins:{normalizeConfig},GSCWolf:{normalizeConfig},GSCVegas:{normalizeConfig},GSCDots:{normalizeConfig}};
     let draftRoundMode="general",draftSkins={enabled:true},draftWolf={enabled:true},draftVegas={enabled:true},draftDots={enabled:true};
-    const nodes=Object.fromEntries(["normalRoundButton","matchPlayRoundButton","fourBallRoundButton","skinsRoundButton","wolfRoundButton","vegasRoundButton","dotsRoundButton"].map(id=>[id,{pressed:"",setAttribute(name,value){if(name==="aria-pressed")this.pressed=value}}]));
+    const nodes=Object.fromEntries(["normalRoundButton","matchPlayRoundButton","fourBallRoundButton","universalesRoundButton","skinsRoundButton","wolfRoundButton","vegasRoundButton"].map(id=>[id,{pressed:"",setAttribute(name,value){if(name==="aria-pressed")this.pressed=value}}]));
     const $=id=>nodes[id];
     function activeDraftGameKey(){return[{key:"skins",config:draftSkins},{key:"wolf",config:draftWolf},{key:"vegas",config:draftVegas},{key:"dots",config:draftDots}].find(item=>item.config.enabled)?.key||null}
     ${selectionSource}
@@ -199,7 +205,7 @@ assert.match(html,/draftRoundMode="general";enforceExclusiveDraftGame\(key\);syn
   assert.deepEqual(harness.snapshot(),{skins:false,wolf:true,vegas:false,dots:false},"WOLF debe apagar incluso estados heredados de todos los demás juegos");
   assert.equal(harness.syncDraftModeSelection("wolf"),"wolf");
   assert.deepEqual(Object.fromEntries(Object.entries(harness.nodes).map(([id,node])=>[id,node.pressed])),{
-    normalRoundButton:"false",matchPlayRoundButton:"false",fourBallRoundButton:"false",skinsRoundButton:"false",wolfRoundButton:"true",vegasRoundButton:"false",dotsRoundButton:"false"
+    normalRoundButton:"false",matchPlayRoundButton:"false",fourBallRoundButton:"false",universalesRoundButton:"false",skinsRoundButton:"false",wolfRoundButton:"true",vegasRoundButton:"false"
   },"Sólo WOLF puede quedar verde después del toque");
 }
 

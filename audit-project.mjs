@@ -86,6 +86,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v368-canonical-hom
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v406-r4-mobile-controls.mjs','test-v406-tournament-categories.mjs','test-v406-r5-simple-tournament-live.mjs','test-v406-r23-visible-version.mjs','test-v406-r23-turn-closure-audio.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r5-visual-inventory.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r5a-history-visual-system.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r6-universales-coordination.mjs','test-v407-r6-universales.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

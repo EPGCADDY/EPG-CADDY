@@ -1187,3 +1187,16 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 |---|---|---|
 | `test-v405-registration-clear-final-mobile.mjs` | Sella `BORRAR TODO`, aislamiento modal, cabecera móvil y scroll contenido de la tarjeta. | Prohíbe borrar Historial y detecta reaparición de controles montados. |
 | `index-grupal.html` | Limpia los seis jugadores del borrador y corrige la presentación móvil de Tarjeta Digital. | Ronda activa, Historial, scores y módulos Intocables permanecen fuera del borrado. |
+# V407-R6 · UNIVERSALES · 08 de septiembre de 2026
+
+- `universales.js`: motor único de 12 puntos por hoyo para 3/4 jugadores y empates.
+- `test-v407-r6-universales.mjs`: matriz matemática, paridad funcional y retiro activo de DOTS.
+- `test-v407-r6-universales-coordination.mjs`: contrato entre la línea gráfica R5 y la integración R6.
+- `CONTROL_PROYECTO_SCIRE/COORDINACION_V407_R6_UNIVERSALES.md`: ramas, propiedad de archivos, snapshot y secuencia sin cruces.
+- `index-grupal.html`: selector, validación, Score Card y Tarjeta Digital UNIVERSALES.
+- `card-library.js`: modo UNIVERSALES en Historial.
+- `service-worker.js`: release/caché R6 y motor offline.
+- `audit-project.mjs`: ejecución obligatoria de los bancos R6.
+- `test-v330-side-games.mjs`: DOTS histórico sin superficie activa; Skins/Wolf/Vegas preservados.
+- `test-v405-registration-clear-final-mobile.mjs`: Control Manual común con UNIVERSALES.
+- `test-v407-r1-premium-visual-system.mjs`: identificación visual R6 sobre geometría R5.

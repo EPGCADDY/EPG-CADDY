@@ -14,8 +14,8 @@ assert.match(clearSource,/round=blankRound\(\)/);
 assert.match(clearSource,/draftPlayers=\[\];[\s\S]*?manualDraftRows=Array\.from\(\{length:6\},\(\)=>emptyManualDraftRow\(\)\);[\s\S]*?clearDraftState\(\);[\s\S]*?renderDraft\(\);/);
 assert.match(html,/\$\("clearAllRegistration"\)\.addEventListener\("click",clearAllRegistrationPlayers\)/);
 assert.match(html,/clearButton\.onclick=\(\)=>\{if\(locked\)return;clearAllRegistrationPlayers\(\)\}/);
-assert.match(html,/manual\.querySelector\("#roundManualTitle"\)\.textContent=`CONTROL MANUAL · \$\{stable\?"STABLEFORD":isFourBallRound\(\)\?"FOUR BALL":isMatchPlayRound\(\)\?"MATCH PLAY":"GENERAL"\}`/,
-  "General, Stableford, Match Play y Four Ball deben compartir el mismo render de tarjeta");
+assert.match(html,/manual\.querySelector\("#roundManualTitle"\)\.textContent=`CONTROL MANUAL · \$\{stable\?"STABLEFORD":isFourBallRound\(\)\?"FOUR BALL":isMatchPlayRound\(\)\?"MATCH PLAY":isUniversalesRound\(\)\?"UNIVERSALES":"GENERAL"\}`/,
+  "General, Stableford, Match Play, Four Ball y Universales deben compartir el mismo render de tarjeta");
 assert.match(clearSource,/openSetup\("new"\)/,"Tras confirmar debe mostrar Inicio limpio");
 assert.doesNotMatch(clearSource,/localStorage\.removeItem\(ROUND_ARCHIVE_KEY\)/,"otras rondas oficiales permanecen en Historial");
 assert.match(html,/function deleteRoundFromArchive\(roundId\)[\s\S]*?deleted\.add\(id\)/,"la ronda queda marcada aunque todavía no estuviera archivada");
