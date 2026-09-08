@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-085 · BARRA DE ESTADO IPHONE SOBRE ENCABEZADO · 08 SEPTIEMBRE 2026
+
+- Defecto físico: la hora, conectividad y batería del iPhone cruzaban logo, ronda, fecha, hora y ACTUALIZADO en la Pantalla Principal.
+- Causa: el contenedor móvil no sumaba `safe-area-inset-top`; el bloque derecho permanecía demasiado próximo al borde.
+- Control permanente: R4 exige área segura superior, bloque de ronda a −36 px y actualización a 58 px del borde; prueba `test-v407-r1-premium-visual-system.mjs`.
+- Evidencia: `IMG_3120(1).png`, `IMG_3121(1).png`, `IMG_3122.png`.
+- Estado: CORREGIDO EN CANDIDATO; REVISIÓN FÍSICA PUBLICADA PENDIENTE; PRODUCCIÓN INTACTA.
+
 Este registro conserva defectos que alcanzaron al propietario o bloquearon un cierre. Un estado ABIERTO impide el PASS del rubro afectado.
 
 | ID | Defecto | Causa raíz | Punto de escape | Control permanente | Evidencia | Estado |

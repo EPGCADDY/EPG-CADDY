@@ -1,5 +1,9 @@
 # ROADMAP OVERALL
 
+## V407-R4 · encabezado fuera de la barra del iPhone · 8 de septiembre de 2026
+
+La Pantalla Principal respeta el área segura superior; logo e información bajan debajo de la barra del iPhone. El bloque derecho se acerca al centro y versión/ACTUALIZADO se separan del borde. Evidencias de origen: `IMG_3120(1).png`, `IMG_3121(1).png` e `IMG_3122.png`. `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` registra el corte R4. Producción intacta.
+
 ## V407-R3 · Pantalla 4 · Tarjeta Digital premium · 8 de septiembre de 2026
 
 - `index-grupal.html`: Tarjeta Digital usa encabezado centrado, tres acciones equivalentes, metadatos 4×1 en escritorio y 2×2 en móvil, guía de desplazamiento y contenedor de tabla con ancho controlado de 1360 px.

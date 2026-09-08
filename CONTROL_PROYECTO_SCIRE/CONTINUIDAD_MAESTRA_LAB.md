@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V407-R4 · 8 de septiembre de 2026
+
+Las capturas físicas `IMG_3120(1).png`, `IMG_3121(1).png` e `IMG_3122.png` confirmaron superposición de la barra de estado iPhone sobre logo, ronda, fecha, hora y actualización. R4 aplica área segura superior, desplaza el bloque derecho 36 px hacia el centro y el control de actualización 58 px desde el borde. Revisión física publicada pendiente; Producción intacta.
+
 ## Continuidad V406-R24 · 8 de septiembre de 2026
 
 La evidencia física `IMG_3054.png` confirmó que R23 sí parpadea únicamente cuando hay actualización y, después del toque, queda oscuro en `ACTUALIZADO`; también mostró que el ID estaba casi invisible detrás de la barra superior. R24 conserva ese flujo manual confirmado y coloca un único `V406 · R24` blanco inmediatamente encima de la misma tecla oscura. `test-v406-r23-visible-version.mjs` exige la relación DOM y el estilo blanco. Revisión física R24 publicada pendiente; Producción intacta.
