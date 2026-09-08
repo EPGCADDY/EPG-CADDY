@@ -649,17 +649,14 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `index-grupal.html`: APP-32–37 reciben área segura superior/inferior, paneles contenidos, filtros móviles en una columna, entradas del Historial en dos filas, paginación sin desbordamiento, confirmación destructiva apilada y cinco consultas rápidas simétricas.
 - `test-v407-r5a-history-visual-system.mjs`: bloquea la geometría premium de Historial y Estadísticas en escritorio e iPhone; `audit-project.mjs` lo incorpora como paquete 124. La aprobación física continúa pendiente y no se infiere del PASS automático.
 - `test-v260-round-points-player-return.mjs`: sustituye la expectativa obsoleta `78/44/66/47 px` por la retícula R5A `70/36/58/40 px`; el deployment `dpl_8SSK4fASsW8PBGnPasaK7gP8gT37` evidenció el fallo y fue rechazado antes de mover el alias LAB.
-## V407-R13 · Categorías y Universales rojo · 8 de septiembre de 2026
+# V407-R14 · Actualización manual permanente y tarjetas seguras · 08 de septiembre de 2026
 
-| Archivo | Cambio verificable |
-|---|---|
-| `card-artifacts.js` | Categoría opcional sobre el nombre y HCP conservado en Global/Personal de General, Stableford, Match Play, Four Ball y Universales; puntos Universales rojos. |
-| `index-grupal.html` | Categoría opcional y HCP en Score Cards activas; PUNTOS y acumulados Universales rojos; cabecera iPhone sin textos montados; identidad visible R13. |
-| `scripts/card-audit-fixtures.mjs` | Fixtures reproducibles de las diez vistas de tarjeta en ancho iPhone. |
-| `test-card-artifacts.mjs` | Candados de categoría opcional, HCP y puntos Universales rojos. |
-| `service-worker.js` | Caché e identidad de release R13 sincronizadas para la actualización instalable. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello actualizado a 437 fuentes después de incorporar el fixture de auditoría R13. |
-| `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r9-manual-update.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v406-r4-mobile-controls.mjs` | Actualizan únicamente las expectativas de identidad/caché desde R10 a R13; conservan las mismas comprobaciones funcionales. |
-| `test-v365-active-round-empty-recovery.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v407-r9-manual-update.mjs` | Completan las aserciones del rótulo visible `V407 · R13` y el mensaje PASS R13. |
-| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Registran el reintento limpio del mismo árbol R13 para producción. |
-| `test-v365-active-round-empty-recovery.mjs` | Fuerza la invalidación de la copia de compilación R10 y mantiene las aserciones R13. |
+- Rama única: `codex/v407-r14-safe-update-cards`, nacida de `main` R10 después de sincronizar y rechazar el HTML truncado de R13.
+- `index-grupal.html`: ACTUALIZAR permanece verde, parpadeante y habilitado; cada toque conserva la ronda, limpia workers/cachés y recarga el release publicado.
+- `service-worker.js`: release y caché avanzan juntos a `V407-R14-PERSISTENT-MANUAL-UPDATE-20260908`.
+- `card-artifacts.js`: categoría opcional pequeña arriba del nombre en tarjetas Global/Personal; si no existe, no se inventa. Universales muestra leyenda y puntos por hoyo/totales en rojo.
+- `scripts/card-audit-fixtures.mjs` y `test-card-artifacts.mjs`: diez tarjetas reproducibles y candados de categorías/puntos.
+- Pruebas V365/V406/V407: sincronizadas con R14 y con el estado visible permanente.
+- Producción permanece intacta hasta auditoría integral y navegador real sin FAIL.
+- Preview R14 reparado: `index-grupal.html` se publica completo (812,277 bytes); el despliegue previo con blob vacío queda rechazado.
+- Cierre R14: ambos ROADMAPS y `INVENTARIOS_V311.lock.json` se sellan juntos para el build final.

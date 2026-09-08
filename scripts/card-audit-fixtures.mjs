@@ -1,8 +1,9 @@
 import fs from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import artifacts from "../card-artifacts.js";
 
-const outputDir=path.resolve("evidence/iphone-card-audit");
+const outputDir=path.join(os.tmpdir(),"epg-caddy-iphone-card-audit");
 await fs.mkdir(outputDir,{recursive:true});
 const pars=Array.from({length:18},(_,index)=>index%3===0?3:index%3===1?4:5);
 const categories=["championship","a","senior",""];
