@@ -527,3 +527,8 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 | `test-v287-stableford-back-controls-clear.mjs` | Comprueba que REGÍSTRATE esté en flujo y no tape controles. |
 | `test-v290-brand-icons-cleanup.mjs` | Mantiene la validación acumulada y reconoce la guía Stableford exacta, el paquete y la caché V305. |
 | `test-v304-homogeneous-registration-actions.mjs` | Conserva el filtro hermano y prohíbe
+# V407-R2 · Tarjeta y acciones premium homogéneas · 08 de septiembre de 2026
+
+- `index-grupal.html`: encuadra la tarjeta operativa con título, borde continuo, fondo original y desplazamiento horizontal visible; conserva la paleta negro, verde, blanco y rojo funcional.
+- `test-v407-r1-premium-visual-system.mjs`: bloquea regresiones de título, contenedor, barra de desplazamiento y colores de la tarjeta, además de las retículas homogéneas de acciones.
+- Producción permanece intacta; el candidato se limita a la rama `lab/premium-ui-v407`.

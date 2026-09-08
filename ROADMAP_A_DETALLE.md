@@ -537,3 +537,10 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 | Archivo modificado | ID o código actualizado | Explicación sencilla |
 |---|---|---|
 | `stableford.j
+# V407-R2 · Pantalla 3 · tarjeta de puntuación y acciones · 08 de septiembre de 2026
+
+- Archivo `index-grupal.html`: se agregó `scorecard-stage-title` con `TARJETA DE PUNTUACIÓN` y la guía `DESLIZA PARA VER TODOS LOS HOYOS`; `card-shell` recibe borde premium, radios inferiores, fondo negro y scrollbar verde de la familia visual original.
+- Archivo `index-grupal.html`: la tabla mantiene cálculos, celdas, entrada manual y desplazamiento; no se cambió el escritor oficial ni el motor de score.
+- Archivo `index-grupal.html`: acciones principales permanecen en matriz 2×2, `NUEVA RONDA` ocupa el ancho completo y `ATRÁS / BORRAR TODO / + JUGADOR` comparten tres columnas iguales.
+- Archivo `test-v407-r1-premium-visual-system.mjs`: valida literalmente la nueva estructura y rechaza cambios de paleta en la tarjeta.
+- Rollback: regresar al commit anterior de `lab/premium-ui-v407`; Producción no se modifica.
