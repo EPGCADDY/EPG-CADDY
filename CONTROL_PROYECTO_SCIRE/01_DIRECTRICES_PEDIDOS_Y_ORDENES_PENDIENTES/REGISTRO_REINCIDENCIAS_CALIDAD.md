@@ -1,5 +1,12 @@
 # Registro de reincidencias de calidad
 
+## RC-089 · ACTUALIZADO VISIBLE PERO TECLA DESHABILITADA · 08 SEPTIEMBRE 2026
+
+- Defecto físico: R9 cargó la pantalla correcta, pero `ACTUALIZADO` no aceptaba toque.
+- Causa raíz: `showCurrentBuild()` asignaba `disabled=true` al estado vigente.
+- Control: R10 conserva el aspecto oscuro, mantiene `disabled=false` y cada toque ejecuta la recarga real ya protegida.
+- Estado: CORREGIDO EN CANDIDATO R10; REVISIÓN FÍSICA PUBLICADA PENDIENTE; MAIN INTACTA.
+
 ## RC-088 · ACTUALIZAR VERDE SIN SUSTITUIR LA PANTALLA · 08 SEPTIEMBRE 2026
 
 - Defecto físico: `IMG_3140(1).jpeg` mostró V407-R8 y `ACTUALIZAR` verde; tocarlo no cargó la pantalla nueva.

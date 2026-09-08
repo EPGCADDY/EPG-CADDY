@@ -1,5 +1,9 @@
 # ROADMAP OVERALL
 
+## V407-R10 · tecla ACTUALIZADO activa · 8 de septiembre de 2026
+
+- Cambio puntual: `ACTUALIZADO` permanece oscuro cuando R10 está vigente, pero ya no queda deshabilitado; tocarlo fuerza una recarga real del mismo enlace sin borrar la ronda. No cambia ninguna gráfica ni otra función. MAIN intacta.
+
 ## V407-R9 · actualización manual real de la pantalla inicial · 8 de septiembre de 2026
 
 - `IMG_3140(1).jpeg` rechaza R8: el botón verde no sustituía la pantalla anterior.
