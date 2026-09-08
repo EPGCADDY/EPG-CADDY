@@ -132,3 +132,10 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Estado: corregido en candidato LAB; repetición visual obligatoria; Producción intacta.
 
 | RC-057 | NUEVA RONDA conservaba jugadores/scores y no garantizaba regreso limpio a Registro; Historial perdió acciones de imagen | La transición difería el reemplazo hasta INICIAR RONDA y una integración posterior eliminó el panel de artefactos | Ronda Normal V401 e Historial | Archivar primero; limpiar todas las claves activas y el borrador; crear blankRound; abrir Registro; restaurar acciones Global/Personal | Preview LAB posterior a commit atómico de código + ambos ROADMAPS | ABIERTO HASTA PRUEBA FÍSICA |
+
+## RC-087 · BOTÓN DE ACTUALIZACIÓN GRIS Y DOBLE SCROLL IPHONE — 08 SEPTIEMBRE 2026
+
+- Evidencia física: `IMG_3134.jpeg` mostró V407-R6 con `ACTUALIZADO` gris mientras R7 ya estaba publicado; el propietario confirmó congelamiento intermitente del scroll.
+- Causa: el Registro seguía desplazándose dentro de un overlay `position:fixed` mientras `html/body` también eran desplazables; dos superficies competían en Safari iOS. El control de versión sólo se activaba cuando el sondeo automático detectaba una diferencia.
+- Prevención permanente: Registro en flujo normal con un único scroll de documento; exclusión de `setupOverlay` en la recuperación; `ACTUALIZAR` siempre habilitado/parpadeando para verificación manual inequívoca.
+- Candado: `test-v407-r7-ios-scroll.mjs` exige geometría de scroll único, exclusión de mutación inline, botón activo y parámetro `update_check`.
