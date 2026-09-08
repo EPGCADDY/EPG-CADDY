@@ -632,4 +632,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - R16: Medal Play y Universales reflejan visualmente una sola modalidad activa; sirve como segunda actualización remota consecutiva.
 - R17: la categoría elegida aparece pequeña sobre el nombre de cada jugador; sin categoría no aparece texto. La fila PUNTOS y sus valores por hoyo/totales quedan rojos, y una fila vacía con categoría o marcas preseleccionadas no bloquea OK.
 - Reparación de transporte R17: `index-grupal.html` se retransmite íntegro; el build truncado queda rechazado y no llegó a Producción.
-- LAB posterior a R17: puntos por hoyo y totales Universales en rojo en Score Card principal y vista LIVE; encabezado móvil separa logo, modalidad y actualización sin superposición. MAIN permanece intacta.
+- R18: `index-grupal.html`, `live-view.js` y `live.html` muestran puntos por hoyo/totales Universales en rojo; el encabezado móvil separa logo, modalidad y actualización sin superposición.
