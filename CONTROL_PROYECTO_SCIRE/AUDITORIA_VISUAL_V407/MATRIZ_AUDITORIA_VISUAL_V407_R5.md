@@ -46,6 +46,7 @@ Contrato: los 67 ID del inventario deben terminar `PASS FÍSICO`. `PASS CÓDIGO`
 |---|---|---|---|---|
 | APP-04, APP-05 | `index-grupal.html` · `#roundManualEntry`, `.round-player-grid` | ancho máximo contenido, retícula móvil de 325 px útiles, etiquetas con corte seguro y controles sin ancho mínimo invasivo | `test-v407-r1-premium-visual-system.mjs` PASS | PENDIENTE R5 |
 | APP-29, APP-30 | `index-grupal.html` · `.final-card-head button` | acción móvil 52 px y texto 10 px en las dos capas heredadas | `test-v407-r1-premium-visual-system.mjs` PASS | PENDIENTE R5 |
+| APP-32–APP-37 | `index-grupal.html` · `.card-library-*`, `.history-insights-*` | área segura, filtros apilados, tarjetas de dos filas, paginación contenida, confirmación vertical y consultas simétricas en iPhone | `test-v407-r5a-history-visual-system.mjs` PASS | PENDIENTE R5 |
 
 ## Contadores del corte
 

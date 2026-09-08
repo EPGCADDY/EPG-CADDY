@@ -611,6 +611,28 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
 .gsc-final-card-open .live-support-link,.gsc-final-card-open .ai-universal-launch,.gsc-final-card-open .golf-rules-launch,.gsc-final-card-open .skins-launch,.gsc-final-card-open .gsc-live-launch{display:none!important}
 .gsc-final-card-open .pwa-install-button{display:none!important}
 .card-library-round,.history-insights-result,.skins-config,.skins-results{border-radius:12px;background:linear-gradient(145deg,#0d1010,#050606)}
+/* V407-R5A · historial premium: densidad, jerarquia y area segura */
+#cardLibraryOverlay,#historyInsightsOverlay{padding:max(18px,calc(env(safe-area-inset-top) + 18px)) 18px max(24px,calc(env(safe-area-inset-bottom) + 18px));overflow-x:hidden}
+.card-library-panel,.history-insights-panel{width:min(920px,100%);max-width:100%;margin:0 auto;padding:24px;overflow:hidden}
+.history-insights-panel{width:min(760px,100%)}
+.card-library-head{display:grid;grid-template-columns:minmax(0,1fr) 132px;gap:16px;align-items:center;padding-bottom:18px;border-bottom:1px solid var(--premium-line)}
+.card-library-head h1,.history-insights-panel h1{font-size:clamp(20px,3vw,26px);line-height:1.15;letter-spacing:.8px}
+.card-library-head button{width:100%;padding:0 12px}
+.card-library-filters{grid-template-columns:1fr 1fr 1.4fr;gap:12px;margin:18px 0 12px}
+.card-library-filters select,.card-library-filters input,.history-insights-query input{height:var(--premium-control);min-width:0;border-color:var(--premium-line-bright);border-radius:12px;background:#080a0a;padding:0 14px;font-size:12px;outline:none}
+.card-library-filters select:focus,.card-library-filters input:focus,.history-insights-query input:focus{border-color:var(--lime);box-shadow:0 0 0 1px rgba(49,255,0,.22)}
+.card-library-status{min-height:32px;padding:7px 0 11px;font-size:11px;letter-spacing:.6px}
+.card-library-list{gap:10px}
+.card-library-round{grid-template-columns:122px minmax(0,1fr) minmax(126px,auto);gap:16px;min-width:0;min-height:78px;padding:14px 16px;border-color:var(--premium-line);border-radius:12px;background:linear-gradient(145deg,#0d1010,#050606)}
+.card-library-round>span{min-width:0;overflow-wrap:anywhere}.card-library-round-date{font-size:12px}.card-library-round-main{font-size:13px;line-height:1.35}.card-library-round-main small{font-size:10px;line-height:1.35}.card-library-round-mode{text-align:right;font-size:11px;line-height:1.35;color:#d8dddd}
+.card-library-empty{padding:34px 18px;border-color:var(--premium-line);border-radius:12px;background:#080a0a;font-size:12px;line-height:1.45}
+.card-library-pager{grid-template-columns:minmax(0,1fr) minmax(118px,auto) minmax(0,1fr);gap:12px;margin-top:16px}.card-library-pager span{font-size:11px;letter-spacing:.4px}
+.card-library-delete-card{width:min(440px,100%);margin:max(18px,calc(env(safe-area-inset-top) + 18px)) auto 18px;padding:24px;border-radius:16px;background:linear-gradient(145deg,#120707,#050505);box-shadow:var(--premium-shadow)}
+.card-library-delete-card h1{font-size:22px;line-height:1.15}.card-library-delete-card p{font-size:13px}.card-library-delete-actions{gap:12px}.card-library-delete-actions button{min-height:var(--premium-control);border-radius:12px}
+.history-insights-panel .screen-back-row{display:flex;justify-content:flex-end;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--premium-line)}
+.history-insights-panel .screen-back-button{width:132px}
+.history-insights-query{grid-template-columns:minmax(0,1fr) 148px;gap:12px;margin-top:18px}.history-insights-query button,.history-insights-quick button{min-height:var(--premium-control);border-radius:12px;background:linear-gradient(180deg,#101414,#060707);font-size:11px;letter-spacing:.35px}
+.history-insights-quick{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.history-insights-result{display:block;min-height:132px;padding:20px;border-color:var(--premium-line);font-size:15px;line-height:1.55;overflow-wrap:anywhere}.history-insights-note{margin:14px 0 0;font-size:10px;line-height:1.4;letter-spacing:.25px}
 #roundManualEntry{width:100%!important;max-width:100%!important;min-width:0!important;overflow:hidden!important;margin:18px 0!important;padding:22px!important;border:1px solid #4b4f50!important;border-radius:16px!important;background:#050606!important;box-shadow:0 14px 34px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.04)!important}
 #roundManualTitle{margin-bottom:12px!important;color:var(--lime)!important;font-size:22px!important;letter-spacing:.8px!important}
 #roundGridInstruction{margin-bottom:18px!important;padding:12px 8px!important;border-color:#4b4f50!important;color:#fff!important;font-size:12px!important;letter-spacing:.4px!important}
@@ -658,6 +680,15 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
   #finalCardOverlay .final-card-panel .scorecard{width:1360px;min-width:1360px}
   #finalCardOverlay .final-card-panel .summary{width:1360px;min-width:1360px;overflow:visible}
   #finalCardOverlay .final-card-readonly{font-size:8.5px;line-height:1.35}
+  #cardLibraryOverlay,#historyInsightsOverlay{padding:max(10px,calc(env(safe-area-inset-top) + 10px)) 10px max(18px,calc(env(safe-area-inset-bottom) + 12px))}
+  .card-library-panel,.history-insights-panel{margin:0;padding:16px 12px;border-radius:16px}
+  .card-library-head{grid-template-columns:minmax(0,1fr) 104px;gap:10px;padding-bottom:14px}.card-library-head h1,.history-insights-panel h1{font-size:18px}.card-library-head button{font-size:9px}
+  .card-library-filters{grid-template-columns:1fr;gap:9px;margin:14px 0 8px}.card-library-filters select,.card-library-filters input{height:50px;font-size:11px}
+  .card-library-round{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"date mode" "main main";gap:7px 10px;min-height:88px;padding:13px}.card-library-round-date{grid-area:date}.card-library-round-main{grid-area:main}.card-library-round-mode{grid-area:mode;max-width:124px;font-size:9px}
+  .card-library-pager{grid-template-columns:minmax(0,1fr) 86px minmax(0,1fr);gap:7px}.card-library-pager button{min-width:0;padding:0 5px;font-size:9px}.card-library-pager span{font-size:8px;line-height:1.25}
+  .card-library-delete-card{margin:max(10px,calc(env(safe-area-inset-top) + 10px)) auto 10px;padding:20px 16px}.card-library-delete-actions{grid-template-columns:1fr;gap:9px}
+  .history-insights-panel .screen-back-row{margin-bottom:14px;padding-bottom:14px}.history-insights-panel .screen-back-button{width:104px}
+  .history-insights-query{grid-template-columns:1fr;gap:9px;margin-top:14px}.history-insights-query input,.history-insights-query button{height:52px}.history-insights-quick{grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.history-insights-quick button{min-width:0;padding:0 7px;font-size:9px;line-height:1.2}.history-insights-quick button:last-child{grid-column:1/-1}.history-insights-result{min-height:120px;padding:16px 14px;font-size:13px;line-height:1.5}
   #roundManualEntry{padding:18px 10px!important;border-radius:16px!important}#roundManualTitle{font-size:20px!important}#roundGridInstruction{font-size:11px!important;line-height:1.4!important}#roundGridNavigation{grid-template-columns:minmax(0,1fr) 88px minmax(0,1fr)!important;gap:8px!important}#roundGridNavigation button,#roundGridHole{min-height:54px!important;font-size:12px!important}.round-manual-detail{grid-template-columns:82px minmax(0,1fr)!important;gap:8px!important}.round-manual-detail-label{font-size:11px!important}.round-player-grid{min-width:0!important;grid-template-columns:minmax(70px,1.2fr) 36px minmax(58px,1fr) repeat(3,minmax(40px,.72fr))!important;gap:4px!important}.round-player-grid-label{min-width:0!important;font-size:8.5px!important;overflow-wrap:anywhere!important}.round-player-grid>strong,.round-player-grid>span{min-width:0!important;font-size:13px!important}#roundManualEntry .round-grid-name,#roundManualEntry .round-grid-gross{min-width:0!important;min-height:54px!important;font-size:14px!important}#roundGridEnter{min-height:62px!important;font-size:20px!important}
   #setupOverlay .screen-back-row{padding-right:118px}.mandatory-update{top:calc(env(safe-area-inset-top) + 12px);right:58px}.mandatory-update-card button{min-width:108px;min-height:40px;border-radius:11px}
 }

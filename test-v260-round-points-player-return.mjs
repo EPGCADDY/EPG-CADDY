@@ -12,7 +12,7 @@ assert.doesNotMatch(html,/>SCORE MANUAL</);
 
 // La retícula conserva seis columnas y permite que nombre, score y acumulados respiren sin desbordar móvil.
 assert.match(html,/\.round-player-grid\{display:grid!important;grid-template-columns:minmax\(116px,1\.3fr\) 72px minmax\(88px,1fr\) repeat\(3,minmax\(76px,\.8fr\)\)!important/);
-assert.match(html,/@media\(max-width:800px\)[\s\S]*\.round-player-grid\{grid-template-columns:minmax\(78px,1\.25fr\) 44px minmax\(66px,1fr\) repeat\(3,minmax\(47px,\.78fr\)\)!important/);
+assert.match(html,/@media\(max-width:800px\)[\s\S]*\.round-player-grid\{min-width:0!important;grid-template-columns:minmax\(70px,1\.2fr\) 36px minmax\(58px,1fr\) repeat\(3,minmax\(40px,\.72fr\)\)!important/);
 
 // En el resumen inferior sólo la última columna PUNTOS TOTAL usa verde neón.
 assert.match(html,/class="stableford-points-total">\$\{t\.count\?t\.points:""\}<\/td>/);
