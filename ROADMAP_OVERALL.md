@@ -627,3 +627,5 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - La cabecera móvil separa logotipo, modalidad, fecha, hora y campo para evitar montajes en formato iPhone.
 - Release y caché avanzan juntos a `V407-R13-UNIVERSALES-CATEGORIES-RED-20260908`.
 - El sello de inventario se regeneró para las 437 fuentes activas, incluida la nueva prueba reproducible.
+- Los candados heredados de R10 ahora comprueban la identidad y caché R13 sin alterar sus contratos funcionales.
+- Las tres aserciones visibles restantes quedaron sincronizadas con `V407 · R13`.
