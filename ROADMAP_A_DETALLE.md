@@ -662,3 +662,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 | `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r9-manual-update.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v406-r4-mobile-controls.mjs` | Actualizan únicamente las expectativas de identidad/caché desde R10 a R13; conservan las mismas comprobaciones funcionales. |
 | `test-v365-active-round-empty-recovery.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v407-r9-manual-update.mjs` | Completan las aserciones del rótulo visible `V407 · R13` y el mensaje PASS R13. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Registran el reintento limpio del mismo árbol R13 para producción. |
+| `test-v365-active-round-empty-recovery.mjs` | Fuerza la invalidación de la copia de compilación R10 y mantiene las aserciones R13. |

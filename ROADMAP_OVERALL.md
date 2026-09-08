@@ -630,3 +630,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Los candados heredados de R10 ahora comprueban la identidad y caché R13 sin alterar sus contratos funcionales.
 - Las tres aserciones visibles restantes quedaron sincronizadas con `V407 · R13`.
 - Reintento de producción R13 registrado después de validar el árbol exacto publicado.
+- La prueba de recuperación R13 se publicó mediante la API normal de contenido para invalidar la copia de compilación R10.
