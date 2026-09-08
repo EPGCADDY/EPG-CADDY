@@ -40,6 +40,13 @@ Contrato: los 67 ID del inventario deben terminar `PASS FÍSICO`. `PASS CÓDIGO`
 | `IMG_3123.png` | CARD-03, SAFE-03 | iPhone vertical, Stableford Global | FAIL |
 | `IMG_3120.png` / `IMG_3121.png` / `IMG_3122.png` | APP-41, SAFE-01 | iPhone vertical, cabecera principal | FAIL histórico; R4 pendiente de repetición |
 
+## Correcciones posteriores a la evidencia inicial
+
+| IDs | Archivo / selector | Corrección aplicada | Prueba | Estado físico |
+|---|---|---|---|---|
+| APP-04, APP-05 | `index-grupal.html` · `#roundManualEntry`, `.round-player-grid` | ancho máximo contenido, retícula móvil de 325 px útiles, etiquetas con corte seguro y controles sin ancho mínimo invasivo | `test-v407-r1-premium-visual-system.mjs` PASS | PENDIENTE R5 |
+| APP-29, APP-30 | `index-grupal.html` · `.final-card-head button` | acción móvil 52 px y texto 10 px en las dos capas heredadas | `test-v407-r1-premium-visual-system.mjs` PASS | PENDIENTE R5 |
+
 ## Contadores del corte
 
 | Métrica | Total |

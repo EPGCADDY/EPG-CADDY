@@ -7,7 +7,7 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 
 assert.match(html,/V365-ACTIVE-ROUND-RECOVERY/);
 assert.match(worker,/v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery/);
-assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v407-r5-stableford-global-card`/);
+assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v407-r5a-mobile-grids`/);
 assert.match(worker,/const APPROVED_CACHE_NAME=`\$\{CACHE_NAME\}-approved`/);
 assert.match(worker,/url\.searchParams\.has\("__gscg_build_check"\)/,"la consulta de versión debe ir a red sin sustituir la versión aprobada");
 assert.match(worker,/url\.searchParams\.get\("app_version"\)===RELEASE/,"sólo el toque de ACTUALIZAR promueve el candidato");
@@ -15,12 +15,12 @@ assert.match(worker,/await ensureApprovedShell\(\);\s*return await caches\.match
 assert.match(html,/id="mandatoryUpdate"[^>]*class="mandatory-update"|class="mandatory-update"[^>]*id="mandatoryUpdate"/);
 assert.doesNotMatch(html,/id="mandatoryUpdate"[^>]*class="mandatory-update available"|class="mandatory-update available"[^>]*id="mandatoryUpdate"/);
 assert.match(html,/id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO<\/span>/);
-assert.match(html,/class="update-version-id" id="appVersionId">V407 · R5<\/span><button type="button" id="mandatoryUpdateButton"/);
+assert.match(html,/class="update-version-id" id="appVersionId">V407 · R5A<\/span><button type="button" id="mandatoryUpdateButton"/);
 assert.match(html,/\.mandatory-update\.available \.mandatory-update-card button\{[^}]*animation:gscUpdatePulse/);
 assert.match(html,/button\.disabled=false;button\.setAttribute\("aria-disabled","false"\)/);
 assert.doesNotMatch(html,/document\.querySelector\("main\.app"\)\?\.setAttribute\("inert"/);
 assert.match(html,/meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
-assert.match(html,/meta name="gscg-release" content="V407-R5-STABLEFORD-GLOBAL-CARD-20260908"/);
+assert.match(html,/meta name="gscg-release" content="V407-R5A-MOBILE-GRIDS-20260908"/);
 assert.match(html,/function recoverInstalledAppScrolling\(\)/);
 assert.match(html,/window\.addEventListener\("pageshow",recoverInstalledAppScrolling\)/);
 assert.match(html,/\.overlay\{overscroll-behavior-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom\}/);

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 const html=fs.readFileSync("index-grupal.html","utf8");
 
-assert.match(html,/V407-R5-STABLEFORD-GLOBAL-CARD-20260908/);
+assert.match(html,/V407-R5A-MOBILE-GRIDS-20260908/);
 assert.match(html,/\.app\{padding:max\(10px,calc\(env\(safe-area-inset-top\) \+ 10px\)\)/);
 assert.match(html,/\.official-round-header \.round-meta\{[^}]*text-align:center;transform:translateX\(-36px\)/);
 assert.match(html,/\.mandatory-update\{top:calc\(env\(safe-area-inset-top\) \+ 12px\);right:58px\}/);
@@ -28,13 +28,16 @@ assert.match(html,/\.gsc-final-card-open \.pwa-install-button\{display:none!impo
 assert.match(html,/#finalTournament:empty::before\{content:"RONDA CASUAL"\}/);
 assert.match(html,/@media\(max-width:800px\)[\s\S]*\.round-utility-bar\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
 assert.match(html,/\.new-round-card\{padding:18px 14px;margin:8px auto;border-radius:18px\}/);
-assert.match(html,/#roundManualEntry\{margin:18px 0!important;padding:22px!important;border:1px solid #4b4f50!important/);
+assert.match(html,/#roundManualEntry\{[^}]*margin:18px 0!important;padding:22px!important;border:1px solid #4b4f50!important/);
 assert.match(html,/#roundGridNavigation\{grid-template-columns:minmax\(0,1fr\) 118px minmax\(0,1fr\)!important/);
 assert.match(html,/\.round-manual-detail\{display:grid!important;grid-template-columns:118px minmax\(0,1fr\)!important/);
 assert.match(html,/\.round-player-grid\{display:grid!important;grid-template-columns:minmax\(116px,1\.3fr\) 72px minmax\(88px,1fr\) repeat\(3,minmax\(76px,\.8fr\)\)!important/);
 assert.match(html,/#roundGridEnter\{min-height:64px!important/);
+assert.match(html,/#roundManualEntry\{width:100%!important;max-width:100%!important;min-width:0!important;overflow:hidden!important/);
+assert.match(html,/\.round-player-grid\{min-width:0!important;grid-template-columns:minmax\(70px,1\.2fr\) 36px minmax\(58px,1fr\) repeat\(3,minmax\(40px,\.72fr\)\)!important/);
+assert.match(html,/#finalCardOverlay \.final-card-head button\{width:100%;height:52px[^}]*font-size:10px/);
 assert.match(html,/#roundGridEnter\{[^}]*background:var\(--lime\)!important;color:#000!important/);
 assert.doesNotMatch(html,/#roundManualEntry\{[^}]*background:(?:linear-gradient|radial-gradient)/);
 assert.doesNotMatch(html,/\.round-actions\{[^}]*display:flex[^}]*\}\s*\/\* V407-R1/);
 
-console.log("PASS V407-R5 · área segura iPhone y encabezado centrado");
+console.log("PASS V407-R5A · área segura iPhone y retículas móviles contenidas");
