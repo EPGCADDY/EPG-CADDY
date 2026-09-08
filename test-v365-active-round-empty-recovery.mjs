@@ -2,26 +2,24 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import vm from "node:vm";
 
-// V407-R13: el control de recuperación valida la identidad publicada vigente.
-
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
 assert.match(html,/V365-ACTIVE-ROUND-RECOVERY/);
 assert.match(worker,/v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery/);
-assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v407-r13-universales-categories-red`/);
+assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v407-r14-persistent-manual-update`/);
 assert.match(worker,/const APPROVED_CACHE_NAME=`\$\{CACHE_NAME\}-approved`/);
 assert.match(worker,/url\.searchParams\.has\("__gscg_build_check"\)/,"la consulta de versión debe ir a red sin sustituir la versión aprobada");
 assert.match(worker,/url\.searchParams\.get\("app_version"\)===RELEASE/,"sólo el toque de ACTUALIZAR promueve el candidato");
 assert.match(worker,/await ensureApprovedShell\(\);\s*return await caches\.match\(OFFLINE_ENTRY,\{cacheName:APPROVED_CACHE_NAME\}\)/,"una apertura normal conserva el shell aprobado");
-assert.match(html,/class="mandatory-update" id="mandatoryUpdate"/);
-assert.match(html,/id="mandatoryUpdateButton" aria-disabled="false"><span id="mandatoryUpdateAction">ACTUALIZADO<\/span>/);
-assert.match(html,/class="update-version-id" id="appVersionId">V407 · R13<\/span><button type="button" id="mandatoryUpdateButton" aria-disabled="false"/);
+assert.match(html,/class="mandatory-update available" id="mandatoryUpdate"/);
+assert.match(html,/id="mandatoryUpdateButton" aria-disabled="false"><span id="mandatoryUpdateAction">ACTUALIZAR<\/span>/);
+assert.match(html,/class="update-version-id" id="appVersionId">V407 · R14<\/span><button type="button" id="mandatoryUpdateButton" aria-disabled="false"/);
 assert.match(html,/\.mandatory-update\.available \.mandatory-update-card button\{[^}]*animation:gscUpdatePulse/);
 assert.match(html,/button\.disabled=false;button\.setAttribute\("aria-disabled","false"\)/);
 assert.doesNotMatch(html,/document\.querySelector\("main\.app"\)\?\.setAttribute\("inert"/);
 assert.match(html,/meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
-assert.match(html,/meta name="gscg-release" content="V407-R13-UNIVERSALES-CATEGORIES-RED-20260908"/);
+assert.match(html,/meta name="gscg-release" content="V407-R14-PERSISTENT-MANUAL-UPDATE-20260908"/);
 assert.match(html,/function recoverInstalledAppScrolling\(\)/);
 assert.match(html,/window\.addEventListener\("pageshow",recoverInstalledAppScrolling\)/);
 assert.match(html,/\.overlay\{height:100dvh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom\}/);

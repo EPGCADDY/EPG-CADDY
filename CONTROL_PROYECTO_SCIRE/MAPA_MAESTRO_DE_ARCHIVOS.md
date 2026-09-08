@@ -1200,3 +1200,14 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 - `test-v330-side-games.mjs`: DOTS histórico sin superficie activa; Skins/Wolf/Vegas preservados.
 - `test-v405-registration-clear-final-mobile.mjs`: Control Manual común con UNIVERSALES.
 - `test-v407-r1-premium-visual-system.mjs`: identificación visual R6 sobre geometría R5.
+# V407-R14 · Archivos de actualización y tarjetas · 08 de septiembre de 2026
+
+| Archivo | Registro R14 |
+|---|---|
+| `index-grupal.html` | ACTUALIZAR permanente, habilitado y parpadeante; release visible R14. |
+| `service-worker.js` | Caché y release R14 coordinados. |
+| `card-artifacts.js` | Categoría opcional sobre nombre y puntos Universales rojos. |
+| `scripts/card-audit-fixtures.mjs` | Generador reproducible de diez tarjetas para auditoría iPhone. |
+| `test-card-artifacts.mjs` | Candado de categorías opcionales y puntos Universales. |
+| `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v407-r9-manual-update.mjs` | Contratos sincronizados con R14. |
+| `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md` | Continuidad, alcance y prevención RC-090. |

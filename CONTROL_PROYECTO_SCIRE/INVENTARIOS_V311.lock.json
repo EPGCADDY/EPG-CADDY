@@ -1,23 +1,23 @@
 {
   "version": "V371-MATCH-GROSS-MICROPHONE-LOCK",
-  "generatedAt": "2026-09-08T21:48:26Z",
+  "generatedAt": "2026-09-08T21:49:00Z",
   "sourceFileCount": 437,
-  "sourceDigest": "dbb1669228db0bf1201ecdcf01abdd5e8e49c926f5c824e74d3bbbc55aaf2e52",
+  "sourceDigest": "3245f4c922a113ea8aad4c27f992e46610555abc18b60b85a0f2709a339271a8",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 114177,
-      "sha256": "f2fb0e2ad6136ebb6abfc051a3bb0ab120d624cd516ec5ae95ab9ce4e56e0c59"
+      "size": 113747,
+      "sha256": "38332032aab263f9bb74d4ad35b862aa76563f7c1f9feb774612bcd4f52edf33"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 120470,
-      "sha256": "ab3e61cdd022c6a4f1733c885d8df5771073704ae3f2fa51f020ba14511dd8b5"
+      "size": 119864,
+      "sha256": "4c73070517da93471d3b07d8f141cac5b85641d7342635d25cfdb0035a7dc988"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19260990,
-      "sha256": "37afbbdeff42b6767c4994cb2e8cde98ebceaa197c4db1ae96bd0866e8baa48e"
+      "size": 19260988,
+      "sha256": "23d1ef58c7735fbc2a6115b9b20d7a97ded9cc32d8e8f46b37e7e26ded92143a"
     }
   ]
 }
