@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V407-R9 · 8 de septiembre de 2026
+
+La evidencia física `IMG_3140(1).jpeg` mostró V407-R8 con `ACTUALIZAR` verde, pero el toque no sustituía la pantalla anterior. R9 restaura el contrato confirmado: la versión vigente muestra `ACTUALIZADO` oscuro; un release distinto muestra `ACTUALIZAR` verde/parpadeante. El toque guarda la ronda, desregistra el service worker viejo, elimina únicamente cachés `gscg-mobile-*` y recarga el mismo enlace con la identidad R9; `localStorage` e Historial no se borran. La activación del worker ya no promueve ni navega por sí sola. MAIN permanece intacta.
+
 ## Continuidad V407-R4 · 8 de septiembre de 2026
 
 Las capturas físicas `IMG_3120(1).png`, `IMG_3121(1).png` e `IMG_3122.png` confirmaron superposición de la barra de estado iPhone sobre logo, ronda, fecha, hora y actualización. R4 aplica área segura superior, desplaza el bloque derecho 36 px hacia el centro y el control de actualización 58 px desde el borde. Revisión física publicada pendiente; Producción intacta.

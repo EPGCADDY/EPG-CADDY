@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-088 · ACTUALIZAR VERDE SIN SUSTITUIR LA PANTALLA · 08 SEPTIEMBRE 2026
+
+- Defecto físico: `IMG_3140(1).jpeg` mostró V407-R8 y `ACTUALIZAR` verde; tocarlo no cargó la pantalla nueva.
+- Causa raíz: R8 reutilizó la misma identidad de release para despliegues posteriores y la navegación del botón continuó bajo control del service worker anterior, que devolvía la caché aprobada vieja.
+- Control permanente: cada corrección avanza release/caché; R9 inicia vigente como `ACTUALIZADO`, detecta R9 desde R8, guarda la ronda y desregistra worker/cachés de shell antes de recargar el mismo enlace. La activación no promueve ni navega automáticamente.
+- Evidencia: `test-v407-r9-manual-update.mjs`, banco integral y revisión física publicada R9 obligatoria.
+- Estado: CORREGIDO EN CANDIDATO V407-R9; PREVIEW Y REVISIÓN FÍSICA PENDIENTES; MAIN INTACTA.
+
 ## RC-087 · INSTALACIÓN R6 EN DOMINIO HISTÓRICO SIN ACTUALIZAR · 08 SEPTIEMBRE 2026
 
 - Defecto físico: `IMG_3137.jpeg` conserva V407-R6 y `ACTUALIZADO` gris después de publicar R8.

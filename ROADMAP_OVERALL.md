@@ -1,5 +1,12 @@
 # ROADMAP OVERALL
 
+## V407-R9 · actualización manual real de la pantalla inicial · 8 de septiembre de 2026
+
+- `IMG_3140(1).jpeg` rechaza R8: el botón verde no sustituía la pantalla anterior.
+- R9 usa una identidad nueva para que R8 detecte la publicación; al tocar, conserva la ronda, retira únicamente el worker/caché viejo y recarga el mismo enlace desde red.
+- Vigente muestra `ACTUALIZADO` oscuro; sólo una versión distinta muestra `ACTUALIZAR` verde/parpadeante. El worker deja de promover o navegar automáticamente.
+- Archivos: `index-grupal.html`, `service-worker.js`, `test-v407-r9-manual-update.mjs`, bancos de versión relacionados, `audit-project.mjs`, continuidad, reincidencias y ambos ROADMAPS. MAIN permanece intacta.
+
 ## V407-R8 · un solo scroll iPhone y actualización siempre verificable · 8 de septiembre de 2026
 
 - El acceso instalado histórico `golf-sc-gt-lab.vercel.app` queda como espejo permanente del canónico `epg-caddy.vercel.app`; `vercel.legacy-mirror.json` conserva la configuración que entrega la misma pantalla y el mismo service worker R8 sin pedir cambio de enlace.

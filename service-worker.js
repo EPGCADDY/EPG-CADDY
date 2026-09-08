@@ -1,9 +1,9 @@
 "use strict";
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r8-single-scroll`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r9-manual-update`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved`;
-const RELEASE="V407-R8-SINGLE-SCROLL-20260908";
+const RELEASE="V407-R9-MANUAL-UPDATE-20260908";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -73,22 +73,7 @@ async function promoteCandidate(){
 }
 
 self.addEventListener("install",event=>event.waitUntil(refreshShell().then(()=>self.skipWaiting())));
-self.addEventListener("activate",event=>event.waitUntil((async()=>{
-  await promoteCandidate();
-  await self.clients.claim();
-  const clients=await self.clients.matchAll({type:"window",includeUncontrolled:true});
-  const client=clients.find(item=>item.focused)||clients.find(item=>item.visibilityState==="visible")||clients[0];
-  if(client){
-    try{
-      const url=new URL(client.url);
-      if(url.searchParams.get("app_version")!==RELEASE){
-        url.searchParams.set("app_version",RELEASE);
-        url.searchParams.set("update_check",String(Date.now()));
-        await client.navigate(url.toString());
-      }
-    }catch{}
-  }
-})()));
+self.addEventListener("activate",event=>event.waitUntil(ensureApprovedShell().then(()=>self.clients.claim())));
 self.addEventListener("message",event=>{
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
   if(event.data?.type==="PROMOTE_BUILD"&&event.data?.build===RELEASE)event.waitUntil(promoteCandidate());
