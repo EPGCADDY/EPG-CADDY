@@ -659,3 +659,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Pruebas V365/V406/V407: sincronizadas con R14 y con el estado visible permanente.
 - Producción permanece intacta hasta auditoría integral y navegador real sin FAIL.
 - Preview R14 reparado: `index-grupal.html` se publica completo (812,277 bytes); el despliegue previo con blob vacío queda rechazado.
+- Cierre R14: ambos ROADMAPS y `INVENTARIOS_V311.lock.json` se sellan juntos para el build final.
