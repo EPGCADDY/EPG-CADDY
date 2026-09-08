@@ -1,5 +1,12 @@
 # ROADMAP OVERALL
 
+## V407-R3 · Pantalla 4 · Tarjeta Digital premium · 8 de septiembre de 2026
+
+- `index-grupal.html`: Tarjeta Digital usa encabezado centrado, tres acciones equivalentes, metadatos 4×1 en escritorio y 2×2 en móvil, guía de desplazamiento y contenedor de tabla con ancho controlado de 1360 px.
+- Los accesos flotantes ajenos quedan ocultos mientras la Tarjeta Digital está abierta; `ACTUALIZADO` permanece visible por orden del propietario.
+- `service-worker.js` identifica el candidato R3; los contratos V365, V405, V406 y V407 se alinean sin cambiar cálculo, persistencia, cierre ni envío.
+- Rollback: regresar al commit V407-R2 en `lab/premium-ui-v407`. Producción permanece intacta.
+
 ## V407-R1 · sistema visual premium y simétrico · 8 de septiembre de 2026
 
 Archivos de trazabilidad y regresión actualizados: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `test-v406-r23-visible-version.mjs` y `test-v406-r5-simple-tournament-live.mjs`.

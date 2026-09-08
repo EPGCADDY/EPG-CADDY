@@ -25,5 +25,5 @@ assert.match(html,/document\.body\?\.classList\.remove\("gsc-final-card-open"\)/
 for(const control of ['live-support-link','ai-universal-launch','golf-rules-launch','skins-launch','gsc-live-launch','mandatory-update'])assert.match(html,new RegExp(`body\\.gsc-final-card-open \\.${control}`));
 assert.match(html,/#finalCardOverlay \.final-card-panel\{width:100%;min-width:0/);
 assert.match(html,/#finalCardOverlay \.final-card-shell\{width:100%;max-width:100%;overflow-x:auto/);
-assert.match(html,/#finalCardOverlay \.final-card-head>div\{display:grid;grid-template-columns:1fr/);
+assert.match(html,/#finalCardOverlay \.final-card-head>div\{display:grid;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
 console.log('PASS V405 · BORRAR TODO elimina ronda activa, evita reaparición y conserva otras rondas del Historial.');

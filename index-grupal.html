@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V407-R2-PREMIUM-SCORECARD-ACTIONS-20260908">
+  <meta name="gscg-release" content="V407-R3-PREMIUM-FINAL-CARD-20260908">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -550,7 +550,7 @@ body.gsc-setup-open:has(#stablefordSetupOverlay.visible) main{visibility:hidden}
  .history-insights-panel{padding:12px}.history-insights-query{grid-template-columns:1fr}.history-insights-quick{grid-template-columns:1fr 1fr}.history-insights-result{font-size:13px}
 }
 
-/* V407-R2 · sistema visual premium, simétrico y respirable */
+/* V407-R3 · sistema visual premium, simétrico y respirable */
 :root{
   --premium-surface:#080a0a;
   --premium-surface-2:#0d1010;
@@ -592,6 +592,22 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
 .new-round-card .course-option[aria-pressed="true"]{background:linear-gradient(180deg,#10250d,#071006);box-shadow:0 0 0 1px rgba(49,255,0,.16),0 8px 22px rgba(49,255,0,.08)}
 .new-round-card .nr-button{margin-top:12px}.new-round-card #setupOk{height:64px;border-radius:14px}
 .overlay{background:rgba(0,0,0,.96);backdrop-filter:blur(12px)}
+.final-card-panel{width:min(1540px,100%);min-width:0;margin:0 auto;padding:22px;border:1px solid var(--premium-line-bright);border-radius:18px;background:#030404;box-shadow:var(--premium-shadow)}
+.final-card-head{position:static;width:auto;display:grid;grid-template-columns:1fr;gap:14px;margin:0 0 14px;padding:0 0 14px;border-bottom:1px solid var(--premium-line);background:transparent}
+.final-card-head h1{margin:0;color:var(--lime);font-size:24px;line-height:1.1;text-align:center;letter-spacing:.8px}
+.final-card-head>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%}
+.final-card-head button{width:100%;min-width:0;height:var(--premium-control);margin:0;padding:0 10px;border:1px solid var(--premium-line-bright);border-radius:12px;background:#080a0a;color:#fff;font:900 11px/1.15 Arial,sans-serif;letter-spacing:.35px}
+.final-card-head #shareFinalLiveButton,.final-card-head #sendFinalCard{border-color:var(--lime);color:var(--lime)}
+.final-card-head #officialCloseButton:not(:disabled){border-color:#ff4545;color:#ff6b6b}
+.final-card-head button:disabled{border-color:#343a3a;color:#777;background:#050606;opacity:1}
+.final-card-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 12px}
+.final-card-meta span{display:flex;min-height:42px;align-items:center;justify-content:center;padding:7px 10px;border:1px solid var(--premium-line);border-radius:10px;background:#080a0a;color:#d8dddd;text-align:center;font-size:11px;line-height:1.25}
+.final-card-scroll-hint{padding:11px 14px;border:1px solid var(--premium-line);border-bottom:0;border-radius:12px 12px 0 0;background:#080a0a;color:#aeb5b5;text-align:right;font:800 9px/1 Arial,sans-serif;letter-spacing:.55px}
+.final-card-shell{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;border:1px solid var(--premium-line);border-radius:0 0 12px 12px;background:#020303;scrollbar-color:var(--lime) #090b0b;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.final-card-shell::-webkit-scrollbar{height:10px}.final-card-shell::-webkit-scrollbar-track{background:#090b0b}.final-card-shell::-webkit-scrollbar-thumb{border:2px solid #090b0b;border-radius:10px;background:var(--lime)}
+.final-card-panel .scorecard{width:1360px;min-width:1360px}.final-card-panel .summary{width:1360px;min-width:1360px;margin-top:12px;border-radius:12px}
+.final-card-readonly{margin:14px 0 0;padding:12px;border:1px solid var(--premium-line);border-radius:10px;background:#080a0a;color:#aeb5b5;font-size:10px;letter-spacing:.35px}
+.gsc-final-card-open .live-support-link,.gsc-final-card-open .ai-universal-launch,.gsc-final-card-open .golf-rules-launch,.gsc-final-card-open .skins-launch,.gsc-final-card-open .gsc-live-launch{display:none!important}
 .card-library-round,.history-insights-result,.skins-config,.skins-results{border-radius:12px;background:linear-gradient(145deg,#0d1010,#050606)}
 #roundManualEntry{margin:18px 0!important;padding:22px!important;border:1px solid #4b4f50!important;border-radius:16px!important;background:#050606!important;box-shadow:0 14px 34px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.04)!important}
 #roundManualTitle{margin-bottom:12px!important;color:var(--lime)!important;font-size:22px!important;letter-spacing:.8px!important}
@@ -627,6 +643,19 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
   .round-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:14px}.round-actions button{height:52px;border-radius:11px;font-size:10px;padding:0 7px}.round-actions #newRoundButton{grid-column:1/-1}
   .round-secondary-actions{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}.back-registration-button,.clear-round-scores{height:50px;border-radius:11px;font-size:9px}
   .overlay{padding:10px}.new-round-card{padding:18px 14px;margin:8px auto;border-radius:18px}.new-round-card .course-options,.game-mode-columns{gap:9px}.game-mode-columns{grid-template-columns:1fr}.new-round-card .course-option{min-height:54px;border-radius:12px;padding:10px 12px;font-size:12px!important}.new-round-card .nr-button,.screen-back-button{min-height:52px;border-radius:12px}
+  #finalCardOverlay{padding:max(8px,env(safe-area-inset-top)) 8px 12px;overflow-x:hidden}
+  #finalCardOverlay .final-card-panel{width:100%;min-width:0;margin:0;padding:14px 10px;border-radius:16px;overflow:hidden}
+  #finalCardOverlay .final-card-head{position:static;width:auto;grid-template-columns:1fr;margin:0 0 12px;padding-bottom:12px;gap:10px}
+  #finalCardOverlay .final-card-head h1{font-size:19px;line-height:1.15;text-align:center}
+  #finalCardOverlay .final-card-head>div{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+  #finalCardOverlay .final-card-head button{width:100%;height:50px;margin:0;padding:0 4px;border-radius:10px;font-size:8.5px;line-height:1.2}
+  #finalCardOverlay .final-card-meta{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-bottom:10px}
+  #finalCardOverlay .final-card-meta span{min-height:40px;padding:6px;font-size:9px}
+  #finalCardOverlay .final-card-scroll-hint{padding:10px 11px;font-size:8px;text-align:center}
+  #finalCardOverlay .final-card-shell{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden}
+  #finalCardOverlay .final-card-panel .scorecard{width:1360px;min-width:1360px}
+  #finalCardOverlay .final-card-panel .summary{width:1360px;min-width:1360px;overflow:visible}
+  #finalCardOverlay .final-card-readonly{font-size:8.5px;line-height:1.35}
   #roundManualEntry{padding:18px 12px!important;border-radius:16px!important}#roundManualTitle{font-size:20px!important}#roundGridInstruction{font-size:11px!important;line-height:1.4!important}#roundGridNavigation{grid-template-columns:minmax(0,1fr) 92px minmax(0,1fr)!important;gap:8px!important}#roundGridNavigation button,#roundGridHole{min-height:54px!important;font-size:12px!important}.round-manual-detail{grid-template-columns:86px minmax(0,1fr)!important;gap:8px!important}.round-manual-detail-label{font-size:12px!important}.round-player-grid{grid-template-columns:minmax(78px,1.25fr) 44px minmax(66px,1fr) repeat(3,minmax(47px,.78fr))!important;gap:5px!important}.round-player-grid-label{font-size:10px!important}.round-player-grid>strong,.round-player-grid>span{font-size:14px!important}#roundManualEntry .round-grid-name,#roundManualEntry .round-grid-gross{min-height:54px!important;font-size:15px!important}#roundGridEnter{min-height:62px!important;font-size:20px!important}
   #setupOverlay .screen-back-row{padding-right:118px}.mandatory-update{top:max(10px,env(safe-area-inset-top));right:10px}.mandatory-update-card button{min-width:108px;min-height:40px;border-radius:11px}
 }
@@ -646,25 +675,25 @@ body.gsc-history-open .live-support-link,
 body.gsc-history-open .ai-universal-launch,
 body.gsc-history-open .golf-rules-launch,
 body.gsc-history-open .skins-launch,
-body.gsc-history-open .gsc-live-launch,
+body.gsc-history-open .gsc-live-launch{display:block!important}
 body.gsc-final-card-open .live-support-link,
 body.gsc-final-card-open .ai-universal-launch,
 body.gsc-final-card-open .golf-rules-launch,
 body.gsc-final-card-open .skins-launch,
-body.gsc-final-card-open .gsc-live-launch,
+body.gsc-final-card-open .gsc-live-launch{display:none!important}
 body.gsc-final-card-open .mandatory-update{display:block!important}
 .registration-clear-all{border:1px solid #ff4545!important;background:#140000!important;color:#ff6b6b!important;box-shadow:none!important}
 @media(max-width:800px){
   #finalCardOverlay{padding:max(8px,env(safe-area-inset-top)) 8px 12px;overflow-x:hidden}
-  #finalCardOverlay .final-card-panel{width:100%;min-width:0;margin:0;padding:10px 8px;overflow:hidden}
-  #finalCardOverlay .final-card-head{display:grid;grid-template-columns:1fr;margin-bottom:10px;gap:9px}
-  #finalCardOverlay .final-card-head h1{font-size:20px;line-height:1.1;text-align:center}
-  #finalCardOverlay .final-card-head>div{display:grid;grid-template-columns:1fr;gap:7px}
-  #finalCardOverlay .final-card-head button{width:100%;height:48px;margin:0}
-  #finalCardOverlay .final-card-meta{display:grid;grid-template-columns:1fr;gap:5px;font-size:11px;text-align:center}
+  #finalCardOverlay .final-card-panel{width:100%;min-width:0;margin:0;padding:14px 10px;border-radius:16px;overflow:hidden}
+  #finalCardOverlay .final-card-head{position:static;width:auto;display:grid;grid-template-columns:1fr;margin:0 0 12px;padding-bottom:12px;gap:10px}
+  #finalCardOverlay .final-card-head h1{font-size:19px;line-height:1.15;text-align:center}
+  #finalCardOverlay .final-card-head>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+  #finalCardOverlay .final-card-head button{width:100%;height:50px;margin:0;padding:0 4px;border-radius:10px;font-size:8.5px;line-height:1.2}
+  #finalCardOverlay .final-card-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-bottom:10px;font-size:9px;text-align:center}
   #finalCardOverlay .final-card-shell{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
-  #finalCardOverlay .final-card-panel .scorecard{min-width:1500px;width:1500px}
-  #finalCardOverlay .final-card-panel .summary{min-width:1500px;width:1500px;overflow:visible}
+  #finalCardOverlay .final-card-panel .scorecard{min-width:1360px;width:1360px}
+  #finalCardOverlay .final-card-panel .summary{min-width:1360px;width:1360px;overflow:visible}
 }
 </style>
 <style id="gscg-pwa-install-v281">
@@ -822,6 +851,7 @@ html,body{height:auto!important;min-height:100%;overflow-y:auto!important;-webki
     <div class="final-card-head"><h1>TARJETA DIGITAL FINAL</h1><div><button id="shareFinalLiveButton" type="button">COMPARTIR LIVE</button><button id="officialCloseButton">FINALIZAR RONDA</button><button id="sendFinalCard" hidden>ENVIAR TARJETA DIGITAL</button><button class="screen-back-button" id="closeFinalCard">ATRÁS</button></div></div>
     <div class="artifact-actions" id="artifactActions" hidden><button id="openGlobalCard">ABRIR GLOBAL</button><button id="imageGlobalCard">IMAGEN GLOBAL</button><button id="pdfGlobalCard">PDF GLOBAL</button><button id="shareGlobalCard">CORREO / WHATSAPP GLOBAL</button><select id="personalCardPlayer" aria-label="Jugador de tarjeta personal"></select><button id="openPersonalCard">ABRIR PERSONAL</button><button id="imagePersonalCard">IMAGEN PERSONAL</button><button id="pdfPersonalCard">PDF PERSONAL</button><button id="sharePersonalCard">CORREO / WHATSAPP PERSONAL</button><button id="downloadAllCards">PDF TODAS</button><button id="openOfficialCorrection">CORREGIR RONDA</button><button class="hidden" id="openOriginalGlobal">ABRIR ORIGINAL</button><div class="artifact-share-status" id="artifactShareStatus" role="status" aria-live="polite"></div></div>
     <div class="final-card-meta"><span id="finalDate">—</span><span>EL PULTÉ GOLF · PAR 72</span><span id="finalTournament"></span><span id="finalPlayers">—</span></div>
+    <div class="final-card-scroll-hint">DESLIZA PARA VER TODOS LOS HOYOS</div>
     <section class="final-card-shell"><table class="scorecard" id="finalScorecard"></table></section>
     <section class="summary"><div class="summary-title" id="finalSummaryTitle">INFORMACIÓN DE RONDA</div><table><thead><tr id="finalSummaryHeadRow"><th class="summary-player">JUGADOR</th><th>GROSS IN</th><th>GROSS OUT</th><th>GROSS TOTAL</th><th>HCP</th><th>NETO TOTAL</th><th>+/- NETO</th></tr></thead><tbody id="finalSummaryBody"></tbody></table></section>
     <div class="final-card-readonly">TARJETA FINAL · SOLO CONSULTA · LOS DATOS DE LA RONDA NO SE MODIFICAN DESDE ESTA VISTA</div>
@@ -948,7 +978,7 @@ html,body{height:auto!important;min-height:100%;overflow-y:auto!important;-webki
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>ACTUALIZACIÓN DISPONIBLE</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R2</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>ACTUALIZACIÓN DISPONIBLE</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R3</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
 "use strict";
