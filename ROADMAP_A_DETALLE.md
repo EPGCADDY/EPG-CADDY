@@ -662,3 +662,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Cierre R14: ambos ROADMAPS y `INVENTARIOS_V311.lock.json` se sellan juntos para el build final.
 - Publicación R15: corrige exclusivamente el estado remoto del botón ACTUALIZAR.
 - Prueba R15: detector, limpieza de caché, recarga y estado final sin parpadeo quedan sellados.
+- R16: `syncDraftModeSelection` reconoce Universales y su botón recibe el mismo estado verde exclusivo.

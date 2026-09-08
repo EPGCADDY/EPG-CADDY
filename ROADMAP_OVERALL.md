@@ -629,3 +629,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Cierre de publicación R14: ROADMAPS y sello de inventario quedan coordinados en el mismo commit final.
 - Evidencia automatizada de tarjetas: `scripts/card-audit-fixtures.mjs`.
 - R15: actualización remota parpadea sólo ante una versión nueva y confirma ACTUALIZADO al instalarla.
+- R16: Medal Play y Universales reflejan visualmente una sola modalidad activa; sirve como segunda actualización remota consecutiva.
