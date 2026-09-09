@@ -8,7 +8,10 @@ assert.match(html,/meta name="gscg-release" content="V407-R24-PWA-PROMOTION-FINA
 assert.match(worker,/const RELEASE="V407-R24-PWA-PROMOTION-FINAL-20260909"/);
 assert.match(html,/nextUrl\.searchParams\.set\("__gscg_build_check",String\(Date\.now\(\)\)\)/);
 assert.ok(!html.includes('nextUrl.searchParams.delete("__gscg_build_check")'));
-assert.match(html,/registration\.active\?\.postMessage\(\{type:"PROMOTE_BUILD",build:CURRENT_APP_BUILD\}\)/);
+assert.match(html,/worker\?\.postMessage\(\{type:"PROMOTE_BUILD",build:CURRENT_APP_BUILD\}\)/);
+assert.match(html,/registration\.update\(\)/);
+assert.match(html,/registration\.installing,registration\.waiting,registration\.active,navigator\.serviceWorker\.controller/);
+assert.match(html,/setInterval\(promote,250\)/);
 assert.match(html,/class="mandatory-update" id="mandatoryUpdate"/);
 assert.match(html,/aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO<\/span>/);
 assert.match(html,/function showCurrentBuild\(\)[\s\S]*?button\.disabled=true[\s\S]*?classList\.remove\("available"\)/);
