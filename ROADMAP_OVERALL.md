@@ -662,3 +662,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `docs/manual/v311/page-00.png`: portada del manual resellada junto con los PDF publicados para que SUPPORT entregue el artefacto vigente.
 - V407-R22: `service-worker.js` deja pasar `/manual.pdf`, `/manual.html` y `/manual-scg` por red; la prueba física confirmó que SUPPORT conserva la misma pestaña y ya no devuelve la aplicación.
 - V407-R23: el enlace SUPPORT incorpora el bypass de red compatible con service workers anteriores; ACTUALIZAR no cambia.
+- V407-R23 ajuste visual: la barra móvil separa COMPARTIR 24H para impedir que comprima u oculte SUPPORT.

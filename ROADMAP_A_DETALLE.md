@@ -701,3 +701,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `docs/manual/v311/page-00.png`: fuente gráfica de portada resellada al reconstruir el inventario y los PDF del manual accesible desde SUPPORT.
 - V407-R22: `index-grupal.html` y `service-worker.js` avanzan a `V407-R22-SUPPORT-PDF-20260909`; `test-v311-live-support-link.mjs` bloquea la interceptación del Manual por el shell PWA.
 - V407-R23: SUPPORT añade `__gscg_build_check=1` a `/manual.pdf` para atravesar también service workers antiguos, conservar la misma pantalla y abrir el PDF real; la lógica de ACTUALIZAR permanece intacta.
+- V407-R23 ajuste móvil: COMPARTIR 24H ocupa una segunda fila completa; LIVE, REGLAS, AI y SUPPORT conservan cuatro columnas legibles. ACTUALIZAR permanece intacto.
