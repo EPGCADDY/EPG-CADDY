@@ -36,6 +36,9 @@ assert.equal((html.match(/class="manual-page"/g)||[]).length,1,"Safari debe mont
 assert.match(html,/function showPageImage\(page\)/,"El visor debe sustituir únicamente la gráfica activa");
 assert.match(html,/const preload=new Image\(\)/,"La nueva gráfica debe cargarse antes de sustituir la actual");
 assert.doesNotMatch(html,/IntersectionObserver/,"El desplazamiento no debe cambiar de página automáticamente");
+assert.match(html,/id="returnToRound"[^>]*>← REGRESAR A MI RONDA<\/button>/,"El Manual debe mostrar un regreso infantil y explícito a la ronda");
+assert.match(html,/sameApp&&history\.length>1\)\{history\.back\(\);return\}/,"El regreso debe volver exactamente a la Score Card anterior");
+assert.match(html,/location\.replace\("\/index-grupal\.html\?source=manual-return"\)/,"Sin historial debe recuperar la ronda persistida desde la aplicación");
 assert.ok(fs.statSync(pdf).size>100000,"El PDF completo debe estar alojado en el proyecto");
 assert.match(fs.readFileSync(pdf,"latin1"),/\/Count\s+74\b/,"El PDF debe contener portada más 73 páginas funcionales");
 assert.match(fs.readFileSync(pdf,"latin1"),/\/Outlines\b/,"El PDF debe contener navegación interna por páginas");
