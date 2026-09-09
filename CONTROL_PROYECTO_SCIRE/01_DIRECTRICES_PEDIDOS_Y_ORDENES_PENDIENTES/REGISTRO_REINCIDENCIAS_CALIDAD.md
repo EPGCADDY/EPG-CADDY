@@ -7,7 +7,7 @@
 - Control permanente: toda ronda activa oculta el visor público y despliega directamente sus controles; sin ronda se conserva el Centro LIVE.
 - Cobertura: General, Universales, Stableford, Match Play y Four Ball, sin valores particulares de jugador, campo u hoyo.
 - Evidencia: `test-v406-r5-simple-tournament-live.mjs` y regresiones V352, V353, V406 categorías, V407 Universales y compartir grupo.
-- Estado: CORREGIDO EN CANDIDATO V407-R22; pendiente auditoría integral, navegador real y publicación.
+- Estado: CORREGIDO Y PUBLICADO EN V407-R22; auditoría integral 129/129 PASS, Preview y Producción READY. La comprobación dentro de la cuenta propietaria queda reservada al dispositivo autenticado; el acceso externo fue correctamente redirigido a `access.html`.
 
 ## RC-091 · SUPPORT PARPADEABA Y NO ABRÍA EN IPHONE/PWA · 09 SEPTIEMBRE 2026
 
