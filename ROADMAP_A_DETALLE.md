@@ -699,3 +699,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Pruebas de release V365/V406/V407 sincronizadas con R21. Rollback: R20 de LAB; MAIN permanece intacta.
 - `.github/workflows/hotfix-support-same-screen.yml`: se elimina el disparador temporal de R20 después de integrar y probar la corrección permanente R21 en LAB.
 - `docs/manual/v311/page-00.png`: fuente gráfica de portada resellada al reconstruir el inventario y los PDF del manual accesible desde SUPPORT.
+- V407-R22: `index-grupal.html` y `service-worker.js` avanzan a `V407-R22-SUPPORT-PDF-20260909`; `test-v311-live-support-link.mjs` bloquea la interceptación del Manual por el shell PWA.

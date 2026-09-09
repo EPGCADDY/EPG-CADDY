@@ -660,3 +660,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Rollback: volver al commit R20 de LAB. MAIN no se modifica.
 - `.github/workflows/hotfix-support-same-screen.yml`: se retira el transporte temporal; R21 queda integrado directamente en LAB.
 - `docs/manual/v311/page-00.png`: portada del manual resellada junto con los PDF publicados para que SUPPORT entregue el artefacto vigente.
+- V407-R22: `service-worker.js` deja pasar `/manual.pdf`, `/manual.html` y `/manual-scg` por red; la prueba física confirmó que SUPPORT conserva la misma pestaña y ya no devuelve la aplicación.

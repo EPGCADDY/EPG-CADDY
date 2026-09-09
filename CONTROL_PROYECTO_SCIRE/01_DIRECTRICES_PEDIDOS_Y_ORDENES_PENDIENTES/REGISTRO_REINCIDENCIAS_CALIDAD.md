@@ -4,7 +4,7 @@
 
 - Defecto físico: SUPPORT no abría el manual y el administrador podía ser sustituido por el shell PWA almacenado.
 - Causa raíz: el vínculo volvió a incluir `target="_blank"` y el service worker trataba `/access.html` como navegación de la aplicación.
-- Control permanente: SUPPORT usa `/manual.pdf` en la misma pantalla; `/access.html` queda fuera de la navegación PWA; la prueba prohíbe `target="_blank"`.
+- Control permanente: SUPPORT usa `/manual.pdf` en la misma pantalla; `/access.html` y las tres rutas del Manual quedan fuera de la navegación PWA; la prueba prohíbe `target="_blank"` y exige bypass de red.
 - Evidencia: `test-v311-live-support-link.mjs`, `test-r18-owner-guest-24h-access.mjs` y verificación HTTPS LAB R21.
 - Estado: CORREGIDO EN CANDIDATO V407-R21; MAIN INTACTA.
 

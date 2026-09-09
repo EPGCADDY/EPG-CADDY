@@ -1,9 +1,9 @@
 "use strict";
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r21-support-access`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r22-support-pdf`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved`;
-const RELEASE="V407-R21-SUPPORT-ACCESS-20260909";
+const RELEASE="V407-R22-SUPPORT-PDF-20260909";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -95,6 +95,7 @@ self.addEventListener("fetch",event=>{
   if(request.method!=="GET")return;
   const url=new URL(request.url);
   if(url.origin!==self.location.origin||url.pathname.startsWith("/api/"))return;
+  if(request.mode==="navigate"&&["/manual.pdf","/manual.html","/manual-scg"].includes(url.pathname)){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"&&url.pathname==="/access.html"){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(url.searchParams.has("__gscg_build_check")){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"){

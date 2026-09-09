@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/V407-R21-SUPPORT-ACCESS-20260909/);
+assert.match(html,/V407-R22-SUPPORT-PDF-20260909/);
 assert.match(worker,/v407-r18-live-points-header/);
 assert.doesNotMatch(worker,/await client\.navigate\(url\.toString\(\)\)/);
 assert.match(html,/\.overlay\{height:100dvh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain/);
@@ -13,7 +13,7 @@ assert.match(html,/body\.gsc-setup-open:has\(#setupOverlay\.visible\) main\{disp
 assert.match(html,/for\(const element of new Set\(\[document\.documentElement,document\.body,root\]\)\)/);
 assert.match(html,/if\(overlay\.id==="setupOverlay"\)\{overlay\.style\.removeProperty\("height"\);overlay\.style\.removeProperty\("overflow-y"\)/);
 assert.doesNotMatch(html,/addEventListener\("touchstart",recoverInstalledAppScrolling/);
-assert.match(html,/class="update-version-id" id="appVersionId">V407 · R21<\/span>/);
+assert.match(html,/class="update-version-id" id="appVersionId">V407 · R22<\/span>/);
 assert.match(html,/class="mandatory-update" id="mandatoryUpdate"/);
 assert.match(html,/id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO<\/span>/);
 assert.match(html,/nextUrl\.searchParams\.set\("update_check",String\(Date\.now\(\)\)\)/);
