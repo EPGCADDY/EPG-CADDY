@@ -720,3 +720,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Reintento controlado: el archivo remoto se contrastó por commit; el nuevo commit fuerza clonación fresca tras detectar que Vercel compiló una versión anterior del blob.
 - `scripts/rebuild-inventory-pdfs.py`: `InventorySans` e `InventorySans-Bold` se registran desde `reportlab/fonts/Vera.ttf` y `VeraBd.ttf`; misma salida reproducible local/remota.
 - Digest remoto: `source_state()` usa `git rev-parse HEAD:<ruta>` cuando existe `VERCEL`, exactamente igual que `scripts/inventory-gate.mjs`; local conserva `git hash-object` sobre el trabajo actual.
+- Runtime: `middleware.js` sustituye el import estático de `resolveAppAccess` por `await import(...)`; el empaquetador CommonJS de Routing Middleware ya no intenta `require()` sobre el módulo ESM.

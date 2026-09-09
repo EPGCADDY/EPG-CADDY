@@ -679,3 +679,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Reintento de publicación: se genera un commit fresco después de comprobar que GitHub contiene Vera pero una clonación previa de Vercel recibió el blob anterior; MAIN permanece intacta.
 - Inventarios portátiles: `scripts/rebuild-inventory-pdfs.py` usa las mismas fuentes Vera incluidas por ReportLab; elimina su última dependencia de `/usr/share/fonts` en Vercel.
 - Sello coherente en build: bajo `VERCEL`, el generador y el gate calculan el digest contra `HEAD`; los PDF derivados pueden reconstruirse sin producir una falsa divergencia del árbol fuente.
+- Middleware Node compatible: `middleware.js` carga `api/_lib/app-access.js` mediante `import()` dinámico dentro del handler; evita `ERR_REQUIRE_ESM` en Vercel sin cambiar las reglas propietario/invitado.

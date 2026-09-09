@@ -1,10 +1,10 @@
 import { next } from "@vercel/functions";
-import { resolveAppAccess } from "./api/_lib/app-access.js";
 
 const PUBLIC_PATHS=new Set(["/access.html","/api/app-access","/favicon.ico"]);
 const PRIVATE_GUEST_PREFIXES=["/api/account-backup","/api/commerce","/api/sync","/api/master-data"];
 
 export default async function accessGate(request){
+  const {resolveAppAccess}=await import("./api/_lib/app-access.js");
   const url=new URL(request.url),path=url.pathname;
   const guestMode=(request.headers.get("cookie")||"").split(";").some(value=>value.trim()==="gsc_guest_mode=1");
   if(path==="/api/account"&&guestMode)return new Response(JSON.stringify({ok:false,code:"OWNER_DATA_FORBIDDEN"}),{status:403,headers:{"content-type":"application/json","cache-control":"no-store"}});
