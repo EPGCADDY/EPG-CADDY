@@ -230,3 +230,10 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Prevención: WhatsApp ocupa la fila móvil completa con mínimo útil; ACTUALIZAR/INSTALAR se ocultan ante overlays estándar, AI, Cuenta e Instalación.
 - Candado: auditoría Chromium móvil 390×844 de todas las modalidades y pantallas críticas exige ancho exacto y cero intersecciones.
 - Estado: corregido en candidato V407-R24; pendiente Preview READY y Producción.
+
+## RC-095 · ACTUALIZAR oculto en Registro pese al contrato manual
+
+- Evidencia física: `IMG_3284.jpeg` muestra Registro R24 sin el control ACTUALIZAR.
+- Causa: el aislamiento genérico de overlays ocultó también el control que el propietario exige conservar visible para decidir personalmente la instalación.
+- Prevención: excepción explícita sólo para `#setupOverlay`, franja superior reservada y medición física que exige botón visible, ancho 390 px e intersección cero con la tarjeta.
+- Estado: corregido en candidato V407-R24A; pendiente publicación.

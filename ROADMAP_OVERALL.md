@@ -723,3 +723,10 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Rollback: `73df15f`; promoción a MAIN sólo tras Preview READY y cero FAIL.
 - Reparación de transporte R24: el primer blob remoto de `index-grupal.html` llegó vacío; el commit reparador retransmite los 830,274 bytes y conserva el árbol candidato exacto.
 - Índice protegido por `test-v311-manual-search.mjs`; enlaces temáticos y búsqueda WhatsApp no pueden desaparecer silenciosamente.
+
+# V407-R24A · ACTUALIZAR manual visible en Registro · 09 de septiembre de 2026
+
+- `index-grupal.html`: restaura ACTUALIZAR exclusivamente en Registro y reserva una franja superior para impedir contacto con el logotipo o controles.
+- `service-worker.js`: nuevo release/caché R24A para que el propietario reciba y confirme manualmente la versión.
+- Evidencia Chromium móvil 390×844: ACTUALIZAR visible, tarjeta inicia en 90 px, botón termina en 67 px, intersección cero y ancho total 390 px.
+- Pruebas V365/V405/V406/V407 actualizadas; rollback productivo `2ba83ed`.
