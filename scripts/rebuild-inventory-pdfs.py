@@ -4,12 +4,14 @@
 import hashlib
 import html
 import json
+import os
 import re
 import subprocess
 from datetime import datetime, timezone
 from functools import partial
 from pathlib import Path
 
+import reportlab
 from PIL import Image
 from reportlab import rl_config
 from reportlab.lib.colors import HexColor
@@ -30,8 +32,9 @@ OVERALL = OUTPUT / "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf"
 DETAIL = OUTPUT / "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf"
 IMAGES = OUTPUT / "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf"
 LOCK = ROOT / "CONTROL_PROYECTO_SCIRE" / "INVENTARIOS_V311.lock.json"
-REGULAR = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+REPORTLAB_FONTS = Path(reportlab.__file__).resolve().parent / "fonts"
+REGULAR = str(REPORTLAB_FONTS / "Vera.ttf")
+BOLD = str(REPORTLAB_FONTS / "VeraBd.ttf")
 
 rl_config.invariant = 1
 
@@ -138,8 +141,9 @@ def source_state():
     files = sorted(path for path in result.stdout.splitlines() if path and path != str(LOCK.relative_to(ROOT)))
     digest = hashlib.sha256()
     for path in files:
+        git_args = ["git", "rev-parse", f"HEAD:{path}"] if os.environ.get("VERCEL") else ["git", "hash-object", "--", path]
         object_id = subprocess.run(
-            ["git", "hash-object", "--", path],
+            git_args,
             cwd=ROOT,
             check=True,
             capture_output=True,

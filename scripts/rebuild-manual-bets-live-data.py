@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import json
+import os
 import shutil
 import subprocess
 import sys
 from pathlib import Path
 
+import reportlab
 from PIL import Image
 from pypdf import PdfReader, PdfWriter
 from reportlab.lib.colors import HexColor, black, white
@@ -23,8 +25,9 @@ ALIAS = MANUAL_DIR / "Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf"
 
 
 def fonts():
-    regular = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-    bold = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+    bundled = Path(reportlab.__file__).resolve().parent / "fonts"
+    regular = str(bundled / "Vera.ttf")
+    bold = str(bundled / "VeraBd.ttf")
     pdfmetrics.registerFont(TTFont("ManualSans", regular))
     pdfmetrics.registerFont(TTFont("ManualSans-Bold", bold))
     return "ManualSans", "ManualSans-Bold"
@@ -145,7 +148,7 @@ def render_png(page_pdf, number):
     source = TMP / f"render-{number:02d}.png"
     target = MANUAL_DIR / f"page-{number:02d}.png"
     with Image.open(source) as image:
-        image.resize((2160, 4320), Image.Resampling.LANCZOS).save(target, format="PNG", dpi=(300, 300), optimize=True)
+        image.resize((2160, 4320), Image.Resampling.LANCZOS).save(target, format="PNG", dpi=(300, 300), compress_level=6)
 
 
 def replace_pdf_pages(replacements):
@@ -182,7 +185,8 @@ def main():
     for item in data:
         number = int(item["number"])
         page_pdf = build_page(item, regular, bold)
-        render_png(page_pdf, number)
+        if os.environ.get("SKIP_MANUAL_PNG") != "1":
+            render_png(page_pdf, number)
         replacements[number] = page_pdf
     replace_pdf_pages(replacements)
     print(f"MANUAL_FUNCTIONAL_PAGES_REBUILT pages={len(replacements)} pdf=74")
