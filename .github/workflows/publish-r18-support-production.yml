@@ -25,10 +25,10 @@ jobs:
           curl -L --fail --cookie /tmp/vcookies "https://golf-sc-gt-lab-v374-9j42qcngx-epgcaddys-projects.vercel.app/docs/manual/v311/page-00.png" -o docs/manual/v311/page-00.png
           python3 - <<'PY'
           from pathlib import Path
-          import fitz
+          from pypdf import PdfReader
           from PIL import Image
           pdf=Path("docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf")
-          assert len(fitz.open(pdf))==74
+          assert len(PdfReader(pdf).pages)==74
           assert Image.open("docs/manual/v311/page-00.png").size==(2160,4320)
           p=Path("index-grupal.html"); s=p.read_text()
           s=s.replace('href="/manual-scg" target="_blank" rel="noopener noreferrer" aria-label="Abrir el Manual vivo de Golf Score Card GT">Support</a>','href="/manual.pdf" target="_blank" rel="noopener noreferrer" aria-label="Abrir el Manual de Usuario V407 R.18 de Golf Score Card GT">Support</a>')
