@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 21482)
-Total output lines: 665
+Warning: truncated output (original token count: 21526)
+Total output lines: 666
 
 # ROADMAP OVERALL
 
@@ -138,8 +138,7 @@ Archivos exactos V331: `wolf.js`, `vegas.js`, `dots.js`, `index-grupal.html`, `c
 
 ## V330 · Skins, Wolf, Vegas, Dots y seis jugadores
 
-**Hotfix V330-R3 después de rechazo físico:** la captura real de iPhone demostró que al elegir `WOLF…11482 tokens truncated…aché V302 para entregar inmediatamente el componente unificado. |
-| `test-v290-brand-icons-cleanup.mjs` | Comprueba la estructura hermana, el SVG, la ausencia del emoji grande, el paquete y la caché. |
+**Hotfix V330-R3 después de rechazo físico:** la captura real de iPhone demostró que al elegir `WOLF…11526 tokens truncated…el paquete y la caché. |
 | `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el inventario de todos los archivos modificados. |
 | `ROADMAP_A_DETALLE.md` | Registra V302 a detalle. |
 | `ROADMAP_OVERALL.md` | Registra V302 en este resumen general. |
@@ -309,3 +308,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Reparación de build R21: `service-worker.js` conserva explícitamente el marcador aprobado `v407-r18-live-points-header`; `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran y sellan la corrección. El Preview anterior quedó rechazado; MAIN/Producción no cambia.
 - Control maestro preservado: punto de corte `línea 185`; activación: 23 de agosto de 2026, 17:05:00, hora de Guatemala.
 - Resello remoto R21: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` usa el digest del árbol Git que audita Vercel; `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` documentan el mismo cambio. MAIN/Producción permanece intacta.
+- Verificación final del resello R21: los tres archivos anteriores se recalculan contra el `HEAD` remoto exacto que usa Vercel; no cambia código funcional ni MAIN/Producción.
