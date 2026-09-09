@@ -4256,14 +4256,14 @@ function openStablefordDataEditor(){
 }
 function startStablefordRoundMode(){
   const cfg=GSCStableford.categoryConfig(stablefordSetupCategory),course=COURSE_CATALOG[stablefordSetupCourseKey];
-  const state=updateStablefordSetupValidity({preserveStatus:true}),names=state.names,entries=state.entries;
+  const state=updateStablefordSetupValidity({preserveStatus:true}),names=state.names,entries=state.entries||names.map((name,index)=>({name,countryCode:"502",whatsapp:"",index}));
   const fail=setStablefordSetupError;
   if(!GSCStableford.isAllowedCourse(stablefordSetupCourseKey))return fail("SELECCIONA EL CAMPO");
   if(!cfg)return fail("SELECCIONA SENIOR O SÚPER SENIOR");
   if(!course?.configured)return fail(`${course?.name?.toUpperCase()||"CAMPO"} · PENDIENTE CARGAR TARJETA OFICIAL`);
   if(!names.length)return fail("INGRESA AL MENOS UN JUGADOR");
   if(state.duplicates.length)return fail(stablefordDuplicateMessage(state.duplicates));
-  if(state.invalidWhatsApps.length)return fail(`JUGADOR ${state.invalidWhatsApps[0].index+1}: REVISA EL WHATSAPP INTERNACIONAL`);
+  if(state.invalidWhatsApps?.length)return fail(`JUGADOR ${state.invalidWhatsApps[0].index+1}: REVISA EL WHATSAPP INTERNACIONAL`);
   const roundNumber=stablefordCourseRoundNumber(stablefordSetupCategory,stablefordSetupCourseKey);
   if(!roundNumber)return fail("LAS CUATRO FECHAS YA ESTÁN REGISTRADAS");
   teardownRealtime();draftCourse=stablefordSetupCourseKey;activateCourse(stablefordSetupCourseKey);const now=new Date().toISOString(),tournamentName=GSCStableford.cleanName(document.getElementById("stablefordTournamentName")?.value||"");

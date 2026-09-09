@@ -6,6 +6,7 @@
 - `FINALIZAR RONDA` guarda la tarjeta oficial en Historial y habilita su envío; `NUEVA RONDA` archiva la ronda actual y abre un registro vacío en todas las modalidades.
 - En cualquier pantalla superpuesta se oculta `ACTUALIZADO`, evitando que cubra `ATRÁS` u otras acciones móviles. Sólo Preview LAB; Main permanece intacta.
 - El inventario se sella contra el árbol remoto LAB dentro del mismo cambio documental requerido por el despliegue.
+- Los simuladores Stableford anteriores interpretan la ausencia del nuevo campo como WhatsApp opcional vacío.
 
 # V407-R23B · enlace LIVE privado abre como sólo lectura · 9 de septiembre de 2026
 
