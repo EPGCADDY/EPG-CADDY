@@ -713,3 +713,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `service-worker.js`: comentario de continuidad `v407-r18-live-points-header` para reconciliar el candado heredado; cambio documental sin alteración ejecutable de ACTUALIZAR, release o estrategia de caché.
 - Registro/WhatsApp: `#ownerShare24hSetup` aparece dentro de la primera pantalla de Registro con rótulo `WHATSAPP · INVITAR 24H`; comparte el mismo creador seguro que `#ownerShare24h`. Ambos permanecen ocultos para invitados y sólo se publican cuando la API confirma `owner` y `canShare=true`.
 - Transporte de portada: `docs/manual/v311/page-00.png` mantiene 2160×4320 y 300 dpi con paleta indexada estable para publicarse íntegra; no altera contenido ni diseño del Manual.
+- `vercel.json`: el build reconstruye páginas 19–21 y los PDF derivados, regenera inventarios y sólo entonces ejecuta la auditoría; elimina la divergencia entre fuentes gráficas y PDF publicados.
