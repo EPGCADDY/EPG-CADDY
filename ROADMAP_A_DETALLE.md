@@ -717,3 +717,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Vercel usa `SKIP_MANUAL_PNG=1`: conserva las PNG 19–21 ya verificadas y subidas, y evita el binario externo `pdftoppm`; el ensamblado de ambos PDF continúa en Python.
 - `test-v254-remove-registration-guide.mjs`: se actualiza únicamente la expectativa del subtítulo oficial para fijar que registrar al grupo completo es opcional; permanecen prohibidas las tres casillas falsas históricas.
 - `scripts/rebuild-manual-bets-live-data.py`: usa `reportlab/fonts/Vera.ttf` y `VeraBd.ttf`, disponibles dentro de la dependencia instalada; el build deja de depender de fuentes del sistema ausentes en Vercel.
+- Reintento controlado: el archivo remoto se contrastó por commit; el nuevo commit fuerza clonación fresca tras detectar que Vercel compiló una versión anterior del blob.

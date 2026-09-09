@@ -676,3 +676,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Dependencia portátil: las PNG 19–21 ya viajan aprobadas en Git; durante el build `SKIP_MANUAL_PNG=1` evita depender de `pdftoppm` y recompone únicamente los PDF e inventarios derivados.
 - Regresión de Registro: `test-v254-remove-registration-guide.mjs` conserva la prohibición de casillas falsas y reconoce la instrucción aprobada `REGISTRA SÓLO A UNO O AL GRUPO · HASTA 6`.
 - Fuente reproducible: el generador utiliza Bitstream Vera incluida por ReportLab, tanto localmente como en Vercel; elimina la dependencia inexistente de `/usr/share/fonts` sin descargar ni sustituir contenido.
+- Reintento de publicación: se genera un commit fresco después de comprobar que GitHub contiene Vera pero una clonación previa de Vercel recibió el blob anterior; MAIN permanece intacta.
