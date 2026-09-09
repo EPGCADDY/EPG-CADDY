@@ -37,7 +37,7 @@ assert.match(html,/if\(document\.readyState==="loading"\)window\.addEventListene
 assert.match(html,/if\(!GSCStableford\.isAllowedCourse\(stablefordSetupCourseKey\)\)return fail\("SELECCIONA EL CAMPO"\)/);
 assert.match(html,/if\(!cfg\)return fail\("SELECCIONA SENIOR O SÚPER SENIOR"\)/);
 assert.match(html,/if\(!names\.length\)return fail\("INGRESA AL MENOS UN JUGADOR"\)/);
-assert.match(html,/names\.slice\(0,6\)/);
+assert.match(html,/entries\.slice\(0,6\)/);
 assert.match(html,/tee:cfg\.tee/);
 
 console.log("PASS V252 · persistencia normal, NUEVA RONDA limpia, 4 campos y categorías por tee");

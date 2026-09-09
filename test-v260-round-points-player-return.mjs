@@ -23,7 +23,7 @@ assert.match(html,/function openStablefordDataEditor\(\)/);
 assert.match(html,/inputs\.forEach\(\(input,i\)=>input\.value=round\.players\[i\]\?\.name\|\|""\)/);
 assert.match(html,/stablefordSetupMode==="edit"&&isStablefordRound\(\)/);
 assert.match(html,/holes:previous\[i\]\?\.holes\|\|\{\}/);
-assert.match(html,/names\.slice\(0,6\)/);
+assert.match(html,/entries\.slice\(0,6\)/);
 
 // ATRÁS queda pequeño y en el flujo; nunca tapa la tarjeta ni sus resultados.
 assert.match(html,/\.round-secondary-actions\{position:static;/);
