@@ -4,8 +4,11 @@ import fs from "node:fs";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/meta name="gscg-release" content="V407-R23-SUPPORT-PWA-FINAL-20260909"/);
-assert.match(worker,/const RELEASE="V407-R23-SUPPORT-PWA-FINAL-20260909"/);
+assert.match(html,/meta name="gscg-release" content="V407-R24-PWA-PROMOTION-FINAL-20260909"/);
+assert.match(worker,/const RELEASE="V407-R24-PWA-PROMOTION-FINAL-20260909"/);
+assert.match(html,/nextUrl\.searchParams\.set\("__gscg_build_check",String\(Date\.now\(\)\)\)/);
+assert.ok(!html.includes('nextUrl.searchParams.delete("__gscg_build_check")'));
+assert.match(html,/registration\.active\?\.postMessage\(\{type:"PROMOTE_BUILD",build:CURRENT_APP_BUILD\}\)/);
 assert.match(html,/class="mandatory-update" id="mandatoryUpdate"/);
 assert.match(html,/aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO<\/span>/);
 assert.match(html,/function showCurrentBuild\(\)[\s\S]*?button\.disabled=true[\s\S]*?classList\.remove\("available"\)/);

@@ -7,7 +7,7 @@ const control=fs.readFileSync("live-control.js","utf8");
 const hubJs=fs.readFileSync("live-hub.js","utf8");
 const css=fs.readFileSync("gsc-design-system.css","utf8");
 
-assert.match(html,/V407-R23-SUPPORT-PWA-FINAL-20260909/);
+assert.match(html,/V407-R24-PWA-PROMOTION-FINAL-20260909/);
 assert.match(html,/id="tournamentLiveHome"[^>]*aria-label="Compartir o ver jugadores en vivo"[^>]*>[\s\S]*?<span>COMPARTE LIVE<\/span>/);
 assert.match(control,/const home=\$\("tournamentLiveHome"\);if\(home\)home\.onclick=\(\)=>openHub\(\)/);
 assert.doesNotMatch(control,/if\(!token\)url\.searchParams\.set\("demo","1"\)/,"TORNEO LIVE abre primero el Centro de Torneos");

@@ -8,6 +8,7 @@
 - Evidencia: `test-v311-live-support-link.mjs`, `test-r18-owner-guest-24h-access.mjs` y verificación HTTPS LAB R23.
 - Estado: CORREGIDO EN CANDIDATO V407-R23; MAIN INTACTA.
 - Corrección visual adicional: en iPhone propietario, `COMPARTIR 24H` debe ocupar una segunda fila y nunca comprimir SUPPORT; candado en `test-v311-live-support-link.mjs`.
+- Escape R24: la captura `IMG_3230.png` comprobó que ACTUALIZAR terminaba pero el PWA regresaba a R18; el flujo conserva el bypass de red y promueve R24 antes de limpiar la URL. Candado: `test-v407-r9-manual-update.mjs`.
 
 ## RC-090 · ACTUALIZAR DEJABA DE PARPADEAR DESPUÉS DE RECONFIGURAR · 08 SEPTIEMBRE 2026
 
