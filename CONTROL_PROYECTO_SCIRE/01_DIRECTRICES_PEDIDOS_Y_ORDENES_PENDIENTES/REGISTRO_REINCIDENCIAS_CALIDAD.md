@@ -1,5 +1,14 @@
 # Registro de reincidencias de calidad
 
+## RC-092 · LIVE ABRÍA EL MENÚ PÚBLICO DESDE UNA RONDA ACTIVA · 09 SEPTIEMBRE 2026
+
+- Defecto físico: al tocar LIVE desde la Score Card activa, aparecía primero `VER TORNEO LIVE` sin mostrar los controles de esa ronda.
+- Causa raíz: `gscLiveLaunch` abría siempre el mismo estado colapsado y no consultaba `currentSnapshot()`.
+- Control permanente: toda ronda activa oculta el visor público y despliega directamente sus controles; sin ronda se conserva el Centro LIVE.
+- Cobertura: General, Universales, Stableford, Match Play y Four Ball, sin valores particulares de jugador, campo u hoyo.
+- Evidencia: `test-v406-r5-simple-tournament-live.mjs` y regresiones V352, V353, V406 categorías, V407 Universales y compartir grupo.
+- Estado: CORREGIDO EN CANDIDATO V407-R22; pendiente auditoría integral, navegador real y publicación.
+
 ## RC-091 · SUPPORT PARPADEABA Y NO ABRÍA EN IPHONE/PWA · 09 SEPTIEMBRE 2026
 
 - Defecto físico: SUPPORT no abría el manual y el administrador podía ser sustituido por el shell PWA almacenado.
