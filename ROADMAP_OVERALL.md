@@ -730,3 +730,12 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `service-worker.js`: nuevo release/caché R24A para que el propietario reciba y confirme manualmente la versión.
 - Evidencia Chromium móvil 390×844: ACTUALIZAR visible, tarjeta inicia en 90 px, botón termina en 67 px, intersección cero y ancho total 390 px.
 - Pruebas V365/V405/V406/V407 actualizadas; rollback productivo `2ba83ed`.
+
+# V407-R24B · recuperación manual desde la copia R24 almacenada · 09 de septiembre de 2026
+
+- `service-worker.js`: al servir el shell aprobado antiguo inyecta sólo el CSS que vuelve visible ACTUALIZAR y reserva su franja; no instala ni recarga automáticamente.
+- `index-grupal.html`: destino visible R24B posterior al toque personal del propietario.
+- Candado permanente R24B: `scripts/lab-update-browser-review.mjs` separa la revisión automatizada en navegador real de la auditoría estática y del iPhone físico; exige cuatro deployments consecutivos A→B→C→D sobre `https://golf-sc-gt-lab.vercel.app`, un perfil persistente, capturas completas y conservación de datos.
+- `scripts/lab-update-physical-gate.mjs`, `test-v407-r24-update-physical-gate.mjs`, `package.json` y `audit-project.mjs`: rechazan evidencia JSON ausente, alterada, ajena o menor de tres transiciones. Hasta ejecutar el recorrido público el estado es NO REVISADO; MAIN/Producción permanece intacta.
+- `test-v407-r9-manual-update.mjs`: exige el puente manual y prohíbe navegación automática.
+- Rollback productivo: `5e45b264`; ninguna ronda, historial ni función de juego se modifica.

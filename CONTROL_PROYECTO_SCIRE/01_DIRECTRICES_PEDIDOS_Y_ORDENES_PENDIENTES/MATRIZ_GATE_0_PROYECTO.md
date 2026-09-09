@@ -29,7 +29,7 @@
 | G0-07 | Calidad de respuestas | exactitud, profundidad, fuentes para datos variables, límites de salud/seguridad, cero falsas acciones y evaluación humana | bancos temáticos + muestra humana fechada |
 | G0-08 | Tráfico | GPS consentido, destino exacto validado, proveedor de tráfico activo, ETA/demora/hora, error seguro y prueba real en Guatemala | respuesta viva reproducible; un enlace sin ETA no pasa |
 | G0-09 | Clima | GPS primero, campo como respaldo, actual/pronóstico, inicio/cierre, artefactos, proveedor identificado y validación física | escenarios automáticos + comparación/medición de campo |
-| G0-10 | Integridad operativa | escritor único, estados, cálculos, persistencia, corrección, historial, modalidades y navegador real | auditoría maestra y recorrido real sin errores |
+| G0-10 | Integridad operativa | escritor único, estados, cálculos, persistencia, corrección, historial y modalidades; ACTUALIZAR exige además cuatro deployments READY consecutivos, mismo alias/perfil Playwright, A→B→C→D, capturas completas SHA-256 y cero errores | auditoría maestra; `node test-v407-r24-update-physical-gate.mjs`; revisión automatizada en navegador real y validador JSON |
 | G0-11 | Producción | sin cambios mientras exista un FAIL; despliegue sólo con aprobación expresa y rollback | commit/deployment exactos y hashes antes/después |
 
 ## Lógica de resultado
@@ -37,4 +37,3 @@
 `PASS INTEGRAL = G0-01 AND G0-02 AND ... AND G0-11`
 
 Un PASS automático parcial no sustituye prueba física o humana exigida. Si falta una evidencia, el rubro permanece FAIL. Producción no se toca.
-

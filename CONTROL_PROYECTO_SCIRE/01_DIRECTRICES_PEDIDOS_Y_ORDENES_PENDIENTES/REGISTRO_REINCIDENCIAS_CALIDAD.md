@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-097 · Auditoría estática confundida con comprobación real de ACTUALIZAR · 09 SEPTIEMBRE 2026
+
+- Riesgo: declarar revisada una versión porque el código y los bancos automáticos pasan, sin haber migrado una instalación real a través del alias LAB público.
+- Causa raíz: no existía evidencia ejecutable que enlazara commit, cuatro deployments READY, mismo alias, mismo perfil persistente, tres toques y capturas antes/después.
+- Control permanente: `scripts/lab-update-browser-review.mjs` ejecuta A→B→C→D en Chromium/Playwright persistente y `scripts/lab-update-physical-gate.mjs` valida JSON, SHA-256, identidad y preservación; `test-v407-r24-update-physical-gate.mjs` impide retirar el contrato.
+- Terminología: Playwright es `REVISIÓN AUTOMATIZADA EN NAVEGADOR REAL`; la única comprobación física pendiente es micrófono en iPhone.
+- Estado: CANDADO INSTALADO; EJECUCIÓN PÚBLICA PENDIENTE; PRODUCTO NO REVISADO; PRODUCCIÓN INTACTA.
+
 ## RC-093 · WHATSAPP ELIMINÓ EL TOKEN Y MOSTRÓ ACCESO PROPIETARIO · 09 SEPTIEMBRE 2026
 
 - Defecto físico: Kathy abrió la invitación compartida y recibió `/access.html` sin el token, por lo que apareció el formulario propietario.
@@ -237,3 +245,11 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa: el aislamiento genérico de overlays ocultó también el control que el propietario exige conservar visible para decidir personalmente la instalación.
 - Prevención: excepción explícita sólo para `#setupOverlay`, franja superior reservada y medición física que exige botón visible, ancho 390 px e intersección cero con la tarjeta.
 - Estado: corregido en candidato V407-R24A; pendiente publicación.
+
+## RC-096 · R24 almacenada no podía mostrar el arreglo R24A
+
+- Evidencia física: `IMG_3288.png` muestra la PWA todavía sin ACTUALIZAR después de publicar R24A.
+- Causa: el shell aprobado R24 se servía desde caché; aunque detectaba el release remoto, su CSS seguía ocultando el botón y bloqueaba la decisión manual del propietario.
+- Prevención: el service worker nuevo transforma únicamente la respuesta HTML almacenada para inyectar la visibilidad y franja segura; no instala, recarga ni borra datos automáticamente.
+- Candado: la prueba exige el puente `approvedNavigationWithManualUpdate`, prohíbe navegación automática y mantiene el toque de `installMandatoryUpdate` como única instalación.
+- Estado: corregido en candidato V407-R24B; pendiente publicación y prueba física del propietario.

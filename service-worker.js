@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r24a-update-visible`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r24b-manual-recovery`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved`;
-const RELEASE="V407-R24A-UPDATE-VISIBLE-20260909";
+const RELEASE="V407-R24B-MANUAL-RECOVERY-20260909";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -91,6 +91,15 @@ async function networkFirst(request){
   }
 }
 
+async function approvedNavigationWithManualUpdate(request){
+  const approved=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});
+  if(!approved)return networkFirst(request);
+  const html=await approved.text();
+  const recoveryStyle='<style id="gsc-update-recovery">body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:block!important}body.gsc-setup-open:has(#setupOverlay.visible) #setupOverlay{padding-top:max(82px,calc(env(safe-area-inset-top) + 70px))}</style>';
+  const headers=new Headers(approved.headers);headers.set("content-type","text/html; charset=utf-8");headers.delete("content-length");
+  return new Response(html.includes('id="gsc-update-recovery"')?html:html.replace("</head>",`${recoveryStyle}</head>`),{status:approved.status,statusText:approved.statusText,headers});
+}
+
 self.addEventListener("fetch",event=>{
   const request=event.request;
   if(request.method!=="GET")return;
@@ -103,7 +112,7 @@ self.addEventListener("fetch",event=>{
     event.respondWith((async()=>{
       if(url.searchParams.get("app_version")===RELEASE){await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}
       await ensureApprovedShell();
-      return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request);
+      return await approvedNavigationWithManualUpdate(request);
     })());
     return;
   }

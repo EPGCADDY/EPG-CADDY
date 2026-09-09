@@ -785,3 +785,15 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `test-v405-registration-clear-final-mobile.mjs` exige la excepción visible; pruebas de versión V365/V406/V407 se sincronizan con R24A.
 - Captura renderizada: botón `left 257`, `top 12`, `right 368`, `bottom 67`; tarjeta `top 90`; cero intersección y cero desbordamiento.
 - Rollback: commit productivo `2ba83ed`; ninguna función de score, WhatsApp, LIVE, Historial, voz o invitación cambia.
+
+# V407-R24B · puente manual para PWA detenida en R24 · 09 de septiembre de 2026
+
+- `service-worker.js`: `approvedNavigationWithManualUpdate(request)` lee el shell aprobado, añade `#gsc-update-recovery` antes de `</head>` y conserva status/headers; la navegación normal usa esa respuesta.
+- El CSS inyectado sólo aplica en `body.gsc-setup-open:has(#setupOverlay.visible)`: muestra `.mandatory-update` y baja `#setupOverlay` hasta 82 px/área segura.
+- No llama `installMandatoryUpdate`, no limpia caches, no recarga y no navega; el propietario conserva el único toque que instala.
+- `index-grupal.html`, release/caché y pruebas V365/V405/V406/V407 avanzan a R24B.
+- Rollback: `5e45b264`; datos locales, score, LIVE, WhatsApp, Historial, voz y acceso 24 h quedan intactos.
+- `scripts/lab-update-browser-review.mjs`: ejecutor Playwright con `launchPersistentContext`; activa cuatro deployments READY consecutivos en el mismo alias LAB, siembra y comprueba ronda/Historial/jugador/score/WhatsApp, detecta ACTUALIZAR, captura antes, toca, espera navegación, confirma ACTUALIZADO/release final, captura después y registra consola, red y geometría.
+- `scripts/lab-update-physical-gate.mjs`: validador independiente del JSON `gscg-lab-update-browser-evidence/v1`; recalcula SHA-256 y rechaza commit, deployment, alias, perfil, transición, captura o preservación inválidos. El nombre histórico del archivo no cambia la clasificación: Playwright es REVISIÓN AUTOMATIZADA EN NAVEGADOR REAL, nunca revisión física.
+- `test-v407-r24-update-physical-gate.mjs`, `package.json` y `audit-project.mjs`: prueba negativa, comandos `update:browser-review` / `update:browser-gate` e integración permanente en auditoría.
+- `DIRECTRICES_MANDATORIAS.md`, matrices Gate 0 humana/JSON y `REGISTRO_REINCIDENCIAS_CALIDAD.md`: fijan las tres puertas independientes y RC-097. Estado actual: NO REVISADO; la ejecución pública A→B→C→D y el micrófono físico iPhone siguen pendientes; MAIN/Producción intacta.
