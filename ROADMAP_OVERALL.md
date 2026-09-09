@@ -643,3 +643,10 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - LAB incorpora acceso propietario y enlaces temporales de 24 horas. El primer canje consume atómicamente cada enlace; cualquier segundo navegador o dispositivo queda rechazado.
 - MAIN permanece intacta; rollback al commit `883df85ad769d27b04b065987039e07ee34eb211`.
 - Archivos: `access.html`, `guest-access.js`, `middleware.js`, `api/_lib/app-access.js`, `api/app-access.js`, `index-grupal.html`, `vercel.json`, `audit-project.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-v311-live-support-link.mjs`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+# V407-R21 · SUPPORT operativo y actualización desactivada · 09 de septiembre de 2026
+
+- `index-grupal.html`: SUPPORT abre el manual vigente y ACTUALIZAR se deshabilita inmediatamente al tocarlo.
+- `service-worker.js`: release y caché R21 obligan la sustitución de la copia anterior.
+- `test-v311-live-support-link.mjs` y `test-v407-r9-manual-update.mjs`: bloquean ambas regresiones.
+- `REGISTRO_REINCIDENCIAS_CALIDAD.md`: documenta RC-091. MAIN permanece intacta.

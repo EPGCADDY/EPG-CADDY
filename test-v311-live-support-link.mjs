@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const mobileBuilder=fs.readFileSync(new URL("./scripts/build-mobile-web.mjs",import.meta.url),"utf8");
-const expected='<a class="live-support-link" href="/manual.pdf" aria-label="Abrir el Manual de Usuario V407 R.18 de Golf Score Card GT en esta pantalla">Support</a>';
+const expected='<a class="live-support-link" href="https://epg-caddy.vercel.app/manual.pdf" aria-label="Abrir el Manual de Usuario V407 R.18 de Golf Score Card GT en esta pantalla">Support</a>';
 
 assert.equal(html.split('class="live-support-link"').length-1,1,"Debe existir un solo enlace Support global");
 assert.ok(html.includes(expected),"Support debe abrir el PDF exacto del Manual V407 R.18 en la misma pantalla");

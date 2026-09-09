@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-091 · ACTUALIZAR NO SE APAGABA Y SUPPORT NO ABRÍA EN LAB · 09 SEPTIEMBRE 2026
+
+- Defecto físico: ACTUALIZAR permanecía verde después del toque y SUPPORT no abría el manual desde LAB.
+- Causa raíz: el estado del botón sólo cambiaba después de la recarga y SUPPORT apuntaba a un PDF no incluido en el transporte reducido de LAB.
+- Control permanente: R21 deshabilita el botón y retira el parpadeo al iniciar la actualización; SUPPORT abre el PDF vigente ya publicado en el dominio canónico.
+- Evidencia: `test-v407-r9-manual-update.mjs`, `test-v311-live-support-link.mjs` y prueba física de navegador.
+- Estado: CORREGIDO EN LAB R21; MAIN INTACTA.
+
 ## RC-090 · ACTUALIZAR DEJABA DE PARPADEAR DESPUÉS DE RECONFIGURAR · 08 SEPTIEMBRE 2026
 
 - Defecto físico: en V407-R12 el control funcionaba una vez después de reconfigurar y luego volvía a `ACTUALIZADO` sin señal visible.

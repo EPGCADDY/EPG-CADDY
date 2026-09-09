@@ -4,12 +4,13 @@ import fs from "node:fs";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/meta name="gscg-release" content="V407-R19-SUPPORT-MANUAL-20260908"/);
-assert.match(worker,/const RELEASE="V407-R19-SUPPORT-MANUAL-20260908"/);
+assert.match(html,/meta name="gscg-release" content="V407-R21-SUPPORT-UPDATE-CONFIRMED-20260909"/);
+assert.match(worker,/const RELEASE="V407-R21-SUPPORT-UPDATE-CONFIRMED-20260909"/);
 assert.match(html,/class="mandatory-update" id="mandatoryUpdate"/);
 assert.match(html,/aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO<\/span>/);
 assert.match(html,/function showCurrentBuild\(\)[\s\S]*?button\.disabled=true[\s\S]*?classList\.remove\("available"\)/);
 assert.match(html,/function showMandatoryUpdate\(build\)[\s\S]*?button\.disabled=false[\s\S]*?classList\.add\("available"\)/);
+assert.match(html,/async function installMandatoryUpdate\(\)[\s\S]*?button\.disabled=true[\s\S]*?ACTUALIZANDO[\s\S]*?classList\.remove\("available"\)/);
 assert.match(html,/if\(published===CURRENT_APP_BUILD\)showCurrentBuild\(\);else showMandatoryUpdate\(published\)/);
 assert.match(html,/navigator\.serviceWorker\.getRegistrations\(\)/);
 assert.match(html,/await registration\.unregister\(\)/);

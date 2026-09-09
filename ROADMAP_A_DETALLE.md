@@ -681,3 +681,12 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `test-r18-owner-guest-24h-access.mjs`: demuestra que el primer dispositivo entra y el segundo queda bloqueado.
 - `test-v311-live-support-link.mjs`: conserva la prueba vigente de SUPPORT en la misma pantalla.
 - `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `audit-project.mjs` y `vercel.json`: trazabilidad, candados y configuración LAB sincronizados.
+
+# V407-R21 · SUPPORT operativo y actualización desactivada · 09 de septiembre de 2026
+
+- `index-grupal.html`: SUPPORT apunta al PDF canónico; ACTUALIZAR cambia de inmediato a ACTUALIZANDO, se deshabilita y deja de parpadear antes de limpiar caché y recargar.
+- `service-worker.js`: release `V407-R21-SUPPORT-UPDATE-CONFIRMED-20260909` y caché R21.
+- `test-v311-live-support-link.mjs`: exige el destino funcional del manual en la misma pantalla.
+- `test-v407-r9-manual-update.mjs`: exige desactivación inmediata y sincronía release/caché.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-091.
+- MAIN, variables y base de datos permanecen intactos.
