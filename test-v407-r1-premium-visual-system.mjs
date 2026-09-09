@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 const html=fs.readFileSync("index-grupal.html","utf8");
 
-assert.match(html,/V407-R23-DIRECT-SHARE-20260909/);
+assert.match(html,/V407-R24-WHATSAPP-VISUAL-MANUAL-20260909/);
 assert.match(html,/\.app\{padding:max\(10px,calc\(env\(safe-area-inset-top\) \+ 10px\)\)/);
 assert.match(html,/\.official-round-header \.round-meta\{[^}]*text-align:center;transform:translateX\(-36px\)/);
 assert.match(html,/\.mandatory-update\{top:calc\(env\(safe-area-inset-top\) \+ 12px\);right:58px\}/);
@@ -23,7 +23,7 @@ assert.match(html,/#finalCardOverlay \.final-card-head>div\{display:grid;grid-te
 assert.match(html,/#finalCardOverlay \.final-card-meta\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
 assert.match(html,/\.final-card-panel \.scorecard\{width:1360px;min-width:1360px\}/);
 assert.match(html,/body\.gsc-final-card-open \.gsc-live-launch\{display:none!important\}/);
-assert.match(html,/body:has\(\.overlay\.visible\) \.mandatory-update\{display:none!important\}/);
+assert.match(html,/body:has\(\.overlay\.visible\) \.mandatory-update,[\s\S]*?body:has\(\.account-backup-overlay\.visible\) \.native-pro-button\{display:none!important\}/);
 assert.match(html,/\.new-round-card \.draft-whatsapp-field\{grid-area:auto;grid-column:1\/-1;grid-template-columns:28px 18px 72px minmax\(180px,1fr\);width:100%/);
 assert.match(html,/\.gsc-final-card-open \.pwa-install-button\{display:none!important\}/);
 assert.match(html,/#finalTournament:empty::before\{content:"RONDA CASUAL"\}/);

@@ -222,3 +222,11 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa: el middleware evaluaba `/live.html` antes de que el navegador pudiera leer el token guardado en el fragmento; además bloqueaba los scripts y la lectura API del visor.
 - Prevención: permitir sólo HTML/scripts del visor y únicamente `POST /api/live` con `action=read`; todas las acciones de escritura conservan el candado de cuenta.
 - Candado: `test-v352-live.mjs` verifica la frontera exacta y prohíbe hacer pública toda la API LIVE.
+
+## RC-094 · Controles y WhatsApp colapsados o superpuestos en móvil
+
+- Evidencia física: `IMG_3272.png` y `IMG_3273.png` muestran ACTUALIZADO sobre ATRÁS; `IMG_3283.png` muestra el teléfono WhatsApp reducido a una franja.
+- Causa: la retícula móvil no reservaba ancho al teléfono y los lanzadores globales fijos no se aislaban en todas las familias de overlay.
+- Prevención: WhatsApp ocupa la fila móvil completa con mínimo útil; ACTUALIZAR/INSTALAR se ocultan ante overlays estándar, AI, Cuenta e Instalación.
+- Candado: auditoría Chromium móvil 390×844 de todas las modalidades y pantallas críticas exige ancho exacto y cero intersecciones.
+- Estado: corregido en candidato V407-R24; pendiente Preview READY y Producción.

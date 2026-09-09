@@ -713,3 +713,11 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `access.html`, `api/app-access.js`, `middleware.js` y `vercel.json` forman un único recorrido invitado; LIVE y las demás funciones permanecen intactas.
 - `test-r18-owner-guest-24h-access.mjs` bloquea regresiones de ruta, reescritura, permiso y canje POST.
 - Rollback: volver a `73df15f`; Producción R23 no cambia hasta cero FAIL y aprobación física.
+
+# V407-R24 · WhatsApp y controles móviles sin traslapes · 09 de septiembre de 2026
+
+- `index-grupal.html`: teléfono WhatsApp editable con 🇬🇹 +502 y ancho móvil útil; ACTUALIZAR e instalación quedan fuera de todos los overlays y dentro del flujo normal.
+- `manual.html`: índice agrupado en ocho temas con título y enlace directo a cada página; búsqueda WhatsApp/teléfono/Guatemala/+502.
+- `service-worker.js` y pruebas V311/V365/V405/V406/V407: release R24 y contratos preventivos sincronizados.
+- Evidencia Chromium móvil 390×844: General, Match Play, Four Ball, Skins, Wolf, Vegas, Universales y trece pantallas críticas sin desbordamiento ni intersecciones.
+- Rollback: `73df15f`; promoción a MAIN sólo tras Preview READY y cero FAIL.

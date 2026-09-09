@@ -38,8 +38,10 @@ assert.equal(first("¿A qué hora puede llover?"),"67");
 for(const required of ["manualSearch","manualSearchResults","categoryIndex","manual-search.js","Quiero jugar Stableford","Cómo corrijo un bogey que fue par"]){
   assert.ok(html.includes(required),`Falta el componente de búsqueda: ${required}`);
 }
-for(const category of ["EMPEZAR Y REGISTRAR","MODALIDADES Y APUESTAS","ANOTAR Y CORREGIR","PREGUNTAR Y ESCUCHAR","FINALIZAR, GUARDAR Y RECUPERAR","CLIMA Y TRÁFICO","INFORMACIÓN DE CAMPOS"]){
+for(const category of ["EMPEZAR Y REGISTRAR","MODALIDADES DE JUEGO","APUESTAS Y ACUERDOS","ANOTAR, NAVEGAR Y CORREGIR","TARJETA DIGITAL, WHATSAPP E HISTORIAL","VOZ, AI Y REGLAS","CLIMA, TRÁFICO E INTERNET","INFORMACIÓN DE CAMPOS"]){
   assert.ok(html.includes(category),`Falta categoría del índice: ${category}`);
 }
+assert.match(html,/className="category-page-link"[\s\S]*?link\.href=`#\$\{pageId\(page\)\}`[\s\S]*?label\.textContent=pages\[page\]\.title/);
+assert.match(html,/"02":"[^"]*whatsapp[^"]*\+502[^"]*editable[^"]*privado opcional"/i);
 
 console.log("PASS V334 · índice temático y lupa alineados con el nuevo orden didáctico");

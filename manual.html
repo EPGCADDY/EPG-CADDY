@@ -59,9 +59,11 @@
     .category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
     .category-card{padding:13px;border:1px solid #292929;border-radius:13px;background:#0a0a0a}
     .category-card h3{margin:0 0 8px;color:#fff;font-size:12px;letter-spacing:.45px}
-    .category-links{display:flex;flex-wrap:wrap;gap:6px}
-    .category-links button{min-width:35px;height:31px;padding:0 8px;border:1px solid #393939;border-radius:999px;background:#111;color:#dcdcdc;font-size:10px;font-weight:900;cursor:pointer}
-    .category-links button:hover,.category-links button:focus{border-color:var(--green);background:var(--green);color:#000}
+    .category-links{display:grid;gap:6px}
+    .category-page-link{display:grid;grid-template-columns:38px minmax(0,1fr);align-items:center;gap:8px;min-height:38px;padding:5px 8px;border:1px solid #393939;border-radius:10px;background:#111;color:#dcdcdc;font-size:10px;font-weight:900;text-decoration:none;cursor:pointer}
+    .category-page-link strong{display:grid;place-items:center;align-self:stretch;border-right:1px solid #343434;color:var(--green);font-size:10px}
+    .category-page-link span{line-height:1.25}
+    .category-page-link:hover,.category-page-link:focus{border-color:var(--green);background:#071407;color:#fff;outline:0}
     .index{display:flex;max-width:920px;margin:0 auto 18px;padding:0 16px;gap:7px;overflow-x:auto;scrollbar-width:thin}
     .index a{flex:0 0 auto;display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;border:1px solid #3b3b3b;border-radius:50%;color:#d8d8d8;font-size:11px;font-weight:900;text-decoration:none}
     .index a.active{border-color:var(--green);background:var(--green);color:#000}
@@ -188,17 +190,18 @@
       pages.push({number,label:number,title});
     });
     const categories=[
-      {title:"EMPEZAR Y REGISTRAR",pages:[1,2,3,17,18,19]},
-      {title:"MODALIDADES Y APUESTAS",pages:[4,5,8,9,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56]},
-      {title:"ANOTAR Y CORREGIR",pages:[6,7,20,21,22,23,24,25,26,27,28,57,58,59]},
-      {title:"PREGUNTAR Y ESCUCHAR",pages:[24,57,58,59,60,61,62,63,68,69,70,71,73]},
-      {title:"FINALIZAR, GUARDAR Y RECUPERAR",pages:[29,30,31,32,33,34,35,36,72]},
-      {title:"CLIMA Y TRÁFICO",pages:[64,65,66,67]},
-      {title:"INFORMACIÓN DE CAMPOS",pages:[10,11,12,13,14,15,16]}
+      {title:"1 · EMPEZAR Y REGISTRAR",pages:[1,2,3,17,18,19]},
+      {title:"2 · MODALIDADES DE JUEGO",pages:[4,5,6,8,9,37,38,39,40,41]},
+      {title:"3 · APUESTAS Y ACUERDOS",pages:[42,43,44,45,46,47,48,49,50,51,52,53,54,55,56]},
+      {title:"4 · ANOTAR, NAVEGAR Y CORREGIR",pages:[7,20,21,22,23,24,25,26,27,28,57,58,59]},
+      {title:"5 · TARJETA DIGITAL, WHATSAPP E HISTORIAL",pages:[2,29,30,31,32,33,34,35,36,71,72]},
+      {title:"6 · VOZ, AI Y REGLAS",pages:[24,57,58,59,60,61,62,63,68,69,70,73]},
+      {title:"7 · CLIMA, TRÁFICO E INTERNET",pages:[64,65,66,67,71]},
+      {title:"8 · INFORMACIÓN DE CAMPOS",pages:[10,11,12,13,14,15,16]}
     ];
     const baseSearchTags={
       "01":"campo modalidad ronda normal stableford práctica match play four ball torneo empezar jugar",
-      "02":"registro jugadores nombre handicap hdcp marcas tees voz manual agregar corregir",
+      "02":"registro jugadores nombre handicap hdcp marcas tees voz manual agregar corregir whatsapp teléfono bandera Guatemala código +502 editable privado opcional",
       "03":"confirmar fecha campo torneo jugadores atrás iniciar ronda",
       "04":"stableford categoría nombres registro puntos",
       "05":"práctica perfil opcional gross neto borrar scores",
@@ -295,13 +298,18 @@
       const links=document.createElement("div");
       links.className="category-links";
       for(const page of category.pages){
-        const button=document.createElement("button");
-        button.type="button";
-        button.textContent=String(page).padStart(2,"0");
-        button.title=pages[page].title;
-        button.setAttribute("aria-label",`Página ${String(page).padStart(2,"0")}: ${pages[page].title}`);
-        button.addEventListener("click",()=>go(page));
-        links.append(button);
+        const link=document.createElement("a");
+        link.className="category-page-link";
+        link.href=`#${pageId(page)}`;
+        link.title=pages[page].title;
+        link.setAttribute("aria-label",`Página ${String(page).padStart(2,"0")}: ${pages[page].title}`);
+        const number=document.createElement("strong");
+        number.textContent=String(page).padStart(2,"0");
+        const label=document.createElement("span");
+        label.textContent=pages[page].title;
+        link.append(number,label);
+        link.addEventListener("click",event=>{event.preventDefault();go(page)});
+        links.append(link);
       }
       card.append(heading,links);
       categoryIndex.append(card);
