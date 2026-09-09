@@ -680,3 +680,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Inventarios portátiles: `scripts/rebuild-inventory-pdfs.py` usa las mismas fuentes Vera incluidas por ReportLab; elimina su última dependencia de `/usr/share/fonts` en Vercel.
 - Sello coherente en build: bajo `VERCEL`, el generador y el gate calculan el digest contra `HEAD`; los PDF derivados pueden reconstruirse sin producir una falsa divergencia del árbol fuente.
 - Middleware Node compatible: `middleware.js` carga `api/_lib/app-access.js` mediante `import()` dinámico dentro del handler; evita `ERR_REQUIRE_ESM` en Vercel sin cambiar las reglas propietario/invitado.
+- Reparación del visor Support en iPhone: `manual.html` monta una sola gráfica activa, precarga cada destino y elimina el `IntersectionObserver` que mantenía 74 PNG simultáneas y provocaba parpadeo/cambios espurios. `test-v311-manual-hosting.mjs` bloquea el retorno de múltiples hojas montadas o navegación automática.
