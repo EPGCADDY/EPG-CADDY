@@ -1,6 +1,6 @@
 import { next } from "@vercel/functions";
 
-const PUBLIC_PATHS=new Set(["/access.html","/api/app-access","/favicon.ico"]);
+const PUBLIC_PATHS=new Set(["/access.html","/live.html","/live-view.js","/match-play.js","/favicon.ico"]);
 const PRIVATE_GUEST_PREFIXES=["/api/account-backup","/api/commerce","/api/sync","/api/master-data"];
 
 export default async function accessGate(request){
@@ -9,6 +9,9 @@ export default async function accessGate(request){
   if(path==="/api/account"&&guestMode)return new Response(JSON.stringify({ok:false,code:"OWNER_DATA_FORBIDDEN"}),{status:403,headers:{"content-type":"application/json","cache-control":"no-store"}});
   if(path==="/api/account")return next();
   if(PUBLIC_PATHS.has(path)||path.startsWith("/invite/")||path.startsWith("/assets/official-logos/"))return next();
+  if(path==="/api/live"&&request.method==="POST"){
+    try{const body=await request.clone().json();if(String(body?.action||"").toLowerCase()==="read")return next()}catch{}
+  }
   let access={ok:false,role:"none",code:"ACCESS_REQUIRED"};
   try{
     const statusUrl=new URL("/api/app-access?action=status",request.url);

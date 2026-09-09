@@ -53,7 +53,7 @@ assert.deepEqual(viewer.parseLiveHash(`#stream=${secret}`),{kind:"stream",token:
 assert.deepEqual(viewer.parseLiveHash(`#tournament=${"B".repeat(43)}`),{kind:"tournament",token:"B".repeat(43)});
 assert.equal(viewer.parseLiveHash("#stream=short"),null);
 
-const index=read("index-grupal.html"),liveHtml=read("live.html"),liveControl=read("live-control.js"),liveView=read("live-view.js"),api=read("api/live.js"),schema=read("database/004_live_scorecards.sql"),vercel=read("vercel.json"),worker=read("service-worker.js");
+const index=read("index-grupal.html"),liveHtml=read("live.html"),liveControl=read("live-control.js"),liveView=read("live-view.js"),api=read("api/live.js"),middleware=read("middleware.js"),schema=read("database/004_live_scorecards.sql"),vercel=read("vercel.json"),worker=read("service-worker.js");
 assert.match(index,/V363-RECORDED-MOBILE-BEHAVIOR/);
 assert.match(index,/window\.GSCLiveControl\?\.onRoundPersisted\(round\)/,"el escritor oficial publica LIVE");
 assert.match(index,/<script src="\.\/live-control\.js"><\/script>/);
@@ -64,6 +64,9 @@ assert.doesNotMatch(`${liveHtml}\n${liveControl}\n${liveView}`,/\bEPG\b/i,"el no
 assert.doesNotMatch(liveView,/localStorage|sessionStorage|microphone|micrófono|audio/i,"el visor no toca tarjeta, almacenamiento ni audio");
 assert.match(liveView,/action:"read"/);
 assert.doesNotMatch(liveView,/action:"(?:publish|create_stream|revoke_stream)"/);
+assert.match(middleware,/"\/live\.html","\/live-view\.js","\/match-play\.js"/,"el visor LIVE y sus scripts deben abrir sin cuenta propietaria");
+assert.match(middleware,/path==="\/api\/live"&&request\.method==="POST"[\s\S]*?action\|\|""\)\.toLowerCase\(\)==="read"/,"sólo la lectura LIVE tokenizada puede atravesar el acceso privado");
+assert.doesNotMatch(middleware,/PUBLIC_PATHS=new Set\([^\n]*"\/api\/live"/,"las acciones de escritura LIVE no pueden quedar públicas");
 assert.match(liveControl,/root\.open\(hubUrl\(kind,token\),"_blank"/,"seguimiento bilateral abre el Centro Live en otra ventana");
 assert.match(liveControl,/url\.origin!==root\.location\.origin/,"el seguidor sólo abre enlaces LIVE de esta aplicación");
 assert.match(liveControl,/belongsToCurrentRound/,"un enlace de otra ronda debe revocarse antes de crear el nuevo");

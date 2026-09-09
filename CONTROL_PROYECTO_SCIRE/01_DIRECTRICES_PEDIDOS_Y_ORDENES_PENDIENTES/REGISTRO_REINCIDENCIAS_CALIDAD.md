@@ -216,3 +216,9 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa raíz: el endpoint consumía el token mediante GET; los previsualizadores automáticos podían ejecutar ese GET antes del toque humano.
 - Medida permanente: el enlace transporta el token en el fragmento `#invite`, invisible para el servidor y los previsualizadores HTTP; `access.html` canjea mediante POST y abre la aplicación inmediatamente en el navegador del invitado.
 - Candado: `test-r18-owner-guest-24h-access.mjs` prohíbe canje GET, exige POST, fragmento y rechazo del segundo canje. Producción permanece intacta.
+# RC-094 · El enlace LIVE sólo lectura no debe exigir cuenta propietaria · 09 de septiembre de 2026
+
+- Evidencia física: el destinatario abrió `live.html#stream=…` y fue redirigido a `access.html`, donde apareció `ENTRAR COMO PROPIETARIO`.
+- Causa: el middleware evaluaba `/live.html` antes de que el navegador pudiera leer el token guardado en el fragmento; además bloqueaba los scripts y la lectura API del visor.
+- Prevención: permitir sólo HTML/scripts del visor y únicamente `POST /api/live` con `action=read`; todas las acciones de escritura conservan el candado de cuenta.
+- Candado: `test-v352-live.mjs` verifica la frontera exacta y prohíbe hacer pública toda la API LIVE.
