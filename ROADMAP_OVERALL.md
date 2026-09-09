@@ -721,3 +721,5 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `service-worker.js` y pruebas V311/V365/V405/V406/V407: release R24 y contratos preventivos sincronizados.
 - Evidencia Chromium móvil 390×844: General, Match Play, Four Ball, Skins, Wolf, Vegas, Universales y trece pantallas críticas sin desbordamiento ni intersecciones.
 - Rollback: `73df15f`; promoción a MAIN sólo tras Preview READY y cero FAIL.
+- Reparación de transporte R24: el primer blob remoto de `index-grupal.html` llegó vacío; el commit reparador retransmite los 830,274 bytes y conserva el árbol candidato exacto.
+- Índice protegido por `test-v311-manual-search.mjs`; enlaces temáticos y búsqueda WhatsApp no pueden desaparecer silenciosamente.
