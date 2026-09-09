@@ -5,6 +5,7 @@ import { requireAccountSession } from "./account-auth.js";
 export const ACCESS_COOKIE="gscg_app_access";
 export const GUEST_MODE_COOKIE="gsc_guest_mode";
 const TOKEN_PATTERN=/^[A-Za-z0-9_-]{43}$/;
+const DEFAULT_OWNER_EMAIL="jaimekirste@gmail.com";
 
 function cookieValue(req,name){
   const raw=typeof req?.headers?.get==="function"?req.headers.get("cookie"):req?.headers?.cookie;
@@ -19,11 +20,11 @@ export function accessCookie(token,maxAge=86400){return`${ACCESS_COOKIE}=${encod
 export function guestModeCookie(maxAge=86400){return`${GUEST_MODE_COOKIE}=1; Path=/; Secure; SameSite=Lax; Max-Age=${maxAge}`}
 export function clearAccessCookies(){return[`${ACCESS_COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`,`${GUEST_MODE_COOKIE}=; Path=/; Secure; SameSite=Lax; Max-Age=0`]}
 
-function ownerConfigured(){return Boolean(String(process.env.EPG_OWNER_USER_ID||"").trim()||String(process.env.EPG_OWNER_EMAIL||"").trim())}
+function ownerConfigured(){return Boolean(String(process.env.EPG_OWNER_USER_ID||"").trim()||String(process.env.EPG_OWNER_EMAIL||DEFAULT_OWNER_EMAIL).trim())}
 export function isOwner(user){
-  const ownerId=String(process.env.EPG_OWNER_USER_ID||"").trim(),ownerEmail=String(process.env.EPG_OWNER_EMAIL||"").trim().toLowerCase();
+  const ownerId=String(process.env.EPG_OWNER_USER_ID||"").trim(),ownerEmail=String(process.env.EPG_OWNER_EMAIL||DEFAULT_OWNER_EMAIL).trim().toLowerCase();
   if(!ownerConfigured())return false;
-  return Boolean((ownerId&&user?.id===ownerId)||(ownerEmail&&user?.email===ownerEmail));
+  return Boolean((ownerId&&user?.id===ownerId)||(ownerEmail&&String(user?.email||"").trim().toLowerCase()===ownerEmail));
 }
 
 export async function requireOwner(req){

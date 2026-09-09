@@ -21,6 +21,7 @@ assert.match(lib,/export async function redeemGuestToken/);
 assert.match(lib,/revoked_at IS NULL AND expires_at>now\(\)/);
 assert.match(lib,/OWNER_NOT_CONFIGURED/);
 assert.match(lib,/EPG_OWNER_USER_ID/);
+assert.match(lib,/DEFAULT_OWNER_EMAIL="jaimekirste@gmail\.com"/);
 assert.match(lib,/DELETE FROM app_access_grants WHERE created_at<=now\(\)-interval '47 hours'/);
 assert.doesNotMatch(lib,/first user|primer usuario/i);
 
