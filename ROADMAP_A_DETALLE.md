@@ -710,3 +710,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `live-control.js`: retira exclusivamente el botón LIVE de la barra superior; `COMPARTIR LIVE` dentro de la tarjeta activa y la Tarjeta Digital permanece operativo.
 - `vercel.json`: SUPPORT deja de abrir el PDF R18 externo con capturas diminutas y sirve el Manual LAB local con pantallas grandes.
 - `test-player-registry.js`: ejecuta el contrato histórico del perfil bajo el modo ESM vigente del proyecto.
+- `/manual.pdf` usa `rewrite` interno, no redirección: Support permanece en LAB y no vuelve al PDF R18 externo.

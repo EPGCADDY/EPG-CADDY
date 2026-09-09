@@ -10,7 +10,8 @@ assert.equal(html.split('class="live-support-link"').length-1,1,"Debe existir un
 assert.ok(html.includes(expected),"Support debe abrir el Manual LAB corregido en la misma pantalla");
 assert.ok(!html.includes('href="https://epg-caddy.vercel.app/manual-scg"'),"Preview nunca debe escapar al Manual de Producción");
 assert.ok(html.indexOf(expected)>html.indexOf('<main class="app">'),"Support debe vivir en la barra estructural de la ronda");
-assert.ok(vercel.redirects.some(item=>item.source==="/manual.pdf"&&item.destination==="/docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf"),"La ruta Support debe abrir el PDF LAB corregido");
+assert.ok(vercel.rewrites.some(item=>item.source==="/manual.pdf"&&item.destination==="/docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf"),"La ruta Support debe servir internamente el PDF LAB corregido sin escapar a Producción");
+assert.ok(!vercel.redirects.some(item=>item.source==="/manual.pdf"),"Support no debe redirigir al dominio del Manual viejo");
 assert.match(html,/<nav class="round-utility-bar" id="roundUtilityBar"[\s\S]*class="live-support-link"/,"Support debe estar dentro de la barra de herramientas");
 assert.match(html,/\.round-utility-bar \.gsc-live-launch,[^}]*\.round-utility-bar \.live-support-link\{position:static!important;/,"Support y LIVE no deben flotar sobre el encabezado");
 assert.match(mobileBuilder,/readFile\(path\.join\(root,"index-grupal\.html"\),"utf8"\)/,"El paquete nativo debe heredar el mismo Support vivo");

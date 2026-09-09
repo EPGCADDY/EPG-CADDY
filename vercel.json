@@ -30,14 +30,15 @@
       "permanent": false
     },
     {
-      "source": "/manual.pdf",
-      "destination": "https://epg-caddy.vercel.app/manual.pdf",
-      "permanent": false
-    },
-    {
       "source": "/stableford-torneo.html",
       "destination": "/index-grupal.html",
       "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/manual.pdf",
+      "destination": "/docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf"
     }
   ],
   "headers": [
