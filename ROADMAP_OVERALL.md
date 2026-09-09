@@ -650,3 +650,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `service-worker.js`: release y caché R21 obligan la sustitución de la copia anterior.
 - `test-v311-live-support-link.mjs` y `test-v407-r9-manual-update.mjs`: bloquean ambas regresiones.
 - `REGISTRO_REINCIDENCIAS_CALIDAD.md`: documenta RC-091. MAIN permanece intacta.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: resella 444 fuentes y tres inventarios después del hotfix.

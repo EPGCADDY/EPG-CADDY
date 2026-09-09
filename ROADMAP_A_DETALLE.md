@@ -689,4 +689,5 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `test-v311-live-support-link.mjs`: exige el destino funcional del manual en la misma pantalla.
 - `test-v407-r9-manual-update.mjs`: exige desactivación inmediata y sincronía release/caché.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-091.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: resella 444 fuentes y tres inventarios después del hotfix.
 - MAIN, variables y base de datos permanecen intactos.
