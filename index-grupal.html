@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V407-R20-SUPPORT-SAME-SCREEN-20260909">
+  <meta name="gscg-release" content="V407-R21-SUPPORT-ACCESS-20260909">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -873,7 +873,8 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
     <button class="golf-rules-launch" id="openGolfRules" type="button" aria-label="Abrir consulta oficial de Reglas de Golf">REGLAS</button>
     <button class="ai-universal-launch" id="openAiUniversal" type="button" aria-label="Abrir AI Universal Infinita">AI ∞</button>
     <button class="skins-launch hidden" id="openSkins" type="button" aria-label="Abrir juego y resultados">JUEGOS</button>
-    <a class="live-support-link" href="/manual.pdf" aria-label="Abrir el Manual de Usuario V407 R.18 de Golf Score Card GT en esta pantalla">Support</a>
+    <a class="live-support-link" href="/manual.pdf" aria-label="Abrir el Manual de Golf Score Card GT en esta pantalla">Support</a>
+    <button class="hidden" id="ownerShare24h" type="button" aria-label="Crear y compartir acceso individual de un solo uso válido por 24 horas">INVITAR · 24 H</button>
   </nav>
   <section class="course-info official-course-info"><div class="course-info-layout"><div class="course-info-data"><h2>INFORMACIÓN DEL CAMPO</h2><div class="course-info-grid" id="courseInfo"></div><div class="course-weather weather-unavailable" id="courseWeather" role="status" aria-live="polite">CLIMA · DISPONIBLE AL INICIAR LA TARJETA</div></div><div class="mic-wrap course-mic" id="headerMicWrap"><button class="mic-hit" id="headerMic" aria-label="Abrir Caddie universal"></button><div class="mic-visual">🎙</div></div></div></section>
   <div class="round-status-row"><div class="status" id="status"></div><button class="timer-off-button" id="stopClockButton">TIMER ON</button><div class="round-elapsed-status" id="roundElapsedStatus"></div></div>
@@ -1017,7 +1018,8 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R18</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R21</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<script src="./guest-access.js"></script>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
 "use strict";
@@ -1328,7 +1330,18 @@ function persist(){
     queueMasterDataSnapshot("round-state");
   }catch(e){console.error("No se pudo persistir la última ronda:",e)}
   window.GSCLiveControl?.onRoundPersisted(round);
+  if(window.GSC_GUEST_ACCESS){const holes=new Set(),annotations=(round.players||[]).reduce((total,player)=>{for(const raw of Object.keys(player.holes||{})){const hole=Number(raw);if(hole>=1&&hole<=18)holes.add(hole)}return total+Object.keys(player.holes||{}).filter(raw=>Number(raw)>=1&&Number(raw)<=18).length},0),sideGame=activeSideGameKey(round),modality=round.provisional?"practice":sideGame||round.mode||"general";clearTimeout(window.gscGuestFeedbackTimer);window.gscGuestFeedbackTimer=setTimeout(()=>fetch("/api/app-access?action=feedback",{method:"POST",credentials:"include",headers:{"content-type":"application/json"},body:JSON.stringify({modality,playerCount:(round.players||[]).length,holesUsed:holes.size,annotationsCount:annotations})}).catch(()=>{}),300)}
   return true;
+}
+let guestAccessFeedbackTimer=0;
+function queueGuestAccessFeedback(){
+  if(!window.GSC_GUEST_ACCESS)return;
+  clearTimeout(guestAccessFeedbackTimer);
+  guestAccessFeedbackTimer=setTimeout(()=>{const scoredHoles=new Set(),annotationsCount=(round.players||[]).reduce((total,player)=>{for(const key of Object.keys(player.holes||{})){const hole=Number(key);if(hole>=1&&hole<=18)scoredHoles.add(hole)}return total+Object.keys(player.holes||{}).length},0),sideGame=activeSideGameKey(round),modality=round.provisional?"practice":sideGame||round.mode||"general";fetch(window.gscgApiUrl("/api/app-access?action=feedback"),{method:"POST",credentials:"include",headers:{"content-type":"application/json"},body:JSON.stringify({modality,playerCount:Math.min(6,(round.players||[]).length),holesUsed:scoredHoles.size,annotationsCount})}).catch(()=>{})},500);
+}
+async function enforceGuestAccess(){
+  if(!window.GSC_GUEST_ACCESS)return;
+  try{const response=await fetch(window.gscgApiUrl("/api/app-access?action=status"),{credentials:"include",cache:"no-store"}),data=await response.json();if(!response.ok||data.role!=="guest")throw new Error("ACCESS_REQUIRED");const remaining=new Date(data.expiresAt).getTime()-Date.now();if(remaining<=0)throw new Error("ACCESS_EXPIRED");setTimeout(()=>location.replace("/access.html"),Math.min(remaining+250,2147483647))}catch{location.replace("/access.html")}
 }
 let masterSyncChain=Promise.resolve(),masterSyncFlushing=false,masterSyncBlockedUntil=0;
 function masterSyncInstallationId(){try{let id=localStorage.getItem(MASTER_SYNC_INSTALLATION_KEY);if(id)return id;const random=crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):Math.random().toString(36).slice(2)+Date.now().toString(36);id=`installation-${random}`;localStorage.setItem(MASTER_SYNC_INSTALLATION_KEY,id);return id}catch{return`installation-${Date.now()}-fallback`}}
@@ -5391,6 +5404,7 @@ phase="idle";listening=false;resetRoundCapture();resetSetupCapture();
 render();
 scheduleRoundTimerIdleShutdown();
 dateSetup();
+if(window.GSC_GUEST_ACCESS){enforceGuestAccess();setInterval(enforceGuestAccess,15000);navigator.serviceWorker?.getRegistrations?.().then(registrations=>registrations.forEach(registration=>registration.unregister())).catch(()=>{});document.getElementById("installAppButton")?.remove();document.getElementById("installAppOverlay")?.remove()}
 // La entrada explícita abre Registro sin borrar la ronda activa. La sustitución
 // continúa ocurriendo únicamente después de confirmar INICIAR RONDA.
 if(explicitNewRound){
@@ -5493,6 +5507,17 @@ $("confirmInstallApp")?.addEventListener("click",async()=>{
   const prompt=deferredInstallPrompt;deferredInstallPrompt=null;await prompt.prompt();await prompt.userChoice.catch(()=>null);closeInstallGuide();showInstallControl();
 });
 showInstallControl();
+fetch("/api/app-access?action=status",{credentials:"include",cache:"no-store"}).then(response=>response.ok?response.json():null).then(access=>{if(access?.role==="owner")$("ownerShare24h")?.classList.remove("hidden")}).catch(()=>{});
+$("ownerShare24h")?.addEventListener("click",async()=>{
+  const button=$("ownerShare24h"),original=button.textContent;button.disabled=true;button.textContent="CREANDO…";
+  try{
+    const response=await fetch("/api/app-access?action=create",{method:"POST",credentials:"include",cache:"no-store"}),data=await response.json().catch(()=>({}));
+    if(!response.ok||!data.url)throw new Error(data.code||"ACCESS_FAILED");
+    const payload={title:"Golf Score Card GT · Invitación 24 H",text:"Invitación individual de un solo uso · válida por 24 horas",url:data.url};
+    if(navigator.share){await navigator.share(payload)}else{await navigator.clipboard.writeText(data.url);button.textContent="ENLACE COPIADO";setTimeout(()=>{button.textContent=original},1800);return}
+  }catch(error){if(error?.name!=="AbortError"){button.textContent="REINTENTAR";setTimeout(()=>{button.textContent=original},1800)}}
+  finally{button.disabled=false;if(button.textContent==="CREANDO…")button.textContent=original}
+});
 window.GSCLiveControl?.mount({
   getRound:()=>round,
   getCourseName:()=>COURSE_CATALOG[ACTIVE_COURSE_KEY]?.displayName||COURSE_CATALOG[ACTIVE_COURSE_KEY]?.name||round.course,

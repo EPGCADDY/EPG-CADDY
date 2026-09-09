@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-091 · SUPPORT PARPADEABA Y NO ABRÍA EN IPHONE/PWA · 09 SEPTIEMBRE 2026
+
+- Defecto físico: SUPPORT no abría el manual y el administrador podía ser sustituido por el shell PWA almacenado.
+- Causa raíz: el vínculo volvió a incluir `target="_blank"` y el service worker trataba `/access.html` como navegación de la aplicación.
+- Control permanente: SUPPORT usa `/manual.pdf` en la misma pantalla; `/access.html` queda fuera de la navegación PWA; la prueba prohíbe `target="_blank"`.
+- Evidencia: `test-v311-live-support-link.mjs`, `test-r18-owner-guest-24h-access.mjs` y verificación HTTPS LAB R21.
+- Estado: CORREGIDO EN CANDIDATO V407-R21; MAIN INTACTA.
+
 ## RC-090 · ACTUALIZAR DEJABA DE PARPADEAR DESPUÉS DE RECONFIGURAR · 08 SEPTIEMBRE 2026
 
 - Defecto físico: en V407-R12 el control funcionaba una vez después de reconfigurar y luego volvía a `ACTUALIZADO` sin señal visible.
@@ -170,3 +178,9 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa: el Registro seguía desplazándose dentro de un overlay `position:fixed` mientras `html/body` también eran desplazables; dos superficies competían en Safari iOS. El control de versión sólo se activaba cuando el sondeo automático detectaba una diferencia.
 - Prevención permanente: Registro en flujo normal con un único scroll de documento; exclusión de `setupOverlay` en la recuperación; `ACTUALIZAR` siempre habilitado/parpadeando para verificación manual inequívoca.
 - Candado: `test-v407-r7-ios-scroll.mjs` exige geometría de scroll único, exclusión de mutación inline, botón activo y parámetro `update_check`.
+# RC-091 · ENLACE DE INVITADO REUTILIZABLE · 09 SEPTIEMBRE 2026
+
+- Defecto físico: el propietario comprobó que el mismo enlace abría la aplicación nuevamente en Safari.
+- Causa raíz: el canje actualizaba `opened_at` con `COALESCE` pero no exigía que estuviera vacío.
+- Control permanente: `redeemGuestToken` consume el enlace atómicamente con `opened_at IS NULL`; la prueba negativa obliga a rechazar el segundo canje.
+- Estado: CORREGIDO EN CANDIDATO LAB R19; MAIN INTACTA.
