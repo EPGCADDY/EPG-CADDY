@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 21393)
-Total output lines: 663
+Warning: truncated output (original token count: 21424)
+Total output lines: 664
 
 # ROADMAP OVERALL
 
@@ -138,11 +138,7 @@ Archivos exactos V331: `wolf.js`, `vegas.js`, `dots.js`, `index-grupal.html`, `c
 
 ## V330 · Skins, Wolf, Vegas, Dots y seis jugadores
 
-**Hotfix V330-R3 después de rechazo físico:** la captura real de iPhone demostró que al elegir `WOLF…11393 tokens truncated… enlace con el motor oficial de voz permanece intacto.
-
-| Archivo o modificación | Qué queda registrado |
-|---|---|
-| `stableford.js` | Reutiliza la línea gráfica y descriptiva aprobada de la Score Card General sin cambiar la lógica de registro. |
+**Hotfix V330-R3 después de rechazo físico:** la captura real de iPhone demostró que al elegir `WOLF…11424 tokens truncated…ableford.js` | Reutiliza la línea gráfica y descriptiva aprobada de la Score Card General sin cambiar la lógica de registro. |
 | `mobile-release.json` | Número de paquete preparado actualizado a V302. |
 | `service-worker.js` | Caché V302 para entregar inmediatamente el componente unificado. |
 | `test-v290-brand-icons-cleanup.mjs` | Comprueba la estructura hermana, el SVG, la ausencia del emoji grande, el paquete y la caché. |
@@ -313,3 +309,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `.github/workflows/hotfix-support-same-screen.yml`: se retira el transporte temporal; R21 queda integrado directamente en LAB.
 - `docs/manual/v311/page-00.png`: portada del manual resellada junto con los PDF publicados para que SUPPORT entregue el artefacto vigente.
 - Reparación de build R21: `service-worker.js` conserva explícitamente el marcador aprobado `v407-r18-live-points-header`; `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran y sellan la corrección. El Preview anterior quedó rechazado; MAIN/Producción no cambia.
+- Control maestro preservado: punto de corte `línea 185`; activación: 23 de agosto de 2026, 17:05:00, hora de Guatemala.
