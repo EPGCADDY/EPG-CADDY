@@ -73,6 +73,10 @@
     .pager button:last-child{border-color:var(--green);color:var(--green)}
     .pager button:disabled{opacity:.32}
     .pager strong{min-width:82px;text-align:center;color:#fff;font-size:12px}
+    .manual-audio{position:fixed;right:12px;bottom:76px;z-index:22;display:flex;gap:7px;padding:8px;border:1px solid #343434;border-radius:12px;background:rgba(0,0,0,.94)}
+    .manual-audio button,.manual-audio select{min-height:40px;border:1px solid var(--green);border-radius:8px;background:#090909;color:var(--green);font-weight:900}
+    .manual-audio button{padding:0 13px}.manual-audio select{padding:0 8px}
+    .page-zoom{position:fixed;inset:0;z-index:50;display:none;overflow:auto;background:#000}.page-zoom.open{display:block}.page-zoom img{display:block;width:180vw;max-width:none;height:auto}.page-zoom button{position:fixed;top:max(12px,env(safe-area-inset-top));right:12px;z-index:51;width:48px;height:48px;border:2px solid var(--green);border-radius:50%;background:#000;color:#fff;font-size:25px}
     @media(max-width:640px){
       .topbar{grid-template-columns:1fr auto;gap:8px}
       .brand img{width:48px;height:35px}
@@ -143,6 +147,8 @@
     <strong id="pageCounter"></strong>
     <button type="button" id="nextPage">SIGUIENTE →</button>
   </footer>
+  <div class="manual-audio" aria-label="Lectura del manual"><button type="button" id="playPage">PLAY</button><select id="speechRate" aria-label="Velocidad de lectura"><option value="0.8">0.8×</option><option value="0.9" selected>0.9×</option><option value="1">1×</option><option value="1.15">1.15×</option></select><button type="button" id="zoomPage">AMPLIAR</button></div>
+  <div class="page-zoom" id="pageZoom" aria-hidden="true"><button type="button" id="closeZoom" aria-label="Cerrar ampliación">×</button><img id="zoomImage" alt="Página ampliada del manual"></div>
 
   <script src="/manual-search.js"></script>
   <script>
@@ -211,19 +217,42 @@
     const pageId=value=>`pagina-${String(value).padStart(2,"0")}`;
     pages.forEach((item,index)=>{
       pageIndex.insertAdjacentHTML("beforeend",`<a href="#${pageId(index)}" data-index="${index}" aria-label="${item.label}: ${item.title}">${item.number}</a>`);
-      manual.insertAdjacentHTML("beforeend",`<section class="manual-page" id="${pageId(index)}" data-page="${index}" aria-label="${item.label}: ${item.title}">${index===0?"":`<span class="label">${item.label}</span>`}<img src="/docs/manual/v311/page-${item.number}.png" alt="${item.label} del manual: ${item.title}" ${index===0?'fetchpriority="high"':'loading="lazy"'}></section>`);
     });
-    const sections=[...document.querySelectorAll(".manual-page")];
+    manual.innerHTML=`<section class="manual-page" id="activeManualPage" data-page="0" aria-label="${pages[0].label}: ${pages[0].title}"><span class="label" id="activePageLabel" hidden></span><img id="activePageImage" src="/docs/manual/v311/page-${pages[0].number}.png" alt="${pages[0].label} del manual: ${pages[0].title}" fetchpriority="high" decoding="async"></section>`;
     const indexLinks=[...document.querySelectorAll("#pageIndex a")];
+    const activePage=document.getElementById("activeManualPage");
+    const activePageImage=document.getElementById("activePageImage");
+    const activePageLabel=document.getElementById("activePageLabel");
     const pageStatus=document.querySelector(".page-status");
     const title=document.getElementById("pageTitle");
     const pageMeta=document.getElementById("pageMeta");
     const counter=document.getElementById("pageCounter");
     const previous=document.getElementById("previousPage");
     const next=document.getElementById("nextPage");
+    let imageRequest=0;
+    function showPageImage(page){
+      const item=pages[page];
+      const source=`/docs/manual/v311/page-${item.number}.png`;
+      const request=++imageRequest;
+      if(activePageImage.getAttribute("src")===source)return;
+      const preload=new Image();
+      preload.decoding="async";
+      preload.onload=()=>{
+        if(request!==imageRequest)return;
+        activePageImage.src=source;
+        activePageImage.alt=`${item.label} del manual: ${item.title}`;
+      };
+      preload.onerror=()=>{if(request===imageRequest)activePageImage.src=source};
+      preload.src=source;
+    }
     function setCurrent(page){
       current=Math.max(0,Math.min(pages.length-1,page));
       const item=pages[current];
+      activePage.dataset.page=String(current);
+      activePage.setAttribute("aria-label",`${item.label}: ${item.title}`);
+      activePageLabel.hidden=current===0;
+      activePageLabel.textContent=item.label;
+      showPageImage(current);
       pageStatus.classList.toggle("cover",current===0);
       title.textContent=current===0?"":`PÁGINA ${item.number} · ${item.title}`;
       pageMeta.textContent=current===0?"":"74 páginas · versión vigente";
@@ -239,12 +268,14 @@
     }
     function go(page,{behavior="smooth"}={}){
       const destination=Math.max(0,Math.min(pages.length-1,Number(page)));
-      const target=document.getElementById(pageId(destination));
-      if(!target)return;
       setCurrent(destination);
       history.replaceState(null,"",`#${pageId(destination)}`);
-      target.scrollIntoView({behavior,block:"start"});
+      activePage.scrollIntoView({behavior,block:"start"});
     }
+    indexLinks.forEach(link=>link.addEventListener("click",event=>{
+      event.preventDefault();
+      go(Number(link.dataset.index));
+    }));
     const categoryIndex=document.getElementById("categoryIndex");
     for(const category of categories){
       const card=document.createElement("section");
@@ -312,22 +343,25 @@
       renderSearch(searchInput.value);
       searchInput.focus();
     }));
+    let manualDetails=[];
     fetch("/docs/manual/v311/manual-pages-17-35.json",{cache:"no-store"}).then(response=>response.ok?response.json():[]).then(details=>{
+      manualDetails=details;
       for(const detail of details){
         const entry=searchEntries.find(item=>item.number===detail.number);
         if(entry)entry.searchText=JSON.stringify(detail);
       }
       if(searchInput.value.trim())renderSearch(searchInput.value);
     }).catch(()=>{});
-    previous.addEventListener("click",()=>go(current-1));
-    next.addEventListener("click",()=>go(current+1));
-    function syncCurrentToViewport(){
-      const reference=Math.max(96,window.innerHeight*.18);
-      const visible=sections.find(section=>section.getBoundingClientRect().bottom>reference)||sections.at(-1);
-      if(visible)setCurrent(Number(visible.dataset.page));
-    }
-    const observer=new IntersectionObserver(syncCurrentToViewport,{rootMargin:"-18% 0px -54% 0px",threshold:[0,.1,.3,.6]});
-    sections.forEach(section=>observer.observe(section));
+    const playPage=document.getElementById("playPage"),speechRate=document.getElementById("speechRate"),pageZoom=document.getElementById("pageZoom"),zoomImage=document.getElementById("zoomImage");
+    let speaking=false;
+    const stopSpeech=()=>{speechSynthesis.cancel();speaking=false;playPage.textContent="PLAY"};
+    const narration=()=>{const item=pages[current],detail=manualDetails.find(value=>value.number===item.number);return detail?[item.title,detail.subtitle,...(detail.steps||[]).flat(),detail.remember,detail.commonError,detail.recovery,detail.glossary].filter(Boolean).join(". "):`Página ${item.number}. ${item.title}. Amplía la hoja para revisar cada indicación.`};
+    const play=()=>{stopSpeech();const utterance=new SpeechSynthesisUtterance(narration());utterance.lang="es-419";utterance.rate=Number(speechRate.value)||.9;const voices=speechSynthesis.getVoices(),voice=voices.find(value=>/^es-(419|MX|GT|US)/i.test(value.lang))||voices.find(value=>/^es/i.test(value.lang));if(voice)utterance.voice=voice;utterance.onend=utterance.onerror=stopSpeech;speaking=true;playPage.textContent="STOP";speechSynthesis.speak(utterance)};
+    playPage.addEventListener("click",()=>speaking?stopSpeech():play());speechRate.addEventListener("change",()=>{if(speaking)play()});
+    previous.addEventListener("click",()=>{stopSpeech();go(current-1)});
+    next.addEventListener("click",()=>{stopSpeech();go(current+1)});
+    document.getElementById("zoomPage").addEventListener("click",()=>{zoomImage.src=`/docs/manual/v311/page-${pages[current].number}.png`;pageZoom.classList.add("open");pageZoom.setAttribute("aria-hidden","false")});
+    document.getElementById("closeZoom").addEventListener("click",()=>{pageZoom.classList.remove("open");pageZoom.setAttribute("aria-hidden","true");zoomImage.removeAttribute("src")});
     const initialMatch=location.hash.match(/^#pagina-(\d{2})$/);
     const initialPage=initialMatch?Number(initialMatch[1]):0;
     if(initialPage>0&&initialPage<pages.length)requestAnimationFrame(()=>go(initialPage,{behavior:"auto"}));

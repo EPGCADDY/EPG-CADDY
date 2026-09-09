@@ -22,7 +22,7 @@ assert.match(html,/\.manual-page img\{[^}]*aspect-ratio:1 \/ 2/,"Las páginas de
 assert.match(html,/\.manual-page\{[^}]*aspect-ratio:1 \/ 2/,"La sección completa debe reservar la geometría 1:2 y no depender de la descarga de la imagen");
 assert.match(html,/\.manual-page img\{[^}]*height:100%[^}]*object-fit:contain/,"La imagen debe ocupar la geometría estable de su sección");
 assert.ok(html.indexOf('<main class="manual" id="manual">')<html.indexOf('<section class="intro">'),"La portada visual debe aparecer antes del compendio");
-assert.match(html,/index===0\?"":`<span class="label">\$\{item\.label\}<\/span>`/,"La portada no debe mostrar la etiqueta PORTADA");
+assert.match(html,/activePageLabel\.hidden=current===0/,"La portada no debe mostrar la etiqueta PORTADA");
 assert.match(html,/title\.textContent=current===0\?"":/,"La portada no debe mostrar un título superpuesto");
 assert.match(html,/counter\.textContent=current===0\?"":/,"La portada no debe mostrar PORTADA en el pie");
 assert.doesNotMatch(html,/<strong id="pageTitle">[^<]*PORTADA/i);
@@ -32,8 +32,10 @@ assert.match(html,/pageIndex\.scrollTo\(\{left:Math\.max\(0,left\),behavior:"smo
 assert.match(html,/history\.replaceState\(null,"",`#\$\{pageId\(destination\)\}`\)/,"Cada destino debe quedar fijado por su ancla");
 assert.match(html,/searchInput\.blur\(\);[\s\S]*?requestAnimationFrame\(\(\)=>go\(destination\)\)/,"El buscador debe soltar el teclado antes de navegar");
 assert.match(html,/initialMatch=location\.hash\.match\(\/\^#pagina-\(\\d\{2\}\)\$\//,"Un enlace directo debe abrir la página indicada");
-assert.match(html,/function syncCurrentToViewport\(\)/,"El indicador debe sincronizarse con la página visible completa");
-assert.match(html,/getBoundingClientRect\(\)\.bottom>reference/,"El indicador no debe conservar la página anterior por un residuo visual");
+assert.equal((html.match(/class="manual-page"/g)||[]).length,1,"Safari debe montar una sola gráfica del manual para evitar parpadeos y corrupción por memoria");
+assert.match(html,/function showPageImage\(page\)/,"El visor debe sustituir únicamente la gráfica activa");
+assert.match(html,/const preload=new Image\(\)/,"La nueva gráfica debe cargarse antes de sustituir la actual");
+assert.doesNotMatch(html,/IntersectionObserver/,"El desplazamiento no debe cambiar de página automáticamente");
 assert.ok(fs.statSync(pdf).size>100000,"El PDF completo debe estar alojado en el proyecto");
 assert.match(fs.readFileSync(pdf,"latin1"),/\/Count\s+74\b/,"El PDF debe contener portada más 73 páginas funcionales");
 assert.match(fs.readFileSync(pdf,"latin1"),/\/Outlines\b/,"El PDF debe contener navegación interna por páginas");

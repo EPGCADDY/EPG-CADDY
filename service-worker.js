@@ -97,6 +97,7 @@ self.addEventListener("fetch",event=>{
   const url=new URL(request.url);
   if(url.origin!==self.location.origin||url.pathname.startsWith("/api/"))return;
   if(request.mode==="navigate"&&url.pathname==="/access.html"){event.respondWith(fetch(request,{cache:"no-store"}));return}
+  if(request.mode==="navigate"&&(url.pathname==="/manual.pdf"||url.pathname==="/manual.html")){event.respondWith(fetch("/manual.html?__gscg_build_check=1",{cache:"no-store"}));return}
   if(url.searchParams.has("__gscg_build_check")){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"){
     event.respondWith((async()=>{
