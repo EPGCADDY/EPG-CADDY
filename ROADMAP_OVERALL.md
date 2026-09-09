@@ -691,3 +691,9 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Portabilidad exclusiva del build: `scripts/rebuild-manual-bets-live-data.py` y `scripts/rebuild-inventory-pdfs.py` usan Bitstream Vera incluida en ReportLab; elimina la dependencia ausente de `/usr/share/fonts` sin modificar ninguna función de la aplicación ni ACTUALIZAR.
 
 - Regreso directo desde Support: `manual.html` incorpora el botón superior `← REGRESAR A MI RONDA`; usa `history.back()` cuando el Manual proviene de la aplicación y `location.replace("/index-grupal.html?source=manual-return")` sólo como recuperación. `test-v311-manual-hosting.mjs` exige ambos recorridos y la conservación de la ronda persistida. ACTUALIZAR no cambia.
+# V407-R23A · Invitación WhatsApp conserva token · 09 de septiembre de 2026
+
+- La invitación de 24 horas usa `/invite/<token>` para impedir que WhatsApp elimine el acceso y envíe a Kathy al formulario propietario.
+- `access.html`, `api/app-access.js`, `middleware.js` y `vercel.json` forman un único recorrido invitado; LIVE y las demás funciones permanecen intactas.
+- `test-r18-owner-guest-24h-access.mjs` bloquea regresiones de ruta, reescritura, permiso y canje POST.
+- Rollback: volver a `73df15f`; Producción R23 no cambia hasta cero FAIL y aprobación física.

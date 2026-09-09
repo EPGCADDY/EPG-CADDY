@@ -734,3 +734,12 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Portabilidad exclusiva del build: `scripts/rebuild-manual-bets-live-data.py` y `scripts/rebuild-inventory-pdfs.py` usan Bitstream Vera incluida en ReportLab; elimina la dependencia ausente de `/usr/share/fonts` sin modificar ninguna función de la aplicación ni ACTUALIZAR.
 
 - Regreso directo desde Support: `manual.html` incorpora el botón superior `← REGRESAR A MI RONDA`; usa `history.back()` cuando el Manual proviene de la aplicación y `location.replace("/index-grupal.html?source=manual-return")` sólo como recuperación. `test-v311-manual-hosting.mjs` exige ambos recorridos y la conservación de la ronda persistida. ACTUALIZAR no cambia.
+# V407-R23A · Invitación WhatsApp conserva token · 09 de septiembre de 2026
+
+- `api/app-access.js`: genera la invitación como `/invite/<token>` en lugar de depender de un parámetro que WhatsApp eliminó físicamente.
+- `vercel.json`: reescribe `/invite/:token` hacia `access.html` sin mostrar una pantalla intermedia.
+- `middleware.js`: permite únicamente el prefijo público `/invite/` para que el canje ocurra antes del control propietario.
+- `access.html`: extrae el token desde la ruta, lo elimina de la barra y conserva compatibilidad con enlaces anteriores por query o fragmento.
+- `test-r18-owner-guest-24h-access.mjs`: exige los cuatro componentes y el canje POST de un solo uso.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-093 con evidencia física, causa y control permanente.
+- Rollback: commit productivo `73df15f`; LIVE, ACTUALIZAR, Support, score, voz y demás funciones no se modifican.

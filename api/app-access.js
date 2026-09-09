@@ -37,7 +37,7 @@ export default async function handler(req,res){
     }
     if(action==="create"){
       const owner=await requireOwner(req),grant=await createGrant(owner),origin=String(process.env.APP_PUBLIC_ORIGIN||"https://golf-sc-gt-lab.vercel.app").replace(/\/$/,"");
-      return res.status(201).json({ok:true,id:grant.id,expiresAt:grant.expiresAt,url:`${origin}/access.html?invite=${encodeURIComponent(grant.token)}`});
+      return res.status(201).json({ok:true,id:grant.id,expiresAt:grant.expiresAt,url:`${origin}/invite/${encodeURIComponent(grant.token)}`});
     }
     if(action==="revoke"){
       const owner=await requireOwner(req),body=await readJson(req,8_000),revoked=await revokeGrant(body?.id,owner);

@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-093 · WHATSAPP ELIMINÓ EL TOKEN Y MOSTRÓ ACCESO PROPIETARIO · 09 SEPTIEMBRE 2026
+
+- Defecto físico: Kathy abrió la invitación compartida y recibió `/access.html` sin el token, por lo que apareció el formulario propietario.
+- Causa raíz: el token viajaba como parámetro `?invite=` y el recorrido físico de WhatsApp lo eliminó.
+- Control permanente: el token viaja dentro de `/invite/<token>`; Vercel reescribe esa ruta a `access.html`, middleware la permite y la página lo canjea por POST.
+- Cobertura: prueba negativa exige ruta, rewrite, permiso público y compatibilidad con enlaces anteriores por query/fragmento.
+- Estado: CORREGIDO EN CANDIDATO R23A; PRODUCCIÓN R23 PERMANECE INTACTA.
+
 ## RC-093 · WHATSAPP OMITÍA TOKEN Y LIVE EXIGÍA SEGUNDA PANTALLA · 09 SEPTIEMBRE 2026
 
 - Defecto físico: la invitada recibía `access.html` sin token utilizable y veía acceso propietario; LIVE desde una tarjeta activa abría un panel intermedio.
