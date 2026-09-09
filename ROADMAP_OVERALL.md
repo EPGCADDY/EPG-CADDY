@@ -572,6 +572,18 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 | `test-v287-stableford-back-controls-clear.mjs` | Comprueba que REGÍSTRATE esté en flujo y no tape controles. |
 | `test-v290-brand-icons-cleanup.mjs` | Mantiene la validación acumulada y reconoce la guía Stableford exacta, el paquete y la caché V305. |
 | `test-v304-homogeneous-registration-actions.mjs` | Conserva el filtro hermano y prohíbe
+# R18-LAB · acceso propietario temporal de 24 horas · 08 de septiembre de 2026
+
+- Acceso completo de prueba mediante token opaco; sólo la cuenta propietaria puede crearlo o revocarlo.
+- Vigencia exacta de 24 horas, cierre automático del cliente y bloqueo obligatorio del servidor.
+- Instancia local limpia, sin jugadores, rondas, tarjetas, historial ni respaldo del propietario.
+- `guest-access.js` carga el aislamiento antes de los módulos y mantiene intacta la compilación histórica del script principal.
+- Cuenta, respaldo, sincronización, comercio y administración quedan cerrados al invitado.
+- Feedback temporal sin nombres: apertura, modalidad, cantidad de jugadores, hoyos y anotaciones; visible sólo por el propietario y eliminado automáticamente antes de 48 horas.
+- Banco específico PASS; falta vincular la identidad propietaria real y ejecutar Preview/pruebas físicas. MAIN y Producción permanecen intactas.
+- Los tres inventarios se regeneran y sellan como `R18-LAB-OWNER-GUEST-24H-LOCK`, sin rótulos históricos V367/V371.
+- Archivos exactos: `access.html`, `api/_lib/app-access.js`, `api/app-access.js`, `guest-access.js`, `middleware.js`, `index-grupal.html`, `package.json`, `vercel.json`, `test-r18-owner-guest-24h-access.mjs`, `audit-project.mjs`, `scripts/rebuild-inventory-pdfs.py`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_A_DETALLE.md` y `ROADMAP_OVERALL.md`.
+
 # V407-R2 · Tarjeta y acciones premium homogéneas · 08 de septiembre de 2026
 
 - `index-grupal.html`: encuadra la tarjeta operativa con título, borde continuo, fondo original y desplazamiento horizontal visible; conserva la paleta negro, verde, blanco y rojo funcional.
@@ -633,8 +645,18 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - R17: la categoría elegida aparece pequeña sobre el nombre de cada jugador; sin categoría no aparece texto. La fila PUNTOS y sus valores por hoyo/totales quedan rojos, y una fila vacía con categoría o marcas preseleccionadas no bloquea OK.
 - Reparación de transporte R17: `index-grupal.html` se retransmite íntegro; el build truncado queda rechazado y no llegó a Producción.
 - R18: `index-grupal.html`, `live-view.js` y `live.html` muestran puntos por hoyo/totales Universales en rojo; el encabezado móvil separa logo, modalidad y actualización sin superposición.
-## V407-R19-SUPPORT-PRODUCTION · 09 de septiembre de 2026
+# R19 · Enlace invitado individual de un solo uso · 09 de septiembre de 2026
 
-- `index-grupal.html`, `service-worker.js`, `test-v311-live-support-link.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r9-manual-update.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v406-r2-professional-design.mjs`, `test-v365-active-round-empty-recovery.mjs` y `test-v407-r1-premium-visual-system.mjs`: Support abre el PDF R.18 y release R19 activa ACTUALIZAR.
-- `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` y `docs/manual/v311/page-00.png`: manual de 74 páginas y portada con logo grande.
-- `.publish-r18-support` y `.github/workflows/publish-r18-support-production.yml`: transporte temporal retirado antes del commit final.
+- El primer canje consume atómicamente el enlace; cualquier segundo navegador o dispositivo recibe `ENLACE INVÁLIDO, VENCIDO O YA UTILIZADO`.
+- El dispositivo que lo canjeó conserva su cookie privada hasta el vencimiento original de 24 horas.
+- Alcance exclusivo LAB; MAIN, variables y base de datos permanecen sin cambios estructurales.
+
+# V407-R21 · SUPPORT y acceso 24 h cerrados · 09 de septiembre de 2026
+
+- `index-grupal.html`: SUPPORT abre `/manual.pdf` en la misma pantalla, muestra `V407 · R21` y ofrece `COMPARTIR 24H` sólo a la cuenta propietaria.
+- `service-worker.js`: avanza release/caché y excluye `/access.html` de la navegación PWA almacenada.
+- `api/app-access.js` y `api/_lib/app-access.js`: los enlaces usan el dominio LAB oficial y se consumen atómicamente una sola vez; el primer dispositivo conserva acceso hasta el vencimiento de 24 horas.
+- Pruebas dirigidas: `test-v311-live-support-link.mjs`, `test-r18-owner-guest-24h-access.mjs` y `test-v407-r9-manual-update.mjs`.
+- Rollback: volver al commit R20 de LAB. MAIN no se modifica.
+- `.github/workflows/hotfix-support-same-screen.yml`: se retira el transporte temporal; R21 queda integrado directamente en LAB.
+- `docs/manual/v311/page-00.png`: portada del manual resellada junto con los PDF publicados para que SUPPORT entregue el artefacto vigente.

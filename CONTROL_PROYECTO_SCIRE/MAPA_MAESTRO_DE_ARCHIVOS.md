@@ -180,12 +180,14 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `STABLEFORD_TOURNAMENT_PASS_CHECKLIST.md` | `02838f5745be3f424ecf4250894da97bed61d201` | 4275 bytes | Lista de comprobaciones para cerrar un torneo Stableford. |
 | `account-backup.js` | `a1b3fbe28a3807312acbb9aaee3750ee244c3f0c` | 4202 bytes | Muestra y controla el respaldo opcional de la cuenta. |
 | `api/_lib/account-auth.js` | `2bd196110b8e57a9d7491b0d3e40527993026133` | 2128 bytes | Ayuda a reconocer la cuenta abierta. |
+| `api/_lib/app-access.js` | R18-LAB acceso 24h | Se calcula al sellar | Identifica propietario, genera y valida tokens, revoca accesos y conserva únicamente métricas anónimas temporales. |
 | `api/_lib/cors.js` | `dffb1f6c6254d826cf622406d48ddb1a19b9b875` | 1328 bytes | Permite que web, iPhone y Android se comuniquen. |
 | `api/_lib/database.js` | `1e99935741e212ff9f0043197f82348972c2263c` | 453 bytes | Abre la información central. |
 | `api/_lib/http.js` | `abf34ad0d937577da81c7cd56833eceeb231bf95` | 1625 bytes | Prepara respuestas para la app. |
 | `api/_lib/sync-validation.js` | `b90cd0193c0606448a13e06e17cb34b359d18978` | 3713 bytes | Revisa que la información enviada esté completa. |
 | `api/_lib/traffic.js` | Tráfico V324 | Se calcula al publicar | Consulta Google Maps Routes con tráfico óptimo, resume ETA/demora/distancia y excluye coordenadas de la respuesta. |
 | `api/account.js` | `eec1c7ff408316ccaff98bcab968cd66bf92120c` | 2437 bytes | Abre, crea o cierra la cuenta opcional. |
+| `api/app-access.js` | R18-LAB acceso 24h | Se calcula al sellar | Controla creación, canje, estado, revocación, reporte propietario y eliminación automática. |
 | `api/backup.js` | `128c8f613861641f16ea5973d6592c8e50e46031` | 2174 bytes | Guarda y recupera respaldos. |
 | `api/golf-rules.js` | `V328-OFFICIAL-USGA-RANDA-SOURCES` | Se calcula al publicar | Consulta Reglas de Golf con el modelo real, restringe fuentes a USGA/The R&A y nunca escribe scores ni penalidades. |
 | `api/database-health.js` | `150c3e82b7e16d79613a2e341ac8fb1cf66de789` | 1307 bytes | Comprueba que el respaldo central responda. |
@@ -210,6 +212,25 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 | `card-artifacts.js` | `df8ba2b09532b73701681d7de1781ca5b54baf26` | 12799 bytes | Arma la tarjeta oficial con la información de la ronda. |
 | `card-file-export.js` | `4ddbf8f36ec142114cfa965a78d97ea55365afa1` | 5919 bytes | Convierte la tarjeta en imagen o PDF. |
 | `card-library.js` | `adb1126087fc75ca15bd0164638a07c1bc6c41e1` | 2644 bytes | Guarda y muestra tarjetas anteriores en el teléfono. |
+
+## R18-LAB · acceso propietario e invitado por 24 horas
+
+| Archivo | Función exacta |
+|---|---|
+| `access.html` | Pantalla privada para autenticar al propietario, crear/revocar accesos y ver el reporte anónimo. |
+| `api/_lib/app-access.js` | Identidad propietaria, token opaco, SHA-256, vigencia, revocación, métricas y purga. |
+| `api/app-access.js` | API de canje, estado, creación, revocación, feedback, reporte y limpieza. |
+| `middleware.js` | Bloqueo central de acceso y rutas privadas para invitados. |
+| `index-grupal.html` | Aislamiento local, aviso, telemetría agregada y cierre por vencimiento/revocación. |
+| `guest-access.js` | Crea el espacio de almacenamiento limpio y muestra el aviso de bitácora temporal al invitado. |
+| `package.json` | Dependencia oficial de middleware Vercel. |
+| `vercel.json` | Limpieza horaria iniciada a las 47 horas. |
+| `test-r18-owner-guest-24h-access.mjs` | Regresión dirigida de seguridad, privacidad y caducidad. |
+| `audit-project.mjs` | Incorpora la regresión R18-LAB al banco integral. |
+| `scripts/rebuild-inventory-pdfs.py` | Regenera los tres PDF con la identidad exacta del corte R18-LAB. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Conserva el bloqueo real de identidad y prueba física previa a publicar. |
+| `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md` | Trazabilidad doble del mismo alcance. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello de 442 fuentes y tres inventarios PDF regenerados. |
 | `commerce.js` | `7f6dcfa2ec518809c5a52616adb1f3c3dd84a36c` | 3301 bytes | Prepara compras y suscripciones dentro de las apps. |
 | `database/001_initial_schema.sql` | `bb169249e1b965e88e3ae3b3d428a4eb5c240b5b` | 5809 bytes | Crea espacios para jugadores, rondas, resultados, tarjetas y entregas. |
 | `database/002_player_profiles_and_history.sql` | `250d6c8bafddaba0abf33fbd1ba3fab7a4ec43f1` | 1473 bytes | Agrega el historial de cambios de jugadores. |
@@ -1211,3 +1232,8 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `test-card-artifacts.mjs` | Candado de categorías opcionales y puntos Universales. |
 | `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v407-r9-manual-update.mjs` | Contratos sincronizados con R14. |
 | `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md` | Continuidad, alcance y prevención RC-090. |
+# R19 · Archivos del enlace de un solo uso
+
+- `api/_lib/app-access.js`: canje atómico consumible una sola vez.
+- `api/app-access.js`: rechazo explícito del segundo uso.
+- `test-r18-owner-guest-24h-access.mjs`: prueba positiva del primer dispositivo y negativa del segundo.
