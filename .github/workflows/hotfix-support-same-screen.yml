@@ -2,7 +2,7 @@ name: Hotfix Support same-screen
 on:
   push:
     branches: [main]
-    paths: [.github/workflows/hotfix-support-same-screen.yml]
+    paths: [.support-hotfix-trigger]
 permissions:
   contents: write
 jobs:
@@ -12,44 +12,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: {fetch-depth: 0}
-      - name: Fix Support
+      - name: Apply and document Support hotfix
         run: |
           python3 - <<'PY'
           from pathlib import Path
           p=Path("index-grupal.html"); s=p.read_text()
-          old='<a class="live-support-link" href="/manual.pdf" target="_blank" rel="noopener noreferrer" aria-label="Abrir el Manual de Usuario V407 R.18 de Golf Score Card GT">Support</a>'
-          new='<a class="live-support-link" href="/manual.pdf" aria-label="Abrir el Manual de Usuario V407 R.18 de Golf Score Card GT en esta pantalla">Support</a>'
-          assert old in s
-          s=s.replace(old,new).replace("V407-R19-SUPPORT-MANUAL-20260908","V407-R20-SUPPORT-SAME-SCREEN-20260909")
+          assert 'href="/manual.pdf"' in s and 'target="_blank"' not in s[s.index('class="live-support-link"'):s.index('class="live-support-link"')+300]
+          if "V407-R20-SUPPORT-SAME-SCREEN-SEAL" not in s:
+              s += "\n<!-- V407-R20-SUPPORT-SAME-SCREEN-SEAL -->\n"
           p.write_text(s)
           p=Path("service-worker.js"); s=p.read_text()
-          s=s.replace("v407-r19-support-manual","v407-r20-support-same-screen").replace("V407-R19-SUPPORT-MANUAL-20260908","V407-R20-SUPPORT-SAME-SCREEN-20260909")
+          if "V407-R20-SUPPORT-SAME-SCREEN-SEAL" not in s:
+              s += "\n// V407-R20-SUPPORT-SAME-SCREEN-SEAL\n"
           p.write_text(s)
-          for p in Path(".").glob("test-*.mjs"):
-              s=p.read_text().replace("v407-r19-support-manual","v407-r20-support-same-screen").replace("V407-R19-SUPPORT-MANUAL-20260908","V407-R20-SUPPORT-SAME-SCREEN-20260909")
-              if p.name=="test-v311-live-support-link.mjs":
-                  s=s.replace(old,new).replace("en otra pestaña","en la misma pantalla")
-              p.write_text(s)
-          block='''
-
-## V407-R20-SUPPORT-SAME-SCREEN · 09 de septiembre de 2026
-
-- `index-grupal.html`: SUPPORT abre `/manual.pdf` en la misma pantalla; se elimina la ventana nueva que parpadeaba en iPhone/PWA.
-- `service-worker.js` y pruebas V407: release R20 y caché nuevo para activar ACTUALIZAR.
-- `test-v311-live-support-link.mjs`: regresión permanente que exige apertura en la misma pantalla.
-- `.github/workflows/hotfix-support-same-screen.yml`: transporte temporal retirado antes del commit final.
-'''
+          p=Path("test-v311-live-support-link.mjs"); s=p.read_text()
+          s=s.replace(' target="_blank" rel="noopener noreferrer"','').replace("en otra pestaña","en la misma pantalla")
+          p.write_text(s)
+          block="\n\n## V407-R20-SUPPORT-SAME-SCREEN · 09 de septiembre de 2026\n\n- index-grupal.html: SUPPORT abre /manual.pdf en la misma pantalla y elimina el parpadeo de ventana nueva en iPhone/PWA.\n- service-worker.js: release R20 activa ACTUALIZAR.\n- test-v311-live-support-link.mjs: control permanente de apertura en la misma pantalla.\n- transporte temporal retirado antes del commit final.\n"
           for name in ("ROADMAP_OVERALL.md","ROADMAP_A_DETALLE.md"):
               p=Path(name); p.write_text(p.read_text().rstrip()+block)
           PY
-          git rm .github/workflows/hotfix-support-same-screen.yml
+          git rm .support-hotfix-trigger .github/workflows/hotfix-support-same-screen.yml
           python3 scripts/rebuild-inventory-pdfs.py
       - name: Commit candidate locally
         run: |
           git config user.name "Golf Score Card GT"
           git config user.email "jaimekirste@gmail.com"
           git add -A
-          git commit -m "fix(support): open manual in same screen"
+          git commit -m "fix(support): seal same-screen opening"
       - name: Verify committed candidate
         run: |
           node test-v311-live-support-link.mjs
