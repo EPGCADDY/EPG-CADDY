@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-092 · R21 FUE SUSTITUIDO Y R19 INSTALADO CONSERVÓ ACTUALIZAR · 09 SEPTIEMBRE 2026
+
+- Defecto físico: ACTUALIZAR continuó verde en el iPhone después del despliegue R21.
+- Causa raíz: un despliegue posterior sustituyó R21; además, la copia instalada R19 necesitaba recibir su misma identidad publicada para ejecutar `showCurrentBuild()` sin otra recarga.
+- Control permanente: R22 publica la identidad compatible R19 para apagar el botón desde la comprobación periódica y redirige la ruta heredada `/manual.pdf` al PDF canónico.
+- Evidencia: lista de deployments del proyecto LAB, `test-v407-r9-manual-update.mjs`, `test-v311-live-support-link.mjs` y navegador real.
+- Estado: CORREGIDO EN LAB R22; MAIN INTACTA.
+
 ## RC-091 · ACTUALIZAR NO SE APAGABA Y SUPPORT NO ABRÍA EN LAB · 09 SEPTIEMBRE 2026
 
 - Defecto físico: ACTUALIZAR permanecía verde después del toque y SUPPORT no abría el manual desde LAB.

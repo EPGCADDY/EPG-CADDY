@@ -691,3 +691,12 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-091.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: resella 444 fuentes y tres inventarios después del hotfix.
 - MAIN, variables y base de datos permanecen intactos.
+
+# V407-R22 · Compatibilidad directa con la copia R19 instalada · 09 de septiembre de 2026
+
+- `index-grupal.html`: publica `V407-R19-SUPPORT-MANUAL-20260908` para que la copia instalada muestre ACTUALIZADO.
+- `service-worker.js`: caché `v407-r22-r19-installed-compatibility` con la identidad de release R19.
+- `vercel.json`: `/manual.pdf` redirige al manual canónico existente.
+- `test-v407-r9-manual-update.mjs` y `test-v311-live-support-link.mjs`: fijan compatibilidad y destino.
+- `REGISTRO_REINCIDENCIAS_CALIDAD.md`: documenta RC-092.
+- MAIN, variables y base de datos permanecen intactos.

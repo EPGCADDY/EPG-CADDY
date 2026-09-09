@@ -651,3 +651,9 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `test-v311-live-support-link.mjs` y `test-v407-r9-manual-update.mjs`: bloquean ambas regresiones.
 - `REGISTRO_REINCIDENCIAS_CALIDAD.md`: documenta RC-091. MAIN permanece intacta.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: resella 444 fuentes y tres inventarios después del hotfix.
+
+# V407-R22 · Compatibilidad directa con la copia R19 instalada · 09 de septiembre de 2026
+
+- La versión publicada declara la identidad R19 conservada por el iPhone; su comprobación periódica ejecuta `showCurrentBuild()` y apaga ACTUALIZAR sin otra recarga.
+- `/manual.pdf` redirige al PDF canónico, por lo que SUPPORT funciona también desde la copia R19 instalada.
+- Release/caché, pruebas y RC-092 quedan coordinados. MAIN, variables y base de datos permanecen intactos.

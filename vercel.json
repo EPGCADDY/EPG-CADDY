@@ -31,7 +31,7 @@
     },
     {
       "source": "/manual.pdf",
-      "destination": "/docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf",
+      "destination": "https://epg-caddy.vercel.app/manual.pdf",
       "permanent": false
     },
     {
