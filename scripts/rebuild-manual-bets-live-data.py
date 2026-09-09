@@ -5,6 +5,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import reportlab
 from PIL import Image
 from pypdf import PdfReader, PdfWriter
 from reportlab.lib.colors import HexColor, black, white
@@ -23,8 +24,9 @@ ALIAS = MANUAL_DIR / "Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf"
 
 
 def fonts():
-    regular = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-    bold = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+    bundled = Path(reportlab.__file__).resolve().parent / "fonts"
+    regular = str(bundled / "Vera.ttf")
+    bold = str(bundled / "VeraBd.ttf")
     pdfmetrics.registerFont(TTFont("ManualSans", regular))
     pdfmetrics.registerFont(TTFont("ManualSans-Bold", bold))
     return "ManualSans", "ManualSans-Bold"
