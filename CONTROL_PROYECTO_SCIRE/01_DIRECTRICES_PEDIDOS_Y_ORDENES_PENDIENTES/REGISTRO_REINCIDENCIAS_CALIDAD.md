@@ -3,10 +3,10 @@
 ## RC-091 · SUPPORT PARPADEABA Y NO ABRÍA EN IPHONE/PWA · 09 SEPTIEMBRE 2026
 
 - Defecto físico: SUPPORT no abría el manual y el administrador podía ser sustituido por el shell PWA almacenado.
-- Causa raíz: el vínculo volvió a incluir `target="_blank"` y el service worker trataba `/access.html` como navegación de la aplicación.
-- Control permanente: SUPPORT usa `/manual.pdf` en la misma pantalla; `/access.html` y las tres rutas del Manual quedan fuera de la navegación PWA; la prueba prohíbe `target="_blank"` y exige bypass de red.
-- Evidencia: `test-v311-live-support-link.mjs`, `test-r18-owner-guest-24h-access.mjs` y verificación HTTPS LAB R21.
-- Estado: CORREGIDO EN CANDIDATO V407-R21; MAIN INTACTA.
+- Causa raíz: además del antiguo `target="_blank"`, un service worker previo podía interceptar `/manual.pdf` antes de recibir el nuevo bypass.
+- Control permanente: SUPPORT usa `/manual.pdf?__gscg_build_check=1` en la misma pantalla; el parámetro obliga también a workers anteriores a consultar la red; la prueba prohíbe `target="_blank"` y el enlace sin bypass.
+- Evidencia: `test-v311-live-support-link.mjs`, `test-r18-owner-guest-24h-access.mjs` y verificación HTTPS LAB R23.
+- Estado: CORREGIDO EN CANDIDATO V407-R23; MAIN INTACTA.
 
 ## RC-090 · ACTUALIZAR DEJABA DE PARPADEAR DESPUÉS DE RECONFIGURAR · 08 SEPTIEMBRE 2026
 
