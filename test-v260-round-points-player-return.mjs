@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+// R24: la lista enriquecida mantiene el límite operativo de seis jugadores.
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
