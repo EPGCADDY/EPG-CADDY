@@ -52,7 +52,13 @@ jobs:
           PY
           git rm .publish-r18-support .github/workflows/publish-r18-support-production.yml
           python3 scripts/rebuild-inventory-pdfs.py
-      - name: Verify
+      - name: Commit candidate locally
+        run: |
+          git config user.name "Golf Score Card GT"
+          git config user.email "jaimekirste@gmail.com"
+          git add -A
+          git commit -m "feat(support): publish V407 R19 manual"
+      - name: Verify committed candidate
         run: |
           node test-v311-live-support-link.mjs
           npm run inventory:gate
@@ -64,10 +70,5 @@ jobs:
           node test-v311-manual-search.mjs
           node test-project-quality-gate.mjs
           node scripts/project-quality-gate.mjs
-      - name: Commit production candidate
-        run: |
-          git config user.name "Golf Score Card GT"
-          git config user.email "jaimekirste@gmail.com"
-          git add -A
-          git commit -m "feat(support): publish V407 R19 manual"
-          git push origin HEAD:main
+      - name: Push verified production
+        run: git push origin HEAD:main
