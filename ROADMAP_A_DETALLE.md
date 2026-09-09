@@ -667,3 +667,8 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Reparación de transporte R17: el blob completo de `index-grupal.html` reemplaza el envío Base64 truncado; ambos ROADMAPS y el sello se actualizan en el mismo commit reparador.
 - LAB posterior a R17: `index-grupal.html` añade totales Universales rojos y corrige la retícula móvil superior; `live-view.js` identifica fila/total de puntos y `live.html` los presenta en rojo. MAIN/Producción no cambia.
 - Reparación documental R18: ambos ROADMAPS nombran literalmente `live.html`; el build anterior quedó bloqueado y Producción permaneció en R17.
+## V407-R19-SUPPORT-PRODUCTION · 09 de septiembre de 2026
+
+- `index-grupal.html`, `service-worker.js`, `test-v311-live-support-link.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r9-manual-update.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v406-r2-professional-design.mjs`, `test-v365-active-round-empty-recovery.mjs` y `test-v407-r1-premium-visual-system.mjs`: Support abre el PDF R.18 y release R19 activa ACTUALIZAR.
+- `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` y `docs/manual/v311/page-00.png`: manual de 74 páginas y portada con logo grande.
+- `.publish-r18-support` y `.github/workflows/publish-r18-support-production.yml`: transporte temporal retirado antes del commit final.

@@ -4,8 +4,8 @@ import fs from "node:fs";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/V407-R18-LIVE-POINTS-HEADER-20260908/);
-assert.match(worker,/v407-r18-live-points-header/);
+assert.match(html,/V407-R19-SUPPORT-MANUAL-20260908/);
+assert.match(worker,/v407-r19-support-manual/);
 assert.doesNotMatch(worker,/await client\.navigate\(url\.toString\(\)\)/);
 assert.match(html,/\.overlay\{height:100dvh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain/);
 assert.match(html,/body\.gsc-setup-open #setupOverlay\.visible\{position:relative;inset:auto;width:100%;height:auto!important;min-height:100dvh;overflow:visible!important/);
