@@ -4,6 +4,7 @@
 import hashlib
 import html
 import json
+import os
 import re
 import subprocess
 from datetime import datetime, timezone
@@ -140,8 +141,9 @@ def source_state():
     files = sorted(path for path in result.stdout.splitlines() if path and path != str(LOCK.relative_to(ROOT)))
     digest = hashlib.sha256()
     for path in files:
+        git_args = ["git", "rev-parse", f"HEAD:{path}"] if os.environ.get("VERCEL") else ["git", "hash-object", "--", path]
         object_id = subprocess.run(
-            ["git", "hash-object", "--", path],
+            git_args,
             cwd=ROOT,
             check=True,
             capture_output=True,

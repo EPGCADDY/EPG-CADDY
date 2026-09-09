@@ -678,3 +678,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Fuente reproducible: el generador utiliza Bitstream Vera incluida por ReportLab, tanto localmente como en Vercel; elimina la dependencia inexistente de `/usr/share/fonts` sin descargar ni sustituir contenido.
 - Reintento de publicación: se genera un commit fresco después de comprobar que GitHub contiene Vera pero una clonación previa de Vercel recibió el blob anterior; MAIN permanece intacta.
 - Inventarios portátiles: `scripts/rebuild-inventory-pdfs.py` usa las mismas fuentes Vera incluidas por ReportLab; elimina su última dependencia de `/usr/share/fonts` en Vercel.
+- Sello coherente en build: bajo `VERCEL`, el generador y el gate calculan el digest contra `HEAD`; los PDF derivados pueden reconstruirse sin producir una falsa divergencia del árbol fuente.
