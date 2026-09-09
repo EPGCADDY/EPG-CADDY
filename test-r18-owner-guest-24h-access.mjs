@@ -57,7 +57,7 @@ assert.match(access,/searchParams\.get\("invite"\)/);
 assert.match(access,/location\.hash\.match\(\/\^#invite=/);
 assert.match(access,/location\.pathname\.match\(\/\^\\\/invite\\\//);
 assert.match(middleware,/path\.startsWith\("\/invite\/"\)/);
-assert.match(fs.readFileSync("vercel.json","utf8"),/"source": "\/invite\/:token"/);
+assert.match(fs.readFileSync("vercel.json","utf8"),/"source"\s*:\s*"\/invite\/:token"/);
 assert.match(access,/method:"POST"/);
 assert.doesNotMatch(access,/item\.name|item\.email|item\.identity/);
 assert.deepEqual(vercel.crons,[{path:"/api/app-access?action=cleanup",schedule:"0 * * * *"}]);
