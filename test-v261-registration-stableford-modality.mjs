@@ -30,9 +30,9 @@ assert.match(html,/>2 · MANUAL OPCIONAL<\/div>/);
 assert.match(html,/<div class="game-mode-columns" aria-label="Modalidades">[\s\S]*?<div class="stableford-mode-option" id="stablefordModeOption"><\/div>[\s\S]*?<div class="game-mode-columns" aria-label="Funciones de Score Card y Live">[\s\S]*?<button[^>]+id="provisionalScorecardButton"[^>]*>[\s\S]*?SCORE CARD - PRÁCTICA[\s\S]*?<\/button>[\s\S]*?<section class="skins-config" id="skinsConfig"[\s\S]*?<div class="setup-facts"/);
 assert.equal((html.match(/id="provisionalScorecardButton"/g)||[]).length,1);
 assert.doesNotMatch(html,/class="provisional-entry"|class="provisional-entry-button"/);
-assert.equal((html.match(/>NOMBRE \+ CATEGORÍA \+ HDCP \+ MARCAS<\/div>/g)||[]).length,1);
+assert.equal((html.match(/>NOMBRE \+ CATEGORÍA \+ HDCP \+ MARCAS \+ WHATSAPP OPCIONAL<\/div>/g)||[]).length,1);
 assert.doesNotMatch(html,/data-draft-code=/);
-assert.doesNotMatch(html,/data-draft-whatsapp=/);
+assert.match(html,/data-draft-whatsapp=/);
 assert.doesNotMatch(html,/id="openShareProject"|id="shareProjectPanel"/);
 
 // Nombres autorizados dentro de Stableford dentro del control operacional común.

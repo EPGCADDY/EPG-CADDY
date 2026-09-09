@@ -1,6 +1,10 @@
 "use strict";
-const assert=require("node:assert/strict");
-const registry=require("./player-registry.js");
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import vm from "node:vm";
+const sandbox={module:{exports:{}},exports:{}};
+vm.runInNewContext(fs.readFileSync(new URL("./player-registry.js",import.meta.url),"utf8"),sandbox);
+const registry=sandbox.module.exports;
 
 const legacy=[{name:"Rodrigo Barterechea",whatsapp:"+502 5555 1234",updatedAt:"2026-08-19T10:00:00.000Z"}];
 const migrated=registry.migrateDirectory(legacy);
@@ -10,11 +14,11 @@ assert.equal(migrated[0].shortName,"Rodrigo");
 assert.equal(migrated[0].whatsapp.e164,"+50255551234");
 assert.equal(migrated[0].deliveryPreference,"none");
 assert.equal(migrated[0].consent.active,false);
-assert.deepEqual(registry.canDeliver(migrated[0],"whatsapp"),{ok:false,reason:"NOT_AUTHORIZED"});
+assert.equal(JSON.stringify(registry.canDeliver(migrated[0],"whatsapp")),JSON.stringify({ok:false,reason:"NOT_AUTHORIZED"}));
 
 const authorized=registry.normalizeProfile({...migrated[0],deliveryPreference:"whatsapp",consent:{active:true,grantedAt:"2026-08-19T11:00:00.000Z",scope:"round-cards",policyVersion:"1"}});
-assert.deepEqual(registry.canDeliver(authorized,"whatsapp"),{ok:true,reason:null});
-assert.deepEqual(registry.canDeliver(authorized,"email"),{ok:false,reason:"NO_DESTINATION"});
+assert.equal(JSON.stringify(registry.canDeliver(authorized,"whatsapp")),JSON.stringify({ok:true,reason:null}));
+assert.equal(JSON.stringify(registry.canDeliver(authorized,"email")),JSON.stringify({ok:false,reason:"NO_DESTINATION"}));
 
 const withdrawn=registry.withdrawConsent(authorized,"2026-08-19T12:00:00.000Z");
 assert.equal(withdrawn.consent.active,false);
@@ -23,8 +27,8 @@ assert.equal(withdrawn.consent.withdrawnAt,"2026-08-19T12:00:00.000Z");
 
 const profiles=registry.upsertProfiles(migrated,[{id:"p1",name:"Rodrigo Barterechea",whatsapp:"55551234"}],{roundId:"round-1",course:"El Pulté Golf"});
 assert.equal(profiles.length,1);
-assert.deepEqual(profiles[0].roundIds,["round-1"]);
-assert.deepEqual(profiles[0].coursesPlayed,["El Pulté Golf"]);
+assert.equal(JSON.stringify(profiles[0].roundIds),JSON.stringify(["round-1"]));
+assert.equal(JSON.stringify(profiles[0].coursesPlayed),JSON.stringify(["El Pulté Golf"]));
 assert.equal(profiles[0].consent.active,false);
 assert.match(profiles[0].registrationCode,/^G[A-Z0-9]{6}$/);
 assert.equal(profiles[0].profileHistory.length,2);

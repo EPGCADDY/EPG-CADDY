@@ -192,3 +192,10 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa raíz: el canje no exigía que `opened_at` estuviera vacío.
 - Control permanente: canje atómico con `opened_at IS NULL` y prueba negativa obligatoria del segundo dispositivo.
 - Estado: CORREGIDO EN CANDIDATO LAB R19; MAIN INTACTA.
+
+# RC-093 · WHATSAPP AUSENTE Y MANUAL INCOMPLETO · 09 SEPTIEMBRE 2026
+
+- Defecto: el Registro no mostraba WhatsApp y el Manual no enseñaba claramente selección parcial del grupo, dictado múltiple, entrada manual ni envío digital.
+- Causa raíz: la capa de perfiles ya persistía WhatsApp, pero el control visible había sido retirado y el Manual describía sólo dictado individual.
+- Control permanente: campo WhatsApp opcional en la misma retícula móvil de dos filas; pruebas positivas del control; cobertura explícita en páginas 19, 20, 31 y 57.
+- Estado: CORREGIDO EN CANDIDATO LAB R23; MAIN, VARIABLES Y BASE DE DATOS INTACTAS.

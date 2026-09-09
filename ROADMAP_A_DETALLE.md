@@ -700,3 +700,13 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `test-v407-r9-manual-update.mjs` y `test-v311-live-support-link.mjs`: fijan compatibilidad y destino.
 - `REGISTRO_REINCIDENCIAS_CALIDAD.md`: documenta RC-092.
 - MAIN, variables y base de datos permanecen intactos.
+
+# V407-R23 · WhatsApp y guía completa de captura/envío · 09 de septiembre de 2026
+
+- `index-grupal.html`: añade WhatsApp opcional por jugador sin aumentar la altura del registro móvil; comparte la segunda fila compacta con HDCP y marcas.
+- El registro acepta únicamente de 1 a 6 jugadores elegidos, aunque participen más personas en el grupo.
+- `docs/manual/v311/manual-pages-17-35.json`: explica captura por micrófono de uno o varios scores, captura manual, selección individual y envío de Tarjeta Digital por WhatsApp.
+- Los bancos de registro y cobertura semántica fijan el nuevo contrato. MAIN, variables y base de datos permanecen intactos.
+- `live-control.js`: retira exclusivamente el botón LIVE de la barra superior; `COMPARTIR LIVE` dentro de la tarjeta activa y la Tarjeta Digital permanece operativo.
+- `vercel.json`: SUPPORT deja de abrir el PDF R18 externo con capturas diminutas y sirve el Manual LAB local con pantallas grandes.
+- `test-player-registry.js`: ejecuta el contrato histórico del perfil bajo el modo ESM vigente del proyecto.

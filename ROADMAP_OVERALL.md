@@ -657,3 +657,12 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - La versión publicada declara la identidad R19 conservada por el iPhone; su comprobación periódica ejecuta `showCurrentBuild()` y apaga ACTUALIZAR sin otra recarga.
 - `/manual.pdf` redirige al PDF canónico, por lo que SUPPORT funciona también desde la copia R19 instalada.
 - Release/caché, pruebas y RC-092 quedan coordinados. MAIN, variables y base de datos permanecen intactos.
+
+# V407-R23 · WhatsApp y guía completa de captura/envío · 09 de septiembre de 2026
+
+- El Registro incorpora WhatsApp opcional dentro de la misma altura móvil y conserva la elección libre de 1 a 6 jugadores.
+- El Manual enseña dictado de uno o varios scores, entrada manual y envío de Tarjeta Digital por WhatsApp.
+- RC-093 y las pruebas permanentes evitan retirar nuevamente el campo o la explicación. MAIN, variables y base de datos permanecen intactos.
+- Se elimina el acceso LIVE superior duplicado; cada tarjeta conserva su propia acción LIVE.
+- SUPPORT sirve el Manual LAB corregido en vez del PDF externo R18 con pantallas diminutas.
+- La regresión del perfil queda compatible con el ejecutor ESM vigente.
