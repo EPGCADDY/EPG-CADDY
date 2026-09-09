@@ -184,3 +184,10 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa raíz: el canje actualizaba `opened_at` con `COALESCE` pero no exigía que estuviera vacío.
 - Control permanente: `redeemGuestToken` consume el enlace atómicamente con `opened_at IS NULL`; la prueba negativa obliga a rechazar el segundo canje.
 - Estado: CORREGIDO EN CANDIDATO LAB R19; MAIN INTACTA.
+
+## RC-092 · ENLACE CONSUMIDO POR PREVISUALIZACIÓN AUTOMÁTICA · 09 SEPTIEMBRE 2026
+
+- Defecto físico: un enlace recién generado respondió `ENLACE INVÁLIDO, VENCIDO O YA UTILIZADO` antes de que el invitado pudiera abrir la aplicación.
+- Causa raíz: el endpoint consumía el token mediante GET; los previsualizadores automáticos podían ejecutar ese GET antes del toque humano.
+- Medida permanente: el enlace transporta el token en el fragmento `#invite`, invisible para el servidor y los previsualizadores HTTP; `access.html` canjea mediante POST y abre la aplicación inmediatamente en el navegador del invitado.
+- Candado: `test-r18-owner-guest-24h-access.mjs` prohíbe canje GET, exige POST, fragmento y rechazo del segundo canje. Producción permanece intacta.

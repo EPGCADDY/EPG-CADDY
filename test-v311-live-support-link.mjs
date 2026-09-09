@@ -11,7 +11,7 @@ assert.ok(!/<a class="live-support-link"[^>]*target="_blank"/.test(html),"Suppor
 assert.ok(!html.includes('href="https://epg-caddy.vercel.app/manual-scg"'),"Preview nunca debe escapar al Manual de Producción");
 assert.ok(html.indexOf(expected)>html.indexOf('<main class="app">'),"Support debe vivir en la barra estructural de la ronda");
 assert.match(html,/<nav class="round-utility-bar" id="roundUtilityBar"[\s\S]*class="live-support-link"/,"Support debe estar dentro de la barra de herramientas");
-assert.match(html,/\.round-utility-bar \.gsc-live-launch,[^}]*\.round-utility-bar \.live-support-link\{position:static!important;/,"Support y LIVE no deben flotar sobre el encabezado");
+assert.match(html,/\.round-utility-bar \.gsc-live-launch,[^}]*\.round-utility-bar \.live-support-link,\.round-utility-bar #ownerShare24h\{position:static!important;/,"Support, LIVE e INVITAR 24 H no deben flotar sobre el encabezado");
 assert.match(mobileBuilder,/readFile\(path\.join\(root,"index-grupal\.html"\),"utf8"\)/,"El paquete nativo debe heredar el mismo Support vivo");
 
 console.log("PASS V406-R4 · Support integrado en barra estructural y conectado al Manual vivo");

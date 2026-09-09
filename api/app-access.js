@@ -8,7 +8,8 @@ export default async function handler(req,res){
   noStore(res);if(handleAppPreflight(req,res))return;
   const action=String(req.query?.action||"status").toLowerCase();
   try{
-    if(action==="redeem"&&req.method==="GET"){
+    if(action==="redeem"&&req.method==="POST"){
+      if(!isAllowedAppOrigin(req))return res.status(403).json({ok:false,code:"ORIGIN_NOT_ALLOWED"});
       const token=String(req.query?.token||""),grant=await redeemGuestToken(token);
       if(!grant)return res.status(401).send("ENLACE INVÁLIDO, VENCIDO O YA UTILIZADO");
       const seconds=Math.max(1,Math.floor((new Date(grant.expiresAt).getTime()-Date.now())/1000));
@@ -36,7 +37,7 @@ export default async function handler(req,res){
     }
     if(action==="create"){
       const owner=await requireOwner(req),grant=await createGrant(owner),origin=String(process.env.APP_PUBLIC_ORIGIN||"https://golf-sc-gt-lab.vercel.app").replace(/\/$/,"");
-      return res.status(201).json({ok:true,id:grant.id,expiresAt:grant.expiresAt,url:`${origin}/api/app-access?action=redeem&token=${encodeURIComponent(grant.token)}`});
+      return res.status(201).json({ok:true,id:grant.id,expiresAt:grant.expiresAt,url:`${origin}/access.html#invite=${encodeURIComponent(grant.token)}`});
     }
     if(action==="revoke"){
       const owner=await requireOwner(req),body=await readJson(req,8_000),revoked=await revokeGrant(body?.id,owner);
