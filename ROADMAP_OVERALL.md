@@ -7,6 +7,7 @@
 - En cualquier pantalla superpuesta se oculta `ACTUALIZADO`, evitando que cubra `ATRÁS` u otras acciones móviles. Sólo Preview LAB; Main permanece intacta.
 - El inventario se sella contra el árbol remoto LAB dentro del mismo cambio documental requerido por el despliegue.
 - Los simuladores Stableford anteriores interpretan la ausencia del nuevo campo como WhatsApp opcional vacío.
+- En móvil, WhatsApp ocupa una fila completa y reserva al número un ancho mínimo utilizable.
 
 # V407-R23B · enlace LIVE privado abre como sólo lectura · 9 de septiembre de 2026
 

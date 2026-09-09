@@ -24,6 +24,7 @@ assert.match(html,/#finalCardOverlay \.final-card-meta\{display:grid;grid-templa
 assert.match(html,/\.final-card-panel \.scorecard\{width:1360px;min-width:1360px\}/);
 assert.match(html,/body\.gsc-final-card-open \.gsc-live-launch\{display:none!important\}/);
 assert.match(html,/body:has\(\.overlay\.visible\) \.mandatory-update\{display:none!important\}/);
+assert.match(html,/\.new-round-card \.draft-whatsapp-field\{grid-area:auto;grid-column:1\/-1;grid-template-columns:28px 18px 72px minmax\(180px,1fr\);width:100%/);
 assert.match(html,/\.gsc-final-card-open \.pwa-install-button\{display:none!important\}/);
 assert.match(html,/#finalTournament:empty::before\{content:"RONDA CASUAL"\}/);
 assert.match(html,/@media\(max-width:800px\)[\s\S]*\.round-utility-bar\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
