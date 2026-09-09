@@ -677,3 +677,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Regresión de Registro: `test-v254-remove-registration-guide.mjs` conserva la prohibición de casillas falsas y reconoce la instrucción aprobada `REGISTRA SÓLO A UNO O AL GRUPO · HASTA 6`.
 - Fuente reproducible: el generador utiliza Bitstream Vera incluida por ReportLab, tanto localmente como en Vercel; elimina la dependencia inexistente de `/usr/share/fonts` sin descargar ni sustituir contenido.
 - Reintento de publicación: se genera un commit fresco después de comprobar que GitHub contiene Vera pero una clonación previa de Vercel recibió el blob anterior; MAIN permanece intacta.
+- Inventarios portátiles: `scripts/rebuild-inventory-pdfs.py` usa las mismas fuentes Vera incluidas por ReportLab; elimina su última dependencia de `/usr/share/fonts` en Vercel.
