@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-093 · WHATSAPP OMITÍA TOKEN Y LIVE EXIGÍA SEGUNDA PANTALLA · 09 SEPTIEMBRE 2026
+
+- Defecto físico: la invitada recibía `access.html` sin token utilizable y veía acceso propietario; LIVE desde una tarjeta activa abría un panel intermedio.
+- Causa raíz: el token viajaba sólo en fragmento dentro del campo `url` de Web Share y el botón LIVE abría el overlay antes de compartir.
+- Control permanente: invitación `?invite=` incluida literalmente en el texto compartido, canje exclusivo por POST y compatibilidad con fragmentos anteriores; LIVE con ronda activa llama directamente `quickShareGroup()`.
+- Cobertura: invitación de un uso/24 horas, previsualización GET negativa, grupo completo y cinco modalidades.
+- Estado: CORREGIDO EN CANDIDATO V407-R23; pendiente auditoría y publicación.
+
 ## RC-092 · LIVE ABRÍA EL MENÚ PÚBLICO DESDE UNA RONDA ACTIVA · 09 SEPTIEMBRE 2026
 
 - Defecto físico: al tocar LIVE desde la Score Card activa, aparecía primero `VER TORNEO LIVE` sin mostrar los controles de esa ronda.

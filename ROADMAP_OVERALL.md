@@ -1,5 +1,11 @@
 # ROADMAP OVERALL
 
+## V407-R23 · compartir directo e invitación transportable · 9 de septiembre de 2026
+
+- Desde una Score Card activa, tocar LIVE ejecuta directamente `quickShareGroup()` y abre la hoja nativa de compartir para elegir WhatsApp; no muestra ninguna pantalla intermedia. La regla común cubre General, Universales, Stableford, Match Play y Four Ball.
+- La invitación propietaria de 24 horas viaja como texto completo con `/access.html?invite=TOKEN`; WhatsApp conserva el token. `access.html` acepta query y el formato fragmento anterior, elimina el token visible y canjea exclusivamente por POST. Un GET de previsualización no consume la invitación.
+- No cambia scores, ronda activa, persistencia, controles de ACTUALIZAR ni privacidad.
+
 ## V407-R22 · LIVE abre la ronda activa en todas las modalidades · 9 de septiembre de 2026
 
 - Publicado en Producción desde commit `90c25514a83b5c407e00ecc4f02ad4f2c9de3ef8`, despliegue `dpl_3T4Fu3Y59uzUzUXytU5FGn5b7ka2`, estado READY; rollback inmediato: `1ad4197bc5f2f8a923b94f3f5eac4a562ccfaafe`.
