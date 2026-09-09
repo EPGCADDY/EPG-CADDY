@@ -638,3 +638,8 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `index-grupal.html`, `service-worker.js`, `test-v311-live-support-link.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r9-manual-update.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v406-r2-professional-design.mjs`, `test-v365-active-round-empty-recovery.mjs` y `test-v407-r1-premium-visual-system.mjs`: Support abre el PDF R.18 y release R19 activa ACTUALIZAR.
 - `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` y `docs/manual/v311/page-00.png`: manual de 74 páginas y portada con logo grande.
 - `.publish-r18-support` y `.github/workflows/publish-r18-support-production.yml`: transporte temporal retirado antes del commit final.
+# R19 · Enlace invitado individual de un solo uso · 09 de septiembre de 2026
+
+- LAB incorpora acceso propietario y enlaces temporales de 24 horas. El primer canje consume atómicamente cada enlace; cualquier segundo navegador o dispositivo queda rechazado.
+- MAIN permanece intacta; rollback al commit `883df85ad769d27b04b065987039e07ee34eb211`.
+- Archivos: `access.html`, `guest-access.js`, `middleware.js`, `api/_lib/app-access.js`, `api/app-access.js`, `index-grupal.html`, `vercel.json`, `audit-project.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-v311-live-support-link.mjs`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.

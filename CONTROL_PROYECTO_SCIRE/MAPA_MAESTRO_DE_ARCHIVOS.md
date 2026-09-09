@@ -1211,3 +1211,7 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `test-card-artifacts.mjs` | Candado de categorías opcionales y puntos Universales. |
 | `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v407-r9-manual-update.mjs` | Contratos sincronizados con R14. |
 | `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md` | Continuidad, alcance y prevención RC-090. |
+# R19 · Acceso temporal individual
+
+- `access.html`, `guest-access.js`, `middleware.js`, `api/app-access.js`, `api/_lib/app-access.js`: acceso propietario e invitación individual de un solo uso.
+- `test-r18-owner-guest-24h-access.mjs`: prueba positiva del primer canje y negativa del segundo.

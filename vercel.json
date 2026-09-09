@@ -2,6 +2,7 @@
   "installCommand": "npm install --omit=dev --no-package-lock && python3 -m pip install --break-system-packages --disable-pip-version-check --no-cache-dir numpy pillow pypdf reportlab",
   "buildCommand": "node audit-project.mjs",
   "outputDirectory": ".",
+  "crons": [{"path": "/api/app-access?action=cleanup", "schedule": "0 * * * *"}],
   "redirects": [
     {
       "source": "/",

@@ -170,3 +170,9 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa: el Registro seguía desplazándose dentro de un overlay `position:fixed` mientras `html/body` también eran desplazables; dos superficies competían en Safari iOS. El control de versión sólo se activaba cuando el sondeo automático detectaba una diferencia.
 - Prevención permanente: Registro en flujo normal con un único scroll de documento; exclusión de `setupOverlay` en la recuperación; `ACTUALIZAR` siempre habilitado/parpadeando para verificación manual inequívoca.
 - Candado: `test-v407-r7-ios-scroll.mjs` exige geometría de scroll único, exclusión de mutación inline, botón activo y parámetro `update_check`.
+# RC-091 · ENLACE DE INVITADO REUTILIZABLE · 09 SEPTIEMBRE 2026
+
+- Defecto físico: el mismo enlace abrió nuevamente la aplicación en Safari.
+- Causa raíz: el canje no exigía que `opened_at` estuviera vacío.
+- Control permanente: canje atómico con `opened_at IS NULL` y prueba negativa obligatoria del segundo dispositivo.
+- Estado: CORREGIDO EN CANDIDATO LAB R19; MAIN INTACTA.

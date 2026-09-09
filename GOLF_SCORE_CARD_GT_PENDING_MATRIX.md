@@ -496,3 +496,6 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - ✅ El borrado queda limitado al borrador de Registro; no elimina Historial, ronda previa ni ronda activa.
 - ✅ La Tarjeta Digital móvil oculta controles flotantes, apila sus acciones y contiene la tabla dentro de desplazamiento horizontal propio.
 - ⏳ Pendiente físico: abrir y capturar Normal, Stableford, Match Play y Four Ball en iPhone; una prueba automática no sustituye esas cuatro vistas.
+# R19 · Seguridad de invitaciones
+
+- CERRADO EN CANDIDATO LAB: enlace individual consumible por el primer dispositivo, no reutilizable durante sus 24 horas.

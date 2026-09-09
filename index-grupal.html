@@ -12,6 +12,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/official-logos/golf-score-card-gt-pwa-v345-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
+<script src="./guest-access.js"></script>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
   <meta name="gscg-release" content="V407-R20-SUPPORT-SAME-SCREEN-20260909">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
@@ -1328,7 +1329,18 @@ function persist(){
     queueMasterDataSnapshot("round-state");
   }catch(e){console.error("No se pudo persistir la última ronda:",e)}
   window.GSCLiveControl?.onRoundPersisted(round);
+  if(window.GSC_GUEST_ACCESS)queueGuestAccessFeedback();
   return true;
+}
+let guestAccessFeedbackTimer=0;
+function queueGuestAccessFeedback(){
+  if(!window.GSC_GUEST_ACCESS)return;
+  clearTimeout(guestAccessFeedbackTimer);
+  guestAccessFeedbackTimer=setTimeout(()=>{const scoredHoles=new Set(),annotationsCount=(round.players||[]).reduce((total,player)=>{for(const key of Object.keys(player.holes||{})){const hole=Number(key);if(hole>=1&&hole<=18)scoredHoles.add(hole)}return total+Object.keys(player.holes||{}).length},0),sideGame=activeSideGameKey(round),modality=round.provisional?"practice":sideGame||round.mode||"general";fetch(window.gscgApiUrl("/api/app-access?action=feedback"),{method:"POST",credentials:"include",headers:{"content-type":"application/json"},body:JSON.stringify({modality,playerCount:Math.min(6,(round.players||[]).length),holesUsed:scoredHoles.size,annotationsCount})}).catch(()=>{})},500);
+}
+async function enforceGuestAccess(){
+  if(!window.GSC_GUEST_ACCESS)return;
+  try{const response=await fetch(window.gscgApiUrl("/api/app-access?action=status"),{credentials:"include",cache:"no-store"}),data=await response.json();if(!response.ok||data.role!=="guest")throw new Error("ACCESS_REQUIRED");const remaining=new Date(data.expiresAt).getTime()-Date.now();if(remaining<=0)throw new Error("ACCESS_EXPIRED");setTimeout(()=>location.replace("/access.html"),Math.min(remaining+250,2147483647))}catch{location.replace("/access.html")}
 }
 let masterSyncChain=Promise.resolve(),masterSyncFlushing=false,masterSyncBlockedUntil=0;
 function masterSyncInstallationId(){try{let id=localStorage.getItem(MASTER_SYNC_INSTALLATION_KEY);if(id)return id;const random=crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):Math.random().toString(36).slice(2)+Date.now().toString(36);id=`installation-${random}`;localStorage.setItem(MASTER_SYNC_INSTALLATION_KEY,id);return id}catch{return`installation-${Date.now()}-fallback`}}
@@ -5391,6 +5403,7 @@ phase="idle";listening=false;resetRoundCapture();resetSetupCapture();
 render();
 scheduleRoundTimerIdleShutdown();
 dateSetup();
+if(window.GSC_GUEST_ACCESS){enforceGuestAccess();setInterval(enforceGuestAccess,15000);navigator.serviceWorker?.getRegistrations?.().then(registrations=>registrations.forEach(registration=>registration.unregister())).catch(()=>{});document.getElementById("installAppButton")?.remove();document.getElementById("installAppOverlay")?.remove()}
 // La entrada explícita abre Registro sin borrar la ronda activa. La sustitución
 // continúa ocurriendo únicamente después de confirmar INICIAR RONDA.
 if(explicitNewRound){
