@@ -22,7 +22,8 @@ assert.match(html,/function deleteRoundFromArchive\(roundId\)[\s\S]*?deleted\.ad
 assert.match(html,/const deleted=readRoundArchiveDeleted\(\),restored=[\s\S]*?filter\(item=>item&&!deleted\.has\(String\(item\.id\)\)\)/,"la recuperación central no revive una ronda eliminada");
 assert.match(html,/document\.body\?\.classList\.add\("gsc-final-card-open"\)/);
 assert.match(html,/document\.body\?\.classList\.remove\("gsc-final-card-open"\)/);
-for(const control of ['live-support-link','ai-universal-launch','golf-rules-launch','skins-launch','gsc-live-launch','mandatory-update'])assert.match(html,new RegExp(`body\\.gsc-final-card-open \\.${control}`));
+for(const control of ['live-support-link','ai-universal-launch','golf-rules-launch','skins-launch','gsc-live-launch'])assert.match(html,new RegExp(`body\\.gsc-final-card-open \\.${control}`));
+assert.match(html,/body:has\(\.overlay\.visible\) \.mandatory-update\{display:none!important\}/,"ACTUALIZADO no debe cubrir ATRÁS ni acciones dentro de pantallas");
 assert.match(html,/#finalCardOverlay \.final-card-panel\{width:100%;min-width:0/);
 assert.match(html,/#finalCardOverlay \.final-card-shell\{width:100%;max-width:100%;overflow-x:auto/);
 assert.match(html,/#finalCardOverlay \.final-card-head>div\{display:grid;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
