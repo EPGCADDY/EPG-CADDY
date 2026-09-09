@@ -30,17 +30,17 @@
       "permanent": false
     },
     {
+      "source": "/manual.pdf",
+      "destination": "https://raw.githubusercontent.com/EPGCADDY/EPG-CADDY/d0c6072f83b2e94ded420e58f60f233ca29b2b8a/docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf",
+      "permanent": false
+    },
+    {
       "source": "/stableford-torneo.html",
       "destination": "/index-grupal.html",
       "permanent": false
     }
   ],
-  "rewrites": [
-    {
-      "source": "/manual.pdf",
-      "destination": "/docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf"
-    }
-  ],
+  "rewrites": [],
   "headers": [
     {
       "source": "/",

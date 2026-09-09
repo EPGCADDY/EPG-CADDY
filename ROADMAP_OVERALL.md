@@ -666,4 +666,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Se elimina el acceso LIVE superior duplicado; cada tarjeta conserva su propia acción LIVE.
 - SUPPORT sirve el Manual LAB corregido en vez del PDF externo R18 con pantallas diminutas.
 - La regresión del perfil queda compatible con el ejecutor ESM vigente.
-- La ruta del Manual queda interna a LAB mediante rewrite y no puede escapar al dominio viejo.
+- La ruta del Manual queda fijada al PDF LAB inmutable R23 y no puede escapar al dominio viejo.
