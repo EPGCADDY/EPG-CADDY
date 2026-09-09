@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --omit=dev --no-package-lock && python3 -m pip install --break-system-packages --disable-pip-version-check --no-cache-dir numpy pillow pypdf reportlab",
-  "buildCommand": "python3 scripts/rebuild-manual-bets-live-data.py 19 20 21 && python3 scripts/rebuild-inventory-pdfs.py && node audit-project.mjs",
+  "buildCommand": "SKIP_MANUAL_PNG=1 python3 scripts/rebuild-manual-bets-live-data.py 19 20 21 && python3 scripts/rebuild-inventory-pdfs.py && node audit-project.mjs",
   "outputDirectory": ".",
   "crons": [{"path": "/api/app-access?action=cleanup", "schedule": "0 * * * *"}],
   "redirects": [

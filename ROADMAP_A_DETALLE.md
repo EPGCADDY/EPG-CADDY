@@ -714,5 +714,6 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Registro/WhatsApp: `#ownerShare24hSetup` aparece dentro de la primera pantalla de Registro con rótulo `WHATSAPP · INVITAR 24H`; comparte el mismo creador seguro que `#ownerShare24h`. Ambos permanecen ocultos para invitados y sólo se publican cuando la API confirma `owner` y `canShare=true`.
 - Transporte de portada: `docs/manual/v311/page-00.png` mantiene 2160×4320 y 300 dpi con paleta indexada estable para publicarse íntegra; no altera contenido ni diseño del Manual.
 - `vercel.json`: el build reconstruye páginas 19–21 y los PDF derivados, regenera inventarios y sólo entonces ejecuta la auditoría; elimina la divergencia entre fuentes gráficas y PDF publicados.
+- Vercel usa `SKIP_MANUAL_PNG=1`: conserva las PNG 19–21 ya verificadas y subidas, y evita el binario externo `pdftoppm`; el ensamblado de ambos PDF continúa en Python.
 - `test-v254-remove-registration-guide.mjs`: se actualiza únicamente la expectativa del subtítulo oficial para fijar que registrar al grupo completo es opcional; permanecen prohibidas las tres casillas falsas históricas.
 - `scripts/rebuild-manual-bets-live-data.py`: usa `reportlab/fonts/Vera.ttf` y `VeraBd.ttf`, disponibles dentro de la dependencia instalada; el build deja de depender de fuentes del sistema ausentes en Vercel.

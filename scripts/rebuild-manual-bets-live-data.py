@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -184,7 +185,8 @@ def main():
     for item in data:
         number = int(item["number"])
         page_pdf = build_page(item, regular, bold)
-        render_png(page_pdf, number)
+        if os.environ.get("SKIP_MANUAL_PNG") != "1":
+            render_png(page_pdf, number)
         replacements[number] = page_pdf
     replace_pdf_pages(replacements)
     print(f"MANUAL_FUNCTIONAL_PAGES_REBUILT pages={len(replacements)} pdf=74")
