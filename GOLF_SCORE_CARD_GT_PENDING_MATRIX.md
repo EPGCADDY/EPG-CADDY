@@ -371,6 +371,17 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Separar secretos de publicación/lectura, guardar sólo SHA-256 y excluir contactos, ubicación, audio, IA, clima detallado y apuestas.
 - Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`.
 
+### 29. Acceso propietario temporal de 24 horas
+
+**Estado:** IMPLEMENTACIÓN LAB Y BANCO DIRIGIDO PASS; IDENTIDAD, PREVIEW Y PRUEBA FÍSICA PENDIENTES · `PEND-ACC-019`
+
+- Sólo la cuenta vinculada por `EPG_OWNER_USER_ID` puede crear o revocar un acceso.
+- El invitado recibe una instancia limpia y aislada; no recibe datos, historial, jugadores, rondas, tarjetas ni respaldo del propietario.
+- El servidor rechaza vencimiento y revocación; el cliente vuelve a validar cada 15 segundos y no admite instalación offline.
+- El reporte temporal registra únicamente apertura, modalidad, cantidad de jugadores, hoyos y número de anotaciones, nunca nombres o identidad.
+- La purga horaria comienza a las 47 horas para garantizar eliminación antes del máximo de 48 horas.
+- Antes de publicar: vincular la cuenta propietaria exacta y probar físicamente propietario, invitado, expiración, revocación, aislamiento y prohibición de crear enlaces.
+
 ## Mejoras continuas
 
 - Cobertura de vocabulario, nombres, acentos, ruido y pausas de dictado.
@@ -496,3 +507,6 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - ✅ El borrado queda limitado al borrador de Registro; no elimina Historial, ronda previa ni ronda activa.
 - ✅ La Tarjeta Digital móvil oculta controles flotantes, apila sus acciones y contiene la tabla dentro de desplazamiento horizontal propio.
 - ⏳ Pendiente físico: abrir y capturar Normal, Stableford, Match Play y Four Ball en iPhone; una prueba automática no sustituye esas cuatro vistas.
+# R19 · Seguridad de invitaciones
+
+- CERRADO EN CANDIDATO LAB: cada enlace de invitado se consume únicamente en el primer dispositivo y no puede reutilizarse ni reenviarse después del canje.

@@ -1,5 +1,9 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Continuidad V407-R25 · 09 de septiembre de 2026
+
+`COMPARTIR 24H` queda reservado a la identidad propietaria verificada por servidor. Cada toque crea un enlace individual nuevo, abre la hoja nativa para WhatsApp/Compartir y mantiene la misma Score Card. El invitado puede usar el registro oficial para uno a seis jugadores y el escritor oficial de scores por voz o Control Manual, pero no puede generar invitaciones. SUPPORT abre el Manual interactivo en la misma pantalla. MAIN permanece intacta.
+
 ## Continuidad V407-R10 · 8 de septiembre de 2026
 
 El propietario confirmó que R9 cargó la pantalla correcta pero rechazó que `ACTUALIZADO` estuviera deshabilitado. R10 conserva el estado oscuro cuando está vigente, pero mantiene la tecla activa: cada toque guarda la ronda, limpia únicamente el shell PWA y recarga realmente el mismo enlace. No cambia ninguna gráfica ni otra función. MAIN intacta.

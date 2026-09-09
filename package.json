@@ -9,6 +9,7 @@
     "@neondatabase/serverless": "^1.0.2",
     "@revenuecat/purchases-capacitor": "13.4.0",
     "@revenuecat/purchases-capacitor-ui": "13.4.0",
+    "@vercel/functions": "^3.2.4",
     "@vercel/oidc": "3.8.5"
   },
   "devDependencies": {

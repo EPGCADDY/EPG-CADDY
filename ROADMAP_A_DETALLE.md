@@ -1,5 +1,20 @@
 # ROADMAP A DETALLE
 
+## R18-LAB · acceso propietario temporal de 24 horas · 8 de septiembre de 2026
+
+- `api/_lib/app-access.js`: crea tokens opacos aleatorios de 32 bytes, guarda únicamente SHA-256, valida 24 horas exactas, revoca por propietario y conserva feedback agregado sin nombres ni identidad. Elimina cada acceso y su bitácora mediante una purga horaria programada desde las 47 horas para no superar 48 horas.
+- `api/app-access.js`: expone canje, estado, creación, revocación, salida, feedback anónimo, reporte exclusivo del propietario y limpieza autenticada por `CRON_SECRET`.
+- `middleware.js`: cierra la aplicación pública, bloquea cuenta, respaldo, sincronización, comercio y administración para invitados, y rechaza tokens vencidos o revocados.
+- `access.html`: permite únicamente a la cuenta propietaria abrir la aplicación, crear/revocar el enlace y consultar actividad anónima.
+- `index-grupal.html`: separa el almacenamiento local del invitado, informa la bitácora temporal, impide instalación offline, comprueba acceso cada 15 segundos y reporta sólo modalidad, cantidad de jugadores, hoyos usados y número de anotaciones.
+- `guest-access.js`: instala antes de los módulos funcionales el almacenamiento aislado y el aviso de privacidad sin alterar los motores de la aplicación.
+- `package.json`: incorpora `@vercel/functions` para el middleware oficial.
+- `vercel.json`: programa la eliminación horaria; el umbral de 47 horas garantiza borrado antes del máximo de 48.
+- `test-r18-owner-guest-24h-access.mjs`: bloquea regresiones de propiedad, token, cookie, vencimiento, revocación, privacidad, rutas prohibidas, feedback y purga.
+- `audit-project.mjs`: incorpora el banco específico a la auditoría integral.
+- `scripts/rebuild-inventory-pdfs.py`: identifica los tres inventarios con el corte real R18-LAB y elimina metadata heredada V367/V371.
+- Estado: implementación y banco dirigido PASS en copia LAB aislada; identidad exacta `EPG_OWNER_USER_ID`/alternativa configurada, Preview y pruebas físicas propietario/invitado/expiración/revocación permanecen bloqueantes. MAIN y Producción intactas.
+
 ## V407-R10 · activación permanente del botón · 8 de septiembre de 2026
 
 `index-grupal.html` cambia únicamente el estado operativo de `mandatoryUpdateButton`: `showCurrentBuild()` conserva `ACTUALIZADO` y retira `disabled`; el toque reutiliza `installMandatoryUpdate()` para guardar y recargar el shell. `service-worker.js` avanza release/caché a R10. Pruebas de versión sincronizadas. Sin cambios gráficos ni funcionales fuera del actualizador; MAIN intacta.
@@ -667,8 +682,32 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Reparación de transporte R17: el blob completo de `index-grupal.html` reemplaza el envío Base64 truncado; ambos ROADMAPS y el sello se actualizan en el mismo commit reparador.
 - LAB posterior a R17: `index-grupal.html` añade totales Universales rojos y corrige la retícula móvil superior; `live-view.js` identifica fila/total de puntos y `live.html` los presenta en rojo. MAIN/Producción no cambia.
 - Reparación documental R18: ambos ROADMAPS nombran literalmente `live.html`; el build anterior quedó bloqueado y Producción permaneció en R17.
-## V407-R19-SUPPORT-PRODUCTION · 09 de septiembre de 2026
+# R19 · Enlace invitado individual de un solo uso · 09 de septiembre de 2026
 
-- `index-grupal.html`, `service-worker.js`, `test-v311-live-support-link.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r9-manual-update.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v406-r2-professional-design.mjs`, `test-v365-active-round-empty-recovery.mjs` y `test-v407-r1-premium-visual-system.mjs`: Support abre el PDF R.18 y release R19 activa ACTUALIZAR.
-- `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` y `docs/manual/v311/page-00.png`: manual de 74 páginas y portada con logo grande.
-- `.publish-r18-support` y `.github/workflows/publish-r18-support-production.yml`: transporte temporal retirado antes del commit final.
+- `api/_lib/app-access.js`: incorpora `redeemGuestToken`, cuyo `UPDATE` exige `opened_at IS NULL` y consume el token en una sola operación atómica.
+- `api/app-access.js`: el canje usa exclusivamente `redeemGuestToken` y rechaza reutilizaciones.
+- `test-r18-owner-guest-24h-access.mjs`: simula dos canjes consecutivos; el primero pasa y el segundo devuelve `null`.
+- Rollback: volver al commit R18 de LAB. MAIN no se modifica.
+
+# V407-R21 · SUPPORT y acceso 24 h cerrados · 09 de septiembre de 2026
+
+- `index-grupal.html`: restaura `href="/manual.pdf"` sin `target`, avanza el identificador visible a R21 y agrega `COMPARTIR 24H`, oculto para invitados.
+- `service-worker.js`: usa `V407-R21-SUPPORT-ACCESS-20260909`, caché propia y entrega `/access.html` directamente desde red.
+- `api/app-access.js`: devuelve enlaces sobre `APP_PUBLIC_ORIGIN` o `https://golf-sc-gt-lab.vercel.app`, nunca sobre una URL temporal de deployment.
+- `api/_lib/app-access.js`: `redeemGuestToken` exige `opened_at IS NULL`; sólo el primer canje obtiene acceso.
+- `test-v311-live-support-link.mjs`: prueba negativa contra `target="_blank"`; `test-r18-owner-guest-24h-access.mjs`: primer canje aceptado y segundo rechazado.
+- Pruebas de release V365/V406/V407 sincronizadas con R21. Rollback: R20 de LAB; MAIN permanece intacta.
+- `.github/workflows/hotfix-support-same-screen.yml`: se elimina el disparador temporal de R20 después de integrar y probar la corrección permanente R21 en LAB.
+- `docs/manual/v311/page-00.png`: fuente gráfica de portada resellada al reconstruir el inventario y los PDF del manual accesible desde SUPPORT.
+
+# V407-R25 · invitación propietaria directa y funciones del invitado · 09 de septiembre de 2026
+
+- `index-grupal.html`: la autorización visual exige simultáneamente `role=owner` y `canShare=true`. El toque hace `POST /api/app-access?action=create`, entrega título, explicación y URL mediante `navigator.share`, conserva la Score Card abierta y sólo copia como respaldo cuando la hoja nativa no existe.
+- Frontera negativa: se elimina la navegación del botón a `/access.html?manage=1`; manipular el DOM no autoriza la creación porque `api/app-access.js` continúa ejecutando `requireOwner`.
+- Alcance invitado explícito: de uno a seis jugadores mediante el registro oficial existente; scores mediante dictado oficial o Control Manual/edición de celdas. No se crean escritores paralelos ni se modifican motores protegidos.
+- `manual.html`: interfaz del Manual con PLAY/STOP, velocidad, ANTERIOR/SIGUIENTE y AMPLIAR; `test-v311-live-support-link.mjs` fija la ruta interactiva en la misma pantalla.
+- `test-r18-owner-guest-24h-access.mjs`: exige verificación propietaria, creación directa, `navigator.share`, explicación funcional y ausencia de navegación administrativa.
+- Rollback: restaurar sólo el commit anterior de LAB. Archivos exactos: `index-grupal.html`, `manual.html`, `test-r18-owner-guest-24h-access.mjs`, `test-v311-live-support-link.mjs`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`.
+- Manual funcional reeditado: `docs/manual/v311/manual-pages-17-35.json`, `page-19.png`, `page-20.png`, `page-21.png`, `Manual_Golf_Score_Card_GT_COMPLETO.pdf` y `Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf`. Página 19: inscripción opcional de un jugador o grupo hasta seis; página 20: voz con Control Manual como recuperación; página 21: corrección de una sola celda y recálculo sin borrar la ronda.
+- Prevención gráfica: `scripts/rebuild-manual-bets-live-data.py` guarda PNG con compresión estable, sin `optimize=True`, después de detectar truncamiento en página 20. `test-v311-manual-semantic-coverage.mjs` exige literalmente los tres contratos.
+- `service-worker.js`: comentario de continuidad `v407-r18-live-points-header` para reconciliar el candado heredado; cambio documental sin alteración ejecutable de ACTUALIZAR, release o estrategia de caché.

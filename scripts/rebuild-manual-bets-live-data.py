@@ -145,7 +145,7 @@ def render_png(page_pdf, number):
     source = TMP / f"render-{number:02d}.png"
     target = MANUAL_DIR / f"page-{number:02d}.png"
     with Image.open(source) as image:
-        image.resize((2160, 4320), Image.Resampling.LANCZOS).save(target, format="PNG", dpi=(300, 300), optimize=True)
+        image.resize((2160, 4320), Image.Resampling.LANCZOS).save(target, format="PNG", dpi=(300, 300), compress_level=6)
 
 
 def replace_pdf_pages(replacements):

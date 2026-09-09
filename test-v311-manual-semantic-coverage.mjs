@@ -40,6 +40,11 @@ for(const internalOnly of ["VERDURA","PARINELO","PARASO","PARCUATO","AGUILER"]){
   assert.ok(!combined.includes(internalOnly),`El manual no debe publicar tolerancias internas: ${internalOnly}`);
 }
 assert.ok(!combined.includes("JAIME"),"El manual de usuario no debe usar JAIME como ejemplo");
+const registration=pageMap.get("19"),voiceScore=pageMap.get("20"),manualCorrection=pageMap.get("21");
+assert.match(JSON.stringify(registration),/únicamente tú|sólo al jugador/i,"El Manual debe explicar que registrar al grupo completo es opcional");
+assert.match(JSON.stringify(registration),/máximo de seis|uno a seis/i,"El Manual debe conservar el límite de seis jugadores");
+assert.match(JSON.stringify(voiceScore),/si no aparece, usa Control Manual|no lo reconoce, escríbelo en Control Manual/i,"El Manual debe ofrecer Control Manual cuando la voz no reconoce el score");
+assert.match(JSON.stringify(manualCorrection),/cambiar únicamente la celda equivocada|sustituye sólo el score seleccionado/i,"El Manual debe explicar cómo corregir un score sin borrar la ronda");
 
 for(const section of ["Funciones vigentes","Combinaciones mínimas","Regla de cierre"]){
   assert.ok(matrix.includes(section),`La matriz debe conservar ${section}`);
