@@ -30,9 +30,12 @@ assert.match(html,/>2 · MANUAL OPCIONAL<\/div>/);
 assert.match(html,/<div class="game-mode-columns" aria-label="Modalidades">[\s\S]*?<div class="stableford-mode-option" id="stablefordModeOption"><\/div>[\s\S]*?<div class="game-mode-columns" aria-label="Funciones de Score Card y Live">[\s\S]*?<button[^>]+id="provisionalScorecardButton"[^>]*>[\s\S]*?SCORE CARD - PRÁCTICA[\s\S]*?<\/button>[\s\S]*?<section class="skins-config" id="skinsConfig"[\s\S]*?<div class="setup-facts"/);
 assert.equal((html.match(/id="provisionalScorecardButton"/g)||[]).length,1);
 assert.doesNotMatch(html,/class="provisional-entry"|class="provisional-entry-button"/);
-assert.equal((html.match(/>NOMBRE \+ CATEGORÍA \+ HDCP \+ MARCAS<\/div>/g)||[]).length,1);
+assert.equal((html.match(/>NOMBRE \+ CATEGORÍA \+ HDCP \+ MARCAS \+ WHATSAPP OPCIONAL<\/div>/g)||[]).length,1);
 assert.doesNotMatch(html,/data-draft-code=/);
-assert.doesNotMatch(html,/data-draft-whatsapp=/);
+assert.match(html,/data-draft-whatsapp=/);
+assert.equal((html.match(/data-stableford-whatsapp="[0-5]"/g)||[]).length,6);
+assert.equal((html.match(/data-stableford-country-code="[0-5]"/g)||[]).length,6);
+assert.equal((html.match(/class="stableford-whatsapp-flag"/g)||[]).length,6);
 assert.doesNotMatch(html,/id="openShareProject"|id="shareProjectPanel"/);
 
 // Nombres autorizados dentro de Stableford dentro del control operacional común.
@@ -40,4 +43,4 @@ assert.match(html,/id="roundManualTitle"[^>]*>CONTROL MANUAL · \$\{stable\?"STA
 assert.match(html,/\$\("summaryTitle"\)\.textContent="PUNTOS"/);
 assert.match(html,/\$\("finalSummaryTitle"\)\.textContent=isStablefordRound\(\)\?"PUNTOS":isMatchPlayRound\(\)\?"RESULTADO MATCH PLAY":isUniversalesRound\(\)\?"PUNTOS UNIVERSALES":"INFORMACIÓN DE RONDA"/);
 
-console.log("PASS V262 · campo separado, modalidad Stableford neutral y registro Dictado/Manual Opcional depurado");
+console.log("PASS V407 R24 · General y Stableford conservan WhatsApp opcional privado");

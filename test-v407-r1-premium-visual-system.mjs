@@ -23,7 +23,7 @@ assert.match(html,/#finalCardOverlay \.final-card-head>div\{display:grid;grid-te
 assert.match(html,/#finalCardOverlay \.final-card-meta\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
 assert.match(html,/\.final-card-panel \.scorecard\{width:1360px;min-width:1360px\}/);
 assert.match(html,/body\.gsc-final-card-open \.gsc-live-launch\{display:none!important\}/);
-assert.match(html,/body\.gsc-final-card-open \.mandatory-update\{display:block!important\}/);
+assert.match(html,/body:has\(\.overlay\.visible\) \.mandatory-update\{display:none!important\}/);
 assert.match(html,/\.gsc-final-card-open \.pwa-install-button\{display:none!important\}/);
 assert.match(html,/#finalTournament:empty::before\{content:"RONDA CASUAL"\}/);
 assert.match(html,/@media\(max-width:800px\)[\s\S]*\.round-utility-bar\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
