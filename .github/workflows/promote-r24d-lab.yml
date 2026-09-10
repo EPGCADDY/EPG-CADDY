@@ -1,0 +1,26 @@
+name: Promote verified R24D to stable LAB alias
+on:
+  push:
+    branches:
+      - lab/v407-r24-whatsapp-registration
+permissions:
+  contents: write
+jobs:
+  promote:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Promote exact READY R24D deployment inside LAB project
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          test -n "$VERCEL_TOKEN"
+          npx --yes vercel@48.10.0 promote https://golf-sc-gt-dxkrjakq0-epgcaddys-projects.vercel.app --scope epgcaddys-projects --token "$VERCEL_TOKEN" --yes
+      - uses: actions/checkout@v4
+      - name: Remove temporary promotion workflow
+        run: |
+          git rm .github/workflows/promote-r24d-lab.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'chore: remove temporary R24D LAB promotion workflow'
+          git push origin HEAD:lab/v407-r24-whatsapp-registration
