@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-107 · R33 NO VALIDABA BYTES Y EN IPHONE PODÍA OMITIR REALTIME · 10 SEPTIEMBRE 2026
+
+- Defecto preventivo: R33 comprobaba el nombre del release, pero no la huella del candidato completo; además, `toggleVoice()` desviaba todo iPhone a `SpeechRecognition` antes de intentar Realtime, por lo que `semantic_vad` podía existir sin gobernar AI UNIVERSAL físicamente.
+- Causa raíz: confianza en metadatos de versión sin manifiesto criptográfico y preferencia de plataforma aplicada antes de conocer el estado real del transporte primario.
+- Control permanente R34: `update-manifest.json` sella el candidato con SHA-256; el Service Worker exige staging completo, valida bytes antes y después de copiar, responde `BUILD_READY`, recibe la huella del cliente y escribe el marcador únicamente después de validar. Realtime es siempre primario y el reconocimiento del navegador sólo se activa tras un fallo; pista finalizada o silenciada dispara recuperación explícita.
+- Evidencia automática: `test-v407-r34-hardened-update-microphone.mjs`, bancos R33, V356, V358 y V362; todos integrados en `audit-project.mjs`.
+- Estado honesto: IMPLEMENTADO EN FUENTE LAB R34; pendiente auditoría integral, deployment público y puertas de navegador/iPhone. Maestro intacto.
+
 ## RC-099 · CONTROLES VERDES SATURADOS Y TARJETA DIGITAL SIN ARCHIVO PREVIO · 10 SEPTIEMBRE 2026
 
 - Defecto visible: superficies de acción heredadas permanecían rellenas en verde y cargaban visualmente tarjetas/paneles; el patrón aprobado es fondo negro con contorno verde, excepto `OK`.

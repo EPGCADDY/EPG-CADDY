@@ -8,11 +8,11 @@ const universal=fs.readFileSync("api/universal-ai.js","utf8");
 const manual=fs.readFileSync("manual.html","utf8");
 const voiceModule=fs.readFileSync("approved-voice.js","utf8");
 
-assert.match(candidate,/V407-R33-ROOT-VOICE-UPDATE-20260910/);
+assert.match(candidate,/V407-R34-HARDENED-UPDATE-MICROPHONE-20260910/);
 assert.match(candidate,/type:"semantic_vad",eagerness:"auto"/);
 assert.match(candidate,/new MessageChannel\(\)/);
 assert.match(candidate,/data\.type==="PROMOTION_READY"/);
-assert.match(candidate,/await ack/);
+assert.match(candidate,/await messageWorker\(worker,\{type:"PROMOTE_BUILD"/);
 assert.doesNotMatch(candidate.slice(candidate.indexOf("async function installMandatoryUpdate"),candidate.indexOf("async function syncPublishedAppVersion")),/searchParams\.set\("app_version"/);
 assert.match(worker,/CANDIDATE_RELEASE_MISMATCH/);
 assert.match(worker,/PROMOTED_RELEASE_MISMATCH/);
@@ -33,4 +33,4 @@ assert.equal(window.GSCApprovedVoice.select().voiceURI,"manual-latin");
 window.speechSynthesis.getVoices=()=>[other,latin];
 assert.equal(window.GSCApprovedVoice.select().voiceURI,"manual-latin");
 
-console.log("PASS V407 R33 · contrato raíz: ACK transaccional, semantic VAD, profundidad equivalente y voz del Manual persistente");
+console.log("PASS V407 R34 · contrato raíz: ACK transaccional, semantic VAD, profundidad equivalente y voz del Manual persistente");

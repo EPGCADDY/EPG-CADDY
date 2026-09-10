@@ -856,6 +856,17 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `approved-voice.js` comparte y persiste la misma selección de voz del Manual; `manual.html`, candidato y política TTS eliminan la orden masculina. `api/universal-ai.js` conserva la misma profundidad para voz y texto.
 - `test-v407-r33-root-voice-update.mjs` prueba el contrato automático. Sigue pendiente la puerta física iPhone; Maestro permanece intacto.
 
+# V407-R34 LAB · endurecimiento definitivo de ACTUALIZAR y micrófono · 10 de septiembre de 2026
+
+- `update-manifest.json` identifica `V407-R34-HARDENED-UPDATE-MICROPHONE-20260910` y sella exactamente `candidate-index-grupal.html` con SHA-256.
+- `service-worker.js` usa staging separado, valida release y bytes, publica `BUILD_READY`, verifica nuevamente antes de promover y escribe el marcador de promoción al final.
+- `service-worker.js` obliga `/update-manifest.json` a red; `vercel.json` aplica `no-cache, no-store, max-age=0, must-revalidate` al manifiesto y al candidato para que una versión futura no quede atrapada detrás de R34.
+- `candidate-index-grupal.html` consulta el manifiesto, localiza el worker que realmente tiene R34 preparado, exige coincidencia de ACK/release/SHA-256 y conserva la versión anterior ante cualquier fallo.
+- Realtime pasa a ser la ruta primaria también en iPhone: órdenes usan `server_vad`; AI UNIVERSAL usa `semantic_vad`; `SpeechRecognition` queda únicamente como respaldo posterior a fallo. Se vigilan `ended`, `mute` y `unmute` de la pista.
+- `test-v407-r34-hardened-update-microphone.mjs` bloquea regresiones de hash, staging, ACK y desvío automático de iPhone. Estado: fuente LAB en pruebas; no es PASS físico. Maestro/Producción intacto.
+- `test-v365-active-round-empty-recovery.mjs`, `test-v406-r23-visible-version.mjs`, `test-v407-r9-manual-update.mjs`, `test-v407-r25-round-controls.mjs`, `test-v407-r32-owner-only-update.mjs`, `test-v407-r32-two-column-modalities.mjs` y `test-v407-r33-root-voice-update.mjs` conservan sus controles históricos y apuntan al contrato sucesor R34; `audit-project.mjs` incorpora el gate nuevo.
+- `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se regeneran y sellan con las 467 fuentes desplegables de R34; el expediente histórico pesado permanece fuera del artefacto operativo.
+
 ## Expediente técnico integral V407-R32 — índice persistente
 
 - `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/ACTA_TECNICA_DE_VERIFICACION_Y_CONGELAMIENTO_DE_VERSION_EPG_CADDY.md`

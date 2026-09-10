@@ -10,6 +10,6 @@ for(const id of ["normalRoundButton","matchPlayRoundButton","fourBallRoundButton
 }
 assert.match(html,/\.game-mode-column>div,\.game-mode-column \.course-option\{width:100%;min-width:0\}/);
 const successor=fs.readFileSync("candidate-index-grupal.html","utf8");
-assert.match(successor,/V407-R33-ROOT-VOICE-UPDATE-20260910/);
+assert.match(successor,/V407-R34-HARDENED-UPDATE-MICROPHONE-20260910/);
 assert.match(successor,/@media\(max-width:800px\)[\s\S]*?\.game-mode-columns\{grid-template-columns:minmax\(0,1fr\) minmax\(0,1fr\)\}/);
 console.log("PASS V407 R32 · modalidades y funciones se conservan en dos columnas móviles");

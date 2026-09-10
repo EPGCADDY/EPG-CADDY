@@ -1,0 +1,6 @@
+{
+  "schema": "gscg-update-manifest/v1",
+  "release": "V407-R34-HARDENED-UPDATE-MICROPHONE-20260910",
+  "candidatePath": "/candidate-index-grupal.html",
+  "candidateSha256": "sha256:2a54073ec09a32e60602ef3d6e39372190cc3ea9db852e2d017cf498c310b5ae"
+}

@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V407-R33-ROOT-VOICE-UPDATE-20260910">
+  <meta name="gscg-release" content="V407-R34-HARDENED-UPDATE-MICROPHONE-20260910">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1073,7 +1073,7 @@ html,body,.app,.card-shell{background:#000!important}
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p id="mandatoryUpdateStatus">ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R33</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p id="mandatoryUpdateStatus">ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R34</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 <script src="./approved-voice.js"></script>
 <script src="./guest-access.js"></script>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
@@ -1251,7 +1251,7 @@ const CONVERSATION_PLAYBACK_STALL_MS=60000;
 const REALTIME_DISCONNECT_GRACE_MS=5000;
 const REALTIME_TURN_PROFILE_OPERATIONAL="operational";
 const REALTIME_TURN_PROFILE_CONVERSATION="conversation";
-let pc=null,dc=null,stream=null,micTrack=null,audioEl=null,listening=false,phase="idle",voiceContext="round",activeResponseId=null;
+let pc=null,dc=null,stream=null,micTrack=null,audioEl=null,listening=false,phase="idle",voiceContext="round",activeResponseId=null,micTrackMuteTimer=null;
 let sessionConnectPromise=null,voiceActivationPromise=null,voiceActivationContext=null,realtimeGeneration=0;
 let realtimeDisconnectTimer=null,voiceLastErrorMessage="";
 let appHiddenAt=0,appWasBackgrounded=false,lastRealtimeActivityAt=Date.now(),resumeCheckPromise=null;
@@ -4486,6 +4486,7 @@ function teardownRealtime(){
   clearConversationIdleCloseTimer();
   clearConversationTurnWatchdogs();
   if(realtimeDisconnectTimer){clearTimeout(realtimeDisconnectTimer);realtimeDisconnectTimer=null}
+  if(micTrackMuteTimer){clearTimeout(micTrackMuteTimer);micTrackMuteTimer=null}
   if(setupTranscriptionWatchdog){clearTimeout(setupTranscriptionWatchdog);setupTranscriptionWatchdog=null}
   realtimeGeneration++;
   try{if(dc){dc.onopen=null;dc.onclose=null;dc.onerror=null;dc.onmessage=null;dc.close()}}catch{}
@@ -5158,7 +5159,7 @@ async function ensureSession(){
     let localStream=null,localTrack=null,localPc=null,localDc=null,localAudio=null,openTimer=null,sessionCreatedTimer=null;
     try{
       reportVoiceHealth("connection_started");
-      localStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+      localStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:{ideal:true},noiseSuppression:{ideal:true},autoGainControl:{ideal:true},channelCount:{ideal:1},sampleRate:{ideal:48000}}});
       if(generation!==realtimeGeneration)throw new Error("Conexión reemplazada");
       localTrack=localStream.getAudioTracks()[0];
       if(!localTrack||localTrack.readyState!=="live")throw new Error("Micrófono no disponible");
@@ -5204,7 +5205,10 @@ async function ensureSession(){
       await sessionCreated;
       if(generation!==realtimeGeneration)throw new Error("Conexión reemplazada");
       stream=localStream;micTrack=localTrack;pc=localPc;dc=localDc;audioEl=localAudio;
-      const installedDc=dc,installedPc=pc;
+      const installedDc=dc,installedPc=pc,installedTrack=micTrack;
+      installedTrack.onended=()=>voiceTransportFailure(installedPc,voiceContext,"MICRÓFONO DESCONECTADO · TOCA ESCUCHAR PARA RECONECTAR");
+      installedTrack.onmute=()=>{if(micTrackMuteTimer)clearTimeout(micTrackMuteTimer);micTrackMuteTimer=setTimeout(()=>{micTrackMuteTimer=null;if(micTrack===installedTrack&&installedTrack.muted&&listening)voiceTransportFailure(installedPc,voiceContext,"MICRÓFONO INTERRUMPIDO · TOCA ESCUCHAR PARA RECONECTAR")},1500)};
+      installedTrack.onunmute=()=>{if(micTrackMuteTimer){clearTimeout(micTrackMuteTimer);micTrackMuteTimer=null}reportVoiceHealth("input_recovered")};
       dc.onmessage=handleRealtime;
       dc.onerror=()=>{if(dc===installedDc&&!listening)console.debug("Canal Realtime reportó error")};
       dc.onclose=()=>{
@@ -5240,15 +5244,9 @@ async function ensureSession(){
 async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL){
   voiceLastErrorMessage="";
   if(browserVoiceActive||browserVoiceRequested){stopBrowserVoiceFallback({keepStatus:true,processPending:true});return true}
-  // En Safari/iPhone la autorización del gesto se pierde si primero esperamos
-  // la sesión Realtime. La captura local debe abrirse en el mismo toque para
-  // que un 429 remoto no deje sin score ni comunicación universal.
-  if(!listening&&gestureSafeBrowserVoicePreferred()){
-    voiceContext=context;setMicConnecting(context,false);
-    if(context==="round")resetRoundCapture();
-    if(context==="setup"&&(setupFinalizeRequested||setupLocked))resetSetupCapture();
-    if(startBrowserVoiceFallback(context)){voiceLastErrorMessage="MICRÓFONO DEL IPHONE ACTIVO";return true}
-  }
+  // Realtime es siempre la ruta primaria, también en iPhone. Así las órdenes
+  // usan el perfil operativo y AI UNIVERSAL usa realmente semantic_vad.
+  // SpeechRecognition queda reservado para recuperación posterior a un fallo.
   setMicConnecting(context,true);
   if(voiceActivationPromise){
     return voiceActivationPromise;
@@ -5633,21 +5631,45 @@ setTimeout(recoverInstalledAppScrolling,0);
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
 const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"";
 let appBuildCheckRunning=false,appBuildReloading=false,pendingPublishedBuild=CURRENT_APP_BUILD;
+let pendingPublishedManifest=null;
 function showCurrentBuild(){
   pendingPublishedBuild=CURRENT_APP_BUILD;
+  pendingPublishedManifest=null;
   const button=$("mandatoryUpdateButton");button.disabled=true;button.setAttribute("aria-disabled","true");
   $("mandatoryUpdateAction").textContent="ACTUALIZADO";
   $("mandatoryUpdate").classList.remove("available");
 }
-function showMandatoryUpdate(build){
-  if(!build||build===CURRENT_APP_BUILD)return false;
+function showMandatoryUpdate(build,manifest=null){
+  if(!build||build===CURRENT_APP_BUILD||!manifest?.candidateSha256)return false;
   pendingPublishedBuild=build;
+  pendingPublishedManifest=manifest;
   const button=$("mandatoryUpdateButton");button.disabled=false;button.setAttribute("aria-disabled","false");
   $("mandatoryUpdateAction").textContent="ACTUALIZAR";
   $("mandatoryUpdate").classList.add("available");return true;
 }
+function messageWorker(worker,message,timeoutMs=20000){
+  return new Promise((resolve,reject)=>{
+    if(!worker)return reject(new Error("UPDATE_WORKER_UNAVAILABLE"));
+    const channel=new MessageChannel(),nonce=`${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const timeout=setTimeout(()=>reject(new Error("UPDATE_ACK_TIMEOUT")),timeoutMs);
+    channel.port1.onmessage=event=>{const data=event.data||{};if(data.nonce!==nonce)return;clearTimeout(timeout);resolve(data)};
+    worker.postMessage({...message,nonce},[channel.port2]);
+  });
+}
+async function verifiedUpdateWorker(registration,expectedBuild){
+  const deadline=Date.now()+20000;
+  while(Date.now()<deadline){
+    await registration.update().catch(()=>registration);
+    const candidates=[navigator.serviceWorker.controller,registration.waiting,registration.active,registration.installing].filter((worker,index,list)=>worker&&list.indexOf(worker)===index);
+    for(const worker of candidates){
+      try{const reply=await messageWorker(worker,{type:"QUERY_BUILD"},2500);if(reply.ok&&reply.type==="BUILD_READY"&&reply.build===expectedBuild&&reply.staged===true)return worker}catch{}
+    }
+    await new Promise(resolve=>setTimeout(resolve,350));
+  }
+  throw new Error("UPDATE_WORKER_NOT_READY");
+}
 async function installMandatoryUpdate(){
-  if(appBuildReloading||!pendingPublishedBuild)return;
+  if(appBuildReloading||!pendingPublishedBuild||!pendingPublishedManifest)return;
   appBuildReloading=true;
   if($("setupOverlay")?.classList.contains("visible")){captureVisibleRegistrationValues();syncDraftPlayersFromManualRows({strict:false,renderAfter:false});persistDraftState()}
   persist();
@@ -5657,22 +5679,9 @@ async function installMandatoryUpdate(){
   try{
     if(!("serviceWorker" in navigator))throw new Error("SERVICE_WORKER_UNAVAILABLE");
     const registration=await navigator.serviceWorker.ready;
-    await registration.update().catch(()=>registration);
-    const worker=navigator.serviceWorker.controller||registration.active;
-    if(!worker)throw new Error("UPDATE_WORKER_UNAVAILABLE");
-    const channel=new MessageChannel(),nonce=`${Date.now()}-${Math.random().toString(36).slice(2)}`;
-    const ack=new Promise((resolve,reject)=>{
-      const timeout=setTimeout(()=>reject(new Error("UPDATE_ACK_TIMEOUT")),20000);
-      channel.port1.onmessage=event=>{
-        const data=event.data||{};
-        if(data.nonce!==nonce)return;
-        clearTimeout(timeout);
-        if(data.ok&&data.type==="PROMOTION_READY"&&data.build===pendingPublishedBuild)resolve(data);
-        else reject(new Error(data.error||"UPDATE_PROMOTION_FAILED"));
-      };
-    });
-    worker.postMessage({type:"PROMOTE_BUILD",build:pendingPublishedBuild,nonce},[channel.port2]);
-    await ack;
+    const worker=await verifiedUpdateWorker(registration,pendingPublishedBuild);
+    const data=await messageWorker(worker,{type:"PROMOTE_BUILD",build:pendingPublishedBuild,candidateSha256:pendingPublishedManifest.candidateSha256});
+    if(!(data.ok&&data.type==="PROMOTION_READY"&&data.build===pendingPublishedBuild&&data.candidateSha256===pendingPublishedManifest.candidateSha256))throw new Error(data.error||"UPDATE_PROMOTION_FAILED");
     sessionStorage.setItem("gscg.expected.release",pendingPublishedBuild);
     const nextUrl=new URL(location.href);nextUrl.searchParams.delete("__gscg_build_check");nextUrl.searchParams.delete("app_version");nextUrl.searchParams.set("update_check",String(Date.now()));location.replace(nextUrl.toString());
   }catch(error){
@@ -5685,20 +5694,20 @@ async function syncPublishedAppVersion(){
   if(appBuildCheckRunning||appBuildReloading||document.hidden)return;
   appBuildCheckRunning=true;
   try{
-    const checkUrl=new URL(location.pathname,location.origin);
-    checkUrl.searchParams.set("__gscg_build_check",String(Date.now()));
+    const checkUrl=new URL("/update-manifest.json",location.origin);
+    checkUrl.searchParams.set("update_manifest",String(Date.now()));
     const response=await fetch(checkUrl,{cache:"no-store",headers:{"Cache-Control":"no-cache"}});
     if(!response.ok)return;
-    const html=await response.text();
-    if(html.length<300000)return;
-    const published=html.match(/<meta\s+name=["']gscg-release["']\s+content=["']([^"']+)["']/i)?.[1]||"";
-    if(!published)return;
-    if(published===CURRENT_APP_BUILD)showCurrentBuild();else showMandatoryUpdate(published);
+    const manifest=await response.json();
+    const published=String(manifest?.release||""),sha=String(manifest?.candidateSha256||"");
+    if(manifest?.schema!=="gscg-update-manifest/v1"||manifest?.candidatePath!=="/candidate-index-grupal.html"||!/^V407-R\d+/.test(published)||!/^sha256:[a-f0-9]{64}$/.test(sha))return;
+    if(published===CURRENT_APP_BUILD)showCurrentBuild();else showMandatoryUpdate(published,manifest);
   }catch(error){console.warn("APP_VERSION_SYNC",error?.message||error)}
   finally{appBuildCheckRunning=false}
 }
 $("mandatoryUpdateButton").addEventListener("click",installMandatoryUpdate);
 showCurrentBuild();
+try{const expected=sessionStorage.getItem("gscg.expected.release");if(expected&&expected===CURRENT_APP_BUILD)sessionStorage.removeItem("gscg.expected.release")}catch{}
 setTimeout(syncPublishedAppVersion,1200);
 setInterval(syncPublishedAppVersion,30000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout(syncPublishedAppVersion,800)});

@@ -98,6 +98,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r30-green-out
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r32-two-column-modalities.mjs','test-v407-r32-owner-only-update.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r33-root-voice-update.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r33-pulte-official-handicap.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r34-hardened-update-microphone.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

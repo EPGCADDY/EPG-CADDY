@@ -934,6 +934,19 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `api/voice-speech.js`: elimina la configuración masculina y usa política femenina latinoamericana.
 - `test-v407-r33-root-voice-update.mjs`, `test-v407-r32-owner-only-update.mjs` y `audit-project.mjs`: contrato R32 a R33 y regresión permanente. La prueba física sigue pendiente y Maestro no se toca.
 
+# V407-R34 · seguridad verificable para actualización y micrófono · 10 de septiembre de 2026
+
+- `candidate-index-grupal.html`: release visible R34; el detector lee `/update-manifest.json`, exige formato y SHA-256; el toque busca mediante `QUERY_BUILD` un worker que responda `BUILD_READY`, envía release/huella y acepta únicamente `PROMOTION_READY` coincidente. La ronda, el borrador y el Historial continúan persistidos antes de cualquier transición.
+- `service-worker.js`: incorpora `STAGING_CACHE_NAME`, `STAGING_READY_MARKER`, `sha256Text()`, `readManifest()` y `verifyCandidate()`. Un shell parcial, release incorrecto, hash distinto, cliente antiguo o ACK perdido no escribe `PROMOTION_MARKER`.
+- `service-worker.js` excluye el manifiesto público de la respuesta cacheada y `vercel.json` fija cabeceras anti-caché para `/update-manifest.json` y `/candidate-index-grupal.html`; el manifiesto almacenado se usa sólo como sello interno del staging.
+- `update-manifest.json`: contrato público mínimo `gscg-update-manifest/v1`, ruta exacta del candidato y huella SHA-256 de sus bytes.
+- `candidate-index-grupal.html`: elimina la preferencia automática de `SpeechRecognition` por detectar iPhone. `ensureSession()` abre Realtime como primera ruta con cancelación de eco, supresión de ruido, ganancia automática, mono y 48 kHz ideales; el respaldo del navegador sólo aparece después del error controlado. La pista notifica desconexión, mute sostenido y recuperación.
+- `test-v407-r34-hardened-update-microphone.mjs`: recalcula la huella, prueba contratos negativos y exige `server_vad` operativo más `semantic_vad` conversacional. Se integra en `audit-project.mjs` junto con V356/V358/V362.
+- Pruebas sucesoras actualizadas sin retirar sus aserciones funcionales: `test-v365-active-round-empty-recovery.mjs`, `test-v406-r23-visible-version.mjs`, `test-v407-r9-manual-update.mjs`, `test-v407-r25-round-controls.mjs`, `test-v407-r32-owner-only-update.mjs`, `test-v407-r32-two-column-modalities.mjs` y `test-v407-r33-root-voice-update.mjs`.
+- `REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-107 documenta causa, escape y control permanente.
+- Estado: implementación exclusivamente LAB. Automatización dirigida PASS; auditoría integral, navegador público e iPhone físico todavía pendientes. Maestro y Producción no se modifican.
+- Inventarios coordinados: `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`; el árbol desplegable queda sellado con 467 fuentes y el expediente histórico pesado permanece fuera del artefacto operativo.
+
 ## Expediente técnico integral V407-R32 — índice persistente
 
 - `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/ACTA_TECNICA_DE_VERIFICACION_Y_CONGELAMIENTO_DE_VERSION_EPG_CADDY.md`

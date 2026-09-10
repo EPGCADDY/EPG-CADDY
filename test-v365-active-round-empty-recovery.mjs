@@ -7,10 +7,11 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 
 assert.match(html,/V365-ACTIVE-ROUND-RECOVERY/);
 assert.match(worker,/v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery/);
-assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v407-r33-root-voice-update`/);
+assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v407-r34-hardened-update-microphone`/);
 assert.match(worker,/const APPROVED_CACHE_NAME=`\$\{CACHE_NAME\}-approved`/);
 assert.match(worker,/url\.searchParams\.has\("__gscg_build_check"\)/,"la consulta de versión debe ir a red sin sustituir la versión aprobada");
-assert.match(worker,/url\.searchParams\.get\("app_version"\)===RELEASE/,"sólo el toque de ACTUALIZAR promueve el candidato");
+assert.match(worker,/event\.data\?\.type==="PROMOTE_BUILD"/,"sólo el mensaje autenticado por release y huella del toque ACTUALIZAR promueve el candidato");
+assert.doesNotMatch(worker,/url\.searchParams\.get\("app_version"\).*promoteCandidate/s,"una URL no puede promover el candidato");
 assert.match(worker,/await ensureApprovedShell\(\);\s*return await approvedNavigationWithManualUpdate\(request\)/,"una apertura normal conserva el shell aprobado y permite recuperar ACTUALIZAR manualmente");
 assert.match(html,/class="mandatory-update" id="mandatoryUpdate"/);
 assert.match(html,/id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO<\/span>/);
