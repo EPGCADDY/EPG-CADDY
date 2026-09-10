@@ -1,5 +1,16 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Relevo V407-R24C recuperación R8 · 9 de septiembre de 2026 · 19:44 Guatemala
+
+- MAIN permanece intacta en `5e45b264da056ed9c4ee5ee61d5e4e05dfc69636`.
+- El alias estable `https://golf-sc-gt-lab.vercel.app` mostró físicamente V407-R8; ACTUALIZAR no actuó.
+- Causa pública verificada: el middleware devolvía `access.html` para `/service-worker.js` y ambos manifiestos. Corrección local: esos tres recursos de arranque quedan públicos; aplicación, datos y escrituras siguen privados.
+- Segundo FAIL físico: `ACTUALIZADO` cubrió `CONTROL MANUAL · UNIVERSALES` durante scroll. Corrección local en `gsc-design-system.css`: sólo el estado inactivo usa posición absoluta; ACTUALIZAR disponible conserva posición fija, verde, habilitada y pulsante.
+- Auditoría local antes de reorganizar el transporte: `133/133 PASS`; inventario `450 fuentes + 3 PDF PASS`; Manual `74/74 PASS`.
+- Commit remoto `9f32fd75f753061c0209a9ebcf719f8bd700aeb8` NO es publicable: el conector truncó `index-grupal.html`; deployment `dpl_6a2A5VCorw1vp1fPUiikeVjDprzC` terminó ERROR y el alias estable no cambió.
+- Estado local actual: HTML completo restaurado desde R24C; regla visual trasladada al CSS pequeño; tres pruebas dirigidas PASS. Falta regenerar inventario, repetir `npm run audit`, crear un commit remoto sin transportar de nuevo el HTML grande, esperar READY y verificar públicamente que `/service-worker.js` sea JavaScript.
+- Estado oficial: **NO REVISADO / NO PUBLICADO**. Revisión automatizada en navegador real y micrófono físico iPhone siguen separados. No promover MAIN hasta cero FAIL LAB.
+
 ## Continuidad V407-R10 · 8 de septiembre de 2026
 
 El propietario confirmó que R9 cargó la pantalla correcta pero rechazó que `ACTUALIZADO` estuviera deshabilitado. R10 conserva el estado oscuro cuando está vigente, pero mantiene la tecla activa: cada toque guarda la ronda, limpia únicamente el shell PWA y recarga realmente el mismo enlace. No cambia ninguna gráfica ni otra función. MAIN intacta.
