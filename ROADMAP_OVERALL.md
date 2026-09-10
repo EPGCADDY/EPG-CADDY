@@ -806,5 +806,5 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - LAB añade la fila `HDCP` entre `HOYO` y `PAR` en cada tarjeta digital LIVE.
 - Los índices de hoyo aparecen dentro de círculos del color de las marcas del jugador; BLANCAS usa blanco. El grosor identifica dónde recibe tiro y el borde doble dónde concede tiro, sin sustituir el color de marcas.
 - GROSS reutiliza la nomenclatura canónica: círculo para birdie, doble círculo para eagle, cuadro para bogey, doble cuadro para doble bogey y triple cuadro para triple bogey.
-- Firma visible, Service Worker, caché y pruebas avanzan coordinadamente a R29. Instalación exclusivamente mediante toque del propietario en `ACTUALIZAR`.
+- Firma visible, Service Worker, caché y `test-v407-r29-live-handicap-row.mjs` avanzan coordinadamente a R29. Instalación exclusivamente mediante toque del propietario en `ACTUALIZAR`.
 - Maestro R28 permanece intacto hasta revisión física de LAB y autorización expresa.
