@@ -1,1 +1,785 @@
-YªçŠx-®éÜj×¢ëiºÚ+Š§j[h‘éÜ¢éíß;Ù:-jZ.¶›­–)Ş³R2$ôDÔõdU$ÄÀ ¢22cCrÕ##DBÄ"+r&V7WW&6œ;6âFR–ç7FÆ6–öæW2#‚’—6ÆÖ–VçFòÂFW7Æ¦'6R+r’FR6WF–VÖ'&RFR##` ¢Ò6÷'&–vRVÂd”Âl:×6–6òFöæFRvöÆb×62ÖwBÖÆ"çfW&6VÂæ6Vw\:ÖÖ÷7G&æFò#‚’5ETÄ•¤"æò7GV&¢VÂÖ–FFÆWv&R7W7F—G\:Ö6W'f–6R×v÷&¶W"æ§6’Æ÷2Öæ–f–W7F÷2÷"66W72æ‡FÖÆà¢ÒW6÷2G&W2&V7W'6÷2L:–6æ–6÷2VVFâ;¦&Æ–6÷3²ÆÆ–66œ;6âÂÆ÷2FF÷2’Æ2—2&—fF26öç6W'fâVÂ6öçG&öÂFR66W6òà¢Ò5ETÄ•¤DöFV¦FR6W"f–¦ò7VæFòæòW†—7FRVæfW'6œ;6âVæF–VçFRÂWf—FæFòVR7V'&4ôåE$ôÂÔåTÂ+rTä•dU%4ÄU6²5ETÄ•¤&F—7öæ–&ÆR6öç6W'ff—6–&–Æ–FBÂfW&FRÂ†&–Æ—F6œ;6â’VÇ6òà¢Ò'VV&2W&ÖæVçFW3¢FW7B×cCr×##F2×V&Æ–2×vÖ&ö÷G7G&æÖ§6’FW7B×cCr×##F2×WFFR×67&öÆÂÖ—6öÆF–öâæÖ§6âÔ”âW&ÖæV6R–çF7Fà¢Ò6öçF–çV–FBFR6WF–VÖ'&RFR##c¢6R&VvVæW&âÆ÷2G&W2–çfVçF&–÷2FW6FRVÂ:&&öÂÆ–×–ò&CC–VV&FC3cC3VFVCf33F3†fccScc&²VÂ6æFFò6öæf—&ÖCSgVVçFW2’6öç6W'fÔ”â6–â6Ö&–÷2à ¢22cCrÕ##BÄ"+rv†G4&—fFò’G&ç6–6œ;6âFR&öæF+r’FR6WF–VÖ'&RFR##` ¢Ò&Vv—7G&òvVæW&Â’7F&ÆVf÷&B–æ6ÇW–Vâv†G4÷6–öæÂ6öâ	øzÏ	ø{’³S&&VFWFW&Ö–æFò’<;6F–vò–çFW&æ6–öæÂVF—F&ÆS²VÂFFò6R6öç6W'fVâVÂW&f–Â’æò6RV&Æ–6VâÄ•dRæ’VâÆF&¦WFF–v—FÂâÆ÷2&æ6÷27F&ÆVf÷&BçFW&–÷&W2VVFâÆ–æVF÷26öâÆVçG&FVç&—VV6–Fà¢Òd”äÄ•¤"$ôäDwV&FÆF&¦WFöf–6–ÂVâ†—7F÷&–Â’†&–Æ—F7RVçl:Öó²åTUd$ôäD&6†—fÆ&öæF7GVÂ’'&RVâ&Vv—7G&òf<:ÖòVâFöF2Æ2ÖöFÆ–FFW2à¢ÒVâ7VÇV–W"çFÆÆ7WW'VW7F6Rö7VÇF5ETÄ•¤DöÂWf—FæFòVR7V'&E,86R÷G&266–öæW2Ü;7f–ÆW2â<;6Æò&Wf–WrÄ#²Ö–âW&ÖæV6R–çF7Fà¢ÒVÂ–çfVçF&–ò6R6VÆÆ6öçG&VÂ:&&öÂ&VÖ÷FòÄ"FVçG&òFVÂÖ—6Öò6Ö&–òFö7VÖVçFÂ&WVW&–Fò÷"VÂFW7Æ–VwVRà¢ÒÆ÷26–×VÆF÷&W27F&ÆVf÷&BçFW&–÷&W2–çFW'&WFâÆW6Væ6–FVÂçVWfò6×ò6öÖòv†G4÷6–öæÂf<:Öòà¢ÒVâÜ;7f–ÂÂv†G4ö7WVæf–Æ6ö×ÆWF’&W6W'fÂì;¦ÖW&òVâæ6†òÜ:Öæ–ÖòWF–Æ—¦&ÆRà ¢2cCrÕ##4"+rVæÆ6RÄ•dR&—fFò'&R6öÖò<;6ÆòÆV7GW&+r’FR6WF–VÖ'&RFR##` ¢Ò6÷'&–vR;¦æ–6ÖVçFRÆg&öçFW&FR66W6òFVÂf—6÷"6ö×'F–Fó¢öÆ—fRæ‡FÖÆÂÆ—fR×f–Wræ§6’ÖF6‚×Æ’æ§6VVFVâ6&v"6–â6W6œ;6â&÷–WF&–à¢Òö’öÆ—fV6öçF–ì;¦&—fFò&7&V"ÂV&Æ–6"’&Wfö6#²VÂÖ–FFÆWv&RFV¦6"W†6ÇW6—fÖVçFRõ5B7F–öã×&VFÂVR’öÆ—fRæ§6fÆ–F6öâVÂFö¶Vâ6V7&WFòÂ6GV6–FBÂ&Wfö66œ;6â’Ì:ÖÖ—FRFR6öç7VÇF2à¢ÒFW7B×c3S"ÖÆ—fRæÖ§6–×–FRVRVÂf—6÷"gVVÇfÂf÷&×VÆ&–ò&÷–WF&–ò’VRVæ66œ;6âFRW67&—GW&VVFRW‡VW7Fà ¢22cCrÕ##2+r6ö×'F—"F—&V7FòR–çf—F6œ;6âG&ç7÷'F&ÆR+r’FR6WF–VÖ'&RFR##` ¢ÒFW6FRVæ66÷&R6&B7F—fÂFö6"Ä•dRV¦V7WFF—&V7FÖVçFRV–6µ6†&Tw&÷W‚–’'&RÆ†ö¦æF—fFR6ö×'F—"&VÆVv—"v†G4²æò×VW7G&æ–æwVæçFÆÆ–çFW&ÖVF–âÆ&VvÆ6öÜ;¦â7V'&RvVæW&ÂÂVæ—fW'6ÆW2Â7F&ÆVf÷&BÂÖF6‚Æ’’f÷W"&ÆÂà¢ÒÆ–çf—F6œ;6â&÷–WF&–FR#B†÷&2f–¦6öÖòFW‡Fò6ö×ÆWFò6öâö66W72æ‡FÖÃö–çf—FSÕDô´Tæ²v†G46öç6W'fVÂFö¶Vââ66W72æ‡FÖÆ6WFVW'’’VÂf÷&ÖFòg&vÖVçFòçFW&–÷"ÂVÆ–Ö–æVÂFö¶Vâf—6–&ÆR’6æ¦VW†6ÇW6—fÖVçFR÷"õ5BâVâtUBFR&Wf—7VÆ—¦6œ;6âæò6öç7VÖRÆ–çf—F6œ;6âà¢Òæò6Ö&–66÷&W2Â&öæF7F—fÂW'6—7FVæ6–Â6öçG&öÆW2FR5ETÄ•¤"æ’&—f6–FBà ¢22cCrÕ##"+rÄ•dR'&RÆ&öæF7F—fVâFöF2Æ2ÖöFÆ–FFW2+r’FR6WF–VÖ'&RFR##` ¢ÒV&Æ–6FòVâ&öGV66œ;6âFW6FR6öÖÖ—B“3#SSFƒ6#V3CvSV63Fc&CFc&3–FS6Vc†ÂFW7Æ–VwVRGÅó5CDgS5“S—W¥W¥U‡—ESTdvãV#v¶&ÂW7FFò$TE“²&öÆÆ&6²–æÖVF–Fó¢CC“v&3Vc&c†“#6#“Fc6cVV3FSc&66ffVà¢ÒÆ—fRÖ6öçG&öÂæ§66W&VÂf—6÷";¦&Æ–6òFRÆ÷26öçG&öÆW2FVÂ&÷–WF&–òâÂFö6"Ä•dRFW6FR7VÇV–W"&öæF7F—f'&RF—&V7FÖVçFRÆFÖ–æ—7G&6œ;6âFRW666÷&R6&C²6–â&öæF6öç6W'fVÂ6VçG&òÄ•dR;¦&Æ–6òà¢ÒÆ–6÷"7W'&VçE6æ6†÷B‚–vVæW&ÂÂVæ—fW'6ÆW2Â7F&ÆVf÷&BÂÖF6‚Æ’’f÷W"&ÆÂÂ6–âFWVæFW"FR§VvF÷&W2Â6×òÂ†÷–òò&öæF'F–7VÆ"à¢ÒFW7B×cCb×#R×6–×ÆR×F÷W&æÖVçBÖÆ—fRæÖ§6&Æ÷VVW&ÖæVçFVÖVçFRVÂ&Vw&W6òÂÖVì;¢vVì:—&–6ò7VæFòW†—7FRVæ&öæFâÆ÷2&æ6÷2Ä•dRÂ6FVv÷,:Ö2ÂVæ—fW'6ÆW2’6ö×'F—"w'WòW&ÖæV6Vâ52à¢Ò–æFW‚Öw'WÂæ‡FÖÆ’6W'f–6R×v÷&¶W"æ§6fç¦â<;6ÆòÆ–FVçF–FBFRVçG&Vv##"&7W7F—GV—"Æ—fRÖ6öçG&öÂæ§6ÆÖ6VæFòÂ6–âÇFW&"66÷&W2ÂW'6—7FVæ6–Â–çf—F6–öæW2#B‚æ’ÆgVæ6œ;6âFR5ETÄ•¤"à ¢22cCrÕ#+rFV6Æ5ETÄ•¤Dò7F—f+r‚FR6WF–VÖ'&RFR##` ¢Ò6Ö&–òVçGVÃ¢5ETÄ•¤DöW&ÖæV6R÷67W&ò7VæFò#W7L:f–vVçFRÂW&ò–æòVVFFW6†&–Æ—FFó²Fö6&ÆògVW'¦Væ&V6&v&VÂFVÂÖ—6ÖòVæÆ6R6–â&÷'&"Æ&öæFâæò6Ö&–æ–æwVæw,:f–6æ’÷G&gVæ6œ;6ââÔ”â–çF7Fà ¢22cCrÕ#’+r7GVÆ—¦6œ;6âÖçVÂ&VÂFRÆçFÆÆ–æ–6–Â+r‚FR6WF–VÖ'&RFR##` ¢Ò”Ôuó3Cƒ’æ§Vv&V6†¦#ƒ¢VÂ&÷L;6âfW&FRæò7W7F—G\:ÖÆçFÆÆçFW&–÷"à¢Ò#’W6Væ–FVçF–FBçVWf&VR#‚FWFV7FRÆV&Æ–66œ;6ã²ÂFö6"Â6öç6W'fÆ&öæFÂ&WF—&;¦æ–6ÖVçFRVÂv÷&¶W"ö66Œ:’f–V¦ò’&V6&vVÂÖ—6ÖòVæÆ6RFW6FR&VBà¢Òf–vVçFR×VW7G&5ETÄ•¤Dö÷67W&ó²<;6ÆòVæfW'6œ;6âF—7F–çF×VW7G&5ETÄ•¤&fW&FR÷'FVçFRâVÂv÷&¶W"FV¦FR&öÖ÷fW"òæfVv"WFöÜ:F–6ÖVçFRà¢Ò&6†—f÷3¢–æFW‚Öw'WÂæ‡FÖÆÂ6W'f–6R×v÷&¶W"æ§6ÂFW7B×cCr×#’ÖÖçVÂ×WFFRæÖ§6Â&æ6÷2FRfW'6œ;6â&VÆ6–öæF÷2ÂVF—B×&ö¦V7BæÖ§6Â6öçF–çV–FBÂ&V–æ6–FVæ6–2’Ö&÷2$ôDÔ2âÔ”âW&ÖæV6R–çF7Fà ¢22cCrÕ#‚+rVâ6öÆò67&öÆÂ•†öæR’7GVÆ—¦6œ;6â6–V×&RfW&–f–6&ÆR+r‚FR6WF–VÖ'&RFR##` ¢ÒVÂ66W6ò–ç7FÆFò†—7L;7&–6òvöÆb×62ÖwBÖÆ"çfW&6VÂæVVF6öÖòW7V¦òW&ÖæVçFRFVÂ6ì;6æ–6òWrÖ6FG’çfW&6VÂæ²fW&6VÂæÆVv7’ÖÖ—'&÷"æ§6öæ6öç6W'fÆ6öæf–wW&6œ;6âVRVçG&VvÆÖ—6ÖçFÆÆ’VÂÖ—6Öò6W'f–6Rv÷&¶W"#‚6–âVF—"6Ö&–òFRVæÆ6Rà¢ÒÆçFÆÆ&–æ6—ÂFV¦FR6W"Vâ÷fW&Æ’f–¦òFW7Æ¦&ÆS¢76WGW÷fW&Æ–VçG&ÂfÇV¦òFVÂFö7VÖVçFò’VÂ•†öæRW6Vâ;¦æ–6ò67&öÆÂæF—fòà¢Ò5ETÄ•¤&W&ÖæV6R†&–Æ—FFò’'FVæFòVâVâÆfW'6œ;6âf–vVçFS²6FF÷VRgVW'¦fW&–f–66œ;6â÷&öÖö6œ;6âFR66Œ:’6–â&÷'&"Æ6W6œ;6âà¢ÒVÂ7F—fFVFVÂ6W'f–6Rv÷&¶W"Ö–w&WFöÜ:F–6ÖVçFRVÂ6Æ–VçFR•†öæR7F—fòcCrÕ#b†6–#‚Væ6öÆfW£²Wf—F&V6&v2Ü;¦ÇF—ÆW2Âæò6öævVÆVÂ67&öÆÂ’æòFWVæFRFVÂ6öæFVòVRfÆÌ;2l:×6–6ÖVçFRVâ”Ôuó33bæ§Vvà¢ÒWf–FVæ6–FR&V6†¦ó¢”Ôuó33Bæ§VvÂcCrÕ#bÂ&÷L;6âw&—2’6öævVÆÖ–VçFò–çFW&Ö—FVçFR&W÷'FFòl:×6–6ÖVçFRà¢Ò&6†—f÷2W†7F÷3¢–æFW‚Öw'WÂæ‡FÖÆÂ6W'f–6R×v÷&¶W"æ§6ÂFW7B×cCr×#rÖ–÷2×67&öÆÂæÖ§6ÂFW7B×c3cRÖ7F—fR×&÷VæBÖV×G’×&V6÷fW'’æÖ§6ÂFW7B×cCb×#"×&öfW76–öæÂÖFW6–vâæÖ§6ÂFW7B×cCb×##2×f—6–&ÆR×fW'6–öâæÖ§6ÂFW7B×cCb×#BÖÖö&–ÆRÖ6öçG&öÇ2æÖ§6ÂFW7B×cCb×#R×6–×ÆR×F÷W&æÖVçBÖÆ—fRæÖ§6ÂFW7B×cCr×#×&VÖ—VÒ×f—7VÂ×7—7FVÒæÖ§6Â4ôåE$ôÅõ$õ”T5Dõõ44•$RóôD•$T5E$”4U5õTD”Dõ5õ•ôõ$DTäU5õTäD”TåDU2õ$Tt•5E$õõ$T”ä4”DTä4”5ô4Ä”DBæÖFÂ4ôåE$ôÅõ$õ”T5Dõõ44•$Rô”ådTåD$”õ5õc3æÆö6²æ§6öæÂ$ôDÔôõdU$ÄÂæÖF’$ôDÔôôDUDÄÄRæÖFà ¢22cCrÕ#r+r67&öÆÂ•†öæR’7GVÆ—¦6œ;6âf—6–&ÆR+r‚FR6WF–VÖ'&RFR##` ¢Ò6÷'&–vRVÂF66ò–çFW&Ö—FVçFRFVÂFW7Æ¦Ö–VçFòVâ•†öæS¢VÆ–Ö–æÆ×WF6œ;6âFRW7F–Æ÷2GW&çFR6FF÷V6‡7F'FÂ6W&VÂFW7Æ¦Ö–VçFòFR÷fW&Æ—2’:v–æÂ’V&Æ–6VæçVWf–FVçF–FBFR66Œ:’&VRcCrÕ#b×VW7G&R5ETÄ•¤&'FVæFòà¢Ò–çFVw&6–â6ö'&W67&–&—"VÂ6Ö&–ò6öæ7W'&VçFR3–&#3¢Vâ6öÆò&Æ÷VRÔôDÄ”DDU6’Æ66œ;6â4ôÕ%DRÄ•dVà¢Ò6æFFò&W&öGV6–&ÆS¢FW7B×cCr×#rÖ–÷2×67&öÆÂæÖ§6VVF–æ6÷'÷&FòVâVF—B×&ö¦V7BæÖ§6à¢Ò&6†—f÷2W†7F÷2cCrÕ#s¢–æFW‚Öw'WÂæ‡FÖÆÂ6W'f–6R×v÷&¶W"æ§6ÂVF—B×&ö¦V7BæÖ§6ÂFW7B×cCr×#rÖ–÷2×67&öÆÂæÖ§6ÂFW7B×cCb×#BÖÖö&–ÆRÖ6öçG&öÇ2æÖ§6ÂFW7B×cCb×#"×&öfW76–öæÂÖFW6–vâæÖ§6ÂFW7B×cCr×#×&VÖ—VÒ×f—7VÂ×7—7FVÒæÖ§6ÂFW7B×cCb×#R×6–×ÆR×F÷W&æÖVçBÖÆ—fRæÖ§6ÂFW7B×c#c×&Vv—7G&F–öâ×7F&ÆVf÷&BÖÖöFÆ—G’æÖ§6ÂFW7B×c3#’×6¶–ç2æÖ§6ÂFW7B×c33×6–FRÖvÖW2æÖ§6ÂFW7B×cCb×##2×f—6–&ÆR×fW'6–öâæÖ§6ÂFW7B×c3cRÖ7F—fR×&÷VæBÖV×G’×&V6÷fW'’æÖ§6Â4ôåE$ôÅõ$õ”T5Dõõ44•$RóôD•$T5E$”4U5õTD”Dõ5õ•ôõ$DTäU5õTäD”TåDU2õ$Tt•5E$õõ$T”ä4”DTä4”5ô4Ä”DBæÖFÂ4ôåE$ôÅõ$õ”T5Dõõ44•$Rô”ådTåD$”õ5õc3æÆö6²æ§6öæÂ$ôDÔôõdU$ÄÂæÖF’$ôDÔôôDUDÄÄRæÖFà ¢22cCrÕ#b$ôET44œ94â+rVæÆ6RW7F&ÆR’7GVÆ—¦6œ;6â–ç7FÆF+r‚FR6WF–VÖ'&RFR##` ¢Ò6RV&Æ–6VÂ:&&öÂcCrÕ#b–fW&–f–6FòVâVÂVæÆ6RW7F&ÆRFR&öGV66œ;6â&VRÆ2–ç7FÆ6–öæW2W†—7FVçFW2FWFV7FVâÆçVWffW'6œ;6â’†&–Æ—FVâ5ETÄ•¤&Â6–âW†–v—"ÂW7V&–ò6Ö&–"FRVæÆ6Ræ’&V–ç7FÆ"ÆÆ–66œ;6âà¢ÒVÂ&öÆÆ&6²6öç6W'f6öÖò&VfW&Væ6–VÂ6öÖÖ—BFR&öGV66œ;6âcCbÕ##BC–cs–cS“ƒvc†&cSƒ–&6S–3VS“##ƒSs3c6à ¢22cCrÕ#B+rVæ6&W¦FògVW&FRÆ&'&FVÂ•†öæR+r‚FR6WF–VÖ'&RFR##` ¤ÆçFÆÆ&–æ6—Â&W7WFVÂ:&V6VwW&7WW&–÷#²ÆövòR–æf÷&Ö6œ;6â&¦âFV&¦òFRÆ&'&FVÂ•†öæRâVÂ&Æ÷VRFW&V6†ò6R6W&6Â6VçG&ò’fW'6œ;6âô5ETÄ•¤Dò6R6W&âFVÂ&÷&FRâWf–FVæ6–2FR÷&–vVã¢”Ôuó3#ƒ’çævÂ”Ôuó3#ƒ’çævR”Ôuó3#"çævâ4ôåE$ôÅõ$õ”T5Dõõ44•$Rô4ôåD”åT”DEôÔU5E$ôÄ"æÖF&Vv—7G&VÂ6÷'FR#Bâ&öGV66œ;6â–çF7Fà ¢22cCrÕ#2+rçFÆÆB+rF&¦WFF–v—FÂ&VÖ—VÒ+r‚FR6WF–VÖ'&RFR##` ¢Ò–æFW‚Öw'WÂæ‡FÖÆ¢F&¦WFF–v—FÂW6Væ6&W¦Fò6VçG&FòÂG&W266–öæW2WV—fÆVçFW2ÂÖWFFF÷2L9sVâW67&—F÷&–ò’,9s"VâÜ;7f–ÂÂw\:ÖFRFW7Æ¦Ö–VçFò’6öçFVæVF÷"FRF&Æ6öâæ6†ò6öçG&öÆFòFR3c‚à¢ÒÆ÷266W6÷2fÆ÷FçFW2¦Væ÷2VVFâö7VÇF÷2Ö–VçG&2ÆF&¦WFF–v—FÂW7L:&–W'F²5ETÄ•¤DöW&ÖæV6Rf—6–&ÆR÷"÷&FVâFVÂ&÷–WF&–òà¢ÒÆ&Wf—6œ;6âl:×6–6FVÂ&–ÖW"&Wf–Wr#2&V6†¬;2”å5DÄ"6ö'&RÆF&¦WF’VâÖWFFFòf<:Öó²VÂ6æF–FFòf–æÂö7VÇFW6R66W6ò’×VW7G&$ôäD45TÆ7VæFòæòW†—7FRF÷&æVòà¢Ò6W'f–6R×v÷&¶W"æ§6–FVçF–f–6VÂ6æF–FFò#3²Æ÷26öçG&F÷2c3cRÂcCRÂcCb’cCr6RÆ–æVâ6–â6Ö&–"<:Æ7VÆòÂW'6—7FVæ6–Â6–W'&Ræ’Vçl:Öòà¢Ò&6†—f÷2W†7F÷2FVÂ6÷'FS¢–æFW‚Öw'WÂæ‡FÖÆÂ6W'f–6R×v÷&¶W"æ§6ÂFW7B×cCr×#×&VÖ—VÒ×f—7VÂ×7—7FVÒæÖ§6ÂFW7B×c3cRÖ7F—fR×&÷VæBÖV×G’×&V6÷fW'’æÖ§6ÂFW7B×cCR×&Vv—7G&F–öâÖ6ÆV"Öf–æÂÖÖö&–ÆRæÖ§6ÂFW7B×cCb×#"×&öfW76–öæÂÖFW6–vâæÖ§6ÂFW7B×cCb×##2×f—6–&ÆR×fW'6–öâæÖ§6ÂFW7B×cCb×#BÖÖö&–ÆRÖ6öçG&öÇ2æÖ§6ÂFW7B×cCb×#R×6–×ÆR×F÷W&æÖVçBÖÆ—fRæÖ§6Â4ôåE$ôÅõ$õ”T5Dõõ44•$RóôD•$T5E$”4U5õTD”Dõ5õ•ôõ$DTäU5õTäD”TåDU2õ$Tt•5E$õõ$T”ä4”DTä4”5ô4Ä”DBæÖFÂ4ôåE$ôÅõ$õ”T5Dõõ44•$Rô”ådTåD$”õ5õc3æÆö6²æ§6öæÂ$ôDÔôõdU$ÄÂæÖF’$ôDÔôôDUDÄÄRæÖFà¢Ò&öÆÆ&6³¢&Vw&W6"Â6öÖÖ—BcCrÕ#"VâÆ"÷&VÖ—VÒ×V’×cCvâ&öGV66œ;6âW&ÖæV6R–çF7Fà ¢22cCrÕ#+r6—7FVÖf—7VÂ&VÖ—VÒ’6–Ü:—G&–6ò+r‚FR6WF–VÖ'&RFR##` ¤&6†—f÷2FRG&¦&–Æ–FB’&Vw&W6œ;6â7GVÆ—¦F÷3¢4ôåE$ôÅõ$õ”T5Dõõ44•$RóôD•$T5E$”4U5õTD”Dõ5õ•ôõ$DTäU5õTäD”TåDU2õ$Tt•5E$õõ$T”ä4”DTä4”5ô4Ä”DBæÖFÂFW7B×cCb×##2×f—6–&ÆR×fW'6–öâæÖ§6’FW7B×cCb×#R×6–×ÆR×F÷W&æÖVçBÖÆ—fRæÖ§6à ¥f—7F2v†G4&W6W'fF2–æF—f–GVÆÖVçFS¢&Wf–Ww2÷v†G6Ö6&G2×cCb×##Bóõ$ôäDôäõ$ÔÂæ‡FÖÆÂ&Wf–Ww2÷v†G6Ö6&G2×cCb×##Bó%õ5D$ÄTdõ$Bæ‡FÖÆÂ&Wf–Ww2÷v†G6Ö6&G2×cCb×##Bó5ôÔD4…õÄ’æ‡FÖÆÂ&Wf–Ww2÷v†G6Ö6&G2×cCb×##BóEôdõU%ô$ÄÂæ‡FÖÆÂ&Wf–Ww2÷v†G6Ö6&G2×cCb×##BóUõ44õ$Uô4$Eõ$5D”4æ‡FÖÆÂ&Wf–Ww2÷v†G6Ö6&G2×cCb×##Bóeõ4´”å2æ‡FÖÆÂ&Wf–Ww2÷v†G6Ö6&G2×cCb×##BóuõtôÄbæ‡FÖÆÂ&Wf–Ww2÷v†G6Ö6&G2×cCb×##Bó…õdTt2æ‡FÖÆÂ&Wf–Ww2÷v†G6Ö6&G2×cCb×##Bó•ôDõE2æ‡FÖÆÂ&Wf–Ww2÷v†G6Ö6&G2×cCb×##BóõDõ$äTõôÄ•dRæ‡FÖÆ’&Wf–Ww2÷v†G6Ö6&G2×cCb×##Bö–æFW‚æ‡FÖÆà ¢Ò–æFW‚Öw'WÂæ‡FÖÆ–æ6÷'÷&Væ&WL:Ö7VÆf—7VÂ;¦æ–6&&Vv—7G&òÂ6&V6W&Â†W'&Ö–VçF2Â–æf÷&Ö6œ;6âFVÂ6×òÂ&W7VÖVâÂ66–öæW2–æfW&–÷&W2Â†—7F÷&–ÂÂF&¦WFF–v—FÂ’æVÆW3¢æVw&òöw&f—FòÂ&÷&FW2F—67&WF÷2ÂfW&FRÆ–Ö—FFòÂ&F–÷26ö†W&VçFW2ÂÇGW&2L:7F–ÆW2†öÖö|:–æV2’W76–Fò&W7—&&ÆRà¢ÒVâÜ;7f–ÂÂÆ6&V6W&6R÷&FVæVâF÷26öÇVÖæ2ÂÆ27VG&ò†W'&Ö–VçF2f÷&ÖâVæf–Æ6–Ü:—G&–6ÂÆ2&–ÖW&27VG&ò66–öæW26RF—7G&–'W–Vâ,9s"ÂåTUd$ôäDö7WVæÌ:ÖæV6ö×ÆWF’Æ2G&W266–öæW26V7VæF&–26öç6W'fâW†7FÖVçFRÆÖ—6ÖÇGW&à¢Ò6W'f–6R×v÷&¶W"æ§6–FVçF–f–6Æ66Œ:’cCrÕ#âFW7B×cCr×#×&VÖ—VÒ×f—7VÂ×7—7FVÒæÖ§6&Æ÷VV&Vw&W6–öæW2FR6–ÖWG,:Ö’vVöÖWG,:Öâ&öGV66œ;6âW&ÖæV6R–çF7F†7F&Wf—6œ;6âf—7VÂ’&ö&6œ;6âFVÂ&÷–WF&–òà¢Ò6öçG&öÂÖçVÂ†W&VFÆÖ—6Ö7WW&f–6–Rw&f—FòÂæfVv6œ;6âåDU$”õ.(	4„õ”ş(	54”uT”TåDR&÷÷&6–öæFÂ6×÷2†öÖö|:–æV÷2’TåDU"&–æ6—ÂFRSb‚à¢Ò6÷'&V66œ;6â$2ÓƒC¢6öçG&öÂÖçVÂVÆ–Ö–æÆ26V—26öÇVÖæ2,:Öv–F2ÂW6&WL:Ö7VÆFF&ÆR6öâ6öçG&öÆW2FRSN(	3cB‚’6öç6W'f6–â6Ö&–÷2ÆÆWF÷&–v–æÂæVw&òÂfW&FRæ\;6âÂ&Ææ6ò’&ö¦ògVæ6–öæÂâ6R&öŒ:Ö&R6WF"6öÖòWf–FVæ6–Ü;7f–ÂVæ6GW&FRW67&—F÷&–ò&V6÷'FFà¢ÒFW7B×c#c×&÷VæB×ö–çG2×Æ–W"×&WGW&âæÖ§66öç6W'fVÂ6öçG&FòFR6V—26öÇVÖæ2FRvVæW&Âõ7F&ÆVf÷&BÂW&ò7W7F—GW–RÆÖVF–F,:Öv–Fö'6öÆWF÷"fÆ–F6œ;6âW‡Ì:Ö6—FFRÆ&WL:Ö7VÆFF&ÆRFRW67&—F÷&–ò’Ü;7f–Âà ¢22cCbÕ##B+r&Wf—7VÆ—¦6œ;6âl:×6–6FRF&¦WF2v†G4+r‚FR6WF–VÖ'&RFR##` ¢Ò6R–æ6÷'÷&&Wf–Ww2÷v†G6Ö6&G2×cCb×##Bö6öâVâ:ÖæF–6R’F–W¢F&¦WF2FR×VW7G&vVæW&F2÷"VÂ6öç7G'V7F÷"öf–6–ÂFR'FVf7F÷3¢&öæFæ÷&ÖÂÂ7F&ÆVf÷&BÂÖF6‚Æ’Âf÷W"&ÆÂÂ66÷&R6&B+r,:7F–6Â6¶–ç2ÂvöÆbÂfVv2ÂF÷G2’F÷&æVòÆ—fRà¢ÒÆ2:v–æ26öâW†6ÇW6—fÖVçFRFR&Wf—6œ;6âf—7VÂVâÄ#²æò6Ö&–â<:Æ7VÆòÂW'6—7FVæ6–ÂVçl:ÖòÂ&öGV7F–öâæ’VÂ6–W'&Röf–6–ÂFR&öæF2à ¢22cCbÕ#B+r6öçG&öÆW2Ü;7f–ÆW26–âG&6ÆR+rrFR6WF–VÖ'&RFR##` ¢ÒÄ•dRÂ$TtÄ2Â’(‰â’7W÷'B6âVæ&'&W7G'V7GW&ÂFV&¦òFVÂVæ6&W¦Fòà¢Ò&Vv—7G&òæöÖ'&W‡Ì:Ö6—FÖVçFRÆ÷26VÆV7F÷&W2f<:Ö÷24DTtõ,8Ô’Ô$42à¢ÒE,82Â$õ%$"44õ$U2’²¥TtDõ"6ö×'FVâVæf–Æ6ö×7Fà¢ÒVÂ&æ6òf—7VÂFV×÷&ÂW6cr'F–6—çFW2&W'F–F÷2róbó#BóóróróS²FW7B×cCb×#BÖÖö&–ÆRÖ6öçG&öÇ2æÖ§26öç6W'fVÂ6æFFòFR&Vw&W6œ;6âà ¢ÒcCbÕ#2&VçVWfW†6ÇW6—fÖVçFRVÂ–FVçF–f–6F÷"V&Æ–6Fò’Æ66Œ:’t&VRÆ÷266W6÷2–ç7FÆF÷26öâcCbÕ#"FWFV7FVâÆ7GVÆ—¦6œ;6â’7F—fVâVÂ&÷L;6â5ETÄ•¤&²æòÖöF–f–6&öæF2Â66÷&W2æ’W'6—7FVæ6–à ¢22cCbÕ#"Ä"6æF–FFò+rF—6\;ò&öfW6–öæÂÂ6FVv÷,:Ö2’Dõ$äTòÄ•dR+rrFR6WF–VÖ'&RFR##` ¢Ò6Rw&V|;2w62ÖFW6–vâ×7—7FVÒæ7766öÖò†ö¦6ì;6æ–6W†6ÇW6—fFRDõ$äTòÄ•dS¢W76–FòÂ&F–÷2Â7WW&f–6–W2Âfö6òÂÇGW&2L:7F–ÆW2’F—öw&l:ÖÆVv–&ÆRâ&Vv—7G&òVVL;26öç6öÆ–FFòFVçG&òFR7R†ö¦†—7L;7&–6Â6–âVæ6W‡FW&æFR6ö'&W67&—GW&2à¢Ò&Vv—7G&òÜ;7f–Â6öç6W'fäôÔ%$R(i"4DTtõ,8Ô(i"„D5(i"Ô$46ÂW&òF—7G&–'W–R6F§VvF÷"VâF÷2Ì:ÖæV2&Wf—F"G'Væ6Ö–VçFó¢æöÖ'&R’6FVv÷,:Ö'&–&²†æF–6’Ö&62&¦òà¢ÒDõ$äTòÄ•dR&VGV6R'V–FòVâÜ;7f–ÂÂ&–÷&—¦Æ2W7F;2FR6Æ6–f–66œ;6âôÖ’F&ÆW&òÂö7VÇF–ç7G'V66–öæW2W&ÖæVçFW2’6–×Æ–f–66öÇVÖæ26V7VæF&–2à¢ÒÆf—7FFWFÆÆF&\;¦æRF–ì:Ö–6ÖVçFRFöF÷2Æ÷2§VvF÷&W2VR&V¸Ó½­¢G§²ÚîÆ­yÖâ&Æö"f<:ÖòVVF&V6†¦Fòà¢Ò6–W'&RFRV&Æ–66œ;6â#C¢$ôDÔ2’6VÆÆòFR–çfVçF&–òVVFâ6ö÷&F–æF÷2VâVÂÖ—6Öò6öÖÖ—Bf–æÂà¢ÒWf–FVæ6–WFöÖF—¦FFRF&¦WF3¢67&—G2ö6&BÖVF—BÖf—‡GW&W2æÖ§6à¢Ò#S¢7GVÆ—¦6œ;6â&VÖ÷F'FV<;6ÆòçFRVæfW'6œ;6âçVWf’6öæf—&Ö5ETÄ•¤DòÂ–ç7FÆ&Æà¢Ò#c¢ÖVFÂÆ’’Væ—fW'6ÆW2&VfÆV¦âf—7VÆÖVçFRVæ6öÆÖöFÆ–FB7F—f²6—'fR6öÖò6VwVæF7GVÆ—¦6œ;6â&VÖ÷F6öç6V7WF—fà¢Ò#s¢Æ6FVv÷,:ÖVÆVv–F&V6RWV\;6ö'&RVÂæöÖ'&RFR6F§VvF÷#²6–â6FVv÷,:Öæò&V6RFW‡FòâÆf–ÆTåDõ2’7W2fÆ÷&W2÷"†÷–ò÷F÷FÆW2VVFâ&ö¦÷2Â’Væf–Æf<:Ö6öâ6FVv÷,:ÖòÖ&62&W6VÆV66–öæF2æò&Æ÷VVô²à¢Ò&W&6œ;6âFRG&ç7÷'FR#s¢–æFW‚Öw'WÂæ‡FÖÆ6R&WG&ç6Ö—FR:ÖçFVw&ó²VÂ'V–ÆBG'Væ6FòVVF&V6†¦Fò’æòÆÆV|;2&öGV66œ;6âà¢Ò#ƒ¢–æFW‚Öw'WÂæ‡FÖÆÂÆ—fR×f–Wræ§6’Æ—fRæ‡FÖÆ×VW7G&âVçF÷2÷"†÷–ò÷F÷FÆW2Væ—fW'6ÆW2Vâ&ö¦ó²VÂVæ6&W¦FòÜ;7f–Â6W&ÆövòÂÖöFÆ–FB’7GVÆ—¦6œ;6â6–â7WW'÷6–6œ;6âà¢2#’+rVæÆ6R–çf—FFò–æF—f–GVÂFRVâ6öÆòW6ò+r’FR6WF–VÖ'&RFR##` ¢ÒVÂ&–ÖW"6æ¦R6öç7VÖRL;6Ö–6ÖVçFRVÂVæÆ6S²7VÇV–W"6VwVæFòæfVvF÷"òF—7÷6—F—fò&V6–&RTäÄ4R”ål8Ä”DòÂdTä4”Dòò”UD”Ä•¤Döà¢ÒVÂF—7÷6—F—fòVRÆò6æ¦\;26öç6W'f7R6öö¶–R&—fF†7FVÂfVæ6–Ö–VçFò÷&–v–æÂFR#B†÷&2à¢ÒÆ6æ6RW†6ÇW6—fòÄ#²Ô”âÂf&–&ÆW2’&6RFRFF÷2W&ÖæV6Vâ6–â6Ö&–÷2W7G'V7GW&ÆW2à ¢2cCrÕ##+r5Uõ%B’66W6ò#B‚6W'&F÷2+r’FR6WF–VÖ'&RFR##` ¢Ò–æFW‚Öw'WÂæ‡FÖÆ¢5Uõ%B'&RöÖçVÂçFfVâÆÖ—6ÖçFÆÆÂ×VW7G&cCr+r##’ög&V6R4ôÕ%D•"#D†<;6ÆòÆ7VVçF&÷–WF&–à¢Ò6W'f–6R×v÷&¶W"æ§6¢fç¦&VÆV6Rö66Œ:’’W†6ÇW–Rö66W72æ‡FÖÆFRÆæfVv6œ;6âtÆÖ6VæFà¢Ò’öÖ66W72æ§6’’õöÆ–"öÖ66W72æ§6¢Æ÷2VæÆ6W2W6âVÂFöÖ–æ–òÄ"öf–6–Â’6R6öç7VÖVâL;6Ö–6ÖVçFRVæ6öÆfW£²VÂ&–ÖW"F—7÷6—F—fò6öç6W'f66W6ò†7FVÂfVæ6–Ö–VçFòFR#B†÷&2à¢Ò'VV&2F—&–v–F3¢FW7B×c3ÖÆ—fR×7W÷'BÖÆ–æ²æÖ§6ÂFW7B×#‚Ö÷væW"ÖwVW7BÓ#F‚Ö66W72æÖ§6’FW7B×cCr×#’ÖÖçVÂ×WFFRæÖ§6à¢Ò&öÆÆ&6³¢föÇfW"Â6öÖÖ—B##FRÄ"âÔ”âæò6RÖöF–f–6à¢Òæv—F‡V"÷v÷&¶fÆ÷w2ö†÷Ff—‚×7W÷'B×6ÖR×67&VVâç–ÖÆ¢6R&WF—&VÂG&ç7÷'FRFV×÷&Ã²##VVF–çFVw&FòF—&V7FÖVçFRVâÄ"à¢ÒFö72öÖçVÂ÷c3÷vRÓçæv¢÷'FFFVÂÖçVÂ&W6VÆÆF§VçFò6öâÆ÷2DbV&Æ–6F÷2&VR5Uõ%BVçG&VwVRVÂ'FVf7Fòf–vVçFRà¢Ò&W&6œ;6âFR'V–ÆB##¢6W'f–6R×v÷&¶W"æ§66öç6W'fW‡Ì:Ö6—FÖVçFRVÂÖ&6F÷"&ö&FòcCr×#‚ÖÆ—fR×ö–çG2Ö†VFW&²$ôDÔôõdU$ÄÂæÖFÂ$ôDÔôôDUDÄÄRæÖF’4ôåE$ôÅõ$õ”T5Dõõ44•$Rô”ådTåD$”õ5õc3æÆö6²æ§6öæ&Vv—7G&â’6VÆÆâÆ6÷'&V66œ;6ââVÂ&Wf–WrçFW&–÷"VVL;2&V6†¦Fó²Ô”âõ&öGV66œ;6âæò6Ö&–à¢Ò6öçG&öÂÖW7G&ò&W6W'fFó¢VçFòFR6÷'FRÌ:ÖæVƒV²7F—f6œ;6ã¢#2FRv÷7FòFR##bÂs£S£Â†÷&FRwVFVÖÆà¢Ò&W6VÆÆò&VÖ÷Fò##¢4ôåE$ôÅõ$õ”T5Dõõ44•$Rô”ådTåD$”õ5õc3æÆö6²æ§6öæW6VÂF–vW7BFVÂ:&&öÂv—BVRVF—FfW&6VÃ²$ôDÔôõdU$ÄÂæÖF’$ôDÔôôDUDÄÄRæÖFFö7VÖVçFâVÂÖ—6Öò6Ö&–òâÔ”âõ&öGV66œ;6âW&ÖæV6R–çF7Fà¢ÒfW&–f–66œ;6âf–æÂFVÂ&W6VÆÆò##¢Æ÷2G&W2&6†—f÷2çFW&–÷&W26R&V6Æ7VÆâ6öçG&VÂ„TF&VÖ÷FòW†7FòVRW6fW&6VÃ²æò6Ö&–<;6F–vògVæ6–öæÂæ’Ô”âõ&öGV66œ;6âà¢Ò6÷'&V66œ;6âl:×6–6##¢Ö–FFÆWv&Ræ§66öç7VÇFVÂW7FFòÖVF–çFRö’öÖ66W73ö7F–öã×7FGW6’VÆ–Ö–æÆ–×÷'F6œ;6âU4Ò–æ6ö×F–&ÆRVR6W6&Ô”DDÄUt$Uô”ådô4D”ôåôd”ÄTF²Ö&÷2$ôDÔ2’VÂ6VÆÆò6R7GVÆ—¦âVâVÂÖ—6Öò6öÖÖ—BâÔ”âõ&öGV66œ;6âæò6Ö&–à¢Ò&÷–WF&–ò##¢’õöÆ–"öÖ66W72æ§6f–¦6öÖò–FVçF–FBW†6ÇW6—f¦–ÖV¶—'7FTvÖ–Âæ6öÖ7VæFòfW&6VÂæòFVf–æRVæf&–&ÆRÜ:2W7V<:Öf–6²FW7B×#‚Ö÷væW"ÖwVW7BÓ#F‚Ö66W72æÖ§6&Æ÷VVW66–væ6œ;6ââ÷G&÷2W7V&–÷26–wVVâ6–âW&Ö—6ò&fW"ò7&V"–çf—F6–öæW2à¢Ò##VæÆ6R&÷FVv–Fò6öçG&&Wf—7VÆ—¦F÷&W3¢’öÖ66W72æ§6VçG&VvVÂFö¶VâVâg&vÖVçFò’<;6ÆòW&Ö—FR6öç7VÖ—&ÆòÖVF–çFRõ5C²66W72æ‡FÖÆV¦V7WFW6Rõ5BÂ'&—&ÆòVÂ–çf—FFò’VçG&–æÖVF–FÖVçFS²–æFW‚Öw'WÂæ‡FÖÆ6öçF–VæRVÂ&÷L;6â&÷–WF&–òFVçG&òFVÂæ6†òÜ;7f–ÂâVâtUBWFöÜ:F–6ò–æò6öç7VÖRVÂ66W6òà¢Ò6ö&W'GW&&WfVçF—f##¢FW7B×#‚Ö÷væW"ÖwVW7BÓ#F‚Ö66W72æÖ§6&Æ÷VVVÂ6æ¦R÷"tUB’fÆ–Fg&vÖVçFò²õ5C²FW7B×c3ÖÆ—fR×7W÷'BÖÆ–æ²æÖ§6W†–vRVR”åd•D"#B‚W&ÖæW¦6FVçG&òFRÆ&'&âÆ6W6’&WfVæ6œ;6âVVFâ6VçFF2Vâ4ôåE$ôÅõ$õ”T5Dõõ44•$RóôD•$T5E$”4U5õTD”Dõ5õ•ôõ$DTäU5õTäD”TåDU2õ$Tt•5E$õõ$T”ä4”DTä4”5ô4Ä”DBæÖFà¢Ò6–W'&R&VÖ÷Fò##¢$ôDÔôõdU$ÄÂæÖFÂ$ôDÔôôDUDÄÄRæÖF’4ôåE$ôÅõ$õ”T5Dõõ44•$Rô”ådTåD$”õ5õc3æÆö6²æ§6öæ6R&W6VÆÆâ§VçF÷26öçG&VÂ:&&öÂW†7FòFVÂ&Wf–Ws²&öGV66œ;6âW&ÖæV6R–çF7Fà¢Ò&W&6œ;6âFRG&ç7÷'FR##¢–æFW‚Öw'WÂæ‡FÖÆ6R&WG&ç6Ö—FR:ÖçFVw&ò6öâƒ‚ÃC'—FW3²Ö&÷2$ôDÔ2’VÂ6VÆÆò6R7GVÆ—¦âVâVÂÖ—6Öò6öÖÖ—BâVÂ'V–ÆBG'Væ6FòVVF&V6†¦Fòà¢ÒV&Æ–66œ;6â&öGV7F—f##¢$ôDÔôõdU$ÄÂæÖFÂ$ôDÔôôDUDÄÄRæÖF’4ôåE$ôÅõ$õ”T5Dõõ44•$Rô”ådTåD$”õ5õc3æÆö6²æ§6öæ&Vv—7G&âVÂFW7Æ–VwVRWF÷&—¦FòVâvöÆb×62ÖwBÖÆ&²VÂ&–ÖW"–çFVçFò÷"5$ôåõ4T5$UF’VÂ6öÖÖ—Bf<:ÖòVVFâ&V6†¦F÷26–â7W7F—GV—"##Bà ¢Ò6÷'&V66œ;6â&öGV7F—f7W÷'B6–âFö6"5ETÄ•¤#¢6W'f–6R×v÷&¶W"æ§6W†6ÇW–RöÖçVÂçFf’öÖçVÂæ‡FÖÆFVÂfÆÆ&6²vVæW&Â†6–Æ66÷&R6&B’VçG&VvÖçVÂæ‡FÖÆ÷"&VC²ÖçVÂæ‡FÖÆÖöçFVæ6öÆw,:f–67F—f6öâ&V6&v’6–â–çFW'6V7F–öäö'6W'fW&âFW7B×c3ÖÆ—fR×7W÷'BÖÆ–æ²æÖ§6’FW7B×c3ÖÖçVÂÖ†÷7F–æræÖ§6&Æ÷VVâVÂ'FVò’VÂ&WF÷&æò6–ÆVæ6–÷6òâfW&6VÂæ§6öæ&VvVæW&–çfVçF&–÷2çFW2FRÆVF—F÷,:Öà ¢Ò÷'F&–Æ–FBW†6ÇW6—fFVÂ'V–ÆC¢67&—G2÷&V'V–ÆBÖÖçVÂÖ&WG2ÖÆ—fRÖFFç–’67&—G2÷&V'V–ÆBÖ–çfVçF÷'’×Fg2ç–W6â&—G7G&VÒfW&–æ6ÇV–FVâ&W÷'DÆ#²VÆ–Ö–æÆFWVæFVæ6–W6VçFRFR÷W7"÷6†&RöföçG66–âÖöF–f–6"æ–æwVægVæ6œ;6âFRÆÆ–66œ;6âæ’5ETÄ•¤"à ¢Ò&Vw&W6òF—&V7FòFW6FR7W÷'C¢ÖçVÂæ‡FÖÆ–æ6÷'÷&VÂ&÷L;6â7WW&–÷"(i$Tu$U4"Ô’$ôäD²W6†—7F÷'’æ&6²‚–7VæFòVÂÖçVÂ&÷f–VæRFRÆÆ–66œ;6â’Æö6F–öâç&WÆ6R‚"ö–æFW‚Öw'WÂæ‡FÖÃ÷6÷W&6SÖÖçVÂ×&WGW&â"–<;6Æò6öÖò&V7WW&6œ;6ââFW7B×c3ÖÖçVÂÖ†÷7F–æræÖ§6W†–vRÖ&÷2&V6÷'&–F÷2’Æ6öç6W'f6œ;6âFRÆ&öæFW'6—7F–Fâ5ETÄ•¤"æò6Ö&–à¢2cCrÕ##4+r–çf—F6œ;6âv†G46öç6W'fFö¶Vâ+r’FR6WF–VÖ'&RFR##` ¢ÒVÂ6öçG&öÂFVÂ&Ww&—FR6WFVÂf÷&ÖFò¥4ôâæ÷&ÖÂ’VÂÖ–æ–f–6Fò÷"fW&6VÃ²VÂ&–ÖW"&Wf–WrVVL;2&V6†¦Fò6–âFö6"&öGV66œ;6âà¢ÒÆ–çf—F6œ;6âFR#B†÷&2W6ö–çf—FRóÇFö¶Vãæ&–×VF—"VRv†G4VÆ–Ö–æRVÂ66W6ò’Vçl:ÖR¶F‡’Âf÷&×VÆ&–ò&÷–WF&–òà¢Ò66W72æ‡FÖÆÂ’öÖ66W72æ§6ÂÖ–FFÆWv&Ræ§6’fW&6VÂæ§6öæf÷&ÖâVâ;¦æ–6ò&V6÷'&–Fò–çf—FFó²Ä•dR’Æ2FVÜ:2gVæ6–öæW2W&ÖæV6Vâ–çF7F2à¢ÒFW7B×#‚Ö÷væW"ÖwVW7BÓ#F‚Ö66W72æÖ§6&Æ÷VV&Vw&W6–öæW2FR'WFÂ&VW67&—GW&ÂW&Ö—6ò’6æ¦Rõ5Bà¢Ò&öÆÆ&6³¢föÇfW"s6FcVf²&öGV66œ;6â##2æò6Ö&–†7F6W&òd”Â’&ö&6œ;6âl:×6–6à ¢2cCrÕ##B+rv†G4’6öçG&öÆW2Ü;7f–ÆW26–âG&6ÆW2+r’FR6WF–VÖ'&RFR##` ¢Ò–æFW‚Öw'WÂæ‡FÖÆ¢FVÌ:–föæòv†G4VF—F&ÆR6öâ	øzÏ	ø{’³S"’æ6†òÜ;7f–Â;§F–Ã²5ETÄ•¤"R–ç7FÆ6œ;6âVVFâgVW&FRFöF÷2Æ÷2÷fW&Æ—2’FVçG&òFVÂfÇV¦òæ÷&ÖÂà¢ÒÖçVÂæ‡FÖÆ¢:ÖæF–6Rw'WFòVâö6†òFVÖ26öâL:×GVÆò’VæÆ6RF—&V7Fò6F:v–æ²,;§7VVFv†G4÷FVÌ:–föæòôwVFVÖÆò³S"à¢Ò6W'f–6R×v÷&¶W"æ§6’'VV&2c3õc3cRõcCRõcCbõcCs¢&VÆV6R##B’6öçG&F÷2&WfVçF—f÷26–æ7&öæ—¦F÷2à¢ÒWf–FVæ6–6‡&öÖ—VÒÜ;7f–Â3“9sƒCC¢vVæW&ÂÂÖF6‚Æ’Âf÷W"&ÆÂÂ6¶–ç2ÂvöÆbÂfVv2ÂVæ—fW'6ÆW2’G&V6RçFÆÆ27,:×F–626–âFW6&÷&FÖ–VçFòæ’–çFW'6V66–öæW2à¢Ò&öÆÆ&6³¢s6FcVf²&öÖö6œ;6âÔ”â<;6ÆòG&2&Wf–Wr$TE’’6W&òd”Âà¢Ò&W&6œ;6âFRG&ç7÷'FR##C¢VÂ&–ÖW"&Æö"&VÖ÷FòFR–æFW‚Öw'WÂæ‡FÖÆÆÆV|;2f<:Öó²VÂ6öÖÖ—B&W&F÷"&WG&ç6Ö—FRÆ÷2ƒ3Ã#sB'—FW2’6öç6W'fVÂ:&&öÂ6æF–FFòW†7Fòà¢Ò8ÖæF–6R&÷FVv–Fò÷"FW7B×c3ÖÖçVÂ×6V&6‚æÖ§6²VæÆ6W2FVÜ:F–6÷2’,;§7VVFv†G4æòVVFVâFW6&V6W"6–ÆVæ6–÷6ÖVçFRà ¢2cCrÕ##D+r5ETÄ•¤"ÖçVÂf—6–&ÆRVâ&Vv—7G&ò+r’FR6WF–VÖ'&RFR##` ¢Ò–æFW‚Öw'WÂæ‡FÖÆ¢&W7FW&5ETÄ•¤"W†6ÇW6—fÖVçFRVâ&Vv—7G&ò’&W6W'fVæg&æ¦7WW&–÷"&–×VF—"6öçF7Fò6öâVÂÆöv÷F—òò6öçG&öÆW2à¢Ò6W'f–6R×v÷&¶W"æ§6¢çVWfò&VÆV6Rö66Œ:’##D&VRVÂ&÷–WF&–ò&V6–&’6öæf—&ÖRÖçVÆÖVçFRÆfW'6œ;6âà¢ÒWf–FVæ6–6‡&öÖ—VÒÜ;7f–Â3“9sƒCC¢5ETÄ•¤"f—6–&ÆRÂF&¦WF–æ–6–Vâ“‚Â&÷L;6âFW&Ö–æVâcr‚Â–çFW'6V66œ;6â6W&ò’æ6†òF÷FÂ3“‚à¢Ò'VV&2c3cRõcCRõcCbõcCr7GVÆ—¦F3²&öÆÆ&6²&öGV7F—fò&&ƒ6VFà ¢2cCrÕ##D"+r&V7WW&6œ;6âÖçVÂFW6FRÆ6÷–##BÆÖ6VæF+r’FR6WF–VÖ'&RFR##` ¢Ò6W'f–6R×v÷&¶W"æ§6¢Â6W'f—"VÂ6†VÆÂ&ö&FòçF–wVò–ç–V7F<;6ÆòVÂ552VRgVVÇfRf—6–&ÆR5ETÄ•¤"’&W6W'f7Rg&æ¦²æò–ç7FÆæ’&V6&vWFöÜ:F–6ÖVçFRà¢Ò–æFW‚Öw'WÂæ‡FÖÆ¢FW7F–æòf—6–&ÆR##D"÷7FW&–÷"ÂF÷VRW'6öæÂFVÂ&÷–WF&–òà¢Ò6æFFòW&ÖæVçFR##D#¢67&—G2öÆ"×WFFRÖ'&÷w6W"×&Wf–WræÖ§66W&Æ&Wf—6œ;6âWFöÖF—¦FVâæfVvF÷"&VÂFRÆVF—F÷,:ÖW7L:F–6’FVÂ•†öæRl:×6–6ó²W†–vR7VG&òFWÆ÷–ÖVçG26öç6V7WF—f÷2(i$.(i$>(i$B6ö'&R‡GG3¢òövöÆb×62ÖwBÖÆ"çfW&6VÂæÂVâW&f–ÂW'6—7FVçFRÂ6GW&26ö×ÆWF2’6öç6W'f6œ;6âFRFF÷2à¢Ò67&—G2öÆ"×WFFR×‡—6–6ÂÖvFRæÖ§6ÂFW7B×cCr×##B×WFFR×‡—6–6ÂÖvFRæÖ§6Â6¶vRæ§6öæ’VF—B×&ö¦V7BæÖ§6¢&V6†¦âWf–FVæ6–¥4ôâW6VçFRÂÇFW&FÂ¦VæòÖVæ÷"FRG&W2G&ç6–6–öæW2â†7FV¦V7WF"VÂ&V6÷'&–Fò;¦&Æ–6òVÂW7FFòW2äò$Ud•4Dó²Ô”âõ&öGV66œ;6âW&ÖæV6R–çF7Fà¢Ò4ôåE$ôÅõ$õ”T5Dõõ44•$RóôD•$T5E$”4U5õTD”Dõ5õ•ôõ$DTäU5õTäD”TåDU2ôÔE$•¥ôtDUóõ$õ”T5DòæÖF’4ôåE$ôÅõ$õ”T5Dõõ44•$RóôD•$T5E$”4U5õTD”Dõ5õ•ôõ$DTäU5õTäD”TåDU2ôÔE$•¥ôtDUóõ$õ”T5Dòæ§6öæ¢–çFVw&âVÂ6æFFòFVçG&òFRsÓ6–â7&V"VæVW'F&ÆVÆà¢Òæv—F‡V"÷v÷&¶fÆ÷w2öÇ’×##F"ÖÆ"ç–ÖÆ¢G&ç7÷'FRFV×÷&Â7&VFò’VÆ–Ö–æFòVâVÂÖ—6Öò6–W'&R&VÖ÷Fó²æòf÷&Ö'FRFVÂ6æF–FFòf–æÂà¢ÒFW7B×cCr×#’ÖÖçVÂ×WFFRæÖ§6¢W†–vRVÂVVçFRÖçVÂ’&öŒ:Ö&RæfVv6œ;6âWFöÜ:F–6à¢Ò&öÆÆ&6²&öGV7F—fó¢VSCV##cF²æ–æwVæ&öæFÂ†—7F÷&–Âæ’gVæ6œ;6âFR§VVvò6RÖöF–f–6à ¢2cCrÕ##D2+r—6ÆÖ–VçFòFR5ETÄ•¤"Vâ†—7F÷&–Â+r’FR6WF–VÖ'&RFR##` ¢Ò”Ôuó332çævFV×VW7G&Vâd”Âl:×6–6ó¢5ETÄ•¤DöF&&6–ÆÖVçFRE,86Vâ†—7F÷&–Âà¢Ò–æFW‚Öw'WÂæ‡FÖÆÆ–Ö—FÆW†6W6œ;6âVR×VW7G&5ETÄ•¤"&Vv—7G&ò7VæFò†—7F÷&–ÂæòW7L:&–W'Fòà¢ÒFW7B×cCr×##F"Ö†—7F÷'’×WFFRÖ—6öÆF–öâæÖ§6&Æ÷VVVÂ6öæfÆ–7FòFR&–÷&–FB552VRFV¬;2f—6–&ÆRVÂ6öçG&öÂvÆö&Â6ö'&RVÂ÷fW&Æ’à¢Ò6R–çfÆ–F7VÇV–W"f—&Ö6œ;6â&Wf–FR&Wf—6œ;6âl:×6–6F÷FÃ¢<;6ÆòÆ2çFÆÆ26öâWf–FVæ6––æF—f–GVÂVVFVâf–wW&"6öÖò&Wf—6F2à¢Ò&öGV66œ;6â&–æ6—ÂW&ÖæV6R–çF7F²VÂ6æF–FFò6öçF–ì;¦VâÄ"’7RW7FFòW2äò$Ud•4Dò†7F&WWF—"æfVvF÷"&VÂ’•†öæRà¢ÒÆ÷2G&W2–çfVçF&–÷2c3’”ådTåD$”õ5õc3æÆö6²æ§6öæ6R&VvVæW&â6ö'&RCC‚gVVçFW2&VÖ÷F2&–æ6ÇV—"Æ6÷'&V66œ;6â’7R&æ6ò&WfVçF—fòà¢Ò6–W'&R&VÖ÷Fò##D3¢6RVÆ–Ö–æVÂG&ç7÷'FRFV×÷&ÂfÆÆ–FòÂ6R&W7FW&â:ÖçFVw&÷2Æ÷2F÷2&6†—f÷2w&æFW2’6R&W6VÆÆâÖ&÷2$ôDÔ26ö'&RVÂ:&&öÂÄ"W†7Fó²VÂ–çfVçF&–ò&VÖ÷Fò6öçF–VæRCC‚gVVçFW27F—f2à¢2cCrÕ##DB+rÄ•dR;¦&Æ–6ò6W&FòFVÂ66W6ò6ö×ÆWFò#B‚+rFR6WF–VÖ'&RFR##` ¢Ò4ôÕ%D•"Ä•dVFV¦FR†W&VF"FöÖ–æ–÷2FV×÷&ÆW2FR&Wf–Wr’'&RÆ66÷&R6&B;¦&Æ–6FR<;6ÆòÆV7GW&VâvöÆb×62ÖwBÖÆ"çfW&6VÂæöÆ—fRæ‡FÖÆà¢Ò”åd•D"+r#B†W&ÖæV6R6öÖòVâfÇV¦òF—7F–çFó¢Æ–66œ;6â6ö×ÆWFFV×÷&Â6öâFö¶Vâ–æF—f–GVÂÂ—6ÆÖ–VçFòÂ6GV6–FBÂ&Wfö66œ;6â’&Æ÷VVòFRFF÷2&÷–WF&–÷2à¢Ò6æFFó¢FW7B×cCb×##"×6†&RÖÆ—fRæÖ§6&öŒ:Ö&RG&ç7÷'F"÷fW&6VÅ÷6†&V’W†–vRVÂFöÖ–æ–ò;¦&Æ–6ó²FW7B×#‚Ö÷væW"ÖwVW7BÓ#F‚Ö66W72æÖ§66öç6W'f:ÖçFVw&òVÂ6öçG&FòFR#B†÷&2âÔ”â–çF7Fà¢2cCrÕ##DB+r7GVÆ—¦6œ;6âÖçVÂö&Æ–vF÷&–+rFR6WF–VÖ'&RFR##` ¢Ò–æFW‚Öw'WÂæ‡FÖÆ×VW7G&cCr+r##DF²Væ–ç7FÆ6œ;6â##D2FWFV7FVÂ&VÆV6RV&Æ–6Fò’7F—f5ETÄ•¤&'FVçFRÂW&òæò–ç7FÆÆÆ–66œ;6â÷"<:Ò6öÆà¢Ò6W'f–6R×v÷&¶W"æ§66W&Æ66Œ:’6æF–FF##DBFRÆ66Œ:’&ö&F²Æ&öÖö6œ;6â<;6Æòö7W'&RFW7\:—2FVÂF÷VRFVÂ&÷–WF&–ò’ÆæfVv6œ;6â6öâ÷fW'6–öæà¢ÒÆ÷2&æ6÷2c3cRõcCbõcCr†FW7B×c3cRÖ7F—fR×&÷VæBÖV×G’×&V6÷fW'’æÖ§6ÂFW7B×cCb×#"×&öfW76–öæÂÖFW6–vâæÖ§6ÂFW7B×cCb×#BÖÖö&–ÆRÖ6öçG&öÇ2æÖ§6ÂFW7B×cCb×#R×6–×ÆR×F÷W&æÖVçBÖÆ—fRæÖ§6ÂFW7B×cCb×##2×f—6–&ÆR×fW'6–öâæÖ§6ÂFW7B×cCr×#×&VÖ—VÒ×f—7VÂ×7—7FVÒæÖ§6ÂFW7B×cCr×#rÖ–÷2×67&öÆÂæÖ§6’FW7B×cCr×#’ÖÖçVÂ×WFFRæÖ§6’&Æ÷VVâ6öæ§VçFÖVçFRÆf—&Ö##DB’&V6†¦â&öÖö6œ;6âWFöÜ:F–6âÄ";¦æ–6ÖVçFS²Ö–âW&ÖæV6R–çF7Fà¢Ò&W&6œ;6âFRG&ç7÷'FR##DC¢–æFW‚Öw'WÂæ‡FÖÆ6R&WG&ç6Ö—FR6ö×ÆWFò6öâƒ3ÃS#b'—FW3²W7FR$ôDÔÂ$ôDÔôôDUDÄÄRæÖF’VÂ6VÆÆòFR–çfVçF&–ò6ö×;âVÂ6öÖÖ—B&W&F÷"W†–v–Fò÷"fW&6VÂâVÂ'V–ÆBf<:ÖòVVL;2&V6†¦Fò’çVæ67F—l;2Ä"à ¢2cCrÕ##R+r6öçG&öÆW26VwW&÷2FR&öæF+rFR6WF–VÖ'&RFR##` ¢ÒÄ"6W&$õ%$"44õ$U6FR$õ%$"DôDö¢VÂ&–ÖW&ò6öç6W'f§VvF÷&W2ÂÖöFÆ–FBÂ6×òÂŒ:æF–62’7&öì;6ÖWG&ó²VÂ6VwVæFòÖçF–VæR7RVÆ–Ö–æ6œ;6â–çFVw&Â6öâ6öæf—&Ö6œ;6âà¢ÒVÂŒ:æF–66WF7VÇV–W"VçFW&òÂ–æ6ÇV–F÷26W&ò’fÆ÷&W2æVvF—f÷2ÂVâFöF2Æ2ÖöFÆ–FFW2’6öç6W'f7R<:Æ7VÆòf—&ÖFòà¢ÒÆ–W"×&Vv—7G'’æ§6’Æ—fRÖ6öçG&öÂæ§6&W6W'fâW6RŒ:æF–6f—&ÖFòVâW&f–ÆW2’Ä•dS²–æFW‚Öw'WÂæ‡FÖÆ6öæ6VçG&fÆ–F6œ;6âÂ<:Æ7VÆò’6öçG&öÆW2à¢Ò6W'f–6R×v÷&¶W"æ§6ÂFW7B×cCR×&Vv—7G&F–öâÖ6ÆV"Öf–æÂÖÖö&–ÆRæÖ§6ÂFW7B×c3cRÖ7F—fR×&÷VæBÖV×G’×&V6÷fW'’æÖ§6ÂFW7B×cCb×#"×&öfW76–öæÂÖFW6–vâæÖ§6ÂFW7B×cCb×##2×f—6–&ÆR×fW'6–öâæÖ§6ÂFW7B×cCb×#BÖÖö&–ÆRÖ6öçG&öÇ2æÖ§6ÂFW7B×cCb×#R×6–×ÆR×F÷W&æÖVçBÖÆ—fRæÖ§6ÂFW7B×cCr×#×&VÖ—VÒ×f—7VÂ×7—7FVÒæÖ§6ÂFW7B×cCr×#rÖ–÷2×67&öÆÂæÖ§6’FW7B×cCr×#’ÖÖçVÂ×WFFRæÖ§6fç¦â6ö÷&F–æFÖVçFR##Rà¢Ò$ôDÔôõdU$ÄÂæÖFÂ$ôDÔôôDUDÄÄRæÖFÂ4ôåE$ôÅõ$õ”T5Dõõ44•$RóôD•$T5E$”4U5õTD”Dõ5õ•ôõ$DTäU5õTäD”TåDU2õ$Tt•5E$õõ$T”ä4”DTä4”5ô4Ä”DBæÖF’4ôåE$ôÅõ$õ”T5Dõõ44•$Rô”ådTåD$”õ5õc3æÆö6²æ§6öæ&Vv—7G&â’6VÆÆâVÂ6Ö&–òà¢ÒVÂ7&öì;6ÖWG&ò–æ6÷'÷&$U4UF££6–â&÷'&"§VvF÷&W2æ’66÷&W2à¢ÒVÂ&Vv—7G&ò6GW&F—&V7FÖVçFRæöÖ'&R’v†G4f—6–&ÆW2ÂVÇ6"ô¶Â–æ6ÇV–FòVÂFW‡Fò&VF–7F—fòöWFö6ö×ÆWFFòFR6f&’”õ2à¢Ò6æFFó¢FW7B×cCr×##R×&÷VæBÖ6öçG&öÇ2æÖ§6âV&Æ–66œ;6â;¦æ–6ÖVçFRVâÄ#²ÖW7G&ò##DBW&ÖæV6R–çF7Fòà¢Òæv—F‡V"÷v÷&¶fÆ÷w2÷&öÖ÷FR×##FBÖÆ"ç–ÖÆ¢&WF—&FòVÂG&ç7÷'FRFV×÷&ÂfÆÆ–FòFR##DC²##RW6VÂFW7Æ–VwVRæ÷&ÖÂFRÆ&ÖÄ"à¢Ò6ö×F–&–Æ–FB†W&VFF¢FW7B×c#ƒr×7F&ÆVf÷&BÖ&6²Ö6öçG&öÇ2Ö6ÆV"æÖ§6&V6öæö6RÆçVWf6V7VVæ6–E,82(i"$õ%$"44õ$U2(i"$õ%$"DôDò(i"²¥TtDõ"6–âFV&–Æ—F"Æ÷26æFF÷2&Wf–÷2à
+# ROADMAP OVERALL
+
+## V407-R24D LAB Â· recuperaciÃ³n de instalaciones R8 y aislamiento al desplazarse Â· 9 de septiembre de 2026
+
+- Corrige el FAIL fÃ­sico donde `golf-sc-gt-lab.vercel.app` seguÃ­a mostrando R8 y ACTUALIZAR no actuaba: el middleware sustituÃ­a `service-worker.js` y los manifiestos por `access.html`.
+- Esos tres recursos tÃ©cnicos quedan pÃºblicos; la aplicaciÃ³n, los datos y las APIs privadas conservan el control de acceso.
+- `ACTUALIZADO` deja de ser fijo cuando no existe una versiÃ³n pendiente, evitando que cubra `CONTROL MANUAL Â· UNIVERSALES`; `ACTUALIZAR` disponible conserva visibilidad, verde, habilitaciÃ³n y pulso.
+- Pruebas permanentes: `test-v407-r24c-public-pwa-bootstrap.mjs` y `test-v407-r24c-update-scroll-isolation.mjs`. MAIN permanece intacta.
+- Continuidad 10 de septiembre de 2026: se regeneran los tres inventarios desde el Ã¡rbol limpio `a2d1d9a5ebdd36435daed6c34a0c8ff61561612a`; el candado confirma 450 fuentes y conserva MAIN sin cambios.
+
+## V407-R24 LAB Â· WhatsApp privado y transiciÃ³n de ronda Â· 9 de septiembre de 2026
+
+- Registro General y Stableford incluyen WhatsApp opcional con `ğŸ‡¬ğŸ‡¹ +502` predeterminado y cÃ³digo internacional editable; el dato se conserva en el perfil y no se publica en LIVE ni en la tarjeta digital. Los bancos Stableford anteriores quedan alineados con la entrada enriquecida.
+- `FINALIZAR RONDA` guarda la tarjeta oficial en Historial y habilita su envÃ­o; `NUEVA RONDA` archiva la ronda actual y abre un registro vacÃ­o en todas las modalidades.
+- En cualquier pantalla superpuesta se oculta `ACTUALIZADO`, evitando que cubra `ATRÃS` u otras acciones mÃ³viles. SÃ³lo Preview LAB; Main permanece intacta.
+- El inventario se sella contra el Ã¡rbol remoto LAB dentro del mismo cambio documental requerido por el despliegue.
+- Los simuladores Stableford anteriores interpretan la ausencia del nuevo campo como WhatsApp opcional vacÃ­o.
+- En mÃ³vil, WhatsApp ocupa una fila completa y reserva al nÃºmero un ancho mÃ­nimo utilizable.
+
+# V407-R23B Â· enlace LIVE privado abre como sÃ³lo lectura Â· 9 de septiembre de 2026
+
+- Corrige Ãºnicamente la frontera de acceso del visor compartido: `/live.html`, `live-view.js` y `match-play.js` pueden cargar sin sesiÃ³n propietaria.
+- `/api/live` continÃºa privado para crear, publicar y revocar; el middleware deja pasar exclusivamente `POST action=read`, que `api/live.js` valida con el token secreto, caducidad, revocaciÃ³n y lÃ­mite de consultas.
+- `test-v352-live.mjs` impide que el visor vuelva al formulario propietario y que una acciÃ³n de escritura quede expuesta.
+
+## V407-R23 Â· compartir directo e invitaciÃ³n transportable Â· 9 de septiembre de 2026
+
+- Desde una Score Card activa, tocar LIVE ejecuta directamente `quickShareGroup()` y abre la hoja nativa de compartir para elegir WhatsApp; no muestra ninguna pantalla intermedia. La regla comÃºn cubre General, Universales, Stableford, Match Play y Four Ball.
+- La invitaciÃ³n propietaria de 24 horas viaja como texto completo con `/access.html?invite=TOKEN`; WhatsApp conserva el token. `access.html` acepta query y el formato fragmento anterior, elimina el token visible y canjea exclusivamente por POST. Un GET de previsualizaciÃ³n no consume la invitaciÃ³n.
+- No cambia scores, ronda activa, persistencia, controles de ACTUALIZAR ni privacidad.
+
+## V407-R22 Â· LIVE abre la ronda activa en todas las modalidades Â· 9 de septiembre de 2026
+
+- Publicado en ProducciÃ³n desde commit `90c25514a83b5c407e00ecc4f02ad4f2c9de3ef8`, despliegue `dpl_3T4Fu3Y59uzUzUXytU5FGn5b7ka2`, estado READY; rollback inmediato: `1ad4197bc5f2f8a923b94f3f5eac4a562ccfaafe`.
+- `live-control.js` separa el visor pÃºblico de los controles del propietario. Al tocar LIVE desde cualquier ronda activa abre directamente la administraciÃ³n de esa Score Card; sin ronda conserva el Centro LIVE pÃºblico.
+- Aplica por `currentSnapshot()` a General, Universales, Stableford, Match Play y Four Ball, sin depender de jugadores, campo, hoyo o ronda particular.
+- `test-v406-r5-simple-tournament-live.mjs` bloquea permanentemente el regreso al menÃº genÃ©rico cuando existe una ronda. Los bancos LIVE, categorÃ­as, Universales y compartir grupo permanecen PASS.
+- `index-grupal.html` y `service-worker.js` avanzan sÃ³lo la identidad de entrega a R22 para sustituir `live-control.js` almacenado, sin alterar scores, persistencia, invitaciones 24 h ni la funciÃ³n de ACTUALIZAR.
+
+## V407-R10 Â· tecla ACTUALIZADO activa Â· 8 de septiembre de 2026
+
+- Cambio puntual: `ACTUALIZADO` permanece oscuro cuando R10 estÃ¡ vigente, pero ya no queda deshabilitado; tocarlo fuerza una recarga real del mismo enlace sin borrar la ronda. No cambia ninguna grÃ¡fica ni otra funciÃ³n. MAIN intacta.
+
+## V407-R9 Â· actualizaciÃ³n manual real de la pantalla inicial Â· 8 de septiembre de 2026
+
+- `IMG_3140(1).jpeg` rechaza R8: el botÃ³n verde no sustituÃ­a la pantalla anterior.
+- R9 usa una identidad nueva para que R8 detecte la publicaciÃ³n; al tocar, conserva la ronda, retira Ãºnicamente el worker/cachÃ© viejo y recarga el mismo enlace desde red.
+- Vigente muestra `ACTUALIZADO` oscuro; sÃ³lo una versiÃ³n distinta muestra `ACTUALIZAR` verde/parpadeante. El worker deja de promover o navegar automÃ¡ticamente.
+- Archivos: `index-grupal.html`, `service-worker.js`, `test-v407-r9-manual-update.mjs`, bancos de versiÃ³n relacionados, `audit-project.mjs`, continuidad, reincidencias y ambos ROADMAPS. MAIN permanece intacta.
+
+## V407-R8 Â· un solo scroll iPhone y actualizaciÃ³n siempre verificable Â· 8 de septiembre de 2026
+
+- El acceso instalado histÃ³rico `golf-sc-gt-lab.vercel.app` queda como espejo permanente del canÃ³nico `epg-caddy.vercel.app`; `vercel.legacy-mirror.json` conserva la configuraciÃ³n que entrega la misma pantalla y el mismo service worker R8 sin pedir cambio de enlace.
+- La pantalla principal deja de ser un overlay fijo desplazable: `#setupOverlay` entra al flujo del documento y el iPhone usa un Ãºnico scroll nativo.
+- `ACTUALIZAR` permanece habilitado y parpadeando aun en la versiÃ³n vigente; cada toque fuerza verificaciÃ³n/promociÃ³n de cachÃ© sin borrar la sesiÃ³n.
+- El `activate` del service worker migra automÃ¡ticamente el cliente iPhone activo V407-R6 hacia R8 una sola vez; evita recargas mÃºltiples, no congela el scroll y no depende del sondeo que fallÃ³ fÃ­sicamente en `IMG_3136.jpeg`.
+- Evidencia de rechazo: `IMG_3134.jpeg`, V407-R6, botÃ³n gris y congelamiento intermitente reportado fÃ­sicamente.
+- Archivos exactos: `index-grupal.html`, `service-worker.js`, `test-v407-r7-ios-scroll.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r1-premium-visual-system.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## V407-R7 Â· scroll iPhone y actualizaciÃ³n visible Â· 8 de septiembre de 2026
+
+- Corrige el atasco intermitente del desplazamiento en iPhone: elimina la mutaciÃ³n de estilos durante cada `touchstart`, separa el desplazamiento de overlays y pÃ¡gina, y publica una nueva identidad de cachÃ© para que V407-R6 muestre `ACTUALIZAR` parpadeando.
+- Integra sin sobrescribir el cambio concurrente `39bb130`: un solo bloque `MODALIDADES` y la acciÃ³n `COMPARTE LIVE`.
+- Candado reproducible: `test-v407-r7-ios-scroll.mjs` queda incorporado en `audit-project.mjs`.
+- Archivos exactos V407-R7: `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r2-professional-design.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v261-registration-stableford-modality.mjs`, `test-v329-skins.mjs`, `test-v330-side-games.mjs`, `test-v406-r23-visible-version.mjs`, `test-v365-active-round-empty-recovery.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## V407-R6 PRODUCCIÃ“N Â· enlace estable y actualizaciÃ³n instalada Â· 8 de septiembre de 2026
+
+- Se publica el Ã¡rbol V407-R6 ya verificado en el enlace estable de ProducciÃ³n para que las instalaciones existentes detecten la nueva versiÃ³n y habiliten `ACTUALIZAR`, sin exigir al usuario cambiar de enlace ni reinstalar la aplicaciÃ³n.
+- El rollback conserva como referencia el commit de ProducciÃ³n V406-R24 `4009f79f50987f8bf105189bce9c5e90b2857363`.
+
+## V407-R4 Â· encabezado fuera de la barra del iPhone Â· 8 de septiembre de 2026
+
+La Pantalla Principal respeta el Ã¡rea segura superior; logo e informaciÃ³n bajan debajo de la barra del iPhone. El bloque derecho se acerca al centro y versiÃ³n/ACTUALIZADO se separan del borde. Evidencias de origen: `IMG_3120(1).png`, `IMG_3121(1).png` e `IMG_3122.png`. `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` registra el corte R4. ProducciÃ³n intacta.
+
+## V407-R3 Â· Pantalla 4 Â· Tarjeta Digital premium Â· 8 de septiembre de 2026
+
+- `index-grupal.html`: Tarjeta Digital usa encabezado centrado, tres acciones equivalentes, metadatos 4Ã—1 en escritorio y 2Ã—2 en mÃ³vil, guÃ­a de desplazamiento y contenedor de tabla con ancho controlado de 1360 px.
+- Los accesos flotantes ajenos quedan ocultos mientras la Tarjeta Digital estÃ¡ abierta; `ACTUALIZADO` permanece visible por orden del propietario.
+- La revisiÃ³n fÃ­sica del primer Preview R3 rechazÃ³ `INSTALAR APP` sobre la tarjeta y un metadato vacÃ­o; el candidato final oculta ese acceso y muestra `RONDA CASUAL` cuando no existe torneo.
+- `service-worker.js` identifica el candidato R3; los contratos V365, V405, V406 y V407 se alinean sin cambiar cÃ¡lculo, persistencia, cierre ni envÃ­o.
+- Archivos exactos del corte: `index-grupal.html`, `service-worker.js`, `test-v407-r1-premium-visual-system.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v405-registration-clear-final-mobile.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+- Rollback: regresar al commit V407-R2 en `lab/premium-ui-v407`. ProducciÃ³n permanece intacta.
+
+## V407-R1 Â· sistema visual premium y simÃ©trico Â· 8 de septiembre de 2026
+
+Archivos de trazabilidad y regresiÃ³n actualizados: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `test-v406-r23-visible-version.mjs` y `test-v406-r5-simple-tournament-live.mjs`.
+
+Vistas WhatsApp preservadas individualmente: `previews/whatsapp-cards-v406-r24/01_RONDA_NORMAL.html`, `previews/whatsapp-cards-v406-r24/02_STABLEFORD.html`, `previews/whatsapp-cards-v406-r24/03_MATCH_PLAY.html`, `previews/whatsapp-cards-v406-r24/04_FOUR_BALL.html`, `previews/whatsapp-cards-v406-r24/05_SCORE_CARD_PRACTICA.html`, `previews/whatsapp-cards-v406-r24/06_SKINS.html`, `previews/whatsapp-cards-v406-r24/07_WOLF.html`, `previews/whatsapp-cards-v406-r24/08_VEGAS.html`, `previews/whatsapp-cards-v406-r24/09_DOTS.html`, `previews/whatsapp-cards-v406-r24/10_TORNEO_LIVE.html` y `previews/whatsapp-cards-v406-r24/index.html`.
+
+- `index-grupal.html` incorpora una retÃ­cula visual Ãºnica para Registro, cabecera, herramientas, informaciÃ³n del campo, resumen, acciones inferiores, Historial, Tarjeta Digital y paneles: negro/grafito, bordes discretos, verde limitado, radios coherentes, alturas tÃ¡ctiles homogÃ©neas y espaciado respirable.
+- En mÃ³vil, la cabecera se ordena en dos columnas, las cuatro herramientas forman una fila simÃ©trica, las primeras cuatro acciones se distribuyen 2Ã—2, NUEVA RONDA ocupa una lÃ­nea completa y las tres acciones secundarias conservan exactamente la misma altura.
+- `service-worker.js` identifica la cachÃ© V407-R1. `test-v407-r1-premium-visual-system.mjs` bloquea regresiones de simetrÃ­a y geometrÃ­a. ProducciÃ³n permanece intacta hasta revisiÃ³n visual y aprobaciÃ³n del propietario.
+- Control Manual hereda la misma superficie grafito, navegaciÃ³n ANTERIORâ€“HOYOâ€“SIGUIENTE proporcionada, campos homogÃ©neos y ENTER principal de 56 px.
+- CorrecciÃ³n RC-084: Control Manual elimina las seis columnas rÃ­gidas, usa retÃ­cula adaptable con controles de 54â€“64 px y conserva sin cambios la paleta original negro, verde neÃ³n, blanco y rojo funcional. Se prohÃ­be aceptar como evidencia mÃ³vil una captura de escritorio recortada.
+- `test-v260-round-points-player-return.mjs` conserva el contrato de seis columnas de General/Stableford, pero sustituye la medida rÃ­gida obsoleta por validaciÃ³n explÃ­cita de la retÃ­cula adaptable de escritorio y mÃ³vil.
+
+## V406-R24 Â· PrevisualizaciÃ³n fÃ­sica de tarjetas WhatsApp Â· 8 de septiembre de 2026
+
+- Se incorpora `previews/whatsapp-cards-v406-r24/` con un Ã­ndice y diez tarjetas de muestra generadas por el constructor oficial de artefactos: Ronda Normal, Stableford, Match Play, Four Ball, Score Card Â· PrÃ¡ctica, Skins, Wolf, Vegas, Dots y Torneo Live.
+- Las pÃ¡ginas son exclusivamente de revisiÃ³n visual en LAB; no cambian cÃ¡lculo, persistencia, envÃ­o, Production ni el cierre oficial de rondas.
+
+## V406-R4 Â· Controles mÃ³viles sin traslape Â· 7 de septiembre de 2026
+
+- LIVE, REGLAS, AI âˆ y Support pasan a una barra estructural debajo del encabezado.
+- Registro nombra explÃ­citamente los selectores vacÃ­os CATEGORÃA y MARCAS.
+- ATRÃS, BORRAR SCORES y + JUGADOR comparten una fila compacta.
+- El banco visual temporal usa 67 participantes repartidos 7/6/24/11/7/7/5; test-v406-r4-mobile-controls.mjs conserva el candado de regresiÃ³n.
+
+- V406-R3 renueva exclusivamente el identificador publicado y la cachÃ© PWA para que los accesos instalados con V406-R2 detecten la actualizaciÃ³n y activen el botÃ³n `ACTUALIZAR`; no modifica rondas, scores ni persistencia.
+
+## V406-R2 LAB candidato Â· DiseÃ±o profesional, categorÃ­as y TORNEO LIVE Â· 7 de septiembre de 2026
+
+- Se agregÃ³ `gsc-design-system.css` como hoja canÃ³nica exclusiva de TORNEO LIVE: espaciado, radios, superficies, foco, alturas tÃ¡ctiles y tipografÃ­a legible. Registro quedÃ³ consolidado dentro de su hoja histÃ³rica, sin una capa externa de sobrescrituras.
+- Registro mÃ³vil conserva `NOMBRE â†’ CATEGORÃA â†’ HDCP â†’ MARCAS`, pero distribuye cada jugador en dos lÃ­neas para evitar truncamiento: Nombre y CategorÃ­a arriba; Handicap y Marcas abajo.
+- TORNEO LIVE reduce ruido en mÃ³vil, prioriza las pestaÃ±as de ClasificaciÃ³n/Mi Tablero, oculta instrucciones permanentes y simplifica columnas secundarias.
+- La Vista detallada reÃºne dinÃ¡micamente a todos los jugadores que realmente tenga la categorÃ­a â€”por ejemplo 14, 20, 22 o 30â€” con hoyos 1â€“18 e indicadores Gross/Neto/resultado, mÃ¡s IN/OUT/TOTAL. No fija ni rellena una cantidad. Mezcla los foursomes y reordena toda la categorÃ­a de lÃ­der a peor resultado en cada actualizaciÃ³n; el grupo sÃ³lo queda como referencia secundaria. Es visualizaciÃ³n LIVE de sÃ³lo lectura; no crea otra tarjeta, archivo, PDF ni historial.
+- `test-v406-tournament-categories.mjs` usa 30 jugadores como escenario visual de la categorÃ­a mÃ¡s poblada, comprueba ademÃ¡s cantidades variables, mezcla de foursomes, orden lÃ­derâ†’peor, 18 hoyos, IN/OUT/TOTAL y capacidad total de 100 participantes.
+- Se agregÃ³ `test-v406-r2-professional-design.mjs` como candado contra el regreso a controles diminutos o la retÃ­cula comprimida.
+- Capacidad comercial protegida: hasta 6 jugadores por tarjeta/grupo y mÃ¡ximo 100 jugadores activos por torneo. `api/live.js` bloquea el torneo dentro de la misma transacciÃ³n tanto al publicar como al unir un grupo y rechaza al jugador 101 con `409 LIVE_TOURNAMENT_CAPACITY_REACHED`.
+- `DATABASE_ARCHITECTURE.md` formaliza que categorÃ­as, clasificaciÃ³n y detalle son proyecciones de sÃ³lo lectura sobre snapshots LIVE; no crean tablas, tarjetas ni un segundo escritor.
+- La cabecera de cada categorÃ­a muestra automÃ¡ticamente fecha de Guatemala, nombre del torneo y modalidad; la categorÃ­a domina visualmente. Su clasificaciÃ³n inmediata usa `POS Â· NOMBRE Â· HDCP Â· MARCAS Â· GROSS Â· NETO Â· +/âˆ’` y el detalle por hoyo queda debajo.
+
+## V406-R1 LAB candidato Â· CategorÃ­as y TORNEO LIVE Â· 7 de septiembre de 2026
+
+- Registro incorpora `CATEGORÃA` inmediatamente despuÃ©s de `NOMBRE`, antes de `HDCP`, para cada jugador.
+- CatÃ¡logo: Campeonato, A, B, C, D, Femenina, Senior y S.Senior; obligatorio cuando existe torneo y opcional fuera de torneo.
+- La categorÃ­a viaja dentro del jugador por ronda, persistencia, snapshot oficial, tarjeta digital y LIVE.
+- TORNEO LIVE crea un Ã­ndice interno por categorÃ­a, permite llamar una clasificaciÃ³n aislada y buscar por jugador, grupo o categorÃ­a.
+- `MI TABLERO` conserva una selecciÃ³n personal de jugadores de distintas categorÃ­as para el caso familiar o grupo de predilecciÃ³n.
+- La pantalla principal no recibe controles adicionales; el anÃ¡lisis masivo queda en la pÃ¡gina independiente TORNEO LIVE.
+- Se separÃ³ `ATRÃS` de `ACTUALIZAR` en el Registro mÃ³vil. MAIN/ProducciÃ³n permanece congelado.
+
+## V405-R4 LAB estable Â· cierre de prueba ACTUALIZAR y Toolbar apagada Â· 7 de septiembre de 2026
+
+- Retira la identificaciÃ³n temporal R3 y publica `V405-R4-LAB-STABLE-20260907` con cachÃ© `v405-r4-lab-stable`.
+- Evidencia fÃ­sica del propietario: `ACTUALIZAR` detectÃ³ sin refresco, se mostrÃ³ verde/parpadeante y, al pulsarlo, instalÃ³ R3 y volviÃ³ a oscuro.
+- Evidencia fÃ­sica del propietario: `BORRAR TODO` funcionÃ³ correctamente en Registro iPhone.
+- ConfiguraciÃ³n Vercel del proyecto `epg-caddy`: Toolbar `Off` en Preview/PreproducciÃ³n y ProducciÃ³n conservada en `Default`; requiere este deployment LAB nuevo para entrar en vigor.
+- MAIN permanece intacta.
+
+## V405-R3 LAB Â· prueba fÃ­sica del parpadeo ACTUALIZAR Â· 7 de septiembre de 2026
+
+- `index-grupal.html`: identificaciÃ³n `V405-R3-LAB-UPDATE-BLINK-TEST-20260907` para que V405-R2 detecte automÃ¡ticamente la actualizaciÃ³n y active el botÃ³n verde/parpadeante.
+- `service-worker.js`: cachÃ© `v405-r3-update-blink-test`.
+- `test-v365-active-round-empty-recovery.mjs`: fija ambos identificadores y conserva detecciÃ³n automÃ¡tica, `persist()` y actualizaciÃ³n en el mismo dominio.
+- Prueba temporal sÃ³lo en LAB; no cambia lÃ³gica, sesiÃ³n, jugadores, scores, historial, voz ni MAIN.
+
+![ROADMAP OVERALL Â· Golf Score Card GT](ROADMAP_OVERALL_V291.png)
+
+## V332 Â· moneda dual y matriz completa de seguimiento
+
+El propietario exige que Skins, Wolf, Vegas y Dots permitan elegir antes de la ronda una de dos monedas: **quetzales (`Q`/`GTQ`) o dÃ³lares (`$`/`USD`)**. Cada juego presenta dos casillas de radio mutuamente excluyentes; elegir una desmarca la otra. La moneda queda guardada en la configuraciÃ³n y viaja sin conversiÃ³n por pantalla, voz, snapshot, correcciÃ³n, tarjeta Global/personal, Historial, sincronizaciÃ³n, restauraciÃ³n y liquidaciÃ³n. El valor es opcional para el grupo y nunca altera Gross, Neto ni el resultado deportivo.
+
+V332 homologa la arquitectura visible de los cuatro juegos para que un jugador sin experiencia no reciba sÃ³lo un saldo final. La matriz comÃºn incluye estado y hoyos resueltos/pendientes, unidades o puntos acumulados, carry abierto, registros, dinero bruto movido, neto exacto a liquidar, lÃ­der o empate, saldos individuales y quiÃ©n paga a quiÃ©n. Cada juego aÃ±ade su riesgo Ãºtil: mayor pozo Skins; exposiciÃ³n del Wolf por rival y hoyo; mayor cambio y riesgo mÃ¡ximo por duelo Vegas; e impacto de un punto por jugador en Dots. La tarjeta final conserva los mismos acumulados para auditorÃ­a.
+
+Los bancos `test-v329-skins.mjs` y `test-v330-side-games.mjs` verifican las ocho casillas Q/$, exclusividad nativa, normalizaciÃ³n de moneda, sÃ­mbolos, mÃ©tricas, cero-suma, persistencia, correcciÃ³n y artefactos. La auditorÃ­a integral aprobÃ³ **89 paquetes**, **325 fuentes** y tres inventarios PDF sellados en V332. El corte visible es `V332-DUAL-CURRENCY-MATRIX-20260826` y la copia instalable usa `gscg-mobile-v332-dual-currency-matrix`. ProducciÃ³n permanece intacta; falta publicar el Preview y aprobar la prueba fÃ­sica en iPhone antes de cualquier montaje.
+
+Archivos exactos V332: `skins.js`, `wolf.js`, `vegas.js`, `dots.js`, `index-grupal.html`, `card-artifacts.js`, `test-v329-skins.mjs`, `test-v330-side-games.mjs`, `service-worker.js`, los bancos que fijan build/cachÃ©, `scripts/update-inventory-v328.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+## V331 Â· matriz investigada de apuestas y lenguaje operativo
+
+La prueba fÃ­sica de **V330-R3 quedÃ³ aprobada en iPhone**: al tocar `WOLF`, Ãºnicamente Wolf permaneciÃ³ verde, `RONDA NORMAL` se desmarcÃ³ y la configuraciÃ³n correcta se abriÃ³. El defecto de selecciÃ³n doble queda cerrado; ProducciÃ³n continÃºa intacta y `PEND-SKI-006` sigue abierto para validar el funcionamiento completo de cada juego.
+
+El nuevo `PEND-DID-017` exige una ficha independiente por cada modalidad y esquema: Ronda Normal, Stableford, Match Play, Four Ball, PrÃ¡ctica, Skins, Wolf, Vegas, Dots y variantes que cambian el cÃ¡lculo. Cada hoja deberÃ¡ ser comprensible a los 10 aÃ±os, funcionar impresa en blanco y negro, incluir un ejemplo aritmÃ©tico completo, estrategia, estados, acumulados, liquidaciÃ³n y glosario. La edad define sÃ³lo la claridad didÃ¡ctica: el dinero permanece siempre dentro del alcance general de cada hoja y cada grupo decide si lo liquida o juega Ãºnicamente con puntos/unidades. La especificaciÃ³n vive en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md`.
+
+V331 sustituye la presentaciÃ³n mÃ­nima de apuestas por una matriz operativa investigada. Wolf elimina la duplicidad confusa `Solo base`/`Lone` y conserva tres decisiones comprensibles: **Con pareja**, **Lobo solitario** y **Lobo ciego**. Registra si el Wolf sale primero o Ãºltimo, multiplicadores configurables, tope monetario por rival/hoyo, riesgo del Wolf, decisiones y scores pendientes, acumulados, unidades netas, dinero movido y liquidaciÃ³n. Vegas explica cÃ³mo 4 y 5 forman 45, maneja correctamente scores de 10 o mÃ¡s â€”10 y 4 forman 104â€”, permite acordar quÃ© ocurre si ambas parejas hacen birdie y muestra por hoyo nÃºmeros, volteos, Ã¡guilas, topes, puntos movidos y saldos. Dots define cada tÃ©rmino en espaÃ±ol, mantiene apagadas las variantes que pueden duplicar eventos, separa puntos positivos/negativos, manuales/automÃ¡ticos y muestra el detalle de cada hoyo.
+
+Las reglas universales no se inventan: las diferencias reales entre grupos quedan configurables y rotuladas. La base investigada utiliza 18Birdies y Wolf Golf Scorecard para Wolf; Mashie, 18Birdies y Golf Digest para Vegas; 18Birdies, MyScorecard y SCGA para Dots/Junk; USGA se conserva como autoridad del hÃ¡ndicap y score deportivo. El dinero nunca modifica el score oficial.
+
+Archivos exactos V331: `wolf.js`, `vegas.js`, `dots.js`, `index-grupal.html`, `card-artifacts.js`, `test-v330-side-games.mjs`, `service-worker.js`, `scripts/update-inventory-v328.py`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` y los bancos que fijan el identificador de build/cachÃ©. El corte visible es `V331-RESEARCHED-SIDE-GAMES-20260826` y la copia instalable usa `gscg-mobile-v331-researched-side-games`.
+
+## V330 Â· Skins, Wolf, Vegas, Dots y seis jugadores
+
+**Hotfix V330-R3 despuÃ©s de rechazo fÃ­sico:** la captura real de iPhone demostrÃ³ que al elegir `WOLF` todavÃ­a podÃ­an quedar verdes `RONDA NORMAL` y `WOLF`. V330-R2 queda rechazada. R3 incorpora un Ãºnico escritor visual para las siete opciones, limpia configuraciones laterales mÃºltiples heredadas, desmarca las otras seis antes de reconstruir la pantalla y vuelve a validar despuÃ©s del render. La cachÃ© instalable sube a `gscg-mobile-v330-side-games-r3`; `test-v330-side-games.mjs` simula exactamente el toque WOLF y exige `false` en Normal, Match Play, Four Ball, Skins, Vegas y Dots, con `true` Ãºnicamente en Wolf.
+
+**Pendientes registrados:** `PEND-UBI-015` separa la detecciÃ³n automÃ¡tica del campo por GPS de clima/trÃ¡fico y de las distancias al green; `PEND-RSG-016` define la sincronizaciÃ³n versionada de Reglas de Golf desde fuentes oficiales. Se crean las especificaciones `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_UBI_015_DETECCION_CAMPO_POR_GPS.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_RSG_016_SINCRONIZACION_REGLAS_GOLF.md`, y se actualizan `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` y `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`.
+
+**Voz pospuesta y registrada:** `PEND-VOZ-003` incorpora tres observaciones fÃ­sicas nuevas sin declararlas implementadas: matriz obligatoria para respuestas estudiadas, profundas y formales; correcciÃ³n del corte observado en la quinta conversaciÃ³n; y avisos bilaterales exactos `ESCUCHANDO` / `RESPONDIENDO` en rojo parpadeante. Por orden del propietario, la ejecuciÃ³n vuelve primero a la configuraciÃ³n y prueba de SKINS, WOLF, VEGAS y DOTS.
+
+El **26 de agosto de 2026** `PEND-SKI-006` pasa de diseÃ±o a implementaciÃ³n comprobable. `skins.js`, `wolf.js`, `vegas.js` y `dots.js` son motores puros conectados al score oficial, no menÃºs de respuestas fijas. La ventana de opciones se divide en dos columnas â€”modalidades existentes a la izquierda y juegos nuevos a la derechaâ€” y la pantalla principal de la tarjeta conserva su formato.
+
+Skins opera Gross/Neto para dos a seis jugadores con unidad monetaria, carry, divisiÃ³n o anulaciÃ³n de empates. Wolf rota decisiones para tres a seis jugadores y no permite cierre con hoyos sin pareja/Solo/Lone/Blind. Vegas trabaja con cuatro o seis jugadores; la variante de seis usa tres parejas y comparaciones par a par. Dots permite activar y valorar eventos antes de jugar, mantiene apagadas por defecto las reglas de grupo `Amigo`, izquierda y derecha, y separa el saldo econÃ³mico del score deportivo. Match Play y Four Ball se amplÃ­an a las parejas Verde, Oro y Azul.
+
+El cierre, correcciÃ³n oficial, tarjetas Global/personales, Historial, consultas, sincronizaciÃ³n y restauraciÃ³n conservan los cuatro resultados en el snapshot firmado. `test-v329-skins.mjs` y `test-v330-side-games.mjs` cubren empates, X, lÃ­mites, multiplicadores, tres parejas, cero-suma, bloqueo de cierre Wolf, correcciÃ³n, artefactos, voz y persistencia. El banco local y el build real de Vercel aprobaron los 89 paquetes, el inventario de 322 fuentes, cero vulnerabilidades y la puerta viva de Reglas con modelo, bÃºsqueda web, seis fuentes oficiales y `scoreChanged:false`. El Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` quedÃ³ `READY` desde el commit remoto `ea18aafb214731d44b41ea069fe27228407f9f47`. ProducciÃ³n permanece intacta; faltan revisiÃ³n visual/tÃ¡ctil y ronda fÃ­sica en iPhone.
+
+Referencias profesionales consultadas: BirdieBet y Squabbit para Vegas; Wiz Golf, FLOG, Squabbit y Golf Monthly para Wolf; The 1st Tee para Dots. Las variantes que no son universales quedan rotuladas como reglas de grupo o adaptaciÃ³n Golf Score Card GT.
+
+Archivos funcionales V329/V330: `skins.js`, `wolf.js`, `vegas.js`, `dots.js`, `match-play.js`, `four-ball.js`, `index-grupal.html`, `round-closure.js`, `card-artifacts.js`, `card-library.js`, `historical-analytics.js`, `master-data-sync.js`, `account-backup.js`, `service-worker.js`, `scripts/build-mobile-web.mjs`, `vercel.json`, `audit-project.mjs`, `test-v329-skins.mjs` y `test-v330-side-games.mjs`. La documentaciÃ³n, mapa, ambos ROADMAP, tres inventarios PDF y su sello se actualizan antes de Preview.
+
+## V328-R2 Â· Centro de Reglas de Golf oficial con respaldo bÃ¡sico sin conexiÃ³n
+
+El **26 de agosto de 2026** comienza la ejecuciÃ³n funcional de `PEND-REG-001`. La misma AI UNIVERSAL âˆ incorpora un acceso global `REGLAS`, acepta situaciones por teclado o micrÃ³fono, conserva campo y modalidad como contexto y consulta el modelo avanzado mediante `/api/golf-rules`. La herramienta limita tÃ©cnicamente la Web a los dominios oficiales `usga.org` y `randa.org`, exige una fuente oficial visible y usa la ediciÃ³n Rules of Golf 2023 con las clarificaciones vigentes; el corte comprobado es 1 de julio de 2026. No se copia el reglamento completo ni se afirma una alianza, licencia de marca o API privada.
+
+La consulta se aÃ­sla de todos los escritores locales: dentro de REGLAS no se ejecutan Ã³rdenes de score y la respuesta nunca aplica penalidades, concede hoyos ni cierra rondas. `test-v328-official-golf-rules.mjs` cubre 15 situaciones y comprueba dominios, contexto, texto/voz y `scoreChanged:false`. El Preview V328-R1 (`dpl_3Sa4NnueMXBqB2kCm69WdwhH83bv`) quedÃ³ `READY` con 86 paquetes, puerta viva aprobada y Ã¡rbol remoto exacto `f0de0f6328c34ed2788faf1009ba04a19f47e6c1`. `test-v328-live-official-rules.mjs` se ejecuta dentro de cada build Vercel y exige una llamada real del modelo, bÃºsqueda web efectiva, al menos una fuente USGA/The R&A y cero cambio de score.
+
+V328-R2 agrega `golf-rules-offline.js`: guarda Ãºnicamente respuestas que ya aprobaron el filtro oficial, retiene hasta 24 entradas durante 90 dÃ­as, conserva tokens normalizados en vez de la pregunta completa, exige coincidencia suficiente y modalidad compatible, muestra la fecha y nunca inventa si no existe una respuesta adecuada. `test-v328-offline-official-rules.mjs` comprueba fuente, privacidad, lÃ­mite, caducidad, cruces negativos, integraciÃ³n PWA y cero escritura. Con este paquete la auditorÃ­a maestra sube a 87 paquetes mÃ¡s la puerta viva de Vercel. El manual visible y sus dos PDF conservan 74 pÃ¡ginas, pÃ¡gina 73 actualizada, 2160 Ã— 4320 px y 300 dpi; el control visual completo debe aprobar antes de entregar. `PEND-REG-001` continÃºa abierto sÃ³lo para voz fÃ­sica y una eventual integraciÃ³n comercial/licenciada; no se declara alianza oficial.
+
+Archivos exactos V328: `api/golf-rules.js`, `audit-project.mjs`, `index-grupal.html`, `service-worker.js`, `manual.html`, `scripts/update-manual-page-73.py`, `docs/manual/v311/manual-pages-17-35.json`, `docs/manual/v311/page-73.png`, `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf`, `test-v328-official-golf-rules.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-v307-match-arrows-format.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v284-native-package-generation.mjs`, `test-v281-pwa-installation.mjs`, `test-v280-local-history-insights.mjs`, `test-v279-local-card-library.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v277-official-round-corrections.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v272-definitive-operational-release.mjs`, `test-stableford-ui.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Los tres inventarios PDF externos se regeneran y verifican antes del build.
+
+Archivos adicionales del cierre V328-R1: `test-v328-live-official-rules.mjs` agrega la puerta real y `vercel.json` la vuelve obligatoria. Archivos adicionales V328-R2: `golf-rules-offline.js`, `test-v328-offline-official-rules.mjs`, `test-v321-ai-universal-infinity.mjs`, `service-worker.js`, `index-grupal.html`, `audit-project.mjs`, `scripts/update-manual-page-73.py`, `docs/manual/v311/manual-pages-17-35.json`, los artefactos de manual, `scripts/update-inventory-v328.py`, los cuatro documentos de control, el candado y ambos ROADMAP.
+
+## ActualizaciÃ³n de control V327-R1-PEND Â· cola completa y ejecuciÃ³n permanente
+
+El **26 de agosto de 2026** el propietario ordena agregar y adaptar todos los pendientes, continuar sin solicitar autorizaciones intermedias y montar cada versiÃ³n cuando estÃ© realmente probada. La instrucciÃ³n no elimina las puertas de calidad: un solo `FAIL` conserva ProducciÃ³n intacta y ninguna licencia, credencial, contrato o integraciÃ³n externa puede simularse. Las reglas permanentes 22â€“26 prohÃ­ben trasladarle trabajo tÃ©cnico que las herramientas puedan resolver, dejarlo adivinando la siguiente acciÃ³n, simular trabajo en segundo plano o exigirle mensajes repetidos de `sigue`; todo reporte debe cerrar con una asignaciÃ³n inequÃ­voca.
+
+La cola vigente distingue lo entregado de lo abierto y agrega los faltantes expresamente acordados: hÃ¡ndicap oficial ASOGOLF/GHIN con Ã­ndice interno separado; campos mundiales con datos oficiales; GPS deportivo por hoyo; Skins, Wolf, Vegas, Amigo, izquierda/derecha y Dots con unidad en quetzales; Apple Watch primero y Wear OS despuÃ©s; nube, cuentas, seguridad, estadÃ­sticas avanzadas, monetizaciÃ³n y certificaciÃ³n integral. Permanecen ademÃ¡s USGA/Reglas de Golf, clima completo en artefactos, GuÃ­a RÃ¡pida, trÃ¡fico comparado y AI UNIVERSAL âˆ.
+
+V327-R1 ya aprobÃ³ en Preview 85 paquetes, 310 fuentes, 44 llamadas reales, 24 materias, ocho turnos con memoria, 550 transiciones herramientaâ†’voz y cero errores 5xx. La puerta inmediata sigue siendo una conversaciÃ³n fÃ­sica prolongada en iPhone; sÃ³lo despuÃ©s de su PASS se permite montar y continuar automÃ¡ticamente con el siguiente pendiente ejecutable.
+
+Archivos exactos V327-R1-PEND: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. TambiÃ©n se regeneran y verifican `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf` e `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf`.
+
+## CorrecciÃ³n controlada V327 Â· la herramienta siempre regresa a la voz
+
+La prueba fÃ­sica rechazÃ³ V326-R2 despuÃ©s de aproximadamente seis preguntas: una investigaciÃ³n sobre una persona conocida en Colima y una consulta de trÃ¡fico podÃ­an completar su API con HTTP 200, pero el telÃ©fono quedaba rojo escuchando sin pronunciar el resultado. No era un vocabulario temÃ¡tico reducido: `search_live_web` sÃ­ recibiÃ³ la consulta y devolviÃ³ datos; el corte estaba en la transiciÃ³n asÃ­ncrona `herramienta â†’ segunda respuesta â†’ audio` de Realtime en iPhone.
+
+V327 conserva la AI universal sin catÃ¡logo y corrige cuatro estados: `speech_stopped` mantiene el guardiÃ¡n hasta la transcripciÃ³n final; un `output_audio_buffer.stopped` tardÃ­o y sin identificador ya no desautoriza el audio final antes de que empiece; la reproducciÃ³n conserva un guardiÃ¡n de 60 segundos hasta su cierre; y una herramienta cuyo canal se perdiÃ³ produce recuperaciÃ³n visible en vez de regresar en silencio. `api/voice-health.js` registra Ãºnicamente eventos tÃ©cnicos permitidos, nÃºmero de turno, etapa y tiempo â€”nunca preguntas, transcripciones, nombres, ubicaciones ni clavesâ€” para que una nueva anomalÃ­a fÃ­sica sea diagnosticable.
+
+El banco dirigido ejecuta 550 secuencias herramientaâ†’voz, 100 eventos de privacidad, 30 turnos bilaterales y las rutas anteriores. La consulta directa `El PultÃ© Golf â†’ Pradera ConcepciÃ³n` devolviÃ³ una ruta real vÃ¡lida de 15 km y aproximadamente 33 minutos en el instante de prueba; un destino que sÃ³lo diga `ConcepciÃ³n` debe provocar una sola pregunta breve de aclaraciÃ³n. ProducciÃ³n continÃºa intacta y V327 no queda autorizada para montaje hasta terminar la regresiÃ³n completa, desplegar Preview y aprobar otra conversaciÃ³n fÃ­sica prolongada en iPhone.
+
+Archivos exactos V327: `index-grupal.html`, `api/_lib/traffic.js`, `api/universal-ai.js`, `api/voice-health.js`, `service-worker.js`, `audit-project.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## Control de entrega V326-R1 Â· redespliegue para cargar trÃ¡fico
+
+El usuario confirmÃ³ que la credencial de trÃ¡fico podrÃ­a haber quedado habilitada. El despliegue V326 original no se reutiliza para aprobarla porque las variables de entorno se fijan al construir cada deployment. Se provocÃ³ un redespliegue sin modificar el cÃ³digo funcional; el primer intento quedÃ³ correctamente bloqueado por `ROADMAP GATE` al no registrar el movimiento en ambos ROADMAPS. V326-R1 registra ese intento, conserva producciÃ³n V322 intacta y ordena construir de nuevo Preview antes de ejecutar la ruta real El PultÃ© â†’ colonia Oakland zona 10 para maÃ±ana a las 12:30 PM.
+
+La aprobaciÃ³n continÃºa prohibida hasta que el nuevo Preview devuelva ETA, duraciÃ³n sin trÃ¡fico, demora, distancia y hora de cÃ¡lculo desde Google Maps Routes, y hasta completar la conversaciÃ³n fÃ­sica prolongada en iPhone. Archivos exactos V326-R1: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+La primera construcciÃ³n documentada de V326-R1 confirmÃ³ que `GOOGLE_MAPS_API_KEY` ya estaba presente en Preview: el test de ausencia recibiÃ³ `TRAFFIC_ROUTE_UNAVAILABLE` en vez de `TRAFFIC_NOT_CONFIGURED`. El bloqueo pertenecÃ­a al aislamiento del test, que pasaba una cadena vacÃ­a y permitÃ­a por error el fallback hacia la credencial real. Se sustituyÃ³ Ãºnicamente ese valor inyectado por espacio en blanco, que se recorta a vacÃ­o sin consultar la red; la lÃ³gica funcional de trÃ¡fico permanece idÃ©ntica.
+
+## CorrecciÃ³n controlada V326 Â· ningÃºn turno puede quedar rojo y mudo
+
+La prueba fÃ­sica en iPhone rechazÃ³ V325: despuÃ©s de preguntas sobre trÃ¡fico futuro y consumo elÃ©ctrico, el micrÃ³fono permanecÃ­a rojo y abierto sin producir una reacciÃ³n. Los registros confirmaron que WebRTC sÃ­ abrÃ­a, pero el cierre del turno no alcanzaba las herramientas ni la respuesta. La causa fue `semantic_vad` con urgencia baja sin un lÃ­mite temporal anterior a `speech_stopped`; el watchdog existente comenzaba demasiado tarde y no podÃ­a recuperar ese estado.
+
+V326 usa para conversaciÃ³n un `server_vad` independiente con umbral 0.2, prefijo de 700 ms y 2,200 ms de silencio. Es mÃ¡s paciente que las Ã³rdenes de la aplicaciÃ³n, que conservan 1,000 ms, pero siempre posee un final determinista. Un guardiÃ¡n de entrada se renueva con los deltas parciales y, si no existe ningÃºn evento durante 15 segundos, desmonta la captura atascada y apaga el rojo con una instrucciÃ³n visible; mantiene un lÃ­mite duro de 90 segundos por turno. Un segundo guardiÃ¡n recupera a los 30 segundos una respuesta del modelo que no haya comenzado. Los cÃ¡lculos estables y aproximados, como el consumo elÃ©ctrico de un aire acondicionado, se responden directamente con supuestos en vez de abrir una bÃºsqueda web innecesaria.
+
+`test-v326-no-silent-conversation.mjs` ejecuta la mÃ¡quina de temporizadores y comprueba recuperaciÃ³n real de estado, ademÃ¡s de 30 alternancias entre conversaciÃ³n y Ã³rdenes. V325 queda rechazada y V326 continÃºa sin autorizaciÃ³n de montaje hasta repetir las dos preguntas exactas y una conversaciÃ³n fÃ­sica prolongada en iPhone. TrÃ¡fico tampoco queda aprobado mientras Preview responda `TRAFFIC_NOT_CONFIGURED` y falte la comparaciÃ³n simultÃ¡nea en Guatemala.
+
+Archivos exactos V326: `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## IntegraciÃ³n controlada V325 Â· tiempos ideales del micrÃ³fono bilateral
+
+V325 separa por intenciÃ³n los tiempos de escucha. Las Ã³rdenes de registro, navegaciÃ³n y score conservan `server_vad` con umbral 0.2, prefijo de 700 ms y 1,000 ms de silencio para respuesta rÃ¡pida. AI UNIVERSAL âˆ cambia a `semantic_vad` con urgencia baja, por lo que una pausa natural no corta automÃ¡ticamente la idea. La sesiÃ³n valida el perfil confirmado antes de responder, serializa cambios concurrentes y vuelve al perfil operativo cuando detecta una acciÃ³n propia de la tarjeta.
+
+La conversaciÃ³n conserva micrÃ³fono vivo durante la respuesta, interrupciÃ³n confirmada despuÃ©s de 250 ms y ocho caracteres, protecciÃ³n de eco por 1,800 ms, reescucha inmediata, watchdog de diez segundos y cierre Ãºnicamente tras 30 minutos completos sin actividad. La prueba V325 compila el JavaScript completo y simula 30 alternancias conversaciÃ³n/orden. Esto no sustituye la conversaciÃ³n fÃ­sica prolongada en iPhone; el corte sigue sin autorizaciÃ³n de montaje. TambiÃ©n quedan registrados como pendientes el enlace oficial/autorizado con USGA y Reglas de Golf, la modalidad Skins y Apple Watch/Wear OS.
+
+Archivos exactos V325: `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## IntegraciÃ³n controlada V324 Â· trÃ¡fico real dentro de AI UNIVERSAL âˆ
+
+V324 incorpora trÃ¡fico vehicular actual y proyectado a la misma conversaciÃ³n universal. Una consulta por voz o texto se clasifica como trÃ¡fico, obtiene origen escrito o GPS efÃ­mero, exige destino suficiente y llama desde servidor a Google Maps Routes con `TRAFFIC_AWARE_OPTIMAL`. La respuesta separa los datos del proveedor â€”ETA, duraciÃ³n sin trÃ¡fico y distanciaâ€” de la clasificaciÃ³n de congestiÃ³n derivada. No muestra mapa, no devuelve coordenadas y no afirma integraciÃ³n con Waze.
+
+La prueba V324 cubre salida inmediata y futura, huso horario, ETA, demora, distancia, privacidad, origen faltante, destino faltante, credencial ausente, proveedor caÃ­do, timeout, solicitud automÃ¡tica de GPS, funciÃ³n de modelo en dos pasos, texto, voz y continuidad recuperable. Este corte es cÃ³digo candidato: permanece expresamente sin aprobaciÃ³n de montaje hasta activar credencial/facturaciÃ³n y completar en Guatemala la comparaciÃ³n simultÃ¡nea contra Waze y la conversaciÃ³n prolongada en iPhone.
+
+Archivos exactos V324: `api/_lib/traffic.js`, `api/traffic.js`, `api/universal-ai.js`, `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v321-ai-universal-infinity.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## CorrecciÃ³n operativa V323 Â· conversaciÃ³n multitema prolongada
+
+V323 corrige una pÃ©rdida de contexto reproducida en producciÃ³n: la comunicaciÃ³n continuaba, pero al turno 15 AI UNIVERSAL âˆ ya no recordaba una clave expresamente indicada al inicio. El lÃ­mite efectivo era de 8 intercambios para texto y sÃ³lo 3 para el contexto compartido con voz. Ahora texto, voz y servidor conservan hasta 80 mensajes â€”40 intercambios completosâ€”, suficiente para la nueva prueba de 30 temas y 63 mensajes sin perder `ORQUÃDEA 47`.
+
+La prueba `test-v323-long-multitopic-context.mjs` reproduce cambios consecutivos entre lluvia, salud, viajes, medicamentos, golf, tecnologÃ­a, cocina, filosofÃ­a, ciencias, idiomas y otros temas; exige que el primer dato siga disponible en la Ãºltima pregunta, valida la misma memoria en texto y voz, y comprueba el descarte controlado Ãºnicamente al superar 80 mensajes.
+
+Archivos V323: `api/universal-ai.js`, `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## CorrecciÃ³n operativa V322 Â· conversaciÃ³n sostenida y recuperaciÃ³n comprobable
+
+V322 integra sin perder la AI UNIVERSAL âˆ de V321 la correcciÃ³n del fallo observado en iPhone: el micrÃ³fono ya no se cierra tres segundos despuÃ©s de una respuesta ni destruye una sesiÃ³n WebRTC sana al tocarlo nuevamente. La escucha permanece activa entre turnos y sÃ³lo se apaga despuÃ©s de 30 minutos completos sin actividad. Si falta una transcripciÃ³n final, Inicio y Tarjeta salen del estado bloqueado y regresan a `â— ESCUCHANDO`.
+
+La investigaciÃ³n web dispone de 40 segundos en servidor y 45 segundos en cliente. Ã‰xito, timeout, proveedor no disponible o respuesta vacÃ­a producen siempre una salida utilizable; un fallo recuperable no apaga el transporte de voz ni deja al usuario sin respuesta. `test-v322-real-sustained-caddie.mjs` simula 24 turnos consecutivos, reapertura, cierre reglamentario y los distintos resultados del servicio; la auditorÃ­a maestra conserva ademÃ¡s las 200 Ã¡reas y las modalidades completas.
+
+Archivos: `index-grupal.html`, `api/research.js`, `service-worker.js`, `audit-project.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v321-ai-universal-infinity.mjs`, `test-v312-general-caddie.mjs`, los candados de build/cachÃ©, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+## ActualizaciÃ³n operativa V321 Â· AI UNIVERSAL âˆ
+
+AI UNIVERSAL âˆ queda integrada mediante API de modelo avanzado, con voz y texto, contexto temporal compartido, bÃºsqueda Web para datos cambiantes, idioma automÃ¡tico, respuesta escrita y hablada, separaciÃ³n entre Ã³rdenes locales y consultas generales, y controles `ESCUCHAR`, `DETENER`, `REPETIR`, `SILENCIAR` y `CONTINUAR`. Las 200 Ã¡reas verificadas son pruebas, nunca una lista lÃ­mite. El Manual conserva la portada como primera pÃ¡gina y documenta la funciÃ³n en la pÃ¡gina 73.
+
+RevisiÃ³n final publicada: el Ã­ndice y el encabezado del visor nombran la pÃ¡gina 73 como **AI UNIVERSAL âˆ**, y la prueba V321 bloquea cualquier regreso al tÃ­tulo anterior.
+
+| Archivo | Registro V321 |
+|---|---|
+| `api/universal-ai.js` | Endpoint real de AI UNIVERSAL âˆ con Responses API, modelo avanzado, contexto, Web, fuentes y `store:false`. |
+| `api/session-grupal.js` | Realtime conserva Golf y habilita detecciÃ³n automÃ¡tica del idioma hablado. |
+| `index-grupal.html` | Panel AI âˆ, teclado, respuestas escritas, contexto voz-texto, clasificaciÃ³n orden/pregunta y cinco controles. |
+| `service-worker.js` | CachÃ© V321 para entregar inmediatamente la integraciÃ³n. |
+| `audit-project.mjs` | Incorpora la baterÃ­a obligatoria V321. |
+| `test-v321-ai-universal-infinity.mjs` | Verifica API real, 200 Ã¡reas sin lista cerrada, texto, voz, contexto, Web y controles. |
+| `test-v267-one-operational-line.mjs` | Alinea el contrato de transcripciÃ³n con idioma automÃ¡tico. |
+| `test-v271-realtime-prompt-limit.mjs` | Conserva el lÃ­mite Realtime con idioma automÃ¡tico. |
+| `test-v312-general-caddie.mjs` | AmplÃ­a la verificaciÃ³n universal a idioma automÃ¡tico y cachÃ© V321. |
+| `test-stableford-ui.mjs` | Alinea el build esperado con V321. |
+| `test-v272-definitive-operational-release.mjs` | Alinea el build esperado con V321. |
+| `test-v274-complete-courses-voice-operations.mjs` | Alinea el build esperado con V321. |
+| `test-v275-stable-live-voice-turns.mjs` | Alinea el build esperado con V321. |
+| `test-v276-manual-hole-navigation.mjs` | Alinea el build esperado con V321. |
+| `test-v277-official-round-corrections.mjs` | Alinea el build esperado con V321. |
+| `test-v278-card-image-pdf-export.mjs` | Alinea el build esperado con V321. |
+| `test-v279-local-card-library.mjs` | Alinea el build esperado con V321. |
+| `test-v280-local-history-insights.mjs` | Alinea el build esperado con V321. |
+| `test-v281-pwa-installation.mjs` | Alinea la cachÃ© instalable esperada con V321. |
+| `test-v284-native-package-generation.mjs` | Alinea el paquete web esperado con V321. |
+| `test-v290-brand-icons-cleanup.mjs` | Alinea el build esperado con V321. |
+| `test-v304-homogeneous-registration-actions.mjs` | Alinea el build esperado con V321. |
+| `test-v305-history-navigation-zero-error.mjs` | Alinea el build esperado con V321. |
+| `test-v307-match-arrows-format.mjs` | Alinea el build esperado con V321. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Registra la especificaciÃ³n y estado operativo de AI UNIVERSAL âˆ. |
+| `MANUAL_COBERTURA_FUNCIONAL_V311.md` | Ubica AI UNIVERSAL âˆ en la pÃ¡gina 73 y su prueba tÃ©cnica. |
+| `docs/manual/v311/manual-pages-17-35.json` | ExplicaciÃ³n para un niÃ±o de diez aÃ±os: voz, texto, Ã³rdenes, contexto y lÃ­mites reales. |
+| `scripts/update-manual-page-73.py` | Genera la pÃ¡gina 73 V321 sin alterar portada ni pÃ¡ginas anteriores. |
+| `docs/manual/v311/page-73.png` | Imagen 4K verificada de AI UNIVERSAL âˆ. |
+| `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf` | Manual completo actualizado; portada primero y pÃ¡gina 73 AI UNIVERSAL âˆ. |
+| `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf` | Alias PDF completo actualizado con el mismo orden correcto. |
+| `test-v311-manual-semantic-coverage.mjs` | Exige la explicaciÃ³n V321 y los cinco controles en el Manual. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello de inventario recalculado sobre las fuentes V321. |
+
+## Golf Score Card GT
+
+Este es el mapa general y sencillo del proyecto. El nombre comercial Ãºnico es **Golf Score Card GT**.
+
+Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sÃ³lo permanecen como cÃ³digos internos antiguos porque cambiarlos romperÃ­a enlaces, publicaciones o la identidad futura de las apps. No se muestran como nombre comercial al consumidor.
+
+## Estado actual
+
+- Corte consolidado de este inventario: **V311 Â· 25 de agosto de 2026**.
+- CÃ³digo oficial GitHub en `main`: `e938fd4d1f1815fdfac3a4babc68c3beedfd96c5`.
+- Vercel: **READY**.
+- PublicaciÃ³n Vercel vigente: `dpl_FkfVRcQVUK8AnWdgtW5gU6eG9KEh`.
+- AplicaciÃ³n oficial: https://epg-caddy.vercel.app/
+- Errores de publicaciÃ³n actuales: **0**.
+- Advertencias actuales: **0**.
+- AuditorÃ­a maestra: **PASS Â· 69 paquetes**.
+
+## AplicaciÃ³n Apple y Android
+
+- Nombre visible: **Golf Score Card GT**.
+- Identidad tÃ©cnica compartida: `com.epgcaddy.app`.
+- VersiÃ³n mÃ³vil preparada: `0.9.0`.
+- NÃºmero de paquete preparado: `290`.
+- Paquete para iPhone: preparado para Xcode y futura firma.
+- Paquete para Android: preparado para Android Studio y futura firma.
+- Compras y suscripciones: ruta preparada con RevenueCat.
+- Icono App Store: 1024 Ã— 1024.
+- Icono Google Play: 512 Ã— 512.
+- Iconos PWA: 512 Ã— 512 y 192 Ã— 192.
+- Icono de acceso directo Apple: 180 Ã— 180.
+
+## OrganizaciÃ³n actual
+
+- Archivos activos rastreados en Git al corte V311: **197**.
+- Base visual original V292: **160 archivos activos** distribuidos en nueve pÃ¡ginas.
+- ContinuaciÃ³n documentada despuÃ©s de crear la base visual: **V294 a V311**.
+- Corte solicitado para revisiÃ³n: **desde la lÃ­nea 160 hacia abajo se considera nuevo**.
+- Archivos de la colecciÃ³n `ROADMAP_IMAGES`: **22**.
+- Archivos histÃ³ricos retirados del uso diario: **89**.
+- Procesos automÃ¡ticos actuales conservados: **4**.
+- Ramas GitHub inventariadas: **80**.
+- Ramas ya incluidas en main: **70**.
+- Ramas con cambios propios conservadas: **9**.
+- Publicaciones Vercel de la base visual histÃ³rica: **622**; los despliegues V306-V311 quedan identificados en la continuaciÃ³n documental.
+- Base central preparada: **22 grupos de informaciÃ³n**.
+- Nombres internos de guardado en el telÃ©fono identificados: **14**.
+
+## Limpieza completada
+
+- Retirados 88 procesos automÃ¡ticos histÃ³ricos.
+- Retirado un script antiguo V112.
+- Todo permanece recuperable en el historial de GitHub.
+- El nombre visible EPG Caddy fue sustituido por Golf Score Card GT.
+- README, documentaciÃ³n, PWA, Apple, Android y procesos actuales usan la marca oficial.
+- Los iconos oficiales quedaron centralizados dentro de `assets/official-logos/`.
+- La instalaciÃ³n de Vercel quedÃ³ sin errores ni advertencias.
+
+## Mapas detallados
+
+- [ROADMAP A DETALLE Â· Directorio visual en nueve pÃ¡ginas](ROADMAP_A_DETALLE.md)
+- [Mapa de todos los archivos](CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md)
+- [Mapa de GitHub, Vercel, Apple, Android y datos](CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_INFRAESTRUCTURA.md)
+- [Inventario de publicaciones Vercel](CONTROL_PROYECTO_SCIRE/INVENTARIO_DESPLIEGUES_VERCEL.md)
+- [Ãndice de logos oficiales](assets/official-logos/README.md)
+
+## ImÃ¡genes lÃ­nea por lÃ­nea
+
+- [01 Â· Archivos activos](ROADMAP_IMAGES/01_ARCHIVOS_ACTIVOS_COMPLETO.png)
+- [02 Â· Archivos retirados](ROADMAP_IMAGES/02_ARCHIVOS_RETIRADOS_COMPLETO.png)
+- [03 Â· Infraestructura e IDs](ROADMAP_IMAGES/03_INFRAESTRUCTURA_COMPLETO.png)
+- [04 Â· Ramas GitHub](ROADMAP_IMAGES/04_RAMAS_GITHUB_COMPLETO.png)
+- [05A Â· Vercel Â· publicaciones 1 a 78](ROADMAP_IMAGES/05_VERCEL_01_A_COMPLETO.png)
+- [05B Â· Vercel Â· publicaciones 79 a 156](ROADMAP_IMAGES/05_VERCEL_01_B_COMPLETO.png)
+- [06A Â· Vercel Â· publicaciones 157 a 234](ROADMAP_IMAGES/06_VERCEL_02_A_COMPLETO.png)
+- [06B Â· Vercel Â· publicaciones 235 a 312](ROADMAP_IMAGES/06_VERCEL_02_B_COMPLETO.png)
+- [07A Â· Vercel Â· publicaciones 313 a 390](ROADMAP_IMAGES/07_VERCEL_03_A_COMPLETO.png)
+- [07B Â· Vercel Â· publicaciones 391 a 468](ROADMAP_IMAGES/07_VERCEL_03_B_COMPLETO.png)
+- [08A Â· Vercel Â· publicaciones 469 a 545](ROADMAP_IMAGES/08_VERCEL_04_A_COMPLETO.png)
+- [08B Â· Vercel Â· publicaciones 546 a 622](ROADMAP_IMAGES/08_VERCEL_04_B_COMPLETO.png)
+- [Ãndice de la colecciÃ³n visual](ROADMAP_IMAGES/README.md)
+
+## Punto de corte del directorio
+
+- Punto de activaciÃ³n original: **lÃ­nea 183**.
+- Registro vigente despuÃ©s de instalar el candado: **lÃ­nea 185**.
+- ActivaciÃ³n de seguimiento obligatorio: **23 de agosto de 2026, 17:05:00, hora de Guatemala**.
+- Desde este punto, cualquier creaciÃ³n, modificaciÃ³n, cambio de nombre, movimiento o eliminaciÃ³n se registra directamente y dentro de la misma versiÃ³n en **ROADMAP OVERALL** y **ROADMAP A DETALLE**.
+
+## Registro obligatorio V294 Â· Candado tÃ©cnico
+
+| Archivo o modificaciÃ³n | QuÃ© quedÃ³ registrado |
+|---|---|
+| `.github/workflows/ios-build.yml` | La construcciÃ³n de iPhone exige primero ambos ROADMAPS. |
+| `.github/workflows/ios-testflight.yml` | La preparaciÃ³n para TestFlight exige primero ambos ROADMAPS. |
+| `.github/workflows/mobile-native-package.yml` | El paquete Apple/Android se bloquea si los ROADMAPS estÃ¡n incompletos. |
+| `.github/workflows/roadmap-gate.yml` | Nuevo control automÃ¡tico obligatorio en GitHub. |
+| `.github/workflows/stableford-tournament-pass.yml` | Las pruebas de Stableford exigen primero ambos ROADMAPS. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | Norma permanente, lÃ­nea de corte y hora de activaciÃ³n. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | CÃ³digos y archivos del directorio actualizados. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_01.png` | PÃ¡gina visual 1 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_02.png` | PÃ¡gina visual 2 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_03.png` | PÃ¡gina visual 3 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_04.png` | PÃ¡gina visual 4 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_05.png` | PÃ¡gina visual 5 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_06.png` | PÃ¡gina visual 6 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_07.png` | PÃ¡gina visual 7 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_08.png` | PÃ¡gina visual 8 de 9. |
+| `ROADMAP_IMAGES/ROADMAP_A_DETALLE_09.png` | PÃ¡gina visual 9 de 9. |
+| `audit-project.mjs` | La auditorÃ­a maestra ejecuta primero el candado. |
+| `package.json` | Agrega el comando `roadmap:gate`. |
+| `scripts/roadmap-gate.mjs` | Comprueba que cada cambio aparezca en ambos ROADMAPS. |
+
+## Refuerzo tÃ©cnico V295 Â· PublicaciÃ³n tambiÃ©n bloqueada
+
+| Archivo o modificaciÃ³n | QuÃ© quedÃ³ registrado |
+|---|---|
+| `vercel.json` | Vercel ejecuta obligatoriamente el candado antes de publicar. |
+| `scripts/roadmap-gate.mjs` | Si Vercel no puede identificar los cambios, la publicaciÃ³n queda bloqueada por seguridad. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` | La publicaciÃ³n de Vercel se incorpora a la norma permanente. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra los cÃ³digos y explicaciones actualizados. |
+| `ROADMAP_A_DETALLE.md` | Guarda el refuerzo dentro del directorio detallado. |
+| `ROADMAP_OVERALL.md` | Guarda el refuerzo dentro de este resumen general. |
+
+## Ajuste de publicaciÃ³n V296 Â· Salida Vercel
+
+| Archivo o modificaciÃ³n | QuÃ© quedÃ³ registrado |
+|---|---|
+| `vercel.json` | Conserva el candado y seÃ±ala correctamente la carpeta que Vercel debe publicar. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el cÃ³digo y la explicaciÃ³n del ajuste. |
+| `ROADMAP_A_DETALLE.md` | Guarda el ajuste dentro del directorio detallado. |
+| `ROADMAP_OVERALL.md` | Guarda el ajuste dentro de este resumen general. |
+
+## ActualizaciÃ³n operativa V297 Â· Icono cromado 3D neÃ³n y micrÃ³fono compacto
+
+AutorizaciÃ³n recibida el **24 de agosto de 2026** para instalar como icono oficial la versiÃ³n cuadrada cromada, con relieve profundo, apariencia de metal troquelado y verde neÃ³n muy saturado. TambiÃ©n se reduce 50 % el diÃ¡metro visible del micrÃ³fono de registro y se coloca una figura clara de micrÃ³fono en el centro. No cambia su funcionamiento ni su Ã¡rea cÃ³moda de toque.
+
+| Archivo o modificaciÃ³n | QuÃ© queda registrado |
+|---|---|
+| `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | Fuente cuadrada histÃ³rica actualizada con el logo autorizado, conservando su nombre tÃ©cnico. |
+| `assets/logo.png` | Fuente operativa de 1024 Ã— 1024 para los paquetes Apple y Android. |
+| `assets/official-logos/README.md` | Identifica la nueva versiÃ³n cromada 3D como oficial. |
+| `assets/official-logos/golf-score-card-gt-app-store-1024.png` | Icono preparado para App Store. |
+| `assets/official-logos/golf-score-card-gt-apple-touch-180.png` | Icono preparado para el acceso directo de iPhone y iPad. |
+| `assets/official-logos/golf-score-card-gt-google-play-512.png` | Icono preparado para Google Play. |
+| `assets/official-logos/golf-score-card-gt-official-master-1254.jpeg` | Copia maestra oficial en mÃ¡xima medida. |
+| `assets/official-logos/golf-score-card-gt-pwa-192.png` | Icono pequeÃ±o de la aplicaciÃ³n instalable. |
+| `assets/official-logos/golf-score-card-gt-pwa-512.png` | Icono grande de la aplicaciÃ³n instalable. |
+| `index-grupal.html` | MicrÃ³fono de registro 50 % mÃ¡s pequeÃ±o, con sÃ­mbolo central claro para el usuario nuevo. |
+| `mobile-release.json` | NÃºmero de paquete preparado actualizado a V297. |
+| `service-worker.js` | CachÃ© renovada para entregar el icono V297 y retirar el anterior. |
+| `test-v290-brand-icons-cleanup.mjs` | ComprobaciÃ³n operativa alineada con el paquete y la cachÃ© V297. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | CÃ³digos, tamaÃ±os y explicaciones de los archivos actualizados. |
+| `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de esta modificaciÃ³n. |
+| `ROADMAP_OVERALL.md` | Registro general obligatorio de esta modificaciÃ³n. |
+
+## ActualizaciÃ³n operativa V298 Â· Instrucciones de registro para newbies
+
+AutorizaciÃ³n recibida el **24 de agosto de 2026** para sustituir Ãºnicamente los textos situados arriba del micrÃ³fono por una guÃ­a mÃ¡s grande, alineada a la izquierda y ordenada: **DICTA O ESCRIBE, 1-NOMBRE, 2-HDCP, 3-MARCAS, DE CADA JUGADOR, 4-OK**. El micrÃ³fono y el registro conservan exactamente su funcionamiento.
+
+| Archivo o modificaciÃ³n | QuÃ© queda registrado |
+|---|---|
+| `index-grupal.html` | Muestra la guÃ­a para usuarios nuevos en el orden autorizado, a la izquierda y con letra mayor. |
+| `mobile-release.json` | NÃºmero de paquete preparado actualizado a V298. |
+| `service-worker.js` | CachÃ© V298 para entregar inmediatamente las instrucciones nuevas. |
+| `test-v290-brand-icons-cleanup.mjs` | Comprueba el texto, orden, alineaciÃ³n, tamaÃ±o, paquete y cachÃ© V298. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza cÃ³digos, tamaÃ±os y explicaciones sencillas. |
+| `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de V298. |
+| `ROADMAP_OVERALL.md` | Registro general obligatorio de V298. |
+
+## CorrecciÃ³n operativa V299 Â· Logo completo dentro del iPhone
+
+CorrecciÃ³n solicitada el **24 de agosto de 2026** despuÃ©s de comprobar la aplicaciÃ³n instalada en iPhone. Se elimina Ãºnicamente el exceso de ancho del logo superior y se respeta el espacio de seguridad de la barra del telÃ©fono. El texto para newbies, el micrÃ³fono y todas las funciones permanecen iguales.
+
+| Archivo o modificaciÃ³n | QuÃ© queda registrado |
+|---|---|
+| `index-grupal.html` | Limita el logo al 100 % del espacio disponible y lo baja debajo de la barra superior del iPhone. |
+| `mobile-release.json` | NÃºmero de paquete preparado actualizado a V299. |
+| `service-worker.js` | CachÃ© V299 para entregar inmediatamente la correcciÃ³n del logo. |
+| `test-v290-brand-icons-cleanup.mjs` | Comprueba el ancho del logo, el espacio seguro, el paquete y la cachÃ© V299. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza cÃ³digos, tamaÃ±os y explicaciones sencillas. |
+| `ROADMAP_A_DETALLE.md` | Registro detallado obligatorio de V299. |
+| `ROADMAP_OVERALL.md` | Registro general obligatorio de V299. |
+
+## DocumentaciÃ³n operativa V300 Â· Compendio final para el usuario
+
+El **24 de agosto de 2026** se crea el compendio final de funciones reales para el consumidor. EstÃ¡ escrito con palabras sencillas, usa los nombres visibles de los botones y separa expresamente las funciones disponibles de las que todavÃ­a siguen en preparaciÃ³n. No modifica la aplicaciÃ³n ni reabre funciones ya aprobadas.
+
+| Archivo o modificaciÃ³n | QuÃ© queda registrado |
+|---|---|
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Manual amigable que explica desde la selecciÃ³n del campo hasta la tarjeta final, historial, correcciones, respaldo e instalaciÃ³n. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Agrega el compendio al inventario y actualiza las explicaciones de ambos ROADMAPS. |
+| `ROADMAP_A_DETALLE.md` | Registra a detalle la creaciÃ³n documental V300. |
+| `ROADMAP_OVERALL.md` | Registra esta creaciÃ³n dentro del resumen general. |
+
+## ActualizaciÃ³n operativa V301 Â· Modalidades claras y torneo opcional
+
+El **24 de agosto de 2026** se cierra el vacÃ­o de orientaciÃ³n de la pantalla principal. La ruta que ya funcionaba como ronda general ahora tiene una opciÃ³n visible llamada **RONDA NORMAL**; la modalidad rÃ¡pida cambia su nombre comercial a **SCORE CARD - PRÃCTICA**. El registro de torneo se identifica como opcional y permite guardar una descripciÃ³n tambiÃ©n opcional. No se modifica ninguna regla de cÃ¡lculo, score, voz, tarjeta o navegaciÃ³n.
+
+| Archivo o modificaciÃ³n | QuÃ© queda registrado |
+|---|---|
+| `index-grupal.html` | Presenta las tres modalidades, cambia el nombre de PrÃ¡ctica y agrega la descripciÃ³n opcional del torneo. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Actualiza el manual con los nombres visibles y el nuevo campo opcional. |
+| `mobile-release.json` | NÃºmero de paquete preparado actualizado a V301. |
+| `service-worker.js` | CachÃ© V301 para entregar la pantalla nueva. |
+| `test-v290-brand-icons-cleanup.mjs` | Comprueba las tres modalidades, el registro opcional y el guardado de la descripciÃ³n. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza cÃ³digos y explicaciones sencillas de V301. |
+| `ROADMAP_A_DETALLE.md` | Registra V301 a detalle. |
+| `ROADMAP_OVERALL.md` | Registra V301 en este resumen general. |
+
+## ActualizaciÃ³n operativa V302 Â· MicrÃ³fonos hermanos en General y Stableford
+
+El **24 de agosto de 2026** se unifica el registro visual de Stableford con la Score Card General. Stableford deja de mostrar el cÃ­rculo de 240 px con emoji y adopta el mismo encabezado REGISTRO DE JUGADORES, bloque de instrucciones, micrÃ³fono SVG compacto de 120 px en escritorio y 112 px en iPhone, color neÃ³n y estado rojo de escucha. El enlace con el motor oficial de voz permanece intacto.
+
+| Archivo o modificaciÃ³n | QuÃ© queda registrado |
+|---|---|
+| `stableford.js` | Reutiliza la lÃ­nea grÃ¡fica y descriptiva aprobada de la Score Card General sin cambiar la lÃ³gica de registro. |
+| `mobile-release.json` | NÃºmero de paquete preparado actualizado a V302. |
+| `service-worker.js` | CachÃ© V302 para entregar inmediatamente el componente unificado. |
+| `test-v290-brand-icons-cleanup.mjs` | Comprueba la estructura hermana, el SVG, la ausencia del emoji grande, el paquete y la cachÃ©. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el inventario de todos los archivos modificados. |
+| `ROADMAP_A_DETALLE.md` | Registra V302 a detalle. |
+| `ROADMAP_OVERALL.md` | Registra V302 en este resumen general. |
+
+## ActualizaciÃ³n operativa V303 Â· Paso 4-OK tambiÃ©n en Stableford
+
+El **24 de agosto de 2026** se completa la hermandad de vocabulario entre General y Stableford. El botÃ³n final de una nueva ronda Stableford ahora dice **OK**, tal como indica el paso 4. Su operaciÃ³n no cambia: sigue validando los datos e iniciando la ronda. Cuando se edita una ronda existente, el botÃ³n conserva **ACTUALIZAR DATOS**.
+
+| Archivo o modificaciÃ³n | QuÃ© queda registrado |
+|---|---|
+| `index-grupal.html` | Muestra OK como acciÃ³n final de una nueva ronda Stableford. |
+| `stableford.js` | Orienta al usuario con REVISA Y PRESIONA OK despuÃ©s del dictado. |
+| `mobile-release.json` | NÃºmero de paquete preparado actualizado a V303. |
+| `service-worker.js` | CachÃ© V303 para entregar inmediatamente el texto homologado. |
+| `test-v290-brand-icons-cleanup.mjs` | Comprueba OK en pantalla, OK en el aviso, paquete y cachÃ©. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el inventario de todos los archivos modificados. |
+| `ROADMAP_A_DETALLE.md` | Registra V303 a detalle. |
+| `ROADMAP_OVERALL.md` | Registra V303 en este resumen general. |
+
+## ActualizaciÃ³n operativa V304 Â· Acciones hermanas y control visual
+
+El **24 de agosto de 2026** se corrige la diferencia que obligaba al usuario a revisar manualmente las dos tarjetas. Registro General y Registro Stableford comparten ahora un Ãºnico tratamiento para sus acciones inferiores: misma familia, peso 900, tamaÃ±o aproximadamente 30 % mayor y la misma altura para OK. Cuando Stableford todavÃ­a no estÃ¡ listo, OK permanece funcionalmente bloqueado, pero se muestra con texto y borde neÃ³n legibles en lugar de gris desvanecido. Ninguna regla de juego, validaciÃ³n o navegaciÃ³n cambia.
+
+| Archivo nuevo o modificaciÃ³n | QuÃ© queda registrado |
+|---|---|
+| `index-grupal.html` | Instala el sistema visual compartido para OK, Ronda previa, Historial, AtrÃ¡s y Cancelar en ambas tarjetas. |
+| `mobile-release.json` | NÃºmero de paquete preparado actualizado a V304. |
+| `service-worker.js` | CachÃ© V304 para entregar inmediatamente la homologaciÃ³n. |
+| `test-v290-brand-icons-cleanup.mjs` | Mantiene la validaciÃ³n acumulada alineada con V304. |
+| `test-v304-homogeneous-registration-actions.mjs` | Impide automÃ¡ticamente diferencias futuras de fuente, peso, tamaÃ±o, altura o brillo entre las acciones hermanas. |
+| `audit-project.mjs` | Ejecuta la comparaciÃ³n V304 dentro del control maestro. |
+| `.github/workflows/roadmap-gate.yml` | Vuelve obligatorio el filtro hermano en GitHub. |
+| `vercel.json` | Vuelve obligatorio el filtro hermano antes de cada publicaciÃ³n Vercel. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Actualiza el inventario completo e incorpora la nueva prueba. |
+| `ROADMAP_A_DETALLE.md` | Registra V304 a detalle. |
+| `ROADMAP_OVERALL.md` | Registra V304 en este resumen general. |
+
+## ActualizaciÃ³n operativa V305 Â· Historial, navegaciÃ³n y cero superposiciones
+
+El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base V304. Todo acceso visible al archivo de tarjetas usa **HISTORIAL**; cada pantalla con retorno ofrece **ATRÃS** conectado y situado arriba del contenido; el acceso opcional de cuenta pasa a **REGÃSTRATE** dentro del flujo y deja de cubrir controles. En Stableford se elimina el aviso huÃ©rfano bajo los jugadores, se conserva su validaciÃ³n interna y la guÃ­a visible se corrige para pedir Ãºnicamente nÃºmero de jugador y nombre. Los OK General y Stableford comparten geometrÃ­a, tipografÃ­a, color y estados equivalentes: delineados mientras el registro estÃ¡ incompleto y sÃ³lidos cuando ya puede confirmarse. CÃ¡lculos y reglas no solicitadas permanecen congelados.
+
+| Archivo nuevo o modificado | QuÃ© queda registrado |
+|---|---|
+| `.github/workflows/roadmap-gate.yml` | Ejecuta tambiÃ©n el filtro obligatorio V305 en GitHub. |
+| `COMPENDIO_FINAL_FUNCIONES_USUARIO.md` | Usa HISTORIAL y REGÃSTRATE y explica los formatos reales de dictado General y Stableford. |
+| `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` | Sincroniza el manual vivo con App V305, el estado de los OK y las guÃ­as operativas reales. |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` | Homologa el vocabulario del historial en la matriz funcional. |
+| `ROADMAP_A_DETALLE.md` | Registra individualmente la intervenciÃ³n V305. |
+| `ROADMAP_OVERALL.md` | Incorpora este resumen general V305. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Eleva el inventario activo e incorpora todos los archivos V305. |
+| `audit-project.mjs` | AÃ±ade la prueba V305 a la auditorÃ­a maestra. |
+| `index-grupal.html` | Homologa HISTORIAL, ATRÃS, REGÃSTRATE y los estados del OK General; evita superposiciones y conserva las validaciones. |
+| `mobile-release.json` | Prepara el paquete mÃ³vil 305. |
+| `service-worker.js` | Activa la cachÃ© `gscg-mobile-v305`. |
+| `stableford.js` | Muestra Ãºnicamente `1-# JUGADOR`, `2-NOMBRE`, `HASTA 6 JUGADORES` y `3-OK`; el motor exige la posiciÃ³n y asigna HCP y marcas por categorÃ­a. |
+| `test-course-catalog.mjs` | Conserva la eliminaciÃ³n de las falsas casillas histÃ³ricas y reconoce la guÃ­a vigente del lÃ­mite real de seis jugadores. |
+| `test-stableford-ui.mjs` | Alinea la prueba de UI con el build vigente V305. |
+| `test-stableford-clean-roster-history.mjs` | Alinea la prueba limpia con la regla V289 de persistir la nueva ronda vacÃ­a. |
+| `test-v255-player-registration-boxes-codes.mjs` | Alinea la prueba histÃ³rica con la guÃ­a visual vigente: Dicta o escribe, Nombre, HDCP, Marcas y OK. |
+| `test-v260-round-points-player-return.mjs` | Alinea la recuperaciÃ³n con la regla V289 de persistir Stableford vacÃ­o para impedir que reaparezcan nombres anteriores. |
+| `test-v261-registration-stableford-modality.mjs` | Alinea la prueba histÃ³rica con Ronda Normal, Stableford, Score Card - PrÃ¡ctica y la guÃ­a homologada vigente. |
+| `test-v262-provisional-optional-profile.mjs` | Conserva los perfiles opcionales y reconoce el nombre comercial vigente `SCORE CARD - PRÃCTICA` sin recuperar `RONDA SIN REGISTRO`. |
+| `test-v253-live-previous-round.mjs` | Alinea la ruta Stableford oficial con `v=305`. |
+| `test-v252-stableford-persistence-category-course.mjs` | Alinea la persistencia con la regla V289 de guardar vacÃ­a la nueva ronda Stableford. |
+| `test-v272-definitive-operational-release.mjs` | Alinea build, snapshot y ruta oficial con V305. |
+| `test-v274-complete-courses-voice-operations.mjs` | Alinea la identificaciÃ³n de versiÃ³n sin cambiar la cobertura de voz. |
+| `test-v275-stable-live-voice-turns.mjs` | Alinea la identificaciÃ³n de versiÃ³n sin cambiar la cobertura viva. |
+| `test-v276-manual-hole-navigation.mjs` | Alinea la identificaciÃ³n de versiÃ³n sin cambiar la navegaciÃ³n por hoyos. |
+| `test-v277-official-round-corrections.mjs` | Alinea correcciones y snapshots oficiales con V305. |
+| `test-v278-card-image-pdf-export.mjs` | Alinea los artefactos de tarjeta con V305. |
+| `test-v279-local-card-library.mjs` | Homologa la redacciÃ³n de Historial y la versiÃ³n vigente. |
+| `test-v280-local-history-insights.mjs` | Alinea las estadÃ­sticas del Historial con V305. |
+| `test-v281-pwa-installation.mjs` | Comprueba la cachÃ© mÃ³vil V305. |
+| `test-v284-native-package-generation.mjs` | Comprueba paquete mÃ³vil y cachÃ© V305. |
+| `test-v285-stableford-back-navigation.mjs` | Comprueba el ATRÃS superior de Stableford. |
+| `test-v287-stableford-back-controls-clear.mjs` | Comprueba que REGÃSTRATE estÃ© en flujo y no tape controles. |
+| `test-v290-brand-icons-cleanup.mjs` | Mantiene la validaciÃ³n acumulada y reconoce la guÃ­a Stableford exacta, el paquete y la cachÃ© V305. |
+| `test-v304-homogeneous-registration-actions.mjs` | Conserva el filtro hermano y prohÃ­be
+# R18-LAB Â· acceso propietario temporal de 24 horas Â· 08 de septiembre de 2026
+
+- Acceso completo de prueba mediante token opaco; sÃ³lo la cuenta propietaria puede crearlo o revocarlo.
+- Vigencia exacta de 24 horas, cierre automÃ¡tico del cliente y bloqueo obligatorio del servidor.
+- Instancia local limpia, sin jugadores, rondas, tarjetas, historial ni respaldo del propietario.
+- `guest-access.js` carga el aislamiento antes de los mÃ³dulos y mantiene intacta la compilaciÃ³n histÃ³rica del script principal.
+- Cuenta, respaldo, sincronizaciÃ³n, comercio y administraciÃ³n quedan cerrados al invitado.
+- Feedback temporal sin nombres: apertura, modalidad, cantidad de jugadores, hoyos y anotaciones; visible sÃ³lo por el propietario y eliminado automÃ¡ticamente antes de 48 horas.
+- Banco especÃ­fico PASS; falta vincular la identidad propietaria real y ejecutar Preview/pruebas fÃ­sicas. MAIN y ProducciÃ³n permanecen intactas.
+- Los tres inventarios se regeneran y sellan como `R18-LAB-OWNER-GUEST-24H-LOCK`, sin rÃ³tulos histÃ³ricos V367/V371.
+- Archivos exactos: `access.html`, `api/_lib/app-access.js`, `api/app-access.js`, `guest-access.js`, `middleware.js`, `index-grupal.html`, `package.json`, `vercel.json`, `test-r18-owner-guest-24h-access.mjs`, `audit-project.mjs`, `scripts/rebuild-inventory-pdfs.py`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_A_DETALLE.md` y `ROADMAP_OVERALL.md`.
+
+# V407-R2 Â· Tarjeta y acciones premium homogÃ©neas Â· 08 de septiembre de 2026
+
+- `index-grupal.html`: encuadra la tarjeta operativa con tÃ­tulo, borde continuo, fondo original y desplazamiento horizontal visible; conserva la paleta negro, verde, blanco y rojo funcional.
+- `test-v407-r1-premium-visual-system.mjs`: bloquea regresiones de tÃ­tulo, contenedor, barra de desplazamiento y colores de la tarjeta, ademÃ¡s de las retÃ­culas homogÃ©neas de acciones.
+- ProducciÃ³n permanece intacta; el candidato se limita a la rama `lab/premium-ui-v407`.
+
+## V407-R6 Â· CoordinaciÃ³n de Universales Â· 08 de septiembre de 2026
+
+- La modalidad general visible se renombra **MEDAL PLAY NORMAL** en Inicio, detalle de ronda y Torneo LIVE; su motor permanece intacto.
+
+- `CONTROL_PROYECTO_SCIRE/COORDINACION_V407_R6_UNIVERSALES.md` separa motor/reglas de diseÃ±o/plantillas para impedir cruces entre conversaciones.
+- `lab/v407-r6-universales` queda como Ãºnica rama de integraciÃ³n de la modalidad; `lab/premium-ui-v407` conserva la auditorÃ­a R5.
+- UNIVERSALES reemplaza el slot completo de DOTS en APP-22/23; DOTS se retira de Score Card, Tarjeta Digital, WhatsApp, Historial, Manual y superficies activas. CARD-09/10 quedan para Global/Personal Universales.
+- `test-v407-r6-universales-coordination.mjs` impide crear APP-43â€“45, conserva 12 puntos por hoyo y bloquea cruces entre motor, grÃ¡fica y ProducciÃ³n.
+- `universales.js` implementa el motor aislado 6â€“4â€“2â€“0 / 6â€“4â€“2, comparte posiciones empatadas y exige 12 puntos exactos por hoyo.
+- `index-grupal.html` sustituye la casilla visible de DOTS por UNIVERSALES, limita el registro a 3 o 4 jugadores y aÃ±ade PUNTOS por hoyo e IN/OUT/TOTAL a la Score Card y Tarjeta Digital.
+- `card-library.js` conserva UNIVERSALES como modalidad propia en Historial; `service-worker.js` incorpora el motor a la copia instalable R6.
+- `card-artifacts.js` genera Global y Personal especÃ­ficas con Gross/Neto/Puntos y elimina el panel digital activo de DOTS; `scripts/build-mobile-web.mjs` incluye el motor en iOS/Android.
+- `api/live.js` y `live-hub.js` preservan y rotulan UNIVERSALES en Torneo LIVE; `voice-assistant.js` abre su registro por voz.
+- `live-control.js` calcula y publica los 12 puntos por grupo; `live-view.js` muestra PUNTOS por hoyo y TOTAL; el Centro LIVE ordena UNIVERSALES de mayor a menor puntaje.
+- `database/005_live_tournament_mode.sql` fija modalidad por torneo dinÃ¡mico; el API rechaza grupos cuyo modo no coincide con el torneo creado.
+- `test-v311-voice-assistant.mjs`, `test-round-information.mjs` y `test-v261-registration-stableford-modality.mjs` fijan navegaciÃ³n y tÃ­tulos compartidos del release R6.
+- `test-v406-r23-visible-version.mjs` fija el identificador visible `V407 Â· R6` sobre ACTUALIZAR.
+- `test-v260-round-points-player-return.mjs` conserva la retÃ­cula mÃ³vil contenida heredada de R5A.
+- `test-v407-r6-universales.mjs` prueba 12 escenarios de empate, 3/4 jugadores, el caso 5â€“5â€“1â€“1, retiro de la superficie DOTS y paridad de configuraciones.
+- `test-v405-registration-clear-final-mobile.mjs` y `test-v407-r1-premium-visual-system.mjs` amplÃ­an los candados compartidos a UNIVERSALES y al release R6.
+- `test-v330-side-games.mjs` conserva la cobertura histÃ³rica del motor DOTS, pero prohÃ­be sus accesos/configuraciÃ³n activos y mantiene Skins, Wolf y Vegas.
+- `test-v307-match-arrows-format.mjs` conserva Match Play y amplÃ­a el rÃ³tulo compartido de modalidad a UNIVERSALES.
+- `test-v329-skins.mjs` conserva Skins y exige UNIVERSALES en el antiguo espacio visual de DOTS.
+- Los candados V365 y V406 de recuperaciÃ³n, diseÃ±o, controles mÃ³viles y Torneo LIVE conservan sus contratos y reconocen el release R6.
+- `audit-project.mjs` incorpora obligatoriamente ambos bancos R6 a la regresiÃ³n maestra.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` registra el conjunto exacto de fuentes R6.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` resella 431 fuentes y los tres inventarios PDF despuÃ©s de la integraciÃ³n R6.
+- ProducciÃ³n `main` permanece congelada en `4009f79f50987f8bf105189bce9c5e90b2857363`.
+
+## V407-R5 Â· Inventario visual total y tarjeta Stableford responsive Â· 08 de septiembre de 2026
+
+- Se inventariaron 67 pantallas y estados verificables en seis familias; el alcance y sus diez criterios estÃ¡n en `CONTROL_PROYECTO_SCIRE/AUDITORIA_VISUAL_V407/`.
+- Las capturas fÃ­sicas `IMG_3120`â€“`IMG_3126` se registraron como 9 ID FAIL; quedan 58 ID pendientes y cero PASS fÃ­sicos hasta repetir el recorrido R5.
+- La tarjeta Stableford Global divide los hoyos en IN 1â€“9 y OUT 10â€“18, repliega metadatos y contiene el SHA-256 dentro del ancho mÃ³vil.
+- La auditorÃ­a maestra incorpora el inventario como paquete obligatorio; el banco integral queda en 123 paquetes.
+- ProducciÃ³n permanece intacta; R5 continÃºa como candidato exclusivo de `lab/premium-ui-v407`.
+- PublicaciÃ³n R5: el primer transporte remoto truncÃ³ `index-grupal.html`; el commit LAB `bb21de0` restaurÃ³ el blob Ã­ntegro con SHA Git exacto y conservÃ³ el Ã¡rbol R5 local completo. El deployment reparador alcanzÃ³ Manual visual PASS y fue detenido por el propio `roadmap:gate`, por lo que se registra esta reparaciÃ³n antes de reintentar.
+- Fuentes de control exactas: `CONTROL_PROYECTO_SCIRE/AUDITORIA_VISUAL_V407/INVENTARIO_PANTALLAS_ESTADOS_V407_R5.md`, `CONTROL_PROYECTO_SCIRE/AUDITORIA_VISUAL_V407/MATRIZ_AUDITORIA_VISUAL_V407_R5.md`, `test-v407-r5-visual-inventory.mjs` y `test-card-artifacts.mjs`.
+- CorrecciÃ³n APP-04/05 y APP-29/30: `index-grupal.html` contiene el Control Manual dentro del iPhone, compacta sus seis columnas sin traslape y aumenta la legibilidad de las acciones de Tarjeta Digital; `test-v407-r1-premium-visual-system.mjs` bloquea la geometrÃ­a.
+- Release de cachÃ© `V407-R5A-MOBILE-GRIDS-20260908`: `service-worker.js`, versiÃ³n visible y pruebas de versiÃ³n obligan al iPhone a descargar esta correcciÃ³n en lugar de reutilizar R5.
+- CorrecciÃ³n APP-32â€“37: Historial, vacÃ­o, filtros, eliminaciÃ³n y EstadÃ­sticas comparten Ã¡rea segura, superficies grafito, controles de 52 px, retÃ­culas contenidas y ritmo mÃ³vil homogÃ©neo; la auditorÃ­a maestra incorpora `test-v407-r5a-history-visual-system.mjs` como paquete 124.
+- RegresiÃ³n R5A: `test-v260-round-points-player-return.mjs` se sincroniza con la retÃ­cula mÃ³vil contenida de seis columnas; el primer build `dpl_8SSK4fASsW8PBGnPasaK7gP8gT37` queda rechazado y no sustituye el alias LAB hasta publicar el Ã¡rbol corregido.
+# V407-R14 Â· ActualizaciÃ³n manual permanente y tarjetas seguras Â· 08 de septiembre de 2026
+
+- Se consolida en una rama limpia el botÃ³n ACTUALIZAR siempre visible/parpadeante, las categorÃ­as opcionales sobre nombres y los puntos rojos de Universales.
+- Se rechaza la sustituciÃ³n truncada de `index-grupal.html` encontrada en R13 y se preserva el HTML canÃ³nico completo de main R10.
+- Release/cachÃ© R14, pruebas y evidencia se mantienen coordinados; ProducciÃ³n no cambia mientras exista un FAIL fÃ­sico o documental.
+- ReparaciÃ³n de publicaciÃ³n R14: se restaura el HTML canÃ³nico completo en el commit de Preview; el intento con blob vacÃ­o queda rechazado.
+- Cierre de publicaciÃ³n R14: ROADMAPS y sello de inventario quedan coordinados en el mismo commit final.
+- Evidencia automatizada de tarjetas: `scripts/card-audit-fixtures.mjs`.
+- R15: actualizaciÃ³n remota parpadea sÃ³lo ante una versiÃ³n nueva y confirma ACTUALIZADO al instalarla.
+- R16: Medal Play y Universales reflejan visualmente una sola modalidad activa; sirve como segunda actualizaciÃ³n remota consecutiva.
+- R17: la categorÃ­a elegida aparece pequeÃ±a sobre el nombre de cada jugador; sin categorÃ­a no aparece texto. La fila PUNTOS y sus valores por hoyo/totales quedan rojos, y una fila vacÃ­a con categorÃ­a o marcas preseleccionadas no bloquea OK.
+- ReparaciÃ³n de transporte R17: `index-grupal.html` se retransmite Ã­ntegro; el build truncado queda rechazado y no llegÃ³ a ProducciÃ³n.
+- R18: `index-grupal.html`, `live-view.js` y `live.html` muestran puntos por hoyo/totales Universales en rojo; el encabezado mÃ³vil separa logo, modalidad y actualizaciÃ³n sin superposiciÃ³n.
+# R19 Â· Enlace invitado individual de un solo uso Â· 09 de septiembre de 2026
+
+- El primer canje consume atÃ³micamente el enlace; cualquier segundo navegador o dispositivo recibe `ENLACE INVÃLIDO, VENCIDO O YA UTILIZADO`.
+- El dispositivo que lo canjeÃ³ conserva su cookie privada hasta el vencimiento original de 24 horas.
+- Alcance exclusivo LAB; MAIN, variables y base de datos permanecen sin cambios estructurales.
+
+# V407-R21 Â· SUPPORT y acceso 24 h cerrados Â· 09 de septiembre de 2026
+
+- `index-grupal.html`: SUPPORT abre `/manual.pdf` en la misma pantalla, muestra `V407 Â· R21` y ofrece `COMPARTIR 24H` sÃ³lo a la cuenta propietaria.
+- `service-worker.js`: avanza release/cachÃ© y excluye `/access.html` de la navegaciÃ³n PWA almacenada.
+- `api/app-access.js` y `api/_lib/app-access.js`: los enlaces usan el dominio LAB oficial y se consumen atÃ³micamente una sola vez; el primer dispositivo conserva acceso hasta el vencimiento de 24 horas.
+- Pruebas dirigidas: `test-v311-live-support-link.mjs`, `test-r18-owner-guest-24h-access.mjs` y `test-v407-r9-manual-update.mjs`.
+- Rollback: volver al commit R20 de LAB. MAIN no se modifica.
+- `.github/workflows/hotfix-support-same-screen.yml`: se retira el transporte temporal; R21 queda integrado directamente en LAB.
+- `docs/manual/v311/page-00.png`: portada del manual resellada junto con los PDF publicados para que SUPPORT entregue el artefacto vigente.
+- ReparaciÃ³n de build R21: `service-worker.js` conserva explÃ­citamente el marcador aprobado `v407-r18-live-points-header`; `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran y sellan la correcciÃ³n. El Preview anterior quedÃ³ rechazado; MAIN/ProducciÃ³n no cambia.
+- Control maestro preservado: punto de corte `lÃ­nea 185`; activaciÃ³n: 23 de agosto de 2026, 17:05:00, hora de Guatemala.
+- Resello remoto R21: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` usa el digest del Ã¡rbol Git que audita Vercel; `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` documentan el mismo cambio. MAIN/ProducciÃ³n permanece intacta.
+- VerificaciÃ³n final del resello R21: los tres archivos anteriores se recalculan contra el `HEAD` remoto exacto que usa Vercel; no cambia cÃ³digo funcional ni MAIN/ProducciÃ³n.
+- CorrecciÃ³n fÃ­sica R21: `middleware.js` consulta el estado mediante `/api/app-access?action=status` y elimina la importaciÃ³n ESM incompatible que causaba `MIDDLEWARE_INVOCATION_FAILED`; ambos ROADMAPS y el sello se actualizan en el mismo commit. MAIN/ProducciÃ³n no cambia.
+- Propietario R21: `api/_lib/app-access.js` fija como identidad exclusiva `jaimekirste@gmail.com` cuando Vercel no define una variable mÃ¡s especÃ­fica; `test-r18-owner-guest-24h-access.mjs` bloquea esa asignaciÃ³n. Otros usuarios siguen sin permiso para ver o crear invitaciones.
+- R21 enlace protegido contra previsualizadores: `api/app-access.js` entrega el token en fragmento y sÃ³lo permite consumirlo mediante POST; `access.html` ejecuta ese POST al abrirlo el invitado y entra inmediatamente; `index-grupal.html` contiene el botÃ³n propietario dentro del ancho mÃ³vil. Un GET automÃ¡tico ya no consume el acceso.
+- Cobertura preventiva R21: `test-r18-owner-guest-24h-access.mjs` bloquea el canje por GET y valida fragmento + POST; `test-v311-live-support-link.mjs` exige que INVITAR 24 H permanezca dentro de la barra. La causa y prevenciÃ³n quedan asentadas en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`.
+- Cierre remoto R21: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se resellan juntos contra el Ã¡rbol exacto del Preview; ProducciÃ³n permanece intacta.
+- ReparaciÃ³n de transporte R21: `index-grupal.html` se retransmite Ã­ntegro con 818,400 bytes; ambos ROADMAPS y el sello se actualizan en el mismo commit. El build truncado queda rechazado.
+- PublicaciÃ³n productiva R21: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran el despliegue autorizado en `golf-sc-gt-lab`; el primer intento por `CRON_SECRET` y el commit vacÃ­o quedan rechazados sin sustituir R24.
+
+- CorrecciÃ³n productiva Support sin tocar ACTUALIZAR: `service-worker.js` excluye `/manual.pdf` y `/manual.html` del fallback general hacia la Score Card y entrega `manual.html` por red; `manual.html` monta una sola grÃ¡fica activa con precarga y sin `IntersectionObserver`. `test-v311-live-support-link.mjs` y `test-v311-manual-hosting.mjs` bloquean el parpadeo y el retorno silencioso. `vercel.json` regenera inventarios antes de la auditorÃ­a.
+
+- Portabilidad exclusiva del build: `scripts/rebuild-manual-bets-live-data.py` y `scripts/rebuild-inventory-pdfs.py` usan Bitstream Vera incluida en ReportLab; elimina la dependencia ausente de `/usr/share/fonts` sin modificar ninguna funciÃ³n de la aplicaciÃ³n ni ACTUALIZAR.
+
+- Regreso directo desde Support: `manual.html` incorpora el botÃ³n superior `â† REGRESAR A MI RONDA`; usa `history.back()` cuando el Manual proviene de la aplicaciÃ³n y `location.replace("/index-grupal.html?source=manual-return")` sÃ³lo como recuperaciÃ³n. `test-v311-manual-hosting.mjs` exige ambos recorridos y la conservaciÃ³n de la ronda persistida. ACTUALIZAR no cambia.
+# V407-R23A Â· InvitaciÃ³n WhatsApp conserva token Â· 09 de septiembre de 2026
+
+- El control del rewrite acepta el formato JSON normal y el minificado por Vercel; el primer Preview quedÃ³ rechazado sin tocar ProducciÃ³n.
+- La invitaciÃ³n de 24 horas usa `/invite/<token>` para impedir que WhatsApp elimine el acceso y envÃ­e a Kathy al formulario propietario.
+- `access.html`, `api/app-access.js`, `middleware.js` y `vercel.json` forman un Ãºnico recorrido invitado; LIVE y las demÃ¡s funciones permanecen intactas.
+- `test-r18-owner-guest-24h-access.mjs` bloquea regresiones de ruta, reescritura, permiso y canje POST.
+- Rollback: volver a `73df15f`; ProducciÃ³n R23 no cambia hasta cero FAIL y aprobaciÃ³n fÃ­sica.
+
+# V407-R24 Â· WhatsApp y controles mÃ³viles sin traslapes Â· 09 de septiembre de 2026
+
+- `index-grupal.html`: telÃ©fono WhatsApp editable con ğŸ‡¬ğŸ‡¹ +502 y ancho mÃ³vil Ãºtil; ACTUALIZAR e instalaciÃ³n quedan fuera de todos los overlays y dentro del flujo normal.
+- `manual.html`: Ã­ndice agrupado en ocho temas con tÃ­tulo y enlace directo a cada pÃ¡gina; bÃºsqueda WhatsApp/telÃ©fono/Guatemala/+502.
+- `service-worker.js` y pruebas V311/V365/V405/V406/V407: release R24 y contratos preventivos sincronizados.
+- Evidencia Chromium mÃ³vil 390Ã—844: General, Match Play, Four Ball, Skins, Wolf, Vegas, Universales y trece pantallas crÃ­ticas sin desbordamiento ni intersecciones.
+- Rollback: `73df15f`; promociÃ³n a MAIN sÃ³lo tras Preview READY y cero FAIL.
+- ReparaciÃ³n de transporte R24: el primer blob remoto de `index-grupal.html` llegÃ³ vacÃ­o; el commit reparador retransmite los 830,274 bytes y conserva el Ã¡rbol candidato exacto.
+- Ãndice protegido por `test-v311-manual-search.mjs`; enlaces temÃ¡ticos y bÃºsqueda WhatsApp no pueden desaparecer silenciosamente.
+
+# V407-R24A Â· ACTUALIZAR manual visible en Registro Â· 09 de septiembre de 2026
+
+- `index-grupal.html`: restaura ACTUALIZAR exclusivamente en Registro y reserva una franja superior para impedir contacto con el logotipo o controles.
+- `service-worker.js`: nuevo release/cachÃ© R24A para que el propietario reciba y confirme manualmente la versiÃ³n.
+- Evidencia Chromium mÃ³vil 390Ã—844: ACTUALIZAR visible, tarjeta inicia en 90 px, botÃ³n termina en 67 px, intersecciÃ³n cero y ancho total 390 px.
+- Pruebas V365/V405/V406/V407 actualizadas; rollback productivo `2ba83ed`.
+
+# V407-R24B Â· recuperaciÃ³n manual desde la copia R24 almacenada Â· 09 de septiembre de 2026
+
+- `service-worker.js`: al servir el shell aprobado antiguo inyecta sÃ³lo el CSS que vuelve visible ACTUALIZAR y reserva su franja; no instala ni recarga automÃ¡ticamente.
+- `index-grupal.html`: destino visible R24B posterior al toque personal del propietario.
+- Candado permanente R24B: `scripts/lab-update-browser-review.mjs` separa la revisiÃ³n automatizada en navegador real de la auditorÃ­a estÃ¡tica y del iPhone fÃ­sico; exige cuatro deployments consecutivos Aâ†’Bâ†’Câ†’D sobre `https://golf-sc-gt-lab.vercel.app`, un perfil persistente, capturas completas y conservaciÃ³n de datos.
+- `scripts/lab-update-physical-gate.mjs`, `test-v407-r24-update-physical-gate.mjs`, `package.json` y `audit-project.mjs`: rechazan evidencia JSON ausente, alterada, ajena o menor de tres transiciones. Hasta ejecutar el recorrido pÃºblico el estado es NO REVISADO; MAIN/ProducciÃ³n permanece intacta.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`: integran el candado dentro de G0-10 sin crear una puerta paralela.
+- `.github/workflows/apply-r24b-lab.yml`: transporte temporal creado y eliminado en el mismo cierre remoto; no forma parte del candidato final.
+- `test-v407-r9-manual-update.mjs`: exige el puente manual y prohÃ­be navegaciÃ³n automÃ¡tica.
+- Rollback productivo: `5e45b264`; ninguna ronda, historial ni funciÃ³n de juego se modifica.
+
+# V407-R24C Â· aislamiento de ACTUALIZAR en Historial Â· 09 de septiembre de 2026
+
+- `IMG_3303.png` demuestra un FAIL fÃ­sico: `ACTUALIZADO` tapaba parcialmente `ATRÃS` en Historial.
+- `index-grupal.html` limita la excepciÃ³n que muestra ACTUALIZAR a Registro cuando Historial no estÃ¡ abierto.
+- `test-v407-r24b-history-update-isolation.mjs` bloquea el conflicto de prioridad CSS que dejÃ³ visible el control global sobre el overlay.
+- Se invalida cualquier afirmaciÃ³n previa de revisiÃ³n fÃ­sica total: sÃ³lo las pantallas con evidencia individual pueden figurar como revisadas.
+- ProducciÃ³n principal permanece intacta; el candidato continÃºa en LAB y su estado es NO REVISADO hasta repetir navegador real y iPhone.
+- Los tres inventarios V311 y `INVENTARIOS_V311.lock.json` se regeneran sobre 448 fuentes remotas para incluir la correcciÃ³n y su banco preventivo.
+- Cierre remoto R24C: se elimina el transporte temporal fallido, se restauran Ã­ntegros los dos archivos grandes y se resellan ambos ROADMAPS sobre el Ã¡rbol LAB exacto; el inventario remoto contiene 448 fuentes activas.
+# V407-R24D Â· LIVE pÃºblico separado del acceso completo 24 H Â· 10 de septiembre de 2026
+
+- `COMPARTIR LIVE` deja de heredar dominios temporales de Preview y abre la Score Card pÃºblica de sÃ³lo lectura en `golf-sc-gt-lab.vercel.app/live.html`.
+- `INVITAR Â· 24 H` permanece como un flujo distinto: aplicaciÃ³n completa temporal con token individual, aislamiento, caducidad, revocaciÃ³n y bloqueo de datos propietarios.
+- Candado: `test-v406-r22-share-live.mjs` prohÃ­be transportar `_vercel_share` y exige el dominio pÃºblico; `test-r18-owner-guest-24h-access.mjs` conserva Ã­ntegro el contrato de 24 horas. MAIN intacta.
+# V407-R24D Â· actualizaciÃ³n manual obligatoria Â· 10 de septiembre de 2026
+
+- `index-grupal.html` muestra `V407 Â· R24D`; una instalaciÃ³n R24C detecta el release publicado y activa `ACTUALIZAR` parpadeante, pero no instala la aplicaciÃ³n por sÃ­ sola.
+- `service-worker.js` separa la cachÃ© candidata R24D de la cachÃ© aprobada; la promociÃ³n sÃ³lo ocurre despuÃ©s del toque del propietario y la navegaciÃ³n con `app_version`.
+- Los bancos V365/V406/V407 (`test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v406-r23-visible-version.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r7-ios-scroll.mjs` y `test-v407-r9-manual-update.mjs`) bloquean conjuntamente la firma R24D y rechazan promociÃ³n automÃ¡tica. LAB Ãºnicamente; Main permanece intacta.
+- ReparaciÃ³n de transporte R24D: `index-grupal.html` se retransmite completo con 830,526 bytes; este ROADMAP, `ROADMAP_A_DETALLE.md` y el sello de inventario acompaÃ±an el commit reparador exigido por Vercel. El build vacÃ­o quedÃ³ rechazado y nunca activÃ³ LAB.
+
+# V407-R25 Â· controles seguros de ronda Â· 10 de septiembre de 2026
+
+- LAB separa `BORRAR SCORES` de `BORRAR TODO`: el primero conserva jugadores, modalidad, campo, hÃ¡ndicaps y cronÃ³metro; el segundo mantiene su eliminaciÃ³n integral con confirmaciÃ³n.
+- El hÃ¡ndicap acepta cualquier entero, incluidos cero y valores negativos, en todas las modalidades y conserva su cÃ¡lculo firmado.
+- `player-registry.js` y `live-control.js` preservan ese hÃ¡ndicap firmado en perfiles y LIVE; `index-grupal.html` concentra validaciÃ³n, cÃ¡lculo y controles.
+- `service-worker.js`, `test-v405-registration-clear-final-mobile.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r7-ios-scroll.mjs` y `test-v407-r9-manual-update.mjs` avanzan coordinadamente a R25.
+- `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran y sellan el cambio.
+- El cronÃ³metro incorpora `RESET` a 00:00:00 sin borrar jugadores ni scores.
+- El registro captura directamente nombre y WhatsApp visibles al pulsar `OK`, incluido el texto predictivo/autocompletado de Safari iOS.
+- Candado: `test-v407-r25-round-controls.mjs`. PublicaciÃ³n Ãºnicamente en LAB; Maestro R24D permanece intacto.
+- `.github/workflows/promote-r24d-lab.yml`: retirado el transporte temporal fallido de R24D; R25 usa el despliegue normal de la rama LAB.
+- Compatibilidad heredada: `test-v287-stableford-back-controls-clear.mjs` reconoce la nueva secuencia ATRÃS â†’ BORRAR SCORES â†’ BORRAR TODO â†’ + JUGADOR sin debilitar los candados previos.
