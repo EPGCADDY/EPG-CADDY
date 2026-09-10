@@ -808,5 +808,6 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `audit-project.mjs`: incorpora el banco como prueba obligatoria de la auditoría maestra.
 - `test-v405-registration-clear-final-mobile.mjs`: conserva la obligación de mostrar ACTUALIZAR en Registro y añade la exclusión de Historial a la misma expectativa.
 - Estado honesto: FAIL físico encontrado y corregido en fuente; candidato NO REVISADO hasta comprobar el despliegue LAB público. Producción principal intacta.
-- `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: regenerados y sellados con 449 fuentes.
+- `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: regenerados y sellados con 448 fuentes remotas.
+- Cierre de transporte remoto: `.github/workflows/apply-r24c-lab.yml` queda eliminado; `index-grupal.html` y este ROADMAP se restauran completos. Los tres inventarios y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se resellan contra 448 fuentes presentes en el árbol LAB sin evidencia local ajena.
 - `.github/workflows/apply-r24b-lab.yml`: workflow de transporte temporal creado, ejecutado y eliminado; su eliminación queda documentada y el árbol final no lo conserva.

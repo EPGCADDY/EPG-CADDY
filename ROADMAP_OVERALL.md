@@ -749,4 +749,5 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `test-v407-r24b-history-update-isolation.mjs` bloquea el conflicto de prioridad CSS que dejó visible el control global sobre el overlay.
 - Se invalida cualquier afirmación previa de revisión física total: sólo las pantallas con evidencia individual pueden figurar como revisadas.
 - Producción principal permanece intacta; el candidato continúa en LAB y su estado es NO REVISADO hasta repetir navegador real y iPhone.
-- Los tres inventarios V311 y `INVENTARIOS_V311.lock.json` se regeneran sobre 449 fuentes para incluir la corrección y su banco preventivo.
+- Los tres inventarios V311 y `INVENTARIOS_V311.lock.json` se regeneran sobre 448 fuentes remotas para incluir la corrección y su banco preventivo.
+- Cierre remoto R24C: se elimina el transporte temporal fallido, se restauran íntegros los dos archivos grandes y se resellan ambos ROADMAPS sobre el árbol LAB exacto; el inventario remoto contiene 448 fuentes activas.
