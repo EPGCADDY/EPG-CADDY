@@ -823,3 +823,10 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Candados nuevos: `test-v407-r30-green-outline-controls.mjs` y `test-v407-r30-history-transitions.mjs`; ambos forman parte de `audit-project.mjs`.
 - Release manual: `V407-R30-OUTLINE-HISTORY-20260910`; rollback exacto: `564a24c` (R29). Maestro R28 permanece intacto.
 - Sello de transporte R30: el commit reparador conserva este ROADMAP y su detalle en la misma modificación verificable para la compuerta de Vercel.
+
+# V407-R31 · Score Card móvil completa y contornos definitivos · 10 de septiembre de 2026
+
+- Evidencia física `IMG_3375.jpeg` / `IMG_3377.png`: selecciones y `ENTER` conservaron relleno verde; la Score Card LAB apareció cortada horizontalmente en el navegador interno del iPhone.
+- `index-grupal.html` elimina relleno/sombra en selecciones, `ENTER` y acciones verdes distintas de `OK`; mantiene fondo negro continuo y fuerza desplazamiento táctil horizontal dentro de `.card-shell`.
+- `service-worker.js`, firma visible y caché avanzan coordinadamente a `V407-R31-MOBILE-CARD-OUTLINE-20260910` / `V407 · R31`.
+- Candado nuevo: `test-v407-r31-mobile-card-scroll.mjs`. R30 queda rechazado físicamente; rollback seguro: `564a24c` (R29). Maestro R28 permanece intacto.

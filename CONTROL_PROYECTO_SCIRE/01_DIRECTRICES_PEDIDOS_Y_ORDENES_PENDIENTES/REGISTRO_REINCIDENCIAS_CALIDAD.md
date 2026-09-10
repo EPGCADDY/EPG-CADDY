@@ -317,3 +317,12 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Control permanente R29: transportar la matriz de índices, pintar círculos con el color de las marcas y reutilizar la clasificación canónica de GROSS.
 - Prueba preventiva: `test-v407-r29-live-handicap-row.mjs` exige orden HOYO → HDCP → PAR, color BLANCAS blanco y símbolos birdie/eagle/bogey/doble/triple.
 - Estado: CORREGIDO EN CANDIDATO LAB; Maestro R28 intacto hasta autorización expresa.
+
+## RC-104 · R30 CONSERVÓ RELLENOS VERDES Y SCORE CARD MÓVIL CORTADA · 10 SEPTIEMBRE 2026
+
+- Defecto físico: `MEDAL PLAY NORMAL`, `EL PULTÉ` y `ENTER` conservaron fondo/resplandor verde; la Score Card no aseguró el gesto horizontal dentro del navegador interno del iPhone.
+- Causa raíz: selectores históricos con `!important` y gradientes vencieron la clase genérica R30; el contenedor dependía de una declaración de desplazamiento sin blindar fondo, gesto y contención.
+- Escape: el candado R30 sólo buscaba dos colores RGB exactos y no probaba selectores de mayor especificidad ni el contrato táctil completo.
+- Control permanente R31: selectores específicos sin relleno excepto `#setupOk`, `.card-shell` con fondo negro, `overflow-x:scroll`, inercia iOS, `touch-action` y tabla no comprimida.
+- Evidencia automatizada: `test-v407-r30-green-outline-controls.mjs` ampliado y `test-v407-r31-mobile-card-scroll.mjs` integrado en auditoría.
+- Estado: CORREGIDO EN FUENTE; pendiente Preview READY y nueva comprobación física.

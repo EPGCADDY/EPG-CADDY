@@ -885,3 +885,12 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `audit-project.mjs` integra R29 y los dos candados R30. `service-worker.js`, meta y firma visible avanzan coordinadamente a `V407-R30-OUTLINE-HISTORY-20260910` / `V407 · R30`.
 - Estado: candidato LAB todavía NO REVISADO visualmente por descarga externa del navegador bloqueada; no se publica hasta cero FAIL. Rollback: commit `564a24c`. Maestro no cambia.
 - Sello de transporte R30: ambos ROADMAPS se actualizan conjuntamente en el commit reparador exigido por `ROADMAP GATE`; no altera funcionalidad ni Maestro.
+
+# V407-R31 · reparación física de tarjeta móvil y superficies verdes · 10 de septiembre de 2026
+
+- `IMG_3375.jpeg`: `MEDAL PLAY NORMAL` y `EL PULTÉ` muestran tinte/resplandor verde contra el patrón aprobado de fondo negro y contorno verde.
+- `IMG_3377.png`: `#roundGridEnter` continúa relleno y la Score Card se percibe cortada en el ancho móvil del navegador interno.
+- `index-grupal.html`: selectores específicos con `!important` neutralizan gradientes históricos en controles activos y en `#roundGridEnter`; `#setupOk` queda expresamente fuera y conserva el único relleno verde aprobado.
+- `.card-shell`: fondo negro, ancho máximo del viewport, `overflow-x:scroll`, inercia iOS, `touch-action:pan-x pan-y`, contención horizontal y tabla sin compresión.
+- `test-v407-r30-green-outline-controls.mjs` amplía la regresión y `test-v407-r31-mobile-card-scroll.mjs` bloquea recorte, fondo blanco y pérdida del gesto horizontal.
+- Estado: candidato exclusivamente LAB y NO REVISADO hasta nuevo deployment READY y captura física. Maestro/Producción no cambia.

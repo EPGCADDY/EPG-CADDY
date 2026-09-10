@@ -213,3 +213,10 @@ No hay que reescribir commits, deployments, enlaces ni pendientes: este archivo 
 - TARJETA DIGITAL archiva antes de abrir; NUEVA RONDA archiva antes de limpiar el registro activo.
 - Pruebas dirigidas R30 PASS. Revisión automatizada en navegador real pendiente; no publicar ni tocar Maestro antes de cerrar esa puerta.
 - Rollback: `564a24c`. Maestro R28 permanece intacto.
+
+## 12. V407-R31 · reparación física posterior a R30
+
+- Evidencia iPhone `IMG_3375.jpeg` y `IMG_3377.png`: R30 cargó, pero selecciones y `ENTER` conservaron relleno verde; la Score Card móvil apareció cortada en el navegador interno.
+- R31 fuerza fondo negro y desplazamiento horizontal táctil dentro de `.card-shell`; neutraliza relleno, gradiente y sombra en controles verdes distintos de `OK`.
+- R30 queda rechazado. R31 debe superar banco integral, Preview READY y nueva evidencia física antes de mover el alias LAB.
+- Rollback: `564a24c` (R29). Maestro R28 permanece intacto.
