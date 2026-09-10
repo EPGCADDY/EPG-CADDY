@@ -13,5 +13,9 @@ assert.match(control,/scope:"group",selectedPlayerIds/,"el enlace incluye al gru
 assert.match(control,/selectedPlayerIds=snapshot\.players\.map\(player=>player\.id\)/,"incluye a todos los jugadores de la tarjeta");
 assert.match(control,/durationHours:24/,"el enlace directo conserva duración definida");
 assert.match(control,/root\.navigator\.share\(shareData\)/,"un toque abre la hoja nativa de compartir");
+assert.match(control,/function publicAppOrigin\(\)/,"LIVE resuelve el dominio público antes de compartir");
+assert.match(control,/return"https:\/\/golf-sc-gt-lab\.vercel\.app"/,"un Preview de LAB comparte siempre el dominio público estable");
+assert.match(control,/new URL\("\/live\.html",publicAppOrigin\(\)\)/,"el invitado abre la Score Card LIVE pública");
+assert.doesNotMatch(control,/searchParams\.set\("_vercel_share"/,"el enlace LIVE nunca transporta el acceso privado de Vercel");
 assert.doesNotMatch(`${html}\n${control}\n${hub}`,/>COMPARTIR GENERAL ♾️<|>COMPARTIR ♾️</,"los botones públicos usan un solo nombre");
-console.log("PASS V406-R22 COMPARTIR LIVE · GRUPO COMPLETO · NOMBRE HOMOGÉNEO");
+console.log("PASS V406-R22 COMPARTIR LIVE · GRUPO COMPLETO · DOMINIO PÚBLICO · NOMBRE HOMOGÉNEO");
