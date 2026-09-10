@@ -8,7 +8,7 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 assert.match(html,/V365-ACTIVE-ROUND-RECOVERY/);
 assert.match(worker,/v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery/);
 assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v407-r28-pulte-handicap-hotfix`/);
-assert.match(worker,/const APPROVED_CACHE_NAME=`\$\{CACHE_NAME\}-approved`/);
+assert.match(worker,/const APPROVED_CACHE_NAME=`\$\{CACHE_NAME\}-approved-pulte-handicap-hotfix`/);
 assert.match(worker,/url\.searchParams\.has\("__gscg_build_check"\)/,"la consulta de versión debe ir a red sin sustituir la versión aprobada");
 assert.match(worker,/url\.searchParams\.get\("app_version"\)===RELEASE/,"sólo el toque de ACTUALIZAR promueve el candidato");
 assert.match(worker,/await ensureApprovedShell\(\);\s*return await approvedNavigationWithManualUpdate\(request\)/,"una apertura normal conserva el shell aprobado y permite recuperar ACTUALIZAR manualmente");
