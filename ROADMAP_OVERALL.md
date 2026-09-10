@@ -808,3 +808,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - GROSS reutiliza la nomenclatura canónica: círculo para birdie, doble círculo para eagle, cuadro para bogey, doble cuadro para doble bogey y triple cuadro para triple bogey.
 - Firma visible, Service Worker, caché y `test-v407-r29-live-handicap-row.mjs` avanzan coordinadamente a R29. Instalación exclusivamente mediante toque del propietario en `ACTUALIZAR`.
 - Maestro R28 permanece intacto hasta revisión física de LAB y autorización expresa.
+- Sello de publicación: ambos ROADMAPS acompañan conjuntamente el candidato R29.

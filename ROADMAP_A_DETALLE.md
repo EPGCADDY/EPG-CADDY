@@ -869,3 +869,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `live-view.js` y `live.html` replican las clases canónicas `birdie`, `eagle`, `bogey`, `double-bogey` y `triple-bogey` de la Score Card para cada GROSS.
 - `test-v407-r29-live-handicap-row.mjs` prueba índices, colores, tiros y las cinco formas con valores deportivos reales.
 - Candidato exclusivamente LAB. Maestro R28 no se modifica sin autorización posterior a la prueba física.
+- Sello de publicación: ambos ROADMAPS acompañan conjuntamente el candidato R29.
