@@ -1,4 +1,5 @@
 name: Promote verified R29 to stable LAB alias
+# Trigger through GitHub Contents API after the workflow exists on the LAB branch.
 on:
   push:
     branches:
