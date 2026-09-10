@@ -2,7 +2,8 @@ import { next } from "@vercel/functions";
 
 const PUBLIC_PATHS=new Set([
   "/access.html","/live.html","/live-view.js","/match-play.js","/favicon.ico",
-  "/service-worker.js","/manifest.webmanifest","/manual.webmanifest"
+  "/service-worker.js","/manifest.webmanifest","/manual.webmanifest",
+  "/update-manifest.json","/candidate-index-grupal.html"
 ]);
 const PRIVATE_GUEST_PREFIXES=["/api/account-backup","/api/commerce","/api/sync","/api/master-data"];
 
