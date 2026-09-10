@@ -764,3 +764,8 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `COMPARTIR LIVE` deja de heredar dominios temporales de Preview y abre la Score Card pública de sólo lectura en `golf-sc-gt-lab.vercel.app/live.html`.
 - `INVITAR · 24 H` permanece como un flujo distinto: aplicación completa temporal con token individual, aislamiento, caducidad, revocación y bloqueo de datos propietarios.
 - Candado: `test-v406-r22-share-live.mjs` prohíbe transportar `_vercel_share` y exige el dominio público; `test-r18-owner-guest-24h-access.mjs` conserva íntegro el contrato de 24 horas. MAIN intacta.
+# V407-R24D · actualización manual obligatoria · 10 de septiembre de 2026
+
+- `index-grupal.html` muestra `V407 · R24D`; una instalación R24C detecta el release publicado y activa `ACTUALIZAR` parpadeante, pero no instala la aplicación por sí sola.
+- `service-worker.js` separa la caché candidata R24D de la caché aprobada; la promoción sólo ocurre después del toque del propietario y la navegación con `app_version`.
+- Los bancos V365/V406/V407 (`test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v406-r23-visible-version.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r7-ios-scroll.mjs` y `test-v407-r9-manual-update.mjs`) bloquean conjuntamente la firma R24D y rechazan promoción automática. LAB únicamente; Main permanece intacta.

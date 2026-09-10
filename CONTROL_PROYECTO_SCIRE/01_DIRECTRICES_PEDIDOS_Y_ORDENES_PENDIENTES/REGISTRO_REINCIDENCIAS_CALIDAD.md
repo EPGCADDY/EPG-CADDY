@@ -269,3 +269,9 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Escape: se extrapoló una revisión automática de algunas superficies a una afirmación física general sin captura individual de esta pantalla.
 - Prevención permanente: la excepción de Registro exige `:not(.gsc-history-open)` y `test-v407-r24b-history-update-isolation.mjs` rechaza la regla anterior.
 - Estado: CORREGIDO EN FUENTE LAB; NO REVISADO en despliegue público hasta repetir la pantalla. Producción principal intacta.
+# RC-094 · NUEVA VERSIÓN NO ACTIVÓ ACTUALIZAR EN IPHONE · 10 SEPTIEMBRE 2026
+
+- Defecto físico: después de publicar R24C, el iPhone continuó mostrando `ACTUALIZADO` y `V407 · R24C` en lugar de avisar una versión posterior.
+- Control permanente R24D: firma coordinada en HTML, Service Worker, caché y prueba; el worker puede descargar el candidato, pero no puede promoverlo desde `install` o `activate`.
+- Cobertura: `test-v406-r23-visible-version.mjs` exige R24D y rechaza promoción automática; la puerta física exige observar `ACTUALIZAR`, tocarlo y terminar en `ACTUALIZADO · V407 · R24D` conservando sesión.
+- Estado: CORREGIDO EN CANDIDATO LAB R24D; pendiente comprobación física final en iPhone. Main permanece intacta.
