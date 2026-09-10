@@ -800,3 +800,8 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 
 - Antes de recargar, `ACTUALIZAR` captura los campos visibles, sincroniza jugadores y persiste el borrador; R28 conserva nombres, teléfonos, hándicaps y marcas.
 - Mantiene íntegro el avance directo de `OK` incorporado en R27.
+
+
+## HOTFIX OFICIAL EL PULTÉ · 10 SEPTIEMBRE 2026
+
+`index-grupal.html` corrige exclusivamente `PULTE_SI_MEN` conforme a la tarjeta física oficial: 9,5,7,11,17,3,1,15,13,18,2,8,16,4,6,12,10,14. `service-worker.js` renueva únicamente las cachés activa y aprobada para entregar la corrección sin borrar la ronda. Sin cambios en jugadores, scores, diseño, modalidades o demás contenido.
