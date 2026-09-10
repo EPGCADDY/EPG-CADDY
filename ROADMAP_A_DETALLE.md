@@ -856,3 +856,8 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `#setupOk`: después de `captureVisibleRegistrationValues()` y validación estricta ejecuta `resetSetupCapture(); renderDraft(); showStep2(); speakSetupConfirmation()`.
 - Se elimina sólo la llamada de `OK` a `requestSetupFinalize()`; la captura y conversación por micrófono no se modifican.
 - `test-v407-r25-round-controls.mjs` exige la ruta directa y prohíbe que `OK` vuelva a depender del finalizador de voz.
+
+# V407-R28 · persistencia previa a actualización · 10 de septiembre de 2026
+
+- `installMandatoryUpdate()` ejecuta captura DOM, sincronización no destructiva y `persistDraftState()` antes de limpiar cachés y recargar.
+- Release/caché/pruebas avanzan coordinadamente a R28.

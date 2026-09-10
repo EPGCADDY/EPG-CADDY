@@ -795,3 +795,8 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `OK` toma los campos visibles ya validados y avanza directamente a confirmación, sin quedar esperando `setupSpeechActive` ni transcripciones pendientes.
 - El micrófono y sus funciones permanecen intactos; únicamente deja de ser una dependencia para completar el registro manual.
 - Release visible, Service Worker y caché avanzan a R27 para actualización manual explícita.
+
+# V407-R28 · actualización conserva registro · 10 de septiembre de 2026
+
+- Antes de recargar, `ACTUALIZAR` captura los campos visibles, sincroniza jugadores y persiste el borrador; R28 conserva nombres, teléfonos, hándicaps y marcas.
+- Mantiene íntegro el avance directo de `OK` incorporado en R27.

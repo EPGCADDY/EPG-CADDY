@@ -290,6 +290,11 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Control permanente R26: ambas rutas usan `Number.isSafeInteger(hcp)`; prueba negativa prohíbe reintroducir el límite.
 - Estado: CORREGIDO EN FUENTE; pendiente comprobación física en iPhone.
 
+## RC-102 · ACTUALIZAR PERDÍA EL BORRADOR VISIBLE DE JUGADORES · 10 SEPTIEMBRE 2026
+
+- Causa: la actualización persistía la ronda, pero no sincronizaba primero los campos visibles del registro.
+- Control R28: captura, sincroniza y persiste el formulario antes de recargar; prueba preventiva obligatoria.
+
 ## RC-101 · OK QUEDABA ESPERANDO ESTADO DE VOZ CON FORMULARIO COMPLETO · 10 SEPTIEMBRE 2026
 
 - Defecto físico: Main R26 mostraba cuatro jugadores completos y `LISTO · PRESIONA OK`, pero el toque no avanzaba.

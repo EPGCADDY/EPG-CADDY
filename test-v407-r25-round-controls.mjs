@@ -17,7 +17,8 @@ assert.match(html,/function captureVisibleRegistrationValues\(\)[\s\S]*data-draf
 assert.match(html,/autocomplete="name"/);
 assert.match(html,/autocomplete="tel-national"/);
 for(const handicap of [-73,-3,-2,-1,0,54,73])assert.equal(registry.normalizeHandicap(handicap),handicap);
-assert.match(worker,/V407-R27-DIRECT-OK-20260910/);
+assert.match(worker,/V407-R28-SAFE-UPDATE-20260910/);
+assert.match(html,/captureVisibleRegistrationValues\(\);syncDraftPlayersFromManualRows\(\{strict:false,renderAfter:false\}\);persistDraftState\(\)/);
 assert.doesNotMatch(html,/hcp<0\|\|hcp>54/);
 assert.match(html,/\$\("setupOk"\)\.addEventListener\("click",[\s\S]*?resetSetupCapture\(\);renderDraft\(\);showStep2\(\);speakSetupConfirmation\(\)/);
 assert.doesNotMatch(html,/\$\("setupOk"\)\.addEventListener\("click",[\s\S]{0,400}?requestSetupFinalize\(\)/);
