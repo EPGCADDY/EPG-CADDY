@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Update Architecture C Burn-in</title></head><body>
+<h1>UPDATE ARCHITECTURE C — BURN-IN</h1>
+<pre id="log"></pre>
+<button id="run">RUN CYCLE</button>
+<script type="module">
+import {fetchRelease,installVerifiedUpdate,queryActiveRelease} from './update-engine.js';
+const log=(m)=>document.querySelector('#log').textContent+=m+'\n';
+async function snapshotState(){return {round:localStorage.getItem('golf-score-card-guatemala-active-round-v1'),probe:localStorage.getItem('gscg-burnin-probe')}}
+function assertSame(before,after){if(before.round!==after.round)throw new Error('ROUND_STATE_CHANGED');if(before.probe!==after.probe)throw new Error('LOCAL_STATE_CHANGED')}
+async function runCycle(){
+  document.querySelector('#run').disabled=true;document.querySelector('#log').textContent='';
+  try{
+    localStorage.setItem('gscg-burnin-probe','KEEP-ME');
+    const before=await snapshotState();log('1/7 baseline state captured');
+    const manifest=await fetchRelease();log('2/7 release network OK '+manifest.release);
+    let current='';try{current=await queryActiveRelease()}catch{}
+    log('3/7 current controller '+(current||'none/old'));
+    const active=await installVerifiedUpdate(manifest.release);log('4/7 controllerchange OK '+active);
+    const verified=await queryActiveRelease();if(verified!==manifest.release)throw new Error('POST_VERIFY_RELEASE_MISMATCH');log('5/7 active release verified');
+    const after=await snapshotState();assertSame(before,after);log('6/7 local state preserved');
+    log('7/7 BURN-IN CYCLE PASS');document.body.dataset.result='PASS';
+  }catch(error){log('FAIL '+String(error?.message||error));document.body.dataset.result='FAIL'}finally{document.querySelector('#run').disabled=false}
+}
+document.querySelector('#run').addEventListener('click',runCycle);
+</script></body></html>
