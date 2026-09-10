@@ -1,0 +1,53 @@
+{
+  "schema": "gscg-r33-baseline-lock/v1",
+  "baselineBranch": "baseline/v407-r33-locked",
+  "baselineCommit": "5b85c63438b27fce53e2d0f6aa4e371bffc3c263",
+  "policy": {
+    "mode": "deny-regression",
+    "scope": "protected-good-functions",
+    "note": "Durante el rediseño de ACTUALIZAR, estos módulos deben permanecer byte por byte iguales a R33. Los archivos del subsistema de actualización se excluyen deliberadamente para permitir su reemplazo aislado."
+  },
+  "protectedGitBlobs": {
+    "player-registry.js": "fc44ab5d8b5a30e8835e1967ddb41bcb72082868",
+    "round-closure.js": "0471c7e8aa7ea58bb00ea0ef1d070b18f9b4c9ab",
+    "round-navigation.js": "277e509f90b6947e828de419a289fc4f5bf5dfce",
+    "historical-analytics.js": "701b1abe8e3737a47a9a79f764a57f16672250cf",
+    "card-artifacts.js": "41632e558a1a49e79bf642e7021f27c05b06394b",
+    "card-file-export.js": "4ddbf8f36ec142114cfa965a78d97ea55365afa1",
+    "card-library.js": "9e364b45300d2015da7e26bdc44bcfc2f6bf5176",
+    "live-control.js": "f83e615a4e8a7cd213599dd551533ed717c9fc0b",
+    "match-play.js": "c65ce45256c0b630156022d377f9816789ac5a38",
+    "four-ball.js": "fab438d2e902fb3fbd9f6820bc33e9f9a608a526",
+    "stableford.js": "6c3a231b44b49e5dc2cb0f53bcee08894f0d76ea",
+    "universales.js": "40a73f2e71729bd18ebba1e6024f20339ed37f32",
+    "skins.js": "514be71ea62e2ca51dd33a8f0bbb345e4679d0b9",
+    "wolf.js": "9343e37e35564b1e7edc25589899d960e5928cc9",
+    "vegas.js": "d10195d194fab81ec0d0ba81eaae173b91f5e00a",
+    "dots.js": "7bb9997cf1e98f8d8010b1ed2dbf79299e3ebe73",
+    "timer-inactivity.js": "8d494f51c01814507bd12387492808714047c0f5",
+    "guest-access.js": "e217b5eac4236ba390008cb38e81d162045cf245",
+    "master-data-sync.js": "a56d00a4707729d9b845e327c53c7d79529cfce7",
+    "sync-queue.js": "472255acb2a293433df36ddd207257e14e256961",
+    "golf-rules-offline.js": "45c3bd99af37a8f342ab0f3fa224c3f12426d862",
+    "gsc-design-system.css": "8d70d759b07171d53af0e94163a2bc66b3ee42fd"
+  },
+  "updateSubsystemAllowlist": [
+    "candidate-index-grupal.html",
+    "service-worker.js",
+    "update-manifest.json",
+    "middleware.js",
+    "vercel.json",
+    "audit-project.mjs",
+    "test-v407-r34-hardened-update-microphone.mjs",
+    "test-v407-r35-update-e2e.mjs",
+    "Intocables/intocables-gate.mjs",
+    "Intocables/REGLAS_INTOCABLES.json",
+    "Intocables/R33_BASELINE.lock.json",
+    "ROADMAP_OVERALL.md",
+    "ROADMAP_A_DETALLE.md"
+  ],
+  "referenceOnly": {
+    "r33CandidateGitBlob": "15a4be1ff33fceb65bc800b9636b9a1bcb632d81",
+    "r33ServiceWorkerGitBlob": "0dc0c5371d9a0abcd05d2351081d5ae341efa746"
+  }
+}
