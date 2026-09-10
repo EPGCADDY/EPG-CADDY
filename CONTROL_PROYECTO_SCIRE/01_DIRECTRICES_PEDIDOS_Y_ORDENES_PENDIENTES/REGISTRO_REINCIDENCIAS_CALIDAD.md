@@ -275,3 +275,10 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Control permanente R24D: firma coordinada en HTML, Service Worker, caché y prueba; el worker puede descargar el candidato, pero no puede promoverlo desde `install` o `activate`.
 - Cobertura: `test-v406-r23-visible-version.mjs` exige R24D y rechaza promoción automática; la puerta física exige observar `ACTUALIZAR`, tocarlo y terminar en `ACTUALIZADO · V407 · R24D` conservando sesión.
 - Estado: CORREGIDO EN CANDIDATO LAB R24D; pendiente comprobación física final en iPhone. Main permanece intacta.
+
+## RC-099 · BORRAR SCORES ELIMINABA JUGADORES Y AUTOCOMPLETADO NO SE CONFIRMABA · 10 SEPTIEMBRE 2026
+
+- Defecto físico: `BORRAR TODO` era la única acción masiva y eliminaba jugadores/ronda; Safari podía mostrar una sugerencia de nombre o teléfono sin entregarla al estado interno.
+- Causa raíz: ambas intenciones compartían `clearAllRegistrationPlayers()` y `OK` dependía de eventos `input/change` del teclado.
+- Control permanente R25: acciones separadas, confirmaciones explícitas y lectura directa del DOM antes de `OK`; se añaden RESET y hándicap entero firmado.
+- Evidencia: `test-v407-r25-round-controls.mjs` y auditoría integral. Estado: candidato LAB; Maestro R24D intacto.

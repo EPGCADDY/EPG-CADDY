@@ -21,7 +21,7 @@
     return digits.slice(0,15);
   }
   function normalizeRegistrationCode(value){return text(value).toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,7)}
-  function normalizeHandicap(value){if(value===null||value===undefined||text(value)==="")return null;const n=Number(value);return Number.isInteger(n)&&n>=0&&n<=54?n:null}
+  function normalizeHandicap(value){if(value===null||value===undefined||text(value)==="")return null;const n=Number(value);return Number.isSafeInteger(n)?n:null}
   function normalizeTee(value){const q=text(value).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");const aliases={negro:"Negro",negra:"Negro",negros:"Negro",negras:"Negro",azul:"Azul",azules:"Azul",blanco:"Blanco",blanca:"Blanco",blancos:"Blanco",blancas:"Blanco",rojo:"Rojo",roja:"Rojo",rojos:"Rojo",rojas:"Rojo",amarillo:"Amarillo",amarilla:"Amarillo",amarillos:"Amarillo",amarillas:"Amarillo",plateado:"Plateado",plateada:"Plateado",plateados:"Plateado",plateadas:"Plateado",plata:"Plateado"};const tee=aliases[q]||text(value);return TEE_KEYS.has(tee)?tee:null}
   function stableId(name,legacyId){return text(legacyId)||`player_${keyForName(name).replace(/\s+/g,"_")||"unknown"}`}
   function unique(values){return [...new Set((values||[]).map(text).filter(Boolean))]}
@@ -137,5 +137,5 @@
   }
   function deliveryKey({roundId,cardVersion,playerId,cardType,channel}){return[roundId,cardVersion,playerId,cardType,channel].map(text).join(":")}
 
-  return{SCHEMA_VERSION,normalizeProfile,normalizeProfileEvent,migrateDirectory,upsertProfiles,findByRegistrationCode,generateRegistrationCode,normalizeRegistrationCode,canDeliver,withdrawConsent,deliveryKey,keyForName,normalizeEmail,normalizeCountryCode,normalizeNationalNumber};
+  return{SCHEMA_VERSION,normalizeProfile,normalizeProfileEvent,migrateDirectory,upsertProfiles,findByRegistrationCode,generateRegistrationCode,normalizeRegistrationCode,normalizeHandicap,canDeliver,withdrawConsent,deliveryKey,keyForName,normalizeEmail,normalizeCountryCode,normalizeNationalNumber};
 });
