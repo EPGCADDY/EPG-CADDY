@@ -289,3 +289,10 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa raíz: formulario y sincronización ya aceptaban enteros firmados, pero dos cierres posteriores conservaban `hcp<0||hcp>54`.
 - Control permanente R26: ambas rutas usan `Number.isSafeInteger(hcp)`; prueba negativa prohíbe reintroducir el límite.
 - Estado: CORREGIDO EN FUENTE; pendiente comprobación física en iPhone.
+
+## RC-101 · OK QUEDABA ESPERANDO ESTADO DE VOZ CON FORMULARIO COMPLETO · 10 SEPTIEMBRE 2026
+
+- Defecto físico: Main R26 mostraba cuatro jugadores completos y `LISTO · PRESIONA OK`, pero el toque no avanzaba.
+- Causa raíz: `#setupOk` enviaba el registro manual válido a `requestSetupFinalize()`, que podía esperar indefinidamente `setupSpeechActive`.
+- Control permanente R27: el registro manual válido avanza directamente; voz permanece disponible pero no bloquea `OK`.
+- Estado: CORREGIDO EN FUENTE; pendiente comprobación física en iPhone.

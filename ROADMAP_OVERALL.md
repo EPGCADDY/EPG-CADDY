@@ -789,3 +789,9 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Se eliminan las dos validaciones residuales `hcp<0||hcp>54` de `finalizeSetupDictation()` y `requestSetupFinalize()`; `OK` acepta el mismo rango entero firmado que el formulario.
 - Firma visible, release y caché avanzan coordinadamente a R26 para provocar `ACTUALIZAR` manual sin instalación remota.
 - Los bancos de actualización y `test-v407-r25-round-controls.mjs` rechazan la reincidencia del límite antiguo.
+
+# V407-R27 · OK manual independiente de voz · 10 de septiembre de 2026
+
+- `OK` toma los campos visibles ya validados y avanza directamente a confirmación, sin quedar esperando `setupSpeechActive` ni transcripciones pendientes.
+- El micrófono y sus funciones permanecen intactos; únicamente deja de ser una dependencia para completar el registro manual.
+- Release visible, Service Worker y caché avanzan a R27 para actualización manual explícita.
