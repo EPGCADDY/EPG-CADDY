@@ -800,3 +800,11 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 
 - Antes de recargar, `ACTUALIZAR` captura los campos visibles, sincroniza jugadores y persiste el borrador; R28 conserva nombres, teléfonos, hándicaps y marcas.
 - Mantiene íntegro el avance directo de `OK` incorporado en R27.
+
+# V407-R29 · tarjeta digital HDCP y símbolos GROSS · 10 de septiembre de 2026
+
+- LAB añade la fila `HDCP` entre `HOYO` y `PAR` en cada tarjeta digital LIVE.
+- Los índices de hoyo aparecen dentro de círculos del color de las marcas del jugador; BLANCAS usa blanco. El grosor identifica dónde recibe tiro y el borde doble dónde concede tiro, sin sustituir el color de marcas.
+- GROSS reutiliza la nomenclatura canónica: círculo para birdie, doble círculo para eagle, cuadro para bogey, doble cuadro para doble bogey y triple cuadro para triple bogey.
+- Firma visible, Service Worker, caché y pruebas avanzan coordinadamente a R29. Instalación exclusivamente mediante toque del propietario en `ACTUALIZAR`.
+- Maestro R28 permanece intacto hasta revisión física de LAB y autorización expresa.

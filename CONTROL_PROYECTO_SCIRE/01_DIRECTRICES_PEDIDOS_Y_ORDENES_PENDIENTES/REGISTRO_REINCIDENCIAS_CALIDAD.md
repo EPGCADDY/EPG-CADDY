@@ -301,3 +301,10 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa raíz: `#setupOk` enviaba el registro manual válido a `requestSetupFinalize()`, que podía esperar indefinidamente `setupSpeechActive`.
 - Control permanente R27: el registro manual válido avanza directamente; voz permanece disponible pero no bloquea `OK`.
 - Estado: CORREGIDO EN FUENTE; pendiente comprobación física en iPhone.
+
+## RC-103 · TARJETA DIGITAL OMITÍA HDCP Y SÍMBOLOS GROSS · 10 SEPTIEMBRE 2026
+
+- Defecto: LIVE mostraba PAR y GROSS numérico plano, sin fila de índice HDCP ni nomenclatura gráfica equivalente a la Score Card principal.
+- Control permanente R29: transportar la matriz de índices, pintar círculos con el color de las marcas y reutilizar la clasificación canónica de GROSS.
+- Prueba preventiva: `test-v407-r29-live-handicap-row.mjs` exige orden HOYO → HDCP → PAR, color BLANCAS blanco y símbolos birdie/eagle/bogey/doble/triple.
+- Estado: CORREGIDO EN CANDIDATO LAB; Maestro R28 intacto hasta autorización expresa.

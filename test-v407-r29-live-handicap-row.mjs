@@ -1,0 +1,38 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import liveView from "./live-view.js";
+
+const html=fs.readFileSync("live.html","utf8");
+const view=fs.readFileSync("live-view.js","utf8");
+const control=fs.readFileSync("live-control.js","utf8");
+const app=fs.readFileSync("index-grupal.html","utf8");
+
+assert.match(view,/hdcpRow=.*?<tr class="live-hdcp-row" style="--live-tee-color:\$\{teeColor\(player\.tee\)\}"><td>HDCP<\/td>/);
+assert.match(view,/handicapStroke\(player\.handicap,si\)/);
+assert.match(view,/gives-stroke/);
+assert.match(view,/has-stroke/);
+assert.match(view,/function teeColor\(tee\)/);
+assert.match(view,/blancas:"#ffffff"/);
+assert.match(html,/\.live-hdcp-circle\{/);
+assert.match(html,/var\(--live-tee-color,#fff\)/);
+assert.doesNotMatch(html,/live-hdcp-circle\.has-stroke\{[^}]*var\(--lime\)/);
+assert.match(view,/function grossMarkClass\(item\)/);
+assert.match(view,/difference===-1\)return"birdie"/);
+assert.match(view,/difference===2\)return"double-bogey"/);
+assert.match(view,/difference>=3\)return"triple-bogey"/);
+assert.match(view,/grossMarkHtml\(item\)/);
+assert.match(html,/\.score-live \.gross-mark\.birdie/);
+assert.match(html,/\.score-live \.gross-mark\.double-bogey/);
+assert.match(control,/getStrokeIndexes/);
+assert.match(app,/getStrokeIndexes:player=>matrixFor\(player\)/);
+assert.equal(liveView.grossMarkClass({gross:3,par:4}),"birdie");
+assert.equal(liveView.grossMarkClass({gross:2,par:4}),"eagle");
+assert.equal(liveView.grossMarkClass({gross:5,par:4}),"bogey");
+assert.equal(liveView.grossMarkClass({gross:6,par:4}),"double-bogey");
+assert.equal(liveView.grossMarkClass({gross:7,par:4}),"triple-bogey");
+assert.equal(liveView.grossMarkHtml({gross:6,par:4}),'<span class="gross-mark double-bogey">6</span>');
+assert.equal(liveView.handicapStroke(14,14),1);
+assert.equal(liveView.handicapStroke(14,15),0);
+assert.equal(liveView.teeColor("BLANCAS"),"#ffffff");
+
+console.log("PASS V407 R29 · fila HDCP LIVE circular y golpes por jugador");

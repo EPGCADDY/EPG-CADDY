@@ -861,3 +861,11 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 
 - `installMandatoryUpdate()` ejecuta captura DOM, sincronización no destructiva y `persistDraftState()` antes de limpiar cachés y recargar.
 - Release/caché/pruebas avanzan coordinadamente a R28.
+
+# V407-R29 · tarjeta digital fiel a la Score Card · 10 de septiembre de 2026
+
+- `live-control.js` publica los índices HDCP calculados por la misma matriz activa del campo y marcas.
+- `live-view.js` coloca `HDCP` antes de `PAR`, distribuye tiros para hándicaps enteros firmados y renderiza círculos con el color de las marcas de cada jugador.
+- `live-view.js` y `live.html` replican las clases canónicas `birdie`, `eagle`, `bogey`, `double-bogey` y `triple-bogey` de la Score Card para cada GROSS.
+- `test-v407-r29-live-handicap-row.mjs` prueba índices, colores, tiros y las cinco formas con valores deportivos reales.
+- Candidato exclusivamente LAB. Maestro R28 no se modifica sin autorización posterior a la prueba física.
