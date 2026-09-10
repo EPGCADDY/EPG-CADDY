@@ -866,3 +866,5 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 ## HOTFIX OFICIAL EL PULTÉ · 10 SEPTIEMBRE 2026
 
 `index-grupal.html` corrige exclusivamente `PULTE_SI_MEN` conforme a la tarjeta física oficial: 9,5,7,11,17,3,1,15,13,18,2,8,16,4,6,12,10,14. `service-worker.js` renueva únicamente las cachés activa y aprobada para entregar la corrección sin borrar la ronda. Sin cambios en jugadores, scores, diseño, modalidades o demás contenido.
+
+Registro conjunto del despliegue: hotfix `main` commits `481f716` y `c548f30`; matriz verificada como permutación exacta 1–18. Estado físico posterior al despliegue: pendiente.
