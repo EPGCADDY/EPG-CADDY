@@ -36,6 +36,7 @@
     "entry:canonical-home-gate": "node test-v368-canonical-home-entry.mjs",
     "update:browser-review": "node scripts/lab-update-browser-review.mjs",
     "update:browser-gate": "node scripts/lab-update-physical-gate.mjs",
+    "update:bootstrap-gate": "node test-v407-r24c-public-pwa-bootstrap.mjs",
     "audit": "node audit-project.mjs",
     "manual:editorial-qc": "python3 scripts/manual-editorial-qc.py",
     "manual:visual-qc": "python3 scripts/manual-visual-qc.py",

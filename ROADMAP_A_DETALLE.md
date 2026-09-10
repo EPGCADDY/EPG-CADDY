@@ -1,5 +1,13 @@
 # ROADMAP A DETALLE
 
+## V407-R24D LAB · service worker recuperable y control sin traslape · 9 de septiembre de 2026
+
+La verificación pública demostró que `/service-worker.js` y ambos manifiestos recibían el HTML de acceso con estado 200. Una instalación R8 no podía descargar el worker nuevo; por eso ACTUALIZAR quedaba sin acción aunque el alias ya tuviera un deployment posterior. `middleware.js` permite exclusivamente estos recursos PWA de arranque y mantiene privados `index-grupal.html`, datos y escrituras.
+
+La captura física de Control Manual mostró `ACTUALIZADO` sobre el título Universales al desplazarse. La regla `.mandatory-update:not(.available){position:absolute}` hace que el estado inactivo permanezca en la cabecera y salga con el scroll; el estado `.available` sigue fijo, verde, habilitado y pulsante. Release/caché avanzan a `V407-R24D-PWA-RECOVERY-20260909` / `v407-r24d-pwa-recovery`.
+
+Los controles automáticos se integran en `package.json`, `audit-project.mjs` y la regresión de acceso R18. Requiere despliegue LAB y revisión automatizada en navegador real; no constituye revisión física. MAIN permanece intacta.
+
 ## V407-R24 LAB · registro WhatsApp privado, archivo y botones móviles · 9 de septiembre de 2026
 
 `index-grupal.html` agrega a cada jugador de Registro General y Stableford un WhatsApp opcional. Guatemala aparece como `🇬🇹 +502`; el código admite edición internacional. El número se normaliza y guarda en el perfil para rondas posteriores, pero queda excluido de LIVE y de los artefactos digitales compartidos.

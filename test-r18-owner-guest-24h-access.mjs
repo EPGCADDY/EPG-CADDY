@@ -37,6 +37,7 @@ assert.match(middleware,/OWNER_DATA_FORBIDDEN/);
 assert.match(middleware,/\/api\/account-backup/);
 assert.match(middleware,/\/api\/sync/);
 assert.match(middleware,/gsc_guest_mode=1/);
+for(const path of ["/service-worker.js","/manifest.webmanifest","/manual.webmanifest"])assert.ok(middleware.includes(`"${path}"`),`${path} debe quedar público para recuperar instalaciones antiguas`);
 
 assert.match(app,/\.\/guest-access\.js/);
 assert.match(app,/id="ownerShare24h"[^>]*>INVITAR · 24 H<\/button>/);

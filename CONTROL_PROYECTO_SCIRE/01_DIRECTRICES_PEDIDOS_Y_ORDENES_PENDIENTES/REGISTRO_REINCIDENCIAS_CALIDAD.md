@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-098 · MIDDLEWARE ENTREGÓ ACCESS.HTML COMO SERVICE WORKER Y ATRAPÓ R8 · 09 SEPTIEMBRE 2026
+
+- Defecto físico: el alias LAB instalado mostró V407-R8 y ACTUALIZAR no ejecutó la migración.
+- Causa raíz verificada: `/service-worker.js`, `/manifest.webmanifest` y `/manual.webmanifest` eran redirigidos por el control privado y respondían con `access.html` estado 200.
+- Control permanente: los tres recursos de arranque atraviesan el middleware; aplicación, datos y escrituras siguen privados. `test-v407-r24c-public-pwa-bootstrap.mjs` bloquea la reincidencia.
+- Defecto relacionado: `ACTUALIZADO` fijo cubría `CONTROL MANUAL · UNIVERSALES` durante scroll; el estado inactivo pasa a posición absoluta y una prueba exige conservar fijo sólo el aviso disponible.
+- Estado: CORREGIDO LOCALMENTE EN R24D; REVISIÓN PÚBLICA LAB PENDIENTE; MAIN INTACTA.
+
 ## RC-097 · Auditoría estática confundida con comprobación real de ACTUALIZAR · 09 SEPTIEMBRE 2026
 
 - Riesgo: declarar revisada una versión porque el código y los bancos automáticos pasan, sin haber migrado una instalación real a través del alias LAB público.
