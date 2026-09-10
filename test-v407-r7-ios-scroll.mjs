@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/V407-R28-SAFE-UPDATE-20260910/);
+assert.match(html,/V407-R28-PULTE-HANDICAP-HOTFIX-20260910/);
 assert.match(worker,/v407-r18-live-points-header/);
 assert.doesNotMatch(worker,/await client\.navigate\(url\.toString\(\)\)/);
 assert.match(html,/\.overlay\{height:100dvh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain/);

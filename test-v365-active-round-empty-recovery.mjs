@@ -19,7 +19,7 @@ assert.match(html,/\.mandatory-update\.available \.mandatory-update-card button\
 assert.match(html,/button\.disabled=false;button\.setAttribute\("aria-disabled","false"\)/);
 assert.doesNotMatch(html,/document\.querySelector\("main\.app"\)\?\.setAttribute\("inert"/);
 assert.match(html,/meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
-assert.match(html,/meta name="gscg-release" content="V407-R28-SAFE-UPDATE-20260910"/);
+assert.match(html,/meta name="gscg-release" content="V407-R28-PULTE-HANDICAP-HOTFIX-20260910"/);
 assert.match(html,/function recoverInstalledAppScrolling\(\)/);
 assert.match(html,/window\.addEventListener\("pageshow",recoverInstalledAppScrolling\)/);
 assert.match(html,/\.overlay\{height:100dvh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom\}/);

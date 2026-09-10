@@ -14,7 +14,7 @@ assert.match(html,/navigator\.serviceWorker\.getRegistrations\(\)/);
 assert.match(html,/key\.startsWith\("gscg-mobile-"\)/);
 assert.match(worker,/if\(url\.searchParams\.get\("app_version"\)===RELEASE\)\{await promoteCandidate\(\)/);
 assert.match(worker,/self\.addEventListener\("activate",event=>event\.waitUntil\(ensureApprovedShell\(\)\.then\(\(\)=>self\.clients\.claim\(\)\)\)\)/);
-assert.match(worker,/const RELEASE="V407-R28-SAFE-UPDATE-20260910"/);
+assert.match(worker,/const RELEASE="V407-R28-PULTE-HANDICAP-HOTFIX-20260910"/);
 assert.doesNotMatch(worker,/install[\s\S]{0,300}promoteCandidate\(/,"La instalación del worker no puede promover R25 sin el toque del propietario");
 
 console.log("PASS V407-R7 ID SOBRE ACTUALIZAR · ÁREA SEGURA IPHONE");

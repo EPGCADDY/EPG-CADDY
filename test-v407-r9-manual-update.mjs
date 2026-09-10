@@ -4,8 +4,8 @@ import fs from "node:fs";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/meta name="gscg-release" content="V407-R28-SAFE-UPDATE-20260910"/);
-assert.match(worker,/const RELEASE="V407-R28-SAFE-UPDATE-20260910"/);
+assert.match(html,/meta name="gscg-release" content="V407-R28-PULTE-HANDICAP-HOTFIX-20260910"/);
+assert.match(worker,/const RELEASE="V407-R28-PULTE-HANDICAP-HOTFIX-20260910"/);
 assert.match(worker,/async function approvedNavigationWithManualUpdate\(request\)/,"La copia almacenada debe recibir el control manual de recuperación");
 assert.match(worker,/gsc-update-recovery[\s\S]*?mandatory-update\{display:block!important\}/,"R24 almacenada debe mostrar ACTUALIZAR en Registro");
 assert.match(worker,/return await approvedNavigationWithManualUpdate\(request\)/,"La navegación almacenada debe usar el puente manual");
