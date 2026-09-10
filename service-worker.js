@@ -105,7 +105,10 @@ async function promoteCandidate(expectedCandidateSha256=""){
   const active=await caches.open(ACTIVE_CACHE_NAME);
   const ready=await stagedRelease(),{candidate,manifest}=await verifyCandidate(active);
   if(ready?.release!==RELEASE||ready?.candidateSha256!==manifest.candidateSha256)throw new Error("CANDIDATE_NOT_STAGED");
-  if(expectedCandidateSha256!==manifest.candidateSha256)throw new Error("CLIENT_SHA256_MISMATCH");
+  // Backward-compatible bridge for the already-approved R33 client: R33 did not send candidateSha256.
+  // The candidate is still cryptographically verified above against the signed manifest. Newer clients that
+  // do send a hash must match it exactly; a supplied wrong hash remains a hard failure.
+  if(expectedCandidateSha256&&expectedCandidateSha256!==manifest.candidateSha256)throw new Error("CLIENT_SHA256_MISMATCH");
   await caches.delete(PROMOTED_CACHE_NAME);
   const promoted=await caches.open(PROMOTED_CACHE_NAME);
   for(const request of await active.keys()){
