@@ -253,3 +253,11 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Prevención: el service worker nuevo transforma únicamente la respuesta HTML almacenada para inyectar la visibilidad y franja segura; no instala, recarga ni borra datos automáticamente.
 - Candado: la prueba exige el puente `approvedNavigationWithManualUpdate`, prohíbe navegación automática y mantiene el toque de `installMandatoryUpdate` como única instalación.
 - Estado: corregido en candidato V407-R24B; pendiente publicación y prueba física del propietario.
+
+## RC-098 · ACTUALIZADO tapaba ATRÁS en Historial · 09 SEPTIEMBRE 2026
+
+- Evidencia física: `IMG_3303.png` muestra el control global `ACTUALIZADO` encima del encabezado de Historial y parcialmente sobre `ATRÁS` en iPhone vertical.
+- Causa raíz: Registro permanecía montado detrás; su excepción CSS posterior con `!important` reactivaba el control aunque el overlay de Historial ordenara ocultarlo.
+- Escape: se extrapoló una revisión automática de algunas superficies a una afirmación física general sin captura individual de esta pantalla.
+- Prevención permanente: la excepción de Registro exige `:not(.gsc-history-open)` y `test-v407-r24b-history-update-isolation.mjs` rechaza la regla anterior.
+- Estado: CORREGIDO EN FUENTE LAB; NO REVISADO en despliegue público hasta repetir la pantalla. Producción principal intacta.

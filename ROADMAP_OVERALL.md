@@ -741,3 +741,12 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `.github/workflows/apply-r24b-lab.yml`: transporte temporal creado y eliminado en el mismo cierre remoto; no forma parte del candidato final.
 - `test-v407-r9-manual-update.mjs`: exige el puente manual y prohíbe navegación automática.
 - Rollback productivo: `5e45b264`; ninguna ronda, historial ni función de juego se modifica.
+
+# V407-R24C · aislamiento de ACTUALIZAR en Historial · 09 de septiembre de 2026
+
+- `IMG_3303.png` demuestra un FAIL físico: `ACTUALIZADO` tapaba parcialmente `ATRÁS` en Historial.
+- `index-grupal.html` limita la excepción que muestra ACTUALIZAR a Registro cuando Historial no está abierto.
+- `test-v407-r24b-history-update-isolation.mjs` bloquea el conflicto de prioridad CSS que dejó visible el control global sobre el overlay.
+- Se invalida cualquier afirmación previa de revisión física total: sólo las pantallas con evidencia individual pueden figurar como revisadas.
+- Producción principal permanece intacta; el candidato continúa en LAB y su estado es NO REVISADO hasta repetir navegador real y iPhone.
+- Los tres inventarios V311 y `INVENTARIOS_V311.lock.json` se regeneran sobre 449 fuentes para incluir la corrección y su banco preventivo.
