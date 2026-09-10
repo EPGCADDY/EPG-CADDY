@@ -814,3 +814,11 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Estado de transporte: preview R29 READY; alias estable LAB conservado en R28 hasta una promoción autenticada.
 - Sello posterior al retiro: inventario regenerado con 452 fuentes activas.
 - Corrección final R29: Stableford conserva símbolos GROSS, pero queda explícitamente excluido de la fila HDCP; General, Universales y Four Ball mantienen índices por marcas.
+
+# V407-R30 · controles verdes livianos e Historial preventivo · 10 de septiembre de 2026
+
+- Todos los botones que heredaban relleno verde se homologan en ejecución a fondo negro, contorno y texto verde; únicamente un botón cuyo texto sea exactamente `OK` conserva el relleno aprobado.
+- `TARJETA DIGITAL` persiste y archiva la ronda vigente antes de abrir su lectura; no destruye la ronda activa mientras sus acciones y artefactos continúan disponibles.
+- `NUEVA RONDA`, General y Stableford, conserva el orden obligatorio: persistir, archivar, borrar almacenamiento activo y limpiar registro.
+- Candados nuevos: `test-v407-r30-green-outline-controls.mjs` y `test-v407-r30-history-transitions.mjs`; ambos forman parte de `audit-project.mjs`.
+- Release manual: `V407-R30-OUTLINE-HISTORY-20260910`; rollback exacto: `564a24c` (R29). Maestro R28 permanece intacto.

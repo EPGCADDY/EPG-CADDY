@@ -1,5 +1,14 @@
 # Registro de reincidencias de calidad
 
+## RC-099 · CONTROLES VERDES SATURADOS Y TARJETA DIGITAL SIN ARCHIVO PREVIO · 10 SEPTIEMBRE 2026
+
+- Defecto visible: superficies de acción heredadas permanecían rellenas en verde y cargaban visualmente tarjetas/paneles; el patrón aprobado es fondo negro con contorno verde, excepto `OK`.
+- Riesgo funcional: abrir TARJETA DIGITAL no garantizaba archivar previamente la ronda vigente.
+- Causa raíz: estilos históricos independientes y ausencia de una normalización final común; `openFinalDigitalCard()` sólo renderizaba.
+- Control permanente: normalización calculada para botones estáticos/dinámicos, exclusión literal de `OK`, archivo previo a la Tarjeta Digital y conservación del orden archivo→limpieza en NUEVA RONDA.
+- Evidencia automática: `test-v407-r30-green-outline-controls.mjs` y `test-v407-r30-history-transitions.mjs`, integrados en auditoría maestra.
+- Estado: CORREGIDO EN FUENTE; NO REVISADO VISUALMENTE Y NO PUBLICADO.
+
 ## RC-098 · MIDDLEWARE ENTREGÓ ACCESS.HTML COMO SERVICE WORKER Y ATRAPÓ R8 · 09 SEPTIEMBRE 2026
 
 - Defecto físico: el alias LAB instalado mostró V407-R8 y ACTUALIZAR no ejecutó la migración.

@@ -205,3 +205,11 @@ No hay que reescribir commits, deployments, enlaces ni pendientes: este archivo 
 - Primera corrección R5: tarjeta Stableford Global responsive con metadatos y SHA contenidos y hoyos separados IN/OUT.
 - Pruebas dirigidas PASS: inventario visual, artefactos, sistema premium, diseño profesional, controles móviles, versión visible y recuperación de ronda.
 - LAB pendiente de publicación y recorrido físico R5; Producción permanece en `4009f79f50987f8bf105189bce9c5e90b2857363`.
+
+## 11. V407-R30 · siguiente candidato después de R29
+
+- R29 está READY y confirmado físicamente como `V407 · R29` / `ACTUALIZADO` en el alias LAB estable.
+- R30 homologa botones verdes a contorno; sólo `OK` conserva relleno.
+- TARJETA DIGITAL archiva antes de abrir; NUEVA RONDA archiva antes de limpiar el registro activo.
+- Pruebas dirigidas R30 PASS. Revisión automatizada en navegador real pendiente; no publicar ni tocar Maestro antes de cerrar esa puerta.
+- Rollback: `564a24c`. Maestro R28 permanece intacto.

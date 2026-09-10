@@ -875,3 +875,12 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Estado de transporte: preview R29 READY; alias estable LAB conservado en R28 hasta una promoción autenticada.
 - Sello posterior al retiro: inventario regenerado con 452 fuentes activas.
 - `live-view.js` condiciona `hdcpRow` a modalidades con hándicap: Stableford no la renderiza y conserva la simbología GROSS canónica.
+
+# V407-R30 · homologación de contornos y archivo previo · 10 de septiembre de 2026
+
+- `index-grupal.html`: `normalizeGreenButtonSurfaces()` inspecciona botones estáticos y dinámicos. Cuando el color calculado corresponde al verde oficial, añade `gsc-green-outline-control`; excluye por texto exacto `OK`.
+- `index-grupal.html`: `gscg-green-outline-homogeneity-v407-r30` impone fondo `#050505`, contorno/texto verde y elimina la sombra cargada sin modificar controles rojos, dorados, azules, micrófonos ni indicadores deportivos.
+- `index-grupal.html`: `openFinalDigitalCard()` ejecuta `persist()` y `archiveRoundSnapshot(round)` antes del render. `openNewRoundDraft()` y `openFreshStablefordSetup()` ya archivan antes de eliminar claves activas y limpiar el borrador.
+- `test-v407-r30-green-outline-controls.mjs` bloquea rellenos verdes reincidentes fuera de `OK`; `test-v407-r30-history-transitions.mjs` bloquea pérdida de Historial o limpieza anterior al archivo.
+- `audit-project.mjs` integra R29 y los dos candados R30. `service-worker.js`, meta y firma visible avanzan coordinadamente a `V407-R30-OUTLINE-HISTORY-20260910` / `V407 · R30`.
+- Estado: candidato LAB todavía NO REVISADO visualmente por descarga externa del navegador bloqueada; no se publica hasta cero FAIL. Rollback: commit `564a24c`. Maestro no cambia.
