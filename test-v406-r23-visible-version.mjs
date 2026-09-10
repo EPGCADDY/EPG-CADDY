@@ -10,11 +10,11 @@ assert.match(html,/\.mandatory-update-card\{display:flex;flex-direction:column;a
 assert.match(html,/\.update-version-id\{[^}]*color:#fff/);
 assert.match(html,/mandatoryUpdateAction"\)\.textContent="ACTUALIZAR"/);
 assert.match(html,/nextUrl\.searchParams\.set\("app_version",pendingPublishedBuild\)/);
-assert.match(html,/navigator\.serviceWorker\.getRegistrations\(\)/);
-assert.match(html,/key\.startsWith\("gscg-mobile-"\)/);
+assert.match(html,/navigator\.serviceWorker\.ready/);
+assert.match(html,/postMessage\(\{type:"PROMOTE_BUILD",build:pendingPublishedBuild\}\)/);
 assert.match(worker,/if\(url\.searchParams\.get\("app_version"\)===RELEASE\)\{await promoteCandidate\(\)/);
 assert.match(worker,/self\.addEventListener\("activate",event=>event\.waitUntil\(ensureApprovedShell\(\)\.then\(\(\)=>self\.clients\.claim\(\)\)\)\)/);
-assert.match(worker,/const RELEASE="V407-R31-MOBILE-CARD-OUTLINE-20260910"/);
-assert.doesNotMatch(worker,/install[\s\S]{0,300}promoteCandidate\(/,"La instalación del worker no puede promover R25 sin el toque del propietario");
+assert.match(worker,/const RELEASE="V407-R32-MANUAL-CANDIDATE-TWO-COLUMNS-20260910"/);
+assert.doesNotMatch(worker,/install[\s\S]{0,300}promoteCandidate\(/,"La instalación del worker no puede promover R32 sin el toque del propietario");
 
 console.log("PASS V407-R7 ID SOBRE ACTUALIZAR · ÁREA SEGURA IPHONE");

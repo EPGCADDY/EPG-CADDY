@@ -2,12 +2,13 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r31-mobile-card-outline`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r32-manual-candidate-two-columns`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved`;
-const RELEASE="V407-R31-MOBILE-CARD-OUTLINE-20260910";
+const RELEASE="V407-R32-MANUAL-CANDIDATE-TWO-COLUMNS-20260910";
 const OFFLINE_ENTRY="/index-grupal.html";
+const CANDIDATE_ENTRY="/candidate-index-grupal.html";
 const SHELL=[
-  OFFLINE_ENTRY,
+  CANDIDATE_ENTRY,
   "/manifest.webmanifest",
   "/gsc-design-system.css",
   "/manual.html",
@@ -63,14 +64,20 @@ async function copyCache(sourceName,targetName){
 async function ensureApprovedShell(){
   const approved=await caches.open(APPROVED_CACHE_NAME);
   if(await approved.match(OFFLINE_ENTRY))return;
-  const keys=await caches.keys();
-  const previous=keys.filter(key=>key.startsWith(`${CACHE_NAME}-v406-`)&&key!==ACTIVE_CACHE_NAME).pop();
-  if(previous)await copyCache(previous,APPROVED_CACHE_NAME);
-  else await copyCache(ACTIVE_CACHE_NAME,APPROVED_CACHE_NAME);
+  const active=await caches.open(ACTIVE_CACHE_NAME);
+  for(const request of await active.keys()){
+    if(new URL(request.url).pathname===CANDIDATE_ENTRY)continue;
+    const response=await active.match(request);if(response)await approved.put(request,response);
+  }
+  const baseline=await fetch(OFFLINE_ENTRY,{cache:"no-store"});
+  if(baseline.ok)await approved.put(OFFLINE_ENTRY,baseline);
 }
 
 async function promoteCandidate(){
   await copyCache(ACTIVE_CACHE_NAME,APPROVED_CACHE_NAME);
+  const active=await caches.open(ACTIVE_CACHE_NAME),approved=await caches.open(APPROVED_CACHE_NAME);
+  const candidate=await active.match(CANDIDATE_ENTRY)||await fetch(CANDIDATE_ENTRY,{cache:"no-store"});
+  if(candidate?.ok)await approved.put(OFFLINE_ENTRY,candidate);
 }
 
 self.addEventListener("install",event=>event.waitUntil(refreshShell().then(()=>self.skipWaiting())));
@@ -107,7 +114,7 @@ self.addEventListener("fetch",event=>{
   if(url.origin!==self.location.origin||url.pathname.startsWith("/api/"))return;
   if(request.mode==="navigate"&&url.pathname==="/access.html"){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"&&(url.pathname==="/manual.pdf"||url.pathname==="/manual.html")){event.respondWith(fetch("/manual.html?__gscg_build_check=1",{cache:"no-store"}));return}
-  if(url.searchParams.has("__gscg_build_check")){event.respondWith(fetch(request,{cache:"no-store"}));return}
+  if(url.searchParams.has("__gscg_build_check")){event.respondWith((async()=>{const cache=await caches.open(ACTIVE_CACHE_NAME);return await cache.match(CANDIDATE_ENTRY)||fetch(CANDIDATE_ENTRY,{cache:"no-store"})})());return}
   if(request.mode==="navigate"){
     event.respondWith((async()=>{
       if(url.searchParams.get("app_version")===RELEASE){await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}

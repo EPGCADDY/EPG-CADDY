@@ -326,3 +326,11 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Control permanente R31: selectores específicos sin relleno excepto `#setupOk`, `.card-shell` con fondo negro, `overflow-x:scroll`, inercia iOS, `touch-action` y tabla no comprimida.
 - Evidencia automatizada: `test-v407-r30-green-outline-controls.mjs` ampliado y `test-v407-r31-mobile-card-scroll.mjs` integrado en auditoría.
 - Estado: CORREGIDO EN FUENTE; pendiente Preview READY y nueva comprobación física.
+
+## RC-105 · PUBLICAR LAB INSTALÓ R31 SIN TOQUE DEL PROPIETARIO · 10 SEPTIEMBRE 2026
+
+- Defecto físico: R31 apareció como `ACTUALIZADO` inmediatamente después de promover el deployment.
+- Causa raíz: la misma URL de entrada representaba simultáneamente la base instalada y el candidato publicado.
+- Control permanente R32: entrada R31 aprobada y archivo candidato R32 separados; el worker sólo sustituye la entrada aprobada tras `ACTUALIZAR`.
+- Prueba preventiva: `test-v407-r32-owner-only-update.mjs`.
+- Estado: CORREGIDO EN FUENTE LAB; pendiente deployment READY.

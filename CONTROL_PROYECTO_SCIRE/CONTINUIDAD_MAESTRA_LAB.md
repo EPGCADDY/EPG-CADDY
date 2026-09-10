@@ -220,3 +220,10 @@ No hay que reescribir commits, deployments, enlaces ni pendientes: este archivo 
 - R31 fuerza fondo negro y desplazamiento horizontal táctil dentro de `.card-shell`; neutraliza relleno, gradiente y sombra en controles verdes distintos de `OK`.
 - R30 queda rechazado. R31 debe superar banco integral, Preview READY y nueva evidencia física antes de mover el alias LAB.
 - Rollback: `564a24c` (R29). Maestro R28 permanece intacto.
+
+## 13. V407-R32 · candidato manual separado
+
+- R31 se conserva como entrada aprobada; R32 se descarga en `candidate-index-grupal.html` y no se instala al publicar.
+- Sólo el toque del propietario en `ACTUALIZAR` envía `PROMOTE_BUILD` y abre la versión R32.
+- Modalidades y funciones: dos columnas móviles, diez opciones conservadas.
+- Candados dirigidos R32 PASS. Siguiente puerta: commit/deployment LAB READY; Maestro/Producción R28 intacto.

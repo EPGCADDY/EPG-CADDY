@@ -95,6 +95,7 @@ checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r24c-public-p
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r24c-update-scroll-isolation.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r29-live-handicap-row.mjs');
 checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r30-green-outline-controls.mjs','test-v407-r30-history-transitions.mjs','test-v407-r31-mobile-card-scroll.mjs');
+checks.splice(checks.indexOf('test-score-engine.mjs'),0,'test-v407-r32-two-column-modalities.mjs','test-v407-r32-owner-only-update.mjs');
 for(const file of checks){
   const result=spawnSync(process.execPath,[file],{stdio:'inherit'});
   if(result.status!==0)process.exit(result.status||1);

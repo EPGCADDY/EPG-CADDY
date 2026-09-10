@@ -894,3 +894,12 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `.card-shell`: fondo negro, ancho máximo del viewport, `overflow-x:scroll`, inercia iOS, `touch-action:pan-x pan-y`, contención horizontal y tabla sin compresión.
 - `test-v407-r30-green-outline-controls.mjs` amplía la regresión y `test-v407-r31-mobile-card-scroll.mjs` bloquea recorte, fondo blanco y pérdida del gesto horizontal.
 - Estado: candidato exclusivamente LAB y NO REVISADO hasta nuevo deployment READY y captura física. Maestro/Producción no cambia.
+
+# V407-R32 · base aprobada separada del candidato · 10 de septiembre de 2026
+
+- `index-grupal.html` permanece como R31 instalada; `candidate-index-grupal.html` contiene R32.
+- `service-worker.js` descarga el candidato sin sustituir la entrada aprobada. La promoción ocurre únicamente por mensaje `PROMOTE_BUILD` o navegación `app_version=V407-R32...`, ambos originados por el botón `ACTUALIZAR`.
+- Se elimina del actualizador el borrado de cachés y la desinstalación de workers, evitando que una publicación equivalga a una actualización del propietario.
+- Media móvil: `.game-mode-columns{grid-template-columns:repeat(2,minmax(0,1fr))}`, preservando las diez funciones: Medal Play Normal, Match Play, Four Ball, Stableford, Skins, Wolf, Vegas, Universales, Score Card-Práctica y Comparte Live.
+- Pruebas dirigidas PASS: `test-v407-r32-owner-only-update.mjs`, `test-v407-r32-two-column-modalities.mjs`, Score Card móvil R31 y contornos verdes.
+- Pendiente antes de luz verde: deployment LAB READY y comprobación remota exacta. Maestro/Producción R28 no se toca.

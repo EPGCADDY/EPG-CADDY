@@ -830,3 +830,10 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `index-grupal.html` elimina relleno/sombra en selecciones, `ENTER` y acciones verdes distintas de `OK`; mantiene fondo negro continuo y fuerza desplazamiento táctil horizontal dentro de `.card-shell`.
 - `service-worker.js`, firma visible y caché avanzan coordinadamente a `V407-R31-MOBILE-CARD-OUTLINE-20260910` / `V407 · R31`.
 - Candado nuevo: `test-v407-r31-mobile-card-scroll.mjs`. R30 queda rechazado físicamente; rollback seguro: `564a24c` (R29). Maestro R28 permanece intacto.
+
+# V407-R32 · actualización exclusivamente manual y modalidades en dos columnas · 10 de septiembre de 2026
+
+- La aplicación servida conserva R31 como base aprobada; R32 vive separada en `candidate-index-grupal.html`.
+- El service worker sólo promueve R32 después del toque del propietario en `ACTUALIZAR`; instalar, activar o publicar el deployment no cambia la versión visible automáticamente.
+- En móvil, las modalidades y funciones quedan en dos columnas, sin eliminar opciones.
+- Candados: `test-v407-r32-owner-only-update.mjs` y `test-v407-r32-two-column-modalities.mjs`. Alcance exclusivo LAB; Maestro/Producción permanece R28 intacto.

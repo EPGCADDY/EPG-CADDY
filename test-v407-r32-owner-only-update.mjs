@@ -1,0 +1,20 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+
+const approved=fs.readFileSync("index-grupal.html","utf8");
+const candidate=fs.readFileSync("candidate-index-grupal.html","utf8");
+const worker=fs.readFileSync("service-worker.js","utf8");
+assert.match(approved,/V407-R31-MOBILE-CARD-OUTLINE-20260910/);
+assert.match(candidate,/V407-R32-MANUAL-CANDIDATE-TWO-COLUMNS-20260910/);
+const updater=approved.slice(approved.indexOf("async function installMandatoryUpdate"),approved.indexOf("async function syncPublishedAppVersion"));
+assert.match(updater,/postMessage\(\{type:"PROMOTE_BUILD",build:pendingPublishedBuild\}\)/);
+assert.doesNotMatch(updater,/registration\.unregister\(\)/);
+assert.doesNotMatch(updater,/caches\.delete\(key\)/);
+assert.match(worker,/const CANDIDATE_ENTRY="\/candidate-index-grupal\.html"/);
+assert.match(worker,/if\(new URL\(request\.url\)\.pathname===CANDIDATE_ENTRY\)continue/);
+assert.match(worker,/await approved\.put\(OFFLINE_ENTRY,baseline\)/);
+assert.match(worker,/await approved\.put\(OFFLINE_ENTRY,candidate\)/);
+assert.match(worker,/url\.searchParams\.has\("__gscg_build_check"\)[\s\S]*?cache\.match\(CANDIDATE_ENTRY\)/);
+assert.match(worker,/event\.data\?\.type==="PROMOTE_BUILD"&&event\.data\?\.build===RELEASE/);
+assert.match(worker,/self\.addEventListener\("install",event=>event\.waitUntil\(refreshShell\(\)\.then\(\(\)=>self\.skipWaiting\(\)\)\)\)/);
+console.log("PASS V407 R32 · el candidato se instala únicamente después del toque ACTUALIZAR");
