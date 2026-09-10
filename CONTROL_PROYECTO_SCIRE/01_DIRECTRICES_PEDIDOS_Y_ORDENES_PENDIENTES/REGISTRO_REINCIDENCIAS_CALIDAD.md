@@ -334,3 +334,11 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Control permanente R32: entrada R31 aprobada y archivo candidato R32 separados; el worker sólo sustituye la entrada aprobada tras `ACTUALIZAR`.
 - Prueba preventiva: `test-v407-r32-owner-only-update.mjs`.
 - Estado: CORREGIDO EN FUENTE LAB; pendiente deployment READY.
+
+## RC-106 · ACTUALIZAR NECESITÓ DOS AVISOS/DOS TOQUES Y LA VOZ TENÍA RUTAS INCOMPATIBLES · 10 SEPTIEMBRE 2026
+
+- Defecto físico: el primer aviso/toque R31 a R32 dejó R31; el segundo aviso/toque activó R32. Registro escuchaba adecuadamente, mientras Score Card y AI UNIVERSAL cortaban o cerraban mal; las respuestas habladas eran demasiado cortas y la voz implementada era masculina, contraria a la voz femenina del Manual.
+- Causa raíz: el cliente enviaba `PROMOTE_BUILD` al worker y navegaba sin ACK; el worker anterior podía ignorar el release nuevo. Voz operativa y conversacional compartían `server_vad` casi idéntico; la API reducía a la mitad los tokens por voz y existían múltiples rutas de síntesis.
+- Escape: pruebas con nombres “physical”, “100 domains” y “owner-only update” inspeccionaban código o enrutamiento, pero no reproducían dispositivo, conversación o primer toque.
+- Control permanente R33: promoción por staging verificado, marcador escrito al final, `MessageChannel`/ACK antes de navegar y fallo seguro; `semantic_vad` conversacional; profundidad igual por voz/texto; selector persistente compartido con el Manual y prohibición de rótulos masculinos.
+- Estado: IMPLEMENTADO EN FUENTE LAB R33; pruebas automáticas y despliegue público pendientes; prueba física iPhone sigue separada. Maestro intacto.

@@ -1,0 +1,14 @@
+EPG CADDY V407-R32 - VERCEL BUILD RECORD
+captured_utc=2026-09-10
+project=golf-sc-gt-lab
+deployment_id=dpl_9SUgqGaTBEcMwuBt1PHsSBvtDWhn
+deployment_url=https://golf-sc-gt-7l2dc94nr-epgcaddys-projects.vercel.app
+deployment_state=READY
+target=Preview (target null)
+git_commit=a4b1cec9e1380d8a5b72080477cad97080ab0cce
+git_branch=lab/v407-r24-whatsapp-registration
+audit_result=PASS auditoría maestra: 139 paquetes
+build_result=Build Completed in /vercel/output
+deployment_result=Deployment completed
+warnings=deprecated tar, uuid, glob and prebuild-install dependencies; Node.js 22 project setting override; ESM-to-CJS warning
+production_promotion=not_performed

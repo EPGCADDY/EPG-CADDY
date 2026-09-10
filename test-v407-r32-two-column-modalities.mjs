@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import assert from "node:assert/strict";
 
-const html=fs.readFileSync("candidate-index-grupal.html","utf8");
+const html=fs.readFileSync("index-grupal.html","utf8");
 assert.match(html,/V407-R32-MANUAL-CANDIDATE-TWO-COLUMNS-20260910/);
 assert.match(html,/@media\(max-width:800px\)[\s\S]*?\.game-mode-columns\{grid-template-columns:minmax\(0,1fr\) minmax\(0,1fr\)\}/);
 assert.doesNotMatch(html,/\.game-mode-columns\{grid-template-columns:1fr\}/);
@@ -9,4 +9,7 @@ for(const id of ["normalRoundButton","matchPlayRoundButton","fourBallRoundButton
   assert.match(html,new RegExp(`id=["']${id}["']`),`falta modalidad o función ${id}`);
 }
 assert.match(html,/\.game-mode-column>div,\.game-mode-column \.course-option\{width:100%;min-width:0\}/);
+const successor=fs.readFileSync("candidate-index-grupal.html","utf8");
+assert.match(successor,/V407-R33-ROOT-VOICE-UPDATE-20260910/);
+assert.match(successor,/@media\(max-width:800px\)[\s\S]*?\.game-mode-columns\{grid-template-columns:minmax\(0,1fr\) minmax\(0,1fr\)\}/);
 console.log("PASS V407 R32 · modalidades y funciones se conservan en dos columnas móviles");

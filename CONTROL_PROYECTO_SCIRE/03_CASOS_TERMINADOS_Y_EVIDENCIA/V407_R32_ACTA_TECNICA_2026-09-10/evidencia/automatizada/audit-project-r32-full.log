@@ -1,0 +1,171 @@
+PROJECT_QUALITY_GATE PASS controls=11 inputs=7 gates=11 baseline=0dc1ba7a62b6 production=7816978be8aa
+PASS continuidad maestra LAB: MAIN congelada, LAB canónico y relevo entre conversaciones blindados.
+PASS V405 · BORRAR TODO elimina ronda activa, evita reaparición y conserva otras rondas del Historial.
+INTOCABLES PASS INT-01…INT-05 · REGISTRO/SCORE/MULTIHOYO Y VOZ V378 SELLADOS
+PASS project quality gate: local, Vercel separado y pruebas negativas.
+MANUAL_EDITORIAL_QC PASS pages=74 standardProfiles=66 topics=23 didacticPages=57 pdf=74
+MANUAL_VISUAL_QC PASS pages=74 coursePages=7 functionalPages=57 resolution=2160x4320 density>=300dpi courseVerticalDeltaMax=378px courseOccupancy=52.7-81.0% functionalOccupancy=94.2-97.5% functionalLowerDensity=41.0-42.7%
+PASS ROADMAP GATE: 14 modificaciones registradas en ambos ROADMAPS.
+PASS INVENTORY GATE: 468 fuentes y 3 PDF sellados en R18-LAB-OWNER-GUEST-24H-LOCK.
+PASS player registry: código, recuperación, datos vigentes, historial, consentimiento e idempotencia
+PASS esquema central: 9 tablas y candados críticos
+PASS esquema de perfiles: código único, dato vigente e historial inmutable preparado
+PASS esquema V256 · base maestra por rubros e historial append-only
+PASS cero X automáticas y reparación V155
+PASS catálogo y registro V170
+PASS Country Club oficial: 18 pares, 90 yardajes, 5 ratings/slopes y 3 matrices HDCP
+PASS V273 · San Isidro y Alta Vista cargados desde tarjetas oficiales
+PASS V274 · siete campos, voz continua protegida, conversación y corrección X
+PASS V275 · hoyo anclado por bloque, voz concurrente protegida y recordatorio confirmado
+PASS V276 · ANTERIOR, selección directa y SIGUIENTE comparten Control Manual General/Stableford
+PASS V277 · corrección oficial versionada, original preservado y recálculo General/Stableford
+PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las tarjetas oficiales General/Stableford
+PASS V279 · historial privada local por ronda, campo, torneo, fecha y jugador sin alterar la ronda actual
+PASS V280 · consulta histórica escrita General/Stableford, filtros, comparación, tendencia y puntos
+PASS V281: instalación oficial iPhone/Android, shell offline y actualización de red
+PASS V282 · cuenta opcional, respaldo autenticado y recuperación central
+PASS V397 · 8 artefactos con IN 1–9, OUT 10–18, TOTAL 1–18; visor con ATRÁS + ENVÍO; REGÍSTRATE sólo en principal
+PASS V398 · 4 modalidades: vacía→1, parcial→pendiente y navegación interna conservada
+PASS V398 · pulsación prolongada, confirmación y borrado persistente del historial
+PASS V283 · preparación nativa iOS/Android y monetización comercial
+PASS V284 · paquetes nativos reproducibles para Xcode y Android Studio
+PASS V285 · ATRÁS vuelve de Stableford a la pantalla principal
+PASS V286 · ATRÁS reconstruye campos, modalidades y registro principal
+PASS V305/V399 · REGÍSTRATE sólo en principal y no traslapa ATRÁS ni + JUGADOR
+PASS V289 · NUEVA RONDA deja Registro Stableford vacío sin sustituir una ronda recuperable
+PASS V305 · historial, navegación y acciones homologadas en General y Stableford
+PASS V304 · filtro hermano: vocabulario, guía, micrófono, tipografía, tamaño, brillo y estados
+PASS V305/V399 · HISTORIAL, ATRÁS, REGÍSTRATE sólo principal, Stableford limpio y cero vocabulario retirado
+PASS V305/V351 · Safari XIV se separa como handicap 14 sin alterar la X del score
+PASS V306/V307/V311/V330 MATCH PLAY · UNA, DOS O TRES PAREJAS · TARJETA NORMAL · NETO · FLECHAS · CIERRE INDEPENDIENTE
+PASS V307 · FLECHAS GRUESAS · FORMATO MATCH PLAY · IN/OUT/TOTAL UP-DOWN · FIN ANTICIPADO · PAQUETE Y CACHÉ
+PASS V309/V310/V311/V329 · FOUR BALL · UNA, DOS O TRES PAREJAS · HCP INDIVIDUAL · MEJOR NETO · SEPARACIÓN · EXPORTACIÓN
+PASS V311/V329 · NOMBRES NEUTRALES · UNA, DOS O TRES PAREJAS · LÍNEAS SEPARADORAS · VOZ ARRIBA/ABAJO · INICIO DIRECTO
+PASS V334 · manual web directo, anclas estables, PDF, portada y 73 páginas alojadas
+PASS V334 · 57 páginas funcionales ordenadas, didácticas y con recuperación explícita
+PASS V334 · mapa de voz, vocabulario oficial y respuestas alineadas con el Manual
+PASS V334 · índice temático y lupa alineados con el nuevo orden didáctico
+PASS V311 · asistente de voz para ayuda y navegación segura
+PASS V311 · todos los TIMER se apagan tras 30 minutos sin instrucciones
+PASS V406-R4 · Support integrado en barra estructural y conectado al Manual vivo
+PASS V321 · intención universal protegida, consultas de tarjeta conservadas, idioma automático y dominio abierto
+PASS V320 · 100 de 100 áreas y temas fuera de lista llegan al Caddie universal
+PASS V321 · AI UNIVERSAL ∞ real, voz + texto + contexto + web y 200 de 200 áreas sin límite cerrado
+research upstream 503
+research timeout recuperado
+PASS V322 · 24 turnos consecutivos, reapertura sana y fallos web recuperables
+PASS V323 · 30 temas, 63 mensajes, 30 turnos bilaterales y memoria inicial en texto/voz
+PASS V324 · tráfico real actual/futuro, ETA, demora, privacidad y voz/texto recuperables
+PASS V326 · 30 turnos bilaterales, pausa natural determinista, órdenes rápidas, interrupción, eco y continuidad
+PASS V327 · entrada, generación y reproducción tienen recuperación comprobable
+PASS V327 · 550 secuencias herramienta→voz, 100 eventos privados y recuperación sin silencio
+golf rules upstream 429
+PASS V328 · 15 situaciones reglamentarias, fuentes USGA/R&A, texto/voz y cero cambios de score
+PASS V328-R2 · reglas oficiales guardadas, coincidencia segura, 90 días, 24 entradas, privacidad y cero score
+universal ai upstream retry {"status":429,"providerCode":"rate_limit_exceeded","attempt":1,"model":"gpt-5.6","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"rate_limit_exceeded","attempt":2,"model":"gpt-5.4","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"rate_limit_exceeded","attempt":1,"model":"gpt-5.6","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"rate_limit_exceeded","attempt":2,"model":"gpt-5.4","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"rate_limit_exceeded","attempt":3,"model":"gpt-5.6","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"credit_balance_exhausted","attempt":1,"model":"gpt-5.6","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"credit_balance_exhausted","attempt":2,"model":"gpt-5.4","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"credit_balance_exhausted","attempt":3,"model":"gpt-5.6","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"credit_balance_exhausted","attempt":1,"model":"gpt-5.6","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"credit_balance_exhausted","attempt":2,"model":"gpt-5.4","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"credit_balance_exhausted","attempt":3,"model":"gpt-5.6","retryable":true,"requestId":null}
+gateway oidc unavailable {"code":"VercelOidcTokenError"}
+PASS V335 · calibre adaptable: directo, sustantivo, no infantil, con límites, acciones y fuentes
+PASS V351 · Registro local, matriz exacta y telemetría privada permanecen protegidos
+PASS V337 · clima de texto usa Open-Meteo estructurado con probabilidad por horario y coordenadas públicas del campo
+PASS V345: iconos visibles, distintos y versionados para Golf Score y Manual SCG
+PASS V332 · Skins Gross/Neto, moneda exclusiva Q/$, acumulados, X, cierre firmado, corrección, nube, historial, liquidación, voz y pantalla principal intacta
+PASS V332 · selección física única + Q/$ excluyentes + matriz común de estados, riesgo, acumulados, dinero, líder y liquidación
+PASS V352 LIVE: permiso, privacidad, cola offline, visor separado y torneo paginado sin máximo fijo
+PASS V353 CENTRO LIVE: 80 jugadores, hasta 5 torneos, multiteléfono sin doble cómputo, privacidad y carga sin máximo fijo
+PASS V354/V367 VOZ: 3 hoyos, plural y consulta general audible sin abandonar la pantalla
+PASS V355 iPhone: audio habilitado desde gesto y dictado del teclado distribuido en nombre, HDCP y marcas
+cedar spanish speech gateway {"model":"fish-audio/s2.1-pro-free","language":"es-419","speed":0.9,"locked":true}
+PASS V356/V378 · voz hablada Fish Audio es-419 0.90 sin ID fijo; tráfico/clima estructurados
+PASS V356 · tráfico y clima actuales/futuros distinguidos en 30 min, 1 h, 3 h, mañana, próxima semana y límite de 16 días
+PASS V357 · iPhone abre voz en el gesto · 429 no bloquea scores ni AI UNIVERSAL · multi-hoyo, reintentos y privacidad protegidos
+PASS V358 · V357 completo + ronda activa visible hasta NUEVA RONDA
+PASS V358 preservado · score natural iPhone + AI UNIVERSAL de un toque + privacidad
+PASS V359 · iPhone interpreta número, golpes, tiró y hoyo al final para dos jugadores sin adivinar
+PASS V358 · recuperación iPhone + hoyos visibles durante el dictado + Universal + ronda persistente
+PASS V361 · parser natural + score visible y persistente inmediato + locutor masculino recuperable + voz sin texto
+PASS V362/V378 · un toque + watchdog + Fish Audio 0.90 + cierre hablado y persistencia progresiva
+universal ai upstream retry {"status":429,"providerCode":"credit_balance_exhausted","attempt":1,"model":"gpt-5.6","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"credit_balance_exhausted","attempt":2,"model":"gpt-5.4","retryable":true,"requestId":null}
+universal ai upstream retry {"status":429,"providerCode":"credit_balance_exhausted","attempt":3,"model":"gpt-5.6","retryable":true,"requestId":null}
+PASS V364 · OIDC dinámico recupera AI UNIVERSAL y voz sin exponer claves
+V363_RECORDED_MOBILE_BEHAVIOR PASS guards=1 modal_isolation=1 live_safe_area=1
+PASS V363 INTOCABLES · ronda viva + Match Play con nombres + Ronda Normal intacta
+V364_EXPLICIT_NEW_ROUND_ENTRY PASS external_contract=ready
+PASS V365/V400 · ronda activa multimodal, tarjeta viva y scores recuperados
+PASS V366 · Inicio principal obligatorio sin ronda + tarjeta operativa intacta
+PASS V367 · comunicación universal audible en Inicio, Registro y tarjeta sin cambiar de pantalla
+PASS V368 · enlace web abre Inicio y app instalada conserva tarjeta viva
+PASS V406-R4 · barra sin traslape, selectores explícitos y acciones inferiores homogéneas
+PASS V406 · categoría individual, índice oculto, filtro TORNEO LIVE y Mi Tablero
+PASS V406-R5 · entrada infantil directa y administración oculta sin retirar funciones
+PASS V407-R7 ID SOBRE ACTUALIZAR · ÁREA SEGURA IPHONE
+PASS V406-R23 CIERRES HABLADOS · HOYOS 9 Y 18 · REINTENTO SEGURO
+PASS inventario visual V407-R5: 67 estados únicos, 10 criterios y conteos reconciliados
+PASS V407-R5A: Historial y Estadísticas usan retícula premium contenida en escritorio e iPhone.
+PASS V407-R6 · Universales reemplaza DOTS y conserva separación motor/diseño/Producción
+PASS V407-R6 · UNIVERSALES distribuye exactamente 12 puntos con 3/4 jugadores y todos los empates
+PASS V407-R7 · scroll iPhone estable y actualización visible
+PASS V407-R18 · actualización, categorías, puntos rojos y encabezado móvil
+PASS acceso propietario/invitado 24h: enlace individual de un solo uso, aislamiento, revocación, bloqueo, feedback anónimo y purga <48h
+PASS V407-R24B: candado permanente de actualización y pruebas negativas instalado
+PASS V407-R24B: Historial aísla ACTUALIZAR/ACTUALIZADO sin tapar ATRÁS
+PASS bootstrap PWA público: service worker y manifiestos no son sustituidos por access.html
+PASS aislamiento al desplazarse: ACTUALIZADO no flota sobre Control Manual y ACTUALIZAR disponible conserva su aviso
+PASS V407 R29 · fila HDCP LIVE circular y golpes por jugador
+PASS V407 R31 · controles verdes homologados a contorno y OK conserva relleno
+PASS V407 R30 · Tarjeta Digital archiva y Nueva Ronda archiva antes de limpiar registros
+PASS V407 R31 · Score Card móvil conserva fondo negro y desplazamiento horizontal táctil
+PASS V407 R32 · modalidades y funciones se conservan en dos columnas móviles
+PASS V407 R32 · el candidato se instala únicamente después del toque ACTUALIZAR
+PASS motor exhaustivo Gross/Neto/handicap: 2 campos, 5 matrices, HCP 0–54, 18 hoyos y 12 Gross
+PASS cierre y corrección: cero X, SHA-256, idempotencia y original preservado
+PASS archivos Global/personal desde snapshot oficial
+PASS matriz oficial Stableford: Global y seis personales con Gross/Puntos
+PASS categoría opcional arriba del nombre en las diez tarjetas; HCP conservado
+PASS leyenda, puntos por hoyo y totales Universales en rojo
+PASS consultas históricas combinables y hora Guatemala
+PASS cola idempotente y purga sólo después de acuse íntegro
+PASS API central V256: contrato maestro, hash e idempotencia validados
+PASS autenticación sync: encabezado o sesión HttpOnly, comparación segura
+PASS V256 · paquete maestro normalizado, historial, scores y cola compactada
+PASS continuidad, watchdog y estados de voz V181
+PASS V265 · cierre automático recupera la sesión de voz y reintenta
+PASS V266 · Stableford manual/voz anuncia nombre, Gross y puntos en primera vuelta, segunda vuelta y total
+PASS V267 · una línea operacional, 35 scores incrementales transaccionales, registro sin contaminación y salida literal
+PASS V267 · matriz integral 583 configuraciones de Score Card por una arquitectura
+PASS V269 · Registro, Ronda previa y retorno a Ronda actual operativos en demo aislada
+PASS V270 · cursor automático General/Stableford, ENTER por bloque, X amplia y corrección retroactiva
+PASS V271 · sesión Realtime limitada a 1024 caracteres con vocabulario operacional intacto
+PASS V274 · recepción continua sin avisos superpuestos, cierre con micrófono apagado, IN/OUT/TOTAL y campos oficiales nuevos
+PASS V197: INICIO izquierda, TIMER centro con toque ampliado, cronómetro derecha y micrófono aislado
+PASS títulos: INFORMACIÓN DE RONDA en General, PUNTOS en Stableford y RESULTADO MATCH PLAY
+Stableford: reglas, seis jugadores, matrices, cuatro fechas y mejores tres verificados.
+Stableford UI: tarjeta limpia, torneo, micrófonos, categorías, seis jugadores, Gross/Puntos y clasificación verificados.
+PASS Stableford limpio: 1–6 jugadores y snapshot histórico completo
+PASS manual General/Stableford -> applyLiteralScores -> recordScore(s) -> cálculo/persist/render/cierre únicos
+PASS V252: Stableford conserva matriz oficial GRUPAL, historial y compartir
+PASS V252 · persistencia normal, NUEVA RONDA limpia, 4 campos y categorías por tee
+PASS V253 · RONDA PREVIA viva en General y Stableford, retorno a RONDA ACTUAL y separación de historiales
+PASS V254 · eliminadas únicamente las tres falsas casillas de registro
+PASS V407 R24 · registro con WhatsApp opcional, +502 editable y bandera de Guatemala
+PASS V256 · dato vigente reemplazable, historial preservado y base maestra conectada
+PASS V257/V267 · botones únicos de campo y título RONDA STABLEFORD
+PASS V258/V267 · metadatos bloqueados y control manual operacional único
+PASS V259/V267 · control manual común 1-6 sin filas ocultas adicionales
+PASS V260/V267 · STABLEFORD, anchos, total neón, alta segura y recuperación única sin mezclar modalidades
+PASS V407 R24 · General y Stableford conservan WhatsApp opcional privado
+PASS V262 · perfiles opcionales, recuperación manual/dictada y Gross total automático
+PASS V263 · jugadores compactos y botón ATRÁS no invasivo
+PASS control de proyecto · fuentes originales, cola y política de no reiteración
+PASS sincronización código/manual V330
+PASS auditoría maestra: 139 paquetes

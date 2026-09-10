@@ -79,10 +79,11 @@ assert.ok(spokenWeather.length<detailedWeather.length/2,"La voz debe ser sustant
 const traffic=formatStructuredTrafficAnswer({ok:true,origin:"El Pulté Golf",destination:"Pradera Concepción",durationMinutes:30,delayMinutes:5,distanceKm:16.1,trafficLevel:"moderado",calculatedAt:"2026-08-28T16:00:00.000Z"});
 for(const datum of ["ETA","Demora por tráfico","Distancia","Hora de cálculo","Google Maps Routes","TRAFFIC_AWARE_OPTIMAL"])assert.match(traffic,new RegExp(datum));
 assert.match(universal,/responseMode==="voice"/);
-assert.match(universal,/tres a seis oraciones concisas pero sustantivas/);
+assert.match(universal,/con la misma profundidad que tendría por texto/);
 assert.match(universal,/const UNIVERSAL_TIMEOUT_MS=27_500/);
-assert.match(universal,/Math\.ceil\(baseResponseProfile\.maxOutputTokens\/2\)/);
+assert.match(universal,/const responseProfile=baseResponseProfile/);
+assert.doesNotMatch(universal,/Math\.ceil\(baseResponseProfile\.maxOutputTokens\/2\)/);
 assert.match(speech,/controller\.abort\(\),22_500/);
 assert.deepEqual(universalResponseProfile("Analiza a fondo causas, riesgos, alternativas y dame una recomendación accionable."),{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"});
 
-console.log("PASS V356/V378 · voz hablada Fish Audio es-419 0.90 sin ID fijo; tráfico/clima estructurados");
+console.log("PASS V356/V407-R33 · voz V378 preservada; profundidad de AI Universal equivalente en voz y texto");

@@ -638,3 +638,12 @@ Total encontrado: **622 publicaciones**.
 - Con error: **1**.
 - Las publicaciones anteriores no se borran: sirven para regresar a una versión anterior si algún cambio futuro falla.
 - No se guardan contraseñas, correos personales ni llaves privadas en este documento.
+# V407-R32 - LAB promovido
+
+- Proyecto: `golf-sc-gt-lab` (`prj_0KNTWUoiCiA3amKZQPDNNkWYFDbp`).
+- Commit: `a4b1cec9e1380d8a5b72080477cad97080ab0cce`.
+- Deployment estable: `dpl_G97hXzJbV9duYHLn8SGREJWRgUHq` - READY - target `production`.
+- URL exacta: `https://golf-sc-gt-dypjyc3wg-epgcaddys-projects.vercel.app`.
+- Alias estable: `https://golf-sc-gt-lab.vercel.app`.
+- Resultado físico ACTUALIZAR: FAIL al primer toque; R32 apareció después de segundo aviso y segundo toque.
+- Maestro: target production permanece en R28, commit `7816978be8aa23aba20f4c066fce30f6287ff134`, deployment `dpl_WPGNVszdVnpNKqKFjMPLPKxXRaSa`.

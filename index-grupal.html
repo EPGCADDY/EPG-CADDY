@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V407-R31-MOBILE-CARD-OUTLINE-20260910">
+  <meta name="gscg-release" content="V407-R32-MANUAL-CANDIDATE-TWO-COLUMNS-20260910">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -671,7 +671,7 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
   .scorecard-stage-title{margin-top:14px;padding:13px 14px;border-radius:14px 14px 0 0;font-size:15px}.scorecard-stage-title small{font-size:9px}.card-shell{border-radius:0 0 14px 14px;scroll-snap-type:x proximity}.scorecard{scroll-snap-align:start}
   .round-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:14px}.round-actions button{height:52px;border-radius:11px;font-size:10px;padding:0 7px}.round-actions #newRoundButton{grid-column:1/-1}
   .round-secondary-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}.back-registration-button,.clear-round-scores{height:50px;border-radius:11px;font-size:9px}
-  .overlay{padding:10px}.new-round-card{padding:18px 14px;margin:8px auto;border-radius:18px}.new-round-card .course-options,.game-mode-columns{gap:9px}.game-mode-columns{grid-template-columns:1fr}.new-round-card .course-option{min-height:54px;border-radius:12px;padding:10px 12px;font-size:12px!important}.new-round-card .nr-button,.screen-back-button{min-height:52px;border-radius:12px}
+  .overlay{padding:10px}.new-round-card{padding:18px 14px;margin:8px auto;border-radius:18px}.new-round-card .course-options,.game-mode-columns{gap:9px}.game-mode-columns{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.game-mode-column{display:grid;align-content:start;gap:9px}.game-mode-column>div,.game-mode-column .course-option{width:100%;min-width:0}.new-round-card .course-option{min-height:54px;border-radius:12px;padding:10px 8px;font-size:10px!important}.new-round-card .nr-button,.screen-back-button{min-height:52px;border-radius:12px}
   #finalCardOverlay{padding:max(8px,env(safe-area-inset-top)) 8px 12px;overflow-x:hidden}
   #finalCardOverlay .final-card-panel{width:100%;min-width:0;margin:0;padding:14px 10px;border-radius:16px;overflow:hidden}
   #finalCardOverlay .final-card-head{position:static;width:auto;grid-template-columns:1fr;margin:0 0 12px;padding-bottom:12px;gap:10px}
@@ -794,7 +794,7 @@ body.gsc-setup-open:not(.gsc-history-open):has(#setupOverlay.visible) #setupOver
   }
 }
 </style>
-<style id="gscg-visible-version-v407-r31">
+<style id="gscg-visible-version-v407-r32">
 .official-round-header{position:relative}
 .app-version-id,.setup-version-id{display:none}
 .mandatory-update-card{display:flex;flex-direction:column;align-items:center}
@@ -860,8 +860,8 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 .round-utility-bar .gsc-live-launch,.round-utility-bar .golf-rules-launch,.round-utility-bar .ai-universal-launch,.round-utility-bar .skins-launch,.round-utility-bar .live-support-link,.round-utility-bar #ownerShare24h{position:static!important;top:auto!important;right:auto!important;z-index:auto!important;display:inline-flex;align-items:center;justify-content:center;min-width:58px;min-height:26px;padding:0 10px;font-size:9px;line-height:1;white-space:nowrap}
 @media(max-width:800px){.round-utility-bar{justify-content:space-between;gap:5px;min-height:36px;padding:4px}.round-utility-bar .gsc-live-launch,.round-utility-bar .golf-rules-launch,.round-utility-bar .ai-universal-launch,.round-utility-bar .skins-launch,.round-utility-bar .live-support-link,.round-utility-bar #ownerShare24h{flex:1 1 0;min-width:0;min-height:28px;padding:0 5px;font-size:8px}}
 </style>
-<style id="gscg-green-outline-homogeneity-v407-r31">
-/* R31: todos los controles verdes usan sólo contorno; únicamente los botones OK conservan relleno. */
+<style id="gscg-green-outline-homogeneity-v407-r32">
+/* R32: todos los controles verdes usan sólo contorno; únicamente los botones OK conservan relleno. */
 button.gsc-green-outline-control{
   border-color:var(--lime)!important;
   background:#050505!important;
@@ -1073,7 +1073,7 @@ html,body,.app,.card-shell{background:#000!important}
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R31</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R32</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 <script src="./guest-access.js"></script>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>

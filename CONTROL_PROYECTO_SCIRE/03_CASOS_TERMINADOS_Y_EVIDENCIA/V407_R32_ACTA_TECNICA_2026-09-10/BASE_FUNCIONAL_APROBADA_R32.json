@@ -1,0 +1,19 @@
+{
+  "schema": "epg-caddy-functional-baseline/v1",
+  "acta": "ATV-R32-20260910-01",
+  "version": "V407-R32",
+  "remoteCommitReviewed": "a4b1cec9e1380d8a5b72080477cad97080ab0cce",
+  "deploymentReviewed": "dpl_G97hXzJbV9duYHLn8SGREJWRgUHq",
+  "deploymentUrl": "https://golf-sc-gt-dypjyc3wg-epgcaddys-projects.vercel.app",
+  "stableAlias": "https://golf-sc-gt-lab.vercel.app",
+  "deploymentState": "READY",
+  "scope": "Only individual matrix elements marked PASS in the act are frozen.",
+  "integralStableVersion": false,
+  "productionModified": false,
+  "productionVersionObserved": "V407-R28",
+  "productionCommitObserved": "7816978be8aa23aba20f4c066fce30f6287ff134",
+  "regressionCommand": "node audit-project.mjs",
+  "automaticPackagesPassed": 139,
+  "knownPhysicalFailure": "R31 to R32 required a second update notice and second tap; first-tap update is not frozen and is FAIL.",
+  "prohibition": "Any regression in a PASS element rejects a later candidate before owner review."
+}

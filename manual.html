@@ -156,7 +156,8 @@
   <div class="page-zoom" id="pageZoom" aria-hidden="true"><button type="button" id="closeZoom" aria-label="Cerrar ampliación">×</button><img id="zoomImage" alt="Página ampliada del manual"></div>
 
   <script src="/manual-search.js"></script>
-  <script>
+<script src="./approved-voice.js"></script>
+<script>
     const pages=[
       {number:"00",label:"PORTADA",title:"MANUAL DE FUNCIONES Y APLICACIONES"},
       {number:"01",label:"01",title:"CONFIGURA LA RONDA"},{number:"02",label:"02",title:"REGISTRA JUGADORES"},
@@ -374,7 +375,7 @@
     let speaking=false;
     const stopSpeech=()=>{speechSynthesis.cancel();speaking=false;playPage.textContent="PLAY"};
     const narration=()=>{const item=pages[current],detail=manualDetails.find(value=>value.number===item.number);return detail?[item.title,detail.subtitle,...(detail.steps||[]).flat(),detail.remember,detail.commonError,detail.recovery,detail.glossary].filter(Boolean).join(". "):`Página ${item.number}. ${item.title}. Amplía la hoja para revisar cada indicación.`};
-    const play=()=>{stopSpeech();const utterance=new SpeechSynthesisUtterance(narration());utterance.lang="es-419";utterance.rate=Number(speechRate.value)||.9;const voices=speechSynthesis.getVoices(),voice=voices.find(value=>/^es-(419|MX|GT|US)/i.test(value.lang))||voices.find(value=>/^es/i.test(value.lang));if(voice)utterance.voice=voice;utterance.onend=utterance.onerror=stopSpeech;speaking=true;playPage.textContent="STOP";speechSynthesis.speak(utterance)};
+    const play=()=>{stopSpeech();const utterance=new SpeechSynthesisUtterance(narration());utterance.lang="es-419";utterance.rate=Number(speechRate.value)||.9;const voice=window.GSCApprovedVoice?.select?.();if(voice)utterance.voice=voice;utterance.onend=utterance.onerror=stopSpeech;speaking=true;playPage.textContent="STOP";speechSynthesis.speak(utterance)};
     playPage.addEventListener("click",()=>speaking?stopSpeech():play());speechRate.addEventListener("change",()=>{if(speaking)play()});
     previous.addEventListener("click",()=>{stopSpeech();go(current-1)});
     next.addEventListener("click",()=>{stopSpeech();go(current+1)});

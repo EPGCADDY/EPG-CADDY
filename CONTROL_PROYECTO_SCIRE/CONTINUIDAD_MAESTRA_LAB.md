@@ -1,5 +1,13 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## V407-R33 · corrección raíz de actualización, turnos y profundidad de voz · 10 de septiembre de 2026
+
+- Base aprobada de fuente: R32; candidato: R33 exclusivamente en LAB.
+- ACTUALIZAR ya no navega después de un mensaje sin confirmar: espera ACK del Service Worker luego de validar y promover el candidato; ante error conserva versión y datos.
+- AI UNIVERSAL usa `semantic_vad` en conversación y deja de reducir a la mitad la respuesta por entrar mediante voz.
+- Manual y candidato comparten un selector persistente de la voz española/latinoamericana elegida en el dispositivo. Las rutas Realtime y TTS cambian a política femenina; la identidad auditiva física exacta sigue pendiente y no se declara PASS.
+- Prueba contractual nueva: `test-v407-r33-root-voice-update.mjs`. Producción/Maestro no se modifica.
+
 ## Relevo V407-R24C recuperación R8 · 9 de septiembre de 2026 · 19:44 Guatemala
 
 - MAIN permanece intacta en `5e45b264da056ed9c4ee5ee61d5e4e05dfc69636`.

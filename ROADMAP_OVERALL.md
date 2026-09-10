@@ -837,3 +837,48 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - El service worker sólo promueve R32 después del toque del propietario en `ACTUALIZAR`; instalar, activar o publicar el deployment no cambia la versión visible automáticamente.
 - En móvil, las modalidades y funciones quedan en dos columnas, sin eliminar opciones.
 - Candados: `test-v407-r32-owner-only-update.mjs` y `test-v407-r32-two-column-modalities.mjs`. Alcance exclusivo LAB; Maestro/Producción permanece R28 intacto.
+# ATV-R32-20260910-01 - expediente técnico integral (10 septiembre 2026)
+
+- Se incorpora `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/`, con Acta Técnica en Markdown/PDF, matriz individual, evidencia automatizada y física aportada, base funcional aprobada, candado de voz femenina, paquete recuperable, rollback y huellas SHA-256.
+- El expediente no declara PASS integral: documenta como FAIL que R31→R32 necesitó dos avisos/dos toques, además de los recorridos físicos no probados y bloqueos reales.
+- LAB verificado: V407-R32, commit `a4b1cec9e1380d8a5b72080477cad97080ab0cce`, deployment promovido `dpl_G97hXzJbV9duYHLn8SGREJWRgUHq`, READY/production target. Maestro permanece en R28, commit `7816978be8aa23aba20f4c066fce30f6287ff134`.
+# Investigación de causa raíz R32 - micrófono, ACTUALIZAR y AI UNIVERSAL - 10 de septiembre de 2026
+
+- `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INVESTIGACION_RAIZ_MICROFONO_ACTUALIZACION_Y_AI_UNIVERSAL_R32.md` y su PDF documentan la comparación técnica y la arquitectura recomendada: commit explícito para órdenes, `semantic_vad` para conversación, profundidad independiente del canal, una sola voz femenina y actualización transaccional con ACK, `controllerchange` y verificación de release/hash.
+- `scripts/generate-root-research-pdf.py` genera el PDF formal desde el Markdown. La investigación no declara prueba física ni modifica Maestro/Producción.
+
+# V407-R33 LAB - protocolo transaccional y voz/conversación separadas - 10 de septiembre de 2026
+
+- Evidencia y candados incluidos: `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INVESTIGACION_RAIZ_MICROFONO_ACTUALIZACION_Y_AI_UNIVERSAL_R32.pdf`, `Intocables/MICROFONO_APROBADO.lock.json`, `test-v356-voice-only-cedar-quality.mjs` y `test-v407-r33-pulte-official-handicap.mjs`.
+
+- `index-grupal.html` queda como base R32; `candidate-index-grupal.html` avanza a R33.
+- `service-worker.js` prepara un caché promovido separado, valida el release, escribe el marcador sólo al final y confirma `PROMOTION_READY` por `MessageChannel`; el cliente recarga únicamente después del ACK.
+- `approved-voice.js` comparte y persiste la misma selección de voz del Manual; `manual.html`, candidato y política TTS eliminan la orden masculina. `api/universal-ai.js` conserva la misma profundidad para voz y texto.
+- `test-v407-r33-root-voice-update.mjs` prueba el contrato automático. Sigue pendiente la puerta física iPhone; Maestro permanece intacto.
+
+## Expediente técnico integral V407-R32 — índice persistente
+
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/ACTA_TECNICA_DE_VERIFICACION_Y_CONGELAMIENTO_DE_VERSION_EPG_CADDY.md`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/ACTA_TECNICA_DE_VERIFICACION_Y_CONGELAMIENTO_DE_VERSION_EPG_CADDY.pdf`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/BASE_FUNCIONAL_APROBADA_R32.json`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/EPG_CADDY_R32_TREE_RECUPERABLE.tar.gz`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/PROCEDIMIENTO_RESTAURACION_Y_ROLLBACK.md`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/SHA256SUMS.txt`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/VOZ_FEMENINA_MANDATORIA.lock.json`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/automatizada/audit-project-r31.log`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/automatizada/audit-project-r32-full.log`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/automatizada/vercel-build-r32.log`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3371_R29_ACTUALIZADO.jpeg`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3372_ACCESO_PROPIETARIO.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3375_R30_REGISTRO.jpeg`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3376_R28_ACTUALIZAR.jpeg`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3377_R30_TARJETA_CORTADA.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3381_PROMOCION_VERCEL.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3382_R31_ENTRO_ACTUALIZADO.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3383_R31_MODALIDADES_UNA_COLUMNA.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3384_MANUAL_VOZ_FEMENINA_09X.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3385_R31_ANTES_DE_R32.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3386_R32_ACTUALIZADO_CONSERVA_RONDA.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3387_R31_ESTADO_VISIBLE_SIN_URL.png`
+
+- `scripts/generate-technical-act-r32.py`

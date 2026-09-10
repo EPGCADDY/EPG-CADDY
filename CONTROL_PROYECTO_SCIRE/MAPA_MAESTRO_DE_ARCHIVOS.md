@@ -1237,3 +1237,8 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 - `api/_lib/app-access.js`: canje atómico consumible una sola vez.
 - `api/app-access.js`: rechazo explícito del segundo uso.
 - `test-r18-owner-guest-24h-access.mjs`: prueba positiva del primer dispositivo y negativa del segundo.
+# Expediente ATV-R32-20260910-01
+
+- Ruta: `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/`.
+- Contiene acta Markdown/PDF, matriz de verificación, evidencias, congelamiento parcial, candado de voz, paquete recuperable, rollback y SHA-256.
+- Generador: `scripts/generate-technical-act-r32.py`.

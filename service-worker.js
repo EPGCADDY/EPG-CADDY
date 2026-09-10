@@ -2,13 +2,17 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r32-manual-candidate-two-columns`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-v407-r33-root-voice-update`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved`;
-const RELEASE="V407-R32-MANUAL-CANDIDATE-TWO-COLUMNS-20260910";
+const UPDATE_META_CACHE_NAME=`${CACHE_NAME}-update-meta`;
+const PROMOTION_MARKER="/__gscg_promoted_release__";
+const RELEASE="V407-R33-ROOT-VOICE-UPDATE-20260910";
+const PROMOTED_CACHE_NAME=`${CACHE_NAME}-promoted-v407-r33-root-voice-update-20260910`;
 const OFFLINE_ENTRY="/index-grupal.html";
 const CANDIDATE_ENTRY="/candidate-index-grupal.html";
 const SHELL=[
   CANDIDATE_ENTRY,
+  "/approved-voice.js",
   "/manifest.webmanifest",
   "/gsc-design-system.css",
   "/manual.html",
@@ -50,7 +54,7 @@ const SHELL=[
 
 async function refreshShell(){
   const cache=await caches.open(ACTIVE_CACHE_NAME);
-  await Promise.all(SHELL.map(async url=>{try{const response=await fetch(url,{cache:"reload"});if(response.ok)await cache.put(url,response)}catch{}}));
+  await Promise.all(SHELL.map(async url=>{const response=await fetch(url,{cache:"reload"});if(!response.ok)throw new Error(`SHELL_FETCH_${response.status}_${url}`);await cache.put(url,response)}));
 }
 
 async function copyCache(sourceName,targetName){
@@ -73,18 +77,47 @@ async function ensureApprovedShell(){
   if(baseline.ok)await approved.put(OFFLINE_ENTRY,baseline);
 }
 
+async function promotedRelease(){
+  const meta=await caches.open(UPDATE_META_CACHE_NAME),marker=await meta.match(PROMOTION_MARKER);
+  return marker?String(await marker.text()):"";
+}
+
+async function selectedApprovedCacheName(){return await promotedRelease()===RELEASE?PROMOTED_CACHE_NAME:APPROVED_CACHE_NAME}
+
 async function promoteCandidate(){
-  await copyCache(ACTIVE_CACHE_NAME,APPROVED_CACHE_NAME);
-  const active=await caches.open(ACTIVE_CACHE_NAME),approved=await caches.open(APPROVED_CACHE_NAME);
+  const active=await caches.open(ACTIVE_CACHE_NAME);
   const candidate=await active.match(CANDIDATE_ENTRY)||await fetch(CANDIDATE_ENTRY,{cache:"no-store"});
-  if(candidate?.ok)await approved.put(OFFLINE_ENTRY,candidate);
+  if(!candidate?.ok)throw new Error("CANDIDATE_UNAVAILABLE");
+  const html=await candidate.clone().text();
+  if(!html.includes(`<meta name="gscg-release" content="${RELEASE}">`))throw new Error("CANDIDATE_RELEASE_MISMATCH");
+  await caches.delete(PROMOTED_CACHE_NAME);
+  const promoted=await caches.open(PROMOTED_CACHE_NAME);
+  for(const request of await active.keys()){
+    if(new URL(request.url).pathname===CANDIDATE_ENTRY)continue;
+    const response=await active.match(request);if(response)await promoted.put(request,response);
+  }
+  await promoted.put(OFFLINE_ENTRY,candidate);
+  const stored=await promoted.match(OFFLINE_ENTRY),storedHtml=stored?await stored.text():"";
+  if(!storedHtml.includes(`<meta name="gscg-release" content="${RELEASE}">`))throw new Error("PROMOTED_RELEASE_MISMATCH");
+  const meta=await caches.open(UPDATE_META_CACHE_NAME);
+  await meta.put(PROMOTION_MARKER,new Response(RELEASE,{headers:{"content-type":"text/plain","cache-control":"no-store"}}));
+  return{release:RELEASE,cache:PROMOTED_CACHE_NAME};
 }
 
 self.addEventListener("install",event=>event.waitUntil(refreshShell().then(()=>self.skipWaiting())));
 self.addEventListener("activate",event=>event.waitUntil(ensureApprovedShell().then(()=>self.clients.claim())));
 self.addEventListener("message",event=>{
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
-  if(event.data?.type==="PROMOTE_BUILD"&&event.data?.build===RELEASE)event.waitUntil(promoteCandidate());
+  if(event.data?.type==="PROMOTE_BUILD"){
+    const port=event.ports?.[0],nonce=String(event.data?.nonce||"");
+    event.waitUntil((async()=>{
+      try{
+        if(event.data?.build!==RELEASE)throw new Error("BUILD_MISMATCH");
+        await promoteCandidate();
+        port?.postMessage({type:"PROMOTION_READY",ok:true,build:RELEASE,nonce});
+      }catch(error){port?.postMessage({type:"PROMOTION_FAILED",ok:false,build:RELEASE,nonce,error:String(error?.message||"PROMOTION_FAILED")})}
+    })());
+  }
 });
 
 async function networkFirst(request){
@@ -99,7 +132,8 @@ async function networkFirst(request){
 }
 
 async function approvedNavigationWithManualUpdate(request){
-  const approved=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});
+  const cacheName=await selectedApprovedCacheName();
+  const approved=await caches.match(OFFLINE_ENTRY,{cacheName});
   if(!approved)return networkFirst(request);
   const html=await approved.text();
   const recoveryStyle='<style id="gsc-update-recovery">body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:block!important}body.gsc-setup-open:has(#setupOverlay.visible) #setupOverlay{padding-top:max(82px,calc(env(safe-area-inset-top) + 70px))}</style>';
@@ -117,11 +151,11 @@ self.addEventListener("fetch",event=>{
   if(url.searchParams.has("__gscg_build_check")){event.respondWith((async()=>{const cache=await caches.open(ACTIVE_CACHE_NAME);return await cache.match(CANDIDATE_ENTRY)||fetch(CANDIDATE_ENTRY,{cache:"no-store"})})());return}
   if(request.mode==="navigate"){
     event.respondWith((async()=>{
-      if(url.searchParams.get("app_version")===RELEASE){await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}
+      if(url.searchParams.get("app_version")===RELEASE){await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:PROMOTED_CACHE_NAME})||networkFirst(request)}
       await ensureApprovedShell();
       return await approvedNavigationWithManualUpdate(request);
     })());
     return;
   }
-  if(SHELL.includes(url.pathname))event.respondWith((async()=>{await ensureApprovedShell();return await caches.match(url.pathname,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)})());
+  if(SHELL.includes(url.pathname))event.respondWith((async()=>{await ensureApprovedShell();const cacheName=await selectedApprovedCacheName();return await caches.match(url.pathname,{cacheName})||networkFirst(request)})());
 });

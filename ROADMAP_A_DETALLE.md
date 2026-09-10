@@ -903,3 +903,58 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Media móvil: `.game-mode-columns{grid-template-columns:repeat(2,minmax(0,1fr))}`, preservando las diez funciones: Medal Play Normal, Match Play, Four Ball, Stableford, Skins, Wolf, Vegas, Universales, Score Card-Práctica y Comparte Live.
 - Pruebas dirigidas PASS: `test-v407-r32-owner-only-update.mjs`, `test-v407-r32-two-column-modalities.mjs`, Score Card móvil R31 y contornos verdes.
 - Pendiente antes de luz verde: deployment LAB READY y comprobación remota exacta. Maestro/Producción R28 no se toca.
+# ATV-R32-20260910-01 - acta, congelamiento parcial y regresión
+
+- `scripts/generate-technical-act-r32.py`: generador reproducible del acta Markdown/PDF y su declaración final cuantificada.
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/ACTA_TECNICA_DE_VERIFICACION_Y_CONGELAMIENTO_DE_VERSION_EPG_CADDY.md`: expediente fuente.
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/ACTA_TECNICA_DE_VERIFICACION_Y_CONGELAMIENTO_DE_VERSION_EPG_CADDY.pdf`: expediente formal renderizado.
+- `BASE_FUNCIONAL_APROBADA_R32.json`: elementos con PASS y referencia inmutable; no representa aprobación integral.
+- `VOZ_FEMENINA_MANDATORIA.lock.json`: requisito intocable de la voz femenina del Manual; queda BLOQUEADO hasta demostrar identidad y cobertura total.
+- `PROCEDIMIENTO_RESTAURACION_Y_ROLLBACK.md`: restauración exacta del árbol y rollback del despliegue.
+- `EPG_CADDY_R32_TREE_RECUPERABLE.tar.gz`: paquete recuperable del commit remoto R32.
+- `SHA256SUMS.txt`: huellas del acta, paquete y evidencias.
+- Evidencia física: se atribuye exclusivamente a capturas aportadas por el propietario desde iPhone; Codex no declara control físico del dispositivo.
+- FAIL permanente registrado: la transición R31→R32 necesitó un segundo aviso y un segundo toque. El alias estable sí quedó asociado a `dpl_G97hXzJbV9duYHLn8SGREJWRgUHq`, READY y commit `a4b1cec9e1380d8a5b72080477cad97080ab0cce`.
+# Investigación técnica R32 - causa raíz de voz y actualización - 10 de septiembre de 2026
+
+- `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INVESTIGACION_RAIZ_MICROFONO_ACTUALIZACION_Y_AI_UNIVERSAL_R32.md`: expediente de investigación con hallazgos reproducibles del código, comparación OpenAI/Web Speech/Deepgram/Google/Azure/Apple, decisión técnica, banco de pruebas y limitaciones honestas.
+- `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INVESTIGACION_RAIZ_MICROFONO_ACTUALIZACION_Y_AI_UNIVERSAL_R32.pdf`: versión formal para consulta y archivo.
+- `scripts/generate-root-research-pdf.py`: generador determinista del PDF. No altera `index-grupal.html`, `candidate-index-grupal.html`, `service-worker.js` ni Maestro/Producción.
+
+# V407-R33 - primera implementación de causa raíz en LAB - 10 de septiembre de 2026
+
+- Evidencia y candados incluidos: `CONTROL_PROYECTO_SCIRE/02_DOCUMENTOS_IMPORTANTES_PENDIENTES_DE_UTILIZAR/INVESTIGACION_RAIZ_MICROFONO_ACTUALIZACION_Y_AI_UNIVERSAL_R32.pdf`, `Intocables/MICROFONO_APROBADO.lock.json`, `test-v356-voice-only-cedar-quality.mjs` y `test-v407-r33-pulte-official-handicap.mjs`.
+
+- `index-grupal.html`: materializa R32 como base aprobada de fuente.
+- `candidate-index-grupal.html`: R33; conversación con `semantic_vad`, profundidad no recortada por canal, voz femenina y ACTUALIZAR que espera ACK verificable antes de recargar.
+- `service-worker.js`: staging en caché versionado, verificación de meta release, marcador atómico, respuesta `PROMOTION_READY`/`PROMOTION_FAILED` y compatibilidad de transición desde cliente R32.
+- `approved-voice.js`: selector único del mismo `voiceURI` que utiliza el Manual y persistencia local de su identidad.
+- `manual.html`: reutiliza el selector compartido sin cambiar velocidad 0.9x ni contenido.
+- `api/universal-ai.js`: elimina la división de tokens para voz y la regla fija de tres a seis oraciones.
+- `api/voice-speech.js`: elimina la configuración masculina y usa política femenina latinoamericana.
+- `test-v407-r33-root-voice-update.mjs`, `test-v407-r32-owner-only-update.mjs` y `audit-project.mjs`: contrato R32 a R33 y regresión permanente. La prueba física sigue pendiente y Maestro no se toca.
+
+## Expediente técnico integral V407-R32 — índice persistente
+
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/ACTA_TECNICA_DE_VERIFICACION_Y_CONGELAMIENTO_DE_VERSION_EPG_CADDY.md`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/ACTA_TECNICA_DE_VERIFICACION_Y_CONGELAMIENTO_DE_VERSION_EPG_CADDY.pdf`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/BASE_FUNCIONAL_APROBADA_R32.json`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/EPG_CADDY_R32_TREE_RECUPERABLE.tar.gz`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/PROCEDIMIENTO_RESTAURACION_Y_ROLLBACK.md`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/SHA256SUMS.txt`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/VOZ_FEMENINA_MANDATORIA.lock.json`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/automatizada/audit-project-r31.log`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/automatizada/audit-project-r32-full.log`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/automatizada/vercel-build-r32.log`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3371_R29_ACTUALIZADO.jpeg`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3372_ACCESO_PROPIETARIO.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3375_R30_REGISTRO.jpeg`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3376_R28_ACTUALIZAR.jpeg`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3377_R30_TARJETA_CORTADA.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3381_PROMOCION_VERCEL.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3382_R31_ENTRO_ACTUALIZADO.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3383_R31_MODALIDADES_UNA_COLUMNA.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3384_MANUAL_VOZ_FEMENINA_09X.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3385_R31_ANTES_DE_R32.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3386_R32_ACTUALIZADO_CONSERVA_RONDA.png`
+- `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3387_R31_ESTADO_VISIBLE_SIN_URL.png`

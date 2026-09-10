@@ -1,6 +1,9 @@
 {
   "schema": "gscg-microphone-lock/v1",
-  "version": "V406-R23",
+  "version": "V407-R33-CANDIDATE",
+  "inheritedPhysicalBase": "V378",
+  "candidatePhysicalStatus": "PENDIENTE",
+  "authorizedChange": "2026-09-10: el propietario ordenó eliminar el recorte de profundidad de AI Universal por voz; voz, parsers, sensibilidad y transporte V378 permanecen preservados",
   "approvedBehavior": [
     "registro_de_jugadores_por_voz",
     "score_de_un_hoyo_por_voz",
@@ -15,7 +18,7 @@
     "test-v336-microphone-transport.mjs": "cfc36abd5f743726a435ff13ef9eddefc567b9e2a6a10488c096b1bff5852a37",
     "test-v354-voice-fallback.mjs": "41d3a14dacaf183e321ce04b61e86511b5d247582785ba966c90b5732282fce2",
     "test-v355-ios-audio-dictation.mjs": "aa528474beaa42acd913dfa56b5c59f8cf0616187a5c8430d34ac338764a54a5",
-    "test-v356-voice-only-cedar-quality.mjs": "d2d03663121cb0d84c53db243d17c055315581a189a1a69de0302eb29e394643",
+    "test-v356-voice-only-cedar-quality.mjs": "eb52fabe4b74ee96a490d414dd3ccba2b8a92d3ee260d2c9043d7b9de6075f4e",
     "test-v357-ios-voice-transport-recovery.mjs": "d89aa29ccf12b482311d5c5701790d91f1241eb6fde5935ab1c60bd16ba59514",
     "test-v358-ios-score-universal-physical-recovery.mjs": "6a787ec011ff5459518f1ab9f3d32d79dbd10de4365a3e2f3cffbb14d45e7618",
     "test-v359-ios-score-parser-recovery.mjs": "a9ef038dd8ba49e31278c1e6e096c9f8ddc9eccdcacd1afe90c51af225fc9515",
