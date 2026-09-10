@@ -813,3 +813,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Disparo de transporte R29: push documental coordinado después de instalar el workflow temporal.
 - Estado de transporte: preview R29 READY; alias estable LAB conservado en R28 hasta una promoción autenticada.
 - Sello posterior al retiro: inventario regenerado con 452 fuentes activas.
+- Corrección final R29: Stableford conserva símbolos GROSS, pero queda explícitamente excluido de la fila HDCP; General, Universales y Four Ball mantienen índices por marcas.

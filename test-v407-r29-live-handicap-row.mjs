@@ -9,6 +9,8 @@ const app=fs.readFileSync("index-grupal.html","utf8");
 
 assert.match(view,/hdcpRow=.*?<tr class="live-hdcp-row" style="--live-tee-color:\$\{teeColor\(player\.tee\)\}"><td>HDCP<\/td>/);
 assert.match(view,/handicapStroke\(player\.handicap,si\)/);
+assert.match(view,/usesHandicap=snapshot\?\.mode!=="stableford"/);
+assert.match(view,/hdcpRow=usesHandicap\?/);
 assert.match(view,/gives-stroke/);
 assert.match(view,/has-stroke/);
 assert.match(view,/function teeColor\(tee\)/);
