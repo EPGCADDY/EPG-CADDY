@@ -867,6 +867,11 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `test-v365-active-round-empty-recovery.mjs`, `test-v406-r23-visible-version.mjs`, `test-v407-r9-manual-update.mjs`, `test-v407-r25-round-controls.mjs`, `test-v407-r32-owner-only-update.mjs`, `test-v407-r32-two-column-modalities.mjs` y `test-v407-r33-root-voice-update.mjs` conservan sus controles históricos y apuntan al contrato sucesor R34; `audit-project.mjs` incorpora el gate nuevo.
 - `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se regeneran y sellan con las 467 fuentes desplegables de R34; el expediente histórico pesado permanece fuera del artefacto operativo.
 
+# V407-R34-C1 LAB · corrección del gate de cabeceras · 10 de septiembre de 2026
+
+- El primer build remoto rechazó correctamente R34 porque el test de cabeceras dependía de espacios de formato JSON. `test-v407-r34-hardened-update-microphone.mjs` ahora analiza `vercel.json` estructuralmente y exige los valores exactos de `Cache-Control` para manifiesto y candidato.
+- No cambia la aplicación, el micrófono ni el protocolo de actualización. Se conserva el rechazo preventivo del Preview fallido y Maestro/Producción permanece intacto.
+
 ## Expediente técnico integral V407-R32 — índice persistente
 
 - `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/ACTA_TECNICA_DE_VERIFICACION_Y_CONGELAMIENTO_DE_VERSION_EPG_CADDY.md`

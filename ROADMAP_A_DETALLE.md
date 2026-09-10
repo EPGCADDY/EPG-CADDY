@@ -947,6 +947,12 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Estado: implementación exclusivamente LAB. Automatización dirigida PASS; auditoría integral, navegador público e iPhone físico todavía pendientes. Maestro y Producción no se modifican.
 - Inventarios coordinados: `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`; el árbol desplegable queda sellado con 467 fuentes y el expediente histórico pesado permanece fuera del artefacto operativo.
 
+# V407-R34-C1 · gate de cabeceras independiente del formato JSON · 10 de septiembre de 2026
+
+- Resultado reproducible del primer build: las cabeceras anti-caché eran correctas, pero la aserción exigía espacios concretos de serialización y produjo un falso negativo.
+- Corrección: `test-v407-r34-hardened-update-microphone.mjs` carga `vercel.json` como objeto, localiza cada ruta y compara exactamente el valor de `Cache-Control`.
+- Alcance: sólo prueba y trazabilidad; cero cambio funcional. Preview fallido no promovido, enlace estable LAB sin alteración y Maestro/Producción intacto.
+
 ## Expediente técnico integral V407-R32 — índice persistente
 
 - `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/ACTA_TECNICA_DE_VERIFICACION_Y_CONGELAMIENTO_DE_VERSION_EPG_CADDY.md`
