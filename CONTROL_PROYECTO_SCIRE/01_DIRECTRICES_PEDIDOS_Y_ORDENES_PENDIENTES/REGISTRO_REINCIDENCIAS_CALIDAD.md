@@ -282,3 +282,10 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa raíz: ambas intenciones compartían `clearAllRegistrationPlayers()` y `OK` dependía de eventos `input/change` del teclado.
 - Control permanente R25: acciones separadas, confirmaciones explícitas y lectura directa del DOM antes de `OK`; se añaden RESET y hándicap entero firmado.
 - Evidencia: `test-v407-r25-round-controls.mjs` y auditoría integral. Estado: candidato LAB; Maestro R24D intacto.
+
+## RC-100 · OK ACEPTABA EL CAMPO PERO RECHAZABA EL HÁNDICAP AL FINALIZAR · 10 SEPTIEMBRE 2026
+
+- Defecto físico: Main R25 mostraba el registro válido, pero `OK` no avanzaba cuando el hándicap estaba fuera del límite heredado 0–54.
+- Causa raíz: formulario y sincronización ya aceptaban enteros firmados, pero dos cierres posteriores conservaban `hcp<0||hcp>54`.
+- Control permanente R26: ambas rutas usan `Number.isSafeInteger(hcp)`; prueba negativa prohíbe reintroducir el límite.
+- Estado: CORREGIDO EN FUENTE; pendiente comprobación física en iPhone.

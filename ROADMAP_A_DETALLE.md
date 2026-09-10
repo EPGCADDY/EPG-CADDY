@@ -844,3 +844,9 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Rollback: commit Maestro R24D `841a8fc`; Maestro/Producción no se modifica durante la revisión LAB.
 - `.github/workflows/promote-r24d-lab.yml`: eliminado por ser un transporte temporal fallido y ajeno al candidato R25.
 - `test-v287-stableford-back-controls-clear.mjs`: actualizado para exigir la coexistencia ordenada de `BORRAR SCORES` y `BORRAR TODO`, manteniendo ATRÁS y + JUGADOR.
+
+# V407-R26 · OK sin límite heredado 0–54 · 10 de septiembre de 2026
+
+- `index-grupal.html`: las dos rutas posteriores al toque de `#setupOk` validan con `Number.isSafeInteger(hcp)`; ya no rechazan cero ni hándicaps negativos.
+- `service-worker.js`: candidato manual `V407-R26-OK-HOTFIX-20260910` y caché `v407-r26-ok-hotfix`.
+- Pruebas versionadas coordinadas a R26; `test-v407-r25-round-controls.mjs` prohíbe expresamente la condición residual `hcp<0||hcp>54`.

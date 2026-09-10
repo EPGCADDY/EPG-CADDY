@@ -783,3 +783,9 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Candado: `test-v407-r25-round-controls.mjs`. Publicación únicamente en LAB; Maestro R24D permanece intacto.
 - `.github/workflows/promote-r24d-lab.yml`: retirado el transporte temporal fallido de R24D; R25 usa el despliegue normal de la rama LAB.
 - Compatibilidad heredada: `test-v287-stableford-back-controls-clear.mjs` reconoce la nueva secuencia ATRÁS → BORRAR SCORES → BORRAR TODO → + JUGADOR sin debilitar los candados previos.
+
+# V407-R26 · hotfix decisivo de OK con hándicap firmado · 10 de septiembre de 2026
+
+- Se eliminan las dos validaciones residuales `hcp<0||hcp>54` de `finalizeSetupDictation()` y `requestSetupFinalize()`; `OK` acepta el mismo rango entero firmado que el formulario.
+- Firma visible, release y caché avanzan coordinadamente a R26 para provocar `ACTUALIZAR` manual sin instalación remota.
+- Los bancos de actualización y `test-v407-r25-round-controls.mjs` rechazan la reincidencia del límite antiguo.

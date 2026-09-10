@@ -7,19 +7,19 @@ const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf
 
 assert.match(html,/V365-ACTIVE-ROUND-RECOVERY/);
 assert.match(worker,/v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery/);
-assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v407-r25-controls`/);
+assert.match(worker,/const ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-v407-r26-ok-hotfix`/);
 assert.match(worker,/const APPROVED_CACHE_NAME=`\$\{CACHE_NAME\}-approved`/);
 assert.match(worker,/url\.searchParams\.has\("__gscg_build_check"\)/,"la consulta de versión debe ir a red sin sustituir la versión aprobada");
 assert.match(worker,/url\.searchParams\.get\("app_version"\)===RELEASE/,"sólo el toque de ACTUALIZAR promueve el candidato");
 assert.match(worker,/await ensureApprovedShell\(\);\s*return await approvedNavigationWithManualUpdate\(request\)/,"una apertura normal conserva el shell aprobado y permite recuperar ACTUALIZAR manualmente");
 assert.match(html,/class="mandatory-update" id="mandatoryUpdate"/);
 assert.match(html,/id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO<\/span>/);
-assert.match(html,/class="update-version-id" id="appVersionId">V407 · R25<\/span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled/);
+assert.match(html,/class="update-version-id" id="appVersionId">V407 · R26<\/span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled/);
 assert.match(html,/\.mandatory-update\.available \.mandatory-update-card button\{[^}]*animation:gscUpdatePulse/);
 assert.match(html,/button\.disabled=false;button\.setAttribute\("aria-disabled","false"\)/);
 assert.doesNotMatch(html,/document\.querySelector\("main\.app"\)\?\.setAttribute\("inert"/);
 assert.match(html,/meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
-assert.match(html,/meta name="gscg-release" content="V407-R25-CONTROLS-20260910"/);
+assert.match(html,/meta name="gscg-release" content="V407-R26-OK-HOTFIX-20260910"/);
 assert.match(html,/function recoverInstalledAppScrolling\(\)/);
 assert.match(html,/window\.addEventListener\("pageshow",recoverInstalledAppScrolling\)/);
 assert.match(html,/\.overlay\{height:100dvh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom\}/);

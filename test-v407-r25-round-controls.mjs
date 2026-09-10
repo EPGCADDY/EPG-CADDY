@@ -17,5 +17,6 @@ assert.match(html,/function captureVisibleRegistrationValues\(\)[\s\S]*data-draf
 assert.match(html,/autocomplete="name"/);
 assert.match(html,/autocomplete="tel-national"/);
 for(const handicap of [-73,-3,-2,-1,0,54,73])assert.equal(registry.normalizeHandicap(handicap),handicap);
-assert.match(worker,/V407-R25-CONTROLS-20260910/);
+assert.match(worker,/V407-R26-OK-HOTFIX-20260910/);
+assert.doesNotMatch(html,/hcp<0\|\|hcp>54/);
 console.log("PASS V407 R25 · borrados separados, handicap entero firmado, reset de cronómetro y autocompletado iPhone");
