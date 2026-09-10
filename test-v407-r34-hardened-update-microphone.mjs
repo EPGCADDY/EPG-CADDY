@@ -4,7 +4,7 @@ import fs from "node:fs";
 
 const candidate=fs.readFileSync("candidate-index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
-const vercel=fs.readFileSync("vercel.json","utf8");
+const vercel=JSON.parse(fs.readFileSync("vercel.json","utf8"));
 const manifest=JSON.parse(fs.readFileSync("update-manifest.json","utf8"));
 const expectedHash=`sha256:${crypto.createHash("sha256").update(candidate).digest("hex")}`;
 
@@ -27,8 +27,9 @@ assert.match(candidate,/new URL\("\/update-manifest\.json",location\.origin\)/);
 assert.match(candidate,/showMandatoryUpdate\(published,manifest\)/,"La detección debe entregar el manifiesto verificado al botón");
 assert.doesNotMatch(worker,/searchParams\.get\("app_version"\).*promoteCandidate/s,"La URL no puede promover una versión sin el hash y ACK del propietario");
 assert.match(worker,/url\.pathname===MANIFEST_ENTRY\)\{event\.respondWith\(fetch\(request,\{cache:"no-store"\}\)\)/,"El manifiesto de una versión futura nunca debe quedar atrapado en el shell aprobado");
-assert.match(vercel,/"source": "\/update-manifest\.json"[\s\S]*?"no-cache, no-store, max-age=0, must-revalidate"/);
-assert.match(vercel,/"source": "\/candidate-index-grupal\.html"[\s\S]*?"no-cache, no-store, max-age=0, must-revalidate"/);
+const cacheHeaderFor=(source)=>vercel.headers.find((entry)=>entry.source===source)?.headers.find((header)=>header.key==="Cache-Control")?.value;
+assert.equal(cacheHeaderFor("/update-manifest.json"),"no-cache, no-store, max-age=0, must-revalidate");
+assert.equal(cacheHeaderFor("/candidate-index-grupal.html"),"no-cache, no-store, max-age=0, must-revalidate");
 
 const toggle=candidate.slice(candidate.indexOf("async function toggleVoice"),candidate.indexOf("function dateSetup"));
 assert.doesNotMatch(toggle,/if\(!listening&&gestureSafeBrowserVoicePreferred\(\)\)/,"iPhone no debe desviar siempre la voz fuera de Realtime");
