@@ -810,3 +810,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Maestro R28 permanece intacto hasta revisión física de LAB y autorización expresa.
 - Sello de publicación: ambos ROADMAPS acompañan conjuntamente el candidato R29.
 - `.github/workflows/promote-r29-lab.yml` transporta temporalmente el deployment READY exacto al alias estable LAB; nunca apunta a Maestro.
+- Disparo de transporte R29: push documental coordinado después de instalar el workflow temporal.

@@ -871,3 +871,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Candidato exclusivamente LAB. Maestro R28 no se modifica sin autorización posterior a la prueba física.
 - Sello de publicación: ambos ROADMAPS acompañan conjuntamente el candidato R29.
 - `.github/workflows/promote-r29-lab.yml`: promoción temporal del artefacto READY `golf-sc-gt-mh94nha57-epgcaddys-projects.vercel.app` exclusivamente al alias del proyecto LAB.
+- Disparo de transporte R29: push documental coordinado después de instalar el workflow temporal.
