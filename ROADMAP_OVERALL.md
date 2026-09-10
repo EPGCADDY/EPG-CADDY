@@ -809,3 +809,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Firma visible, Service Worker, caché y `test-v407-r29-live-handicap-row.mjs` avanzan coordinadamente a R29. Instalación exclusivamente mediante toque del propietario en `ACTUALIZAR`.
 - Maestro R28 permanece intacto hasta revisión física de LAB y autorización expresa.
 - Sello de publicación: ambos ROADMAPS acompañan conjuntamente el candidato R29.
+- `.github/workflows/promote-r29-lab.yml` transporta temporalmente el deployment READY exacto al alias estable LAB; nunca apunta a Maestro.
