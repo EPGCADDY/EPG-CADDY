@@ -870,5 +870,7 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `test-v407-r29-live-handicap-row.mjs` prueba índices, colores, tiros y las cinco formas con valores deportivos reales.
 - Candidato exclusivamente LAB. Maestro R28 no se modifica sin autorización posterior a la prueba física.
 - Sello de publicación: ambos ROADMAPS acompañan conjuntamente el candidato R29.
-- `.github/workflows/promote-r29-lab.yml`: promoción temporal del artefacto READY `golf-sc-gt-mh94nha57-epgcaddys-projects.vercel.app` exclusivamente al alias del proyecto LAB.
+- `.github/workflows/promote-r29-lab.yml`: retirado al comprobar cero ejecuciones de Actions; no alteró Maestro.
 - Disparo de transporte R29: push documental coordinado después de instalar el workflow temporal.
+- Estado de transporte: preview R29 READY; alias estable LAB conservado en R28 hasta una promoción autenticada.
+- Sello posterior al retiro: inventario regenerado con 452 fuentes activas.
