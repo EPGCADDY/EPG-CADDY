@@ -890,3 +890,14 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Criterio bloqueante: no se considera aprobado hasta prueba física en el iPhone instalado. La publicación funcional queda detenida hasta cerrar este circuito.
 - Incidencia detectada: el candado anterior verificaba motor/release/shell, pero no obligaba a que cambios funcionales posteriores avanzaran candidato + release; ese hueco debe convertirse en FAIL automático antes de futuras publicaciones.
 - Archivos de esta prueba: `scripts/apply-update-e.mjs`, `api/release.js`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`. MAIN y MAESTRO permanecen intactos.
+
+## V407-R47 LAB · cadena de publicación ACTUALIZAR endurecida · 11 de septiembre de 2026
+
+- Se mantiene `update-client-e.js` intacto; el motor ACTUALIZAR sigue protegido y fuera de alcance.
+- `scripts/update-chain-gate.mjs` corre primero en el build de Vercel y bloquea cualquier payload runtime distinto del autorizado.
+- `scripts/update-chain-lock.mjs` genera la huella reproducible del payload runtime y `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json` sella release, candidato y archivos entregables.
+- `vercel.json` se controla por contrato semántico (`update-chain-gate` primero) porque Vercel normaliza sus bytes durante build; no se excluye su obligación funcional.
+- Prueba negativa confirmada: un cambio runtime sin nueva release fue rechazado por `CHAIN_PAYLOAD_FINGERPRINT_STALE`.
+- R47 usa `V407-R47-DIRECT-UPDATE-CHAIN-20260911`; `api/release.js` y `scripts/apply-update-e.mjs` deben permanecer sincronizados.
+- Archivos de control R47: `scripts/update-chain-gate.mjs`, `scripts/update-chain-lock.mjs`, `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json`, `vercel.json`, `api/release.js`, `scripts/apply-update-e.mjs`, `.github/workflows/r47-update-chain-lock.yml` y `.github/workflows/r47-roadmap-register.yml`.
+- MAIN y MAESTRO permanecen intactos. La entrega final sólo será válida desde el botón ACTUALIZAR de la app instalada y con prueba física en iPhone conservando la ronda.
