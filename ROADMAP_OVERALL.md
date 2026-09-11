@@ -893,3 +893,5 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 ## V407-R45 · Tarjeta Digital al WhatsApp registrado · 11 de septiembre de 2026
 
 `ENVIAR TARJETA DIGITAL` usa el WhatsApp registrado. Tras cerrar la ronda, sincroniza el snapshot oficial, obtiene un token opaco propio de `card_records` y abre el chat del primer jugador con WhatsApp registrado con un enlace permanente de sólo lectura a la Tarjeta Digital Oficial. La lectura pública expone únicamente `officialSnapshot`, sin WhatsApp ni correo. Sin número o sin tarjeta central disponible, conserva el PNG nativo. LIVE permanece separado e intacto. Archivos: `api/card-share.js`, `card-share.html`, `index-grupal.html`, `middleware.js`, `test-r45-card-share.mjs`.
+
+R45 regresión actualizada: `test-v397-card-in-out-back-contract.mjs` valida que ENVIAR TARJETA DIGITAL use el WhatsApp registrado y conserve PNG como fallback.
