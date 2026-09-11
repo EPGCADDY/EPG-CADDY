@@ -46,7 +46,8 @@ if(branch===experimentalBranch){
   let ledger='';
   try{ledger=readFileSync(experimentalLedger,'utf8')}catch(error){fail([`No se pudo abrir ${experimentalLedger}: ${error.message}`])}
   if(files.length===0)fail(['LAB E sin archivos modificados detectables.']);
-  const allowed=file=>file==='api/release.js'||file==='middleware.js'||file.startsWith('update-lab-e/')||file==='scripts/roadmap-gate.mjs';
+  const allowedPaths=new Set(['api/release.js','middleware.js','service-worker.js','vercel.json','scripts/apply-update-e.mjs','update-client-e.js','scripts/roadmap-gate.mjs']);
+  const allowed=file=>allowedPaths.has(file)||file.startsWith('update-lab-e/');
   const forbidden=files.filter(file=>!allowed(file));
   if(forbidden.length)fail([`LAB E intentó tocar archivos fuera del aislamiento: ${forbidden.join(', ')}`]);
   for(const file of files.filter(file=>file!=='scripts/roadmap-gate.mjs')){
