@@ -1,4 +1,12 @@
 import {readFileSync,writeFileSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+
+const gate=(mode)=>{
+  const result=spawnSync(process.execPath,['scripts/update-intocable-gate.mjs',mode],{stdio:'inherit'});
+  if(result.status!==0)throw new Error(`ACTUALIZADOR_INTOCABLE_GATE_${mode.toUpperCase()}_FAIL`);
+};
+
+gate('source');
 
 const htmlPath='index-grupal.html';
 const shellPath='app-current-shell.html';
@@ -72,3 +80,5 @@ writeFileSync(shellPath,html);
 writeFileSync(htmlPath,loader);
 writeFileSync(swPath,retirementSw);
 console.log(`PINNED_UPDATE_BUILD PASS release=${release} shell=${shellPath} loader=${htmlPath} bytes=${Buffer.byteLength(html,'utf8')} sw=retirement-only`);
+
+gate('built');
