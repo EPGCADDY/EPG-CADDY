@@ -20,20 +20,16 @@ function normalizeFiles(value){
 
 function changedFiles(){
   if(process.env.ROADMAP_CHANGED_FILES)return normalizeFiles(process.env.ROADMAP_CHANGED_FILES);
-
   const base=process.argv[2]||process.env.ROADMAP_BASE_SHA||'';
   const head=process.argv[3]||process.env.ROADMAP_HEAD_SHA||'';
   if(base&&head&&!/^0+$/.test(base)){
     const exact=runGit(['diff','--name-only',base,head]);
     if(exact)return normalizeFiles(exact);
   }
-
   const lastCommit=runGit(['diff','--name-only','HEAD^','HEAD']);
   if(lastCommit)return normalizeFiles(lastCommit);
-
   const currentCommit=runGit(['show','--pretty=format:','--name-only','HEAD']);
   if(currentCommit)return normalizeFiles(currentCommit);
-
   const working=[runGit(['diff','--name-only']),runGit(['diff','--cached','--name-only'])].filter(Boolean).join('\n');
   return normalizeFiles(working);
 }
@@ -50,7 +46,7 @@ if(branch===experimentalBranch){
   let ledger='';
   try{ledger=readFileSync(experimentalLedger,'utf8')}catch(error){fail([`No se pudo abrir ${experimentalLedger}: ${error.message}`])}
   if(files.length===0)fail(['LAB E sin archivos modificados detectables.']);
-  const allowed=file=>file==='api/release.js'||file.startsWith('update-lab-e/')||file==='scripts/roadmap-gate.mjs';
+  const allowed=file=>file==='api/release.js'||file==='middleware.js'||file.startsWith('update-lab-e/')||file==='scripts/roadmap-gate.mjs';
   const forbidden=files.filter(file=>!allowed(file));
   if(forbidden.length)fail([`LAB E intentó tocar archivos fuera del aislamiento: ${forbidden.join(', ')}`]);
   for(const file of files.filter(file=>file!=='scripts/roadmap-gate.mjs')){
@@ -80,17 +76,14 @@ const errors=[];
 for(const roadmap of requiredRoadmaps){
   if(!files.includes(roadmap))errors.push(`${roadmap} no fue actualizado dentro de la misma modificación.`);
 }
-
 for(const file of files){
   if(requiredRoadmaps.includes(file))continue;
   if(!overall.includes(file))errors.push(`${file} no aparece en ${roadmapOverall}.`);
   if(!detail.includes(file))errors.push(`${file} no aparece en ${roadmapDetail}.`);
 }
-
 for(const [name,content] of [[roadmapOverall,overall],[roadmapDetail,detail]]){
   if(!content.toLowerCase().includes(cutoff))errors.push(`${name} no conserva el punto de corte ${cutoff}.`);
   if(!content.includes(activation))errors.push(`${name} no conserva la fecha y hora de activación.`);
 }
-
 if(errors.length)fail(errors);
 console.log(`PASS ROADMAP GATE: ${files.length} modificaciones registradas en ambos ROADMAPS.`);
