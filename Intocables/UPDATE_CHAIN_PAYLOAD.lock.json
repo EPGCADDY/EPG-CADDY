@@ -1,0 +1,10 @@
+{
+  "schema": "gscg-update-chain-payload/v2",
+  "status": "PUBLICATION_CHAIN_LOCKED",
+  "release": "V407-R46-DIRECT-UPDATE-20260911",
+  "fileCount": 73,
+  "fingerprint": "8850dd361db71e79aec191f7030e979b4fb7e3dfa6aa1692bf49480207ce5d75",
+  "candidateSha256": "cff91a550e1d42d44e37d862ca3d8d305e4687565c1c98bbbc8dd43a996253de",
+  "generatedFromCommit": "489e7adccfc517581958347c21d773762888787b",
+  "scope": "runtime-auto-v1"
+}
