@@ -5,9 +5,9 @@ export default function handler(req,res){
   res.status(200).json({
     schema:'gscg-release/v1',
     channel:'lab-update-architecture-e-ios-first',
-    release:'V407-R43-DIRECT-UPDATE-20260911',
-    baseline:'V407-R43',
-    baselineCommit:'R43-AI-FALLBACK-ROUTED',
-    publishedAt:'2026-09-11T13:38:00Z'
+    release:'V407-R46-DIRECT-UPDATE-20260911',
+    baseline:'V407-R46',
+    baselineCommit:'R43-TRANSPORT-VALIDATION',
+    publishedAt:'2026-09-11T22:12:00Z'
   });
 }
