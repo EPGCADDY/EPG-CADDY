@@ -4,6 +4,10 @@
   "outputDirectory": ".",
   "rewrites": [
     {
+      "source": "/api/universal-ai",
+      "destination": "/api/universal-ai-r43"
+    },
+    {
       "source": "/invite/:token",
       "destination": "/access.html"
     }
