@@ -911,3 +911,11 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Release R48: `V407-R48-CANONICAL-UPDATER-ORIGIN-20260911`.
 - Archivos funcionales R48: `update-client-e.js`, `api/release.js`, `scripts/apply-update-e.mjs`.
 - MAIN y MAESTRO permanecen intactos. La aceptación final sigue siendo prueba física en el iPhone instalado conservando la ronda.
+
+## V407-R48 LAB · cierre atómico origen canónico ACTUALIZAR · 11 de septiembre de 2026
+
+- Cierre obligatorio del cambio autorizado del motor ACTUALIZAR para usar siempre el origen canónico `https://golf-sc-gt-lab.vercel.app` en release y shell.
+- `update-client-e.js` autorizado en R48 con hash `6fd5c7f3db13ccf05c86ec7cd74fad2451accbbe`.
+- Release R48: `V407-R48-CANONICAL-UPDATER-ORIGIN-20260911`.
+- Ambos ROADMAPS y `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json` quedan sellados en el mismo commit atómico antes de Preview/Promote.
+- MAIN y MAESTRO permanecen intactos. La aceptación final sigue siendo física desde la app LAB instalada, sin reinstalar y conservando la ronda.
