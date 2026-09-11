@@ -1,0 +1,148 @@
+name: R45 Card Share WhatsApp
+on:
+  push:
+    branches: [hotfix/card-share-whatsapp-r45]
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: hotfix/card-share-whatsapp-r45
+          fetch-depth: 2
+      - name: Apply focused R45 patch
+        shell: python
+        run: |
+          from pathlib import Path
+
+          api = '''import { getDatabase } from "./_lib/database.js";
+          import { requireAccountSession } from "./_lib/account-auth.js";
+          import { handleAppPreflight } from "./_lib/cors.js";
+          import { noStore, readJson } from "./_lib/http.js";
+
+          const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+          const ROUND=/^[A-Za-z0-9._:-]{1,180}$/;
+          const clean=value=>String(value??"").trim();
+
+          export default async function handler(req,res){
+            noStore(res);
+            if(handleAppPreflight(req,res))return;
+            if(req.method!=="POST"){res.setHeader("Allow","POST");return res.status(405).json({ok:false,code:"METHOD_NOT_ALLOWED"});}
+            try{
+              const body=await readJson(req,200_000),action=clean(body?.action).toLowerCase(),sql=getDatabase();
+              if(action==="read"){
+                const token=clean(body?.token);
+                if(!UUID.test(token))return res.status(400).json({ok:false,code:"INVALID_CARD_TOKEN"});
+                const rows=await sql`
+                  SELECT r.raw_snapshot->'officialSnapshot' AS snapshot,
+                         c.version,
+                         c.content_hash
+                  FROM card_records c
+                  JOIN rounds r ON r.id=c.round_id
+                  WHERE c.id=${token}::uuid AND c.type='global'::card_type
+                  LIMIT 1
+                `;
+                const snapshot=rows[0]?.snapshot;
+                if(!snapshot||!["officially_closed","corrected"].includes(snapshot.status))return res.status(404).json({ok:false,code:"CARD_NOT_FOUND"});
+                return res.status(200).json({ok:true,snapshot,version:rows[0].version,contentHash:rows[0].content_hash});
+              }
+              if(action==="create"){
+                const account=await requireAccountSession(req),roundId=clean(body?.roundId);
+                if(!ROUND.test(roundId))return res.status(400).json({ok:false,code:"INVALID_ROUND_ID"});
+                const rows=await sql`
+                  SELECT c.id
+                  FROM rounds r
+                  JOIN installations i ON i.id=r.installation_id
+                  JOIN card_records c ON c.round_id=r.id AND c.type='global'::card_type
+                  WHERE r.client_round_id=${roundId}
+                    AND r.officially_closed_at IS NOT NULL
+                    AND i.metadata->>'authUserId'=${account.id}
+                  ORDER BY c.version DESC,c.created_at DESC
+                  LIMIT 1
+                `;
+                const token=rows[0]?.id;
+                if(!token)return res.status(404).json({ok:false,code:"CARD_NOT_READY"});
+                const proto=String(req.headers["x-forwarded-proto"]||"https").split(",")[0],host=String(req.headers["x-forwarded-host"]||req.headers.host||"").split(",")[0];
+                return res.status(200).json({ok:true,token:String(token),url:`${proto}://${host}/card-share.html#card=${token}`});
+              }
+              return res.status(400).json({ok:false,code:"INVALID_ACTION"});
+            }catch(error){
+              const code=error?.code||"CARD_SHARE_FAILED",status=code==="ACCOUNT_UNAUTHORIZED"?401:code==="DATABASE_NOT_CONFIGURED"||code==="ACCOUNT_AUTH_UNAVAILABLE"?503:400;
+              if(status>=500)console.error("card-share",code);
+              return res.status(status).json({ok:false,code});
+            }
+          }
+          '''
+          Path('api/card-share.js').write_text(api,encoding='utf-8')
+
+          viewer = '''<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#000"><title>Golf Score Card GT · Tarjeta Digital</title><style>html,body{margin:0;background:#000;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}#state{padding:24px;text-align:center;color:#31ff00;font-weight:900}iframe{display:none;width:100%;height:100vh;border:0;background:#000}</style></head><body><div id="state">ABRIENDO TARJETA DIGITAL…</div><iframe id="card" title="Tarjeta Digital Oficial"></iframe><script src="/card-artifacts.js"></script><script>
+          (async()=>{const state=document.getElementById('state'),frame=document.getElementById('card');try{const token=new URLSearchParams(location.hash.slice(1)).get('card')||'';if(!/^[0-9a-f-]{36}$/i.test(token))throw new Error('INVALID');const response=await fetch('/api/card-share',{method:'POST',headers:{'content-type':'application/json'},cache:'no-store',body:JSON.stringify({action:'read',token})}),data=await response.json();if(!response.ok||!data.ok)throw new Error(data.code||'FAILED');const artifact=window.GSCCardArtifacts.build(data.snapshot).global;frame.srcdoc=artifact.html;frame.style.display='block';state.remove()}catch(error){state.style.color='#ff5757';state.textContent='NO SE PUDO ABRIR LA TARJETA DIGITAL';}})();
+          </script></body></html>'''
+          Path('card-share.html').write_text(viewer,encoding='utf-8')
+
+          middleware=Path('middleware.js').read_text(encoding='utf-8')
+          middleware=middleware.replace('"/access.html","/live.html","/live-view.js","/match-play.js","/favicon.ico",','"/access.html","/live.html","/live-view.js","/match-play.js","/card-share.html","/card-artifacts.js","/favicon.ico",')
+          marker='''  if(path==="/api/live"&&request.method==="POST"){
+    try{const body=await request.clone().json();if(String(body?.action||"").toLowerCase()==="read")return next()}catch{}
+  }
+'''
+          insert=marker+'''  if(path==="/api/card-share"&&request.method==="POST"){
+    try{const body=await request.clone().json();if(String(body?.action||"").toLowerCase()==="read")return next()}catch{}
+  }
+'''
+          if marker not in middleware: raise SystemExit('middleware marker missing')
+          middleware=middleware.replace(marker,insert,1)
+          Path('middleware.js').write_text(middleware,encoding='utf-8')
+
+          index=Path('index-grupal.html').read_text(encoding='utf-8')
+          anchor='''async function shareOfficialArtifactImage(item){
+'''
+          helper='''function registeredWhatsAppForFinalCard(){const player=(round?.players||[]).find(p=>normalizeWhatsApp(p?.whatsapp,p?.countryCode));if(!player)return null;const cc=normalizeWhatsAppCountryCode(player.countryCode),national=normalizeWhatsApp(player.whatsapp,cc);if(!national)return null;return{player,phone:`${cc}${national}`.replace(/\\D/g,"")}}
+async function sendFinalCardToRegisteredWhatsApp(){
+  const status=$("artifactShareStatus"),button=$("sendFinalCard"),target=registeredWhatsAppForFinalCard();
+  if(!target)return shareOfficialArtifactImage(officialArtifacts().global);
+  const popup=window.open("about:blank","_blank"),original=button.textContent;button.disabled=true;button.textContent="PREPARANDO ENVÍO…";status.textContent=`PREPARANDO TARJETA PARA ${target.player.name.toUpperCase()}…`;
+  try{
+    await queueMasterDataSnapshot("card-share",{roundOverride:round});
+    let response,data;for(let attempt=0;attempt<3;attempt++){response=await fetch("/api/card-share",{method:"POST",credentials:"include",cache:"no-store",headers:{"content-type":"application/json"},body:JSON.stringify({action:"create",roundId:round.id})});data=await response.json().catch(()=>({}));if(response.ok&&data.url)break;await new Promise(resolve=>setTimeout(resolve,attempt?900:450))}
+    if(!response?.ok||!data?.url)throw new Error(data?.code||"CARD_NOT_READY");
+    const message=`Golf Score Card GT · Tarjeta Digital Oficial\\n${data.url}`,wa=`https://wa.me/${target.phone}?text=${encodeURIComponent(message)}`;
+    if(popup&&!popup.closed)popup.location.href=wa;else location.href=wa;
+    recordShareEvent(officialArtifacts().global,"PREPARED",false);status.textContent=`WHATSAPP ABIERTO PARA ${target.player.name.toUpperCase()}`;return{ok:true,state:"PREPARED",direct:true};
+  }catch(error){if(popup&&!popup.closed)popup.close();status.textContent="NO SE PUDO ABRIR EL WHATSAPP REGISTRADO · SE ABRIRÁ COMPARTIR";return shareOfficialArtifactImage(officialArtifacts().global)}
+  finally{button.disabled=false;button.textContent=original}
+}
+'''+anchor
+          if anchor not in index: raise SystemExit('share anchor missing')
+          index=index.replace(anchor,helper,1)
+          listener='''$("sendFinalCard").addEventListener("click",()=>shareOfficialArtifactImage(officialArtifacts().global));'''
+          if listener not in index: raise SystemExit('listener missing')
+          index=index.replace(listener,''''$("sendFinalCard").addEventListener("click",sendFinalCardToRegisteredWhatsApp);''',1)
+          Path('index-grupal.html').write_text(index,encoding='utf-8')
+
+          test='''import fs from "node:fs";import assert from "node:assert/strict";
+          const index=fs.readFileSync("index-grupal.html","utf8"),middleware=fs.readFileSync("middleware.js","utf8"),api=fs.readFileSync("api/card-share.js","utf8"),viewer=fs.readFileSync("card-share.html","utf8");
+          assert.match(index,/sendFinalCardToRegisteredWhatsApp/);assert.match(index,/https:\/\/wa\.me\//);assert.match(index,/queueMasterDataSnapshot\("card-share"/);assert.match(index,/action:"create",roundId:round\.id/);
+          assert.match(api,/action==="read"/);assert.match(api,/action==="create"/);assert.match(api,/card_records/);assert.match(api,/officialSnapshot/);assert.doesNotMatch(api,/live_stream/);
+          assert.match(middleware,/"\/card-share\.html"/);assert.match(middleware,/path==="\/api\/card-share"/);assert.match(middleware,/action\|\|""\)\.toLowerCase\(\)==="read"/);
+          assert.match(viewer,/GSCCardArtifacts\.build\(data\.snapshot\)\.global/);assert.doesNotMatch(viewer,/whatsapp|phone|email/i);
+          console.log("PASS R45 · tarjeta oficial usa enlace propio y WhatsApp registrado; LIVE intacto");
+          '''
+          Path('test-r45-card-share.mjs').write_text(test,encoding='utf-8')
+
+          note='''\n## V407-R45 · Tarjeta Digital al WhatsApp registrado · 11 de septiembre de 2026\n\n`ENVIAR TARJETA DIGITAL` deja de ignorar el WhatsApp registrado. Tras cerrar la ronda, sincroniza el snapshot oficial, obtiene un token opaco propio de `card_records` y abre el chat del primer jugador con WhatsApp registrado con un enlace permanente de sólo lectura a la Tarjeta Digital Oficial. La lectura pública expone únicamente `officialSnapshot`, que no contiene WhatsApp ni correo. Si no hay WhatsApp o la tarjeta central aún no está disponible, conserva el PNG nativo como fallback. LIVE permanece separado e intacto. Archivos: `api/card-share.js`, `card-share.html`, `index-grupal.html`, `middleware.js`, `test-r45-card-share.mjs`.\n'''
+          for name in ['ROADMAP_A_DETALLE.md','ROADMAP_OVERALL.md']:
+            p=Path(name);p.write_text(p.read_text(encoding='utf-8')+note,encoding='utf-8')
+
+      - name: Verify focused R45 contract
+        run: node test-r45-card-share.mjs && git diff --check
+      - name: Commit atomic R45 hotfix
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add api/card-share.js card-share.html index-grupal.html middleware.js test-r45-card-share.mjs ROADMAP_A_DETALLE.md ROADMAP_OVERALL.md
+          git commit -m "V407-R45: send official card to registered WhatsApp"
+          git push origin HEAD:hotfix/card-share-whatsapp-r45
