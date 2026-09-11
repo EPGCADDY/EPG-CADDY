@@ -6,7 +6,7 @@ const roadmapDetail='ROADMAP_A_DETALLE.md';
 const requiredRoadmaps=[roadmapOverall,roadmapDetail];
 const activation='23 de agosto de 2026, 17:05:00, hora de Guatemala';
 const cutoff='línea 185';
-const experimentalBranch='lab/update-architecture-e-ios-first';
+const experimentalBranches=new Set(['lab/update-architecture-e-ios-first','lab/v407-r24-whatsapp-registration']);
 const experimentalLedger='update-lab-e/ROADMAP_UPDATE_LAB_E.md';
 
 function runGit(args){
@@ -42,7 +42,7 @@ function fail(messages){
 
 const files=changedFiles();
 const branch=process.env.VERCEL_GIT_COMMIT_REF||process.env.GITHUB_REF_NAME||'';
-if(branch===experimentalBranch){
+if(experimentalBranches.has(branch)){
   let ledger='';
   try{ledger=readFileSync(experimentalLedger,'utf8')}catch(error){fail([`No se pudo abrir ${experimentalLedger}: ${error.message}`])}
   if(files.length===0)fail(['LAB E sin archivos modificados detectables.']);
