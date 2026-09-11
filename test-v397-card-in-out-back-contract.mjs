@@ -33,8 +33,9 @@ assert.match(html,/id="artifactViewerBack"/);
 assert.match(html,/id="artifactViewerSend"/);
 assert.match(html,/id="sendFinalCard" hidden>ENVIAR TARJETA DIGITAL<\/button><button class="screen-back-button" id="closeFinalCard">ATRÁS<\/button>/);
 assert.match(html,/closeButton\.hidden=!!round\.officiallyClosedAt/,"FINALIZAR RONDA debe estar visible antes del cierre y desaparecer sólo después");
-assert.match(html,/\$\("sendFinalCard"\)\.addEventListener\("click",\(\)=>shareOfficialArtifactImage\(officialArtifacts\(\)\.global\)\)/);
-assert.match(html,/GSCCardFileExport\.png\(item\)[\s\S]{0,300}type:"image\/png"/,"El envío principal debe preparar un PNG real");
+assert.match(html,/\$\("sendFinalCard"\)\.addEventListener\("click",sendFinalCardToRegisteredWhatsApp\)/,"ENVIAR TARJETA DIGITAL debe usar el WhatsApp registrado cuando existe");
+assert.match(html,/if\(!target\)return shareOfficialArtifactImage\(officialArtifacts\(\)\.global\)/,"Sin WhatsApp registrado debe conservar el PNG nativo como fallback");
+assert.match(html,/GSCCardFileExport\.png\(item\)[\s\S]{0,300}type:"image\/png"/,"El fallback debe seguir preparando un PNG real");
 assert.match(html,/const actions=\$\("artifactActions"\);actions\.hidden=true/);
 assert.match(html,/window\.opener\.focus\(\);window\.close\(\)/);
 assert.match(html,/GSCCardFileExport\.png\(item\)/);
@@ -52,4 +53,4 @@ assert.doesNotMatch(html,/id="accountBackupButtonStableford"(?:\s|>)/,"Stablefor
 assert.match(html,/if\(back\)back\.classList\.toggle\("hidden",!round\.configured\)/,"Práctica debe mostrar ATRÁS");
 assert.match(html,/isStablefordRound\(\)\|\|round\.provisional\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)/,"ATRÁS de Práctica debe volver a principal");
 
-console.log("PASS V397 · 8 artefactos con IN 1–9, OUT 10–18, TOTAL 1–18; visor con ATRÁS + ENVÍO; REGÍSTRATE sólo en principal");
+console.log("PASS V397 · tarjeta digital usa WhatsApp registrado con PNG fallback; IN/OUT/TOTAL y navegación preservados");
