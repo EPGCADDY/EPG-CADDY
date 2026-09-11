@@ -1,9 +1,10 @@
 import {readFileSync,writeFileSync} from 'node:fs';
 
 const htmlPath='index-grupal.html';
+const candidatePath='candidate-index-grupal.html';
 const swPath='service-worker.js';
 const release='V407-E1-IOS-FIRST';
-let html=readFileSync(htmlPath,'utf8');
+let html=readFileSync(candidatePath,'utf8');
 const originalSw=readFileSync(swPath,'utf8');
 
 function replaceExactlyOnce(source,pattern,replacement,label){
@@ -12,6 +13,7 @@ function replaceExactlyOnce(source,pattern,replacement,label){
   return source.replace(pattern,replacement);
 }
 
+if(!html.includes('V407-R33-ROOT-VOICE-UPDATE-20260910'))throw new Error('CANDIDATE_NOT_REAL_R33');
 if(!originalSw.includes('gscg-mobile-v363-recorded-mobile-behavior'))throw new Error('SOURCE_SW_NOT_R33');
 
 html=replaceExactlyOnce(
@@ -39,4 +41,4 @@ const migrationSw=`"use strict";\n\nconst MIGRATION_RELEASE="${release}";\nconst
 
 writeFileSync(htmlPath,html);
 writeFileSync(swPath,migrationSw);
-console.log(`UPDATE_E_BUILD_PATCH PASS release=${release} html=patched sw=migration`);
+console.log(`UPDATE_E_BUILD_PATCH PASS release=${release} source=real-r33-candidate html=patched sw=migration`);
