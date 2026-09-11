@@ -1,10 +1,10 @@
 {
   "schema": "gscg-update-chain-payload/v2",
   "status": "PUBLICATION_CHAIN_LOCKED",
-  "release": "V407-R46-DIRECT-UPDATE-20260911",
+  "release": "V407-R47-DIRECT-UPDATE-CHAIN-20260911",
   "fileCount": 73,
-  "fingerprint": "cf2d46f9ef324f96ca7a8dbda917ecabdca9314b90dceb61beea6a3370b41abb",
+  "fingerprint": "0a4a5eb72c91ea469e6a5d156942696adc5348268d83f082478f52d7e9983530",
   "candidateSha256": "cff91a550e1d42d44e37d862ca3d8d305e4687565c1c98bbbc8dd43a996253de",
-  "generatedFromCommit": "aa5f62cbd5469c845fbb22e09b7ca5d5d2d32b9c",
+  "generatedFromCommit": "90674c51f9092b8530b5cb4d8713da79895c6046",
   "scope": "runtime-auto-v1"
 }
