@@ -24,8 +24,9 @@ assert.equal(lock.status,'INTOCABLE_TECNICO');
 assert.equal(gitBlobSha1(engine),lock.engine.gitBlobSha1,'ACTUALIZADOR_INTOCABLE_VIOLADO: update-client-e.js cambio');
 
 for(const required of [
-  'const RELEASE_ENDPOINT="/api/release"',
-  'const SHELL_ENDPOINT="/app-current-shell.html"',
+  'const CANONICAL_LAB_ORIGIN="https://golf-sc-gt-lab.vercel.app"',
+  'const RELEASE_ENDPOINT=`${CANONICAL_LAB_ORIGIN}/api/release`',
+  'const SHELL_ENDPOINT=`${CANONICAL_LAB_ORIGIN}/app-current-shell.html`',
   'cache:"no-store"',
   'SHELL_RELEASE_MISMATCH_',
   'localStorage.setItem(INSTALLED_HTML_KEY,html)',
@@ -39,7 +40,7 @@ const generatedRelease=capture(generator,/const release='([^']+)'/,'GENERATOR_RE
 const apiRelease=capture(api,/release:'([^']+)'/,'API_RELEASE');
 const apiBaseline=capture(api,/baseline:'([^']+)'/,'API_BASELINE');
 assert.equal(generatedRelease,apiRelease,`RELEASE_DESINCRONIZADO generator=${generatedRelease} api=${apiRelease}`);
-const rxx=capture(generatedRelease,/V407-(R\d+)-DIRECT-UPDATE-/,'RELEASE_RXX');
+const rxx=capture(generatedRelease,/V407-(R\d+)-/,'RELEASE_RXX');
 assert.equal(apiBaseline,`V407-${rxx}`,`BASELINE_DESINCRONIZADO ${apiBaseline} != V407-${rxx}`);
 
 if(mode==='built'){
