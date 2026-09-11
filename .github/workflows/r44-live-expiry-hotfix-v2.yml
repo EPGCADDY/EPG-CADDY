@@ -1,0 +1,52 @@
+name: R44 LIVE expiry hotfix v2
+on:
+  push:
+    branches: [hotfix/live-expired-share-r44]
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: hotfix/live-expired-share-r44
+          fetch-depth: 2
+      - name: Install declared dependencies
+        run: npm install --omit=dev --no-package-lock
+      - name: Patch LIVE expiry handling and regression
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('live-control.js');s=p.read_text()
+          old='''  async function quickShareGroup(){\n    const snapshot=currentSnapshot();if(!snapshot){setStatus("INICIA UNA RONDA PARA COMPARTIR LIVE","warning");return false}\n    let state=liveState(),stream=state.stream;\n    if(!(stream?.publisherSecret&&stream?.viewerToken&&stream.roundId===snapshot.roundId&&stream.scope==="group")){\n      const selectedPlayerIds=snapshot.players.map(player=>player.id),consent={confirmed:true,playerIds:selectedPlayerIds,policyVersion:POLICY_VERSION,confirmedAt:new Date().toISOString(),authority:"scorekeeper_share_live_button"};\n      setStatus("CREANDO ENLACE LIVE DEL GRUPO…");\n      const result=await request("create_stream",{scope:"group",selectedPlayerIds,consent,durationHours:24,groupLabel:snapshot.groupLabel,snapshot});\n      if(!result.ok){setStatus(stateMessage(result.code),"warning");return false}\n      state=liveState();state.stream={roundId:snapshot.roundId,scope:"group",streamId:result.streamId,publisherSecret:result.publisherSecret,viewerToken:result.viewerToken,revision:Number(result.revision)||0,expiresAt:result.expiresAt,groupLabel:snapshot.groupLabel,pendingSnapshot:null,tournamentId:null};saveState(state);stream=state.stream;renderActive();\n    }\n    const url=viewerUrl("stream",stream.viewerToken),shareData={title:"GOLF SCORE CARD GT · LIVE",text:"Sigue en vivo la Score Card de este grupo. Vista privada y sólo lectura.",url};\n    if(root.navigator.share){try{await root.navigator.share(shareData);setStatus("COMPARTIR LIVE LISTO","ok");return true}catch(error){if(error?.name==="AbortError")return false}}\n    try{await root.navigator.clipboard.writeText(url);setStatus("ENLACE LIVE COPIADO","ok");return true}catch{setStatus("NO SE PUDO COMPARTIR EN ESTE DISPOSITIVO","warning");return false}\n  }'''
+          new='''  function streamExpired(stream,now=Date.now()){const expires=Date.parse(stream?.expiresAt||"");return !Number.isFinite(expires)||expires<=now+30000}\n  async function validateStoredStreamForShare(state,stream){\n    if(!stream?.viewerToken||streamExpired(stream))return{ok:false,expired:true};\n    const result=await request("read",{kind:"stream",viewerToken:stream.viewerToken});\n    if(!result.ok||!result.stream||result.stream.status!=="active")return{ok:false,expired:result.code==="LIVE_EXPIRED"||result.status===410,code:result.code||"LIVE_NOT_ACTIVE",network:result.status===0};\n    stream.expiresAt=result.stream.expiresAt||stream.expiresAt;stream.revision=Number(result.stream.revision)||stream.revision;saveState(state);return{ok:true,stream};\n  }\n  async function createFreshGroupStream(snapshot){\n    const selectedPlayerIds=snapshot.players.map(player=>player.id),consent={confirmed:true,playerIds:selectedPlayerIds,policyVersion:POLICY_VERSION,confirmedAt:new Date().toISOString(),authority:"scorekeeper_share_live_button"};\n    setStatus("CREANDO ENLACE LIVE DEL GRUPO…");\n    const result=await request("create_stream",{scope:"group",selectedPlayerIds,consent,durationHours:24,groupLabel:snapshot.groupLabel,snapshot});\n    if(!result.ok){setStatus(stateMessage(result.code),"warning");return null}\n    const state=liveState();state.stream={roundId:snapshot.roundId,scope:"group",streamId:result.streamId,publisherSecret:result.publisherSecret,viewerToken:result.viewerToken,revision:Number(result.revision)||0,expiresAt:result.expiresAt,groupLabel:snapshot.groupLabel,pendingSnapshot:null,tournamentId:null};saveState(state);renderActive();return state.stream;\n  }\n  async function quickShareGroup(){\n    const snapshot=currentSnapshot();if(!snapshot){setStatus("INICIA UNA RONDA PARA COMPARTIR LIVE","warning");return false}\n    let state=liveState(),stream=state.stream;\n    const matches=!!(stream?.publisherSecret&&stream?.viewerToken&&stream.roundId===snapshot.roundId&&stream.scope==="group");\n    if(matches){\n      setStatus("VALIDANDO ENLACE LIVE…");const validation=await validateStoredStreamForShare(state,stream);\n      if(validation.ok)stream=validation.stream;\n      else if(validation.network){setStatus("SIN SEÑAL · NO SE COMPARTIÓ UN ENLACE SIN VALIDAR","warning");return false}\n      else{delete state.stream;saveState(state);renderActive();stream=null}\n    }\n    if(!stream)stream=await createFreshGroupStream(snapshot);\n    if(!stream)return false;\n    const url=viewerUrl("stream",stream.viewerToken),shareData={title:"GOLF SCORE CARD GT · LIVE",text:"Sigue en vivo la Score Card de este grupo. Vista privada y sólo lectura.",url};\n    if(root.navigator.share){try{await root.navigator.share(shareData);setStatus("COMPARTIR LIVE LISTO","ok");return true}catch(error){if(error?.name==="AbortError")return false}}\n    try{await root.navigator.clipboard.writeText(url);setStatus("ENLACE LIVE COPIADO","ok");return true}catch{setStatus("NO SE PUDO COMPARTIR EN ESTE DISPOSITIVO","warning");return false}\n  }'''
+          if old not in s: raise SystemExit('quickShareGroup exact block not found')
+          s=s.replace(old,new,1)
+          old2='''  async function shareStream(){const value=$("liveShareLink")?.value;if(!value)return false;if(root.navigator.share){try{await root.navigator.share({title:"GOLF SCORE CARD GT. LIVE",text:"Sigue esta ronda en vivo. Vista privada y sólo lectura.",url:value});return true}catch{}}return copyValue("liveShareLink")}'''
+          new2='''  async function shareStream(){const state=liveState(),stream=state.stream;if(!stream?.viewerToken)return false;setStatus("VALIDANDO ENLACE LIVE…");const validation=await validateStoredStreamForShare(state,stream);if(!validation.ok){if(validation.network){setStatus("SIN SEÑAL · NO SE COMPARTIÓ UN ENLACE SIN VALIDAR","warning");return false}delete state.stream;saveState(state);renderConsent();renderActive();setStatus("EL ENLACE ANTERIOR YA NO ESTÁ ACTIVO · CREA UNO NUEVO","warning");return false}const value=viewerUrl("stream",validation.stream.viewerToken);if($("liveShareLink"))$("liveShareLink").value=value;if(root.navigator.share){try{await root.navigator.share({title:"GOLF SCORE CARD GT. LIVE",text:"Sigue esta ronda en vivo. Vista privada y sólo lectura.",url:value});return true}catch{}}return copyValue("liveShareLink")}'''
+          if old2 not in s: raise SystemExit('shareStream exact block not found')
+          s=s.replace(old2,new2,1)
+          s=s.replace('return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,publishLatest,quickShareGroup};','return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,streamExpired,mount,onRoundPersisted,publishLatest,quickShareGroup};',1)
+          p.write_text(s)
+          t=Path('test-v352-live.mjs');q=t.read_text();needle='assert.match(liveControl,/pendingSnapshot/);'
+          addition='''assert.match(liveControl,/pendingSnapshot/);\nassert.equal(control.streamExpired({expiresAt:"2026-09-11T10:00:00Z"},Date.parse("2026-09-11T10:00:31Z")),true,"un LIVE vencido jamás puede reutilizarse al compartir");\nassert.equal(control.streamExpired({expiresAt:"2026-09-11T11:00:00Z"},Date.parse("2026-09-11T10:00:00Z")),false,"un LIVE vigente conserva su token");\nassert.match(liveControl,/VALIDANDO ENLACE LIVE/,"COMPARTIR LIVE valida servidor antes de enviar");\nassert.match(liveControl,/request\\("read",\\{kind:"stream",viewerToken:stream\\.viewerToken\\}\\)/,"el token guardado se valida contra el servidor");\nassert.match(liveControl,/delete state\\.stream;saveState\\(state\\)/,"un token vencido o revocado se elimina antes de compartir");'''
+          if needle not in q: raise SystemExit('test insertion point missing')
+          q=q.replace(needle,addition,1);t.write_text(q)
+          section='''\n\n## V407-R44 · HOTFIX LIVE: nunca compartir enlaces caducados · 11 de septiembre de 2026\n\n- `live-control.js`: COMPARTIR LIVE valida `expiresAt` y confirma el `viewerToken` con `POST /api/live action=read` antes de abrir WhatsApp/hoja de compartir. Un token vencido, revocado o inactivo se elimina y, para el botón rápido de grupo, se crea automáticamente un enlace nuevo de 24 horas. Sin red no se comparte un token que no pueda validarse.\n- `test-v352-live.mjs`: regresión permanente que impide reutilizar tokens vencidos y exige validación servidor antes de compartir.\n- Alcance: hotfix LIVE de MAESTRO; no modifica scores, cálculo, micrófono, AI Universal, actualizador ni captura V378.\n'''
+          for name in ['ROADMAP_OVERALL.md','ROADMAP_A_DETALLE.md']:
+              r=Path(name);txt=r.read_text();
+              if 'V407-R44 · HOTFIX LIVE: nunca compartir enlaces caducados' not in txt:r.write_text(txt+section)
+      - name: Verify patch
+        run: |
+          node test-v352-live.mjs
+          git diff --check
+          git diff --name-only
+      - name: Commit atomic hotfix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add live-control.js test-v352-live.mjs ROADMAP_OVERALL.md ROADMAP_A_DETALLE.md
+          git commit -m 'V407-R44 hotfix: refresh expired LIVE links before sharing'
+          git push origin HEAD:hotfix/live-expired-share-r44
