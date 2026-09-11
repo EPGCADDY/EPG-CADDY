@@ -882,3 +882,12 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3387_R31_ESTADO_VISIBLE_SIN_URL.png`
 
 - `scripts/generate-technical-act-r32.py`
+
+## LAB R43 — Universal AI post-transcription fallback
+- Rama: `lab/r43-universal-ai-fallback`.
+- `api/universal-ai-r43.js`: wrapper server-side aislado que conserva R42 como ruta primaria y activa AI Gateway/OIDC únicamente ante `502/503` propios de AI UNIVERSAL (`UNIVERSAL_AI_*` o `EMPTY_UNIVERSAL_RESPONSE`).
+- `vercel.json`: rewrite LAB `/api/universal-ai` → `/api/universal-ai-r43`.
+- Alcance protegido: no modifica `index-grupal.html`, captura/micrófono V378, umbral, sensibilidad, voz aprobada, actualizador ni Main/producción.
+- Evidencia de origen: R42 registró primer turno `transcript_ready → /api/universal-ai 200 → voz`; segundo y tercer turno `transcript_ready → /api/universal-ai 502 → query_failed`.
+- Criterio de aprobación: build/gates PASS, endpoint HTTP probado y regresión sin cambios en intocables antes de prueba física en iPhone.
+
