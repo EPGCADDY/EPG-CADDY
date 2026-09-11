@@ -1,12 +1,15 @@
 {
-  "schema": "gscg-update-chain-payload/v3",
+  "schema": "gscg-update-chain-payload/v4",
   "status": "PUBLICATION_CHAIN_LOCKED",
   "release": "V407-R47-DIRECT-UPDATE-CHAIN-20260911",
-  "fileCount": 73,
-  "fingerprint": "0a4a5eb72c91ea469e6a5d156942696adc5348268d83f082478f52d7e9983530",
+  "fileCount": 72,
+  "fingerprint": "41938c3e1f87984868fae9b8b2cd6c5ddd09985026366468b500e6df11aeee1d",
   "candidateSha256": "cff91a550e1d42d44e37d862ca3d8d305e4687565c1c98bbbc8dd43a996253de",
-  "generatedFromCommit": "6dad6d772c6e29513a1029e8e83f0cab82e13f96",
-  "scope": "runtime-auto-v2",
+  "generatedFromCommit": "e0763b12cadee5400058c219121b0b93eb0fb781",
+  "scope": "runtime-auto-v3-vercel-semantic",
+  "vercelContract": {
+    "gateFirst": true
+  },
   "files": {
     "access.html": "d2345c7e312e3cdc661645c44a52b5d25fdce765fb04278edafaa7d4032f7a2d",
     "account-backup.js": "a5a189b731b0960dd17dd053054333f106e643cd4f652ff160c16963d3429297",
@@ -77,7 +80,6 @@
     "universales.js": "0db9441f9c1671fbf3d44d73dce75fd93d38be1d812ff3420e5bc5f4df0e82d5",
     "update-client-e.js": "6d1a83d8cff4671f70355c65a77a2b23c85a106e4c6aee9e7a892ccfde3a8656",
     "vegas.js": "20cf266b5a9fe1d9dc4f24ced6a5dc0b0495b138e76ea4aa7b81b084ad2f4075",
-    "vercel.json": "94597959eaa065a424cbdc6e5d24f8326bf85852b3b176a622d4c09b6b13dbfc",
     "vercel.legacy-mirror.json": "750d15fc1a026465a48fd7682775625665d4eb76fe114ff2a4c3bcca424b70c8",
     "voice-assistant.js": "e7c36c4c80db0bc7dea9c9165ab64fb6326b4f7300b9ddf5fdc54d6becf49aac",
     "wolf.js": "6f671c6723ca5577ca4eda729f58d0fe769fe09e981badf6f578ab7a3acefa04"
