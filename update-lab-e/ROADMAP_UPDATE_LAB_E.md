@@ -14,6 +14,7 @@ Arquitectura:
 - update-client-e.js reemplaza el listener del botón ACTUALIZAR después de cargar el HTML, consulta /api/release y preserva estado antes de recargar.
 - /api/release y /update-client-e.js son los únicos recursos nuevos públicos necesarios para que la actualización no dependa de una sesión que pueda estar en transición.
 - Todo recurso mutable del shell JavaScript/CSS debe servirse con no-store/must-revalidate; sólo los assets explícitamente versionados pueden permanecer immutable.
+- candidate-index-grupal.html es el shell candidato aislado que scripts/apply-update-e.mjs transforma y publica; se autoriza únicamente para cambios funcionales LAB explícitos que no alteren la baseline protegida.
 
 Archivos autorizados:
 - api/release.js
@@ -23,8 +24,15 @@ Archivos autorizados:
 - scripts/apply-update-e.mjs
 - update-client-e.js
 - index-grupal.html
+- candidate-index-grupal.html
 - update-lab-e/ROADMAP_UPDATE_LAB_E.md
 - scripts/roadmap-gate.mjs
+
+R41 · MICRÓFONO P0 · 11 de septiembre de 2026:
+- candidate-index-grupal.html: conversación de un toque usa semantic_vad y reabre escucha automáticamente después de cada respuesta hablada.
+- Registro, Scores, parsers, sensibilidad y captura V378 permanecen fuera del cambio y conservan su blindaje.
+- scripts/apply-update-e.mjs + api/release.js: únicamente publicación R41 según carretera del actualizador INTOCABLE.
+- Producción real y Main permanecen intocables.
 
 Reglas:
 1. Producción, Main y baseline/v407-r33-locked permanecen intactos.
