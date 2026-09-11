@@ -1,0 +1,45 @@
+name: R47 roadmap register
+on:
+  push:
+    branches:
+      - lab/update-chain-hardening-r47
+permissions:
+  contents: write
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lab/update-chain-hardening-r47
+          fetch-depth: 2
+      - name: Register R47 in both roadmaps
+        shell: bash
+        run: |
+          set -euo pipefail
+          marker='V407-R47 LAB · cadena de publicación ACTUALIZAR endurecida'
+          if grep -Fq "$marker" ROADMAP_OVERALL.md && grep -Fq "$marker" ROADMAP_A_DETALLE.md; then
+            echo 'R47 roadmap registration already present'
+            exit 0
+          fi
+          block=$(cat <<'EOF'
+
+## V407-R47 LAB · cadena de publicación ACTUALIZAR endurecida · 11 de septiembre de 2026
+
+- Se mantiene `update-client-e.js` intacto; el motor ACTUALIZAR sigue protegido y fuera de alcance.
+- Se agrega `scripts/update-chain-gate.mjs` como gate obligatorio al inicio del build de Vercel.
+- Se agrega `scripts/update-chain-lock.mjs` para generar una huella reproducible del payload runtime entregable.
+- Se agrega `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json` como lock de release/payload; cualquier cambio runtime sin nueva release debe fallar antes de publicar.
+- `vercel.json` se valida por contrato semántico (`update-chain-gate` primero) y no por hash binario porque Vercel normaliza ese archivo durante el build.
+- Prueba negativa confirmada: cambio runtime sin nueva release fue rechazado con `CHAIN_PAYLOAD_FINGERPRINT_STALE`.
+- R47 usa `V407-R47-DIRECT-UPDATE-CHAIN-20260911`; MAIN y MAESTRO permanecen intactos.
+- Criterio final pendiente: Preview R47 READY y después prueba física desde la app instalada mediante el botón ACTUALIZAR, conservando la ronda.
+EOF
+          )
+          printf '%s\n' "$block" >> ROADMAP_OVERALL.md
+          printf '%s\n' "$block" >> ROADMAP_A_DETALLE.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add ROADMAP_OVERALL.md ROADMAP_A_DETALLE.md
+          git commit -m 'R47 LAB: register hardened update chain in both roadmaps'
+          git push origin HEAD:lab/update-chain-hardening-r47
