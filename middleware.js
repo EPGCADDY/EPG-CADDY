@@ -9,6 +9,7 @@ const PRIVATE_GUEST_PREFIXES=["/api/account-backup","/api/commerce","/api/sync",
 export default async function accessGate(request){
   const url=new URL(request.url),path=url.pathname;
   const guestMode=(request.headers.get("cookie")||"").split(";").some(value=>value.trim()==="gsc_guest_mode=1");
+  if(path.startsWith("/update-lab/"))return next();
   if(path==="/api/account"&&guestMode)return new Response(JSON.stringify({ok:false,code:"OWNER_DATA_FORBIDDEN"}),{status:403,headers:{"content-type":"application/json","cache-control":"no-store"}});
   if(path==="/api/account")return next();
   if(PUBLIC_PATHS.has(path)||path.startsWith("/invite/")||path.startsWith("/assets/official-logos/"))return next();

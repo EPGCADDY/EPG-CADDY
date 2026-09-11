@@ -20,20 +20,16 @@ function normalizeFiles(value){
 
 function changedFiles(){
   if(process.env.ROADMAP_CHANGED_FILES)return normalizeFiles(process.env.ROADMAP_CHANGED_FILES);
-
   const base=process.argv[2]||process.env.ROADMAP_BASE_SHA||'';
   const head=process.argv[3]||process.env.ROADMAP_HEAD_SHA||'';
   if(base&&head&&!/^0+$/.test(base)){
     const exact=runGit(['diff','--name-only',base,head]);
     if(exact)return normalizeFiles(exact);
   }
-
   const lastCommit=runGit(['diff','--name-only','HEAD^','HEAD']);
   if(lastCommit)return normalizeFiles(lastCommit);
-
   const currentCommit=runGit(['show','--pretty=format:','--name-only','HEAD']);
   if(currentCommit)return normalizeFiles(currentCommit);
-
   const working=[runGit(['diff','--name-only']),runGit(['diff','--cached','--name-only'])].filter(Boolean).join('\n');
   return normalizeFiles(working);
 }
@@ -51,13 +47,14 @@ if(branch===experimentalBranch){
   let ledger='';
   try{ledger=readFileSync(experimentalLedger,'utf8')}catch(error){fail([`No se pudo abrir ${experimentalLedger}: ${error.message}`])}
   if(files.length===0)fail(['LAB C sin archivos modificados detectables.']);
-  const allowed=file=>file.startsWith('update-lab/')||file==='scripts/roadmap-gate.mjs';
+  const allowed=file=>file.startsWith('update-lab/')||file==='scripts/roadmap-gate.mjs'||file==='middleware.js';
   const forbidden=files.filter(file=>!allowed(file));
   if(forbidden.length)fail([`LAB C intentó tocar archivos fuera del aislamiento: ${forbidden.join(', ')}`]);
   if(!files.includes(experimentalLedger)&&!ledger.includes('5/5 o descarte')&&!ledger.includes('primeros cinco ciclos'))fail([`${experimentalLedger} no conserva la regla 5/5 o descarte.`]);
   for(const file of files.filter(file=>file.startsWith('update-lab/'))){
     if(!ledger.includes(file))fail([`${file} no aparece en ${experimentalLedger}.`]);
   }
+  if(files.includes('middleware.js')&&!ledger.includes('middleware.js'))fail(['middleware.js no aparece registrado en el ledger experimental.']);
   if(!ledger.includes('5b85c63438b27fce53e2d0f6aa4e371bffc3c263'))fail(['El ledger no conserva el commit baseline R33.']);
   console.log(`PASS ROADMAP GATE LAB C: ${files.length} modificaciones aisladas y registradas.`);
   process.exit(0);
@@ -82,17 +79,14 @@ const errors=[];
 for(const roadmap of requiredRoadmaps){
   if(!files.includes(roadmap))errors.push(`${roadmap} no fue actualizado dentro de la misma modificación.`);
 }
-
 for(const file of files){
   if(requiredRoadmaps.includes(file))continue;
   if(!overall.includes(file))errors.push(`${file} no aparece en ${roadmapOverall}.`);
   if(!detail.includes(file))errors.push(`${file} no aparece en ${roadmapDetail}.`);
 }
-
 for(const [name,content] of [[roadmapOverall,overall],[roadmapDetail,detail]]){
   if(!content.toLowerCase().includes(cutoff))errors.push(`${name} no conserva el punto de corte ${cutoff}.`);
   if(!content.includes(activation))errors.push(`${name} no conserva la fecha y hora de activación.`);
 }
-
 if(errors.length)fail(errors);
 console.log(`PASS ROADMAP GATE: ${files.length} modificaciones registradas en ambos ROADMAPS.`);
