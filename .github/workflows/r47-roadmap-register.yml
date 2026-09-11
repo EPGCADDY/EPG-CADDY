@@ -12,16 +12,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: lab/update-chain-hardening-r47
-          fetch-depth: 2
-      - name: Register R47 in both roadmaps
+          fetch-depth: 5
+      - name: Register R47 in both roadmaps atomically
         shell: bash
         run: |
           set -euo pipefail
+          branch='lab/update-chain-hardening-r47'
           marker='V407-R47 LAB · cadena de publicación ACTUALIZAR endurecida'
-          if grep -Fq "$marker" ROADMAP_OVERALL.md && grep -Fq "$marker" ROADMAP_A_DETALLE.md; then
-            echo 'R47 roadmap registration already present'
-            exit 0
-          fi
           block=$(cat <<'EOF'
 
 ## V407-R47 LAB · cadena de publicación ACTUALIZAR endurecida · 11 de septiembre de 2026
@@ -36,10 +33,30 @@ jobs:
 - Criterio final pendiente: Preview R47 READY y después prueba física desde la app instalada mediante el botón ACTUALIZAR, conservando la ronda.
 EOF
           )
-          printf '%s\n' "$block" >> ROADMAP_OVERALL.md
-          printf '%s\n' "$block" >> ROADMAP_A_DETALLE.md
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add ROADMAP_OVERALL.md ROADMAP_A_DETALLE.md
-          git commit -m 'R47 LAB: register hardened update chain in both roadmaps'
-          git push origin HEAD:lab/update-chain-hardening-r47
+
+          for attempt in 1 2 3; do
+            git fetch origin "$branch"
+            git reset --hard "origin/$branch"
+
+            if grep -Fq "$marker" ROADMAP_OVERALL.md && grep -Fq "$marker" ROADMAP_A_DETALLE.md; then
+              echo 'R47 roadmap registration already present'
+              exit 0
+            fi
+
+            printf '%s\n' "$block" >> ROADMAP_OVERALL.md
+            printf '%s\n' "$block" >> ROADMAP_A_DETALLE.md
+            git add ROADMAP_OVERALL.md ROADMAP_A_DETALLE.md
+            git commit -m 'R47 LAB: register hardened update chain in both roadmaps'
+
+            if git push origin HEAD:"$branch"; then
+              echo "R47 ROADMAP ATOMIC PASS attempt=$attempt"
+              exit 0
+            fi
+
+            echo "Concurrent branch move detected; retrying attempt=$attempt"
+          done
+
+          echo 'R47 ROADMAP ATOMIC FAIL after 3 attempts'
+          exit 1
