@@ -3,7 +3,7 @@ import {readFileSync,writeFileSync} from 'node:fs';
 const htmlPath='index-grupal.html';
 const candidatePath='candidate-index-grupal.html';
 const swPath='service-worker.js';
-const release='V407-R34-DIRECT-UPDATE-20260910';
+const release='V407-R35-DIRECT-UPDATE-20260910';
 let html=readFileSync(candidatePath,'utf8');
 const originalSw=readFileSync(swPath,'utf8');
 
@@ -17,7 +17,7 @@ if(!html.includes('V407-R33-ROOT-VOICE-UPDATE-20260910'))throw new Error('CANDID
 if(!originalSw.includes('gscg-mobile-v363-recorded-mobile-behavior'))throw new Error('SOURCE_SW_NOT_R33');
 
 html=replaceExactlyOnce(html,/<meta\s+name=["']gscg-release["']\s+content=["'][^"']+["']\s*\/?>/gi,`<meta name="gscg-release" content="${release}">`,'RELEASE_META');
-html=html.replace(/V407\s*·\s*R33/g,'V407 · R34');
+html=html.replace(/V407\s*·\s*R33/g,'V407 · R35');
 
 const swRegistration='if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});';
 const swCount=html.split(swRegistration).length-1;
@@ -37,4 +37,4 @@ const retirementSw=`"use strict";\nconst LEGACY_CACHE_PREFIX="gscg-mobile-";\nse
 
 writeFileSync(htmlPath,html);
 writeFileSync(swPath,retirementSw);
-console.log(`UPDATE_R34_BUILD_PATCH PASS release=${release} source=real-r33-candidate direct-update=no-service-worker html=patched sw=retirement-only`);
+console.log(`UPDATE_R35_BUILD_PATCH PASS release=${release} source=real-r33-candidate direct-update=no-service-worker html=patched sw=retirement-only`);
