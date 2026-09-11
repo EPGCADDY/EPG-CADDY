@@ -4,6 +4,10 @@
   "outputDirectory": ".",
   "rewrites": [
     {
+      "source": "/api/universal-ai",
+      "destination": "https://golf-sc-gt-lab.vercel.app/api/universal-ai-r43"
+    },
+    {
       "source": "/invite/:token",
       "destination": "/access.html"
     }

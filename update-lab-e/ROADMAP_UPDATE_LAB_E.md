@@ -57,3 +57,10 @@ R42 · HOTFIX RESPUESTA AUDIBLE iPHONE · 11 de septiembre de 2026:
 - scripts/apply-update-e.mjs + api/release.js publican R42 por el actualizador INTOCABLE.
 - .github/workflows/lab-mic-r42-hotfix.yml es transporte temporal autocontenido y se elimina en el mismo commit funcional.
 
+R43 · FALLBACK IA POST-TRANSCRIPCIÓN · 11 de septiembre de 2026:
+- vercel.json: /api/universal-ai se enruta al backend R43 previamente probado y READY en golf-sc-gt-lab.vercel.app/api/universal-ai-r43.
+- scripts/apply-update-e.mjs: publica V407-R43-DIRECT-UPDATE-20260911 y etiqueta visual V407 · R43 sin modificar update-client-e.js.
+- api/release.js: anuncia V407-R43-DIRECT-UPDATE-20260911 para que el botón ACTUALIZAR detecte una release nueva.
+- update-lab-e/ROADMAP_UPDATE_LAB_E.md: registra este cierre de carretera R43 dentro del aislamiento LAB E.
+- Alcance protegido: update-client-e.js, V378, umbral, sensibilidad, micrófono, Main y baseline protegida permanecen intactos.
+- Criterio mandatorio para futuras versiones: no declarar una versión lista para prueba física hasta confirmar proyecto epg-caddy correcto, build READY, alias epg-caddy.vercel.app, release nueva publicada y botón ACTUALIZAR visible en el enlace habitual.
