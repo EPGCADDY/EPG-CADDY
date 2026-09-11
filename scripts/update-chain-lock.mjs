@@ -1,0 +1,33 @@
+import crypto from 'node:crypto';
+import fs from 'node:fs';
+import {execFileSync} from 'node:child_process';
+
+const sha256=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
+const text=path=>fs.readFileSync(path,'utf8');
+const capture=(source,re,label)=>{const m=source.match(re);if(!m?.[1])throw new Error(`${label}_MISSING`);return m[1]};
+const tracked=execFileSync('git',['ls-files'],{encoding:'utf8'}).split(/\r?\n/).filter(Boolean);
+const manifestPath='Intocables/UPDATE_CHAIN_PAYLOAD.lock.json';
+const excludedPrefixes=['.github/','CONTROL_PROYECTO_SCIRE/','docs/','evidence/','previews/','update-lab-e/','native/','node_modules/'];
+const excludedExact=new Set([manifestPath,'ROADMAP_OVERALL.md','ROADMAP_A_DETALLE.md','package-lock.json','app-current-shell.html']);
+const excludedName=/^(test-|audit-|Inventario_|Manual_)/i;
+const runtimeExt=/\.(?:html|js|css|json|webmanifest)$/i;
+const isRuntime=path=>{
+  if(excludedExact.has(path)||excludedPrefixes.some(prefix=>path.startsWith(prefix)))return false;
+  if(excludedName.test(path.split('/').pop()||''))return false;
+  if(path.startsWith('scripts/')||path.startsWith('Intocables/'))return false;
+  if(path==='vercel.json'||path==='middleware.js'||path==='candidate-index-grupal.html'||path==='index-grupal.html')return true;
+  if(path.startsWith('api/')&&path.endsWith('.js'))return true;
+  if(!path.includes('/')&&runtimeExt.test(path))return true;
+  return false;
+};
+const payloadFiles=tracked.filter(isRuntime).sort();
+for(const required of ['candidate-index-grupal.html','index-grupal.html','middleware.js','vercel.json'])if(!payloadFiles.includes(required))throw new Error(`REQUIRED_RUNTIME_MISSING_${required}`);
+const hashes=Object.fromEntries(payloadFiles.map(path=>[path,sha256(fs.readFileSync(path))]));
+const fingerprint=sha256(Buffer.from(payloadFiles.map(path=>`${path}:${hashes[path]}`).join('\n')));
+const release=capture(text('api/release.js'),/release:'([^']+)'/,'API_RELEASE');
+const generatorRelease=capture(text('scripts/apply-update-e.mjs'),/const release='([^']+)'/,'GENERATOR_RELEASE');
+if(release!==generatorRelease)throw new Error(`RELEASE_DESYNC_${release}_${generatorRelease}`);
+const lock={schema:'gscg-update-chain-payload/v2',status:'PUBLICATION_CHAIN_LOCKED',release,fileCount:payloadFiles.length,fingerprint,candidateSha256:hashes['candidate-index-grupal.html'],generatedFromCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'runtime-auto-v1'};
+fs.mkdirSync('Intocables',{recursive:true});
+fs.writeFileSync(manifestPath,JSON.stringify(lock,null,2)+'\n');
+console.log(`UPDATE_CHAIN_LOCK WRITTEN release=${release} files=${payloadFiles.length} fingerprint=${fingerprint.slice(0,12)}`);
