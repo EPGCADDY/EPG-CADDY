@@ -82,7 +82,7 @@
       localStorage.setItem(INSTALLED_HTML_KEY,html);
       localStorage.setItem(INSTALLED_RELEASE_KEY,data.release);
       await retireLegacyWorkersAndCaches();
-      const next=new URL("/index-grupal.html",location.origin);
+      const next=new URL("/index-grupal.html",CANONICAL_LAB_ORIGIN);
       const source=new URL(location.href).searchParams.get("source");
       if(source)next.searchParams.set("source",source);
       next.searchParams.set("manual_update",String(Date.now()));
