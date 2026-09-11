@@ -3,8 +3,8 @@
   "status": "PUBLICATION_CHAIN_LOCKED",
   "release": "V407-R46-DIRECT-UPDATE-20260911",
   "fileCount": 73,
-  "fingerprint": "8850dd361db71e79aec191f7030e979b4fb7e3dfa6aa1692bf49480207ce5d75",
+  "fingerprint": "cf2d46f9ef324f96ca7a8dbda917ecabdca9314b90dceb61beea6a3370b41abb",
   "candidateSha256": "cff91a550e1d42d44e37d862ca3d8d305e4687565c1c98bbbc8dd43a996253de",
-  "generatedFromCommit": "489e7adccfc517581958347c21d773762888787b",
+  "generatedFromCommit": "aa5f62cbd5469c845fbb22e09b7ca5d5d2d32b9c",
   "scope": "runtime-auto-v1"
 }
