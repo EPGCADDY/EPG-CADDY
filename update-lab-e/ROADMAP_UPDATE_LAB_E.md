@@ -12,6 +12,7 @@ Arquitectura:
 
 Archivos autorizados inicialmente:
 - api/release.js
+- middleware.js
 - update-lab-e/ROADMAP_UPDATE_LAB_E.md
 - scripts/roadmap-gate.mjs
 
@@ -20,3 +21,4 @@ Reglas:
 2. No se solicita prueba física al usuario hasta completar pruebas técnicas y regresión LAB sin fallos.
 3. Cualquier archivo adicional debe registrarse aquí antes o en el mismo cambio que lo introduce.
 4. Arquitecturas C y D quedan descartadas y no se reutiliza su lifecycle waiting/installing como condición crítica.
+5. middleware.js sólo puede exponer /api/release para esta rama LAB E; no se alteran los controles de acceso restantes.
