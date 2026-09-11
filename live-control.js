@@ -66,16 +66,32 @@
     if(!result.ok){setStatus(stateMessage(result.code),"warning");return false}
     const state=liveState();state.stream={roundId:snapshot.roundId,scope,streamId:result.streamId,publisherSecret:result.publisherSecret,viewerToken:result.viewerToken,revision:Number(result.revision)||0,expiresAt:result.expiresAt,groupLabel:snapshot.groupLabel,pendingSnapshot:null,tournamentId:null};saveState(state);renderActive();return true;
   }
+  function streamExpired(stream,now=Date.now()){const expires=Date.parse(stream?.expiresAt||"");return !Number.isFinite(expires)||expires<=now+30000}
+  async function validateStoredStreamForShare(state,stream){
+    if(!stream?.viewerToken||streamExpired(stream))return{ok:false,expired:true};
+    const result=await request("read",{kind:"stream",viewerToken:stream.viewerToken});
+    if(!result.ok||!result.stream||result.stream.status!=="active")return{ok:false,expired:result.code==="LIVE_EXPIRED"||result.status===410,code:result.code||"LIVE_NOT_ACTIVE",network:result.status===0};
+    stream.expiresAt=result.stream.expiresAt||stream.expiresAt;stream.revision=Number(result.stream.revision)||stream.revision;saveState(state);return{ok:true,stream};
+  }
+  async function createFreshGroupStream(snapshot){
+    const selectedPlayerIds=snapshot.players.map(player=>player.id),consent={confirmed:true,playerIds:selectedPlayerIds,policyVersion:POLICY_VERSION,confirmedAt:new Date().toISOString(),authority:"scorekeeper_share_live_button"};
+    setStatus("CREANDO ENLACE LIVE DEL GRUPO…");
+    const result=await request("create_stream",{scope:"group",selectedPlayerIds,consent,durationHours:24,groupLabel:snapshot.groupLabel,snapshot});
+    if(!result.ok){setStatus(stateMessage(result.code),"warning");return null}
+    const state=liveState();state.stream={roundId:snapshot.roundId,scope:"group",streamId:result.streamId,publisherSecret:result.publisherSecret,viewerToken:result.viewerToken,revision:Number(result.revision)||0,expiresAt:result.expiresAt,groupLabel:snapshot.groupLabel,pendingSnapshot:null,tournamentId:null};saveState(state);renderActive();return state.stream;
+  }
   async function quickShareGroup(){
     const snapshot=currentSnapshot();if(!snapshot){setStatus("INICIA UNA RONDA PARA COMPARTIR LIVE","warning");return false}
     let state=liveState(),stream=state.stream;
-    if(!(stream?.publisherSecret&&stream?.viewerToken&&stream.roundId===snapshot.roundId&&stream.scope==="group")){
-      const selectedPlayerIds=snapshot.players.map(player=>player.id),consent={confirmed:true,playerIds:selectedPlayerIds,policyVersion:POLICY_VERSION,confirmedAt:new Date().toISOString(),authority:"scorekeeper_share_live_button"};
-      setStatus("CREANDO ENLACE LIVE DEL GRUPO…");
-      const result=await request("create_stream",{scope:"group",selectedPlayerIds,consent,durationHours:24,groupLabel:snapshot.groupLabel,snapshot});
-      if(!result.ok){setStatus(stateMessage(result.code),"warning");return false}
-      state=liveState();state.stream={roundId:snapshot.roundId,scope:"group",streamId:result.streamId,publisherSecret:result.publisherSecret,viewerToken:result.viewerToken,revision:Number(result.revision)||0,expiresAt:result.expiresAt,groupLabel:snapshot.groupLabel,pendingSnapshot:null,tournamentId:null};saveState(state);stream=state.stream;renderActive();
+    const matches=!!(stream?.publisherSecret&&stream?.viewerToken&&stream.roundId===snapshot.roundId&&stream.scope==="group");
+    if(matches){
+      setStatus("VALIDANDO ENLACE LIVE…");const validation=await validateStoredStreamForShare(state,stream);
+      if(validation.ok)stream=validation.stream;
+      else if(validation.network){setStatus("SIN SEÑAL · NO SE COMPARTIÓ UN ENLACE SIN VALIDAR","warning");return false}
+      else{delete state.stream;saveState(state);renderActive();stream=null}
     }
+    if(!stream)stream=await createFreshGroupStream(snapshot);
+    if(!stream)return false;
     const url=viewerUrl("stream",stream.viewerToken),shareData={title:"GOLF SCORE CARD GT · LIVE",text:"Sigue en vivo la Score Card de este grupo. Vista privada y sólo lectura.",url};
     if(root.navigator.share){try{await root.navigator.share(shareData);setStatus("COMPARTIR LIVE LISTO","ok");return true}catch(error){if(error?.name==="AbortError")return false}}
     try{await root.navigator.clipboard.writeText(url);setStatus("ENLACE LIVE COPIADO","ok");return true}catch{setStatus("NO SE PUDO COMPARTIR EN ESTE DISPOSITIVO","warning");return false}
@@ -96,7 +112,7 @@
   async function leaveTournament(){const state=liveState();if(!state.stream?.publisherSecret)return false;const result=await request("leave_tournament",{},state.stream.publisherSecret);if(!result.ok){setStatus(stateMessage(result.code),"warning");return false}state.stream.tournamentId=null;saveState(state);renderActive();return true}
   async function revokeTournament(){const state=liveState();if(!state.tournamentOwned?.organizerSecret)return false;const result=await request("revoke_tournament",{},state.tournamentOwned.organizerSecret);if(!result.ok&&result.status!==410){setStatus(stateMessage(result.code),"warning");return false}delete state.tournamentOwned;saveState(state);renderActive();return true}
   async function copyValue(id){const value=$(id)?.value;if(!value)return false;try{await root.navigator.clipboard.writeText(value);setStatus("ENLACE COPIADO","ok");return true}catch{$(id).select();root.document.execCommand?.("copy");setStatus("ENLACE COPIADO","ok");return true}}
-  async function shareStream(){const value=$("liveShareLink")?.value;if(!value)return false;if(root.navigator.share){try{await root.navigator.share({title:"GOLF SCORE CARD GT. LIVE",text:"Sigue esta ronda en vivo. Vista privada y sólo lectura.",url:value});return true}catch{}}return copyValue("liveShareLink")}
+  async function shareStream(){const state=liveState(),stream=state.stream;if(!stream?.viewerToken)return false;setStatus("VALIDANDO ENLACE LIVE…");const validation=await validateStoredStreamForShare(state,stream);if(!validation.ok){if(validation.network){setStatus("SIN SEÑAL · NO SE COMPARTIÓ UN ENLACE SIN VALIDAR","warning");return false}delete state.stream;saveState(state);renderConsent();renderActive();setStatus("EL ENLACE ANTERIOR YA NO ESTÁ ACTIVO · CREA UNO NUEVO","warning");return false}const value=viewerUrl("stream",validation.stream.viewerToken);if($("liveShareLink"))$("liveShareLink").value=value;if(root.navigator.share){try{await root.navigator.share({title:"GOLF SCORE CARD GT. LIVE",text:"Sigue esta ronda en vivo. Vista privada y sólo lectura.",url:value});return true}catch{}}return copyValue("liveShareLink")}
   async function shareTournament(){const value=$("liveTournamentLink")?.value;if(!value)return false;if(root.navigator.share){try{await root.navigator.share({title:"GOLF SCORE CARD GT. LIVE",text:"Sigue la General del torneo en vivo desde cualquier país. Vista sólo lectura.",url:value});return true}catch{}}return copyValue("liveTournamentLink")}
   function openValue(id){const value=$(id)?.value;if(value)root.open(value,"_blank","noopener,noreferrer")}
   function openHub(kind="",token=""){root.open(hubUrl(kind,token),"_blank","noopener,noreferrer");setStatus("CENTRO LIVE ABIERTO EN OTRA VENTANA","ok");return true}
@@ -122,5 +138,5 @@
     root.addEventListener("online",()=>{const state=liveState();if(state.stream?.pendingSnapshot)publishLatest()});
   }
   function mount(options){if(mounted||!root?.document)return false;adapter=options||{};inject();bind();const home=$("tournamentLiveHome");if(home)home.onclick=()=>openHub();$("liveOrganizerToggle").onclick=()=>{const panel=$("liveOrganizerPanel"),open=panel.classList.contains("hidden");panel.classList.toggle("hidden",!open);$("liveOrganizerToggle").setAttribute("aria-expanded",String(open));$("liveOrganizerToggle").textContent=open?"CERRAR ORGANIZACIÓN":"ORGANIZAR TORNEO"};mounted=true;renderConsent();renderActive();return true}
-  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,publishLatest,quickShareGroup};
+  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,streamExpired,mount,onRoundPersisted,publishLatest,quickShareGroup};
 });

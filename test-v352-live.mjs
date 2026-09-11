@@ -71,6 +71,11 @@ assert.match(liveControl,/root\.open\(hubUrl\(kind,token\),"_blank"/,"seguimient
 assert.match(liveControl,/url\.origin!==root\.location\.origin/,"el seguidor sólo abre enlaces LIVE de esta aplicación");
 assert.match(liveControl,/belongsToCurrentRound/,"un enlace de otra ronda debe revocarse antes de crear el nuevo");
 assert.match(liveControl,/pendingSnapshot/);
+assert.equal(control.streamExpired({expiresAt:"2026-09-11T10:00:00Z"},Date.parse("2026-09-11T10:00:31Z")),true,"un LIVE vencido jamás puede reutilizarse al compartir");
+assert.equal(control.streamExpired({expiresAt:"2026-09-11T11:00:00Z"},Date.parse("2026-09-11T10:00:00Z")),false,"un LIVE vigente conserva su token");
+assert.match(liveControl,/VALIDANDO ENLACE LIVE/,"COMPARTIR LIVE valida servidor antes de enviar");
+assert.match(liveControl,/request\("read",\{kind:"stream",viewerToken:stream\.viewerToken\}\)/,"el token guardado se valida contra el servidor");
+assert.match(liveControl,/delete state\.stream;saveState\(state\)/,"un token vencido o revocado se elimina antes de compartir");
 assert.match(liveControl,/addEventListener\("online"/);
 assert.match(api,/randomBytes\(32\)/);
 assert.match(api,/viewer_token_hash/);

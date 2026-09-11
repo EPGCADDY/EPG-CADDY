@@ -882,3 +882,10 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3387_R31_ESTADO_VISIBLE_SIN_URL.png`
 
 - `scripts/generate-technical-act-r32.py`
+
+
+## V407-R44 · HOTFIX LIVE: nunca compartir enlaces caducados · 11 de septiembre de 2026
+
+- `live-control.js`: COMPARTIR LIVE valida `expiresAt` y confirma el `viewerToken` con `POST /api/live action=read` antes de abrir WhatsApp/hoja de compartir. Un token vencido, revocado o inactivo se elimina y, para el botón rápido de grupo, se crea automáticamente un enlace nuevo de 24 horas. Sin red no se comparte un token que no pueda validarse.
+- `test-v352-live.mjs`: regresión permanente que impide reutilizar tokens vencidos y exige validación servidor antes de compartir.
+- Alcance: hotfix LIVE de MAESTRO; no modifica scores, cálculo, micrófono, AI Universal, actualizador ni captura V378.
