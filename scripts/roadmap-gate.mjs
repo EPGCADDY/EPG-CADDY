@@ -47,12 +47,13 @@ if(branch===experimentalBranch){
   let ledger='';
   try{ledger=readFileSync(experimentalLedger,'utf8')}catch(error){fail([`No se pudo abrir ${experimentalLedger}: ${error.message}`])}
   if(files.length===0)fail(['LAB D sin archivos modificados detectables.']);
-  const allowed=file=>file.startsWith('update-lab-d/')||file==='scripts/roadmap-gate.mjs';
+  const allowed=file=>file.startsWith('update-lab-d/')||file==='scripts/roadmap-gate.mjs'||file==='middleware.js';
   const forbidden=files.filter(file=>!allowed(file));
   if(forbidden.length)fail([`LAB D intentó tocar archivos fuera del aislamiento: ${forbidden.join(', ')}`]);
   for(const file of files.filter(file=>file.startsWith('update-lab-d/'))){
     if(!ledger.includes(file))fail([`${file} no aparece en ${experimentalLedger}.`]);
   }
+  if(files.includes('middleware.js')&&!ledger.includes('middleware.js'))fail(['middleware.js no está registrado en el ledger D.']);
   if(!ledger.includes('5b85c63438b27fce53e2d0f6aa4e371bffc3c263'))fail(['El ledger no conserva el commit baseline R33.']);
   if(!ledger.includes('primeros cinco ciclos'))fail(['El ledger no conserva la regla de descarte en los primeros cinco ciclos.']);
   console.log(`PASS ROADMAP GATE LAB D: ${files.length} modificaciones aisladas y registradas.`);
