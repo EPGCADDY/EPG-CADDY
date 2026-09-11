@@ -889,3 +889,7 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `live-control.js`: COMPARTIR LIVE valida `expiresAt` y confirma el `viewerToken` con `POST /api/live action=read` antes de abrir WhatsApp/hoja de compartir. Un token vencido, revocado o inactivo se elimina y, para el botón rápido de grupo, se crea automáticamente un enlace nuevo de 24 horas. Sin red no se comparte un token que no pueda validarse.
 - `test-v352-live.mjs`: regresión permanente que impide reutilizar tokens vencidos y exige validación servidor antes de compartir.
 - Alcance: hotfix LIVE de MAESTRO; no modifica scores, cálculo, micrófono, AI Universal, actualizador ni captura V378.
+
+## V407-R45 · Tarjeta Digital al WhatsApp registrado · 11 de septiembre de 2026
+
+`ENVIAR TARJETA DIGITAL` usa el WhatsApp registrado. Tras cerrar la ronda, sincroniza el snapshot oficial, obtiene un token opaco propio de `card_records` y abre el chat del primer jugador con WhatsApp registrado con un enlace permanente de sólo lectura a la Tarjeta Digital Oficial. La lectura pública expone únicamente `officialSnapshot`, sin WhatsApp ni correo. Sin número o sin tarjeta central disponible, conserva el PNG nativo. LIVE permanece separado e intacto. Archivos: `api/card-share.js`, `card-share.html`, `index-grupal.html`, `middleware.js`, `test-r45-card-share.mjs`.
