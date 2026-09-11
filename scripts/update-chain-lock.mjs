@@ -22,12 +22,12 @@ const isRuntime=path=>{
 };
 const payloadFiles=tracked.filter(isRuntime).sort();
 for(const required of ['candidate-index-grupal.html','index-grupal.html','middleware.js','vercel.json'])if(!payloadFiles.includes(required))throw new Error(`REQUIRED_RUNTIME_MISSING_${required}`);
-const hashes=Object.fromEntries(payloadFiles.map(path=>[path,sha256(fs.readFileSync(path))]));
-const fingerprint=sha256(Buffer.from(payloadFiles.map(path=>`${path}:${hashes[path]}`).join('\n')));
+const files=Object.fromEntries(payloadFiles.map(path=>[path,sha256(fs.readFileSync(path))]));
+const fingerprint=sha256(Buffer.from(payloadFiles.map(path=>`${path}:${files[path]}`).join('\n')));
 const release=capture(text('api/release.js'),/release:'([^']+)'/,'API_RELEASE');
 const generatorRelease=capture(text('scripts/apply-update-e.mjs'),/const release='([^']+)'/,'GENERATOR_RELEASE');
 if(release!==generatorRelease)throw new Error(`RELEASE_DESYNC_${release}_${generatorRelease}`);
-const lock={schema:'gscg-update-chain-payload/v2',status:'PUBLICATION_CHAIN_LOCKED',release,fileCount:payloadFiles.length,fingerprint,candidateSha256:hashes['candidate-index-grupal.html'],generatedFromCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'runtime-auto-v1'};
+const lock={schema:'gscg-update-chain-payload/v3',status:'PUBLICATION_CHAIN_LOCKED',release,fileCount:payloadFiles.length,fingerprint,candidateSha256:files['candidate-index-grupal.html'],generatedFromCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'runtime-auto-v2',files};
 fs.mkdirSync('Intocables',{recursive:true});
 fs.writeFileSync(manifestPath,JSON.stringify(lock,null,2)+'\n');
 console.log(`UPDATE_CHAIN_LOCK WRITTEN release=${release} files=${payloadFiles.length} fingerprint=${fingerprint.slice(0,12)}`);
