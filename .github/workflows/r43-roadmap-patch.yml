@@ -40,6 +40,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ROADMAP_OVERALL.md ROADMAP_A_DETALLE.md .github/workflows/r43-roadmap-patch.yml
+          git add -A
           git commit -m "LAB R43: register universal AI fallback in both roadmaps"
           git push origin HEAD:lab/r43-universal-ai-fallback
