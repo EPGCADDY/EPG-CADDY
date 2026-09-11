@@ -1,10 +1,17 @@
 "use strict";
 (()=>{
   const RELEASE_ENDPOINT="/api/release";
+  const SHELL_ENDPOINT="/app-current-shell.html";
   const LEGACY_CACHE_PREFIX="gscg-mobile-";
+  const INSTALLED_HTML_KEY="gscg_installed_shell_html_v1";
+  const INSTALLED_RELEASE_KEY="gscg_active_release_v1";
   const CURRENT_RELEASE=document.querySelector('meta[name="gscg-release"]')?.content||"";
   let checking=false,updating=false,pending=CURRENT_RELEASE;
   const $=id=>document.getElementById(id);
+
+  try{
+    if(CURRENT_RELEASE&&!localStorage.getItem(INSTALLED_RELEASE_KEY))localStorage.setItem(INSTALLED_RELEASE_KEY,CURRENT_RELEASE);
+  }catch{}
 
   function setCurrent(){
     pending=CURRENT_RELEASE;
@@ -32,7 +39,7 @@
     if(checking||updating||document.hidden)return;
     checking=true;
     try{const data=await fetchRelease();setAvailable(data.release)}
-    catch(error){console.warn("APP_VERSION_SYNC_DIRECT",error?.message||error)}
+    catch(error){console.warn("APP_VERSION_SYNC_PINNED",error?.message||error)}
     finally{checking=false}
   }
   function persistState(){
@@ -40,8 +47,8 @@
     try{window.persist?.()}catch{}
   }
   async function fetchAndVerifyShell(expectedRelease){
-    const probe=new URL("/index-grupal.html",location.origin);
-    probe.searchParams.set("direct_update_probe",String(Date.now()));
+    const probe=new URL(SHELL_ENDPOINT,location.origin);
+    probe.searchParams.set("manual_update_probe",String(Date.now()));
     probe.searchParams.set("expected_release",expectedRelease);
     const response=await fetch(probe.toString(),{cache:"no-store",headers:{"Cache-Control":"no-cache","Pragma":"no-cache"}});
     if(!response.ok)throw new Error(`SHELL_HTTP_${response.status}`);
@@ -49,7 +56,7 @@
     if(html.length<300000)throw new Error("SHELL_TOO_SMALL");
     const release=html.match(/<meta\s+name=["']gscg-release["']\s+content=["']([^"']+)["']/i)?.[1]||"";
     if(release!==expectedRelease)throw new Error(`SHELL_RELEASE_MISMATCH_${release||"EMPTY"}`);
-    return true;
+    return html;
   }
   async function retireLegacyWorkersAndCaches(){
     if("caches" in window){
@@ -70,17 +77,18 @@
       persistState();
       const data=await fetchRelease();
       if(data.release!==pending)throw new Error("RELEASE_CHANGED_DURING_UPDATE");
-      await fetchAndVerifyShell(data.release);
+      const html=await fetchAndVerifyShell(data.release);
+      localStorage.setItem(INSTALLED_HTML_KEY,html);
+      localStorage.setItem(INSTALLED_RELEASE_KEY,data.release);
       await retireLegacyWorkersAndCaches();
       const next=new URL("/index-grupal.html",location.origin);
       const source=new URL(location.href).searchParams.get("source");
       if(source)next.searchParams.set("source",source);
-      next.searchParams.set("release",data.release);
-      next.searchParams.set("direct_update",String(Date.now()));
+      next.searchParams.set("manual_update",String(Date.now()));
       location.replace(next.toString());
     }catch(error){
       updating=false;
-      console.warn("APP_UPDATE_DIRECT",error?.message||error);
+      console.warn("APP_UPDATE_PINNED",error?.message||error);
       setAvailable(pending);
       setTimeout(check,500);
     }
@@ -94,7 +102,7 @@
     return true;
   }
   if(!replaceOldListener())return;
-  window.GSCUpdateDirect={check,fetchRelease,current:CURRENT_RELEASE};
+  window.GSCUpdatePinned={check,fetchRelease,current:CURRENT_RELEASE};
   setCurrent();
   setTimeout(check,250);
   setInterval(check,30000);
