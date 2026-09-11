@@ -13,16 +13,36 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: lab/update-chain-hardening-r47
-          fetch-depth: 2
+          fetch-depth: 5
       - name: Generate runtime payload lock
         run: node scripts/update-chain-lock.mjs
       - name: Verify runtime payload lock
         run: node scripts/update-chain-gate.mjs
-      - name: Commit lock only
+      - name: Register R47 in both roadmaps and commit atomically
+        shell: bash
         run: |
+          set -euo pipefail
+          marker='V407-R47 LAB · cadena de publicación ACTUALIZAR endurecida'
+          block=$(cat <<'EOF'
+
+## V407-R47 LAB · cadena de publicación ACTUALIZAR endurecida · 11 de septiembre de 2026
+
+- Se mantiene `update-client-e.js` intacto; el motor ACTUALIZAR sigue protegido y fuera de alcance.
+- `scripts/update-chain-gate.mjs` corre primero en el build de Vercel y bloquea cualquier payload runtime distinto del autorizado.
+- `scripts/update-chain-lock.mjs` genera la huella reproducible del payload runtime y `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json` sella release, candidato y archivos entregables.
+- `vercel.json` se controla por contrato semántico (`update-chain-gate` primero) porque Vercel normaliza sus bytes durante build; no se excluye su obligación funcional.
+- Prueba negativa confirmada: un cambio runtime sin nueva release fue rechazado por `CHAIN_PAYLOAD_FINGERPRINT_STALE`.
+- R47 usa `V407-R47-DIRECT-UPDATE-CHAIN-20260911`; `api/release.js` y `scripts/apply-update-e.mjs` deben permanecer sincronizados.
+- Archivos de control R47: `scripts/update-chain-gate.mjs`, `scripts/update-chain-lock.mjs`, `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json`, `vercel.json`, `api/release.js`, `scripts/apply-update-e.mjs`, `.github/workflows/r47-update-chain-lock.yml` y `.github/workflows/r47-roadmap-register.yml`.
+- MAIN y MAESTRO permanecen intactos. La entrega final sólo será válida desde el botón ACTUALIZAR de la app instalada y con prueba física en iPhone conservando la ronda.
+EOF
+          )
+          if ! grep -Fq "$marker" ROADMAP_OVERALL.md; then printf '%s\n' "$block" >> ROADMAP_OVERALL.md; fi
+          if ! grep -Fq "$marker" ROADMAP_A_DETALLE.md; then printf '%s\n' "$block" >> ROADMAP_A_DETALLE.md; fi
+
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add Intocables/UPDATE_CHAIN_PAYLOAD.lock.json
+          git add Intocables/UPDATE_CHAIN_PAYLOAD.lock.json ROADMAP_OVERALL.md ROADMAP_A_DETALLE.md
           git diff --cached --quiet && exit 0
-          git commit -m "R47 LAB: seal automatic update payload fingerprint"
+          git commit -m "R47 LAB: atomically seal update chain and both roadmaps"
           git push origin HEAD:lab/update-chain-hardening-r47
