@@ -10,11 +10,16 @@ Arquitectura:
 - El lifecycle del Service Worker no es requisito para detectar ni activar una actualización.
 - Navegación/recarga con cache-busting y verificación posterior.
 - service-worker.js se usa sólo como puente de migración R33→E: retira caches antiguos y luego se desregistra.
+- El HTML E se transforma sólo durante build mediante scripts/apply-update-e.mjs; la baseline R33 en Git no se reescribe.
+- update-client-e.js reemplaza el listener del botón ACTUALIZAR después de cargar el HTML, consulta /api/release y preserva estado antes de recargar.
 
 Archivos autorizados:
 - api/release.js
 - middleware.js
 - service-worker.js
+- vercel.json
+- scripts/apply-update-e.mjs
+- update-client-e.js
 - update-lab-e/ROADMAP_UPDATE_LAB_E.md
 - scripts/roadmap-gate.mjs
 
@@ -25,3 +30,4 @@ Reglas:
 4. Arquitecturas C y D quedan descartadas y no se reutiliza su lifecycle waiting/installing como condición crítica.
 5. middleware.js sólo puede exponer /api/release para esta rama LAB E; no se alteran los controles de acceso restantes.
 6. El worker de migración sólo puede borrar caches cuyo nombre empiece por gscg-mobile-; no toca localStorage, IndexedDB ni datos de ronda.
+7. El parche de build debe abortar si no encuentra exactamente un meta gscg-release y un cierre </body>; no puede publicar una transformación parcial.
