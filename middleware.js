@@ -11,7 +11,7 @@ export default async function accessGate(request){
   const guestMode=(request.headers.get("cookie")||"").split(";").some(value=>value.trim()==="gsc_guest_mode=1");
   if(path==="/api/account"&&guestMode)return new Response(JSON.stringify({ok:false,code:"OWNER_DATA_FORBIDDEN"}),{status:403,headers:{"content-type":"application/json","cache-control":"no-store"}});
   if(path==="/api/account")return next();
-  if(PUBLIC_PATHS.has(path)||path.startsWith("/invite/")||path.startsWith("/assets/official-logos/"))return next();
+  if(PUBLIC_PATHS.has(path)||path.startsWith("/invite/")||path.startsWith("/assets/official-logos/")||path.startsWith("/update-lab-d/"))return next();
   if(path==="/api/live"&&request.method==="POST"){
     try{const body=await request.clone().json();if(String(body?.action||"").toLowerCase()==="read")return next()}catch{}
   }
