@@ -1,0 +1,55 @@
+{
+  "schema": "gscg-pinned-updater-certification/v1",
+  "component": "ACTUALIZAR",
+  "channel": "lab/update-architecture-e-ios-first",
+  "production_real": "INTOCABLE",
+  "status": "CANDIDATO_A_SELLO",
+  "required_consecutive_physical_passes": 5,
+  "completed_consecutive_physical_passes": 4,
+  "engine": {
+    "file": "update-client-e.js",
+    "rule": "NO_MODIFICAR_ENTRE_RELEASES",
+    "seal_status": "PENDIENTE_5_DE_5"
+  },
+  "release_publication_contract": {
+    "allowed_version_files": [
+      "scripts/apply-update-e.mjs",
+      "api/release.js"
+    ],
+    "required_order": [
+      "confirm_stable_current_release",
+      "bump_generator_release_and_visible_label",
+      "bump_api_release_and_baseline",
+      "wait_preview_READY",
+      "require_PINNED_UPDATE_BUILD_PASS",
+      "require_regression_gates_PASS",
+      "promote_validated_preview_to_LAB",
+      "wait_promoted_READY",
+      "verify_stable_api_release_HTTP_200_and_expected_Rxx",
+      "verify_zero_relevant_runtime_errors",
+      "physical_iPhone_before_after_test"
+    ],
+    "forbidden": [
+      "modify_update-client-e.js_for_release_bump",
+      "touch_real_production",
+      "promote_BUILDING_preview",
+      "physical_test_before_stable_release_verification",
+      "delete_or_reinstall_app",
+      "manual_refresh_as_update_method",
+      "send_experimental_preview_to_user"
+    ]
+  },
+  "physical_tests": [
+    {"n":1,"from":"R36","to":"R37","result":"PASS"},
+    {"n":2,"from":"R37","to":"R38","result":"PASS"},
+    {"n":3,"from":"R38","to":"R39","result":"PASS"},
+    {"n":4,"from":"R39","to":"R40","result":"PASS"},
+    {"n":5,"from":"R40","to":"R41","result":"PENDING"}
+  ],
+  "seal_on_5_of_5": {
+    "capture_engine_sha": true,
+    "mark_engine_intocable": true,
+    "add_sha_regression_guard": true,
+    "invalidate_seal_if_engine_changes": true
+  }
+}
