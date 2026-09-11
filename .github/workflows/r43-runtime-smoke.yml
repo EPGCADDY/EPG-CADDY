@@ -37,7 +37,7 @@ jobs:
 
           try{
             let calls=[];
-            globalThis.fetch=async(url,options)=>{
+            globalThis.fetch=async(url)=>{
               calls.push(String(url));
               if(String(url).includes('api.openai.com')) return mkResponse(200,{model:'gpt-5.6',output:[{type:'message',content:[{type:'output_text',text:'PRIMARY_OK'}]}]});
               throw new Error('unexpected fetch '+url);
@@ -51,7 +51,7 @@ jobs:
             console.log('PASS R43 primary 200 passthrough');
 
             calls=[];
-            globalThis.fetch=async(url,options)=>{
+            globalThis.fetch=async(url)=>{
               calls.push(String(url));
               if(String(url).includes('api.openai.com')) return mkResponse(400,{error:{code:'invalid_request_error'}});
               if(String(url).includes('ai-gateway.vercel.sh')) return mkResponse(200,{model:'openai/gpt-5.6-sol',output:[{type:'message',content:[{type:'output_text',text:'FALLBACK_RECOVERED'}]}]});
@@ -66,6 +66,27 @@ jobs:
             assert.equal(res.headers['x-epg-ai-fallback'],'R43');
             assert.equal(calls.filter(x=>x.includes('ai-gateway.vercel.sh')).length,1);
             console.log('PASS R43 AI failure -> gateway recovery 200');
+
+            calls=[];
+            let openAiCount=0;
+            globalThis.fetch=async(url)=>{
+              calls.push(String(url));
+              if(String(url).includes('api.openai.com')){
+                openAiCount+=1;
+                return mkResponse(200,{model:'gpt-5.6',output:[]});
+              }
+              if(String(url).includes('ai-gateway.vercel.sh')) return mkResponse(200,{model:'openai/gpt-5.6-sol',output:[{type:'message',content:[{type:'output_text',text:'EMPTY_RECOVERED'}]}]});
+              throw new Error('unexpected fetch '+url);
+            };
+            res=mkRes();
+            await handler(req('prueba respuesta vacía'),res);
+            assert.equal(openAiCount,1);
+            assert.equal(res.statusCode,200);
+            assert.equal(res.body.answer,'EMPTY_RECOVERED');
+            assert.equal(res.body.mode,'GATEWAY_R43');
+            assert.equal(res.headers['x-epg-ai-fallback'],'R43');
+            assert.equal(calls.filter(x=>x.includes('ai-gateway.vercel.sh')).length,1);
+            console.log('PASS R43 empty 200 -> gateway recovery 200');
 
             calls=[];
             globalThis.fetch=async(url)=>{calls.push(String(url));throw new Error('network must not run')};
