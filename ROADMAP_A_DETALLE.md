@@ -966,4 +966,5 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Alcance protegido: no modifica `index-grupal.html`, captura/micrófono V378, umbral, sensibilidad, voz aprobada, actualizador ni Main/producción.
 - Evidencia de origen: R42 registró primer turno `transcript_ready → /api/universal-ai 200 → voz`; segundo y tercer turno `transcript_ready → /api/universal-ai 502 → query_failed`.
 - Criterio de aprobación: build/gates PASS, endpoint HTTP probado y regresión sin cambios en intocables antes de prueba física en iPhone.
+- Temporary helper history: `.github/workflows/r43-roadmap-patch.yml` was used only to append the mandatory R43 roadmap registration and self-delete; it is not part of the final runtime or deployment.
 
