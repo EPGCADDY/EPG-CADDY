@@ -22,6 +22,7 @@ Archivos autorizados:
 - vercel.json
 - scripts/apply-update-e.mjs
 - update-client-e.js
+- index-grupal.html
 - update-lab-e/ROADMAP_UPDATE_LAB_E.md
 - scripts/roadmap-gate.mjs
 
