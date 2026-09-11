@@ -1,4 +1,4 @@
-name: R45 Roadmap Registration
+name: R45 LAB Candidate Delivery
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
 permissions:
   contents: write
 jobs:
-  register:
+  deliver:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
@@ -14,20 +14,54 @@ jobs:
         with:
           ref: hotfix/card-share-whatsapp-r45
           fetch-depth: 2
-      - name: Register R45 files in both roadmaps
+      - name: Patch only approved E candidate and release identity
         shell: python
         run: |
           from pathlib import Path
-          line='\nR45 publicación: `test-v397-card-in-out-back-contract.mjs` valida que ENVIAR TARJETA DIGITAL use el WhatsApp registrado y conserve PNG como fallback; `.github/workflows/r45-card-share-whatsapp-v2.yml` se utilizó exclusivamente para registrar y publicar este hotfix.\n'
+          index_path=Path('index-grupal.html')
+          candidate_path=Path('candidate-index-grupal.html')
+          apply_path=Path('scripts/apply-update-e.mjs')
+          index=index_path.read_text(encoding='utf-8')
+          candidate=candidate_path.read_text(encoding='utf-8')
+          start='function registeredWhatsAppForFinalCard()'
+          anchor='async function shareOfficialArtifactImage(item){'
+          if start not in index: raise SystemExit('R45 source helper missing')
+          helper=index[index.index(start):index.index(anchor,index.index(start))]
+          if start not in candidate:
+              if anchor not in candidate: raise SystemExit('candidate share anchor missing')
+              candidate=candidate.replace(anchor,helper+anchor,1)
+          old='$("sendFinalCard").addEventListener("click",()=>shareOfficialArtifactImage(officialArtifacts().global));'
+          new='$("sendFinalCard").addEventListener("click",sendFinalCardToRegisteredWhatsApp);'
+          if new not in candidate:
+              if old not in candidate: raise SystemExit('candidate sendFinalCard listener missing')
+              candidate=candidate.replace(old,new,1)
+          if start not in candidate or new not in candidate: raise SystemExit('R45 candidate verify failed')
+          candidate_path.write_text(candidate,encoding='utf-8')
+          apply=apply_path.read_text(encoding='utf-8')
+          apply=apply.replace("const release='V407-R43-DIRECT-UPDATE-20260911';","const release='V407-R45-LAB-SHARING-20260911';",1)
+          apply=apply.replace("html=html.replace(/V407\\s*·\\s*R33/g,'V407 · R43');","html=html.replace(/V407\\s*·\\s*R33/g,'V407 · R45');",1)
+          verify="if(!html.includes('sendFinalCardToRegisteredWhatsApp'))throw new Error('R45_CARD_SHARE_NOT_IN_CANDIDATE');\n"
+          marker="if(!originalSw.includes('gscg-mobile-v363-recorded-mobile-behavior'))throw new Error('SOURCE_SW_NOT_R33');\n"
+          if verify not in apply:
+              if marker not in apply: raise SystemExit('apply-update E verification anchor missing')
+              apply=apply.replace(marker,marker+verify,1)
+          if 'V407-R45-LAB-SHARING-20260911' not in apply or "V407 · R45" not in apply: raise SystemExit('R45 release identity verify failed')
+          apply_path.write_text(apply,encoding='utf-8')
+          note='\nR45 entrega LAB por arquitectura E aprobada: `candidate-index-grupal.html` incorpora `sendFinalCardToRegisteredWhatsApp`; `scripts/apply-update-e.mjs` publica `V407-R45-LAB-SHARING-20260911` y exige el marcador R45 antes de construir. `update-client-e.js` permanece INTOCABLE. LIVE R44 continúa en `live-control.js`.\n'
           for name in ('ROADMAP_A_DETALLE.md','ROADMAP_OVERALL.md'):
-              p=Path(name)
-              text=p.read_text(encoding='utf-8')
-              if '.github/workflows/r45-card-share-whatsapp-v2.yml' not in text:
-                  p.write_text(text+line,encoding='utf-8')
-      - name: Commit roadmaps only
+              p=Path(name); text=p.read_text(encoding='utf-8')
+              if 'V407-R45-LAB-SHARING-20260911' not in text: p.write_text(text+note,encoding='utf-8')
+      - name: Verify protected updater unchanged and focused contracts
+        run: |
+          node scripts/update-intocable-gate.mjs source
+          node test-r45-card-share.mjs
+          node test-v352-live.mjs
+          node test-v397-card-in-out-back-contract.mjs
+      - name: Commit candidate delivery only
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add ROADMAP_A_DETALLE.md ROADMAP_OVERALL.md
-          git commit -m "R45: register publication workflow in roadmaps"
+          git add candidate-index-grupal.html scripts/apply-update-e.mjs ROADMAP_A_DETALLE.md ROADMAP_OVERALL.md
+          git diff --cached --quiet && exit 0
+          git commit -m "V407-R45 LAB: deliver sharing hotfixes through update E candidate"
           git push origin HEAD:hotfix/card-share-whatsapp-r45
