@@ -1,14 +1,18 @@
 import {readFileSync,writeFileSync} from 'node:fs';
 
-const path='index-grupal.html';
+const htmlPath='index-grupal.html';
+const swPath='service-worker.js';
 const release='V407-E1-IOS-FIRST';
-let html=readFileSync(path,'utf8');
+let html=readFileSync(htmlPath,'utf8');
+const originalSw=readFileSync(swPath,'utf8');
 
 function replaceExactlyOnce(source,pattern,replacement,label){
   const matches=[...source.matchAll(pattern)];
   if(matches.length!==1)throw new Error(`${label}_COUNT_${matches.length}`);
   return source.replace(pattern,replacement);
 }
+
+if(!originalSw.includes('gscg-mobile-v363-recorded-mobile-behavior'))throw new Error('SOURCE_SW_NOT_R33');
 
 html=replaceExactlyOnce(
   html,
@@ -31,5 +35,8 @@ if(!html.includes(`content="${release}"`))throw new Error('RELEASE_META_VERIFY_F
 if(!html.includes('/update-client-e.js'))throw new Error('UPDATE_CLIENT_INJECTION_FAIL');
 if(html.includes(swRegistration))throw new Error('OLD_SW_REGISTRATION_STILL_PRESENT');
 
-writeFileSync(path,html);
-console.log(`UPDATE_E_BUILD_PATCH PASS release=${release}`);
+const migrationSw=`"use strict";\n\nconst MIGRATION_RELEASE="${release}";\nconst LEGACY_CACHE_PREFIX="gscg-mobile-";\n\nself.addEventListener("install",event=>{event.waitUntil(self.skipWaiting())});\nself.addEventListener("activate",event=>{\n  event.waitUntil((async()=>{\n    const names=await caches.keys();\n    const legacy=names.filter(name=>name.startsWith(LEGACY_CACHE_PREFIX));\n    await Promise.all(legacy.map(name=>caches.delete(name)));\n    await self.clients.claim();\n    await self.registration.unregister();\n    const clients=await self.clients.matchAll({type:"window",includeUncontrolled:true});\n    await Promise.all(clients.map(async client=>{\n      try{\n        const url=new URL(client.url);\n        url.searchParams.delete("__gscg_build_check");\n        url.searchParams.delete("app_version");\n        url.searchParams.set("e_migrated",MIGRATION_RELEASE);\n        url.searchParams.set("e_reload",String(Date.now()));\n        await client.navigate(url.toString());\n      }catch{}\n    }));\n  })());\n});\n`;
+
+writeFileSync(htmlPath,html);
+writeFileSync(swPath,migrationSw);
+console.log(`UPDATE_E_BUILD_PATCH PASS release=${release} html=patched sw=migration`);
