@@ -1,4 +1,4 @@
-name: R45 Card Share WhatsApp v2
+name: R45 Roadmap Registration
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
 permissions:
   contents: write
 jobs:
-  patch:
+  register:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
@@ -14,14 +14,20 @@ jobs:
         with:
           ref: hotfix/card-share-whatsapp-r45
           fetch-depth: 2
-      - name: Apply patch
-        run: python3 scripts/apply-r45-card-share.py
-      - name: Verify focused contract
-        run: node test-r45-card-share.mjs && git diff --check
-      - name: Commit final R45
+      - name: Register V397 in both roadmaps
+        shell: python
+        run: |
+          from pathlib import Path
+          line='\nR45 regresión actualizada: `test-v397-card-in-out-back-contract.mjs` valida que ENVIAR TARJETA DIGITAL use el WhatsApp registrado y conserve PNG como fallback.\n'
+          for name in ('ROADMAP_A_DETALLE.md','ROADMAP_OVERALL.md'):
+              p=Path(name)
+              text=p.read_text(encoding='utf-8')
+              if 'R45 regresión actualizada: `test-v397-card-in-out-back-contract.mjs`' not in text:
+                  p.write_text(text+line,encoding='utf-8')
+      - name: Commit roadmaps only
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add api/card-share.js card-share.html index-grupal.html middleware.js test-r45-card-share.mjs ROADMAP_A_DETALLE.md ROADMAP_OVERALL.md
-          git commit -m "V407-R45: send official card to registered WhatsApp"
+          git add ROADMAP_A_DETALLE.md ROADMAP_OVERALL.md
+          git commit -m "R45: register digital card regression in roadmaps"
           git push origin HEAD:hotfix/card-share-whatsapp-r45
