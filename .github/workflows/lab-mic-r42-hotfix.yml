@@ -1,0 +1,56 @@
+name: LAB R42 iPhone speech-start hotfix
+on:
+  push:
+    branches: [lab/v407-r24-whatsapp-registration]
+    paths: [.github/workflows/lab-mic-r42-hotfix.yml]
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lab/v407-r24-whatsapp-registration
+          fetch-depth: 0
+      - name: Patch only post-answer audio start and publish R42
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('candidate-index-grupal.html'); s=p.read_text()
+          start=s.index('async function speakAiUniversalApprovedFemaleVoice(clean){')
+          end=s.index('async function speakAiUniversalText(text,{repeat=false}={}){',start)
+          old=s[start:end]
+          assert 'window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);return true;' in old
+          new='''async function speakAiUniversalApprovedFemaleVoice(clean){\n  if(!(\"speechSynthesis\" in window)||typeof SpeechSynthesisUtterance!==\"function\")return false;\n  const voice=await waitForPreferredApprovedFemaleVoice();if(!voice)return false;\n  window.speechSynthesis.cancel();window.speechSynthesis.resume?.();\n  return await new Promise(resolve=>{\n    const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;utterance.lang=voice.lang||\"es-419\";utterance.rate=.9;utterance.pitch=1;utterance.voice=voice;\n    let settled=false,started=false,startTimer=null;\n    const settle=value=>{if(settled)return;settled=true;if(startTimer)clearTimeout(startTimer);resolve(value)};\n    utterance.onstart=()=>{started=true;reportVoiceHealth(\"browser_fallback_speech_started\");setPrimaryVoiceMatrix(\"responding\",voiceContext);aiUniversalSetState(\"RESPONDIENDO EN VOZ\",{busy:true});settle(true)};\n    utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;if(resumeBrowserVoiceConversationAfterSpeech())return;setPrimaryVoiceMatrix(listening?\"listening\":\"idle\",voiceContext);aiUniversalSetState(\"LISTO · PUEDES CONTINUAR\")};if(!started)settle(false)};\n    utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth(\"browser_fallback_speech_failed\");settle(false)};\n    window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);\n    startTimer=setTimeout(()=>{if(started)return;try{window.speechSynthesis.cancel()}catch{};if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth(\"browser_fallback_speech_failed\");settle(false)},1200);\n  });\n}\n'''
+          s=s[:start]+new+s[end:]
+          assert 'startTimer=setTimeout' in s and 'settle(false)},1200)' in s
+          p.write_text(s)
+
+          p=Path('scripts/apply-update-e.mjs'); x=p.read_text(); x=x.replace("V407-R41-DIRECT-UPDATE-20260911","V407-R42-DIRECT-UPDATE-20260911").replace("V407 · R41","V407 · R42"); assert 'V407-R42-DIRECT-UPDATE-20260911' in x; p.write_text(x)
+          p=Path('api/release.js'); x=p.read_text().replace("V407-R41-DIRECT-UPDATE-20260911","V407-R42-DIRECT-UPDATE-20260911").replace("baseline:'V407-R41'","baseline:'V407-R42'").replace("publishedAt:'2026-09-11T11:08:00Z'","publishedAt:'2026-09-11T11:42:00Z'"); assert "baseline:'V407-R42'" in x; p.write_text(x)
+
+          p=Path('scripts/roadmap-gate.mjs'); x=p.read_text(); needle="'.github/workflows/roadmap-gate.yml'"; repl="'.github/workflows/roadmap-gate.yml','.github/workflows/lab-mic-r42-hotfix.yml'"; assert needle in x; x=x.replace(needle,repl,1); p.write_text(x)
+          p=Path('update-lab-e/ROADMAP_UPDATE_LAB_E.md'); x=p.read_text();
+          x=x.replace('- .github/workflows/roadmap-gate.yml','- .github/workflows/roadmap-gate.yml\n- .github/workflows/lab-mic-r42-hotfix.yml')
+          block='''\n\nR42 · HOTFIX RESPUESTA AUDIBLE iPHONE · 11 de septiembre de 2026:\n- Evidencia runtime R41: tres POST /api/universal-ai terminaron HTTP 200 y voice-health registró browser_fallback_query_answered, pero no browser_fallback_speech_started. La IA sí respondió; el bloqueo estaba entre respuesta textual y arranque de SpeechSynthesis.\n- candidate-index-grupal.html: speakAiUniversalApprovedFemaleVoice ya no declara éxito al llamar speechSynthesis.speak(); espera onstart real. Si iOS no inicia audio en 1200 ms, cancela esa ruta y devuelve false para activar inmediatamente el TTS servidor ya existente.\n- El umbral/captura V378, parsers de Registro/Scores y semantic_vad R41 no se modifican.\n- scripts/apply-update-e.mjs + api/release.js publican R42 por el actualizador INTOCABLE.\n- .github/workflows/lab-mic-r42-hotfix.yml es transporte temporal autocontenido y se elimina en el mismo commit funcional.\n'''
+          x=x.rstrip()+block+'\n'; p.write_text(x)
+          PY
+          npm install --omit=dev --no-package-lock
+          node test-v357-ios-voice-transport-recovery.mjs
+          node test-v355-ios-audio-dictation.mjs
+          node test-v356-voice-only-cedar-quality.mjs
+          node test-v362-physical-voice-recovery.mjs
+          node scripts/update-intocable-gate.mjs source
+          grep -q 'startTimer=setTimeout' candidate-index-grupal.html
+          grep -q 'V407-R42-DIRECT-UPDATE-20260911' api/release.js
+      - name: Commit verified isolated hotfix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/lab-mic-r42-hotfix.yml
+          git add candidate-index-grupal.html scripts/apply-update-e.mjs api/release.js scripts/roadmap-gate.mjs update-lab-e/ROADMAP_UPDATE_LAB_E.md
+          git commit -m 'LAB R42: fail over when iPhone speech does not actually start'
+          git push origin HEAD:lab/v407-r24-whatsapp-registration
