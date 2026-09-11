@@ -6,6 +6,8 @@ const roadmapDetail='ROADMAP_A_DETALLE.md';
 const requiredRoadmaps=[roadmapOverall,roadmapDetail];
 const activation='23 de agosto de 2026, 17:05:00, hora de Guatemala';
 const cutoff='línea 185';
+const experimentalBranch='lab/update-architecture-e-ios-first';
+const experimentalLedger='update-lab-e/ROADMAP_UPDATE_LAB_E.md';
 
 function runGit(args){
   const result=spawnSync('git',args,{encoding:'utf8'});
@@ -42,6 +44,23 @@ function fail(messages){
   process.exit(1);
 }
 
+const files=changedFiles();
+const branch=process.env.VERCEL_GIT_COMMIT_REF||process.env.GITHUB_REF_NAME||'';
+if(branch===experimentalBranch){
+  let ledger='';
+  try{ledger=readFileSync(experimentalLedger,'utf8')}catch(error){fail([`No se pudo abrir ${experimentalLedger}: ${error.message}`])}
+  if(files.length===0)fail(['LAB E sin archivos modificados detectables.']);
+  const allowed=file=>file==='api/release.js'||file.startsWith('update-lab-e/')||file==='scripts/roadmap-gate.mjs';
+  const forbidden=files.filter(file=>!allowed(file));
+  if(forbidden.length)fail([`LAB E intentó tocar archivos fuera del aislamiento: ${forbidden.join(', ')}`]);
+  for(const file of files.filter(file=>file!=='scripts/roadmap-gate.mjs')){
+    if(!ledger.includes(file))fail([`${file} no aparece en ${experimentalLedger}.`]);
+  }
+  if(!ledger.includes('5b85c63438b27fce53e2d0f6aa4e371bffc3c263'))fail(['El ledger no conserva el commit baseline R33.']);
+  console.log(`PASS ROADMAP GATE LAB E: ${files.length} modificaciones aisladas y registradas.`);
+  process.exit(0);
+}
+
 let overall='';
 let detail='';
 try{
@@ -51,7 +70,6 @@ try{
   fail([`No se pudieron abrir ambos ROADMAPS: ${error.message}`]);
 }
 
-const files=changedFiles();
 if(files.length===0){
   if(process.env.VERCEL)fail(['Vercel no pudo determinar los archivos modificados; publicación bloqueada por seguridad.']);
   console.log('PASS ROADMAP GATE: no hay modificaciones pendientes que registrar.');
