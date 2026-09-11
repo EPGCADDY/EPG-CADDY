@@ -1,0 +1,52 @@
+{
+  "schema": "gscg-pinned-updater-lock/v1",
+  "component": "ACTUALIZAR",
+  "status": "INTOCABLE_TECNICO",
+  "engine": {
+    "path": "update-client-e.js",
+    "gitBlobSha1": "d09314e0294515e6a271e7e1166009a008652b93",
+    "rule": "NO_MODIFICAR_ENTRE_RELEASES",
+    "changePolicy": "Cualquier cambio del motor requiere orden expresa del propietario, invalida el sello y obliga a nueva certificacion fisica completa."
+  },
+  "authorizedReleaseFiles": [
+    "scripts/apply-update-e.mjs",
+    "api/release.js"
+  ],
+  "requiredInvariants": [
+    "release_generator_equals_api_release",
+    "api_baseline_matches_release_Rxx",
+    "update_client_blob_sha_is_exact",
+    "shell_release_equals_announced_release_after_build",
+    "cache_policy_no_store_for_release_check",
+    "shell_download_verified_before_install",
+    "installed_shell_and_release_persisted_before_reload",
+    "legacy_service_workers_and_caches_retired",
+    "update_button_transitions_ACTUALIZAR_to_ACTUALIZADO"
+  ],
+  "forbidden": [
+    "modify_update-client-e.js_for_version_bump",
+    "publish_generator_without_api_release",
+    "publish_api_release_without_generator",
+    "promote_build_before_READY",
+    "physical_test_before_endpoint_and_runtime_validation",
+    "delete_or_reinstall_app_as_update_method",
+    "manual_refresh_as_update_method",
+    "touch_real_production_without_explicit_order"
+  ],
+  "rollbackAnchor": {
+    "branch": "lab/v407-r24-whatsapp-registration",
+    "knownGoodCommit": "c339195569a7f549f99f7f6821942efec70fc95d",
+    "knownGoodRelease": "V407-R40-DIRECT-UPDATE-20260910",
+    "engineBlob": "d09314e0294515e6a271e7e1166009a008652b93"
+  },
+  "physicalEvidence": {
+    "consecutivePasses": 4,
+    "tests": [
+      "R36->R37 PASS",
+      "R37->R38 PASS",
+      "R38->R39 PASS",
+      "R39->R40 PASS"
+    ],
+    "historicalJump": "R35 detects R40 and exposes ACTUALIZAR; post-update evidence tracked separately"
+  }
+}
