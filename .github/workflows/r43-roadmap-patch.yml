@@ -1,0 +1,45 @@
+name: LAB R43 roadmap registration
+
+on:
+  push:
+    branches:
+      - lab/r43-universal-ai-fallback
+
+permissions:
+  contents: write
+
+jobs:
+  register-r43:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: lab/r43-universal-ai-fallback
+
+      - name: Register R43 in both roadmaps
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          marker = "## LAB R43 — Universal AI post-transcription fallback"
+          entry = '''\n\n## LAB R43 — Universal AI post-transcription fallback\n- Rama: `lab/r43-universal-ai-fallback`.\n- `api/universal-ai-r43.js`: wrapper server-side aislado que conserva R42 como ruta primaria y activa AI Gateway/OIDC únicamente ante `502/503` propios de AI UNIVERSAL (`UNIVERSAL_AI_*` o `EMPTY_UNIVERSAL_RESPONSE`).\n- `vercel.json`: rewrite LAB `/api/universal-ai` → `/api/universal-ai-r43`.\n- Alcance protegido: no modifica `index-grupal.html`, captura/micrófono V378, umbral, sensibilidad, voz aprobada, actualizador ni Main/producción.\n- Evidencia de origen: R42 registró primer turno `transcript_ready → /api/universal-ai 200 → voz`; segundo y tercer turno `transcript_ready → /api/universal-ai 502 → query_failed`.\n- Criterio de aprobación: build/gates PASS, endpoint HTTP probado y regresión sin cambios en intocables antes de prueba física en iPhone.\n'''
+          for name in ["ROADMAP_OVERALL.md", "ROADMAP_A_DETALLE.md"]:
+              p = Path(name)
+              text = p.read_text(encoding="utf-8")
+              if marker not in text:
+                  p.write_text(text.rstrip()+entry+"\n", encoding="utf-8")
+          PY
+
+      - name: Remove temporary workflow from resulting branch
+        run: git rm .github/workflows/r43-roadmap-patch.yml
+
+      - name: Commit roadmap registration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ROADMAP_OVERALL.md ROADMAP_A_DETALLE.md .github/workflows/r43-roadmap-patch.yml
+          git commit -m "LAB R43: register universal AI fallback in both roadmaps"
+          git push origin HEAD:lab/r43-universal-ai-fallback
