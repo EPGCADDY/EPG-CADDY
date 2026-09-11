@@ -995,3 +995,11 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Release R48: `V407-R48-CANONICAL-UPDATER-ORIGIN-20260911`.
 - Ambos ROADMAPS y `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json` quedan sellados en el mismo commit atómico antes de Preview/Promote.
 - MAIN y MAESTRO permanecen intactos. La aceptación final sigue siendo física desde la app LAB instalada, sin reinstalar y conservando la ronda.
+
+
+## V407 · R49 — NAVEGACIÓN CANÓNICA DEL ACTUALIZADOR (11-09-2026)
+- Causa cerrada: el motor consultaba release/shell canónicos pero navegaba con `location.origin`, regresando al Preview antiguo.
+- Corrección incremental: destino final `/index-grupal.html` construido con `CANONICAL_LAB_ORIGIN`.
+- Regresión permanente: prohibido `new URL("/index-grupal.html",location.origin)` y exigido origen LAB canónico.
+- Alcance protegido: captura V378, umbral/sensibilidad del micrófono, Main y MAESTRO sin cambios.
+- Estado: candidato LAB; promoción bloqueada hasta Preview READY y verificación real.
