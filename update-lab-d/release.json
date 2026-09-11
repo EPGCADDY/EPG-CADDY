@@ -1,0 +1,10 @@
+{
+  "schema": "gscg-update-release/v3",
+  "channel": "update-architecture-d-burnin",
+  "release": "BURNIN-D1",
+  "baseline": "V407-R33",
+  "baselineCommit": "5b85c63438b27fce53e2d0f6aa4e371bffc3c263",
+  "workerScope": "/update-lab-d/",
+  "activation": "explicit-controllerchange-verified",
+  "rollback": "retain-current-on-any-failure"
+}
