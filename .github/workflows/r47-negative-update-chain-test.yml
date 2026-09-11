@@ -1,0 +1,15 @@
+name: R47 Negative Update Chain Test
+on:
+  push:
+    branches:
+      - lab/update-chain-negative-r47
+jobs:
+  reject-stale-payload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lab/update-chain-negative-r47
+          fetch-depth: 2
+      - name: Gate must reject stale payload
+        run: node scripts/update-chain-gate.mjs
