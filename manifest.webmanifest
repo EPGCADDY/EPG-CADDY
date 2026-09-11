@@ -19,6 +19,7 @@
     "sports",
     "utilities"
   ],
+  "x_update_chain_negative_test": "runtime-changed-without-release-bump",
   "icons": [
     {
       "src": "/assets/official-logos/golf-score-card-gt-pwa-v345-192.png",
