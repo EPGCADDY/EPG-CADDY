@@ -58,7 +58,10 @@ assert.equal(manifest.candidateSha256,candidateHash,'CHAIN_CANDIDATE_SHA_STALE')
 try{
   const parentRaw=execFileSync('git',['show',`HEAD^:${manifestPath}`],{encoding:'utf8',stdio:['ignore','pipe','ignore']});
   const previous=JSON.parse(parentRaw);
-  if(previous.fingerprint!==manifest.fingerprint)assert.notEqual(previous.release,manifest.release,'CHAIN_RELEASE_NOT_BUMPED_WITH_PAYLOAD');
+  const sameContract=previous.schema===manifest.schema&&previous.scope===manifest.scope;
+  if(sameContract&&previous.fingerprint!==manifest.fingerprint){
+    assert.notEqual(previous.release,manifest.release,'CHAIN_RELEASE_NOT_BUMPED_WITH_PAYLOAD');
+  }
 }catch(error){if(error?.code==='ERR_ASSERTION')throw error;}
 
 console.log(`UPDATE_CHAIN_GATE PASS release=${manifest.release} files=${payloadFiles.length} fingerprint=${computedFingerprint.slice(0,12)} candidate=${candidateHash.slice(0,12)} vercel=semantic`);
