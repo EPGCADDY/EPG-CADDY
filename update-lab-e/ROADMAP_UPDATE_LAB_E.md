@@ -32,6 +32,8 @@ R41 · MICRÓFONO P0 · 11 de septiembre de 2026:
 - candidate-index-grupal.html: conversación de un toque usa semantic_vad y reabre escucha automáticamente después de cada respuesta hablada.
 - Registro, Scores, parsers, sensibilidad y captura V378 permanecen fuera del cambio y conservan su blindaje.
 - scripts/apply-update-e.mjs + api/release.js: únicamente publicación R41 según carretera del actualizador INTOCABLE.
+- Regresión técnica: contratos de conversación alineados con semantic_vad; sintaxis verificada y gate de Intocables mantiene INT-01…INT-05 en PASS.
+- Criterio de entrega: no solicitar prueba física en iPhone hasta que Vercel termine READY y el shell publicado confirme release R41 y contratos de conversación.
 - Producción real y Main permanecen intocables.
 
 Reglas:
