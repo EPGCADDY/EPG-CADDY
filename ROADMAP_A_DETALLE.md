@@ -958,3 +958,11 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3385_R31_ANTES_DE_R32.png`
 - `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3386_R32_ACTUALIZADO_CONSERVA_RONDA.png`
 - `CONTROL_PROYECTO_SCIRE/03_CASOS_TERMINADOS_Y_EVIDENCIA/V407_R32_ACTA_TECNICA_2026-09-10/evidencia/fisica_usuario/IMG_3387_R31_ESTADO_VISIBLE_SIN_URL.png`
+
+## V407-R46 LAB · prueba física aislada del transporte ACTUALIZAR · 11 de septiembre de 2026
+
+- Prueba de transporte pura desde R43: no incorpora R44/R45 ni cambios funcionales; únicamente avanza la identidad publicada a R46 para demostrar en iPhone el ciclo R43 → ACTUALIZAR → R46 conservando la ronda.
+- `scripts/apply-update-e.mjs` conserva el motor aprobado `update-client-e.js` intacto y genera el shell instalado por Arquitectura E.
+- Criterio bloqueante: no se considera aprobado hasta prueba física en el iPhone instalado. La publicación funcional queda detenida hasta cerrar este circuito.
+- Incidencia detectada: el candado anterior verificaba motor/release/shell, pero no obligaba a que cambios funcionales posteriores avanzaran candidato + release; ese hueco debe convertirse en FAIL automático antes de futuras publicaciones.
+- Archivos de esta prueba: `scripts/apply-update-e.mjs`, `api/release.js`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`. MAIN y MAESTRO permanecen intactos.
