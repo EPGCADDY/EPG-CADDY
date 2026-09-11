@@ -22,18 +22,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          marker='V407-R48 LAB · actualizador usa origen canónico LAB'
+          marker='V407-R48 LAB · cierre atómico origen canónico ACTUALIZAR'
           block=$(cat <<'EOF'
           
-          ## V407-R48 LAB · actualizador usa origen canónico LAB · 11 de septiembre de 2026
+          ## V407-R48 LAB · cierre atómico origen canónico ACTUALIZAR · 11 de septiembre de 2026
           
-          - Evidencia física: la app instalada en un alias antiguo permaneció en R43 y no detectó R47 aunque `golf-sc-gt-lab.vercel.app/api/release` ya anunciaba R47.
-          - Causa confirmada: `update-client-e.js` resolvía `/api/release` y `/app-current-shell.html` contra `location.origin`, por lo que una instalación realizada desde un alias Preview quedaba amarrada a ese origen antiguo/protegido.
-          - Corrección R48: el actualizador consulta y descarga siempre desde `https://golf-sc-gt-lab.vercel.app`, independientemente del alias desde el que se instaló originalmente la app.
-          - Se conservan sin cambios la persistencia de ronda, almacenamiento local, retiro de caches legacy, botón, verificación de shell y recarga final en el mismo origen instalado.
+          - Cierre obligatorio del cambio autorizado del motor ACTUALIZAR para usar siempre el origen canónico `https://golf-sc-gt-lab.vercel.app` en release y shell.
+          - `update-client-e.js` autorizado en R48 con hash `6fd5c7f3db13ccf05c86ec7cd74fad2451accbbe`.
           - Release R48: `V407-R48-CANONICAL-UPDATER-ORIGIN-20260911`.
-          - Archivos funcionales R48: `update-client-e.js`, `api/release.js`, `scripts/apply-update-e.mjs`.
-          - MAIN y MAESTRO permanecen intactos. La aceptación final sigue siendo prueba física en el iPhone instalado conservando la ronda.
+          - Ambos ROADMAPS y `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json` quedan sellados en el mismo commit atómico antes de Preview/Promote.
+          - MAIN y MAESTRO permanecen intactos. La aceptación final sigue siendo física desde la app LAB instalada, sin reinstalar y conservando la ronda.
           EOF
           )
           if ! grep -Fq "$marker" ROADMAP_OVERALL.md; then printf '%s\n' "$block" >> ROADMAP_OVERALL.md; fi
@@ -43,5 +41,5 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add Intocables/UPDATE_CHAIN_PAYLOAD.lock.json ROADMAP_OVERALL.md ROADMAP_A_DETALLE.md
           git diff --cached --quiet && exit 0
-          git commit -m "R48 LAB: atomically seal canonical updater origin and both roadmaps"
+          git commit -m "R48 LAB: atomically close canonical updater origin and both roadmaps"
           git push origin HEAD:lab/update-origin-canonical-r48
