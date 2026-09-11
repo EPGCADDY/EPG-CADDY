@@ -901,3 +901,13 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - R47 usa `V407-R47-DIRECT-UPDATE-CHAIN-20260911`; `api/release.js` y `scripts/apply-update-e.mjs` deben permanecer sincronizados.
 - Archivos de control R47: `scripts/update-chain-gate.mjs`, `scripts/update-chain-lock.mjs`, `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json`, `vercel.json`, `api/release.js`, `scripts/apply-update-e.mjs`, `.github/workflows/r47-update-chain-lock.yml` y `.github/workflows/r47-roadmap-register.yml`.
 - MAIN y MAESTRO permanecen intactos. La entrega final sólo será válida desde el botón ACTUALIZAR de la app instalada y con prueba física en iPhone conservando la ronda.
+
+## V407-R48 LAB · actualizador usa origen canónico LAB · 11 de septiembre de 2026
+
+- Evidencia física: la app instalada en un alias antiguo permaneció en R43 y no detectó R47 aunque `golf-sc-gt-lab.vercel.app/api/release` ya anunciaba R47.
+- Causa confirmada: `update-client-e.js` resolvía `/api/release` y `/app-current-shell.html` contra `location.origin`, por lo que una instalación realizada desde un alias Preview quedaba amarrada a ese origen antiguo/protegido.
+- Corrección R48: el actualizador consulta y descarga siempre desde `https://golf-sc-gt-lab.vercel.app`, independientemente del alias desde el que se instaló originalmente la app.
+- Se conservan sin cambios la persistencia de ronda, almacenamiento local, retiro de caches legacy, botón, verificación de shell y recarga final en el mismo origen instalado.
+- Release R48: `V407-R48-CANONICAL-UPDATER-ORIGIN-20260911`.
+- Archivos funcionales R48: `update-client-e.js`, `api/release.js`, `scripts/apply-update-e.mjs`.
+- MAIN y MAESTRO permanecen intactos. La aceptación final sigue siendo prueba física en el iPhone instalado conservando la ronda.

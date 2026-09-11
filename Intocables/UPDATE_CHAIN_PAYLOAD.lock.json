@@ -1,11 +1,11 @@
 {
   "schema": "gscg-update-chain-payload/v4",
   "status": "PUBLICATION_CHAIN_LOCKED",
-  "release": "V407-R47-DIRECT-UPDATE-CHAIN-20260911",
+  "release": "V407-R48-CANONICAL-UPDATER-ORIGIN-20260911",
   "fileCount": 72,
-  "fingerprint": "41938c3e1f87984868fae9b8b2cd6c5ddd09985026366468b500e6df11aeee1d",
+  "fingerprint": "1bc3ffcfcd6cc81effb81dc67b33be064740fd14facbf29b4e58d3a8a4cebc7b",
   "candidateSha256": "cff91a550e1d42d44e37d862ca3d8d305e4687565c1c98bbbc8dd43a996253de",
-  "generatedFromCommit": "2fe02c67bddd7f1255ce5633d6b3b9918c52338a",
+  "generatedFromCommit": "bb02be472dfa5db5870467393817781de9fd26e9",
   "scope": "runtime-auto-v3-vercel-semantic",
   "vercelContract": {
     "gateFirst": true
@@ -27,7 +27,7 @@
     "api/database-health.js": "92299b9c091c9e2ec3008106edea1ab805b47be2eb65c96b0c092072d4bee39c",
     "api/golf-rules.js": "9e5bd35bb92ea58488c0eadca0ceed1ee1bbb7b5f6d0edbf5289da6df3866afd",
     "api/live.js": "56555825856ac862f24c5948d5b51e663df49097fd7a810b616ff5d26a066069",
-    "api/release.js": "7e2521f5c191282305db56a48d73297d869f1c5b0a999be9b133f032fd32044f",
+    "api/release.js": "9aa500337ae0c59569cca9d756301ad38a97e768575491798802e00c143489c8",
     "api/research.js": "3a79c7edaa34ac33c894f82cb3113a8d17f6b523dc223590ed831d1ecb7b749e",
     "api/score.js": "c3ef25fca5ed7d831fc33cd8c031b1cfba4eea66564b2e90f89208a5d02c5039",
     "api/session-grupal.js": "ac7885456960e400962a1b481574bbdc4584025eab5fe9d5e3712d16ab3b2e0c",
@@ -78,7 +78,7 @@
     "sync-queue.js": "74126dd269d8dc8d9fbaca8dac8eb46983ea7aa2cb4960984a666de43d53e4fe",
     "timer-inactivity.js": "cf8a067f9549a817d2fa69717aa0075c0779d8b7afdff4d3513a6354a4c048c9",
     "universales.js": "0db9441f9c1671fbf3d44d73dce75fd93d38be1d812ff3420e5bc5f4df0e82d5",
-    "update-client-e.js": "6d1a83d8cff4671f70355c65a77a2b23c85a106e4c6aee9e7a892ccfde3a8656",
+    "update-client-e.js": "ed55b72e2fd33daf2aacff0c94c230cb9e139fd5f87b0f988bde6ace3014d0b3",
     "vegas.js": "20cf266b5a9fe1d9dc4f24ced6a5dc0b0495b138e76ea4aa7b81b084ad2f4075",
     "vercel.legacy-mirror.json": "750d15fc1a026465a48fd7682775625665d4eb76fe114ff2a4c3bcca424b70c8",
     "voice-assistant.js": "e7c36c4c80db0bc7dea9c9165ab64fb6326b4f7300b9ddf5fdc54d6becf49aac",
