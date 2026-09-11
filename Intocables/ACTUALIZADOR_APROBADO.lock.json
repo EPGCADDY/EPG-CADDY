@@ -4,7 +4,7 @@
   "status": "INTOCABLE_TECNICO",
   "engine": {
     "path": "update-client-e.js",
-    "gitBlobSha1": "6fd5c7f3db13ccf05c86ec7cd74fad2451accbbe",
+    "gitBlobSha1": "bc14e65a79d712ddd397262b929b5eb253bd2099",
     "rule": "NO_MODIFICAR_ENTRE_RELEASES",
     "changePolicy": "Cualquier cambio del motor requiere orden expresa del propietario, invalida el sello y obliga a nueva certificacion fisica completa."
   },
@@ -22,7 +22,8 @@
     "installed_shell_and_release_persisted_before_reload",
     "legacy_service_workers_and_caches_retired",
     "update_button_transitions_ACTUALIZAR_to_ACTUALIZADO",
-    "release_and_shell_use_canonical_lab_origin"
+    "release_and_shell_use_canonical_lab_origin",
+    "post_update_navigation_uses_canonical_lab_origin"
   ],
   "forbidden": [
     "modify_update-client-e.js_for_version_bump",
