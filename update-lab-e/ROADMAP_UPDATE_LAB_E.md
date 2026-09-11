@@ -28,13 +28,15 @@ Archivos autorizados:
 - update-lab-e/ROADMAP_UPDATE_LAB_E.md
 - scripts/roadmap-gate.mjs
 - .github/workflows/roadmap-gate.yml
+- .github/workflows/lab-mic-r42-hotfix.yml
 
 R41 · MICRÓFONO P0 · 11 de septiembre de 2026:
 - candidate-index-grupal.html: conversación de un toque usa semantic_vad y reabre escucha automáticamente después de cada respuesta hablada.
 - Registro, Scores, parsers, sensibilidad y captura V378 permanecen fuera del cambio y conservan su blindaje.
 - scripts/apply-update-e.mjs + api/release.js: únicamente publicación R41 según carretera del actualizador INTOCABLE.
 - Regresión técnica: contratos de conversación alineados con semantic_vad; sintaxis verificada y gate de Intocables mantiene INT-01…INT-05 en PASS.
-- .github/workflows/roadmap-gate.yml: única reparación CI autorizada es instalar dependencias declaradas antes de ejecutar test-v362; no cambia código de aplicación.
+- .github/workflows/roadmap-gate.yml
+- .github/workflows/lab-mic-r42-hotfix.yml: única reparación CI autorizada es instalar dependencias declaradas antes de ejecutar test-v362; no cambia código de aplicación.
 - Criterio de entrega: no solicitar prueba física en iPhone hasta que Vercel termine READY y el shell publicado confirme release R41 y contratos de conversación.
 - Producción real y Main permanecen intocables.
 
@@ -47,3 +49,11 @@ Reglas:
 6. El worker de migración sólo puede borrar caches cuyo nombre empiece por gscg-mobile-; no toca localStorage, IndexedDB ni datos de ronda.
 7. El parche de build debe abortar si no encuentra exactamente un meta gscg-release y un cierre </body>; no puede publicar una transformación parcial.
 8. El HTML principal y todos los módulos mutables del shell deben revalidarse/no almacenarse para impedir mezcla de versiones después de retirar el Service Worker.
+
+R42 · HOTFIX RESPUESTA AUDIBLE iPHONE · 11 de septiembre de 2026:
+- Evidencia runtime R41: tres POST /api/universal-ai terminaron HTTP 200 y voice-health registró browser_fallback_query_answered, pero no browser_fallback_speech_started. La IA sí respondió; el bloqueo estaba entre respuesta textual y arranque de SpeechSynthesis.
+- candidate-index-grupal.html: speakAiUniversalApprovedFemaleVoice ya no declara éxito al llamar speechSynthesis.speak(); espera onstart real. Si iOS no inicia audio en 1200 ms, cancela esa ruta y devuelve false para activar inmediatamente el TTS servidor ya existente.
+- El umbral/captura V378, parsers de Registro/Scores y semantic_vad R41 no se modifican.
+- scripts/apply-update-e.mjs + api/release.js publican R42 por el actualizador INTOCABLE.
+- .github/workflows/lab-mic-r42-hotfix.yml es transporte temporal autocontenido y se elimina en el mismo commit funcional.
+

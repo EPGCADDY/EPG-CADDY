@@ -2756,11 +2756,16 @@ async function speakAiUniversalApprovedFemaleVoice(clean){
   if(!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance!=="function")return false;
   const voice=await waitForPreferredApprovedFemaleVoice();if(!voice)return false;
   window.speechSynthesis.cancel();window.speechSynthesis.resume?.();
-  const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;utterance.lang=voice.lang||"es-419";utterance.rate=.9;utterance.pitch=1;utterance.voice=voice;
-  utterance.onstart=()=>{reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true})};
-  utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;if(resumeBrowserVoiceConversationAfterSpeech())return;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")}};
-  utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ FEMENINA APROBADA")};
-  window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);return true;
+  return await new Promise(resolve=>{
+    const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;utterance.lang=voice.lang||"es-419";utterance.rate=.9;utterance.pitch=1;utterance.voice=voice;
+    let settled=false,started=false,startTimer=null;
+    const settle=value=>{if(settled)return;settled=true;if(startTimer)clearTimeout(startTimer);resolve(value)};
+    utterance.onstart=()=>{started=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true});settle(true)};
+    utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;if(resumeBrowserVoiceConversationAfterSpeech())return;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};if(!started)settle(false)};
+    utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");settle(false)};
+    window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);
+    startTimer=setTimeout(()=>{if(started)return;try{window.speechSynthesis.cancel()}catch{};if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");settle(false)},1200);
+  });
 }
 async function speakAiUniversalText(text,{repeat=false}={}){
   const clean=String(text||"").trim();if(!clean||aiUniversalMuted)return false;
