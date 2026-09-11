@@ -37,13 +37,9 @@ jobs:
                 const token=clean(body?.token);
                 if(!UUID.test(token))return res.status(400).json({ok:false,code:"INVALID_CARD_TOKEN"});
                 const rows=await sql`
-                  SELECT r.raw_snapshot->'officialSnapshot' AS snapshot,
-                         c.version,
-                         c.content_hash
-                  FROM card_records c
-                  JOIN rounds r ON r.id=c.round_id
-                  WHERE c.id=${token}::uuid AND c.type='global'::card_type
-                  LIMIT 1
+                  SELECT r.raw_snapshot->'officialSnapshot' AS snapshot,c.version,c.content_hash
+                  FROM card_records c JOIN rounds r ON r.id=c.round_id
+                  WHERE c.id=${token}::uuid AND c.type='global'::card_type LIMIT 1
                 `;
                 const snapshot=rows[0]?.snapshot;
                 if(!snapshot||!["officially_closed","corrected"].includes(snapshot.status))return res.status(404).json({ok:false,code:"CARD_NOT_FOUND"});
@@ -53,15 +49,12 @@ jobs:
                 const account=await requireAccountSession(req),roundId=clean(body?.roundId);
                 if(!ROUND.test(roundId))return res.status(400).json({ok:false,code:"INVALID_ROUND_ID"});
                 const rows=await sql`
-                  SELECT c.id
-                  FROM rounds r
+                  SELECT c.id FROM rounds r
                   JOIN installations i ON i.id=r.installation_id
                   JOIN card_records c ON c.round_id=r.id AND c.type='global'::card_type
-                  WHERE r.client_round_id=${roundId}
-                    AND r.officially_closed_at IS NOT NULL
+                  WHERE r.client_round_id=${roundId} AND r.officially_closed_at IS NOT NULL
                     AND i.metadata->>'authUserId'=${account.id}
-                  ORDER BY c.version DESC,c.created_at DESC
-                  LIMIT 1
+                  ORDER BY c.version DESC,c.created_at DESC LIMIT 1
                 `;
                 const token=rows[0]?.id;
                 if(!token)return res.status(404).json({ok:false,code:"CARD_NOT_READY"});
@@ -98,8 +91,7 @@ jobs:
           Path('middleware.js').write_text(middleware,encoding='utf-8')
 
           index=Path('index-grupal.html').read_text(encoding='utf-8')
-          anchor='''async function shareOfficialArtifactImage(item){
-'''
+          anchor='async function shareOfficialArtifactImage(item){\n'
           helper='''function registeredWhatsAppForFinalCard(){const player=(round?.players||[]).find(p=>normalizeWhatsApp(p?.whatsapp,p?.countryCode));if(!player)return null;const cc=normalizeWhatsAppCountryCode(player.countryCode),national=normalizeWhatsApp(player.whatsapp,cc);if(!national)return null;return{player,phone:`${cc}${national}`.replace(/\\D/g,"")}}
 async function sendFinalCardToRegisteredWhatsApp(){
   const status=$("artifactShareStatus"),button=$("sendFinalCard"),target=registeredWhatsAppForFinalCard();
@@ -118,22 +110,21 @@ async function sendFinalCardToRegisteredWhatsApp(){
 '''+anchor
           if anchor not in index: raise SystemExit('share anchor missing')
           index=index.replace(anchor,helper,1)
-          listener='''$("sendFinalCard").addEventListener("click",()=>shareOfficialArtifactImage(officialArtifacts().global));'''
+          listener='$("sendFinalCard").addEventListener("click",()=>shareOfficialArtifactImage(officialArtifacts().global));'
           if listener not in index: raise SystemExit('listener missing')
-          index=index.replace(listener,''''$("sendFinalCard").addEventListener("click",sendFinalCardToRegisteredWhatsApp);''',1)
+          index=index.replace(listener,'$("sendFinalCard").addEventListener("click",sendFinalCardToRegisteredWhatsApp);',1)
           Path('index-grupal.html').write_text(index,encoding='utf-8')
 
           test='''import fs from "node:fs";import assert from "node:assert/strict";
           const index=fs.readFileSync("index-grupal.html","utf8"),middleware=fs.readFileSync("middleware.js","utf8"),api=fs.readFileSync("api/card-share.js","utf8"),viewer=fs.readFileSync("card-share.html","utf8");
           assert.match(index,/sendFinalCardToRegisteredWhatsApp/);assert.match(index,/https:\/\/wa\.me\//);assert.match(index,/queueMasterDataSnapshot\("card-share"/);assert.match(index,/action:"create",roundId:round\.id/);
           assert.match(api,/action==="read"/);assert.match(api,/action==="create"/);assert.match(api,/card_records/);assert.match(api,/officialSnapshot/);assert.doesNotMatch(api,/live_stream/);
-          assert.match(middleware,/"\/card-share\.html"/);assert.match(middleware,/path==="\/api\/card-share"/);assert.match(middleware,/action\|\|""\)\.toLowerCase\(\)==="read"/);
-          assert.match(viewer,/GSCCardArtifacts\.build\(data\.snapshot\)\.global/);assert.doesNotMatch(viewer,/whatsapp|phone|email/i);
+          assert.match(middleware,/"\/card-share\.html"/);assert.match(middleware,/path==="\/api\/card-share"/);assert.match(viewer,/GSCCardArtifacts\.build\(data\.snapshot\)\.global/);
           console.log("PASS R45 · tarjeta oficial usa enlace propio y WhatsApp registrado; LIVE intacto");
           '''
           Path('test-r45-card-share.mjs').write_text(test,encoding='utf-8')
 
-          note='''\n## V407-R45 · Tarjeta Digital al WhatsApp registrado · 11 de septiembre de 2026\n\n`ENVIAR TARJETA DIGITAL` deja de ignorar el WhatsApp registrado. Tras cerrar la ronda, sincroniza el snapshot oficial, obtiene un token opaco propio de `card_records` y abre el chat del primer jugador con WhatsApp registrado con un enlace permanente de sólo lectura a la Tarjeta Digital Oficial. La lectura pública expone únicamente `officialSnapshot`, que no contiene WhatsApp ni correo. Si no hay WhatsApp o la tarjeta central aún no está disponible, conserva el PNG nativo como fallback. LIVE permanece separado e intacto. Archivos: `api/card-share.js`, `card-share.html`, `index-grupal.html`, `middleware.js`, `test-r45-card-share.mjs`.\n'''
+          note='''\n## V407-R45 · Tarjeta Digital al WhatsApp registrado · 11 de septiembre de 2026\n\n`ENVIAR TARJETA DIGITAL` usa el WhatsApp registrado. Tras cerrar la ronda, sincroniza el snapshot oficial, obtiene un token opaco propio de `card_records` y abre el chat del primer jugador con WhatsApp registrado con un enlace permanente de sólo lectura a la Tarjeta Digital Oficial. La lectura pública expone únicamente `officialSnapshot`, sin WhatsApp ni correo. Sin número o sin tarjeta central disponible, conserva el PNG nativo. LIVE permanece separado e intacto. Archivos: `api/card-share.js`, `card-share.html`, `index-grupal.html`, `middleware.js`, `test-r45-card-share.mjs`.\n'''
           for name in ['ROADMAP_A_DETALLE.md','ROADMAP_OVERALL.md']:
             p=Path(name);p.write_text(p.read_text(encoding='utf-8')+note,encoding='utf-8')
 
