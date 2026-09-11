@@ -1,7 +1,8 @@
 "use strict";
 (()=>{
-  const RELEASE_ENDPOINT="/api/release";
-  const SHELL_ENDPOINT="/app-current-shell.html";
+  const CANONICAL_LAB_ORIGIN="https://golf-sc-gt-lab.vercel.app";
+  const RELEASE_ENDPOINT=`${CANONICAL_LAB_ORIGIN}/api/release`;
+  const SHELL_ENDPOINT=`${CANONICAL_LAB_ORIGIN}/app-current-shell.html`;
   const LEGACY_CACHE_PREFIX="gscg-mobile-";
   const INSTALLED_HTML_KEY="gscg_installed_shell_html_v1";
   const INSTALLED_RELEASE_KEY="gscg_active_release_v1";
@@ -47,7 +48,7 @@
     try{window.persist?.()}catch{}
   }
   async function fetchAndVerifyShell(expectedRelease){
-    const probe=new URL(SHELL_ENDPOINT,location.origin);
+    const probe=new URL(SHELL_ENDPOINT);
     probe.searchParams.set("manual_update_probe",String(Date.now()));
     probe.searchParams.set("expected_release",expectedRelease);
     const response=await fetch(probe.toString(),{cache:"no-store",headers:{"Cache-Control":"no-cache","Pragma":"no-cache"}});
