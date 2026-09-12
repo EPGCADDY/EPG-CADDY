@@ -929,3 +929,5 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Estado: candidato LAB; promoción bloqueada hasta Preview READY y verificación real.
 
 - Reintento de build R49 solicitado sin cambios de runtime: el intento anterior terminó durante instalación antes de ejecutar el Gate.
+
+- Cierre posterior al sello automático: ambos roadmaps quedan en el último commit para habilitar el Preview físico R49.
