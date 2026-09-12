@@ -939,3 +939,11 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Aceptación: R43 debe detectar R50, mostrar ACTUALIZAR y navegar al LAB canónico R50.
 - Alcance: captura V378, micrófono, Main y MAESTRO sin cambios.
 - Estado: candidato LAB; no promover hasta prueba física.
+
+## V407 · R51 — CERTIFICACIÓN FÍSICA DEL ACTUALIZADOR (11-09-2026)
+
+- Propósito único: comprobar físicamente la transición R50 → R51 mediante ACTUALIZAR.
+- Cambio funcional: ninguno; sólo identidad de publicación R51.
+- Aceptación: R50 muestra ACTUALIZAR, al pulsarlo navega al LAB canónico y muestra V407 · R51.
+- Alcance: MAESTRO sin cambios.
+- Estado: candidato LAB; pendiente de Preview, Promote y prueba física.

@@ -9,9 +9,9 @@ export default function handler(req,res){
   res.status(200).json({
     schema:'gscg-release/v1',
     channel:'lab-update-architecture-e-ios-first',
-    release:'V407-R50-CANONICAL-CORS-20260911',
-    baseline:'V407-R50',
-    baselineCommit:'R50-CANONICAL-CORS',
-    publishedAt:'2026-09-12T00:53:00Z'
+    release:'V407-R51-UPDATER-CERTIFICATION-20260911',
+    baseline:'V407-R51',
+    baselineCommit:'R51-UPDATER-CERTIFICATION',
+    publishedAt:'2026-09-12T01:07:00Z'
   });
 }
