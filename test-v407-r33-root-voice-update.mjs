@@ -5,7 +5,6 @@ import vm from "node:vm";
 const candidate=fs.readFileSync("candidate-index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 const universal=fs.readFileSync("api/universal-ai.js","utf8");
-const grupalSession=fs.readFileSync("api/session-grupal.js","utf8");
 const manual=fs.readFileSync("manual.html","utf8");
 const voiceModule=fs.readFileSync("approved-voice.js","utf8");
 
@@ -42,9 +41,9 @@ assert.match(candidate,/conversationClearResponseId&&e\.response_id&&\(conversat
 assert.match(universal,/pertinencia directa, fundamento verificable, profundidad suficiente, precisión factual, aplicación práctica y claridad/,"R52 must enforce permanent six-part answer quality matrix");
 assert.match(candidate,/CONVERSATION_RESPONSE_STALL_MS=30000/,"Realtime must retain a recovery margin that does not abort valid responses");
 assert.match(universal,/UNIVERSAL_TIMEOUT_MS=27_500/,"Universal AI fallback must retain its recovery margin");
-assert.match(candidate,/async function answerBrowserVoiceQuery\(context,clean\)[\s\S]*?browser_fallback_general_realtime_handoff[\s\S]*?await ensureSession\(\)[\s\S]*?setRealtimeTurnProfile\(REALTIME_TURN_PROFILE_CONVERSATION\)[\s\S]*?speakConversation\(clean\)/,"General iPhone questions must hand off once to the continuous Realtime conversation");
-assert.match(grupalSession,/if\(process\.env\.VERCEL_ENV==="preview"\)return proxyPreviewSession\(req,res\)/,"R54 Preview must bridge Realtime through the canonical LAB when its direct key is unavailable");
-assert.match(grupalSession,/const CANONICAL_LAB_ORIGIN = "https:\/\/golf-sc-gt-lab\.vercel\.app"/,"R54 bridge must target only the canonical LAB");
+assert.match(candidate,/async function answerBrowserVoiceQuery\(context,clean\)[\s\S]*?browser_fallback_general_in_place[\s\S]*?submitAiUniversalText\(clean,\{voiceOnly:true\}\)/,"R55 general iPhone questions must use the proven Universal AI path");
+assert.doesNotMatch(candidate,/onend=\(\)=>\{[^\n]*resumeBrowserVoiceConversationAfterSpeech\(\)/,"R55 must not restart iPhone recognition without a new user gesture");
+assert.match(candidate,/TOCA EL MICRÓFONO PARA OTRA PREGUNTA/,"R55 must clearly request the next reliable iPhone gesture");
 assert.match(candidate,/speed:1\.035,\s*accumulatedSpeed:1\.035/,"R52 must increase Realtime locutor speed by 15 percent from 0.90x");
 assert.match(candidate,/utterance\.rate=1\.035/,"R52 must increase device locutor speed by 15 percent");
 assert.match(candidate,/player\.playbackRate=1\.15/,"R52 must increase generated audio playback by 15 percent");

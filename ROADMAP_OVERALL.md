@@ -966,3 +966,6 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 
 ## V407 · R54 — PUENTE REALTIME PARA PREVIEW (12-09-2026)
 - Evidencia física R53: `/api/session-grupal` devolvió HTTP 500 porque Preview no recibe `OPENAI_API_KEY`. `api/session-grupal.js` usa un puente servidor-a-servidor al LAB canónico fijo exclusivamente cuando `VERCEL_ENV=preview`; R51 y MAESTRO permanecen intactos.
+
+## V407 · R55 — TURNO IOS CON TOQUE FIABLE (12-09-2026)
+- Evidencia física R54: el canónico también devolvió 500 para Realtime. Se descarta el puente. Las preguntas generales vuelven a Universal AI con locutor local inmediato y no reabren SpeechRecognition sin gesto; cada respuesta termina indicando un nuevo toque. R51 y MAESTRO intactos.
