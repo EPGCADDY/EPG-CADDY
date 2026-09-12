@@ -44,6 +44,9 @@ assert.match(universal,/UNIVERSAL_TIMEOUT_MS=27_500/,"Universal AI fallback must
 assert.match(candidate,/async function answerBrowserVoiceQuery\(context,clean\)[\s\S]*?browser_fallback_general_in_place[\s\S]*?submitAiUniversalText\(clean,\{voiceOnly:true\}\)/,"R55 general iPhone questions must use the proven Universal AI path");
 assert.doesNotMatch(candidate,/onend=\(\)=>\{[^\n]*resumeBrowserVoiceConversationAfterSpeech\(\)/,"R55 must not restart iPhone recognition without a new user gesture");
 assert.match(candidate,/TOCA EL MICRÓFONO PARA OTRA PREGUNTA/,"R55 must clearly request the next reliable iPhone gesture");
+assert.match(candidate,/function releaseAiUniversalPlaybackForListening\(\)[\s\S]*?aiUniversalSpeechPrimer=null;aiUniversalSpeechPrimed=false;aiUniversalTtsObjectUrl="";aiUniversalTtsAudio=null/,"R57 must fully release the generated-audio session before the next iPhone turn");
+assert.doesNotMatch(candidate,/function fireMicActivation\(context,e\)[\s\S]*?releaseAiUniversalPlaybackForListening\(\);\s*primeAiUniversalSpeechFromGesture\(\);/,"R57 must not play a silent audio primer immediately before opening the microphone");
+assert.match(candidate,/player\.onended=\(\)=>\{[^\n]*releaseAiUniversalPlaybackForListening\(\)\}/,"R57 must release Fish Audio as soon as playback ends");
 assert.match(candidate,/speed:1\.035,\s*accumulatedSpeed:1\.035/,"R52 must increase Realtime locutor speed by 15 percent from 0.90x");
 assert.match(candidate,/utterance\.rate=1\.035/,"R52 must increase device locutor speed by 15 percent");
 assert.match(candidate,/player\.playbackRate=1\.15/,"R52 must increase generated audio playback by 15 percent");

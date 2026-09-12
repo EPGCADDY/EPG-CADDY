@@ -1050,3 +1050,10 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 ## V407 · R55 — TURNO IOS CON TOQUE FIABLE (12-09-2026)
 - Evidencia física R54: el canónico también devolvió 500 para Realtime. Se descarta el puente. Las preguntas generales vuelven a Universal AI con locutor local inmediato y no reabren SpeechRecognition sin gesto; cada respuesta termina indicando un nuevo toque. R51 y MAESTRO intactos.
 - Cierre técnico: `candidate-index-grupal.html` completo se publica junto con ambas bitácoras y se valida contra `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json`.
+## V407 · R57 — LIBERACIÓN COMPLETA DE FISH AUDIO ANTES DEL SIGUIENTE TURNO IOS (12-09-2026)
+
+Los eventos públicos de R56 demostraron que el botón y el reconocedor sí funcionaban: después de una respuesta correcta se registraron tres pares `browser_fallback_started` → `no_speech`. La frontera defectuosa estaba en `releaseAiUniversalPlaybackForListening()`: retiraba el `src`, pero conservaba el mismo objeto `Audio`, mantenía `aiUniversalSpeechPrimed=true` y `fireMicActivation()` reproducía un WAV silencioso justo antes de solicitar el micrófono.
+
+R57 libera la sesión en todos sus cierres: pausa, reinicia posición, desconecta manejadores, elimina la fuente, ejecuta `load()`, revoca el Object URL y deja `aiUniversalTtsAudio`, `aiUniversalSpeechPrimer` y el estado primed completamente reiniciados. `player.onended` y `player.onerror` ejecutan esa liberación inmediatamente. `fireMicActivation()` y `startAiUniversalListening()` abren la captura sin primer de audio previo.
+
+La regresión dirigida exige destrucción completa, prohíbe `release→prime` dentro del gesto y exige liberación al terminar Fish Audio. Archivos funcionales: `candidate-index-grupal.html`, `test-v407-r33-root-voice-update.mjs`, `api/release.js`, `scripts/apply-update-e.mjs`. Trazabilidad: ambos ROADMAPS, registro de reincidencias y candado de cadena. Rollback: deployment R56. Producción/MAESTRO permanecen intactos hasta PASS físico y autorización expresa.

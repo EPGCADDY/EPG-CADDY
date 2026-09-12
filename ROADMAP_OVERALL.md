@@ -974,3 +974,8 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 ## V407 · R55 — TURNO IOS CON TOQUE FIABLE (12-09-2026)
 - Evidencia física R54: el canónico también devolvió 500 para Realtime. Se descarta el puente. Las preguntas generales vuelven a Universal AI con locutor local inmediato y no reabren SpeechRecognition sin gesto; cada respuesta termina indicando un nuevo toque. R51 y MAESTRO intactos.
 - Cierre técnico: `candidate-index-grupal.html` completo se publica junto con ambas bitácoras y se valida contra `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json`.
+## V407 · R57 — LIBERACIÓN DE SESIÓN DE AUDIO IOS ENTRE PREGUNTAS (12-09-2026)
+
+- Evidencia física R56: la primera pregunta respondió; los tres toques siguientes sí iniciaron `SpeechRecognition`, pero terminaron `no_speech` después de reproducir Fish Audio.
+- `candidate-index-grupal.html` destruye el reproductor generado, revoca su URL y reinicia sus referencias al terminar, fallar o antes de escuchar. El toque ya no reproduce un WAV silencioso antes de abrir el micrófono.
+- `test-v407-r33-root-voice-update.mjs` bloquea la reutilización del reproductor y el primer silencioso dentro del gesto. `api/release.js` y `scripts/apply-update-e.mjs` identifican R57. Preview y prueba física iPhone pendientes; Producción intacta.

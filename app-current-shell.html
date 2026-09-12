@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V407-R33-ROOT-VOICE-UPDATE-20260910">
+  <meta name="gscg-release" content="V407-R57-IOS-AUDIO-SESSION-RELEASE-20260912">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1073,7 +1073,7 @@ html,body,.app,.card-shell{background:#000!important}
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p id="mandatoryUpdateStatus">ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R33</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p id="mandatoryUpdateStatus">ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R57</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 <script src="./approved-voice.js"></script>
 <script src="./guest-access.js"></script>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
@@ -5630,7 +5630,7 @@ window.GSCLiveControl?.mount({
   getStrokeIndexes:player=>matrixFor(player)
 });
 for(const id of ["shareRoundLiveButton","shareFinalLiveButton"])$(id)?.addEventListener("click",()=>window.GSCLiveControl?.quickShareGroup());
-if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});
+window.__GSC_PINNED_UPDATE_NO_SERVICE_WORKER__=true;
 function recoverInstalledAppScrolling(){
   const root=document.scrollingElement||document.documentElement;
   for(const element of new Set([document.documentElement,document.body,root])){element.style.setProperty("overflow-y","auto","important");element.style.setProperty("height","auto","important");element.style.webkitOverflowScrolling="touch"}
@@ -5715,6 +5715,120 @@ showCurrentBuild();
 setTimeout(syncPublishedAppVersion,1200);
 setInterval(syncPublishedAppVersion,30000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout(syncPublishedAppVersion,800)});
+</script>
+<script>
+"use strict";
+(()=>{
+  const CANONICAL_LAB_ORIGIN="https://golf-sc-gt-lab.vercel.app";
+  const RELEASE_ENDPOINT=`${CANONICAL_LAB_ORIGIN}/api/release`;
+  const SHELL_ENDPOINT=`${CANONICAL_LAB_ORIGIN}/app-current-shell.html`;
+  const LEGACY_CACHE_PREFIX="gscg-mobile-";
+  const INSTALLED_HTML_KEY="gscg_installed_shell_html_v1";
+  const INSTALLED_RELEASE_KEY="gscg_active_release_v1";
+  const CURRENT_RELEASE=document.querySelector('meta[name="gscg-release"]')?.content||"";
+  let checking=false,updating=false,pending=CURRENT_RELEASE;
+  const $=id=>document.getElementById(id);
+
+  try{
+    if(CURRENT_RELEASE&&!localStorage.getItem(INSTALLED_RELEASE_KEY))localStorage.setItem(INSTALLED_RELEASE_KEY,CURRENT_RELEASE);
+  }catch{}
+
+  function setCurrent(){
+    pending=CURRENT_RELEASE;
+    const button=$("mandatoryUpdateButton");
+    if(button){button.disabled=true;button.setAttribute("aria-disabled","true")}
+    const action=$("mandatoryUpdateAction");if(action)action.textContent="ACTUALIZADO";
+    $("mandatoryUpdate")?.classList.remove("available");
+  }
+  function setAvailable(release){
+    if(!release||release===CURRENT_RELEASE)return setCurrent();
+    pending=release;
+    const button=$("mandatoryUpdateButton");
+    if(button){button.disabled=false;button.setAttribute("aria-disabled","false")}
+    const action=$("mandatoryUpdateAction");if(action)action.textContent="ACTUALIZAR";
+    $("mandatoryUpdate")?.classList.add("available");
+  }
+  async function fetchRelease(){
+    const response=await fetch(`${RELEASE_ENDPOINT}?t=${Date.now()}`,{cache:"no-store",headers:{"Cache-Control":"no-cache","Pragma":"no-cache"}});
+    if(!response.ok)throw new Error(`RELEASE_HTTP_${response.status}`);
+    const data=await response.json();
+    if(!data?.release||!data?.baseline)throw new Error("RELEASE_PAYLOAD_INVALID");
+    return data;
+  }
+  async function check(){
+    if(checking||updating||document.hidden)return;
+    checking=true;
+    try{const data=await fetchRelease();setAvailable(data.release)}
+    catch(error){console.warn("APP_VERSION_SYNC_PINNED",error?.message||error)}
+    finally{checking=false}
+  }
+  function persistState(){
+    try{if($("setupOverlay")?.classList.contains("visible")){window.captureVisibleRegistrationValues?.();window.syncDraftPlayersFromManualRows?.({strict:false,renderAfter:false});window.persistDraftState?.()}}catch{}
+    try{window.persist?.()}catch{}
+  }
+  async function fetchAndVerifyShell(expectedRelease){
+    const probe=new URL(SHELL_ENDPOINT);
+    probe.searchParams.set("manual_update_probe",String(Date.now()));
+    probe.searchParams.set("expected_release",expectedRelease);
+    const response=await fetch(probe.toString(),{cache:"no-store",headers:{"Cache-Control":"no-cache","Pragma":"no-cache"}});
+    if(!response.ok)throw new Error(`SHELL_HTTP_${response.status}`);
+    const html=await response.text();
+    if(html.length<300000)throw new Error("SHELL_TOO_SMALL");
+    const release=html.match(/<meta\s+name=["']gscg-release["']\s+content=["']([^"']+)["']/i)?.[1]||"";
+    if(release!==expectedRelease)throw new Error(`SHELL_RELEASE_MISMATCH_${release||"EMPTY"}`);
+    return html;
+  }
+  async function retireLegacyWorkersAndCaches(){
+    if("caches" in window){
+      const names=await caches.keys();
+      await Promise.all(names.filter(name=>name.startsWith(LEGACY_CACHE_PREFIX)).map(name=>caches.delete(name)));
+    }
+    if("serviceWorker" in navigator){
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(reg=>reg.unregister().catch(()=>false)));
+    }
+  }
+  async function install(){
+    if(updating||!pending||pending===CURRENT_RELEASE)return;
+    updating=true;
+    const button=$("mandatoryUpdateButton");
+    if(button){button.disabled=true;button.setAttribute("aria-disabled","true")}
+    try{
+      persistState();
+      const data=await fetchRelease();
+      if(data.release!==pending)throw new Error("RELEASE_CHANGED_DURING_UPDATE");
+      const html=await fetchAndVerifyShell(data.release);
+      localStorage.setItem(INSTALLED_HTML_KEY,html);
+      localStorage.setItem(INSTALLED_RELEASE_KEY,data.release);
+      await retireLegacyWorkersAndCaches();
+      const next=new URL("/index-grupal.html",CANONICAL_LAB_ORIGIN);
+      const source=new URL(location.href).searchParams.get("source");
+      if(source)next.searchParams.set("source",source);
+      next.searchParams.set("manual_update",String(Date.now()));
+      location.replace(next.toString());
+    }catch(error){
+      updating=false;
+      console.warn("APP_UPDATE_PINNED",error?.message||error);
+      setAvailable(pending);
+      setTimeout(check,500);
+    }
+  }
+  function replaceOldListener(){
+    const old=$("mandatoryUpdateButton");
+    if(!old)return false;
+    const fresh=old.cloneNode(true);
+    old.replaceWith(fresh);
+    fresh.addEventListener("click",install);
+    return true;
+  }
+  if(!replaceOldListener())return;
+  window.GSCUpdatePinned={check,fetchRelease,current:CURRENT_RELEASE};
+  setCurrent();
+  setTimeout(check,250);
+  setInterval(check,30000);
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout(check,300)});
+})();
+
 </script>
 </body>
 </html>

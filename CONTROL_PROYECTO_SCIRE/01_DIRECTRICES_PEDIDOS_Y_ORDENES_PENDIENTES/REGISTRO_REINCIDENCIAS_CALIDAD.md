@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-100 · FISH AUDIO RETUVO LA SESIÓN IOS DESPUÉS DE LA PRIMERA RESPUESTA · 12 SEPTIEMBRE 2026
+
+- Defecto físico: R56 respondió la primera pregunta; los siguientes toques iniciaron reconocimiento, pero terminaron repetidamente en `no_speech`.
+- Causa raíz: el cierre retiraba la fuente pero conservaba el mismo objeto `Audio` y el estado `primed`; además, el gesto siguiente reproducía un WAV silencioso antes de abrir el micrófono.
+- Control permanente: destrucción y desreferencia completa del reproductor/URL al terminar, fallar o antes de escuchar; queda prohibido ejecutar el primer silencioso dentro del gesto de micrófono.
+- Evidencia automática: `test-v407-r33-root-voice-update.mjs` exige ambos contratos. Evidencia pública pendiente: Preview R57 y turnos consecutivos en iPhone.
+- Estado: CORREGIDO EN CANDIDATO R57; PRODUCCIÓN Y MAESTRO INTACTOS.
+
 ## RC-099 · CONTROLES VERDES SATURADOS Y TARJETA DIGITAL SIN ARCHIVO PREVIO · 10 SEPTIEMBRE 2026
 
 - Defecto visible: superficies de acción heredadas permanecían rellenas en verde y cargaban visualmente tarjetas/paneles; el patrón aprobado es fondo negro con contorno verde, excepto `OK`.

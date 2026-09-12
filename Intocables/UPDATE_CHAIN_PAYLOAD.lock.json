@@ -1,11 +1,11 @@
 {
   "schema": "gscg-update-chain-payload/v4",
   "status": "PUBLICATION_CHAIN_LOCKED",
-  "release": "V407-R56-IOS-TAP-PER-TURN-20260912",
+  "release": "V407-R57-IOS-AUDIO-SESSION-RELEASE-20260912",
   "fileCount": 72,
-  "fingerprint": "95a86197930a1a37ffb19606ed5229d7b8370e536903863318f84035eacdf34c",
-  "candidateSha256": "cdf1c56cdcd680512e3ba6689be00dbbd7f68b00d648e1dfe23ca8837bfef635",
-  "generatedFromCommit": "afc244a993a8cca47d0e1cab139da1445e692ed3",
+  "fingerprint": "32beaf44d7898827b8d81bd3a9086368a5f8ee1cc18111bc3cac99d60a30ea22",
+  "candidateSha256": "56532ed7c099edc6ae73bfd771e962c62c8eea2d4d097d6ff8d3d059e36bdf80",
+  "generatedFromCommit": "4290febf6db56dd6312a12b7d5fe453bb354e0b9",
   "scope": "runtime-auto-v3-vercel-semantic",
   "vercelContract": {
     "gateFirst": true
@@ -27,7 +27,7 @@
     "api/database-health.js": "92299b9c091c9e2ec3008106edea1ab805b47be2eb65c96b0c092072d4bee39c",
     "api/golf-rules.js": "9e5bd35bb92ea58488c0eadca0ceed1ee1bbb7b5f6d0edbf5289da6df3866afd",
     "api/live.js": "56555825856ac862f24c5948d5b51e663df49097fd7a810b616ff5d26a066069",
-    "api/release.js": "d253c24f7e1f0cd76a936fa876e7542d703b0ac48999159fe5467711371c8ce4",
+    "api/release.js": "8699e5d63c33cbcce76961a06aeb4c2f8818ec209c4d5e4b7265f8fa3455f26c",
     "api/research.js": "3a79c7edaa34ac33c894f82cb3113a8d17f6b523dc223590ed831d1ecb7b749e",
     "api/score.js": "c3ef25fca5ed7d831fc33cd8c031b1cfba4eea66564b2e90f89208a5d02c5039",
     "api/session-grupal.js": "5e90ddbed72ea98296f6918b061588a898fccf3276d4036a278647e6f3a3b7e7",
@@ -39,7 +39,7 @@
     "api/voice-speech.js": "96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01",
     "api/weather.js": "102fa8591a12356263b335aef728614c5e8457cf5a41bb6926a8c38f26c80c2b",
     "approved-voice.js": "4869939c9ce680c598159820b9787b7a33338cd40d1d18a3648379f2cc2c48e6",
-    "candidate-index-grupal.html": "cdf1c56cdcd680512e3ba6689be00dbbd7f68b00d648e1dfe23ca8837bfef635",
+    "candidate-index-grupal.html": "56532ed7c099edc6ae73bfd771e962c62c8eea2d4d097d6ff8d3d059e36bdf80",
     "capacitor.config.json": "7f3366d512df998885fab9a3a079e73fd8fdbd036c9a06f2319d6903cb5cf8fe",
     "card-artifacts.js": "95210b5fdd7264cb4f211fe7f0f5bfec2fd453fc9bc9731c047babec91849991",
     "card-file-export.js": "c43cafef8c445f4737acab6b007c4f5ede0c332fa8ac5e7df7366045ca879ee2",
