@@ -9,7 +9,9 @@ const MAX_QUERY_LENGTH=4000;
 const MAX_HISTORY_TURNS=80;
 const MAX_HISTORY_TEXT=2400;
 const MAX_SOURCES=5;
-const UNIVERSAL_TIMEOUT_MS=27_500;
+// Una consulta Universal no puede retener la interfaz durante decenas de segundos.
+// El presupuesto completo equivale a una cuarta parte del límite histórico (27.5 s).
+const UNIVERSAL_TIMEOUT_MS=6_875;
 const OPENAI_RETRYABLE_STATUS=new Set([408,409,425,429,500,502,503,504]);
 const OPENAI_ATTEMPTS=[
   {model:"gpt-5.6",delayMs:0},

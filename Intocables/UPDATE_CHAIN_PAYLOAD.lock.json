@@ -1,15 +1,6 @@
 {
-  "schema": "gscg-update-chain-payload/v4",
-  "status": "PUBLICATION_CHAIN_LOCKED",
-  "release": "V407-R58-IOS-AUDIO-SESSION-RELEASE-20260912",
+  "candidateSha256": "f4bfd018cc6b6987777e31ed2eea8bb3209d23d8e0d98c75ece91634430b2933",
   "fileCount": 72,
-  "fingerprint": "cef73b8d267b89ba41b1d30d8160610af2ece4b25fd6e2b7917231959aa38657",
-  "candidateSha256": "56532ed7c099edc6ae73bfd771e962c62c8eea2d4d097d6ff8d3d059e36bdf80",
-  "generatedFromCommit": "c4f3f2c856a27f674ad411882c88458dee376aa5",
-  "scope": "runtime-auto-v3-vercel-semantic",
-  "vercelContract": {
-    "gateFirst": true
-  },
   "files": {
     "access.html": "d2345c7e312e3cdc661645c44a52b5d25fdce765fb04278edafaa7d4032f7a2d",
     "account-backup.js": "a5a189b731b0960dd17dd053054333f106e643cd4f652ff160c16963d3429297",
@@ -27,19 +18,19 @@
     "api/database-health.js": "92299b9c091c9e2ec3008106edea1ab805b47be2eb65c96b0c092072d4bee39c",
     "api/golf-rules.js": "9e5bd35bb92ea58488c0eadca0ceed1ee1bbb7b5f6d0edbf5289da6df3866afd",
     "api/live.js": "56555825856ac862f24c5948d5b51e663df49097fd7a810b616ff5d26a066069",
-    "api/release.js": "7b0bf29fafa6ee893cea53992e4a78861374435307155833160febdbda5f995a",
+    "api/release.js": "89936c97ae13a64bcd231df5fa5fa01fdc7a9d8ddc9058347de949f960d41262",
     "api/research.js": "3a79c7edaa34ac33c894f82cb3113a8d17f6b523dc223590ed831d1ecb7b749e",
     "api/score.js": "c3ef25fca5ed7d831fc33cd8c031b1cfba4eea66564b2e90f89208a5d02c5039",
     "api/session-grupal.js": "5e90ddbed72ea98296f6918b061588a898fccf3276d4036a278647e6f3a3b7e7",
     "api/session.js": "bc8eeded696a9deff26ecd88424b2508ac1d273e1c5ffcb14d218dae49783cc1",
     "api/sync.js": "34921299db7b13e424d79b70f4322c428d90d114aa86a86be54ffdd45f700ef8",
     "api/traffic.js": "f9a8562bd8ba9586f4a91d491816ec5bef290b9408eb231631436925df089c92",
-    "api/universal-ai.js": "ccf362a0838842f15a807821b6d0bb3448d724172c26eeebfc32820b652ddd01",
+    "api/universal-ai.js": "9672ba94ce0d52d628cd2d94715177f4a0e37da7541a5852ecff16f2c6087c87",
     "api/voice-health.js": "8d26862ea7b8ea6a19100863b67e7cab8660246b45cb1a4906c76dc372c2eedc",
     "api/voice-speech.js": "96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01",
     "api/weather.js": "102fa8591a12356263b335aef728614c5e8457cf5a41bb6926a8c38f26c80c2b",
     "approved-voice.js": "4869939c9ce680c598159820b9787b7a33338cd40d1d18a3648379f2cc2c48e6",
-    "candidate-index-grupal.html": "56532ed7c099edc6ae73bfd771e962c62c8eea2d4d097d6ff8d3d059e36bdf80",
+    "candidate-index-grupal.html": "f4bfd018cc6b6987777e31ed2eea8bb3209d23d8e0d98c75ece91634430b2933",
     "capacitor.config.json": "7f3366d512df998885fab9a3a079e73fd8fdbd036c9a06f2319d6903cb5cf8fe",
     "card-artifacts.js": "95210b5fdd7264cb4f211fe7f0f5bfec2fd453fc9bc9731c047babec91849991",
     "card-file-export.js": "c43cafef8c445f4737acab6b007c4f5ede0c332fa8ac5e7df7366045ca879ee2",
@@ -83,5 +74,14 @@
     "vercel.legacy-mirror.json": "750d15fc1a026465a48fd7682775625665d4eb76fe114ff2a4c3bcca424b70c8",
     "voice-assistant.js": "e7c36c4c80db0bc7dea9c9165ab64fb6326b4f7300b9ddf5fdc54d6becf49aac",
     "wolf.js": "6f671c6723ca5577ca4eda729f58d0fe769fe09e981badf6f578ab7a3acefa04"
+  },
+  "fingerprint": "7d34abe0dd01d66a7b1ed570a250afa1a1693ec2d0cb067d0e84d4ef88c769cd",
+  "generatedFromCommit": "002eb9e4bc4395a5a95484c129f331eb8ddeeaac",
+  "release": "V407-R59-UNIVERSAL-CONTINUITY-20260912",
+  "schema": "gscg-update-chain-payload/v4",
+  "scope": "runtime-auto-v3-vercel-semantic",
+  "status": "PUBLICATION_CHAIN_LOCKED",
+  "vercelContract": {
+    "gateFirst": true
   }
 }

@@ -4,7 +4,7 @@ import handler,{formatLocalGolfStrategyAnswer,isDirectWeatherQuery,isGolfStrateg
 import assistant from "./voice-assistant.js";
 
 const api=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
-const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+const html=fs.readFileSync(new URL("./candidate-index-grupal.html",import.meta.url),"utf8");
 const normalizeSpeech=value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9ñ]+/g," ").replace(/\s+/g," ").trim();
 const guardSource=html.slice(html.indexOf("function aiUniversalCommandShouldRemainLocal"),html.indexOf("\nfunction routeAiUniversalAppText"));
 const commandShouldRemainLocal=new Function("normalizeSpeech",`${guardSource};return aiUniversalCommandShouldRemainLocal`)(normalizeSpeech);
@@ -99,7 +99,7 @@ assert.equal(localRes.statusCode,200,"La estrategia de golf no debe quedar muda 
 assert.equal(localRes.body.mode,"LOCAL_GOLF_STRATEGY");
 assert.match(localRes.body.answer,/Conclusión/);
 
-for(const recoveryToken of ["OPENAI_ATTEMPTS","GATEWAY_MODELS","LOCAL_GOLF_STRATEGY","UNIVERSAL_AI_RATE_LIMITED","RECUPERANDO CONEXIÓN CON AI UNIVERSAL ∞"]){
+for(const recoveryToken of ["OPENAI_ATTEMPTS","GATEWAY_MODELS","LOCAL_GOLF_STRATEGY","UNIVERSAL_AI_RATE_LIMITED","CLIENT_UNIVERSAL_TIMEOUT_MS"]){
   assert.ok(api.includes(recoveryToken)||html.includes(recoveryToken),`Falta control permanente de recuperación: ${recoveryToken}`);
 }
 
