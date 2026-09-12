@@ -13,6 +13,28 @@ function safeHeader(value, max = 300) {
 }
 
 const MAX_TRANSCRIPTION_PROMPT_LENGTH = 1024;
+const CANONICAL_LAB_ORIGIN = "https://golf-sc-gt-lab.vercel.app";
+
+async function proxyPreviewSession(req,res){
+  const sdp=await readRawBody(req);
+  if(!sdp.trim())return res.status(400).json({error:"No se recibió SDP."});
+  const upstream=await fetch(`${CANONICAL_LAB_ORIGIN}/api/session-grupal`,{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/sdp",
+      "X-GSCG-Context":safeHeader(req.headers["x-gscg-context"],20),
+      "X-GSCG-Players":safeHeader(req.headers["x-gscg-players"],300),
+      ...(req.headers.cookie?{Cookie:String(req.headers.cookie)}:{})
+    },
+    body:sdp
+  });
+  const body=await upstream.text();
+  res.setHeader("Cache-Control","no-store");
+  res.setHeader("X-GSCG-Realtime-Origin","canonical-lab");
+  if(!upstream.ok)return res.status(upstream.status).send(body);
+  res.setHeader("Content-Type","application/sdp");
+  return res.status(200).send(body);
+}
 
 function roundTranscriptionPrompt(players) {
   return `Golf Guatemala con Caddie conversacional. Detecta y transcribe literalmente el idioma que hable el usuario; español es el predeterminado. Conserva preguntas y seguimiento de una conversación. Jugadores: ${players || "los registrados"}. Si es score: el cursor indica automáticamente el hoyo activo; transcribe Nombre + Score. Hoyo N opcional reposiciona. Tras Falta NOMBRE, Score u omisión solos son de ese jugador. Gross: número o golf. X: equis, cero, sin score, sin dato, no informó, no dijo, no cantó, ponle cero, no le anotes. Golf: albatros, águila, eagle, birdie, pájaro, par, bogey, doble bogey, triple bogey, doble par, uno bajo par, uno sobre par, dos sobre par, tres sobre par. Nombre único solo; si se repite, apellido. Jessie se escribe Jessie.`.slice(0, MAX_TRANSCRIPTION_PROMPT_LENGTH);
@@ -27,6 +49,7 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
+    if(process.env.VERCEL_ENV==="preview")return proxyPreviewSession(req,res);
     return res.status(500).json({ error: "Falta OPENAI_API_KEY en Vercel." });
   }
 

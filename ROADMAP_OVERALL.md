@@ -963,3 +963,6 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 ## V407 · R53 — TRASPASO IPHONE A REALTIME (12-09-2026)
 - R52 queda rechazado por la prueba física de dos turnos. R53 identifica la corrección de la cadena Safari→Realtime continuo y conserva R51 canónico sin cambios hasta aprobación física.
 - `Intocables/intocables-gate.mjs`: restaurada la aserción canónica R51; el comportamiento nuevo permanece validado por la prueba separada del candidato R53.
+
+## V407 · R54 — PUENTE REALTIME PARA PREVIEW (12-09-2026)
+- Evidencia física R53: `/api/session-grupal` devolvió HTTP 500 porque Preview no recibe `OPENAI_API_KEY`. `api/session-grupal.js` usa un puente servidor-a-servidor al LAB canónico fijo exclusivamente cuando `VERCEL_ENV=preview`; R51 y MAESTRO permanecen intactos.

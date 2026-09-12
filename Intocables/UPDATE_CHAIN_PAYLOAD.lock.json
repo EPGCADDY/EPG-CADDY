@@ -1,11 +1,11 @@
 {
   "schema": "gscg-update-chain-payload/v4",
   "status": "PUBLICATION_CHAIN_LOCKED",
-  "release": "V407-R53-IPHONE-REALTIME-HANDOFF-20260912",
+  "release": "V407-R54-PREVIEW-REALTIME-BRIDGE-20260912",
   "fileCount": 72,
-  "fingerprint": "8c0df7ce3c78125236a46e1ec67efa8552971540fbee2e2cd176a3b6ce9e330b",
+  "fingerprint": "0023483bcc3bc3aac9a3097271646f3bace24dc1adbe9e36c850192982c1c3b8",
   "candidateSha256": "fb634f14951ab16e28fa64ea529ee0687e973cece0262386af7d82a360a3189b",
-  "generatedFromCommit": "b505ccb44ba1d2213c73d5de71536c0ec6d53d0a",
+  "generatedFromCommit": "4290febf6db56dd6312a12b7d5fe453bb354e0b9",
   "scope": "runtime-auto-v3-vercel-semantic",
   "vercelContract": {
     "gateFirst": true
@@ -27,10 +27,10 @@
     "api/database-health.js": "92299b9c091c9e2ec3008106edea1ab805b47be2eb65c96b0c092072d4bee39c",
     "api/golf-rules.js": "9e5bd35bb92ea58488c0eadca0ceed1ee1bbb7b5f6d0edbf5289da6df3866afd",
     "api/live.js": "56555825856ac862f24c5948d5b51e663df49097fd7a810b616ff5d26a066069",
-    "api/release.js": "3a7bbb9ad162d3120f3234fb91966c594ba55d1814f60d64934f22ae1645f8a5",
+    "api/release.js": "083fa16741ef01edcfba46809414b8b65e988e89479d75a8eea99e689b50fc36",
     "api/research.js": "3a79c7edaa34ac33c894f82cb3113a8d17f6b523dc223590ed831d1ecb7b749e",
     "api/score.js": "c3ef25fca5ed7d831fc33cd8c031b1cfba4eea66564b2e90f89208a5d02c5039",
-    "api/session-grupal.js": "ac7885456960e400962a1b481574bbdc4584025eab5fe9d5e3712d16ab3b2e0c",
+    "api/session-grupal.js": "8a6da9e548d902e8df672f2be00efc7c4153d666fa1730f9d3f36efdb6c99edd",
     "api/session.js": "bc8eeded696a9deff26ecd88424b2508ac1d273e1c5ffcb14d218dae49783cc1",
     "api/sync.js": "34921299db7b13e424d79b70f4322c428d90d114aa86a86be54ffdd45f700ef8",
     "api/traffic.js": "f9a8562bd8ba9586f4a91d491816ec5bef290b9408eb231631436925df089c92",
