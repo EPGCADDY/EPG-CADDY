@@ -34,3 +34,13 @@ window.speechSynthesis.getVoices=()=>[other,latin];
 assert.equal(window.GSCApprovedVoice.select().voiceURI,"manual-latin");
 
 console.log("PASS V407 R33 · contrato raíz: ACK transaccional, semantic VAD, profundidad equivalente y voz del Manual persistente");
+
+// R52: deferred conversational guarantees
+assert.match(candidate,/if\(state==="listening"\)return"ESCUCHANDO";\s*if\(state==="responding"\)return"RESPONDIENDO";\s*if\(message\)return message;/,"R52 must keep exact bilateral labels ahead of custom text");
+assert.match(candidate,/conversationClearResponseId&&e\.response_id&&\(conversationClearResponseId==="pending"\|\|e\.response_id===conversationClearResponseId\)\)return;/,"R52 must ignore stale stopped event from interrupted response");
+assert.match(universal,/pertinencia directa, fundamento verificable, profundidad suficiente, precisión factual, aplicación práctica y claridad/,"R52 must enforce permanent six-part answer quality matrix");
+assert.match(candidate,/CONVERSATION_RESPONSE_STALL_MS=7500/,"R52 must cap Realtime response start at one quarter of 30 seconds");
+assert.match(universal,/UNIVERSAL_TIMEOUT_MS=6_875/,"R52 must cap Universal AI at one quarter of 27.5 seconds");
+assert.match(candidate,/speed:1\.035,\s*accumulatedSpeed:1\.035/,"R52 must increase Realtime locutor speed by 15 percent from 0.90x");
+assert.match(candidate,/utterance\.rate=1\.035/,"R52 must increase device locutor speed by 15 percent");
+assert.match(candidate,/player\.playbackRate=1\.15/,"R52 must increase generated audio playback by 15 percent");

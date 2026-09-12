@@ -1023,3 +1023,12 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Aceptación: R50 muestra ACTUALIZAR, al pulsarlo navega al LAB canónico y muestra V407 · R51.
 - Alcance: MAESTRO sin cambios.
 - Estado: candidato LAB; pendiente de Preview, Promote y prueba física.
+
+## V407 · R52 — CORRECCIONES SECUNDARIAS DE VOZ (11-09-2026)
+
+- Matriz permanente: pertinencia, fundamento, profundidad, precisión, aplicación práctica y claridad.
+- Conversación consecutiva: ignora el cierre tardío de la respuesta anterior para no cancelar el turno nuevo.
+- Estados bilaterales exactos: `ESCUCHANDO` y `RESPONDIENDO`, rojos y parpadeantes.
+- Latencia máxima: Realtime 30,000→7,500 ms; AI Universal 27,500→6,875 ms.
+- Locutor: +15% sobre cada transporte (Realtime/dispositivo 0.90→1.035; audio generado 1.00→1.15).
+- Alcance: candidato LAB; R51 canónico congelado durante prueba de 24 horas. MAESTRO intacto.

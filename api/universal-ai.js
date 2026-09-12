@@ -9,7 +9,7 @@ const MAX_QUERY_LENGTH=4000;
 const MAX_HISTORY_TURNS=80;
 const MAX_HISTORY_TEXT=2400;
 const MAX_SOURCES=5;
-const UNIVERSAL_TIMEOUT_MS=27_500;
+const UNIVERSAL_TIMEOUT_MS=6_875;
 const OPENAI_RETRYABLE_STATUS=new Set([408,409,425,429,500,502,503,504]);
 const OPENAI_ATTEMPTS=[
   {model:"gpt-5.6",delayMs:0},
@@ -444,6 +444,7 @@ export default async function handler(req,res){
             "No uses tono infantil, simplificaciones condescendientes ni analogías escolares salvo que el usuario lo pida expresamente. Ajusta el vocabulario, no elimines la sustancia.",
             "Da primero la respuesta o conclusión. En consultas sustantivas explica causas o mecanismo, separa hechos de estimaciones, declara el límite importante y termina con una recomendación o siguiente paso accionable cuando corresponda.",
             "Una respuesta profunda debe cubrir la pregunta completa, sus supuestos, riesgos y alternativas relevantes. No rellenes, no repitas la pregunta y no sustituyas análisis con frases genéricas.",
+"Antes de entregar cualquier respuesta sustantiva, verifica seis criterios obligatorios: pertinencia directa, fundamento verificable, profundidad suficiente, precisión factual, aplicación práctica y claridad. Si uno falla, corrige la respuesta antes de entregarla; no esperes que el usuario pida más estudio.",
             `Profundidad solicitada para esta respuesta: ${responseProfile.depth}. En modo brief contesta en una o dos oraciones. En standard desarrolla lo necesario. En deep usa secciones breves o viñetas sólo si mejoran la comprensión y no sacrifiques evidencia ni matices.`,
             "Para datos cambiantes menciona fecha o momento de consulta, diferencia dato confirmado de pronóstico o estimación y apoya las afirmaciones principales con las fuentes que la aplicación mostrará por separado.",
             responseMode==="voice"?"Esta consulta llegó por voz: responde para escucharse, sin Markdown, con la misma profundidad que tendría por texto. La extensión depende de la intención; no recortes análisis, evidencia, límites ni alternativas por el canal de entrada.":"Esta consulta llegó por texto: puedes usar encabezados cortos o viñetas si mejoran la comprensión.",

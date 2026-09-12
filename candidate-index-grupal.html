@@ -1246,7 +1246,7 @@ const ROUND_VAD_SILENCE_MS=1000;
 const CONVERSATION_VAD_SILENCE_MS=1100;
 const CONVERSATION_INPUT_STALL_MS=15000;
 const CONVERSATION_INPUT_HARD_LIMIT_MS=90000;
-const CONVERSATION_RESPONSE_STALL_MS=30000;
+const CONVERSATION_RESPONSE_STALL_MS=7500;
 const CONVERSATION_PLAYBACK_STALL_MS=60000;
 const REALTIME_DISCONNECT_GRACE_MS=5000;
 const REALTIME_TURN_PROFILE_OPERATIONAL="operational";
@@ -2326,8 +2326,8 @@ setInterval(()=>{if(round.configured&&$("status")&&phase==="idle"&&!listening&&!
 const ALLOWED_SPEECH_REASONS=new Set(["closure","query","query_accumulated","missing_score","conversation"]);
 const VOICE_POLICY=Object.freeze({
   voice:"coral",
-  speed:.9,
-  accumulatedSpeed:.9,
+  speed:1.035,
+  accumulatedSpeed:1.035,
   language:"es",
   style:"Locutora femenina adulta, seria, sobria y profesional. Español latinoamericano natural para Guatemala. Sin ceceo, sin Spanglish y sin entonación comercial. Dicción clara, ritmo medio-lento y constante. Pronuncia Gross como «gros». No traduzcas nombres propios. No agregues introducciones, comentarios ni despedidas."
 });
@@ -2757,7 +2757,7 @@ async function speakAiUniversalApprovedFemaleVoice(clean){
   const voice=await waitForPreferredApprovedFemaleVoice();if(!voice)return false;
   window.speechSynthesis.cancel();window.speechSynthesis.resume?.();
   return await new Promise(resolve=>{
-    const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;utterance.lang=voice.lang||"es-419";utterance.rate=.9;utterance.pitch=1;utterance.voice=voice;
+    const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;utterance.lang=voice.lang||"es-419";utterance.rate=1.035;utterance.pitch=1;utterance.voice=voice;
     let settled=false,started=false,startTimer=null;
     const settle=value=>{if(settled)return;settled=true;if(startTimer)clearTimeout(startTimer);resolve(value)};
     utterance.onstart=()=>{started=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true});settle(true)};
@@ -2781,7 +2781,7 @@ async function speakAiUniversalText(text,{repeat=false}={}){
     const blob=await response.blob();if(!blob.size)throw new Error("CEDAR_TTS_EMPTY");
     if(typeof Audio!=="function")throw new Error("AUDIO_UNAVAILABLE");
     if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(blob);
-    const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.volume=1;player.playbackRate=1;
+    const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.volume=1;player.playbackRate=1.15;
     player.onplay=()=>{aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(deliveredVoice==="browser"?"RESPONDIENDO EN VOZ · RESPALDO DEL DISPOSITIVO":"RESPONDIENDO EN VOZ · FISH AUDIO V378",{busy:true})};
     player.onended=()=>{if(resumeBrowserVoiceConversationAfterSpeech())return;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
     player.onerror=async()=>{reportVoiceHealth("browser_fallback_speech_failed");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ FEMENINA APROBADA")};
@@ -4557,9 +4557,9 @@ function gestureSafeBrowserVoicePreferred(){
 function shouldUseBrowserVoiceFallback(error){const name=String(error?.name||"");return !["NotAllowedError","SecurityError","PermissionDeniedError","NotFoundError","DevicesNotFoundError"].includes(name)}
 function primaryVoiceStatusTarget(context=voiceContext){return context==="setup"?$("setupStatus"):$("status")}
 function primaryVoiceMatrixText(state,context=voiceContext,message=""){
-  if(message)return message;
   if(state==="listening")return"ESCUCHANDO";
   if(state==="responding")return"RESPONDIENDO";
+  if(message)return message;
   if(state==="error")return"ERROR DE MICRÓFONO";
   return context==="setup"?(draftPlayers.length?"LISTO · PRESIONA OK PARA CONFIRMAR":"LISTO PARA ESCUCHAR"):(round.configured?roundIdleStatus():"");
 }
@@ -5116,6 +5116,7 @@ function handleRealtime(message){
         conversationToolTransition=null;
       }
       if(speechPlaybackResponseId&&e.response_id&&e.response_id!==speechPlaybackResponseId)return;
+      if(authorizedSpeech?.reason==="conversation"&&conversationClearResponseId&&e.response_id&&(conversationClearResponseId==="pending"||e.response_id===conversationClearResponseId))return;
       clearConversationResponseStall();
       reportVoiceHealth("response_stopped",{hasResponseId:!!e.response_id});
       const finishedReason=authorizedSpeech?.reason||null;
