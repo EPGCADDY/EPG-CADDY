@@ -2,6 +2,8 @@
 
 ## V407 · R58 — CIERRE PUBLICABLE DE LA LIBERACIÓN IOS (12-09-2026)
 
+- Resello de publicación: lock, `index-grupal.html` fuente y `service-worker.js` fuente usan los hashes previos al build; Vercel genera loader, worker de retiro y shell únicamente después del Gate.
+
 - R57 quedó consumida por los rechazos del Gate de publicación; R58 conserva sin cambios el arreglo funcional de audio `8a0035f4…` y renueva únicamente identidad, generador y candado de cadena.
 - El build vuelve al orden fuente→Gate→artefactos generados. Preview y prueba física iPhone pendientes; Producción/MAESTRO intactos.
 
