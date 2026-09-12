@@ -71,7 +71,7 @@ assert.match(html,/function sealBrowserVoiceProgress\([\s\S]*?consumeLiveRoundCl
 assert.match(html,/if\(progressive\.closure\)void speakClosure\(progressive\.closure\)/);
 assert.match(html,/BROWSER_VOICE_SILENCE_MS=1200/);
 assert.match(html,/BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS=8000/);
-assert.match(html,/async function answerBrowserVoiceQuery\(context,clean\)[\s\S]*?browser_fallback_general_realtime_handoff[\s\S]*?await ensureSession\(\)[\s\S]*?setRealtimeTurnProfile\(REALTIME_TURN_PROFILE_CONVERSATION\)[\s\S]*?speakConversation\(clean\)/);
+assert.match(html,/async function answerBrowserVoiceQuery\(context,clean\)[\s\S]*?browser_fallback_general_in_place[\s\S]*?submitAiUniversalText\(clean,\{voiceOnly:true\}\)/);
 const voiceInPlace=html.slice(html.indexOf("async function answerBrowserVoiceQuery"),html.indexOf("function scheduleBrowserVoiceTransportRetry"));
 assert.doesNotMatch(voiceInPlace,/openAiUniversalPanel|classList\.add\("visible"\)/);
 
