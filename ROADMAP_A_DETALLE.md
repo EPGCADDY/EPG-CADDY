@@ -1034,3 +1034,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Alcance: candidato LAB; R51 canónico congelado durante prueba de 24 horas. MAESTRO intacto.
 
 - Cierre técnico R52: candado de voz autorizado y prueba de latencia al 25% actualizados conjuntamente; runtime sin cambios adicionales. R51 canónico permanece congelado.
+- Corrección física R52: la pregunta general capturada por Safari se transfiere a una sesión Realtime continua; se elimina el reinicio repetido de SpeechRecognition que produjo `no-speech` tras dos turnos. Se restauran márgenes de recuperación seguros; R51 canónico permanece congelado.

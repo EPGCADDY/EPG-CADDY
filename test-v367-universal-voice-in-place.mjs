@@ -28,8 +28,8 @@ const listeningEnd=html.indexOf("\nfunction aiUniversalLooksLikeSetupOrder",list
 const listening=html.slice(listeningStart,listeningEnd);
 assert.match(listening,/setupVisible\|\|!round\.configured\?"setup":"round"/);
 
-const event=sanitizeVoiceHealth({event:"browser_fallback_general_in_place",context:"setup",transcript:"PROHIBIDO"});
-assert.equal(event.event,"browser_fallback_general_in_place");
+const event=sanitizeVoiceHealth({event:"browser_fallback_general_realtime_handoff",context:"setup",transcript:"PROHIBIDO"});
+assert.equal(event.event,"browser_fallback_general_realtime_handoff");
 assert.equal(event.context,"setup");
 assert.equal("transcript" in event,false);
 

@@ -80,7 +80,7 @@ const traffic=formatStructuredTrafficAnswer({ok:true,origin:"El Pulté Golf",des
 for(const datum of ["ETA","Demora por tráfico","Distancia","Hora de cálculo","Google Maps Routes","TRAFFIC_AWARE_OPTIMAL"])assert.match(traffic,new RegExp(datum));
 assert.match(universal,/responseMode==="voice"/);
 assert.match(universal,/con la misma profundidad que tendría por texto/);
-assert.match(universal,/const UNIVERSAL_TIMEOUT_MS=6_875/);
+assert.match(universal,/const UNIVERSAL_TIMEOUT_MS=27_500/);
 assert.match(universal,/const responseProfile=baseResponseProfile/);
 assert.doesNotMatch(universal,/Math\.ceil\(baseResponseProfile\.maxOutputTokens\/2\)/);
 assert.match(speech,/controller\.abort\(\),22_500/);

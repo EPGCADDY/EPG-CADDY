@@ -1246,7 +1246,7 @@ const ROUND_VAD_SILENCE_MS=1000;
 const CONVERSATION_VAD_SILENCE_MS=1100;
 const CONVERSATION_INPUT_STALL_MS=15000;
 const CONVERSATION_INPUT_HARD_LIMIT_MS=90000;
-const CONVERSATION_RESPONSE_STALL_MS=7500;
+const CONVERSATION_RESPONSE_STALL_MS=30000;
 const CONVERSATION_PLAYBACK_STALL_MS=60000;
 const REALTIME_DISCONNECT_GRACE_MS=5000;
 const REALTIME_TURN_PROFILE_OPERATIONAL="operational";
@@ -4693,9 +4693,18 @@ async function processBrowserVoiceTranscript(context,transcript){
   return answerBrowserVoiceQuery(context,clean)
 }
 async function answerBrowserVoiceQuery(context,clean){
-  reportVoiceHealth("browser_fallback_general_in_place");let answered=false;
-  try{answered=await submitAiUniversalText(clean,{voiceOnly:true})}catch(error){console.error("Browser voice query:",error)}
-  if(answered){phase="idle";reportVoiceHealth("browser_fallback_query_answered");return true}
+  reportVoiceHealth("browser_fallback_general_realtime_handoff");
+  setMicConnecting(context,true);
+  try{
+    voiceContext=context;
+    await ensureSession();
+    if(!realtimeReady())throw new Error("Realtime no quedó listo");
+    await setRealtimeTurnProfile(REALTIME_TURN_PROFILE_CONVERSATION);
+    setVoice(true);
+    setMicConnecting(context,false);
+    if(speakConversation(clean)){reportVoiceHealth("browser_fallback_query_answered");return true}
+  }catch(error){console.error("Browser voice realtime handoff:",error)}
+  setMicConnecting(context,false);
   reportVoiceHealth("browser_fallback_query_failed");setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO");return false
 }
 function scheduleBrowserVoiceTransportRetry(recognition,context,event){
