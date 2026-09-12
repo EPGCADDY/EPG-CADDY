@@ -927,3 +927,5 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Regresión permanente: prohibido `new URL("/index-grupal.html",location.origin)` y exigido origen LAB canónico.
 - Alcance protegido: captura V378, umbral/sensibilidad del micrófono, Main y MAESTRO sin cambios.
 - Estado: candidato LAB; promoción bloqueada hasta Preview READY y verificación real.
+
+- Reintento de build R49 solicitado sin cambios de runtime: el intento anterior terminó durante instalación antes de ejecutar el Gate.
