@@ -3,9 +3,9 @@
   "status": "PUBLICATION_CHAIN_LOCKED",
   "release": "V407-R55-IOS-TAP-PER-TURN-20260912",
   "fileCount": 72,
-  "fingerprint": "427f88e2095d2e2fa2742759b3bcde2e129719c270407078733d8588b11e031c",
-  "candidateSha256": "0963e5eb1abec548f2fdffb177fc6f52ff41c07fc0e7e43782301401aaed518c",
-  "generatedFromCommit": "0da9cda4c6099549addab22ee84fba88b83e67c8",
+  "fingerprint": "d425f208ff512fd75c0a03f3b963415cf92fa6d17bf0005398d3e89ab4f4d9bf",
+  "candidateSha256": "cdf1c56cdcd680512e3ba6689be00dbbd7f68b00d648e1dfe23ca8837bfef635",
+  "generatedFromCommit": "4290febf6db56dd6312a12b7d5fe453bb354e0b9",
   "scope": "runtime-auto-v3-vercel-semantic",
   "vercelContract": {
     "gateFirst": true
@@ -39,7 +39,7 @@
     "api/voice-speech.js": "96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01",
     "api/weather.js": "102fa8591a12356263b335aef728614c5e8457cf5a41bb6926a8c38f26c80c2b",
     "approved-voice.js": "4869939c9ce680c598159820b9787b7a33338cd40d1d18a3648379f2cc2c48e6",
-    "candidate-index-grupal.html": "0963e5eb1abec548f2fdffb177fc6f52ff41c07fc0e7e43782301401aaed518c",
+    "candidate-index-grupal.html": "cdf1c56cdcd680512e3ba6689be00dbbd7f68b00d648e1dfe23ca8837bfef635",
     "capacitor.config.json": "7f3366d512df998885fab9a3a079e73fd8fdbd036c9a06f2319d6903cb5cf8fe",
     "card-artifacts.js": "95210b5fdd7264cb4f211fe7f0f5bfec2fd453fc9bc9731c047babec91849991",
     "card-file-export.js": "c43cafef8c445f4737acab6b007c4f5ede0c332fa8ac5e7df7366045ca879ee2",
