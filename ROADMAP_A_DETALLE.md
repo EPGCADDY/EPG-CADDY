@@ -1063,3 +1063,9 @@ Los eventos públicos de R56 demostraron que el botón y el reconocedor sí func
 R57 libera la sesión en todos sus cierres: pausa, reinicia posición, desconecta manejadores, elimina la fuente, ejecuta `load()`, revoca el Object URL y deja `aiUniversalTtsAudio`, `aiUniversalSpeechPrimer` y el estado primed completamente reiniciados. `player.onended` y `player.onerror` ejecutan esa liberación inmediatamente. `fireMicActivation()` y `startAiUniversalListening()` abren la captura sin primer de audio previo.
 
 La regresión dirigida exige destrucción completa, prohíbe `release→prime` dentro del gesto y exige liberación al terminar Fish Audio. Archivos funcionales: `candidate-index-grupal.html`, `test-v407-r33-root-voice-update.mjs`, `api/release.js`, `scripts/apply-update-e.mjs`. Trazabilidad: ambos ROADMAPS, registro de reincidencias y candado de cadena. Rollback: deployment R56. Producción/MAESTRO permanecen intactos hasta PASS físico y autorización expresa.
+
+## V407 · R59 · Comunicación Universal continua · 12/09/2026
+- LAB: respuestas de voz sostenidas durante múltiples preguntas; libera la salida de audio antes de reabrir el micrófono.
+- Calidad: profundidad adaptable con seis criterios comparables al contrato de ChatGPT; historial de 40 intercambios.
+- Rendimiento: presupuesto servidor 6.875 s, cliente 8 s y locutora Universal 1.15×.
+- Estado: pruebas automáticas PASS; validación física en iPhone pendiente; Producción sin cambios.

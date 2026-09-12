@@ -986,3 +986,9 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Evidencia física R56: la primera pregunta respondió; los tres toques siguientes sí iniciaron `SpeechRecognition`, pero terminaron `no_speech` después de reproducir Fish Audio.
 - `candidate-index-grupal.html` destruye el reproductor generado, revoca su URL y reinicia sus referencias al terminar, fallar o antes de escuchar. El toque ya no reproduce un WAV silencioso antes de abrir el micrófono.
 - `test-v407-r33-root-voice-update.mjs` bloquea la reutilización del reproductor y el primer silencioso dentro del gesto. `api/release.js` y `scripts/apply-update-e.mjs` identifican R57. Preview y prueba física iPhone pendientes; Producción intacta.
+
+## V407 · R59 · Comunicación Universal continua · 12/09/2026
+- LAB: respuestas de voz sostenidas durante múltiples preguntas; libera la salida de audio antes de reabrir el micrófono.
+- Calidad: profundidad adaptable con seis criterios comparables al contrato de ChatGPT; historial de 40 intercambios.
+- Rendimiento: presupuesto servidor 6.875 s, cliente 8 s y locutora Universal 1.15×.
+- Estado: pruebas automáticas PASS; validación física en iPhone pendiente; Producción sin cambios.
