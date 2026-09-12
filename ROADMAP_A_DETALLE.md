@@ -1032,3 +1032,5 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Latencia máxima: Realtime 30,000→7,500 ms; AI Universal 27,500→6,875 ms.
 - Locutor: +15% sobre cada transporte (Realtime/dispositivo 0.90→1.035; audio generado 1.00→1.15).
 - Alcance: candidato LAB; R51 canónico congelado durante prueba de 24 horas. MAESTRO intacto.
+
+- Cierre técnico R52: candado de voz autorizado y prueba de latencia al 25% actualizados conjuntamente; runtime sin cambios adicionales. R51 canónico permanece congelado.
