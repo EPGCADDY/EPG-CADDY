@@ -13,7 +13,7 @@ const shellPath='app-current-shell.html';
 const candidatePath='candidate-index-grupal.html';
 const updaterPath='update-client-e.js';
 const swPath='service-worker.js';
-const release='V407-R61-CRITICAL-MODULES-RECOVERY-20260912';
+const release='V407-R62-SOURCE-BUILD-SEPARATION-20260912';
 let html=readFileSync(candidatePath,'utf8');
 const updater=readFileSync(updaterPath,'utf8');
 const originalSw=readFileSync(swPath,'utf8');
@@ -30,7 +30,7 @@ const sourceSwIsRetired=originalSw.includes('LEGACY_CACHE_PREFIX="gscg-mobile-"'
 if(!sourceSwIsLegacy&&!sourceSwIsRetired)throw new Error('SOURCE_SW_NOT_APPROVED');
 
 html=replaceExactlyOnce(html,/<meta\s+name=["']gscg-release["']\s+content=["'][^"']+["']\s*\/?>/gi,`<meta name="gscg-release" content="${release}">`,'RELEASE_META');
-html=html.replace(/V407\s*·\s*R33/g,'V407 · R61');
+html=html.replace(/V407\s*·\s*R33/g,'V407 · R62');
 
 const swRegistration='if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});';
 const swCount=html.split(swRegistration).length-1;

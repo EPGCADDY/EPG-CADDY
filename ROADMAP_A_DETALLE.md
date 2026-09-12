@@ -1069,3 +1069,8 @@ La regresión dirigida exige destrucción completa, prohíbe `release→prime` d
 
 - R61 identifica el mismo código funcional R60 ya aprobado, ahora cerrado junto con el cargador canónico, worker de retiro y sello de payload exigidos por el gate.
 - No agrega comportamiento; evita publicar un payload distinto bajo el mismo número de revisión. MAESTRO/Producción intactos.
+
+## V407 · R62 — SEPARACIÓN FUENTE / ARTEFACTO DE BUILD (12-09-2026)
+
+- Restaura `index-grupal.html` y `service-worker.js` como fuentes auditables completas; el generador los transforma en cargador y worker de retiro únicamente después de aprobar la auditoría.
+- Evita que pruebas heredadas examinen un cargador de 1.7 KB en lugar de la aplicación. El comportamiento crítico ya aprobado no cambia. MAESTRO/Producción intactos.

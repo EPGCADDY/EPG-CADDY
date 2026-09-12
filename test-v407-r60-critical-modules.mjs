@@ -3,7 +3,7 @@ import fs from "node:fs";
 import vm from "node:vm";
 
 const updater=fs.readFileSync("update-client-e.js","utf8");
-const current="V407-R61-CRITICAL-MODULES-RECOVERY-20260912";
+const current="V407-R62-SOURCE-BUILD-SEPARATION-20260912";
 let remote="V407-R52-OLDER-20260912",installedShell="";
 const stored=new Map([["round","MIGUEL|14|BLANCAS"]]),deletedCaches=[],unregistered=[];
 const classes=new Set(),elements={};
@@ -28,14 +28,14 @@ let captured=0,synced=0,persistedDraft=0,persistedRound=0;
 const window={caches,localStorage,captureVisibleRegistrationValues:()=>captured++,syncDraftPlayersFromManualRows:()=>synced++,persistDraftState:()=>persistedDraft++,persist:()=>persistedRound++};
 vm.runInNewContext(updater,{window,document,localStorage,location,fetch,caches,navigator,URL,setTimeout:()=>0,setInterval:()=>0,console});
 
-assert.equal(elements.appVersionId.textContent,"V407 · R61 · 12/09/2026");
+assert.equal(elements.appVersionId.textContent,"V407 · R62 · 12/09/2026");
 await window.GSCUpdatePinned.check();
-assert.equal(classes.has("available"),false,"R52 no puede activar un downgrade desde R61");
+assert.equal(classes.has("available"),false,"R52 no puede activar un downgrade desde R62");
 assert.equal(elements.mandatoryUpdateButton.disabled,true);
 
-remote="V407-R62-BROWSER-PROBE-20260912";
+remote="V407-R63-BROWSER-PROBE-20260912";
 await window.GSCUpdatePinned.check();
-assert.equal(classes.has("available"),true,"R62 debe activar ACTUALIZAR desde R61");
+assert.equal(classes.has("available"),true,"R63 debe activar ACTUALIZAR desde R62");
 assert.equal(elements.mandatoryUpdateButton.disabled,false);
 await elements.mandatoryUpdateButton.listeners.click();
 assert.equal(stored.get("gscg_active_release_v1"),remote);
@@ -46,4 +46,4 @@ assert.deepEqual(unregistered,["sw"]);
 assert.equal(captured,1);assert.equal(synced,1);assert.equal(persistedDraft,1);assert.equal(persistedRound,1);
 assert.match(location.replaced,/^https:\/\/golf-sc-gt-lab\.vercel\.app\/index-grupal\.html\?source=pwa&manual_update=/);
 
-console.log("PASS R61 CRÍTICO · downgrade bloqueado, upgrade instalado, caché retirada, datos preservados y V/R/fecha visibles");
+console.log("PASS R62 CRÍTICO · downgrade bloqueado, upgrade instalado, caché retirada, datos preservados y V/R/fecha visibles");

@@ -991,3 +991,8 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 
 - Identidad final del conjunto R60 funcional + cargador + worker de retiro + sello, requerida para que cada cambio de payload tenga una revisión distinta.
 - Sin cambios adicionales de comportamiento; MAESTRO/Producción intactos.
+
+## V407 · R62 — SEPARACIÓN FUENTE / ARTEFACTO DE BUILD (12-09-2026)
+
+- Las fuentes completas se auditan primero y solo después se generan el cargador persistente y el worker de retiro.
+- Cierra el fallo reproducible que hacía al auditor leer el artefacto transformado como si fuera la aplicación. MAESTRO/Producción intactos.
