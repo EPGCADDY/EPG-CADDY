@@ -1045,3 +1045,4 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 
 ## V407 · R55 — TURNO IOS CON TOQUE FIABLE (12-09-2026)
 - Evidencia física R54: el canónico también devolvió 500 para Realtime. Se descarta el puente. Las preguntas generales vuelven a Universal AI con locutor local inmediato y no reabren SpeechRecognition sin gesto; cada respuesta termina indicando un nuevo toque. R51 y MAESTRO intactos.
+- Cierre técnico: `candidate-index-grupal.html` completo se publica junto con ambas bitácoras y se valida contra `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json`.
