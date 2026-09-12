@@ -1,5 +1,10 @@
 # ROADMAP OVERALL
 
+## V407 · R58 — CIERRE PUBLICABLE DE LA LIBERACIÓN IOS (12-09-2026)
+
+- R57 quedó consumida por los rechazos del Gate de publicación; R58 conserva sin cambios el arreglo funcional de audio `8a0035f4…` y renueva únicamente identidad, generador y candado de cadena.
+- El build vuelve al orden fuente→Gate→artefactos generados. Preview y prueba física iPhone pendientes; Producción/MAESTRO intactos.
+
 ## V407-R24D LAB · recuperación de instalaciones R8 y aislamiento al desplazarse · 9 de septiembre de 2026
 
 - Corrige el FAIL físico donde `golf-sc-gt-lab.vercel.app` seguía mostrando R8 y ACTUALIZAR no actuaba: el middleware sustituía `service-worker.js` y los manifiestos por `access.html`.

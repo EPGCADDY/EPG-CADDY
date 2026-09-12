@@ -1,5 +1,9 @@
 # ROADMAP A DETALLE
 
+## V407 · R58 — IDENTIDAD PUBLICABLE DEL ARREGLO IOS (12-09-2026)
+
+R57 fue consumida al quedar registrada en el padre mientras los builds eran rechazados. R58 mantiene exactamente el candidato funcional que destruye Fish Audio entre turnos y elimina el primer silencioso previo al micrófono. Sólo cambian `api/release.js`, `scripts/apply-update-e.mjs`, el candado de cadena y ambos ROADMAPS. Se restaura el contrato de Vercel: los archivos de fuente entran primero a auditoría y el loader, worker de retiro y shell se generan después. Rollback: R56. Producción y MAESTRO intactos.
+
 ## V407-R24D LAB · service worker recuperable y control sin traslape · 9 de septiembre de 2026
 
 La verificación pública demostró que `/service-worker.js` y ambos manifiestos recibían el HTML de acceso con estado 200. Una instalación R8 no podía descargar el worker nuevo; por eso ACTUALIZAR quedaba sin acción aunque el alias ya tuviera un deployment posterior. `middleware.js` permite exclusivamente estos recursos PWA de arranque y mantiene privados `index-grupal.html`, datos y escrituras.

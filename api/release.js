@@ -9,9 +9,9 @@ export default function handler(req,res){
   res.status(200).json({
     schema:'gscg-release/v1',
     channel:'lab-update-architecture-e-ios-first',
-    release:'V407-R57-IOS-AUDIO-SESSION-RELEASE-20260912',
-    baseline:'V407-R57',
-    baselineCommit:'R57-IOS-AUDIO-SESSION-RELEASE',
+    release:'V407-R58-IOS-AUDIO-SESSION-RELEASE-20260912',
+    baseline:'V407-R58',
+    baselineCommit:'R58-IOS-AUDIO-SESSION-RELEASE',
     publishedAt:'2026-09-12T11:36:00Z'
   });
 }
