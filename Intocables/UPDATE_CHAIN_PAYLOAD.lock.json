@@ -1,11 +1,11 @@
 {
   "schema": "gscg-update-chain-payload/v4",
   "status": "PUBLICATION_CHAIN_LOCKED",
-  "release": "V407-R49-CANONICAL-NAVIGATION-20260911",
+  "release": "V407-R50-CANONICAL-CORS-20260911",
   "fileCount": 72,
-  "fingerprint": "53a7cf8d51820e3b36082823699ae2725356b64c64e9feb41a0ddf4f7707a362",
+  "fingerprint": "e1a3cf288e3d63731b32c8376ce29b33f3a033d69f3e0dd7dc91a1f6d36bf978",
   "candidateSha256": "cff91a550e1d42d44e37d862ca3d8d305e4687565c1c98bbbc8dd43a996253de",
-  "generatedFromCommit": "3360068fe5026b9cc19a1b154b56f20a1ae24046",
+  "generatedFromCommit": "3616b9e6e12b66dec16b4194447b085fc5bff33e",
   "scope": "runtime-auto-v3-vercel-semantic",
   "vercelContract": {
     "gateFirst": true
@@ -27,7 +27,7 @@
     "api/database-health.js": "92299b9c091c9e2ec3008106edea1ab805b47be2eb65c96b0c092072d4bee39c",
     "api/golf-rules.js": "9e5bd35bb92ea58488c0eadca0ceed1ee1bbb7b5f6d0edbf5289da6df3866afd",
     "api/live.js": "56555825856ac862f24c5948d5b51e663df49097fd7a810b616ff5d26a066069",
-    "api/release.js": "30830c66f8d8583c7363ea42978dc731e7e7ac7768231ff5695545c573f93466",
+    "api/release.js": "04a2165958248a66b558e45d74bd068ea9256ce5b3cf719c6bb51ae1970129b4",
     "api/research.js": "3a79c7edaa34ac33c894f82cb3113a8d17f6b523dc223590ed831d1ecb7b749e",
     "api/score.js": "c3ef25fca5ed7d831fc33cd8c031b1cfba4eea66564b2e90f89208a5d02c5039",
     "api/session-grupal.js": "ac7885456960e400962a1b481574bbdc4584025eab5fe9d5e3712d16ab3b2e0c",

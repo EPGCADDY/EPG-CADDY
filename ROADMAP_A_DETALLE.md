@@ -1007,3 +1007,11 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Reintento de build R49 solicitado sin cambios de runtime: el intento anterior terminó durante instalación antes de ejecutar el Gate.
 
 - Cierre posterior al sello automático: ambos roadmaps quedan en el último commit para habilitar el Preview físico R49.
+
+## V407 · R50 — CORS CANÓNICO DEL ACTUALIZADOR (11-09-2026)
+
+- Causa: `/api/release` no respondía CORS/OPTIONS; Safari bloqueaba el preflight desde un Preview viejo por los encabezados `Cache-Control` y `Pragma`.
+- Corrección: `Access-Control-Allow-Origin: *`, métodos `GET/OPTIONS`, encabezados permitidos y `OPTIONS 204`.
+- Aceptación: R43 debe detectar R50, mostrar ACTUALIZAR y navegar al LAB canónico R50.
+- Alcance: captura V378, micrófono, Main y MAESTRO sin cambios.
+- Estado: candidato LAB; no promover hasta prueba física.
