@@ -9,9 +9,9 @@ export default function handler(req,res){
   res.status(200).json({
     schema:'gscg-release/v1',
     channel:'lab-update-architecture-e-ios-first',
-    release:'V407-R52-DEFERRED-VOICE-FIXES-20260911',
-    baseline:'V407-R52',
-    baselineCommit:'R52-DEFERRED-VOICE-FIXES',
+    release:'V407-R53-IPHONE-REALTIME-HANDOFF-20260912',
+    baseline:'V407-R53',
+    baselineCommit:'R53-IPHONE-REALTIME-HANDOFF',
     publishedAt:'2026-09-12T01:47:00Z'
   });
 }
