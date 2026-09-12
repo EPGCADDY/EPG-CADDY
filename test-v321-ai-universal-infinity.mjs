@@ -3,7 +3,7 @@ import fs from "node:fs";
 import assistant from "./voice-assistant.js";
 import handler,{sanitizeUniversalAppContext,sanitizeUniversalHistory,summarizeUniversalResponse} from "./api/universal-ai.js";
 
-const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+const html=fs.readFileSync(new URL("./candidate-index-grupal.html",import.meta.url),"utf8");
 const api=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 const manual=fs.readFileSync(new URL("./manual.html",import.meta.url),"utf8");
 const normalizeSpeech=value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9ñ]+/g," ").replace(/\s+/g," ").trim();

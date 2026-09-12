@@ -1,12 +1,5 @@
 # ROADMAP OVERALL
 
-## V407 · R58 — CIERRE PUBLICABLE DE LA LIBERACIÓN IOS (12-09-2026)
-
-- Resello de publicación: lock, `index-grupal.html` fuente y `service-worker.js` fuente usan los hashes previos al build; Vercel genera loader, worker de retiro y shell únicamente después del Gate.
-
-- R57 quedó consumida por los rechazos del Gate de publicación; R58 conserva sin cambios el arreglo funcional de audio `8a0035f4…` y renueva únicamente identidad, generador y candado de cadena.
-- El build vuelve al orden fuente→Gate→artefactos generados. Preview y prueba física iPhone pendientes; Producción/MAESTRO intactos.
-
 ## V407-R24D LAB · recuperación de instalaciones R8 y aislamiento al desplazarse · 9 de septiembre de 2026
 
 - Corrige el FAIL físico donde `golf-sc-gt-lab.vercel.app` seguía mostrando R8 y ACTUALIZAR no actuaba: el middleware sustituía `service-worker.js` y los manifiestos por `access.html`.
@@ -987,9 +980,9 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `candidate-index-grupal.html` destruye el reproductor generado, revoca su URL y reinicia sus referencias al terminar, fallar o antes de escuchar. El toque ya no reproduce un WAV silencioso antes de abrir el micrófono.
 - `test-v407-r33-root-voice-update.mjs` bloquea la reutilización del reproductor y el primer silencioso dentro del gesto. `api/release.js` y `scripts/apply-update-e.mjs` identifican R57. Preview y prueba física iPhone pendientes; Producción intacta.
 
-## V407 · R59 · Comunicación Universal continua · 12/09/2026
-- LAB: respuestas de voz sostenidas durante múltiples preguntas; libera la salida de audio antes de reabrir el micrófono.
-- Calidad: profundidad adaptable con seis criterios comparables al contrato de ChatGPT; historial de 40 intercambios.
-- Rendimiento: presupuesto servidor 6.875 s, cliente 8 s y locutora Universal 1.15×.
-- Estado: pruebas automáticas PASS; validación física en iPhone pendiente; Producción sin cambios.
-- R59 seguimiento de gate: prueba raíz de voz alineada con 6.875 s, continuidad automática y velocidad Universal 1.15×; validación física pendiente.
+## V407 · R60 — RECUPERACIÓN ESTRUCTURAL DE ACTUALIZACIÓN, MICRÓFONO E IA (12-09-2026)
+
+- Se elimina el falso ACTUALIZAR por versiones canónicas inferiores y se identifica visualmente V/R/fecha.
+- Se conserva dictado de score, registro, persistencia y conversación consecutiva sin audio silencioso previo.
+- IA responde preguntas básicas y profundas con reintentos acotados, modelo alterno y rescate visual.
+- Publicación limitada a LAB Preview; MAESTRO/Producción sin cambios.

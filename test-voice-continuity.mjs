@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 
-const html=readFileSync(new URL('./index-grupal.html',import.meta.url),'utf8');
+const html=readFileSync(new URL('./candidate-index-grupal.html',import.meta.url),'utf8');
 assert.ok(html.includes('function parseRoundNavigationCommand('),'Falta navegación hablada al registro');
 assert.ok(html.includes('if(!transcript){resetRoundCapture();phase="idle"'),'El silencio no debe producir Error hablado');
 assert.ok(html.includes('Todo lo que no sea una operación reconocida de la tarjeta pasa al Caddie'),'Falta el destino conversacional para frases generales');

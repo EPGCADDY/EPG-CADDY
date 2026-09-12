@@ -10,6 +10,21 @@
   let checking=false,updating=false,pending=CURRENT_RELEASE;
   const $=id=>document.getElementById(id);
 
+  function releaseParts(release){
+    const match=String(release||"").match(/^V(\d+)-R(\d+)(?:-[A-Z0-9-]+)?-(\d{4})(\d{2})(\d{2})$/i)
+      ||String(release||"").match(/^V(\d+)-R(\d+)/i);
+    return match?{version:Number(match[1]),revision:Number(match[2]),date:match[3]?`${match[5]}/${match[4]}/${match[3]}`:""}:null;
+  }
+  function isNewerRelease(candidate,current){
+    const next=releaseParts(candidate),active=releaseParts(current);
+    if(!next||!active)return false;
+    return next.version>active.version||(next.version===active.version&&next.revision>active.revision);
+  }
+  function renderActiveRelease(){
+    const active=releaseParts(CURRENT_RELEASE),label=$("appVersionId");
+    if(active&&label)label.textContent=`V${active.version} · R${active.revision}${active.date?` · ${active.date}`:""}`;
+  }
+
   try{
     if(CURRENT_RELEASE&&!localStorage.getItem(INSTALLED_RELEASE_KEY))localStorage.setItem(INSTALLED_RELEASE_KEY,CURRENT_RELEASE);
   }catch{}
@@ -22,7 +37,7 @@
     $("mandatoryUpdate")?.classList.remove("available");
   }
   function setAvailable(release){
-    if(!release||release===CURRENT_RELEASE)return setCurrent();
+    if(!isNewerRelease(release,CURRENT_RELEASE))return setCurrent();
     pending=release;
     const button=$("mandatoryUpdateButton");
     if(button){button.disabled=false;button.setAttribute("aria-disabled","false")}
@@ -104,6 +119,7 @@
   }
   if(!replaceOldListener())return;
   window.GSCUpdatePinned={check,fetchRelease,current:CURRENT_RELEASE};
+  renderActiveRelease();
   setCurrent();
   setTimeout(check,250);
   setInterval(check,30000);

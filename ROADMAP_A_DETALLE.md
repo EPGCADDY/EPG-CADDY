@@ -1,11 +1,5 @@
 # ROADMAP A DETALLE
 
-## V407 · R58 — IDENTIDAD PUBLICABLE DEL ARREGLO IOS (12-09-2026)
-
-Resello atómico final: `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json` y ambos ROADMAPS se publican juntos; los hashes sellados de `index-grupal.html` y `service-worker.js` corresponden a fuente antes de ejecutar `scripts/apply-update-e.mjs`.
-
-R57 fue consumida al quedar registrada en el padre mientras los builds eran rechazados. R58 mantiene exactamente el candidato funcional que destruye Fish Audio entre turnos y elimina el primer silencioso previo al micrófono. Sólo cambian `api/release.js`, `scripts/apply-update-e.mjs`, el candado de cadena y ambos ROADMAPS. Se restaura el contrato de Vercel: los archivos de fuente entran primero a auditoría y el loader, worker de retiro y shell se generan después. Rollback: R56. Producción y MAESTRO intactos.
-
 ## V407-R24D LAB · service worker recuperable y control sin traslape · 9 de septiembre de 2026
 
 La verificación pública demostró que `/service-worker.js` y ambos manifiestos recibían el HTML de acceso con estado 200. Una instalación R8 no podía descargar el worker nuevo; por eso ACTUALIZAR quedaba sin acción aunque el alias ya tuviera un deployment posterior. `middleware.js` permite exclusivamente estos recursos PWA de arranque y mantiene privados `index-grupal.html`, datos y escrituras.
@@ -1064,9 +1058,9 @@ R57 libera la sesión en todos sus cierres: pausa, reinicia posición, desconect
 
 La regresión dirigida exige destrucción completa, prohíbe `release→prime` dentro del gesto y exige liberación al terminar Fish Audio. Archivos funcionales: `candidate-index-grupal.html`, `test-v407-r33-root-voice-update.mjs`, `api/release.js`, `scripts/apply-update-e.mjs`. Trazabilidad: ambos ROADMAPS, registro de reincidencias y candado de cadena. Rollback: deployment R56. Producción/MAESTRO permanecen intactos hasta PASS físico y autorización expresa.
 
-## V407 · R59 · Comunicación Universal continua · 12/09/2026
-- LAB: respuestas de voz sostenidas durante múltiples preguntas; libera la salida de audio antes de reabrir el micrófono.
-- Calidad: profundidad adaptable con seis criterios comparables al contrato de ChatGPT; historial de 40 intercambios.
-- Rendimiento: presupuesto servidor 6.875 s, cliente 8 s y locutora Universal 1.15×.
-- Estado: pruebas automáticas PASS; validación física en iPhone pendiente; Producción sin cambios.
-- R59 seguimiento de gate: prueba raíz de voz alineada con 6.875 s, continuidad automática y velocidad Universal 1.15×; validación física pendiente.
+## V407 · R60 — RECUPERACIÓN ESTRUCTURAL DE ACTUALIZACIÓN, MICRÓFONO E IA (12-09-2026)
+
+- ACTUALIZAR compara V/R numéricamente: solo una revisión canónica superior activa el botón; bloquea falsos downgrades de Preview y muestra V, R y fecha activas.
+- MICRÓFONO libera por completo la salida de audio antes de capturar, conserva score/registro y reabre hasta 25 turnos sin perder contexto.
+- IA Universal reintenta un 5xx dentro del presupuesto de 8 s, mantiene visible la respuesta si falla el locutor y clasifica preguntas factuales cortas con 700 tokens.
+- Alcance exclusivo LAB; MAESTRO y Producción permanecen intactos.

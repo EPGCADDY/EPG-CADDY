@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import assistant from "./voice-assistant.js";
 
-const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+const html=fs.readFileSync(new URL("./candidate-index-grupal.html",import.meta.url),"utf8");
 const research=fs.readFileSync(new URL("./api/research.js",import.meta.url),"utf8");
 const normalizeSpeech=value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9ñ]+/g," ").replace(/\s+/g," ").trim();
 const localIntentSource=html.slice(html.indexOf("function isLocalRoundQueryIntent"),html.indexOf("\nfunction parseRoundQueryTranscript"));

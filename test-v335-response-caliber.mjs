@@ -103,4 +103,18 @@ for(const recoveryToken of ["OPENAI_ATTEMPTS","GATEWAY_MODELS","LOCAL_GOLF_STRAT
   assert.ok(api.includes(recoveryToken)||html.includes(recoveryToken),`Falta control permanente de recuperación: ${recoveryToken}`);
 }
 
+let basicPayload;
+globalThis.fetch=async(_url,options)=>{
+  basicPayload=JSON.parse(options.body);
+  return{ok:true,status:200,headers:{get:()=>null},json:async()=>({output:[{type:"message",content:[{type:"output_text",text:"La capital de Italia es Roma."}]}]})};
+};
+process.env.OPENAI_API_KEY="test-key";
+const basicReq={method:"POST",headers:{host:"epg-caddy.vercel.app"},body:{query:"¿Cuál es la capital de Italia?",history:[]}};
+const basicRes={headers:{},statusCode:0,setHeader(name,value){this.headers[name]=value},status(code){this.statusCode=code;return this},json(value){this.body=value;return this}};
+try{await handler(basicReq,basicRes)}finally{globalThis.fetch=originalFetch;if(originalKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=originalKey}
+assert.equal(basicRes.statusCode,200);
+assert.equal(basicRes.body.answer,"La capital de Italia es Roma.");
+assert.equal(basicPayload.reasoning.effort,"low");
+assert.equal(basicPayload.max_output_tokens,700);
+
 console.log("PASS V335 · calibre adaptable: directo, sustantivo, no infantil, con límites, acciones y fuentes");

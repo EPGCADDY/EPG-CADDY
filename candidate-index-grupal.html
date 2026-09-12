@@ -2750,7 +2750,7 @@ function finishAiUniversalSpeechTurn({resumeConversation=false}={}){
   return true
 }
 function preferredApprovedFemaleVoice(){return window.GSCApprovedVoice?.select?.()||null}
-function waitForPreferredApprovedFemaleVoice(timeoutMs=1600){return window.GSCApprovedVoice?.wait?.(timeoutMs)||Promise.resolve(preferredApprovedFemaleVoice())}
+function waitForPreferredApprovedFemaleVoice(timeoutMs=4000){return window.GSCApprovedVoice?.wait?.(timeoutMs)||Promise.resolve(preferredApprovedFemaleVoice())}
 function resumeBrowserVoiceConversationAfterSpeech(){
   const context=browserVoiceContext||voiceContext;
   if(browserVoiceActive||browserVoiceRequested||browserVoiceRecognition)return false;
@@ -2773,7 +2773,7 @@ async function speakAiUniversalApprovedFemaleVoice(clean,{resumeConversation=fal
     utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;finishAiUniversalSpeechTurn({resumeConversation})};if(!started)settle(false)};
     utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");settle(false)};
     window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);
-    startTimer=setTimeout(()=>{if(started)return;try{window.speechSynthesis.cancel()}catch{};if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");settle(false)},1200);
+    startTimer=setTimeout(()=>{if(started)return;try{window.speechSynthesis.cancel()}catch{};if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");settle(false)},5000);
   });
 }
 async function speakAiUniversalText(text,{repeat=false,resumeConversation=false}={}){
@@ -2798,7 +2798,7 @@ async function speakAiUniversalText(text,{repeat=false,resumeConversation=false}
   }catch(error){
     reportVoiceHealth("browser_fallback_speech_failed");
     cedarSpeechServerBlockedUntil=Math.max(cedarSpeechServerBlockedUntil,Date.now()+CEDAR_SPEECH_RETRY_MS);
-    setPrimaryVoiceMatrix("error",voiceContext,"VOZ FEMENINA APROBADA NO DISPONIBLE · INTENTA DE NUEVO");aiUniversalSetState("VOZ FEMENINA APROBADA NO DISPONIBLE · INTENTA DE NUEVO");return false;
+    setPrimaryVoiceMatrix("idle",voiceContext,clean);aiUniversalSetState(clean);return false;
   }
 }
 function stopAiUniversalOutput(){
@@ -2891,7 +2891,8 @@ async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
     const requestUniversal=async trafficOrigin=>{
       const endpoint=aiUniversalRulesMode?window.gscgApiUrl("/api/golf-rules"):window.gscgApiUrl("/api/universal-ai");
       const options={method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,responseMode:voiceOnly?"voice":"text",appContext:aiUniversalAppContext(trafficOrigin)})};
-      const response=await fetch(endpoint,options),result=await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}));
+      let response=await fetch(endpoint,options),result=await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}));
+      if(!aiUniversalRulesMode&&response.status>=500&&!controller.signal.aborted){response=await fetch(endpoint,options);result=await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}))}
       return{response,result};
     };
     let{response,result}=await requestUniversal(null);

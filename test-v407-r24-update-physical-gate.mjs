@@ -14,4 +14,7 @@ assert.ok(audit.includes('test-v407-r24-update-physical-gate.mjs'),'Auditoría n
 assert.ok(!runner.includes("reviewType:'REVISIÓN FÍSICA'"),'Playwright no puede llamarse revisión física');
 assert.ok(updater.includes('new URL("/index-grupal.html",CANONICAL_LAB_ORIGIN)'),'La navegación final debe abandonar el Preview y abrir el LAB canónico');
 assert.ok(!updater.includes('new URL("/index-grupal.html",location.origin)'),'Prohibido regresar al origin Preview después de actualizar');
+assert.ok(updater.includes('isNewerRelease(release,CURRENT_RELEASE)'),'Solo una revisión canónica superior puede activar ACTUALIZAR');
+assert.ok(updater.includes('next.revision>active.revision'),'Una Preview nueva no debe ofrecer regresar a un LAB canónico viejo');
+assert.ok(updater.includes('active.date?` · ${active.date}`'), 'El identificador activo debe mostrar versión, revisión y fecha');
 console.log('PASS V407-R24B: candado permanente de actualización y pruebas negativas instalado');

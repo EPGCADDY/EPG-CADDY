@@ -20,11 +20,12 @@ const OPENAI_ATTEMPTS=[
 ];
 const GATEWAY_MODELS=["openai/gpt-5.6-sol","anthropic/claude-opus-5","google/gemini-3.1-pro-preview"];
 const BRIEF_QUERY=/^(hola|buenos días|buenas tardes|buenas noches|gracias|ok|okay|listo|sí|si|no|entendido|perfecto)[.!?\s]*$/i;
+const SHORT_FACTUAL_QUERY=/^(?:[¿?¡!\s]*(?:cu[aá]l(?:es)?|qui[eé]n(?:es)?|cu[aá]ndo|d[oó]nde|qu[eé] significa|define|capital de)\b)[\s\S]{0,110}$/i;
 const DEEP_QUERY=/\b(analiza|análisis|compara|comparación|criterio|evalúa|evaluación|explica(?:me)? (?:a fondo|con detalle)|profundiza|paso a paso|ventajas y desventajas|riesgos?|escenarios?|estrategia|plan de acción|por qué|cómo funciona)\b/i;
 
 export function universalResponseProfile(query){
   const text=String(query||"").trim();
-  if(BRIEF_QUERY.test(text))return{reasoningEffort:"low",maxOutputTokens:700,depth:"brief"};
+  if(BRIEF_QUERY.test(text)||SHORT_FACTUAL_QUERY.test(text))return{reasoningEffort:"low",maxOutputTokens:700,depth:"brief"};
   if(text.length>=160||DEEP_QUERY.test(text))return{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"};
   return{reasoningEffort:"low",maxOutputTokens:1400,depth:"standard"};
 }

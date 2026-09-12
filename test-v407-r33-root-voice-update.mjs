@@ -3,7 +3,7 @@ import fs from "node:fs";
 import vm from "node:vm";
 
 const candidate=fs.readFileSync("candidate-index-grupal.html","utf8");
-const worker=fs.readFileSync("service-worker.js","utf8");
+const updater=fs.readFileSync("update-client-e.js","utf8");
 const universal=fs.readFileSync("api/universal-ai.js","utf8");
 const manual=fs.readFileSync("manual.html","utf8");
 const voiceModule=fs.readFileSync("approved-voice.js","utf8");
@@ -14,10 +14,10 @@ assert.match(candidate,/new MessageChannel\(\)/);
 assert.match(candidate,/data\.type==="PROMOTION_READY"/);
 assert.match(candidate,/await ack/);
 assert.doesNotMatch(candidate.slice(candidate.indexOf("async function installMandatoryUpdate"),candidate.indexOf("async function syncPublishedAppVersion")),/searchParams\.set\("app_version"/);
-assert.match(worker,/CANDIDATE_RELEASE_MISMATCH/);
-assert.match(worker,/PROMOTED_RELEASE_MISMATCH/);
-assert.match(worker,/PROMOTION_MARKER/);
-assert.match(worker,/port\?\.postMessage\(\{type:"PROMOTION_READY"/);
+assert.match(updater,/fetchAndVerifyShell/);
+assert.match(updater,/SHELL_RELEASE_MISMATCH/);
+assert.match(updater,/localStorage\.setItem\(INSTALLED_HTML_KEY,html\)/);
+assert.match(updater,/retireLegacyWorkersAndCaches/);
 assert.match(universal,/const responseProfile=baseResponseProfile/);
 assert.doesNotMatch(universal,/Math\.ceil\(baseResponseProfile\.maxOutputTokens\/2\)/);
 assert.match(candidate,/\.\/approved-voice\.js/);
@@ -53,4 +53,3 @@ assert.match(candidate,/utterance\.rate=AI_UNIVERSAL_VOICE_SPEED/,"Device Univer
 assert.match(candidate,/player\.playbackRate=AI_UNIVERSAL_VOICE_SPEED/,"Generated Universal audio must use the 15 percent profile");
 assert.match(candidate,/expectedSpeed=target===REALTIME_TURN_PROFILE_CONVERSATION\?AI_UNIVERSAL_VOICE_SPEED:VOICE_POLICY\.speed/,"Realtime Universal voice must use the 15 percent profile without changing score announcements");
 assert.match(candidate,/pertinencia directa, fundamento verificable, profundidad suficiente, precisión factual, aplicación práctica y claridad/,"Realtime Universal answers must enforce the same six-part quality matrix as text");
-

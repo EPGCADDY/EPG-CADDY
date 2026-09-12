@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import handler,{isDirectWeatherQuery,sanitizeUniversalAppContext,weatherForecastDateForQuery,weatherTimePeriodFromQuery} from "./api/universal-ai.js";
 
-const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+const html=fs.readFileSync(new URL("./candidate-index-grupal.html",import.meta.url),"utf8");
 const api=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 assert.match(html,/weatherOrigin:course\?\.weatherCoordinates\?\{location:course\.weatherLocation,\.\.\.course\.weatherCoordinates\}:null/);
 assert.match(api,/Para clima, lluvia, temperatura, sensación térmica o viento usa exclusivamente get_current_weather/);

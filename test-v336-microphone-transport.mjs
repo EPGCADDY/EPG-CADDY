@@ -3,7 +3,7 @@ import fs from "node:fs";
 import {sanitizeVoiceHealth} from "./api/voice-health.js";
 import {universalUnavailablePayload} from "./api/universal-ai.js";
 
-const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+const html=fs.readFileSync(new URL("./candidate-index-grupal.html",import.meta.url),"utf8");
 const sessionApi=fs.readFileSync(new URL("./api/session-grupal.js",import.meta.url),"utf8");
 const errorStart=html.indexOf("function voiceActivationErrorMessage");
 const errorEnd=html.indexOf("\nfunction realtimeConnectionAction",errorStart);

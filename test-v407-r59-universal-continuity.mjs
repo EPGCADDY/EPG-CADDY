@@ -9,6 +9,13 @@ assert.doesNotThrow(()=>new Function(script),"El JavaScript del candidato debe c
 
 assert.match(api,/UNIVERSAL_TIMEOUT_MS=6_875/);
 assert.match(html,/CLIENT_UNIVERSAL_TIMEOUT_MS=8000/);
+assert.match(html,/response\.status>=500[^}]+fetch\(endpoint,options\)/,
+  "Una falla 5xx transitoria debe tener un reintento dentro del mismo presupuesto");
+assert.match(html,/waitForPreferredApprovedFemaleVoice\(timeoutMs=4000\)/);
+assert.match(html,/settle\(false\)\},5000\)/,
+  "Safari debe recibir margen real para iniciar su sintetizador nativo");
+assert.match(html,/setPrimaryVoiceMatrix\("idle",voiceContext,clean\);aiUniversalSetState\(clean\);return false/,
+  "Si el audio falla, la respuesta debe permanecer visible");
 assert.doesNotMatch(html,/RECUPERANDO CONEXIÓN CON AI UNIVERSAL/,
   "El cliente no debe duplicar el presupuesto con una segunda consulta completa");
 assert.match(html,/AI_UNIVERSAL_HISTORY_LIMIT=80/,
@@ -62,4 +69,4 @@ assert.match(html,/utterance\.rate=AI_UNIVERSAL_VOICE_SPEED/);
 assert.match(html,/player\.playbackRate=AI_UNIVERSAL_VOICE_SPEED/);
 assert.match(html,/target===REALTIME_TURN_PROFILE_CONVERSATION\?AI_UNIVERSAL_VOICE_SPEED:VOICE_POLICY\.speed/);
 
-console.log("PASS R59 · 25 turnos Universal consecutivos, audio liberado, 1.15x, calidad bilateral y latencia acotada");
+console.log("PASS R60 · 25 turnos Universal, reintento 5xx, rescate visual, audio iPhone 1.15x y latencia acotada");

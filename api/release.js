@@ -9,9 +9,9 @@ export default function handler(req,res){
   res.status(200).json({
     schema:'gscg-release/v1',
     channel:'lab-update-architecture-e-ios-first',
-    release:'V407-R59-UNIVERSAL-CONTINUITY-20260912',
-    baseline:'V407-R59',
-    baselineCommit:'R59-UNIVERSAL-CONTINUITY',
-    publishedAt:'2026-09-12T14:27:48Z'
+    release:'V407-R60-UNIVERSAL-RECOVERY-20260912',
+    baseline:'V407-R60',
+    baselineCommit:'R60-UNIVERSAL-RECOVERY',
+    publishedAt:'2026-09-12T23:33:12Z'
   });
 }
