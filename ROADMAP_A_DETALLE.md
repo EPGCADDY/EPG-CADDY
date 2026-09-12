@@ -1069,3 +1069,4 @@ La regresión dirigida exige destrucción completa, prohíbe `release→prime` d
 - Calidad: profundidad adaptable con seis criterios comparables al contrato de ChatGPT; historial de 40 intercambios.
 - Rendimiento: presupuesto servidor 6.875 s, cliente 8 s y locutora Universal 1.15×.
 - Estado: pruebas automáticas PASS; validación física en iPhone pendiente; Producción sin cambios.
+- R59 seguimiento de gate: prueba raíz de voz alineada con 6.875 s, continuidad automática y velocidad Universal 1.15×; validación física pendiente.
