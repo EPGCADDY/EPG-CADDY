@@ -1041,6 +1041,9 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `Intocables/intocables-gate.mjs`: restaurada la aserción canónica R51; el comportamiento nuevo permanece validado por la prueba separada del candidato R53.
 - Cierre de hash R55: `candidate-index-grupal.html` y `Intocables/UPDATE_CHAIN_PAYLOAD.lock.json` se publican juntos con hash SHA-256 `cdf1c56cdcd680512e3ba6689be00dbbd7f68b00d648e1dfe23ca8837bfef635`.
 
+## V407 · R56 — CIERRE PUBLICABLE DEL TURNO IOS (12-09-2026)
+- El gate consumió R55 durante la corrección del candado. R56 conserva exactamente el candidato validado `cdf1c56c…` y cambia sólo la identidad publicable, `api/release.js`, `scripts/apply-update-e.mjs` y el candado de cadena.
+
 ## V407 · R54 — PUENTE REALTIME PARA PREVIEW (12-09-2026)
 - Evidencia física R53: `/api/session-grupal` devolvió HTTP 500 porque Preview no recibe `OPENAI_API_KEY`. `api/session-grupal.js` usa un puente servidor-a-servidor al LAB canónico fijo exclusivamente cuando `VERCEL_ENV=preview`; R51 y MAESTRO permanecen intactos.
 

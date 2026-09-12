@@ -9,9 +9,9 @@ export default function handler(req,res){
   res.status(200).json({
     schema:'gscg-release/v1',
     channel:'lab-update-architecture-e-ios-first',
-    release:'V407-R55-IOS-TAP-PER-TURN-20260912',
-    baseline:'V407-R55',
-    baselineCommit:'R55-IOS-TAP-PER-TURN',
+    release:'V407-R56-IOS-TAP-PER-TURN-20260912',
+    baseline:'V407-R56',
+    baselineCommit:'R56-IOS-TAP-PER-TURN',
     publishedAt:'2026-09-12T01:47:00Z'
   });
 }
