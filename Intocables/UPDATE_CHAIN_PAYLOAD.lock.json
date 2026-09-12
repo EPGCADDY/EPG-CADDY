@@ -3,9 +3,9 @@
   "status": "PUBLICATION_CHAIN_LOCKED",
   "release": "V407-R49-CANONICAL-NAVIGATION-20260911",
   "fileCount": 72,
-  "fingerprint": "6488804596633ba82721456f5bdd29a94fb3b41fc7ad3b71facaa533de2717ea",
+  "fingerprint": "53a7cf8d51820e3b36082823699ae2725356b64c64e9feb41a0ddf4f7707a362",
   "candidateSha256": "cff91a550e1d42d44e37d862ca3d8d305e4687565c1c98bbbc8dd43a996253de",
-  "generatedFromCommit": "26b776e65317743f3b1968b11fe86ccdf34e016f",
+  "generatedFromCommit": "cc77b16c09b0c3bf1e950538427662a8f87eb053",
   "scope": "runtime-auto-v3-vercel-semantic",
   "vercelContract": {
     "gateFirst": true
@@ -27,7 +27,7 @@
     "api/database-health.js": "92299b9c091c9e2ec3008106edea1ab805b47be2eb65c96b0c092072d4bee39c",
     "api/golf-rules.js": "9e5bd35bb92ea58488c0eadca0ceed1ee1bbb7b5f6d0edbf5289da6df3866afd",
     "api/live.js": "56555825856ac862f24c5948d5b51e663df49097fd7a810b616ff5d26a066069",
-    "api/release.js": "8abfd66a4f521080041c74a318a8781b0bc3bea12d36fa62b448aa383a4840bf",
+    "api/release.js": "30830c66f8d8583c7363ea42978dc731e7e7ac7768231ff5695545c573f93466",
     "api/research.js": "3a79c7edaa34ac33c894f82cb3113a8d17f6b523dc223590ed831d1ecb7b749e",
     "api/score.js": "c3ef25fca5ed7d831fc33cd8c031b1cfba4eea66564b2e90f89208a5d02c5039",
     "api/session-grupal.js": "ac7885456960e400962a1b481574bbdc4584025eab5fe9d5e3712d16ab3b2e0c",
