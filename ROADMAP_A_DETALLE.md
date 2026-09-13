@@ -994,3 +994,9 @@ Archivos exactos:
 - `audit-project.mjs`: bancos R32/R33/R34 e integridad de voz obligatorios en cada despliegue.
 
 R34 evidencia Preview: 0595868e64733075c00aa4d0ebe1eecaef438674 READY en ambos proyectos; reproducción real de frase sintética 5,12 s, RMS0,16452, avance/finalización y texto visible PASS. Prueba física iPhone pendiente.
+
+## Diagnóstico aislado del motor R34 · 2026-09-13
+Prueba interna autorizada para continuar sin depender de transcripción HTTP401. Cien llamadas secuenciales al motor real; no prueba micrófono, reproducción ni aprobación integral. Main y LAB canónicos intactos.
+- `scripts/run-engine-100-isolation.mjs`: ejecutor con respuestas, errores y latencia por pregunta; sólo rama de prueba y entorno Preview.
+- `docs/quality/ENGINE_100_BANK.json`: banco importado del commit c37f600; referencias declaradas ChatGPT web, revisión independiente pendiente.
+- `vercel.json`: ejecuta diagnóstico después de controles existentes.
