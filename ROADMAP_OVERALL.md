@@ -951,3 +951,5 @@ Alcance: ubicación explícita y premisas de costos/precios; nueve consultas rea
 - `test-r35-weather-location.mjs`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
 - `vercel.json`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
 - `scripts/run-r36-targeted.mjs`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
+
+- `scripts/run-r36-build.mjs`: conserva el build y sus controles; evita exceder 256 caracteres de buildCommand.
