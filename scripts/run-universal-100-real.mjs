@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import {resolveGatewayToken} from "../api/_lib/vercel-gateway-auth.js";
 
 if(process.env.VERCEL_ENV!=="preview"||process.env.VERCEL_GIT_COMMIT_REF!=="test-r34-universal-100")process.exit(0);
 
@@ -28,12 +29,10 @@ async function callSpeech(text){
   return last;
 }
 async function transcribe(audio){
-  const form=new FormData();
-  form.set("file",new Blob([audio],{type:"audio/mpeg"}),"question.mp3");
-  form.set("model","gpt-4o-mini-transcribe");
-  form.set("language","es");
-  form.set("prompt","Transcribe literalmente una pregunta de propósito general en español. Conserva nombres, números y términos de golf.");
-  const before=Date.now(),response=await fetch("https://api.openai.com/v1/audio/transcriptions",{method:"POST",headers:{Authorization:`Bearer ${process.env.OPENAI_API_KEY||""}`,"OpenAI-Safety-Identifier":"epg-caddy-universal-100"},body:form});
+  const token=await resolveGatewayToken();
+  if(!token)return{status:500,text:"",error:"GATEWAY_TOKEN_MISSING",elapsedMs:0};
+  const authMethod=String(process.env.AI_GATEWAY_API_KEY||"").trim()?"api-key":"oidc";
+  const before=Date.now(),response=await fetch("https://ai-gateway.vercel.sh/v4/ai/transcription-model",{method:"POST",headers:{Authorization:`Bearer ${token}`,"ai-gateway-protocol-version":"0.0.1","ai-gateway-auth-method":authMethod,"ai-transcription-model-specification-version":"4","ai-model-id":"openai/whisper-1","Content-Type":"application/json"},body:JSON.stringify({audio:Buffer.from(audio).toString("base64"),mediaType:"audio/mpeg",language:"es",prompt:"Transcribe literalmente una pregunta de propósito general en español. Conserva nombres, números y términos de golf."})});
   const payload=await response.json().catch(()=>({}));
   return{status:response.status,text:String(payload?.text||"").trim(),error:payload?.error?.code||payload?.error?.message||null,elapsedMs:Date.now()-before};
 }
@@ -74,7 +73,7 @@ async function worker(){while(cursor<jobs.length){const job=jobs[cursor++];for(c
 await Promise.all(Array.from({length:4},()=>worker()));
 results.sort((a,b)=>Number(a.id)-Number(b.id));
 const transportPassed=results.filter(item=>item.transportPass).length,errorCounts=Object.fromEntries(Object.entries(results.reduce((counts,item)=>{const key=item.error||"NONE";counts[key]=(counts[key]||0)+1;return counts},{})).sort((a,b)=>b[1]-a[1]));
-const artifact={schema:"epg-caddy-universal-benchmark-results/v1",startedAt,completedAt:new Date().toISOString(),commit:process.env.VERCEL_GIT_COMMIT_SHA||null,deployment:process.env.VERCEL_URL||null,method:"synthetic speech audio -> OpenAI transcription -> EPG Universal AI -> written answer -> approved speech audio",physicalIphone:"PENDING",qualityComparison:"PENDING_CHATGPT_REVIEW",summary:{total:results.length,transportPassed,transportFailed:results.length-transportPassed,errorCounts},results};
+const artifact={schema:"epg-caddy-universal-benchmark-results/v1",startedAt,completedAt:new Date().toISOString(),commit:process.env.VERCEL_GIT_COMMIT_SHA||null,deployment:process.env.VERCEL_URL||null,method:"synthetic speech audio -> Vercel Gateway transcription -> EPG Universal AI -> written answer -> approved speech audio",physicalIphone:"PENDING",qualityComparison:"PENDING_CHATGPT_REVIEW",summary:{total:results.length,transportPassed,transportFailed:results.length-transportPassed,errorCounts},results};
 fs.mkdirSync("assets/official-logos",{recursive:true});
 fs.writeFileSync("assets/official-logos/universal-100-results.json",JSON.stringify(artifact,null,2));
 console.log("UNIVERSAL_100_COMPLETE "+JSON.stringify(artifact.summary));

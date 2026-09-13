@@ -977,6 +977,8 @@ Validación previa a cualquier nueva entrega: 100 referencias obtenidas en ChatG
 
 Reejecución trazable: el resumen del banco registra también el conteo exacto de errores por etapa para aislar cualquier fallo de captura, transcripción, IA o síntesis sin repetir auditorías generales.
 
+Causa RC-109 confirmada: la credencial directa de transcripción devolvía HTTP 401 en 100/100 casos. El banco usa ahora la ruta oficial de transcripción de Vercel AI Gateway autenticada por OIDC, igual que los servicios de IA y voz operativos.
+
 - `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`
 - `scripts/run-universal-100-real.mjs`
 - `vercel.json`

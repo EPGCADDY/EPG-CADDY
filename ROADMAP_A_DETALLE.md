@@ -1038,6 +1038,7 @@ PASS físico aislado; integración pendiente. Limpieza incremental de audio ante
 ## 2026-09-13 · Banco real universal de 100 casos
 - `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`: 100 preguntas únicas, 78 categorías, respuestas de referencia de ChatGPT, hechos esperados y siete conversaciones contextuales.
 - La reejecución publica un histograma de fallos por etapa; permite separar de forma reproducible captura, transcripción, motor de IA y síntesis hablada.
+- RC-109: 100 respuestas `TRANSCRIPTION_401` localizaron una credencial OpenAI directa inválida. Se sustituye en el banco por `/v4/ai/transcription-model`, modelo `openai/whisper-1`, con autenticación OIDC de Vercel Gateway.
 - `scripts/run-universal-100-real.mjs`: ejecuta audio de entrada → transcripción → AI UNIVERSAL → texto → audio de salida y registra tiempo y PASS/FAIL por etapa.
 - `vercel.json`: ejecuta el banco sólo en el Preview `test-r34-universal-100`, después de los candados existentes.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: incorpora los dos archivos nuevos y el comando de ejecución.
