@@ -931,3 +931,112 @@ Archivos exactos:
 - `audit-project.mjs`: bancos R32/R33/R34 e integridad de voz obligatorios en cada despliegue.
 
 R34 evidencia Preview: 0595868e64733075c00aa4d0ebe1eecaef438674 READY en ambos proyectos; reproducción real de frase sintética 5,12 s, RMS0,16452, avance/finalización y texto visible PASS. Prueba física iPhone pendiente.
+
+## R35 local y diagnóstico de captura R36 · 2026-09-13 · NO PUBLICADO
+
+Cambio autorizado: ubicación explícita del clima y recuperación de captura abandonada. Simulaciones dirigidas PASS; equivalencia ChatGPT, audio inyectado real y comprobación iPhone pendientes. Evidencia en docs/quality/R36_CAPTURE_DIAGNOSTIC.json. No se atribuye al iPhone la ausencia de dispositivo del navegador de pruebas.
+
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: código, prueba o evidencia de la revisión conversacional local.
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: código, prueba o evidencia de la revisión conversacional local.
+- `api/universal-ai.js`: código, prueba o evidencia de la revisión conversacional local.
+- `api/weather.js`: código, prueba o evidencia de la revisión conversacional local.
+- `docs/quality/R35_BANCO_100_PREGUNTAS.json`: código, prueba o evidencia de la revisión conversacional local.
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.json`: código, prueba o evidencia de la revisión conversacional local.
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.md`: código, prueba o evidencia de la revisión conversacional local.
+- `index-grupal.html`: código, prueba o evidencia de la revisión conversacional local.
+- `test-r31-universal-plain.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `test-r35-weather-location.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `test-r36-capture-permissions.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `test-r36-capture-release.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `test-v335-response-caliber.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `test-v364-vercel-oidc-recovery.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `audit-project.mjs`: exige pruebas de liberación de captura y permisos para prevenir reincidencias.
+
+### Seguimiento de aceptación de 100 conversaciones · 2026-09-13
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.json`: evidencia del banco externo 0/100 y límites del método.
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.md`: rechazo del banco como prueba de navegador consecutiva; infraestructura real pendiente. Sin publicación.
+
+
+## Continuidad conversacional R36 · 13 septiembre 2026 · NO APROBADO
+
+Motor real: 100/100 respuestas HTTP, mediana 3327 ms; 100 referencias ChatGPT observadas. Comparación editorial provisional: 98 aceptables, 1 fallo de costos/precios, 1 pendiente de revisar. No certifica equivalencia del flujo completo. Integración de servicios de audio externa: 100/100, sin reproducción y con cuatro trabajadores. Nueve consultas adicionales reales: texto y bytes de voz; costos aún necesita respuesta relativa correcta, las tres ciudades sí se resolvieron.
+
+Segunda escucha: R34 negativo (0 aperturas tras fin de voz), código local positivo (100 transiciones sin duplicados; Detener cancela). Reconocimiento simulado, no hardware iPhone. Persistencia real de ronda sintética LAB tras recarga: cinco tablas idénticas. TestMu documenta inyección iOS, pero no hay cuenta/plan ni dispositivo aprovisionado. Latencia integral <=40%, 100 turnos de navegador y comprobación física siguen pendientes. Regresión integral final reservada para candidato completo.
+
+Archivos del alcance y evidencias:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: corrección, control o evidencia de la conversación; no publicación.
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: corrección, control o evidencia de la conversación; no publicación.
+- `api/universal-ai.js`: corrección, control o evidencia de la conversación; no publicación.
+- `audit-project.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/ENGINE_100_COMPARISON.html`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/ENGINE_100_COMPARISON.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/ENGINE_CHATGPT_REFERENCES_100.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/ENGINE_R34_COMPLETE_100.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/ENGINE_R34_PARTIAL_18.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/R36_CONTINUITY_EVIDENCE.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/R36_TARGETED_CHATGPT.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/R36_TARGETED_CHATGPT_RAW.txt`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/R36_TARGETED_REAL_9.json`: corrección, control o evidencia de la conversación; no publicación.
+- `index-grupal.html`: corrección, control o evidencia de la conversación; no publicación.
+- `scripts/check-conversation-acceptance.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `scripts/render-engine-comparison.py`: corrección, control o evidencia de la conversación; no publicación.
+- `scripts/run-r36-build.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `scripts/run-r36-targeted.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `test-r34-audio-response.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `test-r35-weather-location.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `test-r36-followup-events.mjs`: corrección, control o evidencia de la conversación; no publicación.
+
+
+## R36 publicación autorizada — 2026-09-13
+Orden del propietario: Publica. Correcciones de liberación de captura, siguiente pregunta, ubicación explícita y voz por fragmentos. Pruebas controladas PASS; validación física y equivalencia integral de 100 conversaciones pendientes. No se certifica reducción total de latencia. Reversión: e871621c2af478deed6957a625feb0e280402d68 conservando almacenamiento local.
+Archivos exactos:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `api/universal-ai.js`
+- `api/weather.js`
+- `audit-project.mjs`
+- `docs/quality/ENGINE_100_COMPARISON.html`
+- `docs/quality/ENGINE_100_COMPARISON.json`
+- `docs/quality/ENGINE_CHATGPT_REFERENCES_100.json`
+- `docs/quality/ENGINE_R34_COMPLETE_100.json`
+- `docs/quality/ENGINE_R34_PARTIAL_18.json`
+- `docs/quality/R35_BANCO_100_PREGUNTAS.json`
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.json`
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.md`
+- `docs/quality/R36_CONTINUITY_EVIDENCE.json`
+- `docs/quality/R36_TARGETED_CHATGPT.json`
+- `docs/quality/R36_TARGETED_CHATGPT_RAW.txt`
+- `docs/quality/R36_TARGETED_COMPARISON_9.json`
+- `docs/quality/R36_TARGETED_REAL_9.json`
+- `docs/quality/R36_TTS_LATENCY_PAIRS.json`
+- `index-grupal.html`
+- `scripts/check-conversation-acceptance.mjs`
+- `scripts/render-engine-comparison.py`
+- `scripts/run-r36-audio-sequential.mjs`
+- `scripts/run-r36-build.mjs`
+- `scripts/run-r36-latency-probe.mjs`
+- `scripts/run-r36-targeted.mjs`
+- `service-worker.js`
+- `test-r31-universal-plain.mjs`
+- `test-r34-audio-response.mjs`
+- `test-r35-weather-location.mjs`
+- `test-r36-capture-permissions.mjs`
+- `test-r36-capture-release.mjs`
+- `test-r36-followup-events.mjs`
+- `test-v335-response-caliber.mjs`
+- `test-v364-vercel-oidc-recovery.mjs`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`
+
+R36: test-v365-active-round-empty-recovery.mjs conserva la prueba de recuperación y verifica el identificador sucesor de caché.

@@ -38,7 +38,7 @@ const result=await requestUniversalResponse({input:[{role:"user",content:"Prueba
 });
 assert.equal(result.ok,true);
 assert.equal(result.gateway,true);
-assert.equal(calls.filter(call=>call.url.includes("api.openai.com")).length,3);
+assert.equal(calls.filter(call=>call.url.includes("api.openai.com")).length,1);
 assert.equal(calls.filter(call=>call.url.includes("ai-gateway.vercel.sh")).length,1);
 assert.equal(calls.at(-1).options.headers.Authorization,"Bearer oidc-token");
 

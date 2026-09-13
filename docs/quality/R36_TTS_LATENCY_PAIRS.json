@@ -1,0 +1,73 @@
+{
+  "deployment": "dpl_AzVELDLCntmy8EWDrEgpppQ5ckU2",
+  "method": "Three real paired TTS requests; identical total text; first sentence plus rest generated concurrently; no browser playback",
+  "pairs": [
+    {
+      "trial": 1,
+      "full": {
+        "status": 200,
+        "bytes": 607293,
+        "elapsedMs": 6770
+      },
+      "first": {
+        "status": 200,
+        "bytes": 168018,
+        "elapsedMs": 1770
+      },
+      "rest": {
+        "status": 200,
+        "bytes": 497788,
+        "elapsedMs": 6966
+      },
+      "initialRatio": 0.2614475627769572,
+      "sameText": true,
+      "playback": false,
+      "applicationChanged": false
+    },
+    {
+      "trial": 2,
+      "full": {
+        "status": 200,
+        "bytes": 730173,
+        "elapsedMs": 8622
+      },
+      "first": {
+        "status": 200,
+        "bytes": 180139,
+        "elapsedMs": 2542
+      },
+      "rest": {
+        "status": 200,
+        "bytes": 450141,
+        "elapsedMs": 5746
+      },
+      "initialRatio": 0.29482718626768734,
+      "sameText": true,
+      "playback": false,
+      "applicationChanged": false
+    },
+    {
+      "trial": 3,
+      "full": {
+        "status": 200,
+        "bytes": 640730,
+        "elapsedMs": 8379
+      },
+      "first": {
+        "status": 200,
+        "bytes": 174706,
+        "elapsedMs": 2903
+      },
+      "rest": {
+        "status": 200,
+        "bytes": 445543,
+        "elapsedMs": 6073
+      },
+      "initialRatio": 0.34646139157417355,
+      "sameText": true,
+      "playback": false,
+      "applicationChanged": false
+    }
+  ],
+  "fullFlowAcceptance": false
+}

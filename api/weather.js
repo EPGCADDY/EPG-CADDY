@@ -46,6 +46,7 @@ const FORECAST_PERIODS = Object.freeze({
 });
 
 function numberInRange(value, min, max) {
+  if(value==null||value==="")return null;
   const number = Number(value);
   return Number.isFinite(number) && number >= min && number <= max ? number : null;
 }
@@ -56,15 +57,29 @@ async function fetchJson(url) {
   return response.json();
 }
 
+const placeCache=new Map();
+const normalizePlace=value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
+const countryNames=(()=>{const names=new Intl.DisplayNames(["es"],{type:"region"}),result=[];for(let a=65;a<=90;a++)for(let b=65;b<=90;b++){const code=String.fromCharCode(a,b),name=names.of(code);if(name&&name!==code)result.push({name,code,normalized:normalizePlace(name)})}return result.sort((a,b)=>b.name.length-a.name.length)})();
+export function weatherPlaceSearch(location){
+  const query=String(location||"").trim(),normalized=normalizePlace(query);
+  const country=countryNames.find(item=>normalized.endsWith(" "+item.normalized)||normalized.endsWith(","+item.normalized));
+  if(!country)return {name:query,countryCode:""};
+  const name=query.slice(0,query.length-country.name.length).replace(/[,\s]+$/,"");
+  return {name:/^(?:ciudad de|estado de)$/iu.test(name)?query:name,countryCode:country.code};
+}
 async function resolvePlace(location) {
   const query = String(location || "").trim().slice(0, 120);
   if (!query) return null;
-  const fallback = COURSE_PLACE_FALLBACKS.find(item => item.match.test(query));
+  const search=weatherPlaceSearch(query);
+  const cached=placeCache.get(normalizePlace(query));if(cached&&Date.now()-cached.savedAt<86400000)return {...cached.place};
+  const fallback = (!search.countryCode||search.countryCode==="GT")&&COURSE_PLACE_FALLBACKS.find(item => item.match.test(query));
   const candidates = fallback ? [query, fallback.place] : [query];
   let match = null;
   for (const candidate of candidates) {
     const url = new URL("https://geocoding-api.open-meteo.com/v1/search");
-    url.searchParams.set("name", candidate);
+    const target=weatherPlaceSearch(candidate);
+    url.searchParams.set("name", target.name);
+    if(target.countryCode)url.searchParams.set("countryCode",target.countryCode);
     url.searchParams.set("count", "1");
     url.searchParams.set("language", "es");
     url.searchParams.set("format", "json");
@@ -73,11 +88,14 @@ async function resolvePlace(location) {
     if (match) break;
   }
   if (!match) return null;
-  return {
+  const place={
     latitude: numberInRange(match.latitude, -90, 90),
     longitude: numberInRange(match.longitude, -180, 180),
-    label: fallback ? query : [match.name, match.admin1, match.country].filter(Boolean).join(", ")
+    label: fallback ? query : [...new Set([match.name, match.admin1, match.country].filter(Boolean))].join(", ")
   };
+  if(placeCache.size>=64)placeCache.delete(placeCache.keys().next().value);
+  placeCache.set(normalizePlace(query),{place,savedAt:Date.now()});
+  return {...place};
 }
 
 function summarizeRainTiming(payload, date, notBefore = "", notAfter = "") {

@@ -1,0 +1,47 @@
+{
+  "source": "ChatGPT web, observed 2026-09-13",
+  "referenceStatus": "NOT_GROUND_TRUTH",
+  "warnings": [
+    "costs repeats cost/price confusion",
+    "weather widget resolved to Tecomán rather than Colima city; reject as weather reference",
+    "iPhone answer gives force restart only"
+  ],
+  "cases": [
+    {
+      "id": "costs",
+      "answer": "No. Si un precio baja o sube porcentualmente sobre una base cambiada, no se recupera el valor original. Por ejemplo, 100 reducido 20% queda en 80; aumentar 20% sobre 80 da 96, no 100."
+    },
+    {
+      "id": "prices",
+      "answer": "Cuesta 96. Primero baja 20%: 100 × 0.80 = 80. Después sube 20%: 80 × 1.20 = 96."
+    },
+    {
+      "id": "colima",
+      "answer": "El clima actual en Colima es aproximadamente cálido, con nubes y sol y cerca de 29 °C; el pronóstico indica posibilidad de chubascos por la tarde. Los datos pueden variar y dependen de la actualización meteorológica disponible.\n\nCalle Madrid, Conacar, Pri, 28910 Tecomán, Colima, México\n\n29°\n\nC\n\n/\n\nF\n\nLuego de algo de sol, se tornará nublado, con algunos chubascos en la tarde\n\nSun\n\n32°\n\n22°\n\nMon\n\n33°\n\n23°\n\nTue\n\n31°\n\n22°\n\nWed\n\n33°\n\n23°\n\nThu\n\n34°\n\n23°\n\nFri\n\n30°\n\n23°\n\nSat\n\n32°\n\n22°\n\nSun\n\n31°\n\n22°\n\nWeather data type\nTemperature\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n31°\n29°\n26°\n24°\n24°\n23°\n23°\n29°\n33°\n31°\n27°\n25°\n25°\n24°\n24°\n27°\n30°\n30°\n28°\n25°\n24°\n23°\n23°\n29°\n32°\n32°\n28°\n25°\n25°\n24°\n24°\n30°\n34°\n33°\n29°\n26°\n26°\n25°\n24°\n27°\n30°\n28°\n26°\n25°\n24°\n24°\n24°\n29°\n32°\n29°\n28°\n24°\n24°\n23°\n24°\n26°\n31°\n30°\n29°\n27°\nGive feedback\n\n"
+    },
+    {
+      "id": "madrid",
+      "answer": "En Madrid, España, se espera un tiempo cálido y mayormente despejado, con máximas alrededor de 33 °C para hoy según pronósticos disponibles. No tengo una medición meteorológica directa y en tiempo real más allá de las fuentes consultadas. \n14cast.com\n"
+    },
+    {
+      "id": "mexico",
+      "answer": "En Ciudad de México, el tiempo es templado y con nubosidad; una medición consultada reportó alrededor de 16 °C y cielo mayormente nublado en ese momento. Las condiciones pueden cambiar durante el día. \nNOAA FTP Server\n\nCalle Madrid, Conacar, Pri, 28910 Tecomán, Colima, México\n\n29°\n\nC\n\n/\n\nF\n\nLuego de algo de sol, se tornará nublado, con algunos chubascos en la tarde\n\nSun\n\n32°\n\n22°\n\nMon\n\n33°\n\n23°\n\nTue\n\n31°\n\n22°\n\nWed\n\n33°\n\n23°\n\nThu\n\n34°\n\n23°\n\nFri\n\n30°\n\n23°\n\nSat\n\n32°\n\n22°\n\nSun\n\n31°\n\n22°\n\nTemperature\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n1am\n4am\n7am\n10am\n1pm\n4pm\n7pm\n10pm\n31°\n29°\n26°\n24°\n24°\n23°\n23°\n29°\n33°\n31°\n27°\n25°\n25°\n24°\n24°\n27°\n30°\n30°\n28°\n25°\n24°\n23°\n23°\n29°\n32°\n32°\n28°\n25°\n25°\n24°\n24°\n30°\n34°\n33°\n29°\n26°\n26°\n25°\n24°\n27°\n30°\n28°\n26°\n25°\n24°\n24°\n24°\n29°\n32°\n29°\n28°\n24°\n24°\n23°\n24°\n26°\n31°\n30°\n29°\n27°\nGive feedback\n\n"
+    },
+    {
+      "id": "retinol",
+      "answer": "El retinol puede funcionar bien en cremas faciales porque ayuda a estimular la renovación de la piel, mejorar la apariencia de líneas finas, textura irregular y manchas con uso constante. Puede causar irritación, resequedad o sensibilidad al sol, por lo que suele recomendarse empezar con baja frecuencia y usar protector solar."
+    },
+    {
+      "id": "leather",
+      "answer": "Para hidratar un cincho de cuero que se está rajando, limpia primero el cuero con un paño suave, deja que se seque y aplica un acondicionador específico para cuero en capas delgadas. Evita aceites domésticos fuertes o exceso de agua, porque pueden debilitar el material. Si las grietas ya son profundas, la hidratación puede mejorar la flexibilidad pero no siempre reparar el daño."
+    },
+    {
+      "id": "orchids",
+      "answer": "Las orquídeas en maceta suelen volver a florecer aproximadamente una vez al año, aunque algunas pueden hacerlo cada 6 a 12 meses si tienen buena luz, riego adecuado, fertilización y un periodo de descanso después de la floración."
+    },
+    {
+      "id": "iphone",
+      "answer": "Para reiniciar un iPhone 11: presiona y suelta rápidamente el botón de subir volumen, presiona y suelta rápidamente el botón de bajar volumen y después mantén presionado el botón lateral hasta que aparezca el logotipo de Apple."
+    }
+  ]
+}

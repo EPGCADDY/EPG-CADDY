@@ -1269,3 +1269,56 @@ Archivos exactos:
 - `vercel.json`
 
 - `audit-project.mjs`: bancos R32/R33/R34 e integridad de voz obligatorios en cada despliegue.
+
+
+## R36 publicación autorizada — 2026-09-13
+Orden del propietario: Publica. Correcciones de liberación de captura, siguiente pregunta, ubicación explícita y voz por fragmentos. Pruebas controladas PASS; validación física y equivalencia integral de 100 conversaciones pendientes. No se certifica reducción total de latencia. Reversión: e871621c2af478deed6957a625feb0e280402d68 conservando almacenamiento local.
+Archivos exactos:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `api/universal-ai.js`
+- `api/weather.js`
+- `audit-project.mjs`
+- `docs/quality/ENGINE_100_COMPARISON.html`
+- `docs/quality/ENGINE_100_COMPARISON.json`
+- `docs/quality/ENGINE_CHATGPT_REFERENCES_100.json`
+- `docs/quality/ENGINE_R34_COMPLETE_100.json`
+- `docs/quality/ENGINE_R34_PARTIAL_18.json`
+- `docs/quality/R35_BANCO_100_PREGUNTAS.json`
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.json`
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.md`
+- `docs/quality/R36_CONTINUITY_EVIDENCE.json`
+- `docs/quality/R36_TARGETED_CHATGPT.json`
+- `docs/quality/R36_TARGETED_CHATGPT_RAW.txt`
+- `docs/quality/R36_TARGETED_COMPARISON_9.json`
+- `docs/quality/R36_TARGETED_REAL_9.json`
+- `docs/quality/R36_TTS_LATENCY_PAIRS.json`
+- `index-grupal.html`
+- `scripts/check-conversation-acceptance.mjs`
+- `scripts/render-engine-comparison.py`
+- `scripts/run-r36-audio-sequential.mjs`
+- `scripts/run-r36-build.mjs`
+- `scripts/run-r36-latency-probe.mjs`
+- `scripts/run-r36-targeted.mjs`
+- `service-worker.js`
+- `test-r31-universal-plain.mjs`
+- `test-r34-audio-response.mjs`
+- `test-r35-weather-location.mjs`
+- `test-r36-capture-permissions.mjs`
+- `test-r36-capture-release.mjs`
+- `test-r36-followup-events.mjs`
+- `test-v335-response-caliber.mjs`
+- `test-v364-vercel-oidc-recovery.mjs`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`

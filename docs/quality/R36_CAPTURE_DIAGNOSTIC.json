@@ -1,0 +1,118 @@
+{
+  "recordedAt": "2026-09-13T15:53:36.057342+00:00",
+  "baseCommit": "e871621c2af478deed6957a625feb0e280402d68",
+  "scope": "Capture cleanup and voice chain diagnostics; local unpublished changes",
+  "productionChanged": false,
+  "baselineRegression": {
+    "exitCode": 1,
+    "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: FAIL: stop guard discards recognition while capture remains held\n\ntrue !== false\n\n    at file:///workspace/scratch/b8f99b6bf5b1/epg-r35/test-r36-capture-release.mjs:20:8\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n",
+    "expectedFailure": true
+  },
+  "tests": [
+    {
+      "command": "node test-r36-capture-release.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "stdout": "PASS controlled simulation: stop without onend releases capture, detaches stale callbacks and leaves listening\nPASS controlled simulation: failed transport releases old capture before retry\nPASS 100 controlled capture-finalization cycles; original questions preserved; zero leaked captures or duplicate dispatches. NOT ASR, AI quality, TTS or physical-device certification.\n",
+      "stderr": ""
+    },
+    {
+      "command": "node test-r36-capture-permissions.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "stdout": "PASS simulated getUserMedia NotAllowedError: session not opened and pending connection released\nPASS simulated getUserMedia NotFoundError: session not opened and pending connection released\nPASS simulated getUserMedia SecurityError: session not opened and pending connection released\nPASS simulated session HTTP 401: audio track and connection released\nPASS simulated session HTTP 429: audio track and connection released\nPASS simulated session HTTP 500: audio track and connection released\nPASS simulated capture → WebRTC session handshake; credentials retained and microphone remains muted until listening authorization. NOT physical audio or ASR verification.\n",
+      "stderr": ""
+    },
+    {
+      "command": "node test-r32-open-conversation.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "stdout": "PASS R32 · 18 rutas de preguntas/repreguntas; registro válido local y registro explícito incompleto protegido\nPASS R32 · fallo de audio remoto/local propagado; texto independiente y estado ocupado liberado\nPASS R32 · audio previo liberado sin callbacks antes de volver a escuchar\n",
+      "stderr": ""
+    },
+    {
+      "command": "node test-r34-audio-response.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "stdout": "PASS texto seguro visible, audio adjunto con controles y sin mute, avance y finalización diferenciados\nPASS rechazo de reproducción conserva texto y controles, devuelve false\nPASS audio sin avance abandona RESPONDIENDO y conserva respuesta\nPASS espera bloqueada finaliza y aborta solicitud\nPASS diez reproducciones simuladas consecutivas\nPASS timeout real del envío libera turno y botón, muestra error\n",
+      "stderr": ""
+    },
+    {
+      "command": "node test-v336-microphone-transport.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "stdout": "PASS V351 · Registro local, matriz exacta y telemetría privada permanecen protegidos\n",
+      "stderr": ""
+    },
+    {
+      "command": "node test-v357-ios-voice-transport-recovery.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "stdout": "PASS V357 · iPhone abre voz en el gesto · 429 no bloquea scores ni AI UNIVERSAL · multi-hoyo, reintentos y privacidad protegidos\n",
+      "stderr": ""
+    },
+    {
+      "command": "node test-v362-physical-voice-recovery.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "stdout": "PASS V362/V378 · un toque + watchdog + Fish Audio 0.90 + cierre hablado y persistencia progresiva\n",
+      "stderr": ""
+    },
+    {
+      "command": "node test-r35-weather-location.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "stdout": "PASS ubicación explícita precede al campo y país se separa sin catálogo de ciudades\nPASS handler completo: Colima usa México; segunda pregunta Madrid cambia ciudad; lugar inexistente no sustituye Guatemala; coordenadas null no se convierten en cero\nPASS saldo agotado: un intento, respaldo inmediato, cero esperas artificiales\n",
+      "stderr": "universal ai upstream retry {\"status\":429,\"providerCode\":\"credit_balance_exhausted\",\"attempt\":1,\"model\":\"gpt-5.6\",\"retryable\":true,\"requestId\":null}\n"
+    }
+  ],
+  "liveEvidence": {
+    "mainDeployment": "dpl_FS6xsnxV3iHaYDfyYfGtQTtUzzF7",
+    "dateUTC": "2026-09-13",
+    "eventsUTC": {
+      "transcript_ready": "15:14:04",
+      "speech_started": "15:14:12",
+      "speech_progress": "15:14:12",
+      "speech_ended": "15:14:15",
+      "next_listening": "15:14:16",
+      "no_result_timeout": "15:14:24"
+    },
+    "source": "Vercel runtime logs, retrieved in this turn; anonymized, no device identity inferred",
+    "browserDiagnostic": "Separate microphone diagnostic UI displays FAIL · Captura: NotFoundError",
+    "https": "Both canonical origins validated TLS and returned access.html for unauthenticated requests; authenticated response headers not verified"
+  },
+  "limits": [
+    "100 capture-finalization simulations are not 100 ASR/AI/TTS tests.",
+    "No real audio was injected into native browser speech recognition in this run: browser control exposes no audio-injection capability.",
+    "Root cause of the individual iPhone incident remains unconfirmed; capture leak reproduced in controlled callback-failure scenario.",
+    "No 90/100 ChatGPT-equivalence result and no latency target achieved.",
+    "Final physical iPhone confirmation remains pending."
+  ],
+  "externalBenchmarkReview": {
+    "reviewedAt": "2026-09-13T16:15:47.228924+00:00",
+    "deployment": "dpl_Ab2fnDXaMyT3mdRxR7W4EMmnWzhs",
+    "commit": "c37f600c8b912777bdb386774d0793f02809a8c8",
+    "branch": "test-r34-universal-100",
+    "buildLogSummary": {
+      "total": 100,
+      "transportPassed": 0,
+      "transportFailed": 100
+    },
+    "status": "FAIL_ACCEPTANCE",
+    "methodFromSource": "TTS question audio → OpenAI transcription API → universal handler → TTS bytes; no browser audio playback or native recognition",
+    "concurrency": 4,
+    "source": "scripts/run-universal-100-real.mjs at exact commit",
+    "limitations": [
+      "Not a reproduction of the second iPhone turn.",
+      "Output bytes are counted as spoken without playback.",
+      "Individual failure details unavailable: protected artifact fetch returned HTTP 302 to Vercel authentication.",
+      "Provider errors in earlier build unit-test logs must not be attributed to these actual requests."
+    ],
+    "infrastructure": {
+      "connectedDeviceFarmTools": 0,
+      "browserAudioInjectionCapability": false,
+      "physicalIOSDeviceProvisioned": false
+    },
+    "ownerActionRequested": false
+  }
+}
