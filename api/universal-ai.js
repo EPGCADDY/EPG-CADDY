@@ -113,6 +113,7 @@ export function weatherLocationFromQuery(query){
   const match=text.match(/\b(?:en|para)\s+(.+)/iu);
   if(!match)return "";
   const rawLocation=match[1].replace(/[?¿!¡.]+$/g,"").replace(/\s+(?:hoy|ahora|ahorita|mañana|pasado mañana|esta (?:tarde|noche|mañana)|el (?:lunes|martes|miércoles|jueves|viernes|sábado|domingo)|por (?:la|el) (?:mañana|tarde|noche)|a las? \d).*$/iu,"").trim();
+  if(/^(?:(?:\d+|un[ao]?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|media)\s+(?:minutos?|horas?|d[ií]as?|semanas?|meses?)|(?:la\s+)?(?:pr[oó]xima|otra|esta)\s+semana|invierno|verano|otoño|primavera)\b/iu.test(rawLocation))return weatherLocationFromQuery(rawLocation);
   const location=/^(?:la\s+)?ciudad\s+de\s+m[eé]xico(?:\s*,?\s*m[eé]xico)?$/iu.test(rawLocation)?rawLocation.replace(/^la\s+/iu,""):rawLocation.replace(/^(?:la\s+)?ciudad\s+de\s+/iu,"");
   if(!location||/^(?:(?:el|este|nuestro)\s+campo(?:\s+actual)?|aquí|aca|acá|mi ubicación|donde estoy|este momento|la actualidad|hoy|mañana|la (?:mañana|tarde|noche)|el fin de semana)$/iu.test(location))return "";
   return location.slice(0,120);

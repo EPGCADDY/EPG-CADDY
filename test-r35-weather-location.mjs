@@ -7,6 +7,8 @@ for(const input of ['Clima en Ciudad de México','Clima en la Ciudad de México 
 assert.deepEqual(weatherPlaceSearch(weatherLocationFromQuery('Clima en Ciudad de México')),{name:'Ciudad de México',countryCode:'MX'});
 assert.deepEqual(universalWeatherOrigin('Clima en Colima México',context),{location:'Colima México'});
 assert.deepEqual(universalWeatherOrigin('Clima aquí',context),context.weatherOrigin);
+assert.deepEqual(universalWeatherOrigin('Clima en 30 minutos',context),context.weatherOrigin);
+assert.equal(weatherLocationFromQuery('Clima en 30 minutos en Colima México'),'Colima México');
 assert.deepEqual(universalWeatherOrigin('¿Lloverá en El Pulté?',context),context.weatherOrigin);
 assert.deepEqual(universalWeatherOrigin('Clima en El Pulté México',context),{location:'El Pulté México'});
 assert.deepEqual(universalWeatherOrigin('Cómo estará el tiempo',context,'Madrid, España'),{location:'Madrid, España'});
