@@ -88,14 +88,14 @@ assert.match(html,/echoCancellation:true,noiseSuppression:true,autoGainControl:t
 const outputStopped=html.slice(html.indexOf('if(e.type==="output_audio_buffer.stopped")'),html.indexOf('if(e.type==="output_audio_buffer.cleared")'));
 assert.ok(outputStopped.indexOf("conversationToolTransition")<outputStopped.indexOf("clearSpeechAuthorization()"),"El cierre de la consulta no puede desautorizar la respuesta climática final");
 assert.doesNotMatch(outputStopped,/activeResponseId===transition\.followupResponseId/,"Un cierre de audio de iPhone sin ID no debe dejar la pista del micrófono apagada");
-assert.match(outputStopped,/setVoice\(false\);phase="idle";setPrimaryVoiceMatrix\("idle",voiceContext\)/,"Al terminar de hablar el Caddie debe cerrar la pista y volver el micrófono a verde");
+assert.match(outputStopped,/finishedReason==="conversation"[\s\S]*?phase="listening";resumeConversationListening\(\);setPrimaryVoiceMatrix\("listening",voiceContext\)/,"Al terminar de hablar el Caddie debe conservar la pista y aceptar la siguiente pregunta");
 const stopHelperSource=html.slice(html.indexOf("function conversationToolStopIsPreFollowup"),html.indexOf("\nfunction isGeneralConversationIntent"));
 const conversationToolStopIsPreFollowup=new Function(`${stopHelperSource};return conversationToolStopIsPreFollowup`)();
 assert.equal(conversationToolStopIsPreFollowup(null,{sourceResponseId:"source",followupResponseId:null,followupAudioStarted:false}),true,"Antes de crear la respuesta final debe esperar");
 assert.equal(conversationToolStopIsPreFollowup(null,{sourceResponseId:"source",followupResponseId:"final",followupAudioStarted:false}),true,"Un cierre tardío sin ID no puede apagar la respuesta final antes de su audio");
 assert.equal(conversationToolStopIsPreFollowup(null,{sourceResponseId:"source",followupResponseId:"final",followupAudioStarted:true}),false,"Sólo el cierre posterior al audio final reactiva el micrófono");
 assert.match(html,/Cuando necesites una herramienta, no pronuncies un preámbulo/,"El clima debe responder una sola vez y completo");
-assert.match(html,/aiUniversalSetState\("LISTO · TOCA ESCUCHAR PARA HABLAR"\)/,"La conversación debe quedar lista con el micrófono cerrado");
+assert.match(outputStopped,/aiUniversalSetState\("ESCUCHANDO · PUEDES CONTINUAR"\)/,"La conversación debe quedar escuchando para el siguiente turno");
 assert.match(html, /En salud ofrece únicamente orientación general/, "Faltan límites seguros para preguntas médicas");
 assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=30\*60\*1000/,"Una escucha sin pregunta conserva su protección máxima de inactividad");
 assert.match(html,/const ROUND_VAD_SILENCE_MS=1000/,"Un segundo de silencio debe iniciar la respuesta sin demora artificial");
