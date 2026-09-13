@@ -26,3 +26,9 @@ Fuentes: https://support.apple.com/es-mx/118259 y https://support.apple.com/es-l
 
 ## Estado
 Prueba remota en curso. Sin puntuación ni PASS integral hasta leer las cuatro respuestas reales. Main permanece en R30.
+
+## Primera ejecución real · d198cb61 · LAB Preview
+- Clima: 193 ms, 200; 18 grados, parcialmente nublado, probabilidad diaria 88%, dato 03:30. Cubre 25/25 criterios, pendiente escucha física.
+- Salud: 7616 ms, 200; causa condicional, medidas conservadoras, fisioterapia, advertencias y pregunta. Revisión: 23/25 por lista de alarmas más larga de lo necesario; no diagnóstico confirmado.
+- iPhone: 2258 ms, 200; reinicio normal correcto y sin borrado. Revisión: 20/25 porque omite alternativa para bloqueo de pantalla.
+- BMW: 24045 ms, 200; abre con estimación en Guatemala y enlaza variantes Turbo. FAIL bloqueante: cifras locales insuficientemente sustentadas. No se declara 90%. Se repite sólo este caso con instrucciones de fuentes y variante más estrictas.
