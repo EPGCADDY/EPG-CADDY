@@ -121,7 +121,8 @@ export function universalWeatherOrigin(query,appContext,toolLocation=""){
   const named=weatherLocationFromQuery(query)||String(toolLocation||"").trim();
   const normalize=value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
   if(named){
-    if(appContext?.weatherOrigin&&[appContext.weatherOrigin.location,appContext.course].some(value=>value&&normalize(value)===normalize(named)))return {...appContext.weatherOrigin};
+    const courseAliases=[appContext?.weatherOrigin?.location,appContext?.course].filter(Boolean).flatMap(value=>{const full=normalize(value),short=full.split(",")[0].trim();return [full,short,short.replace(/\s+golf$/,"")]});
+    if(appContext?.weatherOrigin&&courseAliases.includes(normalize(named)))return {...appContext.weatherOrigin};
     return {location:named};
   }
   return appContext?.weatherOrigin?{...appContext.weatherOrigin}:{location:appContext?.course||""};
