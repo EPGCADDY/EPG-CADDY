@@ -310,3 +310,14 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Causa raíz: `#setupOk` enviaba el registro manual válido a `requestSetupFinalize()`, que podía esperar indefinidamente `setupSpeechActive`.
 - Control permanente R27: el registro manual válido avanza directamente; voz permanece disponible pero no bloquea `OK`.
 - Estado: CORREGIDO EN FUENTE; pendiente comprobación física en iPhone.
+
+## RC-104 · PNG no se prepara tras cerrar Universales · 13 septiembre 2026
+
+- Evidencia: IMG_3618.png y reproducción real en LAB R29, cuatro jugadores, 18 hoyos ingresados por interfaz, cierre oficial.
+- Causa confirmada: `canvas.toBlob` lanza `SecurityError: Tainted canvases may not be exported` al dibujar un SVG con foreignObject mediante URL Blob.
+- Escape: R29 comprobó la activación del toque con PNG simulado; no ejecutó la generación PNG real.
+- Corrección: SVG autocontenido, tiempo máximo de carga y color/fuente explícitos en XHTML.
+- Control permanente: comparación en navegador `assets/official-logos/png-export-review.html`, exportador previo falla, corregido crea PNG visible; botón de envío usa el archivo preparado.
+- Evidencia automática dirigida: V278 y V397 PASS. Navegador: PNG de 102707 bytes antes de corregir legibilidad; nueva revisión visual pendiente. iPhone: pendiente. Producción intacta.
+
+- Cierre físico R30: el usuario confirmó «Eso sí, funcionó y llegó» tras enviar la imagen desde su iPhone. PNG real de navegador: 160728 bytes. Integración Main autorizada explícitamente. La prueba temporal permanece en la rama fix-r30-card-png.

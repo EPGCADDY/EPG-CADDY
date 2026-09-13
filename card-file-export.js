@@ -11,16 +11,23 @@
     const style=item.html.match(/<style>([\s\S]*?)<\/style>/i)?.[1]||"",main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
     if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
     const {width,height}=dimensions(item),safeMain=main.replace(/<br>/gi,"<br/>");
-    return`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-56}px;max-width:none;margin:0;padding:28px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
+    return`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-56}px;max-width:none;margin:0;padding:28px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
   }
 
   async function canvasFor(item){
     if(typeof document==="undefined"||typeof Image==="undefined")throw new Error("BROWSER_REQUIRED");
-    const svg=artifactSvg(item),source=new Blob([svg],{type:"image/svg+xml;charset=utf-8"}),url=URL.createObjectURL(source),image=new Image();
-    try{
-      await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=()=>reject(new Error("IMAGE_RENDER_FAILED"));image.src=url});
-      const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;const context=canvas.getContext("2d");context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return canvas;
-    }finally{URL.revokeObjectURL(url)}
+    // A self-contained SVG data image keeps the canvas origin-clean. A Blob
+    // URL containing foreignObject taints it and makes PNG/PDF export fail.
+    const svg=artifactSvg(item),image=new Image();
+    await new Promise((resolve,reject)=>{
+      const timer=setTimeout(()=>{image.src="";reject(new Error("IMAGE_RENDER_TIMEOUT"))},15000);
+      image.onload=()=>{clearTimeout(timer);resolve()};
+      image.onerror=()=>{clearTimeout(timer);reject(new Error("IMAGE_RENDER_FAILED"))};
+      image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
+    });
+    const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
+    const context=canvas.getContext("2d");if(!context)throw new Error("CANVAS_CONTEXT_REQUIRED");
+    context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return canvas;
   }
 
   function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED")),type,quality))}
