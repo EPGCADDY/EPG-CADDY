@@ -931,3 +931,20 @@ Archivos exactos:
 - `audit-project.mjs`: bancos R32/R33/R34 e integridad de voz obligatorios en cada despliegue.
 
 R34 evidencia Preview: 0595868e64733075c00aa4d0ebe1eecaef438674 READY en ambos proyectos; reproducción real de frase sintética 5,12 s, RMS0,16452, avance/finalización y texto visible PASS. Prueba física iPhone pendiente.
+
+## 2026-09-13 · R34 ciudad solicitada y segundo turno
+Corrección incremental tras captura del propietario; PASS técnico, Preview y prueba física pendientes. Evidencia: docs/quality/R34_COLIMA_SEGUNDO_TURNO.md.
+
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `api/universal-ai.js`
+- `api/weather.js`
+- `docs/quality/R34_COLIMA_SEGUNDO_TURNO.md`
+- `index-grupal.html`
+- `scripts/build-r34-voice-review.mjs`
+- `test-r34-audio-response.mjs`
+- `test-r34-weather-location.mjs`

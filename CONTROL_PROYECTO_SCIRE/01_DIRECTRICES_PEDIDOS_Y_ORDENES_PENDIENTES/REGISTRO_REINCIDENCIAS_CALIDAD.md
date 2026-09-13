@@ -348,3 +348,6 @@ Revisión real en navegador: AI ∞ termina sin micrófono disponible, pero aiUn
 
 ## 2026-09-13 · RC-108 · R33 responde sin salida perceptible
 Informe físico del propietario: queda RESPONDIENDO sin voz ni texto. Logs Main confirman transcripción, HTTP200 TTS e inicio de reproducción, no sonido físico. Escape: pruebas de servidor y ausencia de micrófono no cubren audibilidad; voiceOnly oculta texto y no controla progreso. R34 añade texto en pantalla, controles nativos, mute explícito desactivado, plazos de espera y vigilancia de avance. Control permanente: test-r34-audio-response.mjs y prueba sintética Preview scripts/build-r34-voice-review.mjs. Evidencia/alcance: docs/quality/R34_AUDIO_Y_TEXTO.md. Causa física exacta no confirmada; no declarar cierre físico antes del iPhone.
+
+## 2026-09-13 · RC-109 · Ubicación impuesta y segundo turno R34
+Informe del propietario y captura IMG_3623: Colima respondida como El Pulté, segunda pregunta sin reconocimiento. Causas reproducibles: coordenadas del campo incondicionales y final de audio sin reapertura. Escape: V337 solo probaba campo y R34 solo reproducía audios, sin una siguiente transcripción. Controles: test-r34-weather-location.mjs y secuencia completa simulada en test-r34-audio-response.mjs. PASS técnico, aprobación física pendiente. Evidencia y rollback: docs/quality/R34_COLIMA_SEGUNDO_TURNO.md.

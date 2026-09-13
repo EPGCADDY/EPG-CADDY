@@ -2731,9 +2731,15 @@ async function speakAiUniversalMaleBrowserFallback(clean){
   window.speechSynthesis.cancel();window.speechSynthesis.resume?.();
   const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;utterance.lang=language;utterance.rate=VOICE_POLICY.speed;utterance.pitch=.92;utterance.voice=voice;
   utterance.onstart=()=>{reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true})};
-  utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")}};
+  utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;if(resumeBrowserVoiceConversation())return;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")}};
   utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")};
   window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);return true;
+}
+let browserVoiceFollowupContext=null;
+function resumeBrowserVoiceConversation(){
+  const context=browserVoiceFollowupContext;browserVoiceFollowupContext=null;
+  if(!context||browserVoiceRecognition||browserVoiceActive||browserVoiceRequested)return false;
+  return startBrowserVoiceFallback(context);
 }
 function showUniversalSpokenAnswer(text,player=null){
   const anchor=voiceContext==="setup"?$("setupVoiceMatrix"):document.querySelector('[aria-label="Herramientas de la ronda"]')||$("status");
@@ -2762,7 +2768,7 @@ function monitorUniversalAudio(player){
   };
   player.onplaying=()=>{clear();lastAdvance=Date.now();lastTime=Number(player.currentTime)||0;timer=setInterval(tick,500)};
   player.onpause=()=>{clear();setPrimaryVoiceMatrix("idle",voiceContext);aiUniversalSetState("PAUSADO · PUEDES LEER O REPRODUCIR LA RESPUESTA")};
-  player.onended=()=>{clear();reportVoiceHealth("browser_fallback_speech_ended");setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
+  player.onended=()=>{clear();reportVoiceHealth("browser_fallback_speech_ended");if(resumeBrowserVoiceConversation())return;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
   return clear;
 }
 async function speakAiUniversalText(text,{repeat=false}={}){
@@ -2794,6 +2800,7 @@ async function speakAiUniversalText(text,{repeat=false}={}){
   }
 }
 function stopAiUniversalOutput(){
+  browserVoiceFollowupContext=null;
   aiUniversalTextAbortController?.abort();aiUniversalTextAbortController=null;aiUniversalTextBusy=false;
   if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;
   if(aiUniversalTtsAudio){aiUniversalTtsAudio.pause();aiUniversalTtsAudio.currentTime=0}
@@ -4668,6 +4675,7 @@ function restartBrowserVoiceAfterNaturalEnd(recognition,context){
   setPrimaryVoiceMatrix("idle",context,"RECONECTANDO MICRÓFONO…");const opened=beginBrowserVoiceRecognition(context,"natural");if(!opened)reportVoiceHealth("browser_fallback_restart_failed",{transportFailure:"other"});return opened
 }
 function stopBrowserVoiceFallback({keepStatus=false,processPending=false}={}){
+  browserVoiceFollowupContext=null;
   const recognition=browserVoiceRecognition,context=browserVoiceContext||voiceContext;clearBrowserVoiceSilenceTimer();clearBrowserVoiceFirstResultTimer();clearBrowserVoiceStopGuardTimer();clearBrowserVoiceRetryTimer();
   if(processPending&&recognition){browserVoiceRequested=false;return stopBrowserVoiceRecognitionSafely(recognition,context)}
   const progressive=sealBrowserVoiceProgress(context);
@@ -4692,10 +4700,11 @@ async function processBrowserVoiceTranscript(context,transcript){
   return answerBrowserVoiceQuery(context,clean)
 }
 async function answerBrowserVoiceQuery(context,clean){
+  browserVoiceFollowupContext=context;
   reportVoiceHealth("browser_fallback_general_in_place");let answered=false;
   try{answered=await submitAiUniversalText(clean,{voiceOnly:true})}catch(error){console.error("Browser voice query:",error);setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO")}
   if(answered){phase="idle";reportVoiceHealth("browser_fallback_query_answered");return true}
-  reportVoiceHealth("browser_fallback_query_failed");phase="idle";return false
+  browserVoiceFollowupContext=null;reportVoiceHealth("browser_fallback_query_failed");phase="idle";return false
 }
 function scheduleBrowserVoiceTransportRetry(recognition,context,event){
   if(browserVoiceRecognition!==recognition||browserVoiceStopping||!recoverableBrowserVoiceTransportError(event)||browserVoiceTransportRetryCount>=BROWSER_VOICE_MAX_TRANSPORT_RETRIES)return false;

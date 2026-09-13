@@ -117,6 +117,22 @@ export function weatherTimePeriodFromQuery(query){
   return"";
 }
 
+// An explicit destination takes precedence over the selected golf course.
+export function weatherLocationFromQuery(query){
+  const text=String(query||"").replace(/[¿?¡!]/g,"").trim();
+  const match=text.match(/\b(?:en|para)\s+(?:(?:la\s+)?ciudad\s+de\s+)?(.+)$/i)||text.match(/\b(?:clima|temperatura|pronóstico)\s+de\s+(.+)$/i);
+  if(!match)return "";
+  const place=match[1].replace(/\s+(?:hoy|mañana|ahora|esta (?:tarde|noche)|por (?:la|el) .*)\b.*$/i,"").replace(/[.,;]+$/,"").trim();
+  if(/^(?:hoy|mañana|ahora|la (?:mañana|tarde|noche)|el (?:día|momento)|este momento|(?:\d+|un|una|dos|tres) (?:minutos?|horas?|días?)|la próxima semana)$/i.test(place))return "";
+  return place;
+}
+export function weatherLocationInput(location,appContext){
+  const normalize=value=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/\bgolf\b/g,"").replace(/[^a-z0-9]+/g," ").trim();
+  const requested=normalize(location),origin=appContext?.weatherOrigin;
+  const local=!requested||/^(?:aqui|el campo|este campo|el campo actual|mi ubicacion|mi ubicacion actual)$/.test(requested)||[appContext?.course,origin?.location].some(value=>value&&normalize(value)===requested);
+  return local&&origin?{...origin}:{location:String(location||"").trim()};
+}
+
 export function isDirectWeatherQuery(query){
   const text=String(query||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
   const mentionsWeather=/\b(clima|pronostico|tiempo meteorologico|lluvia|llov\w*|temperatura|sensacion termica|viento|weather|forecast|rain\w*|temperature|wind)\b/.test(text);
@@ -394,9 +410,9 @@ export default async function handler(req,res){
     if(query.length<2)return res.status(422).json({ok:false,error:"QUERY_REQUIRED"});
     const history=sanitizeUniversalHistory(body.history),responseMode=body.responseMode==="voice"?"voice":"text";
     const appContext=sanitizeUniversalAppContext(body.appContext);
-    if(isDirectWeatherQuery(query)&&appContext?.weatherOrigin){
+    if(isDirectWeatherQuery(query)&&(weatherLocationFromQuery(query)||appContext?.weatherOrigin)){
       const forecastIntent=weatherForecastIntentForQuery(query),forecastDate=forecastIntent.forecastDate,weatherResult=await computeWeatherForecast({
-        ...appContext.weatherOrigin,
+        ...weatherLocationInput(weatherLocationFromQuery(query),appContext),
         forecastStartDate:forecastDate,
         forecastEndDate:forecastDate,
         forecastTargetTime:forecastIntent.forecastTargetTime,
@@ -475,9 +491,7 @@ export default async function handler(req,res){
     if(weatherCall){
       let args={};try{args=JSON.parse(weatherCall.arguments||"{}")||{}}catch{}
       const forecastIntent=weatherForecastIntentForQuery(query),weatherResult=await computeWeatherForecast({
-        location:args.location||appContext?.weatherOrigin?.location||appContext?.course,
-        latitude:appContext?.weatherOrigin?.latitude,
-        longitude:appContext?.weatherOrigin?.longitude,
+        ...weatherLocationInput(weatherLocationFromQuery(query)||args.location,appContext),
         forecastStartDate:args.forecast_start_date||forecastIntent.forecastDate,
         forecastEndDate:args.forecast_end_date||args.forecast_start_date||forecastIntent.forecastDate,
         forecastTargetTime:forecastIntent.forecastTargetTime,

@@ -56,6 +56,19 @@ async function fetchJson(url) {
   return response.json();
 }
 
+function splitWeatherCountry(query){
+  const normalize=value=>value.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  const normalized=normalize(query),names=[new Intl.DisplayNames(["es"],{type:"region"}),new Intl.DisplayNames(["en"],{type:"region"})];
+  for(let a=65;a<=90;a++)for(let b=65;b<=90;b++){
+    const code=String.fromCharCode(a,b);
+    for(const display of names){const country=display.of(code);if(country===code)continue;
+      const suffix=normalize(country);
+      if(normalized.endsWith(" "+suffix)||normalized.endsWith(","+suffix))return {name:query.slice(0,query.length-country.length).replace(/[,\s]+$/, ""),countryCode:code};
+    }
+  }
+  return {name:query,countryCode:""};
+}
+
 async function resolvePlace(location) {
   const query = String(location || "").trim().slice(0, 120);
   if (!query) return null;
@@ -64,12 +77,14 @@ async function resolvePlace(location) {
   let match = null;
   for (const candidate of candidates) {
     const url = new URL("https://geocoding-api.open-meteo.com/v1/search");
-    url.searchParams.set("name", candidate);
+    const placeQuery=splitWeatherCountry(candidate);
+    url.searchParams.set("name", placeQuery.name);
+    if(placeQuery.countryCode)url.searchParams.set("countryCode",placeQuery.countryCode);
     url.searchParams.set("count", "1");
     url.searchParams.set("language", "es");
     url.searchParams.set("format", "json");
     const payload = await fetchJson(url);
-    match = payload?.results?.[0] || null;
+    match = (payload?.results||[]).find(item=>!placeQuery.countryCode||item.country_code===placeQuery.countryCode) || null;
     if (match) break;
   }
   if (!match) return null;

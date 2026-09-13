@@ -58,10 +58,12 @@
       "id": "microfono_compartido",
       "start": "function gestureSafeBrowserVoicePreferred(){",
       "end": "\nfunction setMicConnecting",
-      "sha256": "a901e118390ef84c791c22a718d17929dbeb21a4b2eb3fa9e89e5fb27aec2ddb",
+      "sha256": "36918bdcec3eb3b938e58f2c617587c0e03ba3af3ef48fed608b652833384fcd",
       "authorizedAdjustment": "2026-09-13 R32: orden expresa en esta conversación de reparar comunicación universal y publicar. Cambio limitado al despacho de preguntas/repreguntas y propagación de fallo de audio; parsers, escritores, captura y umbrales V378 intactos. Pruebas físicas de esta corrección pendientes; no se amplía la aprobación física V378. R33: error de voz visible junto al control; hallazgo real en navegador tras R32. Sin cambio de captura ni nueva aprobación física.",
       "previousSha256": "5565495188f9615fafeb3561f5f57677780a0940be0a3b0450f48e90610330a0",
-      "previousR32Sha256": "d031af6ea3b4dfe1efcabdc360d30bf987890a6974dce2cf71cd511e87ba8c77"
+      "previousR32Sha256": "d031af6ea3b4dfe1efcabdc360d30bf987890a6974dce2cf71cd511e87ba8c77",
+      "previousR34Sha256": "a901e118390ef84c791c22a718d17929dbeb21a4b2eb3fa9e89e5fb27aec2ddb",
+      "authorizedSecondTurnRepair": "2026-09-13: propietario reporta segunda pregunta sin reconocimiento. Rearmar después del audio y cancelar al detener. Prueba física pendiente, sin ampliar aprobación V378."
     },
     {
       "id": "activacion_compartida",

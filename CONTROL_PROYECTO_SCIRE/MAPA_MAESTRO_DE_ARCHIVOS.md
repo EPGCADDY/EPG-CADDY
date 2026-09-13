@@ -1269,3 +1269,7 @@ Archivos exactos:
 - `vercel.json`
 
 - `audit-project.mjs`: bancos R32/R33/R34 e integridad de voz obligatorios en cada despliegue.
+
+## 2026-09-13 · Reparación Colima y segundo turno R34
+- `test-r34-weather-location.mjs`: prioridad de ciudad/país y ausencia de fallback incorrecto.
+- `docs/quality/R34_COLIMA_SEGUNDO_TURNO.md`: causas, pruebas, limitaciones físicas y rollback.
