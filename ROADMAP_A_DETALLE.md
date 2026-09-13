@@ -1147,3 +1147,17 @@ Archivos de esta actualización:
 - `test-v407-r9-manual-update.mjs`
 - `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+
+
+## OP-60 — Obligación permanente de ejecución visible
+Orden expresa 13 septiembre 2026: reportar acción y evidencia visible cada máximo 60 segundos, seguir ejecutando después del reporte y documentar bloqueos reales antes de detenerse. Aplicación a Laboratorio, Maestro y futuras continuaciones. Registro documental; no cambia el código de las aplicaciones.
+Archivos de esta modificación:
+- `AGENTS.md`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md`
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `ROADMAP_OVERALL.md`
+- `ROADMAP_A_DETALLE.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`

@@ -9,19 +9,105 @@
     "productionUrl": "https://epg-caddy.vercel.app/"
   },
   "logic": "all",
-  "inputs": ["canonicalSource", "exactScope", "measurableAcceptance", "approvedReferences", "knownRisks", "testPlan", "rollbackPlan"],
+  "inputs": [
+    "canonicalSource",
+    "exactScope",
+    "measurableAcceptance",
+    "approvedReferences",
+    "knownRisks",
+    "testPlan",
+    "rollbackPlan"
+  ],
   "gates": [
-    {"id":"G0-01","name":"control_documental","evidence":["node scripts/project-quality-gate.mjs","node test-project-quality-gate.mjs"]},
-    {"id":"G0-02","name":"estructura_grafica","evidence":["python3 scripts/manual-editorial-qc.py","python3 scripts/manual-visual-qc.py"]},
-    {"id":"G0-03","name":"texto_diez_anos","requiresHuman":true},
-    {"id":"G0-04","name":"manual_74_74","requiresSameArtifact":true},
-    {"id":"G0-05","name":"apuestas","requiredTopics":["Vegas","Wolf","Skins","otras apuestas documentadas"]},
-    {"id":"G0-06","name":"microfono","requiresPhysicalDevice":true},
-    {"id":"G0-07","name":"calidad_respuestas","requiresHuman":true},
-    {"id":"G0-08","name":"trafico","requiresLiveProvider":true,"requiresRealGuatemalaTest":true},
-    {"id":"G0-09","name":"clima","requiresPhysicalFieldValidation":true},
-    {"id":"G0-10","name":"integridad_operativa","evidence":["node audit-project.mjs","node test-v407-r24-update-physical-gate.mjs","node scripts/lab-update-browser-review.mjs <stages.json>","node scripts/lab-update-physical-gate.mjs <evidence.json>"],"updateBrowserGate":{"reviewType":"REVISIÓN AUTOMATIZADA EN NAVEGADOR REAL","minimumReadyDeployments":4,"minimumTransitions":3,"sameAlias":true,"samePersistentBrowserProfile":true,"requiresFullPageScreenshotsSha256":true,"requiresPreservation":["round","history","player","score","whatsapp"],"rejectsMismatchedCommitDeploymentAlias":true,"iphoneMicrophonePhysical":"PENDING"}},
-    {"id":"G0-11","name":"produccion_intacta","requiresOwnerApproval":true}
+    {
+      "id": "G0-01",
+      "name": "control_documental",
+      "evidence": [
+        "node scripts/project-quality-gate.mjs",
+        "node test-project-quality-gate.mjs"
+      ]
+    },
+    {
+      "id": "G0-02",
+      "name": "estructura_grafica",
+      "evidence": [
+        "python3 scripts/manual-editorial-qc.py",
+        "python3 scripts/manual-visual-qc.py"
+      ]
+    },
+    {
+      "id": "G0-03",
+      "name": "texto_diez_anos",
+      "requiresHuman": true
+    },
+    {
+      "id": "G0-04",
+      "name": "manual_74_74",
+      "requiresSameArtifact": true
+    },
+    {
+      "id": "G0-05",
+      "name": "apuestas",
+      "requiredTopics": [
+        "Vegas",
+        "Wolf",
+        "Skins",
+        "otras apuestas documentadas"
+      ]
+    },
+    {
+      "id": "G0-06",
+      "name": "microfono",
+      "requiresPhysicalDevice": true
+    },
+    {
+      "id": "G0-07",
+      "name": "calidad_respuestas",
+      "requiresHuman": true
+    },
+    {
+      "id": "G0-08",
+      "name": "trafico",
+      "requiresLiveProvider": true,
+      "requiresRealGuatemalaTest": true
+    },
+    {
+      "id": "G0-09",
+      "name": "clima",
+      "requiresPhysicalFieldValidation": true
+    },
+    {
+      "id": "G0-10",
+      "name": "integridad_operativa",
+      "evidence": [
+        "node audit-project.mjs",
+        "node test-v407-r24-update-physical-gate.mjs",
+        "node scripts/lab-update-browser-review.mjs <stages.json>",
+        "node scripts/lab-update-physical-gate.mjs <evidence.json>"
+      ],
+      "updateBrowserGate": {
+        "reviewType": "REVISIÓN AUTOMATIZADA EN NAVEGADOR REAL",
+        "minimumReadyDeployments": 4,
+        "minimumTransitions": 3,
+        "sameAlias": true,
+        "samePersistentBrowserProfile": true,
+        "requiresFullPageScreenshotsSha256": true,
+        "requiresPreservation": [
+          "round",
+          "history",
+          "player",
+          "score",
+          "whatsapp"
+        ],
+        "rejectsMismatchedCommitDeploymentAlias": true,
+        "iphoneMicrophonePhysical": "PENDING"
+      }
+    },
+    {
+      "id": "G0-11",
+      "name": "produccion_intacta",
+      "requiresOwnerApproval": true
+    }
   ],
   "requiredControls": [
     "AGENTS.md",
@@ -35,5 +121,41 @@
     "Intocables/README.md",
     "Intocables/REGLAS_INTOCABLES.json",
     "Intocables/intocables-gate.mjs"
-  ]
+  ],
+  "operationalObligations": {
+    "OP-60": {
+      "mandatory": true,
+      "scope": [
+        "all_repository_tasks",
+        "LAB",
+        "Maestro",
+        "conversation_continuations"
+      ],
+      "maxVisibleReportIntervalSeconds": 60,
+      "reportFields": [
+        "guatemalaTime",
+        "completedActionOrInProgress",
+        "artifactOrCommand",
+        "actualResult",
+        "verifiableEvidence",
+        "PASS_FAIL_PENDING",
+        "nextAction"
+      ],
+      "continueAfterReport": true,
+      "noClaimOfBackgroundWorkAfterTurn": true,
+      "stopOnlyFor": [
+        "completedTask",
+        "documentedRealBlocker",
+        "indispensableOwnerIntervention"
+      ],
+      "onPlatformBlocker": [
+        "declareSpecificLimitation",
+        "saveCompleteRecoveryPoint",
+        "declareStopped",
+        "endTurn"
+      ],
+      "technicalPassDoesNotWaiveVisibility": true,
+      "documentDoesNotImplementTimer": true
+    }
+  }
 }

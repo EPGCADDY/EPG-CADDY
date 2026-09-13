@@ -363,3 +363,7 @@ Hallazgo reproducido en simulación controlada, no causa física certificada: ci
 
 ## RC-110 · Segunda escucha omitida al terminar la voz · 13 septiembre 2026
 R34 cierra reconocimiento para responder y su evento onended sólo vuelve a LISTO: la prueba negativa abre 0 escuchas donde se exige 1. Corrección local: recordar contexto conversacional, reiniciar tras final de voz, consumir una sola vez el contexto y cancelarlo al Detener; liberar también audio primer sin blob. Se conserva cancelación de captura abandonada R36. Pruebas: test-r36-followup-events.mjs (100 transiciones y eventos duplicados), test-r34-audio-response.mjs (dos preguntas y Detener), test-r36-capture-release.mjs, integridad y permisos PASS controlados. No demuestra por sí sola la causa física exacta ni certifica Safari. Evidencia: docs/quality/R36_CONTINUITY_EVIDENCE.json. Producción sin publicar.
+
+
+## RC-OP60 — Silencio y cierre prematuro reiterados · 13 septiembre 2026
+Hecho: el propietario reiteró numerosas veces el máximo de 60 segundos; se cerraron turnos con trabajo pendiente y sin continuidad ejecutada. Estado: incumplimiento confirmado; regla persistente OP-60 incorporada. Prevención: reporte verificable antes de 60 segundos y siguiente acción inmediata; bloqueo real requiere recuperación y cierre explícito. No se declara corregida la conducta futura por guardar este texto.
