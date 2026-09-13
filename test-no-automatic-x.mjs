@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 
-const html=fs.readFileSync(new URL('./index-grupal.html',import.meta.url),'utf8');
+const html=fs.readFileSync(new URL('./candidate-index-grupal.html',import.meta.url),'utf8');
 for(const forbidden of ['function markMissingScoresBefore','function markUnreportedPlayersOnHole','markMissingScoresBefore(checked.hole)','for(const h of holes)markMissingScoresBefore(h)','isOmittedScore(previous)&&segmentClosedForHole']){
   if(html.includes(forbidden))throw new Error(`Regresión de X automática: ${forbidden}`);
 }
