@@ -1093,3 +1093,14 @@ Fallo reproducido: la base 150df9b envía «Explícame por qué se produce la ll
 - `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad e inventarios.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra escape y prevención.
 Preview autorizado; main, LAB y Producción no se sustituyen. Captura de segunda pregunta y comparación real de calidad contra ChatGPT siguen pendientes. El banco geográfico de 100/100 con Open-Meteo es evidencia separada.
+
+
+## Investigación independiente · comparación Realtime · 13 septiembre 2026
+La prueba física del propietario volvió a fallar después del audio; logs 20:45 UTC muestran inicio de reconocimiento nativo y timeout sin transcripción. No se declara resuelta la conversación consecutiva. Se habilita exclusivamente mediante `voice_transport=realtime` la ruta WebRTC/OpenAI existente, conservando el modo predeterminado. Un fallo de Realtime se muestra sin volver silenciosamente al transporte nativo.
+- `index-grupal.html`: selector explícito de transporte de prueba.
+- `test-independent-realtime-selection.mjs`: selección normal, Realtime y fallo sin recaída (simulados).
+- `audit-project.mjs`: añade la regresión sin retirar las aprobadas.
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: ajuste técnico autorizado; no extiende aprobación física.
+- `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: reincidencia física y límite de pruebas simuladas.
+No modifica Actualizar, parsers, cálculos, persistencia, main, Producción ni alias LAB. Preview experimental autorizado; pendiente micrófono real, varias preguntas e interrupción. Rollback: usar el enlace sin el parámetro o Preview anterior 172f8d6.

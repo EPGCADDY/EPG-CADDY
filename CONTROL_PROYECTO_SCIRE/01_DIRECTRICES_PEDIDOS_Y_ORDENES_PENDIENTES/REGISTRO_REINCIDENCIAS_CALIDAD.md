@@ -367,3 +367,7 @@ Causa reproducida: el geocodificador no interpreta ciudad y estado juntos. Escap
 
 ### IND-UNIVERSAL-ROUTE-03
 Causa demostrada: palabras como temperatura o tráfico activaban herramientas especializadas incluso en preguntas conceptuales, médicas o legales. Escape: pruebas previas no incluían polisemia y daban PASS por palabras/temas aislados. Control: test-independent-universal-routing.mjs, antes FAIL en lluvia conceptual, después 100/100 consultas intactas al modelo con proveedor simulado. Calidad de la IA y audio nativo no verificados.
+
+
+### IND-VOICE-REPEAT-04
+Fallo físico reiterado tras respuesta, incluso en reintentos manuales. La guardia liberó estado pero no restauró captura; los PASS simulados no certificaban audio nativo. Se prepara comparación explícita de Realtime sin regreso oculto a Web Speech. Prueba de selección test-independent-realtime-selection.mjs; flujo físico pendiente, NO RESUELTO.

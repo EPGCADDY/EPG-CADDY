@@ -4601,6 +4601,7 @@ function scheduleRealtimeDisconnectRecovery(installedPc,context){
 function fallbackVoiceConstructor(){return window.SpeechRecognition||window.webkitSpeechRecognition||null}
 function fallbackVoiceAvailable(){return typeof fallbackVoiceConstructor()==="function"}
 function gestureSafeBrowserVoicePreferred(){
+  if(new URLSearchParams(window.location?.search||"").get("voice_transport")==="realtime")return false;
   if(!fallbackVoiceAvailable())return false;
   const userAgent=String(navigator.userAgent||""),platform=String(navigator.platform||"");
   const touchMac=platform==="MacIntel"&&Number(navigator.maxTouchPoints||0)>1;
@@ -5381,7 +5382,7 @@ async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPER
       const sameContext=voiceContext===context;
       teardownRealtime();
       setMicConnecting(context,false);
-      if(sameContext&&shouldUseBrowserVoiceFallback(err)&&fallbackVoiceAvailable()){if(startBrowserVoiceFallback(context)){voiceLastErrorMessage="MICRÓFONO ALTERNATIVO ACTIVO";return true}voiceLastErrorMessage=primaryVoiceStatusTarget(context)?.textContent||voiceLastErrorMessage}
+      if(sameContext&&shouldUseBrowserVoiceFallback(err)&&fallbackVoiceAvailable()&&new URLSearchParams(window.location?.search||"").get("voice_transport")!=="realtime"){if(startBrowserVoiceFallback(context)){voiceLastErrorMessage="MICRÓFONO ALTERNATIVO ACTIVO";return true}voiceLastErrorMessage=primaryVoiceStatusTarget(context)?.textContent||voiceLastErrorMessage}
       if(sameContext){
         voiceContext=context;
         if(context==="setup")$("setupStatus").textContent=voiceLastErrorMessage;
