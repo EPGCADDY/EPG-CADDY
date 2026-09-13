@@ -213,3 +213,7 @@ No hay que reescribir commits, deployments, enlaces ni pendientes: este archivo 
 - Primera corrección R5: tarjeta Stableford Global responsive con metadatos y SHA contenidos y hoyos separados IN/OUT.
 - Pruebas dirigidas PASS: inventario visual, artefactos, sistema premium, diseño profesional, controles móviles, versión visible y recuperación de ronda.
 - LAB pendiente de publicación y recorrido físico R5; Producción permanece en `4009f79f50987f8bf105189bce9c5e90b2857363`.
+
+
+## Orden expresa R38 — 13 septiembre 2026
+El propietario solicita push-to-talk en ambas aplicaciones habituales, Laboratorio y Maestro, con aviso Actualizar. Autoriza esta publicación específica en ambos proyectos, sustituyendo para esta entrega el congelamiento histórico de MAIN. Nueva identidad R38 y shell incluye voice-turns.js. El propietario reporta buen funcionamiento del micrófono; disponibilidad de respuestas universales sigue reportada como fallida y pendiente de diagnóstico. No se declara resuelta Comunicación Universal.

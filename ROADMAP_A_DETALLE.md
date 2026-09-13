@@ -1129,3 +1129,21 @@ Estado: pendiente de validación física y publicación. Se detectó y corrigió
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
 Estado: pruebas simuladas PASS; proveedor real, revisión navegador e iPhone pendientes. No aprobado como solución integral.
+
+
+## R38 — Publicación solicitada en Laboratorio y Maestro
+Nueva identidad de release y caché para activar el detector existente de Actualizar. Mantiene el toque manual y los datos locales. Push-to-talk incluido en shell. Orden expresa del propietario para ambos enlaces habituales. Comunicación Universal mantiene un fallo de disponibilidad pendiente; no se afirma solución integral.
+Archivos de esta actualización:
+- `index-grupal.html`
+- `service-worker.js`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
