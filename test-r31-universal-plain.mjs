@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {formatStructuredWeatherAnswer,weatherForecastIntentForQuery} from './api/universal-ai.js';
+const sample={ok:true,location:'El Pulté',condition:'parcialmente nublado',temperatureC:22,feelsLikeC:23,windKmh:5,maxRainProbabilityToday:80,observedAt:'2026-09-13T10:15'};
+const spoken=formatStructuredWeatherAnswer(sample,{concise:true});
+assert.match(spoken,/En El Pulté está parcialmente nublado, con 22 grados/);
+assert.match(spoken,/para hoy es de 80 por ciento/);
+assert.match(spoken,/no significa que esté lloviendo ahora/);
+assert.match(spoken,/10:15/);
+assert.doesNotMatch(spoken,/\*\*|milímetros|resolución|sensación térmica/);
+const missing=formatStructuredWeatherAnswer({...sample,temperatureC:null,feelsLikeC:null,maxRainProbabilityToday:null},{concise:true});
+assert.doesNotMatch(missing,/0 grados|0 por ciento|null|undefined/);
+assert.equal(weatherForecastIntentForQuery('Cómo está el clima ahorita?').forecastDate,'');
+console.log('PASS R31: clima hablado claro; ausencia de datos no inventa ceros; lluvia diaria no se presenta como actual.');
