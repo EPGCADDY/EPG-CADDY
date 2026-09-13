@@ -1290,5 +1290,7 @@ Evidencia separada: sin cierre físico ni cambios especulativos de captura.
 
 ## Banco universal 100 · 2026-09-13
 - `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`: matriz de preguntas, referencias ChatGPT y criterios esperados.
+- `docs/quality/UNIVERSAL_100_RESULTS.json`: respuestas reales, transcripción, tiempos, etapas y audio del banco de 100.
+- `docs/quality/UNIVERSAL_100_EVALUATION.json`: calificación ChatGPT por siete criterios y PASS/FAIL individual.
 - `scripts/run-universal-100-real.mjs`: ejecución real de transcripción, IA, texto y voz con audio inyectado.
 - `vercel.json`: activa el banco exclusivamente en su rama Preview.

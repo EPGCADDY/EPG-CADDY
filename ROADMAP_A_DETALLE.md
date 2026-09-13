@@ -1037,10 +1037,14 @@ PASS físico aislado; integración pendiente. Limpieza incremental de audio ante
 
 ## 2026-09-13 · Banco real universal de 100 casos
 - `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`: 100 preguntas únicas, 78 categorías, respuestas de referencia de ChatGPT, hechos esperados y siete conversaciones contextuales.
+- `docs/quality/UNIVERSAL_100_RESULTS.json`: matriz diagnóstica completa; transporte 99/100, fidelidad de transcripción 99.2%, único fallo de síntesis en el caso 028.
+- `docs/quality/UNIVERSAL_100_EVALUATION.json`: comparación independiente contra las referencias ChatGPT; 99/100 PASS tras validar el caso 063 con la Regla 13.1d oficial.
 - La reejecución publica un histograma de fallos por etapa; permite separar de forma reproducible captura, transcripción, motor de IA y síntesis hablada.
 - RC-109: 100 respuestas `TRANSCRIPTION_401` localizaron una credencial OpenAI directa inválida. Se sustituye en el banco por `/v4/ai/transcription-model`, modelo `openai/whisper-1`, con autenticación OIDC de Vercel Gateway.
 - El JSON íntegro se comprime con gzip/base64 y se publica en fragmentos numerados del log de build; la matriz puede reconstruirse y compararse sin rebajar la protección SSO del Preview.
+- RC-110: `spokenUniversalAnswer` conserva la respuesta escrita íntegra y genera una versión hablada de máximo 1,350 caracteres con conclusión; `index-grupal.html` reproduce `spokenAnswer` y el banco verifica esa misma ruta.
 - `scripts/run-universal-100-real.mjs`: ejecuta audio de entrada → transcripción → AI UNIVERSAL → texto → audio de salida y registra tiempo y PASS/FAIL por etapa.
+- `test-v356-voice-only-cedar-quality.mjs`: verifica que la variante hablada respete 1,350 caracteres, conserve la conclusión y sea la utilizada por el cliente.
 - `vercel.json`: ejecuta el banco sólo en el Preview `test-r34-universal-100`, después de los candados existentes.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: incorpora los dos archivos nuevos y el comando de ejecución.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: se regenera antes del Preview.

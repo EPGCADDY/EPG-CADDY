@@ -41,7 +41,7 @@ async function callAi(query,history){
   const capture=responseCapture(),before=Date.now();
   await universalAi({method:"POST",headers:{},body:{query,history,responseMode:"voice",appContext:{course:"El Pulté Golf, Guatemala"}}},capture.res);
   const result=capture.read();
-  return{status:result.status,answer:String(result.body?.answer||"").trim(),sources:result.body?.sources||[],error:result.body?.error||null,degraded:!!result.body?.degraded,elapsedMs:Date.now()-before};
+  return{status:result.status,answer:String(result.body?.answer||"").trim(),spokenAnswer:String(result.body?.spokenAnswer||result.body?.answer||"").trim(),sources:result.body?.sources||[],error:result.body?.error||null,degraded:!!result.body?.degraded,elapsedMs:Date.now()-before};
 }
 function words(value){return String(value||"").toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu,"").replace(/[^a-z0-9]+/g," ").trim().split(/\s+/).filter(word=>word.length>1)}
 function transcriptRecall(expected,actual){const a=new Set(words(actual)),e=words(expected);return e.length?e.filter(word=>a.has(word)).length/e.length:0}
@@ -56,11 +56,11 @@ async function runCase(item){
     if(recognition.status!==200||!recognition.text)throw new Error(`TRANSCRIPTION_${recognition.status}`);
     const ai=await callAi(recognition.text,history);
     if(ai.status!==200||!ai.answer)throw new Error(`UNIVERSAL_AI_${ai.status}`);
-    const outputAudio=await callSpeech(ai.answer);
+    const outputAudio=await callSpeech(ai.spokenAnswer);
     const recall=transcriptRecall(item.question,recognition.text);
     const stages={inputAudio:inputAudio.status===200,recognition:recognition.status===200&&!!recognition.text,ai:ai.status===200&&!!ai.answer,written:!!ai.answer,spoken:outputAudio.status===200&&outputAudio.bytes?.length>1000};
     const transportPass=Object.values(stages).every(Boolean)&&recall>=0.6;
-    const record={id:item.id,category:item.category,question:item.question,referenceAnswer:item.referenceAnswer,expectedFacts:item.expectedFacts,conversationId:item.conversationId||null,turn:item.turn||null,recognizedText:recognition.text,transcriptRecall:Number(recall.toFixed(3)),answer:ai.answer,sources:ai.sources,inputAudioBytes:inputAudio.bytes.length,outputAudioBytes:outputAudio.bytes?.length||0,timingMs:{inputAudio:inputAudio.elapsedMs,recognition:recognition.elapsedMs,ai:ai.elapsedMs,outputAudio:outputAudio.elapsedMs,total:Date.now()-totalStart},stages,transportPass,qualityScore:null,qualityPass:null,error:outputAudio.status===200?null:`OUTPUT_SPEECH_${outputAudio.status}`};
+    const record={id:item.id,category:item.category,question:item.question,referenceAnswer:item.referenceAnswer,expectedFacts:item.expectedFacts,conversationId:item.conversationId||null,turn:item.turn||null,recognizedText:recognition.text,transcriptRecall:Number(recall.toFixed(3)),answer:ai.answer,spokenAnswer:ai.spokenAnswer,spokenAnswerChars:ai.spokenAnswer.length,sources:ai.sources,inputAudioBytes:inputAudio.bytes.length,outputAudioBytes:outputAudio.bytes?.length||0,timingMs:{inputAudio:inputAudio.elapsedMs,recognition:recognition.elapsedMs,ai:ai.elapsedMs,outputAudio:outputAudio.elapsedMs,total:Date.now()-totalStart},stages,transportPass,qualityScore:null,qualityPass:null,error:outputAudio.status===200?null:`OUTPUT_SPEECH_${outputAudio.status}`};
     results.push(record);
     if(item.conversationId){const next=[...history,{role:"user",content:recognition.text},{role:"assistant",content:ai.answer}].slice(-80);histories.set(item.conversationId,next)}
   }catch(error){results.push({id:item.id,category:item.category,question:item.question,referenceAnswer:item.referenceAnswer,expectedFacts:item.expectedFacts,conversationId:item.conversationId||null,turn:item.turn||null,transportPass:false,qualityScore:null,qualityPass:null,error:String(error?.message||error),timingMs:{total:Date.now()-totalStart}})}

@@ -20,6 +20,16 @@ const GATEWAY_MODELS=["openai/gpt-5.6-sol","anthropic/claude-opus-5","google/gem
 const BRIEF_QUERY=/^(hola|buenos días|buenas tardes|buenas noches|gracias|ok|okay|listo|sí|si|no|entendido|perfecto)[.!?\s]*$/i;
 const DEEP_QUERY=/\b(analiza|análisis|compara|comparación|criterio|evalúa|evaluación|explica(?:me)? (?:a fondo|con detalle)|profundiza|paso a paso|ventajas y desventajas|riesgos?|escenarios?|estrategia|plan de acción|por qué|cómo funciona)\b/i;
 
+export function spokenUniversalAnswer(answer,maxChars=1350){
+  const clean=String(answer||"").replace(/\s+/g," ").trim();
+  if(clean.length<=maxChars)return clean;
+  const sentences=clean.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[clean],closing=String(sentences.at(-1)||"").trim();
+  let spoken="";
+  for(const sentence of sentences){const part=String(sentence||"").trim();if(!part)continue;if(`${spoken} ${part}`.trim().length>Math.max(300,maxChars-closing.length-1))break;spoken=`${spoken} ${part}`.trim()}
+  if(closing&&closing!==spoken&&!spoken.endsWith(closing)&&`${spoken} ${closing}`.trim().length<=maxChars)spoken=`${spoken} ${closing}`.trim();
+  return spoken||clean.slice(0,maxChars).replace(/\s+\S*$/,"").trim();
+}
+
 export function universalResponseProfile(query){
   const text=String(query||"").trim();
   if(BRIEF_QUERY.test(text))return{reasoningEffort:"low",maxOutputTokens:700,depth:"brief"};
@@ -535,7 +545,8 @@ export default async function handler(req,res){
       payload=requestResult.payload;
     }
     const summary=summarizeUniversalResponse(payload);
-    return res.status(summary.ok?200:502).json(summary);
+    const responseBody=summary.ok&&responseMode==="voice"?{...summary,spokenAnswer:spokenUniversalAnswer(summary.answer)}:summary;
+    return res.status(summary.ok?200:502).json(responseBody);
   }catch(error){
     console.error("universal ai",error instanceof Error?error.message:String(error));
     return res.status(502).json({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"});

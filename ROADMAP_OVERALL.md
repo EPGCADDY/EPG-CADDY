@@ -981,8 +981,13 @@ Causa RC-109 confirmada: la credencial directa de transcripción devolvía HTTP 
 
 Evidencia de matriz: el artefacto completo se emite además comprimido y numerado en el log de Preview para permitir la evaluación independiente de las 100 respuestas cuando la protección SSO impide descargar el archivo estático.
 
+RC-110: una respuesta correcta de 1,870 caracteres agotó dos síntesis de 22.5 s. La respuesta escrita se conserva completa y la variante hablada se limita a 1,350 caracteres, conservando apertura y conclusión para evitar bloquear el siguiente turno.
+
 - `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`
+- `docs/quality/UNIVERSAL_100_RESULTS.json`
+- `docs/quality/UNIVERSAL_100_EVALUATION.json`
 - `scripts/run-universal-100-real.mjs`
+- `test-v356-voice-only-cedar-quality.mjs`
 - `vercel.json`
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`

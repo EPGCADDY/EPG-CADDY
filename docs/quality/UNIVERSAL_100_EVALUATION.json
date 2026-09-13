@@ -1,0 +1,1627 @@
+{
+  "schema": "epg-caddy-universal-quality-evaluation/v1",
+  "evaluator": "ChatGPT reference comparison",
+  "rubric": {
+    "criteria": [
+      "comprension",
+      "exactitud",
+      "relevancia",
+      "profundidad",
+      "claridad",
+      "continuidad",
+      "incertidumbre"
+    ],
+    "maxScore": 35,
+    "passThreshold": 30,
+    "transportRequired": true,
+    "maxTotalMs": 30000
+  },
+  "summary": {
+    "total": 100,
+    "passed": 99,
+    "failed": 1
+  },
+  "items": [
+    {
+      "id": "001",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Respuesta precisa y completa con regla de excepción correcta."
+    },
+    {
+      "id": "002",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Distingue correctamente los conceptos geográficos y políticos."
+    },
+    {
+      "id": "003",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explicación correcta de dispersión de Rayleigh."
+    },
+    {
+      "id": "004",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 3,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Cálculo correcto aunque breve."
+    },
+    {
+      "id": "005",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 3,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Define birdie correctamente, con ejemplo."
+    },
+    {
+      "id": "006",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Recomendación muy completa y contextualizada."
+    },
+    {
+      "id": "007",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Resolución matemática correcta y clara."
+    },
+    {
+      "id": "008",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Reconoce incertidumbre futura adecuadamente."
+    },
+    {
+      "id": "009",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Corrige respetuosamente y explica."
+    },
+    {
+      "id": "010",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Respuesta histórica completa y equilibrada."
+    },
+    {
+      "id": "011",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Mantiene contexto y compara adecuadamente."
+    },
+    {
+      "id": "012",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Seguimiento técnico correcto y útil."
+    },
+    {
+      "id": "013",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Adapta recomendaciones a restricción presupuestaria."
+    },
+    {
+      "id": "014",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Diferencia masa y peso correctamente."
+    },
+    {
+      "id": "015",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Resultado y fórmula correctos."
+    },
+    {
+      "id": "016",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Función del ADN bien explicada."
+    },
+    {
+      "id": "017",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explicación completa de husos horarios."
+    },
+    {
+      "id": "018",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Define inflación y efecto correctamente."
+    },
+    {
+      "id": "019",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Evalúa afirmación extraordinaria con rigor."
+    },
+    {
+      "id": "020",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explicación química clara y precisa."
+    },
+    {
+      "id": "021",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica correctamente incertidumbre estadística."
+    },
+    {
+      "id": "022",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Comparación literaria correcta y clara."
+    },
+    {
+      "id": "023",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explicación equilibrada de aprendizaje automático."
+    },
+    {
+      "id": "024",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Define handicap y propósito correctamente."
+    },
+    {
+      "id": "025",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica correctamente porcentajes sucesivos."
+    },
+    {
+      "id": "026",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Respuesta médica prudente con señales de alarma y sin diagnóstico."
+    },
+    {
+      "id": "027",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 4,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Reconoce jurisdicción variable aunque añade detalle local no requerido."
+    },
+    {
+      "id": "028",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": false,
+      "reason": "Excelente contenido pero excede límite de tiempo permitido."
+    },
+    {
+      "id": "029",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Razonamiento lógico correcto y conciso."
+    },
+    {
+      "id": "030",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica límites muestrales y cuantifica incertidumbre."
+    },
+    {
+      "id": "031",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explicación completa del acoplamiento lunar."
+    },
+    {
+      "id": "032",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Diferencia conceptos correctamente."
+    },
+    {
+      "id": "033",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Define alcance y riesgos de forma adecuada."
+    },
+    {
+      "id": "034",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica MFA y su limitación implícita."
+    },
+    {
+      "id": "035",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Respuesta histórica equilibrada."
+    },
+    {
+      "id": "036",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Contexto maya y guatemalteco correcto."
+    },
+    {
+      "id": "037",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Cubre privacidad, ética y mitigaciones."
+    },
+    {
+      "id": "038",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 3,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Traducción correcta aunque sin variantes explicativas."
+    },
+    {
+      "id": "039",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 3,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Reescritura profesional funcional y clara."
+    },
+    {
+      "id": "040",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Compara opciones considerando horizonte temporal."
+    },
+    {
+      "id": "041",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Mantiene contexto financiero previo."
+    },
+    {
+      "id": "042",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Responde cambio de horizonte correctamente."
+    },
+    {
+      "id": "043",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica escala logarítmica correctamente."
+    },
+    {
+      "id": "044",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Describe phishing y prevención práctica."
+    },
+    {
+      "id": "045",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Contexto histórico guatemalteco preciso."
+    },
+    {
+      "id": "046",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Reconoce conflicto de leyes y jurisdicción."
+    },
+    {
+      "id": "047",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explicación astronómica correcta."
+    },
+    {
+      "id": "048",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Continúa correctamente el contexto de programación."
+    },
+    {
+      "id": "049",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica límites del reciclaje."
+    },
+    {
+      "id": "050",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Evalúa sesgo más allá de precisión."
+    },
+    {
+      "id": "051",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica energía, consumo y eficiencia con buena precisión."
+    },
+    {
+      "id": "052",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Describe acción anfipática del jabón correctamente."
+    },
+    {
+      "id": "053",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Diferencia bacterias y virus e incluye tratamientos."
+    },
+    {
+      "id": "054",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Respuesta completa con beneficios y dependencia contextual."
+    },
+    {
+      "id": "055",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica funciones principales y mantenimiento adecuado."
+    },
+    {
+      "id": "056",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Cubre factores prácticos de elección de viaje."
+    },
+    {
+      "id": "057",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Evita generalización y considera necesidades individuales."
+    },
+    {
+      "id": "058",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Incluye comunicación, plan y ejemplo profesional."
+    },
+    {
+      "id": "059",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Negociación basada en intereses correctamente explicada."
+    },
+    {
+      "id": "060",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica independencia y falacia del jugador."
+    },
+    {
+      "id": "061",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 3,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 32,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Resultado correcto aunque sin mostrar conversión."
+    },
+    {
+      "id": "062",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica estrategia y factores del golf."
+    },
+    {
+      "marker": "REEVAL_063",
+      "id": "063",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Aplica correctamente la regla 13.1d vigente y describe reposición sin penalización."
+    },
+    {
+      "id": "064",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Reconoce falta de datos y evita inventar."
+    },
+    {
+      "id": "065",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Pide contexto antes de recomendar banco."
+    },
+    {
+      "id": "066",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Corrige medición de altura correctamente."
+    },
+    {
+      "id": "067",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Adapta recomendaciones al presupuesto limitado."
+    },
+    {
+      "id": "068",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Añade criterios naturales y de seguridad."
+    },
+    {
+      "id": "069",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica presión y concentración de fuerza."
+    },
+    {
+      "id": "070",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Describe polinización e importancia ecológica."
+    },
+    {
+      "id": "071",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Incluye prácticas de calidad y seguridad."
+    },
+    {
+      "id": "072",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica riesgo de reutilización correctamente."
+    },
+    {
+      "id": "073",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 33,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica utilidad y menciona reserva prudente."
+    },
+    {
+      "id": "074",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Mantiene profesionalismo y relación futura."
+    },
+    {
+      "id": "075",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 4
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Adapta propuesta usando retroalimentación."
+    },
+    {
+      "id": "076",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica correlación, factores alternativos y necesidad de evidencia adicional."
+    },
+    {
+      "id": "077",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Corrige la afirmación y explica magnetismo metálico con ejemplos adecuados."
+    },
+    {
+      "id": "078",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Plan completo, priorizado y adaptado al bajo presupuesto."
+    },
+    {
+      "id": "079",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Resumen correcto aunque omite moléculas orgánicas."
+    },
+    {
+      "id": "080",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Mantiene intención con tono diplomático profesional."
+    },
+    {
+      "id": "081",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Traducción precisa y conserva todos los matices."
+    },
+    {
+      "id": "082",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica diversidad cultural y riesgos de generalización."
+    },
+    {
+      "id": "083",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Propone análisis musical sin reproducir letra completa."
+    },
+    {
+      "id": "084",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Compara almacenamiento local y nube con ventajas y riesgos."
+    },
+    {
+      "id": "085",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica minimización de permisos y ejemplos pertinentes."
+    },
+    {
+      "id": "086",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explicación sencilla y científicamente correcta."
+    },
+    {
+      "id": "087",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica handicap y ventaja competitiva correctamente."
+    },
+    {
+      "id": "088",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Continúa privacidad con criterios útiles de evaluación."
+    },
+    {
+      "id": "089",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Da pasos prácticos para gestionar permisos."
+    },
+    {
+      "id": "090",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Evalúa contexto y justificación del permiso."
+    },
+    {
+      "id": "091",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Reconoce incertidumbre y separa predicción de hecho."
+    },
+    {
+      "id": "092",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Admite desconocimiento y explica necesidad de observación."
+    },
+    {
+      "id": "093",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 4,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 34,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Pide contexto mínimo necesario."
+    },
+    {
+      "id": "094",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Compara equilibradamente IA y escritura manual."
+    },
+    {
+      "id": "095",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica cúbits y límites de la computación cuántica."
+    },
+    {
+      "id": "096",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Relaciona golpes cortos con estrategia y resultados."
+    },
+    {
+      "id": "097",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica impacto evolutivo y selección natural."
+    },
+    {
+      "id": "098",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Distingue crítica constructiva y destructiva claramente."
+    },
+    {
+      "id": "099",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Explica límites de anonimización y controles necesarios."
+    },
+    {
+      "id": "100",
+      "scores": {
+        "comprension": 5,
+        "exactitud": 5,
+        "relevancia": 5,
+        "profundidad": 5,
+        "claridad": 5,
+        "continuidad": 5,
+        "incertidumbre": 5
+      },
+      "contentScore": 35,
+      "criticalError": false,
+      "pass": true,
+      "reason": "Recomienda validación temprana y priorización bajo restricciones."
+    }
+  ]
+}
