@@ -831,3 +831,10 @@ Registro conjunto del despliegue: hotfix `main` commits `481f716` y `c548f30`; m
 - `index-grupal.html` y `service-worker.js`: identidad R30 para entregar el exportador mediante ACTUALIZAR. Sin cambios en almacenamiento de rondas ni scores.
 - Pruebas de versión y actualización alineadas con R30; registro RC-104 en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`; sello `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 - Evidencia de comparación en rama fix-r30-card-png; la página temporal no se incorpora en Main.
+
+
+## LAB · Verificación honesta de actualización · 2026-09-13
+- Base: 1c552cb (R30), conserva la corrección aprobada de tarjeta digital.
+- index-grupal.html: una respuesta de acceso, HTTP fallido, HTML sin identidad o fallo de red deja INICIAR SESIÓN/REINTENTAR; ACTUALIZADO exige identidad verificada. Se elimina el umbral arbitrario de 300 KB.
+- test-update-check-errors.mjs: ocho escenarios de ejecución sobre la función real pasan.
+- Pendiente: validación visual del cambio, sesión propietaria y micrófono real. No certifica conversación ni instalación física. No promover como solución integral.

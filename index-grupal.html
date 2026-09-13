@@ -5602,8 +5602,16 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden)recoverIns
 setTimeout(recoverInstalledAppScrolling,0);
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
 const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"";
-let appBuildCheckRunning=false,appBuildReloading=false,pendingPublishedBuild=CURRENT_APP_BUILD;
+let appBuildCheckRunning=false,appBuildReloading=false,pendingPublishedBuild="";
+function showBuildCheckFailure(needsAccess=false){
+  pendingPublishedBuild="";
+  const button=$("mandatoryUpdateButton");button.disabled=false;button.setAttribute("aria-disabled","false");
+  button.dataset.needsAccess=needsAccess?"1":"0";
+  $("mandatoryUpdateAction").textContent=needsAccess?"INICIAR SESIÓN":"REINTENTAR";
+  $("mandatoryUpdate").classList.remove("available");
+}
 function showCurrentBuild(){
+  $("mandatoryUpdateButton").dataset.needsAccess="0";
   pendingPublishedBuild=CURRENT_APP_BUILD;
   const button=$("mandatoryUpdateButton");button.disabled=true;button.setAttribute("aria-disabled","true");
   $("mandatoryUpdateAction").textContent="ACTUALIZADO";
@@ -5617,7 +5625,12 @@ function showMandatoryUpdate(build){
   $("mandatoryUpdate").classList.add("available");return true;
 }
 async function installMandatoryUpdate(){
-  if(appBuildReloading||!pendingPublishedBuild)return;
+  if(appBuildReloading)return;
+  if(!pendingPublishedBuild){
+    if($("mandatoryUpdateButton").dataset.needsAccess==="1")location.assign(new URL("/access.html",location.origin).href);
+    else await syncPublishedAppVersion();
+    return;
+  }
   appBuildReloading=true;
   if($("setupOverlay")?.classList.contains("visible")){captureVisibleRegistrationValues();syncDraftPlayersFromManualRows({strict:false,renderAfter:false});persistDraftState()}
   persist();
@@ -5634,17 +5647,18 @@ async function syncPublishedAppVersion(){
     const checkUrl=new URL(location.pathname,location.origin);
     checkUrl.searchParams.set("__gscg_build_check",String(Date.now()));
     const response=await fetch(checkUrl,{cache:"no-store",headers:{"Cache-Control":"no-cache"}});
-    if(!response.ok)return;
+    if(response.status===401||response.status===403||new URL(response.url||checkUrl.href).pathname==="/access.html"){showBuildCheckFailure(true);return}
+    if(!response.ok){showBuildCheckFailure();return}
     const html=await response.text();
-    if(html.length<300000)return;
     const published=html.match(/<meta\s+name=["']gscg-release["']\s+content=["']([^"']+)["']/i)?.[1]||"";
-    if(!published)return;
+    if(!published){showBuildCheckFailure();return}
     if(published===CURRENT_APP_BUILD)showCurrentBuild();else showMandatoryUpdate(published);
-  }catch(error){console.warn("APP_VERSION_SYNC",error?.message||error)}
+  }catch(error){showBuildCheckFailure();console.warn("APP_VERSION_SYNC",error?.message||error)}
   finally{appBuildCheckRunning=false}
 }
 $("mandatoryUpdateButton").addEventListener("click",installMandatoryUpdate);
-showCurrentBuild();
+$("mandatoryUpdateButton").disabled=true;
+$("mandatoryUpdateAction").textContent="COMPROBANDO";
 setTimeout(syncPublishedAppVersion,1200);
 setInterval(syncPublishedAppVersion,30000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout(syncPublishedAppVersion,800)});
