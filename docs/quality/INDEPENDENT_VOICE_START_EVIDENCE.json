@@ -1,0 +1,383 @@
+{
+  "base": "ccdd004b361bd84dd5936aa069c7722b13b5659f",
+  "type": "controlled simulations and static checks; NOT browser or iPhone",
+  "initialResults": [
+    {
+      "test": "negative-baseline",
+      "exitCode": 1,
+      "stdout": "PASS simulation: two questions, written answers, playback starts, next listening; real application lifecycle with simulated boundaries\n",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Second listening without onstart must release capture within 9.2 seconds\n+ actual - expected\n\n+ Recognition {\n+   continuous: true,\n+   interimResults: true,\n+   lang: 'es-GT',\n+   maxAlternatives: 5,\n+   onend: [Function (anonymous)],\n+   onerror: [Function (anonymous)],\n+   onresult: [Function (anonymous)],\n+   onstart: [Function (anonymous)]\n+ }\n- null\n\n    at file:///workspace/scratch/0e02215cc70b/epg-voice-independent/test-independent-voice-start-timeout.mjs:49:8 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: Recognition {\n    lang: 'es-GT',\n    continuous: true,\n    interimResults: true,\n    maxAlternatives: 5,\n    onstart: [Function (anonymous)],\n    onresult: [Function (anonymous)],\n    onerror: [Function (anonymous)],\n    onend: [Function (anonymous)]\n  },\n  expected: null,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+    },
+    {
+      "test": "test-v336-microphone-transport.mjs",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/package_json_reader:301\n  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n        ^\n\nError [ERR_MODULE_NOT_FOUND]: Cannot find package '@vercel/oidc' imported from /workspace/scratch/0e02215cc70b/epg-voice-independent/api/_lib/vercel-gateway-auth.js\n    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)\n    at packageResolve (node:internal/modules/esm/resolve:768:81)\n    at moduleResolve (node:internal/modules/esm/resolve:859:18)\n    at defaultResolve (node:internal/modules/esm/resolve:992:11)\n    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)\n    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)\n    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)\n    at #resolve (node:internal/modules/esm/loader:683:17)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)\n    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v24.19.0\n"
+    },
+    {
+      "test": "test-v354-voice-fallback.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V354/V367 VOZ: 3 hoyos, plural y consulta general audible sin abandonar la pantalla\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v355-ios-audio-dictation.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V355 iPhone: audio habilitado desde gesto y dictado del teclado distribuido en nombre, HDCP y marcas\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v356-voice-only-cedar-quality.mjs",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/package_json_reader:301\n  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n        ^\n\nError [ERR_MODULE_NOT_FOUND]: Cannot find package '@vercel/oidc' imported from /workspace/scratch/0e02215cc70b/epg-voice-independent/api/_lib/vercel-gateway-auth.js\n    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)\n    at packageResolve (node:internal/modules/esm/resolve:768:81)\n    at moduleResolve (node:internal/modules/esm/resolve:859:18)\n    at defaultResolve (node:internal/modules/esm/resolve:992:11)\n    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)\n    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)\n    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)\n    at #resolve (node:internal/modules/esm/loader:683:17)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)\n    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v24.19.0\n"
+    },
+    {
+      "test": "test-v357-ios-voice-transport-recovery.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V357 · iPhone abre voz en el gesto · 429 no bloquea scores ni AI UNIVERSAL · multi-hoyo, reintentos y privacidad protegidos\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v358-ios-score-universal-physical-recovery.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V358 preservado · score natural iPhone + AI UNIVERSAL de un toque + privacidad\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v359-ios-score-parser-recovery.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V359 · iPhone interpreta número, golpes, tiró y hoyo al final para dos jugadores sin adivinar\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v357-synchronized-progressive-voice.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V358 · recuperación iPhone + hoyos visibles durante el dictado + Universal + ronda persistente\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v361-synchronized-voice.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V361 · parser natural + score visible y persistente inmediato + locutor masculino recuperable + voz sin texto\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v362-physical-voice-recovery.mjs",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/package_json_reader:301\n  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n        ^\n\nError [ERR_MODULE_NOT_FOUND]: Cannot find package '@vercel/oidc' imported from /workspace/scratch/0e02215cc70b/epg-voice-independent/api/_lib/vercel-gateway-auth.js\n    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)\n    at packageResolve (node:internal/modules/esm/resolve:768:81)\n    at moduleResolve (node:internal/modules/esm/resolve:859:18)\n    at defaultResolve (node:internal/modules/esm/resolve:992:11)\n    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)\n    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)\n    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)\n    at #resolve (node:internal/modules/esm/loader:683:17)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)\n    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v24.19.0\n"
+    },
+    {
+      "test": "test-v367-universal-voice-in-place.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V367 · comunicación universal audible en Inicio, Registro y tarjeta sin cambiar de pantalla\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-independent-voice-start-timeout.mjs",
+      "exitCode": 0,
+      "stdout": "PASS simulation: two questions, written answers, playback starts, next listening; real application lifecycle with simulated boundaries\nPASS simulation: missing onstart AND onend releases capture within 9.2 seconds, visible recovery, late callback ignored\nPASS simulation: manual retry responds and resumes listening; Stop cancels timer without restarting\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-r34-audio-response.mjs",
+      "exitCode": 0,
+      "stdout": "PASS texto seguro visible, audio adjunto con controles y sin mute, avance y finalización diferenciados\nPASS rechazo de reproducción conserva texto y controles, devuelve false\nPASS audio sin avance abandona RESPONDIENDO y conserva respuesta\nPASS espera bloqueada finaliza y aborta solicitud\nPASS diez reproducciones simuladas consecutivas\nPASS timeout real del envío libera turno y botón, muestra error\nPASS dos preguntas reconocidas, reactivación tras audio y Detener impide reinicio; reconocimiento simulado\nPASS first phrase starts before remainder; complete text retained, ordered audio, one start/end and no premature microphone reopen. Controlled audio.\nPASS canceling queued speech prevents late playback. Controlled audio.\nPASS remainder failure preserves full text and reports failure, without replaying first phrase. Controlled audio.\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-r36-followup-events.mjs",
+      "exitCode": 0,
+      "stdout": "PASS 100 controlled answer → speech-ended → next-listening transitions; zero duplicate opens. No native ASR, audio playback, or iPhone certification.\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-r36-capture-release.mjs",
+      "exitCode": 0,
+      "stdout": "PASS controlled simulation: stop without onend releases capture, detaches stale callbacks and leaves listening\nPASS controlled simulation: failed transport releases old capture before retry\nPASS 100 controlled capture-finalization cycles; original questions preserved; zero leaked captures or duplicate dispatches. NOT ASR, AI quality, TTS or physical-device certification.\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-r36-capture-permissions.mjs",
+      "exitCode": 0,
+      "stdout": "PASS simulated getUserMedia NotAllowedError: session not opened and pending connection released\nPASS simulated getUserMedia NotFoundError: session not opened and pending connection released\nPASS simulated getUserMedia SecurityError: session not opened and pending connection released\nPASS simulated session HTTP 401: audio track and connection released\nPASS simulated session HTTP 429: audio track and connection released\nPASS simulated session HTTP 500: audio track and connection released\nPASS simulated capture → WebRTC session handshake; credentials retained and microphone remains muted until listening authorization. NOT physical audio or ASR verification.\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-r32-open-conversation.mjs",
+      "exitCode": 0,
+      "stdout": "PASS R32 · 18 rutas de preguntas/repreguntas; registro válido local y registro explícito incompleto protegido\nPASS R32 · fallo de audio remoto/local propagado; texto independiente y estado ocupado liberado\nPASS R32 · audio previo liberado sin callbacks antes de volver a escuchar\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-voice-result-integrity.mjs",
+      "exitCode": 0,
+      "stdout": "PASS remote: audio=false, éxito=false, historial conservado y turno liberado\nPASS remote: audio=true, éxito=true, historial conservado y turno liberado\nPASS local: audio=false, éxito=false, historial conservado y turno liberado\nPASS local: audio=true, éxito=true, historial conservado y turno liberado\nPASS offline: audio=false, éxito=false, historial conservado y turno liberado\nPASS offline: audio=true, éxito=true, historial conservado y turno liberado\nPASS diez turnos secuenciales (API y audio simulados)\nPASS error de red conserva causa y libera turno\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-score-engine.mjs",
+      "exitCode": 0,
+      "stdout": "PASS motor exhaustivo Gross/Neto/handicap: 2 campos, 5 matrices, HCP 0–54, 18 hoyos y 12 Gross\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-round-closure.mjs",
+      "exitCode": 0,
+      "stdout": "PASS cierre y corrección: cero X, SHA-256, idempotencia y original preservado\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v365-active-round-empty-recovery.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V365/V400 · ronda activa multimodal, tarjeta viva y scores recuperados\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v407-r9-manual-update.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V407-R18 · actualización, categorías, puntos rojos y encabezado móvil\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v406-r23-visible-version.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V407-R7 ID SOBRE ACTUALIZAR · ÁREA SEGURA IPHONE\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-update-check-errors.mjs",
+      "exitCode": 0,
+      "stdout": "PASS misma versión → ACTUALIZADO\nPASS nueva versión con HTML compacto → ACTUALIZAR\nPASS sesión vencida → INICIAR SESIÓN\nPASS 401 → INICIAR SESIÓN\nPASS 500 → REINTENTAR\nPASS HTML inválido → REINTENTAR\nPASS sin red → REINTENTAR\nPASS una verificación anterior no oculta un fallo posterior\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-project-quality-gate.mjs",
+      "exitCode": 0,
+      "stdout": "PASS project quality gate: local, Vercel separado y pruebas negativas.\n",
+      "stderr": ""
+    },
+    {
+      "test": "scripts/project-quality-gate.mjs",
+      "exitCode": 0,
+      "stdout": "PROJECT_QUALITY_GATE PASS controls=11 inputs=7 gates=11 baseline=0dc1ba7a62b6 production=ccdd004b361b\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-project-control-matrix.mjs",
+      "exitCode": 0,
+      "stdout": "PASS control de proyecto · fuentes originales, cola y política de no reiteración\n",
+      "stderr": ""
+    },
+    {
+      "test": "audit-project.mjs",
+      "exitCode": 1,
+      "stdout": "PROJECT_QUALITY_GATE PASS controls=11 inputs=7 gates=11 baseline=0dc1ba7a62b6 production=ccdd004b361b\nPASS continuidad maestra LAB: MAIN congelada, LAB canónico y relevo entre conversaciones blindados.\nPASS V405 · BORRAR TODO elimina ronda activa, evita reaparición y conserva otras rondas del Historial.\n",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: INTOCABLE V378 modificado: microfono_compartido\n+ actual - expected\n\n+ '55923401fbea7340850b8b1366774da303ac36874cc782b7b1026dd47ad71000'\n- '46665022535df378cac0c918cd17a8fd4ae09e9c51be3d671d3b158e9bb83850'\n\n    at file:///workspace/scratch/0e02215cc70b/epg-voice-independent/Intocables/intocables-gate.mjs:26:10\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: '55923401fbea7340850b8b1366774da303ac36874cc782b7b1026dd47ad71000',\n  expected: '46665022535df378cac0c918cd17a8fd4ae09e9c51be3d671d3b158e9bb83850',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+    }
+  ],
+  "results": [
+    {
+      "test": "negative-baseline",
+      "exitCode": 1,
+      "stdout": "PASS simulation: first question has written answer and playback start\n",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Second listening without onstart must release capture within 9.2 seconds\n+ actual - expected\n\n+ Recognition {\n+   continuous: true,\n+   interimResults: true,\n+   lang: 'es-GT',\n+   maxAlternatives: 5,\n+   onend: [Function (anonymous)],\n+   onerror: [Function (anonymous)],\n+   onresult: [Function (anonymous)],\n+   onstart: [Function (anonymous)]\n+ }\n- null\n\n    at file:///workspace/scratch/0e02215cc70b/epg-voice-independent/test-independent-voice-start-timeout.mjs:47:8 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: Recognition {\n    lang: 'es-GT',\n    continuous: true,\n    interimResults: true,\n    maxAlternatives: 5,\n    onstart: [Function (anonymous)],\n    onresult: [Function (anonymous)],\n    onerror: [Function (anonymous)],\n    onend: [Function (anonymous)]\n  },\n  expected: null,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+    },
+    {
+      "test": "test-v336-microphone-transport.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V351 · Registro local, matriz exacta y telemetría privada permanecen protegidos\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v354-voice-fallback.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V354/V367 VOZ: 3 hoyos, plural y consulta general audible sin abandonar la pantalla\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v355-ios-audio-dictation.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V355 iPhone: audio habilitado desde gesto y dictado del teclado distribuido en nombre, HDCP y marcas\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v356-voice-only-cedar-quality.mjs",
+      "exitCode": 0,
+      "stdout": "cedar spanish speech gateway {\"model\":\"fish-audio/s2.1-pro-free\",\"language\":\"es-419\",\"speed\":0.9,\"locked\":true}\nPASS V356/V378 · voz hablada Fish Audio es-419 0.90 sin ID fijo; tráfico/clima estructurados\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v357-ios-voice-transport-recovery.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V357 · iPhone abre voz en el gesto · 429 no bloquea scores ni AI UNIVERSAL · multi-hoyo, reintentos y privacidad protegidos\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v358-ios-score-universal-physical-recovery.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V358 preservado · score natural iPhone + AI UNIVERSAL de un toque + privacidad\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v359-ios-score-parser-recovery.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V359 · iPhone interpreta número, golpes, tiró y hoyo al final para dos jugadores sin adivinar\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v357-synchronized-progressive-voice.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V358 · recuperación iPhone + hoyos visibles durante el dictado + Universal + ronda persistente\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v361-synchronized-voice.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V361 · parser natural + score visible y persistente inmediato + locutor masculino recuperable + voz sin texto\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v362-physical-voice-recovery.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V362/V378 · un toque + watchdog + Fish Audio 0.90 + cierre hablado y persistencia progresiva\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v367-universal-voice-in-place.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V367 · comunicación universal audible en Inicio, Registro y tarjeta sin cambiar de pantalla\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-independent-voice-start-timeout.mjs",
+      "exitCode": 0,
+      "stdout": "PASS simulation: first question has written answer and playback start\nPASS simulation: missing onstart AND onend releases capture within 9.2 seconds, visible recovery, late callback ignored\nPASS simulation: after manual recovery, two consecutive questions have written answers, playback starts and listening resumes\nPASS simulation: manual retry responds and resumes listening; Stop cancels timer without restarting\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-r34-audio-response.mjs",
+      "exitCode": 0,
+      "stdout": "PASS texto seguro visible, audio adjunto con controles y sin mute, avance y finalización diferenciados\nPASS rechazo de reproducción conserva texto y controles, devuelve false\nPASS audio sin avance abandona RESPONDIENDO y conserva respuesta\nPASS espera bloqueada finaliza y aborta solicitud\nPASS diez reproducciones simuladas consecutivas\nPASS timeout real del envío libera turno y botón, muestra error\nPASS dos preguntas reconocidas, reactivación tras audio y Detener impide reinicio; reconocimiento simulado\nPASS first phrase starts before remainder; complete text retained, ordered audio, one start/end and no premature microphone reopen. Controlled audio.\nPASS canceling queued speech prevents late playback. Controlled audio.\nPASS remainder failure preserves full text and reports failure, without replaying first phrase. Controlled audio.\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-r36-followup-events.mjs",
+      "exitCode": 0,
+      "stdout": "PASS 100 controlled answer → speech-ended → next-listening transitions; zero duplicate opens. No native ASR, audio playback, or iPhone certification.\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-r36-capture-release.mjs",
+      "exitCode": 0,
+      "stdout": "PASS controlled simulation: stop without onend releases capture, detaches stale callbacks and leaves listening\nPASS controlled simulation: failed transport releases old capture before retry\nPASS 100 controlled capture-finalization cycles; original questions preserved; zero leaked captures or duplicate dispatches. NOT ASR, AI quality, TTS or physical-device certification.\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-r36-capture-permissions.mjs",
+      "exitCode": 0,
+      "stdout": "PASS simulated getUserMedia NotAllowedError: session not opened and pending connection released\nPASS simulated getUserMedia NotFoundError: session not opened and pending connection released\nPASS simulated getUserMedia SecurityError: session not opened and pending connection released\nPASS simulated session HTTP 401: audio track and connection released\nPASS simulated session HTTP 429: audio track and connection released\nPASS simulated session HTTP 500: audio track and connection released\nPASS simulated capture → WebRTC session handshake; credentials retained and microphone remains muted until listening authorization. NOT physical audio or ASR verification.\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-r32-open-conversation.mjs",
+      "exitCode": 0,
+      "stdout": "PASS R32 · 18 rutas de preguntas/repreguntas; registro válido local y registro explícito incompleto protegido\nPASS R32 · fallo de audio remoto/local propagado; texto independiente y estado ocupado liberado\nPASS R32 · audio previo liberado sin callbacks antes de volver a escuchar\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-voice-result-integrity.mjs",
+      "exitCode": 0,
+      "stdout": "PASS remote: audio=false, éxito=false, historial conservado y turno liberado\nPASS remote: audio=true, éxito=true, historial conservado y turno liberado\nPASS local: audio=false, éxito=false, historial conservado y turno liberado\nPASS local: audio=true, éxito=true, historial conservado y turno liberado\nPASS offline: audio=false, éxito=false, historial conservado y turno liberado\nPASS offline: audio=true, éxito=true, historial conservado y turno liberado\nPASS diez turnos secuenciales (API y audio simulados)\nPASS error de red conserva causa y libera turno\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-score-engine.mjs",
+      "exitCode": 0,
+      "stdout": "PASS motor exhaustivo Gross/Neto/handicap: 2 campos, 5 matrices, HCP 0–54, 18 hoyos y 12 Gross\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-round-closure.mjs",
+      "exitCode": 0,
+      "stdout": "PASS cierre y corrección: cero X, SHA-256, idempotencia y original preservado\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v365-active-round-empty-recovery.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V365/V400 · ronda activa multimodal, tarjeta viva y scores recuperados\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v407-r9-manual-update.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V407-R18 · actualización, categorías, puntos rojos y encabezado móvil\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-v406-r23-visible-version.mjs",
+      "exitCode": 0,
+      "stdout": "PASS V407-R7 ID SOBRE ACTUALIZAR · ÁREA SEGURA IPHONE\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-update-check-errors.mjs",
+      "exitCode": 0,
+      "stdout": "PASS misma versión → ACTUALIZADO\nPASS nueva versión con HTML compacto → ACTUALIZAR\nPASS sesión vencida → INICIAR SESIÓN\nPASS 401 → INICIAR SESIÓN\nPASS 500 → REINTENTAR\nPASS HTML inválido → REINTENTAR\nPASS sin red → REINTENTAR\nPASS una verificación anterior no oculta un fallo posterior\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-project-quality-gate.mjs",
+      "exitCode": 0,
+      "stdout": "PASS project quality gate: local, Vercel separado y pruebas negativas.\n",
+      "stderr": ""
+    },
+    {
+      "test": "scripts/project-quality-gate.mjs",
+      "exitCode": 0,
+      "stdout": "PROJECT_QUALITY_GATE PASS controls=11 inputs=7 gates=11 baseline=0dc1ba7a62b6 production=ccdd004b361b\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-project-control-matrix.mjs",
+      "exitCode": 0,
+      "stdout": "PASS control de proyecto · fuentes originales, cola y política de no reiteración\n",
+      "stderr": ""
+    },
+    {
+      "test": "audit-project.mjs",
+      "exitCode": 1,
+      "stdout": "PROJECT_QUALITY_GATE PASS controls=11 inputs=7 gates=11 baseline=0dc1ba7a62b6 production=ccdd004b361b\nPASS continuidad maestra LAB: MAIN congelada, LAB canónico y relevo entre conversaciones blindados.\nPASS V405 · BORRAR TODO elimina ronda activa, evita reaparición y conserva otras rondas del Historial.\n",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: INTOCABLE V378 modificado: microfono_compartido\n+ actual - expected\n\n+ '55923401fbea7340850b8b1366774da303ac36874cc782b7b1026dd47ad71000'\n- '46665022535df378cac0c918cd17a8fd4ae09e9c51be3d671d3b158e9bb83850'\n\n    at file:///workspace/scratch/0e02215cc70b/epg-voice-independent/Intocables/intocables-gate.mjs:26:10\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: '55923401fbea7340850b8b1366774da303ac36874cc782b7b1026dd47ad71000',\n  expected: '46665022535df378cac0c918cd17a8fd4ae09e9c51be3d671d3b158e9bb83850',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+    }
+  ],
+  "changedSourceSha256": "3705f6884b64355303e7d3d3459dd7632d8ba296ebcb34ce383d6d41d36dcb27",
+  "browser": {
+    "status": "BLOCKED",
+    "cloud": "net::ERR_BLOCKED_BY_CLIENT for isolated localhost",
+    "local": "No Chromium executable; vendor download timed out; canceled",
+    "iphone": "NOT TESTED"
+  },
+  "roadmapGate": {
+    "exitCode": 0,
+    "stdout": "PASS ROADMAP GATE: 9 modificaciones registradas en ambos ROADMAPS.\n",
+    "stderr": ""
+  },
+  "inventoryGate": {
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "FAIL INVENTORY GATE\n- Los archivos activos cambiaron después del último guardado de inventarios.\n- El sello registra 488 fuentes y existen 491.\n- Falta Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf.\n- Falta Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf.\n- Falta Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf.\n- Regenera y guarda los tres inventarios antes de validar, construir o publicar.\n"
+  },
+  "authorizedIntegration": {
+    "branch": "integrate/voice-start-authorized-0e02215",
+    "remoteBase": "ccdd004b361bd84dd5936aa069c7722b13b5659f",
+    "auditExitCode": 0,
+    "packages": 142,
+    "stdout": "PROJECT_QUALITY_GATE PASS controls=11 inputs=7 gates=11 baseline=0dc1ba7a62b6 production=ccdd004b361b\nPASS continuidad maestra LAB: MAIN congelada, LAB canónico y relevo entre conversaciones blindados.\nPASS V405 · BORRAR TODO elimina ronda activa, evita reaparición y conserva otras rondas del Historial.\nINTOCABLES PASS INT-01…INT-05 · REGISTRO/SCORE/MULTIHOYO Y VOZ V378 SELLADOS\nPASS project quality gate: local, Vercel separado y pruebas negativas.\nMANUAL_EDITORIAL_QC PASS pages=74 standardProfiles=66 topics=23 didacticPages=57 pdf=74\nMANUAL_VISUAL_QC PASS pages=74 coursePages=7 functionalPages=57 resolution=2160x4320 density>=300dpi courseVerticalDeltaMax=378px courseOccupancy=52.7-81.0% functionalOccupancy=94.2-97.5% functionalLowerDensity=41.0-42.7%\nPASS ROADMAP GATE: 9 modificaciones registradas en ambos ROADMAPS.\nPASS INVENTORY GATE: 491 fuentes y 3 PDF sellados en R18-LAB-OWNER-GUEST-24H-LOCK.\nPASS player registry: código, recuperación, datos vigentes, historial, consentimiento e idempotencia\nPASS esquema central: 9 tablas y candados críticos\nPASS esquema de perfiles: código único, dato vigente e historial inmutable preparado\nPASS esquema V256 · base maestra por rubros e historial append-only\nPASS cero X automáticas y reparación V155\nPASS catálogo y registro V170\nPASS Country Club oficial: 18 pares, 90 yardajes, 5 ratings/slopes y 3 matrices HDCP\nPASS V273 · San Isidro y Alta Vista cargados desde tarjetas oficiales\nPASS V274 · siete campos, voz continua protegida, conversación y corrección X\nPASS V275 · hoyo anclado por bloque, voz concurrente protegida y recordatorio confirmado\nPASS V276 · ANTERIOR, selección directa y SIGUIENTE comparten Control Manual General/Stableford\nPASS V277 · corrección oficial versionada, original preservado y recálculo General/Stableford\nPASS V278 · imagen PNG, PDF individual y PDF conjunto desde las tarjetas oficiales General/Stableford\nPASS V279 · historial privada local por ronda, campo, torneo, fecha y jugador sin alterar la ronda actual\nPASS V280 · consulta histórica escrita General/Stableford, filtros, comparación, tendencia y puntos\nPASS V281: instalación oficial iPhone/Android, shell offline y actualización de red\nPASS V282 · cuenta opcional, respaldo autenticado y recuperación central\nPASS V397/R29 · 8 artefactos; PNG preparado antes del toque; hoja nativa con activación vigente; estado visible\nPASS V398 · 4 modalidades: vacía→1, parcial→pendiente y navegación interna conservada\nPASS V398 · pulsación prolongada, confirmación y borrado persistente del historial\nPASS V283 · preparación nativa iOS/Android y monetización comercial\nPASS V284 · paquetes nativos reproducibles para Xcode y Android Studio\nPASS V285 · ATRÁS vuelve de Stableford a la pantalla principal\nPASS V286 · ATRÁS reconstruye campos, modalidades y registro principal\nPASS V305/V399 · REGÍSTRATE sólo en principal y no traslapa ATRÁS ni + JUGADOR\nPASS V289 · NUEVA RONDA deja Registro Stableford vacío sin sustituir una ronda recuperable\nPASS V305 · historial, navegación y acciones homologadas en General y Stableford\nPASS V304 · filtro hermano: vocabulario, guía, micrófono, tipografía, tamaño, brillo y estados\nPASS V305/V399 · HISTORIAL, ATRÁS, REGÍSTRATE sólo principal, Stableford limpio y cero vocabulario retirado\nPASS V305/V351 · Safari XIV se separa como handicap 14 sin alterar la X del score\nPASS V306/V307/V311/V330 MATCH PLAY · UNA, DOS O TRES PAREJAS · TARJETA NORMAL · NETO · FLECHAS · CIERRE INDEPENDIENTE\nPASS V307 · FLECHAS GRUESAS · FORMATO MATCH PLAY · IN/OUT/TOTAL UP-DOWN · FIN ANTICIPADO · PAQUETE Y CACHÉ\nPASS V309/V310/V311/V329 · FOUR BALL · UNA, DOS O TRES PAREJAS · HCP INDIVIDUAL · MEJOR NETO · SEPARACIÓN · EXPORTACIÓN\nPASS V311/V329 · NOMBRES NEUTRALES · UNA, DOS O TRES PAREJAS · LÍNEAS SEPARADORAS · VOZ ARRIBA/ABAJO · INICIO DIRECTO\nPASS V334 · manual web directo, anclas estables, PDF, portada y 73 páginas alojadas\nPASS V334 · 57 páginas funcionales ordenadas, didácticas y con recuperación explícita\nPASS V334 · mapa de voz, vocabulario oficial y respuestas alineadas con el Manual\nPASS V334 · índice temático y lupa alineados con el nuevo orden didáctico\nPASS V311 · asistente de voz para ayuda y navegación segura\nPASS V311 · todos los TIMER se apagan tras 30 minutos sin instrucciones\nPASS V406-R4 · Support integrado en barra estructural y conectado al Manual vivo\nPASS V321 · intención universal protegida, consultas de tarjeta conservadas, idioma automático y dominio abierto\nPASS V320 · 100 de 100 áreas y temas fuera de lista llegan al Caddie universal\nPASS V321 · AI UNIVERSAL ∞ real, voz + texto + contexto + web y 200 de 200 áreas sin límite cerrado\nresearch upstream 503\nresearch timeout recuperado\nPASS V322 · 24 turnos consecutivos, reapertura sana y fallos web recuperables\nPASS V323 · 30 temas, 63 mensajes, 30 turnos bilaterales y memoria inicial en texto/voz\nPASS V324 · tráfico real actual/futuro, ETA, demora, privacidad y voz/texto recuperables\nPASS V326 · 30 turnos bilaterales, pausa natural determinista, órdenes rápidas, interrupción, eco y continuidad\nPASS V327 · entrada, generación y reproducción tienen recuperación comprobable\nPASS V327 · 550 secuencias herramienta→voz, 100 eventos privados y recuperación sin silencio\ngolf rules upstream 429\nPASS V328 · 15 situaciones reglamentarias, fuentes USGA/R&A, texto/voz y cero cambios de score\nPASS V328-R2 · reglas oficiales guardadas, coincidencia segura, 90 días, 24 entradas, privacidad y cero score\nuniversal ai upstream retry {\"status\":429,\"providerCode\":\"rate_limit_exceeded\",\"attempt\":1,\"model\":\"gpt-5.6\",\"retryable\":true,\"requestId\":null}\nuniversal ai upstream retry {\"status\":429,\"providerCode\":\"rate_limit_exceeded\",\"attempt\":2,\"model\":\"gpt-5.4\",\"retryable\":true,\"requestId\":null}\nuniversal ai upstream retry {\"status\":429,\"providerCode\":\"rate_limit_exceeded\",\"attempt\":1,\"model\":\"gpt-5.6\",\"retryable\":true,\"requestId\":null}\nuniversal ai upstream retry {\"status\":429,\"providerCode\":\"rate_limit_exceeded\",\"attempt\":2,\"model\":\"gpt-5.4\",\"retryable\":true,\"requestId\":null}\nuniversal ai upstream retry {\"status\":429,\"providerCode\":\"rate_limit_exceeded\",\"attempt\":3,\"model\":\"gpt-5.6\",\"retryable\":true,\"requestId\":null}\nuniversal ai upstream retry {\"status\":429,\"providerCode\":\"credit_balance_exhausted\",\"attempt\":1,\"model\":\"gpt-5.6\",\"retryable\":true,\"requestId\":null}\nuniversal ai upstream retry {\"status\":429,\"providerCode\":\"credit_balance_exhausted\",\"attempt\":1,\"model\":\"gpt-5.6\",\"retryable\":true,\"requestId\":null}\ngateway oidc unavailable {\"code\":\"VercelOidcTokenError\"}\nPASS V335 · calibre adaptable: directo, sustantivo, no infantil, con límites, acciones y fuentes\nPASS V351 · Registro local, matriz exacta y telemetría privada permanecen protegidos\nPASS V337 · clima de texto usa Open-Meteo estructurado con probabilidad por horario y coordenadas públicas del campo\nPASS V345: iconos visibles, distintos y versionados para Golf Score y Manual SCG\nPASS V332 · Skins Gross/Neto, moneda exclusiva Q/$, acumulados, X, cierre firmado, corrección, nube, historial, liquidación, voz y pantalla principal intacta\nPASS V332 · selección física única + Q/$ excluyentes + matriz común de estados, riesgo, acumulados, dinero, líder y liquidación\nPASS V352 LIVE: permiso, privacidad, cola offline, visor separado y torneo paginado sin máximo fijo\nPASS V353 CENTRO LIVE: 80 jugadores, hasta 5 torneos, multiteléfono sin doble cómputo, privacidad y carga sin máximo fijo\nPASS V354/V367 VOZ: 3 hoyos, plural y consulta general audible sin abandonar la pantalla\nPASS V355 iPhone: audio habilitado desde gesto y dictado del teclado distribuido en nombre, HDCP y marcas\ncedar spanish speech gateway {\"model\":\"fish-audio/s2.1-pro-free\",\"language\":\"es-419\",\"speed\":0.9,\"locked\":true}\nPASS V356/V378 · voz hablada Fish Audio es-419 0.90 sin ID fijo; tráfico/clima estructurados\nPASS V356 · tráfico y clima actuales/futuros distinguidos en 30 min, 1 h, 3 h, mañana, próxima semana y límite de 16 días\nPASS V357 · iPhone abre voz en el gesto · 429 no bloquea scores ni AI UNIVERSAL · multi-hoyo, reintentos y privacidad protegidos\nPASS V358 · V357 completo + ronda activa visible hasta NUEVA RONDA\nPASS V358 preservado · score natural iPhone + AI UNIVERSAL de un toque + privacidad\nPASS V359 · iPhone interpreta número, golpes, tiró y hoyo al final para dos jugadores sin adivinar\nPASS V358 · recuperación iPhone + hoyos visibles durante el dictado + Universal + ronda persistente\nPASS V361 · parser natural + score visible y persistente inmediato + locutor masculino recuperable + voz sin texto\nPASS V362/V378 · un toque + watchdog + Fish Audio 0.90 + cierre hablado y persistencia progresiva\nuniversal ai upstream retry {\"status\":429,\"providerCode\":\"credit_balance_exhausted\",\"attempt\":1,\"model\":\"gpt-5.6\",\"retryable\":true,\"requestId\":null}\nPASS V364 · OIDC dinámico recupera AI UNIVERSAL y voz sin exponer claves\nV363_RECORDED_MOBILE_BEHAVIOR PASS guards=1 modal_isolation=1 live_safe_area=1\nPASS V363 INTOCABLES · ronda viva + Match Play con nombres + Ronda Normal intacta\nV364_EXPLICIT_NEW_ROUND_ENTRY PASS external_contract=ready\nPASS V365/V400 · ronda activa multimodal, tarjeta viva y scores recuperados\nPASS V366 · Inicio principal obligatorio sin ronda + tarjeta operativa intacta\nPASS V367 · comunicación universal audible en Inicio, Registro y tarjeta sin cambiar de pantalla\nPASS V368 · enlace web abre Inicio y app instalada conserva tarjeta viva\nPASS V406-R4 · barra sin traslape, selectores explícitos y acciones inferiores homogéneas\nPASS V406 · categoría individual, índice oculto, filtro TORNEO LIVE y Mi Tablero\nPASS V406-R5 · entrada infantil directa y administración oculta sin retirar funciones\nPASS V407-R7 ID SOBRE ACTUALIZAR · ÁREA SEGURA IPHONE\nPASS V406-R23 CIERRES HABLADOS · HOYOS 9 Y 18 · REINTENTO SEGURO\nPASS inventario visual V407-R5: 67 estados únicos, 10 criterios y conteos reconciliados\nPASS V407-R5A: Historial y Estadísticas usan retícula premium contenida en escritorio e iPhone.\nPASS V407-R6 · Universales reemplaza DOTS y conserva separación motor/diseño/Producción\nPASS V407-R6 · UNIVERSALES distribuye exactamente 12 puntos con 3/4 jugadores y todos los empates\nPASS V407-R7 · scroll iPhone estable y actualización visible\nPASS V407-R18 · actualización, categorías, puntos rojos y encabezado móvil\nPASS acceso propietario/invitado 24h: enlace individual de un solo uso, aislamiento, revocación, bloqueo, feedback anónimo y purga <48h\nPASS V407-R24B: candado permanente de actualización y pruebas negativas instalado\nPASS V407-R24B: Historial aísla ACTUALIZAR/ACTUALIZADO sin tapar ATRÁS\nPASS bootstrap PWA público: service worker y manifiestos no son sustituidos por access.html\nPASS aislamiento al desplazarse: ACTUALIZADO no flota sobre Control Manual y ACTUALIZAR disponible conserva su aviso\nPASS R32 · 18 rutas de preguntas/repreguntas; registro válido local y registro explícito incompleto protegido\nPASS R32 · fallo de audio remoto/local propagado; texto independiente y estado ocupado liberado\nPASS R32 · audio previo liberado sin callbacks antes de volver a escuchar\nPASS R33 · aviso visible en tarjeta/registro, independiente del reloj, limpieza al reintentar y texto seguro\nPASS remote: audio=false, éxito=false, historial conservado y turno liberado\nPASS remote: audio=true, éxito=true, historial conservado y turno liberado\nPASS local: audio=false, éxito=false, historial conservado y turno liberado\nPASS local: audio=true, éxito=true, historial conservado y turno liberado\nPASS offline: audio=false, éxito=false, historial conservado y turno liberado\nPASS offline: audio=true, éxito=true, historial conservado y turno liberado\nPASS diez turnos secuenciales (API y audio simulados)\nPASS error de red conserva causa y libera turno\nPASS texto seguro visible, audio adjunto con controles y sin mute, avance y finalización diferenciados\nPASS rechazo de reproducción conserva texto y controles, devuelve false\nPASS audio sin avance abandona RESPONDIENDO y conserva respuesta\nPASS espera bloqueada finaliza y aborta solicitud\nPASS diez reproducciones simuladas consecutivas\nPASS timeout real del envío libera turno y botón, muestra error\nPASS dos preguntas reconocidas, reactivación tras audio y Detener impide reinicio; reconocimiento simulado\nPASS first phrase starts before remainder; complete text retained, ordered audio, one start/end and no premature microphone reopen. Controlled audio.\nPASS canceling queued speech prevents late playback. Controlled audio.\nPASS remainder failure preserves full text and reports failure, without replaying first phrase. Controlled audio.\nPASS simulation: first question has written answer and playback start\nPASS simulation: missing onstart AND onend releases capture within 9.2 seconds, visible recovery, late callback ignored\nPASS simulation: after manual recovery, two consecutive questions have written answers, playback starts and listening resumes\nPASS simulation: manual retry responds and resumes listening; Stop cancels timer without restarting\nPASS controlled simulation: stop without onend releases capture, detaches stale callbacks and leaves listening\nPASS controlled simulation: failed transport releases old capture before retry\nPASS 100 controlled capture-finalization cycles; original questions preserved; zero leaked captures or duplicate dispatches. NOT ASR, AI quality, TTS or physical-device certification.\nPASS simulated getUserMedia NotAllowedError: session not opened and pending connection released\nPASS simulated getUserMedia NotFoundError: session not opened and pending connection released\nPASS simulated getUserMedia SecurityError: session not opened and pending connection released\nPASS simulated session HTTP 401: audio track and connection released\nPASS simulated session HTTP 429: audio track and connection released\nPASS simulated session HTTP 500: audio track and connection released\nPASS simulated capture → WebRTC session handshake; credentials retained and microphone remains muted until listening authorization. NOT physical audio or ASR verification.\nPASS 100 controlled answer → speech-ended → next-listening transitions; zero duplicate opens. No native ASR, audio playback, or iPhone certification.\nPASS ubicación explícita precede al campo y país se separa sin catálogo de ciudades\nPASS handler completo: Colima usa México; segunda pregunta Madrid cambia ciudad; lugar inexistente no sustituye Guatemala; coordenadas null no se convierten en cero\nuniversal ai upstream retry {\"status\":429,\"providerCode\":\"credit_balance_exhausted\",\"attempt\":1,\"model\":\"gpt-5.6\",\"retryable\":true,\"requestId\":null}\nPASS saldo agotado: un intento, respaldo inmediato, cero esperas artificiales\nPASS motor exhaustivo Gross/Neto/handicap: 2 campos, 5 matrices, HCP 0–54, 18 hoyos y 12 Gross\nPASS cierre y corrección: cero X, SHA-256, idempotencia y original preservado\nPASS archivos Global/personal desde snapshot oficial\nPASS matriz oficial Stableford: Global y seis personales con Gross/Puntos\nPASS categoría opcional arriba del nombre en las diez tarjetas; HCP conservado\nPASS leyenda, puntos por hoyo y totales Universales en rojo\nPASS consultas históricas combinables y hora Guatemala\nPASS cola idempotente y purga sólo después de acuse íntegro\nPASS API central V256: contrato maestro, hash e idempotencia validados\nPASS autenticación sync: encabezado o sesión HttpOnly, comparación segura\nPASS V256 · paquete maestro normalizado, historial, scores y cola compactada\nPASS continuidad, watchdog y estados de voz V181\nPASS V265 · cierre automático recupera la sesión de voz y reintenta\nPASS V266 · Stableford manual/voz anuncia nombre, Gross y puntos en primera vuelta, segunda vuelta y total\nPASS V267 · una línea operacional, 35 scores incrementales transaccionales, registro sin contaminación y salida literal\nPASS V267 · matriz integral 583 configuraciones de Score Card por una arquitectura\nPASS V269 · Registro, Ronda previa y retorno a Ronda actual operativos en demo aislada\nPASS V270 · cursor automático General/Stableford, ENTER por bloque, X amplia y corrección retroactiva\nPASS V271 · sesión Realtime limitada a 1024 caracteres con vocabulario operacional intacto\nPASS V274 · recepción continua sin avisos superpuestos, cierre con micrófono apagado, IN/OUT/TOTAL y campos oficiales nuevos\nPASS V197: INICIO izquierda, TIMER centro con toque ampliado, cronómetro derecha y micrófono aislado\nPASS títulos: INFORMACIÓN DE RONDA en General, PUNTOS en Stableford y RESULTADO MATCH PLAY\nStableford: reglas, seis jugadores, matrices, cuatro fechas y mejores tres verificados.\nStableford UI: tarjeta limpia, torneo, micrófonos, categorías, seis jugadores, Gross/Puntos y clasificación verificados.\nPASS Stableford limpio: 1–6 jugadores y snapshot histórico completo\nPASS manual General/Stableford -> applyLiteralScores -> recordScore(s) -> cálculo/persist/render/cierre únicos\nPASS V252: Stableford conserva matriz oficial GRUPAL, historial y compartir\nPASS V252 · persistencia normal, NUEVA RONDA limpia, 4 campos y categorías por tee\nPASS V253 · RONDA PREVIA viva en General y Stableford, retorno a RONDA ACTUAL y separación de historiales\nPASS V254 · eliminadas únicamente las tres falsas casillas de registro\nPASS V407 R24 · registro con WhatsApp opcional, +502 editable y bandera de Guatemala\nPASS V256 · dato vigente reemplazable, historial preservado y base maestra conectada\nPASS V257/V267 · botones únicos de campo y título RONDA STABLEFORD\nPASS V258/V267 · metadatos bloqueados y control manual operacional único\nPASS V259/V267 · control manual común 1-6 sin filas ocultas adicionales\nPASS V260/V267 · STABLEFORD, anchos, total neón, alta segura y recuperación única sin mezclar modalidades\nPASS V407 R24 · General y Stableford conservan WhatsApp opcional privado\nPASS V262 · perfiles opcionales, recuperación manual/dictada y Gross total automático\nPASS V263 · jugadores compactos y botón ATRÁS no invasivo\nPASS control de proyecto · fuentes originales, cola y política de no reiteración\nPASS sincronización código/manual V330\nPASS auditoría maestra: 142 paquetes\n",
+    "publication": false,
+    "realBrowser": "BLOCKED as previously documented",
+    "physicalIphone": "PENDING"
+  }
+}

@@ -1322,3 +1322,28 @@ Archivos exactos:
 - `test-v407-r25-round-controls.mjs`
 - `test-v407-r7-ios-scroll.mjs`
 - `test-v407-r9-manual-update.mjs`
+
+
+## Investigación independiente de segunda escucha · 13 septiembre 2026
+Base ccdd004b361bd84dd5936aa069c7722b13b5659f; rama investigate/voice-second-turn-0e02215. Apertura sin onstart queda sin temporizador en R36; corrección defensiva de una línea probada por simulación. Sin PASS de navegador/iPhone, sin publicación, sin integración y sin resellar aprobación física.
+- `index-grupal.html`: vigilancia previa a start; una línea funcional, sin alterar Actualizar ni scores.
+- `audit-project.mjs`: incorpora el banco independiente sin retirar pruebas existentes.
+- `test-independent-voice-start-timeout.mjs`: reproducción negativa/positiva de segunda apertura sin onstart; fronteras simuladas.
+- `docs/quality/INDEPENDENT_VOICE_START_REPORT.md`: aislamiento, hallazgo, reproducción, riesgos y pendientes reales.
+- `docs/quality/INDEPENDENT_VOICE_START_EVIDENCE.json`: salidas completas antes/después y bloqueos observados.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: hallazgo independiente con causa física no confirmada.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: registro del cambio aislado.
+- `ROADMAP_OVERALL.md`: registro de investigación independiente.
+- `ROADMAP_A_DETALLE.md`: registro de investigación independiente.
+
+
+## Integración local autorizada · 13 septiembre 2026
+El propietario autorizó integrar 78580e6. Rama aislada integrate/voice-start-authorized-0e02215; remoto main sigue en ccdd004, sin conflictos. Se registra autorización técnica en el sello conservando hash anterior y aprobación física histórica; NO aprobación física nueva. Intocables y prueba independiente PASS. Se regeneran inventarios para auditoría local. No push, merge a main, publicación ni acceso a datos compartidos.
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: control y trazabilidad de integración autorizada.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: control y trazabilidad de integración autorizada.
+- `docs/quality/INDEPENDENT_VOICE_START_REPORT.md`: control y trazabilidad de integración autorizada.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: control y trazabilidad de integración autorizada.
+- `ROADMAP_OVERALL.md`: control y trazabilidad de integración autorizada.
+- `ROADMAP_A_DETALLE.md`: control y trazabilidad de integración autorizada.
+
+- `docs/quality/INDEPENDENT_VOICE_START_EVIDENCE.json`: auditoría de integración autorizada, 142 paquetes PASS; conserva fallos históricos previos. Navegador real e iPhone pendientes; sin publicar.
