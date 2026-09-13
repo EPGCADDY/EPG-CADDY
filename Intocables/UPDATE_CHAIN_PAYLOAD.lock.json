@@ -5,7 +5,7 @@
   "fileCount": 72,
   "fingerprint": "ad7b041c0e120f00b798db70164d7491753c2ef1dac88de920bc96caef272c3c",
   "candidateSha256": "2ee8fcbc1690c516fd9eadbd276d291183f3c7140e8b4727e7a12349538a1023",
-  "generatedFromCommit": "c8899367cd8557b5e8151c633af92d4bc8f6fb20",
+  "generatedFromCommit": "36c062891ba29487ccd39d0d48f230580fae0841",
   "scope": "runtime-auto-v3-vercel-semantic",
   "vercelContract": {
     "gateFirst": true
