@@ -19,13 +19,13 @@ assert.match(oneTouchSource,/pointerdown/);
 assert.match(oneTouchSource,/primeAiUniversalSpeechFromGesture\(\)/);
 
 const order=[],listeners={};
-const openAndListen=new Function("$","window","primeAiUniversalSpeechFromGesture","startAiUniversalListening",`${oneTouchSource};return openAiUniversalAndListen`)(
+const openAndListen=new Function("$","window","primeAiUniversalSpeechFromGesture","startAiUniversalListening","releaseAiUniversalPlaybackForListening",`${oneTouchSource};return openAiUniversalAndListen`)(
   ()=>({addEventListener:(type,handler)=>{listeners[type]=handler}}),{PointerEvent:function PointerEvent(){}},
-  ()=>order.push("prime"),()=>order.push("listen")
+  ()=>order.push("prime"),()=>order.push("listen"),()=>order.push("release")
 );
 assert.equal(typeof listeners.pointerdown,"function");
 openAndListen({cancelable:true,preventDefault(){},stopPropagation(){}});
-assert.deepEqual(order,["prime","listen"],"AI ∞ debe escuchar en el mismo toque sin cambiar de pantalla");
+assert.deepEqual(order,["release","prime","listen"],"AI ∞ debe escuchar en el mismo toque sin cambiar de pantalla");
 
 assert.match(html,/function parseScoreSequenceTranscript/);
 assert.match(html,/"golpe","golpes","tiro","tiros"/);

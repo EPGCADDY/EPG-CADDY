@@ -911,3 +911,28 @@ Registro conjunto del despliegue: hotfix `main` commits `481f716` y `c548f30`; m
 - Paquete Main R31 preparado: `index-grupal.html` y `service-worker.js` renuevan sólo identificación; pruebas de versión alineadas. No cambia actualización, almacenamiento, scores ni exportador PNG. `vercel.json` conserva el comando original de producción; comparación externa sólo en rama de revisión.
 
 - `docs/quality/R31_RESPUESTAS_REALES.json`: respuestas reales y tiempos; evaluación manual acotada 94/100, sin garantía de similitud general ni de audio físico. Main/LAB R31: preparado para publicación del backend verificado.
+
+
+## 2026-09-13 · R32 · Preguntas abiertas y voz
+Filtro de conversación corregido; éxito audible real; liberación de audio AI ∞. Se preserva la corrección de actualización publicada en LAB y se mantiene R31. Pruebas y límites físicos en `docs/quality/R32_PREGUNTAS_Y_VOZ.md`.
+Archivos de esta versión:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `docs/quality/R32_PREGUNTAS_Y_VOZ.md`
+- `index-grupal.html`
+- `service-worker.js`
+- `test-r32-open-conversation.mjs`
+- `test-update-check-errors.mjs`
+- `test-v358-ios-score-universal-physical-recovery.mjs`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`
+- `test-voice-result-integrity.mjs`

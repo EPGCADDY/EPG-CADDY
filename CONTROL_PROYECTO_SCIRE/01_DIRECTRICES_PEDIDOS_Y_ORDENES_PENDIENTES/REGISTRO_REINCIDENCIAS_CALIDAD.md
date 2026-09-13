@@ -331,3 +331,12 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Estado: pruebas locales y comparación remota pendientes; Main conserva R30.
 
 - RC-105 resultado: cuatro consultas reales registradas; BMW rechazado inicialmente y corregido; revisión de contenido 94/100 sobre esta muestra. Clima y pruebas de integridad PASS; sonido físico pendiente. No equivale a entrenamiento de vocabulario: ajuste de instrucciones, contexto y uso de fuentes.
+
+
+## 2026-09-13 · RC-106 · Preguntas abiertas y fallo de audio R32
+- Defecto que llegó al propietario: frases no incluidas en filtros de conversación se rechazan en registro; silencio no distinguido de respuesta escrita.
+- Causa: processBrowserVoiceTranscript exige palabras de GENERAL_CONVERSATION_CUE/GENERAL_QUESTION_START tras fallo del parser de registro. submitAiUniversalText ignoraba el resultado false de speakAiUniversalText. AI ∞ no liberaba audio anterior como el micrófono principal.
+- Escape: comparación escrita R31 no cubrió despacho ni reproducción; se distingue servidor de iPhone físico.
+- Corrección permanente: preguntas desconocidas fuera de órdenes explícitas llegan al modelo; retorno de audio propagado; error visible preservado; audio anterior liberado en gesto.
+- Evidencia automatizada: test-r32-open-conversation.mjs y test-voice-result-integrity.mjs. Nueve preguntas en dos contextos, diez turnos simulados y pruebas negativas. PASS local, dispositivo físico pendiente.
+- Integración: actualización LAB ce9a652 preservada, API R31 y tarjeta R30 intactas. Registro de pruebas: docs/quality/R32_PREGUNTAS_Y_VOZ.md.
