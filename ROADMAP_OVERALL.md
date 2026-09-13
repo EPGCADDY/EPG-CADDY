@@ -1020,3 +1020,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `test-v312-general-caddie.mjs` deja de exigir el cierre del micrófono tras cada respuesta y verifica el contrato vigente: WebRTC vuelve a escucha continua para preguntas consecutivas.
 - `test-v323-long-multitopic-context.mjs` y `test-v325-ideal-microphone-timings.mjs` verifican el mismo contrato persistente; V325 inspecciona la fuente canónica y acepta `semantic_vad` conversacional, manteniendo `server_vad` para scores.
 - `test-v326-no-silent-conversation.mjs` inspecciona la misma fuente y valida recuperación sin silencios sobre `semantic_vad`, manteniendo sus watchdogs de 15/90 segundos.
+- `test-v365-active-round-empty-recovery.mjs`, `test-v406-r23-visible-version.mjs` y `test-v407-r7-ios-scroll.mjs` validan identidad visible V407 sin fijarla a la revisión retirada R32.

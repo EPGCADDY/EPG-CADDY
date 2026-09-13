@@ -1100,3 +1100,4 @@ La regresión dirigida exige destrucción completa, prohíbe `release→prime` d
 - `test-v312-general-caddie.mjs` valida que `output_audio_buffer.stopped` reactive escucha continua (`ESCUCHANDO · PUEDES CONTINUAR`) en vez de exigir el cierre heredado después de la primera respuesta.
 - `test-v323-long-multitopic-context.mjs` y `test-v325-ideal-microphone-timings.mjs` dejan de imponer el cierre por turno; V325 lee la fuente canónica y valida `semantic_vad` conversacional sin alterar el `server_vad` operativo.
 - `test-v326-no-silent-conversation.mjs` deja de medir el perfil conversacional retirado y verifica sobre la fuente canónica `semantic_vad`, reintento y límites 15/90 segundos.
+- Los gates visuales V365, V406-R23 y V407-R7 conservan ACTUALIZADO/ACTUALIZAR y scroll iPhone, aceptando la revisión V407 vigente en vez de exigir R32.

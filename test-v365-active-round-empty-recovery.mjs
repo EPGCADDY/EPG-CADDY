@@ -14,12 +14,12 @@ assert.match(worker,/url\.searchParams\.get\("app_version"\)===RELEASE/,"sólo e
 assert.match(worker,/await ensureApprovedShell\(\);\s*return await approvedNavigationWithManualUpdate\(request\)/,"una apertura normal conserva el shell aprobado y permite recuperar ACTUALIZAR manualmente");
 assert.match(html,/class="mandatory-update" id="mandatoryUpdate"/);
 assert.match(html,/id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO<\/span>/);
-assert.match(html,/class="update-version-id" id="appVersionId">V407 · R32<\/span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled/);
+assert.match(html,/class="update-version-id" id="appVersionId">V407 · R\d+<\/span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled/);
 assert.match(html,/\.mandatory-update\.available \.mandatory-update-card button\{[^}]*animation:gscUpdatePulse/);
 assert.match(html,/button\.disabled=false;button\.setAttribute\("aria-disabled","false"\)/);
 assert.doesNotMatch(html,/document\.querySelector\("main\.app"\)\?\.setAttribute\("inert"/);
 assert.match(html,/meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
-assert.match(html,/meta name="gscg-release" content="V407-R32-MANUAL-CANDIDATE-TWO-COLUMNS-20260910"/);
+assert.match(html,/meta name="gscg-release" content="V407-R\d+[^\"]*"/);
 assert.match(html,/function recoverInstalledAppScrolling\(\)/);
 assert.match(html,/window\.addEventListener\("pageshow",recoverInstalledAppScrolling\)/);
 assert.match(html,/\.overlay\{height:100dvh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom\}/);
