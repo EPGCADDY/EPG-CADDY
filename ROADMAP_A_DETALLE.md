@@ -1015,5 +1015,6 @@ Alcance: ubicación explícita y premisas de costos/precios; nueve consultas rea
 - `vercel.json`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
 - `scripts/run-r36-targeted.mjs`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
 
-- `scripts/run-r36-build.mjs`: conserva controles de construcción dentro del límite de 256 caracteres.
-- Correcciones dirigidas adicionales: alias exactos del campo y expresiones temporales no se geocodifican como ciudades. `test-v337-universal-weather.mjs`, `test-v356-traffic-weather-accuracy.mjs` y `test-r35-weather-location.mjs` PASS locales. Ensayo remoto pendiente; no publicación.
+- `scripts/run-r36-build.mjs`: mantiene los controles existentes sin exceder 256 caracteres.
+- `api/universal-ai.js`, `test-r35-weather-location.mjs`: alias del campo y tiempos relativos corregidos; V337, V356 y R35 PASS dirigidos.
+- `scripts/run-r36-targeted.mjs`: retesta dos problemas de cantidades y compara tres pares TTS (texto completo frente a primera frase/resto simultáneos). Texto idéntico, sin reproducción, sin nueva aprobación. Nueve respuestas previas conservadas; fallo relativo de costos aún no resuelto. No mide latencia integral iPhone.
