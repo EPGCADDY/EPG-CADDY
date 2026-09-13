@@ -971,3 +971,14 @@ PASS físico aislado; integración pendiente. Limpieza incremental de audio ante
 - `index-grupal.html`
 - `test-r34-audio-response.mjs`
 - `test-r34-capture-cleanup.mjs`
+
+## 2026-09-13 · Banco real universal de 100 casos
+Validación previa a cualquier nueva entrega: 100 referencias obtenidas en ChatGPT, audio de entrada sintetizado e inyectado, transcripción real, respuesta de AI UNIVERSAL, texto y audio final. El resultado automático no sustituye la comprobación física final en iPhone.
+
+- `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`
+- `scripts/run-universal-100-real.mjs`
+- `vercel.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `ROADMAP_OVERALL.md`
+- `ROADMAP_A_DETALLE.md`

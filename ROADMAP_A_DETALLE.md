@@ -1034,3 +1034,11 @@ PASS físico aislado; integración pendiente. Limpieza incremental de audio ante
 - `index-grupal.html`
 - `test-r34-audio-response.mjs`
 - `test-r34-capture-cleanup.mjs`
+
+## 2026-09-13 · Banco real universal de 100 casos
+- `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`: 100 preguntas únicas, 78 categorías, respuestas de referencia de ChatGPT, hechos esperados y siete conversaciones contextuales.
+- `scripts/run-universal-100-real.mjs`: ejecuta audio de entrada → transcripción → AI UNIVERSAL → texto → audio de salida y registra tiempo y PASS/FAIL por etapa.
+- `vercel.json`: ejecuta el banco sólo en el Preview `test-r34-universal-100`, después de los candados existentes.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: incorpora los dos archivos nuevos y el comando de ejecución.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: se regenera antes del Preview.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran el alcance y la evidencia pendiente.

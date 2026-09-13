@@ -1287,3 +1287,8 @@ Evidencia separada: sin cierre físico ni cambios especulativos de captura.
 ## Captura limpia B · 2026-09-13
 - `test-r34-capture-cleanup.mjs`: primer sin objectURL, respuesta previa y callbacks residuales.
 - `docs/quality/R34_CAPTURA_LIMPIA.md`: resultado físico aislado, diferencias y límites.
+
+## Banco universal 100 · 2026-09-13
+- `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`: matriz de preguntas, referencias ChatGPT y criterios esperados.
+- `scripts/run-universal-100-real.mjs`: ejecución real de transcripción, IA, texto y voz con audio inyectado.
+- `vercel.json`: activa el banco exclusivamente en su rama Preview.

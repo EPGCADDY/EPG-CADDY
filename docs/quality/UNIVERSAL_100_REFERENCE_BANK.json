@@ -1,0 +1,1142 @@
+{
+  "schema": "epg-caddy-universal-benchmark/v1",
+  "createdAt": "2026-09-13",
+  "referenceSource": "ChatGPT web",
+  "referenceMethod": "Four batches generated in ChatGPT public web interface; responses preserved verbatim as referenceAnswer.",
+  "cases": [
+    {
+      "id": "001",
+      "category": "conocimiento_general",
+      "question": "¿Por qué existen los años bisiestos y cuál es la regla de excepción para años terminados en 00?",
+      "referenceAnswer": "Los años bisiestos corrigen la diferencia entre el año calendario de 365 días y el año solar de aproximadamente 365,2422 días. Se añade un día cada cuatro años, pero los años de siglo no son bisiestos salvo que sean divisibles entre 400. Así, 2000 fue bisiesto, mientras que 1900 y 2100 no lo son.",
+      "expectedFacts": [
+        "El año solar dura aproximadamente 365,2422 días",
+        "Los años divisibles entre 4 suelen ser bisiestos",
+        "Los años terminados en 00 requieren divisibilidad entre 400"
+      ]
+    },
+    {
+      "id": "002",
+      "category": "geografia",
+      "question": "Explica la diferencia entre el Reino Unido, Gran Bretaña e Inglaterra.",
+      "referenceAnswer": "Inglaterra es uno de los cuatro países que forman el Reino Unido. Gran Bretaña es la isla que contiene Inglaterra, Escocia y Gales. El Reino Unido es el Estado soberano formado por Inglaterra, Escocia, Gales e Irlanda del Norte. Confundir estos términos puede generar errores al hablar de geografía o política británica.",
+      "expectedFacts": [
+        "Inglaterra es parte del Reino Unido",
+        "Gran Bretaña es una isla geográfica",
+        "Irlanda del Norte pertenece al Reino Unido pero no a Gran Bretaña"
+      ]
+    },
+    {
+      "id": "003",
+      "category": "ciencia",
+      "question": "¿Por qué el cielo suele verse azul durante el día?",
+      "referenceAnswer": "El cielo se ve azul porque la atmósfera dispersa la luz solar. Las moléculas del aire dispersan con mayor eficacia las longitudes de onda cortas, como el azul y el violeta, mediante la dispersión de Rayleigh. Aunque el violeta se dispersa mucho, la sensibilidad del ojo humano y la distribución de la luz hacen que percibamos principalmente azul.",
+      "expectedFacts": [
+        "La causa es la dispersión de Rayleigh",
+        "Las longitudes de onda cortas se dispersan más",
+        "La percepción humana influye en el color observado"
+      ]
+    },
+    {
+      "id": "004",
+      "category": "calculo",
+      "question": "Un producto cuesta 240 dólares y aumenta un 15%. ¿Cuál es el nuevo precio?",
+      "referenceAnswer": "El aumento es 240 × 0,15 = 36 dólares. Sumando el incremento al precio original: 240 + 36 = 276 dólares. El nuevo precio es 276 dólares.",
+      "expectedFacts": [
+        "El incremento es de 36 dólares",
+        "El precio final es 276 dólares"
+      ]
+    },
+    {
+      "id": "005",
+      "category": "golf",
+      "question": "¿Qué significa hacer un birdie en golf y cómo se relaciona con el par?",
+      "referenceAnswer": "Un birdie significa completar un hoyo con un golpe menos que el par establecido. Por ejemplo, hacer 3 golpes en un hoyo par 4 es un birdie. Es un resultado favorable y suele requerir precisión, estrategia y buen control de distancia.",
+      "expectedFacts": [
+        "Birdie equivale a uno bajo par",
+        "Depende del par del hoyo",
+        "Es un resultado positivo"
+      ]
+    },
+    {
+      "id": "006",
+      "category": "recomendacion",
+      "question": "Recomienda un método para elegir una laptop para una persona que estudia ingeniería, considerando presupuesto limitado.",
+      "referenceAnswer": "Conviene priorizar procesador moderno, al menos 16 GB de RAM si se usarán simulaciones o programación, almacenamiento SSD y buena batería. La tarjeta gráfica dedicada puede ser necesaria para modelado 3D o aprendizaje automático. También hay que revisar compatibilidad con el software específico del programa de estudios antes de comprar.",
+      "expectedFacts": [
+        "La elección depende del uso concreto",
+        "RAM y procesador son factores importantes",
+        "El software requerido debe influir en la decisión"
+      ],
+      "conversationId": "chainA",
+      "turn": 1
+    },
+    {
+      "id": "007",
+      "category": "razonamiento_complejo",
+      "question": "Un tren sale a 90 km/h y otro a 120 km/h desde ciudades separadas por 420 km, avanzando uno hacia el otro. ¿Cuándo se encuentran?",
+      "referenceAnswer": "La velocidad relativa es 90 + 120 = 210 km/h. El tiempo para encontrarse es distancia dividida entre velocidad relativa: 420 ÷ 210 = 2 horas. Por lo tanto, se encuentran después de 2 horas.",
+      "expectedFacts": [
+        "Las velocidades se suman al moverse uno hacia el otro",
+        "La velocidad relativa es 210 km/h",
+        "El tiempo es 2 horas"
+      ]
+    },
+    {
+      "id": "008",
+      "category": "actualidad_incertidumbre",
+      "question": "¿Quién será el presidente de Estados Unidos en 2032? Responde considerando la fecha actual y la incertidumbre.",
+      "referenceAnswer": "No se puede saber con certeza quién será presidente de Estados Unidos en 2032 porque depende de futuras elecciones, candidatos y circunstancias políticas. Una respuesta responsable debe indicar la incertidumbre y no afirmar un ganador inexistente. La información disponible hasta septiembre de 2026 no permite determinarlo.",
+      "expectedFacts": [
+        "El resultado electoral futuro es desconocido",
+        "No debe inventarse un presidente futuro",
+        "Debe reconocerse la fecha y la incertidumbre"
+      ]
+    },
+    {
+      "id": "009",
+      "category": "correccion_usuario",
+      "question": "Usuario: 'La capital de Australia es Sídney'. Corrige la afirmación y explica.",
+      "referenceAnswer": "La afirmación es incorrecta. La capital de Australia es Canberra, no Sídney. Sídney es una de las ciudades más grandes y conocidas del país, pero Canberra fue elegida como capital para establecer una sede gubernamental entre las dos grandes ciudades rivales, Sídney y Melbourne.",
+      "expectedFacts": [
+        "Canberra es la capital de Australia",
+        "Sídney no es la capital",
+        "Debe corregirse con explicación respetuosa"
+      ]
+    },
+    {
+      "id": "010",
+      "category": "historia",
+      "question": "¿Cuál fue la importancia de la imprenta de Gutenberg?",
+      "referenceAnswer": "La imprenta de tipos móviles de Gutenberg en Europa permitió producir libros mucho más rápido y barato que los manuscritos copiados a mano. Favoreció la difusión del conocimiento, la alfabetización, la ciencia y los movimientos religiosos y políticos. No inventó toda forma de impresión, pero transformó su escala e impacto en Europa.",
+      "expectedFacts": [
+        "Usó tipos móviles",
+        "Aceleró la producción de libros",
+        "Impulsó la difusión del conocimiento"
+      ]
+    },
+    {
+      "id": "011",
+      "category": "seguimiento_contextual",
+      "question": "Continúa el análisis anterior: ahora compara esa laptop con una tablet para ingeniería.",
+      "referenceAnswer": "La laptop suele ser superior para ingeniería porque ofrece más potencia, compatibilidad con software especializado y mejores opciones de programación. Una tablet puede ser útil para tomar notas, leer planos o revisar documentos, pero generalmente no reemplaza una computadora completa para simulaciones o herramientas profesionales.",
+      "expectedFacts": [
+        "Una laptop suele ofrecer mayor compatibilidad",
+        "Una tablet tiene ventajas de movilidad",
+        "La elección depende del flujo de trabajo"
+      ],
+      "conversationId": "chainA",
+      "turn": 2
+    },
+    {
+      "id": "012",
+      "category": "seguimiento_contextual",
+      "question": "Continúa la conversación: ¿qué especificaciones mínimas recomendarías para esa laptop si el estudiante usa CAD?",
+      "referenceAnswer": "Para CAD conviene una laptop con procesador moderno de varios núcleos, 16 GB de RAM como base, SSD rápido y una GPU dedicada compatible cuando el modelado sea exigente. La recomendación exacta depende del nivel de complejidad de los proyectos y del programa CAD utilizado.",
+      "expectedFacts": [
+        "CAD puede requerir GPU dedicada",
+        "16 GB de RAM es una referencia común",
+        "El software específico importa"
+      ],
+      "conversationId": "chainA",
+      "turn": 3
+    },
+    {
+      "id": "013",
+      "category": "seguimiento_contextual",
+      "question": "Continúa la cadena: ¿cómo cambiaría la recomendación si el presupuesto bajara a la mitad?",
+      "referenceAnswer": "Con menor presupuesto habría que priorizar procesador, RAM suficiente y SSD, aceptando posibles sacrificios como una GPU menos potente o una pantalla más sencilla. También conviene considerar equipos reacondicionados de buena calidad y verificar que puedan actualizarse.",
+      "expectedFacts": [
+        "Hay que priorizar componentes clave",
+        "Los equipos reacondicionados pueden ser opción",
+        "Se deben aceptar compromisos"
+      ],
+      "conversationId": "chainA",
+      "turn": 4
+    },
+    {
+      "id": "014",
+      "category": "fisica",
+      "question": "Explica la diferencia entre masa y peso.",
+      "referenceAnswer": "La masa mide la cantidad de materia de un objeto y se mantiene constante. El peso es una fuerza causada por la gravedad sobre esa masa y cambia según el campo gravitatorio. Por ejemplo, una persona tiene la misma masa en la Tierra y la Luna, pero pesa menos en la Luna.",
+      "expectedFacts": [
+        "La masa es constante",
+        "El peso depende de la gravedad",
+        "El peso es una fuerza"
+      ]
+    },
+    {
+      "id": "015",
+      "category": "matematicas",
+      "question": "Si una inversión crece 5% anual compuesto durante 3 años desde 1000 dólares, ¿cuál es el valor aproximado?",
+      "referenceAnswer": "El cálculo es 1000 × 1,05³. Primero 1,05² = 1,1025 y luego 1,1025 × 1,05 = 1,157625. El valor final aproximado es 1157,63 dólares.",
+      "expectedFacts": [
+        "Se usa crecimiento compuesto",
+        "La fórmula es capital inicial por (1+tasa)^años",
+        "Resultado aproximado 1157,63"
+      ]
+    },
+    {
+      "id": "016",
+      "category": "biologia",
+      "question": "¿Cuál es la función principal del ADN?",
+      "referenceAnswer": "El ADN almacena la información genética necesaria para construir y mantener organismos vivos. Contiene instrucciones que influyen en la producción de proteínas y en la herencia de características entre generaciones.",
+      "expectedFacts": [
+        "El ADN almacena información genética",
+        "Participa en la producción de proteínas",
+        "Está relacionado con la herencia"
+      ]
+    },
+    {
+      "id": "017",
+      "category": "geografia",
+      "question": "¿Por qué los husos horarios existen y por qué no todos siguen límites rectos?",
+      "referenceAnswer": "Los husos horarios permiten ajustar la hora local al movimiento aparente del Sol debido a la rotación terrestre. Aunque se basan aproximadamente en divisiones longitudinales, sus límites se modifican por fronteras políticas, económicas y sociales para mantener regiones conectadas con la misma hora oficial.",
+      "expectedFacts": [
+        "Se relacionan con la rotación terrestre",
+        "Aproximadamente siguen longitudes",
+        "Los límites pueden adaptarse políticamente"
+      ]
+    },
+    {
+      "id": "018",
+      "category": "economia",
+      "question": "Explica qué es la inflación y por qué puede reducir el poder adquisitivo.",
+      "referenceAnswer": "La inflación es el aumento generalizado de precios de bienes y servicios durante un periodo. Si los ingresos no aumentan al mismo ritmo, una persona puede comprar menos con la misma cantidad de dinero. No todos los precios suben igual ni toda inflación tiene las mismas causas.",
+      "expectedFacts": [
+        "Es un aumento general de precios",
+        "Puede reducir poder adquisitivo",
+        "Tiene múltiples causas"
+      ]
+    },
+    {
+      "id": "019",
+      "category": "actualidad_fecha",
+      "question": "Si alguien afirma en septiembre de 2026 que una misión tripulada humana a Marte ya ocurrió, ¿cómo evaluarías esa afirmación?",
+      "referenceAnswer": "La afirmación debe verificarse porque una misión tripulada a Marte sería un evento histórico ampliamente documentado. Hasta septiembre de 2026 no hay evidencia de que seres humanos hayan llegado a Marte. La respuesta adecuada es expresar la falta de confirmación y evitar aceptar la afirmación sin fuentes confiables.",
+      "expectedFacts": [
+        "Debe verificarse una afirmación extraordinaria",
+        "No hay evidencia de una misión humana a Marte hasta esa fecha",
+        "Debe evitarse inventar hechos"
+      ]
+    },
+    {
+      "id": "020",
+      "category": "quimica",
+      "question": "¿Por qué el agua es un buen disolvente para muchas sustancias?",
+      "referenceAnswer": "El agua es un excelente disolvente porque es una molécula polar. Sus cargas parciales permiten interactuar con iones y moléculas polares, facilitando la separación y dispersión de muchas sustancias. Por eso es fundamental en procesos biológicos y químicos.",
+      "expectedFacts": [
+        "El agua es polar",
+        "Disuelve muchas sustancias iónicas y polares",
+        "Tiene importancia biológica"
+      ]
+    },
+    {
+      "id": "021",
+      "category": "razonamiento",
+      "question": "Un médico dice que un tratamiento funciona en 80% de pacientes estudiados. ¿Significa que funcionará en exactamente 8 de cada 10 futuros pacientes?",
+      "referenceAnswer": "No necesariamente. El 80% es una estimación basada en una población de estudio y tiene incertidumbre estadística. Los resultados futuros pueden variar según características de los pacientes, tamaño de muestra y condiciones del tratamiento. Es una probabilidad esperada, no una garantía individual.",
+      "expectedFacts": [
+        "Los porcentajes de estudios no garantizan resultados individuales",
+        "Existe incertidumbre estadística",
+        "La población estudiada importa"
+      ]
+    },
+    {
+      "id": "022",
+      "category": "literatura",
+      "question": "¿Qué diferencia principal existe entre una novela y un cuento?",
+      "referenceAnswer": "Una novela suele tener mayor extensión, más desarrollo de personajes, tramas complejas y un mundo narrativo más amplio. Un cuento es generalmente más breve y concentra su efecto en menos personajes y una situación más delimitada, aunque existen excepciones y formas intermedias.",
+      "expectedFacts": [
+        "La novela suele ser más extensa",
+        "El cuento suele concentrarse en un núcleo narrativo",
+        "Hay excepciones"
+      ]
+    },
+    {
+      "id": "023",
+      "category": "tecnologia",
+      "question": "Explica qué es el aprendizaje automático y una limitación importante.",
+      "referenceAnswer": "El aprendizaje automático es una rama de la inteligencia artificial donde los sistemas aprenden patrones a partir de datos para realizar tareas como clasificación o predicción. Una limitación importante es que los modelos pueden heredar sesgos o fallar cuando reciben datos diferentes a los usados durante su entrenamiento.",
+      "expectedFacts": [
+        "Aprende patrones de datos",
+        "Es una rama de la inteligencia artificial",
+        "Puede presentar sesgos o problemas de generalización"
+      ]
+    },
+    {
+      "id": "024",
+      "category": "golf",
+      "question": "¿Qué es un hándicap en golf y para qué sirve?",
+      "referenceAnswer": "El hándicap es un sistema que estima la habilidad relativa de un jugador y permite competir entre personas de distintos niveles. Ajusta la puntuación para hacer la competencia más equilibrada. Su cálculo depende de reglas específicas y del desempeño reciente del jugador.",
+      "expectedFacts": [
+        "Mide habilidad relativa",
+        "Permite competir entre niveles distintos",
+        "Ajusta resultados según reglas"
+      ]
+    },
+    {
+      "id": "025",
+      "category": "razonamiento_complejo",
+      "question": "Una empresa reduce costos un 20% y luego aumenta el precio un 20%. ¿El precio final vuelve al original?",
+      "referenceAnswer": "No necesariamente. Los porcentajes aplicados en momentos distintos no se cancelan. Si un precio de 100 baja 20%, queda en 80. Luego subir 20% sobre 80 da 96. El precio final es 4% menor que el original.",
+      "expectedFacts": [
+        "Los porcentajes sucesivos no son simétricos",
+        "100 reducido 20% queda en 80",
+        "80 aumentado 20% queda en 96"
+      ]
+    },
+    {
+      "id": "026",
+      "category": "medicina_prudente",
+      "question": "Una persona tiene fiebre alta durante varios días. ¿Qué información debería considerar antes de decidir si necesita atención médica?",
+      "referenceAnswer": "Debe considerar la duración y temperatura de la fiebre, síntomas asociados como dificultad para respirar, dolor intenso, confusión, deshidratación, edad, enfermedades previas y medicamentos utilizados. Una respuesta prudente no diagnostica solo con esos datos, sino que recomienda evaluación profesional cuando hay señales de alarma o persistencia.",
+      "expectedFacts": [
+        "La fiebre debe evaluarse junto con otros síntomas",
+        "Existen señales de alarma que requieren atención",
+        "No se debe diagnosticar sin evaluación adecuada"
+      ]
+    },
+    {
+      "id": "027",
+      "category": "derecho_jurisdiccion",
+      "question": "Alguien pregunta: '¿Es legal grabar una conversación sin permiso?'. ¿Cómo responderías correctamente?",
+      "referenceAnswer": "Depende de la jurisdicción aplicable y de las circunstancias. Algunas leyes permiten grabar si quien graba participa en la conversación, mientras otras requieren consentimiento de todas las partes. Una respuesta adecuada debe pedir país o estado y evitar presentar una regla universal.",
+      "expectedFacts": [
+        "Las leyes varían por jurisdicción",
+        "No existe una respuesta universal",
+        "Debe solicitarse ubicación legal relevante"
+      ]
+    },
+    {
+      "id": "028",
+      "category": "finanzas_incertidumbre",
+      "question": "¿Qué factores deberían analizarse antes de invertir en una empresa tecnológica nueva?",
+      "referenceAnswer": "Conviene evaluar modelo de negocio, ingresos, rentabilidad o camino hacia ella, competencia, equipo directivo, valoración, riesgos regulatorios y situación del mercado. Ningún análisis elimina la incertidumbre: una empresa prometedora puede fallar y una inversión puede perder valor. La diversificación y el análisis del perfil de riesgo son importantes.",
+      "expectedFacts": [
+        "Las inversiones tienen incertidumbre",
+        "Debe analizarse negocio y valoración",
+        "El riesgo debe gestionarse"
+      ]
+    },
+    {
+      "id": "029",
+      "category": "logica",
+      "question": "Todos los mamíferos son animales. Algunos animales vuelan. ¿Se puede concluir que algunos mamíferos vuelan?",
+      "referenceAnswer": "No. La conclusión no se sigue lógicamente. La primera afirmación solo indica que los mamíferos pertenecen al grupo de animales. La segunda indica que existe un grupo de animales que vuelan, pero no especifica que esos animales sean mamíferos.",
+      "expectedFacts": [
+        "La conclusión no es válida",
+        "Los conjuntos pueden solaparse o no",
+        "No debe inferirse información no dada"
+      ]
+    },
+    {
+      "id": "030",
+      "category": "estadistica",
+      "question": "Una encuesta muestra que el 70% de 100 personas prefiere un producto. ¿Qué limitaciones tiene este resultado?",
+      "referenceAnswer": "El resultado depende de cómo se seleccionaron las 100 personas, del tamaño de la muestra, del margen de error y de si representan a la población objetivo. No significa necesariamente que exactamente 70% de toda la población tenga esa preferencia. La calidad del muestreo es clave.",
+      "expectedFacts": [
+        "Una muestra tiene incertidumbre",
+        "La representatividad importa",
+        "El resultado no es una certeza poblacional"
+      ]
+    },
+    {
+      "id": "031",
+      "category": "astronomia",
+      "question": "¿Por qué vemos siempre la misma cara de la Luna desde la Tierra?",
+      "referenceAnswer": "Porque la Luna tiene rotación sincrónica: tarda aproximadamente el mismo tiempo en girar sobre su eje que en completar una órbita alrededor de la Tierra. Esto hace que el mismo hemisferio permanezca orientado hacia nuestro planeta, aunque la Luna sí rota.",
+      "expectedFacts": [
+        "La Luna sí gira sobre su eje",
+        "Su periodo de rotación coincide con su órbita",
+        "El fenómeno se llama rotación sincrónica"
+      ]
+    },
+    {
+      "id": "032",
+      "category": "ambiente",
+      "question": "¿Cuál es la diferencia entre cambio climático y variabilidad climática natural?",
+      "referenceAnswer": "La variabilidad climática natural incluye cambios causados por procesos naturales como ciclos oceánicos o actividad solar. El cambio climático actual se refiere a tendencias de largo plazo, especialmente el calentamiento global asociado principalmente a actividades humanas como emisiones de gases de efecto invernadero.",
+      "expectedFacts": [
+        "Existe variabilidad natural del clima",
+        "El cambio climático actual tiene influencia humana importante",
+        "Son conceptos relacionados pero distintos"
+      ]
+    },
+    {
+      "id": "033",
+      "category": "programacion",
+      "question": "¿Cuál es la diferencia entre una variable local y una variable global en programación?",
+      "referenceAnswer": "Una variable local existe dentro de un ámbito específico, como una función, y normalmente solo puede usarse allí. Una variable global está disponible en un ámbito más amplio del programa. El uso excesivo de variables globales puede dificultar mantenimiento y provocar errores.",
+      "expectedFacts": [
+        "El alcance determina dónde puede usarse una variable",
+        "Las variables locales tienen ámbito limitado",
+        "Las globales pueden aumentar complejidad"
+      ],
+      "conversationId": "chainC",
+      "turn": 1
+    },
+    {
+      "id": "034",
+      "category": "ciberseguridad",
+      "question": "¿Por qué la autenticación multifactor mejora la seguridad de una cuenta?",
+      "referenceAnswer": "Porque requiere más de una prueba de identidad, como una contraseña y un código temporal o una llave física. Si una contraseña es robada, el atacante todavía necesita el segundo factor. No elimina todos los riesgos, pero reduce significativamente algunos accesos no autorizados.",
+      "expectedFacts": [
+        "Usa múltiples factores de autenticación",
+        "Reduce riesgos por contraseñas comprometidas",
+        "No garantiza seguridad absoluta"
+      ]
+    },
+    {
+      "id": "035",
+      "category": "historia_latinoamericana",
+      "question": "¿Cuál fue una consecuencia importante de las independencias latinoamericanas del siglo XIX?",
+      "referenceAnswer": "Las independencias terminaron con el dominio colonial español en gran parte de América Latina y dieron origen a nuevos Estados. Sin embargo, muchos países enfrentaron conflictos internos, desigualdades sociales, disputas territoriales y desafíos para construir instituciones políticas estables.",
+      "expectedFacts": [
+        "Surgieron nuevos Estados independientes",
+        "Hubo desafíos posteriores a la independencia",
+        "El proceso tuvo efectos políticos y sociales"
+      ]
+    },
+    {
+      "id": "036",
+      "category": "guatemala",
+      "question": "¿Qué importancia tiene Tikal dentro de la historia maya?",
+      "referenceAnswer": "Tikal fue una de las ciudades más importantes de la civilización maya clásica. Ubicada en la actual Guatemala, destacó por su arquitectura monumental, organización política, actividad económica y avances culturales. Sus templos y estelas proporcionan información sobre la historia maya.",
+      "expectedFacts": [
+        "Tikal está en Guatemala",
+        "Fue una ciudad maya clásica importante",
+        "Tiene valor arqueológico e histórico"
+      ]
+    },
+    {
+      "id": "037",
+      "category": "etica",
+      "question": "Una empresa puede usar datos personales para mejorar un producto. ¿Qué principios éticos debería considerar?",
+      "referenceAnswer": "Debe considerar consentimiento informado, transparencia sobre el uso de datos, minimización de información recolectada, seguridad y respeto por la privacidad. También debe evaluar posibles daños o discriminación derivados del uso de esos datos.",
+      "expectedFacts": [
+        "La privacidad es un principio ético clave",
+        "Debe existir transparencia",
+        "Los datos requieren protección responsable"
+      ]
+    },
+    {
+      "id": "038",
+      "category": "traduccion",
+      "question": "Traduce al español: 'The evidence suggests that the results may vary depending on the context.'",
+      "referenceAnswer": "La traducción adecuada es: 'La evidencia sugiere que los resultados pueden variar dependiendo del contexto.' También puede expresarse como 'según el contexto' manteniendo el mismo significado.",
+      "expectedFacts": [
+        "evidence significa evidencia",
+        "may vary expresa posibilidad",
+        "context significa contexto"
+      ]
+    },
+    {
+      "id": "039",
+      "category": "escritura",
+      "question": "¿Cómo mejorarías una frase profesional que dice: 'Necesito que me mandes esto rápido porque urge'?",
+      "referenceAnswer": "Una versión profesional podría ser: 'Agradecería tu apoyo enviando esta información lo antes posible, ya que la necesitamos para cumplir con el plazo establecido.' Mantiene la urgencia, pero comunica la solicitud con cortesía y claridad.",
+      "expectedFacts": [
+        "Debe conservar la intención original",
+        "El tono profesional requiere cortesía",
+        "La urgencia puede expresarse sin presión excesiva"
+      ]
+    },
+    {
+      "id": "040",
+      "category": "comparacion_opciones",
+      "question": "Compara comprar una vivienda con alquilarla considerando una persona que podría mudarse en dos años.",
+      "referenceAnswer": "Alquilar ofrece flexibilidad y menor compromiso financiero inicial, mientras comprar puede generar patrimonio pero implica costos de mantenimiento, impuestos y menor movilidad. Si la persona probablemente se mudará en dos años, la flexibilidad del alquiler puede ser una ventaja, aunque depende del mercado, precios y situación financiera.",
+      "expectedFacts": [
+        "Comprar y alquilar tienen ventajas distintas",
+        "El horizonte temporal importa",
+        "La decisión depende de circunstancias personales"
+      ],
+      "conversationId": "chainB",
+      "turn": 1
+    },
+    {
+      "id": "041",
+      "category": "seguimiento_contextual",
+      "question": "Continúa la conversación: la persona mencionada antes ahora tiene ingresos variables. ¿Cómo cambia la comparación entre comprar y alquilar?",
+      "referenceAnswer": "Con ingresos variables, la estabilidad financiera cobra más importancia. Alquilar puede reducir compromisos fijos y facilitar adaptación. Comprar podría ser viable si existe ahorro suficiente, fondo de emergencia y capacidad para afrontar pagos incluso en meses de menor ingreso.",
+      "expectedFacts": [
+        "Los ingresos variables afectan la decisión",
+        "La liquidez y el fondo de emergencia importan",
+        "No existe una opción universalmente correcta"
+      ],
+      "conversationId": "chainB",
+      "turn": 2
+    },
+    {
+      "id": "042",
+      "category": "seguimiento_contextual",
+      "question": "Continúa la cadena: si la persona planea quedarse diez años en la misma ciudad, ¿qué factor cambia más?",
+      "referenceAnswer": "Un horizonte de diez años puede hacer más atractiva la compra porque permite distribuir costos iniciales y construir patrimonio con el tiempo. Aun así, deben analizarse precio de la vivienda, tasas de interés, mantenimiento y estabilidad laboral antes de decidir.",
+      "expectedFacts": [
+        "Un plazo largo puede favorecer compra",
+        "Deben evaluarse costos totales",
+        "La decisión sigue dependiendo del contexto"
+      ],
+      "conversationId": "chainB",
+      "turn": 3
+    },
+    {
+      "id": "043",
+      "category": "quimica",
+      "question": "¿Por qué el pH 3 es más ácido que el pH 5?",
+      "referenceAnswer": "La escala de pH es logarítmica. Un cambio de una unidad representa aproximadamente un factor diez en la concentración de iones hidrógeno. Por eso una solución con pH 3 tiene aproximadamente cien veces más concentración de iones hidrógeno que una con pH 5.",
+      "expectedFacts": [
+        "La escala de pH es logarítmica",
+        "Menor pH significa mayor acidez",
+        "La diferencia de dos unidades implica factor 100"
+      ]
+    },
+    {
+      "id": "044",
+      "category": "seguridad_informacion",
+      "question": "¿Qué es phishing y cómo puede una persona reducir el riesgo?",
+      "referenceAnswer": "El phishing es un intento de engañar a una persona para obtener información sensible mediante mensajes o sitios falsos que parecen legítimos. Para reducir riesgos conviene verificar remitentes, evitar enlaces sospechosos, usar autenticación multifactor y confirmar solicitudes inusuales por canales oficiales.",
+      "expectedFacts": [
+        "Busca engañar para obtener información",
+        "Puede usar mensajes o sitios falsos",
+        "La verificación reduce riesgos"
+      ]
+    },
+    {
+      "id": "045",
+      "category": "historia_guatemala",
+      "question": "¿Qué fue la firma de los Acuerdos de Paz de Guatemala de 1996?",
+      "referenceAnswer": "Los Acuerdos de Paz de 1996 pusieron fin formalmente al conflicto armado interno de Guatemala, que había durado décadas. Incluyeron compromisos sobre derechos humanos, participación política, reformas institucionales y atención a poblaciones afectadas.",
+      "expectedFacts": [
+        "Fueron firmados en 1996",
+        "Pusieron fin al conflicto armado interno",
+        "Incluyeron compromisos institucionales y sociales"
+      ]
+    },
+    {
+      "id": "046",
+      "category": "derecho_comparado",
+      "question": "¿Por qué un contrato válido en un país puede no tener el mismo efecto en otro?",
+      "referenceAnswer": "Porque los sistemas legales tienen diferentes normas sobre contratos, requisitos formales, derechos de las partes y reconocimiento internacional. Para evaluar un contrato entre países deben analizarse jurisdicción, ley aplicable y posibles tratados o reglas de conflicto de leyes.",
+      "expectedFacts": [
+        "Las leyes varían entre países",
+        "La jurisdicción es relevante",
+        "Debe analizarse la ley aplicable"
+      ]
+    },
+    {
+      "id": "047",
+      "category": "astronomia",
+      "question": "¿Por qué Plutón dejó de clasificarse como planeta principal?",
+      "referenceAnswer": "En 2006 la Unión Astronómica Internacional definió criterios para un planeta: orbitar el Sol, tener forma aproximadamente esférica y haber limpiado su vecindad orbital. Plutón cumple los dos primeros criterios, pero no el tercero, por lo que fue clasificado como planeta enano.",
+      "expectedFacts": [
+        "La reclasificación ocurrió en 2006",
+        "Plutón es un planeta enano",
+        "El criterio de limpiar la órbita fue clave"
+      ]
+    },
+    {
+      "id": "048",
+      "category": "programacion_seguimiento",
+      "question": "Continúa la conversación: después de explicar variables, ¿qué recomendación darías para evitar errores de alcance en un proyecto grande?",
+      "referenceAnswer": "Conviene usar nombres claros, limitar variables globales, organizar el código en módulos o funciones con responsabilidades definidas y aplicar pruebas. Un buen diseño reduce errores relacionados con cambios inesperados de estado.",
+      "expectedFacts": [
+        "Reducir variables globales ayuda",
+        "La modularidad mejora mantenimiento",
+        "Las pruebas ayudan a detectar errores"
+      ],
+      "conversationId": "chainC",
+      "turn": 2
+    },
+    {
+      "id": "049",
+      "category": "medio_ambiente",
+      "question": "¿Por qué reciclar no es suficiente como única solución ambiental?",
+      "referenceAnswer": "El reciclaje ayuda a reducir residuos y uso de materias primas, pero no elimina todos los impactos ambientales. También son importantes la reducción del consumo, reutilización, diseño sostenible, eficiencia energética y cambios en sistemas de producción.",
+      "expectedFacts": [
+        "El reciclaje tiene beneficios pero límites",
+        "La reducción y reutilización son importantes",
+        "Se necesitan soluciones combinadas"
+      ]
+    },
+    {
+      "id": "050",
+      "category": "razonamiento_etico",
+      "question": "Un sistema de inteligencia artificial toma decisiones con alta precisión, pero perjudica a un grupo específico. ¿Qué debería evaluarse?",
+      "referenceAnswer": "Debe evaluarse no solo la precisión promedio, sino también posibles sesgos, impacto desigual, calidad de los datos, transparencia y mecanismos de supervisión. Un sistema puede ser técnicamente preciso y aun así generar consecuencias injustas para ciertos grupos.",
+      "expectedFacts": [
+        "La precisión no es el único criterio",
+        "Debe analizarse sesgo e impacto",
+        "La supervisión humana puede ser necesaria"
+      ]
+    },
+    {
+      "id": "051",
+      "category": "fisica_aplicada",
+      "question": "¿Por qué un automóvil consume más combustible al acelerar bruscamente que al mantener una velocidad constante?",
+      "referenceAnswer": "Al acelerar bruscamente se requiere aumentar rápidamente la energía cinética del vehículo y vencer resistencias como fricción y aire. El motor opera en condiciones que pueden ser menos eficientes, aumentando el consumo. Mantener una velocidad constante generalmente requiere menos energía adicional, aunque depende de la velocidad, el vehículo y las condiciones de conducción.",
+      "expectedFacts": [
+        "La aceleración requiere aumentar energía cinética",
+        "La eficiencia del motor depende de las condiciones",
+        "La conducción constante suele reducir consumo"
+      ]
+    },
+    {
+      "id": "052",
+      "category": "quimica_cotidiana",
+      "question": "¿Por qué el jabón ayuda a eliminar grasa cuando se lava una superficie?",
+      "referenceAnswer": "El jabón contiene moléculas con una parte que interactúa con el agua y otra que se une a grasas y aceites. Estas moléculas forman estructuras que permiten dispersar la grasa en el agua para que pueda ser eliminada durante el enjuague.",
+      "expectedFacts": [
+        "El jabón tiene propiedades anfipáticas",
+        "Ayuda a dispersar grasas",
+        "Facilita la eliminación con agua"
+      ]
+    },
+    {
+      "id": "053",
+      "category": "biologia",
+      "question": "¿Cuál es la diferencia entre bacterias y virus?",
+      "referenceAnswer": "Las bacterias son organismos celulares que pueden reproducirse por sí mismos bajo ciertas condiciones. Los virus no son células y necesitan infectar una célula huésped para replicarse. Los tratamientos efectivos dependen del organismo involucrado; los antibióticos actúan contra bacterias, no contra virus.",
+      "expectedFacts": [
+        "Las bacterias son células",
+        "Los virus requieren células huésped",
+        "Los antibióticos no sirven contra virus"
+      ]
+    },
+    {
+      "id": "054",
+      "category": "agricultura",
+      "question": "¿Por qué la rotación de cultivos puede mejorar la salud del suelo?",
+      "referenceAnswer": "La rotación de cultivos alterna especies con diferentes necesidades y efectos sobre el suelo. Puede ayudar a reducir acumulación de plagas, mejorar disponibilidad de nutrientes y disminuir agotamiento del terreno. Sus beneficios dependen de los cultivos elegidos y las condiciones locales.",
+      "expectedFacts": [
+        "Alterna diferentes cultivos",
+        "Puede reducir plagas y agotamiento",
+        "Depende del contexto agrícola"
+      ]
+    },
+    {
+      "id": "055",
+      "category": "mecanica_automotriz",
+      "question": "¿Qué función cumple el aceite del motor de un automóvil?",
+      "referenceAnswer": "El aceite lubrica piezas móviles, reduce fricción y desgaste, ayuda a transportar calor y puede mantener partículas suspendidas para proteger componentes. Debe utilizarse el tipo recomendado por el fabricante y cambiarse según condiciones de uso y mantenimiento.",
+      "expectedFacts": [
+        "Reduce fricción",
+        "Ayuda al control térmico",
+        "Debe seguirse la especificación del fabricante"
+      ]
+    },
+    {
+      "id": "056",
+      "category": "viajes",
+      "question": "¿Qué factores deberían considerarse al elegir una época para viajar a un destino?",
+      "referenceAnswer": "Conviene considerar clima, temporada alta o baja, precios, eventos locales, disponibilidad de transporte, seguridad y preferencias personales. La mejor época depende del tipo de experiencia buscada, como actividades al aire libre, descanso o eventos culturales.",
+      "expectedFacts": [
+        "El clima es un factor importante",
+        "Los precios cambian según temporada",
+        "La elección depende del objetivo del viaje"
+      ],
+      "conversationId": "chainD",
+      "turn": 1
+    },
+    {
+      "id": "057",
+      "category": "nutricion_prudente",
+      "question": "¿Una dieta baja en carbohidratos es siempre más saludable?",
+      "referenceAnswer": "No necesariamente. La calidad general de la alimentación, las necesidades individuales, condiciones médicas, actividad física y sostenibilidad del plan son factores importantes. Algunas personas pueden beneficiarse de ciertos patrones alimentarios, pero no existe una dieta única adecuada para todos.",
+      "expectedFacts": [
+        "No existe una dieta universal",
+        "Depende de necesidades individuales",
+        "La calidad alimentaria importa"
+      ]
+    },
+    {
+      "id": "058",
+      "category": "comunicacion_empresarial",
+      "question": "¿Cómo comunicar un retraso de proyecto a un cliente de forma profesional?",
+      "referenceAnswer": "Conviene informar pronto, explicar la situación sin excusas excesivas, indicar impacto, presentar un nuevo plan y comunicar acciones correctivas. Una comunicación clara mantiene confianza y permite gestionar expectativas.",
+      "expectedFacts": [
+        "Debe comunicarse con anticipación",
+        "Debe incluir un plan de acción",
+        "La transparencia ayuda a mantener confianza"
+      ]
+    },
+    {
+      "id": "059",
+      "category": "negociacion",
+      "question": "¿Cuál es una estrategia efectiva para negociar cuando ambas partes tienen intereses distintos?",
+      "referenceAnswer": "Una estrategia útil es identificar intereses reales en lugar de centrarse solo en posiciones. Escuchar, buscar opciones mutuamente beneficiosas y usar criterios objetivos puede facilitar acuerdos. La negociación no siempre implica que una parte gane todo.",
+      "expectedFacts": [
+        "Distinguir posiciones de intereses es importante",
+        "Buscar beneficios mutuos ayuda",
+        "Los criterios objetivos pueden facilitar acuerdos"
+      ]
+    },
+    {
+      "id": "060",
+      "category": "probabilidad",
+      "question": "Si lanzas una moneda justa diez veces y salen diez caras, ¿la siguiente tirada tiene más probabilidad de salir cruz?",
+      "referenceAnswer": "No. Si la moneda es justa y las tiradas son independientes, la siguiente tirada tiene 50% de probabilidad de cara y 50% de cruz. Los resultados anteriores no cambian la probabilidad del siguiente lanzamiento, aunque una racha pueda parecer significativa.",
+      "expectedFacts": [
+        "Las tiradas independientes no se afectan",
+        "La probabilidad sigue siendo 50/50",
+        "Evita la falacia del jugador"
+      ]
+    },
+    {
+      "id": "061",
+      "category": "conversion_unidades",
+      "question": "Convierte 72 kilómetros por hora a metros por segundo.",
+      "referenceAnswer": "Para convertir km/h a m/s se divide entre 3,6. Entonces 72 ÷ 3,6 = 20. La velocidad es 20 metros por segundo.",
+      "expectedFacts": [
+        "La conversión usa división entre 3,6",
+        "72 km/h equivale a 20 m/s"
+      ]
+    },
+    {
+      "id": "062",
+      "category": "golf_estrategico",
+      "question": "En golf, ¿por qué un jugador podría elegir un palo menos potente aunque pueda alcanzar el green con uno más largo?",
+      "referenceAnswer": "Puede elegir un palo menos potente para mejorar precisión, controlar distancia, reducir riesgos de obstáculos o adaptarse al viento y al terreno. La estrategia no siempre busca máxima distancia, sino una posición favorable para el siguiente golpe.",
+      "expectedFacts": [
+        "La precisión puede superar a la distancia",
+        "El entorno afecta la elección del palo",
+        "La estrategia considera el siguiente golpe"
+      ]
+    },
+    {
+      "id": "063",
+      "category": "reglas_golf",
+      "question": "Un jugador mueve accidentalmente su bola en el green. ¿Qué debería hacer antes de determinar la penalización?",
+      "referenceAnswer": "Debe consultar las reglas aplicables según la situación concreta, porque la respuesta depende de factores como si el movimiento fue accidental, dónde ocurrió y las reglas vigentes. No se debe asumir automáticamente una penalización sin analizar el caso.",
+      "expectedFacts": [
+        "Las reglas dependen de circunstancias",
+        "No toda situación tiene la misma penalización",
+        "Debe verificarse la regla aplicable"
+      ]
+    },
+    {
+      "id": "064",
+      "category": "actualidad_verificable",
+      "question": "¿Cómo responder si alguien pregunta quién ganó una elección que ocurrió ayer pero no se conoce información actualizada?",
+      "referenceAnswer": "Debe reconocerse la limitación de información disponible y evitar inventar un ganador. Se puede indicar que hace falta consultar fuentes actualizadas o confirmar la fecha y el lugar de la elección para responder correctamente.",
+      "expectedFacts": [
+        "No debe inventarse información reciente",
+        "Debe reconocerse incertidumbre",
+        "La fecha y jurisdicción importan"
+      ]
+    },
+    {
+      "id": "065",
+      "category": "pregunta_ambigua",
+      "question": "Usuario pregunta: '¿Cuál es el mejor banco?'. ¿Cómo debería responder un asistente?",
+      "referenceAnswer": "La pregunta necesita aclaración porque 'mejor' depende del país, necesidades y criterios. Un asistente debería preguntar si se busca mejor tasa, servicio digital, seguridad, crédito, comisiones u otro factor antes de recomendar opciones concretas.",
+      "expectedFacts": [
+        "La pregunta es ambigua",
+        "Debe pedir contexto",
+        "Los criterios de comparación importan"
+      ]
+    },
+    {
+      "id": "066",
+      "category": "correccion_usuario",
+      "question": "Usuario: 'El Everest es la montaña más alta medida desde el centro de la Tierra'. Corrige la afirmación.",
+      "referenceAnswer": "La afirmación es incorrecta. El Everest es la montaña más alta sobre el nivel del mar. Si se mide desde el centro de la Tierra, el punto más alejado es el Chimborazo en Ecuador debido a la forma ligeramente achatada del planeta.",
+      "expectedFacts": [
+        "Everest es el más alto sobre nivel del mar",
+        "Chimborazo destaca por distancia al centro terrestre",
+        "La medición depende del criterio"
+      ]
+    },
+    {
+      "id": "067",
+      "category": "seguimiento_contextual",
+      "question": "Continúa la conversación: después de hablar de viajes, el usuario dice que tiene presupuesto limitado. ¿Qué recomendaciones cambian?",
+      "referenceAnswer": "Con presupuesto limitado conviene priorizar destinos con costos bajos, viajar en temporada menos demandada, comparar transporte y alojamiento, y definir qué experiencias son más importantes. Ahorrar no implica necesariamente eliminar calidad si se planifica bien.",
+      "expectedFacts": [
+        "El presupuesto cambia la estrategia",
+        "La temporada influye en costos",
+        "La planificación ayuda"
+      ],
+      "conversationId": "chainD",
+      "turn": 2
+    },
+    {
+      "id": "068",
+      "category": "seguimiento_contextual",
+      "question": "Continúa la conversación: el viajero ahora quiere actividades de naturaleza. ¿Qué criterio adicional debe considerar?",
+      "referenceAnswer": "Debe considerar clima adecuado, dificultad física de actividades, seguridad, permisos necesarios, impacto ambiental y disponibilidad local. La elección debe equilibrar presupuesto, intereses y capacidad personal.",
+      "expectedFacts": [
+        "Las actividades requieren evaluar seguridad",
+        "El clima afecta experiencias naturales",
+        "Debe considerarse impacto ambiental"
+      ],
+      "conversationId": "chainD",
+      "turn": 3
+    },
+    {
+      "id": "069",
+      "category": "fisica_aplicada",
+      "question": "¿Por qué un cuchillo afilado corta mejor que uno desafilado?",
+      "referenceAnswer": "Un cuchillo afilado concentra la fuerza aplicada en un área menor, aumentando la presión sobre el material. Esto facilita superar la resistencia del objeto. La fuerza total puede ser similar, pero la distribución de presión cambia.",
+      "expectedFacts": [
+        "La presión depende del área",
+        "Menor área aumenta presión",
+        "La fuerza se concentra"
+      ]
+    },
+    {
+      "id": "070",
+      "category": "biologia_agricultura",
+      "question": "¿Por qué las abejas son importantes para muchos ecosistemas y cultivos?",
+      "referenceAnswer": "Las abejas participan en la polinización de numerosas plantas, ayudando a la reproducción vegetal y a la producción de algunos cultivos. Su importancia depende de cada ecosistema, pero su disminución puede afectar relaciones ecológicas y agrícolas.",
+      "expectedFacts": [
+        "Las abejas realizan polinización",
+        "Ayudan a ciertos cultivos",
+        "Forman parte de ecosistemas"
+      ]
+    },
+    {
+      "id": "071",
+      "category": "programacion_seguimiento",
+      "question": "¿Cómo puede un programador reducir errores antes de publicar una aplicación?",
+      "referenceAnswer": "Puede aplicar pruebas automatizadas, revisión de código, análisis de seguridad, monitoreo y pruebas con usuarios. Ninguna técnica elimina todos los errores, pero un proceso sistemático reduce riesgos antes y después del lanzamiento.",
+      "expectedFacts": [
+        "Las pruebas ayudan a reducir errores",
+        "La revisión de código es útil",
+        "No existe garantía absoluta"
+      ]
+    },
+    {
+      "id": "072",
+      "category": "ciberseguridad",
+      "question": "¿Por qué reutilizar la misma contraseña en varios sitios aumenta el riesgo?",
+      "referenceAnswer": "Si un servicio sufre una filtración y la contraseña queda expuesta, atacantes pueden intentar usarla en otras cuentas. Usar contraseñas únicas reduce el impacto de una brecha individual. Un gestor de contraseñas puede ayudar a administrarlas.",
+      "expectedFacts": [
+        "Las filtraciones pueden afectar cuentas múltiples",
+        "Las contraseñas únicas reducen riesgo",
+        "Los gestores pueden ayudar"
+      ]
+    },
+    {
+      "id": "073",
+      "category": "finanzas_personales",
+      "question": "¿Por qué tener un fondo de emergencia es útil antes de invertir?",
+      "referenceAnswer": "Un fondo de emergencia permite cubrir gastos inesperados sin vender inversiones en momentos desfavorables. Su tamaño adecuado depende de ingresos, estabilidad laboral, obligaciones y necesidades personales. No sustituye el análisis financiero, pero mejora la resiliencia.",
+      "expectedFacts": [
+        "Ayuda ante gastos inesperados",
+        "Evita vender inversiones bajo presión",
+        "Debe adaptarse a la situación personal"
+      ]
+    },
+    {
+      "id": "074",
+      "category": "comunicacion_negociacion",
+      "question": "¿Cómo responder profesionalmente cuando un cliente rechaza una propuesta?",
+      "referenceAnswer": "Conviene agradecer la respuesta, preguntar por los motivos del rechazo si es apropiado, aprender de la retroalimentación y mantener una relación profesional. Un rechazo puede aportar información útil para ajustar futuras propuestas.",
+      "expectedFacts": [
+        "Debe mantenerse profesionalismo",
+        "La retroalimentación puede ser valiosa",
+        "No debe cerrarse la relación innecesariamente"
+      ],
+      "conversationId": "chainF",
+      "turn": 1
+    },
+    {
+      "id": "075",
+      "category": "seguimiento_contextual",
+      "question": "Continúa la conversación: después de hablar de una propuesta rechazada, ¿cómo prepararías una nueva versión?",
+      "referenceAnswer": "Primero se deben identificar las razones del rechazo, ajustar la propuesta a las necesidades reales del cliente, aclarar beneficios, reducir puntos de fricción y presentar cambios concretos. La nueva versión debe responder a la retroalimentación recibida.",
+      "expectedFacts": [
+        "Debe analizarse la causa del rechazo",
+        "La propuesta debe adaptarse",
+        "Los cambios deben ser concretos"
+      ],
+      "conversationId": "chainF",
+      "turn": 2
+    },
+    {
+      "id": "076",
+      "category": "razonamiento_causal",
+      "question": "Un pueblo instala más cámaras de seguridad y al año siguiente baja el crimen. ¿Se puede concluir que las cámaras causaron toda la reducción?",
+      "referenceAnswer": "No necesariamente. La coincidencia temporal no demuestra causalidad. La reducción podría estar relacionada también con cambios policiales, economía, iluminación urbana, programas sociales u otros factores. Las cámaras pueden haber contribuido, pero sería necesario analizar evidencia adicional como comparaciones, controles y tendencias previas.",
+      "expectedFacts": [
+        "Correlación no implica causalidad",
+        "Puede haber múltiples factores causales",
+        "Se requiere evidencia adicional"
+      ]
+    },
+    {
+      "id": "077",
+      "category": "deteccion_premisas_falsas",
+      "question": "Evalúa esta afirmación: 'Todos los metales son magnéticos porque los imanes atraen hierro'.",
+      "referenceAnswer": "La premisa es falsa. Aunque algunos metales como hierro, níquel y cobalto presentan fuerte comportamiento magnético, muchos otros metales no son atraídos de esa manera por imanes comunes. La propiedad magnética depende de la estructura electrónica del material, no solo de ser un metal.",
+      "expectedFacts": [
+        "No todos los metales son magnéticos",
+        "Hierro, níquel y cobalto son ejemplos relevantes",
+        "El magnetismo depende de propiedades físicas"
+      ]
+    },
+    {
+      "id": "078",
+      "category": "planificacion_restricciones",
+      "question": "Diseña un plan básico para organizar una conferencia de 200 personas con poco presupuesto y tres meses de preparación.",
+      "referenceAnswer": "Debe priorizarse lo esencial: definir objetivos, presupuesto, fecha y lugar; asegurar ponentes; gestionar registro; planificar comunicación; coordinar logística y tener alternativas para riesgos. Con recursos limitados conviene negociar proveedores, usar herramientas digitales y asignar responsables claros.",
+      "expectedFacts": [
+        "Debe definirse alcance y presupuesto",
+        "La planificación requiere responsables",
+        "Las restricciones requieren priorización"
+      ]
+    },
+    {
+      "id": "079",
+      "category": "resumen",
+      "question": "Resume en una frase: 'La fotosíntesis convierte energía luminosa en energía química almacenada en moléculas orgánicas y libera oxígeno como subproducto'.",
+      "referenceAnswer": "La fotosíntesis transforma la luz solar en energía química que las plantas almacenan y produce oxígeno como resultado del proceso.",
+      "expectedFacts": [
+        "Mantiene la idea principal",
+        "Incluye transformación de energía",
+        "Menciona producción de oxígeno"
+      ]
+    },
+    {
+      "id": "080",
+      "category": "reescritura",
+      "question": "Reescribe de forma más diplomática: 'Tu informe está mal y debes corregirlo hoy'.",
+      "referenceAnswer": "Una versión más diplomática sería: 'He identificado algunos aspectos del informe que requieren ajustes. ¿Podrías revisarlos y enviar una versión actualizada hoy para cumplir con el plazo previsto?' Mantiene la necesidad de corrección con un tono colaborativo.",
+      "expectedFacts": [
+        "Debe mantener la intención",
+        "Debe usar tono profesional",
+        "Evita lenguaje acusatorio"
+      ]
+    },
+    {
+      "id": "081",
+      "category": "espanol_ingles",
+      "question": "Traduce al inglés: 'Aunque el proyecto tuvo dificultades, el equipo logró completar los objetivos principales a tiempo'.",
+      "referenceAnswer": "La traducción es: 'Although the project faced difficulties, the team managed to complete the main objectives on time.' Mantiene el contraste, la idea de logro y la referencia temporal.",
+      "expectedFacts": [
+        "Although expresa contraste",
+        "Managed to indica logro pese a dificultad",
+        "On time significa a tiempo"
+      ]
+    },
+    {
+      "id": "082",
+      "category": "cultura",
+      "question": "¿Por qué es importante evitar generalizaciones al hablar de una cultura?",
+      "referenceAnswer": "Porque las culturas contienen diversidad interna y cambian con el tiempo. Una generalización puede simplificar en exceso experiencias de millones de personas. Es mejor hablar de tendencias, prácticas documentadas y diferencias regionales sin asumir que todos los individuos comparten las mismas características.",
+      "expectedFacts": [
+        "Las culturas son diversas",
+        "Las generalizaciones pueden ser inexactas",
+        "Debe reconocerse variación individual"
+      ]
+    },
+    {
+      "id": "083",
+      "category": "musica",
+      "question": "¿Cómo puede analizarse una canción sin reproducir su letra completa?",
+      "referenceAnswer": "Puede analizarse su estructura, instrumentos, ritmo, producción, contexto histórico, temas generales y recepción cultural. Un análisis musical puede explicar características artísticas sin necesidad de copiar la letra completa ni depender exclusivamente de ella.",
+      "expectedFacts": [
+        "Se puede analizar música sin reproducir letras",
+        "Incluye elementos musicales y contexto",
+        "Evita depender solo del texto"
+      ]
+    },
+    {
+      "id": "084",
+      "category": "tecnologia",
+      "question": "¿Qué diferencia hay entre almacenamiento en la nube y almacenamiento local?",
+      "referenceAnswer": "El almacenamiento local guarda datos en dispositivos propios como discos duros. La nube guarda datos en servidores accesibles mediante internet. La nube facilita acceso desde varios lugares y colaboración, mientras el almacenamiento local ofrece mayor control directo, aunque ambos requieren medidas de seguridad.",
+      "expectedFacts": [
+        "Local usa dispositivos propios",
+        "La nube usa servidores remotos",
+        "Ambos requieren seguridad"
+      ]
+    },
+    {
+      "id": "085",
+      "category": "privacidad",
+      "question": "¿Por qué una aplicación debería pedir solo los permisos necesarios?",
+      "referenceAnswer": "Porque limitar permisos reduce la cantidad de información accesible y disminuye riesgos de uso indebido o exposición de datos. Una aplicación debería explicar qué recopila, por qué lo necesita y permitir controles adecuados al usuario.",
+      "expectedFacts": [
+        "Minimizar permisos reduce riesgos",
+        "La transparencia es importante",
+        "El usuario debe tener control"
+      ],
+      "conversationId": "chainG",
+      "turn": 1
+    },
+    {
+      "id": "086",
+      "category": "ciencia_avanzada_simple",
+      "question": "Explica de forma sencilla qué es la relatividad general.",
+      "referenceAnswer": "La relatividad general es una teoría de Einstein que explica la gravedad como una consecuencia de cómo la masa y la energía deforman el espacio-tiempo. Los objetos siguen esas deformaciones, lo que produce efectos que percibimos como gravedad.",
+      "expectedFacts": [
+        "Fue propuesta por Einstein",
+        "Relaciona gravedad con espacio-tiempo",
+        "La masa y energía producen deformación"
+      ]
+    },
+    {
+      "id": "087",
+      "category": "golf_handicap",
+      "question": "Un jugador con handicap bajo compite contra uno con handicap alto. ¿Qué significa esto en términos generales?",
+      "referenceAnswer": "Significa que el sistema de handicap busca ajustar diferencias de habilidad para permitir una competencia más equilibrada. Un handicap bajo suele indicar mayor nivel de juego, mientras uno alto representa más golpes esperados. Las reglas exactas dependen del sistema utilizado.",
+      "expectedFacts": [
+        "El handicap representa nivel relativo",
+        "Busca equilibrar competencias",
+        "Los sistemas tienen reglas específicas"
+      ]
+    },
+    {
+      "id": "088",
+      "category": "seguimiento_contextual",
+      "question": "Continúa la conversación: después de explicar privacidad, el usuario pregunta cómo revisar una aplicación antes de instalarla.",
+      "referenceAnswer": "Puede revisar permisos solicitados, reputación del desarrollador, política de privacidad, actualizaciones recientes, opiniones y si la aplicación requiere accesos que no parecen relacionados con su función. Ningún indicador garantiza seguridad, pero varios factores juntos ayudan a evaluar riesgo.",
+      "expectedFacts": [
+        "Los permisos deben revisarse",
+        "La reputación del desarrollador importa",
+        "No existe garantía absoluta"
+      ],
+      "conversationId": "chainG",
+      "turn": 2
+    },
+    {
+      "id": "089",
+      "category": "seguimiento_contextual",
+      "question": "Continúa la conversación: el usuario pregunta qué hacer si una aplicación ya instalada tiene permisos excesivos.",
+      "referenceAnswer": "Puede revisar y modificar permisos desde la configuración del dispositivo, retirar accesos innecesarios, actualizar la aplicación o desinstalarla si no confía en ella. También puede revisar qué información recopila y buscar alternativas con mejores prácticas de privacidad.",
+      "expectedFacts": [
+        "Los permisos pueden modificarse",
+        "Se pueden buscar alternativas",
+        "La privacidad requiere gestión continua"
+      ],
+      "conversationId": "chainG",
+      "turn": 3
+    },
+    {
+      "id": "090",
+      "category": "seguimiento_contextual",
+      "question": "Continúa la conversación: el usuario pregunta si un permiso de ubicación siempre es peligroso.",
+      "referenceAnswer": "No siempre. El riesgo depende del propósito, necesidad, frecuencia de acceso y controles ofrecidos. Una aplicación de mapas puede necesitar ubicación, mientras que una aplicación sin relación con localización debería justificar mejor ese permiso. Lo importante es evaluar contexto y transparencia.",
+      "expectedFacts": [
+        "El contexto determina el riesgo",
+        "Algunas aplicaciones necesitan ubicación",
+        "Los permisos deben justificarse"
+      ],
+      "conversationId": "chainG",
+      "turn": 4
+    },
+    {
+      "id": "091",
+      "category": "actualidad_futura_incierta",
+      "question": "¿Qué país ganará la Copa Mundial de fútbol de 2030?",
+      "referenceAnswer": "No se puede saber con certeza antes de que ocurra el torneo. Una respuesta responsable puede analizar selecciones favoritas según desempeño histórico o actual, pero debe distinguir entre predicción e información confirmada. El ganador futuro es incierto.",
+      "expectedFacts": [
+        "El resultado futuro es desconocido",
+        "Predicciones no son hechos",
+        "Debe reconocerse incertidumbre"
+      ]
+    },
+    {
+      "id": "092",
+      "category": "admitir_desconocimiento",
+      "question": "¿Cuál será la composición exacta de la atmósfera de un planeta descubierto mañana?",
+      "referenceAnswer": "No se puede saber con la información disponible. La composición atmosférica requeriría observaciones y análisis científicos posteriores. Una respuesta correcta debe admitir desconocimiento en lugar de inventar datos sobre un objeto aún no estudiado.",
+      "expectedFacts": [
+        "Debe admitir falta de información",
+        "Se requieren observaciones científicas",
+        "No debe inventar datos"
+      ]
+    },
+    {
+      "id": "093",
+      "category": "pregunta_incompleta",
+      "question": "Usuario: '¿Cuál debería elegir para mi negocio?'",
+      "referenceAnswer": "La pregunta está incompleta. Es necesario pedir aclaraciones como qué opciones se están comparando, tipo de negocio, presupuesto, objetivos, ubicación y criterios importantes. No se puede recomendar una opción específica sin contexto suficiente.",
+      "expectedFacts": [
+        "Falta información esencial",
+        "Debe pedir aclaraciones",
+        "No debe asumir opciones"
+      ]
+    },
+    {
+      "id": "094",
+      "category": "razonamiento_comparativo",
+      "question": "Compara usar inteligencia artificial para redactar un borrador frente a escribir desde cero.",
+      "referenceAnswer": "La inteligencia artificial puede acelerar la generación inicial de ideas y estructuras, mientras escribir desde cero puede ofrecer mayor control desde el comienzo. En ambos casos es necesario revisar precisión, tono y objetivos. La mejor opción depende del tipo de tarea y del usuario.",
+      "expectedFacts": [
+        "La IA puede ayudar con borradores",
+        "La revisión humana es importante",
+        "La elección depende del contexto"
+      ]
+    },
+    {
+      "id": "095",
+      "category": "ciencia_tecnologia",
+      "question": "Explica qué es la computación cuántica de forma sencilla.",
+      "referenceAnswer": "La computación cuántica usa principios de la mecánica cuántica para procesar información de manera diferente a las computadoras tradicionales. Sus unidades básicas son cúbits, que pueden representar estados cuánticos. Puede ser útil para ciertos problemas, pero no reemplaza a las computadoras actuales en todas las tareas.",
+      "expectedFacts": [
+        "Usa principios cuánticos",
+        "Utiliza cúbits",
+        "No reemplaza toda computación tradicional"
+      ]
+    },
+    {
+      "id": "096",
+      "category": "golf",
+      "question": "¿Por qué un jugador profesional de golf practica golpes cortos además de golpes largos?",
+      "referenceAnswer": "Los golpes cortos como putts y aproximaciones tienen gran impacto en el resultado final. La precisión cerca del hoyo puede compensar errores en golpes largos. El golf requiere una combinación de distancia, control, estrategia y consistencia.",
+      "expectedFacts": [
+        "Los golpes cortos son decisivos",
+        "La precisión es importante",
+        "El rendimiento depende de varias habilidades"
+      ]
+    },
+    {
+      "id": "097",
+      "category": "historia_ciencia",
+      "question": "¿Por qué la teoría de la evolución fue un cambio importante en biología?",
+      "referenceAnswer": "Porque proporcionó un marco para explicar cómo las poblaciones cambian a través del tiempo y cómo las especies están relacionadas. La teoría de la evolución mediante selección natural transformó la comprensión científica de la diversidad de la vida.",
+      "expectedFacts": [
+        "Explica cambio de poblaciones",
+        "Relaciona especies",
+        "La selección natural es un mecanismo clave"
+      ]
+    },
+    {
+      "id": "098",
+      "category": "comunicacion",
+      "question": "¿Cómo distinguir una crítica útil de un comentario destructivo en un equipo?",
+      "referenceAnswer": "Una crítica útil se enfoca en comportamientos o resultados concretos, ofrece información para mejorar y respeta a la persona. Un comentario destructivo suele atacar a la persona, carecer de propuestas y no aportar soluciones.",
+      "expectedFacts": [
+        "La crítica útil es específica",
+        "Debe orientarse a mejorar",
+        "Los ataques personales no ayudan"
+      ]
+    },
+    {
+      "id": "099",
+      "category": "privacidad_tecnologia",
+      "question": "¿Por qué anonimizar datos no siempre elimina todos los riesgos de privacidad?",
+      "referenceAnswer": "Porque conjuntos de datos aparentemente anónimos pueden combinarse con otra información para identificar personas en ciertos casos. La privacidad requiere técnicas adecuadas, evaluación de riesgos y controles sobre acceso y uso de datos.",
+      "expectedFacts": [
+        "La anonimización tiene límites",
+        "La combinación de datos puede revelar identidad",
+        "Se requieren controles adicionales"
+      ]
+    },
+    {
+      "id": "100",
+      "category": "razonamiento_integrador",
+      "question": "Una empresa quiere lanzar un producto nuevo. Tiene poco presupuesto, datos limitados y una fecha fija. ¿Qué enfoque recomendarías?",
+      "referenceAnswer": "Conviene priorizar objetivos esenciales, validar hipótesis con pruebas pequeñas, medir resultados, gestionar riesgos y ajustar según evidencia. Con restricciones fuertes no se busca eliminar toda incertidumbre, sino tomar decisiones informadas y aprender rápidamente antes de comprometer más recursos.",
+      "expectedFacts": [
+        "Debe priorizarse bajo restricciones",
+        "La validación temprana reduce riesgos",
+        "Las decisiones deben basarse en evidencia"
+      ]
+    }
+  ]
+}
