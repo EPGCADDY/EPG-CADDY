@@ -1004,3 +1004,6 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `test-no-automatic-x.mjs` valida la fuente canónica `candidate-index-grupal.html`, no el cargador generado, y conserva la reparación histórica V155.
 - `test-course-catalog.mjs` valida en la misma fuente canónica los siete campos y el registro V170 después de la separación fuente/artefacto.
 - Los tests `test-country-club-official.mjs`, `test-round-clock.mjs`, `test-score-engine.mjs` y `test-v250-stableford-delivery-matrix.mjs` validan la fuente canónica completa, no el cargador generado.
+- `audit-project.mjs` materializa `candidate-index-grupal.html` únicamente después de aprobar candados y antes de los tests históricos; `apply-update-e.mjs` genera después el cargador final.
+- Publicación fuente primero: `index-grupal.html` coincide con la fuente canónica y `service-worker.js` conserva el worker PWA auditable; el build genera sus artefactos finales únicamente después del PASS.
+- `audit-project.mjs` materializa la fuente canónica completa únicamente durante la fase de pruebas; `apply-update-e.mjs` genera después el cargador persistente. Se elimina el fallo sistémico de tests contra un artefacto de 1.7 KB.
