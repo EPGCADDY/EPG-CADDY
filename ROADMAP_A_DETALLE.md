@@ -938,3 +938,25 @@ Archivos de esta versión:
 - `test-voice-result-integrity.mjs`
 
 `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: sello de microfono_compartido actualizado sólo por corrección universal autorizada; SHA previo conservado, aprobación física R32 pendiente. Banco V358 restaurado sin cambios; liberación de audio dentro de startAiUniversalListening.
+
+
+## 2026-09-13 · R33 · Error visible en comunicación universal
+Hallazgo en navegador R32: causa del silencio quedaba oculta. R33 muestra aviso junto a controles, independiente del reloj. Prueba física iPhone pendiente. Archivos:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `docs/quality/R33_ERROR_VISIBLE.md`
+- `index-grupal.html`
+- `service-worker.js`
+- `test-r33-visible-voice-errors.mjs`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`

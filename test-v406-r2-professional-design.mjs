@@ -6,7 +6,7 @@ const hub=fs.readFileSync("live-hub.html","utf8");
 const css=fs.readFileSync("gsc-design-system.css","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/V407-R32-OPEN-CONVERSATION-20260913/);
+assert.match(html,/V407-R33-VISIBLE-VOICE-ERRORS-20260913/);
 assert.doesNotMatch(html,/href="\/gsc-design-system\.css"/,"Registro no debe depender de una hoja de sobreescritura externa");
 assert.match(hub,/href="\/gsc-design-system\.css"/);
 assert.match(worker,/v407-r18-live-points-header/);

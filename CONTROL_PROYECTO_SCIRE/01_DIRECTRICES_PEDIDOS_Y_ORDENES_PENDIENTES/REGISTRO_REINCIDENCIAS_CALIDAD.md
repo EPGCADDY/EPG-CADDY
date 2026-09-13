@@ -340,3 +340,7 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Corrección permanente: preguntas desconocidas fuera de órdenes explícitas llegan al modelo; retorno de audio propagado; error visible preservado; audio anterior liberado en gesto.
 - Evidencia automatizada: test-r32-open-conversation.mjs y test-voice-result-integrity.mjs. Nueve preguntas en dos contextos, diez turnos simulados y pruebas negativas. PASS local, dispositivo físico pendiente.
 - Integración: actualización LAB ce9a652 preservada, API R31 y tarjeta R30 intactas. Registro de pruebas: docs/quality/R32_PREGUNTAS_Y_VOZ.md.
+
+
+## 2026-09-13 · RC-107 · Estado de voz oculto R32
+Revisión real en navegador: AI ∞ termina sin micrófono disponible, pero aiUniversalState está oculto y el reloj sobrescribe status. Corrección R33: aviso seguro y visible independiente del reloj, junto al control existente, sin abrir pantalla. Control permanente test-r33-visible-voice-errors.mjs PASS. Estado: código probado, comprobación visual publicada pendiente; micrófono/altavoz físico iPhone pendiente. Evidencia previa y rollback: docs/quality/R33_ERROR_VISIBLE.md.
