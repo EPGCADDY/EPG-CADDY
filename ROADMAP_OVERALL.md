@@ -847,3 +847,4 @@ Registro conjunto del despliegue: hotfix `main` commits `481f716` y `c548f30`; m
 - test-voice-result-integrity.mjs: ocho casos PASS, incluida secuencia de diez turnos con API/audio simulados. test-update-check-errors.mjs: ocho PASS. No equivalen a voz física ni certificación integral.
 - Navegador remoto: clic AI Universal falla con NotFoundError: Requested device not found (2026-09-13T11:49:34.691Z). Bloqueo de prueba de captura real: no hay micrófono en el navegador de ejecución.
 - Sin promoción de este cambio; pendiente audio real y comprobación completa de conversación. MAESTRO intacto.
+- Protección V378: huella microfono_compartido actualizada a f4bb1499551a… por el cambio autorizado de resultado de audio; captura, sensibilidad y umbrales permanecen iguales.
