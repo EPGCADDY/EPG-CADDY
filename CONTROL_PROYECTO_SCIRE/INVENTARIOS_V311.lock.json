@@ -1,18 +1,18 @@
 {
   "version": "R18-LAB-OWNER-GUEST-24H-LOCK",
-  "generatedAt": "2026-09-13T17:03:07Z",
+  "generatedAt": "2026-09-13T17:05:56Z",
   "sourceFileCount": 474,
-  "sourceDigest": "994784e4fef4e612b8f2657a72d635f364cbcd42f6e458936bc576ce31922f23",
+  "sourceDigest": "b36b43836916133308e6bfc528600259a3552bedcf03d034ad6fa073e490f6b4",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 145339,
-      "sha256": "2bf4db9c3e88082b139853c93146e07cc590216150fc880b678dcca66660a1f3"
+      "size": 145410,
+      "sha256": "840e843afd859f2b6a68df6e2e44638650380b5202e53a637af494f693ffe456"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 159154,
-      "sha256": "31c875208a3e79b5eb2860086df014eb53ea3c64937679d9fed36452d6208317"
+      "size": 159244,
+      "sha256": "939510b6af43d2b408cc366f2c9abbcc2a17fdea6bbe138409891d9ba13eb15c"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

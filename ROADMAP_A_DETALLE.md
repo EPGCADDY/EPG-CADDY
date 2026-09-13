@@ -1036,7 +1036,7 @@ PASS físico aislado; integración pendiente. Limpieza incremental de audio ante
 - `test-r34-capture-cleanup.mjs`
 
 ## 2026-09-13 · RC-111
-Corrección de integridad de `index-grupal.html` durante transferencia; límite de síntesis en `api/voice-speech.js`, probado por `test-v356-voice-only-cedar-quality.mjs`. Banco completo pendiente. No aprobado para producción.
+Corrección de integridad de `index-grupal.html` durante transferencia. `api/voice-speech.js` y `test-v356-voice-only-cedar-quality.mjs` se restauran a sus versiones protegidas; INTOCABLES PASS sin cambiar sellos. La variante hablada permanece en `api/universal-ai.js`. Banco completo pendiente. No aprobado para producción.
 
 ## 2026-09-13 · Banco real universal de 100 casos
 - `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`: 100 preguntas únicas, 78 categorías, respuestas de referencia de ChatGPT, hechos esperados y siete conversaciones contextuales.

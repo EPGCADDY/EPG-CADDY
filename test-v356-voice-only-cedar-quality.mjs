@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import speechHandler,{cedarGatewayPayload,cedarSpeechPayload,sanitizeSpeechRequest,spokenSpeechText} from "./api/voice-speech.js";
-import {formatStructuredTrafficAnswer,formatStructuredWeatherAnswer,spokenUniversalAnswer,universalResponseProfile} from "./api/universal-ai.js";
+import speechHandler,{cedarGatewayPayload,cedarSpeechPayload,sanitizeSpeechRequest} from "./api/voice-speech.js";
+import {formatStructuredTrafficAnswer,formatStructuredWeatherAnswer,universalResponseProfile} from "./api/universal-ai.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
@@ -84,11 +84,5 @@ assert.match(universal,/const UNIVERSAL_TIMEOUT_MS=27_500/);
 assert.match(universal,/Math\.ceil\(baseResponseProfile\.maxOutputTokens\/2\)/);
 assert.match(speech,/controller\.abort\(\),22_500/);
 assert.deepEqual(universalResponseProfile("Analiza a fondo causas, riesgos, alternativas y dame una recomendación accionable."),{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"});
-const longSpoken=spokenUniversalAnswer(`${"Primera idea sustantiva. ".repeat(70)}Conclusión accionable final.`);
-assert.ok(longSpoken.length<=1350);
-assert.match(longSpoken,/Conclusión accionable final\.$/);
-const endpointSpoken=spokenSpeechText(`${"Primera idea sustantiva. ".repeat(70)}Conclusión accionable final.`);
-assert.ok(endpointSpoken.length<=1350);
-assert.match(endpointSpoken,/Conclusión accionable final\.$/);
 
 console.log("PASS V356/V378 · voz hablada Fish Audio es-419 0.90 sin ID fijo; tráfico/clima estructurados");
