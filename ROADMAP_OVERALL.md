@@ -1051,3 +1051,18 @@ R36: test-v365-active-round-empty-recovery.mjs conserva la prueba de recuperaci�
 - `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r25-round-controls.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v407-r9-manual-update.mjs`: verifican la versión visible y el caché R37.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-104.
 - Reversión: commit `ccdd004b361bd84dd5936aa069c7722b13b5659f`; conservar almacenamiento local.
+
+
+## PTT — corrección local de duración (2026-09-13T22:19:28.097630+00:00)
+Estado: pendiente de validación física y publicación. Se detectó y corrigió que la espera de onstop inflaba la duración de pulsaciones breves. voice-turns.js registra stoppedAt al soltar. Evidencia: node test-ptt-independent-turns.mjs termina con exit 0; incluye 100 turnos simulados y casos de onstop demorado, pulsación de 50 ms con 1000 ms de espera y recuperación tras permiso denegado. No equivale a prueba iPhone ni proveedor real. Actualizar no fue modificado. Próximo paso: validación navegador/proveedor y controles pendientes antes de candidato.
+
+
+### Candidato local PTT — archivos incluidos
+- `index-grupal.html`
+- `voice-turns.js`
+- `api/voice-transcribe.js`
+- `test-ptt-independent-turns.mjs`
+- `audit-project.mjs`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+Estado: pruebas simuladas PASS; proveedor real, revisión navegador e iPhone pendientes. No aprobado como solución integral.

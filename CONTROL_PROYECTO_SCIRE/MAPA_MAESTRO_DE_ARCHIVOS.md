@@ -1325,3 +1325,10 @@ Archivos exactos:
 - `test-v407-r25-round-controls.mjs`
 - `test-v407-r7-ios-scroll.mjs`
 - `test-v407-r9-manual-update.mjs`
+
+
+### Voz por turnos independientes — candidato local
+- `voice-turns.js`: captura por pulsación y cierre independiente.
+- `api/voice-transcribe.js`: transcripción HTTP del audio del turno.
+- `test-ptt-independent-turns.mjs`: regresión de cierre y cancelación.
+Estado: validación física pendiente.
