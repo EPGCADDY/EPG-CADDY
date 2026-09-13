@@ -1,5 +1,14 @@
 # Registro de reincidencias de calidad
 
+## RC-103 · ENVIAR TARJETA DIGITAL NO ABRÍA WHATSAPP EN IPHONE · 12 SEPTIEMBRE 2026
+
+- Defecto físico: después de finalizar una ronda Universales, el botón visible `ENVIAR TARJETA DIGITAL` no produjo ninguna acción.
+- Causa raíz: `shareOfficialArtifactImage()` esperaba la generación asíncrona del PNG antes de ejecutar `navigator.share`; Safari anulaba la activación transitoria del toque. El error se escribía dentro de `artifactActions`, que estaba oculto.
+- Punto de escape: el banco anterior verificaba texto, conexión y MIME PNG mediante expresiones estáticas, pero no ejecutaba la secuencia temporal real del toque.
+- Control permanente: preparar y almacenar el PNG durante el cierre, invocar `navigator.share` sin espera previa desde el toque y mantener el estado visible fuera del panel oculto.
+- Evidencia: `IMG_3615.png`; `test-v397-card-in-out-back-contract.mjs` ejecuta una Tarjeta Universales de cuatro jugadores y exige compartir con activación vigente.
+- Estado: CORREGIDO EN CANDIDATO V407-R29; PASS AUTOMÁTICO DIRIGIDO; PREVIEW Y PRUEBA FÍSICA IPHONE PENDIENTES; PRODUCCIÓN SIN CAMBIOS.
+
 ## RC-098 · MIDDLEWARE ENTREGÓ ACCESS.HTML COMO SERVICE WORKER Y ATRAPÓ R8 · 09 SEPTIEMBRE 2026
 
 - Defecto físico: el alias LAB instalado mostró V407-R8 y ACTUALIZAR no ejecutó la migración.
