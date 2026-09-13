@@ -19,7 +19,7 @@ assert.equal(direct.model,"gpt-4o-mini-tts");
 assert.equal(direct.voice,"onyx");
 const gateway=cedarGatewayPayload("Respuesta", "es-GT");
 assert.equal(gateway.text,"Respuesta");
-assert.equal(gateway.speed,.9);
+assert.equal(gateway.speed,.963);
 assert.equal(gateway.language,"es-419");
 assert.equal(gateway.outputFormat,"mp3");
 assert.equal(Object.hasOwn(gateway,"voice"),false);

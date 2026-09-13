@@ -80,7 +80,7 @@ export default async function handler(req, res) {
         },
         output: {
           voice: "cedar",
-          speed: 1.15
+          speed: 1.2305
         }
       },
       tools: [],

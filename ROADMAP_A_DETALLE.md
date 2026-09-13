@@ -960,3 +960,25 @@ Hallazgo en navegador R32: causa del silencio quedaba oculta. R33 muestra aviso 
 - `test-v407-r25-round-controls.mjs`
 - `test-v407-r7-ios-scroll.mjs`
 - `test-v407-r9-manual-update.mjs`
+
+
+## 2026-09-13 · Ajuste solicitado de velocidad y pausas (rama separada, no publicado)
+Orden: +7% velocidad; pausa conversacional al 25%. Pruebas dirigidas PASS. Identidad femenina del Manual pendiente: expediente del 10/09 contiene identityVerified=false; no se declara restaurada ni se publica. Conserva R33 y trabajo R34 de otra conversación. Evidencia, alcance y rollback: `docs/quality/VOICE_TUNING_20260913.md`.
+Archivos:
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`
+- `Intocables/CONFIRMACION_ESCRITA_V378.md`
+- `Intocables/MICROFONO_APROBADO.lock.json`
+- `Intocables/intocables-gate.mjs`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `api/session-grupal.js`
+- `api/voice-speech.js`
+- `docs/quality/VOICE_TUNING_20260913.md`
+- `index-grupal.html`
+- `test-v325-ideal-microphone-timings.mjs`
+- `test-v326-no-silent-conversation.mjs`
+- `test-v356-voice-only-cedar-quality.mjs`
+- `test-v362-physical-voice-recovery.mjs`
+- `test-voice-speed-wait.mjs`

@@ -61,7 +61,7 @@ assert.equal(`Primera vuelta. ${["JAIME, 7 arriba","GUSTAVO, 7 abajo"].join(". "
 assert.match(speech,/model:"gpt-4o-mini-tts"/);
 assert.match(speech,/GATEWAY_SPEECH_MODEL="fish-audio\/s2\.1-pro-free"/);
 assert.match(speech,/GATEWAY_VOICE="s2\.1-es-419"/);
-assert.match(speech,/const SPEED=\.9/);
+assert.match(speech,/const SPEED=\.963;/);
 assert.match(speech,/language:"es-419"/);
 assert.match(speech,/Nunca uses acento de España, acento anglosajón, Spanglish/);
 assert.match(speech,/sin ceceo español/);

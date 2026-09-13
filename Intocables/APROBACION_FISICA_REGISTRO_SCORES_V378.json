@@ -19,8 +19,9 @@
     {
       "id": "voz_y_velocidad_v378",
       "path": "api/voice-speech.js",
-      "sha256": "96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01",
-      "authorizedAdjustment": "2026-09-07: español latinoamericano es-419 sin ceceo, velocidad 0.90 conservada y timeout 45s→22.5s; aprobación auditiva del candidato pendiente"
+      "sha256": "1d45c3e85d862a3d8844752204c03f0d725fdddefa6d0f235a29f0a4f2235ea7",
+      "authorizedAdjustment": "2026-09-07: español latinoamericano es-419 sin ceceo, velocidad 0.90 conservada y timeout 45s→22.5s; aprobación auditiva del candidato pendiente; 2026-09-13: orden expresa +7% velocidad (0.963). Candidato sin nueva aprobación física; identidad femenina pendiente.",
+      "previousSpeedAdjustmentSha256": "96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01"
     }
   ],
   "scopes": [
@@ -58,10 +59,11 @@
       "id": "microfono_compartido",
       "start": "function gestureSafeBrowserVoicePreferred(){",
       "end": "\nfunction setMicConnecting",
-      "sha256": "a901e118390ef84c791c22a718d17929dbeb21a4b2eb3fa9e89e5fb27aec2ddb",
-      "authorizedAdjustment": "2026-09-13 R32: orden expresa en esta conversación de reparar comunicación universal y publicar. Cambio limitado al despacho de preguntas/repreguntas y propagación de fallo de audio; parsers, escritores, captura y umbrales V378 intactos. Pruebas físicas de esta corrección pendientes; no se amplía la aprobación física V378. R33: error de voz visible junto al control; hallazgo real en navegador tras R32. Sin cambio de captura ni nueva aprobación física.",
+      "sha256": "7917d135281d4aa1fa5b1dd7f230e2d5cba13bdbe33d572ac78d382e87c0e435",
+      "authorizedAdjustment": "2026-09-13 R32: orden expresa en esta conversación de reparar comunicación universal y publicar. Cambio limitado al despacho de preguntas/repreguntas y propagación de fallo de audio; parsers, escritores, captura y umbrales V378 intactos. Pruebas físicas de esta corrección pendientes; no se amplía la aprobación física V378. R33: error de voz visible junto al control; hallazgo real en navegador tras R32. Sin cambio de captura ni nueva aprobación física.; 2026-09-13: pausa conversacional 1200→300 ms por orden expresa; scores/registro 1200 ms. Sin aprobación física.",
       "previousSha256": "5565495188f9615fafeb3561f5f57677780a0940be0a3b0450f48e90610330a0",
-      "previousR32Sha256": "d031af6ea3b4dfe1efcabdc360d30bf987890a6974dce2cf71cd511e87ba8c77"
+      "previousR32Sha256": "d031af6ea3b4dfe1efcabdc360d30bf987890a6974dce2cf71cd511e87ba8c77",
+      "previousSpeedAdjustmentSha256": "a901e118390ef84c791c22a718d17929dbeb21a4b2eb3fa9e89e5fb27aec2ddb"
     },
     {
       "id": "activacion_compartida",

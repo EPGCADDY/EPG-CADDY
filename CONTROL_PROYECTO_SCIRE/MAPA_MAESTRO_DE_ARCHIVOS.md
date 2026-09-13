@@ -1237,3 +1237,7 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 - `api/_lib/app-access.js`: canje atómico consumible una sola vez.
 - `api/app-access.js`: rechazo explícito del segundo uso.
 - `test-r18-owner-guest-24h-access.mjs`: prueba positiva del primer dispositivo y negativa del segundo.
+
+## 2026-09-13 · Ajuste de voz y pausa sin publicar
+- `test-voice-speed-wait.mjs`: reloj simulado; conversación al 25%, órdenes y turnos protegidos, velocidad +7%.
+- `docs/quality/VOICE_TUNING_20260913.md`: parámetros, evidencia y bloqueo de identidad femenina.

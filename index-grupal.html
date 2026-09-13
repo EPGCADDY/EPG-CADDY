@@ -1204,7 +1204,9 @@ const ROUND_MISSING_CONFIRM_MS=450;
 const ROUND_VAD_THRESHOLD=0.2;
 const ROUND_VAD_PREFIX_MS=700;
 const ROUND_VAD_SILENCE_MS=1000;
-const CONVERSATION_VAD_SILENCE_MS=1100;
+const CONVERSATION_VAD_SILENCE_MS=275; // 1100 × 0.25; sólo conversación.
+const CONVERSATION_BROWSER_SILENCE_MS=300; // 1200 × 0.25; conserva espera de órdenes operativas.
+let browserVoiceTurnProfile="operational";
 const CONVERSATION_INPUT_STALL_MS=15000;
 const CONVERSATION_INPUT_HARD_LIMIT_MS=90000;
 const CONVERSATION_RESPONSE_STALL_MS=30000;
@@ -2287,8 +2289,8 @@ setInterval(()=>{if(round.configured&&$("status")&&phase==="idle"&&!listening&&!
 const ALLOWED_SPEECH_REASONS=new Set(["closure","query","query_accumulated","missing_score","conversation"]);
 const VOICE_POLICY=Object.freeze({
   voice:"cedar",
-  speed:1.15,
-  accumulatedSpeed:1.15,
+  speed:1.2305,
+  accumulatedSpeed:1.2305,
   language:"es",
   style:"Locutor masculino adulto, serio, sobrio y profesional. Español internacional neutro. Sin acento regional marcado. Sin Spanglish. Sin entonación comercial. Sin entusiasmo artificial. Dicción clara, ritmo medio-lento y constante. Pronuncia Gross como «gros», con fonética española. No traduzcas nombres propios. No agregues introducciones, comentarios ni despedidas."
 });
@@ -4592,7 +4594,10 @@ function stopBrowserVoiceRecognitionSafely(recognition,context){
 }
 function scheduleBrowserVoiceFinalize(recognition,context){
   clearBrowserVoiceSilenceTimer();if(browserVoiceRecognition!==recognition||browserVoiceStopping)return false;
-  browserVoiceSilenceTimer=setTimeout(()=>{browserVoiceSilenceTimer=null;if(browserVoiceRecognition!==recognition||browserVoiceStopping)return;stopBrowserVoiceRecognitionSafely(recognition,context)},BROWSER_VOICE_SILENCE_MS);return true
+  const text=browserVoiceCombinedTranscript();
+  const conversation=(browserVoiceTurnProfile===REALTIME_TURN_PROFILE_CONVERSATION||isGeneralConversationIntent(text))&&!aiUniversalLooksLikeSetupOrder(text)&&!aiUniversalLooksLikeScoreOrder(text);
+  const silenceMs=conversation?CONVERSATION_BROWSER_SILENCE_MS:BROWSER_VOICE_SILENCE_MS;
+  browserVoiceSilenceTimer=setTimeout(()=>{browserVoiceSilenceTimer=null;if(browserVoiceRecognition!==recognition||browserVoiceStopping)return;stopBrowserVoiceRecognitionSafely(recognition,context)},silenceMs);return true
 }
 function scheduleBrowserVoiceFirstResultTimeout(recognition,context){
   clearBrowserVoiceFirstResultTimer();if(browserVoiceRecognition!==recognition||browserVoiceStopping||browserVoiceTranscript||browserVoiceInterim)return false;
@@ -5227,6 +5232,7 @@ async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPER
   // la sesión Realtime. La captura local debe abrirse en el mismo toque para
   // que un 429 remoto no deje sin score ni comunicación universal.
   if(!listening&&gestureSafeBrowserVoicePreferred()){
+    browserVoiceTurnProfile=desiredTurnProfile;
     voiceContext=context;setMicConnecting(context,false);
     if(context==="round")resetRoundCapture();
     if(context==="setup"&&(setupFinalizeRequested||setupLocked))resetSetupCapture();

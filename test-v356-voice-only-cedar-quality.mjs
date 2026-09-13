@@ -27,11 +27,11 @@ assert.deepEqual(sanitizeSpeechRequest({text:"  Hola\n mundo  ",language:"es-GT<
 const direct=cedarSpeechPayload("Respuesta confiable.","es-GT");
 assert.equal(direct.model,"gpt-4o-mini-tts");
 assert.equal(direct.voice,"onyx");
-assert.equal(direct.speed,.9);
+assert.equal(direct.speed,.963);
 assert.match(direct.instructions,/Locutor masculino adulto/);
 const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
 assert.equal(gateway.language,"es-419");
-assert.equal(gateway.speed,.9);
+assert.equal(gateway.speed,.963);
 assert.equal(Object.hasOwn(gateway,"voice"),false);
 assert.match(gateway.instructions,/español latinoamericano es-419/);
 assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
@@ -85,4 +85,4 @@ assert.match(universal,/Math\.ceil\(baseResponseProfile\.maxOutputTokens\/2\)/);
 assert.match(speech,/controller\.abort\(\),22_500/);
 assert.deepEqual(universalResponseProfile("Analiza a fondo causas, riesgos, alternativas y dame una recomendación accionable."),{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"});
 
-console.log("PASS V356/V378 · voz hablada Fish Audio es-419 0.90 sin ID fijo; tráfico/clima estructurados");
+console.log("PASS V356/V378 · voz hablada Fish Audio es-419 0.963 sin ID fijo; tráfico/clima estructurados");
