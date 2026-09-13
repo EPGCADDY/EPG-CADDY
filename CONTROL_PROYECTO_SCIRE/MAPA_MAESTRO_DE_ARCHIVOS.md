@@ -1267,3 +1267,5 @@ Archivos exactos:
 - `test-v407-r9-manual-update.mjs`
 - `test-voice-result-integrity.mjs`
 - `vercel.json`
+
+- `audit-project.mjs`: bancos R32/R33/R34 e integridad de voz obligatorios en cada despliegue.

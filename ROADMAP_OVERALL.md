@@ -927,3 +927,7 @@ Archivos exactos:
 - `test-v407-r9-manual-update.mjs`
 - `test-voice-result-integrity.mjs`
 - `vercel.json`
+
+- `audit-project.mjs`: bancos R32/R33/R34 e integridad de voz obligatorios en cada despliegue.
+
+R34 evidencia Preview: 0595868e64733075c00aa4d0ebe1eecaef438674 READY en ambos proyectos; reproducción real de frase sintética 5,12 s, RMS0,16452, avance/finalización y texto visible PASS. Prueba física iPhone pendiente.

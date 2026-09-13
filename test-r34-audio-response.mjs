@@ -28,3 +28,8 @@ const controller=new AbortController();await assert.rejects(f.env.universalVoice
 assert.equal(await f.env.universalVoiceDeadline(Promise.resolve('segunda respuesta'),100), 'segunda respuesta');
 for(let i=0;i<10;i++){assert.equal(await f.env.speakAiUniversalText('Respuesta '+i),true);f.env.aiUniversalTtsAudio.onended()}
 assert.equal(f.nodes.get('universalSpokenAnswerText').textContent,'Respuesta 9');console.log('PASS diez reproducciones simuladas consecutivas');
+const timed=fixture();const originalDeadline=timed.env.universalVoiceDeadline;timed.env.universalVoiceDeadline=(operation,_,controller)=>originalDeadline(operation,5,controller);
+timed.nodes.set('aiUniversalInput',{value:''});timed.nodes.set('sendAiUniversal',{disabled:false});
+Object.assign(timed.env,{aiUniversalTextBusy:false,aiUniversalTextAbortController:null,aiUniversalRulesMode:false,aiUniversalHistory:[],AI_UNIVERSAL_HISTORY_LIMIT:80,aiUniversalRemember(){},routeAiUniversalAppText:()=>({handled:false}),aiUniversalAppContext:()=>({}),fetch:()=>new Promise(()=>{})});
+vm.runInContext(html.slice(html.indexOf('async function submitAiUniversalText('),html.indexOf('async function continueConversationAfterTool(')),timed.env);
+assert.equal(await timed.env.submitAiUniversalText('Pregunta que queda esperando',{voiceOnly:true}),false);assert.equal(timed.env.aiUniversalTextBusy,false);assert.equal(timed.nodes.get('sendAiUniversal').disabled,false);assert.equal(timed.states.at(-1),'SERVICIO DE RESPUESTAS NO DISPONIBLE');console.log('PASS timeout real del envío libera turno y botón, muestra error');

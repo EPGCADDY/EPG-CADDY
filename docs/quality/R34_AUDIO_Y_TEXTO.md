@@ -13,3 +13,8 @@ Pruebas: test-r34-audio-response.mjs cubre texto seguro, controles, reproducció
 scripts/build-r34-voice-review.mjs sólo genera en Preview de fix-r34-audible-response una frase sintética, MP3 y página de prueba con las mismas funciones del candidato; no incluye datos ni sesión de la app. Comprueba decodificación, señal no nula y avance/finalización en navegador. No se genera en producción. Verificación pendiente de ejecución remota.
 
 Reversión: volver al commit base R33 conservando los datos locales; no borrar almacenamiento ni reinstalar. La aprobación física R34 permanece pendiente.
+
+## Evidencia real Preview
+Commit 0595868e64733075c00aa4d0ebe1eecaef438674. Main dpl_DYyTVRbu575gK1tscSqGEysCVyoP y LAB dpl_EVi3a6Vnvk9cxPXTL2t9sQGxjZJT READY; auditoría 133 paquetes PASS. LAB generó 81.919 bytes MP3 HTTP200. En navegador real, pulsación Probar respuesta y audio: texto visible, control Escuchar respuesta, eventos speech_started / speech_progress / speech_ended, estado final LISTO. Audio decodificado: duración 5,12 s, pico 0,94195, RMS 0,16452, nonSilent=true. Esto prueba señal y reproducción de la frase sintética en navegador; no afirma audibilidad en el iPhone del propietario ni prueba de su micrófono.
+
+Tarjeta de prueba LAB antes de actualización: cuatro jugadores PRUEBA 1–4, gross 5 por hoyo, IN45 OUT45 TOTAL90. Datos del iPhone del propietario no inspeccionados. audit-project.mjs incorpora las pruebas R32/R33/R34 e integridad de voz como controles de futuras publicaciones.
