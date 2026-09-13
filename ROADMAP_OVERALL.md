@@ -838,3 +838,12 @@ Registro conjunto del despliegue: hotfix `main` commits `481f716` y `c548f30`; m
 - index-grupal.html: una respuesta de acceso, HTTP fallido, HTML sin identidad o fallo de red deja INICIAR SESIÓN/REINTENTAR; ACTUALIZADO exige identidad verificada. Se elimina el umbral arbitrario de 300 KB.
 - test-update-check-errors.mjs: ocho escenarios de ejecución sobre la función real pasan.
 - Pendiente: validación visual del cambio, sesión propietaria y micrófono real. No certifica conversación ni instalación física. No promover como solución integral.
+
+
+## 2026-09-13 · LAB · integridad del resultado de voz (pendiente de validación física)
+- Base: ce9a6522498ee2235550fba820e88348edbc3490.
+- Causa reproducida: submitAiUniversalText devolvía true aunque speakAiUniversalText devolviera false.
+- Cambio incremental en index-grupal.html: propagar el resultado del inicio de audio en respuesta remota, local y regla offline; liberar phase al fallar y conservar la causa específica visible.
+- test-voice-result-integrity.mjs: ocho casos PASS, incluida secuencia de diez turnos con API/audio simulados. test-update-check-errors.mjs: ocho PASS. No equivalen a voz física ni certificación integral.
+- Navegador remoto: clic AI Universal falla con NotFoundError: Requested device not found (2026-09-13T11:49:34.691Z). Bloqueo de prueba de captura real: no hay micrófono en el navegador de ejecución.
+- Sin promoción de este cambio; pendiente audio real y comprobación completa de conversación. MAESTRO intacto.

@@ -2833,7 +2833,7 @@ async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
   const input=$("aiUniversalInput"),query=String(forcedText||input.value||"").trim();if(!query){input.focus();return false}
   input.value="";aiUniversalRemember("user",query,[],{visible:!voiceOnly});
   const local=aiUniversalRulesMode?{handled:false}:routeAiUniversalAppText(query);
-  if(local.handled){aiUniversalRemember("assistant",local.answer,[],{visible:!voiceOnly});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(voiceOnly)await speakAiUniversalText(local.answer);return true}
+  if(local.handled){aiUniversalRemember("assistant",local.answer,[],{visible:!voiceOnly});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(voiceOnly)return await speakAiUniversalText(local.answer);return true}
   aiUniversalTextBusy=true;$("sendAiUniversal").disabled=true;setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO",{busy:true});
   const controller=new AbortController();aiUniversalTextAbortController=controller;
   try{
@@ -2859,12 +2859,12 @@ async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
     }
     if(!response.ok||!result.ok){const requestError=new Error(result.error||"UNIVERSAL_AI_UNAVAILABLE");requestError.code=result.error||"UNIVERSAL_AI_UNAVAILABLE";throw requestError}
     if(aiUniversalRulesMode)saveOfficialGolfRuleForOffline(query,result);
-    aiUniversalRemember("assistant",result.answer,result.sources,{visible:!voiceOnly});aiUniversalSetState("LISTO · PUEDES CONTINUAR");if(voiceOnly)await speakAiUniversalText(result.answer);return true;
+    aiUniversalRemember("assistant",result.answer,result.sources,{visible:!voiceOnly});aiUniversalSetState("LISTO · PUEDES CONTINUAR");if(voiceOnly)return await speakAiUniversalText(result.answer);return true;
   }catch(error){
     if(error?.name==="AbortError"){if(!aiUniversalTextAbortController||aiUniversalTextAbortController===controller)aiUniversalSetState("DETENIDO · PUEDES CONTINUAR");return false}
     if(aiUniversalRulesMode){
       const offline=officialGolfRuleOfflineResult(query);
-      if(offline){aiUniversalRemember("assistant",offline.answer,offline.sources,{visible:!voiceOnly});renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");if(voiceOnly)await speakAiUniversalText(offline.answer);return true}
+      if(offline){aiUniversalRemember("assistant",offline.answer,offline.sources,{visible:!voiceOnly});renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");if(voiceOnly)return await speakAiUniversalText(offline.answer);return true}
     }
     const creditBlocked=error?.code==="UNIVERSAL_AI_CREDIT_EXHAUSTED";const message=error?.code==="TRAFFIC_LOCATION_DENIED"?"Necesito permiso de ubicación o un punto de salida escrito para calcular el tráfico.":creditBlocked?"El servicio de respuestas no tiene saldo disponible. Tu conexión a Internet sí funciona.":aiUniversalRulesMode?"No pude verificar la regla en las fuentes oficiales USGA / The R&A en este momento. Intenta nuevamente.":"No pude completar la respuesta en este momento.";aiUniversalRemember("assistant",message,[],{visible:!voiceOnly});const visibleState=creditBlocked?"SERVICIO DE RESPUESTAS SIN SALDO · TU INTERNET SÍ FUNCIONA":error?.code==="TRAFFIC_LOCATION_DENIED"?"UBICACIÓN NECESARIA":"SERVICIO DE RESPUESTAS NO DISPONIBLE";setPrimaryVoiceMatrix("error",voiceContext,visibleState);aiUniversalSetState(visibleState);return false;
   }finally{
@@ -4650,9 +4650,9 @@ async function processBrowserVoiceTranscript(context,transcript){
 }
 async function answerBrowserVoiceQuery(context,clean){
   reportVoiceHealth("browser_fallback_general_in_place");let answered=false;
-  try{answered=await submitAiUniversalText(clean,{voiceOnly:true})}catch(error){console.error("Browser voice query:",error)}
+  try{answered=await submitAiUniversalText(clean,{voiceOnly:true})}catch(error){console.error("Browser voice query:",error);setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO")}
   if(answered){phase="idle";reportVoiceHealth("browser_fallback_query_answered");return true}
-  reportVoiceHealth("browser_fallback_query_failed");setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO");return false
+  phase="idle";reportVoiceHealth("browser_fallback_query_failed");return false
 }
 function scheduleBrowserVoiceTransportRetry(recognition,context,event){
   if(browserVoiceRecognition!==recognition||browserVoiceStopping||!recoverableBrowserVoiceTransportError(event)||browserVoiceTransportRetryCount>=BROWSER_VOICE_MAX_TRANSPORT_RETRIES)return false;
