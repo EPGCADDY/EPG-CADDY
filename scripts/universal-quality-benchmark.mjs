@@ -8,7 +8,7 @@ const questions=[
  'Qué precio puede tener en el mercado un BMW 2002 TII del año 1975 que está en buen estado y es de agencia?',
  'Cómo reinicio un iPhone 11?'
 ];
-const results=await Promise.all(questions.map((query,index)=>({query,index})).filter(x=>x.index===2).map(async({query,index})=>{
+const results=await Promise.all(questions.map((query,index)=>({query,index})).filter(x=>x.index===2||x.index===3).map(async({query,index})=>{
  const started=Date.now();let status=0,body;
  const req={method:'POST',headers:{},body:{query,history:[],responseMode:'voice',appContext:{course:'El Pulté Golf, Guatemala',weatherOrigin:{location:'El Pulté Golf, Guatemala',latitude:14.6164777,longitude:-90.4210559}}}};
  const res={setHeader(){},status(n){status=n;return this},json(value){body=value;return this}};
