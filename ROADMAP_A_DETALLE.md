@@ -1074,3 +1074,4 @@ La regresión dirigida exige destrucción completa, prohíbe `release→prime` d
 
 - Restaura `index-grupal.html` y `service-worker.js` como fuentes auditables completas; el generador los transforma en cargador y worker de retiro únicamente después de aprobar la auditoría.
 - Evita que pruebas heredadas examinen un cargador de 1.7 KB en lugar de la aplicación. El comportamiento crítico ya aprobado no cambia. MAESTRO/Producción intactos.
+- El gate intocable acepta únicamente las dos representaciones válidas del worker R62: fuente V363 auditable o retiro generado que borra cachés heredadas y se desregistra.
