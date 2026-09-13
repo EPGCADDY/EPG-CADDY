@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 
-const html=readFileSync(new URL('./index-grupal.html',import.meta.url),'utf8');
+const html=readFileSync(new URL('./candidate-index-grupal.html',import.meta.url),'utf8');
 const expected=['El Pulté','Country Club','San Isidro','Mayan Golf','Hacienda Nueva','Alta Vista','La Reunión'];
 
 for(const name of expected)assert.ok(html.includes(`name:"${name}"`),`Falta el campo ${name}`);

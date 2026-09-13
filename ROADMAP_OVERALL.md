@@ -1002,3 +1002,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 
 - Elimina el forzado de captura local de una sola toma en iPhone; WebRTC persistente conserva audio y preguntas consecutivas, con SpeechRecognition únicamente como respaldo ante fallo. MAESTRO/Producción intactos.
 - `test-no-automatic-x.mjs` valida la fuente canónica `candidate-index-grupal.html`, no el cargador generado, y conserva la reparación histórica V155.
+- `test-course-catalog.mjs` valida en la misma fuente canónica los siete campos y el registro V170 después de la separación fuente/artefacto.

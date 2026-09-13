@@ -1081,3 +1081,4 @@ La regresión dirigida exige destrucción completa, prohíbe `release→prime` d
 - Causa raíz: el atajo iOS evitaba `/api/session-grupal`, cerraba el reconocimiento después de la primera pregunta y podía aceptar `speechSynthesis.onstart` sin audio audible. R63 prioriza WebRTC persistente y conserva el fallback local solo dentro de la recuperación de transporte.
 - Evidencia focal: `test-v407-r63-iphone-persistent-voice.mjs`, gate de actualización, transporte de micrófono, 25 turnos universales y voz en Inicio/Registro/Tarjeta en PASS. MAESTRO/Producción intactos.
 - Compatibilidad del gate: `test-no-automatic-x.mjs` lee `candidate-index-grupal.html`, preservando la comprobación V155 sobre la fuente real antes de generar el cargador.
+- `test-course-catalog.mjs` lee la misma fuente canónica y mantiene la comprobación de los siete campos, selección única y límite de seis jugadores.
