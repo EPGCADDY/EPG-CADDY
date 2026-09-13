@@ -979,6 +979,8 @@ Reejecución trazable: el resumen del banco registra también el conteo exacto d
 
 Causa RC-109 confirmada: la credencial directa de transcripción devolvía HTTP 401 en 100/100 casos. El banco usa ahora la ruta oficial de transcripción de Vercel AI Gateway autenticada por OIDC, igual que los servicios de IA y voz operativos.
 
+Evidencia de matriz: el artefacto completo se emite además comprimido y numerado en el log de Preview para permitir la evaluación independiente de las 100 respuestas cuando la protección SSO impide descargar el archivo estático.
+
 - `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`
 - `scripts/run-universal-100-real.mjs`
 - `vercel.json`

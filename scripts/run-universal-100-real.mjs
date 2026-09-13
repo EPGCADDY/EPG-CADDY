@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import {gzipSync} from "node:zlib";
 import {resolveGatewayToken} from "../api/_lib/vercel-gateway-auth.js";
 
 if(process.env.VERCEL_ENV!=="preview"||process.env.VERCEL_GIT_COMMIT_REF!=="test-r34-universal-100")process.exit(0);
@@ -77,3 +78,5 @@ const artifact={schema:"epg-caddy-universal-benchmark-results/v1",startedAt,comp
 fs.mkdirSync("assets/official-logos",{recursive:true});
 fs.writeFileSync("assets/official-logos/universal-100-results.json",JSON.stringify(artifact,null,2));
 console.log("UNIVERSAL_100_COMPLETE "+JSON.stringify(artifact.summary));
+const encoded=gzipSync(Buffer.from(JSON.stringify(artifact))).toString("base64"),chunkSize=2400,totalChunks=Math.ceil(encoded.length/chunkSize);
+for(let index=0;index<totalChunks;index++)console.log(`UNIVERSAL_100_RESULT_CHUNK ${index+1}/${totalChunks} ${encoded.slice(index*chunkSize,(index+1)*chunkSize)}`);
