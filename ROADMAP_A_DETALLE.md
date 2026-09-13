@@ -1089,6 +1089,7 @@ La regresión dirigida exige destrucción completa, prohíbe `release→prime` d
 
 - R64 identifica el payload corregido exigido por `CHAIN_RELEASE_NOT_BUMPED_WITH_PAYLOAD`: fuente HTML/worker antes de las pruebas, artefactos después del PASS y transporte WebRTC persistente para preguntas consecutivas. MAESTRO intacto.
 - Evidencia dirigida: `test-v407-r63-iphone-persistent-voice.mjs` exige R64, sesión persistente primero, salida audible y recuperación local solo como fallback.
+- `test-v397-card-in-out-back-contract.mjs` acepta el contrato vigente `return !!player` después de comprobar pausa, revocación de URL y reinicio de referencias; no relaja ninguna limpieza.
 - Se cierra el resto del patrón heredado en `test-country-club-official.mjs`, `test-round-clock.mjs`, `test-score-engine.mjs` y `test-v250-stableford-delivery-matrix.mjs`; los cuatro comprueban `candidate-index-grupal.html` antes de generar el cargador.
 - `audit-project.mjs` materializa temporalmente la fuente completa después de los candados; así todos los tests históricos inspeccionan la aplicación real y `apply-update-e.mjs` conserva la salida final como cargador persistente.
 - Corrección estructural en `audit-project.mjs`: tras aprobar candados, materializa `candidate-index-grupal.html` como `index-grupal.html` para toda la regresión y deja a `scripts/apply-update-e.mjs` la transformación final a cargador; así ninguna prueba funcional vuelve a leer el artefacto reducido.

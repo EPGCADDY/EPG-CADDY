@@ -1011,4 +1011,5 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 
 - Identidad obligatoria para el payload fuente-primer​​o: ACTUALIZAR recibe una revisión superior y el micrófono conserva WebRTC persistente con fallback local. MAESTRO intacto.
 - `test-v407-r63-iphone-persistent-voice.mjs` valida la identidad R64, WebRTC primero, audio y segundo turno consecutivo.
+- `test-v397-card-in-out-back-contract.mjs` valida la liberación V378 vigente, que devuelve si existía reproductor después de limpiar audio, URL y estado.
 - `audit-project.mjs` materializa la fuente canónica completa únicamente durante la fase de pruebas; `apply-update-e.mjs` genera después el cargador persistente. Se elimina el fallo sistémico de tests contra un artefacto de 1.7 KB.
