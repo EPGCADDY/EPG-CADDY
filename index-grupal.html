@@ -13,6 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
+  <meta name="gscg-capture-review" content="R34-CAPTURE-CLEANUP-B">
   <meta name="gscg-release" content="V407-R34-AUDIO-AND-TEXT-20260913">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
@@ -2706,13 +2707,19 @@ function primeAiUniversalSpeechFromGesture(){
   }catch{return false}
 }
 function releaseAiUniversalPlaybackForListening(){
-  if(!aiUniversalTtsObjectUrl)return false;
-  const player=aiUniversalTtsAudio;
-  if(player){try{player.pause();player.currentTime=0;player.onplay=null;player.onended=null;player.onerror=null;player.removeAttribute("src");player.load?.()}catch{}}
-  try{URL.revokeObjectURL(aiUniversalTtsObjectUrl)}catch{}
+  const player=aiUniversalTtsAudio||aiUniversalSpeechPrimer,objectUrl=aiUniversalTtsObjectUrl;
+  if(!player&&!objectUrl)return false;
+  if(player){
+    player.onplay=null;player.onplaying=null;player.onpause=null;player.onended=null;player.onerror=null;
+    try{player.pause()}catch{}
+    try{player.currentTime=0}catch{}
+    try{player.removeAttribute("src");player.load?.()}catch{}
+  }
+  if(objectUrl)try{URL.revokeObjectURL(objectUrl)}catch{}
   if(aiUniversalSpeechPrimer===player)aiUniversalSpeechPrimer=null;
   aiUniversalTtsObjectUrl="";aiUniversalTtsAudio=player;return true
 }
+
 function preferredMaleBrowserVoice(language){
   if(!("speechSynthesis" in window))return null;
   const voices=window.speechSynthesis.getVoices?.()||[],base=String(language||"es").toLowerCase().split("-")[0];
@@ -4712,7 +4719,7 @@ function scheduleBrowserVoiceTransportRetry(recognition,context,event){
   setPrimaryVoiceMatrix("idle",context,"RECUPERANDO MICRÓFONO…");reportVoiceHealth("browser_fallback_retry_scheduled",{transportFailure});browserVoiceRetryTimer=setTimeout(()=>{browserVoiceRetryTimer=null;if(!browserVoiceRequested||browserVoiceStopping)return;beginBrowserVoiceRecognition(context,"transport")},BROWSER_VOICE_TRANSPORT_RETRY_MS*browserVoiceTransportRetryCount);return true
 }
 function beginBrowserVoiceRecognition(context,trigger="initial"){
-  const Recognition=fallbackVoiceConstructor();if(typeof Recognition!=="function")return false;const recognition=new Recognition();browserVoiceRecognition=recognition;browserVoiceContext=context;browserVoiceRequested=true;browserVoiceActive=false;
+  const Recognition=fallbackVoiceConstructor();if(typeof Recognition!=="function")return false;releaseAiUniversalPlaybackForListening();const recognition=new Recognition();browserVoiceRecognition=recognition;browserVoiceContext=context;browserVoiceRequested=true;browserVoiceActive=false;
   recognition.lang="es-GT";recognition.continuous=true;recognition.interimResults=true;recognition.maxAlternatives=5;
   recognition.onstart=()=>{if(browserVoiceRecognition!==recognition)return;browserVoiceRequested=false;browserVoiceActive=true;browserVoiceErrored=false;listening=true;phase="listening";const wrap=context==="setup"?$("setupMicWrap"):$("headerMicWrap");wrap?.classList.remove("connecting");wrap?.classList.add("active");setPrimaryVoiceMatrix("listening",context);reportVoiceHealth(trigger==="transport"?"browser_fallback_retry_started":trigger==="natural"?"browser_fallback_restarted":"browser_fallback_started");if(browserVoiceTranscript||browserVoiceInterim)scheduleBrowserVoiceFinalize(recognition,context);else scheduleBrowserVoiceFirstResultTimeout(recognition,context)};
   recognition.onresult=event=>{if(browserVoiceRecognition!==recognition)return;let interim="";for(let i=event.resultIndex;i<event.results.length;i++){const text=String(event.results[i]?.[0]?.transcript||"").trim();if(!text)continue;if(event.results[i].isFinal)browserVoiceTranscript=mergeBrowserVoiceSegments(browserVoiceTranscript,text);else interim=mergeBrowserVoiceSegments(interim,text)}browserVoiceInterim=interim;const alternatives=browserVoiceAlternativeBeams(event.results);browserVoiceCandidates=[...new Set([...browserVoiceCandidates,...alternatives])].slice(-48);if(browserVoiceTranscript||browserVoiceInterim){clearBrowserVoiceFirstResultTimer();const progressive=applyBrowserVoiceProgressiveScore(context);if(!progressive.applied)setPrimaryVoiceMatrix("listening",context);scheduleBrowserVoiceFinalize(recognition,context)}};

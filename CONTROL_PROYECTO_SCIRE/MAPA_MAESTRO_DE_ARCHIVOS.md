@@ -1283,3 +1283,7 @@ Evidencia separada: sin cierre físico ni cambios especulativos de captura.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
 - `ROADMAP_OVERALL.md`
 - `ROADMAP_A_DETALLE.md`
+
+## Captura limpia B · 2026-09-13
+- `test-r34-capture-cleanup.mjs`: primer sin objectURL, respuesta previa y callbacks residuales.
+- `docs/quality/R34_CAPTURA_LIMPIA.md`: resultado físico aislado, diferencias y límites.
