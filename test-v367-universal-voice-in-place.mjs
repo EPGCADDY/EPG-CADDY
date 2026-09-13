@@ -2,11 +2,9 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import {sanitizeVoiceHealth} from "./api/voice-health.js";
 
-const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
+const html=fs.readFileSync(new URL("./candidate-index-grupal.html",import.meta.url),"utf8");
 
 assert.match(html,/V367-UNIVERSAL-VOICE-IN-PLACE-20260828/);
-assert.match(worker,/v367-universal-voice-in-place/);
 
 const answerStart=html.indexOf("async function answerBrowserVoiceQuery");
 const answerEnd=html.indexOf("\nfunction scheduleBrowserVoiceTransportRetry",answerStart);

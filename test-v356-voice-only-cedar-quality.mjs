@@ -3,14 +3,12 @@ import fs from "node:fs";
 import speechHandler,{cedarGatewayPayload,cedarSpeechPayload,sanitizeSpeechRequest} from "./api/voice-speech.js";
 import {formatStructuredTrafficAnswer,formatStructuredWeatherAnswer,universalResponseProfile} from "./api/universal-ai.js";
 
-const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
+const html=fs.readFileSync(new URL("./candidate-index-grupal.html",import.meta.url),"utf8");
 const universal=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 const speech=fs.readFileSync(new URL("./api/voice-speech.js",import.meta.url),"utf8");
 
 assert.match(html,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
 assert.match(html,/FISH-AUDIO-S2\.1-PRO-FREE-ES-419-0\.90/);
-assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
 
 for(const contract of [
   'aiUniversalRemember("user",transcript,[],{visible:false})',
@@ -19,9 +17,10 @@ for(const contract of [
   'aiUniversalHistory.filter(item=>item.visible!==false)',
   'responseMode:voiceOnly?"voice":"text"'
 ])assert.ok(html.includes(contract),`Falta contrato voz sin texto: ${contract}`);
-assert.match(html,/function preferredMaleBrowserVoice/);
+assert.match(html,/function preferredApprovedFemaleVoice/);
+assert.match(html,/function waitForPreferredApprovedFemaleVoice\(timeoutMs=4000\)/);
+assert.match(html,/const AI_UNIVERSAL_VOICE_SPEED=1\.15/);
 assert.match(html,/if\(!voice\)return false/);
-assert.doesNotMatch(html,/voices\.find\(voice=>String\(voice\.lang\|\|""\).*\|\|voices\.find/,"No se permite seleccionar cualquier voz española porque puede ser femenina");
 
 assert.deepEqual(sanitizeSpeechRequest({text:"  Hola\n mundo  ",language:"es-GT<script>"}),{text:"Hola mundo",language:"es-GTscript"});
 const direct=cedarSpeechPayload("Respuesta confiable.","es-GT");
@@ -38,7 +37,7 @@ assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
 assert.match(speech,/fish-audio\/s2\.1-pro-free/);
 assert.match(speech,/sin ceceo español/);
 assert.match(speech,/Nunca uses acento de España/);
-assert.match(html,/if\(aiUniversalSpeechLanguage\(clean\)\.startsWith\("es"\)\)return false/);
+assert.match(html,/if\(await speakAiUniversalApprovedFemaleVoice\(clean,\{resumeConversation\}\)\)return true/);
 assert.doesNotMatch(speech,/openai\/tts-1-hd|GATEWAY_VOICE="echo"/);
 
 function responseRecorder(){return{statusCode:0,headers:{},body:null,setHeader(name,value){this.headers[name]=value},status(code){this.statusCode=code;return this},json(value){this.body=value;return this},send(value){this.body=value;return this}}}
@@ -85,5 +84,6 @@ assert.match(universal,/const responseProfile=baseResponseProfile/);
 assert.doesNotMatch(universal,/Math\.ceil\(baseResponseProfile\.maxOutputTokens\/2\)/);
 assert.match(speech,/controller\.abort\(\),22_500/);
 assert.deepEqual(universalResponseProfile("Analiza a fondo causas, riesgos, alternativas y dame una recomendación accionable."),{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"});
+assert.deepEqual(universalResponseProfile("¿Cuál es la capital de Italia?"),{reasoningEffort:"low",maxOutputTokens:700,depth:"brief"});
 
 console.log("PASS V356/V407-R33 · voz V378 preservada; profundidad de AI Universal equivalente en voz y texto");

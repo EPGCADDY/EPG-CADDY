@@ -3,15 +3,13 @@ import fs from "node:fs";
 import {cedarGatewayPayload,cedarSpeechPayload} from "./api/voice-speech.js";
 import {sanitizeVoiceHealth} from "./api/voice-health.js";
 
-const html=fs.readFileSync("index-grupal.html","utf8");
-const worker=fs.readFileSync("service-worker.js","utf8");
+const html=fs.readFileSync("candidate-index-grupal.html","utf8");
 const speech=fs.readFileSync("api/voice-speech.js","utf8");
 const audit=fs.readFileSync("audit-project.mjs","utf8");
 
 assert.match(html,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
 assert.match(html,/V363-STOP-GUARD-NO-STUCK-LISTENING-20260828/);
 assert.match(html,/V363-IMMEDIATE-PERSISTENT-SPOKEN-CLOSURE-20260828/);
-assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
 for(const file of ["test-v358-ios-score-universal-physical-recovery.mjs","test-v362-physical-voice-recovery.mjs"])assert.ok(audit.includes(file),file);
 
 const direct=cedarSpeechPayload("Respuesta", "es-GT");

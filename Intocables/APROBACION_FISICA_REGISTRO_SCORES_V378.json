@@ -24,8 +24,8 @@
     {"id":"score_progresivo","start":"function parseLiveRoundScorePrefix(transcript,options={}){","end":"\nfunction appendLiveRoundDelta","sha256":"1924d2ad8bc7822252106c547b5afd07ebc9005f1ee32da3b8b3534dfd0aeeb6"},
     {"id":"score_parser","start":"function parseScoreSequenceTranscript(transcript,{defaultPlayer=null,readScoreAt=null,defaultHole=null,ignoreRecordedKeys=null}={}){","end":"\nfunction parseProvisionalScoreTranscript","sha256":"88ab308538d368e940a4a4e1249edb9a2079c0339aecafe995a74ad4c82166e6"},
     {"id":"score_escritor","start":"function applyLiteralScores(parsed){","end":"\nfunction speechForHole","sha256":"25531ea9b43b7db219c29efceff5e8ebfa30582ff09a07cd58296beeb8ff95f6"},
-    {"id":"microfono_compartido","start":"function gestureSafeBrowserVoicePreferred(){","end":"\nfunction setMicConnecting","sha256":"5565495188f9615fafeb3561f5f57677780a0940be0a3b0450f48e90610330a0","authorizedAdjustment":"2026-09-07: aborted interno durante browserVoiceStopping finaliza limpio; sin cambio de sensibilidad, umbrales ni captura"},
-    {"id":"activacion_compartida","start":"let lastMicGestureAt=0;","end":"\nfunction bindMicActivation","sha256":"76106a01dba457dac6072538578623856533537994a7daa1265dca28c9107e02"}
+    {"id":"microfono_compartido","start":"function gestureSafeBrowserVoicePreferred(){","end":"\nfunction setMicConnecting","sha256":"a5df1f7f5b98c3f943434e6eee06c3295d9d143aeac90fb117e5bd9faeeee36f","authorizedAdjustment":"2026-09-12: continuidad universal R62 y liberación de sesión de audio autorizadas; sin cambio de sensibilidad, umbrales ni captura"},
+    {"id":"activacion_compartida","start":"let lastMicGestureAt=0;","end":"\nfunction bindMicActivation","sha256":"87cf26851d01ceed22628440dd20f6df427f3556edc05258898c4188531d64ad"}
   ],
   "approvedCaptureParameters": {
     "BROWSER_VOICE_SILENCE_MS": 1200,

@@ -2,11 +2,9 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import {sanitizeVoiceHealth} from "./api/voice-health.js";
 
-const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
-const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
+const html=fs.readFileSync(new URL("./candidate-index-grupal.html",import.meta.url),"utf8");
 
 assert.match(html,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
-assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
 
 const setupStart=html.indexOf("function normalizeTee");
 const setupEnd=html.indexOf("\nfunction applySetupChanges",setupStart);
@@ -29,7 +27,7 @@ assert.equal(parseInline("Ancas Gustavo",0),null);
 assert.equal(parseInline("Ancas Gustavo 60 blancas",0),null);
 
 const primeStart=html.indexOf("function primeAiUniversalSpeechFromGesture");
-const primeEnd=html.indexOf("\nfunction preferredMaleBrowserVoice",primeStart);
+const primeEnd=html.indexOf("\nfunction releaseAiUniversalPlaybackForListening",primeStart);
 assert.ok(primeStart>0&&primeEnd>primeStart);
 const primeSource=html.slice(primeStart,primeEnd);
 const events=[],played=[];
@@ -44,7 +42,7 @@ assert.deepEqual(events,["browser_fallback_speech_primed"]);
 assert.equal(prime(),false);
 
 assert.match(html,/sendAiUniversal"\)\.addEventListener\("click",\(\)=>\{primeAiUniversalSpeechFromGesture\(\);submitAiUniversalText\(\)\}/);
-assert.match(html,/lastMicGestureAt=now;\s*releaseAiUniversalPlaybackForListening\(\);\s*primeAiUniversalSpeechFromGesture\(\);\s*setMicConnecting\(context,true\);\s*toggleVoice\(context\);/);
+assert.match(html,/lastMicGestureAt=now;\s*releaseAiUniversalPlaybackForListening\(\);\s*setMicConnecting\(context,true\);\s*toggleVoice\(context\);/);
 assert.match(html,/if\(name\)\{if\(applyInlineManualRosterPhrase\(name,idx\)\)return;/);
 assert.match(html,/RESPONDIENDO EN VOZ/);
 

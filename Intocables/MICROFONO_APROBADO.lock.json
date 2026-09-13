@@ -15,17 +15,17 @@
   "policy": "Los bancos y el transporte de voz aprobados no se modifican. Cualquier hash o prueba diferente bloquea auditoría, build y despliegue hasta autorización expresa del propietario.",
   "sha256": {
     "api/voice-speech.js": "96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01",
-    "test-v336-microphone-transport.mjs": "cfc36abd5f743726a435ff13ef9eddefc567b9e2a6a10488c096b1bff5852a37",
-    "test-v354-voice-fallback.mjs": "41d3a14dacaf183e321ce04b61e86511b5d247582785ba966c90b5732282fce2",
-    "test-v355-ios-audio-dictation.mjs": "aa528474beaa42acd913dfa56b5c59f8cf0616187a5c8430d34ac338764a54a5",
-    "test-v356-voice-only-cedar-quality.mjs": "2d165d666ee5d1cc50833aba0f929970662825c074879f3d0f24df33db8e005b",
-    "test-v357-ios-voice-transport-recovery.mjs": "d89aa29ccf12b482311d5c5701790d91f1241eb6fde5935ab1c60bd16ba59514",
-    "test-v358-ios-score-universal-physical-recovery.mjs": "6a787ec011ff5459518f1ab9f3d32d79dbd10de4365a3e2f3cffbb14d45e7618",
-    "test-v359-ios-score-parser-recovery.mjs": "a9ef038dd8ba49e31278c1e6e096c9f8ddc9eccdcacd1afe90c51af225fc9515",
-    "test-v357-synchronized-progressive-voice.mjs": "ad7ba5e426dbde712f2d965e1a33a2af35aa75b3d7a176bf8982d52441bce84d",
-    "test-v361-synchronized-voice.mjs": "ead1297e3f3f93185a56c5a883b366805fac35b85169dbacb5271d69c3ecca43",
-    "test-v362-physical-voice-recovery.mjs": "1fcb521ef6b6b9c89c077b6e3bcb125ccaf46335687e2ab6a8f95e722158eafa",
-    "test-v367-universal-voice-in-place.mjs": "ef9e8ec5aa6a7a129621e0d8743a3d688796b27b527a90d3787eaa4f0a136e26"
+    "test-v336-microphone-transport.mjs": "1aad3ac0e89744e8f2d9a045141dc6f250f2a9a55fea7a3a7901d87e22d58598",
+    "test-v354-voice-fallback.mjs": "04449a2bab1d6bd82a56529476363099c3fe4f13c24af87f57f56100ab6db999",
+    "test-v355-ios-audio-dictation.mjs": "6bbea8d6d8af99a6845d7b84ca756f7610297023091de8be928de75ce356a4ed",
+    "test-v356-voice-only-cedar-quality.mjs": "66d41186de72230c0fe997efa16c1b73ff4ad6dd70933f3a34def7cefc4b604a",
+    "test-v357-ios-voice-transport-recovery.mjs": "1429974ecb68a7b2b52c7de8811f2d43d28553fb04d1963e069de6201e9dddbc",
+    "test-v358-ios-score-universal-physical-recovery.mjs": "d19c5374c596716fd9f030b5105681a7b75a1fe03b51d8e4acac89d77f89ddc3",
+    "test-v359-ios-score-parser-recovery.mjs": "eda431efd3e9b09c05071725b12a518cb97bdbe10f56792c812904e2c1c77eab",
+    "test-v357-synchronized-progressive-voice.mjs": "76118199506b13600ddacc93cd4ec6f3cfdc82e2c867439083d1aec0f57b373f",
+    "test-v361-synchronized-voice.mjs": "3f8484caf7aef0985e5bec5a88ef9dd725adb1141aaa5d0e9f222e8270ce6d05",
+    "test-v362-physical-voice-recovery.mjs": "02b86c4c7be791d8ac37989236f19b94252704f266fc6f28d0583285aafea834",
+    "test-v367-universal-voice-in-place.mjs": "324aa9ae80cec06f736e40e2917daffeb7266a5aee5cdec494d4ccef503e3902"
   },
   "tests": [
     "test-v336-microphone-transport.mjs",

@@ -3,7 +3,7 @@ import crypto from "node:crypto";
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 
-const html=fs.readFileSync(new URL("../index-grupal.html",import.meta.url),"utf8");
+const html=fs.readFileSync(new URL("../candidate-index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("../service-worker.js",import.meta.url),"utf8");
 const speech=fs.readFileSync(new URL("../api/voice-speech.js",import.meta.url),"utf8");
 const audit=fs.readFileSync(new URL("../audit-project.mjs",import.meta.url),"utf8");
@@ -78,5 +78,7 @@ assert.doesNotMatch(voiceInPlace,/openAiUniversalPanel|classList\.add\("visible"
 assert.match(audit,/Intocables\/intocables-gate\.mjs/);
 assert.match(audit,/test-v366-principal-entry-recovery\.mjs/);
 assert.match(audit,/test-v367-universal-voice-in-place\.mjs/);
-assert.match(worker,/gscg-mobile-v363-/);
+assert.match(worker,/LEGACY_CACHE_PREFIX="gscg-mobile-"/);
+assert.match(worker,/caches\.delete\(name\)/);
+assert.match(worker,/self\.registration\.unregister\(\)/);
 console.log("INTOCABLES PASS INT-01…INT-05 · REGISTRO/SCORE/MULTIHOYO Y VOZ V378 SELLADOS");

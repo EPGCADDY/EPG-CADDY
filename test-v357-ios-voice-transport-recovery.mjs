@@ -2,12 +2,10 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import {sanitizeVoiceHealth} from "./api/voice-health.js";
 
-const html=fs.readFileSync("index-grupal.html","utf8");
-const worker=fs.readFileSync("service-worker.js","utf8");
+const html=fs.readFileSync("candidate-index-grupal.html","utf8");
 
 assert.match(html,/gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828"/);
 assert.match(html,/gscg-ios-voice-recovery" content="V363-STOP-GUARD-NO-STUCK-LISTENING-20260828"/);
-assert.match(worker,/const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry"/);
 
 const gestureStart=html.indexOf("function gestureSafeBrowserVoicePreferred");
 const gestureEnd=html.indexOf("\nfunction shouldUseBrowserVoiceFallback",gestureStart);
