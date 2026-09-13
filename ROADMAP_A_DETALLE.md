@@ -1011,3 +1011,13 @@ Corrección incremental tras captura del propietario; PASS técnico, Preview y p
 - `scripts/build-r34-voice-review.mjs`
 - `test-r34-audio-response.mjs`
 - `test-r34-weather-location.mjs`
+
+## 2026-09-13 · FAIL físico 08:32, diagnóstico de captura
+Evidencia separada: sin cierre físico ni cambios especulativos de captura.
+- `assets/official-logos/iphone-microphone.html`
+- `docs/quality/R34_FALLO_FISICO_0832.md`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `ROADMAP_OVERALL.md`
+- `ROADMAP_A_DETALLE.md`

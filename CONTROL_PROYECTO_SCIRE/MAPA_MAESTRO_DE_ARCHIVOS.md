@@ -1273,3 +1273,13 @@ Archivos exactos:
 ## 2026-09-13 · Reparación Colima y segundo turno R34
 - `test-r34-weather-location.mjs`: prioridad de ciudad/país y ausencia de fallback incorrecto.
 - `docs/quality/R34_COLIMA_SEGUNDO_TURNO.md`: causas, pruebas, limitaciones físicas y rollback.
+
+## 2026-09-13 · FAIL físico 08:32, diagnóstico de captura
+Evidencia separada: sin cierre físico ni cambios especulativos de captura.
+- `assets/official-logos/iphone-microphone.html`
+- `docs/quality/R34_FALLO_FISICO_0832.md`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `ROADMAP_OVERALL.md`
+- `ROADMAP_A_DETALLE.md`

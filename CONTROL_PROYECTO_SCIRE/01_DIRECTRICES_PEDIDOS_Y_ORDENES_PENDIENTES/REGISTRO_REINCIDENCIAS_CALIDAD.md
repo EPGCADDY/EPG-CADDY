@@ -351,3 +351,6 @@ Informe físico del propietario: queda RESPONDIENDO sin voz ni texto. Logs Main 
 
 ## 2026-09-13 · RC-109 · Ubicación impuesta y segundo turno R34
 Informe del propietario y captura IMG_3623: Colima respondida como El Pulté, segunda pregunta sin reconocimiento. Causas reproducibles: coordenadas del campo incondicionales y final de audio sin reapertura. Escape: V337 solo probaba campo y R34 solo reproducía audios, sin una siguiente transcripción. Controles: test-r34-weather-location.mjs y secuencia completa simulada en test-r34-audio-response.mjs. PASS técnico, aprobación física pendiente. Evidencia y rollback: docs/quality/R34_COLIMA_SEGUNDO_TURNO.md.
+
+## 2026-09-13 · RC-110 · Preview no reconoce audio físico
+IMG_3625 muestra FAIL en Registro. Eventos started -> timeout8s sin transcripción. Simulación y reproducción no demostraron captura iPhone. Causa anterior al timeout aún no establecida. Diagnóstico aislado RMS y eventos, sin almacenar voz: assets/official-logos/iphone-microphone.html. No emitir PASS físico; docs/quality/R34_FALLO_FISICO_0832.md.
