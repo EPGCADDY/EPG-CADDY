@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import speechHandler,{cedarGatewayPayload,cedarSpeechPayload,sanitizeSpeechRequest} from "./api/voice-speech.js";
+import speechHandler,{cedarGatewayPayload,cedarSpeechPayload,sanitizeSpeechRequest,spokenSpeechText} from "./api/voice-speech.js";
 import {formatStructuredTrafficAnswer,formatStructuredWeatherAnswer,spokenUniversalAnswer,universalResponseProfile} from "./api/universal-ai.js";
 
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
@@ -87,6 +87,8 @@ assert.deepEqual(universalResponseProfile("Analiza a fondo causas, riesgos, alte
 const longSpoken=spokenUniversalAnswer(`${"Primera idea sustantiva. ".repeat(70)}Conclusión accionable final.`);
 assert.ok(longSpoken.length<=1350);
 assert.match(longSpoken,/Conclusión accionable final\.$/);
-assert.match(html,/result\.spokenAnswer\|\|result\.answer/);
+const endpointSpoken=spokenSpeechText(`${"Primera idea sustantiva. ".repeat(70)}Conclusión accionable final.`);
+assert.ok(endpointSpoken.length<=1350);
+assert.match(endpointSpoken,/Conclusión accionable final\.$/);
 
 console.log("PASS V356/V378 · voz hablada Fish Audio es-419 0.90 sin ID fijo; tráfico/clima estructurados");

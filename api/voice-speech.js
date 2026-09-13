@@ -1,15 +1,25 @@
 import {handleAppPreflight,isAllowedAppOrigin} from "./_lib/cors.js";
 import {resolveGatewayToken} from "./_lib/vercel-gateway-auth.js";
 
-const MAX_SPEECH_TEXT=4000;
+const MAX_SPEECH_TEXT=1350;
 const VOICE="onyx";
 const GATEWAY_VOICE="s2.1-es-419";
 const SPEED=.9;
 const GATEWAY_SPEECH_MODEL="fish-audio/s2.1-pro-free";
 const INSTRUCTIONS="Locutor masculino adulto latinoamericano, serio, sobrio y profesional. Habla exclusivamente en español latinoamericano es-419, natural para Guatemala, sin ceceo español: pronuncia c ante e/i y z con sonido de s. Nunca uses acento de España, acento anglosajón, Spanglish ni palabras en inglés salvo nombres propios inevitables. Dicción muy clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";
 
+export function spokenSpeechText(value,maxChars=MAX_SPEECH_TEXT){
+  const text=String(value||"").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g," ").replace(/\s+/g," ").trim();
+  if(text.length<=maxChars)return text;
+  const tailSize=Math.min(360,Math.floor(maxChars*.28));
+  const headSize=maxChars-tailSize-3;
+  const head=text.slice(0,headSize).replace(/\s+\S*$/," ").trimEnd();
+  const tail=text.slice(-tailSize).replace(/^\S*\s+/,"").trimStart();
+  return `${head}… ${tail}`.slice(0,maxChars);
+}
+
 export function sanitizeSpeechRequest(body={}){
-  const text=String(body.text||"").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g," ").replace(/\s+/g," ").trim().slice(0,MAX_SPEECH_TEXT);
+  const text=spokenSpeechText(body.text);
   const language=String(body.language||"es-GT").replace(/[^a-zA-Z-]/g,"").slice(0,12)||"es-GT";
   return{text,language};
 }
