@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 
-const html=readFileSync(new URL('./index-grupal.html',import.meta.url),'utf8');
+const html=readFileSync(new URL('./candidate-index-grupal.html',import.meta.url),'utf8');
 const array=name=>JSON.parse(`[${html.match(new RegExp(`const ${name}=\\[([^;]+)\\]`))?.[1]||''}]`);
 const par=array('COUNTRY_CLUB_PAR');
 const blue=array('COUNTRY_CLUB_SI_BLUE');

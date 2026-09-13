@@ -1082,3 +1082,4 @@ La regresión dirigida exige destrucción completa, prohíbe `release→prime` d
 - Evidencia focal: `test-v407-r63-iphone-persistent-voice.mjs`, gate de actualización, transporte de micrófono, 25 turnos universales y voz en Inicio/Registro/Tarjeta en PASS. MAESTRO/Producción intactos.
 - Compatibilidad del gate: `test-no-automatic-x.mjs` lee `candidate-index-grupal.html`, preservando la comprobación V155 sobre la fuente real antes de generar el cargador.
 - `test-course-catalog.mjs` lee la misma fuente canónica y mantiene la comprobación de los siete campos, selección única y límite de seis jugadores.
+- Se cierra el resto del patrón heredado en `test-country-club-official.mjs`, `test-round-clock.mjs`, `test-score-engine.mjs` y `test-v250-stableford-delivery-matrix.mjs`; los cuatro comprueban `candidate-index-grupal.html` antes de generar el cargador.

@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
-const html=fs.readFileSync(new URL('./index-grupal.html',import.meta.url),'utf8');
+const html=fs.readFileSync(new URL('./candidate-index-grupal.html',import.meta.url),'utf8');
 
 assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
 assert.match(html,/id="shareGlobalCard">CORREO \/ WHATSAPP GLOBAL/);

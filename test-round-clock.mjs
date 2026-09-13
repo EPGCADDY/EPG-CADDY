@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 
-const html=readFileSync(new URL('./index-grupal.html',import.meta.url),'utf8');
+const html=readFileSync(new URL('./candidate-index-grupal.html',import.meta.url),'utf8');
 assert.ok(html.includes('id="stopClockButton"'),'Falta el botón para detener el cronómetro');
 assert.ok(html.includes('id="stopClockButton">TIMER ON</button>'),'El botón debe decir TIMER ON mientras corre');
 assert.ok(html.includes('class="round-status-row"'),'El botón debe compartir la línea del cronómetro');
