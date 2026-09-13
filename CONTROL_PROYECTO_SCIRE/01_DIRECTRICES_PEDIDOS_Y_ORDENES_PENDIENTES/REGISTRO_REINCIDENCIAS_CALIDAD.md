@@ -354,3 +354,6 @@ Informe del propietario y captura IMG_3623: Colima respondida como El Pulté, se
 
 ## 2026-09-13 · RC-110 · Preview no reconoce audio físico
 IMG_3625 muestra FAIL en Registro. Eventos started -> timeout8s sin transcripción. Simulación y reproducción no demostraron captura iPhone. Causa anterior al timeout aún no establecida. Diagnóstico aislado RMS y eventos, sin almacenar voz: assets/official-logos/iphone-microphone.html. No emitir PASS físico; docs/quality/R34_FALLO_FISICO_0832.md.
+
+## 2026-09-13 · Seguimiento RC-110 · IMG_3626 PASS aislado
+Hardware y reconocimiento produjeron señal y transcripciones en iPhone. Se detecta limpieza incompleta del primer audio y ausencia de limpieza en retorno automático. Corrección y evidencia: docs/quality/R34_CAPTURA_LIMPIA.md; test-r34-capture-cleanup.mjs. Integración física pendiente; no declarar solución completa.

@@ -958,3 +958,16 @@ Evidencia separada: sin cierre físico ni cambios especulativos de captura.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
 - `ROADMAP_OVERALL.md`
 - `ROADMAP_A_DETALLE.md`
+
+## 2026-09-13 · Captura limpia B tras IMG_3626
+PASS físico aislado; integración pendiente. Limpieza incremental de audio antes de reconocer, sin nuevo proveedor ni cambios de scoring.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `docs/quality/R34_CAPTURA_LIMPIA.md`
+- `index-grupal.html`
+- `test-r34-audio-response.mjs`
+- `test-r34-capture-cleanup.mjs`

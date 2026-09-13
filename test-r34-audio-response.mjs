@@ -36,7 +36,7 @@ assert.equal(await timed.env.submitAiUniversalText('Pregunta que queda esperando
 // Exercise the real audio-ended -> recognition-start -> result -> finalize path.
 const turns=fixture();let starts=0,queries=[];const e=turns.env;
 Object.assign(e,{browserVoiceContext:'round',browserVoiceStopping:false,browserVoiceErrored:false,browserVoiceRestartCount:0,browserVoiceTransportRetryCount:0,browserVoiceSilenceTimer:null,browserVoiceTranscript:'',browserVoiceInterim:'',browserVoiceCandidates:[],browserVoiceItemId:'',browserVoiceAppliedEntryCount:0,phase:'idle',
- fallbackVoiceConstructor:()=>class{start(){starts++;this.onstart?.()}abort(){}stop(){this.onend?.()}},
+ releaseAiUniversalPlaybackForListening(){},fallbackVoiceConstructor:()=>class{start(){starts++;this.onstart?.()}abort(){}stop(){this.onend?.()}},
  clearBrowserVoiceSilenceTimer(){},clearBrowserVoiceFirstResultTimer(){},clearBrowserVoiceStopGuardTimer(){},clearBrowserVoiceRetryTimer(){},
  sealBrowserVoiceProgress:()=>({handled:false}),mergeBrowserVoiceSegments:(a,b)=>[a,b].filter(Boolean).join(' '),selectBrowserVoiceCandidate:(_,__,text)=>({transcript:text,ambiguous:false}),isGeneralConversationIntent:()=>true,
  scheduleBrowserVoiceFirstResultTimeout(){},scheduleBrowserVoiceFinalize(){},browserVoiceAlternativeBeams:()=>[],applyBrowserVoiceProgressiveScore:()=>({applied:false}),restartBrowserVoiceAfterNaturalEnd:()=>false,

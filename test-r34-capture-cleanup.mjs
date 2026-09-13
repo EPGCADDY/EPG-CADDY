@@ -1,0 +1,8 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+const html=fs.readFileSync('index-grupal.html','utf8');const source=html.slice(html.indexOf('function releaseAiUniversalPlaybackForListening(){'),html.indexOf('\nfunction preferredMaleBrowserVoice'));
+for(const objectUrl of ['', 'blob:previous']){
+ const events=[];const player={src:'data:audio/wav;base64,primer',currentTime:1,onplay(){events.push('stale')},onplaying(){events.push('stale')},onpause(){events.push('stale')},onended(){events.push('stale')},onerror(){events.push('stale')},pause(){events.push('pause');this.onpause?.()},removeAttribute(key){events.push(key);delete this.src},load(){events.push('load')}};
+ const e=vm.createContext({aiUniversalTtsAudio:player,aiUniversalSpeechPrimer:player,aiUniversalTtsObjectUrl:objectUrl,URL:{revokeObjectURL:url=>events.push(url)}});vm.runInContext(source,e);assert.equal(e.releaseAiUniversalPlaybackForListening(),true);assert.equal(player.src,undefined);assert.equal(player.onpause,null);assert.equal(player.onplaying,null);assert.equal(e.aiUniversalSpeechPrimer,null);assert.ok(!events.includes('stale'));assert.deepEqual(events,objectUrl?['pause','src','load',objectUrl]:['pause','src','load']);
+}
+const begin=html.slice(html.indexOf('function beginBrowserVoiceRecognition('),html.indexOf('function startBrowserVoiceFallback('));assert.ok(begin.indexOf('releaseAiUniversalPlaybackForListening()')<begin.indexOf('new Recognition()'));
+console.log('PASS primer sin blob y respuesta previa liberados antes de reconocer, sin callbacks de reproducción residuales');
