@@ -975,6 +975,8 @@ PASS físico aislado; integración pendiente. Limpieza incremental de audio ante
 ## 2026-09-13 · Banco real universal de 100 casos
 Validación previa a cualquier nueva entrega: 100 referencias obtenidas en ChatGPT, audio de entrada sintetizado e inyectado, transcripción real, respuesta de AI UNIVERSAL, texto y audio final. El resultado automático no sustituye la comprobación física final en iPhone.
 
+Reejecución trazable: el resumen del banco registra también el conteo exacto de errores por etapa para aislar cualquier fallo de captura, transcripción, IA o síntesis sin repetir auditorías generales.
+
 - `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`
 - `scripts/run-universal-100-real.mjs`
 - `vercel.json`
