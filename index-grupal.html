@@ -3733,7 +3733,7 @@ function shareOfficialArtifactImage(){
   const {item,blob}=prepared,title=item.kind==="personal"?"Tarjeta oficial personal":"Tarjeta oficial global",name=String(item.name||"tarjeta-digital.html").replace(/\.html?$/i,".png"),file=new File([blob],name,{type:"image/png"}),payload={title,text:officialArtifactShareText(item),files:[file]};
   button.disabled=true;button.textContent="ABRIENDO OPCIONES…";
   const finish=(result,message)=>{button.disabled=false;button.textContent="ENVIAR TARJETA DIGITAL";status.textContent=message;return result};
-  if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]})){
+  if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){
     let sharing;try{sharing=navigator.share(payload)}catch(error){sharing=Promise.reject(error)}
     return Promise.resolve(sharing).then(()=>{recordShareEvent(item,"PREPARED",false);return finish({ok:true,state:"PREPARED",fallback:false},"IMAGEN PNG ENTREGADA A LA APP ELEGIDA")}).catch(error=>{if(error?.name==="AbortError"){recordShareEvent(item,"CANCELLED",false);return finish({ok:false,state:"CANCELLED"},"COMPARTIR CANCELADO · NO SE MARCÓ COMO ENVIADO")}recordShareEvent(item,"FAILED",false);return finish({ok:false,state:"FAILED",error:String(error?.message||error)},"NO SE PUDO ABRIR COMPARTIR · INTENTA DE NUEVO")})
   }
