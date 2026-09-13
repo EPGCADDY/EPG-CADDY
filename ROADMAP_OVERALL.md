@@ -1065,3 +1065,31 @@ El propietario autorizó integrar 78580e6. Rama aislada integrate/voice-start-au
 - `ROADMAP_A_DETALLE.md`: control y trazabilidad de integración autorizada.
 
 - `docs/quality/INDEPENDENT_VOICE_START_EVIDENCE.json`: auditoría de integración autorizada, 142 paquetes PASS; conserva fallos históricos previos. Navegador real e iPhone pendientes; sin publicar.
+
+
+## Investigación independiente · ciudad y estado · 13 septiembre 2026
+
+Fallo reproducido con proveedor real: «Manzanillo Colima» no devuelve resultados en la búsqueda original; «Manzanillo» devuelve candidatos de varios países. Se añade búsqueda por ciudad con coincidencia exacta del estado/departamento y país si se especificó. Las ubicaciones ambiguas o inexistentes no se sustituyen por el campo de golf. No cambia Actualizar, captura, síntesis, cálculos ni persistencia.
+
+- `api/weather.js`: recuperación de ciudad + estado sin catálogo cerrado.
+- `test-r35-weather-location.mjs`: regresión contra Manzanillo de Cuba y estado inexistente.
+- `test-independent-weather-100-live.mjs`: banco reproducible de 100 preguntas escritas con proveedor real; ejecutar `LIVE_WEATHER=1 node test-independent-weather-100-live.mjs`.
+- `docs/quality/INDEPENDENT_WEATHER_100_LIVE.json`: respuestas y resultados reales de cada pregunta. No certifica voz ni equivale a 100 pruebas independientes en ChatGPT.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: causa y control permanente.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: inventario de este cambio.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: alcance y limitación.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello regenerado.
+
+La segunda captura sin transcripción sigue sin solución física demostrada. La corrección geográfica es independiente y no se declara causa única de ese fallo. Publicación autorizada únicamente en Preview independiente. Rollback: volver al Preview 150df9b, sin cambiar main ni LAB.
+
+El banco detectó además un aeródromo homónimo en Tepic: la recuperación ahora exige tipo de localidad PPL. Se conservan los intentos fallidos en previousAttempt. La evaluación es de interpretación escrita y proveedor real, no de vocabulario del reconocimiento nativo.
+
+
+## Investigación independiente · preguntas universales desviadas · 13 septiembre 2026
+Fallo reproducido: la base 150df9b envía «Explícame por qué se produce la lluvia» a clima y devuelve 502 con un proveedor simulado que exige llegada al modelo general. También se desviaban temperatura corporal y tráfico de influencias. La corrección conserva explicaciones/comparaciones y contextos no meteorológicos/no vehiculares en el modelo general. Antes FAIL; después 100/100 preguntas escritas llegan intactas al modelo (respuestas simuladas). No equivale a calidad de respuestas, reconocimiento nativo ni 100 pruebas físicas.
+- `api/universal-ai.js`: evita desvío de preguntas conceptuales por una palabra de tema.
+- `test-independent-universal-routing.mjs`: 80 preguntas del banco R35 y 20 regresiones temáticas; proveedor de IA simulado.
+- `audit-project.mjs`: añade la regresión sin retirar bancos previos.
+- `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: trazabilidad e inventarios.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra escape y prevención.
+Preview autorizado; main, LAB y Producción no se sustituyen. Captura de segunda pregunta y comparación real de calidad contra ChatGPT siguen pendientes. El banco geográfico de 100/100 con Open-Meteo es evidencia separada.

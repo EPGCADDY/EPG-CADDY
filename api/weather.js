@@ -87,6 +87,25 @@ async function resolvePlace(location) {
     match = payload?.results?.[0] || null;
     if (match) break;
   }
+  // A provider city search does not parse a trailing state (e.g. Manzanillo Colima).
+  // Retry city prefixes, but accept only an exact city AND administrative-area match.
+  if(!match&&!fallback){
+    const words=search.name.replace(/,/g," ").split(/\s+/).filter(Boolean);
+    const areaKey=value=>normalizePlace(value).replace(/^(?:estado|provincia|departamento|region)\s+(?:de\s+)?/,"");
+    for(let split=words.length-1;split>=1&&split>=words.length-4;split--){
+      const city=words.slice(0,split).join(" "),area=areaKey(words.slice(split).join(" "));
+      const url=new URL("https://geocoding-api.open-meteo.com/v1/search");
+      url.searchParams.set("name",city);url.searchParams.set("count","100");
+      url.searchParams.set("language","es");url.searchParams.set("format","json");
+      if(search.countryCode)url.searchParams.set("countryCode",search.countryCode);
+      const payload=await fetchJson(url);
+      const matches=(payload?.results||[]).filter(place=>/^PPL/.test(place.feature_code||'')&&normalizePlace(place.name)===normalizePlace(city)&&
+        (!search.countryCode||place.country_code===search.countryCode)&&
+        [place.admin1,place.admin2,place.admin3,place.admin4].some(value=>value&&areaKey(value)===area));
+      if(matches.length===1){match=matches[0];break}
+      if(matches.length>1)return null;
+    }
+  }
   if (!match) return null;
   const place={
     latitude: numberInRange(match.latitude, -90, 90),

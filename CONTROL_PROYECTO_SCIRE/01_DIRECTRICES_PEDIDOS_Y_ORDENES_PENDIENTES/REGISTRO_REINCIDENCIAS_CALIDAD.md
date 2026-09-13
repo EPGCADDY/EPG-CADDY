@@ -359,3 +359,11 @@ R34 cierra reconocimiento para responder y su evento onended sólo vuelve a LIST
 
 ## IND-VOICE-START-01 · Apertura sin onstart · 13 septiembre 2026
 Investigación independiente sobre ccdd004. Reproducción controlada: primera respuesta termina, segunda apertura no entrega onstart y queda sin límite. Causa demostrada de la falta de recuperación: watchdog instalado sólo desde onstart. Escape: las pruebas simuladas existentes emitían onstart al llamar start. Corrección de una línea instala el watchdog previamente. Evidencia negativa/positiva y límites: docs/quality/INDEPENDENT_VOICE_START_REPORT.md y docs/quality/INDEPENDENT_VOICE_START_EVIDENCE.json; control test-independent-voice-start-timeout.mjs integrado en audit-project.mjs. No se atribuye como causa física del iPhone sin prueba. Sello Intocables intacto y bloqueante, no aprobado ni publicado.
+
+
+### IND-WEATHER-STATE-02 · Manzanillo Colima
+Causa reproducida: el geocodificador no interpreta ciudad y estado juntos. Escape: pruebas anteriores cubrían ciudad y país, no ciudad y estado. Control permanente: test-r35-weather-location.mjs exige Manzanillo/Colima y rechaza otro país o estado inexistente. Evidencia adicional: INDEPENDENT_WEATHER_100_LIVE.json. Captura física de segunda pregunta pendiente; no se atribuye a este fallo sin transcripción.
+
+
+### IND-UNIVERSAL-ROUTE-03
+Causa demostrada: palabras como temperatura o tráfico activaban herramientas especializadas incluso en preguntas conceptuales, médicas o legales. Escape: pruebas previas no incluían polisemia y daban PASS por palabras/temas aislados. Control: test-independent-universal-routing.mjs, antes FAIL en lluvia conceptual, después 100/100 consultas intactas al modelo con proveedor simulado. Calidad de la IA y audio nativo no verificados.

@@ -139,6 +139,7 @@ export function weatherTimePeriodFromQuery(query){
 
 export function isDirectWeatherQuery(query){
   const text=String(query||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  if(isExplanatoryUniversalQuery(text)||/\b(corporal|cuerpo|fiebre|paciente|bebe|procesador|cpu|motor|horno|refrigerador)\b/.test(text))return false;
   const mentionsWeather=/\b(clima|pronostico|tiempo meteorologico|lluvia|llov\w*|temperatura|sensacion termica|viento|weather|forecast|rain\w*|temperature|wind)\b/.test(text);
   if(!mentionsWeather)return false;
   const shotContext=/\b(yardas?|palo|palos|golpe|bandera|green|carry|lie|dispersion|swing|trayectoria|estrategia|atacar|agua corta)\b/.test(text);
@@ -148,7 +149,14 @@ export function isDirectWeatherQuery(query){
 
 export function isDirectTrafficQuery(query){
   const text=String(query||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  if(isExplanatoryUniversalQuery(text)||/\b(influencias|datos|redes|internet|organos|personas|drogas|nasal|pulmonar)\b/.test(text))return false;
   return /\b(trafico|congestion|eta|tiempo de llegada|demora vehicular|ruta vehicular)\b/.test(text);
+}
+
+// Explanations and comparisons belong to the general model, which can call tools
+// when needed. A topic word alone must not replace the user's question with live data.
+function isExplanatoryUniversalQuery(text){
+  return /\b(por que|explica\w*|define|definicion|significa\w*|diferencia\w*|compara\w*|relacion entre|causas? de|como se (?:forma|produce|genera|mide)|como funciona\w*|que (?:es|son|causa|produce))\b/.test(text);
 }
 
 export function directTrafficRouteFromQuery(query){

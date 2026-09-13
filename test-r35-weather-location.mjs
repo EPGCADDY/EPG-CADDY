@@ -20,7 +20,7 @@ const originalFetch=globalThis.fetch,calls=[];
 try{
  globalThis.fetch=async raw=>{
   const url=new URL(raw);calls.push(url);
-  if(url.hostname.includes('geocoding')){const name=url.searchParams.get('name');return {ok:true,json:async()=>({results:name==='Colima'?[{name:'Colima',admin1:'Colima',country:'México',latitude:19.24997,longitude:-103.72714}]:name==='Madrid'?[{name:'Madrid',country:'España',latitude:40.4165,longitude:-3.70256}]:[]})}}
+  if(url.hostname.includes('geocoding')){const name=url.searchParams.get('name');return {ok:true,json:async()=>({results:name==='Colima'?[{name:'Colima',admin1:'Colima',country:'México',latitude:19.24997,longitude:-103.72714}]:name==='Manzanillo'?[{name:'Manzanillo',feature_code:'AIRF',admin1:'Estado de Colima',country:'México',country_code:'MX',latitude:19,longitude:-104},{name:'Manzanillo',feature_code:'PPL',admin1:'Granma',country:'Cuba',country_code:'CU',latitude:20.34,longitude:-77.12},{name:'Manzanillo',feature_code:'PPL',admin1:'Estado de Colima',country:'México',country_code:'MX',latitude:19.11695,longitude:-104.34214}]:name==='Madrid'?[{name:'Madrid',country:'España',latitude:40.4165,longitude:-3.70256}]:[]})}}
   return {ok:true,json:async()=>({timezone:'America/Mexico_City',current:{time:'2026-09-13T08:45',temperature_2m:27,apparent_temperature:28,precipitation:0,weather_code:2,wind_speed_10m:8},hourly:{time:['2026-09-13T09:00'],precipitation_probability:[30],precipitation:[0]}})};
  };
  const ask=async(query,history=[])=>{let status=200,body;await handler({method:'POST',headers:{},body:{query,history,responseMode:'voice',appContext:context}},{setHeader(){},status(n){status=n;return this},json(value){body=value;return this}});return{status,body}};
@@ -28,6 +28,8 @@ try{
  assert.equal(calls[0].searchParams.get('countryCode'),'MX');assert.equal(calls[1].searchParams.get('latitude'),'19.24997');assert.equal(calls[1].searchParams.get('longitude'),'-103.72714');
  const second=await ask('¿Y en Madrid España?',[{role:'user',content:'Cómo está el clima en Colima México'},{role:'assistant',content:first.body.answer}]);assert.equal(second.status,200);assert.match(second.body.answer,/Madrid, España/);assert.equal(calls.at(-1).searchParams.get('latitude'),'40.4165');
  const missing=await ask('Clima en CiudadinventadaXYZ');assert.equal(missing.body.error,'LOCATION_REQUIRED');assert.equal(calls.at(-1).hostname,'geocoding-api.open-meteo.com');
+ const state=await ask('Cómo está el clima en Manzanillo Colima');assert.equal(state.status,200);assert.match(state.body.answer,/Manzanillo, Estado de Colima, México/);assert.equal(calls.at(-1).searchParams.get('latitude'),'19.11695');
+ const unknownState=await ask('Clima en Manzanillo Estadoinventado');assert.equal(unknownState.body.error,'LOCATION_REQUIRED');
  const nullCoords=await computeWeatherForecast({location:'Colima México',latitude:null,longitude:null});assert.equal(nullCoords.ok,true);assert.equal(calls.at(-1).searchParams.get('latitude'),'19.24997');
  console.log('PASS handler completo: Colima usa México; segunda pregunta Madrid cambia ciudad; lugar inexistente no sustituye Guatemala; coordenadas null no se convierten en cero');
 }finally{globalThis.fetch=originalFetch}

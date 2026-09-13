@@ -1,0 +1,1053 @@
+{
+  "at": "2026-09-13T20:05:11.373Z",
+  "scope": "100 text queries through local real handler and live Open-Meteo; not ASR, TTS, iPhone or independent ChatGPT benchmark",
+  "results": [
+    {
+      "place": "Manzanillo Colima",
+      "query": "Cómo está el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 17043,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Qué clima hace en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 262,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Dime el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 266,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Cuál es el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 262,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Qué temperatura hace en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 263,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Dime la temperatura en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 265,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Cómo está el tiempo meteorológico en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 324,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Quiero saber el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 234,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Me puedes decir el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 8859,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Por favor dime el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7044,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Consulta el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 257,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Qué tal está el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 252,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Necesito conocer el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 255,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Puedes consultar el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 256,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Me interesa el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 252,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Cuéntame cómo está el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 256,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Infórmame del clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 257,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Dame información del clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 255,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Me dices la temperatura en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 256,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Manzanillo Colima",
+      "query": "Quisiera saber cómo está el clima en Manzanillo Colima",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 256,
+      "answer": "En Manzanillo, Estado de Colima, México está nublado, con 34 grados. Se siente como 40 grados. Hoy hay 87 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Cómo está el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 14622,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Qué clima hace en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 6799,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Dime el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 6631,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Cuál es el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 257,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Qué temperatura hace en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 254,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Dime la temperatura en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 255,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Cómo está el tiempo meteorológico en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 391,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Quiero saber el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 255,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Me puedes decir el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 256,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Por favor dime el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 256,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Consulta el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 258,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Qué tal está el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 272,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Necesito conocer el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 265,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Puedes consultar el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 256,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Me interesa el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 256,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Cuéntame cómo está el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 264,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Infórmame del clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 257,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Dame información del clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 267,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Me dices la temperatura en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 259,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Guadalajara Jalisco",
+      "query": "Quisiera saber cómo está el clima en Guadalajara Jalisco",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 252,
+      "answer": "En Guadalajara, Estado de Jalisco, México está principalmente despejado, con 27 grados. Se siente como 30 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Cómo está el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 17135,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Qué clima hace en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 8898,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Dime el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 6507,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Cuál es el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7913,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Qué temperatura hace en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7805,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Dime la temperatura en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 6535,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Cómo está el tiempo meteorológico en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7694,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Quiero saber el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 260,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Me puedes decir el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 259,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Por favor dime el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 261,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Consulta el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 265,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Qué tal está el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 259,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Necesito conocer el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 263,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Puedes consultar el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 263,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 20 kilómetros por hora. Dato de las 13:45."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Me interesa el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 264,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 21 kilómetros por hora. Dato de las 14:00."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Cuéntame cómo está el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 378,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 21 kilómetros por hora. Dato de las 14:00."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Infórmame del clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 1066,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 21 kilómetros por hora. Dato de las 14:00."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Dame información del clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 1000,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 21 kilómetros por hora. Dato de las 14:00."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Me dices la temperatura en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 687,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 21 kilómetros por hora. Dato de las 14:00."
+    },
+    {
+      "place": "Monterrey Nuevo León",
+      "query": "Quisiera saber cómo está el clima en Monterrey Nuevo León",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 18021,
+      "answer": "En Monterrey, Estado de Nuevo León, México está cielo despejado, con 35 grados. Se siente como 37 grados. Hoy hay 4 por ciento de probabilidad de lluvia. Hay viento de 21 kilómetros por hora. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Cómo está el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 16253,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Qué clima hace en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 293,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Dime el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 265,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Cuál es el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 308,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Qué temperatura hace en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 234,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Dime la temperatura en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 8722,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Cómo está el tiempo meteorológico en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7907,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Quiero saber el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 8469,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Me puedes decir el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7034,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Por favor dime el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7486,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Consulta el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7722,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Qué tal está el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7884,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Necesito conocer el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 6924,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Puedes consultar el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 6908,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Me interesa el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7762,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Cuéntame cómo está el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 9011,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Infórmame del clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7954,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Dame información del clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7221,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Me dices la temperatura en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7270,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Mérida Yucatán",
+      "query": "Quisiera saber cómo está el clima en Mérida Yucatán",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7448,
+      "answer": "En Mérida, Estado de Yucatán, México está principalmente despejado, con 35 grados. Se siente como 38 grados. Hoy hay 76 por ciento de probabilidad de lluvia. Dato de las 14:00."
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Cómo está el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 17182,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Cómo está el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 8203,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Qué clima hace en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 281,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Qué clima hace en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 500,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Dime el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 272,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Dime el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 517,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Cuál es el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 268,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Cuál es el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 538,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Qué temperatura hace en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 264,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Qué temperatura hace en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 480,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Dime la temperatura en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 272,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Dime la temperatura en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 480,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Cómo está el tiempo meteorológico en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 271,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Cómo está el tiempo meteorológico en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 807,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Quiero saber el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 270,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Quiero saber el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 656,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Me puedes decir el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 270,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Me puedes decir el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 482,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Por favor dime el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 268,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Por favor dime el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 482,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Consulta el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 271,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Consulta el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 491,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Qué tal está el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 264,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Qué tal está el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 488,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Necesito conocer el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 282,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Necesito conocer el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 563,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Puedes consultar el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 267,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Puedes consultar el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 479,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Me interesa el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 268,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Me interesa el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 497,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Cuéntame cómo está el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 268,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Cuéntame cómo está el clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 486,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Infórmame del clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 283,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Infórmame del clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 504,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Dame información del clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 16427,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Dame información del clima en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 476,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Me dices la temperatura en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 7791,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00.",
+      "previousAttempt": {
+        "place": "Tepic Nayarit",
+        "query": "Me dices la temperatura en Tepic Nayarit",
+        "pass": false,
+        "status": 502,
+        "elapsedMs": 490,
+        "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n502 !== 200\n",
+        "body": {
+          "ok": false,
+          "needsLocation": true,
+          "error": "LOCATION_REQUIRED"
+        }
+      }
+    },
+    {
+      "place": "Tepic Nayarit",
+      "query": "Quisiera saber cómo está el clima en Tepic Nayarit",
+      "pass": true,
+      "status": 200,
+      "elapsedMs": 8871,
+      "answer": "En Tepic, Estado de Nayarit, México está llovizna moderada, con 28 grados. Se siente como 33 grados. Hoy hay 100 por ciento de probabilidad de lluvia. Dato de las 13:00."
+    }
+  ]
+}
