@@ -838,3 +838,5 @@ Registro conjunto del despliegue: hotfix `main` commits `481f716` y `c548f30`; m
 - `scripts/universal-quality-benchmark.mjs`: cuatro consultas reales al backend durante Preview, con resultados verificables; referencia ChatGPT de esta conversación y evaluación de contenido, no similitud literal.
 - `test-r31-universal-plain.mjs`: regresión de clima actual, datos ausentes y horizonte de lluvia.
 - `vercel.json`: ejecuta comparación solamente en la rama de revisión. Resultado y publicación pendientes.
+
+- `docs/quality/R31_COMPARACION_UNIVERSAL.md`: referencia previa, fuentes y rúbrica de 100 puntos; el análisis detallado se mantiene sólo cuando se solicita profundidad.
