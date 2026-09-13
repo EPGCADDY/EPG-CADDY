@@ -1015,4 +1015,5 @@ Alcance: ubicación explícita y premisas de costos/precios; nueve consultas rea
 - `vercel.json`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
 - `scripts/run-r36-targeted.mjs`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
 
-- `scripts/run-r36-build.mjs`: conserva el build y sus controles; evita exceder 256 caracteres de buildCommand.
+- `scripts/run-r36-build.mjs`: conserva controles de construcción dentro del límite de 256 caracteres.
+- Corrección posterior comprobada: `api/universal-ai.js` conserva alias exacto El Pulté sin reutilizar coordenadas para ciudades explícitas; `test-r35-weather-location.mjs` y V337 PASS dirigidos. El ensayo remoto sigue pendiente; no publicación.
