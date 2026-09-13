@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import vm from "node:vm";
 import "./match-play.js";
 import "./four-ball.js";
 import artifacts from "./card-artifacts.js";
@@ -33,9 +34,9 @@ assert.match(html,/id="artifactViewerBack"/);
 assert.match(html,/id="artifactViewerSend"/);
 assert.match(html,/id="sendFinalCard" hidden>ENVIAR TARJETA DIGITAL<\/button><button class="screen-back-button" id="closeFinalCard">ATRÁS<\/button>/);
 assert.match(html,/closeButton\.hidden=!!round\.officiallyClosedAt/,"FINALIZAR RONDA debe estar visible antes del cierre y desaparecer sólo después");
-assert.match(html,/\$\("sendFinalCard"\)\.addEventListener\("click",\(\)=>shareOfficialArtifactImage\(officialArtifacts\(\)\.global\)\)/);
-assert.match(html,/GSCCardFileExport\.png\(item\)[\s\S]{0,300}type:"image\/png"/,"El envío principal debe preparar un PNG real");
-assert.match(html,/const actions=\$\("artifactActions"\);actions\.hidden=true/);
+assert.match(html,/\$\("sendFinalCard"\)\.addEventListener\("click",shareOfficialArtifactImage\)/);
+assert.match(html,/prepareFinalCardShare\(\)[\s\S]{0,900}GSCCardFileExport\.png\(item\)/,"El envío principal debe preparar un PNG real antes del toque");
+assert.match(html,/const actions=\$\("artifactActions"\),sendButton=\$\("sendFinalCard"\);actions\.hidden=true/);
 assert.match(html,/window\.opener\.focus\(\);window\.close\(\)/);
 assert.match(html,/GSCCardFileExport\.png\(item\)/);
 assert.match(html,/navigator\.canShare/);
@@ -52,4 +53,19 @@ assert.doesNotMatch(html,/id="accountBackupButtonStableford"(?:\s|>)/,"Stablefor
 assert.match(html,/if\(back\)back\.classList\.toggle\("hidden",!round\.configured\)/,"Práctica debe mostrar ATRÁS");
 assert.match(html,/isStablefordRound\(\)\|\|round\.provisional\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)/,"ATRÁS de Práctica debe volver a principal");
 
-console.log("PASS V397 · 8 artefactos con IN 1–9, OUT 10–18, TOTAL 1–18; visor con ATRÁS + ENVÍO; REGÍSTRATE sólo en principal");
+const shareStart=html.indexOf("function shareOfficialArtifactImage(){"),shareEnd=html.indexOf("\nfunction openFinalDigitalCard(){",shareStart),shareSource=html.slice(shareStart,shareEnd);
+assert.ok(shareStart>0&&shareEnd>shareStart,"La función visible de envío debe existir");
+assert.doesNotMatch(shareSource,/async function shareOfficialArtifactImage|await\s+window\.GSCCardFileExport\.png/,"El toque no puede gastar la activación del usuario generando el PNG");
+assert.match(html,/async function prepareFinalCardShare\(\)[\s\S]{0,900}await window\.GSCCardFileExport\.png\(item\)/,"El PNG debe prepararse antes del toque");
+const actionsAt=html.indexOf('<div class="artifact-actions" id="artifactActions" hidden>'),actionsEnd=html.indexOf('</div>',actionsAt),statusAt=html.indexOf('id="artifactShareStatus"');
+assert.ok(statusAt>actionsEnd,"El resultado del envío debe ser visible fuera del panel oculto");
+const preparedItem=artifacts.build({...base,mode:"universales",players:["JAIME","JUAN LUIS","JUGADOR 3","JUGADOR 4"].map((name,index)=>({id:`p${index+1}`,name,handicap:0,tee:"Blanco",holes}))}).global,preparedBlob=new Blob(["png"],{type:"image/png"});
+let activation=true,shareCalls=0,statusText="",buttonText="",buttonDisabled=false;
+const button={get disabled(){return buttonDisabled},set disabled(value){buttonDisabled=value},get textContent(){return buttonText},set textContent(value){buttonText=value}},shareStatus={get textContent(){return statusText},set textContent(value){statusText=value}};
+class FakeFile{constructor(parts,name,options){this.parts=parts;this.name=name;this.type=options.type}}
+const context={prepared:{id:"round:hash:1",item:preparedItem,blob:preparedBlob},navigator:{canShare:()=>true,share:()=>{assert.equal(activation,true,"navigator.share debe comenzar dentro del toque");shareCalls+=1;return Promise.resolve()}},File:FakeFile,Promise,URL,document:{},console,setTimeout,recordShareEvent:()=>true,officialArtifactShareText:()=>"TARJETA OFICIAL",prepareFinalCardShare:()=>false,$:id=>id==="sendFinalCard"?button:shareStatus,finalCardShareIdentity:()=>"round:hash:1"};
+vm.runInNewContext(`let finalCardPreparedShare=prepared;${shareSource};this.runShare=shareOfficialArtifactImage`,context);
+const sharePromise=context.runShare();activation=false;const shareResult=await sharePromise;
+assert.equal(shareCalls,1);assert.equal(shareResult.ok,true);assert.equal(buttonDisabled,false);assert.equal(buttonText,"ENVIAR TARJETA DIGITAL");assert.equal(statusText,"IMAGEN PNG ENTREGADA A LA APP ELEGIDA");
+
+console.log("PASS V397/R29 · 8 artefactos; PNG preparado antes del toque; hoja nativa con activación vigente; estado visible");
