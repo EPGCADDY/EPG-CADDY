@@ -1075,3 +1075,8 @@ La regresión dirigida exige destrucción completa, prohíbe `release→prime` d
 - Restaura `index-grupal.html` y `service-worker.js` como fuentes auditables completas; el generador los transforma en cargador y worker de retiro únicamente después de aprobar la auditoría.
 - Evita que pruebas heredadas examinen un cargador de 1.7 KB en lugar de la aplicación. El comportamiento crítico ya aprobado no cambia. MAESTRO/Producción intactos.
 - El gate intocable acepta únicamente las dos representaciones válidas del worker R62: fuente V363 auditable o retiro generado que borra cachés heredadas y se desregistra.
+
+## V407 · R63 — VOZ PERSISTENTE EN IPHONE (13-09-2026)
+
+- Causa raíz: el atajo iOS evitaba `/api/session-grupal`, cerraba el reconocimiento después de la primera pregunta y podía aceptar `speechSynthesis.onstart` sin audio audible. R63 prioriza WebRTC persistente y conserva el fallback local solo dentro de la recuperación de transporte.
+- Evidencia focal: `test-v407-r63-iphone-persistent-voice.mjs`, gate de actualización, transporte de micrófono, 25 turnos universales y voz en Inicio/Registro/Tarjeta en PASS. MAESTRO/Producción intactos.

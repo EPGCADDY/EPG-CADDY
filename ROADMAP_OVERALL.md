@@ -997,3 +997,7 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Las fuentes completas se auditan primero y solo después se generan el cargador persistente y el worker de retiro.
 - Cierra el fallo reproducible que hacía al auditor leer el artefacto transformado como si fuera la aplicación. MAESTRO/Producción intactos.
 - El gate intocable valida explícitamente ambas fases: worker fuente V363 antes del build o worker de retiro con eliminación de caché y desregistro después del build.
+
+## V407 · R63 — VOZ PERSISTENTE EN IPHONE (13-09-2026)
+
+- Elimina el forzado de captura local de una sola toma en iPhone; WebRTC persistente conserva audio y preguntas consecutivas, con SpeechRecognition únicamente como respaldo ante fallo. MAESTRO/Producción intactos.
