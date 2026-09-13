@@ -1006,4 +1006,8 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - Los tests `test-country-club-official.mjs`, `test-round-clock.mjs`, `test-score-engine.mjs` y `test-v250-stableford-delivery-matrix.mjs` validan la fuente canónica completa, no el cargador generado.
 - `audit-project.mjs` materializa `candidate-index-grupal.html` únicamente después de aprobar candados y antes de los tests históricos; `apply-update-e.mjs` genera después el cargador final.
 - Publicación fuente primero: `index-grupal.html` coincide con la fuente canónica y `service-worker.js` conserva el worker PWA auditable; el build genera sus artefactos finales únicamente después del PASS.
+
+## V407 · R64 — CIERRE FUENTE PRIMERO Y VOZ PERSISTENTE (13-09-2026)
+
+- Identidad obligatoria para el payload fuente-primer​​o: ACTUALIZAR recibe una revisión superior y el micrófono conserva WebRTC persistente con fallback local. MAESTRO intacto.
 - `audit-project.mjs` materializa la fuente canónica completa únicamente durante la fase de pruebas; `apply-update-e.mjs` genera después el cargador persistente. Se elimina el fallo sistémico de tests contra un artefacto de 1.7 KB.
