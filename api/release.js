@@ -9,9 +9,9 @@ export default function handler(req,res){
   res.status(200).json({
     schema:'gscg-release/v1',
     channel:'lab-update-architecture-e-ios-first',
-    release:'V407-R64-SOURCE-FIRST-PERSISTENT-VOICE-20260913',
-    baseline:'V407-R64',
-    baselineCommit:'R64-SOURCE-FIRST-PERSISTENT-VOICE',
+    release:'V407-R65-SAFE-PERSISTENT-VOICE-20260913',
+    baseline:'V407-R65',
+    baselineCommit:'R65-SAFE-PERSISTENT-VOICE',
     publishedAt:'2026-09-12T23:33:12Z'
   });
 }

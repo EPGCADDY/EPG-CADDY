@@ -12,7 +12,8 @@ assert.ok(toggle.includes("startBrowserVoiceFallback(context)"),"fallback local 
 assert.ok(override.includes("window.gestureSafeBrowserVoicePreferred=()=>false"),"iPhone no debe forzar captura de una sola toma");
 assert.ok(source.includes("finishAiUniversalSpeechTurn({resumeConversation})"),"audio debe reabrir la conversación");
 assert.ok(source.includes("resumeConversationListening()"),"WebRTC debe permitir el siguiente turno");
-assert.ok(generator.includes("V407-R64-SOURCE-FIRST-PERSISTENT-VOICE-20260913"));
-assert.ok(generator.includes("V407 · R64"));
-assert.ok(release.includes("V407-R64-SOURCE-FIRST-PERSISTENT-VOICE-20260913"));
-console.log("PASS R64 IPHONE · WebRTC persistente primero, audio y segundo turno conservados, fallback ante fallo");
+assert.ok(override.includes('if(typeof window!=="undefined")window.addEventListener'));
+assert.ok(generator.includes("V407-R65-SAFE-PERSISTENT-VOICE-20260913"));
+assert.ok(generator.includes("V407 · R65"));
+assert.ok(release.includes("V407-R65-SAFE-PERSISTENT-VOICE-20260913"));
+console.log("PASS R65 IPHONE · WebRTC persistente primero, audio y segundo turno conservados, fallback ante fallo");

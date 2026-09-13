@@ -1,9 +1,9 @@
 {
   "schema": "gscg-update-chain-payload/v4",
   "status": "PUBLICATION_CHAIN_LOCKED",
-  "release": "V407-R64-SOURCE-FIRST-PERSISTENT-VOICE-20260913",
+  "release": "V407-R65-SAFE-PERSISTENT-VOICE-20260913",
   "fileCount": 72,
-  "fingerprint": "068f4ee11968bee7fe5d6ecc9f200dc4ed6f271509b0f2446b98f10fdae4edca",
+  "fingerprint": "ce6123e6c6bc464dfa5f6551ea07b2d1c7fb5ee0361ee3f707afda29c4a3444e",
   "candidateSha256": "2ee8fcbc1690c516fd9eadbd276d291183f3c7140e8b4727e7a12349538a1023",
   "generatedFromCommit": "c8899367cd8557b5e8151c633af92d4bc8f6fb20",
   "scope": "runtime-auto-v3-vercel-semantic",
@@ -27,7 +27,7 @@
     "api/database-health.js": "92299b9c091c9e2ec3008106edea1ab805b47be2eb65c96b0c092072d4bee39c",
     "api/golf-rules.js": "9e5bd35bb92ea58488c0eadca0ceed1ee1bbb7b5f6d0edbf5289da6df3866afd",
     "api/live.js": "56555825856ac862f24c5948d5b51e663df49097fd7a810b616ff5d26a066069",
-    "api/release.js": "500bda1c359d28aa0e0dadbce3cebd5b01ee8004ce97a349f8fd43c136455c88",
+    "api/release.js": "c154c21e0f9187cae96b9cc9a68e785c2c043c0fad7a2f134be86867e21b085a",
     "api/research.js": "3a79c7edaa34ac33c894f82cb3113a8d17f6b523dc223590ed831d1ecb7b749e",
     "api/score.js": "c3ef25fca5ed7d831fc33cd8c031b1cfba4eea66564b2e90f89208a5d02c5039",
     "api/session-grupal.js": "5e90ddbed72ea98296f6918b061588a898fccf3276d4036a278647e6f3a3b7e7",
@@ -81,7 +81,7 @@
     "update-client-e.js": "503e1a649dfb507dec14a58a04efb7880210069a538199ef1cd7ef7c9d0db8d1",
     "vegas.js": "20cf266b5a9fe1d9dc4f24ced6a5dc0b0495b138e76ea4aa7b81b084ad2f4075",
     "vercel.legacy-mirror.json": "750d15fc1a026465a48fd7682775625665d4eb76fe114ff2a4c3bcca424b70c8",
-    "voice-assistant.js": "90c76b91213ac51fb751390c39e2f1f831c8fc59d895df99acbb249cb530311b",
+    "voice-assistant.js": "2ef7c07ff30bbafb9567e404262a598f8ef6be287d83f8fe3cceadb05cc2bb4f",
     "wolf.js": "6f671c6723ca5577ca4eda729f58d0fe769fe09e981badf6f578ab7a3acefa04"
   }
 }
