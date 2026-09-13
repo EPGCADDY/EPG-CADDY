@@ -1,0 +1,157 @@
+{
+  "status": "REJECTED_AS_ACCEPTANCE_BANK",
+  "reason": "Draft contains easy cases and has not run through real microphone or against independent ChatGPT references. Not eligible for acceptance or a 90 percent claim.",
+  "executedFullFlow": 0,
+  "draftSuites": [
+    {
+      "topic": "Geografía y seguimiento",
+      "questions": [
+        "¿Cuál es la capital de Italia?",
+        "¿En qué país está esa ciudad?",
+        "¿Qué idioma se habla principalmente allí?",
+        "Ahora dime la capital de Japón.",
+        "¿Y la de Canadá?",
+        "¿Toronto es la capital de Canadá? Corrige la premisa si hace falta.",
+        "¿Cuál es la diferencia entre un país y un continente?",
+        "Nombra tres países sudamericanos que no sean Brasil.",
+        "¿Con qué países tiene frontera terrestre Guatemala?",
+        "Resume las capitales que mencionamos en esta conversación."
+      ]
+    },
+    {
+      "topic": "Aritmética y contexto",
+      "questions": [
+        "Si un producto cuesta 100, baja 20% y luego sube 20%, ¿cuánto cuesta?",
+        "¿Por qué no vuelve a 100?",
+        "Si peso 93 kilos y antes 103, ¿cuántos kilos perdí?",
+        "¿Cuántas libras son esos kilos perdidos? Usa 2.20462262185 libras por kilo.",
+        "Tengo 150 y gasto dos quintas partes. ¿Cuánto queda?",
+        "Divide ese saldo entre tres personas por igual.",
+        "¿Qué es mayor, 0.9 o 0.11?",
+        "Si camino 3 kilómetros en 30 minutos, ¿cuál es mi velocidad en kilómetros por hora?",
+        "¿Cuánto tardaría a esa velocidad en recorrer 9 kilómetros?",
+        "Sin cambiar las cifras, resume las dos últimas respuestas."
+      ]
+    },
+    {
+      "topic": "Razonamiento",
+      "questions": [
+        "Una moneda justa cayó cara cinco veces. ¿Es más probable cruz ahora?",
+        "Explícalo sin fórmulas.",
+        "Si todos los perros son mamíferos, ¿todos los mamíferos son perros?",
+        "Dame un contraejemplo.",
+        "Tengo tres cajas: una contiene solo manzanas, otra solo naranjas y otra mezcla. Las tres etiquetas están mal. ¿De cuál saco una fruta para identificarlas?",
+        "Si de la caja etiquetada mezcla saco una manzana, ¿qué contiene esa caja?",
+        "¿Cuántos meses tienen al menos 28 días?",
+        "¿Un kilo de plomo pesa más que un kilo de plumas?",
+        "¿Y ocupan el mismo volumen?",
+        "Corrige con tacto: después de perder veinte por ciento necesito ganar veinte por ciento para recuperarme."
+      ]
+    },
+    {
+      "topic": "Memoria e instrucciones",
+      "questions": [
+        "Para este ejercicio soy Ana, mi perro se llama Nube y tengo dos plantas. Recuérdalo solo dentro de esta conversación.",
+        "¿Cómo se llama mi perro?",
+        "Mi perro se llama ahora Brisa; corrige el dato anterior.",
+        "¿Cómo se llama ahora?",
+        "Compré tres plantas más. ¿Cuántas tengo?",
+        "Regalé una. Actualiza la cantidad.",
+        "Escribe una frase de diez palabras sobre Brisa sin inventar su raza.",
+        "¿Te dije la raza de mi perro?",
+        "Dame los tres datos personales que sí te di, sin agregar nada.",
+        "Cambia de tema y explica qué es una nube del cielo."
+      ]
+    },
+    {
+      "topic": "Hogar y cuidado de objetos",
+      "questions": [
+        "¿Cómo hidrato un cincho de cuero que se está agrietando?",
+        "¿Y si es sintético y se está pelando?",
+        "¿Conviene aplicar el producto en todo el cincho sin probar primero?",
+        "Tengo una orquídea con hojas verdes que no florece. ¿Qué reviso primero?",
+        "¿Puedo asegurar que florecerá cada mes?",
+        "¿Qué cambia si las raíces están blandas y oscuras?",
+        "¿Cómo limpio una pantalla de teléfono sin dañarla?",
+        "¿Le echo el líquido directamente a la pantalla?",
+        "¿Cómo distingo una mancha superficial de daño al recubrimiento?",
+        "Resume las precauciones sin recomendar marcas."
+      ]
+    },
+    {
+      "topic": "Lenguaje y creación",
+      "questions": [
+        "Traduce al inglés: mañana voy a jugar golf.",
+        "Ahora al francés.",
+        "Explica en español la diferencia entre ahí, hay y ay.",
+        "Escribe una oración con cada una.",
+        "Corrige únicamente la ortografía: aver si mañana ahi tiempo.",
+        "Redacta un mensaje breve para cambiar una cita del martes al jueves sin inventar una hora.",
+        "Hazlo más cordial y conserva los días.",
+        "Resume en cinco palabras: una buena comunicación exige escuchar y responder con claridad.",
+        "Dame un sinónimo de preciso y uno de breve.",
+        "Escribe una historia de tres oraciones con una llave, lluvia y una sorpresa sin violencia."
+      ]
+    },
+    {
+      "topic": "Ciencia cotidiana",
+      "questions": [
+        "¿Por qué el cielo suele verse azul?",
+        "¿Y por qué un atardecer puede verse rojo?",
+        "¿El Sol gira alrededor de la Tierra?",
+        "¿Por qué parece moverse en el cielo?",
+        "¿Qué diferencia hay entre masa y peso?",
+        "¿Mi masa cambia al ir a la Luna?",
+        "¿Y mi peso?",
+        "¿Por qué flota el hielo en el agua?",
+        "¿Eso significa que todos los sólidos flotan en su líquido?",
+        "Resume el ejemplo del hielo para un niño de diez años."
+      ]
+    },
+    {
+      "topic": "Golf y límites del escritor",
+      "questions": [
+        "¿Qué significa birdie en golf?",
+        "¿Y bogey?",
+        "En un hoyo par cuatro hice cinco golpes. ¿Cuál es el resultado gross respecto al par?",
+        "Si recibo un golpe de hándicap en ese hoyo, ¿cuál es el neto?",
+        "Esto es un ejemplo, no registres nada en mi tarjeta.",
+        "¿Puedes calcular un hándicap oficial con una sola cifra de gross y sin datos del campo?",
+        "¿Qué datos faltan?",
+        "Explica la diferencia entre gross y neto sin modificar ningún score.",
+        "¿Por qué dos tees pueden tener distinto course rating?",
+        "Resume nuestra cuenta del hoyo par cuatro."
+      ]
+    },
+    {
+      "topic": "Planificación y ambigüedad",
+      "questions": [
+        "Tengo dos horas libres y tres tareas: leer 30 minutos, caminar 40 y ordenar 20. ¿Cabe todo?",
+        "¿Cuánto tiempo sobra?",
+        "Agrega una pausa de diez minutos. ¿Cuánto queda?",
+        "Haz un orden con la caminata primero.",
+        "No quiero caminar al final. ¿Tu orden cumple?",
+        "Dime si para recomendar una ruta exacta necesitas saber origen y destino.",
+        "Quiero ir allá mañana. ¿Qué dato necesitas antes de darme una ruta?",
+        "No inventes mi ubicación. ¿La conoces a partir de lo que te dije en esta conversación?",
+        "Redacta una pregunta breve para obtener los datos faltantes.",
+        "Cierra con un resumen del plan de dos horas, sin incluir una ruta inventada."
+      ]
+    },
+    {
+      "topic": "Clima y cambios de ciudad",
+      "questions": [
+        "¿Cómo está el clima en la ciudad de Colima México?",
+        "¿Y en Madrid España?",
+        "¿Cuál de esas dos ciudades tiene mayor temperatura según los datos que acabas de obtener?",
+        "¿Cómo está el clima en Bogotá Colombia?",
+        "¿Cómo está el clima en Lima Perú?",
+        "¿Cómo está el clima en Buenos Aires Argentina?",
+        "¿Cómo está el clima en Santiago Chile?",
+        "¿Cómo está el clima en Roma Italia?",
+        "¿Qué diferencia hay entre probabilidad de lluvia y lluvia observada?",
+        "¿Puedes afirmar que está lloviendo ahora solo porque hay 90% de probabilidad para hoy?"
+      ]
+    }
+  ]
+}

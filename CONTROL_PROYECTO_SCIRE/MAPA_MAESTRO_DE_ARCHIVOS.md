@@ -1287,3 +1287,12 @@ Evidencia separada: sin cierre físico ni cambios especulativos de captura.
 ## Captura limpia B · 2026-09-13
 - `test-r34-capture-cleanup.mjs`: primer sin objectURL, respuesta previa y callbacks residuales.
 - `docs/quality/R34_CAPTURA_LIMPIA.md`: resultado físico aislado, diferencias y límites.
+
+## 2026-09-13 · Orden formal de100 pruebas: BLOQUEO DE ENTORNO
+0/100 recorridos completos y0/100 referencias ChatGPT. Captura remota NotFoundError. Prohibido presentar simulación o API como banco aprobado; no enviar otra versión antes de completar criterio. Participación del propietario solo prueba física final.
+- `docs/quality/ORDEN_VALIDACION_100_BLOQUEADA_20260913.md`
+- `tests/fixtures/universal-100-DRAFT.json`
+- `ROADMAP_OVERALL.md`
+- `ROADMAP_A_DETALLE.md`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
