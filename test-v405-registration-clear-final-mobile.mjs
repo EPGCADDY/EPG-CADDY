@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 
-const html=readFileSync('index-grupal.html','utf8');
+const html=readFileSync('candidate-index-grupal.html','utf8');
 assert.match(html,/id="clearAllRegistration">BORRAR TODO<\/button>/);
 assert.match(html,/id="clearRoundScores"[^>]*>BORRAR TODO<\/button>/);
 assert.match(html,/id="clearScoresOnly"[^>]*>BORRAR SCORES<\/button>/,"La ronda activa debe permitir borrar sólo scores");
