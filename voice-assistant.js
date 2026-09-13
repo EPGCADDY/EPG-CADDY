@@ -55,5 +55,13 @@
     return{matched:false};
   }
 
+  // R63: Safari/iPhone uses persistent WebRTC first. The in-page
+  // SpeechRecognition transport remains the automatic catch fallback.
+  window.addEventListener("DOMContentLoaded",()=>{
+    if(typeof window.gestureSafeBrowserVoicePreferred==="function"){
+      window.gestureSafeBrowserVoicePreferred=()=>false;
+    }
+  },{once:true});
+
   return Object.freeze({normalize,parse,rules});
 });
