@@ -937,3 +937,17 @@ Prueba interna autorizada para continuar sin depender de transcripción HTTP401.
 - `scripts/run-engine-100-isolation.mjs`: ejecutor con respuestas, errores y latencia por pregunta; sólo rama de prueba y entorno Preview.
 - `docs/quality/ENGINE_100_BANK.json`: banco importado del commit c37f600; referencias declaradas ChatGPT web, revisión independiente pendiente.
 - `vercel.json`: ejecuta diagnóstico después de controles existentes.
+
+
+## R36 ensayo dirigido interno · sin publicación de producción
+
+Alcance: ubicación explícita y premisas de costos/precios; nueve consultas reales IA → bytes TTS. No captura ni reproducción ni certificación iPhone. Base e871621; rollback: descartar rama de ensayo. No aprobación del banco completo ni 40% de latencia demostrados. Se preservan los controles de build existentes.
+
+- `api/universal-ai.js`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
+- `api/weather.js`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
+- `test-r31-universal-plain.mjs`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
+- `test-v335-response-caliber.mjs`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
+- `test-v364-vercel-oidc-recovery.mjs`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
+- `test-r35-weather-location.mjs`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
+- `vercel.json`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
+- `scripts/run-r36-targeted.mjs`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.

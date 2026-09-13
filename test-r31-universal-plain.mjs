@@ -3,8 +3,9 @@ import {formatStructuredWeatherAnswer,weatherForecastIntentForQuery} from './api
 const sample={ok:true,location:'El Pulté',condition:'parcialmente nublado',temperatureC:22,feelsLikeC:23,windKmh:5,maxRainProbabilityToday:80,observedAt:'2026-09-13T10:15'};
 const spoken=formatStructuredWeatherAnswer(sample,{concise:true});
 assert.match(spoken,/En El Pulté está parcialmente nublado, con 22 grados/);
-assert.match(spoken,/para hoy es de 80 por ciento/);
-assert.match(spoken,/no significa que esté lloviendo ahora/);
+assert.match(spoken,/Hoy hay 80 por ciento de probabilidad de lluvia/);
+assert.match(spoken,/Hoy hay .* probabilidad de lluvia/);
+assert.doesNotMatch(spoken,/está lloviendo/);
 assert.match(spoken,/10:15/);
 assert.doesNotMatch(spoken,/\*\*|milímetros|resolución|sensación térmica/);
 const missing=formatStructuredWeatherAnswer({...sample,temperatureC:null,feelsLikeC:null,maxRainProbabilityToday:null},{concise:true});

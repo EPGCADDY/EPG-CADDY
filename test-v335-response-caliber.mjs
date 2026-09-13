@@ -71,7 +71,7 @@ const gatewayRecovered=await requestUniversalResponse({model:"gpt-5.6",input:[{r
 });
 assert.equal(gatewayRecovered.ok,true,"El saldo agotado de OpenAI debe saltar al Gateway administrado");
 assert.equal(gatewayRecovered.gateway,true);
-assert.equal(gatewayUrls.filter(url=>url.includes("api.openai.com")).length,3);
+assert.equal(gatewayUrls.filter(url=>url.includes("api.openai.com")).length,1);
 assert.equal(gatewayUrls.at(-1),"https://ai-gateway.vercel.sh/v1/responses");
 assert.deepEqual(gatewayBodies.at(-1).providerOptions.gateway.models,["openai/gpt-5.6-sol","anthropic/claude-opus-5","google/gemini-3.1-pro-preview"]);
 
