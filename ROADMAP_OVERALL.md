@@ -1040,3 +1040,14 @@ Archivos exactos:
 - `test-v407-r9-manual-update.mjs`
 
 R36: test-v365-active-round-empty-recovery.mjs conserva la prueba de recuperación y verifica el identificador sucesor de caché.
+
+## V407 · R37 — CLIMA VIVO CONSISTENTE
+
+- `index-grupal.html`: mantiene clima vivo en pantalla y en AI Universal aunque la ronda esté cerrada, sin modificar la tarjeta oficial.
+- `service-worker.js`: publica el identificador y caché independientes R37.
+- `test-r37-closed-round-live-weather.mjs`: reproduce 20.7 °C antiguo frente a 27 °C nuevo y bloquea su reaparición.
+- `test-v312-general-caddie.mjs`: verifica el contrato sucesor de clima vivo sin persistir sobre una ronda cerrada.
+- `audit-project.mjs`: incorpora el caso R37 a la auditoría maestra.
+- `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r25-round-controls.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v407-r9-manual-update.mjs`: verifican la versión visible y el caché R37.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-104.
+- Reversión: commit `ccdd004b361bd84dd5936aa069c7722b13b5659f`; conservar almacenamiento local.

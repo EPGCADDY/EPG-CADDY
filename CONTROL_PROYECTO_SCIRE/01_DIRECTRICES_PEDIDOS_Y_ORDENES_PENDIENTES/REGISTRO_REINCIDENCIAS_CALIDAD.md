@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-104 · CLIMA VIVO CONTRA FRANJA CONGELADA EN RONDA CERRADA · 13 SEPTIEMBRE 2026
+
+- Defecto físico: la respuesta universal indicó 27 °C a las 11:30, pero la franja de la misma pantalla conservó 20.7 °C de las 20:00 de una fecha anterior.
+- Causa raíz reproducida: `syncActiveCourseWeather()` y `scheduleActiveCourseWeather()` cancelaban toda consulta cuando existía `officiallyClosedAt`.
+- Corrección: una instantánea meteorológica viva e informativa actualiza la pantalla y el contexto universal aun con ronda cerrada; la tarjeta oficial cerrada y sus scores no se reescriben.
+- Control permanente: `test-r37-closed-round-live-weather.mjs` exige consulta real de la función, reemplazo visual 20.7 → 27 y cero persistencias sobre la ronda cerrada.
+- Estado: CORREGIDO LOCALMENTE; PREVIEW, DOS TURNOS EXTERNOS, AUDIO DE NAVEGADOR Y ACTUALIZACIÓN REAL PENDIENTES.
+
 ## RC-103 · ENVIAR TARJETA DIGITAL NO ABRÍA WHATSAPP EN IPHONE · 12 SEPTIEMBRE 2026
 
 - Defecto físico: después de finalizar una ronda Universales, el botón visible `ENVIAR TARJETA DIGITAL` no produjo ninguna acción.

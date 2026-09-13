@@ -1103,3 +1103,14 @@ Archivos exactos:
 - `test-v407-r9-manual-update.mjs`
 
 R36: test-v365-active-round-empty-recovery.mjs conserva la prueba de recuperación y verifica el identificador sucesor de caché.
+
+## V407 · R37 — CLIMA VIVO CONSISTENTE
+
+- `index-grupal.html`: `activeCourseWeatherSnapshot` separa el dato meteorológico informativo actual de la tarjeta cerrada; `currentCourseWeatherSnapshot()` alimenta franja y contexto universal. El refresco ya no se cancela por `officiallyClosedAt`, pero `persist()` continúa prohibido en ese estado.
+- `service-worker.js`: `V407-R37-LIVE-WEATHER-20260913` y caché sucesor.
+- `test-r37-closed-round-live-weather.mjs`: ejecuta la función extraída con ronda cerrada, exige una consulta, render sincronizando/final, 27 °C visible, 20.7 °C histórico intacto y cero persistencias.
+- `test-v312-general-caddie.mjs`: sustituye la aserción histórica que exigía cancelar el clima en rondas cerradas por la separación entre instantánea viva y persistencia oficial.
+- `audit-project.mjs`: hace bloqueante la prueba R37.
+- `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r25-round-controls.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v407-r9-manual-update.mjs`: contrato R37 actualizado.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: causa, escape y prevención RC-104.
+- Reversión exacta: `ccdd004b361bd84dd5936aa069c7722b13b5659f`, sin borrar ronda, historial ni credenciales locales.

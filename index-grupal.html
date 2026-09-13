@@ -14,7 +14,7 @@
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
   <meta name="gscg-capture-review" content="R36-FOLLOWUP-PHYSICAL-PENDING">
-  <meta name="gscg-release" content="V407-R36-CONVERSATION-20260913">
+  <meta name="gscg-release" content="V407-R37-LIVE-WEATHER-20260913">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1036,7 +1036,7 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R36</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R37</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 <script src="./guest-access.js"></script>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
@@ -1228,7 +1228,7 @@ const AI_UNIVERSAL_HISTORY_LIMIT=80;
 const processedTranscriptItems=new Set();
 const WEATHER_REFRESH_MS=10*60*1000;
 const WEATHER_RETRY_MS=2*60*1000;
-let weatherRefreshPromise=null,weatherRefreshRoundId=null,weatherRefreshTimer=null;
+let weatherRefreshPromise=null,weatherRefreshRoundId=null,weatherRefreshTimer=null,activeCourseWeatherSnapshot=null;
 let setupWeatherSnapshot=null,setupWeatherPromise=null,setupWeatherRequestSeq=0;
 function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
 function canonicalPlayerName(value){
@@ -2914,7 +2914,7 @@ function routeAiUniversalAppText(text){
   return{handled:false};
 }
 function aiUniversalAppContext(trafficOrigin=null){
-  const weather=round?.weather||setupWeatherSnapshot||null;
+  const weather=currentCourseWeatherSnapshot()||setupWeatherSnapshot||null;
   const courseKey=COURSE_CATALOG[round?.courseKey]?round.courseKey:(COURSE_CATALOG[draftCourse]?draftCourse:"pulte"),course=COURSE_CATALOG[courseKey];
   return{
     course:course?.displayName||round?.course||"",
@@ -3873,7 +3873,8 @@ function clearOnlyRoundScores(){if(!round?.configured||round.officiallyClosedAt)
 function courseRatingText(value){const number=Number(value);return value!==null&&value!==""&&Number.isFinite(number)&&number>0?number.toFixed(1):"—"}
 function courseSlopeText(value){const number=Number(value);return value!==null&&value!==""&&Number.isFinite(number)&&number>0?String(number):"—"}
 function renderCourseInfo(){const preferred=["Negro","Azul","Blanco","Rojo","Amarillo","Plateado"],keys=[...preferred.filter(k=>TEES[k]),...Object.keys(TEES).filter(k=>!preferred.includes(k))],rows=keys.map(k=>[k,TEES[k]]);$("courseInfo").innerHTML=`<div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>${rows.map(([k,t])=>`<div style="text-align:left"><span class="tee-dot" style="background:${t.color};border:${k==='Negro'?'1px solid #777':'0'}"></span><span style="color:${k==='Negro'?'#000':t.color};font-weight:800;${k==='Negro'?'background:#fff;padding:1px 5px;border-radius:2px;display:inline-block;':''}">${Number(t.total).toLocaleString('en-US')}</span></div><div style="text-align:center">${courseRatingText(t.rating)}</div><div style="text-align:center">${courseSlopeText(t.slope)}</div>`).join("")}`}
-function weatherSnapshotIsFresh(snapshot=round.weather){const fetched=Date.parse(snapshot?.fetchedAt||"");return snapshot?.fieldKey===round.courseKey&&Number.isFinite(fetched)&&Date.now()-fetched<WEATHER_REFRESH_MS}
+function currentCourseWeatherSnapshot(){return activeCourseWeatherSnapshot?.fieldKey===round.courseKey?activeCourseWeatherSnapshot:round.weather}
+function weatherSnapshotIsFresh(snapshot=currentCourseWeatherSnapshot()){const fetched=Date.parse(snapshot?.fetchedAt||"");return snapshot?.fieldKey===round.courseKey&&Number.isFinite(fetched)&&Date.now()-fetched<WEATHER_REFRESH_MS}
 function weatherNumber(value,digits=0){const number=Number(value);return value!==null&&value!==""&&Number.isFinite(number)?number.toFixed(digits):"—"}
 function weatherSummaryMarkup(snapshot,label="CLIMA"){
   const origin=snapshot.origin==="gps"?"GPS":"CAMPO · RESPALDO",rain=weatherNumber(snapshot.maxRainProbabilityToday),time=String(snapshot.observedAt||"").slice(11,16)||"—";
@@ -3907,7 +3908,7 @@ async function syncSetupWeather({force=false}={}){
 }
 function renderCourseWeather(state=""){
   const el=$("courseWeather");if(!el)return;
-  const snapshot=round.weather;
+  const snapshot=currentCourseWeatherSnapshot();
   el.classList.toggle("weather-fallback",snapshot?.origin==="field");
   el.classList.toggle("weather-unavailable",!snapshot?.ok);
   if(!round.configured){el.textContent="CLIMA · DISPONIBLE AL INICIAR LA TARJETA";return}
@@ -3916,8 +3917,8 @@ function renderCourseWeather(state=""){
   el.innerHTML=`${weatherSummaryMarkup(snapshot,"CLIMA")}${state==="syncing"?" · ACTUALIZANDO…":""}`;
 }
 async function syncActiveCourseWeather({force=false}={}){
-  if(!round.configured||round.officiallyClosedAt)return null;
-  if(!force&&weatherSnapshotIsFresh())return round.weather;
+  if(!round.configured)return null;
+  if(!force&&weatherSnapshotIsFresh())return currentCourseWeatherSnapshot();
   if(weatherRefreshPromise&&weatherRefreshRoundId===round.id)return weatherRefreshPromise;
   const targetRoundId=round.id,targetCourseKey=round.courseKey,course=COURSE_CATALOG[targetCourseKey]||COURSE_CATALOG.pulte;
   weatherRefreshRoundId=targetRoundId;renderCourseWeather("syncing");
@@ -3931,9 +3932,11 @@ async function syncActiveCourseWeather({force=false}={}){
       const response=await fetch(window.gscgApiUrl("/api/weather"),{method:"POST",credentials:"include",cache:"no-store",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
       const result=await response.json().catch(()=>({ok:false,error:"WEATHER_UNAVAILABLE"}));
       if(!response.ok||!result?.ok)throw new Error(result?.error||`HTTP_${response.status}`);
-      if(round.id!==targetRoundId||round.courseKey!==targetCourseKey||round.officiallyClosedAt)return null;
-      round.weather={...result,origin,fieldKey:targetCourseKey,fieldName:course.name,fetchedAt:new Date().toISOString(),gpsAccuracyMeters:origin==="gps"?gps.accuracyMeters:null};
-      persist();renderCourseWeather();return round.weather;
+      if(round.id!==targetRoundId||round.courseKey!==targetCourseKey)return null;
+      const snapshot={...result,origin,fieldKey:targetCourseKey,fieldName:course.name,fetchedAt:new Date().toISOString(),gpsAccuracyMeters:origin==="gps"?gps.accuracyMeters:null};
+      activeCourseWeatherSnapshot=snapshot;
+      if(!round.officiallyClosedAt){round.weather=snapshot;persist()}
+      renderCourseWeather();return snapshot;
     }catch(error){
       console.error("Clima automático:",error instanceof Error?error.message:String(error));
       if(round.id===targetRoundId)renderCourseWeather("failed");return null;
@@ -3945,8 +3948,8 @@ async function syncActiveCourseWeather({force=false}={}){
 }
 function scheduleActiveCourseWeather(retryDelay=0){
   if(weatherRefreshTimer){clearTimeout(weatherRefreshTimer);weatherRefreshTimer=null}
-  if(!round.configured||round.officiallyClosedAt)return;
-  const fetched=Date.parse(round.weather?.fetchedAt||""),remaining=Number.isFinite(fetched)?Math.max(0,WEATHER_REFRESH_MS-(Date.now()-fetched)):0,delay=retryDelay||remaining;
+  if(!round.configured)return;
+  const fetched=Date.parse(currentCourseWeatherSnapshot()?.fetchedAt||""),remaining=Number.isFinite(fetched)?Math.max(0,WEATHER_REFRESH_MS-(Date.now()-fetched)):0,delay=retryDelay||remaining;
   weatherRefreshTimer=setTimeout(async()=>{
     weatherRefreshTimer=null;
     const result=await syncActiveCourseWeather({force:true});

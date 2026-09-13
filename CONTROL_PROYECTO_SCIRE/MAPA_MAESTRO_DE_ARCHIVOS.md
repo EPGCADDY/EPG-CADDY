@@ -1270,6 +1270,9 @@ Archivos exactos:
 
 - `audit-project.mjs`: bancos R32/R33/R34 e integridad de voz obligatorios en cada despliegue.
 
+- `test-r37-closed-round-live-weather.mjs`: impide que una ronda cerrada congele el clima informativo de la pantalla; conserva la tarjeta y los scores cerrados.
+- `test-v312-general-caddie.mjs`: asegura que el Caddie use clima vivo y mantenga inmutable la ronda cerrada.
+
 
 ## R36 publicación autorizada — 2026-09-13
 Orden del propietario: Publica. Correcciones de liberación de captura, siguiente pregunta, ubicación explícita y voz por fragmentos. Pruebas controladas PASS; validación física y equivalencia integral de 100 conversaciones pendientes. No se certifica reducción total de latencia. Reversión: e871621c2af478deed6957a625feb0e280402d68 conservando almacenamiento local.

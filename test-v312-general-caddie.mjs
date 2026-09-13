@@ -49,8 +49,8 @@ for (const token of [
   "WEATHER_REFRESH_MS=10*60*1000",
   "WEATHER_RETRY_MS=2*60*1000",
   'location:"GPS del teléfono"',
-  "round.weather={...result,origin",
-  'if(!round.configured||round.officiallyClosedAt)return null'
+  "activeCourseWeatherSnapshot=snapshot",
+  'if(!round.officiallyClosedAt){round.weather=snapshot;persist()}'
 ]) assert.ok(html.includes(token), `Falta integración conversacional: ${token}`);
 
 assert.ok(
