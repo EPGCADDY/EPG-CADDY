@@ -1,5 +1,21 @@
 # ROADMAP A DETALLE
 
+## R34 · restauración WebRTC persistente y audio inyectado · 13 septiembre 2026
+
+| Archivo | Registro exacto |
+|---|---|
+| `voice-assistant.js` | Restaura el override R63/R65 que hace WebRTC primario en iPhone y conserva `SpeechRecognition` como recuperación. |
+| `index-grupal.html` | El fin de audio conversacional reutiliza la pista viva y regresa a `ESCUCHANDO`; no ejecuta `setVoice(false)`. |
+| `test-r34-persistent-voice-regression.mjs` | Ejecuta el override real, verifica captura antes de red e inyecta una pista PCM durante 100 turnos consecutivos. |
+| `test-v312-general-caddie.mjs` | Sustituye la aserción obsoleta de pista cerrada por el contrato persistente `RESPONDIENDO → ESCUCHANDO`. |
+| `test-v323-long-multitopic-context.mjs` y `test-v325-ideal-microphone-timings.mjs` | Actualizan los contratos heredados de contexto y tiempos para exigir continuidad WebRTC. |
+| `audit-project.mjs` | Incorpora el candado persistente al banco maestro. |
+| `docs/quality/R34_WEBRTC_PERSISTENTE_20260913.md` | Diagnóstico, evidencia, estado y rollback. |
+| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` | RC-111 registra la regresión y su control permanente. |
+| `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` | Registra los dos archivos nuevos del corte. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sella 474 fuentes activas y conserva los hashes de los tres PDF de inventario. |
+| `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` | Trazabilidad doble obligatoria del mismo corte. |
+
 
 ## V407-R29 · corrección directa de ENVIAR TARJETA DIGITAL · 12 de septiembre de 2026
 

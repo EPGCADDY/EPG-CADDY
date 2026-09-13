@@ -1,5 +1,13 @@
 # Registro de reincidencias de calidad
 
+## RC-111 · R34 perdió transporte persistente y apagó el segundo turno · 13 septiembre 2026
+
+- Defecto físico: la primera pregunta se reconocía y respondía; la segunda quedaba en `NO ESCUCHÉ NINGUNA VOZ`.
+- Causa raíz confirmada: la integración R34 perdió el override R63/R65 de `voice-assistant.js`, por lo que iPhone forzaba `webkitSpeechRecognition`; además, `output_audio_buffer.stopped` ejecutaba `setVoice(false)` en vez de reactivar la misma pista WebRTC.
+- Evidencia: V407-R63 `6511501` contiene ambos contratos; `IMG_3626.png` demuestra hardware/permisos/reconocimiento aislados; logs R34 muestran primer turno completo y reinicios posteriores `started → no_result_timeout`.
+- Control permanente: `test-r34-persistent-voice-regression.mjs` ejecuta el override y exige WebRTC primario, fallback conservado, captura antes de red y 100 turnos sobre la misma pista de audio inyectada con estados `RESPONDIENDO → ESCUCHANDO`.
+- Estado: PASS automático dirigido; auditoría integral, banco cualitativo 100/100 y prueba física final iPhone pendientes. Producción intacta.
+
 ## RC-103 · ENVIAR TARJETA DIGITAL NO ABRÍA WHATSAPP EN IPHONE · 12 SEPTIEMBRE 2026
 
 - Defecto físico: después de finalizar una ronda Universales, el botón visible `ENVIAR TARJETA DIGITAL` no produjo ninguna acción.

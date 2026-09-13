@@ -1,5 +1,15 @@
 # ROADMAP OVERALL
 
+## R34 · restauración WebRTC persistente y audio inyectado · 13 septiembre 2026
+
+- Comparación exclusiva con V407-R63 `6511501` identificó dos pérdidas en R34: se eliminó el override que impedía forzar `SpeechRecognition` de una sola toma en iPhone y se sustituyó la reanudación de la pista Realtime por `setVoice(false)` al terminar la respuesta.
+- `voice-assistant.js` vuelve a priorizar WebRTC persistente; `index-grupal.html` conserva la pista y vuelve de `RESPONDIENDO` a `ESCUCHANDO`. El fallback local permanece disponible ante fallo de Realtime.
+- `test-r34-persistent-voice-regression.mjs` inyecta una pista PCM viva y demuestra 100 reanudaciones consecutivas; queda incorporado a `audit-project.mjs`.
+- `test-v312-general-caddie.mjs` elimina el contrato obsoleto que exigía apagar la pista y ahora bloquea cualquier regreso de ese fallo.
+- `test-v323-long-multitopic-context.mjs` y `test-v325-ideal-microphone-timings.mjs` alinean contexto prolongado y tiempos con la misma continuidad persistente.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` sella 474 fuentes activas sin alterar los tres PDF históricos.
+- `docs/quality/R34_WEBRTC_PERSISTENTE_20260913.md` conserva causa, evidencia, límites y rollback. Producción permanece intacta; banco cualitativo de 100 y prueba física final iPhone pendientes.
+
 
 ## V407-R29 · envío de Tarjeta Digital compatible con el toque de iPhone · 12 de septiembre de 2026
 

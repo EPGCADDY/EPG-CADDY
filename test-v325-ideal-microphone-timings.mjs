@@ -32,7 +32,7 @@ for(const contract of [
   /const ROUND_MISSING_IDLE_MS=2000/,
   /const ROUND_MISSING_CONFIRM_MS=450/,
   /getUserMedia\(\{audio:\{echoCancellation:true,noiseSuppression:true,autoGainControl:true\}\}\)/,
-  /else if\(finishedReason==="conversation"\)\{setVoice\(false\);phase="idle";setPrimaryVoiceMatrix\("idle",voiceContext\)/
+  /else if\(finishedReason==="conversation"\)\{phase="listening";resumeConversationListening\(\);setPrimaryVoiceMatrix\("listening",voiceContext\)/
 ])assert.match(html,contract);
 
 assert.match(sessionApi,/type: "server_vad"/,"La sesión inicial debe conservar captura operativa rápida");

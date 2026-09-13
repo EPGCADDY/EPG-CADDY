@@ -55,5 +55,14 @@
     return{matched:false};
   }
 
+  // iPhone keeps the same WebRTC microphone track between conversational
+  // turns. SpeechRecognition remains the recovery transport used only when
+  // the persistent Realtime session cannot open.
+  if(typeof window!=="undefined")window.addEventListener("DOMContentLoaded",()=>{
+    if(typeof window.gestureSafeBrowserVoicePreferred==="function"){
+      window.gestureSafeBrowserVoicePreferred=()=>false;
+    }
+  },{once:true});
+
   return Object.freeze({normalize,parse,rules});
 });

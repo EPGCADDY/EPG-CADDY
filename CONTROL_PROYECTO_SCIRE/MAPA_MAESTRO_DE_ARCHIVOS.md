@@ -1,5 +1,8 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+- `test-r34-persistent-voice-regression.mjs`: candado R34 de transporte WebRTC persistente, audio PCM inyectado y 100 turnos consecutivos.
+- `docs/quality/R34_WEBRTC_PERSISTENTE_20260913.md`: diagnóstico causal, evidencia y rollback de RC-111.
+
 ## Delta V406-R14 · 7 de septiembre de 2026
 
 | Archivo | Función |
