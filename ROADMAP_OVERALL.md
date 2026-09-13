@@ -1019,3 +1019,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `audit-project.mjs` materializa la fuente canónica completa únicamente durante la fase de pruebas; `apply-update-e.mjs` genera después el cargador persistente. Se elimina el fallo sistémico de tests contra un artefacto de 1.7 KB.
 - `test-v312-general-caddie.mjs` deja de exigir el cierre del micrófono tras cada respuesta y verifica el contrato vigente: WebRTC vuelve a escucha continua para preguntas consecutivas.
 - `test-v323-long-multitopic-context.mjs` y `test-v325-ideal-microphone-timings.mjs` verifican el mismo contrato persistente; V325 inspecciona la fuente canónica y acepta `semantic_vad` conversacional, manteniendo `server_vad` para scores.
+- `test-v326-no-silent-conversation.mjs` inspecciona la misma fuente y valida recuperación sin silencios sobre `semantic_vad`, manteniendo sus watchdogs de 15/90 segundos.

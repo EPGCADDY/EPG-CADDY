@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
-const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+const html=fs.readFileSync(new URL("./candidate-index-grupal.html",import.meta.url),"utf8");
 const worker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 
 assert.match(html,/gscg-build" content="V\d{3}[^"]*"/);
@@ -16,7 +16,7 @@ for(const contract of [
   /const CONVERSATION_INPUT_HARD_LIMIT_MS=90000/,
   /const CONVERSATION_RESPONSE_STALL_MS=30000/,
   /const CONVERSATION_PLAYBACK_STALL_MS=60000/,
-  /silence_duration_ms:CONVERSATION_VAD_SILENCE_MS,create_response:false,interrupt_response:false/,
+  /if\(profile===REALTIME_TURN_PROFILE_CONVERSATION\)return\{type:"semantic_vad",eagerness:"auto",create_response:false,interrupt_response:false\}/,
   /armConversationInputStall\(\{newTurn:true\}\)/,
   /recoverStalledConversationInput\(\)/,
   /armConversationResponseStall\(\)/,
@@ -42,8 +42,8 @@ const profiles=new Function(`
 const operational=profiles.turnDetectionForProfile("operational");
 const conversation=profiles.turnDetectionForProfile("conversation");
 assert.equal(operational.silence_duration_ms,1000);
-assert.equal(conversation.type,"server_vad");
-assert.equal(conversation.silence_duration_ms,1100);
+assert.equal(conversation.type,"semantic_vad");
+assert.equal(conversation.eagerness,"auto");
 assert.equal(conversation.create_response,false);
 assert.equal(conversation.interrupt_response,false);
 
@@ -105,7 +105,7 @@ assert.equal(responseGuard.snapshot().resumeCount,1);
 assert.equal(responseGuard.snapshot().state,"NO PUDE COMPLETAR ESA RESPUESTA · PUEDES CONTINUAR");
 
 for(let turn=1;turn<=30;turn++){
-  assert.equal(profiles.turnDetectionForProfile("conversation").silence_duration_ms,1100,`Turno ${turn}: la conversación volvió a quedar sin tiempo determinista`);
+  assert.equal(profiles.turnDetectionForProfile("conversation").eagerness,"auto",`Turno ${turn}: la conversación perdió detección semántica automática`);
   assert.equal(profiles.turnDetectionForProfile("operational").silence_duration_ms,1000,`Turno ${turn}: se alteró la captura rápida de órdenes`);
 }
 
