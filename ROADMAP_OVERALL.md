@@ -848,3 +848,7 @@ Registro conjunto del despliegue: hotfix `main` commits `481f716` y `c548f30`; m
 - Paquete Main R31 preparado: `index-grupal.html` y `service-worker.js` renuevan sólo identificación; pruebas de versión alineadas. No cambia actualización, almacenamiento, scores ni exportador PNG. `vercel.json` conserva el comando original de producción; comparación externa sólo en rama de revisión.
 
 - `docs/quality/R31_RESPUESTAS_REALES.json`: respuestas reales y tiempos; evaluación manual acotada 94/100, sin garantía de similitud general ni de audio físico. Main/LAB R31: preparado para publicación del backend verificado.
+
+
+## 2026-09-13 · Diagnóstico de preguntas abiertas (Preview)
+Prueba sobre R31, sin modificar el comportamiento de Main/LAB: nueve consultas sintéticas de retinol, cincho, orquídeas, continuidad y razonamiento; audio servidor en las tres consultas del propietario. Registrar respuestas completas, tiempos, fuentes y fallos por separado; no equivale a prueba física iPhone. Reversión: retirar rama de diagnóstico; producción permanece en 8bcba839885dda559725a23ce2e368534c7efc67. Evidencia de ejecución en logs OPEN_QUESTIONS de Preview.
