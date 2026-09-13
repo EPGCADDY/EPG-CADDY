@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V407-R31-UNIVERSAL-PLAIN-20260913">
+  <meta name="gscg-release" content="V407-R32-OPEN-CONVERSATION-20260913">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1035,7 +1035,7 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R31</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R32</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 <script src="./guest-access.js"></script>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
@@ -2742,7 +2742,7 @@ async function speakAiUniversalText(text,{repeat=false}={}){
     const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.volume=1;player.playbackRate=1;
     player.onplay=()=>{aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(deliveredVoice==="browser"?"RESPONDIENDO EN VOZ · RESPALDO DEL DISPOSITIVO":"RESPONDIENDO EN VOZ · FISH AUDIO V378",{busy:true})};
     player.onended=()=>{setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
-    player.onerror=async()=>{reportVoiceHealth("browser_fallback_speech_failed");if(!await speakAiUniversalMaleBrowserFallback(clean))aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")};
+    player.onerror=async()=>{reportVoiceHealth("browser_fallback_speech_failed");if(!await speakAiUniversalMaleBrowserFallback(clean)){setPrimaryVoiceMatrix("error",voiceContext,"NO PUDE REPRODUCIR LA RESPUESTA · TOCA AI ∞ PARA INTENTAR DE NUEVO");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")}};
     await player.play();return true;
   }catch(error){
     reportVoiceHealth("browser_fallback_speech_failed");
@@ -2779,7 +2779,7 @@ async function startAiUniversalListening(){
     try{await setRealtimeTurnProfile(REALTIME_TURN_PROFILE_CONVERSATION)}catch(error){console.error("Perfil conversacional:",error)}
     aiUniversalSetState("ESCUCHANDO",{busy:true});return true
   }
-  if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;primeAiUniversalSpeechFromGesture();
+  if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;releaseAiUniversalPlaybackForListening();primeAiUniversalSpeechFromGesture();
   const setupVisible=$("setupOverlay")?.classList?.contains("visible"),context=setupVisible||!round.configured?"setup":"round";
   aiUniversalSetState("ABRIENDO MICRÓFONO…",{busy:true});
   const opened=await toggleVoice(context,REALTIME_TURN_PROFILE_CONVERSATION);
@@ -2833,7 +2833,7 @@ async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
   const input=$("aiUniversalInput"),query=String(forcedText||input.value||"").trim();if(!query){input.focus();return false}
   input.value="";aiUniversalRemember("user",query,[],{visible:!voiceOnly});
   const local=aiUniversalRulesMode?{handled:false}:routeAiUniversalAppText(query);
-  if(local.handled){aiUniversalRemember("assistant",local.answer,[],{visible:!voiceOnly});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(voiceOnly)await speakAiUniversalText(local.answer);return true}
+  if(local.handled){aiUniversalRemember("assistant",local.answer,[],{visible:!voiceOnly});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(voiceOnly)return await speakAiUniversalText(local.answer);return true}
   aiUniversalTextBusy=true;$("sendAiUniversal").disabled=true;setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO",{busy:true});
   const controller=new AbortController();aiUniversalTextAbortController=controller;
   try{
@@ -2859,12 +2859,12 @@ async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
     }
     if(!response.ok||!result.ok){const requestError=new Error(result.error||"UNIVERSAL_AI_UNAVAILABLE");requestError.code=result.error||"UNIVERSAL_AI_UNAVAILABLE";throw requestError}
     if(aiUniversalRulesMode)saveOfficialGolfRuleForOffline(query,result);
-    aiUniversalRemember("assistant",result.answer,result.sources,{visible:!voiceOnly});aiUniversalSetState("LISTO · PUEDES CONTINUAR");if(voiceOnly)await speakAiUniversalText(result.answer);return true;
+    aiUniversalRemember("assistant",result.answer,result.sources,{visible:!voiceOnly});aiUniversalSetState("LISTO · PUEDES CONTINUAR");if(voiceOnly)return await speakAiUniversalText(result.answer);return true;
   }catch(error){
     if(error?.name==="AbortError"){if(!aiUniversalTextAbortController||aiUniversalTextAbortController===controller)aiUniversalSetState("DETENIDO · PUEDES CONTINUAR");return false}
     if(aiUniversalRulesMode){
       const offline=officialGolfRuleOfflineResult(query);
-      if(offline){aiUniversalRemember("assistant",offline.answer,offline.sources,{visible:!voiceOnly});renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");if(voiceOnly)await speakAiUniversalText(offline.answer);return true}
+      if(offline){aiUniversalRemember("assistant",offline.answer,offline.sources,{visible:!voiceOnly});renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");if(voiceOnly)return await speakAiUniversalText(offline.answer);return true}
     }
     const creditBlocked=error?.code==="UNIVERSAL_AI_CREDIT_EXHAUSTED";const message=error?.code==="TRAFFIC_LOCATION_DENIED"?"Necesito permiso de ubicación o un punto de salida escrito para calcular el tráfico.":creditBlocked?"El servicio de respuestas no tiene saldo disponible. Tu conexión a Internet sí funciona.":aiUniversalRulesMode?"No pude verificar la regla en las fuentes oficiales USGA / The R&A en este momento. Intenta nuevamente.":"No pude completar la respuesta en este momento.";aiUniversalRemember("assistant",message,[],{visible:!voiceOnly});const visibleState=creditBlocked?"SERVICIO DE RESPUESTAS SIN SALDO · TU INTERNET SÍ FUNCIONA":error?.code==="TRAFFIC_LOCATION_DENIED"?"UBICACIÓN NECESARIA":"SERVICIO DE RESPUESTAS NO DISPONIBLE";setPrimaryVoiceMatrix("error",voiceContext,visibleState);aiUniversalSetState(visibleState);return false;
   }finally{
@@ -4636,7 +4636,7 @@ async function processBrowserVoiceTranscript(context,transcript){
   if(context==="setup"){
     const parsed=parseSetupTranscript(clean);
     if(parsed?.ok){const result=applySetupChanges(parsed.changes);if(result?.ok){phase="idle";reportVoiceHealth("browser_fallback_setup_applied");renderDraft();setPrimaryVoiceMatrix("idle",context,"LISTO · REVISA LOS JUGADORES Y PRESIONA OK");return true}}
-    if(isGeneralConversationIntent(clean))return answerBrowserVoiceQuery(context,clean);
+    if(isGeneralConversationIntent(clean)||!aiUniversalLooksLikeSetupOrder(clean))return answerBrowserVoiceQuery(context,clean);
     phase="idle";reportVoiceHealth("browser_fallback_setup_rejected");resetSetupCapture();setPrimaryVoiceMatrix("error",context,"NO RECONOCÍ EL LISTADO · DI: NOMBRE, HANDICAP Y MARCAS");return false
   }
   const scoreParsed=parseRoundScoreTranscript(clean),scoreIntent=!isGeneralConversationIntent(clean)&&(scoreParsed?.ok||aiUniversalLooksLikeScoreOrder(clean));
@@ -4645,14 +4645,14 @@ async function processBrowserVoiceTranscript(context,transcript){
     if(result?.ok){const count=scoreParsed.entries.length;reportVoiceHealth("browser_fallback_round_applied",{entryCount:count});reportVoiceHealth("browser_fallback_score_applied");setPrimaryVoiceMatrix("idle",context,count===1?"LISTO · 1 HOYO REGISTRADO":`LISTO · ${count} HOYOS REGISTRADOS`);return true}
     reportVoiceHealth("browser_fallback_round_rejected",{entryCount:0});reportVoiceHealth("browser_fallback_score_rejected",{scoreFailure:scoreParsed?.failureCode||"parser_rejected"});setPrimaryVoiceMatrix("error",context,"NO RECONOCÍ LA TANDA · DI: HOYO 1 CUATRO, HOYO 2 CINCO");return false
   }
-  const local=routeAiUniversalAppText(clean);if(local?.handled){aiUniversalRemember("user",clean,[],{visible:false});aiUniversalRemember("assistant",local.answer,[],{visible:false});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(!await speakAiUniversalText(local.answer))setPrimaryVoiceMatrix("idle",context);return true}
+  const local=routeAiUniversalAppText(clean);if(local?.handled){aiUniversalRemember("user",clean,[],{visible:false});aiUniversalRemember("assistant",local.answer,[],{visible:false});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");return await speakAiUniversalText(local.answer)}
   return answerBrowserVoiceQuery(context,clean)
 }
 async function answerBrowserVoiceQuery(context,clean){
   reportVoiceHealth("browser_fallback_general_in_place");let answered=false;
-  try{answered=await submitAiUniversalText(clean,{voiceOnly:true})}catch(error){console.error("Browser voice query:",error)}
+  try{answered=await submitAiUniversalText(clean,{voiceOnly:true})}catch(error){console.error("Browser voice query:",error);setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO")}
   if(answered){phase="idle";reportVoiceHealth("browser_fallback_query_answered");return true}
-  reportVoiceHealth("browser_fallback_query_failed");setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO");return false
+  reportVoiceHealth("browser_fallback_query_failed");phase="idle";return false
 }
 function scheduleBrowserVoiceTransportRetry(recognition,context,event){
   if(browserVoiceRecognition!==recognition||browserVoiceStopping||!recoverableBrowserVoiceTransportError(event)||browserVoiceTransportRetryCount>=BROWSER_VOICE_MAX_TRANSPORT_RETRIES)return false;
@@ -5602,8 +5602,16 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden)recoverIns
 setTimeout(recoverInstalledAppScrolling,0);
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
 const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"";
-let appBuildCheckRunning=false,appBuildReloading=false,pendingPublishedBuild=CURRENT_APP_BUILD;
+let appBuildCheckRunning=false,appBuildReloading=false,pendingPublishedBuild="";
+function showBuildCheckFailure(needsAccess=false){
+  pendingPublishedBuild="";
+  const button=$("mandatoryUpdateButton");button.disabled=false;button.setAttribute("aria-disabled","false");
+  button.dataset.needsAccess=needsAccess?"1":"0";
+  $("mandatoryUpdateAction").textContent=needsAccess?"INICIAR SESIÓN":"REINTENTAR";
+  $("mandatoryUpdate").classList.remove("available");
+}
 function showCurrentBuild(){
+  $("mandatoryUpdateButton").dataset.needsAccess="0";
   pendingPublishedBuild=CURRENT_APP_BUILD;
   const button=$("mandatoryUpdateButton");button.disabled=true;button.setAttribute("aria-disabled","true");
   $("mandatoryUpdateAction").textContent="ACTUALIZADO";
@@ -5617,7 +5625,12 @@ function showMandatoryUpdate(build){
   $("mandatoryUpdate").classList.add("available");return true;
 }
 async function installMandatoryUpdate(){
-  if(appBuildReloading||!pendingPublishedBuild)return;
+  if(appBuildReloading)return;
+  if(!pendingPublishedBuild){
+    if($("mandatoryUpdateButton").dataset.needsAccess==="1")location.assign(new URL("/access.html",location.origin).href);
+    else await syncPublishedAppVersion();
+    return;
+  }
   appBuildReloading=true;
   if($("setupOverlay")?.classList.contains("visible")){captureVisibleRegistrationValues();syncDraftPlayersFromManualRows({strict:false,renderAfter:false});persistDraftState()}
   persist();
@@ -5634,17 +5647,18 @@ async function syncPublishedAppVersion(){
     const checkUrl=new URL(location.pathname,location.origin);
     checkUrl.searchParams.set("__gscg_build_check",String(Date.now()));
     const response=await fetch(checkUrl,{cache:"no-store",headers:{"Cache-Control":"no-cache"}});
-    if(!response.ok)return;
+    if(response.status===401||response.status===403||new URL(response.url||checkUrl.href).pathname==="/access.html"){showBuildCheckFailure(true);return}
+    if(!response.ok){showBuildCheckFailure();return}
     const html=await response.text();
-    if(html.length<300000)return;
     const published=html.match(/<meta\s+name=["']gscg-release["']\s+content=["']([^"']+)["']/i)?.[1]||"";
-    if(!published)return;
+    if(!published){showBuildCheckFailure();return}
     if(published===CURRENT_APP_BUILD)showCurrentBuild();else showMandatoryUpdate(published);
-  }catch(error){console.warn("APP_VERSION_SYNC",error?.message||error)}
+  }catch(error){showBuildCheckFailure();console.warn("APP_VERSION_SYNC",error?.message||error)}
   finally{appBuildCheckRunning=false}
 }
 $("mandatoryUpdateButton").addEventListener("click",installMandatoryUpdate);
-showCurrentBuild();
+$("mandatoryUpdateButton").disabled=true;
+$("mandatoryUpdateAction").textContent="COMPROBANDO";
 setTimeout(syncPublishedAppVersion,1200);
 setInterval(syncPublishedAppVersion,30000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout(syncPublishedAppVersion,800)});
