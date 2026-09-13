@@ -886,3 +886,8 @@ Registro conjunto del despliegue: hotfix `main` commits `481f716` y `c548f30`; m
 
 - Entrega del hotfix: identidad técnica `V407-R28-PULTE-HANDICAP-HOTFIX-20260910` para que instalaciones existentes detecten ACTUALIZAR sin borrar la ronda.
 - 2026-09-13 · R29: paquete de despliegue validado con el envío digital de iPhone, la prueba de activación del toque y el registro de cambios en un mismo commit.
+
+## R30 · Corrección de preparación PNG · 2026-09-13
+- `card-file-export.js`: corrige SecurityError de canvas contaminado por SVG Blob; imagen autocontenida con límite de espera.
+- `assets/official-logos/png-export-review.html`: prueba temporal sin datos personales con el exportador anterior y corregido, y PNG visible.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello del paquete.

@@ -1,0 +1,290 @@
+<!doctype html><meta charset="utf-8"><title>Prueba PNG Universales</title><style>body{background:#000;color:#fff;font:20px Arial}button{padding:20px}img{width:100%}</style><h1>Prueba de exportación Universales · 4 jugadores</h1><button id="run">Preparar PNG real</button><pre id="status">Pendiente</pre><img id="preview"><script>(function(root,factory){
+  const api=factory();
+  if(typeof module==="object"&&module.exports)module.exports=api;
+  root.GSCCardArtifacts=api;
+})(typeof globalThis!=="undefined"?globalThis:this,function(){
+  const esc=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]));
+  const sum=(items,key)=>items.reduce((total,item)=>total+(Number(item?.[key])||0),0);
+  const rel=value=>value===0?"E":value>0?`+${value}`:String(value);
+  const slug=value=>String(value||"tarjeta").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9]+/g,"-").replace(/^-|-$/g,"").toLowerCase();
+  const categoryLabel=value=>value==="super_senior"?"S. SENIOR":value==="senior"?"SENIOR":String(value||"").toUpperCase();
+  const PLAYER_CATEGORIES={championship:"CAMPEONATO",a:"A",b:"B",c:"C",d:"D",female:"FEMENINA",senior:"SENIOR",super_senior:"S. SENIOR"};
+  const playerCategory=(player,fallback="")=>PLAYER_CATEGORIES[player?.tournamentCategory]||categoryLabel(fallback)||"";
+  const playerNameWithCategory=(player,fallback="")=>{const category=playerCategory(player,fallback);return`${category?`<span class="player-category" style="display:block;margin:0 0 2px;color:#b7bbbc;font-size:75%;font-weight:800;line-height:1.1">${esc(category)}</span>`:""}<span class="player-name-text" style="display:block">${esc(player?.name||"")}</span>`};
+  const courseLabel=value=>typeof value==="object"?(value?.displayName||value?.name||""):String(value||"");
+
+  function playerStats(player){
+    const holes=Object.values(player.holes||{}).filter(score=>score&&Number.isInteger(score.gross)).sort((a,b)=>a.hole-b.hole);
+    const gross=sum(holes,"gross"),net=sum(holes,"net"),par=sum(holes,"par"),strokes=sum(holes,"strokes");
+    const count=diff=>holes.filter(score=>score.gross-score.par===diff).length;
+    const front=holes.filter(score=>score.hole<=9),back=holes.filter(score=>score.hole>=10);
+    const rounds=[front,back].filter(items=>items.length).map(items=>({gross:sum(items,"gross"),net:sum(items,"net"),from:items[0].hole,to:items[items.length-1].hole}));
+    const sorted=[...holes].sort((a,b)=>(a.net-a.par)-(b.net-b.par)||a.gross-b.gross),byPar={};
+    [3,4,5].forEach(parValue=>{const items=holes.filter(score=>score.par===parValue);byPar[parValue]=items.length?Number((sum(items,"gross")/items.length).toFixed(2)):null});
+    return{holes,gross,net,par,relative:net-par,strokes,front:{gross:sum(front,"gross"),net:sum(front,"net"),count:front.length},back:{gross:sum(back,"gross"),net:sum(back,"net"),count:back.length},eagles:holes.filter(score=>score.gross-score.par<=-2).length,birdies:count(-1),pars:count(0),bogeys:count(1),doubleBogeys:count(2),triplePlus:holes.filter(score=>score.gross-score.par>=3).length,best:sorted[0]||null,worst:sorted.at(-1)||null,bestNine:rounds.sort((a,b)=>a.net-b.net)[0]||null,byPar};
+  }
+
+  function stablefordPoints(gross,par,status){
+    if(String(status||"").toLowerCase()==="x")return 0;
+    if(!Number.isInteger(gross)||!Number.isInteger(par))return 0;
+    const againstPar=gross-par;
+    if(againstPar>=2)return 0;
+    if(againstPar===1)return 1;
+    if(againstPar===0)return 2;
+    if(againstPar===-1)return 3;
+    return 4;
+  }
+
+  function stablefordPlayerStats(player){
+    const holes=Object.entries(player.holes||{}).map(([rawHole,entry])=>{
+      const hole=Number(entry?.hole??rawHole),gross=Number.isInteger(entry?.gross)?entry.gross:null,par=Number(entry?.par),status=String(entry?.status||"").toLowerCase()==="x"?"x":null;
+      return{hole,gross,par:Number.isInteger(par)?par:null,status,points:stablefordPoints(gross,par,status),recorded:status==="x"||gross!==null};
+    }).filter(score=>score.recorded&&Number.isInteger(score.hole)).sort((a,b)=>a.hole-b.hole);
+    const grossHoles=holes.filter(score=>score.gross!==null),front=holes.filter(score=>score.hole<=9),back=holes.filter(score=>score.hole>=10);
+    const totals=items=>{const numeric=items.filter(score=>score.gross!==null);return{gross:sum(numeric,"gross"),grossCount:numeric.length,points:sum(items,"points"),count:items.length}};
+    const pointCounts=Object.fromEntries([0,1,2,3,4].map(points=>[points,holes.filter(score=>points===4?score.points>=4:score.points===points).length]));
+    return{holes,gross:sum(grossHoles,"gross"),grossCount:grossHoles.length,points:sum(holes,"points"),front:totals(front),back:totals(back),pointCounts};
+  }
+
+  function summary(name,stats){
+    const level=stats.relative<0?`${Math.abs(stats.relative)} bajo par neto`:stats.relative>0?`${stats.relative} sobre par neto`:"par neto";
+    return`${name} terminó con ${stats.gross} Gross y ${stats.net} Neto (${level}). Registró ${stats.eagles} águilas, ${stats.birdies} birdies, ${stats.pars} pares, ${stats.bogeys} bogeys, ${stats.doubleBogeys} dobles bogeys y ${stats.triplePlus} triples bogeys o superiores. Recibió ${stats.strokes} tiros de handicap.`;
+  }
+
+  function stablefordSummary(name,stats){
+    const gross=stats.grossCount===18?`${stats.gross} Gross`:`Gross parcial ${stats.gross} en ${stats.grossCount} hoyos`;
+    return`${name} finalizó con ${stats.points} puntos Stableford y ${gross}. IN, hoyos 1 al 9: ${stats.front.points} puntos. OUT, hoyos 10 al 18: ${stats.back.points} puntos.`;
+  }
+
+  function universalesResult(snapshot,hole){
+    const players=snapshot.players||[],scores=players.map(player=>player.holes?.[hole]);
+    if(![3,4].includes(players.length)||scores.some(score=>!score||score.status==="x"||!Number.isFinite(score.net)))return{recorded:false,pointsById:{}};
+    const base=players.length===3?[6,4,2]:[6,4,2,0],ranked=scores.map((score,index)=>({net:score.net,index})).sort((a,b)=>a.net-b.net||a.index-b.index),points=Array(players.length).fill(0);
+    for(let start=0;start<ranked.length;){let end=start+1;while(end<ranked.length&&ranked[end].net===ranked[start].net)end++;const shared=base.slice(start,end).reduce((total,value)=>total+value,0)/(end-start);for(let index=start;index<end;index++)points[ranked[index].index]=shared;start=end}
+    return{recorded:true,pointsById:Object.fromEntries(players.map((player,index)=>[player.id,points[index]]))};
+  }
+  function universalesPlayerStats(snapshot,player){
+    const holes=Array.from({length:18},(_,index)=>index+1).map(hole=>{const score=player.holes?.[hole],result=universalesResult(snapshot,hole);return{hole,gross:score?.gross,net:score?.net,points:result.recorded?result.pointsById[player.id]:null,recorded:result.recorded}});
+    const totals=items=>items.reduce((total,item)=>total+(Number(item.points)||0),0),recorded=holes.filter(item=>item.recorded);
+    return{holes,recordedHoles:recorded.length,front:totals(holes.slice(0,9)),back:totals(holes.slice(9)),points:totals(holes)};
+  }
+
+  const money=(value,currency="GTQ")=>`${Number(value)<0?"−":""}${currency==="USD"?"$":"Q"}${Math.abs(Number(value)||0).toFixed(2)}`;
+  function sideGamePanels(snapshot){
+    const panels=[],settlements=(result,currency)=>(result.settlements||[]).length?result.settlements.map(item=>`${esc(item.fromName)} paga ${money(item.amount,currency)} a ${esc(item.toName)}`).join(" · "):"Sin pagos definidos",skins=snapshot?.sideGames?.skins,skinsResult=skins?.result;
+    if(skins?.enabled===true&&skinsResult){const tie=skins.tiePolicy==="split"?"DIVIDE":skins.tiePolicy==="void"?"ANULA":"ACUMULA",currency=skins.currency||skinsResult.config?.currency||"GTQ",metrics=skinsResult.metrics||{},rows=(skinsResult.summaries||[]).map(item=>`<tr><td>${esc(item.name)}</td><td>${item.skins}</td><td>${(item.holesWon||[]).join(", ")||"—"}</td><td class="${item.balance>0?'under':item.balance<0?'over':''}">${money(item.balance,currency)}</td></tr>`).join("");panels.push(`<section class="side-game-panel"><h2>SKINS · ${esc(String(skins.scoreType||"net").toUpperCase())}</h2><p>Unidad ${money(skins.unitValue,currency)} · empate ${tie} · cada jugador arriesga una unidad · el score deportivo no se modifica.</p><p><b>ACUMULADO:</b> ${metrics.completedHoles||0} hoyos resueltos · ${metrics.openCarryUnits||0} unidades abiertas · ${money(metrics.moneyTransferred||0,currency)} movidos · ${money(metrics.settlementTotal||0,currency)} netos a liquidar · líder ${esc(metrics.leaderNames?.join(" / ")||"empate")}.</p><div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>SKINS</th><th>HOYOS GANADOS</th><th>SALDO</th></tr></thead><tbody>${rows}</tbody></table></div><p><b>LIQUIDACIÓN:</b> ${settlements(skinsResult,currency)}${skinsResult.pendingCarryUnits?` · ${skinsResult.pendingCarryUnits} unidades pendientes`:""}</p></section>`)}
+    const wolf=snapshot?.sideGames?.wolf,wolfResult=wolf?.result;
+    if(wolf?.enabled===true&&wolfResult){
+      const currency=wolf.currency||wolfResult.config?.currency||"GTQ",rows=(wolfResult.summaries||[]).map(item=>`<tr><td>${esc(item.name)}</td><td>${item.wolfHoles}</td><td>${item.wins}</td><td>${item.losses}</td><td>${item.ties}</td><td>${item.netUnits>0?"+":""}${item.netUnits||0}</td><td class="${item.balance>0?'under':item.balance<0?'over':''}">${money(item.balance,currency)}</td></tr>`).join(""),lone=wolf.multipliers?.lone??2,blind=wolf.multipliers?.blind??3,metrics=wolfResult.metrics||{},cap=wolf.holeCapAmount?`tope ${money(wolf.holeCapAmount,currency)} por rival y hoyo`:"sin tope";
+      panels.push(`<section class="side-game-panel"><h2>WOLF · ${esc(String(wolf.scoreType||"net").toUpperCase())}</h2><p>Mejor bola del lado Wolf contra mejor bola de los rivales · con pareja ×1 · Lobo solitario ×${lone} después de los drives · Lobo ciego ×${blind} antes del primer drive · el Wolf sale ${wolf.wolfTeePosition==="last"?"último":"primero"} · empate ${wolf.tiePolicy==="carry"?"acumula como regla del grupo":"push"} · ${cap} · pago por diferencia entre jugadores.</p><p><b>ESTADO:</b> ${metrics.completedHoles||0} hoyos resueltos · ${metrics.pendingDecisions||0} decisiones pendientes · ${metrics.openCarryUnits||0} unidades acumuladas · ${money(metrics.moneyTransferred||0,currency)} movidos · ${money(metrics.settlementTotal||0,currency)} netos a liquidar · líder ${esc(metrics.leaderNames?.join(" / ")||"empate")}.</p><div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>FUE WOLF</th><th>GANÓ</th><th>PERDIÓ</th><th>EMPATÓ</th><th>UNIDADES NETAS</th><th>SALDO</th></tr></thead><tbody>${rows}</tbody></table></div><p><b>LIQUIDACIÓN:</b> ${settlements(wolfResult,currency)}</p></section>`)
+    }
+    const vegas=snapshot?.sideGames?.vegas,vegasResult=vegas?.result;if(vegas?.enabled===true&&vegasResult){const currency=vegas.currency||vegasResult.config?.currency||"GTQ",metrics=vegasResult.metrics||{},rows=(vegasResult.teams||[]).map(item=>`<tr><td>${esc(item.name)}</td><td>${item.points}</td><td class="${item.balance>0?'under':item.balance<0?'over':''}">${money(item.balance,currency)}</td></tr>`).join("");panels.push(`<section class="side-game-panel"><h2>VEGAS · ${vegasResult.teams.length} PAREJAS</h2><p>Menor score primero forma el número · gana el número menor · empate push · birdie ${vegas.birdieFlip?"voltea":"no voltea"} · eagle ${vegas.eagleDouble?"duplica diferencia":"normal"} · tope ${vegas.holeCapPoints} puntos por duelo · tres parejas es variante GSC GT.</p><p><b>ACUMULADO:</b> ${metrics.completedHoles||0} hoyos resueltos · ${metrics.pendingHoles||0} pendientes · ${metrics.totalPointsMoved||0} puntos · ${money(metrics.moneyTransferred||0,currency)} movidos · ${money(metrics.settlementTotal||0,currency)} netos a liquidar · riesgo máximo por duelo ${money(metrics.maximumDuelExposure||0,currency)} · líder ${esc(metrics.leaderNames?.join(" / ")||"empate")}.</p><div class="table-wrap"><table><thead><tr><th>PAREJA</th><th>PUNTOS</th><th>SALDO</th></tr></thead><tbody>${rows}</tbody></table></div><p><b>LIQUIDACIÓN:</b> ${settlements(vegasResult,currency)}</p></section>`)}
+    return panels.join("");
+  }
+
+  const style=`<style>*{box-sizing:border-box}body{margin:0;padding:20px;background:#000;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:1500px;margin:auto;border:1px solid #555;border-radius:16px;padding:22px;background:#020303}h1,h2{color:#31ff00}.artifact-heading{margin:0 0 18px;font-size:32px;line-height:1.08;letter-spacing:.2px}.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:22px;color:#ddd}.meta span{min-width:0;padding:10px 12px;border:1px solid #363a3b;border-radius:9px;background:#070808;font-size:13px;line-height:1.3}.meta .meta-wide{grid-column:span 2}.meta .meta-hash{grid-column:1/-1;color:#929799;font-size:10px}.meta .meta-hash code{display:block;margin-top:4px;color:#c9cccd;font:700 10px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere;word-break:break-word}.approved-round-totals{margin:0 0 22px}.approved-round-totals h2,.score-half h2{margin:0;padding:12px 14px;border:1px solid #45494a;border-bottom:0;border-radius:12px 12px 0 0;background:#080909;font-size:17px;letter-spacing:.4px}.table-wrap{max-width:100%;overflow-x:auto;overflow-y:hidden;border:1px solid #45494a;border-radius:0 0 12px 12px;background:#000;-webkit-overflow-scrolling:touch}.table-wrap table{border:0}table{width:100%;border-collapse:collapse}th,td{border:1px solid #555;padding:7px;text-align:center}th{background:#080909}.pair-divider td{height:18px;border-color:#202323;background:#000}.score-half{margin:0 0 18px}.score-half .table-wrap table{min-width:720px}.score-half-note{margin:8px 2px 0;color:#9da1a2;font-size:11px;font-weight:800;letter-spacing:.3px}.under,.match-won{color:#31ff00;font-weight:900}.over,.match-lost{color:#ff3030;font-weight:900}.match-tied{color:#fff;font-weight:900}.team-green{color:#31ff00;font-weight:900}.team-gold{color:#d4af37;font-weight:900}.team-blue{color:#36a3ff;font-weight:900}.best-ball{color:#d4af37;font-weight:900}.match-arrow{display:inline-flex;width:26px;height:32px;align-items:center;justify-content:center;vertical-align:middle}.match-arrow svg{display:block;width:26px;height:32px;overflow:visible}.match-arrow path{fill:none;stroke:currentColor;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}.match-result{margin:14px 0;border:2px solid #31ff00;padding:12px;color:#31ff00;text-align:center;font-size:20px;font-weight:900}.four-ball-result{border-color:#d4af37;color:#d4af37}.side-game-panel{margin-top:22px;border:2px solid #31ff00;padding:14px}.side-game-panel h2{margin-top:0}.points{color:#31ff00;font-weight:900}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0}.stat{border:1px solid #555;padding:10px}.chart{display:flex;align-items:center;gap:3px;height:150px;border:1px solid #555;padding:10px}.bar{flex:1;position:relative;height:100%}.bar i{position:absolute;left:12%;right:12%;bottom:50%;background:#31ff00;min-height:2px}.bar.over i{top:50%;bottom:auto;background:#ff3030}.bar b{position:absolute;bottom:0;width:100%;text-align:center;font-size:10px}.stableford-chart{align-items:flex-end}.stableford-chart .bar i,.stableford-chart .bar.over i{top:auto;bottom:24px}@media(max-width:720px){body{padding:8px}main{padding:12px 10px;border-radius:13px}.artifact-heading{margin-bottom:14px;font-size:25px;line-height:1.12}.meta{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-bottom:18px}.meta span{padding:8px;font-size:10px}.meta .meta-wide,.meta .meta-hash{grid-column:1/-1}.meta .meta-hash,.meta .meta-hash code{font-size:8px}.approved-round-totals h2,.score-half h2{padding:10px;font-size:14px}.approved-round-totals .table-wrap table{min-width:620px}.score-half .table-wrap table{min-width:680px}.score-half-note{font-size:9px}.stats{grid-template-columns:repeat(2,1fr)}th,td{padding:6px 5px;font-size:11px}.match-arrow{width:22px;height:28px}.match-arrow svg{width:22px;height:28px}}</style>`;
+
+  function approvedRoundTotals(snapshot,players=snapshot.players||[]){
+    const stableford=snapshot.mode==="stableford",universales=snapshot.mode==="universales",rows=players.map(player=>{
+      if(stableford){const stats=stablefordPlayerStats(player),grossIn=stats.front.grossCount===9?stats.front.gross:"—",grossOut=stats.back.grossCount===9?stats.back.gross:"—",grossTotal=stats.grossCount===18?stats.gross:"—";return`<tr><td>${playerNameWithCategory(player,snapshot.stablefordCategory)}</td><td>${grossIn}</td><td>${grossOut}</td><td>${grossTotal}</td><td>${stats.front.points}</td><td>${stats.back.points}</td><td class="points">${stats.points}</td></tr>`}
+      if(universales){const regular=playerStats(player),stats=universalesPlayerStats(snapshot,player);return`<tr><td>${playerNameWithCategory(player)}</td><td>${regular.front.count===9?regular.front.gross:"—"}</td><td>${regular.back.count===9?regular.back.gross:"—"}</td><td>${regular.holes.length===18?regular.gross:"—"}</td><td style="color:#ff3030;font-weight:900">${stats.front}</td><td style="color:#ff3030;font-weight:900">${stats.back}</td><td style="color:#ff3030;font-weight:900">${stats.points}</td></tr>`}
+      const stats=playerStats(player),grossIn=stats.front.count===9?stats.front.gross:"—",grossOut=stats.back.count===9?stats.back.gross:"—",grossTotal=stats.holes.length===18?stats.gross:"—",netIn=stats.front.count===9?stats.front.net:"—",netOut=stats.back.count===9?stats.back.net:"—",netTotal=stats.holes.length===18?stats.net:"—";return`<tr><td>${playerNameWithCategory(player)}</td><td>${grossIn}</td><td>${grossOut}</td><td>${grossTotal}</td><td>${netIn}</td><td>${netOut}</td><td>${netTotal}</td></tr>`
+    }).join("");
+    const resultHeaders=stableford||universales?universales?"<th style=\"color:#ff3030\">PUNTOS IN<br>1–9</th><th style=\"color:#ff3030\">PUNTOS OUT<br>10–18</th><th style=\"color:#ff3030\">PUNTOS TOTAL<br>1–18</th>":"<th>PUNTOS IN<br>1–9</th><th>PUNTOS OUT<br>10–18</th><th>PUNTOS TOTAL<br>1–18</th>":"<th>NETO IN<br>1–9</th><th>NETO OUT<br>10–18</th><th>NETO TOTAL<br>1–18</th>";
+    return`<section class="approved-round-totals"><h2>RESULTADOS DE VUELTA</h2><div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>GROSS IN<br>1–9</th><th>GROSS OUT<br>10–18</th><th>GROSS TOTAL<br>1–18</th>${resultHeaders}</tr></thead><tbody>${rows}</tbody></table></div></section>`
+  }
+
+  function shell(title,snapshot,body,summaryPlayers=snapshot.players||[]){
+    const tournament=snapshot.tournament?.name||snapshot.tournament||"",category=snapshot.mode==="stableford"?categoryLabel(snapshot.stablefordCategory):"";
+    const tournamentMeta=tournament?`<span>TORNEO · ${esc(tournament)}</span>`:"",categoryMeta=category?`<span>CATEGORÍA · ${esc(category)}</span>`:"";
+    return`<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>${esc(title)}</title>${style}<body><main><h1 class="artifact-heading">${esc(title)}</h1><div class="meta"><span>CAMPO · ${esc(courseLabel(snapshot.course))}</span><span>FECHA · ${esc(new Date(snapshot.playedAt).toLocaleString("es-GT"))}</span>${tournament?`<span class="meta-wide">TORNEO · ${esc(tournament)}</span>`:""}${category?`<span>CATEGORÍA · ${esc(category)}</span>`:""}<span>VERSIÓN · ${snapshot.version}</span><span class="meta-hash">ID OFICIAL · SHA-256<code>${esc(snapshot.sha256)}</code></span></div>${approvedRoundTotals(snapshot,summaryPlayers)}${body}${sideGamePanels(snapshot)}</main></body></html>`;
+  }
+
+  function globalCard(snapshot){
+    const rows=snapshot.players.map(player=>{const stats=playerStats(player);return`<tr><td>${playerNameWithCategory(player)}</td><td>${esc(player.tee)}</td><td>${player.handicap}</td>${stats.holes.map(hole=>`<td>${hole.gross}/${hole.net}</td>`).join("")}<td>${stats.gross}</td><td>${stats.net}</td><td class="${stats.relative<0?'under':stats.relative>0?'over':''}">${rel(stats.relative)}</td></tr>`}).join("");
+    return shell(snapshot.version>1?"Tarjeta Global corregida":"Tarjeta Global",snapshot,`<div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>MARCAS</th><th>HCP</th>${Array.from({length:18},(_,i)=>`<th>${i+1}</th>`).join("")}<th>GROSS</th><th>NETO</th><th>+/-</th></tr></thead><tbody>${rows}</tbody></table></div>`);
+  }
+
+  function personalCard(snapshot,player){
+    const stats=playerStats(player),bars=stats.holes.map(hole=>{const diff=hole.net-hole.par,height=Math.min(48,Math.max(2,Math.abs(diff)*22));return`<span class="bar ${diff>0?'over':''}"><i style="height:${height}px"></i><b>${hole.hole}<br>${rel(diff)}</b></span>`}).join("");
+    const line=`<div class="table-wrap"><table><tr><th>HOYO</th>${stats.holes.map(hole=>`<th>${hole.hole}</th>`).join("")}</tr><tr><th>GROSS</th>${stats.holes.map(hole=>`<td>${hole.gross}</td>`).join("")}</tr><tr><th>NETO</th>${stats.holes.map(hole=>`<td>${hole.net}</td>`).join("")}</tr></table></div>`;
+    const items=[["Gross",stats.gross],["Neto",stats.net],["Contra par",rel(stats.relative)],["Tiros HCP",stats.strokes],["Águilas",stats.eagles],["Birdies",stats.birdies],["Pares",stats.pars],["Bogeys",stats.bogeys],["Dobles",stats.doubleBogeys],["Triples+",stats.triplePlus],["Mejor hoyo",stats.best?.hole||"—"],["Peor hoyo",stats.worst?.hole||"—"],["Mejor vuelta",stats.bestNine?`${stats.bestNine.from}-${stats.bestNine.to}: ${stats.bestNine.net}`:"—"],["Prom. Par 3",stats.byPar[3]??"—"],["Prom. Par 4",stats.byPar[4]??"—"],["Prom. Par 5",stats.byPar[5]??"—"]].map(([key,value])=>`<div class="stat"><b>${key}</b><br>${value}</div>`).join("");
+    return shell(snapshot.version>1?`Tarjeta personal corregida · ${player.name}`:`Tarjeta personal · ${player.name}`,snapshot,`<h2>${playerNameWithCategory(player)} · HCP ${player.handicap} · ${esc(player.tee)}</h2>${line}<div class="stats">${items}</div><h2>Comportamiento Neto contra Par</h2><div class="chart">${bars}</div><p>${esc(summary(player.name,stats))}</p>`,[player]);
+  }
+
+  function stablefordGlobalCard(snapshot){
+    const label=categoryLabel(snapshot.stablefordCategory),half=(from,to,halfLabel)=>{const holes=Array.from({length:to-from+1},(_,i)=>from+i),rows=snapshot.players.map(player=>{const stats=stablefordPlayerStats(player),byHole=new Map(stats.holes.map(hole=>[hole.hole,hole])),segment=halfLabel==="IN"?stats.front:stats.back;return`<tr><td>${playerNameWithCategory(player,snapshot.stablefordCategory)}</td><td>${player.handicap}</td><td>${esc(player.tee)}</td>${holes.map(number=>{const hole=byHole.get(number);return`<td>${hole?(hole.status==="x"?"X":hole.gross):"—"}/${hole?.points??"—"}</td>`}).join("")}<td>${segment.grossCount===9?segment.gross:"—"}</td><td class="points">${segment.points}</td></tr>`}).join("");return`<section class="score-half"><h2>${halfLabel} · HOYOS ${from}–${to}</h2><div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>HCP</th><th>MARCAS</th>${holes.map(number=>`<th>${number}<br>G/P</th>`).join("")}<th>GROSS<br>${halfLabel}</th><th>PUNTOS<br>${halfLabel}</th></tr></thead><tbody>${rows}</tbody></table></div><p class="score-half-note">DESLIZA LA TABLA PARA VER TODOS LOS HOYOS · G/P = Gross / Puntos Stableford.</p></section>`};
+    return shell(snapshot.version>1?`Tarjeta Global Stableford corregida · ${label}`:`Tarjeta Global Stableford · ${label}`,snapshot,`${half(1,9,"IN")}${half(10,18,"OUT")}`);
+  }
+
+  function stablefordPersonalCard(snapshot,player){
+    const label=categoryLabel(snapshot.stablefordCategory),stats=stablefordPlayerStats(player),bars=stats.holes.map(hole=>`<span class="bar"><i style="height:${Math.max(2,hole.points*22)}px"></i><b>${hole.hole}<br>${hole.points}</b></span>`).join("");
+    const grossTotal=stats.grossCount===18?stats.gross:"—";
+    const line=`<div class="table-wrap"><table><tr><th>HOYO</th>${stats.holes.map(hole=>`<th>${hole.hole}</th>`).join("")}<th>TOTAL</th></tr><tr><th>GROSS</th>${stats.holes.map(hole=>`<td>${hole.status==="x"?"X":hole.gross}</td>`).join("")}<td>${grossTotal}</td></tr><tr><th>PUNTOS</th>${stats.holes.map(hole=>`<td class="points">${hole.points}</td>`).join("")}<td class="points">${stats.points}</td></tr></table></div>`;
+    const items=[["Gross",grossTotal],["Puntos",stats.points],["Gross 1ª vuelta",stats.front.grossCount===9?stats.front.gross:"—"],["Puntos 1ª vuelta",stats.front.points],["Gross 2ª vuelta",stats.back.grossCount===9?stats.back.gross:"—"],["Puntos 2ª vuelta",stats.back.points],["4 puntos",stats.pointCounts[4]],["3 puntos",stats.pointCounts[3]],["2 puntos",stats.pointCounts[2]],["1 punto",stats.pointCounts[1]],["0 puntos",stats.pointCounts[0]],["Fecha clasificatoria",snapshot.stablefordRoundNumber||"—"]].map(([key,value])=>`<div class="stat"><b>${key}</b><br>${value}</div>`).join("");
+    return shell(snapshot.version>1?`Tarjeta personal Stableford corregida · ${player.name}`:`Tarjeta personal Stableford · ${player.name}`,snapshot,`<h2>${playerNameWithCategory(player,snapshot.stablefordCategory)} · HCP ${player.handicap} · ${esc(label)} · ${esc(player.tee)}</h2>${line}<div class="stats">${items}</div><h2>Puntos Stableford por hoyo</h2><div class="chart stableford-chart">${bars}</div><p>${esc(stablefordSummary(player.name,stats))}</p>`,[player]);
+  }
+
+  function matchPlayHole(snapshot,hole,pairIndex=0){return globalThis.GSCMatchPlay?.pairHoleResult?.(snapshot.players,pairIndex,hole)||{recorded:false,statuses:["pending","pending"]}}
+  const matchSymbol=status=>{if(status!=="won"&&status!=="lost")return"";const path=status==="won"?"M12 22V5M5 12l7-7 7 7":"M12 2v17M5 12l7 7 7-7";return`<span class="match-arrow match-arrow-${status}" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="${path}"></path></svg></span>`};
+  function matchPlayGlobalCard(snapshot){
+    const rows=snapshot.players.map((player,index)=>{const pairIndex=Math.floor(index/2),localIndex=index%2,finalHole=Number(snapshot.matchPlay?.matches?.[pairIndex]?.decidedAt||snapshot.matchPlay?.decidedAt)||18,divider=(index===2||index===4)?`<tr class="pair-divider" aria-hidden="true"><td colspan="20"></td></tr>`:"";return`${divider}<tr><td>${playerNameWithCategory(player)}</td><td>${player.handicap}</td>${Array.from({length:18},(_,offset)=>{const hole=offset+1,result=matchPlayHole(snapshot,hole,pairIndex),score=player.holes?.[hole],state=result.statuses?.[localIndex]||"pending";return`<td class="match-${state}">${hole<=finalHole&&score?`${score.gross}/${score.net}<br>${matchSymbol(state)}`:"—"}</td>`}).join("")}</tr>`}).join("");
+    return shell(`Tarjeta Global Match Play`,snapshot,`<div class="match-result">${esc(snapshot.matchPlay?.resultLabel||snapshot.matchPlay?.label||"MATCH PLAY")}</div><div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>HCP</th>${Array.from({length:18},(_,i)=>`<th>${i+1}<br>G/N</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div><p>Flecha verde hacia arriba = ganó · flecha roja hacia abajo = perdió · sin símbolo = empate. Cada hoyo se define por el resultado Neto.</p>`);
+  }
+  function matchPlayPersonalCard(snapshot,player){
+    const index=snapshot.players.findIndex(item=>item.id===player.id),pairIndex=Math.floor(index/2),localIndex=index%2,opponentIndex=pairIndex*2+(localIndex===0?1:0),finalHole=Number(snapshot.matchPlay?.matches?.[pairIndex]?.decidedAt||snapshot.matchPlay?.decidedAt)||18,rows=Array.from({length:finalHole},(_,offset)=>{const hole=offset+1,result=matchPlayHole(snapshot,hole,pairIndex),score=player.holes?.[hole],opponent=snapshot.players[opponentIndex]?.holes?.[hole],state=result.statuses?.[localIndex]||"pending";return`<tr><td>${hole}</td><td>${score?.gross??"—"}</td><td>${score?.net??"—"}</td><td>${opponent?.net??"—"}</td><td class="match-${state}">${matchSymbol(state)}</td></tr>`}).join("");
+    return shell(`Tarjeta Match Play · ${player.name}`,snapshot,`<h2>${playerNameWithCategory(player)} · HCP ${player.handicap} · ${esc(player.tee)}</h2><div class="match-result">${esc(snapshot.matchPlay?.resultLabel||snapshot.matchPlay?.label||"MATCH PLAY")}</div><table><thead><tr><th>HOYO</th><th>GROSS</th><th>NETO</th><th>NETO RIVAL</th><th>RESULTADO</th></tr></thead><tbody>${rows}</tbody></table><p>Flecha verde hacia arriba = ganó · flecha roja hacia abajo = perdió · sin símbolo = empate.</p>`,[player]);
+  }
+
+  const FOUR_BALL_TEAM_NAMES=["PAREJA VERDE","PAREJA ORO","PAREJA AZUL"];
+  const FOUR_BALL_TEAM_CLASSES=["team-green","team-gold","team-blue"];
+  const fourBallTeamIndex=playerIndex=>Math.floor(playerIndex/2);
+  function fourBallHole(snapshot,hole){return globalThis.GSCFourBall?.holeResult?.(snapshot.players,hole)||{recorded:false,teamBest:[],teamStatuses:[]}}
+  function fourBallStanding(snapshot,teamIndex,hole){const holes=Array.from({length:hole},(_,index)=>index+1),value=globalThis.GSCFourBall?.teamStanding?.(snapshot.players,teamIndex,holes)||{played:0,state:"pending",position:""};return{...value,state:value.state==="up"?"won":value.state==="down"?"lost":value.played?"tied":"pending",label:value.position||""}}
+  function fourBallGlobalCard(snapshot){
+    const finalHole=Number(snapshot.fourBall?.decidedAt)||18,rows=snapshot.players.map((player,index)=>{const teamIndex=fourBallTeamIndex(index),teamClass=FOUR_BALL_TEAM_CLASSES[teamIndex],divider=(index===2||index===4)?`<tr class="pair-divider" aria-hidden="true"><td colspan="21"></td></tr>`:"";return`${divider}<tr><td>${playerNameWithCategory(player)}</td><td class="${teamClass}">${FOUR_BALL_TEAM_NAMES[teamIndex]}</td><td>${player.handicap}</td>${Array.from({length:18},(_,offset)=>{const hole=offset+1,result=fourBallHole(snapshot,hole),standing=fourBallStanding(snapshot,teamIndex,hole),score=player.holes?.[hole],best=result.teamBest?.[teamIndex]?.playerIndexes?.includes(index);return`<td class="match-${standing.state}">${hole<=finalHole&&score?`${score.gross}/${score.net}${best?'<br><span class="best-ball">★ MEJOR</span>':""}<br>${matchSymbol(standing.state)} ${standing.label}`:"—"}</td>`}).join("")}</tr>`}).join("");
+    return shell("Tarjeta Global Four Ball",snapshot,`<div class="match-result four-ball-result">${esc(snapshot.fourBall?.resultLabel||snapshot.fourBall?.label||"FOUR BALL")}</div><div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>PAREJA</th><th>HCP</th>${Array.from({length:18},(_,i)=>`<th>${i+1}<br>G/N</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div><p>De una a tres parejas, con HCP individual y resultado separado por pareja. ★ identifica el mejor Neto de cada pareja. Con dos o tres parejas se comparan los mejores Netos y se identifica ganador o empate por hoyo y acumulado.</p>`)
+  }
+  function fourBallPersonalCard(snapshot,player){
+    const index=snapshot.players.findIndex(item=>item.id===player.id),teamIndex=fourBallTeamIndex(index),mateIndex=teamIndex*2+(index%2===0?1:0),rivalIndexes=snapshot.players.map((_,playerIndex)=>playerIndex).filter(playerIndex=>fourBallTeamIndex(playerIndex)!==teamIndex),finalHole=Number(snapshot.fourBall?.decidedAt)||18,rows=Array.from({length:finalHole},(_,offset)=>{const hole=offset+1,result=fourBallHole(snapshot,hole),standing=fourBallStanding(snapshot,teamIndex,hole),score=player.holes?.[hole],mate=snapshot.players[mateIndex]?.holes?.[hole],rivalBest=Math.min(...result.teamBest.map((value,rivalTeam)=>rivalTeam===teamIndex?Infinity:Number(value?.score??Infinity))),best=result.teamBest?.[teamIndex]?.playerIndexes?.includes(index);return`<tr><td>${hole}</td><td>${score?.gross??"—"}</td><td>${score?.net??"—"}${best?' <span class="best-ball">★</span>':""}</td><td>${mate?.net??"—"}</td><td>${Number.isFinite(rivalBest)?rivalBest:"—"}</td><td class="match-${standing.state}">${matchSymbol(standing.state)} ${standing.label}</td></tr>`}).join("");
+    const rivals=rivalIndexes.length?` Rivales: ${rivalIndexes.map(i=>esc(snapshot.players[i]?.name)).join(" y ")}.`:"";
+    return shell(`Tarjeta Four Ball · ${player.name}`,snapshot,`<h2>${playerNameWithCategory(player)} · <span class="${FOUR_BALL_TEAM_CLASSES[teamIndex]}">${FOUR_BALL_TEAM_NAMES[teamIndex]}</span> · HCP ${player.handicap} · ${esc(player.tee)}</h2><div class="match-result four-ball-result">${esc(snapshot.fourBall?.resultLabel||snapshot.fourBall?.label||"FOUR BALL")}</div><table><thead><tr><th>HOYO</th><th>GROSS</th><th>NETO</th><th>NETO COMPAÑERO</th><th>MEJOR NETO RIVAL</th><th>ACUMULADO</th></tr></thead><tbody>${rows}</tbody></table><p>La pareja está formada por ${esc(snapshot.players[teamIndex*2]?.name)} y ${esc(snapshot.players[teamIndex*2+1]?.name)}.${rivals}</p>`,[player])
+  }
+
+  function universalesGlobalCard(snapshot){
+    const rows=snapshot.players.map(player=>{const stats=universalesPlayerStats(snapshot,player);return`<tr><td>${playerNameWithCategory(player)}</td><td>${player.handicap}</td>${stats.holes.map(item=>`<td>${item.recorded?`${item.gross}/${item.net}/<span style="color:#ff3030;font-weight:900">${item.points}</span>`:"—"}</td>`).join("")}<td style="color:#ff3030;font-weight:900">${stats.points}</td></tr>`}).join("");
+    return shell(snapshot.version>1?"Tarjeta Global Universales corregida":"Tarjeta Global Universales",snapshot,`<div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>HCP</th>${Array.from({length:18},(_,i)=>`<th>${i+1}<br>G/N/P</th>`).join("")}<th style="color:#ff3030">PUNTOS</th></tr></thead><tbody>${rows}</tbody></table></div><p>G/N/P = Gross, Neto y puntos. Cada hoyo reparte exactamente 12 puntos según el Neto después de aplicar el handicap.</p>`);
+  }
+  function universalesPersonalCard(snapshot,player){
+    const stats=universalesPlayerStats(snapshot,player),line=`<div class="table-wrap"><table><tr><th>HOYO</th>${stats.holes.map(item=>`<th>${item.hole}</th>`).join("")}<th>TOTAL</th></tr><tr><th>GROSS</th>${stats.holes.map(item=>`<td>${item.gross??"—"}</td>`).join("")}<td>—</td></tr><tr><th>NETO</th>${stats.holes.map(item=>`<td>${item.net??"—"}</td>`).join("")}<td>—</td></tr><tr><th style="color:#ff3030">PUNTOS</th>${stats.holes.map(item=>`<td style="color:#ff3030;font-weight:900">${item.points??"—"}</td>`).join("")}<td style="color:#ff3030;font-weight:900">${stats.points}</td></tr></table></div>`;
+    return shell(snapshot.version>1?`Tarjeta Universales corregida · ${player.name}`:`Tarjeta Universales · ${player.name}`,snapshot,`<h2>${playerNameWithCategory(player)} · HCP ${player.handicap} · ${esc(player.tee)}</h2>${line}<div class="stats"><div class="stat"><b>Puntos IN</b><br>${stats.front}</div><div class="stat"><b>Puntos OUT</b><br>${stats.back}</div><div class="stat"><b>Puntos total</b><br>${stats.points}</div><div class="stat"><b>Hoyos resueltos</b><br>${stats.recordedHoles}</div></div><p>Resultado Universales calculado por el Neto después de aplicar el handicap; los empates dividen los puntos de las posiciones ocupadas.</p>`,[player]);
+  }
+
+  function build(snapshot){
+    if(!snapshot||!["officially_closed","corrected"].includes(snapshot.status)||!snapshot.sha256)throw new Error("Se requiere snapshot oficialmente cerrado");
+    const stableford=snapshot.mode==="stableford",matchPlay=snapshot.mode==="match_play",fourBall=snapshot.mode==="four_ball",universales=snapshot.mode==="universales",mode=stableford?"stableford":matchPlay?"match_play":fourBall?"four_ball":universales?"universales":"stroke";
+    const global={kind:"global",mode,name:stableford?`tarjeta-global-stableford-v${snapshot.version}.html`:matchPlay?`tarjeta-global-match-play-v${snapshot.version}.html`:fourBall?`tarjeta-global-four-ball-v${snapshot.version}.html`:universales?`tarjeta-global-universales-v${snapshot.version}.html`:`tarjeta-global-v${snapshot.version}.html`,html:stableford?stablefordGlobalCard(snapshot):matchPlay?matchPlayGlobalCard(snapshot):fourBall?fourBallGlobalCard(snapshot):universales?universalesGlobalCard(snapshot):globalCard(snapshot)};
+    const personal=snapshot.players.map(player=>({kind:"personal",mode,playerId:player.id,name:stableford?`tarjeta-stableford-${slug(player.name)}-v${snapshot.version}.html`:matchPlay?`tarjeta-match-play-${slug(player.name)}-v${snapshot.version}.html`:fourBall?`tarjeta-four-ball-${slug(player.name)}-v${snapshot.version}.html`:universales?`tarjeta-universales-${slug(player.name)}-v${snapshot.version}.html`:`tarjeta-${slug(player.name)}-v${snapshot.version}.html`,html:stableford?stablefordPersonalCard(snapshot,player):matchPlay?matchPlayPersonalCard(snapshot,player):fourBall?fourBallPersonalCard(snapshot,player):universales?universalesPersonalCard(snapshot,player):personalCard(snapshot,player),stats:stableford?stablefordPlayerStats(player):universales?universalesPlayerStats(snapshot,player):playerStats(player)}));
+    return{global,personal,all:[global,...personal]};
+  }
+
+  return{build,playerStats,stablefordPlayerStats,universalesPlayerStats,summary,stablefordSummary};
+});
+</script><script>(function(root,factory){const api=factory();if(typeof module==="object"&&module.exports)module.exports=api;if(root)root.GSCCardFileExport=api})(typeof globalThis!=="undefined"?globalThis:this,function(){
+  "use strict";
+  const encoder=new TextEncoder();
+  const textBytes=value=>encoder.encode(String(value));
+  const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
+  const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
+  const dimensions=item=>({width:1600,height:item?.kind==="personal"?1300:Math.max(780,520+Number(item?.html?.match(/<tr>/g)?.length||0)*42)});
+
+  function artifactSvg(item){
+    if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
+    const style=item.html.match(/<style>([\s\S]*?)<\/style>/i)?.[1]||"",main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
+    if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
+    const {width,height}=dimensions(item),safeMain=main.replace(/<br>/gi,"<br/>");
+    return`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-56}px;max-width:none;margin:0;padding:28px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
+  }
+
+  async function canvasFor(item){
+    if(typeof document==="undefined"||typeof Image==="undefined")throw new Error("BROWSER_REQUIRED");
+    const svg=artifactSvg(item),source=new Blob([svg],{type:"image/svg+xml;charset=utf-8"}),url=URL.createObjectURL(source),image=new Image();
+    try{
+      await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=()=>reject(new Error("IMAGE_RENDER_FAILED"));image.src=url});
+      const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;const context=canvas.getContext("2d");context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return canvas;
+    }finally{URL.revokeObjectURL(url)}
+  }
+
+  function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED")),type,quality))}
+  async function png(item){return canvasBlob(await canvasFor(item),"image/png")}
+  async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
+
+  function pdfBytes(pages){
+    if(!Array.isArray(pages)||!pages.length)throw new Error("PDF_PAGES_REQUIRED");
+    const chunks=[],offsets=[0];let position=0;const push=value=>{const bytes=value instanceof Uint8Array?value:textBytes(value);chunks.push(bytes);position+=bytes.length};
+    const pageNumbers=pages.map((_,index)=>3+index*3),objectCount=2+pages.length*3;
+    push("%PDF-1.4\n%GSCG\n");
+    const object=(number,parts)=>{offsets[number]=position;push(`${number} 0 obj\n`);for(const part of parts)push(part);push("\nendobj\n")};
+    object(1,["<< /Type /Catalog /Pages 2 0 R >>"]);
+    object(2,[`<< /Type /Pages /Count ${pages.length} /Kids [${pageNumbers.map(number=>`${number} 0 R`).join(" ")}] >>`]);
+    pages.forEach((page,index)=>{const pageObject=3+index*3,imageObject=pageObject+1,contentObject=pageObject+2,pageWidth=1200,pageHeight=Math.round(pageWidth*page.height/page.width),stream=`q\n${pageWidth} 0 0 ${pageHeight} 0 0 cm\n/Im0 Do\nQ\n`;
+      object(pageObject,[`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /XObject << /Im0 ${imageObject} 0 R >> >> /Contents ${contentObject} 0 R >>`]);
+      object(imageObject,[`<< /Type /XObject /Subtype /Image /Width ${page.width} /Height ${page.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${page.bytes.length} >>\nstream\n`,page.bytes,"\nendstream"]);
+      object(contentObject,[`<< /Length ${textBytes(stream).length} >>\nstream\n${stream}endstream`]);
+    });
+    const xref=position;push(`xref\n0 ${objectCount+1}\n0000000000 65535 f \n`);for(let number=1;number<=objectCount;number++)push(`${String(offsets[number]).padStart(10,"0")} 00000 n \n`);push(`trailer\n<< /Size ${objectCount+1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`);return concat(chunks)
+  }
+
+  async function pdf(items){const list=Array.isArray(items)?items:[items],pages=[];for(const item of list)pages.push(await jpegPage(item));return new Blob([pdfBytes(pages)],{type:"application/pdf"})}
+  function download(blob,name){const url=URL.createObjectURL(blob),anchor=document.createElement("a");anchor.href=url;anchor.download=name;document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),4000)}
+  async function downloadPng(item){const blob=await png(item);download(blob,`${baseName(item)}.png`);return blob}
+  async function downloadPdf(item){const blob=await pdf(item);download(blob,`${baseName(item)}.pdf`);return blob}
+  async function downloadPackage(items,name="tarjetas-oficiales.pdf"){const blob=await pdf(items);download(blob,name);return blob}
+  async function shareImage(item,title="Tarjeta oficial"){const blob=await png(item),file=typeof File==="function"?new File([blob],`${baseName(item)}.png`,{type:"image/png"}):null;if(file&&navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title,files:[file]});return{shared:true,blob}}download(blob,`${baseName(item)}.png`);return{shared:false,blob}}
+  return{artifactSvg,dimensions,pdfBytes,png,pdf,downloadPng,downloadPdf,downloadPackage,shareImage};
+});
+</script><script>const oldExport=GSCCardFileExport;</script><script>(function(root,factory){const api=factory();if(typeof module==="object"&&module.exports)module.exports=api;if(root)root.GSCCardFileExport=api})(typeof globalThis!=="undefined"?globalThis:this,function(){
+  "use strict";
+  const encoder=new TextEncoder();
+  const textBytes=value=>encoder.encode(String(value));
+  const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
+  const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
+  const dimensions=item=>({width:1600,height:item?.kind==="personal"?1300:Math.max(780,520+Number(item?.html?.match(/<tr>/g)?.length||0)*42)});
+
+  function artifactSvg(item){
+    if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
+    const style=item.html.match(/<style>([\s\S]*?)<\/style>/i)?.[1]||"",main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
+    if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
+    const {width,height}=dimensions(item),safeMain=main.replace(/<br>/gi,"<br/>");
+    return`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-56}px;max-width:none;margin:0;padding:28px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
+  }
+
+  async function canvasFor(item){
+    if(typeof document==="undefined"||typeof Image==="undefined")throw new Error("BROWSER_REQUIRED");
+    // A self-contained SVG data image keeps the canvas origin-clean. A Blob
+    // URL containing foreignObject taints it and makes PNG/PDF export fail.
+    const svg=artifactSvg(item),image=new Image();
+    await new Promise((resolve,reject)=>{
+      const timer=setTimeout(()=>{image.src="";reject(new Error("IMAGE_RENDER_TIMEOUT"))},15000);
+      image.onload=()=>{clearTimeout(timer);resolve()};
+      image.onerror=()=>{clearTimeout(timer);reject(new Error("IMAGE_RENDER_FAILED"))};
+      image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
+    });
+    const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
+    const context=canvas.getContext("2d");if(!context)throw new Error("CANVAS_CONTEXT_REQUIRED");
+    context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return canvas;
+  }
+
+  function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED")),type,quality))}
+  async function png(item){return canvasBlob(await canvasFor(item),"image/png")}
+  async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
+
+  function pdfBytes(pages){
+    if(!Array.isArray(pages)||!pages.length)throw new Error("PDF_PAGES_REQUIRED");
+    const chunks=[],offsets=[0];let position=0;const push=value=>{const bytes=value instanceof Uint8Array?value:textBytes(value);chunks.push(bytes);position+=bytes.length};
+    const pageNumbers=pages.map((_,index)=>3+index*3),objectCount=2+pages.length*3;
+    push("%PDF-1.4\n%GSCG\n");
+    const object=(number,parts)=>{offsets[number]=position;push(`${number} 0 obj\n`);for(const part of parts)push(part);push("\nendobj\n")};
+    object(1,["<< /Type /Catalog /Pages 2 0 R >>"]);
+    object(2,[`<< /Type /Pages /Count ${pages.length} /Kids [${pageNumbers.map(number=>`${number} 0 R`).join(" ")}] >>`]);
+    pages.forEach((page,index)=>{const pageObject=3+index*3,imageObject=pageObject+1,contentObject=pageObject+2,pageWidth=1200,pageHeight=Math.round(pageWidth*page.height/page.width),stream=`q\n${pageWidth} 0 0 ${pageHeight} 0 0 cm\n/Im0 Do\nQ\n`;
+      object(pageObject,[`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /XObject << /Im0 ${imageObject} 0 R >> >> /Contents ${contentObject} 0 R >>`]);
+      object(imageObject,[`<< /Type /XObject /Subtype /Image /Width ${page.width} /Height ${page.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${page.bytes.length} >>\nstream\n`,page.bytes,"\nendstream"]);
+      object(contentObject,[`<< /Length ${textBytes(stream).length} >>\nstream\n${stream}endstream`]);
+    });
+    const xref=position;push(`xref\n0 ${objectCount+1}\n0000000000 65535 f \n`);for(let number=1;number<=objectCount;number++)push(`${String(offsets[number]).padStart(10,"0")} 00000 n \n`);push(`trailer\n<< /Size ${objectCount+1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`);return concat(chunks)
+  }
+
+  async function pdf(items){const list=Array.isArray(items)?items:[items],pages=[];for(const item of list)pages.push(await jpegPage(item));return new Blob([pdfBytes(pages)],{type:"application/pdf"})}
+  function download(blob,name){const url=URL.createObjectURL(blob),anchor=document.createElement("a");anchor.href=url;anchor.download=name;document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),4000)}
+  async function downloadPng(item){const blob=await png(item);download(blob,`${baseName(item)}.png`);return blob}
+  async function downloadPdf(item){const blob=await pdf(item);download(blob,`${baseName(item)}.pdf`);return blob}
+  async function downloadPackage(items,name="tarjetas-oficiales.pdf"){const blob=await pdf(items);download(blob,name);return blob}
+  async function shareImage(item,title="Tarjeta oficial"){const blob=await png(item),file=typeof File==="function"?new File([blob],`${baseName(item)}.png`,{type:"image/png"}):null;if(file&&navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title,files:[file]});return{shared:true,blob}}download(blob,`${baseName(item)}.png`);return{shared:false,blob}}
+  return{artifactSvg,dimensions,pdfBytes,png,pdf,downloadPng,downloadPdf,downloadPackage,shareImage};
+});
+</script><script>
+const holes=Object.fromEntries(Array.from({length:18},(_,i)=>[i+1,{hole:i+1,par:4,gross:5,net:4,strokes:1}]));
+const snapshot={status:'officially_closed',sha256:'a'.repeat(64),version:1,mode:'universales',course:'Campo de prueba',playedAt:'2026-09-11T18:00:00Z',players:Array.from({length:4},(_,i)=>({id:'p'+i,name:'JUGADOR DE PRUEBA '+(i+1),handicap:14,tee:'Blanco',holes}))};
+document.getElementById('run').onclick=async()=>{const status=document.getElementById('status');status.textContent='Preparando…';try{const item=GSCCardArtifacts.build(snapshot).global;let before='';try{await oldExport.png(item);before='ANTERIOR: sin error'}catch(e){before='ANTERIOR: '+e.name+' '+e.message}const blob=await GSCCardFileExport.png(item);document.getElementById('preview').src=URL.createObjectURL(blob);status.textContent=before+'\nCORREGIDO: PASS PNG '+blob.type+' '+blob.size+' bytes'}catch(e){status.textContent='FAIL '+e.name+': '+e.message;console.error(e)}};
+</script>
