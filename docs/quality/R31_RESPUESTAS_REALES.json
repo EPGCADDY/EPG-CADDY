@@ -1,0 +1,170 @@
+{
+  "date": "2026-09-13",
+  "reference": "R31_COMPARACION_UNIVERSAL.md",
+  "firstRun": {
+    "commit": "d198cb61c47db923c133b60e9311ae0bf5bb3501",
+    "results": [
+      {
+        "case": 1,
+        "query": "Cómo está el clima ahorita?",
+        "status": 200,
+        "elapsedMs": 193,
+        "answer": "En El Pulté Golf, Guatemala está parcialmente nublado, con 18 grados. La probabilidad de lluvia para hoy es de 88 por ciento; eso no significa que esté lloviendo ahora. Dato de las 03:30.",
+        "error": null,
+        "sources": [],
+        "degraded": false
+      },
+      {
+        "case": 4,
+        "query": "Cómo reinicio un iPhone 11?",
+        "status": 200,
+        "elapsedMs": 2258,
+        "answer": "Para reiniciar tu iPhone 11: mantén presionado el botón lateral y cualquiera de los botones de volumen hasta que aparezca “deslizar para apagar”. Desliza, espera unos 30 segundos y luego mantén presionado el botón lateral hasta que aparezca el logo de Apple. Esto solo reinicia el teléfono; no borra tus datos.",
+        "error": null,
+        "sources": [],
+        "degraded": false
+      },
+      {
+        "case": 2,
+        "query": "Cuál es la mejor terapia para un dolor en el dorsal ancho derecho?",
+        "status": 200,
+        "elapsedMs": 7616,
+        "answer": "La mejor terapia depende de la causa; si comenzó tras jugar golf, cargar peso o hacer un movimiento brusco, podría ser una distensión muscular. Durante las primeras 48 a 72 horas haz reposo relativo y aplica hielo envuelto durante 15 a 20 minutos varias veces al día; después inicia movilidad y estiramientos suaves sin provocar dolor, idealmente guiados por un fisioterapeuta. Evita masajes fuertes y calor al inicio; busca atención pronto si tienes dificultad para respirar, dolor de pecho, debilidad del brazo, fiebre, un golpe fuerte o dolor intenso que empeora. ¿Cuándo empezó y qué movimiento o actividad lo desencadenó?",
+        "error": null,
+        "sources": [
+          {
+            "title": "Fuente web",
+            "url": "https://medlineplus.gov/ency/article/000042.htm"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://medlineplus.gov/spanish/ency/article/003178.htm"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://medlineplus.gov/sprainsandstrains.html"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://medlineplus.gov/spanish/ency/article/000042.htm"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://medlineplus.gov/spanish/sprainsandstrains.html"
+          }
+        ],
+        "degraded": false
+      },
+      {
+        "case": 3,
+        "query": "Qué precio puede tener en el mercado un BMW 2002 TII del año 1975 que está en buen estado y es de agencia?",
+        "status": 200,
+        "elapsedMs": 24045,
+        "answer": "En Guatemala, a septiembre de 2026, estimaría un BMW 2002 tii en buen estado entre US$25,000 y US$38,000, aproximadamente Q191,000 a Q290,000; unidades restauradas, originales y bien documentadas pueden superar Q320,000. Ventas internacionales recientes comparables han cerrado entre US$19,000 y US$38,252, pero ser “de agencia” sólo agrega valor si conserva factura, historial y números originales.\n\nConviene revisar la tarjeta o el número de chasis: varios 2002 tii fabricados en 1974 aparecen registrados como modelo 1975, y confirmar que realmente sea tii —con inyección Kugelfischer— cambia mucho el precio. La ausencia de óxido estructural, el motor original, la pintura correcta y la documentación son determinantes; el cálculo usa Q7.62817 por dólar.",
+        "error": null,
+        "sources": [
+          {
+            "title": "Fuente web",
+            "url": "https://assets.ctfassets.net/x8mrk904j4k6/2vpIPUmVh6mgeWWPBF1lQf/cf94c33ec484586bb2acf7d71b44490d/1974_BMW_2002_2026-02-26.pdf"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://www.hagerty.co.uk/valuation/tool/results/?b=2dr+Saloon&cc=1990&md=2002&mk=BMW&sm=Turbo&y=1974"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://www.hagerty.co.uk/valuation/tool/?md=2002&mk=BMW&y=1974"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://www.hagerty.com/valuation-tools/bmw/2002/1974/1974-bmw-2002-turbo?backUrl=trans%2FTRANS%23559d25b6-e15e-41a2-8000-9d0771accda8%26vin%3D4291044&id=aCn1I000000DOP1SAO"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://driveindex.com/cars/bmw/2002/auction-results"
+          }
+        ],
+        "degraded": false
+      }
+    ]
+  },
+  "revisedRun": {
+    "commit": "8e9b78c194d6f96b9d29576eff55e1112117304f",
+    "results": [
+      {
+        "case": 4,
+        "query": "Cómo reinicio un iPhone 11?",
+        "status": 200,
+        "elapsedMs": 3051,
+        "answer": "Para reiniciarlo normalmente, mantén presionado el botón lateral y cualquiera de los botones de volumen hasta que aparezca “deslizar para apagar”. Apágalo, espera unos segundos y mantén presionado el botón lateral hasta ver el logo de Apple. Si la pantalla no responde, presiona y suelta rápido volumen arriba, luego volumen abajo y después mantén presionado el botón lateral hasta que aparezca el logo. Esto no borra tus datos.",
+        "error": null,
+        "sources": [],
+        "degraded": false
+      },
+      {
+        "case": 3,
+        "query": "Qué precio puede tener en el mercado un BMW 2002 TII del año 1975 que está en buen estado y es de agencia?",
+        "status": 200,
+        "elapsedMs": 12902,
+        "answer": "Como referencia internacional consultada el 13 de septiembre de 2026, un BMW 2002 tii 1975 auténtico, manual, original y en buen estado puede rondar entre US$28,000 y US$45,000; uno restaurado a nivel excelente y con documentación completa puede superar US$50,000. El mercado reciente del tii tiene una referencia cercana a US$37,000, aunque un ejemplar 1975 original se vendió en subasta por US$26,250 en noviembre de 2025.\n\nEstas cifras son internacionales y no determinan automáticamente el precio en Guatemala, donde no encontré comparables verificables de esa variante. Que sea de agencia ayuda únicamente si conserva factura, historial y números de chasis y motor verificables; para afinar el valor habría que revisar fotos, documentos, originalidad y especialmente posibles reparaciones u óxido.",
+        "error": null,
+        "sources": [
+          {
+            "title": "Fuente web",
+            "url": "https://www.hagerty.co.uk/valuation/tool/?md=2002&mk=BMW&y=1975"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://assets.ctfassets.net/x8mrk904j4k6/4fD14W1UBdLRCvRIuu4jAX/e87d5e1a64d73a06752506e4c563843e/1973_BMW_2002tii_2025-04-18.pdf"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://www.hagerty.co.uk/valuation/tool/results/?b=2dr+Saloon&cc=1990&md=2002&mk=BMW&sm=tii&y=1973"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://driveindex.com/cars/bmw/2002/auction-results"
+          },
+          {
+            "title": "Fuente web",
+            "url": "https://oldcarsdata.com/bmw/2002"
+          }
+        ],
+        "degraded": false
+      }
+    ]
+  },
+  "review": {
+    "method": "Manual content rubric, not literal similarity or a second ChatGPT session",
+    "weather": [
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "health": [
+      5,
+      5,
+      5,
+      5,
+      3
+    ],
+    "bmw": [
+      5,
+      3,
+      5,
+      5,
+      5
+    ],
+    "iphone": [
+      5,
+      3,
+      5,
+      5,
+      5
+    ],
+    "total": 94,
+    "physicalIphoneAudio": "PENDING"
+  }
+}

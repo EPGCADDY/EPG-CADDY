@@ -321,3 +321,13 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Evidencia automática dirigida: V278 y V397 PASS. Navegador: PNG de 102707 bytes antes de corregir legibilidad; nueva revisión visual pendiente. iPhone: pendiente. Producción intacta.
 
 - Cierre físico R30: el usuario confirmó «Eso sí, funcionó y llegó» tras enviar la imagen desde su iPhone. PNG real de navegador: 160728 bytes. Integración Main autorizada explícitamente. La prueba temporal permanece en la rama fix-r30-card-png.
+
+
+### RC-105 · Comunicación universal demasiado técnica
+- Evidencia del usuario: clima actual usa tecnicismos; solicita comparar cuatro preguntas de clima, salud, valoración de clásico e iPhone.
+- Causa de estilo comprobada: formato fijo del clima ignora concise para observación actual; instrucciones generales fuerzan mecanismos y riesgos.
+- Corrección: clima conversacional, ausencia de datos no se vuelve cero e instrucciones ajustadas a la pregunta.
+- Control: test-r31-universal-plain.mjs y comparación real de cuatro consultas en Preview. Sin porcentaje de similitud declarado antes de evaluar las respuestas.
+- Estado: pruebas locales y comparación remota pendientes; Main conserva R30.
+
+- RC-105 resultado: cuatro consultas reales registradas; BMW rechazado inicialmente y corregido; revisión de contenido 94/100 sobre esta muestra. Clima y pruebas de integridad PASS; sonido físico pendiente. No equivale a entrenamiento de vocabulario: ajuste de instrucciones, contexto y uso de fuentes.
