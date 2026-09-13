@@ -1,0 +1,486 @@
+{
+  "date": "2026-09-13",
+  "baseCommit": "8bcba839885dda559725a23ce2e368534c7efc67",
+  "testCommit": "0529d6ba47eeae9af80d43bfb97602800221494e",
+  "scope": "Same R31 handlers executed on Preview in Main and LAB project environments. Inputs supplied as text, voice response mode. Audio generated server-side; microphone capture and physical playback not tested.",
+  "referenceMethod": "Answers authored by current ChatGPT assistant before application outputs, with source checks. No separate ChatGPT session, no literal or statistical 90-percent claim.",
+  "reference": [
+    {
+      "checks": [
+        "Explica beneficios sin prometer resultados inmediatos",
+        "Introduce uso gradual y posible irritación",
+        "Incluye protección solar"
+      ],
+      "id": "retinol",
+      "reference": "El retinol puede mejorar líneas finas, manchas y textura, pero tarda semanas o meses. Puede resecar o irritar: empieza poco a poco por la noche, acompáñalo con hidratante y usa protector solar de día. Evítalo durante el embarazo.",
+      "sources": [
+        "https://www.aad.org/public/everyday-care/skin-care-secrets/anti-aging/retinoid-retinol",
+        "https://my.clevelandclinic.org/health/treatments/23293-retinol"
+      ]
+    },
+    {
+      "checks": [
+        "Entiende que se refiere al retinol",
+        "No recomienda continuar sobre piel irritada",
+        "Orienta ante reacción persistente o intensa"
+      ],
+      "id": "retinol-followup",
+      "reference": "Si el retinol te causa ardor, suspéndelo mientras la piel se recupera y usa una hidratante suave. No lo combines en ese momento con exfoliantes. Si la reacción es intensa o persiste, consulta al dermatólogo; no tienes que aguantar el ardor para que funcione.",
+      "sources": [
+        "https://my.clevelandclinic.org/health/treatments/23293-retinol"
+      ]
+    },
+    {
+      "checks": [
+        "Entiende cincho como cinturón",
+        "Acondicionador compatible y prueba oculta",
+        "No promete reparar grietas profundas con hidratación"
+      ],
+      "id": "leather",
+      "reference": "Si el cincho es de cuero natural, limpia suavemente y aplica una capa fina de acondicionador compatible, probando primero en una parte oculta. Puede oscurecerlo. Eso ayuda a conservar flexibilidad, pero no vuelve a unir grietas profundas; si se está abriendo cerca de la hebilla, conviene repararlo o cambiarlo.",
+      "sources": [
+        "https://www.leatherhoney.com/blogs/leather-care/six-leather-restoration-tips"
+      ]
+    },
+    {
+      "checks": [
+        "Conserva contexto del cincho",
+        "Distingue pelado del recubrimiento de cuero seco",
+        "No promete recuperar capa plástica con acondicionador"
+      ],
+      "id": "leather-followup",
+      "reference": "Si se desprende una capa parecida al plástico, puede estar fallando un recubrimiento o ser cuero sintético; no basta con hidratarlo. El acondicionador no vuelve a pegar esa capa. Una foto o la etiqueta permitiría distinguir el material antes de recomendar reparación o reemplazo.",
+      "sources": [
+        "https://www.leatherhoney.com/blogs/leather-care/six-leather-restoration-tips"
+      ]
+    },
+    {
+      "checks": [
+        "No inventa frecuencia universal",
+        "Identifica especie o condiciona a Phalaenopsis",
+        "Distingue retoños/brotes de flores"
+      ],
+      "id": "orchid",
+      "reference": "Depende del tipo de orquídea y de si te refieres a flores o brotes nuevos. Las Phalaenopsis comunes pueden volver a florecer cada año, aunque no tienen un calendario exacto; la luz y la temperatura influyen. Las hojas y raíces nuevas siguen otro ritmo. ¿Quieres que vuelva a dar flores?",
+      "sources": [
+        "https://www.rhs.org.uk/plants/phalaenopsis/growing-guide",
+        "https://www.aos.org/orchid-care/care-sheets/phalaenopsis-culture-sheet"
+      ]
+    },
+    {
+      "checks": [
+        "Responde qué revisar primero",
+        "Luz suficiente sin quemar planta",
+        "Condiciona consejo a especie y evita calendario de riego rígido"
+      ],
+      "id": "orchid-followup",
+      "reference": "Revisa primero si recibe suficiente luz indirecta: puede mantener hojas verdes y no florecer por falta de luz. Si es una Phalaenopsis, noches algo más frescas también ayudan a iniciar la floración. Comprueba que las raíces estén sanas y que la maceta no quede encharcada.",
+      "sources": [
+        "https://www.rhs.org.uk/plants/phalaenopsis/growing-guide",
+        "https://www.aos.org/orchid-care/care-sheets/phalaenopsis-culture-sheet"
+      ]
+    },
+    {
+      "checks": [
+        "50/50 siguiente lanzamiento",
+        "Explica independencia",
+        "No confunde probabilidad de secuencia con siguiente tirada"
+      ],
+      "id": "probability",
+      "reference": "No. Si la moneda es justa y los lanzamientos son independientes, la siguiente tirada sigue teniendo 50 % de probabilidad de cara y 50 % de cruz. Los cinco resultados anteriores no obligan a compensar nada.",
+      "sources": []
+    },
+    {
+      "checks": [
+        "Resultado 96",
+        "Calcula 100→80→96",
+        "Explica cambio de base"
+      ],
+      "id": "percentages",
+      "reference": "No: termina en 96. Al bajar 20 % de 100 queda 80; después el aumento de 20 % se calcula sobre 80 y suma 16. Por eso no regresa a 100.",
+      "sources": []
+    },
+    {
+      "checks": [
+        "Dos zonas opuestas por efecto lunar diferencial",
+        "Relaciona giro terrestre con dos pasos",
+        "No afirma dos mareas iguales en todas las costas"
+      ],
+      "id": "tides",
+      "reference": "La atracción de la Luna no actúa igual sobre toda la Tierra: eso produce dos zonas opuestas donde sube el agua. Al girar la Tierra, muchas costas pasan por ambas y tienen dos mareas altas, separadas aproximadamente por 12 horas y 25 minutos. No sucede igual en todos los lugares porque la forma de costas y océanos modifica el patrón.",
+      "sources": [
+        "https://oceanservice.noaa.gov/education/tutorial_tides/tides03_gravity.html",
+        "https://oceanservice.noaa.gov/education/tutorial_tides/tides07_cycles.html"
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "project": "Main project Preview",
+      "deployment": "dpl_FphTKnxn1KUiJdWfrpZR5qrkoUKW",
+      "answers": [
+        {
+          "id": "retinol",
+          "query": "Qué tal funciona el retinol para la crema facial",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 8060,
+          "answer": "El retinol funciona bastante bien con uso constante: puede mejorar líneas finas, manchas, textura y acné leve, aunque los resultados suelen ser graduales y moderados. Empieza por la noche, dos o tres veces por semana, con una cantidad del tamaño de un guisante; después aplica hidratante y usa protector solar cada mañana, porque al inicio puede causar resequedad, ardor o descamación. No se recomienda durante el embarazo, y si tienes rosácea, eczema o piel muy sensible conviene consultarlo con dermatología.",
+          "error": null,
+          "sources": [
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/everyday-care/skin-care-secrets/anti-aging/retinoid-retinol"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.mayoclinic.org/es/diseases-conditions/wrinkles/in-depth/wrinkle-creams/art-20047463"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.mayoclinic.org/diseases-conditions/wrinkles/in-depth/wrinkle-creams/art-20047463"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.mayoclinic.org/es/diseases-conditions/wrinkles/symptoms-causes/syc-20354927"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://mcpress.mayoclinic.org/healthy-aging/facial-skin-care-and-wrinkle-treatments-for-younger-looking-skin/"
+            }
+          ],
+          "degraded": false
+        },
+        {
+          "id": "retinol-followup",
+          "query": "¿Y si me arde después de ponérmela?",
+          "historyTurns": 2,
+          "status": 200,
+          "elapsedMs": 6905,
+          "answer": "Si el ardor es fuerte o no desaparece pronto, enjuágala suavemente y suspende el retinol; aplica una hidratante simple, sin perfume. Cuando la piel se recupere, podrías probar menos cantidad y solo una o dos noches por semana, evitando exfoliantes y ácidos; si hay hinchazón, ampollas, dolor intenso o dificultad para respirar, busca atención médica.",
+          "error": null,
+          "sources": [
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/diseases/acne/derm-treat/treat"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/everyday-care/skin-care-secrets/prevent-skin-problems/test-skin-care-products"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/everyday-care/skin-care-basics/care/skin-care-in-your-20s"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/everyday-care/skin-care-secrets/routine/facial-masks-and-skin-care"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/everyday-care/skin-care-basics/dry/dermatologists-tips-relieve-dry-skin"
+            }
+          ],
+          "degraded": false
+        },
+        {
+          "id": "leather",
+          "query": "Cuál es la mejor manera de hidratar un cincho de cuero que se está rajando su piel?",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 9024,
+          "answer": "Límpialo suavemente con un paño apenas húmedo y déjalo secar; luego aplica una capa fina de acondicionador específico para cuero con un paño, probando primero en una zona oculta. Déjalo absorber unas horas o toda la noche y retira el exceso; evita aceite de cocina, alcohol, calor directo y remojarlo. El acondicionador puede frenar el deterioro y darle flexibilidad, pero las rajaduras existentes no desaparecerán; si son profundas o afectan la resistencia del cincho, conviene reemplazarlo.",
+          "error": null,
+          "sources": [
+            {
+              "title": "Fuente web",
+              "url": "https://lexol.com/product/lexol-complete-two-step-leather-regime-8oz/"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://lexol.com/education/"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://lexol.com/faq/"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.leatherhoney.com/products/leather-honey-leather-conditioner"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.leatherhoney.com/blogs/leather-care/how-to-use-leather-honey-cleaner-and-conditioner"
+            }
+          ],
+          "degraded": false
+        },
+        {
+          "id": "leather-followup",
+          "query": "¿Y si se está pelando como una capita de plástico?",
+          "historyTurns": 2,
+          "status": 200,
+          "elapsedMs": 5636,
+          "answer": "Si se pela como una capita plástica, probablemente es cuero sintético o cuero recubierto: hidratarlo no pegará ni restaurará esa capa y los aceites pueden empeorarlo. Límpialo con un paño húmedo, retira sólo lo que ya esté completamente suelto y, si es leve, usa una pintura o reparador flexible para vinilo del mismo color; si se pela mucho o el cincho sostiene peso, lo más seguro es reemplazarlo.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        },
+        {
+          "id": "orchid",
+          "query": "Cada cuanto retoñen, las orquídeas en maceta",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 5142,
+          "answer": "Depende de la especie y sus cuidados. Muchas orquídeas en maceta producen hojas o raíces nuevas una o dos veces al año, normalmente durante la época cálida; las Phalaenopsis pueden rebrotar y florecer cada 6 a 12 meses. Si me dices qué tipo de orquídea tienes o compartes una foto, puedo orientarte mejor.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        },
+        {
+          "id": "orchid-followup",
+          "query": "La mía tiene hojas verdes pero lleva un año sin flores. ¿Qué reviso primero?",
+          "historyTurns": 2,
+          "status": 200,
+          "elapsedMs": 5731,
+          "answer": "Revisa primero la luz: debe recibir mucha claridad indirecta, pero no sol fuerte directo. Luego mira las raíces; las sanas suelen estar firmes, verdes o plateadas, mientras que las cafés y blandas indican exceso de agua. Riega sólo cuando el sustrato esté casi seco y asegúrate de que la maceta drene bien. Si es una Phalaenopsis, noches ligeramente más frescas durante unas semanas pueden estimular una nueva vara floral.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        },
+        {
+          "id": "probability",
+          "query": "Si una moneda justa ha caído cara cinco veces seguidas, ¿ahora es más probable que salga cruz?",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 4163,
+          "answer": "No. Si la moneda es justa y cada lanzamiento es independiente, la probabilidad sigue siendo 50% cara y 50% cruz. Pensar que “ya toca cruz” es la falacia del jugador.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        },
+        {
+          "id": "percentages",
+          "query": "Si algo costaba 100, bajó veinte por ciento y luego subió veinte por ciento, ¿regresó al precio inicial? Explícamelo fácil.",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 3884,
+          "answer": "No. Si costaba 100 y baja 20%, queda en 80. Luego sube 20% de 80, que son 16: termina en 96, o sea, 4% menos que el precio inicial.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        },
+        {
+          "id": "tides",
+          "query": "¿Por qué hay dos mareas altas al día si sólo tenemos una Luna? Explícamelo sin tecnicismos.",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 5914,
+          "answer": "Porque la Luna forma dos “bultos” de agua: uno en el lado de la Tierra que mira hacia ella, por su atracción, y otro en el lado opuesto, por el movimiento conjunto de la Tierra y la Luna. Al girar la Tierra, cada lugar pasa por ambos bultos, por eso suele haber dos mareas altas al día, separadas por unas 12 horas.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        }
+      ],
+      "audio": [
+        {
+          "id": "retinol",
+          "status": 200,
+          "audioBytes": 513252,
+          "error": null,
+          "elapsedMs": 5491,
+          "physicalPlayback": "NOT_TESTED"
+        },
+        {
+          "id": "leather",
+          "status": 200,
+          "audioBytes": 511999,
+          "error": null,
+          "elapsedMs": 5261,
+          "physicalPlayback": "NOT_TESTED"
+        },
+        {
+          "id": "orchid",
+          "status": 200,
+          "audioBytes": 318901,
+          "error": null,
+          "elapsedMs": 3645,
+          "physicalPlayback": "NOT_TESTED"
+        }
+      ]
+    },
+    {
+      "project": "LAB project Preview",
+      "deployment": "dpl_9yGn2RER8uXbXpN6W51r8FswDwn1",
+      "answers": [
+        {
+          "id": "retinol",
+          "query": "Qué tal funciona el retinol para la crema facial",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 5044,
+          "answer": "El retinol sí funciona: con uso constante puede mejorar líneas finas, manchas, textura y acné leve, pero los cambios suelen tardar entre 8 y 12 semanas. Empieza por la noche dos o tres veces por semana, con una cantidad del tamaño de un chícharo para todo el rostro; usa hidratante y protector solar cada mañana. Puede causar resequedad, ardor o descamación al inicio, y debe evitarse durante el embarazo.",
+          "error": null,
+          "sources": [
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/everyday-care/skin-care-secrets/anti-aging/retinoid-retinol"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/everyday-care/skin-care-secrets/routine/pregnancy-skin-care"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://pubmed.ncbi.nlm.nih.gov/19852122/"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://pubmed.ncbi.nlm.nih.gov/28762645/"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/diseases/acne/derm-treat/pregnancy"
+            }
+          ],
+          "degraded": false
+        },
+        {
+          "id": "retinol-followup",
+          "query": "¿Y si me arde después de ponérmela?",
+          "historyTurns": 2,
+          "status": 200,
+          "elapsedMs": 5074,
+          "answer": "Si te arde, lávate suavemente y suspéndela hasta que la piel se calme; aplica una hidratante simple, sin perfume. Luego puedes probar menos cantidad y solo una o dos noches por semana, evitando ácidos, exfoliantes y peróxido de benzoilo esa noche. Si el ardor es intenso, dura varias horas, aparece hinchazón, ampollas o dificultad para respirar, deja de usarla y busca atención médica.",
+          "error": null,
+          "sources": [
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/everyday-care/skin-care-secrets/prevent-skin-problems/test-skin-care-products"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/everyday-care/skin-care-secrets/anti-aging/maximize-anti-aging-products"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/everyday-care/skin-care-secrets/anti-aging/wrinkle-remedies"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.nhs.uk/conditions/acne/treatment/"
+            },
+            {
+              "title": "Fuente web",
+              "url": "https://www.aad.org/public/diseases/acne/derm-treat/treat"
+            }
+          ],
+          "degraded": false
+        },
+        {
+          "id": "leather",
+          "query": "Cuál es la mejor manera de hidratar un cincho de cuero que se está rajando su piel?",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 5042,
+          "answer": "Límpialo primero con un paño apenas húmedo y déjalo secar a la sombra; luego aplica poca cantidad de acondicionador para cuero neutro, masajeándolo suavemente y repitiendo si aún está reseco. Evita empaparlo, usar aceite de cocina, alcohol, vaselina o calor; si la superficie se está pelando en capas, probablemente es cuero sintético o regenerado y el acondicionador no reparará las grietas, sólo ayudará a disimularlas temporalmente.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        },
+        {
+          "id": "leather-followup",
+          "query": "¿Y si se está pelando como una capita de plástico?",
+          "historyTurns": 2,
+          "status": 200,
+          "elapsedMs": 3815,
+          "answer": "Si se pela como una capita de plástico, probablemente es cuero sintético, cuero regenerado o cuero auténtico con recubrimiento; hidratarlo no volverá a pegar esa capa. Retira sólo lo que ya esté suelto, sin arrancar, limpia suavemente y usa un reparador flexible para vinilo o cuero del mismo color; será un arreglo cosmético y temporal. Si el cincho soporta peso y las grietas llegan al material interior, lo más seguro es reemplazarlo.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        },
+        {
+          "id": "orchid",
+          "query": "Cada cuanto retoñen, las orquídeas en maceta",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 3210,
+          "answer": "Depende de la variedad, pero muchas orquídeas en maceta producen brotes nuevos una o dos veces al año, normalmente durante primavera o época lluviosa. Si te refieres a florecer, las Phalaenopsis suelen hacerlo una vez al año y sus flores pueden durar varios meses; buena luz indirecta, riego sin encharcar y raíces sanas favorecen nuevos brotes.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        },
+        {
+          "id": "orchid-followup",
+          "query": "La mía tiene hojas verdes pero lleva un año sin flores. ¿Qué reviso primero?",
+          "historyTurns": 2,
+          "status": 200,
+          "elapsedMs": 2281,
+          "answer": "Revisa primero la luz: necesita mucha claridad indirecta; hojas verde muy oscuro suelen indicar poca luz. Después mira las raíces: deben estar firmes, verdes o plateadas, no cafés ni blandas; riega sólo cuando estén plateadas y evita agua acumulada. Si es una Phalaenopsis, varias semanas con noches un poco más frescas que el día suelen estimular la vara floral.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        },
+        {
+          "id": "probability",
+          "query": "Si una moneda justa ha caído cara cinco veces seguidas, ¿ahora es más probable que salga cruz?",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 2141,
+          "answer": "No. Si la moneda es justa y cada lanzamiento es independiente, la probabilidad sigue siendo 50% cara y 50% cruz. Pensar que “ya toca cruz” es la falacia del jugador.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        },
+        {
+          "id": "percentages",
+          "query": "Si algo costaba 100, bajó veinte por ciento y luego subió veinte por ciento, ¿regresó al precio inicial? Explícamelo fácil.",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 1506,
+          "answer": "No. Si costaba 100 y baja 20%, queda en 80. Luego sube 20% de 80, que son 16, así que termina en 96: quedó 4% más barato que al inicio.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        },
+        {
+          "id": "tides",
+          "query": "¿Por qué hay dos mareas altas al día si sólo tenemos una Luna? Explícamelo sin tecnicismos.",
+          "historyTurns": 0,
+          "status": 200,
+          "elapsedMs": 2798,
+          "answer": "Porque la Luna “estira” el agua de los océanos y forma dos abultamientos: uno en el lado de la Tierra que mira hacia la Luna y otro en el lado opuesto, debido al movimiento conjunto de la Tierra y la Luna. Al girar la Tierra, cada costa pasa por ambos abultamientos, por eso suele haber dos mareas altas al día, separadas por unas 12 horas. El Sol y la forma de las costas pueden cambiar el horario y la intensidad.",
+          "error": null,
+          "sources": [],
+          "degraded": false
+        }
+      ],
+      "audio": [
+        {
+          "id": "retinol",
+          "status": 200,
+          "audioBytes": 436766,
+          "error": null,
+          "elapsedMs": 4087,
+          "physicalPlayback": "NOT_TESTED"
+        },
+        {
+          "id": "leather",
+          "status": 200,
+          "audioBytes": 514506,
+          "error": null,
+          "elapsedMs": 4935,
+          "physicalPlayback": "NOT_TESTED"
+        },
+        {
+          "id": "orchid",
+          "status": 200,
+          "audioBytes": 363205,
+          "error": null,
+          "elapsedMs": 3529,
+          "physicalPlayback": "NOT_TESTED"
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 // Synthetic queries only. Uses Preview server credentials without exposing them.
 if(process.env.VERCEL_ENV!=="preview"||process.env.VERCEL_GIT_COMMIT_REF!=="test-universal-open-questions")process.exit(0);
+if(process.env.VERCEL_GIT_COMMIT_SHA!=="0529d6ba47eeae9af80d43bfb97602800221494e")process.exit(0);
 const {default:answerHandler}=await import('../api/universal-ai.js');
 const {default:speechHandler}=await import('../api/voice-speech.js');
 const cases=[

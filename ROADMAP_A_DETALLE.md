@@ -916,3 +916,5 @@ Registro conjunto del despliegue: hotfix `main` commits `481f716` y `c548f30`; m
 ## 2026-09-13 · Diagnóstico de preguntas abiertas (Preview)
 Prueba sobre R31, sin modificar el comportamiento de Main/LAB: nueve consultas sintéticas de retinol, cincho, orquídeas, continuidad y razonamiento; audio servidor en las tres consultas del propietario. Registrar respuestas completas, tiempos, fuentes y fallos por separado; no equivale a prueba física iPhone. Reversión: retirar rama de diagnóstico; producción permanece en 8bcba839885dda559725a23ce2e368534c7efc67. Evidencia de ejecución en logs OPEN_QUESTIONS de Preview.
 Archivo de prueba: `scripts/test-universal-open-questions.mjs`. Configuración de ejecución exclusiva Preview: `vercel.json`.
+
+Comparación terminada: `docs/quality/PREGUNTAS_ABIERTAS_COMPARACION.md` y `docs/quality/PREGUNTAS_ABIERTAS_RESPUESTAS_REALES.json`. 18/18 respuestas y 6/6 audios de servidor; no equivale a iPhone. Fallos documentados: filtro setup rechaza preguntas fuera de sus expresiones, conexión directa agotada en Main Preview, éxito de texto no garantiza audio. Sin corrección publicada en esta prueba.

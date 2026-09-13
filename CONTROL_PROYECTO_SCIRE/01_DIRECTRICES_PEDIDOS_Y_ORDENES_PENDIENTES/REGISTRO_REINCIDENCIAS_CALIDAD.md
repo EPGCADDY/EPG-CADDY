@@ -331,3 +331,13 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 - Estado: pruebas locales y comparación remota pendientes; Main conserva R30.
 
 - RC-105 resultado: cuatro consultas reales registradas; BMW rechazado inicialmente y corregido; revisión de contenido 94/100 sobre esta muestra. Clima y pruebas de integridad PASS; sonido físico pendiente. No equivale a entrenamiento de vocabulario: ajuste de instrucciones, contexto y uso de fuentes.
+
+
+## 2026-09-13 · Diagnóstico de silencio ante preguntas abiertas R31
+- Reporte del propietario: retinol, cincho y orquídeas quedan callados; pide comparación con ChatGPT.
+- Causa reproducida parcialmente: filtro por expresiones de conversación en setup rechaza orquídeas y repreguntas antes de llamar al modelo. La reproducción del dispatcher sustituye el parser de registro por resultado negativo; no es prueba de micrófono.
+- Escape: pruebas anteriores de consultas escritas no cubrían ese despacho ni la reproducción física.
+- Evidencia: `docs/quality/PREGUNTAS_ABIERTAS_COMPARACION.md`, respuestas íntegras en `docs/quality/PREGUNTAS_ABIERTAS_RESPUESTAS_REALES.json`, ensayo reproducible `scripts/test-universal-open-questions.mjs`, commit de prueba 0529d6ba47eeae9af80d43bfb97602800221494e.
+- Resultado: PASS servidor 18/18 consultas y 6/6 audios generados; FAIL de precisión en generalización de orquídeas; comprensión física y sonido iPhone no verificados. Conexión directa Main Preview registró credit_balance_exhausted, recuperada vía gateway.
+- Control permanente requerido: despacho de preguntas variadas y repreguntas en setup/ronda; resultado de voz separado del éxito del modelo. Pendiente de implementar, no se declara cerrado.
+- Producción: no modificada por este diagnóstico.
