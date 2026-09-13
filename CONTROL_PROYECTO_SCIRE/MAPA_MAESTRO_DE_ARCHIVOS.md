@@ -1249,6 +1249,19 @@ Base R33 ab2e227c6dc1. Incidente RC-108: audio iniciado no demuestra salida audi
 Archivos exactos:
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+
+## 2026-09-13 · R34 arquitectura universal y validación 100
+
+| Archivo | Función verificable |
+|---|---|
+| `index-grupal.html` | Usa WebRTC sólo para captura/transcripción y encamina toda pregunta general al motor universal; suspende y rearma el track alrededor de texto/TTS. |
+| `api/session-grupal.js`, `api/voice-speech.js` | Fijan VAD/velocidad autorizados y la ruta hablada sellada. |
+| `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json` | Matriz fuente de 100 preguntas, referencias ChatGPT, categorías y contexto. |
+| `scripts/run-universal-100-real.mjs` | Ejecuta las cinco etapas reales en Preview, registra ambas respuestas, tiempos, criterios y PASS/FAIL. |
+| `test-r34-universal-architecture.mjs` | Impide reintroducir respuesta directa de Realtime/cedar para consultas generales. |
+| `test-r34-audio-response.mjs`, `test-v312-general-caddie.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v356-voice-only-cedar-quality.mjs`, `test-v362-physical-voice-recovery.mjs` | Contratos actualizados de continuidad, tiempos, salida visible y voz sellada. |
+| `Intocables/MICROFONO_APROBADO.lock.json`, `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`, `Intocables/CONFIRMACION_ESCRITA_V378.md`, `Intocables/README.md`, `Intocables/intocables-gate.mjs` | Registran exclusivamente el ajuste autorizado y preservan la declaración honesta de voz pendiente de validación auditiva. |
+| `audit-project.mjs`, `vercel.json` | Hacen obligatorios el contrato arquitectónico y el banco 100 en el build Preview. |
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
 - `ROADMAP_A_DETALLE.md`
 - `ROADMAP_OVERALL.md`

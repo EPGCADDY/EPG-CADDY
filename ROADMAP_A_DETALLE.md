@@ -986,6 +986,15 @@ Archivos exactos:
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+
+## 2026-09-13 · R34 universal: eliminación del bypass Realtime
+
+- Causa exacta: `speakConversation` permitía que `gpt-realtime` generara la respuesta y `cedar` la voz, sin pasar por el motor general `api/universal-ai.js` ni por la voz sellada `api/voice-speech.js`.
+- Corrección: Realtime se limita a capturar/transcribir; `submitAiUniversalText(...,{voiceOnly:true})` resuelve cualquier tema con contexto/herramientas, publica texto y reproduce TTS. El track permanece suspendido durante salida y se rearma al terminar.
+- Tiempos autorizados: Fish `0.963`, sesión `1.2305`, VAD `275 ms`, silencio conversacional `300 ms`. El silencio operativo ajeno a conversación conserva `1200 ms`.
+- Prueba local: `test-r34-universal-architecture.mjs`, 100 turnos WebRTC inyectados y bancos R34/V312/V325/V326/V356/V362 PASS. No equivalen todavía a aprobación cualitativa remota ni física.
+- Banco real: `UNIVERSAL_100_REFERENCE_BANK.json` contiene las 100 preguntas y referencias ChatGPT. `run-universal-100-real.mjs` exige las cinco etapas, conserva ambas respuestas y tiempos, puntúa siete criterios con juez independiente y sólo marca aceptación con transporte 100/100 y calidad >=90/100.
+- Estado honesto: EN VALIDACIÓN; Producción/main intactas y única participación restante del propietario, después del PASS completo, es la comprobación física final en iPhone.
 - `ROADMAP_A_DETALLE.md`
 - `ROADMAP_OVERALL.md`
 - `api/voice-health.js`

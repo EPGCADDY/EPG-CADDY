@@ -83,8 +83,8 @@ assert.equal(limited.at(-1).content,"turno vigente 80");
 
 assert.match(html,/const CONVERSATION_INACTIVITY_CLOSE_MS=30\*60\*1000/);
 assert.doesNotMatch(html,/CONVERSATION_IDLE_CLOSE_MS=3000/);
-assert.match(html,/conversationBargeInArmedAt=Date\.now\(\)\+250/);
-assert.match(html,/if\(micTrack\)micTrack\.enabled=listening/);
+assert.match(html,/function suspendRealtimeCaptureForExternalAnswer\(\)[\s\S]*?micTrack\.enabled=false/);
+assert.match(html,/function resumeRealtimeCaptureAfterExternalAnswer\(\)[\s\S]*?micTrack\.enabled=true/);
 assert.match(html,/else if\(finishedReason==="conversation"\)\{phase="listening";resumeConversationListening\(\);setPrimaryVoiceMatrix\("listening",voiceContext\)/);
 
 const timingStart=html.indexOf("function clearConversationIdleCloseTimer");

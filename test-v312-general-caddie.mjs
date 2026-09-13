@@ -81,9 +81,10 @@ assert.equal(echoBeforeAudio("Cambia mi pregunta"),false,"Durante la espera web 
 assert.equal(echoDuringAudio("ruido del altavoz"),true,"Al comenzar audio sin transcripción debe protegerse contra eco");
 assert.match(html,/conversation\.item\.input_audio_transcription\.completed"&&listening[\s\S]*?conversationInputLooksLikeEcho\(heard\)[\s\S]*?consumeLiveRoundItem/ ,"El eco del altavoz debe descartarse sin cortar la respuesta");
 const conversationStart=html.slice(html.indexOf("function speakConversation(transcript)"),html.indexOf("async function setSessionVoiceSpeed"));
-assert.match(conversationStart,/conversationBargeInArmedAt=Date\.now\(\)\+250/,"La interrupción debe ignorar sólo el arranque inmediato del altavoz");
-assert.match(conversationStart,/if\(micTrack\)micTrack\.enabled=listening/,"El micrófono debe permanecer disponible mientras habla el Caddie");
-assert.doesNotMatch(conversationStart,/micTrack\.enabled=false/,"La respuesta no puede bloquear la interrupción por voz");
+assert.match(conversationStart,/submitAiUniversalText\(clean,\{voiceOnly:true\}\)/,"Toda consulta debe usar el mismo motor general que el teclado");
+assert.match(conversationStart,/suspendRealtimeCaptureForExternalAnswer\(\)/,"La captura debe silenciarse sólo durante la respuesta para no transcribir el altavoz");
+assert.doesNotMatch(conversationStart,/response\.create/,"La calidad general no puede depender del generador Realtime reducido");
+assert.match(html,/function resumeRealtimeCaptureAfterExternalAnswer\(\)[\s\S]*?micTrack\.enabled=true[\s\S]*?ESCUCHANDO · PUEDES CONTINUAR/,"La misma pista debe reactivarse después de cada respuesta");
 assert.match(html,/echoCancellation:true,noiseSuppression:true,autoGainControl:true/,"La escucha simultánea debe conservar cancelación de eco");
 const outputStopped=html.slice(html.indexOf('if(e.type==="output_audio_buffer.stopped")'),html.indexOf('if(e.type==="output_audio_buffer.cleared")'));
 assert.ok(outputStopped.indexOf("conversationToolTransition")<outputStopped.indexOf("clearSpeechAuthorization()"),"El cierre de la consulta no puede desautorizar la respuesta climática final");

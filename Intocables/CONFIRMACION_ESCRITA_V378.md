@@ -18,3 +18,7 @@ Queda terminantemente prohibido modificar, reemplazar, reinterpretar o “mejora
 El tiempo de **22 segundos de Comunicación Universal está rechazado** y queda expresamente fuera de esta aprobación y de este blindaje.
 
 La fuente vigente debe coincidir byte por byte con el archivo servidor de voz autorizado, SHA-256 `96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01`. El 7 de septiembre de 2026 Jaime Kirste ordenó expresamente corregir únicamente la pronunciación a español latinoamericano `es-419` sin ceceo, conservar velocidad exacta `0.90` y reducir a la mitad los límites de espera de Comunicación Universal. La aprobación auditiva del candidato corregido sigue pendiente; Registro, Scores, sensibilidad y umbrales permanecen intocables. Un solo cambio no autorizado bloquea auditoría, Preview y Producción.
+
+## Ajuste autorizado el 13 de septiembre de 2026
+
+El propietario ordenó aumentar 7% la velocidad y reducir la pausa de conversación al 25%: Fish Audio pasa de `0.90` a `0.963`, Realtime de `1.15` a `1.2305`, VAD conversacional de `1100` a `275 ms` y reconocimiento del navegador de `1200` a `300 ms`. Registro, Scores, umbral `0.2`, prefijo `700 ms` y espera operativa `1000/1200 ms` no cambian. La comprobación auditiva final continúa pendiente.

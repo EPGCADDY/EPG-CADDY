@@ -1,18 +1,18 @@
 {
-  "version": "R34-WEBRTC-PERSISTENT-VOICE-LOCK",
-  "generatedAt": "2026-09-13T13:15:00Z",
-  "sourceFileCount": 474,
-  "sourceDigest": "b803be614c11b1d2ccf312bd2a1360a24dcb38ea7135a19c360b4461b501b322",
+  "version": "R18-LAB-OWNER-GUEST-24H-LOCK",
+  "generatedAt": "2026-09-13T16:58:53Z",
+  "sourceFileCount": 477,
+  "sourceDigest": "19cb76d3da60b037db9315a9f5732cf729588a1c2099bb37fa3e452e4cb1a4bc",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 144369,
-      "sha256": "5306b1ccc75646f282d18283d2d0d172105312417563561ee41c57fc1baa9dff"
+      "size": 147869,
+      "sha256": "a54443e94eb58a297f5aa5a750f7d5b71b5d8df304cb7221cab67f91218ab589"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 157073,
-      "sha256": "5e1790fe08a660b8be2b67e16b9d83bcf43375e0c4d0a7c56f4c20b4a0e1eb58"
+      "size": 159992,
+      "sha256": "b6f13c2d79364b180d3c0e72af00afa8d002bb126e3486106fc9f0d01b96f2af"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

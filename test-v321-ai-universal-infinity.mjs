@@ -80,8 +80,9 @@ for(const token of [
   "function startAiUniversalListening()",
   "function speakAiUniversalText(text",
   "function renderAiUniversalHistory()",
-  'aiUniversalRemember("user",transcript,[],{visible:false})',
-  'aiUniversalRemember("assistant",finishedConversationText,aiUniversalPendingSources,{visible:false})',
+  "function speakConversation(transcript)",
+  "suspendRealtimeCaptureForExternalAnswer()",
+  "submitAiUniversalText(clean,{voiceOnly:true})",
   "const CONVERSATION_INACTIVITY_CLOSE_MS=30*60*1000",
   "CONTEXTO DE CHAT TEMPORAL · REGLAS PUEDE GUARDAR SÓLO TOKENS Y RESPUESTAS OFICIALES EN ESTE DISPOSITIVO"
 ])assert.ok(html.includes(token),`Falta integración AI UNIVERSAL ∞: ${token}`);

@@ -19,8 +19,9 @@
     {
       "id": "voz_y_velocidad_v378",
       "path": "api/voice-speech.js",
-      "sha256": "96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01",
-      "authorizedAdjustment": "2026-09-07: español latinoamericano es-419 sin ceceo, velocidad 0.90 conservada y timeout 45s→22.5s; aprobación auditiva del candidato pendiente"
+      "sha256": "1d45c3e85d862a3d8844752204c03f0d725fdddefa6d0f235a29f0a4f2235ea7",
+      "authorizedAdjustment": "2026-09-07: español latinoamericano es-419 sin ceceo y timeout 45s→22.5s; 2026-09-13: orden expresa +7% velocidad, de 0.90 a 0.963. Aprobación auditiva del candidato pendiente.",
+      "previousSpeedAdjustmentSha256": "96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01"
     }
   ],
   "scopes": [

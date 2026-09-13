@@ -4,7 +4,7 @@ import {resolveGatewayToken} from "./_lib/vercel-gateway-auth.js";
 const MAX_SPEECH_TEXT=4000;
 const VOICE="onyx";
 const GATEWAY_VOICE="s2.1-es-419";
-const SPEED=.9;
+const SPEED=.963; // 2026-09-13: 0.90 × 1.07, orden del propietario.
 const GATEWAY_SPEECH_MODEL="fish-audio/s2.1-pro-free";
 const INSTRUCTIONS="Locutor masculino adulto latinoamericano, serio, sobrio y profesional. Habla exclusivamente en español latinoamericano es-419, natural para Guatemala, sin ceceo español: pronuncia c ante e/i y z con sonido de s. Nunca uses acento de España, acento anglosajón, Spanglish ni palabras en inglés salvo nombres propios inevitables. Dicción muy clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";
 

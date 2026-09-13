@@ -882,6 +882,14 @@ Archivos de esta versión:
 - `test-v407-r25-round-controls.mjs`
 - `test-v407-r7-ios-scroll.mjs`
 - `test-v407-r9-manual-update.mjs`
+
+## 2026-09-13 · R34 arquitectura conversacional universal y banco ChatGPT 100
+
+Colima queda documentada como síntoma, no como solución puntual. Se elimina el bypass por el que `gpt-realtime` respondía directamente con `cedar`: WebRTC conserva captura/transcripción y todas las preguntas generales pasan por `api/universal-ai.js`, con contexto y herramientas, texto visible y salida sellada de `api/voice-speech.js`. Se aplican las autorizaciones de velocidad (+7%) y reducción de espera (VAD 275 ms; silencio conversacional 300 ms). Producción permanece intacta.
+
+La validación obligatoria usa 100 preguntas con referencias ChatGPT, 78 categorías y siete cadenas de seguimiento. El runner ejecuta audio inyectado -> STT -> IA universal -> texto -> TTS y un juez independiente califica siete criterios. Cierre exigido: transporte 100/100 y por lo menos 90 casos cualitativamente aprobados; no se entrega Preview al propietario antes de ese resultado.
+
+Archivos centrales: `index-grupal.html`, `api/session-grupal.js`, `api/voice-speech.js`, `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`, `scripts/run-universal-100-real.mjs`, `test-r34-universal-architecture.mjs`, contratos de voz R34/V312/V325/V326/V356/V362, `audit-project.mjs`, `vercel.json`, candados `Intocables`, ambos ROADMAPS, mapa maestro, reincidencias e inventario sellado.
 - `test-voice-result-integrity.mjs`
 
 `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: sello de microfono_compartido actualizado sólo por corrección universal autorizada; SHA previo conservado, aprobación física R32 pendiente. Banco V358 restaurado sin cambios; liberación de audio dentro de startAiUniversalListening.

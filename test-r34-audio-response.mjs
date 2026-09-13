@@ -2,14 +2,14 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 const html=fs.readFileSync('index-grupal.html','utf8');
-const helpers=html.slice(html.indexOf('let browserVoiceFollowupContext='),html.indexOf('function stopAiUniversalOutput('));
+const helpers=html.slice(html.indexOf('function suspendRealtimeCaptureForExternalAnswer('),html.indexOf('function stopAiUniversalOutput('));
 function fixture({rejectPlay=false,stuckFetch=false}={}){
  const nodes=new Map(),events=[],states=[];let tick=null,now=0;
  function element(tag){return {tag,style:{},children:[],setAttribute(k,v){this[k]=v},appendChild(child){this.children.push(child);if(child.id)nodes.set(child.id,child)},insertAdjacentElement(_,child){nodes.set(child.id,child)}}}
  nodes.set('toolbar',element('nav'));
  class Audio {constructor(){Object.assign(this,element('audio'));this.currentTime=0;this.paused=true;this.ended=false;this.muted=true}play(){if(rejectPlay)return Promise.reject(new Error('NotAllowedError'));this.paused=false;this.onplay?.();this.onplaying?.();return Promise.resolve()}pause(){this.paused=true;this.onpause?.()}}
  const env=vm.createContext({AbortController,console,Audio,Date:{now:()=>now},setTimeout,clearTimeout,setInterval:fn=>{tick=fn;return 1},clearInterval:()=>{tick=null},URL:{createObjectURL:()=> 'blob:verified',revokeObjectURL(){}},
- $:id=>nodes.get(id),document:{querySelector:()=>nodes.get('toolbar'),createElement:element},voiceContext:'round',listening:false,browserVoiceRecognition:null,browserVoiceActive:false,browserVoiceRequested:false,startBrowserVoiceFallback:()=>true,aiUniversalMuted:false,aiUniversalSpeechPrimed:false,aiUniversalTtsAudio:null,aiUniversalTtsObjectUrl:'',cedarSpeechServerBlockedUntil:0,CEDAR_SPEECH_RETRY_MS:1000,
+ $:id=>nodes.get(id),document:{querySelector:()=>nodes.get('toolbar'),createElement:element},voiceContext:'round',listening:false,micTrack:null,externalAnswerCaptureSuspended:false,phase:'idle',browserVoiceRecognition:null,browserVoiceActive:false,browserVoiceRequested:false,startBrowserVoiceFallback:()=>true,aiUniversalMuted:false,aiUniversalSpeechPrimed:false,aiUniversalTtsAudio:null,aiUniversalTtsObjectUrl:'',cedarSpeechServerBlockedUntil:0,CEDAR_SPEECH_RETRY_MS:1000,
  window:{gscgApiUrl:x=>x},reportVoiceHealth:event=>events.push(event),setPrimaryVoiceMatrix:(state,context,message)=>states.push(message||state),aiUniversalSetState:state=>states.push(state),aiUniversalSpeechLanguage:()=> 'es-GT',speakAiUniversalMaleBrowserFallback:async()=>false,
  fetch:async()=>stuckFetch?await new Promise(()=>{}):({ok:true,headers:{get:()=> 'fish'},blob:async()=>({size:12000})})});
  vm.runInContext(helpers,env);return {env,nodes,events,states,advance(ms,time){now+=ms;if(time!==undefined)env.aiUniversalTtsAudio.currentTime=time;tick?.()}};

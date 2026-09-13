@@ -19,7 +19,7 @@ assert.equal(direct.model,"gpt-4o-mini-tts");
 assert.equal(direct.voice,"onyx");
 const gateway=cedarGatewayPayload("Respuesta", "es-GT");
 assert.equal(gateway.text,"Respuesta");
-assert.equal(gateway.speed,.9);
+assert.equal(gateway.speed,.963);
 assert.equal(gateway.language,"es-419");
 assert.equal(gateway.outputFormat,"mp3");
 assert.equal(Object.hasOwn(gateway,"voice"),false);
@@ -55,4 +55,4 @@ assert.match(spokenClosure,/round\.announced\.complete=false/);
 
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_no_result_timeout",build:"V363",transportFailure:"no_speech",transcript:"PRIVADO"}),{event:"browser_fallback_no_result_timeout",build:"V363",context:"round",turn:0,elapsedMs:0,transportFailure:"no_speech"});
 
-console.log("PASS V362/V378 · un toque + watchdog + Fish Audio 0.90 + cierre hablado y persistencia progresiva");
+console.log("PASS V362/V378 · un toque + watchdog + Fish Audio 0.963 + cierre hablado y persistencia progresiva");
