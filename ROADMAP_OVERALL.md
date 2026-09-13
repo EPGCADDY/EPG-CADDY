@@ -952,6 +952,8 @@ Alcance: ubicación explícita y premisas de costos/precios; nueve consultas rea
 - `vercel.json`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
 - `scripts/run-r36-targeted.mjs`: ensayo o corrección local dirigida; evidencia en TARGETED_CASE de build.
 
-- `scripts/run-r36-build.mjs`: mantiene los controles existentes sin exceder 256 caracteres.
-- `api/universal-ai.js`, `test-r35-weather-location.mjs`: alias del campo y tiempos relativos corregidos; V337, V356 y R35 PASS dirigidos.
-- `scripts/run-r36-targeted.mjs`: retesta dos problemas de cantidades y compara tres pares TTS (texto completo frente a primera frase/resto simultáneos). Texto idéntico, sin reproducción, sin nueva aprobación. Nueve respuestas previas conservadas; fallo relativo de costos aún no resuelto. No mide latencia integral iPhone.
+## R36 banco de audio secuencial · ensayo interno sin aceptación
+
+- `scripts/run-r36-audio-sequential.mjs`: 100 preguntas en secuencia única, TTS de entrada, ASR Gateway, motor real, texto, TTS de salida, decodificación MP3 y señal RMS. Registros por caso y archivos con SHA-256. No navegador ni reproducción física; no declarar equivalencia completa.
+- `scripts/run-r36-build.mjs`: mantiene controles existentes y ejecuta banco sólo en LAB Preview y rama de ensayo.
+- Motor R34 previo: 100/100 HTTP; referencias ChatGPT observadas. Pruebas dirigidas de ciudades PASS; costos/precios sigue en FAIL de calidad. Tres pares TTS: primera frase entre 26% y 35% del tiempo total de síntesis; no acredita 40% integral.
