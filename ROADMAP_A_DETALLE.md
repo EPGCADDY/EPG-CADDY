@@ -1161,3 +1161,23 @@ Archivos de esta modificación:
 - `ROADMAP_OVERALL.md`
 - `ROADMAP_A_DETALLE.md`
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+
+
+## R39 — Grabación visible y respuesta sólo por sonido
+Corrección por orden del propietario: activar estado rojo/blanco del micrófono en tarjeta, sincronizar estado escuchando durante pulsación, ocultar párrafo hablado, no agregar despedidas de acompañamiento y descartar cierre inesperado del grabador antes de soltar. Banco simulado PASS incluyendo 20 segundos sostenidos; causa del corte físico aún no demostrada. No se declara validación física. Conserva OP-60.
+- `api/universal-ai.js`
+- `index-grupal.html`
+- `service-worker.js`
+- `test-ptt-independent-turns.mjs`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`
+- `voice-turns.js`
+- `docs/quality/R39_PTT_RESULTADO.json`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`

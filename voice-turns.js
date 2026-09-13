@@ -41,7 +41,11 @@
         const type=['audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus'].find(value=>deps.Recorder.isTypeSupported(value));
         turn.recorder=type?new deps.Recorder(stream,{mimeType:type,audioBitsPerSecond:64000}):new deps.Recorder(stream);
         turn.recorder.ondataavailable=event=>{if(current===turn&&event.data?.size)turn.chunks.push(event.data)};
-        turn.recorder.onstop=()=>void send(turn);
+        turn.recorder.onstop=()=>{
+          if(current!==turn)return;
+          if(turn.held){cancel();deps.state('error','GRABACIÓN INTERRUMPIDA · NO SE ENVIÓ EL AUDIO',context);return}
+          void send(turn);
+        };
         turn.recorder.onerror=()=>{if(current===turn){cancel();deps.state('error','NO SE PUDO GRABAR · VUELVE A PRESIONAR',context)}};
         for(const track of stream.getAudioTracks())track.onended=()=>{if(current===turn&&turn.held){cancel();deps.state('error','GRABACIÓN INTERRUMPIDA · VUELVE A PRESIONAR',context)}};
         turn.started=Date.now();turn.recorder.start();state(turn,'listening','ESCUCHANDO · SUELTA PARA ENVIAR');
@@ -59,7 +63,14 @@
     return {press,release,cancel,isBusy:()=>!!current};
   }
   function install(adapters){
-    const controller=createController({...adapters,busy:on=>{for(const button of document.querySelectorAll('#setupMic,#headerMic,#listenAiUniversal,#openAiUniversal')){button.disabled=on;button.setAttribute('aria-disabled',String(on))}},Recorder:root.MediaRecorder,getUserMedia:constraints=>navigator.mediaDevices.getUserMedia(constraints),
+    const controller=createController({...adapters,state:(state,message,context)=>{
+      for(const id of ['setupMicWrap','headerMicWrap']){
+        const wrap=document.getElementById(id),active=state==='listening'&&id===(context==='setup'?'setupMicWrap':'headerMicWrap');
+        wrap?.classList.toggle('active',active);
+        if(wrap)wrap.dataset.pttListening=String(active);
+      }
+      adapters.state(state,message,context);
+    },busy:on=>{for(const button of document.querySelectorAll('#setupMic,#headerMic,#listenAiUniversal,#openAiUniversal')){button.disabled=on;button.setAttribute('aria-disabled',String(on))}},Recorder:root.MediaRecorder,getUserMedia:constraints=>navigator.mediaDevices.getUserMedia(constraints),
       transcribe:async(blob,turnId,signal)=>{
         const bytes=new Uint8Array(await blob.arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=8192)binary+=String.fromCharCode(...bytes.subarray(i,i+8192));
         const response=await fetch(root.gscgApiUrl('/api/voice-transcribe'),{method:'POST',credentials:'include',signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({audio:btoa(binary),mediaType:blob.type,turnId})});

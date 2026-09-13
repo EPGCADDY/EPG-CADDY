@@ -80,3 +80,23 @@ console.log('PASS short press rejected independently of onstop delay');
 denyPermission=true;assert.equal(await delayed.press('setup'),false);assert.equal(delayed.isBusy(),false);
 denyPermission=false;assert.equal(await delayed.press('setup'),true);delayed.cancel();
 console.log('PASS denied permission releases turn; next press obtains a new stream');
+
+const wraps=Object.fromEntries(['setupMicWrap','headerMicWrap'].map(id=>[id,{dataset:{},classList:{toggle(name,on){this[name]=on}}}]));
+env.document={querySelectorAll:()=>[],getElementById:id=>wraps[id]||null,addEventListener(){}};
+env.navigator={mediaDevices:{getUserMedia:async()=>stream()}};env.MediaRecorder=Recorder;env.addEventListener=()=>{};
+const visual=env.GSCVoiceTurns.install({prepare(){},state(){},context:()=> 'round',dispatch(){}});
+await visual.press('round');assert.equal(wraps.headerMicWrap.dataset.pttListening,'true');assert.equal(wraps.setupMicWrap.dataset.pttListening,'false');visual.cancel();assert.equal(wraps.headerMicWrap.dataset.pttListening,'false');
+await visual.press('setup');assert.equal(wraps.setupMicWrap.dataset.pttListening,'true');visual.cancel();
+console.log('PASS installed PTT activates only the recording microphone and resets on cancel');
+const showSource=html.slice(html.indexOf('function showUniversalSpokenAnswer('),html.indexOf('async function universalVoiceDeadline('));
+const paragraph={},card={appendChild(){}};const showEnv={window:{GSCVoiceTurns:{enabled:true}},voiceContext:'setup',$:id=>id==='universalSpokenAnswerText'?paragraph:id==='universalSpokenAnswer'?card:{}};
+vm.runInNewContext(showSource,showEnv);showEnv.showUniversalSpokenAnswer('Respuesta en español');assert.equal(paragraph.hidden,true);
+showEnv.window.GSCVoiceTurns.enabled=false;showEnv.showUniversalSpokenAnswer('Respuesta por texto');assert.equal(paragraph.hidden,false);
+console.log('PASS spoken PTT answer text hidden; other output mode retained');
+
+let heldDispatches=0;
+const held=createController({...deps,Recorder:DelayedRecorder,transcribe:async()=>{heldDispatches++;return 'Hoyo 1 cuatro hoyo 2 cinco'}});
+await held.press('round');time+=20000;await flush();assert.equal(held.isBusy(),true);assert.equal(heldDispatches,0);
+recorders.at(-1).finish();await flush();assert.equal(heldDispatches,0);assert.equal(held.isBusy(),false);
+await held.press('round');time+=20000;assert.equal(heldDispatches,0);held.release();recorders.at(-1).finish();await flush();assert.equal(heldDispatches,1);
+console.log('PASS 20-second hold sends nothing before release; unexpected recorder stop discards partial audio; next full turn sends once');
