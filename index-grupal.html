@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="V407-R33-VISIBLE-VOICE-ERRORS-20260913">
+  <meta name="gscg-release" content="V407-R34-AUDIO-AND-TEXT-20260913">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1035,7 +1035,7 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R33</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R34</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 <script src="./guest-access.js"></script>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
@@ -2385,7 +2385,7 @@ function markConversationFollowupAudioStarted(eventResponseId=""){
   transition.followupAudioStarted=true;
   return true;
 }
-const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_restarted","browser_fallback_restart_failed","browser_fallback_error","browser_fallback_start_failed","browser_fallback_no_result_timeout","browser_fallback_retry_scheduled","browser_fallback_retry_started","browser_fallback_retry_failed","browser_fallback_transcript_ready","browser_fallback_query_answered","browser_fallback_query_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_round_progressive","browser_fallback_round_applied","browser_fallback_round_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_general_visible","browser_fallback_speech_primed","browser_fallback_speech_started","browser_fallback_speech_failed","keyboard_dictation_setup_applied"]);
+const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_restarted","browser_fallback_restart_failed","browser_fallback_error","browser_fallback_start_failed","browser_fallback_no_result_timeout","browser_fallback_retry_scheduled","browser_fallback_retry_started","browser_fallback_retry_failed","browser_fallback_transcript_ready","browser_fallback_query_answered","browser_fallback_query_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_round_progressive","browser_fallback_round_applied","browser_fallback_round_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_general_visible","browser_fallback_general_in_place","browser_fallback_speech_primed","browser_fallback_speech_started","browser_fallback_speech_failed","browser_fallback_speech_progress","browser_fallback_speech_ended","keyboard_dictation_setup_applied"]);
 function reportVoiceHealth(event,detail={}){
   if(!VOICE_HEALTH_EVENTS.has(event)||typeof fetch!=="function")return false;
   const payload={event,build:"V363",context:voiceContext==="setup"?"setup":"round",turn:Math.max(0,voiceHealthTurn),elapsedMs:voiceHealthTurnStartedAt?Math.max(0,Date.now()-voiceHealthTurnStartedAt):0};
@@ -2735,8 +2735,38 @@ async function speakAiUniversalMaleBrowserFallback(clean){
   utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")};
   window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);return true;
 }
+function showUniversalSpokenAnswer(text,player=null){
+  const anchor=voiceContext==="setup"?$("setupVoiceMatrix"):document.querySelector('[aria-label="Herramientas de la ronda"]')||$("status");
+  if(!anchor)return;
+  let card=$("universalSpokenAnswer");
+  if(!card){card=document.createElement("section");card.id="universalSpokenAnswer";card.setAttribute("aria-label","Respuesta de AI Universal");card.style.cssText="margin:12px 0;padding:16px;border:1px solid #52605a;border-radius:12px;background:#101512;color:#fff;text-align:left";anchor.insertAdjacentElement("afterend",card)}
+  let paragraph=$("universalSpokenAnswerText");
+  if(!paragraph){paragraph=document.createElement("p");paragraph.id="universalSpokenAnswerText";paragraph.style.cssText="margin:0 0 12px;font:400 17px/1.5 Arial,sans-serif;white-space:pre-wrap;overflow-wrap:anywhere";card.appendChild(paragraph)}
+  paragraph.textContent=String(text||"");
+  if(player){player.controls=true;player.setAttribute("aria-label","Escuchar respuesta");player.setAttribute("playsinline","");player.style.cssText="display:block;width:100%;max-width:100%;height:48px";card.appendChild(player)}
+}
+async function universalVoiceDeadline(operation,timeoutMs,controller=null){
+  let timer;
+  try{return await Promise.race([operation,new Promise((_,reject)=>{timer=setTimeout(()=>{const error=new Error("UNIVERSAL_VOICE_TIMEOUT");error.code="UNIVERSAL_VOICE_TIMEOUT";reject(error);controller?.abort()},timeoutMs)})])}
+  finally{clearTimeout(timer)}
+}
+function monitorUniversalAudio(player){
+  let timer=null,lastTime=Number(player.currentTime)||0,lastAdvance=Date.now(),started=false;
+  const clear=()=>{if(timer)clearInterval(timer);timer=null};
+  const fail=()=>{clear();player.pause();reportVoiceHealth("browser_fallback_speech_failed");setPrimaryVoiceMatrix("error",voiceContext,"EL AUDIO SE DETUVO · PUEDES LEER LA RESPUESTA O PULSAR REPRODUCIR");aiUniversalSetState("NO SE PUDO CONTINUAR EL AUDIO")};
+  const tick=()=>{
+    if(player.ended){clear();return}
+    const current=Number(player.currentTime)||0;
+    if(current>lastTime+.02){lastTime=current;lastAdvance=Date.now();if(!started){started=true;reportVoiceHealth("browser_fallback_speech_progress")}}
+    if(!player.paused&&Date.now()-lastAdvance>10000)fail();
+  };
+  player.onplaying=()=>{clear();lastAdvance=Date.now();lastTime=Number(player.currentTime)||0;timer=setInterval(tick,500)};
+  player.onpause=()=>{clear();setPrimaryVoiceMatrix("idle",voiceContext);aiUniversalSetState("PAUSADO · PUEDES LEER O REPRODUCIR LA RESPUESTA")};
+  player.onended=()=>{clear();reportVoiceHealth("browser_fallback_speech_ended");setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
+  return clear;
+}
 async function speakAiUniversalText(text,{repeat=false}={}){
-  const clean=String(text||"").trim();if(!clean||aiUniversalMuted)return false;
+  const clean=String(text||"").trim();if(!clean)return false;showUniversalSpokenAnswer(clean);if(aiUniversalMuted)return false;
   if(Date.now()<cedarSpeechServerBlockedUntil){
     aiUniversalSetState("PREPARANDO LOCUTOR MASCULINO…",{busy:true});
     if(await speakAiUniversalMaleBrowserFallback(clean))return true;
@@ -2744,17 +2774,18 @@ async function speakAiUniversalText(text,{repeat=false}={}){
   }
   try{
     aiUniversalSetState("PREPARANDO VOZ V378…",{busy:true});
-    const response=await fetch(window.gscgApiUrl("/api/voice-speech"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:clean,language:aiUniversalSpeechLanguage(clean)})});
+    const speechController=new AbortController();
+    const response=await universalVoiceDeadline(fetch(window.gscgApiUrl("/api/voice-speech"),{signal:speechController.signal,method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:clean,language:aiUniversalSpeechLanguage(clean)})}),30000,speechController);
     if(!response.ok){if(response.status===429||response.status===503)cedarSpeechServerBlockedUntil=Date.now()+CEDAR_SPEECH_RETRY_MS;throw new Error("CEDAR_TTS_UNAVAILABLE")}
     const deliveredVoice=String(response.headers?.get?.("X-GSCG-Voice")||"cedar").toLowerCase();
-    const blob=await response.blob();if(!blob.size)throw new Error("CEDAR_TTS_EMPTY");
+    const blob=await universalVoiceDeadline(response.blob(),10000,speechController);if(!blob.size)throw new Error("CEDAR_TTS_EMPTY");
     if(typeof Audio!=="function")throw new Error("AUDIO_UNAVAILABLE");
     if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(blob);
-    const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.volume=1;player.playbackRate=1;
+    const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.muted=false;player.volume=1;player.playbackRate=1;showUniversalSpokenAnswer(clean,player);
     player.onplay=()=>{aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(deliveredVoice==="browser"?"RESPONDIENDO EN VOZ · RESPALDO DEL DISPOSITIVO":"RESPONDIENDO EN VOZ · FISH AUDIO V378",{busy:true})};
-    player.onended=()=>{setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
-    player.onerror=async()=>{reportVoiceHealth("browser_fallback_speech_failed");if(!await speakAiUniversalMaleBrowserFallback(clean)){setPrimaryVoiceMatrix("error",voiceContext,"NO PUDE REPRODUCIR LA RESPUESTA · TOCA AI ∞ PARA INTENTAR DE NUEVO");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")}};
-    await player.play();return true;
+    const stopAudioMonitor=monitorUniversalAudio(player);
+    player.onerror=async()=>{stopAudioMonitor();reportVoiceHealth("browser_fallback_speech_failed");if(!await speakAiUniversalMaleBrowserFallback(clean)){setPrimaryVoiceMatrix("error",voiceContext,"NO PUDE REPRODUCIR LA RESPUESTA · TOCA AI ∞ PARA INTENTAR DE NUEVO");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")}};
+    try{await universalVoiceDeadline(player.play(),6000)}catch(error){player.pause();throw error}return true;
   }catch(error){
     reportVoiceHealth("browser_fallback_speech_failed");
     cedarSpeechServerBlockedUntil=Math.max(cedarSpeechServerBlockedUntil,Date.now()+CEDAR_SPEECH_RETRY_MS);
@@ -2852,12 +2883,12 @@ async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
     const requestUniversal=async trafficOrigin=>{
       const endpoint=aiUniversalRulesMode?window.gscgApiUrl("/api/golf-rules"):window.gscgApiUrl("/api/universal-ai");
       const options={method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,responseMode:voiceOnly?"voice":"text",appContext:aiUniversalAppContext(trafficOrigin)})};
-      let response=await fetch(endpoint,options),result=await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}));
+      let response=await universalVoiceDeadline(fetch(endpoint,options),35000,controller),result=await universalVoiceDeadline(response.json(),10000,controller);
       if(!aiUniversalRulesMode&&response.status===503&&result?.retryable){
         aiUniversalSetState("RECUPERANDO CONEXIÓN CON AI UNIVERSAL ∞…",{busy:true});
         const waitSeconds=Math.min(5,Math.max(1,Number(response.headers.get("Retry-After")||1)));
         await new Promise(resolve=>setTimeout(resolve,waitSeconds*1000));
-        response=await fetch(endpoint,options);result=await response.json().catch(()=>({ok:false,error:"UNIVERSAL_AI_UNAVAILABLE"}));
+        response=await universalVoiceDeadline(fetch(endpoint,options),35000,controller);result=await universalVoiceDeadline(response.json(),10000,controller);
       }
       return{response,result};
     };

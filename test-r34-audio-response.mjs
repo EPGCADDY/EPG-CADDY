@@ -1,0 +1,30 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const html=fs.readFileSync('index-grupal.html','utf8');
+const helpers=html.slice(html.indexOf('function showUniversalSpokenAnswer('),html.indexOf('function stopAiUniversalOutput('));
+function fixture({rejectPlay=false,stuckFetch=false}={}){
+ const nodes=new Map(),events=[],states=[];let tick=null,now=0;
+ function element(tag){return {tag,style:{},children:[],setAttribute(k,v){this[k]=v},appendChild(child){this.children.push(child);if(child.id)nodes.set(child.id,child)},insertAdjacentElement(_,child){nodes.set(child.id,child)}}}
+ nodes.set('toolbar',element('nav'));
+ class Audio {constructor(){Object.assign(this,element('audio'));this.currentTime=0;this.paused=true;this.ended=false;this.muted=true}play(){if(rejectPlay)return Promise.reject(new Error('NotAllowedError'));this.paused=false;this.onplay?.();this.onplaying?.();return Promise.resolve()}pause(){this.paused=true;this.onpause?.()}}
+ const env=vm.createContext({AbortController,console,Audio,Date:{now:()=>now},setTimeout,clearTimeout,setInterval:fn=>{tick=fn;return 1},clearInterval:()=>{tick=null},URL:{createObjectURL:()=> 'blob:verified',revokeObjectURL(){}},
+ $:id=>nodes.get(id),document:{querySelector:()=>nodes.get('toolbar'),createElement:element},voiceContext:'round',listening:false,aiUniversalMuted:false,aiUniversalSpeechPrimed:false,aiUniversalTtsAudio:null,aiUniversalTtsObjectUrl:'',cedarSpeechServerBlockedUntil:0,CEDAR_SPEECH_RETRY_MS:1000,
+ window:{gscgApiUrl:x=>x},reportVoiceHealth:event=>events.push(event),setPrimaryVoiceMatrix:(state,context,message)=>states.push(message||state),aiUniversalSetState:state=>states.push(state),aiUniversalSpeechLanguage:()=> 'es-GT',speakAiUniversalMaleBrowserFallback:async()=>false,
+ fetch:async()=>stuckFetch?await new Promise(()=>{}):({ok:true,headers:{get:()=> 'fish'},blob:async()=>({size:12000})})});
+ vm.runInContext(helpers,env);return {env,nodes,events,states,advance(ms,time){now+=ms;if(time!==undefined)env.aiUniversalTtsAudio.currentTime=time;tick?.()}};
+}
+const f=fixture();assert.equal(await f.env.speakAiUniversalText('<b>Respuesta real</b>'),true);
+assert.equal(f.nodes.get('universalSpokenAnswerText').textContent,'<b>Respuesta real</b>');
+assert.equal(f.nodes.get('universalSpokenAnswerText').innerHTML,undefined);
+assert.equal(f.env.aiUniversalTtsAudio.controls,true);assert.equal(f.env.aiUniversalTtsAudio.muted,false);
+assert.ok(f.nodes.get('universalSpokenAnswer').children.includes(f.env.aiUniversalTtsAudio));
+f.advance(500,.5);assert.ok(f.events.includes('browser_fallback_speech_progress'));
+f.env.aiUniversalTtsAudio.onended();assert.ok(f.events.includes('browser_fallback_speech_ended'));assert.match(f.states.at(-1),/LISTO/);
+console.log('PASS texto seguro visible, audio adjunto con controles y sin mute, avance y finalización diferenciados');
+const blocked=fixture({rejectPlay:true});assert.equal(await blocked.env.speakAiUniversalText('Se puede leer aunque Safari bloquee el audio'),false);assert.match(blocked.nodes.get('universalSpokenAnswerText').textContent,/Se puede leer/);assert.ok(blocked.events.includes('browser_fallback_speech_failed'));console.log('PASS rechazo de reproducción conserva texto y controles, devuelve false');
+const stalled=fixture();await stalled.env.speakAiUniversalText('Respuesta que no avanza');stalled.advance(11000,0);assert.ok(stalled.env.aiUniversalTtsAudio.paused);assert.match(stalled.states.at(-1),/NO SE PUDO/);assert.equal(stalled.nodes.get('universalSpokenAnswerText').textContent,'Respuesta que no avanza');console.log('PASS audio sin avance abandona RESPONDIENDO y conserva respuesta');
+const controller=new AbortController();await assert.rejects(f.env.universalVoiceDeadline(new Promise(()=>{}),5,controller),/UNIVERSAL_VOICE_TIMEOUT/);assert.equal(controller.signal.aborted,true);console.log('PASS espera bloqueada finaliza y aborta solicitud');
+assert.equal(await f.env.universalVoiceDeadline(Promise.resolve('segunda respuesta'),100), 'segunda respuesta');
+for(let i=0;i<10;i++){assert.equal(await f.env.speakAiUniversalText('Respuesta '+i),true);f.env.aiUniversalTtsAudio.onended()}
+assert.equal(f.nodes.get('universalSpokenAnswerText').textContent,'Respuesta 9');console.log('PASS diez reproducciones simuladas consecutivas');

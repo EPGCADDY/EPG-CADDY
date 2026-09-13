@@ -344,3 +344,7 @@ Este registro conserva defectos que alcanzaron al propietario o bloquearon un ci
 
 ## 2026-09-13 · RC-107 · Estado de voz oculto R32
 Revisión real en navegador: AI ∞ termina sin micrófono disponible, pero aiUniversalState está oculto y el reloj sobrescribe status. Corrección R33: aviso seguro y visible independiente del reloj, junto al control existente, sin abrir pantalla. Control permanente test-r33-visible-voice-errors.mjs PASS. Estado: código probado, comprobación visual publicada pendiente; micrófono/altavoz físico iPhone pendiente. Evidencia previa y rollback: docs/quality/R33_ERROR_VISIBLE.md.
+
+
+## 2026-09-13 · RC-108 · R33 responde sin salida perceptible
+Informe físico del propietario: queda RESPONDIENDO sin voz ni texto. Logs Main confirman transcripción, HTTP200 TTS e inicio de reproducción, no sonido físico. Escape: pruebas de servidor y ausencia de micrófono no cubren audibilidad; voiceOnly oculta texto y no controla progreso. R34 añade texto en pantalla, controles nativos, mute explícito desactivado, plazos de espera y vigilancia de avance. Control permanente: test-r34-audio-response.mjs y prueba sintética Preview scripts/build-r34-voice-review.mjs. Evidencia/alcance: docs/quality/R34_AUDIO_Y_TEXTO.md. Causa física exacta no confirmada; no declarar cierre físico antes del iPhone.

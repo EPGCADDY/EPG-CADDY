@@ -897,3 +897,33 @@ Hallazgo en navegador R32: causa del silencio quedaba oculta. R33 muestra aviso 
 - `test-v407-r25-round-controls.mjs`
 - `test-v407-r7-ios-scroll.mjs`
 - `test-v407-r9-manual-update.mjs`
+
+
+## V407-R34 · Respuesta escrita y reproducción verificable · 2026-09-13
+
+Base R33 ab2e227c6dc1. Incidente RC-108: audio iniciado no demuestra salida audible; texto oculto y esperas sin límite. Texto seguro junto a controles, reproductor nativo visible sin mute, plazos máximos y monitor de avance/final. Registro/scores, tarjeta R30 y updater preservados. Pruebas locales dirigidas PASS; Preview y prueba física pendientes. Detalle y rollback en docs/quality/R34_AUDIO_Y_TEXTO.md.
+
+Archivos exactos:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `api/voice-health.js`
+- `docs/quality/R34_AUDIO_Y_TEXTO.md`
+- `index-grupal.html`
+- `scripts/build-r34-voice-review.mjs`
+- `service-worker.js`
+- `test-r32-open-conversation.mjs`
+- `test-r34-audio-response.mjs`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`
+- `test-voice-result-integrity.mjs`
+- `vercel.json`

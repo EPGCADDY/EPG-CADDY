@@ -51,7 +51,7 @@ const history=[];let delivered=false;
 const apiEnv=vm.createContext({
   $:element,aiUniversalTextBusy:false,aiUniversalRulesMode:false,
   aiUniversalTextAbortController:null,aiUniversalHistory:history,AI_UNIVERSAL_HISTORY_LIMIT:80,
-  voiceContext:'setup',AbortController,console,
+  voiceContext:'setup',AbortController,console,universalVoiceDeadline:async operation=>await operation,
   aiUniversalRemember:(role,content)=>history.push({role,content}),
   routeAiUniversalAppText:()=>({handled:false}),
   aiUniversalSetState:()=>{},setPrimaryVoiceMatrix:(...args)=>states.push(args),
