@@ -4,7 +4,7 @@ import fs from "node:fs";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const worker=fs.readFileSync("service-worker.js","utf8");
 
-assert.match(html,/meta name="gscg-release" content="V407-R32-MANUAL-CANDIDATE-TWO-COLUMNS-20260910"/);
+assert.match(html,/meta name="gscg-release" content="V407-R\d+[^"]*"/);
 assert.match(worker,/const RELEASE="V407-R33-ROOT-VOICE-UPDATE-20260910"/);
 assert.match(worker,/async function approvedNavigationWithManualUpdate\(request\)/,"La copia almacenada debe recibir el control manual de recuperación");
 assert.match(worker,/gsc-update-recovery[\s\S]*?mandatory-update\{display:block!important\}/,"R24 almacenada debe mostrar ACTUALIZAR en Registro");
@@ -16,10 +16,12 @@ assert.match(html,/function showCurrentBuild\(\)[\s\S]*?button\.disabled=true[\s
 assert.match(html,/function showMandatoryUpdate\(build\)[\s\S]*?button\.disabled=false[\s\S]*?classList\.add\("available"\)/);
 assert.match(html,/if\(published===CURRENT_APP_BUILD\)showCurrentBuild\(\);else showMandatoryUpdate\(published\)/);
 assert.match(html,/navigator\.serviceWorker\.ready/);
-assert.match(html,/registration\.active\?\.postMessage\(\{type:"PROMOTE_BUILD",build:pendingPublishedBuild\}\)/);
+assert.match(html,/worker\.postMessage\(\{type:"PROMOTE_BUILD",build:pendingPublishedBuild,nonce\},\[channel\.port2\]\)/);
 assert.doesNotMatch(html,/async function installMandatoryUpdate\(\)[\s\S]{0,900}?\.unregister\(\)/);
 assert.doesNotMatch(html,/async function installMandatoryUpdate\(\)[\s\S]{0,900}?caches\.delete/);
-assert.match(html,/nextUrl\.searchParams\.set\("app_version",pendingPublishedBuild\)/);
+assert.match(html,/sessionStorage\.setItem\("gscg\.expected\.release",pendingPublishedBuild\)/);
+assert.match(html,/nextUrl\.searchParams\.delete\("app_version"\)/);
+assert.match(html,/nextUrl\.searchParams\.set\("update_check",String\(Date\.now\(\)\)\)/);
 assert.match(worker,/const CANDIDATE_ENTRY="\/candidate-index-grupal\.html"/);
 assert.match(worker,/async function promoteCandidate\(\)/);
 assert.match(worker,/self\.addEventListener\("activate",event=>event\.waitUntil\(ensureApprovedShell\(\)\.then\(\(\)=>self\.clients\.claim\(\)\)\)\)/);

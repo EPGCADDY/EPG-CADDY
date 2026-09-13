@@ -1021,3 +1021,4 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `test-v323-long-multitopic-context.mjs` y `test-v325-ideal-microphone-timings.mjs` verifican el mismo contrato persistente; V325 inspecciona la fuente canónica y acepta `semantic_vad` conversacional, manteniendo `server_vad` para scores.
 - `test-v326-no-silent-conversation.mjs` inspecciona la misma fuente y valida recuperación sin silencios sobre `semantic_vad`, manteniendo sus watchdogs de 15/90 segundos.
 - `test-v365-active-round-empty-recovery.mjs`, `test-v406-r23-visible-version.mjs` y `test-v407-r7-ios-scroll.mjs` validan identidad visible V407 sin fijarla a la revisión retirada R32.
+- Ocho gates visuales restantes dejan de fijar la identidad retirada R32 y conservan sus contratos de diseño, modalidades, actualización propietaria y scroll para cualquier revisión V407 activa.
