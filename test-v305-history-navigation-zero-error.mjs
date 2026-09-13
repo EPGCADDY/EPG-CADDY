@@ -54,6 +54,15 @@ function textFiles(directory){
 }
 for(const file of textFiles(root)){
   const source=fs.readFileSync(file,"utf8");
+  // Conversational evidence is not interface copy: preserve verbatim answers.
+  if(path.relative(root,file)==="docs/quality/UNIVERSAL_100_RESULTS.json"){
+    const evidence=JSON.parse(source);
+    assert.equal(evidence.schema,"epg-caddy-universal-benchmark-results/v1");
+    assert.equal(evidence.results.length,100);
+    assert.equal(new Set(evidence.results.map(item=>item.id)).size,100);
+    for(const item of evidence.results){assert.equal(typeof item.question,"string");assert.equal(typeof item.referenceAnswer,"string")}
+    continue;
+  }
   assert.doesNotMatch(source,new RegExp(retired,"i"),`Vocabulario retirado en ${path.relative(root,file)}`);
 }
 

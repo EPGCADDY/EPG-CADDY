@@ -973,6 +973,7 @@ PASS físico aislado; integración pendiente. Limpieza incremental de audio ante
 - `test-r34-capture-cleanup.mjs`
 
 ## 2026-09-13 · RC-111
+`test-v305-history-navigation-zero-error.mjs`: las respuestas literales de `docs/quality/UNIVERSAL_100_RESULTS.json` no son etiquetas UI; se valida su esquema y 100 IDs únicos, conservando íntegros los controles de botones.
 Corrección de integridad de `index-grupal.html` durante transferencia. `api/voice-speech.js` y `test-v356-voice-only-cedar-quality.mjs` se restauran a sus versiones protegidas; INTOCABLES PASS sin cambiar sellos. La variante hablada permanece en `api/universal-ai.js`. Banco completo pendiente. No aprobado para producción.
 
 ## 2026-09-13 · Banco real universal de 100 casos
