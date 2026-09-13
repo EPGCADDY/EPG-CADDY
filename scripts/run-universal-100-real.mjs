@@ -73,8 +73,8 @@ let cursor=0;
 async function worker(){while(cursor<jobs.length){const job=jobs[cursor++];for(const item of job)await runCase(item)}}
 await Promise.all(Array.from({length:4},()=>worker()));
 results.sort((a,b)=>Number(a.id)-Number(b.id));
-const transportPassed=results.filter(item=>item.transportPass).length;
-const artifact={schema:"epg-caddy-universal-benchmark-results/v1",startedAt,completedAt:new Date().toISOString(),commit:process.env.VERCEL_GIT_COMMIT_SHA||null,deployment:process.env.VERCEL_URL||null,method:"synthetic speech audio -> OpenAI transcription -> EPG Universal AI -> written answer -> approved speech audio",physicalIphone:"PENDING",qualityComparison:"PENDING_CHATGPT_REVIEW",summary:{total:results.length,transportPassed,transportFailed:results.length-transportPassed},results};
+const transportPassed=results.filter(item=>item.transportPass).length,errorCounts=Object.fromEntries(Object.entries(results.reduce((counts,item)=>{const key=item.error||"NONE";counts[key]=(counts[key]||0)+1;return counts},{})).sort((a,b)=>b[1]-a[1]));
+const artifact={schema:"epg-caddy-universal-benchmark-results/v1",startedAt,completedAt:new Date().toISOString(),commit:process.env.VERCEL_GIT_COMMIT_SHA||null,deployment:process.env.VERCEL_URL||null,method:"synthetic speech audio -> OpenAI transcription -> EPG Universal AI -> written answer -> approved speech audio",physicalIphone:"PENDING",qualityComparison:"PENDING_CHATGPT_REVIEW",summary:{total:results.length,transportPassed,transportFailed:results.length-transportPassed,errorCounts},results};
 fs.mkdirSync("assets/official-logos",{recursive:true});
 fs.writeFileSync("assets/official-logos/universal-100-results.json",JSON.stringify(artifact,null,2));
 console.log("UNIVERSAL_100_COMPLETE "+JSON.stringify(artifact.summary));
