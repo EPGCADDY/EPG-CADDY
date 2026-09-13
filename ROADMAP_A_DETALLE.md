@@ -995,6 +995,7 @@ Archivos exactos:
 - Prueba local: `test-r34-universal-architecture.mjs`, 100 turnos WebRTC inyectados y bancos R34/V312/V325/V326/V356/V362 PASS. No equivalen todavía a aprobación cualitativa remota ni física.
 - Banco real: `UNIVERSAL_100_REFERENCE_BANK.json` contiene las 100 preguntas y referencias ChatGPT. `run-universal-100-real.mjs` exige las cinco etapas, conserva ambas respuestas y tiempos, puntúa siete criterios con juez independiente y sólo marca aceptación con transporte 100/100 y calidad >=90/100.
 - Estado honesto: EN VALIDACIÓN; Producción/main intactas y única participación restante del propietario, después del PASS completo, es la comprobación física final en iPhone.
+- Rutas exactas del banco y voz: `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`, `scripts/run-universal-100-real.mjs`, `Intocables/CONFIRMACION_ESCRITA_V378.md`, `Intocables/MICROFONO_APROBADO.lock.json`, `Intocables/README.md`, `Intocables/intocables-gate.mjs`, `test-v356-voice-only-cedar-quality.mjs` y `test-v362-physical-voice-recovery.mjs`.
 - `ROADMAP_A_DETALLE.md`
 - `ROADMAP_OVERALL.md`
 - `api/voice-health.js`

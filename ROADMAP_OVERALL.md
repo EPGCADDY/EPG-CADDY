@@ -890,6 +890,8 @@ Colima queda documentada como síntoma, no como solución puntual. Se elimina el
 La validación obligatoria usa 100 preguntas con referencias ChatGPT, 78 categorías y siete cadenas de seguimiento. El runner ejecuta audio inyectado -> STT -> IA universal -> texto -> TTS y un juez independiente califica siete criterios. Cierre exigido: transporte 100/100 y por lo menos 90 casos cualitativamente aprobados; no se entrega Preview al propietario antes de ese resultado.
 
 Archivos centrales: `index-grupal.html`, `api/session-grupal.js`, `api/voice-speech.js`, `docs/quality/UNIVERSAL_100_REFERENCE_BANK.json`, `scripts/run-universal-100-real.mjs`, `test-r34-universal-architecture.mjs`, contratos de voz R34/V312/V325/V326/V356/V362, `audit-project.mjs`, `vercel.json`, candados `Intocables`, ambos ROADMAPS, mapa maestro, reincidencias e inventario sellado.
+
+Rutas preventivas exactas adicionales: `Intocables/CONFIRMACION_ESCRITA_V378.md`, `Intocables/MICROFONO_APROBADO.lock.json`, `Intocables/README.md`, `Intocables/intocables-gate.mjs`, `test-v356-voice-only-cedar-quality.mjs` y `test-v362-physical-voice-recovery.mjs`.
 - `test-voice-result-integrity.mjs`
 
 `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: sello de microfono_compartido actualizado sólo por corrección universal autorizada; SHA previo conservado, aprobación física R32 pendiente. Banco V358 restaurado sin cambios; liberación de audio dentro de startAiUniversalListening.
