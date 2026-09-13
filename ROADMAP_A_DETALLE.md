@@ -936,3 +936,5 @@ Archivos de esta versión:
 - `test-v407-r7-ios-scroll.mjs`
 - `test-v407-r9-manual-update.mjs`
 - `test-voice-result-integrity.mjs`
+
+`Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: sello de microfono_compartido actualizado sólo por corrección universal autorizada; SHA previo conservado, aprobación física R32 pendiente. Banco V358 restaurado sin cambios; liberación de audio dentro de startAiUniversalListening.

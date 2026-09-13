@@ -2779,7 +2779,7 @@ async function startAiUniversalListening(){
     try{await setRealtimeTurnProfile(REALTIME_TURN_PROFILE_CONVERSATION)}catch(error){console.error("Perfil conversacional:",error)}
     aiUniversalSetState("ESCUCHANDO",{busy:true});return true
   }
-  if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;primeAiUniversalSpeechFromGesture();
+  if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;releaseAiUniversalPlaybackForListening();primeAiUniversalSpeechFromGesture();
   const setupVisible=$("setupOverlay")?.classList?.contains("visible"),context=setupVisible||!round.configured?"setup":"round";
   aiUniversalSetState("ABRIENDO MICRÓFONO…",{busy:true});
   const opened=await toggleVoice(context,REALTIME_TURN_PROFILE_CONVERSATION);
@@ -5299,7 +5299,6 @@ let lastAiUniversalGestureAt=0;
 function openAiUniversalAndListen(event){
   if(event?.cancelable)event.preventDefault();event?.stopPropagation?.();
   const now=Date.now();if(now-lastAiUniversalGestureAt<350)return false;lastAiUniversalGestureAt=now;
-  releaseAiUniversalPlaybackForListening();
   primeAiUniversalSpeechFromGesture();void startAiUniversalListening();return true
 }
 if(window.PointerEvent)$("openAiUniversal").addEventListener("pointerdown",openAiUniversalAndListen,{passive:false,capture:true});
