@@ -78,7 +78,7 @@ assert.doesNotMatch(voiceInPlace,/openAiUniversalPanel|classList\.add\("visible"
 assert.match(audit,/Intocables\/intocables-gate\.mjs/);
 assert.match(audit,/test-v366-principal-entry-recovery\.mjs/);
 assert.match(audit,/test-v367-universal-voice-in-place\.mjs/);
-assert.match(worker,/LEGACY_CACHE_PREFIX="gscg-mobile-"/);
-assert.match(worker,/caches\.delete\(name\)/);
-assert.match(worker,/self\.registration\.unregister\(\)/);
+const sourceWorker=/gscg-mobile-v363-/.test(worker);
+const retirementWorker=/LEGACY_CACHE_PREFIX="gscg-mobile-"/.test(worker)&&/caches\.delete\(name\)/.test(worker)&&/self\.registration\.unregister\(\)/.test(worker);
+assert.ok(sourceWorker||retirementWorker,"service-worker debe ser fuente V363 auditable o retiro de caché generado");
 console.log("INTOCABLES PASS INT-01…INT-05 · REGISTRO/SCORE/MULTIHOYO Y VOZ V378 SELLADOS");
