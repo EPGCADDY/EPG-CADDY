@@ -891,3 +891,7 @@ Registro conjunto del despliegue: hotfix `main` commits `481f716` y `c548f30`; m
 - `card-file-export.js`: corrige SecurityError de canvas contaminado por SVG Blob; imagen autocontenida con límite de espera.
 - `assets/official-logos/png-export-review.html`: prueba temporal sin datos personales con el exportador anterior y corregido, y PNG visible.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello del paquete.
+
+- R30 revisión visual: `card-file-export.js` conserva texto blanco y fuente Arial en la imagen XHTML; `assets/official-logos/png-export-review.html` permite enviar el PNG ya preparado en iPhone.
+
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-104 documenta la reproducción real, causa y control de exportación.
