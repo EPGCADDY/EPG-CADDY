@@ -154,9 +154,9 @@ export function isDirectTrafficQuery(query){
 export function directTrafficRouteFromQuery(query){
   const segment=String(query||"").replace(/[\u0000-\u001F]/g," ").replace(/\s+/g," ").trim().split(/[?!](?:\s|$)/,1)[0].replace(/^[¿¡]+/,"").trim();
   const normalized=segment.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
-  const toIndex=Math.max(normalized.lastIndexOf(" a "),normalized.lastIndexOf(" hasta "),normalized.lastIndexOf(" para "));
+  const toIndex=Math.max(normalized.lastIndexOf(" a "),normalized.lastIndexOf(" al "),normalized.lastIndexOf(" hasta "),normalized.lastIndexOf(" para "));
   if(toIndex<0)return null;
-  const connectorLength=normalized.startsWith(" hasta ",toIndex)?7:normalized.startsWith(" para ",toIndex)?6:3;
+  const connectorLength=normalized.startsWith(" hasta ",toIndex)?7:normalized.startsWith(" para ",toIndex)?6:normalized.startsWith(" al ",toIndex)?4:3;
   const left=segment.slice(0,toIndex),leftNormalized=normalized.slice(0,toIndex);
   const fromIndex=Math.max(leftNormalized.lastIndexOf(" desde "),leftNormalized.lastIndexOf(" de "));
   if(fromIndex<0)return null;

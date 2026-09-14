@@ -136,3 +136,5 @@ try{
 }
 
 console.log("PASS V356 · tráfico y clima actuales/futuros distinguidos en 30 min, 1 h, 3 h, mañana, próxima semana y límite de 16 días");
+
+assert.deepEqual(directTrafficRouteFromQuery("Cómo está el tráfico desde mi ubicación al aeropuerto internacional La Aurora"),{origin:"Ubicación GPS actual",destination:"aeropuerto internacional La Aurora"});
