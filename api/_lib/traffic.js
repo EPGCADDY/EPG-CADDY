@@ -78,8 +78,10 @@ export function summarizeTrafficRoute(payload,{originLabel="Ubicación GPS actua
 }
 
 export async function computeTrafficRoute(request={},options={}){
+  const startedAt=Date.now();
+  const reportFailure=(error,upstreamStatus=0,providerStatus="")=>console.warn("traffic-failure",JSON.stringify({error,upstreamStatus,providerStatus:/^[A-Z_]{1,64}$/.test(providerStatus)?providerStatus:"",elapsedMs:Date.now()-startedAt}));
   const apiKey=String(options.apiKey||process.env.GOOGLE_MAPS_ROUTES_API_KEY||process.env.GOOGLE_MAPS_API_KEY||"").trim();
-  if(!apiKey)return{ok:false,error:"TRAFFIC_NOT_CONFIGURED",message:"El servicio de tráfico todavía no tiene una credencial activa. Puedes continuar con otra pregunta."};
+  if(!apiKey){reportFailure("TRAFFIC_NOT_CONFIGURED");return{ok:false,error:"TRAFFIC_NOT_CONFIGURED",message:"El servicio de tráfico todavía no tiene una credencial activa. Puedes continuar con otra pregunta."}}
   const originCoordinates=cleanCoordinates(request.originCoordinates);
   const originAddress=cleanPlace(request.origin);
   const destinationAddress=cleanPlace(request.destination);
@@ -111,7 +113,7 @@ export async function computeTrafficRoute(request={},options={}){
       })
     });
     const payload=await response.json().catch(()=>null);
-    if(!response.ok)return{ok:false,error:"TRAFFIC_UPSTREAM_UNAVAILABLE",message:"No pude consultar tráfico confiable en este momento. Puedes continuar con otra pregunta."};
+    if(!response.ok){reportFailure("TRAFFIC_UPSTREAM_UNAVAILABLE",Number(response.status)||0,payload?.error?.status||"");return{ok:false,error:"TRAFFIC_UPSTREAM_UNAVAILABLE",message:"No pude consultar tráfico confiable en este momento. Puedes continuar con otra pregunta."}}
     return summarizeTrafficRoute(payload,{
       originLabel:originCoordinates?"Ubicación GPS actual":originAddress,
       destinationLabel:destinationAddress||"Destino indicado",
@@ -120,6 +122,7 @@ export async function computeTrafficRoute(request={},options={}){
       calculatedAt:new Date(nowMs).toISOString()
     });
   }catch(error){
+    reportFailure(error?.name==="AbortError"?"TRAFFIC_TIMEOUT":"TRAFFIC_UNAVAILABLE");
     return{ok:false,error:error?.name==="AbortError"?"TRAFFIC_TIMEOUT":"TRAFFIC_UNAVAILABLE",message:"No pude consultar tráfico confiable en este momento. Puedes continuar con otra pregunta."};
   }finally{clearTimeout(timeout)}
 }

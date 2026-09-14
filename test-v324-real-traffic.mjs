@@ -132,3 +132,17 @@ try{
 }
 
 console.log("PASS V324 · tráfico real actual/futuro, ETA, demora, privacidad y voz/texto recuperables");
+
+// Provider diagnostics must identify rejection without logging route or credentials.
+const diagnosticLogs=[];
+const originalWarn=console.warn;
+try{
+  console.warn=(...args)=>diagnosticLogs.push(args);
+  await computeTrafficRoute({origin:"PRIVATE_ORIGIN",destination:"PRIVATE_DESTINATION"},{apiKey:"SECRET_TEST_KEY",fetchImpl:async()=>({ok:false,status:403,json:async()=>({error:{status:"PERMISSION_DENIED",message:"SECRET_TEST_KEY PRIVATE_ORIGIN"}})})});
+}finally{console.warn=originalWarn}
+assert.equal(diagnosticLogs[0][0],"traffic-failure");
+const diagnostic=JSON.parse(diagnosticLogs[0][1]);
+assert.equal(diagnostic.upstreamStatus,403);
+assert.equal(diagnostic.providerStatus,"PERMISSION_DENIED");
+assert.doesNotMatch(JSON.stringify(diagnosticLogs),/SECRET_TEST_KEY|PRIVATE_ORIGIN|PRIVATE_DESTINATION/);
+console.log("PASS traffic diagnostics · provider status without credentials or route");
