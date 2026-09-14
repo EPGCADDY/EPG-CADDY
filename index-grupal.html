@@ -14,7 +14,7 @@
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
   <meta name="gscg-capture-review" content="R36-FOLLOWUP-PHYSICAL-PENDING">
-  <meta name="gscg-release" content="V407-R41-PTT-HOLD-20260913">
+  <meta name="gscg-release" content="V407-R42-PTT-HOLD-20260913">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1043,7 +1043,7 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R41</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R42</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 <script src="./voice-turns.js"></script>
 <script src="./guest-access.js"></script>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
@@ -2741,6 +2741,7 @@ function waitForPreferredMaleBrowserVoice(language,timeoutMs=1600){
   return new Promise(resolve=>{let settled=false,timer=null;const finish=()=>{if(settled)return;settled=true;if(timer)clearTimeout(timer);window.speechSynthesis.removeEventListener?.("voiceschanged",probe);resolve(preferredMaleBrowserVoice(language))};const probe=()=>{if(preferredMaleBrowserVoice(language))finish()};window.speechSynthesis.addEventListener?.("voiceschanged",probe);window.speechSynthesis.getVoices?.();timer=setTimeout(finish,timeoutMs)});
 }
 async function speakAiUniversalMaleBrowserFallback(clean){
+  if(window.GSCVoiceTurns?.enabled)return false;
   if(aiUniversalSpeechLanguage(clean).startsWith("es"))return false;
   if(!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance!=="function")return false;
   const language=aiUniversalSpeechLanguage(clean),voice=await waitForPreferredMaleBrowserVoice(language);if(!voice)return false;
@@ -3052,6 +3053,10 @@ async function setSessionVoiceSpeed(speed){
   }catch(e){console.error(e);return false}
 }
 function speakAuthorized(reason,text){
+  if(typeof window!=="undefined"&&window.GSCVoiceTurns?.enabled){
+    if(!ALLOWED_SPEECH_REASONS.has(reason))return false;
+    void speakAiUniversalText(text);return true;
+  }
   if(!ALLOWED_SPEECH_REASONS.has(reason)||!dc||dc.readyState!=="open")return false;
   const spokenText=String(text);
   const token=`speech_${++speechTokenSeq}`;
@@ -3085,11 +3090,12 @@ async function speakClosure(text){
   clearOperationalMissingPrompt();
   if(listening)setVoice(false);else if(micTrack)micTrack.enabled=false;
   stopMonitorActive=false;
-  if(speakAuthorized("closure",text))return true;
+  const pushToTalk=typeof window!=="undefined"&&window.GSCVoiceTurns?.enabled;
+  if(!pushToTalk&&speakAuthorized("closure",text))return true;
   if(await speakAiUniversalText(text))return true;
   try{
-    await ensureSession();
-    if(speakAuthorized("closure",text))return true
+    if(!pushToTalk){await ensureSession();
+    if(speakAuthorized("closure",text))return true;}
   }catch(error){console.error("Cierre automático de vuelta:",error)}
   ensureAnnouncedState();
   if(/Primera vuelta\./.test(text))round.announced.front=false;
@@ -3099,6 +3105,7 @@ async function speakClosure(text){
   return false
 }
 async function speakQuery(text,kind="query"){
+  if(typeof window!=="undefined"&&window.GSCVoiceTurns?.enabled)return await speakAiUniversalText(text);
   if(kind==="accumulated")return speakAuthorized("query_accumulated",text);
   return speakAuthorized("query",text);
 }
@@ -4765,7 +4772,7 @@ async function processBrowserVoiceTranscript(context,transcript){
   const scoreParsed=parseRoundScoreTranscript(clean),scoreIntent=!isGeneralConversationIntent(clean)&&(scoreParsed?.ok||aiUniversalLooksLikeScoreOrder(clean));
   if(scoreIntent){
     const result=scoreParsed?.ok?applyLiteralScores(scoreParsed):scoreParsed;phase="idle";
-    if(result?.ok){const count=scoreParsed.entries.length;reportVoiceHealth("browser_fallback_round_applied",{entryCount:count});reportVoiceHealth("browser_fallback_score_applied");setPrimaryVoiceMatrix("idle",context,count===1?"LISTO · 1 HOYO REGISTRADO":`LISTO · ${count} HOYOS REGISTRADOS`);return true}
+    if(result?.ok){const count=scoreParsed.entries.length;reportVoiceHealth("browser_fallback_round_applied",{entryCount:count});reportVoiceHealth("browser_fallback_score_applied");setPrimaryVoiceMatrix("idle",context,count===1?"LISTO · 1 HOYO REGISTRADO":`LISTO · ${count} HOYOS REGISTRADOS`);if(result.closure)await speakClosure(result.closure);return true}
     reportVoiceHealth("browser_fallback_round_rejected",{entryCount:0});reportVoiceHealth("browser_fallback_score_rejected",{scoreFailure:scoreParsed?.failureCode||"parser_rejected"});setPrimaryVoiceMatrix("error",context,"NO RECONOCÍ LA TANDA · DI: HOYO 1 CUATRO, HOYO 2 CINCO");return false
   }
   const local=routeAiUniversalAppText(clean);if(local?.handled){aiUniversalRemember("user",clean,[],{visible:false});aiUniversalRemember("assistant",local.answer,[],{visible:false});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");return await speakAiUniversalText(local.answer)}

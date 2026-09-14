@@ -127,3 +127,18 @@ const actualRoster=setupEnv.parseRoster(normalizeRoster('Jugador número uno nom
 assert.equal(actualRoster.ok,true);
 assert.deepEqual(JSON.parse(JSON.stringify(actualRoster.changes.map(p=>[p.position,p.name,p.handicap,p.tee]))),[[1,'Jaime',13,'blancas'],[2,'Miguel',14,'azules']]);
 console.log('PASS actual setup parser receives explicit slots and stores Jaime/Miguel without numero prefixes');
+
+// PTT closures use the same Fish output and never reopen Realtime on failure.
+{
+ const page=fs.readFileSync('index-grupal.html','utf8');
+ const source=page.slice(page.indexOf('async function speakClosure('),page.indexOf('async function speakQuery('));
+ for(const success of [true,false]){
+  let fish=0,other=0;
+  const context=vm.createContext({window:{GSCVoiceTurns:{enabled:true}},clearOperationalMissingPrompt(){},listening:false,micTrack:null,stopMonitorActive:false,speakAuthorized(){other++;return true},speakAiUniversalText:async()=>{fish++;return success},ensureSession:async()=>{other++},ensureAnnouncedState(){},round:{announced:{front:true}},persist(){},console});
+  vm.runInContext(source,context);
+  assert.equal(await context.speakClosure('Primera vuelta.'),success);
+  assert.equal(fish,1);assert.equal(other,0);
+  if(!success)assert.equal(context.round.announced.front,false);
+ }
+ console.log('PASS PTT closure uses Fish only; failed audio retains retry without Cedar');
+}
