@@ -374,3 +374,6 @@ Evidencia IMG_3669: NÚMERO 1 JAIME en nombre; IMG_3670 sin scores. Causa confir
 ## Invitaciones y OP-60 · 13 septiembre 2026 18:41
 Fallo reproducido en navegador: service worker servía shell para /invite/ y rompía scripts relativos. Control permanente: test-invite-service-worker.mjs verifica red no-store, URL original, cero lectura de caché. Sin nueva aprobación física.
 Reincidencia operativa: se cerraron turnos con trabajo de diagnóstico disponible y se respondió con estados sin siguiente acción. La matriz documenta, no ejecuta reportes; obligación de cumplir OP-60 sigue vigente. No afirmar corrección operativa sólo por escribir esta entrada.
+
+## RC-OP60-02 · Cierre reiterado con tráfico pendiente · 14 septiembre 2026
+Hecho: después de publicar el diagnóstico de tráfico se cerraron turnos aunque seguían disponibles acciones técnicas. Incumplimiento confirmado. Control agregado a OP-60: prohibido cerrar mientras haya trabajo autorizado pendiente y una siguiente acción ejecutable; un reporte de estado no sustituye ejecución. La corrección documental no demuestra por sí sola cumplimiento futuro.

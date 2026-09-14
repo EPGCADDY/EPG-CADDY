@@ -142,6 +142,8 @@
         "nextAction"
       ],
       "continueAfterReport": true,
+      "forbidTurnClosureWhileAuthorizedWorkAndExecutableNextActionRemain": true,
+      "statusReportDoesNotReplaceExecution": true,
       "noClaimOfBackgroundWorkAfterTurn": true,
       "stopOnlyFor": [
         "completedTask",
