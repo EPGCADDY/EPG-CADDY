@@ -78,3 +78,10 @@ const failedRest=fixture();let requests=0;failedRest.env.fetch=async()=>({ok:++r
 await failedRest.env.speakAiUniversalText(longText);failedRest.env.aiUniversalTtsAudio.onended();await new Promise(resolve=>setImmediate(resolve));
 assert.equal(failedRest.nodes.get('universalSpokenAnswerText').textContent,longText);assert.equal(failedRest.states.at(-1),'NO SE PUDO COMPLETAR EL AUDIO');
 console.log('PASS remainder failure preserves full text and reports failure, without replaying first phrase. Controlled audio.');
+
+// Regression: a long opening sentence must not queue the entire answer before playback.
+const longOpening=('Esta explicación conserva cada palabra y necesita empezar pronto sin esperar todo el audio ').repeat(14).trim()+'.';
+const openingChunks=Array.from(queued.env.splitUniversalSpeechText(longOpening));
+assert.ok(openingChunks[0].length<=240);
+assert.equal(openingChunks.join(' '),longOpening);
+console.log('PASS long opening sentence uses a short first audio block without losing text');
