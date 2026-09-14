@@ -1148,3 +1148,14 @@ Archivos:
 - test-v407-r7-ios-scroll.mjs
 - test-v407-r9-manual-update.mjs
 - voice-turns.js
+
+### R40 · corrección de construcción
+Los dos builds de ef096d1 fallaron porque las pruebas de guía visible aún exigían las instrucciones antiguas. Se actualizan las expectativas a jugador número/nombre/handicap/marcas según orden del propietario; no se eliminan verificaciones. Nuevos controles funcionales ejecutados antes de reconstruir.
+- test-v255-player-registration-boxes-codes.mjs
+- test-v261-registration-stableford-modality.mjs
+- test-v290-brand-icons-cleanup.mjs
+- test-v304-homogeneous-registration-actions.mjs
+- test-v305-registration-guides-parser-truth.mjs
+- CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json
+
+Se conserva MIGUEL como nombre de ejemplo por regla visual V311; sólo cambia la sintaxis explícita. Archivo adicional: index-grupal.html. Banco funcional: 143 PASS y un FAIL inicial por el nombre de ejemplo; corregido antes de reconstruir.

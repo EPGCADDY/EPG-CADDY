@@ -13,8 +13,8 @@ assert.match(html,/<option value="" \$\{staged\.tee\?"":"selected"\}>MARCAS<\/op
 assert.doesNotMatch(html,/draft-empty-label">DISPONIBLE/);
 assert.match(html,/function syncDraftPlayersFromManualRows/);
 assert.match(html,/<div class="newbie-guide-title">DICTA ASÍ:<\/div>/);
-assert.match(html,/<div>MIGUEL · 14 · BLANCAS<\/div>/);
-assert.match(html,/<div>OTRO JUGADOR · NOMBRE \+ HDCP \+ MARCAS<\/div>/);
+assert.match(html,/<div>JUGADOR NÚMERO UNO · MIGUEL · HANDICAP 14 · MARCAS BLANCAS<\/div>/);
+assert.match(html,/<div>JUGADOR NÚMERO DOS · NOMBRE \+ HANDICAP \+ MARCAS<\/div>/);
 assert.match(html,/<div class="newbie-guide-player">HASTA 6 JUGADORES<\/div>/);
 assert.match(html,/<div>LUEGO TOCA OK<\/div>/);
 assert.match(html,/id="setupMic" aria-label="Abrir Caddie universal o dictar jugadores"/);

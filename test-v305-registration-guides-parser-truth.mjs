@@ -53,7 +53,7 @@ assert.deepEqual(stableNumbered.changes,[
 ]);
 assert.equal(stableParser("Jaime Roberto").ok,false,"Stableford debe exigir la posición que usa su analizador");
 
-for(const text of ["DICTA ASÍ:","MIGUEL · 14 · BLANCAS","OTRO JUGADOR · NOMBRE + HDCP + MARCAS","HASTA 6 JUGADORES","LUEGO TOCA OK"])assert.ok(html.includes(text),`Falta guía General: ${text}`);
+for(const text of ["DICTA ASÍ:","JUGADOR NÚMERO UNO · MIGUEL · HANDICAP 14 · MARCAS BLANCAS","JUGADOR NÚMERO DOS · NOMBRE + HANDICAP + MARCAS","HASTA 6 JUGADORES","LUEGO TOCA OK"])assert.ok(html.includes(text),`Falta guía General: ${text}`);
 for(const text of ["DICTA ASÍ:","1-# JUGADOR","2-NOMBRE","HASTA 6 JUGADORES","3-OK"])assert.ok(stable.includes(text),`Falta guía Stableford: ${text}`);
 const stablefordGuide=stable.match(/<div class="newbie-registration-guide"[^>]*>([\s\S]*?)<\/div><div class="nr-mic stableford-registration-mic"/)?.[1]||"";
 assert.ok(stablefordGuide,"No se encontró la guía visible Stableford");

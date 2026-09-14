@@ -17,7 +17,7 @@ assert.match(html,/\.registration-method \.nr-mic\{width:120px;height:120px;/);
 assert.match(html,/\.registration-method \.nr-mic\{width:112px;height:112px;/);
 assert.match(html,/class="setup-mic-icon"/);
 assert.doesNotMatch(html,/id="setupMicWrap"[^\n]*<div class="mic-visual">🎙<\/div>/);
-assert.match(html,/class="newbie-guide-title">DICTA ASÍ:<\/div>\s*<div>MIGUEL · 14 · BLANCAS<\/div>\s*<div>OTRO JUGADOR · NOMBRE \+ HDCP \+ MARCAS<\/div>\s*<div class="newbie-guide-player">HASTA 6 JUGADORES<\/div>\s*<div>LUEGO TOCA OK<\/div>/);
+assert.match(html,/class="newbie-guide-title">DICTA ASÍ:<\/div>\s*<div>JUGADOR NÚMERO UNO · MIGUEL · HANDICAP 14 · MARCAS BLANCAS<\/div>\s*<div>JUGADOR NÚMERO DOS · NOMBRE \+ HANDICAP \+ MARCAS<\/div>\s*<div class="newbie-guide-player">HASTA 6 JUGADORES<\/div>\s*<div>LUEGO TOCA OK<\/div>/);
 assert.match(html,/\.newbie-registration-guide\{text-align:left;/);
 assert.match(html,/\.newbie-registration-guide,\.newbie-registration-guide \*\{font-size:13px!important\}/);
 assert.match(html,/#setupOverlay\{padding-top:max\(8px,calc\(env\(safe-area-inset-top\) \+ 4px\)\)\}/);

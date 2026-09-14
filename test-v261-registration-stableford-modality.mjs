@@ -25,7 +25,7 @@ assert.doesNotMatch(neutralDot,/background:var\(--lime\)/);
 
 // El registro oficial contiene exactamente las dos vías autorizadas.
 assert.match(html,/class="newbie-guide-title">DICTA ASÍ:<\/div>/);
-assert.match(html,/<div>MIGUEL · 14 · BLANCAS<\/div>[\s\S]*?<div>LUEGO TOCA OK<\/div>/);
+assert.match(html,/<div>JUGADOR NÚMERO UNO · MIGUEL · HANDICAP 14 · MARCAS BLANCAS<\/div>[\s\S]*?<div>LUEGO TOCA OK<\/div>/);
 assert.match(html,/>2 · MANUAL OPCIONAL<\/div>/);
 assert.match(html,/<div class="game-mode-columns" aria-label="Modalidades">[\s\S]*?<div class="stableford-mode-option" id="stablefordModeOption"><\/div>[\s\S]*?<div class="game-mode-columns" aria-label="Funciones de Score Card y Live">[\s\S]*?<button[^>]+id="provisionalScorecardButton"[^>]*>[\s\S]*?SCORE CARD - PRÁCTICA[\s\S]*?<\/button>[\s\S]*?<section class="skins-config" id="skinsConfig"[\s\S]*?<div class="setup-facts"/);
 assert.equal((html.match(/id="provisionalScorecardButton"/g)||[]).length,1);
