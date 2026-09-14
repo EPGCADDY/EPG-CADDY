@@ -367,3 +367,6 @@ R34 cierra reconocimiento para responder y su evento onended sólo vuelve a LIST
 
 ## RC-OP60 — Silencio y cierre prematuro reiterados · 13 septiembre 2026
 Hecho: el propietario reiteró numerosas veces el máximo de 60 segundos; se cerraron turnos con trabajo pendiente y sin continuidad ejecutada. Estado: incumplimiento confirmado; regla persistente OP-60 incorporada. Prevención: reporte verificable antes de 60 segundos y siguiente acción inmediata; bloqueo real requiere recuperación y cierre explícito. No se declara corregida la conducta futura por guardar este texto.
+
+## R40 · fallos físicos reportados en R39
+Evidencia IMG_3669: NÚMERO 1 JAIME en nombre; IMG_3670 sin scores. Causa confirmada: prefijo número no separado antes del parser; límite de grabación de 60 s existente. Causa exacta del corte observado no determinada. Escape: prueba previa de 20 s no cubría límite de 60 s ni frase jugador número. Corrección: adaptador explícito, prueba 90 s y cinco hoyos; área táctil doble. Estado: PASS controlado, aceptación física pendiente.

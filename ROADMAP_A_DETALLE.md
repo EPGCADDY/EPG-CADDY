@@ -1181,3 +1181,33 @@ Corrección por orden del propietario: activar estado rojo/blanco del micrófono
 - `voice-turns.js`
 - `docs/quality/R39_PTT_RESULTADO.json`
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+
+## R40 · 13 septiembre 2026 · pulsación sostenida y registro explícito
+
+Orden del propietario tras IMG_3669/IMG_3670: área táctil invisible +100%, no autocierre mientras mantiene pulsado, registro mediante jugador número/ nombre/handicap/marcas. Fuente R39 286aca44e54b00ced7726ba64ddc966d2153b0fa.
+
+Cambios: se elimina temporizador de cierre de 60 s; perder captura de puntero no equivale a soltar; touch-action none en botón y contenedor; área anterior multiplicada por dos; adaptador de comando explícito separa posición del nombre y evita tratar nombre+dígito conversacional como alta. Guía visible actualizada. Parsers y escritor oficiales conservados; el registro de scores mantiene silencio por regla existente.
+
+Evidencia controlada: 100 turnos, 90 s sin envío hasta soltar, analizador real de dos jugadores con posiciones y nombres correctos, cinco hoyos conservados. Pendiente revisión visual y física; no aprobado integralmente ni publicado en producción. Rollback: R39 286aca4.
+
+Archivos:
+- CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md
+- CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json
+- ROADMAP_A_DETALLE.md
+- ROADMAP_OVERALL.md
+- docs/quality/R40_PTT_RESULTADO.json
+- index-grupal.html
+- service-worker.js
+- test-ptt-independent-turns.mjs
+- test-r40-five-holes.mjs
+- audit-project.mjs
+- test-v365-active-round-empty-recovery.mjs
+- test-v406-r2-professional-design.mjs
+- test-v406-r23-visible-version.mjs
+- test-v406-r4-mobile-controls.mjs
+- test-v406-r5-simple-tournament-live.mjs
+- test-v407-r1-premium-visual-system.mjs
+- test-v407-r25-round-controls.mjs
+- test-v407-r7-ios-scroll.mjs
+- test-v407-r9-manual-update.mjs
+- voice-turns.js

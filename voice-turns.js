@@ -49,7 +49,7 @@
         turn.recorder.onerror=()=>{if(current===turn){cancel();deps.state('error','NO SE PUDO GRABAR · VUELVE A PRESIONAR',context)}};
         for(const track of stream.getAudioTracks())track.onended=()=>{if(current===turn&&turn.held){cancel();deps.state('error','GRABACIÓN INTERRUMPIDA · VUELVE A PRESIONAR',context)}};
         turn.started=Date.now();turn.recorder.start();state(turn,'listening','ESCUCHANDO · SUELTA PARA ENVIAR');
-        turn.timer=setTimeout(()=>release(),60000);return true;
+        return true; // Only an explicit release submits; no elapsed-time auto-release.
       }catch(error){if(current===turn){cancel();deps.state('error',error?.name==='NotAllowedError'?'PERMITE EL MICRÓFONO PARA GRABAR':'MICRÓFONO NO DISPONIBLE',context)}return false}
     }
     function release(){
@@ -84,7 +84,7 @@
     document.addEventListener('pointerdown',event=>{const element=target(event);if(!element||event.button!==0)return;event.preventDefault();event.stopImmediatePropagation();if(heldId!==null||controller.isBusy())return;heldId=event.pointerId;element.setPointerCapture?.(event.pointerId);void controller.press(context(element))},true);
     document.addEventListener('pointerup',event=>{if(event.pointerId!==heldId)return;event.preventDefault();event.stopImmediatePropagation();heldId=null;controller.release()},true);
     document.addEventListener('pointercancel',event=>{if(event.pointerId!==heldId)return;heldId=null;controller.cancel()},true);
-    document.addEventListener('lostpointercapture',event=>{if(event.pointerId!==heldId)return;heldId=null;controller.cancel()},true);
+    // Losing capture alone is not a finger release. Document pointerup still ends the turn.
     document.addEventListener('click',event=>{if(target(event)){event.preventDefault();event.stopImmediatePropagation()}},true);
     document.addEventListener('contextmenu',event=>{if(target(event))event.preventDefault()},true);
     document.addEventListener('keydown',event=>{if(!target(event)||![' ','Enter'].includes(event.key))return;event.preventDefault();event.stopImmediatePropagation();if(!event.repeat)void controller.press(context(target(event)))},true);
@@ -94,7 +94,8 @@
     document.addEventListener('visibilitychange',()=>{if(document.hidden)cancel()});
     document.getElementById('stopAiUniversal')?.addEventListener('click',cancel,true);
     for(const element of document.querySelectorAll(selector)){
-      element.style.touchAction='none';element.style.webkitUserSelect='none';element.style.webkitTouchCallout='none';
+      element.style.touchAction='none';
+      const hit=element.querySelector('button');if(hit)hit.style.touchAction='none';element.style.webkitUserSelect='none';element.style.webkitTouchCallout='none';
       const button=element.matches('button')?element:element.querySelector('button');
       button?.setAttribute('aria-label','Mantén presionado para hablar; suelta para enviar');
       if(element.id==='listenAiUniversal')element.textContent='MANTÉN PARA HABLAR';

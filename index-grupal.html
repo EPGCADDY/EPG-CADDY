@@ -14,7 +14,7 @@
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
   <meta name="gscg-capture-review" content="R36-FOLLOWUP-PHYSICAL-PENDING">
-  <meta name="gscg-release" content="V407-R39-PTT-VOICE-ONLY-20260913">
+  <meta name="gscg-release" content="V407-R40-PTT-HOLD-20260913">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -704,6 +704,8 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
 #setupMicWrap[data-ptt-listening="true"] .mic-visual,#headerMicWrap[data-ptt-listening="true"] .mic-visual{background:#ff4545!important;border-color:#ff4545!important;color:#fff!important}
 #headerMicWrap[data-ptt-listening="true"] .mic-visual{font-size:0!important}
 #headerMicWrap[data-ptt-listening="true"] .mic-visual::after{content:"";width:58%;height:65%;background:#fff;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H7v2h10v-2h-4v-3.08A7 7 0 0 0 19 11z'/%3E%3C/svg%3E") center/contain no-repeat}
+/* Double the previous 150%-wide hit area: sqrt(2) × 150% per side. */
+#setupMicWrap .mic-hit,#headerMicWrap .mic-hit{inset:-56.066017%;touch-action:none}
 </style>
 <style id="gscg-mobile-modal-isolation-v363">
 body.gsc-setup-open .live-support-link,
@@ -963,8 +965,8 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
     <section class="registration-method" aria-label="Método 1 Dictado">
       <div class="newbie-registration-guide" aria-label="Instrucciones de registro para cada jugador">
         <div class="newbie-guide-title">DICTA ASÍ:</div>
-        <div>MIGUEL · 14 · BLANCAS</div>
-        <div>OTRO JUGADOR · NOMBRE + HDCP + MARCAS</div>
+        <div>JUGADOR NÚMERO UNO · JAIME · HANDICAP 13 · MARCAS BLANCAS</div>
+        <div>JUGADOR NÚMERO DOS · NOMBRE + HANDICAP + MARCAS</div>
         <div class="newbie-guide-player">HASTA 6 JUGADORES</div>
         <div>LUEGO TOCA OK</div>
       </div>
@@ -1040,7 +1042,7 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R39</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R40</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 <script src="./voice-turns.js"></script>
 <script src="./guest-access.js"></script>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
@@ -2909,8 +2911,8 @@ function routeAiUniversalAppText(text){
   if(aiUniversalCommandShouldRemainLocal(text,command)){if(command.execute&&command.action)executeVoiceAssistantAction(command.action);return{handled:true,answer:command.execute?`Orden ejecutada. ${command.speech}`:command.speech}}
   const navigation=parseRoundNavigationCommand(text);if(navigation.matched){openNewRoundDraft();return{handled:true,answer:"Orden ejecutada. Abrí el registro de jugadores."}}
   const setupVisible=$("setupOverlay")?.classList?.contains("visible");
-  if(setupVisible&&aiUniversalLooksLikeSetupOrder(text)){
-    const parsed=parseSetupTranscript(text);if(parsed.ok){const result=applySetupChanges(parsed.changes);return{handled:true,answer:result.ok?"Orden ejecutada. Actualicé el registro de jugadores.":result.speech||"No pude completar esa orden."}}
+  if(setupVisible&&aiUniversalLooksLikeSetupOrder(text)&&(!window.GSCVoiceTurns?.enabled||normalizeExplicitPttRoster(text)!==null)){
+    const parsed=parseSetupTranscript(window.GSCVoiceTurns?.enabled?normalizeExplicitPttRoster(text):text);if(parsed.ok){const result=applySetupChanges(parsed.changes);return{handled:true,answer:result.ok?"Orden ejecutada. Actualicé el registro de jugadores.":result.speech||"No pude completar esa orden."}}
   }
   if(round.configured&&isLocalRoundQueryIntent(text)){
     const query=parseRoundQueryTranscript(text);if(query.matched)return{handled:true,answer:query.result?.speech||"No encontré ese dato en la tarjeta."};
@@ -5770,12 +5772,27 @@ async function syncPublishedAppVersion(){
   }catch(error){showBuildCheckFailure();console.warn("APP_VERSION_SYNC",error?.message||error)}
   finally{appBuildCheckRunning=false}
 }
+function normalizeExplicitPttRoster(text){
+  const clean=normalizeSpeech(text);
+  if(!/^(?:(?:agrega|agregar|registra|registrar)\s+)?jugador(?:a)?\s+(?:numero\s+)?(?:[1-6]|uno|una|dos|tres|cuatro|cinco|seis)\b/.test(clean))return null;
+  return clean.replace(/\bjugador(?:a)?\s+(?:numero\s+)?([1-6]|uno|una|dos|tres|cuatro|cinco|seis)\s+(?:nombre\s+)?/g,'jugador $1 ').replace(/^(?:registra|registrar)\s+/,'');
+}
 const discreteVoiceController=window.GSCVoiceTurns.install({
   cancel:()=>stopAiUniversalOutput(),
   context:()=>$("setupOverlay")?.classList.contains("visible")||!round.configured?"setup":"round",
   prepare:context=>{stopAiUniversalOutput();releaseAiUniversalPlaybackForListening();primeAiUniversalSpeechFromGesture();voiceContext=context},
   state:(state,message,context)=>{listening=state==="listening";phase=listening?"listening":state==="responding"?"responding":"idle";setPrimaryVoiceMatrix(state,context,message)},
-  dispatch:async(context,text)=>{voiceContext=context;await processBrowserVoiceTranscript(context,text);browserVoiceFollowupContext=null}
+  dispatch:async(context,text)=>{
+    voiceContext=context;
+    try{
+      if(context==="setup"){
+        const roster=normalizeExplicitPttRoster(text);
+        if(roster===null)return await answerBrowserVoiceQuery(context,text);
+        return await processBrowserVoiceTranscript(context,roster);
+      }
+      return await processBrowserVoiceTranscript(context,text);
+    }finally{browserVoiceFollowupContext=null}
+  }
 });
 for(const context of ["setup","round"])setPrimaryVoiceMatrix("idle",context,"MANTÉN PRESIONADO PARA HABLAR · SUELTA PARA ENVIAR");
 $("mandatoryUpdateButton").addEventListener("click",installMandatoryUpdate);

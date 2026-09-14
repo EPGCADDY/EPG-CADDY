@@ -100,3 +100,30 @@ await held.press('round');time+=20000;await flush();assert.equal(held.isBusy(),t
 recorders.at(-1).finish();await flush();assert.equal(heldDispatches,0);assert.equal(held.isBusy(),false);
 await held.press('round');time+=20000;assert.equal(heldDispatches,0);held.release();recorders.at(-1).finish();await flush();assert.equal(heldDispatches,1);
 console.log('PASS 20-second hold sends nothing before release; unexpected recorder stop discards partial audio; next full turn sends once');
+
+// A real timer scheduler under a virtual clock proves there is no auto-submit at 60s.
+const pendingTimers=new Map();let timerId=0;
+const clockEnv={Blob,AbortController,Date:{now:()=>time},setTimeout:(fn,ms)=>{const id=++timerId;pendingTimers.set(id,{fn,at:time+ms});return id},clearTimeout:id=>pendingTimers.delete(id)};
+vm.runInNewContext(fs.readFileSync('voice-turns.js','utf8'),clockEnv);
+const longCalls=[];
+const sustained=clockEnv.GSCVoiceTurns.createController({...deps,transcribe:async()=>{longCalls.push('sent');return 'hoyo 1 cuatro hoyo 2 cinco hoyo 3 cuatro hoyo 4 seis hoyo 5 tres'},dispatch:async(_c,t)=>longCalls.push(t)});
+await sustained.press('round');time+=90000;
+for(const [id,timer] of pendingTimers)if(timer.at<=time){pendingTimers.delete(id);timer.fn()}
+await flush();assert.deepEqual(longCalls,[]);assert.equal(sustained.isBusy(),true);
+sustained.release();await flush();assert.equal(longCalls.length,2);
+console.log('PASS 90-second simulated hold: no auto-stop or submit; release sends entire five-hole transcript once');
+const rosterHtml=fs.readFileSync('index-grupal.html','utf8');
+const rosterSource=rosterHtml.slice(rosterHtml.indexOf('function normalizeExplicitPttRoster('),rosterHtml.indexOf('const discreteVoiceController='));
+const normalizeSpeech=v=>v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+const normalizeRoster=new Function('normalizeSpeech',rosterSource+';return normalizeExplicitPttRoster')(normalizeSpeech);
+assert.equal(normalizeRoster('Jugador número uno nombre Jaime handicap 13 marcas blancas'),'jugador uno jaime handicap 13 marcas blancas');
+assert.equal(normalizeRoster('Jugador número uno Jaime handicap 13 marcas blancas jugador número dos Miguel handicap 14 marcas azules'),'jugador uno jaime handicap 13 marcas blancas jugador dos miguel handicap 14 marcas azules');
+for(const phrase of ['Jaime 13 blancas','cuál es el handicap del jugador número uno','cuál es la capital de Italia'])assert.equal(normalizeRoster(phrase),null);
+console.log('PASS explicit roster command normalizes position separately from name; conversational phrases cannot enter roster adapter');
+const setupEnv={normalizeSpeech,normalizeTee:t=>({blancas:'blancas',azules:'azules'}[t]||null),normalizeMatrix:()=>null,stripPulteCourseTokens:t=>t,canonicalPlayerNameKey:normalizeSpeech,draftPlayers:[],handicapRectificationMode:false,rosterAddMode:false};
+const setupCode=rosterHtml.slice(rosterHtml.indexOf('const WORD_NUMBERS='),rosterHtml.indexOf('function parseInlineManualRosterPhrase('));
+vm.runInNewContext(setupCode+';this.parseRoster=parseSetupTranscript',setupEnv);
+const actualRoster=setupEnv.parseRoster(normalizeRoster('Jugador número uno nombre Jaime handicap 13 marcas blancas jugador número dos Miguel handicap 14 marcas azules'));
+assert.equal(actualRoster.ok,true);
+assert.deepEqual(JSON.parse(JSON.stringify(actualRoster.changes.map(p=>[p.position,p.name,p.handicap,p.tee]))),[[1,'Jaime',13,'blancas'],[2,'Miguel',14,'azules']]);
+console.log('PASS actual setup parser receives explicit slots and stores Jaime/Miguel without numero prefixes');

@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-09-14T00:02:04.457748+00:00",
+  "exitCode": 0,
+  "output": "PASS 100 controlled independent presses: one capture/transcription/dispatch each; tracks stopped; zero automatic reopen\nPASS release before permission resolves stops late stream and sends nothing\nPASS cancellation during transcription discards late text; no score dispatch\nPASS failed HTTP turn releases state; following press succeeds\nPASS transcription endpoint rejects foreign origin, malformed base64 and unsupported media\nPASS production followup function cannot reopen native recognition in PTT mode; official transcript router reused\nLIMIT: simulated capture and HTTP failures; not physical iPhone or live provider acceptance.\nPASS delayed onstop blocks next capture and transcription until final data arrives\nPASS short press rejected independently of onstop delay\nPASS denied permission releases turn; next press obtains a new stream\nPASS installed PTT activates only the recording microphone and resets on cancel\nPASS spoken PTT answer text hidden; other output mode retained\nPASS 20-second hold sends nothing before release; unexpected recorder stop discards partial audio; next full turn sends once\nPASS 90-second simulated hold: no auto-stop or submit; release sends entire five-hole transcript once\nPASS explicit roster command normalizes position separately from name; conversational phrases cannot enter roster adapter\nPASS actual setup parser receives explicit slots and stores Jaime/Miguel without numero prefixes\n",
+  "errors": "",
+  "physicalAcceptance": false,
+  "productionPublished": false,
+  "limits": [
+    "No prueba física del iPhone",
+    "Interrupciones reales de hardware/sistema aún posibles",
+    "Se mantiene límite de audio HTTP de 3 MB"
+  ]
+}
