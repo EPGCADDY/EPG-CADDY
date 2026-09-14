@@ -1186,4 +1186,4 @@ Las dos frases del usuario extraen correctamente origen GPS/El Pulté y destino 
 
 
 ## Diagnóstico protegido de configuración de tráfico · 14 septiembre 2026
-`GET /api/traffic?action=status` informa únicamente proveedor y `configured`; no expone credenciales, ubicaciones ni consultas. Permite distinguir configuración ausente antes de pedir otra grabación física. Prueba específica PASS. Archivos funcionales: api/traffic.js; test-v324-real-traffic.mjs.
+`GET /api/traffic?action=status` informa únicamente proveedor y `configured`; no expone credenciales, ubicaciones ni consultas. Permite distinguir configuración ausente antes de pedir otra grabación física. Prueba específica PASS. Archivos funcionales: api/traffic.js; middleware.js; test-v324-real-traffic.mjs.

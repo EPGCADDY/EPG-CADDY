@@ -8,6 +8,7 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 const serviceWorker=fs.readFileSync(new URL("./service-worker.js",import.meta.url),"utf8");
 const universalApi=fs.readFileSync(new URL("./api/universal-ai.js",import.meta.url),"utf8");
 const trafficLib=fs.readFileSync(new URL("./api/_lib/traffic.js",import.meta.url),"utf8");
+const middleware=fs.readFileSync(new URL("./middleware.js",import.meta.url),"utf8");
 
 assert.match(html,/gscg-build" content="V\d{3}[^"]*"/);
 assert.match(serviceWorker,/gscg-mobile-v\d{3}[^"]*/);
@@ -26,6 +27,7 @@ assert.match(universalApi,/LIVE_TRAFFIC_TOOL/);
 assert.match(trafficLib,/routingPreference:"TRAFFIC_AWARE_OPTIMAL"/);
 assert.match(universalApi,/needsCurrentLocation:true/);
 assert.match(universalApi,/store:false/);
+assert.match(middleware,/path==="\/api\/traffic"&&request\.method==="GET"&&url\.searchParams\.get\("action"\)==="status"/);
 assert.match(universalApi,/Si el destino es un fragmento ambiguo/);
 assert.match(universalApi,/Si needsDestinationClarification es true, haz solamente una pregunta breve/);
 assert.equal(isDirectTrafficQuery("¿Cuánto tráfico hay ahora de El Pulté Golf a Pradera Concepción, Guatemala?"),true);
