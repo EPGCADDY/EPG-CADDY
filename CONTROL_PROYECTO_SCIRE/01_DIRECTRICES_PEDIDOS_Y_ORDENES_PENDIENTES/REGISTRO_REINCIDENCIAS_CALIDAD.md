@@ -370,3 +370,7 @@ Hecho: el propietario reiteró numerosas veces el máximo de 60 segundos; se cer
 
 ## R40 · fallos físicos reportados en R39
 Evidencia IMG_3669: NÚMERO 1 JAIME en nombre; IMG_3670 sin scores. Causa confirmada: prefijo número no separado antes del parser; límite de grabación de 60 s existente. Causa exacta del corte observado no determinada. Escape: prueba previa de 20 s no cubría límite de 60 s ni frase jugador número. Corrección: adaptador explícito, prueba 90 s y cinco hoyos; área táctil doble. Estado: PASS controlado, aceptación física pendiente.
+
+## Invitaciones y OP-60 · 13 septiembre 2026 18:41
+Fallo reproducido en navegador: service worker servía shell para /invite/ y rompía scripts relativos. Control permanente: test-invite-service-worker.mjs verifica red no-store, URL original, cero lectura de caché. Sin nueva aprobación física.
+Reincidencia operativa: se cerraron turnos con trabajo de diagnóstico disponible y se respondió con estados sin siguiente acción. La matriz documenta, no ejecuta reportes; obligación de cumplir OP-60 sigue vigente. No afirmar corrección operativa sólo por escribir esta entrada.
