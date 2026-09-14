@@ -142,3 +142,13 @@ console.log('PASS actual setup parser receives explicit slots and stores Jaime/M
  }
  console.log('PASS PTT closure uses Fish only; failed audio retains retry without Cedar');
 }
+{
+ const page=fs.readFileSync('index-grupal.html','utf8');
+ const source=page.slice(page.indexOf('const discreteVoiceController='),page.indexOf('for(const context of ["setup","round"])',page.indexOf('const discreteVoiceController=')));
+ for(const closure of ['', 'Primera vuelta.']){
+  let adapter,writes=0;const spoken=[];
+  const context=vm.createContext({window:{GSCVoiceTurns:{install:options=>{adapter=options}}},voiceContext:'round',phase:'idle',browserVoiceFollowupContext:null,parseRoundScoreTranscript:()=>({ok:true,entries:[{hole:9,gross:4}]}),isGeneralConversationIntent:()=>false,applyLiteralScores:()=>{writes++;return {ok:true,closure}},reportVoiceHealth(){},setPrimaryVoiceMatrix(){},speakClosure:async text=>spoken.push(text)});
+  vm.runInContext(source,context);assert.equal(await adapter.dispatch('round','hoyo nueve cuatro'),true);assert.equal(writes,1);assert.deepEqual(spoken,closure?[closure]:[]);
+ }
+ console.log('PASS PTT adapter writes once and announces only a returned turn closure');
+}

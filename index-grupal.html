@@ -4772,7 +4772,7 @@ async function processBrowserVoiceTranscript(context,transcript){
   const scoreParsed=parseRoundScoreTranscript(clean),scoreIntent=!isGeneralConversationIntent(clean)&&(scoreParsed?.ok||aiUniversalLooksLikeScoreOrder(clean));
   if(scoreIntent){
     const result=scoreParsed?.ok?applyLiteralScores(scoreParsed):scoreParsed;phase="idle";
-    if(result?.ok){const count=scoreParsed.entries.length;reportVoiceHealth("browser_fallback_round_applied",{entryCount:count});reportVoiceHealth("browser_fallback_score_applied");setPrimaryVoiceMatrix("idle",context,count===1?"LISTO · 1 HOYO REGISTRADO":`LISTO · ${count} HOYOS REGISTRADOS`);if(result.closure)await speakClosure(result.closure);return true}
+    if(result?.ok){const count=scoreParsed.entries.length;reportVoiceHealth("browser_fallback_round_applied",{entryCount:count});reportVoiceHealth("browser_fallback_score_applied");setPrimaryVoiceMatrix("idle",context,count===1?"LISTO · 1 HOYO REGISTRADO":`LISTO · ${count} HOYOS REGISTRADOS`);return true}
     reportVoiceHealth("browser_fallback_round_rejected",{entryCount:0});reportVoiceHealth("browser_fallback_score_rejected",{scoreFailure:scoreParsed?.failureCode||"parser_rejected"});setPrimaryVoiceMatrix("error",context,"NO RECONOCÍ LA TANDA · DI: HOYO 1 CUATRO, HOYO 2 CINCO");return false
   }
   const local=routeAiUniversalAppText(clean);if(local?.handled){aiUniversalRemember("user",clean,[],{visible:false});aiUniversalRemember("assistant",local.answer,[],{visible:false});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");return await speakAiUniversalText(local.answer)}
@@ -5804,6 +5804,16 @@ const discreteVoiceController=window.GSCVoiceTurns.install({
         const roster=normalizeExplicitPttRoster(text);
         if(roster===null)return await answerBrowserVoiceQuery(context,text);
         return await processBrowserVoiceTranscript(context,roster);
+      }
+      const parsed=parseRoundScoreTranscript(text);
+      if(parsed?.ok&&!isGeneralConversationIntent(text)){
+        const result=applyLiteralScores(parsed);phase="idle";
+        if(!result?.ok){setPrimaryVoiceMatrix("error",context,"NO SE PUDO GUARDAR LA TANDA");return false}
+        reportVoiceHealth("browser_fallback_round_applied",{entryCount:parsed.entries.length});
+        reportVoiceHealth("browser_fallback_score_applied");
+        setPrimaryVoiceMatrix("idle",context,`LISTO · ${parsed.entries.length} HOYOS REGISTRADOS`);
+        if(result.closure)await speakClosure(result.closure);
+        return true;
       }
       return await processBrowserVoiceTranscript(context,text);
     }finally{browserVoiceFollowupContext=null}
