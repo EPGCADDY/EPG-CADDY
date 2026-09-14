@@ -5,6 +5,10 @@ export default async function handler(req,res){
   if(handleAppPreflight(req,res))return;
   res.setHeader("Cache-Control","no-store");
   if(!isAllowedAppOrigin(req))return res.status(403).json({ok:false,error:"ORIGIN_NOT_ALLOWED"});
+  if(req.method==="GET"&&String(req.query?.action||"")==="status"){
+    const configured=Boolean(String(process.env.GOOGLE_MAPS_ROUTES_API_KEY||process.env.GOOGLE_MAPS_API_KEY||"").trim());
+    return res.status(200).json({ok:true,provider:"Google Maps Routes",configured});
+  }
   if(req.method!=="POST"){
     res.setHeader("Allow","POST");
     return res.status(405).json({ok:false,error:"METHOD_NOT_ALLOWED"});

@@ -86,8 +86,12 @@ const originalFetch=globalThis.fetch;
 const previousOpenAiKey=process.env.OPENAI_API_KEY;
 const previousGoogleKey=process.env.GOOGLE_MAPS_ROUTES_API_KEY;
 process.env.OPENAI_API_KEY="openai-test-key";
-process.env.GOOGLE_MAPS_ROUTES_API_KEY="google-test-key";
+  process.env.GOOGLE_MAPS_ROUTES_API_KEY="google-test-key";
 try{
+  const statusReq={method:"GET",query:{action:"status"},headers:{host:"epg-caddy.vercel.app"}};
+  const statusRes=responseRecorder();
+  await trafficHandler(statusReq,statusRes);
+  assert.deepEqual(statusRes.body,{ok:true,provider:"Google Maps Routes",configured:true});
   const calls=[];
   globalThis.fetch=async(url,options)=>{
     calls.push({url:String(url),options});
