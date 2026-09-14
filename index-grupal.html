@@ -704,8 +704,9 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
 #setupMicWrap[data-ptt-listening="true"] .mic-visual,#headerMicWrap[data-ptt-listening="true"] .mic-visual{background:#ff4545!important;border-color:#ff4545!important;color:#fff!important}
 #headerMicWrap[data-ptt-listening="true"] .mic-visual{font-size:0!important}
 #headerMicWrap[data-ptt-listening="true"] .mic-visual::after{content:"";width:58%;height:65%;background:#fff;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H7v2h10v-2h-4v-3.08A7 7 0 0 0 19 11z'/%3E%3C/svg%3E") center/contain no-repeat}
-/* Double the previous 150%-wide hit area: sqrt(2) × 150% per side. */
-#setupMicWrap .mic-hit,#headerMicWrap .mic-hit{inset:-56.066017%;touch-action:none}
+/* Double each existing hit area, preserving the visible microphone size. */
+#setupMicWrap .mic-hit{inset:calc(-20.710678% - 36.769553px);touch-action:none}
+#headerMicWrap .mic-hit{inset:calc(-20.710678% - 14.142136px);touch-action:none}
 </style>
 <style id="gscg-mobile-modal-isolation-v363">
 body.gsc-setup-open .live-support-link,
