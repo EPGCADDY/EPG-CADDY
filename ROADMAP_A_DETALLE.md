@@ -1,5 +1,27 @@
 # ROADMAP A DETALLE
 
+## Preparación de Preview aislado de comunicación universal · 17 septiembre 2026
+
+Los 145 paquetes funcionales del auditor existente concluyen PASS en Node 22. Los controles editorial y visual de 74 páginas también pasaron en la revisión previa, sin cambios de diseño. `VOICE_R42_CHECKPOINT.md` registra que se vuelve a ejecutar la auditoría final y el sello antes del Preview; los resultados físicos no se infieren de estas pruebas automáticas.
+
+`test-voice-result-integrity.mjs` y `test-r34-audio-response.mjs` incluyen el lector real al extraer la función de envío. El primero agrega estado de silencio y cabeceras al simulador HTTP. Se mantienen intactas las aserciones de errores de red frente a audio, diez turnos, historial, estado ocupado, interrupción y timeout. No se declara prueba física por ejecutar estos bancos.
+
+R32: su fixture extraía únicamente `submitAiUniversalText`, omitiendo la nueva dependencia `readUniversalVoiceResponse` y `aiUniversalMuted`; la respuesta simulada carecía de cabeceras. `test-r32-open-conversation.mjs` carga la función real y agrega esos datos al fixture, sin quitar ni relajar ninguna aserción. Quedan preservadas las comprobaciones de voz fallida, segundo turno audible, liberación del estado ocupado y consultas locales/textuales.
+
+Compatibilidad adicional V328: se conserva exactamente la declaración original de `endpoint` para reglas/texto en `index-grupal.html`; `requestEndpoint` selecciona el transporte compuesto únicamente si no son reglas y la respuesta es vocal y no silenciada. No se modifican pruebas ni funciones de reglas. V321, V328 y el banco de dos turnos PASS; se renueva `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` antes de la auditoría final.
+
+Corrección de compatibilidad en `index-grupal.html`: V321 rechazó la construcción del endpoint mediante una cadena condicional dentro de `gscgApiUrl`. Se mantienen explícitas las tres llamadas de reglas, voz y texto, preservando el contrato de la prueba existente. `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se vuelve a generar después del ajuste; no se modifica V321.
+
+Worktree exclusivo y rama `preview/universal-voice-20260917`, desde `8183f8d`. `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se regenera mediante el procedimiento existente, con los tres PDF en una carpeta de salida propia. Se ejecutan los controles de publicación sin modificar reglas ni módulos aprobados. No confundir aprobación automática con tiempo real, identidad audible o prueba física iPhone; no hay promoción autorizada por este registro.
+
+## Investigación aislada R42: respuesta y primer audio en una petición · 17 septiembre 2026
+
+Actualización de evidencia en `VOICE_R42_CHECKPOINT.md`: las pruebas dirigidas también pasan con Node 22.23.2, incluidos HTTP cancelado y dos turnos. El servidor de voz aprobado y Actualizar no cambian. Control documental y ROADMAP PASS; no equivale a auditoría integral ni publicación ni tiempo físico demostrado.
+
+Base `ccffefb81e1957e40f8c7e9782c8ac18bd0488a7`, rama `fix/universal-voice-latency-20260917`. `api/universal-voice-response.js` reutiliza sin cambios `api/universal-ai.js` y `api/voice-speech.js`. Para respuestas vocales breves devuelve primero texto en NDJSON y después el audio aprobado en la misma respuesta HTTP; registra tiempos del servidor sin texto de preguntas. Errores y respuestas largas conservan JSON/ruta de voz previa. `index-grupal.html` modifica exclusivamente `submitAiUniversalText`, `speakAiUniversalText` y añade `readUniversalVoiceResponse`. Texto manual, reglas y órdenes locales mantienen sus rutas.
+
+`test-universal-voice-response.mjs` ejecuta HTTP local y funciones reales del transporte con proveedores/reproductor simulados. Valida dos turnos, texto antes de audio, una petición por turno sin duplicar síntesis, errores, respuestas largas, denegación y corte del stream. Comparación antes/después contra HTML base reproducible; no es medición física. `test-r42-voice-configuration.mjs` mantiene Fish/es-419/0.90. `VOICE_R42_CHECKPOINT.md` conserva el estado. Objetivo ≤2.75 s e identidad audible pendientes; no sustituirlo por los tiempos sintéticos. La síntesis del proveedor continúa entregando audio completo; este cambio elimina un viaje de red, no implementa streaming nativo de Fish. Borrador sin publicación ni integración.
+
 
 ## V407-R29 · corrección directa de ENVIAR TARJETA DIGITAL · 12 de septiembre de 2026
 

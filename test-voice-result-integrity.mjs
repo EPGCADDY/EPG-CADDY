@@ -2,13 +2,13 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 const html=fs.readFileSync('index-grupal.html','utf8');
-const submit=html.slice(html.indexOf('async function submitAiUniversalText('),html.indexOf('async function continueConversationAfterTool('));
+const submit=html.slice(html.indexOf('async function readUniversalVoiceResponse('),html.indexOf('async function continueConversationAfterTool('));
 const answer=html.slice(html.indexOf('async function answerBrowserVoiceQuery('),html.indexOf('function scheduleBrowserVoiceTransportRetry('));
 function fixture({audio=true,local=false,network=false,offline=false}={}){
  const elements={aiUniversalInput:{value:''},sendAiUniversal:{disabled:false}},history=[],events=[];
- const ctx=vm.createContext({AbortController,console,universalVoiceDeadline:async operation=>await operation,phase:'responding',aiUniversalTextBusy:false,aiUniversalTextAbortController:null,aiUniversalRulesMode:offline,aiUniversalHistory:history,AI_UNIVERSAL_HISTORY_LIMIT:10,voiceContext:'setup',
+ const ctx=vm.createContext({AbortController,console,universalVoiceDeadline:async operation=>await operation,phase:'responding',aiUniversalTextBusy:false,aiUniversalTextAbortController:null,aiUniversalRulesMode:offline,aiUniversalMuted:false,aiUniversalHistory:history,AI_UNIVERSAL_HISTORY_LIMIT:10,voiceContext:'setup',
  $:id=>elements[id],aiUniversalRemember:(role,content)=>history.push({role,content}),routeAiUniversalAppText:()=>({handled:local,answer:'Local'}),aiUniversalSetState:state=>{ctx.state=state},setPrimaryVoiceMatrix:(state,context,message)=>{if(message)ctx.state=message},aiUniversalAppContext:()=>({}),window:{gscgApiUrl:x=>x},
- fetch:async()=>{if(network||offline)throw new Error('offline');return {ok:true,json:async()=>({ok:true,answer:'Roma',sources:[]})}},
+ fetch:async()=>{if(network||offline)throw new Error('offline');return {ok:true,headers:{get:()=> 'application/json'},json:async()=>({ok:true,answer:'Roma',sources:[]})}},
  officialGolfRuleOfflineResult:()=>({answer:'Regla guardada',sources:[]}),renderCaddieSources(){},saveOfficialGolfRuleForOffline(){},
  speakAiUniversalText:async()=>{ctx.state=audio?'AUDIO INICIADO':'VOZ MASCULINA NO DISPONIBLE';return audio},reportVoiceHealth:event=>events.push(event)});
  vm.runInContext(submit+'\n'+answer,ctx);return{ctx,elements,history,events};

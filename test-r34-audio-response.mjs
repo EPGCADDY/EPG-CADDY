@@ -31,7 +31,7 @@ assert.equal(f.nodes.get('universalSpokenAnswerText').textContent,'Respuesta 9')
 const timed=fixture();const originalDeadline=timed.env.universalVoiceDeadline;timed.env.universalVoiceDeadline=(operation,_,controller)=>originalDeadline(operation,5,controller);
 timed.nodes.set('aiUniversalInput',{value:''});timed.nodes.set('sendAiUniversal',{disabled:false});
 Object.assign(timed.env,{aiUniversalTextBusy:false,aiUniversalTextAbortController:null,aiUniversalRulesMode:false,aiUniversalHistory:[],AI_UNIVERSAL_HISTORY_LIMIT:80,aiUniversalRemember(){},routeAiUniversalAppText:()=>({handled:false}),aiUniversalAppContext:()=>({}),fetch:()=>new Promise(()=>{})});
-vm.runInContext(html.slice(html.indexOf('async function submitAiUniversalText('),html.indexOf('async function continueConversationAfterTool(')),timed.env);
+vm.runInContext(html.slice(html.indexOf('async function readUniversalVoiceResponse('),html.indexOf('async function continueConversationAfterTool(')),timed.env);
 assert.equal(await timed.env.submitAiUniversalText('Pregunta que queda esperando',{voiceOnly:true}),false);assert.equal(timed.env.aiUniversalTextBusy,false);assert.equal(timed.nodes.get('sendAiUniversal').disabled,false);assert.equal(timed.states.at(-1),'SERVICIO DE RESPUESTAS NO DISPONIBLE');console.log('PASS timeout real del envío libera turno y botón, muestra error');
 // Exercise the real audio-ended -> recognition-start -> result -> finalize path.
 const turns=fixture();let starts=0,queries=[];const e=turns.env;

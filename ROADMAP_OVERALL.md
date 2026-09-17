@@ -1,5 +1,27 @@
 # ROADMAP OVERALL
 
+## Preparación de Preview aislado de comunicación universal · 17 septiembre 2026
+
+Resultado del grupo funcional: 145 paquetes PASS con Node 22, incluyendo diez turnos simulados, fallos de voz/red y liberación de estados. `VOICE_R42_CHECKPOINT.md` registra el corte anterior al despliegue. Se ejecuta auditoría final con sello renovado antes de publicar exclusivamente Preview.
+
+La misma carga de dependencias reales se aplica en los fixtures `test-voice-result-integrity.mjs` y `test-r34-audio-response.mjs`. Se conservan todas sus aserciones: errores diferenciados de red/audio, diez turnos, recuperación, texto y timeout. No se altera lógica de aprobación de pruebas.
+
+El banco `test-r32-open-conversation.mjs` carga ahora el lector real del nuevo transporte, el estado de silencio y las cabeceras de la respuesta simulada. Se mantienen todas sus aserciones de fallo audible, recuperación del segundo turno, texto independiente y prioridad del registro local.
+
+V328 exige además la expresión original completa de separación reglas/texto. Esa expresión se conserva sin cambios en `index-grupal.html`; la selección de la ruta vocal se aplica en una variable posterior y solo fuera de reglas. V321, V328 y la prueba dirigida del transporte pasan tras el ajuste.
+
+La primera auditoría detectó que el control V321 exige conservar explícita la ruta textual `window.gscgApiUrl("/api/universal-ai")`. Se conserva esa llamada en `index-grupal.html`, separada de la nueva ruta vocal; no se debilita ni cambia la prueba existente.
+
+Rama `preview/universal-voice-20260917`, derivada del borrador `8183f8d`. Regeneración requerida del sello `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` en carpeta de salida exclusiva y ejecución de los controles de publicación existentes. Sin cambios de funciones ajenas a comunicación universal; sin promoción a LAB/Maestro. La medición física de 11 s a ≤2.75 s permanece pendiente.
+
+## Investigación aislada R42: respuesta y primer audio en una petición · 17 septiembre 2026
+
+Actualización de evidencia en `VOICE_R42_CHECKPOINT.md`: las pruebas dirigidas también pasan con Node 22.23.2; controles documental y ROADMAP pasan. Publicación, auditoría integral y latencia física pendientes.
+
+Borrador funcional en `fix/universal-voice-latency-20260917`, base `ccffefb81e1957e40f8c7e9782c8ac18bd0488a7`. Solo comunicación universal: `api/universal-voice-response.js` compone los controladores existentes para respuestas de menos de 260 caracteres; `index-grupal.html` recibe texto antes del audio y evita una segunda petición de síntesis. R42, velocidad 0.90, respuestas largas, reglas, entrada de scores y persistencia se conservan.
+
+`test-universal-voice-response.mjs`: HTTP local real con proveedores y Audio simulados; dos turnos, texto antes de terminar audio, fallos de audio, respuesta larga, rechazo y transmisión incompleta. Comparación con la base: dos peticiones por turno pasan a una, excluyendo transcripción y telemetría. No prueba latencia real ni voz física. `test-r42-voice-configuration.mjs` conserva la configuración. `VOICE_R42_CHECKPOINT.md` guarda limitaciones, reproducción y pendientes. No se declara cumplida la meta 11 s → 2.75 s; no publicado ni integrado.
+
 
 ## V407-R29 · envío de Tarjeta Digital compatible con el toque de iPhone · 12 de septiembre de 2026
 

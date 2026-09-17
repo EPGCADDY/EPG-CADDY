@@ -2809,7 +2809,7 @@ function splitUniversalSpeechText(text){
   while(remaining.length>3500){const boundary=remaining.lastIndexOf(" ",3500),end=boundary>0?boundary:3500;chunks.push(remaining.slice(0,end));remaining=remaining.slice(end).trimStart()}
   if(remaining)chunks.push(remaining);return chunks;
 }
-async function speakAiUniversalText(text,{repeat=false}={}){
+async function speakAiUniversalText(text,{repeat=false,prefetchedSpeech=null}={}){
   const clean=String(text||"").trim();if(!clean)return false;showUniversalSpokenAnswer(clean);if(aiUniversalMuted)return false;
   let cancelPendingSpeech=null;
   if(Date.now()<cedarSpeechServerBlockedUntil){
@@ -2827,7 +2827,12 @@ async function speakAiUniversalText(text,{repeat=false}={}){
     player.gscCancelSpeech=()=>{plan.active=false;speechController.abort();plan.stopMonitor?.();for(const url of plan.urls)URL.revokeObjectURL(url);plan.urls=[]};
     cancelPendingSpeech=player.gscCancelSpeech;
     const chunks=splitUniversalSpeechText(clean);
-    const pending=chunks.map(async text=>{
+    const pending=chunks.map(async(text,index)=>{
+    if(index===0&&chunks.length===1&&prefetchedSpeech){
+      const ready=await universalVoiceDeadline(prefetchedSpeech,30000,speechController);
+      if(!ready.ok)throw new Error("CEDAR_TTS_UNAVAILABLE");
+      return ready;
+    }
     const response=await universalVoiceDeadline(fetch(window.gscgApiUrl("/api/voice-speech"),{signal:speechController.signal,method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({text,language:aiUniversalSpeechLanguage(clean)})}),30000,speechController);
     if(!response.ok){if(response.status===429||response.status===503)cedarSpeechServerBlockedUntil=Date.now()+CEDAR_SPEECH_RETRY_MS;throw new Error("CEDAR_TTS_UNAVAILABLE")}
     const deliveredVoice=String(response.headers?.get?.("X-GSCG-Voice")||"cedar").toLowerCase();
@@ -2942,6 +2947,33 @@ function aiUniversalAppContext(trafficOrigin=null){
     trafficOrigin:trafficOrigin?{latitude:trafficOrigin.latitude,longitude:trafficOrigin.longitude}:null
   };
 }
+async function readUniversalVoiceResponse(response){
+  if(!String(response.headers.get("Content-Type")||"").includes("application/x-ndjson"))return{result:await response.json(),prefetchedSpeech:null};
+  const reader=response.body.getReader(),decoder=new TextDecoder();let buffer="",finished=false;
+  const nextRecord=async()=>{
+    while(true){
+      const newline=buffer.indexOf("\n");
+      if(newline>=0){const line=buffer.slice(0,newline);buffer=buffer.slice(newline+1);if(line.trim())return JSON.parse(line);continue}
+      if(finished)throw new Error("UNIVERSAL_VOICE_STREAM_INCOMPLETE");
+      const part=await reader.read();finished=part.done;buffer+=decoder.decode(part.value,{stream:!part.done});
+      if(buffer.length>8000000)throw new Error("UNIVERSAL_VOICE_STREAM_TOO_LARGE");
+    }
+  };
+  let first;
+  try{first=await nextRecord();if(first.type!=="answer")throw new Error("UNIVERSAL_VOICE_STREAM_INVALID")}
+  catch(error){await reader.cancel().catch(()=>{});reader.releaseLock();throw error}
+  const prefetchedSpeech=(async()=>{
+    try{
+      const audio=await nextRecord();
+      if(audio.type!=="audio"||!audio.ok||typeof audio.audio!=="string")throw new Error("CEDAR_TTS_UNAVAILABLE");
+      const bytes=Uint8Array.from(atob(audio.audio),character=>character.charCodeAt(0));
+      if(!bytes.length)throw new Error("CEDAR_TTS_EMPTY");
+      return{ok:true,blob:new Blob([bytes],{type:"audio/mpeg"}),deliveredVoice:String(audio.voice||"s2.1-es-419")};
+    }catch(error){return{ok:false,error}}
+    finally{await reader.cancel().catch(()=>{});reader.releaseLock()}
+  })();
+  return{result:first.result,prefetchedSpeech};
+}
 async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
   if(aiUniversalTextBusy)return false;
   const input=$("aiUniversalInput"),query=String(forcedText||input.value||"").trim();if(!query){input.focus();return false}
@@ -2954,26 +2986,28 @@ async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
     const history=aiUniversalHistory.slice(0,-1).slice(-AI_UNIVERSAL_HISTORY_LIMIT).map(item=>({role:item.role,content:item.content}));
     const requestUniversal=async trafficOrigin=>{
       const endpoint=aiUniversalRulesMode?window.gscgApiUrl("/api/golf-rules"):window.gscgApiUrl("/api/universal-ai");
+      const requestEndpoint=!aiUniversalRulesMode&&voiceOnly&&!aiUniversalMuted?window.gscgApiUrl("/api/universal-voice-response"):endpoint;
       const options={method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,responseMode:voiceOnly?"voice":"text",appContext:aiUniversalAppContext(trafficOrigin)})};
-      let response=await universalVoiceDeadline(fetch(endpoint,options),35000,controller),result=await universalVoiceDeadline(response.json(),10000,controller);
+      let response=await universalVoiceDeadline(fetch(requestEndpoint,options),35000,controller);
+      let{result,prefetchedSpeech}=await universalVoiceDeadline(readUniversalVoiceResponse(response),10000,controller);
       if(!aiUniversalRulesMode&&response.status===503&&result?.retryable){
         aiUniversalSetState("RECUPERANDO CONEXIÓN CON AI UNIVERSAL ∞…",{busy:true});
         const waitSeconds=Math.min(5,Math.max(1,Number(response.headers.get("Retry-After")||1)));
         await new Promise(resolve=>setTimeout(resolve,waitSeconds*1000));
-        response=await universalVoiceDeadline(fetch(endpoint,options),35000,controller);result=await universalVoiceDeadline(response.json(),10000,controller);
+        response=await universalVoiceDeadline(fetch(requestEndpoint,options),35000,controller);({result,prefetchedSpeech}=await universalVoiceDeadline(readUniversalVoiceResponse(response),10000,controller));
       }
-      return{response,result};
+      return{response,result,prefetchedSpeech};
     };
-    let{response,result}=await requestUniversal(null);
+    let{response,result,prefetchedSpeech}=await requestUniversal(null);
     if(!aiUniversalRulesMode&&result?.needsCurrentLocation){
       aiUniversalSetState("SOLICITANDO UBICACIÓN PARA EL TRÁFICO…",{busy:true});
       const coordinates=await currentBrowserCoordinates();
       if(!coordinates){const locationError=new Error("TRAFFIC_LOCATION_DENIED");locationError.code="TRAFFIC_LOCATION_DENIED";throw locationError}
-      ({response,result}=await requestUniversal(coordinates));
+      ({response,result,prefetchedSpeech}=await requestUniversal(coordinates));
     }
     if(!response.ok||!result.ok){const requestError=new Error(result.error||"UNIVERSAL_AI_UNAVAILABLE");requestError.code=result.error||"UNIVERSAL_AI_UNAVAILABLE";throw requestError}
     if(aiUniversalRulesMode)saveOfficialGolfRuleForOffline(query,result);
-    aiUniversalRemember("assistant",result.answer,result.sources,{visible:!voiceOnly});aiUniversalSetState("LISTO · PUEDES CONTINUAR");if(voiceOnly)return await speakAiUniversalText(result.answer);return true;
+    aiUniversalRemember("assistant",result.answer,result.sources,{visible:!voiceOnly});aiUniversalSetState("LISTO · PUEDES CONTINUAR");if(voiceOnly)return await speakAiUniversalText(result.answer,{prefetchedSpeech});return true;
   }catch(error){
     if(error?.name==="AbortError"){if(!aiUniversalTextAbortController||aiUniversalTextAbortController===controller)aiUniversalSetState("DETENIDO · PUEDES CONTINUAR");return false}
     if(aiUniversalRulesMode){
