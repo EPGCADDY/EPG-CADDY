@@ -1,3 +1,11 @@
+## Voz sin texto · instrucción expresa 17 septiembre 2026
+
+IMG_4084.jpeg: propietario rechaza texto en respuesta por voz y reporta 9 s. Base local 844da54/remota 612f797. Corrección limitada a showUniversalSpokenAnswer: PTT oculta párrafo y tarjeta completa, evitando recuadro vacío; modo texto recupera ambos. Pruebas PTT y error de reproducción se actualizan al requisito explícito, sin cambiar captura, cálculo ni persistencia.
+
+Logs reales dpl_6Qsk1GGBkHymaj1JCjuUxGdsUpJd: ptt_1789686067695_3 answerMs=5189, firstAudioMs=8490, progressive=false; ptt_1789686093153_4 answerMs=6032, firstAudioMs=8893, progressive=false. El servidor entrega audio, pero eso no demuestra audibilidad física. Gateway sintetiza completo: 3301/2861 ms después del texto. No se afirma mejora de latencia; meta <3 s sigue incumplida. Acceso propietario bloquea la prueba autónoma completa; sin credenciales locales de proveedor. No reducir calidad cambiando modelo a ciegas. Rama Preview propia; Maestra/LAB intactos.
+
+Archivos: index-grupal.html; test-ptt-independent-turns.mjs; test-r34-audio-response.mjs; docs/quality/UNIVERSAL_PCM_20260917.md; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
+
 ## RC-PCM-REGRESSION · 17 septiembre 2026, 15:47 Guatemala
 
 IMG_4037.jpeg confirma fallo físico de voz y recuadro vacío en Preview 543e5b4/dpl_31zUPHQ8RSs4YwrGkYuw2iyZdLLo. Servidor generó 486 y 448 caracteres en 4692 y 4551 ms; no registró PCM completado. Causa de texto verificada: showUniversalSpokenAnswer ocultaba el párrafo con PTT. Error de configuración verificado: respaldo Gateway openai/gpt-4o-mini-tts ausente del catálogo https://ai-gateway.vercel.sh/v1/models consultado hoy, reincidencia RC-032; no hay log upstream previo para certificar que fue el único fallo físico. Escape: proveedor simulado aceptaba un modelo inexistente y la prueba PTT exigía ocultar el texto.

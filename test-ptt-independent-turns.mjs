@@ -90,9 +90,9 @@ await visual.press('setup');assert.equal(wraps.setupMicWrap.dataset.pttListening
 console.log('PASS installed PTT activates only the recording microphone and resets on cancel');
 const showSource=html.slice(html.indexOf('function showUniversalSpokenAnswer('),html.indexOf('async function universalVoiceDeadline('));
 const paragraph={},card={appendChild(){}};const showEnv={window:{GSCVoiceTurns:{enabled:true}},voiceContext:'setup',$:id=>id==='universalSpokenAnswerText'?paragraph:id==='universalSpokenAnswer'?card:{}};
-vm.runInNewContext(showSource,showEnv);showEnv.showUniversalSpokenAnswer('Respuesta en español');assert.equal(paragraph.hidden,false,'A voice answer must remain readable when playback fails');
-showEnv.window.GSCVoiceTurns.enabled=false;showEnv.showUniversalSpokenAnswer('Respuesta por texto');assert.equal(paragraph.hidden,false);
-console.log('PASS spoken PTT answer remains visible; other output mode retained');
+vm.runInNewContext(showSource,showEnv);showEnv.showUniversalSpokenAnswer('Respuesta en español');assert.equal(paragraph.hidden,true);assert.equal(card.hidden,true,'Voice-only output must not leave an empty card');
+showEnv.window.GSCVoiceTurns.enabled=false;showEnv.showUniversalSpokenAnswer('Respuesta por texto');assert.equal(paragraph.hidden,false);assert.equal(card.hidden,false);
+console.log('PASS PTT hides answer text and entire card; text mode restores both');
 
 let heldDispatches=0;
 const held=createController({...deps,Recorder:DelayedRecorder,transcribe:async()=>{heldDispatches++;return 'Hoyo 1 cuatro hoyo 2 cinco'}});
