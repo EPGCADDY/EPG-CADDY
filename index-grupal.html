@@ -2828,9 +2828,10 @@ async function speakAiUniversalText(text,{repeat=false,prefetchedSpeech=null}={}
     cancelPendingSpeech=player.gscCancelSpeech;
     const chunks=splitUniversalSpeechText(clean);
     const pending=chunks.map(async(text,index)=>{
-    if(index===0&&chunks.length===1&&prefetchedSpeech){
+    if(index===0&&prefetchedSpeech){
       const ready=await universalVoiceDeadline(prefetchedSpeech,30000,speechController);
       if(!ready.ok)throw new Error("CEDAR_TTS_UNAVAILABLE");
+      if(ready.text&&ready.text!==text)throw new Error("CEDAR_TTS_TEXT_MISMATCH");
       return ready;
     }
     const response=await universalVoiceDeadline(fetch(window.gscgApiUrl("/api/voice-speech"),{signal:speechController.signal,method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({text,language:aiUniversalSpeechLanguage(clean)})}),30000,speechController);
@@ -2968,7 +2969,7 @@ async function readUniversalVoiceResponse(response){
       if(audio.type!=="audio"||!audio.ok||typeof audio.audio!=="string")throw new Error("CEDAR_TTS_UNAVAILABLE");
       const bytes=Uint8Array.from(atob(audio.audio),character=>character.charCodeAt(0));
       if(!bytes.length)throw new Error("CEDAR_TTS_EMPTY");
-      return{ok:true,blob:new Blob([bytes],{type:"audio/mpeg"}),deliveredVoice:String(audio.voice||"s2.1-es-419")};
+      return{ok:true,blob:new Blob([bytes],{type:"audio/mpeg"}),deliveredVoice:String(audio.voice||"s2.1-es-419"),text:first.speechText||String(first.result?.answer||"").trim()};
     }catch(error){return{ok:false,error}}
     finally{await reader.cancel().catch(()=>{});reader.releaseLock()}
   })();

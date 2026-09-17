@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { createServer } from 'node:http';
+import {firstUniversalSpeechChunk} from './api/_lib/universal-response-stream.js';
 
 // Real HTTP streaming + actual transport code; answer and speech providers simulated.
 const html=readFileSync(new URL('./index-grupal.html',import.meta.url),'utf8');
@@ -13,12 +14,13 @@ let result={ok:true,answer:'En Manzanillo está despejado, con 28 grados.',sourc
 let answerStatus=200,speechFailure=false;
 const source=readFileSync(new URL('./api/universal-voice-response.js',import.meta.url),'utf8')
   .replace("import universalAnswer from './universal-ai.js';",'const universalAnswer=globalThis.__universalTransportTest.answer;')
-  .replace("import approvedSpeech from './voice-speech.js';",'const approvedSpeech=globalThis.__universalTransportTest.speech;');
+  .replace("import approvedSpeech from './voice-speech.js';",'const approvedSpeech=globalThis.__universalTransportTest.speech;')
+  .replace("'./_lib/universal-response-stream.js'",JSON.stringify(new URL('./api/_lib/universal-response-stream.js',import.meta.url).href));
 globalThis.__universalTransportTest={
   answer:async(req,res)=>{res.setHeader('Cache-Control','no-store');return res.status(answerStatus).json(result);},
   speech:async(req,res)=>{
     speechCalls++;
-    assert.equal(req.body.text,result.answer.trim());
+    assert.equal(req.body.text,firstUniversalSpeechChunk(result.answer.trim()));
     assert.equal(req.headers.origin,'https://example.test');
     signalSpeechStarted?.();
     await new Promise(resolve=>{releaseSpeech=resolve});
@@ -68,10 +70,12 @@ try{
   console.log('PASS: canceling a real HTTP request settles pending audio as failure.');
   const previousCalls=speechCalls;
   result={ok:true,answer:'Respuesta extensa. '.repeat(30),sources:[]};
-  const long=await readResponse(await request());assert.equal(long.prefetchedSpeech,null);assert.equal(speechCalls,previousCalls);
+  const long=await readResponse(await request());releaseSpeech();
+  const longAudio=await long.prefetchedSpeech;assert.equal(longAudio.ok,true);
+  assert.equal(longAudio.text,firstUniversalSpeechChunk(result.answer.trim()));assert.equal(speechCalls,previousCalls+1);
   answerStatus=403;result={ok:false,error:'ORIGIN_NOT_ALLOWED'};
-  const denied=await request();assert.equal(denied.status,403);assert.equal((await readResponse(denied)).result.error,'ORIGIN_NOT_ALLOWED');assert.equal(speechCalls,previousCalls);
-  console.log('PASS: long answers retain existing route; denied answers never synthesize.');
+  const denied=await request();assert.equal(denied.status,403);assert.equal((await readResponse(denied)).result.error,'ORIGIN_NOT_ALLOWED');assert.equal(speechCalls,previousCalls+1);
+  console.log('PASS: long answers prefetch only their first fragment; denied answers never synthesize.');
   const truncated=new Response('{"type":"answer","result":{"ok":true,"answer":"Texto"}}\n',{headers:{'Content-Type':'application/x-ndjson'}});
   assert.equal((await (await readResponse(truncated)).prefetchedSpeech).ok,false);
   console.log('PASS: truncated audio stream settles as failure. No real voice or iPhone latency claimed.');
@@ -95,6 +99,16 @@ try{
   assert.equal(playbackCount,2);assert.equal(extraSpeechRequests,0);
   context.aiUniversalTtsAudio.gscCancelSpeech();
   console.log('PASS actual client function with simulated Audio: both turns play; zero duplicate speech requests.');
+  const longText='Una oración inicial suficientemente larga para comprobar que el primer audio se reproduce una sola vez. '+'El resto continúa en el segundo fragmento. '.repeat(10);
+  const split=vm.runInContext('splitUniversalSpeechText',context),parts=split(longText.trim());
+  context.fetch=async(_url,options)=>{extraSpeechRequests++;assert.equal(JSON.parse(options.body).text,parts[1]);return new Response('SECOND_AUDIO',{headers:{'X-GSCG-Voice':'s2.1-es-419'}})};
+  context.monitorUniversalAudio=player=>{player.onended=()=>{};return()=>{}};
+  assert.equal(await speak(longText,{prefetchedSpeech:Promise.resolve({ok:true,text:parts[0],blob:new Blob(['FIRST_AUDIO']),deliveredVoice:'s2.1-es-419'})}),true);
+  context.aiUniversalTtsAudio.onended();await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(playbackCount,4);assert.equal(extraSpeechRequests,1);
+  context.aiUniversalTtsAudio.onended();context.aiUniversalTtsAudio.gscCancelSpeech();
+  console.log('PASS long answer client playback: first and remaining audio play in order; no repeated first fragment.');
+  extraSpeechRequests=0;context.fetch=async()=>{extraSpeechRequests++;throw new Error('Duplicate speech request')};
   const baselinePath=process.argv[2];
   if(baselinePath){
     const old=readFileSync(baselinePath,'utf8');
