@@ -398,3 +398,6 @@ Defecto: nueva medición onplaying sobrescrita por monitorUniversalAudio. Escape
 
 ## RC-VOICE-TWO-SPEAKERS · 17 septiembre 2026 UTC
 Propietario informa dos voces/intervenciones por pregunta. Síntesis de fragmentos independientes confirmada; duplicación semántica no confirmada. Escape: pruebas simuladas verificaban orden, no identidad audible. Corrección para respuestas <=4000 caracteres: una síntesis completa sin segundo fragmento. Prueba negativa/positiva en test-universal-voice-response.mjs, tres turnos de controlador en test-universal-stream-overlap.mjs. Por encima de 4000 se conserva ruta larga. Identidad fija entre preguntas e iPhone pendientes; no se declara solución integral ni rapidez.
+
+## RC-INVITE-PREVIEW y OP60 · 17 septiembre 2026
+Se pidió una invitación Preview al propietario sin comprobar que podía crearla. Captura IMG_3961 y logs reales confirman error400; UI borraba el motivo a1.8s. Prueba antes/después test-invite-error-visibility.mjs y mensajes persistentes diferencian creación/compartir. Diagnóstico backend sólo código/estado. Causa remota no demostrada; no presentar corrección de diagnóstico como arreglo integral. Se volvió a cerrar con acciones técnicas disponibles; la entrada documental no demuestra cumplimiento futuro. Sin cambios a bases compartidas, permisos o despliegues oficiales.

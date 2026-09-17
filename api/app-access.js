@@ -2,7 +2,12 @@ import { createGrant, accessCookie, guestModeCookie, clearAccessCookies, require
 import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 import { noStore, readJson } from "./_lib/http.js";
 
-function fail(res,error){const code=String(error?.code||"ACCESS_FAILED"),status=Number(error?.status)||({ACCOUNT_UNAUTHORIZED:401,OWNER_REQUIRED:403,OWNER_NOT_CONFIGURED:503}[code]||400);return res.status(status).json({ok:false,code})}
+function fail(res,error){
+  const raw=String(error?.code||"ACCESS_FAILED"),code=/^[A-Z][A-Z0-9_]{0,63}$/.test(raw)||/^[0-9A-Z]{5}$/.test(raw)?raw:"ACCESS_FAILED";
+  const status=Number(error?.status)||({ACCOUNT_UNAUTHORIZED:401,OWNER_REQUIRED:403,OWNER_NOT_CONFIGURED:503,DATABASE_NOT_CONFIGURED:503,ACCOUNT_AUTH_UNAVAILABLE:503}[code]||400);
+  console.warn("app-access-failure",JSON.stringify({code,status}));
+  return res.status(status).json({ok:false,code});
+}
 
 export default async function handler(req,res){
   noStore(res);if(handleAppPreflight(req,res))return;

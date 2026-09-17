@@ -146,3 +146,15 @@ Los eventos de voz consultados registraban `elapsedMs:0`, salvo la transcripció
 Para comprobar la meta y una corrección real hace falta ejecutar audio en un entorno autorizado con micrófono/proveedor y medir liberación del botón, fin de transcripción, respuesta disponible, audio disponible y comienzo de reproducción. Deben incluirse primera y segunda preguntas, voz audible y recuperación. La comprobación física de iPhone sigue separada.
 
 No se fusionó, publicó ni cambió LAB, Maestro, bases compartidas, Actualizar, registro, cálculos o persistencia. Los controles ejecutados posteriormente están enumerados arriba; no se declara resolución.
+
+## Invitación Preview: error visible y diagnóstico seguro · 17 septiembre 2026 UTC
+
+Base aislada local 6f874ba97edc861d7c9594a19c8bd5e40fcbf77b / remota 3c04d79526c4a64fac71a98145a4a0e2c3950f38. IMG_3961 muestra REINTENTAR. Logs reales dpl_EnscwwnxAwa8aPWwBBwDsT7ffZZw: POST /api/app-access 400 a 10:45:46, 10:45:50, 10:45:54, 10:46:08 y 10:46:18 UTC; GET estado 200. Causa interna del 400 aún desconocida; no afirmar falta de DATABASE_URL como hecho remoto. El conector no expone configuración de entorno. Invitación LAB sí abrió acceso temporal; no traslada sesión a Preview.
+
+Corrección limitada: index-grupal.html conserva mensaje visible de error junto al botón, distingue creación de fallo de compartir y deja el botón utilizable. api/app-access.js registra sólo código y estado, sin mensajes de proveedor, tokens, correo ni cookies; configuración ausente pasa a 503. No habilita acceso ni cambia permisos, TTL, canje, dominios ni base de datos. No arregla por sí sola el error remoto ni la meta de voz <3 s.
+
+Prueba test-invite-error-visibility.mjs: antes falla por mensaje vacío después del temporizador; después verifica fallos de configuración/autorización/compartir y éxito. Handler real con autenticación simulada y DATABASE_URL ausente; cero acceso a base o proveedor real. Prueba existente test-r18-owner-guest-24h-access.mjs preserva 24 h, un solo uso y propietario. Navegador real e iPhone pendientes. Rollback: commit base; no tocar LAB, Maestro, main, audio, Actualizar ni datos compartidos.
+
+Archivos: index-grupal.html; api/app-access.js; test-invite-error-visibility.mjs; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; VOICE_R42_CHECKPOINT.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json; CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md.
+
+Validación 17 septiembre 2026 06:45 Guatemala: auditoría maestra 145 paquetes PASS; test-invite-error-visibility.mjs PASS; acceso24h existente PASS. Prueba visual local bloqueada por navegador ERR_BLOCKED_BY_CLIENT en localhost; no se declara navegador PASS. Causa interna remota400 sigue pendiente.
