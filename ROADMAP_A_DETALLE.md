@@ -1,3 +1,13 @@
+## Respuesta oral sencilla con menor esfuerzo · 17 septiembre 2026 UTC
+
+Reporte: audio único confirmado por el propietario; promedio aproximado de ocho segundos, meta <3 s. Dos turnos medidos en Preview 24c9c6a: 6012 y 11225 ms desde liberación hasta playing. Texto proveedor 2152/4470 ms; TTS 1043/3631 ms; transcripción recibida a 2251/2062 ms. Fast/priority realmente servido. No se culpa al navegador ni se afirma objetivo logrado.
+
+api/universal-ai.js mantiene modelos, prioridad, herramientas y audio único. El perfil vocal breve/general usa effort none cuando no detecta señales de salud, legal/finanzas, seguridad o cálculo; los casos detectados conservan low, y análisis explícito/consultas largas mantienen medium. Texto conserva política anterior. Clasificación heurística, no certificación de complejidad. Instrucción oral pide respuesta sencilla normalmente de 20–45 palabras, pero exige ampliar para cubrir todas las partes, precisión, evidencia, seguridad o detalle solicitado; nunca corta texto ya generado y conserva límites de salida anteriores.
+
+Compatibilidad verificada en catálogo público https://ai-gateway.vercel.sh/v1/models: openai/gpt-5.6-sol admite none, low, medium, high, xhigh, max. Referencia https://vercel.com/docs/ai-gateway/models-and-providers/reasoning . No es una garantía de latencia. test-universal-voice-latency-profile.mjs verifica solicitudes reales del controlador con proveedor simulado, consultas generales, ecografía/dolor/crédito/cálculo y detalle; no certifica contenido generado ni rapidez física. Voz R42 .90, respuesta única <=4000, STT, Actualizar, cálculos y persistencia intactos. Base remota 24c9c6aa9a2bf5271a1e1e3b710c083dc491791a/local 7f2db28. Rollback: Preview inmutable 24c9c6a. Sólo Preview propia; aceptación física <3 s pendiente.
+
+Archivos: api/universal-ai.js; test-universal-voice-latency-profile.mjs; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; VOICE_R42_CHECKPOINT.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
+
 ## Una respuesta, un audio completo · 17 septiembre 2026 UTC
 
 Reporte físico del propietario: ocho segundos en dos preguntas; dos intervenciones con voces diferentes dentro de la misma pregunta. Registros de Preview dac8045: respuestas de 373 y 687 caracteres; ruta genera fragmentos separados. No se conserva pregunta ni audio, por lo que no está demostrado que el contenido se repita; sí está confirmado que la arquitectura pide dos síntesis independientes sin identidad fija.
