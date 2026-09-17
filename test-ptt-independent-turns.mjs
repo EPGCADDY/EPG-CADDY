@@ -152,3 +152,40 @@ console.log('PASS actual setup parser receives explicit slots and stores Jaime/M
  }
  console.log('PASS PTT adapter writes once and announces only a returned turn closure');
 }
+
+// Measure release-to-playback without including the user's speaking time.
+{
+  const {sanitizeVoiceHealth}=await import('./api/voice-health.js');
+  let tick=100;
+  const clock=env.GSCVoiceTurns.createLatencyClock(()=>tick);
+  const measured=createController({...deps,measure:(id,stage)=>clock.mark(id,stage),
+    transcribe:async()=>{tick+=1100;return 'Pregunta de prueba'},
+    dispatch:async()=>{tick+=4200}});
+  fail=false;
+  for(let i=0;i<2;i++){
+    await measured.press('setup');assert.equal(clock.snapshot(),null);
+    tick+=8000;time+=8000;measured.release();await flush();
+    const reading=clock.snapshot();
+    assert.equal(reading.recordingReadyMs,0);
+    assert.equal(reading.transcriptionReadyMs,1100);
+    assert.equal(reading.elapsedMs,5300,'Speaking time is excluded');
+    clock.mark(reading.turnId,'answerReadyMs');tick+=650;clock.mark(reading.turnId,'audioReadyMs');
+    tick+=250;clock.mark(reading.turnId,'audioPlayingMs');
+    clock.mark('ptt_0_0','audioPlayingMs');tick+=200;clock.mark(reading.turnId,'audioPlayingMs');
+    assert.equal(clock.snapshot().audioPlayingMs,6200,'Duplicate playing events cannot move the first onset');
+    const metrics=[];
+    const reporter=html.slice(html.indexOf('function reportVoiceHealth('),html.indexOf('\nfunction isGeneralConversationIntent('));
+    const ctx={window:{GSCVoiceTurns:{latency:clock},gscgApiUrl:x=>x},Date,voiceContext:'setup',voiceHealthTurn:0,voiceHealthTurnStartedAt:0,
+      VOICE_HEALTH_EVENTS:new Set(['browser_fallback_audio_playing']),fetch:async(url,options)=>metrics.push(JSON.parse(options.body))};
+    vm.runInNewContext(reporter,ctx);ctx.reportVoiceHealth('browser_fallback_audio_playing');
+    const safe=sanitizeVoiceHealth({...metrics[0],query:'private question',audio:'secret',latitude:14.6});
+    assert.equal(safe.elapsedMs,6400);assert.equal(safe.transcriptionReadyMs,1100);assert.equal(safe.audioPlayingMs,6200);
+    assert.equal(safe.turnId,reading.turnId);assert.equal(safe.query,undefined);assert.equal(safe.audio,undefined);assert.equal(safe.latitude,undefined);
+    assert.equal(measured.isBusy(),false);
+  }
+  const invalid=sanitizeVoiceHealth({event:'browser_fallback_audio_playing',turnId:'private text',audioPlayingMs:Infinity,answerReadyMs:-1});
+  assert.equal(invalid.turnId,undefined);assert.equal(invalid.audioPlayingMs,0);assert.equal(invalid.answerReadyMs,0);
+  const broken=createController({...deps,measure(){throw Error('metrics failed')}});
+  await broken.press('setup');time+=1000;broken.release();await flush();assert.equal(broken.isBusy(),false);
+  console.log('PASS measured controller + actual client reporter + server sanitizer: two turns, release origin, transcription, first playback, duplicate/stale events, privacy and non-blocking metrics failures. Simulated timing, not physical latency.');
+}

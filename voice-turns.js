@@ -1,8 +1,22 @@
 (function(root){
   'use strict';
   // One capture and one HTTP transcription per press. Never restart automatically.
+  function createLatencyClock(now=()=>root.performance?.now?.()??Date.now()){
+    let turnId='',releasedAt=null,stages={};
+    return {
+      mark(id,stage){
+        if(stage==='capture'){turnId=id;releasedAt=null;stages={};return}
+        if(id!==turnId)return;
+        if(stage==='release'){releasedAt=now();return}
+        if(releasedAt===null)return;
+        if(['recordingReadyMs','transcriptionReadyMs','answerReadyMs','audioReadyMs','audioPlayingMs'].includes(stage)&&stages[stage]===undefined)stages[stage]=Math.max(0,Math.round(now()-releasedAt));
+      },
+      snapshot(){return releasedAt===null?null:{turnId,elapsedMs:Math.max(0,Math.round(now()-releasedAt)),...stages}}
+    };
+  }
   function createController(deps){
     let current=null,sequence=0;
+    const measure=(turn,stage)=>{try{deps.measure?.(turn.id,stage)}catch{}};
     const state=(turn,value,message)=>{if(current===turn)deps.state(value,message,turn.context)};
     const stopTracks=turn=>{for(const track of turn.stream?.getTracks()||[])track.stop();turn.stream=null};
     const cancel=()=>{
@@ -14,6 +28,7 @@
     async function send(turn){
       clearTimeout(turn.timer);stopTracks(turn);
       if(current!==turn)return;
+      measure(turn,'recordingReadyMs');
       const blob=new Blob(turn.chunks,{type:turn.recorder.mimeType});turn.chunks=[];
       if(blob.size<512||(turn.stoppedAt??Date.now())-turn.started<250){state(turn,'error','GRABACIÓN MUY CORTA · MANTÉN PRESIONADO PARA HABLAR');current=null;deps.busy?.(false);return}
       if(blob.size>3_000_000){state(turn,'error','GRABACIÓN DEMASIADO GRANDE · HAZ UNA PREGUNTA MÁS CORTA');current=null;deps.busy?.(false);return}
@@ -22,6 +37,7 @@
       try{
         const text=await deps.transcribe(blob,turn.id,turn.abort.signal);
         if(current!==turn)return;
+        measure(turn,'transcriptionReadyMs');
         clearTimeout(turn.timer);
         if(!String(text||'').trim())throw Error('NO_TRANSCRIPT');
         state(turn,'responding','PREPARANDO RESPUESTA');
@@ -32,7 +48,7 @@
     }
     async function press(context){
       if(current)return false;
-      const turn={id:`ptt_${Date.now()}_${++sequence}`,context,held:true,abort:new AbortController(),chunks:[],stream:null,recorder:null,timer:null,started:0};current=turn;
+      const turn={id:`ptt_${Date.now()}_${++sequence}`,context,held:true,abort:new AbortController(),chunks:[],stream:null,recorder:null,timer:null,started:0};current=turn;measure(turn,'capture');
       try{
         deps.prepare(context);state(turn,'idle','PERMITE EL MICRÓFONO Y MANTÉN PRESIONADO');
         const stream=await deps.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
@@ -55,7 +71,7 @@
     function release(){
       const turn=current;if(!turn||!turn.held)return false;turn.held=false;
       if(!turn.recorder){cancel();return false}
-      turn.stoppedAt=Date.now();clearTimeout(turn.timer);deps.busy?.(true);state(turn,'responding','ENVIANDO GRABACIÓN');
+      turn.stoppedAt=Date.now();measure(turn,'release');clearTimeout(turn.timer);deps.busy?.(true);state(turn,'responding','ENVIANDO GRABACIÓN');
       turn.timer=setTimeout(()=>{if(current===turn){cancel();deps.state('error','NO SE PUDO CERRAR LA GRABACIÓN · VUELVE A PRESIONAR',turn.context)}},5000);
       try{turn.recorder.stop()}catch{cancel();return false}
       stopTracks(turn);return true;
@@ -63,7 +79,7 @@
     return {press,release,cancel,isBusy:()=>!!current};
   }
   function install(adapters){
-    const controller=createController({...adapters,state:(state,message,context)=>{
+    const controller=createController({...adapters,measure:(id,stage)=>root.GSCVoiceTurns.latency.mark(id,stage),state:(state,message,context)=>{
       for(const id of ['setupMicWrap','headerMicWrap']){
         const wrap=document.getElementById(id),active=state==='listening'&&id===(context==='setup'?'setupMicWrap':'headerMicWrap');
         wrap?.classList.toggle('active',active);
@@ -102,5 +118,5 @@
     }
     return controller;
   }
-  root.GSCVoiceTurns={enabled:true,createController,install};
+  root.GSCVoiceTurns={enabled:true,createController,createLatencyClock,latency:createLatencyClock(),install};
 })(typeof window!=='undefined'?window:globalThis);

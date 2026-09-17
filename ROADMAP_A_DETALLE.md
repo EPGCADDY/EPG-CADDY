@@ -1,3 +1,13 @@
+## Medición de extremo a extremo de voz · 17 septiembre 2026 UTC
+
+Base aislada: local 18efb2b / remoto 4be9da830e8f269871c4629c23bedecc915d427b. Reporte del propietario: 9 segundos. Logs del Preview 03:18 UTC: transcripción 1100 ms; respuesta 4183 ms; audio servidor 4842 ms, preparación solapada confirmada. Los eventos de navegador tenían elapsedMs:0; no permiten asignar la diferencia a red, autorización, captura o reproducción. No se presenta una causa no demostrada.
+
+Medición pasiva por turno con reloj monotónico: origen al soltar el botón; cierre de grabación, transcripción recibida, respuesta final recibida, primer audio disponible e inicio del evento playing. Se conserva el identificador PTT en cliente y registros del endpoint compuesto. Eventos duplicados no mueven el primer tiempo; nuevo turno borra el anterior; un fallo del observador no bloquea captura. El servidor sólo acepta campos acotados, sin texto, audio, ubicación ni credenciales. playing es evidencia del navegador, no prueba de sonido físico.
+
+Pruebas: test-ptt-independent-turns.mjs usa controlador, reportador cliente y saneador servidor reales con reloj/captura simulados; dos turnos y privacidad. test-universal-voice-response.mjs verifica marcas audioReady/playing sin duplicar peticiones. Auditoría integral requerida antes de publicar Preview. Sin cambios en voz R42, modelo, datos, Actualizar, scores ni persistencia. Esto corrige el diagnóstico; NO reduce por sí solo la latencia ni prueba ≤2.75 s. Acceso propietario y micrófono físico siguen fuera del entorno de pruebas. Rollback: Preview inmutable 4be9da8.
+
+Archivos: voice-turns.js; index-grupal.html; api/voice-health.js; api/universal-voice-response.js; test-ptt-independent-turns.mjs; test-universal-voice-response.mjs; VOICE_R42_CHECKPOINT.md; CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
+
 # ROADMAP A DETALLE
 
 ## Preparación simultánea de primer audio y texto · 17 septiembre 2026 UTC

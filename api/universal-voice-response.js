@@ -19,6 +19,7 @@ function captureResponse() {
 export default async function handler(req, res) {
   const startedAt = Date.now();
   const requestBody = typeof req.body === 'string' ? (() => { try { return JSON.parse(req.body); } catch { return {}; } })() : req.body;
+  const turnId=/^ptt_[0-9]{1,16}_[0-9]{1,8}$/.test(String(requestBody?.turnId||""))?requestBody.turnId:null;
   const synthesize = async text => {
     const speech = captureResponse(),speechStartedAt=Date.now();
     try { await approvedSpeech({ method: 'POST', headers: req.headers, body: { text, language: 'es-419' } }, speech); }
@@ -42,7 +43,7 @@ export default async function handler(req, res) {
   res.status(answer.statusCode);
   const result = answer.body;
   const text = typeof result?.answer === 'string' ? result.answer.trim() : '';
-  console.info('universal-answer-timing', JSON.stringify({ answerMs: answerReadyAt - startedAt,
+  console.info('universal-answer-timing', JSON.stringify({ turnId, answerMs: answerReadyAt - startedAt,
     status: answer.statusCode, answerChars: text.length, mode: requestBody?.responseMode === 'voice' ? 'voice' : 'text' }));
   // Send the full verified answer; only reuse audio that exactly matches its first fragment.
   if (req.method !== 'POST' || answer.statusCode !== 200 || !result?.ok ||
@@ -57,7 +58,7 @@ export default async function handler(req, res) {
   try {
     const reused=!!prefetched&&prefetched.text===speechText;
     const {speech,speechStartedAt}=await (reused?prefetched.promise:synthesize(speechText));
-    console.info('universal-voice-timing', JSON.stringify({ answerMs: answerReadyAt - startedAt,
+    console.info('universal-voice-timing', JSON.stringify({ turnId, answerMs: answerReadyAt - startedAt,
       speechMs: Date.now() - speechStartedAt, speechStartedMs:speechStartedAt-startedAt,
       prefetched:reused, audioAfterAnswerMs:Date.now()-answerReadyAt,
       totalMs: Date.now() - startedAt, speechStatus: speech.statusCode }));

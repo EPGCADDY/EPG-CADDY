@@ -80,14 +80,15 @@ try{
   assert.equal((await (await readResponse(truncated)).prefetchedSpeech).ok,false);
   console.log('PASS: truncated audio stream settles as failure. No real voice or iPhone latency claimed.');
   let playbackCount=0,extraSpeechRequests=0;
+  const onsetMarks=[];
   Object.assign(context,{
     AbortController,URL,aiUniversalMuted:false,cedarSpeechServerBlockedUntil:0,
     aiUniversalTtsAudio:null,aiUniversalTtsObjectUrl:null,voiceContext:'setup',
     aiUniversalSpeechPrimed:false,browserVoiceFollowupContext:null,CEDAR_SPEECH_RETRY_MS:1000,
-    Audio:class{pause(){}async play(){playbackCount++;this.onplay?.()}},
+    Audio:class{pause(){}async play(){playbackCount++;this.onplay?.();this.onplaying?.()}},
     showUniversalSpokenAnswer(){},aiUniversalSetState(){},setPrimaryVoiceMatrix(){},reportVoiceHealth(){},
     monitorUniversalAudio(){return()=>{}},universalVoiceDeadline:promise=>promise,
-    window:{gscgApiUrl:path=>path},aiUniversalSpeechLanguage:()=> 'es-419',
+    window:{gscgApiUrl:path=>path,GSCVoiceTurns:{latency:{snapshot:()=>({turnId:'ptt_1_1'}),mark:(id,stage)=>onsetMarks.push(stage)}}},aiUniversalSpeechLanguage:()=> 'es-419',
     speakAiUniversalMaleBrowserFallback:async()=>false,
     fetch:async()=>{extraSpeechRequests++;throw new Error('Duplicate speech request')}
   });
@@ -97,6 +98,7 @@ try{
     assert.equal(await speak(`Respuesta ${turn}.`,{prefetchedSpeech:Promise.resolve({ok:true,blob:new Blob(['SIMULATED_MP3']),deliveredVoice:'s2.1-es-419'})}),true);
   }
   assert.equal(playbackCount,2);assert.equal(extraSpeechRequests,0);
+  assert.deepEqual(onsetMarks,['audioReadyMs','audioPlayingMs','audioReadyMs','audioPlayingMs']);
   context.aiUniversalTtsAudio.gscCancelSpeech();
   console.log('PASS actual client function with simulated Audio: both turns play; zero duplicate speech requests.');
   const longText='Una oración inicial suficientemente larga para comprobar que el primer audio se reproduce una sola vez. '+'El resto continúa en el segundo fragmento. '.repeat(10);

@@ -2394,10 +2394,12 @@ function markConversationFollowupAudioStarted(eventResponseId=""){
   transition.followupAudioStarted=true;
   return true;
 }
-const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_restarted","browser_fallback_restart_failed","browser_fallback_error","browser_fallback_start_failed","browser_fallback_no_result_timeout","browser_fallback_retry_scheduled","browser_fallback_retry_started","browser_fallback_retry_failed","browser_fallback_transcript_ready","browser_fallback_query_answered","browser_fallback_query_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_round_progressive","browser_fallback_round_applied","browser_fallback_round_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_general_visible","browser_fallback_general_in_place","browser_fallback_speech_primed","browser_fallback_speech_started","browser_fallback_speech_failed","browser_fallback_speech_progress","browser_fallback_speech_ended","keyboard_dictation_setup_applied"]);
+const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_restarted","browser_fallback_restart_failed","browser_fallback_error","browser_fallback_start_failed","browser_fallback_no_result_timeout","browser_fallback_retry_scheduled","browser_fallback_retry_started","browser_fallback_retry_failed","browser_fallback_transcript_ready","browser_fallback_query_answered","browser_fallback_query_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_round_progressive","browser_fallback_round_applied","browser_fallback_round_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_general_visible","browser_fallback_general_in_place","browser_fallback_speech_primed","browser_fallback_speech_started","browser_fallback_speech_failed","browser_fallback_speech_progress","browser_fallback_audio_playing","browser_fallback_speech_ended","keyboard_dictation_setup_applied"]);
 function reportVoiceHealth(event,detail={}){
   if(!VOICE_HEALTH_EVENTS.has(event)||typeof fetch!=="function")return false;
   const payload={event,build:"V363",context:voiceContext==="setup"?"setup":"round",turn:Math.max(0,voiceHealthTurn),elapsedMs:voiceHealthTurnStartedAt?Math.max(0,Date.now()-voiceHealthTurnStartedAt):0};
+  const latency=typeof window!=="undefined"?window.GSCVoiceTurns?.latency?.snapshot():null;
+  if(latency)Object.assign(payload,latency);
   for(const key of ["tool","hasResponseId","followupCreated","followupAudioStarted","entryCount","scoreFailure","transportFailure"]){
     const value=detail?.[key];if(typeof value==="boolean"||typeof value==="number"||typeof value==="string")payload[key]=value;
   }
@@ -2826,6 +2828,7 @@ async function speakAiUniversalText(text,{repeat=false,prefetchedSpeech=null}={}
     const plan={active:true,index:-1,advancing:false,urls:[],stopMonitor:null};
     player.gscCancelSpeech=()=>{plan.active=false;speechController.abort();plan.stopMonitor?.();for(const url of plan.urls)URL.revokeObjectURL(url);plan.urls=[]};
     cancelPendingSpeech=player.gscCancelSpeech;
+    const latencyClock=typeof window!=="undefined"?window.GSCVoiceTurns?.latency:null,latencyTurn=latencyClock?.snapshot()?.turnId;
     const chunks=splitUniversalSpeechText(clean);
     const pending=chunks.map(async(text,index)=>{
     if(index===0&&prefetchedSpeech){
@@ -2846,6 +2849,7 @@ async function speakAiUniversalText(text,{repeat=false,prefetchedSpeech=null}={}
     plan.index=index;plan.advancing=false;plan.stopMonitor?.();
     if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(blob);
     plan.urls.push(aiUniversalTtsObjectUrl);player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.muted=false;player.volume=1;player.playbackRate=1;showUniversalSpokenAnswer(clean,player);
+    player.onplaying=()=>{if(plan.active&&index===0&&latencyTurn){latencyClock.mark(latencyTurn,"audioPlayingMs");reportVoiceHealth("browser_fallback_audio_playing")}};
     player.onplay=()=>{aiUniversalSpeechPrimed=true;if(index===0)reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(deliveredVoice==="browser"?"RESPONDIENDO EN VOZ · RESPALDO DEL DISPOSITIVO":"RESPONDIENDO EN VOZ · FISH AUDIO V378",{busy:true})};
     const stopAudioMonitor=monitorUniversalAudio(player);
     plan.stopMonitor=stopAudioMonitor;
@@ -2860,6 +2864,7 @@ async function speakAiUniversalText(text,{repeat=false,prefetchedSpeech=null}={}
     try{await universalVoiceDeadline(player.play(),6000)}catch(error){player.pause();throw error}return true;
     };
     const first=await pending[0];if(!plan.active)return false;if(!first.ok){player.gscCancelSpeech();throw first.error}
+    if(latencyTurn)latencyClock.mark(latencyTurn,"audioReadyMs");
     return await playChunk(first,0);
   }catch(error){
     cancelPendingSpeech?.();
@@ -2984,11 +2989,12 @@ async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
   aiUniversalTextBusy=true;$("sendAiUniversal").disabled=true;setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO",{busy:true});
   const controller=new AbortController();aiUniversalTextAbortController=controller;
   try{
+    const latencyClock=typeof window!=="undefined"?window.GSCVoiceTurns?.latency:null,latencyTurn=latencyClock?.snapshot()?.turnId;
     const history=aiUniversalHistory.slice(0,-1).slice(-AI_UNIVERSAL_HISTORY_LIMIT).map(item=>({role:item.role,content:item.content}));
     const requestUniversal=async trafficOrigin=>{
       const endpoint=aiUniversalRulesMode?window.gscgApiUrl("/api/golf-rules"):window.gscgApiUrl("/api/universal-ai");
       const requestEndpoint=!aiUniversalRulesMode&&voiceOnly&&!aiUniversalMuted?window.gscgApiUrl("/api/universal-voice-response"):endpoint;
-      const options={method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,responseMode:voiceOnly?"voice":"text",appContext:aiUniversalAppContext(trafficOrigin)})};
+      const options={method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,...(voiceOnly&&latencyTurn?{turnId:latencyTurn}:{}),responseMode:voiceOnly?"voice":"text",appContext:aiUniversalAppContext(trafficOrigin)})};
       let response=await universalVoiceDeadline(fetch(requestEndpoint,options),35000,controller);
       let{result,prefetchedSpeech}=await universalVoiceDeadline(readUniversalVoiceResponse(response),10000,controller);
       if(!aiUniversalRulesMode&&response.status===503&&result?.retryable){
@@ -3007,6 +3013,7 @@ async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
       ({response,result,prefetchedSpeech}=await requestUniversal(coordinates));
     }
     if(!response.ok||!result.ok){const requestError=new Error(result.error||"UNIVERSAL_AI_UNAVAILABLE");requestError.code=result.error||"UNIVERSAL_AI_UNAVAILABLE";throw requestError}
+    if(latencyTurn)latencyClock.mark(latencyTurn,"answerReadyMs");
     if(aiUniversalRulesMode)saveOfficialGolfRuleForOffline(query,result);
     aiUniversalRemember("assistant",result.answer,result.sources,{visible:!voiceOnly});aiUniversalSetState("LISTO · PUEDES CONTINUAR");if(voiceOnly)return await speakAiUniversalText(result.answer,{prefetchedSpeech});return true;
   }catch(error){
