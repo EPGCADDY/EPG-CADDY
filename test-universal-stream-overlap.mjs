@@ -27,6 +27,7 @@ globalThis.__overlapSpeech=async(req,res)=>{
 };
 const source=readFileSync(new URL('./api/universal-voice-response.js',import.meta.url),'utf8')
   .replace("'./universal-ai.js'",JSON.stringify(new URL('./api/universal-ai.js',import.meta.url).href))
+  .replace("'./_lib/universal-pcm.js'",JSON.stringify(new URL('./api/_lib/universal-pcm.js',import.meta.url).href))
   .replace("import approvedSpeech from './voice-speech.js';",'const approvedSpeech=globalThis.__overlapSpeech;')
   .replace("'./_lib/universal-response-stream.js'",JSON.stringify(new URL('./api/_lib/universal-response-stream.js',import.meta.url).href));
 const {default:handler}=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);

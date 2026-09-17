@@ -2,6 +2,7 @@ import {spawnSync} from 'node:child_process';
 
 for(const [command,args] of [
   [process.execPath,['scripts/project-quality-gate.mjs']],
+  [process.execPath,['test-universal-pcm.mjs']],
   [process.execPath,['test-lab-continuity-master.mjs']],
   [process.execPath,['test-v405-registration-clear-final-mobile.mjs']],
   [process.execPath,['Intocables/intocables-gate.mjs']],

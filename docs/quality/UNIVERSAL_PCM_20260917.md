@@ -1,0 +1,13 @@
+## Audio universal progresivo autorizado · 17 septiembre 2026
+
+Rama aislada preview/universal-stream-20260917; base local 416b7308dace8bc04b64c992a88b1202b41092c2, árbol equivalente remoto f908d2d. Propietario autoriza sustituir R42 para priorizar latencia. No se incorpora el trabajo pendiente de invitaciones. Una síntesis gpt-4o-mini-tts/onyx, velocidad 0.90, PCM 24 kHz; entrega incremental directa OpenAI. Respaldo Gateway con mismo modelo y voz es buffered, se informa progressive=false. No se cambia api/voice-speech.js, cálculos, persistencia, Actualizar ni Maestra/LAB.
+
+Cliente prepara AudioContext desde gesto, consume bloques con muestras partidas, cancela ante nueva escucha/Detener/silenciar/segundo plano, rechaza reproducción tardía y termina una sola vez. Rama activa sólo si AudioContext listo y respuesta <=4000 caracteres; clientes incompatibles y respuestas superiores conservan vía anterior. El texto completo se valida antes de sintetizar: demora LLM aún se suma. Marcas PCM significan programación de audio, no audibilidad física. No afirmar voces uniformes fuera de la nueva ruta.
+
+Pruebas reproducibles: node test-universal-pcm.mjs; node test-universal-voice-response.mjs; node test-universal-stream-overlap.mjs. Proveedores y AudioContext simulados, dos turnos de controlador/decodificador reales; prueba demuestra primeros bytes antes de EOF, no rapidez real. Navegador local bloqueado ERR_BLOCKED_BY_CLIENT; iPhone, proveedor real, menos de 3 segundos y reducción al 25% PENDIENTES. No hay claves de proveedor en entorno local. Rollback: commit base; Preview/Producción no declarados corregidos.
+
+Archivos: api/_lib/universal-pcm.js; api/universal-voice-response.js; universal-pcm-player.js; index-grupal.html; test-universal-pcm.mjs; test-universal-voice-response.mjs; test-universal-stream-overlap.mjs; audit-project.mjs; docs/quality/UNIVERSAL_PCM_20260917.md; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
+
+Referencia técnica: https://developers.openai.com/api/docs/guides/text-to-speech (PCM firmado 16 bits little-endian 24 kHz y streaming). Gateway: https://vercel.com/docs/ai-gateway/modalities/text-to-speech (respuesta base64 completa). No hay un parámetro que garantice 2 segundos. Última medición anterior registrada: texto 4264 ms, TTS 4970 ms; no corresponde a este candidato.
+
+Revisión pendiente: medir desde soltar micrófono al inicio audible, al menos dos preguntas consecutivas, muestra de clima/tráfico/general, comparar mismo dispositivo/red y registrar mediana/p95; confirmar timbre/acentos y recuperación. La conexión directa necesita OPENAI_API_KEY válida en el despliegue; no solicitar valores por chat. Respaldo Gateway no cumple streaming y debe medirse por separado.

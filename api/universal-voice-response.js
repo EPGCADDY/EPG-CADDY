@@ -1,5 +1,6 @@
 import universalAnswer from './universal-ai.js';
 import approvedSpeech from './voice-speech.js';
+import {streamUniversalPcm} from './_lib/universal-pcm.js';
 
 export const config = { maxDuration: 60 };
 
@@ -42,8 +43,25 @@ export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/x-ndjson; charset=utf-8');
   res.setHeader('Cache-Control', 'no-store, no-transform');
   const speechText=text;
-  res.write(JSON.stringify({ type: 'answer', result, speechText }) + '\n');
+  const pcm=requestBody?.progressiveAudio===true;
+  res.write(JSON.stringify({ type: 'answer', result, speechText, ...(pcm?{pcm:true}:{}) }) + '\n');
   res.flushHeaders?.();
+  if(pcm){
+    const controller=new AbortController(),abort=()=>controller.abort();
+    const timeout=setTimeout(abort,22500);res.on?.('close',abort);
+    let firstAudioMs=null;
+    try{
+      const delivery=await streamUniversalPcm(speechText,{signal:controller.signal,emit:record=>{
+        if(res.destroyed||controller.signal.aborted)throw new Error('ABORTED');
+        if(record.type==='audio_chunk'&&firstAudioMs===null)firstAudioMs=Date.now()-startedAt;
+        res.write(JSON.stringify(record)+'\n');
+      }});
+      console.info('universal-pcm-timing',JSON.stringify({turnId,answerMs:answerReadyAt-startedAt,firstAudioMs,totalMs:Date.now()-startedAt,...delivery}));
+    }catch{
+      if(!res.destroyed)res.write(JSON.stringify({type:'audio_error',code:'UNIVERSAL_PCM_UNAVAILABLE'})+'\n');
+    }finally{clearTimeout(timeout);res.off?.('close',abort);if(!res.destroyed)res.end()}
+    return;
+  }
   try {
     const {speech,speechStartedAt}=await synthesize(speechText);
     console.info('universal-voice-timing', JSON.stringify({ turnId, answerMs: answerReadyAt - startedAt,

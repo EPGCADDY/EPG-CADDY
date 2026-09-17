@@ -14,6 +14,7 @@ let result={ok:true,answer:'En Manzanillo está despejado, con 28 grados.',sourc
 let answerStatus=200,speechFailure=false;
 const source=readFileSync(new URL('./api/universal-voice-response.js',import.meta.url),'utf8')
   .replace("import universalAnswer from './universal-ai.js';",'const universalAnswer=globalThis.__universalTransportTest.answer;')
+  .replace("'./_lib/universal-pcm.js'",JSON.stringify(new URL('./api/_lib/universal-pcm.js',import.meta.url).href))
   .replace("import approvedSpeech from './voice-speech.js';",'const approvedSpeech=globalThis.__universalTransportTest.speech;')
   .replace("'./_lib/universal-response-stream.js'",JSON.stringify(new URL('./api/_lib/universal-response-stream.js',import.meta.url).href));
 globalThis.__universalTransportTest={

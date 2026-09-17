@@ -1,3 +1,13 @@
+## Audio universal progresivo autorizado · 17 septiembre 2026
+
+Rama aislada preview/universal-stream-20260917; base local 416b7308dace8bc04b64c992a88b1202b41092c2, árbol equivalente remoto f908d2d. Propietario autoriza sustituir R42 para priorizar latencia. No se incorpora el trabajo pendiente de invitaciones. Una síntesis gpt-4o-mini-tts/onyx, velocidad 0.90, PCM 24 kHz; entrega incremental directa OpenAI. Respaldo Gateway con mismo modelo y voz es buffered, se informa progressive=false. No se cambia api/voice-speech.js, cálculos, persistencia, Actualizar ni Maestra/LAB.
+
+Cliente prepara AudioContext desde gesto, consume bloques con muestras partidas, cancela ante nueva escucha/Detener/silenciar/segundo plano, rechaza reproducción tardía y termina una sola vez. Rama activa sólo si AudioContext listo y respuesta <=4000 caracteres; clientes incompatibles y respuestas superiores conservan vía anterior. El texto completo se valida antes de sintetizar: demora LLM aún se suma. Marcas PCM significan programación de audio, no audibilidad física. No afirmar voces uniformes fuera de la nueva ruta.
+
+Pruebas reproducibles: node test-universal-pcm.mjs; node test-universal-voice-response.mjs; node test-universal-stream-overlap.mjs. Proveedores y AudioContext simulados, dos turnos de controlador/decodificador reales; prueba demuestra primeros bytes antes de EOF, no rapidez real. Navegador local bloqueado ERR_BLOCKED_BY_CLIENT; iPhone, proveedor real, menos de 3 segundos y reducción al 25% PENDIENTES. No hay claves de proveedor en entorno local. Rollback: commit base; Preview/Producción no declarados corregidos.
+
+Archivos: api/_lib/universal-pcm.js; api/universal-voice-response.js; universal-pcm-player.js; index-grupal.html; test-universal-pcm.mjs; test-universal-voice-response.mjs; test-universal-stream-overlap.mjs; audit-project.mjs; docs/quality/UNIVERSAL_PCM_20260917.md; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
+
 ## Invitación Preview: error visible y diagnóstico seguro · 17 septiembre 2026 UTC
 
 Base aislada local 6f874ba97edc861d7c9594a19c8bd5e40fcbf77b / remota 3c04d79526c4a64fac71a98145a4a0e2c3950f38. IMG_3961 muestra REINTENTAR. Logs reales dpl_EnscwwnxAwa8aPWwBBwDsT7ffZZw: POST /api/app-access 400 a 10:45:46, 10:45:50, 10:45:54, 10:46:08 y 10:46:18 UTC; GET estado 200. Causa interna del 400 aún desconocida; no afirmar falta de DATABASE_URL como hecho remoto. El conector no expone configuración de entorno. Invitación LAB sí abrió acceso temporal; no traslada sesión a Preview.
