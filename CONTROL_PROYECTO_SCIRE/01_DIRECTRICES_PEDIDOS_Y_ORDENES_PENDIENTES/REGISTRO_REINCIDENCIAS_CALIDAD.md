@@ -385,3 +385,7 @@ Hecho: después de publicar el diagnóstico de tráfico se cerraron turnos aunqu
 - Escape: la optimización anterior eliminó una petición sólo en respuestas inferiores a 260 caracteres; respuestas largas conservaron la ruta previa y no emitían `universal-voice-timing`.
 - Control: `test-universal-voice-latency-profile.mjs` ejecuta caso anterior/nuevo y dos turnos del controlador con proveedor simulado, preservando análisis explícito, texto y seguridad médica. `universal-answer-timing` mide ahora todas las salidas del endpoint compuesto.
 - Estado: corrección local dirigida; validación real posterior y meta ≤2.75 segundos PENDIENTES; no se cambia voz R42 ni Producción.
+
+## RC-VOICE-LATENCY-13 · Mejora insuficiente · 17 septiembre 2026 UTC
+
+Reporte posterior del propietario: 13 s. Telemetría real de `fc2a0a2`: texto 8493 ms, 627 caracteres; transcripción 962 ms. Meta ≤2.75 s sigue abierta. Se prepara prioridad de servicio sólo para voz con el mismo modelo, herramientas y razonamiento; registrar nivel realmente servido evita confundir solicitud con resultado. Control `test-universal-voice-latency-profile.mjs`: prioridad de voz, texto intacto, modelos y respaldo conservados; no prueba rapidez física. Tarifa Fast superior, limitada al Preview. No se declara solución ni PASS de latencia sin nueva medición.

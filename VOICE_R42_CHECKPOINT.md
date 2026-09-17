@@ -1,3 +1,13 @@
+## Medición real 13 segundos y prioridad de voz · 17 septiembre 2026 UTC
+
+El propietario reporta 13 segundos en `fc2a0a27805bbc6a658239193069df5473c6f8ee`, deployment `dpl_9YBUFom2khBxcFhfqX3Aed6GvY5E`. Logs de 02:47:45 UTC: `universal-answer-timing` mide 8493 ms y 627 caracteres; transcripción 962 ms; inicio de voz registrado 02:47:58. La mejora respecto al reporte previo de 21 s no satisface ≤2.75 s; no se infiere el tiempo preciso de TTS de marcas de eventos.
+
+`api/universal-ai.js` solicita exclusivamente para respuestas vocales `service_tier: priority` en OpenAI directo y `providerOptions.gateway.speed: fast` en Gateway. Modelo, razonamiento, herramientas, instrucciones y lista de respaldos permanecen iguales. La documentación vigente del proveedor y su catálogo confirman Fast para `openai/gpt-5.6-sol`; Fast tiene tarifa superior (catálogo: 2× la tarifa estándar de ese modelo). Sólo se publica Preview; no se cambia facturación ni configuración de LAB/Maestro. El proveedor puede volver al nivel estándar si no hay capacidad rápida.
+
+Se añade registro `universal-provider-timing` sin texto: tiempo, modelo y prioridad/velocidad realmente informadas por el proveedor, o null si no las informa. `test-universal-voice-latency-profile.mjs` exige prioridad sólo en voz, política textual intacta, misma capacidad/modelos/razonamiento y respaldo automático conservado; proveedores simulados, no certifica rapidez real. `VOICE_R42_CHECKPOINT.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` registran el pendiente; se renueva `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` antes de auditoría.
+
+Referencias verificadas: https://vercel.com/docs/ai-gateway/models-and-providers/fast-mode y https://ai-gateway.vercel.sh/v1/models . Aceptación pendiente: medir misma pregunta, voz R42 0.90, dos turnos consecutivos y tiempo hasta primer sonido; no declarar ≤2.75 s por solicitar Fast. Rollback: Preview inmutable `fc2a0a2`. Mi navegador de pruebas permanece en acceso propietario y no tiene micrófono físico; no se solicita la contraseña por chat ni se eluden controles.
+
 ## Latencia reportada de 21 segundos · 17 septiembre 2026 UTC
 
 Prueba del propietario: «Cómo funciona el botox para el dorsal ancho?», 21 segundos. El Preview `9dda012bd88106e6368a42b397931def4571a56d`, deployment `dpl_AK9wBA89qCG5N6cXd55L5fr7Cheg`, recibió una consulta universal a las 02:34:01 UTC; transcripción registrada de 1357 ms; síntesis a las 02:34:19 e inicio de reproducción a las 02:34:23. La correlación temporal no certifica duración exacta por etapa ni revela el texto de la consulta.
