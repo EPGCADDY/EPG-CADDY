@@ -1,3 +1,11 @@
+## Reducción de espera: modelo de voz estándar · 17 septiembre 2026
+
+Orden: minimizar demora, entregar texto oculto y rapidez juntos, no pedir prueba sólo de texto. Base local 7e37474/remota e6ff600. api/universal-ai.js selecciona GPT-4.1 completo con prioridad/fast exclusivamente para voz estándar o breve; elimina reasoning incompatible con ese modelo. Profundidad medium/high conserva modelos anteriores. Herramientas web/clima/tráfico, instrucciones, contexto, límite de salida y modelos de respaldo se conservan. No se afirma equivalencia de calidad sin evaluación real. Catálogo oficial consultado https://ai-gateway.vercel.sh/v1/models incluye openai/gpt-4.1 y prioridad. No se cambia locutor ni captura.
+
+Prueba test-universal-voice-latency-profile.mjs ejecuta dos turnos reales de controlador con proveedor simulado, selección directa/Gateway, parámetros compatibles, seguridad médica textual y análisis profundo intacto. No certifica exactitud clínica del modelo ni reducción real. Base medida 8490/8893 ms hasta primeros bytes de audio servidor; nueva medición e iPhone pendientes. Este cambio sí afecta generación; no se declara meta <3 s cumplida. Ruta Gateway de voz sigue buffered.
+
+Archivos: api/universal-ai.js; test-universal-voice-latency-profile.mjs; docs/quality/UNIVERSAL_PCM_20260917.md; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
+
 ## Voz sin texto · instrucción expresa 17 septiembre 2026
 
 IMG_4084.jpeg: propietario rechaza texto en respuesta por voz y reporta 9 s. Base local 844da54/remota 612f797. Corrección limitada a showUniversalSpokenAnswer: PTT oculta párrafo y tarjeta completa, evitando recuadro vacío; modo texto recupera ambos. Pruebas PTT y error de reproducción se actualizan al requisito explícito, sin cambiar captura, cálculo ni persistencia.

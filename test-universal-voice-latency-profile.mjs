@@ -40,8 +40,8 @@ try{
   }
   assert.equal(requests.length,2);
   for(const [index,body] of requests.entries()){
-    assert.equal(body.service_tier,'priority','Spoken requests use priority without changing model or reasoning');
-    assert.equal(body.reasoning.effort,index===0?'low':'none');assert.equal(body.max_output_tokens,700);
+    assert.equal(body.service_tier,'priority','Spoken requests use priority with the selected full model');
+    assert.equal(body.model,'gpt-4.1');assert.equal(body.reasoning,undefined,'Non-reasoning model must not receive an unsupported parameter');assert.equal(body.max_output_tokens,700);
     assert.match(body.instructions,/20 a 45 palabras/);assert.match(body.instructions,/NO es un límite/);assert.match(body.instructions,/Nunca recortes/);
     assert.equal(body.tool_choice,'auto');
     assert.ok(body.tools.some(tool=>tool.type==='web_search'));
@@ -58,18 +58,18 @@ for(const latencySensitive of [true,false]){
   const payload={model:'openai/gpt-5.6-sol',output:[],provider_metadata:{gateway:{routing:{speed:'fast'}}}};
   const direct=await requestUniversalResponse({input:query,reasoning:{effort:'low'}},{apiKey:'simulated',latencySensitive,
     fetchImpl:async(_url,options)=>{directBody=JSON.parse(options.body);return{ok:true,status:200,json:async()=>payload}}});
-  assert.equal(direct.ok,true);assert.equal(directBody.model,'gpt-5.6');
+  assert.equal(direct.ok,true);assert.equal(directBody.model,latencySensitive?'gpt-4.1':'gpt-5.6');
   assert.equal(directBody.service_tier,latencySensitive?'priority':undefined);
   const gateway=await requestUniversalResponse({input:query,reasoning:{effort:'low'}},{apiKey:'',gatewayToken:'simulated',latencySensitive,
     fetchImpl:async(_url,options)=>{gatewayBody=JSON.parse(options.body);return{ok:true,status:200,json:async()=>payload}}});
-  assert.equal(gateway.ok,true);assert.equal(gatewayBody.model,'openai/gpt-5.6-sol');
+  assert.equal(gateway.ok,true);assert.equal(gatewayBody.model,latencySensitive?'openai/gpt-4.1':'openai/gpt-5.6-sol');
   assert.equal(gatewayBody.providerOptions.gateway.speed,latencySensitive?'fast':undefined);
   assert.equal(gatewayBody.providerOptions.gateway.allowFallbackFromFast,undefined,'Retain documented automatic base-tier fallback');
-  assert.deepEqual(gatewayBody.providerOptions.gateway.models,['openai/gpt-5.6-sol','anthropic/claude-opus-5','google/gemini-3.1-pro-preview']);
-  assert.deepEqual(gatewayBody.reasoning,{effort:'low'});
+  assert.deepEqual(gatewayBody.providerOptions.gateway.models,[...(latencySensitive?['openai/gpt-4.1']:[]),'openai/gpt-5.6-sol','anthropic/claude-opus-5','google/gemini-3.1-pro-preview']);
+  assert.deepEqual(gatewayBody.reasoning,latencySensitive?undefined:{effort:'low'});
 }
-console.log('PASS: voice requests priority/fast; text keeps its serving policy; models and gateway fallbacks unchanged; explicit request reasoning preserved.');
-console.log('PASS: two actual handler turns with simulated provider use low or none with 700 tokens; explicit detail, risk, text policy and medical safeguards preserved.');
+console.log('PASS: voice requests priority/fast; text keeps its serving policy; standard voice selects GPT-4.1, existing fallbacks retained, text unchanged.');
+console.log('PASS: two actual handler turns with simulated provider use GPT-4.1 with 700 tokens; explicit detail, risk, text policy and medical safeguards preserved.');
 console.log('No real provider timing, medical answer quality or physical iPhone audio is certified by this test.');
 
 for(const question of ['Cuál es la capital de Italia?','Quién escribió Don Quijote?','Qué es una nube?']){
@@ -79,3 +79,6 @@ for(const question of ['Cuál es la capital de Italia?','Quién escribió Don Qu
 for(const question of ['Dónde hacen una ecografía en Guatemala?','Qué hago para el dolor del dorsal ancho?','Cómo funciona una tarjeta de crédito?','Calcula 15 por ciento de 80','Qué medicamento uso?','Cómo funciona una inversión?'])assert.notEqual(profile(question,{responseMode:'voice'}).reasoningEffort,'none',question);
 assert.equal(profile('Analiza con detalle las causas',{responseMode:'voice'}).reasoningEffort,'medium');
 console.log('PASS simple voice questions use supported none; medical/financial/numeric/deep and text reasoning preserved; spoken brevity is not truncation.');
+
+for(const latencySensitive of [true,false]){let sent;await requestUniversalResponse({input:query,reasoning:{effort:'medium'}},{apiKey:'',gatewayToken:'simulated',latencySensitive,fetchImpl:async(_url,options)=>{sent=JSON.parse(options.body);return{ok:true,status:200,json:async()=>({output:[]})}}});assert.equal(sent.model,'openai/gpt-5.6-sol');assert.equal(sent.reasoning.effort,'medium');}
+console.log('PASS explicit deep analysis retains original model and medium reasoning for voice and text.');

@@ -53,10 +53,15 @@ function logUniversalProviderTiming(payload,{startedAt,model,gateway=false}){
 
 export async function requestUniversalResponse(body,{apiKey,gatewayToken,deadlineMs=Date.now()+UNIVERSAL_TIMEOUT_MS,fetchImpl=globalThis.fetch,sleepImpl=ms=>new Promise(resolve=>setTimeout(resolve,ms)),label="universal ai",latencySensitive=false,onTextDelta}={}){
   const startedAt=Date.now();
+  // Spoken standard turns favor a low-latency full model; explicit deep analysis keeps the existing models.
+  const fastVoice=latencySensitive&&!['medium','high','xhigh'].includes(body.reasoning?.effort);
+  const attempts=fastVoice?[{model:'gpt-4.1',delayMs:0},...OPENAI_ATTEMPTS]:OPENAI_ATTEMPTS;
+  const gatewayModels=fastVoice?['openai/gpt-4.1',...GATEWAY_MODELS]:GATEWAY_MODELS;
+  const payloadFor=model=>{const payload={...body,model};if(model==='gpt-4.1'||model==='openai/gpt-4.1')delete payload.reasoning;return payload};
   if(typeof onTextDelta==="function")body={...body,stream:true};
   let lastFailure={ok:false,status:503,retryable:true,retryAfterMs:1_000,error:"UNIVERSAL_AI_UNAVAILABLE"};
-  for(let index=0;apiKey&&index<OPENAI_ATTEMPTS.length;index++){
-    const attempt=OPENAI_ATTEMPTS[index];
+  for(let index=0;apiKey&&index<attempts.length;index++){
+    const attempt=attempts[index];
     const waitMs=index===0?0:(lastFailure.retryAfterMs??attempt.delayMs);
     if(waitMs>0){
       if(Date.now()+waitMs+500>=deadlineMs)break;
@@ -71,7 +76,7 @@ export async function requestUniversalResponse(body,{apiKey,gatewayToken,deadlin
         method:"POST",
         signal:controller.signal,
         headers:{Authorization:`Bearer ${apiKey}`,"Content-Type":"application/json","OpenAI-Safety-Identifier":"golf-score-card-guatemala-ai-universal-infinity"},
-        body:JSON.stringify({...body,model:attempt.model,...(latencySensitive?{service_tier:"priority"}:{})})
+        body:JSON.stringify({...payloadFor(attempt.model),...(latencySensitive?{service_tier:"priority"}:{})})
       });
       payload=await readUniversalProviderResponse(response,onTextDelta);
     }catch(error){
@@ -98,12 +103,12 @@ export async function requestUniversalResponse(body,{apiKey,gatewayToken,deadlin
         method:"POST",
         signal:controller.signal,
         headers:{Authorization:`Bearer ${gatewayToken}`,"Content-Type":"application/json"},
-        body:JSON.stringify({...body,model:GATEWAY_MODELS[0],providerOptions:{gateway:{models:GATEWAY_MODELS,tags:["feature:ai-universal","env:preview"],...(latencySensitive?{speed:"fast"}:{})}}})
+        body:JSON.stringify({...payloadFor(gatewayModels[0]),providerOptions:{gateway:{models:gatewayModels,tags:["feature:ai-universal","env:preview"],...(latencySensitive?{speed:"fast"}:{})}}})
       });
       const payload=await readUniversalProviderResponse(response,onTextDelta);
       if(response.ok){
-        if(latencySensitive)logUniversalProviderTiming(payload,{startedAt,model:GATEWAY_MODELS[0],gateway:true});
-        return{ok:true,status:response.status||200,payload,model:String(payload?.model||GATEWAY_MODELS[0]),attempts:OPENAI_ATTEMPTS.length+1,gateway:true};
+        if(latencySensitive)logUniversalProviderTiming(payload,{startedAt,model:gatewayModels[0],gateway:true});
+        return{ok:true,status:response.status||200,payload,model:String(payload?.model||gatewayModels[0]),attempts:attempts.length+1,gateway:true};
       }
       const status=Number(response.status)||502,providerCode=upstreamErrorCode(payload),retryable=OPENAI_RETRYABLE_STATUS.has(status)||status===402;
       console.warn(`${label} gateway fallback`,JSON.stringify({status,providerCode,retryable,requestId:String(response?.headers?.get?.("x-request-id")||"").slice(0,120)||null}));
