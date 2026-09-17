@@ -395,3 +395,6 @@ Se volvió a cerrar el turno con la medición cliente pendiente. Incumplimiento 
 
 ## RC-VOICE-TIMING-PLAYING · 17 septiembre 2026 UTC
 Defecto: nueva medición onplaying sobrescrita por monitorUniversalAudio. Escape: prueba usaba monitor simulado que no asignaba el evento. Control permanente: test-universal-voice-response.mjs ejecuta monitor real; reproducción negativa pierde las dos marcas de inicio, positiva conserva monitor y medición en dos turnos y respuesta larga. Sólo audio/proveedores simulados. Corrección de diagnóstico, no de rapidez ni identidad vocal.
+
+## RC-VOICE-TWO-SPEAKERS · 17 septiembre 2026 UTC
+Propietario informa dos voces/intervenciones por pregunta. Síntesis de fragmentos independientes confirmada; duplicación semántica no confirmada. Escape: pruebas simuladas verificaban orden, no identidad audible. Corrección para respuestas <=4000 caracteres: una síntesis completa sin segundo fragmento. Prueba negativa/positiva en test-universal-voice-response.mjs, tres turnos de controlador en test-universal-stream-overlap.mjs. Por encima de 4000 se conserva ruta larga. Identidad fija entre preguntas e iPhone pendientes; no se declara solución integral ni rapidez.

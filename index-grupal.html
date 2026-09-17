@@ -2829,7 +2829,7 @@ async function speakAiUniversalText(text,{repeat=false,prefetchedSpeech=null}={}
     player.gscCancelSpeech=()=>{plan.active=false;speechController.abort();plan.stopMonitor?.();for(const url of plan.urls)URL.revokeObjectURL(url);plan.urls=[]};
     cancelPendingSpeech=player.gscCancelSpeech;
     const latencyClock=typeof window!=="undefined"?window.GSCVoiceTurns?.latency:null,latencyTurn=latencyClock?.snapshot()?.turnId;
-    const chunks=splitUniversalSpeechText(clean);
+    const chunks=prefetchedSpeech&&clean.length<=4000?[clean]:splitUniversalSpeechText(clean);
     const pending=chunks.map(async(text,index)=>{
     if(index===0&&prefetchedSpeech){
       const ready=await universalVoiceDeadline(prefetchedSpeech,30000,speechController);

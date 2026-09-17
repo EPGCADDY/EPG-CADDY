@@ -20,7 +20,7 @@ globalThis.__universalTransportTest={
   answer:async(req,res)=>{res.setHeader('Cache-Control','no-store');return res.status(answerStatus).json(result);},
   speech:async(req,res)=>{
     speechCalls++;
-    assert.equal(req.body.text,firstUniversalSpeechChunk(result.answer.trim()));
+    assert.equal(req.body.text,result.answer.trim());
     assert.equal(req.headers.origin,'https://example.test');
     signalSpeechStarted?.();
     await new Promise(resolve=>{releaseSpeech=resolve});
@@ -72,10 +72,18 @@ try{
   result={ok:true,answer:'Respuesta extensa. '.repeat(30),sources:[]};
   const long=await readResponse(await request());releaseSpeech();
   const longAudio=await long.prefetchedSpeech;assert.equal(longAudio.ok,true);
-  assert.equal(longAudio.text,firstUniversalSpeechChunk(result.answer.trim()));assert.equal(speechCalls,previousCalls+1);
+  assert.equal(longAudio.text,result.answer.trim());assert.equal(speechCalls,previousCalls+1);
+  result={ok:true,answer:'a'.repeat(4000),sources:[]};
+  const atLimit=await readResponse(await request());releaseSpeech();
+  assert.equal((await atLimit.prefetchedSpeech).text,result.answer);
+  const boundedCalls=speechCalls;
+  result={ok:true,answer:'a'.repeat(4001),sources:[]};
+  const overLimit=await readResponse(await request());
+  assert.equal(overLimit.prefetchedSpeech,null);assert.equal(overLimit.result.answer.length,4001);assert.equal(speechCalls,boundedCalls);
+  console.log('PASS 4000 characters use one complete synthesis; 4001 preserve complete text and existing long-answer fallback without truncation.');
   answerStatus=403;result={ok:false,error:'ORIGIN_NOT_ALLOWED'};
-  const denied=await request();assert.equal(denied.status,403);assert.equal((await readResponse(denied)).result.error,'ORIGIN_NOT_ALLOWED');assert.equal(speechCalls,previousCalls+1);
-  console.log('PASS: long answers prefetch only their first fragment; denied answers never synthesize.');
+  const denied=await request();assert.equal(denied.status,403);assert.equal((await readResponse(denied)).result.error,'ORIGIN_NOT_ALLOWED');assert.equal(speechCalls,boundedCalls);
+  console.log('PASS: one complete audio for long answers; denied answers never synthesize.');
   const truncated=new Response('{"type":"answer","result":{"ok":true,"answer":"Texto"}}\n',{headers:{'Content-Type':'application/x-ndjson'}});
   assert.equal((await (await readResponse(truncated)).prefetchedSpeech).ok,false);
   console.log('PASS: truncated audio stream settles as failure. No real voice or iPhone latency claimed.');
@@ -104,13 +112,13 @@ try{
   console.log('PASS actual client function with simulated Audio: both turns play; zero duplicate speech requests.');
   const longText='Una oración inicial suficientemente larga para comprobar que el primer audio se reproduce una sola vez. '+'El resto continúa en el segundo fragmento. '.repeat(10);
   const split=vm.runInContext('splitUniversalSpeechText',context),parts=split(longText.trim());
-  context.fetch=async(_url,options)=>{extraSpeechRequests++;assert.equal(JSON.parse(options.body).text,parts[1]);return new Response('SECOND_AUDIO',{headers:{'X-GSCG-Voice':'s2.1-es-419'}})};
+  context.fetch=async()=>{extraSpeechRequests++;throw new Error('A complete answer must not request another voice')};
 
-  assert.equal(await speak(longText,{prefetchedSpeech:Promise.resolve({ok:true,text:parts[0],blob:new Blob(['FIRST_AUDIO']),deliveredVoice:'s2.1-es-419'})}),true);
+  assert.equal(await speak(longText,{prefetchedSpeech:Promise.resolve({ok:true,text:longText.trim(),blob:new Blob(['COMPLETE_AUDIO']),deliveredVoice:'s2.1-es-419'})}),true);
   context.aiUniversalTtsAudio.onended();await new Promise(resolve=>setImmediate(resolve));
-  assert.equal(playbackCount,4);assert.equal(extraSpeechRequests,1);
+  assert.equal(playbackCount,3);assert.equal(extraSpeechRequests,0);
   context.aiUniversalTtsAudio.onended();context.aiUniversalTtsAudio.gscCancelSpeech();
-  console.log('PASS long answer client playback: first and remaining audio play in order; no repeated first fragment.');
+  console.log('PASS long answer client playback: one complete audio, zero second TTS request, repeated end event never starts another audio.');
   extraSpeechRequests=0;context.fetch=async()=>{extraSpeechRequests++;throw new Error('Duplicate speech request')};
   const baselinePath=process.argv[2];
   if(baselinePath){

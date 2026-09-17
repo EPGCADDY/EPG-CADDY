@@ -33,31 +33,26 @@ const {default:handler}=await import(`data:text/javascript;base64,${Buffer.from(
 delete globalThis.__overlapSpeech;
 try{
   for(let turn=0;turn<3;turn++){
-    let streamController,modelCompleted=false;
-    const actualText=turn===2?'El texto definitivo tiene una explicación distinta de la anticipada. '+sample:sample;
+    let finishModel;
+    const actualText=turn===2?'El texto definitivo conserva toda la explicación. '+sample:sample;
     const callsBefore=spoken.length;
     const started=new Promise(resolve=>{speechStarted=resolve});
     globalThis.fetch=async(_url,options)=>{
-      assert.equal(JSON.parse(options.body).stream,true);
-      return new Response(new ReadableStream({start(c){streamController=c;c.enqueue(event({type:'response.output_text.delta',delta:sample.slice(0,320)}))}}),{headers:{'content-type':'text/event-stream'}});
+      assert.notEqual(JSON.parse(options.body).stream,true);
+      return await new Promise(resolve=>{finishModel=()=>resolve(new Response(JSON.stringify({output:[{type:'message',content:[{type:'output_text',text:actualText}]}]}),{headers:{'content-type':'application/json'}}))});
     };
     const records=[];
     const res={headers:{},setHeader(k,v){this.headers[k]=v},status(code){this.statusCode=code;return this},write(value){records.push(JSON.parse(value))},flushHeaders(){},json(body){this.body=body},end(){this.ended=true}};
     const pending=handler({method:'POST',headers:{host:'epg-caddy.vercel.app'},body:{query:'Cómo funciona una conversación?',responseMode:'voice'}},res);
-    await started;
-    assert.equal(modelCompleted,false);assert.equal(records.length,0,'Never expose provisional text or speech');
-    releaseSpeech();
-    let replacementStarted;
-    if(turn===2)replacementStarted=new Promise(resolve=>{speechStarted=resolve});
-    modelCompleted=true;
-    streamController.enqueue(event({type:'response.completed',response:{output:[{type:'message',content:[{type:'output_text',text:actualText}]}]}}));streamController.close();
-    if(replacementStarted){await replacementStarted;releaseSpeech()}
-    await pending;
-    assert.equal(records[0].result.answer,actualText.trim());assert.equal(records[1].ok,true);
-    assert.equal(Buffer.from(records[1].audio,'base64').toString(),split(actualText.trim())[0]);
-    assert.equal(spoken.length,callsBefore+(turn===2?2:1),'Reuse only an exact prefix; replace a mismatched provisional fragment');
+    for(let i=0;i<50&&!finishModel;i++)await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(typeof finishModel,'function');assert.equal(spoken.length,callsBefore,'No speculative fragment may synthesize a second speaker');
+    finishModel();await started;
+    assert.equal(records[0].result.answer,actualText.trim());releaseSpeech();await pending;
+    assert.equal(records[1].ok,true);
+    assert.equal(Buffer.from(records[1].audio,'base64').toString(),actualText.trim());
+    assert.equal(spoken.length,callsBefore+1,'Exactly one synthesis includes the entire answer');
   }
-  console.log('PASS: two real handler turns with simulated streaming providers start synthesis BEFORE final text, send only verified audio and synthesize each first fragment once.');
+  console.log('PASS: three real handler turns with simulated providers synthesize the entire verified answer exactly once; no speculative or second speaker request.');
 }finally{
   globalThis.fetch=originalFetch;
   if(originalKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=originalKey;
