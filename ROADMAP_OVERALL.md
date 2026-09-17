@@ -1,5 +1,15 @@
 # ROADMAP OVERALL
 
+## Latencia reportada de 21 segundos · 17 septiembre 2026 UTC
+
+Prueba del propietario: «Cómo funciona el botox para el dorsal ancho?», 21 segundos. El Preview `9dda012bd88106e6368a42b397931def4571a56d`, deployment `dpl_AK9wBA89qCG5N6cXd55L5fr7Cheg`, recibió una consulta universal a las 02:34:01 UTC; transcripción registrada de 1357 ms; síntesis a las 02:34:19 e inicio de reproducción a las 02:34:23. La correlación temporal no certifica duración exacta por etapa ni revela el texto de la consulta.
+
+Hallazgo reproducible: la frase «cómo funciona» seleccionaba deep/medium aun en una pregunta breve por voz. `api/universal-ai.js` conserva el perfil textual y las peticiones explícitas de detalle, riesgos, comparación y análisis; sólo impide que esa frase por sí sola fuerce profundidad en voz. El caso exacto pasa de medium/1600 a low/700 tokens máximos en la petición vocal. Modelo, herramientas web, precauciones médicas y órdenes locales permanecen iguales. Un límite de tokens menor no demuestra un tiempo objetivo.
+
+`api/universal-voice-response.js` agrega `universal-answer-timing` también para respuestas largas: milisegundos hasta texto, estado HTTP, número de caracteres y modo; sin registrar contenido ni datos personales. `test-universal-voice-latency-profile.mjs` compara el clasificador anterior y el nuevo, y ejecuta dos turnos reales del controlador con proveedor simulado. El transporte HTTP local y los contratos de calidad mantienen sus bancos existentes.
+
+`VOICE_R42_CHECKPOINT.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` conservan evidencia y límites. Se renueva `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` para el candidato aislado. Pendientes: respuesta real posterior, latencia hasta sonido, calidad médica y conversación física consecutiva; no se afirma ≤2.75 segundos ni solución integral. LAB, Maestro, Actualizar, voz R42 0.90, cálculos y persistencia sin cambios. Rollback: volver al Preview inmutable de `9dda012` sin tocar aliases principales.
+
 ## Preparación de Preview aislado de comunicación universal · 17 septiembre 2026
 
 Resultado del grupo funcional: 145 paquetes PASS con Node 22, incluyendo diez turnos simulados, fallos de voz/red y liberación de estados. `VOICE_R42_CHECKPOINT.md` registra el corte anterior al despliegue. Se ejecuta auditoría final con sello renovado antes de publicar exclusivamente Preview.

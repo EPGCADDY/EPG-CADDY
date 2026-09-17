@@ -25,6 +25,8 @@ export default async function handler(req, res) {
   const result = answer.body;
   const requestBody = typeof req.body === 'string' ? (() => { try { return JSON.parse(req.body); } catch { return {}; } })() : req.body;
   const text = typeof result?.answer === 'string' ? result.answer.trim() : '';
+  console.info('universal-answer-timing', JSON.stringify({ answerMs: answerReadyAt - startedAt,
+    status: answer.statusCode, answerChars: text.length, mode: requestBody?.responseMode === 'voice' ? 'voice' : 'text' }));
   // Longer answers retain the approved client chunking and playback path.
   if (req.method !== 'POST' || answer.statusCode !== 200 || !result?.ok ||
       requestBody?.responseMode !== 'voice' || text.length < 2 || text.length >= 260) {

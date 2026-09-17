@@ -377,3 +377,11 @@ Reincidencia operativa: se cerraron turnos con trabajo de diagnóstico disponibl
 
 ## RC-OP60-02 · Cierre reiterado con tráfico pendiente · 14 septiembre 2026
 Hecho: después de publicar el diagnóstico de tráfico se cerraron turnos aunque seguían disponibles acciones técnicas. Incumplimiento confirmado. Control agregado a OP-60: prohibido cerrar mientras haya trabajo autorizado pendiente y una siguiente acción ejecutable; un reporte de estado no sustituye ejecución. La corrección documental no demuestra por sí sola cumplimiento futuro.
+
+## RC-VOICE-LATENCY-21 · Pregunta breve tarda 21 segundos · 17 septiembre 2026 UTC
+
+- Evidencia física reportada: «Cómo funciona el botox para el dorsal ancho?», 21 segundos en el Preview. Registros correlacionados en `VOICE_R42_CHECKPOINT.md`; no hay medición exacta completa por etapa.
+- Factor reproducido: clasificador activa deep/medium sólo por «cómo funciona». No se presenta como causa única demostrada de los 21 segundos.
+- Escape: la optimización anterior eliminó una petición sólo en respuestas inferiores a 260 caracteres; respuestas largas conservaron la ruta previa y no emitían `universal-voice-timing`.
+- Control: `test-universal-voice-latency-profile.mjs` ejecuta caso anterior/nuevo y dos turnos del controlador con proveedor simulado, preservando análisis explícito, texto y seguridad médica. `universal-answer-timing` mide ahora todas las salidas del endpoint compuesto.
+- Estado: corrección local dirigida; validación real posterior y meta ≤2.75 segundos PENDIENTES; no se cambia voz R42 ni Producción.

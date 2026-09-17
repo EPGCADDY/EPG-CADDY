@@ -20,10 +20,13 @@ const GATEWAY_MODELS=["openai/gpt-5.6-sol","anthropic/claude-opus-5","google/gem
 const BRIEF_QUERY=/^(hola|buenos días|buenas tardes|buenas noches|gracias|ok|okay|listo|sí|si|no|entendido|perfecto)[.!?\s]*$/i;
 const DEEP_QUERY=/\b(analiza|análisis|compara|comparación|criterio|evalúa|evaluación|explica(?:me)? (?:a fondo|con detalle)|profundiza|paso a paso|ventajas y desventajas|riesgos?|escenarios?|estrategia|plan de acción|por qué|cómo funciona)\b/i;
 
-export function universalResponseProfile(query){
+export function universalResponseProfile(query,{responseMode="text"}={}){
   const text=String(query||"").trim();
   if(BRIEF_QUERY.test(text))return{reasoningEffort:"low",maxOutputTokens:700,depth:"brief"};
-  if(text.length>=160||DEEP_QUERY.test(text))return{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"};
+  // A short spoken "how does it work" is not by itself a request for deep analysis.
+  // Keep explicit detail, risk/comparison requests and the original text policy.
+  const depthText=responseMode==="voice"?text.replace(/c[oó]mo\s+funciona\b/gi,""):text;
+  if(text.length>=160||DEEP_QUERY.test(depthText)||(responseMode==="voice"&&/\b(a fondo|con detalle|detallad[oa])\b/i.test(text)))return{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"};
   return{reasoningEffort:"low",maxOutputTokens:1400,depth:"standard"};
 }
 
@@ -443,7 +446,7 @@ export default async function handler(req,res){
       return res.status(200).json({ok:true,answer:formatStructuredTrafficAnswer(trafficResult),sources:[]});
     }
     const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
-    const baseResponseProfile=universalResponseProfile(query);
+    const baseResponseProfile=universalResponseProfile(query,{responseMode});
     const responseProfile=responseMode==="voice"
       ?{...baseResponseProfile,maxOutputTokens:Math.max(350,Math.ceil(baseResponseProfile.maxOutputTokens/2))}
       :baseResponseProfile;
