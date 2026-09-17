@@ -45,6 +45,8 @@ console.log('PASS actual PCM player with simulated AudioContext: early playback,
 let fallback=[];
 await streamUniversalPcm('Segunda respuesta.',{apiKey:'',gatewayToken:'simulated',emit:e=>fallback.push(e),fetchImpl:async(url,request)=>{
   const b=JSON.parse(request.body);assert.equal(b.voice,'onyx');assert.equal(b.outputFormat,'pcm');
+  assert.equal(request.headers['ai-model-id'],'openai/tts-1','Gateway must use its published speech catalog');
+  assert.equal(b.instructions,undefined,'TTS-1 does not support instructions');
   return Response.json({audio:'AAAAAA=='});
 }});
 assert.equal(fallback[0].progressive,false);assert.equal(fallback[0].voice,'onyx');

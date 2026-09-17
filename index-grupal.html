@@ -2773,7 +2773,7 @@ function showUniversalSpokenAnswer(text,player=null){
   let paragraph=$("universalSpokenAnswerText");
   if(!paragraph){paragraph=document.createElement("p");paragraph.id="universalSpokenAnswerText";paragraph.style.cssText="margin:0 0 12px;font:400 17px/1.5 Arial,sans-serif;white-space:pre-wrap;overflow-wrap:anywhere";card.appendChild(paragraph)}
   paragraph.textContent=String(text||"");
-  paragraph.hidden=typeof window!=="undefined"&&!!window.GSCVoiceTurns?.enabled;
+  paragraph.hidden=false;
   if(player){player.controls=true;player.setAttribute("aria-label","Escuchar respuesta");player.setAttribute("playsinline","");player.style.cssText="display:block;width:100%;max-width:100%;height:48px";card.appendChild(player)}
 }
 async function universalVoiceDeadline(operation,timeoutMs,controller=null){

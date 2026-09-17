@@ -2,6 +2,7 @@ import {resolveGatewayToken} from './vercel-gateway-auth.js';
 
 // One fixed speaker and one synthesis. No sentence-level speaker switching.
 export const UNIVERSAL_PCM_VOICE='onyx';
+export const UNIVERSAL_GATEWAY_PCM_MODEL='openai/tts-1';
 export async function streamUniversalPcm(text,{emit,signal,fetchImpl=fetch,apiKey=process.env.OPENAI_API_KEY,gatewayToken}={}){
   const input=String(text||'').trim();
   if(!input||input.length>4000)throw new Error('UNIVERSAL_PCM_TEXT_INVALID');
@@ -21,17 +22,17 @@ export async function streamUniversalPcm(text,{emit,signal,fetchImpl=fetch,apiKe
       if(!bytes||bytes%2)throw new Error('UNIVERSAL_PCM_INCOMPLETE');
       emit({type:'audio_end'});return {progressive:true,bytes};
     }
-    // Only before any sound: same model/voice through Gateway if direct access fails.
+    // Only before any sound: same named voice through a catalog-supported Gateway model.
     await response.body?.cancel().catch(()=>{});
   }
   const token=await resolveGatewayToken(gatewayToken);
   if(!token)throw new Error('UNIVERSAL_PCM_NOT_CONFIGURED');
   response=await fetchImpl('https://ai-gateway.vercel.sh/v4/ai/speech-model',{method:'POST',signal,
-    headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json','ai-model-id':'openai/gpt-4o-mini-tts',
+    headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json','ai-model-id':UNIVERSAL_GATEWAY_PCM_MODEL,
       'ai-gateway-protocol-version':'0.0.1','ai-speech-model-specification-version':'4',
       'ai-gateway-auth-method':process.env.AI_GATEWAY_API_KEY?'api-key':'oidc'},
-    body:JSON.stringify({text:input,voice:UNIVERSAL_PCM_VOICE,instructions,speed:0.9,outputFormat:'pcm'})});
-  if(!response.ok)throw new Error('UNIVERSAL_PCM_PROVIDER_UNAVAILABLE');
+    body:JSON.stringify({text:input,voice:UNIVERSAL_PCM_VOICE,speed:0.9,outputFormat:'pcm'})});
+  if(!response.ok){console.warn('universal-pcm-provider-failure',JSON.stringify({provider:'gateway',model:UNIVERSAL_GATEWAY_PCM_MODEL,status:response.status}));throw new Error('UNIVERSAL_PCM_PROVIDER_UNAVAILABLE');}
   const payload=await response.json(),audio=Buffer.from(String(payload.audio||''),'base64');
   if(!audio.length||audio.length%2||audio.length>24_000*2*300)throw new Error('UNIVERSAL_PCM_INCOMPLETE');
   emit({type:'audio_start',voice:UNIVERSAL_PCM_VOICE,sampleRate:24000,format:'pcm_s16le',progressive:false});

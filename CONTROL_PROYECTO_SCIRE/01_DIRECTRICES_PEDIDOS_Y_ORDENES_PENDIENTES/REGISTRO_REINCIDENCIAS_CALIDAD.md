@@ -1,3 +1,11 @@
+## RC-PCM-REGRESSION · 17 septiembre 2026, 15:47 Guatemala
+
+IMG_4037.jpeg confirma fallo físico de voz y recuadro vacío en Preview 543e5b4/dpl_31zUPHQ8RSs4YwrGkYuw2iyZdLLo. Servidor generó 486 y 448 caracteres en 4692 y 4551 ms; no registró PCM completado. Causa de texto verificada: showUniversalSpokenAnswer ocultaba el párrafo con PTT. Error de configuración verificado: respaldo Gateway openai/gpt-4o-mini-tts ausente del catálogo https://ai-gateway.vercel.sh/v1/models consultado hoy, reincidencia RC-032; no hay log upstream previo para certificar que fue el único fallo físico. Escape: proveedor simulado aceptaba un modelo inexistente y la prueba PTT exigía ocultar el texto.
+
+Corrección: respaldo Gateway openai/tts-1, Onyx 0.90, PCM, sin instructions no soportadas; texto siempre visible en su tarjeta existente. Directo gpt-4o-mini-tts intacto; Gateway sigue buffered y no garantiza misma interpretación vocal que otro modelo aunque voice=onyx. Se registra código HTTP/modelo del fallo Gateway, nunca contenido ni secretos. Pruebas dirigidas de catálogo configurado, dos turnos simulados, cancelación, PTT y rechazo de reproducción con texto visible PASS. Menos de 3 segundos NO alcanzado; voz física posterior y proveedor real pendientes. Maestra/LAB oficial, DB, Actualizar y cálculos intactos. Base local eb198eb, remota 543e5b4. Rollback al commit base sólo del Preview propio.
+
+Archivos: api/_lib/universal-pcm.js; index-grupal.html; test-universal-pcm.mjs; test-ptt-independent-turns.mjs; test-r34-audio-response.mjs; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; docs/quality/UNIVERSAL_PCM_20260917.md; CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
+
 # Registro de reincidencias de calidad
 
 ## RC-104 · CLIMA VIVO CONTRA FRANJA CONGELADA EN RONDA CERRADA · 13 SEPTIEMBRE 2026
