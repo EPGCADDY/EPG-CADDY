@@ -1,3 +1,11 @@
+## Consulta de ecografía: desglose real y corrección de evento playing · 17 septiembre 2026 UTC
+
+Propietario reporta 15 s para «En dónde hacen una ecografía en Guatemala?». Último turno observado en Preview 9c06776: ptt_1789627731145_2, 06:48:56–06:49:14 UTC. No se registra el texto de la consulta; la correspondencia es temporal, no certificada por contenido. Desde soltar: grabación lista 13 ms, transcripción recibida 7760 ms, texto 14811 ms, primer audio 16973 ms, evento play 17027 ms, progreso 17591 ms. Servidor: transcripción 7343 ms; respuesta 6733 ms; primer audio disponible 8792 ms desde solicitud de respuesta. Prioridad fast servida; 346 caracteres; TTS solapado confirmado. No atribuir la diferencia a Safari ni red sin medir.
+
+Defecto descubierto: monitorUniversalAudio asigna onplaying y sobrescribe la nueva medición. La prueba anterior usaba un monitor simulado que no asignaba ese evento. test-universal-voice-response.mjs ahora ejecuta el monitor real: falla antes con sólo audioReadyMs, pasa después con audioPlayingMs en ambos turnos. index-grupal.html encadena el monitor existente y la medición tras instalarlo, conservando vigilancia de progreso, pausa, final y errores. Dos turnos y fragmentos ordenados PASS con audio/proveedores simulados; no demuestra audibilidad física ni velocidad objetivo.
+
+Archivos: index-grupal.html; test-universal-voice-response.mjs; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; VOICE_R42_CHECKPOINT.md; CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json. Base remota 9c0677656168d6db42d8960f13b2b3eee6d5b42f, local 4979ce5. Sólo rama/Preview propias. Rollback Preview inmutable 9c06776. Meta ≤2.75 s y voz de identidad fija siguen pendientes; ningún modelo, configuración de voz, dato, Actualizar o cálculo se modifica.
+
 ## Medición de extremo a extremo de voz · 17 septiembre 2026 UTC
 
 Base aislada: local 18efb2b / remoto 4be9da830e8f269871c4629c23bedecc915d427b. Reporte del propietario: 9 segundos. Logs del Preview 03:18 UTC: transcripción 1100 ms; respuesta 4183 ms; audio servidor 4842 ms, preparación solapada confirmada. Los eventos de navegador tenían elapsedMs:0; no permiten asignar la diferencia a red, autorización, captura o reproducción. No se presenta una causa no demostrada.

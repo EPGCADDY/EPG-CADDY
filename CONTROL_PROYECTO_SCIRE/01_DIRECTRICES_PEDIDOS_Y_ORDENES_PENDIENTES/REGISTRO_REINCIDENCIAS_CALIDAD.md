@@ -392,3 +392,6 @@ Reporte posterior del propietario: 13 s. Telemetría real de `fc2a0a2`: texto 84
 
 ## RC-OP60-03 y latencia 9 s · 17 septiembre 2026 UTC
 Se volvió a cerrar el turno con la medición cliente pendiente. Incumplimiento confirmado; no se considera subsanado por registrar esta entrada. Acción ejecutada: instrumentar el trayecto que hoy enviaba elapsedMs:0, con prueba de dos turnos y comparación de métricas del servidor. La meta ≤2.75 s y voz fija permanecen abiertas. El usuario no debe ser solicitado para ejecutar diagnósticos que las herramientas permiten. La prueba física sí requiere dispositivo/micrófono accesible; no se simula su aprobación.
+
+## RC-VOICE-TIMING-PLAYING · 17 septiembre 2026 UTC
+Defecto: nueva medición onplaying sobrescrita por monitorUniversalAudio. Escape: prueba usaba monitor simulado que no asignaba el evento. Control permanente: test-universal-voice-response.mjs ejecuta monitor real; reproducción negativa pierde las dos marcas de inicio, positiva conserva monitor y medición en dos turnos y respuesta larga. Sólo audio/proveedores simulados. Corrección de diagnóstico, no de rapidez ni identidad vocal.

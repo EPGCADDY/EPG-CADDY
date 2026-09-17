@@ -87,24 +87,25 @@ try{
     aiUniversalSpeechPrimed:false,browserVoiceFollowupContext:null,CEDAR_SPEECH_RETRY_MS:1000,
     Audio:class{pause(){}async play(){playbackCount++;this.onplay?.();this.onplaying?.()}},
     showUniversalSpokenAnswer(){},aiUniversalSetState(){},setPrimaryVoiceMatrix(){},reportVoiceHealth(){},
-    monitorUniversalAudio(){return()=>{}},universalVoiceDeadline:promise=>promise,
+    setInterval,clearInterval,listening:false,resumeBrowserVoiceConversation:()=>false,universalVoiceDeadline:promise=>promise,
     window:{gscgApiUrl:path=>path,GSCVoiceTurns:{latency:{snapshot:()=>({turnId:'ptt_1_1'}),mark:(id,stage)=>onsetMarks.push(stage)}}},aiUniversalSpeechLanguage:()=> 'es-419',
     speakAiUniversalMaleBrowserFallback:async()=>false,
     fetch:async()=>{extraSpeechRequests++;throw new Error('Duplicate speech request')}
   });
+  vm.runInContext(html.slice(html.indexOf('function monitorUniversalAudio('),html.indexOf('function splitUniversalSpeechText(')),context);
   vm.runInContext(html.slice(html.indexOf('function splitUniversalSpeechText('),html.indexOf('function stopAiUniversalOutput(')),context);
   const speak=vm.runInContext('speakAiUniversalText',context);
   for(let turn=1;turn<=2;turn++){
     assert.equal(await speak(`Respuesta ${turn}.`,{prefetchedSpeech:Promise.resolve({ok:true,blob:new Blob(['SIMULATED_MP3']),deliveredVoice:'s2.1-es-419'})}),true);
   }
   assert.equal(playbackCount,2);assert.equal(extraSpeechRequests,0);
-  assert.deepEqual(onsetMarks,['audioReadyMs','audioPlayingMs','audioReadyMs','audioPlayingMs']);
+  try{assert.deepEqual(onsetMarks,['audioReadyMs','audioPlayingMs','audioReadyMs','audioPlayingMs'])}finally{context.aiUniversalTtsAudio.gscCancelSpeech()}
   context.aiUniversalTtsAudio.gscCancelSpeech();
   console.log('PASS actual client function with simulated Audio: both turns play; zero duplicate speech requests.');
   const longText='Una oración inicial suficientemente larga para comprobar que el primer audio se reproduce una sola vez. '+'El resto continúa en el segundo fragmento. '.repeat(10);
   const split=vm.runInContext('splitUniversalSpeechText',context),parts=split(longText.trim());
   context.fetch=async(_url,options)=>{extraSpeechRequests++;assert.equal(JSON.parse(options.body).text,parts[1]);return new Response('SECOND_AUDIO',{headers:{'X-GSCG-Voice':'s2.1-es-419'}})};
-  context.monitorUniversalAudio=player=>{player.onended=()=>{};return()=>{}};
+
   assert.equal(await speak(longText,{prefetchedSpeech:Promise.resolve({ok:true,text:parts[0],blob:new Blob(['FIRST_AUDIO']),deliveredVoice:'s2.1-es-419'})}),true);
   context.aiUniversalTtsAudio.onended();await new Promise(resolve=>setImmediate(resolve));
   assert.equal(playbackCount,4);assert.equal(extraSpeechRequests,1);

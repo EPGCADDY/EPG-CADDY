@@ -2849,9 +2849,10 @@ async function speakAiUniversalText(text,{repeat=false,prefetchedSpeech=null}={}
     plan.index=index;plan.advancing=false;plan.stopMonitor?.();
     if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(blob);
     plan.urls.push(aiUniversalTtsObjectUrl);player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.muted=false;player.volume=1;player.playbackRate=1;showUniversalSpokenAnswer(clean,player);
-    player.onplaying=()=>{if(plan.active&&index===0&&latencyTurn){latencyClock.mark(latencyTurn,"audioPlayingMs");reportVoiceHealth("browser_fallback_audio_playing")}};
     player.onplay=()=>{aiUniversalSpeechPrimed=true;if(index===0)reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(deliveredVoice==="browser"?"RESPONDIENDO EN VOZ · RESPALDO DEL DISPOSITIVO":"RESPONDIENDO EN VOZ · FISH AUDIO V378",{busy:true})};
     const stopAudioMonitor=monitorUniversalAudio(player);
+    const monitorPlaying=player.onplaying;
+    player.onplaying=()=>{monitorPlaying?.();if(plan.active&&index===0&&latencyTurn){latencyClock.mark(latencyTurn,"audioPlayingMs");reportVoiceHealth("browser_fallback_audio_playing")}};
     plan.stopMonitor=stopAudioMonitor;
     const finish=player.onended;
     player.onended=()=>{
