@@ -52,6 +52,40 @@ await streamUniversalPcm('Segunda respuesta.',{apiKey:'',gatewayToken:'simulated
 assert.equal(fallback[0].progressive,false);assert.equal(fallback[0].voice,'onyx');assert.equal(fallback[0].format,'mp3');
 console.log('PASS Gateway buffered fallback keeps fixed voice and explicitly reports progressive=false. No live-provider/iPhone latency claimed.');
 
+// A stalled direct connection must not consume the whole voice deadline.
+for(const failure of ['timeout','network','http']){
+  const calls=[],records=[];
+  const delivered=await streamUniversalPcm('Respuesta sin espera indefinida.',{
+    apiKey:'simulated',gatewayToken:'simulated',headersTimeoutMs:20,emit:e=>records.push(e),
+    fetchImpl:async(url,request)=>{
+      calls.push(url);
+      if(url.includes('api.openai.com')){
+        if(failure==='timeout')return new Promise((resolve,reject)=>request.signal.addEventListener('abort',()=>reject(request.signal.reason),{once:true}));
+        if(failure==='network')throw new TypeError('Simulated connection failure');
+        return new Response('',{status:401});
+      }
+      assert.equal(JSON.parse(request.body).voice,'onyx');
+      return Response.json({audio:'AAAAAA=='});
+    }
+  });
+  assert.equal(calls.length,2);
+  assert.equal(delivered.provider,'gateway');
+  assert.equal(delivered.fallbackReason,{timeout:'direct_headers_timeout',network:'direct_network_error',http:'direct_http_401'}[failure]);
+  assert.equal(records.filter(e=>e.type==='audio_start').length,1);
+}
+const canceled=new AbortController();let cancelCalls=0;
+await assert.rejects(streamUniversalPcm('Turno cancelado.',{apiKey:'simulated',gatewayToken:'simulated',signal:canceled.signal,emit:()=>assert.fail('Canceled turn emitted audio'),fetchImpl:async(url,request)=>{
+  cancelCalls++;canceled.abort();throw request.signal.reason;
+}}),{name:'AbortError'});
+assert.equal(cancelCalls,1,'User cancellation must never trigger another provider');
+let partialCalls=0;
+await assert.rejects(streamUniversalPcm('Audio parcial.',{apiKey:'simulated',gatewayToken:'simulated',emit:()=>{},fetchImpl:async()=>{
+  partialCalls++;let reads=0;
+  return new Response(new ReadableStream({pull(c){if(reads++===0)c.enqueue(new Uint8Array([0,0]));else c.error(new Error('Simulated mid-stream failure'))}}));
+}}));
+assert.equal(partialCalls,1,'Never restart a response after any audio has been emitted');
+console.log('PASS simulated direct timeout/network/401 recover once; cancellation and partial audio never restart another speaker.');
+
 // Actual composed handler + actual browser decoder, providers simulated.
 const html=readFileSync('index-grupal.html','utf8');
 const decode=new Function(html.slice(html.indexOf('async function readUniversalVoiceResponse('),html.indexOf('async function submitAiUniversalText('))+';return readUniversalVoiceResponse')();

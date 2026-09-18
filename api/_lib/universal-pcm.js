@@ -3,15 +3,25 @@ import {resolveGatewayToken} from './vercel-gateway-auth.js';
 // One fixed speaker and one synthesis. No sentence-level speaker switching.
 export const UNIVERSAL_PCM_VOICE='onyx';
 export const UNIVERSAL_GATEWAY_PCM_MODEL='openai/tts-1';
-export async function streamUniversalPcm(text,{emit,signal,fetchImpl=fetch,apiKey=process.env.OPENAI_API_KEY,gatewayToken}={}){
+export async function streamUniversalPcm(text,{emit,signal,fetchImpl=fetch,apiKey=process.env.OPENAI_API_KEY,gatewayToken,headersTimeoutMs=1500}={}){
   const input=String(text||'').trim();
   if(!input||input.length>4000)throw new Error('UNIVERSAL_PCM_TEXT_INVALID');
-  let response;
+  let response,fallbackReason='direct_not_configured';
+  signal?.throwIfAborted();
   if(apiKey){
-    response=await fetchImpl('https://api.openai.com/v1/audio/speech',{method:'POST',signal,
+    const handshake=new AbortController();
+    const directSignal=signal?AbortSignal.any([signal,handshake.signal]):handshake.signal;
+    const timer=setTimeout(()=>handshake.abort(),headersTimeoutMs);
+    try{
+    response=await fetchImpl('https://api.openai.com/v1/audio/speech',{method:'POST',signal:directSignal,
       headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},
       body:JSON.stringify({model:'tts-1',voice:UNIVERSAL_PCM_VOICE,input,speed:0.9,response_format:'pcm'})});
-    if(response.ok){
+    fallbackReason=response.ok?null:`direct_http_${response.status}`;
+    }catch(error){
+      signal?.throwIfAborted();
+      fallbackReason=handshake.signal.aborted?'direct_headers_timeout':'direct_network_error';
+    }finally{clearTimeout(timer)}
+    if(response?.ok){
       emit({type:'audio_start',voice:UNIVERSAL_PCM_VOICE,sampleRate:24000,format:'pcm_s16le',progressive:true});
       const reader=response.body.getReader();let bytes=0;
       try{while(true){const part=await reader.read();if(part.done)break;if(signal?.aborted)throw new Error('ABORTED');
@@ -19,11 +29,13 @@ export async function streamUniversalPcm(text,{emit,signal,fetchImpl=fetch,apiKe
         emit({type:'audio_chunk',audio:Buffer.from(part.value).toString('base64')});
       }}finally{await reader.cancel().catch(()=>{});reader.releaseLock()}
       if(!bytes||bytes%2)throw new Error('UNIVERSAL_PCM_INCOMPLETE');
-      emit({type:'audio_end'});return {progressive:true,bytes};
+      emit({type:'audio_end'});return {provider:'openai',progressive:true,bytes};
     }
     // Only before any sound: preserve both model and speaker through Gateway.
-    await response.body?.cancel().catch(()=>{});
+    await response?.body?.cancel().catch(()=>{});
   }
+  signal?.throwIfAborted();
+  console.info('universal-speech-route',JSON.stringify({provider:'gateway',fallbackReason,voice:UNIVERSAL_PCM_VOICE}));
   const token=await resolveGatewayToken(gatewayToken);
   if(!token)throw new Error('UNIVERSAL_PCM_NOT_CONFIGURED');
   response=await fetchImpl('https://ai-gateway.vercel.sh/v4/ai/speech-model',{method:'POST',signal,
@@ -39,5 +51,5 @@ export async function streamUniversalPcm(text,{emit,signal,fetchImpl=fetch,apiKe
   if(!audio.length||audio.length>8_000_000)throw new Error('UNIVERSAL_AUDIO_INCOMPLETE');
   emit({type:'audio_start',voice:UNIVERSAL_PCM_VOICE,format:'mp3',progressive:false});
   emit({type:'audio_chunk',audio:audio.toString('base64')});emit({type:'audio_end'});
-  return {progressive:false,format:'mp3',bytes:audio.length};
+  return {provider:'gateway',fallbackReason,progressive:false,format:'mp3',bytes:audio.length};
 }
