@@ -44,12 +44,12 @@ console.log('PASS actual PCM player with simulated AudioContext: early playback,
 
 let fallback=[];
 await streamUniversalPcm('Segunda respuesta.',{apiKey:'',gatewayToken:'simulated',emit:e=>fallback.push(e),fetchImpl:async(url,request)=>{
-  const b=JSON.parse(request.body);assert.equal(b.voice,'onyx');assert.equal(b.outputFormat,'pcm');
+  const b=JSON.parse(request.body);assert.equal(b.voice,'onyx');assert.equal(b.outputFormat,'mp3');
   assert.equal(request.headers['ai-model-id'],'openai/tts-1','Gateway must use its published speech catalog');
   assert.equal(b.instructions,undefined,'TTS-1 does not support instructions');
   return Response.json({audio:'AAAAAA=='});
 }});
-assert.equal(fallback[0].progressive,false);assert.equal(fallback[0].voice,'onyx');
+assert.equal(fallback[0].progressive,false);assert.equal(fallback[0].voice,'onyx');assert.equal(fallback[0].format,'mp3');
 console.log('PASS Gateway buffered fallback keeps fixed voice and explicitly reports progressive=false. No live-provider/iPhone latency claimed.');
 
 // Actual composed handler + actual browser decoder, providers simulated.
@@ -77,3 +77,44 @@ try{
  }
 }finally{globalThis.fetch=oldFetch;if(oldKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=oldKey}
 console.log('PASS two composed handler/decoder turns: complete written answer, PCM before provider end, fixed voice and clean close.');
+
+// Compressed Gateway audio uses the already gesture-primed AudioContext.
+let decodePending,holdDecode=false,compressedStarts=0,compressedEnds=0;
+class CompressedContext extends Context{
+ decodeAudioData(bytes){
+  assert.equal(bytes.byteLength,3);
+  if(holdDecode)return new Promise(resolve=>{decodePending=resolve});
+  return Promise.resolve({length:24000,duration:1});
+ }
+ createBufferSource(){return{connect(){},disconnect(){},start(){compressedStarts++},stop(){},set onended(fn){this.finish=fn}}}
+}
+const compressedContext=vm.createContext({AudioContext:CompressedContext,Uint8Array,DataView,atob,console});
+vm.runInContext(readFileSync('universal-pcm-player.js','utf8'),compressedContext);
+const compressedPlayer=compressedContext.GSCUniversalPcm;compressedPlayer.prime();
+function compressedTransport(){let next=0;return{format:'mp3',next:async()=>next++?{type:'audio_end'}:{type:'audio_chunk',audio:'SUQz'},cancel(){}}}
+for(let turn=0;turn<2;turn++)assert.equal(await compressedPlayer.play(compressedTransport()),true);
+assert.equal(compressedStarts,2);
+holdDecode=true;const canceledPlay=compressedPlayer.play(compressedTransport());
+await new Promise(r=>setImmediate(r));compressedPlayer.stop();decodePending({length:24000,duration:1});
+assert.equal(await canceledPlay,false);assert.equal(compressedStarts,2,'Cancellation during decode must never start stale audio');
+
+const oldGateway=process.env.AI_GATEWAY_API_KEY;
+try{
+ process.env.OPENAI_API_KEY='';process.env.AI_GATEWAY_API_KEY='simulated';
+ globalThis.fetch=async()=>Response.json({audio:'SUQz'});
+ for(let turn=0;turn<2;turn++){
+  let sink;const stream=new ReadableStream({start(c){sink=c}});
+  const res={setHeader(){},status(){return this},write(line){sink.enqueue(new TextEncoder().encode(line))},end(){sink.close()}};
+  const task=handler({method:'POST',headers:{},body:{responseMode:'voice',progressiveAudio:true}},res);
+  const parsed=await decode(new Response(stream,{headers:{'Content-Type':'application/x-ndjson'}}));
+  const transport=await parsed.prefetchedSpeech;
+  assert.equal(transport.ok,true);assert.equal(transport.format,'mp3');
+  assert.equal((await transport.next()).audio,'SUQz');assert.equal((await transport.next()).type,'audio_end');
+  transport.cancel();await task;
+ }
+}finally{
+ globalThis.fetch=oldFetch;
+ if(oldKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=oldKey;
+ if(oldGateway===undefined)delete process.env.AI_GATEWAY_API_KEY;else process.env.AI_GATEWAY_API_KEY=oldGateway;
+}
+console.log('PASS compressed Gateway: two actual handler/decoder turns, same Onyx, primed AudioContext, no late playback after cancellation. Simulated providers; no physical timing certified.');

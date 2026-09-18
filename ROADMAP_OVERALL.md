@@ -1,3 +1,13 @@
+## Transferencia de voz comprimida · 18 septiembre 2026
+
+Evidencia real del Preview 410c017, dpl_CWfS6mQYYEoeCihyuHWefNebFJFk: turnos ptt_1789695441443_2 y ptt_1789695457861_3, inicio registrado de audio a 8990 y 10283 ms desde soltar. Transcripción disponible 1399/1213 ms; texto 4060/5881 ms. Servidor: texto 1782/4371 ms, primeros bytes 4887/7454 ms; Gateway buffered, PCM 1749334/1882000 bytes. Son marcas del navegador/servidor, no audición independiente. No se registran preguntas ni credenciales.
+
+Corrección concreta: Gateway entrega MP3 comprimido de la misma síntesis TTS-1/Onyx/0.90. Se decodifica con el AudioContext ya preparado desde el gesto y se reproduce una vez. Directo conserva PCM incremental. Elimina transferencia PCM masiva sin alterar texto, modelo, timbre configurado, captura o datos. Cancelación durante decodificación impide reproducción tardía. No se anuncia streaming para Gateway ni cumplimiento de dos segundos.
+
+Prueba dirigida de dos turnos de controlador/decodificador y cancelación pasa con proveedores simulados. Medición posterior real pendiente; no equivalencia a prueba física. Fuente/base y rollback: 410c01708fcb624e37ccfab96a05c2d81e6e632e, sólo rama Preview propia.
+
+Archivos: `api/_lib/universal-pcm.js`; `index-grupal.html`; `universal-pcm-player.js`; `test-universal-pcm.mjs`; `ROADMAP_OVERALL.md`; `ROADMAP_A_DETALLE.md`; `docs/quality/VOICE_UNIFIED_20260918.md`.
+
 
 ### Ajuste autorizado del sello de salida vocal
 El primer build c32868b fue rechazado porque api/voice-speech.js conservaba el hash histórico Fish. La orden actual del propietario autoriza cambiar esa salida y sus dos pruebas de configuración. Se registran hashes previos y nuevos, sin retirar verificaciones ni tocar hashes de captura/parsers/scores. La aprobación física V378 sigue siendo histórica; la nueva voz figura PENDING. No implica PASS audible ni meta de dos segundos.

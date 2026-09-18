@@ -30,11 +30,14 @@ export async function streamUniversalPcm(text,{emit,signal,fetchImpl=fetch,apiKe
     headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json','ai-model-id':UNIVERSAL_GATEWAY_PCM_MODEL,
       'ai-gateway-protocol-version':'0.0.1','ai-speech-model-specification-version':'4',
       'ai-gateway-auth-method':process.env.AI_GATEWAY_API_KEY?'api-key':'oidc'},
-    body:JSON.stringify({text:input,voice:UNIVERSAL_PCM_VOICE,speed:0.9,outputFormat:'pcm'})});
+    // Gateway returns a complete base64 file, not a byte stream. Sending raw PCM
+    // here adds megabytes without allowing earlier playback. Keep the same
+    // model/speaker but compress this buffered delivery.
+    body:JSON.stringify({text:input,voice:UNIVERSAL_PCM_VOICE,speed:0.9,outputFormat:'mp3'})});
   if(!response.ok){console.warn('universal-pcm-provider-failure',JSON.stringify({provider:'gateway',model:UNIVERSAL_GATEWAY_PCM_MODEL,status:response.status}));throw new Error('UNIVERSAL_PCM_PROVIDER_UNAVAILABLE');}
   const payload=await response.json(),audio=Buffer.from(String(payload.audio||''),'base64');
-  if(!audio.length||audio.length%2||audio.length>24_000*2*300)throw new Error('UNIVERSAL_PCM_INCOMPLETE');
-  emit({type:'audio_start',voice:UNIVERSAL_PCM_VOICE,sampleRate:24000,format:'pcm_s16le',progressive:false});
+  if(!audio.length||audio.length>8_000_000)throw new Error('UNIVERSAL_AUDIO_INCOMPLETE');
+  emit({type:'audio_start',voice:UNIVERSAL_PCM_VOICE,format:'mp3',progressive:false});
   emit({type:'audio_chunk',audio:audio.toString('base64')});emit({type:'audio_end'});
-  return {progressive:false,bytes:audio.length};
+  return {progressive:false,format:'mp3',bytes:audio.length};
 }

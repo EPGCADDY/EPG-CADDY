@@ -28,13 +28,22 @@
           if(record.type!=='audio_chunk'||typeof record.audio!=='string')throw new Error('PCM_STREAM_FAILED');
           let bytes=Uint8Array.from(atob(record.audio),c=>c.charCodeAt(0));
           total+=bytes.length;if(total>24000*2*300)throw new Error('PCM_TOO_LARGE');
-          if(tail!==null){const joined=new Uint8Array(bytes.length+1);joined[0]=tail;joined.set(bytes,1);bytes=joined;tail=null}
-          if(bytes.length%2){tail=bytes[bytes.length-1];bytes=bytes.subarray(0,bytes.length-1)}
-          if(!bytes.length)continue;
+          let audio;
+          if(transport.format==='mp3'){
+            // Exactly one complete compressed file from buffered Gateway.
+            if(started||!bytes.length)throw new Error('COMPRESSED_AUDIO_INVALID');
+            audio=await context.decodeAudioData(bytes.buffer);
+            if(stopped)return;
+            if(!audio.length||!Number.isFinite(audio.duration)||audio.duration>300)throw new Error('COMPRESSED_AUDIO_INVALID');
+          }else{
+            if(tail!==null){const joined=new Uint8Array(bytes.length+1);joined[0]=tail;joined.set(bytes,1);bytes=joined;tail=null}
+            if(bytes.length%2){tail=bytes[bytes.length-1];bytes=bytes.subarray(0,bytes.length-1)}
+            if(!bytes.length)continue;
+            audio=context.createBuffer(1,bytes.length/2,24000);const samples=audio.getChannelData(0);
+            const view=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
+            for(let i=0;i<samples.length;i++)samples[i]=view.getInt16(i*2,true)/32768;
+          }
           if(context.state!=='running')throw new Error('AUDIO_CONTEXT_INTERRUPTED');
-          const audio=context.createBuffer(1,bytes.length/2,24000),samples=audio.getChannelData(0);
-          const view=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
-          for(let i=0;i<samples.length;i++)samples[i]=view.getInt16(i*2,true)/32768;
           const node=context.createBufferSource();node.buffer=audio;node.connect(context.destination);sources.add(node);
           node.onended=()=>{sources.delete(node);node.disconnect();finish()};
           nextTime=Math.max(nextTime,context.currentTime+.025);node.start(nextTime);nextTime+=audio.duration;

@@ -3002,8 +3002,8 @@ async function readUniversalVoiceResponse(response){
     const prefetchedSpeech=(async()=>{
       try{
         const header=await nextPcm();
-        if(header.type!=="audio_start"||header.voice!=="onyx"||header.sampleRate!==24000||header.format!=="pcm_s16le")throw new Error("PCM_HEADER_INVALID");
-        return{ok:true,next:nextPcm,cancel};
+        if(header.type!=="audio_start"||header.voice!=="onyx"||!(header.format==="mp3"||(header.sampleRate===24000&&header.format==="pcm_s16le")))throw new Error("PCM_HEADER_INVALID");
+        return{ok:true,format:header.format,next:nextPcm,cancel};
       }catch(error){cancel();return{ok:false,error}}
     })();
     prefetchedSpeech.pcmTransport=true;
