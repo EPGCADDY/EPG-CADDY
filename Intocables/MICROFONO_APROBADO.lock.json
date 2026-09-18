@@ -11,17 +11,17 @@
   ],
   "policy": "Los bancos y el transporte de voz aprobados no se modifican. Cualquier hash o prueba diferente bloquea auditoría, build y despliegue hasta autorización expresa del propietario.",
   "sha256": {
-    "api/voice-speech.js": "96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01",
+    "api/voice-speech.js": "7bb42bdfa0dae50acd4752effc7f75534aa984adb33417b86f2d355f68002974",
     "test-v336-microphone-transport.mjs": "cfc36abd5f743726a435ff13ef9eddefc567b9e2a6a10488c096b1bff5852a37",
     "test-v354-voice-fallback.mjs": "41d3a14dacaf183e321ce04b61e86511b5d247582785ba966c90b5732282fce2",
     "test-v355-ios-audio-dictation.mjs": "aa528474beaa42acd913dfa56b5c59f8cf0616187a5c8430d34ac338764a54a5",
-    "test-v356-voice-only-cedar-quality.mjs": "d2d03663121cb0d84c53db243d17c055315581a189a1a69de0302eb29e394643",
+    "test-v356-voice-only-cedar-quality.mjs": "f13ae0e28d72caeef3e5d63ff8e7f14d4b8b33062b1ee98b38aeef7f659aa56e",
     "test-v357-ios-voice-transport-recovery.mjs": "d89aa29ccf12b482311d5c5701790d91f1241eb6fde5935ab1c60bd16ba59514",
     "test-v358-ios-score-universal-physical-recovery.mjs": "6a787ec011ff5459518f1ab9f3d32d79dbd10de4365a3e2f3cffbb14d45e7618",
     "test-v359-ios-score-parser-recovery.mjs": "a9ef038dd8ba49e31278c1e6e096c9f8ddc9eccdcacd1afe90c51af225fc9515",
     "test-v357-synchronized-progressive-voice.mjs": "ad7ba5e426dbde712f2d965e1a33a2af35aa75b3d7a176bf8982d52441bce84d",
     "test-v361-synchronized-voice.mjs": "ead1297e3f3f93185a56c5a883b366805fac35b85169dbacb5271d69c3ecca43",
-    "test-v362-physical-voice-recovery.mjs": "1fcb521ef6b6b9c89c077b6e3bcb125ccaf46335687e2ab6a8f95e722158eafa",
+    "test-v362-physical-voice-recovery.mjs": "2fb8effe0639dd80809271b3b7fe9477105dd6b7bbaa38b217cd3cb0e51a5a96",
     "test-v367-universal-voice-in-place.mjs": "ef5c659d69851f7f018116ae7252ad4efff36728472cbb87db1598a33c5dbd49"
   },
   "tests": [
@@ -36,5 +36,14 @@
     "test-v361-synchronized-voice.mjs",
     "test-v362-physical-voice-recovery.mjs",
     "test-v367-universal-voice-in-place.mjs"
-  ]
+  ],
+  "authorizedVoiceAdjustment20260918": {
+    "authorization": "2026-09-18: orden expresa del propietario de corregir tiempo de respuesta y unificar voz en todas las preguntas. Cambio limitado a salida TTS-1/Onyx 0.90 y expectativas de proveedor; sin nueva aprobación audible ni prueba física. Registro, scores y parámetros de captura intactos.",
+    "status": "AUDIBLE_VALIDATION_PENDING",
+    "previousSha256": {
+      "api/voice-speech.js": "96e18c1956f72e5dc7028c76936d54c0b2290abed3745f54c19ab6402d418a01",
+      "test-v356-voice-only-cedar-quality.mjs": "d2d03663121cb0d84c53db243d17c055315581a189a1a69de0302eb29e394643",
+      "test-v362-physical-voice-recovery.mjs": "1fcb521ef6b6b9c89c077b6e3bcb125ccaf46335687e2ab6a8f95e722158eafa"
+    }
+  }
 }

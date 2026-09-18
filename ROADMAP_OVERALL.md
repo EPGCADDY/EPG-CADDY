@@ -1,3 +1,7 @@
+
+### Ajuste autorizado del sello de salida vocal
+El primer build c32868b fue rechazado porque api/voice-speech.js conservaba el hash histórico Fish. La orden actual del propietario autoriza cambiar esa salida y sus dos pruebas de configuración. Se registran hashes previos y nuevos, sin retirar verificaciones ni tocar hashes de captura/parsers/scores. La aprobación física V378 sigue siendo histórica; la nueva voz figura PENDING. No implica PASS audible ni meta de dos segundos.
+Archivos: `Intocables/MICROFONO_APROBADO.lock.json`; `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`; `ROADMAP_OVERALL.md`; `ROADMAP_A_DETALLE.md`; `docs/quality/VOICE_UNIFIED_20260918.md`.
 ## Voz uniforme y espera de respaldo · 18 septiembre 2026
 
 Orden actual: limitar trabajo a tiempo de respuesta y voz uniforme en clima, salud, tráfico y conversación general. Base ef31ccae5108fa5bb812e05e59fc93ec2c24a340, rama preview/universal-stream-20260917. Rollback: volver a ese commit sólo en Preview.
@@ -8,7 +12,7 @@ Voz estándar: un intento directo de GPT-4.1, máximo 2500 ms, seguido de Gatewa
 
 Evidencia interna: bancos PCM, configuración MP3, perfil de latencia, V356 y V362 pasan con proveedores simulados, incluyendo 429 y timeout seguido de respaldo. No equivalen a ejercicios físicos. La invitación real abrió Laboratorio R42; navegador disponible carece de herramienta para inyectar voz o escuchar audio. No se enviaron preguntas habladas. No existe prueba de dos segundos ni aprobación audible. Prueba de Preview y estado de construcción se registrarán por separado.
 
-INT-03 y sus expectativas antiguas se actualizan a la orden actual de unificar voz. No se cambian hashes ni confirmaciones históricas del micrófono Registro/Score. No se modifican cálculos, datos, permisos, Actualizar ni Producción.
+INT-03 y sus expectativas antiguas se actualizan a la orden actual de unificar voz. No se cambian los hashes de captura, parsers ni escritores de Registro/Score. Se conservan los hashes previos y se documentan los nuevos de salida vocal autorizada. No se modifican cálculos, datos, permisos, Actualizar ni Producción.
 
 Archivos de esta corrección:
 - `api/_lib/universal-pcm.js`
