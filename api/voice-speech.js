@@ -3,10 +3,9 @@ import {resolveGatewayToken} from "./_lib/vercel-gateway-auth.js";
 
 const MAX_SPEECH_TEXT=4000;
 const VOICE="onyx";
-const GATEWAY_VOICE="s2.1-es-419";
+const GATEWAY_VOICE="onyx";
 const SPEED=.9;
-const GATEWAY_SPEECH_MODEL="fish-audio/s2.1-pro-free";
-const INSTRUCTIONS="Locutor masculino adulto latinoamericano, serio, sobrio y profesional. Habla exclusivamente en español latinoamericano es-419, natural para Guatemala, sin ceceo español: pronuncia c ante e/i y z con sonido de s. Nunca uses acento de España, acento anglosajón, Spanglish ni palabras en inglés salvo nombres propios inevitables. Dicción muy clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";
+const GATEWAY_SPEECH_MODEL="openai/tts-1";
 
 export function sanitizeSpeechRequest(body={}){
   const text=String(body.text||"").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g," ").replace(/\s+/g," ").trim().slice(0,MAX_SPEECH_TEXT);
@@ -16,17 +15,18 @@ export function sanitizeSpeechRequest(body={}){
 
 export function cedarSpeechPayload(text,language="es-GT"){
   return{
-    model:"gpt-4o-mini-tts",
+    model:"tts-1",
     voice:VOICE,
     speed:SPEED,
     response_format:"mp3",
-    input:text,
-    instructions:`${INSTRUCTIONS} Idioma solicitado: ${language}.`
+    input:text
   };
 }
 
 export function cedarGatewayPayload(text){
-  return{text,speed:SPEED,language:"es-419",outputFormat:"mp3",instructions:INSTRUCTIONS};
+  // tts-1 uses a fixed speaker; language follows the input text. Instructions
+  // and language overrides are not supported by this model.
+  return{text,voice:VOICE,speed:SPEED,outputFormat:"mp3"};
 }
 
 async function requestDirectSpeech(apiKey,payload,signal){

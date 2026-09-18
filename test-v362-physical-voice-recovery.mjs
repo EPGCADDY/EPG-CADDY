@@ -15,15 +15,15 @@ assert.match(worker,/gscg-mobile-v363-recorded-mobile-behavior/);
 for(const file of ["test-v358-ios-score-universal-physical-recovery.mjs","test-v362-physical-voice-recovery.mjs"])assert.ok(audit.includes(file),file);
 
 const direct=cedarSpeechPayload("Respuesta", "es-GT");
-assert.equal(direct.model,"gpt-4o-mini-tts");
+assert.equal(direct.model,"tts-1");
 assert.equal(direct.voice,"onyx");
 const gateway=cedarGatewayPayload("Respuesta", "es-GT");
 assert.equal(gateway.text,"Respuesta");
 assert.equal(gateway.speed,.9);
-assert.equal(gateway.language,"es-419");
+assert.equal(gateway.language,undefined);
 assert.equal(gateway.outputFormat,"mp3");
-assert.equal(Object.hasOwn(gateway,"voice"),false);
-assert.match(speech,/GATEWAY_SPEECH_MODEL="fish-audio\/s2\.1-pro-free"/);
+assert.equal(gateway.voice,"onyx");
+assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1"/);
 assert.doesNotMatch(speech,/openai\/tts-1-hd|GATEWAY_VOICE="echo"/);
 assert.match(speech,/X-GSCG-Voice/);
 assert.match(html,/X-GSCG-Voice/);
@@ -55,4 +55,4 @@ assert.match(spokenClosure,/round\.announced\.complete=false/);
 
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_no_result_timeout",build:"V363",transportFailure:"no_speech",transcript:"PRIVADO"}),{event:"browser_fallback_no_result_timeout",build:"V363",context:"round",turn:0,elapsedMs:0,transportFailure:"no_speech"});
 
-console.log("PASS V362/V378 · un toque + watchdog + Fish Audio 0.90 + cierre hablado y persistencia progresiva");
+console.log("PASS V362/V378 · un toque + watchdog + TTS-1/Onyx 0.90 + cierre hablado y persistencia progresiva");

@@ -28,16 +28,16 @@ try {
     assert.equal(res.code, 200, `turn ${turn}`);
     assert.equal(res.body.toString(), 'SIMULATED_AUDIO');
     const request = requests.at(-1);
-    assert.equal(request.headers['ai-model-id'], 'fish-audio/s2.1-pro-free');
-    assert.equal(request.body.language, 'es-419');
+    assert.equal(request.headers['ai-model-id'], 'openai/tts-1');
+    assert.equal(request.body.language, undefined);
     assert.equal(request.body.speed, 0.9);
-    assert.equal(Object.hasOwn(request.body, 'voice'), false, 'R42 has no fixed speaker ID');
-    assert.equal(res.headers['X-GSCG-Voice'], 's2.1-es-419');
+    assert.equal(request.body.voice, 'onyx', 'Every turn must use the same fixed speaker');
+    assert.equal(res.headers['X-GSCG-Voice'], 'onyx');
   }
   assert.equal(requests.length, 100);
 } finally {
   globalThis.fetch = originalFetch;
   console.info = originalInfo;
 }
-console.log('PASS: 100 simulated TTS turns preserve R42 model, es-419 and speed 0.90.');
+console.log('PASS: 100 simulated TTS turns use TTS-1/Onyx and speed 0.90.');
 console.log('NOT VERIFIED: microphone, audible identity, live provider, latency, universal answers.');

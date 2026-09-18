@@ -82,3 +82,25 @@ console.log('PASS simple voice questions use supported none; medical/financial/n
 
 for(const latencySensitive of [true,false]){let sent;await requestUniversalResponse({input:query,reasoning:{effort:'medium'}},{apiKey:'',gatewayToken:'simulated',latencySensitive,fetchImpl:async(_url,options)=>{sent=JSON.parse(options.body);return{ok:true,status:200,json:async()=>({output:[]})}}});assert.equal(sent.model,'openai/gpt-5.6-sol');assert.equal(sent.reasoning.effort,'medium');}
 console.log('PASS explicit deep analysis retains original model and medium reasoning for voice and text.');
+
+// A failed standard voice request must reach the healthy fallback without
+// repeating the failed upstream or honoring its five-second retry delay.
+for(const failure of ['http','timeout']){
+ const calls=[];let sleeps=0;
+ const result=await requestUniversalResponse({input:'Pregunta general.',reasoning:{effort:'low'}},{
+  apiKey:'simulated',gatewayToken:'simulated',latencySensitive:true,
+  sleepImpl:async()=>{sleeps++},
+  fetchImpl:async(url,options)=>{
+   calls.push(url);
+   if(url.includes('api.openai.com')){
+    if(failure==='timeout')return new Promise((resolve,reject)=>options.signal.addEventListener('abort',()=>reject(new DOMException('Timeout','AbortError')),{once:true}));
+    return new Response(JSON.stringify({error:{code:'rate_limit_exceeded'}}),{status:429,headers:{'retry-after':'5'}});
+   }
+   return Response.json({output:[]});
+  }
+ });
+ assert.equal(result.ok,true);assert.equal(result.gateway,true);
+ assert.deepEqual(calls,['https://api.openai.com/v1/responses','https://ai-gateway.vercel.sh/v1/responses']);
+ assert.equal(sleeps,0);
+}
+console.log('PASS simulated rate limit and stalled upstream: one direct attempt, no retry sleep, healthy Gateway fallback. Not a two-second end-to-end measurement.');

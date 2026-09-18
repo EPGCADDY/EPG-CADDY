@@ -5,7 +5,7 @@ import {streamUniversalPcm} from './api/_lib/universal-pcm.js';
 
 const events=[];let upstream,requests=0;
 const running=streamUniversalPcm('Primera respuesta.',{apiKey:'simulated',emit:e=>events.push(e),fetchImpl:async(url,request)=>{
-  requests++;const body=JSON.parse(request.body);assert.equal(body.voice,'onyx');assert.equal(body.response_format,'pcm');
+  requests++;const body=JSON.parse(request.body);assert.equal(body.model,'tts-1');assert.equal(body.voice,'onyx');assert.equal(body.speed,0.9);assert.equal(body.instructions,undefined);assert.equal(body.response_format,'pcm');
   return new Response(new ReadableStream({start(c){upstream=c;c.enqueue(new Uint8Array([0,0,0,64]))}}));
 }});
 await new Promise(r=>setImmediate(r));

@@ -58,15 +58,14 @@ assert.match(html,/if\(!isTeamMatchRound\(\)\)return baseClosureSpeechIfDue\(\)/
 assert.match(html,/segmentSpeech\("Primera vuelta\.",FRONT\)/);
 assert.equal(`Primera vuelta. ${["JAIME, 7 arriba","GUSTAVO, 7 abajo"].join(". ")}.`,"Primera vuelta. JAIME, 7 arriba. GUSTAVO, 7 abajo.");
 
-assert.match(speech,/model:"gpt-4o-mini-tts"/);
-assert.match(speech,/GATEWAY_SPEECH_MODEL="fish-audio\/s2\.1-pro-free"/);
-assert.match(speech,/GATEWAY_VOICE="s2\.1-es-419"/);
+// Owner order, 18 September: unify the speaker across all answers.
+// Historical microphone approvals above remain unchanged.
+assert.match(speech,/model:"tts-1"/);
+assert.match(speech,/GATEWAY_SPEECH_MODEL="openai\/tts-1"/);
+assert.match(speech,/GATEWAY_VOICE="onyx"/);
 assert.match(speech,/const SPEED=\.9/);
-assert.match(speech,/language:"es-419"/);
-assert.match(speech,/Nunca uses acento de España, acento anglosajón, Spanglish/);
-assert.match(speech,/sin ceceo español/);
-assert.doesNotMatch(speech,/openai\/tts-1-hd|const GATEWAY_VOICE="onyx"/);
-assert.doesNotMatch(speech,/openai\/gpt-4o-mini-tts/);
+assert.match(speech,/voice:VOICE/);
+assert.doesNotMatch(speech,/fish-audio|gpt-4o-mini-tts/);
 assert.match(html,/function sealBrowserVoiceProgress\([\s\S]*?consumeLiveRoundClosures\(\)/);
 assert.match(html,/if\(progressive\.closure\)void speakClosure\(progressive\.closure\)/);
 assert.match(html,/BROWSER_VOICE_SILENCE_MS=1200/);

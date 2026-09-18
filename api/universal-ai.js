@@ -55,7 +55,9 @@ export async function requestUniversalResponse(body,{apiKey,gatewayToken,deadlin
   const startedAt=Date.now();
   // Spoken standard turns favor a low-latency full model; explicit deep analysis keeps the existing models.
   const fastVoice=latencySensitive&&!['medium','high','xhigh'].includes(body.reasoning?.effort);
-  const attempts=fastVoice?[{model:'gpt-4.1',delayMs:0},...OPENAI_ATTEMPTS]:OPENAI_ATTEMPTS;
+  // A spoken standard turn must not queue several retries at the same upstream.
+  // Reserve time for Gateway failover instead of exhausting the whole deadline.
+  const attempts=fastVoice?[{model:'gpt-4.1',delayMs:0}]:OPENAI_ATTEMPTS;
   const gatewayModels=fastVoice?['openai/gpt-4.1',...GATEWAY_MODELS]:GATEWAY_MODELS;
   const payloadFor=model=>{const payload={...body,model};if(model==='gpt-4.1'||model==='openai/gpt-4.1')delete payload.reasoning;return payload};
   if(typeof onTextDelta==="function")body={...body,stream:true};
@@ -69,7 +71,7 @@ export async function requestUniversalResponse(body,{apiKey,gatewayToken,deadlin
     }
     const remainingMs=deadlineMs-Date.now();
     if(remainingMs<500)break;
-    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),remainingMs);
+    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),fastVoice?Math.min(2500,remainingMs):remainingMs);
     let response,payload=null;
     try{
       response=await fetchImpl("https://api.openai.com/v1/responses",{
@@ -93,10 +95,11 @@ export async function requestUniversalResponse(body,{apiKey,gatewayToken,deadlin
     console.warn(`${label} upstream retry`,JSON.stringify({status,providerCode,attempt:index+1,model:attempt.model,retryable,requestId:String(response?.headers?.get?.("x-request-id")||"").slice(0,120)||null}));
     if(!retryable||providerCode==="credit_balance_exhausted")break;
   }
-  if((!apiKey||lastFailure.providerCode==="credit_balance_exhausted")&&deadlineMs-Date.now()>=500){
+  const gatewayEligible=!apiKey||lastFailure.providerCode==="credit_balance_exhausted"||fastVoice;
+  if(gatewayEligible&&deadlineMs-Date.now()>=500){
     gatewayToken=await resolveGatewayToken(gatewayToken);
   }
-  if((!apiKey||lastFailure.providerCode==="credit_balance_exhausted")&&gatewayToken&&deadlineMs-Date.now()>=500){
+  if(gatewayEligible&&gatewayToken&&deadlineMs-Date.now()>=500){
     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),deadlineMs-Date.now());
     try{
       const response=await fetchImpl("https://ai-gateway.vercel.sh/v1/responses",{

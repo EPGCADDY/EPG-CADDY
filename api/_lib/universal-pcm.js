@@ -6,12 +6,11 @@ export const UNIVERSAL_GATEWAY_PCM_MODEL='openai/tts-1';
 export async function streamUniversalPcm(text,{emit,signal,fetchImpl=fetch,apiKey=process.env.OPENAI_API_KEY,gatewayToken}={}){
   const input=String(text||'').trim();
   if(!input||input.length>4000)throw new Error('UNIVERSAL_PCM_TEXT_INVALID');
-  const instructions='Locutor masculino adulto. Español latinoamericano natural para Guatemala. Ritmo constante, dicción clara. Lee exactamente el texto completo sin agregar ni repetir contenido.';
   let response;
   if(apiKey){
     response=await fetchImpl('https://api.openai.com/v1/audio/speech',{method:'POST',signal,
       headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},
-      body:JSON.stringify({model:'gpt-4o-mini-tts',voice:UNIVERSAL_PCM_VOICE,input,instructions,speed:0.9,response_format:'pcm'})});
+      body:JSON.stringify({model:'tts-1',voice:UNIVERSAL_PCM_VOICE,input,speed:0.9,response_format:'pcm'})});
     if(response.ok){
       emit({type:'audio_start',voice:UNIVERSAL_PCM_VOICE,sampleRate:24000,format:'pcm_s16le',progressive:true});
       const reader=response.body.getReader();let bytes=0;
@@ -22,7 +21,7 @@ export async function streamUniversalPcm(text,{emit,signal,fetchImpl=fetch,apiKe
       if(!bytes||bytes%2)throw new Error('UNIVERSAL_PCM_INCOMPLETE');
       emit({type:'audio_end'});return {progressive:true,bytes};
     }
-    // Only before any sound: same named voice through a catalog-supported Gateway model.
+    // Only before any sound: preserve both model and speaker through Gateway.
     await response.body?.cancel().catch(()=>{});
   }
   const token=await resolveGatewayToken(gatewayToken);
