@@ -43,8 +43,26 @@ export default async function handler(req,res){
       await purgeExpiredAccess();return res.status(200).json({ok:true});
     }
     if(action==="create"){
-      const owner=await requireOwner(req),origin=inviteOrigin(),grant=await createGrant(owner);
-      return res.status(201).json({ok:true,id:grant.id,expiresAt:grant.expiresAt,url:`${origin}/invite/${encodeURIComponent(grant.token)}`});
+      const owner=await requireOwner(req);
+      try{
+        const origin=inviteOrigin(),grant=await createGrant(owner);
+        return res.status(201).json({ok:true,id:grant.id,expiresAt:grant.expiresAt,url:`${origin}/invite/${encodeURIComponent(grant.token)}`});
+      }catch(error){
+        if(error?.code!=="DATABASE_NOT_CONFIGURED"||process.env.VERCEL_ENV!=="preview")throw error;
+        const productionOrigin=String(process.env.APP_PUBLIC_ORIGIN||"https://golf-sc-gt-lab.vercel.app").replace(/\/$/,"");
+        const forwarded=await fetch(`${productionOrigin}/api/app-access?action=create`,{
+          method:"POST",
+          headers:{Accept:"application/json",Cookie:String(req.headers.cookie||"")},
+          redirect:"manual",
+          cache:"no-store"
+        });
+        const data=await forwarded.json().catch(()=>({}));
+        if(!forwarded.ok||!data?.url){
+          const code=String(data?.code||`HTTP_${forwarded.status}`);
+          throw Object.assign(new Error(code),{code,status:forwarded.status||503});
+        }
+        return res.status(201).json(data);
+      }
     }
     if(action==="revoke"){
       const owner=await requireOwner(req),body=await readJson(req,8_000),revoked=await revokeGrant(body?.id,owner);
