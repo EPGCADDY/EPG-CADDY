@@ -839,7 +839,7 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 .round-grid-gross{min-height:48px;font-size:20px!important}.round-manual-entry{margin-top:16px}
 .device-closure-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:stretch;padding:12px;border:1px solid #414b41;border-radius:12px;margin:12px 0;background:#0b100b}
 .device-closure-title{grid-column:1/-1;color:var(--lime);font-weight:900;font-size:15px;letter-spacing:.6px;text-align:left}
-.device-closure-controls button{min-width:0;min-height:58px;padding:8px 5px;border:1px solid #6eea28;border-radius:8px;background:#0b100b;color:#b4ffa0;font-weight:800;font-size:11px;line-height:1.15}.device-closure-controls span{grid-column:1/-1;font-size:12px;color:#b6bfb6}
+.device-closure-controls button{min-width:0;min-height:58px;padding:8px 5px;border:1px solid #6eea28;border-radius:8px;background:#0b100b;color:#b4ffa0;font-weight:800;font-size:11px;line-height:1.15}.device-closure-controls span{grid-column:1/-1;font-size:12px;color:#b6bfb6;text-align:center;width:100%}
 @media(max-width:800px){
  .course-options{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
  .game-mode-columns{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
@@ -858,7 +858,13 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
   #setupStep1 .game-mode-columns{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
   #setupStep1 .game-mode-column{display:contents!important}
 }
-</style></head>
+<style id="lab-mobile-bottom-safearea-20260919">
+@media(max-width:800px){
+  .app{padding-bottom:max(150px,calc(env(safe-area-inset-bottom,0px) + 120px))!important}
+  .round-actions,.round-secondary-actions{position:relative;z-index:2}
+  .round-secondary-actions{margin-bottom:24px!important}
+}
+</style></style></head>
 <body>
 
 <div class="overlay" id="skinsOverlay" aria-hidden="true">
