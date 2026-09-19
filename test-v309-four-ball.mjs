@@ -141,7 +141,7 @@ assert.match(html,/function fourBallHoleStanding/);
 assert.match(html,/fourBallStatus\(\)\.closed/);
 assert.match(html,/MEJOR NETO POR PAREJA/);
 assert.match(html,/CONTROL MANUAL · \$\{stable\?"STABLEFORD":isFourBallRound\(\)\?"FOUR BALL"/);
-assert.match(html,/Modalidad Four Ball por parejas/);
+assert.doesNotMatch(html,/cfg\.audio\.input\.transcription/,"Retired dictation must not return");
 assert.match(html,/round\.fourBall=\{\.\.\.state,holes:undefined\}/);
 assert.match(worker,/"\/four-ball\.js"/);
 assert.match(mobile,/"four-ball\.js"/);

@@ -159,14 +159,6 @@
     }catch{}
     const overlay=document.getElementById("stablefordSetupOverlay"),card=overlay?.querySelector(".stableford-setup-card");
     if(!overlay||!card)return false;
-    const stablefordVoiceActive=()=>overlay.classList.contains("visible")||(typeof round!=="undefined"&&round?.mode==="stableford");
-
-    // Stableford usa exactamente la ruta Realtime base ya probada de GRUPAL.
-
-
-    // Micrófono Stableford: handler base GRUPAL sin wrapper intermedio.
-
-
     if(!document.getElementById("stablefordTournamentName")){
       const facts=document.getElementById("stablefordSetupFacts");
       const wrap=document.createElement("label");
@@ -174,105 +166,15 @@
       wrap.innerHTML='<span>NOMBRE DEL TORNEO</span><input id="stablefordTournamentName" maxlength="80" autocomplete="off" placeholder="NOMBRE DEL TORNEO">';
       (facts?.parentNode||card).insertBefore(wrap,facts?.nextSibling||card.firstChild);
     }
-    if(!document.getElementById("stablefordSetupMicWrap")){
-      const course=document.getElementById("stablefordSetupCourse");
-      const parent=course?.parentNode||card,anchor=course?.nextSibling||card.firstChild;
-      const prompt=document.createElement("div");
-      prompt.className="voice-prompt stableford-voice-prompt";
-      prompt.innerHTML='<strong>REGISTRO DE JUGADORES · CADDIE UNIVERSAL</strong><span>REGISTRA O PREGUNTA CUALQUIER TEMA</span>';
-      const method=document.createElement("section");
-      method.className="registration-method stableford-registration-method";
-      method.setAttribute("aria-label","Método 1 Dictado Stableford");
-      method.innerHTML='<div class="newbie-registration-guide" aria-label="Instrucciones de registro Stableford por posición"><div class="newbie-guide-title">DICTA ASÍ:</div><div>1-# JUGADOR</div><div>2-NOMBRE</div><div class="newbie-guide-player">HASTA 6 JUGADORES</div><div>3-OK</div></div><div class="nr-mic stableford-registration-mic" id="stablefordSetupMicWrap"><button class="mic-hit" id="stablefordSetupMic" type="button" aria-label="Abrir Caddie universal o dictar jugadores Stableford"></button><div class="mic-visual" aria-hidden="true"><svg class="setup-mic-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></div></div>';
-      parent.insertBefore(prompt,anchor);
-      parent.insertBefore(method,anchor);
-      const hit=document.getElementById("stablefordSetupMic");
-      const activate=e=>{if(typeof fireMicActivation==="function")return fireMicActivation("setup",e);return false};
-      if(hit){
-        if(globalThis.PointerEvent)hit.addEventListener("pointerup",activate,{passive:false,capture:true});
-        else hit.addEventListener("touchend",activate,{passive:false,capture:true});
-        hit.addEventListener("click",e=>{if(e.detail===0)activate(e)},{passive:false,capture:true});
-      }
-    }
     if(!document.getElementById("stableford-ui-bridge-style")){
       const style=document.createElement("style");style.id="stableford-ui-bridge-style";
       style.textContent='.stableford-tournament-field{display:grid;gap:6px;margin:12px 0;text-align:left;color:#fff;font:800 11px Arial,sans-serif}.stableford-tournament-field input{width:100%;height:44px;border:1px solid var(--line);border-radius:6px;background:#050505;color:#fff;padding:0 12px;font:800 14px Arial,sans-serif;text-transform:uppercase}';
       document.head.appendChild(style);
     }
-    const stableStatus=document.getElementById("stablefordSetupStatus"),baseStatus=document.getElementById("setupStatus"),baseMic=document.getElementById("setupMicWrap"),stableMic=document.getElementById("stablefordSetupMicWrap");
-    const syncVoiceUi=()=>{if(!overlay.classList.contains("visible"))return;if(stableStatus&&!stableStatus.classList.contains("error")&&baseStatus?.textContent)stableStatus.textContent=baseStatus.textContent;if(stableMic&&baseMic)stableMic.classList.toggle("active",baseMic.classList.contains("active"))};
-    if(!overlay.__stablefordVoiceBridge){
-      overlay.__stablefordVoiceBridge=true;
-      const observer=new MutationObserver(syncVoiceUi);if(baseStatus)observer.observe(baseStatus,{subtree:true,childList:true,characterData:true,attributes:true});if(baseMic)observer.observe(baseMic,{attributes:true,attributeFilter:["class"]});const detected=document.getElementById("detectedBody");if(detected)observer.observe(detected,{subtree:true,childList:true,attributes:true,characterData:true});
-      overlay.addEventListener("transitionend",syncVoiceUi);
-    }
     const start=document.getElementById("startStablefordRound");
     if(start&&!start.__stablefordTournamentBridge){
       start.__stablefordTournamentBridge=true;
       start.addEventListener("click",()=>{const value=cleanName(document.getElementById("stablefordTournamentName")?.value||"");setTimeout(()=>{try{if(typeof round!=="undefined"&&round?.mode==="stableford"){round.tournament=value?{name:value}:null;if(typeof persist==="function")persist();if(typeof render==="function")render()}}catch(err){console.error("Stableford tournament",err)}},0)});
-    }
-
-    if(typeof setupSessionConfig==="function"&&!setupSessionConfig.__stablefordRegistrationPrompt){
-      const baseSetupSessionConfig=setupSessionConfig;
-      setupSessionConfig=function(){
-        const config=baseSetupSessionConfig();
-        if(overlay.classList.contains("visible")&&config?.audio?.input?.transcription)config.audio.input.transcription.prompt="Golf Guatemala con Caddie universal. Transcribe literalmente español natural de cualquier tema. Registro Stableford Scratch: conserva posiciones y nombres: Jugador 1 Miguel; Jugador 2 y el nombre pronunciado; hasta Jugador 6. No agregues handicap ni marcas porque la categoría los asigna automáticamente.";
-        return config;
-      };
-      setupSessionConfig.__stablefordRegistrationPrompt=true;
-    }
-
-    let stablefordParseSetupTranscript=null;
-    if(typeof parseSetupTranscript==="function"&&!parseSetupTranscript.__stablefordScratchVoice){
-      const baseParseSetupTranscript=parseSetupTranscript;
-      stablefordParseSetupTranscript=function(transcript){
-        if(!overlay.classList.contains("visible"))return baseParseSetupTranscript(transcript);
-        const active=document.querySelector("#stablefordSetupOverlay [data-stableford-category].active")||document.querySelector("#stablefordSetupOverlay [data-stableford-category][aria-pressed='true']");
-        const category=active?.getAttribute("data-stableford-category")||(typeof stablefordSetupCategory!=="undefined"?stablefordSetupCategory:"senior");
-        const cfg=categoryConfig(category);
-        if(!cfg||typeof normalizeSpeech!=="function"||typeof playerPositionToken!=="function")return{ok:false,speech:"Error"};
-        const tokens=normalizeSpeech(transcript).split(" ").filter(Boolean);
-        const changes=[];let i=0;
-        while(i<tokens.length){
-          while(i<tokens.length&&["y","luego","despues","después","jugadores","jugadoras"].includes(tokens[i]))i++;
-          if(i>=tokens.length)break;
-          if(["jugador","jugadora"].includes(tokens[i]))i++;
-          const position=playerPositionToken(tokens[i]);
-          if(!position||position<1||position>MAX_PLAYERS)return{ok:false,speech:"Error"};
-          i++;
-          const start=i;
-          while(i<tokens.length){
-            if(["jugador","jugadora"].includes(tokens[i])&&playerPositionToken(tokens[i+1]))break;
-            i++;
-          }
-          const nameTokens=tokens.slice(start,i);
-          while(nameTokens.length&&["y","luego","despues","después"].includes(nameTokens[nameTokens.length-1]))nameTokens.pop();
-          const rawName=nameTokens.join(" ").trim();
-          if(!rawName)return{ok:false,speech:"Error"};
-          const name=typeof titleName==="function"?titleName(rawName):cleanName(rawName);
-          changes.push({position,name,handicap:0,tee:cfg.tee,matrix:"Caballeros"});
-          if(changes.length>MAX_PLAYERS)return{ok:false,speech:"Error"};
-        }
-        return changes.length?{ok:true,changes}:{ok:false,speech:"Error"};
-      };
-      stablefordParseSetupTranscript.__stablefordScratchVoice=true;
-      parseSetupTranscript=stablefordParseSetupTranscript;
-    }
-
-    if(typeof applySetupChanges==="function"&&!applySetupChanges.__stablefordRegistrationTarget){
-      const baseApplySetupChanges=applySetupChanges;
-      const applyToActiveRegistration=function(changes){
-        if(!overlay.classList.contains("visible"))return baseApplySetupChanges(changes);
-        if(!Array.isArray(changes)||!changes.length)return{ok:false,speech:"Error"};
-        const targets=[...document.querySelectorAll("[data-stableford-name]")],next=targets.map(target=>cleanName(target.value));
-        for(const change of changes){const index=Number(change.position)-1,name=cleanName(change.name);if(!Number.isInteger(index)||index<0||index>=MAX_PLAYERS||!name)return{ok:false,speech:"Error"};next[index]=name}
-        next.forEach((name,index)=>{const target=targets[index];if(!target||target.value===name)return;target.value=name;target.dispatchEvent(new Event("input",{bubbles:true}));target.dispatchEvent(new Event("change",{bubbles:true}))});
-        if(stableStatus&&!stableStatus.classList.contains("error"))stableStatus.textContent="JUGADORES DETECTADOS · REVISA Y PRESIONA OK";
-        if(typeof listening!=="undefined"&&listening&&typeof setVoice==="function")setVoice(false);
-        return{ok:true,speech:""};
-      };
-      applyToActiveRegistration.__stablefordRegistrationTarget=true;
-      applySetupChanges=applyToActiveRegistration;
     }
 
     const stableSelector=document.querySelector('[data-course-key="stableford"]');
