@@ -13,6 +13,106 @@
 
 ---
 
+## EMPIEZA AQUÍ — ¿QUÉ QUIERES HACER?
+
+Esta es la primera guía que debe leer cualquier usuario que abra Golf Score Card GT por primera vez. **No se asume conocimiento previo de la aplicación.**
+
+Si la aplicación abre directamente en **REGISTRO DE JUGADORES**, primero decide qué quieres hacer:
+
+### 1. QUIERO JUGAR Y LLEVAR LOS SCORES DE MI GRUPO
+
+1. En **REGISTRO DE JUGADORES**, escribe los jugadores de tu grupo.
+2. Completa NOMBRE, CATEGORÍA, HDCP y MARCAS según corresponda.
+3. Toca **OK**.
+4. Revisa **CONFIRMACIÓN**.
+5. Inicia la ronda.
+6. Durante el juego anota los scores por voz o Control Manual.
+7. Si el grupo pertenece a un torneo LIVE, abre **COMPARTIR LIVE**, activa el grupo e ingresa el código del torneo.
+
+**Resultado:** tu Score Card alimenta automáticamente la clasificación del torneo.
+
+### 2. QUIERO VER UN TORNEO EN VIVO
+
+1. Abre **CENTRO LIVE / TORNEO LIVE**.
+2. En **CENTRO DE TORNEOS**, toca el torneo que quieres ver.
+3. Si no aparece, toca **+ AGREGAR OTRO TORNEO** y pega el enlace que te compartieron.
+4. Dentro del torneo elige:
+   - **GENERAL**
+   - **CATEGORÍAS**
+   - **INDIVIDUAL**
+   - **AGREGAR A MI TABLERO**
+
+**Resultado:** puedes consultar resultados sin editar ninguna Score Card.
+
+### 3. QUIERO VER LA GENERAL
+
+1. Entra al torneo.
+2. Toca **GENERAL**.
+3. Verás todos los jugadores publicados, su posición, grupo, hoyo actual, Gross, Neto y resultado.
+4. Si existen varios clubes/campos, usa **TODOS LOS CLUBES / CAMPOS** para filtrar.
+
+### 4. QUIERO VER UNA CATEGORÍA
+
+1. Entra al torneo.
+2. Toca **CATEGORÍAS**.
+3. Selecciona la categoría:
+   - CAMPEONATO
+   - A
+   - B
+   - C
+   - D
+   - FEMENINA
+   - SENIOR
+   - S.SENIOR
+4. Si lo deseas, toca **VER DETALLE LIVE DE CATEGORÍA**.
+
+### 5. QUIERO VER A UNA PERSONA ESPECÍFICA
+
+1. Entra al torneo.
+2. Toca **INDIVIDUAL** o usa el buscador de jugadores.
+3. Escribe el nombre.
+4. Abre el jugador que quieres consultar.
+
+### 6. QUIERO ARMAR MI PROPIO TABLERO
+
+1. Entra al torneo.
+2. Toca **AGREGAR A MI TABLERO**.
+3. Busca un jugador.
+4. Toca **+ SEGUIR**.
+5. Repite con todos los jugadores que quieras.
+6. Toca **INDIVIDUAL** para abrir **MI TABLERO**.
+
+**Resultado:** tu tablero conserva únicamente las personas o grupos que elegiste, incluso cuando cambias de torneo.
+
+### 7. QUIERO MOSTRAR EL TORNEO EN UNA TV O PANTALLA GIGANTE
+
+1. Abre el torneo desde el Centro LIVE.
+2. Abre **MÁS OPCIONES**.
+3. Toca **PANTALLA PÚBLICA**.
+4. Conecta el dispositivo al monitor o TV mediante HDMI, AirPlay, Chromecast o navegador directo.
+5. Deja la presentación abierta.
+
+La pantalla pública:
+- es sólo lectura;
+- actualiza los datos LIVE cada 3 segundos;
+- cambia automáticamente cada 10 segundos;
+- recorre GENERAL y las categorías que tengan jugadores;
+- no permite modificar scores.
+
+### REGLA DE ORIENTACIÓN
+
+Ninguna pantalla del manual puede explicar una función sin indicar:
+- **DÓNDE ESTOY**;
+- **QUÉ QUIERO HACER**;
+- **QUÉ BOTÓN TOCO**;
+- **QUÉ DEBE PASAR DESPUÉS**;
+- **CÓMO REGRESO**.
+
+Toda captura, gráfica o página del manual debe llevar flechas, números o llamadas visuales cuando exista más de una acción posible.
+
+---
+
+
 ## 1. Propósito
 
 Este archivo conserva, de la A a la Z, la memoria funcional de GOLF Score Card GT. GRUPAL. Su objetivo es impedir que una decisión aprobada se pierda, que una función nueva contradiga una regla anterior o que la aplicación llegue al mercado con comportamientos incompletos.
