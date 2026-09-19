@@ -945,7 +945,19 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
   .round-actions button,
   .round-secondary-actions button{font-size:11px!important}
 }
-</style></head>
+</style><style id="registration-missing-dialog-20260919">
+#registrationMissingOverlay{z-index:4200;display:none!important;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.88)}
+#registrationMissingOverlay.visible{display:flex!important}
+.registration-missing-card{width:min(430px,100%);padding:24px 20px;border:1px solid #4b4f50;border-radius:16px;background:#050606;box-shadow:0 20px 60px rgba(0,0,0,.65);text-align:center;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.registration-missing-card h1{margin:0 0 14px;color:var(--lime);font-size:20px;font-weight:900;letter-spacing:.7px}
+.registration-missing-player{color:#fff;font-size:19px;font-weight:900;margin-bottom:10px}
+.registration-missing-message{color:#fff;font-size:16px;font-weight:800;line-height:1.35;margin-bottom:20px}
+.registration-missing-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.registration-missing-actions button{min-height:52px;border-radius:11px;background:#050505;font:900 14px/1 Arial,sans-serif}
+#registrationMissingCorrect{border:1px solid var(--lime);color:var(--lime)}
+#registrationMissingIgnore{border:1px solid #888;color:#fff}
+</style>
+</head>
 <body>
 
 <div class="overlay" id="skinsOverlay" aria-hidden="true">
@@ -999,6 +1011,18 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 <div class="overlay" id="cardLibraryDeleteOverlay" aria-hidden="true"><section class="card-library-delete-card" role="dialog" aria-modal="true" aria-labelledby="cardLibraryDeleteTitle"><h1 id="cardLibraryDeleteTitle">ELIMINAR RONDA</h1><p id="cardLibraryDeleteText">¿ELIMINAR ESTA RONDA DEL HISTORIAL?</p><div class="card-library-delete-actions"><button class="card-library-delete-cancel" type="button" id="cancelCardLibraryDelete">CANCELAR</button><button class="card-library-delete-confirm" type="button" id="confirmCardLibraryDelete">ELIMINAR</button></div></section></div>
 
 <div class="overlay" id="historyInsightsOverlay" aria-hidden="true"><section class="history-insights-panel"><div class="screen-back-row"><button type="button" class="screen-back-button" id="closeHistoryInsights">ATRÁS</button></div><h1>ESTADÍSTICAS DEL HISTORIAL</h1><div class="history-insights-query"><input id="historyInsightsQuery" type="search" placeholder="PROMEDIO ÚLTIMO MES HOYO 18" aria-label="Consulta histórica escrita" autocomplete="off"><button type="button" id="runHistoryInsights">CONSULTAR</button></div><div class="history-insights-quick"><button type="button" data-history-query="REPORTE DEL ÚLTIMO MES">PROMEDIOS</button><button type="button" data-history-query="MEJOR Y PEOR DEL ÚLTIMO MES">MEJOR / PEOR</button><button type="button" data-history-query="CONSISTENCIA DEL ÚLTIMO MES">CONSISTENCIA</button><button type="button" data-history-query="TENDENCIA DEL ÚLTIMO MES">TENDENCIA</button><button type="button" data-history-query="ESTADÍSTICAS DE PUNTOS STABLEFORD DEL ÚLTIMO MES">PUNTOS STABLEFORD</button></div><output class="history-insights-result" id="historyInsightsResult">ESCRIBE UNA CONSULTA O ELIGE UNA OPCIÓN.</output><p class="history-insights-note">CONSULTA PRIVADA DEL HISTORIAL GUARDADO EN ESTE DISPOSITIVO.</p></section></div>
+
+<div class="overlay" id="registrationMissingOverlay" aria-hidden="true">
+  <section class="registration-missing-card" role="dialog" aria-modal="true" aria-labelledby="registrationMissingTitle">
+    <h1 id="registrationMissingTitle">DATO FALTANTE</h1>
+    <div class="registration-missing-player" id="registrationMissingPlayer">—</div>
+    <div class="registration-missing-message" id="registrationMissingMessage">—</div>
+    <div class="registration-missing-actions">
+      <button type="button" id="registrationMissingCorrect">CORREGIR</button>
+      <button type="button" id="registrationMissingIgnore">IGNORAR</button>
+    </div>
+  </section>
+</div>
 
 <div class="overlay" id="setupOverlay">
   <section class="new-round-card" id="setupStep1">
@@ -1322,7 +1346,7 @@ function enforceCanonicalDraftNames(){
   return changed;
 }
 const PLAYER_SLOT_SEQUENCE=[1,3,5,2,4,6];
-const TOURNAMENT_CATEGORIES={championship:"CAMPEONATO",a:"A",b:"B",c:"C",d:"D",female:"FEMENINA",senior:"SENIOR",super_senior:"S.SENIOR"};
+const TOURNAMENT_CATEGORIES={championship:"CAMPEONATO",a:"A",b:"B",c:"C",d:"D",female:"FEMENINA",senior:"SENIOR",super_senior:"S.SENIOR",none:"SIN CATEGORÍA"};
 const CATEGORY_DEFAULT_TEES={championship:"Negro",a:"Azul",b:"Blanco",c:"Blanco",d:"Blanco",female:"Rojo",senior:"Blanco",super_senior:"Amarillo"};
 function normalizeTournamentCategory(value){const raw=String(value||"").trim().toLowerCase().replace(/[.\s-]+/g,"_");return TOURNAMENT_CATEGORIES[raw]?raw:""}
 function tournamentCategoryLabel(value){const key=normalizeTournamentCategory(value);return key?TOURNAMENT_CATEGORIES[key]:"SIN CATEGORÍA"}
@@ -1523,6 +1547,50 @@ function manualRowFromPlayer(player){const countryCode=normalizeWhatsAppCountryC
 function seedManualDraftRowsFromPlayers(){manualDraftRows=Array.from({length:6},(_,i)=>draftPlayers[i]?manualRowFromPlayer(draftPlayers[i]):emptyManualDraftRow())}
 function manualRowHasData(row){return !!(String(row?.name||"").trim()||String(row?.handicap??"").trim())}
 function setManualRegistrationStatus(message){const status=$("setupStatus");if(status){status.classList.remove("listening");status.textContent=message}return false}
+function registrationMissingPrompt(index,field){
+  const row=manualDraftRows[index]||emptyManualDraftRow(),name=canonicalPlayerName(row.name)||`JUGADOR ${index+1}`,overlay=$("registrationMissingOverlay"),player=$("registrationMissingPlayer"),message=$("registrationMissingMessage"),correct=$("registrationMissingCorrect"),ignore=$("registrationMissingIgnore");
+  if(!overlay||!player||!message||!correct||!ignore)return Promise.resolve(false);
+  player.textContent=name.toUpperCase();
+  message.textContent=field==="category"?"FALTA CATEGORÍA":"FALTA HDCP";
+  overlay.classList.add("visible");overlay.setAttribute("aria-hidden","false");
+  return new Promise(resolve=>{
+    const finish=ignored=>{
+      overlay.classList.remove("visible");overlay.setAttribute("aria-hidden","true");
+      correct.onclick=null;ignore.onclick=null;
+      if(ignored){
+        if(field==="category"){
+          row.category="none";
+          const control=document.querySelector(`[data-draft-category="${index}"]`);
+          if(control){if(!control.querySelector('option[value="none"]'))control.insertAdjacentHTML("beforeend",'<option value="none">SIN CATEGORÍA</option>');control.value="none"}
+        }else{
+          row.handicap="0";
+          const control=document.querySelector(`[data-draft-hcp="${index}"]`);
+          if(control)control.value="0";
+        }
+        row.dirty=true;
+      }else{
+        const selector=field==="category"?`[data-draft-category="${index}"]`:`[data-draft-hcp="${index}"]`;
+        setTimeout(()=>document.querySelector(selector)?.focus(),0);
+      }
+      resolve(ignored);
+    };
+    correct.onclick=()=>finish(false);
+    ignore.onclick=()=>finish(true);
+  });
+}
+async function reviewMissingCategoryAndHandicap(){
+  for(let i=0;i<manualDraftRows.length;i++){
+    const row=manualDraftRows[i]||emptyManualDraftRow();if(!manualRowHasData(row))continue;
+    if(!normalizeTournamentCategory(row.category)){
+      const ignored=await registrationMissingPrompt(i,"category");if(!ignored)return false;
+    }
+    const handicapText=String(row.handicap??"").trim();
+    if(handicapText===""||!Number.isSafeInteger(Number(handicapText))){
+      const ignored=await registrationMissingPrompt(i,"handicap");if(!ignored)return false;
+    }
+  }
+  return true;
+}
 function syncDraftPlayersFromManualRows({strict=false,renderAfter=false}={}){
   const next=[],seen=new Set(),limit=6;let incomplete=null;
   for(let i=0;i<limit;i++){
@@ -1560,8 +1628,8 @@ function generalSetupState(){
   const seen=new Set(),limit=6;let count=0,complete=true;
   for(let i=0;i<limit;i++){
     const row=manualDraftRows[i]||emptyManualDraftRow();if(!manualRowHasData(row))continue;
-    const name=canonicalPlayerName(row.name),handicapText=String(row.handicap??"").trim(),handicap=Number(handicapText),tee=normalizeTee(row.tee),countryCode=normalizeWhatsAppCountryCode(row.countryCode),key=canonicalPlayerNameKey(name);
-    if(!name||handicapText===""||!Number.isSafeInteger(handicap)||!tee||(draftTournament&&!normalizeTournamentCategory(row.category))||!validWhatsApp(row.whatsapp,countryCode)||seen.has(key)){complete=false;continue}
+    const name=canonicalPlayerName(row.name),tee=normalizeTee(row.tee),countryCode=normalizeWhatsAppCountryCode(row.countryCode),key=canonicalPlayerNameKey(name);
+    if(!name||!tee||!validWhatsApp(row.whatsapp,countryCode)||seen.has(key)){complete=false;continue}
     seen.add(key);count++;
   }
   const required=["match_play","four_ball"].includes(draftRoundMode)?[2,4,6].includes(count):count>=1,gameRequired=!draftSkins.enabled||count>=2,wolfRequired=!draftWolf.enabled||(count>=3&&count<=6),vegasRequired=!draftVegas.enabled||[4,6].includes(count),dotsRequired=!draftDots.enabled||count>=2,course=COURSE_CATALOG[draftCourse];return{ready:!!(complete&&required&&course?.configured&&gameRequired&&wolfRequired&&vegasRequired&&dotsRequired),count,complete};
@@ -3300,7 +3368,7 @@ $("tournamentDescription").addEventListener("input",e=>{if(!draftTournament)draf
 $("tournamentDescription").addEventListener("change",e=>{if(!draftTournament)return;draftTournament.description=String(e.target.value||"").trim();persistDraftState();renderTournamentDraft()});
 $("courseOptions").addEventListener("change",e=>{if(!e.target.matches('input[name="registrationCourse"]'))return;const key=String(e.target.value||"pulte");draftCourse=COURSE_CATALOG[key]?key:"pulte";activateCourse(draftCourse);draftPlayers=draftPlayers.map((p,i)=>normalizePlayer(p,i));seedManualDraftRowsFromPlayers();persistDraftState();renderDraft();Promise.resolve(null).catch(()=>null);const course=COURSE_CATALOG[draftCourse];$("setupStatus").textContent=course.configured?`${course.name.toUpperCase()} · TARJETA OFICIAL CONFIGURADA`:`${course.name.toUpperCase()} · PENDIENTE CARGAR TARJETA OFICIAL`});
 function captureVisibleRegistrationValues(){for(const rowElement of document.querySelectorAll("#detectedBody [data-draft-row]")){const index=Number(rowElement.dataset.draftRow),row=manualDraftRows[index];if(!row)continue;const name=rowElement.querySelector("[data-draft-name]"),hcp=rowElement.querySelector("[data-draft-hcp]"),country=rowElement.querySelector("[data-draft-country-code]"),whatsapp=rowElement.querySelector("[data-draft-whatsapp]");if(name)row.name=String(name.value||"").trimStart();if(hcp)row.handicap=String(hcp.value??"");if(country)row.countryCode=String(country.value||"").replace(/\D/g,"").slice(0,4);if(whatsapp)row.whatsapp=String(whatsapp.value||"").replace(/\D/g,"").slice(0,15)}persistDraftState();return true}
-$("setupOk").addEventListener("click",()=>{captureVisibleRegistrationValues();if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;if(profileCorrectionMode){startConfirmedRound();return};renderDraft();showStep2();;});
+$("setupOk").addEventListener("click",async()=>{captureVisibleRegistrationValues();if(!(await reviewMissingCategoryAndHandicap()))return;if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;if(profileCorrectionMode){startConfirmedRound();return};renderDraft();showStep2();;});
 $("clearAllRegistration").addEventListener("click",clearAllRegistrationPlayers);
 $("normalRoundButton").addEventListener("click",()=>selectGeneralRoundMode("general"));$("matchPlayRoundButton").addEventListener("click",()=>selectGeneralRoundMode("match_play"));$("fourBallRoundButton").addEventListener("click",()=>selectGeneralRoundMode("four_ball"));$("universalesRoundButton").addEventListener("click",()=>selectGeneralRoundMode("universales"));$("skinsRoundButton").addEventListener("click",selectSkinsRoundMode);
 function saveSkinsDraftConfig(){draftSkins=window.GSCSkins.normalizeConfig({enabled:true,scoreType:$("skinsScoreType").value,tiePolicy:$("skinsTiePolicy").value,unitValue:$("skinsUnitValue").value,currency:selectedDraftCurrency("skins")});persistDraftState();renderSideGameDrafts();updateGeneralSetupValidity()}
