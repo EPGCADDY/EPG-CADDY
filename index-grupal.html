@@ -868,19 +868,16 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 .round-utility-bar .gsc-live-launch,.round-utility-bar .golf-rules-launch,.round-utility-bar .ai-universal-launch,.round-utility-bar .skins-launch,.round-utility-bar .live-support-link,.round-utility-bar #ownerShare24h{position:static!important;top:auto!important;right:auto!important;z-index:auto!important;display:inline-flex;align-items:center;justify-content:center;min-width:58px;min-height:26px;padding:0 10px;font-size:9px;line-height:1;white-space:nowrap}
 @media(max-width:800px){.round-utility-bar{justify-content:space-between;gap:5px;min-height:36px;padding:4px}.round-utility-bar .gsc-live-launch,.round-utility-bar .golf-rules-launch,.round-utility-bar .ai-universal-launch,.round-utility-bar .skins-launch,.round-utility-bar .live-support-link,.round-utility-bar #ownerShare24h{flex:1 1 0;min-width:0;min-height:28px;padding:0 5px;font-size:8px}}
 </style>
-</head>
+<style id="manual-lab-layout">
+.official-course-info .course-info-layout{grid-template-columns:minmax(0,1fr)!important}
+.round-utility-bar{display:flex;flex-wrap:wrap;gap:8px}.round-utility-bar>*{flex:1;min-height:44px!important}
+.registration-method{margin-top:12px}.registration-method-title{font-size:18px;color:#70ef28}.voice-prompt{padding:12px 0}
+.round-grid-gross{min-height:48px;font-size:20px!important}.round-manual-entry{margin-top:16px}
+.device-closure-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px;border:1px solid #414b41;border-radius:12px;margin:12px 0;background:#0b100b}
+.device-closure-controls button{min-height:44px;flex:1;border:1px solid #6eea28;border-radius:8px;background:#0b100b;color:#b4ffa0;font-weight:800}.device-closure-controls span{flex-basis:100%;font-size:12px;color:#b6bfb6}
+</style></head>
 <body>
-<div class="ai-universal-overlay" id="aiUniversalOverlay" role="dialog" aria-modal="true" aria-labelledby="aiUniversalTitle" aria-hidden="true">
-  <section class="ai-universal-panel">
-    <div class="ai-universal-head"><h2 id="aiUniversalTitle">AI UNIVERSAL ∞</h2><button class="ai-universal-close" id="closeAiUniversal" type="button">ATRÁS</button></div>
-    <div class="ai-universal-state" id="aiUniversalState" role="status" aria-live="polite">VOZ Y TEXTO · CUALQUIER TEMA PERMITIDO</div>
-    <div class="ai-universal-rules-note hidden" id="aiUniversalRulesNote">FUENTES OFICIALES: <a href="https://www.usga.org/content/usga/home-page/rules-hub.html" target="_blank" rel="noopener noreferrer">USGA</a> · <a href="https://www.randa.org/en/rules/rules-hub" target="_blank" rel="noopener noreferrer">THE R&amp;A</a> · La consulta no cambia scores ni aplica penalidades. Sin conexión sólo se reutilizan respuestas oficiales confirmadas y guardadas localmente, con fecha visible.</div>
-    <div class="ai-universal-messages" id="aiUniversalMessages" role="log" aria-live="polite"><div class="ai-universal-empty">Pregunta por voz con el micrófono de la tarjeta o escribe aquí.<br>No existe una lista cerrada de temas.</div></div>
-    <div class="ai-universal-compose"><textarea id="aiUniversalInput" maxlength="4000" autocomplete="off" placeholder="Escribe una pregunta, orden o tema…" aria-label="Mensaje para AI Universal Infinita"></textarea><button class="ai-universal-send" id="sendAiUniversal" type="button">ENVIAR</button></div>
-    <div class="ai-universal-controls" aria-label="Controles de AI Universal Infinita"><button type="button" id="listenAiUniversal">ESCUCHAR</button><button type="button" id="stopAiUniversal">DETENER</button><button type="button" id="repeatAiUniversal">REPETIR</button><button type="button" id="muteAiUniversal">SILENCIAR</button><button type="button" id="continueAiUniversal">CONTINUAR</button></div>
-    <div class="ai-universal-privacy">CONTEXTO DE CHAT TEMPORAL · REGLAS PUEDE GUARDAR SÓLO TOKENS Y RESPUESTAS OFICIALES EN ESTE DISPOSITIVO · NO SE COMPARTE CON TERCEROS</div>
-  </section>
-</div>
+
 <div class="overlay" id="skinsOverlay" aria-hidden="true">
   <section class="skins-panel">
     <div class="skins-panel-head"><h1 id="sideGameTitle">JUEGO · RESULTADO EN VIVO</h1><button type="button" id="closeSkins">ATRÁS</button></div>
@@ -894,13 +891,13 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
     <section class="course-meta"><div class="cap">CAMPO</div><div class="course">EL PULTÉ GOLF</div><div class="numbers"><span>PAR 72</span><span id="headerSlope">SLOPE —</span></div></section>
   </header>
   <nav class="round-utility-bar" id="roundUtilityBar" aria-label="Herramientas de la ronda">
-    <button class="golf-rules-launch" id="openGolfRules" type="button" aria-label="Abrir consulta oficial de Reglas de Golf">REGLAS</button>
-    <button class="ai-universal-launch" id="openAiUniversal" type="button" aria-label="Abrir AI Universal Infinita">AI ∞</button>
+    
+    
     <button class="skins-launch hidden" id="openSkins" type="button" aria-label="Abrir juego y resultados">JUEGOS</button>
     <a class="live-support-link" href="/manual.pdf" aria-label="Abrir el Manual de Golf Score Card GT en esta pantalla">Support</a>
     <button class="hidden" id="ownerShare24h" type="button" aria-label="Crear y compartir acceso individual de un solo uso válido por 24 horas">INVITAR · 24 H</button>
   </nav>
-  <section class="course-info official-course-info"><div class="course-info-layout"><div class="course-info-data"><h2>INFORMACIÓN DEL CAMPO</h2><div class="course-info-grid" id="courseInfo"></div><div class="course-weather weather-unavailable" id="courseWeather" role="status" aria-live="polite">CLIMA · DISPONIBLE AL INICIAR LA TARJETA</div></div><div class="mic-wrap course-mic" id="headerMicWrap"><button class="mic-hit" id="headerMic" aria-label="Abrir Caddie universal"></button><div class="mic-visual">🎙</div></div></div></section>
+  <section class="device-closure-controls" aria-label="Anuncios de resultados"><button id="deviceClosureToggle" type="button" aria-pressed="true">ANUNCIOS ACTIVADOS</button><button id="deviceClosureRepeat" type="button">REPETIR RESULTADO</button><span id="deviceClosureStatus" role="status">Primera vuelta · segunda vuelta · total</span></section><section class="course-info official-course-info"><div class="course-info-layout"><div class="course-info-data"><h2>INFORMACIÓN DEL CAMPO</h2><div class="course-info-grid" id="courseInfo"></div><div class="course-weather weather-unavailable" id="courseWeather" role="status" aria-live="polite">CLIMA · DISPONIBLE AL INICIAR LA TARJETA</div></div></div></section>
   <div class="round-status-row"><div class="status" id="status"></div><div class="round-timer-controls"><button class="timer-off-button" id="stopClockButton">TIMER ON</button><button class="timer-reset-button" id="resetClockButton" type="button">RESET</button></div><div class="round-elapsed-status" id="roundElapsedStatus"></div></div>
   <div class="caddie-sources hidden" id="roundCaddieSources" aria-label="Fuentes consultadas por el Caddie"></div>
   <div class="scorecard-stage-title"><span>TARJETA DE PUNTUACIÓN</span><small>DESLIZA PARA VER TODOS LOS HOYOS</small></div>
@@ -962,21 +959,11 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
     <section class="skins-config" id="vegasConfig" aria-label="Configuración Vegas"><div class="skins-config-title">VEGAS · ACUERDOS ANTES DE LA RONDA</div><div class="skins-config-grid"><label>CÁLCULO<select id="vegasScoreType"><option value="gross">GROSS</option><option value="net">NETO</option></select></label><label>BIRDIE VOLTEA AL RIVAL<select id="vegasBirdieFlip"><option value="yes">SÍ</option><option value="no">NO</option></select></label><label>SI AMBAS PAREJAS HACEN BIRDIE<select id="vegasBothBirdies"><option value="cancel">NO SE VOLTEA · BASE</option><option value="both_flip">SE VOLTEAN AMBAS · REGLA DEL GRUPO</option></select></label><label>EAGLE DUPLICA DIFERENCIA<select id="vegasEagleDouble"><option value="no">NO</option><option value="yes">SÍ</option></select></label><label>TOPE DE PUNTOS POR DUELO<input id="vegasCap" type="number" inputmode="numeric" min="1" max="999" step="1" value="20"></label><fieldset class="currency-choice"><legend>MONEDA · ELIGE UNA</legend><label class="currency-option"><input id="vegasCurrencyGTQ" type="radio" name="vegasCurrency" value="GTQ" checked>Q · QUETZALES</label><label class="currency-option"><input id="vegasCurrencyUSD" type="radio" name="vegasCurrency" value="USD">$ · DÓLARES</label></fieldset><label>VALOR DE CADA PUNTO · <span data-currency-symbol="vegas">Q</span><input id="vegasUnitValue" type="number" inputmode="decimal" min="0.01" max="100000" step="0.01" value="1"></label></div><div class="skins-config-note">CADA PAREJA UNE SUS DOS SCORES: 4 Y 5 FORMAN 45; GANA EL NÚMERO MENOR Y LA DIFERENCIA SON LOS PUNTOS. SI EXISTE UN SCORE DE 10 O MÁS, EL MAYOR VA PRIMERO: 10 Y 4 FORMAN 104. CUATRO JUGADORES ES EL FORMATO CLÁSICO; SEIS JUGADORES Y TRES PAREJAS ES UNA ADAPTACIÓN IDENTIFICADA DE GOLF SCORE CARD GT.</div></section>
     <div class="setup-facts" id="courseSetupStatus">REGISTRO DE TORNEO (OPCIONAL)</div>
     <div class="tournament-box"><label class="tournament-toggle"><input type="checkbox" id="tournamentToggle"> NOMBRE TORNEO</label><div class="tournament-fields hidden" id="tournamentFields"><input id="tournamentName" type="text" maxlength="80" placeholder="NOMBRE DEL TORNEO" aria-label="Nombre del torneo"><input id="tournamentDescription" type="text" maxlength="180" placeholder="DESCRIPCIÓN DE TORNEO (OPCIONAL)" aria-label="Descripción de torneo opcional"></div></div>
-    <div class="voice-prompt"><strong id="playerVoicePrompt">REGISTRO DE JUGADORES · CADDIE UNIVERSAL</strong><span>REGISTRA O PREGUNTA CUALQUIER TEMA</span></div>
-    <section class="registration-method" aria-label="Método 1 Dictado">
-      <div class="newbie-registration-guide" aria-label="Instrucciones de registro para cada jugador">
-        <div class="newbie-guide-title">DICTA ASÍ:</div>
-        <div>JUGADOR NÚMERO UNO · MIGUEL · HANDICAP 14 · MARCAS BLANCAS</div>
-        <div>JUGADOR NÚMERO DOS · NOMBRE + HANDICAP + MARCAS</div>
-        <div class="newbie-guide-player">HASTA 6 JUGADORES</div>
-        <div>LUEGO TOCA OK</div>
-      </div>
-      <div class="nr-mic" id="setupMicWrap"><button class="mic-hit" id="setupMic" aria-label="Abrir Caddie universal o dictar jugadores"></button><div class="mic-visual" aria-hidden="true"><svg class="setup-mic-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></div></div>
-      <div class="setup-voice-matrix" id="setupVoiceMatrix" role="status" aria-live="assertive" aria-atomic="true">LISTO PARA ESCUCHAR</div>
-    </section>
+    <div class="voice-prompt"><strong id="playerVoicePrompt">REGISTRO DE JUGADORES</strong><span>COMPLETA LOS DATOS DE CADA JUGADOR</span></div>
+    
     </div>
-    <section class="registration-method" aria-label="Método 2 Manual">
-      <div class="registration-method-title">2 · MANUAL OPCIONAL</div>
+    <section class="registration-method" aria-label="Registro manual">
+      <div class="registration-method-title">DATOS DE LOS JUGADORES</div>
       <div class="registration-method-fields">NOMBRE + CATEGORÍA + HDCP + MARCAS + WHATSAPP OPCIONAL</div>
       <div class="detected hidden" id="detectedPlayers"><div class="detected-row head"><span>NOMBRE</span><span>CATEGORÍA</span><span>HDCP</span><span>MARCAS</span></div><div id="detectedBody"></div></div>
     </section>
@@ -1044,9 +1031,9 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
 <div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">V407 · R42</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
-<script src="./voice-turns.js"></script>
+
 <script src="./guest-access.js"></script>
-<script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./voice-assistant.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
+<script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./device-closures.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
 <script>
 "use strict";
 const GSC_API_ORIGIN=String(window.GSC_API_ORIGIN||"").replace(/\/$/,"");
@@ -1883,7 +1870,7 @@ function finalizeSetupDictation(){
 function requestSetupFinalize(){
   setupLocked=true;setupFinalizeRequested=true;
   if(voiceContext==="setup")setVoice(false);
-  $("setupMicWrap").classList.remove("active");
+  $("setupMicWrap")?.classList.remove("active");
   $("setupStatus").classList.remove("listening");
   $("setupStatus").textContent="TRANSCRIBIENDO…";
 
@@ -2395,15 +2382,7 @@ function markConversationFollowupAudioStarted(eventResponseId=""){
   return true;
 }
 const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","connection_interrupted","connection_failed","speech_started","speech_stopped","transcription_completed","tool_started","tool_ready","followup_created","followup_audio_started","response_stopped","input_recovered","response_recovered","tool_transport_recovered","browser_fallback_requested","browser_fallback_started","browser_fallback_restarted","browser_fallback_restart_failed","browser_fallback_error","browser_fallback_start_failed","browser_fallback_no_result_timeout","browser_fallback_retry_scheduled","browser_fallback_retry_started","browser_fallback_retry_failed","browser_fallback_transcript_ready","browser_fallback_query_answered","browser_fallback_query_failed","browser_fallback_setup_applied","browser_fallback_setup_rejected","browser_fallback_round_progressive","browser_fallback_round_applied","browser_fallback_round_rejected","browser_fallback_score_applied","browser_fallback_score_rejected","browser_fallback_general_visible","browser_fallback_general_in_place","browser_fallback_speech_primed","browser_fallback_speech_started","browser_fallback_speech_failed","browser_fallback_speech_progress","browser_fallback_speech_ended","keyboard_dictation_setup_applied"]);
-function reportVoiceHealth(event,detail={}){
-  if(!VOICE_HEALTH_EVENTS.has(event)||typeof fetch!=="function")return false;
-  const payload={event,build:"V363",context:voiceContext==="setup"?"setup":"round",turn:Math.max(0,voiceHealthTurn),elapsedMs:voiceHealthTurnStartedAt?Math.max(0,Date.now()-voiceHealthTurnStartedAt):0};
-  for(const key of ["tool","hasResponseId","followupCreated","followupAudioStarted","entryCount","scoreFailure","transportFailure"]){
-    const value=detail?.[key];if(typeof value==="boolean"||typeof value==="number"||typeof value==="string")payload[key]=value;
-  }
-  fetch(window.gscgApiUrl("/api/voice-health"),{method:"POST",credentials:"include",keepalive:true,headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).catch(()=>{});
-  return true;
-}
+function reportVoiceHealth(event,detail={}){ return false; }
 
 function isGeneralConversationIntent(transcript){const text=normalizeSpeech(transcript);return GENERAL_CONVERSATION_CUE.test(text)||GENERAL_QUESTION_START.test(text)}
 function conversationStatusTarget(){return voiceContext==="setup"?$("setupStatus"):$("status")}
@@ -2531,52 +2510,8 @@ function currentBrowserCoordinates(){return new Promise(resolve=>{
     {enableHighAccuracy:true,timeout:8000,maximumAge:WEATHER_REFRESH_MS}
   );
 })}
-async function weatherToolResult(argumentsText){
-  aiUniversalSetState("CONSULTANDO EL PRONÓSTICO…",{busy:true});
-  let args={};try{args=JSON.parse(argumentsText||"{}")||{}}catch{}
-  const rawLocation=String(args.location||"").trim();
-  const asksDevice=/^(?:aqu[ií]|ac[aá]|mi ubicaci[oó]n|ubicaci[oó]n actual)$/i.test(rawLocation);
-  const asksCourse=/^(?:el campo|campo actual|campo de golf)$/i.test(rawLocation);
-  const requestedLocation=asksDevice||asksCourse?"":rawLocation;
-  const inferredRange=inferConversationForecastRange(authorizedSpeech?.text||"");
-  const datePattern=/^\d{4}-\d{2}-\d{2}$/;
-  const forecastStartDate=datePattern.test(String(args.start_date||""))?String(args.start_date):inferredRange.startDate;
-  const forecastEndDate=datePattern.test(String(args.end_date||""))?String(args.end_date):(inferredRange.endDate||forecastStartDate);
-  const allowedPeriods=new Set(["morning","afternoon","evening","night"]),inferredPeriod=inferConversationTimePeriod(authorizedSpeech?.text||"");
-  const timePeriod=allowedPeriods.has(String(args.time_period||""))?String(args.time_period):inferredPeriod;
-  const courseContext=activeCourseWeatherContext();
-  const deviceCoordinates=!requestedLocation?await currentBrowserCoordinates():null;
-  const locationPayload=requestedLocation
-    ?{location:requestedLocation}
-    :deviceCoordinates
-      ?{location:"GPS del teléfono",latitude:deviceCoordinates.latitude,longitude:deviceCoordinates.longitude}
-      :courseContext;
-  const payload={...locationPayload,...(forecastStartDate?{forecastStartDate,forecastEndDate:forecastEndDate||forecastStartDate,...(timePeriod?{timePeriod}:{})}:{})};
-  try{
-    const response=await fetch(window.gscgApiUrl("/api/weather"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
-    const result=await response.json().catch(()=>({ok:false,error:"WEATHER_UNAVAILABLE"}));
-    return JSON.stringify(result);
-  }catch{return JSON.stringify({ok:false,error:"WEATHER_UNAVAILABLE",message:"No se pudo consultar el pronóstico en este momento."})}
-}
-async function trafficToolResult(argumentsText){
-  aiUniversalSetState("CALCULANDO TRÁFICO REAL…",{busy:true});
-  let args={};try{args=JSON.parse(argumentsText||"{}")||{}}catch{}
-  const rawOrigin=String(args.origin||"").trim();
-  const asksDevice=!rawOrigin||/^(?:aqu[ií](?: mismo)?|ac[aá](?: mismo)?|desde aqu[ií]|desde ac[aá]|de aqu[ií]|de ac[aá]|mi ubicaci[oó]n(?: actual)?|ubicaci[oó]n actual|donde (?:yo )?estoy|desde donde (?:yo )?estoy|este lugar|desde este lugar|mi posici[oó]n(?: actual)?|punto actual|current location|from here|here)$/i.test(rawOrigin);
-  const deviceCoordinates=asksDevice?await currentBrowserCoordinates():null;
-  const payload={
-    ...(deviceCoordinates?{originCoordinates:{latitude:deviceCoordinates.latitude,longitude:deviceCoordinates.longitude}}:{origin:rawOrigin}),
-    destination:String(args.destination||"").trim(),
-    departureTime:String(args.departure_time||"").trim(),
-    languageCode:"es-419"
-  };
-  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),20000);
-  try{
-    const response=await fetch(window.gscgApiUrl("/api/traffic"),{method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
-    return JSON.stringify(await response.json().catch(()=>({ok:false,error:"TRAFFIC_UNAVAILABLE",message:"No pude consultar tráfico confiable en este momento. Puedes continuar con otra pregunta."})));
-  }catch(error){return JSON.stringify({ok:false,error:error?.name==="AbortError"?"TRAFFIC_TIMEOUT":"TRAFFIC_UNAVAILABLE",message:"No pude consultar tráfico confiable en este momento. Puedes continuar con otra pregunta."})}
-  finally{clearTimeout(timeout)}
-}
+async function weatherToolResult(argumentsText){ return false; }
+async function trafficToolResult(argumentsText){ return false; }
 function renderCaddieSources(result){
   const target=voiceContext==="setup"?$("setupCaddieSources"):$("roundCaddieSources");if(!target)return;
   const sources=Array.isArray(result?.sources)?result.sources.filter(source=>/^https:\/\//i.test(String(source?.url||""))).slice(0,5):[];
@@ -2586,19 +2521,7 @@ function renderCaddieSources(result){
   sources.forEach((source,index)=>{const link=document.createElement("a");link.href=source.url;link.target="_blank";link.rel="noopener noreferrer";link.textContent=String(source.title||`Fuente ${index+1}`).slice(0,70);target.append(link)});
   target.classList.remove("hidden");
 }
-async function researchToolResult(argumentsText){
-  aiUniversalSetState("INVESTIGANDO EN LA WEB…",{busy:true});
-  let args={};try{args=JSON.parse(argumentsText||"{}")||{}}catch{}
-  const query=String(args.query||authorizedSpeech?.text||"").trim();
-  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),CLIENT_RESEARCH_TIMEOUT_MS);
-  try{
-    const response=await fetch(window.gscgApiUrl("/api/research"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({query}),signal:controller.signal});
-    const result=await response.json().catch(()=>({ok:false,error:"RESEARCH_UNAVAILABLE"}));
-    renderCaddieSources(result);
-    return JSON.stringify(result);
-  }catch(error){return JSON.stringify({ok:false,error:error?.name==="AbortError"?"RESEARCH_TIMEOUT":"RESEARCH_UNAVAILABLE",message:"No se pudo consultar la web en este momento. Puedes continuar con otra pregunta."})}
-  finally{clearTimeout(timeout)}
-}
+async function researchToolResult(argumentsText){ return false; }
 function officialGolfRuleOfflineResult(query){
   try{
     const cached=window.GSCGolfRulesOffline?.find?.(localStorage,query,aiUniversalAppContext());
@@ -2611,29 +2534,7 @@ function officialGolfRuleOfflineResult(query){
 function saveOfficialGolfRuleForOffline(query,result){
   try{return !!window.GSCGolfRulesOffline?.save?.(localStorage,query,result,aiUniversalAppContext())}catch{return false}
 }
-async function golfRulesToolResult(argumentsText){
-  aiUniversalSetState("CONSULTANDO REGLAS OFICIALES USGA / R&A…",{busy:true});
-  let args={};try{args=JSON.parse(argumentsText||"{}")||{}}catch{}
-  const query=String(args.query||authorizedSpeech?.text||"").trim();
-  const history=aiUniversalHistory.slice(-AI_UNIVERSAL_HISTORY_LIMIT).map(item=>({role:item.role,content:item.content}));
-  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),CLIENT_RESEARCH_TIMEOUT_MS);
-  try{
-    const response=await fetch(window.gscgApiUrl("/api/golf-rules"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,appContext:aiUniversalAppContext()}),signal:controller.signal});
-    const result=await response.json().catch(()=>({ok:false,error:"GOLF_RULES_UNAVAILABLE"}));
-    if(result?.ok)saveOfficialGolfRuleForOffline(query,result);
-    if(!response.ok||!result?.ok){
-      const offline=officialGolfRuleOfflineResult(query);
-      if(offline){renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");return JSON.stringify(offline)}
-    }
-    renderCaddieSources(result);
-    return JSON.stringify(result);
-  }catch(error){
-    const offline=officialGolfRuleOfflineResult(query);
-    if(offline){renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");return JSON.stringify(offline)}
-    return JSON.stringify({ok:false,error:error?.name==="AbortError"?"GOLF_RULES_TIMEOUT":"GOLF_RULES_UNAVAILABLE",message:"No pude verificar la regla oficial en este momento. Puedes continuar con otra pregunta."})
-  }
-  finally{clearTimeout(timeout)}
-}
+async function golfRulesToolResult(argumentsText){ return false; }
 function showUniversalVoiceNotice(text=""){
   let notice=$("universalVoiceNotice");
   if(!text){notice?.remove();return}
@@ -2665,100 +2566,19 @@ function aiUniversalRemember(role,content,sources=[],{visible=true}={}){
   if(safeRole==="assistant")aiUniversalLastAnswer=clean;
   renderAiUniversalHistory();return entry;
 }
-function renderAiUniversalHistory(){
-  const target=$("aiUniversalMessages");if(!target)return;
-  target.replaceChildren();
-  const visibleHistory=aiUniversalHistory.filter(item=>item.visible!==false);
-  if(!visibleHistory.length){
-    const empty=document.createElement("div");empty.className="ai-universal-empty";empty.textContent="Pregunta por voz con el micrófono de la tarjeta o escribe aquí. No existe una lista cerrada de temas.";target.append(empty);return;
-  }
-  for(const item of visibleHistory){
-    const card=document.createElement("article");card.className=`ai-message ${item.role}`;
-    const label=document.createElement("strong");label.textContent=item.role==="assistant"?"AI UNIVERSAL ∞":"TÚ";
-    const text=document.createElement("div");text.textContent=item.content;card.append(label,text);
-    if(Array.isArray(item.sources)&&item.sources.length){
-      const sourceBox=document.createElement("div");sourceBox.className="ai-message-sources";sourceBox.append("FUENTES: ");
-      item.sources.forEach((source,index)=>{const link=document.createElement("a");link.href=source.url;link.target="_blank";link.rel="noopener noreferrer";link.textContent=source.title||`Fuente ${index+1}`;sourceBox.append(link)});card.append(sourceBox);
-    }
-    target.append(card);
-  }
-  target.scrollTop=target.scrollHeight;
-}
-function aiUniversalSpeechLanguage(text){
-  const value=String(text||"");
-  if(/[\u4E00-\u9FFF]/.test(value))return"zh-CN";
-  if(/[\u3040-\u30FF]/.test(value))return"ja-JP";
-  if(/[\u0400-\u04FF]/.test(value))return"ru-RU";
-  if(/[\u0600-\u06FF]/.test(value))return"ar-SA";
-  if(/[\u0900-\u097F]/.test(value))return"hi-IN";
-  const normalized=value.toLowerCase();
-  if(/\b(?:the|and|with|what|how|please|today|tomorrow|because|would|should)\b/.test(normalized))return"en-US";
-  if(/\b(?:bonjour|avec|pourquoi|comment|aujourd'hui|demain|merci|vous|nous|est-ce)\b/.test(normalized))return"fr-FR";
-  if(/\b(?:olá|obrigado|porque|amanhã|você|vocês|como está|por favor)\b/.test(normalized))return"pt-BR";
-  if(/\b(?:buongiorno|grazie|perché|domani|oggi|come stai|per favore)\b/.test(normalized))return"it-IT";
-  if(/\b(?:guten|danke|warum|morgen|heute|bitte|wie geht)\b/.test(normalized))return"de-DE";
-  return"es-GT";
-}
+function renderAiUniversalHistory(){ return false; }
+function aiUniversalSpeechLanguage(text){ return false; }
 function realtimeResponseTranscript(response){
   return(response?.output||[]).flatMap(item=>item?.content||[]).map(content=>String(content?.transcript||content?.text||"").trim()).filter(Boolean).join(" ").trim();
 }
-function primeAiUniversalSpeechFromGesture(){
-  if(aiUniversalSpeechPrimed||aiUniversalMuted)return false;
-  try{
-    if(typeof Audio==="function"){
-      const primer=new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=");aiUniversalSpeechPrimer=primer;aiUniversalTtsAudio=primer;primer.volume=.01;
-      const ready=()=>{if(aiUniversalSpeechPrimer===primer)aiUniversalSpeechPrimer=null;if(!aiUniversalSpeechPrimed){aiUniversalSpeechPrimed=true;reportVoiceHealth("browser_fallback_speech_primed")}};
-      primer.onplay=ready;primer.onended=ready;primer.onerror=()=>{if(aiUniversalSpeechPrimer===primer)aiUniversalSpeechPrimer=null};
-      const played=primer.play();if(played?.then)played.then(ready).catch(()=>{});return true;
-    }
-    return false;
-  }catch{return false}
-}
-function releaseAiUniversalPlaybackForListening(){
-  const player=aiUniversalTtsAudio||aiUniversalSpeechPrimer,objectUrl=aiUniversalTtsObjectUrl;
-  if(!player&&!objectUrl)return false;
-  player?.gscCancelSpeech?.();
-  if(player){
-    player.onplay=null;player.onplaying=null;player.onpause=null;player.onended=null;player.onerror=null;
-    try{player.pause()}catch{}
-    try{player.currentTime=0}catch{}
-    try{player.removeAttribute("src");player.load?.()}catch{}
-  }
-  if(objectUrl)try{URL.revokeObjectURL(objectUrl)}catch{}
-  if(aiUniversalSpeechPrimer===player)aiUniversalSpeechPrimer=null;
-  aiUniversalTtsObjectUrl="";aiUniversalTtsAudio=player;return true
-}
+function primeAiUniversalSpeechFromGesture(){ return true; }
+function releaseAiUniversalPlaybackForListening(){ return false; }
 
-function preferredMaleBrowserVoice(language){
-  if(!("speechSynthesis" in window))return null;
-  const voices=window.speechSynthesis.getVoices?.()||[],base=String(language||"es").toLowerCase().split("-")[0];
-  const maleName=/\b(cedar|onyx|jorge|diego|carlos|enrique|alberto|antonio|pablo|raul|juan|felipe|andres|ángel|angel|alex|mario|ricardo|oscar|martin|male|masculino|hombre)\b/i;
-  return voices.find(voice=>String(voice.lang||"").toLowerCase().startsWith(base)&&maleName.test(`${voice.name||""} ${voice.voiceURI||""}`))||null;
-}
-function waitForPreferredMaleBrowserVoice(language,timeoutMs=1600){
-  const first=preferredMaleBrowserVoice(language);if(first)return Promise.resolve(first);
-  if(!("speechSynthesis" in window))return Promise.resolve(null);
-  return new Promise(resolve=>{let settled=false,timer=null;const finish=()=>{if(settled)return;settled=true;if(timer)clearTimeout(timer);window.speechSynthesis.removeEventListener?.("voiceschanged",probe);resolve(preferredMaleBrowserVoice(language))};const probe=()=>{if(preferredMaleBrowserVoice(language))finish()};window.speechSynthesis.addEventListener?.("voiceschanged",probe);window.speechSynthesis.getVoices?.();timer=setTimeout(finish,timeoutMs)});
-}
-async function speakAiUniversalMaleBrowserFallback(clean){
-  if(window.GSCVoiceTurns?.enabled)return false;
-  if(aiUniversalSpeechLanguage(clean).startsWith("es"))return false;
-  if(!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance!=="function")return false;
-  const language=aiUniversalSpeechLanguage(clean),voice=await waitForPreferredMaleBrowserVoice(language);if(!voice)return false;
-  window.speechSynthesis.cancel();window.speechSynthesis.resume?.();
-  const utterance=new SpeechSynthesisUtterance(clean);aiUniversalUtterance=utterance;utterance.lang=language;utterance.rate=VOICE_POLICY.speed;utterance.pitch=.92;utterance.voice=voice;
-  utterance.onstart=()=>{reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO EN VOZ",{busy:true})};
-  utterance.onend=()=>{if(aiUniversalUtterance===utterance){aiUniversalUtterance=null;if(resumeBrowserVoiceConversation())return;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")}};
-  utterance.onerror=()=>{if(aiUniversalUtterance===utterance)aiUniversalUtterance=null;reportVoiceHealth("browser_fallback_speech_failed");aiUniversalSetState("NO PUDE REPRODUCIR LA VOZ MASCULINA")};
-  window.speechSynthesis.speak(utterance);setTimeout(()=>window.speechSynthesis.resume?.(),50);return true;
-}
+function preferredMaleBrowserVoice(language){ return false; }
+function waitForPreferredMaleBrowserVoice(language,timeoutMs=1600){ return false; }
+async function speakAiUniversalMaleBrowserFallback(clean){ return false; }
 let browserVoiceFollowupContext=null;
-function resumeBrowserVoiceConversation(){
-  const context=browserVoiceFollowupContext;browserVoiceFollowupContext=null;
-  if(typeof window!=="undefined"&&window.GSCVoiceTurns?.enabled)return false;
-  if(!context||browserVoiceRecognition||browserVoiceActive||browserVoiceRequested)return false;
-  return startBrowserVoiceFallback(context);
-}
+function resumeBrowserVoiceConversation(){ return false; }
 function showUniversalSpokenAnswer(text,player=null){
   const anchor=voiceContext==="setup"?$("setupVoiceMatrix"):document.querySelector('[aria-label="Herramientas de la ronda"]')||$("status");
   if(!anchor)return;
@@ -2790,115 +2610,13 @@ function monitorUniversalAudio(player){
   player.onended=()=>{clear();reportVoiceHealth("browser_fallback_speech_ended");if(resumeBrowserVoiceConversation())return;setPrimaryVoiceMatrix(listening?"listening":"idle",voiceContext);aiUniversalSetState("LISTO · PUEDES CONTINUAR")};
   return clear;
 }
-function splitUniversalSpeechText(text){
-  if(text.length<260)return [text];
-  const chunks=[];let remaining=text;
-  for(const match of text.matchAll(/[.!?]["”»]?\s+/g)){
-    const end=match.index+match[0].trimEnd().length;
-    if(end<70)continue;
-    if(end>240||text.length-end<60)break;
-    chunks.push(text.slice(0,end));remaining=text.slice(end).trimStart();break;
-  }
-  // A long first sentence must not delay playback until the whole answer is synthesized.
-  if(!chunks.length&&remaining.length>240){
-    let end=0;
-    for(const match of remaining.slice(0,241).matchAll(/[,;:]\s+/g)){const boundary=match.index+1;if(boundary>=70)end=boundary}
-    if(!end)end=remaining.lastIndexOf(" ",240);
-    if(end>0){chunks.push(remaining.slice(0,end));remaining=remaining.slice(end).trimStart()}
-  }
-  while(remaining.length>3500){const boundary=remaining.lastIndexOf(" ",3500),end=boundary>0?boundary:3500;chunks.push(remaining.slice(0,end));remaining=remaining.slice(end).trimStart()}
-  if(remaining)chunks.push(remaining);return chunks;
-}
-async function speakAiUniversalText(text,{repeat=false}={}){
-  const clean=String(text||"").trim();if(!clean)return false;showUniversalSpokenAnswer(clean);if(aiUniversalMuted)return false;
-  let cancelPendingSpeech=null;
-  if(Date.now()<cedarSpeechServerBlockedUntil){
-    aiUniversalSetState("PREPARANDO LOCUTOR MASCULINO…",{busy:true});
-    if(await speakAiUniversalMaleBrowserFallback(clean))return true;
-    setPrimaryVoiceMatrix("error",voiceContext,"VOZ MASCULINA NO DISPONIBLE · INTENTA DE NUEVO");aiUniversalSetState("VOZ MASCULINA NO DISPONIBLE · INTENTA DE NUEVO");return false;
-  }
-  try{
-    aiUniversalSetState("PREPARANDO VOZ V378…",{busy:true});
-    if(typeof Audio!=="function")throw new Error("AUDIO_UNAVAILABLE");
-    const player=aiUniversalTtsAudio||new Audio();aiUniversalTtsAudio=player;
-    player.gscCancelSpeech?.();player.onpause=null;player.pause();
-    const speechController=new AbortController();
-    const plan={active:true,index:-1,advancing:false,urls:[],stopMonitor:null};
-    player.gscCancelSpeech=()=>{plan.active=false;speechController.abort();plan.stopMonitor?.();for(const url of plan.urls)URL.revokeObjectURL(url);plan.urls=[]};
-    cancelPendingSpeech=player.gscCancelSpeech;
-    const chunks=splitUniversalSpeechText(clean);
-    const pending=chunks.map(async text=>{
-    const response=await universalVoiceDeadline(fetch(window.gscgApiUrl("/api/voice-speech"),{signal:speechController.signal,method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({text,language:aiUniversalSpeechLanguage(clean)})}),30000,speechController);
-    if(!response.ok){if(response.status===429||response.status===503)cedarSpeechServerBlockedUntil=Date.now()+CEDAR_SPEECH_RETRY_MS;throw new Error("CEDAR_TTS_UNAVAILABLE")}
-    const deliveredVoice=String(response.headers?.get?.("X-GSCG-Voice")||"cedar").toLowerCase();
-    const blob=await universalVoiceDeadline(response.blob(),10000,speechController);if(!blob.size)throw new Error("CEDAR_TTS_EMPTY");
-    return {blob,deliveredVoice};
-    }).map(operation=>operation.then(value=>({ok:true,...value}),error=>({ok:false,error})));
-    const failRemainder=()=>{if(!plan.active)return;player.gscCancelSpeech();browserVoiceFollowupContext=null;reportVoiceHealth("browser_fallback_speech_failed");setPrimaryVoiceMatrix("error",voiceContext,"NO SE PUDO COMPLETAR EL AUDIO · LA RESPUESTA COMPLETA SIGUE ESCRITA");aiUniversalSetState("NO SE PUDO COMPLETAR EL AUDIO")};
-    const playChunk=async({blob,deliveredVoice},index)=>{
-    if(!plan.active)return false;
-    plan.index=index;plan.advancing=false;plan.stopMonitor?.();
-    if(aiUniversalTtsObjectUrl)URL.revokeObjectURL(aiUniversalTtsObjectUrl);aiUniversalTtsObjectUrl=URL.createObjectURL(blob);
-    plan.urls.push(aiUniversalTtsObjectUrl);player.src=aiUniversalTtsObjectUrl;player.preload="auto";player.muted=false;player.volume=1;player.playbackRate=1;showUniversalSpokenAnswer(clean,player);
-    player.onplay=()=>{aiUniversalSpeechPrimed=true;if(index===0)reportVoiceHealth("browser_fallback_speech_started");setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState(deliveredVoice==="browser"?"RESPONDIENDO EN VOZ · RESPALDO DEL DISPOSITIVO":"RESPONDIENDO EN VOZ · FISH AUDIO V378",{busy:true})};
-    const stopAudioMonitor=monitorUniversalAudio(player);
-    plan.stopMonitor=stopAudioMonitor;
-    const finish=player.onended;
-    player.onended=()=>{
-      if(!plan.active||plan.index!==index||plan.advancing)return;
-      if(index+1===chunks.length){finish();return}
-      plan.advancing=true;stopAudioMonitor();
-      void pending[index+1].then(result=>{if(!plan.active)return;if(!result.ok)throw result.error;return playChunk(result,index+1)}).catch(failRemainder);
-    };
-    player.onerror=failRemainder;
-    try{await universalVoiceDeadline(player.play(),6000)}catch(error){player.pause();throw error}return true;
-    };
-    const first=await pending[0];if(!plan.active)return false;if(!first.ok){player.gscCancelSpeech();throw first.error}
-    return await playChunk(first,0);
-  }catch(error){
-    cancelPendingSpeech?.();
-    reportVoiceHealth("browser_fallback_speech_failed");
-    cedarSpeechServerBlockedUntil=Math.max(cedarSpeechServerBlockedUntil,Date.now()+CEDAR_SPEECH_RETRY_MS);
-    if(await speakAiUniversalMaleBrowserFallback(clean))return true;
-    setPrimaryVoiceMatrix("error",voiceContext,"VOZ MASCULINA NO DISPONIBLE · INTENTA DE NUEVO");aiUniversalSetState("VOZ MASCULINA NO DISPONIBLE · INTENTA DE NUEVO");return false;
-  }
-}
-function stopAiUniversalOutput(){
-  browserVoiceFollowupContext=null;
-  aiUniversalTtsAudio?.gscCancelSpeech?.();
-  aiUniversalTextAbortController?.abort();aiUniversalTextAbortController=null;aiUniversalTextBusy=false;
-  if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;
-  if(aiUniversalTtsAudio){aiUniversalTtsAudio.pause();aiUniversalTtsAudio.currentTime=0}
-  if(authorizedSpeech?.reason==="conversation"||activeResponseId||stopMonitorActive)stopAuthorizedSpeech();
-  if(browserVoiceActive||browserVoiceRequested)stopBrowserVoiceFallback();else if(listening)setVoice(false);
-  $("sendAiUniversal").disabled=false;aiUniversalSetState("DETENIDO · PUEDES ESCRIBIR O ESCUCHAR");return true;
-}
-function toggleAiUniversalMute(){
-  aiUniversalMuted=!aiUniversalMuted;
-  if(aiUniversalMuted){if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;if(aiUniversalTtsAudio)aiUniversalTtsAudio.pause();if(audioEl){audioEl.muted=true;audioEl.volume=0}}
-  else if(audioEl&&authorizedSpeech?.reason==="conversation"){audioEl.muted=false;audioEl.volume=1}
-  const button=$("muteAiUniversal");button.classList.toggle("active",aiUniversalMuted);button.textContent=aiUniversalMuted?"ACTIVAR VOZ":"SILENCIAR";
-  aiUniversalSetState(aiUniversalMuted?"VOZ SILENCIADA · EL TEXTO SIGUE ACTIVO":"VOZ ACTIVADA");return aiUniversalMuted;
-}
-function openAiUniversalPanel(rulesMode=false,{focus=true}={}){
-  aiUniversalRulesMode=!!rulesMode;
-  $("aiUniversalTitle").textContent=aiUniversalRulesMode?"REGLAS DE GOLF · USGA / R&A":"AI UNIVERSAL ∞";
-  $("aiUniversalRulesNote").classList.toggle("hidden",!aiUniversalRulesMode);
-  $("aiUniversalInput").placeholder=aiUniversalRulesMode?"Describe la situación: bola, lugar, modalidad y qué ocurrió…":"Escribe una pregunta, orden o tema…";
-  const overlay=$("aiUniversalOverlay");overlay.classList.add("visible");overlay.setAttribute("aria-hidden","false");renderAiUniversalHistory();aiUniversalSetState(aiUniversalTextBusy?"INVESTIGANDO Y PENSANDO…":aiUniversalRulesMode?"CONSULTA OFICIAL · REGLAS 2023 Y ACLARACIONES VIGENTES":"VOZ Y TEXTO · CUALQUIER TEMA PERMITIDO",{busy:aiUniversalTextBusy});if(focus)setTimeout(()=>$("aiUniversalInput").focus(),0);
-}
-function closeAiUniversalPanel(){const overlay=$("aiUniversalOverlay");overlay.classList.remove("visible");overlay.setAttribute("aria-hidden","true")}
-async function startAiUniversalListening(){
-  if(listening){
-    try{await setRealtimeTurnProfile(REALTIME_TURN_PROFILE_CONVERSATION)}catch(error){console.error("Perfil conversacional:",error)}
-    aiUniversalSetState("ESCUCHANDO",{busy:true});return true
-  }
-  if("speechSynthesis" in window)window.speechSynthesis.cancel();aiUniversalUtterance=null;releaseAiUniversalPlaybackForListening();primeAiUniversalSpeechFromGesture();
-  const setupVisible=$("setupOverlay")?.classList?.contains("visible"),context=setupVisible||!round.configured?"setup":"round";
-  aiUniversalSetState("ABRIENDO MICRÓFONO…",{busy:true});
-  const opened=await toggleVoice(context,REALTIME_TURN_PROFILE_CONVERSATION);
-  aiUniversalSetState(opened?"ESCUCHANDO":voiceLastErrorMessage||"NO SE PUDO ABRIR EL MICRÓFONO",{busy:!!opened});return !!opened;
-}
+function splitUniversalSpeechText(text){ return false; }
+async function speakAiUniversalText(text,{repeat=false}={}){ return false; }
+function stopAiUniversalOutput(){ return false; }
+function toggleAiUniversalMute(){ return false; }
+function openAiUniversalPanel(rulesMode=false,{focus=true}={}){ return false; }
+function closeAiUniversalPanel(){ return false; }
+async function startAiUniversalListening(){ return false; }
 function aiUniversalLooksLikeSetupOrder(text){
   const value=normalizeSpeech(text);
   return /^(?:agrega|agregar|anade|anadir|incorpora|incorporar|registra|registrar|corrige|corregir|rectifica|rectificar|jugador|jugadora)\b/.test(value)&&/\b(?:handicap|hcp|blancas?|azules?|rojas?|doradas?|negras?|amarillas?|senior|caballeros?|damas?)\b/.test(value);
@@ -2915,22 +2633,7 @@ function aiUniversalCommandShouldRemainLocal(text,command){
   const advisory=/\b(analiza|analisis|compara|comparacion|criterio|evalua|evaluacion|explica|profundiza|recomienda|recomendacion|aconseja|consejo|riesgo|riesgos|supuesto|supuestos|alternativa|alternativas|estrategia|plan|afecta|efecto|seleccion de palo)\b/.test(value);
   return !advisory&&words.length<=12;
 }
-function routeAiUniversalAppText(text){
-  const command=window.GSCVoiceAssistant?.parse?.(text)||{matched:false};
-  if(aiUniversalCommandShouldRemainLocal(text,command)){if(command.execute&&command.action)executeVoiceAssistantAction(command.action);return{handled:true,answer:command.execute?`Orden ejecutada. ${command.speech}`:command.speech}}
-  const navigation=parseRoundNavigationCommand(text);if(navigation.matched){openNewRoundDraft();return{handled:true,answer:"Orden ejecutada. Abrí el registro de jugadores."}}
-  const setupVisible=$("setupOverlay")?.classList?.contains("visible");
-  if(setupVisible&&aiUniversalLooksLikeSetupOrder(text)&&(!window.GSCVoiceTurns?.enabled||normalizeExplicitPttRoster(text)!==null)){
-    const parsed=parseSetupTranscript(window.GSCVoiceTurns?.enabled?normalizeExplicitPttRoster(text):text);if(parsed.ok){const result=applySetupChanges(parsed.changes);return{handled:true,answer:result.ok?"Orden ejecutada. Actualicé el registro de jugadores.":result.speech||"No pude completar esa orden."}}
-  }
-  if(round.configured&&isLocalRoundQueryIntent(text)){
-    const query=parseRoundQueryTranscript(text);if(query.matched)return{handled:true,answer:query.result?.speech||"No encontré ese dato en la tarjeta."};
-  }
-  if(round.configured&&aiUniversalLooksLikeScoreOrder(text)){
-    const parsed=parseRoundScoreTranscript(text);if(parsed.matched&&parsed.ok){const result=applyLiteralScores(parsed);return{handled:true,answer:result.ok?"Score registrado en la tarjeta.":result.speech||"No pude registrar ese score."}}
-  }
-  return{handled:false};
-}
+function routeAiUniversalAppText(text){ return false; }
 function aiUniversalAppContext(trafficOrigin=null){
   const weather=currentCourseWeatherSnapshot()||setupWeatherSnapshot||null;
   const courseKey=COURSE_CATALOG[round?.courseKey]?round.courseKey:(COURSE_CATALOG[draftCourse]?draftCourse:"pulte"),course=COURSE_CATALOG[courseKey];
@@ -2942,49 +2645,7 @@ function aiUniversalAppContext(trafficOrigin=null){
     trafficOrigin:trafficOrigin?{latitude:trafficOrigin.latitude,longitude:trafficOrigin.longitude}:null
   };
 }
-async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){
-  if(aiUniversalTextBusy)return false;
-  const input=$("aiUniversalInput"),query=String(forcedText||input.value||"").trim();if(!query){input.focus();return false}
-  input.value="";aiUniversalRemember("user",query,[],{visible:!voiceOnly});
-  const local=aiUniversalRulesMode?{handled:false}:routeAiUniversalAppText(query);
-  if(local.handled){aiUniversalRemember("assistant",local.answer,[],{visible:!voiceOnly});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");if(voiceOnly)return await speakAiUniversalText(local.answer);return true}
-  aiUniversalTextBusy=true;$("sendAiUniversal").disabled=true;setPrimaryVoiceMatrix("responding",voiceContext);aiUniversalSetState("RESPONDIENDO",{busy:true});
-  const controller=new AbortController();aiUniversalTextAbortController=controller;
-  try{
-    const history=aiUniversalHistory.slice(0,-1).slice(-AI_UNIVERSAL_HISTORY_LIMIT).map(item=>({role:item.role,content:item.content}));
-    const requestUniversal=async trafficOrigin=>{
-      const endpoint=aiUniversalRulesMode?window.gscgApiUrl("/api/golf-rules"):window.gscgApiUrl("/api/universal-ai");
-      const options={method:"POST",credentials:"include",signal:controller.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({query,history,responseMode:voiceOnly?"voice":"text",appContext:aiUniversalAppContext(trafficOrigin)})};
-      let response=await universalVoiceDeadline(fetch(endpoint,options),35000,controller),result=await universalVoiceDeadline(response.json(),10000,controller);
-      if(!aiUniversalRulesMode&&response.status===503&&result?.retryable){
-        aiUniversalSetState("RECUPERANDO CONEXIÓN CON AI UNIVERSAL ∞…",{busy:true});
-        const waitSeconds=Math.min(5,Math.max(1,Number(response.headers.get("Retry-After")||1)));
-        await new Promise(resolve=>setTimeout(resolve,waitSeconds*1000));
-        response=await universalVoiceDeadline(fetch(endpoint,options),35000,controller);result=await universalVoiceDeadline(response.json(),10000,controller);
-      }
-      return{response,result};
-    };
-    let{response,result}=await requestUniversal(null);
-    if(!aiUniversalRulesMode&&result?.needsCurrentLocation){
-      aiUniversalSetState("SOLICITANDO UBICACIÓN PARA EL TRÁFICO…",{busy:true});
-      const coordinates=await currentBrowserCoordinates();
-      if(!coordinates){const locationError=new Error("TRAFFIC_LOCATION_DENIED");locationError.code="TRAFFIC_LOCATION_DENIED";throw locationError}
-      ({response,result}=await requestUniversal(coordinates));
-    }
-    if(!response.ok||!result.ok){const requestError=new Error(result.error||"UNIVERSAL_AI_UNAVAILABLE");requestError.code=result.error||"UNIVERSAL_AI_UNAVAILABLE";throw requestError}
-    if(aiUniversalRulesMode)saveOfficialGolfRuleForOffline(query,result);
-    aiUniversalRemember("assistant",result.answer,result.sources,{visible:!voiceOnly});aiUniversalSetState("LISTO · PUEDES CONTINUAR");if(voiceOnly)return await speakAiUniversalText(result.answer);return true;
-  }catch(error){
-    if(error?.name==="AbortError"){if(!aiUniversalTextAbortController||aiUniversalTextAbortController===controller)aiUniversalSetState("DETENIDO · PUEDES CONTINUAR");return false}
-    if(aiUniversalRulesMode){
-      const offline=officialGolfRuleOfflineResult(query);
-      if(offline){aiUniversalRemember("assistant",offline.answer,offline.sources,{visible:!voiceOnly});renderCaddieSources(offline);aiUniversalSetState("MODO BÁSICO SIN CONEXIÓN · RESPUESTA OFICIAL GUARDADA");if(voiceOnly)return await speakAiUniversalText(offline.answer);return true}
-    }
-    const creditBlocked=error?.code==="UNIVERSAL_AI_CREDIT_EXHAUSTED";const message=error?.code==="TRAFFIC_LOCATION_DENIED"?"Necesito permiso de ubicación o un punto de salida escrito para calcular el tráfico.":creditBlocked?"El servicio de respuestas no tiene saldo disponible. Tu conexión a Internet sí funciona.":aiUniversalRulesMode?"No pude verificar la regla en las fuentes oficiales USGA / The R&A en este momento. Intenta nuevamente.":"No pude completar la respuesta en este momento.";aiUniversalRemember("assistant",message,[],{visible:!voiceOnly});const visibleState=creditBlocked?"SERVICIO DE RESPUESTAS SIN SALDO · TU INTERNET SÍ FUNCIONA":error?.code==="TRAFFIC_LOCATION_DENIED"?"UBICACIÓN NECESARIA":"SERVICIO DE RESPUESTAS NO DISPONIBLE";setPrimaryVoiceMatrix("error",voiceContext,visibleState);aiUniversalSetState(visibleState);return false;
-  }finally{
-    if(aiUniversalTextAbortController===controller){aiUniversalTextAbortController=null;aiUniversalTextBusy=false;$("sendAiUniversal").disabled=false}
-  }
-}
+async function submitAiUniversalText(forcedText="",{voiceOnly=false}={}){ return false; }
 async function continueConversationAfterTool(call){
   if(!call?.call_id||processedConversationToolCalls.has(call.call_id))return;
   processedConversationToolCalls.add(call.call_id);
@@ -3052,80 +2713,20 @@ async function setSessionVoiceSpeed(speed){
     return true;
   }catch(e){console.error(e);return false}
 }
-function speakAuthorized(reason,text){
-  if(typeof window!=="undefined"&&window.GSCVoiceTurns?.enabled){
-    if(!ALLOWED_SPEECH_REASONS.has(reason))return false;
-    void speakAiUniversalText(text);return true;
-  }
-  if(!ALLOWED_SPEECH_REASONS.has(reason)||!dc||dc.readyState!=="open")return false;
-  const spokenText=String(text);
-  const token=`speech_${++speechTokenSeq}`;
-  authorizedSpeech={reason,token,text:spokenText};
-  sessionHasSpoken=true;
-  const monitorStop=reason==="query"||reason==="query_accumulated";
-  stopMonitorActive=monitorStop;
-  phase="speaking";
-  if(micTrack)micTrack.enabled=monitorStop;
-  if(audioEl){audioEl.volume=1;audioEl.muted=false;}
-  sendEvent({type:"response.create",response:responseForActiveShape(reason,token,spokenText)});
-  return true
-}
-function speakGlobalError(context=voiceContext){
-  if(listening)setVoice(false);
-  conversationToolTransition=null;
-  phase="idle";
-  aiUniversalSetState("NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO");
-  if(audioEl){audioEl.muted=true;audioEl.volume=0;}
-  if(activeResponseId)cancelResponseSafe(activeResponseId);
-  clearOutputAudioSafe();
-  activeResponseId=null;speechPlaybackResponseId=null;stopMonitorActive=false;clearSpeechAuthorization();
-  if(context==="setup"){
-    const stableSetup=$("stablefordSetupOverlay")?.classList?.contains("visible"),target=stableSetup?$("stablefordSetupStatus"):$("setupStatus");
-    if(target){target.classList.remove("listening");target.classList.add("error");target.textContent="ERROR"}
-  }else if($("status"))$("status").textContent=round.configured?roundIdleStatus():"";
-  return false
-}
+function speakAuthorized(reason,text){ return false; }
+function speakGlobalError(context=voiceContext){ return false; }
 function speakSetupConfirmation(){return false}
 async function speakClosure(text){
-  clearOperationalMissingPrompt();
-  if(listening)setVoice(false);else if(micTrack)micTrack.enabled=false;
-  stopMonitorActive=false;
-  const pushToTalk=typeof window!=="undefined"&&window.GSCVoiceTurns?.enabled;
-  if(!pushToTalk&&speakAuthorized("closure",text))return true;
-  if(await speakAiUniversalText(text))return true;
-  try{
-    if(!pushToTalk){await ensureSession();
-    if(speakAuthorized("closure",text))return true;}
-  }catch(error){console.error("Cierre automático de vuelta:",error)}
-  ensureAnnouncedState();
-  if(/Primera vuelta\./.test(text))round.announced.front=false;
-  if(/Segunda vuelta\./.test(text))round.announced.back=false;
-  if(/Ronda completa\./.test(text))round.announced.complete=false;
-  persist();
-  return false
+ const targetRound=round;
+ const ok=await window.GSCDeviceClosures.speak(text);
+ if(!ok){ensureAnnouncedState();if(/Primera vuelta\./.test(text))targetRound.announced.front=false;if(/Segunda vuelta\./.test(text))targetRound.announced.back=false;if(/Ronda completa\./.test(text))targetRound.announced.complete=false;if(round===targetRound)persist()}
+ return ok;
 }
-async function speakQuery(text,kind="query"){
-  if(typeof window!=="undefined"&&window.GSCVoiceTurns?.enabled)return await speakAiUniversalText(text);
-  if(kind==="accumulated")return speakAuthorized("query_accumulated",text);
-  return speakAuthorized("query",text);
-}
+async function speakQuery(text,kind="query"){ return false; }
 let sessionUpdateSeq=0;let pendingSessionUpdate=null;let sessionUpdateQueue=Promise.resolve();
-function performSessionUpdateAndWait(session,context,expectedSpeed=VOICE_POLICY.speed,expectedProfile=REALTIME_TURN_PROFILE_OPERATIONAL){return new Promise((resolve,reject)=>{if(!dc||dc.readyState!=="open")return reject(new Error("Canal Realtime no disponible"));const event_id=`group_session_${++sessionUpdateSeq}`;const timer=setTimeout(()=>{if(pendingSessionUpdate?.event_id===event_id)pendingSessionUpdate=null;reject(new Error("No se confirmó la configuración de voz"))},8000);pendingSessionUpdate={event_id,context,expectedSpeed,expectedProfile,resolve:()=>{clearTimeout(timer);pendingSessionUpdate=null;resolve()},reject:(err)=>{clearTimeout(timer);pendingSessionUpdate=null;reject(err)}};sendEvent({type:"session.update",event_id,session})})}
-function updateSessionAndWait(session,context,expectedSpeed=VOICE_POLICY.speed,expectedProfile=REALTIME_TURN_PROFILE_OPERATIONAL){
-  const queued=sessionUpdateQueue.catch(()=>{}).then(()=>performSessionUpdateAndWait(session,context,expectedSpeed,expectedProfile));
-  sessionUpdateQueue=queued.catch(()=>{});return queued;
-}
-async function setRealtimeTurnProfile(profile=REALTIME_TURN_PROFILE_OPERATIONAL){
-  const target=profile===REALTIME_TURN_PROFILE_CONVERSATION?REALTIME_TURN_PROFILE_CONVERSATION:REALTIME_TURN_PROFILE_OPERATIONAL;
-  const previousRequested=realtimeTurnProfileRequested;
-  realtimeTurnProfileRequested=target;
-  if(!realtimeReady())return false;
-  if(realtimeTurnProfile===target&&previousRequested===target&&!pendingSessionUpdate)return true;
-  const context=voiceContext==="setup"?"setup":"round";
-  const cfg=applyTurnProfileToConfig(context==="setup"?setupSessionConfig():roundSessionConfig(),target);
-  await updateSessionAndWait(sessionConfigForActiveShape(cfg),context,VOICE_POLICY.speed,target);
-  realtimeTurnProfile=target;return true;
-}
+function performSessionUpdateAndWait(session,context,expectedSpeed=VOICE_POLICY.speed,expectedProfile=REALTIME_TURN_PROFILE_OPERATIONAL){ return false; }
+function updateSessionAndWait(session,context,expectedSpeed=VOICE_POLICY.speed,expectedProfile=REALTIME_TURN_PROFILE_OPERATIONAL){ return false; }
+async function setRealtimeTurnProfile(profile=REALTIME_TURN_PROFILE_OPERATIONAL){ return false; }
 function restoreOperationalTurnProfile(){
   if(realtimeTurnProfile===REALTIME_TURN_PROFILE_OPERATIONAL&&realtimeTurnProfileRequested===REALTIME_TURN_PROFILE_OPERATIONAL&&!pendingSessionUpdate)return true;
   setRealtimeTurnProfile(REALTIME_TURN_PROFILE_OPERATIONAL).catch(error=>console.error("Perfil operativo:",error));return true;
@@ -4138,7 +3739,7 @@ function openSetup(mode="new"){
   $("startRoundButton").textContent=profileCorrectionMode?"ACTUALIZAR DATOS":rosterEditMode?"ACTUALIZAR RONDA":"INICIAR RONDA";
   $("setupOk").textContent=profileCorrectionMode?"CONFIRMAR CAMBIOS":"OK";
   $("cancelSetup").classList.toggle("hidden",!round.configured);
-  $("setupMicWrap").classList.toggle("hidden",profileCorrectionMode);
+  $("setupMicWrap")?.classList.toggle("hidden",profileCorrectionMode);
   renderPreviousRoundControls();
   document.body?.classList.add("gsc-setup-open");
   showInstallControl();
@@ -4594,8 +4195,8 @@ function teardownRealtime(){
   processedTranscriptItems.clear();processedConversationToolCalls.clear();
   if(pendingSessionUpdate){try{pendingSessionUpdate.reject(new Error("Realtime reiniciado"))}catch{}}
   pendingSessionUpdate=null;realtimeTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL;realtimeTurnProfileRequested=REALTIME_TURN_PROFILE_OPERATIONAL;listening=false;phase="idle";
-  $("headerMicWrap").classList.remove("active","connecting");
-  $("setupMicWrap").classList.remove("active","connecting");
+  $("headerMicWrap")?.classList.remove("active","connecting");
+  $("setupMicWrap")?.classList.remove("active","connecting");
 }
 function voiceActivationErrorMessage(error){
   const name=String(error?.name||""),message=String(error?.message||"").toLowerCase(),status=Number(error?.status||0);
@@ -4625,15 +4226,10 @@ function scheduleRealtimeDisconnectRecovery(installedPc,context){
   realtimeDisconnectTimer=setTimeout(()=>{realtimeDisconnectTimer=null;if(pc===installedPc&&installedPc.connectionState!=="connected")voiceTransportFailure(installedPc,context)},REALTIME_DISCONNECT_GRACE_MS);
 }
 
-function fallbackVoiceConstructor(){return window.SpeechRecognition||window.webkitSpeechRecognition||null}
+function fallbackVoiceConstructor(){ return false; }
 function fallbackVoiceAvailable(){return typeof fallbackVoiceConstructor()==="function"}
-function gestureSafeBrowserVoicePreferred(){
-  if(!fallbackVoiceAvailable())return false;
-  const userAgent=String(navigator.userAgent||""),platform=String(navigator.platform||"");
-  const touchMac=platform==="MacIntel"&&Number(navigator.maxTouchPoints||0)>1;
-  return /iPad|iPhone|iPod/i.test(userAgent)||touchMac
-}
-function shouldUseBrowserVoiceFallback(error){const name=String(error?.name||"");return !["NotAllowedError","SecurityError","PermissionDeniedError","NotFoundError","DevicesNotFoundError"].includes(name)}
+function gestureSafeBrowserVoicePreferred(){ return false; }
+function shouldUseBrowserVoiceFallback(error){ return false; }
 function primaryVoiceStatusTarget(context=voiceContext){return context==="setup"?$("setupStatus"):$("status")}
 function primaryVoiceMatrixText(state,context=voiceContext,message=""){
   if(message)return message;
@@ -4650,12 +4246,7 @@ function setPrimaryVoiceMatrix(state,context=voiceContext,message=""){
   return true
 }
 function fallbackVoiceErrorMessage(event){const code=String(event?.error||"").toLowerCase();if(code==="not-allowed"||code==="service-not-allowed")return"PERMISO DE MICRÓFONO BLOQUEADO · HABILÍTALO EN EL NAVEGADOR";if(code==="audio-capture")return"NO HAY UN MICRÓFONO DISPONIBLE EN ESTE DISPOSITIVO";if(code==="no-speech")return"NO ESCUCHÉ NINGUNA VOZ · TOCA EL MICRÓFONO E INTENTA DE NUEVO";return"RECONOCIMIENTO DE VOZ NO DISPONIBLE · INTENTA DE NUEVO"}
-function mergeBrowserVoiceSegments(committed="",pending=""){
-  const left=normalizeSpeech(committed),right=normalizeSpeech(pending);if(!left)return right;if(!right)return left;if(left===right||left.endsWith(` ${right}`))return left;if(right.startsWith(`${left} `))return right;
-  const a=left.split(" "),b=right.split(" ");let overlap=0;
-  for(let size=Math.min(a.length,b.length);size>0;size--)if(a.slice(-size).join(" ")===b.slice(0,size).join(" ")){overlap=size;break}
-  return[...a,...b.slice(overlap)].join(" ")
-}
+function mergeBrowserVoiceSegments(committed="",pending=""){ return false; }
 function browserVoiceAlternativeBeams(results,maxBeams=16,maxAlternatives=5){
   let beams=[""];
   for(let index=0;index<Number(results?.length||0);index++){
@@ -4669,153 +4260,32 @@ function browserVoiceAlternativeBeams(results,maxBeams=16,maxAlternatives=5){
 }
 function browserVoiceScoreSignature(parsed){if(!parsed?.ok||!Array.isArray(parsed.entries))return"";return parsed.entries.map(entry=>`${canonicalPlayerNameKey(entry.player)}:${Number(entry.hole)}:${entry.status||Number(entry.gross)}`).sort().join("|")}
 function browserVoiceCandidateLength(transcript=""){const value=normalizeSpeech(transcript);return{words:value?value.split(" ").length:0,characters:value.length}}
-function strongestBrowserVoiceCandidates(items=[],unitReader=()=>0,preferLength=true){
-  if(!items.length)return[];
-  const maxUnits=Math.max(...items.map(item=>Number(unitReader(item)||0))),byUnits=items.filter(item=>Number(unitReader(item)||0)===maxUnits);if(!preferLength)return byUnits;
-  const maxWords=Math.max(...byUnits.map(item=>browserVoiceCandidateLength(item.transcript).words)),byWords=byUnits.filter(item=>browserVoiceCandidateLength(item.transcript).words===maxWords);
-  const maxCharacters=Math.max(...byWords.map(item=>browserVoiceCandidateLength(item.transcript).characters));return byWords.filter(item=>browserVoiceCandidateLength(item.transcript).characters===maxCharacters)
-}
-function selectBrowserVoiceCandidate(context,candidates=[],preferredTranscript=""){
-  const preferred=normalizeSpeech(preferredTranscript),unique=[...new Set([...candidates.map(normalizeSpeech),preferred].filter(Boolean))];if(!unique.length)return{transcript:"",ambiguous:false};
-  if(context==="setup"){
-    const preferredParsed=preferred?parseSetupTranscript(preferred):null;if(preferredParsed?.ok)return{transcript:preferred,ambiguous:false,source:"primary"};
-    const valid=unique.map(transcript=>({transcript,parsed:parseSetupTranscript(transcript)})).filter(item=>item.parsed?.ok),strongest=strongestBrowserVoiceCandidates(valid,item=>Array.isArray(item.parsed?.changes)?item.parsed.changes.length:0);
-    if(strongest.length)return{transcript:strongest[0].transcript,ambiguous:false,source:"recovery"};
-    return{transcript:strongestBrowserVoiceCandidates(unique.map(transcript=>({transcript})))[0]?.transcript||unique[0],ambiguous:false}
-  }
-  const preferredParsed=preferred&&aiUniversalLooksLikeScoreOrder(preferred)?parseRoundScoreTranscript(preferred):null;
-  if(preferredParsed?.ok&&!isGeneralConversationIntent(preferred))return{transcript:preferred,ambiguous:false,source:"primary"};
-  const valid=unique.map(transcript=>({transcript,parsed:aiUniversalLooksLikeScoreOrder(transcript)?parseRoundScoreTranscript(transcript):null})).filter(item=>item.parsed?.ok&&!isGeneralConversationIntent(item.transcript));
-  const strongest=strongestBrowserVoiceCandidates(valid,item=>Array.isArray(item.parsed?.entries)?item.parsed.entries.length:0,false),signatures=new Map();for(const item of strongest){const signature=browserVoiceScoreSignature(item.parsed);if(signature&&!signatures.has(signature))signatures.set(signature,item)}
-  if(signatures.size===1)return{transcript:[...signatures.values()][0].transcript,ambiguous:false,source:"recovery"};if(signatures.size>1)return{transcript:"",ambiguous:true};
-  return{transcript:strongestBrowserVoiceCandidates(unique.map(transcript=>({transcript})))[0]?.transcript||unique[0],ambiguous:false}
-}
-function clearBrowserVoiceSilenceTimer(){if(browserVoiceSilenceTimer){clearTimeout(browserVoiceSilenceTimer);browserVoiceSilenceTimer=null}}
-function clearBrowserVoiceFirstResultTimer(){if(browserVoiceFirstResultTimer){clearTimeout(browserVoiceFirstResultTimer);browserVoiceFirstResultTimer=null}}
-function clearBrowserVoiceStopGuardTimer(){if(browserVoiceStopGuardTimer){clearTimeout(browserVoiceStopGuardTimer);browserVoiceStopGuardTimer=null}}
-function clearBrowserVoiceRetryTimer(){if(browserVoiceRetryTimer){clearTimeout(browserVoiceRetryTimer);browserVoiceRetryTimer=null}}
-function detachBrowserVoiceRecognition(recognition){if(!recognition)return false;recognition.onstart=null;recognition.onresult=null;recognition.onerror=null;recognition.onend=null;return true}
-function releaseBrowserVoiceCapture(recognition){
-  if(!recognition)return false;detachBrowserVoiceRecognition(recognition);
-  try{if(typeof recognition.abort==="function")recognition.abort();else recognition.stop?.()}catch{try{recognition.stop?.()}catch{}}
-  return true
-}
+function strongestBrowserVoiceCandidates(items=[],unitReader=()=>0,preferLength=true){ return false; }
+function selectBrowserVoiceCandidate(context,candidates=[],preferredTranscript=""){ return false; }
+function clearBrowserVoiceSilenceTimer(){ return false; }
+function clearBrowserVoiceFirstResultTimer(){ return false; }
+function clearBrowserVoiceStopGuardTimer(){ return false; }
+function clearBrowserVoiceRetryTimer(){ return false; }
+function detachBrowserVoiceRecognition(recognition){ return false; }
+function releaseBrowserVoiceCapture(recognition){ return false; }
 function browserVoiceTransportFailure(event){const code=String(event?.error||event?.name||"").toLowerCase().replace(/-/g,"_");if(code==="audio_capture")return"audio_capture";if(code==="network")return"network";if(code==="no_speech")return"no_speech";if(code==="not_allowed"||code==="service_not_allowed")return"not_allowed";if(code==="aborted"||code==="aborterror")return"aborted";return"other"}
-function recoverableBrowserVoiceTransportError(event){return["audio_capture","network"].includes(browserVoiceTransportFailure(event))}
-function stopBrowserVoiceRecognitionSafely(recognition,context){
-  if(browserVoiceRecognition!==recognition)return false;browserVoiceStopping=true;setPrimaryVoiceMatrix("responding",context);clearBrowserVoiceStopGuardTimer();
-  browserVoiceStopGuardTimer=setTimeout(()=>{browserVoiceStopGuardTimer=null;if(browserVoiceRecognition===recognition)finalizeBrowserVoiceFallback(recognition,context)},BROWSER_VOICE_STOP_GUARD_MS);
-  try{recognition.stop()}catch{clearBrowserVoiceStopGuardTimer();finalizeBrowserVoiceFallback(recognition,context)}return true
-}
-function scheduleBrowserVoiceFinalize(recognition,context){
-  clearBrowserVoiceSilenceTimer();if(browserVoiceRecognition!==recognition||browserVoiceStopping)return false;
-  browserVoiceSilenceTimer=setTimeout(()=>{browserVoiceSilenceTimer=null;if(browserVoiceRecognition!==recognition||browserVoiceStopping)return;stopBrowserVoiceRecognitionSafely(recognition,context)},BROWSER_VOICE_SILENCE_MS);return true
-}
-function scheduleBrowserVoiceFirstResultTimeout(recognition,context){
-  clearBrowserVoiceFirstResultTimer();if(browserVoiceRecognition!==recognition||browserVoiceStopping||browserVoiceTranscript||browserVoiceInterim)return false;
-  browserVoiceFirstResultTimer=setTimeout(()=>{browserVoiceFirstResultTimer=null;if(browserVoiceRecognition!==recognition||browserVoiceStopping||browserVoiceTranscript||browserVoiceInterim)return;reportVoiceHealth("browser_fallback_no_result_timeout",{transportFailure:"no_speech"});
-    stopBrowserVoiceRecognitionSafely(recognition,context)
-  },BROWSER_VOICE_FIRST_RESULT_TIMEOUT_MS);return true
-}
+function recoverableBrowserVoiceTransportError(event){ return false; }
+function stopBrowserVoiceRecognitionSafely(recognition,context){ return false; }
+function scheduleBrowserVoiceFinalize(recognition,context){ return false; }
+function scheduleBrowserVoiceFirstResultTimeout(recognition,context){ return false; }
 function browserVoiceCombinedTranscript(){return mergeBrowserVoiceSegments(browserVoiceTranscript,browserVoiceInterim)}
-function applyBrowserVoiceProgressiveScore(context,transcript=browserVoiceCombinedTranscript()){
-  const clean=String(transcript||"").trim();if(context!=="round"||!browserVoiceItemId||!clean||isGeneralConversationIntent(clean))return{handled:false,applied:0,count:0};
-  const live=applyLiveRoundTranscript(browserVoiceItemId,clean),count=roundLiveCommitted.get(browserVoiceItemId)?.size||0;
-  if(live.applied){browserVoiceAppliedEntryCount=count;persist();render();const hole=Number(live.entries?.at(-1)?.hole);reportVoiceHealth("browser_fallback_round_progressive",{entryCount:count});setPrimaryVoiceMatrix("listening",context,Number.isInteger(hole)?`HOYO ${hole} REGISTRADO · ESCUCHANDO`:`${count} SCORES REGISTRADOS · ESCUCHANDO`)}
-  return{handled:count>0,applied:live.applied||0,count,entries:live.entries||[]}
-}
-function sealBrowserVoiceProgress(context,transcript=browserVoiceCombinedTranscript()){
-  if(context!=="round"||!browserVoiceItemId||isGeneralConversationIntent(transcript))return{handled:false,count:0};
-  const itemId=browserVoiceItemId,live=applyLiveRoundTranscript(itemId,transcript,{final:true}),count=Math.max(browserVoiceAppliedEntryCount,roundLiveCommitted.get(itemId)?.size||0);
-  if(!live.handled&&!count)return{handled:false,count:0};
-  const closure=consumeLiveRoundClosures();consumeLiveRoundItem(itemId);browserVoiceItemId="";browserVoiceAppliedEntryCount=count;return{handled:true,count,closure}
-}
-function finalizeBrowserVoiceFallback(recognition,context){
-  if(browserVoiceRecognition!==recognition)return false;clearBrowserVoiceSilenceTimer();clearBrowserVoiceFirstResultTimer();clearBrowserVoiceStopGuardTimer();clearBrowserVoiceRetryTimer();
-  const primary=mergeBrowserVoiceSegments(browserVoiceTranscript,browserVoiceInterim),selection=selectBrowserVoiceCandidate(context,browserVoiceCandidates,primary),transcript=selection.transcript,failed=browserVoiceErrored&&!transcript;
-  if(!failed&&selection.ambiguous&&context==="round"&&browserVoiceItemId){rollbackLiveRoundItem(browserVoiceItemId);consumeLiveRoundItem(browserVoiceItemId);browserVoiceItemId="";browserVoiceAppliedEntryCount=0}
-  let progressive={handled:false,count:0};
-  if(!failed&&!selection.ambiguous&&context==="round"&&transcript&&!isGeneralConversationIntent(transcript)){
-    if(normalizeSpeech(transcript)!==normalizeSpeech(primary)&&(roundLiveCommitted.get(browserVoiceItemId)?.size||0)){rollbackLiveRoundItem(browserVoiceItemId);consumeLiveRoundItem(browserVoiceItemId);browserVoiceItemId=`browser_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;browserVoiceAppliedEntryCount=0}
-    progressive=sealBrowserVoiceProgress(context,transcript)
-  }
-  releaseBrowserVoiceCapture(recognition);browserVoiceRecognition=null;browserVoiceRequested=false;browserVoiceActive=false;browserVoiceStopping=false;browserVoiceRestartCount=0;browserVoiceTransportRetryCount=0;listening=false;phase="idle";
-  const wrap=context==="setup"?$("setupMicWrap"):$("headerMicWrap");wrap?.classList.remove("active","connecting");
-  if(!failed&&selection.ambiguous){phase="idle";reportVoiceHealth("browser_fallback_score_rejected",{scoreFailure:"ambiguous_score"});setPrimaryVoiceMatrix("error",context,"SCORE NO REGISTRADO · DOS TRANSCRIPCIONES POSIBLES");return true}
-  if(progressive.handled){phase="idle";reportVoiceHealth("browser_fallback_round_applied",{entryCount:progressive.count});reportVoiceHealth("browser_fallback_score_applied");setPrimaryVoiceMatrix("idle",context,progressive.count===1?"LISTO · 1 SCORE REGISTRADO":`LISTO · ${progressive.count} SCORES REGISTRADOS`);if(progressive.closure)void speakClosure(progressive.closure);return true}
-  if(!failed&&transcript){reportVoiceHealth("browser_fallback_transcript_ready");void processBrowserVoiceTranscript(context,transcript).catch(error=>{console.error("Browser voice transcript:",error);reportVoiceHealth("browser_fallback_query_failed");setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO")});return true}
-  if(!failed)setPrimaryVoiceMatrix("error",context,"NO ESCUCHÉ NINGUNA VOZ · TOCA EL MICRÓFONO E INTENTA DE NUEVO");return false
-}
-function restartBrowserVoiceAfterNaturalEnd(recognition,context){
-  if(browserVoiceRecognition!==recognition||browserVoiceStopping||!browserVoiceSilenceTimer||browserVoiceRestartCount>=BROWSER_VOICE_MAX_RESTARTS)return false;
-  const pending=mergeBrowserVoiceSegments(browserVoiceTranscript,browserVoiceInterim);if(!pending)return false;
-  if(isGeneralConversationIntent(pending))return false;
-  clearBrowserVoiceSilenceTimer();clearBrowserVoiceFirstResultTimer();detachBrowserVoiceRecognition(recognition);browserVoiceRecognition=null;browserVoiceTranscript=pending;browserVoiceInterim="";browserVoiceRestartCount++;browserVoiceRequested=true;browserVoiceActive=false;
-  setPrimaryVoiceMatrix("idle",context,"RECONECTANDO MICRÓFONO…");const opened=beginBrowserVoiceRecognition(context,"natural");if(!opened)reportVoiceHealth("browser_fallback_restart_failed",{transportFailure:"other"});return opened
-}
-function stopBrowserVoiceFallback({keepStatus=false,processPending=false}={}){
-  browserVoiceFollowupContext=null;
-  const recognition=browserVoiceRecognition,context=browserVoiceContext||voiceContext;clearBrowserVoiceSilenceTimer();clearBrowserVoiceFirstResultTimer();clearBrowserVoiceStopGuardTimer();clearBrowserVoiceRetryTimer();
-  if(processPending&&recognition){browserVoiceRequested=false;return stopBrowserVoiceRecognitionSafely(recognition,context)}
-  const progressive=sealBrowserVoiceProgress(context);
-  detachBrowserVoiceRecognition(recognition);browserVoiceRequested=false;browserVoiceActive=false;browserVoiceStopping=false;browserVoiceRestartCount=0;browserVoiceTransportRetryCount=0;browserVoiceRecognition=null;try{recognition?.abort?.()}catch{try{recognition?.stop()}catch{}}
-  listening=false;phase="idle";$("headerMicWrap")?.classList.remove("active","connecting");$("setupMicWrap")?.classList.remove("active","connecting");if(progressive.handled){setPrimaryVoiceMatrix("idle",context,`${progressive.count} SCORES GUARDADOS`);if(progressive.closure)void speakClosure(progressive.closure)}else if(!keepStatus)setPrimaryVoiceMatrix("idle",context);return true
-}
-async function processBrowserVoiceTranscript(context,transcript){
-  const clean=String(transcript||"").trim();if(!clean)return false;voiceContext=context;setPrimaryVoiceMatrix("responding",context);
-  if(context==="setup"){
-    const parsed=parseSetupTranscript(clean);
-    if(parsed?.ok){const result=applySetupChanges(parsed.changes);if(result?.ok){phase="idle";reportVoiceHealth("browser_fallback_setup_applied");renderDraft();setPrimaryVoiceMatrix("idle",context,"LISTO · REVISA LOS JUGADORES Y PRESIONA OK");return true}}
-    if(isGeneralConversationIntent(clean)||!aiUniversalLooksLikeSetupOrder(clean))return answerBrowserVoiceQuery(context,clean);
-    phase="idle";reportVoiceHealth("browser_fallback_setup_rejected");resetSetupCapture();setPrimaryVoiceMatrix("error",context,"NO RECONOCÍ EL LISTADO · DI: NOMBRE, HANDICAP Y MARCAS");return false
-  }
-  const scoreParsed=parseRoundScoreTranscript(clean),scoreIntent=!isGeneralConversationIntent(clean)&&(scoreParsed?.ok||aiUniversalLooksLikeScoreOrder(clean));
-  if(scoreIntent){
-    const result=scoreParsed?.ok?applyLiteralScores(scoreParsed):scoreParsed;phase="idle";
-    if(result?.ok){const count=scoreParsed.entries.length;reportVoiceHealth("browser_fallback_round_applied",{entryCount:count});reportVoiceHealth("browser_fallback_score_applied");setPrimaryVoiceMatrix("idle",context,count===1?"LISTO · 1 HOYO REGISTRADO":`LISTO · ${count} HOYOS REGISTRADOS`);return true}
-    reportVoiceHealth("browser_fallback_round_rejected",{entryCount:0});reportVoiceHealth("browser_fallback_score_rejected",{scoreFailure:scoreParsed?.failureCode||"parser_rejected"});setPrimaryVoiceMatrix("error",context,"NO RECONOCÍ LA TANDA · DI: HOYO 1 CUATRO, HOYO 2 CINCO");return false
-  }
-  const local=routeAiUniversalAppText(clean);if(local?.handled){aiUniversalRemember("user",clean,[],{visible:false});aiUniversalRemember("assistant",local.answer,[],{visible:false});aiUniversalSetState("ORDEN DE LA APLICACIÓN RESUELTA");return await speakAiUniversalText(local.answer)}
-  return answerBrowserVoiceQuery(context,clean)
-}
-async function answerBrowserVoiceQuery(context,clean){
-  browserVoiceFollowupContext=context;
-  reportVoiceHealth("browser_fallback_general_in_place");let answered=false;
-  try{answered=await submitAiUniversalText(clean,{voiceOnly:true})}catch(error){console.error("Browser voice query:",error);setPrimaryVoiceMatrix("error",context,"NO PUDE COMPLETAR ESA RESPUESTA · INTENTA DE NUEVO")}
-  if(answered){phase="idle";reportVoiceHealth("browser_fallback_query_answered");return true}
-  browserVoiceFollowupContext=null;reportVoiceHealth("browser_fallback_query_failed");phase="idle";return false
-}
-function scheduleBrowserVoiceTransportRetry(recognition,context,event){
-  if(browserVoiceRecognition!==recognition||browserVoiceStopping||!recoverableBrowserVoiceTransportError(event)||browserVoiceTransportRetryCount>=BROWSER_VOICE_MAX_TRANSPORT_RETRIES)return false;
-  const transportFailure=browserVoiceTransportFailure(event);clearBrowserVoiceSilenceTimer();clearBrowserVoiceFirstResultTimer();clearBrowserVoiceRetryTimer();releaseBrowserVoiceCapture(recognition);browserVoiceRecognition=null;browserVoiceTransportRetryCount++;browserVoiceRequested=true;browserVoiceActive=false;browserVoiceErrored=false;listening=false;phase="idle";
-  setPrimaryVoiceMatrix("idle",context,"RECUPERANDO MICRÓFONO…");reportVoiceHealth("browser_fallback_retry_scheduled",{transportFailure});browserVoiceRetryTimer=setTimeout(()=>{browserVoiceRetryTimer=null;if(!browserVoiceRequested||browserVoiceStopping)return;beginBrowserVoiceRecognition(context,"transport")},BROWSER_VOICE_TRANSPORT_RETRY_MS*browserVoiceTransportRetryCount);return true
-}
-function beginBrowserVoiceRecognition(context,trigger="initial"){
-  const Recognition=fallbackVoiceConstructor();if(typeof Recognition!=="function")return false;releaseAiUniversalPlaybackForListening();const recognition=new Recognition();browserVoiceRecognition=recognition;browserVoiceContext=context;browserVoiceRequested=true;browserVoiceActive=false;
-  recognition.lang="es-GT";recognition.continuous=true;recognition.interimResults=true;recognition.maxAlternatives=5;
-  recognition.onstart=()=>{if(browserVoiceRecognition!==recognition)return;browserVoiceRequested=false;browserVoiceActive=true;browserVoiceErrored=false;listening=true;phase="listening";const wrap=context==="setup"?$("setupMicWrap"):$("headerMicWrap");wrap?.classList.remove("connecting");wrap?.classList.add("active");setPrimaryVoiceMatrix("listening",context);reportVoiceHealth(trigger==="transport"?"browser_fallback_retry_started":trigger==="natural"?"browser_fallback_restarted":"browser_fallback_started");if(browserVoiceTranscript||browserVoiceInterim)scheduleBrowserVoiceFinalize(recognition,context);else scheduleBrowserVoiceFirstResultTimeout(recognition,context)};
-  recognition.onresult=event=>{if(browserVoiceRecognition!==recognition)return;let interim="";for(let i=event.resultIndex;i<event.results.length;i++){const text=String(event.results[i]?.[0]?.transcript||"").trim();if(!text)continue;if(event.results[i].isFinal)browserVoiceTranscript=mergeBrowserVoiceSegments(browserVoiceTranscript,text);else interim=mergeBrowserVoiceSegments(interim,text)}browserVoiceInterim=interim;const alternatives=browserVoiceAlternativeBeams(event.results);browserVoiceCandidates=[...new Set([...browserVoiceCandidates,...alternatives])].slice(-48);if(browserVoiceTranscript||browserVoiceInterim){clearBrowserVoiceFirstResultTimer();const progressive=applyBrowserVoiceProgressiveScore(context);if(!progressive.applied)setPrimaryVoiceMatrix("listening",context);scheduleBrowserVoiceFinalize(recognition,context)}};
-  recognition.onerror=event=>{if(browserVoiceRecognition!==recognition)return;const transportFailure=browserVoiceTransportFailure(event);if(transportFailure==="aborted"&&browserVoiceStopping){browserVoiceErrored=false;finalizeBrowserVoiceFallback(recognition,context);return}browserVoiceErrored=true;browserVoiceRequested=false;browserVoiceActive=false;listening=false;phase="idle";reportVoiceHealth("browser_fallback_error",{transportFailure});if(scheduleBrowserVoiceTransportRetry(recognition,context,event))return;if(browserVoiceTranscript||browserVoiceInterim){finalizeBrowserVoiceFallback(recognition,context);return}detachBrowserVoiceRecognition(recognition);browserVoiceRecognition=null;browserVoiceStopping=false;clearBrowserVoiceSilenceTimer();clearBrowserVoiceFirstResultTimer();if(recoverableBrowserVoiceTransportError(event))reportVoiceHealth("browser_fallback_retry_failed",{transportFailure});setPrimaryVoiceMatrix("error",context,fallbackVoiceErrorMessage(event))};
-  recognition.onend=()=>{if(restartBrowserVoiceAfterNaturalEnd(recognition,context))return;finalizeBrowserVoiceFallback(recognition,context)};
-  try{recognition.start();return true}catch(error){const transportFailure=browserVoiceTransportFailure(error);clearBrowserVoiceFirstResultTimer();detachBrowserVoiceRecognition(recognition);browserVoiceRecognition=null;browserVoiceRequested=false;browserVoiceActive=false;reportVoiceHealth("browser_fallback_start_failed",{transportFailure});if(trigger==="transport")reportVoiceHealth("browser_fallback_retry_failed",{transportFailure});setPrimaryVoiceMatrix("error",context,voiceActivationErrorMessage(error));return false}
-}
-function startBrowserVoiceFallback(context){
-  if(typeof fallbackVoiceConstructor()!=="function")return false;stopBrowserVoiceFallback({keepStatus:true});browserVoiceContext=context;browserVoiceRequested=true;browserVoiceTranscript="";browserVoiceInterim="";browserVoiceCandidates=[];browserVoiceErrored=false;browserVoiceStopping=false;browserVoiceRestartCount=0;browserVoiceTransportRetryCount=0;browserVoiceItemId=`browser_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;browserVoiceAppliedEntryCount=0;
-  setPrimaryVoiceMatrix("idle",context,"ABRIENDO MICRÓFONO DEL IPHONE…");reportVoiceHealth("browser_fallback_requested");return beginBrowserVoiceRecognition(context,"initial")
-}
+function applyBrowserVoiceProgressiveScore(context,transcript=browserVoiceCombinedTranscript()){ return false; }
+function sealBrowserVoiceProgress(context,transcript=browserVoiceCombinedTranscript()){ return false; }
+function finalizeBrowserVoiceFallback(recognition,context){ return false; }
+function restartBrowserVoiceAfterNaturalEnd(recognition,context){ return false; }
+function stopBrowserVoiceFallback({keepStatus=false,processPending=false}={}){ return false; }
+async function processBrowserVoiceTranscript(context,transcript){ return false; }
+async function answerBrowserVoiceQuery(context,clean){ return false; }
+function scheduleBrowserVoiceTransportRetry(recognition,context,event){ return false; }
+function beginBrowserVoiceRecognition(context,trigger="initial"){ return false; }
+function startBrowserVoiceFallback(context){ return false; }
 
-function setMicConnecting(context,on){
-  const wrap=context==="setup"?$("setupMicWrap"):$("headerMicWrap");
-  if(wrap){
-    wrap.classList.toggle("connecting",!!on);
-    if(on)wrap.classList.add("active");
-    else if(!listening)wrap.classList.remove("active");
-  }
-  if(on){
-    if(context==="setup")$("setupStatus").textContent="CONECTANDO…";
-    else $("status").textContent="CONECTANDO…";
-  }
-}
+function setMicConnecting(context,on){ return false; }
 function realtimeReady(){
   return !!(dc&&dc.readyState==="open"&&pc&&!["failed","closed","disconnected"].includes(pc.connectionState)&&micTrack&&micTrack.readyState==="live");
 }
@@ -4870,26 +4340,7 @@ async function recoverRealtimeAfterResume(){
   try{return await resumeCheckPromise}
   finally{resumeCheckPromise=null}
 }
-function setVoice(on){
-  if(!on)clearConversationIdleCloseTimer();
-  if(!on)clearOperationalMissingPrompt();
-  if(!on)roundSpeechActive=false;
-  if(micTrack)micTrack.enabled=on;
-  if(audioEl&&on){audioEl.muted=true;audioEl.volume=0;}
-  listening=on;
-  $("headerMicWrap").classList.toggle("active",on&&voiceContext==="round");
-  $("setupMicWrap").classList.toggle("active",on&&voiceContext==="setup");
-  phase=on?"listening":"idle";
-  if(voiceContext==="setup"){
-    $("setupStatus").classList.toggle("listening",on);
-    $("setupStatus").textContent=on?"ESCUCHANDO":setupFinalizeRequested?"ESPERANDO TRANSCRIPCIÓN…":draftPlayers.length?"LISTO · PRESIONA OK PARA CONFIRMAR":"";
-    renderSetupWeather();
-  }else{
-    $("status").textContent=on?"ESCUCHANDO":round.configured?`Ronda activa · ${round.players.length} jugador${round.players.length===1?"":"es"}`:"";
-    renderCourseWeather();
-  }
-  if(on)scheduleConversationIdleClose();
-}
+function setVoice(on){ return false; }
 function clearConversationIdleCloseTimer(){if(conversationIdleCloseTimer){clearTimeout(conversationIdleCloseTimer);conversationIdleCloseTimer=null}}
 function clearConversationInputStall(){if(conversationInputStallTimer){clearTimeout(conversationInputStallTimer);conversationInputStallTimer=null}conversationInputStartedAt=0}
 function clearConversationResponseStall(){if(conversationResponseStallTimer){clearTimeout(conversationResponseStallTimer);conversationResponseStallTimer=null}}
@@ -5065,7 +4516,7 @@ function handleRealtime(message){
           $("setupStatus").classList.remove("listening");
           $("setupStatus").textContent="TRANSCRIBIENDO… · PUEDES CONTINUAR HABLANDO";
           if(setupTranscriptionWatchdog)clearTimeout(setupTranscriptionWatchdog);
-          setupTranscriptionWatchdog=setTimeout(()=>{setupTranscriptionWatchdog=null;if(!setupPendingItems.size)return;resetSetupCapture();phase=listening?"listening":"idle";if(listening){$("setupMicWrap").classList.add("active");$("setupStatus").classList.add("listening");$("setupStatus").textContent="ESCUCHANDO"}},ROUND_TRANSCRIPTION_WATCHDOG_MS);
+          setupTranscriptionWatchdog=setTimeout(()=>{setupTranscriptionWatchdog=null;if(!setupPendingItems.size)return;resetSetupCapture();phase=listening?"listening":"idle";if(listening){$("setupMicWrap")?.classList.add("active");$("setupStatus").classList.add("listening");$("setupStatus").textContent="ESCUCHANDO"}},ROUND_TRANSCRIPTION_WATCHDOG_MS);
         }
       }else if(voiceContext==="round"&&(listening||phase==="listening")){
         noteRoundOperationalActivity();
@@ -5073,7 +4524,7 @@ function handleRealtime(message){
         phase="listening";
         $("status").textContent="TRANSCRIBIENDO…";
         if(roundTranscriptionWatchdog)clearTimeout(roundTranscriptionWatchdog);
-        roundTranscriptionWatchdog=setTimeout(()=>{roundTranscriptionWatchdog=null;if(!roundPendingItems.size)return;roundPendingItems.clear();if(roundTranscriptCombined())requestRoundFinalize(0,true);else{resetRoundCapture();phase=listening?"listening":"idle";if(listening)$("headerMicWrap").classList.add("active");$("status").textContent=listening?"ESCUCHANDO":roundIdleStatus()}},ROUND_TRANSCRIPTION_WATCHDOG_MS);
+        roundTranscriptionWatchdog=setTimeout(()=>{roundTranscriptionWatchdog=null;if(!roundPendingItems.size)return;roundPendingItems.clear();if(roundTranscriptCombined())requestRoundFinalize(0,true);else{resetRoundCapture();phase=listening?"listening":"idle";if(listening)$("headerMicWrap")?.classList.add("active");$("status").textContent=listening?"ESCUCHANDO":roundIdleStatus()}},ROUND_TRANSCRIPTION_WATCHDOG_MS);
       }
     }
     if(e.type==="conversation.item.input_audio_transcription.completed"&&stopMonitorActive&&!listening){
@@ -5250,206 +4701,29 @@ function handleRealtime(message){
     }
   }catch(err){console.error(err)}
 }
-async function ensureSession(){
-  if(realtimeLooksStale())invalidateRealtimeForResume();
-  if(realtimeReady())return true;
-  if(sessionConnectPromise)return sessionConnectPromise;
-  if(!navigator.mediaDevices?.getUserMedia)throw new Error("Micrófono no disponible");
-  const generation=++realtimeGeneration;
-  sessionConnectPromise=(async()=>{
-    let localStream=null,localTrack=null,localPc=null,localDc=null,localAudio=null,openTimer=null,sessionCreatedTimer=null;
-    try{
-      reportVoiceHealth("connection_started");
-      localStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
-      if(generation!==realtimeGeneration)throw new Error("Conexión reemplazada");
-      localTrack=localStream.getAudioTracks()[0];
-      if(!localTrack||localTrack.readyState!=="live")throw new Error("Micrófono no disponible");
-      localTrack.enabled=false;
-      localPc=new RTCPeerConnection();
-      localAudio=document.createElement("audio");
-      localAudio.autoplay=true;localAudio.playsInline=true;localAudio.muted=true;localAudio.volume=0;
-      document.body.appendChild(localAudio);
-      localPc.ontrack=e=>{localAudio.srcObject=e.streams?.[0]||new MediaStream([e.track])};
-      localPc.addTrack(localTrack,localStream);
-      localDc=localPc.createDataChannel("oai-events");
-      realtimeShape="unknown";
-      let sessionCreatedResolve,sessionCreatedReject;
-      const sessionCreated=new Promise((resolve,reject)=>{sessionCreatedResolve=resolve;sessionCreatedReject=reject});
-      sessionCreatedTimer=setTimeout(()=>sessionCreatedReject(new Error("Realtime no informó session.created")),5000);
-      const opened=new Promise((resolve,reject)=>{
-        openTimer=setTimeout(()=>reject(new Error("Realtime no abrió")),10000);
-        localDc.onopen=()=>{clearTimeout(openTimer);openTimer=null;resolve()};
-        localDc.onerror=()=>{clearTimeout(openTimer);openTimer=null;reject(new Error("Canal Realtime no disponible"))};
-      });
-      localDc.onmessage=ev=>{
-        try{
-          const msg=JSON.parse(ev.data);
-          if(msg.type==="session.created"){
-            realtimeShape=detectRealtimeShape(msg.session);
-            clearTimeout(sessionCreatedTimer);
-            sessionCreatedResolve(true);
-          }
-        }catch{}
-        handleRealtime(ev);
-      };
-      const offer=await localPc.createOffer();
-      await localPc.setLocalDescription(offer);
-      const controller=new AbortController(),fetchTimer=setTimeout(()=>controller.abort(),10000);
-      let rsp;
-      try{
-        rsp=await fetch(window.gscgApiUrl("/api/session-grupal"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/sdp","X-GSCG-Context":voiceContext==="setup"?"setup":"round","X-GSCG-Players":round.players.map(p=>p.name).join(", ").slice(0,300)},body:localPc.localDescription.sdp,signal:controller.signal});
-      }finally{clearTimeout(fetchTimer)}
-      const sdp=await rsp.text();
-      if(!rsp.ok){const failure=new Error(sdp||"No se pudo iniciar Realtime");failure.status=rsp.status;failure.code="HTTP_"+rsp.status;throw failure}
-      await localPc.setRemoteDescription({type:"answer",sdp});
-      await opened;
-      await sessionCreated;
-      if(generation!==realtimeGeneration)throw new Error("Conexión reemplazada");
-      stream=localStream;micTrack=localTrack;pc=localPc;dc=localDc;audioEl=localAudio;
-      const installedDc=dc,installedPc=pc;
-      dc.onmessage=handleRealtime;
-      dc.onerror=()=>{if(dc===installedDc&&!listening)console.debug("Canal Realtime reportó error")};
-      dc.onclose=()=>{
-        if(dc!==installedDc)return;
-        voiceTransportFailure(installedPc,voiceContext);
-      };
-      pc.onconnectionstatechange=()=>{
-        if(pc!==installedPc)return;
-        const action=realtimeConnectionAction(pc.connectionState);
-        if(action==="ready"){
-          if(realtimeDisconnectTimer){clearTimeout(realtimeDisconnectTimer);realtimeDisconnectTimer=null;reportVoiceHealth("connection_ready")}
-          return;
-        }
-        if(action==="grace"){reportVoiceHealth("connection_interrupted");scheduleRealtimeDisconnectRecovery(installedPc,voiceContext);return}
-        if(action==="reset")voiceTransportFailure(installedPc,voiceContext);
-      };
-      reportVoiceHealth("connection_ready");
-      return true;
-    }catch(err){
-      if(openTimer)clearTimeout(openTimer);
-      if(sessionCreatedTimer)clearTimeout(sessionCreatedTimer);
-      try{localDc?.close()}catch{}
-      try{localPc?.close()}catch{}
-      try{localStream?.getTracks().forEach(t=>t.stop())}catch{}
-      try{if(localAudio){localAudio.pause();localAudio.srcObject=null;localAudio.remove()}}catch{}
-      throw err;
-    }finally{
-      if(generation===realtimeGeneration)sessionConnectPromise=null;
-    }
-  })();
-  return sessionConnectPromise;
-}
-async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL){
-  voiceLastErrorMessage="";
-  if(browserVoiceActive||browserVoiceRequested){stopBrowserVoiceFallback({keepStatus:true,processPending:true});return true}
-  // En Safari/iPhone la autorización del gesto se pierde si primero esperamos
-  // la sesión Realtime. La captura local debe abrirse en el mismo toque para
-  // que un 429 remoto no deje sin score ni comunicación universal.
-  if(!listening&&gestureSafeBrowserVoicePreferred()){
-    voiceContext=context;setMicConnecting(context,false);
-    if(context==="round")resetRoundCapture();
-    if(context==="setup"&&(setupFinalizeRequested||setupLocked))resetSetupCapture();
-    if(startBrowserVoiceFallback(context)){voiceLastErrorMessage="MICRÓFONO DEL IPHONE ACTIVO";return true}
-  }
-  setMicConnecting(context,true);
-  if(voiceActivationPromise){
-    return voiceActivationPromise;
-  }
-  recoverRealtimeAfterResumeSync();
-  if(context==="round"&&!listening&&(phase==="processing"||roundFinalizeRequested||roundPendingItems.size)&&!roundFinalizeTimer){
-    resetRoundCapture();phase="idle";
-  }
-  if(context==="round"&&(phase==="processing"||roundFinalizeRequested||roundPendingItems.size)){
-    setMicConnecting(context,false);
-    $("status").textContent="PROCESANDO…";
-    return false;
-  }
-  if(context==="setup"&&(setupFinalizeRequested||setupLocked)){
-    resetSetupCapture();
-    setMicConnecting(context,false);
-    setPrimaryVoiceMatrix("idle",context,"LISTO PARA ESCUCHAR");
-  }
-  if(activeResponseId||stopMonitorActive)stopAuthorizedSpeech();
-  voiceContext=context;
-  if(listening){
-    if(context==="round"){requestRoundFinalize(900);return true}
-    setVoice(false);return true
-  }
-
-  voiceActivationContext=context;
-  voiceOpening=true;
-  setMicConnecting(context,true);
-  voiceActivationPromise=(async()=>{
-    voiceContext=context;
-    try{
-      // Una reapertura inmediata reutiliza el transporte WebRTC si continúa sano.
-      // Sólo se reconstruye cuando el canal, la pista o el contexto están dañados.
-      if(!realtimeReusableFor(context)){
-        teardownRealtime();
-        voiceContext=context;
-        setMicConnecting(context,true);
-        await ensureSession();
-      }
-      if(context!==voiceContext)throw new Error("Contexto de micrófono cambió");
-      if(context==="round")resetRoundCapture();
-      if(context==="setup"&&activeResponseId){try{sendEvent({type:"response.cancel",response_id:activeResponseId})}catch{}activeResponseId=null}
-      // /api/session-grupal entrega la sesión ya configurada en el SDP inicial.
-      if(!realtimeReady())throw new Error("Realtime no quedó listo");
-      // AI UNIVERSAL usa final de turno semántico paciente; las órdenes de la
-      // tarjeta conservan el VAD rápido y predecible de un segundo.
-      await setRealtimeTurnProfile(desiredTurnProfile);
-      setMicConnecting(context,false);
-      setVoice(true);
-      return true;
-    }catch(err){
-      console.error("Activación de micrófono:",err);
-      voiceLastErrorMessage=voiceActivationErrorMessage(err);
-      const sameContext=voiceContext===context;
-      teardownRealtime();
-      setMicConnecting(context,false);
-      if(sameContext&&shouldUseBrowserVoiceFallback(err)&&fallbackVoiceAvailable()){if(startBrowserVoiceFallback(context)){voiceLastErrorMessage="MICRÓFONO ALTERNATIVO ACTIVO";return true}voiceLastErrorMessage=primaryVoiceStatusTarget(context)?.textContent||voiceLastErrorMessage}
-      if(sameContext){
-        voiceContext=context;
-        if(context==="setup")$("setupStatus").textContent=voiceLastErrorMessage;
-        else $("status").textContent=voiceLastErrorMessage;
-        aiUniversalSetState(voiceLastErrorMessage);
-      }
-      return false;
-    }
-  })();
-  try{return await voiceActivationPromise}
-  finally{
-    setMicConnecting(context,false);
-    voiceOpening=false;
-    voiceActivationPromise=null;
-    voiceActivationContext=null;
-  }
-}
+async function ensureSession(){ return false; }
+async function toggleVoice(context,desiredTurnProfile=REALTIME_TURN_PROFILE_OPERATIONAL){ return false; }
 function dateSetup(){const d=new Date(),date=new Intl.DateTimeFormat("es-GT",{day:"2-digit",month:"long",year:"numeric"}).format(d).toUpperCase();$("confirmDate").textContent=date}
 let lastAiUniversalGestureAt=0;
-function openAiUniversalAndListen(event){
-  if(event?.cancelable)event.preventDefault();event?.stopPropagation?.();
-  const now=Date.now();if(now-lastAiUniversalGestureAt<350)return false;lastAiUniversalGestureAt=now;
-  primeAiUniversalSpeechFromGesture();void startAiUniversalListening();return true
-}
-if(window.PointerEvent)$("openAiUniversal").addEventListener("pointerdown",openAiUniversalAndListen,{passive:false,capture:true});
-$("openAiUniversal").addEventListener("click",openAiUniversalAndListen,{passive:false,capture:true});
-$("openGolfRules").addEventListener("click",()=>openAiUniversalPanel(true));
+function openAiUniversalAndListen(event){ return false; }
+
+
+
 $("openSkins").addEventListener("click",()=>{renderSkinsResults();$("skinsOverlay").classList.add("visible");$("skinsOverlay").setAttribute("aria-hidden","false")});
 $("closeSkins").addEventListener("click",()=>{$("skinsOverlay").classList.remove("visible");$("skinsOverlay").setAttribute("aria-hidden","true")});
 $("skinsOverlay").addEventListener("click",event=>{if(event.target===$("skinsOverlay"))$("closeSkins").click()});
 $("skinsResults").addEventListener("change",event=>{const hole=event.target.closest?.("[data-side-hole]"),wolfType=event.target.closest?.("[data-wolf-type]");if(hole){sideGameControlHole=Math.max(1,Math.min(18,Number(hole.value)||1));renderSideGameResults();return}if(wolfType){const partner=$("skinsResults").querySelector("[data-wolf-partner]");if(partner){partner.disabled=wolfType.value!=="partner";if(partner.disabled)partner.value=""}}});
 $("skinsResults").addEventListener("click",event=>{const save=event.target.closest?.("[data-wolf-save]"),dot=event.target.closest?.("[data-dot-event]");if(save){const type=$("skinsResults").querySelector("[data-wolf-type]")?.value||"partner",partnerPlayerId=$("skinsResults").querySelector("[data-wolf-partner]")?.value||null,current=window.GSCWolf.normalizeConfig(round.sideGames.wolf),decisions={...current.decisions,[sideGameControlHole]:{type,partnerPlayerId:type==="partner"?partnerPlayerId:null}};if(type==="partner"&&!partnerPlayerId){$("status").textContent="WOLF · SELECCIONA COMPAÑERO";return}round.sideGames={...round.sideGames,wolf:window.GSCWolf.normalizeConfig({...current,enabled:true,decisions})};persist();renderSideGameResults();return}if(dot){const current=window.GSCDots.normalizeConfig(round.sideGames.dots);round.sideGames={...round.sideGames,dots:window.GSCDots.toggleEvent(current,sideGameControlHole,dot.dataset.dotPlayer,dot.dataset.dotEvent)};persist();renderSideGameResults()}});
-$("closeAiUniversal").addEventListener("click",closeAiUniversalPanel);
-$("aiUniversalOverlay").addEventListener("click",event=>{if(event.target===$("aiUniversalOverlay"))closeAiUniversalPanel()});
-$("sendAiUniversal").addEventListener("click",()=>{primeAiUniversalSpeechFromGesture();submitAiUniversalText()});
-$("aiUniversalInput").addEventListener("keydown",event=>{if(event.key==="Enter"&&!event.shiftKey){event.preventDefault();primeAiUniversalSpeechFromGesture();submitAiUniversalText()}});
-$("listenAiUniversal").addEventListener("click",startAiUniversalListening);
-$("stopAiUniversal").addEventListener("click",stopAiUniversalOutput);
-$("repeatAiUniversal").addEventListener("click",()=>{if(aiUniversalLastAnswer)speakAiUniversalText(aiUniversalLastAnswer,{repeat:true});else aiUniversalSetState("TODAVÍA NO HAY UNA RESPUESTA PARA REPETIR")});
-$("muteAiUniversal").addEventListener("click",toggleAiUniversalMute);
-$("continueAiUniversal").addEventListener("click",()=>{if(aiUniversalLastAnswer)submitAiUniversalText("Continúa exactamente desde la respuesta anterior, sin repetir lo ya explicado.");else aiUniversalSetState("PRIMERO HAZ UNA PREGUNTA")});
-document.addEventListener("keydown",event=>{if(event.key==="Escape"&&$("aiUniversalOverlay").classList.contains("visible"))closeAiUniversalPanel()});
+
+
+
+
+
+
+
+
+
+
 $("finalCardButton").addEventListener("click",openFinalDigitalCard);$("officialCloseButton").addEventListener("click",officiallyCloseRound);$("sendFinalCard").addEventListener("click",shareOfficialArtifactImage);$("closeFinalCard").addEventListener("click",closeFinalDigitalCard);$("finalCardOverlay").addEventListener("click",e=>{if(e.target===$("finalCardOverlay"))closeFinalDigitalCard()});
 $("openGlobalCard").addEventListener("click",()=>openArtifact(officialArtifacts().global));$("imageGlobalCard").addEventListener("click",()=>imageOfficialCard(officialArtifacts().global));$("pdfGlobalCard").addEventListener("click",()=>pdfOfficialCard(officialArtifacts().global));$("shareGlobalCard").addEventListener("click",()=>shareOfficialArtifact(officialArtifacts().global));$("openPersonalCard").addEventListener("click",()=>openArtifact(selectedPersonalArtifact()));$("imagePersonalCard").addEventListener("click",()=>imageOfficialCard(selectedPersonalArtifact()));$("pdfPersonalCard").addEventListener("click",()=>pdfOfficialCard(selectedPersonalArtifact()));$("sharePersonalCard").addEventListener("click",()=>shareOfficialArtifact(selectedPersonalArtifact()));$("downloadAllCards").addEventListener("click",downloadAllOfficialCards);
 for(const id of ["openCardLibraryButton","openCardLibrarySetup","openCardLibraryStableford"])$(id).addEventListener("click",openCardLibrary);$("closeCardLibrary").addEventListener("click",closeCardLibrary);$("cardLibraryOverlay").addEventListener("click",event=>{if(event.target===$("cardLibraryOverlay"))closeCardLibrary()});for(const id of ["cardLibraryMode","cardLibraryCourse","cardLibraryQuery"])$(id).addEventListener(id==="cardLibraryQuery"?"input":"change",()=>{cardLibraryPageIndex=0;renderCardLibrary()});$("cardLibraryPrevious").addEventListener("click",()=>{if(cardLibraryPageIndex>0){cardLibraryPageIndex-=1;renderCardLibrary()}});$("cardLibraryNext").addEventListener("click",()=>{cardLibraryPageIndex+=1;renderCardLibrary()});$("cardLibraryList").addEventListener("selectstart",event=>{if(event.target.closest?.("[data-library-round]"))event.preventDefault()});$("cardLibraryList").addEventListener("pointerdown",event=>{const control=event.target.closest?.("[data-library-round]");if(!control)return;cardLibraryLongPressHandled=false;clearTimeout(cardLibraryPressTimer);cardLibraryPressTimer=setTimeout(()=>openCardLibraryDelete(control.dataset.libraryRound),650)});for(const type of ["pointerup","pointercancel"])$("cardLibraryList").addEventListener(type,()=>{clearTimeout(cardLibraryPressTimer);cardLibraryPressTimer=null});$("cardLibraryList").addEventListener("contextmenu",event=>{const control=event.target.closest?.("[data-library-round]");if(!control)return;event.preventDefault();openCardLibraryDelete(control.dataset.libraryRound)});$("cardLibraryList").addEventListener("click",event=>{const control=event.target.closest?.("[data-library-round]");if(!control)return;if(cardLibraryLongPressHandled){cardLibraryLongPressHandled=false;event.preventDefault();return}const id=control.dataset.libraryRound,now=Date.now(),openGlobal=id===cardLibraryLastTapId&&now-cardLibraryLastTapAt<=600;cardLibraryEntryId=id;renderCardLibrary();cardLibraryLastTapId=openGlobal?null:id;cardLibraryLastTapAt=openGlobal?0:now;if(openGlobal)openArtifact(cardLibraryArtifacts().global)});$("cancelCardLibraryDelete").addEventListener("click",closeCardLibraryDelete);$("confirmCardLibraryDelete").addEventListener("click",confirmCardLibraryDelete);$("cardLibraryDeleteOverlay").addEventListener("click",event=>{if(event.target===$("cardLibraryDeleteOverlay"))closeCardLibraryDelete()});
@@ -5517,27 +4791,11 @@ for(const id of ["wolfScoreType","wolfTeePosition","wolfTiePolicy","wolfLoneMult
 for(const id of ["vegasScoreType","vegasBirdieFlip","vegasBothBirdies","vegasEagleDouble","vegasCap","vegasUnitValue","vegasCurrencyGTQ","vegasCurrencyUSD"])$(id).addEventListener("change",saveVegasDraftConfig);
 $("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);$("startRoundButton").addEventListener("click",startConfirmedRound);
 let lastMicGestureAt=0;
-function fireMicActivation(context,e){
-  if(e&&e.cancelable)e.preventDefault();
-  if(e&&e.stopPropagation)e.stopPropagation();
-  const now=Date.now();
-  if(now-lastMicGestureAt<350)return false;
-  lastMicGestureAt=now;
-  releaseAiUniversalPlaybackForListening();
-  primeAiUniversalSpeechFromGesture();
-  setMicConnecting(context,true);
-  toggleVoice(context);
-  return true;
-}
-function bindMicActivation(id,context){
-  const el=$(id);if(!el)return;
-  if(window.PointerEvent)el.addEventListener("pointerdown",e=>fireMicActivation(context,e),{passive:false,capture:true});
-  else el.addEventListener("touchstart",e=>fireMicActivation(context,e),{passive:false,capture:true});
-  el.addEventListener("click",e=>fireMicActivation(context,e),{passive:false,capture:true});
-}
-bindMicActivation("headerMic","round");bindMicActivation("setupMic","setup");
-$("headerMicWrap")?.addEventListener(window.PointerEvent?"pointerdown":"touchstart",e=>fireMicActivation("round",e),{passive:false,capture:true});
-$("setupMicWrap")?.addEventListener(window.PointerEvent?"pointerdown":"touchstart",e=>fireMicActivation("setup",e),{passive:false,capture:true});
+function fireMicActivation(context,e){ return false; }
+function bindMicActivation(id,context){ return false; }
+
+
+
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="hidden"){
     persist();
@@ -5792,34 +5050,8 @@ function normalizeExplicitPttRoster(text){
   if(!/^(?:(?:agrega|agregar|registra|registrar)\s+)?jugador(?:a)?\s+(?:numero\s+)?(?:[1-6]|uno|una|dos|tres|cuatro|cinco|seis)\b/.test(clean))return null;
   return clean.replace(/\bjugador(?:a)?\s+(?:numero\s+)?([1-6]|uno|una|dos|tres|cuatro|cinco|seis)\s+(?:nombre\s+)?/g,'jugador $1 ').replace(/^(?:registra|registrar)\s+/,'');
 }
-const discreteVoiceController=window.GSCVoiceTurns.install({
-  cancel:()=>stopAiUniversalOutput(),
-  context:()=>$("setupOverlay")?.classList.contains("visible")||!round.configured?"setup":"round",
-  prepare:context=>{stopAiUniversalOutput();releaseAiUniversalPlaybackForListening();primeAiUniversalSpeechFromGesture();voiceContext=context},
-  state:(state,message,context)=>{listening=state==="listening";phase=listening?"listening":state==="responding"?"responding":"idle";setPrimaryVoiceMatrix(state,context,message)},
-  dispatch:async(context,text)=>{
-    voiceContext=context;
-    try{
-      if(context==="setup"){
-        const roster=normalizeExplicitPttRoster(text);
-        if(roster===null)return await answerBrowserVoiceQuery(context,text);
-        return await processBrowserVoiceTranscript(context,roster);
-      }
-      const parsed=parseRoundScoreTranscript(text);
-      if(parsed?.ok&&!isGeneralConversationIntent(text)){
-        const result=applyLiteralScores(parsed);phase="idle";
-        if(!result?.ok){setPrimaryVoiceMatrix("error",context,"NO SE PUDO GUARDAR LA TANDA");return false}
-        reportVoiceHealth("browser_fallback_round_applied",{entryCount:parsed.entries.length});
-        reportVoiceHealth("browser_fallback_score_applied");
-        setPrimaryVoiceMatrix("idle",context,`LISTO · ${parsed.entries.length} HOYOS REGISTRADOS`);
-        if(result.closure)await speakClosure(result.closure);
-        return true;
-      }
-      return await processBrowserVoiceTranscript(context,text);
-    }finally{browserVoiceFollowupContext=null}
-  }
-});
-for(const context of ["setup","round"])setPrimaryVoiceMatrix("idle",context,"MANTÉN PRESIONADO PARA HABLAR · SUELTA PARA ENVIAR");
+const discreteVoiceController=null;
+
 $("mandatoryUpdateButton").addEventListener("click",installMandatoryUpdate);
 $("mandatoryUpdateButton").disabled=true;
 $("mandatoryUpdateAction").textContent="COMPROBANDO";
@@ -5827,5 +5059,5 @@ setTimeout(syncPublishedAppVersion,1200);
 setInterval(syncPublishedAppVersion,30000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout(syncPublishedAppVersion,800)});
 </script>
-</body>
+<script>window.GSCDeviceClosures.bindControls();</script></body>
 </html>

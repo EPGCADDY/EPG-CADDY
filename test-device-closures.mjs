@@ -1,0 +1,16 @@
+import vm from 'node:vm';
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const voices=[{lang:'es-MX',localService:true}];
+let spoken=[],timer;
+const context={localStorage:{getItem(){return null}},document:{getElementById(){return null}},speechSynthesis:{getVoices:()=>voices,speak:u=>spoken.push(u),cancel(){}},SpeechSynthesisUtterance:class {constructor(text){this.text=text}},setTimeout:fn=>(timer=fn,1),clearTimeout(){}};
+vm.runInNewContext(fs.readFileSync('device-closures.js','utf8'),context);
+const api=context.GSCDeviceClosures;
+const a=api.speak('Primera vuelta 40');const b=api.speak('Segunda vuelta 42');
+assert.equal(spoken.length,1);spoken[0].onend();assert.equal(await a,true);assert.equal(spoken.length,2);
+api.cancel();assert.equal(await b,false);
+const c=api.speak('Total 82');assert.equal(spoken.length,3);spoken[2].onend();assert.equal(await c,true);
+const d=api.speak('Tiempo agotado');timer();assert.equal(await d,false);
+voices.length=0;assert.equal(await api.speak('Sin voz'),false);
+voices.push({lang:'es-MX',localService:false});assert.equal(await api.speak('Voz remota rechazada'),false);
+console.log('PASS anuncios locales: cola, cancelación sin evento, recuperación, timeout y rechazo de voz remota');
