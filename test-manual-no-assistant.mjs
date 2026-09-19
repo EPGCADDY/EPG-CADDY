@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const html=fs.readFileSync('index-grupal.html','utf8');
 const scripts=[...html.matchAll(/<script\b[^>]*src="\.\/([^"?]+)/gi)].map(m=>m[1]);
-const forbidden=/getUserMedia|SpeechRecognition|MediaRecorder|RTCPeerConnection|\/api\/(?:session|voice-|universal-ai|research|golf-rules)|fireMicActivation|CADDIE UNIVERSAL|DICTA ASÍ|Método 1 Dictado|id=["'](?:setupMic|headerMic|stablefordSetupMic)/i;
+const forbidden=/geolocation|getCurrentPosition|watchPosition|\/api\/weather|id="(?:courseWeather|setupWeather)"|getUserMedia|SpeechRecognition|MediaRecorder|RTCPeerConnection|\/api\/(?:session|voice-|universal-ai|research|golf-rules)|fireMicActivation|CADDIE UNIVERSAL|DICTA ASÍ|Método 1 Dictado|id=["'](?:setupMic|headerMic|stablefordSetupMic)/i;
 for(const file of ['index-grupal.html',...scripts]){
  const raw=fs.readFileSync(file,'utf8');
  const content=file.endsWith('.html')?raw.replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,''):raw;

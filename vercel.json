@@ -176,7 +176,7 @@
       "headers": [
         {
           "key": "Permissions-Policy",
-          "value": "microphone=()"
+          "value": "microphone=(), geolocation=()"
         }
       ]
     },
