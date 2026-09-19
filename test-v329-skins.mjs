@@ -135,7 +135,7 @@ for(const token of [
   'id="skinsCurrencyUSD"',
   'aria-label="Modalidades"',
   'aria-label="Funciones de Score Card y Live"',
-  'COMPARTE LIVE',
+  'TORNEOS',
   'id="universalesRoundButton"',
   'function skinsSpeechSummary()',
   'function syncSkinsResult(value=round)',
