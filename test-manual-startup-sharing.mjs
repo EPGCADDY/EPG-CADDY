@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const html=fs.readFileSync('index-grupal.html','utf8');
+const start=html.indexOf('function renderDraft(){');
+const end=html.indexOf('  let editHtml=',start);
+assert(start>=0&&end>start);
+const prefix=html.slice(start,end)+'}';
+const ctx={enforceCanonicalDraftNames(){},renderTournamentDraft(){},renderCourseDraft(){},activeDraftGameKey:()=>'',renderSideGameDrafts(){},syncDraftModeSelection(){},draftRoundMode:'general',$:id=>html.includes(`id="${id}"`)?{textContent:''}:null,document:{querySelector:()=>null}};
+vm.runInNewContext(prefix+';renderDraft()',ctx);
+assert.throws(()=>vm.runInNewContext(prefix.replace('function renderDraft(){','function renderDraft(){ document.querySelector(".newbie-guide-player").textContent="old";')+';renderDraft()',ctx),/Cannot set properties of null/);
+assert(html.includes('window.GSCLiveControl?.mount({'));
+assert(html.includes('access?.role==="owner"'));
+console.log('PASS arranque manual sin guía de micrófono: regresión previa reproduce error; LIVE y permiso propietario preservados');

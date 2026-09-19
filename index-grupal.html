@@ -3682,7 +3682,6 @@ function renderDraft(){
   renderSideGameDrafts();
   syncDraftModeSelection(draftGame);
   $("playerVoicePrompt").textContent=draftGame?`REGISTRO ${draftGame.toUpperCase()} · ${draftGame==="vegas"?"4 O 6":"HASTA 6"} JUGADORES`:draftRoundMode==="match_play"?"REGISTRO MATCH PLAY · HASTA TRES PAREJAS":draftRoundMode==="four_ball"?"REGISTRO FOUR BALL · HASTA TRES PAREJAS":draftRoundMode==="universales"?"REGISTRO UNIVERSALES · 3 O 4 JUGADORES":"REGISTRO DE JUGADORES";
-  document.querySelector(".newbie-guide-player").textContent=draftGame?draftGame==="vegas"?"VEGAS: 2 O 3 PAREJAS":`${draftGame.toUpperCase()}: HASTA 6 JUGADORES`:draftRoundMode==="match_play"?"P1: 1–2 · P2: 3–4 · P3: 5–6":draftRoundMode==="four_ball"?"VERDE: 1–2 · ORO: 3–4 · AZUL: 5–6":"HASTA 6 JUGADORES";
   let editHtml="",confirmHtml="";
   const registrationSlots=6;
   for(let i=0;i<registrationSlots;i++){

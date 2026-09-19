@@ -377,3 +377,6 @@ Reincidencia operativa: se cerraron turnos con trabajo de diagnóstico disponibl
 
 ## RC-OP60-02 · Cierre reiterado con tráfico pendiente · 14 septiembre 2026
 Hecho: después de publicar el diagnóstico de tráfico se cerraron turnos aunque seguían disponibles acciones técnicas. Incumplimiento confirmado. Control agregado a OP-60: prohibido cerrar mientras haya trabajo autorizado pendiente y una siguiente acción ejecutable; un reporte de estado no sustituye ejecución. La corrección documental no demuestra por sí sola cumplimiento futuro.
+
+## LAB · recuperación de compartir · 2026-09-19
+IMG_4312/4313: barra solo SUPPORT. Navegador reprodujo TypeError en renderDraft: escritura sobre .newbie-guide-player eliminado con el micrófono interrumpía arranque antes de GSCLiveControl.mount y consulta de invitaciones. index-grupal.html retira esa referencia; test-manual-startup-sharing.mjs reproduce fallo anterior y valida corrección; scripts/build-manual-lab.mjs incorpora candado. Invitaciones conservan control de propietario. ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md y REGISTRO_REINCIDENCIAS_CALIDAD.md documentan incidente. Base publicada b65b71d; rollback a ese commit solo en LAB. Maestra 80dfe05 intacta. Revisión de nueva publicación pendiente; no se declara prueba iPhone.
