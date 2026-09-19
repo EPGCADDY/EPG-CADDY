@@ -15,6 +15,9 @@ Este documento contiene únicamente funciones reales del producto pendientes o p
 - **LABORATORIO** = rama `laboratorio`, creada como copia exacta de PRODUCCIÓN en el mismo SHA inicial.
 - **TODO DESARROLLO NUEVO** se hace exclusivamente en `laboratorio`.
 - Antes de cualquier cambio, verificar que la rama activa sea `laboratorio`; si no lo es, detener la ejecución.
+- **FLUJO OBLIGATORIO DE PROMOCIÓN:** LABORATORIO → desarrollo → prueba técnica → prueba física aprobada → preparación de actualización → autorización del propietario → PRODUCCIÓN.
+- PRODUCCIÓN no recibe cambios directos de desarrollo. Sólo recibe una versión ya aprobada mediante el mecanismo de actualización de la aplicación.
+- Después de una actualización aprobada, PRODUCCIÓN y LABORATORIO deben volver a quedar funcionalmente alineadas antes de iniciar el siguiente desarrollo.
 - Ningún cambio de laboratorio puede llegar a producción por accidente, automatismo, merge, redeploy o reutilización de `main`.
 
 
