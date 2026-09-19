@@ -15,102 +15,126 @@
 
 ## EMPIEZA AQUÍ — ¿QUÉ QUIERES HACER?
 
-Esta es la primera guía que debe leer cualquier usuario que abra Golf Score Card GT por primera vez. **No se asume conocimiento previo de la aplicación.**
+Esta guía parte de una regla simple: **si quieres consultar resultados, no necesitas saber cómo se llena una Score Card.**
 
-Si la aplicación abre directamente en **REGISTRO DE JUGADORES**, primero decide qué quieres hacer:
+Desde la pantalla inicial busca y toca:
 
-### 1. QUIERO JUGAR Y LLEVAR LOS SCORES DE MI GRUPO
+# **TORNEOS**
 
-1. En **REGISTRO DE JUGADORES**, escribe los jugadores de tu grupo.
-2. Completa NOMBRE, CATEGORÍA, HDCP y MARCAS según corresponda.
-3. Toca **OK**.
-4. Revisa **CONFIRMACIÓN**.
-5. Inicia la ronda.
-6. Durante el juego anota los scores por voz o Control Manual.
-7. Si el grupo pertenece a un torneo LIVE, abre **COMPARTIR LIVE**, activa el grupo e ingresa el código del torneo.
+Al tocar **TORNEOS** se abre el **CENTRO DE TORNEOS**.
 
-**Resultado:** tu Score Card alimenta automáticamente la clasificación del torneo.
+Ahí aparecen los torneos que ya tengan por lo menos una Score Card conectada y publicando información LIVE, o los torneos que hayas guardado previamente mediante su enlace.
 
-### 2. QUIERO VER UN TORNEO EN VIVO
+### 1. ENTRAR A UN TORNEO
 
-1. Abre **CENTRO LIVE / TORNEO LIVE**.
+1. Toca **TORNEOS**.
 2. En **CENTRO DE TORNEOS**, toca el torneo que quieres ver.
-3. Si no aparece, toca **+ AGREGAR OTRO TORNEO** y pega el enlace que te compartieron.
-4. Dentro del torneo elige:
-   - **GENERAL**
-   - **CATEGORÍAS**
-   - **INDIVIDUAL**
-   - **AGREGAR A MI TABLERO**
+3. Puedes tener guardados varios torneos y cambiar de uno a otro sin borrar los anteriores.
 
-**Resultado:** puedes consultar resultados sin editar ninguna Score Card.
+Ejemplo:
+- TORNEO A · EL PULTÉ
+- TORNEO B · COUNTRY CLUB
+- TORNEO C · SAN ISIDRO
 
-### 3. QUIERO VER LA GENERAL
+Puedes abrir A, después B, después C y regresar a A cuando quieras.
+
+**Al regresar a un torneo, la aplicación vuelve a consultar el LIVE y muestra la información más reciente disponible en ese momento.**
+
+### 2. OPCIONES DENTRO DE CADA TORNEO
+
+Todos los torneos usan exactamente las mismas cuatro opciones:
+
+#### GENERAL
+Muestra la tabla completa de posiciones del torneo.
+
+#### CATEGORÍAS
+Permite escoger y ver por separado:
+- CAMPEONATO
+- A
+- B
+- C
+- D
+- FEMENINA
+- SENIOR
+- S.SENIOR
+
+#### BUSCAR POR NOMBRE
+1. Toca **BUSCAR POR NOMBRE**.
+2. Escribe el nombre del jugador.
+3. Puedes consultar a esa persona.
+4. Puedes tocar **+ PERSONA** para agregarla a tu tablero.
+5. También puedes tocar **+ GRUPO** para seguir a todo su grupo.
+
+#### ARMAR MI TABLERO
+Abre **MI TABLERO**, donde aparecen únicamente las personas y grupos que elegiste.
+
+### 3. SEGUIR VARIOS TORNEOS AL MISMO TIEMPO
+
+**MI TABLERO es multi-torneo.**
+
+Puedes, por ejemplo:
+- seguir 2 jugadores del Torneo A;
+- seguir 1 grupo completo del Torneo B;
+- seguir 3 jugadores del Torneo C.
+
+No necesitas permanecer dentro de un torneo para que sus elementos sigan perteneciendo a tu tablero.
+
+El sistema conserva la referencia de cada torneo y actualiza los torneos que tengan personas o grupos seguidos.
+
+### 4. CAMBIAR DE TORNEO SIN PERDER NADA
+
+Ejemplo:
+
+1. Estás viendo **TORNEO A**.
+2. Agregas a Jaime y al GRUPO 07 a **MI TABLERO**.
+3. Regresas a **CENTRO DE TORNEOS**.
+4. Entras a **TORNEO B**.
+5. Agregas a María.
+6. Entras a **TORNEO C**.
+7. Regresas a **MI TABLERO**.
+
+Tu tablero debe conservar:
+- Jaime · Torneo A;
+- Grupo 07 · Torneo A;
+- María · Torneo B.
+
+Si después vuelves al **TORNEO A**, éste se consulta nuevamente y debe aparecer actualizado al momento de regresar.
+
+### 5. FILTRAR POR CLUB O CAMPO
+
+Dentro de un torneo puedes usar **TODOS LOS CLUBES / CAMPOS**.
+
+Si el torneo utiliza más de un club o campo, puedes ver solamente el que te interese.
+
+### 6. PANTALLA PÚBLICA · PROSHOP / RESTAURANTE / TV
 
 1. Entra al torneo.
-2. Toca **GENERAL**.
-3. Verás todos los jugadores publicados, su posición, grupo, hoyo actual, Gross, Neto y resultado.
-4. Si existen varios clubes/campos, usa **TODOS LOS CLUBES / CAMPOS** para filtrar.
-
-### 4. QUIERO VER UNA CATEGORÍA
-
-1. Entra al torneo.
-2. Toca **CATEGORÍAS**.
-3. Selecciona la categoría:
-   - CAMPEONATO
-   - A
-   - B
-   - C
-   - D
-   - FEMENINA
-   - SENIOR
-   - S.SENIOR
-4. Si lo deseas, toca **VER DETALLE LIVE DE CATEGORÍA**.
-
-### 5. QUIERO VER A UNA PERSONA ESPECÍFICA
-
-1. Entra al torneo.
-2. Toca **INDIVIDUAL** o usa el buscador de jugadores.
-3. Escribe el nombre.
-4. Abre el jugador que quieres consultar.
-
-### 6. QUIERO ARMAR MI PROPIO TABLERO
-
-1. Entra al torneo.
-2. Toca **AGREGAR A MI TABLERO**.
-3. Busca un jugador.
-4. Toca **+ SEGUIR**.
-5. Repite con todos los jugadores que quieras.
-6. Toca **INDIVIDUAL** para abrir **MI TABLERO**.
-
-**Resultado:** tu tablero conserva únicamente las personas o grupos que elegiste, incluso cuando cambias de torneo.
-
-### 7. QUIERO MOSTRAR EL TORNEO EN UNA TV O PANTALLA GIGANTE
-
-1. Abre el torneo desde el Centro LIVE.
 2. Abre **MÁS OPCIONES**.
 3. Toca **PANTALLA PÚBLICA**.
-4. Conecta el dispositivo al monitor o TV mediante HDMI, AirPlay, Chromecast o navegador directo.
-5. Deja la presentación abierta.
+4. Conecta el dispositivo al televisor o monitor por HDMI, AirPlay, Chromecast o navegador directo.
+5. Déjala abierta.
 
-La pantalla pública:
+La pantalla:
 - es sólo lectura;
-- actualiza los datos LIVE cada 3 segundos;
-- cambia automáticamente cada 10 segundos;
+- recibe información del mismo Centro LIVE;
+- refresca datos cada 3 segundos;
+- cambia de escenario cada 10 segundos;
 - recorre GENERAL y las categorías que tengan jugadores;
-- no permite modificar scores.
+- no modifica ninguna Score Card.
 
-### REGLA DE ORIENTACIÓN
+### REGLA OBLIGATORIA DEL MANUAL
 
-Ninguna pantalla del manual puede explicar una función sin indicar:
-- **DÓNDE ESTOY**;
-- **QUÉ QUIERO HACER**;
-- **QUÉ BOTÓN TOCO**;
-- **QUÉ DEBE PASAR DESPUÉS**;
-- **CÓMO REGRESO**.
+Ninguna página puede dejar al usuario adivinando.
 
-Toda captura, gráfica o página del manual debe llevar flechas, números o llamadas visuales cuando exista más de una acción posible.
+Cada pantalla o función debe indicar siempre:
 
----
+1. **DÓNDE ESTOY**
+2. **QUÉ QUIERO HACER**
+3. **QUÉ BOTÓN TOCO**
+4. **QUÉ DEBE PASAR**
+5. **CÓMO REGRESO O CAMBIO A OTRA OPCIÓN**
+
+Cuando existan varias rutas, el manual debe utilizar números, flechas o llamadas visuales claras.
 
 
 ## 1. Propósito
