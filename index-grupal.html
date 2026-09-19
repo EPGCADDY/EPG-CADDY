@@ -735,7 +735,7 @@ body:has(.pwa-install-overlay.visible) .native-pro-button{display:none!important
 body.gsc-setup-open:not(.gsc-history-open):has(#setupOverlay.visible) .mandatory-update{display:block!important}
 body.gsc-setup-open:not(.gsc-history-open):has(#setupOverlay.visible) #setupOverlay{padding-top:max(82px,calc(env(safe-area-inset-top) + 70px))}
 .pwa-install-button,.native-pro-button{position:static!important;float:right;margin:10px max(10px,env(safe-area-inset-right)) 10px 0}
-.registration-clear-all{border:1px solid #ff4545!important;background:#140000!important;color:#ff6b6b!important;box-shadow:none!important}
+.registration-clear-all{border:1px solid var(--red)!important;background:#140000!important;color:var(--red)!important;-webkit-text-fill-color:var(--red)!important;box-shadow:none!important;opacity:1!important}
 @media(max-width:800px){
   #finalCardOverlay{padding:max(8px,env(safe-area-inset-top)) 8px 12px;overflow-x:hidden}
   #finalCardOverlay .final-card-panel{width:100%;min-width:0;margin:0;padding:14px 10px;border-radius:16px;overflow:hidden}
