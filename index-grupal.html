@@ -1548,15 +1548,16 @@ function seedManualDraftRowsFromPlayers(){manualDraftRows=Array.from({length:6},
 function manualRowHasData(row){return !!(String(row?.name||"").trim()||String(row?.handicap??"").trim())}
 function setManualRegistrationStatus(message){const status=$("setupStatus");if(status){status.classList.remove("listening");status.textContent=message}return false}
 function registrationMissingPrompt(index,field){
-  const row=manualDraftRows[index]||emptyManualDraftRow(),name=canonicalPlayerName(row.name)||`JUGADOR ${index+1}`,overlay=$("registrationMissingOverlay"),player=$("registrationMissingPlayer"),message=$("registrationMissingMessage"),correct=$("registrationMissingCorrect"),ignore=$("registrationMissingIgnore");
+  const row=manualDraftRows[index]||emptyManualDraftRow(),name=canonicalPlayerName(row.name)||`JUGADOR ${index+1}`,overlay=$("registrationMissingOverlay"),player=$("registrationMissingPlayer"),message=$("registrationMissingMessage"),correct=$("registrationMissingCorrect"),ignore=$("registrationMissingIgnore"),ignorable=field==="category"||field==="handicap";
   if(!overlay||!player||!message||!correct||!ignore)return Promise.resolve(false);
   player.textContent=name.toUpperCase();
-  message.textContent=field==="category"?"FALTA CATEGORÍA":"FALTA HDCP";
+  message.textContent=field==="name"?"FALTA NOMBRE":field==="category"?"FALTA CATEGORÍA":field==="handicap"?"FALTA HDCP":field==="tee"?"FALTAN MARCAS":"DATO INVÁLIDO";
+  ignore.classList.toggle("hidden",!ignorable);
   overlay.classList.add("visible");overlay.setAttribute("aria-hidden","false");
   return new Promise(resolve=>{
     const finish=ignored=>{
       overlay.classList.remove("visible");overlay.setAttribute("aria-hidden","true");
-      correct.onclick=null;ignore.onclick=null;
+      ignore.classList.remove("hidden");correct.onclick=null;ignore.onclick=null;
       if(ignored){
         if(field==="category"){
           row.category="none";
@@ -1569,18 +1570,21 @@ function registrationMissingPrompt(index,field){
         }
         row.dirty=true;
       }else{
-        const selector=field==="category"?`[data-draft-category="${index}"]`:`[data-draft-hcp="${index}"]`;
+        const selector=field==="name"?`[data-draft-name="${index}"]`:field==="category"?`[data-draft-category="${index}"]`:field==="handicap"?`[data-draft-hcp="${index}"]`:`[data-draft-tee="${index}"]`;
         setTimeout(()=>document.querySelector(selector)?.focus(),0);
       }
       resolve(ignored);
     };
     correct.onclick=()=>finish(false);
-    ignore.onclick=()=>finish(true);
+    ignore.onclick=ignorable?()=>finish(true):null;
   });
 }
 async function reviewMissingCategoryAndHandicap(){
   for(let i=0;i<manualDraftRows.length;i++){
-    const row=manualDraftRows[i]||emptyManualDraftRow();if(!manualRowHasData(row))continue;
+    const row=manualDraftRows[i]||emptyManualDraftRow();
+    const hasData=!!(String(row.name||"").trim()||String(row.category||"").trim()||String(row.handicap??"").trim()||String(row.tee||"").trim()||String(row.whatsapp||"").trim());
+    if(!hasData)continue;
+    if(!canonicalPlayerName(row.name)){await registrationMissingPrompt(i,"name");return false}
     if(!normalizeTournamentCategory(row.category)){
       const ignored=await registrationMissingPrompt(i,"category");if(!ignored)return false;
     }
@@ -1588,6 +1592,7 @@ async function reviewMissingCategoryAndHandicap(){
     if(handicapText===""||!Number.isSafeInteger(Number(handicapText))){
       const ignored=await registrationMissingPrompt(i,"handicap");if(!ignored)return false;
     }
+    if(!normalizeTee(row.tee)){await registrationMissingPrompt(i,"tee");return false}
   }
   return true;
 }
@@ -1635,7 +1640,7 @@ function generalSetupState(){
   const required=["match_play","four_ball"].includes(draftRoundMode)?[2,4,6].includes(count):count>=1,gameRequired=!draftSkins.enabled||count>=2,wolfRequired=!draftWolf.enabled||(count>=3&&count<=6),vegasRequired=!draftVegas.enabled||[4,6].includes(count),dotsRequired=!draftDots.enabled||count>=2,course=COURSE_CATALOG[draftCourse];return{ready:!!(complete&&required&&course?.configured&&gameRequired&&wolfRequired&&vegasRequired&&dotsRequired),count,complete};
 }
 function updateGeneralSetupValidity(){
-  const state=generalSetupState(),button=$("setupOk");if(button){button.disabled=!state.ready;button.setAttribute("aria-disabled",String(!state.ready))}return state;
+  const state=generalSetupState(),button=$("setupOk");if(button){button.disabled=false;button.setAttribute("aria-disabled","false")}return state;
 }
 function restorePersistedRound(){
   const stored=loadRound();
@@ -3367,7 +3372,7 @@ $("tournamentName").addEventListener("change",e=>{if(!draftTournament)return;dra
 $("tournamentDescription").addEventListener("input",e=>{if(!draftTournament)draftTournament={name:"",description:""};draftTournament.description=String(e.target.value||"").trimStart();persistDraftState()});
 $("tournamentDescription").addEventListener("change",e=>{if(!draftTournament)return;draftTournament.description=String(e.target.value||"").trim();persistDraftState();renderTournamentDraft()});
 $("courseOptions").addEventListener("change",e=>{if(!e.target.matches('input[name="registrationCourse"]'))return;const key=String(e.target.value||"pulte");draftCourse=COURSE_CATALOG[key]?key:"pulte";activateCourse(draftCourse);draftPlayers=draftPlayers.map((p,i)=>normalizePlayer(p,i));seedManualDraftRowsFromPlayers();persistDraftState();renderDraft();Promise.resolve(null).catch(()=>null);const course=COURSE_CATALOG[draftCourse];$("setupStatus").textContent=course.configured?`${course.name.toUpperCase()} · TARJETA OFICIAL CONFIGURADA`:`${course.name.toUpperCase()} · PENDIENTE CARGAR TARJETA OFICIAL`});
-function captureVisibleRegistrationValues(){for(const rowElement of document.querySelectorAll("#detectedBody [data-draft-row]")){const index=Number(rowElement.dataset.draftRow),row=manualDraftRows[index];if(!row)continue;const name=rowElement.querySelector("[data-draft-name]"),hcp=rowElement.querySelector("[data-draft-hcp]"),country=rowElement.querySelector("[data-draft-country-code]"),whatsapp=rowElement.querySelector("[data-draft-whatsapp]");if(name)row.name=String(name.value||"").trimStart();if(hcp)row.handicap=String(hcp.value??"");if(country)row.countryCode=String(country.value||"").replace(/\D/g,"").slice(0,4);if(whatsapp)row.whatsapp=String(whatsapp.value||"").replace(/\D/g,"").slice(0,15)}persistDraftState();return true}
+function captureVisibleRegistrationValues(){for(const rowElement of document.querySelectorAll("#detectedBody [data-draft-row]")){const index=Number(rowElement.dataset.draftRow),row=manualDraftRows[index];if(!row)continue;const name=rowElement.querySelector("[data-draft-name]"),category=rowElement.querySelector("[data-draft-category]"),hcp=rowElement.querySelector("[data-draft-hcp]"),tee=rowElement.querySelector("[data-draft-tee]"),country=rowElement.querySelector("[data-draft-country-code]"),whatsapp=rowElement.querySelector("[data-draft-whatsapp]");if(name)row.name=String(name.value||"").trimStart();if(category)row.category=String(category.value||"");if(hcp)row.handicap=String(hcp.value??"");if(tee)row.tee=String(tee.value||"");if(country)row.countryCode=String(country.value||"").replace(/\D/g,"").slice(0,4);if(whatsapp)row.whatsapp=String(whatsapp.value||"").replace(/\D/g,"").slice(0,15)}persistDraftState();return true}
 $("setupOk").addEventListener("click",async()=>{captureVisibleRegistrationValues();if(!(await reviewMissingCategoryAndHandicap()))return;if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;if(profileCorrectionMode){startConfirmedRound();return};renderDraft();showStep2();;});
 $("clearAllRegistration").addEventListener("click",clearAllRegistrationPlayers);
 $("normalRoundButton").addEventListener("click",()=>selectGeneralRoundMode("general"));$("matchPlayRoundButton").addEventListener("click",()=>selectGeneralRoundMode("match_play"));$("fourBallRoundButton").addEventListener("click",()=>selectGeneralRoundMode("four_ball"));$("universalesRoundButton").addEventListener("click",()=>selectGeneralRoundMode("universales"));$("skinsRoundButton").addEventListener("click",selectSkinsRoundMode);
