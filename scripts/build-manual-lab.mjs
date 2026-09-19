@@ -9,5 +9,5 @@ assert(!/getUserMedia|SpeechRecognition|MediaRecorder|\/api\/(?:universal-ai|voi
 for(const m of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi))if(m[1].trim())new vm.Script(m[1]);
 for(const m of html.matchAll(/<script\b[^>]*src="\.\/([^"?]+)/gi))assert(fs.existsSync(m[1]),`Missing script ${m[1]}`);
 for(const file of ['device-closures.js','service-worker.js'])new vm.Script(fs.readFileSync(file,'utf8'));
-for(const test of ['test-manual-no-assistant.mjs','test-manual-startup-sharing.mjs','test-device-closures.mjs','test-score-engine.mjs','test-round-closure.mjs','test-player-registry.js','test-stableford.mjs','test-stableford-manual.mjs','test-v398-manual-opening-hole.mjs','test-v306-match-play.mjs','test-v309-four-ball.mjs','test-v329-skins.mjs'])execFileSync(process.execPath,[test],{stdio:'inherit'});
+for(const test of ['test-owner-invitation-ui.mjs','test-manual-no-assistant.mjs','test-manual-startup-sharing.mjs','test-device-closures.mjs','test-score-engine.mjs','test-round-closure.mjs','test-player-registry.js','test-stableford.mjs','test-stableford-manual.mjs','test-v398-manual-opening-hole.mjs','test-v306-match-play.mjs','test-v309-four-ball.mjs','test-v329-skins.mjs'])execFileSync(process.execPath,[test],{stdio:'inherit'});
 console.log('PASS LAB manual technical profile; visual/device acceptance remains separate');
