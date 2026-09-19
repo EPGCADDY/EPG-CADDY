@@ -4,11 +4,18 @@
   else root.GSCTimerInactivity=api;
 })(typeof globalThis!=="undefined"?globalThis:this,function(){
   "use strict";
+  const LIMIT_MS=30*60*1000; // compatibilidad histórica; no dispara cierre genérico
   const NINE_HOLE_WAIT_MS=25*60*1000;
 
   function timestamp(value){
     const parsed=Date.parse(String(value||""));
     return Number.isFinite(parsed)?parsed:null;
+  }
+  function lastInstructionAt(round){
+    return timestamp(round?.timerLastInstructionAt)
+      ??timestamp(round?.clockResumedAt)
+      ??timestamp(round?.createdAt)
+      ??0;
   }
   function scoreTime(round,hole){
     const values=(round?.players||[]).map(p=>timestamp(p?.holes?.[hole]?.updatedAt)).filter(Number.isFinite);
@@ -34,5 +41,5 @@
     if(shouldStop(round,now))return nineHoleAnchor(round);
     return null;
   }
-  return Object.freeze({NINE_HOLE_WAIT_MS,remainingMs,shouldStop,isNineHoleGap,stopEndAt});
+  return Object.freeze({LIMIT_MS,NINE_HOLE_WAIT_MS,lastInstructionAt,remainingMs,shouldStop,isNineHoleGap,stopEndAt});
 });
