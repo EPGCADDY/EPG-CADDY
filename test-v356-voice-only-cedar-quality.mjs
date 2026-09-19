@@ -25,19 +25,19 @@ assert.doesNotMatch(html,/voices\.find\(voice=>String\(voice\.lang\|\|""\).*\|\|
 
 assert.deepEqual(sanitizeSpeechRequest({text:"  Hola\n mundo  ",language:"es-GT<script>"}),{text:"Hola mundo",language:"es-GTscript"});
 const direct=cedarSpeechPayload("Respuesta confiable.","es-GT");
-assert.equal(direct.model,"gpt-4o-mini-tts");
+assert.equal(direct.model,"tts-1");
 assert.equal(direct.voice,"onyx");
 assert.equal(direct.speed,.9);
-assert.match(direct.instructions,/Locutor masculino adulto/);
+assert.equal(direct.instructions,undefined);
 const gateway=cedarGatewayPayload("Respuesta confiable.","es-GT");
-assert.equal(gateway.language,"es-419");
+assert.equal(gateway.voice,"onyx");
 assert.equal(gateway.speed,.9);
-assert.equal(Object.hasOwn(gateway,"voice"),false);
-assert.match(gateway.instructions,/español latinoamericano es-419/);
+assert.equal(Object.hasOwn(gateway,"voice"),true);
+assert.equal(gateway.instructions,undefined);
 assert.match(speech,/ai-model-id":GATEWAY_SPEECH_MODEL/);
-assert.match(speech,/fish-audio\/s2\.1-pro-free/);
-assert.match(speech,/sin ceceo español/);
-assert.match(speech,/Nunca uses acento de España/);
+assert.match(speech,/openai\/tts-1/);
+
+
 assert.match(html,/if\(aiUniversalSpeechLanguage\(clean\)\.startsWith\("es"\)\)return false/);
 assert.doesNotMatch(speech,/openai\/tts-1-hd|GATEWAY_VOICE="echo"/);
 
@@ -58,10 +58,10 @@ try{
   assert.equal(res.body.toString(),"cedar-audio");
   assert.equal(calls.length,1);
   assert.equal(calls[0].url,"https://ai-gateway.vercel.sh/v4/ai/speech-model");
-  assert.equal(calls[0].options.headers["ai-model-id"],"fish-audio/s2.1-pro-free");
-  assert.equal(JSON.parse(calls[0].options.body).language,"es-419");
-  assert.equal(Object.hasOwn(JSON.parse(calls[0].options.body),"voice"),false);
-  assert.equal(res.headers["X-GSCG-Voice"],"s2.1-es-419");
+  assert.equal(calls[0].options.headers["ai-model-id"],"openai/tts-1");
+  assert.equal(JSON.parse(calls[0].options.body).voice,"onyx");
+  assert.equal(Object.hasOwn(JSON.parse(calls[0].options.body),"voice"),true);
+  assert.equal(res.headers["X-GSCG-Voice"],"onyx");
 }finally{
   globalThis.fetch=previousFetch;
   if(previousOpenAI===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=previousOpenAI;
@@ -85,4 +85,4 @@ assert.match(universal,/Math\.ceil\(baseResponseProfile\.maxOutputTokens\/2\)/);
 assert.match(speech,/controller\.abort\(\),22_500/);
 assert.deepEqual(universalResponseProfile("Analiza a fondo causas, riesgos, alternativas y dame una recomendación accionable."),{reasoningEffort:"medium",maxOutputTokens:3200,depth:"deep"});
 
-console.log("PASS V356/V378 · voz hablada Fish Audio es-419 0.90 sin ID fijo; tráfico/clima estructurados");
+console.log("PASS V356/V378 · configuración TTS-1 Onyx 0.90; audio físico pendiente; tráfico/clima estructurados");

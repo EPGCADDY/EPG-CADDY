@@ -3,10 +3,9 @@ import {resolveGatewayToken} from "./_lib/vercel-gateway-auth.js";
 
 const MAX_SPEECH_TEXT=4000;
 const VOICE="onyx";
-const GATEWAY_VOICE="s2.1-es-419";
+const GATEWAY_VOICE="onyx";
 const SPEED=.9;
-const GATEWAY_SPEECH_MODEL="fish-audio/s2.1-pro-free";
-const INSTRUCTIONS="Locutor masculino adulto latinoamericano, serio, sobrio y profesional. Habla exclusivamente en español latinoamericano es-419, natural para Guatemala, sin ceceo español: pronuncia c ante e/i y z con sonido de s. Nunca uses acento de España, acento anglosajón, Spanglish ni palabras en inglés salvo nombres propios inevitables. Dicción muy clara, ritmo medio-lento y constante. Lee el contenido completo sin agregar introducciones, comentarios ni despedidas.";
+const GATEWAY_SPEECH_MODEL="openai/tts-1";
 
 export function sanitizeSpeechRequest(body={}){
   const text=String(body.text||"").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g," ").replace(/\s+/g," ").trim().slice(0,MAX_SPEECH_TEXT);
@@ -16,17 +15,18 @@ export function sanitizeSpeechRequest(body={}){
 
 export function cedarSpeechPayload(text,language="es-GT"){
   return{
-    model:"gpt-4o-mini-tts",
+    model:"tts-1",
     voice:VOICE,
     speed:SPEED,
     response_format:"mp3",
-    input:text,
-    instructions:`${INSTRUCTIONS} Idioma solicitado: ${language}.`
+    input:text
   };
 }
 
 export function cedarGatewayPayload(text){
-  return{text,speed:SPEED,language:"es-419",outputFormat:"mp3",instructions:INSTRUCTIONS};
+  // tts-1 uses a fixed speaker; language follows the input text. Instructions
+  // and language overrides are not supported by this model.
+  return{text,voice:VOICE,speed:SPEED,outputFormat:"mp3"};
 }
 
 async function requestDirectSpeech(apiKey,payload,signal){
@@ -63,29 +63,47 @@ export default async function handler(req,res){
     res.setHeader("Allow","POST");
     return res.status(405).json({ok:false,error:"METHOD_NOT_ALLOWED"});
   }
-  const gatewayToken=await resolveGatewayToken();
-  if(!gatewayToken)return res.status(500).json({ok:false,error:"APPROVED_VOICE_NOT_CONFIGURED"});
+  const gatewayToken=await resolveGatewayToken().catch(()=>null);
+  const apiKey=String(process.env.OPENAI_API_KEY||"").trim();
+  if(!gatewayToken&&!apiKey)return res.status(500).json({ok:false,error:"APPROVED_VOICE_NOT_CONFIGURED"});
   try{
     const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):req.body||{};
     const {text,language}=sanitizeSpeechRequest(body);
     if(text.length<2)return res.status(422).json({ok:false,error:"TEXT_REQUIRED"});
     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),22_500);
-    let upstream;
+    let audio=null,provider=null;
     try{
-      upstream=await requestGatewaySpeech(gatewayToken,text,language,controller.signal);
+      // One complete, fixed-voice recording. Fail over before delivering any audio.
+      for(const route of ['gateway','direct']){
+        if(route==='gateway'&&!gatewayToken||route==='direct'&&!apiKey)continue;
+        const attempt=new AbortController();
+        const signal=AbortSignal.any([controller.signal,attempt.signal]);
+        const attemptTimer=setTimeout(()=>attempt.abort(),route==='gateway'&&apiKey?8000:22000);
+        try{
+          const upstream=route==='gateway'
+            ?await requestGatewaySpeech(gatewayToken,text,language,signal)
+            :await requestDirectSpeech(apiKey,cedarSpeechPayload(text,language),signal);
+          if(!upstream?.ok){
+            console.warn('voice-provider-failure',JSON.stringify({provider:route,status:upstream?.status||0,voice:VOICE}));
+            await upstream?.body?.cancel().catch(()=>{});
+            continue;
+          }
+          const candidate=route==='gateway'
+            ?Buffer.from(String((await upstream.json())?.audio||''),'base64')
+            :Buffer.from(await upstream.arrayBuffer());
+          if(!candidate.length||candidate.length>8_000_000)throw new Error('INVALID_AUDIO');
+          audio=candidate;provider=route;break;
+        }catch(error){
+          console.warn('voice-provider-failure',JSON.stringify({provider:route,reason:signal.aborted?'timeout':'transport_or_audio',voice:VOICE}));
+        }finally{clearTimeout(attemptTimer)}
+        if(controller.signal.aborted)break;
+      }
     }finally{clearTimeout(timeout)}
-    if(!upstream){
-      console.warn("cedar speech upstream",JSON.stringify({status:0}));
-      return res.status(502).json({ok:false,error:"CEDAR_SPEECH_UNAVAILABLE",retryable:false});
+    if(!audio){
+      console.error('voice-unavailable',JSON.stringify({voice:VOICE,gatewayConfigured:Boolean(gatewayToken),backupConfigured:Boolean(apiKey)}));
+      return res.status(502).json({ok:false,error:'CEDAR_SPEECH_UNAVAILABLE',retryable:true});
     }
-    if(!upstream.ok){
-      console.warn("cedar speech gateway failed",JSON.stringify({status:upstream.status,model:GATEWAY_SPEECH_MODEL}));
-      console.warn("cedar speech upstream",JSON.stringify({status:upstream.status}));
-      return res.status(upstream.status===429?503:502).json({ok:false,error:"CEDAR_SPEECH_UNAVAILABLE",retryable:upstream.status===429});
-    }
-    const payload=await upstream.json().catch(()=>null);
-    const audio=Buffer.from(String(payload?.audio||""),"base64");
-    if(!audio.length)return res.status(502).json({ok:false,error:"CEDAR_SPEECH_EMPTY"});
+    res.setHeader('X-GSCG-Voice-Provider',provider);
     console.info("cedar spanish speech gateway",JSON.stringify({model:GATEWAY_SPEECH_MODEL,language:"es-419",speed:SPEED,locked:true}));
     res.setHeader("Content-Type","audio/mpeg");
     res.setHeader("Content-Length",String(audio.length));
