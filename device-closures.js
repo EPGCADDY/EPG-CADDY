@@ -42,8 +42,8 @@
     const text=typeof root.GSCRequestedClosureSpeech==='function'?root.GSCRequestedClosureSpeech(kind):'';
     if(text){cancel();speak(text)}else status(`${label}: todavía no hay resultados disponibles.`);
   });
-  bind('deviceClosureFront','front','Primera vuelta');
-  bind('deviceClosureBack','back','Segunda vuelta');
+  bind('deviceClosureFront','front','FRONT · 1 - 9');
+  bind('deviceClosureBack','back','BACK · 10 - 18');
   bind('deviceClosureTotal','total','Total');
 }
  root.GSCDeviceClosures={speak,cancel,bindControls};
