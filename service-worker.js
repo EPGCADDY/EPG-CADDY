@@ -80,14 +80,14 @@ self.addEventListener("message",event=>{
   if(event.data?.type==="PROMOTE_BUILD"&&event.data?.build===RELEASE)event.waitUntil(promoteCandidate());
 });
 
-async function networkFirst(request){
+async function networkFirst(request,allowCardFallback=true){
   const cache=await caches.open(ACTIVE_CACHE_NAME);
   try{
     const response=await fetch(request);
     if(response.ok&&response.type==="basic")await cache.put(request,response.clone());
     return response;
   }catch{
-    return await cache.match(request)||await cache.match(OFFLINE_ENTRY)||Response.error();
+    return await cache.match(request)||(allowCardFallback?await cache.match(OFFLINE_ENTRY):null)||Response.error();
   }
 }
 
@@ -108,6 +108,7 @@ self.addEventListener("fetch",event=>{
   if(request.mode==="navigate"&&(url.pathname==="/access.html"||url.pathname.startsWith("/invite/"))){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"&&(url.pathname==="/manual.pdf"||url.pathname==="/manual.html")){event.respondWith(fetch("/manual.html?__gscg_build_check=1",{cache:"no-store"}));return}
   if(url.searchParams.has("__gscg_build_check")){event.respondWith(fetch(request,{cache:"no-store"}));return}
+  if(request.mode==="navigate"&&!["/","/index.html","/inicio",OFFLINE_ENTRY].includes(url.pathname)){event.respondWith(networkFirst(request,false));return}
   if(request.mode==="navigate"){
     event.respondWith((async()=>{
       if(url.searchParams.get("app_version")===RELEASE){await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}
