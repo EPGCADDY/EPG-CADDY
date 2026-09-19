@@ -5,7 +5,7 @@
 })(typeof globalThis!=="undefined"?globalThis:this,function(){
   "use strict";
   const LIMIT_MS=30*60*1000; // compatibilidad histórica; no dispara cierre genérico
-  const NINE_HOLE_WAIT_MS=25*60*1000;
+  const NINE_HOLE_WAIT_MS=20*60*1000;
 
   function timestamp(value){
     const parsed=Date.parse(String(value||""));
