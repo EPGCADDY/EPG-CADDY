@@ -18,6 +18,60 @@ Este documento contiene únicamente funciones reales del producto pendientes o p
 - Ningún cambio de laboratorio puede llegar a producción por accidente, automatismo, merge, redeploy o reutilización de `main`.
 
 
+## Matriz operativa — Torneo LIVE 25 grupos / 100 jugadores
+
+**Objetivo:** operar un torneo de **25 grupos × 4 jugadores = 100 jugadores** con una Score Card por grupo y un centro único de posiciones LIVE.
+
+### Capacidad y arquitectura confirmadas
+
+- Cada Score Card admite de 1 a 6 jugadores.
+- El backend LIVE fija `MAX_TOURNAMENT_PLAYERS=100`; 25 grupos de 4 jugadores caben exactamente en el límite oficial.
+- Cada grupo publica un stream independiente con `groupLabel` propio.
+- Todos los streams se enlazan a un único torneo mediante el código privado de torneo.
+- El Centro LIVE consulta la General cada 3 segundos y pagina hasta reunir todos los streams del torneo.
+- La clasificación se recalcula con los scores recibidos sin editar las tarjetas originales.
+
+### Procedimiento oficial del torneo
+
+1. **Organizador:** crea una sola vez el TORNEO LIVE desde `COMPARTIR LIVE`.
+2. El sistema entrega:
+   - enlace General del torneo;
+   - código de unión del torneo;
+   - credencial privada del organizador.
+3. **Cada uno de los 25 grupos:** una persona abre su Score Card, registra exactamente a sus cuatro jugadores con categoría, HDCP y marcas, e inicia la ronda.
+4. Esa persona activa `COMPARTIR LIVE` para el grupo, escribe el mismo código de torneo y asigna un identificador único: `GRUPO 01` … `GRUPO 25`.
+5. Al quedar unido, cada score guardado en la Score Card se publica automáticamente al torneo; no se vuelve a digitar en la tabla de posiciones.
+6. El organizador abre `TORNEO LIVE / CENTRO LIVE` para consultar las posiciones.
+
+### Vistas obligatorias del Centro LIVE
+
+- **GENERAL:** todos los jugadores del torneo, ordenados por resultado y hoyos jugados.
+- **CATEGORÍAS:** filtro independiente para `CAMPEONATO, A, B, C, D, FEMENINA, SENIOR, S.SENIOR`; nunca mezcla categorías.
+- **INDIVIDUAL / MI TABLERO:** monitor personalizado con los jugadores o grupos elegidos.
+- **AGREGAR A MI TABLERO:** al buscar un jugador en la General, el botón `+ SEGUIR` lo agrega al monitor individual; también se puede agregar un grupo o un enlace LIVE externo autorizado.
+
+### Navegación esperada
+
+`CENTRO DE TORNEOS → TORNEO → JUGADORES → GENERAL/CATEGORÍA → + SEGUIR → MI TABLERO`
+
+La vista GENERAL y el filtro de CATEGORÍA pertenecen al mismo monitor de jugadores. `MI TABLERO` es la vista individual personalizada.
+
+### Criterios de aceptación antes de usarlo en torneo real
+
+- 25 grupos conectados simultáneamente.
+- 100 jugadores visibles sin duplicados.
+- Cada grupo identificado de `GRUPO 01` a `GRUPO 25`.
+- Cambio de score reflejado en General en la siguiente ventana de refresco.
+- Filtros de todas las categorías correctos.
+- `+ SEGUIR` agrega jugador al MI TABLERO y no crea consultas duplicadas cuando el jugador ya pertenece a la General.
+- Reinicio/recarga de un teléfono no pierde la ronda ni rompe su vínculo LIVE.
+- Sin señal: el grupo conserva su ronda y la publicación se reintenta al recuperar conexión.
+- Ninguna vista LIVE puede editar scores.
+- Prueba física obligatoria con carga equivalente a 25 grupos antes del torneo oficial.
+
+**Estado actual:** arquitectura y límites de código CONFIRMADOS. La prueba física/concurrente real de 25 grupos y 100 jugadores todavía debe ejecutarse antes de declarar el operativo 100% aprobado.
+
+
 ## Mapa único del producto
 
 Todas las configuraciones y combinaciones pertenecen a una sola arquitectura:
