@@ -837,8 +837,8 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 .round-utility-bar{display:flex;flex-wrap:wrap;gap:8px}.round-utility-bar>*{flex:1;min-height:44px!important}
 .registration-method{margin-top:12px}.registration-method-title{font-size:18px;color:#70ef28}.voice-prompt{padding:12px 0}
 .round-grid-gross{min-height:48px;font-size:20px!important}.round-manual-entry{margin-top:16px}
-.device-closure-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px;border:1px solid #414b41;border-radius:12px;margin:12px 0;background:#0b100b}
-.device-closure-controls button{min-height:44px;flex:1;border:1px solid #6eea28;border-radius:8px;background:#0b100b;color:#b4ffa0;font-weight:800}.device-closure-controls span{flex-basis:100%;font-size:12px;color:#b6bfb6}
+.device-closure-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:stretch;padding:12px;border:1px solid #414b41;border-radius:12px;margin:12px 0;background:#0b100b}
+.device-closure-controls button{min-width:0;min-height:58px;padding:8px 5px;border:1px solid #6eea28;border-radius:8px;background:#0b100b;color:#b4ffa0;font-weight:800;font-size:11px;line-height:1.15}.device-closure-controls span{grid-column:1/-1;font-size:12px;color:#b6bfb6}
 </style></head>
 <body>
 
@@ -861,7 +861,7 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
     <a class="live-support-link" href="/manual.pdf" aria-label="Abrir el Manual de Golf Score Card GT en esta pantalla">Support</a>
     <button class="hidden" id="ownerShare24h" type="button" aria-label="Crear y compartir acceso individual de un solo uso válido por 24 horas">INVITAR · 24 H</button>
   </nav>
-  <section class="device-closure-controls" aria-label="Anuncios de resultados"><button id="deviceClosureRepeat" type="button">REPETIR RESULTADO</button><span id="deviceClosureStatus" role="status">Primera vuelta · segunda vuelta · total</span></section><section class="course-info official-course-info"><div class="course-info-layout"><div class="course-info-data"><h2>INFORMACIÓN DEL CAMPO</h2><div class="course-info-grid" id="courseInfo"></div></div></div></section>
+  <section class="device-closure-controls" aria-label="Anuncios de resultados"><button id="deviceClosureFront" type="button">PRIMERA VUELTA</button><button id="deviceClosureBack" type="button">SEGUNDA VUELTA</button><button id="deviceClosureTotal" type="button">TOTAL</button><span id="deviceClosureStatus" role="status">Toca una vuelta para escuchar su resultado.</span></section><section class="course-info official-course-info"><div class="course-info-layout"><div class="course-info-data"><h2>INFORMACIÓN DEL CAMPO</h2><div class="course-info-grid" id="courseInfo"></div></div></div></section>
   <div class="round-status-row"><div class="status" id="status"></div><div class="round-timer-controls"><button class="timer-off-button" id="stopClockButton">TIMER ON</button><button class="timer-reset-button" id="resetClockButton" type="button">RESET</button></div><div class="round-elapsed-status" id="roundElapsedStatus"></div></div>
   <div class="caddie-sources hidden" id="roundCaddieSources" aria-label="Fuentes consultadas por el Caddie"></div>
   <div class="scorecard-stage-title"><span>TARJETA DE PUNTUACIÓN</span><small>DESLIZA PARA VER TODOS LOS HOYOS</small></div>
@@ -1896,6 +1896,14 @@ function segmentSpeech(title,holes){
   }
   return lines.length?[title,...lines].join(" "):"";
 }
+function requestedClosureSpeech(kind){
+  if(!round?.configured||!Array.isArray(round.players)||!round.players.length)return "";
+  if(kind==="front")return segmentSpeech("Primera vuelta.",FRONT);
+  if(kind==="back")return segmentSpeech("Segunda vuelta.",BACK);
+  if(kind==="total")return segmentSpeech("Ronda completa.",ALL);
+  return "";
+}
+window.GSCRequestedClosureSpeech=requestedClosureSpeech;
 function closureSpeechIfDue(){
   ensureAnnouncedState();
   const out=[];
