@@ -863,7 +863,21 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
   .app{padding-bottom:max(150px,calc(env(safe-area-inset-bottom,0px) + 120px))!important}
   .round-actions,.round-secondary-actions{position:relative;z-index:2}
   .round-secondary-actions{margin-bottom:24px!important}
+  .new-round-card input,.new-round-card textarea,.new-round-card select,
+  .scorecard input,.scorecard textarea,.scorecard select,
+  .stableford-setup-card input,.stableford-setup-card textarea,.stableford-setup-card select,
+  .stableford-result-card input,.stableford-result-card textarea,.stableford-result-card select{
+    font-size:16px!important;
+    box-sizing:border-box!important;
+  }
 }
+input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
+  border-color:var(--lime)!important;
+  outline:1px solid var(--lime)!important;
+  box-shadow:0 0 0 1px var(--lime)!important;
+}
+.round-status-row.gsc-time-four .timer-toggle-cell{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.round-status-row.gsc-time-four .timer-toggle-cell[aria-pressed="true"]{border-color:var(--lime)!important;box-shadow:0 0 0 1px var(--lime)!important}
 </style></style></head>
 <body>
 
@@ -893,7 +907,7 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
   
   <section class="device-closure-controls" aria-label="Repetir audio"><div class="device-closure-title">REPETIR AUDIO</div><button id="deviceClosureFront" type="button">FRONT · 1 - 9</button><button id="deviceClosureBack" type="button">BACK · 10 - 18</button><button id="deviceClosureTotal" type="button">TOTAL · 1 - 18</button><span id="deviceClosureStatus" role="status">Toca FRONT, BACK o TOTAL para repetir el resultado.</span></section><section class="summary"><div class="summary-title" id="summaryTitle">INFORMACIÓN DE RONDA</div><table><thead><tr id="summaryHeadRow"><th class="summary-player">JUGADOR</th><th>GROSS IN</th><th>GROSS OUT</th><th>GROSS TOTAL</th><th>HCP</th><th>NETO TOTAL</th><th>+/- NETO</th></tr></thead><tbody id="summaryBody"></tbody></table></section>
   <div class="summary-title" id="timeMonitorTitle">MONITOR DE TIEMPO</div>
-  <div class="round-status-row gsc-time-four"><div class="time-cell"><span class="time-label">INICIO</span><span class="time-value" id="roundStartStatus">—</span></div><div class="time-cell"><span class="time-label">FINAL</span><span class="time-value" id="roundEndStatus">—</span></div><div class="time-cell"><span class="time-label">TIMER</span><span class="time-value" id="roundElapsedStatus">00:00:00</span></div><button class="timer-reset-button" id="resetClockButton" type="button">RESET</button><button class="hidden" id="stopClockButton" type="button" aria-hidden="true" tabindex="-1">TIMER</button><div class="status hidden" id="status"></div></div>
+  <div class="round-status-row gsc-time-four"><div class="time-cell"><span class="time-label">INICIO</span><span class="time-value" id="roundStartStatus">—</span></div><div class="time-cell"><span class="time-label">FINAL</span><span class="time-value" id="roundEndStatus">—</span></div><div class="time-cell timer-toggle-cell" id="roundTimerToggle" role="button" tabindex="0" aria-label="Pausar o reanudar timer" aria-pressed="false"><span class="time-label">TIMER</span><span class="time-value" id="roundElapsedStatus">00:00:00</span></div><button class="timer-reset-button" id="resetClockButton" type="button">RESET</button><button class="hidden" id="stopClockButton" type="button" aria-hidden="true" tabindex="-1">TIMER</button><div class="status hidden" id="status"></div></div>
   <section class="stableford-series hidden" id="stablefordSeriesSection"><div class="summary-title">CLASIFICACIÓN ACUMULADA · MEJORES 3 DE 4</div><div class="stableford-series-tabs"><button type="button" id="stablefordSeniorTab">SENIOR</button><button type="button" id="stablefordSuperSeniorTab">S. SENIOR</button></div><table><thead><tr><th>POS.</th><th>JUGADOR</th><th>F1</th><th>F2</th><th>F3</th><th>F4</th><th>MEJORES 3</th></tr></thead><tbody id="stablefordStandingsBody"></tbody></table><div class="stableford-series-actions"><button type="button" id="openStablefordResult">AGREGAR RESULTADO OFICIAL</button></div></section>
   <div class="round-actions"><button class="hidden" id="shareRoundLiveButton" type="button">COMPARTIR LIVE</button><button id="finalCardButton">TARJETA DIGITAL</button><button id="openCardLibraryButton">HISTORIAL</button><button class="hidden" id="previousRoundButton">RONDA PREVIA</button><button id="newRoundButton">NUEVA RONDA</button></div>
   <div class="round-secondary-actions" id="roundSecondaryActions"><button class="back-registration-button" id="backToRegistrationButton" aria-label="Atrás: volver a la pantalla principal" title="Volver a la pantalla principal">ATRÁS</button><button class="clear-round-scores" id="clearScoresOnly" type="button">BORRAR SCORES</button><button class="clear-round-scores" id="clearRoundScores" type="button">BORRAR TODO</button><button class="back-registration-button add-player-button hidden" id="addPlayerButton" aria-label="Agregar jugador a la ronda" title="Agregar jugador">+ JUGADOR</button></div>
@@ -1709,31 +1723,36 @@ function applyInlineManualRosterPhrase(input,index){
   ;updateGeneralSetupValidity();return true;
 }
 
-function roundElapsedSeconds(){const start=new Date(round.createdAt).getTime(),end=round.endedAt?new Date(round.endedAt).getTime():Date.now();return Math.max(0,Math.floor((end-start)/1000))}
+function roundElapsedSecondsAt(endMs){const start=new Date(round.createdAt).getTime(),pausedTotal=Math.max(0,Number(round.timerPausedTotalMs)||0),pausedAt=round.timerPausedAt?Date.parse(round.timerPausedAt):NaN,effectiveEnd=Number.isFinite(pausedAt)?Math.min(endMs,pausedAt):endMs;return Math.max(0,Math.floor((effectiveEnd-start-pausedTotal)/1000))}
+function roundElapsedSeconds(){const end=round.endedAt?new Date(round.endedAt).getTime():round.timerPausedAt?new Date(round.timerPausedAt).getTime():Date.now();return roundElapsedSecondsAt(end)}
 function roundElapsedText(){const sec=roundElapsedSeconds(),hh=String(Math.floor(sec/3600)).padStart(2,"0"),mm=String(Math.floor((sec%3600)/60)).padStart(2,"0"),ss=String(sec%60).padStart(2,"0");return `${hh}:${mm}:${ss}`}
 function roundStartText(){return new Intl.DateTimeFormat("es-GT",{hour:"2-digit",minute:"2-digit"}).format(new Date(round.createdAt))}
 function roundIdleStatus(){return `INICIO ${roundStartText()}`}
 function latestScoreTimestamp(){const values=round.players.flatMap(p=>Object.values(p.holes||{}).map(s=>Date.parse(s?.updatedAt||"")).filter(Number.isFinite));return values.length?Math.max(...values):null}
 function roundEndText(){return round.endedAt?new Intl.DateTimeFormat("es-GT",{hour:"2-digit",minute:"2-digit"}).format(new Date(round.endedAt)):"—"}
-function renderRoundClockButton(){const button=$("stopClockButton"),elapsed=$("roundElapsedStatus"),start=$("roundStartStatus"),end=$("roundEndStatus");if(button)button.disabled=!round.configured;if(start)start.textContent=round.configured?roundStartText():"—";if(end)end.textContent=round.configured?roundEndText():"—";if(elapsed)elapsed.textContent=round.configured?roundElapsedText():"00:00:00"}
+function renderRoundClockButton(){const button=$("stopClockButton"),toggle=$("roundTimerToggle"),elapsed=$("roundElapsedStatus"),start=$("roundStartStatus"),end=$("roundEndStatus");if(button)button.disabled=!round.configured;if(toggle){toggle.setAttribute("aria-pressed",round.timerPausedAt?"true":"false");toggle.setAttribute("aria-label",round.timerPausedAt?"Reanudar timer":"Pausar timer")}if(start)start.textContent=round.configured?roundStartText():"—";if(end)end.textContent=round.configured?roundEndText():"—";if(elapsed)elapsed.textContent=round.configured?roundElapsedText():"00:00:00"}
 let roundTimerIdleTimeout=null;
 function clearRoundTimerIdleTimeout(){if(roundTimerIdleTimeout){clearTimeout(roundTimerIdleTimeout);roundTimerIdleTimeout=null}}
 function scheduleRoundTimerIdleShutdown(){
   clearRoundTimerIdleTimeout();
-  const idle=window.GSCTimerInactivity;if(!idle||!round.configured||round.endedAt)return false;
+  const idle=window.GSCTimerInactivity;if(!idle||!round.configured||round.endedAt||round.timerPausedAt)return false;
   if(idle.shouldStop(round)){stopRoundClock(idle.isNineHoleGap?.(round)?"nine_hole_idle":"idle");return true}
   roundTimerIdleTimeout=setTimeout(()=>{roundTimerIdleTimeout=null;scheduleRoundTimerIdleShutdown()},Math.max(50,idle.remainingMs(round)));
   return true;
 }
 function noteRoundTimerInstruction(){
-  if(!round.configured||round.endedAt)return false;
+  if(!round.configured||round.endedAt||round.timerPausedAt)return false;
   round.timerLastInstructionAt=new Date().toISOString();persist();scheduleRoundTimerIdleShutdown();return true;
 }
-function stopRoundClock(reason="manual"){if(!round.configured||round.endedAt)return false;clearRoundTimerIdleTimeout();const now=Date.now(),lastScore=latestScoreTimestamp(),retro=window.GSCTimerInactivity?.stopEndAt?.(round,now),useLast=reason==="score_complete"||reason==="nine_hole_idle"||reason==="idle";const end=(useLast&&(retro||lastScore))||(reason!=="idle"&&!round.clockResumedAt&&isRoundComplete()&&lastScore&&lastScore<now?lastScore:now);round.endedAt=new Date(end).toISOString();round.durationSeconds=Math.max(0,Math.floor((end-new Date(round.createdAt).getTime())/1000));round.clockResumedAt=null;if(reason==="idle"||reason==="nine_hole_idle")round.timerStoppedByInactivityAt=new Date(now).toISOString();persist();render();renderRoundClockButton();$("status").textContent=(reason==="idle"||reason==="nine_hole_idle")?"RONDA FINALIZADA EN EL ÚLTIMO SCORE":roundIdleStatus();return true}
+function pauseRoundTimer(){if(!round.configured||round.endedAt||round.timerPausedAt)return false;clearRoundTimerIdleTimeout();round.timerPausedAt=new Date().toISOString();persist();renderRoundClockButton();$("status").textContent="TIMER EN PAUSA";return true}
+function resumeRoundTimer(){if(!round.configured||round.endedAt||!round.timerPausedAt)return false;const now=Date.now(),pausedAt=Date.parse(round.timerPausedAt);if(Number.isFinite(pausedAt))round.timerPausedTotalMs=Math.max(0,Number(round.timerPausedTotalMs)||0)+Math.max(0,now-pausedAt);round.timerPausedAt=null;round.timerLastInstructionAt=new Date(now).toISOString();persist();renderRoundClockButton();scheduleRoundTimerIdleShutdown();$("status").textContent=roundIdleStatus();return true}
+let lastRoundTimerPauseToggleAt=0;
+function toggleRoundTimerPause(){const now=Date.now();if(now-lastRoundTimerPauseToggleAt<350)return false;lastRoundTimerPauseToggleAt=now;return round.timerPausedAt?resumeRoundTimer():pauseRoundTimer()}
+function stopRoundClock(reason="manual"){if(!round.configured||round.endedAt)return false;clearRoundTimerIdleTimeout();const now=Date.now(),lastScore=latestScoreTimestamp(),retro=window.GSCTimerInactivity?.stopEndAt?.(round,now),useLast=reason==="score_complete"||reason==="nine_hole_idle"||reason==="idle";const end=(useLast&&(retro||lastScore))||(reason!=="idle"&&!round.clockResumedAt&&isRoundComplete()&&lastScore&&lastScore<now?lastScore:now);round.endedAt=new Date(end).toISOString();round.durationSeconds=roundElapsedSecondsAt(end);round.timerPausedAt=null;round.clockResumedAt=null;if(reason==="idle"||reason==="nine_hole_idle")round.timerStoppedByInactivityAt=new Date(now).toISOString();persist();render();renderRoundClockButton();$("status").textContent=(reason==="idle"||reason==="nine_hole_idle")?"RONDA FINALIZADA EN EL ÚLTIMO SCORE":roundIdleStatus();return true}
 function startRoundClock(){if(!round.configured||!round.endedAt)return false;const now=Date.now(),elapsed=Math.max(0,Number(round.durationSeconds)||roundElapsedSeconds());round.createdAt=new Date(now-elapsed*1000).toISOString();round.endedAt=null;round.clockResumedAt=new Date(now).toISOString();round.timerLastInstructionAt=round.clockResumedAt;round.timerStoppedByInactivityAt=null;persist();render();renderRoundClockButton();scheduleRoundTimerIdleShutdown();$("status").textContent=roundIdleStatus();return true}
 let lastRoundClockToggleAt=0;
 function toggleRoundClock(){const now=Date.now();if(now-lastRoundClockToggleAt<650)return false;lastRoundClockToggleAt=now;return round.endedAt?startRoundClock():stopRoundClock()}
-function resetRoundClock(){if(!round.configured)return false;if(!window.confirm("¿CONFIRMAS REINICIAR EL CRONÓMETRO A 00:00:00?\n\nLos jugadores y scores se conservan."))return false;clearRoundTimerIdleTimeout();const now=new Date().toISOString();round.createdAt=now;round.endedAt=null;round.durationSeconds=null;round.clockResumedAt=now;round.timerLastInstructionAt=now;round.timerStoppedByInactivityAt=null;persist();render();scheduleRoundTimerIdleShutdown();$("status").textContent="CRONÓMETRO REINICIADO · 00:00:00";return true}
+function resetRoundClock(){if(!round.configured)return false;if(!window.confirm("¿CONFIRMAS REINICIAR EL CRONÓMETRO A 00:00:00?\n\nLos jugadores y scores se conservan."))return false;clearRoundTimerIdleTimeout();const now=new Date().toISOString();round.createdAt=now;round.endedAt=null;round.durationSeconds=null;round.timerPausedAt=null;round.timerPausedTotalMs=0;round.clockResumedAt=now;round.timerLastInstructionAt=now;round.timerStoppedByInactivityAt=null;persist();render();scheduleRoundTimerIdleShutdown();$("status").textContent="CRONÓMETRO REINICIADO · 00:00:00";return true}
 
 function cumulativeAllPlayersSpeech(){
   if(!round.configured||!round.players.length)return{ok:false,speech:"Error"};
@@ -3162,6 +3181,8 @@ for(const id of ["openCardLibraryButton","openCardLibrarySetup","openCardLibrary
 $("closeHistoryInsights").addEventListener("click",closeHistoryInsights);$("historyInsightsOverlay").addEventListener("click",event=>{if(event.target===$("historyInsightsOverlay"))closeHistoryInsights()});$("runHistoryInsights").addEventListener("click",()=>runHistoryInsights());$("historyInsightsQuery").addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();runHistoryInsights()}});document.querySelectorAll("[data-history-query]").forEach(button=>button.addEventListener("click",()=>runHistoryInsights(button.dataset.historyQuery)));
 $("openOfficialCorrection").addEventListener("click",openOfficialCorrection);$("openOriginalGlobal").addEventListener("click",openOriginalGlobalCard);$("officialCorrectionPlayer").addEventListener("change",renderOfficialCorrectionCurrent);$("officialCorrectionHole").addEventListener("change",renderOfficialCorrectionCurrent);$("saveOfficialCorrection").addEventListener("click",saveOfficialCorrection);$("cancelOfficialCorrection").addEventListener("click",closeOfficialCorrection);$("officialCorrectionOverlay").addEventListener("click",event=>{if(event.target===$("officialCorrectionOverlay"))closeOfficialCorrection()});
 $("stopClockButton").addEventListener("click",toggleRoundClock);
+$("roundTimerToggle").addEventListener("click",toggleRoundTimerPause);
+$("roundTimerToggle").addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();toggleRoundTimerPause()}});
 $("resetClockButton").addEventListener("click",resetRoundClock);
 document.addEventListener("click",event=>{if(event.target?.closest?.("button,a,[role='button']"))noteRoundTimerInstruction()});
 document.addEventListener("input",event=>{if(event.target?.matches?.("input,textarea,select"))noteRoundTimerInstruction()});
