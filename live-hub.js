@@ -2,7 +2,7 @@
   "use strict";
 
   const STORAGE_KEY="golf-score-card-gt-live-hub-v1",POLL_MS=3000,DISPLAY_MS=10000,MAX_SAVED_TOURNAMENTS=5,TOKEN_PATTERN=/^[A-Za-z0-9_-]{40,100}$/;
-  let state={version:2,generalToken:"",tournaments:[],follows:[]},general=null,generalRevision=null,generalStreams=new Map(),externalStreams=new Map(),pendingImportToken="",timer=null,loading=false,categoryCardOpen=false,tournamentPortalOpen=false,activeMonitor="general",displayTimer=null,displayCountdownTimer=null,displaySceneIndex=0;
+  let state={version:2,generalToken:"",tournaments:[],follows:[]},general=null,generalRevision=null,generalStreams=new Map(),tournamentStreams=new Map(),externalStreams=new Map(),pendingImportToken="",timer=null,loading=false,categoryCardOpen=false,tournamentPortalOpen=false,activeMonitor="general",displayTimer=null,displayCountdownTimer=null,displaySceneIndex=0;
   const $=id=>root&&root.document?root.document.getElementById(id):null;
   const text=(value,max=120)=>String(value==null?"":value).trim().replace(/\s+/g," ").slice(0,max);
   const escapeHtml=value=>String(value==null?"":value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
@@ -40,9 +40,9 @@
   function tournamentHubOpenUrl(token,origin,href,demo=false){const url=new URL(tournamentHubShareUrl(token,origin,href,demo));url.searchParams.delete("shared");return url.toString()}
   function tournamentDisplayUrl(token,origin,href,demo=false){const url=new URL(tournamentHubShareUrl(token,origin,href,demo));url.searchParams.set("display","1");return url.toString()}
   function normalizeFollow(value){
-    const token=tokenOk(value&&value.token)?String(value.token):"",streamId=text(value&&value.streamId,80),playerId=text(value&&value.playerId,80),kind=value&&value.kind==="group"?"group":"player";
+    const token=tokenOk(value&&value.token)?String(value.token):"",tournamentToken=tokenOk(value&&value.tournamentToken)?String(value.tournamentToken):"",streamId=text(value&&value.streamId,80),playerId=text(value&&value.playerId,80),kind=value&&value.kind==="group"?"group":"player";
     if(!streamId&&!token)return null;
-    return{key:text(value&&value.key,180)||streamId+":"+(playerId||"group"),kind,token,streamId,playerId,label:text(value&&value.label,80)||"JUGADOR",groupLabel:text(value&&value.groupLabel,120)||"GRUPO"};
+    return{key:text(value&&value.key,180)||streamId+":"+(playerId||"group"),kind,token,tournamentToken,tournamentLabel:text(value&&value.tournamentLabel,80)||"",streamId,playerId,label:text(value&&value.label,80)||"JUGADOR",groupLabel:text(value&&value.groupLabel,120)||"GRUPO"};
   }
   function normalizeHubState(value){
     const follows=[],keys=new Set();
@@ -128,7 +128,25 @@
     for(const stream of result.streams||[])next.set(stream.id,stream);
     let cursor=result.nextCursor||null;const seenCursors=new Set();
     while(cursor&&!seenCursors.has(cursor)){seenCursors.add(cursor);result=await read("tournament",state.generalToken,{cursor:cursor,limit:50});if(!result.ok)break;for(const stream of result.streams||[])next.set(stream.id,stream);cursor=result.nextCursor||null}
-    if(next.size||!result.unchanged)generalStreams=next;if(general&&state.generalToken){const saved=upsertTournamentState(state,state.generalToken,general.name||"TORNEO LIVE");state=saved.state;saveState()}return result;
+    if(next.size||!result.unchanged){generalStreams=next;tournamentStreams.set(state.generalToken,new Map(next))}if(general&&state.generalToken){const saved=upsertTournamentState(state,state.generalToken,general.name||"TORNEO LIVE");state=saved.state;saveState()}return result;
+  }
+  async function readTournamentStreams(token){
+    if(!tokenOk(token))return null;
+    let result=await read("tournament",token,{limit:50});if(!result.ok)return null;
+    const next=new Map();for(const stream of result.streams||[])next.set(stream.id,stream);
+    let cursor=result.nextCursor||null,guard=new Set();
+    while(cursor&&!guard.has(cursor)){guard.add(cursor);result=await read("tournament",token,{cursor,limit:50});if(!result.ok)break;for(const stream of result.streams||[])next.set(stream.id,stream);cursor=result.nextCursor||null}
+    return next;
+  }
+  async function loadFollowTournaments(){
+    const tokens=[...new Set(normalizeHubState(state).follows.map(item=>item.tournamentToken).filter(token=>tokenOk(token)&&token!==state.generalToken))];
+    await Promise.all(tokens.map(async token=>{const streams=await readTournamentStreams(token);if(streams)tournamentStreams.set(token,streams)}));
+  }
+  function allTournamentStreams(){
+    const combined=new Map();
+    for(const streams of tournamentStreams.values())for(const [id,stream] of streams)combined.set(id,stream);
+    for(const [id,stream] of generalStreams)combined.set(id,stream);
+    return combined;
   }
   async function loadExternal(){
     const tokens=unresolvedFollowTokens(state,generalStreams);
@@ -146,7 +164,7 @@
     return resolved.players.map(player=>{const totals=livePlayerTotals(player),rank=rankByPlayer.get(resolved.stream.id+":"+player.id)||"—";return'<article class="favorite"><header class="favorite-head"><div><h3>#'+escapeHtml(rank)+' · '+escapeHtml(player.name)+'</h3><small>'+escapeHtml(resolved.stream.groupLabel||snapshot.groupLabel)+' · '+escapeHtml(snapshot.course||"CAMPO")+'</small></div><button class="remove" data-remove="'+escapeHtml(resolved.item.key)+'">×</button></header><div class="favorite-body"><div class="favorite-totals"><div><small>HOYO ACTUAL</small><b>'+(totals.finished?'FINAL':escapeHtml(totals.currentHole||'—'))+'</b></div><div><small>GROSS</small><b>'+escapeHtml(totals.gross)+'</b></div><div><small>NETO</small><b>'+escapeHtml(totals.net)+'</b></div><div><small>+/−</small><b class="'+(totals.relativeToPar<0?"under":totals.relativeToPar>0?"over":"")+'">'+relation(totals.relativeToPar)+'</b></div></div>'+scoreRows(player,snapshot)+'</div></article>'}).join("");
   }
   function renderFavorites(){
-    const visible=displayStreams(),streams=favoriteStreams(visible),target=$("hubFavorites"),resolved=resolveFollows(state,streams,externalStreams);if(!target)return;const rankByPlayer=new Map([...buildLeaderboard(demoTournamentStreams()),...buildLeaderboard(visible)].map(item=>[item.streamId+":"+item.playerId,item.rank]));
+    const visible=displayStreams(),streams=favoriteStreams(allTournamentStreams()),target=$("hubFavorites"),resolved=resolveFollows(state,streams,externalStreams);if(!target)return;const rankByPlayer=new Map();for(const tournamentMap of tournamentStreams.values())for(const item of buildLeaderboard(tournamentMap))rankByPlayer.set(item.streamId+":"+item.playerId,item.rank);for(const item of buildLeaderboard(visible))rankByPlayer.set(item.streamId+":"+item.playerId,item.rank);
     target.innerHTML=resolved.length?resolved.map(item=>favoriteCard(item,rankByPlayer)).join(""):'<div class="empty">EN EL MONITOR GENERAL, BUSCA UN JUGADOR Y TOCA + SEGUIR.</div>';
     target.querySelectorAll("[data-remove]").forEach(button=>button.onclick=()=>{state=removeFollowFromState(state,button.dataset.remove);saveState();renderAll()});
   }
@@ -160,8 +178,9 @@
     const wrap=$("hubLeaderWrap");if(!wrap)return;const rows=buildLeaderboard(displayStreams());
     if(!rows.length){wrap.innerHTML='<div class="empty">'+(state.generalToken?"TODAVÍA NO HAY SCORE CARDS PUBLICADAS.":"ABRE EL ENLACE GENERAL Y TOCA “ABRIR EN CENTRO LIVE”.")+'</div>';return}
     const followed=new Set(state.follows.map(item=>item.streamId+":"+item.playerId));
-    wrap.innerHTML='<table class="leader"><thead><tr><th>POS</th><th>JUGADOR</th><th>CATEGORÍA</th><th>GRUPO</th><th>MODALIDAD</th><th>HOYO ACTUAL</th><th>GROSS</th><th>NETO</th><th>PUNTOS</th><th>+/−</th><th>SEGUIR</th></tr></thead><tbody>'+rows.map(item=>{const key=item.streamId+":"+item.playerId,isFollowed=followed.has(key),progress=item.finished?"FINAL":item.currentHole?String(item.currentHole):"—";return"<tr><td>"+item.rankLabel+"</td><td>"+escapeHtml(item.name)+"</td><td><span class=\"category-chip category-"+escapeHtml(item.tournamentCategory||"none")+"\">"+escapeHtml(categoryShortLabel(item.tournamentCategory))+"</span></td><td>"+escapeHtml(item.groupLabel)+"</td><td>"+escapeHtml(modeLabel(item.mode))+"</td><td>"+progress+"</td><td>"+item.gross+"</td><td>"+item.net+"</td><td>"+(item.mode==="universales"?item.universalesPoints:"—")+"</td><td class=\""+(item.relativeToPar<0?"under":item.relativeToPar>0?"over":"")+"\">"+relation(item.relativeToPar)+"</td><td><button class=\"star\" data-follow-stream=\""+escapeHtml(item.streamId)+"\" data-follow-player=\""+escapeHtml(item.playerId)+"\" aria-label=\"Seguir a "+escapeHtml(item.name)+"\">"+(isFollowed?"★":"＋")+"</button></td></tr>"}).join("")+"</tbody></table>";
-    wrap.querySelectorAll("[data-follow-stream]").forEach(button=>button.onclick=()=>{const item=rows.find(row=>row.streamId===button.dataset.followStream&&row.playerId===button.dataset.followPlayer);if(item){state=addFollowToState(state,{key:item.streamId+":"+item.playerId,kind:"player",streamId:item.streamId,playerId:item.playerId,label:item.name,groupLabel:item.groupLabel});saveState();renderAll();showMonitor("individual");setStatus(item.name+" ABIERTO EN MONITOR INDIVIDUAL","")}});
+    wrap.innerHTML='<table class="leader"><thead><tr><th>POS</th><th>JUGADOR</th><th>CATEGORÍA</th><th>GRUPO</th><th>MODALIDAD</th><th>HOYO ACTUAL</th><th>GROSS</th><th>NETO</th><th>PUNTOS</th><th>+/−</th><th>SEGUIR</th></tr></thead><tbody>'+rows.map(item=>{const key=item.streamId+":"+item.playerId,isFollowed=followed.has(key),progress=item.finished?"FINAL":item.currentHole?String(item.currentHole):"—";return"<tr><td>"+item.rankLabel+"</td><td>"+escapeHtml(item.name)+"</td><td><span class=\"category-chip category-"+escapeHtml(item.tournamentCategory||"none")+"\">"+escapeHtml(categoryShortLabel(item.tournamentCategory))+"</span></td><td>"+escapeHtml(item.groupLabel)+"</td><td>"+escapeHtml(modeLabel(item.mode))+"</td><td>"+progress+"</td><td>"+item.gross+"</td><td>"+item.net+"</td><td>"+(item.mode==="universales"?item.universalesPoints:"—")+"</td><td class=\""+(item.relativeToPar<0?"under":item.relativeToPar>0?"over":"")+"\">"+relation(item.relativeToPar)+"</td><td><button class=\"star\" data-follow-stream=\""+escapeHtml(item.streamId)+"\" data-follow-player=\""+escapeHtml(item.playerId)+"\" aria-label=\"Seguir a "+escapeHtml(item.name)+"\">"+(isFollowed?"★ PERSONA":"＋ PERSONA")+"</button><button class=\"star\" data-follow-group=\""+escapeHtml(item.streamId)+"\" aria-label=\"Seguir grupo "+escapeHtml(item.groupLabel)+"\">＋ GRUPO</button></td></tr>"}).join("")+"</tbody></table>";
+    wrap.querySelectorAll("[data-follow-stream]").forEach(button=>button.onclick=()=>{const item=rows.find(row=>row.streamId===button.dataset.followStream&&row.playerId===button.dataset.followPlayer);if(item){state=addFollowToState(state,{key:item.streamId+":"+item.playerId,kind:"player",tournamentToken:state.generalToken,tournamentLabel:general?.name||"TORNEO",streamId:item.streamId,playerId:item.playerId,label:item.name,groupLabel:item.groupLabel});saveState();renderAll();showMonitor("individual");setStatus(item.name+" AGREGADO A MI TABLERO","")}});
+    wrap.querySelectorAll("[data-follow-group]").forEach(button=>button.onclick=()=>{const item=rows.find(row=>row.streamId===button.dataset.followGroup);if(item){state=addFollowToState(state,{key:item.streamId+":group",kind:"group",tournamentToken:state.generalToken,tournamentLabel:general?.name||"TORNEO",streamId:item.streamId,playerId:"",label:item.groupLabel,groupLabel:item.groupLabel});saveState();renderAll();showMonitor("individual");setStatus(item.groupLabel+" AGREGADO A MI TABLERO","")}});
   }
   function categoryCell(value){return value?'<span><b>'+escapeHtml(value.gross)+'</b><i>'+escapeHtml(value.net)+'</i><em>'+escapeHtml(value.result)+'</em></span>':'<span class="pending">—</span>'}
   function totalCell(value){return categoryCell(value&&value.holes?{gross:value.gross,net:value.net,result:relation(value.result)}:null)}
@@ -181,8 +200,9 @@
     const target=$("hubSearchResults"),query=fold($("hubSearch")&&$("hubSearch").value);if(!target)return;
     if(!query){target.innerHTML="";return}
     const matches=tournamentPlayers(displayStreams()).filter(item=>fold(item.name).includes(query)||fold(item.groupLabel).includes(query)||fold(item.categoryLabel).includes(query)).sort((left,right)=>fold(left.name).localeCompare(fold(right.name),"es")).slice(0,100);
-    target.innerHTML=matches.length?matches.map(item=>'<div class="search-row"><div><strong>'+escapeHtml(item.name)+'</strong><small><span class="category-chip category-'+escapeHtml(item.tournamentCategory||"none")+'">'+escapeHtml(categoryShortLabel(item.tournamentCategory))+'</span> · '+escapeHtml(item.groupLabel)+' · '+item.holes+'/18 HOYOS · NETO '+item.net+'</small></div><button class="follow-button" data-search-stream="'+escapeHtml(item.streamId)+'" data-search-player="'+escapeHtml(item.playerId)+'">+ SEGUIR</button></div>').join(""):'<div class="empty">NO ENCONTRÉ ESE NOMBRE EN LA GENERAL.</div>';
-    target.querySelectorAll("[data-search-stream]").forEach(button=>button.onclick=()=>{const item=matches.find(row=>row.streamId===button.dataset.searchStream&&row.playerId===button.dataset.searchPlayer);if(item){state=addFollowToState(state,{key:item.streamId+":"+item.playerId,kind:"player",streamId:item.streamId,playerId:item.playerId,label:item.name,groupLabel:item.groupLabel});saveState();$("hubSearch").value="";renderAll();showMonitor("individual");setStatus(item.name+" ABIERTO EN MONITOR INDIVIDUAL","")}});
+    target.innerHTML=matches.length?matches.map(item=>'<div class="search-row"><div><strong>'+escapeHtml(item.name)+'</strong><small><span class="category-chip category-'+escapeHtml(item.tournamentCategory||"none")+'">'+escapeHtml(categoryShortLabel(item.tournamentCategory))+'</span> · '+escapeHtml(item.groupLabel)+' · '+item.holes+'/18 HOYOS · NETO '+item.net+'</small></div><div><button class="follow-button" data-search-stream="'+escapeHtml(item.streamId)+'" data-search-player="'+escapeHtml(item.playerId)+'">+ PERSONA</button><button class="follow-button" data-search-group="'+escapeHtml(item.streamId)+'">+ GRUPO</button></div></div>').join(""):'<div class="empty">NO ENCONTRÉ ESE NOMBRE EN LA GENERAL.</div>';
+    target.querySelectorAll("[data-search-stream]").forEach(button=>button.onclick=()=>{const item=matches.find(row=>row.streamId===button.dataset.searchStream&&row.playerId===button.dataset.searchPlayer);if(item){state=addFollowToState(state,{key:item.streamId+":"+item.playerId,kind:"player",tournamentToken:state.generalToken,tournamentLabel:general?.name||"TORNEO",streamId:item.streamId,playerId:item.playerId,label:item.name,groupLabel:item.groupLabel});saveState();$("hubSearch").value="";renderAll();showMonitor("individual");setStatus(item.name+" AGREGADO A MI TABLERO","")}});
+    target.querySelectorAll("[data-search-group]").forEach(button=>button.onclick=()=>{const item=matches.find(row=>row.streamId===button.dataset.searchGroup);if(item){state=addFollowToState(state,{key:item.streamId+":group",kind:"group",tournamentToken:state.generalToken,tournamentLabel:general?.name||"TORNEO",streamId:item.streamId,playerId:"",label:item.groupLabel,groupLabel:item.groupLabel});saveState();$("hubSearch").value="";renderAll();showMonitor("individual");setStatus(item.groupLabel+" AGREGADO A MI TABLERO","")}});
   }
   function displayScenes(){
     const available=categoryIndex(displayStreams()),categories=Object.keys(CATEGORY_LABELS).filter(key=>(available[key]||[]).length);
@@ -233,7 +253,7 @@
 
   function addImported(stream,player){
     const item=player?{key:stream.id+":"+player.id,kind:"player",token:pendingImportToken,streamId:stream.id,playerId:player.id,label:player.name,groupLabel:stream.groupLabel}:{key:stream.id+":group",kind:"group",token:pendingImportToken,streamId:stream.id,playerId:"",label:stream.groupLabel,groupLabel:stream.groupLabel};
-    state=addFollowToState(state,item);saveState();pendingImportToken="";$("hubPicker").classList.remove("visible");renderAll();showMonitor("individual");setStatus((player?player.name:stream.groupLabel)+" ABIERTO EN MONITOR INDIVIDUAL","");
+    state=addFollowToState(state,item);saveState();pendingImportToken="";$("hubPicker").classList.remove("visible");renderAll();showMonitor("individual");setStatus((player?player.name:stream.groupLabel)+" AGREGADO A MI TABLERO","");
   }
   function showPicker(stream,token){
     pendingImportToken=token;externalStreams.set(token,stream);const players=stream.snapshot&&stream.snapshot.players||[],picker=$("hubPicker"),grid=$("hubPickerGrid");if(!picker||!grid)return;
@@ -267,6 +287,7 @@
   async function refresh(){
     if(loading||tournamentPortalOpen)return;loading=true;let result={ok:true};
     if(state.generalToken)result=await loadGeneral();
+    await loadFollowTournaments();
     await loadExternal();loading=false;renderAll();
     if(result&&result.ok)setStatus(state.generalToken?"CENTRO LIVE ACTUALIZADO · MONITOR GENERAL + INDIVIDUAL":"AGREGA LA GENERAL O UN ENLACE PRIVADO","");
     else setStatus(errorMessage(result&&result.code),result&&["LIVE_REVOKED","LIVE_EXPIRED","LIVE_LINK_INVALID"].includes(result.code)?"error":"warning");
@@ -280,8 +301,8 @@
     $("hubIndividualPanel")?.classList.toggle("hidden",!individual);
     $("hubShowGeneral")?.classList.toggle("active",!individual&&!categories&&!add);
     $("hubShowCategories")?.classList.toggle("active",categories);
-    $("hubShowIndividual")?.classList.toggle("active",individual);
-    $("hubAddToBoard")?.classList.toggle("active",add);
+    $("hubShowIndividual")?.classList.toggle("active",add);
+    $("hubAddToBoard")?.classList.toggle("active",individual);
     if(categories){
       const select=$("hubCategory");if(select&&select.value==="all")select.value="championship";
       categoryCardOpen=true;renderAll();
@@ -297,7 +318,7 @@
   async function start(){
     state=loadState();const imported=parseHubHash(root.location.hash);if(imported)clearHash();const params=new URLSearchParams(root.location.search||""),shared=params.get("shared")==="1";tournamentPortalOpen=!demoMode()&&!imported;root.document.body.classList.toggle("shared-view",shared);
     $("hubBack").onclick=()=>{root.close();setTimeout(()=>root.history.back(),100)};$("hubOpenTournament").onclick=openTournamentTyped;$("hubTournamentLink").onkeydown=event=>{if(event.key==="Enter")openTournamentTyped()};
-    $("hubShowGeneral").onclick=()=>showMonitor("general");$("hubShowCategories").onclick=()=>showMonitor("categories");$("hubShowIndividual").onclick=()=>showMonitor("individual");$("hubAddToBoard").onclick=()=>showMonitor("add");$("hubShareGeneral").onclick=shareGeneral;$("hubRefresh").onclick=refresh;$("hubPublicDisplay").onclick=openPublicDisplay;$("hubCategory").onchange=renderAll;$("hubCourse").onchange=renderAll;$("hubCategoryCardToggle").onclick=()=>{categoryCardOpen=!categoryCardOpen;renderCategoryCard()};$("hubSearchButton").onclick=renderSearch;$("hubSearch").oninput=renderSearch;$("hubImportButton").onclick=importTyped;$("hubAddTournament").onclick=()=>$("hubTournamentLink")?.focus();$("hubTournamentHome").onclick=showTournamentPortal;
+    $("hubShowGeneral").onclick=()=>showMonitor("general");$("hubShowCategories").onclick=()=>showMonitor("categories");$("hubShowIndividual").onclick=()=>showMonitor("add");$("hubAddToBoard").onclick=()=>showMonitor("individual");$("hubShareGeneral").onclick=shareGeneral;$("hubRefresh").onclick=refresh;$("hubPublicDisplay").onclick=openPublicDisplay;$("hubCategory").onchange=renderAll;$("hubCourse").onchange=renderAll;$("hubCategoryCardToggle").onclick=()=>{categoryCardOpen=!categoryCardOpen;renderCategoryCard()};$("hubSearchButton").onclick=renderSearch;$("hubSearch").oninput=renderSearch;$("hubImportButton").onclick=importTyped;$("hubAddTournament").onclick=()=>$("hubTournamentLink")?.focus();$("hubTournamentHome").onclick=showTournamentPortal;
     $("hubRemoveGeneral").onclick=()=>{state=removeTournamentFromState(state,state.generalToken);saveState();resetGeneralView();showTournamentPortal()};
     $("hubClearFavorites").onclick=()=>{state.follows=[];saveState();externalStreams.clear();renderAll();setStatus("MONITOR INDIVIDUAL VACÍO","warning")};
     root.addEventListener("online",refresh);root.document.addEventListener("visibilitychange",()=>{if(root.document.visibilityState==="visible")refresh()});
