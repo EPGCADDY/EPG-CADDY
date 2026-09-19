@@ -15,7 +15,7 @@
   function normalizeConfig(value={}){
     const scoreType=value.scoreType==="gross"?"gross":"net",tiePolicy=value.tiePolicy==="carry"?"carry":"push",unitValue=Math.max(.01,round(value.unitValue||10,2)),currency=value.currency==="USD"?"USD":"GTQ",wolfTeePosition=value.wolfTeePosition==="last"?"last":"first",holeCapAmount=Math.max(0,Math.min(100000,round(value.holeCapAmount||0,2))),multipliers={partner:1,lone:integer(value.multipliers?.lone??value.loneMultiplier,2,1,9),blind:integer(value.multipliers?.blind??value.blindMultiplier,3,1,9)};
     const decisions={};for(const[hole,entry]of Object.entries(value.decisions||{})){const number=Number(hole),legacyType=entry?.type==="solo"?"lone":entry?.type,type=Object.hasOwn(DECISIONS,legacyType)?legacyType:"partner";if(Number.isInteger(number)&&number>=1&&number<=18)decisions[number]={type,partnerPlayerId:type==="partner"?(String(entry?.partnerPlayerId||"")||null):null,declaredBeforeTee:type==="blind"}}
-    return{enabled:value.enabled===true,scoreType,tiePolicy,unitValue,currency,wolfTeePosition,holeCapAmount,decisions,multipliers,settlement:"pay_the_difference_pairwise",rulesVersion:"WOLF_DUAL_CURRENCY_V332",variant:"CLASSIC_4_WITH_GSC_GT_3_5_6_ADAPTATIONS"};
+    return{enabled:false /* Retired from LAB by owner */,scoreType,tiePolicy,unitValue,currency,wolfTeePosition,holeCapAmount,decisions,multipliers,settlement:"pay_the_difference_pairwise",rulesVersion:"WOLF_DUAL_CURRENCY_V332",variant:"CLASSIC_4_WITH_GSC_GT_3_5_6_ADAPTATIONS"};
   }
 
   function wolfForHole(playersInput,hole){const players=validPlayers(playersInput),number=Math.max(1,Math.min(18,Math.trunc(Number(hole)||1)));return players.length?players[(number-1)%players.length]:null}

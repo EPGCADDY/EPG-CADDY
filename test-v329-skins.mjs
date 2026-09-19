@@ -136,13 +136,12 @@ for(const token of [
   'aria-label="Modalidades"',
   'aria-label="Funciones de Score Card y Live"',
   'COMPARTE LIVE',
-  'id="wolfRoundButton"',
-  'id="vegasRoundButton"',
   'id="universalesRoundButton"',
   'function skinsSpeechSummary()',
   'function syncSkinsResult(value=round)',
   'SCORE DEPORTIVO INTACTO'
 ])assert.ok(html.includes(token),`Falta integración Skins: ${token}`);
+for(const id of ['wolfRoundButton','vegasRoundButton','wolfConfig','vegasConfig'])assert.ok(!html.includes(`id="${id}"`),`LAB: modalidad retirada reapareció: ${id}`);
 const overlayIndex=html.indexOf('id="skinsOverlay"'),mainIndex=html.indexOf('<main class="app">');
 assert.ok(overlayIndex>=0&&overlayIndex<mainIndex,"Skins debe abrir fuera del formato de la pantalla principal");
 const main=html.slice(mainIndex,html.indexOf('</main>',mainIndex));
