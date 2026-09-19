@@ -226,12 +226,31 @@
     clearTimeout(timer);timer=setTimeout(refresh,POLL_MS);
   }
   async function shareGeneral(){const url=tournamentHubShareUrl(state.generalToken,root.location.origin,root.location.href,demoMode());if(!url){setStatus("ABRE PRIMERO EL ENLACE GENERAL","warning");return false}if(root.navigator.share){try{await root.navigator.share({title:general&&general.name||"TORNEO LIVE",text:"Sigue la General y categorías de este torneo en vivo. Vista sólo lectura.",url:url});setStatus("ENLACE EXCLUSIVO DEL TORNEO LISTO PARA COMPARTIR ♾️","");return true}catch{}}try{await root.navigator.clipboard.writeText(url);setStatus("ENLACE DEL TORNEO COPIADO · NO COMPARTE LA APLICACIÓN","");return true}catch{setStatus("NO SE PUDO COMPARTIR EN ESTE NAVEGADOR","warning");return false}}
-  function showMonitor(kind){const individual=kind==="individual";activeMonitor=individual?"individual":"general";$("hubGeneralPanel")?.classList.toggle("hidden",individual);$("hubIndividualPanel")?.classList.toggle("hidden",!individual);$("hubShowGeneral")?.classList.toggle("active",!individual);$("hubShowIndividual")?.classList.toggle("active",individual)}
+  function showMonitor(kind){
+    const individual=kind==="individual",categories=kind==="categories",add=kind==="add";
+    activeMonitor=individual?"individual":"general";
+    $("hubGeneralPanel")?.classList.toggle("hidden",individual);
+    $("hubIndividualPanel")?.classList.toggle("hidden",!individual);
+    $("hubShowGeneral")?.classList.toggle("active",!individual&&!categories&&!add);
+    $("hubShowCategories")?.classList.toggle("active",categories);
+    $("hubShowIndividual")?.classList.toggle("active",individual);
+    $("hubAddToBoard")?.classList.toggle("active",add);
+    if(categories){
+      const select=$("hubCategory");if(select&&select.value==="all")select.value="championship";
+      categoryCardOpen=true;renderAll();
+      setTimeout(()=>$("hubCategory")?.focus(),0);
+    }
+    if(add){
+      $("hubSearch")?.scrollIntoView?.({block:"center",behavior:"smooth"});
+      setTimeout(()=>$("hubSearch")?.focus(),150);
+      setStatus("BUSCA UN JUGADOR Y TOCA + SEGUIR PARA AGREGARLO A MI TABLERO","");
+    }
+  }
   function clearHash(){try{root.history.replaceState(null,"",root.location.pathname+root.location.search)}catch{}}
   async function start(){
     state=loadState();const imported=parseHubHash(root.location.hash);if(imported)clearHash();const params=new URLSearchParams(root.location.search||""),shared=params.get("shared")==="1";tournamentPortalOpen=!demoMode()&&!imported;root.document.body.classList.toggle("shared-view",shared);
     $("hubBack").onclick=()=>{root.close();setTimeout(()=>root.history.back(),100)};$("hubOpenTournament").onclick=openTournamentTyped;$("hubTournamentLink").onkeydown=event=>{if(event.key==="Enter")openTournamentTyped()};
-    $("hubShowGeneral").onclick=()=>showMonitor("general");$("hubShowIndividual").onclick=()=>showMonitor("individual");$("hubShareGeneral").onclick=shareGeneral;$("hubRefresh").onclick=refresh;$("hubCategory").onchange=renderAll;$("hubCategoryCardToggle").onclick=()=>{categoryCardOpen=!categoryCardOpen;renderCategoryCard()};$("hubSearchButton").onclick=renderSearch;$("hubSearch").oninput=renderSearch;$("hubImportButton").onclick=importTyped;$("hubAddTournament").onclick=()=>$("hubTournamentLink")?.focus();$("hubTournamentHome").onclick=showTournamentPortal;
+    $("hubShowGeneral").onclick=()=>showMonitor("general");$("hubShowCategories").onclick=()=>showMonitor("categories");$("hubShowIndividual").onclick=()=>showMonitor("individual");$("hubAddToBoard").onclick=()=>showMonitor("add");$("hubShareGeneral").onclick=shareGeneral;$("hubRefresh").onclick=refresh;$("hubCategory").onchange=renderAll;$("hubCategoryCardToggle").onclick=()=>{categoryCardOpen=!categoryCardOpen;renderCategoryCard()};$("hubSearchButton").onclick=renderSearch;$("hubSearch").oninput=renderSearch;$("hubImportButton").onclick=importTyped;$("hubAddTournament").onclick=()=>$("hubTournamentLink")?.focus();$("hubTournamentHome").onclick=showTournamentPortal;
     $("hubRemoveGeneral").onclick=()=>{state=removeTournamentFromState(state,state.generalToken);saveState();resetGeneralView();showTournamentPortal()};
     $("hubClearFavorites").onclick=()=>{state.follows=[];saveState();externalStreams.clear();renderAll();setStatus("MONITOR INDIVIDUAL VACÍO","warning")};
     root.addEventListener("online",refresh);root.document.addEventListener("visibilitychange",()=>{if(root.document.visibilityState==="visible")refresh()});
