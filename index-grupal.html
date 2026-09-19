@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LAB-TIME-AUDIO-GRID-20260919">
+  <meta name="gscg-release" content="LAB-AUDIO-TIMER-GRID-20260919">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -851,6 +851,13 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
 .round-status-row.gsc-time-four .time-value{font-size:10px;line-height:1;white-space:nowrap}
 .round-status-row.gsc-time-four #resetClockButton{width:100%!important;height:48px!important;border:1px solid var(--lime)!important;border-radius:11px!important;background:#050505!important;color:var(--lime)!important;font-size:10px!important;font-weight:900!important}
 @media(max-width:800px){.round-status-row.gsc-time-four{gap:5px!important}.round-status-row.gsc-time-four .time-label{font-size:7.5px}.round-status-row.gsc-time-four .time-value{font-size:8.5px}.round-status-row.gsc-time-four #resetClockButton{font-size:8.5px!important}}
+</style>
+<style id="lab-final-layout-20260919">
+@media(max-width:800px){
+  #setupStep1 .course-options{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  #setupStep1 .game-mode-columns{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  #setupStep1 .game-mode-column{display:contents!important}
+}
 </style></head>
 <body>
 
@@ -874,10 +881,10 @@ body.gsc-setup-open:has(#setupOverlay.visible) main{display:none}
     <button class="hidden" id="ownerShare24h" type="button" aria-label="Crear y compartir acceso individual de un solo uso válido por 24 horas">INVITAR · 24 H</button>
   </nav>
   <section class="course-info official-course-info"><div class="course-info-layout"><div class="course-info-data"><h2>INFORMACIÓN DEL CAMPO</h2><div class="course-info-grid" id="courseInfo"></div></div></div></section>
-  <div class="round-status-row gsc-time-four"><div class="time-cell"><span class="time-label">INICIO</span><span class="time-value" id="roundStartStatus">—</span></div><div class="time-cell"><span class="time-label">FINAL</span><span class="time-value" id="roundEndStatus">—</span></div><div class="time-cell"><span class="time-label">TIMER</span><span class="time-value" id="roundElapsedStatus">00:00:00</span></div><button class="timer-reset-button" id="resetClockButton" type="button">RESET</button><button class="hidden" id="stopClockButton" type="button" aria-hidden="true" tabindex="-1">TIMER</button><div class="status hidden" id="status"></div></div>
   <div class="caddie-sources hidden" id="roundCaddieSources" aria-label="Fuentes consultadas por el Caddie"></div>
   <div class="scorecard-stage-title"><span>TARJETA DE PUNTUACIÓN</span><small>DESLIZA PARA VER TODOS LOS HOYOS</small></div>
   <section class="card-shell" aria-label="Tarjeta de puntuación desplazable"><table class="scorecard" id="scorecard"></table></section>
+  <div class="round-status-row gsc-time-four"><div class="time-cell"><span class="time-label">INICIO</span><span class="time-value" id="roundStartStatus">—</span></div><div class="time-cell"><span class="time-label">FINAL</span><span class="time-value" id="roundEndStatus">—</span></div><div class="time-cell"><span class="time-label">TIMER</span><span class="time-value" id="roundElapsedStatus">00:00:00</span></div><button class="timer-reset-button" id="resetClockButton" type="button">RESET</button><button class="hidden" id="stopClockButton" type="button" aria-hidden="true" tabindex="-1">TIMER</button><div class="status hidden" id="status"></div></div>
   <section class="device-closure-controls" aria-label="Audio de resultados"><div class="device-closure-title">AUDIO DE RESULTADOS</div><button id="deviceClosureFront" type="button">PRIMERA VUELTA</button><button id="deviceClosureBack" type="button">SEGUNDA VUELTA</button><button id="deviceClosureTotal" type="button">TOTAL</button><span id="deviceClosureStatus" role="status">Toca una vuelta para escuchar su resultado.</span></section><section class="summary"><div class="summary-title" id="summaryTitle">INFORMACIÓN DE RONDA</div><table><thead><tr id="summaryHeadRow"><th class="summary-player">JUGADOR</th><th>GROSS IN</th><th>GROSS OUT</th><th>GROSS TOTAL</th><th>HCP</th><th>NETO TOTAL</th><th>+/- NETO</th></tr></thead><tbody id="summaryBody"></tbody></table></section>
   <section class="stableford-series hidden" id="stablefordSeriesSection"><div class="summary-title">CLASIFICACIÓN ACUMULADA · MEJORES 3 DE 4</div><div class="stableford-series-tabs"><button type="button" id="stablefordSeniorTab">SENIOR</button><button type="button" id="stablefordSuperSeniorTab">S. SENIOR</button></div><table><thead><tr><th>POS.</th><th>JUGADOR</th><th>F1</th><th>F2</th><th>F3</th><th>F4</th><th>MEJORES 3</th></tr></thead><tbody id="stablefordStandingsBody"></tbody></table><div class="stableford-series-actions"><button type="button" id="openStablefordResult">AGREGAR RESULTADO OFICIAL</button></div></section>
   <div class="round-actions"><button id="shareRoundLiveButton" type="button">COMPARTIR LIVE</button><button id="finalCardButton">TARJETA DIGITAL</button><button id="openCardLibraryButton">HISTORIAL</button><button class="hidden" id="previousRoundButton">RONDA PREVIA</button><button id="newRoundButton">NUEVA RONDA</button></div>
