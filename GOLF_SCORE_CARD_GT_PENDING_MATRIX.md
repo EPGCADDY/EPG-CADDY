@@ -8,6 +8,16 @@
 
 Este documento contiene únicamente funciones reales del producto pendientes o previstas. No incluye auditorías, ramas, publicaciones, permisos, facturación ni administración.
 
+## Candado de ramas — MANDATORIO
+
+- **PRODUCCIÓN** = rama `produccion` fijada en `8a3107221b3e84388aadf9c5d23018251ebdf9c9`.
+- **PRODUCCIÓN NO SE TOCA POR NINGÚN MOTIVO.** Queda prohibido desarrollar, probar, corregir, experimentar, hacer commits o desplegar cambios desde esa rama salvo autorización expresa del propietario para reemplazar producción.
+- **LABORATORIO** = rama `laboratorio`, creada como copia exacta de PRODUCCIÓN en el mismo SHA inicial.
+- **TODO DESARROLLO NUEVO** se hace exclusivamente en `laboratorio`.
+- Antes de cualquier cambio, verificar que la rama activa sea `laboratorio`; si no lo es, detener la ejecución.
+- Ningún cambio de laboratorio puede llegar a producción por accidente, automatismo, merge, redeploy o reutilización de `main`.
+
+
 ## Mapa único del producto
 
 Todas las configuraciones y combinaciones pertenecen a una sola arquitectura:
