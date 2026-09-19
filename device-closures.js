@@ -14,7 +14,7 @@
   const item=queue.shift();busy=true;last=item.text;
   let settled=false,voiceTimer=null,startTimer=null,endTimer=null;
   function clean(){root.clearTimeout(voiceTimer);root.clearTimeout(startTimer);root.clearTimeout(endTimer);synth?.removeEventListener?.('voiceschanged',onVoices)}
-  function finish(ok,message){if(settled)return;settled=true;clean();activeFinish=null;activeUtterance=null;busy=false;status(`${item.text} ${message||(ok?'Resultado anunciado.':'No se pudo reproducir. Toca REPETIR RESULTADO.')}`);item.resolve(ok);next()}
+  function finish(ok,message){if(settled)return;settled=true;clean();activeFinish=null;activeUtterance=null;busy=false;status(`${item.text} ${message||(ok?'Resultado anunciado.':'No se pudo reproducir. Toca el botón de la vuelta que deseas escuchar.')}`);item.resolve(ok);next()}
   activeFinish=()=>finish(false);
   function play(selected){
    if(settled)return;
@@ -22,10 +22,10 @@
    const utterance=new root.SpeechSynthesisUtterance(item.text);activeUtterance=utterance;
    utterance.voice=selected;utterance.lang=selected.lang;utterance.rate=1;utterance.volume=1;
    status(`${item.text} Preparando voz del dispositivo…`);
-   startTimer=root.setTimeout(()=>{synth.cancel();finish(false,'La voz no inició. Toca REPETIR RESULTADO.');},8000);
+   startTimer=root.setTimeout(()=>{synth.cancel();finish(false,'La voz no inició. Toca el botón de la vuelta que deseas escuchar.');},8000);
    utterance.onstart=()=>{root.clearTimeout(startTimer);status(`${item.text} Leyendo resultado…`);endTimer=root.setTimeout(()=>{synth.cancel();finish(false)},120000)};
    utterance.onend=()=>finish(true);
-   utterance.onerror=event=>finish(false,event?.error==='not-allowed'?'El navegador bloqueó el audio. Toca REPETIR RESULTADO.':undefined);
+   utterance.onerror=event=>finish(false,event?.error==='not-allowed'?'El navegador bloqueó el audio. Toca el botón de la vuelta que deseas escuchar.':undefined);
    try{if(synth.paused)synth.resume();synth.speak(utterance)}catch{finish(false)}
   }
   function onVoices(){const selected=voice();if(selected&&!activeUtterance)play(selected)}
@@ -37,6 +37,14 @@
  }
  function speak(text){const clean=String(text||'').trim();if(!clean)return Promise.resolve(false);return new Promise(resolve=>{queue.push({text:clean,resolve});next()})}
  function cancel(){for(const item of queue.splice(0))item.resolve(false);synth?.cancel();if(activeFinish)activeFinish(false)}
- function bindControls(){root.document?.getElementById('deviceClosureRepeat')?.addEventListener('click',()=>{if(last){cancel();speak(last)}else status('Todavía no hay un cierre para repetir.')});}
+ function bindControls(){
+  const bind=(id,kind,label)=>root.document?.getElementById(id)?.addEventListener('click',()=>{
+    const text=typeof root.GSCRequestedClosureSpeech==='function'?root.GSCRequestedClosureSpeech(kind):'';
+    if(text){cancel();speak(text)}else status(`${label}: todavía no hay resultados disponibles.`);
+  });
+  bind('deviceClosureFront','front','Primera vuelta');
+  bind('deviceClosureBack','back','Segunda vuelta');
+  bind('deviceClosureTotal','total','Total');
+}
  root.GSCDeviceClosures={speak,cancel,bindControls};
 })(typeof window!=='undefined'?window:globalThis);
