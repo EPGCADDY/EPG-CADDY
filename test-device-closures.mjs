@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const voices=[{lang:'es-MX',localService:true}];
 let spoken=[],timer;
-const context={localStorage:{getItem(){return null}},document:{getElementById(){return null}},speechSynthesis:{getVoices:()=>voices,speak:u=>spoken.push(u),cancel(){}},SpeechSynthesisUtterance:class {constructor(text){this.text=text}},setTimeout:fn=>(timer=fn,1),clearTimeout(){}};
+const context={localStorage:{getItem(){return "false"}},document:{getElementById(){return null}},speechSynthesis:{getVoices:()=>voices,speak:u=>spoken.push(u),cancel(){}},SpeechSynthesisUtterance:class {constructor(text){this.text=text}},setTimeout:fn=>(timer=fn,1),clearTimeout(){}};
 vm.runInNewContext(fs.readFileSync('device-closures.js','utf8'),context);
 const api=context.GSCDeviceClosures;
 const a=api.speak('Primera vuelta 40');const b=api.speak('Segunda vuelta 42');
