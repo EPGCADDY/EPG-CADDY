@@ -14,6 +14,39 @@
   <meta property="og:description" content="General, categorías y tablero personalizado del torneo en vivo.">
   <meta property="og:image" content="/assets/official-logos/golf-score-card-gt-pwa-v345-512.png">
   <link rel="stylesheet" href="/gsc-design-system.css">
+  <style>
+    body.public-display{overflow:hidden;background:#000}
+    body.public-display .hub{max-width:none;width:100vw;min-height:100vh;padding:18px 24px 24px}
+    body.public-display #hubBack,
+    body.public-display #hubTournamentShelf,
+    body.public-display #hubTournamentEntry,
+    body.public-display .monitor-switch,
+    body.public-display #hubTournamentHome,
+    body.public-display .search,
+    body.public-display #hubSearchResults,
+    body.public-display .category-filter,
+    body.public-display #hubCategoryCardToggle,
+    body.public-display .viewer-tools,
+    body.public-display #hubIndividualPanel,
+    body.public-display .footer{display:none!important}
+    body.public-display .head{grid-template-columns:auto 1fr auto}
+    body.public-display .head::after{content:"PANTALLA PÚBLICA · SÓLO LECTURA";color:#31ff00;font:900 18px Arial}
+    body.public-display #hubGeneralPanel{display:block!important;border:0;padding:0;background:#000}
+    body.public-display #hubGeneralPanel>h2,
+    body.public-display #hubGeneralPanel>.panel-note{display:none}
+    body.public-display #hubSummary{margin:8px 0 16px}
+    body.public-display #hubLeaderWrap,
+    body.public-display #hubCategoryCard{font-size:1.12em}
+    body.public-display #hubCategoryCard{display:block!important}
+    body.public-display.display-general #hubCategoryCard{display:none!important}
+    body.public-display.display-category #hubLeaderWrap{display:none!important}
+    .public-display-status{display:none}
+    body.public-display .public-display-status{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:8px 0 14px;padding:12px 16px;border:1px solid #31ff00;border-radius:10px;background:#061006;color:#fff}
+    .public-display-status strong{font-size:28px;color:#31ff00}
+    .public-display-status span{font-weight:900}
+    .public-display-status b{font-size:22px}
+    @media(max-width:900px){body.public-display .head::after{font-size:12px}.public-display-status strong{font-size:20px}.public-display-status b{font-size:16px}}
+  </style>
 </head>
 <body>
   <main class="hub">
@@ -24,6 +57,7 @@
     </header>
 
     <div class="state" id="hubState" role="status" aria-live="polite">LISTO PARA CONECTAR LA GENERAL</div>
+    <div class="public-display-status" id="publicDisplayStatus" aria-live="polite"><strong id="publicDisplayScene">GENERAL</strong><span>PRÓXIMO CAMBIO EN <b id="publicDisplayCountdown">10</b>s</span></div>
     <section class="tournament-shelf" id="hubTournamentShelf" aria-label="Mis torneos guardados">
       <h2>CENTRO DE TORNEOS</h2>
       <p>ELIGE EL TORNEO QUE QUIERES VER.</p>
@@ -59,6 +93,7 @@
       <details class="viewer-tools"><summary>MÁS OPCIONES</summary><div class="actions">
         <button class="primary" id="hubShareGeneral" type="button">COMPARTIR</button>
         <button class="secondary" id="hubRefresh" type="button">ACTUALIZAR</button>
+        <button class="secondary" id="hubPublicDisplay" type="button">PANTALLA PÚBLICA</button>
         <button class="danger" id="hubRemoveGeneral" type="button">QUITAR ESTE TORNEO</button>
       </div></details>
       <div class="leader-wrap" id="hubLeaderWrap"><div class="empty">ABRE EL ENLACE GENERAL Y TOCA “ABRIR EN CENTRO LIVE”.</div></div>
