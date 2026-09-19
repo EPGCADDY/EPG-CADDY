@@ -4,7 +4,7 @@ const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-ro
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
 const ACTIVE_CACHE_NAME=`${CACHE_NAME}-lab-manual-no-gps-20260919`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-lab-manual-no-gps-approved-20260919`;
-const RELEASE="LAB-TIME-AUDIO-GRID-20260919";
+const RELEASE="LAB-AUDIO-TIMER-GRID-20260919";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
