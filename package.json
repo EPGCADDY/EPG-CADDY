@@ -1,7 +1,9 @@
 {
   "name": "golf-score-card-gt",
   "private": true,
-  "engines": { "node": "22.x" },
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
     "@capacitor/android": "8.5.0",
     "@capacitor/core": "8.5.0",
@@ -48,6 +50,7 @@
     "mobile:sync": "npm run mobile:web && cap sync && npm run mobile:configure && npm run mobile:assets",
     "mobile:prepare": "node scripts/prepare-native-release.mjs",
     "mobile:open:ios": "cap open ios",
-    "mobile:open:android": "cap open android"
+    "mobile:open:android": "cap open android",
+    "manual:screen-parity": "node scripts/manual-screen-parity-gate.mjs"
   }
 }
