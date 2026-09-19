@@ -1,6 +1,7 @@
 import { createGrant, accessCookie, guestModeCookie, clearAccessCookies, requireOwner, resolveAppAccess, revokeGrant, redeemGuestToken, recordGuestFeedback, ownerFeedback, purgeExpiredAccess } from "./_lib/app-access.js";
 import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 import { noStore, readJson } from "./_lib/http.js";
+import { inviteOrigin } from "./_lib/invite-origin.js";
 
 function fail(res,error){const code=String(error?.code||"ACCESS_FAILED"),status=Number(error?.status)||({ACCOUNT_UNAUTHORIZED:401,OWNER_REQUIRED:403,OWNER_NOT_CONFIGURED:503}[code]||400);return res.status(status).json({ok:false,code})}
 
@@ -36,7 +37,7 @@ export default async function handler(req,res){
       await purgeExpiredAccess();return res.status(200).json({ok:true});
     }
     if(action==="create"){
-      const owner=await requireOwner(req),grant=await createGrant(owner),origin=String(process.env.APP_PUBLIC_ORIGIN||"https://golf-sc-gt-lab.vercel.app").replace(/\/$/,"");
+      const owner=await requireOwner(req),origin=inviteOrigin(),grant=await createGrant(owner);
       return res.status(201).json({ok:true,id:grant.id,expiresAt:grant.expiresAt,url:`${origin}/invite/${encodeURIComponent(grant.token)}`});
     }
     if(action==="revoke"){
