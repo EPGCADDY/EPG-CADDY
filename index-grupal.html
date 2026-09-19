@@ -3373,6 +3373,36 @@ $("tournamentDescription").addEventListener("input",e=>{if(!draftTournament)draf
 $("tournamentDescription").addEventListener("change",e=>{if(!draftTournament)return;draftTournament.description=String(e.target.value||"").trim();persistDraftState();renderTournamentDraft()});
 $("courseOptions").addEventListener("change",e=>{if(!e.target.matches('input[name="registrationCourse"]'))return;const key=String(e.target.value||"pulte");draftCourse=COURSE_CATALOG[key]?key:"pulte";activateCourse(draftCourse);draftPlayers=draftPlayers.map((p,i)=>normalizePlayer(p,i));seedManualDraftRowsFromPlayers();persistDraftState();renderDraft();Promise.resolve(null).catch(()=>null);const course=COURSE_CATALOG[draftCourse];$("setupStatus").textContent=course.configured?`${course.name.toUpperCase()} · TARJETA OFICIAL CONFIGURADA`:`${course.name.toUpperCase()} · PENDIENTE CARGAR TARJETA OFICIAL`});
 function captureVisibleRegistrationValues(){for(const rowElement of document.querySelectorAll("#detectedBody [data-draft-row]")){const index=Number(rowElement.dataset.draftRow),row=manualDraftRows[index];if(!row)continue;const name=rowElement.querySelector("[data-draft-name]"),category=rowElement.querySelector("[data-draft-category]"),hcp=rowElement.querySelector("[data-draft-hcp]"),tee=rowElement.querySelector("[data-draft-tee]"),country=rowElement.querySelector("[data-draft-country-code]"),whatsapp=rowElement.querySelector("[data-draft-whatsapp]");if(name)row.name=String(name.value||"").trimStart();if(category)row.category=String(category.value||"");if(hcp)row.handicap=String(hcp.value??"");if(tee)row.tee=String(tee.value||"");if(country)row.countryCode=String(country.value||"").replace(/\D/g,"").slice(0,4);if(whatsapp)row.whatsapp=String(whatsapp.value||"").replace(/\D/g,"").slice(0,15)}persistDraftState();return true}
+
+async function guardVisibleRegistrationBeforeOk(event){
+  const button=$("setupOk");
+  if(!button||event?.target!==button)return;
+  const rows=[...document.querySelectorAll("#detectedBody [data-draft-row]")];
+  for(const rowElement of rows){
+    const index=Number(rowElement.dataset.draftRow);
+    const name=String(rowElement.querySelector("[data-draft-name]")?.value||"").trim();
+    const category=String(rowElement.querySelector("[data-draft-category]")?.value||"").trim();
+    const handicapText=String(rowElement.querySelector("[data-draft-hcp]")?.value??"").trim();
+    const tee=String(rowElement.querySelector("[data-draft-tee]")?.value||"").trim();
+    const whatsapp=String(rowElement.querySelector("[data-draft-whatsapp]")?.value||"").trim();
+    const hasData=!!(name||category||handicapText||tee||whatsapp);
+    if(!hasData)continue;
+    let field="";
+    if(!name)field="name";
+    else if(!category)field="category";
+    else if(handicapText===""||!Number.isSafeInteger(Number(handicapText)))field="handicap";
+    else if(!tee)field="tee";
+    if(!field)continue;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    captureVisibleRegistrationValues();
+    const ignored=await registrationMissingPrompt(index,field);
+    if(ignored)setTimeout(()=>button.click(),0);
+    return;
+  }
+}
+$("setupOk").addEventListener("click",guardVisibleRegistrationBeforeOk,true);
+
 $("setupOk").addEventListener("click",async()=>{captureVisibleRegistrationValues();if(!(await reviewMissingCategoryAndHandicap()))return;if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;if(profileCorrectionMode){startConfirmedRound();return};renderDraft();showStep2();;});
 $("clearAllRegistration").addEventListener("click",clearAllRegistrationPlayers);
 $("normalRoundButton").addEventListener("click",()=>selectGeneralRoundMode("general"));$("matchPlayRoundButton").addEventListener("click",()=>selectGeneralRoundMode("match_play"));$("fourBallRoundButton").addEventListener("click",()=>selectGeneralRoundMode("four_ball"));$("universalesRoundButton").addEventListener("click",()=>selectGeneralRoundMode("universales"));$("skinsRoundButton").addEventListener("click",selectSkinsRoundMode);
