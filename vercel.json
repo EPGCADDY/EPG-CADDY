@@ -42,7 +42,7 @@
     },
     {
       "source": "/manual.pdf",
-      "destination": "/docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf",
+      "destination": "/manual.html",
       "permanent": false
     },
     {
