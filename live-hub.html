@@ -73,8 +73,8 @@
     <nav class="monitor-switch" aria-label="Elegir vista del torneo">
       <button class="active" id="hubShowGeneral" type="button">GENERAL</button>
       <button id="hubShowCategories" type="button">CATEGORÍAS</button>
-      <button id="hubShowIndividual" type="button">INDIVIDUAL</button>
-      <button id="hubAddToBoard" type="button">AGREGAR A MI TABLERO</button>
+      <button id="hubShowIndividual" type="button">BUSCAR POR NOMBRE</button>
+      <button id="hubAddToBoard" type="button">ARMAR MI TABLERO</button>
     </nav>
     <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← CENTRO DE TORNEOS</button>
 
@@ -105,7 +105,7 @@
 
     <section class="panel monitor-panel hidden" id="hubIndividualPanel">
       <h2>MI TABLERO</h2>
-      <p class="panel-note">AQUÍ APARECEN LOS JUGADORES O GRUPOS QUE ELEGISTE. SI ESTÁN EN LA GENERAL, NO SE HACEN CONSULTAS EXTRA.</p>
+      <p class="panel-note">AQUÍ APARECEN JUGADORES Y GRUPOS QUE ELEGISTE DE UNO O VARIOS TORNEOS. SE ACTUALIZAN AUNQUE ESTÉS MIRANDO OTRO TORNEO.</p>
       <div class="favorites" id="hubFavorites"><div class="empty">TODAVÍA NO SIGUES A NADIE.</div></div>
       <div class="actions" style="margin-top:9px"><button class="danger" id="hubClearFavorites" type="button">LIMPIAR MONITOR INDIVIDUAL</button></div>
       <details class="viewer-tools"><summary>AGREGAR JUGADOR EXTERNO</summary><div class="import">
