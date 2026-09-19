@@ -14,6 +14,8 @@
   const DEMO_DISTRIBUTION={championship:7,a:6,b:24,c:11,d:0,female:7,senior:7,super_senior:5};
   const demoMode=()=>root&&root.location&&new URLSearchParams(root.location.search||"").get("demo")==="1";
   const selectedCategory=()=>{const value=String($("hubCategory")?.value||"all");return CATEGORY_LABELS[value]?value:"all"};
+  const selectedCourse=()=>String($("hubCourse")?.value||"all");
+  const courseKey=value=>fold(value||"CAMPO");
   const categoryLabel=value=>CATEGORY_LABELS[String(value||"")]||"SIN CATEGORÍA";
   const categoryShortLabel=value=>String(value||"")==="championship"?"C":categoryLabel(value);
 
@@ -81,14 +83,17 @@
   function displayStreams(){return generalStreams.size||!demoMode()?generalStreams:demoTournamentStreams()}
   function favoriteStreams(streams){const combined=demoTournamentStreams();for(const [id,stream] of generalStreamMap(streams))combined.set(id,stream);return combined}
   function categoryIndex(streams){const index={};for(const item of tournamentPlayers(streams)){const key=item.tournamentCategory||"uncategorized";(index[key]||(index[key]=[])).push(item)}return index}
-  function visibleTournamentPlayers(streams){const category=selectedCategory();return tournamentPlayers(streams).filter(item=>category==="all"||item.tournamentCategory===category)}
+  function visibleTournamentPlayers(streams){
+    const category=selectedCategory(),course=selectedCourse();
+    return tournamentPlayers(streams).filter(item=>(category==="all"||item.tournamentCategory===category)&&(course==="all"||courseKey(item.course)===course));
+  }
   function buildLeaderboard(streams){
     const players=visibleTournamentPlayers(streams).sort((left,right)=>left.mode==="universales"&&right.mode==="universales"?right.universalesPoints-left.universalesPoints||right.holes-left.holes||fold(left.name).localeCompare(fold(right.name)):left.relativeToPar-right.relativeToPar||right.holes-left.holes||fold(left.name).localeCompare(fold(right.name)));
     const tieCounts=new Map();for(const item of players){const value=item.mode==="universales"?item.universalesPoints:item.relativeToPar,key=item.mode+":"+value+":"+item.holes;tieCounts.set(key,(tieCounts.get(key)||0)+1)}
     let previous=null,rank=0;return players.map((item,index)=>{const value=item.mode==="universales"?item.universalesPoints:item.relativeToPar,key=item.mode+":"+value+":"+item.holes;if(previous===null||key!==previous)rank=index+1;previous=key;return{...item,rank,rankLabel:(tieCounts.get(key)||0)>1?`T${rank}`:String(rank)}})
   }
   function categoryScoreboardRows(streams,category="all"){
-    const selected=CATEGORY_LABELS[category]?category:"all",players=tournamentPlayers(streams).filter(item=>selected==="all"||item.tournamentCategory===selected);
+    const selected=CATEGORY_LABELS[category]?category:"all",course=selectedCourse(),players=tournamentPlayers(streams).filter(item=>(selected==="all"||item.tournamentCategory===selected)&&(course==="all"||courseKey(item.course)===course));
     return players.sort((left,right)=>left.relativeToPar-right.relativeToPar||right.holes-left.holes||fold(left.name).localeCompare(fold(right.name))).map(item=>{
       const holes=new Map(uniquePlayerHoles(item.player).map(hole=>[Number(hole.hole),hole]));
       const segment=numbers=>numbers.reduce((sum,hole)=>{const value=holes.get(hole);if(!value||value.explicitX)return sum;const gross=Number(value.gross),net=Number(value.net),par=Number(value.par);if(Number.isFinite(gross))sum.gross+=gross;if(Number.isFinite(net))sum.net+=net;if(Number.isFinite(net)&&Number.isFinite(par))sum.result+=net-par;sum.holes+=1;return sum},{gross:0,net:0,result:0,holes:0});
@@ -214,11 +219,17 @@
     return true;
   }
 
+  function renderCourseFilter(){
+    const select=$("hubCourse");if(!select)return;
+    const current=selectedCourse(),courses=[...new Set(tournamentPlayers(displayStreams()).map(item=>text(item.course,120)).filter(Boolean))].sort((a,b)=>fold(a).localeCompare(fold(b),"es"));
+    select.innerHTML='<option value="all">TODOS LOS CLUBES / CAMPOS</option>'+courses.map(course=>'<option value="'+escapeHtml(courseKey(course))+'">'+escapeHtml(course)+'</option>').join("");
+    select.value=courses.some(course=>courseKey(course)===current)?current:"all";
+  }
   function renderTournamentShelf(){const shelf=$("hubTournamentShelf"),cards=$("hubTournamentCards"),shared=new URLSearchParams(root.location.search||"").get("shared")==="1";if(!shelf||!cards)return;const portal=tournamentPortalOpen&&!shared,items=[{token:"__demo__",label:"TORNEO DEMOSTRACIÓN",demo:true},...state.tournaments];shelf.classList.toggle("hidden",!portal);cards.innerHTML=items.map(item=>'<button class="tournament-card" type="button" data-tournament="'+escapeHtml(item.token)+'">'+escapeHtml(item.label)+'<small>'+(item.demo?'67 JUGADORES SIMULADOS':'GENERAL Y CATEGORÍAS LIVE')+'</small></button>').join("");cards.querySelectorAll("[data-tournament]").forEach(button=>button.onclick=()=>button.dataset.tournament==="__demo__"?root.location.assign(tournamentHubOpenUrl("",root.location.origin,root.location.href,true)):selectSavedTournament(button.dataset.tournament));$("hubTournamentEntry")?.classList.toggle("hidden",!portal);$("hubTournamentHome")?.classList.toggle("hidden",portal||shared);$("hubGeneralPanel")?.classList.toggle("hidden",portal||activeMonitor==="individual");$("hubIndividualPanel")?.classList.toggle("hidden",portal||activeMonitor!=="individual");root.document.querySelector(".monitor-switch")?.classList.toggle("hidden",portal)}
   function resetGeneralView(){general=null;generalRevision=null;generalStreams.clear();categoryCardOpen=false;$("hubCategory")&&( $("hubCategory").value="all");$("hubSearch")&&( $("hubSearch").value="")}
   async function selectSavedTournament(token){if(!tokenOk(token))return false;state.generalToken=token;saveState();tournamentPortalOpen=false;resetGeneralView();showMonitor("general");setStatus("ABRIENDO TORNEO…","");await refresh();return true}
   function showTournamentPortal(){tournamentPortalOpen=true;clearTimeout(timer);renderAll();setStatus("ELIGE UNO DE TUS TORNEOS O AGREGA OTRO","")}
-  function renderAll(){renderTournamentShelf();renderSummary();renderLeaderboard();renderCategoryCard();renderSearch();renderFavorites()}
+  function renderAll(){renderTournamentShelf();renderCourseFilter();renderSummary();renderLeaderboard();renderCategoryCard();renderSearch();renderFavorites()}
 
   function addImported(stream,player){
     const item=player?{key:stream.id+":"+player.id,kind:"player",token:pendingImportToken,streamId:stream.id,playerId:player.id,label:player.name,groupLabel:stream.groupLabel}:{key:stream.id+":group",kind:"group",token:pendingImportToken,streamId:stream.id,playerId:"",label:stream.groupLabel,groupLabel:stream.groupLabel};
@@ -286,7 +297,7 @@
   async function start(){
     state=loadState();const imported=parseHubHash(root.location.hash);if(imported)clearHash();const params=new URLSearchParams(root.location.search||""),shared=params.get("shared")==="1";tournamentPortalOpen=!demoMode()&&!imported;root.document.body.classList.toggle("shared-view",shared);
     $("hubBack").onclick=()=>{root.close();setTimeout(()=>root.history.back(),100)};$("hubOpenTournament").onclick=openTournamentTyped;$("hubTournamentLink").onkeydown=event=>{if(event.key==="Enter")openTournamentTyped()};
-    $("hubShowGeneral").onclick=()=>showMonitor("general");$("hubShowCategories").onclick=()=>showMonitor("categories");$("hubShowIndividual").onclick=()=>showMonitor("individual");$("hubAddToBoard").onclick=()=>showMonitor("add");$("hubShareGeneral").onclick=shareGeneral;$("hubRefresh").onclick=refresh;$("hubPublicDisplay").onclick=openPublicDisplay;$("hubCategory").onchange=renderAll;$("hubCategoryCardToggle").onclick=()=>{categoryCardOpen=!categoryCardOpen;renderCategoryCard()};$("hubSearchButton").onclick=renderSearch;$("hubSearch").oninput=renderSearch;$("hubImportButton").onclick=importTyped;$("hubAddTournament").onclick=()=>$("hubTournamentLink")?.focus();$("hubTournamentHome").onclick=showTournamentPortal;
+    $("hubShowGeneral").onclick=()=>showMonitor("general");$("hubShowCategories").onclick=()=>showMonitor("categories");$("hubShowIndividual").onclick=()=>showMonitor("individual");$("hubAddToBoard").onclick=()=>showMonitor("add");$("hubShareGeneral").onclick=shareGeneral;$("hubRefresh").onclick=refresh;$("hubPublicDisplay").onclick=openPublicDisplay;$("hubCategory").onchange=renderAll;$("hubCourse").onchange=renderAll;$("hubCategoryCardToggle").onclick=()=>{categoryCardOpen=!categoryCardOpen;renderCategoryCard()};$("hubSearchButton").onclick=renderSearch;$("hubSearch").oninput=renderSearch;$("hubImportButton").onclick=importTyped;$("hubAddTournament").onclick=()=>$("hubTournamentLink")?.focus();$("hubTournamentHome").onclick=showTournamentPortal;
     $("hubRemoveGeneral").onclick=()=>{state=removeTournamentFromState(state,state.generalToken);saveState();resetGeneralView();showTournamentPortal()};
     $("hubClearFavorites").onclick=()=>{state.follows=[];saveState();externalStreams.clear();renderAll();setStatus("MONITOR INDIVIDUAL VACÍO","warning")};
     root.addEventListener("online",refresh);root.document.addEventListener("visibilitychange",()=>{if(root.document.visibilityState==="visible")refresh()});
