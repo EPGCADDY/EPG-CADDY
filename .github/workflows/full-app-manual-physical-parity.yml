@@ -224,6 +224,22 @@ jobs:
               check(await page.locator('[data-draft-tee="0"]').first().inputValue().then(v=>/Negro/i.test(v)).catch(()=>false),'CAMPEONATO no preconfigura marcas negras');
               await page.locator('#setupOverlay').screenshot({path:'full-parity/app/04-campeonato-registro.png'});
               results.app.push('campeonato-registro');
+
+              await page.evaluate(()=>{
+                const select=document.querySelector('[data-draft-category="0"]');
+                if(select){
+                  const wrap=document.createElement('div');
+                  wrap.id='physicalCategoryMatrix';
+                  wrap.style.cssText='position:fixed;inset:0;z-index:30000;background:#000;padding:28px;color:#fff;font-family:Arial;overflow:auto';
+                  wrap.innerHTML='<h1 style="color:#31ff00">CATEGORÍAS OFICIALES</h1><div style="display:grid;gap:12px;margin-top:20px">'+
+                    [...select.options].map(o=>'<div style="border:1px solid #4b4f50;border-radius:10px;padding:16px;font-weight:900;font-size:20px">'+o.textContent+(o.value==="championship"?' · MARCAS NEGRAS':'')+'</div>').join('')+
+                    '</div>';
+                  document.body.appendChild(wrap);
+                }
+              });
+              await page.locator('#physicalCategoryMatrix').screenshot({path:'full-parity/app/04b-categorias-oficiales.png'});
+              await page.evaluate(()=>document.getElementById('physicalCategoryMatrix')?.remove());
+              results.app.push('categorias-oficiales');
             }
 
             // CAMPEONATO physically in final Score Card renderer
@@ -289,10 +305,10 @@ jobs:
         run: |
           mkdir -p docs/manual/current
           cp full-parity/app/01-access.png docs/manual/current/APP_ACCESS.png
-          cp full-parity/app/04a-setup-current.png docs/manual/current/APP_SETUP_CURRENT.png
           cp full-parity/app/02-scorecard-atajos.png docs/manual/current/APP_SCORECARD_ATAJOS.png
           cp full-parity/app/03-atajos-overlay.png docs/manual/current/APP_ATAJOS_OVERLAY.png
           cp full-parity/app/04-campeonato-registro.png docs/manual/current/APP_CAMPEONATO_REGISTRO.png
+          cp full-parity/app/04b-categorias-oficiales.png docs/manual/current/APP_CATEGORIAS_OFICIALES.png
           cp full-parity/app/05-campeonato-scorecard.png docs/manual/current/APP_CAMPEONATO_SCORECARD.png
           cp full-parity/app/overlay-final-card-atajos.png docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png
           cp full-parity/app/overlay-correction-atajos.png docs/manual/current/APP_CORRECCION_ATAJOS.png
