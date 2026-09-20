@@ -7,7 +7,7 @@
 
   const MAX_HOLES=18;
   const TEAM_PLAYER_INDEXES=Object.freeze([[0,1],[2,3],[4,5]]);
-  const DEFAULT_TEAM_NAMES=Object.freeze(["PAREJA VERDE","PAREJA ORO","PAREJA AZUL"]);
+  const DEFAULT_TEAM_NAMES=Object.freeze(["TEAM 1","TEAM 2","TEAM 3"]);
   const playerName=(player,index)=>String(player?.name||`JUGADOR ${index+1}`).trim().toUpperCase();
   const netScore=(player,hole)=>{const score=player?.holes?.[hole];return score&&score.status!=="x"&&Number.isFinite(Number(score.net))?Number(score.net):null};
   const teamNames=value=>DEFAULT_TEAM_NAMES.map((fallback,index)=>String(value?.[index]||fallback).trim().toUpperCase());
