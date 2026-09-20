@@ -5,7 +5,7 @@ assert.match(html,/GOLF SCORE CARD GT · STABLEFORD/);
 assert.match(html,/CLASIFICACIÓN CENTROAMERICANA · MEJORES 3 DE 4/);
 for(const key of ["country_club","pulte","san_isidro","mayan_golf"])assert.match(html,new RegExp(`${key}:\\{name:`),`Falta ${key}`);
 assert.match(html,/SENIOR · BLANCAS · HCP 0/);
-assert.match(html,/id="superBtn"[^>]*>S\. SENIOR/);
+assert.match(html,/id="superBtn"[^>]*>SUPER SENIOR/);
 assert.match(html,/PUNTOS/);
 assert.match(html,/GROSS OUT/);
 assert.match(html,/PTS OUT/);
