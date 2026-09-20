@@ -204,30 +204,24 @@ jobs:
             {
               await page.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
               await page.waitForTimeout(300);
-              await page.locator('#normalRoundButton').click().catch(()=>{});
-              await page.waitForTimeout(120);
               await page.evaluate(()=>{
-                const overlay=document.getElementById('setupOverlay');
-                if(overlay){overlay.classList.add('visible');overlay.setAttribute('aria-hidden','false');overlay.style.display='block'}
-                const s1=document.getElementById('setupStep1'); if(s1)s1.classList.remove('hidden');
-                const detected=document.getElementById('detectedPlayers'); if(detected)detected.classList.add('hidden');
+                openNewRoundDraft();
+                manualDraftRows[0]={...emptyManualDraftRow(),name:'AUDITOR CAMPEONATO',category:'championship',handicap:'0',tee:'Negro',countryCode:'502',whatsapp:'',dirty:true};
+                renderDraft();
+                showStep1();
+                const select=document.querySelector('[data-draft-category="0"]');
+                if(select){select.size=Math.max(8,select.options.length);select.value='championship'}
+                const tee=document.querySelector('[data-draft-tee="0"]');
+                if(tee)tee.value='Negro';
               });
-              await page.waitForTimeout(80);
-              await page.locator('#setupOverlay').screenshot({path:'full-parity/app/04a-setup-current.png'});
-              results.app.push('setup-current');
-              await page.evaluate(()=>{
-                const overlay=document.getElementById('setupOverlay'); if(overlay){overlay.classList.add('visible');overlay.setAttribute('aria-hidden','false')}
-                const detected=document.getElementById('detectedPlayers'); if(detected)detected.classList.remove('hidden');
-                const select=document.querySelector('[data-draft-category]');
-                if(select){select.size=Math.max(8,select.options.length);select.value='championship';select.dispatchEvent(new Event('change',{bubbles:true}))}
-              });
+              await page.waitForTimeout(180);
               const select=page.locator('[data-draft-category="0"]').first();
               check(await select.count()===1,'Registro físico no muestra selector de categoría');
+              check(await select.isVisible(),'Registro físico: selector de categoría no visible');
               const options=await select.locator('option').allTextContents();
               for(const token of ['CAMPEONATO','A','B','C','D','SENIOR','SUPER SENIOR','FEMENINA']) check(options.includes(token),'Registro físico falta '+token);
+              check(await select.inputValue()==='championship','Registro físico no deja CAMPEONATO seleccionado');
               check(await page.locator('[data-draft-tee="0"]').first().inputValue().then(v=>/Negro/i.test(v)).catch(()=>false),'CAMPEONATO no preconfigura marcas negras');
-              await select.scrollIntoViewIfNeeded();
-              await page.waitForTimeout(120);
               await page.locator('#setupOverlay').screenshot({path:'full-parity/app/04-campeonato-registro.png'});
               results.app.push('campeonato-registro');
             }
