@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LAB-FOUR-BALL-PAIR-NET-20260920-K">
+  <meta name="gscg-release" content="LAB-FOUR-BALL-CLEAN-20260920-L">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2997,12 +2997,12 @@ function fourBallTeamNetTotal(teamIndex,holes){
 }
 function fourBallPairHeader(teamIndex){
   const teamClass=fourBallTeamClass(teamIndex),teamName=window.GSCFourBall.DEFAULT_TEAM_NAMES[teamIndex]||`PAREJA ${teamIndex+1}`;
-  return`<tbody class="four-ball-pair-header ${teamClass}"><tr><td colspan="23">${escapeHtml(teamName)} · 2 JUGADORES · CUENTA EL MEJOR NETO DE CADA HOYO</td></tr></tbody>`
+  return`<tbody class="four-ball-pair-header ${teamClass}"><tr><td colspan="23">${escapeHtml(teamName)} · 2 JUGADORES</td></tr></tbody>`
 }
 function fourBallPairBestRow(teamIndex){
   const teamClass=fourBallTeamClass(teamIndex),teamName=window.GSCFourBall.DEFAULT_TEAM_NAMES[teamIndex]||`PAREJA ${teamIndex+1}`;
-  const cell=hole=>{const result=window.GSCFourBall.holeResult(round.players,hole),best=result.teamBest?.[teamIndex];return`<td>${result.recorded&&best?`${best.score}<span class="pair-best-star">★ MEJOR</span>`:""}</td>`};
-  return`<tbody class="four-ball-pair-best-row ${teamClass}"><tr><td colspan="2" class="pair-best-label">MEJOR NETO · ${escapeHtml(teamName)}</td>${FRONT.map(cell).join("")}<td>${fourBallTeamNetTotal(teamIndex,FRONT)}</td>${BACK.map(cell).join("")}<td>${fourBallTeamNetTotal(teamIndex,BACK)}</td><td>${fourBallTeamNetTotal(teamIndex,ALL)}</td></tr></tbody>`
+  const cell=hole=>{const result=window.GSCFourBall.holeResult(round.players,hole),best=result.teamBest?.[teamIndex];return`<td>${result.recorded&&best?best.score:""}</td>`};
+  return`<tbody class="four-ball-pair-best-row ${teamClass}"><tr><td colspan="2" class="pair-best-label">NETO PAREJA</td>${FRONT.map(cell).join("")}<td>${fourBallTeamNetTotal(teamIndex,FRONT)}</td>${BACK.map(cell).join("")}<td>${fourBallTeamNetTotal(teamIndex,BACK)}</td><td>${fourBallTeamNetTotal(teamIndex,ALL)}</td></tr></tbody>`
 }
 function fourBallPlayerBlock(player,slot){
   let html=basePlayerBlock(player,slot);if(!player)return html;
