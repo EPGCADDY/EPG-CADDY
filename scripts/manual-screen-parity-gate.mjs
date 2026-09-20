@@ -14,7 +14,7 @@ assert(manual.indexOf('id="portada"')<manual.indexOf('id="indice"'),"La portada 
 assert(manual.includes('id="indice"')&&manual.includes("Toca cualquier tema para saltar directamente"),"Falta índice general clickable");
 assert((manual.match(/href="#[^"]+"/g)||[]).length>=50,"Índice/navegación insuficiente");
 assert((manual.match(/<section class="sheet(?: |")/g)||[]).length===74,"Debe haber exactamente 74 hojas vigentes: 51 base + 9 pantallas actuales + 10 Torneos + 4 pantallas reales LAB");
-assert(manual.includes("/docs/manual/layout/page-01.png")&&manual.includes("/docs/manual/layout/page-45.png"),"Faltan hojas originales operativas");
+assert(manual.includes("/docs/manual/layout/page-03.png")&&manual.includes("/docs/manual/layout/page-45.png"),"Faltan hojas originales vigentes");
 for(const p of [68,69,70,71,72,73]) assert(manual.includes("/docs/manual/layout/page-"+String(p).padStart(2,"0")+".png"),"Falta hoja original vigente page-"+p);
 const current=["/docs/manual/current/CAMPO_MODALIDAD_REAL.webp","/docs/manual/current/REGISTRO_ATAJOS_REAL.webp","/docs/manual/current/SCORECARD_CONTROL_REAL.webp","/docs/manual/current/FOURBALL_ATAJOS_REAL.webp"];
 for(const img of current) assert(manual.includes(img),"Falta pantalla real LAB: "+img);
