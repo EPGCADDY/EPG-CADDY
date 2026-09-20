@@ -1,0 +1,51 @@
+name: Build GSC Final Voice
+
+on:
+  push:
+    branches: [laboratorio]
+    paths:
+      - ".github/workflows/build-gsc-final.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download source media
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 "https://cdn.creativeclaw.co/u/9cfd647d/videos/c887e683-ac07-4fda-b04e-dd24c444f3a8.mp4" -o v1.mp4
+          curl -L --fail --retry 3 "https://cdn.creativeclaw.co/u/9cfd647d/videos/638ab311-0f93-4dec-b648-971faa0d0752.mp4" -o v2.mp4
+          curl -L --fail --retry 3 "https://cdn.creativeclaw.co/u/9cfd647d/videos/d6de3614-7352-45ab-aed8-df4e31e36c08.mp4" -o v3.mp4
+          curl -L --fail --retry 3 "https://cdn.creativeclaw.co/u/9cfd647d/videos/30da6c96-0b3d-4df9-88e3-066bb47b34b4.mp4" -o v4.mp4
+          curl -L --fail --retry 3 "https://cdn.creativeclaw.co/u/9cfd647d/audio/e0caf14d-21ff-42fe-a0c5-2189f7ec8fa3.mp3" -o a1.mp3
+          curl -L --fail --retry 3 "https://cdn.creativeclaw.co/u/9cfd647d/audio/3cf2bcaa-b194-41ec-b696-7bd5b561b90c.mp3" -o a2.mp3
+          curl -L --fail --retry 3 "https://cdn.creativeclaw.co/u/9cfd647d/audio/d61e3d83-bfec-4f19-8edf-af4701062a55.mp3" -o a3.mp3
+          curl -L --fail --retry 3 "https://cdn.creativeclaw.co/u/9cfd647d/audio/5ff6e368-bbc8-411f-b7d9-05dc5c4fee6b.mp3" -o a4.mp3
+
+      - name: Mux approved voice without regeneration
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffmpeg -y -i v1.mp4 -i a1.mp3 -filter_complex "[1:a]apad[a]" -map 0:v:0 -map "[a]" -c:v copy -c:a aac -b:a 192k -ar 48000 -t 19 p1.mp4
+          ffmpeg -y -i v2.mp4 -i a2.mp3 -filter_complex "[1:a]apad[a]" -map 0:v:0 -map "[a]" -c:v copy -c:a aac -b:a 192k -ar 48000 -t 17 p2.mp4
+          ffmpeg -y -i v3.mp4 -i a3.mp3 -filter_complex "[1:a]apad[a]" -map 0:v:0 -map "[a]" -c:v copy -c:a aac -b:a 192k -ar 48000 -t 14 p3.mp4
+          ffmpeg -y -i v4.mp4 -i a4.mp3 -filter_complex "[1:a]apad[a]" -map 0:v:0 -map "[a]" -c:v copy -c:a aac -b:a 192k -ar 48000 -t 34 p4.mp4
+          printf "file 'p1.mp4'\nfile 'p2.mp4'\nfile 'p3.mp4'\nfile 'p4.mp4'\n" > list.txt
+          ffmpeg -y -f concat -safe 0 -i list.txt -c copy -movflags +faststart GSC_GT_FINAL_VOZ_APROBADA.mp4
+
+      - name: Triple technical QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s GSC_GT_FINAL_VOZ_APROBADA.mp4
+          ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,duration -of default=nw=1 GSC_GT_FINAL_VOZ_APROBADA.mp4
+          ffprobe -v error -select_streams a:0 -show_entries stream=codec_name,sample_rate,channels,duration -of default=nw=1 GSC_GT_FINAL_VOZ_APROBADA.mp4
+          ffmpeg -v error -i GSC_GT_FINAL_VOZ_APROBADA.mp4 -f null -
+
+      - name: Upload final MP4
+        uses: actions/upload-artifact@v4
+        with:
+          name: GSC_GT_FINAL_VOZ_APROBADA
+          path: GSC_GT_FINAL_VOZ_APROBADA.mp4
+          if-no-files-found: error
