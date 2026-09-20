@@ -2845,7 +2845,7 @@ function renderDraft(){
     const longNameClass=nameLength>=24?" very-long-name":nameLength>=18?" long-name":"";
     const categoryOptions=`<option value="" ${staged.category?"":"selected"}>CATEGORÍA</option>`+Object.entries(TOURNAMENT_CATEGORIES).map(([key,label])=>`<option value="${key}" ${key===staged.category?"selected":""}>${label}</option>`).join("");
     const teeOptions=`<option value="" ${staged.tee?"":"selected"}>MARCAS</option>`+Object.entries(TEES).map(([key,t])=>`<option value="${key}" ${key===staged.tee?"selected":""}>${t.label}</option>`).join("");
-    const pairIndex=Math.floor(i/2),pairCode=["1","2","3"][pairIndex],pairName=["TEAM 1","TEAM 2","TEAM 3"][pairIndex],pairClass=[" team-green"," team-gold"," team-blue"][pairIndex],pairColor=["var(--lime)","#d4af37","#36a3ff"][pairIndex];
+    const pairIndex=Math.floor(i/2),pairCode=["1","2","3"][pairIndex],pairName=["TEAM","TEAM","TEAM"][pairIndex],pairClass=[" team-green"," team-gold"," team-blue"][pairIndex],pairColor=["var(--lime)","#d4af37","#36a3ff"][pairIndex];
     const color=tee?.color||"#fff",emptyClass=p||manualRowHasData(staged)?"":" empty",teamClass=draftRoundMode==="four_ball"?pairClass:draftRoundMode==="match_play"?` match-pair-${pairIndex+1}`:"",slotLabel=draftRoundMode==="four_ball"?`${pairCode}${i%2+1}`:draftRoundMode==="match_play"?`P${pairIndex+1}.${i%2+1}`:String(i+1);
     if((i===2||i===4)&&["match_play","four_ball"].includes(draftRoundMode)){editHtml+='<div class="draft-pair-divider" aria-hidden="true"></div>';confirmHtml+='<div class="confirm-pair-divider" aria-hidden="true"></div>'}
     const countryCode=normalizeWhatsAppCountryCode(staged.countryCode),flag=countryCode==="502"?"🇬🇹":"🌐";
