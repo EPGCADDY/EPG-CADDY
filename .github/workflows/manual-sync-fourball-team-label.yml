@@ -1,0 +1,50 @@
+name: LAB manual sync Four Ball TEAM label
+
+on:
+  push:
+    branches: [laboratorio]
+
+permissions:
+  contents: write
+
+jobs:
+  sync-manual:
+    if: contains(github.event.head_commit.message, 'manual-sync-trigger')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: laboratorio
+          fetch-depth: 0
+      - name: Synchronize Four Ball TEAM label
+        run: |
+          git fetch origin laboratorio
+          git reset --hard origin/laboratorio
+          node <<'NODE'
+          const fs=require('fs');
+          const manualPath='manual.html';
+          const gatePath='scripts/manual-screen-parity-gate.mjs';
+          let manual=fs.readFileSync(manualPath,'utf8');
+          let gate=fs.readFileSync(gatePath,'utf8');
+          const p08=`<section class="page" id="p08" data-index="8"><div class="kicker">PÁGINA 08 · FOUR BALL</div><h1>Four Ball · TEAM</h1><p>Four Ball agrupa a los jugadores en TEAMS de dos jugadores. La etiqueta visible es TEAM acompañada por los nombres de sus jugadores, sin numeración. En cada hoyo cuenta el mejor Neto del TEAM.</p><div class="screen-replica"><div class="sr-title">RESULTADO FOUR BALL</div><div class="sr-section"><div class="sr-section-title">TEAM · JUGADOR / JUGADOR</div><div class="sr-note">CUENTA EL MEJOR NETO DE CADA HOYO · ★ MEJOR NETO DEL TEAM</div></div><div class="sr-row" style="grid-template-columns:repeat(5,minmax(0,1fr))"><div class="sr-chip">JUGADOR</div><div class="sr-chip">GROSS</div><div class="sr-chip">NETO</div><div class="sr-chip green">GROSS TEAM</div><div class="sr-chip green">NETO TEAM</div></div><div class="sr-section"><div class="sr-section-title">TEAM · NOMBRES</div><div class="sr-note">Con un solo TEAM, el estado se muestra como TEAM · NETO o TEAM · PENDIENTE. Con varios TEAMS, la app compara sus mejores Netos y muestra el resultado por hoyo y acumulado. Las tarjetas exportadas conservan la denominación TEAM.</div></div></div><div class="steps"><div><b>QUÉ ES</b><span>Modalidad por TEAMS de dos jugadores; la identificación visible usa TEAM y los nombres, sin TEAM 1, TEAM 2 o TEAM 3.</span></div><div><b>TÚ HACES</b><span>Registra el Gross individual de cada jugador.</span></div><div><b>LA APP HACE</b><span>Calcula Gross y Neto individual, GROSS TEAM y NETO TEAM, e identifica el mejor Neto del TEAM en cada hoyo.</span></div><div><b>RESULTADO</b><span>La Score Card y el resumen Four Ball usan TEAM sin numeración visible; las tarjetas exportadas mantienen la columna TEAM.</span></div></div></section>`;
+          const before=manual;
+          manual=manual.replace(/<section class="page" id="p08" data-index="8">[\s\S]*?<\/section>/,p08);
+          if(manual===before) throw new Error('P08 replacement failed');
+          gate=gate.replace('"08":["RESULTADO FOUR BALL","TEAM 1","GROSS","NETO","GROSS TEAM","NETO TEAM","MEJOR NETO DEL TEAM"],','"08":["RESULTADO FOUR BALL","TEAM ·","GROSS","NETO","GROSS TEAM","NETO TEAM","MEJOR NETO DEL TEAM"],');
+          gate=gate.replace('assert(page("08").includes("TEAM 1")&&page("08").includes("GROSS TEAM")&&page("08").includes("NETO TEAM"),"P08 debe documentar Four Ball con terminología TEAM y resumen actual");','assert(page("08").includes("TEAM ·")&&page("08").includes("GROSS TEAM")&&page("08").includes("NETO TEAM")&&!page("08").includes("TEAM 1"),"P08 debe documentar Four Ball con TEAM sin numeración y resumen actual");\nassert(app.includes("TEAM · NETO")&&app.includes("function fourBallTeamLabel")&&!app.includes("return`TEAM ${teamIndex+1}"),"LAB Four Ball debe mostrar TEAM sin numeración visible");');
+          gate=gate.replace('15 replicas · pre-score mode edit · Four Ball TEAM · universal Atajos','15 replicas · pre-score mode edit · Four Ball TEAM unnumbered · universal Atajos');
+          fs.writeFileSync(manualPath,manual);
+          fs.writeFileSync(gatePath,gate);
+          NODE
+          node scripts/manual-screen-parity-gate.mjs
+      - name: Commit synchronized manual
+        run: |
+          git config user.name "EPGCADDY"
+          git config user.email "jaimekirste@gmail.com"
+          git rm .github/workflows/manual-sync-fourball-team-label.yml
+          git add manual.html scripts/manual-screen-parity-gate.mjs
+          git commit -m "LAB manual: sync unnumbered Four Ball TEAM labels"
+          git pull --rebase origin laboratorio
+          node scripts/manual-screen-parity-gate.mjs
+          git push origin HEAD:laboratorio
