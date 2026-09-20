@@ -6,6 +6,7 @@ const manual=read("manual.html");
 const liveHub=read("live-hub.html");
 const auth=read("auth-gate.js");
 const shortcuts=read("shortcuts-ui.js");
+const cards=read("card-artifacts.js");
 
 const fail=[];
 const assert=(ok,msg)=>{if(!ok)fail.push(msg)};
@@ -16,7 +17,8 @@ const page=id=>{
 
 const pages={
  "01":["GOLF SCORE CARD GT","Bienvenido","CONTINUAR CON GOOGLE · EN CONFIGURACIÓN","CONTINUAR CON APPLE · PRÓXIMAMENTE","O ENTRA CON TU CORREO","Nombre · sólo al crear cuenta","Correo","Contraseña · mínimo 8 caracteres","INICIAR SESIÓN","CREAR CUENTA"],
- "03":["REGISTRO DE JUGADORES","DATO FALTANTE","CORREGIR","IGNORAR","SIN CATEGORÍA"],
+ "03":["REGISTRO DE JUGADORES","DATO FALTANTE","CORREGIR","IGNORAR","SIN CATEGORÍA","PARA CAMBIAR MODALIDAD DESPUÉS DE REGISTRAR SCORES, INICIA UNA NUEVA RONDA"],
+ "08":["RESULTADO FOUR BALL","TEAM 1","GROSS","NETO","GROSS TEAM","NETO TEAM","MEJOR NETO DEL TEAM"],
  "13":["TARJETA DE PUNTUACIÓN","YDS","HDCP","GROSS","NETO","+ / -","TARJETA DIGITAL","HISTORIAL","NUEVA RONDA","ATRÁS","BORRAR SCORES","BORRAR TODO"],
  "19":["AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18"],
  "20":["MONITOR DE TIEMPO","INICIO","FINAL","TIMER","RESET"],
@@ -32,7 +34,7 @@ const pages={
 };
 
 const sourceByPage={
- "01":auth,"03":app,"13":app,"19":app,"20":app,"22":app+"\n"+liveHub,"29":app,"30":app,"33":app,"34":app,"36":app,"38":app,"45":app,"49":shortcuts
+ "01":auth,"03":app,"08":app,"13":app,"19":app,"20":app,"22":app+"\n"+liveHub,"29":app,"30":app,"33":app,"34":app,"36":app,"38":app,"45":app,"49":shortcuts
 };
 
 for(const [id,tokens] of Object.entries(pages)){
@@ -56,7 +58,7 @@ for(const word of forbidden) assert(countWord(manual,word)===0,`Manual contiene 
 assert((manual.match(/class="page"/g)||[]).length===50,"Manual base debe conservar 50 páginas");
 assert((manual.match(/class="page tutorial-page"/g)||[]).length===10,"Manual debe incluir 10 páginas tutorial R3");
 assert(manual.includes('id="count">00 / 60</span>'),"Contador editorial debe marcar 60 páginas");
-assert((manual.match(/class="screen-replica"/g)||[]).length===14,"Manual debe tener 14 réplicas clave");
+assert((manual.match(/class="screen-replica"/g)||[]).length===15,"Manual debe tener 15 réplicas clave");
 assert(manual.includes("TUTORIAL TORNEOS · 01")&&manual.includes("TUTORIAL TORNEOS · 09"),"Capítulo tutorial R3 debe incluir los 9 tutoriales");
 assert(manual.includes("MIS FAVORITOS")&&manual.includes("REVISADO 100% · PLANTILLA ÚNICA"),"Capítulo tutorial R3 incompleto");
 assert(manual.includes("ATAJOS siempre contigo")&&manual.includes("ATAJOS UNIVERSAL · LAB R3"),"Falta tutorial universal ATAJOS");
@@ -67,6 +69,9 @@ assert(!shortcuts.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-1
 assert(app.includes('href="/manual"')&&app.includes(">GUÍA DE USUARIO</a>"),"GUÍA DE USUARIO debe apuntar a /manual");
 assert(!page("41").includes("Cuenta opcional"),"P41 conserva la cuenta opcional retirada");
 assert(page("41").includes("Cuenta personal"),"P41 debe documentar la cuenta personal");
+assert(page("03").includes("CAMBIO DE MODALIDAD")&&app.includes("canChangeConfiguredRoundMode"),"P03 debe documentar cambio de modalidad únicamente antes de registrar scores");
+assert(page("08").includes("TEAM 1")&&page("08").includes("GROSS TEAM")&&page("08").includes("NETO TEAM"),"P08 debe documentar Four Ball con terminología TEAM y resumen actual");
+assert(cards.includes('FOUR_BALL_TEAM_NAMES=["TEAM 1","TEAM 2","TEAM 3"]')&&cards.includes("<th>TEAM</th>"),"Tarjetas exportadas Four Ball deben conservar terminología TEAM");
 
 assert(app.includes('.mandatory-update{display:none;')&&app.includes('.mandatory-update.available{display:block}'),"ACTUALIZAR debe permanecer oculto cuando LAB está al día y mostrarse sólo cuando hay versión nueva");
 assert(page("45").includes("control de actualización permanece oculto")&&page("45").includes("no debe quedar superpuesto"),"P45 debe documentar la visibilidad condicional de ACTUALIZAR");
@@ -89,4 +94,4 @@ if(fail.length){
  process.exit(1);
 }
 console.log("MANUAL SCREEN PARITY: PASS");
-console.log("60 pages · 50 base + 10 tutorial R3 · 14 replicas · universal Atajos · 0 retired features · current LAB controls matched");
+console.log("60 pages · 50 base + 10 tutorial R3 · 15 replicas · pre-score mode edit · Four Ball TEAM · universal Atajos · 0 retired features · current LAB controls matched");
