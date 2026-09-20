@@ -10,7 +10,7 @@ const shortcuts=read("shortcuts-ui.js");
 const fail=[];
 const assert=(ok,msg)=>{if(!ok)fail.push(msg)};
 const page=id=>{
-  const m=manual.match(new RegExp('<section class="page" id="p'+id+'"[\\s\\S]*?<\\/section>'));
+  const m=manual.match(new RegExp('<section class="page(?: [^"]*)?" id="p'+id+'"[\\s\\S]*?<\\/section>'));
   return m?m[0]:"";
 };
 
@@ -45,6 +45,26 @@ for(const [id,tokens] of Object.entries(pages)){
  }
 }
 
+const tutorialPages={
+ "50":["ÍNDICE DE TORNEOS","8 TUTORIALES","Abrir Atajos","Ir al Centro de Torneos","Elegir un torneo","Ver General","Categorías y jugadores","Mis Favoritos","Gestionar Mis Favoritos","Volver a mi Score Card"],
+ "51":["TUTORIAL TORNEOS · 01","Abrir Atajos","ATAJOS","MI SCORE CARD","CENTRO DE TORNEOS"],
+ "52":["TUTORIAL TORNEOS · 02","Ir al Centro de Torneos","ATAJOS","CENTRO DE TORNEOS"],
+ "53":["TUTORIAL TORNEOS · 03","Elegir un torneo","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS"],
+ "54":["TUTORIAL TORNEOS · 04","Ver General","GENERAL","ATAJOS"],
+ "55":["TUTORIAL TORNEOS · 05","Buscar categorías y jugadores","CATEGORÍAS","BUSCAR JUGADOR","SEGUIR"],
+ "56":["TUTORIAL TORNEOS · 06","Abrir Mis Favoritos","MIS FAVORITOS","JUGADORES","GRUPOS"],
+ "57":["TUTORIAL TORNEOS · 07","Gestionar Mis Favoritos","SEGUIR","DEJAR DE SEGUIR"],
+ "58":["TUTORIAL TORNEOS · 08","Volver a mi Score Card","ATAJOS","MI SCORE CARD"]
+};
+for(const [id,tokens] of Object.entries(tutorialPages)){
+ const p=page(id);
+ assert(Boolean(p),`P${id}: tutorial ausente`);
+ assert(p.includes('tutorial-page'),`P${id}: plantilla tutorial R2 ausente`);
+ for(const token of tokens) assert(p.includes(token),`P${id}: tutorial no contiene "${token}"`);
+ assert(p.includes("MATRIZ TÉCNICA DE REVISIÓN"),`P${id}: matriz técnica ausente`);
+ assert(p.includes("REVISADO 100% · PLANTILLA ÚNICA"),`P${id}: certificación R2 ausente`);
+}
+
 const forbidden=["MIC","MICRÓFONO","MICROFONO","REGISTRO POR VOZ","DICTADO","CADDIE UNIVERSAL","INTELIGENCIA ARTIFICIAL","CLIMA","GPS","WOLF","VEGAS","DOTS"];
 const countWord=(s,w)=>{
  const e=w.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
@@ -53,8 +73,10 @@ const countWord=(s,w)=>{
 };
 for(const word of forbidden) assert(countWord(manual,word)===0,`Manual contiene función retirada: ${word}`);
 
-assert((manual.match(/class="page"/g)||[]).length===50,"Manual debe tener 50 páginas");
+assert((manual.match(/class="page(?: [^"]*)?"/g)||[]).length===59,"Manual debe tener 59 páginas");
 assert((manual.match(/class="screen-replica"/g)||[]).length===14,"Manual debe tener 14 réplicas clave");
+assert((manual.match(/class="page tutorial-page"/g)||[]).length===9,"Manual debe tener 9 páginas tutorial R2");
+assert(manual.includes('id="count">00 / 59</span>'),"Contador editorial debe marcar 59 páginas");
 assert(app.includes('href="/manual"')&&app.includes(">GUÍA DE USUARIO</a>"),"GUÍA DE USUARIO debe apuntar a /manual");
 assert(!page("41").includes("Cuenta opcional"),"P41 conserva la cuenta opcional retirada");
 assert(page("41").includes("Cuenta personal"),"P41 debe documentar la cuenta personal");
@@ -68,7 +90,8 @@ const cssContracts=[
  ["tiempo","#p20 .screen-replica","min-height:48px"],
  ["live","#p22 .screen-replica","min-height:42px"],
  ["tarjeta-final","#p30 .screen-replica","font-size:24px"],
- ["historial","#p38 .screen-replica","min-height:52px"]
+ ["historial","#p38 .screen-replica","min-height:52px"],
+ ["tutorial-r2",".tutorial-page h1","--tut-h1:44px"]
 ];
 for(const [name,selector,needle] of cssContracts){
  assert(manual.includes(selector)&&manual.includes(needle),`Contrato visual ausente: ${name}`);
@@ -80,4 +103,4 @@ if(fail.length){
  process.exit(1);
 }
 console.log("MANUAL SCREEN PARITY: PASS");
-console.log("50 pages · 14 replicas · 0 retired features · current LAB controls matched");
+console.log("59 pages · 14 replicas · 9 tutorial pages R2 · 0 retired features · current LAB controls matched");
