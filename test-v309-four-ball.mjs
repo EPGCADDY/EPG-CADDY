@@ -143,7 +143,7 @@ assert.match(html,/function fourBallPairBestRow/,"Debe existir una sola fila Net
 assert.match(html,/GROSS TEAM/,"Resumen Four Ball debe mostrar Gross Team");
 assert.match(html,/NETO TEAM/,"Resumen Four Ball debe mostrar Neto Team");
 assert.match(html,/function fourBallTeamTotals/,"Four Ball debe calcular Gross y Neto del Team");
-assert.match(html,/TEAM \${teamIndex\+1}/,"Los grupos Four Ball deben identificarse como TEAM");
+assert.doesNotMatch(html,/TEAM \\${teamIndex\\+1}/,"Los encabezados Four Ball no deben numerar TEAM");
 assert.match(html,/NETO TEAM/,"Fila del Team debe mostrar un único Neto Team");
 assert.doesNotMatch(html,/standing\.best\?" · ★":""/,"No debe repetir el resultado de pareja dentro de cada jugador");
 assert.match(html,/four-ball-pair-best-row td\{height:54px/,"Resultado de pareja debe tener altura propia para evitar traslape");
