@@ -19,6 +19,7 @@ const SHELL=[
   "/docs/manual/v311/manual-pages-17-35.json",
   "/7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg",
   "/assets/official-logos/golf-score-card-gt-pwa-v345-192.png",
+  "/assets/official-logos/golf-score-card-gt-horizontal-original.webp",
   "/assets/official-logos/golf-score-card-gt-pwa-v345-512.png",
   "/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png",
   "/docs/manual/v311/manual-scg-pwa-v345-192.png",
