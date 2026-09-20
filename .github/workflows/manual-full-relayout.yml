@@ -1,6 +1,7 @@
 name: LAB manual full re-layout
 on:
-  workflow_dispatch:
+  push:
+    branches: [laboratorio]
 permissions:
   contents: write
 jobs:
