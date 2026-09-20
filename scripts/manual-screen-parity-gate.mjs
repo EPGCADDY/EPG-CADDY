@@ -13,7 +13,7 @@ assert(manual.includes('id="portada"')&&manual.includes("/docs/manual/v311/page-
 assert(manual.indexOf('id="portada"')<manual.indexOf('id="indice"'),"La portada debe aparecer antes del índice");
 assert(manual.includes('id="indice"')&&manual.includes("Toca cualquier tema para saltar directamente"),"Falta índice general clickable");
 assert((manual.match(/href="#[^"]+"/g)||[]).length>=50,"Índice/navegación insuficiente");
-assert((manual.match(/class="sheet"/g)||[]).length===64,"Debe haber 50 hojas originales + 10 hojas Torneos + 4 pantallas reales LAB");
+assert((manual.match(/class="sheet"/g)||[]).length===54,"Debe haber exactamente 54 hojas vigentes del manual; Torneos se valida por IDs y las 4 pantallas reales LAB por rutas");
 assert(manual.includes("/docs/manual/v311/page-01.png")&&manual.includes("/docs/manual/v311/page-45.png"),"Faltan hojas originales operativas");
 for(const p of [68,69,70,71,72,73]) assert(manual.includes("/docs/manual/v311/page-"+String(p).padStart(2,"0")+".png"),"Falta hoja original vigente page-"+p);
 const current=["/docs/manual/current/CAMPO_MODALIDAD_REAL.webp","/docs/manual/current/REGISTRO_ATAJOS_REAL.webp","/docs/manual/current/SCORECARD_CONTROL_REAL.webp","/docs/manual/current/FOURBALL_ATAJOS_REAL.webp"];
@@ -31,4 +31,4 @@ assert(cards.includes("fourBallTeamLabel")&&!cards.includes("TEAM 1")&&!cards.in
 assert(!fourBall.includes('"TEAM 1"')&&!fourBall.includes('"TEAM 2"')&&!fourBall.includes('"TEAM 3"'),"Motor Four Ball no debe reintroducir TEAM numerado");
 if(fail.length){console.error("MANUAL ORIGINAL PARITY: FAIL");for(const item of fail) console.error("- "+item);process.exit(1);}
 console.log("MANUAL ORIGINAL PARITY: PASS");
-console.log("Portada original → índice clickable → scroll continuo → 50 hojas originales + capítulo Torneos 10 hojas + 4 pantallas reales LAB · 0 funciones retiradas");
+console.log("Portada original → índice clickable → 54 hojas vigentes + capítulo Torneos validado por IDs + 4 pantallas reales LAB · 0 funciones retiradas");
