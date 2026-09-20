@@ -207,6 +207,15 @@ jobs:
               await page.locator('#normalRoundButton').click().catch(()=>{});
               await page.waitForTimeout(120);
               await page.evaluate(()=>{
+                const overlay=document.getElementById('setupOverlay');
+                if(overlay){overlay.classList.add('visible');overlay.setAttribute('aria-hidden','false');overlay.style.display='block'}
+                const s1=document.getElementById('setupStep1'); if(s1)s1.classList.remove('hidden');
+                const detected=document.getElementById('detectedPlayers'); if(detected)detected.classList.add('hidden');
+              });
+              await page.waitForTimeout(80);
+              await page.locator('#setupOverlay').screenshot({path:'full-parity/app/04a-setup-current.png'});
+              results.app.push('setup-current');
+              await page.evaluate(()=>{
                 const overlay=document.getElementById('setupOverlay'); if(overlay){overlay.classList.add('visible');overlay.setAttribute('aria-hidden','false')}
                 const detected=document.getElementById('detectedPlayers'); if(detected)detected.classList.remove('hidden');
                 const select=document.querySelector('[data-draft-category]');
@@ -285,6 +294,8 @@ jobs:
       - name: Publish current physical app screens into manual assets
         run: |
           mkdir -p docs/manual/current
+          cp full-parity/app/01-access.png docs/manual/current/APP_ACCESS.png
+          cp full-parity/app/04a-setup-current.png docs/manual/current/APP_SETUP_CURRENT.png
           cp full-parity/app/02-scorecard-atajos.png docs/manual/current/APP_SCORECARD_ATAJOS.png
           cp full-parity/app/03-atajos-overlay.png docs/manual/current/APP_ATAJOS_OVERLAY.png
           cp full-parity/app/04-campeonato-registro.png docs/manual/current/APP_CAMPEONATO_REGISTRO.png
