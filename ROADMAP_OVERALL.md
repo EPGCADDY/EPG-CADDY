@@ -1228,3 +1228,14 @@ Micrófono: el propietario informa solicitud iPhone. No reproducida ni atribuida
 Se retiran currentBrowserCoordinates y las funciones de carga, temporizadores y representación de clima en index-grupal.html; se eliminan ambos bloques visibles de registro y tarjeta. Permissions-Policy incorpora geolocation=() además de microphone=(). Identidad y worker LAB-MANUAL-NO-GPS-20260919. Se mantienen campo, yardas, par, rating, slope, fuentes y logo. No se alteran datos históricos ni la maestra.
 
 Pruebas manuales técnicas PASS; regresión amplía bloqueo a GPS y llamadas weather en módulos cargados. La comprobación visual autenticada del Preview y la configuración DATABASE_URL de invitaciones permanecen pendientes; retirar clima no resuelve almacenamiento.
+
+
+## ACTUALIZACIÓN OVERALL · CATEGORÍAS / CAMPEONATO / ATAJOS / MANUAL · 2026-09-20
+- `shortcuts-ui.js`: ATAJOS universal operativo; CATEGORÍAS muestra la lista completa vigente.
+- Categorías globales: CAMPEONATO · A · B · C · D · SENIOR · SUPER SENIOR · FEMENINA.
+- CAMPEONATO preconfigura MARCAS NEGRAS en Registro y se fuerza como NEGRAS en Score Cards/artefactos/LIVE.
+- Stableford principal e independiente incorporan las 8 categorías y matrices oficiales de tees; CAMPEONATO usa Negro.
+- Manual de Usuario actualizado con categorías completas, pantalla física vigente de Monitor de Tiempo (INICIO · FINAL · TIMER · RESET) y pantallas actuales de Registro/Score Card/Torneos/ATAJOS/Campeonato.
+- Auditoría física reforzada: Tarjeta Final, Corrección Oficial e Historial deben abrirse por funciones reales; se miden traslapes de ATAJOS/ACTUALIZADO con controles críticos.
+- `LAB · MANUAL 04 / ACTUALIZADO` se oculta al abrir overlays para impedir solapamiento de encabezados y controles.
+- Manual físico vigente: 74 hojas = 51 base + 9 pantallas actuales + 10 Torneos + 4 pantallas LAB.
