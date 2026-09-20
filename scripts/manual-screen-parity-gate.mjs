@@ -42,7 +42,9 @@ assert(app.includes('id="roundTimerToggle"')&&app.includes('aria-label="Pausar o
 assert(app.includes('id="resetClockButton"')&&app.includes("¿CONFIRMAS REINICIAR EL CRONÓMETRO A 00:00:00?"),"LAB debe mantener RESET con confirmación");
 for(const id of ["torneos","torneos-01","torneos-02","torneos-03","torneos-04","torneos-05","torneos-06","torneos-07","torneos-08","torneos-09"]) assert(manual.includes('id="'+id+'"'),"Falta hoja del capítulo Torneos: "+id);
 for(const token of ["CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS","ATAJOS siempre contigo"]) assert(manual.includes(token),"Capítulo Torneos incompleto: "+token);
-for(const removed of ["MIC","MICRÓFONO","MICROFONO","REGISTRO POR VOZ","DICTADO","CADDIE UNIVERSAL","INTELIGENCIA ARTIFICIAL","CLIMA","GPS","WOLF","VEGAS","DOTS"]) assert(!hasWord(manual,removed),"El manual reintroduce función retirada: "+removed);
+for(const removed of ["REGISTRO POR VOZ","DICTADO","CADDIE UNIVERSAL","INTELIGENCIA ARTIFICIAL","CLIMA","GPS","WOLF","VEGAS","DOTS"]) assert(!hasWord(manual,removed),"El manual reintroduce función retirada: "+removed);
+const manualWithoutRemovalNotice=manual.replace(/no existe entrada por micrófono para crear la ronda/gi,"FUNCIÓN RETIRADA");
+for(const removed of ["MIC","MICRÓFONO","MICROFONO"]) assert(!hasWord(manualWithoutRemovalNotice,removed),"El manual reintroduce control de micrófono retirado: "+removed);
 assert(!manual.includes("/docs/manual/layout/page-20.png"),"No debe reintroducir Scores por voz");
 for(let p=46;p<=67;p++) assert(!manual.includes("/docs/manual/layout/page-"+String(p).padStart(2,"0")+".png"),"No debe reintroducir hoja retirada page-"+p);
 assert(app.includes("shortcuts-ui.js"),"Score Card debe cargar ATAJOS");
