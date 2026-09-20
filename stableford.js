@@ -19,7 +19,7 @@
   const ALLOWED_COURSES=Object.freeze(["country_club","pulte","san_isidro","mayan_golf"]);
   const CATEGORY_CONFIG=Object.freeze({
     senior:Object.freeze({key:"senior",label:"SENIOR",handicap:0,tee:"Blanco",rankingPlaces:5,captainChoices:3}),
-    super_senior:Object.freeze({key:"super_senior",label:"S. SENIOR",handicap:0,tee:"Amarillo",rankingPlaces:4,captainChoices:2})
+    super_senior:Object.freeze({key:"super_senior",label:"SUPER SENIOR",handicap:0,tee:"Amarillo",rankingPlaces:4,captainChoices:2})
   });
   const TOURNAMENT_COURSES=Object.freeze({
     san_isidro:Object.freeze({
