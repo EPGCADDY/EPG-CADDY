@@ -315,6 +315,12 @@ jobs:
           cp full-parity/app/overlay-history-atajos.png docs/manual/current/APP_HISTORIAL_ATAJOS.png
           cp full-parity/app/07-tournament-hub.png docs/manual/current/APP_TORNEOS_HUB.png
           cp full-parity/app/08-tournament-hub-atajos.png docs/manual/current/APP_TORNEOS_ATAJOS.png
+          cp full-parity/app/mode-stableford.png docs/manual/current/APP_MODE_STABLEFORD.png
+          cp full-parity/app/mode-match_play.png docs/manual/current/APP_MODE_MATCH_PLAY.png
+          cp full-parity/app/mode-four_ball.png docs/manual/current/APP_MODE_FOUR_BALL.png
+          cp full-parity/app/mode-skins.png docs/manual/current/APP_MODE_SKINS.png
+          cp full-parity/app/mode-universales.png docs/manual/current/APP_MODE_UNIVERSALES.png
+          cp full-parity/app/mode-practice.png docs/manual/current/APP_MODE_PRACTICE.png
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/manual/current/APP_*.png
