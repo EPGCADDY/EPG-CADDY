@@ -2800,9 +2800,10 @@ function roundHasRecordedScores(value=round){
 }
 function canChangeConfiguredRoundMode(){
   if(!rosterEditMode||!round.configured)return true;
-  if(!roundHasRecordedScores(round))return true;
-  $("setupStatus").textContent="PARA CAMBIAR MODALIDAD DESPUÉS DE REGISTRAR SCORES, INICIA UNA NUEVA RONDA";
-  return false;
+  if(roundHasRecordedScores(round)){
+    $("setupStatus").textContent="MODALIDAD EDITABLE · LOS SCORES EXISTENTES SE CONSERVAN";
+  }
+  return true;
 }
 function selectGeneralRoundMode(mode){
   if(!canChangeConfiguredRoundMode())return false;
