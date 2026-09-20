@@ -1340,7 +1340,7 @@ function enforceCanonicalDraftNames(){
 }
 const PLAYER_SLOT_SEQUENCE=[1,3,5,2,4,6];
 const TOURNAMENT_CATEGORIES={championship:"CAMPEONATO",a:"A",b:"B",c:"C",d:"D",senior:"SENIOR",super_senior:"SUPER SENIOR",female:"FEMENINA",none:"SIN CATEGORÍA"};
-const TOURNAMENT_PRELOAD_CATEGORIES={a:"A",b:"B",c:"C",d:"D",senior:"SENIOR",super_senior:"SUPER SENIOR",female:"FEMENINA"};
+const TOURNAMENT_PRELOAD_CATEGORIES={championship:"CAMPEONATO",a:"A",b:"B",c:"C",d:"D",senior:"SENIOR",super_senior:"SUPER SENIOR",female:"FEMENINA"};
 const CATEGORY_DEFAULT_TEES={championship:"Negro",a:"Azul",b:"Blanco",c:"Blanco",d:"Blanco",female:"Rojo",senior:"Blanco",super_senior:"Amarillo"};
 function normalizeTournamentCategory(value){const raw=String(value||"").trim().toLowerCase().replace(/[.\s-]+/g,"_");return TOURNAMENT_CATEGORIES[raw]?raw:""}
 function tournamentCategoryLabel(value){const key=normalizeTournamentCategory(value);return key?TOURNAMENT_CATEGORIES[key]:"SIN CATEGORÍA"}
