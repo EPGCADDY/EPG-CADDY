@@ -54,7 +54,52 @@ const countWord=(s,w)=>{
  const re=new RegExp("(^|[^a-záéíóúüñ0-9])"+e+"([^a-záéíóúüñ0-9]|$)","g");
  return (s.toLowerCase().match(re)||[]).length;
 };
+
 for(const word of forbidden) assert(countWord(manual,word)===0,`Manual contiene función retirada: ${word}`);
+
+// APP ↔ MANUAL completo: páginas, pantallas reales, ATAJOS y Torneos.
+for(let i=0;i<=60;i++){
+ const id=String(i).padStart(2,"0");
+ assert(Boolean(page(id)),`P${id}: falta en el manual completo`);
+}
+const currentImages=[
+ "/docs/manual/current/manual-real-campo-modalidad.webp",
+ "/docs/manual/current/manual-real-registro-atajos.webp",
+ "/docs/manual/current/manual-real-scorecard-control.webp",
+ "/docs/manual/current/manual-real-fourball-atajos.webp"
+];
+for(const image of currentImages) assert(manual.includes(image),`Falta captura física vigente: ${image}`);
+assert(page("02").includes(currentImages[0]),"P02 debe incluir Campo/Modalidad real vigente");
+assert(page("03").includes(currentImages[1]),"P03 debe incluir Registro real vigente con ATAJOS");
+assert(page("13").includes(currentImages[2]),"P13 debe incluir Score Card/Control Manual real vigente");
+assert(page("08").includes(currentImages[3]),"P08 debe incluir Four Ball físico corregido");
+
+assert(app.includes("shortcuts-ui.js"),"Score Card debe cargar ATAJOS universal");
+assert(liveHub.includes("shortcuts-ui.js"),"Centro de Torneos debe cargar ATAJOS universal");
+const shortcutDestinations=["MI SCORE CARD","CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS","+ SEGUIR OTRO TORNEO","SALIR DE ESTE TORNEO","DEJAR DE SEGUIR MIS FAVORITOS"];
+for(const token of shortcutDestinations) assert(shortcuts.includes(token),`ATAJOS LAB incompleto: ${token}`);
+for(const id of ["03","08","13","14","29","30","36","38","49","59"]){
+ assert(page(id).includes("ATAJOS"),`P${id} debe documentar ATAJOS visible en su pantalla operativa`);
+}
+
+const liveHubControls=["CENTRO DE TORNEOS","+ AGREGAR OTRO TORNEO","VER TORNEO","ENTRAR","GENERAL","CATEGORÍAS","BUSCAR POR NOMBRE","MIS FAVORITOS","VOLVER A MI SCORE CARD","JUGADORES EN VIVO","BUSCAR","VER DETALLE LIVE DE CATEGORÍA","COMPARTIR","ACTUALIZAR","PANTALLA PÚBLICA","LIMPIAR MONITOR INDIVIDUAL","AGREGAR","¿A QUIÉN QUIERES SEGUIR?"];
+for(const token of liveHubControls) assert(liveHub.includes(token),`Centro de Torneos LAB no contiene "${token}"`);
+const tournamentManualMap={
+ "22":["CENTRO DE TORNEOS","+ AGREGAR OTRO TORNEO","VER TORNEO","ENTRAR","GENERAL","CATEGORÍAS","BUSCAR POR NOMBRE","MIS FAVORITOS","VOLVER A MI SCORE CARD"],
+ "52":["CENTRO DE TORNEOS","+ AGREGAR OTRO TORNEO","VER TORNEO","ENTRAR"],
+ "53":["CENTRO DE TORNEOS","VER TORNEO","ENTRAR"],
+ "54":["GENERAL","COMPARTIR","ACTUALIZAR","PANTALLA PÚBLICA"],
+ "55":["CATEGORÍAS","BUSCAR POR NOMBRE","JUGADORES EN VIVO","BUSCAR","VER DETALLE LIVE DE CATEGORÍA","BUSCAR JUGADOR"],
+ "56":["MIS FAVORITOS"],
+ "57":["AGREGAR","LIMPIAR MONITOR INDIVIDUAL","¿A QUIÉN QUIERES SEGUIR?"],
+ "58":["MI SCORE CARD","VOLVER A MI SCORE CARD"],
+ "59":["Registro","Score Card","Control Manual","Four Ball","Tarjeta Final","Historial","Corrección","Torneos"]
+};
+for(const [id,tokens] of Object.entries(tournamentManualMap)){
+ const p=page(id);
+ for(const token of tokens) assert(p.includes(token),`P${id}: falta paridad vigente "${token}"`);
+}
+
 
 assert((manual.match(/class="page"/g)||[]).length===50,"Manual base debe conservar 50 páginas");
 assert((manual.match(/class="page tutorial-page"/g)||[]).length===11,"Manual debe incluir 11 páginas tutorial R4");
@@ -99,4 +144,4 @@ if(fail.length){
  process.exit(1);
 }
 console.log("MANUAL SCREEN PARITY: PASS");
-console.log("61 pages · 50 base + 11 tutorial R4 · 15 replicas · pre-score mode edit · Four Ball TEAM unnumbered · universal Atajos · 0 retired features · current LAB controls matched");
+console.log("61 pages · APP↔MANUAL full parity · 4 current physical screenshots · tournament index/routes synced · operational ATAJOS coverage · 15 replicas · Four Ball TEAM unnumbered · 0 retired features");
