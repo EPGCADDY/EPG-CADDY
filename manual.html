@@ -55,6 +55,16 @@ main{max-width:960px;margin:auto;padding:18px max(12px,env(safe-area-inset-right
  .current-copy{margin:0 10px 10px;padding:12px}
  .current-copy h3{font-size:14px}.current-copy p{font-size:13px}
 }
+
+.current-function-sheet .screen-stage.focus-app{
+  height:min(640px,62dvh);overflow:hidden;border-bottom:1px solid #d5dedf;
+}
+.current-function-sheet .screen-stage.focus-app img{
+  width:100%;height:100%;max-height:none;object-fit:cover;object-position:center 42%;
+}
+@media(max-width:640px){
+ .current-function-sheet .screen-stage.focus-app{height:min(610px,60dvh)}
+}
 </style></head><body>
 <header class="top"><strong>GOLF SCORE CARD GT · MANUAL DE FUNCIONES</strong><a href="#indice">ÍNDICE</a></header>
 <main>
@@ -63,11 +73,11 @@ main{max-width:960px;margin:auto;padding:18px max(12px,env(safe-area-inset-right
 <a href="#actual-registro"><b>ACT</b><span>REGISTRO ACTUAL · ATAJOS</span></a><a href="#actual-scorecard"><b>ACT</b><span>SCORE CARD ACTUAL · ATAJOS</span></a><a href="#actual-cierre"><b>ACT</b><span>TARJETA FINAL ACTUAL</span></a><a href="#actual-correccion"><b>ACT</b><span>CORRECCIÓN OFICIAL ACTUAL</span></a><a href="#actual-historial"><b>ACT</b><span>HISTORIAL ACTUAL</span></a><a href="#actual-torneos"><b>ACT</b><span>CENTRO DE TORNEOS ACTUAL</span></a><a href="#actual-torneos-atajos"><b>ACT</b><span>TORNEOS + ATAJOS ACTUAL</span></a><a href="#actual-atajos"><b>ACT</b><span>ATAJOS ACTUAL</span></a><a href="#actual-campeonato-score"><b>ACT</b><span>CAMPEONATO · SCORE CARD ACTUAL</span></a><div class="toc-divider">CAPÍTULO · TORNEOS Y ATAJOS</div><a href="#torneos"><b>51</b><span>Índice visual de Torneos</span></a><a href="#torneos-01"><b>52</b><span>Abrir Atajos</span></a><a href="#torneos-02"><b>53</b><span>Centro de Torneos</span></a><a href="#torneos-03"><b>54</b><span>Elegir un torneo</span></a><a href="#torneos-04"><b>55</b><span>General</span></a><a href="#torneos-05"><b>56</b><span>Categorías y Buscar Jugador</span></a><a href="#torneos-06"><b>57</b><span>Mis Favoritos</span></a><a href="#torneos-07"><b>58</b><span>Gestionar Mis Favoritos</span></a><a href="#torneos-08"><b>59</b><span>Volver a Mi Score Card</span></a><a href="#torneos-09"><b>60</b><span>ATAJOS siempre contigo</span></a><div class="toc-divider">PANTALLAS REALES ACTUALES · LAB</div><a href="#lab-campo"><b>61</b><span>Campo y modalidad · pantalla real LAB</span></a><a href="#lab-registro"><b>62</b><span>Registro de jugadores + ATAJOS · pantalla real LAB</span></a><a href="#lab-scorecard"><b>63</b><span>Score Card / Control Manual · pantalla real LAB</span></a><a href="#lab-fourball"><b>64</b><span>Four Ball corregido + ATAJOS · pantalla real LAB</span></a></div></section>
 <div class="notice">Se conserva la línea gráfica original del manual y únicamente las funciones vigentes. Al final se incorporan capturas reales actuales de LAB para Campo/Modalidad, Registro + ATAJOS, Score Card, Four Ball corregido y Monitor de Tiempo.</div>
 <section class="sheet current-function-sheet" id="inicio">
-<div class="sheet-head"><strong>ACT</strong><h2>Inicio general</h2><a href="#indice">ÍNDICE</a></div>
+<div class="sheet-head"><strong>01</strong><h2>Inicio general</h2><a href="#indice">ÍNDICE</a></div>
 <div class="screen-stage"><img src="/docs/manual/current/CAMPO_MODALIDAD_REAL.webp" alt="Selección actual de campo y modalidad" loading="lazy"></div><div class="current-copy"><h3>QUÉ HACES</h3><p>Selecciona campo y modalidad. El registro vigente es manual; no existe entrada por micrófono para crear la ronda.</p></div><div class="current-copy"><h3>QUÉ HACE LA APP</h3><p>Conserva la selección y te lleva al registro de jugadores.</p></div>
 <div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
 </section><section class="sheet current-function-sheet" id="registro">
-<div class="sheet-head"><strong>ACT</strong><h2>Registro de jugadores</h2><a href="#indice">ÍNDICE</a></div>
+<div class="sheet-head"><strong>02</strong><h2>Registro de jugadores</h2><a href="#indice">ÍNDICE</a></div>
 <div class="screen-stage"><img src="/docs/manual/current/REGISTRO_ATAJOS_REAL.webp" alt="Registro actual de jugadores con ATAJOS" loading="lazy"></div><div class="current-copy"><h3>DATOS</h3><p>Nombre, categoría, HDCP, marcas y WhatsApp opcional. Completa los campos visibles y confirma.</p></div><div class="current-copy"><h3>ATAJOS</h3><p>El acceso ATAJOS permanece disponible sin alterar el registro.</p></div>
 <div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
 </section><section class="sheet" id="confirmacion">
@@ -75,29 +85,29 @@ main{max-width:960px;margin:auto;padding:18px max(12px,env(safe-area-inset-right
 <img src="/docs/manual/layout/page-03.png" alt="Confirmación general" loading="eager">
 <div class="sheet-nav"><a href="#registro">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#stableford-registro">SIGUIENTE →</a></div>
 </section><section class="sheet current-function-sheet" id="stableford-registro">
-<div class="sheet-head"><strong>ACT</strong><h2>Registro Stableford</h2><a href="#indice">ÍNDICE</a></div>
+<div class="sheet-head"><strong>04</strong><h2>Registro Stableford</h2><a href="#indice">ÍNDICE</a></div>
 <div class="screen-stage"><img src="/docs/manual/current/APP_CAMPEONATO_REGISTRO.png" alt="Registro actual de torneo y categorías" loading="lazy"></div><div class="current-copy"><h3>CATEGORÍAS VIGENTES</h3><p>CAMPEONATO, A, B, C, D, SENIOR, SUPER SENIOR y FEMENINA.</p></div><div class="current-copy"><h3>MARCAS</h3><p>CAMPEONATO usa NEGRAS; la app aplica las marcas configuradas por categoría.</p></div>
 <div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
 </section><section class="sheet current-function-sheet" id="practica">
-<div class="sheet-head"><strong>ACT</strong><h2>Score Card - Práctica</h2><a href="#indice">ÍNDICE</a></div>
+<div class="sheet-head"><strong>05</strong><h2>Score Card - Práctica</h2><a href="#indice">ÍNDICE</a></div>
 <div class="screen-stage"><img src="/docs/manual/current/SCORECARD_CONTROL_REAL.webp" alt="Score Card actual de práctica y control manual" loading="lazy"></div><div class="current-copy"><h3>PRÁCTICA</h3><p>Permite registrar una ronda de práctica sin generar un récord oficial.</p></div><div class="current-copy"><h3>INGRESO</h3><p>Los scores se ingresan con los controles manuales visibles de la tarjeta.</p></div>
 <div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
 </section><section class="sheet current-function-sheet" id="ronda">
-<div class="sheet-head"><strong>ACT</strong><h2>Ronda general</h2><a href="#indice">ÍNDICE</a></div>
+<div class="sheet-head"><strong>06</strong><h2>Ronda general</h2><a href="#indice">ÍNDICE</a></div>
 <div class="screen-stage"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Score Card actual de ronda" loading="lazy"></div><div class="current-copy"><h3>Ronda activa</h3><p>La tarjeta actual muestra scores, netos, navegación, resumen, cronómetro y ATAJOS.</p></div><div class="current-copy"><h3>Operación</h3><p>Usa los botones y controles visibles; las funciones retiradas no forman parte de esta pantalla.</p></div>
 <div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
 </section><section class="sheet current-function-sheet" id="control-manual">
-<div class="sheet-head"><strong>ACT</strong><h2>Control manual</h2><a href="#indice">ÍNDICE</a></div>
+<div class="sheet-head"><strong>07</strong><h2>Control manual</h2><a href="#indice">ÍNDICE</a></div>
 <div class="screen-stage"><img src="/docs/manual/current/SCORECARD_CONTROL_REAL.webp" alt="Control manual actual de Score Card" loading="lazy"></div><div class="current-copy"><h3>Control vigente</h3><p>Selecciona hoyo, registra Gross y navega con los controles manuales actuales.</p></div><div class="current-copy"><h3>Resultado</h3><p>La app recalcula Neto, +/- y acumulados automáticamente.</p></div>
 <div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
-</section><section class="sheet" id="match-play">
+</section><section class="sheet current-function-sheet" id="match-play">
 <div class="sheet-head"><strong>08</strong><h2>Match Play</h2><a href="#indice">ÍNDICE</a></div>
-<img src="/docs/manual/layout/page-08.png" alt="Match Play" loading="lazy">
-<div class="sheet-nav"><a href="#control-manual">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#four-ball">SIGUIENTE →</a></div>
-</section><section class="sheet" id="four-ball">
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Score Card actual usada como referencia visual de Match Play" loading="lazy"></div><div class="current-copy"><h3>JUGADORES</h3><p>Match Play requiere 2, 4 o 6 jugadores: una, dos o tres parejas independientes.</p></div><div class="current-copy"><h3>CÁLCULO</h3><p>Cada hoyo compara NETO. El estado se expresa AS, UP o DOWN; cada pareja puede cerrar en un hoyo distinto.</p></div><div class="current-copy"><h3>TARJETA</h3><p>Conserva la tarjeta Normal para Gross, HDCP y Neto. Sólo ganador/perdedor llevan flecha; empate queda sin símbolo.</p></div>
+<div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
+</section><section class="sheet current-function-sheet" id="four-ball">
 <div class="sheet-head"><strong>09</strong><h2>Four Ball</h2><a href="#indice">ÍNDICE</a></div>
-<img src="/docs/manual/layout/page-09.png" alt="Four Ball" loading="lazy">
-<div class="sheet-nav"><a href="#match-play">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#campo-1">SIGUIENTE →</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/FOURBALL_ATAJOS_REAL.webp" alt="Four Ball actual con TEAM y ATAJOS" loading="lazy"></div><div class="current-copy"><h3>TEAMS</h3><p>Four Ball registra 1, 2 o 3 TEAMS de 2 jugadores. Cada jugador mantiene su HCP individual.</p></div><div class="current-copy"><h3>MEJOR NETO</h3><p>En cada hoyo cuenta el mejor Neto del TEAM. La Score Card usa una sola fila limpia `NETO TEAM`.</p></div><div class="current-copy"><h3>ROTULACIÓN</h3><p>Los encabezados visibles usan `TEAM · NOMBRES`, sin TEAM 1/2/3 y sin estrellas redundantes.</p></div>
+<div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
 </section><section class="sheet" id="campo-1">
 <div class="sheet-head"><strong>10</strong><h2>Información de campos I</h2><a href="#indice">ÍNDICE</a></div>
 <img src="/docs/manual/layout/page-10.png" alt="Información de campos I" loading="lazy">
@@ -234,18 +244,18 @@ main{max-width:960px;margin:auto;padding:18px max(12px,env(safe-area-inset-right
 <div class="sheet-head"><strong>37</strong><h2>Stableford - operación</h2><a href="#indice">ÍNDICE</a></div>
 <img src="/docs/manual/layout/page-38.png" alt="Stableford - operación" loading="lazy">
 <div class="sheet-nav"><a href="#stableford-objetivo">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#match-play-2">SIGUIENTE →</a></div>
-</section><section class="sheet" id="match-play-2">
-<div class="sheet-head"><strong>38</strong><h2>Match Play</h2><a href="#indice">ÍNDICE</a></div>
-<img src="/docs/manual/layout/page-39.png" alt="Match Play" loading="lazy">
-<div class="sheet-nav"><a href="#stableford-operacion">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#four-ball-2">SIGUIENTE →</a></div>
-</section><section class="sheet" id="four-ball-2">
-<div class="sheet-head"><strong>39</strong><h2>Four Ball</h2><a href="#indice">ÍNDICE</a></div>
-<img src="/docs/manual/layout/page-40.png" alt="Four Ball" loading="lazy">
-<div class="sheet-nav"><a href="#match-play-2">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#practica-2">SIGUIENTE →</a></div>
-</section><section class="sheet" id="practica-2">
-<div class="sheet-head"><strong>40</strong><h2>Score Card - Práctica</h2><a href="#indice">ÍNDICE</a></div>
-<img src="/docs/manual/layout/page-41.png" alt="Score Card - Práctica" loading="lazy">
-<div class="sheet-nav"><a href="#four-ball-2">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#juegos">SIGUIENTE →</a></div>
+</section><section class="sheet current-function-sheet" id="match-play-2">
+<div class="sheet-head"><strong>39</strong><h2>Match Play · operación vigente</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Score Card actual usada como referencia visual de Match Play" loading="lazy"></div><div class="current-copy"><h3>JUGADORES</h3><p>Match Play requiere 2, 4 o 6 jugadores: una, dos o tres parejas independientes.</p></div><div class="current-copy"><h3>CÁLCULO</h3><p>Cada hoyo compara NETO. El estado se expresa AS, UP o DOWN; cada pareja puede cerrar en un hoyo distinto.</p></div><div class="current-copy"><h3>TARJETA</h3><p>Conserva la tarjeta Normal para Gross, HDCP y Neto. Sólo ganador/perdedor llevan flecha; empate queda sin símbolo.</p></div>
+<div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
+</section><section class="sheet current-function-sheet" id="four-ball-2">
+<div class="sheet-head"><strong>40</strong><h2>Four Ball · operación vigente</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/FOURBALL_ATAJOS_REAL.webp" alt="Four Ball actual con TEAM y ATAJOS" loading="lazy"></div><div class="current-copy"><h3>TEAMS</h3><p>Four Ball registra 1, 2 o 3 TEAMS de 2 jugadores. Cada jugador mantiene su HCP individual.</p></div><div class="current-copy"><h3>MEJOR NETO</h3><p>En cada hoyo cuenta el mejor Neto del TEAM. La Score Card usa una sola fila limpia `NETO TEAM`.</p></div><div class="current-copy"><h3>ROTULACIÓN</h3><p>Los encabezados visibles usan `TEAM · NOMBRES`, sin TEAM 1/2/3 y sin estrellas redundantes.</p></div>
+<div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
+</section><section class="sheet current-function-sheet" id="practica-2">
+<div class="sheet-head"><strong>41</strong><h2>Score Card - Práctica · operación vigente</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/SCORECARD_CONTROL_REAL.webp" alt="Score Card de práctica y control manual vigente" loading="lazy"></div><div class="current-copy"><h3>PRÁCTICA</h3><p>Inicia una ronda de práctica sin generar récord oficial.</p></div><div class="current-copy"><h3>INGRESO</h3><p>Registra Gross con el Control Manual vigente; la app calcula Neto y resultado.</p></div><div class="current-copy"><h3>NAVEGACIÓN</h3><p>Usa los controles visibles de hoyo y ATAJOS; no hay entrada por micrófono.</p></div>
+<div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
 </section><section class="sheet" id="juegos">
 <div class="sheet-head"><strong>41</strong><h2>Juegos laterales - acuerdos</h2><a href="#indice">ÍNDICE</a></div>
 <img src="/docs/manual/layout/page-42.png" alt="Juegos laterales - acuerdos" loading="lazy">
@@ -357,5 +367,21 @@ main{max-width:960px;margin:auto;padding:18px max(12px,env(safe-area-inset-right
 <img src="/docs/manual/current/FOURBALL_ATAJOS_REAL.webp" alt="Four Ball corregido + ATAJOS · pantalla real LAB" loading="lazy">
 <div class="sheet-nav"><a href="#lab-scorecard">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#portada">SIGUIENTE →</a></div>
 </section>
-</main></body></html>
+</main><script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const sheets=[...document.querySelectorAll("section.sheet")];
+  sheets.forEach((sheet,i)=>{
+    const nav=sheet.querySelector(":scope > .sheet-nav");
+    if(!nav)return;
+    const links=nav.querySelectorAll("a");
+    if(links.length<3)return;
+    links[0].href=i>0?"#"+sheets[i-1].id:"#portada";
+    links[0].textContent="← ANTERIOR";
+    links[1].href="#indice";
+    links[1].textContent="ÍNDICE";
+    links[2].href=i<sheets.length-1?"#"+sheets[i+1].id:"#portada";
+    links[2].textContent="SIGUIENTE →";
+  });
+});
+</script></body></html>
 <!-- visual-qa-layout: compact-b0fca961 -->
