@@ -2,6 +2,7 @@ import fs from "node:fs";
 import assert from "node:assert/strict";
 const hub=fs.readFileSync("live-hub.js","utf8");
 const ui=fs.readFileSync("shortcuts-ui.js","utf8");
+const app=fs.readFileSync("index-grupal.html","utf8");
 assert(hub.includes('$("hubBack").onclick=()=>{const url=new URL("/index-grupal.html"'),"VOLVER A MI SCORE CARD debe navegar directo");
 assert(!hub.includes('$("hubBack").onclick=()=>{root.close();setTimeout(()=>root.history.back(),100)}'),"No usar history.back para volver al Score Card");
 for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAddToBoard","hubTournamentHome"])assert(hub.includes(id),"Falta destino "+id);
@@ -9,4 +10,7 @@ for(const label of ["MI SCORE CARD","CENTRO DE TORNEOS","GENERAL","CATEGORÍAS",
 assert(ui.includes("data:image/webp;base64,"),"ATAJOS debe usar el WebP original de la Score Card");
 assert(ui.includes("<span>ATAJOS</span>"),"ATAJOS debe mostrar la etiqueta debajo del logo");
 assert(!ui.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png"),"ATAJOS no debe usar el icono PWA cuadrado");
-console.log("PASS LAB deterministic tournament navigation + official Atajos branding");
+for(const id of ["setupOverlay","finalCardOverlay","cardLibraryOverlay","historyInsightsOverlay","officialCorrectionOverlay"])assert(app.includes('id="'+id+'"')||app.includes('#'+id),"Falta pantalla/overlay "+id);
+assert(ui.includes("z-index:2147483000!important"),"ATAJOS debe quedar por encima de overlays");
+assert(!app.includes("#gscShortcutsButton{display:none"),"La app no debe ocultar ATAJOS");
+console.log("PASS LAB deterministic tournament navigation + original-logo universal overlays");
