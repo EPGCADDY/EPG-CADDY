@@ -20,6 +20,7 @@ jobs:
           npm init -y >/dev/null 2>&1
           npm install playwright@1.55.0 --no-audit --no-fund
           npx playwright install chromium
+          python3 -m pip install --user pillow
       - name: Render all 61 manual pages physically
         run: |
           python3 -m http.server 8765 >/tmp/manual-http.log 2>&1 &
