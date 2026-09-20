@@ -14,7 +14,7 @@ jobs:
           ref: laboratorio
       - name: Crop active manual pages to content
         run: |
-          python3 -m pip install --user pillow
+          python3 -m pip install --user pillow numpy
           python3 - <<'PY'
           from PIL import Image, ImageChops
           from pathlib import Path
@@ -41,18 +41,13 @@ jobs:
                   crop=im.crop((l,t,r,b))
 
               # Compress excessive internal white horizontal bands while preserving content.
-              px=crop.load()
-              rows=[]
-              for y in range(crop.height):
-                  nonwhite=0
-                  for x in range(crop.width):
-                      rr,gg,bb=px[x,y]
-                      if min(rr,gg,bb) < 242:
-                          nonwhite += 1
-                  rows.append(nonwhite / max(1,crop.width))
+              import numpy as np
+              arr=np.asarray(crop)
+              ink=(arr.min(axis=2) < 242)
+              rows=ink.mean(axis=1)
 
               # White rows are rows with less than 0.8% visible ink.
-              white=[v < 0.008 for v in rows]
+              white=(rows < 0.008).tolist()
               runs=[]
               s=None
               for y,isw in enumerate(white+[False]):
