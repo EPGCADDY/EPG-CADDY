@@ -497,7 +497,6 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - La base central distribuye el paquete por rubros; no usa una bolsa genérica como fuente operativa.
 - WhatsApp y demás contactos siguen siendo datos privados. La API central requiere autenticación y el navegador nunca contiene la contraseña de PostgreSQL.
 - V256 no debe anunciarse como centralmente activa hasta aplicar la migración en Producción y completar una prueba real de ida, lectura y recuperación.
-
 ### 8.7 Torneo V143
 
 **Estado:** registro y archivo local `OPERATIVOS`; visualizador y consulta histórica por voz `PLANIFICADOS`.
@@ -997,7 +996,6 @@ Los campos nuevos todavía no aparecen en la interfaz y no habilitan envíos. Su
 - Las tarjetas visuales se almacenan separadamente como archivos privados; la base conserva su metadata, versión y hash.
 - Backups automáticos no sustituyen una prueba periódica de restauración.
 - No se activa sincronización hasta definir autenticación, privacidad, retención y resolución de conflictos.
-
 Reglas inviolables:
 
 - correo y WhatsApp nunca son obligatorios para registrarse ni jugar;
@@ -1497,8 +1495,7 @@ La pantalla `Configura la ronda` muestra dos columnas sin cambiar la tarjeta pri
 | 2026-08-26 | Manual 3.75 / App V327 | Rechazada V326-R2 tras aproximadamente seis preguntas físicas: investigación web y tráfico completaban en servidor, pero un cierre tardío sin ID podía apagar el follow-up antes del audio. V327 conserva vigilancia hasta transcripción, protege la transición herramienta→voz, añade guardián de reproducción de 60 s y telemetría técnica sin contenido privado. El banco dirigido cubre 550 secuencias y 100 eventos; aún falta Preview, regresión completa y PASS físico prolongado. |
 | 2026-08-26 | Manual 3.74 / App V326 | Rechazada V325 después de dos silencios reales con micrófono rojo en iPhone. AI UNIVERSAL ∞ cambia de final semántico indefinido a `server_vad` conversacional 0.2/700/2,200 ms; añade guardián de entrada 15 s con límite duro 90 s, guardián de respuesta 30 s y respuesta directa para cálculos estables como consumo eléctrico de A/C. Se prohíbe montaje hasta repetir tráfico El Pulté-Oakland 12:30 PM, consumo A/C y conversación multitema prolongada. |
 | 2026-08-26 | Manual 3.73 / App V325 | Separados los tiempos del micrófono: órdenes y scores conservan VAD operativo de 0.2/700/1,000 ms; AI UNIVERSAL ∞ usa `semantic_vad` con urgencia baja para respetar pausas naturales. La interrupción bilateral conserva guardia de 250 ms, confirmación mínima de ocho caracteres, protección de eco por 1,800 ms, reescucha inmediata y cierre sólo tras 30 minutos sin actividad. Se registra además como trabajo futuro el enlace oficial/autorizado con USGA y Reglas de Golf, la modalidad Skins y soporte Apple Watch/Wear OS. La aprobación comercial sigue pendiente de prueba física prolongada en iPhone. |
-| 2026-08-26 | Manual 3.72 / App V324 | AI UNIVERSAL ∞ incorpora tráfico vehicular real o proyectado mediante Google Maps Routes en modo `TRAFFIC_AWARE_OPTIMAL`: entiende origen, destino y hora por voz o texto, solicita GPS cuando el usuario dice `aquí`, responde ETA, demora, distancia y hora de cálculo sin mostrar mapa ni conservar coordenadas en el historial. No se presenta como Waze. Fallo, timeout o permiso denegado permiten continuar la conversación. La función permanece pendiente de credencial/facturación y de comparación física en Guatemala e iPhone antes de declararse lista para montar. |
-| 2026-08-25 | Manual 3.69 / App V321 | Integrada AI UNIVERSAL ∞ mediante API de modelo avanzado: comunicación por voz y texto sin catálogo temático cerrado, contexto temporal, búsqueda Web para datos cambiantes, fuentes visibles, adaptación de idioma y nivel, separación automática entre órdenes de la tarjeta y consultas generales, y controles ESCUCHAR, DETENER, REPETIR, SILENCIAR y CONTINUAR. Las 200 áreas validadas son pruebas, nunca límites. |
+| 2026-08-26 | Manual 3.72 / App V324 | AI UNIVERSAL ∞ incorpora tráfico vehicular real o proyectado mediante Google Maps Routes en modo `TRAFFIC_AWARE_OPTIMAL`: entiende origen, destino y hora por voz o texto, solicita GPS cuando el usuario dice `aquí`, responde ETA, demora, distancia y hora de cálculo sin mostrar mapa ni conservar coordenadas en el historial. No se presenta como Waze. Fallo, timeout o permiso denegado permiten continuar la conversación. La función permanece pendiente de credencial/facturación y de comparación física en Guatemala e iPhone antes de declararse lista para montar. || 2026-08-25 | Manual 3.69 / App V321 | Integrada AI UNIVERSAL ∞ mediante API de modelo avanzado: comunicación por voz y texto sin catálogo temático cerrado, contexto temporal, búsqueda Web para datos cambiantes, fuentes visibles, adaptación de idioma y nivel, separación automática entre órdenes de la tarjeta y consultas generales, y controles ESCUCHAR, DETENER, REPETIR, SILENCIAR y CONTINUAR. Las 200 áreas validadas son pruebas, nunca límites. |
 | 2026-08-25 | Manual 3.68 / App V315 | El Caddie entiende cualquier frase que no sea una operación válida de tarjeta, incluso situaciones contadas sin pregunta perfecta; conversa sobre cualquier tema, investiga datos actuales mediante búsqueda web y muestra fuentes. La respuesta normal comienza tras aproximadamente un segundo de silencio. Mientras habla puede ser interrumpido por la voz del jugador. Al terminar espera tres segundos y cierra el micrófono si no hay seguimiento; nunca lo abre solo. El pronóstico llega hasta 16 días e incluye intervalos y hora pico de lluvia. |
 | 2026-08-25 | Manual 3.67 / App V314 | El mismo Caddie universal queda disponible en todos los micrófonos visibles, incluida la primera pantalla, sin cambio de modo y siempre bajo apertura manual. La primera pantalla muestra automáticamente la condición meteorológica mediante GPS del teléfono, con respaldo del campo, sin activar el micrófono. Se registran como pendientes separados la Guía Rápida derivada del Manual y el tiempo vehicular sin mapa; este último requiere destino exacto y un servicio de rutas con tráfico, por lo que no se declara operativo. |
 | 2026-08-25 | Manual 3.66 / App V313 | Corregida la continuidad hablada después de consultar clima: la primera respuesta técnica ya no corta el resultado final y el micrófono se pausa mientras habla el Caddie para evitar eco. El Manual agrega la página 73 con ejemplos sencillos de conversación universal y queda en 74 páginas físicas. |
@@ -1609,3 +1606,49 @@ La próxima versión deberá registrar aquí:
 7. número de versión, commit y respaldo.
 
 **Regla final:** si una capacidad no está documentada y probada, no se considera lista para mercado. Toda función aprobada debe actualizar simultáneamente código, Matriz de Funciones, manual del usuario y pruebas de aceptación; si falta cualquiera de esas cuatro evidencias, permanece pendiente.
+
+## 29. LAB · Identidad, inicio de sesión y Atajos personales
+
+**Estado:** LAB únicamente. No autorizado para promoción a PRODUCCIÓN.
+
+### 29.1 Identidad
+La aplicación incorpora una identidad permanente por usuario mediante Neon Auth. El identificador técnico `auth_user_id` es la llave obligatoria para separar Score Cards, torneos seguidos, tableros, Pantallas Públicas y Atajos personales.
+
+Regla absoluta: ningún tablero o Atajo personal puede mostrarse globalmente a todos los usuarios.
+
+### 29.2 Inicio de sesión
+- Correo + contraseña: operativo en LAB sobre la API existente `/api/account`.
+- Google: proveedor compartido ya configurado en Neon Auth; la activación visual permanece bloqueada hasta cerrar el flujo OAuth first-party y comprobar Safari/iPhone.
+- Apple: previsto como proveedor futuro; no se declara operativo.
+- Invitaciones temporales de 24 horas conservan su flujo de invitado y no crean falsamente una cuenta permanente.
+
+### 29.3 Atajos personales
+Nueva API LAB: `/api/shortcuts`.
+
+Tipos:
+- `scorecard`
+- `tournament`
+- `board`
+- `display`
+
+Cada registro pertenece a un único `auth_user_id`. Dos usuarios pueden seguir el mismo torneo o tablero sin compartir preferencias ni borrar los Atajos del otro.
+
+### 29.4 Automatización prevista
+1. Al iniciar un Score Card de torneo, se crea o actualiza su Atajo automáticamente.
+2. Al seguir un torneo, aparece únicamente en los Atajos de ese usuario.
+3. Al agregar un tablero, aparece únicamente en los Atajos de ese usuario.
+4. Al dejar de seguir un tablero o torneo, su Atajo se retira para ese usuario.
+5. Los recursos con `expires_at` vencido se purgan automáticamente.
+6. La regla comercial de torneo terminado + 24 horas se implementará utilizando `expires_at`.
+7. La pantalla Atajos debe reconstruirse desde datos vigentes; no es una lista global estática.
+
+### 29.5 Aislamiento técnico de laboratorio
+Se creó la rama Neon `lab-auth-shortcuts-20260919` para probar esquema y Auth sin aplicar cambios a la rama principal. El esquema `user_shortcuts` fue validado allí con dos usuarios distintos utilizando el mismo `resource_key` y conservando datos independientes.
+
+### 29.6 Estado de aceptación
+- Identidad Neon Auth existente: PASS.
+- Google configurado en Neon Auth: PASS de configuración; flujo UI: PENDIENTE.
+- Login correo LAB: IMPLEMENTADO, pendiente de prueba física visual.
+- API de Atajos por usuario: IMPLEMENTADA.
+- Esquema Atajos en rama Neon LAB: IMPLEMENTADO.
+- PRODUCCIÓN: SIN CAMBIOS.
