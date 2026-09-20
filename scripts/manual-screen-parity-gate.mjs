@@ -12,7 +12,7 @@ const fourBall=read("four-ball.js");
 const fail=[];
 const assert=(ok,msg)=>{if(!ok)fail.push(msg)};
 const page=id=>{
-  const m=manual.match(new RegExp('<section class="page" id="p'+id+'"[\\s\\S]*?<\\/section>'));
+  const m=manual.match(new RegExp('<section class="page(?: [^"]*)?" id="p'+id+'"[\\s\\S]*?<\\/section>'));
   return m?m[0]:"";
 };
 
