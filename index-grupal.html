@@ -1339,7 +1339,8 @@ function enforceCanonicalDraftNames(){
   return changed;
 }
 const PLAYER_SLOT_SEQUENCE=[1,3,5,2,4,6];
-const TOURNAMENT_CATEGORIES={championship:"CAMPEONATO",a:"A",b:"B",c:"C",d:"D",female:"FEMENINA",senior:"SENIOR",super_senior:"S.SENIOR",none:"SIN CATEGORÍA"};
+const TOURNAMENT_CATEGORIES={championship:"CAMPEONATO",a:"A",b:"B",c:"C",d:"D",senior:"SENIOR",super_senior:"SUPER SENIOR",female:"FEMENINA",none:"SIN CATEGORÍA"};
+const TOURNAMENT_PRELOAD_CATEGORIES={a:"A",b:"B",c:"C",d:"D",senior:"SENIOR",super_senior:"SUPER SENIOR",female:"FEMENINA"};
 const CATEGORY_DEFAULT_TEES={championship:"Negro",a:"Azul",b:"Blanco",c:"Blanco",d:"Blanco",female:"Rojo",senior:"Blanco",super_senior:"Amarillo"};
 function normalizeTournamentCategory(value){const raw=String(value||"").trim().toLowerCase().replace(/[.\s-]+/g,"_");return TOURNAMENT_CATEGORIES[raw]?raw:""}
 function tournamentCategoryLabel(value){const key=normalizeTournamentCategory(value);return key?TOURNAMENT_CATEGORIES[key]:"SIN CATEGORÍA"}
@@ -2843,7 +2844,7 @@ function renderDraft(){
     if(p&&!row.dirty)manualDraftRows[i]=manualRowFromPlayer(p);
     const staged=manualDraftRows[i]||row,tee=TEES[staged.tee]||null,safeName=escapeHtml(staged.name),nameLength=Array.from(String(staged.name||"").trim()).length;
     const longNameClass=nameLength>=24?" very-long-name":nameLength>=18?" long-name":"";
-    const categoryOptions=`<option value="" ${staged.category?"":"selected"}>CATEGORÍA</option>`+Object.entries(TOURNAMENT_CATEGORIES).map(([key,label])=>`<option value="${key}" ${key===staged.category?"selected":""}>${label}</option>`).join("");
+    const categoryOptions=`<option value="" ${staged.category?"":"selected"}>CATEGORÍA</option>`+Object.entries(TOURNAMENT_PRELOAD_CATEGORIES).map(([key,label])=>`<option value="${key}" ${key===staged.category?"selected":""}>${label}</option>`).join("");
     const teeOptions=`<option value="" ${staged.tee?"":"selected"}>MARCAS</option>`+Object.entries(TEES).map(([key,t])=>`<option value="${key}" ${key===staged.tee?"selected":""}>${t.label}</option>`).join("");
     const pairIndex=Math.floor(i/2),pairCode=["1","2","3"][pairIndex],pairName=["TEAM","TEAM","TEAM"][pairIndex],pairClass=[" team-green"," team-gold"," team-blue"][pairIndex],pairColor=["var(--lime)","#d4af37","#36a3ff"][pairIndex];
     const color=tee?.color||"#fff",emptyClass=p||manualRowHasData(staged)?"":" empty",teamClass=draftRoundMode==="four_ball"?pairClass:draftRoundMode==="match_play"?` match-pair-${pairIndex+1}`:"",slotLabel=draftRoundMode==="four_ball"?`${pairCode}${i%2+1}`:draftRoundMode==="match_play"?`P${pairIndex+1}.${i%2+1}`:String(i+1);
