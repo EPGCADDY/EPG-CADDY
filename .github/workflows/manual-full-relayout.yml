@@ -48,5 +48,6 @@ jobs:
           git add docs/manual/layout
           if ! git diff --cached --quiet; then
             git commit -m "LAB manual: crop active pages for unified mobile layout"
+            git pull --rebase origin laboratorio
             git push origin HEAD:laboratorio
           fi
