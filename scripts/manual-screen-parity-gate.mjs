@@ -18,7 +18,7 @@ const page=id=>{
 const pages={
  "01":["GOLF SCORE CARD GT","Bienvenido","CONTINUAR CON GOOGLE · EN CONFIGURACIÓN","CONTINUAR CON APPLE · PRÓXIMAMENTE","O ENTRA CON TU CORREO","Nombre · sólo al crear cuenta","Correo","Contraseña · mínimo 8 caracteres","INICIAR SESIÓN","CREAR CUENTA"],
  "03":["REGISTRO DE JUGADORES","DATO FALTANTE","CORREGIR","IGNORAR","SIN CATEGORÍA","PARA CAMBIAR MODALIDAD DESPUÉS DE REGISTRAR SCORES, INICIA UNA NUEVA RONDA"],
- "08":["RESULTADO FOUR BALL","TEAM 1","GROSS","NETO","GROSS TEAM","NETO TEAM","MEJOR NETO DEL TEAM"],
+ "08":["RESULTADO FOUR BALL","TEAM ·","GROSS","NETO","GROSS TEAM","NETO TEAM","MEJOR NETO DEL TEAM"],
  "13":["TARJETA DE PUNTUACIÓN","YDS","HDCP","GROSS","NETO","+ / -","TARJETA DIGITAL","HISTORIAL","NUEVA RONDA","ATRÁS","BORRAR SCORES","BORRAR TODO"],
  "19":["AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18"],
  "20":["MONITOR DE TIEMPO","INICIO","FINAL","TIMER","RESET"],
@@ -70,7 +70,8 @@ assert(app.includes('href="/manual"')&&app.includes(">GUÍA DE USUARIO</a>"),"GU
 assert(!page("41").includes("Cuenta opcional"),"P41 conserva la cuenta opcional retirada");
 assert(page("41").includes("Cuenta personal"),"P41 debe documentar la cuenta personal");
 assert(page("03").includes("CAMBIO DE MODALIDAD")&&app.includes("canChangeConfiguredRoundMode"),"P03 debe documentar cambio de modalidad únicamente antes de registrar scores");
-assert(page("08").includes("TEAM 1")&&page("08").includes("GROSS TEAM")&&page("08").includes("NETO TEAM"),"P08 debe documentar Four Ball con terminología TEAM y resumen actual");
+assert(page("08").includes("TEAM ·")&&page("08").includes("GROSS TEAM")&&page("08").includes("NETO TEAM")&&!page("08").includes("TEAM 1"),"P08 debe documentar Four Ball con TEAM sin numeración y resumen actual");
+assert(app.includes("TEAM · NETO")&&app.includes("function fourBallTeamLabel")&&!app.includes("return`TEAM ${teamIndex+1}"),"LAB Four Ball debe mostrar TEAM sin numeración visible");
 assert(cards.includes('FOUR_BALL_TEAM_NAMES=["TEAM 1","TEAM 2","TEAM 3"]')&&cards.includes("<th>TEAM</th>"),"Tarjetas exportadas Four Ball deben conservar terminología TEAM");
 
 assert(app.includes('.mandatory-update{display:none;')&&app.includes('.mandatory-update.available{display:block}'),"ACTUALIZAR debe permanecer oculto cuando LAB está al día y mostrarse sólo cuando hay versión nueva");
@@ -94,4 +95,4 @@ if(fail.length){
  process.exit(1);
 }
 console.log("MANUAL SCREEN PARITY: PASS");
-console.log("60 pages · 50 base + 10 tutorial R3 · 15 replicas · pre-score mode edit · Four Ball TEAM · universal Atajos · 0 retired features · current LAB controls matched");
+console.log("60 pages · 50 base + 10 tutorial R3 · 15 replicas · pre-score mode edit · Four Ball TEAM unnumbered · universal Atajos · 0 retired features · current LAB controls matched");
