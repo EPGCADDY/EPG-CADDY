@@ -86,6 +86,46 @@ jobs:
               await page.evaluate(id=>{const el=document.getElementById(id);if(el){el.classList.remove('visible');el.style.removeProperty('display')}},id);
             }
 
+            // CAMPEONATO physically in registration category selector
+            {
+              await page.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
+              await page.waitForTimeout(300);
+              await page.locator('#normalRoundButton').click().catch(()=>{});
+              await page.waitForTimeout(120);
+              await page.evaluate(()=>{
+                const overlay=document.getElementById('setupOverlay'); if(overlay){overlay.classList.add('visible');overlay.setAttribute('aria-hidden','false')}
+                const detected=document.getElementById('detectedPlayers'); if(detected)detected.classList.remove('hidden');
+                const select=document.querySelector('[data-draft-category]');
+                if(select){select.size=Math.max(8,select.options.length);select.value='championship';select.dispatchEvent(new Event('change',{bubbles:true}))}
+              });
+              const select=page.locator('[data-draft-category]').first();
+              check(await select.count()===1,'Registro físico no muestra selector de categoría');
+              const options=await select.locator('option').allTextContents();
+              for(const token of ['CAMPEONATO','A','B','C','D','SENIOR','SUPER SENIOR','FEMENINA']) check(options.includes(token),'Registro físico falta '+token);
+              check(await page.locator('[data-draft-tee]').first().inputValue().then(v=>/Negro/i.test(v)).catch(()=>false),'CAMPEONATO no preconfigura marcas negras');
+              await page.screenshot({path:'full-parity/app/04-campeonato-registro.png',fullPage:false});
+              results.app.push('campeonato-registro');
+            }
+
+            // CAMPEONATO physically in final Score Card renderer
+            {
+              const {createRequire}=await import('node:module');
+              const require=createRequire(import.meta.url);
+              const artifacts=require(process.cwd()+'/card-artifacts.js');
+              const holes=Object.fromEntries(Array.from({length:18},(_,i)=>[i+1,{hole:i+1,par:4,gross:4,net:4,strokes:0,relativeToPar:0}]));
+              const snap={status:'officially_closed',sha256:'c'.repeat(64),version:1,course:'El Pulté Golf',playedAt:'2026-09-20T16:00:00Z',mode:'general',players:[{id:'champ',name:'JUGADOR CAMPEONATO',tournamentCategory:'championship',handicap:0,tee:'Blanco',holes}]};
+              const out=artifacts.build(snap);
+              fs.writeFileSync('full-parity/app/campeonato-card.html',out.global.html);
+              const card=await browser.newPage({viewport,deviceScaleFactor:2});
+              await card.goto('file://'+process.cwd()+'/full-parity/app/campeonato-card.html');
+              const body=await card.locator('body').innerText();
+              check(body.includes('CAMPEONATO'),'Score Card física falta CAMPEONATO');
+              check(body.includes('NEGRAS'),'Score Card física CAMPEONATO no muestra NEGRAS');
+              await card.screenshot({path:'full-parity/app/05-campeonato-scorecard.png',fullPage:true});
+              await card.close();
+              results.app.push('campeonato-scorecard');
+            }
+
             // Tournament hub physically
             await page.goto('http://127.0.0.1:8765/live-hub.html',{waitUntil:'networkidle'});
             await page.waitForTimeout(500);
@@ -109,7 +149,7 @@ jobs:
             await m.locator('#portada').screenshot({path:'full-parity/manual/00-portada.png'});
             await m.locator('#indice').screenshot({path:'full-parity/manual/01-indice.png'});
             const count=await m.locator('.sheet').count();
-            check(count===65,'Manual físico no tiene 65 hojas restauradas: '+count);
+            check(count===56,'Manual físico no tiene 56 hojas vigentes: '+count);
             for(let i=0;i<count;i++){
               const el=m.locator('.sheet').nth(i);
               await el.scrollIntoViewIfNeeded(); await m.waitForTimeout(20);
@@ -124,7 +164,7 @@ jobs:
             fs.writeFileSync('full-parity/audit.json',JSON.stringify(results,null,2));
             await browser.close();
             if(results.fail.length){console.error(results.fail.join('\n'));process.exit(1)}
-            console.log('PHYSICAL APP ↔ MANUAL PARITY: PASS · portada + índice + 54 hojas restauradas · app access/scorecard/overlays/tournaments/Atajos rendered');
+            console.log('PHYSICAL APP ↔ MANUAL PARITY: PASS · portada + índice + 56 hojas vigentes · app + categorías + tarjetas + torneos + Atajos rendered');
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
           node /tmp/full-parity/audit.cjs
@@ -133,6 +173,8 @@ jobs:
           mkdir -p docs/manual/current
           cp full-parity/app/02-scorecard-atajos.png docs/manual/current/APP_SCORECARD_ATAJOS.png
           cp full-parity/app/03-atajos-overlay.png docs/manual/current/APP_ATAJOS_OVERLAY.png
+          cp full-parity/app/04-campeonato-registro.png docs/manual/current/APP_CAMPEONATO_REGISTRO.png
+          cp full-parity/app/05-campeonato-scorecard.png docs/manual/current/APP_CAMPEONATO_SCORECARD.png
           cp full-parity/app/overlay-final-card-atajos.png docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png
           cp full-parity/app/overlay-correction-atajos.png docs/manual/current/APP_CORRECCION_ATAJOS.png
           cp full-parity/app/overlay-history-atajos.png docs/manual/current/APP_HISTORIAL_ATAJOS.png
