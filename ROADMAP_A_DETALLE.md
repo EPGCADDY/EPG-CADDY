@@ -1291,3 +1291,24 @@ Micrófono: el propietario informa solicitud iPhone. No reproducida ni atribuida
 Se retiran currentBrowserCoordinates y las funciones de carga, temporizadores y representación de clima en index-grupal.html; se eliminan ambos bloques visibles de registro y tarjeta. Permissions-Policy incorpora geolocation=() además de microphone=(). Identidad y worker LAB-MANUAL-NO-GPS-20260919. Se mantienen campo, yardas, par, rating, slope, fuentes y logo. No se alteran datos históricos ni la maestra.
 
 Pruebas manuales técnicas PASS; regresión amplía bloqueo a GPS y llamadas weather en módulos cargados. La comprobación visual autenticada del Preview y la configuración DATABASE_URL de invitaciones permanecen pendientes; retirar clima no resuelve almacenamiento.
+
+
+## 2026-09-20 · Detalle operativo y físico
+### Categorías
+- Precarga obligatoria en toda opción de categoría: `championship=CAMPEONATO`, `a=A`, `b=B`, `c=C`, `d=D`, `senior=SENIOR`, `super_senior=SUPER SENIOR`, `female=FEMENINA`.
+- Marcas por defecto: CAMPEONATO→Negro/NEGRAS; A→Azul/AZULES; B/C/D/SENIOR→Blanco/BLANCAS; SUPER SENIOR→Amarillo/AMARILLAS; FEMENINA→Rojo/ROJAS.
+- Archivos operativos verificados: `index-grupal.html`, `stableford.js`, `stableford-torneo.html`, `live-hub.html`, `live-hub.js`, `live-view.js`, `card-artifacts.js`, `shortcuts-ui.js`.
+
+### ATAJOS
+- `shortcuts-ui.js` mantiene MI SCORE CARD, CENTRO DE TORNEOS, GENERAL, CATEGORÍAS, BUSCAR JUGADOR, MIS FAVORITOS y gestión.
+- Texto de CATEGORÍAS actualizado a CAMPEONATO · A · B · C · D · SENIOR · SUPER SENIOR · FEMENINA.
+- Auditor físico valida que ATAJOS permanezca visible y no intersecte controles críticos de Tarjeta Final, Corrección Oficial e Historial.
+
+### Manual
+- `manual.html` y `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md` sincronizados con categorías completas.
+- Monitor de Tiempo vigente documentado con captura física real: INICIO · FINAL · TIMER · RESET.
+- Manual físico vigente: 74 hojas; gate y auditor Chromium deben conservar ese conteo y cargar todas las imágenes sin desbordes horizontales.
+
+### Traslapes
+- `mandatoryUpdate` se oculta durante overlays visibles para evitar invasión de títulos, filtros y controles.
+- La revisión física no se considera cerrada sólo por tests de código: cada pantalla crítica requiere captura renderizada y revisión visual.
