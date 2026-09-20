@@ -3,7 +3,7 @@ on:
   push:
     branches: [laboratorio]
 permissions:
-  contents: read
+  contents: write
 jobs:
   capture:
     if: github.actor != 'github-actions[bot]'
@@ -63,6 +63,18 @@ jobs:
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
           node /tmp/timer-capture/capture.cjs
+      - name: Publish current timer screens into manual assets
+        run: |
+          mkdir -p docs/manual/current
+          cp timer-capture/MONITOR_TIEMPO_REAL_LAB.png docs/manual/current/MONITOR_TIEMPO_REAL_LAB.png
+          cp timer-capture/MONITOR_TIEMPO_CONTEXTO_LAB.png docs/manual/current/MONITOR_TIEMPO_CONTEXTO_LAB.png
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/manual/current/MONITOR_TIEMPO_REAL_LAB.png docs/manual/current/MONITOR_TIEMPO_CONTEXTO_LAB.png
+          if ! git diff --cached --quiet; then
+            git commit -m "LAB manual: publish current physical timer screenshots"
+            git push origin HEAD:laboratorio
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: current-timer-screen
