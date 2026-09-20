@@ -1,0 +1,60 @@
+name: LAB capture current timer manual screen
+on:
+  push:
+    branches: [laboratorio]
+permissions:
+  contents: read
+jobs:
+  capture:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: laboratorio
+      - name: Install Chromium
+        run: |
+          mkdir -p /tmp/timer-capture
+          cd /tmp/timer-capture
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 --no-audit --no-fund
+          npx playwright install chromium
+      - name: Capture current timer physically
+        run: |
+          python3 -m http.server 8765 >/tmp/timer-http.log 2>&1 &
+          sleep 2
+          mkdir -p timer-capture
+          cat > /tmp/timer-capture/capture.cjs <<'NODE'
+          const {chromium}=require('/tmp/timer-capture/node_modules/playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const page=await browser.newPage({viewport:{width:430,height:932},deviceScaleFactor:2});
+            await page.route('**/api/account**',route=>{
+              const u=new URL(route.request().url());
+              if(u.searchParams.get('action')==='session') return route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"timer-audit","email":"timer@example.com"}}'});
+              return route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"timer-audit"}}'});
+            });
+            await page.route('**/api/app-access**',route=>route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"role":"owner"}'}));
+            await page.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
+            await page.waitForTimeout(600);
+            await page.evaluate(()=>{
+              const el=document.querySelector('.round-status-row.gsc-time-four');
+              if(el)el.scrollIntoView({block:'center'});
+            });
+            await page.waitForTimeout(200);
+            const block=page.locator('.round-status-row.gsc-time-four');
+            if(await block.count()!==1) throw new Error('Timer block not found');
+            await block.screenshot({path:'timer-capture/MONITOR_TIEMPO_REAL_LAB.png'});
+            await page.screenshot({path:'timer-capture/MONITOR_TIEMPO_CONTEXTO_LAB.png',fullPage:false});
+            const labels=await block.innerText();
+            require('fs').writeFileSync('timer-capture/labels.txt',labels);
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          node /tmp/timer-capture/capture.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: current-timer-screen
+          path: timer-capture
+          retention-days: 1
