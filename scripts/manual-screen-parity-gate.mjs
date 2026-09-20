@@ -27,11 +27,12 @@ const pages={
  "34":["ABRIR PERSONAL","IMAGEN PERSONAL","PDF PERSONAL","CORREO / WHATSAPP PERSONAL","PDF TODAS"],
  "36":["CORRECCIÓN OFICIAL","JUGADOR","HOYO","SCORE ACTUAL","NUEVO GROSS","MOTIVO","RESPONSABLE","GUARDAR CORRECCIÓN","ATRÁS"],
  "38":["HISTORIAL DE TARJETAS","TODAS LAS MODALIDADES","TODOS LOS CAMPOS","JUGADOR / TORNEO / FECHA","ANTERIOR","SIGUIENTE","ATRÁS"],
+ "45":["VERIFICAR ACTUALIZACIÓN","ACTUALIZAR","ACTUALIZADO"],
  "49":["ATAJOS","MI SCORE CARD","CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MI TABLERO","+ SEGUIR OTRO TORNEO","SALIR DE ESTE TORNEO","DEJAR DE SEGUIR MI TABLERO"]
 };
 
 const sourceByPage={
- "01":auth,"03":app,"13":app,"19":app,"20":app,"22":app+"\n"+liveHub,"29":app,"30":app,"33":app,"34":app,"36":app,"38":app,"49":shortcuts
+ "01":auth,"03":app,"13":app,"19":app,"20":app,"22":app+"\n"+liveHub,"29":app,"30":app,"33":app,"34":app,"36":app,"38":app,"45":app,"49":shortcuts
 };
 
 for(const [id,tokens] of Object.entries(pages)){
@@ -53,10 +54,13 @@ const countWord=(s,w)=>{
 for(const word of forbidden) assert(countWord(manual,word)===0,`Manual contiene función retirada: ${word}`);
 
 assert((manual.match(/class="page"/g)||[]).length===50,"Manual debe tener 50 páginas");
-assert((manual.match(/class="screen-replica"/g)||[]).length===13,"Manual debe tener 13 réplicas clave");
+assert((manual.match(/class="screen-replica"/g)||[]).length===14,"Manual debe tener 14 réplicas clave");
 assert(app.includes('href="/manual"')&&app.includes(">GUÍA DE USUARIO</a>"),"GUÍA DE USUARIO debe apuntar a /manual");
 assert(!page("41").includes("Cuenta opcional"),"P41 conserva la cuenta opcional retirada");
 assert(page("41").includes("Cuenta personal"),"P41 debe documentar la cuenta personal");
+
+assert(app.includes('.mandatory-update{display:none;')&&app.includes('.mandatory-update.available{display:block}'),"ACTUALIZAR debe permanecer oculto cuando LAB está al día y mostrarse sólo cuando hay versión nueva");
+assert(page("45").includes("control de actualización permanece oculto")&&page("45").includes("no debe quedar superpuesto"),"P45 debe documentar la visibilidad condicional de ACTUALIZAR");
 
 const cssContracts=[
  ["registro","#p03 .screen-replica","min-height:52px"],
@@ -76,4 +80,4 @@ if(fail.length){
  process.exit(1);
 }
 console.log("MANUAL SCREEN PARITY: PASS");
-console.log("50 pages · 13 replicas · 0 retired features · current LAB controls matched");
+console.log("50 pages · 14 replicas · 0 retired features · current LAB controls matched");
