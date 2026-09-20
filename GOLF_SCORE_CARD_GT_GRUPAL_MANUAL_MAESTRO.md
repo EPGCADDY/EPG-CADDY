@@ -498,7 +498,6 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - WhatsApp y demás contactos siguen siendo datos privados. La API central requiere autenticación y el navegador nunca contiene la contraseña de PostgreSQL.
 - V256 no debe anunciarse como centralmente activa hasta aplicar la migración en Producción y completar una prueba real de ida, lectura y recuperación.
 ### 8.7 Torneo V143
-
 **Estado:** registro y archivo local `OPERATIVOS`; visualizador y consulta histórica por voz `PLANIFICADOS`.
 
 - El registro ofrece una opción `TORNEO`.
@@ -997,7 +996,6 @@ Los campos nuevos todavía no aparecen en la interfaz y no habilitan envíos. Su
 - Backups automáticos no sustituyen una prueba periódica de restauración.
 - No se activa sincronización hasta definir autenticación, privacidad, retención y resolución de conflictos.
 Reglas inviolables:
-
 - correo y WhatsApp nunca son obligatorios para registrarse ni jugar;
 - la ausencia de datos de contacto no impide crear, jugar, cerrar ni conservar una ronda;
 - ningún canal se considera autorizado por estar escrito en el registro;
@@ -1497,8 +1495,7 @@ La pantalla `Configura la ronda` muestra dos columnas sin cambiar la tarjeta pri
 | 2026-08-26 | Manual 3.73 / App V325 | Separados los tiempos del micrófono: órdenes y scores conservan VAD operativo de 0.2/700/1,000 ms; AI UNIVERSAL ∞ usa `semantic_vad` con urgencia baja para respetar pausas naturales. La interrupción bilateral conserva guardia de 250 ms, confirmación mínima de ocho caracteres, protección de eco por 1,800 ms, reescucha inmediata y cierre sólo tras 30 minutos sin actividad. Se registra además como trabajo futuro el enlace oficial/autorizado con USGA y Reglas de Golf, la modalidad Skins y soporte Apple Watch/Wear OS. La aprobación comercial sigue pendiente de prueba física prolongada en iPhone. |
 | 2026-08-26 | Manual 3.72 / App V324 | AI UNIVERSAL ∞ incorpora tráfico vehicular real o proyectado mediante Google Maps Routes en modo `TRAFFIC_AWARE_OPTIMAL`: entiende origen, destino y hora por voz o texto, solicita GPS cuando el usuario dice `aquí`, responde ETA, demora, distancia y hora de cálculo sin mostrar mapa ni conservar coordenadas en el historial. No se presenta como Waze. Fallo, timeout o permiso denegado permiten continuar la conversación. La función permanece pendiente de credencial/facturación y de comparación física en Guatemala e iPhone antes de declararse lista para montar. || 2026-08-25 | Manual 3.69 / App V321 | Integrada AI UNIVERSAL ∞ mediante API de modelo avanzado: comunicación por voz y texto sin catálogo temático cerrado, contexto temporal, búsqueda Web para datos cambiantes, fuentes visibles, adaptación de idioma y nivel, separación automática entre órdenes de la tarjeta y consultas generales, y controles ESCUCHAR, DETENER, REPETIR, SILENCIAR y CONTINUAR. Las 200 áreas validadas son pruebas, nunca límites. |
 | 2026-08-25 | Manual 3.68 / App V315 | El Caddie entiende cualquier frase que no sea una operación válida de tarjeta, incluso situaciones contadas sin pregunta perfecta; conversa sobre cualquier tema, investiga datos actuales mediante búsqueda web y muestra fuentes. La respuesta normal comienza tras aproximadamente un segundo de silencio. Mientras habla puede ser interrumpido por la voz del jugador. Al terminar espera tres segundos y cierra el micrófono si no hay seguimiento; nunca lo abre solo. El pronóstico llega hasta 16 días e incluye intervalos y hora pico de lluvia. |
-| 2026-08-25 | Manual 3.67 / App V314 | El mismo Caddie universal queda disponible en todos los micrófonos visibles, incluida la primera pantalla, sin cambio de modo y siempre bajo apertura manual. La primera pantalla muestra automáticamente la condición meteorológica mediante GPS del teléfono, con respaldo del campo, sin activar el micrófono. Se registran como pendientes separados la Guía Rápida derivada del Manual y el tiempo vehicular sin mapa; este último requiere destino exacto y un servicio de rutas con tráfico, por lo que no se declara operativo. |
-| 2026-08-25 | Manual 3.66 / App V313 | Corregida la continuidad hablada después de consultar clima: la primera respuesta técnica ya no corta el resultado final y el micrófono se pausa mientras habla el Caddie para evitar eco. El Manual agrega la página 73 con ejemplos sencillos de conversación universal y queda en 74 páginas físicas. |
+| 2026-08-25 | Manual 3.67 / App V314 | El mismo Caddie universal queda disponible en todos los micrófonos visibles, incluida la primera pantalla, sin cambio de modo y siempre bajo apertura manual. La primera pantalla muestra automáticamente la condición meteorológica mediante GPS del teléfono, con respaldo del campo, sin activar el micrófono. Se registran como pendientes separados la Guía Rápida derivada del Manual y el tiempo vehicular sin mapa; este último requiere destino exacto y un servicio de rutas con tráfico, por lo que no se declara operativo. || 2026-08-25 | Manual 3.66 / App V313 | Corregida la continuidad hablada después de consultar clima: la primera respuesta técnica ya no corta el resultado final y el micrófono se pausa mientras habla el Caddie para evitar eco. El Manual agrega la página 73 con ejemplos sencillos de conversación universal y queda en 74 páginas físicas. |
 | 2026-08-25 | Manual 3.65 / App V312 | Incorporados el Caddie conversacional de propósito general y el clima vivo por GPS en la tarjeta activa, conservando la escritura de scores separada y la apertura voluntaria del micrófono. |
 | 2026-08-25 | Manual 3.64 / App V311 | Homologados `MATCH PLAY` y `FOUR BALL` para una o dos parejas, con HCP individual, resultados separados y una línea vacía entre parejas cuando participan cuatro jugadores. Match Play mantiene un resultado independiente para jugadores 1–2 y 3–4. Four Ball acumula el mejor Neto con una pareja o compara los mejores Netos con dos. La dicción de primera vuelta, segunda vuelta y total dice `arriba`, `abajo` y `empatado`, nunca `UP`, `DOWN` o `AS`. El nombre Match Play no añade `HDCP`. El enlace público raíz abre directamente `Configura la ronda` mediante `inicio=1` y conserva cualquier ronda activa. |
 | 2026-08-25 | Manual 3.63 / App V310 | Homologado el nombre visible `FOUR BALL` sin el sufijo `2 PAREJAS`. El cambio alcanza selección de modalidad, validación, registro por voz, encabezado de ronda, control manual y tarjeta digital final. La lógica de mejor Neto por pareja y el marcador acumulado permanecen intactos. |
@@ -1652,3 +1649,25 @@ Se creó la rama Neon `lab-auth-shortcuts-20260919` para probar esquema y Auth s
 - API de Atajos por usuario: IMPLEMENTADA.
 - Esquema Atajos en rama Neon LAB: IMPLEMENTADO.
 - PRODUCCIÓN: SIN CAMBIOS.
+
+### 29.7 Atajos universales
+
+LAB incorpora un botón permanente **ATAJOS** visible tanto desde SCORE CARD como desde TORNEOS. Su objetivo es que el usuario nunca tenga que adivinar cuántas veces debe tocar “Atrás”.
+
+Destinos directos disponibles:
+- MI SCORE CARD
+- CENTRO DE TORNEOS
+- GENERAL
+- CATEGORÍAS
+- BUSCAR JUGADOR
+- MI TABLERO
+- hasta cinco torneos guardados
+- + SEGUIR OTRO TORNEO
+- SALIR DE ESTE TORNEO
+- DEJAR DE SEGUIR MI TABLERO
+
+**Regla de navegación:** VOLVER A MI SCORE CARD navega directamente a /index-grupal.html. Queda prohibido depender de history.back() para esa acción porque el historial del navegador no garantiza volver al Score Card.
+
+Los Atajos de navegación no sustituyen la capa de identidad. Los datos personales de torneos/tableros deberán migrar a la API autenticada por auth_user_id antes de declararse sincronización multi-dispositivo completa.
+
+**Estado LAB:** interfaz y navegación implementadas; prueba física visual en navegador/iPhone pendiente.
