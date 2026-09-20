@@ -54,11 +54,13 @@ const countWord=(s,w)=>{
 for(const word of forbidden) assert(countWord(manual,word)===0,`Manual contiene función retirada: ${word}`);
 
 assert((manual.match(/class="page"/g)||[]).length===50,"Manual base debe conservar 50 páginas");
-assert((manual.match(/class="page tutorial-page"/g)||[]).length===9,"Manual debe incluir 9 páginas tutorial R2");
-assert(manual.includes('id="count">00 / 59</span>'),"Contador editorial debe marcar 59 páginas");
+assert((manual.match(/class="page tutorial-page"/g)||[]).length===10,"Manual debe incluir 10 páginas tutorial R3");
+assert(manual.includes('id="count">00 / 60</span>'),"Contador editorial debe marcar 60 páginas");
 assert((manual.match(/class="screen-replica"/g)||[]).length===14,"Manual debe tener 14 réplicas clave");
-assert(manual.includes("TUTORIAL TORNEOS · 01")&&manual.includes("TUTORIAL TORNEOS · 08"),"Capítulo tutorial R2 debe incluir los 8 tutoriales");
-assert(manual.includes("MIS FAVORITOS")&&manual.includes("REVISADO 100% · PLANTILLA ÚNICA"),"Capítulo tutorial R2 incompleto");
+assert(manual.includes("TUTORIAL TORNEOS · 01")&&manual.includes("TUTORIAL TORNEOS · 09"),"Capítulo tutorial R3 debe incluir los 9 tutoriales");
+assert(manual.includes("MIS FAVORITOS")&&manual.includes("REVISADO 100% · PLANTILLA ÚNICA"),"Capítulo tutorial R3 incompleto");
+assert(manual.includes("ATAJOS siempre contigo")&&manual.includes("ATAJOS UNIVERSAL · LAB R3"),"Falta tutorial universal ATAJOS");
+assert(manual.includes("golf-score-card-gt-horizontal-original.webp"),"Las guías deben usar el logo horizontal original en ATAJOS");
 assert(page("49").includes("/assets/official-logos/golf-score-card-gt-horizontal-original.webp")&&page("49").includes("logo horizontal original"),"P49 debe documentar el launcher ATAJOS con el logo horizontal original del repositorio");
 assert(shortcuts.includes("/assets/official-logos/golf-score-card-gt-horizontal-original.webp")&&shortcuts.includes("<span>ATAJOS</span>"),"LAB debe usar el logo horizontal original del repositorio + etiqueta ATAJOS en el launcher universal");
 assert(!shortcuts.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png"),"ATAJOS no debe usar el icono PWA cuadrado");
@@ -87,4 +89,4 @@ if(fail.length){
  process.exit(1);
 }
 console.log("MANUAL SCREEN PARITY: PASS");
-console.log("59 pages · 50 base + 9 tutorial R2 · 14 replicas · 0 retired features · current LAB controls matched");
+console.log("60 pages · 50 base + 10 tutorial R3 · 14 replicas · universal Atajos · 0 retired features · current LAB controls matched");
