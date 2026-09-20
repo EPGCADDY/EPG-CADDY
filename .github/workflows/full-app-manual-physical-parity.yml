@@ -147,7 +147,7 @@ jobs:
             await m.locator('#portada').screenshot({path:'full-parity/manual/00-portada.png'});
             await m.locator('#indice').screenshot({path:'full-parity/manual/01-indice.png'});
             const count=await m.locator('.sheet').count();
-            check(count===56,'Manual físico no tiene 56 hojas vigentes: '+count);
+            check(count===65,'Manual físico no tiene 65 hojas vigentes: '+count);
             for(let i=0;i<count;i++){
               const el=m.locator('.sheet').nth(i);
               await el.scrollIntoViewIfNeeded(); await m.waitForTimeout(20);
@@ -162,7 +162,7 @@ jobs:
             fs.writeFileSync('full-parity/audit.json',JSON.stringify(results,null,2));
             await browser.close();
             if(results.fail.length){console.error(results.fail.join('\n'));process.exit(1)}
-            console.log('PHYSICAL APP ↔ MANUAL PARITY: PASS · portada + índice + 56 hojas vigentes · app + categorías + tarjetas + torneos + Atajos rendered');
+            console.log('PHYSICAL APP ↔ MANUAL PARITY: PASS · portada + índice + 65 hojas vigentes · app + categorías + tarjetas + torneos + Atajos rendered');
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
           node /tmp/full-parity/audit.cjs
