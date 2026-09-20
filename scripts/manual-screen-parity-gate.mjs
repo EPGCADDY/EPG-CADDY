@@ -18,6 +18,11 @@ assert(manual.includes("/docs/manual/v311/page-01.png")&&manual.includes("/docs/
 for(const p of [68,69,70,71,72,73]) assert(manual.includes("/docs/manual/v311/page-"+String(p).padStart(2,"0")+".png"),"Falta hoja original vigente page-"+p);
 const current=["/docs/manual/current/CAMPO_MODALIDAD_REAL.webp","/docs/manual/current/REGISTRO_ATAJOS_REAL.webp","/docs/manual/current/SCORECARD_CONTROL_REAL.webp","/docs/manual/current/FOURBALL_ATAJOS_REAL.webp"];
 for(const img of current) assert(manual.includes(img),"Falta pantalla real LAB: "+img);
+for(const img of ["/docs/manual/current/MONITOR_TIEMPO_REAL_LAB.png","/docs/manual/current/MONITOR_TIEMPO_CONTEXTO_LAB.png"]) assert(manual.includes(img),"Falta captura física del Monitor de Tiempo: "+img);
+assert(manual.includes('id="timer-vigente"'),"Falta hoja vigente del Monitor de Tiempo");
+for(const token of ["INICIO","FINAL","TIMER","RESET","HH:MM:SS","pausa el conteo","lo reanuda","Conserva jugadores y scores"]) assert(manual.includes(token),"Monitor de Tiempo incompleto en manual: "+token);
+assert(app.includes('id="roundTimerToggle"')&&app.includes('aria-label="Pausar o reanudar timer"'),"LAB debe mantener TIMER pulsable para pausar/reanudar");
+assert(app.includes('id="resetClockButton"')&&app.includes("¿CONFIRMAS REINICIAR EL CRONÓMETRO A 00:00:00?"),"LAB debe mantener RESET con confirmación");
 for(const id of ["torneos","torneos-01","torneos-02","torneos-03","torneos-04","torneos-05","torneos-06","torneos-07","torneos-08","torneos-09"]) assert(manual.includes('id="'+id+'"'),"Falta hoja del capítulo Torneos: "+id);
 for(const token of ["CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS","ATAJOS siempre contigo"]) assert(manual.includes(token),"Capítulo Torneos incompleto: "+token);
 for(const removed of ["MIC","MICRÓFONO","MICROFONO","REGISTRO POR VOZ","DICTADO","CADDIE UNIVERSAL","INTELIGENCIA ARTIFICIAL","CLIMA","GPS","WOLF","VEGAS","DOTS"]) assert(!hasWord(manual,removed),"El manual reintroduce función retirada: "+removed);
