@@ -1,0 +1,51 @@
+name: LAB manual full re-layout
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  relayout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: laboratorio
+      - name: Crop active manual pages to content
+        run: |
+          python3 -m pip install --user pillow
+          python3 - <<'PY'
+          from PIL import Image, ImageChops
+          from pathlib import Path
+          src=Path("docs/manual/v311")
+          dst=Path("docs/manual/layout")
+          dst.mkdir(parents=True,exist_ok=True)
+          active=list(range(0,46))+[68,69,70,71,72,73]
+          for n in active:
+              p=src/f"page-{n:02d}.png"
+              if not p.exists(): continue
+              im=Image.open(p).convert("RGB")
+              # detect non-white/non-near-white content
+              bg=Image.new("RGB",im.size,(255,255,255))
+              diff=ImageChops.difference(im,bg).convert("L")
+              # ignore tiny antialiasing differences from white
+              mask=diff.point(lambda x: 255 if x>12 else 0)
+              box=mask.getbbox()
+              if not box:
+                  crop=im
+              else:
+                  l,t,r,b=box
+                  pad=max(24,round(min(im.size)*0.025))
+                  l=max(0,l-pad); t=max(0,t-pad); r=min(im.width,r+pad); b=min(im.height,b+pad)
+                  crop=im.crop((l,t,r,b))
+              crop.save(dst/f"page-{n:02d}.png",optimize=True)
+          PY
+      - name: Commit layout pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/manual/layout
+          if ! git diff --cached --quiet; then
+            git commit -m "LAB manual: crop active pages for unified mobile layout"
+            git push origin HEAD:laboratorio
+          fi
