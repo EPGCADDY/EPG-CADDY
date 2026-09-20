@@ -88,10 +88,12 @@ jobs:
               import numpy as np
               arr=np.asarray(compact).copy()
               r=arr[:,:,0].astype(int); g=arr[:,:,1].astype(int); b=arr[:,:,2].astype(int)
-              green=(g>90)&(g>r*1.22)&(g>b*1.18)
+              mx=np.maximum(np.maximum(r,g),b); mn=np.minimum(np.minimum(r,g),b)
+              # Detect saturated and pastel green accents, including pale green boxes.
+              green=(g>r+5)&(g>b+5)&((mx-mn)>8)&(g>70)
               if green.any():
                   lum=(0.299*r+0.587*g+0.114*b).astype(np.uint8)
-                  neutral=np.clip((lum.astype(int)*0.72)+55,70,185).astype(np.uint8)
+                  neutral=np.clip((lum.astype(int)*0.68)+58,78,190).astype(np.uint8)
                   arr[green,0]=neutral[green]
                   arr[green,1]=neutral[green]
                   arr[green,2]=neutral[green]
