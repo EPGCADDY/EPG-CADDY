@@ -1239,3 +1239,5 @@ Pruebas manuales técnicas PASS; regresión amplía bloqueo a GPS y llamadas wea
 - Auditoría física reforzada: Tarjeta Final, Corrección Oficial e Historial deben abrirse por funciones reales; se miden traslapes de ATAJOS/ACTUALIZADO con controles críticos.
 - `LAB · MANUAL 04 / ACTUALIZADO` se oculta al abrir overlays para impedir solapamiento de encabezados y controles.
 - Manual físico vigente: 74 hojas = 51 base + 9 pantallas actuales + 10 Torneos + 4 pantallas LAB.
+
+- Auditor físico Chromium oficial: `.github/workflows/full-app-manual-physical-parity.yml` valida modalidades, categorías, Tarjeta Final, Corrección, Historial, Torneos, ATAJOS, 74 hojas del Manual y ausencia de desbordes/traslapes críticos.
