@@ -137,7 +137,7 @@ assert.doesNotMatch(html,/FOUR BALL · 2 PAREJAS/);
 assert.match(html,/FOUR BALL · REGISTRA 1, 2 O 3 TEAMS DE 2 JUGADORES/);
 assert.match(html,/team-pair-spacer/);
 assert.match(html,/function fourBallPlayerBlock/);
-assert.equal((html.match(/function renderFourBall\\(\\)/g)||[]).length,1,"Debe existir un solo renderer Four Ball vigente");
+assert.equal((html.match(/function renderFourBall\(\)/g)||[]).length,1,"Debe existir un solo renderer Four Ball vigente");
 assert.match(html,/function fourBallPairHeader/,"Score Card Four Ball debe agrupar visualmente por pareja");
 assert.match(html,/function fourBallPairBestRow/,"Debe existir una sola fila Neto Team");
 assert.match(html,/GROSS TEAM/,"Resumen Four Ball debe mostrar Gross Team");
