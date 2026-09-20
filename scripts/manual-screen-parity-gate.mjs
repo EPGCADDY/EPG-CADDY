@@ -18,6 +18,21 @@ assert(manual.includes("/docs/manual/v311/page-01.png")&&manual.includes("/docs/
 for(const p of [68,69,70,71,72,73]) assert(manual.includes("/docs/manual/v311/page-"+String(p).padStart(2,"0")+".png"),"Falta hoja original vigente page-"+p);
 const current=["/docs/manual/current/CAMPO_MODALIDAD_REAL.webp","/docs/manual/current/REGISTRO_ATAJOS_REAL.webp","/docs/manual/current/SCORECARD_CONTROL_REAL.webp","/docs/manual/current/FOURBALL_ATAJOS_REAL.webp"];
 for(const img of current) assert(manual.includes(img),"Falta pantalla real LAB: "+img);
+const mountedCurrent=[
+ "/docs/manual/current/APP_CAMPEONATO_REGISTRO.png",
+ "/docs/manual/current/APP_CAMPEONATO_SCORECARD.png",
+ "/docs/manual/current/APP_SCORECARD_ATAJOS.png",
+ "/docs/manual/current/APP_ATAJOS_OVERLAY.png",
+ "/docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png",
+ "/docs/manual/current/APP_CORRECCION_ATAJOS.png",
+ "/docs/manual/current/APP_HISTORIAL_ATAJOS.png",
+ "/docs/manual/current/APP_TORNEOS_HUB.png",
+ "/docs/manual/current/APP_TORNEOS_ATAJOS.png"
+];
+for(const img of mountedCurrent) assert(manual.includes(img),"Falta pantalla física actual montada en manual: "+img);
+for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","TARJETA DIGITAL FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","CORREGIR RONDA","HISTORIAL DE TARJETAS"]) {
+  assert(app.includes(token)||hub.includes(token),"LAB actual no contiene control esperado: "+token);
+}
 for(const img of ["/docs/manual/current/MONITOR_TIEMPO_REAL_LAB.png","/docs/manual/current/MONITOR_TIEMPO_CONTEXTO_LAB.png"]) assert(manual.includes(img),"Falta captura física del Monitor de Tiempo: "+img);
 assert(manual.includes('id="timer-vigente"'),"Falta hoja vigente del Monitor de Tiempo");
 for(const token of ["INICIO","FINAL","TIMER","RESET","HH:MM:SS","pausa el conteo","lo reanuda","Conserva jugadores y scores"]) assert(manual.includes(token),"Monitor de Tiempo incompleto en manual: "+token);
