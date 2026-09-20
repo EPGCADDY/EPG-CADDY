@@ -14,9 +14,8 @@ const sharedVocabulary=[
   ["HISTORIAL","openCardLibrarySetup","openCardLibraryStableford"]
 ];
 const sharedInstructions=["REGISTRO DE JUGADORES"];
-const generalInstructions=["JUGADOR NÚMERO UNO · MIGUEL · HANDICAP 14 · MARCAS BLANCAS","JUGADOR NÚMERO DOS · NOMBRE + HANDICAP + MARCAS","HASTA 6 JUGADORES","LUEGO TOCA OK"];
+const generalInstructions=["REGISTRO DE JUGADORES","COMPLETA LOS DATOS DE CADA JUGADOR","DATOS DE LOS JUGADORES","NOMBRE + CATEGORÍA + HDCP + MARCAS + WHATSAPP OPCIONAL"];
 const stablefordInstructions=["SELECCIONA CATEGORÍA","CAMPEONATO · NEGRAS","A · AZULES","B · BLANCAS","C · BLANCAS","D · BLANCAS","SENIOR · BLANCAS","SUPER SENIOR · AMARILLAS","FEMENINA · ROJAS"];
-const microphonePath='M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z';
 
 assert.ok(style,"Falta el sistema visual V304");
 assert.match(style,/#setupStep1>\.nr-button,[\s\S]*?#stablefordSetupOverlay \.stableford-setup-card>\.nr-button/);
@@ -43,4 +42,4 @@ assert.match(html,/id="openCardLibraryStableford"[^>]*>HISTORIAL<\/button>/);
 assert.equal(release.buildNumber,307);
 assert.match(worker,/const CACHE_NAME="gscg-mobile-v\d{3}[^"]*"/);
 
-console.log("PASS V304 · registro vigente: vocabulario, categorías, navegación, tipografía, tamaño, brillo y estados");
+console.log("PASS V304 · registro manual vigente: vocabulario, categorías, navegación, tipografía, tamaño, brillo y estados");
