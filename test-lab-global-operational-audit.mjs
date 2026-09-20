@@ -39,8 +39,8 @@ for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAd
 
 for(const token of ["card-artifacts.js","four-ball.js","universales.js","stableford.js","shortcuts-ui.js","live-hub.html"])assert(sw.includes(token),"Service Worker no incluye "+token);
 
-assert(manual.includes("PANTALLAS REALES")&&manual.includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_01_INICIO_4K.png")&&!manual.includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_02_REGISTRO_4K.png"),"Manual R4 debe conservar la captura real vigente y excluir la captura retirada de Registro con voz");
-assert(manual.includes("Four Ball · TEAM")&&manual.includes("NETO TEAM"),"Manual Four Ball incompleto");
-assert(manual.includes("ATAJOS siempre contigo"),"Manual Atajos incompleto");
+assert(manual.includes('id="portada"')&&manual.includes('id="indice"')&&manual.includes("/docs/manual/v311/page-00.png"),"Manual restaurado debe conservar portada original e índice");
+for(const image of ["CAMPO_MODALIDAD_REAL.webp","REGISTRO_ATAJOS_REAL.webp","SCORECARD_CONTROL_REAL.webp","FOURBALL_ATAJOS_REAL.webp"])assert(manual.includes(image),"Manual restaurado: falta pantalla real "+image);
+assert(manual.includes("Registro de jugadores + ATAJOS")&&manual.includes("Four Ball corregido + ATAJOS"),"Manual restaurado: falta cobertura ATAJOS/Four Ball");
 
 console.log("PASS AUDITORÍA GLOBAL LAB · 5 MODALIDADES ACTIVAS · TARJETAS GLOBAL/PERSONAL · TORNEOS · ATAJOS · PWA · MANUAL R4");
