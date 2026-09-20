@@ -28,7 +28,7 @@ assert.equal(fourBall.teamIndexForPlayer(5),2);
     player("d","DIEGO",[7,6,5])
   ];
   const first=fourBall.holeResult(players,1),second=fourBall.holeResult(players,2),third=fourBall.holeResult(players,3);
-  assert.equal(first.winnerTeamIndex,0,"Hoyo 1: gana el mejor Neto del TEAM 1");
+  assert.equal(first.winnerTeamIndex,0,"Hoyo 1: gana el mejor Neto del TEAM");
   assert.deepEqual(first.teamBest.map(item=>item.score),[4,5]);
   assert.equal(first.teamBest[0].playerIndexes[0],0,"ANA aporta la mejor bola Verde");
   assert.equal(second.winnerTeamIndex,null,"Hoyo 2 empatado por mejores Netos");
@@ -43,7 +43,7 @@ assert.equal(fourBall.teamIndexForPlayer(5),2);
   const players=[player("a","ANA",Array(18).fill(4)),player("b","BETO",Array(18).fill(5))],result=fourBall.status(players);
   assert.equal(result.teamCount,1,"Four Ball admite una sola pareja");
   assert.equal(result.closed,true);
-  assert.equal(result.resultLabel,"TEAM 1 · NETO TOTAL 72");
+  assert.equal(result.resultLabel,"TEAM · ANA / BETO · NETO TOTAL 72");
   assert.equal(fourBall.teamStanding(players,0,[1,2,3]).position,"NETO 12");
   const singleClosed=await roundClosure.close({id:"four-ball-single",configured:true,mode:"four_ball",courseKey:"pulte",course:"El Pulté",players,fourBall:{...result,holes:undefined},createdAt:"2026-08-25T00:00:00.000Z"},{appVersion:"V311",closedAt:"2026-08-25T03:00:00.000Z"});
   assert.equal(singleClosed.ok,true);
@@ -64,12 +64,12 @@ assert.equal(fourBall.teamIndexForPlayer(5),2);
   assert.deepEqual(hole.teamDeltas,[2,0,-2],"Cada TEAM se compara contra los otros dos");
   assert.equal(hole.winnerTeamIndex,0);
   assert.deepEqual(result.teamPoints,[36,0,-36]);
-  assert.equal(result.resultLabel,"TEAM 1 GANA · 36 PUNTOS");
+  assert.equal(result.resultLabel,"TEAM · ANA / BETO GANA · 36 PUNTOS");
   assert.equal(result.closed,true);
   assert.equal(fourBall.teamStanding(players,2,[1,2,3]).position,"-6 PTS");
   const threeClosed=await roundClosure.close({id:"four-ball-three",configured:true,mode:"four_ball",courseKey:"pulte",course:"El Pulté",players,fourBall:{...result,holes:undefined},createdAt:"2026-08-26T00:00:00.000Z"},{appVersion:"V329",closedAt:"2026-08-26T03:00:00.000Z"});
   const threeArtifacts=cardArtifacts.build(threeClosed.snapshot);
-  assert.match(threeArtifacts.global.html,/TEAM 3/);
+  assert.match(threeArtifacts.global.html,/TEAM · ELENA \/ FABIO/);
   assert.match(threeArtifacts.personal[5].html,/team-blue/);
   assert.equal((threeArtifacts.global.html.match(/class="pair-divider"/g)||[]).length,2);
 }
@@ -88,7 +88,7 @@ const decisivePlayers=[
 const decisive=fourBall.status(decisivePlayers);
 assert.equal(decisive.closed,true);
 assert.equal(decisive.decidedAt,10);
-assert.equal(decisive.resultLabel,"TEAM 1 GANA 10 & 8");
+assert.equal(decisive.resultLabel,"TEAM · ANA / BETO GANA 10 & 8");
 
 const closed=await roundClosure.close({
   id:"four-ball-1",configured:true,mode:"four_ball",courseKey:"pulte",course:"El Pulté",players:decisivePlayers,
@@ -97,7 +97,7 @@ const closed=await roundClosure.close({
 assert.equal(closed.ok,true);
 assert.equal(closed.snapshot.mode,"four_ball");
 assert.equal(closed.snapshot.players.length,4);
-assert.equal(closed.snapshot.fourBall.resultLabel,"TEAM 1 GANA 10 & 8");
+assert.equal(closed.snapshot.fourBall.resultLabel,"TEAM · ANA / BETO GANA 10 & 8");
 
 const libraryEntry=cardLibrary.entry(closed.round);
 assert.equal(libraryEntry.mode,"four_ball");
@@ -109,7 +109,7 @@ const central=masterDataSync.build({round:closed.round,profiles:[],courseData:{p
 assert.equal(central.round.mode,"four_ball");
 const restored=accountBackup.localRound(central.round);
 assert.equal(restored.mode,"four_ball");
-assert.equal(restored.fourBall.resultLabel,"TEAM 1 GANA 10 & 8");
+assert.equal(restored.fourBall.resultLabel,"TEAM · ANA / BETO GANA 10 & 8");
 const historical=historicalAnalytics.run("REPORTE FOUR BALL DEL ÚLTIMO MES",[closed.round],{now:new Date("2026-08-25T04:00:00.000Z")});
 assert.equal(historical.matched,true);
 assert.equal(historical.ok,true);
@@ -118,8 +118,8 @@ const artifacts=cardArtifacts.build(closed.snapshot);
 assert.equal(artifacts.global.mode,"four_ball");
 assert.equal(artifacts.personal.length,4);
 assert.match(artifacts.global.name,/tarjeta-global-four-ball/);
-assert.match(artifacts.global.html,/TEAM 1/);
-assert.match(artifacts.global.html,/TEAM 2/);
+assert.match(artifacts.global.html,/TEAM · ANA \/ BETO/);
+assert.match(artifacts.global.html,/TEAM · CARLA \/ DIEGO/);
 assert.match(artifacts.global.html,/★ MEJOR/);
 assert.match(artifacts.global.html,/uno a tres TEAMS de 2 jugadores, con HCP individual y resultado separado por TEAM/i);
 assert.match(artifacts.global.html,/class="pair-divider"/);
