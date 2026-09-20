@@ -221,11 +221,11 @@ jobs:
                 const select=document.querySelector('[data-draft-category]');
                 if(select){select.size=Math.max(8,select.options.length);select.value='championship';select.dispatchEvent(new Event('change',{bubbles:true}))}
               });
-              const select=page.locator('[data-draft-category]').first();
+              const select=page.locator('[data-draft-category="0"]').first();
               check(await select.count()===1,'Registro físico no muestra selector de categoría');
               const options=await select.locator('option').allTextContents();
               for(const token of ['CAMPEONATO','A','B','C','D','SENIOR','SUPER SENIOR','FEMENINA']) check(options.includes(token),'Registro físico falta '+token);
-              check(await page.locator('[data-draft-tee]').first().inputValue().then(v=>/Negro/i.test(v)).catch(()=>false),'CAMPEONATO no preconfigura marcas negras');
+              check(await page.locator('[data-draft-tee="0"]').first().inputValue().then(v=>/Negro/i.test(v)).catch(()=>false),'CAMPEONATO no preconfigura marcas negras');
               await select.scrollIntoViewIfNeeded();
               await page.waitForTimeout(120);
               await page.locator('#setupOverlay').screenshot({path:'full-parity/app/04-campeonato-registro.png'});
