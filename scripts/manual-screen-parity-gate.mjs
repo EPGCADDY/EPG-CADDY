@@ -61,9 +61,9 @@ assert((manual.match(/class="page tutorial-page"/g)||[]).length===11,"Manual deb
 assert(manual.includes('id="count">00 / 61</span>'),"Contador editorial debe marcar 61 páginas");
 assert((manual.match(/class="screen-replica"/g)||[]).length===15,"Manual debe tener 15 réplicas clave");
 assert(manual.includes("TUTORIAL TORNEOS · 01")&&manual.includes("TUTORIAL TORNEOS · 09")&&manual.includes("TUTORIAL VISUAL · 10 · PANTALLAS REALES"),"Capítulo tutorial R4 debe incluir torneos y pantallas reales");
-assert(manual.includes("MIS FAVORITOS")&&manual.includes("REVISADO 100% · PLANTILLA ÚNICA"),"Capítulo tutorial R3 incompleto");
-assert(manual.includes("ATAJOS siempre contigo")&&manual.includes("ATAJOS UNIVERSAL · LAB R3"),"Falta tutorial universal ATAJOS");
-assert(page("60").includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_01_INICIO_4K.png")&&page("60").includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_02_REGISTRO_4K.png"),"P60 debe usar capturas reales de iPhone del repositorio");
+assert(manual.includes("MIS FAVORITOS")&&manual.includes("REVISADO 100% · PLANTILLA ÚNICA")&&manual.includes("Plantilla común R4 · PASS"),"Capítulo tutorial R4 incompleto");
+assert(manual.includes("ATAJOS siempre contigo")&&manual.includes("ATAJOS UNIVERSAL · LAB R4"),"Falta tutorial universal ATAJOS R4");
+assert(page("60").includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_01_INICIO_4K.png")&&!page("60").includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_02_REGISTRO_4K.png"),"P60 debe conservar sólo la captura real vigente y excluir la captura retirada de Registro con voz");
 assert(manual.includes("golf-score-card-gt-horizontal-original.webp"),"Las guías deben usar el logo horizontal original en ATAJOS");
 assert(page("49").includes("/assets/official-logos/golf-score-card-gt-horizontal-original.webp")&&page("49").includes("logo horizontal original"),"P49 debe documentar el launcher ATAJOS con el logo horizontal original del repositorio");
 assert(shortcuts.includes("/assets/official-logos/golf-score-card-gt-horizontal-original.webp")&&shortcuts.includes("<span>ATAJOS</span>"),"LAB debe usar el logo horizontal original del repositorio + etiqueta ATAJOS en el launcher universal");
