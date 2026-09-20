@@ -7,6 +7,7 @@ const liveHub=read("live-hub.html");
 const auth=read("auth-gate.js");
 const shortcuts=read("shortcuts-ui.js");
 const cards=read("card-artifacts.js");
+const fourBall=read("four-ball.js");
 
 const fail=[];
 const assert=(ok,msg)=>{if(!ok)fail.push(msg)};
@@ -72,7 +73,9 @@ assert(page("41").includes("Cuenta personal"),"P41 debe documentar la cuenta per
 assert(page("03").includes("CAMBIO DE MODALIDAD")&&app.includes("canChangeConfiguredRoundMode"),"P03 debe documentar cambio de modalidad únicamente antes de registrar scores");
 assert(page("08").includes("TEAM ·")&&page("08").includes("GROSS TEAM")&&page("08").includes("NETO TEAM")&&!page("08").includes("TEAM 1"),"P08 debe documentar Four Ball con TEAM sin numeración y resumen actual");
 assert(app.includes("TEAM · NETO")&&app.includes("function fourBallTeamLabel")&&!app.includes("return`TEAM ${teamIndex+1}"),"LAB Four Ball debe mostrar TEAM sin numeración visible");
-assert(cards.includes('FOUR_BALL_TEAM_NAMES=["TEAM 1","TEAM 2","TEAM 3"]')&&cards.includes("<th>TEAM</th>"),"Tarjetas exportadas Four Ball deben conservar terminología TEAM");
+assert(cards.includes("fourBallTeamLabel")&&cards.includes("<th>TEAM</th>")&&!cards.includes("TEAM 1")&&!cards.includes("TEAM 2")&&!cards.includes("TEAM 3"),"Tarjetas exportadas Four Ball deben usar TEAM + nombres sin numeración");
+assert(!fourBall.includes('"TEAM 1"')&&!fourBall.includes('"TEAM 2"')&&!fourBall.includes('"TEAM 3"')&&fourBall.includes("TEAM${names.length?"),"Motor Four Ball debe producir TEAM + nombres sin numeración");
+assert(!app.includes('pairName=["TEAM 1","TEAM 2","TEAM 3"]'),"Registro Four Ball no debe reintroducir TEAM numerado");
 
 assert(app.includes('.mandatory-update{display:none;')&&app.includes('.mandatory-update.available{display:block}'),"ACTUALIZAR debe permanecer oculto cuando LAB está al día y mostrarse sólo cuando hay versión nueva");
 assert(page("45").includes("control de actualización permanece oculto")&&page("45").includes("no debe quedar superpuesto"),"P45 debe documentar la visibilidad condicional de ACTUALIZAR");
