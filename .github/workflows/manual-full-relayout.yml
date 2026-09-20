@@ -39,7 +39,57 @@ jobs:
                   pad=max(24,round(min(im.size)*0.025))
                   l=max(0,l-pad); t=max(0,t-pad); r=min(im.width,r+pad); b=min(im.height,b+pad)
                   crop=im.crop((l,t,r,b))
-              crop.save(dst/f"page-{n:02d}.png",optimize=True)
+
+              # Compress excessive internal white horizontal bands while preserving content.
+              px=crop.load()
+              rows=[]
+              for y in range(crop.height):
+                  nonwhite=0
+                  for x in range(crop.width):
+                      rr,gg,bb=px[x,y]
+                      if min(rr,gg,bb) < 242:
+                          nonwhite += 1
+                  rows.append(nonwhite / max(1,crop.width))
+
+              # White rows are rows with less than 0.8% visible ink.
+              white=[v < 0.008 for v in rows]
+              runs=[]
+              s=None
+              for y,isw in enumerate(white+[False]):
+                  if isw and s is None:
+                      s=y
+                  elif not isw and s is not None:
+                      runs.append((s,y))
+                      s=None
+
+              pieces=[]
+              cursor=0
+              max_blank=max(26, round(crop.height*0.025))
+              for a,b in runs:
+                  if a>cursor:
+                      pieces.append(crop.crop((0,cursor,crop.width,a)))
+                  run_h=b-a
+                  keep=min(run_h,max_blank)
+                  if keep>0:
+                      mid=(a+b)//2
+                      y0=max(a,mid-keep//2)
+                      y1=min(b,y0+keep)
+                      pieces.append(crop.crop((0,y0,crop.width,y1)))
+                  cursor=b
+              if cursor<crop.height:
+                  pieces.append(crop.crop((0,cursor,crop.width,crop.height)))
+
+              pieces=[p for p in pieces if p.height>0]
+              if pieces:
+                  out_h=sum(p.height for p in pieces)
+                  compact=Image.new("RGB",(crop.width,out_h),(255,255,255))
+                  yy=0
+                  for p in pieces:
+                      compact.paste(p,(0,yy)); yy+=p.height
+              else:
+                  compact=crop
+
+              compact.save(dst/f"page-{n:02d}.png",optimize=True)
           PY
       - name: Commit layout pages
         run: |
