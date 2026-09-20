@@ -320,6 +320,7 @@ jobs:
           git add docs/manual/current/APP_*.png
           if ! git diff --cached --quiet; then
             git commit -m "LAB manual: publish current physical app screens"
+            git pull --rebase origin laboratorio
             git push origin HEAD:laboratorio
           fi
       - uses: actions/upload-artifact@v4
