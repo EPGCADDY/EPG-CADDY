@@ -1419,17 +1419,23 @@ La aplicación consulta periódicamente el identificador central de la versión 
 
 Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarjeta oficial o provisional, dictar scores ni utilizar ninguna función. `ACTUALIZAR` conserva primero la ronda local activa, carga la versión publicada con una URL nueva para evitar caché y sólo entonces devuelve el control. La revisión ocurre al iniciar, cada treinta segundos y al volver a primer plano.
 
-## 27. Stableford Scratch — Senior y SUPER SENIOR
+## 27. Stableford Scratch — categorías completas
 
 La pantalla general de Registro mantiene una opción permanente correctamente nombrada `STABLEFORD`. Al tocarla abre la modalidad Stableford dentro de la misma tarjeta oficial y la misma arquitectura operacional. General y Stableford conservan datos de ronda separados para impedir contaminación cruzada, pero comparten navegación, control manual, voz, validación, escritura, persistencia, render y cierre.
 
 La apertura normal del alojamiento conserva y restaura la última ronda Stableford activa: campo, torneo, categoría, jugadores, marcas, Gross y Puntos. El botón `NUEVA RONDA` elimina únicamente la ronda activa y el borrador de registro, y presenta un registro Stableford completamente limpio. Nunca borra el historial de tarjetas cerradas ni la clasificación acumulada.
 
+- `CAMPEONATO`: handicap fijo `0`, marcas negras.
+- `A`: handicap fijo `0`, marcas azules.
+- `B`: handicap fijo `0`, marcas blancas.
+- `C`: handicap fijo `0`, marcas blancas.
+- `D`: handicap fijo `0`, marcas blancas.
 - `SENIOR`: handicap fijo `0`, marcas blancas y cinco plazas de clasificación por ranking.
 - `SUPER SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
-- En una nueva ronda no queda categoría impuesta. El registro muestra simultáneamente `SENIOR · BLANCAS` y `SÚPER SENIOR · AMARILLAS`; la selección configura automáticamente las marcas, los yardajes, Course Rating y Slope correspondientes al campo elegido.
+- `FEMENINA`: handicap fijo `0`, marcas rojas.
+- En una nueva ronda no queda categoría impuesta. El registro muestra simultáneamente `CAMPEONATO · NEGRAS`, `A · AZULES`, `B · BLANCAS`, `C · BLANCAS`, `D · BLANCAS`, `SENIOR · BLANCAS`, `SUPER SENIOR · AMARILLAS` y `FEMENINA · ROJAS`; la selección configura automáticamente las marcas, los yardajes, Course Rating y Slope correspondientes al campo elegido.
 - El registro muestra los cuatro campos autorizados —Country Club, El Pulté, San Isidro y Mayan Golf— y exige seleccionar uno antes de iniciar.
-- En ambas categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. El dictado debe conservar la posición: `JUGADOR 1 MIGUEL`; para los siguientes se usa `JUGADOR # + NOMBRE`. Los nombres solos sin posición no se aceptan en esta pantalla. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
+- En todas las categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. El dictado debe conservar la posición: `JUGADOR 1 MIGUEL`; para los siguientes se usa `JUGADOR # + NOMBRE`. Los nombres solos sin posición no se aceptan en esta pantalla. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
 - El mismo panel permite escribir el nombre del torneo antes de iniciar scores. `REGRESAR A DATOS` abre los datos de la ronda actual sin borrar sus scores; `NUEVA RONDA` sí abre un registro completamente limpio.
 - Los únicos campos admitidos por la serie son Country Club, El Pulté, San Isidro y Mayan Golf. Un campo sin tarjeta oficial cargada permanece bloqueado para evitar cálculos con datos heredados o inventados.
 - Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales `OUT`, `IN` y `TOTAL`.
