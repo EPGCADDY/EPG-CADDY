@@ -39,7 +39,7 @@ for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAd
 
 for(const token of ["card-artifacts.js","four-ball.js","universales.js","stableford.js","shortcuts-ui.js","live-hub.html"])assert(sw.includes(token),"Service Worker no incluye "+token);
 
-assert(manual.includes("PANTALLAS REALES")&&manual.includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_01_INICIO_4K.png")&&manual.includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_02_REGISTRO_4K.png"),"Manual R4 no contiene pantallas reales");
+assert(manual.includes("PANTALLAS REALES")&&manual.includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_01_INICIO_4K.png")&&!manual.includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_02_REGISTRO_4K.png"),"Manual R4 debe conservar la captura real vigente y excluir la captura retirada de Registro con voz");
 assert(manual.includes("Four Ball · TEAM")&&manual.includes("NETO TEAM"),"Manual Four Ball incompleto");
 assert(manual.includes("ATAJOS siempre contigo"),"Manual Atajos incompleto");
 
