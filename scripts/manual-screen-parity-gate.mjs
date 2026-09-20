@@ -49,7 +49,7 @@ const countWord=(s,w)=>{
 for(const word of forbidden) assert(countWord(manual,word)===0,`Manual contiene función retirada: ${word}`);
 
 assert((manual.match(/class="page"/g)||[]).length===50,"Manual debe tener 50 páginas");
-assert((manual.match(/class="screen-replica"/g)||[]).length===11,"Manual debe tener 11 réplicas clave");
+assert((manual.match(/class="screen-replica"/g)||[]).length===12,"Manual debe tener 12 réplicas clave");
 assert(app.includes('href="/manual"')&&app.includes(">GUÍA DE USUARIO</a>"),"GUÍA DE USUARIO debe apuntar a /manual");
 
 const cssContracts=[
@@ -70,4 +70,4 @@ if(fail.length){
  process.exit(1);
 }
 console.log("MANUAL SCREEN PARITY: PASS");
-console.log("50 pages · 11 replicas · 0 retired features · current production controls matched");
+console.log("50 pages · 12 replicas · 0 retired features · current LAB controls matched");
