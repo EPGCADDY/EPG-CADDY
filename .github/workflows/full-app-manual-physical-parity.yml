@@ -113,7 +113,9 @@ jobs:
                 const loc=page.locator(selector).first();
                 if(!await loc.count()||!await loc.isVisible())continue;
                 await loc.scrollIntoViewIfNeeded();await page.waitForTimeout(60);
-                check(!(await overlaps('#gscShortcutsButton',selector)),`ATAJOS traslapa ${selector} en ${label}`);
+                const a=await page.locator('#gscShortcutsButton').boundingBox(),b=await loc.boundingBox();
+                const overlap=!!(a&&b)&&!(a.x+a.width<=b.x||b.x+b.width<=a.x||a.y+a.height<=b.y||b.y+b.height<=a.y);
+                check(!overlap,`ATAJOS traslapa ${selector} en ${label}`);
               }
             };
             const modalityCases=[
