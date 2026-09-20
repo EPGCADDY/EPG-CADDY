@@ -59,8 +59,8 @@ assert(manual.includes('id="count">00 / 59</span>'),"Contador editorial debe mar
 assert((manual.match(/class="screen-replica"/g)||[]).length===14,"Manual debe tener 14 réplicas clave");
 assert(manual.includes("TUTORIAL TORNEOS · 01")&&manual.includes("TUTORIAL TORNEOS · 08"),"Capítulo tutorial R2 debe incluir los 8 tutoriales");
 assert(manual.includes("MIS FAVORITOS")&&manual.includes("REVISADO 100% · PLANTILLA ÚNICA"),"Capítulo tutorial R2 incompleto");
-assert(page("49").includes("data:image/webp;base64,")&&page("49").includes("logo horizontal original"),"P49 debe documentar el launcher ATAJOS con el logo horizontal original");
-assert(shortcuts.includes("data:image/webp;base64,")&&shortcuts.includes("<span>ATAJOS</span>"),"LAB debe usar el logo horizontal original + etiqueta ATAJOS en el launcher universal");
+assert(page("49").includes("/assets/official-logos/golf-score-card-gt-horizontal-original.webp")&&page("49").includes("logo horizontal original"),"P49 debe documentar el launcher ATAJOS con el logo horizontal original del repositorio");
+assert(shortcuts.includes("/assets/official-logos/golf-score-card-gt-horizontal-original.webp")&&shortcuts.includes("<span>ATAJOS</span>"),"LAB debe usar el logo horizontal original del repositorio + etiqueta ATAJOS en el launcher universal");
 assert(!shortcuts.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png"),"ATAJOS no debe usar el icono PWA cuadrado");
 assert(app.includes('href="/manual"')&&app.includes(">GUÍA DE USUARIO</a>"),"GUÍA DE USUARIO debe apuntar a /manual");
 assert(!page("41").includes("Cuenta opcional"),"P41 conserva la cuenta opcional retirada");
