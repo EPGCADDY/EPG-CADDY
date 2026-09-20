@@ -3005,7 +3005,7 @@ function fourBallTeamTotals(teamIndex,holes){
 function fourBallTeamLabel(teamIndex){
   const indexes=window.GSCFourBall.TEAM_PLAYER_INDEXES[teamIndex]?.filter(index=>index<round.players.length)||[];
   const names=indexes.map(index=>String(round.players[index]?.name||"").trim()).filter(Boolean);
-  return`TEAM ${teamIndex+1}${names.length?` · ${names.map(escapeHtml).join(" / ")}`:""}`
+  return`TEAM${names.length?` · ${names.map(escapeHtml).join(" / ")}`:""}`
 }
 function fourBallPairHeader(teamIndex){
   const teamClass=fourBallTeamClass(teamIndex);
@@ -3041,7 +3041,7 @@ function fourBallSummaryRows(){
 }
 function fourBallSimpleStatus(){
   const count=window.GSCFourBall.teamCount(round.players);
-  if(count===1){const team=fourBallTeamTotals(0,ALL);return team.count?`TEAM 1 · NETO ${team.net}`:"TEAM 1 · PENDIENTE"}
+  if(count===1){const team=fourBallTeamTotals(0,ALL);return team.count?`TEAM · NETO ${team.net}`:"TEAM · PENDIENTE"}
   return fourBallStatus().resultLabel
 }
 function renderFourBall(){  const output=baseRender(),state=fourBallStatus();round.fourBall={...state,holes:undefined};document.body.classList.add("four-ball-mode");document.querySelector(".round-meta h1").textContent="FOUR BALL";
