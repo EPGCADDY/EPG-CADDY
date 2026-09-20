@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-lab-tournaments-atajos-20260919-e`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-lab-tournaments-atajos-approved-20260919-e`;
-const RELEASE="LAB-TOURNAMENTS-ATAJOS-20260919-E";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-lab-tournaments-atajos-20260919-f`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-lab-tournaments-atajos-approved-20260919-f`;
+const RELEASE="LAB-TOURNAMENTS-ATAJOS-20260919-F";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -97,7 +97,7 @@ async function approvedNavigationWithManualUpdate(request){
   const approved=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});
   if(!approved)return networkFirst(request);
   const html=await approved.text();
-  const recoveryStyle='<style id="gsc-update-recovery">body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:block!important}body.gsc-setup-open:has(#setupOverlay.visible) #setupOverlay{padding-top:max(82px,calc(env(safe-area-inset-top) + 70px))}</style>';
+  const recoveryStyle='<style id="gsc-update-recovery">body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:none!important}body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update.available{display:block!important}</style>';
   const headers=new Headers(approved.headers);headers.set("content-type","text/html; charset=utf-8");headers.delete("content-length");
   return new Response(html.includes('id="gsc-update-recovery"')?html:html.replace("</head>",`${recoveryStyle}</head>`),{status:approved.status,statusText:approved.statusText,headers});
 }
