@@ -103,7 +103,9 @@ jobs:
               const options=await select.locator('option').allTextContents();
               for(const token of ['CAMPEONATO','A','B','C','D','SENIOR','SUPER SENIOR','FEMENINA']) check(options.includes(token),'Registro físico falta '+token);
               check(await page.locator('[data-draft-tee]').first().inputValue().then(v=>/Negro/i.test(v)).catch(()=>false),'CAMPEONATO no preconfigura marcas negras');
-              await page.screenshot({path:'full-parity/app/04-campeonato-registro.png',fullPage:false});
+              await select.scrollIntoViewIfNeeded();
+              await page.waitForTimeout(120);
+              await page.locator('#setupOverlay').screenshot({path:'full-parity/app/04-campeonato-registro.png'});
               results.app.push('campeonato-registro');
             }
 
