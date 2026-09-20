@@ -49,14 +49,14 @@ Muestra la tabla completa de posiciones del torneo.
 
 #### CATEGORÍAS
 Permite escoger y ver por separado:
-- CAMPEONATO
+- CAMPEONATO — MARCAS NEGRAS
 - A
 - B
 - C
 - D
-- FEMENINA
 - SENIOR
-- S.SENIOR
+- SUPER SENIOR
+- FEMENINA
 
 #### BUSCAR POR NOMBRE
 1. Toca **BUSCAR POR NOMBRE**.
@@ -1419,14 +1419,14 @@ La aplicación consulta periódicamente el identificador central de la versión 
 
 Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarjeta oficial o provisional, dictar scores ni utilizar ninguna función. `ACTUALIZAR` conserva primero la ronda local activa, carga la versión publicada con una URL nueva para evitar caché y sólo entonces devuelve el control. La revisión ocurre al iniciar, cada treinta segundos y al volver a primer plano.
 
-## 27. Stableford Scratch — Senior y S. Senior
+## 27. Stableford Scratch — Senior y SUPER SENIOR
 
 La pantalla general de Registro mantiene una opción permanente correctamente nombrada `STABLEFORD`. Al tocarla abre la modalidad Stableford dentro de la misma tarjeta oficial y la misma arquitectura operacional. General y Stableford conservan datos de ronda separados para impedir contaminación cruzada, pero comparten navegación, control manual, voz, validación, escritura, persistencia, render y cierre.
 
 La apertura normal del alojamiento conserva y restaura la última ronda Stableford activa: campo, torneo, categoría, jugadores, marcas, Gross y Puntos. El botón `NUEVA RONDA` elimina únicamente la ronda activa y el borrador de registro, y presenta un registro Stableford completamente limpio. Nunca borra el historial de tarjetas cerradas ni la clasificación acumulada.
 
 - `SENIOR`: handicap fijo `0`, marcas blancas y cinco plazas de clasificación por ranking.
-- `S. SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
+- `SUPER SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
 - En una nueva ronda no queda categoría impuesta. El registro muestra simultáneamente `SENIOR · BLANCAS` y `SÚPER SENIOR · AMARILLAS`; la selección configura automáticamente las marcas, los yardajes, Course Rating y Slope correspondientes al campo elegido.
 - El registro muestra los cuatro campos autorizados —Country Club, El Pulté, San Isidro y Mayan Golf— y exige seleccionar uno antes de iniciar.
 - En ambas categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. El dictado debe conservar la posición: `JUGADOR 1 MIGUEL`; para los siguientes se usa `JUGADOR # + NOMBRE`. Los nombres solos sin posición no se aceptan en esta pantalla. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
@@ -1444,7 +1444,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 - La hoja nativa constituye una entrega preparada y confirmada por el usuario. Cancelarla no altera la ronda ni marca la tarjeta como enviada; el envío automático y el estado `ENTREGADO` continúan reservados a proveedores verificables.
 - La clasificación contiene cuatro fechas, una por campo, y suma automáticamente las tres mejores tarjetas de cada jugador.
 - Se pueden incorporar resultados oficiales de otros grupos mediante `AGREGAR RESULTADO OFICIAL`, indicando jugador, categoría, fecha, campo, puntos y Gross opcional.
-- La clasificación Senior muestra las primeras cinco posiciones de ranking; las tres elecciones de capitán se administran fuera del cálculo. S. Senior muestra cuatro posiciones; sus dos elecciones de capitán también son externas.
+- La clasificación Senior muestra las primeras cinco posiciones de ranking; las tres elecciones de capitán se administran fuera del cálculo. SUPER SENIOR muestra cuatro posiciones; sus dos elecciones de capitán también son externas.
 - En V199 el acumulado operativo se conserva localmente en el navegador. Su migración a Neon y consulta multi-dispositivo continúan pendientes y no deben anunciarse como sincronizadas hasta superar la prueba central.
 
 ### Four Ball
@@ -1535,7 +1535,7 @@ La pantalla `Configura la ronda` muestra dos columnas sin cambiar la tarjeta pri
 | 2026-08-22 | Manual 3.29 / App V252 | Stableford aislado con estado operativo explícito: apertura normal restaura la última ronda; `NUEVA RONDA` limpia solamente ronda activa y borrador, sin tocar historial ni clasificación; registro nuevo sin nombres, campo o categoría forzados; cuatro campos, Senior/blancas, Súper Senior/amarillas y uno a seis jugadores. |
 | 2026-08-22 | Manual 3.28 / App V250 | Fin de ronda Stableford conectado a la matriz oficial GRUPAL: Global, una personal por jugador, paquete conjunto, historial y compartir del archivo visual por correo/WhatsApp mediante la hoja nativa, sin falsos estados de entrega. |
 | 2026-08-22 | Manual 3.27 / App V201 | Stableford oficial limpio: acceso directo sin nombres precargados, registro interno de uno a seis jugadores, torneo/categoría dentro de la tarjeta y snapshot histórico con campo, fecha, torneo, jugadores, Gross y Puntos. |
-| 2026-08-20 | Manual 3.25 / App V199 | Stableford Scratch permanente: Senior HCP 0/marcas blancas y S. Senior HCP 0/marcas amarillas; máximo cuatro jugadores; Gross y puntos por hoyo; X explícita con cero; cuatro campos y fechas; totales por vuelta/ronda; clasificación por las tres mejores tarjetas e ingreso manual de resultados oficiales. |
+| 2026-08-20 | Manual 3.25 / App V199 | Stableford Scratch permanente: Senior HCP 0/marcas blancas y SUPER SENIOR HCP 0/marcas amarillas; máximo cuatro jugadores; Gross y puntos por hoyo; X explícita con cero; cuatro campos y fechas; totales por vuelta/ronda; clasificación por las tres mejores tarjetas e ingreso manual de resultados oficiales. |
 | 2026-08-22 | Manual 3.26 / App V200 | Reconciliación de la versión física Stableford: bloque inferior unificado como `INFORMACIÓN DE RONDA`, verde neón, con primera vuelta, segunda vuelta y total completos en grupal, provisional, Stableford y tarjeta digital. |
 | 2026-08-20 | Manual 3.24 / App V197 | Franja del reloj reorganizada en tres zonas: INICIO a la izquierda, TIMER centrado con superficie táctil real ampliada y cronómetro a la derecha; eliminada completamente la antigua capa invisible y sus interceptores globales para impedir que el micrófono active o desactive el timer. |
 | 2026-08-20 | Manual 3.23 / App V196 | Guatemala Country Club habilitado desde su tarjeta oficial: Par 71, 90 yardajes, cinco ratings/slopes y tres matrices de handicap validados casilla por casilla; selección de campo enlazada al motor de Gross, Neto, vueltas y total sin heredar datos de El Pulté. |
