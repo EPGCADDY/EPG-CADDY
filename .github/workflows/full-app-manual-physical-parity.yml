@@ -77,6 +77,11 @@ jobs:
             // Physical internal Score Cards for every active modality + overlap sweep.
             const setAuditRound=async(mode,opts={})=>{
               await page.evaluate(({mode,opts})=>{
+                const setup=document.getElementById('setupOverlay');
+                if(setup){setup.classList.remove('visible');setup.setAttribute('aria-hidden','true');setup.style.removeProperty('display')}
+                const stable=document.getElementById('stablefordSetupOverlay');
+                if(stable){stable.classList.remove('visible');stable.setAttribute('aria-hidden','true');stable.style.removeProperty('display')}
+                document.body.classList.remove('gsc-setup-open','gsc-history-open','gsc-final-card-open');
                 const makeHoles=(gross=4)=>{const h={};for(let n=1;n<=18;n++)h[n]={gross,status:null};return h};
                 const count=mode==='universales'?4:(mode==='match_play'||mode==='four_ball'?4:opts.players||3);
                 const players=Array.from({length:count},(_,i)=>normalizePlayer({
@@ -130,6 +135,13 @@ jobs:
             }
 
             // Critical overlays opened through their real application functions.
+            await page.evaluate(()=>{
+              const setup=document.getElementById('setupOverlay');
+              if(setup){setup.classList.remove('visible');setup.setAttribute('aria-hidden','true');setup.style.removeProperty('display')}
+              const stable=document.getElementById('stablefordSetupOverlay');
+              if(stable){stable.classList.remove('visible');stable.setAttribute('aria-hidden','true');stable.style.removeProperty('display')}
+              document.body.classList.remove('gsc-setup-open','gsc-history-open','gsc-final-card-open');
+            });
             const overlaps=async(a,b)=>{
               const ra=await page.locator(a).boundingBox(), rb=await page.locator(b).boundingBox();
               if(!ra||!rb)return false;
