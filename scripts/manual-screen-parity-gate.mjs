@@ -3,7 +3,7 @@ import fs from "node:fs";
 const read=p=>fs.readFileSync(new URL("../"+p,import.meta.url),"utf8");
 const app=read("index-grupal.html");
 const manual=read("manual.html");
-const live=read("live-control.js");
+const liveHub=read("live-hub.html");
 const auth=read("auth-gate.js");
 const shortcuts=read("shortcuts-ui.js");
 
@@ -31,7 +31,7 @@ const pages={
 };
 
 const sourceByPage={
- "01":auth,"03":app,"13":app,"19":app,"20":app,"22":app+"\n"+live,"29":app,"30":app,"33":app,"34":app,"36":app,"38":app,"49":shortcuts
+ "01":auth,"03":app,"13":app,"19":app,"20":app,"22":app+"\n"+liveHub,"29":app,"30":app,"33":app,"34":app,"36":app,"38":app,"49":shortcuts
 };
 
 for(const [id,tokens] of Object.entries(pages)){
