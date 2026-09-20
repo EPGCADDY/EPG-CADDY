@@ -74,17 +74,62 @@ jobs:
             await page.screenshot({path:'full-parity/app/03-atajos-overlay.png',fullPage:false});
             await page.keyboard.press('Escape');
 
-            // Critical overlays with launcher physically above them
-            for(const [id,name] of [['finalCardOverlay','final-card'],['officialCorrectionOverlay','correction'],['cardLibraryOverlay','history']]){
-              await page.evaluate(id=>{
-                const el=document.getElementById(id); if(el){el.classList.add('visible');el.style.display='block';}
-              },id);
-              await page.waitForTimeout(100);
-              check(await page.locator('#gscShortcutsButton').isVisible(),`ATAJOS no visible sobre ${name}`);
-              await page.screenshot({path:`full-parity/app/overlay-${name}-atajos.png`,fullPage:false});
-              results.app.push(name+'+atajos');
-              await page.evaluate(id=>{const el=document.getElementById(id);if(el){el.classList.remove('visible');el.style.removeProperty('display')}},id);
+            // Critical overlays opened through their real application functions.
+            const overlaps=async(a,b)=>{
+              const ra=await page.locator(a).boundingBox(), rb=await page.locator(b).boundingBox();
+              if(!ra||!rb)return false;
+              return !(ra.x+ra.width<=rb.x||rb.x+rb.width<=ra.x||ra.y+ra.height<=rb.y||rb.y+rb.height<=ra.y);
+            };
+            await page.evaluate(()=>{
+              const holes={}; for(let h=1;h<=18;h++)holes[h]={gross:4,status:null};
+              round=blankRound();
+              round.id='physical-overlay-audit';
+              round.configured=true;
+              round.courseKey='pulte';
+              round.mode='general';
+              round.createdAt=new Date().toISOString();
+              round.players=[normalizePlayer({id:'p1',name:'AUDITOR',handicap:0,tee:'Negro',tournamentCategory:'championship',holes},0)];
+              render();
+            });
+
+            await page.evaluate(()=>openFinalDigitalCard());
+            await page.waitForTimeout(120);
+            check(await page.locator('#finalCardOverlay.visible').count()===1,'Tarjeta Final no abre físicamente');
+            check(await page.locator('#closeFinalCard').isVisible(),'ATRÁS no visible en Tarjeta Final');
+            check(!(await overlaps('#gscShortcutsButton','#closeFinalCard')),'ATAJOS traslapa ATRÁS en Tarjeta Final');
+            check(!(await overlaps('#gscShortcutsButton','#officialCloseButton')),'ATAJOS traslapa FINALIZAR RONDA');
+            check(await page.locator('#mandatoryUpdate').isHidden(),'ACTUALIZADO invade Tarjeta Final');
+            await page.screenshot({path:'full-parity/app/overlay-final-card-atajos.png',fullPage:false});
+            results.app.push('final-card+atajos');
+            await page.evaluate(()=>closeFinalDigitalCard());
+
+            await page.evaluate(()=>{
+              round.officiallyClosedAt=new Date().toISOString();
+              round.officialSnapshot={id:round.id,courseKey:round.courseKey,players:round.players};
+              openOfficialCorrection();
+            });
+            await page.waitForTimeout(120);
+            check(await page.locator('#officialCorrectionOverlay.visible').count()===1,'Corrección Oficial no abre físicamente');
+            for(const s of ['#cancelOfficialCorrection','#officialCorrectionPlayer','#officialCorrectionHole','#officialCorrectionGross','#officialCorrectionReason','#officialCorrectionAuthorizedBy','#saveOfficialCorrection']){
+              check(await page.locator(s).isVisible(),`Corrección Oficial falta control ${s}`);
+              check(!(await overlaps('#gscShortcutsButton',s)),`ATAJOS traslapa ${s} en Corrección Oficial`);
             }
+            check(await page.locator('#mandatoryUpdate').isHidden(),'ACTUALIZADO invade Corrección Oficial');
+            await page.screenshot({path:'full-parity/app/overlay-correction-atajos.png',fullPage:false});
+            results.app.push('correction+atajos');
+            await page.evaluate(()=>closeOfficialCorrection());
+
+            await page.evaluate(()=>openCardLibrary());
+            await page.waitForTimeout(120);
+            check(await page.locator('#cardLibraryOverlay.visible').count()===1,'Historial no abre físicamente');
+            for(const s of ['#closeCardLibrary','#cardLibraryMode','#cardLibraryCourse','#cardLibraryQuery']){
+              check(await page.locator(s).isVisible(),`Historial falta control ${s}`);
+              check(!(await overlaps('#gscShortcutsButton',s)),`ATAJOS traslapa ${s} en Historial`);
+            }
+            check(await page.locator('#mandatoryUpdate').isHidden(),'ACTUALIZADO invade Historial');
+            await page.screenshot({path:'full-parity/app/overlay-history-atajos.png',fullPage:false});
+            results.app.push('history+atajos');
+            await page.evaluate(()=>closeCardLibrary());
 
             // CAMPEONATO physically in registration category selector
             {
