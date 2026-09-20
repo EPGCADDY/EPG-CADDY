@@ -74,6 +74,61 @@ jobs:
             await page.screenshot({path:'full-parity/app/03-atajos-overlay.png',fullPage:false});
             await page.keyboard.press('Escape');
 
+            // Physical internal Score Cards for every active modality + overlap sweep.
+            const setAuditRound=async(mode,opts={})=>{
+              await page.evaluate(({mode,opts})=>{
+                const makeHoles=(gross=4)=>{const h={};for(let n=1;n<=18;n++)h[n]={gross,status:null};return h};
+                const count=mode==='universales'?4:(mode==='match_play'||mode==='four_ball'?4:opts.players||3);
+                const players=Array.from({length:count},(_,i)=>normalizePlayer({
+                  id:'audit-'+mode+'-'+i,
+                  name:'AUDITOR '+(i+1),
+                  handicap:i+1,
+                  tee:mode==='stableford'?'Negro':'Blanco',
+                  tournamentCategory:i===0?'championship':'a',
+                  holes:makeHoles(4+i%2)
+                },i));
+                round=blankRound();
+                round.id='physical-'+mode;
+                round.configured=true;
+                round.courseKey='pulte';
+                round.course='El Pulté Golf';
+                round.mode=mode==='practice'?'general':mode;
+                round.provisional=mode==='practice';
+                round.players=players;
+                round.createdAt=new Date().toISOString();
+                round.sideGames=round.sideGames||{};
+                if(mode==='stableford'){round.stablefordCategory='championship';round.stablefordRoundNumber=1}
+                if(mode==='skins')round.sideGames.skins=window.GSCSkins.normalizeConfig({enabled:true,scoreType:'net',tiePolicy:'carry',unitValue:10,currency:'GTQ'});
+                render();
+              },{mode,opts});
+              await page.waitForTimeout(140);
+            };
+            const noShortcutOverlap=async(selectors,label)=>{
+              for(const selector of selectors){
+                const loc=page.locator(selector).first();
+                if(!await loc.count()||!await loc.isVisible())continue;
+                await loc.scrollIntoViewIfNeeded();await page.waitForTimeout(60);
+                check(!(await overlaps('#gscShortcutsButton',selector)),`ATAJOS traslapa ${selector} en ${label}`);
+              }
+            };
+            const modalityCases=[
+              ['stableford',['#roundManualEntry','#roundGridEnter','#finalCardButton','.summary']],
+              ['match_play',['#roundManualEntry','#roundGridEnter','#finalCardButton','#matchPlayStatus','.summary']],
+              ['four_ball',['#roundManualEntry','#roundGridEnter','#finalCardButton','#fourBallStatus','.summary']],
+              ['skins',['#roundManualEntry','#roundGridEnter','#finalCardButton','#skinsResults','.summary']],
+              ['universales',['#roundManualEntry','#roundGridEnter','#finalCardButton','.summary']],
+              ['practice',['#roundManualEntry','#roundGridEnter','.summary']]
+            ];
+            for(const [mode,selectors] of modalityCases){
+              await setAuditRound(mode);
+              const title=mode==='practice'?'SCORE CARD - PRÁCTICA':mode.replace('_',' ').toUpperCase();
+              check((await page.locator('body').innerText()).includes(title),`${mode} no renderizó su identidad física`);
+              await noShortcutOverlap(selectors,mode);
+              await page.evaluate(()=>window.scrollTo(0,0));await page.waitForTimeout(60);
+              await page.screenshot({path:`full-parity/app/mode-${mode}.png`,fullPage:false});
+              results.app.push('mode-'+mode);
+            }
+
             // Critical overlays opened through their real application functions.
             const overlaps=async(a,b)=>{
               const ra=await page.locator(a).boundingBox(), rb=await page.locator(b).boundingBox();
