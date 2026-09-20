@@ -109,8 +109,6 @@ jobs:
 
             // CAMPEONATO physically in final Score Card renderer
             {
-              const {createRequire}=await import('node:module');
-              const require=createRequire(import.meta.url);
               const artifacts=require(process.cwd()+'/card-artifacts.js');
               const holes=Object.fromEntries(Array.from({length:18},(_,i)=>[i+1,{hole:i+1,par:4,gross:4,net:4,strokes:0,relativeToPar:0}]));
               const snap={status:'officially_closed',sha256:'c'.repeat(64),version:1,course:'El Pulté Golf',playedAt:'2026-09-20T16:00:00Z',mode:'general',players:[{id:'champ',name:'JUGADOR CAMPEONATO',tournamentCategory:'championship',handicap:0,tee:'Blanco',holes}]};
