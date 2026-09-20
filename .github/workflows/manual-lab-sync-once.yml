@@ -1,0 +1,65 @@
+name: LAB manual update-control sync
+
+on:
+  push:
+    branches: [laboratorio]
+
+permissions:
+  contents: write
+
+jobs:
+  sync-manual:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: laboratorio
+          fetch-depth: 0
+      - name: Rebase onto latest LAB
+        run: git pull --rebase origin laboratorio
+      - name: Patch manual and parity gate
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          manual_path = Path('manual.html')
+          manual = manual_path.read_text()
+          p45 = '''<section class="page" id="p45" data-index="45"><div class="kicker">PÁGINA 45 · ACTUALIZAR</div><h1>Actualizar solo cuando exista una versión nueva</h1><p>Cuando LAB ya está al día, el control de actualización permanece oculto. Solo aparece cuando la aplicación detecta una versión publicada distinta; entonces muestra ACTUALIZAR. En REGISTRO DE JUGADORES no debe quedar superpuesto el estado ACTUALIZADO.</p><div class="screen-replica"><div class="sr-title">VERIFICAR ACTUALIZACIÓN</div><div class="sr-section"><div class="sr-section-title">VERSIÓN ACTUAL</div><div class="sr-note">ACTUALIZADO · EL CONTROL PERMANECE OCULTO</div></div><div class="sr-section"><div class="sr-section-title">NUEVA VERSIÓN DISPONIBLE</div><div class="sr-chip green">ACTUALIZAR</div></div></div><div class="steps"><div><b>QUÉ ES</b><span>Es el control que carga una versión nueva sin borrar tu sesión.</span></div><div><b>CUANDO ESTÁ AL DÍA</b><span>El control no se muestra en pantalla.</span></div><div><b>CUANDO HAY VERSIÓN NUEVA</b><span>Aparece ACTUALIZAR y queda disponible para cargar la publicación nueva.</span></div><div><b>REGISTRO DE JUGADORES</b><span>ACTUALIZADO no debe quedar visible ni superpuesto cuando no existe una actualización pendiente.</span></div></div></section>'''
+          manual2, n = re.subn(r'<section class="page" id="p45" data-index="45">[\s\S]*?</section>', p45, manual, count=1)
+          if n != 1:
+              raise SystemExit(f'Expected one p45 section, replaced {n}')
+          manual_path.write_text(manual2)
+
+          gate_path = Path('scripts/manual-screen-parity-gate.mjs')
+          gate = gate_path.read_text()
+          old38=' "38":["HISTORIAL DE TARJETAS","TODAS LAS MODALIDADES","TODOS LOS CAMPOS","JUGADOR / TORNEO / FECHA","ANTERIOR","SIGUIENTE","ATRÁS"],\n "49"'
+          new38=' "38":["HISTORIAL DE TARJETAS","TODAS LAS MODALIDADES","TODOS LOS CAMPOS","JUGADOR / TORNEO / FECHA","ANTERIOR","SIGUIENTE","ATRÁS"],\n "45":["VERIFICAR ACTUALIZACIÓN","ACTUALIZAR","ACTUALIZADO"],\n "49"'
+          if old38 not in gate:
+              raise SystemExit('P45 insertion anchor not found')
+          gate = gate.replace(old38,new38,1)
+          oldmap='"36":app,"38":app,"49":shortcuts'
+          newmap='"36":app,"38":app,"45":app,"49":shortcuts'
+          if oldmap not in gate:
+              raise SystemExit('sourceByPage anchor not found')
+          gate = gate.replace(oldmap,newmap,1)
+          gate = gate.replace('length===13,"Manual debe tener 13 réplicas clave"','length===14,"Manual debe tener 14 réplicas clave"',1)
+          gate = gate.replace('50 pages · 13 replicas · 0 retired features · current LAB controls matched','50 pages · 14 replicas · 0 retired features · current LAB controls matched',1)
+          anchor='const cssContracts=['
+          checks='''assert(app.includes('.mandatory-update{display:none;')&&app.includes('.mandatory-update.available{display:block}'),"ACTUALIZAR debe permanecer oculto cuando LAB está al día y mostrarse sólo cuando hay versión nueva");\nassert(page("45").includes("control de actualización permanece oculto")&&page("45").includes("no debe quedar superpuesto"),"P45 debe documentar la visibilidad condicional de ACTUALIZAR");\n\n'''
+          if anchor not in gate:
+              raise SystemExit('CSS contracts anchor not found')
+          gate = gate.replace(anchor,checks+anchor,1)
+          gate_path.write_text(gate)
+          PY
+      - name: Run manual parity gate
+        run: node scripts/manual-screen-parity-gate.mjs
+      - name: Commit synchronized manual
+        run: |
+          git config user.name "EPGCADDY Manual Sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add manual.html scripts/manual-screen-parity-gate.mjs
+          git diff --cached --quiet && exit 0
+          git commit -m "LAB manual: sync conditional update control"
+          git push origin HEAD:laboratorio
