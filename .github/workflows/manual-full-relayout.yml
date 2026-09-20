@@ -84,6 +84,18 @@ jobs:
               else:
                   compact=crop
 
+              # Manual explanatory graphics: convert green accents to neutral gray.
+              import numpy as np
+              arr=np.asarray(compact).copy()
+              r=arr[:,:,0].astype(int); g=arr[:,:,1].astype(int); b=arr[:,:,2].astype(int)
+              green=(g>90)&(g>r*1.22)&(g>b*1.18)
+              if green.any():
+                  lum=(0.299*r+0.587*g+0.114*b).astype(np.uint8)
+                  neutral=np.clip((lum.astype(int)*0.72)+55,70,185).astype(np.uint8)
+                  arr[green,0]=neutral[green]
+                  arr[green,1]=neutral[green]
+                  arr[green,2]=neutral[green]
+              compact=Image.fromarray(arr,"RGB")
               compact.save(dst/f"page-{n:02d}.png",optimize=True)
           PY
       - name: Commit layout pages
