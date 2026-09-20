@@ -1312,3 +1312,5 @@ Pruebas manuales técnicas PASS; regresión amplía bloqueo a GPS y llamadas wea
 ### Traslapes
 - `mandatoryUpdate` se oculta durante overlays visibles para evitar invasión de títulos, filtros y controles.
 - La revisión física no se considera cerrada sólo por tests de código: cada pantalla crítica requiere captura renderizada y revisión visual.
+
+- Auditor físico Chromium oficial: `.github/workflows/full-app-manual-physical-parity.yml` valida modalidades, categorías, Tarjeta Final, Corrección, Historial, Torneos, ATAJOS, 74 hojas del Manual y ausencia de desbordes/traslapes críticos.
