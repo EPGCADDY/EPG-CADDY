@@ -59,6 +59,8 @@ assert(manual.includes('id="count">00 / 59</span>'),"Contador editorial debe mar
 assert((manual.match(/class="screen-replica"/g)||[]).length===14,"Manual debe tener 14 réplicas clave");
 assert(manual.includes("TUTORIAL TORNEOS · 01")&&manual.includes("TUTORIAL TORNEOS · 08"),"Capítulo tutorial R2 debe incluir los 8 tutoriales");
 assert(manual.includes("MIS FAVORITOS")&&manual.includes("REVISADO 100% · PLANTILLA ÚNICA"),"Capítulo tutorial R2 incompleto");
+assert(page("49").includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png")&&page("49").includes("logo oficial"),"P49 debe documentar el launcher ATAJOS con logo oficial");
+assert(shortcuts.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png")&&shortcuts.includes("<span>ATAJOS</span>"),"LAB debe usar logo oficial + etiqueta ATAJOS en el launcher universal");
 assert(app.includes('href="/manual"')&&app.includes(">GUÍA DE USUARIO</a>"),"GUÍA DE USUARIO debe apuntar a /manual");
 assert(!page("41").includes("Cuenta opcional"),"P41 conserva la cuenta opcional retirada");
 assert(page("41").includes("Cuenta personal"),"P41 debe documentar la cuenta personal");
