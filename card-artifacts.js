@@ -135,9 +135,7 @@
     const index=snapshot.players.findIndex(item=>item.id===player.id),pairIndex=Math.floor(index/2),localIndex=index%2,opponentIndex=pairIndex*2+(localIndex===0?1:0),finalHole=Number(snapshot.matchPlay?.matches?.[pairIndex]?.decidedAt||snapshot.matchPlay?.decidedAt)||18,rows=Array.from({length:finalHole},(_,offset)=>{const hole=offset+1,result=matchPlayHole(snapshot,hole,pairIndex),score=player.holes?.[hole],opponent=snapshot.players[opponentIndex]?.holes?.[hole],state=result.statuses?.[localIndex]||"pending";return`<tr><td>${hole}</td><td>${score?.gross??"—"}</td><td>${score?.net??"—"}</td><td>${opponent?.net??"—"}</td><td class="match-${state}">${matchSymbol(state)}</td></tr>`}).join("");
     return shell(`Tarjeta Match Play · ${player.name}`,snapshot,`<h2>${playerNameWithCategory(player)} · HCP ${player.handicap} · ${esc(player.tee)}</h2><div class="match-result">${esc(snapshot.matchPlay?.resultLabel||snapshot.matchPlay?.label||"MATCH PLAY")}</div><table><thead><tr><th>HOYO</th><th>GROSS</th><th>NETO</th><th>NETO RIVAL</th><th>RESULTADO</th></tr></thead><tbody>${rows}</tbody></table><p>Flecha verde hacia arriba = ganó · flecha roja hacia abajo = perdió · sin símbolo = empate.</p>`,[player]);
   }
-
-  const FOUR_BALL_TEAM_NAMES=["TEAM 1","TEAM 2","TEAM 3"];
-  const FOUR_BALL_TEAM_CLASSES=["team-green","team-gold","team-blue"];
+const FOUR_BALL_TEAM_CLASSES=["team-green","team-gold","team-blue"];
   const fourBallTeamIndex=playerIndex=>Math.floor(playerIndex/2);
   const fourBallTeamLabel=(snapshot,teamIndex)=>{const names=[teamIndex*2,teamIndex*2+1].map(index=>String(snapshot.players?.[index]?.name||"").trim()).filter(Boolean);return `TEAM${names.length?` · ${names.map(esc).join(" / ")}`:""}`};
   function fourBallHole(snapshot,hole){return globalThis.GSCFourBall?.holeResult?.(snapshot.players,hole)||{recorded:false,teamBest:[],teamStatuses:[]}}
