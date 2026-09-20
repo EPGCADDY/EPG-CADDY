@@ -60,7 +60,7 @@ assert((manual.match(/class="page"/g)||[]).length===50,"Manual base debe conserv
 assert((manual.match(/class="page tutorial-page"/g)||[]).length===11,"Manual debe incluir 11 páginas tutorial R4");
 assert(manual.includes('id="count">00 / 61</span>'),"Contador editorial debe marcar 61 páginas");
 assert((manual.match(/class="screen-replica"/g)||[]).length===15,"Manual debe tener 15 réplicas clave");
-assert(manual.includes("TUTORIAL TORNEOS · 01")&&manual.includes("TUTORIAL TORNEOS · 09")&&manual.includes("TUTORIAL VISUAL · 10 · PANTALLAS REALES"),"Capítulo tutorial R4 debe incluir torneos y pantallas reales");
+assert(manual.includes("TUTORIAL TORNEOS · 01")&&manual.includes("TUTORIAL TORNEOS · 09")&&manual.includes("TUTORIAL VISUAL · 10 · PANTALLAS REALES")&&manual.includes("Diez rutas directas"),"Capítulo tutorial R4 debe incluir las 10 rutas vigentes");
 assert(manual.includes("MIS FAVORITOS")&&manual.includes("REVISADO 100% · PLANTILLA ÚNICA")&&manual.includes("Plantilla común R4 · PASS"),"Capítulo tutorial R4 incompleto");
 assert(manual.includes("ATAJOS siempre contigo")&&manual.includes("ATAJOS UNIVERSAL · LAB R4"),"Falta tutorial universal ATAJOS R4");
 assert(page("60").includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_01_INICIO_4K.png")&&!page("60").includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_02_REGISTRO_4K.png"),"P60 debe conservar sólo la captura real vigente y excluir la captura retirada de Registro con voz");
