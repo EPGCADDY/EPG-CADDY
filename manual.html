@@ -222,6 +222,23 @@ main{max-width:960px;margin:auto;padding:18px max(12px,env(safe-area-inset-right
  .master-sheet>.sheet-nav{padding:9px 10px 10px!important}
  .master-sheet>.sheet-nav a{min-height:40px!important;font-size:9.5px!important}
 }
+
+.master-sheet .screen-stage.category-focus{
+  height:min(600px,60dvh)!important;
+  padding:8px!important;
+  overflow:hidden!important;
+}
+.master-sheet .screen-stage.category-focus img{
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:center top!important;
+}
+@media(max-width:640px){
+ .master-sheet .screen-stage.category-focus{height:min(560px,58dvh)!important}
+}
 </style></head><body>
 <header class="top"><strong>GOLF SCORE CARD GT · MANUAL DE FUNCIONES</strong><a href="#indice">ÍNDICE</a></header>
 <main>
@@ -243,7 +260,7 @@ main{max-width:960px;margin:auto;padding:18px max(12px,env(safe-area-inset-right
 <div class="sheet-nav"><a href="#registro">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#stableford-registro">SIGUIENTE →</a></div>
 </section><section class="sheet master-sheet current-function-sheet" id="stableford-registro">
 <div class="sheet-head"><strong>04</strong><h2>Registro Stableford</h2><a href="#indice">ÍNDICE</a></div>
-<div class="screen-stage"><img src="/docs/manual/current/APP_CAMPEONATO_REGISTRO.png" alt="Registro actual de torneo y categorías" loading="lazy"></div><div class="current-copy"><h3>CATEGORÍAS VIGENTES</h3><p>CAMPEONATO, A, B, C, D, SENIOR, SUPER SENIOR y FEMENINA.</p></div><div class="current-copy"><h3>MARCAS</h3><p>CAMPEONATO usa NEGRAS; la app aplica las marcas configuradas por categoría.</p></div>
+<div class="screen-stage focus-app category-focus"><img src="/docs/manual/current/APP_CATEGORIAS_OFICIALES.png" alt="Categorías oficiales vigentes: Campeonato A B C D Senior Super Senior y Femenina" loading="lazy"></div><div class="current-copy"><h3>CATEGORÍAS VIGENTES</h3><p>CAMPEONATO, A, B, C, D, SENIOR, SUPER SENIOR y FEMENINA.</p></div><div class="current-copy"><h3>MARCAS</h3><p>CAMPEONATO usa NEGRAS; la app aplica las marcas configuradas por categoría.</p></div>
 <div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
 </section><section class="sheet master-sheet current-function-sheet" id="practica">
 <div class="sheet-head"><strong>05</strong><h2>Score Card - Práctica</h2><a href="#indice">ÍNDICE</a></div>
@@ -441,7 +458,7 @@ main{max-width:960px;margin:auto;padding:18px max(12px,env(safe-area-inset-right
 <div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
 </section><section class="sheet master-sheet current-screen-sheet" id="actual-registro">
 <div class="sheet-head"><strong>ACT</strong><h2>REGISTRO ACTUAL · ATAJOS</h2><a href="#indice">ÍNDICE</a></div>
-<div class="screen-stage"><img src="/docs/manual/current/APP_CAMPEONATO_REGISTRO.png" alt="REGISTRO ACTUAL · ATAJOS" loading="lazy"></div>
+<div class="screen-stage focus-app category-focus"><img src="/docs/manual/current/APP_CATEGORIAS_OFICIALES.png" alt="Categorías oficiales vigentes en el registro actual" loading="lazy"></div>
 <div class="screen-note">Registro vigente con categorías de torneo y ATAJOS visible.</div>
 <div class="sheet-nav"><a href="#soporte">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#actual-scorecard">SIGUIENTE →</a></div>
 </section><section class="sheet master-sheet current-screen-sheet" id="actual-scorecard">
