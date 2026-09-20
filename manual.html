@@ -239,6 +239,40 @@ main{max-width:960px;margin:auto;padding:18px max(12px,env(safe-area-inset-right
 @media(max-width:640px){
  .master-sheet .screen-stage.category-focus{height:min(560px,58dvh)!important}
 }
+
+/* Evidencia física actual: llenar el ancho útil, no miniaturizar pantallas verticales */
+.master-sheet.current-screen-sheet>.screen-stage{
+  display:block!important;
+  width:100%!important;
+  padding:0!important;
+  background:#000!important;
+  overflow:hidden!important;
+}
+.master-sheet.current-screen-sheet>.screen-stage img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  margin:0!important;
+}
+#zona-operativa>.screen-stage{
+  display:block!important;
+  width:100%!important;
+  padding:0!important;
+  background:#000!important;
+}
+#zona-operativa>.screen-stage img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  margin:0!important;
+}
 </style></head><body>
 <header class="top"><strong>GOLF SCORE CARD GT · MANUAL DE FUNCIONES</strong><a href="#indice">ÍNDICE</a></header>
 <main>
