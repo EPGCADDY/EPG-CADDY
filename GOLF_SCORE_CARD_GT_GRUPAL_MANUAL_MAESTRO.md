@@ -1675,10 +1675,10 @@ Los Atajos de navegación no sustituyen la capa de identidad. Los datos personal
 
 ---
 
-## TUTORIAL VISUAL DE TORNEOS · R2
+## TUTORIAL VISUAL DE TORNEOS · R3
 
 **Estado:** LAB · integrado al Manual de Usuario  
-**Páginas del Manual:** 50–58  
+**Páginas del Manual:** 50–59  
 **Regla terminológica:** usar **MIS FAVORITOS** para jugadores y grupos seguidos; no usar “Mi Tablero” en este capítulo.
 
 ### Índice didáctico oficial
@@ -1691,6 +1691,7 @@ Los Atajos de navegación no sustituyen la capa de identidad. Los datos personal
 6. **Abrir Mis Favoritos** — jugadores y grupos seguidos del torneo abierto.
 7. **Gestionar Mis Favoritos** — agregar o dejar de seguir jugadores/grupos.
 8. **Volver a mi Score Card** — regreso directo desde cualquier sección mediante Atajos.
+9. **ATAJOS siempre contigo** — el acceso universal permanece visible durante Registro, Score Card, Tarjeta Final, Historial, Corrección y Torneos; permite moverse o volver sin encadenar “Atrás”.
 
 ### Regla técnica editorial obligatoria
 
@@ -1724,3 +1725,7 @@ GENERAL, CATEGORÍAS, BUSCAR JUGADOR y MIS FAVORITOS pertenecen al torneo abiert
 ### Regla de ida y vuelta
 
 ATAJOS es el menú directo universal. El usuario no debe depender de repetir “Atrás” para volver a su Score Card o cambiar a otra función.
+
+### Regla visual R3 · ATAJOS en todas las guías
+
+Todas las pantallas representadas en el set visual de Torneos deben mostrar el launcher ATAJOS con el **logo horizontal original de Golf Score Card GT** y la palabra **ATAJOS** debajo. La guía debe enseñar explícitamente que este acceso permanece disponible durante todo el recorrido y funciona como comodín de navegación.
