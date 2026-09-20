@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LAB-MANUAL-TORNEOS-R3-ATAJOS-20260920-I">
+  <meta name="gscg-release" content="LAB-MODE-EDIT-20260920-J">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1967,7 +1967,7 @@ function startConfirmedRound(){
       const merged=normalizePlayer({...source,holes:old?.holes||p.holes||{},lastHole:old?.lastHole||p.lastHole||null,activeFrom:old?.activeFrom||p.activeFrom||rosterEditJoinHole},i);
       return recomputePlayerScores(merged);
     }));
-    round.tournament=draftTournament;round.sideGames=draftSideGames();savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();return true;
+    round.mode=draftRoundMode;round.tournament=draftTournament;round.sideGames=draftSideGames();ensureAnnouncedState();round.announced.front=false;round.announced.back=false;round.announced.complete=false;savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();return true;
   }
   // ÚNICO punto autorizado para sustituir la última ronda persistida por una nueva:
   // el usuario llegó a la confirmación y presionó INICIAR RONDA.
@@ -2785,8 +2785,20 @@ function render(){
 }
 function renderTournamentDraft(){const t=normalizeTournament(draftTournament),enabled=!!t;$("tournamentToggle").checked=enabled;$("tournamentFields").classList.toggle("hidden",!enabled);$("tournamentName").value=t?.name||"";$("tournamentDescription").value=t?.description||"";$("confirmTournament").classList.toggle("hidden",!enabled);$("confirmTournament").innerHTML=enabled?`<strong>TORNEO</strong> · ${escapeHtml(t.name||"SIN NOMBRE")} · FECHA AUTOMÁTICA${t.description?`<br><strong>DESCRIPCIÓN</strong> · ${escapeHtml(t.description)}`:""}`:""}
 function renderCourseDraft(){const key=COURSE_CATALOG[draftCourse]?draftCourse:"pulte",course=COURSE_CATALOG[key],stableOption=`<a class="course-option stable-course-option" id="stableCourseOption" href="${STABLEFORD_OFFICIAL_HOSTING_URL}" aria-label="Seleccionar modalidad Stableford"><span class="stable-course-dot">S</span><span>STABLEFORD</span></a>`;$("courseOptions").innerHTML=Object.entries(COURSE_CATALOG).map(([value,item])=>`<label class="course-option ${item.configured?"":"pending"}"><input type="radio" name="registrationCourse" value="${value}" ${value===key?"checked":""} ${rosterEditMode?"disabled":""}><span>${item.name}</span></label>`).join("");$("stablefordModeOption").innerHTML=stableOption;$("confirmCourse").textContent=course.name;$("courseSetupStatus").textContent="REGISTRO DE TORNEO (OPCIONAL)";$("courseSetupStatus").style.color="var(--lime)"}
+function roundHasRecordedScores(value=round){
+  return !!(value?.players||[]).some(player=>Object.keys(player?.holes||{}).some(raw=>{
+    const hole=Number(raw),entry=player?.holes?.[raw];
+    return Number.isInteger(hole)&&hole>=1&&hole<=18&&!!entry;
+  }));
+}
+function canChangeConfiguredRoundMode(){
+  if(!rosterEditMode||!round.configured)return true;
+  if(!roundHasRecordedScores(round))return true;
+  $("setupStatus").textContent="PARA CAMBIAR MODALIDAD DESPUÉS DE REGISTRAR SCORES, INICIA UNA NUEVA RONDA";
+  return false;
+}
 function selectGeneralRoundMode(mode){
-  if(rosterEditMode)return false;
+  if(!canChangeConfiguredRoundMode())return false;
   enforceExclusiveDraftGame(null);
   draftRoundMode=["match_play","four_ball","universales"].includes(mode)?mode:"general";
   const limit=6;
@@ -2797,7 +2809,7 @@ function selectGeneralRoundMode(mode){
   return true
 }
 function selectSideGameRoundMode(key){
-  if(rosterEditMode)return false;
+  if(!canChangeConfiguredRoundMode())return false;
   draftRoundMode="general";enforceExclusiveDraftGame(key);syncDraftModeSelection(key);
   draftPlayers=draftPlayers.slice(0,6);persistDraftState();renderDraft();
   $("setupStatus").textContent=key==="skins"?"SKINS · REGISTRA DE 2 A 6 JUGADORES · CONFIGURA ANTES DE INICIAR":key==="wolf"?"WOLF · REGISTRA DE 3 A 6 JUGADORES · DECISIÓN POR HOYO":key==="vegas"?"VEGAS · REGISTRA 4 O 6 JUGADORES · 2 O 3 PAREJAS":key==="dots"?"DOTS · REGISTRA DE 2 A 6 JUGADORES · EVENTOS EN VIVO":"";return true
