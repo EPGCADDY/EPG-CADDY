@@ -3099,7 +3099,7 @@ closureSpeechIfDue=function(){
 function readStablefordSeries(){try{return GSCStableford.normalizeSeries(JSON.parse(localStorage.getItem(STABLEFORD_SERIES_KEY)||"null"))}catch{return GSCStableford.blankSeries()}}
 function writeStablefordSeries(value){const next=GSCStableford.normalizeSeries(value);next.updatedAt=new Date().toISOString();localStorage.setItem(STABLEFORD_SERIES_KEY,JSON.stringify(next));return next}
 function stablefordConfig(category=round.stablefordCategory){return GSCStableford.categoryConfig(category)||GSCStableford.categoryConfig("senior")}
-function stablefordTeeLabel(config=stablefordConfig()){return config.tee==="Blanco"?"BLANCAS":"AMARILLAS"}
+function stablefordTeeLabel(config=stablefordConfig()){return({Negro:"NEGRAS",Azul:"AZULES",Blanco:"BLANCAS",Amarillo:"AMARILLAS",Rojo:"ROJAS"})[config?.tee]||String(config?.tee||"").toUpperCase()}
 function stablefordTotals(player,holes=ALL){return GSCStableford.totals(player,holes,PAR)}
 function stablefordCell(player,hole,key){const result=GSCStableford.holeResult(player?.holes?.[hole],PAR[hole-1]);if(!result.recorded)return"";if(key==="gross")return result.status==="x"?"X":grossMarkHtml({...player.holes[hole],par:PAR[hole-1]});return String(result.points??0)}
 function stablefordCourseRoundNumber(category,courseKey){return GSCStableford.nextRoundNumber(readStablefordSeries(),category,courseKey)}
