@@ -3,7 +3,7 @@ on:
   push:
     branches: [laboratorio]
 permissions:
-  contents: read
+  contents: write
 jobs:
   audit:
     if: github.actor != 'github-actions[bot]'
@@ -109,7 +109,7 @@ jobs:
             await m.locator('#portada').screenshot({path:'full-parity/manual/00-portada.png'});
             await m.locator('#indice').screenshot({path:'full-parity/manual/01-indice.png'});
             const count=await m.locator('.sheet').count();
-            check(count===54,'Manual físico no tiene 54 hojas restauradas: '+count);
+            check(count===65,'Manual físico no tiene 65 hojas restauradas: '+count);
             for(let i=0;i<count;i++){
               const el=m.locator('.sheet').nth(i);
               await el.scrollIntoViewIfNeeded(); await m.waitForTimeout(20);
@@ -128,6 +128,23 @@ jobs:
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
           node /tmp/full-parity/audit.cjs
+      - name: Publish current physical app screens into manual assets
+        run: |
+          mkdir -p docs/manual/current
+          cp full-parity/app/02-scorecard-atajos.png docs/manual/current/APP_SCORECARD_ATAJOS.png
+          cp full-parity/app/03-atajos-overlay.png docs/manual/current/APP_ATAJOS_OVERLAY.png
+          cp full-parity/app/overlay-final-card-atajos.png docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png
+          cp full-parity/app/overlay-correction-atajos.png docs/manual/current/APP_CORRECCION_ATAJOS.png
+          cp full-parity/app/overlay-history-atajos.png docs/manual/current/APP_HISTORIAL_ATAJOS.png
+          cp full-parity/app/07-tournament-hub.png docs/manual/current/APP_TORNEOS_HUB.png
+          cp full-parity/app/08-tournament-hub-atajos.png docs/manual/current/APP_TORNEOS_ATAJOS.png
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/manual/current/APP_*.png
+          if ! git diff --cached --quiet; then
+            git commit -m "LAB manual: publish current physical app screens"
+            git push origin HEAD:laboratorio
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
