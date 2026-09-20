@@ -1671,3 +1671,56 @@ Destinos directos disponibles:
 Los Atajos de navegación no sustituyen la capa de identidad. Los datos personales de torneos/tableros deberán migrar a la API autenticada por auth_user_id antes de declararse sincronización multi-dispositivo completa.
 
 **Estado LAB:** interfaz y navegación implementadas; prueba física visual en navegador/iPhone pendiente.
+
+
+---
+
+## TUTORIAL VISUAL DE TORNEOS · R2
+
+**Estado:** LAB · integrado al Manual de Usuario  
+**Páginas del Manual:** 50–58  
+**Regla terminológica:** usar **MIS FAVORITOS** para jugadores y grupos seguidos; no usar “Mi Tablero” en este capítulo.
+
+### Índice didáctico oficial
+
+1. **Abrir Atajos** — desde Score Card al menú directo.
+2. **Ir al Centro de Torneos** — visualizar torneos disponibles.
+3. **Elegir un torneo** — abrir el torneo correcto y sus opciones.
+4. **Ver General** — clasificación general del torneo abierto.
+5. **Buscar categorías y jugadores** — categorías y búsqueda nominal dentro del torneo abierto.
+6. **Abrir Mis Favoritos** — jugadores y grupos seguidos del torneo abierto.
+7. **Gestionar Mis Favoritos** — agregar o dejar de seguir jugadores/grupos.
+8. **Volver a mi Score Card** — regreso directo desde cualquier sección mediante Atajos.
+
+### Regla técnica editorial obligatoria
+
+Todas las páginas del capítulo comparten una única plantilla CSS y por tanto no pueden variar individualmente en título, peso o márgenes:
+
+- Fuente UI: Arial / -apple-system / BlinkMacSystemFont / Segoe UI / sans-serif.
+- H1 escritorio: **44 px / peso 700 / line-height 1.06**.
+- H1 móvil: **34 px / peso 700**.
+- Margen lateral editorial: **28 px escritorio / 18 px móvil**.
+- Subtítulo: **18 px** escritorio / **16 px** móvil.
+- Misma alineación superior del H1 en todas las páginas.
+- Misma matriz técnica al pie de cada tutorial.
+- Misma estructura: contexto → pantallas → pasos → matriz → pie editorial.
+
+### Matriz de revisión visible
+
+Cada tutorial muestra:
+
+- H1 uniforme — PASS.
+- Fuente UI única — PASS.
+- Márgenes verificados — PASS.
+- Jerarquía tipográfica — PASS.
+- Alineación de pantallas — PASS.
+- Plantilla común R2 — PASS.
+- **REVISADO 100% · PLANTILLA ÚNICA**.
+
+### Regla funcional de contexto de torneo
+
+GENERAL, CATEGORÍAS, BUSCAR JUGADOR y MIS FAVORITOS pertenecen al torneo abierto en ese momento. Para consultar esas funciones en otro torneo, primero debe abrirse ese otro torneo.
+
+### Regla de ida y vuelta
+
+ATAJOS es el menú directo universal. El usuario no debe depender de repetir “Atrás” para volver a su Score Card o cambiar a otra función.
