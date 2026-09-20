@@ -34,6 +34,8 @@ for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RE
   assert(app.includes(token)||hub.includes(token),"LAB actual no contiene control esperado: "+token);
 }
 for(const img of ["/docs/manual/current/MONITOR_TIEMPO_REAL_LAB.png","/docs/manual/current/MONITOR_TIEMPO_CONTEXTO_LAB.png"]) assert(manual.includes(img),"Falta captura física del Monitor de Tiempo: "+img);
+assert(manual.includes("/docs/manual/current/OPERACION_RONDA_INFERIOR_REAL_LAB.png"),"Falta captura física de la zona operativa inferior");
+for(const token of ["AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","GROSS IN","GROSS OUT","GROSS TOTAL","NETO TOTAL","+/- NETO","TARJETA DIGITAL","HISTORIAL","NUEVA RONDA","ATRÁS","BORRAR SCORES","BORRAR TODO"]) assert(manual.includes(token),"Zona operativa inferior incompleta en manual: "+token);
 assert(manual.includes('id="timer-vigente"'),"Falta hoja vigente del Monitor de Tiempo");
 for(const token of ["INICIO","FINAL","TIMER","RESET","HH:MM:SS","pausa el conteo","lo reanuda","Conserva jugadores y scores"]) assert(manual.includes(token),"Monitor de Tiempo incompleto en manual: "+token);
 assert(app.includes('id="roundTimerToggle"')&&app.includes('aria-label="Pausar o reanudar timer"'),"LAB debe mantener TIMER pulsable para pausar/reanudar");
