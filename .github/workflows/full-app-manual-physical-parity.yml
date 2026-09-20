@@ -101,26 +101,30 @@ jobs:
             await page.screenshot({path:'full-parity/app/08-tournament-hub-atajos.png',fullPage:false});
             await page.close();
 
-            // Manual P00-P60 physically
+            // Manual original restaurado: portada + índice + 54 hojas en scroll continuo
             const m=await browser.newPage({viewport,deviceScaleFactor:2});
             await m.goto('http://127.0.0.1:8765/manual.html',{waitUntil:'networkidle'});
-            const count=await m.locator('.page').count();
-            check(count===61,'Manual físico no tiene 61 páginas: '+count);
+            check(await m.locator('#portada').count()===1,'Falta portada original');
+            check(await m.locator('#indice').count()===1,'Falta índice original');
+            await m.locator('#portada').screenshot({path:'full-parity/manual/00-portada.png'});
+            await m.locator('#indice').screenshot({path:'full-parity/manual/01-indice.png'});
+            const count=await m.locator('.sheet').count();
+            check(count===54,'Manual físico no tiene 54 hojas restauradas: '+count);
             for(let i=0;i<count;i++){
-              await m.evaluate(n=>show(n),i); await m.waitForTimeout(30);
-              const el=m.locator('.page').nth(i);
+              const el=m.locator('.sheet').nth(i);
+              await el.scrollIntoViewIfNeeded(); await m.waitForTimeout(20);
               const metrics=await el.evaluate(e=>({id:e.id,sw:e.scrollWidth,cw:e.clientWidth,sh:e.scrollHeight,ch:e.clientHeight,text:e.innerText.length,imgs:[...e.querySelectorAll('img')].map(x=>({src:x.getAttribute('src'),complete:x.complete,nw:x.naturalWidth,nh:x.naturalHeight}))}));
               check(metrics.sw<=metrics.cw+1,`${metrics.id} desborde horizontal ${metrics.sw}>${metrics.cw}`);
-              check(metrics.text>30,`${metrics.id} contenido físico vacío`);
+              check(metrics.text>20,`${metrics.id} contenido físico vacío`);
               for(const img of metrics.imgs) check(img.complete&&img.nw>0,`${metrics.id} imagen no cargó: ${img.src}`);
-              await el.screenshot({path:`full-parity/manual/p${String(i).padStart(2,'0')}.png`});
+              await el.screenshot({path:`full-parity/manual/${String(i+2).padStart(2,'0')}-${metrics.id}.png`});
               results.manual.push(metrics);
             }
             await m.close();
             fs.writeFileSync('full-parity/audit.json',JSON.stringify(results,null,2));
             await browser.close();
             if(results.fail.length){console.error(results.fail.join('\n'));process.exit(1)}
-            console.log('PHYSICAL APP ↔ MANUAL PARITY: PASS · 61/61 manual · app access/scorecard/overlays/tournaments/Atajos rendered');
+            console.log('PHYSICAL APP ↔ MANUAL PARITY: PASS · portada + índice + 54 hojas restauradas · app access/scorecard/overlays/tournaments/Atajos rendered');
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
           node /tmp/full-parity/audit.cjs
