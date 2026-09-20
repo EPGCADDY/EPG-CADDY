@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-lab-tournaments-atajos-20260919-b`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-lab-manual-no-gps-approved-20260919`;
-const RELEASE="LAB-TOURNAMENTS-ATAJOS-20260919-B";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-lab-tournaments-atajos-20260919-c`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-lab-tournaments-atajos-approved-20260919-c`;
+const RELEASE="LAB-TOURNAMENTS-ATAJOS-20260919-C";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
