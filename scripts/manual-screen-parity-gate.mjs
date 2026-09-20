@@ -57,12 +57,13 @@ const countWord=(s,w)=>{
 for(const word of forbidden) assert(countWord(manual,word)===0,`Manual contiene función retirada: ${word}`);
 
 assert((manual.match(/class="page"/g)||[]).length===50,"Manual base debe conservar 50 páginas");
-assert((manual.match(/class="page tutorial-page"/g)||[]).length===10,"Manual debe incluir 10 páginas tutorial R3");
-assert(manual.includes('id="count">00 / 60</span>'),"Contador editorial debe marcar 60 páginas");
+assert((manual.match(/class="page tutorial-page"/g)||[]).length===11,"Manual debe incluir 11 páginas tutorial R4");
+assert(manual.includes('id="count">00 / 61</span>'),"Contador editorial debe marcar 61 páginas");
 assert((manual.match(/class="screen-replica"/g)||[]).length===15,"Manual debe tener 15 réplicas clave");
-assert(manual.includes("TUTORIAL TORNEOS · 01")&&manual.includes("TUTORIAL TORNEOS · 09"),"Capítulo tutorial R3 debe incluir los 9 tutoriales");
+assert(manual.includes("TUTORIAL TORNEOS · 01")&&manual.includes("TUTORIAL TORNEOS · 09")&&manual.includes("TUTORIAL VISUAL · 10 · PANTALLAS REALES"),"Capítulo tutorial R4 debe incluir torneos y pantallas reales");
 assert(manual.includes("MIS FAVORITOS")&&manual.includes("REVISADO 100% · PLANTILLA ÚNICA"),"Capítulo tutorial R3 incompleto");
 assert(manual.includes("ATAJOS siempre contigo")&&manual.includes("ATAJOS UNIVERSAL · LAB R3"),"Falta tutorial universal ATAJOS");
+assert(page("60").includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_01_INICIO_4K.png")&&page("60").includes("MANUAL_GOLF_SCORE_CARD_GT_IPHONE_02_REGISTRO_4K.png"),"P60 debe usar capturas reales de iPhone del repositorio");
 assert(manual.includes("golf-score-card-gt-horizontal-original.webp"),"Las guías deben usar el logo horizontal original en ATAJOS");
 assert(page("49").includes("/assets/official-logos/golf-score-card-gt-horizontal-original.webp")&&page("49").includes("logo horizontal original"),"P49 debe documentar el launcher ATAJOS con el logo horizontal original del repositorio");
 assert(shortcuts.includes("/assets/official-logos/golf-score-card-gt-horizontal-original.webp")&&shortcuts.includes("<span>ATAJOS</span>"),"LAB debe usar el logo horizontal original del repositorio + etiqueta ATAJOS en el launcher universal");
@@ -98,4 +99,4 @@ if(fail.length){
  process.exit(1);
 }
 console.log("MANUAL SCREEN PARITY: PASS");
-console.log("60 pages · 50 base + 10 tutorial R3 · 15 replicas · pre-score mode edit · Four Ball TEAM unnumbered · universal Atajos · 0 retired features · current LAB controls matched");
+console.log("61 pages · 50 base + 11 tutorial R4 · 15 replicas · pre-score mode edit · Four Ball TEAM unnumbered · universal Atajos · 0 retired features · current LAB controls matched");
