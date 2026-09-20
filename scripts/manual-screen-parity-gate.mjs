@@ -19,7 +19,7 @@ for(const p of [68,70,72]) assert(manual.includes("/docs/manual/layout/page-"+St
 const current=["/docs/manual/current/CAMPO_MODALIDAD_REAL.webp","/docs/manual/current/REGISTRO_ATAJOS_REAL.webp","/docs/manual/current/SCORECARD_CONTROL_REAL.webp","/docs/manual/current/FOURBALL_ATAJOS_REAL.webp"];
 for(const img of current) assert(manual.includes(img),"Falta pantalla real LAB: "+img);
 const mountedCurrent=[
- "/docs/manual/current/APP_CAMPEONATO_REGISTRO.png",
+ "/docs/manual/current/APP_CATEGORIAS_OFICIALES.png",
  "/docs/manual/current/APP_CAMPEONATO_SCORECARD.png",
  "/docs/manual/current/APP_SCORECARD_ATAJOS.png",
  "/docs/manual/current/APP_ATAJOS_OVERLAY.png",
