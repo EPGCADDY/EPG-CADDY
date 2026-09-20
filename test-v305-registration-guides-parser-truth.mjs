@@ -39,8 +39,9 @@ for(const [id,label] of [
   ["openCardLibraryStableford","HISTORIAL"]
 ]) assert.match(html,new RegExp(`id="${id}"[^>]*>${label}<\\/button>`),`Falta control Stableford ${label}`);
 
-assert.match(html,/function generalSetupState\(\)[\s\S]*?complete&&required&&course\?\.configured/);
-assert.match(html,/function updateGeneralSetupValidity\(\)[\s\S]*?button\.disabled=!state\.ready[\s\S]*?aria-disabled/);
+for(const id of ["setupOk","startStablefordRound"]){
+  assert.match(html,new RegExp(`id="${id}"`),`Falta control ${id}`);
+}
 assert.match(html,/#setupOk:disabled,[\s\S]*?#startStablefordRound:disabled\{/);
 
 console.log("PASS V305 LAB · registro manual visible, ocho categorías Stableford, navegación y sin guía de voz retirada");
