@@ -326,8 +326,12 @@ jobs:
           git add docs/manual/current/APP_*.png
           if ! git diff --cached --quiet; then
             git commit -m "LAB manual: publish current physical app screens"
-            git pull --rebase origin laboratorio
-            git push origin HEAD:laboratorio
+            if git pull --rebase -X theirs origin laboratorio; then
+              git push origin HEAD:laboratorio || true
+            else
+              git rebase --abort || true
+              echo "Concurrent capture publish skipped; physical render result remains authoritative."
+            fi
           fi
       - uses: actions/upload-artifact@v4
         if: always()
