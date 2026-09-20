@@ -1,0 +1,19 @@
+name: LAB manual gate diagnose
+on:
+  push:
+    branches: [laboratorio]
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: laboratorio
+      - name: Run screen parity gate
+        run: node scripts/manual-screen-parity-gate.mjs
+      - name: Run LAB manual build
+        run: node scripts/build-manual-lab.mjs
