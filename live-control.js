@@ -1,5 +1,6 @@
 (function(root,factory){const api=factory(root);if(typeof module==="object"&&module.exports)module.exports=api;if(root)root.GSCLiveControl=api})(typeof globalThis!=="undefined"?globalThis:this,function(root){
   "use strict";
+  // LIVE PUBLICATION REFRESH 2026-09-20 · deploy trigger only, no functional change
 
   const STORAGE_KEY="golf-score-card-gt-live-control-v1",POLICY_VERSION="gsc-gt-live-v1";
   let adapter=null,mounted=false,publishTimer=null,publishRunning=false,publishAgain=false;
