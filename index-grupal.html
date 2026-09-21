@@ -960,12 +960,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
   .official-round-header .round-meta.gsc-shortcuts-host{transform:none!important;padding:0!important;align-self:center!important}
 }
 </style><style id="gscMenuOverlaySafety">
-body:has(#finalCardOverlay.visible) #gscShortcutsButton,
-body:has(#officialCorrectionOverlay.visible) #gscShortcutsButton,
-body:has(#cardLibraryOverlay.visible) #gscShortcutsButton,
-body:has(#historyInsightsOverlay.visible) #gscShortcutsButton{
-  display:none!important;
-}
+/* MENÚ universal: permanece visible también en Tarjeta Digital, Corrección, Historial y Estadísticas. */
 .stableford-identity{
   margin:12px auto!important;
   width:min(960px,calc(100% - 20px))!important;
@@ -1147,7 +1142,7 @@ body:has(#historyInsightsOverlay.visible) #gscShortcutsButton{
     </div>
     <div class="game-mode-columns" aria-label="Funciones de Score Card y Live">
       <section class="game-mode-column"><div class="provisional-mode-option"><button type="button" class="course-option stable-course-option provisional-scorecard-option" id="provisionalScorecardButton" aria-label="Abrir Score Card de práctica"><span class="stable-course-dot">➜</span><span>SCORE CARD - PRÁCTICA</span></button></div></section>
-      <section class="game-mode-column"><div class="skins-mode-option"><button type="button" class="course-option stable-course-option" id="tournamentLiveHome" aria-label="Abrir Torneos en vivo"><span class="stable-course-dot">●</span><span>TORNEOS EN VIVO</span></button></div></section>
+      <section class="game-mode-column"><div class="skins-mode-option"><button type="button" class="course-option stable-course-option" id="tournamentLiveHome" aria-label="Abrir Torneos en vivo"><span class="stable-course-dot">●</span><span>MIS TORNEOS / EN VIVO</span></button></div></section>
     </div>
     <section class="skins-config" id="skinsConfig" aria-label="Configuración Skins"><div class="skins-config-title">SKINS · CONFIGURACIÓN ANTES DE LA RONDA</div><div class="skins-config-grid"><label>CÁLCULO<select id="skinsScoreType"><option value="net">NETO</option><option value="gross">GROSS</option></select></label><label>EMPATE<select id="skinsTiePolicy"><option value="carry">ACUMULA</option><option value="split">DIVIDE</option><option value="void">ANULA</option></select></label><fieldset class="currency-choice"><legend>MONEDA · ELIGE UNA</legend><label class="currency-option"><input id="skinsCurrencyGTQ" type="radio" name="skinsCurrency" value="GTQ" checked>Q · QUETZALES</label><label class="currency-option"><input id="skinsCurrencyUSD" type="radio" name="skinsCurrency" value="USD">$ · DÓLARES</label></fieldset><label>VALOR UNIDAD · <span data-currency-symbol="skins">Q</span><input id="skinsUnitValue" type="number" inputmode="decimal" min="0.01" max="100000" step="0.01" value="10"></label></div><div class="skins-config-note">CADA JUGADOR ARRIESGA UNA UNIDAD POR SKIN · EL DINERO NO MODIFICA GROSS, NETO NI RESULTADOS DEPORTIVOS.</div></section>
     <div class="setup-facts" id="courseSetupStatus">REGISTRO DE TORNEO (OPCIONAL)</div>
