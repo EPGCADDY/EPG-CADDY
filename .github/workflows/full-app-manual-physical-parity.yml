@@ -60,14 +60,32 @@ jobs:
             await page.route('**/api/app-access**',route=>route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"role":"owner"}'}));
             await page.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
             await page.waitForTimeout(500);
-            check(await page.locator('#gscShortcutsButton').count()===1,'ATAJOS no existe físicamente en Score Card');
-            check(await page.locator('#gscShortcutsButton').isVisible(),'ATAJOS no está visible físicamente en Score Card');
+            await page.evaluate(()=>{
+              const setup=document.getElementById('setupOverlay');
+              if(setup){setup.classList.remove('visible');setup.setAttribute('aria-hidden','true');setup.style.removeProperty('display')}
+              const stable=document.getElementById('stablefordSetupOverlay');
+              if(stable){stable.classList.remove('visible');stable.setAttribute('aria-hidden','true');stable.style.removeProperty('display')}
+              document.body.classList.remove('gsc-setup-open','gsc-history-open','gsc-final-card-open');
+              const holes={};for(let h=1;h<=18;h++)holes[h]={gross:4,status:null};
+              round=blankRound();
+              round.id='physical-menu-audit';
+              round.configured=true;
+              round.courseKey='pulte';
+              round.course='El Pulté Golf';
+              round.mode='general';
+              round.createdAt=new Date().toISOString();
+              round.players=[normalizePlayer({id:'menu-audit',name:'AUDITOR',handicap:0,tee:'Blanco',tournamentCategory:'a',holes},0)];
+              render();
+            });
+            await page.waitForTimeout(150);
+            check(await page.locator('#gscShortcutsButton').count()===1,'MENÚ no existe físicamente en Score Card');
+            check(await page.locator('#gscShortcutsButton').isVisible(),'MENÚ no está visible físicamente en Score Card');
             await page.screenshot({path:'full-parity/app/02-scorecard-atajos.png',fullPage:false});
-            results.app.push('scorecard+atajos');
+            results.app.push('scorecard+menu');
 
             await page.locator('#gscShortcutsButton').click();
             await page.waitForTimeout(120);
-            check(await page.locator('#gscShortcutsOverlay.visible').count()===1,'Overlay ATAJOS no abre físicamente');
+            check(await page.locator('#gscShortcutsOverlay.visible').count()===1,'Overlay MENÚ no abre físicamente');
             for(const token of ['MI SCORE CARD','CENTRO DE TORNEOS','GENERAL','CATEGORÍAS','BUSCAR JUGADOR','MIS FAVORITOS']){
               check((await page.locator('#gscShortcutsOverlay').innerText()).includes(token),'ATAJOS overlay falta '+token);
             }
