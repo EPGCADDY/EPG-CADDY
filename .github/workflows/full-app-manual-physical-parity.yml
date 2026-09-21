@@ -261,8 +261,9 @@ jobs:
 
             // Tournament hub physically
             await page.goto('http://127.0.0.1:8765/live-hub.html',{waitUntil:'networkidle'});
+            await page.evaluate(()=>document.body.classList.remove('public-display','display-general','display-category'));
             await page.waitForTimeout(500);
-            check(await page.locator('#gscShortcutsButton').isVisible(),'ATAJOS no visible físicamente en Torneos');
+            check(await page.locator('#gscShortcutsButton').isVisible(),'MENÚ no visible físicamente en Torneos');
             const hubText=await page.locator('body').innerText();
             for(const token of ['CENTRO DE TORNEOS','+ AGREGAR OTRO TORNEO','GENERAL','CATEGORÍAS','BUSCAR POR NOMBRE','MIS FAVORITOS','VOLVER A MI SCORE CARD']){
               check(hubText.includes(token),'Hub físico falta '+token);
@@ -270,7 +271,7 @@ jobs:
             await page.screenshot({path:'full-parity/app/07-tournament-hub.png',fullPage:false});
             await page.locator('#gscShortcutsButton').click();
             await page.waitForTimeout(120);
-            check(await page.locator('#gscShortcutsOverlay.visible').count()===1,'ATAJOS no abre físicamente en Torneos');
+            check(await page.locator('#gscShortcutsOverlay.visible').count()===1,'MENÚ no abre físicamente en Torneos');
             await page.screenshot({path:'full-parity/app/08-tournament-hub-atajos.png',fullPage:false});
             await page.close();
 
@@ -297,7 +298,7 @@ jobs:
             fs.writeFileSync('full-parity/audit.json',JSON.stringify(results,null,2));
             await browser.close();
             if(results.fail.length){console.error(results.fail.join('\n'));process.exit(1)}
-            console.log('PHYSICAL APP ↔ MANUAL PARITY: PASS · portada + índice + 74 hojas vigentes · app + categorías + tarjetas + torneos + Atajos rendered');
+            console.log('PHYSICAL APP ↔ MANUAL PARITY: PASS · portada + índice + 74 hojas vigentes · app + categorías + tarjetas + torneos + MENÚ rendered');
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
           node /tmp/full-parity/audit.cjs
