@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-progressive-player-registration-20260921-ag`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-player-registration-under-modalities-20260921-ah`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-lab-four-ball-team-nonumber-20260920-q`;
-const RELEASE="PROGRESSIVE-PLAYER-REGISTRATION-20260921-AG";
+const RELEASE="PLAYER-REGISTRATION-UNDER-MODALITIES-20260921-AH";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -101,12 +101,14 @@ async function approvedNavigationWithManualUpdate(request){
   const approved=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});
   if(!approved)return networkFirst(request);
   const html=await approved.text();
-  const recoveryStyle='<style id="gsc-update-recovery">body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:none!important}body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update.available{display:block!important}</style>';
   const approvedRelease=html.match(/<meta\\s+name=["']gscg-release["']\\s+content=["']([^"']+)["']/i)?.[1]||"";
   const stale=approvedRelease!==RELEASE;
-  const forcedUpdate=stale?'<style id="gsc-sw-update-gate-style">#gscSwUpdateGate{position:fixed;inset:0;z-index:2147483647;background:rgba(0,0,0,.96);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Arial,sans-serif}#gscSwUpdateGate .g{width:min(560px,100%);border:2px solid #31ff00;border-radius:18px;background:#020402;padding:24px;text-align:center;box-shadow:0 0 30px rgba(49,255,0,.35)}#gscSwUpdateGate h2{margin:0 0 10px;color:#31ff00;font-size:24px}#gscSwUpdateGate p{margin:0 0 18px;color:#fff;font-size:15px;line-height:1.4}#gscSwUpdateGate button{width:100%;height:58px;border:0;border-radius:10px;background:#31ff00;color:#000;font:900 18px Arial,sans-serif}</style><div id="gscSwUpdateGate" role="dialog" aria-modal="true" aria-label="Actualización disponible"><div class="g"><h2>NUEVA VERSIÓN DISPONIBLE</h2><p>Hay una actualización de Golf Score Card GT lista para instalar.</p><button id="gscSwUpdateNow" type="button">ACTUALIZAR</button></div></div><script id="gsc-sw-update-gate-script">(function(){var b=document.getElementById("gscSwUpdateNow");if(!b)return;b.addEventListener("click",function(){b.disabled=true;b.textContent="ACTUALIZANDO…";var u=new URL(location.href);u.searchParams.delete("__gscg_build_check");u.searchParams.set("app_version","'+RELEASE+'");u.searchParams.set("update_check",String(Date.now()));location.replace(u.toString())})})();<\\/script>':"";
+  const recoveryStyle='<style id="gsc-update-recovery">body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:none!important}body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update.available{display:block!important}</style>';
   let servedHtml=html.includes('id="gsc-update-recovery"')?html:html.replace("</head>",`${recoveryStyle}</head>`);
-  if(stale&&!servedHtml.includes('id="gscSwUpdateGate"'))servedHtml=servedHtml.replace("</body>",`${forcedUpdate}</body>`);
+  if(stale&&!servedHtml.includes('id="mandatoryUpdateButton"')&&!servedHtml.includes('id="gscFallbackUpdateButton"')){
+    const fallback='<style id="gsc-fallback-update-style">#gscFallbackUpdateButton{position:fixed;right:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:2147483647;height:44px;padding:0 18px;border:2px solid #31ff00;border-radius:22px;background:#000;color:#31ff00;font:900 14px Arial,sans-serif;box-shadow:0 0 14px rgba(49,255,0,.28)}</style><button id="gscFallbackUpdateButton" type="button">ACTUALIZAR</button><script id="gsc-fallback-update-script">(function(){var b=document.getElementById("gscFallbackUpdateButton");if(!b)return;b.onclick=function(){b.disabled=true;b.textContent="ACTUALIZANDO…";var u=new URL(location.href);u.searchParams.delete("__gscg_build_check");u.searchParams.set("app_version","PLAYER-REGISTRATION-UNDER-MODALITIES-20260921-AH");u.searchParams.set("update_check",String(Date.now()));location.replace(u.toString())}})();<\\/script>';
+    servedHtml=servedHtml.replace("</body>",fallback+"</body>");
+  }
   const headers=new Headers(approved.headers);headers.set("content-type","text/html; charset=utf-8");headers.delete("content-length");headers.set("cache-control","no-store");
   return new Response(servedHtml,{status:approved.status,statusText:approved.statusText,headers});
 }
