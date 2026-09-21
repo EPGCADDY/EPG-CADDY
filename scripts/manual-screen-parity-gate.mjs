@@ -9,7 +9,7 @@ const fourBall=read("four-ball.js");
 const fail=[];
 const assert=(ok,msg)=>{if(!ok)fail.push(msg)};
 const hasWord=(s,w)=>new RegExp("(^|[^a-záéíóúüñ0-9])"+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"([^a-záéíóúüñ0-9]|$)","i").test(s);
-assert(manual.includes('id="portada"')&&manual.includes("/docs/manual/layout/page-00.png"),"Falta portada gráfica original");
+assert(manual.includes('id="portada"')&&manual.includes("/assets/official-logos/golf-score-card-gt-official-master-1254.jpeg"),"Falta logo oficial cuadrado vigente en portada");
 assert(manual.indexOf('id="portada"')<manual.indexOf('id="indice"'),"La portada debe aparecer antes del índice");
 assert(manual.includes('id="indice"')&&manual.includes("Toca cualquier tema para saltar directamente"),"Falta índice general clickable");
 assert((manual.match(/href="#[^"]+"/g)||[]).length>=50,"Índice/navegación insuficiente");
