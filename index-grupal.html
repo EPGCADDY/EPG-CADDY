@@ -1147,7 +1147,7 @@ body:has(#historyInsightsOverlay.visible) #gscShortcutsButton{
     </div>
     <div class="game-mode-columns" aria-label="Funciones de Score Card y Live">
       <section class="game-mode-column"><div class="provisional-mode-option"><button type="button" class="course-option stable-course-option provisional-scorecard-option" id="provisionalScorecardButton" aria-label="Abrir Score Card de práctica"><span class="stable-course-dot">➜</span><span>SCORE CARD - PRÁCTICA</span></button></div></section>
-      <section class="game-mode-column"><div class="skins-mode-option"><button type="button" class="course-option stable-course-option" id="tournamentLiveHome" aria-label="Abrir Torneos en vivo"><span class="stable-course-dot">●</span><span>TORNEOS</span></button></div></section>
+      <section class="game-mode-column"><div class="skins-mode-option"><button type="button" class="course-option stable-course-option" id="tournamentLiveHome" aria-label="Abrir Torneos en vivo"><span class="stable-course-dot">●</span><span>TORNEOS EN VIVO</span></button></div></section>
     </div>
     <section class="skins-config" id="skinsConfig" aria-label="Configuración Skins"><div class="skins-config-title">SKINS · CONFIGURACIÓN ANTES DE LA RONDA</div><div class="skins-config-grid"><label>CÁLCULO<select id="skinsScoreType"><option value="net">NETO</option><option value="gross">GROSS</option></select></label><label>EMPATE<select id="skinsTiePolicy"><option value="carry">ACUMULA</option><option value="split">DIVIDE</option><option value="void">ANULA</option></select></label><fieldset class="currency-choice"><legend>MONEDA · ELIGE UNA</legend><label class="currency-option"><input id="skinsCurrencyGTQ" type="radio" name="skinsCurrency" value="GTQ" checked>Q · QUETZALES</label><label class="currency-option"><input id="skinsCurrencyUSD" type="radio" name="skinsCurrency" value="USD">$ · DÓLARES</label></fieldset><label>VALOR UNIDAD · <span data-currency-symbol="skins">Q</span><input id="skinsUnitValue" type="number" inputmode="decimal" min="0.01" max="100000" step="0.01" value="10"></label></div><div class="skins-config-note">CADA JUGADOR ARRIESGA UNA UNIDAD POR SKIN · EL DINERO NO MODIFICA GROSS, NETO NI RESULTADOS DEPORTIVOS.</div></section>
     <div class="setup-facts" id="courseSetupStatus">REGISTRO DE TORNEO (OPCIONAL)</div>
@@ -1163,18 +1163,18 @@ body:has(#historyInsightsOverlay.visible) #gscShortcutsButton{
     <div class="setup-status" id="setupStatus"></div>
     <div class="caddie-sources hidden" id="setupCaddieSources" aria-label="Fuentes consultadas por el Caddie"></div>
     <button class="nr-button registration-clear-all" type="button" id="clearAllRegistration">BORRAR JUGADORES REGISTRADOS</button>
-    <button class="nr-button" id="setupOk">OK</button>
-    <button class="nr-button secondary hidden" type="button" id="previousRoundSetupButton">RONDA PREVIA</button>
+    <button class="nr-button" id="setupOk">REVISAR DATOS</button>
+    <button class="nr-button secondary hidden" type="button" id="previousRoundSetupButton">VER RONDA ANTERIOR</button>
     <button class="nr-button secondary" type="button" id="openCardLibrarySetup">VER RONDAS GUARDADAS</button>
     <button class="nr-button secondary account-entry-button" type="button" id="accountBackupButtonSetup" data-account-entry>RESPALDAR / RECUPERAR DATOS</button>
   </section>
   <section class="new-round-card hidden" id="setupStep2">
     <div class="screen-back-row"><button class="screen-back-button" type="button" id="backSetup">ATRÁS</button></div>
-    <div class="nr-head"><img class="official-logo-target" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Golf Score Card Guatemala"><div><h1>CONFIRMACIÓN</h1><div class="nr-date" id="confirmDate">—</div></div></div>
+    <div class="nr-head"><img class="official-logo-target" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Golf Score Card Guatemala"><div><h1>REVISAR ANTES DE EMPEZAR</h1><div class="nr-date" id="confirmDate">—</div></div></div>
     <div class="field-title">CAMPO</div><div class="course-select" id="confirmCourse">EL PULTÉ</div>
     <div class="tournament-confirm hidden" id="confirmTournament"></div>
     <div class="skins-confirm hidden" id="confirmSkins"></div>
-    <div class="confirm-title">JUGADORES DETECTADOS</div>
+    <div class="confirm-title">JUGADORES REGISTRADOS</div>
     <div class="confirm-row head"><span>NOMBRE</span><span>CATEGORÍA</span><span>HDCP</span><span>MARCAS</span></div><div id="confirmBody"></div>
     <button class="nr-button" id="startRoundButton">INICIAR RONDA</button>
   </section>
@@ -1218,8 +1218,8 @@ body:has(#historyInsightsOverlay.visible) #gscShortcutsButton{
       <label>JUGADOR 6<span class="stableford-player-entry"><input type="text" maxlength="40" data-stableford-name="5" autocomplete="off"><span class="stableford-whatsapp-field"><span class="stableford-whatsapp-flag" data-stableford-whatsapp-flag="5">🇬🇹</span><span class="stableford-whatsapp-plus">+</span><input inputmode="numeric" maxlength="4" value="502" data-stableford-country-code="5" aria-label="Código de país WhatsApp jugador 6"><input inputmode="tel" maxlength="18" data-stableford-whatsapp="5" placeholder="WHATSAPP OPCIONAL" aria-label="WhatsApp jugador 6"></span></span></label>
     </div>
     <div class="setup-status" id="stablefordSetupStatus"></div>
-    <button class="nr-button" type="button" id="startStablefordRound">OK</button>
-    <button class="nr-button secondary hidden" type="button" id="previousStablefordRoundButton">RONDA PREVIA</button>
+    <button class="nr-button" type="button" id="startStablefordRound">INICIAR RONDA</button>
+    <button class="nr-button secondary hidden" type="button" id="previousStablefordRoundButton">VER RONDA ANTERIOR</button>
     <button class="nr-button secondary" type="button" id="openCardLibraryStableford">VER RONDAS GUARDADAS</button>
     <button class="nr-button secondary" type="button" id="cancelStablefordSetup">ATRÁS A LA RONDA</button>
   </section>
