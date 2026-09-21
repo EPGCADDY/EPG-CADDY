@@ -11,6 +11,8 @@ assert(ui.includes("/assets/official-logos/golf-score-card-gt-horizontal-origina
 assert(ui.includes("<span>ATAJOS</span>"),"ATAJOS debe mostrar la etiqueta debajo del logo");
 assert(!ui.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png"),"ATAJOS no debe usar el icono PWA cuadrado");
 for(const id of ["setupOverlay","finalCardOverlay","cardLibraryOverlay","historyInsightsOverlay","officialCorrectionOverlay"])assert(app.includes('id="'+id+'"')||app.includes('#'+id),"Falta pantalla/overlay "+id);
-assert(ui.includes("z-index:2147483000!important"),"ATAJOS debe quedar por encima de overlays");
+assert(ui.includes("official-round-header .round-meta.gsc-shortcuts-host"),"ATAJOS debe ocupar el espacio superior de ronda");
+assert(ui.includes('body.classList.remove("gsc-shortcuts-docked")'),"ATAJOS no debe reservar una columna lateral ni angostar la Score Card");
+assert(!ui.includes("padding-right:68px!important"),"ATAJOS no debe reducir el ancho útil de la app");
 assert(!app.includes("#gscShortcutsButton{display:none"),"La app no debe ocultar ATAJOS");
 console.log("PASS LAB deterministic tournament navigation + original-logo universal overlays");
