@@ -13,10 +13,8 @@ assert(manual.includes('id="portada"')&&manual.includes("/docs/manual/layout/pag
 assert(manual.indexOf('id="portada"')<manual.indexOf('id="indice"'),"La portada debe aparecer antes del índice");
 assert(manual.includes('id="indice"')&&manual.includes("Toca cualquier tema para saltar directamente"),"Falta índice general clickable");
 assert((manual.match(/href="#[^"]+"/g)||[]).length>=50,"Índice/navegación insuficiente");
-assert((manual.match(/<section class="sheet(?: |")/g)||[]).length===74,"Debe haber exactamente 74 hojas vigentes: 51 base + 9 pantallas actuales + 10 Torneos + 4 pantallas reales LAB");
+assert((manual.match(/<section class="sheet(?: |")/g)||[]).length===70,"Debe haber exactamente 70 hojas vigentes: 51 base + 9 pantallas actuales + 10 Torneos");
 for(const p of [10,11,12,13,14,15,16,68,70,72]) assert(manual.includes("/docs/manual/layout/page-"+String(p).padStart(2,"0")+".png"),"Falta lámina informativa gris vigente page-"+p);
-const current=["/docs/manual/current/CAMPO_MODALIDAD_REAL.webp","/docs/manual/current/REGISTRO_ATAJOS_REAL.webp","/docs/manual/current/SCORECARD_CONTROL_REAL.webp","/docs/manual/current/FOURBALL_ATAJOS_REAL.webp"];
-for(const img of current) assert(manual.includes(img),"Falta pantalla real LAB: "+img);
 const mountedCurrent=[
  "/docs/manual/current/APP_ACCESS.png",
  "/docs/manual/current/APP_SETUP_CURRENT.png",
@@ -56,9 +54,8 @@ for(let p=46;p<=67;p++) assert(!manual.includes("/docs/manual/layout/page-"+Stri
 assert(app.includes("shortcuts-ui.js"),"Score Card debe cargar MENÚ");
 assert(hub.includes("shortcuts-ui.js"),"Torneos debe cargar MENÚ");
 for(const t of ["MI SCORE CARD","MIS TORNEOS","MONITOR DEL TORNEO EN VIVO","VER RESULTADOS POR CATEGORÍA","BUSCAR JUGADOR","TABLERO DE MIS FAVORITOS"]) assert(shortcuts.includes(t),"MENÚ incompleto: "+t);
-assert(manual.includes("Registro de jugadores + MENÚ")&&manual.includes("Four Ball corregido + MENÚ"),"Las pantallas reales deben documentar MENÚ");
 assert(cards.includes("fourBallTeamLabel")&&!cards.includes("TEAM 1")&&!cards.includes("TEAM 2")&&!cards.includes("TEAM 3"),"Tarjetas Four Ball no deben reintroducir TEAM numerado");
 assert(!fourBall.includes('"TEAM 1"')&&!fourBall.includes('"TEAM 2"')&&!fourBall.includes('"TEAM 3"'),"Motor Four Ball no debe reintroducir TEAM numerado");
 if(fail.length){console.error("MANUAL ORIGINAL PARITY: FAIL");for(const item of fail) console.error("- "+item);process.exit(1);}
 console.log("MANUAL ORIGINAL PARITY: PASS");
-console.log("MANUAL RE-MAQUETADO: 74 hojas · MENÚ vigente · pantallas reales para funciones · láminas informativas grises · 0 funciones retiradas");
+console.log("MANUAL RE-MAQUETADO: 70 hojas · MENÚ vigente · sólo capturas oficiales limpias · láminas informativas grises · 0 funciones retiradas");
