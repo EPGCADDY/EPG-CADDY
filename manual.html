@@ -294,6 +294,132 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
 
 .master-sheet>.screen-stage.mode-real{display:block!important;width:100%!important;padding:0!important;background:#000!important;overflow:hidden!important}
 .master-sheet>.screen-stage.mode-real img{display:block!important;width:100%!important;height:auto!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:center top!important;margin:0!important}
+
+/* PREMIUM EDITORIAL GRID · SCREEN / NARRATIVE / NAVIGATION */
+.master-sheet{padding:0!important}
+.master-sheet>img{
+  width:auto!important;
+  max-width:calc(100% - 48px)!important;
+  margin:24px auto!important;
+  display:block!important;
+}
+.master-sheet.current-screen-sheet{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+.master-sheet.current-screen-sheet>.screen-stage{
+  width:calc(100% - 48px)!important;
+  margin:24px auto 18px!important;
+  padding:18px!important;
+  background:#fff!important;
+  border:1px solid #e0e6e8!important;
+  border-radius:14px!important;
+  overflow:hidden!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.master-sheet.current-screen-sheet>.screen-stage img{
+  width:auto!important;
+  max-width:100%!important;
+  max-height:680px!important;
+  height:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:auto!important;
+}
+.master-sheet.current-screen-sheet>.screen-note{
+  width:calc(100% - 48px)!important;
+  max-width:680px!important;
+  margin:0 auto 22px!important;
+  padding:14px 18px!important;
+  border:1px solid #d5dedf!important;
+  border-radius:12px!important;
+  background:#f8faf9!important;
+  text-align:center!important;
+  line-height:1.5!important;
+}
+.master-sheet.current-function-sheet{
+  display:grid!important;
+  grid-template-columns:minmax(300px,44%) minmax(320px,1fr)!important;
+  column-gap:28px!important;
+  row-gap:12px!important;
+  align-items:start!important;
+  padding:0 24px 0!important;
+}
+.master-sheet.current-function-sheet>.sheet-head{
+  grid-column:1/-1!important;
+  margin:0 -24px!important;
+}
+.master-sheet.current-function-sheet>.screen-stage{
+  grid-column:1!important;
+  grid-row:2 / span 20!important;
+  align-self:center!important;
+  justify-self:center!important;
+  width:100%!important;
+  min-height:360px!important;
+  margin:24px 0!important;
+  padding:18px!important;
+  border:1px solid #dfe5e7!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  overflow:hidden!important;
+}
+.master-sheet.current-function-sheet>.screen-stage img{
+  display:block!important;
+  width:auto!important;
+  max-width:100%!important;
+  max-height:620px!important;
+  height:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:auto!important;
+}
+.master-sheet.current-function-sheet>.screen-stage.focus-app{
+  height:auto!important;
+  min-height:420px!important;
+}
+.master-sheet.current-function-sheet>.screen-stage.focus-app img{
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:620px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+.master-sheet.current-function-sheet>.current-copy,
+.master-sheet.current-function-sheet>.notice{
+  grid-column:2!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  padding:16px 18px!important;
+  align-self:start!important;
+}
+.master-sheet.current-function-sheet>.current-copy:first-of-type,
+.master-sheet.current-function-sheet>.notice:first-of-type{margin-top:24px!important}
+.master-sheet.current-function-sheet>.sheet-nav{
+  grid-column:1/-1!important;
+  grid-row:99!important;
+  margin:10px -24px 0!important;
+}
+.master-sheet.current-function-sheet .current-copy p{font-size:13px!important;line-height:1.55!important}
+.master-sheet.current-function-sheet .current-copy h3{font-size:14px!important;line-height:1.2!important}
+@media(max-width:700px){
+  .master-sheet>img{max-width:calc(100% - 24px)!important;margin:14px auto!important}
+  .master-sheet.current-screen-sheet>.screen-stage{width:calc(100% - 24px)!important;margin:14px auto 12px!important;padding:10px!important}
+  .master-sheet.current-screen-sheet>.screen-stage img{max-height:560px!important}
+  .master-sheet.current-screen-sheet>.screen-note{width:calc(100% - 24px)!important;margin:0 auto 14px!important;padding:12px 14px!important}
+  .master-sheet.current-function-sheet{display:block!important;padding:0!important}
+  .master-sheet.current-function-sheet>.sheet-head{margin:0!important}
+  .master-sheet.current-function-sheet>.screen-stage{width:calc(100% - 24px)!important;min-height:0!important;margin:14px auto!important;padding:10px!important;border-radius:12px!important}
+  .master-sheet.current-function-sheet>.screen-stage.focus-app{min-height:0!important}
+  .master-sheet.current-function-sheet>.screen-stage img,
+  .master-sheet.current-function-sheet>.screen-stage.focus-app img{max-height:560px!important}
+  .master-sheet.current-function-sheet>.current-copy,
+  .master-sheet.current-function-sheet>.notice{width:calc(100% - 24px)!important;margin:10px auto!important;padding:13px 14px!important}
+  .master-sheet.current-function-sheet>.current-copy:first-of-type,
+  .master-sheet.current-function-sheet>.notice:first-of-type{margin-top:18px!important;border-top:3px solid #d6aa3f!important}
+  .master-sheet.current-function-sheet>.sheet-nav{margin:16px 0 0!important}
+}
+
 </style></head><body>
 <header class="top"><strong>GOLF SCORE CARD GT · MANUAL DE FUNCIONES</strong><a href="#indice">ÍNDICE</a></header>
 <main>
