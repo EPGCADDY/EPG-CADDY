@@ -34,8 +34,8 @@ for(const token of ["GENERAL","STABLEFORD","MATCH PLAY","FOUR BALL","UNIVERSALES
 for(const removed of ["id=\"dotsRoundButton\"","id=\"wolfRoundButton\"","id=\"vegasRoundButton\""])assert(!app.includes(removed),"No debe reaparecer función retirada "+removed);
 
 for(const token of ["MI SCORE CARD","MIS TORNEOS","MONITOR DEL TORNEO EN VIVO","VER RESULTADOS POR CATEGORÍA","BUSCAR JUGADOR","TABLERO DE MIS FAVORITOS"])assert(shortcuts.includes(token),"Menú incompleto: "+token);
-assert(shortcuts.includes("official-round-header .round-meta.gsc-shortcuts-host"),"MENÚ debe quedar en el encabezado de ronda");
-assert(shortcuts.includes('body.classList.remove("gsc-shortcuts-docked")'),"MENÚ no debe angostar la aplicación");
+assert(shortcuts.includes("position:fixed!important"),"MENÚ debe quedar flotante y visible sobre cualquier pantalla");
+assert(shortcuts.includes('item("manual","MANUAL DE USUARIO"'),"MENÚ debe incluir acceso directo al Manual");
 assert(!shortcuts.includes("padding-right:68px!important"),"MENÚ no debe reservar columna lateral");
 for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAddToBoard","hubTournamentHome"])assert(hub.includes(id),"Torneos: falta destino "+id);
 
