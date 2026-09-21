@@ -1610,12 +1610,12 @@ La próxima versión deberá registrar aquí:
 
 **Regla final:** si una capacidad no está documentada y probada, no se considera lista para mercado. Toda función aprobada debe actualizar simultáneamente código, Matriz de Funciones, manual del usuario y pruebas de aceptación; si falta cualquiera de esas cuatro evidencias, permanece pendiente.
 
-## 29. LAB · Identidad, inicio de sesión y Atajos personales
+## 29. LAB · Identidad, inicio de sesión y Menú personales
 
 **Estado:** LAB únicamente. No autorizado para promoción a PRODUCCIÓN.
 
 ### 29.1 Identidad
-La aplicación incorpora una identidad permanente por usuario mediante Neon Auth. El identificador técnico `auth_user_id` es la llave obligatoria para separar Score Cards, torneos seguidos, tableros, Pantallas Públicas y Atajos personales.
+La aplicación incorpora una identidad permanente por usuario mediante Neon Auth. El identificador técnico `auth_user_id` es la llave obligatoria para separar Score Cards, torneos seguidos, tableros, Pantallas Públicas y Menú personales.
 
 Regla absoluta: ningún tablero o Atajo personal puede mostrarse globalmente a todos los usuarios.
 
@@ -1625,7 +1625,7 @@ Regla absoluta: ningún tablero o Atajo personal puede mostrarse globalmente a t
 - Apple: previsto como proveedor futuro; no se declara operativo.
 - Invitaciones temporales de 24 horas conservan su flujo de invitado y no crean falsamente una cuenta permanente.
 
-### 29.3 Atajos personales
+### 29.3 Menú personales
 Nueva API LAB: `/api/shortcuts`.
 
 Tipos:
@@ -1634,16 +1634,16 @@ Tipos:
 - `board`
 - `display`
 
-Cada registro pertenece a un único `auth_user_id`. Dos usuarios pueden seguir el mismo torneo o tablero sin compartir preferencias ni borrar los Atajos del otro.
+Cada registro pertenece a un único `auth_user_id`. Dos usuarios pueden seguir el mismo torneo o tablero sin compartir preferencias ni borrar los Menú del otro.
 
 ### 29.4 Automatización prevista
 1. Al iniciar un Score Card de torneo, se crea o actualiza su Atajo automáticamente.
-2. Al seguir un torneo, aparece únicamente en los Atajos de ese usuario.
-3. Al agregar un tablero, aparece únicamente en los Atajos de ese usuario.
+2. Al seguir un torneo, aparece únicamente en los Menú de ese usuario.
+3. Al agregar un tablero, aparece únicamente en los Menú de ese usuario.
 4. Al dejar de seguir un tablero o torneo, su Atajo se retira para ese usuario.
 5. Los recursos con `expires_at` vencido se purgan automáticamente.
 6. La regla comercial de torneo terminado + 24 horas se implementará utilizando `expires_at`.
-7. La pantalla Atajos debe reconstruirse desde datos vigentes; no es una lista global estática.
+7. La pantalla Menú debe reconstruirse desde datos vigentes; no es una lista global estática.
 
 ### 29.5 Aislamiento técnico de laboratorio
 Se creó la rama Neon `lab-auth-shortcuts-20260919` para probar esquema y Auth sin aplicar cambios a la rama principal. El esquema `user_shortcuts` fue validado allí con dos usuarios distintos utilizando el mismo `resource_key` y conservando datos independientes.
@@ -1652,13 +1652,13 @@ Se creó la rama Neon `lab-auth-shortcuts-20260919` para probar esquema y Auth s
 - Identidad Neon Auth existente: PASS.
 - Google configurado en Neon Auth: PASS de configuración; flujo UI: PENDIENTE.
 - Login correo LAB: IMPLEMENTADO, pendiente de prueba física visual.
-- API de Atajos por usuario: IMPLEMENTADA.
-- Esquema Atajos en rama Neon LAB: IMPLEMENTADO.
+- API de Menú por usuario: IMPLEMENTADA.
+- Esquema Menú en rama Neon LAB: IMPLEMENTADO.
 - PRODUCCIÓN: SIN CAMBIOS.
 
-### 29.7 Atajos universales
+### 29.7 Menú universales
 
-LAB incorpora un botón permanente **ATAJOS** visible tanto desde SCORE CARD como desde TORNEOS. Su objetivo es que el usuario nunca tenga que adivinar cuántas veces debe tocar “Atrás”.
+LAB incorpora un botón permanente **MENÚ** visible tanto desde SCORE CARD como desde TORNEOS. Su objetivo es que el usuario nunca tenga que adivinar cuántas veces debe tocar “Atrás”.
 
 Destinos directos disponibles:
 - MI SCORE CARD
@@ -1674,7 +1674,7 @@ Destinos directos disponibles:
 
 **Regla de navegación:** VOLVER A MI SCORE CARD navega directamente a /index-grupal.html. Queda prohibido depender de history.back() para esa acción porque el historial del navegador no garantiza volver al Score Card.
 
-Los Atajos de navegación no sustituyen la capa de identidad. Los datos personales de torneos/tableros deberán migrar a la API autenticada por auth_user_id antes de declararse sincronización multi-dispositivo completa.
+Los Menú de navegación no sustituyen la capa de identidad. Los datos personales de torneos/tableros deberán migrar a la API autenticada por auth_user_id antes de declararse sincronización multi-dispositivo completa.
 
 **Estado LAB:** interfaz y navegación implementadas; prueba física visual en navegador/iPhone pendiente.
 
@@ -1689,15 +1689,15 @@ Los Atajos de navegación no sustituyen la capa de identidad. Los datos personal
 
 ### Índice didáctico oficial
 
-1. **Abrir Atajos** — desde Score Card al menú directo.
+1. **Abrir Menú** — desde Score Card al menú directo.
 2. **Ir al Centro de Torneos** — visualizar torneos disponibles.
 3. **Elegir un torneo** — abrir el torneo correcto y sus opciones.
 4. **Ver General** — clasificación general del torneo abierto.
 5. **Buscar categorías y jugadores** — categorías y búsqueda nominal dentro del torneo abierto.
 6. **Abrir Mis Favoritos** — jugadores y grupos seguidos del torneo abierto.
 7. **Gestionar Mis Favoritos** — agregar o dejar de seguir jugadores/grupos.
-8. **Volver a mi Score Card** — regreso directo desde cualquier sección mediante Atajos.
-9. **ATAJOS siempre contigo** — el acceso universal permanece visible durante Registro, Score Card, Tarjeta Final, Historial, Corrección y Torneos; permite moverse o volver sin encadenar “Atrás”.
+8. **Volver a mi Score Card** — regreso directo desde cualquier sección mediante Menú.
+9. **MENÚ siempre contigo** — el acceso universal permanece visible durante Registro, Score Card, Tarjeta Final, Historial, Corrección y Torneos; permite moverse o volver sin encadenar “Atrás”.
 
 ### Regla técnica editorial obligatoria
 
@@ -1730,8 +1730,8 @@ GENERAL, CATEGORÍAS, BUSCAR JUGADOR y MIS FAVORITOS pertenecen al torneo abiert
 
 ### Regla de ida y vuelta
 
-ATAJOS es el menú directo universal. El usuario no debe depender de repetir “Atrás” para volver a su Score Card o cambiar a otra función.
+MENÚ es el menú directo universal. El usuario no debe depender de repetir “Atrás” para volver a su Score Card o cambiar a otra función.
 
-### Regla visual R3 · ATAJOS en todas las guías
+### Regla visual R3 · MENÚ en todas las guías
 
-Todas las pantallas representadas en el set visual de Torneos deben mostrar el launcher ATAJOS con el **logo horizontal original de Golf Score Card GT** y la palabra **ATAJOS** debajo. La guía debe enseñar explícitamente que este acceso permanece disponible durante todo el recorrido y funciona como comodín de navegación.
+Todas las pantallas representadas en el set visual de Torneos deben mostrar el launcher MENÚ con el **logo horizontal original de Golf Score Card GT** y la palabra **MENÚ** debajo. La guía debe enseñar explícitamente que este acceso permanece disponible durante todo el recorrido y funciona como comodín de navegación.
