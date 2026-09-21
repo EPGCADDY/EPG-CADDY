@@ -477,7 +477,7 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
 
 /* HOTSPOTS REALES SOBRE LAS GRÁFICAS DEL MANUAL */
 .screen-stage{position:relative!important}
-.manual-hotspot-layer{position:absolute;inset:0;z-index:8;pointer-events:none}
+.manual-hotspot-layer{position:absolute;z-index:8;pointer-events:none}
 .manual-hotspot{
  position:absolute;display:block;pointer-events:auto;cursor:pointer;
  background:transparent;border:0;border-radius:10px;text-indent:-9999px;overflow:hidden;
@@ -1138,6 +1138,16 @@ document.addEventListener("DOMContentLoaded",()=>{
      layer.appendChild(a);
    });
    stage.appendChild(layer);
+   const syncLayer=()=>{
+     const sr=stage.getBoundingClientRect(),ir=img.getBoundingClientRect();
+     layer.style.left=(ir.left-sr.left)+"px";
+     layer.style.top=(ir.top-sr.top)+"px";
+     layer.style.width=ir.width+"px";
+     layer.style.height=ir.height+"px";
+   };
+   if(img.complete)syncLayer();else img.addEventListener("load",syncLayer,{once:true});
+   if("ResizeObserver" in window){const ro=new ResizeObserver(syncLayer);ro.observe(img);ro.observe(stage)}
+   addEventListener("resize",syncLayer,{passive:true});
  });
 })();
 </script><script src="/shortcuts-ui.js"></script></body></html>
