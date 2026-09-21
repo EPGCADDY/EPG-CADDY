@@ -40,6 +40,10 @@
     body.public-display #hubCategoryCard{display:block!important}
     body.public-display.display-general #hubCategoryCard{display:none!important}
     body.public-display.display-category #hubLeaderWrap{display:none!important}
+    .head{grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center}
+    .head #gscShortcutsButton{max-width:140px!important;min-width:104px!important;margin:0!important}
+    body.public-display #gscShortcutsButton{display:none!important}
+    @media(max-width:600px){.head{grid-template-columns:auto minmax(0,1fr) auto}.head #gscShortcutsButton{grid-column:2/4;max-width:none!important;width:100%!important;min-height:52px!important;margin-top:4px!important}}
     .public-display-status{display:none}
     body.public-display .public-display-status{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:8px 0 14px;padding:12px 16px;border:1px solid #31ff00;border-radius:10px;background:#061006;color:#fff}
     .public-display-status strong{font-size:28px;color:#31ff00}
