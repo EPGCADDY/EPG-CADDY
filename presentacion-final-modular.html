@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GSC Presentación Final Modular</title>
+<style>
+html,body{margin:0;background:#050705;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:760px;margin:auto;padding:12px}
+video{width:100%;display:block;background:#000;border-radius:16px;max-height:78vh}
+.controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+button{flex:1;min-height:48px;border-radius:12px;border:1px solid #2cff20;background:#0b120b;color:#fff;font-weight:700}
+button.primary{background:#25ff14;color:#061006}
+.meta{padding:10px 2px;color:#b9c0b9;font-size:14px}
+.title{font-size:17px;font-weight:800;margin-bottom:4px;color:#39ff27}
+</style>
+</head>
+<body><main>
+<div class="title" id="sceneTitle">01 · Configuración</div>
+<video id="v" playsinline preload="auto"></video>
+<audio id="a" preload="auto"></audio>
+<div class="controls">
+<button id="prev">ANTERIOR</button>
+<button id="play" class="primary">PLAY / PAUSA</button>
+<button id="next">SIGUIENTE</button>
+</div>
+<div class="meta" id="meta"></div>
+</main>
+<script>
+const videoUrl="https://cdn.creativeclaw.co/u/9cfd647d/videos/b967beca-2419-4f77-aa6b-8a671f7021ce.mp4";
+const scenes=[
+{t:"01 · Configuración campo/modalidad",s:0,e:12,a:"https://cdn.creativeclaw.co/u/9cfd647d/audio/b6e13094-c681-4505-b130-e35c62762c09.mp3"},
+{t:"02 · Registro de jugadores",s:12,e:86,a:"https://cdn.creativeclaw.co/u/9cfd647d/audio/8feb8f6d-ad14-4e66-9baf-ca4029743fc7.mp3"},
+{t:"03 · Marcas y categorías",s:86,e:98,a:"https://cdn.creativeclaw.co/u/9cfd647d/audio/31e1c6c5-62e7-43e8-a8cf-cbdbaa4c3d78.mp3"},
+{t:"04 · Handicap y tarjeta",s:98,e:110,a:"https://cdn.creativeclaw.co/u/9cfd647d/audio/9a60dc42-252b-41b0-a767-5497fd374f5f.mp3"},
+{t:"05 · Scores, gross y neto",s:110,e:132,a:"https://cdn.creativeclaw.co/u/9cfd647d/audio/18fec1aa-6e19-4551-8eff-5b334b076e6d.mp3"},
+{t:"06 · Autoavance y corrección",s:132,e:162,a:"https://cdn.creativeclaw.co/u/9cfd647d/audio/eb377782-e4e5-4f82-b294-0b3723902b1c.mp3"},
+{t:"07 · Resultados",s:162,e:187,a:"https://cdn.creativeclaw.co/u/9cfd647d/audio/5ff6e368-bbc8-411f-b7d9-05dc5c4fee6b.mp3"}
+];
+let i=0;
+const v=document.getElementById("v"),a=document.getElementById("a"),title=document.getElementById("sceneTitle"),meta=document.getElementById("meta");
+v.src=videoUrl; v.muted=true;
+function load(n){
+ i=Math.max(0,Math.min(scenes.length-1,n));
+ const x=scenes[i]; title.textContent=x.t; meta.textContent=`Escena ${i+1} de ${scenes.length}`;
+ a.src=x.a; a.currentTime=0; a.pause(); v.pause();
+ const seek=()=>{v.currentTime=x.s; v.removeEventListener("loadedmetadata",seek)};
+ if(v.readyState>=1)v.currentTime=x.s; else v.addEventListener("loadedmetadata",seek);
+}
+function play(){
+ const x=scenes[i];
+ if(!v.paused||!a.paused){v.pause();a.pause();return}
+ if(v.currentTime<x.s||v.currentTime>=x.e)v.currentTime=x.s;
+ a.currentTime=0;
+ Promise.allSettled([v.play(),a.play()]);
+}
+v.addEventListener("timeupdate",()=>{const x=scenes[i]; if(v.currentTime>=x.e){v.pause();a.pause();}});
+document.getElementById("play").onclick=play;
+document.getElementById("prev").onclick=()=>load(i-1);
+document.getElementById("next").onclick=()=>load(i+1);
+load(0);
+</script></body></html>
