@@ -1,0 +1,131 @@
+name: Manual hotspots physical certification
+on:
+  push:
+    branches: [qa-manual-hotspots-physical-20260921]
+permissions:
+  contents: read
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium
+        run: |
+          mkdir -p /tmp/manual-hotspot-qa
+          cd /tmp/manual-hotspot-qa
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 --no-audit --no-fund
+          npx playwright install chromium
+      - name: Physical click certification
+        run: |
+          python3 -m http.server 8765 >/tmp/manual-hotspot-http.log 2>&1 &
+          sleep 2
+          mkdir -p evidence/manual-hotspots
+          cat >/tmp/manual-hotspot-qa/certify.cjs <<'NODE'
+          const {chromium}=require('/tmp/manual-hotspot-qa/node_modules/playwright');
+          const fs=require('fs');
+          const path=require('path');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const context=await browser.newContext({
+              viewport:{width:430,height:932},
+              deviceScaleFactor:3,
+              isMobile:true,
+              hasTouch:true,
+              userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X) AppleWebKit/605.1.15 Version/26.0 Mobile/15E148 Safari/604.1'
+            });
+            const page=await context.newPage();
+            await page.route('**/api/account**',r=>r.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"qa","email":"qa@example.com"}}'}));
+            await page.route('**/api/app-access**',r=>r.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"role":"owner"}'}));
+            const manualUrl='http://127.0.0.1:8765/manual.html';
+            await page.goto(manualUrl,{waitUntil:'networkidle'});
+            await page.waitForTimeout(600);
+            await page.evaluate(async()=>{
+              const imgs=[...document.querySelectorAll('.screen-stage img[src^="/docs/manual/current/"]')];
+              await Promise.all(imgs.map(img=>img.complete?Promise.resolve():new Promise(res=>{img.addEventListener('load',res,{once:true});img.addEventListener('error',res,{once:true})})));
+            });
+            await page.waitForTimeout(400);
+
+            const coverage=await page.evaluate(()=>{
+              const imgs=[...document.querySelectorAll('.screen-stage img[src^="/docs/manual/current/"]')];
+              return imgs.map(img=>{
+                const sheet=img.closest('section.sheet');
+                const stage=img.closest('.screen-stage');
+                const layer=stage?.querySelector('.manual-hotspot-layer');
+                return {sheet:sheet?.id||'',src:img.getAttribute('src')||'',hotspots:layer?.querySelectorAll('.manual-hotspot').length||0};
+              });
+            });
+            const uncovered=coverage.filter(x=>x.hotspots<1);
+            const uniqueAssets=[...new Set(coverage.map(x=>x.src))];
+
+            const sheets=[...new Set(coverage.map(x=>x.sheet))];
+            for(const sid of sheets){
+              const sheet=page.locator('#'+sid);
+              await sheet.scrollIntoViewIfNeeded();
+              await page.waitForTimeout(50);
+              await sheet.evaluate(el=>el.querySelectorAll('.manual-hotspot').forEach(h=>{h.style.boxShadow='inset 0 0 0 3px #31ff00';h.style.background='rgba(49,255,0,.10)'}));
+              await page.screenshot({path:path.join('evidence/manual-hotspots','sheet-'+sid+'.png'),fullPage:false});
+              await sheet.evaluate(el=>el.querySelectorAll('.manual-hotspot').forEach(h=>{h.style.boxShadow='';h.style.background=''}));
+            }
+
+            const hotspots=await page.evaluate(()=>{
+              return [...document.querySelectorAll('.manual-hotspot')].map((a,i)=>{
+                const img=a.closest('.screen-stage')?.querySelector('img');
+                const sheet=a.closest('section.sheet');
+                return {i,sheet:sheet?.id||'',label:a.getAttribute('aria-label')||'',href:a.getAttribute('href')||'',src:img?.getAttribute('src')||''};
+              });
+            });
+
+            const results=[];
+            for(const meta of hotspots){
+              await page.goto(manualUrl,{waitUntil:'domcontentloaded'});
+              await page.waitForTimeout(120);
+              const all=page.locator('.manual-hotspot');
+              const loc=all.nth(meta.i);
+              await loc.scrollIntoViewIfNeeded();
+              await page.waitForTimeout(30);
+              const geom=await loc.evaluate(a=>{
+                const r=a.getBoundingClientRect();
+                const img=a.closest('.screen-stage')?.querySelector('img');
+                const ir=img?.getBoundingClientRect();
+                return {x:r.x,y:r.y,w:r.width,h:r.height,ix:ir?.x,iy:ir?.y,iw:ir?.width,ih:ir?.height};
+              });
+              const within=geom.w>0&&geom.h>0&&geom.x>=geom.ix-1&&geom.y>=geom.iy-1&&(geom.x+geom.w)<=geom.ix+geom.iw+1&&(geom.y+geom.h)<=geom.iy+geom.ih+1;
+              let requested='';
+              try{
+                const nav=page.waitForRequest(req=>req.isNavigationRequest()&&req.frame()===page.mainFrame(),{timeout:5000});
+                await loc.click({timeout:5000});
+                const req=await nav; requested=req.url();
+              }catch(e){}
+              const expected=new URL(meta.href,'http://127.0.0.1:8765').href;
+              const navOk=requested===expected;
+              results.push({...meta,within,navOk,requested,expected,geom});
+            }
+
+            const fail=results.filter(r=>!r.within||!r.navOk);
+            const report={
+              viewport:'430x932@3x mobile touch',
+              operationalImageInstances:coverage.length,
+              uniqueOperationalAssets:uniqueAssets.length,
+              uncoveredOperationalImages:uncovered,
+              hotspotCount:hotspots.length,
+              passCount:results.length-fail.length,
+              failCount:fail.length,
+              results
+            };
+            fs.writeFileSync('evidence/manual-hotspots/report.json',JSON.stringify(report,null,2));
+            console.log('OPERATIONAL IMAGES',coverage.length,'UNIQUE ASSETS',uniqueAssets.length,'HOTSPOTS',hotspots.length,'PASS',report.passCount,'FAIL',report.failCount);
+            if(uncovered.length)console.error('UNCOVERED',JSON.stringify(uncovered,null,2));
+            if(fail.length)console.error('FAILURES',JSON.stringify(fail.slice(0,20),null,2));
+            await browser.close();
+            if(uncovered.length||fail.length)process.exit(1);
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          node /tmp/manual-hotspot-qa/certify.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: manual-hotspots-physical-certification
+          path: evidence/manual-hotspots
+          retention-days: 3
