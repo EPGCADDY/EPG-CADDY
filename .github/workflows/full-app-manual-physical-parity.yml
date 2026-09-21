@@ -304,7 +304,20 @@ jobs:
             check(count===74,'Manual físico no tiene 74 hojas vigentes: '+count);
             for(let i=0;i<count;i++){
               const el=m.locator('.sheet').nth(i);
-              await el.scrollIntoViewIfNeeded();\n              await el.evaluate(async e=>{const imgs=[...e.querySelectorAll("img")];await Promise.all(imgs.map(img=>img.complete&&img.naturalWidth>0?Promise.resolve():new Promise(resolve=>{const done=()=>resolve();img.addEventListener("load",done,{once:true});img.addEventListener("error",done,{once:true});setTimeout(done,1800)})))});\n              await m.waitForTimeout(40);
+              await el.scrollIntoViewIfNeeded();
+              await el.evaluate(async e=>{
+                const imgs=[...e.querySelectorAll("img")];
+                await Promise.all(imgs.map(img=>img.complete&&img.naturalWidth>0
+                  ? Promise.resolve()
+                  : new Promise(resolve=>{
+                      const done=()=>resolve();
+                      img.addEventListener("load",done,{once:true});
+                      img.addEventListener("error",done,{once:true});
+                      setTimeout(done,1800);
+                    })
+                ));
+              });
+              await m.waitForTimeout(40);
               const metrics=await el.evaluate(e=>({id:e.id,sw:e.scrollWidth,cw:e.clientWidth,sh:e.scrollHeight,ch:e.clientHeight,text:e.innerText.length,imgs:[...e.querySelectorAll('img')].map(x=>({src:x.getAttribute('src'),complete:x.complete,nw:x.naturalWidth,nh:x.naturalHeight}))}));
               check(metrics.sw<=metrics.cw+1,`${metrics.id} desborde horizontal ${metrics.sw}>${metrics.cw}`);
               check(metrics.text>20,`${metrics.id} contenido físico vacío`);
