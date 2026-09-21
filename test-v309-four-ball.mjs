@@ -151,7 +151,7 @@ assert.doesNotMatch(html,/★ MEJOR/,"La Score Card Four Ball no debe mostrar es
 assert.match(html,/function fourBallHoleStanding/);
 assert.match(html,/fourBallStatus\(\)\.closed/);
 assert.match(html,/MEJOR NETO DEL TEAM/);
-assert.match(html,/CONTROL MANUAL · \$\{stable\?"STABLEFORD":isFourBallRound\(\)\?"FOUR BALL"/);
+assert.match(html,/ANOTADOR · \$\{stable\?"STABLEFORD":isFourBallRound\(\)\?"FOUR BALL"/);
 assert.doesNotMatch(html,/cfg\.audio\.input\.transcription/,"Retired dictation must not return");
 assert.match(html,/round\.fourBall=\{\.\.\.state,holes:undefined\}/);
 assert.match(worker,/"\/four-ball\.js"/);
