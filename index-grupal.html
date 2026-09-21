@@ -953,7 +953,13 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 #registrationMissingCorrect{border:1px solid var(--lime);color:var(--lime)}
 #registrationMissingIgnore{border:1px solid #888;color:#fff}
 </style>
-</head>
+<style id="gsc-menu-logo-balance">
+@media(max-width:800px){
+  .official-round-header.topbar{grid-template-columns:minmax(0,1.78fr) minmax(92px,.52fr)!important}
+  .official-round-header .logo{width:100%!important;height:auto!important;max-height:145px!important;object-fit:contain!important;object-position:left center!important}
+  .official-round-header .round-meta.gsc-shortcuts-host{transform:none!important;padding:0!important;align-self:center!important}
+}
+</style></head>
 <body>
 
 <div class="overlay" id="skinsOverlay" aria-hidden="true">
