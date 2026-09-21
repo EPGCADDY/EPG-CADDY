@@ -1,5 +1,13 @@
 # ROADMAP OVERALL
 
+## LAB 20-sep-2026 · gate de QA alineado con perfil actual sin micrófono/AI
+
+- El gate ROADMAP deja de ejecutar bancos V354–V362 de dictado/AI retirados y usa el perfil técnico actual mediante `scripts/build-manual-lab.mjs`.
+- La nueva protección exige ausencia de entradas de micrófono/AI, conserva voz local de resultados, cálculo, persistencia, modalidades, cierre, historial, manual y paridad de pantallas.
+- Se evita que una prueba obsoleta falle por `api/voice-health.js`, módulo retirado del perfil LAB actual.
+- Archivos exactos: `.github/workflows/roadmap-gate.yml`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+
 ## LAB 20-sep-2026 · cambio de modalidad con scores existentes
 
 - Se elimina el bloqueo que impedía cambiar modalidad cuando la ronda ya tenía scores registrados.
