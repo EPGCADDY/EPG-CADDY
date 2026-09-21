@@ -165,18 +165,18 @@
   }
   function renderFavorites(){
     const visible=displayStreams(),streams=favoriteStreams(allTournamentStreams()),target=$("hubFavorites"),resolved=resolveFollows(state,streams,externalStreams);if(!target)return;const rankByPlayer=new Map();for(const tournamentMap of tournamentStreams.values())for(const item of buildLeaderboard(tournamentMap))rankByPlayer.set(item.streamId+":"+item.playerId,item.rank);for(const item of buildLeaderboard(visible))rankByPlayer.set(item.streamId+":"+item.playerId,item.rank);
-    target.innerHTML=resolved.length?resolved.map(item=>favoriteCard(item,rankByPlayer)).join(""):'<div class="empty">EN EL MONITOR GENERAL, BUSCA UN JUGADOR Y TOCA + SEGUIR.</div>';
+    target.innerHTML=resolved.length?resolved.map(item=>favoriteCard(item,rankByPlayer)).join(""):'<div class="empty">EN EL MONITOR DEL TORNEO, BUSCA UN JUGADOR Y TOCA + SEGUIR.</div>';
     target.querySelectorAll("[data-remove]").forEach(button=>button.onclick=()=>{state=removeFollowFromState(state,button.dataset.remove);saveState();renderAll()});
   }
   function renderSummary(){
     const streams=displayStreams(),target=$("hubSummary"),players=tournamentPlayers(streams);if(!target)return;
     if(!state.generalToken&&!demoMode()){target.innerHTML='<div><small>GENERAL</small><strong>NO CONECTADA</strong></div>';return}
     const holes=players.reduce((sum,item)=>sum+item.holes,0),complete=players.filter(item=>item.holes===18).length;
-    target.innerHTML='<div><small>TORNEO</small><strong>'+escapeHtml(general&&general.name||(demoMode()?"DEMOSTRACIÓN":"GENERAL LIVE"))+'</strong></div><div><small>GRUPOS</small><strong>'+streams.size+'</strong></div><div><small>JUGADORES</small><strong>'+players.length+'</strong></div><div><small>FINALIZADOS</small><strong>'+complete+' · '+holes+' HOYOS</strong></div>';
+    target.innerHTML='<div><small>TORNEO</small><strong>'+escapeHtml(general&&general.name||(demoMode()?"DEMOSTRACIÓN":"TORNEO EN VIVO"))+'</strong></div><div><small>GRUPOS</small><strong>'+streams.size+'</strong></div><div><small>JUGADORES</small><strong>'+players.length+'</strong></div><div><small>FINALIZADOS</small><strong>'+complete+' · '+holes+' HOYOS</strong></div>';
   }
   function renderLeaderboard(){
     const wrap=$("hubLeaderWrap");if(!wrap)return;const rows=buildLeaderboard(displayStreams());
-    if(!rows.length){wrap.innerHTML='<div class="empty">'+(state.generalToken?"TODAVÍA NO HAY SCORE CARDS PUBLICADAS.":"ABRE EL ENLACE GENERAL Y TOCA “ABRIR EN CENTRO LIVE”.")+'</div>';return}
+    if(!rows.length){wrap.innerHTML='<div class="empty">'+(state.generalToken?"TODAVÍA NO HAY SCORE CARDS PUBLICADAS.":"ABRE EL TORNEO PARA VER SUS RESULTADOS EN VIVO.")+'</div>';return}
     const followed=new Set(state.follows.map(item=>item.streamId+":"+item.playerId));
     wrap.innerHTML='<table class="leader"><thead><tr><th>POS</th><th>JUGADOR</th><th>CATEGORÍA</th><th>GRUPO</th><th>MODALIDAD</th><th>HOYO ACTUAL</th><th>GROSS</th><th>NETO</th><th>PUNTOS</th><th>+/−</th><th>SEGUIR</th></tr></thead><tbody>'+rows.map(item=>{const key=item.streamId+":"+item.playerId,isFollowed=followed.has(key),progress=item.finished?"FINAL":item.currentHole?String(item.currentHole):"—";return"<tr><td>"+item.rankLabel+"</td><td>"+escapeHtml(item.name)+"</td><td><span class=\"category-chip category-"+escapeHtml(item.tournamentCategory||"none")+"\">"+escapeHtml(categoryShortLabel(item.tournamentCategory))+"</span></td><td>"+escapeHtml(item.groupLabel)+"</td><td>"+escapeHtml(modeLabel(item.mode))+"</td><td>"+progress+"</td><td>"+item.gross+"</td><td>"+item.net+"</td><td>"+(item.mode==="universales"?item.universalesPoints:"—")+"</td><td class=\""+(item.relativeToPar<0?"under":item.relativeToPar>0?"over":"")+"\">"+relation(item.relativeToPar)+"</td><td><button class=\"star\" data-follow-stream=\""+escapeHtml(item.streamId)+"\" data-follow-player=\""+escapeHtml(item.playerId)+"\" aria-label=\"Seguir a "+escapeHtml(item.name)+"\">"+(isFollowed?"★ PERSONA":"＋ PERSONA")+"</button><button class=\"star\" data-follow-group=\""+escapeHtml(item.streamId)+"\" aria-label=\"Seguir grupo "+escapeHtml(item.groupLabel)+"\">＋ GRUPO</button></td></tr>"}).join("")+"</tbody></table>";
     wrap.querySelectorAll("[data-follow-stream]").forEach(button=>button.onclick=()=>{const item=rows.find(row=>row.streamId===button.dataset.followStream&&row.playerId===button.dataset.followPlayer);if(item){state=addFollowToState(state,{key:item.streamId+":"+item.playerId,kind:"player",tournamentToken:state.generalToken,tournamentLabel:general?.name||"TORNEO",streamId:item.streamId,playerId:item.playerId,label:item.name,groupLabel:item.groupLabel});saveState();renderAll();showMonitor("individual");setStatus(item.name+" AGREGADO A MIS FAVORITOS","")}});
@@ -270,7 +270,7 @@
   async function importAccess(access){
     if(!access)return false;
     if(access.kind==="demo"){root.location.href=tournamentHubShareUrl("",root.location.origin,root.location.href,true);return true}
-    if(access.kind==="general"){const saved=upsertTournamentState(state,access.token,"TORNEO CARGANDO…");if(saved.full){setStatus("MÁXIMO 5 TORNEOS GUARDADOS · QUITA UNO PARA AGREGAR OTRO","warning");return false}state=saved.state;saveState();tournamentPortalOpen=false;resetGeneralView();showMonitor("general");setStatus("GENERAL GUARDADA · CARGANDO JUGADORES…","");await refresh();return true}
+    if(access.kind==="general"){const saved=upsertTournamentState(state,access.token,"TORNEO CARGANDO…");if(saved.full){setStatus("MÁXIMO 5 TORNEOS GUARDADOS · QUITA UNO PARA AGREGAR OTRO","warning");return false}state=saved.state;saveState();tournamentPortalOpen=false;resetGeneralView();showMonitor("general");setStatus("TORNEO GUARDADO · CARGANDO RESULTADOS…","");await refresh();return true}
     return importStream(access.token);
   }
   async function importTyped(){
@@ -289,11 +289,11 @@
     if(state.generalToken)result=await loadGeneral();
     await loadFollowTournaments();
     await loadExternal();loading=false;renderAll();
-    if(result&&result.ok)setStatus(state.generalToken?"CENTRO LIVE ACTUALIZADO · MONITOR GENERAL + INDIVIDUAL":"AGREGA LA GENERAL O UN ENLACE PRIVADO","");
+    if(result&&result.ok)setStatus(state.generalToken?"MONITOR DEL TORNEO ACTUALIZADO · RESULTADOS + SEGUIMIENTO":"AGREGA UN TORNEO O PEGA UN ENLACE PRIVADO","");
     else setStatus(errorMessage(result&&result.code),result&&["LIVE_REVOKED","LIVE_EXPIRED","LIVE_LINK_INVALID"].includes(result.code)?"error":"warning");
     clearTimeout(timer);timer=setTimeout(refresh,POLL_MS);
   }
-  async function shareGeneral(){const url=tournamentHubShareUrl(state.generalToken,root.location.origin,root.location.href,demoMode());if(!url){setStatus("ABRE PRIMERO EL ENLACE GENERAL","warning");return false}if(root.navigator.share){try{await root.navigator.share({title:general&&general.name||"TORNEO LIVE",text:"Sigue la General y categorías de este torneo en vivo. Vista sólo lectura.",url:url});setStatus("ENLACE EXCLUSIVO DEL TORNEO LISTO PARA COMPARTIR ♾️","");return true}catch{}}try{await root.navigator.clipboard.writeText(url);setStatus("ENLACE DEL TORNEO COPIADO · NO COMPARTE LA APLICACIÓN","");return true}catch{setStatus("NO SE PUDO COMPARTIR EN ESTE NAVEGADOR","warning");return false}}
+  async function shareGeneral(){const url=tournamentHubShareUrl(state.generalToken,root.location.origin,root.location.href,demoMode());if(!url){setStatus("ABRE PRIMERO EL TORNEO","warning");return false}if(root.navigator.share){try{await root.navigator.share({title:general&&general.name||"TORNEO LIVE",text:"Sigue los resultados y categorías de este torneo en vivo. Vista sólo lectura.",url:url});setStatus("ENLACE EXCLUSIVO DEL TORNEO LISTO PARA COMPARTIR ♾️","");return true}catch{}}try{await root.navigator.clipboard.writeText(url);setStatus("ENLACE DEL TORNEO COPIADO · NO COMPARTE LA APLICACIÓN","");return true}catch{setStatus("NO SE PUDO COMPARTIR EN ESTE NAVEGADOR","warning");return false}}
   function showMonitor(kind){
     const individual=kind==="individual",categories=kind==="categories",add=kind==="add";
     activeMonitor=individual?"individual":"general";
@@ -311,7 +311,7 @@
     if(add){
       $("hubSearch")?.scrollIntoView?.({block:"center",behavior:"smooth"});
       setTimeout(()=>$("hubSearch")?.focus(),150);
-      setStatus("BUSCA UN JUGADOR Y TOCA + SEGUIR PARA AGREGARLO A MIS FAVORITOS","");
+      setStatus("BUSCA UN JUGADOR Y TOCA + SEGUIR PARA AGREGARLO A TU SEGUIMIENTO","");
     }
   }
   function clearHash(){try{root.history.replaceState(null,"",root.location.pathname+root.location.search)}catch{}}
@@ -320,7 +320,7 @@
     $("hubBack").onclick=()=>{const url=new URL("/index-grupal.html",root.location.origin),share=new URL(root.location.href).searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);root.location.assign(url.toString())};$("hubOpenTournament").onclick=openTournamentTyped;$("hubTournamentLink").onkeydown=event=>{if(event.key==="Enter")openTournamentTyped()};
     $("hubShowGeneral").onclick=()=>showMonitor("general");$("hubShowCategories").onclick=()=>showMonitor("categories");$("hubShowIndividual").onclick=()=>showMonitor("add");$("hubAddToBoard").onclick=()=>showMonitor("individual");$("hubShareGeneral").onclick=shareGeneral;$("hubRefresh").onclick=refresh;$("hubPublicDisplay").onclick=openPublicDisplay;$("hubCategory").onchange=renderAll;$("hubCourse").onchange=renderAll;$("hubCategoryCardToggle").onclick=()=>{categoryCardOpen=!categoryCardOpen;renderCategoryCard()};$("hubSearchButton").onclick=renderSearch;$("hubSearch").oninput=renderSearch;$("hubImportButton").onclick=importTyped;$("hubAddTournament").onclick=()=>$("hubTournamentLink")?.focus();$("hubTournamentHome").onclick=showTournamentPortal;
     $("hubRemoveGeneral").onclick=()=>{state=removeTournamentFromState(state,state.generalToken);saveState();resetGeneralView();showTournamentPortal()};
-    $("hubClearFavorites").onclick=()=>{state.follows=[];saveState();externalStreams.clear();renderAll();setStatus("MONITOR INDIVIDUAL VACÍO","warning")};
+    $("hubClearFavorites").onclick=()=>{state.follows=[];saveState();externalStreams.clear();renderAll();setStatus("SEGUIMIENTO VACÍO","warning")};
     root.addEventListener("online",refresh);root.document.addEventListener("visibilitychange",()=>{if(root.document.visibilityState==="visible")refresh()});
     const publicDisplay=params.get("display")==="1";
     renderAll();if(imported)await importAccess(imported);else if(tournamentPortalOpen&&!publicDisplay)setStatus("ELIGE UN TORNEO · PUEDES GUARDAR HASTA 5","");else await refresh();
