@@ -13,6 +13,130 @@
 
 ---
 
+## EMPIEZA AQUÍ — ¿QUÉ QUIERES HACER?
+
+Esta guía parte de una regla simple: **si quieres consultar resultados, no necesitas saber cómo se llena una Score Card.**
+
+Desde la pantalla inicial busca y toca:
+
+# **TORNEOS**
+
+Al tocar **TORNEOS** se abre el **CENTRO DE TORNEOS**.
+
+Ahí aparecen los torneos que ya tengan por lo menos una Score Card conectada y publicando información LIVE, o los torneos que hayas guardado previamente mediante su enlace.
+
+### 1. ENTRAR A UN TORNEO
+
+1. Toca **TORNEOS**.
+2. En **CENTRO DE TORNEOS**, toca el torneo que quieres ver.
+3. Puedes tener guardados varios torneos y cambiar de uno a otro sin borrar los anteriores.
+
+Ejemplo:
+- TORNEO A · EL PULTÉ
+- TORNEO B · COUNTRY CLUB
+- TORNEO C · SAN ISIDRO
+
+Puedes abrir A, después B, después C y regresar a A cuando quieras.
+
+**Al regresar a un torneo, la aplicación vuelve a consultar el LIVE y muestra la información más reciente disponible en ese momento.**
+
+### 2. OPCIONES DENTRO DE CADA TORNEO
+
+Todos los torneos usan exactamente las mismas cuatro opciones:
+
+#### GENERAL
+Muestra la tabla completa de posiciones del torneo.
+
+#### CATEGORÍAS
+Permite escoger y ver por separado:
+- CAMPEONATO — MARCAS NEGRAS
+- A
+- B
+- C
+- D
+- SENIOR
+- SUPER SENIOR
+- FEMENINA
+
+#### BUSCAR POR NOMBRE
+1. Toca **BUSCAR POR NOMBRE**.
+2. Escribe el nombre del jugador.
+3. Puedes consultar a esa persona.
+4. Puedes tocar **+ PERSONA** para agregarla a tu tablero.
+5. También puedes tocar **+ GRUPO** para seguir a todo su grupo.
+
+#### ARMAR MI TABLERO
+Abre **MI TABLERO**, donde aparecen únicamente las personas y grupos que elegiste.
+
+### 3. SEGUIR VARIOS TORNEOS AL MISMO TIEMPO
+
+**MI TABLERO es multi-torneo.**
+
+Puedes, por ejemplo:
+- seguir 2 jugadores del Torneo A;
+- seguir 1 grupo completo del Torneo B;
+- seguir 3 jugadores del Torneo C.
+
+No necesitas permanecer dentro de un torneo para que sus elementos sigan perteneciendo a tu tablero.
+
+El sistema conserva la referencia de cada torneo y actualiza los torneos que tengan personas o grupos seguidos.
+
+### 4. CAMBIAR DE TORNEO SIN PERDER NADA
+
+Ejemplo:
+
+1. Estás viendo **TORNEO A**.
+2. Agregas a Jaime y al GRUPO 07 a **MI TABLERO**.
+3. Regresas a **CENTRO DE TORNEOS**.
+4. Entras a **TORNEO B**.
+5. Agregas a María.
+6. Entras a **TORNEO C**.
+7. Regresas a **MI TABLERO**.
+
+Tu tablero debe conservar:
+- Jaime · Torneo A;
+- Grupo 07 · Torneo A;
+- María · Torneo B.
+
+Si después vuelves al **TORNEO A**, éste se consulta nuevamente y debe aparecer actualizado al momento de regresar.
+
+### 5. FILTRAR POR CLUB O CAMPO
+
+Dentro de un torneo puedes usar **TODOS LOS CLUBES / CAMPOS**.
+
+Si el torneo utiliza más de un club o campo, puedes ver solamente el que te interese.
+
+### 6. PANTALLA PÚBLICA · PROSHOP / RESTAURANTE / TV
+
+1. Entra al torneo.
+2. Abre **MÁS OPCIONES**.
+3. Toca **PANTALLA PÚBLICA**.
+4. Conecta el dispositivo al televisor o monitor por HDMI, AirPlay, Chromecast o navegador directo.
+5. Déjala abierta.
+
+La pantalla:
+- es sólo lectura;
+- recibe información del mismo Centro LIVE;
+- refresca datos cada 3 segundos;
+- cambia de escenario cada 10 segundos;
+- recorre GENERAL y las categorías que tengan jugadores;
+- no modifica ninguna Score Card.
+
+### REGLA OBLIGATORIA DEL MANUAL
+
+Ninguna página puede dejar al usuario adivinando.
+
+Cada pantalla o función debe indicar siempre:
+
+1. **DÓNDE ESTOY**
+2. **QUÉ QUIERO HACER**
+3. **QUÉ BOTÓN TOCO**
+4. **QUÉ DEBE PASAR**
+5. **CÓMO REGRESO O CAMBIO A OTRA OPCIÓN**
+
+Cuando existan varias rutas, el manual debe utilizar números, flechas o llamadas visuales claras.
+
+
 ## 1. Propósito
 
 Este archivo conserva, de la A a la Z, la memoria funcional de GOLF Score Card GT. GRUPAL. Su objetivo es impedir que una decisión aprobada se pierda, que una función nueva contradiga una regla anterior o que la aplicación llegue al mercado con comportamientos incompletos.
@@ -373,9 +497,7 @@ La corrección abre el registro para editar uno o varios jugadores y confirmar u
 - La base central distribuye el paquete por rubros; no usa una bolsa genérica como fuente operativa.
 - WhatsApp y demás contactos siguen siendo datos privados. La API central requiere autenticación y el navegador nunca contiene la contraseña de PostgreSQL.
 - V256 no debe anunciarse como centralmente activa hasta aplicar la migración en Producción y completar una prueba real de ida, lectura y recuperación.
-
 ### 8.7 Torneo V143
-
 **Estado:** registro y archivo local `OPERATIVOS`; visualizador y consulta histórica por voz `PLANIFICADOS`.
 
 - El registro ofrece una opción `TORNEO`.
@@ -873,9 +995,7 @@ Los campos nuevos todavía no aparecen en la interfaz y no habilitan envíos. Su
 - Las tarjetas visuales se almacenan separadamente como archivos privados; la base conserva su metadata, versión y hash.
 - Backups automáticos no sustituyen una prueba periódica de restauración.
 - No se activa sincronización hasta definir autenticación, privacidad, retención y resolución de conflictos.
-
 Reglas inviolables:
-
 - correo y WhatsApp nunca son obligatorios para registrarse ni jugar;
 - la ausencia de datos de contacto no impide crear, jugar, cerrar ni conservar una ronda;
 - ningún canal se considera autorizado por estar escrito en el registro;
@@ -1299,17 +1419,23 @@ La aplicación consulta periódicamente el identificador central de la versión 
 
 Mientras el aviso esté activo no se permite registrar jugadores, abrir la tarjeta oficial o provisional, dictar scores ni utilizar ninguna función. `ACTUALIZAR` conserva primero la ronda local activa, carga la versión publicada con una URL nueva para evitar caché y sólo entonces devuelve el control. La revisión ocurre al iniciar, cada treinta segundos y al volver a primer plano.
 
-## 27. Stableford Scratch — Senior y S. Senior
+## 27. Stableford Scratch — categorías completas
 
 La pantalla general de Registro mantiene una opción permanente correctamente nombrada `STABLEFORD`. Al tocarla abre la modalidad Stableford dentro de la misma tarjeta oficial y la misma arquitectura operacional. General y Stableford conservan datos de ronda separados para impedir contaminación cruzada, pero comparten navegación, control manual, voz, validación, escritura, persistencia, render y cierre.
 
 La apertura normal del alojamiento conserva y restaura la última ronda Stableford activa: campo, torneo, categoría, jugadores, marcas, Gross y Puntos. El botón `NUEVA RONDA` elimina únicamente la ronda activa y el borrador de registro, y presenta un registro Stableford completamente limpio. Nunca borra el historial de tarjetas cerradas ni la clasificación acumulada.
 
+- `CAMPEONATO`: handicap fijo `0`, marcas negras.
+- `A`: handicap fijo `0`, marcas azules.
+- `B`: handicap fijo `0`, marcas blancas.
+- `C`: handicap fijo `0`, marcas blancas.
+- `D`: handicap fijo `0`, marcas blancas.
 - `SENIOR`: handicap fijo `0`, marcas blancas y cinco plazas de clasificación por ranking.
-- `S. SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
-- En una nueva ronda no queda categoría impuesta. El registro muestra simultáneamente `SENIOR · BLANCAS` y `SÚPER SENIOR · AMARILLAS`; la selección configura automáticamente las marcas, los yardajes, Course Rating y Slope correspondientes al campo elegido.
+- `SUPER SENIOR`: handicap fijo `0`, marcas amarillas y cuatro plazas de clasificación por ranking.
+- `FEMENINA`: handicap fijo `0`, marcas rojas.
+- En una nueva ronda no queda categoría impuesta. El registro muestra simultáneamente `CAMPEONATO · NEGRAS`, `A · AZULES`, `B · BLANCAS`, `C · BLANCAS`, `D · BLANCAS`, `SENIOR · BLANCAS`, `SUPER SENIOR · AMARILLAS` y `FEMENINA · ROJAS`; la selección configura automáticamente las marcas, los yardajes, Course Rating y Slope correspondientes al campo elegido.
 - El registro muestra los cuatro campos autorizados —Country Club, El Pulté, San Isidro y Mayan Golf— y exige seleccionar uno antes de iniciar.
-- En ambas categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. El dictado debe conservar la posición: `JUGADOR 1 MIGUEL`; para los siguientes se usa `JUGADOR # + NOMBRE`. Los nombres solos sin posición no se aceptan en esta pantalla. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
+- En todas las categorías se registran de uno a seis nombres dentro del panel de la propia tarjeta oficial, manualmente o mediante el micrófono de registro. El dictado debe conservar la posición: `JUGADOR 1 MIGUEL`; para los siguientes se usa `JUGADOR # + NOMBRE`. Los nombres solos sin posición no se aceptan en esta pantalla. Los espacios no utilizados permanecen vacíos; no se permiten nombres duplicados. Handicap y marcas no se escriben porque la aplicación los configura automáticamente.
 - El mismo panel permite escribir el nombre del torneo antes de iniciar scores. `REGRESAR A DATOS` abre los datos de la ronda actual sin borrar sus scores; `NUEVA RONDA` sí abre un registro completamente limpio.
 - Los únicos campos admitidos por la serie son Country Club, El Pulté, San Isidro y Mayan Golf. Un campo sin tarjeta oficial cargada permanece bloqueado para evitar cálculos con datos heredados o inventados.
 - Cada jugador ocupa dos filas visibles: `GROSS` y `PUNTOS`, con separación visual entre jugadores y totales `OUT`, `IN` y `TOTAL`.
@@ -1324,7 +1450,7 @@ La apertura normal del alojamiento conserva y restaura la última ronda Stablefo
 - La hoja nativa constituye una entrega preparada y confirmada por el usuario. Cancelarla no altera la ronda ni marca la tarjeta como enviada; el envío automático y el estado `ENTREGADO` continúan reservados a proveedores verificables.
 - La clasificación contiene cuatro fechas, una por campo, y suma automáticamente las tres mejores tarjetas de cada jugador.
 - Se pueden incorporar resultados oficiales de otros grupos mediante `AGREGAR RESULTADO OFICIAL`, indicando jugador, categoría, fecha, campo, puntos y Gross opcional.
-- La clasificación Senior muestra las primeras cinco posiciones de ranking; las tres elecciones de capitán se administran fuera del cálculo. S. Senior muestra cuatro posiciones; sus dos elecciones de capitán también son externas.
+- La clasificación Senior muestra las primeras cinco posiciones de ranking; las tres elecciones de capitán se administran fuera del cálculo. SUPER SENIOR muestra cuatro posiciones; sus dos elecciones de capitán también son externas.
 - En V199 el acumulado operativo se conserva localmente en el navegador. Su migración a Neon y consulta multi-dispositivo continúan pendientes y no deben anunciarse como sincronizadas hasta superar la prueba central.
 
 ### Four Ball
@@ -1373,11 +1499,9 @@ La pantalla `Configura la ronda` muestra dos columnas sin cambiar la tarjeta pri
 | 2026-08-26 | Manual 3.75 / App V327 | Rechazada V326-R2 tras aproximadamente seis preguntas físicas: investigación web y tráfico completaban en servidor, pero un cierre tardío sin ID podía apagar el follow-up antes del audio. V327 conserva vigilancia hasta transcripción, protege la transición herramienta→voz, añade guardián de reproducción de 60 s y telemetría técnica sin contenido privado. El banco dirigido cubre 550 secuencias y 100 eventos; aún falta Preview, regresión completa y PASS físico prolongado. |
 | 2026-08-26 | Manual 3.74 / App V326 | Rechazada V325 después de dos silencios reales con micrófono rojo en iPhone. AI UNIVERSAL ∞ cambia de final semántico indefinido a `server_vad` conversacional 0.2/700/2,200 ms; añade guardián de entrada 15 s con límite duro 90 s, guardián de respuesta 30 s y respuesta directa para cálculos estables como consumo eléctrico de A/C. Se prohíbe montaje hasta repetir tráfico El Pulté-Oakland 12:30 PM, consumo A/C y conversación multitema prolongada. |
 | 2026-08-26 | Manual 3.73 / App V325 | Separados los tiempos del micrófono: órdenes y scores conservan VAD operativo de 0.2/700/1,000 ms; AI UNIVERSAL ∞ usa `semantic_vad` con urgencia baja para respetar pausas naturales. La interrupción bilateral conserva guardia de 250 ms, confirmación mínima de ocho caracteres, protección de eco por 1,800 ms, reescucha inmediata y cierre sólo tras 30 minutos sin actividad. Se registra además como trabajo futuro el enlace oficial/autorizado con USGA y Reglas de Golf, la modalidad Skins y soporte Apple Watch/Wear OS. La aprobación comercial sigue pendiente de prueba física prolongada en iPhone. |
-| 2026-08-26 | Manual 3.72 / App V324 | AI UNIVERSAL ∞ incorpora tráfico vehicular real o proyectado mediante Google Maps Routes en modo `TRAFFIC_AWARE_OPTIMAL`: entiende origen, destino y hora por voz o texto, solicita GPS cuando el usuario dice `aquí`, responde ETA, demora, distancia y hora de cálculo sin mostrar mapa ni conservar coordenadas en el historial. No se presenta como Waze. Fallo, timeout o permiso denegado permiten continuar la conversación. La función permanece pendiente de credencial/facturación y de comparación física en Guatemala e iPhone antes de declararse lista para montar. |
-| 2026-08-25 | Manual 3.69 / App V321 | Integrada AI UNIVERSAL ∞ mediante API de modelo avanzado: comunicación por voz y texto sin catálogo temático cerrado, contexto temporal, búsqueda Web para datos cambiantes, fuentes visibles, adaptación de idioma y nivel, separación automática entre órdenes de la tarjeta y consultas generales, y controles ESCUCHAR, DETENER, REPETIR, SILENCIAR y CONTINUAR. Las 200 áreas validadas son pruebas, nunca límites. |
+| 2026-08-26 | Manual 3.72 / App V324 | AI UNIVERSAL ∞ incorpora tráfico vehicular real o proyectado mediante Google Maps Routes en modo `TRAFFIC_AWARE_OPTIMAL`: entiende origen, destino y hora por voz o texto, solicita GPS cuando el usuario dice `aquí`, responde ETA, demora, distancia y hora de cálculo sin mostrar mapa ni conservar coordenadas en el historial. No se presenta como Waze. Fallo, timeout o permiso denegado permiten continuar la conversación. La función permanece pendiente de credencial/facturación y de comparación física en Guatemala e iPhone antes de declararse lista para montar. || 2026-08-25 | Manual 3.69 / App V321 | Integrada AI UNIVERSAL ∞ mediante API de modelo avanzado: comunicación por voz y texto sin catálogo temático cerrado, contexto temporal, búsqueda Web para datos cambiantes, fuentes visibles, adaptación de idioma y nivel, separación automática entre órdenes de la tarjeta y consultas generales, y controles ESCUCHAR, DETENER, REPETIR, SILENCIAR y CONTINUAR. Las 200 áreas validadas son pruebas, nunca límites. |
 | 2026-08-25 | Manual 3.68 / App V315 | El Caddie entiende cualquier frase que no sea una operación válida de tarjeta, incluso situaciones contadas sin pregunta perfecta; conversa sobre cualquier tema, investiga datos actuales mediante búsqueda web y muestra fuentes. La respuesta normal comienza tras aproximadamente un segundo de silencio. Mientras habla puede ser interrumpido por la voz del jugador. Al terminar espera tres segundos y cierra el micrófono si no hay seguimiento; nunca lo abre solo. El pronóstico llega hasta 16 días e incluye intervalos y hora pico de lluvia. |
-| 2026-08-25 | Manual 3.67 / App V314 | El mismo Caddie universal queda disponible en todos los micrófonos visibles, incluida la primera pantalla, sin cambio de modo y siempre bajo apertura manual. La primera pantalla muestra automáticamente la condición meteorológica mediante GPS del teléfono, con respaldo del campo, sin activar el micrófono. Se registran como pendientes separados la Guía Rápida derivada del Manual y el tiempo vehicular sin mapa; este último requiere destino exacto y un servicio de rutas con tráfico, por lo que no se declara operativo. |
-| 2026-08-25 | Manual 3.66 / App V313 | Corregida la continuidad hablada después de consultar clima: la primera respuesta técnica ya no corta el resultado final y el micrófono se pausa mientras habla el Caddie para evitar eco. El Manual agrega la página 73 con ejemplos sencillos de conversación universal y queda en 74 páginas físicas. |
+| 2026-08-25 | Manual 3.67 / App V314 | El mismo Caddie universal queda disponible en todos los micrófonos visibles, incluida la primera pantalla, sin cambio de modo y siempre bajo apertura manual. La primera pantalla muestra automáticamente la condición meteorológica mediante GPS del teléfono, con respaldo del campo, sin activar el micrófono. Se registran como pendientes separados la Guía Rápida derivada del Manual y el tiempo vehicular sin mapa; este último requiere destino exacto y un servicio de rutas con tráfico, por lo que no se declara operativo. || 2026-08-25 | Manual 3.66 / App V313 | Corregida la continuidad hablada después de consultar clima: la primera respuesta técnica ya no corta el resultado final y el micrófono se pausa mientras habla el Caddie para evitar eco. El Manual agrega la página 73 con ejemplos sencillos de conversación universal y queda en 74 páginas físicas. |
 | 2026-08-25 | Manual 3.65 / App V312 | Incorporados el Caddie conversacional de propósito general y el clima vivo por GPS en la tarjeta activa, conservando la escritura de scores separada y la apertura voluntaria del micrófono. |
 | 2026-08-25 | Manual 3.64 / App V311 | Homologados `MATCH PLAY` y `FOUR BALL` para una o dos parejas, con HCP individual, resultados separados y una línea vacía entre parejas cuando participan cuatro jugadores. Match Play mantiene un resultado independiente para jugadores 1–2 y 3–4. Four Ball acumula el mejor Neto con una pareja o compara los mejores Netos con dos. La dicción de primera vuelta, segunda vuelta y total dice `arriba`, `abajo` y `empatado`, nunca `UP`, `DOWN` o `AS`. El nombre Match Play no añade `HDCP`. El enlace público raíz abre directamente `Configura la ronda` mediante `inicio=1` y conserva cualquier ronda activa. |
 | 2026-08-25 | Manual 3.63 / App V310 | Homologado el nombre visible `FOUR BALL` sin el sufijo `2 PAREJAS`. El cambio alcanza selección de modalidad, validación, registro por voz, encabezado de ronda, control manual y tarjeta digital final. La lógica de mejor Neto por pareja y el marcador acumulado permanecen intactos. |
@@ -1417,7 +1541,7 @@ La pantalla `Configura la ronda` muestra dos columnas sin cambiar la tarjeta pri
 | 2026-08-22 | Manual 3.29 / App V252 | Stableford aislado con estado operativo explícito: apertura normal restaura la última ronda; `NUEVA RONDA` limpia solamente ronda activa y borrador, sin tocar historial ni clasificación; registro nuevo sin nombres, campo o categoría forzados; cuatro campos, Senior/blancas, Súper Senior/amarillas y uno a seis jugadores. |
 | 2026-08-22 | Manual 3.28 / App V250 | Fin de ronda Stableford conectado a la matriz oficial GRUPAL: Global, una personal por jugador, paquete conjunto, historial y compartir del archivo visual por correo/WhatsApp mediante la hoja nativa, sin falsos estados de entrega. |
 | 2026-08-22 | Manual 3.27 / App V201 | Stableford oficial limpio: acceso directo sin nombres precargados, registro interno de uno a seis jugadores, torneo/categoría dentro de la tarjeta y snapshot histórico con campo, fecha, torneo, jugadores, Gross y Puntos. |
-| 2026-08-20 | Manual 3.25 / App V199 | Stableford Scratch permanente: Senior HCP 0/marcas blancas y S. Senior HCP 0/marcas amarillas; máximo cuatro jugadores; Gross y puntos por hoyo; X explícita con cero; cuatro campos y fechas; totales por vuelta/ronda; clasificación por las tres mejores tarjetas e ingreso manual de resultados oficiales. |
+| 2026-08-20 | Manual 3.25 / App V199 | Stableford Scratch permanente: Senior HCP 0/marcas blancas y SUPER SENIOR HCP 0/marcas amarillas; máximo cuatro jugadores; Gross y puntos por hoyo; X explícita con cero; cuatro campos y fechas; totales por vuelta/ronda; clasificación por las tres mejores tarjetas e ingreso manual de resultados oficiales. |
 | 2026-08-22 | Manual 3.26 / App V200 | Reconciliación de la versión física Stableford: bloque inferior unificado como `INFORMACIÓN DE RONDA`, verde neón, con primera vuelta, segunda vuelta y total completos en grupal, provisional, Stableford y tarjeta digital. |
 | 2026-08-20 | Manual 3.24 / App V197 | Franja del reloj reorganizada en tres zonas: INICIO a la izquierda, TIMER centrado con superficie táctil real ampliada y cronómetro a la derecha; eliminada completamente la antigua capa invisible y sus interceptores globales para impedir que el micrófono active o desactive el timer. |
 | 2026-08-20 | Manual 3.23 / App V196 | Guatemala Country Club habilitado desde su tarjeta oficial: Par 71, 90 yardajes, cinco ratings/slopes y tres matrices de handicap validados casilla por casilla; selección de campo enlazada al motor de Gross, Neto, vueltas y total sin heredar datos de El Pulté. |
@@ -1485,3 +1609,129 @@ La próxima versión deberá registrar aquí:
 7. número de versión, commit y respaldo.
 
 **Regla final:** si una capacidad no está documentada y probada, no se considera lista para mercado. Toda función aprobada debe actualizar simultáneamente código, Matriz de Funciones, manual del usuario y pruebas de aceptación; si falta cualquiera de esas cuatro evidencias, permanece pendiente.
+
+## 29. LAB · Identidad, inicio de sesión y Menú personales
+
+**Estado:** LAB únicamente. No autorizado para promoción a PRODUCCIÓN.
+
+### 29.1 Identidad
+La aplicación incorpora una identidad permanente por usuario mediante Neon Auth. El identificador técnico `auth_user_id` es la llave obligatoria para separar Score Cards, torneos seguidos, tableros, Pantallas Públicas y Menú personales.
+
+Regla absoluta: ningún tablero o Atajo personal puede mostrarse globalmente a todos los usuarios.
+
+### 29.2 Inicio de sesión
+- Correo + contraseña: operativo en LAB sobre la API existente `/api/account`.
+- Google: proveedor compartido ya configurado en Neon Auth; la activación visual permanece bloqueada hasta cerrar el flujo OAuth first-party y comprobar Safari/iPhone.
+- Apple: previsto como proveedor futuro; no se declara operativo.
+- Invitaciones temporales de 24 horas conservan su flujo de invitado y no crean falsamente una cuenta permanente.
+
+### 29.3 Menú personales
+Nueva API LAB: `/api/shortcuts`.
+
+Tipos:
+- `scorecard`
+- `tournament`
+- `board`
+- `display`
+
+Cada registro pertenece a un único `auth_user_id`. Dos usuarios pueden seguir el mismo torneo o tablero sin compartir preferencias ni borrar los Menú del otro.
+
+### 29.4 Automatización prevista
+1. Al iniciar un Score Card de torneo, se crea o actualiza su Atajo automáticamente.
+2. Al seguir un torneo, aparece únicamente en los Menú de ese usuario.
+3. Al agregar un tablero, aparece únicamente en los Menú de ese usuario.
+4. Al dejar de seguir un tablero o torneo, su Atajo se retira para ese usuario.
+5. Los recursos con `expires_at` vencido se purgan automáticamente.
+6. La regla comercial de torneo terminado + 24 horas se implementará utilizando `expires_at`.
+7. La pantalla Menú debe reconstruirse desde datos vigentes; no es una lista global estática.
+
+### 29.5 Aislamiento técnico de laboratorio
+Se creó la rama Neon `lab-auth-shortcuts-20260919` para probar esquema y Auth sin aplicar cambios a la rama principal. El esquema `user_shortcuts` fue validado allí con dos usuarios distintos utilizando el mismo `resource_key` y conservando datos independientes.
+
+### 29.6 Estado de aceptación
+- Identidad Neon Auth existente: PASS.
+- Google configurado en Neon Auth: PASS de configuración; flujo UI: PENDIENTE.
+- Login correo LAB: IMPLEMENTADO, pendiente de prueba física visual.
+- API de Menú por usuario: IMPLEMENTADA.
+- Esquema Menú en rama Neon LAB: IMPLEMENTADO.
+- PRODUCCIÓN: SIN CAMBIOS.
+
+### 29.7 Menú universales
+
+LAB incorpora un botón permanente **MENÚ** visible tanto desde SCORE CARD como desde TORNEOS. Su objetivo es que el usuario nunca tenga que adivinar cuántas veces debe tocar “Atrás”.
+
+Destinos directos disponibles:
+- MI SCORE CARD
+- CENTRO DE TORNEOS
+- GENERAL
+- CATEGORÍAS
+- BUSCAR JUGADOR
+- MI TABLERO
+- hasta cinco torneos guardados
+- + SEGUIR OTRO TORNEO
+- SALIR DE ESTE TORNEO
+- DEJAR DE SEGUIR MI TABLERO
+
+**Regla de navegación:** VOLVER A MI SCORE CARD navega directamente a /index-grupal.html. Queda prohibido depender de history.back() para esa acción porque el historial del navegador no garantiza volver al Score Card.
+
+Los Menú de navegación no sustituyen la capa de identidad. Los datos personales de torneos/tableros deberán migrar a la API autenticada por auth_user_id antes de declararse sincronización multi-dispositivo completa.
+
+**Estado LAB:** interfaz y navegación implementadas; prueba física visual en navegador/iPhone pendiente.
+
+
+---
+
+## TUTORIAL VISUAL DE TORNEOS · R3
+
+**Estado:** LAB · integrado al Manual de Usuario  
+**Páginas del Manual:** 50–59  
+**Regla terminológica:** usar **MIS FAVORITOS** para jugadores y grupos seguidos; no usar “Mi Tablero” en este capítulo.
+
+### Índice didáctico oficial
+
+1. **Abrir Menú** — desde Score Card al menú directo.
+2. **Ir al Centro de Torneos** — visualizar torneos disponibles.
+3. **Elegir un torneo** — abrir el torneo correcto y sus opciones.
+4. **Ver General** — clasificación general del torneo abierto.
+5. **Buscar categorías y jugadores** — categorías y búsqueda nominal dentro del torneo abierto.
+6. **Abrir Mis Favoritos** — jugadores y grupos seguidos del torneo abierto.
+7. **Gestionar Mis Favoritos** — agregar o dejar de seguir jugadores/grupos.
+8. **Volver a mi Score Card** — regreso directo desde cualquier sección mediante Menú.
+9. **MENÚ siempre contigo** — el acceso universal permanece visible durante Registro, Score Card, Tarjeta Final, Historial, Corrección y Torneos; permite moverse o volver sin encadenar “Atrás”.
+
+### Regla técnica editorial obligatoria
+
+Todas las páginas del capítulo comparten una única plantilla CSS y por tanto no pueden variar individualmente en título, peso o márgenes:
+
+- Fuente UI: Arial / -apple-system / BlinkMacSystemFont / Segoe UI / sans-serif.
+- H1 escritorio: **44 px / peso 700 / line-height 1.06**.
+- H1 móvil: **34 px / peso 700**.
+- Margen lateral editorial: **28 px escritorio / 18 px móvil**.
+- Subtítulo: **18 px** escritorio / **16 px** móvil.
+- Misma alineación superior del H1 en todas las páginas.
+- Misma matriz técnica al pie de cada tutorial.
+- Misma estructura: contexto → pantallas → pasos → matriz → pie editorial.
+
+### Matriz de revisión visible
+
+Cada tutorial muestra:
+
+- H1 uniforme — PASS.
+- Fuente UI única — PASS.
+- Márgenes verificados — PASS.
+- Jerarquía tipográfica — PASS.
+- Alineación de pantallas — PASS.
+- Plantilla común R2 — PASS.
+- **REVISADO 100% · PLANTILLA ÚNICA**.
+
+### Regla funcional de contexto de torneo
+
+GENERAL, CATEGORÍAS, BUSCAR JUGADOR y MIS FAVORITOS pertenecen al torneo abierto en ese momento. Para consultar esas funciones en otro torneo, primero debe abrirse ese otro torneo.
+
+### Regla de ida y vuelta
+
+MENÚ es el menú directo universal. El usuario no debe depender de repetir “Atrás” para volver a su Score Card o cambiar a otra función.
+
+### Regla visual R3 · MENÚ en todas las guías
+
+Todas las pantallas representadas en el set visual de Torneos deben mostrar el launcher MENÚ con el **logo horizontal original de Golf Score Card GT** y la palabra **MENÚ** debajo. La guía debe enseñar explícitamente que este acceso permanece disponible durante todo el recorrido y funciona como comodín de navegación.

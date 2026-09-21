@@ -1,19 +1,21 @@
 (function(root,factory){const api=factory(root);if(typeof module==="object"&&module.exports)module.exports=api;if(root&&root.document)api.start()})(typeof globalThis!=="undefined"?globalThis:this,function(root){
   "use strict";
 
-  const STORAGE_KEY="golf-score-card-gt-live-hub-v1",POLL_MS=3000,MAX_SAVED_TOURNAMENTS=5,TOKEN_PATTERN=/^[A-Za-z0-9_-]{40,100}$/;
-  let state={version:2,generalToken:"",tournaments:[],follows:[]},general=null,generalRevision=null,generalStreams=new Map(),externalStreams=new Map(),pendingImportToken="",timer=null,loading=false,categoryCardOpen=false,tournamentPortalOpen=false,activeMonitor="general";
+  const STORAGE_KEY="golf-score-card-gt-live-hub-v1",POLL_MS=3000,DISPLAY_MS=10000,MAX_SAVED_TOURNAMENTS=5,TOKEN_PATTERN=/^[A-Za-z0-9_-]{40,100}$/;
+  let state={version:2,generalToken:"",tournaments:[],follows:[]},general=null,generalRevision=null,generalStreams=new Map(),tournamentStreams=new Map(),externalStreams=new Map(),pendingImportToken="",timer=null,loading=false,categoryCardOpen=false,tournamentPortalOpen=false,activeMonitor="general",displayTimer=null,displayCountdownTimer=null,displaySceneIndex=0;
   const $=id=>root&&root.document?root.document.getElementById(id):null;
   const text=(value,max=120)=>String(value==null?"":value).trim().replace(/\s+/g," ").slice(0,max);
   const escapeHtml=value=>String(value==null?"":value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
   const fold=value=>text(value,160).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase();
   const relation=value=>{const number=Number(value);return Number.isFinite(number)?number===0?"E":number>0?"+"+number:String(number):"—"};
   const tokenOk=value=>TOKEN_PATTERN.test(String(value||""));
-  const CATEGORY_LABELS={championship:"CAMPEONATO",a:"A",b:"B",c:"C",d:"D",female:"FEMENINA",senior:"SENIOR",super_senior:"S.SENIOR"};
+  const CATEGORY_LABELS={championship:"CAMPEONATO",a:"A",b:"B",c:"C",d:"D",senior:"SENIOR",super_senior:"SUPER SENIOR",female:"FEMENINA"};
   const CATEGORY_DEFAULT_TEES={championship:"NEGRAS",a:"AZULES",b:"BLANCAS",c:"BLANCAS",d:"BLANCAS",female:"ROJAS",senior:"BLANCAS",super_senior:"AMARILLAS"};
   const DEMO_DISTRIBUTION={championship:7,a:6,b:24,c:11,d:0,female:7,senior:7,super_senior:5};
   const demoMode=()=>root&&root.location&&new URLSearchParams(root.location.search||"").get("demo")==="1";
   const selectedCategory=()=>{const value=String($("hubCategory")?.value||"all");return CATEGORY_LABELS[value]?value:"all"};
+  const selectedCourse=()=>String($("hubCourse")?.value||"all");
+  const courseKey=value=>fold(value||"CAMPO");
   const categoryLabel=value=>CATEGORY_LABELS[String(value||"")]||"SIN CATEGORÍA";
   const categoryShortLabel=value=>String(value||"")==="championship"?"C":categoryLabel(value);
 
@@ -36,10 +38,11 @@
   function generalShareUrl(token){if(!tokenOk(token))return"";const url=new URL("/live.html",root.location.origin),share=new URL(root.location.href).searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);url.hash="tournament="+encodeURIComponent(token);return url.toString()}
   function tournamentHubShareUrl(token,origin,href,demo=false){const url=new URL("/live-hub.html",origin),share=new URL(href||origin).searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);url.searchParams.set("shared","1");if(demo)url.searchParams.set("demo","1");else{if(!tokenOk(token))return"";url.hash="general="+encodeURIComponent(token)}return url.toString()}
   function tournamentHubOpenUrl(token,origin,href,demo=false){const url=new URL(tournamentHubShareUrl(token,origin,href,demo));url.searchParams.delete("shared");return url.toString()}
+  function tournamentDisplayUrl(token,origin,href,demo=false){const url=new URL(tournamentHubShareUrl(token,origin,href,demo));url.searchParams.set("display","1");return url.toString()}
   function normalizeFollow(value){
-    const token=tokenOk(value&&value.token)?String(value.token):"",streamId=text(value&&value.streamId,80),playerId=text(value&&value.playerId,80),kind=value&&value.kind==="group"?"group":"player";
+    const token=tokenOk(value&&value.token)?String(value.token):"",tournamentToken=tokenOk(value&&value.tournamentToken)?String(value.tournamentToken):"",streamId=text(value&&value.streamId,80),playerId=text(value&&value.playerId,80),kind=value&&value.kind==="group"?"group":"player";
     if(!streamId&&!token)return null;
-    return{key:text(value&&value.key,180)||streamId+":"+(playerId||"group"),kind,token,streamId,playerId,label:text(value&&value.label,80)||"JUGADOR",groupLabel:text(value&&value.groupLabel,120)||"GRUPO"};
+    return{key:text(value&&value.key,180)||streamId+":"+(playerId||"group"),kind,token,tournamentToken,tournamentLabel:text(value&&value.tournamentLabel,80)||"",streamId,playerId,label:text(value&&value.label,80)||"JUGADOR",groupLabel:text(value&&value.groupLabel,120)||"GRUPO"};
   }
   function normalizeHubState(value){
     const follows=[],keys=new Set();
@@ -80,14 +83,17 @@
   function displayStreams(){return generalStreams.size||!demoMode()?generalStreams:demoTournamentStreams()}
   function favoriteStreams(streams){const combined=demoTournamentStreams();for(const [id,stream] of generalStreamMap(streams))combined.set(id,stream);return combined}
   function categoryIndex(streams){const index={};for(const item of tournamentPlayers(streams)){const key=item.tournamentCategory||"uncategorized";(index[key]||(index[key]=[])).push(item)}return index}
-  function visibleTournamentPlayers(streams){const category=selectedCategory();return tournamentPlayers(streams).filter(item=>category==="all"||item.tournamentCategory===category)}
+  function visibleTournamentPlayers(streams){
+    const category=selectedCategory(),course=selectedCourse();
+    return tournamentPlayers(streams).filter(item=>(category==="all"||item.tournamentCategory===category)&&(course==="all"||courseKey(item.course)===course));
+  }
   function buildLeaderboard(streams){
     const players=visibleTournamentPlayers(streams).sort((left,right)=>left.mode==="universales"&&right.mode==="universales"?right.universalesPoints-left.universalesPoints||right.holes-left.holes||fold(left.name).localeCompare(fold(right.name)):left.relativeToPar-right.relativeToPar||right.holes-left.holes||fold(left.name).localeCompare(fold(right.name)));
     const tieCounts=new Map();for(const item of players){const value=item.mode==="universales"?item.universalesPoints:item.relativeToPar,key=item.mode+":"+value+":"+item.holes;tieCounts.set(key,(tieCounts.get(key)||0)+1)}
     let previous=null,rank=0;return players.map((item,index)=>{const value=item.mode==="universales"?item.universalesPoints:item.relativeToPar,key=item.mode+":"+value+":"+item.holes;if(previous===null||key!==previous)rank=index+1;previous=key;return{...item,rank,rankLabel:(tieCounts.get(key)||0)>1?`T${rank}`:String(rank)}})
   }
   function categoryScoreboardRows(streams,category="all"){
-    const selected=CATEGORY_LABELS[category]?category:"all",players=tournamentPlayers(streams).filter(item=>selected==="all"||item.tournamentCategory===selected);
+    const selected=CATEGORY_LABELS[category]?category:"all",course=selectedCourse(),players=tournamentPlayers(streams).filter(item=>(selected==="all"||item.tournamentCategory===selected)&&(course==="all"||courseKey(item.course)===course));
     return players.sort((left,right)=>left.relativeToPar-right.relativeToPar||right.holes-left.holes||fold(left.name).localeCompare(fold(right.name))).map(item=>{
       const holes=new Map(uniquePlayerHoles(item.player).map(hole=>[Number(hole.hole),hole]));
       const segment=numbers=>numbers.reduce((sum,hole)=>{const value=holes.get(hole);if(!value||value.explicitX)return sum;const gross=Number(value.gross),net=Number(value.net),par=Number(value.par);if(Number.isFinite(gross))sum.gross+=gross;if(Number.isFinite(net))sum.net+=net;if(Number.isFinite(net)&&Number.isFinite(par))sum.result+=net-par;sum.holes+=1;return sum},{gross:0,net:0,result:0,holes:0});
@@ -122,7 +128,25 @@
     for(const stream of result.streams||[])next.set(stream.id,stream);
     let cursor=result.nextCursor||null;const seenCursors=new Set();
     while(cursor&&!seenCursors.has(cursor)){seenCursors.add(cursor);result=await read("tournament",state.generalToken,{cursor:cursor,limit:50});if(!result.ok)break;for(const stream of result.streams||[])next.set(stream.id,stream);cursor=result.nextCursor||null}
-    if(next.size||!result.unchanged)generalStreams=next;if(general&&state.generalToken){const saved=upsertTournamentState(state,state.generalToken,general.name||"TORNEO LIVE");state=saved.state;saveState()}return result;
+    if(next.size||!result.unchanged){generalStreams=next;tournamentStreams.set(state.generalToken,new Map(next))}if(general&&state.generalToken){const saved=upsertTournamentState(state,state.generalToken,general.name||"TORNEO LIVE");state=saved.state;saveState()}return result;
+  }
+  async function readTournamentStreams(token){
+    if(!tokenOk(token))return null;
+    let result=await read("tournament",token,{limit:50});if(!result.ok)return null;
+    const next=new Map();for(const stream of result.streams||[])next.set(stream.id,stream);
+    let cursor=result.nextCursor||null,guard=new Set();
+    while(cursor&&!guard.has(cursor)){guard.add(cursor);result=await read("tournament",token,{cursor,limit:50});if(!result.ok)break;for(const stream of result.streams||[])next.set(stream.id,stream);cursor=result.nextCursor||null}
+    return next;
+  }
+  async function loadFollowTournaments(){
+    const tokens=[...new Set(normalizeHubState(state).follows.map(item=>item.tournamentToken).filter(token=>tokenOk(token)&&token!==state.generalToken))];
+    await Promise.all(tokens.map(async token=>{const streams=await readTournamentStreams(token);if(streams)tournamentStreams.set(token,streams)}));
+  }
+  function allTournamentStreams(){
+    const combined=new Map();
+    for(const streams of tournamentStreams.values())for(const [id,stream] of streams)combined.set(id,stream);
+    for(const [id,stream] of generalStreams)combined.set(id,stream);
+    return combined;
   }
   async function loadExternal(){
     const tokens=unresolvedFollowTokens(state,generalStreams);
@@ -140,7 +164,7 @@
     return resolved.players.map(player=>{const totals=livePlayerTotals(player),rank=rankByPlayer.get(resolved.stream.id+":"+player.id)||"—";return'<article class="favorite"><header class="favorite-head"><div><h3>#'+escapeHtml(rank)+' · '+escapeHtml(player.name)+'</h3><small>'+escapeHtml(resolved.stream.groupLabel||snapshot.groupLabel)+' · '+escapeHtml(snapshot.course||"CAMPO")+'</small></div><button class="remove" data-remove="'+escapeHtml(resolved.item.key)+'">×</button></header><div class="favorite-body"><div class="favorite-totals"><div><small>HOYO ACTUAL</small><b>'+(totals.finished?'FINAL':escapeHtml(totals.currentHole||'—'))+'</b></div><div><small>GROSS</small><b>'+escapeHtml(totals.gross)+'</b></div><div><small>NETO</small><b>'+escapeHtml(totals.net)+'</b></div><div><small>+/−</small><b class="'+(totals.relativeToPar<0?"under":totals.relativeToPar>0?"over":"")+'">'+relation(totals.relativeToPar)+'</b></div></div>'+scoreRows(player,snapshot)+'</div></article>'}).join("");
   }
   function renderFavorites(){
-    const visible=displayStreams(),streams=favoriteStreams(visible),target=$("hubFavorites"),resolved=resolveFollows(state,streams,externalStreams);if(!target)return;const rankByPlayer=new Map([...buildLeaderboard(demoTournamentStreams()),...buildLeaderboard(visible)].map(item=>[item.streamId+":"+item.playerId,item.rank]));
+    const visible=displayStreams(),streams=favoriteStreams(allTournamentStreams()),target=$("hubFavorites"),resolved=resolveFollows(state,streams,externalStreams);if(!target)return;const rankByPlayer=new Map();for(const tournamentMap of tournamentStreams.values())for(const item of buildLeaderboard(tournamentMap))rankByPlayer.set(item.streamId+":"+item.playerId,item.rank);for(const item of buildLeaderboard(visible))rankByPlayer.set(item.streamId+":"+item.playerId,item.rank);
     target.innerHTML=resolved.length?resolved.map(item=>favoriteCard(item,rankByPlayer)).join(""):'<div class="empty">EN EL MONITOR GENERAL, BUSCA UN JUGADOR Y TOCA + SEGUIR.</div>';
     target.querySelectorAll("[data-remove]").forEach(button=>button.onclick=()=>{state=removeFollowFromState(state,button.dataset.remove);saveState();renderAll()});
   }
@@ -154,8 +178,9 @@
     const wrap=$("hubLeaderWrap");if(!wrap)return;const rows=buildLeaderboard(displayStreams());
     if(!rows.length){wrap.innerHTML='<div class="empty">'+(state.generalToken?"TODAVÍA NO HAY SCORE CARDS PUBLICADAS.":"ABRE EL ENLACE GENERAL Y TOCA “ABRIR EN CENTRO LIVE”.")+'</div>';return}
     const followed=new Set(state.follows.map(item=>item.streamId+":"+item.playerId));
-    wrap.innerHTML='<table class="leader"><thead><tr><th>POS</th><th>JUGADOR</th><th>CATEGORÍA</th><th>GRUPO</th><th>MODALIDAD</th><th>HOYO ACTUAL</th><th>GROSS</th><th>NETO</th><th>PUNTOS</th><th>+/−</th><th>SEGUIR</th></tr></thead><tbody>'+rows.map(item=>{const key=item.streamId+":"+item.playerId,isFollowed=followed.has(key),progress=item.finished?"FINAL":item.currentHole?String(item.currentHole):"—";return"<tr><td>"+item.rankLabel+"</td><td>"+escapeHtml(item.name)+"</td><td><span class=\"category-chip category-"+escapeHtml(item.tournamentCategory||"none")+"\">"+escapeHtml(categoryShortLabel(item.tournamentCategory))+"</span></td><td>"+escapeHtml(item.groupLabel)+"</td><td>"+escapeHtml(modeLabel(item.mode))+"</td><td>"+progress+"</td><td>"+item.gross+"</td><td>"+item.net+"</td><td>"+(item.mode==="universales"?item.universalesPoints:"—")+"</td><td class=\""+(item.relativeToPar<0?"under":item.relativeToPar>0?"over":"")+"\">"+relation(item.relativeToPar)+"</td><td><button class=\"star\" data-follow-stream=\""+escapeHtml(item.streamId)+"\" data-follow-player=\""+escapeHtml(item.playerId)+"\" aria-label=\"Seguir a "+escapeHtml(item.name)+"\">"+(isFollowed?"★":"＋")+"</button></td></tr>"}).join("")+"</tbody></table>";
-    wrap.querySelectorAll("[data-follow-stream]").forEach(button=>button.onclick=()=>{const item=rows.find(row=>row.streamId===button.dataset.followStream&&row.playerId===button.dataset.followPlayer);if(item){state=addFollowToState(state,{key:item.streamId+":"+item.playerId,kind:"player",streamId:item.streamId,playerId:item.playerId,label:item.name,groupLabel:item.groupLabel});saveState();renderAll();showMonitor("individual");setStatus(item.name+" ABIERTO EN MONITOR INDIVIDUAL","")}});
+    wrap.innerHTML='<table class="leader"><thead><tr><th>POS</th><th>JUGADOR</th><th>CATEGORÍA</th><th>GRUPO</th><th>MODALIDAD</th><th>HOYO ACTUAL</th><th>GROSS</th><th>NETO</th><th>PUNTOS</th><th>+/−</th><th>SEGUIR</th></tr></thead><tbody>'+rows.map(item=>{const key=item.streamId+":"+item.playerId,isFollowed=followed.has(key),progress=item.finished?"FINAL":item.currentHole?String(item.currentHole):"—";return"<tr><td>"+item.rankLabel+"</td><td>"+escapeHtml(item.name)+"</td><td><span class=\"category-chip category-"+escapeHtml(item.tournamentCategory||"none")+"\">"+escapeHtml(categoryShortLabel(item.tournamentCategory))+"</span></td><td>"+escapeHtml(item.groupLabel)+"</td><td>"+escapeHtml(modeLabel(item.mode))+"</td><td>"+progress+"</td><td>"+item.gross+"</td><td>"+item.net+"</td><td>"+(item.mode==="universales"?item.universalesPoints:"—")+"</td><td class=\""+(item.relativeToPar<0?"under":item.relativeToPar>0?"over":"")+"\">"+relation(item.relativeToPar)+"</td><td><button class=\"star\" data-follow-stream=\""+escapeHtml(item.streamId)+"\" data-follow-player=\""+escapeHtml(item.playerId)+"\" aria-label=\"Seguir a "+escapeHtml(item.name)+"\">"+(isFollowed?"★ PERSONA":"＋ PERSONA")+"</button><button class=\"star\" data-follow-group=\""+escapeHtml(item.streamId)+"\" aria-label=\"Seguir grupo "+escapeHtml(item.groupLabel)+"\">＋ GRUPO</button></td></tr>"}).join("")+"</tbody></table>";
+    wrap.querySelectorAll("[data-follow-stream]").forEach(button=>button.onclick=()=>{const item=rows.find(row=>row.streamId===button.dataset.followStream&&row.playerId===button.dataset.followPlayer);if(item){state=addFollowToState(state,{key:item.streamId+":"+item.playerId,kind:"player",tournamentToken:state.generalToken,tournamentLabel:general?.name||"TORNEO",streamId:item.streamId,playerId:item.playerId,label:item.name,groupLabel:item.groupLabel});saveState();renderAll();showMonitor("individual");setStatus(item.name+" AGREGADO A MIS FAVORITOS","")}});
+    wrap.querySelectorAll("[data-follow-group]").forEach(button=>button.onclick=()=>{const item=rows.find(row=>row.streamId===button.dataset.followGroup);if(item){state=addFollowToState(state,{key:item.streamId+":group",kind:"group",tournamentToken:state.generalToken,tournamentLabel:general?.name||"TORNEO",streamId:item.streamId,playerId:"",label:item.groupLabel,groupLabel:item.groupLabel});saveState();renderAll();showMonitor("individual");setStatus(item.groupLabel+" AGREGADO A MIS FAVORITOS","")}});
   }
   function categoryCell(value){return value?'<span><b>'+escapeHtml(value.gross)+'</b><i>'+escapeHtml(value.net)+'</i><em>'+escapeHtml(value.result)+'</em></span>':'<span class="pending">—</span>'}
   function totalCell(value){return categoryCell(value&&value.holes?{gross:value.gross,net:value.net,result:relation(value.result)}:null)}
@@ -175,18 +200,60 @@
     const target=$("hubSearchResults"),query=fold($("hubSearch")&&$("hubSearch").value);if(!target)return;
     if(!query){target.innerHTML="";return}
     const matches=tournamentPlayers(displayStreams()).filter(item=>fold(item.name).includes(query)||fold(item.groupLabel).includes(query)||fold(item.categoryLabel).includes(query)).sort((left,right)=>fold(left.name).localeCompare(fold(right.name),"es")).slice(0,100);
-    target.innerHTML=matches.length?matches.map(item=>'<div class="search-row"><div><strong>'+escapeHtml(item.name)+'</strong><small><span class="category-chip category-'+escapeHtml(item.tournamentCategory||"none")+'">'+escapeHtml(categoryShortLabel(item.tournamentCategory))+'</span> · '+escapeHtml(item.groupLabel)+' · '+item.holes+'/18 HOYOS · NETO '+item.net+'</small></div><button class="follow-button" data-search-stream="'+escapeHtml(item.streamId)+'" data-search-player="'+escapeHtml(item.playerId)+'">+ SEGUIR</button></div>').join(""):'<div class="empty">NO ENCONTRÉ ESE NOMBRE EN LA GENERAL.</div>';
-    target.querySelectorAll("[data-search-stream]").forEach(button=>button.onclick=()=>{const item=matches.find(row=>row.streamId===button.dataset.searchStream&&row.playerId===button.dataset.searchPlayer);if(item){state=addFollowToState(state,{key:item.streamId+":"+item.playerId,kind:"player",streamId:item.streamId,playerId:item.playerId,label:item.name,groupLabel:item.groupLabel});saveState();$("hubSearch").value="";renderAll();showMonitor("individual");setStatus(item.name+" ABIERTO EN MONITOR INDIVIDUAL","")}});
+    target.innerHTML=matches.length?matches.map(item=>'<div class="search-row"><div><strong>'+escapeHtml(item.name)+'</strong><small><span class="category-chip category-'+escapeHtml(item.tournamentCategory||"none")+'">'+escapeHtml(categoryShortLabel(item.tournamentCategory))+'</span> · '+escapeHtml(item.groupLabel)+' · '+item.holes+'/18 HOYOS · NETO '+item.net+'</small></div><div><button class="follow-button" data-search-stream="'+escapeHtml(item.streamId)+'" data-search-player="'+escapeHtml(item.playerId)+'">+ PERSONA</button><button class="follow-button" data-search-group="'+escapeHtml(item.streamId)+'">+ GRUPO</button></div></div>').join(""):'<div class="empty">NO ENCONTRÉ ESE NOMBRE EN LA GENERAL.</div>';
+    target.querySelectorAll("[data-search-stream]").forEach(button=>button.onclick=()=>{const item=matches.find(row=>row.streamId===button.dataset.searchStream&&row.playerId===button.dataset.searchPlayer);if(item){state=addFollowToState(state,{key:item.streamId+":"+item.playerId,kind:"player",tournamentToken:state.generalToken,tournamentLabel:general?.name||"TORNEO",streamId:item.streamId,playerId:item.playerId,label:item.name,groupLabel:item.groupLabel});saveState();$("hubSearch").value="";renderAll();showMonitor("individual");setStatus(item.name+" AGREGADO A MIS FAVORITOS","")}});
+    target.querySelectorAll("[data-search-group]").forEach(button=>button.onclick=()=>{const item=matches.find(row=>row.streamId===button.dataset.searchGroup);if(item){state=addFollowToState(state,{key:item.streamId+":group",kind:"group",tournamentToken:state.generalToken,tournamentLabel:general?.name||"TORNEO",streamId:item.streamId,playerId:"",label:item.groupLabel,groupLabel:item.groupLabel});saveState();$("hubSearch").value="";renderAll();showMonitor("individual");setStatus(item.groupLabel+" AGREGADO A MIS FAVORITOS","")}});
+  }
+  function displayScenes(){
+    const available=categoryIndex(displayStreams()),categories=Object.keys(CATEGORY_LABELS).filter(key=>(available[key]||[]).length);
+    return["all",...categories];
+  }
+  function applyDisplayScene(){
+    if(!root.document.body.classList.contains("public-display"))return;
+    const scenes=displayScenes(),scene=scenes[displaySceneIndex%Math.max(1,scenes.length)]||"all",category=$("hubCategory");
+    if(category)category.value=scene;
+    const isGeneral=scene==="all";
+    root.document.body.classList.toggle("display-general",isGeneral);
+    root.document.body.classList.toggle("display-category",!isGeneral);
+    categoryCardOpen=!isGeneral;
+    renderSummary();renderLeaderboard();renderCategoryCard();
+    const label=isGeneral?"GENERAL":categoryLabel(scene),target=$("publicDisplayScene");
+    if(target)target.textContent=label;
+  }
+  function scheduleDisplayRotation(){
+    if(!root.document.body.classList.contains("public-display"))return;
+    clearTimeout(displayTimer);clearInterval(displayCountdownTimer);
+    let remaining=DISPLAY_MS/1000;const countdown=$("publicDisplayCountdown");if(countdown)countdown.textContent=String(remaining);
+    displayCountdownTimer=setInterval(()=>{remaining=Math.max(0,remaining-1);if(countdown)countdown.textContent=String(remaining)},1000);
+    displayTimer=setTimeout(()=>{const scenes=displayScenes();displaySceneIndex=(displaySceneIndex+1)%Math.max(1,scenes.length);applyDisplayScene();scheduleDisplayRotation()},DISPLAY_MS);
+  }
+  function openPublicDisplay(){
+    const url=tournamentDisplayUrl(state.generalToken,root.location.origin,root.location.href,demoMode());
+    if(!url){setStatus("ABRE PRIMERO UN TORNEO","warning");return false}
+    root.open(url,"_blank","noopener,noreferrer");return true;
+  }
+  function activatePublicDisplay(){
+    root.document.body.classList.add("public-display","display-general");
+    tournamentPortalOpen=false;activeMonitor="general";categoryCardOpen=false;displaySceneIndex=0;
+    applyDisplayScene();scheduleDisplayRotation();
+    return true;
+  }
+
+  function renderCourseFilter(){
+    const select=$("hubCourse");if(!select)return;
+    const current=selectedCourse(),courses=[...new Set(tournamentPlayers(displayStreams()).map(item=>text(item.course,120)).filter(Boolean))].sort((a,b)=>fold(a).localeCompare(fold(b),"es"));
+    select.innerHTML='<option value="all">TODOS LOS CLUBES / CAMPOS</option>'+courses.map(course=>'<option value="'+escapeHtml(courseKey(course))+'">'+escapeHtml(course)+'</option>').join("");
+    select.value=courses.some(course=>courseKey(course)===current)?current:"all";
   }
   function renderTournamentShelf(){const shelf=$("hubTournamentShelf"),cards=$("hubTournamentCards"),shared=new URLSearchParams(root.location.search||"").get("shared")==="1";if(!shelf||!cards)return;const portal=tournamentPortalOpen&&!shared,items=[{token:"__demo__",label:"TORNEO DEMOSTRACIÓN",demo:true},...state.tournaments];shelf.classList.toggle("hidden",!portal);cards.innerHTML=items.map(item=>'<button class="tournament-card" type="button" data-tournament="'+escapeHtml(item.token)+'">'+escapeHtml(item.label)+'<small>'+(item.demo?'67 JUGADORES SIMULADOS':'GENERAL Y CATEGORÍAS LIVE')+'</small></button>').join("");cards.querySelectorAll("[data-tournament]").forEach(button=>button.onclick=()=>button.dataset.tournament==="__demo__"?root.location.assign(tournamentHubOpenUrl("",root.location.origin,root.location.href,true)):selectSavedTournament(button.dataset.tournament));$("hubTournamentEntry")?.classList.toggle("hidden",!portal);$("hubTournamentHome")?.classList.toggle("hidden",portal||shared);$("hubGeneralPanel")?.classList.toggle("hidden",portal||activeMonitor==="individual");$("hubIndividualPanel")?.classList.toggle("hidden",portal||activeMonitor!=="individual");root.document.querySelector(".monitor-switch")?.classList.toggle("hidden",portal)}
   function resetGeneralView(){general=null;generalRevision=null;generalStreams.clear();categoryCardOpen=false;$("hubCategory")&&( $("hubCategory").value="all");$("hubSearch")&&( $("hubSearch").value="")}
   async function selectSavedTournament(token){if(!tokenOk(token))return false;state.generalToken=token;saveState();tournamentPortalOpen=false;resetGeneralView();showMonitor("general");setStatus("ABRIENDO TORNEO…","");await refresh();return true}
   function showTournamentPortal(){tournamentPortalOpen=true;clearTimeout(timer);renderAll();setStatus("ELIGE UNO DE TUS TORNEOS O AGREGA OTRO","")}
-  function renderAll(){renderTournamentShelf();renderSummary();renderLeaderboard();renderCategoryCard();renderSearch();renderFavorites()}
+  function renderAll(){renderTournamentShelf();renderCourseFilter();renderSummary();renderLeaderboard();renderCategoryCard();renderSearch();renderFavorites()}
 
   function addImported(stream,player){
     const item=player?{key:stream.id+":"+player.id,kind:"player",token:pendingImportToken,streamId:stream.id,playerId:player.id,label:player.name,groupLabel:stream.groupLabel}:{key:stream.id+":group",kind:"group",token:pendingImportToken,streamId:stream.id,playerId:"",label:stream.groupLabel,groupLabel:stream.groupLabel};
-    state=addFollowToState(state,item);saveState();pendingImportToken="";$("hubPicker").classList.remove("visible");renderAll();showMonitor("individual");setStatus((player?player.name:stream.groupLabel)+" ABIERTO EN MONITOR INDIVIDUAL","");
+    state=addFollowToState(state,item);saveState();pendingImportToken="";$("hubPicker").classList.remove("visible");renderAll();showMonitor("individual");setStatus((player?player.name:stream.groupLabel)+" AGREGADO A MIS FAVORITOS","");
   }
   function showPicker(stream,token){
     pendingImportToken=token;externalStreams.set(token,stream);const players=stream.snapshot&&stream.snapshot.players||[],picker=$("hubPicker"),grid=$("hubPickerGrid");if(!picker||!grid)return;
@@ -220,23 +287,46 @@
   async function refresh(){
     if(loading||tournamentPortalOpen)return;loading=true;let result={ok:true};
     if(state.generalToken)result=await loadGeneral();
+    await loadFollowTournaments();
     await loadExternal();loading=false;renderAll();
     if(result&&result.ok)setStatus(state.generalToken?"CENTRO LIVE ACTUALIZADO · MONITOR GENERAL + INDIVIDUAL":"AGREGA LA GENERAL O UN ENLACE PRIVADO","");
     else setStatus(errorMessage(result&&result.code),result&&["LIVE_REVOKED","LIVE_EXPIRED","LIVE_LINK_INVALID"].includes(result.code)?"error":"warning");
     clearTimeout(timer);timer=setTimeout(refresh,POLL_MS);
   }
   async function shareGeneral(){const url=tournamentHubShareUrl(state.generalToken,root.location.origin,root.location.href,demoMode());if(!url){setStatus("ABRE PRIMERO EL ENLACE GENERAL","warning");return false}if(root.navigator.share){try{await root.navigator.share({title:general&&general.name||"TORNEO LIVE",text:"Sigue la General y categorías de este torneo en vivo. Vista sólo lectura.",url:url});setStatus("ENLACE EXCLUSIVO DEL TORNEO LISTO PARA COMPARTIR ♾️","");return true}catch{}}try{await root.navigator.clipboard.writeText(url);setStatus("ENLACE DEL TORNEO COPIADO · NO COMPARTE LA APLICACIÓN","");return true}catch{setStatus("NO SE PUDO COMPARTIR EN ESTE NAVEGADOR","warning");return false}}
-  function showMonitor(kind){const individual=kind==="individual";activeMonitor=individual?"individual":"general";$("hubGeneralPanel")?.classList.toggle("hidden",individual);$("hubIndividualPanel")?.classList.toggle("hidden",!individual);$("hubShowGeneral")?.classList.toggle("active",!individual);$("hubShowIndividual")?.classList.toggle("active",individual)}
+  function showMonitor(kind){
+    const individual=kind==="individual",categories=kind==="categories",add=kind==="add";
+    activeMonitor=individual?"individual":"general";
+    $("hubGeneralPanel")?.classList.toggle("hidden",individual);
+    $("hubIndividualPanel")?.classList.toggle("hidden",!individual);
+    $("hubShowGeneral")?.classList.toggle("active",!individual&&!categories&&!add);
+    $("hubShowCategories")?.classList.toggle("active",categories);
+    $("hubShowIndividual")?.classList.toggle("active",add);
+    $("hubAddToBoard")?.classList.toggle("active",individual);
+    if(categories){
+      const select=$("hubCategory");if(select&&select.value==="all")select.value="championship";
+      categoryCardOpen=true;renderAll();
+      setTimeout(()=>$("hubCategory")?.focus(),0);
+    }
+    if(add){
+      $("hubSearch")?.scrollIntoView?.({block:"center",behavior:"smooth"});
+      setTimeout(()=>$("hubSearch")?.focus(),150);
+      setStatus("BUSCA UN JUGADOR Y TOCA + SEGUIR PARA AGREGARLO A MIS FAVORITOS","");
+    }
+  }
   function clearHash(){try{root.history.replaceState(null,"",root.location.pathname+root.location.search)}catch{}}
   async function start(){
     state=loadState();const imported=parseHubHash(root.location.hash);if(imported)clearHash();const params=new URLSearchParams(root.location.search||""),shared=params.get("shared")==="1";tournamentPortalOpen=!demoMode()&&!imported;root.document.body.classList.toggle("shared-view",shared);
-    $("hubBack").onclick=()=>{root.close();setTimeout(()=>root.history.back(),100)};$("hubOpenTournament").onclick=openTournamentTyped;$("hubTournamentLink").onkeydown=event=>{if(event.key==="Enter")openTournamentTyped()};
-    $("hubShowGeneral").onclick=()=>showMonitor("general");$("hubShowIndividual").onclick=()=>showMonitor("individual");$("hubShareGeneral").onclick=shareGeneral;$("hubRefresh").onclick=refresh;$("hubCategory").onchange=renderAll;$("hubCategoryCardToggle").onclick=()=>{categoryCardOpen=!categoryCardOpen;renderCategoryCard()};$("hubSearchButton").onclick=renderSearch;$("hubSearch").oninput=renderSearch;$("hubImportButton").onclick=importTyped;$("hubAddTournament").onclick=()=>$("hubTournamentLink")?.focus();$("hubTournamentHome").onclick=showTournamentPortal;
+    $("hubBack").onclick=()=>{const url=new URL("/index-grupal.html",root.location.origin),share=new URL(root.location.href).searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);root.location.assign(url.toString())};$("hubOpenTournament").onclick=openTournamentTyped;$("hubTournamentLink").onkeydown=event=>{if(event.key==="Enter")openTournamentTyped()};
+    $("hubShowGeneral").onclick=()=>showMonitor("general");$("hubShowCategories").onclick=()=>showMonitor("categories");$("hubShowIndividual").onclick=()=>showMonitor("add");$("hubAddToBoard").onclick=()=>showMonitor("individual");$("hubShareGeneral").onclick=shareGeneral;$("hubRefresh").onclick=refresh;$("hubPublicDisplay").onclick=openPublicDisplay;$("hubCategory").onchange=renderAll;$("hubCourse").onchange=renderAll;$("hubCategoryCardToggle").onclick=()=>{categoryCardOpen=!categoryCardOpen;renderCategoryCard()};$("hubSearchButton").onclick=renderSearch;$("hubSearch").oninput=renderSearch;$("hubImportButton").onclick=importTyped;$("hubAddTournament").onclick=()=>$("hubTournamentLink")?.focus();$("hubTournamentHome").onclick=showTournamentPortal;
     $("hubRemoveGeneral").onclick=()=>{state=removeTournamentFromState(state,state.generalToken);saveState();resetGeneralView();showTournamentPortal()};
     $("hubClearFavorites").onclick=()=>{state.follows=[];saveState();externalStreams.clear();renderAll();setStatus("MONITOR INDIVIDUAL VACÍO","warning")};
     root.addEventListener("online",refresh);root.document.addEventListener("visibilitychange",()=>{if(root.document.visibilityState==="visible")refresh()});
-    renderAll();if(imported)await importAccess(imported);else if(tournamentPortalOpen)setStatus("ELIGE UN TORNEO · PUEDES GUARDAR HASTA 5","");else await refresh();return true;
+    const publicDisplay=params.get("display")==="1";
+    renderAll();if(imported)await importAccess(imported);else if(tournamentPortalOpen&&!publicDisplay)setStatus("ELIGE UN TORNEO · PUEDES GUARDAR HASTA 5","");else await refresh();
+    if(publicDisplay)activatePublicDisplay();
+    return true;
   }
 
-  return{STORAGE_KEY,POLL_MS,MAX_SAVED_TOURNAMENTS,TOKEN_PATTERN,CATEGORY_LABELS,CATEGORY_DEFAULT_TEES,DEMO_DISTRIBUTION,demoTournamentStreams,favoriteStreams,parseHubHash,parseShareLink,generalShareUrl,tournamentHubShareUrl,tournamentHubOpenUrl,normalizeHubState,upsertTournamentState,removeTournamentFromState,addFollowToState,removeFollowFromState,uniquePlayerHoles,livePlayerTotals,tournamentPlayers,categoryIndex,categoryShortLabel,buildLeaderboard,categoryScoreboardRows,liveDate,modeLabel,unresolvedFollowTokens,resolveFollows,start};
+  return{STORAGE_KEY,POLL_MS,DISPLAY_MS,MAX_SAVED_TOURNAMENTS,TOKEN_PATTERN,CATEGORY_LABELS,CATEGORY_DEFAULT_TEES,DEMO_DISTRIBUTION,demoTournamentStreams,favoriteStreams,parseHubHash,parseShareLink,generalShareUrl,tournamentHubShareUrl,tournamentHubOpenUrl,normalizeHubState,upsertTournamentState,removeTournamentFromState,addFollowToState,removeFollowFromState,uniquePlayerHoles,livePlayerTotals,tournamentPlayers,categoryIndex,categoryShortLabel,buildLeaderboard,categoryScoreboardRows,liveDate,modeLabel,unresolvedFollowTokens,resolveFollows,start};
 });

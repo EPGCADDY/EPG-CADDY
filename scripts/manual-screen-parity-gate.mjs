@@ -1,73 +1,64 @@
 import fs from "node:fs";
-
 const read=p=>fs.readFileSync(new URL("../"+p,import.meta.url),"utf8");
-const app=read("index-grupal.html");
 const manual=read("manual.html");
-const live=read("live-control.js");
-
+const app=read("index-grupal.html");
+const hub=read("live-hub.html");
+const shortcuts=read("shortcuts-ui.js");
+const cards=read("card-artifacts.js");
+const fourBall=read("four-ball.js");
 const fail=[];
 const assert=(ok,msg)=>{if(!ok)fail.push(msg)};
-const page=id=>{
-  const m=manual.match(new RegExp('<section class="page" id="p'+id+'"[\\s\\S]*?<\\/section>'));
-  return m?m[0]:"";
-};
-
-const pages={
- "03":["REGISTRO DE JUGADORES","DATO FALTANTE","CORREGIR","IGNORAR","SIN CATEGORÍA"],
- "13":["TARJETA DE PUNTUACIÓN","YDS","HDCP","GROSS","NETO","+ / -","TARJETA DIGITAL","HISTORIAL","NUEVA RONDA","ATRÁS","BORRAR SCORES","BORRAR TODO"],
- "19":["AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18"],
- "20":["MONITOR DE TIEMPO","INICIO","FINAL","TIMER","RESET"],
- "22":["GOLF SCORE CARD GT. LIVE","ABRIR CENTRO LIVE","GRUPO LIVE","JUGADOR LIVE","ACTIVAR ENLACE PRIVADO","COMPARTIR LIVE","COPIAR","VER EN OTRA VENTANA","REVOCAR"],
- "29":["TARJETA DIGITAL","COMPARTIR LIVE","FINALIZAR RONDA","ATRÁS","RONDA EN CURSO","SOLO CONSULTA"],
- "30":["TARJETA DIGITAL FINAL","COMPARTIR LIVE","FINALIZAR RONDA","ATRÁS","SOLO CONSULTA"],
- "33":["ABRIR GLOBAL","IMAGEN GLOBAL","PDF GLOBAL","CORREO / WHATSAPP GLOBAL"],
- "34":["ABRIR PERSONAL","IMAGEN PERSONAL","PDF PERSONAL","CORREO / WHATSAPP PERSONAL","PDF TODAS"],
- "36":["CORRECCIÓN OFICIAL","JUGADOR","HOYO","SCORE ACTUAL","NUEVO GROSS","MOTIVO","RESPONSABLE","GUARDAR CORRECCIÓN","ATRÁS"],
- "38":["HISTORIAL DE TARJETAS","TODAS LAS MODALIDADES","TODOS LOS CAMPOS","JUGADOR / TORNEO / FECHA","ANTERIOR","SIGUIENTE","ATRÁS"]
-};
-
-const sourceByPage={
- "03":app,"13":app,"19":app,"20":app,"22":live,"29":app,"30":app,"33":app,"34":app,"36":app,"38":app
-};
-
-for(const [id,tokens] of Object.entries(pages)){
- const p=page(id);
- assert(Boolean(p),`P${id}: página ausente`);
- assert(p.includes('screen-replica'),`P${id}: réplica ausente`);
- for(const token of tokens){
-   assert(p.includes(token),`P${id}: manual no contiene "${token}"`);
-   assert(sourceByPage[id].includes(token),`P${id}: producción no contiene "${token}"`);
- }
-}
-
-const forbidden=["MIC","MICRÓFONO","MICROFONO","REGISTRO POR VOZ","DICTADO","CADDIE UNIVERSAL","INTELIGENCIA ARTIFICIAL","CLIMA","GPS","WOLF","VEGAS","DOTS"];
-const countWord=(s,w)=>{
- const e=w.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
- const re=new RegExp("(^|[^a-záéíóúüñ0-9])"+e+"([^a-záéíóúüñ0-9]|$)","g");
- return (s.toLowerCase().match(re)||[]).length;
-};
-for(const word of forbidden) assert(countWord(manual,word)===0,`Manual contiene función retirada: ${word}`);
-
-assert((manual.match(/class="page"/g)||[]).length===50,"Manual debe tener 50 páginas");
-assert((manual.match(/class="screen-replica"/g)||[]).length===11,"Manual debe tener 11 réplicas clave");
-assert(app.includes('href="/manual"')&&app.includes(">GUÍA DE USUARIO</a>"),"GUÍA DE USUARIO debe apuntar a /manual");
-
-const cssContracts=[
- ["registro","#p03 .screen-replica","min-height:52px"],
- ["audio","#p19 .screen-replica","min-height:58px"],
- ["tiempo","#p20 .screen-replica","min-height:48px"],
- ["live","#p22 .screen-replica","min-height:42px"],
- ["tarjeta-final","#p30 .screen-replica","font-size:24px"],
- ["historial","#p38 .screen-replica","min-height:52px"]
+const hasWord=(s,w)=>new RegExp("(^|[^a-záéíóúüñ0-9])"+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"([^a-záéíóúüñ0-9]|$)","i").test(s);
+assert(manual.includes('id="portada"')&&manual.includes("/docs/manual/layout/page-00.png"),"Falta portada gráfica original");
+assert(manual.indexOf('id="portada"')<manual.indexOf('id="indice"'),"La portada debe aparecer antes del índice");
+assert(manual.includes('id="indice"')&&manual.includes("Toca cualquier tema para saltar directamente"),"Falta índice general clickable");
+assert((manual.match(/href="#[^"]+"/g)||[]).length>=50,"Índice/navegación insuficiente");
+assert((manual.match(/<section class="sheet(?: |")/g)||[]).length===74,"Debe haber exactamente 74 hojas vigentes: 51 base + 9 pantallas actuales + 10 Torneos + 4 pantallas reales LAB");
+for(const p of [10,11,12,13,14,15,16,68,70,72]) assert(manual.includes("/docs/manual/layout/page-"+String(p).padStart(2,"0")+".png"),"Falta lámina informativa gris vigente page-"+p);
+const current=["/docs/manual/current/CAMPO_MODALIDAD_REAL.webp","/docs/manual/current/REGISTRO_ATAJOS_REAL.webp","/docs/manual/current/SCORECARD_CONTROL_REAL.webp","/docs/manual/current/FOURBALL_ATAJOS_REAL.webp"];
+for(const img of current) assert(manual.includes(img),"Falta pantalla real LAB: "+img);
+const mountedCurrent=[
+ "/docs/manual/current/APP_ACCESS.png",
+ "/docs/manual/current/APP_SETUP_CURRENT.png",
+ "/docs/manual/current/APP_CATEGORIAS_OFICIALES.png",
+ "/docs/manual/current/APP_CAMPEONATO_SCORECARD.png",
+ "/docs/manual/current/APP_SCORECARD_ATAJOS.png",
+ "/docs/manual/current/APP_ATAJOS_OVERLAY.png",
+ "/docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png",
+ "/docs/manual/current/APP_CORRECCION_ATAJOS.png",
+ "/docs/manual/current/APP_HISTORIAL_ATAJOS.png",
+ "/docs/manual/current/APP_TORNEOS_HUB.png",
+ "/docs/manual/current/APP_TORNEOS_ATAJOS.png",
+ "/docs/manual/current/APP_MODE_STABLEFORD.png",
+ "/docs/manual/current/APP_MODE_MATCH_PLAY.png",
+ "/docs/manual/current/APP_MODE_FOUR_BALL.png",
+ "/docs/manual/current/APP_MODE_SKINS.png",
+ "/docs/manual/current/APP_MODE_UNIVERSALES.png",
+ "/docs/manual/current/APP_MODE_PRACTICE.png"
 ];
-for(const [name,selector,needle] of cssContracts){
- assert(manual.includes(selector)&&manual.includes(needle),`Contrato visual ausente: ${name}`);
+for(const img of mountedCurrent) assert(manual.includes(img),"Falta pantalla física actual montada en manual: "+img);
+for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","TARJETA DIGITAL FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","CORREGIR RONDA","HISTORIAL DE TARJETAS"]) {
+  assert(app.includes(token)||hub.includes(token),"LAB actual no contiene control esperado: "+token);
 }
-
-if(fail.length){
- console.error("MANUAL SCREEN PARITY: FAIL");
- for(const item of fail) console.error("- "+item);
- process.exit(1);
-}
-console.log("MANUAL SCREEN PARITY: PASS");
-console.log("50 pages · 11 replicas · 0 retired features · current production controls matched");
+assert(manual.includes("/docs/manual/current/MONITOR_TIEMPO_REAL_LAB.png"),"Falta captura física vigente del Monitor de Tiempo");
+assert(manual.includes("/docs/manual/current/OPERACION_RONDA_INFERIOR_REAL_LAB.png"),"Falta captura física de la zona operativa inferior");
+for(const token of ["AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","GROSS IN","GROSS OUT","GROSS TOTAL","NETO TOTAL","+/- NETO","TARJETA DIGITAL","HISTORIAL","NUEVA RONDA","ATRÁS","BORRAR SCORES","BORRAR TODO"]) assert(manual.includes(token),"Zona operativa inferior incompleta en manual: "+token);
+assert(manual.includes('id="tiempo"')&&manual.includes('id="zona-operativa"'),"Faltan hojas vigentes de Monitor de Tiempo / zona operativa");
+for(const token of ["INICIO","FINAL","TIMER","RESET","HH:MM:SS","pausar","reanudar","sin borrar jugadores ni scores"]) assert(manual.includes(token),"Monitor de Tiempo incompleto en manual: "+token);
+assert(app.includes('id="roundTimerToggle"')&&app.includes('aria-label="Pausar o reanudar timer"'),"LAB debe mantener TIMER pulsable para pausar/reanudar");
+assert(app.includes('id="resetClockButton"')&&app.includes("¿CONFIRMAS REINICIAR EL CRONÓMETRO A 00:00:00?"),"LAB debe mantener RESET con confirmación");
+for(const id of ["torneos","torneos-01","torneos-02","torneos-03","torneos-04","torneos-05","torneos-06","torneos-07","torneos-08","torneos-09"]) assert(manual.includes('id="'+id+'"'),"Falta hoja del capítulo Torneos: "+id);
+for(const token of ["CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS","MENÚ siempre contigo"]) assert(manual.includes(token),"Capítulo Torneos incompleto: "+token);
+for(const removed of ["REGISTRO POR VOZ","DICTADO","CADDIE UNIVERSAL","INTELIGENCIA ARTIFICIAL","CLIMA","GPS","WOLF","VEGAS","DOTS"]) assert(!hasWord(manual,removed),"El manual reintroduce función retirada: "+removed);
+for(const removed of ["MIC","MICRÓFONO","MICROFONO"]) assert(!hasWord(manual,removed),"El manual reintroduce control de micrófono retirado: "+removed);
+assert(!manual.includes("/docs/manual/layout/page-20.png"),"No debe reintroducir Scores por voz");
+for(let p=46;p<=67;p++) assert(!manual.includes("/docs/manual/layout/page-"+String(p).padStart(2,"0")+".png"),"No debe reintroducir hoja retirada page-"+p);
+assert(app.includes("shortcuts-ui.js"),"Score Card debe cargar MENÚ");
+assert(hub.includes("shortcuts-ui.js"),"Torneos debe cargar MENÚ");
+for(const t of ["MI SCORE CARD","CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS"]) assert(shortcuts.includes(t),"MENÚ incompleto: "+t);
+assert(manual.includes("Registro de jugadores + MENÚ")&&manual.includes("Four Ball corregido + MENÚ"),"Las pantallas reales deben documentar MENÚ");
+assert(cards.includes("fourBallTeamLabel")&&!cards.includes("TEAM 1")&&!cards.includes("TEAM 2")&&!cards.includes("TEAM 3"),"Tarjetas Four Ball no deben reintroducir TEAM numerado");
+assert(!fourBall.includes('"TEAM 1"')&&!fourBall.includes('"TEAM 2"')&&!fourBall.includes('"TEAM 3"'),"Motor Four Ball no debe reintroducir TEAM numerado");
+if(fail.length){console.error("MANUAL ORIGINAL PARITY: FAIL");for(const item of fail) console.error("- "+item);process.exit(1);}
+console.log("MANUAL ORIGINAL PARITY: PASS");
+console.log("MANUAL RE-MAQUETADO: 74 hojas · MENÚ vigente · pantallas reales para funciones · láminas informativas grises · 0 funciones retiradas");

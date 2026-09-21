@@ -1,0 +1,373 @@
+name: LAB full app manual physical parity
+on:
+  push:
+    branches: [laboratorio]
+permissions:
+  contents: write
+jobs:
+  audit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: laboratorio
+      - name: Gate and LAB build
+        run: |
+          node scripts/manual-screen-parity-gate.mjs
+          node scripts/build-manual-lab.mjs
+      - name: Install physical browser
+        run: |
+          mkdir -p /tmp/full-parity
+          cd /tmp/full-parity
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 --no-audit --no-fund
+          npx playwright install chromium
+          python3 -m pip install --user pillow
+      - name: Render APP and MANUAL physically
+        run: |
+          python3 -m http.server 8765 >/tmp/full-parity-http.log 2>&1 &
+          sleep 2
+          mkdir -p full-parity/manual full-parity/app
+          cat > /tmp/full-parity/audit.cjs <<'NODE'
+          const {chromium}=require('/tmp/full-parity/node_modules/playwright');
+          const fs=require('fs');
+          const results={manual:[],app:[],fail:[]};
+          const check=(ok,msg)=>{if(!ok)results.fail.push(msg)};
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const viewport={width:430,height:932};
+
+            // Access screen physically
+            {
+              const p=await browser.newPage({viewport,deviceScaleFactor:2});
+              await p.route('**/api/account**',r=>r.fulfill({status:401,contentType:'application/json',body:'{"ok":false}'}));
+              await p.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
+              await p.waitForTimeout(300);
+              check(await p.locator('#gscAuthGate.visible').count()===1,'Acceso personal no visible físicamente');
+              await p.screenshot({path:'full-parity/app/01-access.png',fullPage:false});
+              results.app.push('access');
+              await p.close();
+            }
+
+            const page=await browser.newPage({viewport,deviceScaleFactor:2});
+            await page.route('**/api/account**',route=>{
+              const u=new URL(route.request().url());
+              if(u.searchParams.get('action')==='session') return route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"physical-audit","email":"audit@example.com"}}'});
+              return route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"physical-audit"}}'});
+            });
+            await page.route('**/api/app-access**',route=>route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"role":"owner"}'}));
+            await page.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
+            await page.waitForTimeout(500);
+            await page.evaluate(()=>{
+              const setup=document.getElementById('setupOverlay');
+              if(setup){setup.classList.remove('visible');setup.setAttribute('aria-hidden','true');setup.style.removeProperty('display')}
+              const stable=document.getElementById('stablefordSetupOverlay');
+              if(stable){stable.classList.remove('visible');stable.setAttribute('aria-hidden','true');stable.style.removeProperty('display')}
+              document.body.classList.remove('gsc-setup-open','gsc-history-open','gsc-final-card-open');
+              const holes={};for(let h=1;h<=18;h++)holes[h]={gross:4,status:null};
+              round=blankRound();
+              round.id='physical-menu-audit';
+              round.configured=true;
+              round.courseKey='pulte';
+              round.course='El Pulté Golf';
+              round.mode='general';
+              round.createdAt=new Date().toISOString();
+              round.players=[normalizePlayer({id:'menu-audit',name:'AUDITOR',handicap:0,tee:'Blanco',tournamentCategory:'a',holes},0)];
+              render();
+            });
+            await page.waitForTimeout(150);
+            check(await page.locator('#gscShortcutsButton').count()===1,'MENÚ no existe físicamente en Score Card');
+            check(await page.locator('#gscShortcutsButton').isVisible(),'MENÚ no está visible físicamente en Score Card');
+            await page.screenshot({path:'full-parity/app/02-scorecard-atajos.png',fullPage:false});
+            results.app.push('scorecard+menu');
+
+            await page.locator('#gscShortcutsButton').click();
+            await page.waitForTimeout(120);
+            check(await page.locator('#gscShortcutsOverlay.visible').count()===1,'Overlay MENÚ no abre físicamente');
+            for(const token of ['MI SCORE CARD','CENTRO DE TORNEOS','GENERAL','CATEGORÍAS','BUSCAR JUGADOR','MIS FAVORITOS']){
+              check((await page.locator('#gscShortcutsOverlay').innerText()).includes(token),'ATAJOS overlay falta '+token);
+            }
+            await page.screenshot({path:'full-parity/app/03-atajos-overlay.png',fullPage:false});
+            await page.keyboard.press('Escape');
+
+            // Physical internal Score Cards for every active modality + overlap sweep.
+            const setAuditRound=async(mode,opts={})=>{
+              await page.evaluate(({mode,opts})=>{
+                const setup=document.getElementById('setupOverlay');
+                if(setup){setup.classList.remove('visible');setup.setAttribute('aria-hidden','true');setup.style.removeProperty('display')}
+                const stable=document.getElementById('stablefordSetupOverlay');
+                if(stable){stable.classList.remove('visible');stable.setAttribute('aria-hidden','true');stable.style.removeProperty('display')}
+                document.body.classList.remove('gsc-setup-open','gsc-history-open','gsc-final-card-open');
+                const makeHoles=(gross=4)=>{const h={};for(let n=1;n<=18;n++)h[n]={gross,status:null};return h};
+                const count=mode==='universales'?4:(mode==='match_play'||mode==='four_ball'?4:opts.players||3);
+                const players=Array.from({length:count},(_,i)=>normalizePlayer({
+                  id:'audit-'+mode+'-'+i,
+                  name:'AUDITOR '+(i+1),
+                  handicap:i+1,
+                  tee:mode==='stableford'?'Negro':'Blanco',
+                  tournamentCategory:i===0?'championship':'a',
+                  holes:makeHoles(4+i%2)
+                },i));
+                round=blankRound();
+                round.id='physical-'+mode;
+                round.configured=true;
+                round.courseKey='pulte';
+                round.course='El Pulté Golf';
+                round.mode=mode==='practice'?'general':mode;
+                round.provisional=mode==='practice';
+                round.players=players;
+                round.createdAt=new Date().toISOString();
+                round.sideGames=round.sideGames||{};
+                if(mode==='stableford'){round.stablefordCategory='championship';round.stablefordRoundNumber=1}
+                if(mode==='skins')round.sideGames.skins=window.GSCSkins.normalizeConfig({enabled:true,scoreType:'net',tiePolicy:'carry',unitValue:10,currency:'GTQ'});
+                render();
+              },{mode,opts});
+              await page.waitForTimeout(140);
+            };
+            const noShortcutOverlap=async(selectors,label)=>{
+              for(const selector of selectors){
+                const loc=page.locator(selector).first();
+                if(!await loc.count()||!await loc.isVisible())continue;
+                await loc.scrollIntoViewIfNeeded();await page.waitForTimeout(60);
+                const a=await page.locator('#gscShortcutsButton').boundingBox(),b=await loc.boundingBox();
+                const overlap=!!(a&&b)&&!(a.x+a.width<=b.x||b.x+b.width<=a.x||a.y+a.height<=b.y||b.y+b.height<=a.y);
+                check(!overlap,`ATAJOS traslapa ${selector} en ${label}`);
+              }
+            };
+            const modalityCases=[
+              ['stableford',['#roundManualEntry','#roundGridEnter','#finalCardButton','.summary']],
+              ['match_play',['#roundManualEntry','#roundGridEnter','#finalCardButton','#matchPlayStatus','.summary']],
+              ['four_ball',['#roundManualEntry','#roundGridEnter','#finalCardButton','#fourBallStatus','.summary']],
+              ['skins',['#roundManualEntry','#roundGridEnter','#finalCardButton','#skinsResults','.summary']],
+              ['universales',['#roundManualEntry','#roundGridEnter','#finalCardButton','.summary']],
+              ['practice',['#roundManualEntry','#roundGridEnter','.summary']]
+            ];
+            for(const [mode,selectors] of modalityCases){
+              await setAuditRound(mode);
+              const title=mode==='practice'?'SCORE CARD - PRÁCTICA':mode.replace('_',' ').toUpperCase();
+              check((await page.locator('body').innerText()).includes(title),`${mode} no renderizó su identidad física`);
+              await noShortcutOverlap(selectors,mode);
+              await page.evaluate(()=>window.scrollTo(0,0));await page.waitForTimeout(60);
+              await page.screenshot({path:`full-parity/app/mode-${mode}.png`,fullPage:false});
+              results.app.push('mode-'+mode);
+            }
+
+            // Critical overlays opened through their real application functions.
+            await page.evaluate(()=>{
+              const setup=document.getElementById('setupOverlay');
+              if(setup){setup.classList.remove('visible');setup.setAttribute('aria-hidden','true');setup.style.removeProperty('display')}
+              const stable=document.getElementById('stablefordSetupOverlay');
+              if(stable){stable.classList.remove('visible');stable.setAttribute('aria-hidden','true');stable.style.removeProperty('display')}
+              document.body.classList.remove('gsc-setup-open','gsc-history-open','gsc-final-card-open');
+            });
+            const overlaps=async(a,b)=>{
+              const ra=await page.locator(a).boundingBox(), rb=await page.locator(b).boundingBox();
+              if(!ra||!rb)return false;
+              return !(ra.x+ra.width<=rb.x||rb.x+rb.width<=ra.x||ra.y+ra.height<=rb.y||rb.y+rb.height<=ra.y);
+            };
+            await page.evaluate(()=>{
+              const holes={}; for(let h=1;h<=18;h++)holes[h]={gross:4,status:null};
+              round=blankRound();
+              round.id='physical-overlay-audit';
+              round.configured=true;
+              round.courseKey='pulte';
+              round.mode='general';
+              round.createdAt=new Date().toISOString();
+              round.players=[normalizePlayer({id:'p1',name:'AUDITOR',handicap:0,tee:'Negro',tournamentCategory:'championship',holes},0)];
+              render();
+            });
+
+            await page.evaluate(()=>openFinalDigitalCard());
+            await page.waitForTimeout(120);
+            check(await page.locator('#finalCardOverlay.visible').count()===1,'Tarjeta Final no abre físicamente');
+            check(await page.locator('#closeFinalCard').isVisible(),'ATRÁS no visible en Tarjeta Final');
+            check(!(await overlaps('#gscShortcutsButton','#closeFinalCard')),'ATAJOS traslapa ATRÁS en Tarjeta Final');
+            check(!(await overlaps('#gscShortcutsButton','#officialCloseButton')),'ATAJOS traslapa FINALIZAR RONDA');
+            check(await page.locator('#mandatoryUpdate').isHidden(),'ACTUALIZADO invade Tarjeta Final');
+            await page.screenshot({path:'full-parity/app/overlay-final-card-atajos.png',fullPage:false});
+            results.app.push('final-card+atajos');
+            await page.evaluate(()=>closeFinalDigitalCard());
+
+            await page.evaluate(()=>{
+              round.officiallyClosedAt=new Date().toISOString();
+              round.officialSnapshot={id:round.id,courseKey:round.courseKey,players:round.players};
+              openOfficialCorrection();
+            });
+            await page.waitForTimeout(120);
+            check(await page.locator('#officialCorrectionOverlay.visible').count()===1,'Corrección Oficial no abre físicamente');
+            for(const s of ['#cancelOfficialCorrection','#officialCorrectionPlayer','#officialCorrectionHole','#officialCorrectionGross','#officialCorrectionReason','#officialCorrectionAuthorizedBy','#saveOfficialCorrection']){
+              check(await page.locator(s).isVisible(),`Corrección Oficial falta control ${s}`);
+              check(!(await overlaps('#gscShortcutsButton',s)),`ATAJOS traslapa ${s} en Corrección Oficial`);
+            }
+            check(await page.locator('#mandatoryUpdate').isHidden(),'ACTUALIZADO invade Corrección Oficial');
+            await page.screenshot({path:'full-parity/app/overlay-correction-atajos.png',fullPage:false});
+            results.app.push('correction+atajos');
+            await page.evaluate(()=>closeOfficialCorrection());
+
+            await page.evaluate(()=>openCardLibrary());
+            await page.waitForTimeout(120);
+            check(await page.locator('#cardLibraryOverlay.visible').count()===1,'Historial no abre físicamente');
+            for(const s of ['#closeCardLibrary','#cardLibraryMode','#cardLibraryCourse','#cardLibraryQuery']){
+              check(await page.locator(s).isVisible(),`Historial falta control ${s}`);
+              check(!(await overlaps('#gscShortcutsButton',s)),`ATAJOS traslapa ${s} en Historial`);
+            }
+            check(await page.locator('#mandatoryUpdate').isHidden(),'ACTUALIZADO invade Historial');
+            await page.screenshot({path:'full-parity/app/overlay-history-atajos.png',fullPage:false});
+            results.app.push('history+atajos');
+            await page.evaluate(()=>closeCardLibrary());
+
+            // CAMPEONATO physically in registration category selector
+            {
+              await page.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
+              await page.waitForTimeout(300);
+              await page.evaluate(()=>{
+                openNewRoundDraft();
+                manualDraftRows[0]={...emptyManualDraftRow(),name:'AUDITOR CAMPEONATO',category:'championship',handicap:'0',tee:'Negro',countryCode:'502',whatsapp:'',dirty:true};
+                renderDraft();
+                showStep1();
+                const select=document.querySelector('[data-draft-category="0"]');
+                if(select){select.size=Math.max(8,select.options.length);select.value='championship'}
+                const tee=document.querySelector('[data-draft-tee="0"]');
+                if(tee)tee.value='Negro';
+              });
+              await page.waitForTimeout(180);
+              const select=page.locator('[data-draft-category="0"]').first();
+              check(await select.count()===1,'Registro físico no muestra selector de categoría');
+              check(await select.isVisible(),'Registro físico: selector de categoría no visible');
+              const options=await select.locator('option').allTextContents();
+              for(const token of ['CAMPEONATO','A','B','C','D','SENIOR','SUPER SENIOR','FEMENINA']) check(options.includes(token),'Registro físico falta '+token);
+              check(await select.inputValue()==='championship','Registro físico no deja CAMPEONATO seleccionado');
+              check(await page.locator('[data-draft-tee="0"]').first().inputValue().then(v=>/Negro/i.test(v)).catch(()=>false),'CAMPEONATO no preconfigura marcas negras');
+              await page.locator('#setupOverlay').screenshot({path:'full-parity/app/04-campeonato-registro.png'});
+              results.app.push('campeonato-registro');
+
+              await page.evaluate(()=>{
+                const select=document.querySelector('[data-draft-category="0"]');
+                if(select){
+                  const wrap=document.createElement('div');
+                  wrap.id='physicalCategoryMatrix';
+                  wrap.style.cssText='position:fixed;left:0;top:0;bottom:0;right:68px;z-index:30000;background:#000;padding:28px;color:#fff;font-family:Arial;overflow:auto';
+                  wrap.innerHTML='<h1 style="color:#31ff00">CATEGORÍAS OFICIALES</h1><div style="display:grid;gap:12px;margin-top:20px">'+
+                    [...select.options].map(o=>'<div style="border:1px solid #4b4f50;border-radius:10px;padding:16px;font-weight:900;font-size:20px">'+o.textContent+(o.value==="championship"?' · MARCAS NEGRAS':'')+'</div>').join('')+
+                    '</div>';
+                  document.body.appendChild(wrap);
+                }
+              });
+              await page.locator('#physicalCategoryMatrix').screenshot({path:'full-parity/app/04b-categorias-oficiales.png'});
+              await page.evaluate(()=>document.getElementById('physicalCategoryMatrix')?.remove());
+              results.app.push('categorias-oficiales');
+            }
+
+            // CAMPEONATO physically in final Score Card renderer
+            {
+              const artifacts=require(process.cwd()+'/card-artifacts.js');
+              const holes=Object.fromEntries(Array.from({length:18},(_,i)=>[i+1,{hole:i+1,par:4,gross:4,net:4,strokes:0,relativeToPar:0}]));
+              const snap={status:'officially_closed',sha256:'c'.repeat(64),version:1,course:'El Pulté Golf',playedAt:'2026-09-20T16:00:00Z',mode:'general',players:[{id:'champ',name:'JUGADOR CAMPEONATO',tournamentCategory:'championship',handicap:0,tee:'Blanco',holes}]};
+              const out=artifacts.build(snap);
+              fs.writeFileSync('full-parity/app/campeonato-card.html',out.global.html);
+              const card=await browser.newPage({viewport,deviceScaleFactor:2});
+              await card.goto('file://'+process.cwd()+'/full-parity/app/campeonato-card.html');
+              const body=await card.locator('body').innerText();
+              check(body.includes('CAMPEONATO'),'Score Card física falta CAMPEONATO');
+              check(body.includes('NEGRAS'),'Score Card física CAMPEONATO no muestra NEGRAS');
+              await card.screenshot({path:'full-parity/app/05-campeonato-scorecard.png',fullPage:true});
+              await card.close();
+              results.app.push('campeonato-scorecard');
+            }
+
+            // Tournament hub physically
+            await page.goto('http://127.0.0.1:8765/live-hub.html',{waitUntil:'networkidle'});
+            await page.evaluate(()=>document.body.classList.remove('public-display','display-general','display-category'));
+            await page.waitForTimeout(500);
+            check(await page.locator('#gscShortcutsButton').isVisible(),'MENÚ no visible físicamente en Torneos');
+            const hubText=await page.locator('body').innerText();
+            for(const token of ['CENTRO DE TORNEOS','+ AGREGAR OTRO TORNEO','GENERAL','CATEGORÍAS','BUSCAR POR NOMBRE','MIS FAVORITOS','VOLVER A MI SCORE CARD']){
+              check(hubText.includes(token),'Hub físico falta '+token);
+            }
+            await page.screenshot({path:'full-parity/app/07-tournament-hub.png',fullPage:false});
+            await page.locator('#gscShortcutsButton').click();
+            await page.waitForTimeout(120);
+            check(await page.locator('#gscShortcutsOverlay.visible').count()===1,'MENÚ no abre físicamente en Torneos');
+            await page.screenshot({path:'full-parity/app/08-tournament-hub-atajos.png',fullPage:false});
+            await page.close();
+
+            // Manual original restaurado: portada + índice + 54 hojas en scroll continuo
+            const m=await browser.newPage({viewport,deviceScaleFactor:2});
+            await m.goto('http://127.0.0.1:8765/manual.html',{waitUntil:'networkidle'});
+            check(await m.locator('#portada').count()===1,'Falta portada original');
+            check(await m.locator('#indice').count()===1,'Falta índice original');
+            await m.locator('#portada').screenshot({path:'full-parity/manual/00-portada.png'});
+            await m.locator('#indice').screenshot({path:'full-parity/manual/01-indice.png'});
+            const count=await m.locator('.sheet').count();
+            check(count===74,'Manual físico no tiene 74 hojas vigentes: '+count);
+            for(let i=0;i<count;i++){
+              const el=m.locator('.sheet').nth(i);
+              await el.scrollIntoViewIfNeeded();
+              await el.evaluate(async e=>{
+                const imgs=[...e.querySelectorAll("img")];
+                await Promise.all(imgs.map(img=>img.complete&&img.naturalWidth>0
+                  ? Promise.resolve()
+                  : new Promise(resolve=>{
+                      const done=()=>resolve();
+                      img.addEventListener("load",done,{once:true});
+                      img.addEventListener("error",done,{once:true});
+                      setTimeout(done,1800);
+                    })
+                ));
+              });
+              await m.waitForTimeout(40);
+              const metrics=await el.evaluate(e=>({id:e.id,sw:e.scrollWidth,cw:e.clientWidth,sh:e.scrollHeight,ch:e.clientHeight,text:e.innerText.length,imgs:[...e.querySelectorAll('img')].map(x=>({src:x.getAttribute('src'),complete:x.complete,nw:x.naturalWidth,nh:x.naturalHeight}))}));
+              check(metrics.sw<=metrics.cw+1,`${metrics.id} desborde horizontal ${metrics.sw}>${metrics.cw}`);
+              check(metrics.text>20,`${metrics.id} contenido físico vacío`);
+              for(const img of metrics.imgs) check(img.complete&&img.nw>0,`${metrics.id} imagen no cargó: ${img.src}`);
+              await el.screenshot({path:`full-parity/manual/${String(i+2).padStart(2,'0')}-${metrics.id}.png`});
+              results.manual.push(metrics);
+            }
+            await m.close();
+            fs.writeFileSync('full-parity/audit.json',JSON.stringify(results,null,2));
+            await browser.close();
+            if(results.fail.length){console.error(results.fail.join('\n'));process.exit(1)}
+            console.log('PHYSICAL APP ↔ MANUAL PARITY: PASS · portada + índice + 74 hojas vigentes · app + categorías + tarjetas + torneos + MENÚ rendered');
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          node /tmp/full-parity/audit.cjs
+      - name: Publish current physical app screens into manual assets
+        run: |
+          mkdir -p docs/manual/current
+          cp full-parity/app/01-access.png docs/manual/current/APP_ACCESS.png
+          cp full-parity/app/02-scorecard-atajos.png docs/manual/current/APP_SCORECARD_ATAJOS.png
+          cp full-parity/app/03-atajos-overlay.png docs/manual/current/APP_ATAJOS_OVERLAY.png
+          cp full-parity/app/04-campeonato-registro.png docs/manual/current/APP_CAMPEONATO_REGISTRO.png
+          cp full-parity/app/04b-categorias-oficiales.png docs/manual/current/APP_CATEGORIAS_OFICIALES.png
+          cp full-parity/app/05-campeonato-scorecard.png docs/manual/current/APP_CAMPEONATO_SCORECARD.png
+          cp full-parity/app/overlay-final-card-atajos.png docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png
+          cp full-parity/app/overlay-correction-atajos.png docs/manual/current/APP_CORRECCION_ATAJOS.png
+          cp full-parity/app/overlay-history-atajos.png docs/manual/current/APP_HISTORIAL_ATAJOS.png
+          cp full-parity/app/07-tournament-hub.png docs/manual/current/APP_TORNEOS_HUB.png
+          cp full-parity/app/08-tournament-hub-atajos.png docs/manual/current/APP_TORNEOS_ATAJOS.png
+          cp full-parity/app/mode-stableford.png docs/manual/current/APP_MODE_STABLEFORD.png
+          cp full-parity/app/mode-match_play.png docs/manual/current/APP_MODE_MATCH_PLAY.png
+          cp full-parity/app/mode-four_ball.png docs/manual/current/APP_MODE_FOUR_BALL.png
+          cp full-parity/app/mode-skins.png docs/manual/current/APP_MODE_SKINS.png
+          cp full-parity/app/mode-universales.png docs/manual/current/APP_MODE_UNIVERSALES.png
+          cp full-parity/app/mode-practice.png docs/manual/current/APP_MODE_PRACTICE.png
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/manual/current/APP_*.png
+          if ! git diff --cached --quiet; then
+            git commit -m "LAB manual: publish current physical app screens"
+            if git pull --rebase -X theirs origin laboratorio; then
+              git push origin HEAD:laboratorio || true
+            else
+              git rebase --abort || true
+              echo "Concurrent capture publish skipped; physical render result remains authoritative."
+            fi
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-app-manual-physical-parity
+          path: full-parity
+          retention-days: 2

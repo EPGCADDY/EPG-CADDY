@@ -18,8 +18,14 @@
   const BEST_ROUNDS=3;
   const ALLOWED_COURSES=Object.freeze(["country_club","pulte","san_isidro","mayan_golf"]);
   const CATEGORY_CONFIG=Object.freeze({
+    championship:Object.freeze({key:"championship",label:"CAMPEONATO",handicap:0,tee:"Negro",rankingPlaces:0,captainChoices:0}),
+    a:Object.freeze({key:"a",label:"A",handicap:0,tee:"Azul",rankingPlaces:0,captainChoices:0}),
+    b:Object.freeze({key:"b",label:"B",handicap:0,tee:"Blanco",rankingPlaces:0,captainChoices:0}),
+    c:Object.freeze({key:"c",label:"C",handicap:0,tee:"Blanco",rankingPlaces:0,captainChoices:0}),
+    d:Object.freeze({key:"d",label:"D",handicap:0,tee:"Blanco",rankingPlaces:0,captainChoices:0}),
     senior:Object.freeze({key:"senior",label:"SENIOR",handicap:0,tee:"Blanco",rankingPlaces:5,captainChoices:3}),
-    super_senior:Object.freeze({key:"super_senior",label:"S. SENIOR",handicap:0,tee:"Amarillo",rankingPlaces:4,captainChoices:2})
+    super_senior:Object.freeze({key:"super_senior",label:"SUPER SENIOR",handicap:0,tee:"Amarillo",rankingPlaces:4,captainChoices:2}),
+    female:Object.freeze({key:"female",label:"FEMENINA",handicap:0,tee:"Rojo",rankingPlaces:0,captainChoices:0})
   });
   const TOURNAMENT_COURSES=Object.freeze({
     san_isidro:Object.freeze({
@@ -182,7 +188,7 @@
     if(!document.getElementById("stableford-touch-plan-b-style")){const st=document.createElement("style");st.id="stableford-touch-plan-b-style";st.textContent='body.stableford-round .score-cell{touch-action:manipulation;-webkit-user-select:none;user-select:none}body.stableford-round .score-cell input{touch-action:manipulation;min-width:100%;min-height:100%;margin:0;padding:0;text-align:center}body.stableford-round .score-table{touch-action:pan-x pan-y}';document.head.appendChild(st)}
     const markStablefordRound=()=>document.body.classList.toggle("stableford-round",typeof round!=="undefined"&&round?.mode==="stableford");markStablefordRound();
     const categoryButtons=[...document.querySelectorAll("[data-stableford-category]")];
-    for(const button of categoryButtons)if(!button.__stablefordDefaults){button.__stablefordDefaults=true;button.addEventListener("click",()=>{const category=button.getAttribute("data-stableford-category"),cfg=categoryConfig(category);if(!cfg)return;const facts=document.getElementById("stablefordSetupFacts"),teeLabel=cfg.tee==="Blanco"?"BLANCAS":"AMARILLAS";if(facts)facts.textContent=`SCRATCH · MARCAS ${teeLabel} · HCP 0 · MÁXIMO 6 JUGADORES`})}
+    for(const button of categoryButtons)if(!button.__stablefordDefaults){button.__stablefordDefaults=true;button.addEventListener("click",()=>{const category=button.getAttribute("data-stableford-category"),cfg=categoryConfig(category);if(!cfg)return;const facts=document.getElementById("stablefordSetupFacts"),teeLabel=({Negro:"NEGRAS",Azul:"AZULES",Blanco:"BLANCAS",Amarillo:"AMARILLAS",Rojo:"ROJAS"})[cfg.tee]||String(cfg.tee||"").toUpperCase();if(facts)facts.textContent=`SCRATCH · MARCAS ${teeLabel} · HCP 0 · MÁXIMO 6 JUGADORES`})}
     return true;
   }
   return{SERIES_ID,MAX_PLAYERS,MAX_ROUNDS,BEST_ROUNDS,ALLOWED_COURSES,CATEGORY_CONFIG,TOURNAMENT_COURSES,categoryConfig,isAllowedCourse,pointsFor,holeResult,totals,bestThree,blankSeries,normalizeSeries,normalizeResult,upsertResult,standings,nextRoundNumber,cleanName,installTournamentCourses,installStablefordUi};

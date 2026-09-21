@@ -7,10 +7,15 @@
 
   const MAX_HOLES=18;
   const TEAM_PLAYER_INDEXES=Object.freeze([[0,1],[2,3],[4,5]]);
-  const DEFAULT_TEAM_NAMES=Object.freeze(["PAREJA VERDE","PAREJA ORO","PAREJA AZUL"]);
+  const DEFAULT_TEAM_NAMES=Object.freeze(["TEAM","TEAM","TEAM"]);
   const playerName=(player,index)=>String(player?.name||`JUGADOR ${index+1}`).trim().toUpperCase();
   const netScore=(player,hole)=>{const score=player?.holes?.[hole];return score&&score.status!=="x"&&Number.isFinite(Number(score.net))?Number(score.net):null};
-  const teamNames=value=>DEFAULT_TEAM_NAMES.map((fallback,index)=>String(value?.[index]||fallback).trim().toUpperCase());
+  const teamNames=(value,players=[])=>DEFAULT_TEAM_NAMES.map((fallback,index)=>{
+    const supplied=String(value?.[index]||fallback).trim().toUpperCase();
+    if(supplied&&supplied!=="TEAM"&&!/^TEAM\s+\d+$/.test(supplied))return supplied;
+    const names=TEAM_PLAYER_INDEXES[index].filter(playerIndex=>players[playerIndex]).map(playerIndex=>playerName(players[playerIndex],playerIndex));
+    return `TEAM${names.length?` · ${names.join(" / ")}`:""}`
+  });
 
   function validatePlayers(players){
     if(!Array.isArray(players)||![2,4,6].includes(players.length))return false;
@@ -40,7 +45,7 @@
   }
 
   function status(players,{maxHoles=MAX_HOLES,names=DEFAULT_TEAM_NAMES}={}){
-    const limit=Math.max(1,Math.min(MAX_HOLES,Number(maxHoles)||MAX_HOLES)),labels=teamNames(names),count=teamCount(players);
+    const limit=Math.max(1,Math.min(MAX_HOLES,Number(maxHoles)||MAX_HOLES)),labels=teamNames(names,players),count=teamCount(players);
     if(!count)return{valid:false,teamCount:0,played:0,remaining:limit,closed:false,label:"FOUR BALL REQUIERE 2, 4 O 6 JUGADORES",resultLabel:"FOUR BALL REQUIERE 2, 4 O 6 JUGADORES",teamNames:labels,holes:[]};
     const holes=[];let winsA=0,winsB=0,halves=0,totalNet=0;const teamPoints=Array(count).fill(0),teamWins=Array(count).fill(0),teamTies=Array(count).fill(0);
     for(let hole=1;hole<=limit;hole++){
@@ -66,7 +71,7 @@
   }
 
   function teamStanding(players,teamIndex,holes){
-    const index=Number(teamIndex),selected=Array.isArray(holes)?holes.map(Number).filter(hole=>Number.isInteger(hole)&&hole>=1&&hole<=MAX_HOLES):[],labels=teamNames(),count=teamCount(players);
+    const index=Number(teamIndex),selected=Array.isArray(holes)?holes.map(Number).filter(hole=>Number.isInteger(hole)&&hole>=1&&hole<=MAX_HOLES):[],labels=teamNames(undefined,players),count=teamCount(players);
     if(!count||index<0||index>=count||!selected.length)return{valid:false,teamIndex:index,played:0,won:0,tied:0,lost:0,margin:0,position:"",label:"",state:"pending"};
     let won=0,tied=0,lost=0,played=0,netTotal=0,points=0;
     for(const hole of selected){

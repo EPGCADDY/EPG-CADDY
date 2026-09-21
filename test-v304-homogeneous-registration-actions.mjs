@@ -13,10 +13,9 @@ const sharedVocabulary=[
   ["RONDA PREVIA","previousRoundSetupButton","previousStablefordRoundButton"],
   ["HISTORIAL","openCardLibrarySetup","openCardLibraryStableford"]
 ];
-const sharedInstructions=["REGISTRO DE JUGADORES","DICTA ASÍ:"];
-const generalInstructions=["JUGADOR NÚMERO UNO · MIGUEL · HANDICAP 14 · MARCAS BLANCAS","JUGADOR NÚMERO DOS · NOMBRE + HANDICAP + MARCAS","HASTA 6 JUGADORES","LUEGO TOCA OK"];
-const stablefordInstructions=["1-# JUGADOR","2-NOMBRE","HASTA 6 JUGADORES","3-OK"];
-const microphonePath='M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z';
+const sharedInstructions=["REGISTRO DE JUGADORES"];
+const generalInstructions=["REGISTRO DE JUGADORES","COMPLETA LOS DATOS DE CADA JUGADOR","DATOS DE LOS JUGADORES","NOMBRE + CATEGORÍA + HDCP + MARCAS + WHATSAPP OPCIONAL"];
+const stablefordInstructions=["SELECCIONA CATEGORÍA","CAMPEONATO · NEGRAS","A · AZULES","B · BLANCAS","C · BLANCAS","D · BLANCAS","SENIOR · BLANCAS","SUPER SENIOR · AMARILLAS","FEMENINA · ROJAS"];
 
 assert.ok(style,"Falta el sistema visual V304");
 assert.match(style,/#setupStep1>\.nr-button,[\s\S]*?#stablefordSetupOverlay \.stableford-setup-card>\.nr-button/);
@@ -32,21 +31,15 @@ for(const [expected,generalId,stablefordId] of sharedVocabulary){
   assert.equal(buttonText(html,generalId),expected,`${generalId} debe usar vocabulario hermano`);
   assert.equal(buttonText(html,stablefordId),expected,`${stablefordId} debe usar vocabulario hermano`);
 }
-for(const text of sharedInstructions){
-  assert.ok(html.includes(text),`General perdió la instrucción hermana: ${text}`);
-  assert.ok(stable.includes(text),`Stableford perdió la instrucción hermana: ${text}`);
-}
+for(const text of sharedInstructions)assert.ok(html.includes(text),`General perdió la instrucción vigente: ${text}`);
 for(const text of generalInstructions)assert.ok(html.includes(text),`General perdió su ejemplo operativo: ${text}`);
-for(const text of stablefordInstructions)assert.ok(stable.includes(text),`Stableford perdió su ejemplo operativo: ${text}`);
-const stablefordGuide=stable.match(/<div class="newbie-registration-guide"[^>]*>([\s\S]*?)<\/div><div class="nr-mic stableford-registration-mic"/)?.[1]||"";
-assert.doesNotMatch(stablefordGuide,/HDCP|HANDICAP|MARCA/,'La guía visible Stableford no debe pedir HDCP ni marcas');
-assert.ok(html.includes(microphonePath),"General perdió el SVG oficial del micrófono");
-assert.ok(stable.includes(microphonePath),"Stableford perdió el SVG oficial del micrófono");
-assert.match(html,/id="setupMicWrap"[\s\S]*?class="setup-mic-icon"/);
-assert.match(stable,/id="stablefordSetupMicWrap"[\s\S]*?class="setup-mic-icon"/);
-assert.match(html,/\.registration-method \.nr-mic\{width:120px;height:120px;/);
-assert.match(html,/\.registration-method \.nr-mic\{width:112px;height:112px;/);
+
+for(const text of stablefordInstructions)assert.ok(html.includes(text)||stable.includes(text),`Stableford perdió la interfaz vigente: ${text}`);
+assert.match(html,/id="backStablefordSetup"[^>]*>ATRÁS<\/button>/);
+assert.match(html,/id="startStablefordRound"[^>]*>OK<\/button>/);
+assert.match(html,/id="previousStablefordRoundButton"[^>]*>RONDA PREVIA<\/button>/);
+assert.match(html,/id="openCardLibraryStableford"[^>]*>HISTORIAL<\/button>/);
 assert.equal(release.buildNumber,307);
 assert.match(worker,/const CACHE_NAME="gscg-mobile-v\d{3}[^"]*"/);
 
-console.log("PASS V304 · filtro hermano: vocabulario, guía, micrófono, tipografía, tamaño, brillo y estados");
+console.log("PASS V304 · registro manual vigente: vocabulario, categorías, navegación, tipografía, tamaño, brillo y estados");

@@ -1,0 +1,18 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+const hub=fs.readFileSync("live-hub.js","utf8");
+const ui=fs.readFileSync("shortcuts-ui.js","utf8");
+const app=fs.readFileSync("index-grupal.html","utf8");
+assert(hub.includes('$("hubBack").onclick=()=>{const url=new URL("/index-grupal.html"'),"VOLVER A MI SCORE CARD debe navegar directo");
+assert(!hub.includes('$("hubBack").onclick=()=>{root.close();setTimeout(()=>root.history.back(),100)}'),"No usar history.back para volver al Score Card");
+for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAddToBoard","hubTournamentHome"])assert(hub.includes(id),"Falta destino "+id);
+for(const label of ["MI SCORE CARD","CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS"])assert(ui.includes(label),"Falta atajo "+label);
+assert(!ui.includes('b.innerHTML="<img'),"MENÚ no debe insertar ningún logo en el botón");
+assert(ui.includes('b.innerHTML="<span>MENÚ</span>"'),"MENÚ debe mostrar sólo la palabra MENÚ grande y centrada");
+assert(!ui.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png"),"MENÚ no debe usar el icono PWA cuadrado");
+for(const id of ["setupOverlay","finalCardOverlay","cardLibraryOverlay","historyInsightsOverlay","officialCorrectionOverlay"])assert(app.includes('id="'+id+'"')||app.includes('#'+id),"Falta pantalla/overlay "+id);
+assert(ui.includes("official-round-header .round-meta.gsc-shortcuts-host"),"MENÚ debe ocupar el espacio superior de ronda");
+assert(ui.includes('body.classList.remove("gsc-shortcuts-docked")'),"MENÚ no debe reservar una columna lateral ni angostar la Score Card");
+assert(!ui.includes("padding-right:68px!important"),"MENÚ no debe reducir el ancho útil de la app");
+assert(!app.includes("#gscShortcutsButton{display:none"),"La app no debe ocultar MENÚ");
+console.log("PASS LAB deterministic tournament navigation + MENÚ universal overlays");

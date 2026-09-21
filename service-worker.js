@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-prod-manual-50p-11screens-r1`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-prod-manual-50p-11screens-r1-approved`;
-const RELEASE="PROD-MANUAL-50P-11SCREENS-20260919-R1";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-lab-hole-weight-yardage-align-20260921-y`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-lab-four-ball-team-nonumber-20260920-q`;
+const RELEASE="LAB-HOLE-WEIGHT-YARDAGE-ALIGN-20260921-Y";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -19,6 +19,7 @@ const SHELL=[
   "/docs/manual/v311/manual-pages-17-35.json",
   "/7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg",
   "/assets/official-logos/golf-score-card-gt-pwa-v345-192.png",
+  "/assets/official-logos/golf-score-card-gt-horizontal-original.webp",
   "/assets/official-logos/golf-score-card-gt-pwa-v345-512.png",
   "/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png",
   "/docs/manual/v311/manual-scg-pwa-v345-192.png",
@@ -36,6 +37,8 @@ const SHELL=[
   "/live-control.js",
   "/live-hub.html",
   "/live-hub.js",
+  "/shortcuts-ui.js",
+  "/auth-gate.js",
   "/match-play.js",
   "/four-ball.js",
   "/stableford.js",
@@ -95,7 +98,7 @@ async function approvedNavigationWithManualUpdate(request){
   const approved=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});
   if(!approved)return networkFirst(request);
   const html=await approved.text();
-  const recoveryStyle='<style id="gsc-update-recovery">body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:block!important}body.gsc-setup-open:has(#setupOverlay.visible) #setupOverlay{padding-top:max(82px,calc(env(safe-area-inset-top) + 70px))}</style>';
+  const recoveryStyle='<style id="gsc-update-recovery">body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:none!important}body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update.available{display:block!important}</style>';
   const headers=new Headers(approved.headers);headers.set("content-type","text/html; charset=utf-8");headers.delete("content-length");
   return new Response(html.includes('id="gsc-update-recovery"')?html:html.replace("</head>",`${recoveryStyle}</head>`),{status:approved.status,statusText:approved.statusText,headers});
 }

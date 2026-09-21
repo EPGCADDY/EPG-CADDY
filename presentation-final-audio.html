@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Golf Score Card GT — Presentación Final</title>
+<style>
+html,body{margin:0;background:#000;height:100%;overflow:hidden;font-family:Arial,sans-serif}
+.wrap{height:100%;display:flex;align-items:center;justify-content:center;background:#000}
+video{height:100%;width:100%;object-fit:contain;background:#000}
+button{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9;padding:14px 24px;border-radius:999px;border:0;font-weight:700;font-size:17px;background:#fff;color:#111;box-shadow:0 4px 18px #0008}
+.status{position:fixed;top:12px;left:12px;right:12px;text-align:center;color:#fff;font-size:13px;background:#0008;padding:7px 10px;border-radius:12px}
+</style>
+</head>
+<body>
+<div class="wrap"><video id="v" playsinline preload="auto" src="https://cdn.creativeclaw.co/u/9cfd647d/videos/b967beca-2419-4f77-aa6b-8a671f7021ce.mp4"></video></div>
+<audio id="a" preload="auto" src="https://cdn.creativeclaw.co/u/9cfd647d/audio/66db998e-8d26-4dc2-a3fc-b9f59aa97dbb.wav"></audio>
+<div class="status" id="s">Listo · Audio externo sincronizado</div>
+<button id="b">▶ REPRODUCIR CON AUDIO</button>
+<script>
+const v=document.getElementById('v'),a=document.getElementById('a'),b=document.getElementById('b'),s=document.getElementById('s');
+let playing=false;
+async function playBoth(){
+  try{
+    if(!playing){ if(v.ended||a.ended){v.currentTime=0;a.currentTime=0}
+      a.currentTime=v.currentTime;
+      await Promise.all([v.play(),a.play()]);
+      playing=true;b.textContent='❚❚ PAUSA';s.textContent='Reproduciendo video + audio';
+    }else{v.pause();a.pause();playing=false;b.textContent='▶ REPRODUCIR CON AUDIO';s.textContent='Pausado';}
+  }catch(e){s.textContent='Tocá nuevamente REPRODUCIR CON AUDIO';}
+}
+b.addEventListener('click',playBoth);
+v.addEventListener('seeking',()=>{a.currentTime=Math.min(v.currentTime,a.duration||v.currentTime)});
+v.addEventListener('pause',()=>{if(playing)a.pause()});
+v.addEventListener('play',()=>{if(playing&&!a.paused)return;});
+a.addEventListener('ended',()=>{v.pause();playing=false;b.textContent='↻ REINICIAR';s.textContent='Presentación finalizada'});
+setInterval(()=>{if(playing&&Math.abs(v.currentTime-a.currentTime)>.35){a.currentTime=v.currentTime}},500);
+</script>
+</body></html>

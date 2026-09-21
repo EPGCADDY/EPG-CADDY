@@ -41,17 +41,5 @@ jobs:
       - name: Block thin Match Play arrows and verbose format labels
         run: node test-v307-match-arrows-format.mjs
 
-      - name: Block iPhone microphone and universal voice regressions
-        run: node test-v357-ios-voice-transport-recovery.mjs
-
-      - name: Block delayed multi-hole rendering and round-loss regressions
-        run: node test-v357-synchronized-progressive-voice.mjs
-
-      - name: Block synchronized parser, persistence and male-voice regressions
-        run: node test-v359-ios-score-parser-recovery.mjs && node test-v361-synchronized-voice.mjs && node test-v362-physical-voice-recovery.mjs
-
-      - name: Preserve approved voice behavior V354 through V356
-        run: node test-v354-voice-fallback.mjs && node test-v355-ios-audio-dictation.mjs && node test-v356-voice-only-cedar-quality.mjs
-
-      - name: Preserve approved traffic and weather behavior
-        run: node test-v324-real-traffic.mjs && node test-v337-universal-weather.mjs && node test-v356-traffic-weather-accuracy.mjs
+      - name: Block retired microphone and AI regressions; preserve current LAB profile
+        run: node scripts/build-manual-lab.mjs
