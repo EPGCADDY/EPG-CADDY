@@ -3888,6 +3888,31 @@ setInterval(syncPublishedAppVersion,30000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout(syncPublishedAppVersion,800)});
 </script>
 <script>window.GSCDeviceClosures.bindControls();</script><a id="gscShortcutsButton" href="/live-hub.html" aria-label="Abrir Atajos"><span>ATAJOS</span></a><script src="./shortcuts-ui.js"></script><script src="./auth-gate.js"></script>
+<script id="gsc-manual-action-router">
+document.addEventListener("DOMContentLoaded",()=>{
+  const action=new URLSearchParams(location.search).get("manual_action");
+  if(!action)return;
+  const later=(fn)=>setTimeout(()=>{try{fn()}catch(error){console.warn("MANUAL_ACTION",action,error?.message||error)}},450);
+  const click=id=>document.getElementById(id)?.click();
+  const scroll=id=>document.getElementById(id)?.scrollIntoView({block:"start",behavior:"smooth"});
+  const handlers={
+    setup:()=>openNewRoundDraft(),
+    stableford:()=>openFreshStablefordSetup(),
+    scorecard:()=>{document.querySelector(".app")?.scrollIntoView({block:"start"});},
+    manual:()=>{scroll("roundManualEntry");},
+    final:()=>round?.configured?openFinalDigitalCard():openNewRoundDraft(),
+    history:()=>openCardLibrary(),
+    stats:()=>openHistoryInsights(),
+    account:()=>openCentralAccount(),
+    menu:()=>document.getElementById("gscShortcutsButton")?.click(),
+    timer:()=>scroll("roundTimerToggle"),
+    rules:()=>document.querySelector(".golf-rules-launch")?.click(),
+    install:()=>document.querySelector(".pwa-install-button")?.click(),
+    correction:()=>{if(round?.configured&&round?.officiallyClosedAt)openOfficialCorrection();else openCardLibrary();}
+  };
+  if(handlers[action])later(handlers[action]);
+});
+</script>
 <script id="gsc-tournament-center-direct">
 document.addEventListener("DOMContentLoaded",()=>{
   const button=document.getElementById("tournamentLiveHome");
