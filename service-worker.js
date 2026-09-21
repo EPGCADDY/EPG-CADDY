@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-large-centro-torneos-backup-label-20260921-ad`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-explicit-update-button-20260921-ae`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-lab-four-ball-team-nonumber-20260920-q`;
-const RELEASE="LARGE-CENTRO-TORNEOS-BACKUP-LABEL-20260921-AD";
+const RELEASE="EXPLICIT-UPDATE-BUTTON-20260921-AE";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -80,7 +80,7 @@ async function promoteCandidate(){
 }
 
 self.addEventListener("install",event=>event.waitUntil(refreshShell().then(()=>self.skipWaiting())));
-self.addEventListener("activate",event=>event.waitUntil(refreshShell().then(()=>promoteCandidate()).then(()=>self.clients.claim())));
+self.addEventListener("activate",event=>event.waitUntil(ensureApprovedShell().then(()=>self.clients.claim())));
 self.addEventListener("message",event=>{
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
   if(event.data?.type==="PROMOTE_BUILD"&&event.data?.build===RELEASE)event.waitUntil(promoteCandidate());
