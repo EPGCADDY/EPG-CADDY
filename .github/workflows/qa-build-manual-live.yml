@@ -1,0 +1,17 @@
+name: QA build manual live
+on:
+  push:
+    branches: [qa-build-manual-live-20260921]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run exact Vercel manual build
+        run: node scripts/build-manual-lab.mjs
