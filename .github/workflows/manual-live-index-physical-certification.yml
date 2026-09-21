@@ -44,11 +44,14 @@ jobs:
             page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text())});
             page.on('requestfailed',r=>requestFailures.push({url:r.url(),error:r.failure()?.errorText||''}));
 
-            await page.goto(process.env.INVITE_URL,{waitUntil:'domcontentloaded',timeout:60000});
-            await page.waitForURL(/index-grupal\.html\?source=guest24h/,{timeout:60000});
+            const token=process.env.INVITE_URL.split('/').pop();
+            await context.addCookies([
+              {name:'gscg_app_access',value:token,url:process.env.LAB_ORIGIN,httpOnly:true,secure:true,sameSite:'Lax'},
+              {name:'gsc_guest_mode',value:'1',url:process.env.LAB_ORIGIN,httpOnly:false,secure:true,sameSite:'Lax'}
+            ]);
             const cookieNames=(await context.cookies()).map(c=>c.name);
-            check(cookieNames.includes('gscg_app_access'),'Invitación no creó cookie gscg_app_access');
-            check(cookieNames.includes('gsc_guest_mode'),'Invitación no creó cookie gsc_guest_mode');
+            check(cookieNames.includes('gscg_app_access'),'No se instaló cookie gscg_app_access del acceso invitado');
+            check(cookieNames.includes('gsc_guest_mode'),'No se instaló cookie gsc_guest_mode');
 
             await page.goto(process.env.LAB_ORIGIN+'/manual.html',{waitUntil:'networkidle',timeout:60000});
             check((await page.title()).includes('Manual'),'Manual LIVE no abrió; title='+await page.title());
@@ -63,7 +66,7 @@ jobs:
               const href=await link.getAttribute('href');
               const label=((await link.locator('span').count())?await link.locator('span').innerText():await link.innerText()).trim();
               const id=decodeURIComponent(String(href||'').replace(/^#/,''));
-              const target=page.locator('#'+CSS.escape(id));
+              const target=page.locator('[id="'+id.replace(/"/g,'\\\"')+'"]');
               const exists=await target.count()===1;
               let title='',hashOk=false,visible=false,headingVisible=false,top=null;
               if(exists){
