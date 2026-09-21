@@ -11,8 +11,8 @@ assert(!ui.includes('b.innerHTML="<img'),"MENÚ no debe insertar ningún logo en
 assert(ui.includes('b.innerHTML="<span>MENÚ</span>"'),"MENÚ debe mostrar sólo la palabra MENÚ grande y centrada");
 assert(!ui.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png"),"MENÚ no debe usar el icono PWA cuadrado");
 for(const id of ["setupOverlay","finalCardOverlay","cardLibraryOverlay","historyInsightsOverlay","officialCorrectionOverlay"])assert(app.includes('id="'+id+'"')||app.includes('#'+id),"Falta pantalla/overlay "+id);
-assert(ui.includes("official-round-header .round-meta.gsc-shortcuts-host"),"MENÚ debe ocupar el espacio superior de ronda");
-assert(ui.includes('body.classList.remove("gsc-shortcuts-docked")'),"MENÚ no debe reservar una columna lateral ni angostar la Score Card");
+assert(ui.includes("position:fixed!important"),"MENÚ debe permanecer flotante y visible sobre cualquier pantalla");
+assert(ui.includes('item("manual","MANUAL DE USUARIO"'),"MENÚ debe incluir acceso directo al Manual");
 assert(!ui.includes("padding-right:68px!important"),"MENÚ no debe reducir el ancho útil de la app");
 assert(!app.includes("#gscShortcutsButton{display:none"),"La app no debe ocultar MENÚ");
 console.log("PASS LAB deterministic tournament navigation + MENÚ universal overlays");
