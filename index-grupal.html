@@ -2989,10 +2989,10 @@ function matchPlaySummaryRows(){return round.players.map((player,index)=>{const 
 function teamStandingSpeech(value){return String(value||"").replace(" · ",", ").replace(/\bUP\b/gi,"arriba").replace(/\bDOWN\b/gi,"abajo").replace(/\bAS\b/gi,"empatado").replace(/\+(\d+)/g,"$1 arriba").replace(/−(\d+)/g,"$1 abajo").replace(/\bEVEN\b/gi,"empatado")}
 function matchPlayFinalSpeech(state=matchPlayStatus()){const result=teamStandingSpeech(String(state.resultLabel||"").replace(/\s*&\s*/g," y ")),standings=round.players.map((player,index)=>teamStandingSpeech(matchPlaySegment(index,ALL).label)).filter(Boolean).join(". ");return`Fin del Match. ${result}. ${standings}.`}
 function renderMatchPlay(){
-  const output=baseRender(),state=matchPlayStatus();round.matchPlay={...state,holes:undefined};document.body.classList.add("match-play-mode");document.querySelector(".round-meta h1").textContent="MATCH PLAY";
-  $("summaryTitle").textContent="RESULTADO MATCH PLAY";$("summaryHeadRow").innerHTML='<th class="summary-player">JUGADOR</th><th>GROSS IN</th><th>GROSS OUT</th><th>GROSS TOTAL</th><th>HCP</th><th>MATCH IN</th><th>MATCH OUT</th><th>MATCH TOTAL</th>';$("summaryBody").innerHTML=matchPlaySummaryRows();
-  let indicator=$("matchPlayStatus");if(!indicator){indicator=document.createElement("section");indicator.id="matchPlayStatus";indicator.className="match-play-status";document.querySelector(".summary").before(indicator)}indicator.innerHTML=state.closed?`FIN DEL MATCH · <strong>${escapeHtml(state.resultLabel)}</strong> · RESULTADO NETO`:`MATCH PLAY · <strong>${escapeHtml(state.resultLabel)}</strong> · RESULTADO NETO`;
-  $("status").textContent=state.closed?`FIN DEL MATCH · ${state.resultLabel}`:`MATCH ACTIVO · ${state.resultLabel}`;$("finalCardButton").textContent=state.closed?"TARJETA DIGITAL FINAL":"TARJETA DIGITAL";return output
+  const output=baseRender(),state=matchPlayStatus();round.matchPlay={...state,holes:undefined};document.body.classList.add("match-play-mode");const matchTitle=document.querySelector(".round-meta h1");if(matchTitle)matchTitle.textContent="MATCH PLAY";
+  const matchSummaryTitle=$("summaryTitle"),matchSummaryHead=$("summaryHeadRow"),matchSummaryBody=$("summaryBody");if(matchSummaryTitle)matchSummaryTitle.textContent="RESULTADO MATCH PLAY";if(matchSummaryHead)matchSummaryHead.innerHTML='<th class="summary-player">JUGADOR</th><th>GROSS IN</th><th>GROSS OUT</th><th>GROSS TOTAL</th><th>HCP</th><th>MATCH IN</th><th>MATCH OUT</th><th>MATCH TOTAL</th>';if(matchSummaryBody)matchSummaryBody.innerHTML=matchPlaySummaryRows();
+  let indicator=$("matchPlayStatus");if(!indicator){const summaryNode=document.querySelector(".summary");if(summaryNode){indicator=document.createElement("section");indicator.id="matchPlayStatus";indicator.className="match-play-status";summaryNode.before(indicator)}}if(indicator)indicator.innerHTML=state.closed?`FIN DEL MATCH · <strong>${escapeHtml(state.resultLabel)}</strong> · RESULTADO NETO`:`MATCH PLAY · <strong>${escapeHtml(state.resultLabel)}</strong> · RESULTADO NETO`;
+  const matchStatusNode=$("status"),matchFinalButton=$("finalCardButton");if(matchStatusNode)matchStatusNode.textContent=state.closed?`FIN DEL MATCH · ${state.resultLabel}`:`MATCH ACTIVO · ${state.resultLabel}`;if(matchFinalButton)matchFinalButton.textContent=state.closed?"TARJETA DIGITAL FINAL":"TARJETA DIGITAL";return output
 }
 function fourBallStatus(){return window.GSCFourBall.status(round.players)}
 function fourBallSegment(teamIndex,holes){return window.GSCFourBall.teamStanding(round.players,teamIndex,holes)}
@@ -3051,10 +3051,10 @@ function fourBallSimpleStatus(){
   if(count===1){const team=fourBallTeamTotals(0,ALL);return team.count?`TEAM · NETO ${team.net}`:"TEAM · PENDIENTE"}
   return fourBallStatus().resultLabel
 }
-function renderFourBall(){  const output=baseRender(),state=fourBallStatus();round.fourBall={...state,holes:undefined};document.body.classList.add("four-ball-mode");document.querySelector(".round-meta h1").textContent="FOUR BALL";
-  $("summaryTitle").textContent="RESULTADO FOUR BALL";$("summaryHeadRow").innerHTML='<th class="summary-player">JUGADOR</th><th>GROSS</th><th>NETO</th><th>GROSS TEAM</th><th>NETO TEAM</th>';$("summaryBody").innerHTML=fourBallSummaryRows();
-  let indicator=$("fourBallStatus");if(!indicator){indicator=document.createElement("section");indicator.id="fourBallStatus";indicator.className="match-play-status four-ball-status";document.querySelector(".summary").before(indicator)}indicator.innerHTML=`FOUR BALL · <strong>${escapeHtml(fourBallSimpleStatus())}</strong>`;
-  $("status").textContent=state.closed?`FIN FOUR BALL · ${fourBallSimpleStatus()}`:`FOUR BALL ACTIVO · ${fourBallSimpleStatus()}`;$("finalCardButton").textContent=state.closed?"TARJETA DIGITAL FINAL":"TARJETA DIGITAL";return output
+function renderFourBall(){  const output=baseRender(),state=fourBallStatus();round.fourBall={...state,holes:undefined};document.body.classList.add("four-ball-mode");const fourTitle=document.querySelector(".round-meta h1");if(fourTitle)fourTitle.textContent="FOUR BALL";
+  const fourSummaryTitle=$("summaryTitle"),fourSummaryHead=$("summaryHeadRow"),fourSummaryBody=$("summaryBody");if(fourSummaryTitle)fourSummaryTitle.textContent="RESULTADO FOUR BALL";if(fourSummaryHead)fourSummaryHead.innerHTML='<th class="summary-player">JUGADOR</th><th>GROSS</th><th>NETO</th><th>GROSS TEAM</th><th>NETO TEAM</th>';if(fourSummaryBody)fourSummaryBody.innerHTML=fourBallSummaryRows();
+  let indicator=$("fourBallStatus");if(!indicator){const summaryNode=document.querySelector(".summary");if(summaryNode){indicator=document.createElement("section");indicator.id="fourBallStatus";indicator.className="match-play-status four-ball-status";summaryNode.before(indicator)}}if(indicator)indicator.innerHTML=`FOUR BALL · <strong>${escapeHtml(fourBallSimpleStatus())}</strong>`;
+  const fourStatusNode=$("status"),fourFinalButton=$("finalCardButton");if(fourStatusNode)fourStatusNode.textContent=state.closed?`FIN FOUR BALL · ${fourBallSimpleStatus()}`:`FOUR BALL ACTIVO · ${fourBallSimpleStatus()}`;if(fourFinalButton)fourFinalButton.textContent=state.closed?"TARJETA DIGITAL FINAL":"TARJETA DIGITAL";return output
 }
 function fourBallFinalSpeech(state=fourBallStatus()){const result=teamStandingSpeech(String(state.resultLabel||"").replace(/\s*&\s*/g," y ")),standings=Array.from({length:state.teamCount||0},(_,index)=>teamStandingSpeech(fourBallSegment(index,ALL).label)).filter(Boolean).join(". ");return`Fin del Four Ball. ${result}. ${standings}.`}
 function universalesHole(hole){return window.GSCUniversales.hole(round.players,hole,(player,number)=>derivedScoreForHole(player,number))}function universalesSegment(holes){return window.GSCUniversales.totals(round.players,holes,(player,number)=>derivedScoreForHole(player,number))}
@@ -3071,12 +3071,12 @@ function universalesSummaryRows(){
 }
 function renderUniversales(){
   const output=baseRender();
-  document.querySelector(".round-meta h1").textContent="UNIVERSALES";
-  $("scorecard").innerHTML=scorecardLead()+round.players.map((player,index)=>universalesPlayerBlock(player,index+1)).join("");
-  $("summaryTitle").textContent="PUNTOS UNIVERSALES";
-  $("summaryHeadRow").innerHTML='<th class="summary-player">JUGADOR</th><th>GROSS IN</th><th>GROSS OUT</th><th>GROSS TOTAL</th><th>HCP</th><th>PUNTOS IN</th><th>PUNTOS OUT</th><th>PUNTOS TOTAL</th>';
-  $("summaryBody").innerHTML=universalesSummaryRows();
-  $("status").textContent=`UNIVERSALES ACTIVO · ${round.players.length} JUGADORES · 12 PUNTOS POR HOYO`;
+  const universalesTitle=document.querySelector(".round-meta h1");if(universalesTitle)universalesTitle.textContent="UNIVERSALES";
+  const universalesScorecard=$("scorecard");if(universalesScorecard)universalesScorecard.innerHTML=scorecardLead()+round.players.map((player,index)=>universalesPlayerBlock(player,index+1)).join("");
+  const universalesSummaryTitle=$("summaryTitle");if(universalesSummaryTitle)universalesSummaryTitle.textContent="PUNTOS UNIVERSALES";
+  const universalesSummaryHead=$("summaryHeadRow");if(universalesSummaryHead)universalesSummaryHead.innerHTML='<th class="summary-player">JUGADOR</th><th>GROSS IN</th><th>GROSS OUT</th><th>GROSS TOTAL</th><th>HCP</th><th>PUNTOS IN</th><th>PUNTOS OUT</th><th>PUNTOS TOTAL</th>';
+  const universalesSummaryBody=$("summaryBody");if(universalesSummaryBody)universalesSummaryBody.innerHTML=universalesSummaryRows();
+  const universalesStatus=$("status");if(universalesStatus)universalesStatus.textContent=`UNIVERSALES ACTIVO · ${round.players.length} JUGADORES · 12 PUNTOS POR HOYO`;
   renderRoundManualEntry();bindRoundManualCells();return output
 }
 function activeTeamMatchStatus(){return isFourBallRound()?fourBallStatus():isMatchPlayRound()?matchPlayStatus():null}
