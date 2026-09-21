@@ -6,7 +6,7 @@ const app=fs.readFileSync("index-grupal.html","utf8");
 assert(hub.includes('$("hubBack").onclick=()=>{const url=new URL("/index-grupal.html"'),"VOLVER A MI SCORE CARD debe navegar directo");
 assert(!hub.includes('$("hubBack").onclick=()=>{root.close();setTimeout(()=>root.history.back(),100)}'),"No usar history.back para volver al Score Card");
 for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAddToBoard","hubTournamentHome"])assert(hub.includes(id),"Falta destino "+id);
-for(const label of ["MI SCORE CARD","MIS TORNEOS","MONITOR DEL TORNEO EN VIVO","VER RESULTADOS POR CATEGORÍA","BUSCAR JUGADOR","SEGUIR JUGADORES / GRUPOS"])assert(ui.includes(label),"Falta atajo "+label);
+for(const label of ["MI SCORE CARD","MIS TORNEOS","MONITOR DEL TORNEO EN VIVO","VER RESULTADOS POR CATEGORÍA","BUSCAR JUGADOR","TABLERO DE MIS FAVORITOS"])assert(ui.includes(label),"Falta atajo "+label);
 assert(!ui.includes('b.innerHTML="<img'),"MENÚ no debe insertar ningún logo en el botón");
 assert(ui.includes('b.innerHTML="<span>MENÚ</span>"'),"MENÚ debe mostrar sólo la palabra MENÚ grande y centrada");
 assert(!ui.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png"),"MENÚ no debe usar el icono PWA cuadrado");
