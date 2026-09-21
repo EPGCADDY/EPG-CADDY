@@ -1,0 +1,116 @@
+name: Manual live index physical certification
+on:
+  push:
+    branches: [qa-manual-live-20260921]
+permissions:
+  contents: read
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium + Playwright
+        run: |
+          mkdir -p /tmp/manual-live-qa
+          cd /tmp/manual-live-qa
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 --no-audit --no-fund
+          npx playwright install chromium
+      - name: Physically click all manual index topics on LIVE LAB
+        env:
+          INVITE_URL: "https://golf-sc-gt-lab.vercel.app/invite/crAoOIZnDufSHzyCEcyhSgcXnmF0zY1vhFQh4PrlVoY"
+          LAB_ORIGIN: "https://golf-sc-gt-lab.vercel.app"
+        run: |
+          mkdir -p evidence/manual-live-index
+          cat > /tmp/manual-live-qa/audit.cjs <<'NODE'
+          const {chromium}=require('/tmp/manual-live-qa/node_modules/playwright');
+          const fs=require('fs');
+          const path=require('path');
+          const results={startedAt:new Date().toISOString(),invite:process.env.INVITE_URL,origin:process.env.LAB_ORIGIN,topics:[],fail:[]};
+          const check=(ok,msg)=>{if(!ok)results.fail.push(msg)};
+          const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const context=await browser.newContext({
+              viewport:{width:430,height:932},
+              deviceScaleFactor:3,
+              isMobile:true,
+              hasTouch:true,
+              userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X) AppleWebKit/605.1.15 Version/26.0 Mobile/15E148 Safari/604.1'
+            });
+            const page=await context.newPage();
+            const consoleErrors=[],requestFailures=[];
+            page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text())});
+            page.on('requestfailed',r=>requestFailures.push({url:r.url(),error:r.failure()?.errorText||''}));
+
+            await page.goto(process.env.INVITE_URL,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForURL(/index-grupal\.html\?source=guest24h/,{timeout:60000});
+            const cookieNames=(await context.cookies()).map(c=>c.name);
+            check(cookieNames.includes('gscg_app_access'),'Invitación no creó cookie gscg_app_access');
+            check(cookieNames.includes('gsc_guest_mode'),'Invitación no creó cookie gsc_guest_mode');
+
+            await page.goto(process.env.LAB_ORIGIN+'/manual.html',{waitUntil:'networkidle',timeout:60000});
+            check((await page.title()).includes('Manual'),'Manual LIVE no abrió; title='+await page.title());
+            check(await page.locator('#indice').count()===1,'Índice general no existe en manual LIVE');
+
+            const anchors=page.locator('#indice .toc a[href^="#"]');
+            const count=await anchors.count();
+            check(count===74,'Índice LIVE debe tener 74 temas; tiene '+count);
+
+            for(let i=0;i<count;i++){
+              const link=anchors.nth(i);
+              const href=await link.getAttribute('href');
+              const label=((await link.locator('span').count())?await link.locator('span').innerText():await link.innerText()).trim();
+              const id=decodeURIComponent(String(href||'').replace(/^#/,''));
+              const target=page.locator('#'+CSS.escape(id));
+              const exists=await target.count()===1;
+              let title='',hashOk=false,visible=false,headingVisible=false,top=null;
+              if(exists){
+                const heading=target.locator('h1,h2').first();
+                title=(await heading.count()?await heading.innerText():'').trim();
+                await link.scrollIntoViewIfNeeded();
+                await link.click();
+                // The production stabilizer intentionally re-aligns through 2.2 s
+                // to survive lazy-image layout shifts. Wait past that window.
+                await sleep(2350);
+                hashOk=(await page.evaluate(()=>location.hash))===href;
+                const metrics=await target.evaluate(el=>{
+                  const r=el.getBoundingClientRect();
+                  const h=el.querySelector('h1,h2')?.getBoundingClientRect();
+                  return {
+                    top:r.top,bottom:r.bottom,
+                    visible:r.bottom>0&&r.top<innerHeight,
+                    headingVisible:!!h&&h.bottom>0&&h.top<innerHeight
+                  };
+                });
+                top=Math.round(metrics.top);
+                visible=metrics.visible;
+                headingVisible=metrics.headingVisible;
+                await page.screenshot({path:path.join('evidence/manual-live-index',String(i+1).padStart(2,'0')+'-'+id+'.png'),fullPage:false});
+              }
+              const ok=exists&&hashOk&&visible&&headingVisible;
+              const item={n:i+1,href,id,label,title,exists,hashOk,visible,headingVisible,top,ok};
+              results.topics.push(item);
+              if(!ok)results.fail.push('Tema '+(i+1)+' '+label+' -> '+JSON.stringify(item));
+            }
+
+            results.consoleErrors=consoleErrors;
+            results.requestFailures=requestFailures.filter(x=>!x.url.includes('/api/traffic'));
+            results.finishedAt=new Date().toISOString();
+            results.pass=results.fail.length===0;
+            fs.writeFileSync('evidence/manual-live-index/certification.json',JSON.stringify(results,null,2));
+            console.log('MANUAL LIVE INDEX PHYSICAL CERTIFICATION',results.pass?'PASS':'FAIL');
+            console.log('TOPICS',results.topics.length,'PASS',results.topics.filter(x=>x.ok).length,'FAIL',results.topics.filter(x=>!x.ok).length);
+            if(results.fail.length)console.error(results.fail.join('\n'));
+            await browser.close();
+            if(!results.pass)process.exit(1);
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          node /tmp/manual-live-qa/audit.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: manual-live-index-physical-certification
+          path: evidence/manual-live-index
+          retention-days: 2
