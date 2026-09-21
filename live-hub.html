@@ -8,10 +8,10 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/official-logos/golf-score-card-gt-pwa-v345-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
-  <title>Torneo Live · Golf Score Card GT</title>
+  <title>Monitor del Torneo en Vivo · Golf Score Card GT</title>
   <meta property="og:site_name" content="Golf Score Card GT">
-  <meta property="og:title" content="Golf Score Card GT · Torneo Live">
-  <meta property="og:description" content="General, categorías y tablero personalizado del torneo en vivo.">
+  <meta property="og:title" content="Golf Score Card GT · Monitor del Torneo en Vivo">
+  <meta property="og:description" content="Resultados, categorías y seguimiento de jugadores y grupos del torneo en vivo.">
   <meta property="og:image" content="/assets/official-logos/golf-score-card-gt-pwa-v345-512.png">
   <link rel="stylesheet" href="/gsc-design-system.css">
   <style>
@@ -56,34 +56,34 @@
   <main class="hub">
     <header class="head">
       <img src="/assets/official-logos/golf-score-card-gt-pwa-v345-192.png" alt="Golf Score Card GT">
-      <div><h1>TORNEO LIVE</h1><p>BUSCA · ELIGE · MIRA</p></div>
+      <div><h1>TORNEOS EN VIVO</h1><p>ELIGE · MIRA RESULTADOS · SIGUE</p></div>
       <button class="back" id="hubBack" type="button">VOLVER A MI SCORE CARD</button>
     </header>
 
-    <div class="state" id="hubState" role="status" aria-live="polite">LISTO PARA CONECTAR LA GENERAL</div>
+    <div class="state" id="hubState" role="status" aria-live="polite">LISTO PARA ABRIR EL MONITOR DEL TORNEO</div>
     <div class="public-display-status" id="publicDisplayStatus" aria-live="polite"><strong id="publicDisplayScene">GENERAL</strong><span>PRÓXIMO CAMBIO EN <b id="publicDisplayCountdown">10</b>s</span></div>
     <section class="tournament-shelf" id="hubTournamentShelf" aria-label="Mis torneos guardados">
-      <h2>CENTRO DE TORNEOS</h2>
-      <p>ELIGE EL TORNEO QUE QUIERES VER.</p>
+      <h2>MIS TORNEOS</h2>
+      <p>ELIGE O AGREGA EL TORNEO QUE QUIERES SEGUIR.</p>
       <div class="tournament-cards" id="hubTournamentCards"></div>
       <button class="secondary" id="hubAddTournament" type="button">+ AGREGAR OTRO TORNEO</button>
     </section>
     <section class="viewer-entry" id="hubTournamentEntry">
-      <h2>VER TORNEO</h2>
+      <h2>ABRIR TORNEO CON ENLACE</h2>
       <p>PEGA EL ENLACE QUE TE COMPARTIERON.</p>
       <div><input id="hubTournamentLink" type="url" placeholder="ENLACE DEL TORNEO" aria-label="Enlace del torneo"><button class="primary" id="hubOpenTournament" type="button">ENTRAR</button></div>
     </section>
 
     <nav class="monitor-switch" aria-label="Elegir vista del torneo">
-      <button class="active" id="hubShowGeneral" type="button">GENERAL</button>
-      <button id="hubShowCategories" type="button">CATEGORÍAS</button>
-      <button id="hubShowIndividual" type="button">BUSCAR POR NOMBRE</button>
-      <button id="hubAddToBoard" type="button">MIS FAVORITOS</button>
+      <button class="active" id="hubShowGeneral" type="button">MONITOR DEL TORNEO</button>
+      <button id="hubShowCategories" type="button">POR CATEGORÍA</button>
+      <button id="hubShowIndividual" type="button">BUSCAR JUGADOR</button>
+      <button id="hubAddToBoard" type="button">SEGUIMIENTO</button>
     </nav>
-    <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← CENTRO DE TORNEOS</button>
+    <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← MIS TORNEOS</button>
 
     <section class="panel monitor-panel" id="hubGeneralPanel">
-      <h2>JUGADORES EN VIVO</h2>
+      <h2>RESULTADOS DEL TORNEO EN VIVO</h2>
       <p class="panel-note">ESCRIBE UN NOMBRE O ELIGE UNA CATEGORÍA.</p>
       <div class="search">
         <input id="hubSearch" type="search" maxlength="80" placeholder="NOMBRE DEL JUGADOR">
@@ -104,14 +104,14 @@
         <button class="secondary" id="hubPublicDisplay" type="button">PANTALLA PÚBLICA</button>
         <button class="danger" id="hubRemoveGeneral" type="button">QUITAR ESTE TORNEO</button>
       </div></details>
-      <div class="leader-wrap" id="hubLeaderWrap"><div class="empty">ABRE EL ENLACE GENERAL Y TOCA “ABRIR EN CENTRO LIVE”.</div></div>
+      <div class="leader-wrap" id="hubLeaderWrap"><div class="empty">ABRE EL TORNEO PARA VER SUS RESULTADOS EN VIVO.</div></div>
     </section>
 
     <section class="panel monitor-panel hidden" id="hubIndividualPanel">
-      <h2>MIS FAVORITOS</h2>
+      <h2>JUGADORES Y GRUPOS QUE SIGO</h2>
       <p class="panel-note">AQUÍ APARECEN LOS JUGADORES Y GRUPOS QUE SIGUES EN ESTE TORNEO.</p>
       <div class="favorites" id="hubFavorites"><div class="empty">TODAVÍA NO SIGUES A NADIE.</div></div>
-      <div class="actions" style="margin-top:9px"><button class="danger" id="hubClearFavorites" type="button">LIMPIAR MONITOR INDIVIDUAL</button></div>
+      <div class="actions" style="margin-top:9px"><button class="danger" id="hubClearFavorites" type="button">DEJAR DE SEGUIR A TODOS</button></div>
       <details class="viewer-tools"><summary>AGREGAR JUGADOR EXTERNO</summary><div class="import">
         <input id="hubImportLink" type="url" placeholder="PEGA UNA VEZ SU ENLACE LIVE">
         <button class="primary" id="hubImportButton" type="button">AGREGAR</button>
