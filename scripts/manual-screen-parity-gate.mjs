@@ -48,14 +48,14 @@ for(const token of ["INICIO","FINAL","TIMER","RESET","HH:MM:SS","pausar","reanud
 assert(app.includes('id="roundTimerToggle"')&&app.includes('aria-label="Pausar o reanudar timer"'),"LAB debe mantener TIMER pulsable para pausar/reanudar");
 assert(app.includes('id="resetClockButton"')&&app.includes("¿CONFIRMAS REINICIAR EL CRONÓMETRO A 00:00:00?"),"LAB debe mantener RESET con confirmación");
 for(const id of ["torneos","torneos-01","torneos-02","torneos-03","torneos-04","torneos-05","torneos-06","torneos-07","torneos-08","torneos-09"]) assert(manual.includes('id="'+id+'"'),"Falta hoja del capítulo Torneos: "+id);
-for(const token of ["CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS","MENÚ siempre contigo"]) assert(manual.includes(token),"Capítulo Torneos incompleto: "+token);
+for(const token of ["MIS TORNEOS","MONITOR DEL TORNEO EN VIVO","VER RESULTADOS POR CATEGORÍA","BUSCAR JUGADOR","SEGUIR JUGADORES / GRUPOS","MENÚ siempre contigo"]) assert(manual.includes(token),"Capítulo Torneos incompleto: "+token);
 for(const removed of ["REGISTRO POR VOZ","DICTADO","CADDIE UNIVERSAL","INTELIGENCIA ARTIFICIAL","CLIMA","GPS","WOLF","VEGAS","DOTS"]) assert(!hasWord(manual,removed),"El manual reintroduce función retirada: "+removed);
 for(const removed of ["MIC","MICRÓFONO","MICROFONO"]) assert(!hasWord(manual,removed),"El manual reintroduce control de micrófono retirado: "+removed);
 assert(!manual.includes("/docs/manual/layout/page-20.png"),"No debe reintroducir Scores por voz");
 for(let p=46;p<=67;p++) assert(!manual.includes("/docs/manual/layout/page-"+String(p).padStart(2,"0")+".png"),"No debe reintroducir hoja retirada page-"+p);
 assert(app.includes("shortcuts-ui.js"),"Score Card debe cargar MENÚ");
 assert(hub.includes("shortcuts-ui.js"),"Torneos debe cargar MENÚ");
-for(const t of ["MI SCORE CARD","CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS"]) assert(shortcuts.includes(t),"MENÚ incompleto: "+t);
+for(const t of ["MI SCORE CARD","MIS TORNEOS","MONITOR DEL TORNEO EN VIVO","VER RESULTADOS POR CATEGORÍA","BUSCAR JUGADOR","SEGUIR JUGADORES / GRUPOS"]) assert(shortcuts.includes(t),"MENÚ incompleto: "+t);
 assert(manual.includes("Registro de jugadores + MENÚ")&&manual.includes("Four Ball corregido + MENÚ"),"Las pantallas reales deben documentar MENÚ");
 assert(cards.includes("fourBallTeamLabel")&&!cards.includes("TEAM 1")&&!cards.includes("TEAM 2")&&!cards.includes("TEAM 3"),"Tarjetas Four Ball no deben reintroducir TEAM numerado");
 assert(!fourBall.includes('"TEAM 1"')&&!fourBall.includes('"TEAM 2"')&&!fourBall.includes('"TEAM 3"'),"Motor Four Ball no debe reintroducir TEAM numerado");
