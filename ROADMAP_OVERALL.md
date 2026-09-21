@@ -1,5 +1,15 @@
 # ROADMAP OVERALL
 
+## LAB 20-sep-2026 · cambio de modalidad con scores existentes
+
+- Se elimina el bloqueo que impedía cambiar modalidad cuando la ronda ya tenía scores registrados.
+- Los scores existentes se conservan al cambiar entre modalidades compatibles; la validación propia de cantidad de jugadores de cada modalidad permanece activa.
+- El flujo editado persiste la nueva modalidad mediante `round.mode=draftRoundMode` sin borrar `player.holes`.
+- Prueba permanente actualizada: `test-lab-edit-round-mode.mjs`, que exige cambio de modalidad con scores conservados y prohíbe el mensaje de bloqueo anterior.
+- Archivos funcionales y de QA del cambio: `index-grupal.html` y `test-lab-edit-round-mode.mjs`.
+- Producción permanece intacta; alcance exclusivo LAB hasta certificación integral.
+
+
 
 ## V407-R29 · envío de Tarjeta Digital compatible con el toque de iPhone · 12 de septiembre de 2026
 
