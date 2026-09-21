@@ -37,12 +37,12 @@ const mountedCurrent=[
  "/docs/manual/current/APP_MODE_PRACTICE.png"
 ];
 for(const img of mountedCurrent) assert(manual.includes(img),"Falta pantalla física actual montada en manual: "+img);
-for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","TARJETA DIGITAL FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","CORREGIR RONDA","HISTORIAL DE TARJETAS"]) {
+for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","MI TARJETA FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","CORREGIR RONDA","MIS RONDAS GUARDADAS"]) {
   assert(app.includes(token)||hub.includes(token),"LAB actual no contiene control esperado: "+token);
 }
 assert(manual.includes("/docs/manual/current/MONITOR_TIEMPO_REAL_LAB.png"),"Falta captura física vigente del Monitor de Tiempo");
 assert(manual.includes("/docs/manual/current/OPERACION_RONDA_INFERIOR_REAL_LAB.png"),"Falta captura física de la zona operativa inferior");
-for(const token of ["AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","GROSS IN","GROSS OUT","GROSS TOTAL","NETO TOTAL","+/- NETO","TARJETA DIGITAL","HISTORIAL","NUEVA RONDA","ATRÁS","BORRAR SCORES","BORRAR TODO"]) assert(manual.includes(token),"Zona operativa inferior incompleta en manual: "+token);
+for(const token of ["AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","GROSS IN","GROSS OUT","GROSS TOTAL","NETO TOTAL","+/- NETO","VER MI TARJETA","VER RONDAS GUARDADAS","EMPEZAR NUEVA RONDA","ATRÁS","BORRAR RESULTADOS DE ESTA RONDA","BORRAR RONDA Y JUGADORES"]) assert(manual.includes(token),"Zona operativa inferior incompleta en manual: "+token);
 assert(manual.includes('id="tiempo"')&&manual.includes('id="zona-operativa"'),"Faltan hojas vigentes de Monitor de Tiempo / zona operativa");
 for(const token of ["INICIO","FINAL","TIMER","RESET","HH:MM:SS","pausar","reanudar","sin borrar jugadores ni scores"]) assert(manual.includes(token),"Monitor de Tiempo incompleto en manual: "+token);
 assert(app.includes('id="roundTimerToggle"')&&app.includes('aria-label="Pausar o reanudar timer"'),"LAB debe mantener TIMER pulsable para pausar/reanudar");
