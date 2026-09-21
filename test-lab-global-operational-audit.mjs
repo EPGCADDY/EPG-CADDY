@@ -33,7 +33,7 @@ assert.equal(universales.distribute([3,4,5,6]).total,12,"Universales debe repart
 for(const token of ["GENERAL","STABLEFORD","MATCH PLAY","FOUR BALL","UNIVERSALES"])assert(app.includes(token),"Falta modalidad activa "+token);
 for(const removed of ["id=\"dotsRoundButton\"","id=\"wolfRoundButton\"","id=\"vegasRoundButton\""])assert(!app.includes(removed),"No debe reaparecer función retirada "+removed);
 
-for(const token of ["MI SCORE CARD","CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS"])assert(shortcuts.includes(token),"Menú incompleto: "+token);
+for(const token of ["MI SCORE CARD","MIS TORNEOS","MONITOR DEL TORNEO EN VIVO","VER RESULTADOS POR CATEGORÍA","BUSCAR JUGADOR","SEGUIR JUGADORES / GRUPOS"])assert(shortcuts.includes(token),"Menú incompleto: "+token);
 assert(shortcuts.includes("official-round-header .round-meta.gsc-shortcuts-host"),"MENÚ debe quedar en el encabezado de ronda");
 assert(shortcuts.includes('body.classList.remove("gsc-shortcuts-docked")'),"MENÚ no debe angostar la aplicación");
 assert(!shortcuts.includes("padding-right:68px!important"),"MENÚ no debe reservar columna lateral");
