@@ -33,16 +33,16 @@ assert.equal(universales.distribute([3,4,5,6]).total,12,"Universales debe repart
 for(const token of ["GENERAL","STABLEFORD","MATCH PLAY","FOUR BALL","UNIVERSALES"])assert(app.includes(token),"Falta modalidad activa "+token);
 for(const removed of ["id=\"dotsRoundButton\"","id=\"wolfRoundButton\"","id=\"vegasRoundButton\""])assert(!app.includes(removed),"No debe reaparecer función retirada "+removed);
 
-for(const token of ["MI SCORE CARD","CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS"])assert(shortcuts.includes(token),"Atajos incompleto: "+token);
-assert(shortcuts.includes("official-round-header .round-meta.gsc-shortcuts-host"),"ATAJOS debe quedar en el encabezado de ronda");
-assert(shortcuts.includes('body.classList.remove("gsc-shortcuts-docked")'),"ATAJOS no debe angostar la aplicación");
-assert(!shortcuts.includes("padding-right:68px!important"),"ATAJOS no debe reservar columna lateral");
+for(const token of ["MI SCORE CARD","CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS"])assert(shortcuts.includes(token),"Menú incompleto: "+token);
+assert(shortcuts.includes("official-round-header .round-meta.gsc-shortcuts-host"),"MENÚ debe quedar en el encabezado de ronda");
+assert(shortcuts.includes('body.classList.remove("gsc-shortcuts-docked")'),"MENÚ no debe angostar la aplicación");
+assert(!shortcuts.includes("padding-right:68px!important"),"MENÚ no debe reservar columna lateral");
 for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAddToBoard","hubTournamentHome"])assert(hub.includes(id),"Torneos: falta destino "+id);
 
 for(const token of ["card-artifacts.js","four-ball.js","universales.js","stableford.js","shortcuts-ui.js","live-hub.html"])assert(sw.includes(token),"Service Worker no incluye "+token);
 
 assert(manual.includes('id="portada"')&&manual.includes('id="indice"')&&manual.includes("/docs/manual/layout/page-00.png"),"Manual vigente debe conservar portada e índice con asset remaquetado actual");
-for(const image of ["CAMPO_MODALIDAD_REAL.webp","REGISTRO_ATAJOS_REAL.webp","SCORECARD_CONTROL_REAL.webp","FOURBALL_ATAJOS_REAL.webp","MONITOR_TIEMPO_REAL_LAB.png","APP_CAMPEONATO_REGISTRO.png","APP_CAMPEONATO_SCORECARD.png"])assert(manual.includes(image)||fs.existsSync("docs/manual/current/"+image),"Manual vigente: falta pantalla real "+image);
-assert(manual.includes("Registro de jugadores + ATAJOS")&&manual.includes("Four Ball corregido + ATAJOS"),"Manual restaurado: falta cobertura ATAJOS/Four Ball");
+for(const image of ["CAMPO_MODALIDAD_REAL.webp","REGISTRO_MENÚ_REAL.webp","SCORECARD_CONTROL_REAL.webp","FOURBALL_MENÚ_REAL.webp","MONITOR_TIEMPO_REAL_LAB.png","APP_CAMPEONATO_REGISTRO.png","APP_CAMPEONATO_SCORECARD.png"])assert(manual.includes(image)||fs.existsSync("docs/manual/current/"+image),"Manual vigente: falta pantalla real "+image);
+assert(manual.includes("Registro de jugadores + MENÚ")&&manual.includes("Four Ball corregido + MENÚ"),"Manual restaurado: falta cobertura MENÚ/Four Ball");
 
-console.log("PASS AUDITORÍA GLOBAL LAB · 5 MODALIDADES ACTIVAS · TARJETAS GLOBAL/PERSONAL · TORNEOS · ATAJOS · PWA · MANUAL R4");
+console.log("PASS AUDITORÍA GLOBAL LAB · 5 MODALIDADES ACTIVAS · TARJETAS GLOBAL/PERSONAL · TORNEOS · MENÚ · PWA · MANUAL R4");
