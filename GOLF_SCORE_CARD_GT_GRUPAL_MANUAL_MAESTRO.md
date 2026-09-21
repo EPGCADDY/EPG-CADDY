@@ -40,15 +40,24 @@ Puedes abrir A, después B, después C y regresar a A cuando quieras.
 
 **Al regresar a un torneo, la aplicación vuelve a consultar el LIVE y muestra la información más reciente disponible en ese momento.**
 
-### 2. OPCIONES DENTRO DE CADA TORNEO
+### 2. TORNEO LIVE — GUÍA RÁPIDA PARA EL USUARIO
 
-Todos los torneos usan exactamente las mismas cuatro opciones:
+Esta pantalla debe poder entenderse sin conocer la lógica interna de la aplicación.
 
-#### GENERAL
-Muestra la tabla completa de posiciones del torneo.
+#### 1. VOLVER A MI SCORE CARD
+Regresa directamente a tu tarjeta principal.
 
-#### CATEGORÍAS
-Permite escoger y ver por separado:
+#### 2. MENÚ
+Abre los accesos rápidos y opciones útiles de la aplicación.
+
+#### 3. AGREGA LA GENERAL O UN ENLACE PRIVADO
+Sirve para conectar el torneo general o para incorporar un enlace LIVE privado que te hayan compartido.
+
+#### 4. GENERAL
+Muestra el tablero general del torneo con la información disponible en LIVE.
+
+#### 5. CATEGORÍAS
+Permite filtrar los resultados por categoría:
 - CAMPEONATO — MARCAS NEGRAS
 - A
 - B
@@ -58,15 +67,39 @@ Permite escoger y ver por separado:
 - SUPER SENIOR
 - FEMENINA
 
-#### BUSCAR POR NOMBRE
-1. Toca **BUSCAR POR NOMBRE**.
-2. Escribe el nombre del jugador.
-3. Puedes consultar a esa persona.
-4. Puedes tocar **+ PERSONA** para agregarla a tu tablero.
-5. También puedes tocar **+ GRUPO** para seguir a todo su grupo.
+#### 6. BUSCAR POR NOMBRE
+Encuentra rápidamente a un jugador dentro del torneo abierto.
 
-#### ARMAR MI TABLERO
-Abre **MI TABLERO**, donde aparecen únicamente las personas y grupos que elegiste.
+1. Toca **BUSCAR POR NOMBRE**.
+2. Escribe el nombre.
+3. Abre al jugador.
+4. Cuando esté disponible, toca **+ SEGUIR** para guardarlo en **MIS FAVORITOS**.
+
+#### 7. MIS FAVORITOS
+Muestra únicamente los jugadores o grupos que decidiste seguir en ese torneo, para encontrarlos sin volver a buscarlos cada vez.
+
+#### 8. CENTRO DE TORNEOS
+Regresa al centro donde puedes elegir otro torneo.
+
+#### 9. LIMPIAR MONITOR INDIVIDUAL
+Borra la selección actual del monitor individual. No borra la Score Card ni elimina el torneo.
+
+#### 10. AGREGAR JUGADOR EXTERNO
+Permite añadir al monitor un jugador que te comparta su enlace LIVE.
+
+#### 11. PEGA UNA VEZ SU ENLACE LIVE
+Pega en este campo el enlace LIVE del jugador externo.
+
+#### 12. AGREGAR
+Confirma el enlace pegado y añade ese jugador al monitor.
+
+### CÓMO USAR TORNEO LIVE EN 3 PASOS
+
+1. Para consultar el torneo, entra a **GENERAL**, **CATEGORÍAS** o **BUSCAR POR NOMBRE**.
+2. Si quieres seguir jugadores o grupos específicos, guárdalos en **MIS FAVORITOS**.
+3. Si alguien te comparte un enlace LIVE individual, abre **AGREGAR JUGADOR EXTERNO**, pega el enlace y toca **AGREGAR**.
+
+**Regla de lenguaje para usuario final:** explicar primero **qué hace el botón**, después **qué toca el usuario** y finalmente **qué debe ocurrir**. Evitar nombres técnicos, arquitectura interna o instrucciones que obliguen al usuario a deducir la función.
 
 ### 3. SEGUIR VARIOS TORNEOS AL MISMO TIEMPO
 
