@@ -1022,6 +1022,45 @@ body:has(#historyInsightsOverlay.visible) #gscShortcutsButton{
     line-height:20px!important;
   }
 }
+</style><style id="gsc-yardage-row-lock">
+@media(max-width:800px){
+  .official-course-info .tee-yardage-row{
+    display:grid!important;
+    grid-template-columns:10px 58px!important;
+    column-gap:5px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-height:22px!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  .official-course-info .tee-yardage-row .tee-dot{
+    width:7px!important;
+    height:7px!important;
+    margin:0!important;
+    align-self:center!important;
+    justify-self:center!important;
+  }
+  .official-course-info .tee-yardage-value{
+    display:flex!important;
+    width:58px!important;
+    min-width:58px!important;
+    height:20px!important;
+    margin:0!important;
+    padding:0 4px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    box-sizing:border-box!important;
+    line-height:20px!important;
+    border-radius:3px!important;
+    background:transparent!important;
+    font-weight:600!important;
+  }
+  .official-course-info .tee-yardage-value.tee-yardage-black{
+    background:#fff!important;
+    color:#000!important;
+  }
+}
 </style></head>
 <body>
 
@@ -2785,7 +2824,7 @@ function clearAllRegistrationPlayers(){
 function clearOnlyRoundScores(){if(!round?.configured||round.officiallyClosedAt)return false;if(!window.confirm("¿CONFIRMAS BORRAR ÚNICAMENTE TODOS LOS SCORES?\n\nJugadores, modalidad, campo, hándicaps y cronómetro se conservan."))return false;for(const player of round.players){player.holes={};player.lastHole=null}round.announced={front:false,back:false,complete:false};round.matchPlay=null;round.fourBall=null;syncSideGameResults(round);persist();render();$("status").textContent="SCORES BORRADOS · JUGADORES Y RONDA CONSERVADOS";return true}
 function courseRatingText(value){const number=Number(value);return value!==null&&value!==""&&Number.isFinite(number)&&number>0?number.toFixed(1):"—"}
 function courseSlopeText(value){const number=Number(value);return value!==null&&value!==""&&Number.isFinite(number)&&number>0?String(number):"—"}
-function renderCourseInfo(){const preferred=["Negro","Azul","Blanco","Rojo","Amarillo","Plateado"],keys=[...preferred.filter(k=>TEES[k]),...Object.keys(TEES).filter(k=>!preferred.includes(k))],rows=keys.map(k=>[k,TEES[k]]);$("courseInfo").innerHTML=`<div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>${rows.map(([k,t])=>`<div style="text-align:left"><span class="tee-dot" style="background:${t.color};border:${k==='Negro'?'1px solid #777':'0'}"></span><span style="color:${k==='Negro'?'#000':t.color};font-weight:800;${k==='Negro'?'background:#fff;padding:1px 5px;border-radius:2px;display:inline-block;':''}">${Number(t.total).toLocaleString('en-US')}</span></div><div style="text-align:center">${courseRatingText(t.rating)}</div><div style="text-align:center">${courseSlopeText(t.slope)}</div>`).join("")}`}
+function renderCourseInfo(){const preferred=["Negro","Azul","Blanco","Rojo","Amarillo","Plateado"],keys=[...preferred.filter(k=>TEES[k]),...Object.keys(TEES).filter(k=>!preferred.includes(k))],rows=keys.map(k=>[k,TEES[k]]);$("courseInfo").innerHTML=`<div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>${rows.map(([k,t])=>`<div class="tee-yardage-row"><span class="tee-dot" style="background:${t.color};border:${k==='Negro'?'1px solid #777':'0'}"></span><span class="tee-yardage-value ${k==='Negro'?'tee-yardage-black':''}" style="color:${k==='Negro'?'#000':t.color}">${Number(t.total).toLocaleString('en-US')}</span></div><div style="text-align:center">${courseRatingText(t.rating)}</div><div style="text-align:center">${courseSlopeText(t.slope)}</div>`).join("")}`}
 
 
 
