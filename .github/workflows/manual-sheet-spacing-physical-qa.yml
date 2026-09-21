@@ -1,0 +1,91 @@
+name: Manual sheet spacing physical QA
+on:
+  push:
+    branches: [qa-manual-spacing-20260921]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium
+        run: |
+          mkdir -p /tmp/manual-spacing
+          cd /tmp/manual-spacing
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 --no-audit --no-fund
+          npx playwright install chromium
+      - name: Audit 74 sheets physically
+        run: |
+          python3 -m http.server 8765 >/tmp/manual-spacing-http.log 2>&1 &
+          sleep 2
+          mkdir -p evidence/manual-spacing
+          cat >/tmp/manual-spacing/audit.cjs <<'NODE'
+          const {chromium}=require('/tmp/manual-spacing/node_modules/playwright');
+          const fs=require('fs');
+          const path=require('path');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const page=await browser.newPage({
+              viewport:{width:430,height:932},
+              deviceScaleFactor:3,
+              isMobile:true,
+              hasTouch:true,
+              userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X) AppleWebKit/605.1.15 Version/26.0 Mobile/15E148 Safari/604.1'
+            });
+            await page.goto('http://127.0.0.1:8765/manual.html',{waitUntil:'networkidle'});
+            const links=page.locator('#indice .toc a[href^="#"]');
+            const count=await links.count();
+            const report={count,pass:[],fail:[]};
+            if(count!==74) report.fail.push({type:'count',count});
+            for(let i=0;i<count;i++){
+              const link=links.nth(i);
+              const href=await link.getAttribute('href');
+              const id=String(href||'').slice(1);
+              const target=page.locator('[id="'+id.replace(/"/g,'\\\"')+'"]');
+              if(await target.count()!==1){report.fail.push({n:i+1,id,reason:'missing'});continue}
+              await link.scrollIntoViewIfNeeded();
+              await link.click();
+              await page.waitForTimeout(2350);
+              const metrics=await target.evaluate(el=>{
+                const r=el.getBoundingClientRect();
+                const body=document.documentElement.getBoundingClientRect();
+                const style=getComputedStyle(el);
+                const main=document.querySelector('main').getBoundingClientRect();
+                return {
+                  top:r.top,bottom:r.bottom,left:r.left,right:r.right,
+                  vw:innerWidth,vh:innerHeight,
+                  leftGap:r.left,
+                  rightGap:innerWidth-r.right,
+                  bodyLeft:body.left,
+                  mainLeft:main.left,
+                  marginBottom:parseFloat(style.marginBottom)||0,
+                  hash:location.hash
+                };
+              });
+              const sideBalanced=Math.abs(metrics.leftGap-metrics.rightGap)<=2.5;
+              const topSafe=metrics.top>=20;
+              const visible=metrics.bottom>90 && metrics.top<metrics.vh-90;
+              const hashOk=metrics.hash===href;
+              const ok=sideBalanced&&topSafe&&visible&&hashOk;
+              const item={n:i+1,id,href,...metrics,sideBalanced,topSafe,visible,hashOk,ok};
+              (ok?report.pass:report.fail).push(item);
+              await page.screenshot({path:path.join('evidence/manual-spacing',String(i+1).padStart(2,'0')+'-'+id+'.png'),fullPage:false});
+            }
+            report.ok=report.fail.length===0;
+            fs.writeFileSync('evidence/manual-spacing/report.json',JSON.stringify(report,null,2));
+            console.log('MANUAL SHEET SPACING',report.ok?'PASS':'FAIL','PASS',report.pass.length,'FAIL',report.fail.length);
+            if(report.fail.length) console.error(JSON.stringify(report.fail,null,2));
+            await browser.close();
+            if(!report.ok)process.exit(1);
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          node /tmp/manual-spacing/audit.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: manual-sheet-spacing-physical-qa
+          path: evidence/manual-spacing
+          retention-days: 2
