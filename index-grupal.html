@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="MENU-OVERLAYS-CENTRO-TORNEOS-20260921-AC">
+  <meta name="gscg-release" content="LARGE-CENTRO-TORNEOS-BACKUP-LABEL-20260921-AD">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1056,7 +1056,27 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
     color:#000!important;
   }
 }
-</style></head>
+</style><style id="gsc-tournament-center-primary-style">
+.tournament-center-primary{
+  width:100%!important;
+  min-height:72px!important;
+  margin:22px 0 16px!important;
+  border:2px solid var(--lime)!important;
+  border-radius:14px!important;
+  background:#050705!important;
+  color:var(--lime)!important;
+  font-size:24px!important;
+  font-weight:900!important;
+  letter-spacing:.3px!important;
+  box-shadow:0 0 18px rgba(49,255,0,.18)!important;
+}
+.tournament-center-secondary-row{grid-template-columns:1fr!important}
+.practice-full-row{grid-column:1/-1!important}
+@media(max-width:800px){
+  .tournament-center-primary{min-height:68px!important;font-size:22px!important;margin:18px 0 14px!important}
+}
+</style>
+</head>
 <body>
 
 <div class="overlay" id="skinsOverlay" aria-hidden="true">
@@ -1140,14 +1160,13 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
         <div class="universales-mode-option"><button type="button" class="course-option stable-course-option universales-round-option" id="universalesRoundButton" aria-label="Seleccionar modalidad Universales" aria-pressed="false"><span class="stable-course-dot">U</span><span>UNIVERSALES</span></button></div>
       </section>
     </div>
-    <div class="game-mode-columns" aria-label="Funciones de Score Card y Live">
-      <section class="game-mode-column"><div class="provisional-mode-option"><button type="button" class="course-option stable-course-option provisional-scorecard-option" id="provisionalScorecardButton" aria-label="Abrir Score Card de práctica"><span class="stable-course-dot">➜</span><span>SCORE CARD - PRÁCTICA</span></button></div></section>
-      <section class="game-mode-column"><div class="skins-mode-option"><button type="button" class="course-option stable-course-option" id="tournamentLiveHome" aria-label="Abrir Centro de Torneos"><span class="stable-course-dot">●</span><span>CENTRO DE TORNEOS</span></button></div></section>
+    <div class="game-mode-columns tournament-center-secondary-row" aria-label="Funciones de Score Card y Live">
+      <section class="game-mode-column practice-full-row"><div class="provisional-mode-option"><button type="button" class="course-option stable-course-option provisional-scorecard-option" id="provisionalScorecardButton" aria-label="Abrir Score Card de práctica"><span class="stable-course-dot">➜</span><span>SCORE CARD - PRÁCTICA</span></button></div></section>
     </div>
     <section class="skins-config" id="skinsConfig" aria-label="Configuración Skins"><div class="skins-config-title">SKINS · CONFIGURACIÓN ANTES DE LA RONDA</div><div class="skins-config-grid"><label>CÁLCULO<select id="skinsScoreType"><option value="net">NETO</option><option value="gross">GROSS</option></select></label><label>EMPATE<select id="skinsTiePolicy"><option value="carry">ACUMULA</option><option value="split">DIVIDE</option><option value="void">ANULA</option></select></label><fieldset class="currency-choice"><legend>MONEDA · ELIGE UNA</legend><label class="currency-option"><input id="skinsCurrencyGTQ" type="radio" name="skinsCurrency" value="GTQ" checked>Q · QUETZALES</label><label class="currency-option"><input id="skinsCurrencyUSD" type="radio" name="skinsCurrency" value="USD">$ · DÓLARES</label></fieldset><label>VALOR UNIDAD · <span data-currency-symbol="skins">Q</span><input id="skinsUnitValue" type="number" inputmode="decimal" min="0.01" max="100000" step="0.01" value="10"></label></div><div class="skins-config-note">CADA JUGADOR ARRIESGA UNA UNIDAD POR SKIN · EL DINERO NO MODIFICA GROSS, NETO NI RESULTADOS DEPORTIVOS.</div></section>
     <div class="setup-facts" id="courseSetupStatus">REGISTRO DE TORNEO (OPCIONAL)</div>
     <div class="tournament-box"><label class="tournament-toggle"><input type="checkbox" id="tournamentToggle"> NOMBRE TORNEO</label><div class="tournament-fields hidden" id="tournamentFields"><input id="tournamentName" type="text" maxlength="80" placeholder="NOMBRE DEL TORNEO" aria-label="Nombre del torneo"><input id="tournamentDescription" type="text" maxlength="180" placeholder="DESCRIPCIÓN DE TORNEO (OPCIONAL)" aria-label="Descripción de torneo opcional"></div></div>
-    <div class="voice-prompt"><strong id="playerVoicePrompt">REGISTRO DE JUGADORES</strong><span>COMPLETA LOS DATOS DE CADA JUGADOR</span></div>
+    <button class="nr-button tournament-center-primary" type="button" id="tournamentLiveHome" aria-label="Abrir Centro de Torneos">CENTRO DE TORNEOS</button><strong id="playerVoicePrompt" class="hidden" aria-hidden="true">REGISTRO DE JUGADORES</strong>
     
     </div>
     <section class="registration-method" aria-label="Registro manual">
@@ -1224,7 +1243,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">MENU-OVERLAYS-CENTRO-TORNEOS-20260921-AC</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">LARGE-CENTRO-TORNEOS-BACKUP-LABEL-20260921-AD</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 
 <script src="./guest-access.js"></script>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./device-closures.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
@@ -3648,7 +3667,7 @@ function centralAccountMessage(code){
 function setCentralAccountStatus(message){const target=$("accountBackupState");if(target)target.textContent=message}
 function renderCentralAccount(){
   const signed=window.GSC_ACCOUNT_SIGNED_IN===true,email=centralAccountUser?.email||"";
-  document.querySelectorAll("[data-account-entry]").forEach(button=>{button.textContent=signed?"RESPALDO ACTIVO ✓":"RESPALDAR / RECUPERAR DATOS";button.classList.toggle("connected",signed)});
+  document.querySelectorAll("[data-account-entry]").forEach(button=>{button.textContent=signed?"CUENTA DE RESPALDO CONECTADA ✓":"RESPALDAR / RECUPERAR DATOS";button.classList.toggle("connected",signed)});
   for(const id of ["accountBackupNow","accountRestoreNow","accountSignOut"])if($(id))$(id).disabled=!signed;
   if(signed){$("accountEmail").value=email;setCentralAccountStatus(`CUENTA CONECTADA · ${email.toUpperCase()}`)}
 }
