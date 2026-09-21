@@ -473,6 +473,26 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
     margin-right:auto!important;
   }
 }
+
+/* MANUAL INTERACTIVO · todas las hojas */
+.manual-interactive{
+  width:calc(100% - 24px);margin:12px auto 16px;padding:13px 14px;
+  border:1px solid #31ff00;border-radius:12px;background:#071007;color:#122436;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center
+}
+.manual-interactive-copy{min-width:0;color:#f4f7f5;font:800 12px/1.4 Arial,sans-serif}
+.manual-interactive-copy strong{display:block;color:#31ff00;font-size:12px;letter-spacing:.5px;margin-bottom:3px}
+.manual-interactive a{
+  min-height:44px;display:flex;align-items:center;justify-content:center;padding:0 13px;
+  border:1px solid #31ff00;border-radius:10px;background:#31ff00;color:#000;
+  text-decoration:none;text-align:center;font:900 11px/1.15 Arial,sans-serif
+}
+.manual-interactive-target{cursor:pointer!important;outline:0}
+.manual-interactive-target:focus{box-shadow:0 0 0 3px rgba(49,255,0,.35)!important}
+@media(max-width:560px){
+ .manual-interactive{grid-template-columns:1fr;margin:10px auto 14px}
+ .manual-interactive a{width:100%}
+}
 </style></head><body>
 <header class="top"><strong>GOLF SCORE CARD GT · MANUAL DE FUNCIONES</strong><a href="#indice">ÍNDICE</a></header>
 <main>
@@ -1016,6 +1036,71 @@ document.addEventListener("DOMContentLoaded",()=>{
     else location.hash="portada";
   });
 });
+</script><script id="gsc-manual-interactive-all">
+(()=>{
+  const origin=location.origin;
+  const withShare=raw=>{
+    const url=new URL(raw,origin);
+    const share=new URL(location.href).searchParams.get("_vercel_share");
+    if(share)url.searchParams.set("_vercel_share",share);
+    return url.pathname+url.search+url.hash;
+  };
+  const app=action=>withShare("/index-grupal.html?manual_action="+encodeURIComponent(action));
+  const hub=shortcut=>withShare("/live-hub.html?shortcut="+encodeURIComponent(shortcut));
+  const groups={
+    setup:["inicio","registro","confirmacion","antes-jugar","registro-2","match-play","four-ball","practica","match-play-2","four-ball-2","practica-2","juegos","skins-1","actual-registro","lab-campo","lab-registro","lab-fourball"],
+    stableford:["stableford-registro","stableford-objetivo","stableford-operacion"],
+    scorecard:["ronda","campo-1","campo-2","campo-3","campo-4","campo-5","campo-6","campo-7","ronda-completa","calculos","lectura","consultas","continuidad","reinicios","jugadores-ronda","actual-scorecard","actual-campeonato-score","lab-scorecard","skins-2","skins-3"],
+    manual:["control-manual","control-x"],
+    timer:["tiempo","zona-operativa"],
+    final:["tarjeta-digital","cierre","archivos","actual-cierre"],
+    correction:["correccion","actual-correccion"],
+    history:["historial","actual-historial"],
+    stats:["estadisticas"],
+    account:["cuenta","privacidad"],
+    install:["instalacion","offline"],
+    rules:["reglas"],
+    menu:["ayuda","ruta","soporte","actual-atajos","actual-torneos-atajos","torneos-01","torneos-09"]
+  };
+  const map={};
+  Object.entries(groups).forEach(([action,ids])=>ids.forEach(id=>map[id]={url:app(action),label:{
+    setup:"ABRIR REGISTRO REAL",stableford:"ABRIR STABLEFORD REAL",scorecard:"ABRIR SCORE CARD REAL",
+    manual:"ABRIR CONTROL MANUAL",timer:"ABRIR MONITOR DE TIEMPO",final:"ABRIR TARJETA FINAL",
+    correction:"ABRIR CORRECCIÓN OFICIAL",history:"ABRIR MIS RONDAS",stats:"ABRIR ESTADÍSTICAS",
+    account:"ABRIR RESPALDO / CUENTA",install:"ABRIR INSTALACIÓN",rules:"ABRIR REGLAS",menu:"ABRIR MENÚ REAL"
+  }[action]}));
+  Object.assign(map,{
+    "actual-torneos":{url:hub("tournaments"),label:"ABRIR MIS TORNEOS"},
+    "torneos":{url:hub("tournaments"),label:"ABRIR CENTRO DE TORNEOS"},
+    "torneos-02":{url:hub("tournaments"),label:"ABRIR CENTRO DE TORNEOS"},
+    "torneos-03":{url:hub("tournaments"),label:"ELEGIR TORNEO REAL"},
+    "torneos-04":{url:hub("general"),label:"ABRIR GENERAL EN VIVO"},
+    "torneos-05":{url:hub("categories"),label:"ABRIR CATEGORÍAS"},
+    "torneos-06":{url:hub("board"),label:"ABRIR MIS FAVORITOS"},
+    "torneos-07":{url:hub("board"),label:"GESTIONAR MIS FAVORITOS"},
+    "torneos-08":{url:app("scorecard"),label:"VOLVER A MI SCORE CARD"}
+  });
+
+  const sheets=[...document.querySelectorAll("section.sheet")];
+  sheets.forEach(sheet=>{
+    const cfg=map[sheet.id]||{url:app("menu"),label:"ABRIR FUNCIÓN REAL"};
+    const box=document.createElement("div");
+    box.className="manual-interactive";
+    box.innerHTML='<div class="manual-interactive-copy"><strong>MODO INTERACTIVO</strong>Toca la imagen o el botón para salir de la guía y abrir esta función real en la aplicación.</div><a href="'+cfg.url+'">'+cfg.label+" →</a>";
+    const nav=sheet.querySelector(":scope > .sheet-nav");
+    if(nav)sheet.insertBefore(box,nav); else sheet.appendChild(box);
+    const visual=sheet.querySelector(":scope > .screen-stage img, :scope > img");
+    if(visual){
+      visual.classList.add("manual-interactive-target");
+      visual.setAttribute("tabindex","0");
+      visual.setAttribute("role","link");
+      visual.setAttribute("aria-label",cfg.label);
+      const go=()=>location.assign(cfg.url);
+      visual.addEventListener("click",go);
+      visual.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
+    }
+  });
+})();
 </script><script src="/shortcuts-ui.js"></script></body></html>
 <!-- visual-qa-layout: compact-b0fca961 -->
 <!-- master-layout: all-74-v1 -->
