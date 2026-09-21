@@ -121,7 +121,7 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   assert.match(html,/function matchPlayFinalSpeech\(state=matchPlayStatus\(\)\)/,'El cierre anticipado debe preparar el anuncio hablado con resultado y posiciones');
   assert.match(html,/FIN DEL MATCH · <strong>/,'La tarjeta debe cantar visualmente el final anticipado');
   assert.match(html,/hole>limit/,'Los hoyos posteriores a la decisión de cada pareja deben quedar bloqueados');
-  assert.match(html,/CORRECCIÓN HASTA HOYO/,'Los hoyos ya jugados deben conservar corrección tras el final');
+  assert.match(html,/CORREGIR RONDA/,'El flujo vigente debe conservar acceso a corrección oficial tras el final');
   assert.match(html,/RESULTADO POR HOYOS UP\/DOWN/,'La tarjeta digital final no debe describir un total Neto');
   assert.match(html,/GSCRoundClosure\.close\(round,\{deriveScore:derivedScoreForHole,appVersion:"V330"\}\)/,"El snapshot oficial debe firmarse con el build V330");
   assert.doesNotMatch(html,/appVersion:"V305"/,"Ningún cierre o corrección puede conservar la firma V305");
