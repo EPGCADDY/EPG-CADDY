@@ -420,6 +420,59 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
   .master-sheet.current-function-sheet>.sheet-nav{margin:16px 0 0!important}
 }
 
+
+/* 2026-09-21 · BALANCE FÍSICO HOJA-POR-HOJA
+   El salto desde ÍNDICE debe dejar aire visible arriba y abajo, y márgenes
+   laterales simétricos incluso con las barras del navegador y MENÚ fijo. */
+:root{
+  --manual-viewport-top-gap:24px;
+  --manual-viewport-bottom-gap:96px;
+  --manual-mobile-gutter:14px;
+}
+.cover,.index,.sheet,.master-sheet{
+  scroll-margin-top:calc(var(--manual-viewport-top-gap) + env(safe-area-inset-top,0px))!important;
+  scroll-margin-bottom:calc(var(--manual-viewport-bottom-gap) + env(safe-area-inset-bottom,0px))!important;
+}
+@media(max-width:700px){
+  main{
+    width:100%!important;
+    max-width:none!important;
+    padding-top:18px!important;
+    padding-right:max(var(--manual-mobile-gutter),env(safe-area-inset-right,0px))!important;
+    padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))!important;
+    padding-left:max(var(--manual-mobile-gutter),env(safe-area-inset-left,0px))!important;
+  }
+  .cover,.index,.sheet,.master-sheet{
+    width:100%!important;
+    max-width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    margin-top:0!important;
+    margin-bottom:28px!important;
+    border-radius:14px!important;
+  }
+  .master-sheet>.sheet-head{
+    margin:0!important;
+  }
+  .master-sheet>.sheet-nav{
+    margin-left:0!important;
+    margin-right:0!important;
+    margin-bottom:0!important;
+  }
+  .master-sheet.current-screen-sheet>.screen-stage,
+  .master-sheet.current-function-sheet>.screen-stage{
+    width:calc(100% - 28px)!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+  .master-sheet.current-screen-sheet>.screen-note,
+  .master-sheet.current-function-sheet>.current-copy,
+  .master-sheet.current-function-sheet>.notice{
+    width:calc(100% - 28px)!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+}
 </style></head><body>
 <header class="top"><strong>GOLF SCORE CARD GT · MANUAL DE FUNCIONES</strong><a href="#indice">ÍNDICE</a></header>
 <main>
