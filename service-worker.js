@@ -2,15 +2,18 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-manual-150-premium-final-20260921-z`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-universal-floating-menu-20260921-aa`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-lab-four-ball-team-nonumber-20260920-q`;
-const RELEASE="MANUAL-150-PREMIUM-FINAL-20260921-Z";
+const RELEASE="UNIVERSAL-FLOATING-MENU-20260921-AA";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
   "/manifest.webmanifest",
   "/gsc-design-system.css",
   "/manual.html",
+  "/stableford-torneo.html",
+  "/live.html",
+  "/manual-torneos.html",
   "/manual.webmanifest",
   "/manual-search.js",
   "/device-closures.js",
