@@ -53,7 +53,8 @@ assert(!manual.includes("/docs/manual/layout/page-20.png"),"No debe reintroducir
 for(let p=46;p<=67;p++) assert(!manual.includes("/docs/manual/layout/page-"+String(p).padStart(2,"0")+".png"),"No debe reintroducir hoja retirada page-"+p);
 assert(app.includes("shortcuts-ui.js"),"Score Card debe cargar MENÚ");
 assert(hub.includes("shortcuts-ui.js"),"Torneos debe cargar MENÚ");
-for(const t of ["MI SCORE CARD","MIS TORNEOS","MONITOR DEL TORNEO EN VIVO","VER RESULTADOS POR CATEGORÍA","BUSCAR JUGADOR","TABLERO DE MIS FAVORITOS"]) assert(shortcuts.includes(t),"MENÚ incompleto: "+t);
+assert(manual.includes("shortcuts-ui.js"),"Manual completo debe cargar MENÚ flotante");
+for(const t of ["MI SCORE CARD","MANUAL DE USUARIO","MIS TORNEOS","MONITOR DEL TORNEO EN VIVO","VER RESULTADOS POR CATEGORÍA","BUSCAR JUGADOR","TABLERO DE MIS FAVORITOS"]) assert(shortcuts.includes(t),"MENÚ incompleto: "+t);
 assert(cards.includes("fourBallTeamLabel")&&!cards.includes("TEAM 1")&&!cards.includes("TEAM 2")&&!cards.includes("TEAM 3"),"Tarjetas Four Ball no deben reintroducir TEAM numerado");
 assert(!fourBall.includes('"TEAM 1"')&&!fourBall.includes('"TEAM 2"')&&!fourBall.includes('"TEAM 3"'),"Motor Four Ball no debe reintroducir TEAM numerado");
 if(fail.length){console.error("MANUAL ORIGINAL PARITY: FAIL");for(const item of fail) console.error("- "+item);process.exit(1);}
