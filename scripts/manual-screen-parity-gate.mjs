@@ -61,4 +61,4 @@ assert(cards.includes("fourBallTeamLabel")&&!cards.includes("TEAM 1")&&!cards.in
 assert(!fourBall.includes('"TEAM 1"')&&!fourBall.includes('"TEAM 2"')&&!fourBall.includes('"TEAM 3"'),"Motor Four Ball no debe reintroducir TEAM numerado");
 if(fail.length){console.error("MANUAL ORIGINAL PARITY: FAIL");for(const item of fail) console.error("- "+item);process.exit(1);}
 console.log("MANUAL ORIGINAL PARITY: PASS");
-console.log("MANUAL RE-MAQUETADO: 74 hojas · pantallas reales para funciones · láminas informativas grises · 0 funciones retiradas");
+console.log("MANUAL RE-MAQUETADO: 74 hojas · MENÚ vigente · pantallas reales para funciones · láminas informativas grises · 0 funciones retiradas");
