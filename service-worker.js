@@ -102,13 +102,14 @@ async function approvedNavigationWithManualUpdate(request){
   if(!approved)return networkFirst(request);
   const html=await approved.text();
   const recoveryStyle='<style id="gsc-update-recovery">body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:none!important}body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update.available{display:block!important}</style>';
-  const staleUpdateControl='<style id="gsc-stale-update-control-style">#gscStaleUpdateControl{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483647;height:58px;border:2px solid #31ff00;border-radius:10px;background:#000;color:#31ff00;font:900 18px Arial,sans-serif;box-shadow:0 0 18px rgba(49,255,0,.38)}</style><button id="gscStaleUpdateControl" type="button">ACTUALIZAR</button><script id="gsc-stale-update-control-script">(function(){var b=document.getElementById("gscStaleUpdateControl");if(!b)return;b.addEventListener("click",function(){var u=new URL(location.href);u.searchParams.delete("__gscg_build_check");u.searchParams.set("app_version","REMOVE-TOURNAMENT-REG-MOVE-PLAYERS-20260921-AF");u.searchParams.set("update_check",String(Date.now()));location.replace(u.toString())})})();<\/script>';
+  const approvedRelease=html.match(/<meta\\s+name=["']gscg-release["']\\s+content=["']([^"']+)["']/i)?.[1]||"";
+  const stale=approvedRelease!==RELEASE;
+  const forcedUpdate=stale?'<style id="gsc-sw-update-gate-style">#gscSwUpdateGate{position:fixed;inset:0;z-index:2147483647;background:rgba(0,0,0,.96);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Arial,sans-serif}#gscSwUpdateGate .g{width:min(560px,100%);border:2px solid #31ff00;border-radius:18px;background:#020402;padding:24px;text-align:center;box-shadow:0 0 30px rgba(49,255,0,.35)}#gscSwUpdateGate h2{margin:0 0 10px;color:#31ff00;font-size:24px}#gscSwUpdateGate p{margin:0 0 18px;color:#fff;font-size:15px;line-height:1.4}#gscSwUpdateGate button{width:100%;height:58px;border:0;border-radius:10px;background:#31ff00;color:#000;font:900 18px Arial,sans-serif}</style><div id="gscSwUpdateGate" role="dialog" aria-modal="true" aria-label="Actualización disponible"><div class="g"><h2>NUEVA VERSIÓN DISPONIBLE</h2><p>Hay una actualización de Golf Score Card GT lista para instalar.</p><button id="gscSwUpdateNow" type="button">ACTUALIZAR</button></div></div><script id="gsc-sw-update-gate-script">(function(){var b=document.getElementById("gscSwUpdateNow");if(!b)return;b.addEventListener("click",function(){b.disabled=true;b.textContent="ACTUALIZANDO…";var u=new URL(location.href);u.searchParams.delete("__gscg_build_check");u.searchParams.set("app_version","'+RELEASE+'");u.searchParams.set("update_check",String(Date.now()));location.replace(u.toString())})})();<\\/script>':"";
   let servedHtml=html.includes('id="gsc-update-recovery"')?html:html.replace("</head>",`${recoveryStyle}</head>`);
-  if(!servedHtml.includes('id="mandatoryUpdateButton"')&&!servedHtml.includes('id="gscStaleUpdateControl"'))servedHtml=servedHtml.replace("</body>",`${staleUpdateControl}</body>`);
-  const headers=new Headers(approved.headers);headers.set("content-type","text/html; charset=utf-8");headers.delete("content-length");
+  if(stale&&!servedHtml.includes('id="gscSwUpdateGate"'))servedHtml=servedHtml.replace("</body>",`${forcedUpdate}</body>`);
+  const headers=new Headers(approved.headers);headers.set("content-type","text/html; charset=utf-8");headers.delete("content-length");headers.set("cache-control","no-store");
   return new Response(servedHtml,{status:approved.status,statusText:approved.statusText,headers});
 }
-
 self.addEventListener("fetch",event=>{
   const request=event.request;
   if(request.method!=="GET")return;
