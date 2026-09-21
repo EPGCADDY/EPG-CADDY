@@ -34,7 +34,9 @@ for(const token of ["GENERAL","STABLEFORD","MATCH PLAY","FOUR BALL","UNIVERSALES
 for(const removed of ["id=\"dotsRoundButton\"","id=\"wolfRoundButton\"","id=\"vegasRoundButton\""])assert(!app.includes(removed),"No debe reaparecer función retirada "+removed);
 
 for(const token of ["MI SCORE CARD","CENTRO DE TORNEOS","GENERAL","CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS"])assert(shortcuts.includes(token),"Atajos incompleto: "+token);
-assert(shortcuts.includes("z-index:2147483000!important"),"ATAJOS debe quedar visible sobre overlays");
+assert(shortcuts.includes("official-round-header .round-meta.gsc-shortcuts-host"),"ATAJOS debe quedar en el encabezado de ronda");
+assert(shortcuts.includes('body.classList.remove("gsc-shortcuts-docked")'),"ATAJOS no debe angostar la aplicación");
+assert(!shortcuts.includes("padding-right:68px!important"),"ATAJOS no debe reservar columna lateral");
 for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAddToBoard","hubTournamentHome"])assert(hub.includes(id),"Torneos: falta destino "+id);
 
 for(const token of ["card-artifacts.js","four-ball.js","universales.js","stableford.js","shortcuts-ui.js","live-hub.html"])assert(sw.includes(token),"Service Worker no incluye "+token);
