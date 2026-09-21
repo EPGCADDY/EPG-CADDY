@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PLAYER-REGISTRATION-UNDER-MODALITIES-20260921-AH">
+  <meta name="gscg-release" content="AUTO-OPEN-NEXT-PLAYER-AFTER-TWO-FIELDS-20260921-AI">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1256,7 +1256,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 <div class="account-backup-overlay" id="accountBackupOverlay" role="dialog" aria-modal="true" aria-labelledby="accountBackupTitle" aria-hidden="true"><section class="account-backup-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeAccountBackup">ATRÁS</button></div><h1 id="accountBackupTitle">RESPALDO Y RECUPERACIÓN</h1><p>Juega sin cuenta cuando quieras. La cuenta es opcional y se usa únicamente para respaldar y recuperar tus jugadores, rondas y tarjetas.</p><div class="account-backup-state" id="accountBackupState" role="status" aria-live="polite">JUEGO LOCAL ACTIVO · CUENTA OPCIONAL</div><div class="account-backup-fields"><input id="accountName" type="text" maxlength="80" autocomplete="name" placeholder="NOMBRE"><input id="accountEmail" name="username" type="email" maxlength="160" autocomplete="username" inputmode="email" placeholder="CORREO"><input id="accountPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="CONTRASEÑA · MÍNIMO 8 CARACTERES"><label class="account-remember"><input id="accountPasswordVisible" type="checkbox">MOSTRAR CONTRASEÑA</label><label class="account-remember"><input id="accountRemember" type="checkbox" checked>RECORDAR CORREO Y MANTENER SESIÓN</label></div><div class="account-backup-actions"><button class="account-primary" type="button" id="accountSignUp">CREAR CUENTA</button><button type="button" id="accountSignIn">INICIAR SESIÓN</button><button class="account-backup-now" type="button" id="accountBackupNow" disabled>RESPALDAR AHORA</button><button type="button" id="accountRestoreNow" disabled>RECUPERAR RESPALDO</button><button type="button" id="accountSignOut" disabled>CERRAR SESIÓN</button></div></section></div>
 <button class="pwa-install-button hidden" type="button" id="installAppButton">INSTALAR APP</button>
 <div class="pwa-install-overlay" id="installAppOverlay" role="dialog" aria-modal="true" aria-labelledby="installAppTitle" aria-hidden="true"><section class="pwa-install-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="closeInstallApp">ATRÁS</button></div><h1 id="installAppTitle">INSTALAR GOLF SCORE CARD GT</h1><p>Instala la aplicación en este teléfono para abrirla desde su propio icono y conservar la ronda aunque la conexión se interrumpa.</p><ol id="installAppSteps"></ol><div class="pwa-install-actions"><button class="pwa-install-primary" type="button" id="confirmInstallApp">INSTALAR</button></div></section></div>
-<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">PLAYER-REGISTRATION-UNDER-MODALITIES-20260921-AH</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
+<div class="mandatory-update" id="mandatoryUpdate" aria-live="polite"><div class="mandatory-update-card"><h1>VERIFICAR ACTUALIZACIÓN</h1><p>ACTUALIZA SIN BORRAR TU SESIÓN.</p><span class="update-version-id" id="appVersionId">AUTO-OPEN-NEXT-PLAYER-AFTER-TWO-FIELDS-20260921-AI</span><button type="button" id="mandatoryUpdateButton" aria-disabled="true" disabled><span id="mandatoryUpdateAction">ACTUALIZADO</span></button></div></div>
 
 <script src="./guest-access.js"></script>
 <script src="./player-registry.js"></script><script src="./round-closure.js"></script><script src="./device-closures.js"></script><script src="./card-artifacts.js"></script><script src="./card-file-export.js"></script><script src="./card-library.js"></script><script src="./historical-analytics.js"></script><script src="./sync-queue.js"></script><script src="./master-data-sync.js"></script><script src="./account-backup.js"></script><script src="./live-control.js"></script><script src="./match-play.js"></script><script src="./four-ball.js"></script><script src="./stableford.js"></script><script src="./universales.js"></script><script src="./skins.js"></script><script src="./wolf.js"></script><script src="./vegas.js"></script><script src="./dots.js"></script><script src="./round-navigation.js"></script><script src="./golf-rules-offline.js"></script><script src="./timer-inactivity.js"></script>
@@ -1403,7 +1403,7 @@ const STABLEFORD_ACTIVE_KEY="golf-score-card-guatemala-stableford-active-v1";
 const STABLEFORD_OFFICIAL_HOSTING_URL="/index-grupal.html?stableford_emergency=countryclub&emergency_clean=1&v=305";
 let round=sfEmergency?(latestStoredRound("stableford")||blankRound()):demoControlManual?(readStoredRound(DEMO_CONTROL_MANUAL_KEY)||blankRound()):loadRound();
 let sfRestoredActive=!!(sfEmergency&&round.configured&&round.mode==="stableford");
-let draftPlayers=[],manualDraftRows=Array.from({length:6},()=>({name:"",category:"",handicap:"",tee:"",countryCode:"502",whatsapp:""})),draftTournament=null,draftCourse="pulte",draftRoundMode="general",draftSkins=defaultSkinsDraft(),draftWolf=defaultWolfDraft(),draftVegas=defaultVegasDraft(),draftDots=defaultDotsDraft(),sideGameControlHole=1,rosterEditMode=false,rosterEditJoinHole=1,handicapRectificationMode=false,nameCorrectionMode=false,profileCorrectionMode=false,rosterAddMode=false;
+let draftPlayers=[],manualDraftRows=Array.from({length:6},()=>({name:"",category:"",handicap:"",tee:"",countryCode:"502",whatsapp:""})),progressiveVisibleRegistrationCount=1,draftTournament=null,draftCourse="pulte",draftRoundMode="general",draftSkins=defaultSkinsDraft(),draftWolf=defaultWolfDraft(),draftVegas=defaultVegasDraft(),draftDots=defaultDotsDraft(),sideGameControlHole=1,rosterEditMode=false,rosterEditJoinHole=1,handicapRectificationMode=false,nameCorrectionMode=false,profileCorrectionMode=false,rosterAddMode=false;
 
 
 let roundPendingItems=new Set(),roundFinalizeRequested=false,roundFinalizeTimer=null,roundTranscriptionWatchdog=null,roundSpeechActive=false;
@@ -1678,6 +1678,18 @@ function emptyManualDraftRow(){return{name:"",category:"",handicap:"",tee:"",cou
 function manualRowFromPlayer(player){const countryCode=normalizeWhatsAppCountryCode(player?.countryCode||player?.whatsapp?.countryCode||"502");return{name:canonicalPlayerName(player?.name),category:normalizeTournamentCategory(player?.tournamentCategory),handicap:Number.isInteger(Number(player?.handicap))?String(Number(player.handicap)):"",tee:TEES[player?.tee]?player.tee:"",countryCode,whatsapp:normalizeWhatsApp(player?.whatsapp,countryCode),dirty:false,id:player?.id||null}}
 function seedManualDraftRowsFromPlayers(){manualDraftRows=Array.from({length:6},(_,i)=>draftPlayers[i]?manualRowFromPlayer(draftPlayers[i]):emptyManualDraftRow())}
 function manualRowHasData(row){return !!(String(row?.name||"").trim()||String(row?.handicap??"").trim())}
+function primaryRegistrationFieldCount(row){
+  return [String(row?.name||"").trim(),String(row?.category||"").trim(),String(row?.handicap??"").trim(),String(row?.tee||"").trim()].filter(Boolean).length;
+}
+function revealNextRegistrationSlot(index){
+  if(!Number.isInteger(index)||index<0||index>=5)return false;
+  if(primaryRegistrationFieldCount(manualDraftRows[index]||emptyManualDraftRow())<2)return false;
+  const nextVisible=Math.min(6,index+2);
+  if(nextVisible<=progressiveVisibleRegistrationCount)return false;
+  progressiveVisibleRegistrationCount=nextVisible;
+  document.querySelector(`#detectedBody [data-draft-row="${index+1}"]`)?.classList.remove("progressive-hidden");
+  return true;
+}
 function setManualRegistrationStatus(message){const status=$("setupStatus");if(status){status.classList.remove("listening");status.textContent=message}return false}
 function registrationMissingPrompt(index,field){
   const row=manualDraftRows[index]||emptyManualDraftRow(),name=canonicalPlayerName(row.name)||`JUGADOR ${index+1}`,overlay=$("registrationMissingOverlay"),player=$("registrationMissingPlayer"),message=$("registrationMissingMessage"),correct=$("registrationMissingCorrect"),ignore=$("registrationMissingIgnore"),ignorable=field==="category"||field==="handicap";
@@ -2980,9 +2992,8 @@ function renderDraft(){
   $("playerVoicePrompt").textContent=draftGame?`REGISTRO ${draftGame.toUpperCase()} · ${draftGame==="vegas"?"4 O 6":"HASTA 6"} JUGADORES`:draftRoundMode==="match_play"?"REGISTRO MATCH PLAY · HASTA TRES PAREJAS":draftRoundMode==="four_ball"?"REGISTRO FOUR BALL · HASTA 3 TEAMS":draftRoundMode==="universales"?"REGISTRO UNIVERSALES · 3 O 4 JUGADORES":"REGISTRO DE JUGADORES";
   let editHtml="",confirmHtml="";
   const registrationSlots=6;
-  const occupiedSlots=Array.from({length:registrationSlots},(_,index)=>!!draftPlayers[index]||manualRowHasData(manualDraftRows[index]||emptyManualDraftRow()));
-  const highestOccupied=occupiedSlots.reduce((highest,occupied,index)=>occupied?index:highest,-1);
-  const visibleRegistrationCount=Math.min(registrationSlots,Math.max(1,highestOccupied+2));
+  if(draftPlayers.length)progressiveVisibleRegistrationCount=Math.max(progressiveVisibleRegistrationCount,Math.min(registrationSlots,draftPlayers.length+(draftPlayers.length<registrationSlots?1:0)));
+  const visibleRegistrationCount=Math.min(registrationSlots,Math.max(1,progressiveVisibleRegistrationCount));
   for(let i=0;i<registrationSlots;i++){
     const p=draftPlayers[i],row=manualDraftRows[i]||emptyManualDraftRow();
     if(p&&!row.dirty)manualDraftRows[i]=manualRowFromPlayer(p);
@@ -3058,7 +3069,7 @@ function openNewRoundDraft(){
   try{localStorage.setItem(PRINCIPAL_RESET_KEY,"1")}catch{}
   clearDraftState();
   round=blankRound();
-  draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());draftTournament=null;draftCourse="pulte";draftRoundMode="general";resetDraftGames();;
+  draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());progressiveVisibleRegistrationCount=1;draftTournament=null;draftCourse="pulte";draftRoundMode="general";resetDraftGames();;
   if(sfEmergency)window.history.replaceState(null,"",window.location.pathname);
   render();
   dateSetup();
@@ -3069,7 +3080,7 @@ function openRegistrationPreservingActiveRound(){
   if(round.configured)persist();
   ;
   clearDraftState();
-  draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());draftTournament=null;draftCourse="pulte";draftRoundMode="general";resetDraftGames();;
+  draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());progressiveVisibleRegistrationCount=1;draftTournament=null;draftCourse="pulte";draftRoundMode="general";resetDraftGames();;
   dateSetup();
   openSetup("new");
   return true;
@@ -3326,7 +3337,7 @@ function openFreshStablefordSetup(){
   if(round.configured){persist();archiveRoundSnapshot(round)}
   ;
   for(const key of [ACTIVE_ROUND_KEY,STORAGE_KEY,STORAGE_BACKUP_KEY,MATCH_PLAY_ACTIVE_KEY,FOUR_BALL_ACTIVE_KEY,STABLEFORD_ACTIVE_KEY]){try{localStorage.removeItem(key)}catch{}}
-  clearDraftState();draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());draftTournament=null;resetDraftGames();;
+  clearDraftState();draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());progressiveVisibleRegistrationCount=1;draftTournament=null;resetDraftGames();;
   round={...blankRound(),mode:"stableford"};
   try{localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round))}catch{}
   resetStablefordSetupFields();render();return showStablefordSetup()
@@ -3530,6 +3541,7 @@ $("detectedBody").addEventListener("input",e=>{
   if(hcp)row.handicap=String(hcp.value??"");
   if(country){row.countryCode=String(country.value||"").replace(/\D/g,"").slice(0,4);const flag=target.closest(".draft-edit-row")?.querySelector("[data-draft-whatsapp-flag]");if(flag)flag.textContent=normalizeWhatsAppCountryCode(row.countryCode)==="502"?"🇬🇹":"🌐"}
   if(whatsapp)row.whatsapp=String(whatsapp.value||"").replace(/\D/g,"").slice(0,15);
+  if(name||hcp)revealNextRegistrationSlot(idx);
   updateGeneralSetupValidity();
 });
 $("detectedBody").addEventListener("change",e=>{
@@ -3543,6 +3555,7 @@ $("detectedBody").addEventListener("change",e=>{
   if(country){row.countryCode=normalizeWhatsAppCountryCode(country.value);country.value=row.countryCode;const flag=target.closest(".draft-edit-row")?.querySelector("[data-draft-whatsapp-flag]");if(flag)flag.textContent=row.countryCode==="502"?"🇬🇹":"🌐"}
   if(whatsapp){row.whatsapp=normalizeWhatsApp(whatsapp.value,row.countryCode);whatsapp.value=row.whatsapp}
   if(teeInput){row.tee=normalizeTee(teeInput.value)||"";const color=TEES[row.tee]?.color||"#fff";teeInput.style.color=color;const nameField=target.closest(".draft-edit-row")?.querySelector("[data-draft-name]");if(nameField)nameField.style.color=color}
+  if(name||categoryInput||hcp||teeInput)revealNextRegistrationSlot(idx);
   const saved=syncDraftPlayersFromManualRows({strict:false,renderAfter:false});
   // No reconstruir detectedBody al cambiar de campo: en móvil el blur del
   // nombre ocurre mientras el usuario toca handicap/marcas. Reemplazar el DOM
