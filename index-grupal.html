@@ -971,6 +971,57 @@ body:has(#historyInsightsOverlay.visible) #gscShortcutsButton{
   width:min(960px,calc(100% - 20px))!important;
   text-align:center!important;
 }
+</style><style id="gsc-hole-courseinfo-refine">
+@media(max-width:800px){
+  #roundGridHole{
+    font-weight:400!important;
+  }
+  .official-course-info .course-info-grid{
+    grid-template-columns:minmax(0,1fr) minmax(0,.86fr) minmax(0,.86fr)!important;
+    column-gap:8px!important;
+    row-gap:5px!important;
+    align-items:center!important;
+  }
+  .official-course-info .course-info-grid .head{
+    display:flex!important;
+    align-items:flex-end!important;
+    justify-content:center!important;
+    min-height:28px!important;
+    text-align:center!important;
+  }
+  .official-course-info .course-info-grid>div:not(.head){
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-height:22px!important;
+    line-height:1!important;
+  }
+  .official-course-info .course-info-grid>div:nth-child(3n+1):not(.head){
+    display:grid!important;
+    grid-template-columns:10px 58px!important;
+    column-gap:5px!important;
+    justify-content:center!important;
+    align-items:center!important;
+  }
+  .official-course-info .course-info-grid>div:nth-child(3n+1):not(.head) .tee-dot{
+    width:7px!important;
+    height:7px!important;
+    margin:0!important;
+    justify-self:center!important;
+  }
+  .official-course-info .course-info-grid>div:nth-child(3n+1):not(.head)>span:last-child{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:58px!important;
+    min-width:58px!important;
+    height:20px!important;
+    padding:0 4px!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+    line-height:20px!important;
+  }
+}
 </style></head>
 <body>
 
