@@ -1076,6 +1076,11 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
   .tournament-center-primary{min-height:68px!important;font-size:22px!important;margin:18px 0 14px!important}
 }
 </style>
+<style id="gsc-registration-up-layout">
+.tournament-registration-legacy{display:none!important}
+.player-registration-prompt{margin-top:18px!important;margin-bottom:12px!important}
+.tournament-center-primary{margin-top:0!important}
+</style>
 </head>
 <body>
 
@@ -1164,9 +1169,18 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
       <section class="game-mode-column practice-full-row"><div class="provisional-mode-option"><button type="button" class="course-option stable-course-option provisional-scorecard-option" id="provisionalScorecardButton" aria-label="Abrir Score Card de práctica"><span class="stable-course-dot">➜</span><span>SCORE CARD - PRÁCTICA</span></button></div></section>
     </div>
     <section class="skins-config" id="skinsConfig" aria-label="Configuración Skins"><div class="skins-config-title">SKINS · CONFIGURACIÓN ANTES DE LA RONDA</div><div class="skins-config-grid"><label>CÁLCULO<select id="skinsScoreType"><option value="net">NETO</option><option value="gross">GROSS</option></select></label><label>EMPATE<select id="skinsTiePolicy"><option value="carry">ACUMULA</option><option value="split">DIVIDE</option><option value="void">ANULA</option></select></label><fieldset class="currency-choice"><legend>MONEDA · ELIGE UNA</legend><label class="currency-option"><input id="skinsCurrencyGTQ" type="radio" name="skinsCurrency" value="GTQ" checked>Q · QUETZALES</label><label class="currency-option"><input id="skinsCurrencyUSD" type="radio" name="skinsCurrency" value="USD">$ · DÓLARES</label></fieldset><label>VALOR UNIDAD · <span data-currency-symbol="skins">Q</span><input id="skinsUnitValue" type="number" inputmode="decimal" min="0.01" max="100000" step="0.01" value="10"></label></div><div class="skins-config-note">CADA JUGADOR ARRIESGA UNA UNIDAD POR SKIN · EL DINERO NO MODIFICA GROSS, NETO NI RESULTADOS DEPORTIVOS.</div></section>
-    <div class="setup-facts" id="courseSetupStatus">REGISTRO DE TORNEO (OPCIONAL)</div>
-    <div class="tournament-box"><label class="tournament-toggle"><input type="checkbox" id="tournamentToggle"> NOMBRE TORNEO</label><div class="tournament-fields hidden" id="tournamentFields"><input id="tournamentName" type="text" maxlength="80" placeholder="NOMBRE DEL TORNEO" aria-label="Nombre del torneo"><input id="tournamentDescription" type="text" maxlength="180" placeholder="DESCRIPCIÓN DE TORNEO (OPCIONAL)" aria-label="Descripción de torneo opcional"></div></div>
-    <button class="nr-button tournament-center-primary" type="button" id="tournamentLiveHome" aria-label="Abrir Centro de Torneos">CENTRO DE TORNEOS</button><strong id="playerVoicePrompt" class="hidden" aria-hidden="true">REGISTRO DE JUGADORES</strong>
+    <div class="tournament-registration-legacy hidden" aria-hidden="true" hidden>
+      <div class="setup-facts" id="courseSetupStatus"></div>
+      <div class="tournament-box">
+        <label class="tournament-toggle"><input type="checkbox" id="tournamentToggle"> NOMBRE TORNEO</label>
+        <div class="tournament-fields hidden" id="tournamentFields">
+          <input id="tournamentName" type="text" maxlength="80" placeholder="NOMBRE DEL TORNEO" aria-label="Nombre del torneo">
+          <input id="tournamentDescription" type="text" maxlength="180" placeholder="DESCRIPCIÓN DE TORNEO (OPCIONAL)" aria-label="Descripción de torneo opcional">
+        </div>
+      </div>
+    </div>
+    <div class="voice-prompt player-registration-prompt"><strong id="playerVoicePrompt">REGISTRO DE JUGADORES</strong><span>COMPLETA LOS DATOS DE CADA JUGADOR</span></div>
+    <button class="nr-button tournament-center-primary" type="button" id="tournamentLiveHome" aria-label="Abrir Centro de Torneos">CENTRO DE TORNEOS</button>
     
     </div>
     <section class="registration-method" aria-label="Registro manual">
