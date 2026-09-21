@@ -4,6 +4,21 @@ import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 import { noStore, readJson } from "./_lib/http.js";
 
 const LIVE_POLICY_VERSION="gsc-gt-live-v1";
+const LIVE_UPSTREAM_URL="https://epg-caddy.vercel.app/api/live";
+
+async function proxyLiveToProduction(req,res){
+  const host=String(req?.headers?.["x-forwarded-host"]||req?.headers?.host||"").split(",")[0].trim().toLowerCase();
+  if(host==="epg-caddy.vercel.app")throw liveError("DATABASE_NOT_CONFIGURED",503);
+  const headers={"content-type":"application/json"};
+  if(req?.headers?.authorization)headers.authorization=String(req.headers.authorization);
+  const body=typeof req.body==="string"?req.body:JSON.stringify(req.body||{});
+  const upstream=await fetch(LIVE_UPSTREAM_URL,{method:"POST",headers,body,cache:"no-store"});
+  const text=await upstream.text();
+  res.status(upstream.status);
+  const type=upstream.headers.get("content-type");if(type)res.setHeader("content-type",type);
+  return res.send(text);
+}
+
 const MAX_TOURNAMENT_PLAYERS=100;
 const TOKEN_PATTERN=/^[A-Za-z0-9_-]{40,100}$/;
 const SECRET_PATTERN=/^[A-Za-z0-9_-]{40,100}$/;
@@ -397,7 +412,11 @@ export default async function handler(req,res){
   try{
     const body=await readJson(req,600_000),action=cleanText(body.action,40).toLowerCase();
     if(CONTROL_ACTIONS.has(action)&&!isAllowedAppOrigin(req))throw liveError("ORIGIN_NOT_ALLOWED",403);
-    const sql=getDatabase();
+    let sql;
+    try{sql=getDatabase()}catch(error){
+      if(String(error?.code||"")==="DATABASE_NOT_CONFIGURED")return proxyLiveToProduction(req,res);
+      throw error;
+    }
     const result=action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="read"?await readLive(sql,req,body):null;
     if(!result)throw liveError("LIVE_ACTION_UNSUPPORTED",404);
     return res.status(200).json(result);
