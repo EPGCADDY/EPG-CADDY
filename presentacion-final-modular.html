@@ -3,27 +3,32 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>GSC Presentación Final Modular</title>
+<title>GSC Presentación Modular</title>
 <style>
 html,body{margin:0;background:#050705;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 main{max-width:760px;margin:auto;padding:12px}
 video{width:100%;display:block;background:#000;border-radius:16px;max-height:78vh}
 .controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-button{flex:1;min-height:48px;border-radius:12px;border:1px solid #2cff20;background:#0b120b;color:#fff;font-weight:700}
+button{flex:1;min-height:48px;border-radius:12px;border:1px solid #2cff20;background:#0b120b;color:#fff;font-weight:800;font-size:15px}
 button.primary{background:#25ff14;color:#061006}
-.meta{padding:10px 2px;color:#b9c0b9;font-size:14px}
-.title{font-size:17px;font-weight:800;margin-bottom:4px;color:#39ff27}
+.meta{padding:10px 2px;color:#b9c0b9;font-size:14px;line-height:1.4}
+.title{font-size:18px;font-weight:800;margin:4px 0 10px;color:#39ff27}
+.status{margin-top:8px;padding:9px 11px;border:1px solid #273127;border-radius:10px;font-size:13px;color:#d7ddd7}
+.progress{height:5px;background:#1a211a;border-radius:99px;overflow:hidden;margin-top:8px}
+.bar{height:100%;width:0;background:#39ff27;transition:width .15s linear}
 </style>
 </head>
 <body><main>
-<div class="title" id="sceneTitle">01 · Configuración</div>
-<video id="v" playsinline preload="auto"></video>
+<div class="title" id="sceneTitle">01 · Configuración campo/modalidad</div>
+<video id="v" playsinline preload="metadata"></video>
 <audio id="a" preload="auto"></audio>
+<div class="progress"><div class="bar" id="bar"></div></div>
 <div class="controls">
 <button id="prev">ANTERIOR</button>
-<button id="play" class="primary">PLAY / PAUSA</button>
+<button id="play" class="primary">PLAY</button>
 <button id="next">SIGUIENTE</button>
 </div>
+<div class="status" id="status">Listo para reproducir. El video se detiene en la lámina mientras termina la explicación.</div>
 <div class="meta" id="meta"></div>
 </main>
 <script>
@@ -37,26 +42,59 @@ const scenes=[
 {t:"06 · Autoavance y corrección",s:132,e:162,a:"https://cdn.creativeclaw.co/u/9cfd647d/audio/eb377782-e4e5-4f82-b294-0b3723902b1c.mp3"},
 {t:"07 · Resultados",s:162,e:187,a:"https://cdn.creativeclaw.co/u/9cfd647d/audio/5ff6e368-bbc8-411f-b7d9-05dc5c4fee6b.mp3"}
 ];
-let i=0;
-const v=document.getElementById("v"),a=document.getElementById("a"),title=document.getElementById("sceneTitle"),meta=document.getElementById("meta");
-v.src=videoUrl; v.muted=true;
+let i=0, playing=false;
+const v=document.getElementById("v"),a=document.getElementById("a");
+const title=document.getElementById("sceneTitle"),meta=document.getElementById("meta");
+const status=document.getElementById("status"),playBtn=document.getElementById("play"),bar=document.getElementById("bar");
+v.src=videoUrl; v.muted=true; a.volume=1;
+
+function setStatus(x){status.textContent=x}
 function load(n){
  i=Math.max(0,Math.min(scenes.length-1,n));
- const x=scenes[i]; title.textContent=x.t; meta.textContent=`Escena ${i+1} de ${scenes.length}`;
- a.src=x.a; a.currentTime=0; a.pause(); v.pause();
- const seek=()=>{v.currentTime=x.s; v.removeEventListener("loadedmetadata",seek)};
- if(v.readyState>=1)v.currentTime=x.s; else v.addEventListener("loadedmetadata",seek);
-}
-function play(){
+ playing=false; v.pause(); a.pause(); bar.style.width="0%"; playBtn.textContent="PLAY";
  const x=scenes[i];
- if(!v.paused||!a.paused){v.pause();a.pause();return}
- if(v.currentTime<x.s||v.currentTime>=x.e)v.currentTime=x.s;
- a.currentTime=0;
- Promise.allSettled([v.play(),a.play()]);
+ title.textContent=x.t;
+ meta.textContent="Escena "+(i+1)+" de "+scenes.length+" · La narración manda el ritmo; la imagen queda fija si la explicación continúa.";
+ a.src=x.a; a.load();
+ const seek=()=>{v.currentTime=x.s;v.removeEventListener("loadedmetadata",seek);};
+ if(v.readyState>=1)v.currentTime=x.s; else v.addEventListener("loadedmetadata",seek);
+ setStatus("Cargando narración…");
 }
-v.addEventListener("timeupdate",()=>{const x=scenes[i]; if(v.currentTime>=x.e){v.pause();a.pause();}});
-document.getElementById("play").onclick=play;
-document.getElementById("prev").onclick=()=>load(i-1);
-document.getElementById("next").onclick=()=>load(i+1);
+a.addEventListener("canplay",()=>setStatus("Audio listo. Pulsa PLAY."));
+a.addEventListener("error",()=>setStatus("ERROR DE AUDIO: esta narración no pudo cargarse."));
+a.addEventListener("timeupdate",()=>{
+ if(Number.isFinite(a.duration)&&a.duration>0) bar.style.width=Math.min(100,(a.currentTime/a.duration)*100)+"%";
+});
+a.addEventListener("ended",()=>{
+ playing=false; v.pause(); playBtn.textContent="REPETIR";
+ setStatus("Explicación terminada. La lámina permanece visible para analizarla; pulsa SIGUIENTE cuando estés listo.");
+ bar.style.width="100%";
+});
+v.addEventListener("timeupdate",()=>{
+ const x=scenes[i];
+ if(v.currentTime>=x.e){
+   v.pause();
+   v.currentTime=x.e-0.04;
+   setStatus(a.ended ? "Explicación terminada." : "Lámina en pausa mientras continúa la explicación.");
+ }
+});
+async function playScene(){
+ const x=scenes[i];
+ if(playing){v.pause();a.pause();playing=false;playBtn.textContent="CONTINUAR";setStatus("Pausado.");return;}
+ if(a.ended || a.currentTime===0){
+   a.currentTime=0;
+   if(v.currentTime<x.s||v.currentTime>=x.e)v.currentTime=x.s;
+ }
+ try{
+   await a.play();
+   if(v.currentTime<x.e-0.08) v.play().catch(()=>{});
+   playing=true; playBtn.textContent="PAUSA"; setStatus("Reproduciendo narración y demostración.");
+ }catch(err){
+   setStatus("ERROR DE REPRODUCCIÓN DE AUDIO. Pulsa PLAY nuevamente.");
+ }
+}
+document.getElementById("play").addEventListener("click",playScene);
+document.getElementById("prev").addEventListener("click",()=>load(i-1));
+document.getElementById("next").addEventListener("click",()=>load(i+1));
 load(0);
 </script></body></html>
