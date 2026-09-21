@@ -474,25 +474,17 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
   }
 }
 
-/* MANUAL INTERACTIVO · todas las hojas */
-.manual-interactive{
-  width:calc(100% - 24px);margin:12px auto 16px;padding:13px 14px;
-  border:1px solid #31ff00;border-radius:12px;background:#071007;color:#122436;
-  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center
+
+/* HOTSPOTS REALES SOBRE LAS GRÁFICAS DEL MANUAL */
+.screen-stage{position:relative!important}
+.manual-hotspot-layer{position:absolute;inset:0;z-index:8;pointer-events:none}
+.manual-hotspot{
+ position:absolute;display:block;pointer-events:auto;cursor:pointer;
+ background:transparent;border:0;border-radius:10px;text-indent:-9999px;overflow:hidden;
+ -webkit-tap-highlight-color:rgba(49,255,0,.20)
 }
-.manual-interactive-copy{min-width:0;color:#f4f7f5;font:800 12px/1.4 Arial,sans-serif}
-.manual-interactive-copy strong{display:block;color:#31ff00;font-size:12px;letter-spacing:.5px;margin-bottom:3px}
-.manual-interactive a{
-  min-height:44px;display:flex;align-items:center;justify-content:center;padding:0 13px;
-  border:1px solid #31ff00;border-radius:10px;background:#31ff00;color:#000;
-  text-decoration:none;text-align:center;font:900 11px/1.15 Arial,sans-serif
-}
-.manual-interactive-target{cursor:pointer!important;outline:0}
-.manual-interactive-target:focus{box-shadow:0 0 0 3px rgba(49,255,0,.35)!important}
-@media(max-width:560px){
- .manual-interactive{grid-template-columns:1fr;margin:10px auto 14px}
- .manual-interactive a{width:100%}
-}
+.manual-hotspot:focus-visible{outline:3px solid #31ff00;outline-offset:1px;background:rgba(49,255,0,.08)}
+@media(hover:hover) and (pointer:fine){.manual-hotspot:hover{box-shadow:inset 0 0 0 2px rgba(49,255,0,.55);background:rgba(49,255,0,.05)}}
 </style></head><body>
 <header class="top"><strong>GOLF SCORE CARD GT · MANUAL DE FUNCIONES</strong><a href="#indice">ÍNDICE</a></header>
 <main>
@@ -1036,70 +1028,60 @@ document.addEventListener("DOMContentLoaded",()=>{
     else location.hash="portada";
   });
 });
-</script><script id="gsc-manual-interactive-all">
+</script><script id="gsc-manual-hotspots-v1">
 (()=>{
-  const origin=location.origin;
-  const withShare=raw=>{
-    const url=new URL(raw,origin);
-    const share=new URL(location.href).searchParams.get("_vercel_share");
-    if(share)url.searchParams.set("_vercel_share",share);
-    return url.pathname+url.search+url.hash;
-  };
-  const app=action=>withShare("/index-grupal.html?manual_action="+encodeURIComponent(action));
-  const hub=shortcut=>withShare("/live-hub.html?shortcut="+encodeURIComponent(shortcut));
-  const groups={
-    setup:["inicio","registro","confirmacion","antes-jugar","registro-2","match-play","four-ball","practica","match-play-2","four-ball-2","practica-2","juegos","skins-1","actual-registro","lab-campo","lab-registro","lab-fourball"],
-    stableford:["stableford-registro","stableford-objetivo","stableford-operacion"],
-    scorecard:["ronda","campo-1","campo-2","campo-3","campo-4","campo-5","campo-6","campo-7","ronda-completa","calculos","lectura","consultas","continuidad","reinicios","jugadores-ronda","actual-scorecard","actual-campeonato-score","lab-scorecard","skins-2","skins-3"],
-    manual:["control-manual","control-x"],
-    timer:["tiempo","zona-operativa"],
-    final:["tarjeta-digital","cierre","archivos","actual-cierre"],
-    correction:["correccion","actual-correccion"],
-    history:["historial","actual-historial"],
-    stats:["estadisticas"],
-    account:["cuenta","privacidad"],
-    install:["instalacion","offline"],
-    rules:["reglas"],
-    menu:["ayuda","ruta","soporte","actual-atajos","actual-torneos-atajos","torneos-01","torneos-09"]
-  };
-  const map={};
-  Object.entries(groups).forEach(([action,ids])=>ids.forEach(id=>map[id]={url:app(action),label:{
-    setup:"ABRIR REGISTRO REAL",stableford:"ABRIR STABLEFORD REAL",scorecard:"ABRIR SCORE CARD REAL",
-    manual:"ABRIR CONTROL MANUAL",timer:"ABRIR MONITOR DE TIEMPO",final:"ABRIR TARJETA FINAL",
-    correction:"ABRIR CORRECCIÓN OFICIAL",history:"ABRIR MIS RONDAS",stats:"ABRIR ESTADÍSTICAS",
-    account:"ABRIR RESPALDO / CUENTA",install:"ABRIR INSTALACIÓN",rules:"ABRIR REGLAS",menu:"ABRIR MENÚ REAL"
-  }[action]}));
-  Object.assign(map,{
-    "actual-torneos":{url:hub("tournaments"),label:"ABRIR MIS TORNEOS"},
-    "torneos":{url:hub("tournaments"),label:"ABRIR CENTRO DE TORNEOS"},
-    "torneos-02":{url:hub("tournaments"),label:"ABRIR CENTRO DE TORNEOS"},
-    "torneos-03":{url:hub("tournaments"),label:"ELEGIR TORNEO REAL"},
-    "torneos-04":{url:hub("general"),label:"ABRIR GENERAL EN VIVO"},
-    "torneos-05":{url:hub("categories"),label:"ABRIR CATEGORÍAS"},
-    "torneos-06":{url:hub("board"),label:"ABRIR MIS FAVORITOS"},
-    "torneos-07":{url:hub("board"),label:"GESTIONAR MIS FAVORITOS"},
-    "torneos-08":{url:app("scorecard"),label:"VOLVER A MI SCORE CARD"}
-  });
-
-  const sheets=[...document.querySelectorAll("section.sheet")];
-  sheets.forEach(sheet=>{
-    const cfg=map[sheet.id]||{url:app("menu"),label:"ABRIR FUNCIÓN REAL"};
-    const box=document.createElement("div");
-    box.className="manual-interactive";
-    box.innerHTML='<div class="manual-interactive-copy"><strong>MODO INTERACTIVO</strong>Toca la imagen o el botón para salir de la guía y abrir esta función real en la aplicación.</div><a href="'+cfg.url+'">'+cfg.label+" →</a>";
-    const nav=sheet.querySelector(":scope > .sheet-nav");
-    if(nav)sheet.insertBefore(box,nav); else sheet.appendChild(box);
-    const visual=sheet.querySelector(":scope > .screen-stage img, :scope > img");
-    if(visual){
-      visual.classList.add("manual-interactive-target");
-      visual.setAttribute("tabindex","0");
-      visual.setAttribute("role","link");
-      visual.setAttribute("aria-label",cfg.label);
-      const go=()=>location.assign(cfg.url);
-      visual.addEventListener("click",go);
-      visual.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
-    }
-  });
+ const shareParam=()=>new URL(location.href).searchParams.get("_vercel_share");
+ const route=(kind)=>{
+   let raw="/index-grupal.html?manual_action="+encodeURIComponent(kind);
+   if(kind.startsWith("hub:")) raw="/live-hub.html?shortcut="+encodeURIComponent(kind.slice(4));
+   const u=new URL(raw,location.origin), share=shareParam(); if(share)u.searchParams.set("_vercel_share",share); return u.pathname+u.search+u.hash;
+ };
+ const maps={
+  "APP_SETUP_CURRENT.png":[
+   {l:3,t:20,w:46,h:8,a:"setup",n:"Seleccionar campo"},
+   {l:3,t:30,w:94,h:22,a:"setup",n:"Modalidades"},
+   {l:3,t:54,w:94,h:24,a:"setup",n:"Registro de jugadores"},
+   {l:3,t:79,w:94,h:7,a:"hub:tournaments",n:"Centro de Torneos"},
+   {l:3,t:87,w:94,h:6,a:"history",n:"Ver rondas guardadas"},
+   {l:3,t:93,w:94,h:6,a:"account",n:"Respaldar / recuperar datos"}
+  ],
+  "APP_SCORECARD_ATAJOS.png":[
+   {l:77,t:2,w:20,h:8,a:"menu",n:"MENÚ"},
+   {l:2,t:9,w:96,h:18,a:"scorecard",n:"Información de campo"},
+   {l:2,t:28,w:96,h:38,a:"scorecard",n:"Score Card"},
+   {l:2,t:67,w:96,h:28,a:"manual",n:"Anotador / Control Manual"}
+  ],
+  "APP_ATAJOS_OVERLAY.png":[
+   {l:5,t:14,w:43,h:10,a:"scorecard",n:"Mi Score Card"},
+   {l:52,t:14,w:43,h:10,a:"hub:tournaments",n:"Mis Torneos"},
+   {l:5,t:26,w:90,h:10,a:"hub:general",n:"Monitor del Torneo en Vivo"},
+   {l:5,t:38,w:90,h:10,a:"hub:categories",n:"Resultados por Categoría"},
+   {l:5,t:50,w:90,h:10,a:"hub:search",n:"Buscar Jugador"},
+   {l:5,t:62,w:90,h:10,a:"hub:board",n:"Tablero de Mis Favoritos"},
+   {l:5,t:74,w:90,h:10,a:"manual",n:"Manual de Usuario"}
+  ],
+  "APP_TORNEOS_HUB.png":[
+   {l:75,t:2,w:22,h:8,a:"menu",n:"MENÚ"},
+   {l:4,t:18,w:92,h:12,a:"hub:tournaments",n:"Mis Torneos"},
+   {l:4,t:32,w:92,h:12,a:"hub:general",n:"Monitor General"},
+   {l:4,t:46,w:92,h:12,a:"hub:categories",n:"Resultados por Categoría"},
+   {l:4,t:60,w:92,h:12,a:"hub:search",n:"Buscar Jugador"},
+   {l:4,t:74,w:92,h:12,a:"hub:board",n:"Favoritos"}
+  ]
+ };
+ document.querySelectorAll(".screen-stage img").forEach(img=>{
+   const file=(img.getAttribute("src")||"").split("/").pop();
+   const defs=maps[file]; if(!defs)return;
+   const stage=img.closest(".screen-stage"); if(!stage||stage.querySelector(".manual-hotspot-layer"))return;
+   const layer=document.createElement("div"); layer.className="manual-hotspot-layer";
+   defs.forEach(d=>{
+     const a=document.createElement("a"); a.className="manual-hotspot"; a.href=route(d.a);
+     a.setAttribute("aria-label",d.n); a.textContent=d.n;
+     Object.assign(a.style,{left:d.l+"%",top:d.t+"%",width:d.w+"%",height:d.h+"%"});
+     layer.appendChild(a);
+   });
+   stage.appendChild(layer);
+ });
 })();
 </script><script src="/shortcuts-ui.js"></script></body></html>
 <!-- visual-qa-layout: compact-b0fca961 -->
