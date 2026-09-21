@@ -41,7 +41,7 @@ for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAd
 
 for(const token of ["card-artifacts.js","four-ball.js","universales.js","stableford.js","shortcuts-ui.js","live-hub.html"])assert(sw.includes(token),"Service Worker no incluye "+token);
 
-assert(manual.includes('id="portada"')&&manual.includes('id="indice"')&&manual.includes("/docs/manual/layout/page-00.png"),"Manual vigente debe conservar portada e índice con asset remaquetado actual");
+assert(manual.includes('id="portada"')&&manual.includes('id="indice"')&&manual.includes("/assets/official-logos/golf-score-card-gt-official-master-1254.jpeg"),"Manual vigente debe conservar portada e índice con logo oficial cuadrado vigente");
 for(const image of ["CAMPO_MODALIDAD_REAL.webp","REGISTRO_ATAJOS_REAL.webp","SCORECARD_CONTROL_REAL.webp","FOURBALL_ATAJOS_REAL.webp","MONITOR_TIEMPO_REAL_LAB.png","APP_CAMPEONATO_REGISTRO.png","APP_CAMPEONATO_SCORECARD.png"])assert(manual.includes(image)||fs.existsSync("docs/manual/current/"+image),"Manual vigente: falta pantalla real "+image);
 assert(manual.includes("Registro de jugadores + MENÚ")&&manual.includes("Four Ball corregido + MENÚ"),"Manual restaurado: falta cobertura MENÚ/Four Ball");
 
