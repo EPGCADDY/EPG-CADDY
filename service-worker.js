@@ -102,8 +102,11 @@ async function approvedNavigationWithManualUpdate(request){
   if(!approved)return networkFirst(request);
   const html=await approved.text();
   const recoveryStyle='<style id="gsc-update-recovery">body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:none!important}body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update.available{display:block!important}</style>';
+  const staleUpdateControl='<style id="gsc-stale-update-control-style">#gscStaleUpdateControl{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483647;height:58px;border:2px solid #31ff00;border-radius:10px;background:#000;color:#31ff00;font:900 18px Arial,sans-serif;box-shadow:0 0 18px rgba(49,255,0,.38)}</style><button id="gscStaleUpdateControl" type="button">ACTUALIZAR</button><script id="gsc-stale-update-control-script">(function(){var b=document.getElementById("gscStaleUpdateControl");if(!b)return;b.addEventListener("click",function(){var u=new URL(location.href);u.searchParams.delete("__gscg_build_check");u.searchParams.set("app_version","REMOVE-TOURNAMENT-REG-MOVE-PLAYERS-20260921-AF");u.searchParams.set("update_check",String(Date.now()));location.replace(u.toString())})})();<\/script>';
+  let servedHtml=html.includes('id="gsc-update-recovery"')?html:html.replace("</head>",`${recoveryStyle}</head>`);
+  if(!servedHtml.includes('id="mandatoryUpdateButton"')&&!servedHtml.includes('id="gscStaleUpdateControl"'))servedHtml=servedHtml.replace("</body>",`${staleUpdateControl}</body>`);
   const headers=new Headers(approved.headers);headers.set("content-type","text/html; charset=utf-8");headers.delete("content-length");
-  return new Response(html.includes('id="gsc-update-recovery"')?html:html.replace("</head>",`${recoveryStyle}</head>`),{status:approved.status,statusText:approved.statusText,headers});
+  return new Response(servedHtml,{status:approved.status,statusText:approved.statusText,headers});
 }
 
 self.addEventListener("fetch",event=>{
