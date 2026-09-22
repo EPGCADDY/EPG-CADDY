@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PLAYER-NAME-POINTER-FIX-AUDIO-20260922-R29">
+  <meta name="gscg-release" content="MANUAL-AUDIO-SEGMENT-KEYPAD-HOLEINONE-20260922-R30">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2270,10 +2270,13 @@ function requestedPlayerResultSpeech(player){
   if(!round?.configured||!player)return "";
   const latest=latestRecordedHoleForPlayer(player);
   if(!latest)return "";
-  const holes=ALL.filter(h=>h<=latest&&player.holes?.[h]&&!isOmittedScore(player.holes[h])&&Number.isInteger(player.holes[h].gross));
+  const segment=latest<=9?FRONT:BACK;
+  const holes=segment.filter(h=>h<=latest&&player.holes?.[h]&&!isOmittedScore(player.holes[h])&&Number.isInteger(player.holes[h].gross));
   const t=totals(player,holes);
   if(!t.count)return "";
-  const title=latest===18?"Ronda completa.":latest===9?"Primera vuelta.":`Hasta el hoyo ${HOLE_SPEECH_NAMES[latest]||latest}.`;
+  const title=latest<=9
+    ?(latest===9?"Primera vuelta completa.":`Primera vuelta, hasta el hoyo ${HOLE_SPEECH_NAMES[latest]||latest}.`)
+    :(latest===18?"Segunda vuelta completa.":`Segunda vuelta, del hoyo diez al hoyo ${HOLE_SPEECH_NAMES[latest]||latest}.`);
   return `${title} ${player.name}. Gros ${t.gross}. Neto ${t.net}. ${versusParSpeech(t.net-t.par)}.`;
 }
 window.GSCPlayerNameAudio=function(playerId){
@@ -3532,7 +3535,7 @@ function roundManualPlayerRows(selectedHole,activePlayerId=""){
   return round.players.map((player,index)=>{
     const result=manualHoleResult(player,selectedHole),value=result.recorded?(result.status==="x"?"X":result.gross??""):"";
     const base=index*3;
-    const keypad=index<3?[1,2,3].map(n=>base+n).map(n=>`<button type="button" class="round-inline-score-key" data-score-key="${n}" aria-label="Anotar ${n}" style="min-width:0;width:100%;height:100%;padding:0;border:1px solid #4b4f50;border-radius:8px;background:#0b0d0d;color:#fff;font-size:17px;font-weight:900">${n}</button>`).join(""):`<span></span><span></span><span></span>`;
+    const inlineScoreKeys=[1,2,3,4,5,6,7,8,9];\n    if(inlineScoreKeys[0]!==1)throw new Error("INLINE_SCORE_KEYS_REQUIRE_HOLE_IN_ONE");\n    const keypad=index<3?inlineScoreKeys.slice(base,base+3).map(n=>`<button type="button" class="round-inline-score-key" data-score-key="${n}" aria-label="Anotar ${n}" style="min-width:0;width:100%;height:100%;padding:0;border:1px solid #4b4f50;border-radius:8px;background:#0b0d0d;color:#fff;font-size:17px;font-weight:900">${n}</button>`).join(""):`<span></span><span></span><span></span>`;
     return`<div class="round-grid-name" aria-label="JUGADOR ${index+1}" style="display:flex;align-items:center;justify-content:center;min-width:0;width:100%;padding:3px;font-weight:900;text-align:center;overflow:hidden">${escapeHtml(player.name)}</div><span>${selectedHole}</span><button class="round-grid-gross ${player.id===activePlayerId?"is-active-score":""}" data-player-id="${escapeHtml(player.id)}" data-score-value="${escapeHtml(value)}" type="button" aria-label="GROSS ${escapeHtml(player.name)} HOYO ${selectedHole}. TOCAR PARA SELECCIONAR" style="min-width:0;width:100%;font-size:20px;text-align:center;box-sizing:border-box;cursor:pointer;${player.id===activePlayerId?"background:#31ff00!important;color:#000!important;-webkit-text-fill-color:#000!important;border:3px solid #31ff00!important;box-shadow:0 0 0 2px #000,0 0 0 4px rgba(49,255,0,.80),0 0 18px rgba(49,255,0,.55)!important;":""}" ${locked?"disabled":""}>${escapeHtml(value)||"&nbsp;"}</button>${keypad}`;
   }).join("")
 }
@@ -3567,11 +3570,11 @@ function ensureRoundScoreKeypad(){
   overlay.id="roundScoreKeypadOverlay";
   overlay.setAttribute("aria-hidden","true");
   overlay.style.cssText="position:fixed;inset:0;z-index:220;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.24);padding:6px max(8px,env(safe-area-inset-right)) max(6px,calc(env(safe-area-inset-bottom) + 4px)) max(8px,env(safe-area-inset-left));pointer-events:auto";
-  overlay.innerHTML=`<section role="dialog" aria-modal="true" aria-label="Teclado de score" style="width:min(320px,88vw);max-height:42vh;border:1.5px solid #31ff00;border-radius:14px;background:#050705;padding:8px;box-shadow:0 10px 28px rgba(0,0,0,.48)">
+  const SCORE_KEYPAD_KEYS=["1","2","3","4","5","6","7","8","9","X","0","⌫"];\n  if(SCORE_KEYPAD_KEYS[0]!=="1")throw new Error("SCORE_KEYPAD_REQUIRES_HOLE_IN_ONE");\n  overlay.innerHTML=`<section role="dialog" aria-modal="true" aria-label="Teclado de score" style="width:min(320px,88vw);max-height:42vh;border:1.5px solid #31ff00;border-radius:14px;background:#050705;padding:8px;box-shadow:0 10px 28px rgba(0,0,0,.48)">
     <div id="roundScoreKeypadTitle" style="color:#31ff00;text-align:center;font-size:11px;font-weight:900;margin:0 0 5px;line-height:1.1"></div>
     <div id="roundScoreKeypadDisplay" style="height:38px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;border:1px solid #4b4f50;border-radius:9px;background:#000;color:#fff;font-size:22px;font-weight:900"></div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px">
-      ${["1","2","3","4","5","6","7","8","9","X","0","⌫"].map(key=>`<button type="button" data-score-key="${key}" style="height:38px;border:1px solid #4a4e50;border-radius:9px;background:#0b0d0d;color:#fff;font-size:18px;font-weight:900">${key}</button>`).join("")}
+      ${SCORE_KEYPAD_KEYS.map(key=>`<button type="button" data-score-key="${key}" style="height:38px;border:1px solid #4a4e50;border-radius:9px;background:#0b0d0d;color:#fff;font-size:18px;font-weight:900">${key}</button>`).join("")}
     </div>
     <div style="display:grid;grid-template-columns:.9fr 1.6fr;gap:6px;margin-top:6px">
       <button type="button" id="roundScoreKeypadCancel" style="height:40px;border:1px solid #666;border-radius:9px;background:#0a0a0a;color:#bbb;font-size:11px;font-weight:900">CANCELAR</button>
