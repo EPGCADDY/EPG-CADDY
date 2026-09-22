@@ -635,7 +635,7 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
 #roundGridNavigation label{color:var(--lime)!important;letter-spacing:.6px!important}
 .round-manual-detail{display:grid!important;grid-template-columns:118px minmax(0,1fr)!important;gap:10px!important;align-items:center!important;margin-bottom:10px!important}
 .round-manual-detail-label{color:var(--lime)!important;font-size:13px!important;letter-spacing:.3px!important}
-#roundManualEntry [aria-readonly="true"],#roundManualEntry .round-grid-name,#roundManualEntry .round-grid-gross{min-height:52px!important;border:1px solid #4b4f50!important;border-radius:10px!important;background:#080a0a!important;color:#fff!important;box-shadow:inset 0 1px rgba(255,255,255,.03)!important}
+#roundManualEntry [aria-readonly="true"],#roundManualEntry .round-grid-name,#roundManualEntry .round-grid-gross{min-height:52px!important;border:1px solid #4b4f50!important;border-radius:10px!important;background:#080a0a!important;color:#fff!important;box-shadow:inset 0 1px rgba(255,255,255,.03)!important}.round-grid-gross{font-family:inherit!important;font-weight:900!important;padding:0!important;-webkit-appearance:none!important;appearance:none!important;touch-action:manipulation!important}
 .round-player-grid{display:grid!important;grid-template-columns:minmax(116px,1.3fr) 72px minmax(88px,1fr) repeat(3,minmax(76px,.8fr))!important;gap:8px!important;align-items:center!important;width:100%!important}
 .round-player-grid>strong,.round-player-grid>span{font-size:16px!important;text-align:center!important}
 .round-player-grid-label{color:var(--lime)!important;font-weight:900!important;line-height:1.15!important;text-align:center!important}
@@ -3475,7 +3475,7 @@ function manualSegmentValue(player,holes){
 }
 function roundManualPlayerRows(selectedHole){
   const locked=!!round.officiallyClosedAt;
-  return round.players.map((player,index)=>{const first=manualSegmentValue(player,FRONT),second=manualSegmentValue(player,BACK),total=manualSegmentValue(player,ALL),result=manualHoleResult(player,selectedHole),value=result.recorded?(result.status==="x"?"X":result.gross??""):"";return`<div class="round-grid-name" aria-label="JUGADOR ${index+1}" style="display:flex;align-items:center;justify-content:center;min-width:0;width:100%;padding:3px;font-weight:900;text-align:center;overflow:hidden">${escapeHtml(player.name)}</div><span>${selectedHole}</span><input class="round-grid-gross" data-player-id="${escapeHtml(player.id)}" inputmode="none" type="text" readonly aria-label="GROSS ${escapeHtml(player.name)} HOYO ${selectedHole}" style="min-width:0;width:100%;font-size:20px;text-align:center;box-sizing:border-box;cursor:pointer" value="${escapeHtml(value)}" ${locked?"disabled":""}><strong>${first.count?first.total:0}</strong><strong>${second.count?second.total:0}</strong><strong style="color:#72ff42">${total.count?total.total:0}</strong>`}).join("")
+  return round.players.map((player,index)=>{const first=manualSegmentValue(player,FRONT),second=manualSegmentValue(player,BACK),total=manualSegmentValue(player,ALL),result=manualHoleResult(player,selectedHole),value=result.recorded?(result.status==="x"?"X":result.gross??""):"";return`<div class="round-grid-name" aria-label="JUGADOR ${index+1}" style="display:flex;align-items:center;justify-content:center;min-width:0;width:100%;padding:3px;font-weight:900;text-align:center;overflow:hidden">${escapeHtml(player.name)}</div><span>${selectedHole}</span><button class="round-grid-gross" data-player-id="${escapeHtml(player.id)}" data-score-value="${escapeHtml(value)}" type="button" aria-label="GROSS ${escapeHtml(player.name)} HOYO ${selectedHole}. TOCAR PARA INGRESAR SCORE" style="min-width:0;width:100%;font-size:20px;text-align:center;box-sizing:border-box;cursor:pointer" ${locked?"disabled":""}>${escapeHtml(value)||"&nbsp;"}</button><strong>${first.count?first.total:0}</strong><strong>${second.count?second.total:0}</strong><strong style="color:#72ff42">${total.count?total.total:0}</strong>`}).join("")
 }
 function roundManualHoleNavigation(selectedHole,locked,maxHole=18){
   const buttonStyle=disabled=>`min-height:42px;border:2px solid ${disabled?"#555":"#31ff00"};border-radius:5px;background:#050505;color:${disabled?"#777":"#31ff00"};font-size:12px;font-weight:900;box-shadow:${disabled?"none":"0 0 10px rgba(49,255,0,.22)"}`;
@@ -3515,6 +3515,7 @@ function ensureRoundScoreKeypad(){
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
       ${["1","2","3","4","5","6","7","8","9","X","0","⌫"].map(key=>`<button type="button" data-score-key="${key}" style="height:58px;border:1px solid #555;border-radius:12px;background:#0b0d0d;color:#fff;font-size:24px;font-weight:900">${key}</button>`).join("")}
     </div>
+    <button type="button" id="roundScoreKeypadDictate" style="width:100%;height:52px;margin-top:8px;border:1px solid #31ff00;border-radius:12px;background:#071007;color:#31ff00;font-size:16px;font-weight:900">🎙 DICTAR</button>
     <div style="display:grid;grid-template-columns:1fr 2fr;gap:8px;margin-top:8px">
       <button type="button" id="roundScoreKeypadCancel" style="height:54px;border:1px solid #666;border-radius:12px;background:#0a0a0a;color:#bbb;font-weight:900">CANCELAR</button>
       <button type="button" id="roundScoreKeypadOk" style="height:54px;border:1px solid #31ff00;border-radius:12px;background:#31ff00;color:#000;font-size:18px;font-weight:900">OK · SIGUIENTE</button>
@@ -3529,7 +3530,48 @@ function ensureRoundScoreKeypad(){
   });
   overlay.querySelector("#roundScoreKeypadCancel").onclick=closeRoundScoreKeypad;
   overlay.querySelector("#roundScoreKeypadOk").onclick=commitRoundScoreKeypad;
+  overlay.querySelector("#roundScoreKeypadDictate").onclick=()=>startRoundScoreDictation({playerId:roundScoreKeypadState?.playerId,hole:roundScoreKeypadState?.hole,source:"keypad"});
   return overlay;
+}
+let roundScoreDictationRecognition=null;
+function roundScoreDictationSupported(){return !!(window.SpeechRecognition||window.webkitSpeechRecognition)}
+function stopRoundScoreDictation(){
+  try{roundScoreDictationRecognition?.stop?.()}catch{}
+  roundScoreDictationRecognition=null;
+  document.querySelectorAll("[data-score-dictating='1']").forEach(el=>{el.dataset.scoreDictating="0";el.textContent=el.dataset.idleLabel||el.textContent});
+}
+function applyRoundScoreDictationTranscript(transcript,{playerId=null,hole=null}={}){
+  const player=playerId?round.players.find(p=>p.id===playerId):null;
+  const parsed=parseRoundScoreTranscript(transcript,{defaultPlayer:player||operationalDefaultVoicePlayer(),defaultHole:Number(hole)||currentOperationalHole()});
+  if(!parsed?.matched||!parsed?.ok||!parsed.entries?.length)return{ok:false,speech:"NO ENTENDÍ EL SCORE"};
+  const result=applyLiteralScores(parsed);
+  return result?.ok?{ok:true,entries:parsed.entries}:{ok:false,speech:result?.speech||"SCORE INVÁLIDO"};
+}
+function startRoundScoreDictation({playerId=null,hole=null,source="manual"}={}){
+  if(round.officiallyClosedAt)return false;
+  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const status=source==="keypad"?document.getElementById("roundScoreKeypadStatus"):document.getElementById("roundGridStatus");
+  if(!Recognition){if(status)status.textContent="DICTADO NO DISPONIBLE EN ESTE NAVEGADOR";return false}
+  stopRoundScoreDictation();
+  const recognition=new Recognition();
+  roundScoreDictationRecognition=recognition;
+  recognition.lang="es-GT";recognition.continuous=false;recognition.interimResults=false;recognition.maxAlternatives=3;
+  const button=source==="keypad"?document.getElementById("roundScoreKeypadDictate"):document.getElementById("roundGridDictate");
+  if(button){button.dataset.scoreDictating="1";button.dataset.idleLabel=button.textContent;button.textContent="🔴 ESCUCHANDO…"}
+  if(status)status.textContent="DICTA EL SCORE";
+  recognition.onresult=event=>{
+    const options=[];
+    for(let i=0;i<event.results.length;i++)for(let j=0;j<event.results[i].length;j++)options.push(event.results[i][j].transcript);
+    let applied=null;
+    for(const transcript of options){applied=applyRoundScoreDictationTranscript(transcript,{playerId,hole});if(applied?.ok)break}
+    if(applied?.ok){
+      if(status)status.textContent="SCORE REGISTRADO";
+      if(source==="keypad"){roundScoreKeypadState=null;closeRoundScoreKeypad()}
+    }else if(status)status.textContent=applied?.speech||"NO ENTENDÍ EL SCORE";
+  };
+  recognition.onerror=()=>{if(status)status.textContent="NO SE PUDO ESCUCHAR · INTENTA DE NUEVO"};
+  recognition.onend=()=>{roundScoreDictationRecognition=null;if(button){button.dataset.scoreDictating="0";button.textContent=button.dataset.idleLabel||"🎙 DICTAR"}};
+  try{recognition.start();return true}catch{if(status)status.textContent="NO SE PUDO ACTIVAR EL MICRÓFONO";return false}
 }
 function scoreKeypadPlayerList(hole){return operationalPlayersForHole(hole)}
 function closeRoundScoreKeypad(){
@@ -3600,20 +3642,18 @@ function renderRoundManualEntry(){
   const effectiveDetailTwo=isFourBallRound()?{label:"MODALIDAD",value:"FOUR BALL"}:detailTwo;
   const metric=stable?"PTS":"GROSS";
   manual.setAttribute("aria-label","ANOTADOR");
-  manual.innerHTML=`<div id="roundManualTitle" style="margin:0 0 10px;color:#72ff42;text-align:center;font-size:20px;font-weight:900">ANOTADOR</div>${roundManualHoleNavigation(selectedHole,locked,matchLimit)}<div class="round-manual-detail"><b class="round-manual-detail-label">${detailOne.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;width:100%;padding:5px 9px;box-sizing:border-box;text-align:center;font-size:13px;font-weight:900;text-transform:uppercase">${escapeHtml(detailOne.value)}</div></div><div class="round-manual-detail"><b class="round-manual-detail-label">${effectiveDetailTwo.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900">${escapeHtml(effectiveDetailTwo.value)}</div></div><div class="round-player-grid">${roundManualPlayerRows(selectedHole)}</div><div id="roundGridStatus" style="min-height:18px;margin-top:5px;color:#ff4545;text-align:center;font-size:11px;font-weight:900"></div><button id="roundGridEnter" type="button" style="display:block;width:100%;font-weight:900" ${locked?"disabled":""}>${locked?"RONDA CERRADA":"ENTER"}</button>`;
+  manual.innerHTML=`<div id="roundManualTitle" style="margin:0 0 10px;color:#72ff42;text-align:center;font-size:20px;font-weight:900">ANOTADOR</div>${roundManualHoleNavigation(selectedHole,locked,matchLimit)}<div class="round-manual-detail"><b class="round-manual-detail-label">${detailOne.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;width:100%;padding:5px 9px;box-sizing:border-box;text-align:center;font-size:13px;font-weight:900;text-transform:uppercase">${escapeHtml(detailOne.value)}</div></div><div class="round-manual-detail"><b class="round-manual-detail-label">${effectiveDetailTwo.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900">${escapeHtml(effectiveDetailTwo.value)}</div></div><div class="round-player-grid">${roundManualPlayerRows(selectedHole)}</div><button id="roundGridDictate" type="button" style="display:block;width:100%;min-height:54px;margin-top:12px;border:1px solid #31ff00;border-radius:12px;background:#071007;color:#31ff00;font-size:16px;font-weight:900">🎙 DICTAR SCORES</button><div id="roundGridStatus" style="min-height:18px;margin-top:5px;color:#ff4545;text-align:center;font-size:11px;font-weight:900"></div><button id="roundGridEnter" type="button" style="display:block;width:100%;font-weight:900" ${locked?"disabled":""}>${locked?"RONDA CERRADA":"ENTER"}</button>`;
   manual.querySelector("#roundManualTitle").textContent="ANOTADOR";
-  const manualGridDirty=()=>[...manual.querySelectorAll(".round-grid-gross")].some(input=>{const player=round.players.find(item=>item.id===input.dataset.playerId),result=manualHoleResult(player,selectedHole),stored=result.recorded?(result.status==="x"?"x":String(result.gross??"")):"";return normalizeSpeech(input.value)!==normalizeSpeech(stored)});
-  const navigateManualHole=target=>{const next=Math.max(1,Math.min(matchLimit,Number(target)||selectedHole));if(next===selectedHole)return true;if(manualGridDirty()){manual.querySelector("#roundGridHole").value=String(selectedHole);return roundGridStatus("PRESIONA ENTER ANTES DE CAMBIAR DE HOYO")}clearOperationalMissingPrompt();manual.dataset.hole=String(next);render();return true};
+  const manualGridDirty=()=>false;
+  const navigateManualHole=target=>{const next=Math.max(1,Math.min(matchLimit,Number(target)||selectedHole));if(next===selectedHole)return true;clearOperationalMissingPrompt();manual.dataset.hole=String(next);render();return true};
   manual.querySelector("#roundGridHole").onchange=event=>navigateManualHole(event.target.value);
   manual.querySelector("#roundGridPrevious").onclick=()=>navigateManualHole(selectedHole-1);
   manual.querySelector("#roundGridNext").onclick=()=>navigateManualHole(selectedHole+1);
-  const saveManualHole=()=>{;const entries=[];for(const input of manual.querySelectorAll(".round-grid-gross")){if(input.value.trim()==="")continue;const entry=manualScoreEntry(input.dataset.playerId,selectedHole,input.value);if(!entry)return roundGridStatus("SCORE INVÁLIDO");entries.push(entry)}const result=applyManualScoreEntries(entries);return!!result?.ok};
+  const saveManualHole=()=>{if(!operationalHoleComplete(selectedHole))return roundGridStatus("FALTAN SCORES");if(selectedHole<matchLimit)return navigateManualHole(selectedHole+1);return true};
   manual.querySelector("#roundGridEnter").onclick=saveManualHole;
-  manual.querySelectorAll(".round-grid-gross").forEach(input=>{
-    const open=event=>{event?.preventDefault?.();openRoundScoreKeypad(input.dataset.playerId,selectedHole)};
-    input.onclick=open;
-    input.onfocus=open;
-    input.onkeydown=event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();openRoundScoreKeypad(input.dataset.playerId,selectedHole)}};
+  manual.querySelector("#roundGridDictate").onclick=()=>startRoundScoreDictation({hole:selectedHole,source:"manual"});
+  manual.querySelectorAll(".round-grid-gross").forEach(button=>{
+    button.onclick=event=>{event.preventDefault();openRoundScoreKeypad(button.dataset.playerId,selectedHole)};
   });
   const clearButton=document.getElementById("clearRoundScores"),scoresButton=document.getElementById("clearScoresOnly");for(const button of [clearButton,scoresButton]){button.disabled=locked;button.setAttribute("aria-disabled",String(locked))}clearButton.onclick=()=>{if(locked)return;clearAllRegistrationPlayers()};scoresButton.onclick=()=>{if(locked)return;clearOnlyRoundScores()}
 }
