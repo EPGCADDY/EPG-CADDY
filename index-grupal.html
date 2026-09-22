@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="SCORE-INLINE-1-9-AUDIO-FINAL-20260922-R8">
+  <meta name="gscg-release" content="PLAYER-NAME-AUDIO-TAP-FINAL-20260922-R10">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2278,7 +2278,11 @@ function requestedPlayerResultSpeech(player){
 }
 function speakPlayerResultFromNameCell(cell){
   if(!cell||cell.dataset.audioPlayer!=="1"||!round?.configured)return false;
-  const player=round.players.find(p=>p.id===cell.dataset.playerId);
+  let player=round.players.find(p=>p.id===cell.dataset.playerId);
+  if(!player){
+    const slot=Number(cell.closest("tbody[data-slot]")?.dataset.slot);
+    player=playersByVisualSlot(round.players)[slot-1]||round.players[slot-1]||null;
+  }
   if(!player)return false;
   const speech=requestedPlayerResultSpeech(player);
   if(!speech){const status=$("deviceClosureStatus");if(status)status.textContent=`${player.name}: todavía no hay resultados disponibles.`;return false}
@@ -2287,11 +2291,23 @@ function speakPlayerResultFromNameCell(cell){
   return true;
 }
 function bindPlayerNameResultAudio(){
-  const card=$("scorecard");if(!card||card.dataset.playerAudioBound==="1")return;
-  card.dataset.playerAudioBound="1";
-  card.addEventListener("click",event=>{const cell=event.target.closest?.(".player-name[data-audio-player='1']");if(cell&&!event.target.closest("input,select,button,a"))speakPlayerResultFromNameCell(cell)});
-  card.addEventListener("keydown",event=>{if(event.key!=="Enter"&&event.key!==" ")return;const cell=event.target.closest?.(".player-name[data-audio-player='1']");if(cell){event.preventDefault();speakPlayerResultFromNameCell(cell)}});
+  if(document.documentElement.dataset.playerNameAudioBound==="1")return;
+  document.documentElement.dataset.playerNameAudioBound="1";
+  document.addEventListener("click",event=>{
+    const cell=event.target.closest?.("#scorecard .player-name[data-audio-player='1']");
+    if(!cell||event.target.closest("input,select,button,a"))return;
+    event.preventDefault();
+    speakPlayerResultFromNameCell(cell);
+  },true);
+  document.addEventListener("keydown",event=>{
+    if(event.key!=="Enter"&&event.key!==" ")return;
+    const cell=event.target.closest?.("#scorecard .player-name[data-audio-player='1']");
+    if(!cell)return;
+    event.preventDefault();
+    speakPlayerResultFromNameCell(cell);
+  },true);
 }
+bindPlayerNameResultAudio();
 document.addEventListener("DOMContentLoaded",bindPlayerNameResultAudio);
 function closureSpeechIfDue(){
   ensureAnnouncedState();
