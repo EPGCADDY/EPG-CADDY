@@ -3555,10 +3555,9 @@ function roundManualPlayerRows(selectedHole,activePlayerId=""){
   const locked=!!round.officiallyClosedAt;
   return round.players.map((player,index)=>{
     const result=manualHoleResult(player,selectedHole),value=result.recorded?(result.status==="x"?"X":result.gross??""):"";
-    const base=index*3;
-    const inlineScoreKeys=[1,2,3,4,5,6,7,8,9];
-    if(inlineScoreKeys[0]!==1)throw new Error("INLINE_SCORE_KEYS_REQUIRE_HOLE_IN_ONE");
-    const keypad=index<3?inlineScoreKeys.slice(base,base+3).map(n=>`<button type="button" class="round-inline-score-key" data-score-key="${n}" aria-label="Anotar ${n}" style="min-width:0;width:100%;height:100%;padding:0;border:1px solid #4b4f50;border-radius:8px;background:#0b0d0d;color:#fff;font-size:17px;font-weight:900">${n}</button>`).join(""):`<span></span><span></span><span></span>`;
+    const inlineScoreRows=[[1,2,3],[4,5,6],[7,8,9]];
+    if(inlineScoreRows[0][0]!==1)throw new Error("INLINE_SCORE_KEYS_REQUIRE_HOLE_IN_ONE");
+    const keypad=index<3?inlineScoreRows[index].map(n=>`<button type="button" class="round-inline-score-key" data-score-key="${n}" aria-label="Anotar ${n}" style="min-width:0;width:100%;height:100%;padding:0;border:1px solid #4b4f50;border-radius:8px;background:#0b0d0d;color:#fff;font-size:17px;font-weight:900">${n}</button>`).join(""):`<span></span><span></span><span></span>`;
     return`<div class="round-grid-name" aria-label="JUGADOR ${index+1}" style="display:flex;align-items:center;justify-content:center;min-width:0;width:100%;padding:3px;font-weight:900;text-align:center;overflow:hidden">${escapeHtml(player.name)}</div><span>${selectedHole}</span><button class="round-grid-gross ${player.id===activePlayerId?"is-active-score":""}" data-player-id="${escapeHtml(player.id)}" data-score-value="${escapeHtml(value)}" type="button" aria-label="GROSS ${escapeHtml(player.name)} HOYO ${selectedHole}. TOCAR PARA SELECCIONAR" style="min-width:0;width:100%;font-size:20px;text-align:center;box-sizing:border-box;cursor:pointer;${player.id===activePlayerId?"background:#31ff00!important;color:#000!important;-webkit-text-fill-color:#000!important;border:3px solid #31ff00!important;box-shadow:0 0 0 2px #000,0 0 0 4px rgba(49,255,0,.80),0 0 18px rgba(49,255,0,.55)!important;":""}" ${locked?"disabled":""}>${escapeHtml(value)||"&nbsp;"}</button>${keypad}`;
   }).join("")
 }
