@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PLAYER-NAME-AUDIO-TAP-FINAL-20260922-R10">
+  <meta name="gscg-release" content="SCORE-ACTIVE-FLOW-FINAL-20260922-R9">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -3594,6 +3594,9 @@ function scoreKeypadPlayerList(hole){return operationalPlayersForHole(hole)}
 function closeRoundScoreKeypad(){
   const overlay=document.getElementById("roundScoreKeypadOverlay");
   if(overlay){overlay.style.display="none";overlay.setAttribute("aria-hidden","true")}
+  const manual=document.getElementById("roundManualEntry");
+  if(manual)manual.dataset.activePlayerId="";
+  document.querySelectorAll(".round-grid-gross.is-active-score").forEach(el=>el.classList.remove("is-active-score"));
   roundScoreKeypadState=null;
 }
 function renderRoundScoreKeypad(){
@@ -3622,12 +3625,27 @@ function roundScoreKeypadPress(key){
   const entry=manualScoreEntry(player.id,state.hole,String(key));if(!entry)return false;
   const players=scoreKeypadPlayerList(state.hole),index=players.findIndex(p=>p.id===player.id),nextPlayer=index>=0?players[index+1]||null:null;
   const manual=document.getElementById("roundManualEntry");
-  if(manual)manual.dataset.activePlayerId=nextPlayer?.id||player.id;
-  const result=applyManualScoreEntries([entry]);if(!result?.ok)return false;
+  const nextId=nextPlayer?.id||"";
+  if(manual)manual.dataset.activePlayerId=nextId;
+  roundScoreKeypadState=nextPlayer?{playerId:nextPlayer.id,hole:state.hole,value:""}:null;
+  const result=applyManualScoreEntries([entry]);
+  if(!result?.ok){
+    if(manual)manual.dataset.activePlayerId=player.id;
+    roundScoreKeypadState={playerId:player.id,hole:state.hole,value:""};
+    setTimeout(()=>openRoundScoreKeypad(player.id,state.hole),0);
+    return false;
+  }
   const saved=player.holes?.[state.hole],spokenScore=Number.isInteger(saved?.gross)?`Gros ${saved.gross}`:"";
   if(spokenScore){window.GSCDeviceClosures?.cancel?.();window.GSCDeviceClosures?.speak?.(`Hoyo ${state.hole}. ${player.name}. ${spokenScore}.`)}
-  roundScoreKeypadState={playerId:(nextPlayer||player).id,hole:state.hole,value:""};
-  setTimeout(()=>openRoundScoreKeypad((nextPlayer||player).id,state.hole),0);
+  if(nextPlayer){
+    const refreshed=document.querySelector(`.round-grid-gross[data-player-id="${CSS.escape(nextPlayer.id)}"]`);
+    refreshed?.classList.add("is-active-score");
+  }else{
+    const refreshedManual=document.getElementById("roundManualEntry");
+    if(refreshedManual)refreshedManual.dataset.activePlayerId="";
+    document.querySelectorAll(".round-grid-gross.is-active-score").forEach(el=>el.classList.remove("is-active-score"));
+    roundScoreKeypadState=null;
+  }
   return true;
 }
 function commitRoundScoreKeypad(){
@@ -3666,18 +3684,17 @@ function renderRoundManualEntry(){
   const effectiveDetailTwo=isFourBallRound()?{label:"MODALIDAD",value:"FOUR BALL"}:detailTwo;
   const metric=stable?"PTS":"GROSS";
   manual.setAttribute("aria-label","ANOTADOR");
-  manual.innerHTML=`<div id="roundManualTitle" style="margin:0 0 10px;color:#72ff42;text-align:center;font-size:20px;font-weight:900">ANOTADOR</div>${roundManualHoleNavigation(selectedHole,locked,matchLimit)}<div class="round-manual-detail"><b class="round-manual-detail-label">${detailOne.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;width:100%;padding:5px 9px;box-sizing:border-box;text-align:center;font-size:13px;font-weight:900;text-transform:uppercase">${escapeHtml(detailOne.value)}</div></div><div class="round-manual-detail"><b class="round-manual-detail-label">${effectiveDetailTwo.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900">${escapeHtml(effectiveDetailTwo.value)}</div></div><div class="round-player-grid">${roundManualPlayerRows(selectedHole,manual.dataset.activePlayerId||round.players[0]?.id||"")}</div><button id="roundGridDictate" type="button" style="display:block;width:100%;min-height:54px;margin-top:12px;border:1px solid #31ff00;border-radius:12px;background:#071007;color:#31ff00;font-size:16px;font-weight:900">🎙 DICTAR SCORES</button><div id="roundGridStatus" style="min-height:18px;margin-top:5px;color:#ff4545;text-align:center;font-size:11px;font-weight:900"></div><button id="roundGridEnter" type="button" style="display:block;width:100%;font-weight:900" ${locked?"disabled":""}>${locked?"RONDA CERRADA":"ENTER"}</button>`;
+  manual.innerHTML=`<div id="roundManualTitle" style="margin:0 0 10px;color:#72ff42;text-align:center;font-size:20px;font-weight:900">ANOTADOR</div>${roundManualHoleNavigation(selectedHole,locked,matchLimit)}<div class="round-manual-detail"><b class="round-manual-detail-label">${detailOne.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;width:100%;padding:5px 9px;box-sizing:border-box;text-align:center;font-size:13px;font-weight:900;text-transform:uppercase">${escapeHtml(detailOne.value)}</div></div><div class="round-manual-detail"><b class="round-manual-detail-label">${effectiveDetailTwo.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900">${escapeHtml(effectiveDetailTwo.value)}</div></div><div class="round-player-grid">${roundManualPlayerRows(selectedHole,manual.dataset.activePlayerId||"")}</div><button id="roundGridDictate" type="button" style="display:block;width:100%;min-height:54px;margin-top:12px;border:1px solid #31ff00;border-radius:12px;background:#071007;color:#31ff00;font-size:16px;font-weight:900">🎙 DICTAR SCORES</button><div id="roundGridStatus" style="min-height:18px;margin-top:5px;color:#ff4545;text-align:center;font-size:11px;font-weight:900"></div><button id="roundGridEnter" type="button" style="display:block;width:100%;font-weight:900" ${locked?"disabled":""}>${locked?"RONDA CERRADA":"ENTER"}</button>`;
   manual.querySelector("#roundManualTitle").textContent="ANOTADOR";
   const manualGridDirty=()=>false;
-  const navigateManualHole=target=>{const next=Math.max(1,Math.min(matchLimit,Number(target)||selectedHole));if(next===selectedHole)return true;clearOperationalMissingPrompt();manual.dataset.hole=String(next);render();return true};
+  const navigateManualHole=target=>{const next=Math.max(1,Math.min(matchLimit,Number(target)||selectedHole));if(next===selectedHole)return true;clearOperationalMissingPrompt();manual.dataset.activePlayerId="";roundScoreKeypadState=null;manual.dataset.hole=String(next);render();return true};
   manual.querySelector("#roundGridHole").onchange=event=>navigateManualHole(event.target.value);
   manual.querySelector("#roundGridPrevious").onclick=()=>navigateManualHole(selectedHole-1);
   manual.querySelector("#roundGridNext").onclick=()=>navigateManualHole(selectedHole+1);
   const saveManualHole=()=>{if(!operationalHoleComplete(selectedHole))return roundGridStatus("FALTAN SCORES");if(selectedHole<matchLimit)return navigateManualHole(selectedHole+1);return true};
   manual.querySelector("#roundGridEnter").onclick=saveManualHole;
   manual.querySelector("#roundGridDictate").onclick=()=>startRoundScoreDictation({hole:selectedHole,source:"manual"});
-  if(!manual.dataset.activePlayerId||!round.players.some(p=>p.id===manual.dataset.activePlayerId))manual.dataset.activePlayerId=round.players[0]?.id||"";
-  openRoundScoreKeypad(manual.dataset.activePlayerId,selectedHole);
+  if(manual.dataset.activePlayerId&&!round.players.some(p=>p.id===manual.dataset.activePlayerId))manual.dataset.activePlayerId="";
   manual.querySelectorAll(".round-grid-gross").forEach(button=>{
     button.onclick=event=>{event.preventDefault();openRoundScoreKeypad(button.dataset.playerId,selectedHole)};
   });
