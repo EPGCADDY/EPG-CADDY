@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PLAYER-NAME-DOUBLE-TAP-ACCUMULATED-AUDIO-20260922-R19">
+  <meta name="gscg-release" content="PLAYER-NAME-DOUBLE-TAP-ACCUMULATED-AUDIO-20260922-R21">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2306,18 +2306,19 @@ function speakPlayerResultFromNameCell(cell){
 function bindPlayerNameResultAudio(){
   if(document.documentElement.dataset.playerNameAudioBound==="1")return;
   document.documentElement.dataset.playerNameAudioBound="1";
-  let lastPlayerTapCell=null,lastPlayerTapAt=0;
-  document.addEventListener("click",event=>{
+  let lastPlayerTapId="",lastPlayerTapAt=0;
+  function playerNameTap(event){
     const cell=event.target.closest?.("#scorecard .player-name[data-audio-player='1']");
     if(!cell||event.target.closest("input,select,button,a"))return;
-    event.preventDefault();
-    event.stopPropagation();
-    const now=Date.now(),isDoubleTap=cell===lastPlayerTapCell&&(now-lastPlayerTapAt)<=550;
-    lastPlayerTapCell=cell;lastPlayerTapAt=now;
+    const playerId=String(cell.dataset.playerId||"");
+    const now=Date.now(),isDoubleTap=playerId&&playerId===lastPlayerTapId&&(now-lastPlayerTapAt)<=900;
+    lastPlayerTapId=playerId;lastPlayerTapAt=now;
     if(!isDoubleTap)return;
-    lastPlayerTapCell=null;lastPlayerTapAt=0;
-    speakPlayerResultFromNameCell(cell);
-  },true);
+    event.preventDefault();event.stopPropagation();
+    lastPlayerTapId="";lastPlayerTapAt=0;
+    window.GSCPlayerNameAudio(playerId);
+  }
+  document.addEventListener("pointerup",playerNameTap,true);
   document.addEventListener("keydown",event=>{
     if(event.key!=="Enter"&&event.key!==" ")return;
     const cell=event.target.closest?.("#scorecard .player-name[data-audio-player='1']");
