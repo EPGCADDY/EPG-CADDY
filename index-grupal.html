@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="SCORE-SELECTION-GREEN-NO-MIC-PLAYER-AUDIO-20260922-R11">
+  <meta name="gscg-release" content="SCORE-SELECTION-GREEN-NO-MIC-PLAYER-AUDIO-20260922-R12">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -3536,7 +3536,6 @@ function ensureRoundScoreKeypad(){
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px">
       ${["1","2","3","4","5","6","7","8","9","X","0","⌫"].map(key=>`<button type="button" data-score-key="${key}" style="height:38px;border:1px solid #4a4e50;border-radius:9px;background:#0b0d0d;color:#fff;font-size:18px;font-weight:900">${key}</button>`).join("")}
     </div>
-    <button type="button" id="roundScoreKeypadDictate" style="width:100%;height:38px;margin-top:6px;border:1px solid #31ff00;border-radius:9px;background:#071007;color:#31ff00;font-size:12px;font-weight:900">🎙 DICTAR</button>
     <div style="display:grid;grid-template-columns:.9fr 1.6fr;gap:6px;margin-top:6px">
       <button type="button" id="roundScoreKeypadCancel" style="height:40px;border:1px solid #666;border-radius:9px;background:#0a0a0a;color:#bbb;font-size:11px;font-weight:900">CANCELAR</button>
       <button type="button" id="roundScoreKeypadOk" style="height:40px;border:1px solid #31ff00;border-radius:9px;background:#31ff00;color:#000;font-size:13px;font-weight:900">OK</button>
@@ -3551,7 +3550,6 @@ function ensureRoundScoreKeypad(){
   });
   overlay.querySelector("#roundScoreKeypadCancel").onclick=closeRoundScoreKeypad;
   overlay.querySelector("#roundScoreKeypadOk").onclick=commitRoundScoreKeypad;
-  overlay.querySelector("#roundScoreKeypadDictate").onclick=()=>startRoundScoreDictation({playerId:roundScoreKeypadState?.playerId,hole:roundScoreKeypadState?.hole,source:"keypad"});
   return overlay;
 }
 function scoreKeypadPlayerList(hole){return operationalPlayersForHole(hole)}
