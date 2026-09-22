@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="MANUAL-AUDIO-SEGMENT-KEYPAD-HOLEINONE-20260922-R30">
+  <meta name="gscg-release" content="AUDIO-CURRENT-SEGMENT-PLUS-TOTAL-20260922-R31">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2266,18 +2266,39 @@ function latestRecordedHoleForPlayer(player){
   const recorded=ALL.filter(h=>{const score=player.holes?.[h];return score&&!isOmittedScore(score)&&Number.isInteger(score.gross)});
   return recorded.length?Math.max(...recorded):null;
 }
+function playerRecordedTimeline(player){
+  if(!player?.holes)return[];
+  return ALL.map(hole=>{
+    const score=player.holes?.[hole];
+    const stamp=Date.parse(score?.updatedAt||"");
+    return score&&!isOmittedScore(score)&&Number.isInteger(score.gross)
+      ?{hole,score,stamp:Number.isFinite(stamp)?stamp:0}
+      :null;
+  }).filter(Boolean).sort((a,b)=>(a.stamp-b.stamp)||(a.hole-b.hole));
+}
 function requestedPlayerResultSpeech(player){
   if(!round?.configured||!player)return "";
-  const latest=latestRecordedHoleForPlayer(player);
-  if(!latest)return "";
-  const segment=latest<=9?FRONT:BACK;
-  const holes=segment.filter(h=>h<=latest&&player.holes?.[h]&&!isOmittedScore(player.holes[h])&&Number.isInteger(player.holes[h].gross));
-  const t=totals(player,holes);
-  if(!t.count)return "";
-  const title=latest<=9
-    ?(latest===9?"Primera vuelta completa.":`Primera vuelta, hasta el hoyo ${HOLE_SPEECH_NAMES[latest]||latest}.`)
-    :(latest===18?"Segunda vuelta completa.":`Segunda vuelta, del hoyo diez al hoyo ${HOLE_SPEECH_NAMES[latest]||latest}.`);
-  return `${title} ${player.name}. Gros ${t.gross}. Neto ${t.net}. ${versusParSpeech(t.net-t.par)}.`;
+  const timeline=playerRecordedTimeline(player);
+  if(!timeline.length)return "";
+  const firstHole=timeline[0].hole,currentHole=timeline[timeline.length-1].hole;
+  const startedOnBack=firstHole>=10;
+  const currentSegment=currentHole>=10?BACK:FRONT;
+  const firstSegment=startedOnBack?BACK:FRONT;
+  const currentSegmentEntries=timeline.filter(item=>currentSegment.includes(item.hole));
+  const completedFirstSegment=currentSegment!==firstSegment&&timeline.some(item=>firstSegment.includes(item.hole));
+  const segmentHoles=currentSegmentEntries.map(item=>item.hole);
+  const segmentTotals=totals(player,segmentHoles);
+  if(!segmentTotals.count)return "";
+  const segmentLabel=currentSegment===BACK
+    ?`Vuelta actual, del hoyo diez al hoyo ${HOLE_SPEECH_NAMES[currentHole]||currentHole}.`
+    :`Vuelta actual, del hoyo uno al hoyo ${HOLE_SPEECH_NAMES[currentHole]||currentHole}.`;
+  const segmentSpeech=`${segmentLabel} ${player.name}. Gros ${segmentTotals.gross}. Neto ${segmentTotals.net}. ${versusParSpeech(segmentTotals.net-segmentTotals.par)}.`;
+  if(!completedFirstSegment)return segmentSpeech;
+  const totalHoles=timeline.map(item=>item.hole);
+  const total=totals(player,totalHoles);
+  if(!total.count)return segmentSpeech;
+  const totalSpeech=`Acumulado total de la ronda hasta el hoyo ${HOLE_SPEECH_NAMES[currentHole]||currentHole}. Gros ${total.gross}. Neto ${total.net}. ${versusParSpeech(total.net-total.par)}.`;
+  return `${segmentSpeech} ${totalSpeech}`;
 }
 window.GSCPlayerNameAudio=function(playerId){
   if(!round?.configured)return false;
