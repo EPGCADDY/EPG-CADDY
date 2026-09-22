@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="AUTO-OPEN-NEXT-PLAYER-AFTER-TWO-FIELDS-20260921-AI">
+  <meta name="gscg-release" content="PARTIAL-RESULT-AUDIO-BY-HOLE-20260922">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2228,11 +2228,34 @@ function segmentSpeech(title,holes){
   }
   return lines.length?[title,...lines].join(" "):"";
 }
+const HOLE_SPEECH_NAMES={1:"uno",2:"dos",3:"tres",4:"cuatro",5:"cinco",6:"seis",7:"siete",8:"ocho",9:"nueve",10:"diez",11:"once",12:"doce",13:"trece",14:"catorce",15:"quince",16:"dieciséis",17:"diecisiete",18:"dieciocho"};
+function latestCompletedHoleInSegment(holes){
+  let latest=null;
+  for(const hole of holes){
+    const complete=round.players.every(p=>{
+      const required=requiredHolesForPlayer(p,[hole]);
+      return !required.length||required.every(h=>!!p.holes[h]);
+    });
+    if(!complete)break;
+    latest=hole;
+  }
+  return latest;
+}
+function partialSegmentSpeech(kind){
+  const source=kind==="front"?FRONT:kind==="back"?BACK:ALL;
+  const latest=latestCompletedHoleInSegment(source);
+  if(!latest)return "";
+  const isComplete=latest===source[source.length-1];
+  if(kind==="front"&&isComplete)return segmentSpeech("Primera vuelta.",FRONT);
+  if(kind==="back"&&isComplete)return segmentSpeech("Segunda vuelta.",BACK);
+  if(kind==="total"&&isComplete)return segmentSpeech("Ronda completa.",ALL);
+  const holes=source.filter(h=>h<=latest);
+  const title=`Hasta el hoyo ${HOLE_SPEECH_NAMES[latest]||latest}.`;
+  return segmentSpeech(title,holes);
+}
 function requestedClosureSpeech(kind){
   if(!round?.configured||!Array.isArray(round.players)||!round.players.length)return "";
-  if(kind==="front")return segmentSpeech("Primera vuelta.",FRONT);
-  if(kind==="back")return segmentSpeech("Segunda vuelta.",BACK);
-  if(kind==="total")return segmentSpeech("Ronda completa.",ALL);
+  if(kind==="front"||kind==="back"||kind==="total")return partialSegmentSpeech(kind);
   return "";
 }
 window.GSCRequestedClosureSpeech=requestedClosureSpeech;
