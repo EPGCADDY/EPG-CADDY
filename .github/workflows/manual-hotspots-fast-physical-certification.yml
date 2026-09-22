@@ -1,0 +1,88 @@
+name: Manual hotspots fast physical certification
+on:
+  push:
+    branches: [qa-manual-hotspots-fast-20260921]
+permissions:
+  contents: read
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium
+        run: |
+          mkdir -p /tmp/hotspot-fast
+          cd /tmp/hotspot-fast
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 --no-audit --no-fund
+          npx playwright install chromium
+      - name: Click every hotspot
+        run: |
+          python3 -m http.server 8765 >/tmp/hotspot-fast-http.log 2>&1 &
+          sleep 2
+          mkdir -p evidence/hotspot-fast
+          cat >/tmp/hotspot-fast/certify.cjs <<'NODE'
+          const {chromium}=require('/tmp/hotspot-fast/node_modules/playwright');
+          const fs=require('fs');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const context=await browser.newContext({
+              viewport:{width:430,height:932},deviceScaleFactor:3,isMobile:true,hasTouch:true,
+              userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X) AppleWebKit/605.1.15 Version/26.0 Mobile/15E148 Safari/604.1'
+            });
+            const page=await context.newPage();
+            const manual='http://127.0.0.1:8765/manual.html';
+            await page.goto(manual,{waitUntil:'networkidle'});
+            await page.waitForTimeout(500);
+            const coverage=await page.evaluate(()=>[...document.querySelectorAll('.screen-stage img[src^="/docs/manual/current/"]')].map(img=>({
+              sheet:img.closest('section.sheet')?.id||'',
+              src:img.getAttribute('src')||'',
+              hotspots:img.closest('.screen-stage')?.querySelectorAll('.manual-hotspot').length||0
+            })));
+            const uncovered=coverage.filter(x=>x.hotspots<1);
+            const hotspots=await page.evaluate(()=>[...document.querySelectorAll('.manual-hotspot')].map((a,i)=>({
+              i,label:a.getAttribute('aria-label')||'',href:a.getAttribute('href')||'',
+              sheet:a.closest('section.sheet')?.id||'',src:a.closest('.screen-stage')?.querySelector('img')?.getAttribute('src')||''
+            })));
+            const results=[];
+            for(const meta of hotspots){
+              await page.goto(manual,{waitUntil:'domcontentloaded'});
+              await page.waitForTimeout(50);
+              const loc=page.locator('.manual-hotspot').nth(meta.i);
+              await loc.scrollIntoViewIfNeeded();
+              const geom=await loc.evaluate(a=>{
+                const r=a.getBoundingClientRect(),ir=a.closest('.screen-stage')?.querySelector('img')?.getBoundingClientRect();
+                return {x:r.x,y:r.y,w:r.width,h:r.height,ix:ir?.x,iy:ir?.y,iw:ir?.width,ih:ir?.height};
+              });
+              const within=geom.w>0&&geom.h>0&&geom.x>=geom.ix-1&&geom.y>=geom.iy-1&&geom.x+geom.w<=geom.ix+geom.iw+1&&geom.y+geom.h<=geom.iy+geom.ih+1;
+              const expected=new URL(meta.href,manual).href;
+              await page.route(expected,route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>QA TARGET</title><p>target ok</p>'}),{times:1});
+              let clickOk=false,actual='';
+              try{
+                await Promise.all([
+                  page.waitForURL(expected,{timeout:3000}),
+                  loc.click({timeout:3000})
+                ]);
+                actual=page.url();clickOk=actual===expected;
+              }catch(e){actual=page.url();}
+              results.push({...meta,within,clickOk,expected,actual,geom});
+            }
+            const fail=results.filter(r=>!r.within||!r.clickOk);
+            const uniqueAssets=[...new Set(coverage.map(x=>x.src))];
+            const report={viewport:'430x932@3x iPhone-like touch',operationalImageInstances:coverage.length,uniqueOperationalAssets:uniqueAssets.length,uncovered,hotspotCount:hotspots.length,passCount:results.length-fail.length,failCount:fail.length,results};
+            fs.writeFileSync('evidence/hotspot-fast/report.json',JSON.stringify(report,null,2));
+            console.log(JSON.stringify({operationalImageInstances:coverage.length,uniqueOperationalAssets:uniqueAssets.length,hotspotCount:hotspots.length,passCount:report.passCount,failCount:report.failCount,uncovered:uncovered.length}));
+            if(uncovered.length)console.error('UNCOVERED',JSON.stringify(uncovered,null,2));
+            if(fail.length)console.error('FAIL',JSON.stringify(fail.slice(0,30),null,2));
+            await browser.close();
+            if(uncovered.length||fail.length)process.exit(1);
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          node /tmp/hotspot-fast/certify.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: manual-hotspots-fast-physical-certification
+          path: evidence/hotspot-fast
+          retention-days: 3
