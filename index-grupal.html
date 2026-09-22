@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="MOBILE-UPDATE-POSITION-LOCK-20260922-R46">
+  <meta name="gscg-release" content="CORRECTION-STAYS-ON-PLAYER-UNTIL-ENTER-20260922-R47">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -3725,8 +3725,9 @@ function openRoundScoreKeypad(playerOrId,hole){
   const h=Number(hole);if(!player||!Number.isInteger(h)||h<1||h>18)return false;
   const manual=document.getElementById("roundManualEntry");
   if(manual)manual.dataset.activePlayerId=player.id;
+  const correctionMode=operationalEntryRecorded(player?.holes?.[h]);
   setActiveScoreVisual(player.id);
-  roundScoreKeypadState={playerId:player.id,hole:h,value:""};
+  roundScoreKeypadState={playerId:player.id,hole:h,value:"",correctionMode};
   return true;
 }
 function roundScoreKeypadPress(key){
@@ -3742,7 +3743,7 @@ function roundScoreKeypadPress(key){
     const removed=removeManualScore(player,hole);
     if(!removed){roundGridStatus("NO HAY SCORE PARA BORRAR");return false}
     if(manual)manual.dataset.activePlayerId=player.id;
-    roundScoreKeypadState={playerId:player.id,hole,value:""};
+    roundScoreKeypadState={playerId:player.id,hole,value:"",correctionMode:true};
     setTimeout(()=>setActiveScoreVisual(player.id),0);
     return true;
   }
@@ -3750,15 +3751,23 @@ function roundScoreKeypadPress(key){
     ?{player:player.id,hole,gross:null,status:"x"}
     :{player:player.id,hole,gross:contract.gross,status:null};
   if(contract.action==="score"&&(!Number.isInteger(entry.gross)||entry.gross<1||entry.gross>9))return false;
-  const players=scoreKeypadPlayerList(hole),index=players.findIndex(p=>p.id===player.id),nextPlayer=index>=0?players.slice(index+1).find(p=>!operationalEntryRecorded(p?.holes?.[hole]))||null:null;
-  if(manual)manual.dataset.activePlayerId=nextPlayer?.id||"";
-  roundScoreKeypadState=nextPlayer?{playerId:nextPlayer.id,hole,value:""}:null;
+  const correctionMode=roundScoreKeypadState?.correctionMode===true;
+  const players=scoreKeypadPlayerList(hole),index=players.findIndex(p=>p.id===player.id);
+  const nextPlayer=!correctionMode&&index>=0?players.slice(index+1).find(p=>!operationalEntryRecorded(p?.holes?.[hole]))||null:null;
+  if(manual)manual.dataset.activePlayerId=correctionMode?player.id:(nextPlayer?.id||"");
+  roundScoreKeypadState=correctionMode
+    ?{playerId:player.id,hole,value:"",correctionMode:true}
+    :(nextPlayer?{playerId:nextPlayer.id,hole,value:"",correctionMode:false}:null);
   const result=applyManualScoreEntries([entry]);if(!result?.ok)return false;
   setTimeout(()=>{
     const refreshed=document.getElementById("roundManualEntry");
-    if(nextPlayer){
+    if(correctionMode){
+      if(refreshed)refreshed.dataset.activePlayerId=player.id;
+      roundScoreKeypadState={playerId:player.id,hole,value:"",correctionMode:true};
+      setActiveScoreVisual(player.id);
+    }else if(nextPlayer){
       if(refreshed)refreshed.dataset.activePlayerId=nextPlayer.id;
-      roundScoreKeypadState={playerId:nextPlayer.id,hole,value:""};
+      roundScoreKeypadState={playerId:nextPlayer.id,hole,value:"",correctionMode:false};
       setActiveScoreVisual(nextPlayer.id);
     }else{
       if(refreshed)refreshed.dataset.activePlayerId="";
