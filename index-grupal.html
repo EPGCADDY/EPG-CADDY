@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="VERSION-BADGE-ABOVE-ROUND-20260922-R42">
+  <meta name="gscg-release" content="KEYPAD-ROUTING-AUDIT-20260922-R43">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -3654,6 +3654,24 @@ function scoreKeypadPlayerList(hole){
   if(!Number.isInteger(value)||value<1||value>18)return[];
   return round.players.filter(player=>value<=teamMatchPlayerLimit(player));
 }
+function firstPendingScorePlayer(hole){
+  return scoreKeypadPlayerList(hole).find(player=>!operationalEntryRecorded(player?.holes?.[hole]))||null;
+}
+function ensureRoundKeyTarget(hole){
+  const h=Number(hole);if(!Number.isInteger(h)||h<1||h>18)return null;
+  const manual=document.getElementById("roundManualEntry");
+  let playerId=String(roundScoreKeypadState?.playerId||manual?.dataset?.activePlayerId||"");
+  let player=round.players.find(p=>p.id===playerId)||null;
+  if(!player){
+    player=firstPendingScorePlayer(h);
+    if(player){
+      if(manual)manual.dataset.activePlayerId=player.id;
+      roundScoreKeypadState={playerId:player.id,hole:h,value:""};
+      setTimeout(()=>setActiveScoreVisual(player.id),0);
+    }
+  }
+  return player;
+}
 function closeRoundScoreKeypad(){
   const overlay=document.getElementById("roundScoreKeypadOverlay");
   if(overlay){overlay.style.display="none";overlay.setAttribute("aria-hidden","true")}
@@ -3706,13 +3724,14 @@ function openRoundScoreKeypad(playerOrId,hole){
 function roundScoreKeypadPress(key){
   key=String(key);
   if(!/^[0-9]$/.test(key)&&key!=="X")return false;
-  const state=roundScoreKeypadState;if(!state)return false;
-  const player=round.players.find(p=>p.id===state.playerId);if(!player)return false;
-  const hole=state.hole;
+  const manual=document.getElementById("roundManualEntry");
+  const selectedHole=Number(roundScoreKeypadState?.hole||manual?.dataset?.hole);
+  const player=ensureRoundKeyTarget(selectedHole);
+  if(!player){roundGridStatus("SELECCIONA UN JUGADOR PARA CORREGIR");return false}
+  const hole=selectedHole;
   if(key==="X"){
     const removed=removeManualScore(player,hole);
-    if(!removed)return false;
-    const manual=document.getElementById("roundManualEntry");
+    if(!removed){roundGridStatus("NO HAY SCORE PARA BORRAR");return false}
     if(manual)manual.dataset.activePlayerId=player.id;
     roundScoreKeypadState={playerId:player.id,hole,value:""};
     setTimeout(()=>setActiveScoreVisual(player.id),0);
@@ -3720,21 +3739,19 @@ function roundScoreKeypadPress(key){
   }
   const entry=key==="0"
     ?{player:player.id,hole,gross:null,status:"x"}
-    :manualScoreEntry(player.id,hole,key);
-  if(!entry)return false;
-  const players=scoreKeypadPlayerList(hole),index=players.findIndex(p=>p.id===player.id),nextPlayer=index>=0?players[index+1]||null:null;
-  const manual=document.getElementById("roundManualEntry");
+    :{player:player.id,hole,gross:Number(key),status:null};
+  if(key!=="0"&&(!Number.isInteger(entry.gross)||entry.gross<1||entry.gross>9))return false;
+  const players=scoreKeypadPlayerList(hole),index=players.findIndex(p=>p.id===player.id),nextPlayer=index>=0?players.slice(index+1).find(p=>!operationalEntryRecorded(p?.holes?.[hole]))||null:null;
   if(manual)manual.dataset.activePlayerId=nextPlayer?.id||"";
   roundScoreKeypadState=nextPlayer?{playerId:nextPlayer.id,hole,value:""}:null;
   const result=applyManualScoreEntries([entry]);if(!result?.ok)return false;
   setTimeout(()=>{
+    const refreshed=document.getElementById("roundManualEntry");
     if(nextPlayer){
-      const refreshed=document.getElementById("roundManualEntry");
       if(refreshed)refreshed.dataset.activePlayerId=nextPlayer.id;
       roundScoreKeypadState={playerId:nextPlayer.id,hole,value:""};
       setActiveScoreVisual(nextPlayer.id);
     }else{
-      const refreshed=document.getElementById("roundManualEntry");
       if(refreshed)refreshed.dataset.activePlayerId="";
       roundScoreKeypadState=null;
       clearActiveScoreVisual();
@@ -3766,12 +3783,25 @@ function renderRoundManualEntry(){
   const saveManualHole=()=>{if(!operationalHoleComplete(selectedHole))return roundGridStatus("FALTAN SCORES");if(selectedHole<matchLimit)return navigateManualHole(selectedHole+1);return true};
   manual.querySelector("#roundGridEnter").onclick=saveManualHole;
   if(manual.dataset.activePlayerId&&!round.players.some(p=>p.id===manual.dataset.activePlayerId))manual.dataset.activePlayerId="";
+  if(!manual.dataset.activePlayerId){
+    const pendingPlayer=firstPendingScorePlayer(selectedHole);
+    if(pendingPlayer){manual.dataset.activePlayerId=pendingPlayer.id;roundScoreKeypadState={playerId:pendingPlayer.id,hole:selectedHole,value:""}}
+  }else if(!roundScoreKeypadState){
+    roundScoreKeypadState={playerId:manual.dataset.activePlayerId,hole:selectedHole,value:""};
+  }
   manual.querySelectorAll(".round-grid-gross").forEach(button=>{
     button.onclick=event=>{event.preventDefault();openRoundScoreKeypad(button.dataset.playerId,selectedHole)};
   });
   if(manual.dataset.activePlayerId)setTimeout(()=>setActiveScoreVisual(manual.dataset.activePlayerId),0);
   manual.querySelectorAll(".round-inline-score-key").forEach(button=>{
-    button.onclick=event=>{event.preventDefault();roundScoreKeypadPress(button.dataset.scoreKey)};
+    button.onclick=event=>{
+      event.preventDefault();
+      if(!roundScoreKeypadState){
+        const target=ensureRoundKeyTarget(selectedHole);
+        if(!target)return;
+      }
+      roundScoreKeypadPress(button.dataset.scoreKey);
+    };
   });
   const clearButton=document.getElementById("clearRoundScores"),scoresButton=document.getElementById("clearScoresOnly");for(const button of [clearButton,scoresButton]){button.disabled=locked;button.setAttribute("aria-disabled",String(locked))}clearButton.onclick=()=>{if(locked)return;clearAllRegistrationPlayers()};scoresButton.onclick=()=>{if(locked)return;clearOnlyRoundScores()}
 }
