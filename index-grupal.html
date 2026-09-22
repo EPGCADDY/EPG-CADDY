@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="KEYPAD-ZERO-DELETE-AND-CLOSURE-REARM-20260922-R39">
+  <meta name="gscg-release" content="AUTO-CLOSURE-PLAYBACK-20260922-R40">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2084,7 +2084,13 @@ const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","conn
 async function speakClosure(text){
  const targetRound=round;
  const ok=await window.GSCDeviceClosures.speak(text);
- if(!ok){ensureAnnouncedState();if(/Primera vuelta\./.test(text))targetRound.announced.front=false;if(/Segunda vuelta\./.test(text))targetRound.announced.back=false;if(/Ronda completa\./.test(text))targetRound.announced.complete=false;if(round===targetRound)persist()}
+ if(!ok){
+   ensureAnnouncedState();
+   if(/Resultados totales de la primera vuelta\./.test(text)){targetRound.announced.firstSegment=false;targetRound.announced.front=false}
+   if(/Resultados de la segunda vuelta\./.test(text)){targetRound.announced.secondSegment=false;targetRound.announced.back=false}
+   if(/Resultados totales\./.test(text))targetRound.announced.complete=false;
+   if(round===targetRound)persist();
+ }
  return ok;
 }
 
@@ -2805,13 +2811,17 @@ function grossGolfSpeech(score){
   return lines.join(" ");
 }
 function applyLiteralScores(parsed){
-  // El registro de scores es silencioso: actualiza la tarjeta sin repetir
-  // jugador, hoyo, score ni resultados. La voz queda reservada para consultas expresas.
+  // El registro normal de scores sigue siendo silencioso. La única excepción
+  // es un cierre automático de vuelta/ronda ya calculado por recordScore(s).
   const manual=document.getElementById("roundManualEntry"),previousHole=manual?.dataset?.hole,targetHole=operationalTargetHoleForEntries(parsed.entries);
   if(manual&&Number.isInteger(targetHole))manual.dataset.hole=String(targetHole);
   const result=parsed.entries.length===1?recordScore(parsed.entries[0]):recordScores({entries:parsed.entries});
   if(!result.ok&&manual){if(previousHole===undefined)delete manual.dataset.hole;else manual.dataset.hole=previousHole}
-  if(result.ok){if(listening&&voiceContext==="round")noteRoundOperationalActivity();scheduleOperationalMissingPrompt(targetHole)}
+  if(result.ok){
+    if(listening&&voiceContext==="round")noteRoundOperationalActivity();
+    scheduleOperationalMissingPrompt(targetHole);
+    if(result.closure)void speakClosure(result.closure);
+  }
   return result
 }
 function speechForHole(p,h){
