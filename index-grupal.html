@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PLAYER-NAME-ACCUMULATED-AUDIO-20260922-R15">
+  <meta name="gscg-release" content="PLAYER-NAME-ACCUMULATED-AUDIO-20260922-R16">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2309,8 +2309,8 @@ function bindPlayerNameResultAudio(){
   document.addEventListener("click",event=>{
     const cell=event.target.closest?.("#scorecard .player-name[data-audio-player='1']");
     if(!cell||event.target.closest("input,select,button,a"))return;
-    if(cell.hasAttribute("onclick"))return;
     event.preventDefault();
+    event.stopPropagation();
     speakPlayerResultFromNameCell(cell);
   },true);
   document.addEventListener("keydown",event=>{
@@ -2793,7 +2793,7 @@ function playerBlock(p,slot){
  const categoryLabel=normalizeTournamentCategory(p.tournamentCategory)?tournamentCategoryLabel(p.tournamentCategory):"";
  const nameContent=provisional?`<div class="provisional-player-fields"><input class="provisional-player-control provisional-player-name-input" data-provisional-player="${yds10NameSafe(p.id)}" value="${yds10NameSafe(provisionalDefaultName)}" maxlength="40" autocomplete="name" placeholder="NOMBRE" aria-label="NOMBRE OPCIONAL JUGADOR ${slot}"><div class="provisional-player-optional-row"><input class="provisional-player-control provisional-player-hcp-input" data-provisional-hcp="${yds10NameSafe(p.id)}" type="number" inputmode="numeric" step="1" value="${p.provisionalHandicapProvided?p.handicap:""}" placeholder="HDCP" aria-label="HANDICAP OPCIONAL JUGADOR ${slot}"><select class="provisional-player-control provisional-player-tee-select" data-provisional-tee="${yds10NameSafe(p.id)}" aria-label="MARCAS OPCIONALES JUGADOR ${slot}" style="color:${p.provisionalTeeProvided?tee.color:"#fff"}">${provisionalTeeOptions}</select></div></div>`:`${categoryLabel?`<span class="player-category">${escapeHtml(categoryLabel)}</span>`:""}${escapeHtml(p.name)}<span class="player-hcp" style="color:${tee.color}">${p.handicap}</span>`;
  const provisionalRowspan=(provisionalFull?5:2)+(slot===1?1:0),rowspan=provisional?provisionalRowspan:(slot===1?6:5);
- const base=(label,cells,front,back,total,idx)=>`<tr>${idx===0?`<td rowspan="${rowspan}" class="player-name" data-audio-player="${provisional?0:1}" data-player-id="${provisional?"":escapeHtml(p.id)}" ${provisional?"":`onclick="return window.GSCPlayerNameAudio('${escapeHtml(p.id)}')"`} role="${provisional?"cell":"button"}" tabindex="${provisional?-1:0}" aria-label="${provisional?"Jugador":`Escuchar resultados de ${escapeHtml(p.name)}`}" style="color:#fff">${nameContent}</td>`:""}<td class="concept">${label}</td>${cells.slice(0,9).map(v=>`<td>${v}</td>`).join("")}<td>${front}</td>${cells.slice(9).map((v,j)=>`<td class="${label==="YDS"&&j===0?"yds10-cell":""}">${v}${label==="YDS"&&j===0&&!provisional?`<span class="yds10-name${playerHole10AliasClass(p)}" style="color:${tee.color}">${yds10NameSafe(playerHole10Label(p))}</span>`:""}</td>`).join("")}<td>${back}</td><td>${total}</td></tr>`;
+ const base=(label,cells,front,back,total,idx)=>`<tr>${idx===0?`<td rowspan="${rowspan}" class="player-name" data-audio-player="${provisional?0:1}" data-player-id="${provisional?"":escapeHtml(p.id)}" ${provisional?"":``} role="${provisional?"cell":"button"}" tabindex="${provisional?-1:0}" aria-label="${provisional?"Jugador":`Escuchar resultados de ${escapeHtml(p.name)}`}" style="color:#fff">${nameContent}</td>`:""}<td class="concept">${label}</td>${cells.slice(0,9).map(v=>`<td>${v}</td>`).join("")}<td>${front}</td>${cells.slice(9).map((v,j)=>`<td class="${label==="YDS"&&j===0?"yds10-cell":""}">${v}${label==="YDS"&&j===0&&!provisional?`<span class="yds10-name${playerHole10AliasClass(p)}" style="color:${tee.color}">${yds10NameSafe(playerHole10Label(p))}</span>`:""}</td>`).join("")}<td>${back}</td><td>${total}</td></tr>`;
  const blankYards=Array(18).fill(""),yds=base("YDS",provisional&&!provisionalHasTee?blankYards:tee.yds,provisional&&!provisionalHasTee?"":tee.front,provisional&&!provisionalHasTee?"":tee.back,provisional&&!provisionalHasTee?"":tee.total,0);
  const hcpCell=(h)=>{const i=h-1,st=strokesOnHole(p.handicap,h,si),circle=st?`<span class="hcp-stroke-circle" style="color:${tee.color}">${si[i]}</span>`:si[i];return`<td class="hcp-cell ${st===2?"stroke2":st>=3?"stroke3":""}">${circle}</td>`};
  const hcp=`<tr class="player-block"><td class="concept">HDCP</td>${FRONT.map(h=>hcpCell(h)).join("")}<td>-</td>${BACK.map(h=>hcpCell(h)).join("")}<td>-</td><td>-</td></tr>`;
