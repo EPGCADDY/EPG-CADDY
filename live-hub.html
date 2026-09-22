@@ -47,6 +47,18 @@
     body:not(.public-display) .monitor-switch button.active{border-color:var(--tour-green);background:#071007;color:var(--tour-green)}
     body:not(.public-display) #hubShowCategories{display:none!important}
     body:not(.public-display) .panel>h2{margin:0 0 12px;color:#fff;font-size:18px}
+    body:not(.public-display):not(.hub-search-mode) #hubGeneralPanel>.search,
+    body:not(.public-display):not(.hub-search-mode) #hubSearchResults{display:none!important}
+    body:not(.public-display).hub-search-mode #hubGeneralPanel>.summary,
+    body:not(.public-display).hub-search-mode #hubGeneralPanel>.category-filter,
+    body:not(.public-display).hub-search-mode #hubCategoryCardToggle,
+    body:not(.public-display).hub-search-mode #hubCategoryCard,
+    body:not(.public-display).hub-search-mode #hubGeneralPanel>.viewer-tools,
+    body:not(.public-display).hub-search-mode #hubLeaderWrap{display:none!important}
+    body:not(.public-display).hub-search-mode #hubGeneralPanel>h2{font-size:0}
+    body:not(.public-display).hub-search-mode #hubGeneralPanel>h2::after{content:"BUSCAR JUGADOR";font-size:18px}
+    body:not(.public-display).hub-favorites-mode #hubTournamentShelf,
+    body:not(.public-display).hub-favorites-mode #hubTournamentEntry{display:none!important}
     body:not(.public-display) .search{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
     body:not(.public-display) .search input{min-width:0;height:46px;border-radius:11px}
     body:not(.public-display) .search button{min-width:96px;height:46px;border-radius:11px}
