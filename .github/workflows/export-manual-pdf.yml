@@ -1,0 +1,55 @@
+name: Export Manual PDF
+on:
+  push:
+    branches: [export-manual-pdf-20260921]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium
+        run: |
+          mkdir -p /tmp/manual-pdf
+          cd /tmp/manual-pdf
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 --no-audit --no-fund
+          npx playwright install chromium
+      - name: Export PDF
+        run: |
+          python3 -m http.server 8765 >/tmp/manual-pdf-http.log 2>&1 &
+          sleep 2
+          mkdir -p export
+          cat >/tmp/manual-pdf/export.cjs <<'NODE'
+          const { chromium } = require('/tmp/manual-pdf/node_modules/playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const page=await browser.newPage({viewport:{width:1280,height:1800},deviceScaleFactor:1});
+            await page.goto('http://127.0.0.1:8765/manual.html',{waitUntil:'networkidle'});
+            await page.evaluate(async()=>{
+              const imgs=[...document.images];
+              await Promise.all(imgs.map(img=>img.complete?Promise.resolve():new Promise(res=>{img.addEventListener('load',res,{once:true});img.addEventListener('error',res,{once:true})})));
+            });
+            await page.emulateMedia({media:'print'});
+            await page.pdf({
+              path:'export/MANUAL_DE_USUARIO_GOLF_SCORE_CARD_GT.pdf',
+              format:'A4',
+              printBackground:true,
+              preferCSSPageSize:true,
+              margin:{top:'8mm',right:'8mm',bottom:'8mm',left:'8mm'}
+            });
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          node /tmp/manual-pdf/export.cjs
+      - name: Verify PDF
+        run: |
+          test -s export/MANUAL_DE_USUARIO_GOLF_SCORE_CARD_GT.pdf
+          pdfinfo export/MANUAL_DE_USUARIO_GOLF_SCORE_CARD_GT.pdf | head -20
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MANUAL_DE_USUARIO_GOLF_SCORE_CARD_GT
+          path: export/MANUAL_DE_USUARIO_GOLF_SCORE_CARD_GT.pdf
+          retention-days: 7
