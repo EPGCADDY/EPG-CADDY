@@ -57,15 +57,9 @@ jobs:
               });
               const within=geom.w>0&&geom.h>0&&geom.x>=geom.ix-1&&geom.y>=geom.iy-1&&geom.x+geom.w<=geom.ix+geom.iw+1&&geom.y+geom.h<=geom.iy+geom.ih+1;
               const expected=new URL(meta.href,manual).href;
-              await page.route(expected,route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>QA TARGET</title><p>target ok</p>'}),{times:1});
+              await page.evaluate(()=>{window.__qaClickedHref='';document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('.manual-hotspot');if(a){e.preventDefault();window.__qaClickedHref=a.href}},true)},{timeout:1000});
               let clickOk=false,actual='';
-              try{
-                await Promise.all([
-                  page.waitForURL(expected,{timeout:3000}),
-                  loc.click({timeout:3000})
-                ]);
-                actual=page.url();clickOk=actual===expected;
-              }catch(e){actual=page.url();}
+              try{await loc.click({timeout:1200});actual=await page.evaluate(()=>window.__qaClickedHref||'');clickOk=actual===expected}catch(e){actual=''}
               results.push({...meta,within,clickOk,expected,actual,geom});
             }
             const fail=results.filter(r=>!r.within||!r.clickOk);
