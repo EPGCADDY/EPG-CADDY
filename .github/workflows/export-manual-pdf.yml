@@ -27,11 +27,16 @@ jobs:
           (async()=>{
             const browser=await chromium.launch({headless:true});
             const page=await browser.newPage({viewport:{width:1280,height:1800},deviceScaleFactor:1});
-            await page.goto('http://127.0.0.1:8765/manual.html',{waitUntil:'networkidle'});
+            await page.goto('http://127.0.0.1:8765/manual.html',{waitUntil:'domcontentloaded',timeout:30000});
+            await page.evaluate(()=>document.querySelectorAll('img').forEach(img=>img.loading='eager'));
             await page.evaluate(async()=>{
               const imgs=[...document.images];
-              await Promise.all(imgs.map(img=>img.complete?Promise.resolve():new Promise(res=>{img.addEventListener('load',res,{once:true});img.addEventListener('error',res,{once:true})})));
+              await Promise.race([
+                Promise.all(imgs.map(img=>img.complete?Promise.resolve():new Promise(res=>{img.addEventListener('load',res,{once:true});img.addEventListener('error',res,{once:true})}))),
+                new Promise(res=>setTimeout(res,8000))
+              ]);
             });
+            await page.waitForTimeout(1200);
             await page.emulateMedia({media:'print'});
             await page.pdf({
               path:'export/MANUAL_DE_USUARIO_GOLF_SCORE_CARD_GT.pdf',
