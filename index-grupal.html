@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="UNIFORM-PLAYER-AUDIO-WORDING-20260922-R37">
+  <meta name="gscg-release" content="ROUND-CLOSURE-AUDIO-ORDER-20260922-R38">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2373,22 +2373,39 @@ function bindPlayerNameResultAudio(){
 }
 bindPlayerNameResultAudio();
 document.addEventListener("DOMContentLoaded",bindPlayerNameResultAudio);
+function playedSegmentOrder(){
+  const recorded=[];
+  for(const p of round.players||[])for(const hole of ALL){
+    const score=p.holes?.[hole];if(!score)continue;
+    const stamp=Date.parse(score.updatedAt||"");
+    recorded.push({hole,stamp:Number.isFinite(stamp)?stamp:Number.MAX_SAFE_INTEGER});
+  }
+  recorded.sort((a,b)=>(a.stamp-b.stamp)||(a.hole-b.hole));
+  const firstHole=recorded[0]?.hole||1;
+  const first=firstHole>=10?BACK:FRONT;
+  return{first,second:first===FRONT?BACK:FRONT};
+}
 function closureSpeechIfDue(){
   ensureAnnouncedState();
-  const out=[];
-  if(!round.announced.front&&segmentComplete(FRONT)){
-    round.announced.front=true;
-    const speech=segmentSpeech("Primera vuelta.",FRONT);
+  const out=[],order=playedSegmentOrder();
+  if(typeof round.announced.firstSegment!=="boolean"||typeof round.announced.secondSegment!=="boolean"){
+    const secondStarted=(round.players||[]).some(p=>order.second.some(h=>!!p.holes?.[h]));
+    round.announced.firstSegment=secondStarted&&segmentComplete(order.first);
+    round.announced.secondSegment=segmentComplete(order.second);
+  }
+  if(!round.announced.firstSegment&&segmentComplete(order.first)){
+    round.announced.firstSegment=true;
+    const speech=segmentSpeech("Resultados totales de la primera vuelta.",order.first);
     if(speech)out.push(speech);
   }
-  if(!round.announced.back&&segmentComplete(BACK)){
-    round.announced.back=true;
-    const speech=segmentSpeech("Segunda vuelta.",BACK);
+  if(!round.announced.secondSegment&&segmentComplete(order.second)){
+    round.announced.secondSegment=true;
+    const speech=segmentSpeech("Resultados de la segunda vuelta.",order.second);
     if(speech)out.push(speech);
   }
   if(!round.announced.complete&&segmentComplete(ALL)){
     round.announced.complete=true;
-    const speech=segmentSpeech("Ronda completa.",ALL);
+    const speech=segmentSpeech("Resultados totales.",ALL);
     if(speech)out.push(speech);
   }
   return out.join(" ");
