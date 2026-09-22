@@ -10,9 +10,9 @@ const buttonText=id=>html.match(new RegExp(`id="${id}"[^>]*>([^<]+)<\\/button>`)
 
 assert.match(html,/gscg-build" content="V\d{3}[^"]*"/);
 for(const id of ["openCardLibraryButton","openCardLibrarySetup","openCardLibraryStableford"]){
-  assert.equal(buttonText(id),"HISTORIAL",`${id} debe usar el vocabulario común`);
+  assert.equal(buttonText(id),"VER RONDAS GUARDADAS",`${id} debe usar el vocabulario común vigente`);
 }
-assert.match(html,/<h1>HISTORIAL DE TARJETAS<\/h1>/);
+assert.match(html,/<h1>MIS RONDAS GUARDADAS<\/h1>/);
 
 const returnControls=[
   "backToRegistrationButton","closeFinalCard","cancelOfficialCorrection","closeCardLibrary",
@@ -60,4 +60,4 @@ for(const file of textFiles(root)){
 assert.equal(release.buildNumber,307);
 assert.match(worker,/const CACHE_NAME="gscg-mobile-v\d{3}[^"]*"/);
 
-console.log("PASS V305/V399 · HISTORIAL, ATRÁS, REGÍSTRATE sólo principal, Stableford limpio y cero vocabulario retirado");
+console.log("PASS V305/V399 · VER RONDAS GUARDADAS, ATRÁS, REGÍSTRATE sólo principal, Stableford limpio y cero vocabulario retirado");
