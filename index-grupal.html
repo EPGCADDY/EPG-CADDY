@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="MANUAL-SCORE-KEYPAD-AUTO-NEXT-20260922-R5">
+  <meta name="gscg-release" content="MANUAL-SCORE-KEYPAD-AUTO-NEXT-VOICE-20260922-R6">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -3576,6 +3576,12 @@ function commitRoundScoreKeypad(){
   const hole=state.hole;
   const result=applyManualScoreEntries([entry]);
   if(!result?.ok){if(status)status.textContent="SCORE INVÁLIDO";return false}
+  const saved=player.holes?.[hole];
+  const spokenScore=isOmittedScore(saved)?"X":Number.isInteger(saved?.gross)?`Gros ${saved.gross}`:"";
+  if(spokenScore){
+    window.GSCDeviceClosures?.cancel?.();
+    window.GSCDeviceClosures?.speak?.(`Hoyo ${hole}. ${player.name}. ${spokenScore}.`);
+  }
   roundScoreKeypadState=null;
   if(nextPlayer)setTimeout(()=>openRoundScoreKeypad(nextPlayer.id,hole),0);
   else closeRoundScoreKeypad();

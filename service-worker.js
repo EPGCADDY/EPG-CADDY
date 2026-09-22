@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-manual-score-keypad-auto-next-20260922-r5`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-manual-score-keypad-auto-next-voice-20260922-r6`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-lab-four-ball-team-nonumber-20260920-q`;
-const RELEASE="MANUAL-SCORE-KEYPAD-AUTO-NEXT-20260922-R5";
+const RELEASE="MANUAL-SCORE-KEYPAD-AUTO-NEXT-VOICE-20260922-R6";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
