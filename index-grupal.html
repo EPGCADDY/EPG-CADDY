@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PLAYER-NAME-RESULT-AUDIO-20260922-R4">
+  <meta name="gscg-release" content="MANUAL-SCORE-KEYPAD-AUTO-NEXT-20260922-R5">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -3475,7 +3475,7 @@ function manualSegmentValue(player,holes){
 }
 function roundManualPlayerRows(selectedHole){
   const locked=!!round.officiallyClosedAt;
-  return round.players.map((player,index)=>{const first=manualSegmentValue(player,FRONT),second=manualSegmentValue(player,BACK),total=manualSegmentValue(player,ALL),result=manualHoleResult(player,selectedHole),value=result.recorded?(result.status==="x"?"X":result.gross??""):"";return`<div class="round-grid-name" aria-label="JUGADOR ${index+1}" style="display:flex;align-items:center;justify-content:center;min-width:0;width:100%;padding:3px;font-weight:900;text-align:center;overflow:hidden">${escapeHtml(player.name)}</div><span>${selectedHole}</span><input class="round-grid-gross" data-player-id="${escapeHtml(player.id)}" inputmode="text" type="text" autocapitalize="characters" aria-label="GROSS ${escapeHtml(player.name)} HOYO ${selectedHole}" style="min-width:0;width:100%;font-size:20px;text-align:center;box-sizing:border-box" value="${escapeHtml(value)}" ${locked?"disabled":""}><strong>${first.count?first.total:0}</strong><strong>${second.count?second.total:0}</strong><strong style="color:#72ff42">${total.count?total.total:0}</strong>`}).join("")
+  return round.players.map((player,index)=>{const first=manualSegmentValue(player,FRONT),second=manualSegmentValue(player,BACK),total=manualSegmentValue(player,ALL),result=manualHoleResult(player,selectedHole),value=result.recorded?(result.status==="x"?"X":result.gross??""):"";return`<div class="round-grid-name" aria-label="JUGADOR ${index+1}" style="display:flex;align-items:center;justify-content:center;min-width:0;width:100%;padding:3px;font-weight:900;text-align:center;overflow:hidden">${escapeHtml(player.name)}</div><span>${selectedHole}</span><input class="round-grid-gross" data-player-id="${escapeHtml(player.id)}" inputmode="none" type="text" readonly aria-label="GROSS ${escapeHtml(player.name)} HOYO ${selectedHole}" style="min-width:0;width:100%;font-size:20px;text-align:center;box-sizing:border-box;cursor:pointer" value="${escapeHtml(value)}" ${locked?"disabled":""}><strong>${first.count?first.total:0}</strong><strong>${second.count?second.total:0}</strong><strong style="color:#72ff42">${total.count?total.total:0}</strong>`}).join("")
 }
 function roundManualHoleNavigation(selectedHole,locked,maxHole=18){
   const buttonStyle=disabled=>`min-height:42px;border:2px solid ${disabled?"#555":"#31ff00"};border-radius:5px;background:#050505;color:${disabled?"#777":"#31ff00"};font-size:12px;font-weight:900;box-shadow:${disabled?"none":"0 0 10px rgba(49,255,0,.22)"}`;
@@ -3501,6 +3501,86 @@ function removeManualScore(player,hole){
   if(round.officiallyClosedAt||!player?.holes?.[hole])return false;
   delete player.holes[hole];player.lastHole=Math.max(0,...Object.keys(player.holes||{}).map(Number).filter(value=>Number.isInteger(value)&&value>=1&&value<=18));resetAnnouncementsAfterRemoval(hole);persist();render();return true
 }
+let roundScoreKeypadState=null;
+function ensureRoundScoreKeypad(){
+  let overlay=document.getElementById("roundScoreKeypadOverlay");
+  if(overlay)return overlay;
+  overlay=document.createElement("div");
+  overlay.id="roundScoreKeypadOverlay";
+  overlay.setAttribute("aria-hidden","true");
+  overlay.style.cssText="position:fixed;inset:0;z-index:220;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.58);padding:12px max(12px,env(safe-area-inset-right)) max(12px,calc(env(safe-area-inset-bottom) + 10px)) max(12px,env(safe-area-inset-left))";
+  overlay.innerHTML=`<section role="dialog" aria-modal="true" aria-label="Teclado de score" style="width:min(420px,100%);border:2px solid #31ff00;border-radius:18px;background:#050705;padding:14px;box-shadow:0 18px 50px rgba(0,0,0,.65)">
+    <div id="roundScoreKeypadTitle" style="color:#31ff00;text-align:center;font-size:14px;font-weight:900;margin:0 0 8px"></div>
+    <div id="roundScoreKeypadDisplay" style="height:58px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;border:1px solid #4b4f50;border-radius:12px;background:#000;color:#fff;font-size:30px;font-weight:900"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      ${["1","2","3","4","5","6","7","8","9","X","0","⌫"].map(key=>`<button type="button" data-score-key="${key}" style="height:58px;border:1px solid #555;border-radius:12px;background:#0b0d0d;color:#fff;font-size:24px;font-weight:900">${key}</button>`).join("")}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:8px;margin-top:8px">
+      <button type="button" id="roundScoreKeypadCancel" style="height:54px;border:1px solid #666;border-radius:12px;background:#0a0a0a;color:#bbb;font-weight:900">CANCELAR</button>
+      <button type="button" id="roundScoreKeypadOk" style="height:54px;border:1px solid #31ff00;border-radius:12px;background:#31ff00;color:#000;font-size:18px;font-weight:900">OK · SIGUIENTE</button>
+    </div>
+    <div id="roundScoreKeypadStatus" style="min-height:18px;margin-top:8px;color:#ff4b4b;text-align:center;font-size:11px;font-weight:900"></div>
+  </section>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener("click",event=>{
+    if(event.target===overlay){closeRoundScoreKeypad();return}
+    const key=event.target.closest?.("[data-score-key]")?.dataset.scoreKey;
+    if(key)roundScoreKeypadPress(key);
+  });
+  overlay.querySelector("#roundScoreKeypadCancel").onclick=closeRoundScoreKeypad;
+  overlay.querySelector("#roundScoreKeypadOk").onclick=commitRoundScoreKeypad;
+  return overlay;
+}
+function scoreKeypadPlayerList(hole){return operationalPlayersForHole(hole)}
+function closeRoundScoreKeypad(){
+  const overlay=document.getElementById("roundScoreKeypadOverlay");
+  if(overlay){overlay.style.display="none";overlay.setAttribute("aria-hidden","true")}
+  roundScoreKeypadState=null;
+}
+function renderRoundScoreKeypad(){
+  const overlay=ensureRoundScoreKeypad(),state=roundScoreKeypadState;if(!state)return;
+  const player=round.players.find(p=>p.id===state.playerId);if(!player){closeRoundScoreKeypad();return}
+  overlay.querySelector("#roundScoreKeypadTitle").textContent=`${player.name.toUpperCase()} · HOYO ${state.hole} · GROSS`;
+  overlay.querySelector("#roundScoreKeypadDisplay").textContent=state.value||"—";
+  overlay.querySelector("#roundScoreKeypadStatus").textContent="";
+  overlay.style.display="flex";overlay.setAttribute("aria-hidden","false");
+}
+function openRoundScoreKeypad(playerOrId,hole){
+  if(round.officiallyClosedAt)return false;
+  const player=typeof playerOrId==="string"?round.players.find(p=>p.id===playerOrId):playerOrId;
+  const h=Number(hole);if(!player||!Number.isInteger(h)||h<1||h>18)return false;
+  const current=manualHoleResult(player,h);
+  roundScoreKeypadState={playerId:player.id,hole:h,value:current.recorded?(current.status==="x"?"X":String(current.gross??"")):""};
+  renderRoundScoreKeypad();return true;
+}
+function roundScoreKeypadPress(key){
+  const state=roundScoreKeypadState;if(!state)return;
+  if(key==="⌫")state.value=state.value.slice(0,-1);
+  else if(key==="X")state.value="X";
+  else if(/^\d$/.test(key)){
+    if(state.value==="X")state.value="";
+    const next=(state.value+key).replace(/^0+(?=\d)/,"").slice(0,2);
+    state.value=next;
+  }
+  renderRoundScoreKeypad();
+}
+function commitRoundScoreKeypad(){
+  const state=roundScoreKeypadState;if(!state)return false;
+  const player=round.players.find(p=>p.id===state.playerId);if(!player)return closeRoundScoreKeypad();
+  const value=String(state.value||"").trim();
+  const status=document.getElementById("roundScoreKeypadStatus");
+  if(!value){if(status)status.textContent="INGRESA UN SCORE";return false}
+  const entry=manualScoreEntry(player.id,state.hole,value);
+  if(!entry){if(status)status.textContent="SCORE INVÁLIDO";return false}
+  const players=scoreKeypadPlayerList(state.hole),index=players.findIndex(p=>p.id===player.id),nextPlayer=index>=0?players[index+1]||null:null;
+  const hole=state.hole;
+  const result=applyManualScoreEntries([entry]);
+  if(!result?.ok){if(status)status.textContent="SCORE INVÁLIDO";return false}
+  roundScoreKeypadState=null;
+  if(nextPlayer)setTimeout(()=>openRoundScoreKeypad(nextPlayer.id,hole),0);
+  else closeRoundScoreKeypad();
+  return true;
+}
 function renderRoundManualEntry(){
   let manual=document.getElementById("roundManualEntry");
   if(!round.configured||!round.players.length){manual?.remove();return}
@@ -3522,12 +3602,18 @@ function renderRoundManualEntry(){
   manual.querySelector("#roundGridPrevious").onclick=()=>navigateManualHole(selectedHole-1);
   manual.querySelector("#roundGridNext").onclick=()=>navigateManualHole(selectedHole+1);
   const saveManualHole=()=>{;const entries=[];for(const input of manual.querySelectorAll(".round-grid-gross")){if(input.value.trim()==="")continue;const entry=manualScoreEntry(input.dataset.playerId,selectedHole,input.value);if(!entry)return roundGridStatus("SCORE INVÁLIDO");entries.push(entry)}const result=applyManualScoreEntries(entries);return!!result?.ok};
-  manual.querySelector("#roundGridEnter").onclick=saveManualHole;manual.querySelectorAll(".round-grid-gross").forEach(input=>input.onkeydown=event=>{if(event.key==="Enter"){event.preventDefault();saveManualHole()}});
+  manual.querySelector("#roundGridEnter").onclick=saveManualHole;
+  manual.querySelectorAll(".round-grid-gross").forEach(input=>{
+    const open=event=>{event?.preventDefault?.();openRoundScoreKeypad(input.dataset.playerId,selectedHole)};
+    input.onclick=open;
+    input.onfocus=open;
+    input.onkeydown=event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();openRoundScoreKeypad(input.dataset.playerId,selectedHole)}};
+  });
   const clearButton=document.getElementById("clearRoundScores"),scoresButton=document.getElementById("clearScoresOnly");for(const button of [clearButton,scoresButton]){button.disabled=locked;button.setAttribute("aria-disabled",String(locked))}clearButton.onclick=()=>{if(locked)return;clearAllRegistrationPlayers()};scoresButton.onclick=()=>{if(locked)return;clearOnlyRoundScores()}
 }
 function bindRoundManualCells(){
   const matchState=activeTeamMatchStatus();
-  $("scorecard").querySelectorAll(".round-manual-cell").forEach(cell=>{const hole=Number(cell.dataset.roundHole),player=round.players.find(item=>item.id===cell.dataset.roundPlayer);if(matchState&&hole>teamMatchPlayerLimit(player,matchState)){cell.classList.add("match-closed-cell");cell.removeAttribute("role");cell.removeAttribute("tabindex");cell.setAttribute("aria-disabled","true");return}const edit=()=>{if(round.officiallyClosedAt)return;if(!player||!hole)return;const current=manualHoleResult(player,hole),raw=window.prompt(`${player.name} · HOYO ${hole} · GROSS`,current.recorded?(current.status==="x"?"X":String(current.gross??"")):"");if(raw===null)return;const value=raw.trim();if(value===""){removeManualScore(player,hole);return}const entry=manualScoreEntry(player.id,hole,value),result=entry?applyManualScoreEntries([entry]):null;if(!result?.ok)window.alert("SCORE INVÁLIDO")};cell.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();edit()});cell.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();edit()}})})
+  $("scorecard").querySelectorAll(".round-manual-cell").forEach(cell=>{const hole=Number(cell.dataset.roundHole),player=round.players.find(item=>item.id===cell.dataset.roundPlayer);if(matchState&&hole>teamMatchPlayerLimit(player,matchState)){cell.classList.add("match-closed-cell");cell.removeAttribute("role");cell.removeAttribute("tabindex");cell.setAttribute("aria-disabled","true");return}const edit=()=>{if(round.officiallyClosedAt||!player||!hole)return;openRoundScoreKeypad(player,hole)};cell.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();edit()});cell.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();edit()}})})
 }
 function renderStableford(){
   activateCourse(round.courseKey);const cfg=stablefordConfig(),course=COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte,par=PAR.reduce((a,b)=>a+b,0),d=new Date(round.createdAt);
