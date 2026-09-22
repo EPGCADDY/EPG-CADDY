@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-audio-second-nine-until-hole-r35`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-audio-second-nine-until-hole-r35`;
-const RELEASE="AUDIO-SECOND-NINE-UNTIL-HOLE-20260922-R35";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-player-name-first-audio-wording-r36`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-player-name-first-audio-wording-r36`;
+const RELEASE="PLAYER-NAME-FIRST-AUDIO-WORDING-20260922-R36";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,
@@ -106,7 +106,7 @@ async function approvedNavigationWithManualUpdate(request){
   const recoveryStyle='<style id="gsc-update-recovery">body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:none!important}body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update.available{display:block!important}</style>';
   let servedHtml=html.includes('id="gsc-update-recovery"')?html:html.replace("</head>",`${recoveryStyle}</head>`);
   if(stale&&!servedHtml.includes('id="mandatoryUpdateButton"')&&!servedHtml.includes('id="gscFallbackUpdateButton"')){
-    const fallback='<style id="gsc-fallback-update-style">#gscFallbackUpdateButton{position:fixed;right:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:2147483647;height:44px;padding:0 18px;border:2px solid #31ff00;border-radius:22px;background:#000;color:#31ff00;font:900 14px Arial,sans-serif;box-shadow:0 0 14px rgba(49,255,0,.28)}</style><button id="gscFallbackUpdateButton" type="button">ACTUALIZAR</button><script id="gsc-fallback-update-script">(function(){var b=document.getElementById("gscFallbackUpdateButton");if(!b)return;b.onclick=function(){b.disabled=true;b.textContent="ACTUALIZANDO…";var u=new URL(location.href);u.searchParams.delete("__gscg_build_check");u.searchParams.set("app_version","AUDIO-SECOND-NINE-UNTIL-HOLE-20260922-R35");u.searchParams.set("update_check",String(Date.now()));location.replace(u.toString())}})();<\\/script>';
+    const fallback='<style id="gsc-fallback-update-style">#gscFallbackUpdateButton{position:fixed;right:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:2147483647;height:44px;padding:0 18px;border:2px solid #31ff00;border-radius:22px;background:#000;color:#31ff00;font:900 14px Arial,sans-serif;box-shadow:0 0 14px rgba(49,255,0,.28)}</style><button id="gscFallbackUpdateButton" type="button">ACTUALIZAR</button><script id="gsc-fallback-update-script">(function(){var b=document.getElementById("gscFallbackUpdateButton");if(!b)return;b.onclick=function(){b.disabled=true;b.textContent="ACTUALIZANDO…";var u=new URL(location.href);u.searchParams.delete("__gscg_build_check");u.searchParams.set("app_version","PLAYER-NAME-FIRST-AUDIO-WORDING-20260922-R36");u.searchParams.set("update_check",String(Date.now()));location.replace(u.toString())}})();<\\/script>';
     servedHtml=servedHtml.replace("</body>",fallback+"</body>");
   }
   const headers=new Headers(approved.headers);headers.set("content-type","text/html; charset=utf-8");headers.delete("content-length");headers.set("cache-control","no-store");
