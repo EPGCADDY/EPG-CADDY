@@ -34,9 +34,9 @@ assert.match(stable,/female:Object\.freeze\(\{key:"female",label:"FEMENINA",hand
 
 for(const [id,label] of [
   ["backStablefordSetup","ATRÁS"],
-  ["startStablefordRound","OK"],
-  ["previousStablefordRoundButton","RONDA PREVIA"],
-  ["openCardLibraryStableford","HISTORIAL"]
+  ["startStablefordRound","INICIAR RONDA"],
+  ["previousStablefordRoundButton","VER RONDA ANTERIOR"],
+  ["openCardLibraryStableford","VER RONDAS GUARDADAS"]
 ]) assert.match(html,new RegExp(`id="${id}"[^>]*>${label}<\\/button>`),`Falta control Stableford ${label}`);
 
 for(const id of ["setupOk","startStablefordRound"]){
