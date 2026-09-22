@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="MANUAL-SCORE-KEYPAD-AUTO-NEXT-VOICE-20260922-R6">
+  <meta name="gscg-release" content="SCORE-INLINE-1-9-AUDIO-FINAL-20260922-R8">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -683,7 +683,7 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
   .card-library-delete-card{margin:max(10px,calc(env(safe-area-inset-top) + 10px)) auto 10px;padding:20px 16px}.card-library-delete-actions{grid-template-columns:1fr;gap:9px}
   .history-insights-panel .screen-back-row{margin-bottom:14px;padding-bottom:14px}.history-insights-panel .screen-back-button{width:104px}
   .history-insights-query{grid-template-columns:1fr;gap:9px;margin-top:14px}.history-insights-query input,.history-insights-query button{height:52px}.history-insights-quick{grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.history-insights-quick button{min-width:0;padding:0 7px;font-size:9px;line-height:1.2}.history-insights-quick button:last-child{grid-column:1/-1}.history-insights-result{min-height:120px;padding:16px 14px;font-size:13px;line-height:1.5}
-  #roundManualEntry{padding:14px 10px 18px!important;border-radius:16px!important}#roundManualTitle{font-size:20px!important;margin:0 0 2px!important}#roundGridInstruction{font-size:11px!important;line-height:1.4!important}#roundGridNavigation{grid-template-columns:minmax(0,1fr) 88px minmax(0,1fr)!important;gap:8px!important;margin-top:0!important;margin-bottom:10px!important;align-items:end!important}#roundGridNavigation button{min-height:54px!important;height:54px!important;font-size:12px!important}#roundGridNavigation label{margin:0!important}#roundGridHole{min-height:54px!important;height:54px!important;font-size:30px!important;line-height:1!important;font-weight:900!important;text-align:center!important;text-align-last:center!important;padding:0!important;color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-appearance:none!important;appearance:none!important;border:1px solid #4b4f50!important;border-radius:12px!important;background:#080a0a!important;box-shadow:none!important}.round-manual-detail{grid-template-columns:82px minmax(0,1fr)!important;gap:8px!important}.round-manual-detail-label{font-size:11px!important}.round-player-grid{min-width:0!important;grid-template-columns:minmax(70px,1.2fr) 36px minmax(58px,1fr) repeat(3,minmax(40px,.72fr))!important;gap:4px!important}.round-player-grid-label{min-width:0!important;font-size:8.5px!important;overflow-wrap:anywhere!important}.round-player-grid>strong,.round-player-grid>span{min-width:0!important;font-size:13px!important}#roundManualEntry .round-grid-name,#roundManualEntry .round-grid-gross{min-width:0!important;min-height:54px!important;font-size:14px!important}#roundGridEnter{min-height:62px!important;font-size:20px!important}
+  #roundManualEntry{padding:14px 10px 18px!important;border-radius:16px!important}#roundManualTitle{font-size:20px!important;margin:0 0 2px!important}#roundGridInstruction{font-size:11px!important;line-height:1.4!important}#roundGridNavigation{grid-template-columns:minmax(0,1fr) 88px minmax(0,1fr)!important;gap:8px!important;margin-top:0!important;margin-bottom:10px!important;align-items:end!important}#roundGridNavigation button{min-height:54px!important;height:54px!important;font-size:12px!important}#roundGridNavigation label{margin:0!important}#roundGridHole{min-height:54px!important;height:54px!important;font-size:30px!important;line-height:1!important;font-weight:900!important;text-align:center!important;text-align-last:center!important;padding:0!important;color:#fff!important;-webkit-text-fill-color:#fff!important;-webkit-appearance:none!important;appearance:none!important;border:1px solid #4b4f50!important;border-radius:12px!important;background:#080a0a!important;box-shadow:none!important}.round-manual-detail{grid-template-columns:82px minmax(0,1fr)!important;gap:8px!important}.round-manual-detail-label{font-size:11px!important}.round-player-grid{min-width:0!important;grid-template-columns:minmax(70px,1.2fr) 36px minmax(58px,1fr) repeat(3,minmax(40px,.72fr))!important;gap:4px!important}.round-player-grid-label{min-width:0!important;font-size:8.5px!important;overflow-wrap:anywhere!important}.round-player-grid>strong,.round-player-grid>span{min-width:0!important;font-size:13px!important}.round-grid-gross.is-active-score{border:2px solid #31ff00!important;box-shadow:0 0 0 2px rgba(49,255,0,.32),0 0 14px rgba(49,255,0,.22)!important;background:#071007!important}#roundManualEntry .round-grid-name,#roundManualEntry .round-grid-gross{min-width:0!important;min-height:54px!important;font-size:14px!important}#roundGridEnter{min-height:62px!important;font-size:20px!important}
   #setupOverlay .screen-back-row{padding-right:118px}.mandatory-update{top:calc(env(safe-area-inset-top) + 12px);right:58px}.mandatory-update-card button{min-width:108px;min-height:40px;border-radius:11px}
   .official-round-header .round-meta{transform:none;padding-top:50px}
   .mandatory-update{right:22px}
@@ -2243,15 +2243,17 @@ function latestCompletedHoleInSegment(holes){
 }
 function partialSegmentSpeech(kind){
   const source=kind==="front"?FRONT:kind==="back"?BACK:ALL;
-  const latest=latestCompletedHoleInSegment(source);
-  if(!latest)return "";
-  const isComplete=latest===source[source.length-1];
-  if(kind==="front"&&isComplete)return segmentSpeech("Primera vuelta.",FRONT);
-  if(kind==="back"&&isComplete)return segmentSpeech("Segunda vuelta.",BACK);
-  if(kind==="total"&&isComplete)return segmentSpeech("Ronda completa.",ALL);
-  const holes=source.filter(h=>h<=latest);
-  const title=`Hasta el hoyo ${HOLE_SPEECH_NAMES[latest]||latest}.`;
-  return segmentSpeech(title,holes);
+  const recorded=source.filter(h=>round.players.some(p=>{const s=p.holes?.[h];return s&&!isOmittedScore(s)&&Number.isInteger(s.gross)}));
+  if(!recorded.length)return "";
+  const latest=Math.max(...recorded),isComplete=latest===source[source.length-1]&&round.players.every(p=>source.every(h=>{const s=p.holes?.[h];return s&&!isOmittedScore(s)&&Number.isInteger(s.gross)}));
+  const title=kind==="front"&&isComplete?"Primera vuelta.":kind==="back"&&isComplete?"Segunda vuelta.":kind==="total"&&isComplete?"Ronda completa.":`Hasta el hoyo ${HOLE_SPEECH_NAMES[latest]||latest}.`;
+  const lines=[];
+  for(const p of round.players){
+    const holes=source.filter(h=>h<=latest&&p.holes?.[h]&&!isOmittedScore(p.holes[h])&&Number.isInteger(p.holes[h].gross));
+    const t=totals(p,holes);
+    if(t.count)lines.push(`${p.name}. Gros ${t.gross}. Neto ${t.net}. ${versusParSpeech(t.net-t.par)}.`);
+  }
+  return lines.length?[title,...lines].join(" "):"";
 }
 function requestedClosureSpeech(kind){
   if(!round?.configured||!Array.isArray(round.players)||!round.players.length)return "";
@@ -2261,20 +2263,14 @@ function requestedClosureSpeech(kind){
 window.GSCRequestedClosureSpeech=requestedClosureSpeech;
 function latestRecordedHoleForPlayer(player){
   if(!player)return null;
-  const from=Math.max(1,Math.min(18,Number(player.activeFrom)||1));
-  let latest=null;
-  for(let hole=from;hole<=18;hole++){
-    const score=player.holes?.[hole];
-    if(!score||isOmittedScore(score)||!Number.isInteger(score.gross))break;
-    latest=hole;
-  }
-  return latest;
+  const recorded=ALL.filter(h=>{const score=player.holes?.[h];return score&&!isOmittedScore(score)&&Number.isInteger(score.gross)});
+  return recorded.length?Math.max(...recorded):null;
 }
 function requestedPlayerResultSpeech(player){
   if(!round?.configured||!player)return "";
   const latest=latestRecordedHoleForPlayer(player);
   if(!latest)return "";
-  const holes=ALL.filter(h=>h>=Math.max(1,Number(player.activeFrom)||1)&&h<=latest);
+  const holes=ALL.filter(h=>h<=latest&&player.holes?.[h]&&!isOmittedScore(player.holes[h])&&Number.isInteger(player.holes[h].gross));
   const t=totals(player,holes);
   if(!t.count)return "";
   const title=latest===18?"Ronda completa.":latest===9?"Primera vuelta.":`Hasta el hoyo ${HOLE_SPEECH_NAMES[latest]||latest}.`;
@@ -2282,7 +2278,7 @@ function requestedPlayerResultSpeech(player){
 }
 function speakPlayerResultFromNameCell(cell){
   if(!cell||cell.dataset.audioPlayer!=="1"||!round?.configured)return false;
-  const block=cell.closest("tbody[data-slot]"),slot=Number(block?.dataset.slot),player=round.players?.[slot-1];
+  const player=round.players.find(p=>p.id===cell.dataset.playerId);
   if(!player)return false;
   const speech=requestedPlayerResultSpeech(player);
   if(!speech){const status=$("deviceClosureStatus");if(status)status.textContent=`${player.name}: todavía no hay resultados disponibles.`;return false}
@@ -2767,7 +2763,7 @@ function playerBlock(p,slot){
  const categoryLabel=normalizeTournamentCategory(p.tournamentCategory)?tournamentCategoryLabel(p.tournamentCategory):"";
  const nameContent=provisional?`<div class="provisional-player-fields"><input class="provisional-player-control provisional-player-name-input" data-provisional-player="${yds10NameSafe(p.id)}" value="${yds10NameSafe(provisionalDefaultName)}" maxlength="40" autocomplete="name" placeholder="NOMBRE" aria-label="NOMBRE OPCIONAL JUGADOR ${slot}"><div class="provisional-player-optional-row"><input class="provisional-player-control provisional-player-hcp-input" data-provisional-hcp="${yds10NameSafe(p.id)}" type="number" inputmode="numeric" step="1" value="${p.provisionalHandicapProvided?p.handicap:""}" placeholder="HDCP" aria-label="HANDICAP OPCIONAL JUGADOR ${slot}"><select class="provisional-player-control provisional-player-tee-select" data-provisional-tee="${yds10NameSafe(p.id)}" aria-label="MARCAS OPCIONALES JUGADOR ${slot}" style="color:${p.provisionalTeeProvided?tee.color:"#fff"}">${provisionalTeeOptions}</select></div></div>`:`${categoryLabel?`<span class="player-category">${escapeHtml(categoryLabel)}</span>`:""}${escapeHtml(p.name)}<span class="player-hcp" style="color:${tee.color}">${p.handicap}</span>`;
  const provisionalRowspan=(provisionalFull?5:2)+(slot===1?1:0),rowspan=provisional?provisionalRowspan:(slot===1?6:5);
- const base=(label,cells,front,back,total,idx)=>`<tr>${idx===0?`<td rowspan="${rowspan}" class="player-name" data-audio-player="${provisional?0:1}" role="${provisional?"cell":"button"}" tabindex="${provisional?-1:0}" aria-label="${provisional?"Jugador":`Escuchar resultados de ${escapeHtml(p.name)}`}" style="color:#fff">${nameContent}</td>`:""}<td class="concept">${label}</td>${cells.slice(0,9).map(v=>`<td>${v}</td>`).join("")}<td>${front}</td>${cells.slice(9).map((v,j)=>`<td class="${label==="YDS"&&j===0?"yds10-cell":""}">${v}${label==="YDS"&&j===0&&!provisional?`<span class="yds10-name${playerHole10AliasClass(p)}" style="color:${tee.color}">${yds10NameSafe(playerHole10Label(p))}</span>`:""}</td>`).join("")}<td>${back}</td><td>${total}</td></tr>`;
+ const base=(label,cells,front,back,total,idx)=>`<tr>${idx===0?`<td rowspan="${rowspan}" class="player-name" data-audio-player="${provisional?0:1}" data-player-id="${provisional?"":escapeHtml(p.id)}" role="${provisional?"cell":"button"}" tabindex="${provisional?-1:0}" aria-label="${provisional?"Jugador":`Escuchar resultados de ${escapeHtml(p.name)}`}" style="color:#fff">${nameContent}</td>`:""}<td class="concept">${label}</td>${cells.slice(0,9).map(v=>`<td>${v}</td>`).join("")}<td>${front}</td>${cells.slice(9).map((v,j)=>`<td class="${label==="YDS"&&j===0?"yds10-cell":""}">${v}${label==="YDS"&&j===0&&!provisional?`<span class="yds10-name${playerHole10AliasClass(p)}" style="color:${tee.color}">${yds10NameSafe(playerHole10Label(p))}</span>`:""}</td>`).join("")}<td>${back}</td><td>${total}</td></tr>`;
  const blankYards=Array(18).fill(""),yds=base("YDS",provisional&&!provisionalHasTee?blankYards:tee.yds,provisional&&!provisionalHasTee?"":tee.front,provisional&&!provisionalHasTee?"":tee.back,provisional&&!provisionalHasTee?"":tee.total,0);
  const hcpCell=(h)=>{const i=h-1,st=strokesOnHole(p.handicap,h,si),circle=st?`<span class="hcp-stroke-circle" style="color:${tee.color}">${si[i]}</span>`:si[i];return`<td class="hcp-cell ${st===2?"stroke2":st>=3?"stroke3":""}">${circle}</td>`};
  const hcp=`<tr class="player-block"><td class="concept">HDCP</td>${FRONT.map(h=>hcpCell(h)).join("")}<td>-</td>${BACK.map(h=>hcpCell(h)).join("")}<td>-</td><td>-</td></tr>`;
@@ -3454,7 +3450,7 @@ function stablefordScorecardLead(){const cfg=stablefordConfig(),tee=TEES[cfg.tee
 function stablefordPlayerBlock(player,slot){
   const cell=(key,h)=>{if(key==="points")return`<td class="stableford-points">${player?stablefordCell(player,h,key):""}</td>`;if(!player)return'<td class="gross-cell"></td>';return`<td class="gross-cell round-manual-cell" data-round-player="${escapeHtml(player.id)}" data-round-hole="${h}" role="button" tabindex="0">${stablefordCell(player,h,"gross")}</td>`};
   const total=(key,holes)=>{if(!player)return"";const t=stablefordTotals(player,holes);return t.count?(key==="points"?t.points:t.gross):""};
-  const name=player?escapeHtml(player.name):"";const row=(key,label,first)=>`<tr>${first?`<td rowspan="2" class="player-name" data-audio-player="${player?1:0}" role="${player?"button":"cell"}" tabindex="${player?0:-1}" aria-label="${player?`Escuchar resultados de ${escapeHtml(player.name)}`:"Jugador"}">${name}</td>`:""}<td class="concept">${label}</td>${FRONT.map(h=>cell(key,h)).join("")}<td>${total(key,FRONT)}</td>${BACK.map(h=>cell(key,h)).join("")}<td>${total(key,BACK)}</td><td class="${key==="points"?"stableford-points":""}">${total(key,ALL)}</td></tr>`;  return`<tbody class="player-block stableford-player" data-slot="${slot}">${row("gross","GROSS",true)}${row("points","PUNTOS",false)}</tbody><tbody class="stableford-player-spacer" aria-hidden="true"><tr>${Array(22).fill("<td></td>").join("")}</tr></tbody>`
+  const name=player?escapeHtml(player.name):"";const row=(key,label,first)=>`<tr>${first?`<td rowspan="2" class="player-name" data-audio-player="${player?1:0}" data-player-id="${player?escapeHtml(player.id):""}" role="${player?"button":"cell"}" tabindex="${player?0:-1}" aria-label="${player?`Escuchar resultados de ${escapeHtml(player.name)}`:"Jugador"}">${name}</td>`:""}<td class="concept">${label}</td>${FRONT.map(h=>cell(key,h)).join("")}<td>${total(key,FRONT)}</td>${BACK.map(h=>cell(key,h)).join("")}<td>${total(key,BACK)}</td><td class="${key==="points"?"stableford-points":""}">${total(key,ALL)}</td></tr>`;  return`<tbody class="player-block stableford-player" data-slot="${slot}">${row("gross","GROSS",true)}${row("points","PUNTOS",false)}</tbody><tbody class="stableford-player-spacer" aria-hidden="true"><tr>${Array(22).fill("<td></td>").join("")}</tr></tbody>`
 }
 playerBlock=function(p,slot){return isStablefordRound()?stablefordPlayerBlock(p,slot):isFourBallRound()?fourBallPlayerBlock(p,slot):isMatchPlayRound()?matchPlayPlayerBlock(p,slot):basePlayerBlock(p,slot)};
 isRoundComplete=function(){return isStablefordRound()?!!(round.configured&&round.players.length&&round.players.every(p=>ALL.every(h=>GSCStableford.holeResult(p.holes?.[h],PAR[h-1]).recorded))):isFourBallRound()?fourBallStatus().closed:isMatchPlayRound()?matchPlayStatus().closed:baseIsRoundComplete()};
@@ -3473,9 +3469,14 @@ function manualSegmentValue(player,holes){
   if(isStablefordRound()){const value=stablefordTotals(player,holes);return{count:value.count,total:value.points}}
   const value=totals(player,holes);return{count:value.count,total:value.gross}
 }
-function roundManualPlayerRows(selectedHole){
+function roundManualPlayerRows(selectedHole,activePlayerId=""){
   const locked=!!round.officiallyClosedAt;
-  return round.players.map((player,index)=>{const first=manualSegmentValue(player,FRONT),second=manualSegmentValue(player,BACK),total=manualSegmentValue(player,ALL),result=manualHoleResult(player,selectedHole),value=result.recorded?(result.status==="x"?"X":result.gross??""):"";return`<div class="round-grid-name" aria-label="JUGADOR ${index+1}" style="display:flex;align-items:center;justify-content:center;min-width:0;width:100%;padding:3px;font-weight:900;text-align:center;overflow:hidden">${escapeHtml(player.name)}</div><span>${selectedHole}</span><button class="round-grid-gross" data-player-id="${escapeHtml(player.id)}" data-score-value="${escapeHtml(value)}" type="button" aria-label="GROSS ${escapeHtml(player.name)} HOYO ${selectedHole}. TOCAR PARA INGRESAR SCORE" style="min-width:0;width:100%;font-size:20px;text-align:center;box-sizing:border-box;cursor:pointer" ${locked?"disabled":""}>${escapeHtml(value)||"&nbsp;"}</button><strong>${first.count?first.total:0}</strong><strong>${second.count?second.total:0}</strong><strong style="color:#72ff42">${total.count?total.total:0}</strong>`}).join("")
+  return round.players.map((player,index)=>{
+    const result=manualHoleResult(player,selectedHole),value=result.recorded?(result.status==="x"?"X":result.gross??""):"";
+    const base=index*3;
+    const keypad=index<3?[1,2,3].map(n=>base+n).map(n=>`<button type="button" class="round-inline-score-key" data-score-key="${n}" aria-label="Anotar ${n}" style="min-width:0;width:100%;height:100%;padding:0;border:1px solid #4b4f50;border-radius:8px;background:#0b0d0d;color:#fff;font-size:17px;font-weight:900">${n}</button>`).join(""):`<span></span><span></span><span></span>`;
+    return`<div class="round-grid-name" aria-label="JUGADOR ${index+1}" style="display:flex;align-items:center;justify-content:center;min-width:0;width:100%;padding:3px;font-weight:900;text-align:center;overflow:hidden">${escapeHtml(player.name)}</div><span>${selectedHole}</span><button class="round-grid-gross ${player.id===activePlayerId?"is-active-score":""}" data-player-id="${escapeHtml(player.id)}" data-score-value="${escapeHtml(value)}" type="button" aria-label="GROSS ${escapeHtml(player.name)} HOYO ${selectedHole}. TOCAR PARA SELECCIONAR" style="min-width:0;width:100%;font-size:20px;text-align:center;box-sizing:border-box;cursor:pointer" ${locked?"disabled":""}>${escapeHtml(value)||"&nbsp;"}</button>${keypad}`;
+  }).join("")
 }
 function roundManualHoleNavigation(selectedHole,locked,maxHole=18){
   const buttonStyle=disabled=>`min-height:42px;border:2px solid ${disabled?"#555":"#31ff00"};border-radius:5px;background:#050505;color:${disabled?"#777":"#31ff00"};font-size:12px;font-weight:900;box-shadow:${disabled?"none":"0 0 10px rgba(49,255,0,.22)"}`;
@@ -3591,22 +3592,27 @@ function openRoundScoreKeypad(playerOrId,hole){
   if(round.officiallyClosedAt)return false;
   const player=typeof playerOrId==="string"?round.players.find(p=>p.id===playerOrId):playerOrId;
   const h=Number(hole);if(!player||!Number.isInteger(h)||h<1||h>18)return false;
-  const current=manualHoleResult(player,h);
-  roundScoreKeypadState={playerId:player.id,hole:h,value:current.recorded?(current.status==="x"?"X":String(current.gross??"")):""};
-  const active=document.querySelector(`.round-grid-gross[data-player-id="${CSS.escape(player.id)}"]`)||document.querySelector(`.round-manual-cell[data-round-player="${CSS.escape(player.id)}"][data-round-hole="${h}"]`);
-  active?.scrollIntoView?.({block:"center",behavior:"smooth"});
-  setTimeout(renderRoundScoreKeypad,120);return true;
+  const manual=document.getElementById("roundManualEntry");
+  if(manual)manual.dataset.activePlayerId=player.id;
+  document.querySelectorAll(".round-grid-gross.is-active-score").forEach(el=>el.classList.remove("is-active-score"));
+  document.querySelector(`.round-grid-gross[data-player-id="${CSS.escape(player.id)}"]`)?.classList.add("is-active-score");
+  roundScoreKeypadState={playerId:player.id,hole:h,value:""};
+  return true;
 }
 function roundScoreKeypadPress(key){
-  const state=roundScoreKeypadState;if(!state)return;
-  if(key==="⌫")state.value=state.value.slice(0,-1);
-  else if(key==="X")state.value="X";
-  else if(/^\d$/.test(key)){
-    if(state.value==="X")state.value="";
-    const next=(state.value+key).replace(/^0+(?=\d)/,"").slice(0,2);
-    state.value=next;
-  }
-  renderRoundScoreKeypad();
+  if(!/^[1-9]$/.test(String(key)))return false;
+  const state=roundScoreKeypadState;if(!state)return false;
+  const player=round.players.find(p=>p.id===state.playerId);if(!player)return false;
+  const entry=manualScoreEntry(player.id,state.hole,String(key));if(!entry)return false;
+  const players=scoreKeypadPlayerList(state.hole),index=players.findIndex(p=>p.id===player.id),nextPlayer=index>=0?players[index+1]||null:null;
+  const manual=document.getElementById("roundManualEntry");
+  if(manual)manual.dataset.activePlayerId=nextPlayer?.id||player.id;
+  const result=applyManualScoreEntries([entry]);if(!result?.ok)return false;
+  const saved=player.holes?.[state.hole],spokenScore=Number.isInteger(saved?.gross)?`Gros ${saved.gross}`:"";
+  if(spokenScore){window.GSCDeviceClosures?.cancel?.();window.GSCDeviceClosures?.speak?.(`Hoyo ${state.hole}. ${player.name}. ${spokenScore}.`)}
+  roundScoreKeypadState={playerId:(nextPlayer||player).id,hole:state.hole,value:""};
+  setTimeout(()=>openRoundScoreKeypad((nextPlayer||player).id,state.hole),0);
+  return true;
 }
 function commitRoundScoreKeypad(){
   const state=roundScoreKeypadState;if(!state)return false;
@@ -3644,7 +3650,7 @@ function renderRoundManualEntry(){
   const effectiveDetailTwo=isFourBallRound()?{label:"MODALIDAD",value:"FOUR BALL"}:detailTwo;
   const metric=stable?"PTS":"GROSS";
   manual.setAttribute("aria-label","ANOTADOR");
-  manual.innerHTML=`<div id="roundManualTitle" style="margin:0 0 10px;color:#72ff42;text-align:center;font-size:20px;font-weight:900">ANOTADOR</div>${roundManualHoleNavigation(selectedHole,locked,matchLimit)}<div class="round-manual-detail"><b class="round-manual-detail-label">${detailOne.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;width:100%;padding:5px 9px;box-sizing:border-box;text-align:center;font-size:13px;font-weight:900;text-transform:uppercase">${escapeHtml(detailOne.value)}</div></div><div class="round-manual-detail"><b class="round-manual-detail-label">${effectiveDetailTwo.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900">${escapeHtml(effectiveDetailTwo.value)}</div></div><div class="round-player-grid">${roundManualPlayerRows(selectedHole)}</div><button id="roundGridDictate" type="button" style="display:block;width:100%;min-height:54px;margin-top:12px;border:1px solid #31ff00;border-radius:12px;background:#071007;color:#31ff00;font-size:16px;font-weight:900">🎙 DICTAR SCORES</button><div id="roundGridStatus" style="min-height:18px;margin-top:5px;color:#ff4545;text-align:center;font-size:11px;font-weight:900"></div><button id="roundGridEnter" type="button" style="display:block;width:100%;font-weight:900" ${locked?"disabled":""}>${locked?"RONDA CERRADA":"ENTER"}</button>`;
+  manual.innerHTML=`<div id="roundManualTitle" style="margin:0 0 10px;color:#72ff42;text-align:center;font-size:20px;font-weight:900">ANOTADOR</div>${roundManualHoleNavigation(selectedHole,locked,matchLimit)}<div class="round-manual-detail"><b class="round-manual-detail-label">${detailOne.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;width:100%;padding:5px 9px;box-sizing:border-box;text-align:center;font-size:13px;font-weight:900;text-transform:uppercase">${escapeHtml(detailOne.value)}</div></div><div class="round-manual-detail"><b class="round-manual-detail-label">${effectiveDetailTwo.label}</b><div aria-readonly="true" style="display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900">${escapeHtml(effectiveDetailTwo.value)}</div></div><div class="round-player-grid">${roundManualPlayerRows(selectedHole,manual.dataset.activePlayerId||round.players[0]?.id||"")}</div><button id="roundGridDictate" type="button" style="display:block;width:100%;min-height:54px;margin-top:12px;border:1px solid #31ff00;border-radius:12px;background:#071007;color:#31ff00;font-size:16px;font-weight:900">🎙 DICTAR SCORES</button><div id="roundGridStatus" style="min-height:18px;margin-top:5px;color:#ff4545;text-align:center;font-size:11px;font-weight:900"></div><button id="roundGridEnter" type="button" style="display:block;width:100%;font-weight:900" ${locked?"disabled":""}>${locked?"RONDA CERRADA":"ENTER"}</button>`;
   manual.querySelector("#roundManualTitle").textContent="ANOTADOR";
   const manualGridDirty=()=>false;
   const navigateManualHole=target=>{const next=Math.max(1,Math.min(matchLimit,Number(target)||selectedHole));if(next===selectedHole)return true;clearOperationalMissingPrompt();manual.dataset.hole=String(next);render();return true};
@@ -3654,8 +3660,13 @@ function renderRoundManualEntry(){
   const saveManualHole=()=>{if(!operationalHoleComplete(selectedHole))return roundGridStatus("FALTAN SCORES");if(selectedHole<matchLimit)return navigateManualHole(selectedHole+1);return true};
   manual.querySelector("#roundGridEnter").onclick=saveManualHole;
   manual.querySelector("#roundGridDictate").onclick=()=>startRoundScoreDictation({hole:selectedHole,source:"manual"});
+  if(!manual.dataset.activePlayerId||!round.players.some(p=>p.id===manual.dataset.activePlayerId))manual.dataset.activePlayerId=round.players[0]?.id||"";
+  openRoundScoreKeypad(manual.dataset.activePlayerId,selectedHole);
   manual.querySelectorAll(".round-grid-gross").forEach(button=>{
     button.onclick=event=>{event.preventDefault();openRoundScoreKeypad(button.dataset.playerId,selectedHole)};
+  });
+  manual.querySelectorAll(".round-inline-score-key").forEach(button=>{
+    button.onclick=event=>{event.preventDefault();roundScoreKeypadPress(button.dataset.scoreKey)};
   });
   const clearButton=document.getElementById("clearRoundScores"),scoresButton=document.getElementById("clearScoresOnly");for(const button of [clearButton,scoresButton]){button.disabled=locked;button.setAttribute("aria-disabled",String(locked))}clearButton.onclick=()=>{if(locked)return;clearAllRegistrationPlayers()};scoresButton.onclick=()=>{if(locked)return;clearOnlyRoundScores()}
 }
