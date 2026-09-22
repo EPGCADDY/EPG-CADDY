@@ -9,9 +9,12 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 const style=html.match(/<style id="gscg-registration-actions-v304">([\s\S]*?)<\/style>/)?.[1]||"";
 const buttonText=(source,id)=>source.match(new RegExp(`id="${id}"[^>]*>([^<]+)<\\/button>`))?.[1]?.trim()||"";
 const sharedVocabulary=[
-  ["OK","setupOk","startStablefordRound"],
   ["RONDA PREVIA","previousRoundSetupButton","previousStablefordRoundButton"],
   ["HISTORIAL","openCardLibrarySetup","openCardLibraryStableford"]
+];
+const primaryVocabulary=[
+  ["REVISAR DATOS","setupOk"],
+  ["OK","startStablefordRound"]
 ];
 const sharedInstructions=["REGISTRO DE JUGADORES"];
 const generalInstructions=["REGISTRO DE JUGADORES","COMPLETA LOS DATOS DE CADA JUGADOR","DATOS DE LOS JUGADORES","NOMBRE + CATEGORÍA + HDCP + MARCAS + WHATSAPP OPCIONAL"];
@@ -31,6 +34,9 @@ for(const [expected,generalId,stablefordId] of sharedVocabulary){
   assert.equal(buttonText(html,generalId),expected,`${generalId} debe usar vocabulario hermano`);
   assert.equal(buttonText(html,stablefordId),expected,`${stablefordId} debe usar vocabulario hermano`);
 }
+for(const [expected,id] of primaryVocabulary){
+  assert.equal(buttonText(html,id),expected,`${id} debe conservar el vocabulario vigente`);
+}
 for(const text of sharedInstructions)assert.ok(html.includes(text),`General perdió la instrucción vigente: ${text}`);
 for(const text of generalInstructions)assert.ok(html.includes(text),`General perdió su ejemplo operativo: ${text}`);
 
@@ -42,4 +48,4 @@ assert.match(html,/id="openCardLibraryStableford"[^>]*>HISTORIAL<\/button>/);
 assert.equal(release.buildNumber,307);
 assert.match(worker,/const CACHE_NAME="gscg-mobile-v\d{3}[^"]*"/);
 
-console.log("PASS V304 · registro manual vigente: vocabulario, categorías, navegación, tipografía, tamaño, brillo y estados");
+console.log("PASS V304 · registro manual vigente: REVISAR DATOS general + OK Stableford, categorías, navegación, tipografía, tamaño, brillo y estados");
