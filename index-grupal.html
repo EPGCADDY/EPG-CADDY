@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PLAYER-NAME-FULLCELL-HITZONE-AUDIO-20260922-R24">
+  <meta name="gscg-release" content="PLAYER-NAME-BUTTON-CLICK-AUDIO-20260922-R25">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2307,49 +2307,48 @@ function bindPlayerNameResultAudio(){
   if(document.documentElement.dataset.playerNameAudioBound==="1")return;
   document.documentElement.dataset.playerNameAudioBound="1";
   let lastAudioPlayerId="",lastAudioTapAt=0;
-  function flashPlayerCell(button){
+  function flashPlayerCell(button,phase){
     const cell=button?.closest?.(".player-name");
     if(!cell)return;
     const oldBg=cell.style.backgroundColor,oldColor=cell.style.color,oldShadow=cell.style.boxShadow;
-    cell.style.backgroundColor="#31ff00";
-    cell.style.color="#000";
-    cell.style.boxShadow="inset 0 0 0 3px #31ff00,0 0 18px rgba(49,255,0,.9)";
-    setTimeout(()=>{cell.style.backgroundColor=oldBg;cell.style.color=oldColor;cell.style.boxShadow=oldShadow},450);
+    if(phase==="first"){
+      cell.style.backgroundColor="#ffbf00";
+      cell.style.color="#000";
+      cell.style.boxShadow="inset 0 0 0 3px #ffbf00,0 0 16px rgba(255,191,0,.8)";
+    }else{
+      cell.style.backgroundColor="#31ff00";
+      cell.style.color="#000";
+      cell.style.boxShadow="inset 0 0 0 3px #31ff00,0 0 18px rgba(49,255,0,.9)";
+    }
+    setTimeout(()=>{cell.style.backgroundColor=oldBg;cell.style.color=oldColor;cell.style.boxShadow=oldShadow},350);
   }
-  function triggerPlayerAudio(button,event){
-    const playerId=String(button?.dataset?.playerAudioId||"");
-    if(!playerId)return false;
-    const now=Date.now();
-    const isDouble=playerId===lastAudioPlayerId&&(now-lastAudioTapAt)<=1000;
-    lastAudioPlayerId=playerId;lastAudioTapAt=now;
-    if(!isDouble)return false;
-    event?.preventDefault?.();event?.stopPropagation?.();
-    lastAudioPlayerId="";lastAudioTapAt=0;
-    flashPlayerCell(button);
-    const status=$("deviceClosureStatus");
-    if(status)status.textContent="DOBLE TOQUE DETECTADO · PREPARANDO AUDIO";
-    window.GSCPlayerNameAudio(playerId);
-    return true;
-  }
-  document.addEventListener("touchend",event=>{
-    const button=event.target.closest?.(".player-audio-hit[data-player-audio-id]");
-    if(button)triggerPlayerAudio(button,event);
-  },{capture:true,passive:false});
   document.addEventListener("click",event=>{
     const button=event.target.closest?.(".player-audio-hit[data-player-audio-id]");
     if(!button)return;
-    if(event.detail>=2){
-      lastAudioPlayerId=String(button.dataset.playerAudioId||"");
-      lastAudioTapAt=Date.now()-1;
-      triggerPlayerAudio(button,event);
+    event.preventDefault();event.stopPropagation();
+    const playerId=String(button.dataset.playerAudioId||"");
+    if(!playerId)return;
+    const now=Date.now();
+    const secondTap=playerId===lastAudioPlayerId&&(now-lastAudioTapAt)<=1000;
+    if(!secondTap){
+      lastAudioPlayerId=playerId;lastAudioTapAt=now;
+      flashPlayerCell(button,"first");
+      const status=$("deviceClosureStatus");
+      if(status)status.textContent="PRIMER TOQUE DETECTADO · TOCA DE NUEVO";
+      return;
     }
+    lastAudioPlayerId="";lastAudioTapAt=0;
+    flashPlayerCell(button,"second");
+    const status=$("deviceClosureStatus");
+    if(status)status.textContent="SEGUNDO TOQUE DETECTADO · REPRODUCIENDO AUDIO";
+    window.GSCPlayerNameAudio(playerId);
   },true);
   document.addEventListener("keydown",event=>{
     if(event.key!=="Enter"&&event.key!==" ")return;
     const button=event.target.closest?.(".player-audio-hit[data-player-audio-id]");
     if(!button)return;
     event.preventDefault();
-    flashPlayerCell(button);
+    flashPlayerCell(button,"second");
     window.GSCPlayerNameAudio(String(button.dataset.playerAudioId||""));
   },true);
 }
