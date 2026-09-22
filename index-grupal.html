@@ -3508,19 +3508,19 @@ function ensureRoundScoreKeypad(){
   overlay=document.createElement("div");
   overlay.id="roundScoreKeypadOverlay";
   overlay.setAttribute("aria-hidden","true");
-  overlay.style.cssText="position:fixed;inset:0;z-index:220;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.58);padding:12px max(12px,env(safe-area-inset-right)) max(12px,calc(env(safe-area-inset-bottom) + 10px)) max(12px,env(safe-area-inset-left))";
-  overlay.innerHTML=`<section role="dialog" aria-modal="true" aria-label="Teclado de score" style="width:min(420px,100%);border:2px solid #31ff00;border-radius:18px;background:#050705;padding:14px;box-shadow:0 18px 50px rgba(0,0,0,.65)">
-    <div id="roundScoreKeypadTitle" style="color:#31ff00;text-align:center;font-size:14px;font-weight:900;margin:0 0 8px"></div>
-    <div id="roundScoreKeypadDisplay" style="height:58px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;border:1px solid #4b4f50;border-radius:12px;background:#000;color:#fff;font-size:30px;font-weight:900"></div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-      ${["1","2","3","4","5","6","7","8","9","X","0","⌫"].map(key=>`<button type="button" data-score-key="${key}" style="height:58px;border:1px solid #555;border-radius:12px;background:#0b0d0d;color:#fff;font-size:24px;font-weight:900">${key}</button>`).join("")}
+  overlay.style.cssText="position:fixed;inset:0;z-index:220;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.24);padding:6px max(8px,env(safe-area-inset-right)) max(6px,calc(env(safe-area-inset-bottom) + 4px)) max(8px,env(safe-area-inset-left));pointer-events:auto";
+  overlay.innerHTML=`<section role="dialog" aria-modal="true" aria-label="Teclado de score" style="width:min(320px,88vw);max-height:42vh;border:1.5px solid #31ff00;border-radius:14px;background:#050705;padding:8px;box-shadow:0 10px 28px rgba(0,0,0,.48)">
+    <div id="roundScoreKeypadTitle" style="color:#31ff00;text-align:center;font-size:11px;font-weight:900;margin:0 0 5px;line-height:1.1"></div>
+    <div id="roundScoreKeypadDisplay" style="height:38px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;border:1px solid #4b4f50;border-radius:9px;background:#000;color:#fff;font-size:22px;font-weight:900"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px">
+      ${["1","2","3","4","5","6","7","8","9","X","0","⌫"].map(key=>`<button type="button" data-score-key="${key}" style="height:38px;border:1px solid #4a4e50;border-radius:9px;background:#0b0d0d;color:#fff;font-size:18px;font-weight:900">${key}</button>`).join("")}
     </div>
-    <button type="button" id="roundScoreKeypadDictate" style="width:100%;height:52px;margin-top:8px;border:1px solid #31ff00;border-radius:12px;background:#071007;color:#31ff00;font-size:16px;font-weight:900">🎙 DICTAR</button>
-    <div style="display:grid;grid-template-columns:1fr 2fr;gap:8px;margin-top:8px">
-      <button type="button" id="roundScoreKeypadCancel" style="height:54px;border:1px solid #666;border-radius:12px;background:#0a0a0a;color:#bbb;font-weight:900">CANCELAR</button>
-      <button type="button" id="roundScoreKeypadOk" style="height:54px;border:1px solid #31ff00;border-radius:12px;background:#31ff00;color:#000;font-size:18px;font-weight:900">OK · SIGUIENTE</button>
+    <button type="button" id="roundScoreKeypadDictate" style="width:100%;height:38px;margin-top:6px;border:1px solid #31ff00;border-radius:9px;background:#071007;color:#31ff00;font-size:12px;font-weight:900">🎙 DICTAR</button>
+    <div style="display:grid;grid-template-columns:.9fr 1.6fr;gap:6px;margin-top:6px">
+      <button type="button" id="roundScoreKeypadCancel" style="height:40px;border:1px solid #666;border-radius:9px;background:#0a0a0a;color:#bbb;font-size:11px;font-weight:900">CANCELAR</button>
+      <button type="button" id="roundScoreKeypadOk" style="height:40px;border:1px solid #31ff00;border-radius:9px;background:#31ff00;color:#000;font-size:13px;font-weight:900">OK · SIGUIENTE</button>
     </div>
-    <div id="roundScoreKeypadStatus" style="min-height:18px;margin-top:8px;color:#ff4b4b;text-align:center;font-size:11px;font-weight:900"></div>
+    <div id="roundScoreKeypadStatus" style="min-height:14px;margin-top:4px;color:#ff4b4b;text-align:center;font-size:9px;font-weight:900"></div>
   </section>`;
   document.body.appendChild(overlay);
   overlay.addEventListener("click",event=>{
@@ -3593,7 +3593,9 @@ function openRoundScoreKeypad(playerOrId,hole){
   const h=Number(hole);if(!player||!Number.isInteger(h)||h<1||h>18)return false;
   const current=manualHoleResult(player,h);
   roundScoreKeypadState={playerId:player.id,hole:h,value:current.recorded?(current.status==="x"?"X":String(current.gross??"")):""};
-  renderRoundScoreKeypad();return true;
+  const active=document.querySelector(`.round-grid-gross[data-player-id="${CSS.escape(player.id)}"]`)||document.querySelector(`.round-manual-cell[data-round-player="${CSS.escape(player.id)}"][data-round-hole="${h}"]`);
+  active?.scrollIntoView?.({block:"center",behavior:"smooth"});
+  setTimeout(renderRoundScoreKeypad,120);return true;
 }
 function roundScoreKeypadPress(key){
   const state=roundScoreKeypadState;if(!state)return;
