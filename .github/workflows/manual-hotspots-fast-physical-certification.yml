@@ -45,22 +45,27 @@ jobs:
               i,label:a.getAttribute('aria-label')||'',href:a.getAttribute('href')||'',
               sheet:a.closest('section.sheet')?.id||'',src:a.closest('.screen-stage')?.querySelector('img')?.getAttribute('src')||''
             })));
+            await page.evaluate(()=>{window.__qaClickedHref='';document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('.manual-hotspot');if(a){e.preventDefault();window.__qaClickedHref=a.href}},true)});
             const results=[];
             for(const meta of hotspots){
-              await page.goto(manual,{waitUntil:'domcontentloaded'});
-              await page.waitForTimeout(50);
               const loc=page.locator('.manual-hotspot').nth(meta.i);
               await loc.scrollIntoViewIfNeeded();
+              await loc.evaluate(async a=>{
+                const img=a.closest('.screen-stage')?.querySelector('img');
+                if(!img)return;
+                if(!img.complete||!img.naturalWidth)await new Promise(res=>{const done=()=>res();img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true});setTimeout(done,1500)});
+              });
+              await page.waitForTimeout(40);
               const geom=await loc.evaluate(a=>{
                 const r=a.getBoundingClientRect(),ir=a.closest('.screen-stage')?.querySelector('img')?.getBoundingClientRect();
                 return {x:r.x,y:r.y,w:r.width,h:r.height,ix:ir?.x,iy:ir?.y,iw:ir?.width,ih:ir?.height};
               });
-              const within=geom.w>0&&geom.h>0&&geom.x>=geom.ix-1&&geom.y>=geom.iy-1&&geom.x+geom.w<=geom.ix+geom.iw+1&&geom.y+geom.h<=geom.iy+geom.ih+1;
+              const within=geom.w>0&&geom.h>0&&geom.iw>0&&geom.ih>0&&geom.x>=geom.ix-1&&geom.y>=geom.iy-1&&geom.x+geom.w<=geom.ix+geom.iw+1&&geom.y+geom.h<=geom.iy+geom.ih+1;
               const expected=new URL(meta.href,manual).href;
-              await page.evaluate(()=>{window.__qaClickedHref='';document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('.manual-hotspot');if(a){e.preventDefault();window.__qaClickedHref=a.href}},true)},{timeout:1000});
-              let clickOk=false,actual='';
-              try{await loc.click({timeout:1200});actual=await page.evaluate(()=>window.__qaClickedHref||'');clickOk=actual===expected}catch(e){actual=''}
-              results.push({...meta,within,clickOk,expected,actual,geom});
+              await page.evaluate(()=>window.__qaClickedHref='');
+              let clickOk=false,actual='',error='';
+              try{await loc.click({timeout:2000});actual=await page.evaluate(()=>window.__qaClickedHref||'');clickOk=actual===expected}catch(e){error=String(e?.message||e)}
+              results.push({...meta,within,clickOk,expected,actual,error,geom});
             }
             const fail=results.filter(r=>!r.within||!r.clickOk);
             const uniqueAssets=[...new Set(coverage.map(x=>x.src))];
