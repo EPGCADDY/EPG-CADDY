@@ -2289,15 +2289,13 @@ function requestedPlayerResultSpeech(player){
   const segmentHoles=currentSegmentEntries.map(item=>item.hole);
   const segmentTotals=totals(player,segmentHoles);
   if(!segmentTotals.count)return "";
-  const segmentLabel=currentSegment===BACK
-    ?`Vuelta actual, del hoyo diez al hoyo ${HOLE_SPEECH_NAMES[currentHole]||currentHole}.`
-    :`Vuelta actual, del hoyo uno al hoyo ${HOLE_SPEECH_NAMES[currentHole]||currentHole}.`;
+  const segmentLabel=`Hasta el hoyo ${HOLE_SPEECH_NAMES[currentHole]||currentHole}.`;
   const segmentSpeech=`${segmentLabel} ${player.name}. Gros ${segmentTotals.gross}. Neto ${segmentTotals.net}. ${versusParSpeech(segmentTotals.net-segmentTotals.par)}.`;
   if(!completedFirstSegment)return segmentSpeech;
   const totalHoles=timeline.map(item=>item.hole);
   const total=totals(player,totalHoles);
   if(!total.count)return segmentSpeech;
-  const totalSpeech=`Acumulado total de la ronda hasta el hoyo ${HOLE_SPEECH_NAMES[currentHole]||currentHole}. Gros ${total.gross}. Neto ${total.net}. ${versusParSpeech(total.net-total.par)}.`;
+  const totalSpeech=`Acumulado total hasta el hoyo ${HOLE_SPEECH_NAMES[currentHole]||currentHole}. Gros ${total.gross}. Neto ${total.net}. ${versusParSpeech(total.net-total.par)}.`;
   return `${segmentSpeech} ${totalSpeech}`;
 }
 window.GSCPlayerNameAudio=function(playerId){
