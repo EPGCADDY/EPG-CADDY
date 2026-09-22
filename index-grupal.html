@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PLAYER-NAME-ACCUMULATED-AUDIO-20260922-R16">
+  <meta name="gscg-release" content="PLAYER-NAME-DOUBLE-TAP-ACCUMULATED-AUDIO-20260922-R17">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2306,11 +2306,16 @@ function speakPlayerResultFromNameCell(cell){
 function bindPlayerNameResultAudio(){
   if(document.documentElement.dataset.playerNameAudioBound==="1")return;
   document.documentElement.dataset.playerNameAudioBound="1";
+  let lastPlayerTapCell=null,lastPlayerTapAt=0;
   document.addEventListener("click",event=>{
     const cell=event.target.closest?.("#scorecard .player-name[data-audio-player='1']");
     if(!cell||event.target.closest("input,select,button,a"))return;
     event.preventDefault();
     event.stopPropagation();
+    const now=Date.now(),isDoubleTap=cell===lastPlayerTapCell&&(now-lastPlayerTapAt)<=550;
+    lastPlayerTapCell=cell;lastPlayerTapAt=now;
+    if(!isDoubleTap)return;
+    lastPlayerTapCell=null;lastPlayerTapAt=0;
     speakPlayerResultFromNameCell(cell);
   },true);
   document.addEventListener("keydown",event=>{
