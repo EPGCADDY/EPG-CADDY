@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="ROUND-CLOSURE-AUDIO-ORDER-20260922-R38">
+  <meta name="gscg-release" content="KEYPAD-ZERO-DELETE-AND-CLOSURE-REARM-20260922-R39">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -3570,9 +3570,9 @@ function roundManualPlayerRows(selectedHole,activePlayerId=""){
   const locked=!!round.officiallyClosedAt;
   return round.players.map((player,index)=>{
     const result=manualHoleResult(player,selectedHole),value=result.recorded?(result.status==="x"?"X":result.gross??""):"";
-    const inlineScoreRows=[[1,2,3],[4,5,6],[7,8,9]];
+    const inlineScoreRows=[[1,2,3],[4,5,6],[7,8,9],[0,"X",""]];
     if(inlineScoreRows[0][0]!==1)throw new Error("INLINE_SCORE_KEYS_REQUIRE_HOLE_IN_ONE");
-    const keypad=index<3?inlineScoreRows[index].map(n=>`<button type="button" class="round-inline-score-key" data-score-key="${n}" aria-label="Anotar ${n}" style="min-width:0;width:100%;height:100%;padding:0;border:1px solid #4b4f50;border-radius:8px;background:#0b0d0d;color:#fff;font-size:17px;font-weight:900">${n}</button>`).join(""):`<span></span><span></span><span></span>`;
+    const keypad=index<4?inlineScoreRows[index].map(n=>n===""?`<span></span>`:`<button type="button" class="round-inline-score-key" data-score-key="${n}" aria-label="${n==="X"?"Borrar score":n===0?"No jugó este hoyo":`Anotar ${n}`}" style="min-width:0;width:100%;height:100%;padding:0;border:1px solid #4b4f50;border-radius:8px;background:#0b0d0d;color:#fff;font-size:17px;font-weight:900">${n}</button>`).join(""):`<span></span><span></span><span></span>`;
     return`<div class="round-grid-name" aria-label="JUGADOR ${index+1}" style="display:flex;align-items:center;justify-content:center;min-width:0;width:100%;padding:3px;font-weight:900;text-align:center;overflow:hidden">${escapeHtml(player.name)}</div><span>${selectedHole}</span><button class="round-grid-gross ${player.id===activePlayerId?"is-active-score":""}" data-player-id="${escapeHtml(player.id)}" data-score-value="${escapeHtml(value)}" type="button" aria-label="GROSS ${escapeHtml(player.name)} HOYO ${selectedHole}. TOCAR PARA SELECCIONAR" style="min-width:0;width:100%;font-size:20px;text-align:center;box-sizing:border-box;cursor:pointer;${player.id===activePlayerId?"background:#31ff00!important;color:#000!important;-webkit-text-fill-color:#000!important;border:3px solid #31ff00!important;box-shadow:0 0 0 2px #000,0 0 0 4px rgba(49,255,0,.80),0 0 18px rgba(49,255,0,.55)!important;":""}" ${locked?"disabled":""}>${escapeHtml(value)||"&nbsp;"}</button>${keypad}`;
   }).join("")
 }
@@ -3594,7 +3594,15 @@ function preferredManualHole({roundId,renderedRoundId,selectedHole,firstPending,
   if(String(renderedRoundId||"")!==String(roundId||""))return pending;
   return Math.max(1,Math.min(limit,Number(selectedHole)||pending))
 }
-function resetAnnouncementsAfterRemoval(hole){ensureAnnouncedState();if(FRONT.includes(hole))round.announced.front=false;if(BACK.includes(hole))round.announced.back=false;round.announced.complete=false}
+function resetAnnouncementsAfterRemoval(hole){
+  ensureAnnouncedState();
+  const order=playedSegmentOrder();
+  if(order.first.includes(hole))round.announced.firstSegment=false;
+  if(order.second.includes(hole))round.announced.secondSegment=false;
+  if(FRONT.includes(hole))round.announced.front=false;
+  if(BACK.includes(hole))round.announced.back=false;
+  round.announced.complete=false;
+}
 function removeManualScore(player,hole){
   if(round.officiallyClosedAt||!player?.holes?.[hole])return false;
   delete player.holes[hole];player.lastHole=Math.max(0,...Object.keys(player.holes||{}).map(Number).filter(value=>Number.isInteger(value)&&value>=1&&value<=18));resetAnnouncementsAfterRemoval(hole);persist();render();return true
@@ -3686,12 +3694,26 @@ function openRoundScoreKeypad(playerOrId,hole){
   return true;
 }
 function roundScoreKeypadPress(key){
-  if(!/^[1-9]$/.test(String(key)))return false;
+  key=String(key);
+  if(!/^[0-9]$/.test(key)&&key!=="X")return false;
   const state=roundScoreKeypadState;if(!state)return false;
   const player=round.players.find(p=>p.id===state.playerId);if(!player)return false;
-  const entry=manualScoreEntry(player.id,state.hole,String(key));if(!entry)return false;
-  const players=scoreKeypadPlayerList(state.hole),index=players.findIndex(p=>p.id===player.id),nextPlayer=index>=0?players[index+1]||null:null;
-  const hole=state.hole,manual=document.getElementById("roundManualEntry");
+  const hole=state.hole;
+  if(key==="X"){
+    const removed=removeManualScore(player,hole);
+    if(!removed)return false;
+    const manual=document.getElementById("roundManualEntry");
+    if(manual)manual.dataset.activePlayerId=player.id;
+    roundScoreKeypadState={playerId:player.id,hole,value:""};
+    setTimeout(()=>setActiveScoreVisual(player.id),0);
+    return true;
+  }
+  const entry=key==="0"
+    ?{player:player.id,hole,gross:null,status:"x"}
+    :manualScoreEntry(player.id,hole,key);
+  if(!entry)return false;
+  const players=scoreKeypadPlayerList(hole),index=players.findIndex(p=>p.id===player.id),nextPlayer=index>=0?players[index+1]||null:null;
+  const manual=document.getElementById("roundManualEntry");
   if(manual)manual.dataset.activePlayerId=nextPlayer?.id||"";
   roundScoreKeypadState=nextPlayer?{playerId:nextPlayer.id,hole,value:""}:null;
   const result=applyManualScoreEntries([entry]);if(!result?.ok)return false;
