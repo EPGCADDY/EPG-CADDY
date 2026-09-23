@@ -3,7 +3,7 @@
   // LIVE PUBLICATION REFRESH 2026-09-20 · deploy trigger only, no functional change
 
   const STORAGE_KEY="golf-score-card-gt-live-control-v1",POLICY_VERSION="gsc-gt-live-v1";
-  let adapter=null,mounted=false,publishTimer=null,publishRunning=false,publishAgain=false;
+  let adapter=null,mounted=false,publishTimer=null,publishRunning=false,publishAgain=false,foregroundStatus=false;
   const $=id=>root?.document?.getElementById(id)||null;
   const text=(value,max=120)=>String(value??"").trim().replace(/\s+/g," ").slice(0,max);
   const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
@@ -38,8 +38,8 @@
   function publicAppOrigin(){const origin=String(root.location.origin||"");try{const host=new URL(origin).hostname.toLowerCase();if(host==="golf-sc-gt-lab.vercel.app")return origin;if(/^golf-sc-gt(?:-|\.)/.test(host))return"https://golf-sc-gt-lab.vercel.app"}catch{}return origin}
   function viewerUrl(kind,token){const url=new URL("/live.html",publicAppOrigin());url.hash=`${kind}=${encodeURIComponent(token)}`;return url.toString()}
   function hubUrl(kind="",token=""){const url=new URL("/live-hub.html",publicAppOrigin());if(token)url.hash=`${kind==="tournament"||kind==="general"?"general":"stream"}=${encodeURIComponent(token)}`;return url.toString()}
-  function setStatus(message,tone=""){const target=$("liveControlStatus");if(!target)return;target.textContent=message;target.dataset.tone=tone}
-  function stateMessage(code){return({NETWORK_ERROR:"SIN SEÑAL · EL ÚLTIMO SCORE QUEDA EN COLA",LIVE_CONSENT_REQUIRED:"FALTA CONFIRMAR EL PERMISO DE TODOS",LIVE_GROUP_CONSENT_REQUIRED:"EL GRUPO COMPLETO DEBE AUTORIZAR",LIVE_PLAYER_SCOPE_REQUIRED:"SELECCIONA UN JUGADOR",LIVE_REVISION_CONFLICT:"SINCRONIZANDO LA VERSIÓN MÁS RECIENTE",LIVE_NOT_ACTIVE:"EL ENLACE YA NO ESTÁ ACTIVO",LIVE_EXPIRED:"EL ENLACE CADUCÓ",LIVE_RATE_LIMITED:"DEMASIADAS SOLICITUDES · ESPERA UN MINUTO",LIVE_JOIN_CODE_INVALID:"CÓDIGO DE TORNEO INVÁLIDO",LIVE_GROUP_LABEL_REQUIRED:"ESCRIBE EL NOMBRE O NÚMERO DEL GRUPO",LIVE_TOURNAMENT_CAPACITY_REACHED:"TORNEO COMPLETO · MÁXIMO 100 JUGADORES",LIVE_TOURNAMENT_MODE_MISMATCH:"ESTA SCORE CARD USA OTRA MODALIDAD",DATABASE_MIGRATION_REQUIRED:"LIVE AÚN NO ESTÁ ACTIVADO EN LA BASE CENTRAL",DATABASE_NOT_CONFIGURED:"LIVE CENTRAL NO DISPONIBLE"})[String(code||"")]||"NO SE PUDO COMPLETAR LIVE"}
+  function setStatus(message,tone="",background=false){if(background&&foregroundStatus)return;if(!background)foregroundStatus=true;const target=$("liveControlStatus");if(!target)return;target.textContent=message;target.dataset.tone=tone}
+  function stateMessage(code){return({NETWORK_ERROR:"SIN SEÑAL · EL ÚLTIMO SCORE QUEDA EN COLA",LIVE_CONSENT_REQUIRED:"FALTA CONFIRMAR EL PERMISO DE TODOS",LIVE_GROUP_CONSENT_REQUIRED:"EL GRUPO COMPLETO DEBE AUTORIZAR",LIVE_PLAYER_SCOPE_REQUIRED:"SELECCIONA UN JUGADOR",LIVE_REVISION_CONFLICT:"SINCRONIZANDO LA VERSIÓN MÁS RECIENTE",LIVE_NOT_ACTIVE:"EL ENLACE YA NO ESTÁ ACTIVO",LIVE_EXPIRED:"EL ENLACE CADUCÓ",LIVE_RATE_LIMITED:"DEMASIADAS SOLICITUDES · ESPERA UN MINUTO",LIVE_JOIN_CODE_INVALID:"CÓDIGO DE TORNEO INVÁLIDO",LIVE_GROUP_LABEL_REQUIRED:"ESCRIBE EL NOMBRE O NÚMERO DEL GRUPO",LIVE_TOURNAMENT_CAPACITY_REACHED:"TORNEO COMPLETO · MÁXIMO 100 JUGADORES",LIVE_TOURNAMENT_MODE_MISMATCH:"ESTA SCORE CARD USA OTRA MODALIDAD","42703":"TORNEOS NO DISPONIBLES · FALTA ACTUALIZAR EL SERVIDOR",DATABASE_MIGRATION_REQUIRED:"LIVE AÚN NO ESTÁ ACTIVADO EN LA BASE CENTRAL",DATABASE_NOT_CONFIGURED:"LIVE CENTRAL NO DISPONIBLE"})[String(code||"")]||"NO SE PUDO COMPLETAR LIVE"}
   function consentIds(scope){const snapshot=currentSnapshot();if(!snapshot)return[];if(scope==="player")return[$("livePlayerSelect")?.value].filter(Boolean);return snapshot.players.map(player=>player.id)}
   function renderConsent(){
     const snapshot=currentSnapshot(),scope=document.querySelector('input[name="liveScope"]:checked')?.value||"group",target=$("liveConsentPlayers"),select=$("livePlayerSelect");if(!target||!select)return;
@@ -56,9 +56,9 @@
     $("liveTournamentOwned")?.classList.toggle("hidden",!owned?.viewerToken);if(owned?.viewerToken){$("liveTournamentLink").value=viewerUrl("tournament",owned.viewerToken);$("liveTournamentCode").textContent=owned.joinCode||"—"}
     const button=$("gscLiveLaunch");if(button){button.classList.toggle("active",active);button.textContent=active?"COMPARTIR LIVE ●":"COMPARTIR LIVE"}
     const belongsToCurrentRound=!active||!snapshot||stream.roundId===snapshot.roundId;
-    if(active&&!belongsToCurrentRound)setStatus("ESTE ENLACE PERTENECE A OTRA RONDA · REVÓCALO ANTES DE CREAR EL NUEVO","warning");
-    else if(active)setStatus(stream.pendingSnapshot?"SINCRONIZACIÓN PENDIENTE · SE REINTENTARÁ CON SEÑAL":"EN VIVO · ENLACE PRIVADO Y SÓLO LECTURA",stream.pendingSnapshot?"warning":"ok");
-    else setStatus(snapshot?"LISTO PARA AUTORIZAR LIVE":"INICIA UNA RONDA PARA ACTIVAR LIVE");
+    if(active&&!belongsToCurrentRound)setStatus("ESTE ENLACE PERTENECE A OTRA RONDA · REVÓCALO ANTES DE CREAR EL NUEVO","warning",true);
+    else if(active)setStatus(stream.pendingSnapshot?"SINCRONIZACIÓN PENDIENTE · SE REINTENTARÁ CON SEÑAL":"EN VIVO · ENLACE PRIVADO Y SÓLO LECTURA",stream.pendingSnapshot?"warning":"ok",true);
+    else setStatus(snapshot?"LISTO PARA AUTORIZAR LIVE":"INICIA UNA RONDA PARA ACTIVAR LIVE","",true);
   }
   async function activateStream(){
     const snapshot=currentSnapshot();if(!snapshot){setStatus("INICIA UNA RONDA PARA ACTIVAR LIVE","warning");return false}
@@ -69,7 +69,7 @@
   }
   function openLivePanel(){
     if(!$("gscLiveOverlay"))return;
-    renderConsent();renderActive();root.document.body.classList.add("gsc-live-open");$("gscLiveOverlay").classList.add("visible");$("gscLiveOverlay").setAttribute("aria-hidden","false");
+    foregroundStatus=false;renderConsent();renderActive();root.document.body.classList.add("gsc-live-open");$("gscLiveOverlay").classList.add("visible");$("gscLiveOverlay").setAttribute("aria-hidden","false");
   }
   async function quickShareGroup(){
     openLivePanel();
@@ -92,7 +92,7 @@
     publishRunning=true;stream.pendingSnapshot=snapshot;stream.pendingMutationId=stream.pendingMutationId||mutationId();saveState(state);
     let result=await request("publish",{clientMutationId:stream.pendingMutationId,expectedRevision:Number(stream.revision)||0,snapshot},stream.publisherSecret);
     if(result.status===409&&await recoverRevision(state)){const refreshed=liveState();result=await request("publish",{clientMutationId:refreshed.stream.pendingMutationId,expectedRevision:Number(refreshed.stream.revision)||0,snapshot},refreshed.stream.publisherSecret)}
-    const latest=liveState();if(result.ok&&latest.stream?.streamId===stream.streamId){latest.stream.revision=Number(result.revision)||latest.stream.revision;latest.stream.pendingSnapshot=null;latest.stream.pendingMutationId=null;saveState(latest);setStatus("EN VIVO · ACTUALIZACIÓN CONFIRMADA","ok")}else if(latest.stream?.streamId===stream.streamId){latest.stream.pendingSnapshot=snapshot;saveState(latest);setStatus(stateMessage(result.code),"warning")}
+    const latest=liveState();if(result.ok&&latest.stream?.streamId===stream.streamId){latest.stream.revision=Number(result.revision)||latest.stream.revision;latest.stream.pendingSnapshot=null;latest.stream.pendingMutationId=null;saveState(latest);setStatus("EN VIVO · ACTUALIZACIÓN CONFIRMADA","ok",true)}else if(latest.stream?.streamId===stream.streamId){latest.stream.pendingSnapshot=snapshot;saveState(latest);setStatus(stateMessage(result.code),"warning",true)}
     publishRunning=false;renderActive();if(publishAgain){publishAgain=false;setTimeout(publishLatest,0)}return result.ok;
   }
   function onRoundPersisted(roundValue){const state=liveState(),snapshot=currentSnapshot(roundValue);if(!state.stream?.publisherSecret||!snapshot||state.stream.roundId!==snapshot.roundId)return false;state.stream.pendingSnapshot=snapshot;state.stream.pendingMutationId=mutationId();saveState(state);clearTimeout(publishTimer);publishTimer=setTimeout(publishLatest,350);return true}
@@ -123,7 +123,7 @@
     const organizer=root.document.createElement("div");organizer.id="liveOrganizerPanel";organizer.className="gsc-live-organizer-panel hidden";sections.forEach(section=>{if(["liveNoRound","liveActivate","liveActive"].includes(section.id))panel.appendChild(section);else organizer.appendChild(section)});panel.append(toggle,organizer);
   }
   function bind(){
-    $("gscLiveLaunch").onclick=()=>{if(currentSnapshot())return quickShareGroup();renderConsent();renderActive();root.document.body.classList.add("gsc-live-open");$("gscLiveOverlay").classList.add("visible");$("gscLiveOverlay").setAttribute("aria-hidden","false")};$("closeGscLive").onclick=()=>{root.document.body.classList.remove("gsc-live-open");$("gscLiveOverlay").classList.remove("visible");$("gscLiveOverlay").setAttribute("aria-hidden","true")};
+    $("gscLiveLaunch").onclick=()=>{if(currentSnapshot())return quickShareGroup();foregroundStatus=false;renderConsent();renderActive();root.document.body.classList.add("gsc-live-open");$("gscLiveOverlay").classList.add("visible");$("gscLiveOverlay").setAttribute("aria-hidden","false")};$("closeGscLive").onclick=()=>{root.document.body.classList.remove("gsc-live-open");$("gscLiveOverlay").classList.remove("visible");$("gscLiveOverlay").setAttribute("aria-hidden","true")};
     document.querySelectorAll('input[name="liveScope"]').forEach(input=>input.onchange=renderConsent);$("livePlayerSelect").onchange=renderConsent;$("liveOpenHub").onclick=()=>openHub();$("liveActivateButton").onclick=activateStream;$("liveShareButton").onclick=shareStream;$("liveCopyButton").onclick=()=>copyValue("liveShareLink");$("liveOpenButton").onclick=()=>openValue("liveShareLink");$("liveRevokeButton").onclick=revokeStream;$("liveCreateTournament").onclick=createTournament;$("liveShareTournament").onclick=shareTournament;$("liveCopyTournament").onclick=()=>copyValue("liveTournamentLink");$("liveOpenTournament").onclick=()=>openHub("general",liveState().tournamentOwned?.viewerToken);$("liveRevokeTournament").onclick=revokeTournament;$("liveJoinTournament").onclick=joinTournament;$("liveLeaveTournament").onclick=leaveTournament;$("liveFollowOpen").onclick=openFollow;
     root.addEventListener("online",()=>{const state=liveState();if(state.stream?.pendingSnapshot)publishLatest()});
   }
