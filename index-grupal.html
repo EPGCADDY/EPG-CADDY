@@ -3972,7 +3972,8 @@ $("newRoundButton").addEventListener("click",()=>isStablefordRound()?openFreshSt
 $("detectedBody").addEventListener("click",e=>{
   const remove=e.target.closest?.("[data-draft-remove]");if(!remove)return;
   const idx=Number(remove.dataset.draftRemove);if(!Number.isInteger(idx)||idx<0||idx>=manualDraftRows.length)return;
-  const name=canonicalPlayerName(manualDraftRows[idx]?.name)||draftPlayers[idx]?.name||`JUGADOR ${idx+1}`;
+  const name=canonicalPlayerName(manualDraftRows[idx]?.name)||draftPlayers[idx]?.name||`JUGADOR ${idx+1}`,player=draftPlayers[idx];
+  if(player&&Object.keys(player.holes||{}).length)return setManualRegistrationStatus(`${name.toUpperCase()} YA TIENE SCORES · NO SE ELIMINA DURANTE LA RONDA`);
   if(!window.confirm(`¿ELIMINAR A ${name.toUpperCase()} DEL REGISTRO?`))return;
   manualDraftRows.splice(idx,1);manualDraftRows.push(emptyManualDraftRow());
   if(idx<draftPlayers.length)draftPlayers.splice(idx,1);
