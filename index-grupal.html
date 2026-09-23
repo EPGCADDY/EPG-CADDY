@@ -2321,13 +2321,11 @@ function requestedPlayerResultSpeech(player){
     return `${segmentSpeech} Acumulado total. Puntos ${totalPoints}.`;
   }
 
-  if(isFourBallRound()){
-    const playerIndex=round.players.findIndex(item=>item.id===player.id),teamIndex=window.GSCFourBall.teamIndexForPlayer(playerIndex);
-    if(teamIndex===null||teamIndex===undefined)return "";
-    const segment=fourBallSegment(teamIndex,segmentHoles),segmentPoints=Number(segment.points||0);
+  if(isStablefordRound()){
+    const segment=stablefordTotals(player,segmentHoles),segmentPoints=Number(segment.points||0);
     const segmentSpeech=`${segmentLabel} Puntos ${segmentPoints}.`;
     if(!completedFirstSegment)return segmentSpeech;
-    const total=fourBallSegment(teamIndex,totalHoles),totalPoints=Number(total.points||0);
+    const total=stablefordTotals(player,totalHoles),totalPoints=Number(total.points||0);
     return `${segmentSpeech} Acumulado total. Puntos ${totalPoints}.`;
   }
 
