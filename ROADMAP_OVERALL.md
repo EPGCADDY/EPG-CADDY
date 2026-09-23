@@ -1686,3 +1686,9 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 ## Regla permanente de releases
 - Se incorpora `RELEASE_UPDATE_MATRIX.md` como protocolo obligatorio de actualización LAB/Producción.
 - Exige sincronización de versión, LAB READY, regresión, prueba física, promoción del mismo árbol y verificación final antes de declarar una actualización terminada.
+
+
+## R71 · orden visual del ANOTADOR
+- CAMPO y MODALIDAD se muestran primero.
+- ANOTADOR + ANTERIOR/HOYO/SIGUIENTE quedan inmediatamente debajo, invirtiendo el orden anterior.
+- Sin cambios funcionales en captura de scores, navegación ni cálculo.
