@@ -1709,3 +1709,9 @@ Corrección solicitada por propietario sobre IMG_4745: CSS compartido ocultaba H
 Validación local posterior: test-lab-medal-monitor.mjs PASS (Medal sin puntos, columnas esenciales, desempate9→6→3 y mensaje de error persistente); integrado al build LAB. project-quality-gate PASS y build-manual-lab PASS. Aún sin publicar esta corrección; prueba visual posterior pendiente.
 
 Candidato R52 LAB-MEDAL-MONITOR-20260923-R52: index-grupal.html y service-worker.js actualizados para entrega verificable por ACTUALIZAR. Incluye correcciones del monitor y avisos LIVE; no incluye migración de base de datos ni certificación integral.
+
+R52 READY confirmado en dpl_2zdrX6Tt1aFSWBYDcPFQMb9wQT5x, alias LAB; navegador abre VERSIÓN R52. Monitor demo muestra Gross/Neto/Hoyo/Resultado sin Puntos; empate −4 ordena hoyo15 antes de12. Inspección visual revela prioridad espacial pendiente: corrección posterior mueve Hoyo/Gross/Neto/Resultado antes de categoría/grupo/modalidad. Sin certificación integral.
+
+Regresión reportada IMG_4747: Compartir LIVE abría administración por openLivePanel inicial introducido R51 y heredado R52. Corrección: llamada nativa directa; cancelar no abre panel; fallback de copia/error mantiene aviso visible. Prueba de navegación actualizada para impedir recaída. Pendiente nueva publicación.
+
+R53 LAB-SHARE-DIRECT-20260923-R53: compartir directo, monitor con información principal primero; prueba test-lab-share-direct.mjs integrada en build, cubre éxito y cancelación nativa sin panel ni copia. index-grupal.html y service-worker.js versionados. No resuelve migración de torneos ni certifica todos los recorridos.

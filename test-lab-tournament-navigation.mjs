@@ -24,5 +24,5 @@ assert.match(html,/body:not\(\.public-display\) \.hub \.hidden\{display:none!imp
 assert.doesNotMatch(html,/body:not\(\.public-display\) #hubState,/,'No ocultar el estado junto a elementos decorativos');
 assert.match(html,/ADJUNTAR RONDA EN VIVO/);
 const live=fs.readFileSync('live-control.js','utf8');
-assert.match(live,/async function quickShareGroup\(\)\{\s*openLivePanel\(\)/,'Compartir debe mostrar resultado o error en pantalla');
+assert.doesNotMatch(live,/async function quickShareGroup\(\)\{\s*openLivePanel\(\)/,'Compartir nativo no debe abrir administración antes de compartir');
 console.log('PASS torneo: regreso portal, favoritos únicos, ranking completo, mensajes y compartir visibles');

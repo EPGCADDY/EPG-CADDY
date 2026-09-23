@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const s=fs.readFileSync('live-control.js','utf8');
+const code=s.slice(s.indexOf('  async function quickShareGroup(){'),s.indexOf('  async function recoverRevision'));
+let opened=0,shared=0,copied=0;
+const ctx={openLivePanel(){opened++},currentSnapshot:()=>({roundId:'r',players:[]}),liveState:()=>({stream:{publisherSecret:'test',viewerToken:'test',roundId:'r',scope:'group'}}),viewerUrl:()=> 'https://example.test/live',setStatus(){},root:{navigator:{share:async()=>{shared++},clipboard:{writeText:async()=>{copied++}}}}};
+vm.createContext(ctx);vm.runInContext(code,ctx);
+assert.equal(await ctx.quickShareGroup(),true);assert.equal(shared,1);assert.equal(opened,0);assert.equal(copied,0);
+ctx.root.navigator.share=async()=>{throw Object.assign(new Error('cancel'),{name:'AbortError'})};
+assert.equal(await ctx.quickShareGroup(),false);assert.equal(opened,0);assert.equal(copied,0);
+console.log('PASS compartir nativo directo y cancelar: sin administración ni copia inesperada');

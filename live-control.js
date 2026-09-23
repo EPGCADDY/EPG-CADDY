@@ -72,19 +72,18 @@
     foregroundStatus=false;renderConsent();renderActive();root.document.body.classList.add("gsc-live-open");$("gscLiveOverlay").classList.add("visible");$("gscLiveOverlay").setAttribute("aria-hidden","false");
   }
   async function quickShareGroup(){
-    openLivePanel();
-    const snapshot=currentSnapshot();if(!snapshot){setStatus("INICIA UNA RONDA PARA COMPARTIR LIVE","warning");return false}
+    const snapshot=currentSnapshot();if(!snapshot){openLivePanel();setStatus("INICIA UNA RONDA PARA COMPARTIR LIVE","warning");return false}
     let state=liveState(),stream=state.stream;
     if(!(stream?.publisherSecret&&stream?.viewerToken&&stream.roundId===snapshot.roundId&&stream.scope==="group")){
       const selectedPlayerIds=snapshot.players.map(player=>player.id),consent={confirmed:true,playerIds:selectedPlayerIds,policyVersion:POLICY_VERSION,confirmedAt:new Date().toISOString(),authority:"scorekeeper_share_live_button"};
       setStatus("CREANDO ENLACE LIVE DEL GRUPO…");
       const result=await request("create_stream",{scope:"group",selectedPlayerIds,consent,durationHours:24,groupLabel:snapshot.groupLabel,snapshot});
-      if(!result.ok){setStatus(stateMessage(result.code),"warning");return false}
+      if(!result.ok){openLivePanel();setStatus(stateMessage(result.code),"warning");return false}
       state=liveState();state.stream={roundId:snapshot.roundId,scope:"group",streamId:result.streamId,publisherSecret:result.publisherSecret,viewerToken:result.viewerToken,revision:Number(result.revision)||0,expiresAt:result.expiresAt,groupLabel:snapshot.groupLabel,pendingSnapshot:null,tournamentId:null};saveState(state);stream=state.stream;renderActive();
     }
     const url=viewerUrl("stream",stream.viewerToken),shareData={title:"GOLF SCORE CARD GT · LIVE",text:"Sigue en vivo la Score Card de este grupo. Vista privada y sólo lectura.",url};
     if(root.navigator.share){try{await root.navigator.share(shareData);setStatus("COMPARTIR LIVE LISTO","ok");return true}catch(error){if(error?.name==="AbortError")return false}}
-    try{await root.navigator.clipboard.writeText(url);setStatus("ENLACE LIVE COPIADO","ok");return true}catch{setStatus("NO SE PUDO COMPARTIR EN ESTE DISPOSITIVO","warning");return false}
+    try{await root.navigator.clipboard.writeText(url);openLivePanel();setStatus("ENLACE LIVE COPIADO","ok");return true}catch{openLivePanel();setStatus("NO SE PUDO COMPARTIR EN ESTE DISPOSITIVO","warning");return false}
   }
   async function recoverRevision(state){const stream=state.stream,result=await request("read",{kind:"stream",viewerToken:stream.viewerToken});if(result.ok&&result.stream){stream.revision=Number(result.stream.revision)||0;saveState(state);return true}return false}
   async function publishLatest(){
