@@ -19,9 +19,9 @@ function roundFrom(startHole,endHole){
 function run(mode,startHole,endHole){
   const round=roundFrom(startHole,endHole);round.mode=mode;
   const ctx={round,FRONT,BACK,ALL,HOLE_SPEECH_NAMES,isOmittedScore:()=>false,
-    isUniversalesRound:()=>mode==='universales',isFourBallRound:()=>mode==='four_ball',
+    isUniversalesRound:()=>mode==='universales',isStablefordRound:()=>mode==='stableford',isFourBallRound:()=>mode==='four_ball',
     universalesSegment:holes=>({pointsById:{p1:holes.length*3}}),
-    fourBallSegment:(team,holes)=>({points:holes.length}),
+    stablefordTotals:(player,holes)=>({points:holes.length*2,count:holes.length}),
     window:{GSCFourBall:{teamIndexForPlayer:index=>Math.floor(index/2)}},
     totals:(player,holes)=>({count:holes.length,gross:holes.length*4,net:holes.length*4,par:holes.length*4}),
     versusParSpeech:()=> 'even'};
@@ -29,7 +29,7 @@ function run(mode,startHole,endHole){
   return ctx.requestedPlayerResultSpeech(round.players[0]);
 }
 
-for(const mode of ['universales','four_ball']){
+for(const mode of ['universales','stableford']){
   let speech=run(mode,1,5);
   assert.match(speech,/Puntos /i,mode+' debe anunciar puntos');
   assert.doesNotMatch(speech,/Gros|Neto/i,mode+' NO debe anunciar scores');
@@ -43,4 +43,4 @@ for(const mode of ['universales','four_ball']){
   assert.doesNotMatch(speech,/Gros|Neto/i,mode+' desde hoyo 10 NO debe anunciar scores');
 }
 
-console.log('PASS doble toque: UNIVERSALES y FOUR BALL anuncian PUNTOS exclusivamente, incluyendo segundo nivel acumulado y comienzo por 1 o 10');
+console.log('PASS doble toque: UNIVERSALES y STABLEFORD anuncian PUNTOS exclusivamente, incluyendo segundo nivel acumulado y comienzo por 1 o 10');
