@@ -1698,3 +1698,17 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Se elimina visualmente el bloque blanco de acciones redundantes en MIS RONDAS GUARDADAS: ABRIR/IMAGEN/PDF GLOBAL, selector de jugador, ABRIR/IMAGEN/PDF PERSONAL, PDF TODAS y ESTADÍSTICAS.
 - Se colapsa por completo el espacio del bloque para que el contador quede seguido de la tarjeta de ronda.
 - Release sincronizado como R72 en app, Service Worker, cachés y prueba de release.
+
+- Regresión asociada: `test-lab-r60-production-refresh.mjs` valida release R72 y que `cardLibraryActions` permanezca oculto en MIS RONDAS GUARDADAS.
+
+
+## R73 · 2026-09-23 · limpieza exacta del anotador
+- Se elimina únicamente la columna visual HOYO del bloque de captura, incluido el número repetido por jugador.
+- Se elimina el encabezado HOYO de esa franja.
+- JUGADOR, SCORE y TECLADO quedan como únicos encabezados, en blanco y a 16 px, equivalentes al tamaño visual de los nombres.
+- No se modifica navegación de hoyo, lógica de score, teclado, jugadores ni ninguna otra función.
+- Release sincronizado R73 en app, Service Worker, caché y prueba de release.
+
+- Corrección R73 móvil: la rejilla responsive también se reduce a cinco columnas y el selector específico impide que TECLADO herede el estilo verde/grande de las celdas no vacías.
+
+- Ajuste de regresión R73: eliminada la aserción antigua de encabezados para conservar únicamente el contrato específico vigente con `span:not(:empty)` y cinco columnas móviles.
