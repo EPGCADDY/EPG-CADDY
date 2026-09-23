@@ -23,7 +23,6 @@
     body:not(.public-display) .head h1{margin:0;color:var(--tour-green);font-size:clamp(24px,7vw,34px);line-height:1;letter-spacing:.2px}
     body:not(.public-display) .head p,
     body:not(.public-display) #hubBack,
-    body:not(.public-display) #hubState,
     body:not(.public-display) .tournament-shelf>h2,
     body:not(.public-display) .tournament-shelf>p,
     body:not(.public-display) .viewer-entry>p,
@@ -55,8 +54,6 @@
     body:not(.public-display).hub-search-mode #hubCategoryCard,
     body:not(.public-display).hub-search-mode #hubGeneralPanel>.viewer-tools,
     body:not(.public-display).hub-search-mode #hubLeaderWrap{display:none!important}
-    body:not(.public-display).hub-search-mode #hubGeneralPanel>h2{font-size:0}
-    body:not(.public-display).hub-search-mode #hubGeneralPanel>h2::after{content:"BUSCAR JUGADOR";font-size:18px}
     body:not(.public-display).hub-favorites-mode #hubTournamentShelf,
     body:not(.public-display).hub-favorites-mode #hubTournamentEntry{display:none!important}
     body:not(.public-display) .search{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
@@ -78,6 +75,15 @@
       body:not(.public-display) .viewer-entry h2{grid-column:1/-1}
       body:not(.public-display) .category-filter{grid-template-columns:1fr}
     }
+    /* Visibility must outrank the layout rules above. */
+    body:not(.public-display) .hub .hidden{display:none!important}
+    body:not(.public-display) #hubState{font-size:14px;line-height:1.4;padding:10px 12px;margin:0 0 12px}
+    body:not(.public-display) #hubState:empty{display:none}
+    body:not(.public-display) #hubState.warning,body:not(.public-display) #hubState.error{position:sticky;top:60px;z-index:20;background:#171009;border:1px solid #ffb340;color:#fff}
+    body:not(.public-display) .favorites{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+    body:not(.public-display) .favorite-head small{font-size:13px;line-height:1.4}
+    body:not(.public-display) .favorite .remove{min-width:44px;min-height:44px}
+    body:not(.public-display) .favorite details>summary{min-height:44px;padding:12px;color:#31ff00;cursor:pointer;font-weight:bold}
     body.public-display{overflow:hidden;background:#000}
     body.public-display .hub{max-width:none;width:100vw;min-height:100vh;padding:18px 24px 24px}
     body.public-display #hubBack,
@@ -144,7 +150,7 @@
     <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← MIS TORNEOS</button>
 
     <section class="panel monitor-panel" id="hubGeneralPanel">
-      <h2>RESULTADOS</h2>
+      <h2 id="hubPanelTitle">RESULTADOS</h2>
       <div class="search">
         <input id="hubSearch" type="search" maxlength="80" placeholder="Nombre del jugador">
         <button class="primary" id="hubSearchButton" type="button">BUSCAR</button>
@@ -171,9 +177,9 @@
       <h2>FAVORITOS</h2>
       <div class="favorites" id="hubFavorites"><div class="empty">TODAVÍA NO SIGUES A NADIE.</div></div>
       <div class="actions" style="margin-top:9px"><button class="danger" id="hubClearFavorites" type="button">VACIAR FAVORITOS</button></div>
-      <details class="viewer-tools"><summary>AGREGAR EXTERNO</summary><div class="import">
-        <input id="hubImportLink" type="url" placeholder="PEGA UNA VEZ SU ENLACE LIVE">
-        <button class="primary" id="hubImportButton" type="button">AGREGAR</button>
+      <details class="viewer-tools"><summary>ADJUNTAR RONDA EN VIVO</summary><div class="import">
+        <input id="hubImportLink" type="url" placeholder="Pega el enlace de la ronda" aria-label="Enlace de la ronda en vivo">
+        <button class="primary" id="hubImportButton" type="button">ADJUNTAR</button>
       </div></details>
       <div class="picker" id="hubPicker">
         <h3>¿A QUIÉN QUIERES SEGUIR?</h3>

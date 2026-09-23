@@ -67,7 +67,12 @@
     if(!result.ok){setStatus(stateMessage(result.code),"warning");return false}
     const state=liveState();state.stream={roundId:snapshot.roundId,scope,streamId:result.streamId,publisherSecret:result.publisherSecret,viewerToken:result.viewerToken,revision:Number(result.revision)||0,expiresAt:result.expiresAt,groupLabel:snapshot.groupLabel,pendingSnapshot:null,tournamentId:null};saveState(state);renderActive();return true;
   }
+  function openLivePanel(){
+    if(!$("gscLiveOverlay"))return;
+    renderConsent();renderActive();root.document.body.classList.add("gsc-live-open");$("gscLiveOverlay").classList.add("visible");$("gscLiveOverlay").setAttribute("aria-hidden","false");
+  }
   async function quickShareGroup(){
+    openLivePanel();
     const snapshot=currentSnapshot();if(!snapshot){setStatus("INICIA UNA RONDA PARA COMPARTIR LIVE","warning");return false}
     let state=liveState(),stream=state.stream;
     if(!(stream?.publisherSecret&&stream?.viewerToken&&stream.roundId===snapshot.roundId&&stream.scope==="group")){
@@ -115,7 +120,7 @@
     const intro=panel.querySelector(":scope > .gsc-live-note");if(intro)intro.remove();
     viewer.id="liveViewerSection";viewer.classList.add("gsc-live-viewer");viewer.querySelector("h2").textContent="MONITOR DEL TORNEO EN VIVO";viewer.querySelector("p").textContent="VER RESULTADOS, BUSCAR JUGADORES O FILTRAR POR CATEGORÍA.";$("liveOpenHub").textContent="ABRIR MONITOR";
     const toggle=root.document.createElement("button");toggle.id="liveOrganizerToggle";toggle.className="gsc-live-organizer-toggle";toggle.type="button";toggle.setAttribute("aria-expanded","false");toggle.textContent="ORGANIZAR TORNEO";
-    const organizer=root.document.createElement("div");organizer.id="liveOrganizerPanel";organizer.className="gsc-live-organizer-panel hidden";sections.forEach(section=>organizer.appendChild(section));panel.append(toggle,organizer);
+    const organizer=root.document.createElement("div");organizer.id="liveOrganizerPanel";organizer.className="gsc-live-organizer-panel hidden";sections.forEach(section=>{if(["liveNoRound","liveActivate","liveActive"].includes(section.id))panel.appendChild(section);else organizer.appendChild(section)});panel.append(toggle,organizer);
   }
   function bind(){
     $("gscLiveLaunch").onclick=()=>{if(currentSnapshot())return quickShareGroup();renderConsent();renderActive();root.document.body.classList.add("gsc-live-open");$("gscLiveOverlay").classList.add("visible");$("gscLiveOverlay").setAttribute("aria-hidden","false")};$("closeGscLive").onclick=()=>{root.document.body.classList.remove("gsc-live-open");$("gscLiveOverlay").classList.remove("visible");$("gscLiveOverlay").setAttribute("aria-hidden","true")};

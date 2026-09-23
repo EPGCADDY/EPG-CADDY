@@ -3,6 +3,7 @@
 
   const STORAGE_KEY="golf-score-card-gt-live-hub-v1",POLL_MS=3000,DISPLAY_MS=10000,MAX_SAVED_TOURNAMENTS=5,TOKEN_PATTERN=/^[A-Za-z0-9_-]{40,100}$/;
   let state={version:2,generalToken:"",tournaments:[],follows:[]},general=null,generalRevision=null,generalStreams=new Map(),tournamentStreams=new Map(),externalStreams=new Map(),pendingImportToken="",timer=null,loading=false,categoryCardOpen=false,tournamentPortalOpen=false,activeMonitor="general",displayTimer=null,displayCountdownTimer=null,displaySceneIndex=0;
+  const expandedFavorites=new Set();
   const $=id=>root&&root.document?root.document.getElementById(id):null;
   const text=(value,max=120)=>String(value==null?"":value).trim().replace(/\s+/g," ").slice(0,max);
   const escapeHtml=value=>String(value==null?"":value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
@@ -87,8 +88,8 @@
     const category=selectedCategory(),course=selectedCourse();
     return tournamentPlayers(streams).filter(item=>(category==="all"||item.tournamentCategory===category)&&(course==="all"||courseKey(item.course)===course));
   }
-  function buildLeaderboard(streams){
-    const players=visibleTournamentPlayers(streams).sort((left,right)=>left.mode==="universales"&&right.mode==="universales"?right.universalesPoints-left.universalesPoints||right.holes-left.holes||fold(left.name).localeCompare(fold(right.name)):left.relativeToPar-right.relativeToPar||right.holes-left.holes||fold(left.name).localeCompare(fold(right.name)));
+  function buildLeaderboard(streams,filtered=true){
+    const players=(filtered?visibleTournamentPlayers(streams):tournamentPlayers(streams)).sort((left,right)=>left.mode==="universales"&&right.mode==="universales"?right.universalesPoints-left.universalesPoints||right.holes-left.holes||fold(left.name).localeCompare(fold(right.name)):left.relativeToPar-right.relativeToPar||right.holes-left.holes||fold(left.name).localeCompare(fold(right.name)));
     const tieCounts=new Map();for(const item of players){const value=item.mode==="universales"?item.universalesPoints:item.relativeToPar,key=item.mode+":"+value+":"+item.holes;tieCounts.set(key,(tieCounts.get(key)||0)+1)}
     let previous=null,rank=0;return players.map((item,index)=>{const value=item.mode==="universales"?item.universalesPoints:item.relativeToPar,key=item.mode+":"+value+":"+item.holes;if(previous===null||key!==previous)rank=index+1;previous=key;return{...item,rank,rankLabel:(tieCounts.get(key)||0)>1?`T${rank}`:String(rank)}})
   }
@@ -111,6 +112,11 @@
     return normalizeHubState(current).follows.map(item=>{const stream=map.get(item.streamId)||externalMap.get(item.token)||null;if(!stream||!stream.snapshot)return{item,stream:null,players:[]};const players=item.kind==="group"?(stream.snapshot.players||[]):[(stream.snapshot.players||[]).find(player=>player.id===item.playerId)].filter(Boolean);return{item,stream,players}})
   }
 
+  function uniqueFavoritePlayers(resolved){
+    // Prefer an individually followed player when their group is followed too.
+    const ordered=[...resolved.filter(row=>row.item.kind!=="group"),...resolved.filter(row=>row.item.kind==="group")],seen=new Set();
+    return ordered.map(row=>({...row,players:row.players.filter(player=>{const key=(row.stream?.id||row.item.streamId)+":"+player.id;if(seen.has(key))return false;seen.add(key);return true})})).filter(row=>!row.stream||row.players.length);
+  }
   function setStatus(message,tone){
     const target=$("hubState");if(!target)return;target.textContent=message;target.className="state"+(tone?" "+tone:"");
   }
@@ -159,13 +165,14 @@
     return'<div class="holes"><table><thead><tr><th>HOYO</th>'+numbers.map(hole=>"<th>"+hole+"</th>").join("")+'</tr></thead><tbody><tr><td>PAR</td>'+numbers.map(hole=>"<td>"+escapeHtml(pars.get(hole)||"")+"</td>").join("")+'</tr><tr><td>GROSS</td>'+numbers.map(hole=>"<td>"+cell(holes.get(hole),"gross")+"</td>").join("")+'</tr><tr><td>NETO</td>'+numbers.map(hole=>"<td>"+cell(holes.get(hole),"net")+"</td>").join("")+'</tr></tbody></table></div>';
   }
   function favoriteCard(resolved,rankByPlayer){
-    if(!resolved.stream||!resolved.players.length)return'<article class="favorite"><header class="favorite-head"><div><h3>'+escapeHtml(resolved.item.label)+'</h3><small>ENLACE NO DISPONIBLE, CADUCADO O REVOCADO</small></div><button class="remove" data-remove="'+escapeHtml(resolved.item.key)+'">×</button></header></article>';
+    if(!resolved.stream||!resolved.players.length)return'<article class="favorite"><header class="favorite-head"><div><h3>'+escapeHtml(resolved.item.label)+'</h3><small>ENLACE NO DISPONIBLE, CADUCADO O REVOCADO</small></div><button class="remove" aria-label="Quitar seguimiento de '+escapeHtml(resolved.item.label)+'" data-remove="'+escapeHtml(resolved.item.key)+'">×</button></header></article>';
     const snapshot=resolved.stream.snapshot;
-    return resolved.players.map(player=>{const totals=livePlayerTotals(player),rank=rankByPlayer.get(resolved.stream.id+":"+player.id)||"—";return'<article class="favorite"><header class="favorite-head"><div><h3>#'+escapeHtml(rank)+' · '+escapeHtml(player.name)+'</h3><small>'+escapeHtml(resolved.stream.groupLabel||snapshot.groupLabel)+' · '+escapeHtml(snapshot.course||"CAMPO")+'</small></div><button class="remove" data-remove="'+escapeHtml(resolved.item.key)+'">×</button></header><div class="favorite-body"><div class="favorite-totals"><div><small>HOYO ACTUAL</small><b>'+(totals.finished?'FINAL':escapeHtml(totals.currentHole||'—'))+'</b></div><div><small>GROSS</small><b>'+escapeHtml(totals.gross)+'</b></div><div><small>NETO</small><b>'+escapeHtml(totals.net)+'</b></div><div><small>+/−</small><b class="'+(totals.relativeToPar<0?"under":totals.relativeToPar>0?"over":"")+'">'+relation(totals.relativeToPar)+'</b></div></div>'+scoreRows(player,snapshot)+'</div></article>'}).join("");
+    return resolved.players.map(player=>{const totals=livePlayerTotals(player),rank=rankByPlayer.get(resolved.stream.id+":"+player.id)||"—";return'<article class="favorite"><header class="favorite-head"><div><h3>'+escapeHtml(player.name)+'</h3><small>'+escapeHtml(resolved.stream.groupLabel||snapshot.groupLabel)+' · '+escapeHtml(snapshot.course||"CAMPO")+(rank==='—'?'':' · POSICIÓN GENERAL '+escapeHtml(rank))+'</small></div><button class="remove" aria-label="Quitar seguimiento de '+escapeHtml(resolved.item.label)+'" data-remove="'+escapeHtml(resolved.item.key)+'">×</button></header><div class="favorite-body"><div class="favorite-totals"><div><small>HOYO ACTUAL</small><b>'+(totals.finished?'FINAL':escapeHtml(totals.currentHole||'—'))+'</b></div><div><small>GROSS</small><b>'+escapeHtml(totals.gross)+'</b></div><div><small>NETO</small><b>'+escapeHtml(totals.net)+'</b></div><div><small>+/−</small><b class="'+(totals.relativeToPar<0?"under":totals.relativeToPar>0?"over":"")+'">'+relation(totals.relativeToPar)+'</b></div></div>'+'<details data-favorite-detail="'+escapeHtml(resolved.stream.id+':'+player.id)+'"'+(expandedFavorites.has(resolved.stream.id+':'+player.id)?' open':'')+'><summary>VER HOYO POR HOYO</summary>'+scoreRows(player,snapshot)+'</details>'+'</div></article>'}).join("");
   }
   function renderFavorites(){
-    const visible=displayStreams(),streams=favoriteStreams(allTournamentStreams()),target=$("hubFavorites"),resolved=resolveFollows(state,streams,externalStreams);if(!target)return;const rankByPlayer=new Map();for(const tournamentMap of tournamentStreams.values())for(const item of buildLeaderboard(tournamentMap))rankByPlayer.set(item.streamId+":"+item.playerId,item.rank);for(const item of buildLeaderboard(visible))rankByPlayer.set(item.streamId+":"+item.playerId,item.rank);
-    target.innerHTML=resolved.length?resolved.map(item=>favoriteCard(item,rankByPlayer)).join(""):'<div class="empty">EN EL MONITOR DEL TORNEO, BUSCA UN JUGADOR Y TOCA + SEGUIR.</div>';
+    const visible=displayStreams(),streams=favoriteStreams(allTournamentStreams()),target=$("hubFavorites"),resolved=resolveFollows(state,streams,externalStreams);if(!target)return;const rankByPlayer=new Map();for(const tournamentMap of tournamentStreams.values())for(const item of buildLeaderboard(tournamentMap,false))rankByPlayer.set(item.streamId+":"+item.playerId,item.rank);for(const item of buildLeaderboard(visible,false))rankByPlayer.set(item.streamId+":"+item.playerId,item.rank);
+    target.innerHTML=resolved.length?uniqueFavoritePlayers(resolved).map(item=>favoriteCard(item,rankByPlayer)).join(""):'<div class="empty">EN EL MONITOR DEL TORNEO, BUSCA UN JUGADOR Y TOCA + SEGUIR.</div>';
+    target.querySelectorAll("[data-favorite-detail]").forEach(detail=>detail.ontoggle=()=>{if(detail.open)expandedFavorites.add(detail.dataset.favoriteDetail);else expandedFavorites.delete(detail.dataset.favoriteDetail)});
     target.querySelectorAll("[data-remove]").forEach(button=>button.onclick=()=>{state=removeFollowFromState(state,button.dataset.remove);saveState();renderAll()});
   }
   function renderSummary(){
@@ -248,7 +255,7 @@
   function renderTournamentShelf(){const shelf=$("hubTournamentShelf"),cards=$("hubTournamentCards"),shared=new URLSearchParams(root.location.search||"").get("shared")==="1";if(!shelf||!cards)return;const portal=tournamentPortalOpen&&!shared,items=[{token:"__demo__",label:"TORNEO DEMOSTRACIÓN",demo:true},...state.tournaments];shelf.classList.toggle("hidden",!portal);cards.innerHTML=items.map(item=>'<button class="tournament-card" type="button" data-tournament="'+escapeHtml(item.token)+'">'+escapeHtml(item.label)+'<small>'+(item.demo?'67 JUGADORES':'EN VIVO')+'</small></button>').join("");cards.querySelectorAll("[data-tournament]").forEach(button=>button.onclick=()=>button.dataset.tournament==="__demo__"?root.location.assign(tournamentHubOpenUrl("",root.location.origin,root.location.href,true)):selectSavedTournament(button.dataset.tournament));$("hubTournamentEntry")?.classList.toggle("hidden",!portal);$("hubTournamentHome")?.classList.toggle("hidden",portal||shared);$("hubGeneralPanel")?.classList.toggle("hidden",portal||activeMonitor==="individual");$("hubIndividualPanel")?.classList.toggle("hidden",portal||activeMonitor!=="individual");root.document.querySelector(".monitor-switch")?.classList.toggle("hidden",portal)}
   function resetGeneralView(){general=null;generalRevision=null;generalStreams.clear();categoryCardOpen=false;$("hubCategory")&&( $("hubCategory").value="all");$("hubSearch")&&( $("hubSearch").value="")}
   async function selectSavedTournament(token){if(!tokenOk(token))return false;state.generalToken=token;saveState();tournamentPortalOpen=false;resetGeneralView();showMonitor("general");setStatus("ABRIENDO TORNEO…","");await refresh();return true}
-  function showTournamentPortal(){tournamentPortalOpen=true;clearTimeout(timer);renderAll();setStatus("ELIGE UNO DE TUS TORNEOS O AGREGA OTRO","")}
+  function showTournamentPortal(){root.document.body.classList.remove("hub-search-mode","hub-favorites-mode");tournamentPortalOpen=true;clearTimeout(timer);renderAll();setStatus("ELIGE UNO DE TUS TORNEOS O AGREGA OTRO","")}
   function renderAll(){renderTournamentShelf();renderCourseFilter();renderSummary();renderLeaderboard();renderCategoryCard();renderSearch();renderFavorites()}
 
   function addImported(stream,player){
@@ -296,8 +303,9 @@
   async function shareGeneral(){const url=tournamentHubShareUrl(state.generalToken,root.location.origin,root.location.href,demoMode());if(!url){setStatus("ABRE PRIMERO EL TORNEO","warning");return false}if(root.navigator.share){try{await root.navigator.share({title:general&&general.name||"TORNEO LIVE",text:"Sigue los resultados y categorías de este torneo en vivo. Vista sólo lectura.",url:url});setStatus("ENLACE EXCLUSIVO DEL TORNEO LISTO PARA COMPARTIR ♾️","");return true}catch{}}try{await root.navigator.clipboard.writeText(url);setStatus("ENLACE DEL TORNEO COPIADO · NO COMPARTE LA APLICACIÓN","");return true}catch{setStatus("NO SE PUDO COMPARTIR EN ESTE NAVEGADOR","warning");return false}}
   function showMonitor(kind){
     const individual=kind==="individual",categories=kind==="categories",add=kind==="add";
-    if(tournamentPortalOpen&&(state.generalToken||demoMode()))tournamentPortalOpen=false;
+    if(tournamentPortalOpen&&(individual||state.generalToken||demoMode()))tournamentPortalOpen=false;
     activeMonitor=individual?"individual":"general";
+    if($("hubPanelTitle"))$("hubPanelTitle").textContent=add?"BUSCAR JUGADOR":"RESULTADOS";
     root.document.body.classList.toggle("hub-search-mode",add);
     root.document.body.classList.toggle("hub-favorites-mode",individual);
     renderTournamentShelf();
@@ -332,5 +340,5 @@
     return true;
   }
 
-  return{STORAGE_KEY,POLL_MS,DISPLAY_MS,MAX_SAVED_TOURNAMENTS,TOKEN_PATTERN,CATEGORY_LABELS,CATEGORY_DEFAULT_TEES,DEMO_DISTRIBUTION,demoTournamentStreams,favoriteStreams,parseHubHash,parseShareLink,generalShareUrl,tournamentHubShareUrl,tournamentHubOpenUrl,normalizeHubState,upsertTournamentState,removeTournamentFromState,addFollowToState,removeFollowFromState,uniquePlayerHoles,livePlayerTotals,tournamentPlayers,categoryIndex,categoryShortLabel,buildLeaderboard,categoryScoreboardRows,liveDate,modeLabel,unresolvedFollowTokens,resolveFollows,start};
+  return{STORAGE_KEY,POLL_MS,DISPLAY_MS,MAX_SAVED_TOURNAMENTS,TOKEN_PATTERN,CATEGORY_LABELS,CATEGORY_DEFAULT_TEES,DEMO_DISTRIBUTION,demoTournamentStreams,favoriteStreams,parseHubHash,parseShareLink,generalShareUrl,tournamentHubShareUrl,tournamentHubOpenUrl,normalizeHubState,upsertTournamentState,removeTournamentFromState,addFollowToState,removeFollowFromState,uniquePlayerHoles,livePlayerTotals,tournamentPlayers,categoryIndex,categoryShortLabel,buildLeaderboard,categoryScoreboardRows,liveDate,modeLabel,unresolvedFollowTokens,resolveFollows,uniqueFavoritePlayers,start};
 });
