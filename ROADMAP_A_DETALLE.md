@@ -1715,3 +1715,6 @@ R52 READY confirmado en dpl_2zdrX6Tt1aFSWBYDcPFQMb9wQT5x, alias LAB; navegador a
 Regresión reportada IMG_4747: Compartir LIVE abría administración por openLivePanel inicial introducido R51 y heredado R52. Corrección: llamada nativa directa; cancelar no abre panel; fallback de copia/error mantiene aviso visible. Prueba de navegación actualizada para impedir recaída. Pendiente nueva publicación.
 
 R53 LAB-SHARE-DIRECT-20260923-R53: compartir directo, monitor con información principal primero; prueba test-lab-share-direct.mjs integrada en build, cubre éxito y cancelación nativa sin panel ni copia. index-grupal.html y service-worker.js versionados. No resuelve migración de torneos ni certifica todos los recorridos.
+
+R53 READY dpl_HfxvLB4tijTnkXzjmP2eE3Qo8sLr; ACTUALIZAR R52→R53 probado conserva jugadores/hoyo3. Revisión real Compartir usa fallback copia en Chrome y aún muestra administración; NO aprobado ese flujo. R54 LAB-SHARE-FEEDBACK-20260923-R54 corrige también fallback y errores: aviso transitorio accesible encima de ronda, sin abrir administración. live-control.js, prueba test-lab-share-direct.mjs y releases index/service-worker. Pendiente publicarR54 y verificar fallback real.
+Punto de continuidad: docs/quality/LAB_R53_RECORRIDO_PENDIENTE.md.
