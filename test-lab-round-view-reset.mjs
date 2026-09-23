@@ -1,0 +1,24 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const html=fs.readFileSync('index-grupal.html','utf8');
+const code=html.slice(html.indexOf('let lastRenderedRoundId=null;'),html.indexOf('renderFinalDigitalCard=function'));
+const status={textContent:'audio anterior'};let cancelled=0,side=0;
+const ctx={round:{id:'one'},window:{GSCDeviceClosures:{cancel(){cancelled++}}},$:()=>status,render(){return 42},renderSideGameResults(){side++},renderPendingCourseTemplate(){},renderPreviousRoundControls(){},renderPlayerEditControls(){}};
+vm.createContext(ctx);vm.runInContext(code,ctx);
+assert.equal(ctx.render(),42);assert.equal(status.textContent,'');
+status.textContent='audio actual';ctx.render();assert.equal(status.textContent,'audio actual');assert.equal(cancelled,1);
+ctx.round={id:'two'};ctx.render();assert.equal(status.textContent,'');assert.equal(cancelled,2);assert.equal(side,3);
+const open=html.slice(html.indexOf('function openFinalDigitalCard(){'),html.indexOf('function closeFinalDigitalCard(){'));
+const calls=[];const el={classList:{add(){}},setAttribute(){}};
+const cardCtx={COURSE_CATALOG:{pulte:{configured:true}},round:{courseKey:'pulte'},render(){calls.push('current')},renderFinalDigitalCard(){calls.push('clone');return true},$:()=>el,document:{body:el}};
+vm.createContext(cardCtx);vm.runInContext(open,cardCtx);cardCtx.openFinalDigitalCard();assert.deepEqual(calls,['current','clone']);
+console.log('PASS: audio cleared only on round change, side game refreshed on every mode, digital card rendered from current mode');
+
+cardCtx.COURSE_CATALOG.pulte.configured=false;calls.length=0;cardCtx.openFinalDigitalCard();assert.deepEqual(calls,['current']);
+const template=html.slice(html.indexOf('function renderPendingCourseTemplate(){'),html.indexOf('let lastRenderedRoundId=null;'));
+const nodes={};const get=id=>nodes[id]??=( {textContent:'old',innerHTML:'old',classList:{add(){}}});
+const tpl={COURSE_CATALOG:{la_reunion:{configured:false}},round:{courseKey:'la_reunion'},$:get,document:{querySelector:()=>get('par')}};
+vm.createContext(tpl);vm.runInContext(template,tpl);tpl.renderPendingCourseTemplate();
+assert.equal(nodes.headerSlope.textContent,'');assert.equal(nodes.par.textContent,'');assert.equal(nodes.summaryBody.innerHTML,'');assert.match(nodes.scorecard.innerHTML,/PLANTILLA PENDIENTE/);assert.match(nodes.roundManualEntry.textContent,/RECONSTRUCCIÓN/);
+console.log('PASS: La Reunión pending template hides unverified course data and blocks digital card');

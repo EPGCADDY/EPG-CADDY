@@ -52,3 +52,9 @@ const universalesCards=artifacts.build({...snapshot,mode:'universales',players:o
 assert.match(universalesCards.global.html,/color:#ff3030[\s\S]*PUNTOS/,'Universales Global debe identificar los puntos en rojo');
 assert.match(universalesCards.personal[0].html,/<th style="color:#ff3030">PUNTOS<\/th>[\s\S]*color:#ff3030/,'Universales Personal debe mostrar leyenda y valores de puntos en rojo');
 console.log('PASS leyenda, puntos por hoyo y totales Universales en rojo');
+
+// Legacy point fields cannot contaminate non-Universales artifacts.
+const legacy=JSON.parse(JSON.stringify(snapshot));legacy.mode='general';legacy.universalesPoints=12;
+for(const player of legacy.players){player.universalesPoints=12;for(const h of Object.values(player.holes)){h.universalesPoints=12;h.stablefordPoints=2;}}
+for(const card of artifacts.build(legacy).all)assert.doesNotMatch(card.html,/PUNTOS UNIVERSALES|PUNTOS IN|PUNTOS OUT|G\/N\/P/);
+console.log('PASS: global and personal Medal cards ignore legacy Universales point fields');

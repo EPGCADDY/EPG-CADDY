@@ -1,0 +1,10 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+const code=fs.readFileSync('service-worker.js','utf8');
+const start=code.indexOf('async function approvedNavigationWithManualUpdate('),end=code.indexOf('self.addEventListener("fetch"',start);
+let html='';const ctx={Response,Headers,RELEASE:'R49',OFFLINE_ENTRY:'/index-grupal.html',APPROVED_CACHE_NAME:'approved',caches:{match:async()=>new Response(html)},networkFirst(){throw Error('unexpected network')}};
+vm.createContext(ctx);vm.runInContext(code.slice(start,end),ctx);
+html='<head><meta name="gscg-release" content="R43"></head><body><button id="mandatoryUpdateButton">ACTUALIZAR</button></body>';
+let out=await (await ctx.approvedNavigationWithManualUpdate({})).text();assert.match(out,/bottom:calc\(env\(safe-area-inset-bottom/);assert.match(out,/z-index:2147483647/);assert.match(out,/mandatoryUpdateButton/);
+html='<head><meta name="gscg-release" content="R49"></head><body>current</body>';
+out=await (await ctx.approvedNavigationWithManualUpdate({})).text();assert.equal(out,html,'Current release must retain approved button geometry');
+console.log('PASS: stale approved shell receives reachable update button; current release unchanged');

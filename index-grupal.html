@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LAB-KEYPAD-CORRECTION-20260922-R48">
+  <meta name="gscg-release" content="LAB-ROUND-VIEW-RECOVERY-20260923-R49">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1287,7 +1287,7 @@ const COURSE_CATALOG={
   mayan_golf:{name:"Mayan Golf",displayName:"MAYAN GOLF",configured:true,weatherLocation:"Mayan Golf Club, Villa Nueva, Guatemala",weatherCoordinates:{latitude:14.4920708,longitude:-90.5792525}},
   hacienda_nueva:{name:"Hacienda Nueva",displayName:"HACIENDA NUEVA COUNTRY CLUB",configured:true,weatherLocation:"Hacienda Nueva Country Club, San José Pinula, Guatemala",weatherCoordinates:{latitude:14.5478243,longitude:-90.3935436}},
   alta_vista:{name:"Alta Vista",displayName:"ALTA VISTA GOLF & TENNIS CLUB",configured:true,weatherLocation:"Alta Vista Golf & Tennis Club, San José Pinula, Guatemala",weatherCoordinates:{latitude:14.53921,longitude:-90.37879}},
-  la_reunion:{name:"La Reunión",displayName:"LA REUNIÓN GOLF RESORT",configured:true,weatherLocation:"La Reunión Golf Resort, Alotenango, Guatemala",weatherCoordinates:{latitude:14.430247,longitude:-90.8357452}}
+  la_reunion:{name:"La Reunión",displayName:"LA REUNIÓN GOLF RESORT",configured:false,weatherLocation:"La Reunión Golf Resort, Alotenango, Guatemala",weatherCoordinates:{latitude:14.430247,longitude:-90.8357452}}
 };
 const FRONT=[1,2,3,4,5,6,7,8,9],BACK=[10,11,12,13,14,15,16,17,18],ALL=[...FRONT,...BACK];
 const PULTE_PAR=[4,4,4,4,3,5,5,3,4,3,5,4,4,5,4,4,3,4];
@@ -2995,8 +2995,8 @@ function shareOfficialArtifactImage(){
   const url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download=name;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);recordShareEvent(item,"PREPARED",true);return Promise.resolve(finish({ok:true,state:"PREPARED",fallback:true},"IMAGEN PNG DESCARGADA · ADJÚNTALA EN WHATSAPP"))
 }
 function openFinalDigitalCard(){
-  {}
-  {}
+  render();
+  if(COURSE_CATALOG[round.courseKey]?.configured===false)return;
   if(!renderFinalDigitalCard())return;
   $("finalCardOverlay").classList.add("visible");
   $("finalCardOverlay").setAttribute("aria-hidden","false");
@@ -3797,7 +3797,7 @@ function renderRoundManualEntry(){
   const selectedHole=preferredManualHole({roundId:round.id,renderedRoundId:manual.dataset.roundId,selectedHole:manual.dataset.hole,firstPending,maxHole:matchLimit});manual.dataset.roundId=String(round.id||"");manual.dataset.hole=String(selectedHole);
   const stable=isStablefordRound(),course=COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte,cfg=stable?stablefordConfig():null,locked=!!round.officiallyClosedAt;
   const detailOne=stable?{label:"TORNEO",value:round.tournament?.name||STABLEFORD_DEFAULT_TOURNAMENT}:{label:"CAMPO",value:course.displayName||course.name};
-  const generalMatchDetail={label:"MODALIDAD",value:round.provisional?"SCORE CARD - PRÁCTICA":isMatchPlayRound()?"MATCH PLAY":isUniversalesRound()?"UNIVERSALES":"MEDAL PLAY NORMAL"};
+  const generalMatchDetail={label:"MODALIDAD",value:round.provisional?"SCORE CARD - PRÁCTICA":isMatchPlayRound()?"MATCH PLAY":isUniversalesRound()?"UNIVERSALES":activeSideGameKey()?`${activeSideGameKey().toUpperCase()} · MEDAL PLAY`:"MEDAL PLAY NORMAL"};
   const detailTwo=stable?{label:"CATEGORÍA",value:`${cfg.label} · ${stablefordTeeLabel(cfg)}`}:generalMatchDetail;
   const effectiveDetailTwo=isFourBallRound()?{label:"MODALIDAD",value:"FOUR BALL"}:detailTwo;
   const metric=stable?"PTS":"GROSS";
@@ -3854,7 +3854,29 @@ function renderStableford(){
   const stableStatusNode=$("status"),stableFinalButton=$("finalCardButton");if(stableStatusNode)stableStatusNode.textContent=roundIdleStatus();if(stableFinalButton){stableFinalButton.classList.remove("hidden");stableFinalButton.textContent=isRoundComplete()?"VER TARJETA FINAL":"VER MI TARJETA"}renderRoundClockButton();renderStablefordSeries();
 }
 render=function(){if(isStablefordRound()){$("matchPlayStatus")?.remove();$("fourBallStatus")?.remove();document.body.classList.remove("match-play-mode","four-ball-mode");return renderStableford()}$("stablefordIdentity")?.remove();document.body.classList.remove("stableford-mode");$("stablefordSeriesSection")?.classList.add("hidden");if(isFourBallRound()){$("matchPlayStatus")?.remove();document.body.classList.remove("match-play-mode");return renderFourBall()}if(isMatchPlayRound()){$("fourBallStatus")?.remove();document.body.classList.remove("four-ball-mode");return renderMatchPlay()}if(isUniversalesRound()){$("matchPlayStatus")?.remove();$("fourBallStatus")?.remove();document.body.classList.remove("match-play-mode","four-ball-mode");return renderUniversales()}$("matchPlayStatus")?.remove();$("fourBallStatus")?.remove();document.body.classList.remove("match-play-mode","four-ball-mode");return baseRender()};
-const baseRenderPreviousRound=render;render=function(){const output=baseRenderPreviousRound();renderPreviousRoundControls();renderPlayerEditControls();return output};
+function renderPendingCourseTemplate(){
+  if(COURSE_CATALOG[round.courseKey]?.configured!==false)return;
+  const message="CAMPO EN RECONSTRUCCIÓN · TARJETA OFICIAL PENDIENTE";
+  const par=document.querySelector(".course-meta .numbers span:first-child");if(par)par.textContent="";
+  $("headerSlope").textContent="";
+  $("courseInfo").textContent=message;
+  $("scorecard").innerHTML='<tbody><tr><th>LA REUNIÓN</th><th>PLANTILLA PENDIENTE</th></tr></tbody>';
+  $("summaryTitle").textContent=message;$("summaryHeadRow").innerHTML="";$("summaryBody").innerHTML="";
+  $("roundManualEntry").textContent=message;
+  $("finalCardButton").classList.add("hidden");
+}
+let lastRenderedRoundId=null;
+const baseRenderPreviousRound=render;render=function(){
+  if(lastRenderedRoundId!==round.id){
+    window.GSCDeviceClosures?.cancel();
+    const audioStatus=$("deviceClosureStatus");if(audioStatus)audioStatus.textContent="";
+    lastRenderedRoundId=round.id;
+  }
+  const output=baseRenderPreviousRound();
+  renderSideGameResults();
+  renderPendingCourseTemplate();
+  renderPreviousRoundControls();renderPlayerEditControls();return output
+};
 renderFinalDigitalCard=function(){const ok=baseRenderFinalDigitalCard();if(!ok)return false;$("finalSummaryHeadRow").innerHTML=$("summaryHeadRow").innerHTML;$("finalSummaryTitle").textContent=isStablefordRound()?"PUNTOS":isMatchPlayRound()?"RESULTADO MATCH PLAY":isUniversalesRound()?"PUNTOS UNIVERSALES":"INFORMACIÓN DE RONDA";if(isFourBallRound())$("finalSummaryTitle").textContent="RESULTADO FOUR BALL";if(isStablefordRound()){const cfg=stablefordConfig(),corrected=Number(round.officialVersion||1)>1;document.querySelector(".final-card-head h1").textContent=corrected?`TARJETA STABLEFORD CORREGIDA · ${cfg.label} · V${round.officialVersion}`:`TARJETA STABLEFORD · ${cfg.label}`;document.querySelector(".final-card-readonly").textContent=corrected?"STABLEFORD SCRATCH · CORRECCIÓN OFICIAL · ORIGINAL PRESERVADO · SOLO CONSULTA":"STABLEFORD SCRATCH · TARJETA OFICIAL · SOLO CONSULTA"}else if(isFourBallRound()){const state=fourBallStatus();document.querySelector(".final-card-head h1").textContent=`TARJETA FOUR BALL · ${state.resultLabel}`;document.querySelector(".final-card-readonly").textContent="FOUR BALL · MEJOR NETO DEL TEAM · SOLO CONSULTA"}else if(isMatchPlayRound()){const state=matchPlayStatus();document.querySelector(".final-card-head h1").textContent=`TARJETA MATCH PLAY · ${state.resultLabel}`;document.querySelector(".final-card-readonly").textContent="MATCH PLAY · RESULTADO POR HOYOS UP/DOWN · SOLO CONSULTA"}else if(isUniversalesRound()){document.querySelector(".final-card-head h1").textContent="TARJETA UNIVERSALES";document.querySelector(".final-card-readonly").textContent="UNIVERSALES · NETO CON HÁNDICAP · 12 PUNTOS POR HOYO · SOLO CONSULTA"}return true};
 function storeStablefordRoundResults(){let series=readStablefordSeries();for(const p of round.players){const t=stablefordTotals(p,ALL);series=GSCStableford.upsertResult(series,{playerName:p.name,category:round.stablefordCategory,roundNumber:round.stablefordRoundNumber,courseKey:round.courseKey,points:t.points,gross:t.grossCount?t.gross:null,source:"scorecard",roundId:round.id})}writeStablefordSeries(series)}
 async function stablefordOfficialSnapshot(closedAt){const snapshot={roundId:round.id,version:Number(round.officialVersion)||1,status:"officially_closed",mode:"stableford",stablefordCategory:round.stablefordCategory,stablefordRoundNumber:round.stablefordRoundNumber,courseKey:round.courseKey,course:round.course,tournament:round.tournament||{name:STABLEFORD_DEFAULT_TOURNAMENT},playedAt:round.createdAt,officiallyClosedAt:closedAt,appVersion:"V307",players:JSON.parse(JSON.stringify(round.players))};snapshot.sha256=await window.GSCRoundClosure.sha256(snapshot);return snapshot}
