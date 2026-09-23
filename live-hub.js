@@ -195,6 +195,18 @@
   function totalCell(value){return categoryCell(value&&value.holes?{gross:value.gross,net:value.net,result:relation(value.result)}:null)}
   function liveDate(value){const date=new Date(value||Date.now());return Number.isFinite(date.getTime())?new Intl.DateTimeFormat("es-GT",{timeZone:"America/Guatemala",day:"2-digit",month:"2-digit",year:"numeric"}).format(date):"—"}
   function modeLabel(value){return({general:"MEDAL PLAY NORMAL",stableford:"STABLEFORD",match_play:"MATCH PLAY",four_ball:"FOUR BALL",universales:"UNIVERSALES"})[value]||text(value,30).toUpperCase()||"MEDAL PLAY NORMAL"}
+  // Keep scroll containers mounted while LIVE refreshes; replacing them cancels
+  // touch momentum and returns the spectator to hole 1 every polling cycle.
+  function updateCategoryCardContent(target,html){
+    const selectors=[".category-card-head",".category-ranking",".category-detail-title",".category-score"];
+    if(!target.querySelector(".category-score-wrap")){target.innerHTML=html;return}
+    const next=root.document.createElement("div");next.innerHTML=html;
+    for(const selector of selectors){
+      const current=target.querySelector(selector),replacement=next.querySelector(selector);
+      if(!current||!replacement){target.innerHTML=html;return}
+      if(current.innerHTML!==replacement.innerHTML)current.innerHTML=replacement.innerHTML;
+    }
+  }
   function renderCategoryCard(){
     const target=$("hubCategoryCard"),button=$("hubCategoryCardToggle");if(!target||!button)return;
     target.classList.toggle("hidden",!categoryCardOpen);button.setAttribute("aria-expanded",String(categoryCardOpen));button.textContent=categoryCardOpen?"OCULTAR DETALLE LIVE":"VER DETALLE LIVE DE CATEGORÍA";if(!categoryCardOpen)return;
@@ -203,7 +215,7 @@
     const first=rows[0],tournament=text(first.snapshot.tournament,120).toUpperCase()||"TORNEO",date=liveDate(first.snapshot.playedAt),mode=modeLabel(first.mode);
     const heads=Array.from({length:18},(_,index)=>'<th>'+(index+1)+'</th>').join("");
     const ranking=rows.map((item,index)=>'<tr><td>'+(index+1)+'</td><td><b>'+escapeHtml(item.name)+'</b></td><td>'+escapeHtml(item.player.handicap)+'</td><td><span class="category-chip category-'+escapeHtml(item.tournamentCategory||"none")+'">'+escapeHtml(categoryShortLabel(item.tournamentCategory))+'</span></td><td>'+(item.finished?'FINAL':item.currentHole||'—')+'</td><td>'+item.gross+'</td><td>'+item.net+'</td><td class="'+(item.relativeToPar<0?"under":item.relativeToPar>0?"over":"")+'">'+relation(item.relativeToPar)+'</td></tr>').join("");
-    target.innerHTML='<header class="category-card-head"><div class="category-event-meta"><span><small>FECHA</small><b>'+escapeHtml(date)+'</b></span><span><small>TORNEO</small><b>'+escapeHtml(tournament)+'</b></span><span><small>MODALIDAD</small><b>'+escapeHtml(mode)+'</b></span></div><strong>'+escapeHtml(label)+'</strong><small>'+rows.length+' JUGADORES EN VIVO</small></header><div class="category-ranking-wrap"><table class="category-ranking"><thead><tr><th>POS</th><th>NOMBRE</th><th>HDCP</th><th>CATEGORÍA</th><th>HOYO</th><th>GROSS</th><th>NETO</th><th>+/−</th></tr></thead><tbody>'+ranking+'</tbody></table></div><div class="category-detail-title">DETALLE POR HOYO · GROSS / NETO / RESULTADO</div><div class="category-score-wrap"><table class="category-score"><thead><tr><th>POS</th><th>JUGADOR</th>'+heads+'<th>IN</th><th>OUT</th><th>TOTAL</th></tr></thead><tbody>'+rows.map((item,index)=>'<tr><td>'+(index+1)+'</td><td><b>'+escapeHtml(item.name)+'</b><small>'+escapeHtml(item.groupLabel)+'</small></td>'+item.holeValues.map(categoryCell).map(cell=>'<td>'+cell+'</td>').join("")+'<td>'+totalCell(item.inTotals)+'</td><td>'+totalCell(item.outTotals)+'</td><td>'+totalCell(item.totalTotals)+'</td></tr>').join("")+'</tbody></table></div>';
+    updateCategoryCardContent(target,'<header class="category-card-head"><div class="category-event-meta"><span><small>FECHA</small><b>'+escapeHtml(date)+'</b></span><span><small>TORNEO</small><b>'+escapeHtml(tournament)+'</b></span><span><small>MODALIDAD</small><b>'+escapeHtml(mode)+'</b></span></div><strong>'+escapeHtml(label)+'</strong><small>'+rows.length+' JUGADORES EN VIVO</small></header><div class="category-ranking-wrap"><table class="category-ranking"><thead><tr><th>POS</th><th>NOMBRE</th><th>HDCP</th><th>CATEGORÍA</th><th>HOYO</th><th>GROSS</th><th>NETO</th><th>+/−</th></tr></thead><tbody>'+ranking+'</tbody></table></div><div class="category-detail-title">DETALLE POR HOYO · GROSS / NETO / RESULTADO</div><div class="category-score-wrap"><table class="category-score"><thead><tr><th>POS</th><th>JUGADOR</th>'+heads+'<th>IN</th><th>OUT</th><th>TOTAL</th></tr></thead><tbody>'+rows.map((item,index)=>'<tr><td>'+(index+1)+'</td><td><b>'+escapeHtml(item.name)+'</b><small>'+escapeHtml(item.groupLabel)+'</small></td>'+item.holeValues.map(categoryCell).map(cell=>'<td>'+cell+'</td>').join("")+'<td>'+totalCell(item.inTotals)+'</td><td>'+totalCell(item.outTotals)+'</td><td>'+totalCell(item.totalTotals)+'</td></tr>').join("")+'</tbody></table></div>');
   }
   function renderSearch(){
     const target=$("hubSearchResults"),query=fold($("hubSearch")&&$("hubSearch").value);if(!target)return;
