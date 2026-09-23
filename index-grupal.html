@@ -1777,7 +1777,11 @@ function syncDraftPlayersFromManualRows({strict=false,renderAfter=false}={}){
   if(strict&&draftVegas.enabled&&![4,6].includes(next.length))return setManualRegistrationStatus("VEGAS REQUIERE 4 O 6 JUGADORES · 2 O 3 PAREJAS");
   if(strict&&draftDots.enabled&&next.length<2)return setManualRegistrationStatus("DOTS REQUIERE DE 2 A 6 JUGADORES");
   if(strict&&!next.length)return setManualRegistrationStatus("REGISTRA DE 1 A 6 JUGADORES");
-  if(rosterEditMode&&next.length<draftPlayers.length)return setManualRegistrationStatus("NO SE PUEDE ELIMINAR UN JUGADOR DESDE ESTA CORRECCIÓN");
+  if(rosterEditMode&&next.length<draftPlayers.length){
+    const removed=draftPlayers.filter(oldPlayer=>!next.some(player=>player.id===oldPlayer.id));
+    const removedHasScores=removed.some(player=>Object.keys(player.holes||{}).length>0);
+    if(removedHasScores)return setManualRegistrationStatus("NO SE PUEDE ELIMINAR UN JUGADOR QUE YA TIENE SCORES · USA CORRECCIÓN DE RONDA");
+  }
   draftPlayers=next.map((p,i)=>normalizePlayer({...p,id:p.id||`p${i+1}`},i));
   savePlayersToDirectory(draftPlayers,{source:"registration"});
   seedManualDraftRowsFromPlayers();persistDraftState();
