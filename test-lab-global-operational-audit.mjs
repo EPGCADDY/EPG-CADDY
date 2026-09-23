@@ -26,7 +26,10 @@ for(const [mode,snapshot] of cases){
   const out=artifacts.build(snapshot);
   assert(out.global?.html,mode+": falta tarjeta global");
   assert.equal(out.personal.length,snapshot.players.length,mode+": cantidad de tarjetas personales incorrecta");
-  for(const item of [out.global,...out.personal])assert.match(item.html,/GROSS/,mode+": tarjeta sin GROSS");
+  for(const item of [out.global,...out.personal]){
+    if(mode==="match_play"||mode==="four_ball")assert.match(item.html,/G\/N|GROSS/,mode+": tarjeta sin lógica de score propia");
+    else assert.match(item.html,/GROSS/,mode+": tarjeta sin GROSS");
+  }
 }
 assert.equal(universales.distribute([3,4,5,6]).total,12,"Universales debe repartir 12 puntos");
 
