@@ -22,7 +22,7 @@ function makeRound(startHole,endHole){
   return {configured:true,players:[{id:'p1',name:'JAIME',holes}]};
 }
 function speechFor(round){
-  const ctx={round,FRONT,BACK,ALL,HOLE_SPEECH_NAMES,isOmittedScore:()=>false,isUniversalesRound:()=>false,isFourBallRound:()=>false,totals:(player,holes)=>({count:holes.length,gross:holes.length*4,net:holes.length*4,par:holes.length*4}),versusParSpeech:()=> 'even'};
+  const ctx={round,FRONT,BACK,ALL,HOLE_SPEECH_NAMES,isOmittedScore:()=>false,isUniversalesRound:()=>false,isStablefordRound:()=>false,isFourBallRound:()=>false,totals:(player,holes)=>({count:holes.length,gross:holes.length*4,net:holes.length*4,par:holes.length*4}),versusParSpeech:()=> 'even'};
   vm.createContext(ctx);vm.runInContext(code,ctx);return ctx.requestedPlayerResultSpeech(round.players[0]);
 }
 
@@ -42,4 +42,4 @@ s=speechFor(makeRound(10,4));
 assert.match(s,/JAIME, hasta el hoyo cuatro\. Gros 16\. Neto 16\./,'Si inicia por 10, al entrar al 1–9 debe anunciar la vuelta actual');
 assert.match(s,/Acumulado total\. Gros 52\. Neto 52\./,'Si inicia por 10, debe acumular BACK + FRONT');
 
-console.log('PASS doble toque/resultado: Medal y Stableford comparten botón; IN/OUT correcto en ambos órdenes; segundo nivel = acumulado total');
+console.log('PASS doble toque/resultado: Medal IN/OUT correcto en ambos órdenes; Stableford comparte botón físico; segundo nivel = acumulado total');
