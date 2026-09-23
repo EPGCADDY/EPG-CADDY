@@ -13,7 +13,7 @@ for(const token of [
   'AUDIO DE RESULTADOS',
   'officialCloseButton',
   'VER MI TARJETA',
-  'HISTORIAL DE RONDAS',
+  'VER RONDAS GUARDADAS',
   'CORREGIR RONDA',
   'mandatoryUpdateButton',
   'INVITAR · 24 H'

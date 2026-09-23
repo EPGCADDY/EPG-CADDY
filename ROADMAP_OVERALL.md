@@ -1665,3 +1665,17 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Corrección: mantener contenedores horizontal/vertical montados; actualizar sólo contenido cambiado de tablas y cabecera. Sin cambios en columnas aprobadas.
 - PASS técnico: test-lab-live-scroll, medal-monitor, stableford-ranking y tournament-navigation. Navegador publicado pendiente al preparar candidato.
 - Recorrido R55 Stableford real: par=2 puntos, birdie=3, corrección bogey=1, borrado limpia totales, omitido X=0, tarjeta digital coincide y compartir devuelve ENLACE LIVE COPIADO. No constituye certificación integral.
+
+
+## LAB R70 · 2026-09-23 · simplificación Tarjeta Digital Final
+- Se ocultan únicamente los controles redundantes de exportación global/personal en la vista final.
+- Se conserva CORREGIR RONDA y se renombra visualmente ENVIAR TARJETA DIGITAL a COMPARTIR TARJETA.
+- Producción permanece sin promoción de este cambio hasta validación LAB.
+
+- Ajuste de regresión V307: la prueba ahora reconoce el contrato vigente de modalidad con side game activo, sin cambiar lógica de aplicación.
+
+- Corrección de build LAB: restaurado identificador contractual R68 en app y service worker; no cambia Producción ni la lógica funcional R70.
+
+- Ajuste de regresión matriz física R60: se actualiza el token de navegación al vocabulario vigente VER RONDAS GUARDADAS; sin cambio funcional.
+
+- Archivo de regresión actualizado: test-lab-r60-physical-matrix.mjs · vocabulario vigente VER RONDAS GUARDADAS.
