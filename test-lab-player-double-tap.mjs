@@ -22,7 +22,7 @@ function makeRound(startHole,endHole){
   return {configured:true,players:[{id:'p1',name:'JAIME',holes}]};
 }
 function speechFor(round){
-  const ctx={round,FRONT,BACK,ALL,HOLE_SPEECH_NAMES,isOmittedScore:()=>false,totals:(player,holes)=>({count:holes.length,gross:holes.length*4,net:holes.length*4,par:holes.length*4}),versusParSpeech:()=> 'even'};
+  const ctx={round,FRONT,BACK,ALL,HOLE_SPEECH_NAMES,isOmittedScore:()=>false,isUniversalesRound:()=>false,isFourBallRound:()=>false,totals:(player,holes)=>({count:holes.length,gross:holes.length*4,net:holes.length*4,par:holes.length*4}),versusParSpeech:()=> 'even'};
   vm.createContext(ctx);vm.runInContext(code,ctx);return ctx.requestedPlayerResultSpeech(round.players[0]);
 }
 
