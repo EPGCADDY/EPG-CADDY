@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+const hub=createRequire(import.meta.url)('./live-hub.js');
+const stream=(id,scores)=>({id,groupLabel:id,snapshot:{mode:'stableford',players:[{id,name:id,tournamentCategory:'a',holes:scores.map((net,i)=>({hole:i+1,par:4,gross:net,net,relativeToPar:net-4,stablefordPoints:Math.max(0,6-net)}))}]}});
+const four=stream('CUATRO_PUNTOS',[10,2]),three=stream('TRES_PUNTOS',[5,4]),fourAdvanced=stream('CUATRO_PUNTOS_AVANCE',[4,4,9]);
+const rows=hub.buildLeaderboard([three,four,fourAdvanced],false);
+assert.deepEqual(rows.map(x=>x.name),['CUATRO_PUNTOS_AVANCE','CUATRO_PUNTOS','TRES_PUNTOS']);
+assert.deepEqual(rows.map(x=>x.stablefordPoints),[4,4,3]);
+assert.deepEqual(hub.categoryScoreboardRows([three,four,fourAdvanced],'a').map(x=>x.name),rows.map(x=>x.name));
+const duplicate={holes:[{hole:1,par:4,gross:4,net:4,stablefordPoints:2},{hole:1,par:4,gross:3,net:3,stablefordPoints:3},{hole:2,explicitX:true,stablefordPoints:99}]};
+assert.equal(hub.livePlayerTotals(duplicate).stablefordPoints,3);
+console.log('PASS Stableford: 4 puntos antes de3; empate por hoyos; categorías coinciden; sin doble suma ni puntos de omitidos');

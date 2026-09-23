@@ -1718,3 +1718,16 @@ R53 LAB-SHARE-DIRECT-20260923-R53: compartir directo, monitor con información p
 
 R53 READY dpl_HfxvLB4tijTnkXzjmP2eE3Qo8sLr; ACTUALIZAR R52→R53 probado conserva jugadores/hoyo3. Revisión real Compartir usa fallback copia en Chrome y aún muestra administración; NO aprobado ese flujo. R54 LAB-SHARE-FEEDBACK-20260923-R54 corrige también fallback y errores: aviso transitorio accesible encima de ronda, sin abrir administración. live-control.js, prueba test-lab-share-direct.mjs y releases index/service-worker. Pendiente publicarR54 y verificar fallback real.
 Punto de continuidad: docs/quality/LAB_R53_RECORRIDO_PENDIENTE.md.
+
+## R54 publicada y verificación posterior
+READY dpl_NymL823VReiLxbkvDcmfZ9nt37dD, alias golf-sc-gt-lab.vercel.app, remoto f8b12e1a49c0538c3e00f6e8c9501f7cbc13e03e; árbol bbbb043becca90785cd3f8f15ebcb6ef2220d5a0. ACTUALIZAR R53→R54 PASS en navegador; comparte por copia y permanece RONDA EN CURSO sin dialog administrativo, aviso ENLACE LIVE COPIADO visible y captura emitida. Ronda sintética conserva hoyo3. Test nativo/cancelación simulado PASS, iOS nativo no probado remotamente. Monitor publicado: datos esenciales preceden categoría/grupo/modalidad. Revisión integral continúa pendiente, incluyendo creación torneos503/42703 y reglas por otras modalidades.
+
+Revisión posterior R54: FAIL reproducido Stableford (3puntos antes de4 por ordenar relativo al par). Corrección local live-hub.js suma stablefordPoints, usa puntos descendentes para Stableford/Universales y hoyos completados descendentes en empate; comparador común para general/categorías. Medal conserva relativo al par ascendente. Pendiente pruebas y entrega.
+
+IMG_4748 demuestra que tabla horizontal sigue ocultando datos al desplazarse. Corrección local live-hub.js etiqueta semánticamente celdas; live-hub.html muestra filas como tarjetas móviles a≤800px con nombre, hoyo, Gross, Neto y resultado juntos sin desplazamiento horizontal; conserva tabla de escritorio y seguimiento persona/grupo. Pendiente prueba visual y entrega.
+
+Aclaración propietario IMG_4748: Hoyo/Gross/Neto se ven bien; desplazó tabla para señalar elementos a borrar. Se retira adaptación móvil no publicada y se conserva tabla R54. Corrección matemática Stableford permanece local; pendiente precisar elementos a quitar.
+
+Orden explícita propietario: quitar sólo columnas GRUPO y MODALIDAD del monitor. live-hub.js elimina encabezados y celdas de esas dos columnas; conserva categoría y seguimiento, incluidos datos de grupo internos para +GRUPO. Prueba test-lab-medal-monitor.mjs comprueba exclusión y conservación.
+
+R55 LAB-MONITOR-COLUMNS-20260923-R55 versionada en index-grupal.html/service-worker.js. Incluye eliminación Grupo/Modalidad y clasificación Stableford por puntos; test-lab-stableford-ranking.mjs incorporado al build. Sin rediseño móvil. Pendiente publicación y verificación de columnas en navegador.

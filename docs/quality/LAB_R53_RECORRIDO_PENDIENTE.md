@@ -24,3 +24,6 @@ Pruebas técnicas: build-manual-lab PASS, project-quality-gate PASS, roadmap-gat
 - Primer enlace nativo tras creación, caducidad, revocación, unirse/salir torneo, persistencia multi sesión, coordinación LIVE mutaciones, resto botones/ramificaciones: pendientes.
 - Gate actualización4versiones consecutivas no completado. No afirmar R51→R52 por botón: R52 se obtuvo mediante navegación.
 - Mantener visible ejecución≤60s. No afirmar trabajo en segundo plano después de cerrar turno.
+
+## R54 publicada y verificación posterior
+READY dpl_NymL823VReiLxbkvDcmfZ9nt37dD, alias golf-sc-gt-lab.vercel.app, remoto f8b12e1a49c0538c3e00f6e8c9501f7cbc13e03e; árbol bbbb043becca90785cd3f8f15ebcb6ef2220d5a0. ACTUALIZAR R53→R54 PASS en navegador; comparte por copia y permanece RONDA EN CURSO sin dialog administrativo, aviso ENLACE LIVE COPIADO visible y captura emitida. Ronda sintética conserva hoyo3. Test nativo/cancelación simulado PASS, iOS nativo no probado remotamente. Monitor publicado: datos esenciales preceden categoría/grupo/modalidad. Revisión integral continúa pendiente, incluyendo creación torneos503/42703 y reglas por otras modalidades.

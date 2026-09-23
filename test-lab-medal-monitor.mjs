@@ -13,6 +13,8 @@ const context={$:()=>wrap,buildLeaderboard:()=>rows,displayStreams:()=>streams,s
 vm.runInNewContext(source.slice(source.indexOf('  function renderLeaderboard(){'),source.indexOf('  function categoryCell('))+';renderLeaderboard()',context);
 for(const title of ['HOYO ACTUAL','GROSS','NETO','RESULTADO'])assert.ok(wrap.innerHTML.includes('<th>'+title+'</th>'));
 assert.ok(!wrap.innerHTML.includes('<th>PUNTOS</th>'));
+for(const title of ['GRUPO','MODALIDAD'])assert.ok(!wrap.innerHTML.includes('<th>'+title+'</th>'));
+for(const title of ['CATEGORÍA','SEGUIR'])assert.ok(wrap.innerHTML.includes('<th>'+title+'</th>'));
 const live=fs.readFileSync('live-control.js','utf8');const status={dataset:{}};
 const ctx={$:()=>status,foregroundStatus:false};
 vm.runInNewContext(live.slice(live.indexOf('  function setStatus('),live.indexOf('  function stateMessage('))+';setStatus("FALLO TORNEO","warning");setStatus("EN VIVO","ok",true)',ctx);
