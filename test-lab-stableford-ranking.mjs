@@ -6,7 +6,9 @@ const four=stream('CUATRO_PUNTOS',[10,2]),three=stream('TRES_PUNTOS',[5,4]),four
 const rows=hub.buildLeaderboard([three,four,fourAdvanced],false);
 assert.deepEqual(rows.map(x=>x.name),['CUATRO_PUNTOS_AVANCE','CUATRO_PUNTOS','TRES_PUNTOS']);
 assert.deepEqual(rows.map(x=>x.stablefordPoints),[4,4,3]);
-assert.deepEqual(hub.categoryScoreboardRows([three,four,fourAdvanced],'a').map(x=>x.name),rows.map(x=>x.name));
+const categoryRows=hub.categoryScoreboardRows([three,four,fourAdvanced],'a');
+assert.deepEqual(categoryRows.map(x=>x.name),rows.map(x=>x.name));
+assert.deepEqual(categoryRows.map(x=>x.rankLabel),['1','2','3'],'La primera columna debe exponer la posición oficial');
 const duplicate={holes:[{hole:1,par:4,gross:4,net:4,stablefordPoints:2},{hole:1,par:4,gross:3,net:3,stablefordPoints:3},{hole:2,explicitX:true,stablefordPoints:99}]};
 assert.equal(hub.livePlayerTotals(duplicate).stablefordPoints,3);
 console.log('PASS Stableford: 4 puntos antes de3; empate por hoyos; categorías coinciden; sin doble suma ni puntos de omitidos');
