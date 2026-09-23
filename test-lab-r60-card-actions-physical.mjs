@@ -1,0 +1,21 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const app=fs.readFileSync('index-grupal.html','utf8');
+
+const required=[
+'openGlobalCard','imageGlobalCard','pdfGlobalCard','shareGlobalCard',
+'personalCardPlayer','openPersonalCard','imagePersonalCard','pdfPersonalCard',
+'sharePersonalCard','downloadAllCards','openOfficialCorrection','openOriginalGlobal'
+];
+for(const id of required)assert(app.includes('id="'+id+'"'),'Falta control '+id);
+
+assert.match(app,/actions\.hidden=!round\.officiallyClosedAt/,'Las acciones oficiales deben mostrarse al cerrar la ronda');
+assert.doesNotMatch(app,/actions\.hidden=true;sendButton\.hidden=!round\.officiallyClosedAt/,'No se permite ocultar permanentemente acciones oficiales');
+
+for(const id of ['openGlobalCard','imageGlobalCard','pdfGlobalCard','shareGlobalCard','openPersonalCard','imagePersonalCard','pdfPersonalCard','sharePersonalCard','downloadAllCards','openOfficialCorrection']){
+ assert(app.includes('$("'+id+'").addEventListener("click"'),'Falta listener de '+id);
+}
+assert.match(app,/openOriginalGlobal[^\n]*addEventListener\("click",openOriginalGlobalCard\)/,'Falta listener de tarjeta original');
+assert.match(app,/openOriginalGlobal"\)\.classList\.toggle\("hidden",!corrected\)/,'Original sólo debe aparecer tras corrección');
+
+console.log('PASS R60 tarjetas: acciones oficiales visibles tras cierre y todos los botones tienen handler');
