@@ -2943,7 +2943,7 @@ function renderFinalDigitalCard(){
   document.querySelector(".final-card-readonly").textContent=complete?"TARJETA FINAL · SOLO CONSULTA · LOS DATOS DE LA RONDA NO SE MODIFICAN DESDE ESTA VISTA":"TARJETA DIGITAL · RONDA EN CURSO · SOLO CONSULTA";
   const corrected=Number(round.officialVersion||1)>1,closeButton=$("officialCloseButton");closeButton.hidden=!!round.officiallyClosedAt;closeButton.disabled=!complete||!!round.officiallyClosedAt;closeButton.textContent=round.officiallyClosedAt?(corrected?`RONDA CORREGIDA V${round.officialVersion}`:"RONDA CERRADA"):"FINALIZAR RONDA";
   if(corrected)document.querySelector(".final-card-head h1").textContent=`TARJETA DIGITAL CORREGIDA · V${round.officialVersion}`;
-  const actions=$("artifactActions"),sendButton=$("sendFinalCard");actions.hidden=true;sendButton.hidden=!round.officiallyClosedAt;$("openOriginalGlobal").classList.toggle("hidden",!corrected);
+  const actions=$("artifactActions"),sendButton=$("sendFinalCard");actions.hidden=!round.officiallyClosedAt;sendButton.hidden=!round.officiallyClosedAt;$("openOriginalGlobal").classList.toggle("hidden",!corrected);
   if(round.officiallyClosedAt){$("personalCardPlayer").innerHTML=round.officialSnapshot.players.map(p=>`<option value="${yds10NameSafe(p.id)}">${yds10NameSafe(p.name)}</option>`).join("");prepareFinalCardShare()}
   else{$("artifactShareStatus").textContent="";resetFinalCardShare()}
   return true;
