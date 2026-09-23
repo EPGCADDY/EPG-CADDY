@@ -1754,3 +1754,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Ajuste de regresión matriz física R60: se actualiza el token de navegación al vocabulario vigente VER RONDAS GUARDADAS; sin cambio funcional.
 
 - Archivo de regresión actualizado: test-lab-r60-physical-matrix.mjs · vocabulario vigente VER RONDAS GUARDADAS.
+
+- R70 LAB: release identificable por PWA; app y service worker pasan de R68 a R70 para que el iPhone detecte actualización. Producción no se toca hasta READY.
