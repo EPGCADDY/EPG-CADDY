@@ -1,0 +1,13 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+const html=fs.readFileSync('index-grupal.html','utf8');
+const code=html.slice(html.indexOf('function segmentSpeech(title,holes){'),html.indexOf('const HOLE_SPEECH_NAMES='));
+const holes=Array.from({length:9},(_,i)=>i+1);
+const round={players:['JESSIE','JAIME','BECKY','JUSTI'].map(name=>({name,holes:Object.fromEntries(holes.map(h=>[h,{gross:5,net:4,par:4}]))}))};
+const omitted=s=>s?.status==='x';
+const ctx={round,requiredHolesForPlayer:(_,hs)=>hs,isOmittedScore:omitted,playerEligibleForResults:(p,hs)=>!hs.some(h=>omitted(p.holes[h])),totals:(p,hs)=>({count:hs.length,gross:hs.reduce((n,h)=>n+p.holes[h].gross,0),net:36,par:36}),versusParSpeech:()=> 'par'};
+vm.createContext(ctx);vm.runInContext(code,ctx);
+let text=ctx.segmentSpeech('Resultados totales de la primera vuelta.',holes);
+for(const p of round.players)assert.equal(text.split(p.name).length-1,1);assert.match(text,/JUSTI\. Gros 45\. Neto 36/);
+round.players[3].holes[2]={status:'x',gross:null};text=ctx.segmentSpeech('Resultados totales de la primera vuelta.',holes);
+for(const p of round.players)assert.equal(text.split(p.name).length-1,1);assert.match(text,/JUSTI\. Sin resultado completo.*Hoyo 2 sin jugar/);assert.doesNotMatch(text,/JUSTI\. Gros/);
+console.log('PASS four-player closure includes Justi; omitted hole names player and reason without inventing total');

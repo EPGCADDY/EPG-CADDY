@@ -17,3 +17,10 @@ const c=setup([{lang:'es-MX',localService:false}]);p=c.api.speak('Primera vuelta
 const d=setup([local]);p=d.api.speak('Resultado');d.spoken[0].onerror({error:'not-allowed'});assert.equal(await p,false);assert.match(d.display.textContent,/bloqueó/);
 const e=setup([]);p=e.api.speak('Cancelado');e.api.cancel();assert.equal(await p,false);assert.equal(e.listeners.size,0);assert.equal(e.timers.size,0);
 console.log('PASS voz local: carga tardía, rechazo remoto, cola, cancelación, inicio bloqueado, resultado visible y recuperación');
+
+const group=setup([local]);const report='Resultados totales de la primera vuelta. '+['JESSIE','JAIME','BECKY','JUSTI'].map(n=>`${n}. Gros 45. Neto 36. Resultado par.`).join(' ');
+let completed=false;const full=group.api.speak(report).then(ok=>{completed=true;return ok});
+let index=0;while(index<group.spoken.length){const u=group.spoken[index++];u.onstart();assert.equal(completed,false);u.onend();}
+assert.equal(await full,true);assert.ok(group.spoken.length>1);assert.equal(group.spoken.map(u=>u.text).join(' '),report);assert.match(group.spoken.map(u=>u.text).join(' '),/JUSTI\. Gros 45\. Neto 36/);
+const interrupted=setup([local]);const stopped=interrupted.api.speak(report);interrupted.spoken[0].onend();interrupted.spoken[1].onerror({error:'interrupted'});assert.equal(await stopped,false);
+console.log('PASS: long four-player report speaks every chunk, including Justi; interruption never reports full success');

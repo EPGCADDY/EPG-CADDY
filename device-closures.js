@@ -12,6 +12,13 @@
  function next(){
   if(busy||!queue.length)return;
   const item=queue.shift();busy=true;last=item.text;
+  const chunks=[];let chunk='';
+  for(const sentence of item.text.split(/(?<=[.!?])\s+/)){
+   if(chunk&&chunk.length+sentence.length+1>180){chunks.push(chunk);chunk=''}
+   chunk+=(chunk?' ':'')+sentence;
+  }
+  if(chunk)chunks.push(chunk);
+  let chunkIndex=0;
   let settled=false,voiceTimer=null,startTimer=null,endTimer=null;
   function clean(){root.clearTimeout(voiceTimer);root.clearTimeout(startTimer);root.clearTimeout(endTimer);synth?.removeEventListener?.('voiceschanged',onVoices)}
   function finish(ok,message){if(settled)return;settled=true;clean();activeFinish=null;activeUtterance=null;busy=false;status(`${item.text} ${message||(ok?'Resultado anunciado.':'No se pudo reproducir. Toca el botón de la vuelta que deseas escuchar.')}`);item.resolve(ok);next()}
@@ -19,12 +26,17 @@
   function play(selected){
    if(settled)return;
    root.clearTimeout(voiceTimer);synth.removeEventListener?.('voiceschanged',onVoices);
-   const utterance=new root.SpeechSynthesisUtterance(item.text);activeUtterance=utterance;
+   const utterance=new root.SpeechSynthesisUtterance(chunks[chunkIndex]);activeUtterance=utterance;
    utterance.voice=selected;utterance.lang=selected.lang;utterance.rate=1;utterance.volume=1;
    status(`${item.text} Preparando voz del dispositivo…`);
    startTimer=root.setTimeout(()=>{synth.cancel();finish(false,'La voz no inició. Toca el botón de la vuelta que deseas escuchar.');},8000);
    utterance.onstart=()=>{root.clearTimeout(startTimer);status(`${item.text} Leyendo resultado…`);endTimer=root.setTimeout(()=>{synth.cancel();finish(false)},120000)};
-   utterance.onend=()=>finish(true);
+   utterance.onend=()=>{
+    if(settled)return;
+    root.clearTimeout(startTimer);root.clearTimeout(endTimer);
+    chunkIndex++;
+    if(chunkIndex<chunks.length){activeUtterance=null;play(selected)}else finish(true);
+   };
    utterance.onerror=event=>finish(false,event?.error==='not-allowed'?'El navegador bloqueó el audio. Toca el botón de la vuelta que deseas escuchar.':undefined);
    try{if(synth.paused)synth.resume();synth.speak(utterance)}catch{finish(false)}
   }

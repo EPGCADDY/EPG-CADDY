@@ -1599,3 +1599,16 @@ Prueba interactiva R48: hoyo1 jugador UNO corregido4→8→4 sin reselección; s
 - R49 local: refresca juegos laterales también tras render Stableford; limpia audio/cancela cola únicamente al cambiar ID de ronda; refresca vista principal antes de clonar tarjeta digital; etiqueta Skins explícita en anotador; La Reunión configured=false y plantilla sin datos oficiales, bloquea abrir tarjeta digital pendiente.
 - Service Worker corrige regex de release aprobada; en HTML antiguo coloca ACTUALIZAR al pie fuera de MENÚ, sin alterar posición de versión actual. Regresión ejecuta función real contra HTML R43 y actual. Conserva sesión y datos.
 - Pruebas nuevas test-lab-round-view-reset.mjs y test-lab-update-recovery.mjs PASS. Build LAB PASS antes de últimos guards; se ejecutará candidato completo. Pendiente publicación R49 LAB y recorridos en navegador; no producción principal.
+
+
+### R49 READY en dominio LAB — revisión interactiva bloqueada por acceso
+Publicado b2c528435528e2a2f65e5951d4aec7b2914b77a0 (árbol idéntico localddcd726). Preview dpl_7WuNs96S7WgB2zWjfKM5eVad9PZC READY; rebuild dominio LAB dpl_C2aB1p8tkpkRQLKJoWT1r1LZpmGb READY con alias golf-sc-gt-lab.vercel.app confirmado. Se mantuvo sesión Vercel abierta; proyecto principal intacto.
+Antes de verificar R49, pestaña LAB redirigió a access.html y solicita ENTRAR COMO PROPIETARIO. No se atribuye causa exacta sin prueba. Requiere autenticación segura del propietario para continuar pruebas reales; no se elude el acceso. Pendientes: recuperación ACTUALIZAR desde versión anterior, cambio de modalidad/tarjeta digital, Skins, audio residual, La Reunión y resto de matriz completa. R49 NO CERTIFICADA integralmente. Pruebas técnicas PASS; revisión visible posterior publicación pendiente. Rollback LAB: dpl_8MxdkZ8GDztr6fyWd7SX2RRGaaKs R48.
+
+Autenticación segura solicitada y enviada; respuesta visible de LAB: NO SE PUDO VERIFICAR LA CUENTA PROPIETARIA. No prueba contraseña incorrecta ni causa concreta. Se detuvo repetición de inicio de sesión tras primer fallo genérico conforme a control-browser. Sesión Vercel abierta.
+
+
+### R50 · reporte propietario: cierre hoyo9 no anunció Justi
+Captura IMG_4742 muestra cuatro gross5 en hoyo9; propietario oyó sólo tres resultados. No hay evidencia de hoyos1–8 ni del audio para atribuir causa final. Código confirma exclusión silenciosa de jugador si cualquier hoyo del segmento es0/statusx. Se sustituye silencio por nombre y hoyo(s) sin jugar, sin inventar total completo.
+Reproducción larga se divide en bloques de hasta180 caracteres por oración; sólo se resuelve éxito después de todos los bloques. Error/interrupción sigue false para rearmar anuncio. Prueba ejecuta transporte real simulado con cuatro nombres incluyendo Justi, conserva texto completo y prueba fallo intermedio. No certifica audibilidad en iPhone.
+Prueba test-lab-closure-all-players.mjs cubre cuatro jugadores completos y Justi con omisión previa. Pendiente publicar LAB y reproducción real; login propietario continúa bloqueado.
