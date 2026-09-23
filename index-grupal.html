@@ -1098,6 +1098,13 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 <style id="gscg-score-entry-hotfix-r69">
 @media(max-width:800px){.round-player-grid-head{margin:0 0 4px!important;min-height:12px!important;align-items:end!important}.round-player-grid-head>strong,.round-player-grid-head>span{font-size:9px!important;line-height:1!important;color:#fff!important;-webkit-text-fill-color:#fff!important;text-align:center!important}.round-player-grid-head .round-keypad-head{grid-column:4/7!important}.round-player-grid>span:not(:empty),.round-player-grid>.round-grid-gross,.round-player-grid>.round-inline-score-key{font-size:20px!important;line-height:1!important}}
 </style>
+
+<style id="gscg-final-card-cleanup-r70">
+#finalCardOverlay #openGlobalCard,#finalCardOverlay #imageGlobalCard,#finalCardOverlay #pdfGlobalCard,#finalCardOverlay #shareGlobalCard,#finalCardOverlay #personalCardPlayer,#finalCardOverlay #openPersonalCard,#finalCardOverlay #imagePersonalCard,#finalCardOverlay #pdfPersonalCard,#finalCardOverlay #sharePersonalCard,#finalCardOverlay #downloadAllCards{display:none!important}
+#finalCardOverlay #artifactActions{grid-template-columns:minmax(0,1fr)!important}
+#finalCardOverlay #sendFinalCard{font-size:0!important}
+#finalCardOverlay #sendFinalCard::after{content:"COMPARTIR TARJETA";font:900 11px/1.15 Arial,sans-serif;letter-spacing:.35px}
+</style>
 </head>
 <body>
 
