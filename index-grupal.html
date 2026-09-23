@@ -2459,7 +2459,7 @@ function recordScore(a){
   const checked=validateEntry(a);if(!checked.ok)return checked;
   const retroactive=isRetroactiveScore(checked.p,checked.hole);
   const r=saveEntry(a);if(!r.ok)return r;
-  const closure=round.provisional?"":closureSpeechIfDue();const completedNow=isRoundComplete();if(completedNow&&!round.endedAt)stopRoundClock("score_complete");persist();if(completedNow)archiveRoundSnapshot(round);render();if(!completedNow)scheduleRoundTimerIdleShutdown();
+  const closure=round.provisional?"":closureSpeechIfDue();persist();render();if(isRoundComplete())stopRoundClock("score_complete");else scheduleRoundTimerIdleShutdown();
   return{ok:true,speech:"",closure,retroactive:retroactive||r.replacedOmission};
 }
 function recordScores(a){
@@ -2478,7 +2478,7 @@ function recordScores(a){
     const r=saveEntry(item.raw);if(!r.ok)return r;
     if(r.replacedOmission)retroactive=true;
   }
-  const closure=round.provisional?"":closureSpeechIfDue();const completedNow=isRoundComplete();if(completedNow&&!round.endedAt)stopRoundClock("score_complete");persist();if(completedNow)archiveRoundSnapshot(round);render();
+  const closure=round.provisional?"":closureSpeechIfDue();persist();render();
   return{ok:true,speech:"",closure,retroactive};
 }
 function editDistance(a,b){a=String(a||"");b=String(b||"");const dp=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=1;j<=b.length;j++)dp[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)dp[i][j]=Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return dp[a.length][b.length]}
