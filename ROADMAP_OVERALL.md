@@ -1692,3 +1692,9 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - CAMPO y MODALIDAD se muestran primero.
 - ANOTADOR + ANTERIOR/HOYO/SIGUIENTE quedan inmediatamente debajo, invirtiendo el orden anterior.
 - Sin cambios funcionales en captura de scores, navegación ni cálculo.
+
+
+## R72 · 2026-09-23 · limpieza MIS RONDAS GUARDADAS
+- Se elimina visualmente el bloque blanco de acciones redundantes en MIS RONDAS GUARDADAS: ABRIR/IMAGEN/PDF GLOBAL, selector de jugador, ABRIR/IMAGEN/PDF PERSONAL, PDF TODAS y ESTADÍSTICAS.
+- Se colapsa por completo el espacio del bloque para que el contador quede seguido de la tarjeta de ronda.
+- Release sincronizado como R72 en app, Service Worker, cachés y prueba de release.
