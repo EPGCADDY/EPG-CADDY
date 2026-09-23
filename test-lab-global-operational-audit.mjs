@@ -45,7 +45,8 @@ assert(manual.includes('id="portada"')&&manual.includes('id="indice"')&&manual.i
 for(const image of ["CAMPO_MODALIDAD_REAL.webp","REGISTRO_ATAJOS_REAL.webp","SCORECARD_CONTROL_REAL.webp","FOURBALL_ATAJOS_REAL.webp","MONITOR_TIEMPO_REAL_LAB.png","APP_CAMPEONATO_REGISTRO.png","APP_CAMPEONATO_SCORECARD.png"])assert(manual.includes(image)||fs.existsSync("docs/manual/current/"+image),"Manual vigente: falta pantalla real "+image);
 assert(manual.includes("Registro de jugadores + MENÚ")&&manual.includes("Four Ball corregido + MENÚ"),"Manual restaurado: falta cobertura MENÚ/Four Ball");
 
-assert(sw.includes('ensureApprovedShell().then(()=>self.clients.claim())'),"Service Worker debe conservar actualización explícita hasta que el usuario pulse ACTUALIZAR");
+assert(sw.includes('await self.clients.claim()'),"Service Worker debe tomar control inmediato de la versión nueva");
+assert(sw.includes('client.navigate(url.href)'),"Service Worker debe sacar a clientes instalados de una versión vieja");
 assert(app.includes('CENTRO DE TORNEOS'),"Inicio debe mostrar CENTRO DE TORNEOS");
 assert(!app.includes('body:has(#finalCardOverlay.visible) #gscShortcutsButton'),"Tarjeta Digital debe conservar MENÚ");
 console.log("PASS AUDITORÍA GLOBAL LAB · 5 MODALIDADES ACTIVAS · TARJETAS GLOBAL/PERSONAL · TORNEOS · MENÚ · PWA · MANUAL R4");
