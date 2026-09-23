@@ -33,7 +33,7 @@ assert.doesNotMatch(html,/function openFreshStablefordSetup\(\)[\s\S]*?localStor
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_ACTIVE_KEY\);localStorage\.removeItem\(STORAGE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(ROUND_ARCHIVE_KEY\)/);
 assert.doesNotMatch(html,/localStorage\.removeItem\(STABLEFORD_SERIES_KEY\)/);
-assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\|\|sfEmergency\?openFreshStablefordSetup\(\):openNewRoundDraft\(\)\)/);
+assert.match(html,/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openFreshStablefordSetup\(\):openNewRoundDraft\(\)\)/);
 assert.match(html,/if\(document\.readyState==="loading"\)window\.addEventListener\("DOMContentLoaded",openFreshStablefordSetup,\{once:true\}\);\s*else openFreshStablefordSetup\(\);/);
 assert.match(html,/if\(!GSCStableford\.isAllowedCourse\(stablefordSetupCourseKey\)\)return fail\("SELECCIONA EL CAMPO"\)/);
 assert.match(html,/if\(!cfg\)return fail\("SELECCIONA SENIOR O SÚPER SENIOR"\)/);

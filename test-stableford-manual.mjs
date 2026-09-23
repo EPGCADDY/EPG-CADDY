@@ -9,7 +9,7 @@ assert.match(h,/data-score-key/);
 assert.doesNotMatch(h,/OK · SIGUIENTE/);
 assert.doesNotMatch(h,/window\.prompt\(`\$\{player\.name\} · HOYO \$\{hole\} · GROSS`/);
 assert.match(h,/function applyManualScoreEntries\(entries\)/);
-assert.match(h,/applyLiteralScores\(\{matched:true,ok:true,entries\}\)/);
+assert.match(h,/applyLiteralScores\(\{matched:true,ok:true,entries\},\{keepManualHole:true\}\)/);
 assert.doesNotMatch(h,/if\(result\.closure\)speakClosure\(result\.closure\)/);
 assert.match(h,/points:GSCStableford\.pointsFor\(v\.gross,PAR\[v\.hole-1\]\)/);
 assert.doesNotMatch(h,/stableford-manual-cell/);

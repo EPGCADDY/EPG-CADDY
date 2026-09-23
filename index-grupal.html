@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="CORRECTION-STAYS-ON-PLAYER-UNTIL-ENTER-20260922-R47">
+  <meta name="gscg-release" content="LAB-KEYPAD-CORRECTION-20260922-R48">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -695,6 +695,8 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
 /* Double each existing hit area, preserving the visible microphone size. */
 #setupMicWrap .mic-hit{inset:calc(-20.710678% - 36.769553px);touch-action:none}
 #headerMicWrap .mic-hit{inset:calc(-20.710678% - 14.142136px);touch-action:none}
+@media(max-width:1000px){#cardLibraryOverlay .card-library-panel{margin-top:calc(env(safe-area-inset-top,0px) + 64px)}}
+.scorecard .yds10-name{position:static;transform:none;margin:2px auto 0}
 </style>
 <style id="gscg-mobile-modal-isolation-v363">
 body.gsc-setup-open .live-support-link,
@@ -2083,11 +2085,12 @@ const VOICE_HEALTH_EVENTS=new Set(["connection_started","connection_ready","conn
 
 async function speakClosure(text){
  const targetRound=round;
+ const announcementOrder=playedSegmentOrder();
  const ok=await window.GSCDeviceClosures.speak(text);
  if(!ok){
    ensureAnnouncedState();
-   if(/Resultados totales de la primera vuelta\./.test(text)){targetRound.announced.firstSegment=false;targetRound.announced.front=false}
-   if(/Resultados de la segunda vuelta\./.test(text)){targetRound.announced.secondSegment=false;targetRound.announced.back=false}
+   if(/Resultados totales de la primera vuelta\./.test(text)){targetRound.announced[announcementOrder.first===FRONT?"firstSegment":"secondSegment"]=false;targetRound.announced.front=false}
+   if(/Resultados de la segunda vuelta\./.test(text)){targetRound.announced[announcementOrder.first===BACK?"firstSegment":"secondSegment"]=false;targetRound.announced.back=false}
    if(/Resultados totales\./.test(text))targetRound.announced.complete=false;
    if(round===targetRound)persist();
  }
@@ -2401,12 +2404,12 @@ function closureSpeechIfDue(){
   }
   if(!round.announced.firstSegment&&segmentComplete(order.first)){
     round.announced.firstSegment=true;
-    const speech=segmentSpeech("Resultados totales de la primera vuelta.",order.first);
+    const speech=segmentSpeech(order.first===FRONT?"Resultados totales de la primera vuelta.":"Resultados de la segunda vuelta.",order.first);
     if(speech)out.push(speech);
   }
   if(!round.announced.secondSegment&&segmentComplete(order.second)){
     round.announced.secondSegment=true;
-    const speech=segmentSpeech("Resultados de la segunda vuelta.",order.second);
+    const speech=segmentSpeech(order.second===FRONT?"Resultados totales de la primera vuelta.":"Resultados de la segunda vuelta.",order.second);
     if(speech)out.push(speech);
   }
   if(!round.announced.complete&&segmentComplete(ALL)){
@@ -2810,10 +2813,10 @@ function grossGolfSpeech(score){
   }
   return lines.join(" ");
 }
-function applyLiteralScores(parsed){
+function applyLiteralScores(parsed,{keepManualHole=false}={}){
   // El registro normal de scores sigue siendo silencioso. La única excepción
   // es un cierre automático de vuelta/ronda ya calculado por recordScore(s).
-  const manual=document.getElementById("roundManualEntry"),previousHole=manual?.dataset?.hole,targetHole=operationalTargetHoleForEntries(parsed.entries);
+  const manual=document.getElementById("roundManualEntry"),previousHole=manual?.dataset?.hole,targetHole=keepManualHole?Number(parsed.entries.at(-1)?.hole):operationalTargetHoleForEntries(parsed.entries);
   if(manual&&Number.isInteger(targetHole))manual.dataset.hole=String(targetHole);
   const result=parsed.entries.length===1?recordScore(parsed.entries[0]):recordScores({entries:parsed.entries});
   if(!result.ok&&manual){if(previousHole===undefined)delete manual.dataset.hole;else manual.dataset.hole=previousHole}
@@ -3603,7 +3606,7 @@ function roundGridStatus(message){const target=document.querySelector("#roundGri
 function manualScoreEntry(player,hole,value){const tokens=normalizeSpeech(value).split(" ").filter(Boolean),score=readOperationalScoreAt(tokens,0,hole);return score&&score.next===tokens.length?{player,hole,gross:score.gross,status:score.status||null}:null}
 function applyManualScoreEntries(entries){
   if(!entries.length)return roundGridStatus("INGRESA AL MENOS UN SCORE");
-  const result=applyLiteralScores({matched:true,ok:true,entries});
+  const result=applyLiteralScores({matched:true,ok:true,entries},{keepManualHole:true});
   if(!result.ok)return roundGridStatus("SCORE INVÁLIDO");
   return result
 }
@@ -3633,7 +3636,7 @@ function ensureRoundScoreKeypad(){
   overlay.id="roundScoreKeypadOverlay";
   overlay.setAttribute("aria-hidden","true");
   overlay.style.cssText="position:fixed;inset:0;z-index:220;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.24);padding:6px max(8px,env(safe-area-inset-right)) max(6px,calc(env(safe-area-inset-bottom) + 4px)) max(8px,env(safe-area-inset-left));pointer-events:auto";
-  const SCORE_KEYPAD_KEYS=["1","2","3","4","5","6","7","8","9","X","0","⌫"];
+  const SCORE_KEYPAD_KEYS=["1","2","3","4","5","6","7","8","9","0","X"];
   if(SCORE_KEYPAD_KEYS[0]!=="1")throw new Error("SCORE_KEYPAD_REQUIRES_HOLE_IN_ONE");
   overlay.innerHTML=`<section role="dialog" aria-modal="true" aria-label="Teclado de score" style="width:min(320px,88vw);max-height:42vh;border:1.5px solid #31ff00;border-radius:14px;background:#050705;padding:8px;box-shadow:0 10px 28px rgba(0,0,0,.48)">
     <div id="roundScoreKeypadTitle" style="color:#31ff00;text-align:center;font-size:11px;font-weight:900;margin:0 0 5px;line-height:1.1"></div>
@@ -3675,7 +3678,7 @@ function ensureRoundKeyTarget(hole){
     if(player){
       if(manual)manual.dataset.activePlayerId=player.id;
       roundScoreKeypadState={playerId:player.id,hole:h,value:""};
-      setTimeout(()=>setActiveScoreVisual(player.id),0);
+      setActiveScoreVisual(player.id);
     }
   }
   return player;
@@ -3739,27 +3742,35 @@ function roundScoreKeypadPress(key){
   const player=ensureRoundKeyTarget(selectedHole);
   if(!player){roundGridStatus("SELECCIONA UN JUGADOR PARA CORREGIR");return false}
   const hole=selectedHole;
+  if(round.officiallyClosedAt)return false;
   if(contract.action==="delete"){
+    roundScoreKeypadState={playerId:player.id,hole,value:"",correctionMode:true};
+    if(manual)manual.dataset.activePlayerId=player.id;
     const removed=removeManualScore(player,hole);
     if(!removed){roundGridStatus("NO HAY SCORE PARA BORRAR");return false}
     if(manual)manual.dataset.activePlayerId=player.id;
     roundScoreKeypadState={playerId:player.id,hole,value:"",correctionMode:true};
-    setTimeout(()=>setActiveScoreVisual(player.id),0);
+    setActiveScoreVisual(player.id);
     return true;
   }
   const entry=contract.action==="omit"
     ?{player:player.id,hole,gross:null,status:"x"}
     :{player:player.id,hole,gross:contract.gross,status:null};
   if(contract.action==="score"&&(!Number.isInteger(entry.gross)||entry.gross<1||entry.gross>9))return false;
-  const correctionMode=roundScoreKeypadState?.correctionMode===true;
+  const correctionMode=roundScoreKeypadState?.correctionMode===true||operationalEntryRecorded(player.holes?.[hole]);
   const players=scoreKeypadPlayerList(hole),index=players.findIndex(p=>p.id===player.id);
   const nextPlayer=!correctionMode&&index>=0?players.slice(index+1).find(p=>!operationalEntryRecorded(p?.holes?.[hole]))||null:null;
   if(manual)manual.dataset.activePlayerId=correctionMode?player.id:(nextPlayer?.id||"");
   roundScoreKeypadState=correctionMode
     ?{playerId:player.id,hole,value:"",correctionMode:true}
     :(nextPlayer?{playerId:nextPlayer.id,hole,value:"",correctionMode:false}:null);
-  const result=applyManualScoreEntries([entry]);if(!result?.ok)return false;
-  setTimeout(()=>{
+  const result=applyManualScoreEntries([entry]);
+  if(!result?.ok){
+    if(manual)manual.dataset.activePlayerId=player.id;
+    roundScoreKeypadState={playerId:player.id,hole,value:"",correctionMode};
+    setActiveScoreVisual(player.id);return false;
+  }
+  {
     const refreshed=document.getElementById("roundManualEntry");
     if(correctionMode){
       if(refreshed)refreshed.dataset.activePlayerId=player.id;
@@ -3774,7 +3785,7 @@ function roundScoreKeypadPress(key){
       roundScoreKeypadState=null;
       clearActiveScoreVisual();
     }
-  },0);
+  }
   return true;
 }
 function commitRoundScoreKeypad(){return false}
@@ -3810,7 +3821,7 @@ function renderRoundManualEntry(){
   manual.querySelectorAll(".round-grid-gross").forEach(button=>{
     button.onclick=event=>{event.preventDefault();openRoundScoreKeypad(button.dataset.playerId,selectedHole)};
   });
-  if(manual.dataset.activePlayerId)setTimeout(()=>setActiveScoreVisual(manual.dataset.activePlayerId),0);
+  if(manual.dataset.activePlayerId)setActiveScoreVisual(manual.dataset.activePlayerId);
   manual.querySelectorAll(".round-inline-score-key").forEach(button=>{
     button.onclick=event=>{
       event.preventDefault();
@@ -3890,7 +3901,7 @@ $("addPlayerButton").addEventListener("click",()=>isStablefordRound()?openStable
 $("scorecard").addEventListener("input",e=>{const input=e.target.closest?.("[data-provisional-player]");if(!input||!round.provisional)return;const p=round.players.find(x=>x.id===input.dataset.provisionalPlayer);if(p)p.name=String(input.value||"").toUpperCase().trimStart()||`JUGADOR ${p.slot}`});
 $("scorecard").addEventListener("change",e=>{if(!round.provisional)return;const name=e.target.closest?.("[data-provisional-player]"),hcp=e.target.closest?.("[data-provisional-hcp]"),tee=e.target.closest?.("[data-provisional-tee]"),control=name||hcp||tee;if(!control)return;const id=name?.dataset.provisionalPlayer||hcp?.dataset.provisionalHcp||tee?.dataset.provisionalTee,p=round.players.find(x=>x.id===id);if(!p)return;if(name){const value=String(name.value||"").trim().toUpperCase();p.name=value||`JUGADOR ${p.slot}`;name.value=value}if(hcp){const value=String(hcp.value||"").trim(),number=Number(value),valid=value!==""&&Number.isSafeInteger(number);p.provisionalHandicapProvided=valid;p.handicap=valid?number:0}if(tee){const value=normalizeTee(tee.value);p.provisionalTeeProvided=!!value;p.tee=value||"Blanco"}recomputePlayerScores(p);persist();render()});
 $("previousRoundButton").addEventListener("click",()=>activatePreviousOperationalRound());$("previousRoundSetupButton").addEventListener("click",()=>activatePreviousOperationalRound("general",true));$("previousStablefordRoundButton").addEventListener("click",()=>activatePreviousOperationalRound("stableford",true));
-$("newRoundButton").addEventListener("click",()=>isStablefordRound()||sfEmergency?openFreshStablefordSetup():openNewRoundDraft());$("cancelSetup").addEventListener("click",closeSetup);$("backSetup").addEventListener("click",()=>{;showStep1();$("setupStatus").textContent=draftPlayers.length?"CORRIGE CON: CORRIJO / CORRIGIENDO / CORREGIR · LUEGO PRESIONA OK":""});
+$("newRoundButton").addEventListener("click",()=>isStablefordRound()?openFreshStablefordSetup():openNewRoundDraft());$("cancelSetup").addEventListener("click",closeSetup);$("backSetup").addEventListener("click",()=>{;showStep1();$("setupStatus").textContent=draftPlayers.length?"CORRIGE CON: CORRIJO / CORRIGIENDO / CORREGIR · LUEGO PRESIONA OK":""});
 $("detectedBody").addEventListener("input",e=>{
   const name=e.target.closest?.("[data-draft-name]"),hcp=e.target.closest?.("[data-draft-hcp]"),country=e.target.closest?.("[data-draft-country-code]"),whatsapp=e.target.closest?.("[data-draft-whatsapp]");
   const target=name||hcp||country||whatsapp;if(!target)return;

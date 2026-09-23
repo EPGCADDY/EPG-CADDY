@@ -5,11 +5,11 @@ const source=fs.readFileSync(new URL('./index-grupal.html',import.meta.url),'utf
 
 assert.match(source,/function playedSegmentOrder\(\)/);
 assert.match(source,/const first=firstHole>=10\?BACK:FRONT/);
-assert.match(source,/segmentSpeech\("Resultados totales de la primera vuelta\.",order\.first\)/);
-assert.match(source,/segmentSpeech\("Resultados de la segunda vuelta\.",order\.second\)/);
+assert.match(source,/segmentSpeech\(order\.first===FRONT\?"Resultados totales de la primera vuelta\.":"Resultados de la segunda vuelta\.",order\.first\)/);
+assert.match(source,/segmentSpeech\(order\.second===FRONT\?"Resultados totales de la primera vuelta\.":"Resultados de la segunda vuelta\.",order\.second\)/);
 assert.match(source,/segmentSpeech\("Resultados totales\.",ALL\)/);
 
-const secondIdx=source.indexOf('segmentSpeech("Resultados de la segunda vuelta.",order.second)');
+const secondIdx=source.indexOf('segmentSpeech(order.second===FRONT?');
 const totalIdx=source.indexOf('segmentSpeech("Resultados totales.",ALL)');
 assert.ok(secondIdx>=0&&totalIdx>secondIdx,'second-nine announcement must precede 18-hole total');
 

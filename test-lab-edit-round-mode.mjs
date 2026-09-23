@@ -8,3 +8,12 @@ assert(app.includes('round.mode=draftRoundMode;round.tournament=draftTournament;
 assert(app.includes('$("setupStatus").textContent="MODALIDAD EDITABLE · LOS SCORES EXISTENTES SE CONSERVAN";'),"Falta confirmación de conservación de scores al cambiar modalidad");
 assert(!app.includes("PARA CAMBIAR MODALIDAD DESPUÉS DE REGISTRAR SCORES, INICIA UNA NUEVA RONDA"),"No debe bloquear modalidad cuando ya existen scores");
 console.log("PASS LAB modality change with recorded scores preserved");
+
+// A previous Stableford entry URL must not override the current round mode.
+const newRoundRoute=app.match(/\$\("newRoundButton"\)\.addEventListener\("click",\(\)=>((?:isStablefordRound)[^;]+)\);/);
+assert(newRoundRoute,"Missing new-round control");
+for(const activeStableford of [false,true])for(const emergencyEntry of [false,true]){
+  const route=new Function("isStablefordRound","sfEmergency","openFreshStablefordSetup","openNewRoundDraft",`return ${newRoundRoute[1]}`);
+  assert.equal(route(()=>activeStableford,emergencyEntry,()=>"stableford",()=>"general"),activeStableford?"stableford":"general");
+}
+console.log("PASS new round follows active mode, independent of old Stableford entry URL");

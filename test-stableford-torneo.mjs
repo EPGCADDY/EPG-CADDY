@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import vm from "node:vm";
 const html=fs.readFileSync(new URL("./stableford-torneo.html",import.meta.url),"utf8");
 assert.match(html,/GOLF SCORE CARD GT · STABLEFORD/);
 assert.match(html,/CLASIFICACIÓN CENTROAMERICANA · MEJORES 3 DE 4/);
@@ -14,7 +15,32 @@ assert.match(html,/PTS OUT/);
 assert.match(html,/GROSS IN/);
 assert.match(html,/PTS IN/);
 assert.match(html,/MEJORES 3/);
-assert.match(html,/raw==="X"/);
+// Exercise the actual independent card handler and shared contract.
+const status={textContent:""};
+let persisted=null, renders=0;
+const ctx={state:{holes:{}},KEY:"test",Number,JSON,
+  localStorage:{setItem(key,value){persisted=JSON.parse(value)}},
+  render(){renders++}, $(id){assert.equal(id,"status");return status},
+  entry(p,h){return ctx.state.holes[p]?.[h]},
+  inputValue(e){return e?.status==="x"?"0":String(e?.gross??"")}};
+ctx.window=ctx;
+vm.createContext(ctx);
+vm.runInContext(fs.readFileSync(new URL("./score-entry-contract.js",import.meta.url),"utf8"),ctx);
+const handler=html.match(/function onGross\(e\)\{[^\n]+/);
+assert.ok(handler,"Missing actual score handler");
+vm.runInContext(handler[0],ctx);
+const enter=value=>{const e={target:{dataset:{p:"player",h:"3"},value}};ctx.onGross(e);return e.target.value};
+for(const score of [1,2,3,4,5,6,7,8,9,10,18,30]){
+  enter(String(score));assert.equal(persisted.holes.player[3].gross,score);
+}
+for(const invalid of ["31","-1","1.5","oops"]){
+  const before=renders;assert.equal(enter(invalid),"30");
+  assert.equal(ctx.state.holes.player[3].gross,30);assert.equal(renders,before);
+  assert.equal(status.textContent,"SCORE INVÁLIDO");
+}
+enter("0");assert.equal(persisted.holes.player[3].status,"x");assert.equal(persisted.holes.player[3].gross,null);
+enter("X");assert.equal(persisted.holes.player[3],undefined);
+enter("4");enter("");assert.equal(persisted.holes.player[3],undefined);
 assert.match(html,/GSCStableford\.pointsFor|GSCStableford\.holeResult/);
 assert.match(html,/state\.players=.*slice\(0,4\)/s);
 assert.match(html,/NUEVA RONDA LIMPIA/);
