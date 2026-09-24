@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PRODUCTION-20260923-R73">
+  <meta name="gscg-release" content="PRODUCTION-20260923-R75">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -590,7 +590,7 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
 .final-card-head h1{margin:0;color:var(--lime);font-size:24px;line-height:1.1;text-align:center;letter-spacing:.8px}
 .final-card-head>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%}
 .final-card-head button{width:100%;min-width:0;height:var(--premium-control);margin:0;padding:0 10px;border:1px solid var(--premium-line-bright);border-radius:12px;background:#080a0a;color:#fff;font:900 11px/1.15 Arial,sans-serif;letter-spacing:.35px}
-.final-card-head #shareFinalLiveButton,.final-card-head #sendFinalCard{border-color:var(--lime);color:var(--lime)}
+.final-card-head #sendFinalCard,.final-card-head #sendFinalCardPlayers{border-color:var(--lime);color:var(--lime)}
 .final-card-head #officialCloseButton:not(:disabled){border-color:#ff4545;color:#ff6b6b}
 .final-card-head button:disabled{border-color:#343a3a;color:#777;background:#050606;opacity:1}
 .final-card-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 12px}
@@ -1100,7 +1100,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 </style>
 
 <style id="gscg-final-card-cleanup-r70">
-#finalCardOverlay #openGlobalCard,#finalCardOverlay #imageGlobalCard,#finalCardOverlay #pdfGlobalCard,#finalCardOverlay #shareGlobalCard,#finalCardOverlay #personalCardPlayer,#finalCardOverlay #openPersonalCard,#finalCardOverlay #imagePersonalCard,#finalCardOverlay #pdfPersonalCard,#finalCardOverlay #sharePersonalCard,#finalCardOverlay #downloadAllCards{display:none!important}
+#finalCardOverlay #openGlobalCard,#finalCardOverlay #imageGlobalCard,#finalCardOverlay #pdfGlobalCard,#finalCardOverlay #shareGlobalCard,#finalCardOverlay #personalCardPlayer,#finalCardOverlay #openPersonalCard,#finalCardOverlay #imagePersonalCard,#finalCardOverlay #pdfPersonalCard,#finalCardOverlay #sharePersonalCard,#finalCardOverlay #downloadAllCards,#finalCardOverlay #openOfficialCorrection{display:none!important}
 #finalCardOverlay #artifactActions{grid-template-columns:minmax(0,1fr)!important}
 #finalCardOverlay #sendFinalCard{font-size:0!important}
 #finalCardOverlay #sendFinalCard::after{content:"COMPARTIR TARJETA";font:900 11px/1.15 Arial,sans-serif;letter-spacing:.35px}
@@ -1140,8 +1140,8 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 
 <div class="overlay" id="finalCardOverlay" aria-hidden="true">
   <section class="final-card-panel">
-    <div class="final-card-head"><h1>MI TARJETA FINAL</h1><div><button id="shareFinalLiveButton" type="button">COMPARTIR MI RONDA EN VIVO</button><button id="officialCloseButton">FINALIZAR RONDA</button><button id="sendFinalCard" hidden>ENVIAR TARJETA DIGITAL</button><button class="screen-back-button" id="closeFinalCard">ATRÁS</button></div></div>
-    <div class="artifact-actions" id="artifactActions" hidden><button id="openGlobalCard">ABRIR GLOBAL</button><button id="imageGlobalCard">IMAGEN GLOBAL</button><button id="pdfGlobalCard">PDF GLOBAL</button><button id="shareGlobalCard">CORREO / WHATSAPP GLOBAL</button><select id="personalCardPlayer" aria-label="Jugador de tarjeta personal"></select><button id="openPersonalCard">ABRIR PERSONAL</button><button id="imagePersonalCard">IMAGEN PERSONAL</button><button id="pdfPersonalCard">PDF PERSONAL</button><button id="sharePersonalCard">CORREO / WHATSAPP PERSONAL</button><button id="downloadAllCards">PDF TODAS</button><button id="openOfficialCorrection">CORREGIR RONDA</button><button class="hidden" id="openOriginalGlobal">ABRIR ORIGINAL</button></div>
+    <div class="final-card-head"><h1>MI TARJETA FINAL</h1><div><button id="officialCloseButton">FINALIZAR RONDA</button><button id="sendFinalCard" hidden>COMPARTIR TARJETA</button><button id="sendFinalCardPlayers" type="button" hidden disabled>ENVIAR A JUGADORES</button><button class="screen-back-button" id="closeFinalCard">ATRÁS</button></div></div>
+    <div class="artifact-actions" id="artifactActions" hidden><button id="openGlobalCard">ABRIR GLOBAL</button><button id="imageGlobalCard">IMAGEN GLOBAL</button><button id="pdfGlobalCard">PDF GLOBAL</button><button id="shareGlobalCard">CORREO / WHATSAPP GLOBAL</button><select id="personalCardPlayer" aria-label="Jugador de tarjeta personal"></select><button id="openPersonalCard">ABRIR PERSONAL</button><button id="imagePersonalCard">IMAGEN PERSONAL</button><button id="pdfPersonalCard">PDF PERSONAL</button><button id="sharePersonalCard">CORREO / WHATSAPP PERSONAL</button><button id="downloadAllCards">PDF TODAS</button><button class="hidden" id="openOriginalGlobal">ABRIR ORIGINAL</button></div>
     <div class="artifact-share-status" id="artifactShareStatus" role="status" aria-live="polite"></div>
     <div class="final-card-meta"><span id="finalDate">—</span><span>EL PULTÉ GOLF · PAR 72</span><span id="finalTournament"></span><span id="finalPlayers">—</span></div>
     <div class="final-card-scroll-hint">DESLIZA PARA VER TODOS LOS HOYOS</div>
@@ -2929,17 +2929,17 @@ function playerBlock(p,slot){
 function isRoundComplete(){return !!(!round.provisional&&round.configured&&round.players.length&&round.players.every(p=>requiredHolesForPlayer(p,ALL).every(h=>{const s=p.holes[h];return!!s&&!isOmittedScore(s)&&Number.isInteger(s.gross)})))}
 let finalCardPreparedShare=null,finalCardPreparingId="";
 function finalCardShareIdentity(){return`${round?.id||""}:${round?.officialSnapshot?.sha256||""}:${round?.officialVersion||1}`}
-function resetFinalCardShare(){finalCardPreparedShare=null;finalCardPreparingId="";const button=$("sendFinalCard");if(button){button.disabled=false;button.textContent="ENVIAR TARJETA DIGITAL"}}
+function resetFinalCardShare(){finalCardPreparedShare=null;finalCardPreparingId="";const button=$("sendFinalCard");if(button){button.disabled=false;button.textContent="COMPARTIR TARJETA"}}
 async function prepareFinalCardShare(){
   if(!round?.officiallyClosedAt||!round?.officialSnapshot){resetFinalCardShare();return false}
   const id=finalCardShareIdentity(),button=$("sendFinalCard"),status=$("artifactShareStatus");
-  if(finalCardPreparedShare?.id===id){button.disabled=false;button.textContent="ENVIAR TARJETA DIGITAL";status.textContent="TARJETA LISTA PARA ENVIAR";return true}
+  if(finalCardPreparedShare?.id===id){button.disabled=false;button.textContent="COMPARTIR TARJETA";status.textContent="TARJETA LISTA PARA ENVIAR";return true}
   if(finalCardPreparingId===id)return false;
   finalCardPreparingId=id;finalCardPreparedShare=null;button.disabled=true;button.textContent="PREPARANDO TARJETA…";status.textContent="PREPARANDO IMAGEN PARA ENVIAR…";
   try{
     const item=officialArtifacts().global,blob=await window.GSCCardFileExport.png(item);
     if(id!==finalCardShareIdentity())return false;
-    finalCardPreparedShare={id,item,blob};button.disabled=false;button.textContent="ENVIAR TARJETA DIGITAL";status.textContent="TARJETA LISTA PARA ENVIAR";return true
+    finalCardPreparedShare={id,item,blob};button.disabled=false;button.textContent="COMPARTIR TARJETA";status.textContent="TARJETA LISTA PARA ENVIAR";return true
   }catch(error){console.error("Preparación de tarjeta digital:",error);if(id===finalCardShareIdentity()){button.disabled=false;button.textContent="REINTENTAR PREPARACIÓN";status.textContent="NO SE PUDO PREPARAR LA TARJETA · TOCA PARA REINTENTAR"}return false}
   finally{if(finalCardPreparingId===id)finalCardPreparingId=""}
 }
@@ -2957,7 +2957,7 @@ function renderFinalDigitalCard(){
   document.querySelector(".final-card-head h1").textContent=complete?"TARJETA DIGITAL FINAL":"TARJETA DIGITAL";
   document.querySelector(".final-card-readonly").textContent=complete?"TARJETA FINAL · SOLO CONSULTA · LOS DATOS DE LA RONDA NO SE MODIFICAN DESDE ESTA VISTA":"TARJETA DIGITAL · RONDA EN CURSO · SOLO CONSULTA";
   const corrected=Number(round.officialVersion||1)>1,closeButton=$("officialCloseButton");closeButton.hidden=!!round.officiallyClosedAt;closeButton.disabled=!complete||!!round.officiallyClosedAt;closeButton.textContent=round.officiallyClosedAt?(corrected?`RONDA CORREGIDA V${round.officialVersion}`:"RONDA CERRADA"):"FINALIZAR RONDA";
-  if(corrected)document.querySelector(".final-card-head h1").textContent=`TARJETA DIGITAL CORREGIDA · V${round.officialVersion}`;
+  if(corrected)document.querySelector(".final-card-head h1").textContent=`TARJETA DIGITAL CORREGIDA · V${round.officialVersion}`;syncFinalCardPlayerSend();
   const actions=$("artifactActions"),sendButton=$("sendFinalCard");actions.hidden=!round.officiallyClosedAt;sendButton.hidden=!round.officiallyClosedAt;$("openOriginalGlobal").classList.toggle("hidden",!corrected);
   if(round.officiallyClosedAt){$("personalCardPlayer").innerHTML=round.officialSnapshot.players.map(p=>`<option value="${yds10NameSafe(p.id)}">${yds10NameSafe(p.name)}</option>`).join("");prepareFinalCardShare()}
   else{$("artifactShareStatus").textContent="";resetFinalCardShare()}
@@ -2976,7 +2976,7 @@ async function shareOpenedArtifact(token,targetWindow=window){
   if(button){button.disabled=true;button.textContent="PREPARANDO…"}
   try{
     const blob=await window.GSCCardFileExport.png(item),FileCtor=targetWindow.File||File,file=new FileCtor([blob],String(item.name||"tarjeta-global.html").replace(/\.html?$/i,".png"),{type:"image/png"}),share=targetWindow.navigator?.share?.bind(targetWindow.navigator),payload={title:"Tarjeta digital Golf Score Card GT",text:"Tarjeta digital Golf Score Card GT",files:[file]};
-    if(share&&(!targetWindow.navigator.canShare||targetWindow.navigator.canShare(payload))){if(button)button.textContent="ELIGE WHATSAPP";await share(payload);if(button){button.disabled=false;button.textContent="ENVIAR TARJETA DIGITAL"}return true}
+    if(share&&(!targetWindow.navigator.canShare||targetWindow.navigator.canShare(payload))){if(button)button.textContent="ELIGE WHATSAPP";await share(payload);if(button){button.disabled=false;button.textContent="COMPARTIR TARJETA"}return true}
     const url=targetWindow.URL.createObjectURL(blob),link=targetWindow.document.createElement("a");link.href=url;link.download=file.name;targetWindow.document.body.appendChild(link);link.click();link.remove();targetWindow.setTimeout(()=>targetWindow.URL.revokeObjectURL(url),3000);if(button){button.disabled=false;button.textContent="IMAGEN DESCARGADA"}return false
   }catch(error){if(button){button.disabled=false;button.textContent=error?.name==="AbortError"?"ENVIAR TARJETA DIGITAL":"REINTENTAR ENVÍO"}return false}
 }
@@ -3043,12 +3043,43 @@ function shareOfficialArtifactImage(){
   if(!prepared||prepared.id!==id){prepareFinalCardShare();return Promise.resolve({ok:false,state:"PREPARING"})}
   const {item,blob}=prepared,title=item.kind==="personal"?"Tarjeta oficial personal":"Tarjeta oficial global",name=String(item.name||"tarjeta-digital.html").replace(/\.html?$/i,".png"),file=new File([blob],name,{type:"image/png"}),payload={title,text:officialArtifactShareText(item),files:[file]};
   button.disabled=true;button.textContent="ABRIENDO OPCIONES…";
-  const finish=(result,message)=>{button.disabled=false;button.textContent="ENVIAR TARJETA DIGITAL";status.textContent=message;return result};
+  const finish=(result,message)=>{button.disabled=false;button.textContent="COMPARTIR TARJETA";status.textContent=message;return result};
   if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){
     let sharing;try{sharing=navigator.share(payload)}catch(error){sharing=Promise.reject(error)}
     return Promise.resolve(sharing).then(()=>{recordShareEvent(item,"PREPARED",false);return finish({ok:true,state:"PREPARED",fallback:false},"IMAGEN PNG ENTREGADA A LA APP ELEGIDA")}).catch(error=>{if(error?.name==="AbortError"){recordShareEvent(item,"CANCELLED",false);return finish({ok:false,state:"CANCELLED"},"COMPARTIR CANCELADO · NO SE MARCÓ COMO ENVIADO")}recordShareEvent(item,"FAILED",false);return finish({ok:false,state:"FAILED",error:String(error?.message||error)},"NO SE PUDO ABRIR COMPARTIR · INTENTA DE NUEVO")})
   }
   const url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download=name;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);recordShareEvent(item,"PREPARED",true);return Promise.resolve(finish({ok:true,state:"PREPARED",fallback:true},"IMAGEN PNG DESCARGADA · ADJÚNTALA EN WHATSAPP"))
+}
+function finalCardRegisteredRecipients(){
+  return (round?.players||[]).map(player=>{
+    const saved=directoryWhatsAppFor(player.name),countryCode=normalizeWhatsAppCountryCode(saved?.countryCode||player.countryCode||"502"),nationalNumber=normalizeWhatsApp(saved?.nationalNumber||player.whatsapp||"",countryCode);
+    return nationalNumber?{name:player.name,countryCode,nationalNumber,international:`${countryCode}${nationalNumber}`}:null;
+  }).filter(Boolean)
+}
+function syncFinalCardPlayerSend(){
+  const button=$("sendFinalCardPlayers");if(!button)return[];
+  const recipients=finalCardRegisteredRecipients();
+  button.hidden=!round?.officiallyClosedAt;
+  button.disabled=!recipients.length;
+  button.setAttribute("aria-disabled",String(!recipients.length));
+  button.title=recipients.length?`WHATSAPP REGISTRADO: ${recipients.map(x=>x.name).join(", ")}`:"NINGÚN JUGADOR TIENE WHATSAPP REGISTRADO";
+  return recipients
+}
+async function shareFinalCardToRegisteredPlayers(){
+  const recipients=syncFinalCardPlayerSend(),status=$("artifactShareStatus"),button=$("sendFinalCardPlayers");
+  if(!recipients.length){status.textContent="NO HAY WHATSAPP REGISTRADOS PARA LOS JUGADORES DE ESTA RONDA";return false}
+  const id=finalCardShareIdentity();
+  if(!finalCardPreparedShare||finalCardPreparedShare.id!==id){await prepareFinalCardShare()}
+  const prepared=finalCardPreparedShare;
+  if(!prepared||prepared.id!==id){status.textContent="NO SE PUDO PREPARAR LA TARJETA";return false}
+  const {item,blob}=prepared,name=String(item.name||"tarjeta-digital.html").replace(/\.html?$/i,".png"),file=new File([blob],name,{type:"image/png"});
+  const names=recipients.map(x=>x.name).join(", "),text=`TARJETA DIGITAL FINAL · JUGADORES CON WHATSAPP REGISTRADO: ${names}`;
+  button.disabled=true;button.textContent="ABRIENDO WHATSAPP…";
+  try{
+    if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:"Tarjeta Digital Final",text,files:[file]});status.textContent=`TARJETA LISTA PARA ENVIAR · ${names}`;return true}
+    const first=recipients[0],url=`https://wa.me/${first.international}?text=${encodeURIComponent(text)}`;window.open(url,"_blank","noopener");status.textContent="WHATSAPP ABIERTO · ADJUNTA LA TARJETA PNG";return true
+  }catch(error){status.textContent=error?.name==="AbortError"?"ENVÍO CANCELADO":"NO SE PUDO ABRIR WHATSAPP";return false}
+  finally{button.disabled=false;button.textContent="ENVIAR A JUGADORES"}
 }
 function openFinalDigitalCard(){
   render();
@@ -3959,11 +3990,11 @@ $("skinsOverlay").addEventListener("click",event=>{if(event.target===$("skinsOve
 $("skinsResults").addEventListener("change",event=>{const hole=event.target.closest?.("[data-side-hole]"),wolfType=event.target.closest?.("[data-wolf-type]");if(hole){sideGameControlHole=Math.max(1,Math.min(18,Number(hole.value)||1));renderSideGameResults();return}if(wolfType){const partner=$("skinsResults").querySelector("[data-wolf-partner]");if(partner){partner.disabled=wolfType.value!=="partner";if(partner.disabled)partner.value=""}}});
 $("skinsResults").addEventListener("click",event=>{const save=event.target.closest?.("[data-wolf-save]"),dot=event.target.closest?.("[data-dot-event]");if(save){const type=$("skinsResults").querySelector("[data-wolf-type]")?.value||"partner",partnerPlayerId=$("skinsResults").querySelector("[data-wolf-partner]")?.value||null,current=window.GSCWolf.normalizeConfig(round.sideGames.wolf),decisions={...current.decisions,[sideGameControlHole]:{type,partnerPlayerId:type==="partner"?partnerPlayerId:null}};if(type==="partner"&&!partnerPlayerId){$("status").textContent="WOLF · SELECCIONA COMPAÑERO";return}round.sideGames={...round.sideGames,wolf:window.GSCWolf.normalizeConfig({...current,enabled:true,decisions})};persist();renderSideGameResults();return}if(dot){const current=window.GSCDots.normalizeConfig(round.sideGames.dots);round.sideGames={...round.sideGames,dots:window.GSCDots.toggleEvent(current,sideGameControlHole,dot.dataset.dotPlayer,dot.dataset.dotEvent)};persist();renderSideGameResults()}});
 
-$("finalCardButton").addEventListener("click",openFinalDigitalCard);$("officialCloseButton").addEventListener("click",officiallyCloseRound);$("sendFinalCard").addEventListener("click",shareOfficialArtifactImage);$("closeFinalCard").addEventListener("click",closeFinalDigitalCard);$("finalCardOverlay").addEventListener("click",e=>{if(e.target===$("finalCardOverlay"))closeFinalDigitalCard()});
+$("finalCardButton").addEventListener("click",openFinalDigitalCard);$("officialCloseButton").addEventListener("click",officiallyCloseRound);$("sendFinalCard").addEventListener("click",shareOfficialArtifactImage);$("sendFinalCardPlayers")?.addEventListener("click",shareFinalCardToRegisteredPlayers);$("closeFinalCard").addEventListener("click",closeFinalDigitalCard);$("finalCardOverlay").addEventListener("click",e=>{if(e.target===$("finalCardOverlay"))closeFinalDigitalCard()});
 $("openGlobalCard").addEventListener("click",()=>openArtifact(officialArtifacts().global));$("imageGlobalCard").addEventListener("click",()=>imageOfficialCard(officialArtifacts().global));$("pdfGlobalCard").addEventListener("click",()=>pdfOfficialCard(officialArtifacts().global));$("shareGlobalCard").addEventListener("click",()=>shareOfficialArtifact(officialArtifacts().global));$("openPersonalCard").addEventListener("click",()=>openArtifact(selectedPersonalArtifact()));$("imagePersonalCard").addEventListener("click",()=>imageOfficialCard(selectedPersonalArtifact()));$("pdfPersonalCard").addEventListener("click",()=>pdfOfficialCard(selectedPersonalArtifact()));$("sharePersonalCard").addEventListener("click",()=>shareOfficialArtifact(selectedPersonalArtifact()));$("downloadAllCards").addEventListener("click",downloadAllOfficialCards);
 for(const id of ["openCardLibraryButton","openCardLibrarySetup","openCardLibraryStableford"])$(id).addEventListener("click",openCardLibrary);$("closeCardLibrary").addEventListener("click",closeCardLibrary);$("cardLibraryOpenGlobal").addEventListener("click",()=>openArtifact(cardLibraryArtifacts().global));$("cardLibraryImageGlobal").addEventListener("click",()=>cardLibraryImage(cardLibraryArtifacts().global));$("cardLibraryPdfGlobal").addEventListener("click",()=>cardLibraryPdf(cardLibraryArtifacts().global));$("cardLibraryOpenPersonal").addEventListener("click",()=>{const item=cardLibrarySelectedPersonalArtifact();if(item)openArtifact(item)});$("cardLibraryImagePersonal").addEventListener("click",()=>{const item=cardLibrarySelectedPersonalArtifact();if(item)cardLibraryImage(item)});$("cardLibraryPdfPersonal").addEventListener("click",()=>{const item=cardLibrarySelectedPersonalArtifact();if(item)cardLibraryPdf(item)});$("cardLibraryPdfAll").addEventListener("click",cardLibraryPdfAll);$("cardLibraryStats").addEventListener("click",openHistoryInsights);$("cardLibraryOverlay").addEventListener("click",event=>{if(event.target===$("cardLibraryOverlay"))closeCardLibrary()});for(const id of ["cardLibraryMode","cardLibraryCourse","cardLibraryQuery"])$(id).addEventListener(id==="cardLibraryQuery"?"input":"change",()=>{cardLibraryPageIndex=0;renderCardLibrary()});$("cardLibraryPrevious").addEventListener("click",()=>{if(cardLibraryPageIndex>0){cardLibraryPageIndex-=1;renderCardLibrary()}});$("cardLibraryNext").addEventListener("click",()=>{cardLibraryPageIndex+=1;renderCardLibrary()});$("cardLibraryList").addEventListener("selectstart",event=>{if(event.target.closest?.("[data-library-round]"))event.preventDefault()});$("cardLibraryList").addEventListener("pointerdown",event=>{const control=event.target.closest?.("[data-library-round]");if(!control)return;cardLibraryLongPressHandled=false;clearTimeout(cardLibraryPressTimer);cardLibraryPressTimer=setTimeout(()=>openCardLibraryDelete(control.dataset.libraryRound),650)});for(const type of ["pointerup","pointercancel"])$("cardLibraryList").addEventListener(type,()=>{clearTimeout(cardLibraryPressTimer);cardLibraryPressTimer=null});$("cardLibraryList").addEventListener("contextmenu",event=>{const control=event.target.closest?.("[data-library-round]");if(!control)return;event.preventDefault();openCardLibraryDelete(control.dataset.libraryRound)});$("cardLibraryList").addEventListener("click",event=>{const control=event.target.closest?.("[data-library-round]");if(!control)return;if(cardLibraryLongPressHandled){cardLibraryLongPressHandled=false;event.preventDefault();return}const id=control.dataset.libraryRound,now=Date.now(),openGlobal=id===cardLibraryLastTapId&&now-cardLibraryLastTapAt<=600;cardLibraryEntryId=id;renderCardLibrary();cardLibraryLastTapId=openGlobal?null:id;cardLibraryLastTapAt=openGlobal?0:now;if(openGlobal)openArtifact(cardLibraryArtifacts().global)});$("cancelCardLibraryDelete").addEventListener("click",closeCardLibraryDelete);$("confirmCardLibraryDelete").addEventListener("click",confirmCardLibraryDelete);$("cardLibraryDeleteOverlay").addEventListener("click",event=>{if(event.target===$("cardLibraryDeleteOverlay"))closeCardLibraryDelete()});
 $("closeHistoryInsights").addEventListener("click",closeHistoryInsights);$("historyInsightsOverlay").addEventListener("click",event=>{if(event.target===$("historyInsightsOverlay"))closeHistoryInsights()});$("runHistoryInsights").addEventListener("click",()=>runHistoryInsights());$("historyInsightsQuery").addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();runHistoryInsights()}});document.querySelectorAll("[data-history-query]").forEach(button=>button.addEventListener("click",()=>runHistoryInsights(button.dataset.historyQuery)));
-$("openOfficialCorrection").addEventListener("click",openOfficialCorrection);$("openOriginalGlobal").addEventListener("click",openOriginalGlobalCard);$("officialCorrectionPlayer").addEventListener("change",renderOfficialCorrectionCurrent);$("officialCorrectionHole").addEventListener("change",renderOfficialCorrectionCurrent);$("saveOfficialCorrection").addEventListener("click",saveOfficialCorrection);$("cancelOfficialCorrection").addEventListener("click",closeOfficialCorrection);$("officialCorrectionOverlay").addEventListener("click",event=>{if(event.target===$("officialCorrectionOverlay"))closeOfficialCorrection()});
+$("openOfficialCorrection")?.addEventListener("click",openOfficialCorrection);$("openOriginalGlobal").addEventListener("click",openOriginalGlobalCard);$("officialCorrectionPlayer").addEventListener("change",renderOfficialCorrectionCurrent);$("officialCorrectionHole").addEventListener("change",renderOfficialCorrectionCurrent);$("saveOfficialCorrection").addEventListener("click",saveOfficialCorrection);$("cancelOfficialCorrection").addEventListener("click",closeOfficialCorrection);$("officialCorrectionOverlay").addEventListener("click",event=>{if(event.target===$("officialCorrectionOverlay"))closeOfficialCorrection()});
 $("stopClockButton").addEventListener("click",toggleRoundClock);
 $("roundTimerToggle").addEventListener("click",toggleRoundTimerPause);
 $("roundTimerToggle").addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();toggleRoundTimerPause()}});
@@ -4269,7 +4300,7 @@ window.GSCLiveControl?.mount({
   getCourseName:()=>COURSE_CATALOG[ACTIVE_COURSE_KEY]?.displayName||COURSE_CATALOG[ACTIVE_COURSE_KEY]?.name||round.course,
   getPars:()=>PAR
 });
-for(const id of ["shareRoundLiveButton","shareFinalLiveButton"])$(id)?.addEventListener("click",()=>window.GSCLiveControl?.quickShareGroup());
+$("shareRoundLiveButton")?.addEventListener("click",()=>window.GSCLiveControl?.quickShareGroup());
 if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator){navigator.serviceWorker.addEventListener("controllerchange",()=>{try{sessionStorage.setItem("gscg-sw-controller-changed","1")}catch{} location.reload()},{once:true});window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/",updateViaCache:"none"}).then(reg=>reg.update()).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});}
 function recoverInstalledAppScrolling(){
   const root=document.scrollingElement||document.documentElement;

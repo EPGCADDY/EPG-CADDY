@@ -14,7 +14,7 @@ for(const token of [
   'officialCloseButton',
   'VER MI TARJETA',
   'VER RONDAS GUARDADAS',
-  'CORREGIR RONDA',
+  'officialCorrectionOverlay',
   'mandatoryUpdateButton',
   'INVITAR · 24 H'
 ]) assert(app.includes(token),'Falta función física: '+token);

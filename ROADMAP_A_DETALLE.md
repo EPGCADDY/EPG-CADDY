@@ -1787,3 +1787,24 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Corrección R73 móvil: la rejilla responsive también se reduce a cinco columnas y el selector específico impide que TECLADO herede el estilo verde/grande de las celdas no vacías.
 
 - Ajuste de regresión R73: eliminada la aserción antigua de encabezados para conservar únicamente el contrato específico vigente con `span:not(:empty)` y cinco columnas móviles.
+
+
+## R74 · 2026-09-23 · limpieza Tarjeta Digital Final
+- Se elimina COMPARTIR MI RONDA EN VIVO de la vista final; la función LIVE permanece únicamente durante la ronda.
+- Se elimina CORREGIR RONDA de la Tarjeta Digital Final.
+- Se conserva COMPARTIR TARJETA para la hoja de compartir del iPhone.
+- Se agrega ENVIAR A JUGADORES, activo únicamente cuando al menos un jugador de la ronda tiene WhatsApp registrado.
+- El envío prepara la misma tarjeta PNG final y abre el flujo de compartir del dispositivo; el botón queda deshabilitado cuando no hay destinatarios registrados.
+- Release sincronizado como R74 en app, Service Worker, caché y regresión.
+
+
+## R75 · 2026-09-23 · arquitectura UX TORNEOS
+- TORNEOS conserva título propio únicamente en el portal de selección.
+- RESULTADOS GENERALES, RESULTADOS POR CATEGORÍA, BUSCAR JUGADORES y MIS FAVORITOS muestran título inequívoco de la pantalla activa.
+- Accesos renombrados con vocabulario directo y consistente; MENÚ y regreso a MIS TORNEOS permanecen disponibles.
+- Sin cambios en cálculo, clasificación, LIVE ni datos de jugadores.
+- Release sincronizado como R75 en app, Service Worker, caché y regresión.
+- Reparación de gate R75: la regresión Match Play se alinea con la regla aprobada de Tarjeta Digital Final sin CORREGIR RONDA; no cambia lógica funcional.
+- Reparación de matriz física R75: valida que la corrección oficial siga existiendo por `officialCorrectionOverlay` sin exigir el botón CORREGIR RONDA dentro de la Tarjeta Digital Final.
+- Reparación R75 Tarjeta Digital Final: se elimina la dependencia DOM del botón `openOfficialCorrection`; el listener queda opcional y no puede romper la carga cuando CORREGIR RONDA no está en la tarjeta final.
+- Reparación R75 del gate de paridad del manual: verifica `officialCorrectionOverlay` como función de corrección vigente sin exigir el texto/botón CORREGIR RONDA en la Tarjeta Digital Final.

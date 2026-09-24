@@ -271,7 +271,7 @@
   function renderTournamentShelf(){const shelf=$("hubTournamentShelf"),cards=$("hubTournamentCards"),shared=new URLSearchParams(root.location.search||"").get("shared")==="1";if(!shelf||!cards)return;const portal=tournamentPortalOpen&&!shared,items=[{token:"__demo__",label:"TORNEO DEMOSTRACIÓN",demo:true},...state.tournaments];shelf.classList.toggle("hidden",!portal);cards.innerHTML=items.map(item=>'<button class="tournament-card" type="button" data-tournament="'+escapeHtml(item.token)+'">'+escapeHtml(item.label)+'<small>'+(item.demo?'67 JUGADORES':'EN VIVO')+'</small></button>').join("");cards.querySelectorAll("[data-tournament]").forEach(button=>button.onclick=()=>button.dataset.tournament==="__demo__"?root.location.assign(tournamentHubOpenUrl("",root.location.origin,root.location.href,true)):selectSavedTournament(button.dataset.tournament));$("hubTournamentEntry")?.classList.toggle("hidden",!portal);$("hubTournamentHome")?.classList.toggle("hidden",portal||shared);$("hubGeneralPanel")?.classList.toggle("hidden",portal||activeMonitor==="individual");$("hubIndividualPanel")?.classList.toggle("hidden",portal||activeMonitor!=="individual");root.document.querySelector(".monitor-switch")?.classList.toggle("hidden",portal)}
   function resetGeneralView(){general=null;generalRevision=null;generalStreams.clear();categoryCardOpen=false;$("hubCategory")&&( $("hubCategory").value="all");$("hubSearch")&&( $("hubSearch").value="")}
   async function selectSavedTournament(token){if(!tokenOk(token))return false;state.generalToken=token;saveState();tournamentPortalOpen=false;resetGeneralView();showMonitor("general");setStatus("ABRIENDO TORNEO…","");await refresh();return true}
-  function showTournamentPortal(){root.document.body.classList.remove("hub-search-mode","hub-favorites-mode");tournamentPortalOpen=true;clearTimeout(timer);renderAll();setStatus("ELIGE UNO DE TUS TORNEOS O AGREGA OTRO","")}
+  function setPageTitle(value){const title=$("hubPageTitle");if(title)title.textContent=value} function showTournamentPortal(){root.document.body.classList.remove("hub-search-mode","hub-favorites-mode");tournamentPortalOpen=true;setPageTitle("TORNEOS");clearTimeout(timer);renderAll();setStatus("ELIGE UNO DE TUS TORNEOS O AGREGA OTRO","")}
   function renderAll(){renderTournamentShelf();renderCourseFilter();renderSummary();renderLeaderboard();renderCategoryCard();renderSearch();renderFavorites()}
 
   function addImported(stream,player){
@@ -321,7 +321,7 @@
     const individual=kind==="individual",categories=kind==="categories",add=kind==="add";
     if(tournamentPortalOpen&&(individual||state.generalToken||demoMode()))tournamentPortalOpen=false;
     activeMonitor=individual?"individual":"general";
-    if($("hubPanelTitle"))$("hubPanelTitle").textContent=add?"BUSCAR JUGADOR":"RESULTADOS";
+    const pageTitle=add?"BUSCAR JUGADORES":categories?"RESULTADOS POR CATEGORÍA":individual?"MIS FAVORITOS":"RESULTADOS GENERALES";setPageTitle(pageTitle);if($("hubPanelTitle"))$("hubPanelTitle").textContent=pageTitle;
     root.document.body.classList.toggle("hub-search-mode",add);
     root.document.body.classList.toggle("hub-favorites-mode",individual);
     renderTournamentShelf();

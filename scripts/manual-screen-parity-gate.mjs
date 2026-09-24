@@ -35,7 +35,7 @@ const mountedCurrent=[
  "/docs/manual/current/APP_MODE_PRACTICE.png"
 ];
 for(const img of mountedCurrent) assert(manual.includes(img),"Falta pantalla física actual montada en manual: "+img);
-for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","MI TARJETA FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","CORREGIR RONDA","MIS RONDAS GUARDADAS"]) {
+for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","MI TARJETA FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","officialCorrectionOverlay","MIS RONDAS GUARDADAS"]) {
   assert(app.includes(token)||hub.includes(token),"LAB actual no contiene control esperado: "+token);
 }
 assert(manual.includes("/docs/manual/current/MONITOR_TIEMPO_REAL_LAB.png"),"Falta captura física vigente del Monitor de Tiempo");

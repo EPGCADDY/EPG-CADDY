@@ -26,3 +26,11 @@ assert.match(html,/ADJUNTAR RONDA EN VIVO/);
 const live=fs.readFileSync('live-control.js','utf8');
 assert.doesNotMatch(live,/async function quickShareGroup\(\)\{\s*openLivePanel\(\)/,'Compartir nativo no debe abrir administración antes de compartir');
 console.log('PASS torneo: regreso portal, favoritos únicos, ranking completo, mensajes y compartir visibles');
+
+assert.match(html,/id="hubPageTitle">TORNEOS<\/h1>/);
+assert.match(html,/>RESULTADOS GENERALES<\/button>/);
+assert.match(html,/>RESULTADOS POR CATEGORÍA<\/button>/);
+assert.match(html,/>BUSCAR JUGADORES<\/button>/);
+assert.match(html,/>MIS FAVORITOS<\/button>/);
+assert.match(source,/add\?"BUSCAR JUGADORES":categories\?"RESULTADOS POR CATEGORÍA":individual\?"MIS FAVORITOS":"RESULTADOS GENERALES"/);
+console.log("PASS R75: títulos inequívocos en arquitectura TORNEOS");

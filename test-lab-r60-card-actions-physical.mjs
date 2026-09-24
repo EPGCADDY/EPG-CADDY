@@ -5,16 +5,18 @@ const app=fs.readFileSync('index-grupal.html','utf8');
 const required=[
 'openGlobalCard','imageGlobalCard','pdfGlobalCard','shareGlobalCard',
 'personalCardPlayer','openPersonalCard','imagePersonalCard','pdfPersonalCard',
-'sharePersonalCard','downloadAllCards','openOfficialCorrection','openOriginalGlobal'
+'sharePersonalCard','downloadAllCards','openOriginalGlobal'
 ];
 for(const id of required)assert(app.includes('id="'+id+'"'),'Falta control '+id);
 
 assert.match(app,/actions\.hidden=!round\.officiallyClosedAt/,'Las acciones oficiales deben mostrarse al cerrar la ronda');
 assert.doesNotMatch(app,/actions\.hidden=true;sendButton\.hidden=!round\.officiallyClosedAt/,'No se permite ocultar permanentemente acciones oficiales');
 
-for(const id of ['openGlobalCard','imageGlobalCard','pdfGlobalCard','shareGlobalCard','openPersonalCard','imagePersonalCard','pdfPersonalCard','sharePersonalCard','downloadAllCards','openOfficialCorrection']){
+for(const id of ['openGlobalCard','imageGlobalCard','pdfGlobalCard','shareGlobalCard','openPersonalCard','imagePersonalCard','pdfPersonalCard','sharePersonalCard','downloadAllCards']){
  assert(app.includes('$("'+id+'").addEventListener("click"'),'Falta listener de '+id);
 }
+assert.doesNotMatch(app,/id="openOfficialCorrection"/,'Tarjeta Digital Final no debe mostrar CORREGIR RONDA');
+assert.match(app,/\$\("openOfficialCorrection"\)\?\.addEventListener\("click",openOfficialCorrection\)/,'El handler legado de corrección debe ser seguro si el botón final no existe');
 assert.match(app,/openOriginalGlobal[^\n]*addEventListener\("click",openOriginalGlobalCard\)/,'Falta listener de tarjeta original');
 assert.match(app,/openOriginalGlobal"\)\.classList\.toggle\("hidden",!corrected\)/,'Original sólo debe aparecer tras corrección');
 
