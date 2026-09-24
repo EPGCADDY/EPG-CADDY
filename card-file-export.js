@@ -16,7 +16,7 @@
 
   async function inlineImages(html){
     let output=String(html||"");const sources=[...new Set([...output.matchAll(/<img[^>]+src=["']([^"']+)["']/gi)].map(match=>match[1]))];
-    for(const src of sources){try{const response=await fetch(src,{cache:"no-store"});if(!response.ok)throw new Error(`IMAGE_FETCH_${response.status}`);const blob=await response.blob(),bytes=new Uint8Array(await blob.arrayBuffer());let binary="";for(let offset=0;offset<bytes.length;offset+=32768)binary+=String.fromCharCode(...bytes.subarray(offset,offset+32768));output=output.split(src).join(`data:${blob.type||"image/png"};base64,${btoa(binary)}`)}catch(error){throw new Error(`IMAGE_INLINE_FAILED:${src}:${error?.message||error}`)}}
+    for(const src of sources){try{const controller=typeof AbortController==="function"?new AbortController():null,timer=setTimeout(()=>controller?.abort(),8000);let response;try{response=await fetch(src,{cache:"no-store",...(controller?{signal:controller.signal}:{})})}finally{clearTimeout(timer)};if(!response.ok)throw new Error(`IMAGE_FETCH_${response.status}`);const blob=await response.blob(),bytes=new Uint8Array(await blob.arrayBuffer());let binary="";for(let offset=0;offset<bytes.length;offset+=32768)binary+=String.fromCharCode(...bytes.subarray(offset,offset+32768));output=output.split(src).join(`data:${blob.type||"image/png"};base64,${btoa(binary)}`)}catch(error){throw new Error(`IMAGE_INLINE_FAILED:${src}:${error?.message||error}`)}}
     return output
   }
   async function canvasFor(item){
@@ -33,10 +33,21 @@
     });
     const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
     const context=canvas.getContext("2d");if(!context)throw new Error("CANVAS_CONTEXT_REQUIRED");
-    context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return canvas;
+    context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return trimCanvas(canvas,32);
   }
 
-  function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED")),type,quality))}
+  function trimCanvas(canvas,margin=32){
+    const context=canvas.getContext("2d");if(!context)return canvas;
+    const {width,height}=canvas,data=context.getImageData(0,0,width,height).data,step=4;
+    let minX=width,minY=height,maxX=-1,maxY=-1;
+    for(let y=0;y<height;y+=step)for(let x=0;x<width;x+=step){const i=(y*width+x)*4;if(data[i+3]>0&&(data[i]>18||data[i+1]>18||data[i+2]>18)){if(x<minX)minX=x;if(x>maxX)maxX=x;if(y<minY)minY=y;if(y>maxY)maxY=y}}
+    if(maxX<0||maxY<0)return canvas;
+    minX=Math.max(0,minX-margin);minY=Math.max(0,minY-margin);maxX=Math.min(width-1,maxX+margin);maxY=Math.min(height-1,maxY+margin);
+    const out=document.createElement("canvas");out.width=Math.max(1,maxX-minX+1);out.height=Math.max(1,maxY-minY+1);const outCtx=out.getContext("2d");if(!outCtx)return canvas;
+    outCtx.fillStyle="#000";outCtx.fillRect(0,0,out.width,out.height);outCtx.drawImage(canvas,minX,minY,out.width,out.height,0,0,out.width,out.height);return out;
+  }
+
+  function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("CANVAS_EXPORT_TIMEOUT")),12000);canvas.toBlob(blob=>{clearTimeout(timer);blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED"))},type,quality)})}
   async function png(item){
     try{return canvasBlob(await canvasFor(item),"image/png")}
     catch(primaryError){
@@ -48,8 +59,8 @@
         await new Promise(resolve=>setTimeout(resolve,120));
         const target=doc.body?.querySelector("main")||doc.body;if(!target)throw primaryError;
         const svg=artifactSvg({...item,html:String(item.html).replace(/<img[^>]*>/gi,"")}),image=new Image();
-        await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject;image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)});
-        const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;const context=canvas.getContext("2d");if(!context)throw primaryError;context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return canvasBlob(canvas,"image/png")
+        await new Promise((resolve,reject)=>{const timer=setTimeout(()=>{image.src="";reject(new Error("IMAGE_FALLBACK_TIMEOUT"))},12000);image.onload=()=>{clearTimeout(timer);resolve()};image.onerror=()=>{clearTimeout(timer);reject(new Error("IMAGE_FALLBACK_FAILED"))};image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)});
+        const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;const context=canvas.getContext("2d");if(!context)throw primaryError;context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return canvasBlob(trimCanvas(canvas,32),"image/png")
       }finally{host.remove()}
     }
   }

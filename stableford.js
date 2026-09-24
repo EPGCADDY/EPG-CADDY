@@ -16,7 +16,7 @@
   const MAX_PLAYERS=6;
   const MAX_ROUNDS=4;
   const BEST_ROUNDS=3;
-  const ALLOWED_COURSES=Object.freeze(["country_club","pulte","san_isidro","mayan_golf"]);
+  const ALLOWED_COURSES=Object.freeze(["country_club","pulte","san_isidro","mayan_golf","hacienda_nueva","alta_vista"]);
   const CATEGORY_CONFIG=Object.freeze({
     championship:Object.freeze({key:"championship",label:"CAMPEONATO",handicap:0,tee:"Negro",rankingPlaces:0,captainChoices:0}),
     a:Object.freeze({key:"a",label:"A",handicap:0,tee:"Azul",rankingPlaces:0,captainChoices:0}),

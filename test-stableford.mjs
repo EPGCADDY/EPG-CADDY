@@ -3,7 +3,7 @@ import {createRequire} from "node:module";
 const require=createRequire(import.meta.url);
 const s=require("./stableford.js");
 
-assert.deepEqual(s.ALLOWED_COURSES,["country_club","pulte","san_isidro","mayan_golf"]);
+assert.deepEqual(s.ALLOWED_COURSES,["country_club","pulte","san_isidro","mayan_golf","hacienda_nueva","alta_vista"]);
 assert.equal(s.MAX_ROUNDS,4);
 assert.equal(s.MAX_PLAYERS,6);
 assert.deepEqual(s.categoryConfig("senior"),{key:"senior",label:"SENIOR",handicap:0,tee:"Blanco",rankingPlaces:5,captainChoices:3});
