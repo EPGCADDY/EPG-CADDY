@@ -58,7 +58,7 @@
         doc.open();doc.write(String(item?.html||""));doc.close();
         await new Promise(resolve=>setTimeout(resolve,120));
         const target=doc.body?.querySelector("main")||doc.body;if(!target)throw primaryError;
-        const svg=artifactSvg({...item,html:String(item.html).replace(/<img[^>]*>/gi,"")}),image=new Image();
+        const fallbackHtml=await inlineImages(String(item.html||""));const svg=artifactSvg({...item,html:fallbackHtml}),image=new Image();
         await new Promise((resolve,reject)=>{const timer=setTimeout(()=>{image.src="";reject(new Error("IMAGE_FALLBACK_TIMEOUT"))},12000);image.onload=()=>{clearTimeout(timer);resolve()};image.onerror=()=>{clearTimeout(timer);reject(new Error("IMAGE_FALLBACK_FAILED"))};image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)});
         const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;const context=canvas.getContext("2d");if(!context)throw primaryError;context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return canvasBlob(trimCanvas(canvas,32),"image/png")
       }finally{host.remove()}
