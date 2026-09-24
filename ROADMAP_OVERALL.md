@@ -1836,3 +1836,5 @@ LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 1
 - R106-H12: matriz digital Match Play alineada al concepto aprobado de enfrentamientos directos 1 vs 1, hasta tres matches.
 
 - R106-H13: gate Match Play reparado para permitir continuar al render visual.
+
+- R106-H14: exportación digital fijada a Full HD exacto 1920×1080 sin recorte posterior.
