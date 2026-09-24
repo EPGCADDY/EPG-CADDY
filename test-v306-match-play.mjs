@@ -40,7 +40,7 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   assert.equal(matchPlay.pairIndexForPlayer(5),2);
   const closed=await roundClosure.close({id:"match-3-pairs",configured:true,mode:"match_play",courseKey:"pulte",course:"El Pulté",players,matchPlay:{...result,holes:undefined},createdAt:"2026-08-26T00:00:00.000Z"},{appVersion:"V329",closedAt:"2026-08-26T02:00:00.000Z"});
   const artifacts=cardArtifacts.build(closed.snapshot);
-  assert.match(artifacts.global.html,/PAREJA 3:/);
+  assert.doesNotMatch(artifacts.global.html,/PAREJA [123]:/,"La matriz aprobada separa enfrentamientos sin rótulos PAREJA");\n  assert.match(artifacts.global.html,/<th>GROSS<\\/th><th>NETO<\\/th><th>\\+\\/-<\\/th>/);
   assert.equal((artifacts.global.html.match(/class="pair-divider"/g)||[]).length,4,"Dos bloques 1–9/10–18 conservan los dos separadores de pareja en cada bloque");
 }
 
@@ -82,7 +82,7 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   const entry=cardLibrary.entry(closed.round);
   assert.equal(entry.mode,"match_play");
   const artifacts=cardArtifacts.build(closed.snapshot);
-  assert.match(artifacts.global.html,/Flecha verde ↑ = ganó · flecha roja ↓ = perdió · signo = = empate/);
+  assert.match(artifacts.global.html,/Flecha verde ↑ = gana · Flecha roja ↓ = pierde · Signo = = empata/);
   assert.match(artifacts.global.html,/aria-label="Ganó">↑<\/span>/);
   assert.match(artifacts.global.html,/aria-label="Perdió">↓<\/span>/);
   assert.match(artifacts.global.html,/aria-label="Empató">=<\/span>/);
