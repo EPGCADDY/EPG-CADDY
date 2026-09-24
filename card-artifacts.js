@@ -109,7 +109,7 @@
     const rows=snapshot.players.map(player=>{
       const scores=holes.map(h=>player.holes?.[h]);
       const gross=scores.reduce((n,s)=>n+(Number(s?.gross)||0),0),net=scores.reduce((n,s)=>n+(Number(s?.net)||0),0),relative=net-parTotal;
-      return `<tr><td>${esc(player.name)}</td><td>${esc(playerTeeLabel(player))}</td><td>${player.handicap}</td>${scores.map(score=>`<td>${score?`${score.gross}/${score.net}`:"—"}</td>`).join("")}<td>${gross}</td><td>${net}</td><td class="${relative<0?'over':relative>0?'over':'under'}">${relative===0?"E":rel(relative)}</td></tr>`
+      return `<tr><td>${playerNameWithCategory(player)}</td><td>${esc(playerTeeLabel(player))}</td><td>${player.handicap}</td>${scores.map(score=>`<td>${score?`${score.gross}/${score.net}`:"—"}</td>`).join("")}<td>${gross}</td><td>${net}</td><td class="${relative<0?'under':relative>0?'over':'match-tied'}">${relative===0?"E":rel(relative)}</td></tr>`
     }).join("");
     return `<section class="score-half stroke-half"><h2>${label} · HOYOS ${from}–${to}</h2><div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>MARCAS</th><th>HCP</th>${holes.map(h=>`<th>${h}<br><small>G/N</small></th>`).join("")}<th>GROSS</th><th>NETO</th><th>+/-</th></tr></thead><tbody><tr class="par-row"><th>PAR</th><td></td><td></td>${parValues.map(v=>`<td>${v}/${v}</td>`).join("")}<td>${parTotal}</td><td>${parTotal}</td><td>E</td></tr>${rows}</tbody></table></div></section>`;
   }
