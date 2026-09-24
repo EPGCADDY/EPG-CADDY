@@ -1813,3 +1813,7 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Reparación R75 exacta del test TORNEOS: el sandbox VM ahora define `$` como stub nulo al ejecutar `setPageTitle()`, eliminando `ReferenceError: $ is not defined` sin alterar la aplicación.
 
 - R76 · Auditoría de lógica y arquitectura TORNEOS: las cuatro funciones principales quedan visibles; RESULTADOS POR CATEGORÍA deja de estar oculto; BUSCAR JUGADORES conserva la intención y, si falta contexto, pide elegir torneo sin desviar a pegar enlace; AGREGAR TORNEO POR ENLACE queda como flujo secundario explícito y oculto hasta solicitarlo; la selección de torneo reanuda automáticamente la función previamente elegida.
+
+- R77 · Tarjeta Global: el visor secundario incorpora ENVIAR A JUGADORES junto a ATRÁS y ENVIAR TARJETA DIGITAL. El botón conecta con el flujo existente que usa los WhatsApp registrados de los jugadores de la ronda.
+
+- R77 gate sync: ambos inventarios registran conjuntamente la corrección del botón ENVIAR A JUGADORES en el visor de Tarjeta Global.

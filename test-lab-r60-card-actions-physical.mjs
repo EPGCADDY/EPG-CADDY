@@ -21,3 +21,7 @@ assert.match(app,/openOriginalGlobal[^\n]*addEventListener\("click",openOriginal
 assert.match(app,/openOriginalGlobal"\)\.classList\.toggle\("hidden",!corrected\)/,'Original sólo debe aparecer tras corrección');
 
 console.log('PASS R60 tarjetas: acciones oficiales visibles tras cierre y todos los botones tienen handler');
+
+assert.match(app,/id="artifactViewerSendPlayers"/,'El visor de Tarjeta Global debe mostrar ENVIAR A JUGADORES');
+assert.match(app,/shareFinalCardToRegisteredPlayers\(\)/,'El botón del visor debe conectar con el envío a jugadores registrados');
+console.log('PASS R77 visor global: ENVIAR A JUGADORES visible y conectado');
