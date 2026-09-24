@@ -1844,3 +1844,5 @@ LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 1
 - R106-H15: gate Match Play desbloqueado; eliminado último salto de línea escapado que detenía el build antes del render visual.
 
 - R106-H16: gate Match Play alineado por completo con matriz 1v1 aprobada, sin PAREJA 1/2/3.
+
+- R106-H17: revisión visual separada en pipeline dedicado de siete tarjetas Full HD; eliminado el manual del recorrido de certificación de tarjetas.
