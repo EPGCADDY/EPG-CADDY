@@ -15,7 +15,7 @@ assert.equal(hub.uniqueFavoritePlayers([{item:{kind:'player'},stream:null,player
 const classes=new Set(['hub-search-mode','hub-favorites-mode']);
 let rendered=0;
 const context={root:{document:{body:{classList:{remove:(...names)=>names.forEach(x=>classes.delete(x))}}}},clearTimeout(){},timer:null,renderAll(){rendered++},setStatus(){}};
-vm.runInNewContext(source.slice(source.indexOf('  function showTournamentPortal(){'),source.indexOf('  function renderAll(){'))+';showTournamentPortal()',context);
+vm.runInNewContext(source.slice(source.indexOf('  function setPageTitle(value){'),source.indexOf('  function renderAll(){'))+';showTournamentPortal()',context);
 assert.equal(classes.size,0,'Regresar al portal limpia los modos que ocultaban los torneos');assert.equal(rendered,1);
 const streams=hub.demoTournamentStreams();
 assert.equal(hub.buildLeaderboard(streams,false).length,67,'Ranking general de favoritos considera todos los jugadores');

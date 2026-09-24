@@ -1733,3 +1733,4 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Reparación de matriz física R75: valida que la corrección oficial siga existiendo por `officialCorrectionOverlay` sin exigir el botón CORREGIR RONDA dentro de la Tarjeta Digital Final.
 - Reparación R75 Tarjeta Digital Final: se elimina la dependencia DOM del botón `openOfficialCorrection`; el listener queda opcional y no puede romper la carga cuando CORREGIR RONDA no está en la tarjeta final.
 - Reparación R75 del gate de paridad del manual: verifica `officialCorrectionOverlay` como función de corrección vigente sin exigir el texto/botón CORREGIR RONDA en la Tarjeta Digital Final.
+- Reparación R75 gate TORNEOS: la prueba VM incluye `setPageTitle()` antes de ejecutar `showTournamentPortal()`, evitando ReferenceError introducido por el nuevo título dinámico; sin cambio funcional.
