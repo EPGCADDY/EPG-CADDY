@@ -41,10 +41,9 @@
     body:not(.public-display) .viewer-entry>div{display:contents}
     body:not(.public-display) #hubTournamentLink{min-width:0;height:46px;border-radius:11px;font-size:14px}
     body:not(.public-display) #hubOpenTournament{height:46px;min-width:92px;border-radius:11px;font-size:14px}
-    body:not(.public-display) .monitor-switch{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 14px}
+    body:not(.public-display) .monitor-switch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 14px}
     body:not(.public-display) .monitor-switch button{min-height:42px;padding:8px 6px;border:1px solid #42474a;border-radius:999px;background:#070808;color:#b7bbbd;font-size:12px;font-weight:900}
     body:not(.public-display) .monitor-switch button.active{border-color:var(--tour-green);background:#071007;color:var(--tour-green)}
-    body:not(.public-display) #hubShowCategories{display:none!important}
     body:not(.public-display) .panel>h2{margin:0 0 12px;color:#fff;font-size:18px}
     body:not(.public-display):not(.hub-search-mode) #hubGeneralPanel>.search,
     body:not(.public-display):not(.hub-search-mode) #hubSearchResults{display:none!important}
@@ -141,19 +140,19 @@
     <section class="tournament-shelf" id="hubTournamentShelf" aria-label="Mis torneos guardados">
       <h2>MIS TORNEOS</h2>
       <div class="tournament-cards" id="hubTournamentCards"></div>
-      <button class="secondary" id="hubAddTournament" type="button">+ AGREGAR</button>
+      <button class="secondary" id="hubAddTournament" type="button">+ AGREGAR TORNEO</button>
     </section>
-    <section class="viewer-entry" id="hubTournamentEntry">
-      <h2>ENLACE</h2>
-      <div><input id="hubTournamentLink" type="url" placeholder="Pegar enlace" aria-label="Enlace del torneo"><button class="primary" id="hubOpenTournament" type="button">ENTRAR</button></div>
-    </section>
-
-    <nav class="monitor-switch" aria-label="Elegir vista del torneo">
+    <nav class="monitor-switch" aria-label="Elegir función de torneos">
       <button class="active" id="hubShowGeneral" type="button">RESULTADOS GENERALES</button>
       <button id="hubShowCategories" type="button">RESULTADOS POR CATEGORÍA</button>
       <button id="hubShowIndividual" type="button">BUSCAR JUGADORES</button>
       <button id="hubAddToBoard" type="button">MIS FAVORITOS</button>
     </nav>
+
+    <section class="viewer-entry hidden" id="hubTournamentEntry">
+      <h2>AGREGAR TORNEO POR ENLACE</h2>
+      <div><input id="hubTournamentLink" type="url" placeholder="Pega enlace del torneo" aria-label="Enlace del torneo"><button class="primary" id="hubOpenTournament" type="button">AGREGAR</button></div>
+    </section>
     <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← MIS TORNEOS</button>
 
     <section class="panel monitor-panel" id="hubGeneralPanel">

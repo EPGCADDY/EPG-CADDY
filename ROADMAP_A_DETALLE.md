@@ -1811,3 +1811,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Reparación R75 gate TORNEOS: la prueba VM incluye `setPageTitle()` antes de ejecutar `showTournamentPortal()`, evitando ReferenceError introducido por el nuevo título dinámico; sin cambio funcional.
 - Diagnóstico R75 CI: se separan temporalmente los contratos modificados (TORNEOS, release, matriz física, tarjeta final y paridad manual) en pasos visibles para identificar el fallo exacto antes del gate agregado.
 - Reparación R75 exacta del test TORNEOS: el sandbox VM ahora define `$` como stub nulo al ejecutar `setPageTitle()`, eliminando `ReferenceError: $ is not defined` sin alterar la aplicación.
+
+- R76 · Auditoría de lógica y arquitectura TORNEOS: las cuatro funciones principales quedan visibles; RESULTADOS POR CATEGORÍA deja de estar oculto; BUSCAR JUGADORES conserva la intención y, si falta contexto, pide elegir torneo sin desviar a pegar enlace; AGREGAR TORNEO POR ENLACE queda como flujo secundario explícito y oculto hasta solicitarlo; la selección de torneo reanuda automáticamente la función previamente elegida.
