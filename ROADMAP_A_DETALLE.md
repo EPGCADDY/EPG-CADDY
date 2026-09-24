@@ -1903,3 +1903,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Producción pendiente de validación LAB y autorización final.
 
 - R106-H5: corregido gate de release obsoleto para permitir build y revisión visual real de las siete tarjetas; producción bloqueada hasta 7/7 PASS visual.
+
+- R106-H6: restaurada leyenda exacta Match Play ↑/↓/= exigida por gate; continúa bloqueada producción hasta render y revisión visual 7/7.
