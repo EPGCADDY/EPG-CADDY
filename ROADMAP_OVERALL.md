@@ -1811,4 +1811,4 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 
 - R106 hotfix gate 2026-09-24 · test-v306-match-play.mjs actualizado al contrato visual aprobado de Match Play: ↑ ganó, ↓ perdió y = empate; valida que los tres símbolos estén presentes en la tarjeta Global exportable.
 
-- 2026-09-24 R106-H3: tarjetas digitales — invalida caché H2 para cargar el generador/exportador vigente; conserva exactamente formato, diagrama, tamaños, fuentes, orden, casillas y línea gráfica; render PNG nativo 3×/4200 px; logo oficial obligatorio; paleta exclusiva negro/verde/blanco.
+- 2026-09-24 R106-H3: tarjetas digitales — invalida caché H2 para cargar el generador/exportador vigente; conserva exactamente formato, diagrama, tamaños, fuentes, orden, casillas y línea gráfica; render PNG nativo 3×/4200 px; logo oficial obligatorio; paleta exclusiva negro/verde/blanco. Archivos de control actualizados: ROADMAP_A_DETALLE.md, ROADMAP_OVERALL.md.
