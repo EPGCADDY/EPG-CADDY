@@ -4,7 +4,7 @@ const app=fs.readFileSync("index-grupal.html","utf8");
 assert(app.includes("function roundHasRecordedScores"),"Falta detector de scores para cambio de modalidad");
 assert(app.includes("function canChangeConfiguredRoundMode"),"Falta guard de cambio de modalidad");
 assert(!app.includes("function selectGeneralRoundMode(mode){\n  if(rosterEditMode)return false;"),"No debe bloquear cambio de modalidad sólo por editar ronda");
-assert(app.includes('round.mode=draftRoundMode;round.tournament=draftTournament;round.sideGames=draftSideGames();'),"Editar ronda debe persistir la nueva modalidad");
+assert(app.includes('const previousMode=round.mode;round.mode=draftRoundMode;if(previousMode!==round.mode){round.officiallyClosedAt=null;round.officialSnapshot=null;round.officialVersions=[];round.snapshotHash="";round.status="active";resetFinalCardShare()}round.tournament=draftTournament;round.sideGames=draftSideGames();'),"Editar ronda debe persistir la nueva modalidad y reiniciar el cierre oficial si cambia");
 assert(app.includes('$("setupStatus").textContent="MODALIDAD EDITABLE · LOS SCORES EXISTENTES SE CONSERVAN";'),"Falta confirmación de conservación de scores al cambiar modalidad");
 assert(!app.includes("PARA CAMBIAR MODALIDAD DESPUÉS DE REGISTRAR SCORES, INICIA UNA NUEVA RONDA"),"No debe bloquear modalidad cuando ya existen scores");
 console.log("PASS LAB modality change with recorded scores preserved");
