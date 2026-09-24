@@ -4,7 +4,7 @@
   const textBytes=value=>encoder.encode(String(value));
   const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
-  const dimensions=item=>{const rows=Number(item?.html?.match(/<tr>/g)?.length||0),sections=Number(item?.html?.match(/<section/g)?.length||0),mode=String(item?.mode||"");const complex=["four_ball","match_play","stableford","universales"].includes(mode)||/SKINS|NASSAU|VEGAS|WOLF/i.test(String(item?.html||""));return{width:1600,height:item?.kind==="personal"?Math.max(1300,720+rows*48+sections*90):Math.max(900,(complex?760:560)+rows*(complex?58:46)+sections*110)}};
+  const dimensions=item=>{const rows=Number(item?.html?.match(/<tr>/g)?.length||0),sections=Number(item?.html?.match(/<section/g)?.length||0),mode=String(item?.mode||"");const complex=["four_ball","match_play","stableford","universales"].includes(mode)||/SKINS|NASSAU|VEGAS|WOLF/i.test(String(item?.html||""));return{width:2400,height:item?.kind==="personal"?Math.max(1950,1080+rows*72+sections*135):Math.max(1350,(complex?1140:840)+rows*(complex?87:69)+sections*165)}};
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
@@ -16,12 +16,12 @@
 
   async function inlineImages(html){
     let output=String(html||"");const sources=[...new Set([...output.matchAll(/<img[^>]+src=["']([^"']+)["']/gi)].map(match=>match[1]))];
-    for(const src of sources){try{const response=await fetch(src,{cache:"force-cache"});if(!response.ok)continue;const blob=await response.blob(),bytes=new Uint8Array(await blob.arrayBuffer());let binary="";for(let offset=0;offset<bytes.length;offset+=32768)binary+=String.fromCharCode(...bytes.subarray(offset,offset+32768));output=output.split(src).join(`data:${blob.type||"image/png"};base64,${btoa(binary)}`)}catch{}}
+    for(const src of sources){try{const response=await fetch(src,{cache:"no-store"});if(!response.ok)throw new Error(`IMAGE_FETCH_${response.status}`);const blob=await response.blob(),bytes=new Uint8Array(await blob.arrayBuffer());let binary="";for(let offset=0;offset<bytes.length;offset+=32768)binary+=String.fromCharCode(...bytes.subarray(offset,offset+32768));output=output.split(src).join(`data:${blob.type||"image/png"};base64,${btoa(binary)}`)}catch(error){throw new Error(`IMAGE_INLINE_FAILED:${src}:${error?.message||error}`)}}
     return output
   }
   async function canvasFor(item){
     if(typeof document==="undefined"||typeof Image==="undefined")throw new Error("BROWSER_REQUIRED");
-    item={...item,html:await inlineImages(item.html)};
+    item={...item,html:await inlineImages(item.html)};if(/<img[^>]+src=["'](?!data:)/i.test(item.html))throw new Error("IMAGE_NOT_INLINED");
     // A self-contained SVG data image keeps the canvas origin-clean. A Blob
     // URL containing foreignObject taints it and makes PNG/PDF export fail.
     const svg=artifactSvg(item),image=new Image();

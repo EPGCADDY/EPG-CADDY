@@ -1867,3 +1867,9 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - LAB 2026-09-23 · Versionado PWA corregido a R101 en index-grupal.html y service-worker.js; cache names y RELEASE dejan de identificarse como R80. Sin cambios en Scores ni cálculos deportivos.
 
 - LAB 2026-09-23 · test-lab-r60-production-refresh.mjs actualizado al release R101 para validar el nuevo versionado PWA/caché; resto del contrato permanece intacto.
+
+- LAB 2026-09-23 · Exportación de tarjetas digitales: resolución PNG elevada de 1600 a 2400 px con altura proporcional; imágenes/logos pasan a ser obligatorios y el export falla explícitamente si el logo no puede incrustarse, evitando enviar tarjetas sin logo. Aplica al exportador común de Global/Personal y todas las modalidades, incluyendo Four Ball, Match Play, Stableford, Universales y paneles laterales. Sin cambios deportivos.
+
+- LAB 2026-09-23 · Blindaje de modalidad en tarjeta digital: la identidad de share incluye modalidad activa y modalidad del snapshot; officialArtifacts bloquea cualquier cruce Match Play/Four Ball y valida que el artefacto generado corresponda a la modalidad. Regresión añadida: Match Play exige flechas y prohíbe TEAM/MEJOR/Four Ball.
+
+- LAB 2026-09-23 · Corrección raíz de Tarjeta Digital: compartir ahora genera el artefacto desde la ronda ACTUAL visible (modalidad + jugadores + scores) y no reutiliza un officialSnapshot histórico de otra modalidad. La identidad de caché incorpora modalidad y scores, evitando que Medal Play/Match Play hereden un PNG Four Ball previo. Aplica a COMPARTIR TARJETA y ENVIAR A JUGADORES.

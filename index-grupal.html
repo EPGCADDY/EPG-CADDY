@@ -1099,6 +1099,14 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 @media(max-width:800px){.round-player-grid-head{margin:0 0 4px!important;min-height:12px!important;align-items:end!important}.round-player-grid-head>strong,.round-player-grid-head>span,.round-player-grid-head>span:not(:empty){font-size:16px!important;line-height:1!important;color:#fff!important;-webkit-text-fill-color:#fff!important;text-align:center!important;font-weight:900!important}.round-player-grid-head .round-keypad-head{grid-column:3/6!important}.round-player-grid>span:not(:empty),.round-player-grid>.round-grid-gross,.round-player-grid>.round-inline-score-key{font-size:20px!important;line-height:1!important}}
 </style>
 
+<style id="gscg-score-entry-alignment-r101">
+@media(max-width:800px){
+  .round-player-grid-head{grid-auto-rows:18px!important;min-height:18px!important;height:18px!important;margin:0 0 4px!important;align-items:center!important}
+  .round-player-grid-head>strong,.round-player-grid-head>span,.round-player-grid-head>span:not(:empty){display:flex!important;align-items:center!important;justify-content:center!important;height:18px!important;min-height:18px!important;margin:0!important;padding:0!important;font-size:16px!important;line-height:18px!important;font-weight:900!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+  .round-player-grid-head .round-keypad-head{grid-column:3/6!important}
+  #roundGridHole{color:#31ff00!important;-webkit-text-fill-color:#31ff00!important}
+}
+</style>
 <style id="gscg-final-card-cleanup-r70">
 #finalCardOverlay #openGlobalCard,#finalCardOverlay #imageGlobalCard,#finalCardOverlay #pdfGlobalCard,#finalCardOverlay #shareGlobalCard,#finalCardOverlay #personalCardPlayer,#finalCardOverlay #openPersonalCard,#finalCardOverlay #imagePersonalCard,#finalCardOverlay #pdfPersonalCard,#finalCardOverlay #sharePersonalCard,#finalCardOverlay #downloadAllCards,#finalCardOverlay #openOfficialCorrection{display:none!important}
 #finalCardOverlay #artifactActions{grid-template-columns:minmax(0,1fr)!important}
@@ -2928,16 +2936,18 @@ function playerBlock(p,slot){
 }
 function isRoundComplete(){return !!(!round.provisional&&round.configured&&round.players.length&&round.players.every(p=>requiredHolesForPlayer(p,ALL).every(h=>{const s=p.holes[h];return!!s&&!isOmittedScore(s)&&Number.isInteger(s.gross)})))}
 let finalCardPreparedShare=null,finalCardPreparingId="";
-function finalCardShareIdentity(){return`${round?.id||""}:${round?.officialSnapshot?.sha256||""}:${round?.officialVersion||1}`}
+function finalCardShareIdentity(){const scores=(round?.players||[]).map(p=>`${p.id}:${Object.entries(p.holes||{}).map(([k,v])=>`${k}=${v?.gross??v?.status??""}`).join(",")}`).join("|");return`${round?.id||""}:${round?.mode||""}:${round?.officialSnapshot?.mode||""}:${round?.officialSnapshot?.sha256||""}:${round?.officialVersion||1}:${scores}`}
 function resetFinalCardShare(){finalCardPreparedShare=null;finalCardPreparingId="";const button=$("sendFinalCard");if(button){button.disabled=false;button.textContent="COMPARTIR TARJETA"}}
+function currentShareSnapshot(){if(round.provisional||!round.configured||!round.players.length)throw new Error("ROUND_NOT_READY");const snapshot=JSON.parse(JSON.stringify(round));snapshot.mode=round.mode||"general";snapshot.playedAt=round.createdAt;snapshot.course=COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte;snapshot.sha256=round.officialSnapshot?.sha256||"";return snapshot}
+function currentShareArtifacts(){const snapshot=currentShareSnapshot(),cards=window.GSCCardArtifacts.build(snapshot),normalized=snapshot.mode==="general"?"stroke":snapshot.mode;if(cards.global?.mode!==normalized)throw new Error(`LIVE_CARD_ARTIFACT_MODE_MISMATCH:${normalized}:${cards.global?.mode||"missing"}`);return cards}
 async function prepareFinalCardShare(){
-  if(!round?.officiallyClosedAt||!round?.officialSnapshot){resetFinalCardShare();return false}
+  if(!round?.configured||!round?.players?.length){resetFinalCardShare();return false}
   const id=finalCardShareIdentity(),button=$("sendFinalCard"),status=$("artifactShareStatus");
   if(finalCardPreparedShare?.id===id){button.disabled=false;button.textContent="COMPARTIR TARJETA";status.textContent="TARJETA LISTA PARA ENVIAR";return true}
   if(finalCardPreparingId===id)return false;
   finalCardPreparingId=id;finalCardPreparedShare=null;button.disabled=true;button.textContent="PREPARANDO TARJETA…";status.textContent="PREPARANDO IMAGEN PARA ENVIAR…";
   try{
-    const item=officialArtifacts().global,blob=await window.GSCCardFileExport.png(item);
+    const item=currentShareArtifacts().global,blob=await window.GSCCardFileExport.png(item);
     if(id!==finalCardShareIdentity())return false;
     finalCardPreparedShare={id,item,blob};button.disabled=false;button.textContent="COMPARTIR TARJETA";status.textContent="TARJETA LISTA PARA ENVIAR";return true
   }catch(error){console.error("Preparación de tarjeta digital:",error);if(id===finalCardShareIdentity()){button.disabled=false;button.textContent="REINTENTAR PREPARACIÓN";status.textContent="NO SE PUDO PREPARAR LA TARJETA · TOCA PARA REINTENTAR"}return false}
@@ -2964,7 +2974,7 @@ function renderFinalDigitalCard(){
   return true;
 }
 async function officiallyCloseRound(){if(round.provisional||!isRoundComplete()||round.officiallyClosedAt)return false;if(!round.endedAt)stopRoundClock();syncSideGameResults();const result=await window.GSCRoundClosure.close(round,{deriveScore:derivedScoreForHole,appVersion:"V330"});if(!result.ok){$("status").textContent=result.code==="SIDE_GAME_PENDING"?`${String(result.game||"JUEGO").toUpperCase()} · FALTA DEFINIR EL HOYO ${result.hole}`:"RONDA INCOMPLETA";return false}round=result.round;persist();render();renderFinalDigitalCard();$("status").textContent="RONDA FINALIZADA. LAS TARJETAS ESTÁN LISTAS.";return true}
-function officialArtifacts(){if(round.provisional||!round.officialSnapshot)throw new Error("Ronda no cerrada");return window.GSCCardArtifacts.build(round.officialSnapshot)}
+function officialArtifacts(){if(round.provisional||!round.officialSnapshot)throw new Error("Ronda no cerrada");const expected=round.mode||"general",actual=round.officialSnapshot.mode||"general";if(actual!==expected)throw new Error(`CARD_MODE_MISMATCH:${expected}:${actual}`);const cards=window.GSCCardArtifacts.build(round.officialSnapshot),normalized=expected==="general"?"stroke":expected;if(cards.global?.mode!==normalized)throw new Error(`CARD_ARTIFACT_MODE_MISMATCH:${normalized}:${cards.global?.mode||"missing"}`);return cards}
 function artifactBlobUrl(html){return URL.createObjectURL(new Blob([html],{type:"text/html;charset=utf-8"}))}
 const openedArtifactItems=new Map(),openedArtifactBlobs=new Map();
 function artifactViewerHtml(item,token){

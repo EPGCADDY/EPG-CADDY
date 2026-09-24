@@ -58,3 +58,12 @@ const legacy=JSON.parse(JSON.stringify(snapshot));legacy.mode='general';legacy.u
 for(const player of legacy.players){player.universalesPoints=12;for(const h of Object.values(player.holes)){h.universalesPoints=12;h.stablefordPoints=2;}}
 for(const card of artifacts.build(legacy).all)assert.doesNotMatch(card.html,/PUNTOS UNIVERSALES|PUNTOS IN|PUNTOS OUT|G\/N\/P/);
 console.log('PASS: global and personal Medal cards ignore legacy Universales point fields');
+
+const matchPlayers=Array.from({length:2},(_,playerIndex)=>({...snapshot.players[0],id:`mp${playerIndex+1}`,name:`MATCH ${playerIndex+1}`,holes:JSON.parse(JSON.stringify(holes))}));
+const matchSnapshot={...snapshot,mode:'match_play',players:matchPlayers,matchPlay:{closed:true,decidedAt:18,resultLabel:'MATCH 1 UP',matches:[{closed:true,decidedAt:18,resultLabel:'MATCH 1 UP'}]}};
+const matchCards=artifacts.build(matchSnapshot);
+assert.equal(matchCards.global.mode,'match_play');
+assert.match(matchCards.global.html,/MODALIDAD · MATCH PLAY/);
+assert.match(matchCards.global.html,/match-arrow/,'Match Play digital debe conservar flechas');
+assert.doesNotMatch(matchCards.global.html,/TEAM ·|★ MEJOR|MODALIDAD · FOUR BALL/,'Match Play digital no puede contener formato Four Ball');
+console.log('PASS tarjeta digital Match Play conserva flechas y no contamina Four Ball');
