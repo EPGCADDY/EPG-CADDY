@@ -1798,3 +1798,9 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - LAB 2026-09-23 · Blindaje de modalidad en tarjeta digital: la identidad de share incluye modalidad activa y modalidad del snapshot; officialArtifacts bloquea cualquier cruce Match Play/Four Ball y valida que el artefacto generado corresponda a la modalidad. Regresión añadida: Match Play exige flechas y prohíbe TEAM/MEJOR/Four Ball.
 
 - LAB 2026-09-23 · Corrección raíz de Tarjeta Digital: compartir ahora genera el artefacto desde la ronda ACTUAL visible (modalidad + jugadores + scores) y no reutiliza un officialSnapshot histórico de otra modalidad. La identidad de caché incorpora modalidad y scores, evitando que Medal Play/Match Play hereden un PNG Four Ball previo. Aplica a COMPARTIR TARJETA y ENVIAR A JUGADORES.
+
+
+### R106 · 24 septiembre 2026
+- Tarjetas digitales Match Play y Four Ball: presentación global dividida en dos bloques, hoyos 1–9 arriba y 10–18 abajo, para mejorar legibilidad en iPhone y exportación PNG.
+- Compartir tarjeta: regeneración por modalidad activa y prevención de reutilización de artefactos de otra modalidad.
+- Entrada manual: encabezados JUGADOR, SCORE y TECLADO homologados en tamaño y alineación; HOYO conserva identificación verde.
