@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PRODUCTION-20260924-R102">
+  <meta name="gscg-release" content="PRODUCTION-20260924-R103">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1112,7 +1112,17 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 #finalCardOverlay #artifactActions{grid-template-columns:minmax(0,1fr)!important}
 #finalCardOverlay #sendFinalCard{font-size:0!important}
 #finalCardOverlay #sendFinalCard::after{content:"COMPARTIR TARJETA";font:900 11px/1.15 Arial,sans-serif;letter-spacing:.35px}
-#cardLibraryActions{display:none!important;margin:0!important;padding:0!important;gap:0!important;height:0!important;min-height:0!important;overflow:hidden!important}\n</style>\n</head>
+#cardLibraryActions{display:none!important;margin:0!important;padding:0!important;gap:0!important;height:0!important;min-height:0!important;overflow:hidden!important}\n</style>
+<style id="gscg-score-entry-final-r103">
+@media(max-width:800px){
+ #roundManualEntry .round-player-grid-head{grid-auto-rows:14px!important;min-height:14px!important;height:14px!important;margin:0 0 4px!important;align-items:center!important}
+ #roundManualEntry .round-player-grid-head>strong,#roundManualEntry .round-player-grid-head>span,#roundManualEntry .round-player-grid-head>span:not(:empty){display:flex!important;align-items:center!important;justify-content:center!important;height:14px!important;min-height:14px!important;margin:0!important;padding:0!important;font-size:9px!important;line-height:14px!important;font-weight:900!important;color:#fff!important;-webkit-text-fill-color:#fff!important;white-space:nowrap!important}
+ #roundManualEntry .round-player-grid-head .round-keypad-head{grid-column:3/6!important}
+ #roundManualEntry #roundGridHole{color:#31ff00!important;-webkit-text-fill-color:#31ff00!important}
+ #roundManualEntry .round-player-grid>.round-grid-gross,#roundManualEntry .round-player-grid>.round-inline-score-key,#roundManualEntry .round-player-grid>span:not(:empty){font-family:inherit!important;font-size:20px!important;font-weight:900!important;line-height:1!important}
+}
+</style>
+</head>
 <body>
 
 <div class="overlay" id="skinsOverlay" aria-hidden="true">
