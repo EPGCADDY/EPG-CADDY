@@ -1790,3 +1790,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - PRODUCCIÓN 2026-09-23 · Gate Universales ajustado para Global y Personal: reconoce G/N/P o PUNTOS según el artefacto. Archivo: test-lab-global-operational-audit.mjs. Sin cambio funcional ni deportivo.
 
 - LAB 2026-09-23 · Versionado PWA corregido a R101 en index-grupal.html y service-worker.js; cache names y RELEASE dejan de identificarse como R80. Sin cambios en Scores ni cálculos deportivos.
+
+- LAB 2026-09-23 · test-lab-r60-production-refresh.mjs actualizado al release R101 para validar el nuevo versionado PWA/caché; resto del contrato permanece intacto.
