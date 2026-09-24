@@ -1915,3 +1915,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R106-H10: eliminado remanente de gate V278 que aún exigía 1400/4200px; fixture restaurado y contrato Full HD 1920×1080 completo.
 
 - R106-H11: reparado SyntaxError del gate Full HD causado por secuencia literal backslash-n; archivo verificado con salto de línea real.
+
+- R106-H12: Match Play reconstruido según matriz aprobada: 2/4/6 jugadores en enfrentamientos 1 vs 1, separadores sin rótulos PAREJA/POS, G/N por hoyo y columnas GROSS/NETO/+/-; leyenda gana/pierde/empata. Gate V306 actualizado.
