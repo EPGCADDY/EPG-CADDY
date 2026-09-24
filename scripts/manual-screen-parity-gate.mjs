@@ -28,6 +28,8 @@ const mountedCurrent=[
  "/docs/manual/current/APP_TORNEOS_HUB.png",
  "/docs/manual/current/APP_TORNEOS_ATAJOS.png",
  "/docs/manual/current/APP_MODE_STABLEFORD_R106_H2.svg",
+ "/docs/manual/current/APP_TARJETA_DIGITAL_R106_H2.svg",
+ "/docs/manual/current/APP_MATCH_PLAY_CARD_R106_H2.svg",
  "/docs/manual/current/APP_MODE_MATCH_PLAY.png",
  "/docs/manual/current/APP_MODE_FOUR_BALL.png",
  "/docs/manual/current/APP_MODE_SKINS.png",
@@ -35,6 +37,10 @@ const mountedCurrent=[
  "/docs/manual/current/APP_MODE_PRACTICE.png"
 ];
 for(const img of mountedCurrent) assert(manual.includes(img),"Falta pantalla física actual montada en manual: "+img);
+for(const token of ["HACIENDA NUEVA","ALTA VISTA","↑ verde","↓ roja","= blanco","modalidad activa","lienzo negro excesivo"]) assert(manual.includes(token),"R106-H2 no está documentado completamente: "+token);
+assert(manual.includes("APP_MODE_STABLEFORD_R106_H2.svg"),"Stableford debe usar la pantalla R106-H2 de seis campos");
+assert(manual.includes("APP_TARJETA_DIGITAL_R106_H2.svg"),"Tarjeta Digital debe usar la gráfica R106-H2 recortada/legible");
+assert(manual.includes("APP_MATCH_PLAY_CARD_R106_H2.svg"),"Match Play debe usar la gráfica R106-H2 con ↑ / ↓ / =");
 for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","MI TARJETA FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","officialCorrectionOverlay","MIS RONDAS GUARDADAS"]) {
   assert(app.includes(token)||hub.includes(token),"LAB actual no contiene control esperado: "+token);
 }
