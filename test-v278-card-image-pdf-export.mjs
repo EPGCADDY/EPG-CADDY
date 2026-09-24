@@ -49,3 +49,5 @@ assert.match(source,/async function renderFullHd\(item\)/,"R106-H9 must use nati
 assert.match(source,/canvas\.width=width;canvas\.height=height/,"R106-H9 renderer must render natively at 1920×1080");
 assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
 assert.match(source,/async function png\(item\)\{return canvasBlob\(await canvasFor\(item\),"image\/png"\)\}/,"PNG must come directly from rebuilt native renderer");
+
+assert.match(source,/return canvas;/,"El exportador no debe recortar el canvas Full HD después del render");
