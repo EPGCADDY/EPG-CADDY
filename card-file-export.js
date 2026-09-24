@@ -11,7 +11,7 @@
     const style=item.html.match(/<style>([\s\S]*?)<\/style>/i)?.[1]||"",main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
     if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
     const {width,height}=dimensions(item),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
-    return`<svg xmlns="http://www.w3.org/2000/svg" width="${width*3}" height="${height*3}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-40}px;max-width:none;margin:0;padding:20px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
+    return`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-40}px;max-width:none;margin:0;padding:20px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
   }
 
   async function inlineImages(html){
@@ -19,22 +19,33 @@
     for(const src of sources){try{const controller=typeof AbortController==="function"?new AbortController():null,timer=setTimeout(()=>controller?.abort(),8000);let response;try{response=await fetch(src,{cache:"no-store",...(controller?{signal:controller.signal}:{})})}finally{clearTimeout(timer)};if(!response.ok)throw new Error(`IMAGE_FETCH_${response.status}`);const blob=await response.blob(),bytes=new Uint8Array(await blob.arrayBuffer());let binary="";for(let offset=0;offset<bytes.length;offset+=32768)binary+=String.fromCharCode(...bytes.subarray(offset,offset+32768));output=output.split(src).join(`data:${blob.type||"image/png"};base64,${btoa(binary)}`)}catch(error){throw new Error(`IMAGE_INLINE_FAILED:${src}:${error?.message||error}`)}}
     return output
   }
-  async function canvasFor(item){
-    if(typeof document==="undefined"||typeof Image==="undefined")throw new Error("BROWSER_REQUIRED");
-    item={...item,html:await inlineImages(item.html)};if(/<img[^>]+src=["'](?!data:)/i.test(item.html))throw new Error("IMAGE_NOT_INLINED");
-    // A self-contained SVG data image keeps the canvas origin-clean. A Blob
-    // URL containing foreignObject taints it and makes PNG/PDF export fail.
-    const svg=artifactSvg(item),image=new Image();
-    await new Promise((resolve,reject)=>{
-      const timer=setTimeout(()=>{image.src="";reject(new Error("IMAGE_RENDER_TIMEOUT"))},15000);
-      image.onload=()=>{clearTimeout(timer);resolve()};
-      image.onerror=()=>{clearTimeout(timer);reject(new Error("IMAGE_RENDER_FAILED"))};
-      image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
-    });
-    const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width*3;canvas.height=height*3;
-    const context=canvas.getContext("2d");if(!context)throw new Error("CANVAS_CONTEXT_REQUIRED");
-    context.fillStyle="#000";context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(image,0,0,canvas.width,canvas.height);return trimCanvas(canvas,96);
+
+  async function renderNative3x(item){
+    if(typeof document==="undefined")throw new Error("BROWSER_REQUIRED");
+    const html=await inlineImages(String(item?.html||""));
+    if(/<img[^>]+src=["'](?!data:)/i.test(html))throw new Error("IMAGE_NOT_INLINED");
+    const {width,height}=dimensions(item),scale=3;
+    const frame=document.createElement("iframe");
+    frame.setAttribute("aria-hidden","true");
+    frame.style.cssText=`position:fixed;left:-100000px;top:0;width:${width}px;height:${height}px;border:0;visibility:hidden;pointer-events:none;background:#000`;
+    document.body.appendChild(frame);
+    try{
+      const doc=frame.contentDocument;if(!doc)throw new Error("FRAME_DOCUMENT_REQUIRED");
+      doc.open();doc.write(html);doc.close();
+      await new Promise(resolve=>setTimeout(resolve,80));
+      const source=doc.querySelector("main");if(!source)throw new Error("ARTIFACT_BODY_REQUIRED");
+      const canvas=document.createElement("canvas");canvas.width=width*scale;canvas.height=height*scale;
+      const ctx=canvas.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");
+      ctx.fillStyle="#000";ctx.fillRect(0,0,canvas.width,canvas.height);
+      const svg=artifactSvg({...item,html}),image=new Image();
+      await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("NATIVE_RENDER_TIMEOUT")),15000);image.onload=()=>{clearTimeout(timer);resolve()};image.onerror=()=>{clearTimeout(timer);reject(new Error("NATIVE_RENDER_FAILED"))};image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)});
+      ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
+      ctx.drawImage(image,0,0,width,height,0,0,canvas.width,canvas.height);
+      return trimCanvas(canvas,96);
+    }finally{frame.remove()}
   }
+
+  async function canvasFor(item){return renderNative3x(item)}
 
   function trimCanvas(canvas,margin=32){
     const context=canvas.getContext("2d");if(!context)return canvas;
@@ -48,22 +59,7 @@
   }
 
   function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("CANVAS_EXPORT_TIMEOUT")),12000);canvas.toBlob(blob=>{clearTimeout(timer);blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED"))},type,quality)})}
-  async function png(item){
-    try{return canvasBlob(await canvasFor(item),"image/png")}
-    catch(primaryError){
-      if(typeof document==="undefined")throw primaryError;
-      const host=document.createElement("iframe");host.setAttribute("aria-hidden","true");host.style.cssText="position:fixed;left:-100000px;top:0;width:2400px;height:4000px;border:0;visibility:hidden;pointer-events:none";document.body.appendChild(host);
-      try{
-        const doc=host.contentDocument;if(!doc)throw primaryError;
-        doc.open();doc.write(String(item?.html||""));doc.close();
-        await new Promise(resolve=>setTimeout(resolve,120));
-        const target=doc.body?.querySelector("main")||doc.body;if(!target)throw primaryError;
-        const fallbackHtml=await inlineImages(String(item.html||""));const svg=artifactSvg({...item,html:fallbackHtml}),image=new Image();
-        await new Promise((resolve,reject)=>{const timer=setTimeout(()=>{image.src="";reject(new Error("IMAGE_FALLBACK_TIMEOUT"))},12000);image.onload=()=>{clearTimeout(timer);resolve()};image.onerror=()=>{clearTimeout(timer);reject(new Error("IMAGE_FALLBACK_FAILED"))};image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)});
-        const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width*3;canvas.height=height*3;const context=canvas.getContext("2d");if(!context)throw primaryError;context.fillStyle="#000";context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(image,0,0,canvas.width,canvas.height);return canvasBlob(trimCanvas(canvas,96),"image/png")
-      }finally{host.remove()}
-    }
-  }
+  async function png(item){return canvasBlob(await canvasFor(item),"image/png")}
   async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
 
   function pdfBytes(pages){
