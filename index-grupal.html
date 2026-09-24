@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PRODUCTION-20260924-R105">
+  <meta name="gscg-release" content="PRODUCTION-20260924-R106">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -3073,8 +3073,7 @@ async function shareOfficialArtifact(item){const status=$("artifactShareStatus")
 function shareOfficialArtifactImage(){
   const status=$("artifactShareStatus"),button=$("sendFinalCard"),prepared=finalCardPreparedShare,id=finalCardShareIdentity();
   if(!prepared||prepared.id!==id){prepareFinalCardShare();return Promise.resolve({ok:false,state:"PREPARING"})}
-  const expectedMode=(round?.mode||"general"),snapshotMode=(round?.officialSnapshot?.mode||expectedMode),normalizedExpectedMode=expectedMode==="general"?"stroke":expectedMode;
-  if(snapshotMode!==expectedMode){resetFinalCardShare();status.textContent="ERROR DE MODALIDAD · TARJETA NO ENVIADA";return Promise.resolve({ok:false,state:"MODE_MISMATCH"})}
+  const expectedMode=(round?.mode||"general"),normalizedExpectedMode=expectedMode==="general"?"stroke":expectedMode;
   if(prepared.item?.mode!==normalizedExpectedMode){resetFinalCardShare();prepareFinalCardShare();status.textContent="REGENERANDO TARJETA DE LA MODALIDAD CORRECTA…";return Promise.resolve({ok:false,state:"MODE_REFRESH"})}
   const {item,blob}=prepared,title=item.kind==="personal"?"Tarjeta oficial personal":"Tarjeta oficial global",name=String(item.name||"tarjeta-digital.html").replace(/\.html?$/i,".png"),file=new File([blob],name,{type:"image/png"}),payload={title,text:officialArtifactShareText(item),files:[file]};
   button.disabled=true;button.textContent="ABRIENDO OPCIONES…";
