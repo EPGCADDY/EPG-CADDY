@@ -43,3 +43,8 @@ assert.match(pdfText,/xref\n0 9/);
 assert.match(pdfText,/%%EOF\n$/);
 
 console.log("PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las tarjetas oficiales General/Stableford");
+
+assert.match(source,/async function renderNative3x\(item\)/,"R106-H3 must use rebuilt native 3x renderer");
+assert.match(source,/const \{width,height\}=dimensions\(item\),scale=3/,"R106-H3 native renderer must render at 3x");
+assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
+assert.match(source,/async function png\(item\)\{return canvasBlob\(await canvasFor\(item\),"image\/png"\)\}/,"PNG must come directly from rebuilt native renderer");
