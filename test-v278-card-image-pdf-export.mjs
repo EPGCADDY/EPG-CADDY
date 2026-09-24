@@ -29,7 +29,7 @@ assert.match(svg,/background:#000/);
 const dims=fileExport.dimensions(cards.personal[0]);
 assert.equal(dims.width,1400);
 assert.ok(dims.height>=1180);
-assert.match(svg,/width="2800"/,"El SVG exportable debe renderizar a 2x para alta resolución");
+assert.match(svg,/width="4200"/,"El SVG exportable debe renderizar a 3x para alta resolución");
 assert.match(svg,/golf-score-card-gt-horizontal-original\.webp/,"La tarjeta exportable debe conservar el logo oficial");
 assert.doesNotMatch(cards.global.html,/<h2 class="score-card-title">SCORE CARD<\/h2>/,"El texto SCORE CARD no debe ocupar el lugar del logo");
 
