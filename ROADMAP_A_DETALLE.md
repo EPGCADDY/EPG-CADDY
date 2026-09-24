@@ -1929,3 +1929,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R106-H16: retiradas las dos últimas aserciones obsoletas `PAREJA 1/2` del gate Match Play; la matriz aprobada queda 1v1 con separadores visuales y sin rótulos PAREJA.
 
 - R106-H17: añadido render físico enfocado exclusivamente en las siete tarjetas a 1920×1080, sin recorrido de manual ni pantallas ajenas; artefacto dedicado `r106-seven-cards`.
+
+- R106-H18: fixtures visuales corregidos: Match Play/Four Ball con resultados decisivos visibles; Práctica y Skins ahora son modalidades reales, no copias nominales de Medal; pipeline enfocado vuelve a renderizar las siete.
