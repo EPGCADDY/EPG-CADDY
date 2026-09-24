@@ -1822,3 +1822,5 @@ LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 1
 - R106-H5: gate de build alineado; revisión visual 7/7 obligatoria antes de nueva publicación.
 
 - R106-H6: Match Play legend gate corregido; pendiente certificación visual 7/7.
+
+- R106-H7: gate Medal reparado; pendiente build verde y revisión visual 7/7.
