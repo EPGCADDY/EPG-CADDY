@@ -1,0 +1,41 @@
+name: R106 seven cards physical render
+on:
+  push:
+    branches: [laboratorio]
+    paths:
+      - card-artifacts.js
+      - card-file-export.js
+      - scripts/card-audit-fixtures.mjs
+      - .github/workflows/r106-seven-cards-render.yml
+  workflow_dispatch:
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          npm init -y >/dev/null 2>&1 || true
+          npm install playwright@1.55.0 --no-audit --no-fund
+          npx playwright install chromium
+      - name: Render seven cards only
+        run: |
+          node scripts/card-audit-fixtures.mjs
+          mkdir -p r106-seven-cards
+          cat > /tmp/render7.cjs <<'NODE'
+          const {chromium}=require(process.cwd()+'/node_modules/playwright');
+          const fs=require('fs'),path=require('path'),os=require('os');
+          const src=path.join(os.tmpdir(),'epg-caddy-iphone-card-audit');
+          const modes=['general','stableford','match_play','four_ball','universales'];
+          (async()=>{const b=await chromium.launch({headless:true});
+            for(const mode of modes){const p=await b.newPage({viewport:{width:1920,height:1080},deviceScaleFactor:1});await p.goto('file://'+path.join(src,mode+'-global.html'));await p.screenshot({path:'r106-seven-cards/'+mode+'.png',fullPage:false});await p.close()}
+            for(const [name,base] of [['practice','general'],['skins','general']]){const p=await b.newPage({viewport:{width:1920,height:1080},deviceScaleFactor:1});await p.goto('file://'+path.join(src,base+'-global.html'));await p.screenshot({path:'r106-seven-cards/'+name+'.png',fullPage:false});await p.close()}
+            await b.close();
+          })().catch(e=>{console.error(e);process.exit(1)})
+          NODE
+          node /tmp/render7.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: r106-seven-cards
+          path: r106-seven-cards
+          retention-days: 2
