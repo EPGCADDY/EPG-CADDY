@@ -1818,3 +1818,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 
 ### R106-H4 — Shared digital scorecard matrix — 2026-09-24
 LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 10–18, G/N per hole, PAR and per-nine totals, up to six registered players. Changed: card-artifacts.js, test-card-artifacts.mjs, ROADMAP_A_DETALLE.md, ROADMAP_OVERALL.md. Production publication remains gated by LAB validation and owner authorization.
+
+- R106-H5: gate de build alineado; revisión visual 7/7 obligatoria antes de nueva publicación.
