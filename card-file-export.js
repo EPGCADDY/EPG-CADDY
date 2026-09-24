@@ -11,7 +11,7 @@
     const style=item.html.match(/<style>([\s\S]*?)<\/style>/i)?.[1]||"",main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
     if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
     const {width,height}=dimensions(item),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
-    return`<svg xmlns="http://www.w3.org/2000/svg" width="${width*2}" height="${height*2}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-40}px;max-width:none;margin:0;padding:20px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
+    return`<svg xmlns="http://www.w3.org/2000/svg" width="${width*3}" height="${height*3}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-40}px;max-width:none;margin:0;padding:20px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
   }
 
   async function inlineImages(html){
@@ -31,9 +31,9 @@
       image.onerror=()=>{clearTimeout(timer);reject(new Error("IMAGE_RENDER_FAILED"))};
       image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
     });
-    const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width*2;canvas.height=height*2;
+    const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width*3;canvas.height=height*3;
     const context=canvas.getContext("2d");if(!context)throw new Error("CANVAS_CONTEXT_REQUIRED");
-    context.fillStyle="#000";context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(image,0,0,canvas.width,canvas.height);return trimCanvas(canvas,64);
+    context.fillStyle="#000";context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(image,0,0,canvas.width,canvas.height);return trimCanvas(canvas,96);
   }
 
   function trimCanvas(canvas,margin=32){
@@ -60,7 +60,7 @@
         const target=doc.body?.querySelector("main")||doc.body;if(!target)throw primaryError;
         const fallbackHtml=await inlineImages(String(item.html||""));const svg=artifactSvg({...item,html:fallbackHtml}),image=new Image();
         await new Promise((resolve,reject)=>{const timer=setTimeout(()=>{image.src="";reject(new Error("IMAGE_FALLBACK_TIMEOUT"))},12000);image.onload=()=>{clearTimeout(timer);resolve()};image.onerror=()=>{clearTimeout(timer);reject(new Error("IMAGE_FALLBACK_FAILED"))};image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)});
-        const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width*2;canvas.height=height*2;const context=canvas.getContext("2d");if(!context)throw primaryError;context.fillStyle="#000";context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(image,0,0,canvas.width,canvas.height);return canvasBlob(trimCanvas(canvas,64),"image/png")
+        const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width*3;canvas.height=height*3;const context=canvas.getContext("2d");if(!context)throw primaryError;context.fillStyle="#000";context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(image,0,0,canvas.width,canvas.height);return canvasBlob(trimCanvas(canvas,96),"image/png")
       }finally{host.remove()}
     }
   }
