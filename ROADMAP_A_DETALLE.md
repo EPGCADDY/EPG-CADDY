@@ -1919,3 +1919,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R106-H12: Match Play reconstruido según matriz aprobada: 2/4/6 jugadores en enfrentamientos 1 vs 1, separadores sin rótulos PAREJA/POS, G/N por hoyo y columnas GROSS/NETO/+/-; leyenda gana/pierde/empata. Gate V306 actualizado.
 
 - R106-H13: corregido SyntaxError introducido en gate V306 y sustituida regex frágil por comprobación literal de columnas GROSS/NETO/+/-.
+
+- R106-H14: eliminado trimCanvas posterior al render; PNG/JPEG conservan exactamente 1920×1080. Gate añadido para impedir regresión por recorte.
