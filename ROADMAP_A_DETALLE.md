@@ -1907,3 +1907,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R106-H6: restaurada leyenda exacta Match Play ↑/↓/= exigida por gate; continúa bloqueada producción hasta render y revisión visual 7/7.
 
 - R106-H7: reparadas aserciones escapadas del gate de tarjeta Medal R106 (logo y G/N); revisión visual sigue bloqueada hasta build verde y render real 7/7.
+
+- R106-H8: Medal Global recupera categoría sobre nombre y corrige color relativo (- bajo par verde, + sobre par rojo, E blanco); sigue pendiente render visual 7/7.
