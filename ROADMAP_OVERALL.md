@@ -1826,3 +1826,5 @@ LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 1
 - R106-H7: gate Medal reparado; pendiente build verde y revisión visual 7/7.
 
 - R106-H8: corregida categoría/color Medal; certificación visual continúa 0/7 hasta render.
+
+- R106-H9: tarjetas fijadas a exportación Full HD nativa 1920×1080; revisión visual sigue pendiente.
