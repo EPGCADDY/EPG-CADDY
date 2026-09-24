@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 
 const c=fs.readFileSync('card-artifacts.js','utf8');
 
-assert(c.includes('const modeTotals=["match_play","four_ball"].includes(snapshot.mode)?"":approvedRoundTotals(snapshot,summaryPlayers)'),'Match Play/Four Ball no deben heredar resumen genérico');
+assert(c.includes('function shell(_title,snapshot,body,_summaryPlayers=snapshot.players||[])'),'La tarjeta limpia usa shell común sin resumen genérico heredado');
 
 for(const token of ['Tarjeta Global Match Play','NETO RIVAL','Tarjeta Global Four Ball','NETO COMPAÑERO','MEJOR NETO RIVAL','★ MEJOR']) assert(c.includes(token),'Falta lógica propia '+token);
 for(const token of ['Tarjeta Global Stableford','PUNTOS','G/P = Gross / Puntos Stableford']) assert(c.includes(token),'Falta Stableford '+token);

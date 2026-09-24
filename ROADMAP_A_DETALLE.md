@@ -1857,3 +1857,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - PRODUCCIÓN 2026-09-23 · Se elimina del workflow el gate heredado «R80 card diagnostic · personal unchanged», incompatible con la tarjeta limpia vigente y duplicado por las pruebas actuales. Archivo: .github/workflows/roadmap-gate.yml. Sin cambio de UI, Scores ni cálculo deportivo.
 
 - PRODUCCIÓN 2026-09-23 · Se alinea test-card-artifacts.mjs con la tarjeta limpia vigente: no exige SHA-256 visible en tarjeta personal. Archivo: test-card-artifacts.mjs. Sin cambio funcional ni deportivo.
+
+- PRODUCCIÓN 2026-09-23 · Se actualiza test-lab-r60-card-mode-purity.mjs para reconocer el shell limpio vigente sin resumen genérico heredado en Match Play/Four Ball. Sin cambio de UI, Scores ni cálculo deportivo.
