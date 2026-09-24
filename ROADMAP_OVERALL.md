@@ -1834,3 +1834,5 @@ LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 1
 - R106-H11: gate Full HD vuelve a ser JavaScript válido; continúa pendiente render visual 7/7.
 
 - R106-H12: matriz digital Match Play alineada al concepto aprobado de enfrentamientos directos 1 vs 1, hasta tres matches.
+
+- R106-H13: gate Match Play reparado para permitir continuar al render visual.
