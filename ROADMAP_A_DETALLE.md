@@ -1891,3 +1891,13 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - 2026-09-24 R106-H3 build: scripts/build-manual-lab.mjs ejecuta test-v278-card-image-pdf-export.mjs para bloquear publicación si el motor nativo 3× de tarjetas no cumple el contrato.
 
 - R106-H3 FINAL BUILD: card-file-export.js + test-v278-card-image-pdf-export.mjs + scripts/build-manual-lab.mjs; sin cambios de formato visual de las tarjetas. ROADMAP_A_DETALLE.md y ROADMAP_OVERALL.md actualizados conjuntamente.
+
+
+### R106-H4 — Matriz digital compartible 1920×1080 — 2026-09-24
+- Medal Play reconstruida en dos bloques: PRIMERA VUELTA 1–9 y SEGUNDA VUELTA 10–18.
+- Cada hoyo Medal Play conserva Gross/Neto en una sola celda G/N.
+- Fila PAR, MARCAS, HCP, GROSS, NETO y +/- conservados.
+- Capacidad heredada del registro: hasta 6 jugadores sin volver a matriz 1–18 ultrapanorámica.
+- Referencia visual aprobada por propietario: matriz compartible recibida/enviada por jugadores.
+- Archivo: card-artifacts.js; gate: test-card-artifacts.mjs.
+- Producción pendiente de validación LAB y autorización final.
