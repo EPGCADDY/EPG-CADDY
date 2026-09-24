@@ -1776,3 +1776,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R78 gate sync diagnóstico: ambos ROADMAPS registran en el mismo commit la separación title/hash del último fallo Stableford; sin cambio funcional.
 
 - PRODUCCIÓN 2026-09-23 · Publicación directa de la corrección solicitada de tarjeta final limpia y exportación. Archivos funcionales publicados: card-artifacts.js, card-file-export.js. Sin modificación de cálculo deportivo.
+
+- PRODUCCIÓN 2026-09-23 · Se alinea el diagnóstico heredado R80 con la tarjeta limpia vigente: la tarjeta personal no exige mostrar SHA-256. Archivo: scripts/r80-card-diagnostic.mjs. Sin cambio funcional ni deportivo.

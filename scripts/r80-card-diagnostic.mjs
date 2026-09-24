@@ -25,7 +25,7 @@ if(which==='personal'){
  const out=artifacts.build(snapshot);
  assert.match(out.personal[0].html,/Comportamiento Neto contra Par/);
  assert.match(out.personal[0].html,/Águilas/);
- assert.match(out.personal[0].html,/SHA-256/);
+ assert.doesNotMatch(out.personal[0].html,/ID OFICIAL · SHA-256/);
 }
 if(which==='matrix'){
  const players=[{...snapshot.players[0],id:'with-category',name:'CON CATEGORÍA',tournamentCategory:'championship'},{...snapshot.players[0],id:'without-category',name:'SIN REGISTRO',tournamentCategory:''}];
