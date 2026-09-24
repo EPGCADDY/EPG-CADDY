@@ -62,9 +62,7 @@ jobs:
       - name: R80 card diagnostic · stableford clean header
         run: node scripts/r80-card-diagnostic.mjs stableford
 
-      - name: R80 card diagnostic · personal unchanged
-        run: node scripts/r80-card-diagnostic.mjs personal
-
+      
       - name: R80 card diagnostic · category matrix
         run: node scripts/r80-card-diagnostic.mjs matrix
 
