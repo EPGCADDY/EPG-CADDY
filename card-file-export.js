@@ -4,7 +4,7 @@
   const textBytes=value=>encoder.encode(String(value));
   const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
-  const dimensions=item=>{const rows=Number(item?.html?.match(/<tr>/g)?.length||0),sections=Number(item?.html?.match(/<section/g)?.length||0),mode=String(item?.mode||"");const complex=["four_ball","match_play","stableford","universales"].includes(mode)||/SKINS|NASSAU|VEGAS|WOLF/i.test(String(item?.html||""));return{width:1400,height:item?.kind==="personal"?Math.max(1180,760+rows*52+sections*96):Math.max(980,(complex?860:700)+rows*(complex?62:50)+sections*118)}};
+  const dimensions=item=>({width:1920,height:1080});
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
@@ -20,11 +20,11 @@
     return output
   }
 
-  async function renderNative3x(item){
+  async function renderFullHd(item){
     if(typeof document==="undefined")throw new Error("BROWSER_REQUIRED");
     const html=await inlineImages(String(item?.html||""));
     if(/<img[^>]+src=["'](?!data:)/i.test(html))throw new Error("IMAGE_NOT_INLINED");
-    const {width,height}=dimensions(item),scale=3;
+    const {width,height}=dimensions(item);
     const frame=document.createElement("iframe");
     frame.setAttribute("aria-hidden","true");
     frame.style.cssText=`position:fixed;left:-100000px;top:0;width:${width}px;height:${height}px;border:0;visibility:hidden;pointer-events:none;background:#000`;
@@ -34,7 +34,7 @@
       doc.open();doc.write(html);doc.close();
       await new Promise(resolve=>setTimeout(resolve,80));
       const source=doc.querySelector("main");if(!source)throw new Error("ARTIFACT_BODY_REQUIRED");
-      const canvas=document.createElement("canvas");canvas.width=width*scale;canvas.height=height*scale;
+      const canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
       const ctx=canvas.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");
       ctx.fillStyle="#000";ctx.fillRect(0,0,canvas.width,canvas.height);
       const svg=artifactSvg({...item,html}),image=new Image();
@@ -45,7 +45,7 @@
     }finally{frame.remove()}
   }
 
-  async function canvasFor(item){return renderNative3x(item)}
+  async function canvasFor(item){return renderFullHd(item)}
 
   function trimCanvas(canvas,margin=32){
     const context=canvas.getContext("2d");if(!context)return canvas;
