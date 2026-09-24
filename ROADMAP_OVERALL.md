@@ -1786,3 +1786,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - PRODUCCIÓN 2026-09-23 · Se actualiza test-lab-r60-card-mode-purity.mjs para reconocer el shell limpio vigente sin resumen genérico heredado en Match Play/Four Ball. Sin cambio de UI, Scores ni cálculo deportivo.
 
 - PRODUCCIÓN 2026-09-23 · Auditoría global alineada con Universales aprobado: acepta G/N/P (Gross, Neto y puntos) en vez de exigir encabezado GROSS genérico. Archivo: test-lab-global-operational-audit.mjs. Sin cambio funcional ni deportivo.
+
+- PRODUCCIÓN 2026-09-23 · Gate Universales ajustado para Global y Personal: reconoce G/N/P o PUNTOS según el artefacto. Archivo: test-lab-global-operational-audit.mjs. Sin cambio funcional ni deportivo.

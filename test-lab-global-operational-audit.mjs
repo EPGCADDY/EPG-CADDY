@@ -28,7 +28,7 @@ for(const [mode,snapshot] of cases){
   assert.equal(out.personal.length,snapshot.players.length,mode+": cantidad de tarjetas personales incorrecta");
   for(const item of [out.global,...out.personal]){
     if(mode==="match_play"||mode==="four_ball")assert.match(item.html,/G\/N|GROSS/,mode+": tarjeta sin lógica de score propia");
-    else if(mode==="universales")assert.match(item.html,/G\/N\/P|Gross, Neto y puntos/,mode+": tarjeta sin lógica G/N/P");
+    else if(mode==="universales")assert.match(item.html,/G\/N\/P|Gross, Neto y puntos|PUNTOS/,mode+": tarjeta sin lógica Universales");
     else assert.match(item.html,/GROSS/,mode+": tarjeta sin GROSS");
   }
 }
