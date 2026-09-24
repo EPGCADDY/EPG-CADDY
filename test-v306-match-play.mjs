@@ -62,8 +62,8 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   assert.equal(closed.ok,true,"Cada pareja puede cerrar en un hoyo distinto");
   const artifacts=cardArtifacts.build(closed.snapshot);
   assert.match(artifacts.global.html,/class="pair-divider"/);
-  assert.match(artifacts.global.html,/PAREJA 1:/);
-  assert.match(artifacts.global.html,/PAREJA 2:/);
+  assert.doesNotMatch(artifacts.global.html,/PAREJA [123]:/,"La tarjeta aprobada separa cada 1v1 visualmente sin rótulos PAREJA");
+  assert.equal((artifacts.global.html.match(/class="pair-divider"/g)||[]).length,2,"Dos vueltas conservan separación visual del segundo enfrentamiento");
 }
 
 {
