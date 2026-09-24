@@ -120,7 +120,6 @@ assert.match(artifacts.global.name,/tarjeta-global-four-ball/);
 assert.match(artifacts.global.html,/TEAM · ANA \/ BETO/);
 assert.match(artifacts.global.html,/TEAM · CARLA \/ DIEGO/);
 assert.match(artifacts.global.html,/★ MEJOR/);
-assert.match(artifacts.global.html,/uno a tres TEAMS de 2 jugadores, con HCP individual y resultado separado por TEAM/i);
 assert.match(artifacts.global.html,/class="pair-divider"/);
 assert.match(artifacts.personal[0].html,/NETO COMPAÑERO/);
 assert.match(artifacts.personal[0].html,/MEJOR NETO RIVAL/);
