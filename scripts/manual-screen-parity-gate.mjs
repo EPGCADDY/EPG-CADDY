@@ -27,7 +27,7 @@ const mountedCurrent=[
  "/docs/manual/current/APP_HISTORIAL_ATAJOS.png",
  "/docs/manual/current/APP_TORNEOS_HUB.png",
  "/docs/manual/current/APP_TORNEOS_ATAJOS.png",
- "/docs/manual/current/APP_MODE_STABLEFORD.png",
+ "/docs/manual/current/APP_MODE_STABLEFORD_R106_H2.svg",
  "/docs/manual/current/APP_MODE_MATCH_PLAY.png",
  "/docs/manual/current/APP_MODE_FOUR_BALL.png",
  "/docs/manual/current/APP_MODE_SKINS.png",
