@@ -4,11 +4,11 @@ import assert from 'node:assert/strict';
 const app=fs.readFileSync('index-grupal.html','utf8');
 const sw=fs.readFileSync('service-worker.js','utf8');
 
-assert.match(app,/gscg-release" content="PRODUCTION-20260924-R103"/,'La app debe identificarse como R101');
+assert.match(app,/gscg-release" content="PRODUCTION-20260924-R104"/,'La app debe identificarse como R101');
 assert.match(app,/updateViaCache:"none"/,'El registro del Service Worker debe ignorar caché HTTP intermedia');
 assert.match(app,/controllerchange[\s\S]*location\.reload\(\)/,'La app debe recargar al tomar control un SW nuevo');
 
-assert.match(sw,/const RELEASE="PRODUCTION-20260924-R103"/,'El SW debe identificarse como R101');
+assert.match(sw,/const RELEASE="PRODUCTION-20260924-R104"/,'El SW debe identificarse como R101');
 assert.match(sw,/clients\.claim\(\)/,'El SW nuevo debe tomar control inmediato');
 assert.match(sw,/clients\.matchAll\(\{type:"window",includeUncontrolled:true\}\)/,'El SW debe localizar ventanas antiguas');
 assert.match(sw,/client\.navigate\(url\.href\)/,'El SW debe recargar clientes viejos al activar');
