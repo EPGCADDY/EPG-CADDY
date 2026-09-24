@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PRODUCTION-20260924-R103">
+  <meta name="gscg-release" content="PRODUCTION-20260924-R104">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1122,7 +1122,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
  #roundManualEntry .round-player-grid>.round-grid-gross,#roundManualEntry .round-player-grid>.round-inline-score-key,#roundManualEntry .round-player-grid>span:not(:empty){font-family:inherit!important;font-size:20px!important;font-weight:900!important;line-height:1!important}
 }
 </style>
-</head>
+<style id="gscg-score-head-r104">@media(max-width:800px){#roundManualEntry .round-player-grid-head>strong,#roundManualEntry .round-player-grid-head>span,#roundManualEntry .round-player-grid-head>span:not(:empty){font-size:9px!important;line-height:14px!important;height:14px!important;min-height:14px!important}#roundManualEntry .round-player-grid-head .round-keypad-head{font-size:9px!important;line-height:14px!important;font-weight:900!important;color:#fff!important;-webkit-text-fill-color:#fff!important;grid-column:3/6!important}}</style></head>
 <body>
 
 <div class="overlay" id="skinsOverlay" aria-hidden="true">
@@ -2948,7 +2948,7 @@ function isRoundComplete(){return !!(!round.provisional&&round.configured&&round
 let finalCardPreparedShare=null,finalCardPreparingId="";
 function finalCardShareIdentity(){const scores=(round?.players||[]).map(p=>`${p.id}:${Object.entries(p.holes||{}).map(([k,v])=>`${k}=${v?.gross??v?.status??""}`).join(",")}`).join("|");return`${round?.id||""}:${round?.mode||""}:${round?.officialSnapshot?.mode||""}:${round?.officialSnapshot?.sha256||""}:${round?.officialVersion||1}:${scores}`}
 function resetFinalCardShare(){finalCardPreparedShare=null;finalCardPreparingId="";const button=$("sendFinalCard");if(button){button.disabled=false;button.textContent="COMPARTIR TARJETA"}}
-function currentShareSnapshot(){if(round.provisional||!round.configured||!round.players.length)throw new Error("ROUND_NOT_READY");const source=round.officiallyClosedAt&&round.officialSnapshot?round.officialSnapshot:round,snapshot=JSON.parse(JSON.stringify(source));snapshot.mode=source.mode||round.mode||"general";snapshot.playedAt=source.playedAt||round.createdAt;snapshot.course=source.course||COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte;snapshot.sha256=source.sha256||round.officialSnapshot?.sha256||"";return snapshot}
+function currentShareSnapshot(){if(round.provisional||!round.configured||!round.players.length)throw new Error("ROUND_NOT_READY");const expected=round.mode||"general",source=round.officiallyClosedAt&&round.officialSnapshot?round.officialSnapshot:round,actual=source.mode||"general";if(actual!==expected)throw new Error(`LIVE_CARD_MODE_MISMATCH:${expected}:${actual}`);const snapshot=JSON.parse(JSON.stringify(source));snapshot.mode=expected;snapshot.playedAt=source.playedAt||round.createdAt;snapshot.course=source.course||COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte;snapshot.sha256=source.sha256||round.officialSnapshot?.sha256||"";return snapshot}
 function currentShareArtifacts(){const snapshot=currentShareSnapshot(),cards=window.GSCCardArtifacts.build(snapshot),normalized=snapshot.mode==="general"?"stroke":snapshot.mode;if(cards.global?.mode!==normalized)throw new Error(`LIVE_CARD_ARTIFACT_MODE_MISMATCH:${normalized}:${cards.global?.mode||"missing"}`);return cards}
 async function prepareFinalCardShare(){
   if(!round?.configured||!round?.players?.length){resetFinalCardShare();return false}
@@ -3073,7 +3073,8 @@ async function shareOfficialArtifact(item){const status=$("artifactShareStatus")
 function shareOfficialArtifactImage(){
   const status=$("artifactShareStatus"),button=$("sendFinalCard"),prepared=finalCardPreparedShare,id=finalCardShareIdentity();
   if(!prepared||prepared.id!==id){prepareFinalCardShare();return Promise.resolve({ok:false,state:"PREPARING"})}
-  const expectedMode=(round?.officialSnapshot?.mode||round?.mode||"general"),normalizedExpectedMode=expectedMode==="general"?"stroke":expectedMode;
+  const expectedMode=(round?.mode||"general"),snapshotMode=(round?.officialSnapshot?.mode||expectedMode),normalizedExpectedMode=expectedMode==="general"?"stroke":expectedMode;
+  if(snapshotMode!==expectedMode){resetFinalCardShare();status.textContent="ERROR DE MODALIDAD · TARJETA NO ENVIADA";return Promise.resolve({ok:false,state:"MODE_MISMATCH"})}
   if(prepared.item?.mode!==normalizedExpectedMode){resetFinalCardShare();prepareFinalCardShare();status.textContent="REGENERANDO TARJETA DE LA MODALIDAD CORRECTA…";return Promise.resolve({ok:false,state:"MODE_REFRESH"})}
   const {item,blob}=prepared,title=item.kind==="personal"?"Tarjeta oficial personal":"Tarjeta oficial global",name=String(item.name||"tarjeta-digital.html").replace(/\.html?$/i,".png"),file=new File([blob],name,{type:"image/png"}),payload={title,text:officialArtifactShareText(item),files:[file]};
   button.disabled=true;button.textContent="ABRIENDO OPCIONES…";
