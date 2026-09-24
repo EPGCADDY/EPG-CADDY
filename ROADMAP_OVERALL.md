@@ -1830,3 +1830,5 @@ LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 1
 - R106-H9: tarjetas fijadas a exportación Full HD nativa 1920×1080; revisión visual sigue pendiente.
 
 - R106-H10: retirado último gate heredado 1400/4200px; Full HD 1920×1080 queda como contrato de exportación.
+
+- R106-H11: gate Full HD vuelve a ser JavaScript válido; continúa pendiente render visual 7/7.
