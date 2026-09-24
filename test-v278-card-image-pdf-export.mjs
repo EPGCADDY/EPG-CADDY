@@ -27,9 +27,9 @@ assert.match(svg,/foreignObject/);
 assert.match(svg,/MODALIDAD · MEDAL PLAY NORMAL/);
 assert.match(svg,/background:#000/);
 const dims=fileExport.dimensions(cards.personal[0]);
-assert.equal(dims.width,1400);
-assert.ok(dims.height>=1180);
-assert.match(svg,/width="4200"/,"El SVG exportable debe renderizar a 3x para alta resolución");
+assert.equal(dims.width,1920);
+assert.equal(dims.height,1080);
+assert.match(svg,/width="1920"/,"La tarjeta exportable debe ser Full HD 1920×1080");
 assert.match(svg,/golf-score-card-gt-horizontal-original\.webp/,"La tarjeta exportable debe conservar el logo oficial");
 assert.doesNotMatch(cards.global.html,/<h2 class="score-card-title">SCORE CARD<\/h2>/,"El texto SCORE CARD no debe ocupar el lugar del logo");
 
@@ -44,7 +44,7 @@ assert.match(pdfText,/%%EOF\n$/);
 
 console.log("PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las tarjetas oficiales General/Stableford");
 
-assert.match(source,/async function renderNative3x\(item\)/,"R106-H3 must use rebuilt native 3x renderer");
-assert.match(source,/const \{width,height\}=dimensions\(item\),scale=3/,"R106-H3 native renderer must render at 3x");
+assert.match(source,/async function renderFullHd\(item\)/,"R106-H9 must use native Full HD renderer");
+assert.match(source,/canvas\.width=width;canvas\.height=height/,"R106-H9 renderer must render natively at 1920×1080");
 assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
 assert.match(source,/async function png\(item\)\{return canvasBlob\(await canvasFor\(item\),"image\/png"\)\}/,"PNG must come directly from rebuilt native renderer");
