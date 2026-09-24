@@ -1840,3 +1840,5 @@ LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 1
 - R106-H14: exportación digital fijada a Full HD exacto 1920×1080 sin recorte posterior.
 
 - R106-H15: Match Play ya no imprime rótulos PAREJA en tarjeta global.
+
+- R106-H15: gate Match Play desbloqueado; eliminado último salto de línea escapado que detenía el build antes del render visual.
