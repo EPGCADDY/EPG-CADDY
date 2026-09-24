@@ -1848,3 +1848,10 @@ LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 1
 - R106-H17: revisión visual separada en pipeline dedicado de siete tarjetas Full HD; eliminado el manual del recorrido de certificación de tarjetas.
 
 - R106-H18: corregidos fixtures de revisión física para las siete modalidades y relanzado render Full HD dedicado.
+
+
+## R106 Full HD batch · overall
+- Commit de corrección visual: `ffe97e05d5557d0d6da4dfb10ef21fd26a8260f5`.
+- Match Play y Four Ball compactados exclusivamente para eliminar recorte inferior en 1920×1080 sin alterar su matriz ni lógica.
+- Universales ya dividido en PRIMERA VUELTA 1–9 y SEGUNDA VUELTA 10–18 en `d0511273e1125fc9814537b68a9a46e8fdfe4670`.
+- Gate vigente: no producción hasta inspección visual de los siete PNG definitivos.
