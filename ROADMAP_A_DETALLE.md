@@ -1913,3 +1913,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R106-H9: exportación de tarjetas migrada de 1400/3x heredado a Full HD nativo fijo 1920×1080; gate de exportación alineado. Pendiente render visual 7/7.
 
 - R106-H10: eliminado remanente de gate V278 que aún exigía 1400/4200px; fixture restaurado y contrato Full HD 1920×1080 completo.
+
+- R106-H11: reparado SyntaxError del gate Full HD causado por secuencia literal backslash-n; archivo verificado con salto de línea real.
