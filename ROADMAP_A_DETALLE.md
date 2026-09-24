@@ -1927,3 +1927,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R106-H15: reparado el último `\\n` literal del gate Match Play que impedía arrancar el navegador; verificación del archivo: 0 secuencias literales restantes.
 
 - R106-H16: retiradas las dos últimas aserciones obsoletas `PAREJA 1/2` del gate Match Play; la matriz aprobada queda 1v1 con separadores visuales y sin rótulos PAREJA.
+
+- R106-H17: añadido render físico enfocado exclusivamente en las siete tarjetas a 1920×1080, sin recorrido de manual ni pantallas ajenas; artefacto dedicado `r106-seven-cards`.
