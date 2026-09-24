@@ -4,13 +4,13 @@
   const textBytes=value=>encoder.encode(String(value));
   const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
-  const dimensions=item=>({width:1600,height:item?.kind==="personal"?1300:Math.max(780,520+Number(item?.html?.match(/<tr>/g)?.length||0)*42)});
+  const dimensions=item=>{const rows=Number(item?.html?.match(/<tr>/g)?.length||0),sections=Number(item?.html?.match(/<section/g)?.length||0),mode=String(item?.mode||"");const complex=["four_ball","match_play","stableford","universales"].includes(mode)||/SKINS|NASSAU|VEGAS|WOLF/i.test(String(item?.html||""));return{width:1600,height:item?.kind==="personal"?Math.max(1300,720+rows*48+sections*90):Math.max(900,(complex?760:560)+rows*(complex?58:46)+sections*110)}};
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
     const style=item.html.match(/<style>([\s\S]*?)<\/style>/i)?.[1]||"",main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
     if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
-    const {width,height}=dimensions(item),safeMain=main.replace(/<br>/gi,"<br/>");
+    const {width,height}=dimensions(item),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
     return`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-56}px;max-width:none;margin:0;padding:28px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
   }
 
