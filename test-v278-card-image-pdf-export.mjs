@@ -4,7 +4,7 @@ import artifacts from "./card-artifacts.js";
 import fileExport from "./card-file-export.js";
 import masterSync from "./master-data-sync.js";
 
-const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");\nconst source=fs.readFileSync(new URL("./card-file-export.js",import.meta.url),"utf8");
 assert.match(html,/gscg-build" content="V\d{3}[^"]*"/);
 assert.match(html,/V278-PNG-PDF-PACKAGE-20260823/);
 assert.match(html,/card-file-export\.js/);
