@@ -1806,3 +1806,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Entrada manual: encabezados JUGADOR, SCORE y TECLADO homologados en tamaño y alineación; HOYO conserva identificación verde.
 
 - R106 gate: prueba automatizada Match Play actualizada para validar los dos bloques 1–9 y 10–18 y sus separadores de parejas.
+
+- R106 hotfix físico 2026-09-24 · Stableford incorpora los seis campos configurados (El Pulté, Country Club, San Isidro, Mayan Golf, Hacienda Nueva y Alta Vista). Match Play sustituye flechas SVG por símbolos de texto ↑/↓ y = para evitar desaparición en PNG. El exportador común recorta automáticamente el lienzo negro sobrante, conserva alta resolución y añade timeouts de exportación. Archivos: index-grupal.html, stableford.js, card-artifacts.js, card-file-export.js, test-stableford.mjs.
