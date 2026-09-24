@@ -83,6 +83,12 @@ jobs:
       - name: R80 card diagnostic · matrix personal
         run: node scripts/r80-card-last-diagnostic.mjs personal-matrix
 
+      - name: R80 card diagnostic · stableford title only
+        run: node scripts/r80-card-title-diagnostic.mjs title
+
+      - name: R80 card diagnostic · stableford hash only
+        run: node scripts/r80-card-title-diagnostic.mjs hash
+
       - name: R80 card diagnostic · stableford hash/title
         run: node scripts/r80-card-last-diagnostic.mjs stableford-hash
 

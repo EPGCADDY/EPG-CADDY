@@ -1770,3 +1770,7 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R80 diagnóstico card-artifacts III: se aíslan las últimas aserciones no cubiertas (baseline, personales por modalidad y ausencia de hash/título Stableford). Archivos: .github/workflows/roadmap-gate.yml, scripts/r80-card-last-diagnostic.mjs.
 
 - R80 causa exacta del build: la regresión R79 buscaba `meta-hash` en todo el HTML y confundía una clase CSS no visible con información mostrada al usuario. Se corrige únicamente el test para validar el texto visible `ID OFICIAL · SHA-256`; la Tarjeta Global sigue sin mostrar ese dato. Archivos: test-card-artifacts.mjs, scripts/r80-card-last-diagnostic.mjs.
+
+- R78 diagnóstico exacto: se separa el último fallo Stableford en dos checks independientes (título oculto e ID técnico oculto) antes de tocar lógica.
+
+- R78 gate sync diagnóstico: ambos ROADMAPS registran en el mismo commit la separación title/hash del último fallo Stableford; sin cambio funcional.
