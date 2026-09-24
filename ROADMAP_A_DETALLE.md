@@ -1879,3 +1879,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Tarjetas digitales Match Play y Four Ball: presentación global dividida en dos bloques, hoyos 1–9 arriba y 10–18 abajo, para mejorar legibilidad en iPhone y exportación PNG.
 - Compartir tarjeta: regeneración por modalidad activa y prevención de reutilización de artefactos de otra modalidad.
 - Entrada manual: encabezados JUGADOR, SCORE y TECLADO homologados en tamaño y alineación; HOYO conserva identificación verde.
+
+- R106 gate: prueba automatizada Match Play actualizada para validar los dos bloques 1–9 y 10–18 y sus separadores de parejas.
