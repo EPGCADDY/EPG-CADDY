@@ -37,7 +37,22 @@
   }
 
   function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED")),type,quality))}
-  async function png(item){return canvasBlob(await canvasFor(item),"image/png")}
+  async function png(item){
+    try{return canvasBlob(await canvasFor(item),"image/png")}
+    catch(primaryError){
+      if(typeof document==="undefined")throw primaryError;
+      const host=document.createElement("iframe");host.setAttribute("aria-hidden","true");host.style.cssText="position:fixed;left:-100000px;top:0;width:2400px;height:4000px;border:0;visibility:hidden;pointer-events:none";document.body.appendChild(host);
+      try{
+        const doc=host.contentDocument;if(!doc)throw primaryError;
+        doc.open();doc.write(String(item?.html||""));doc.close();
+        await new Promise(resolve=>setTimeout(resolve,120));
+        const target=doc.body?.querySelector("main")||doc.body;if(!target)throw primaryError;
+        const svg=artifactSvg({...item,html:String(item.html).replace(/<img[^>]*>/gi,"")}),image=new Image();
+        await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject;image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)});
+        const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;const context=canvas.getContext("2d");if(!context)throw primaryError;context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return canvasBlob(canvas,"image/png")
+      }finally{host.remove()}
+    }
+  }
   async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
 
   function pdfBytes(pages){
