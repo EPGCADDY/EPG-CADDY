@@ -4,14 +4,14 @@
   const textBytes=value=>encoder.encode(String(value));
   const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
-  const dimensions=item=>{const rows=Number(item?.html?.match(/<tr>/g)?.length||0),sections=Number(item?.html?.match(/<section/g)?.length||0),mode=String(item?.mode||"");const complex=["four_ball","match_play","stableford","universales"].includes(mode)||/SKINS|NASSAU|VEGAS|WOLF/i.test(String(item?.html||""));return{width:2400,height:item?.kind==="personal"?Math.max(1950,1080+rows*72+sections*135):Math.max(1350,(complex?1140:840)+rows*(complex?87:69)+sections*165)}};
+  const dimensions=item=>{const rows=Number(item?.html?.match(/<tr>/g)?.length||0),sections=Number(item?.html?.match(/<section/g)?.length||0),mode=String(item?.mode||"");const complex=["four_ball","match_play","stableford","universales"].includes(mode)||/SKINS|NASSAU|VEGAS|WOLF/i.test(String(item?.html||""));return{width:1400,height:item?.kind==="personal"?Math.max(1180,760+rows*52+sections*96):Math.max(980,(complex?860:700)+rows*(complex?62:50)+sections*118)}};
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
     const style=item.html.match(/<style>([\s\S]*?)<\/style>/i)?.[1]||"",main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
     if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
     const {width,height}=dimensions(item),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
-    return`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-56}px;max-width:none;margin:0;padding:28px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
+    return`<svg xmlns="http://www.w3.org/2000/svg" width="${width*2}" height="${height*2}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-40}px;max-width:none;margin:0;padding:20px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
   }
 
   async function inlineImages(html){
@@ -31,9 +31,9 @@
       image.onerror=()=>{clearTimeout(timer);reject(new Error("IMAGE_RENDER_FAILED"))};
       image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
     });
-    const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
+    const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width*2;canvas.height=height*2;
     const context=canvas.getContext("2d");if(!context)throw new Error("CANVAS_CONTEXT_REQUIRED");
-    context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return trimCanvas(canvas,32);
+    context.fillStyle="#000";context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(image,0,0,canvas.width,canvas.height);return trimCanvas(canvas,64);
   }
 
   function trimCanvas(canvas,margin=32){
@@ -60,7 +60,7 @@
         const target=doc.body?.querySelector("main")||doc.body;if(!target)throw primaryError;
         const fallbackHtml=await inlineImages(String(item.html||""));const svg=artifactSvg({...item,html:fallbackHtml}),image=new Image();
         await new Promise((resolve,reject)=>{const timer=setTimeout(()=>{image.src="";reject(new Error("IMAGE_FALLBACK_TIMEOUT"))},12000);image.onload=()=>{clearTimeout(timer);resolve()};image.onerror=()=>{clearTimeout(timer);reject(new Error("IMAGE_FALLBACK_FAILED"))};image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)});
-        const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;const context=canvas.getContext("2d");if(!context)throw primaryError;context.fillStyle="#000";context.fillRect(0,0,width,height);context.drawImage(image,0,0,width,height);return canvasBlob(trimCanvas(canvas,32),"image/png")
+        const {width,height}=dimensions(item),canvas=document.createElement("canvas");canvas.width=width*2;canvas.height=height*2;const context=canvas.getContext("2d");if(!context)throw primaryError;context.fillStyle="#000";context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(image,0,0,canvas.width,canvas.height);return canvasBlob(trimCanvas(canvas,64),"image/png")
       }finally{host.remove()}
     }
   }
