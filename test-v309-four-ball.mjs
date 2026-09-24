@@ -71,7 +71,7 @@ assert.equal(fourBall.teamIndexForPlayer(5),2);
   const threeArtifacts=cardArtifacts.build(threeClosed.snapshot);
   assert.match(threeArtifacts.global.html,/TEAM · ELENA \/ FABIO/);
   assert.match(threeArtifacts.personal[5].html,/team-blue/);
-  assert.equal((threeArtifacts.global.html.match(/class="pair-divider"/g)||[]).length,2);
+  assert.equal((threeArtifacts.global.html.match(/class="pair-divider"/g)||[]).length,4,"Dos bloques 1–9/10–18 conservan los dos separadores de TEAM en cada bloque");
 }
 
 {
