@@ -14,7 +14,7 @@ assert.equal(selected[0].item.key,'g1:p1');
 assert.equal(hub.uniqueFavoritePlayers([{item:{kind:'player'},stream:null,players:[]}]).length,1,'Un enlace no disponible sigue visible para poder quitarlo');
 const classes=new Set(['hub-search-mode','hub-favorites-mode']);
 let rendered=0;
-const context={root:{document:{body:{classList:{remove:(...names)=>names.forEach(x=>classes.delete(x))}}}},clearTimeout(){},timer:null,renderAll(){rendered++},setStatus(){}};
+const context={$:()=>null,root:{document:{body:{classList:{remove:(...names)=>names.forEach(x=>classes.delete(x))}}}},clearTimeout(){},timer:null,renderAll(){rendered++},setStatus(){}};
 vm.runInNewContext(source.slice(source.indexOf('  function setPageTitle(value){'),source.indexOf('  function renderAll(){'))+';showTournamentPortal()',context);
 assert.equal(classes.size,0,'Regresar al portal limpia los modos que ocultaban los torneos');assert.equal(rendered,1);
 const streams=hub.demoTournamentStreams();

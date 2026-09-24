@@ -41,5 +41,20 @@ jobs:
       - name: Block thin Match Play arrows and verbose format labels
         run: node test-v307-match-arrows-format.mjs
 
+      - name: R75 diagnostic · tournament navigation
+        run: node test-lab-tournament-navigation.mjs
+
+      - name: R75 diagnostic · release contract
+        run: node test-lab-r60-production-refresh.mjs
+
+      - name: R75 diagnostic · physical matrix
+        run: node test-lab-r60-physical-matrix.mjs
+
+      - name: R75 diagnostic · final-card actions
+        run: node test-lab-r60-card-actions-physical.mjs
+
+      - name: R75 diagnostic · manual parity
+        run: node scripts/manual-screen-parity-gate.mjs
+
       - name: Block retired microphone and AI regressions; preserve current LAB profile
         run: node scripts/build-manual-lab.mjs
