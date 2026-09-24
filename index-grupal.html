@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="PRODUCTION-20260924-R104">
+  <meta name="gscg-release" content="PRODUCTION-20260924-R105">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2172,7 +2172,7 @@ function startConfirmedRound(){
       const merged=normalizePlayer({...source,holes:old?.holes||p.holes||{},lastHole:old?.lastHole||p.lastHole||null,activeFrom:old?.activeFrom||p.activeFrom||rosterEditJoinHole},i);
       return recomputePlayerScores(merged);
     }));
-    round.mode=draftRoundMode;round.tournament=draftTournament;round.sideGames=draftSideGames();ensureAnnouncedState();round.announced.front=false;round.announced.back=false;round.announced.complete=false;savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();return true;
+    const previousMode=round.mode;round.mode=draftRoundMode;if(previousMode!==round.mode){round.officiallyClosedAt=null;round.officialSnapshot=null;round.officialVersions=[];round.snapshotHash="";round.status="active";resetFinalCardShare()}round.tournament=draftTournament;round.sideGames=draftSideGames();ensureAnnouncedState();round.announced.front=false;round.announced.back=false;round.announced.complete=false;savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();return true;
   }
   // ÚNICO punto autorizado para sustituir la última ronda persistida por una nueva:
   // el usuario llegó a la confirmación y presionó INICIAR RONDA.
@@ -2948,7 +2948,7 @@ function isRoundComplete(){return !!(!round.provisional&&round.configured&&round
 let finalCardPreparedShare=null,finalCardPreparingId="";
 function finalCardShareIdentity(){const scores=(round?.players||[]).map(p=>`${p.id}:${Object.entries(p.holes||{}).map(([k,v])=>`${k}=${v?.gross??v?.status??""}`).join(",")}`).join("|");return`${round?.id||""}:${round?.mode||""}:${round?.officialSnapshot?.mode||""}:${round?.officialSnapshot?.sha256||""}:${round?.officialVersion||1}:${scores}`}
 function resetFinalCardShare(){finalCardPreparedShare=null;finalCardPreparingId="";const button=$("sendFinalCard");if(button){button.disabled=false;button.textContent="COMPARTIR TARJETA"}}
-function currentShareSnapshot(){if(round.provisional||!round.configured||!round.players.length)throw new Error("ROUND_NOT_READY");const expected=round.mode||"general",source=round.officiallyClosedAt&&round.officialSnapshot?round.officialSnapshot:round,actual=source.mode||"general";if(actual!==expected)throw new Error(`LIVE_CARD_MODE_MISMATCH:${expected}:${actual}`);const snapshot=JSON.parse(JSON.stringify(source));snapshot.mode=expected;snapshot.playedAt=source.playedAt||round.createdAt;snapshot.course=source.course||COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte;snapshot.sha256=source.sha256||round.officialSnapshot?.sha256||"";return snapshot}
+function currentShareSnapshot(){if(round.provisional||!round.configured||!round.players.length)throw new Error("ROUND_NOT_READY");const expected=round.mode||"general";if(round.officiallyClosedAt&&round.officialSnapshot&&round.officialSnapshot.mode!==expected){round.officiallyClosedAt=null;round.officialSnapshot=null;round.officialVersions=[];round.snapshotHash="";round.status="active"}const source=round.officiallyClosedAt&&round.officialSnapshot?round.officialSnapshot:round,actual=source.mode||"general";if(actual!==expected)throw new Error(`LIVE_CARD_MODE_MISMATCH:${expected}:${actual}`);const snapshot=JSON.parse(JSON.stringify(source));snapshot.mode=expected;snapshot.playedAt=source.playedAt||round.createdAt;snapshot.course=source.course||COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte;snapshot.sha256=source.sha256||round.officialSnapshot?.sha256||"";return snapshot}
 function currentShareArtifacts(){const snapshot=currentShareSnapshot(),cards=window.GSCCardArtifacts.build(snapshot),normalized=snapshot.mode==="general"?"stroke":snapshot.mode;if(cards.global?.mode!==normalized)throw new Error(`LIVE_CARD_ARTIFACT_MODE_MISMATCH:${normalized}:${cards.global?.mode||"missing"}`);return cards}
 async function prepareFinalCardShare(){
   if(!round?.configured||!round?.players?.length){resetFinalCardShare();return false}
