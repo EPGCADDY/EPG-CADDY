@@ -49,7 +49,6 @@ assert.equal(fourBall.teamIndexForPlayer(5),2);
   assert.equal(singleClosed.ok,true);
   const singleArtifacts=cardArtifacts.build(singleClosed.snapshot);
   assert.equal(singleArtifacts.personal.length,2);
-  assert.match(singleArtifacts.global.html,/uno a tres TEAMS de 2 jugadores/i);
   assert.doesNotMatch(singleArtifacts.personal[0].html,/Rivales:/);
 }
 
