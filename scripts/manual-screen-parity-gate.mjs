@@ -41,6 +41,9 @@ for(const token of ["HACIENDA NUEVA","ALTA VISTA","↑ verde","↓ roja","= blan
 assert(manual.includes("APP_MODE_STABLEFORD_R106_H2.svg"),"Stableford debe usar la pantalla R106-H2 de seis campos");
 assert(manual.includes("APP_TARJETA_DIGITAL_R106_H2.svg"),"Tarjeta Digital debe usar la gráfica R106-H2 recortada/legible");
 assert(manual.includes("APP_MATCH_PLAY_CARD_R106_H2.svg"),"Match Play debe usar la gráfica R106-H2 con ↑ / ↓ / =");
+assert((manual.match(/APP_ANOTADOR_TECLADO_NUMERICO_R30\.svg/g)||[]).length>=2,"Las páginas operativas de anotación deben usar el teclado vigente");
+assert(!manual.includes('id="control-x"')||manual.slice(manual.indexOf('id="control-x"'),manual.indexOf("</section>",manual.indexOf('id="control-x"'))).includes("APP_ANOTADOR_TECLADO_NUMERICO_R30.svg"),"Página 20 debe mostrar el teclado vigente");
+assert(!manual.includes('id="lab-scorecard"')||manual.slice(manual.indexOf('id="lab-scorecard"'),manual.indexOf("</section>",manual.indexOf('id="lab-scorecard"'))).includes("APP_ANOTADOR_TECLADO_NUMERICO_R30.svg"),"Pantalla 63 debe mostrar el anotador vigente");
 for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","MI TARJETA FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","officialCorrectionOverlay","MIS RONDAS GUARDADAS"]) {
   assert(app.includes(token)||hub.includes(token),"LAB actual no contiene control esperado: "+token);
 }
