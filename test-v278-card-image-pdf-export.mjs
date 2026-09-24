@@ -26,7 +26,12 @@ assert.match(svg,/^<svg/);
 assert.match(svg,/foreignObject/);
 assert.match(svg,/Tarjeta Global/);
 assert.match(svg,/background:#000/);
-assert.equal(fileExport.dimensions(cards.personal[0]).height,1300);
+const dims=fileExport.dimensions(cards.personal[0]);
+assert.equal(dims.width,1400);
+assert.ok(dims.height>=1180);
+assert.match(svg,/width="2800"/,"El SVG exportable debe renderizar a 2x para alta resolución");
+assert.match(svg,/golf-score-card-gt-horizontal-original\.webp/,"La tarjeta exportable debe conservar el logo oficial");
+assert.doesNotMatch(cards.global.html,/<h2 class="score-card-title">SCORE CARD<\/h2>/,"El texto SCORE CARD no debe ocupar el lugar del logo");
 
 const jpegA=new Uint8Array([0xff,0xd8,0xff,0xdb,0x00,0x43,0xff,0xd9]),jpegB=new Uint8Array([0xff,0xd8,0xff,0xd9]);
 const pdf=fileExport.pdfBytes([{bytes:jpegA,width:1600,height:900},{bytes:jpegB,width:1600,height:1300}]),pdfText=new TextDecoder("latin1").decode(pdf);
