@@ -41,7 +41,7 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   const closed=await roundClosure.close({id:"match-3-pairs",configured:true,mode:"match_play",courseKey:"pulte",course:"El Pulté",players,matchPlay:{...result,holes:undefined},createdAt:"2026-08-26T00:00:00.000Z"},{appVersion:"V329",closedAt:"2026-08-26T02:00:00.000Z"});
   const artifacts=cardArtifacts.build(closed.snapshot);
   assert.doesNotMatch(artifacts.global.html,/PAREJA [123]:/,"La matriz aprobada separa enfrentamientos sin rótulos PAREJA");
-  assert.match(artifacts.global.html,/<th>GROSS<\\/th><th>NETO<\\/th><th>\\+\\/-<\\/th>/);
+  assert.ok(artifacts.global.html.includes("<th>GROSS</th><th>NETO</th><th>+/-</th>"));
   assert.equal((artifacts.global.html.match(/class="pair-divider"/g)||[]).length,4,"Dos bloques 1–9/10–18 conservan los dos separadores de pareja en cada bloque");
 }
 
