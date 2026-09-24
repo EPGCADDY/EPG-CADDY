@@ -1889,3 +1889,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - 2026-09-24 R106-H3: tarjetas digitales — invalida caché H2 para cargar el generador/exportador vigente; conserva exactamente formato, diagrama, tamaños, fuentes, orden, casillas y línea gráfica; render PNG nativo 3×/4200 px; logo oficial obligatorio; paleta exclusiva negro/verde/blanco. Archivos de control actualizados: ROADMAP_A_DETALLE.md, ROADMAP_OVERALL.md. Registro técnico de esta modificación: ROADMAP_A_DETALLE.md y ROADMAP_OVERALL.md se modifican conjuntamente; card-artifacts.js, card-file-export.js, test-v278-card-image-pdf-export.mjs, service-worker.js e index-grupal.html forman el paquete R106-H3.
 
 - 2026-09-24 R106-H3 build: scripts/build-manual-lab.mjs ejecuta test-v278-card-image-pdf-export.mjs para bloquear publicación si el motor nativo 3× de tarjetas no cumple el contrato.
+
+- R106-H3 FINAL BUILD: card-file-export.js + test-v278-card-image-pdf-export.mjs + scripts/build-manual-lab.mjs; sin cambios de formato visual de las tarjetas. ROADMAP_A_DETALLE.md y ROADMAP_OVERALL.md actualizados conjuntamente.
