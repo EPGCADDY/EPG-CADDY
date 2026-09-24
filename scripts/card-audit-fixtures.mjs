@@ -1,6 +1,8 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import "../match-play.js";
+import "../four-ball.js";
 import artifacts from "../card-artifacts.js";
 
 const outputDir=path.join(os.tmpdir(),"epg-caddy-iphone-card-audit");
