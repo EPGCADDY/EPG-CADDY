@@ -13,7 +13,7 @@ assert(manual.includes('id="portada"')&&manual.includes("/assets/official-logos/
 assert(manual.indexOf('id="portada"')<manual.indexOf('id="indice"'),"La portada debe aparecer antes del índice");
 assert(manual.includes('id="indice"')&&manual.includes("Toca cualquier tema para saltar directamente"),"Falta índice general clickable");
 assert((manual.match(/href="#[^"]+"/g)||[]).length>=50,"Índice/navegación insuficiente");
-assert((manual.match(/<section class="sheet(?: |")/g)||[]).length===74,"Debe haber exactamente 74 hojas vigentes: 51 base + 9 pantallas actuales + 10 Torneos + 4 pantallas reales LAB");
+assert((manual.match(/<section class="sheet(?: |")/g)||[]).length===75,"Debe haber exactamente 75 hojas vigentes: estructura anterior + capítulo 30A Tarjetas Digitales");
 for(const p of [10,11,12,13,14,15,16,68,70,72]) assert(manual.includes("/docs/manual/layout/page-"+String(p).padStart(2,"0")+".png"),"Falta lámina informativa gris vigente page-"+p);
 const mountedCurrent=[
  "/docs/manual/current/APP_ACCESS.png",
@@ -42,6 +42,13 @@ assert(manual.includes("APP_MODE_STABLEFORD_R106_H2.svg"),"Stableford debe usar 
 assert(manual.includes("APP_TARJETA_DIGITAL_R106_H2.svg"),"Tarjeta Digital debe usar la gráfica R106-H2 recortada/legible");
 assert(manual.includes("APP_MATCH_PLAY_CARD_R106_H2.svg"),"Match Play debe usar la gráfica R106-H2 con ↑ / ↓ / =");
 assert((manual.match(/APP_ANOTADOR_TECLADO_NUMERICO_R30\.svg/g)||[]).length>=2,"Las páginas operativas de anotación deben usar el teclado vigente");
+assert(manual.includes('id="tarjetas-digitales-capitulo"'),"Falta capítulo 30A Tarjetas Digitales");
+for(const token of ["COMPARTIR TARJETA","ENVIAR A JUGADORES","WhatsApp registrado","MEDAL PLAY NORMAL","STABLEFORD","MATCH PLAY","FOUR BALL","SCORE CARD · PRÁCTICA","SKINS","UNIVERSALES"]) assert(manual.includes(token),"Capítulo Tarjetas Digitales incompleto: "+token);
+for(const img of [
+"TARJETA_DIGITAL_MEDAL_PLAY_R106_H2.svg","TARJETA_DIGITAL_STABLEFORD_R106_H2.svg","TARJETA_DIGITAL_MATCH_PLAY_R106_H2.svg","TARJETA_DIGITAL_FOUR_BALL_R106_H2.svg","TARJETA_DIGITAL_PRACTICA_R106_H2.svg","TARJETA_DIGITAL_SKINS_R106_H2.svg","TARJETA_DIGITAL_UNIVERSALES_R106_H2.svg"
+]) assert(manual.includes(img),"Falta ejemplo limpio de Tarjeta Digital: "+img);
+assert(app.includes('id="sendFinalCard"')&&app.includes("COMPARTIR TARJETA"),"La app debe conservar COMPARTIR TARJETA");
+assert(app.includes('id="sendFinalCardPlayers"')&&app.includes("ENVIAR A JUGADORES"),"La app debe conservar ENVIAR A JUGADORES");
 assert(!manual.includes('id="control-x"')||manual.slice(manual.indexOf('id="control-x"'),manual.indexOf("</section>",manual.indexOf('id="control-x"'))).includes("APP_ANOTADOR_TECLADO_NUMERICO_R30.svg"),"Página 20 debe mostrar el teclado vigente");
 assert(!manual.includes('id="lab-scorecard"')||manual.slice(manual.indexOf('id="lab-scorecard"'),manual.indexOf("</section>",manual.indexOf('id="lab-scorecard"'))).includes("APP_ANOTADOR_TECLADO_NUMERICO_R30.svg"),"Pantalla 63 debe mostrar el anotador vigente");
 for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","MI TARJETA FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","officialCorrectionOverlay","MIS RONDAS GUARDADAS"]) {
@@ -68,4 +75,4 @@ assert(cards.includes("fourBallTeamLabel")&&!cards.includes("TEAM 1")&&!cards.in
 assert(!fourBall.includes('"TEAM 1"')&&!fourBall.includes('"TEAM 2"')&&!fourBall.includes('"TEAM 3"'),"Motor Four Ball no debe reintroducir TEAM numerado");
 if(fail.length){console.error("MANUAL ORIGINAL PARITY: FAIL");for(const item of fail) console.error("- "+item);process.exit(1);}
 console.log("MANUAL ORIGINAL PARITY: PASS");
-console.log("MANUAL RE-MAQUETADO: 74 hojas · MENÚ vigente · 4 pantallas reales LAB · sólo capturas oficiales limpias · láminas informativas grises · 0 funciones retiradas");
+console.log("MANUAL RE-MAQUETADO: 75 hojas · capítulo Tarjetas Digitales · MENÚ vigente · pantallas actuales · 0 funciones retiradas");
