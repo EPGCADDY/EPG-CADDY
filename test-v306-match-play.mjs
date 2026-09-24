@@ -88,7 +88,7 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   assert.match(artifacts.global.html,/aria-label="Perdió">↓<\/span>/);
   assert.match(artifacts.global.html,/aria-label="Empató">=<\/span>/);
   assert.match(artifacts.global.html,/stroke-width:4\.5/);
-  assert.match(artifacts.global.html,/ANA GANA 3 &amp; 2/);
+  assert.match(artifacts.global.html,/ANA GANA 3 &amp; 2/);\n  assert.doesNotMatch(artifacts.global.html,/PAREJA [123]:/);
 }
 
 {
