@@ -41,7 +41,7 @@
       await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("NATIVE_RENDER_TIMEOUT")),15000);image.onload=()=>{clearTimeout(timer);resolve()};image.onerror=()=>{clearTimeout(timer);reject(new Error("NATIVE_RENDER_FAILED"))};image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)});
       ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
       ctx.drawImage(image,0,0,width,height,0,0,canvas.width,canvas.height);
-      return trimCanvas(canvas,96);
+      return canvas;
     }finally{frame.remove()}
   }
 
