@@ -1921,3 +1921,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R106-H13: corregido SyntaxError introducido en gate V306 y sustituida regex frágil por comprobación literal de columnas GROSS/NETO/+/-.
 
 - R106-H14: eliminado trimCanvas posterior al render; PNG/JPEG conservan exactamente 1920×1080. Gate añadido para impedir regresión por recorte.
+
+- R106-H15: eliminado texto heredado PAREJA 1/2/3 del encabezado Match Play global; 2/4/6 jugadores quedan únicamente separados como enfrentamientos directos.
