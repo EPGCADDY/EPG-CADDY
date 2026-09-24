@@ -1885,3 +1885,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R106 hotfix físico 2026-09-24 · Stableford incorpora los seis campos configurados (El Pulté, Country Club, San Isidro, Mayan Golf, Hacienda Nueva y Alta Vista). Match Play sustituye flechas SVG por símbolos de texto ↑/↓ y = para evitar desaparición en PNG. El exportador común recorta automáticamente el lienzo negro sobrante, conserva alta resolución y añade timeouts de exportación. Archivos: index-grupal.html, stableford.js, card-artifacts.js, card-file-export.js, test-stableford.mjs.
 
 - R106 hotfix gate 2026-09-24 · test-v306-match-play.mjs actualizado al contrato visual aprobado de Match Play: ↑ ganó, ↓ perdió y = empate; valida que los tres símbolos estén presentes en la tarjeta Global exportable.
+
+- 2026-09-24 R106-H3: tarjetas digitales — invalida caché H2 para cargar el generador/exportador vigente; conserva exactamente formato, diagrama, tamaños, fuentes, orden, casillas y línea gráfica; render PNG nativo 3×/4200 px; logo oficial obligatorio; paleta exclusiva negro/verde/blanco.
