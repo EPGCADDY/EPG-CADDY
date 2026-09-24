@@ -14,8 +14,14 @@
     return`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-56}px;max-width:none;margin:0;padding:28px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
   }
 
+  async function inlineImages(html){
+    let output=String(html||"");const sources=[...new Set([...output.matchAll(/<img[^>]+src=["']([^"']+)["']/gi)].map(match=>match[1]))];
+    for(const src of sources){try{const response=await fetch(src,{cache:"force-cache"});if(!response.ok)continue;const blob=await response.blob(),bytes=new Uint8Array(await blob.arrayBuffer());let binary="";for(let offset=0;offset<bytes.length;offset+=32768)binary+=String.fromCharCode(...bytes.subarray(offset,offset+32768));output=output.split(src).join(`data:${blob.type||"image/png"};base64,${btoa(binary)}`)}catch{}}
+    return output
+  }
   async function canvasFor(item){
     if(typeof document==="undefined"||typeof Image==="undefined")throw new Error("BROWSER_REQUIRED");
+    item={...item,html:await inlineImages(item.html)};
     // A self-contained SVG data image keeps the canvas origin-clean. A Blob
     // URL containing foreignObject taints it and makes PNG/PDF export fail.
     const svg=artifactSvg(item),image=new Image();

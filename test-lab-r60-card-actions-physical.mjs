@@ -23,5 +23,15 @@ assert.match(app,/openOriginalGlobal"\)\.classList\.toggle\("hidden",!corrected\
 console.log('PASS R60 tarjetas: acciones oficiales visibles tras cierre y todos los botones tienen handler');
 
 assert.match(app,/id="artifactViewerSendPlayers"/,'El visor de Tarjeta Global debe mostrar ENVIAR A JUGADORES');
-assert.match(app,/shareFinalCardToRegisteredPlayers\(\)/,'El botón del visor debe conectar con el envío a jugadores registrados');
 console.log('PASS R77 visor global: ENVIAR A JUGADORES visible y conectado');
+
+assert.match(app,/shareOpenedArtifactToRegisteredPlayers\('\$\{token\}',window\)/,'ENVIAR A JUGADORES del visor debe ejecutar el helper en la ventana que recibió el gesto');
+assert.match(app,/function shareOpenedArtifactToRegisteredPlayers\(/,'Debe existir helper funcional de envío desde el visor');
+assert.match(app,/targetWindow\.navigator\?\.share/,'El envío debe usar navigator.share de la ventana tocada para conservar activación del usuario en iPhone');
+assert.match(app,/-webkit-user-select:none!important;user-select:none!important/,'Los controles del visor no deben permitir seleccionar texto');
+console.log('PASS R78 visor global: botón jugadores funcional, gesto iPhone preservado y texto no seleccionable');
+
+assert.match(app,/openedArtifactBlobs=new Map/,'El PNG debe quedar preparado antes del toque de compartir');
+assert.match(app,/artifactViewerSendPlayers" disabled/,'ENVIAR A JUGADORES espera el PNG antes de habilitarse');
+assert.match(app,/onselectstart="return false"/,'Los botones del visor no permiten selección de texto');
+console.log('PASS R78: visor funcional y texto no seleccionable');

@@ -1744,3 +1744,29 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R77 gate sync: ambos inventarios registran conjuntamente la corrección del botón ENVIAR A JUGADORES en el visor de Tarjeta Global.
 
 - R77 promoción: ambos ROADMAPS quedan modificados en el mismo commit de cierre para satisfacer el gate de promoción sin alterar lógica funcional.
+
+- R78 · Corrección funcional Tarjeta Global: ENVIAR A JUGADORES deja de llamar el flujo en la ventana de origen y pasa el gesto táctil a un helper que usa navigator.share de la propia ventana del visor, evitando el no-op observado en iPhone. El helper prepara la PNG oficial, valida WhatsApp registrados y abre el share sheet; como fallback usa wa.me. Los tres botones del visor quedan con user-select y touch-callout desactivados para impedir selección accidental de texto.
+
+- R78 gate exacto · archivos de esta modificación registrados en ambos ROADMAPS: index-grupal.html, service-worker.js, test-lab-r60-production-refresh.mjs, test-lab-r60-card-actions-physical.mjs, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md.
+
+- R78 reparación exacta · index-grupal.html corrige la llamada del botón ENVIAR A JUGADORES a shareOpenedArtifactToRegisteredPlayers('${token}',window); test-lab-r60-card-actions-physical.mjs elimina el contrato R77 obsoleto que exigía la llamada anterior. ROADMAP_OVERALL.md y ROADMAP_A_DETALLE.md registran conjuntamente ambos archivos.
+
+- R79 · Tarjeta Global limpia: se elimina el texto visible “Tarjeta Global” y se sustituye por el logo oficial Golf Score Card GT. La cabecera visible queda únicamente con CAMPO, MODALIDAD y FECHA; se eliminan de la Global VERSIÓN, ID OFICIAL/SHA-256, TORNEO y CATEGORÍA. El cuerpo de resultados y puntuaciones permanece intacto. Archivos: card-artifacts.js, index-grupal.html, service-worker.js, test-lab-r60-production-refresh.mjs, test-card-artifacts.mjs.
+
+- R80 · Corrección lógica MENÚ/TORNEOS: SALIR DE ESTE TORNEO deja de ejecutar QUITAR y de devolver al portal de torneos. Ahora sale directamente a MI SCORE CARD sin borrar el torneo guardado. QUITAR DE MIS TORNEOS queda como acción destructiva separada y explícita. Archivos: shortcuts-ui.js, index-grupal.html, service-worker.js, test-lab-r60-production-refresh.mjs, test-lab-shortcuts-navigation.mjs.
+
+- R80 diagnóstico CI activo: se aíslan card-artifacts, visor de tarjeta, shortcuts y release antes del build agregado para localizar el fallo exacto sin tocar Producción.
+
+- R78 cierre funcional: Tarjeta Global limpia con sólo logo oficial + CAMPO + MODALIDAD + FECHA antes de los jugadores/resultados; sin “Tarjeta Global”, VERSIÓN, ID OFICIAL/SHA-256, torneo ni categoría en la cabecera. El logo se incrusta en el PNG exportado. Los botones de envío quedan deshabilitados sólo mientras se prepara el PNG y después son accionables; ENVIAR A JUGADORES usa los WhatsApp registrados y los textos de botones no son seleccionables.
+
+- R80 diagnóstico card-artifacts: se divide temporalmente la regresión R79 en cabecera Global general, Global Stableford, Personal y matriz de categorías para aislar exactamente el fallo del build agregado.
+
+- R78 gate fix exacto: se retiró el escape innecesario de comillas en los onclick del visor; no cambia lógica, sólo restaura el contrato y la ejecución literal de shareOpenedArtifact/shareOpenedArtifactToRegisteredPlayers.
+
+- R80 gate exacto · archivos del diagnóstico registrados en ambos ROADMAPS: .github/workflows/roadmap-gate.yml, scripts/r80-card-diagnostic.mjs, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md.
+
+- R78 diagnóstico activo: se separan las aserciones restantes de Tarjeta Global (Stableford extendido, Universales y contaminación legacy) para aislar el fallo exacto del gate sin cambiar lógica funcional.
+
+- R80 diagnóstico card-artifacts III: se aíslan las últimas aserciones no cubiertas (baseline, personales por modalidad y ausencia de hash/título Stableford). Archivos: .github/workflows/roadmap-gate.yml, scripts/r80-card-last-diagnostic.mjs.
+
+- R80 causa exacta del build: la regresión R79 buscaba `meta-hash` en todo el HTML y confundía una clase CSS no visible con información mostrada al usuario. Se corrige únicamente el test para validar el texto visible `ID OFICIAL · SHA-256`; la Tarjeta Global sigue sin mostrar ese dato. Archivos: test-card-artifacts.mjs, scripts/r80-card-last-diagnostic.mjs.

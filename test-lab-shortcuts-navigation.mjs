@@ -19,3 +19,7 @@ assert(app.includes('id="tournamentLiveHome"')&&app.includes('CENTRO DE TORNEOS'
 assert(app.includes('id="gsc-tournament-center-direct"')&&app.includes('/live-hub.html'),"CENTRO DE TORNEOS debe navegar directo al hub");
 assert(!app.includes('body:has(#finalCardOverlay.visible) #gscShortcutsButton'),"Tarjeta Digital no debe ocultar MENÚ");
 console.log("PASS LAB deterministic tournament navigation + MENÚ universal overlays");
+assert(ui.includes('item("exit-tournament","SALIR DE ESTE TORNEO","Volver a MI SCORE CARD sin borrar este torneo")'),'SALIR DE ESTE TORNEO debe ser salida real, no borrado');
+assert(ui.includes('if(action==="exit-tournament")return nav("/index-grupal.html")'),'SALIR DE ESTE TORNEO debe volver directo a MI SCORE CARD');
+assert(ui.includes('item("remove-tournament","QUITAR DE MIS TORNEOS"'),'Borrar un torneo guardado debe ser una acción distinta y explícita');
+console.log("PASS R80: SALIR DE ESTE TORNEO vuelve a Score Card y QUITAR queda separado");

@@ -56,5 +56,47 @@ jobs:
       - name: R75 diagnostic · manual parity
         run: node scripts/manual-screen-parity-gate.mjs
 
+      - name: R80 card diagnostic · general clean header
+        run: node scripts/r80-card-diagnostic.mjs general
+
+      - name: R80 card diagnostic · stableford clean header
+        run: node scripts/r80-card-diagnostic.mjs stableford
+
+      - name: R80 card diagnostic · personal unchanged
+        run: node scripts/r80-card-diagnostic.mjs personal
+
+      - name: R80 card diagnostic · category matrix
+        run: node scripts/r80-card-diagnostic.mjs matrix
+
+      - name: R80 card diagnostic · stableford extended
+        run: node scripts/r80-card-diagnostic.mjs stableford2
+
+      - name: R80 card diagnostic · universales
+        run: node scripts/r80-card-diagnostic.mjs universales
+
+      - name: R80 card diagnostic · legacy contamination
+        run: node scripts/r80-card-diagnostic.mjs legacy
+
+      - name: R80 card diagnostic · baseline extras
+        run: node scripts/r80-card-last-diagnostic.mjs baseline
+
+      - name: R80 card diagnostic · matrix personal
+        run: node scripts/r80-card-last-diagnostic.mjs personal-matrix
+
+      - name: R80 card diagnostic · stableford hash/title
+        run: node scripts/r80-card-last-diagnostic.mjs stableford-hash
+
+      - name: R80 diagnostic · card artifacts
+        run: node test-card-artifacts.mjs
+
+      - name: R80 diagnostic · card viewer actions
+        run: node test-lab-r60-card-actions-physical.mjs
+
+      - name: R80 diagnostic · shortcuts navigation
+        run: node test-lab-shortcuts-navigation.mjs
+
+      - name: R80 diagnostic · release sync
+        run: node test-lab-r60-production-refresh.mjs
+
       - name: Block retired microphone and AI regressions; preserve current LAB profile
         run: node scripts/build-manual-lab.mjs
