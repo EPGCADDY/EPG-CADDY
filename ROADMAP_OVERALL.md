@@ -1742,3 +1742,5 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - R77 · Tarjeta Global: el visor secundario incorpora ENVIAR A JUGADORES junto a ATRÁS y ENVIAR TARJETA DIGITAL. El botón conecta con el flujo existente que usa los WhatsApp registrados de los jugadores de la ronda.
 
 - R77 gate sync: ambos inventarios registran conjuntamente la corrección del botón ENVIAR A JUGADORES en el visor de Tarjeta Global.
+
+- R77 promoción: ambos ROADMAPS quedan modificados en el mismo commit de cierre para satisfacer el gate de promoción sin alterar lógica funcional.
