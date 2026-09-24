@@ -28,7 +28,8 @@ jobs:
           const src=path.join(os.tmpdir(),'epg-caddy-iphone-card-audit');
           const modes=['general','stableford','match_play','four_ball','universales','practice','skins'];
           (async()=>{const b=await chromium.launch({headless:true});
-            for(const mode of modes){const p=await b.newPage({viewport:{width:1920,height:1080},deviceScaleFactor:1});await p.goto('file://'+path.join(src,mode+'-global.html'));await p.screenshot({path:'r106-seven-cards/'+mode+'.png',fullPage:false});await p.close()}\n            await b.close();
+            for(const mode of modes){const p=await b.newPage({viewport:{width:1920,height:1080},deviceScaleFactor:1});await p.goto('file://'+path.join(src,mode+'-global.html'));await p.screenshot({path:'r106-seven-cards/'+mode+'.png',fullPage:false});await p.close()}
+            await b.close();
           })().catch(e=>{console.error(e);process.exit(1)})
           NODE
           node /tmp/render7.cjs
