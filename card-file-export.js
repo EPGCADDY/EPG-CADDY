@@ -5,6 +5,7 @@
   const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
   const dimensions=item=>({width:1920,height:1080});
+  const layoutDimensions=()=>({width:1920,height:1080});
   const renderDimensions=()=>({width:3840,height:2160});
   const exportDimensions=()=>({width:3840,height:2160});
 
@@ -12,8 +13,8 @@
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
     const style=[...item.html.matchAll(/<style>([\s\S]*?)<\/style>/gi)].map(match=>match[1]).join("\n"),main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
     if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
-    const {width,height}=renderDimensions(),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
-    return`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject x="0" y="0" width="${width}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000;overflow:hidden"><style>${style}html,body{width:${width}px!important;height:${height}px!important;min-height:0!important;background:#000!important;margin:0!important;padding:0!important;overflow:hidden!important}main{width:${width}px!important;max-width:none!important;margin:0!important;padding:12px!important;overflow:hidden!important}</style><main>${safeMain}</main></div></foreignObject></svg>`;
+    const {width:pixelWidth,height:pixelHeight}=renderDimensions(),{width,height}=layoutDimensions(),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
+    return`<svg xmlns="http://www.w3.org/2000/svg" width="${pixelWidth}" height="${pixelHeight}" viewBox="0 0 ${width} ${height}"><foreignObject x="0" y="0" width="${width}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000;overflow:hidden"><style>${style}html,body{width:${width}px!important;height:${height}px!important;min-height:0!important;background:#000!important;margin:0!important;padding:0!important;overflow:hidden!important}main{width:${width}px!important;max-width:none!important;margin:0!important;padding:12px!important;overflow:hidden!important}</style><main>${safeMain}</main></div></foreignObject></svg>`;
   }
 
   async function inlineImages(html){
@@ -39,10 +40,10 @@
     if(typeof document==="undefined")throw new Error("BROWSER_REQUIRED");
     const html=await normalizeWebpDataImages(await inlineImages(String(item?.html||"")));
     if(/<img[^>]+src=["'](?!data:)/i.test(html))throw new Error("IMAGE_NOT_INLINED");
-    const {width,height}=renderDimensions();
+    const {width,height}=renderDimensions(),layout=layoutDimensions();
     const frame=document.createElement("iframe");
     frame.setAttribute("aria-hidden","true");
-    frame.style.cssText=`position:fixed;left:-100000px;top:0;width:${width}px;height:${height}px;border:0;visibility:hidden;pointer-events:none;background:#000`;
+    frame.style.cssText=`position:fixed;left:-100000px;top:0;width:${layout.width}px;height:${layout.height}px;border:0;visibility:hidden;pointer-events:none;background:#000`;
     document.body.appendChild(frame);
     try{
       const doc=frame.contentDocument;if(!doc)throw new Error("FRAME_DOCUMENT_REQUIRED");
