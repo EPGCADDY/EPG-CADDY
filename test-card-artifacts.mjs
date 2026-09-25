@@ -76,7 +76,7 @@ console.log('PASS tarjeta digital Match Play conserva flechas y no contamina Fou
 for(const mode of ['general','practice','skins','stableford','match_play','four_ball','universales']){
   const modeSnapshot={...snapshot,mode,players:mode==='universales'?optionalCategoryPlayers:mode==='stableford'?stablefordPlayers:mode==='match_play'?matchPlayers:snapshot.players,stablefordCategory:'senior',matchPlay:{closed:true,decidedAt:18,resultLabel:'MATCH PLAY'},fourBall:{resultLabel:'FOUR BALL'}};
   const card=artifacts.build(modeSnapshot).global.html;
-  assert.match(card,/r127-seven-card-premium/,mode+': premium visual layer missing');
+  assert.match(card,/r130-seven-card-premium/,mode+': premium visual layer missing');
   assert.match(card,/PRIMERA VUELTA/,mode+': first round label missing');
   assert.match(card,/SEGUNDA VUELTA/,mode+': second round label missing');
 }
