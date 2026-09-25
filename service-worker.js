@@ -1,11 +1,11 @@
 "use strict";
-// R137 republish 2026-09-25: force installed LAB clients to re-fetch this worker and expose the manual update control.
+// R138 republish 2026-09-25: force installed LAB clients to re-fetch this worker and expose the manual update control.
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-laboratorio-r137`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-laboratorio-r137`;
-const RELEASE="LABORATORIO-20260925-R137";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-laboratorio-r138`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-laboratorio-r138`;
+const RELEASE="LABORATORIO-20260925-R138";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   "/score-entry-contract.js",
@@ -126,7 +126,7 @@ self.addEventListener("fetch",event=>{
   if(request.mode==="navigate"&&!["/","/index.html","/inicio",OFFLINE_ENTRY].includes(url.pathname)){event.respondWith(networkFirst(request,false));return}
   if(request.mode==="navigate"){
     event.respondWith((async()=>{
-      // R137: network-first navigation prevents installed iOS PWA from pinning an old approved shell.
+      // R138: network-first navigation prevents installed iOS PWA from pinning an old approved shell.
       try{const fresh=await fetch(request,{cache:"no-store"});if(fresh.ok){const active=await caches.open(ACTIVE_CACHE_NAME);await active.put(OFFLINE_ENTRY,fresh.clone());const approved=await caches.open(APPROVED_CACHE_NAME);await approved.put(OFFLINE_ENTRY,fresh.clone());return fresh}}catch{}
       if(url.searchParams.get("force_update")==="r134"){await refreshShell();await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}
       if(url.searchParams.get("app_version")===RELEASE){await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}
