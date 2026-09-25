@@ -115,7 +115,25 @@
   }
 
   function globalCard(snapshot){
-    return shell(snapshot.version>1?"Tarjeta Global corregida":"Tarjeta Global",snapshot,`${strokeHalf(snapshot,1,9,"PRIMERA VUELTA")}${strokeHalf(snapshot,10,18,"SEGUNDA VUELTA")}`);
+    return shell(snapshot.version>1?"Tarjeta Global corregida":"Tarjeta Global",snapshot,`<style>
+body{padding:0!important}
+main{width:1880px!important;height:auto!important;max-width:none!important;margin:0!important;padding:12px!important;border-radius:10px!important;display:grid!important;grid-template-columns:360px minmax(0,1fr)!important;grid-template-rows:104px auto auto auto!important;gap:10px 12px!important}
+.global-clean-head{grid-column:1!important;grid-row:1!important;margin:0!important;padding:4px 8px!important;border:1px solid #555!important;border-radius:10px!important;display:flex!important;align-items:center!important}
+.global-clean-head img{width:330px!important;height:90px!important;max-width:none!important;object-fit:contain!important}
+.global-clean-meta{grid-column:2!important;grid-row:1!important;display:grid!important;grid-template-columns:1fr 1.35fr 1fr!important;gap:10px!important;margin:0!important;align-self:center!important}
+.global-clean-meta span{padding:22px 18px!important;border-radius:8px!important;font-size:21px!important;font-weight:800!important;white-space:nowrap!important}
+.score-half{grid-column:1/-1!important;margin:0!important}
+.score-half h2{padding:9px 18px!important;border:3px solid #31ff00!important;border-radius:8px!important;color:#31ff00!important;font-size:24px!important;line-height:1!important}
+.score-half .table-wrap{border-radius:0 0 8px 8px!important;overflow:hidden!important}
+.score-half table{min-width:0!important;table-layout:fixed!important}
+.score-half th,.score-half td{padding:4px 4px!important;font-size:20px!important;line-height:1!important;height:48px!important}
+.score-half th:first-child,.score-half td:first-child{width:290px!important}
+.score-half th:nth-last-child(-n+3),.score-half td:nth-last-child(-n+3){width:115px!important}
+.stroke-half th:nth-child(2),.stroke-half td:nth-child(2){width:150px!important}
+.stroke-half th:nth-child(3),.stroke-half td:nth-child(3){width:85px!important}
+.stroke-half th small{display:none!important}
+.stroke-half .par-row th,.stroke-half .par-row td{color:#31ff00!important;font-weight:900!important}
+</style>${strokeHalf(snapshot,1,9,"PRIMERA VUELTA")}${strokeHalf(snapshot,10,18,"SEGUNDA VUELTA")}`);
   }
 
   function personalCard(snapshot,player){
@@ -176,7 +194,25 @@ const FOUR_BALL_TEAM_CLASSES=["team-green","team-gold","team-blue"];
   function fourBallStanding(snapshot,teamIndex,hole){const holes=Array.from({length:hole},(_,index)=>index+1),value=globalThis.GSCFourBall?.teamStanding?.(snapshot.players,teamIndex,holes)||{played:0,state:"pending",position:""};return{...value,state:value.state==="up"?"won":value.state==="down"?"lost":value.played?"tied":"pending",label:value.position||""}}
   function fourBallGlobalCard(snapshot){
     const finalHole=Number(snapshot.fourBall?.decidedAt)||18,half=(from,to,label)=>{const holes=Array.from({length:to-from+1},(_,i)=>from+i),rows=snapshot.players.map((player,index)=>{const teamIndex=fourBallTeamIndex(index),teamClass=FOUR_BALL_TEAM_CLASSES[teamIndex],divider=(index===2||index===4)?`<tr class="pair-divider" aria-hidden="true"><td colspan="${holes.length+3}"></td></tr>`:"";return`${divider}<tr><td>${playerNameWithCategory(player)}</td><td class="${teamClass}">${fourBallTeamLabel(snapshot,teamIndex)}</td><td>${player.handicap}</td>${holes.map(hole=>{const result=fourBallHole(snapshot,hole),standing=fourBallStanding(snapshot,teamIndex,hole),score=player.holes?.[hole],best=result.teamBest?.[teamIndex]?.playerIndexes?.includes(index);return`<td class="match-${standing.state}">${hole<=finalHole&&score?`${score.gross}/${score.net}${best?'<br><span class="best-ball">★ MEJOR</span>':""}<br>${matchSymbol(standing.state)} ${standing.label}`:"—"}</td>`}).join("")}</tr>`}).join("");return`<section class="score-half"><h2>${label} · HOYOS ${from}–${to}</h2><div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>TEAM</th><th>HCP</th>${holes.map(h=>`<th>${h}<br>G/N</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div></section>`};
-    return shell("Tarjeta Global Four Ball",snapshot,`<style>body{padding:10px}main{padding:12px}.global-clean-head{margin-bottom:8px;padding:4px 8px}.global-clean-head img{height:54px}.global-clean-meta{margin-bottom:10px!important}.global-clean-meta span{padding:7px 10px}.score-half{margin-bottom:8px}.score-half h2{padding:5px 10px;font-size:14px}.score-half th,.score-half td{padding:2px 3px;font-size:9px;line-height:1}.score-half .player-category{font-size:58%!important;margin:0!important}.score-half .pair-divider td{height:4px;padding:0}.best-ball{font-size:8px}.match-result{margin:5px 0;padding:5px;font-size:17px}main>p{margin:3px 0 0;font-size:9px}</style><div class="match-result four-ball-result">${esc(snapshot.fourBall?.resultLabel||snapshot.fourBall?.label||"FOUR BALL")}</div>${half(1,9,"PRIMERA VUELTA")}${half(10,18,"SEGUNDA VUELTA")}<p>★ identifica el mejor Neto de cada pareja.</p>`)
+    return shell("Tarjeta Global Four Ball",snapshot,`<style>
+body{padding:0!important}
+main{width:1880px!important;height:auto!important;max-width:none!important;margin:0!important;padding:12px!important;border-radius:10px!important;display:grid!important;grid-template-columns:360px minmax(0,1fr)!important;grid-template-rows:104px auto auto auto!important;gap:10px 12px!important}
+.global-clean-head{grid-column:1!important;grid-row:1!important;margin:0!important;padding:4px 8px!important;border:1px solid #555!important;border-radius:10px!important;display:flex!important;align-items:center!important}
+.global-clean-head img{width:330px!important;height:90px!important;max-width:none!important;object-fit:contain!important}
+.global-clean-meta{grid-column:2!important;grid-row:1!important;display:grid!important;grid-template-columns:1fr 1.35fr 1fr!important;gap:10px!important;margin:0!important;align-self:center!important}
+.global-clean-meta span{padding:22px 18px!important;border-radius:8px!important;font-size:21px!important;font-weight:800!important;white-space:nowrap!important}
+.score-half{grid-column:1/-1!important;margin:0!important}
+.score-half h2{padding:9px 18px!important;border:3px solid #31ff00!important;border-radius:8px!important;color:#31ff00!important;font-size:24px!important;line-height:1!important}
+.score-half .table-wrap{border-radius:0 0 8px 8px!important;overflow:hidden!important}
+.score-half table{min-width:0!important;table-layout:fixed!important}
+.score-half th,.score-half td{padding:4px 4px!important;font-size:20px!important;line-height:1!important;height:48px!important}
+.score-half th:first-child,.score-half td:first-child{width:290px!important}
+.score-half th:nth-last-child(-n+3),.score-half td:nth-last-child(-n+3){width:115px!important}
+.stroke-half th:nth-child(2),.stroke-half td:nth-child(2){width:150px!important}
+.stroke-half th:nth-child(3),.stroke-half td:nth-child(3){width:85px!important}
+.stroke-half th small{display:none!important}
+.stroke-half .par-row th,.stroke-half .par-row td{color:#31ff00!important;font-weight:900!important}
+.score-half th:first-child,.score-half td:first-child{width:220px!important}.score-half th:nth-child(2),.score-half td:nth-child(2){width:260px!important}.score-half th:nth-child(3),.score-half td:nth-child(3){width:85px!important}.score-half .pair-divider td{height:16px!important;padding:0!important;background:#061014!important}.best-ball{font-size:11px!important}.match-result{grid-column:1/-1!important;margin:0!important;padding:7px!important;font-size:22px!important}main>p{grid-column:1/-1!important;margin:0!important;font-size:13px!important}</style><div class="match-result four-ball-result">${esc(snapshot.fourBall?.resultLabel||snapshot.fourBall?.label||"FOUR BALL")}</div>${half(1,9,"PRIMERA VUELTA")}${half(10,18,"SEGUNDA VUELTA")}<p>★ identifica el mejor Neto de cada pareja.</p>`)
   }
   function fourBallPersonalCard(snapshot,player){
     const index=snapshot.players.findIndex(item=>item.id===player.id),teamIndex=fourBallTeamIndex(index),mateIndex=teamIndex*2+(index%2===0?1:0),rivalIndexes=snapshot.players.map((_,playerIndex)=>playerIndex).filter(playerIndex=>fourBallTeamIndex(playerIndex)!==teamIndex),finalHole=Number(snapshot.fourBall?.decidedAt)||18,rows=Array.from({length:finalHole},(_,offset)=>{const hole=offset+1,result=fourBallHole(snapshot,hole),standing=fourBallStanding(snapshot,teamIndex,hole),score=player.holes?.[hole],mate=snapshot.players[mateIndex]?.holes?.[hole],rivalBest=Math.min(...result.teamBest.map((value,rivalTeam)=>rivalTeam===teamIndex?Infinity:Number(value?.score??Infinity))),best=result.teamBest?.[teamIndex]?.playerIndexes?.includes(index);return`<tr><td>${hole}</td><td>${score?.gross??"—"}</td><td>${score?.net??"—"}${best?' <span class="best-ball">★</span>':""}</td><td>${mate?.net??"—"}</td><td>${Number.isFinite(rivalBest)?rivalBest:"—"}</td><td class="match-${standing.state}">${matchSymbol(standing.state)} ${standing.label}</td></tr>`}).join("");
