@@ -9,8 +9,8 @@ const required=[
 ];
 for(const id of required)assert(app.includes('id="'+id+'"'),'Falta control '+id);
 
-assert.match(app,/actions\.hidden=!round\.officiallyClosedAt/,'Las acciones oficiales deben mostrarse al cerrar la ronda');
-assert.doesNotMatch(app,/actions\.hidden=true;sendButton\.hidden=!round\.officiallyClosedAt/,'No se permite ocultar permanentemente acciones oficiales');
+assert.match(app,/actions\.hidden=false/,'Tarjeta Digital debe mostrar directamente las opciones de envío, sin pantalla intermedia');
+assert.match(app,/sendButton\.hidden=false/,'COMPARTIR TARJETA debe estar visible al entrar a Tarjeta Digital');
 
 for(const id of ['openGlobalCard','imageGlobalCard','pdfGlobalCard','shareGlobalCard','openPersonalCard','imagePersonalCard','pdfPersonalCard','sharePersonalCard','downloadAllCards']){
  assert(app.includes('$("'+id+'").addEventListener("click"'),'Falta listener de '+id);
@@ -35,3 +35,9 @@ assert.match(app,/openedArtifactBlobs=new Map/,'El PNG debe quedar preparado ant
 assert.match(app,/artifactViewerSendPlayers" disabled/,'ENVIAR A JUGADORES espera el PNG antes de habilitarse');
 assert.match(app,/onselectstart="return false"/,'Los botones del visor no permiten selección de texto');
 console.log('PASS R78: visor funcional y texto no seleccionable');
+
+// R129: acceso directo universal a Tarjeta Digital — sin FINALIZAR RONDA intermedio.
+assert.match(app,/<button id="officialCloseButton" type="button" hidden aria-hidden="true" tabindex="-1">FINALIZAR RONDA<\/button>/,'Control legado de cierre debe permanecer fuera del flujo visible');
+assert.doesNotMatch(app,/\$\("officialCloseButton"\)\.addEventListener\("click",officiallyCloseRound\)/,'Tarjeta Digital no debe exigir FINALIZAR RONDA');
+assert.match(app,/\$\("finalCardButton"\)\.addEventListener\("click",openFinalDigitalCard\)/,'Tarjeta Digital abre directamente su vista de envío');
+console.log('PASS R129 · Tarjeta Digital abre directamente opciones de compartir/enviar sin pantalla intermedia');
