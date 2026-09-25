@@ -54,12 +54,14 @@ assert.deepEqual(fileExport.exportDimensions(),{width:7680,height:4320});
 assert.match(source,/FINAL_PNG_LOGO_NOT_VISIBLE/,"El exportador debe bloquear cualquier PNG cuyo logo no sea físicamente visible");
 assert.match(source,/FINAL_PNG_CARD_NOT_FILLED/,"El exportador debe bloquear cualquier PNG con tarjeta vacía o incompleta");
 assert.match(source,/OFFICIAL_LOGO_PNG_REQUIRED/,"El raster final exige logo PNG embebido antes de dibujar");
-assert.match(source,/async function png\(item\)\{const canvas=await canvasFor\(item\);assertRenderedCard\(canvas\);return canvasBlob\(canvas,"image\/png"\)\}/,"PNG final debe salir directamente del master 8K, sin segundo canvas ni reescalado");
+assert.match(source,/async function png\(item\)\{const canvas=await canvasFor\(item\),cropped=trimCanvas\(canvas,8\);return canvasBlob\(cropped,"image\/png"\)\}/,"PNG final debe recortar el master 8K sin reescalarlo");
 assert.match(source,/ctx\.drawImage\(logo,20\*scale,16\*scale,400\*scale,132\*scale\)/,"El logo oficial debe pintarse directamente sobre el canvas 8K final para evitar el fallo foreignObject de Safari/iOS");
 assert.match(source,/box-sizing:border-box!important/,"El viewport 1920 debe incluir padding sin recorte ni reescalado accidental");
 
 assert.match(source,/function trimCanvas\(canvas,margin=24\)/,"El recortador legado puede conservarse para compatibilidad, pero PNG no debe invocarlo");
-assert.doesNotMatch(source,/async function png\(item\)[^\n]*trimCanvas/,"PNG no debe recortar ni reescalar el master 8K");
+assert.match(source,/out\.width=cropWidth;out\.height=cropHeight/,"Recorte debe conservar dimensiones nativas del contenido");
+assert.match(source,/outCtx\.imageSmoothingEnabled=false/,"Recorte 1:1 debe impedir suavizado adicional");
+assert.doesNotMatch(source,/out\.width=width;out\.height=Math\.max/,"No debe existir ampliación del recorte a ancho completo");
 assert.match(source,/shape-rendering="geometricPrecision"/,"SVG 8K debe solicitar precisión geométrica");
 assert.match(source,/text-rendering="geometricPrecision"/,"SVG 8K debe solicitar precisión tipográfica");
 
