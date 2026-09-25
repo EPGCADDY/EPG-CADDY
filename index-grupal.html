@@ -4243,7 +4243,13 @@ if(window.GSC_GUEST_ACCESS){enforceGuestAccess();setInterval(enforceGuestAccess,
 // La entrada explícita abre Registro sin borrar la ronda activa. La sustitución
 // continúa ocurriendo únicamente después de confirmar INICIAR RONDA.
 if(explicitNewRound){
+  // Entrada de prueba: forzar REGISTRO como última acción del arranque, aun con ronda persistida.
   openNewRoundDraft();
+  showStep1();
+  document.body?.classList.add("gsc-setup-open");
+  $("setupOverlay")?.classList.add("visible");
+  $("setupOverlay")?.setAttribute("aria-hidden","false");
+  requestAnimationFrame(()=>{showStep1();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")});
 }else if(directHome){
   openRegistrationPreservingActiveRound();
 }else if(sfEmergency){
