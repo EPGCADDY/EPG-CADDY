@@ -14,7 +14,7 @@
     const style=[...item.html.matchAll(/<style>([\s\S]*?)<\/style>/gi)].map(match=>match[1]).join("\n"),main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
     if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
     const {width:pixelWidth,height:pixelHeight}=renderDimensions(),{width,height}=layoutDimensions(),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
-    return`<svg xmlns="http://www.w3.org/2000/svg" width="${pixelWidth}" height="${pixelHeight}" viewBox="0 0 ${width} ${height}"><foreignObject x="0" y="0" width="${width}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000;overflow:hidden"><style>${style}html,body{width:${width}px!important;height:${height}px!important;min-height:0!important;background:#000!important;margin:0!important;padding:0!important;overflow:hidden!important}main{width:${width}px!important;max-width:none!important;margin:0!important;padding:12px!important;overflow:hidden!important}</style><main>${safeMain}</main></div></foreignObject></svg>`;
+    return`<svg xmlns="http://www.w3.org/2000/svg" width="${pixelWidth}" height="${pixelHeight}" viewBox="0 0 ${width} ${height}"><foreignObject x="0" y="0" width="${width}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000;overflow:hidden"><style>${style}html,body{width:${width}px!important;height:${height}px!important;min-height:0!important;background:#000!important;margin:0!important;padding:0!important;overflow:hidden!important}main{width:${width}px!important;max-width:none!important;margin:0!important;padding:12px!important;box-sizing:border-box!important;overflow:hidden!important}</style><main>${safeMain}</main></div></foreignObject></svg>`;
   }
 
   async function inlineImages(html){
@@ -63,12 +63,18 @@
     if(/<img[^>]+src=["'](?!data:)/i.test(html))throw new Error("IMAGE_NOT_INLINED");
     if(!/data:image\/png;base64,/i.test(html))throw new Error("OFFICIAL_LOGO_PNG_REQUIRED");
     const {width,height}=renderDimensions();
-    const svg=artifactSvg({...item,html}),image=await decodeImage(svgDataUrl(svg));
+    const logoSrc=html.match(/<div class=["']global-clean-head["'][^>]*>\s*<img[^>]+src=["'](data:image\/png;base64,[^"']+)["']/i)?.[1];
+    if(!logoSrc)throw new Error("OFFICIAL_LOGO_PNG_REQUIRED");
+    const svg=artifactSvg({...item,html}),image=await decodeImage(svgDataUrl(svg)),logo=await decodeImage(logoSrc);
     const canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
     const ctx=canvas.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");
     ctx.fillStyle="#000";ctx.fillRect(0,0,width,height);
     ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
     ctx.drawImage(image,0,0,width,height);
+    // Safari/iOS can omit <img> inside SVG foreignObject. Paint the official logo
+    // as a native canvas layer at the exact 2x coordinates of the 1920px card.
+    ctx.fillStyle="#000";ctx.fillRect(40,32,800,264);
+    ctx.drawImage(logo,40,32,800,264);
     assertRenderedCard(canvas);
     return canvas;
   }
