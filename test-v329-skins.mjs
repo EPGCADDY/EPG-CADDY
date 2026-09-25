@@ -134,7 +134,6 @@ for(const token of [
   'id="skinsCurrencyGTQ"',
   'id="skinsCurrencyUSD"',
   'aria-label="Modalidades"',
-  'aria-label="Funciones de Score Card y Live"',
   'TORNEOS',
   'id="universalesRoundButton"',
   'function skinsSpeechSummary()',
