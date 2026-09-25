@@ -1442,7 +1442,7 @@ const sfEmergency=startupParams.get("stableford_emergency")==="countryclub";
 const demoControlManual=startupParams.get("demo_control_manual")==="v269";
 const directHome=startupParams.get("inicio")==="1";
 const explicitNewRound=startupParams.get("nueva_ronda")==="1"||startupParams.get("manual_action")==="setup";
-const principalStartup=!sfEmergency&&!demoControlManual&&!directHome;
+let principalStartup=!sfEmergency&&!demoControlManual&&!directHome;
 const DEMO_CONTROL_MANUAL_KEY="golf-score-card-guatemala-demo-control-manual-v269";
 const DEMO_CONTROL_MANUAL_DRAFT_KEY="golf-score-card-guatemala-demo-control-manual-draft-v269";
 const DEMO_CONTROL_MANUAL_ARCHIVE_KEY="golf-score-card-guatemala-demo-control-manual-archive-v269";
@@ -2164,6 +2164,8 @@ function prepareGroup(args){
 }
 function startConfirmedRound(){
   if(!draftPlayers.length)return false;
+  // Una vez confirmada la ronda, la entrada principal deja de forzar REGISTRO.
+  principalStartup=false;
   if(draftPlayers.length===1){draftRoundMode="general";resetDraftGames()}
   if(draftSkins.enabled&&draftPlayers.length<2){setManualRegistrationStatus("SKINS REQUIERE DE 2 A 6 JUGADORES");return false}
   if(draftWolf.enabled&&(draftPlayers.length<3||draftPlayers.length>6)){setManualRegistrationStatus("WOLF REQUIERE DE 3 A 6 JUGADORES");return false}
