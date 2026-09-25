@@ -2194,6 +2194,15 @@ function startConfirmedRound(){
 // LAB hotfix: iOS/PWA can leave the confirmation overlay visually active after the round is created.
 // Guarantee the visible transition to the scorecard immediately after a successful start.
 function startConfirmedRoundFromButton(){
+  if(!draftPlayers.length&&manualDraftRows.some(row=>manualRowHasData(row))){
+    const recovered=syncDraftPlayersFromManualRows({strict:true,renderAfter:false});
+    if(!recovered){showStep1();return false}
+  }
+  if(!draftPlayers.length){
+    showStep1();
+    setManualRegistrationStatus("REGISTRA AL MENOS UN JUGADOR PARA INICIAR LA RONDA");
+    return false;
+  }
   const started=startConfirmedRound();
   if(started&&round.configured){
     $("setupOverlay")?.classList.remove("visible");
@@ -2201,8 +2210,10 @@ function startConfirmedRoundFromButton(){
     voiceContext="round";
     render();
     requestAnimationFrame(()=>{window.scrollTo(0,0);});
+    return true;
   }
-  return started;
+  showStep1();
+  return false;
 }
 function startProvisionalScorecard(){
   const selectedCourse=COURSE_CATALOG[draftCourse];
