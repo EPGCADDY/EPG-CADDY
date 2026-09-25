@@ -32,8 +32,8 @@ assert.equal(dims.width,1920);
 assert.equal(dims.height,1080);
 assert.match(svg,/width="9600"/,"La tarjeta exportable debe rasterizarse nativamente a 8K");
 assert.match(svg,/viewBox="0 0 9600 5400"/,"Safari debe rasterizar dentro de un viewport físico 8K, no ampliar un viewBox 1920");
-assert.match(svg,/transform:scale\(4\)/,"La geometría 1920 debe escalarse dentro del foreignObject 8K antes de rasterizar");
-assert.match(svg,/foreignObject x="0" y="0" width="9600" height="5400"/,"foreignObject debe poseer resolución física 8K");
+assert.match(svg,/transform:scale\(5\)/,"La geometría auxiliar SVG debe reflejar escala 5x aunque la ruta PNG final use Canvas nativo");
+assert.match(svg,/foreignObject x="0" y="0" width="9600" height="5400"/,"SVG auxiliar debe conservar resolución física 5x");
 assert.doesNotMatch(svg,/viewBox="0 0 1920 1080"/,"Prohibido volver al viewBox lógico que producía detalle efectivo bajo");
 
 assert.match(svg,/data:image\/webp;base64/,"La tarjeta exportable debe llevar el logo oficial embebido, sin depender de red");
