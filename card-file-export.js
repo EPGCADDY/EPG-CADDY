@@ -9,8 +9,8 @@
   const renderScale=()=>5;
   const renderDimensions=()=>({width:9600,height:5400});
   const exportDimensions=()=>({width:9600,height:5400});
-  const shareScale=()=>2;
-  const shareDimensions=()=>({width:3840,height:2160});
+  const shareScale=()=>5;
+  const shareDimensions=()=>({width:9600,height:5400});
   const contentDimensions=()=>({width:1920,height:1080});
 
   function artifactSvg(item){
@@ -77,14 +77,14 @@
     const text=node.nodeValue.replace(/\s+/g," ").trim();if(!text)return;
     const pr=parent.getBoundingClientRect(),x0=pr.left-rootRect.left,y0=pr.top-rootRect.top,w=pr.width,h=pr.height;
     const fontSize=px(style.fontSize)||16,fontWeight=style.fontWeight||"400",fontStyle=style.fontStyle||"normal",family=style.fontFamily||"Arial";
-    ctx.font=`${fontStyle} ${fontWeight} ${fontSize}px ${family}`;ctx.fillStyle=style.color||"#fff";ctx.textBaseline="middle";ctx.textRendering="geometricPrecision";
+    ctx.font=`${fontStyle} ${fontWeight} ${fontSize}px ${family}`;ctx.fillStyle=style.color||"#fff";ctx.textBaseline="middle";
     const align=style.textAlign||"start";ctx.textAlign=align==="center"?"center":align==="right"||align==="end"?"right":"left";
     const padL=px(style.paddingLeft),padR=px(style.paddingRight);
     const x=ctx.textAlign==="center"?x0+w/2:ctx.textAlign==="right"?x0+w-padR:x0+padL;
     let y=y0+h/2;
     // Direct text beside child elements (hole number + G/N, score + arrow) belongs in upper half.
     if(parent.children.length)y=y0+Math.max(fontSize*.72,h*.30);
-    ctx.fillText(text,x,y,Math.max(1,w-padL-padR));
+    ctx.fillText(text,x,y);
   }
   async function nativeDomCanvas(item,html,profile="master"){
     const scale=profile==="share"?shareScale():renderScale(),{width:pixelWidth,height:pixelHeight}=profile==="share"?shareDimensions():renderDimensions(),{width,height}=layoutDimensions();
@@ -99,7 +99,7 @@
       const main=doc.querySelector("main");if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
       const rootRect=main.getBoundingClientRect(),canvas=document.createElement("canvas");canvas.width=pixelWidth;canvas.height=pixelHeight;
       const ctx=canvas.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");
-      ctx.fillStyle="#000";ctx.fillRect(0,0,pixelWidth,pixelHeight);ctx.save();ctx.scale(scale,scale);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
+      ctx.fillStyle="#000";ctx.fillRect(0,0,pixelWidth,pixelHeight);ctx.save();ctx.scale(scale,scale);ctx.imageSmoothingEnabled=false;
       const elements=[main,...main.querySelectorAll("*")];
       for(const el of elements){
         const style=doc.defaultView.getComputedStyle(el);if(style.display==="none"||style.visibility==="hidden"||Number(style.opacity)===0)continue;
