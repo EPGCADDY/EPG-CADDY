@@ -70,3 +70,9 @@ assert.doesNotMatch(source,/out\.width=width;out\.height=Math\.max/,"Prohibido a
 assert.deepEqual(fileExport.dimensions({mode:"match_play"}),{width:1920,height:1080});
 assert.deepEqual(fileExport.dimensions({mode:"four_ball"}),{width:1920,height:1080});
 assert.deepEqual(fileExport.dimensions({mode:"normal"}),{width:1920,height:1080});
+
+assert.deepEqual(fileExport.shareDimensions(),{width:3840,height:2160});
+assert.match(source,/const shareScale=\(\)=>2/,"Compartir debe renderizar nativamente a 2x, no reducir el master 5x");
+assert.match(source,/profile==="share"\?shareDimensions\(\):renderDimensions\(\)/,"Share debe usar su propio viewport nativo");
+assert.match(source,/canvasFor\(item,"share"\)/,"Share no debe entregar el master gigante a mensajería");
+assert.doesNotMatch(source,/shareImage[^\n]*await png\(item\)/,"Share no debe pasar el PNG 9600px a WhatsApp/iOS");
