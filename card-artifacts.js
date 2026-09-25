@@ -246,7 +246,18 @@ main>p{grid-column:1/-1!important;margin:0!important;font-size:14px!important}
 
   const PREMIUM_GLOBAL_CSS=`<style id="r127-seven-card-premium">
 body{background:#000!important;padding:0!important}
-main{background:linear-gradient(180deg,#050706 0%,#000 100%)!important;border:1px solid #343a38!important;box-shadow:0 0 0 1px #0d100f inset!important}
+main{background:linear-gradient(180deg,#050706 0%,#000 100%)!important;border:1px solid #4b514f!important;box-shadow:0 0 0 1px #0d100f inset,0 8px 34px rgba(0,0,0,.7)!important}
+.global-clean-head{box-shadow:inset 0 0 0 1px #171b19,0 2px 12px rgba(0,0,0,.65)!important}
+.global-clean-head img{filter:contrast(1.08) saturate(1.08)!important}
+.global-clean-meta{gap:8px!important}
+.global-clean-meta span{background:linear-gradient(180deg,#080b0a,#020303)!important;border:1px solid #454b49!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important;text-transform:none!important}
+.score-half{border-radius:8px!important}
+.score-half h2{background:linear-gradient(90deg,#061506,#020703)!important;text-shadow:0 0 12px rgba(49,255,0,.22)!important}
+.score-half table{border-collapse:collapse!important}
+.score-half th{background:linear-gradient(180deg,#101312,#050706)!important;text-shadow:0 1px 0 #000!important}
+.score-half td{background:#010202!important;text-shadow:0 1px 0 #000!important}
+.score-half th,.score-half td{border-width:1px!important}
+.match-arrow{font-family:Arial Black,Arial,sans-serif!important;font-weight:900!important;text-shadow:none!important}
 .global-clean-head{background:#020303!important;border-color:#4d5553!important}
 .global-clean-meta span{background:#050706!important;border:1px solid #343a38!important;color:#f5f5f5!important;letter-spacing:.25px!important}
 .score-half h2{background:#041004!important;box-shadow:0 0 18px rgba(49,255,0,.10)!important;letter-spacing:.45px!important}
