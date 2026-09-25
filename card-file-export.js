@@ -5,6 +5,7 @@
   const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
   const dimensions=item=>({width:1920,height:1080});
+  const exportDimensions=()=>({width:3840,height:2160});
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
@@ -60,7 +61,7 @@
   }
 
   function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("CANVAS_EXPORT_TIMEOUT")),12000);canvas.toBlob(blob=>{clearTimeout(timer);blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED"))},type,quality)})}
-  async function png(item){const canvas=await canvasFor(item),cropped=trimCanvas(canvas,8),out=document.createElement("canvas");out.width=1920;out.height=1080;const ctx=out.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");ctx.fillStyle="#000";ctx.fillRect(0,0,out.width,out.height);const pad=8,scale=Math.min((out.width-pad*2)/cropped.width,(out.height-pad*2)/cropped.height),w=Math.round(cropped.width*scale),h=Math.round(cropped.height*scale);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";ctx.drawImage(cropped,0,0,cropped.width,cropped.height,Math.round((out.width-w)/2),Math.round((out.height-h)/2),w,h);return canvasBlob(out,"image/png")}
+  async function png(item){const canvas=await canvasFor(item),cropped=trimCanvas(canvas,8),out=document.createElement("canvas"),exportSize=exportDimensions();out.width=exportSize.width;out.height=exportSize.height;const ctx=out.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");ctx.fillStyle="#000";ctx.fillRect(0,0,out.width,out.height);const pad=8,scale=Math.min((out.width-pad*2)/cropped.width,(out.height-pad*2)/cropped.height),w=Math.round(cropped.width*scale),h=Math.round(cropped.height*scale);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";ctx.drawImage(cropped,0,0,cropped.width,cropped.height,Math.round((out.width-w)/2),Math.round((out.height-h)/2),w,h);return canvasBlob(out,"image/png")}
   async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
 
   function pdfBytes(pages){
@@ -85,5 +86,5 @@
   async function downloadPdf(item){const blob=await pdf(item);download(blob,`${baseName(item)}.pdf`);return blob}
   async function downloadPackage(items,name="tarjetas-oficiales.pdf"){const blob=await pdf(items);download(blob,name);return blob}
   async function shareImage(item,title="Tarjeta oficial"){const blob=await png(item),file=typeof File==="function"?new File([blob],`${baseName(item)}.png`,{type:"image/png"}):null;if(file&&navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title,files:[file]});return{shared:true,blob}}download(blob,`${baseName(item)}.png`);return{shared:false,blob}}
-  return{artifactSvg,dimensions,pdfBytes,png,pdf,downloadPng,downloadPdf,downloadPackage,shareImage};
+  return{artifactSvg,dimensions,exportDimensions,pdfBytes,png,pdf,downloadPng,downloadPdf,downloadPackage,shareImage};
 });
