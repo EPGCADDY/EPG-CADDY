@@ -144,7 +144,7 @@
     const half=(from,to,label)=>{const holes=Array.from({length:to-from+1},(_,i)=>from+i),rows=snapshot.players.slice(0,6).map((player,index)=>{const pairIndex=Math.floor(index/2),localIndex=index%2,finalHole=Number(snapshot.matchPlay?.matches?.[pairIndex]?.decidedAt||snapshot.matchPlay?.decidedAt)||18,divider=(index===2||index===4)?`<tr class="pair-divider" aria-hidden="true"><td colspan="${holes.length+5}"></td></tr>`:"",played=holes.map(h=>player.holes?.[h]).filter(Boolean),gross=played.reduce((a,v)=>a+Number(v.gross||0),0),net=played.reduce((a,v)=>a+Number(v.net||0),0),par=holes.filter(h=>player.holes?.[h]).reduce((a,h)=>a+Number(player.holes?.[h]?.par||0),0),relative=net-par,relativeLabel=relative===0?"E":relative>0?`+${relative}`:String(relative),relativeClass=relative<0?"under":relative>0?"over":"match-tied";return`${divider}<tr><td>${playerNameWithCategory(player)}</td><td>${player.handicap}</td>${holes.map(hole=>{const result=matchPlayHole(snapshot,hole,pairIndex),score=player.holes?.[hole],state=result.statuses?.[localIndex]||"pending";return`<td class="match-${state}">${hole<=finalHole&&score?`${score.gross}/${score.net}<br>${matchSymbol(state)}`:"—"}</td>`}).join("")}<td>${gross||"—"}</td><td>${net||"—"}</td><td class="${relativeClass}">${played.length?relativeLabel:"—"}</td></tr>`}).join("");return`<section class="score-half match-play-half"><h2>${label} · HOYOS ${from}–${to}</h2><div class="table-wrap"><table><thead><tr><th>JUGADOR</th><th>HCP</th>${holes.map(h=>`<th>${h}<br><small>G/N</small></th>`).join("")}<th>GROSS</th><th>NETO</th><th>+/-</th></tr></thead><tbody>${rows}</tbody></table></div></section>`};
     return shell(`Tarjeta Global Match Play`,snapshot,`<style>
 body{padding:0!important}
-main{width:1880px!important;max-width:none!important;margin:0!important;padding:12px!important;border-radius:10px!important;display:grid!important;grid-template-columns:360px minmax(0,1fr)!important;grid-template-rows:104px auto auto auto!important;gap:10px 12px!important}
+main{width:1880px!important;height:auto!important;max-width:none!important;margin:0!important;padding:12px!important;border-radius:10px!important;display:grid!important;grid-template-columns:360px minmax(0,1fr)!important;grid-template-rows:104px auto auto auto!important;gap:10px 12px!important}
 .global-clean-head{grid-column:1!important;grid-row:1!important;margin:0!important;padding:4px 8px!important;border:1px solid #555!important;border-radius:10px!important;display:flex!important;align-items:center!important}
 .global-clean-head img{width:330px!important;height:90px!important;max-width:none!important;object-fit:contain!important}
 .global-clean-meta{grid-column:2!important;grid-row:1!important;display:grid!important;grid-template-columns:1fr 1.35fr 1fr!important;gap:10px!important;margin:0!important;align-self:center!important}
@@ -154,13 +154,13 @@ main{width:1880px!important;max-width:none!important;margin:0!important;padding:
 .match-play-half h2{padding:9px 18px!important;border:3px solid #31ff00!important;border-radius:8px!important;color:#31ff00!important;font-size:24px!important;line-height:1!important}
 .match-play-half .table-wrap{border-radius:0 0 8px 8px!important;overflow:hidden!important}
 .match-play-half table{min-width:0!important;table-layout:fixed!important}
-.match-play-half th,.match-play-half td{padding:5px 4px!important;font-size:20px!important;line-height:1.05!important;height:55px!important}
+.match-play-half th,.match-play-half td{padding:4px 4px!important;font-size:20px!important;line-height:1!important;height:48px!important}
 .match-play-half th:first-child,.match-play-half td:first-child{width:310px!important}
 .match-play-half th:nth-child(2),.match-play-half td:nth-child(2){width:110px!important}
 .match-play-half th:nth-last-child(-n+3),.match-play-half td:nth-last-child(-n+3){width:115px!important}
 .match-play-half th small{font-size:15px!important}
 .match-play-half .player-category{font-size:60%!important;margin:0!important}
-.match-play-half .pair-divider td{height:24px!important;padding:0!important;background:#061014!important}
+.match-play-half .pair-divider td{height:20px!important;padding:0!important;background:#061014!important}
 .match-play-half .match-arrow{font-size:30px!important;width:32px!important;height:25px!important;line-height:1!important}
 main>p{grid-column:1/-1!important;margin:0!important;font-size:14px!important;line-height:1.1!important}
 </style><div class="match-result">${esc(snapshot.matchPlay?.matches?.length===1?(snapshot.matchPlay.matches[0]?.resultLabel||"MATCH PLAY"):"MATCH PLAY")}</div>${half(1,9,"PRIMERA VUELTA")}${half(10,18,"SEGUNDA VUELTA")}<p>Flecha verde ↑ = gana · Flecha roja ↓ = pierde · Signo = = empata · Cada hoyo se define por el resultado Neto.</p>`);
