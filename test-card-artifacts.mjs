@@ -29,7 +29,7 @@ assert.doesNotMatch(stablefordOut.global.html,/CATEGORÍA · SENIOR/);
 assert.match(stablefordOut.global.html,/G\/P = Gross \/ Puntos Stableford/);
 assert.doesNotMatch(stablefordOut.global.html,/<th>NETO<\/th>/);
 assert.doesNotMatch(stablefordOut.global.html,/ID OFICIAL · SHA-256/,"La Global limpia no debe mostrar ID técnico visible");
-assert.match(stablefordOut.global.html,/PRIMERA VUELTA · HOYOS 1–9[\\s\\S]*?SEGUNDA VUELTA · HOYOS 10–18/,"Stableford Global debe separar las dos vueltas en orden IN/OUT");
+assert.match(stablefordOut.global.html,/PRIMERA VUELTA · HOYOS 1–9[\s\S]*?SEGUNDA VUELTA · HOYOS 10–18/,"Stableford Global debe separar las dos vueltas en orden IN/OUT");
 assert.equal((stablefordOut.global.html.match(/class="score-half"/g)||[]).length,2,"Stableford Global debe tener exactamente dos bloques de vuelta");
 assert.match(stablefordOut.global.html,/global-clean-meta[\s\S]*?grid-template-columns:1fr!important/,"La cabecera Global móvil debe apilar Campo, Modalidad y Fecha");
 assert.doesNotMatch(stablefordOut.global.html,/ID OFICIAL · SHA-256/,"La Global limpia no muestra identificador técnico");
