@@ -10,11 +10,11 @@ assert.match(app,/controllerchange[\s\S]*location\.reload\(\)/,'La app debe reca
 
 assert.match(sw,/const RELEASE="LABORATORIO-20260925-R138"/,'El SW debe identificarse como R138');
 assert.match(sw,/clients\.claim\(\)/,'El SW nuevo debe tomar control inmediato');
-assert.match(sw,/clients\.matchAll\(\{type:"window",includeUncontrolled:true\}\)/,'El SW debe localizar ventanas antiguas');
-assert.match(sw,/client\.navigate\(url\.href\)/,'El SW debe recargar clientes viejos al activar');
+assert.match(sw,/key\.startsWith\("gscg-mobile-"\)&&key!==CACHE_NAME/,'El SW debe eliminar caches viejos al activar');
+assert.match(sw,/fetch\(request,\{cache:"no-store"\}\)/,'El SW debe pedir navegación fresca antes del fallback offline');
 assert.doesNotMatch(sw,/LAB-PHYSICAL-CERTIFIED-20260923-R59/,'No debe quedar release R59 como release activa del SW');
 
-console.log('PASS R138: producción fuerza actualización de clientes PWA viejos y evita permanecer en versiones anteriores');
+console.log('PASS R138: network-first fuerza actualización de clientes PWA viejos y evita permanecer en versiones anteriores');
 
 assert.match(app,/#cardLibraryActions\{display:none!important/,'MIS RONDAS GUARDADAS no debe mostrar la franja blanca de acciones redundantes');
 
