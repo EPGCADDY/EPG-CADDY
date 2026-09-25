@@ -244,6 +244,24 @@ main>p{grid-column:1/-1!important;margin:0!important;font-size:14px!important}
     return shell(snapshot.version>1?`Tarjeta Universales corregida · ${player.name}`:`Tarjeta Universales · ${player.name}`,snapshot,`<h2>${playerNameWithCategory(player)} · HCP ${player.handicap} · ${esc(playerTeeLabel(player))}</h2>${line}<div class="stats"><div class="stat"><b>Puntos IN</b><br>${stats.front}</div><div class="stat"><b>Puntos OUT</b><br>${stats.back}</div><div class="stat"><b>Puntos total</b><br>${stats.points}</div><div class="stat"><b>Hoyos resueltos</b><br>${stats.recordedHoles}</div></div><p>Resultado Universales calculado por el Neto después de aplicar el handicap; los empates dividen los puntos de las posiciones ocupadas.</p>`,[player]);
   }
 
+  const PREMIUM_GLOBAL_CSS=`<style id="r127-seven-card-premium">
+body{background:#000!important;padding:0!important}
+main{background:linear-gradient(180deg,#050706 0%,#000 100%)!important;border:1px solid #343a38!important;box-shadow:0 0 0 1px #0d100f inset!important}
+.global-clean-head{background:#020303!important;border-color:#4d5553!important}
+.global-clean-meta span{background:#050706!important;border:1px solid #343a38!important;color:#f5f5f5!important;letter-spacing:.25px!important}
+.score-half h2{background:#041004!important;box-shadow:0 0 18px rgba(49,255,0,.10)!important;letter-spacing:.45px!important}
+.score-half th{background:#080a09!important;color:#f5f5f5!important;font-weight:900!important}
+.score-half td{background:#010202!important;color:#f5f5f5!important;font-weight:800!important}
+.score-half tbody tr:nth-child(even) td{background:#030504!important}
+.score-half th,.score-half td{border-color:#4b504e!important}
+.player-name-text{letter-spacing:.2px!important}
+.pair-divider td{background:#000!important;border-color:#202523!important}
+.match-won,.under,.points{color:#31ff00!important}
+.match-lost,.over{color:#ff4545!important}
+.match-tied{color:#fff!important}
+.best-ball{color:#ffbf00!important;font-weight:900!important}
+</style>`;
+  const premiumGlobal=html=>String(html||"").replace("</head>",PREMIUM_GLOBAL_CSS+"</head>").replace("<body>",PREMIUM_GLOBAL_CSS+"<body>");
   function build(snapshot){
     if(!snapshot||!["officially_closed","corrected"].includes(snapshot.status)||!snapshot.sha256)throw new Error("Se requiere snapshot oficialmente cerrado");
     const stableford=snapshot.mode==="stableford",matchPlay=snapshot.mode==="match_play",fourBall=snapshot.mode==="four_ball",universales=snapshot.mode==="universales",mode=stableford?"stableford":matchPlay?"match_play":fourBall?"four_ball":universales?"universales":"stroke";
@@ -255,7 +273,7 @@ body{padding:0!important}main{width:1880px!important;height:auto!important;max-w
 .side-game-panel{grid-column:1/-1!important;margin:0!important;padding:10px 14px!important;border:2px solid #31ff00!important}.side-game-panel h2{font-size:22px!important;margin:0 0 5px!important}.side-game-panel p{font-size:13px!important;margin:4px 0!important}.side-game-panel th,.side-game-panel td{font-size:16px!important;padding:5px!important;height:38px!important}
 main>p{grid-column:1/-1!important;margin:0!important;font-size:14px!important}
 </style>`:"",globalHtml=sidePanels?baseGlobalHtml.replace("</main>",`${compactSide}${sidePanels}</main>`):baseGlobalHtml;
-    const global={kind:"global",mode,name:stableford?`tarjeta-global-stableford-v${snapshot.version}.html`:matchPlay?`tarjeta-global-match-play-v${snapshot.version}.html`:fourBall?`tarjeta-global-four-ball-v${snapshot.version}.html`:universales?`tarjeta-global-universales-v${snapshot.version}.html`:`tarjeta-global-v${snapshot.version}.html`,html:globalHtml};
+    const polishedGlobalHtml=premiumGlobal(globalHtml);\n    const global={kind:"global",mode,name:stableford?`tarjeta-global-stableford-v${snapshot.version}.html`:matchPlay?`tarjeta-global-match-play-v${snapshot.version}.html`:fourBall?`tarjeta-global-four-ball-v${snapshot.version}.html`:universales?`tarjeta-global-universales-v${snapshot.version}.html`:`tarjeta-global-v${snapshot.version}.html`,html:polishedGlobalHtml};
     const personal=snapshot.players.map(player=>{const basePersonalHtml=stableford?stablefordPersonalCard(snapshot,player):matchPlay?matchPlayPersonalCard(snapshot,player):fourBall?fourBallPersonalCard(snapshot,player):universales?universalesPersonalCard(snapshot,player):personalCard(snapshot,player),personalHtml=sidePanels?basePersonalHtml.replace("</main>",`${sidePanels}</main>`):basePersonalHtml;return{kind:"personal",mode,playerId:player.id,name:stableford?`tarjeta-stableford-${slug(player.name)}-v${snapshot.version}.html`:matchPlay?`tarjeta-match-play-${slug(player.name)}-v${snapshot.version}.html`:fourBall?`tarjeta-four-ball-${slug(player.name)}-v${snapshot.version}.html`:universales?`tarjeta-universales-${slug(player.name)}-v${snapshot.version}.html`:`tarjeta-${slug(player.name)}-v${snapshot.version}.html`,html:personalHtml,stats:stableford?stablefordPlayerStats(player):universales?universalesPlayerStats(snapshot,player):playerStats(player)}});
     return{global,personal,all:[global,...personal]};
   }
