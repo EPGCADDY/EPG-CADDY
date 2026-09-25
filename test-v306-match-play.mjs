@@ -64,7 +64,7 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   assert.match(artifacts.global.html,/class="pair-divider"/);
   assert.doesNotMatch(artifacts.global.html,/PAREJA [123]:/,"La tarjeta aprobada separa cada 1v1 visualmente sin rótulos PAREJA");
   assert.match(artifacts.global.html,/main\{width:1880px!important;height:auto!important/,"La tarjeta Match Play global debe conservar lienzo horizontal ancho como la referencia aprobada");
-  assert.match(artifacts.global.html,/grid-template-columns:430px minmax\\(0,1fr\\)!important/,"Logo y metadatos deben compartir la cabecera horizontal");
+  assert.match(artifacts.global.html,/grid-template-columns:430px minmax\(0,1fr\)!important/,"Logo y metadatos deben compartir la cabecera horizontal");
   assert.match(artifacts.global.html,/font-size:20px!important;line-height:1!important;height:48px!important/,"Scores Match Play deben exportarse grandes y legibles");
   assert.match(artifacts.global.html,/\.match-result\{display:none!important\}/,"La referencia aprobada no lleva franja MATCH PLAY redundante entre cabecera y primera vuelta");
   assert.equal((artifacts.global.html.match(/class="pair-divider"/g)||[]).length,2,"Dos vueltas conservan separación visual del segundo enfrentamiento");
