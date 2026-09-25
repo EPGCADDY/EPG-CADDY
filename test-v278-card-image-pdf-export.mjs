@@ -50,7 +50,7 @@ assert.match(pdfText,/%%EOF\n$/);
 
 console.log("PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las tarjetas oficiales General/Stableford");
 
-assert.match(source,/async function renderFullHd\(item\)/,"Exportador debe conservar una sola entrada de raster final");
+assert.match(source,/async function renderFullHd\(item,profile="master"\)/,"Exportador debe conservar una sola entrada de raster final con perfil master/share");
 assert.match(source,/async function nativeDomCanvas\(item,html\)/,"Exportador debe rasterizar DOM con Canvas 2D nativo");
 assert.match(source,/ctx\.scale\(scale,scale\)/,"Canvas debe dibujar texto y geometría directamente a densidad 5x");
 assert.match(source,/ctx\.fillText\(text,x,y/,"Tipografía debe salir de Canvas nativo, no de un bitmap HTML ampliado");
