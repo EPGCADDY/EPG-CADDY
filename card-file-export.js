@@ -6,6 +6,7 @@
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
   const dimensions=item=>({width:1920,height:1080});
   const layoutDimensions=()=>({width:1920,height:1080});
+  const renderScale=()=>4;
   const renderDimensions=()=>({width:7680,height:4320});
   const exportDimensions=()=>({width:7680,height:4320});
 
@@ -14,7 +15,9 @@
     const style=[...item.html.matchAll(/<style>([\s\S]*?)<\/style>/gi)].map(match=>match[1]).join("\n"),main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
     if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
     const {width:pixelWidth,height:pixelHeight}=renderDimensions(),{width,height}=layoutDimensions(),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
-    return`<svg xmlns="http://www.w3.org/2000/svg" width="${pixelWidth}" height="${pixelHeight}" viewBox="0 0 ${width} ${height}"><foreignObject x="0" y="0" width="${width}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000;overflow:hidden"><style>${style}html,body{width:${width}px!important;height:${height}px!important;min-height:0!important;background:#000!important;margin:0!important;padding:0!important;overflow:hidden!important}main{width:${width}px!important;max-width:none!important;margin:0!important;padding:12px!important;box-sizing:border-box!important;overflow:hidden!important}</style><main>${safeMain}</main></div></foreignObject></svg>`;
+    // Keep CSS geometry at the authored 1920x1080 viewport. The SVG itself owns the
+    // 4x raster density, so text/borders are sampled once at final pixel density.
+    return`<svg xmlns="http://www.w3.org/2000/svg" width="${pixelWidth}" height="${pixelHeight}" viewBox="0 0 ${width} ${height}" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><foreignObject x="0" y="0" width="${width}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000;overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision"><style>${style}html,body{width:${width}px!important;height:${height}px!important;min-height:0!important;background:#000!important;margin:0!important;padding:0!important;overflow:hidden!important}main{width:${width}px!important;max-width:none!important;margin:0!important;padding:12px!important;box-sizing:border-box!important;overflow:hidden!important}</style><main>${safeMain}</main></div></foreignObject></svg>`;
   }
 
   async function inlineImages(html){
@@ -73,8 +76,9 @@
     ctx.drawImage(image,0,0,width,height);
     // Safari/iOS can omit <img> inside SVG foreignObject. Paint the official logo
     // as a native canvas layer at the exact 2x coordinates of the 1920px card.
-    ctx.fillStyle="#000";ctx.fillRect(80,64,1600,528);
-    ctx.drawImage(logo,80,64,1600,528);
+    const scale=renderScale();
+    ctx.fillStyle="#000";ctx.fillRect(20*scale,16*scale,400*scale,132*scale);
+    ctx.drawImage(logo,20*scale,16*scale,400*scale,132*scale);
     assertRenderedCard(canvas);
     return canvas;
   }
@@ -93,7 +97,7 @@
   }
 
   function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("CANVAS_EXPORT_TIMEOUT")),12000);canvas.toBlob(blob=>{clearTimeout(timer);blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED"))},type,quality)})}
-  async function png(item){const canvas=await canvasFor(item),cropped=trimCanvas(canvas,8),out=document.createElement("canvas"),exportSize=exportDimensions();out.width=exportSize.width;out.height=exportSize.height;const ctx=out.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");ctx.fillStyle="#000";ctx.fillRect(0,0,out.width,out.height);const pad=8,scale=Math.min((out.width-pad*2)/cropped.width,(out.height-pad*2)/cropped.height),w=Math.round(cropped.width*scale),h=Math.round(cropped.height*scale);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";ctx.drawImage(cropped,0,0,cropped.width,cropped.height,Math.round((out.width-w)/2),Math.round((out.height-h)/2),w,h);assertRenderedCard(out);return canvasBlob(out,"image/png")}
+  async function png(item){const canvas=await canvasFor(item);assertRenderedCard(canvas);return canvasBlob(canvas,"image/png")}
   async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
 
   function pdfBytes(pages){
