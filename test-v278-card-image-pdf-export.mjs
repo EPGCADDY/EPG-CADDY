@@ -50,26 +50,23 @@ assert.match(pdfText,/%%EOF\n$/);
 
 console.log("PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las tarjetas oficiales General/Stableford");
 
-assert.match(source,/async function renderFullHd\(item\)/,"R106-H9 must use native Full HD renderer");
-assert.match(source,/canvas\.width=width;canvas\.height=height/,"El renderer debe usar las dimensiones 4K nativas");
+assert.match(source,/async function renderFullHd\(item\)/,"Exportador debe conservar una sola entrada de raster final");
+assert.match(source,/async function nativeDomCanvas\(item,html\)/,"Exportador debe rasterizar DOM con Canvas 2D nativo");
+assert.match(source,/ctx\.scale\(scale,scale\)/,"Canvas debe dibujar texto y geometría directamente a densidad 4x");
+assert.match(source,/ctx\.fillText\(text,x,y/,"Tipografía debe salir de Canvas nativo, no de un bitmap HTML ampliado");
+assert.match(source,/ctx\.drawImage\(el,x,y,w,h\)/,"Logo embebido debe pintarse como imagen nativa dentro del mismo master");
+assert.match(source,/No SVG foreignObject, no Safari HTML rasterizer/,"La ruta final debe excluir explícitamente el rasterizador foreignObject de Safari");
+assert.doesNotMatch(source,/const svg=artifactSvg\(\{\.\.\.item,html\}\),image=await decodeImage/,"renderFullHd no puede volver a rasterizar HTML mediante SVG");
 assert.deepEqual(fileExport.renderDimensions(),{width:7680,height:4320});
-assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
-assert.match(source,/const exportDimensions=\(\)=>\(\{width:7680,height:4320\}\)/,"PNG compartido debe entregarse en 8K exacto");
+assert.match(source,/const exportDimensions=\(\)=>\(\{width:7680,height:4320\}\)/,"PNG compartido debe conservar master 8K");
 assert.deepEqual(fileExport.exportDimensions(),{width:7680,height:4320});
-assert.match(source,/FINAL_PNG_LOGO_NOT_VISIBLE/,"El exportador debe bloquear cualquier PNG cuyo logo no sea físicamente visible");
-assert.match(source,/FINAL_PNG_CARD_NOT_FILLED/,"El exportador debe bloquear cualquier PNG con tarjeta vacía o incompleta");
-assert.match(source,/OFFICIAL_LOGO_PNG_REQUIRED/,"El raster final exige logo PNG embebido antes de dibujar");
-assert.match(source,/async function png\(item\)\{const canvas=await canvasFor\(item\),cropped=trimCanvas\(canvas,8\);return canvasBlob\(cropped,"image\/png"\)\}/,"PNG final debe recortar el master 8K sin reescalarlo");
-assert.match(source,/ctx\.drawImage\(logo,20\*scale,16\*scale,400\*scale,132\*scale\)/,"El logo oficial debe pintarse directamente sobre el canvas 8K final para evitar el fallo foreignObject de Safari/iOS");
-assert.match(source,/box-sizing:border-box!important/,"El viewport 1920 debe incluir padding sin recorte ni reescalado accidental");
-
-assert.match(source,/function trimCanvas\(canvas,margin=24\)/,"El recortador legado puede conservarse para compatibilidad, pero PNG no debe invocarlo");
-assert.match(source,/out\.width=cropWidth;out\.height=cropHeight/,"Recorte debe conservar dimensiones nativas del contenido");
-assert.match(source,/outCtx\.imageSmoothingEnabled=false/,"Recorte 1:1 debe impedir suavizado adicional");
-assert.doesNotMatch(source,/out\.width=width;out\.height=Math\.max/,"No debe existir ampliación del recorte a ancho completo");
-assert.match(source,/shape-rendering="geometricPrecision"/,"SVG 8K debe solicitar precisión geométrica");
-assert.match(source,/text-rendering="geometricPrecision"/,"SVG 8K debe solicitar precisión tipográfica");
-
+assert.match(source,/FINAL_PNG_LOGO_NOT_VISIBLE/,"Debe bloquear PNG sin logo visible");
+assert.match(source,/FINAL_PNG_CARD_NOT_FILLED/,"Debe bloquear PNG vacío o incompleto");
+assert.match(source,/OFFICIAL_LOGO_PNG_REQUIRED/,"Debe exigir logo oficial embebido");
+assert.match(source,/async function png\(item\)\{const canvas=await canvasFor\(item\),cropped=trimCanvas\(canvas,8\);return canvasBlob\(cropped,"image\/png"\)\}/,"PNG debe recortar 1:1 el master sin reescalar");
+assert.match(source,/out\.width=cropWidth;out\.height=cropHeight/,"Recorte conserva píxeles nativos");
+assert.match(source,/outCtx\.imageSmoothingEnabled=false/,"Recorte 1:1 no suaviza");
+assert.doesNotMatch(source,/out\.width=width;out\.height=Math\.max/,"Prohibido ampliar el recorte");
 assert.deepEqual(fileExport.dimensions({mode:"match_play"}),{width:1920,height:1080});
 assert.deepEqual(fileExport.dimensions({mode:"four_ball"}),{width:1920,height:1080});
 assert.deepEqual(fileExport.dimensions({mode:"normal"}),{width:1920,height:1080});
