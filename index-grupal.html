@@ -4195,7 +4195,7 @@ document.addEventListener("visibilitychange",()=>{
     ;
     scheduleRoundTimerIdleShutdown();
     render();
-    if(principalStartup||explicitNewRound){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else ensurePrincipalEntry();
+    if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
   }
 });
 window.addEventListener("pageshow",e=>{
@@ -4204,14 +4204,14 @@ window.addEventListener("pageshow",e=>{
   {}
   scheduleRoundTimerIdleShutdown();
   render();
-  if(principalStartup||explicitNewRound){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else ensurePrincipalEntry();
+  if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
 });
 window.addEventListener("focus",()=>{
   if(voiceOpening)return;
   if(!principalStartup&&!explicitNewRound&&!isRecoverableStoredRound(round)&&restorePersistedRound())render();
   {}
   scheduleRoundTimerIdleShutdown();
-  if(principalStartup||explicitNewRound){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else ensurePrincipalEntry();
+  if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
 });
 window.addEventListener("pagehide",()=>{
   persist();
