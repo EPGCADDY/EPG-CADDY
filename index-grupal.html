@@ -2193,29 +2193,6 @@ function startConfirmedRound(){
 }
 // LAB hotfix: iOS/PWA can leave the confirmation overlay visually active after the round is created.
 // Guarantee the visible transition to the scorecard immediately after a successful start.
-function startConfirmedRoundFromButton(event){
-  event?.preventDefault?.();
-  event?.stopPropagation?.();
-  if(manualDraftRows.some(row=>manualRowHasData(row))&&!draftPlayers.length){
-    const recovered=syncDraftPlayersFromManualRows({strict:false,renderAfter:false});
-    if(!recovered||!draftPlayers.length){showStep1();setManualRegistrationStatus("REVISA LOS DATOS DEL JUGADOR");return false}
-  }
-  if(!draftPlayers.length){showStep1();setManualRegistrationStatus("REGISTRA AL MENOS UN JUGADOR PARA INICIAR LA RONDA");return false}
-  if(draftPlayers.length===1){draftRoundMode="general";resetDraftGames()}
-  const selectedCourse=COURSE_CATALOG[draftCourse];
-  if(!selectedCourse?.configured){showStep1();setManualRegistrationStatus("CAMPO NO DISPONIBLE");return false}
-  const started=startConfirmedRound();
-  if(!started||!round.configured){showStep1();return false}
-  $("setupOverlay")?.classList.remove("visible");
-  $("setupOverlay")?.setAttribute("aria-hidden","true");
-  $("setupStep1")?.classList.remove("hidden");
-  $("setupStep2")?.classList.add("hidden");
-  document.body?.classList.remove("gsc-setup-open");
-  voiceContext="round";
-  render();
-  requestAnimationFrame(()=>window.scrollTo(0,0));
-  return true;
-}
 function startProvisionalScorecard(){
   const selectedCourse=COURSE_CATALOG[draftCourse];
   if(!selectedCourse?.configured){$("setupStatus").textContent=`${selectedCourse?.name?.toUpperCase()||"CAMPO"} · PENDIENTE CARGAR TARJETA OFICIAL`;return false}
@@ -4199,13 +4176,7 @@ function saveSkinsDraftConfig(){draftSkins=window.GSCSkins.normalizeConfig({enab
 
 
 for(const id of ["skinsScoreType","skinsTiePolicy","skinsUnitValue","skinsCurrencyGTQ","skinsCurrencyUSD"])$(id).addEventListener("change",saveSkinsDraftConfig);
-$("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);
-const startRoundControl=$("startRoundButton");
-startRoundControl?.addEventListener("click",startConfirmedRoundFromButton);
-startRoundControl?.addEventListener("touchend",event=>{
-  event.preventDefault();
-  startConfirmedRoundFromButton(event);
-},{passive:false});
+$("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);$("startRoundButton").addEventListener("click",startConfirmedRound);
 
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="hidden"){
