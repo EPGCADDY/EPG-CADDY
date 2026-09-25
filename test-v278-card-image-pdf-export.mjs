@@ -55,7 +55,7 @@ assert.match(source,/FINAL_PNG_LOGO_NOT_VISIBLE/,"El exportador debe bloquear cu
 assert.match(source,/FINAL_PNG_CARD_NOT_FILLED/,"El exportador debe bloquear cualquier PNG con tarjeta vacía o incompleta");
 assert.match(source,/OFFICIAL_LOGO_PNG_REQUIRED/,"El raster final exige logo PNG embebido antes de dibujar");
 assert.match(source,/async function png\(item\)\{const canvas=await canvasFor\(item\);assertRenderedCard\(canvas\);return canvasBlob\(canvas,"image\/png"\)\}/,"PNG final debe salir directamente del master 8K, sin segundo canvas ni reescalado");
-assert.match(source,/ctx\.drawImage\(logo,80,64,1600,528\)/,"El logo oficial debe pintarse directamente sobre el canvas 8K final para evitar el fallo foreignObject de Safari/iOS");
+assert.match(source,/ctx\.drawImage\(logo,20\*scale,16\*scale,400\*scale,132\*scale\)/,"El logo oficial debe pintarse directamente sobre el canvas 8K final para evitar el fallo foreignObject de Safari/iOS");
 assert.match(source,/box-sizing:border-box!important/,"El viewport 1920 debe incluir padding sin recorte ni reescalado accidental");
 
 assert.match(source,/function trimCanvas\(canvas,margin=24\)/,"El recortador legado puede conservarse para compatibilidad, pero PNG no debe invocarlo");
