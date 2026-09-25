@@ -5,8 +5,8 @@
   const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
   const dimensions=item=>({width:1920,height:1080});
-  const renderDimensions=()=>({width:3840,height:2160});
-  const exportDimensions=()=>({width:3840,height:2160});
+  const renderDimensions=()=>({width:1920,height:1080});
+  const exportDimensions=()=>({width:3840,height:1920});
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
@@ -22,9 +22,22 @@
     return output
   }
 
+  async function normalizeWebpDataImages(html){
+    let output=String(html||"");
+    const sources=[...new Set([...output.matchAll(/<img[^>]+src=["'](data:image\/webp;base64,[^"']+)["']/gi)].map(match=>match[1]))];
+    for(const src of sources){
+      const image=new Image();
+      await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("WEBP_LOGO_DECODE_TIMEOUT")),10000);image.onload=()=>{clearTimeout(timer);resolve()};image.onerror=()=>{clearTimeout(timer);reject(new Error("WEBP_LOGO_DECODE_FAILED"))};image.src=src});
+      const canvas=document.createElement("canvas");canvas.width=image.naturalWidth||image.width;canvas.height=image.naturalHeight||image.height;
+      const ctx=canvas.getContext("2d");if(!ctx)throw new Error("LOGO_CANVAS_CONTEXT_REQUIRED");
+      ctx.drawImage(image,0,0);const png=canvas.toDataURL("image/png");output=output.split(src).join(png);
+    }
+    return output;
+  }
+
   async function renderFullHd(item){
     if(typeof document==="undefined")throw new Error("BROWSER_REQUIRED");
-    const html=await inlineImages(String(item?.html||""));
+    const html=await normalizeWebpDataImages(await inlineImages(String(item?.html||"")));
     if(/<img[^>]+src=["'](?!data:)/i.test(html))throw new Error("IMAGE_NOT_INLINED");
     const {width,height}=renderDimensions();
     const frame=document.createElement("iframe");
