@@ -31,6 +31,11 @@ const dims=fileExport.dimensions(cards.personal[0]);
 assert.equal(dims.width,1920);
 assert.equal(dims.height,1080);
 assert.match(svg,/width="7680"/,"La tarjeta exportable debe rasterizarse nativamente a 8K");
+assert.match(svg,/viewBox="0 0 7680 4320"/,"Safari debe rasterizar dentro de un viewport físico 8K, no ampliar un viewBox 1920");
+assert.match(svg,/transform:scale\(4\)/,"La geometría 1920 debe escalarse dentro del foreignObject 8K antes de rasterizar");
+assert.match(svg,/foreignObject x="0" y="0" width="7680" height="4320"/,"foreignObject debe poseer resolución física 8K");
+assert.doesNotMatch(svg,/viewBox="0 0 1920 1080"/,"Prohibido volver al viewBox lógico que producía detalle efectivo bajo");
+
 assert.match(svg,/data:image\/webp;base64/,"La tarjeta exportable debe llevar el logo oficial embebido, sin depender de red");
 assert.doesNotMatch(cards.global.html,/<h2 class="score-card-title">SCORE CARD<\/h2>/,"El texto SCORE CARD no debe ocupar el lugar del logo");
 
