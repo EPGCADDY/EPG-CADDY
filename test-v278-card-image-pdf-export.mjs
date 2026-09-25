@@ -30,10 +30,10 @@ assert.match(svg,/background:#000/);
 const dims=fileExport.dimensions(cards.personal[0]);
 assert.equal(dims.width,1920);
 assert.equal(dims.height,1080);
-assert.match(svg,/width="7680"/,"La tarjeta exportable debe rasterizarse nativamente a 8K");
-assert.match(svg,/viewBox="0 0 7680 4320"/,"Safari debe rasterizar dentro de un viewport físico 8K, no ampliar un viewBox 1920");
+assert.match(svg,/width="9600"/,"La tarjeta exportable debe rasterizarse nativamente a 8K");
+assert.match(svg,/viewBox="0 0 9600 5400"/,"Safari debe rasterizar dentro de un viewport físico 8K, no ampliar un viewBox 1920");
 assert.match(svg,/transform:scale\(4\)/,"La geometría 1920 debe escalarse dentro del foreignObject 8K antes de rasterizar");
-assert.match(svg,/foreignObject x="0" y="0" width="7680" height="4320"/,"foreignObject debe poseer resolución física 8K");
+assert.match(svg,/foreignObject x="0" y="0" width="9600" height="5400"/,"foreignObject debe poseer resolución física 8K");
 assert.doesNotMatch(svg,/viewBox="0 0 1920 1080"/,"Prohibido volver al viewBox lógico que producía detalle efectivo bajo");
 
 assert.match(svg,/data:image\/webp;base64/,"La tarjeta exportable debe llevar el logo oficial embebido, sin depender de red");
@@ -52,14 +52,14 @@ console.log("PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las ta
 
 assert.match(source,/async function renderFullHd\(item\)/,"Exportador debe conservar una sola entrada de raster final");
 assert.match(source,/async function nativeDomCanvas\(item,html\)/,"Exportador debe rasterizar DOM con Canvas 2D nativo");
-assert.match(source,/ctx\.scale\(scale,scale\)/,"Canvas debe dibujar texto y geometría directamente a densidad 4x");
+assert.match(source,/ctx\.scale\(scale,scale\)/,"Canvas debe dibujar texto y geometría directamente a densidad 5x");
 assert.match(source,/ctx\.fillText\(text,x,y/,"Tipografía debe salir de Canvas nativo, no de un bitmap HTML ampliado");
 assert.match(source,/ctx\.drawImage\(el,x,y,w,h\)/,"Logo embebido debe pintarse como imagen nativa dentro del mismo master");
 assert.match(source,/No SVG foreignObject, no Safari HTML rasterizer/,"La ruta final debe excluir explícitamente el rasterizador foreignObject de Safari");
 assert.doesNotMatch(source,/const svg=artifactSvg\(\{\.\.\.item,html\}\),image=await decodeImage/,"renderFullHd no puede volver a rasterizar HTML mediante SVG");
-assert.deepEqual(fileExport.renderDimensions(),{width:7680,height:4320});
-assert.match(source,/const exportDimensions=\(\)=>\(\{width:7680,height:4320\}\)/,"PNG compartido debe conservar master 8K");
-assert.deepEqual(fileExport.exportDimensions(),{width:7680,height:4320});
+assert.deepEqual(fileExport.renderDimensions(),{width:9600,height:5400});
+assert.match(source,/const exportDimensions=\(\)=>\(\{width:9600,height:5400\}\)/,"PNG compartido debe conservar master 8K");
+assert.deepEqual(fileExport.exportDimensions(),{width:9600,height:5400});
 assert.match(source,/FINAL_PNG_LOGO_NOT_VISIBLE/,"Debe bloquear PNG sin logo visible");
 assert.match(source,/FINAL_PNG_CARD_NOT_FILLED/,"Debe bloquear PNG vacío o incompleto");
 assert.match(source,/OFFICIAL_LOGO_PNG_REQUIRED/,"Debe exigir logo oficial embebido");
