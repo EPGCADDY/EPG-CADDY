@@ -48,6 +48,6 @@ console.log("PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las ta
 assert.match(source,/async function renderFullHd\(item\)/,"R106-H9 must use native Full HD renderer");
 assert.match(source,/canvas\.width=width;canvas\.height=height/,"R106-H9 renderer must render natively at 1920×1080");
 assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
-assert.match(source,/async function png\(item\)\{const canvas=await canvasFor\(item\);return canvasBlob\(trimCanvas\(canvas,20\),"image\/png"\)\}/,"PNG compartido debe recortar el margen negro sobrante después del render Full HD");
+assert.match(source,/async function png\(item\)\{const canvas=await canvasFor\(item\);return canvasBlob\(trimCanvas\(canvas,24\),"image\/png"\)\}/,"PNG compartido debe recortar el margen negro sobrante después del render Full HD");
 
 assert.match(source,/function trimCanvas\(canvas,margin=32\)/,"El exportador conserva render Full HD y recorta únicamente la salida PNG compartida");
