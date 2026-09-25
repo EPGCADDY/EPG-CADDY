@@ -51,7 +51,7 @@ assert(app.includes('id="sendFinalCard"')&&app.includes("COMPARTIR TARJETA"),"La
 assert(app.includes('id="sendFinalCardPlayers"')&&app.includes("ENVIAR A JUGADORES"),"La app debe conservar ENVIAR A JUGADORES");
 assert(!manual.includes('id="control-x"')||manual.slice(manual.indexOf('id="control-x"'),manual.indexOf("</section>",manual.indexOf('id="control-x"'))).includes("APP_ANOTADOR_TECLADO_NUMERICO_R30.svg"),"Página 20 debe mostrar el teclado vigente");
 assert(!manual.includes('id="lab-scorecard"')||manual.slice(manual.indexOf('id="lab-scorecard"'),manual.indexOf("</section>",manual.indexOf('id="lab-scorecard"'))).includes("APP_ANOTADOR_TECLADO_NUMERICO_R30.svg"),"Pantalla 63 debe mostrar el anotador vigente");
-for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","MI TARJETA FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","officialCorrectionOverlay","MIS RONDAS GUARDADAS"]) {
+for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","TARJETA DIGITAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","officialCorrectionOverlay","MIS RONDAS GUARDADAS"]) {
   assert(app.includes(token)||hub.includes(token),"LAB actual no contiene control esperado: "+token);
 }
 assert(manual.includes("/docs/manual/current/MONITOR_TIEMPO_REAL_LAB.png"),"Falta captura física vigente del Monitor de Tiempo");
