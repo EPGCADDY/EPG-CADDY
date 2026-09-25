@@ -57,7 +57,7 @@ assert.match(source,/ctx\.fillText\(text,x,y/,"Tipografía debe salir de Canvas 
 assert.match(source,/ctx\.drawImage\(el,x,y,w,h\)/,"Logo embebido debe pintarse como imagen nativa dentro del mismo master");
 assert.match(source,/No SVG foreignObject, no Safari HTML rasterizer/,"La ruta final debe excluir explícitamente el rasterizador foreignObject de Safari");
 assert.doesNotMatch(source,/const svg=artifactSvg\(\{\.\.\.item,html\}\),image=await decodeImage/,"renderFullHd no puede volver a rasterizar HTML mediante SVG");
-assert.deepEqual(fileExport.renderDimensions(),{width:9600,height:5400});
+assert.deepEqual(fileExport.renderDimensions(),{width:3840,height:2160});
 assert.match(source,/const exportDimensions=\(\)=>\(\{width:9600,height:5400\}\)/,"PNG compartido debe conservar master 8K");
 assert.deepEqual(fileExport.exportDimensions(),{width:9600,height:5400});
 assert.match(source,/FINAL_PNG_LOGO_NOT_VISIBLE/,"Debe bloquear PNG sin logo visible");
@@ -72,7 +72,7 @@ assert.deepEqual(fileExport.dimensions({mode:"four_ball"}),{width:1920,height:10
 assert.deepEqual(fileExport.dimensions({mode:"normal"}),{width:1920,height:1080});
 
 assert.deepEqual(fileExport.shareDimensions(),{width:9600,height:5400});
-assert.match(source,/const shareScale=\(\)=>5/,"Compartir debe conservar el mismo master nativo 5x que PNG");
+assert.match(source,/const shareScale=\\(\\)=>2/,"Compartir debe usar master 4K compatible con mensajería");
 assert.match(source,/profile==="share"\?shareDimensions\(\):renderDimensions\(\)/,"Share debe usar su propio viewport nativo");
 assert.match(source,/canvasFor\(item,"share"\)/,"Share no debe entregar el master gigante a mensajería");
 assert.doesNotMatch(source,/shareImage[^\n]*await png\(item\)/,"Share no debe pasar el PNG 9600px a WhatsApp/iOS");
