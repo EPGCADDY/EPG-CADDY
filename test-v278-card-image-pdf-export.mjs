@@ -31,7 +31,7 @@ const dims=fileExport.dimensions(cards.personal[0]);
 assert.equal(dims.width,1920);
 assert.equal(dims.height,1080);
 assert.match(svg,/width="1920"/,"La tarjeta MEDAL PLAY exportable debe conservar 1920 px de ancho nativo");
-assert.match(svg,/golf-score-card-gt-horizontal-original\.webp/,"La tarjeta exportable debe conservar el logo oficial");
+assert.match(svg,/data:image\/webp;base64/,"La tarjeta exportable debe llevar el logo oficial embebido, sin depender de red");
 assert.doesNotMatch(cards.global.html,/<h2 class="score-card-title">SCORE CARD<\/h2>/,"El texto SCORE CARD no debe ocupar el lugar del logo");
 
 const jpegA=new Uint8Array([0xff,0xd8,0xff,0xdb,0x00,0x43,0xff,0xd9]),jpegB=new Uint8Array([0xff,0xd8,0xff,0xd9]);
@@ -48,7 +48,8 @@ console.log("PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las ta
 assert.match(source,/async function renderFullHd\(item\)/,"R106-H9 must use native Full HD renderer");
 assert.match(source,/canvas\.width=width;canvas\.height=height/,"R106-H9 renderer must render natively at 1920×1080");
 assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
-assert.match(source,/out\.width=1920;out\.height=1080/,"PNG debe normalizar todas las tarjetas al mismo ancho y alto exactos");
+assert.match(source,/const exportDimensions=\(\)=>\(\{width:3840,height:2160\}\)/,"PNG compartido debe entregarse en 4K exacto");
+assert.deepEqual(fileExport.exportDimensions(),{width:3840,height:2160});
 
 assert.match(source,/function trimCanvas\(canvas,margin=24\)/,"El exportador conserva render Full HD y recorta únicamente la salida PNG compartida");
 
