@@ -1125,8 +1125,14 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 <style id="gscg-score-head-r104">@media(max-width:800px){#roundManualEntry .round-player-grid-head>strong,#roundManualEntry .round-player-grid-head>span,#roundManualEntry .round-player-grid-head>span:not(:empty){font-size:9px!important;line-height:14px!important;height:14px!important;min-height:14px!important}#roundManualEntry .round-player-grid-head .round-keypad-head{font-size:9px!important;line-height:14px!important;font-weight:900!important;color:#fff!important;-webkit-text-fill-color:#fff!important;grid-column:3/6!important}}</style>
 <style id="gscg-r132-stableford-back-left">
 /* R132: ATRÁS de Registro Stableford a la izquierda para no cruzarse con MENÚ. */
-#stablefordSetupOverlay .screen-back-row{justify-content:flex-start!important;padding-left:0!important;padding-right:0!important}
+#stablefordSetupOverlay{overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important;padding-bottom:max(110px,calc(env(safe-area-inset-bottom) + 90px))!important}
+#stablefordSetupOverlay .stableford-setup-card{margin-top:20px!important;margin-bottom:120px!important}
+#stablefordSetupOverlay .screen-back-row{position:static!important;top:auto!important;justify-content:flex-start!important;padding-left:0!important;padding-right:0!important}
 #stablefordSetupOverlay #backStablefordSetup{margin-left:0!important;margin-right:auto!important}
+@media(max-width:800px){
+ #stablefordSetupOverlay{padding-bottom:max(140px,calc(env(safe-area-inset-bottom) + 110px))!important}
+ #stablefordSetupOverlay .stableford-setup-card{margin-bottom:150px!important}
+}
 </style>
 </head>
 <body>
