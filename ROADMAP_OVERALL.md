@@ -1855,3 +1855,10 @@ LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 1
 - Match Play y Four Ball compactados exclusivamente para eliminar recorte inferior en 1920×1080 sin alterar su matriz ni lógica.
 - Universales ya dividido en PRIMERA VUELTA 1–9 y SEGUNDA VUELTA 10–18 en `d0511273e1125fc9814537b68a9a46e8fdfe4670`.
 - Gate vigente: no producción hasta inspección visual de los siete PNG definitivos.
+
+
+## R134 · actualización 25/09/2026
+- LAB sincronizado en R134; seis modalidades activas sin selector Práctica.
+- Tarjeta Digital abre compartir/enviar directamente; tarjetas G/N y dos vueltas alineadas al contrato vigente.
+- Exportación master y perfil iPhone verificados por gates; Service Worker/caché/release sincronizados.
+- Build LAB y regresión técnica PASS; candidato exacto para promoción: árbol del commit `011e36e00137fa3530949f7713b580668347911c`.
