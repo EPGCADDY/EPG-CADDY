@@ -4,7 +4,7 @@ const RELEASE="LABORATORIO-20260925-R138";
 const CACHE_NAME="gscg-mobile-v138-r138";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
-  OFFLINE_ENTRY,"/manifest.webmanifest","/gsc-design-system.css","/score-entry-contract.js",
+  OFFLINE_ENTRY,"/live-hub.html","/manifest.webmanifest","/gsc-design-system.css","/score-entry-contract.js",
   "/player-registry.js","/round-closure.js","/device-closures.js","/card-artifacts.js",
   "/card-file-export.js","/card-library.js","/historical-analytics.js","/sync-queue.js",
   "/master-data-sync.js","/account-backup.js","/live-control.js","/match-play.js",
@@ -19,6 +19,9 @@ self.addEventListener("install",event=>event.waitUntil(cacheFreshShell().then(()
 self.addEventListener("activate",event=>event.waitUntil((async()=>{
   for(const key of await caches.keys())if(key.startsWith("gscg-mobile-")&&key!==CACHE_NAME)await caches.delete(key);
   await self.clients.claim();
+  for(const client of await self.clients.matchAll({type:"window",includeUncontrolled:true})){
+    try{const url=new URL(client.url);if(url.origin===self.location.origin)await client.navigate(url.href)}catch{}
+  }
 })()));
 self.addEventListener("message",event=>{if(event.data?.type==="SKIP_WAITING")self.skipWaiting()});
 async function networkFirst(request,fallbackPath=""){
