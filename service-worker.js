@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-laboratorio-r133`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-laboratorio-r133`;
-const RELEASE="LABORATORIO-20260925-R133";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-laboratorio-r134`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-laboratorio-r134`;
+const RELEASE="LABORATORIO-20260925-R134";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   "/score-entry-contract.js",
