@@ -13,7 +13,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20260925-R134">\n<meta name="gscg-seven-cards-premium" content="R132-SIX-CARDS-NO-PRACTICE-20260925">
+  <meta name="gscg-release" content="LABORATORIO-20260925-R134">
+<meta name="gscg-seven-cards-premium" content="R132-SIX-CARDS-NO-PRACTICE-20260925">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2193,6 +2194,28 @@ function startConfirmedRound(){
 }
 // LAB hotfix: iOS/PWA can leave the confirmation overlay visually active after the round is created.
 // Guarantee the visible transition to the scorecard immediately after a successful start.
+function startConfirmedRoundFromButton(){
+  if(!draftPlayers.length&&manualDraftRows.some(row=>manualRowHasData(row))){
+    const recovered=syncDraftPlayersFromManualRows({strict:true,renderAfter:false});
+    if(!recovered){showStep1();return false}
+  }
+  if(!draftPlayers.length){
+    showStep1();
+    setManualRegistrationStatus("REGISTRA AL MENOS UN JUGADOR PARA INICIAR LA RONDA");
+    return false;
+  }
+  const started=startConfirmedRound();
+  if(started&&round.configured){
+    $("setupOverlay")?.classList.remove("visible");
+    document.body?.classList.remove("gsc-setup-open");
+    voiceContext="round";
+    render();
+    requestAnimationFrame(()=>{window.scrollTo(0,0);});
+    return true;
+  }
+  showStep1();
+  return false;
+}
 function startProvisionalScorecard(){
   const selectedCourse=COURSE_CATALOG[draftCourse];
   if(!selectedCourse?.configured){$("setupStatus").textContent=`${selectedCourse?.name?.toUpperCase()||"CAMPO"} · PENDIENTE CARGAR TARJETA OFICIAL`;return false}
@@ -4176,7 +4199,7 @@ function saveSkinsDraftConfig(){draftSkins=window.GSCSkins.normalizeConfig({enab
 
 
 for(const id of ["skinsScoreType","skinsTiePolicy","skinsUnitValue","skinsCurrencyGTQ","skinsCurrencyUSD"])$(id).addEventListener("change",saveSkinsDraftConfig);
-$("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);$("startRoundButton").addEventListener("click",startConfirmedRound);
+$("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);$("startRoundButton").addEventListener("click",startConfirmedRoundFromButton);
 
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="hidden"){
