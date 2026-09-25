@@ -6,8 +6,8 @@
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
   const dimensions=item=>({width:1920,height:1080});
   const layoutDimensions=()=>({width:1920,height:1080});
-  const renderDimensions=()=>({width:3840,height:2160});
-  const exportDimensions=()=>({width:3840,height:2160});
+  const renderDimensions=()=>({width:7680,height:4320});
+  const exportDimensions=()=>({width:7680,height:4320});
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
@@ -73,8 +73,8 @@
     ctx.drawImage(image,0,0,width,height);
     // Safari/iOS can omit <img> inside SVG foreignObject. Paint the official logo
     // as a native canvas layer at the exact 2x coordinates of the 1920px card.
-    ctx.fillStyle="#000";ctx.fillRect(40,32,800,264);
-    ctx.drawImage(logo,40,32,800,264);
+    ctx.fillStyle="#000";ctx.fillRect(80,64,1600,528);
+    ctx.drawImage(logo,80,64,1600,528);
     assertRenderedCard(canvas);
     return canvas;
   }
