@@ -126,6 +126,8 @@ self.addEventListener("fetch",event=>{
   if(request.mode==="navigate"&&!["/","/index.html","/inicio",OFFLINE_ENTRY].includes(url.pathname)){event.respondWith(networkFirst(request,false));return}
   if(request.mode==="navigate"){
     event.respondWith((async()=>{
+      // R136: network-first navigation prevents installed iOS PWA from pinning an old approved shell.
+      try{const fresh=await fetch(request,{cache:"no-store"});if(fresh.ok){const active=await caches.open(ACTIVE_CACHE_NAME);await active.put(OFFLINE_ENTRY,fresh.clone());const approved=await caches.open(APPROVED_CACHE_NAME);await approved.put(OFFLINE_ENTRY,fresh.clone());return fresh}}catch{}
       if(url.searchParams.get("force_update")==="r134"){await refreshShell();await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}
       if(url.searchParams.get("app_version")===RELEASE){await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}
       await ensureApprovedShell();
