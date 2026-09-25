@@ -9,8 +9,8 @@
   const renderScale=()=>5;
   const renderDimensions=()=>({width:9600,height:5400});
   const exportDimensions=()=>({width:9600,height:5400});
-  const shareScale=()=>3;
-  const shareDimensions=()=>({width:5760,height:3240});
+  const shareScale=()=>2;
+  const shareDimensions=()=>({width:3840,height:2160});
   const contentDimensions=()=>({width:1920,height:1080});
 
   function artifactSvg(item){
@@ -166,6 +166,6 @@
   async function downloadPng(item){const blob=await png(item);download(blob,`${baseName(item)}.png`);return blob}
   async function downloadPdf(item){const blob=await pdf(item);download(blob,`${baseName(item)}.pdf`);return blob}
   async function downloadPackage(items,name="tarjetas-oficiales.pdf"){const blob=await pdf(items);download(blob,name);return blob}
-  async function shareImage(item,title="Tarjeta oficial"){const canvas=await canvasFor(item,"share"),cropped=trimCanvas(canvas,4),blob=await canvasBlob(cropped,"image/png"),file=typeof File==="function"?new File([blob],`${baseName(item)}.png`,{type:"image/png"}):null;if(file&&navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){try{await navigator.share({title,files:[file]});return{shared:true,blob}}catch(error){if(error?.name==="AbortError")return{shared:false,cancelled:true,blob};throw error}}download(blob,`${baseName(item)}.png`);return{shared:false,blob}}
+  async function shareImage(item,title="Tarjeta oficial"){const canvas=await canvasFor(item,"share"),cropped=trimCanvas(canvas,4);let blob=await canvasBlob(cropped,"image/jpeg",.94),extension="jpg",mime="image/jpeg";if(blob.size>8*1024*1024){blob=await canvasBlob(cropped,"image/jpeg",.88)}const file=typeof File==="function"?new File([blob],`${baseName(item)}.${extension}`,{type:mime}):null;if(file&&navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){try{await navigator.share({title,files:[file]});return{shared:true,blob}}catch(error){if(error?.name==="AbortError")return{shared:false,cancelled:true,blob};throw error}}download(blob,`${baseName(item)}.${extension}`);return{shared:false,blob}}
   return{artifactSvg,dimensions,renderDimensions,exportDimensions,shareDimensions,pdfBytes,png,pdf,downloadPng,downloadPdf,downloadPackage,shareImage};
 });
