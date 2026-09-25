@@ -86,7 +86,7 @@ console.log('PASS LAB R127 premium visual layer present across seven digital car
 {
  const medal=artifacts.build({...snapshot,mode:'general'}).global.html;
  assert.match(medal,/MODALIDAD · MEDAL PLAY/,'Medal debe titularse MEDAL PLAY');
- assert.doesNotMatch(medal,/MEDAL PLAY/,'No debe quedar MEDAL PLAY');
+ assert.doesNotMatch(medal,/MEDAL PLAY NORMAL/,'No debe quedar MEDAL PLAY NORMAL');
  const mp=artifacts.build({...snapshot,mode:'match_play',players:matchPlayers.slice(0,4),matchPlay:{resultLabel:'MATCH PLAY'}}).global.html;
  assert.match(mp,/PRIMERA VUELTA/); assert.match(mp,/SEGUNDA VUELTA/); assert.match(mp,/G\/N/);
  assert.equal((mp.match(/class="pair-divider"/g)||[]).length,2,'Una separación de parejas por cada vuelta');
