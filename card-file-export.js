@@ -4,13 +4,13 @@
   const textBytes=value=>encoder.encode(String(value));
   const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
-  const dimensions=item=>({width:1536,height:1024});
+  const dimensions=item=>({width:1920,height:1080});
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
     const style=[...item.html.matchAll(/<style>([\s\S]*?)<\/style>/gi)].map(match=>match[1]).join("\n"),main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
     if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
-    const {width,height}=dimensions(item),safeMain=main.replace(/<style>[\s\S]*?<\/style>/gi,"").replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
+    const {width,height}=dimensions(item),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
     return`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000"><style>${style}html,body{width:${width}px;min-height:${height}px;background:#000}body{margin:0}main{width:${width-40}px;max-width:none;margin:0;padding:20px;overflow:hidden}</style><main>${safeMain}</main></div></foreignObject></svg>`;
   }
 
@@ -60,7 +60,7 @@
   }
 
   function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("CANVAS_EXPORT_TIMEOUT")),12000);canvas.toBlob(blob=>{clearTimeout(timer);blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED"))},type,quality)})}
-  async function png(item){const canvas=await canvasFor(item),cropped=trimCanvas(canvas,24),out=document.createElement("canvas");out.width=1536;out.height=1024;const ctx=out.getContext("2d");ctx.fillStyle="#000";ctx.fillRect(0,0,out.width,out.height);const scale=Math.min(out.width/cropped.width,out.height/cropped.height),w=Math.round(cropped.width*scale),h=Math.round(cropped.height*scale);ctx.drawImage(cropped,Math.round((out.width-w)/2),Math.round((out.height-h)/2),w,h);return canvasBlob(out,"image/png")}
+  async function png(item){const canvas=await canvasFor(item),cropped=trimCanvas(canvas,12),out=document.createElement("canvas");out.width=1920;out.height=1080;const ctx=out.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");ctx.fillStyle="#000";ctx.fillRect(0,0,out.width,out.height);const scale=Math.min(out.width/cropped.width,out.height/cropped.height),w=Math.round(cropped.width*scale),h=Math.round(cropped.height*scale);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";ctx.drawImage(cropped,0,0,cropped.width,cropped.height,Math.round((out.width-w)/2),Math.round((out.height-h)/2),w,h);return canvasBlob(out,"image/png")}
   async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
 
   function pdfBytes(pages){
