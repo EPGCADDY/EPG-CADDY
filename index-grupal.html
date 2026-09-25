@@ -3387,9 +3387,9 @@ function openRegistrationPreservingActiveRound(){
   return true;
 }
 function ensurePrincipalEntry(){
-  if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
+  if(demoControlManual||sfEmergency)return false;
   const overlay=$("setupOverlay");if(!overlay)return false;
-  if(!overlay.classList.contains("visible"))openNewRoundDraft();
+  if(!overlay.classList.contains("visible"))openRegistrationPreservingActiveRound();
   document.body?.classList.add("gsc-setup-open");
   overlay.classList.add("visible");
   return true;
