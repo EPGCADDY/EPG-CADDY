@@ -4,7 +4,7 @@
   const textBytes=value=>encoder.encode(String(value));
   const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
-  const dimensions=item=>({width:1920,height:1080});
+  const dimensions=item=>{const mode=String(item?.mode||"").toLowerCase();if(mode==="match_play"||mode==="four_ball")return{width:1920,height:960};if(mode==="normal"||mode==="medal_play")return{width:1920,height:1280};return{width:1920,height:1080}};
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
@@ -60,7 +60,7 @@
   }
 
   function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("CANVAS_EXPORT_TIMEOUT")),12000);canvas.toBlob(blob=>{clearTimeout(timer);blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED"))},type,quality)})}
-  async function png(item){const canvas=await canvasFor(item);return canvasBlob(trimCanvas(canvas,24),"image/png")}
+  async function png(item){const canvas=await canvasFor(item),mode=String(item?.mode||"").toLowerCase();if(mode==="match_play"||mode==="four_ball"||mode==="normal"||mode==="medal_play")return canvasBlob(canvas,"image/png");return canvasBlob(trimCanvas(canvas,24),"image/png")}
   async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
 
   function pdfBytes(pages){
