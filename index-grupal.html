@@ -4390,7 +4390,7 @@ window.addEventListener("focus",recoverInstalledAppScrolling);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)recoverInstalledAppScrolling()});
 setTimeout(recoverInstalledAppScrolling,0);
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
-const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"";
+const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"LABORATORIO-20260925-R134";
 function appVersionLabel(build){
   const match=String(build||"").match(/-R(\d+)(?:-[A-Z0-9]+)?$/i);
   return match?`R${match[1]}`:String(build||"—");
