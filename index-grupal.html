@@ -4249,7 +4249,7 @@ if(explicitNewRound){
 }else if(sfEmergency){
   if(document.readyState==="loading")window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
   else openFreshStablefordSetup();
-}else if(!isRecoverableStoredRound(round)){
+}else{
   ensurePrincipalEntry();
 }
 if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
