@@ -3617,6 +3617,10 @@ function renderStablefordSetup(){
   updateStablefordSetupValidity({preserveStatus:true});
 }
 function showStablefordSetup(){
+  if(round?.configured&&round.players?.length&&stablefordSetupMode!=="edit"){
+    stablefordSetupMode="convert";
+    stablefordSetupCourseKey=round.courseKey||stablefordSetupCourseKey||courseKeyForName(round.course);
+  }
   {};voiceContext="setup";
   $("setupOverlay").classList.remove("visible");
   renderStablefordSetup();
