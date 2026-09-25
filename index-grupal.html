@@ -4450,11 +4450,9 @@ async function syncPublishedAppVersion(){
   if(appBuildCheckRunning||appBuildReloading||document.hidden)return;
   appBuildCheckRunning=true;
   try{
-    // R138: consult the canonical production document, never the currently cached PWA pathname.
-    const checkUrl=new URL("/index-grupal.html",location.origin);
+    const checkUrl=new URL(location.pathname,location.origin);
     checkUrl.searchParams.set("__gscg_build_check",String(Date.now()));
-    checkUrl.searchParams.set("__gscg_release_probe","R138");
-    const response=await fetch(checkUrl,{cache:"no-store",headers:{"Cache-Control":"no-cache, no-store","Pragma":"no-cache"}});
+    const response=await fetch(checkUrl,{cache:"no-store",headers:{"Cache-Control":"no-cache"}});
     if(response.status===401||response.status===403||new URL(response.url||checkUrl.href).pathname==="/access.html"){showBuildCheckFailure(true);return}
     if(!response.ok){showBuildCheckFailure();return}
     const html=await response.text();
