@@ -60,7 +60,7 @@
   }
 
   function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("CANVAS_EXPORT_TIMEOUT")),12000);canvas.toBlob(blob=>{clearTimeout(timer);blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED"))},type,quality)})}
-  async function png(item){const canvas=await canvasFor(item);return canvasBlob(trimCanvas(canvas,24),"image/png")}
+  async function png(item){const canvas=await canvasFor(item),cropped=trimCanvas(canvas,24),out=document.createElement("canvas");out.width=1536;out.height=1024;const ctx=out.getContext("2d");ctx.fillStyle="#000";ctx.fillRect(0,0,out.width,out.height);const scale=Math.min(out.width/cropped.width,out.height/cropped.height),w=Math.round(cropped.width*scale),h=Math.round(cropped.height*scale);ctx.drawImage(cropped,Math.round((out.width-w)/2),Math.round((out.height-h)/2),w,h);return canvasBlob(out,"image/png")}
   async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
 
   function pdfBytes(pages){
