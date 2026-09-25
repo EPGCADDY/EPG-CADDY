@@ -36,31 +36,42 @@
     return output;
   }
 
+  function svgDataUrl(svg){return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)}
+  async function decodeImage(src,timeout=15000){
+    const image=new Image();
+    await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("IMAGE_DECODE_TIMEOUT")),timeout);image.onload=()=>{clearTimeout(timer);resolve()};image.onerror=()=>{clearTimeout(timer);reject(new Error("IMAGE_DECODE_FAILED"))};image.src=src});
+    if(typeof image.decode==="function")try{await image.decode()}catch(_){}
+    return image;
+  }
+  function assertRenderedCard(canvas){
+    const ctx=canvas.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");
+    const {width,height}=canvas,regions={
+      logo:{x:16,y:16,w:820,h:300,min:1800},
+      upper:{x:0,y:0,w:width,h:Math.round(height*.42),min:12000},
+      lower:{x:0,y:Math.round(height*.42),w:width,h:Math.round(height*.58),min:12000}
+    };
+    const visible=({x,y,w,h})=>{const d=ctx.getImageData(x,y,Math.min(w,width-x),Math.min(h,height-y)).data;let count=0;for(let i=0;i<d.length;i+=16){if(d[i+3]>32&&(d[i]>24||d[i+1]>24||d[i+2]>24))count++}return count};
+    const counts=Object.fromEntries(Object.entries(regions).map(([key,region])=>[key,visible(region)]));
+    if(counts.logo<regions.logo.min)throw new Error("FINAL_PNG_LOGO_NOT_VISIBLE");
+    if(counts.upper<regions.upper.min||counts.lower<regions.lower.min)throw new Error("FINAL_PNG_CARD_NOT_FILLED");
+    return counts;
+  }
+
   async function renderFullHd(item){
     if(typeof document==="undefined")throw new Error("BROWSER_REQUIRED");
     const html=await normalizeWebpDataImages(await inlineImages(String(item?.html||"")));
     if(/<img[^>]+src=["'](?!data:)/i.test(html))throw new Error("IMAGE_NOT_INLINED");
-    const {width,height}=renderDimensions(),layout=layoutDimensions();
-    const frame=document.createElement("iframe");
-    frame.setAttribute("aria-hidden","true");
-    frame.style.cssText=`position:fixed;left:-100000px;top:0;width:${layout.width}px;height:${layout.height}px;border:0;visibility:hidden;pointer-events:none;background:#000`;
-    document.body.appendChild(frame);
-    try{
-      const doc=frame.contentDocument;if(!doc)throw new Error("FRAME_DOCUMENT_REQUIRED");
-      doc.open();doc.write(html);doc.close();
-      await new Promise(resolve=>setTimeout(resolve,80));
-      const source=doc.querySelector("main");if(!source)throw new Error("ARTIFACT_BODY_REQUIRED");
-      const canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
-      const ctx=canvas.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");
-      ctx.fillStyle="#000";ctx.fillRect(0,0,canvas.width,canvas.height);
-      const svg=artifactSvg({...item,html}),image=new Image();
-      await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("NATIVE_RENDER_TIMEOUT")),15000);image.onload=()=>{clearTimeout(timer);resolve()};image.onerror=()=>{clearTimeout(timer);reject(new Error("NATIVE_RENDER_FAILED"))};image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)});
-      ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
-      ctx.drawImage(image,0,0,width,height,0,0,canvas.width,canvas.height);
-      return canvas;
-    }finally{frame.remove()}
+    if(!/data:image\/png;base64,/i.test(html))throw new Error("OFFICIAL_LOGO_PNG_REQUIRED");
+    const {width,height}=renderDimensions();
+    const svg=artifactSvg({...item,html}),image=await decodeImage(svgDataUrl(svg));
+    const canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
+    const ctx=canvas.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");
+    ctx.fillStyle="#000";ctx.fillRect(0,0,width,height);
+    ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
+    ctx.drawImage(image,0,0,width,height);
+    assertRenderedCard(canvas);
+    return canvas;
   }
-
   async function canvasFor(item){return renderFullHd(item)}
 
   function trimCanvas(canvas,margin=24){
@@ -76,7 +87,7 @@
   }
 
   function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("CANVAS_EXPORT_TIMEOUT")),12000);canvas.toBlob(blob=>{clearTimeout(timer);blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED"))},type,quality)})}
-  async function png(item){const canvas=await canvasFor(item),cropped=trimCanvas(canvas,8),out=document.createElement("canvas"),exportSize=exportDimensions();out.width=exportSize.width;out.height=exportSize.height;const ctx=out.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");ctx.fillStyle="#000";ctx.fillRect(0,0,out.width,out.height);const pad=8,scale=Math.min((out.width-pad*2)/cropped.width,(out.height-pad*2)/cropped.height),w=Math.round(cropped.width*scale),h=Math.round(cropped.height*scale);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";ctx.drawImage(cropped,0,0,cropped.width,cropped.height,Math.round((out.width-w)/2),Math.round((out.height-h)/2),w,h);return canvasBlob(out,"image/png")}
+  async function png(item){const canvas=await canvasFor(item),cropped=trimCanvas(canvas,8),out=document.createElement("canvas"),exportSize=exportDimensions();out.width=exportSize.width;out.height=exportSize.height;const ctx=out.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");ctx.fillStyle="#000";ctx.fillRect(0,0,out.width,out.height);const pad=8,scale=Math.min((out.width-pad*2)/cropped.width,(out.height-pad*2)/cropped.height),w=Math.round(cropped.width*scale),h=Math.round(cropped.height*scale);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";ctx.drawImage(cropped,0,0,cropped.width,cropped.height,Math.round((out.width-w)/2),Math.round((out.height-h)/2),w,h);assertRenderedCard(out);return canvasBlob(out,"image/png")}
   async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
 
   function pdfBytes(pages){
