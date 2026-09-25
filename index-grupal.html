@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20260925-R132">\n<meta name="gscg-seven-cards-premium" content="R132-SIX-CARDS-NO-PRACTICE-20260925">
+  <meta name="gscg-release" content="LABORATORIO-20260925-R133">\n<meta name="gscg-seven-cards-premium" content="R132-SIX-CARDS-NO-PRACTICE-20260925">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1123,15 +1123,17 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 }
 </style>
 <style id="gscg-score-head-r104">@media(max-width:800px){#roundManualEntry .round-player-grid-head>strong,#roundManualEntry .round-player-grid-head>span,#roundManualEntry .round-player-grid-head>span:not(:empty){font-size:9px!important;line-height:14px!important;height:14px!important;min-height:14px!important}#roundManualEntry .round-player-grid-head .round-keypad-head{font-size:9px!important;line-height:14px!important;font-weight:900!important;color:#fff!important;-webkit-text-fill-color:#fff!important;grid-column:3/6!important}}</style>
-<style id="gscg-r132-stableford-back-left">
-/* R132: ATRÁS de Registro Stableford a la izquierda para no cruzarse con MENÚ. */
-#stablefordSetupOverlay{overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important;padding-bottom:max(110px,calc(env(safe-area-inset-bottom) + 90px))!important}
-#stablefordSetupOverlay .stableford-setup-card{margin-top:20px!important;margin-bottom:120px!important}
-#stablefordSetupOverlay .screen-back-row{position:static!important;top:auto!important;justify-content:flex-start!important;padding-left:0!important;padding-right:0!important}
-#stablefordSetupOverlay #backStablefordSetup{margin-left:0!important;margin-right:auto!important}
+<style id="gscg-r133-registration-scroll-parity">
+/* R133: todas las pantallas de registro conservan ATRÁS a la derecha y liberan MENÚ mediante scroll, igual que Medal Play. */
+#stablefordSetupOverlay{height:100dvh!important;min-height:100dvh!important;overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important;touch-action:pan-y pinch-zoom!important;padding-bottom:max(150px,calc(env(safe-area-inset-bottom) + 120px))!important}
+#stablefordSetupOverlay .stableford-setup-card{min-height:max-content!important;margin-top:max(16px,env(safe-area-inset-top))!important;margin-bottom:160px!important}
+#stablefordSetupOverlay .screen-back-row{position:sticky!important;top:0!important;z-index:12!important;display:flex!important;justify-content:flex-end!important;padding-left:0!important;padding-right:0!important;background:#000!important}
+#stablefordSetupOverlay #backStablefordSetup{margin-left:auto!important;margin-right:0!important}
+#setupOverlay{height:100dvh!important;min-height:100dvh!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y pinch-zoom!important;padding-bottom:max(150px,calc(env(safe-area-inset-bottom) + 120px))!important}
+#setupOverlay .new-round-card{margin-bottom:160px!important}
 @media(max-width:800px){
- #stablefordSetupOverlay{padding-bottom:max(140px,calc(env(safe-area-inset-bottom) + 110px))!important}
- #stablefordSetupOverlay .stableford-setup-card{margin-bottom:150px!important}
+ #stablefordSetupOverlay,#setupOverlay{padding-bottom:max(180px,calc(env(safe-area-inset-bottom) + 140px))!important}
+ #stablefordSetupOverlay .stableford-setup-card,#setupOverlay .new-round-card{margin-bottom:190px!important}
 }
 </style>
 </head>
