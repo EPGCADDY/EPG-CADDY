@@ -86,18 +86,21 @@
 
   function trimCanvas(canvas,margin=24){
     const context=canvas.getContext("2d");if(!context)return canvas;
-    const {width,height}=canvas,data=context.getImageData(0,0,width,height).data,step=2;
+    const {width,height}=canvas,data=context.getImageData(0,0,width,height).data,step=4;
     let minX=width,minY=height,maxX=-1,maxY=-1;
     for(let y=0;y<height;y+=step)for(let x=0;x<width;x+=step){const i=(y*width+x)*4,r=data[i],g=data[i+1],b=data[i+2],a=data[i+3];if(a>16&&(r>10||g>10||b>10)){if(x<minX)minX=x;if(x>maxX)maxX=x;if(y<minY)minY=y;if(y>maxY)maxY=y}}
     if(maxX<0||maxY<0)return canvas;
     minX=Math.max(0,minX-margin);minY=Math.max(0,minY-margin);maxX=Math.min(width-1,maxX+margin);maxY=Math.min(height-1,maxY+margin);
     const cropWidth=Math.max(1,maxX-minX+1),cropHeight=Math.max(1,maxY-minY+1);
-    const out=document.createElement("canvas");out.width=width;out.height=Math.max(1,Math.round(width*cropHeight/cropWidth));const outCtx=out.getContext("2d");if(!outCtx)return canvas;
-    outCtx.fillStyle="#000";outCtx.fillRect(0,0,out.width,out.height);outCtx.imageSmoothingEnabled=true;outCtx.imageSmoothingQuality="high";outCtx.drawImage(canvas,minX,minY,cropWidth,cropHeight,0,0,out.width,out.height);return out;
+    // Preserve every master pixel: crop only, never enlarge or shrink.
+    const out=document.createElement("canvas");out.width=cropWidth;out.height=cropHeight;const outCtx=out.getContext("2d");if(!outCtx)return canvas;
+    outCtx.fillStyle="#000";outCtx.fillRect(0,0,cropWidth,cropHeight);outCtx.imageSmoothingEnabled=false;
+    outCtx.drawImage(canvas,minX,minY,cropWidth,cropHeight,0,0,cropWidth,cropHeight);
+    return out;
   }
 
   function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("CANVAS_EXPORT_TIMEOUT")),12000);canvas.toBlob(blob=>{clearTimeout(timer);blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED"))},type,quality)})}
-  async function png(item){const canvas=await canvasFor(item);assertRenderedCard(canvas);return canvasBlob(canvas,"image/png")}
+  async function png(item){const canvas=await canvasFor(item),cropped=trimCanvas(canvas,8);return canvasBlob(cropped,"image/png")}
   async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
 
   function pdfBytes(pages){
