@@ -2193,7 +2193,7 @@ function startConfirmedRound(){
 }
 // LAB hotfix: iOS/PWA can leave the confirmation overlay visually active after the round is created.
 // Guarantee the visible transition to the scorecard immediately after a successful start.
-function startConfirmedRoundFromButton(){
+function startConfirmedRoundFromButton(event){\n  event?.preventDefault?.();\n  event?.stopPropagation?.();
   if(!draftPlayers.length&&manualDraftRows.some(row=>manualRowHasData(row))){
     const recovered=syncDraftPlayersFromManualRows({strict:true,renderAfter:false});
     if(!recovered){showStep1();return false}
@@ -4198,7 +4198,13 @@ function saveSkinsDraftConfig(){draftSkins=window.GSCSkins.normalizeConfig({enab
 
 
 for(const id of ["skinsScoreType","skinsTiePolicy","skinsUnitValue","skinsCurrencyGTQ","skinsCurrencyUSD"])$(id).addEventListener("change",saveSkinsDraftConfig);
-$("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);$("startRoundButton").addEventListener("click",startConfirmedRoundFromButton);
+$("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);
+const startRoundControl=$("startRoundButton");
+startRoundControl?.addEventListener("click",startConfirmedRoundFromButton);
+startRoundControl?.addEventListener("touchend",event=>{
+  event.preventDefault();
+  startConfirmedRoundFromButton(event);
+},{passive:false});
 
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="hidden"){
