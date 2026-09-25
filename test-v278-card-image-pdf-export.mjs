@@ -50,4 +50,4 @@ assert.match(source,/canvas\.width=width;canvas\.height=height/,"R106-H9 rendere
 assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
 assert.match(source,/async function png\(item\)\{const canvas=await canvasFor\(item\);return canvasBlob\(trimCanvas\(canvas,24\),"image\/png"\)\}/,"PNG compartido debe recortar el margen negro sobrante después del render Full HD");
 
-assert.match(source,/function trimCanvas\(canvas,margin=32\)/,"El exportador conserva render Full HD y recorta únicamente la salida PNG compartida");
+assert.match(source,/function trimCanvas\(canvas,margin=24\)/,"El exportador conserva render Full HD y recorta únicamente la salida PNG compartida");
