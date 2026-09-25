@@ -82,7 +82,7 @@ async function promoteCandidate(){
 }
 
 self.addEventListener("install",event=>event.waitUntil(refreshShell().then(()=>self.skipWaiting())));
-self.addEventListener("activate",event=>event.waitUntil((async()=>{await ensureApprovedShell();await self.clients.claim();const clients=await self.clients.matchAll({type:"window",includeUncontrolled:true});for(const client of clients){try{const url=new URL(client.url);if(url.origin===self.location.origin&&!url.pathname.startsWith("/access.html")&&!url.pathname.startsWith("/invite/"))await client.navigate(url.href)}catch{}}})()));
+self.addEventListener("activate",event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key.startsWith("gscg-mobile-")&&key!==CACHE_NAME)await caches.delete(key);await ensureApprovedShell();await self.clients.claim();const clients=await self.clients.matchAll({type:"window",includeUncontrolled:true});for(const client of clients){try{const url=new URL(client.url);if(url.origin===self.location.origin&&!url.pathname.startsWith("/access.html")&&!url.pathname.startsWith("/invite/"))await client.navigate(url.href)}catch{}}})()));
 self.addEventListener("message",event=>{
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
   if(event.data?.type==="PROMOTE_BUILD"&&event.data?.build===RELEASE)event.waitUntil(promoteCandidate());
