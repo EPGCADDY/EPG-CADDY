@@ -4177,34 +4177,7 @@ function saveSkinsDraftConfig(){draftSkins=window.GSCSkins.normalizeConfig({enab
 
 for(const id of ["skinsScoreType","skinsTiePolicy","skinsUnitValue","skinsCurrencyGTQ","skinsCurrencyUSD"])$(id).addEventListener("change",saveSkinsDraftConfig);
 $("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);
-function startRoundFromReview(){
-  const button=$("startRoundButton");
-  if(button){button.disabled=true;button.textContent="INICIANDO RONDA…"}
-  try{
-    if(draftPlayers.length===1){draftRoundMode="general";resetDraftGames()}
-    const started=startConfirmedRound();
-    if(!started){
-      showStep1();
-      if(button){button.disabled=false;button.textContent="INICIAR RONDA"}
-      return false;
-    }
-    $("setupOverlay")?.classList.remove("visible");
-    document.body?.classList.remove("gsc-setup-open");
-    voiceContext="round";
-    render();
-    window.scrollTo(0,0);
-    return true;
-  }catch(error){
-    console.error("START_ROUND",error);
-    $("setupOverlay")?.classList.remove("visible");
-    document.body?.classList.remove("gsc-setup-open");
-    if(round?.configured){voiceContext="round";try{render()}catch{};window.scrollTo(0,0);return true}
-    showStep1();
-    if(button){button.disabled=false;button.textContent="INICIAR RONDA"}
-    return false;
-  }
-}
-$("startRoundButton").onclick=startRoundFromReview;
+$("startRoundButton").onclick=startConfirmedRound;
 
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="hidden"){
