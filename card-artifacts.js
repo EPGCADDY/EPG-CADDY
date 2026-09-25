@@ -244,7 +244,7 @@ main>p{grid-column:1/-1!important;margin:0!important;font-size:14px!important}
     return shell(snapshot.version>1?`Tarjeta Universales corregida · ${player.name}`:`Tarjeta Universales · ${player.name}`,snapshot,`<h2>${playerNameWithCategory(player)} · HCP ${player.handicap} · ${esc(playerTeeLabel(player))}</h2>${line}<div class="stats"><div class="stat"><b>Puntos IN</b><br>${stats.front}</div><div class="stat"><b>Puntos OUT</b><br>${stats.back}</div><div class="stat"><b>Puntos total</b><br>${stats.points}</div><div class="stat"><b>Hoyos resueltos</b><br>${stats.recordedHoles}</div></div><p>Resultado Universales calculado por el Neto después de aplicar el handicap; los empates dividen los puntos de las posiciones ocupadas.</p>`,[player]);
   }
 
-  const PREMIUM_GLOBAL_CSS=`<style id="r127-seven-card-premium">
+  const PREMIUM_GLOBAL_CSS=`<style id="r130-seven-card-premium">
 body{background:#000!important;padding:0!important}
 main{background:linear-gradient(180deg,#050706 0%,#000 100%)!important;border:1px solid #4b514f!important;box-shadow:0 0 0 1px #0d100f inset,0 8px 34px rgba(0,0,0,.7)!important}
 .global-clean-head{box-shadow:inset 0 0 0 1px #171b19,0 2px 12px rgba(0,0,0,.65)!important}
@@ -277,7 +277,7 @@ main{background:linear-gradient(180deg,#050706 0%,#000 100%)!important;border:1p
 .match-lost,.over{color:#ff4545!important}
 .match-tied{color:#fff!important}
 .best-ball{color:#31ff00!important;font-weight:900!important}
-</style>`;
+/* R130 · sistema visual maestro homogéneo para las siete tarjetas */\nmain{width:1880px!important;max-width:1880px!important;padding:14px!important;gap:12px!important;border-radius:12px!important}\n.global-clean-head{border-radius:10px!important}\n.global-clean-meta span{min-height:76px!important;display:flex!important;align-items:center!important;justify-content:center!important}\n.score-half h2{min-height:48px!important;display:flex!important;align-items:center!important;margin:0!important}\n.score-half .table-wrap{border:1px solid #4b504e!important;border-top:0!important}\n.score-half th,.score-half td{height:52px!important;padding:5px 6px!important}\n.score-half th{letter-spacing:.2px!important}\n.score-half td{font-size:20px!important}\n.score-half td:not(:first-child){font-family:Arial Black,Arial,sans-serif!important;font-stretch:normal!important}\n.score-half th small{font-size:14px!important;line-height:1!important}\n.player-name-text{font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;font-weight:900!important}\n.pair-divider td{height:24px!important;background:#000!important;border-top:2px solid #31ff00!important;border-bottom:1px solid #303633!important}\n.match-play-half .pair-divider td{height:26px!important}\n.best-ball{font-size:11px!important;letter-spacing:0!important}\n</style>`;
   const premiumGlobal=html=>String(html||"").replace("<body>",PREMIUM_GLOBAL_CSS+"<body>");
   function build(snapshot){
     if(!snapshot||!["officially_closed","corrected"].includes(snapshot.status)||!snapshot.sha256)throw new Error("Se requiere snapshot oficialmente cerrado");
