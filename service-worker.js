@@ -9,7 +9,7 @@ const SHELL=[
   "/card-file-export.js","/card-library.js","/historical-analytics.js","/sync-queue.js",
   "/master-data-sync.js","/account-backup.js","/live-control.js","/match-play.js",
   "/four-ball.js","/stableford.js","/universales.js","/skins.js","/wolf.js","/vegas.js",
-  "/dots.js","/round-navigation.js","/golf-rules-offline.js","/timer-inactivity.js","/shortcuts-ui.js"
+  "/dots.js","/round-navigation.js","/golf-rules-offline.js","/timer-inactivity.js","/shortcuts-ui.js","/auth-gate.js","/live-hub.html","/live-hub.js","/shortcuts-ui.js"
 ];
 async function cacheFreshShell(){
   const cache=await caches.open(CACHE_NAME);
