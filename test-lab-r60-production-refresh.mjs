@@ -4,17 +4,17 @@ import assert from 'node:assert/strict';
 const app=fs.readFileSync('index-grupal.html','utf8');
 const sw=fs.readFileSync('service-worker.js','utf8');
 
-assert.match(app,/gscg-release" content="LABORATORIO-20260925-R142"/,'La app debe identificarse como R142');
+assert.match(app,/gscg-release" content="LABORATORIO-20260925-R143"/,'La app debe identificarse como R143');
 assert.match(app,/updateViaCache:"none"/,'El registro del Service Worker debe ignorar caché HTTP intermedia');
 assert.match(app,/controllerchange[\s\S]*location\.reload\(\)/,'La app debe recargar al tomar control un SW nuevo');
 
-assert.match(sw,/const RELEASE="LABORATORIO-20260925-R142"/,'El SW debe identificarse como R142');
+assert.match(sw,/const RELEASE="LABORATORIO-20260925-R143"/,'El SW debe identificarse como R143');
 assert.match(sw,/clients\.claim\(\)/,'El SW nuevo debe tomar control inmediato');
 assert.match(sw,/key\.startsWith\("gscg-mobile-"\)&&key!==CACHE_NAME/,'El SW debe eliminar caches viejos al activar');
 assert.match(sw,/fetch\(request,\{cache:"no-store"\}\)/,'El SW debe pedir navegación fresca antes del fallback offline');
 assert.doesNotMatch(sw,/LAB-PHYSICAL-CERTIFIED-20260923-R59/,'No debe quedar release R59 como release activa del SW');
 
-console.log('PASS R142: network-first fuerza actualización de clientes PWA viejos y evita permanecer en versiones anteriores');
+console.log('PASS R143: network-first fuerza actualización de clientes PWA viejos y evita permanecer en versiones anteriores');
 
 assert.match(app,/#cardLibraryActions\{display:none!important/,'MIS RONDAS GUARDADAS no debe mostrar la franja blanca de acciones redundantes');
 
