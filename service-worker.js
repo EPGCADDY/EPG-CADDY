@@ -126,6 +126,7 @@ self.addEventListener("fetch",event=>{
   if(request.mode==="navigate"&&!["/","/index.html","/inicio",OFFLINE_ENTRY].includes(url.pathname)){event.respondWith(networkFirst(request,false));return}
   if(request.mode==="navigate"){
     event.respondWith((async()=>{
+      if(url.searchParams.get("force_update")==="r134"){await refreshShell();await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}
       if(url.searchParams.get("app_version")===RELEASE){await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}
       await ensureApprovedShell();
       return await approvedNavigationWithManualUpdate(request);
