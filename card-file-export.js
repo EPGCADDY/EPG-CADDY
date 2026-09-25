@@ -5,13 +5,14 @@
   const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
   const dimensions=item=>({width:1920,height:1080});
+  const renderDimensions=()=>({width:3840,height:2160});
   const exportDimensions=()=>({width:3840,height:2160});
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
     const style=[...item.html.matchAll(/<style>([\s\S]*?)<\/style>/gi)].map(match=>match[1]).join("\n"),main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
     if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
-    const {width,height}=dimensions(item),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
+    const {width,height}=renderDimensions(),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
     return`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject x="0" y="0" width="${width}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000;overflow:hidden"><style>${style}html,body{width:${width}px!important;height:${height}px!important;min-height:0!important;background:#000!important;margin:0!important;padding:0!important;overflow:hidden!important}main{width:${width}px!important;max-width:none!important;margin:0!important;padding:12px!important;overflow:hidden!important}</style><main>${safeMain}</main></div></foreignObject></svg>`;
   }
 
@@ -25,7 +26,7 @@
     if(typeof document==="undefined")throw new Error("BROWSER_REQUIRED");
     const html=await inlineImages(String(item?.html||""));
     if(/<img[^>]+src=["'](?!data:)/i.test(html))throw new Error("IMAGE_NOT_INLINED");
-    const {width,height}=dimensions(item);
+    const {width,height}=renderDimensions();
     const frame=document.createElement("iframe");
     frame.setAttribute("aria-hidden","true");
     frame.style.cssText=`position:fixed;left:-100000px;top:0;width:${width}px;height:${height}px;border:0;visibility:hidden;pointer-events:none;background:#000`;
@@ -86,5 +87,5 @@
   async function downloadPdf(item){const blob=await pdf(item);download(blob,`${baseName(item)}.pdf`);return blob}
   async function downloadPackage(items,name="tarjetas-oficiales.pdf"){const blob=await pdf(items);download(blob,name);return blob}
   async function shareImage(item,title="Tarjeta oficial"){const blob=await png(item),file=typeof File==="function"?new File([blob],`${baseName(item)}.png`,{type:"image/png"}):null;if(file&&navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title,files:[file]});return{shared:true,blob}}download(blob,`${baseName(item)}.png`);return{shared:false,blob}}
-  return{artifactSvg,dimensions,exportDimensions,pdfBytes,png,pdf,downloadPng,downloadPdf,downloadPackage,shareImage};
+  return{artifactSvg,dimensions,renderDimensions,exportDimensions,pdfBytes,png,pdf,downloadPng,downloadPdf,downloadPackage,shareImage};
 });
