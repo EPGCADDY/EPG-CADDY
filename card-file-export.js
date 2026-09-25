@@ -6,7 +6,7 @@
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
   const dimensions=item=>({width:1920,height:1080});
   const renderDimensions=()=>({width:3840,height:2160});
-  const exportDimensions=()=>({width:3840,height:1920});
+  const exportDimensions=()=>({width:3840,height:2160});
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
