@@ -251,15 +251,21 @@ main{background:linear-gradient(180deg,#050706 0%,#000 100%)!important;border:1p
 .global-clean-meta span{background:#050706!important;border:1px solid #343a38!important;color:#f5f5f5!important;letter-spacing:.25px!important}
 .score-half h2{background:#041004!important;box-shadow:0 0 18px rgba(49,255,0,.10)!important;letter-spacing:.45px!important}
 .score-half th{background:#080a09!important;color:#f5f5f5!important;font-weight:900!important}
-.score-half td{background:#010202!important;color:#f5f5f5!important;font-weight:800!important}
+.score-half td{background:#010202!important;font-weight:800!important}
+.score-half td:not(.match-won):not(.match-lost):not(.under):not(.over){color:#f5f5f5!important}
 .score-half tbody tr:nth-child(even) td{background:#030504!important}
+.score-half td.match-won,.score-half td.under{color:#31ff00!important}
+.score-half td.match-lost,.score-half td.over{color:#ff3030!important}
+.score-half td.match-tied{color:#fff!important}
+.score-half td.match-won .match-arrow,.score-half td.under .match-arrow{color:#31ff00!important}
+.score-half td.match-lost .match-arrow,.score-half td.over .match-arrow{color:#ff3030!important}
 .score-half th,.score-half td{border-color:#4b504e!important;font-variant-numeric:tabular-nums!important}.score-half td:not(:first-child){font-family:Arial Black,Arial,sans-serif!important;letter-spacing:-.2px!important}
 .player-name-text{letter-spacing:.2px!important}
 .pair-divider td{background:#000!important;border-color:#202523!important}
 .match-won,.under,.points{color:#31ff00!important}
 .match-lost,.over{color:#ff4545!important}
 .match-tied{color:#fff!important}
-.best-ball{color:#ffbf00!important;font-weight:900!important}
+.best-ball{color:#31ff00!important;font-weight:900!important}
 </style>`;
   const premiumGlobal=html=>String(html||"").replace("<body>",PREMIUM_GLOBAL_CSS+"<body>");
   function build(snapshot){
