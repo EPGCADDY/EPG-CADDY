@@ -1,7 +1,7 @@
 "use strict";
 // R138: iOS PWA network-first. Cache is fallback only; never pin an older application shell.
 const RELEASE="LABORATORIO-20260925-R138";
-const CACHE_NAME="gscg-mobile-lab-r138";
+const CACHE_NAME="gscg-mobile-v138-r138";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,"/manifest.webmanifest","/gsc-design-system.css","/score-entry-contract.js",
