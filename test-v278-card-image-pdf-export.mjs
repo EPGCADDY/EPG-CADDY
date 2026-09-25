@@ -30,7 +30,7 @@ assert.match(svg,/background:#000/);
 const dims=fileExport.dimensions(cards.personal[0]);
 assert.equal(dims.width,1920);
 assert.equal(dims.height,1080);
-assert.match(svg,/width="1920"/,"La tarjeta MEDAL PLAY exportable debe conservar 1920 px de ancho nativo");
+assert.match(svg,/width="3840"/,"La tarjeta exportable debe rasterizarse nativamente a 4K");
 assert.match(svg,/data:image\/webp;base64/,"La tarjeta exportable debe llevar el logo oficial embebido, sin depender de red");
 assert.doesNotMatch(cards.global.html,/<h2 class="score-card-title">SCORE CARD<\/h2>/,"El texto SCORE CARD no debe ocupar el lugar del logo");
 
@@ -46,7 +46,8 @@ assert.match(pdfText,/%%EOF\n$/);
 console.log("PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las tarjetas oficiales General/Stableford");
 
 assert.match(source,/async function renderFullHd\(item\)/,"R106-H9 must use native Full HD renderer");
-assert.match(source,/canvas\.width=width;canvas\.height=height/,"R106-H9 renderer must render natively at 1920×1080");
+assert.match(source,/canvas\.width=width;canvas\.height=height/,"El renderer debe usar las dimensiones 4K nativas");
+assert.deepEqual(fileExport.renderDimensions(),{width:3840,height:2160});
 assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
 assert.match(source,/const exportDimensions=\(\)=>\(\{width:3840,height:2160\}\)/,"PNG compartido debe entregarse en 4K exacto");
 assert.deepEqual(fileExport.exportDimensions(),{width:3840,height:2160});
