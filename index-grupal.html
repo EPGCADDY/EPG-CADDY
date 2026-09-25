@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20260925-R144">
+  <meta name="gscg-release" content="LABORATORIO-20260925-R145">
 
 <meta name="gscg-seven-cards-premium" content="R132-SIX-CARDS-NO-PRACTICE-20260925">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
@@ -4193,7 +4193,7 @@ document.addEventListener("visibilitychange",()=>{
     ;
     scheduleRoundTimerIdleShutdown();
     render();
-    ensurePrincipalEntry();
+    if(principalStartup||explicitNewRound){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else ensurePrincipalEntry();
   }
 });
 window.addEventListener("pageshow",e=>{
@@ -4222,7 +4222,7 @@ window.addEventListener("online",()=>{if(!demoControlManual){masterSyncBlockedUn
 // Regla de continuidad: al abrir/reabrir, la última ronda válida es la actividad activa.
 // No se crea ni se sustituye una ronda hasta confirmar expresamente INICIAR RONDA.
 if(demoControlManual)activateControlManualDemo();
-else if(!sfEmergency)restorePersistedRound();
+else if(!sfEmergency&&!principalStartup)restorePersistedRound();
 else if(round.configured)activateCourse(round.courseKey);
 (function repairAutomaticOmissionsV155(){
   const key="gscg-v155-automatic-x-repair";
@@ -4256,6 +4256,8 @@ if(explicitNewRound){
 }else if(sfEmergency){
   if(document.readyState==="loading")window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
   else openFreshStablefordSetup();
+}else if(principalStartup){
+  openNewRoundDraft();showStep1();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false");
 }else if(!isRecoverableStoredRound(round)){
   ensurePrincipalEntry();
 }
@@ -4400,7 +4402,7 @@ window.addEventListener("focus",recoverInstalledAppScrolling);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)recoverInstalledAppScrolling()});
 setTimeout(recoverInstalledAppScrolling,0);
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
-const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"LABORATORIO-20260925-R144";
+const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"LABORATORIO-20260925-R145";
 function appVersionLabel(build){
   const match=String(build||"").match(/-R(\d+)(?:-[A-Z0-9]+)?$/i);
   return match?`R${match[1]}`:String(build||"—");
@@ -4460,7 +4462,7 @@ async function syncPublishedAppVersion(){
     // R138: consult the canonical production document, never the currently cached PWA pathname.
     const checkUrl=new URL("/index-grupal.html",location.origin);
     checkUrl.searchParams.set("__gscg_build_check",String(Date.now()));
-    checkUrl.searchParams.set("__gscg_release_probe","R144");
+    checkUrl.searchParams.set("__gscg_release_probe","R145");
     const response=await fetch(checkUrl,{cache:"no-store",headers:{"Cache-Control":"no-cache, no-store","Pragma":"no-cache"}});
     if(response.status===401||response.status===403||new URL(response.url||checkUrl.href).pathname==="/access.html"){showBuildCheckFailure(true);return}
     if(!response.ok){showBuildCheckFailure();return}
