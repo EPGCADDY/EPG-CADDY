@@ -2174,11 +2174,9 @@ function startConfirmedRound(){
   enforceCanonicalDraftNames();draftTournament=normalizeTournament(draftTournament);if(draftTournament&&!draftTournament.name)draftTournament=null;
   const selectedCourse=COURSE_CATALOG[draftCourse];if(!selectedCourse?.configured){showStep1();$("setupStatus").textContent=`${selectedCourse?.name?.toUpperCase()||"CAMPO"} · PENDIENTE CARGAR TARJETA OFICIAL`;return false}
   if(rosterEditMode&&round.configured){
-    const previousMode=round.mode;
     const previous=new Map(round.players.map(p=>[p.id,p]));
     round.players=assignStablePlayerSlots(draftPlayers.map((p,i)=>{const old=previous.get(p.id);const source=profileCorrectionMode&&old?{...old,name:p.name,handicap:p.handicap,tee:p.tee}:p;return recomputePlayerScores(normalizePlayer({...source,holes:old?.holes||p.holes||{},lastHole:old?.lastHole||p.lastHole||null,activeFrom:old?.activeFrom||p.activeFrom||rosterEditJoinHole},i))}));
-    round.mode=draftRoundMode;if(previousMode!==round.mode){round.officiallyClosedAt=null;round.officialSnapshot=null;round.officialVersions=[];round.snapshotHash="";round.status="active";resetFinalCardShare()}
-    round.tournament=draftTournament;round.sideGames=draftSideGames();ensureAnnouncedState();round.announced.front=false;round.announced.back=false;round.announced.complete=false;
+    const previousMode=round.mode;round.mode=draftRoundMode;if(previousMode!==round.mode){round.officiallyClosedAt=null;round.officialSnapshot=null;round.officialVersions=[];round.snapshotHash="";round.status="active";resetFinalCardShare()}round.tournament=draftTournament;round.sideGames=draftSideGames();ensureAnnouncedState();round.announced.front=false;round.announced.back=false;round.announced.complete=false;
     savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();return true;
   }
   activateCourse(draftCourse);
