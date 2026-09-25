@@ -6,7 +6,7 @@ const out=artifacts.build(snapshot);assert.equal(out.personal.length,1);assert.e
 assert.match(out.global.html,/PRIMERA VUELTA · HOYOS 1–9/);
 assert.match(out.global.html,/SEGUNDA VUELTA · HOYOS 10–18/);
 assert.ok(out.global.html.includes('1<br><small>G/N</small>'));
-assert.ok(out.global.html.includes('10<br><small>G/N</small>'));assert.match(out.global.html,/CAMPO · El Pulté Golf/);assert.match(out.global.html,/MODALIDAD · MEDAL PLAY NORMAL/);assert.match(out.global.html,/FECHA ·/);assert.doesNotMatch(out.global.html,/VERSIÓN ·|ID OFICIAL · SHA-256/);assert.match(out.personal[0].html,/Comportamiento Neto contra Par/);assert.match(out.personal[0].html,/Águilas/);assert.doesNotMatch(out.personal[0].html,/ID OFICIAL · SHA-256/);assert.throws(()=>artifacts.build({...snapshot,status:'active'}));console.log('PASS archivos Global/personal desde snapshot oficial');
+assert.ok(out.global.html.includes('10<br><small>G/N</small>'));assert.match(out.global.html,/CAMPO · El Pulté Golf/);assert.match(out.global.html,/MODALIDAD · MEDAL PLAY/);assert.match(out.global.html,/FECHA ·/);assert.doesNotMatch(out.global.html,/VERSIÓN ·|ID OFICIAL · SHA-256/);assert.match(out.personal[0].html,/Comportamiento Neto contra Par/);assert.match(out.personal[0].html,/Águilas/);assert.doesNotMatch(out.personal[0].html,/ID OFICIAL · SHA-256/);assert.throws(()=>artifacts.build({...snapshot,status:'active'}));console.log('PASS archivos Global/personal desde snapshot oficial');
 
 const stablefordPlayers=Array.from({length:6},(_,playerIndex)=>({
   id:`sf${playerIndex+1}`,
@@ -86,7 +86,7 @@ console.log('PASS LAB R127 premium visual layer present across seven digital car
 {
  const medal=artifacts.build({...snapshot,mode:'general'}).global.html;
  assert.match(medal,/MODALIDAD · MEDAL PLAY/,'Medal debe titularse MEDAL PLAY');
- assert.doesNotMatch(medal,/MEDAL PLAY NORMAL/,'No debe quedar MEDAL PLAY NORMAL');
+ assert.doesNotMatch(medal,/MEDAL PLAY/,'No debe quedar MEDAL PLAY');
  const mp=artifacts.build({...snapshot,mode:'match_play',players:matchPlayers.slice(0,4),matchPlay:{resultLabel:'MATCH PLAY'}}).global.html;
  assert.match(mp,/PRIMERA VUELTA/); assert.match(mp,/SEGUNDA VUELTA/); assert.match(mp,/G\/N/);
  assert.equal((mp.match(/class="pair-divider"/g)||[]).length,2,'Una separación de parejas por cada vuelta');
