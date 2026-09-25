@@ -6,9 +6,9 @@
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
   const dimensions=item=>({width:1920,height:1080});
   const layoutDimensions=()=>({width:1920,height:1080});
-  const renderScale=()=>4;
-  const renderDimensions=()=>({width:7680,height:4320});
-  const exportDimensions=()=>({width:7680,height:4320});
+  const renderScale=()=>5;
+  const renderDimensions=()=>({width:9600,height:5400});
+  const exportDimensions=()=>({width:9600,height:5400});
   const contentDimensions=()=>({width:1920,height:1080});
 
   function artifactSvg(item){
@@ -75,7 +75,7 @@
     const text=node.nodeValue.replace(/\s+/g," ").trim();if(!text)return;
     const pr=parent.getBoundingClientRect(),x0=pr.left-rootRect.left,y0=pr.top-rootRect.top,w=pr.width,h=pr.height;
     const fontSize=px(style.fontSize)||16,fontWeight=style.fontWeight||"400",fontStyle=style.fontStyle||"normal",family=style.fontFamily||"Arial";
-    ctx.font=`${fontStyle} ${fontWeight} ${fontSize}px ${family}`;ctx.fillStyle=style.color||"#fff";ctx.textBaseline="middle";
+    ctx.font=`${fontStyle} ${fontWeight} ${fontSize}px ${family}`;ctx.fillStyle=style.color||"#fff";ctx.textBaseline="middle";ctx.textRendering="geometricPrecision";
     const align=style.textAlign||"start";ctx.textAlign=align==="center"?"center":align==="right"||align==="end"?"right":"left";
     const padL=px(style.paddingLeft),padR=px(style.paddingRight);
     const x=ctx.textAlign==="center"?x0+w/2:ctx.textAlign==="right"?x0+w-padR:x0+padL;
@@ -126,7 +126,7 @@
 
   function trimCanvas(canvas,margin=24){
     const context=canvas.getContext("2d");if(!context)return canvas;
-    const {width,height}=canvas,data=context.getImageData(0,0,width,height).data,step=4;
+    const {width,height}=canvas,data=context.getImageData(0,0,width,height).data,step=5;
     let minX=width,minY=height,maxX=-1,maxY=-1;
     for(let y=0;y<height;y+=step)for(let x=0;x<width;x+=step){const i=(y*width+x)*4,r=data[i],g=data[i+1],b=data[i+2],a=data[i+3];if(a>16&&(r>10||g>10||b>10)){if(x<minX)minX=x;if(x>maxX)maxX=x;if(y<minY)minY=y;if(y>maxY)maxY=y}}
     if(maxX<0||maxY<0)return canvas;
