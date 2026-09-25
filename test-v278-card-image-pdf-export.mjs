@@ -71,7 +71,7 @@ assert.deepEqual(fileExport.dimensions({mode:"match_play"}),{width:1920,height:1
 assert.deepEqual(fileExport.dimensions({mode:"four_ball"}),{width:1920,height:1080});
 assert.deepEqual(fileExport.dimensions({mode:"normal"}),{width:1920,height:1080});
 
-assert.deepEqual(fileExport.shareDimensions(),{width:9600,height:5400});
+assert.deepEqual(fileExport.shareDimensions(),{width:3840,height:2160});
 assert.match(source,/const shareScale=\\(\\)=>2/,"Compartir debe usar master 4K compatible con mensajería");
 assert.match(source,/profile==="share"\?shareDimensions\(\):renderDimensions\(\)/,"Share debe usar su propio viewport nativo");
 assert.match(source,/canvasFor\(item,"share"\)/,"Share no debe entregar el master gigante a mensajería");
@@ -80,8 +80,8 @@ assert.doesNotMatch(source,/shareImage[^\n]*await png\(item\)/,"Share no debe pa
 // R128 master-resolution contract: WhatsApp/share must use the same 5x master as PNG export.
 assert.equal(fileExport.renderDimensions().width,9600);
 assert.equal(fileExport.renderDimensions().height,5400);
-assert.equal(fileExport.shareDimensions().width,9600);
-assert.equal(fileExport.shareDimensions().height,5400);
+assert.equal(fileExport.shareDimensions().width,3840);
+assert.equal(fileExport.shareDimensions().height,2160);
 assert.match(source,/const shareScale=\(\)=>5/);
 assert.match(source,/ctx\.imageSmoothingEnabled=false/);
 assert.doesNotMatch(source,/ctx\.fillText\(text,x,y,Math\.max/);
