@@ -29,7 +29,7 @@ assert.match(svg,/MODALIDAD · MEDAL PLAY NORMAL/);
 assert.match(svg,/background:#000/);
 const dims=fileExport.dimensions(cards.personal[0]);
 assert.equal(dims.width,1920);
-assert.equal(dims.height,1280);
+assert.equal(dims.height,1080);
 assert.match(svg,/width="1920"/,"La tarjeta MEDAL PLAY exportable debe conservar 1920 px de ancho nativo");
 assert.match(svg,/golf-score-card-gt-horizontal-original\.webp/,"La tarjeta exportable debe conservar el logo oficial");
 assert.doesNotMatch(cards.global.html,/<h2 class="score-card-title">SCORE CARD<\/h2>/,"El texto SCORE CARD no debe ocupar el lugar del logo");
