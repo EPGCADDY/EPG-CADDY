@@ -47,19 +47,20 @@
 
   async function canvasFor(item){return renderFullHd(item)}
 
-  function trimCanvas(canvas,margin=32){
+  function trimCanvas(canvas,margin=24){
     const context=canvas.getContext("2d");if(!context)return canvas;
-    const {width,height}=canvas,data=context.getImageData(0,0,width,height).data,step=4;
+    const {width,height}=canvas,data=context.getImageData(0,0,width,height).data,step=2;
     let minX=width,minY=height,maxX=-1,maxY=-1;
-    for(let y=0;y<height;y+=step)for(let x=0;x<width;x+=step){const i=(y*width+x)*4;if(data[i+3]>0&&(data[i]>18||data[i+1]>18||data[i+2]>18)){if(x<minX)minX=x;if(x>maxX)maxX=x;if(y<minY)minY=y;if(y>maxY)maxY=y}}
+    for(let y=0;y<height;y+=step)for(let x=0;x<width;x+=step){const i=(y*width+x)*4,r=data[i],g=data[i+1],b=data[i+2],a=data[i+3];if(a>16&&(r>10||g>10||b>10)){if(x<minX)minX=x;if(x>maxX)maxX=x;if(y<minY)minY=y;if(y>maxY)maxY=y}}
     if(maxX<0||maxY<0)return canvas;
     minX=Math.max(0,minX-margin);minY=Math.max(0,minY-margin);maxX=Math.min(width-1,maxX+margin);maxY=Math.min(height-1,maxY+margin);
-    const out=document.createElement("canvas");out.width=Math.max(1,maxX-minX+1);out.height=Math.max(1,maxY-minY+1);const outCtx=out.getContext("2d");if(!outCtx)return canvas;
-    outCtx.fillStyle="#000";outCtx.fillRect(0,0,out.width,out.height);outCtx.drawImage(canvas,minX,minY,out.width,out.height,0,0,out.width,out.height);return out;
+    const cropWidth=Math.max(1,maxX-minX+1),cropHeight=Math.max(1,maxY-minY+1);
+    const out=document.createElement("canvas");out.width=width;out.height=Math.max(1,Math.round(width*cropHeight/cropWidth));const outCtx=out.getContext("2d");if(!outCtx)return canvas;
+    outCtx.fillStyle="#000";outCtx.fillRect(0,0,out.width,out.height);outCtx.imageSmoothingEnabled=true;outCtx.imageSmoothingQuality="high";outCtx.drawImage(canvas,minX,minY,cropWidth,cropHeight,0,0,out.width,out.height);return out;
   }
 
   function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("CANVAS_EXPORT_TIMEOUT")),12000);canvas.toBlob(blob=>{clearTimeout(timer);blob?resolve(blob):reject(new Error("CANVAS_EXPORT_FAILED"))},type,quality)})}
-  async function png(item){const canvas=await canvasFor(item);return canvasBlob(trimCanvas(canvas,20),"image/png")}
+  async function png(item){const canvas=await canvasFor(item);return canvasBlob(trimCanvas(canvas,24),"image/png")}
   async function jpegPage(item){const canvas=await canvasFor(item),blob=await canvasBlob(canvas,"image/jpeg",.94);return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height}}
 
   function pdfBytes(pages){
