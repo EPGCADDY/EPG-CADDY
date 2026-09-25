@@ -57,7 +57,7 @@ assert.match(source,/ctx\.fillText\(text,x,y/,"Tipografía debe salir de Canvas 
 assert.match(source,/ctx\.drawImage\(el,x,y,w,h\)/,"Logo embebido debe pintarse como imagen nativa dentro del mismo master");
 assert.match(source,/No SVG foreignObject, no Safari HTML rasterizer/,"La ruta final debe excluir explícitamente el rasterizador foreignObject de Safari");
 assert.doesNotMatch(source,/const svg=artifactSvg\(\{\.\.\.item,html\}\),image=await decodeImage/,"renderFullHd no puede volver a rasterizar HTML mediante SVG");
-assert.deepEqual(fileExport.renderDimensions(),{width:3840,height:2160});
+assert.deepEqual(fileExport.renderDimensions(),{width:9600,height:5400});
 assert.match(source,/const exportDimensions=\(\)=>\(\{width:9600,height:5400\}\)/,"PNG compartido debe conservar master 8K");
 assert.deepEqual(fileExport.exportDimensions(),{width:9600,height:5400});
 assert.match(source,/FINAL_PNG_LOGO_NOT_VISIBLE/,"Debe bloquear PNG sin logo visible");
