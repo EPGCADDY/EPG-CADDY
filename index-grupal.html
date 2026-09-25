@@ -2983,8 +2983,8 @@ function renderFinalDigitalCard(){
   const corrected=Number(round.officialVersion||1)>1,closeButton=$("officialCloseButton");closeButton.hidden=true;closeButton.disabled=true;closeButton.setAttribute("aria-hidden","true");
   if(corrected)document.querySelector(".final-card-head h1").textContent=`TARJETA DIGITAL CORREGIDA · V${round.officialVersion}`;syncFinalCardPlayerSend();
   const actions=$("artifactActions"),sendButton=$("sendFinalCard");actions.hidden=false;sendButton.hidden=false;$("openOriginalGlobal").classList.toggle("hidden",!corrected);
-  if(round.officiallyClosedAt){$("personalCardPlayer").innerHTML=round.officialSnapshot.players.map(p=>`<option value="${yds10NameSafe(p.id)}">${yds10NameSafe(p.name)}</option>`).join("");prepareFinalCardShare()}else{prepareFinalCardShare()}
-  else{$("artifactShareStatus").textContent="";resetFinalCardShare()}
+  if(round.officiallyClosedAt){$("personalCardPlayer").innerHTML=round.officialSnapshot.players.map(p=>`<option value="${yds10NameSafe(p.id)}">${yds10NameSafe(p.name)}</option>`).join("")}
+  prepareFinalCardShare();
   return true;
 }
 async function officiallyCloseRound(){if(round.provisional||!isRoundComplete()||round.officiallyClosedAt)return false;if(!round.endedAt)stopRoundClock();syncSideGameResults();const result=await window.GSCRoundClosure.close(round,{deriveScore:derivedScoreForHole,appVersion:"V330"});if(!result.ok){$("status").textContent=result.code==="SIDE_GAME_PENDING"?`${String(result.game||"JUEGO").toUpperCase()} · FALTA DEFINIR EL HOYO ${result.hole}`:"RONDA INCOMPLETA";return false}round=result.round;persist();render();renderFinalDigitalCard();$("status").textContent="RONDA FINALIZADA. LAS TARJETAS ESTÁN LISTAS.";return true}
