@@ -261,7 +261,7 @@ main{background:linear-gradient(180deg,#050706 0%,#000 100%)!important;border:1p
 .match-tied{color:#fff!important}
 .best-ball{color:#ffbf00!important;font-weight:900!important}
 </style>`;
-  const premiumGlobal=html=>String(html||"").replace("</head>",PREMIUM_GLOBAL_CSS+"</head>").replace("<body>",PREMIUM_GLOBAL_CSS+"<body>");
+  const premiumGlobal=html=>String(html||"").replace("<body>",PREMIUM_GLOBAL_CSS+"<body>");
   function build(snapshot){
     if(!snapshot||!["officially_closed","corrected"].includes(snapshot.status)||!snapshot.sha256)throw new Error("Se requiere snapshot oficialmente cerrado");
     const stableford=snapshot.mode==="stableford",matchPlay=snapshot.mode==="match_play",fourBall=snapshot.mode==="four_ball",universales=snapshot.mode==="universales",mode=stableford?"stableford":matchPlay?"match_play":fourBall?"four_ball":universales?"universales":"stroke";
