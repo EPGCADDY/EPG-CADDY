@@ -9,15 +9,17 @@
   const renderScale=()=>4;
   const renderDimensions=()=>({width:7680,height:4320});
   const exportDimensions=()=>({width:7680,height:4320});
+  const contentDimensions=()=>({width:1920,height:1080});
 
   function artifactSvg(item){
     if(!item?.html)throw new Error("ARTIFACT_REQUIRED");
     const style=[...item.html.matchAll(/<style>([\s\S]*?)<\/style>/gi)].map(match=>match[1]).join("\n"),main=item.html.match(/<body><main>([\s\S]*?)<\/main><\/body>/i)?.[1];
     if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
-    const {width:pixelWidth,height:pixelHeight}=renderDimensions(),{width,height}=layoutDimensions(),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
-    // Keep CSS geometry at the authored 1920x1080 viewport. The SVG itself owns the
-    // 4x raster density, so text/borders are sampled once at final pixel density.
-    return`<svg xmlns="http://www.w3.org/2000/svg" width="${pixelWidth}" height="${pixelHeight}" viewBox="0 0 ${width} ${height}" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><foreignObject x="0" y="0" width="${width}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000;overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision"><style>${style}html,body{width:${width}px!important;height:${height}px!important;min-height:0!important;background:#000!important;margin:0!important;padding:0!important;overflow:hidden!important}main{width:${width}px!important;max-width:none!important;margin:0!important;padding:12px!important;box-sizing:border-box!important;overflow:hidden!important}</style><main>${safeMain}</main></div></foreignObject></svg>`;
+    const {width:pixelWidth,height:pixelHeight}=renderDimensions(),{width,height}=layoutDimensions(),scale=renderScale(),safeMain=main.replace(/<br>/gi,"<br/>").replace(/<img([^>]*?)>/gi,(match,attrs)=>/\/$/.test(attrs.trim())?match:`<img${attrs}/>`);
+    // Safari must see the physical 8K viewport, not a 1920 viewBox enlarged afterwards.
+    // The authored 1920 card is scaled inside the foreignObject so glyphs, rules and
+    // arrows are rasterized at final density on the first and only master render.
+    return`<svg xmlns="http://www.w3.org/2000/svg" width="${pixelWidth}" height="${pixelHeight}" viewBox="0 0 ${pixelWidth} ${pixelHeight}" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><foreignObject x="0" y="0" width="${pixelWidth}" height="${pixelHeight}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${pixelWidth}px;height:${pixelHeight}px;color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,sans-serif;background:#000;overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision"><div style="width:${width}px;height:${height}px;transform:scale(${scale});transform-origin:0 0"><style>${style}html,body{width:${width}px!important;height:${height}px!important;min-height:0!important;background:#000!important;margin:0!important;padding:0!important;overflow:hidden!important}main{width:${width}px!important;max-width:none!important;margin:0!important;padding:12px!important;box-sizing:border-box!important;overflow:hidden!important}</style><main>${safeMain}</main></div></div></foreignObject></svg>`;
   }
 
   async function inlineImages(html){
