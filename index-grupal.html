@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20260925-R141">
+  <meta name="gscg-release" content="LABORATORIO-20260925-R142">
 
 <meta name="gscg-seven-cards-premium" content="R132-SIX-CARDS-NO-PRACTICE-20260925">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
@@ -1441,7 +1441,7 @@ const startupParams=new URLSearchParams(location.search);
 const sfEmergency=startupParams.get("stableford_emergency")==="countryclub";
 const demoControlManual=startupParams.get("demo_control_manual")==="v269";
 const directHome=startupParams.get("inicio")==="1";
-const explicitNewRound=startupParams.get("nueva_ronda")==="1";
+const explicitNewRound=startupParams.get("nueva_ronda")==="1"||startupParams.get("manual_action")==="setup";
 const DEMO_CONTROL_MANUAL_KEY="golf-score-card-guatemala-demo-control-manual-v269";
 const DEMO_CONTROL_MANUAL_DRAFT_KEY="golf-score-card-guatemala-demo-control-manual-draft-v269";
 const DEMO_CONTROL_MANUAL_ARCHIVE_KEY="golf-score-card-guatemala-demo-control-manual-archive-v269";
@@ -4393,7 +4393,7 @@ window.addEventListener("focus",recoverInstalledAppScrolling);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)recoverInstalledAppScrolling()});
 setTimeout(recoverInstalledAppScrolling,0);
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
-const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"LABORATORIO-20260925-R141";
+const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"LABORATORIO-20260925-R142";
 function appVersionLabel(build){
   const match=String(build||"").match(/-R(\d+)(?:-[A-Z0-9]+)?$/i);
   return match?`R${match[1]}`:String(build||"—");
@@ -4453,7 +4453,7 @@ async function syncPublishedAppVersion(){
     // R138: consult the canonical production document, never the currently cached PWA pathname.
     const checkUrl=new URL("/index-grupal.html",location.origin);
     checkUrl.searchParams.set("__gscg_build_check",String(Date.now()));
-    checkUrl.searchParams.set("__gscg_release_probe","R141");
+    checkUrl.searchParams.set("__gscg_release_probe","R142");
     const response=await fetch(checkUrl,{cache:"no-store",headers:{"Cache-Control":"no-cache, no-store","Pragma":"no-cache"}});
     if(response.status===401||response.status===403||new URL(response.url||checkUrl.href).pathname==="/access.html"){showBuildCheckFailure(true);return}
     if(!response.ok){showBuildCheckFailure();return}
