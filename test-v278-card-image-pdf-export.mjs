@@ -30,7 +30,7 @@ assert.match(svg,/background:#000/);
 const dims=fileExport.dimensions(cards.personal[0]);
 assert.equal(dims.width,1920);
 assert.equal(dims.height,1080);
-assert.match(svg,/width="3840"/,"La tarjeta exportable debe rasterizarse nativamente a 4K");
+assert.match(svg,/width="7680"/,"La tarjeta exportable debe rasterizarse nativamente a 8K");
 assert.match(svg,/data:image\/webp;base64/,"La tarjeta exportable debe llevar el logo oficial embebido, sin depender de red");
 assert.doesNotMatch(cards.global.html,/<h2 class="score-card-title">SCORE CARD<\/h2>/,"El texto SCORE CARD no debe ocupar el lugar del logo");
 
@@ -49,16 +49,19 @@ assert.match(source,/async function renderFullHd\(item\)/,"R106-H9 must use nati
 assert.match(source,/canvas\.width=width;canvas\.height=height/,"El renderer debe usar las dimensiones 4K nativas");
 assert.deepEqual(fileExport.renderDimensions(),{width:7680,height:4320});
 assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
-assert.match(source,/const exportDimensions=\(\)=>\(\{width:3840,height:2160\}\)/,"PNG compartido debe entregarse en 4K exacto");
+assert.match(source,/const exportDimensions=\(\)=>\(\{width:7680,height:4320\}\)/,"PNG compartido debe entregarse en 8K exacto");
 assert.deepEqual(fileExport.exportDimensions(),{width:7680,height:4320});
 assert.match(source,/FINAL_PNG_LOGO_NOT_VISIBLE/,"El exportador debe bloquear cualquier PNG cuyo logo no sea físicamente visible");
 assert.match(source,/FINAL_PNG_CARD_NOT_FILLED/,"El exportador debe bloquear cualquier PNG con tarjeta vacía o incompleta");
 assert.match(source,/OFFICIAL_LOGO_PNG_REQUIRED/,"El raster final exige logo PNG embebido antes de dibujar");
-assert.match(source,/assertRenderedCard\(out\)/,"La validación debe ejecutarse sobre el PNG final compartible, no sólo sobre HTML o SVG");
+assert.match(source,/async function png\(item\)\{const canvas=await canvasFor\(item\);assertRenderedCard\(canvas\);return canvasBlob\(canvas,"image\/png"\)\}/,"PNG final debe salir directamente del master 8K, sin segundo canvas ni reescalado");
 assert.match(source,/ctx\.drawImage\(logo,80,64,1600,528\)/,"El logo oficial debe pintarse directamente sobre el canvas 8K final para evitar el fallo foreignObject de Safari/iOS");
 assert.match(source,/box-sizing:border-box!important/,"El viewport 1920 debe incluir padding sin recorte ni reescalado accidental");
 
-assert.match(source,/function trimCanvas\(canvas,margin=24\)/,"El exportador conserva render Full HD y recorta únicamente la salida PNG compartida");
+assert.match(source,/function trimCanvas\(canvas,margin=24\)/,"El recortador legado puede conservarse para compatibilidad, pero PNG no debe invocarlo");
+assert.doesNotMatch(source,/async function png\(item\)[^\n]*trimCanvas/,"PNG no debe recortar ni reescalar el master 8K");
+assert.match(source,/shape-rendering="geometricPrecision"/,"SVG 8K debe solicitar precisión geométrica");
+assert.match(source,/text-rendering="geometricPrecision"/,"SVG 8K debe solicitar precisión tipográfica");
 
 assert.deepEqual(fileExport.dimensions({mode:"match_play"}),{width:1920,height:1080});
 assert.deepEqual(fileExport.dimensions({mode:"four_ball"}),{width:1920,height:1080});
