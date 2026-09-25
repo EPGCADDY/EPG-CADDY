@@ -5,7 +5,7 @@
   const concat=chunks=>{const length=chunks.reduce((sum,chunk)=>sum+chunk.length,0),result=new Uint8Array(length);let offset=0;for(const chunk of chunks){result.set(chunk,offset);offset+=chunk.length}return result};
   const baseName=item=>String(item?.name||"tarjeta-oficial.html").replace(/\.html$/i,"");
   const dimensions=item=>({width:1920,height:1080});
-  const renderDimensions=()=>({width:1920,height:1080});
+  const renderDimensions=()=>({width:3840,height:2160});
   const exportDimensions=()=>({width:3840,height:1920});
 
   function artifactSvg(item){
