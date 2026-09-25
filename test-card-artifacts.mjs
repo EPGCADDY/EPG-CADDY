@@ -94,3 +94,13 @@ console.log('PASS LAB R127 premium visual layer present across seven digital car
  for(const p of mpPlayers) assert.match(mp,new RegExp(p.name),'Deben aparecer exactamente los cuatro jugadores de las dos parejas');
 }
 console.log('PASS LAB R127 final: Medal Play + Match Play 4 jugadores / 2 parejas / G-N / dos vueltas');
+
+// R127 color fidelity — preserve competitive red/green reference palette
+{
+ const mpPlayers=Array.from({length:4},(_,i)=>({...snapshot.players[0],id:'color'+i,name:['JAIME','JESSIE','BECKY','JUSRI'][i],handicap:[13,38,21,8][i]}));
+ const html=artifacts.build({...snapshot,mode:'match_play',players:mpPlayers,matchPlay:{resultLabel:'MATCH PLAY'}}).global.html;
+ assert.match(html,/\.score-half td\.match-lost,.score-half td\.over\{color:#ff3030!important\}/,'Rojo competitivo debe permanecer visible');
+ assert.match(html,/\.score-half td\.match-won,.score-half td\.under\{color:#31ff00!important\}/,'Verde competitivo debe permanecer visible');
+ assert.match(html,/\.best-ball\{color:#31ff00!important/,'MEJOR conserva verde de referencia');
+}
+console.log('PASS R127 color fidelity: rojo/verde restaurados sin alterar estructura de tarjeta');
