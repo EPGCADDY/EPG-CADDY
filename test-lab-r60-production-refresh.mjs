@@ -26,6 +26,6 @@ assert.match(app,/\.round-player-grid-head>strong,\.round-player-grid-head>span,
 
 assert.doesNotMatch(app,/id="shareFinalLiveButton"/,'Tarjeta Digital Final no debe mostrar compartir ronda en vivo');
 assert.doesNotMatch(app,/id="openOfficialCorrection">CORREGIR RONDA/,'Tarjeta Digital Final no debe mostrar CORREGIR RONDA');
-assert.match(app,/id="sendFinalCard" hidden>COMPARTIR TARJETA<\/button>/,'Debe conservar COMPARTIR TARJETA');
+assert.match(app,/id="sendFinalCard">COMPARTIR TARJETA<\/button>/,'Tarjeta Digital debe mostrar COMPARTIR TARJETA directamente');
 assert.match(app,/id="sendFinalCardPlayers"[^>]*>ENVIAR A JUGADORES<\/button>/,'Debe incluir ENVIAR A JUGADORES');
 assert.match(app,/function finalCardRegisteredRecipients\(\)/,'ENVIAR A JUGADORES debe depender del registro WhatsApp');
