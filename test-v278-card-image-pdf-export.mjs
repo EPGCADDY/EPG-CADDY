@@ -48,7 +48,7 @@ console.log("PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las ta
 assert.match(source,/async function renderFullHd\(item\)/,"R106-H9 must use native Full HD renderer");
 assert.match(source,/canvas\.width=width;canvas\.height=height/,"R106-H9 renderer must render natively at 1920×1080");
 assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
-assert.match(source,/const dimensions=item=>\\(\\{width:3840,height:2160\\}\\)/,"Todas las tarjetas oficiales deben exportarse en 4K nativo");
+assert.match(source,/const dimensions=item=>\(\{width:3840,height:2160\}\)/,"Todas las tarjetas oficiales deben exportarse en 4K nativo");
 
 assert.match(source,/function trimCanvas\(canvas,margin=24\)/,"El exportador conserva render Full HD y recorta únicamente la salida PNG compartida");
 
