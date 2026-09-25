@@ -1,4 +1,5 @@
 "use strict";
+// R134 republish 2026-09-25: force installed LAB clients to re-fetch this worker and expose the manual update control.
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
