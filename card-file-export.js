@@ -62,25 +62,63 @@
     return counts;
   }
 
+  function cssColor(value){return value&&value!=="rgba(0, 0, 0, 0)"&&value!=="transparent"?value:null}
+  function px(value){const n=parseFloat(value);return Number.isFinite(n)?n:0}
+  function paintBorder(ctx,x,y,w,h,style){
+    const sides=[["Top",x,y,x+w,y],["Right",x+w,y,x+w,y+h],["Bottom",x,y+h,x+w,y+h],["Left",x,y,x,y+h]];
+    for(const [side,x1,y1,x2,y2] of sides){const width=px(style["border"+side+"Width"]),color=cssColor(style["border"+side+"Color"]);if(width>0&&color&&style["border"+side+"Style"]!=="none"){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}}
+  }
+  function directTextNodes(element){return [...element.childNodes].filter(node=>node.nodeType===3&&node.nodeValue&&node.nodeValue.trim())}
+  function paintTextNode(ctx,node,rootRect,scale){
+    const parent=node.parentElement;if(!parent)return;
+    const style=parent.ownerDocument.defaultView.getComputedStyle(parent);if(style.display==="none"||style.visibility==="hidden"||Number(style.opacity)===0)return;
+    const text=node.nodeValue.replace(/\s+/g," ").trim();if(!text)return;
+    const pr=parent.getBoundingClientRect(),x0=pr.left-rootRect.left,y0=pr.top-rootRect.top,w=pr.width,h=pr.height;
+    const fontSize=px(style.fontSize)||16,fontWeight=style.fontWeight||"400",fontStyle=style.fontStyle||"normal",family=style.fontFamily||"Arial";
+    ctx.font=`${fontStyle} ${fontWeight} ${fontSize}px ${family}`;ctx.fillStyle=style.color||"#fff";ctx.textBaseline="middle";
+    const align=style.textAlign||"start";ctx.textAlign=align==="center"?"center":align==="right"||align==="end"?"right":"left";
+    const padL=px(style.paddingLeft),padR=px(style.paddingRight);
+    const x=ctx.textAlign==="center"?x0+w/2:ctx.textAlign==="right"?x0+w-padR:x0+padL;
+    let y=y0+h/2;
+    // Direct text beside child elements (hole number + G/N, score + arrow) belongs in upper half.
+    if(parent.children.length)y=y0+Math.max(fontSize*.72,h*.30);
+    ctx.fillText(text,x,y,Math.max(1,w-padL-padR));
+  }
+  async function nativeDomCanvas(item,html){
+    const {width:pixelWidth,height:pixelHeight}=renderDimensions(),scale=renderScale(),{width,height}=layoutDimensions();
+    const frame=document.createElement("iframe");frame.setAttribute("aria-hidden","true");frame.style.cssText=`position:fixed;left:-10000px;top:0;width:${width}px;height:${height}px;border:0;visibility:hidden;pointer-events:none`;
+    document.body.appendChild(frame);
+    try{
+      const doc=frame.contentDocument;if(!doc)throw new Error("CARD_FRAME_REQUIRED");
+      doc.open();doc.write(html);doc.close();
+      await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+      if(doc.fonts?.ready)try{await doc.fonts.ready}catch(_){}
+      for(const img of [...doc.images])if(!img.complete)await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error("CARD_IMAGE_TIMEOUT")),10000);img.onload=()=>{clearTimeout(timer);resolve()};img.onerror=()=>{clearTimeout(timer);reject(new Error("CARD_IMAGE_FAILED"))}});
+      const main=doc.querySelector("main");if(!main)throw new Error("ARTIFACT_BODY_REQUIRED");
+      const rootRect=main.getBoundingClientRect(),canvas=document.createElement("canvas");canvas.width=pixelWidth;canvas.height=pixelHeight;
+      const ctx=canvas.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");
+      ctx.fillStyle="#000";ctx.fillRect(0,0,pixelWidth,pixelHeight);ctx.save();ctx.scale(scale,scale);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
+      const elements=[main,...main.querySelectorAll("*")];
+      for(const el of elements){
+        const style=doc.defaultView.getComputedStyle(el);if(style.display==="none"||style.visibility==="hidden"||Number(style.opacity)===0)continue;
+        const r=el.getBoundingClientRect(),x=r.left-rootRect.left,y=r.top-rootRect.top,w=r.width,h=r.height;if(w<=0||h<=0)continue;
+        const bg=cssColor(style.backgroundColor);if(bg){ctx.fillStyle=bg;ctx.fillRect(x,y,w,h)}
+        paintBorder(ctx,x,y,w,h,style);
+        if(el.tagName==="IMG"&&el.complete&&el.naturalWidth){ctx.drawImage(el,x,y,w,h);continue}
+        for(const node of directTextNodes(el))paintTextNode(ctx,node,rootRect,scale);
+      }
+      ctx.restore();return canvas;
+    }finally{frame.remove()}
+  }
+
   async function renderFullHd(item){
     if(typeof document==="undefined")throw new Error("BROWSER_REQUIRED");
     const html=await normalizeWebpDataImages(await inlineImages(String(item?.html||"")));
     if(/<img[^>]+src=["'](?!data:)/i.test(html))throw new Error("IMAGE_NOT_INLINED");
     if(!/data:image\/png;base64,/i.test(html))throw new Error("OFFICIAL_LOGO_PNG_REQUIRED");
-    const {width,height}=renderDimensions();
-    const logoSrc=html.match(/<div class=["']global-clean-head["'][^>]*>\s*<img[^>]+src=["'](data:image\/png;base64,[^"']+)["']/i)?.[1];
-    if(!logoSrc)throw new Error("OFFICIAL_LOGO_PNG_REQUIRED");
-    const svg=artifactSvg({...item,html}),image=await decodeImage(svgDataUrl(svg)),logo=await decodeImage(logoSrc);
-    const canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
-    const ctx=canvas.getContext("2d");if(!ctx)throw new Error("CANVAS_CONTEXT_REQUIRED");
-    ctx.fillStyle="#000";ctx.fillRect(0,0,width,height);
-    ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
-    ctx.drawImage(image,0,0,width,height);
-    // Safari/iOS can omit <img> inside SVG foreignObject. Paint the official logo
-    // as a native canvas layer at the exact 2x coordinates of the 1920px card.
-    const scale=renderScale();
-    ctx.fillStyle="#000";ctx.fillRect(20*scale,16*scale,400*scale,132*scale);
-    ctx.drawImage(logo,20*scale,16*scale,400*scale,132*scale);
+    // Root fix: render the live DOM directly to Canvas 2D at 4x density.
+    // No SVG foreignObject, no Safari HTML rasterizer, no upscaled 1920 bitmap.
+    const canvas=await nativeDomCanvas(item,html);
     assertRenderedCard(canvas);
     return canvas;
   }
