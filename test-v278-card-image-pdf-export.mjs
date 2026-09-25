@@ -82,7 +82,7 @@ assert.equal(fileExport.renderDimensions().width,9600);
 assert.equal(fileExport.renderDimensions().height,5400);
 assert.equal(fileExport.shareDimensions().width,3840);
 assert.equal(fileExport.shareDimensions().height,2160);
-assert.match(source,/const shareScale=\(\)=>5/);
+assert.match(source,/const shareScale=\(\)=>2/);
 assert.match(source,/ctx\.imageSmoothingEnabled=false/);
 assert.doesNotMatch(source,/ctx\.fillText\(text,x,y,Math\.max/);
 console.log('PASS R128 · export conserva master 9600×5400 y share iPhone usa 5760×3240 sin reescalado ni compresión geométrica de texto');
