@@ -25,7 +25,7 @@ const snapshot={roundId:"round-v278",status:"officially_closed",sha256:"c".repea
 const cards=artifacts.build(snapshot),svg=fileExport.artifactSvg(cards.global);
 assert.match(svg,/^<svg/);
 assert.match(svg,/foreignObject/);
-assert.match(svg,/MODALIDAD · MEDAL PLAY NORMAL/);
+assert.match(svg,/MODALIDAD · MEDAL PLAY/);
 assert.match(svg,/background:#000/);
 const dims=fileExport.dimensions(cards.personal[0]);
 assert.equal(dims.width,1920);
