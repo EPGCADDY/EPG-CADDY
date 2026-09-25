@@ -14,7 +14,7 @@
   const playerNameWithCategory=(player,fallback="")=>{const category=playerCategory(player,fallback);return`${category?`<span class="player-category" style="display:block;margin:0 0 2px;color:#b7bbbc;font-size:75%;font-weight:800;line-height:1.1">${esc(category)}</span>`:""}<span class="player-name-text" style="display:block">${esc(player?.name||"")}</span>`};
   const courseLabel=value=>typeof value==="object"?(value?.displayName||value?.name||""):String(value||"");
   const globalModeLabel=snapshot=>({general:"MEDAL PLAY NORMAL",practice:"PRÁCTICA",skins:"SKINS",stableford:"STABLEFORD",match_play:"MATCH PLAY",four_ball:"FOUR BALL",universales:"UNIVERSALES"}[String(snapshot?.mode||"general")]||String(snapshot?.mode||"MEDAL PLAY NORMAL").replace(/_/g," ").toUpperCase());
-  const officialLogoUrl=()=>{try{return new URL("/assets/official-logos/golf-score-card-gt-horizontal-original.webp",globalThis.location?.origin||"https://epg-caddy.vercel.app").toString()}catch{return"/assets/official-logos/golf-score-card-gt-horizontal-original.webp"}};
+  const officialLogoUrl=()=>"/assets/official-logos/golf-score-card-gt-horizontal-original.webp";
 
   function playerStats(player){
     const holes=Object.values(player.holes||{}).filter(score=>score&&Number.isInteger(score.gross)).sort((a,b)=>a.hole-b.hole);
