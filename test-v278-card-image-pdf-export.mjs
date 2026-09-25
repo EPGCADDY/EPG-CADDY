@@ -28,9 +28,9 @@ assert.match(svg,/foreignObject/);
 assert.match(svg,/MODALIDAD · MEDAL PLAY NORMAL/);
 assert.match(svg,/background:#000/);
 const dims=fileExport.dimensions(cards.personal[0]);
-assert.equal(dims.width,1536);
-assert.equal(dims.height,1024);
-assert.match(svg,/width="1536"/,"La tarjeta MEDAL PLAY exportable debe conservar 1536 px de ancho nativo");
+assert.equal(dims.width,1920);
+assert.equal(dims.height,1080);
+assert.match(svg,/width="1920"/,"La tarjeta MEDAL PLAY exportable debe conservar 1920 px de ancho nativo");
 assert.match(svg,/golf-score-card-gt-horizontal-original\.webp/,"La tarjeta exportable debe conservar el logo oficial");
 assert.doesNotMatch(cards.global.html,/<h2 class="score-card-title">SCORE CARD<\/h2>/,"El texto SCORE CARD no debe ocupar el lugar del logo");
 
@@ -46,12 +46,12 @@ assert.match(pdfText,/%%EOF\n$/);
 console.log("PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las tarjetas oficiales General/Stableford");
 
 assert.match(source,/async function renderFullHd\(item\)/,"R106-H9 must use native Full HD renderer");
-assert.match(source,/canvas\.width=width;canvas\.height=height/,"R106-H9 renderer must render natively at 1536×1024");
+assert.match(source,/canvas\.width=width;canvas\.height=height/,"R106-H9 renderer must render natively at 1920×1080");
 assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
-assert.match(source,/out\.width=1536;out\.height=1024/,"PNG debe normalizar todas las tarjetas al mismo ancho y alto exactos");
+assert.match(source,/out\.width=1920;out\.height=1080/,"PNG debe normalizar todas las tarjetas al mismo ancho y alto exactos");
 
 assert.match(source,/function trimCanvas\(canvas,margin=24\)/,"El exportador conserva render Full HD y recorta únicamente la salida PNG compartida");
 
-assert.deepEqual(fileExport.dimensions({mode:"match_play"}),{width:1536,height:1024});
-assert.deepEqual(fileExport.dimensions({mode:"four_ball"}),{width:1536,height:1024});
-assert.deepEqual(fileExport.dimensions({mode:"normal"}),{width:1536,height:1024});
+assert.deepEqual(fileExport.dimensions({mode:"match_play"}),{width:1920,height:1080});
+assert.deepEqual(fileExport.dimensions({mode:"four_ball"}),{width:1920,height:1080});
+assert.deepEqual(fileExport.dimensions({mode:"normal"}),{width:1920,height:1080});
