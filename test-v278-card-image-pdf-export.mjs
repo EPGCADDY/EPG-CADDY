@@ -51,6 +51,10 @@ assert.deepEqual(fileExport.renderDimensions(),{width:3840,height:2160});
 assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
 assert.match(source,/const exportDimensions=\(\)=>\(\{width:3840,height:2160\}\)/,"PNG compartido debe entregarse en 4K exacto");
 assert.deepEqual(fileExport.exportDimensions(),{width:3840,height:2160});
+assert.match(source,/FINAL_PNG_LOGO_NOT_VISIBLE/,"El exportador debe bloquear cualquier PNG cuyo logo no sea físicamente visible");
+assert.match(source,/FINAL_PNG_CARD_NOT_FILLED/,"El exportador debe bloquear cualquier PNG con tarjeta vacía o incompleta");
+assert.match(source,/OFFICIAL_LOGO_PNG_REQUIRED/,"El raster final exige logo PNG embebido antes de dibujar");
+assert.match(source,/assertRenderedCard\(out\)/,"La validación debe ejecutarse sobre el PNG final compartible, no sólo sobre HTML o SVG");
 
 assert.match(source,/function trimCanvas\(canvas,margin=24\)/,"El exportador conserva render Full HD y recorta únicamente la salida PNG compartida");
 
