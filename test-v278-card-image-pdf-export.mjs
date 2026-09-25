@@ -47,15 +47,15 @@ console.log("PASS V278 · imagen PNG, PDF individual y PDF conjunto desde las ta
 
 assert.match(source,/async function renderFullHd\(item\)/,"R106-H9 must use native Full HD renderer");
 assert.match(source,/canvas\.width=width;canvas\.height=height/,"El renderer debe usar las dimensiones 4K nativas");
-assert.deepEqual(fileExport.renderDimensions(),{width:3840,height:2160});
+assert.deepEqual(fileExport.renderDimensions(),{width:7680,height:4320});
 assert.doesNotMatch(source,/IMAGE_FALLBACK_TIMEOUT|IMAGE_FALLBACK_FAILED/,"R106-H3 must not retain legacy fallback raster path");
 assert.match(source,/const exportDimensions=\(\)=>\(\{width:3840,height:2160\}\)/,"PNG compartido debe entregarse en 4K exacto");
-assert.deepEqual(fileExport.exportDimensions(),{width:3840,height:2160});
+assert.deepEqual(fileExport.exportDimensions(),{width:7680,height:4320});
 assert.match(source,/FINAL_PNG_LOGO_NOT_VISIBLE/,"El exportador debe bloquear cualquier PNG cuyo logo no sea físicamente visible");
 assert.match(source,/FINAL_PNG_CARD_NOT_FILLED/,"El exportador debe bloquear cualquier PNG con tarjeta vacía o incompleta");
 assert.match(source,/OFFICIAL_LOGO_PNG_REQUIRED/,"El raster final exige logo PNG embebido antes de dibujar");
 assert.match(source,/assertRenderedCard\(out\)/,"La validación debe ejecutarse sobre el PNG final compartible, no sólo sobre HTML o SVG");
-assert.match(source,/ctx\.drawImage\(logo,40,32,800,264\)/,"El logo oficial debe pintarse directamente sobre el canvas 4K final para evitar el fallo foreignObject de Safari/iOS");
+assert.match(source,/ctx\.drawImage\(logo,80,64,1600,528\)/,"El logo oficial debe pintarse directamente sobre el canvas 8K final para evitar el fallo foreignObject de Safari/iOS");
 assert.match(source,/box-sizing:border-box!important/,"El viewport 1920 debe incluir padding sin recorte ni reescalado accidental");
 
 assert.match(source,/function trimCanvas\(canvas,margin=24\)/,"El exportador conserva render Full HD y recorta únicamente la salida PNG compartida");
