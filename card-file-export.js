@@ -9,6 +9,8 @@
   const renderScale=()=>5;
   const renderDimensions=()=>({width:9600,height:5400});
   const exportDimensions=()=>({width:9600,height:5400});
+  const shareScale=()=>2;
+  const shareDimensions=()=>({width:3840,height:2160});
   const contentDimensions=()=>({width:1920,height:1080});
 
   function artifactSvg(item){
@@ -84,8 +86,8 @@
     if(parent.children.length)y=y0+Math.max(fontSize*.72,h*.30);
     ctx.fillText(text,x,y,Math.max(1,w-padL-padR));
   }
-  async function nativeDomCanvas(item,html){
-    const {width:pixelWidth,height:pixelHeight}=renderDimensions(),scale=renderScale(),{width,height}=layoutDimensions();
+  async function nativeDomCanvas(item,html,profile="master"){
+    const scale=profile==="share"?shareScale():renderScale(),{width:pixelWidth,height:pixelHeight}=profile==="share"?shareDimensions():renderDimensions(),{width,height}=layoutDimensions();
     const frame=document.createElement("iframe");frame.setAttribute("aria-hidden","true");frame.style.cssText=`position:fixed;left:-10000px;top:0;width:${width}px;height:${height}px;border:0;visibility:hidden;pointer-events:none`;
     document.body.appendChild(frame);
     try{
@@ -111,18 +113,18 @@
     }finally{frame.remove()}
   }
 
-  async function renderFullHd(item){
+  async function renderFullHd(item,profile="master"){
     if(typeof document==="undefined")throw new Error("BROWSER_REQUIRED");
     const html=await normalizeWebpDataImages(await inlineImages(String(item?.html||"")));
     if(/<img[^>]+src=["'](?!data:)/i.test(html))throw new Error("IMAGE_NOT_INLINED");
     if(!/data:image\/png;base64,/i.test(html))throw new Error("OFFICIAL_LOGO_PNG_REQUIRED");
     // Root fix: render the live DOM directly to Canvas 2D at 4x density.
     // No SVG foreignObject, no Safari HTML rasterizer, no upscaled 1920 bitmap.
-    const canvas=await nativeDomCanvas(item,html);
+    const canvas=await nativeDomCanvas(item,html,profile);
     assertRenderedCard(canvas);
     return canvas;
   }
-  async function canvasFor(item){return renderFullHd(item)}
+  async function canvasFor(item,profile="master"){return renderFullHd(item,profile)}
 
   function trimCanvas(canvas,margin=24){
     const context=canvas.getContext("2d");if(!context)return canvas;
@@ -164,6 +166,6 @@
   async function downloadPng(item){const blob=await png(item);download(blob,`${baseName(item)}.png`);return blob}
   async function downloadPdf(item){const blob=await pdf(item);download(blob,`${baseName(item)}.pdf`);return blob}
   async function downloadPackage(items,name="tarjetas-oficiales.pdf"){const blob=await pdf(items);download(blob,name);return blob}
-  async function shareImage(item,title="Tarjeta oficial"){const blob=await png(item),file=typeof File==="function"?new File([blob],`${baseName(item)}.png`,{type:"image/png"}):null;if(file&&navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title,files:[file]});return{shared:true,blob}}download(blob,`${baseName(item)}.png`);return{shared:false,blob}}
-  return{artifactSvg,dimensions,renderDimensions,exportDimensions,pdfBytes,png,pdf,downloadPng,downloadPdf,downloadPackage,shareImage};
+  async function shareImage(item,title="Tarjeta oficial"){const canvas=await canvasFor(item,"share"),cropped=trimCanvas(canvas,4),blob=await canvasBlob(cropped,"image/png"),file=typeof File==="function"?new File([blob],`${baseName(item)}.png`,{type:"image/png"}):null;if(file&&navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title,files:[file]});return{shared:true,blob}}download(blob,`${baseName(item)}.png`);return{shared:false,blob}}
+  return{artifactSvg,dimensions,renderDimensions,exportDimensions,shareDimensions,pdfBytes,png,pdf,downloadPng,downloadPdf,downloadPackage,shareImage};
 });
