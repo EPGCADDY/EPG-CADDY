@@ -2191,6 +2191,19 @@ function startConfirmedRound(){
   const startedAt=new Date().toISOString();round={id:newRoundId(),version:2,mode:draftRoundMode,configured:true,provisional:false,courseKey:draftCourse,course:selectedCourse.name,tournament:draftTournament,sideGames:draftSideGames(),players:assignStablePlayerSlots(draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{},activeFrom:1},i))),announced:{front:false,back:false,complete:false},weather:null,createdAt:startedAt,updatedAt:startedAt,endedAt:null,durationSeconds:null,timerLastInstructionAt:startedAt};
   savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();scheduleRoundTimerIdleShutdown();return true
 }
+// LAB hotfix: iOS/PWA can leave the confirmation overlay visually active after the round is created.
+// Guarantee the visible transition to the scorecard immediately after a successful start.
+function startConfirmedRoundFromButton(){
+  const started=startConfirmedRound();
+  if(started&&round.configured){
+    $("setupOverlay")?.classList.remove("visible");
+    document.body?.classList.remove("gsc-setup-open");
+    voiceContext="round";
+    render();
+    requestAnimationFrame(()=>{window.scrollTo(0,0);});
+  }
+  return started;
+}
 function startProvisionalScorecard(){
   const selectedCourse=COURSE_CATALOG[draftCourse];
   if(!selectedCourse?.configured){$("setupStatus").textContent=`${selectedCourse?.name?.toUpperCase()||"CAMPO"} · PENDIENTE CARGAR TARJETA OFICIAL`;return false}
@@ -4174,7 +4187,7 @@ function saveSkinsDraftConfig(){draftSkins=window.GSCSkins.normalizeConfig({enab
 
 
 for(const id of ["skinsScoreType","skinsTiePolicy","skinsUnitValue","skinsCurrencyGTQ","skinsCurrencyUSD"])$(id).addEventListener("change",saveSkinsDraftConfig);
-$("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);$("startRoundButton").addEventListener("click",startConfirmedRound);
+$("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);$("startRoundButton").addEventListener("click",startConfirmedRoundFromButton);
 
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="hidden"){
