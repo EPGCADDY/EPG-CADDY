@@ -39,5 +39,5 @@ console.log('PASS R78: visor funcional y texto no seleccionable');
 // R129: acceso directo universal a Tarjeta Digital — sin FINALIZAR RONDA intermedio.
 assert.match(app,/<button id="officialCloseButton" type="button" hidden aria-hidden="true" tabindex="-1">FINALIZAR RONDA<\/button>/,'Control legado de cierre debe permanecer fuera del flujo visible');
 assert.doesNotMatch(app,/\$\("officialCloseButton"\)\.addEventListener\("click",officiallyCloseRound\)/,'Tarjeta Digital no debe exigir FINALIZAR RONDA');
-assert.match(app,/\$\("finalCardButton"\)\.addEventListener\("click",openFinalDigitalCard\)/,'Tarjeta Digital abre directamente su vista de envío');
+assert.match(app,/\$\("finalCardButton"\)\.addEventListener\("click",openDirectDigitalCardShare\)/,'Tarjeta Digital abre directamente su vista de envío');
 console.log('PASS R129 · Tarjeta Digital abre directamente opciones de compartir/enviar sin pantalla intermedia');
