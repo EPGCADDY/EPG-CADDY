@@ -2172,27 +2172,28 @@ function startConfirmedRound(){
   if(draftRoundMode==="match_play"&&![2,4,6].includes(draftPlayers.length)){setManualRegistrationStatus("MATCH PLAY REQUIERE 2, 4 O 6 JUGADORES");return false}
   if(draftRoundMode==="four_ball"&&![2,4,6].includes(draftPlayers.length)){setManualRegistrationStatus("FOUR BALL REQUIERE 2, 4 O 6 JUGADORES");return false}
   if(draftRoundMode==="universales"&&![3,4].includes(draftPlayers.length)){setManualRegistrationStatus("UNIVERSALES REQUIERE 3 O 4 JUGADORES");return false}
-  enforceCanonicalDraftNames();draftTournament=normalizeTournament(draftTournament);if(draftTournament&&!draftTournament.name)draftTournament=null;
-  const selectedCourse=COURSE_CATALOG[draftCourse];if(!selectedCourse?.configured){showStep1();$("setupStatus").textContent=`${selectedCourse?.name?.toUpperCase()||"CAMPO"} · PENDIENTE CARGAR TARJETA OFICIAL`;return false}
+  enforceCanonicalDraftNames();
+  draftTournament=normalizeTournament(draftTournament);
+  if(draftTournament&&!draftTournament.name)draftTournament=null;
+  const selectedCourse=COURSE_CATALOG[draftCourse];
+  if(!selectedCourse?.configured){showStep1();$("setupStatus").textContent=`${selectedCourse?.name?.toUpperCase()||"CAMPO"} · PENDIENTE CARGAR TARJETA OFICIAL`;return false}
+  ;
   if(rosterEditMode&&round.configured){
     const previous=new Map(round.players.map(p=>[p.id,p]));
-    round.players=assignStablePlayerSlots(draftPlayers.map((p,i)=>{const old=previous.get(p.id);const source=profileCorrectionMode&&old?{...old,name:p.name,handicap:p.handicap,tee:p.tee}:p;return recomputePlayerScores(normalizePlayer({...source,holes:old?.holes||p.holes||{},lastHole:old?.lastHole||p.lastHole||null,activeFrom:old?.activeFrom||p.activeFrom||rosterEditJoinHole},i))}));
-    const previousMode=round.mode;round.mode=draftRoundMode;if(previousMode!==round.mode){round.officiallyClosedAt=null;round.officialSnapshot=null;round.officialVersions=[];round.snapshotHash="";round.status="active";resetFinalCardShare()}round.tournament=draftTournament;round.sideGames=draftSideGames();ensureAnnouncedState();round.announced.front=false;round.announced.back=false;round.announced.complete=false;
-    savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();return true;
+    round.players=assignStablePlayerSlots(draftPlayers.map((p,i)=>{
+      const old=previous.get(p.id);
+      if(rosterAddMode&&!old)return normalizePlayer({...p,holes:{},lastHole:null,activeFrom:rosterEditJoinHole},i);
+      const source=profileCorrectionMode&&old?{...old,name:p.name,handicap:p.handicap,tee:p.tee}:p;
+      const merged=normalizePlayer({...source,holes:old?.holes||p.holes||{},lastHole:old?.lastHole||p.lastHole||null,activeFrom:old?.activeFrom||p.activeFrom||rosterEditJoinHole},i);
+      return recomputePlayerScores(merged);
+    }));
+    const previousMode=round.mode;round.mode=draftRoundMode;if(previousMode!==round.mode){round.officiallyClosedAt=null;round.officialSnapshot=null;round.officialVersions=[];round.snapshotHash="";round.status="active";resetFinalCardShare()}round.tournament=draftTournament;round.sideGames=draftSideGames();ensureAnnouncedState();round.announced.front=false;round.announced.back=false;round.announced.complete=false;savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();return true;
   }
+  // ÚNICO punto autorizado para sustituir la última ronda persistida por una nueva:
+  // el usuario llegó a la confirmación y presionó INICIAR RONDA.
   activateCourse(draftCourse);
-  const startedAt=new Date().toISOString();
-  round={id:newRoundId(),version:2,mode:draftRoundMode,configured:true,provisional:false,courseKey:draftCourse,course:selectedCourse.name,tournament:draftTournament,sideGames:draftSideGames(),players:assignStablePlayerSlots(draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{},activeFrom:1},i))),announced:{front:false,back:false,complete:false},weather:null,createdAt:startedAt,updatedAt:startedAt,endedAt:null,durationSeconds:null,timerLastInstructionAt:startedAt};
-  // R141: salida visual inmediata del registro antes de persistencia/sincronización.
-  voiceContext="round";rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;
-  $("setupOverlay")?.classList.remove("visible");document.body?.classList.remove("gsc-setup-open");
-  const startedPlayers=round.players.slice();
-  draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();
-  try{savePlayersToDirectory(startedPlayers)}catch(e){console.error("START_DIRECTORY",e)}
-  try{persist()}catch(e){console.error("START_PERSIST",e)}
-  try{render()}catch(e){console.error("START_RENDER",e)}
-  try{scheduleRoundTimerIdleShutdown()}catch(e){console.error("START_TIMER",e)}
-  return true
+  const startedAt=new Date().toISOString();round={id:newRoundId(),version:2,mode:draftRoundMode,configured:true,provisional:false,courseKey:draftCourse,course:selectedCourse.name,tournament:draftTournament,sideGames:draftSideGames(),players:assignStablePlayerSlots(draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{},activeFrom:1},i))),announced:{front:false,back:false,complete:false},weather:null,createdAt:startedAt,updatedAt:startedAt,endedAt:null,durationSeconds:null,timerLastInstructionAt:startedAt};
+  savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();scheduleRoundTimerIdleShutdown();return true
 }
 function startProvisionalScorecard(){
   const selectedCourse=COURSE_CATALOG[draftCourse];
