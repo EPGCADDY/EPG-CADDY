@@ -3635,14 +3635,25 @@ function selectStablefordSetupCategory(category){
   if(!GSCStableford.categoryConfig(category))return false;
   stablefordSetupCategory=category;renderStablefordSetup();return true
 }
+function stablefordSourcePlayersFromActiveRound(){
+  if(!round?.configured||!Array.isArray(round.players)||!round.players.length)return[];
+  return round.players.slice(0,6).map((p,i)=>normalizePlayer({...p,holes:{...(p.holes||{})}},i));
+}
+function seedStablefordSetupFromActiveRound(){
+  const source=stablefordSourcePlayersFromActiveRound();if(!source.length)return false;
+  stablefordSetupMode="convert";stablefordSetupCourseKey=round.courseKey||courseKeyForName(round.course);
+  const inputs=[...document.querySelectorAll("[data-stableford-name]")];
+  inputs.forEach((input,i)=>input.value=source[i]?.name||"");
+  source.forEach((player,i)=>{const countryCode=normalizeWhatsAppCountryCode(player.countryCode),country=document.querySelector(`[data-stableford-country-code="${i}"]`),whatsapp=document.querySelector(`[data-stableford-whatsapp="${i}"]`),flag=document.querySelector(`[data-stableford-whatsapp-flag="${i}"]`);if(country)country.value=countryCode;if(whatsapp)whatsapp.value=normalizeWhatsApp(player.whatsapp,countryCode);if(flag)flag.textContent=countryCode==="502"?"🇬🇹":"🌐"});
+  const tournament=document.getElementById("stablefordTournamentName");if(tournament)tournament.value=round.tournament?.name||"";
+  $("startStablefordRound").textContent="CAMBIAR A STABLEFORD";
+  return true;
+}
 function openFreshStablefordSetup(){
-  if(round.configured){persist();archiveRoundSnapshot(round)}
-  ;
-  for(const key of [ACTIVE_ROUND_KEY,STORAGE_KEY,STORAGE_BACKUP_KEY,MATCH_PLAY_ACTIVE_KEY,FOUR_BALL_ACTIVE_KEY,STABLEFORD_ACTIVE_KEY]){try{localStorage.removeItem(key)}catch{}}
-  clearDraftState();draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());progressiveVisibleRegistrationCount=1;draftTournament=null;resetDraftGames();;
-  round={...blankRound(),mode:"stableford"};
-  try{localStorage.setItem(STABLEFORD_ACTIVE_KEY,JSON.stringify(round))}catch{}
-  resetStablefordSetupFields();render();return showStablefordSetup()
+  if(round.configured&&round.players?.length){
+    persist();archiveRoundSnapshot(round);resetStablefordSetupFields();seedStablefordSetupFromActiveRound();render();return showStablefordSetup()
+  }
+  resetStablefordSetupFields();round={...blankRound(),mode:"stableford"};render();return showStablefordSetup()
 }
 function openStablefordDataEditor(){
   if(!isStablefordRound())return openNewRoundDraft();
@@ -3668,6 +3679,10 @@ function startStablefordRoundMode(){
   if(stablefordSetupMode==="edit"&&isStablefordRound()){
     const previous=round.players;
     round={...round,stablefordCategory:stablefordSetupCategory,stablefordRoundNumber:roundNumber,courseKey:stablefordSetupCourseKey,course:course.name,tournament:tournamentName?{name:tournamentName}:null,players:entries.slice(0,6).map((entry,i)=>normalizePlayer({...previous[i],id:previous[i]?.id||`sf${i+1}`,name:entry.name,countryCode:entry.countryCode,whatsapp:entry.whatsapp,handicap:0,tee:cfg.tee,matrix:"Caballeros",holes:previous[i]?.holes||{},activeFrom:previous[i]?.activeFrom||1,slot:i+1},i)),weather:round.courseKey===stablefordSetupCourseKey?(round.weather||null):null,updatedAt:now};
+  }else if(stablefordSetupMode==="convert"&&round.configured&&round.players?.length){
+    const source=round.players,byName=new Map(source.map(p=>[canonicalPlayerName(p.name),p]));
+    round={...round,mode:"stableford",stablefordCategory:stablefordSetupCategory,stablefordRoundNumber:roundNumber,courseKey:stablefordSetupCourseKey,course:course.name,tournament:tournamentName?{name:tournamentName}:round.tournament||null,players:entries.slice(0,6).map((entry,i)=>{const previous=byName.get(canonicalPlayerName(entry.name))||source[i];return normalizePlayer({...previous,id:previous?.id||`sf${i+1}`,name:entry.name,countryCode:entry.countryCode,whatsapp:entry.whatsapp,handicap:0,tee:cfg.tee,matrix:"Caballeros",holes:{...(previous?.holes||{})},activeFrom:previous?.activeFrom||1,slot:i+1},i)}),officiallyClosedAt:null,officialSnapshot:null,officialVersions:[],snapshotHash:"",status:"active",announced:{front:false,back:false,complete:false},weather:round.courseKey===stablefordSetupCourseKey?(round.weather||null):null,updatedAt:now};
+    resetFinalCardShare();
   }else{
     round={id:newRoundId(),version:2,mode:"stableford",stablefordCategory:stablefordSetupCategory,stablefordRoundNumber:roundNumber,configured:true,provisional:false,courseKey:stablefordSetupCourseKey,course:course.name,tournament:tournamentName?{name:tournamentName}:null,players:entries.slice(0,6).map((entry,i)=>normalizePlayer({id:`sf${i+1}`,name:entry.name,countryCode:entry.countryCode,whatsapp:entry.whatsapp,handicap:0,tee:cfg.tee,matrix:"Caballeros",holes:{},activeFrom:1,slot:i+1},i)),announced:{front:false,back:false,complete:false},weather:null,createdAt:now,updatedAt:now,endedAt:null,durationSeconds:null,timerLastInstructionAt:now};
   }
