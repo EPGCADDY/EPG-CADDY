@@ -3317,6 +3317,9 @@ function renderDraft(){
   updateGeneralSetupValidity();
 }
 function openSetup(mode="new"){
+  const setupOverlay=$("setupOverlay");
+  document.body?.classList.add("gsc-setup-open");
+  setupOverlay?.classList.add("visible");
   {}
   {}
   // REGISTRO y TARJETA usan transportes Realtime separados. No se reutiliza
