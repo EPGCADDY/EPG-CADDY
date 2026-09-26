@@ -4222,7 +4222,7 @@ window.addEventListener("online",()=>{if(!demoControlManual){masterSyncBlockedUn
 // Regla de continuidad: al abrir/reabrir, la última ronda válida es la actividad activa.
 // No se crea ni se sustituye una ronda hasta confirmar expresamente INICIAR RONDA.
 if(demoControlManual)activateControlManualDemo();
-else if(!sfEmergency)restorePersistedRound();
+else if(!sfEmergency&&!principalStartup)restorePersistedRound();
 else if(round.configured)activateCourse(round.courseKey);
 (function repairAutomaticOmissionsV155(){
   const key="gscg-v155-automatic-x-repair";
