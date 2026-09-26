@@ -2195,8 +2195,12 @@ function startConfirmedRound(){
   const committedPlayers=assignStablePlayerSlots(draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{},activeFrom:1},i)));
   if(!committedPlayers.length){setManualRegistrationStatus("REGISTRO NO CONFIRMADO · REVISA JUGADORES");return false}
   const startedAt=new Date().toISOString();round={id:newRoundId(),version:2,mode:draftRoundMode,configured:true,provisional:false,courseKey:draftCourse,course:selectedCourse.name,tournament:draftTournament,sideGames:draftSideGames(),players:committedPlayers,announced:{front:false,back:false,complete:false},weather:null,createdAt:startedAt,updatedAt:startedAt,endedAt:null,durationSeconds:null,timerLastInstructionAt:startedAt};
+  // Commit primero: mientras la transacción siga bloqueada, ningún evento de ciclo
+  // de vida puede intervenir. Sólo después de persistir la ronda con roster válido
+  // se libera el bloqueo y se cierra REGISTRO.
+  savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();
   registrationTransactionActive=false;
-  savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();scheduleRoundTimerIdleShutdown();return true
+  closeSetup();render();scheduleRoundTimerIdleShutdown();return true
 }
 function startProvisionalScorecard(){
   const selectedCourse=COURSE_CATALOG[draftCourse];
