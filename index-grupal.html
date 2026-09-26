@@ -2156,6 +2156,7 @@ function startConfirmedRound(){
   if(!draftPlayers.length)return false;
   // R146: una vez confirmada la ronda, la entrada principal deja de forzar REGISTRO.
   principalStartup=false;
+  if(draftPlayers.length===1){draftRoundMode="general";resetDraftGames()}
   if(draftSkins.enabled&&draftPlayers.length<2){setManualRegistrationStatus("SKINS REQUIERE DE 2 A 6 JUGADORES");return false}
   if(draftWolf.enabled&&(draftPlayers.length<3||draftPlayers.length>6)){setManualRegistrationStatus("WOLF REQUIERE DE 3 A 6 JUGADORES");return false}
   if(draftVegas.enabled&&![4,6].includes(draftPlayers.length)){setManualRegistrationStatus("VEGAS REQUIERE 4 O 6 JUGADORES · 2 O 3 PAREJAS");return false}
@@ -3380,7 +3381,8 @@ function openRegistrationPreservingActiveRound(){
   return true;
 }
 function ensurePrincipalEntry(){
-  if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
+  // Apertura principal oficial: REGISTRO siempre tiene prioridad sobre una ronda recuperable.
+  if(demoControlManual||sfEmergency)return false;
   const overlay=$("setupOverlay");if(!overlay)return false;
   if(!overlay.classList.contains("visible"))openNewRoundDraft();
   document.body?.classList.add("gsc-setup-open");
