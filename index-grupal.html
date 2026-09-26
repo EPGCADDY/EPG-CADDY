@@ -1441,7 +1441,8 @@ const startupParams=new URLSearchParams(location.search);
 const sfEmergency=startupParams.get("stableford_emergency")==="countryclub";
 const demoControlManual=startupParams.get("demo_control_manual")==="v269";
 const directHome=startupParams.get("inicio")==="1";
-const explicitNewRound=startupParams.get("nueva_ronda")==="1";
+const explicitNewRound=startupParams.get("nueva_ronda")==="1"||startupParams.get("manual_action")==="setup";
+let principalStartup=!sfEmergency&&!demoControlManual&&!directHome;
 const DEMO_CONTROL_MANUAL_KEY="golf-score-card-guatemala-demo-control-manual-v269";
 const DEMO_CONTROL_MANUAL_DRAFT_KEY="golf-score-card-guatemala-demo-control-manual-draft-v269";
 const DEMO_CONTROL_MANUAL_ARCHIVE_KEY="golf-score-card-guatemala-demo-control-manual-archive-v269";
@@ -1455,7 +1456,7 @@ const CONTROL_MANUAL_DEMO_PLAYERS=[
 ];
 const STABLEFORD_ACTIVE_KEY="golf-score-card-guatemala-stableford-active-v1";
 const STABLEFORD_OFFICIAL_HOSTING_URL="#stableford";
-let round=sfEmergency?(latestStoredRound("stableford")||blankRound()):demoControlManual?(readStoredRound(DEMO_CONTROL_MANUAL_KEY)||blankRound()):loadRound();
+let round=sfEmergency?(latestStoredRound("stableford")||blankRound()):demoControlManual?(readStoredRound(DEMO_CONTROL_MANUAL_KEY)||blankRound()):(principalStartup?blankRound():loadRound());
 let sfRestoredActive=!!(sfEmergency&&round.configured&&round.mode==="stableford");
 let draftPlayers=[],manualDraftRows=Array.from({length:6},()=>({name:"",category:"",handicap:"",tee:"",countryCode:"502",whatsapp:""})),progressiveVisibleRegistrationCount=1,draftTournament=null,draftCourse="pulte",draftRoundMode="general",draftSkins=defaultSkinsDraft(),draftWolf=defaultWolfDraft(),draftVegas=defaultVegasDraft(),draftDots=defaultDotsDraft(),sideGameControlHole=1,rosterEditMode=false,rosterEditJoinHole=1,handicapRectificationMode=false,nameCorrectionMode=false,profileCorrectionMode=false,rosterAddMode=false;
 
@@ -3317,9 +3318,6 @@ function renderDraft(){
   updateGeneralSetupValidity();
 }
 function openSetup(mode="new"){
-  const setupOverlay=$("setupOverlay");
-  document.body?.classList.add("gsc-setup-open");
-  setupOverlay?.classList.add("visible");
   {}
   {}
   // REGISTRO y TARJETA usan transportes Realtime separados. No se reutiliza
@@ -4180,7 +4178,7 @@ function saveSkinsDraftConfig(){draftSkins=window.GSCSkins.normalizeConfig({enab
 
 for(const id of ["skinsScoreType","skinsTiePolicy","skinsUnitValue","skinsCurrencyGTQ","skinsCurrencyUSD"])$(id).addEventListener("change",saveSkinsDraftConfig);
 $("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);
-$("startRoundButton").onclick=startConfirmedRound;
+$("startRoundButton").addEventListener("click",startConfirmedRound);
 
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="hidden"){
@@ -4246,13 +4244,21 @@ if(window.GSC_GUEST_ACCESS){enforceGuestAccess();setInterval(enforceGuestAccess,
 // La entrada explícita abre Registro sin borrar la ronda activa. La sustitución
 // continúa ocurriendo únicamente después de confirmar INICIAR RONDA.
 if(explicitNewRound){
+  // Entrada de prueba: forzar REGISTRO como última acción del arranque, aun con ronda persistida.
   openNewRoundDraft();
+  showStep1();
+  document.body?.classList.add("gsc-setup-open");
+  $("setupOverlay")?.classList.add("visible");
+  $("setupOverlay")?.setAttribute("aria-hidden","false");
+  requestAnimationFrame(()=>{showStep1();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")});
 }else if(directHome){
   openRegistrationPreservingActiveRound();
 }else if(sfEmergency){
   if(document.readyState==="loading")window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
   else openFreshStablefordSetup();
-}else{
+}else if(principalStartup){
+  openNewRoundDraft();showStep1();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false");
+}else if(!isRecoverableStoredRound(round)){
   ensurePrincipalEntry();
 }
 if(!demoControlManual){queueMasterDataSnapshot("app-open");setTimeout(flushMasterSyncQueue,1800)}
