@@ -2163,6 +2163,9 @@ function prepareGroup(args){
   return applySetupChanges(v.players.map((p,i)=>({position:i+1,name:p.name,handicap:p.handicap,tee:p.tee})));
 }
 function startConfirmedRound(){
+  // Una vez confirmada la ronda, la entrada principal deja de forzar REGISTRO.
+  principalStartup=false;
+  if(draftPlayers.length===1){draftRoundMode="general";resetDraftGames()}
   if(!draftPlayers.length)return false;
   if(draftSkins.enabled&&draftPlayers.length<2){setManualRegistrationStatus("SKINS REQUIERE DE 2 A 6 JUGADORES");return false}
   if(draftWolf.enabled&&(draftPlayers.length<3||draftPlayers.length>6)){setManualRegistrationStatus("WOLF REQUIERE DE 3 A 6 JUGADORES");return false}
