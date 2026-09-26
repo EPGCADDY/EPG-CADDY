@@ -4193,23 +4193,23 @@ document.addEventListener("visibilitychange",()=>{
     ;
     scheduleRoundTimerIdleShutdown();
     render();
-    ensurePrincipalEntry();
+    if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
   }
 });
 window.addEventListener("pageshow",e=>{
   if(voiceOpening)return;
-  if(!isRecoverableStoredRound(round))restorePersistedRound();
+  if(!principalStartup&&!explicitNewRound&&!isRecoverableStoredRound(round))restorePersistedRound();
   {}
   scheduleRoundTimerIdleShutdown();
   render();
-  ensurePrincipalEntry();
+  if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
 });
 window.addEventListener("focus",()=>{
   if(voiceOpening)return;
-  if(!isRecoverableStoredRound(round)&&restorePersistedRound())render();
+  if(!principalStartup&&!explicitNewRound&&!isRecoverableStoredRound(round)&&restorePersistedRound())render();
   {}
   scheduleRoundTimerIdleShutdown();
-  ensurePrincipalEntry();
+  if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
 });
 window.addEventListener("pagehide",()=>{
   persist();
