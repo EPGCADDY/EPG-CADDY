@@ -1441,8 +1441,7 @@ const startupParams=new URLSearchParams(location.search);
 const sfEmergency=startupParams.get("stableford_emergency")==="countryclub";
 const demoControlManual=startupParams.get("demo_control_manual")==="v269";
 const directHome=startupParams.get("inicio")==="1";
-const registrationEntry=["guest24h","owner"].includes(startupParams.get("source")||"");
-const explicitNewRound=startupParams.get("nueva_ronda")==="1"||startupParams.get("manual_action")==="setup";
+const explicitNewRound=startupParams.get("nueva_ronda")==="1";
 const DEMO_CONTROL_MANUAL_KEY="golf-score-card-guatemala-demo-control-manual-v269";
 const DEMO_CONTROL_MANUAL_DRAFT_KEY="golf-score-card-guatemala-demo-control-manual-draft-v269";
 const DEMO_CONTROL_MANUAL_ARCHIVE_KEY="golf-score-card-guatemala-demo-control-manual-archive-v269";
@@ -4198,18 +4197,18 @@ document.addEventListener("visibilitychange",()=>{
 });
 window.addEventListener("pageshow",e=>{
   if(voiceOpening)return;
-  if(!explicitNewRound&&!isRecoverableStoredRound(round))restorePersistedRound();
+  if(!isRecoverableStoredRound(round))restorePersistedRound();
   {}
   scheduleRoundTimerIdleShutdown();
   render();
-  if(explicitNewRound&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
+  ensurePrincipalEntry();
 });
 window.addEventListener("focus",()=>{
   if(voiceOpening)return;
-  if(!explicitNewRound&&!isRecoverableStoredRound(round)&&restorePersistedRound())render();
+  if(!isRecoverableStoredRound(round)&&restorePersistedRound())render();
   {}
   scheduleRoundTimerIdleShutdown();
-  if(explicitNewRound&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
+  ensurePrincipalEntry();
 });
 window.addEventListener("pagehide",()=>{
   persist();
@@ -4244,14 +4243,8 @@ if(window.GSC_GUEST_ACCESS){enforceGuestAccess();setInterval(enforceGuestAccess,
 // La entrada explícita abre Registro sin borrar la ronda activa. La sustitución
 // continúa ocurriendo únicamente después de confirmar INICIAR RONDA.
 if(explicitNewRound){
-  // Entrada de prueba: forzar REGISTRO como última acción del arranque, aun con ronda persistida.
   openNewRoundDraft();
-  showStep1();
-  document.body?.classList.add("gsc-setup-open");
-  $("setupOverlay")?.classList.add("visible");
-  $("setupOverlay")?.setAttribute("aria-hidden","false");
-  requestAnimationFrame(()=>{showStep1();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")});
-}else if(directHome||registrationEntry){
+}else if(directHome){
   openRegistrationPreservingActiveRound();
 }else if(sfEmergency){
   if(document.readyState==="loading")window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
