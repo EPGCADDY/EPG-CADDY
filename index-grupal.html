@@ -2154,7 +2154,7 @@ function prepareGroup(args){
 }
 function startConfirmedRound(){
   if(!draftPlayers.length)return false;
-  // R146: una vez confirmada la ronda, la entrada principal deja de forzar REGISTRO.
+  // Una vez confirmada la ronda, la entrada principal deja de forzar REGISTRO.
   principalStartup=false;
   if(draftPlayers.length===1){draftRoundMode="general";resetDraftGames()}
   if(draftSkins.enabled&&draftPlayers.length<2){setManualRegistrationStatus("SKINS REQUIERE DE 2 A 6 JUGADORES");return false}
