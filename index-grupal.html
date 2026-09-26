@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20260925-R145">
+  <meta name="gscg-release" content="LABORATORIO-20260925-R138">
 
 <meta name="gscg-seven-cards-premium" content="R132-SIX-CARDS-NO-PRACTICE-20260925">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
@@ -4406,7 +4406,7 @@ window.addEventListener("focus",recoverInstalledAppScrolling);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)recoverInstalledAppScrolling()});
 setTimeout(recoverInstalledAppScrolling,0);
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
-const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"LABORATORIO-20260925-R145";
+const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"LABORATORIO-20260925-R138";
 function appVersionLabel(build){
   const match=String(build||"").match(/-R(\d+)(?:-[A-Z0-9]+)?$/i);
   return match?`R${match[1]}`:String(build||"—");
