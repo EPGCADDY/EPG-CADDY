@@ -3151,7 +3151,8 @@ function closeFinalDigitalCard(){
   document.body?.classList.remove("gsc-final-card-open");
 }
 function clearAllRegistrationPlayers(){
-  if(!window.confirm("¿CONFIRMAS BORRAR JUGADORES, SCORES Y RONDA ACTIVA?\n\nEsta acción no se puede deshacer."))return false;
+  registrationTransactionActive=true;
+  if(!window.confirm("¿CONFIRMAS BORRAR JUGADORES, SCORES Y RONDA ACTIVA?\n\nEsta acción no se puede deshacer.")){registrationTransactionActive=false;return false;}
   const removedRoundId=round?.configured?String(round.id||""):"";
   ;
   if(removedRoundId)deleteRoundFromArchive(removedRoundId);
