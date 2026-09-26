@@ -1134,7 +1134,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 @media(max-width:800px){#setupOverlay,#stablefordSetupOverlay{padding-bottom:max(180px,calc(env(safe-area-inset-bottom) + 140px))!important}#setupOverlay .new-round-card,#stablefordSetupOverlay .new-round-card{margin-bottom:190px!important}}
 </style>
 </head>
-<body>
+<body class="gsc-setup-open">
 
 <div class="overlay" id="skinsOverlay" aria-hidden="true">
   <section class="skins-panel">
@@ -1197,7 +1197,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
   </section>
 </div>
 
-<div class="overlay" id="setupOverlay">
+<div class="overlay visible" id="setupOverlay" aria-hidden="false">
   <section class="new-round-card" id="setupStep1">
     <div class="screen-back-row"><button class="screen-back-button hidden" type="button" id="cancelSetup">ATRÁS</button></div>
     <div class="registration-upper">
