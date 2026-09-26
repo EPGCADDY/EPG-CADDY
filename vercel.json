@@ -17,17 +17,17 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "/index-grupal.html?inicio=1",
+      "destination": "/index-grupal.html",
       "permanent": false
     },
     {
       "source": "/index.html",
-      "destination": "/index-grupal.html?inicio=1",
+      "destination": "/index-grupal.html",
       "permanent": false
     },
     {
       "source": "/inicio",
-      "destination": "/index-grupal.html?inicio=1",
+      "destination": "/index-grupal.html",
       "permanent": false
     },
     {
