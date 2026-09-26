@@ -2155,7 +2155,7 @@ function prepareGroup(args){
 function startConfirmedRound(){
   if(!draftPlayers.length)return false;
   // Una vez confirmada la ronda, la entrada principal deja de forzar REGISTRO.
-  principalStartup=false;
+  window.principalStartup=false;
   if(draftPlayers.length===1){draftRoundMode="general";resetDraftGames()}
   if(draftSkins.enabled&&draftPlayers.length<2){setManualRegistrationStatus("SKINS REQUIERE DE 2 A 6 JUGADORES");return false}
   if(draftWolf.enabled&&(draftPlayers.length<3||draftPlayers.length>6)){setManualRegistrationStatus("WOLF REQUIERE DE 3 A 6 JUGADORES");return false}
