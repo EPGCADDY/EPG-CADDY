@@ -378,7 +378,7 @@ async function readStream(sql,req,body,viewerToken){
   const rows=await sql`SELECT id,scope,group_label,status,revision,expires_at,updated_at,current_snapshot FROM live_streams WHERE viewer_token_hash=${hash} LIMIT 1`;
   if(!rows.length)throw liveError("LIVE_LINK_INVALID",404);const row=rows[0];
   if(row.status==="revoked")throw liveError("LIVE_REVOKED",410);if(new Date(row.expires_at)<=new Date())throw liveError("LIVE_EXPIRED",410);
-  if(Number(body.sinceRevision)===Number(row.revision))return{ok:true,kind:"stream",unchanged:true,revision:Number(row.revision),serverAt:new Date().toISOString()};
+  if(body.sinceRevision!==null&&body.sinceRevision!==undefined&&Number(body.sinceRevision)===Number(row.revision))return{ok:true,kind:"stream",unchanged:true,revision:Number(row.revision),serverAt:new Date().toISOString()};
   return{ok:true,kind:"stream",stream:publicStream(row),serverAt:new Date().toISOString()};
 }
 
@@ -388,7 +388,7 @@ async function readTournament(sql,req,body,viewerToken){
   if(!tournaments.length)throw liveError("LIVE_LINK_INVALID",404);const tournament=tournaments[0];
   if(tournament.status==="revoked")throw liveError("LIVE_REVOKED",410);if(new Date(tournament.expires_at)<=new Date())throw liveError("LIVE_EXPIRED",410);
   const cursor=cleanText(body.cursor,50);if(cursor&&!UUID_PATTERN.test(cursor))throw liveError("LIVE_INVALID_CURSOR");
-  if(!cursor&&Number(body.sinceRevision)===Number(tournament.revision))return{ok:true,kind:"tournament",unchanged:true,revision:Number(tournament.revision),serverAt:new Date().toISOString()};
+  if(!cursor&&body.sinceRevision!==null&&body.sinceRevision!==undefined&&Number(body.sinceRevision)===Number(tournament.revision))return{ok:true,kind:"tournament",unchanged:true,revision:Number(tournament.revision),serverAt:new Date().toISOString()};
   const limit=boundedInteger(body.limit,1,50,25),rows=await sql`
     SELECT id,scope,group_label,status,revision,expires_at,updated_at,current_snapshot
     FROM live_streams
