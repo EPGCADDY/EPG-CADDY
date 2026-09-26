@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>Golf Score Card GT</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20260925-R145">
+  <meta name="gscg-release" content="LABORATORIO-20260925-R146">
 
 <meta name="gscg-seven-cards-premium" content="R132-SIX-CARDS-NO-PRACTICE-20260925">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
@@ -2164,8 +2164,7 @@ function prepareGroup(args){
 }
 function startConfirmedRound(){
   if(!draftPlayers.length)return false;
-  if(draftPlayers.length===1){draftRoundMode="general";resetDraftGames()}
-  if(draftSkins.enabled&&draftPlayers.length<2){setManualRegistrationStatus("SKINS REQUIERE DE 2 A 6 JUGADORES");return false}
+    if(draftSkins.enabled&&draftPlayers.length<2){setManualRegistrationStatus("SKINS REQUIERE DE 2 A 6 JUGADORES");return false}
   if(draftWolf.enabled&&(draftPlayers.length<3||draftPlayers.length>6)){setManualRegistrationStatus("WOLF REQUIERE DE 3 A 6 JUGADORES");return false}
   if(draftVegas.enabled&&![4,6].includes(draftPlayers.length)){setManualRegistrationStatus("VEGAS REQUIERE 4 O 6 JUGADORES · 2 O 3 PAREJAS");return false}
   if(draftDots.enabled&&draftPlayers.length<2){setManualRegistrationStatus("DOTS REQUIERE DE 2 A 6 JUGADORES");return false}
@@ -3389,8 +3388,7 @@ function openRegistrationPreservingActiveRound(){
   return true;
 }
 function ensurePrincipalEntry(){
-  // Apertura principal oficial: REGISTRO siempre tiene prioridad sobre una ronda recuperable.
-  if(demoControlManual||sfEmergency)return false;
+  if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
   const overlay=$("setupOverlay");if(!overlay)return false;
   if(!overlay.classList.contains("visible"))openNewRoundDraft();
   document.body?.classList.add("gsc-setup-open");
@@ -4402,7 +4400,7 @@ window.addEventListener("focus",recoverInstalledAppScrolling);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)recoverInstalledAppScrolling()});
 setTimeout(recoverInstalledAppScrolling,0);
 // V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
-const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"LABORATORIO-20260925-R145";
+const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"LABORATORIO-20260925-R146";
 function appVersionLabel(build){
   const match=String(build||"").match(/-R(\d+)(?:-[A-Z0-9]+)?$/i);
   return match?`R${match[1]}`:String(build||"—");
@@ -4462,7 +4460,7 @@ async function syncPublishedAppVersion(){
     // R138: consult the canonical production document, never the currently cached PWA pathname.
     const checkUrl=new URL("/index-grupal.html",location.origin);
     checkUrl.searchParams.set("__gscg_build_check",String(Date.now()));
-    checkUrl.searchParams.set("__gscg_release_probe","R145");
+    checkUrl.searchParams.set("__gscg_release_probe","R146");
     const response=await fetch(checkUrl,{cache:"no-store",headers:{"Cache-Control":"no-cache, no-store","Pragma":"no-cache"}});
     if(response.status===401||response.status===403||new URL(response.url||checkUrl.href).pathname==="/access.html"){showBuildCheckFailure(true);return}
     if(!response.ok){showBuildCheckFailure();return}
