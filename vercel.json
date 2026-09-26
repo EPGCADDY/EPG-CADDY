@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/invite/:token",
-      "destination": "/access.html"
+      "destination": "/api/app-access?action=redeem&token=:token"
     }
   ],
   "crons": [
