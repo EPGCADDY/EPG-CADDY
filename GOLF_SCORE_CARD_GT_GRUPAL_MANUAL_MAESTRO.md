@@ -1793,3 +1793,7 @@ Para cada modalidad oficial debe verificarse:
 - LIVE y tarjeta compartida de solo lectura sin regresiones.
 
 **Prueba física confirmada el 26-09-2026:** ronda completa de 18 hoyos en iPhone → Tarjeta Digital Final directa → Compartir Tarjeta → WhatsApp → selección múltiple de tres destinatarios → Enviar.
+
+
+### 30.5 Identificación G/N dentro de cada casilla
+En toda tarjeta que muestre dos cifras deportivas dentro de una misma casilla, la identificación debe aparecer **encima de las cifras dentro de esa misma casilla**: `G/N` = **Gross / Neto**. No basta con indicarlo únicamente en el encabezado del hoyo. La lectura visual aprobada es `G/N` arriba y `gross/neto` debajo. En Universales se utiliza `G/N/P` = Gross / Neto / Puntos.
