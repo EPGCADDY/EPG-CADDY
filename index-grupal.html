@@ -4177,7 +4177,12 @@ function saveSkinsDraftConfig(){draftSkins=window.GSCSkins.normalizeConfig({enab
 
 for(const id of ["skinsScoreType","skinsTiePolicy","skinsUnitValue","skinsCurrencyGTQ","skinsCurrencyUSD"])$(id).addEventListener("change",saveSkinsDraftConfig);
 $("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);
-$("startRoundButton").addEventListener("click",startConfirmedRound);
+$("startRoundButton").addEventListener("click",()=>{
+  // RUTA ATÓMICA: la confirmación visible es la fuente de verdad.
+  captureVisibleRegistrationValues();
+  if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return false;
+  return startConfirmedRound();
+});
 
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="hidden"){
