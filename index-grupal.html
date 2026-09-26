@@ -3382,14 +3382,10 @@ function openNewRoundDraft(){
   return true;
 }
 function openRegistrationPreservingActiveRound(){
-  registrationTransactionActive=true;
-  if(round.configured)persist();
-  ;
-  clearDraftState();
-  draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());progressiveVisibleRegistrationCount=1;draftTournament=null;draftCourse="pulte";draftRoundMode="general";resetDraftGames();;
-  dateSetup();
-  openSetup("new");
-  return true;
+  // La entrada principal y NUEVA RONDA deben compartir una sola semántica:
+  // archivar la ronda anterior, limpiar todos los estados activos y abrir un
+  // único borrador nuevo. Evita mezclar una ronda persistida con registro vacío.
+  return openNewRoundDraft();
 }
 function ensurePrincipalEntry(){
   if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
