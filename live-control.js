@@ -12,7 +12,7 @@
   function mutationId(){const value=root?.crypto?.randomUUID?.().replace(/-/g,"")||`${Date.now()}${Math.random().toString(36).slice(2)}`;return`live-mutation-${value}`}
   function liveState(){try{const value=JSON.parse(root.localStorage.getItem(STORAGE_KEY)||"null");return value&&value.version===1?value:{version:1}}catch{return{version:1}}}
   function saveState(value){try{root.localStorage.setItem(STORAGE_KEY,JSON.stringify({...value,version:1}));return true}catch{return false}}
-  function apiUrl(){return typeof root?.gscgApiUrl==="function"?root.gscgApiUrl("/api/live"):"/api/live"}
+  function apiUrl(){return "/api/live"}
   async function request(action,payload={},publisherSecret=""){
     const headers={"Content-Type":"application/json"};if(publisherSecret)headers.Authorization=`LivePublisher ${publisherSecret}`;
     let response;try{response=await root.fetch(apiUrl(),{method:"POST",headers,cache:"no-store",credentials:"same-origin",body:JSON.stringify({action,...payload})})}catch{return{ok:false,code:"NETWORK_ERROR",status:0}}
