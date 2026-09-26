@@ -1,7 +1,7 @@
 "use strict";
-// R145: iOS PWA network-first. Cache is fallback only; never pin an older application shell.
-const RELEASE="LABORATORIO-20260925-R145";
-const CACHE_NAME="gscg-mobile-v138-r145";
+// R146: iOS PWA network-first. Cache is fallback only; never pin an older application shell.
+const RELEASE="LABORATORIO-20260925-R146";
+const CACHE_NAME="gscg-mobile-v138-r146";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   OFFLINE_ENTRY,"/live-hub.html","/manifest.webmanifest","/gsc-design-system.css","/score-entry-contract.js",
