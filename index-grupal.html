@@ -1441,8 +1441,7 @@ const startupParams=new URLSearchParams(location.search);
 const sfEmergency=startupParams.get("stableford_emergency")==="countryclub";
 const demoControlManual=startupParams.get("demo_control_manual")==="v269";
 const directHome=startupParams.get("inicio")==="1";
-const explicitNewRound=startupParams.get("nueva_ronda")==="1"||startupParams.get("manual_action")==="setup";
-let principalStartup=!sfEmergency&&!demoControlManual&&!directHome;
+const explicitNewRound=startupParams.get("nueva_ronda")==="1";
 const DEMO_CONTROL_MANUAL_KEY="golf-score-card-guatemala-demo-control-manual-v269";
 const DEMO_CONTROL_MANUAL_DRAFT_KEY="golf-score-card-guatemala-demo-control-manual-draft-v269";
 const DEMO_CONTROL_MANUAL_ARCHIVE_KEY="golf-score-card-guatemala-demo-control-manual-archive-v269";
@@ -3391,8 +3390,7 @@ function openRegistrationPreservingActiveRound(){
   return true;
 }
 function ensurePrincipalEntry(){
-  // Apertura principal oficial: REGISTRO siempre tiene prioridad sobre una ronda recuperable.
-  if(demoControlManual||sfEmergency)return false;
+  if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
   const overlay=$("setupOverlay");if(!overlay)return false;
   if(!overlay.classList.contains("visible"))openNewRoundDraft();
   document.body?.classList.add("gsc-setup-open");
@@ -4197,23 +4195,23 @@ document.addEventListener("visibilitychange",()=>{
     ;
     scheduleRoundTimerIdleShutdown();
     render();
-    if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
+    if(explicitNewRound&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
   }
 });
 window.addEventListener("pageshow",e=>{
   if(voiceOpening)return;
-  if(!principalStartup&&!explicitNewRound&&!isRecoverableStoredRound(round))restorePersistedRound();
+  if(!isRecoverableStoredRound(round))restorePersistedRound();
   {}
   scheduleRoundTimerIdleShutdown();
   render();
-  if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
+  ensurePrincipalEntry();
 });
 window.addEventListener("focus",()=>{
   if(voiceOpening)return;
-  if(!principalStartup&&!explicitNewRound&&!isRecoverableStoredRound(round)&&restorePersistedRound())render();
+  if(!isRecoverableStoredRound(round)&&restorePersistedRound())render();
   {}
   scheduleRoundTimerIdleShutdown();
-  if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
+  ensurePrincipalEntry();
 });
 window.addEventListener("pagehide",()=>{
   persist();
