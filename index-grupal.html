@@ -3122,9 +3122,15 @@ async function shareFinalCardToRegisteredPlayers(){
   }catch(error){status.textContent=error?.name==="AbortError"?"ENVÍO CANCELADO":"NO SE PUDO ABRIR WHATSAPP";return false}
   finally{button.disabled=false;button.textContent="ENVIAR A JUGADORES"}
 }
-function openFinalDigitalCard(){
+async function openFinalDigitalCard(){
   render();
   if(COURSE_CATALOG[round.courseKey]?.configured===false)return;
+  // An 18-hole complete round is final by definition: close it before showing the card.
+  // This removes the redundant FINALIZAR RONDA intermediate screen.
+  if(isRoundComplete()&&!round.officiallyClosedAt){
+    const closed=await officiallyCloseRound();
+    if(!closed)return;
+  }
   if(!renderFinalDigitalCard())return;
   $("finalCardOverlay").classList.add("visible");
   $("finalCardOverlay").setAttribute("aria-hidden","false");
