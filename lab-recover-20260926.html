@@ -1,12 +1,13 @@
-<!doctype html><meta charset="utf-8"><title>R128.6 · Recuperación</title><script>
-const round={id:"recovery_20260926_pulte",version:2,mode:"general",configured:true,provisional:false,courseKey:"pulte",course:"El Pulté",tournament:null,sideGames:{skins:{enabled:false},wolf:{enabled:false},vegas:{enabled:false},dots:{enabled:false}},players:[
-{name:"Diego Arvizu",handicap:13,tee:"Blanco",matrix:"Caballeros",scores:[4,5,6,8,4,6,7,5,5,4,5,5,4,5,4,4,3,4]},
-{name:"Jaime Kirste",handicap:13,tee:"Blanco",matrix:"Caballeros",scores:[4,6,4,6,4,7,7,4,6,4,5,4,5,5,4,4,3,4]},
-{name:"Roberto",handicap:28,tee:"Blanco",matrix:"Caballeros",scores:[7,4,6,6,4,8,8,5,7,5,7,4,7,5,4,4,3,4]},
-{name:"Jerry",handicap:25,tee:"Blanco",matrix:"Caballeros",scores:[6,5,6,5,3,7,8,3,6,8,8,8,8,5,4,4,3,4]}
-].map((p,i)=>({...p,id:"p"+(i+1),slot:[1,3,5,2][i],activeFrom:1,holes:Object.fromEntries(p.scores.map((gross,j)=>[String(j+1),{gross}]))})),createdAt:"2026-09-26T08:08:00-06:00",updatedAt:new Date().toISOString(),endedAt:null,durationSeconds:null,announced:{front:false,back:false,complete:false}};
-delete round.players[0].scores;delete round.players[1].scores;delete round.players[2].scores;delete round.players[3].scores;
-for(const k of ["golf-score-card-guatemala-active-round-v1","golf-score-card-guatemala-group-round-v2","golf-score-card-guatemala-group-round-v2-backup"])localStorage.setItem(k,JSON.stringify(round));
-localStorage.removeItem("golf-score-card-guatemala-principal-reset-v1");
-location.replace("/index-grupal.html?recovered=20260926-r1286");
-</script><body style="background:#000;color:#31ff00;font:700 18px Arial;padding:30px">RECUPERANDO RONDA…</body>
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>R128.6 Recuperación</title>
+<body style="background:#050505;color:#fff;font-family:Arial;padding:24px"><h2 style="color:#39ff14">R128.6 · RECUPERACIÓN</h2><div id="s">Preparando…</div><button id="go" style="display:none;font-size:20px;padding:18px;margin-top:24px;width:100%">ABRIR SCORE CARD</button>
+<script>
+const PAR=[4,4,4,4,3,5,5,3,4,3,5,4,4,5,4,4,3,4],SI=[9,5,7,11,17,3,1,15,13,18,2,8,16,4,6,12,10,14];
+const data=[["Diego Arvizu",13,[4,5,6,8,4,6,7,5,5,4,5,5,4,5,4,4,3,4]],["Jaime Kirste",13,[4,6,4,6,4,7,7,4,6,4,5,4,5,5,4,4,3,4]],["Roberto",28,[7,4,6,6,4,8,8,5,7,5,7,4,7,5,4,4,3,4]],["Jerry",25,[6,5,6,5,3,7,8,3,6,8,8,8,8,5,4,4,3,4]]];
+function strokes(h,si){return h>=0?Math.floor(h/18)+(si<=h%18?1:0):-Math.floor((-h)/18)-(si<=((-h)%18)?1:0)}
+const players=data.map((x,i)=>{const holes={};x[2].forEach((gross,j)=>{const hole=j+1,st=strokes(x[1],SI[j]),net=gross-st;holes[hole]={hole,gross,par:PAR[j],si:SI[j],strokes:st,net,diff:net-PAR[j],fairway:null,green:null,putts:null,penalties:0,updatedAt:new Date().toISOString()}});return{id:"p"+(i+1),name:x[0],handicap:x[1],tee:"Blanco",matrix:"Caballeros",holes,lastHole:18,activeFrom:1,slot:[1,3,5,2][i],provisionalHandicapProvided:false,provisionalTeeProvided:false}});
+const round={id:"recovery_20260926_pulte",version:2,mode:"general",configured:true,provisional:false,courseKey:"pulte",course:"El Pulté",tournament:null,players,announced:{front:false,back:false,complete:false},createdAt:"2026-09-26T08:08:00-06:00",updatedAt:new Date().toISOString(),endedAt:null,durationSeconds:null};
+const keys=["golf-score-card-guatemala-active-round-v1","golf-score-card-guatemala-group-round-v2","golf-score-card-guatemala-group-round-v2-backup"];const payload=JSON.stringify(round);keys.forEach(k=>localStorage.setItem(k,payload));localStorage.removeItem("golf-score-card-guatemala-principal-reset-v1");
+const check=JSON.parse(localStorage.getItem(keys[0])||"null");const gross=check?.players?.map(p=>Object.values(p.holes).reduce((a,h)=>a+h.gross,0))||[];
+document.getElementById("s").innerHTML=(check?.players?.length===4&&gross.join(",")==="88,86,98,101")?"<b style='color:#39ff14'>✓ RONDA CARGADA Y VERIFICADA</b><br><br>4 jugadores · 72 scores<br>Gross: "+gross.join(" / "):"<b style='color:red'>ERROR DE CARGA</b>";
+document.getElementById("go").style.display="block";document.getElementById("go").onclick=()=>location.href="/index-grupal.html?restore=ok&t="+Date.now();
+</script></body>
