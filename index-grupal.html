@@ -3390,8 +3390,8 @@ function openRegistrationPreservingActiveRound(){
   return true;
 }
 function ensurePrincipalEntry(){
-  // Apertura principal oficial: REGISTRO siempre tiene prioridad sobre una ronda recuperable.
-  if(demoControlManual||sfEmergency)return false;
+  // No destruir ni tapar una ronda ya confirmada/recuperada.
+  if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
   const overlay=$("setupOverlay");if(!overlay)return false;
   if(!overlay.classList.contains("visible"))openNewRoundDraft();
   document.body?.classList.add("gsc-setup-open");
