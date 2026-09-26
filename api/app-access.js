@@ -15,8 +15,8 @@ export default async function handler(req,res){
   noStore(res);if(handleAppPreflight(req,res))return;
   const action=String(req.query?.action||"status").toLowerCase();
   try{
-    if(action==="redeem"&&req.method==="POST"){
-      if(!isAllowedAppOrigin(req))return res.status(403).json({ok:false,code:"ORIGIN_NOT_ALLOWED"});
+    if(action==="redeem"&&(req.method==="GET"||req.method==="POST")){
+      if(req.method==="POST"&&!isAllowedAppOrigin(req))return res.status(403).json({ok:false,code:"ORIGIN_NOT_ALLOWED"});
       const token=String(req.query?.token||""),grant=await redeemGuestToken(token);
       if(!grant)return res.status(401).send("ENLACE INVÁLIDO, VENCIDO O YA UTILIZADO");
       const seconds=Math.max(1,Math.floor((new Date(grant.expiresAt).getTime()-Date.now())/1000));
