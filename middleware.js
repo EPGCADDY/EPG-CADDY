@@ -13,9 +13,9 @@ export default async function accessGate(request){
   if(path==="/api/account")return next();
   if(path==="/api/traffic"&&request.method==="GET"&&url.searchParams.get("action")==="status")return next();
   if(PUBLIC_PATHS.has(path)||path.startsWith("/invite/")||path.startsWith("/assets/official-logos/"))return next();
-  if(path==="/api/live"&&request.method==="POST"){
-    try{const body=await request.clone().json();if(String(body?.action||"").toLowerCase()==="read")return next()}catch{}
-  }
+  // LIVE is token/secret-authorized inside api/live itself. Keep it independent from app-access
+  // so installed/PWA clients can create, publish, read and revoke a private LIVE stream.
+  if(path==="/api/live"&&request.method==="POST")return next();
   let access={ok:false,role:"none",code:"ACCESS_REQUIRED"};
   try{
     const statusUrl=new URL("/api/app-access?action=status",request.url);
