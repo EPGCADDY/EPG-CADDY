@@ -1442,7 +1442,6 @@ const sfEmergency=startupParams.get("stableford_emergency")==="countryclub";
 const demoControlManual=startupParams.get("demo_control_manual")==="v269";
 const directHome=startupParams.get("inicio")==="1";
 const explicitNewRound=startupParams.get("nueva_ronda")==="1"||startupParams.get("manual_action")==="setup";
-let principalStartup=!sfEmergency&&!demoControlManual&&!directHome;
 const DEMO_CONTROL_MANUAL_KEY="golf-score-card-guatemala-demo-control-manual-v269";
 const DEMO_CONTROL_MANUAL_DRAFT_KEY="golf-score-card-guatemala-demo-control-manual-draft-v269";
 const DEMO_CONTROL_MANUAL_ARCHIVE_KEY="golf-score-card-guatemala-demo-control-manual-archive-v269";
@@ -1456,7 +1455,7 @@ const CONTROL_MANUAL_DEMO_PLAYERS=[
 ];
 const STABLEFORD_ACTIVE_KEY="golf-score-card-guatemala-stableford-active-v1";
 const STABLEFORD_OFFICIAL_HOSTING_URL="#stableford";
-let round=sfEmergency?(latestStoredRound("stableford")||blankRound()):demoControlManual?(readStoredRound(DEMO_CONTROL_MANUAL_KEY)||blankRound()):(principalStartup?blankRound():loadRound());
+let round=sfEmergency?(latestStoredRound("stableford")||blankRound()):demoControlManual?(readStoredRound(DEMO_CONTROL_MANUAL_KEY)||blankRound()):loadRound();
 let sfRestoredActive=!!(sfEmergency&&round.configured&&round.mode==="stableford");
 let draftPlayers=[],manualDraftRows=Array.from({length:6},()=>({name:"",category:"",handicap:"",tee:"",countryCode:"502",whatsapp:""})),progressiveVisibleRegistrationCount=1,draftTournament=null,draftCourse="pulte",draftRoundMode="general",draftSkins=defaultSkinsDraft(),draftWolf=defaultWolfDraft(),draftVegas=defaultVegasDraft(),draftDots=defaultDotsDraft(),sideGameControlHole=1,rosterEditMode=false,rosterEditJoinHole=1,handicapRectificationMode=false,nameCorrectionMode=false,profileCorrectionMode=false,rosterAddMode=false;
 
@@ -2164,8 +2163,6 @@ function prepareGroup(args){
 }
 function startConfirmedRound(){
   if(!draftPlayers.length)return false;
-  // Una vez confirmada la ronda, la entrada principal deja de forzar REGISTRO.
-  principalStartup=false;
   if(draftPlayers.length===1){draftRoundMode="general";resetDraftGames()}
   if(draftSkins.enabled&&draftPlayers.length<2){setManualRegistrationStatus("SKINS REQUIERE DE 2 A 6 JUGADORES");return false}
   if(draftWolf.enabled&&(draftPlayers.length<3||draftPlayers.length>6)){setManualRegistrationStatus("WOLF REQUIERE DE 3 A 6 JUGADORES");return false}
@@ -4197,23 +4194,23 @@ document.addEventListener("visibilitychange",()=>{
     ;
     scheduleRoundTimerIdleShutdown();
     render();
-    if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
+    if(explicitNewRound&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
   }
 });
 window.addEventListener("pageshow",e=>{
   if(voiceOpening)return;
-  if(!principalStartup&&!explicitNewRound&&!isRecoverableStoredRound(round))restorePersistedRound();
+  if(!explicitNewRound&&!isRecoverableStoredRound(round))restorePersistedRound();
   {}
   scheduleRoundTimerIdleShutdown();
   render();
-  if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
+  if(explicitNewRound&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
 });
 window.addEventListener("focus",()=>{
   if(voiceOpening)return;
-  if(!principalStartup&&!explicitNewRound&&!isRecoverableStoredRound(round)&&restorePersistedRound())render();
+  if(!explicitNewRound&&!isRecoverableStoredRound(round)&&restorePersistedRound())render();
   {}
   scheduleRoundTimerIdleShutdown();
-  if((principalStartup||explicitNewRound)&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
+  if(explicitNewRound&&!round.configured){showStep1();dateSetup();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false")}else if(!round.configured)ensurePrincipalEntry();
 });
 window.addEventListener("pagehide",()=>{
   persist();
@@ -4226,7 +4223,7 @@ window.addEventListener("online",()=>{if(!demoControlManual){masterSyncBlockedUn
 // Regla de continuidad: al abrir/reabrir, la última ronda válida es la actividad activa.
 // No se crea ni se sustituye una ronda hasta confirmar expresamente INICIAR RONDA.
 if(demoControlManual)activateControlManualDemo();
-else if(!sfEmergency&&!principalStartup)restorePersistedRound();
+else if(!sfEmergency)restorePersistedRound();
 else if(round.configured)activateCourse(round.courseKey);
 (function repairAutomaticOmissionsV155(){
   const key="gscg-v155-automatic-x-repair";
@@ -4260,8 +4257,6 @@ if(explicitNewRound){
 }else if(sfEmergency){
   if(document.readyState==="loading")window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
   else openFreshStablefordSetup();
-}else if(principalStartup){
-  openNewRoundDraft();showStep1();document.body?.classList.add("gsc-setup-open");$("setupOverlay")?.classList.add("visible");$("setupOverlay")?.setAttribute("aria-hidden","false");
 }else if(!isRecoverableStoredRound(round)){
   ensurePrincipalEntry();
 }
