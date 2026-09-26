@@ -1457,7 +1457,6 @@ const STABLEFORD_ACTIVE_KEY="golf-score-card-guatemala-stableford-active-v1";
 const STABLEFORD_OFFICIAL_HOSTING_URL="#stableford";
 let round=sfEmergency?(latestStoredRound("stableford")||blankRound()):demoControlManual?(readStoredRound(DEMO_CONTROL_MANUAL_KEY)||blankRound()):loadRound();
 let sfRestoredActive=!!(sfEmergency&&round.configured&&round.mode==="stableford");
-let registrationTransactionActive=false;
 let draftPlayers=[],manualDraftRows=Array.from({length:6},()=>({name:"",category:"",handicap:"",tee:"",countryCode:"502",whatsapp:""})),progressiveVisibleRegistrationCount=1,draftTournament=null,draftCourse="pulte",draftRoundMode="general",draftSkins=defaultSkinsDraft(),draftWolf=defaultWolfDraft(),draftVegas=defaultVegasDraft(),draftDots=defaultDotsDraft(),sideGameControlHole=1,rosterEditMode=false,rosterEditJoinHole=1,handicapRectificationMode=false,nameCorrectionMode=false,profileCorrectionMode=false,rosterAddMode=false;
 
 
@@ -2186,21 +2185,13 @@ function startConfirmedRound(){
       const merged=normalizePlayer({...source,holes:old?.holes||p.holes||{},lastHole:old?.lastHole||p.lastHole||null,activeFrom:old?.activeFrom||p.activeFrom||rosterEditJoinHole},i);
       return recomputePlayerScores(merged);
     }));
-    const previousMode=round.mode;round.mode=draftRoundMode;if(previousMode!==round.mode){round.officiallyClosedAt=null;round.officialSnapshot=null;round.officialVersions=[];round.snapshotHash="";round.status="active";resetFinalCardShare()}round.tournament=draftTournament;round.sideGames=draftSideGames();ensureAnnouncedState();round.announced.front=false;round.announced.back=false;round.announced.complete=false;registrationTransactionActive=false;
-  savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();return true;
+    const previousMode=round.mode;round.mode=draftRoundMode;if(previousMode!==round.mode){round.officiallyClosedAt=null;round.officialSnapshot=null;round.officialVersions=[];round.snapshotHash="";round.status="active";resetFinalCardShare()}round.tournament=draftTournament;round.sideGames=draftSideGames();ensureAnnouncedState();round.announced.front=false;round.announced.back=false;round.announced.complete=false;savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();return true;
   }
   // ÚNICO punto autorizado para sustituir la última ronda persistida por una nueva:
   // el usuario llegó a la confirmación y presionó INICIAR RONDA.
   activateCourse(draftCourse);
-  const committedPlayers=assignStablePlayerSlots(draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{},activeFrom:1},i)));
-  if(!committedPlayers.length){setManualRegistrationStatus("REGISTRO NO CONFIRMADO · REVISA JUGADORES");return false}
-  const startedAt=new Date().toISOString();round={id:newRoundId(),version:2,mode:draftRoundMode,configured:true,provisional:false,courseKey:draftCourse,course:selectedCourse.name,tournament:draftTournament,sideGames:draftSideGames(),players:committedPlayers,announced:{front:false,back:false,complete:false},weather:null,createdAt:startedAt,updatedAt:startedAt,endedAt:null,durationSeconds:null,timerLastInstructionAt:startedAt};
-  // Commit primero: mientras la transacción siga bloqueada, ningún evento de ciclo
-  // de vida puede intervenir. Sólo después de persistir la ronda con roster válido
-  // se libera el bloqueo y se cierra REGISTRO.
-  savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();
-  registrationTransactionActive=false;
-  closeSetup();render();scheduleRoundTimerIdleShutdown();return true
+  const startedAt=new Date().toISOString();round={id:newRoundId(),version:2,mode:draftRoundMode,configured:true,provisional:false,courseKey:draftCourse,course:selectedCourse.name,tournament:draftTournament,sideGames:draftSideGames(),players:assignStablePlayerSlots(draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{},activeFrom:1},i))),announced:{front:false,back:false,complete:false},weather:null,createdAt:startedAt,updatedAt:startedAt,endedAt:null,durationSeconds:null,timerLastInstructionAt:startedAt};
+  savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();scheduleRoundTimerIdleShutdown();return true
 }
 function startProvisionalScorecard(){
   const selectedCourse=COURSE_CATALOG[draftCourse];
@@ -3151,8 +3142,7 @@ function closeFinalDigitalCard(){
   document.body?.classList.remove("gsc-final-card-open");
 }
 function clearAllRegistrationPlayers(){
-  registrationTransactionActive=true;
-  if(!window.confirm("¿CONFIRMAS BORRAR JUGADORES, SCORES Y RONDA ACTIVA?\n\nEsta acción no se puede deshacer.")){registrationTransactionActive=false;return false;}
+  if(!window.confirm("¿CONFIRMAS BORRAR JUGADORES, SCORES Y RONDA ACTIVA?\n\nEsta acción no se puede deshacer."))return false;
   const removedRoundId=round?.configured?String(round.id||""):"";
   ;
   if(removedRoundId)deleteRoundFromArchive(removedRoundId);
@@ -3169,7 +3159,6 @@ function clearAllRegistrationPlayers(){
   dateSetup();
   openSetup("new");
   $("setupStatus").textContent="RONDA Y REGISTRO BORRADOS · INICIO LIMPIO";
-  // Se mantiene el bloqueo: seguimos dentro de un registro nuevo.
   return true;
 }
 function clearOnlyRoundScores(){if(!round?.configured||round.officiallyClosedAt)return false;if(!window.confirm("¿CONFIRMAS BORRAR ÚNICAMENTE TODOS LOS SCORES?\n\nJugadores, modalidad, campo, hándicaps y cronómetro se conservan."))return false;for(const player of round.players){player.holes={};player.lastHole=null}round.announced={front:false,back:false,complete:false};round.matchPlay=null;round.fourBall=null;syncSideGameResults(round);persist();render();$("status").textContent="SCORES BORRADOS · JUGADORES Y RONDA CONSERVADOS";return true}
@@ -3373,7 +3362,6 @@ function openCurrentRoundDataEditor(){
   return openSetup(round.mode==="match_play"?"correction":round.players.length<6?"add":"correction");
 }
 function openNewRoundDraft(){
-  registrationTransactionActive=true;
   // NUEVA RONDA conserva la ronda anterior únicamente en HISTORIAL y limpia
   // de inmediato jugadores, scores y hoyo activo antes de volver a REGISTRO.
   if(round.configured){persist();archiveRoundSnapshot(round)}
@@ -3390,10 +3378,13 @@ function openNewRoundDraft(){
   return true;
 }
 function openRegistrationPreservingActiveRound(){
-  // La entrada principal y NUEVA RONDA deben compartir una sola semántica:
-  // archivar la ronda anterior, limpiar todos los estados activos y abrir un
-  // único borrador nuevo. Evita mezclar una ronda persistida con registro vacío.
-  return openNewRoundDraft();
+  if(round.configured)persist();
+  ;
+  clearDraftState();
+  draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());progressiveVisibleRegistrationCount=1;draftTournament=null;draftCourse="pulte";draftRoundMode="general";resetDraftGames();;
+  dateSetup();
+  openSetup("new");
+  return true;
 }
 function ensurePrincipalEntry(){
   if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
@@ -4186,15 +4177,9 @@ function saveSkinsDraftConfig(){draftSkins=window.GSCSkins.normalizeConfig({enab
 
 for(const id of ["skinsScoreType","skinsTiePolicy","skinsUnitValue","skinsCurrencyGTQ","skinsCurrencyUSD"])$(id).addEventListener("change",saveSkinsDraftConfig);
 $("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);
-$("startRoundButton").addEventListener("click",()=>{
-  // RUTA ATÓMICA: la confirmación visible es la fuente de verdad.
-  captureVisibleRegistrationValues();
-  if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return false;
-  return startConfirmedRound();
-});
+$("startRoundButton").addEventListener("click",startConfirmedRound);
 
 document.addEventListener("visibilitychange",()=>{
-  if(registrationTransactionActive)return;
   if(document.visibilityState==="hidden"){
     persist();
     // iOS puede ocultar brevemente la página al presentar/retirar el permiso de
@@ -4211,7 +4196,7 @@ document.addEventListener("visibilitychange",()=>{
   }
 });
 window.addEventListener("pageshow",e=>{
-  if(voiceOpening||registrationTransactionActive)return;
+  if(voiceOpening)return;
   if(!isRecoverableStoredRound(round))restorePersistedRound();
   {}
   scheduleRoundTimerIdleShutdown();
@@ -4219,20 +4204,19 @@ window.addEventListener("pageshow",e=>{
   ensurePrincipalEntry();
 });
 window.addEventListener("focus",()=>{
-  if(voiceOpening||registrationTransactionActive)return;
+  if(voiceOpening)return;
   if(!isRecoverableStoredRound(round)&&restorePersistedRound())render();
   {}
   scheduleRoundTimerIdleShutdown();
   ensurePrincipalEntry();
 });
 window.addEventListener("pagehide",()=>{
-  if(registrationTransactionActive)return;
   persist();
   if(voiceOpening)return;
   appHiddenAt=Date.now();appWasBackgrounded=true;
   if(browserVoiceActive||browserVoiceRequested);else {}
 });
-window.addEventListener("beforeunload",()=>{if(!registrationTransactionActive)persist()});
+window.addEventListener("beforeunload",persist);
 window.addEventListener("online",()=>{if(!demoControlManual){masterSyncBlockedUntil=0;flushMasterSyncQueue()}});
 // Regla de continuidad: al abrir/reabrir, la última ronda válida es la actividad activa.
 // No se crea ni se sustituye una ronda hasta confirmar expresamente INICIAR RONDA.
