@@ -1735,3 +1735,61 @@ MENÚ es el menú directo universal. El usuario no debe depender de repetir “A
 ### Regla visual R3 · MENÚ en todas las guías
 
 Todas las pantallas representadas en el set visual de Torneos deben mostrar el launcher MENÚ con el **logo horizontal original de Golf Score Card GT** y la palabra **MENÚ** debajo. La guía debe enseñar explícitamente que este acceso permanece disponible durante todo el recorrido y funciona como comodín de navegación.
+
+
+---
+
+## 30. Cierre directo y envío de todas las Tarjetas Digitales
+
+**Estado:** OPERATIVO · flujo único para las tarjetas finales oficiales.
+
+### 30.1 Regla de cierre sin pantalla intermedia
+
+Cuando la modalidad cumple su condición real de finalización, la aplicación cierra la ronda automáticamente y abre directamente **TARJETA DIGITAL FINAL** lista para compartir. No debe existir una pantalla intermedia que obligue a presionar **FINALIZAR RONDA**.
+
+Esta regla aplica al motor común de tarjetas de:
+- Medal Play / ronda normal.
+- Stableford.
+- Match Play, cuando el match queda matemáticamente definido.
+- Four Ball, cuando el match queda definido.
+- Universales.
+- Skins, Wolf, Vegas y Dots cuando se ejecutan sobre la ronda Medal Play y sus decisiones obligatorias están resueltas.
+
+**Score Card - Práctica** conserva su naturaleza no oficial y no genera cierre oficial ni envío oficial.
+
+Si una ronda ya estaba completa antes de instalar una actualización, al tocar **VER TARJETA FINAL** el sistema debe ejecutar el mismo cierre automático y abrir la tarjeta final; no debe reaparecer el paso manual de finalización.
+
+### 30.2 Compartir por WhatsApp
+
+En **TARJETA DIGITAL FINAL**, el botón **COMPARTIR TARJETA** prepara una sola imagen PNG y abre la hoja nativa de compartir de iPhone mediante Web Share. Desde allí el usuario puede escoger **WhatsApp**.
+
+La selección de destinatarios ocurre dentro de WhatsApp. Cuando la versión de WhatsApp/iOS presentada por el dispositivo permite selección múltiple, el usuario puede marcar varios contactos y grupos y realizar un solo envío desde esa pantalla. Golf Score Card GT entrega la tarjeta una sola vez a la hoja nativa; no realiza envíos automáticos, no lee la agenda de WhatsApp y no controla los límites de selección impuestos por WhatsApp.
+
+Secuencia de usuario:
+1. Completar la ronda.
+2. La aplicación abre directamente **TARJETA DIGITAL FINAL**.
+3. Tocar **COMPARTIR TARJETA**.
+4. Tocar **WhatsApp** en la hoja de compartir del iPhone.
+5. Seleccionar uno o varios destinatarios disponibles.
+6. Tocar **Enviar** dentro de WhatsApp.
+7. Al terminar, iOS puede regresar a la hoja de compartir o a Golf Score Card GT; ese retorno no significa que el envío haya fallado.
+
+### 30.3 Enviar a jugadores
+
+**ENVIAR A JUGADORES** utiliza los números de WhatsApp registrados para identificar a los jugadores previstos, pero la confirmación final del envío sigue perteneciendo al usuario y a la aplicación de mensajería. Nunca se debe declarar un mensaje como enviado únicamente porque se abrió WhatsApp.
+
+### 30.4 Prueba de aceptación obligatoria
+
+Para cada modalidad oficial debe verificarse:
+- condición de ronda terminada;
+- ausencia de pantalla intermedia **FINALIZAR RONDA**;
+- apertura directa de **TARJETA DIGITAL FINAL**;
+- generación correcta del PNG correspondiente a la modalidad;
+- apertura de la hoja nativa de iPhone;
+- WhatsApp disponible como destino;
+- posibilidad de seleccionar varios destinatarios cuando WhatsApp/iOS la ofrezca;
+- botón **Enviar** ejecutado dentro de WhatsApp;
+- regreso seguro a Golf Score Card GT sin alterar la tarjeta oficial;
+- LIVE y tarjeta compartida de solo lectura sin regresiones.
+
+**Prueba física confirmada el 26-09-2026:** ronda completa de 18 hoyos en iPhone → Tarjeta Digital Final directa → Compartir Tarjeta → WhatsApp → selección múltiple de tres destinatarios → Enviar.
