@@ -2193,6 +2193,7 @@ function startConfirmedRound(){
   // el usuario llegó a la confirmación y presionó INICIAR RONDA.
   activateCourse(draftCourse);
   const startedAt=new Date().toISOString();round={id:newRoundId(),version:2,mode:draftRoundMode,configured:true,provisional:false,courseKey:draftCourse,course:selectedCourse.name,tournament:draftTournament,sideGames:draftSideGames(),players:assignStablePlayerSlots(draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{},activeFrom:1},i))),announced:{front:false,back:false,complete:false},weather:null,createdAt:startedAt,updatedAt:startedAt,endedAt:null,durationSeconds:null,timerLastInstructionAt:startedAt};
+  registrationTransactionActive=false;
   savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterAddMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();scheduleRoundTimerIdleShutdown();return true
 }
 function startProvisionalScorecard(){
