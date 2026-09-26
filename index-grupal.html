@@ -3169,6 +3169,7 @@ function clearAllRegistrationPlayers(){
   dateSetup();
   openSetup("new");
   $("setupStatus").textContent="RONDA Y REGISTRO BORRADOS · INICIO LIMPIO";
+  // Se mantiene el bloqueo: seguimos dentro de un registro nuevo.
   return true;
 }
 function clearOnlyRoundScores(){if(!round?.configured||round.officiallyClosedAt)return false;if(!window.confirm("¿CONFIRMAS BORRAR ÚNICAMENTE TODOS LOS SCORES?\n\nJugadores, modalidad, campo, hándicaps y cronómetro se conservan."))return false;for(const player of round.players){player.holes={};player.lastHole=null}round.announced={front:false,back:false,complete:false};round.matchPlay=null;round.fourBall=null;syncSideGameResults(round);persist();render();$("status").textContent="SCORES BORRADOS · JUGADORES Y RONDA CONSERVADOS";return true}
