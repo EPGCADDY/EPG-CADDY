@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --omit=dev --no-package-lock && python3 -m pip install --break-system-packages --disable-pip-version-check --no-cache-dir numpy pillow pypdf reportlab",
-  "buildCommand": "node -e \"console.log(\'Production API hotfix build: static files + serverless functions\')\"",
+  "buildCommand": "echo Production-LIVE-hotfix",
   "outputDirectory": ".",
   "rewrites": [
     {
