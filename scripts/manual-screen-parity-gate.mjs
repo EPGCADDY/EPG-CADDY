@@ -41,13 +41,13 @@ assert(!/<img\b[^>]*src="[^"]+\.svg"/i.test(manual),"No se permiten SVG diseñad
 for(const token of ["HACIENDA NUEVA","ALTA VISTA","↑ verde","↓ roja","= blanco","modalidad activa","lienzo negro excesivo"]) assert(manual.includes(token),"Función vigente no está documentada completamente: "+token);
 assert(manual.includes('id="tarjetas-digitales-capitulo"'),"Falta capítulo 30A Tarjetas Digitales");
 for(const token of ["COMPARTIR TARJETA","ENVIAR A JUGADORES","WhatsApp registrado","MEDAL PLAY NORMAL","STABLEFORD","MATCH PLAY","FOUR BALL","SCORE CARD · PRÁCTICA","SKINS","UNIVERSALES"]) assert(manual.includes(token),"Capítulo Tarjetas Digitales incompleto: "+token);
-for(const img of [
-"TARJETA_DIGITAL_MEDAL_PLAY_R106_H2.svg","TARJETA_DIGITAL_STABLEFORD_R106_H2.svg","TARJETA_DIGITAL_MATCH_PLAY_R106_H2.svg","TARJETA_DIGITAL_FOUR_BALL_R106_H2.svg","TARJETA_DIGITAL_PRACTICA_R106_H2.svg","TARJETA_DIGITAL_SKINS_R106_H2.svg","TARJETA_DIGITAL_UNIVERSALES_R106_H2.svg"
-]) assert(manual.includes(img),"Falta ejemplo limpio de Tarjeta Digital: "+img);
 assert(app.includes('id="sendFinalCard"')&&app.includes("COMPARTIR TARJETA"),"La app debe conservar COMPARTIR TARJETA");
 assert(app.includes('id="sendFinalCardPlayers"')&&app.includes("ENVIAR A JUGADORES"),"La app debe conservar ENVIAR A JUGADORES");
-assert(!manual.includes('id="control-x"')||manual.slice(manual.indexOf('id="control-x"'),manual.indexOf("</section>",manual.indexOf('id="control-x"'))).includes("APP_ANOTADOR_TECLADO_NUMERICO_R30.svg"),"Página 20 debe mostrar el teclado vigente");
-assert(!manual.includes('id="lab-scorecard"')||manual.slice(manual.indexOf('id="lab-scorecard"'),manual.indexOf("</section>",manual.indexOf('id="lab-scorecard"'))).includes("APP_ANOTADOR_TECLADO_NUMERICO_R30.svg"),"Pantalla 63 debe mostrar el anotador vigente");
+for(const id of ["control-x","lab-scorecard"]){
+  if(!manual.includes('id="'+id+'"')) continue;
+  const section=manual.slice(manual.indexOf('id="'+id+'"'),manual.indexOf("</section>",manual.indexOf('id="'+id+'"')));
+  assert(/<img\b[^>]*src="\/docs\/manual\/current\/[^"]+\.(?:png|webp|jpe?g)"/i.test(section),"La hoja "+id+" debe usar captura real LAB");
+}
 for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","MI TARJETA FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","officialCorrectionOverlay","MIS RONDAS GUARDADAS"]) {
   assert(app.includes(token)||hub.includes(token),"LAB actual no contiene control esperado: "+token);
 }
