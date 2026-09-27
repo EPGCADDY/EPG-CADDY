@@ -21,16 +21,19 @@ const cases=[
 
 for(const [label,snapshot] of cases){
   const generated=artifacts.build(snapshot);
-  for(const [kind,item] of [["GLOBAL",generated.global],["PERSONAL",generated.personal[0]]]){
-    assert.match(item.html,/PRIMERA VUELTA · HOYOS 1–9/,label+" "+kind+": falta primera vuelta 1–9");
-    assert.match(item.html,/SEGUNDA VUELTA · HOYOS 10–18/,label+" "+kind+": falta segunda vuelta 10–18");
-    assert.match(item.html,/<td>36<\/td><td>36<\/td>/,label+" "+kind+": primera vuelta gross/neto 36");
-    assert.match(item.html,/<td>45<\/td><td>45<\/td>/,label+" "+kind+": segunda vuelta gross/neto 45");
-    if(label==="STABLEFORD"){
-      assert.match(item.html,/PUNTOS/);
-      assert.match(item.html,/>18<\/td>/,label+" "+kind+": primera vuelta 18 puntos");
-      assert.match(item.html,/>9<\/td>/,label+" "+kind+": segunda vuelta 9 puntos");
-    }
+  const global=generated.global.html;
+  assert.match(global,/PRIMERA VUELTA · HOYOS 1–9/,label+" GLOBAL: falta primera vuelta 1–9");
+  assert.match(global,/SEGUNDA VUELTA · HOYOS 10–18/,label+" GLOBAL: falta segunda vuelta 10–18");
+  assert.match(global,/<td>36<\/td><td>36<\/td>/,label+" GLOBAL: primera vuelta gross/neto 36");
+  assert.match(global,/<td>45<\/td><td>45<\/td>/,label+" GLOBAL: segunda vuelta gross/neto 45");
+  const personal=generated.personal[0].html;
+  assert.match(personal,/<th>HOYO<\/th><th>1<\/th>[\s\S]*<th>9<\/th><th>10<\/th>[\s\S]*<th>18<\/th>/,label+" PERSONAL: hoyos 1–18");
+  assert.match(personal,/<th>GROSS<\/th>(?:<td>4<\/td>){9}(?:<td>5<\/td>){9}/,label+" PERSONAL: gross 1–9=4 y 10–18=5");
+  assert.match(personal,/<div class="stat"><b>Gross<\/b><br>81<\/div>/,label+" PERSONAL: total gross 81");
+  if(label==="STABLEFORD"){
+    assert.match(global,/PUNTOS/);
+    assert.match(global,/>18<\/td>/,label+" GLOBAL: primera vuelta 18 puntos");
+    assert.match(global,/>9<\/td>/,label+" GLOBAL: segunda vuelta 9 puntos");
   }
 }
 
