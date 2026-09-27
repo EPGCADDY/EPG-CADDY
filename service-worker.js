@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-production-r128-16`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-production-r128-16`;
-const RELEASE="PRODUCTION-20260926-R128.16";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-production-r128-17`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-production-r128-17`;
+const RELEASE="PRODUCTION-20260926-R128.17";
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   "/score-entry-contract.js",
@@ -80,7 +80,7 @@ async function promoteCandidate(){
   await copyCache(ACTIVE_CACHE_NAME,APPROVED_CACHE_NAME);
 }
 
-self.addEventListener("install",event=>event.waitUntil(refreshShell().then(()=>self.skipWaiting())));
+self.addEventListener("install",event=>event.waitUntil((async()=>{await refreshShell();await promoteCandidate();await self.skipWaiting()})()));
 self.addEventListener("activate",event=>event.waitUntil((async()=>{await promoteCandidate();await self.clients.claim();const keys=await caches.keys();await Promise.all(keys.filter(key=>key.startsWith(CACHE_NAME)&&key!==ACTIVE_CACHE_NAME&&key!==APPROVED_CACHE_NAME).map(key=>caches.delete(key)));const clients=await self.clients.matchAll({type:"window",includeUncontrolled:true});for(const client of clients){try{const url=new URL(client.url);if(url.origin===self.location.origin&&!url.pathname.startsWith("/access.html")&&!url.pathname.startsWith("/invite/")){url.searchParams.set("app_version",RELEASE);url.searchParams.set("sw_activate",String(Date.now()));await client.navigate(url.href)}}catch{}}})()));
 self.addEventListener("message",event=>{
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
@@ -111,7 +111,7 @@ async function approvedNavigationWithManualUpdate(request){
     // Always inject a SW-owned rescue control. Old R128 HTML already contains mandatoryUpdateButton,
     // but its stale JavaScript is exactly what failed to discover the new build.
     if(!servedHtml.includes('id="gscFallbackUpdateButton"')){
-    const fallback='<style id="gsc-fallback-update-style">#gscFallbackUpdateButton{position:fixed;right:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:2147483647;height:44px;padding:0 18px;border:2px solid #31ff00;border-radius:22px;background:#000;color:#31ff00;font:900 14px Arial,sans-serif;box-shadow:0 0 14px rgba(49,255,0,.28)}</style><button id="gscFallbackUpdateButton" type="button">ACTUALIZAR</button><script id="gsc-fallback-update-script">(function(){var b=document.getElementById("gscFallbackUpdateButton");if(!b)return;b.onclick=function(){b.disabled=true;b.textContent="ACTUALIZANDO…";var u=new URL(location.href);u.searchParams.delete("__gscg_build_check");u.searchParams.set("app_version","PRODUCTION-20260926-R128.16");u.searchParams.set("update_check",String(Date.now()));location.replace(u.toString())}})();<\\/script>';
+    const fallback='<style id="gsc-fallback-update-style">#gscFallbackUpdateButton{position:fixed;right:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:2147483647;height:44px;padding:0 18px;border:2px solid #31ff00;border-radius:22px;background:#000;color:#31ff00;font:900 14px Arial,sans-serif;box-shadow:0 0 14px rgba(49,255,0,.28)}</style><button id="gscFallbackUpdateButton" type="button">ACTUALIZAR</button><script id="gsc-fallback-update-script">(function(){var b=document.getElementById("gscFallbackUpdateButton");if(!b)return;b.onclick=function(){b.disabled=true;b.textContent="ACTUALIZANDO…";var u=new URL(location.href);u.searchParams.delete("__gscg_build_check");u.searchParams.set("app_version","PRODUCTION-20260926-R128.17");u.searchParams.set("update_check",String(Date.now()));location.replace(u.toString())}})();<\\/script>';
     servedHtml=servedHtml.replace("</body>",fallback+"</body>");
     }
   }
