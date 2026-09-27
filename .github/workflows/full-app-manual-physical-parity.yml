@@ -17,6 +17,13 @@ jobs:
         run: |
           node scripts/manual-screen-parity-gate.mjs
           node scripts/build-manual-lab.mjs
+          node test-lab-global-operational-audit.mjs
+          node test-lab-r60-physical-matrix.mjs
+          node test-lab-player-double-tap.mjs
+          node test-lab-player-double-tap-points-modes.mjs
+          node test-device-closures.mjs
+          node test-lab-closure-fixed-nines.mjs
+          node test-v397-card-in-out-back-contract.mjs
       - name: Install physical browser
         run: |
           mkdir -p /tmp/full-parity
