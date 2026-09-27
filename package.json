@@ -51,6 +51,7 @@
     "mobile:prepare": "node scripts/prepare-native-release.mjs",
     "mobile:open:ios": "cap open ios",
     "mobile:open:android": "cap open android",
-    "manual:screen-parity": "node scripts/manual-screen-parity-gate.mjs"
+    "manual:screen-parity": "node scripts/manual-screen-parity-gate.mjs",
+    "manual:current-gate": "node test-manual-current-lab.mjs"
   }
 }
