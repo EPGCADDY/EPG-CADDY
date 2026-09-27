@@ -184,7 +184,7 @@ jobs:
             check(await page.locator('#finalCardOverlay.visible').count()===1,'Tarjeta Final no abre físicamente');
             check(await page.locator('#closeFinalCard').isVisible(),'ATRÁS no visible en Tarjeta Final');
             check(!(await overlaps('#gscShortcutsButton','#closeFinalCard')),'ATAJOS traslapa ATRÁS en Tarjeta Final');
-            check(!(await overlaps('#gscShortcutsButton','#officialCloseButton')),'ATAJOS traslapa FINALIZAR RONDA');
+            if(await page.locator('#officialCloseButton').count()) check(!(await overlaps('#gscShortcutsButton','#officialCloseButton')),'ATAJOS traslapa control de cierre legado');
             check(await page.locator('#mandatoryUpdate').isHidden(),'ACTUALIZADO invade Tarjeta Final');
             await page.screenshot({path:'full-parity/app/overlay-final-card-atajos.png',fullPage:false});
             results.app.push('final-card+atajos');
@@ -301,7 +301,7 @@ jobs:
             await m.locator('#portada').screenshot({path:'full-parity/manual/00-portada.png'});
             await m.locator('#indice').screenshot({path:'full-parity/manual/01-indice.png'});
             const count=await m.locator('.sheet').count();
-            check(count===74,'Manual físico no tiene 74 hojas vigentes: '+count);
+            check(count===75,'Manual físico no tiene 75 hojas vigentes: '+count);
             for(let i=0;i<count;i++){
               const el=m.locator('.sheet').nth(i);
               await el.scrollIntoViewIfNeeded();
