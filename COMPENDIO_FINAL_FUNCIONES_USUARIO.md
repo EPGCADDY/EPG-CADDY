@@ -6,7 +6,7 @@ Este documento explica, con palabras sencillas, qué puede hacer el usuario dent
 
 ## 1. ¿Qué es Golf Score Card GT?
 
-Es una aplicación para registrar y conservar los resultados de una ronda de golf desde el teléfono. Permite llevar una ronda General, una ronda Stableford o una Score Card rápida sin registro formal.
+Es una aplicación para registrar y conservar los resultados de una ronda de golf desde el teléfono. Permite llevar Medal Play Normal, Stableford, Match Play, Four Ball, Skins, Universales o una Score Card de Práctica, además de consultar Torneos en Vivo.
 
 La aplicación puede usarse con uno y hasta seis jugadores.
 
@@ -15,7 +15,7 @@ La aplicación puede usarse con uno y hasta seis jugadores.
 Al abrir la aplicación aparece la pantalla principal. Desde allí el usuario puede:
 
 - seleccionar el campo de golf;
-- elegir **RONDA NORMAL**, **STABLEFORD** o **SCORE CARD - PRÁCTICA**;
+- elegir **MEDAL PLAY NORMAL**, **STABLEFORD**, **MATCH PLAY**, **FOUR BALL**, **SKINS**, **UNIVERSALES**, **SCORE CARD - PRÁCTICA** o **TORNEOS EN VIVO**;
 - escribir el nombre del torneo, si corresponde;
 - registrar a los jugadores manualmente;
 - abrir la ronda anterior;
@@ -83,6 +83,26 @@ Durante esta modalidad se puede agregar de forma opcional:
 - marcas.
 
 Si esos datos no se agregan, la tarjeta funciona como registro rápido de Gross.
+
+### Match Play
+
+Compara jugadores o parejas hoyo por hoyo y mantiene el estado del enfrentamiento hasta que quede definido matemáticamente.
+
+### Four Ball
+
+Organiza jugadores por equipos y conserva el HCP individual de cada participante mientras calcula el resultado correspondiente del equipo.
+
+### Skins
+
+Añade el juego de Skins sobre la Score Card principal y mantiene separados el resultado deportivo y el valor económico acordado.
+
+### Universales
+
+Añade el cálculo de puntos Universales sobre la Score Card principal. Al completarse la ronda, el cierre es automático y abre la Tarjeta Digital Final.
+
+### Torneos en Vivo
+
+Abre el Centro de Torneos para consultar Monitor del Torneo en Vivo, Resultados por Categoría, Buscar Jugador y Tablero de Mis Favoritos sin mezclar esas vistas con la Score Card activa.
 
 ## 5. Nombre del torneo
 
