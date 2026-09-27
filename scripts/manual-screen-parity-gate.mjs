@@ -14,34 +14,31 @@ assert(manual.indexOf('id="portada"')<manual.indexOf('id="indice"'),"La portada 
 assert(manual.includes('id="indice"')&&manual.includes("Toca cualquier tema para saltar directamente"),"Falta índice general clickable");
 assert((manual.match(/href="#[^"]+"/g)||[]).length>=50,"Índice/navegación insuficiente");
 assert((manual.match(/<section class="sheet(?: |")/g)||[]).length===75,"Debe haber exactamente 75 hojas vigentes: estructura anterior + capítulo 30A Tarjetas Digitales");
-for(const p of [10,11,12,13,14,15,16,68,70,72]) assert(manual.includes("/docs/manual/layout/page-"+String(p).padStart(2,"0")+".png"),"Falta lámina informativa gris vigente page-"+p);
-const mountedCurrent=[
- "/docs/manual/current/APP_ACCESS.png",
- "/docs/manual/current/APP_SETUP_CURRENT.png",
- "/docs/manual/current/APP_CATEGORIAS_OFICIALES.png",
- "/docs/manual/current/APP_CAMPEONATO_SCORECARD.png",
- "/docs/manual/current/APP_SCORECARD_ATAJOS.png",
- "/docs/manual/current/APP_ATAJOS_OVERLAY.png",
- "/docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png",
- "/docs/manual/current/APP_CORRECCION_ATAJOS.png",
- "/docs/manual/current/APP_HISTORIAL_ATAJOS.png",
- "/docs/manual/current/APP_TORNEOS_HUB.png",
- "/docs/manual/current/APP_TORNEOS_ATAJOS.png",
- "/docs/manual/current/APP_MODE_STABLEFORD_R106_H2.svg",
- "/docs/manual/current/APP_TARJETA_DIGITAL_R106_H2.svg",
- "/docs/manual/current/APP_MATCH_PLAY_CARD_R106_H2.svg",
- "/docs/manual/current/APP_MODE_MATCH_PLAY.png",
- "/docs/manual/current/APP_MODE_FOUR_BALL.png",
- "/docs/manual/current/APP_MODE_SKINS.png",
- "/docs/manual/current/APP_MODE_UNIVERSALES.png",
- "/docs/manual/current/APP_MODE_PRACTICE.png"
+const mountedRealCurrent=[
+"/docs/manual/current/APP_ACCESS.png",
+"/docs/manual/current/APP_SETUP_CURRENT.png",
+"/docs/manual/current/APP_CATEGORIAS_OFICIALES.png",
+"/docs/manual/current/APP_CAMPEONATO_SCORECARD.png",
+"/docs/manual/current/APP_SCORECARD_ATAJOS.png",
+"/docs/manual/current/APP_ATAJOS_OVERLAY.png",
+"/docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png",
+"/docs/manual/current/APP_CORRECCION_ATAJOS.png",
+"/docs/manual/current/APP_HISTORIAL_ATAJOS.png",
+"/docs/manual/current/APP_TORNEOS_HUB.png",
+"/docs/manual/current/APP_TORNEOS_ATAJOS.png",
+"/docs/manual/current/APP_MODE_MATCH_PLAY.png",
+"/docs/manual/current/APP_MODE_FOUR_BALL.png",
+"/docs/manual/current/APP_MODE_SKINS.png",
+"/docs/manual/current/APP_MODE_UNIVERSALES.png",
+"/docs/manual/current/APP_MODE_PRACTICE.png",
+"/docs/manual/current/CAMPO_MODALIDAD_REAL.webp",
+"/docs/manual/current/REGISTRO_ATAJOS_REAL.webp",
+"/docs/manual/current/FOURBALL_ATAJOS_REAL.webp"
 ];
-for(const img of mountedCurrent) assert(manual.includes(img),"Falta pantalla física actual montada en manual: "+img);
-for(const token of ["HACIENDA NUEVA","ALTA VISTA","↑ verde","↓ roja","= blanco","modalidad activa","lienzo negro excesivo"]) assert(manual.includes(token),"R106-H2 no está documentado completamente: "+token);
-assert(manual.includes("APP_MODE_STABLEFORD_R106_H2.svg"),"Stableford debe usar la pantalla R106-H2 de seis campos");
-assert(manual.includes("APP_TARJETA_DIGITAL_R106_H2.svg"),"Tarjeta Digital debe usar la gráfica R106-H2 recortada/legible");
-assert(manual.includes("APP_MATCH_PLAY_CARD_R106_H2.svg"),"Match Play debe usar la gráfica R106-H2 con ↑ / ↓ / =");
-assert((manual.match(/APP_ANOTADOR_TECLADO_NUMERICO_R30\.svg/g)||[]).length>=2,"Las páginas operativas de anotación deben usar el teclado vigente");
+for(const img of mountedRealCurrent) assert(manual.includes(img),"Falta captura real actual montada en manual: "+img);
+assert(!/\/docs\/manual\/layout\//.test(manual),"No se permiten láminas diseñadas /layout/ como pantallas de aplicación");
+assert(!/<img\b[^>]*src="[^"]+\.svg"/i.test(manual),"No se permiten SVG diseñados como pantallas de aplicación");
+for(const token of ["HACIENDA NUEVA","ALTA VISTA","↑ verde","↓ roja","= blanco","modalidad activa","lienzo negro excesivo"]) assert(manual.includes(token),"Función vigente no está documentada completamente: "+token);
 assert(manual.includes('id="tarjetas-digitales-capitulo"'),"Falta capítulo 30A Tarjetas Digitales");
 for(const token of ["COMPARTIR TARJETA","ENVIAR A JUGADORES","WhatsApp registrado","MEDAL PLAY NORMAL","STABLEFORD","MATCH PLAY","FOUR BALL","SCORE CARD · PRÁCTICA","SKINS","UNIVERSALES"]) assert(manual.includes(token),"Capítulo Tarjetas Digitales incompleto: "+token);
 for(const img of [
