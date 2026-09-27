@@ -82,7 +82,7 @@ assert.equal(matchPlay.validatePlayers([player("a","A",[]),player("b","B",[]),pl
   const entry=cardLibrary.entry(closed.round);
   assert.equal(entry.mode,"match_play");
   const artifacts=cardArtifacts.build(closed.snapshot);
-  assert.match(artifacts.global.html,/Flecha verde ↑ = ganó · flecha roja ↓ = perdió · signo = = empate/);
+  assert.match(artifacts.global.html,/Flecha verde hacia arriba = ganó · flecha roja hacia abajo = perdió · signo = = empate/);
   assert.match(artifacts.global.html,/aria-label="Ganó">↑<\/span>/);
   assert.match(artifacts.global.html,/aria-label="Perdió">↓<\/span>/);
   assert.match(artifacts.global.html,/aria-label="Empató">=<\/span>/);
