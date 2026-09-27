@@ -209,11 +209,9 @@ Antes de usar **BORRAR SCORES**, la aplicación pide confirmación.
 
 ## 10. Tarjeta Digital Final
 
-Al abrir **TARJETA DIGITAL**, el usuario puede revisar toda la ronda antes de cerrarla.
+Cuando la modalidad cumple su condición real de finalización y están completos todos los scores o las **X** correspondientes, la aplicación cierra la ronda automáticamente y abre directamente la **TARJETA DIGITAL FINAL**. No existe un paso intermedio de cierre manual.
 
-Cuando los 18 hoyos están completos, tocar **FINALIZAR RONDA**. La ronda no termina únicamente por llegar al hoyo 18: deben estar completos todos los scores o las **X** correspondientes.
-
-Después de finalizar, aparecen las siguientes opciones:
+Después del cierre automático, aparecen las siguientes opciones:
 
 - **ABRIR GLOBAL**: abre la tarjeta de todos los jugadores.
 - **IMAGEN GLOBAL**: prepara la tarjeta global como imagen.
@@ -355,8 +353,8 @@ Las siguientes capacidades continúan en preparación o validación y no deben c
 4. Tocar **INICIAR RONDA** una sola vez.
 5. Registrar cada score por voz o manualmente.
 6. Comprobar los 18 hoyos.
-7. Abrir **TARJETA DIGITAL**.
-8. Tocar **FINALIZAR RONDA**.
+7. Completar todos los resultados requeridos.
+8. La aplicación cierra automáticamente y abre la **TARJETA DIGITAL FINAL**.
 9. Guardar, descargar o compartir las tarjetas.
 
 Si la aplicación tarda en abrir, esperar entre 5 y 10 segundos. Si continúa sin responder, cerrarla y abrirla de nuevo, y comprobar la conexión a Internet. No es necesario borrar ni reinstalar la aplicación.
