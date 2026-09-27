@@ -71,9 +71,9 @@ const preparedItem=artifacts.build({...base,mode:"universales",players:["JAIME",
 let activation=true,shareCalls=0,statusText="",buttonText="",buttonDisabled=false;
 const button={get disabled(){return buttonDisabled},set disabled(value){buttonDisabled=value},get textContent(){return buttonText},set textContent(value){buttonText=value}},shareStatus={get textContent(){return statusText},set textContent(value){statusText=value}};
 class FakeFile{constructor(parts,name,options){this.parts=parts;this.name=name;this.type=options.type}}
-const context={prepared:{id:"round:hash:1",item:preparedItem,blob:preparedBlob},navigator:{canShare:()=>true,share:()=>{assert.equal(activation,true,"navigator.share debe comenzar dentro del toque");shareCalls+=1;return Promise.resolve()}},File:FakeFile,Promise,URL,document:{},console,setTimeout,recordShareEvent:()=>true,officialArtifactShareText:()=>"TARJETA OFICIAL",prepareFinalCardShare:()=>false,$:id=>id==="sendFinalCard"?button:shareStatus,finalCardShareIdentity:()=>"round:hash:1"};
+const context={round:{mode:"universales"},prepared:{id:"round:hash:1",item:preparedItem,blob:preparedBlob},navigator:{canShare:()=>true,share:()=>{assert.equal(activation,true,"navigator.share debe comenzar dentro del toque");shareCalls+=1;return Promise.resolve()}},File:FakeFile,Promise,URL,document:{},console,setTimeout,recordShareEvent:()=>true,officialArtifactShareText:()=>"TARJETA OFICIAL",prepareFinalCardShare:()=>false,$:id=>id==="sendFinalCard"?button:shareStatus,finalCardShareIdentity:()=>"round:hash:1"};
 vm.runInNewContext(`let finalCardPreparedShare=prepared;${shareSource};this.runShare=shareOfficialArtifactImage`,context);
 const sharePromise=context.runShare();activation=false;const shareResult=await sharePromise;
-assert.equal(shareCalls,1);assert.equal(shareResult.ok,true);assert.equal(buttonDisabled,false);assert.equal(buttonText,"ENVIAR TARJETA DIGITAL");assert.equal(statusText,"IMAGEN PNG ENTREGADA A LA APP ELEGIDA");
+assert.equal(shareCalls,1);assert.equal(shareResult.ok,true);assert.equal(buttonDisabled,false);assert.equal(buttonText,"COMPARTIR TARJETA");assert.equal(statusText,"IMAGEN PNG ENTREGADA A LA APP ELEGIDA");
 
 console.log("PASS V397/R29 · 8 artefactos; PNG preparado antes del toque; hoja nativa con activación vigente; estado visible");
