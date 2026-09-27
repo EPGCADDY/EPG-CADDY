@@ -636,7 +636,7 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
 <div class="current-copy"><h3>REGISTRA GROSS</h3><p>Ingresa los golpes reales. La aplicación calcula neto y acumulados automáticamente.</p></div>
 <div class="current-copy"><h3>MARCA X</h3><p>Cuando la modalidad y la operación permitan una X, úsala para registrar explícitamente ese estado. No sustituyas una X por un número inventado.</p></div>
 <div class="current-copy"><h3>ENTER / CONFIRMAR</h3><p>Confirma el hoyo para guardar el dato y actualizar la tarjeta.</p></div>
-<div class="current-copy"><h3>CORREGIR UN HOYO</h3><p>Si detectas un error antes del cierre, vuelve al hoyo específico y corrige sólo ese dato. Si la ronda ya fue cerrada, utiliza CORRECCIÓN OFICIAL.</p></div>
+<div class="current-copy"><h3>CORREGIR UN HOYO</h3><p>Si detectas un error mientras la ronda sigue activa, vuelve al hoyo específico y corrige sólo ese dato. Si la ronda ya fue cerrada automáticamente, utiliza CORRECCIÓN OFICIAL.</p></div>
 <div class="current-copy"><h3>QUÉ NO DEBES HACER</h3><p>No borres toda la ronda para corregir una sola celda. Usa la corrección puntual disponible.</p></div>
 <div class="sheet-nav"><a href="#registro-2">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#calculos">SIGUIENTE →</a></div>
 </section><section class="sheet master-sheet current-function-sheet" id="calculos">
@@ -693,7 +693,7 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
 <div class="current-copy"><h3>VISTA FINAL</h3><p>Revisa la Tarjeta Digital Global y las personales desde el resultado oficial. La tarjeta compartida conserva la modalidad activa y debe salir ajustada al contenido real, sin un lienzo negro excesivo alrededor.</p></div>
 <div class="current-copy"><h3>CONSISTENCIA DE MODALIDAD</h3><p>Antes de compartir, la aplicación valida que la tarjeta preparada corresponda a la modalidad actual. Si detecta una tarjeta preparada de otra modalidad, la descarta y genera nuevamente la correcta.</p></div>
 <div class="current-copy"><h3>LEGIBILIDAD</h3><p>La imagen PNG debe conservar todos los datos visibles con tamaño suficiente para lectura en teléfono. La exportación recorta espacio vacío y mantiene el contenido completo.</p></div>
-<div class="current-copy"><h3>CONSISTENCIA DE RESULTADOS</h3><p>Antes de cerrar, comprueba que los totales y el resultado correspondan con la ronda.</p></div>
+<div class="current-copy"><h3>CONSISTENCIA DE RESULTADOS</h3><p>Antes de completar el último resultado requerido, comprueba que los totales y el resultado correspondan con la ronda; al cumplirse la condición de finalización, el cierre es automático.</p></div>
 <div class="sheet-nav"><a href="#jugadores-ronda">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#cierre">SIGUIENTE →</a></div>
 </section><section class="sheet master-sheet current-function-sheet" id="cierre">
 <div class="sheet-head"><strong>29</strong><h2>Cierre automático y Tarjeta Digital Final</h2><a href="#indice">ÍNDICE</a></div>
@@ -801,7 +801,7 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
 <div class="current-copy"><h3>CAMPO ACTIVO</h3><p>La ronda puede operar en EL PULTÉ, COUNTRY CLUB, SAN ISIDRO, MAYAN GOLF, HACIENDA NUEVA o ALTA VISTA. Confirma el campo antes de ingresar el primer score.</p></div>
 <div class="current-copy"><h3>1 · SELECCIONA HOYO</h3><p>Confirma el hoyo que vas a registrar antes de ingresar scores.</p></div>
 <div class="current-copy"><h3>2 · INGRESA GROSS</h3><p>Registra el gross de cada jugador. La aplicación actualiza puntos y acumulados automáticamente.</p></div>
-<div class="current-copy"><h3>3 · REVISA ACUMULADOS</h3><p>Comprueba que el total de puntos evolucione de forma coherente conforme avanzan los hoyos. Si un jugador no tiene score en un hoyo, revisa ese faltante antes de cerrar.</p></div>
+<div class="current-copy"><h3>3 · REVISA ACUMULADOS</h3><p>Comprueba que el total de puntos evolucione de forma coherente conforme avanzan los hoyos. Si un jugador no tiene score en un hoyo, revisa ese faltante antes de completar el último resultado requerido.</p></div>
 <div class="current-copy"><h3>AGREGAR RESULTADO OFICIAL</h3><p>Esta función sirve para registrar un resultado Stableford oficial cuando la pantalla correspondiente lo solicita. Debes completar jugador, categoría, fecha, campo, puntos y gross opcional antes de GUARDAR RESULTADO.</p></div>
 <div class="current-copy"><h3>GUARDAR RESULTADO</h3><p>Confirma el resultado oficial ingresado. Antes de guardar revisa FECHA 1, FECHA 2, FECHA 3 o FECHA 4, el campo y los puntos para evitar mezclar jornadas.</p></div>
 <div class="current-copy"><h3>CIERRE AUTOMÁTICO</h3><p>Comprueba los 18 hoyos, puntos y jugadores. Cuando Stableford queda completo, la aplicación realiza el cierre automáticamente y abre la Tarjeta Digital Final. Después del cierre, cualquier corrección debe pasar por el flujo oficial.</p></div>
