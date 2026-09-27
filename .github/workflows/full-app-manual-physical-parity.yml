@@ -184,7 +184,7 @@ jobs:
             check(await page.locator('#finalCardOverlay.visible').count()===1,'Tarjeta Final no abre físicamente');
             check(await page.locator('#closeFinalCard').isVisible(),'ATRÁS no visible en Tarjeta Final');
             check(!(await overlaps('#gscShortcutsButton','#closeFinalCard')),'ATAJOS traslapa ATRÁS en Tarjeta Final');
-            if(await page.locator('#officialCloseButton').count()) check(!(await overlaps('#gscShortcutsButton','#officialCloseButton')),'ATAJOS traslapa control de cierre legado');
+            check(await page.locator('#officialCloseButton').isHidden(),'Control legado de cierre no debe ser visible');
             check(await page.locator('#mandatoryUpdate').isHidden(),'ACTUALIZADO invade Tarjeta Final');
             await page.screenshot({path:'full-parity/app/overlay-final-card-atajos.png',fullPage:false});
             results.app.push('final-card+atajos');
