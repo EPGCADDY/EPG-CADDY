@@ -285,7 +285,8 @@ jobs:
             }
 
             // Tournament hub physically
-            await openStable(page,'http://127.0.0.1:8765/live-hub.html');
+            const hub=await newAuditPage();
+            await openStable(hub,'http://127.0.0.1:8765/live-hub.html');
             await page.evaluate(()=>document.body.classList.remove('public-display','display-general','display-category'));
             await page.waitForTimeout(500);
             check(await page.locator('#gscShortcutsButton').isVisible(),'MENÚ no visible físicamente en Torneos');
@@ -293,11 +294,11 @@ jobs:
             for(const token of ['CENTRO DE TORNEOS','+ AGREGAR OTRO TORNEO','GENERAL','CATEGORÍAS','BUSCAR POR NOMBRE','MIS FAVORITOS','VOLVER A MI SCORE CARD']){
               check(hubText.includes(token),'Hub físico falta '+token);
             }
-            await page.screenshot({path:'full-parity/app/07-tournament-hub.png',fullPage:false});
+            await hub.screenshot({path:'full-parity/app/07-tournament-hub.png',fullPage:false});
             await page.locator('#gscShortcutsButton').click();
             await page.waitForTimeout(120);
             check(await page.locator('#gscShortcutsOverlay.visible').count()===1,'MENÚ no abre físicamente en Torneos');
-            await page.screenshot({path:'full-parity/app/08-tournament-hub-atajos.png',fullPage:false});
+            await hub.screenshot({path:'full-parity/app/08-tournament-hub-atajos.png',fullPage:false});
             await page.close();
 
             // Manual original restaurado: portada + índice + 54 hojas en scroll continuo
