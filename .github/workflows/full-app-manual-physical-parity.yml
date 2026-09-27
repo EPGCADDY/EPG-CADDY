@@ -53,6 +53,7 @@ jobs:
             }
 
             const page=await browser.newPage({viewport,deviceScaleFactor:2});
+            await page.addInitScript(()=>{if('serviceWorker' in navigator){Object.defineProperty(navigator,'serviceWorker',{value:{register:()=>Promise.resolve({update:()=>Promise.resolve()}),addEventListener:()=>{},getRegistrations:()=>Promise.resolve([])},configurable:true})}});
             await page.route('**/api/account**',route=>{
               const u=new URL(route.request().url());
               if(u.searchParams.get('action')==='session') return route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"physical-audit","email":"audit@example.com"}}'});
