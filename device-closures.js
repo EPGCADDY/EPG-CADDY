@@ -1,6 +1,6 @@
 (function(root){
  'use strict';
- let last='',busy=false,queue=[],activeFinish=null,activeUtterance=null;
+ let last='',busy=false,queue=[],activeFinish=null,activeUtterance=null,activeKind=null,playbackToken=0;
  const synth=root.speechSynthesis;
  function status(text){const el=root.document?.getElementById('deviceClosureStatus');if(el)el.textContent=text}
  function voice(){
@@ -50,25 +50,27 @@
  function speak(text){const clean=String(text||'').trim();if(!clean)return Promise.resolve(false);return new Promise(resolve=>{queue.push({text:clean,resolve});next()})}
  function cancel(){for(const item of queue.splice(0))item.resolve(false);synth?.cancel();if(activeFinish)activeFinish(false)}
  function bindControls(){
-  let activeKind=null,playbackToken=0;
-  const bind=(id,kind,label)=>root.document?.getElementById(id)?.addEventListener('click',()=>{
-    if(activeKind===kind){
+  const bind=(id,kind,label)=>{
+    const button=root.document?.getElementById(id);
+    if(!button||button.dataset.gscClosureBound==='1')return;
+    button.dataset.gscClosureBound='1';
+    button.addEventListener('click',()=>{
+      if(activeKind===kind){
+        playbackToken++;
+        activeKind=null;
+        cancel();
+        status(`${label}: audio detenido.`);
+        return;
+      }
+      const text=typeof root.GSCRequestedClosureSpeech==='function'?root.GSCRequestedClosureSpeech(kind):'';
+      if(!text){status(`${label}: todavía no hay resultados disponibles.`);return}
       playbackToken++;
+      const token=playbackToken;
+      activeKind=kind;
       cancel();
-      activeKind=null;
-      status(`${label}: audio detenido.`);
-      return;
-    }
-    const text=typeof root.GSCRequestedClosureSpeech==='function'?root.GSCRequestedClosureSpeech(kind):'';
-    if(!text){status(`${label}: todavía no hay resultados disponibles.`);return}
-    playbackToken++;
-    const token=playbackToken;
-    cancel();
-    activeKind=kind;
-    speak(text).finally(()=>{
-      if(token===playbackToken)activeKind=null;
+      speak(text).finally(()=>{if(token===playbackToken)activeKind=null});
     });
-  });
+  };
   bind('deviceClosureFront','front','FRONT · 1 - 9');
   bind('deviceClosureBack','back','BACK · 10 - 18');
   bind('deviceClosureTotal','total','TOTAL · 1 - 18');
