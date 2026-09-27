@@ -228,7 +228,7 @@ jobs:
 
             // CAMPEONATO physically in registration category selector
             {
-              await page.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
+              await openStable(page,'http://127.0.0.1:8765/index-grupal.html');
               await page.waitForTimeout(300);
               await page.evaluate(()=>{
                 openNewRoundDraft();
@@ -286,7 +286,7 @@ jobs:
             }
 
             // Tournament hub physically
-            await page.goto('http://127.0.0.1:8765/live-hub.html',{waitUntil:'networkidle'});
+            await openStable(page,'http://127.0.0.1:8765/live-hub.html');
             await page.evaluate(()=>document.body.classList.remove('public-display','display-general','display-category'));
             await page.waitForTimeout(500);
             check(await page.locator('#gscShortcutsButton').isVisible(),'MENÚ no visible físicamente en Torneos');
