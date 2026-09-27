@@ -228,9 +228,8 @@ jobs:
 
             // CAMPEONATO physically in registration category selector
             {
-              await openStable(page,'http://127.0.0.1:8765/index-grupal.html');
-              await page.waitForTimeout(300);
               await page.evaluate(()=>{
+                closeCardLibrary();
                 openNewRoundDraft();
                 manualDraftRows[0]={...emptyManualDraftRow(),name:'AUDITOR CAMPEONATO',category:'championship',handicap:'0',tee:'Negro',countryCode:'502',whatsapp:'',dirty:true};
                 renderDraft();
