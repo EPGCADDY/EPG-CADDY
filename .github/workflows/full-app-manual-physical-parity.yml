@@ -4,6 +4,10 @@ on:
     branches: [laboratorio]
 permissions:
   contents: write
+concurrency:
+  group: lab-full-physical-parity-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   audit:
     if: github.actor != 'github-actions[bot]'
