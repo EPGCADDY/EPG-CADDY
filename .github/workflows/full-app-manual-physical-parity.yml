@@ -63,6 +63,11 @@ jobs:
             await page.waitForLoadState('domcontentloaded');
             await page.waitForFunction(()=>document.readyState==='complete',{timeout:15000}).catch(()=>{});
             await page.waitForTimeout(1200);
+            // Freeze further document-level redirects during deterministic physical audit.
+            await page.route('http://127.0.0.1:8765/**',async route=>{
+              if(route.request().isNavigationRequest() && route.request().frame()===page.mainFrame() && page.url().includes('index-grupal.html')) return route.abort();
+              return route.continue();
+            });
             await page.evaluate(()=>{
               const setup=document.getElementById('setupOverlay');
               if(setup){setup.classList.remove('visible');setup.setAttribute('aria-hidden','true');setup.style.removeProperty('display')}
