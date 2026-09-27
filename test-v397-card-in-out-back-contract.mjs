@@ -40,7 +40,7 @@ for(const [label,snapshot] of cases){
 assert.doesNotMatch(html,/id="librarySendDigital"/);
 assert.match(html,/id="artifactViewerBack"/);
 assert.match(html,/id="artifactViewerSend"/);
-assert.match(html,/id="sendFinalCard" hidden>ENVIAR TARJETA DIGITAL<\/button><button class="screen-back-button" id="closeFinalCard">ATRÁS<\/button>/);
+assert.match(html,/id="sendFinalCard" hidden>COMPARTIR TARJETA<\/button><button id="sendFinalCardPlayers" type="button" hidden disabled>ENVIAR A JUGADORES<\/button><button class="screen-back-button" id="closeFinalCard">ATRÁS<\/button>/);
 assert.match(html,/closeButton\.hidden=true;closeButton\.disabled=true;closeButton\.setAttribute\("aria-hidden","true"\);closeButton\.tabIndex=-1;closeButton\.textContent="CIERRE AUTOMÁTICO"/,"El control legado de cierre debe permanecer oculto; el cierre oficial es automático");
 assert.match(html,/\$\("sendFinalCard"\)\.addEventListener\("click",shareOfficialArtifactImage\)/);
 assert.match(html,/prepareFinalCardShare\(\)[\s\S]{0,900}GSCCardFileExport\.png\(item\)/,"El envío principal debe preparar un PNG real antes del toque");
