@@ -37,5 +37,5 @@ const screenSources=[...html.matchAll(/<img\b[^>]*src="([^"]+)"/g)].map(match=>m
 const nonRealArtwork=screenSources.filter(src=>/\/docs\/manual\/layout\/|\.svg$/i.test(src));
 assert.deepEqual(nonRealArtwork,[],"El manual vigente no debe presentar láminas o SVG diseñados como pantallas de la aplicación");
 const realScreenSources=screenSources.filter(src=>/\/docs\/manual\/current\/.*\.(?:png|webp|jpe?g)$/i.test(src));
-assert.ok(realScreenSources.length>=50,"El manual debe conservar las capturas reales actuales de LAB");
-console.log("MANUAL_CURRENT_LAB_GATE PASS sheets=75 navigation=sequential retired=0 nonRealArtwork=0 realScreens>=50");
+assert.ok(realScreenSources.length>=60,"El manual debe conservar las capturas reales actuales de LAB");
+console.log("MANUAL_CURRENT_LAB_GATE PASS sheets=75 navigation=sequential retired=0 nonRealArtwork=0 realScreens>=60");
