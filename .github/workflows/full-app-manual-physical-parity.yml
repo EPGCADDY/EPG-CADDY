@@ -38,11 +38,12 @@ jobs:
           (async()=>{
             const browser=await chromium.launch({headless:true});
             const viewport={width:430,height:932};
+            const newAuditPage=async()=>{const context=await browser.newContext({viewport,deviceScaleFactor:2,serviceWorkers:'block'});const p=await context.newPage();return p};
             const openStable=async(p,url)=>{for(let n=0;n<4;n++){try{await p.goto(url,{waitUntil:'domcontentloaded',timeout:20000});await p.waitForTimeout(400);return}catch(e){if(n===3)throw e;await p.waitForTimeout(250)}}};
 
             // Access screen physically
             {
-              const p=await browser.newPage({viewport,deviceScaleFactor:2});
+              const p=await newAuditPage();
               await p.route('**/api/account**',r=>r.fulfill({status:401,contentType:'application/json',body:'{"ok":false}'}));
               await openStable(p,'http://127.0.0.1:8765/index-grupal.html');
               await p.waitForTimeout(300);
@@ -52,8 +53,8 @@ jobs:
               await p.close();
             }
 
-            const page=await browser.newPage({viewport,deviceScaleFactor:2});
-            await page.addInitScript(()=>{if('serviceWorker' in navigator){Object.defineProperty(navigator,'serviceWorker',{value:{register:()=>Promise.resolve({update:()=>Promise.resolve()}),addEventListener:()=>{},getRegistrations:()=>Promise.resolve([])},configurable:true})}});
+            const page=await newAuditPage();
+            
             await page.route('**/api/account**',route=>{
               const u=new URL(route.request().url());
               if(u.searchParams.get('action')==='session') return route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"physical-audit","email":"audit@example.com"}}'});
@@ -274,7 +275,7 @@ jobs:
               const snap={status:'officially_closed',sha256:'c'.repeat(64),version:1,course:'El Pulté Golf',playedAt:'2026-09-20T16:00:00Z',mode:'general',players:[{id:'champ',name:'JUGADOR CAMPEONATO',tournamentCategory:'championship',handicap:0,tee:'Blanco',holes}]};
               const out=artifacts.build(snap);
               fs.writeFileSync('full-parity/app/campeonato-card.html',out.global.html);
-              const card=await browser.newPage({viewport,deviceScaleFactor:2});
+              const card=await newAuditPage();
               await card.goto('file://'+process.cwd()+'/full-parity/app/campeonato-card.html');
               const body=await card.locator('body').innerText();
               check(body.includes('CAMPEONATO'),'Score Card física falta CAMPEONATO');
@@ -301,7 +302,7 @@ jobs:
             await page.close();
 
             // Manual original restaurado: portada + índice + 54 hojas en scroll continuo
-            const m=await browser.newPage({viewport,deviceScaleFactor:2});
+            const m=await newAuditPage();
             await openStable(m,'http://127.0.0.1:8765/manual.html');
             check(await m.locator('#portada').count()===1,'Falta portada original');
             check(await m.locator('#indice').count()===1,'Falta índice original');
