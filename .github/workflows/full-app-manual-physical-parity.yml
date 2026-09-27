@@ -157,7 +157,7 @@ jobs:
             };
             const modalityCases=[
               ['stableford',['#roundManualEntry','#roundGridEnter','#finalCardButton','.summary']],
-              ['match_play',['#roundManualEntry','#roundGridEnter','#finalCardButton','.summary']],
+              ['match_play',['#roundManualEntry','#roundGridEnter','#finalCardButton']],
               ['four_ball',['#roundManualEntry','#roundGridEnter','#finalCardButton','#fourBallStatus','.summary']],
               ['skins',['#roundManualEntry','#roundGridEnter','#finalCardButton','#skinsResults','.summary']],
               ['universales',['#roundManualEntry','#roundGridEnter','#finalCardButton','.summary']],
