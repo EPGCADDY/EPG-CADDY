@@ -3935,7 +3935,7 @@ function renderRoundManualEntry(){
   const selectedHole=preferredManualHole({roundId:round.id,renderedRoundId:manual.dataset.roundId,selectedHole:manual.dataset.hole,firstPending,maxHole:matchLimit});manual.dataset.roundId=String(round.id||"");manual.dataset.hole=String(selectedHole);
   const stable=isStablefordRound(),course=COURSE_CATALOG[round.courseKey]||COURSE_CATALOG.pulte,cfg=stable?stablefordConfig():null,locked=!!round.officiallyClosedAt;
   const detailOne=stable?{label:"TORNEO",value:round.tournament?.name||STABLEFORD_DEFAULT_TOURNAMENT}:{label:"CAMPO",value:course.displayName||course.name};
-  const generalMatchDetail={label:"MODALIDAD",value:round.provisional?"SCORE CARD - PRÁCTICA":isMatchPlayRound()?"MATCH PLAY":isUniversalesRound()?"UNIVERSALES":activeSideGameKey()?`${activeSideGameKey().toUpperCase()} · MEDAL PLAY`:"MEDAL PLAY NORMAL"};
+  const generalMatchDetail={label:"MODALIDAD",value:round.provisional?"SCORE CARD - PRÁCTICA":isMatchPlayRound()?"MATCH PLAY":isUniversalesRound()?"UNIVERSALES":activeSideGameKey()?activeSideGameKey().toUpperCase():"MEDAL PLAY NORMAL"};
   const detailTwo=stable?{label:"CATEGORÍA",value:`${cfg.label} · ${stablefordTeeLabel(cfg)}`}:generalMatchDetail;
   const effectiveDetailTwo=isFourBallRound()?{label:"MODALIDAD",value:"FOUR BALL"}:detailTwo;
   const metric=stable?"PTS":"GROSS";
