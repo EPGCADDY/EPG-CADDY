@@ -61,6 +61,8 @@ jobs:
             await page.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'domcontentloaded'});
             await page.waitForTimeout(700);
             await page.waitForLoadState('domcontentloaded');
+            await page.waitForFunction(()=>document.readyState==='complete',{timeout:15000}).catch(()=>{});
+            await page.waitForTimeout(1200);
             await page.evaluate(()=>{
               const setup=document.getElementById('setupOverlay');
               if(setup){setup.classList.remove('visible');setup.setAttribute('aria-hidden','true');setup.style.removeProperty('display')}
