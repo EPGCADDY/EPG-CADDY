@@ -54,8 +54,8 @@ assert.match(html,/<th>PUNTOS IN<\/th><th>PUNTOS OUT<\/th><th>PUNTOS TOTAL<\/th>
 assert.match(html,/FRONT\.map[\s\S]{0,180}<th class="sum-col">IN<\/th>\$\{BACK\.map[\s\S]{0,180}<th class="sum-col">OUT<\/th><th class="sum-col">TOTAL<\/th>/,"La tabla principal debe colocar IN después del hoyo 9 y OUT después del hoyo 18");
 assert.match(html,/<th>GROSS IN<\/th><th>GROSS OUT<\/th><th>GROSS TOTAL<\/th>/,"Resumen vigente debe rotular IN, OUT y TOTAL en ese orden");
 assert.doesNotMatch(html,/<th>GROSS OUT<\/th><th>GROSS IN<\/th>/,"El resumen vigente no puede invertir OUT e IN");
-assert.equal((html.match(/>REGÍSTRATE<\/button>/g)||[]).length,1,"REGÍSTRATE debe existir una sola vez");
-assert.match(html,/id="accountBackupButtonSetup"[^>]*data-account-entry>REGÍSTRATE<\/button>/,"REGÍSTRATE debe permanecer únicamente en la pantalla principal");
+assert.equal((html.match(/>RESPALDAR \/ RECUPERAR DATOS<\/button>/g)||[]).length,1,"RESPALDAR / RECUPERAR DATOS debe existir una sola vez");
+assert.match(html,/id="accountBackupButtonSetup"[^>]*data-account-entry>RESPALDAR \/ RECUPERAR DATOS<\/button>/,"Respaldo de datos debe permanecer únicamente en la pantalla principal");
 assert.doesNotMatch(html,/id="accountBackupButton"(?:\s|>)/,"La tarjeta operativa no puede mostrar REGÍSTRATE");
 assert.doesNotMatch(html,/id="accountBackupButtonStableford"(?:\s|>)/,"Stableford no puede mostrar REGÍSTRATE dentro de su tarjeta");
 assert.match(html,/if\(back\)back\.classList\.toggle\("hidden",!round\.configured\)/,"Práctica debe mostrar ATRÁS");
