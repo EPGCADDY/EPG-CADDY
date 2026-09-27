@@ -50,13 +50,28 @@
  function speak(text){const clean=String(text||'').trim();if(!clean)return Promise.resolve(false);return new Promise(resolve=>{queue.push({text:clean,resolve});next()})}
  function cancel(){for(const item of queue.splice(0))item.resolve(false);synth?.cancel();if(activeFinish)activeFinish(false)}
  function bindControls(){
+  let activeKind=null,playbackToken=0;
   const bind=(id,kind,label)=>root.document?.getElementById(id)?.addEventListener('click',()=>{
+    if(activeKind===kind){
+      playbackToken++;
+      cancel();
+      activeKind=null;
+      status(`${label}: audio detenido.`);
+      return;
+    }
     const text=typeof root.GSCRequestedClosureSpeech==='function'?root.GSCRequestedClosureSpeech(kind):'';
-    if(text){cancel();speak(text)}else status(`${label}: todavía no hay resultados disponibles.`);
+    if(!text){status(`${label}: todavía no hay resultados disponibles.`);return}
+    playbackToken++;
+    const token=playbackToken;
+    cancel();
+    activeKind=kind;
+    speak(text).finally(()=>{
+      if(token===playbackToken)activeKind=null;
+    });
   });
   bind('deviceClosureFront','front','FRONT · 1 - 9');
   bind('deviceClosureBack','back','BACK · 10 - 18');
-  bind('deviceClosureTotal','total','Total');
+  bind('deviceClosureTotal','total','TOTAL · 1 - 18');
 }
  root.GSCDeviceClosures={speak,cancel,bindControls};
 })(typeof window!=='undefined'?window:globalThis);
