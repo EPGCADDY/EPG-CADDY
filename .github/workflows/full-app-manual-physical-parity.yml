@@ -58,8 +58,9 @@ jobs:
               return route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"physical-audit"}}'});
             });
             await page.route('**/api/app-access**',route=>route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"role":"owner"}'}));
-            await page.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
-            await page.waitForTimeout(500);
+            await page.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'domcontentloaded'});
+            await page.waitForTimeout(700);
+            await page.waitForLoadState('domcontentloaded');
             await page.evaluate(()=>{
               const setup=document.getElementById('setupOverlay');
               if(setup){setup.classList.remove('visible');setup.setAttribute('aria-hidden','true');setup.style.removeProperty('display')}
