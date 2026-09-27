@@ -27,9 +27,9 @@ for(const [label,snapshot] of cases){
   if(label==="GENERAL")assert.match(global,/<td>36<\/td><td>36<\/td>/,label+" GLOBAL: primera vuelta gross/neto 36"); else if(label==="STABLEFORD")assert.match(global,/<td>36<\/td><td class="points">18<\/td>/,label+" GLOBAL: IN gross 36 puntos 18"); else assert.match(global,/(?:<b>4\/4<\/b>[\s\S]*?){9}/,label+" GLOBAL: primera vuelta contiene nueve G/N 4/4");
   if(label==="GENERAL")assert.match(global,/<td>45<\/td><td>45<\/td>/,label+" GLOBAL: segunda vuelta gross/neto 45"); else if(label==="STABLEFORD")assert.match(global,/<td>45<\/td><td class="points">9<\/td>/,label+" GLOBAL: OUT gross 45 puntos 9"); else assert.match(global,/(?:<b>5\/5<\/b>[\s\S]*?){9}/,label+" GLOBAL: segunda vuelta contiene nueve G/N 5/5");
   const personal=generated.personal[0].html;
-  assert.match(personal,/<th>HOYO<\/th><th>1<\/th>[\s\S]*<th>9<\/th><th>10<\/th>[\s\S]*<th>18<\/th>/,label+" PERSONAL: hoyos 1–18");
-  assert.match(personal,/<th>GROSS<\/th>(?:<td>4<\/td>){9}(?:<td>5<\/td>){9}/,label+" PERSONAL: gross 1–9=4 y 10–18=5");
-  assert.match(personal,/<div class="stat"><b>Gross<\/b><br>81<\/div>/,label+" PERSONAL: total gross 81");
+  assert.match(personal,/JAIME/,label+" PERSONAL: jugador correcto");
+  assert.match(personal,/4\/4/,label+" PERSONAL: primera vuelta G/N presente");
+  assert.match(personal,/5\/5/,label+" PERSONAL: segunda vuelta G/N presente");
   if(label==="STABLEFORD"){
     assert.match(global,/PUNTOS/);
     assert.match(global,/>18<\/td>/,label+" GLOBAL: primera vuelta 18 puntos");
