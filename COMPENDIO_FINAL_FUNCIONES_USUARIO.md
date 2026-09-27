@@ -211,6 +211,29 @@ Después del cierre automático, aparecen las siguientes opciones:
 
 Al compartir, el usuario todavía confirma el envío dentro de la aplicación de correo o WhatsApp elegida. Golf Score Card GT prepara y entrega el archivo a esa aplicación, pero no afirma que el destinatario ya lo recibió.
 
+## 10A. Audio de resultados y envío rápido
+
+### Audio de resultados
+
+Los controles **FRONT · 1 - 9**, **BACK · 10 - 18** y **TOTAL · 1 - 18** leen el segmento correspondiente cuando está disponible.
+
+- tocar un resultado inicia la lectura;
+- tocar otra vez el mismo botón detiene ese audio;
+- tocar otro resultado cancela el anterior y comienza el nuevo;
+- la cola interna evita que dos lecturas queden montadas.
+
+Durante una ronda activa, dos toques sobre el nombre de un jugador leen su situación individual hasta el punto actual del recorrido.
+
+### Compartir Tarjeta Digital Final
+
+**COMPARTIR TARJETA** prepara la imagen PNG de la Tarjeta Digital Final y abre las opciones de compartir del teléfono.
+
+**ENVIAR A JUGADORES** se habilita cuando existen jugadores con WhatsApp registrado desde el registro inicial. La aplicación prepara la misma tarjeta para esos destinatarios y abre el flujo de compartir; el usuario confirma el envío en WhatsApp.
+
+### Rotulación dentro de una misma casilla
+
+Cuando una tarjeta presenta Gross y Neto dentro de una misma casilla, debe mostrarse **G/N** sobre ambos valores. En Universales, cuando corresponde Gross, Neto y Puntos, debe mostrarse **G/N/P**.
+
 ## 11. Corrección oficial de una ronda cerrada
 
 Para corregir una ronda finalizada:
