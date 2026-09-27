@@ -38,12 +38,13 @@ jobs:
           (async()=>{
             const browser=await chromium.launch({headless:true});
             const viewport={width:430,height:932};
+            const openStable=async(p,url)=>{for(let n=0;n<4;n++){try{await p.goto(url,{waitUntil:'domcontentloaded',timeout:20000});await p.waitForTimeout(400);return}catch(e){if(n===3)throw e;await p.waitForTimeout(250)}}};
 
             // Access screen physically
             {
               const p=await browser.newPage({viewport,deviceScaleFactor:2});
               await p.route('**/api/account**',r=>r.fulfill({status:401,contentType:'application/json',body:'{"ok":false}'}));
-              await p.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
+              await openStable(p,'http://127.0.0.1:8765/index-grupal.html');
               await p.waitForTimeout(300);
               check(await p.locator('#gscAuthGate.visible').count()===1,'Acceso personal no visible físicamente');
               await p.screenshot({path:'full-parity/app/01-access.png',fullPage:false});
@@ -58,7 +59,7 @@ jobs:
               return route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"physical-audit"}}'});
             });
             await page.route('**/api/app-access**',route=>route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"role":"owner"}'}));
-            await page.goto('http://127.0.0.1:8765/index-grupal.html?physicalAudit=1',{waitUntil:'domcontentloaded'});
+            await openStable(page,'http://127.0.0.1:8765/index-grupal.html?physicalAudit=1');
             await page.waitForTimeout(700);
             await page.waitForLoadState('domcontentloaded');
             await page.waitForFunction(()=>document.readyState==='complete',{timeout:15000}).catch(()=>{});
@@ -303,7 +304,7 @@ jobs:
 
             // Manual original restaurado: portada + índice + 54 hojas en scroll continuo
             const m=await browser.newPage({viewport,deviceScaleFactor:2});
-            await m.goto('http://127.0.0.1:8765/manual.html',{waitUntil:'networkidle'});
+            await openStable(m,'http://127.0.0.1:8765/manual.html');
             check(await m.locator('#portada').count()===1,'Falta portada original');
             check(await m.locator('#indice').count()===1,'Falta índice original');
             await m.locator('#portada').screenshot({path:'full-parity/manual/00-portada.png'});
