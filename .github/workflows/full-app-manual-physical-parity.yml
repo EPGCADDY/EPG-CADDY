@@ -58,17 +58,17 @@ jobs:
               return route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"physical-audit"}}'});
             });
             await page.route('**/api/app-access**',route=>route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"role":"owner"}'}));
-            await page.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'domcontentloaded'});
+            await page.goto('http://127.0.0.1:8765/index-grupal.html?physicalAudit=1',{waitUntil:'domcontentloaded'});
             await page.waitForTimeout(700);
             await page.waitForLoadState('domcontentloaded');
             await page.waitForFunction(()=>document.readyState==='complete',{timeout:15000}).catch(()=>{});
             await page.waitForTimeout(1200);
             // Freeze further document-level redirects during deterministic physical audit.
             await page.route('http://127.0.0.1:8765/**',async route=>{
-              if(route.request().isNavigationRequest() && route.request().frame()===page.mainFrame() && page.url().includes('index-grupal.html')) return route.abort();
+              if(route.request().isNavigationRequest() && route.request().frame()===page.mainFrame()) return route.abort();
               return route.continue();
             });
-            await page.evaluate(()=>{
+            await page.evaluate(()=>{ window.onbeforeunload=null; window.onunload=null; window.stop();
               const setup=document.getElementById('setupOverlay');
               if(setup){setup.classList.remove('visible');setup.setAttribute('aria-hidden','true');setup.style.removeProperty('display')}
               const stable=document.getElementById('stablefordSetupOverlay');
@@ -337,7 +337,7 @@ jobs:
             fs.writeFileSync('full-parity/audit.json',JSON.stringify(results,null,2));
             await browser.close();
             if(results.fail.length){console.error(results.fail.join('\n'));process.exit(1)}
-            console.log('PHYSICAL APP ↔ MANUAL PARITY: PASS · portada + índice + 74 hojas vigentes · app + categorías + tarjetas + torneos + MENÚ rendered');
+            console.log('PHYSICAL APP ↔ MANUAL PARITY: PASS · portada + índice + 75 hojas vigentes · app + categorías + tarjetas + torneos + MENÚ rendered');
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
           node /tmp/full-parity/audit.cjs
