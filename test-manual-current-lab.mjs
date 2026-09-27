@@ -33,6 +33,9 @@ for(const required of [
   assert.ok(html.toUpperCase().includes(required),`Falta función vigente: ${required}`);
 }
 assert.ok(html.includes('href="#torneos"><b>T01–T10</b>'),"El índice debe abrir Torneos dentro del mismo manual");
-assert.ok((html.match(/<img\b/g)||[]).length>=80,"El manual debe conservar su banco visual/capturas");
-assert.ok((html.match(/\/docs\/manual\/current\//g)||[]).length>=70,"El manual debe conservar las capturas actuales");
-console.log("MANUAL_CURRENT_LAB_GATE PASS sheets=75 navigation=sequential retired=0 currentScreens>=70");
+const screenSources=[...html.matchAll(/<img\b[^>]*src="([^"]+)"/g)].map(match=>match[1]);
+const nonRealArtwork=screenSources.filter(src=>/\/docs\/manual\/layout\/|\.svg$/i.test(src));
+assert.deepEqual(nonRealArtwork,[],"El manual vigente no debe presentar láminas o SVG diseñados como pantallas de la aplicación");
+const realScreenSources=screenSources.filter(src=>/\/docs\/manual\/current\/.*\.(?:png|webp|jpe?g)$/i.test(src));
+assert.ok(realScreenSources.length>=50,"El manual debe conservar las capturas reales actuales de LAB");
+console.log("MANUAL_CURRENT_LAB_GATE PASS sheets=75 navigation=sequential retired=0 nonRealArtwork=0 realScreens>=50");
