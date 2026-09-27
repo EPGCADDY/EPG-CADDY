@@ -4442,6 +4442,7 @@ $("mandatoryUpdateAction").textContent="COMPROBANDO";
 setTimeout(syncPublishedAppVersion,1200);
 setInterval(syncPublishedAppVersion,30000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout(syncPublishedAppVersion,800)});
+window.addEventListener("scroll",()=>{const button=$("mandatoryUpdateButton");if(button&&button.disabled&&$("mandatoryUpdateAction")?.textContent==="ACTUALIZADO")button.classList.add("gsc-update-confirmed");},{passive:true});
 </script>
 <script>window.GSCDeviceClosures.bindControls();</script><a id="gscShortcutsButton" href="/live-hub.html" aria-label="Abrir Atajos"><span>ATAJOS</span></a><script src="./shortcuts-ui.js"></script><script src="./auth-gate.js"></script>
 <script id="gsc-manual-action-router">
