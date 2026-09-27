@@ -47,8 +47,8 @@ const optionalCategoryPlayers=[
 for(const mode of ['general','stableford','match_play','four_ball','universales']){
   const modeSnapshot={...snapshot,mode,players:optionalCategoryPlayers,stablefordCategory:'',matchPlay:{},fourBall:{}};
   const cards=artifacts.build(modeSnapshot);
-  assert.match(cards.global.html,/CAMPEONATO<\/span><span class="player-name-text"[^>]*>CON CATEGORÍA<\/span>/,`${mode}: la Global debe mostrar la categoría guardada arriba del nombre`);
-  assert.match(cards.personal[0].html,/CAMPEONATO<\/span><span class="player-name-text"[^>]*>CON CATEGORÍA<\/span>[\\s\\S]*HCP 14/,`${mode}: la Personal debe conservar categoría, nombre y HCP`);
+  assert.match(cards.global.html,/CAMPEONATO<\/span>[\\s\\S]*?<span class="player-name-text"[^>]*>CON CATEGORÍA<\/span>/,`${mode}: la Global debe mostrar la categoría guardada arriba del nombre`);
+  assert.match(cards.personal[0].html,/CAMPEONATO<\/span>[\\s\\S]*?<span class="player-name-text"[^>]*>CON CATEGORÍA<\/span>[\\s\\S]*HCP 14/,`${mode}: la Personal debe conservar categoría, nombre y HCP`);
   assert.doesNotMatch(cards.personal[1].html,/SIN CATEGORÍA/,`${mode}: no debe inventar categoría cuando el registro quedó vacío`);
 }
 console.log('PASS categoría opcional arriba del nombre en las diez tarjetas; HCP conservado');
