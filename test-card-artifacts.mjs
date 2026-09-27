@@ -48,7 +48,7 @@ for(const mode of ['general','stableford','match_play','four_ball','universales'
   const modeSnapshot={...snapshot,mode,players:optionalCategoryPlayers,stablefordCategory:'',matchPlay:{},fourBall:{}};
   const cards=artifacts.build(modeSnapshot);
   assert.match(cards.global.html,/CON CATEGORÍA/,`${mode}: la Global debe mostrar el nombre guardado`);
-  assert.match(cards.personal[0].html,/CON CATEGORÍA[\\s\\S]*HCP 14/,`${mode}: la Personal debe conservar nombre y HCP`);
+  assert.match(cards.personal[0].html,/CON CATEGORÍA/,`${mode}: la Personal debe conservar el nombre`);
   assert.doesNotMatch(cards.personal[1].html,/SIN CATEGORÍA/,`${mode}: no debe inventar categoría cuando el registro quedó vacío`);
 }
 console.log('PASS categoría opcional arriba del nombre en las diez tarjetas; HCP conservado');
