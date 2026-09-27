@@ -17,7 +17,7 @@ Al abrir la aplicación aparece la pantalla principal. Desde allí el usuario pu
 - seleccionar el campo de golf;
 - elegir **RONDA NORMAL**, **STABLEFORD** o **SCORE CARD - PRÁCTICA**;
 - escribir el nombre del torneo, si corresponde;
-- registrar a los jugadores por dictado o manualmente;
+- registrar a los jugadores manualmente;
 - abrir la ronda anterior;
 - entrar al historial de tarjetas;
 - abrir el respaldo y recuperación de datos.
@@ -315,7 +315,7 @@ Las siguientes capacidades continúan en preparación o validación y no deben c
 2. Seleccionar campo y modalidad.
 3. Registrar y confirmar los jugadores.
 4. Tocar **INICIAR RONDA** una sola vez.
-5. Registrar cada score por voz o manualmente.
+5. Registrar cada score con el Control Manual.
 6. Comprobar los 18 hoyos.
 7. Completar todos los resultados requeridos.
 8. La aplicación cierra automáticamente y abre la **TARJETA DIGITAL FINAL**.
