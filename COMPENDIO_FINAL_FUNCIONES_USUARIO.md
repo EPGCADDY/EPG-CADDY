@@ -99,63 +99,26 @@ El nombre y la descripción opcional quedan guardados junto con la ronda.
 
 ## 6. Registro de jugadores
 
-Se pueden registrar de uno a seis jugadores.
+Se pueden registrar de uno a seis jugadores según la modalidad.
 
-### Opción 1 · Dictado
-
-En una **Ronda Normal**:
-
-1. Tocar el micrófono verde.
-2. Dictar directamente nombre, HDCP y marcas. Ejemplo: **“Miguel 14 blancas”**.
-3. Repetir el mismo orden hasta completar de uno a seis jugadores. Decir **“Jugador 1”** es opcional.
-4. Tocar **OK**.
-
-La guía de pantalla muestra:
-
-**DICTA ASÍ: MIGUEL · 14 · BLANCAS; PARA LOS DEMÁS REPITE NOMBRE + HDCP + MARCAS; HASTA 6 JUGADORES; LUEGO TOCA OK.**
-
-En **Stableford**:
-
-1. Seleccionar campo y categoría.
-2. Tocar el micrófono verde.
-3. Dictar obligatoriamente la posición y el nombre. Ejemplo: **“Jugador 1 Miguel”**; para los demás, repetir **“Jugador # + nombre”**.
-4. Continuar hasta **Jugador 6** si corresponde y tocar **OK**.
-
-En Stableford no se dictan HDCP ni marcas: la aplicación asigna automáticamente HCP 0 y blancas o amarillas según la categoría.
-
-La guía de pantalla muestra únicamente:
-
-**1-# JUGADOR · 2-NOMBRE · HASTA 6 JUGADORES · 3-OK.**
-
-### Opción 2 · Manual
+### Registro manual vigente
 
 1. Escribir el nombre del jugador.
-2. Escribir su HDCP.
-3. Seleccionar sus marcas.
-4. Repetir el proceso para los demás jugadores.
-5. Tocar **OK**.
+2. Seleccionar la categoría correspondiente.
+3. Escribir su HDCP cuando aplique.
+4. Seleccionar sus marcas cuando aplique.
+5. Agregar WhatsApp sólo si se desea habilitar el envío posterior de la Tarjeta Digital Final a ese jugador.
+6. Revisar los datos antes de iniciar la ronda.
+
+Los espacios de jugadores aparecen de forma progresiva conforme se completa el registro; no es necesario llenar jugadores que no participarán.
 
 ### Confirmación
 
-Después de tocar **OK**, la aplicación muestra **JUGADORES DETECTADOS**.
-
-- Si los datos están correctos, tocar **INICIAR RONDA** una sola vez.
-- Si algo debe corregirse, tocar **REGRESAR AL REGISTRO DE JUGADORES**.
+Antes de iniciar, revisar nombres, categoría, HDCP, marcas y cualquier dato opcional. Si algo está incorrecto, regresar al registro y corregirlo antes de comenzar.
 
 ## 7. Registro de scores durante la ronda
 
-La aplicación permite ingresar scores por voz o con el Control Manual. Ambos métodos escriben en la misma tarjeta.
-
-### Por voz
-
-1. Tocar el micrófono de la ronda.
-2. Decir el nombre del jugador y su score.
-3. Esperar que la aplicación coloque el dato antes de continuar.
-4. Repetir con los demás jugadores.
-
-Cuando todos los jugadores tienen score o **X** en el hoyo activo, la aplicación avanza al siguiente hoyo.
-
-### Con Control Manual
+La captura vigente de scores se realiza con **Control Manual**.
 
 El Control Manual muestra:
 
@@ -163,13 +126,14 @@ El Control Manual muestra:
 - **HOYO**: permite elegir directamente cualquier hoyo del 1 al 18;
 - **SIGUIENTE**: avanza al hoyo siguiente;
 - casilla **GROSS** de cada jugador;
+- teclado numérico con 1 a 9;
 - **ENTER**: confirma los datos escritos.
 
 Si se escribió o modificó un dato, primero debe tocarse **ENTER** antes de cambiar de hoyo.
 
 ### Uso de X
 
-La letra **X** significa que no existe score para ese jugador en ese hoyo. Sólo se coloca cuando el usuario la escribe o la dicta expresamente. Después puede corregirse desde el Control Manual.
+La letra **X** significa que no existe score para ese jugador en ese hoyo. Sólo se coloca cuando el usuario la registra expresamente. Después puede corregirse desde el Control Manual.
 
 ## 8. Información que se actualiza automáticamente
 
