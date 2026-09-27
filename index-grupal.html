@@ -4150,7 +4150,7 @@ function saveSkinsDraftConfig(){draftSkins=window.GSCSkins.normalizeConfig({enab
 
 
 for(const id of ["skinsScoreType","skinsTiePolicy","skinsUnitValue","skinsCurrencyGTQ","skinsCurrencyUSD"])$(id).addEventListener("change",saveSkinsDraftConfig);
-$("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);$("startRoundButton").addEventListener("click",startConfirmedRound);
+$("provisionalScorecardButton").addEventListener("click",startProvisionalScorecard);$("startRoundButton").addEventListener("click",event=>{try{const ok=startConfirmedRound();if(!ok&&$("setupStatus")&&!$("setupStatus").textContent.trim())$("setupStatus").textContent="INICIO DE RONDA DETENIDO";}catch(error){console.error("INICIAR RONDA:",error);const message=String(error?.message||error||"ERROR DESCONOCIDO");if($("setupStatus"))$("setupStatus").textContent="ERROR INICIAR RONDA · "+message;alert("ERROR INICIAR RONDA · "+message);}});
 
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="hidden"){
