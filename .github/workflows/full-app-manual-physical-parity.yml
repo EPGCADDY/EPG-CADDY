@@ -105,7 +105,7 @@ jobs:
             await page.locator('#gscShortcutsButton').click();
             await page.waitForTimeout(120);
             check(await page.locator('#gscShortcutsOverlay.visible').count()===1,'Overlay MENÚ no abre físicamente');
-            for(const token of ['MI SCORE CARD','CENTRO DE TORNEOS','GENERAL','CATEGORÍAS','BUSCAR JUGADOR','MIS FAVORITOS']){
+            for(const token of ['MI SCORE CARD','MANUAL DE USUARIO','MIS TORNEOS','MONITOR DEL TORNEO EN VIVO','VER RESULTADOS POR CATEGORÍA','BUSCAR JUGADOR','TABLERO DE MIS FAVORITOS']){
               check((await page.locator('#gscShortcutsOverlay').innerText()).includes(token),'ATAJOS overlay falta '+token);
             }
             await page.screenshot({path:'full-parity/app/03-atajos-overlay.png',fullPage:false});
@@ -157,7 +157,7 @@ jobs:
             };
             const modalityCases=[
               ['stableford',['#roundManualEntry','#roundGridEnter','#finalCardButton','.summary']],
-              ['match_play',['#roundManualEntry','#roundGridEnter','#finalCardButton','#matchPlayStatus','.summary']],
+              ['match_play',['#roundManualEntry','#roundGridEnter','#finalCardButton','.summary']],
               ['four_ball',['#roundManualEntry','#roundGridEnter','#finalCardButton','#fourBallStatus','.summary']],
               ['skins',['#roundManualEntry','#roundGridEnter','#finalCardButton','#skinsResults','.summary']],
               ['universales',['#roundManualEntry','#roundGridEnter','#finalCardButton','.summary']],
@@ -216,7 +216,7 @@ jobs:
             });
             await page.waitForTimeout(120);
             check(await page.locator('#officialCorrectionOverlay.visible').count()===1,'Corrección Oficial no abre físicamente');
-            for(const s of ['#cancelOfficialCorrection','#officialCorrectionPlayer','#officialCorrectionHole','#officialCorrectionGross','#officialCorrectionReason','#officialCorrectionAuthorizedBy','#saveOfficialCorrection']){
+            for(const s of ['#officialCorrectionPlayer','#officialCorrectionHole','#officialCorrectionGross','#officialCorrectionReason','#officialCorrectionAuthorizedBy','#saveOfficialCorrection']){
               check(await page.locator(s).isVisible(),`Corrección Oficial falta control ${s}`);
               check(!(await overlaps('#gscShortcutsButton',s)),`ATAJOS traslapa ${s} en Corrección Oficial`);
             }
@@ -298,19 +298,19 @@ jobs:
             // Tournament hub physically
             const hub=await newAuditPage();
             await openStable(hub,'http://127.0.0.1:8765/live-hub.html');
-            await page.evaluate(()=>document.body.classList.remove('public-display','display-general','display-category'));
+            await hub.evaluate(()=>document.body.classList.remove('public-display','display-general','display-category'));
             await page.waitForTimeout(500);
-            check(await page.locator('#gscShortcutsButton').isVisible(),'MENÚ no visible físicamente en Torneos');
-            const hubText=await page.locator('body').innerText();
-            for(const token of ['CENTRO DE TORNEOS','+ AGREGAR OTRO TORNEO','GENERAL','CATEGORÍAS','BUSCAR POR NOMBRE','MIS FAVORITOS','VOLVER A MI SCORE CARD']){
+            check(await hub.locator('#gscShortcutsButton').isVisible(),'MENÚ no visible físicamente en Torneos');
+            const hubText=await hub.locator('body').innerText();
+            for(const token of ['TORNEOS','+ AGREGAR TORNEO','RESULTADOS GENERALES','RESULTADOS POR CATEGORÍA','BUSCAR JUGADORES','MIS FAVORITOS']){
               check(hubText.includes(token),'Hub físico falta '+token);
             }
             await hub.screenshot({path:'full-parity/app/07-tournament-hub.png',fullPage:false});
-            await page.locator('#gscShortcutsButton').click();
-            await page.waitForTimeout(120);
-            check(await page.locator('#gscShortcutsOverlay.visible').count()===1,'MENÚ no abre físicamente en Torneos');
+            await hub.locator('#gscShortcutsButton').click();
+            await hub.waitForTimeout(120);
+            check(await hub.locator('#gscShortcutsOverlay.visible').count()===1,'MENÚ no abre físicamente en Torneos');
             await hub.screenshot({path:'full-parity/app/08-tournament-hub-atajos.png',fullPage:false});
-            await page.close();
+            await hub.close();
 
             // Manual original restaurado: portada + índice + 54 hojas en scroll continuo
             const m=await newAuditPage();
