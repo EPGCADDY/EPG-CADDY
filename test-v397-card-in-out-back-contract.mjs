@@ -22,9 +22,15 @@ const cases=[
 for(const [label,snapshot] of cases){
   const generated=artifacts.build(snapshot);
   for(const [kind,item] of [["GLOBAL",generated.global],["PERSONAL",generated.personal[0]]]){
-    assert.match(item.html,/GROSS IN<br>1–9<\/th><th>GROSS OUT<br>10–18<\/th><th>GROSS TOTAL<br>1–18/);
-    assert.match(item.html,/<td>36<\/td><td>45<\/td><td>81<\/td>/,`${label} ${kind}: IN=36, OUT=45, TOTAL=81`);
-    if(label==="STABLEFORD")assert.match(item.html,/<td>18<\/td><td>9<\/td><td class="points">27<\/td>/);
+    assert.match(item.html,/PRIMERA VUELTA · HOYOS 1–9/,label+" "+kind+": falta primera vuelta 1–9");
+    assert.match(item.html,/SEGUNDA VUELTA · HOYOS 10–18/,label+" "+kind+": falta segunda vuelta 10–18");
+    assert.match(item.html,/<td>36<\/td><td>36<\/td>/,label+" "+kind+": primera vuelta gross/neto 36");
+    assert.match(item.html,/<td>45<\/td><td>45<\/td>/,label+" "+kind+": segunda vuelta gross/neto 45");
+    if(label==="STABLEFORD"){
+      assert.match(item.html,/PUNTOS/);
+      assert.match(item.html,/>18<\/td>/,label+" "+kind+": primera vuelta 18 puntos");
+      assert.match(item.html,/>9<\/td>/,label+" "+kind+": segunda vuelta 9 puntos");
+    }
   }
 }
 
