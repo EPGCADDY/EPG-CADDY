@@ -8,13 +8,13 @@ assert.match(app,/gscg-release" content="LABORATORIO-20260927-R128.19"/,'La app 
 assert.match(app,/updateViaCache:"none"/,'El registro del Service Worker debe ignorar caché HTTP intermedia');
 assert.match(app,/controllerchange[\s\S]*location\.reload\(\)/,'La app debe recargar al tomar control un SW nuevo');
 
-assert.match(sw,/const RELEASE="PRODUCTION-20260926-R128.19"/,'El SW debe identificarse como R128.19');
+assert.match(sw,/const RELEASE="PRODUCTION-20260926-R128.18"/,'El SW de Producción debe permanecer en R128.18 mientras R128.19 se valida sólo en LAB');
 assert.match(sw,/clients\.claim\(\)/,'El SW nuevo debe tomar control inmediato');
 assert.match(sw,/clients\.matchAll\(\{type:"window",includeUncontrolled:true\}\)/,'El SW debe localizar ventanas antiguas');
 assert.match(sw,/client\.navigate\(url\.href\)/,'El SW debe recargar clientes viejos al activar');
 assert.doesNotMatch(sw,/LAB-PHYSICAL-CERTIFIED-20260923-R59/,'No debe quedar release R59 como release activa del SW');
 
-console.log('PASS R128.19: producción fuerza actualización de clientes PWA viejos y evita permanecer en versiones anteriores');
+console.log('PASS R128.19 LAB: la app LAB avanza a R128.19 sin modificar el Service Worker R128.18 de Producción');
 
 assert.match(app,/#cardLibraryActions\{display:none!important/,'MIS RONDAS GUARDADAS no debe mostrar la franja blanca de acciones redundantes');
 
