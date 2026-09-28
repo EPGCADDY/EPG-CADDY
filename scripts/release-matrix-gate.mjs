@@ -9,4 +9,6 @@ assert.match(sw,/fetchPublishedRelease\(\)/,"Service Worker must resolve release
 assert.match(sw,/fetch\("\/release\.json\?sw_release_check="/,"Service Worker must bypass cached release metadata");
 assert.match(sw,/url\.pathname==="\/release\.json"[^\n]*cache:"no-store"/,"release.json must bypass Service Worker cache");
 assert.doesNotMatch(sw,/const RELEASE="(?:LABORATORIO|PRODUCTION)-/,"Service Worker release must never be hard-coded again");
+assert.match(sw,/ACTIVE_CACHE_NAME=`\$\{CACHE_NAME\}-active-[^`]+`/,"Every rescue publication must use a fresh active cache namespace");
+assert.match(sw,/APPROVED_CACHE_NAME=`\$\{CACHE_NAME\}-approved-[^`]+`/,"Every rescue publication must use a fresh approved cache namespace");
 console.log("PASS RELEASE MATRIX: app/release aligned; updater is release-independent and future-version safe");
