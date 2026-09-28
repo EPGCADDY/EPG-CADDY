@@ -20,6 +20,7 @@ jobs:
       - name: Gate and LAB build
         run: |
           node scripts/manual-screen-parity-gate.mjs
+          node scripts/release-matrix-gate.mjs
           node scripts/build-manual-lab.mjs
           node test-lab-global-operational-audit.mjs
           node test-lab-r60-physical-matrix.mjs
