@@ -1138,6 +1138,12 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
     <section class="course-meta"><div class="cap">CAMPO</div><div class="course">EL PULTÉ GOLF</div><div class="numbers"><span>PAR 72</span><span id="headerSlope">SLOPE —</span></div></section>
   </header>
   <nav class="round-utility-bar" id="roundUtilityBar" aria-label="Herramientas de la ronda">
+    <section class="gsc-tournament-connect gsc-tournament-connect-round" id="tournamentConnectScorecard" aria-label="Conectar Score Card a torneo">
+      <div class="gsc-tournament-connect-title">TORNEOS</div>
+      <button class="gsc-tournament-picker" type="button" data-gsc-tournament-picker><span data-gsc-tournament-name>NOMBRE TORNEO / GRUPO</span><span aria-hidden="true">›</span></button>
+      <div class="gsc-tournament-list hidden" data-gsc-tournament-list></div>
+      <button class="gsc-tournament-action" type="button" data-gsc-tournament-action>CONECTAR</button>
+    </section>
     
     
     <a class="live-support-link" href="/manual" aria-label="Abrir Guía de Usuario de Golf Score Card GT">GUÍA DE USUARIO</a>
@@ -1226,7 +1232,13 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
       <div class="registration-method-fields">NOMBRE + CATEGORÍA + HDCP + MARCAS + WHATSAPP OPCIONAL</div>
       <div class="detected hidden" id="detectedPlayers"><div class="detected-row head"><span>NOMBRE</span><span>CATEGORÍA</span><span>HDCP</span><span>MARCAS</span></div><div id="detectedBody"></div></div>
     </section>
-    <button class="nr-button tournament-center-primary" type="button" id="tournamentLiveHome" aria-label="Abrir Centro de Torneos">CENTRO DE TORNEOS</button>
+    <section class="gsc-tournament-connect" id="tournamentConnectRegistration" aria-label="Conectar Score Card a torneo">
+  <div class="gsc-tournament-connect-title">TORNEOS</div>
+  <button class="gsc-tournament-picker" type="button" data-gsc-tournament-picker><span data-gsc-tournament-name>NOMBRE TORNEO / GRUPO</span><span aria-hidden="true">›</span></button>
+  <div class="gsc-tournament-list hidden" data-gsc-tournament-list></div>
+  <button class="gsc-tournament-action" type="button" data-gsc-tournament-action>CONECTAR</button>
+</section>
+<button class="nr-button tournament-center-primary" type="button" id="tournamentLiveHome" aria-label="Abrir Centro de Torneos">CENTRO DE TORNEOS</button>
     <div class="setup-status" id="setupStatus"></div>
     <div class="caddie-sources hidden" id="setupCaddieSources" aria-label="Fuentes consultadas por el Caddie"></div>
     <button class="nr-button registration-clear-all" type="button" id="clearAllRegistration">BORRAR JUGADORES REGISTRADOS</button>
@@ -4493,6 +4505,69 @@ document.addEventListener("DOMContentLoaded",()=>{
     if(share)url.searchParams.set("_vercel_share",share);
     location.assign(url.toString());
   });
+});
+</script>
+<style id="gsc-tournament-connect-r129">
+.gsc-tournament-connect{width:100%;margin:12px 0 16px;padding:12px;border:1px solid #343838;border-radius:14px;background:#050606;color:#fff}
+.gsc-tournament-connect-title{margin:0 0 9px;color:#31ff00;font-size:15px;font-weight:900;letter-spacing:.5px}
+.gsc-tournament-picker,.gsc-tournament-action{width:100%;min-height:52px;border:1px solid #31ff00;border-radius:11px;background:#020402;color:#31ff00;font:900 15px Arial,sans-serif}
+.gsc-tournament-picker{display:flex;align-items:center;justify-content:space-between;padding:0 14px;text-align:left}
+.gsc-tournament-picker span:last-child{font-size:28px;line-height:1}
+.gsc-tournament-action{margin-top:9px}
+.gsc-tournament-list{display:grid;gap:7px;margin-top:7px;padding:7px;border:1px solid #343838;border-radius:10px;background:#000}
+.gsc-tournament-list.hidden{display:none}
+.gsc-tournament-list button{min-height:44px;padding:8px 10px;border:1px solid #343838;border-radius:9px;background:#070808;color:#fff;text-align:left;font-weight:800}
+.gsc-tournament-connect-round{max-width:430px;margin:8px 0 12px}
+@media(max-width:800px){.gsc-tournament-connect{padding:10px}.gsc-tournament-connect-round{max-width:none}.gsc-tournament-picker,.gsc-tournament-action{min-height:48px}}
+</style>
+<script id="gsc-tournament-connect-r129">
+document.addEventListener("DOMContentLoaded",()=>{
+  const HUB_KEY="golf-score-card-gt-live-hub-v1",LIVE_KEY="golf-score-card-gt-live-v1",PENDING_KEY="gsc-tournament-connect-selection-v1";
+  const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key)||"null")||fallback}catch{return fallback}};
+  const write=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}catch{}};
+  const live=()=>read(LIVE_KEY,{version:1});
+  const selected=()=>read(PENDING_KEY,{label:"",joinCode:""});
+  function tournamentItems(){
+    const hub=read(HUB_KEY,{tournaments:[]}),ls=live(),out=[];
+    if(ls.tournamentOwned?.name)out.push({label:ls.tournamentOwned.name,joinCode:ls.tournamentOwned.joinCode||""});
+    for(const item of Array.isArray(hub.tournaments)?hub.tournaments:[])if(item?.label&&!out.some(x=>x.label===item.label))out.push({label:item.label,joinCode:item.joinCode||""});
+    return out;
+  }
+  function connected(){return !!live().stream?.tournamentId}
+  function render(){
+    const pick=selected(),isConnected=connected();
+    document.querySelectorAll(".gsc-tournament-connect").forEach(panel=>{
+      const name=panel.querySelector("[data-gsc-tournament-name]"),action=panel.querySelector("[data-gsc-tournament-action]");
+      if(name)name.textContent=pick.label||live().tournamentOwned?.name||"NOMBRE TORNEO / GRUPO";
+      if(action)action.textContent=isConnected?"SALIR":"CONECTAR";
+    });
+  }
+  function openExistingConnect(pick){
+    const launch=document.getElementById("gscLiveLaunch"); if(launch)launch.click();
+    setTimeout(()=>{
+      const toggle=document.getElementById("liveOrganizerToggle"),panel=document.getElementById("liveOrganizerPanel");
+      if(toggle&&panel?.classList.contains("hidden"))toggle.click();
+      const group=document.getElementById("liveGroupLabel"),code=document.getElementById("liveJoinCode");
+      if(group&&pick.label)group.value=pick.label;
+      if(code&&pick.joinCode)code.value=pick.joinCode;
+      document.getElementById("liveJoinTournament")?.scrollIntoView({block:"center",behavior:"smooth"});
+    },80);
+  }
+  document.querySelectorAll("[data-gsc-tournament-picker]").forEach(button=>button.addEventListener("click",()=>{
+    const panel=button.closest(".gsc-tournament-connect"),list=panel.querySelector("[data-gsc-tournament-list]"),items=tournamentItems();
+    list.innerHTML=(items.length?items:[{label:"ABRIR TORNEOS",openHub:true}]).map((item,i)=>'<button type="button" data-tour-i="'+i+'">'+String(item.label).replace(/[&<>"]/g,s=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[s]))+'</button>').join("");
+    list.classList.toggle("hidden");
+    list.querySelectorAll("[data-tour-i]").forEach((row,i)=>row.onclick=()=>{
+      const item=(items.length?items:[{label:"ABRIR TORNEOS",openHub:true}])[i];
+      if(item.openHub){document.getElementById("tournamentLiveHome")?.click();return}
+      write(PENDING_KEY,{label:item.label,joinCode:item.joinCode||""});list.classList.add("hidden");render();
+    });
+  }));
+  document.querySelectorAll("[data-gsc-tournament-action]").forEach(button=>button.addEventListener("click",()=>{
+    if(connected()){document.getElementById("liveLeaveTournament")?.click();setTimeout(render,180);return}
+    openExistingConnect(selected());
+  }));
+  window.addEventListener("storage",render);document.addEventListener("visibilitychange",()=>{if(!document.hidden)render()});render();
 });
 </script>
 <!-- PROD DEPLOY TRIGGER 2026-09-23 R67 -->
