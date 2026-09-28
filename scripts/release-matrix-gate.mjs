@@ -1,0 +1,12 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+const app=fs.readFileSync("index-grupal.html","utf8");
+const sw=fs.readFileSync("service-worker.js","utf8");
+const release=JSON.parse(fs.readFileSync("release.json","utf8"));
+const appRelease=(app.match(/name="gscg-release" content="([^"]+)"/)||[])[1];
+assert.equal(appRelease,release.release,"APP and release.json must publish the same release");
+assert.match(sw,/fetchPublishedRelease\(\)/,"Service Worker must resolve release dynamically");
+assert.match(sw,/fetch\("\/release\.json\?sw_release_check="/,"Service Worker must bypass cached release metadata");
+assert.match(sw,/url\.pathname==="\/release\.json"[^\n]*cache:"no-store"/,"release.json must bypass Service Worker cache");
+assert.doesNotMatch(sw,/const RELEASE="(?:LABORATORIO|PRODUCTION)-/,"Service Worker release must never be hard-coded again");
+console.log("PASS RELEASE MATRIX: app/release aligned; updater is release-independent and future-version safe");
