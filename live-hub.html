@@ -127,7 +127,7 @@
     @media(max-width:900px){body.public-display .head::after{font-size:12px}.public-display-status strong{font-size:20px}.public-display-status b{font-size:16px}}
     body:not(.public-display) .round-create{margin:0 0 14px;padding:14px;border:1px solid var(--tour-line);border-radius:16px;background:var(--tour-card)}
     body:not(.public-display) .round-create button{width:100%;min-height:52px;border-radius:12px;font-size:18px;font-weight:900}
-    body:not(.public-display) .round-create-fields.hidden{display:none!important}\n    body:not(.public-display) .round-create label{display:block;margin:12px 6px 7px;color:var(--tour-muted);font-size:11px;font-weight:900;letter-spacing:.8px}
+    body:not(.public-display) .round-create-fields[hidden]{display:none!important}\n    body:not(.public-display) .round-create label{display:block;margin:12px 6px 7px;color:var(--tour-muted);font-size:11px;font-weight:900;letter-spacing:.8px}
     body:not(.public-display) .round-create input{box-sizing:border-box;width:100%;height:48px;border:1px solid var(--tour-green);border-radius:11px;background:#030303;color:#fff;padding:0 12px;font:inherit;font-size:16px}
     body:not(.public-display) #hubRoundOk{margin-top:10px;width:100%;min-height:48px}\n  </style>
 </head>
@@ -159,7 +159,7 @@
     </section>
     <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← MIS TORNEOS</button>\n    <section class="round-create" id="hubRoundCreate" aria-label="Crear ronda">
       <button class="primary" id="hubCreateRound" type="button">＋ CREAR RONDA</button>
-      <div class="round-create-fields hidden" id="hubRoundCreateFields">
+      <div class="round-create-fields" id="hubRoundCreateFields" hidden>
         <label for="hubRoundName">NOMBRE DEL EVENTO DE LA RONDA</label>
         <input id="hubRoundName" type="text" maxlength="120" placeholder="Nombre de la ronda" autocomplete="off">
         <button class="primary" id="hubRoundOk" type="button">OK</button>
