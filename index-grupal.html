@@ -4522,46 +4522,46 @@ document.addEventListener("DOMContentLoaded",()=>{
 </style>
 <script id="gsc-tournament-connect-r129">
 document.addEventListener("DOMContentLoaded",()=>{
-  const HUB_KEY="golf-score-card-gt-live-hub-v1",LIVE_KEY="golf-score-card-gt-live-v1",PENDING_KEY="gsc-tournament-connect-selection-v1";
+  const LIVE_KEY="golf-score-card-gt-live-v1",PENDING_KEY="gsc-tournament-connect-selection-v1";
   const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key)||"null")||fallback}catch{return fallback}};
   const write=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}catch{}};
-  const live=()=>read(LIVE_KEY,{version:1});
-  const selected=()=>read(PENDING_KEY,{label:"",joinCode:""});
-  function tournamentItems(){
-    const hub=read(HUB_KEY,{tournaments:[]}),ls=live(),out=[];
-    if(ls.tournamentOwned?.name)out.push({label:ls.tournamentOwned.name,joinCode:ls.tournamentOwned.joinCode||""});
-    for(const item of Array.isArray(hub.tournaments)?hub.tournaments:[])if(item?.label&&!out.some(x=>x.label===item.label))out.push({label:item.label,joinCode:item.joinCode||""});
-    return out;
-  }
+  const live=()=>read(LIVE_KEY,{version:1}),selected=()=>read(PENDING_KEY,{label:"",id:""});
+  const esc=v=>String(v||"").replace(/[&<>"]/g,s=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[s]));
   function connected(){return !!live().stream?.tournamentId}
   function render(){
-    const pick=selected(),isConnected=connected();
+    const pick=selected(),ls=live(),isConnected=connected();
     document.querySelectorAll(".gsc-tournament-connect").forEach(panel=>{
       const name=panel.querySelector("[data-gsc-tournament-name]"),action=panel.querySelector("[data-gsc-tournament-action]");
-      if(name)name.textContent=pick.label||live().tournamentOwned?.name||"NOMBRE TORNEO / GRUPO";
+      if(name)name.textContent=pick.label||ls.tournamentOwned?.name||"NOMBRE TORNEO / GRUPO";
       if(action)action.textContent=isConnected?"SALIR":"CONECTAR";
     });
   }
+  async function activeTournaments(){
+    const response=await fetch("/api/live",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({action:"list_active_tournaments"}),cache:"no-store"});
+    const data=await response.json().catch(()=>({})); if(!response.ok||data?.ok!==true)throw new Error(data?.code||"LIVE_TOURNAMENT_LIST_FAILED");
+    return Array.isArray(data.tournaments)?data.tournaments:[];
+  }
   function openExistingConnect(pick){
-    const launch=document.getElementById("gscLiveLaunch"); if(launch)launch.click();
+    const launch=document.getElementById("gscLiveLaunch");if(launch)launch.click();
     setTimeout(()=>{
       const toggle=document.getElementById("liveOrganizerToggle"),panel=document.getElementById("liveOrganizerPanel");
       if(toggle&&panel?.classList.contains("hidden"))toggle.click();
-      const group=document.getElementById("liveGroupLabel"),code=document.getElementById("liveJoinCode");
-      if(group&&pick.label)group.value=pick.label;
-      if(code&&pick.joinCode)code.value=pick.joinCode;
+      const group=document.getElementById("liveGroupLabel");
+      if(group&&!group.value.trim())group.value="GRUPO";
+      const owned=live().tournamentOwned;
+      const code=document.getElementById("liveJoinCode");
+      if(code&&owned?.name===pick.label&&owned?.joinCode)code.value=owned.joinCode;
       document.getElementById("liveJoinTournament")?.scrollIntoView({block:"center",behavior:"smooth"});
     },80);
   }
-  document.querySelectorAll("[data-gsc-tournament-picker]").forEach(button=>button.addEventListener("click",()=>{
-    const panel=button.closest(".gsc-tournament-connect"),list=panel.querySelector("[data-gsc-tournament-list]"),items=tournamentItems();
-    list.innerHTML=(items.length?items:[{label:"ABRIR TORNEOS",openHub:true}]).map((item,i)=>'<button type="button" data-tour-i="'+i+'">'+String(item.label).replace(/[&<>"]/g,s=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[s]))+'</button>').join("");
-    list.classList.toggle("hidden");
-    list.querySelectorAll("[data-tour-i]").forEach((row,i)=>row.onclick=()=>{
-      const item=(items.length?items:[{label:"ABRIR TORNEOS",openHub:true}])[i];
-      if(item.openHub){document.getElementById("tournamentLiveHome")?.click();return}
-      write(PENDING_KEY,{label:item.label,joinCode:item.joinCode||""});list.classList.add("hidden");render();
-    });
+  document.querySelectorAll("[data-gsc-tournament-picker]").forEach(button=>button.addEventListener("click",async()=>{
+    const panel=button.closest(".gsc-tournament-connect"),list=panel.querySelector("[data-gsc-tournament-list]");
+    list.innerHTML='<button type="button">BUSCANDO TORNEOS EN JUEGO…</button>';list.classList.remove("hidden");
+    try{
+      const items=await activeTournaments();
+      list.innerHTML=items.length?items.map((item,i)=>'<button type="button" data-tour-i="'+i+'">'+esc(item.name)+'</button>').join(""):'<button type="button" disabled>NO HAY TORNEOS EN JUEGO</button>';
+      list.querySelectorAll("[data-tour-i]").forEach((row,i)=>row.onclick=()=>{const item=items[i];write(PENDING_KEY,{label:item.name,id:item.id,mode:item.mode||""});list.classList.add("hidden");render()});
+    }catch(error){list.innerHTML='<button type="button" disabled>NO SE PUDO CARGAR TORNEOS</button>'}
   }));
   document.querySelectorAll("[data-gsc-tournament-action]").forEach(button=>button.addEventListener("click",()=>{
     if(connected()){document.getElementById("liveLeaveTournament")?.click();setTimeout(render,180);return}
