@@ -134,6 +134,14 @@
     root.addEventListener("online",()=>{const state=liveState();if(state.stream?.pendingSnapshot)publishLatest()});
   }
   function mount(options){if(mounted||!root?.document)return false;adapter=options||{};inject();bind();const home=$("tournamentLiveHome");if(home)home.onclick=()=>openHub();$("liveOrganizerToggle").onclick=()=>{const panel=$("liveOrganizerPanel"),open=panel.classList.contains("hidden");panel.classList.toggle("hidden",!open);$("liveOrganizerToggle").setAttribute("aria-expanded",String(open));$("liveOrganizerToggle").textContent=open?"CERRAR ORGANIZACIÓN":"ORGANIZAR TORNEO"};mounted=true;renderConsent();renderActive();return true}
+  async function createTournamentDirect(name,mode="general"){
+    name=text(name,120);if(!name)return{ok:false,code:"LIVE_TOURNAMENT_NAME_REQUIRED"};
+    mode=["general","match_play","four_ball","stableford","universales"].includes(mode)?mode:"general";
+    const result=await request("create_tournament",{name,mode,durationDays:2,consent:{confirmed:true,confirmedAt:new Date().toISOString(),authority:"scorekeeper_create_tournament"}});
+    if(!result.ok)return result;
+    const state=liveState();state.tournamentOwned={tournamentId:result.tournamentId,name,mode:result.mode,organizerSecret:result.organizerSecret,viewerToken:result.viewerToken,joinCode:result.joinCode,expiresAt:result.expiresAt};saveState(state);renderActive();
+    return{...result,name};
+  }
   async function connectTournamentById(tournamentId,groupLabel=""){
     const snapshot=currentSnapshot();if(!snapshot)return{ok:false,code:"LIVE_ROUND_REQUIRED"};
     let state=liveState(),stream=state.stream;
@@ -152,5 +160,5 @@
     const result=await request("leave_tournament",{},stream.publisherSecret);
     if(result.ok&&state.stream){state.stream.tournamentId=null;saveState(state);renderActive()}return result;
   }
-  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,publishLatest,quickShareGroup,connectTournamentById,disconnectTournament};
+  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,publishLatest,quickShareGroup,createTournamentDirect,connectTournamentById,disconnectTournament};
 });
