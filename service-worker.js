@@ -2,8 +2,8 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r12820-rescue`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r12820-rescue`;
 const RELEASE_FALLBACK="LABORATORIO-20260927-R128.20";
 let RELEASE=RELEASE_FALLBACK;
 async function fetchPublishedRelease(){
