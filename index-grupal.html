@@ -4564,10 +4564,15 @@ document.addEventListener("DOMContentLoaded",()=>{
       list.querySelectorAll("[data-tour-i]").forEach((row,i)=>row.onclick=()=>{const item=items[i];write(PENDING_KEY,{label:item.name,id:item.id,mode:item.mode||""});list.classList.add("hidden");render()});
     }catch(error){list.innerHTML='<button type="button" disabled>NO SE PUDO CARGAR TORNEOS</button>'}
   }));
-  document.querySelectorAll("[data-gsc-tournament-create]").forEach(button=>button.addEventListener("click",()=>{
+  document.querySelectorAll("[data-gsc-tournament-create]").forEach(button=>button.addEventListener("click",async()=>{
     const name=prompt("NOMBRE DEL TORNEO");if(!name?.trim())return;
-    const launch=document.getElementById("gscLiveLaunch");if(launch)launch.click();
-    setTimeout(()=>{const toggle=document.getElementById("liveOrganizerToggle"),panel=document.getElementById("liveOrganizerPanel");if(toggle&&panel?.classList.contains("hidden"))toggle.click();const input=document.getElementById("liveTournamentName");if(input)input.value=name.trim();document.getElementById("liveCreateTournament")?.scrollIntoView({block:"center",behavior:"smooth"})},80);
+    button.disabled=true;button.textContent="CREANDO…";
+    try{
+      const mode=(window.round?.mode||"general"),result=await window.GSCLiveControl?.createTournamentDirect?.(name.trim(),mode);
+      if(!result?.ok)throw new Error(result?.code||"LIVE_CREATE_FAILED");
+      write(PENDING_KEY,{label:result.name,id:result.tournamentId,mode:result.mode||mode});render();button.textContent="TORNEO CREADO";
+    }catch(error){button.textContent=String(error?.message||"NO SE PUDO CREAR").replace(/^LIVE_/,"").replaceAll("_"," ")}
+    finally{button.disabled=false;setTimeout(()=>{button.textContent="CREAR TORNEO";render()},1800)}
   }));
   document.querySelectorAll("[data-gsc-tournament-action]").forEach(button=>button.addEventListener("click",async()=>{
     button.disabled=true;
