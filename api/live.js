@@ -294,6 +294,57 @@ async function listActiveTournaments(sql,req){
   return{ok:true,kind:"active_tournaments",tournaments:rows.map(row=>({id:row.id,name:row.name,mode:row.mode,expiresAt:row.expires_at,updatedAt:row.updated_at})),serverAt:new Date().toISOString()};
 }
 
+async function joinTournamentById(sql,req,body){
+  const secret=authorizationSecret(req),tournamentId=cleanText(body.tournamentId,50),groupLabel=cleanText(body.groupLabel,120);
+  if(!SECRET_PATTERN.test(secret)||!UUID_PATTERN.test(tournamentId))throw liveError("LIVE_JOIN_UNAUTHORIZED",401);
+  if(!groupLabel)throw liveError("LIVE_GROUP_LABEL_REQUIRED");
+  await rateLimit(sql,req,"join",tokenHash(secret),30);
+  const secretHash=tokenHash(secret),rows=await sql`
+    WITH tournament AS MATERIALIZED (
+      SELECT id,mode FROM live_tournaments
+      WHERE id=${tournamentId}::uuid AND status='active' AND expires_at>now()
+      LIMIT 1 FOR UPDATE
+    ),
+    candidate AS MATERIALIZED (
+      SELECT id,current_snapshot,tournament_id FROM live_streams
+      WHERE publisher_secret_hash=${secretHash}::char(64)
+      LIMIT 1 FOR UPDATE
+    ),
+    decision AS MATERIALIZED (
+      SELECT tournament.id AS tournament_id,candidate.id AS stream_id,
+        CASE
+          WHEN tournament.id IS NULL THEN 'LIVE_TOURNAMENT_NOT_ACTIVE'
+          WHEN candidate.id IS NULL OR NOT EXISTS (SELECT 1 FROM live_streams active WHERE active.id=candidate.id AND active.status='active' AND active.expires_at>now()) THEN 'LIVE_NOT_ACTIVE'
+          WHEN candidate.tournament_id=tournament.id THEN 'ALREADY_JOINED'
+          WHEN coalesce(candidate.current_snapshot->>'mode','general')<>tournament.mode THEN 'LIVE_TOURNAMENT_MODE_MISMATCH'
+          WHEN (SELECT coalesce(sum(jsonb_array_length(coalesce(active.current_snapshot->'players','[]'::jsonb))),0) FROM live_streams active WHERE active.tournament_id=tournament.id AND active.id<>candidate.id AND active.status='active' AND active.expires_at>now())+jsonb_array_length(coalesce(candidate.current_snapshot->'players','[]'::jsonb))>${MAX_TOURNAMENT_PLAYERS} THEN 'LIVE_TOURNAMENT_CAPACITY_REACHED'
+          ELSE 'APPLY'
+        END AS outcome_code
+      FROM (VALUES (1)) seed(one) LEFT JOIN tournament ON true LEFT JOIN candidate ON true
+    ),
+    updated AS (
+      UPDATE live_streams stream SET tournament_id=decision.tournament_id,group_label=${groupLabel}::text,updated_at=now()
+      FROM decision WHERE stream.id=decision.stream_id AND decision.outcome_code='APPLY'
+      RETURNING stream.id,stream.tournament_id,stream.group_label
+    ),
+    tournament_bump AS (
+      UPDATE live_tournaments tournament SET revision=tournament.revision+1,updated_at=now()
+      FROM updated WHERE tournament.id=updated.tournament_id RETURNING tournament.id
+    ),
+    event_log AS (
+      INSERT INTO live_events (stream_id,tournament_id,event_type,actor_hash,details)
+      SELECT updated.id,updated.tournament_id,'joined_tournament',${secretHash}::char(64),jsonb_build_object('groupLabel',updated.group_label)
+      FROM updated RETURNING id
+    )
+    SELECT coalesce(
+      (SELECT jsonb_build_object('applied',true,'streamId',id,'tournamentId',tournament_id,'groupLabel',group_label) FROM updated),
+      (SELECT jsonb_build_object('applied',outcome_code='ALREADY_JOINED','alreadyJoined',outcome_code='ALREADY_JOINED','streamId',stream_id,'tournamentId',tournament_id,'groupLabel',${groupLabel}::text,'code',outcome_code) FROM decision)
+    ) AS applied
+  `,applied=rows[0]?.applied||{};
+  if(!applied.applied){const code=String(applied.code||"LIVE_JOIN_FAILED");throw liveError(code,["LIVE_TOURNAMENT_CAPACITY_REACHED","LIVE_TOURNAMENT_MODE_MISMATCH"].includes(code)?409:["LIVE_NOT_ACTIVE","LIVE_TOURNAMENT_NOT_ACTIVE"].includes(code)?410:400)}
+  return{ok:true,joined:true,alreadyJoined:!!applied.alreadyJoined,tournamentId:applied.tournamentId,groupLabel:applied.groupLabel};
+}
+
 async function joinTournament(sql,req,body){
   const secret=authorizationSecret(req),joinCode=cleanText(body.joinCode,20).toUpperCase(),groupLabel=cleanText(body.groupLabel,120);
   if(!SECRET_PATTERN.test(secret)||joinCode.length!==10)throw liveError("LIVE_JOIN_UNAUTHORIZED",401);
@@ -429,7 +480,7 @@ export default async function handler(req,res){
       if(String(error?.code||"")==="DATABASE_NOT_CONFIGURED")return proxyLiveToProduction(req,res);
       throw error;
     }
-    const result=action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req):action==="read"?await readLive(sql,req,body):null;
+    const result=action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="join_tournament_by_id"?await joinTournamentById(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req):action==="read"?await readLive(sql,req,body):null;
     if(!result)throw liveError("LIVE_ACTION_UNSUPPORTED",404);
     return res.status(200).json(result);
   }catch(error){
