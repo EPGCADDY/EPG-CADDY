@@ -4514,6 +4514,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 .gsc-tournament-picker{display:flex;align-items:center;justify-content:space-between;padding:0 14px;text-align:left}
 .gsc-tournament-picker span:last-child{font-size:28px;line-height:1}
 .gsc-tournament-action{margin-top:9px}
+.gsc-tournament-create{width:100%;min-height:48px;margin-top:9px;border:1px solid #31ff00;border-radius:11px;background:#020402;color:#31ff00;font:900 15px Arial,sans-serif}
 .gsc-tournament-list{display:grid;gap:7px;margin-top:7px;padding:7px;border:1px solid #343838;border-radius:10px;background:#000}
 .gsc-tournament-list.hidden{display:none}
 .gsc-tournament-list button{min-height:44px;padding:8px 10px;border:1px solid #343838;border-radius:9px;background:#070808;color:#fff;text-align:left;font-weight:800}
@@ -4562,6 +4563,11 @@ document.addEventListener("DOMContentLoaded",()=>{
       list.innerHTML=items.length?items.map((item,i)=>'<button type="button" data-tour-i="'+i+'">'+esc(item.name)+'</button>').join(""):'<button type="button" disabled>NO HAY TORNEOS EN JUEGO</button>';
       list.querySelectorAll("[data-tour-i]").forEach((row,i)=>row.onclick=()=>{const item=items[i];write(PENDING_KEY,{label:item.name,id:item.id,mode:item.mode||""});list.classList.add("hidden");render()});
     }catch(error){list.innerHTML='<button type="button" disabled>NO SE PUDO CARGAR TORNEOS</button>'}
+  }));
+  document.querySelectorAll("[data-gsc-tournament-create]").forEach(button=>button.addEventListener("click",()=>{
+    const name=prompt("NOMBRE DEL TORNEO");if(!name?.trim())return;
+    const launch=document.getElementById("gscLiveLaunch");if(launch)launch.click();
+    setTimeout(()=>{const toggle=document.getElementById("liveOrganizerToggle"),panel=document.getElementById("liveOrganizerPanel");if(toggle&&panel?.classList.contains("hidden"))toggle.click();const input=document.getElementById("liveTournamentName");if(input)input.value=name.trim();document.getElementById("liveCreateTournament")?.scrollIntoView({block:"center",behavior:"smooth"})},80);
   }));
   document.querySelectorAll("[data-gsc-tournament-action]").forEach(button=>button.addEventListener("click",async()=>{
     button.disabled=true;
