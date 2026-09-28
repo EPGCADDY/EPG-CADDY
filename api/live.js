@@ -282,6 +282,18 @@ async function createTournament(sql,req,body){
   return{ok:true,kind:"tournament",tournamentId:row.id,name,mode,organizerSecret,viewerToken,joinCode,revision:Number(row.revision)||0,expiresAt:row.expires_at,serverAt:row.created_at};
 }
 
+async function listActiveTournaments(sql,req){
+  await rateLimit(sql,req,"list-active-tournaments",tokenHash(requestAddress(req)),120);
+  const rows=await sql`
+    SELECT id,name,mode,expires_at,updated_at
+    FROM live_tournaments
+    WHERE status='active' AND expires_at>now()
+    ORDER BY updated_at DESC
+    LIMIT 50
+  `;
+  return{ok:true,kind:"active_tournaments",tournaments:rows.map(row=>({id:row.id,name:row.name,mode:row.mode,expiresAt:row.expires_at,updatedAt:row.updated_at})),serverAt:new Date().toISOString()};
+}
+
 async function joinTournament(sql,req,body){
   const secret=authorizationSecret(req),joinCode=cleanText(body.joinCode,20).toUpperCase(),groupLabel=cleanText(body.groupLabel,120);
   if(!SECRET_PATTERN.test(secret)||joinCode.length!==10)throw liveError("LIVE_JOIN_UNAUTHORIZED",401);
@@ -417,7 +429,7 @@ export default async function handler(req,res){
       if(String(error?.code||"")==="DATABASE_NOT_CONFIGURED")return proxyLiveToProduction(req,res);
       throw error;
     }
-    const result=action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="read"?await readLive(sql,req,body):null;
+    const result=action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req):action==="read"?await readLive(sql,req,body):null;
     if(!result)throw liveError("LIVE_ACTION_UNSUPPORTED",404);
     return res.status(200).json(result);
   }catch(error){
