@@ -1901,3 +1901,12 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Referencia visual aprobada por propietario: matriz compartible recibida/enviada por jugadores.
 - Archivo: card-artifacts.js; gate: test-card-artifacts.mjs.
 - Producción pendiente de validación LAB y autorización final.
+
+
+### R128.20 · 27 septiembre 2026 · MATRIZ DE ACTUALIZACIÓN PERMANENTE
+- Corrección raíz del actualizador PWA en LAB: service-worker.js deja de depender de una versión RELEASE escrita manualmente y obtiene la versión publicada desde release.json con cache no-store.
+- release.json queda excluido de la caché del Service Worker para que una instalación anterior pueda descubrir siempre una versión nueva.
+- Los nombres de caché dejan de depender del número de release; la promoción de shell conserva sesión/datos locales y permite saltos entre versiones sin editar manualmente el updater.
+- Nuevo gate scripts/release-matrix-gate.mjs: bloquea publicación si index-grupal.html y release.json divergen, si el Service Worker vuelve a hard-codear una release o si release.json deja de saltarse caché.
+- .github/workflows/full-app-manual-physical-parity.yml ejecuta este gate en cada push de LAB antes de la auditoría física.
+- Archivos: service-worker.js, scripts/release-matrix-gate.mjs, .github/workflows/full-app-manual-physical-parity.yml, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md. Sin cambio de diseño, Scores ni cálculo deportivo. Producción EPG Caddy no se modifica.
