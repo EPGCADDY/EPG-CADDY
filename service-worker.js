@@ -2,9 +2,20 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-lab-r128-20`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-lab-r128-20`;
-const RELEASE="LABORATORIO-20260927-R128.20";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved`;
+const RELEASE_FALLBACK="LABORATORIO-20260927-R128.20";
+let RELEASE=RELEASE_FALLBACK;
+async function fetchPublishedRelease(){
+  try{
+    const response=await fetch("/release.json?sw_release_check="+Date.now(),{cache:"no-store"});
+    if(response.ok){
+      const data=await response.json();
+      if(data?.release)RELEASE=String(data.release);
+    }
+  }catch{}
+  return RELEASE;
+}
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
   "/score-entry-contract.js",
@@ -55,6 +66,7 @@ const SHELL=[
 ];
 
 async function refreshShell(){
+  await fetchPublishedRelease();
   const cache=await caches.open(ACTIVE_CACHE_NAME);
   await Promise.all(SHELL.map(async url=>{try{const response=await fetch(url,{cache:"reload"});if(response.ok)await cache.put(url,response)}catch{}}));
 }
@@ -80,8 +92,8 @@ async function promoteCandidate(){
   await copyCache(ACTIVE_CACHE_NAME,APPROVED_CACHE_NAME);
 }
 
-self.addEventListener("install",event=>event.waitUntil((async()=>{await refreshShell();await promoteCandidate();await self.skipWaiting()})()));
-self.addEventListener("activate",event=>event.waitUntil((async()=>{await promoteCandidate();await self.clients.claim();const keys=await caches.keys();await Promise.all(keys.filter(key=>key.startsWith(CACHE_NAME)&&key!==ACTIVE_CACHE_NAME&&key!==APPROVED_CACHE_NAME).map(key=>caches.delete(key)));const clients=await self.clients.matchAll({type:"window",includeUncontrolled:true});for(const client of clients){try{const url=new URL(client.url);if(url.origin===self.location.origin&&!url.pathname.startsWith("/access.html")&&!url.pathname.startsWith("/invite/")){url.searchParams.set("app_version",RELEASE);url.searchParams.set("sw_activate",String(Date.now()));await client.navigate(url.href)}}catch{}}})()));
+self.addEventListener("install",event=>event.waitUntil((async()=>{await fetchPublishedRelease();await refreshShell();await promoteCandidate();await self.skipWaiting()})()));
+self.addEventListener("activate",event=>event.waitUntil((async()=>{await fetchPublishedRelease();await promoteCandidate();await self.clients.claim();const keys=await caches.keys();await Promise.all(keys.filter(key=>key.startsWith(CACHE_NAME)&&key!==ACTIVE_CACHE_NAME&&key!==APPROVED_CACHE_NAME).map(key=>caches.delete(key)));const clients=await self.clients.matchAll({type:"window",includeUncontrolled:true});for(const client of clients){try{const url=new URL(client.url);if(url.origin===self.location.origin&&!url.pathname.startsWith("/access.html")&&!url.pathname.startsWith("/invite/")){url.searchParams.set("app_version",RELEASE);url.searchParams.set("sw_activate",String(Date.now()));await client.navigate(url.href)}}catch{}}})()));
 self.addEventListener("message",event=>{
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
   if(event.data?.type==="PROMOTE_BUILD"&&event.data?.build===RELEASE)event.waitUntil(promoteCandidate());
@@ -99,6 +111,7 @@ async function networkFirst(request,allowCardFallback=true){
 }
 
 async function approvedNavigationWithManualUpdate(request){
+  await fetchPublishedRelease();
   const approved=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});
   if(!approved)return networkFirst(request);
   const html=await approved.text();
@@ -125,6 +138,7 @@ self.addEventListener("fetch",event=>{
   if(url.origin!==self.location.origin||url.pathname.startsWith("/api/"))return;
   if(request.mode==="navigate"&&(url.pathname==="/access.html"||url.pathname==="/pwa-launch.html"||url.pathname.startsWith("/invite/"))){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"&&(url.pathname==="/manual.pdf"||url.pathname==="/manual.html")){event.respondWith(fetch("/manual.html?__gscg_build_check=1",{cache:"no-store"}));return}
+  if(url.pathname==="/release.json"){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(url.searchParams.has("__gscg_build_check")){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"&&!["/","/index.html","/inicio",OFFLINE_ENTRY].includes(url.pathname)){event.respondWith(networkFirst(request,false));return}
   if(request.mode==="navigate"){
