@@ -10,7 +10,7 @@ for(const file of ['index-grupal.html',...scripts]){
 }
 const release=html.match(/name="gscg-release" content="([^"]+)/)[1];
 const workerRelease=(fs.readFileSync('service-worker.js','utf8').match(/const RELEASE="([^"]+)/)||[])[1];
-assert(release==='LABORATORIO-20260927-R128.20' && workerRelease==='PRODUCTION-20260926-R128.18','LAB page must identify R128.20 while production worker remains R128.18');
+assert(release==='LABORATORIO-20260927-R128.20' && workerRelease==='LABORATORIO-20260927-R128.20','LAB page must identify R128.20 while LAB updater worker identifies R128.20');
 for(const path of ['api/session.js','api/session-grupal.js','api/universal-ai.js','api/voice-speech.js','api/voice-transcribe.js','voice-assistant.js','voice-turns.js'])assert(!fs.existsSync(path),`Retired endpoint returned: ${path}`);
 assert(html.includes('GSCDeviceClosures'),'Local score announcements must remain');
 assert(!html.includes('startRoundScoreDictation'),'Score dictation must remain removed');
