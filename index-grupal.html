@@ -1122,7 +1122,12 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
  #roundManualEntry .round-player-grid>.round-grid-gross,#roundManualEntry .round-player-grid>.round-inline-score-key,#roundManualEntry .round-player-grid>span:not(:empty){font-family:inherit!important;font-size:20px!important;font-weight:900!important;line-height:1!important}
 }
 </style>
-<style id="gscg-score-head-r104">@media(max-width:800px){#roundManualEntry .round-player-grid-head>strong,#roundManualEntry .round-player-grid-head>span,#roundManualEntry .round-player-grid-head>span:not(:empty){font-size:9px!important;line-height:14px!important;height:14px!important;min-height:14px!important}#roundManualEntry .round-player-grid-head .round-keypad-head{font-size:9px!important;line-height:14px!important;font-weight:900!important;color:#fff!important;-webkit-text-fill-color:#fff!important;grid-column:3/6!important}}</style></head>
+<style id="gscg-score-head-r104">@media(max-width:800px){#roundManualEntry .round-player-grid-head>strong,#roundManualEntry .round-player-grid-head>span,#roundManualEntry .round-player-grid-head>span:not(:empty){font-size:9px!important;line-height:14px!important;height:14px!important;min-height:14px!important}#roundManualEntry .round-player-grid-head .round-keypad-head{font-size:9px!important;line-height:14px!important;font-weight:900!important;color:#fff!important;-webkit-text-fill-color:#fff!important;grid-column:3/6!important}}</style><style id="r129-evento-clean">
+.gsc-tournament-connect{border:0!important;background:transparent!important;padding:0!important;margin:10px 0!important}
+.gsc-tournament-connect .gsc-event-entry{width:100%!important;min-height:54px!important;font:inherit!important;font-weight:900!important;text-align:center!important;justify-content:center!important}
+.gsc-tournament-connect-title{display:none!important}
+.gsc-tournament-action.hidden{display:none!important}
+</style></head>
 <body>
 
 <div class="overlay" id="skinsOverlay" aria-hidden="true">
@@ -1138,11 +1143,10 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
     <section class="course-meta"><div class="cap">CAMPO</div><div class="course">EL PULTÉ GOLF</div><div class="numbers"><span>PAR 72</span><span id="headerSlope">SLOPE —</span></div></section>
   </header>
   <nav class="round-utility-bar" id="roundUtilityBar" aria-label="Herramientas de la ronda">
-    <section class="gsc-tournament-connect gsc-tournament-connect-round" id="tournamentConnectScorecard" aria-label="Conectar Score Card a torneo">
-      <div class="gsc-tournament-connect-title">TORNEOS</div>
-      <button class="gsc-tournament-picker" type="button" data-gsc-tournament-picker><span data-gsc-tournament-name>NOMBRE TORNEO / GRUPO</span><span aria-hidden="true">›</span></button>
+    <section class="gsc-tournament-connect gsc-tournament-connect-round" id="tournamentConnectScorecard" aria-label="Evento">
+      <button class="gsc-tournament-picker gsc-event-entry" type="button" data-gsc-tournament-picker><span data-gsc-tournament-name>EVENTO</span></button>
       <div class="gsc-tournament-list hidden" data-gsc-tournament-list></div>
-      <button class="gsc-tournament-action" type="button" data-gsc-tournament-action>CONECTAR</button>
+      <button class="gsc-tournament-action hidden" type="button" data-gsc-tournament-action>CONECTAR</button>
     </section>
     
     
@@ -1232,13 +1236,11 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
       <div class="registration-method-fields">NOMBRE + CATEGORÍA + HDCP + MARCAS + WHATSAPP OPCIONAL</div>
       <div class="detected hidden" id="detectedPlayers"><div class="detected-row head"><span>NOMBRE</span><span>CATEGORÍA</span><span>HDCP</span><span>MARCAS</span></div><div id="detectedBody"></div></div>
     </section>
-    <section class="gsc-tournament-connect" id="tournamentConnectRegistration" aria-label="Conectar Score Card a torneo">
-  <div class="gsc-tournament-connect-title">TORNEOS</div>
-  <button class="gsc-tournament-picker" type="button" data-gsc-tournament-picker><span data-gsc-tournament-name>NOMBRE TORNEO / GRUPO</span><span aria-hidden="true">›</span></button>
+    <section class="gsc-tournament-connect" id="tournamentConnectRegistration" aria-label="Evento">
+  <button class="gsc-tournament-picker gsc-event-entry" type="button" data-gsc-tournament-picker><span data-gsc-tournament-name>EVENTO</span></button>
   <div class="gsc-tournament-list hidden" data-gsc-tournament-list></div>
-  <button class="gsc-tournament-action" type="button" data-gsc-tournament-action>CONECTAR</button>
+  <button class="gsc-tournament-action hidden" type="button" data-gsc-tournament-action>CONECTAR</button>
 </section>
-<button class="nr-button tournament-center-primary" type="button" id="tournamentLiveHome" aria-label="Abrir Centro de Torneos">CENTRO DE TORNEOS</button>
     <div class="setup-status" id="setupStatus"></div>
     <div class="caddie-sources hidden" id="setupCaddieSources" aria-label="Fuentes consultadas por el Caddie"></div>
     <button class="nr-button registration-clear-all" type="button" id="clearAllRegistration">BORRAR JUGADORES REGISTRADOS</button>
