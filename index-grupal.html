@@ -4563,9 +4563,21 @@ document.addEventListener("DOMContentLoaded",()=>{
       list.querySelectorAll("[data-tour-i]").forEach((row,i)=>row.onclick=()=>{const item=items[i];write(PENDING_KEY,{label:item.name,id:item.id,mode:item.mode||""});list.classList.add("hidden");render()});
     }catch(error){list.innerHTML='<button type="button" disabled>NO SE PUDO CARGAR TORNEOS</button>'}
   }));
-  document.querySelectorAll("[data-gsc-tournament-action]").forEach(button=>button.addEventListener("click",()=>{
-    if(connected()){document.getElementById("liveLeaveTournament")?.click();setTimeout(render,180);return}
-    openExistingConnect(selected());
+  document.querySelectorAll("[data-gsc-tournament-action]").forEach(button=>button.addEventListener("click",async()=>{
+    button.disabled=true;
+    try{
+      if(connected()){
+        const result=await window.GSCLiveControl?.disconnectTournament?.();
+        if(!result?.ok)throw new Error(result?.code||"LIVE_LEAVE_FAILED");
+        render();return;
+      }
+      const pick=selected();if(!pick.id){button.textContent="SELECCIONA TORNEO";return}
+      const groupLabel=(window.round?.liveGroupLabel||window.round?.players?.[0]?.name&&("GRUPO "+window.round.players[0].name)||"GRUPO");
+      const result=await window.GSCLiveControl?.connectTournamentById?.(pick.id,groupLabel);
+      if(!result?.ok)throw new Error(result?.code||"LIVE_JOIN_FAILED");
+      render();
+    }catch(error){button.textContent=String(error?.message||"NO SE PUDO CONECTAR").replace(/^LIVE_/,"").replaceAll("_"," ")}
+    finally{button.disabled=false;setTimeout(render,1800)}
   }));
   window.addEventListener("storage",render);document.addEventListener("visibilitychange",()=>{if(!document.hidden)render()});render();
 });
