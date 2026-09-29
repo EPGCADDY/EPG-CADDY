@@ -37,7 +37,7 @@
     async function refresh(){
       if(dialog!==current)return;let result=await request("read_private_round",{kind:"tournament",viewerToken:item.viewerToken,limit:50});
       if(dialog!==current)return;
-      if(!result.ok){status(error(result.code));return}
+      if(!result.ok){if(["LIVE_REVOKED","LIVE_EXPIRED"].includes(result.code)){root.localStorage.removeItem(KEY);close();return}status(error(result.code));return}
       const streams=[...(result.streams||[])],seen=new Set();let cursor=result.nextCursor;
       while(cursor&&!seen.has(cursor)){seen.add(cursor);const page=await request("read_private_round",{kind:"tournament",viewerToken:item.viewerToken,limit:50,cursor});if(!page.ok){status(error(page.code));return}streams.push(...(page.streams||[]));cursor=page.nextCursor}
       if(dialog!==current)return;
@@ -50,9 +50,10 @@
   function open(value){round=value||read(ACTIVE);const item=saved();if(item&&new Date(item.expiresAt||"2099-01-01")>new Date()&&(!item.roundId||item.roundId===active()?.id))return scores(item,true);show("RONDA PARTICULAR",input("NOMBRE DE LA RONDA","privateName")+button("CREAR RONDA PARTICULAR","privateCreate"));dialog.querySelector('#privateCreate').onclick=create;dialog.querySelector('#privateName').focus()}
   function openScores(value){round=value||read(ACTIVE);const item=saved();if(item&&new Date(item.expiresAt||"2099-01-01")>new Date()&&(!item.roundId||item.roundId===active()?.id))return scores(item);show("SCORES GRUPO","<p>PRIMERO CREA O ÚNETE A UNA RONDA PARTICULAR.</p>")}
   async function list(){
-    round=read(ACTIVE);show("RONDAS PARTICULARES",'<div data-rounds></div>');status("CARGANDO RONDAS…");const current=dialog,result=await request("list_private_rounds",{});if(dialog!==current)return;if(!result.ok){status(error(result.code));return}
+    round=read(ACTIVE);show("RONDAS PARTICULARES",'<div data-rounds></div>');status("CARGANDO RONDAS…");const current=dialog;async function refresh(){if(dialog!==current)return;const result=await request("list_private_rounds",{});if(dialog!==current)return;if(!result.ok){status(error(result.code));return}
     const target=dialog.querySelector('[data-rounds]');target.innerHTML=result.rounds.length?result.rounds.map(item=>button(escape(item.name),"private-"+item.id)).join(""):'<p>NO HAY RONDAS PARTICULARES ACTIVAS.</p>';status("");
-    for(const item of result.rounds)target.querySelector('#private-'+item.id).onclick=()=>{show(item.name,input("CÓDIGO DE LA RONDA","privateCode")+button("ENTRAR A LA RONDA","privateJoin"));const field=dialog.querySelector('#privateCode');field.maxLength=10;field.autocomplete="off";dialog.querySelector('#privateJoin').onclick=async()=>{const b=dialog.querySelector('#privateJoin');b.disabled=true;try{await connect(item,field.value.trim().toUpperCase())}finally{if(b.isConnected)b.disabled=false}};field.focus()};
+    for(const item of result.rounds)target.querySelector('#private-'+item.id).onclick=()=>{show(item.name,input("CÓDIGO DE LA RONDA","privateCode")+button("ENTRAR A LA RONDA","privateJoin"));const field=dialog.querySelector('#privateCode');field.maxLength=10;field.autocomplete="off";dialog.querySelector('#privateJoin').onclick=async()=>{const b=dialog.querySelector('#privateJoin');b.disabled=true;try{await connect(item,field.value.trim().toUpperCase())}finally{if(b.isConnected)b.disabled=false}};field.focus()};timer=root.setTimeout(refresh,10000);}
+    await refresh();
   }
   let connecting=false;
   async function syncPending(value){const item=saved();if(connecting||!item?.creator||item.roundId||!value?.configured)return;connecting=true;try{const result=await root.GSCLiveControl.connectPrivateRound(item.id,item.joinCode,value);if(result.ok)store({...item,roundId:value.id})}finally{connecting=false}}

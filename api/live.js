@@ -1,3 +1,4 @@
+import {refreshPrivateRoundLifecycle} from "./_lib/private-round-lifecycle.js";
 import { createHash, randomBytes } from "node:crypto";
 import { getDatabase } from "./_lib/database.js";
 import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
@@ -34,9 +35,13 @@ async function ensurePrivateRoundTables(sql){
   await sql`CREATE TABLE IF NOT EXISTS live_private_rounds (LIKE live_tournaments INCLUDING DEFAULTS INCLUDING CONSTRAINTS INCLUDING INDEXES, viewer_access_token text)`;
   await sql`CREATE TABLE IF NOT EXISTS live_private_streams (LIKE live_streams INCLUDING DEFAULTS INCLUDING CONSTRAINTS INCLUDING INDEXES)`;
   await sql`CREATE TABLE IF NOT EXISTS live_private_events (LIKE live_events INCLUDING DEFAULTS INCLUDING CONSTRAINTS INCLUDING INDEXES INCLUDING IDENTITY)`;
+  await sql`ALTER TABLE live_private_rounds ADD COLUMN IF NOT EXISTS completed_at timestamptz, ADD COLUMN IF NOT EXISTS completed_roster text, ADD COLUMN IF NOT EXISTS base_expires_at timestamptz`;
+  await sql`UPDATE live_private_rounds SET base_expires_at=expires_at WHERE base_expires_at IS NULL`;
+  // Owner-authorized retirement of the two identified Cuates test rounds; recoverable.
+  await sql`UPDATE live_private_rounds SET status='revoked',revoked_at=coalesce(revoked_at,now()),updated_at=now() WHERE id IN ('b6aabdee-065f-4f62-9f9a-499832263857'::uuid,'ba15e650-c8a3-4f8e-a937-b87e0d26edaf'::uuid) AND name='Cuates' AND status='active'`;
 }
 export async function privateRoundAction(sql,req,body,action){
-  await ensurePrivateRoundTables(sql);const scoped=privateRoundSql(sql);
+  await ensurePrivateRoundTables(sql);await refreshPrivateRoundLifecycle(sql);const scoped=privateRoundSql(sql);
   if(action==="create_private_round"){
     const result=await createTournament(scoped,req,body);
     await sql`UPDATE live_private_rounds SET viewer_access_token=${result.viewerToken} WHERE id=${result.tournamentId}::uuid`;
@@ -54,10 +59,16 @@ export async function privateRoundAction(sql,req,body,action){
     const rows=await sql`SELECT id,name,viewer_access_token FROM live_private_rounds WHERE id=${id}::uuid AND join_code_hash=${tokenHash(code)}::char(64) AND status='active' AND expires_at>now() LIMIT 1`;
     if(!rows.length||!rows[0].viewer_access_token)throw liveError("PRIVATE_ROUND_CODE_INVALID",401);
     const result=await joinTournament(scoped,req,body);
+    await refreshPrivateRoundLifecycle(sql);
     return{...result,kind:"private_round",name:rows[0].name,viewerToken:rows[0].viewer_access_token};
   }
   if(action==="create_private_stream")return createStream(scoped,req,body);
-  if(action==="publish_private_round")return publish(scoped,req,body);
+  if(action==="publish_private_round"){
+    const secret=authorizationSecret(req);if(!SECRET_PATTERN.test(secret))throw liveError("LIVE_PUBLISHER_UNAUTHORIZED",401);
+    const eligible=await sql`SELECT stream.id FROM live_private_streams stream LEFT JOIN live_private_rounds round ON round.id=stream.tournament_id WHERE stream.publisher_secret_hash=${tokenHash(secret)}::char(64) AND (stream.tournament_id IS NULL OR (round.status='active' AND round.expires_at>now())) LIMIT 1`;
+    if(!eligible.length)throw liveError("LIVE_NOT_ACTIVE",410);
+    const result=await publish(scoped,req,body);await refreshPrivateRoundLifecycle(sql);return result;
+  }
   if(action==="read_private_round")return readLive(scoped,req,body);
   if(action==="revoke_private_round")return revokeTournament(scoped,req);
   throw liveError("LIVE_ACTION_UNSUPPORTED",404);
