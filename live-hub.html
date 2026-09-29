@@ -127,9 +127,20 @@
     @media(max-width:900px){body.public-display .head::after{font-size:12px}.public-display-status strong{font-size:20px}.public-display-status b{font-size:16px}}
     body:not(.public-display) .round-create{margin:0 0 14px;padding:14px;border:1px solid var(--tour-line);border-radius:16px;background:var(--tour-card)}
     body:not(.public-display) .round-create button{width:100%;min-height:52px;border-radius:12px;font-size:18px;font-weight:900}
-    body:not(.public-display) .round-create-fields[hidden]{display:none!important}\n    body:not(.public-display) .round-create label{display:block;margin:12px 6px 7px;color:var(--tour-muted);font-size:11px;font-weight:900;letter-spacing:.8px}
-    body:not(.public-display) .round-create input{box-sizing:border-box;width:100%;height:48px;border:1px solid var(--tour-green);border-radius:11px;background:#030303;color:#fff;padding:0 12px;font:inherit;font-size:16px}
-    body:not(.public-display) #hubRoundOk{margin-top:10px;width:100%;min-height:48px}\n  </style>
+    body:not(.public-display) .round-create-dialog[hidden]{display:none!important}
+    body:not(.public-display) .round-create-dialog{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:18px;background:rgba(0,0,0,.84);backdrop-filter:blur(3px)}
+    body:not(.public-display) .round-create-dialog-card{position:relative;box-sizing:border-box;width:min(520px,100%);max-height:calc(100dvh - 36px);overflow:auto;padding:24px 20px 20px;border:1px solid var(--tour-green);border-radius:18px;background:#050505;box-shadow:0 0 30px rgba(49,255,0,.2)}
+    body:not(.public-display) .round-create-dialog-card h2{margin:0 36px 8px 0;color:var(--tour-green);font-size:22px;font-weight:900;text-align:center}
+    body:not(.public-display) .round-create-dialog-card p{margin:0 0 16px;color:var(--tour-muted);font-size:13px;line-height:1.45;text-align:center}
+    body:not(.public-display) .round-create-dialog-card label{display:block;margin:12px 4px 7px;color:var(--tour-muted);font-size:11px;font-weight:900;letter-spacing:.8px}
+    body:not(.public-display) .round-create-dialog-card input{box-sizing:border-box;width:100%;height:50px;border:1px solid var(--tour-green);border-radius:11px;background:#030303;color:#fff;padding:0 12px;font:inherit;font-size:16px}
+    body:not(.public-display) #hubRoundOk{margin-top:14px;width:100%;min-height:50px}
+    body:not(.public-display) #hubRoundClose{position:absolute;top:10px;right:10px;width:38px;min-height:38px;border:1px solid #444;border-radius:50%;background:#080808;color:#fff;font-size:22px}
+    body:not(.public-display) #hubRoundDialogStatus{min-height:18px;margin-top:10px;color:var(--tour-muted);font-size:12px;font-weight:800;text-align:center}
+    body.round-create-open{overflow:hidden}
+    body.public-display .round-create{display:none!important}
+    @media(max-width:600px){body:not(.public-display) .round-create-dialog{padding:12px}body:not(.public-display) .round-create-dialog-card{max-height:calc(100dvh - 24px);padding:22px 15px 16px}}
+  </style>
 </head>
 <body>
   <main class="hub">
@@ -157,14 +168,21 @@
       <h2>AGREGAR TORNEO POR ENLACE</h2>
       <div><input id="hubTournamentLink" type="url" placeholder="Pega enlace del torneo" aria-label="Enlace del torneo"><button class="primary" id="hubOpenTournament" type="button">AGREGAR</button></div>
     </section>
-    <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← MIS TORNEOS</button>\n    <section class="round-create" id="hubRoundCreate" aria-label="Crear ronda">
-      <button class="primary" id="hubCreateRound" type="button">＋ CREAR RONDA</button>
-      <div class="round-create-fields" id="hubRoundCreateFields" hidden>
-        <label for="hubRoundName">NOMBRE DEL EVENTO DE LA RONDA</label>
-        <input id="hubRoundName" type="text" maxlength="120" placeholder="Nombre de la ronda" autocomplete="off">
-        <button class="primary" id="hubRoundOk" type="button">OK</button>
-      </div>
+    <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← MIS TORNEOS</button>
+    <section class="round-create" id="hubRoundCreate" aria-label="Crear ronda">
+      <button class="primary" id="hubCreateRound" type="button" aria-haspopup="dialog" aria-controls="hubRoundCreateDialog">＋ CREAR RONDA</button>
     </section>
+    <div class="round-create-dialog" id="hubRoundCreateDialog" role="presentation" aria-hidden="true" hidden>
+      <section class="round-create-dialog-card" role="dialog" aria-modal="true" aria-labelledby="hubRoundDialogTitle">
+        <button id="hubRoundClose" type="button" aria-label="Cerrar ventana">×</button>
+        <h2 id="hubRoundDialogTitle">AGREGAR RONDA</h2>
+        <p>Escribe el nombre del torneo o evento. Se agregará a tus torneos activos.</p>
+        <label for="hubRoundName">NOMBRE DEL EVENTO DE LA RONDA</label>
+        <input id="hubRoundName" type="text" maxlength="120" placeholder="Nombre del torneo" autocomplete="off">
+        <div id="hubRoundDialogStatus" role="status" aria-live="polite"></div>
+        <button class="primary" id="hubRoundOk" type="button">OK</button>
+      </section>
+    </div>
 
 
     <section class="panel monitor-panel" id="hubGeneralPanel">

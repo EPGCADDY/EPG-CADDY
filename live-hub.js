@@ -347,12 +347,46 @@
     }
   }
   function clearHash(){try{root.history.replaceState(null,"",root.location.pathname+root.location.search)}catch{}}
+  function setRoundCreateDialogOpen(open){
+    const dialog=$("hubRoundCreateDialog");if(!dialog)return false;
+    const visible=!!open;dialog.hidden=!visible;dialog.setAttribute("aria-hidden",String(!visible));root.document.body.classList.toggle("round-create-open",visible);
+    const nameField=$("hubRoundName"),message=$("hubRoundDialogStatus");
+    if(visible){if(nameField)nameField.value="";if(message)message.textContent=state.tournaments.length>=MAX_SAVED_TOURNAMENTS?"YA TIENES 5 TORNEOS GUARDADOS":"";setTimeout(()=>nameField?.focus(),0)}
+    else setTimeout(()=>$("hubCreateRound")?.focus(),0);
+    return true;
+  }
+  function roundCreateMessage(value,tone="warning"){const message=$("hubRoundDialogStatus");if(message)message.textContent=value;setStatus(value,tone)}
+  async function submitRoundCreate(){
+    const name=text($("hubRoundName")?.value,120),okButton=$("hubRoundOk");
+    if(!name){roundCreateMessage("ESCRIBE EL NOMBRE DEL TORNEO O EVENTO");$("hubRoundName")?.focus();return false}
+    if(state.tournaments.length>=MAX_SAVED_TOURNAMENTS){roundCreateMessage("YA TIENES 5 TORNEOS GUARDADOS");return false}
+    if(okButton)okButton.disabled=true;
+    const message=$("hubRoundDialogStatus");if(message)message.textContent="CREANDO RONDA…";setStatus("CREANDO RONDA…","");
+    let response;try{response=await root.fetch("/api/live",{method:"POST",headers:{"Content-Type":"application/json"},cache:"no-store",credentials:"same-origin",body:JSON.stringify({action:"create_tournament",name,mode:"general",durationDays:2,consent:{confirmed:true}})});}catch{roundCreateMessage("NO SE PUDO CREAR LA RONDA · REVISA TU CONEXIÓN");if(okButton)okButton.disabled=false;return false}
+    const result=await response.json().catch(()=>null);
+    if(!response.ok||!result?.viewerToken){roundCreateMessage("NO SE PUDO CREAR LA RONDA");if(okButton)okButton.disabled=false;return false}
+    const saved=upsertTournamentState(state,result.viewerToken,name);
+    if(saved.full){roundCreateMessage("YA TIENES 5 TORNEOS GUARDADOS");if(okButton)okButton.disabled=false;return false}
+    state=saved.state;saveState();
+    try{
+      const liveKey="golf-score-card-gt-live-control-v1",liveSaved=JSON.parse(root.localStorage.getItem(liveKey)||"null"),liveState=liveSaved&&liveSaved.version===1?liveSaved:{version:1};
+      liveState.version=1;liveState.tournamentOwned={tournamentId:result.tournamentId,name,mode:"general",organizerSecret:result.organizerSecret,viewerToken:result.viewerToken,joinCode:result.joinCode,expiresAt:result.expiresAt};
+      root.localStorage.setItem(liveKey,JSON.stringify(liveState));
+      root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify({label:name,id:result.tournamentId,mode:"general"}));
+    }catch{roundCreateMessage("NO SE PUDO PREPARAR LA TARJETA DE SCORE");if(okButton)okButton.disabled=false;return false}
+    const url=new URL("/index-grupal.html?manual_action=setup",root.location.origin),share=new URL(root.location.href).searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);
+    setRoundCreateDialogOpen(false);root.location.assign(url.toString());return true;
+  }
   async function start(){
     state=loadState();const imported=parseHubHash(root.location.hash);if(imported)clearHash();const params=new URLSearchParams(root.location.search||""),shared=params.get("shared")==="1";tournamentPortalOpen=!demoMode()&&!imported;root.document.body.classList.toggle("shared-view",shared);
     $("hubBack").onclick=()=>{const url=new URL("/index-grupal.html",root.location.origin),share=new URL(root.location.href).searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);root.location.assign(url.toString())};$("hubOpenTournament").onclick=openTournamentTyped;$("hubTournamentLink").onkeydown=event=>{if(event.key==="Enter")openTournamentTyped()};
     $("hubShowGeneral").onclick=()=>showMonitor("general");$("hubShowCategories").onclick=()=>showMonitor("categories");$("hubShowIndividual").onclick=()=>showMonitor("add");$("hubAddToBoard").onclick=()=>showMonitor("individual");$("hubShareGeneral").onclick=shareGeneral;$("hubRefresh").onclick=refresh;$("hubPublicDisplay").onclick=openPublicDisplay;$("hubCategory").onchange=renderAll;$("hubCourse").onchange=renderAll;$("hubCategoryCardToggle").onclick=()=>{categoryCardOpen=!categoryCardOpen;renderCategoryCard()};$("hubSearchButton").onclick=renderSearch;$("hubSearch").oninput=renderSearch;$("hubImportButton").onclick=importTyped;$("hubAddTournament").onclick=()=>{tournamentEntryOpen=!tournamentEntryOpen;renderTournamentShelf();if(tournamentEntryOpen)setTimeout(()=>$("hubTournamentLink")?.focus(),0)};$("hubTournamentHome").onclick=showTournamentPortal;
-    $("hubCreateRound").onclick=()=>{const fields=$("hubRoundCreateFields");if(fields)fields.hidden=false;setTimeout(()=>$("hubRoundName")?.focus(),0)};
-    $("hubRoundOk").onclick=async()=>{const name=text($("hubRoundName")?.value,120);if(!name){setStatus("ESCRIBE EL NOMBRE DEL EVENTO DE LA RONDA","warning");$("hubRoundName")?.focus();return}let response;try{response=await root.fetch("/api/live",{method:"POST",headers:{"Content-Type":"application/json"},cache:"no-store",credentials:"same-origin",body:JSON.stringify({action:"create_tournament",name,mode:"general",durationDays:2,consent:{confirmed:true}})});}catch{setStatus("NO SE PUDO CREAR LA RONDA","warning");return}const result=await response.json().catch(()=>null);if(!response.ok||!result?.viewerToken){setStatus("NO SE PUDO CREAR LA RONDA","warning");return}const saved=upsertTournamentState(state,result.viewerToken,name);if(saved.full){setStatus("YA TIENES 5 TORNEOS GUARDADOS","warning");return}state=saved.state;saveState();try{root.sessionStorage.setItem("gsc-created-round",JSON.stringify({name,tournamentId:result.tournamentId||"",viewerToken:result.viewerToken||"",joinCode:result.joinCode||""}))}catch{}const url=new URL("/index-grupal.html",root.location.origin),share=new URL(root.location.href).searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);root.location.assign(url.toString())};
+    $("hubCreateRound").onclick=()=>setRoundCreateDialogOpen(true);
+    $("hubRoundClose").onclick=()=>setRoundCreateDialogOpen(false);
+    $("hubRoundOk").onclick=submitRoundCreate;
+    $("hubRoundCreateDialog").onclick=event=>{if(event.target===$("hubRoundCreateDialog"))setRoundCreateDialogOpen(false)};
+    $("hubRoundName").onkeydown=event=>{if(event.key==="Enter"){event.preventDefault();submitRoundCreate()}};
+    root.document.addEventListener("keydown",event=>{if(event.key==="Escape"&&!$("hubRoundCreateDialog")?.hidden)setRoundCreateDialogOpen(false)});
     $("hubRemoveGeneral").onclick=()=>{state=removeTournamentFromState(state,state.generalToken);saveState();resetGeneralView();showTournamentPortal()};
     $("hubClearFavorites").onclick=()=>{state.follows=[];saveState();externalStreams.clear();renderAll();setStatus("TABLERO DE MIS FAVORITOS VACÍO","warning")};
     root.addEventListener("online",refresh);root.document.addEventListener("visibilitychange",()=>{if(root.document.visibilityState==="visible")refresh()});
