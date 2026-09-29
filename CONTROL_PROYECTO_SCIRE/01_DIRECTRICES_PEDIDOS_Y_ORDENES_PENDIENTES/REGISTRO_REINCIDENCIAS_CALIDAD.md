@@ -495,3 +495,10 @@ Captura IMG_5275: `CREAR RONDA` abre el diálogo pero OK devuelve error. Causa r
 - Los tests heredados `test-lab-r60-production-refresh.mjs` y `test-manual-no-assistant.mjs` exigían R128.20 fija y fallaban con la release válida R131. Pasan a comparar con `release.json` y con el fallback dinámico del Service Worker; sin cambios de producto.
 - `test-lab-shortcuts-navigation.mjs` seguía exigiendo el CTA retirado `CENTRO DE TORNEOS` en Inicio y rechazaba el botón existente `EVENTO`. La regresión ahora exige `EVENTO`→TORNEOS, el único acceso pedido; no se agrega otro botón.
 - `test-lab-global-operational-audit.mjs` conservaba la misma expectativa retirada y detenía el build después de pasar las demás pruebas. Se alinea con `EVENTO`→TORNEOS; el build LAB completo concluye PASS.
+
+## RC-R138 · actualización atascada R129 y botón en pantalla equivocada
+- Evidencia del propietario: IMG_5315 muestra R129 sin MI RONDA en la tarjeta mientras servidor publica R137.
+- Causa: worker conserva namespaces/fallback R129 y promoción devuelve shell anterior; MI RONDA sólo estaba en Registro.
+- Escape: pruebas estáticas no ejecutaron el control inyectado ni comprobaron el contenedor solicitado.
+- Control: test-lab-update-recovery.mjs ejecuta el script recuperador, valida URL no-cache y botón junto a RONDA PREVIA.
+- Estado: corregido localmente; pruebas y publicación LAB en curso; iPhone pendiente.

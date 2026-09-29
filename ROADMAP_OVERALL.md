@@ -1883,3 +1883,10 @@ LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 1
 - Nuevo gate scripts/release-matrix-gate.mjs: bloquea publicación si index-grupal.html y release.json divergen, si el Service Worker vuelve a hard-codear una release o si release.json deja de saltarse caché.
 - .github/workflows/full-app-manual-physical-parity.yml ejecuta este gate en cada push de LAB antes de la auditoría física.
 - Archivos: service-worker.js, scripts/release-matrix-gate.mjs, .github/workflows/full-app-manual-physical-parity.yml, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md. Sin cambio de diseño, Scores ni cálculo deportivo. Producción EPG Caddy no se modifica.
+
+## R138 · 29 septiembre 2026 · actualización y MI RONDA
+- Corrección: MI RONDA añadido en la tarjeta, a la derecha de RONDA PREVIA; muestra los scores de la ronda activa sin cambiar torneo ni guardar datos nuevos.
+- Actualización: namespace nuevo del Service Worker, versión recuperada de release.json, navegación de actualización a red sin caché y refresco del shell antes de promover.
+- Rollback LAB: deployment dpl_9CQvZ6huTzxXhR6wHJ7N6bYzoKXf, commit f3f954f48a4cdc820031c75fea29faa2e2e02eb7.
+- Archivos: index-grupal.html, service-worker.js, release.json, test-lab-round-create-modal.mjs, test-lab-update-recovery.mjs, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md, CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md, CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md, CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
+- Estado: pruebas y publicación LAB en curso; verificación física iPhone pendiente.

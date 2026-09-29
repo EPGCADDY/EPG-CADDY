@@ -46,7 +46,7 @@ assert.equal(full.full,true);
 assert.equal(full.state.tournaments.length,5,"La lista debe conservar el límite de cinco");
 
 const release=JSON.parse(fs.readFileSync("release.json","utf8"));
-assert.equal(release.release,"LABORATORIO-20260929-R137");
+assert.equal(release.release,"LABORATORIO-20260929-R138");
 const score=fs.readFileSync("index-grupal.html","utf8");
 assert.match(score,/registrationEventButton[^\n]*addEventListener\("click"[^\n]*new URL\("\/live-hub\.html",location\.origin\)/,"EVENTO desde Inicio debe llevar a la pantalla Torneos, donde vive el alta de ronda");
 assert.match(score,/registrationEventButton[^\n]*persistDraftState\(\)/,"EVENTO debe conservar los datos del registro antes de abrir Torneos");
