@@ -46,10 +46,13 @@ assert.equal(full.full,true);
 assert.equal(full.state.tournaments.length,5,"La lista debe conservar el límite de cinco");
 
 const release=JSON.parse(fs.readFileSync("release.json","utf8"));
-assert.equal(release.release,"LABORATORIO-20260929-R135");
+assert.equal(release.release,"LABORATORIO-20260929-R136");
 const score=fs.readFileSync("index-grupal.html","utf8");
 assert.match(score,/registrationEventButton[^\n]*addEventListener\("click"[^\n]*new URL\("\/live-hub\.html",location\.origin\)/,"EVENTO desde Inicio debe llevar a la pantalla Torneos, donde vive el alta de ronda");
 assert.match(score,/registrationEventButton[^\n]*persistDraftState\(\)/,"EVENTO debe conservar los datos del registro antes de abrir Torneos");
+assert.match(score,/id="registrationEventButton">CREAR EVENTO<\/button>/,"El acceso debe decir CREAR EVENTO");
+assert.doesNotMatch(score,/previousRoundSetupButton|addPlayerButton|openRosterEditor|rosterAddMode/,"El Registro y la ronda no deben ofrecer RONDA PREVIA ni agregar jugadores después del inicio");
+assert.match(score,/if\(rosterEditMode&&deduplicated\.changes\.some\(change=>!change\.position\|\|change\.position>draftPlayers\.length\)\)return\{ok:false,speech:"Error"\}/,"La edición de una ronda existente rechaza altas de jugadores por voz");
 assert.match(score,/function openFriendsRoundDraft\(\)[\s\S]*?archived=readRoundArchive\(\)[\s\S]*?source=draft\.length\?draft:\(current&&Array\.isArray\(current\.players\)\?current\.players:\[\]\)/,"CREAR RONDA debe recuperar el borrador, la tarjeta actual o el roster archivado");
 assert.match(score,/\"friends-round\":\(\)=>openFriendsRoundDraft\(\)/,"La ruta de alta debe abrir el Registro no destructivo");
 const friendsDraft=score.slice(score.indexOf("function openFriendsRoundDraft()"),score.indexOf("function openRegistrationPreservingActiveRound()"));
@@ -61,7 +64,7 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 assert.match(worker,/fetchPublishedRelease\(\)/,"El Service Worker debe obtener la versión publicada dinámicamente");
 assert.match(worker,/release\.json\?sw_release_check=/,"La lectura de versión debe saltarse la caché");
 assert.doesNotMatch(worker,/const RELEASE="(?:LABORATORIO|PRODUCTION)-/,"La versión no debe quedar fijada en el Service Worker");
-console.log("PASS R135 · diálogo de ronda, roster preservado, vínculo LIVE compatible y reintentos Friends");
+console.log("PASS R136 · diálogo de ronda, roster preservado, vínculo LIVE compatible y reintentos Friends");
 
 const liveControl=fs.readFileSync("live-control.js","utf8");
 const liveApi=fs.readFileSync("api/live.js","utf8");

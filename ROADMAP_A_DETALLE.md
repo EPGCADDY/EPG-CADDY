@@ -1,5 +1,15 @@
 # ROADMAP A DETALLE
 
+## R136 · 29 septiembre 2026 · acciones de CREAR EVENTO y Registro
+
+- `index-grupal.html`: cambia el rótulo `EVENTO` por `CREAR EVENTO`, retira el acceso y handler de RONDA PREVIA del Registro general, elimina `+ JUGADOR` y su ruta de altas posteriores; el editor sólo expone la cantidad de jugadores ya registrados y rechaza altas por dictado. La captura normal de jugadores al iniciar una ronda se conserva.
+- `live-hub.js`: al abrir el portal de Torneos, limpia el estado operativo en vez de emitir `ELIGE UNA FUNCIÓN O UN TORNEO`; se conservan torneos y acciones de resultados.
+- `test-lab-tournament-navigation.mjs`: valida que la función operativa del portal no emita el mensaje eliminado.
+- `release.json` y la cabecera de `index-grupal.html`: identifican R136.
+- `test-lab-round-create-modal.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v253-live-previous-round.mjs`, `test-v304-homogeneous-registration-actions.mjs`: cubren rótulo, ausencia de controles y handlers de alta, protección por voz, retorno ATRÁS e historial conservado.
+- Archivos de control: ambos ROADMAPS, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` e `INVENTARIOS_V311.lock.json`.
+- Estado: pruebas dirigidas, build integral LAB, calidad, ROADMAP e inventario PASS. Revisión visual en navegador y Preview pendientes. Producción intacta.
+
 ## R135 · 29 septiembre 2026 · compatibilidad al vincular Friends
 
 - `live-hub.js`: conserva en la selección del evento el código de unión devuelto por LIVE, además del ID.

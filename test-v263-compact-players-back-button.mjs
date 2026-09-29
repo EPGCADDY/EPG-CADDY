@@ -18,12 +18,13 @@ assert.match(html,/\.back-registration-button,\.clear-round-scores\{width:100%;m
 assert.doesNotMatch(html,/REGRESAR A DATOS/);
 assert.doesNotMatch(html,/\.round-secondary-actions\{position:fixed;/);
 
-// Agregar jugador es explícito, sólo aparece con cupo y usa el editor que conserva la ronda.
-assert.match(html,/id="addPlayerButton"[^>]*>\+ JUGADOR<\/button>/);
-assert.match(html,/editable&&round\.mode!=="match_play"&&round\.players\.length<6/);
-assert.match(html,/addPlayerButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\?openStablefordDataEditor\(\):openRosterEditor\(\)\)/);
+// La incorporación de jugadores después de iniciar la ronda se retiró por completo.
+assert.doesNotMatch(html,/addPlayerButton|openRosterEditor|rosterAddMode/);
+assert.match(html,/const registrationSlots=rosterEditMode\?Math\.max\(1,draftPlayers\.length\):6/);
+assert.match(html,/if\(rosterEditMode\)progressiveVisibleRegistrationCount=Math\.max\(1,Math\.min\(registrationSlots,draftPlayers\.length\)\)/,"La corrección mantiene visibles los jugadores existentes sin añadir una fila nueva");
+assert.match(html,/if\(rosterEditMode\)return false/);
 
-// ATRÁS vuelve al inicio en Stableford; + JUGADOR conserva el editor y los scores.
+// ATRÁS conserva el acceso al registro y los scores existentes.
 assert.match(html,/backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\|\|round\.provisional\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)\)/);
 assert.match(html,/function openNewRoundDraft\(\)[\s\S]*?persist\(\);[\s\S]*?openSetup\("new"\)/);
 assert.match(html,/holes:previous\[i\]\?\.holes\|\|\{\}/);
@@ -71,4 +72,4 @@ assert.equal(updatedRound.players[5].name,"DIEGO");
 assert.deepEqual(updatedRound.players.slice(0,5).map(p=>p.holes),initialPlayers.map(p=>p.holes));
 assert.deepEqual(updatedRound.players[5].holes,{});
 
-console.log("PASS V263 · jugadores compactos y botón ATRÁS no invasivo");
+console.log("PASS R136 · jugadores compactos, ATRÁS no invasivo y alta posterior retirada");

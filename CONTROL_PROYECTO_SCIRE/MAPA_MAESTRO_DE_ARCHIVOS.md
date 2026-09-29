@@ -1,5 +1,13 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## LAB R136 · Registro simplificado · 29 septiembre 2026
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `index-grupal.html`, `live-hub.js`, `release.json` | Rótulo `CREAR EVENTO`; Registro sin acceso a RONDA PREVIA ni altas de jugadores después de iniciar; edición limitada al roster actual. Portal de Torneos sin el mensaje `ELIGE UNA FUNCIÓN O UN TORNEO`. | Inicio de ronda sigue admitiendo el registro normal; historial, opciones del portal y Producción intactos. |
+| `test-lab-round-create-modal.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v253-live-previous-round.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-lab-tournament-navigation.mjs` | Regresiones del rótulo, ausencia de controles/handlers, preservación de historial y limpieza del estado del portal. | Build LAB bloquea la reaparición de las funciones/mensajes retirados. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `INVENTARIOS_V311.lock.json` | Registro doble y sello de R136. | Gates de proyecto y de inventario. |
+
 ## LAB R135 · conexión compatible de rondas Friends · 29 septiembre 2026
 
 | Archivo | Función | Protección |

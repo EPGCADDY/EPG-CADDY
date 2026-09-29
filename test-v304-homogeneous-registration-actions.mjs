@@ -9,7 +9,6 @@ const worker=fs.readFileSync("service-worker.js","utf8");
 const style=html.match(/<style id="gscg-registration-actions-v304">([\s\S]*?)<\/style>/)?.[1]||"";
 const buttonText=(source,id)=>source.match(new RegExp(`id="${id}"[^>]*>([^<]+)<\\/button>`))?.[1]?.trim()||"";
 const sharedVocabulary=[
-  ["VER RONDA ANTERIOR","previousRoundSetupButton","previousStablefordRoundButton"],
   ["VER RONDAS GUARDADAS","openCardLibrarySetup","openCardLibraryStableford"]
 ];
 const primaryVocabulary=[
@@ -48,4 +47,5 @@ assert.match(html,/id="openCardLibraryStableford"[^>]*>VER RONDAS GUARDADAS<\/bu
 assert.equal(release.buildNumber,307);
 assert.match(worker,/const CACHE_NAME="gscg-mobile-v\d{3}[^"]*"/);
 
-console.log("PASS V304 · registro manual vigente: REVISAR DATOS + INICIAR RONDA + VER RONDA ANTERIOR + VER RONDAS GUARDADAS");
+assert.doesNotMatch(html,/previousRoundSetupButton/,"El registro general ya no tiene acceso a RONDA PREVIA");
+console.log("PASS R136 · registro manual vigente sin acciones redundantes");

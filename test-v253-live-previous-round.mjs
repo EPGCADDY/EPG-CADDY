@@ -42,14 +42,14 @@ detached.players[0].name="EDITADA";
 assert.equal(generalPrevious.players[0].name,"AYER","La ronda restaurada es una copia operativa independiente");
 
 assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
-assert.match(html,/id="previousRoundButton">RONDA PREVIA/);
-assert.match(html,/id="previousRoundSetupButton">RONDA PREVIA/);
-assert.match(html,/id="previousStablefordRoundButton">RONDA PREVIA/);
+assert.match(html,/id="previousRoundButton">VER RONDA ANTERIOR<\/button>/);
+assert.doesNotMatch(html,/previousRoundSetupButton/,"El registro ya no ofrece RONDA PREVIA");
+assert.match(html,/id="previousStablefordRoundButton"[^>]*>VER RONDA ANTERIOR<\/button>/);
 assert.match(html,/function activatePreviousOperationalRound\(modeHint=null,fromSetup=false\)/);
 assert.match(html,/if\(round\.configured\)persist\(\)/,"La ronda actual debe guardarse antes de restaurar otra");
 assert.match(html,/round=restored;activateCourse/);
 assert.match(html,/persist\(\);render\(\);\$\("status"\)\.textContent=state\.relation/,"La ronda restaurada debe quedar activa, editable y persistida");
-assert.match(html,/activatePreviousOperationalRound\("general",true\)/);
+assert.doesNotMatch(html,/activatePreviousOperationalRound\("general",true\)/,"El registro general ya no reactiva rondas previas");
 assert.match(html,/activatePreviousOperationalRound\("stableford",true\)/);
 assert.match(html,/STABLEFORD_OFFICIAL_HOSTING_URL="\/index-grupal\.html\?stableford_emergency=countryclub&emergency_clean=1&v=305"/);
 assert.match(html,/id="stableCourseOption" href="\$\{STABLEFORD_OFFICIAL_HOSTING_URL\}"[\s\S]{0,180}<span>STABLEFORD<\/span>/);

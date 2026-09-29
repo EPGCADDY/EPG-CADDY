@@ -1,5 +1,17 @@
 # ROADMAP OVERALL
 
+## R136 · 29 septiembre 2026 · acciones de CREAR EVENTO y Registro
+
+- El botón `EVENTO` del Registro ahora dice `CREAR EVENTO` y conserva su navegación a Torneos.
+- El Registro general deja de ofrecer `VER RONDA ANTERIOR`; su reactivación desde esa pantalla también se eliminó. `VER RONDAS GUARDADAS` permanece disponible.
+- Se retiró `+ JUGADOR` y su editor de altas posteriores. El editor de una ronda existente sólo muestra los jugadores ya registrados y rechaza altas por dictado; el registro inicial conserva su capacidad normal de jugadores.
+- El portal de Torneos deja de generar el mensaje `ELIGE UNA FUNCIÓN O UN TORNEO`; la función limpia el estado al abrir el portal y conserva las opciones de torneos y resultados.
+- Regresión: `test-lab-tournament-navigation.mjs` comprueba que la función del portal no vuelva a emitir ese mensaje.
+- Regresión: `test-lab-round-create-modal.mjs`, `test-lab-tournament-navigation.mjs`, `test-v263-compact-players-back-button.mjs`, `test-v253-live-previous-round.mjs` y `test-v304-homogeneous-registration-actions.mjs`.
+- Archivos: `index-grupal.html`, `live-hub.js`, `release.json`, las cinco pruebas anteriores, ambos ROADMAPS, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md` e `INVENTARIOS_V311.lock.json`.
+- PASS: pruebas dirigidas, build integral LAB, calidad, ROADMAP e inventario. Revisión visual en navegador y Preview siguen pendientes.
+- Alcance LAB R136. Producción intacta.
+
 ## R135 · 29 septiembre 2026 · compatibilidad al vincular Friends
 
 - Las capturas posteriores a R134 confirmaron que “Cuates” se crea, pero Torneos aún no recibe tarjetas. Causa: la unión automática usaba la acción LIVE nueva `join_tournament_by_id`, que puede no existir en el backend al que el entorno LAB deriva la llamada.
