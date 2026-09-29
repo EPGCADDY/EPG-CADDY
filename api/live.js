@@ -26,7 +26,7 @@ const SECRET_PATTERN=/^[A-Za-z0-9_-]{40,100}$/;
 // client identifiers inside an authenticated, private LIVE snapshot.
 const ID_PATTERN=/^[A-Za-z0-9._:-]{1,160}$/;
 const UUID_PATTERN=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const CONTROL_ACTIONS=new Set(["create_stream","publish","revoke_stream","create_tournament","join_tournament","leave_tournament","revoke_tournament"]);
+const CONTROL_ACTIONS=new Set(["create_stream","publish","revoke_stream","create_tournament","join_tournament","join_tournament_by_id","leave_tournament","revoke_tournament"]);
 
 function liveError(code,status=400){return Object.assign(new Error(code),{code,status})}
 function cleanText(value,max=120){return String(value??"").trim().replace(/\s+/g," ").slice(0,max)}

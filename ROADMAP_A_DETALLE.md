@@ -1,5 +1,47 @@
 # ROADMAP A DETALLE
 
+## R135 · 29 septiembre 2026 · compatibilidad al vincular Friends
+
+- `live-hub.js`: conserva en la selección del evento el código de unión devuelto por LIVE, además del ID.
+- `live-control.js`: conecta por ID cuando el servidor admite la acción; ante acción no soportada/404, reintenta por código con `join_tournament`. Conserva los reintentos, no sustituye el escritor oficial de Score y publica el roster registrado al guardar la ronda.
+- `api/live.js`: incluye `join_tournament_by_id` en la lista de acciones que requieren origen autorizado de la app.
+- `index-grupal.html` y `release.json`: identifican el shell LAB como R135.
+- `test-lab-round-create-modal.mjs`: cubre el código persistido, la alternativa compatible, la validación de origen y el reintento.
+- Archivos modificados: `api/live.js`, `index-grupal.html`, `live-control.js`, `live-hub.js`, `release.json`, `test-lab-round-create-modal.mjs`, ambos ROADMAPS, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` e inventario LAB.
+- PASS: prueba Friends, navegación TORNEOS, release, calidad, ROADMAP e inventario. Build integral LAB PASS. Revisión automática de navegador/recorrido real sigue pendiente al publicar Preview. Producción intacta.
+
+## R133 · 29 septiembre 2026 · conservar jugadores al crear ronda Friends
+
+- `live-hub.js`: después de guardar el nombre del evento, navega a `manual_action=friends-round`; no usa la acción estándar `setup`, que borra el borrador y la tarjeta recuperada.
+- index-grupal.html: la ruta Friends espera al enrutador de Registro sin disparar el borrado automático. openFriendsRoundDraft precarga los jugadores del borrador o, en su ausencia, de la tarjeta activa o el archivo más reciente; conserva hándicap, categoría, marcas y contacto, y deja vacíos los scores del nuevo juego. El scorecard anterior permanece guardado hasta confirmar INICIAR RONDA.
+- `test-lab-round-create-modal.mjs`: valida la ruta no destructiva, fuente de roster y protección contra el inicio automático que borraba jugadores.
+- Release `LABORATORIO-20260929-R133`. Cambios en `live-hub.js`, `index-grupal.html`, prueba focalizada, `release.json`, ambos ROADMAPS, registro de reincidencias e inventario. Producción intacta. Preview y pruebas de recorrido pendientes.
+
+## R132 · 28 septiembre 2026 · conexión de Friends y lista directa
+
+- `live-control.js`: al persistir una ronda configurada, conecta la tarjeta al torneo que quedó seleccionado al crear Friends. Crea el stream inicial con todos los jugadores registrados y conserva el grupo para seguir publicando cambios; el reintento vuelve a activarse al recuperar conexión.
+- `live-hub.js`: reconoce los torneos creados como ronda de grupo, conserva el monitor general existente para torneos normales y muestra `NOMBRE · HDCP · HOYO · GROSS · NETO · +/-`, ordenado por score y después por hoyo actual más avanzado.
+- `live-hub.html`: oculta filtros, paneles y opciones sólo durante la vista compacta de Friends y deja la lista de jugadores como contenido principal, con tipografía compartida con las tarjetas y texto en mayúsculas.
+- `index-grupal.html` y `release.json`: versión identificable R132 para invalidar el shell anterior y permitir probar el recorrido actualizado.
+- `test-lab-round-create-modal.mjs`: añade regresión de conexión automática, memoria de la ronda conectada, presentación Friends y orden score/hoyo; permanece integrado en el build LAB.
+- `test-lab-medal-monitor.mjs`: el fixture aislado declara que su torneo estándar no es una ronda Friends y conserva las aserciones de columnas del monitor general.
+- Incidencia registrada en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`. Inventario vuelve a sellarse en `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+- Estado: regresiones focalizadas, build integral LAB y gates de calidad/release/ROADMAP/inventario PASS. Deployment Preview y recorrido real completo Score→Friends→Score pendientes. Producción sin cambios.
+
+## R131 · 28 septiembre 2026 · alta de ronda desde TORNEOS
+
+- `live-hub.html`: el botón `CREAR RONDA` abre un diálogo modal con nombre y `OK`; permanece cerrado hasta que se solicita y ofrece cierre explícito.
+- `live-hub.js`: valida nombre y cupo antes de crear; guarda el torneo activo y las credenciales de organización para que se puedan incorporar grupos; `OK` cierra el diálogo y abre el Registro de Score existente con el torneo seleccionado. Los errores 42703 y de configuración faltante se muestran con diagnóstico claro.
+- `test-lab-round-create-modal.mjs`: protege diálogo bajo demanda, nombre obligatorio, límite de cinco, error de esquema, selección del torneo y salto al Registro. Se integra a `scripts/build-manual-lab.mjs`.
+- `test-lab-update-recovery.mjs`: añade el stub ausente `fetchPublishedRelease` a su contexto aislado de prueba; corrige el bloqueo heredado del build sin cambiar el Service Worker ni la app.
+- `test-lab-r60-production-refresh.mjs` y `test-manual-no-assistant.mjs`: comparan `index-grupal.html` con `release.json` actual y validan el mecanismo de actualización del Service Worker, sin exigir el número histórico R128.20.
+- `test-lab-shortcuts-navigation.mjs`: valida `EVENTO`→TORNEOS como acceso desde Inicio, sin agregar un segundo botón.
+- `test-lab-global-operational-audit.mjs`: sustituye la expectativa obsoleta `CENTRO DE TORNEOS` por la acción `EVENTO`→TORNEOS; el build LAB completo vuelve a validar la pantalla de Inicio sin requerir controles adicionales.
+- `index-grupal.html` y `release.json`: R131; el botón `EVENTO` existente en Inicio lleva a TORNEOS tras persistir el borrador, donde está el único control que abre la ventana de nombre.
+- La migración `database/005_live_tournament_mode.sql` (`8b5d6fc9-33fd-4bec-8a54-b244bcfa57a6`) se preparó y probó en Neon temporal `br-withered-cell-av876aco`; una inserción sintética devolvió `mode=general`, `status=active`, revisión 0. Parent compartido: `br-late-wind-avhgi9s3`. La tabla compartida carece de `mode`, causa confirmada del 503/42703. Neon MCP exige aprobación antes de aplicar a main.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: regenerado con los tres inventarios PDF para sellar el árbol actualizado de Laboratorio.
+- Producción web permanece intacta. La migración compartida y revisión de navegador LAB están pendientes.
+
 ## LAB 20-sep-2026 · saneamiento del gate ROADMAP contra contratos retirados
 
 El workflow obligatorio aún ejecutaba `test-v357-synchronized-progressive-voice.mjs` y otros bancos V354–V362 que importan `api/voice-health.js` y validan reconocimiento/dictado ya retirado por el perfil LAB actual. Esa discrepancia hacía fallar el gate aun cuando el build vigente ya certificaba expresamente que no existen entradas de micrófono/AI y que la voz local de resultados permanece.

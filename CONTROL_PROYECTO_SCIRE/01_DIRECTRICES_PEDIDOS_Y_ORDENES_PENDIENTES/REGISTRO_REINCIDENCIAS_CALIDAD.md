@@ -1,5 +1,14 @@
 # Registro de reincidencias de calidad
 
+## RC-105 · TORNEO FRIENDS SE CREABA SIN TARJETAS PUBLICADAS · 29 SEPTIEMBRE 2026
+
+- Defecto reportado con capturas: el evento Friends aparecía en TORNEOS, pero al abrir RESULTADOS GENERALES mostraba 0 jugadores y “TODAVÍA NO HAY SCORE CARDS PUBLICADAS”.
+- Causa raíz: la unión automática dependía de `join_tournament_by_id`; el entorno LAB puede derivar `/api/live` a un backend anterior que no implementa esa acción. La ronda quedaba sin asociar aunque el torneo se hubiera creado correctamente.
+- Punto de escape: la regresión comprobaba la ruta cliente por ID y reintentos, pero no cubría compatibilidad del backend ni verificaba el resultado del torneo después de unir.
+- Control permanente: conservar el `joinCode` y usar `join_tournament` si la unión por ID responde acción no soportada/404; incluir la ruta por ID en el allowlist de origen; proteger código, conexión, reintentos y estado de versión en `test-lab-round-create-modal.mjs`.
+- Evidencia automática: prueba Friends, navegación y build LAB PASS; revisión publicada de navegador y recorrido real Score→Friends→Score pendientes.
+- Estado: CORREGIDO EN CANDIDATO R135; PREVIEW POR ACTUALIZAR Y RECORRIDO E2E PENDIENTES; PRODUCCIÓN INTACTA.
+
 ## RC-104 · CLIMA VIVO CONTRA FRANJA CONGELADA EN RONDA CERRADA · 13 SEPTIEMBRE 2026
 
 - Defecto físico: la respuesta universal indicó 27 °C a las 11:30, pero la franja de la misma pantalla conservó 20.7 °C de las 20:00 de una fecha anterior.
@@ -449,3 +458,40 @@ Audio anterior persiste porque render no limpia status por ID de ronda; Skins no
 Acceso temporal recuperado por invitación del propietario; token no guardado. R50 inspeccionada mediante Chrome remoto. FAIL reproducidos: volver desde Favoritos oculta Mis torneos; formulario de enlace y navegación siguen visibles fuera de contexto por especificidad CSS; avisos de validación ocultos; mismo jugador duplicado por seguimiento individual/grupo; ranking de favoritos depende del filtro previo; Compartir LIVE informa sólo en panel oculto.
 Correcciones: live-hub.html, live-hub.js, live-control.js. Portal restablece clases; .hidden prevalece sobre layout; estado visible; favoritos deduplicados con ranking general y detalle desplegable conservado entre refrescos; título de búsqueda real; ADJUNTAR RONDA EN VIVO y campo etiquetado; Compartir abre panel visible con enlace y organización accesible. C de Campeonato se conserva por referencia previa aprobada.
 Test test-lab-tournament-navigation.mjs incorporado a scripts/build-manual-lab.mjs. index-grupal.html y service-worker.js identifican R51. Documentación anterior R50 READY preservada en docs/quality/LAB_R50_RECORRIDO_PENDIENTE.md y docs/quality/LAB_R32_KEYPAD_20260922.md. R51 pendiente build, publicación LAB y verificación de arreglo en navegador. Main intacta; rollback LAB R50 dpl_BJ53UK8UfYERZMRcvSUHspCJnEY4. No certificación integral ni iPhone.
+
+### R134 · torneo Friends sin jugadores tras crear la ronda · 29 septiembre 2026
+
+Capturas IMG_5285–IMG_5291: el nombre “Hola” se guarda y vuelve a aparecer en Torneos; después, Resultados Generales sigue indicando 0 grupos y 0 jugadores. R133 preserva el roster, pero no daba recuperación observable si fallaba el enlace de la tarjeta al torneo LIVE.
+
+- Corrección R134: el enlace automático de la tarjeta Friends programa reintentos con espera progresiva y repite el intento al recuperar la conexión o volver a la app. Una conexión exitosa cancela la cola.
+- Control permanente: regresión focalizada para reintento, recuperación en `pageshow` y cancelación al conectar; gates integrales y Preview R134 pendientes. Producción intacta.
+
+### R133 · roster borrado al regresar de CREAR RONDA · 29 septiembre 2026
+
+Capturas IMG_5282(1)–IMG_5284(1): tras dar de alta “Cuates 1”, el Monitor mostraba 0 grupos y 0 jugadores. Causa reproducida en el código: `live-hub.js` regresaba a `manual_action=setup`; `openNewRoundDraft()` limpiaba el borrador y la ronda activa antes de mostrar Registro. Por eso no se guardaba un roster para conectar al torneo.
+
+- Escape: `test-lab-round-create-modal.mjs` exigía únicamente que se abriera Registro y que el torneo se seleccionara; no cubría conservación del roster ni el borrado del arranque automático.
+- Corrección local R133: se agregó una ruta de Registro para Friends que no ejecuta el limpiado estándar. Primero restaura el borrador; si no existe, precarga jugadores desde la tarjeta activa o el archivo más reciente, con sus datos y sin scores anteriores. La tarjeta previa queda intacta hasta confirmar INICIAR RONDA.
+- Control permanente: el test focalizado exige la ruta `friends-round`, la selección de origen del roster y el guard de inicio; build y gates completos pendientes. Preview R133 pendiente. Producción intacta.
+
+### R132 · Friends aparece vacío tras crear y empezar una ronda · 28 septiembre 2026
+
+Captura IMG_5280/IMG_5281: el torneo Friends abre el monitor general completo con 0 grupos, 0 jugadores y opciones ajenas a la ronda. Causa: crear el torneo sólo guardaba las credenciales locales; la tarjeta iniciada nunca creaba/publicaba su grupo dentro de ese torneo. El flujo al seleccionar Friends tampoco diferenciaba una ronda casual del monitor general.
+
+- Corrección local: al persistir la ronda configurada, `live-control.js` crea el stream del grupo y lo une al torneo seleccionado; mantiene la publicación de cambios y permite reintentar cuando vuelve la conexión.
+- La selección Friends activa una lista directa `NOMBRE · HDCP · HOYO · GROSS · NETO · +/-`, en tipografía compartida con las tarjetas y todo en mayúsculas, ordenada por score; empates van primero por hoyo actual más avanzado. Los filtros, estadísticas y opciones sólo se ocultan para los eventos creados mediante CREAR RONDA.
+- Regresión: `test-lab-round-create-modal.mjs` cubre unión/identidad de ronda, columnas, vista compacta y ranking. El build aislado de `test-lab-medal-monitor.mjs` requirió declarar Friends falso para conservar su cobertura del monitor normal; el fixture se corrigió sin cambiar el producto.
+- Estado R132: pruebas focalizadas, build LAB completo y gates de calidad/release/ROADMAP/inventario PASS; Preview y recorrido real completo pendientes. Producción permanece intacta. Archivos funcionales `live-control.js`, `live-hub.js`, `live-hub.html`, `index-grupal.html`; versión `LABORATORIO-20260928-R132`.
+
+## R131 — alta de ronda LIVE no llega a completar · 28 septiembre 2026
+
+Captura IMG_5275: `CREAR RONDA` abre el diálogo pero OK devuelve error. Causa reproducida en Vercel: POST `/api/live` 503; log de producción `live 42703`. Neon `live_tournaments` en main y LAB carece de `mode`, que la API inserta. Captura IMG_5276: el botón existente `EVENTO` en Inicio no tenía manejador.
+
+- Escape: el test R130 verificaba respuesta LIVE simulada y navegación estática; no contrastaba el endpoint publicado con el esquema de Neon ni cubría EVENTO en Inicio.
+- Corrección local: mensaje explícito para 42703 y manejador EVENTO que conserva el borrador y dirige a TORNEOS; la ventana de nombre sigue abriéndose sólo desde `CREAR RONDA`.
+- Migración: `database/005_live_tournament_mode.sql`, ID `8b5d6fc9-33fd-4bec-8a54-b244bcfa57a6`; columna aditiva `mode text NOT NULL DEFAULT 'general'` y constraint de modalidades. Temporal `br-withered-cell-av876aco`, parent `br-late-wind-avhgi9s3`; lectura y alta sintética PASS (`general`, `active`, revisión 0). La base compartida no se ha modificado; falta aprobación expresa requerida por Neon MCP.
+- Control permanente: `test-lab-round-create-modal.mjs` protege ruta Evento→Torneos, persistencia del borrador, error 42703 y contrato de columna. Estado: código local PASS; migración compartida, Preview posterior y revisión de navegador pendientes.
+- Bloqueo heredado de build corregido en test, no en la app: `test-lab-update-recovery.mjs` ejecutaba `approvedNavigationWithManualUpdate` sin el mock `fetchPublishedRelease`; el fixture ahora lo provee y conserva la prueba de geometría. Verificación del build LAB completo incorporada a R131.
+- Los tests heredados `test-lab-r60-production-refresh.mjs` y `test-manual-no-assistant.mjs` exigían R128.20 fija y fallaban con la release válida R131. Pasan a comparar con `release.json` y con el fallback dinámico del Service Worker; sin cambios de producto.
+- `test-lab-shortcuts-navigation.mjs` seguía exigiendo el CTA retirado `CENTRO DE TORNEOS` en Inicio y rechazaba el botón existente `EVENTO`. La regresión ahora exige `EVENTO`→TORNEOS, el único acceso pedido; no se agrega otro botón.
+- `test-lab-global-operational-audit.mjs` conservaba la misma expectativa retirada y detenía el build después de pasar las demás pruebas. Se alinea con `EVENTO`→TORNEOS; el build LAB completo concluye PASS.

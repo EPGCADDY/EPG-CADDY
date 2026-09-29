@@ -1,5 +1,16 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## LAB R135 · conexión compatible de rondas Friends · 29 septiembre 2026
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `live-hub.js` | Guarda el código de unión del torneo Friends en la selección local. | ID y código pertenecen al mismo torneo creado. |
+| `live-control.js` | Usa unión por ID y hace respaldo por código cuando el backend aún no acepta la acción nueva; mantiene reintentos y publicación desde la ronda oficial. | No crea un segundo escritor ni cambia otra pantalla. |
+| `api/live.js` | Exige origen autorizado también para `join_tournament_by_id`. | La acción autenticada conserva allowlist de origen. |
+| `index-grupal.html`, `release.json` | Identifican el shell del candidato LAB R135. | La instalación puede detectar el release nuevo. |
+| `test-lab-round-create-modal.mjs` | Protege joinCode, fallback, origen y recorrido de conexión. | Build LAB bloquea el regreso a un único método de unión. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `INVENTARIOS_V311.lock.json` | Registran causa, corrección, pendientes y sello del árbol R135. | Preview requiere cero FAIL; Producción permanece intacta. |
+
 ## Delta V406-R14 · 7 de septiembre de 2026
 
 | Archivo | Función |

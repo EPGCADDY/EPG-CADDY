@@ -126,7 +126,9 @@
     }
     tournamentConnectRunning=true;
     try{
-      const result=await connectTournamentById(tournamentId,snapshot.groupLabel);
+      const ownedTournament=state.tournamentOwned?.tournamentId===tournamentId?state.tournamentOwned:null;
+      const joinCode=text(selection?.joinCode||ownedTournament?.joinCode,20).toUpperCase();
+      const result=await connectTournamentById(tournamentId,snapshot.groupLabel,joinCode);
       if(result?.ok){selection.roundId=snapshot.roundId;selection.connected=true;try{root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify(selection))}catch{};clearTournamentConnectRetry(snapshot.roundId);onRoundPersisted(roundValue);return true}
       setStatus(`${stateMessage(result?.code)} · REINTENTANDO VINCULAR EL TORNEO`,"warning",true);scheduleTournamentConnectRetry(roundValue);return false;
     }catch(error){setStatus(`${stateMessage(error?.code||"NETWORK_ERROR")} · REINTENTANDO VINCULAR EL TORNEO`,"warning",true);scheduleTournamentConnectRetry(roundValue);return false;
@@ -174,7 +176,7 @@
     const state=liveState();state.tournamentOwned={tournamentId:result.tournamentId,name,mode:result.mode,organizerSecret:result.organizerSecret,viewerToken:result.viewerToken,joinCode:result.joinCode,expiresAt:result.expiresAt};saveState(state);renderActive();
     return{...result,name};
   }
-  async function connectTournamentById(tournamentId,groupLabel=""){
+  async function connectTournamentById(tournamentId,groupLabel="",joinCode=""){
     const snapshot=currentSnapshot();if(!snapshot)return{ok:false,code:"LIVE_ROUND_REQUIRED"};
     let state=liveState(),stream=state.stream;
     if(!(stream?.publisherSecret&&stream.roundId===snapshot.roundId&&stream.scope==="group")){
@@ -183,7 +185,11 @@
       if(!created.ok)return created;
       state=liveState();state.stream={roundId:snapshot.roundId,scope:"group",streamId:created.streamId,publisherSecret:created.publisherSecret,viewerToken:created.viewerToken,revision:Number(created.revision)||0,expiresAt:created.expiresAt,groupLabel:groupLabel||snapshot.groupLabel,pendingSnapshot:null,tournamentId:null};saveState(state);stream=state.stream;
     }
-    const result=await request("join_tournament_by_id",{tournamentId,groupLabel:groupLabel||snapshot.groupLabel},stream.publisherSecret);
+    let result=await request("join_tournament_by_id",{tournamentId,groupLabel:groupLabel||snapshot.groupLabel},stream.publisherSecret);
+    // Older LIVE backends support joining by tournament code but not by ID.
+    // The round-creation flow owns the code, so use that compatible route when needed.
+    if(!result.ok&&joinCode&&([404,405].includes(Number(result.status))||["LIVE_ACTION_UNSUPPORTED","HTTP_404","HTTP_405"].includes(String(result.code||""))))
+      result=await request("join_tournament",{joinCode:text(joinCode,20).toUpperCase(),groupLabel:groupLabel||snapshot.groupLabel},stream.publisherSecret);
     if(result.ok){state=liveState();if(state.stream){state.stream.tournamentId=result.tournamentId;state.stream.groupLabel=result.groupLabel||groupLabel||snapshot.groupLabel;saveState(state)}renderActive()}
     return result;
   }
