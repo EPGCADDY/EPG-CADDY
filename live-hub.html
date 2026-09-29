@@ -142,6 +142,7 @@
     @media(max-width:900px){body.public-display .head::after{font-size:12px}.public-display-status strong{font-size:20px}.public-display-status b{font-size:16px}}
     body:not(.public-display) .round-create{margin:0 0 14px;padding:14px;border:1px solid var(--tour-line);border-radius:16px;background:var(--tour-card)}
     body:not(.public-display) .round-create button{width:100%;min-height:52px;border-radius:12px;font-size:18px;font-weight:900}
+    body:not(.public-display) .round-create button+button{margin-top:10px}
     body:not(.public-display) .round-create-dialog[hidden]{display:none!important}
     body:not(.public-display) .round-create-dialog{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:18px;background:rgba(0,0,0,.84);backdrop-filter:blur(3px)}
     body:not(.public-display) .round-create-dialog-card{position:relative;box-sizing:border-box;width:min(520px,100%);max-height:calc(100dvh - 36px);overflow:auto;padding:24px 20px 20px;border:1px solid var(--tour-green);border-radius:18px;background:#050505;box-shadow:0 0 30px rgba(49,255,0,.2)}
@@ -185,7 +186,8 @@
     </section>
     <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← MIS TORNEOS</button>
     <section class="round-create" id="hubRoundCreate" aria-label="Crear ronda">
-      <button class="primary" id="hubCreateRound" type="button" aria-haspopup="dialog" aria-controls="hubRoundCreateDialog">＋ CREAR RONDA</button>
+      <button class="primary" id="hubCreateRound" type="button" aria-haspopup="dialog" aria-controls="hubRoundCreateDialog">CREAR TORNEO</button>
+      <button class="primary" id="hubCreatePrivateRound" type="button">CREAR RONDA PRIVADA</button>
     </section>
     <div class="round-create-dialog" id="hubRoundCreateDialog" role="presentation" aria-hidden="true" hidden>
       <section class="round-create-dialog-card" role="dialog" aria-modal="true" aria-labelledby="hubRoundDialogTitle">

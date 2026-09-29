@@ -114,6 +114,7 @@
     tournamentConnectRetryTimer=setTimeout(()=>{tournamentConnectRetryTimer=null;const current=adapter?.getRound?.();if(!current?.configured||String(current.id)!==roundId){clearTournamentConnectRetry(roundId);return}void connectPendingRoundTournament(current)},delay);return true;
   }
   async function connectPendingRoundTournament(roundValue){
+    if(!roundValue?.tournament?.name)return false;
     if(tournamentConnectRunning){scheduleTournamentConnectRetry(roundValue);return false}
     let selection;try{selection=JSON.parse(root.localStorage.getItem("gsc-tournament-connect-selection-v1")||"null")}catch{return false}
     const snapshot=currentSnapshot(roundValue),tournamentId=text(selection?.id,50);

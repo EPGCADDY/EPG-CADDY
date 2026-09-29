@@ -1,5 +1,13 @@
 # ROADMAP OVERALL
 
+## R137 · 29 septiembre 2026 · ronda privada separada de Torneos (candidato local)
+
+- `live-hub.html` muestra CREAR TORNEO y CREAR RONDA PRIVADA en botones consecutivos. La ronda privada abre Registro conservando jugadores existentes y sin crear un torneo.
+- `index-grupal.html` incorpora MI RONDA debajo de VER RONDAS GUARDADAS para regresar a la tarjeta y ver los scores del grupo; la ruta privada elimina el torneo del borrador antes de iniciar.
+- `live-control.js` impide enviar una ronda sin torneo a un torneo pendiente. `live-hub.js` enruta la acción privada sin agregarla a la lista de torneos. `test-lab-round-create-modal.mjs` protege estas reglas.
+- `release.json` e `index-grupal.html` avanzan a R137; `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` sella las fuentes actualizadas. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` registra las rutas operativas.
+- Estado: pruebas dirigidas PASS; revisión de navegador y publicación LAB pendientes. Producción intacta.
+
 ## R136 · 29 septiembre 2026 · acciones de CREAR EVENTO y Registro
 
 - El botón `EVENTO` del Registro ahora dice `CREAR EVENTO` y conserva su navegación a Torneos.

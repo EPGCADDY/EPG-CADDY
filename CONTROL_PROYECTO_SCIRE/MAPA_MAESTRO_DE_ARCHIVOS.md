@@ -1351,3 +1351,6 @@ Archivos exactos:
 - `api/voice-transcribe.js`: transcripción HTTP del audio del turno.
 - `test-ptt-independent-turns.mjs`: regresión de cierre y cancelación.
 Estado: validación física pendiente.
+# R137 · 29 septiembre 2026
+
+`live-hub.html` y `live-hub.js` separan CREAR TORNEO de CREAR RONDA PRIVADA; `index-grupal.html` conserva jugadores en Registro privado y ofrece MI RONDA con scores; `live-control.js` evita conexión automática de la ronda privada a Torneos. `test-lab-round-create-modal.mjs` protege el flujo, `release.json` identifica R137 y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` sella la versión. Ambos ROADMAPS registran el cambio.

@@ -1962,3 +1962,12 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Nuevo gate scripts/release-matrix-gate.mjs: bloquea publicación si index-grupal.html y release.json divergen, si el Service Worker vuelve a hard-codear una release o si release.json deja de saltarse caché.
 - .github/workflows/full-app-manual-physical-parity.yml ejecuta este gate en cada push de LAB antes de la auditoría física.
 - Archivos: service-worker.js, scripts/release-matrix-gate.mjs, .github/workflows/full-app-manual-physical-parity.yml, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md. Sin cambio de diseño, Scores ni cálculo deportivo. Producción EPG Caddy no se modifica.
+# R137 · 29 septiembre 2026 · ronda privada separada de Torneos (candidato local)
+
+- `live-hub.html`: botones CREAR TORNEO y CREAR RONDA PRIVADA, uno debajo del otro, con la tipografía y estilo existentes.
+- `live-hub.js`: la ronda privada navega a Registro sin llamar a `create_tournament`, guardar token ni entrar en el monitor de Torneos.
+- `index-grupal.html`: `openPrivateRoundDraft` conserva jugadores de borrador/tarjeta/archivo, fija `draftTournament=null`; `MI RONDA` debajo de RONDAS GUARDADAS vuelve a la tarjeta activa y sus scores.
+- `live-control.js`: `connectPendingRoundTournament` omite rondas sin nombre de torneo, incluso si existe una selección anterior pendiente.
+- `test-lab-round-create-modal.mjs`: verifica separación visual, ruta y bloqueo de envío de ronda privada a torneo.
+- `release.json` e `index-grupal.html`: identidad R137. `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: digest y tres PDF actualizados tras los cambios. `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: rutas operativas R137.
+- Estado: pruebas dirigidas PASS; revisión de navegador y publicación LAB pendientes. Producción intacta.

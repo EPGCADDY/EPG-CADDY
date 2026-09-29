@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20260929-R136">
+  <meta name="gscg-release" content="LABORATORIO-20260929-R137">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1232,6 +1232,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
     <button class="nr-button registration-clear-all" type="button" id="clearAllRegistration">BORRAR JUGADORES REGISTRADOS</button>
     <button class="nr-button" id="setupOk">REVISAR DATOS</button>
     <button class="nr-button secondary" type="button" id="openCardLibrarySetup">VER RONDAS GUARDADAS</button>
+    <button class="nr-button secondary" type="button" id="openMyRoundSetup">MI RONDA</button>
     <button class="nr-button secondary account-entry-button" type="button" id="accountBackupButtonSetup" data-account-entry>RESPALDAR / RECUPERAR DATOS</button>
   </section>
   <section class="new-round-card hidden" id="setupStep2">
@@ -3400,6 +3401,13 @@ function openFriendsRoundDraft(){
   seedManualDraftRowsFromPlayers();persistDraftState();dateSetup();openSetup("new");
   return true;
 }
+function openPrivateRoundDraft(){
+  openFriendsRoundDraft();
+  draftTournament=null;
+  persistDraftState();
+  renderTournamentDraft();
+  return true;
+}
 function openRegistrationPreservingActiveRound(){
   if(round.configured)persist();
   ;
@@ -3411,7 +3419,7 @@ function openRegistrationPreservingActiveRound(){
 }
 function ensurePrincipalEntry(){
   // No destruir ni tapar una ronda ya confirmada/recuperada.
-  if(new URLSearchParams(location.search).get("manual_action")==="friends-round")return false;
+  if(["friends-round","private-round"].includes(new URLSearchParams(location.search).get("manual_action")))return false;
   if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
   const overlay=$("setupOverlay");if(!overlay)return false;
   if(!overlay.classList.contains("visible"))openNewRoundDraft();
@@ -4080,6 +4088,7 @@ $("backToRegistrationButton").addEventListener("click",()=>isStablefordRound()||
 $("scorecard").addEventListener("input",e=>{const input=e.target.closest?.("[data-provisional-player]");if(!input||!round.provisional)return;const p=round.players.find(x=>x.id===input.dataset.provisionalPlayer);if(p)p.name=String(input.value||"").toUpperCase().trimStart()||`JUGADOR ${p.slot}`});
 $("scorecard").addEventListener("change",e=>{if(!round.provisional)return;const name=e.target.closest?.("[data-provisional-player]"),hcp=e.target.closest?.("[data-provisional-hcp]"),tee=e.target.closest?.("[data-provisional-tee]"),control=name||hcp||tee;if(!control)return;const id=name?.dataset.provisionalPlayer||hcp?.dataset.provisionalHcp||tee?.dataset.provisionalTee,p=round.players.find(x=>x.id===id);if(!p)return;if(name){const value=String(name.value||"").trim().toUpperCase();p.name=value||`JUGADOR ${p.slot}`;name.value=value}if(hcp){const value=String(hcp.value||"").trim(),number=Number(value),valid=value!==""&&Number.isSafeInteger(number);p.provisionalHandicapProvided=valid;p.handicap=valid?number:0}if(tee){const value=normalizeTee(tee.value);p.provisionalTeeProvided=!!value;p.tee=value||"Blanco"}recomputePlayerScores(p);persist();render()});
 $("previousRoundButton").addEventListener("click",()=>activatePreviousOperationalRound());$("previousStablefordRoundButton").addEventListener("click",()=>activatePreviousOperationalRound("stableford",true));
+$("openMyRoundSetup").addEventListener("click",()=>{if(round.configured){closeSetup();render();document.querySelector(".app")?.scrollIntoView({block:"start"})}else $("setupStatus").textContent="PRIMERO INICIA TU RONDA PARA VER LOS SCORES"});
 $("newRoundButton").addEventListener("click",()=>isStablefordRound()?openFreshStablefordSetup():openNewRoundDraft());$("cancelSetup").addEventListener("click",closeSetup);$("backSetup").addEventListener("click",()=>{;showStep1();$("setupStatus").textContent=draftPlayers.length?"CORRIGE CON: CORRIJO / CORRIGIENDO / CORREGIR · LUEGO PRESIONA OK":""});
 $("detectedBody").addEventListener("click",e=>{
   const remove=e.target.closest?.("[data-draft-remove]");if(!remove)return;
@@ -4242,7 +4251,7 @@ if(explicitNewRound){
 }else if(sfEmergency){
   if(document.readyState==="loading")window.addEventListener("DOMContentLoaded",openFreshStablefordSetup,{once:true});
   else openFreshStablefordSetup();
-}else if(new URLSearchParams(location.search).get("manual_action")==="friends-round"){
+}else if(["friends-round","private-round"].includes(new URLSearchParams(location.search).get("manual_action"))){
   // Esperar al enrutador DOMContentLoaded: preserve la ronda y el roster existentes.
 }else if(!isRecoverableStoredRound(round)){
   ensurePrincipalEntry();
@@ -4474,6 +4483,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   const scroll=id=>document.getElementById(id)?.scrollIntoView({block:"start",behavior:"smooth"});
   const handlers={
     "friends-round":()=>openFriendsRoundDraft(),
+    "private-round":()=>openPrivateRoundDraft(),
     setup:()=>openNewRoundDraft(),
     stableford:()=>openFreshStablefordSetup(),
     scorecard:()=>{document.querySelector(".app")?.scrollIntoView({block:"start"});},
