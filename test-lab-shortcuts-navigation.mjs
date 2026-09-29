@@ -15,8 +15,8 @@ assert(ui.includes("position:fixed!important"),"MENÚ debe permanecer flotante y
 assert(ui.includes('item("manual","MANUAL DE USUARIO"'),"MENÚ debe incluir acceso directo al Manual");
 assert(!ui.includes("padding-right:68px!important"),"MENÚ no debe reducir el ancho útil de la app");
 assert(!app.includes("#gscShortcutsButton{display:none"),"La app no debe ocultar MENÚ");
-assert(app.includes('id="tournamentLiveHome"')&&app.includes('CENTRO DE TORNEOS'),"CENTRO DE TORNEOS debe abrir directo desde INICIO");
-assert(app.includes('id="gsc-tournament-center-direct"')&&app.includes('/live-hub.html'),"CENTRO DE TORNEOS debe navegar directo al hub");
+assert(app.includes('id="registrationEventButton"')&&app.includes('registrationEventButton")?.addEventListener("click"'),"EVENTO debe ofrecer una acción desde Inicio");
+assert(app.includes('new URL("/live-hub.html",location.origin)'),"EVENTO debe navegar al hub Torneos existente");
 assert(!app.includes('body:has(#finalCardOverlay.visible) #gscShortcutsButton'),"Tarjeta Digital no debe ocultar MENÚ");
 console.log("PASS LAB deterministic tournament navigation + MENÚ universal overlays");
 assert(ui.includes('item("exit-tournament","SALIR DE ESTE TORNEO","Volver a MI SCORE CARD sin borrar este torneo")'),'SALIR DE ESTE TORNEO debe ser salida real, no borrado');

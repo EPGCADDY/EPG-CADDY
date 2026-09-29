@@ -9,8 +9,10 @@ for(const file of ['index-grupal.html',...scripts]){
  assert(!forbidden.test(content),`${file}: removed assistant entry returned`);
 }
 const release=html.match(/name="gscg-release" content="([^"]+)/)[1];
-const workerRelease=(fs.readFileSync('service-worker.js','utf8').match(/const RELEASE="([^"]+)/)||[])[1];
-assert(release==='LABORATORIO-20260927-R128.20' && workerRelease==='LABORATORIO-20260927-R128.20','LAB page must identify R128.20 while LAB updater worker identifies R128.20');
+const configuredRelease=JSON.parse(fs.readFileSync('release.json','utf8')).release;
+const worker=fs.readFileSync('service-worker.js','utf8');
+const workerFallback=(worker.match(/const RELEASE_FALLBACK="([^"]+)/)||[])[1];
+assert(release===configuredRelease && workerFallback?.startsWith('LABORATORIO-') && worker.includes('await fetchPublishedRelease()'),'LAB page and updater must follow the current release file');
 for(const path of ['api/session.js','api/session-grupal.js','api/universal-ai.js','api/voice-speech.js','api/voice-transcribe.js','voice-assistant.js','voice-turns.js'])assert(!fs.existsSync(path),`Retired endpoint returned: ${path}`);
 assert(html.includes('GSCDeviceClosures'),'Local score announcements must remain');
 assert(!html.includes('startRoundScoreDictation'),'Score dictation must remain removed');

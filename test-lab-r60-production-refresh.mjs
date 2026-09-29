@@ -3,18 +3,20 @@ import assert from 'node:assert/strict';
 
 const app=fs.readFileSync('index-grupal.html','utf8');
 const sw=fs.readFileSync('service-worker.js','utf8');
+const release=JSON.parse(fs.readFileSync('release.json','utf8')).release;
 
-assert.match(app,/gscg-release" content="LABORATORIO-20260927-R128.20"/,'La app debe identificarse como R128.20');
+assert.match(app,new RegExp(`gscg-release" content="${release}"`),'La app debe identificarse con el release.json vigente');
 assert.match(app,/updateViaCache:"none"/,'El registro del Service Worker debe ignorar caché HTTP intermedia');
 assert.match(app,/controllerchange[\s\S]*location\.reload\(\)/,'La app debe recargar al tomar control un SW nuevo');
 
-assert.match(sw,/const RELEASE="LABORATORIO-20260927-R128.20"/,'El SW de Producción debe permanecer en R128.18 mientras R128.20 se valida sólo en LAB');
+assert.match(sw,/const RELEASE_FALLBACK="LABORATORIO-/,'El Service Worker debe conservar una versión segura de respaldo');
+assert.match(sw,/let RELEASE=RELEASE_FALLBACK/,'El Service Worker debe actualizar su release desde release.json');
 assert.match(sw,/clients\.claim\(\)/,'El SW nuevo debe tomar control inmediato');
 assert.match(sw,/clients\.matchAll\(\{type:"window",includeUncontrolled:true\}\)/,'El SW debe localizar ventanas antiguas');
 assert.match(sw,/client\.navigate\(url\.href\)/,'El SW debe recargar clientes viejos al activar');
 assert.doesNotMatch(sw,/LAB-PHYSICAL-CERTIFIED-20260923-R59/,'No debe quedar release R59 como release activa del SW');
 
-console.log('PASS R128.20 LAB: la app LAB avanza a R128.20 sin modificar el Service Worker R128.20 de LAB');
+console.log(`PASS ${release}: shell de LAB sincronizado y release del Service Worker actualizable desde release.json`);
 
 assert.match(app,/#cardLibraryActions\{display:none!important/,'MIS RONDAS GUARDADAS no debe mostrar la franja blanca de acciones redundantes');
 
