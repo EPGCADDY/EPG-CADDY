@@ -101,7 +101,25 @@
     const latest=liveState();if(result.ok&&latest.stream?.streamId===stream.streamId){latest.stream.revision=Number(result.revision)||latest.stream.revision;latest.stream.pendingSnapshot=null;latest.stream.pendingMutationId=null;saveState(latest);setStatus("EN VIVO · ACTUALIZACIÓN CONFIRMADA","ok",true)}else if(latest.stream?.streamId===stream.streamId){latest.stream.pendingSnapshot=snapshot;saveState(latest);setStatus(stateMessage(result.code),"warning",true)}
     publishRunning=false;renderActive();if(publishAgain){publishAgain=false;setTimeout(publishLatest,0)}return result.ok;
   }
-  function onRoundPersisted(roundValue){const state=liveState(),snapshot=currentSnapshot(roundValue);if(!state.stream?.publisherSecret||!snapshot||state.stream.roundId!==snapshot.roundId)return false;state.stream.pendingSnapshot=snapshot;state.stream.pendingMutationId=mutationId();saveState(state);clearTimeout(publishTimer);publishTimer=setTimeout(publishLatest,350);return true}
+  let tournamentConnectRunning=false;
+  async function connectPendingRoundTournament(roundValue){
+    if(tournamentConnectRunning)return false;
+    let selection;try{selection=JSON.parse(root.localStorage.getItem("gsc-tournament-connect-selection-v1")||"null")}catch{return false}
+    const snapshot=currentSnapshot(roundValue),tournamentId=text(selection?.id,50);
+    if(!snapshot||!tournamentId)return false;
+    const state=liveState(),stream=state.stream;
+    if(stream?.roundId===snapshot.roundId&&stream?.tournamentId===tournamentId){
+      if(selection.roundId!==snapshot.roundId){selection.roundId=snapshot.roundId;try{root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify(selection))}catch{}}
+      return true;
+    }
+    tournamentConnectRunning=true;
+    try{
+      const result=await connectTournamentById(tournamentId,snapshot.groupLabel);
+      if(result?.ok){selection.roundId=snapshot.roundId;selection.connected=true;try{root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify(selection))}catch{};onRoundPersisted(roundValue);return true}
+      return false;
+    }finally{tournamentConnectRunning=false}
+  }
+  function onRoundPersisted(roundValue){const state=liveState(),snapshot=currentSnapshot(roundValue);if(!snapshot)return false;void connectPendingRoundTournament(roundValue);if(!state.stream?.publisherSecret||state.stream.roundId!==snapshot.roundId)return true;state.stream.pendingSnapshot=snapshot;state.stream.pendingMutationId=mutationId();saveState(state);clearTimeout(publishTimer);publishTimer=setTimeout(publishLatest,350);return true}
   async function revokeStream(){const state=liveState();if(!state.stream?.publisherSecret)return false;setStatus("REVOCANDO ENLACE…");const result=await request("revoke_stream",{},state.stream.publisherSecret);if(!result.ok&&result.status!==410){setStatus(stateMessage(result.code),"warning");return false}delete state.stream;saveState(state);renderConsent();renderActive();return true}
   async function createTournament(){const name=text($("liveTournamentName")?.value,120),mode=$("liveTournamentMode")?.value||currentSnapshot()?.mode||"general";if(!name){setStatus("ESCRIBE EL NOMBRE DEL TORNEO","warning");return false}if(!$("liveTournamentConsent")?.checked){setStatus("CONFIRMA QUE PUEDES CREAR Y COMPARTIR EL TORNEO","warning");return false}setStatus("CREANDO TORNEO LIVE…");const result=await request("create_tournament",{name,mode,durationDays:Number($("liveTournamentDays")?.value)||2,consent:{confirmed:true,confirmedAt:new Date().toISOString()}});if(!result.ok){setStatus(stateMessage(result.code),"warning");return false}const state=liveState();state.tournamentOwned={tournamentId:result.tournamentId,name,mode:result.mode,organizerSecret:result.organizerSecret,viewerToken:result.viewerToken,joinCode:result.joinCode,expiresAt:result.expiresAt};saveState(state);renderActive();setStatus("TORNEO LIVE CREADO · "+String(result.mode||mode).toUpperCase()+" · COMPARTE EL CÓDIGO","ok");return true}
   async function joinTournament(){const state=liveState(),stream=state.stream,joinCode=text($("liveJoinCode")?.value,20).toUpperCase(),groupLabel=text($("liveGroupLabel")?.value,120);if(!stream?.publisherSecret){setStatus("ACTIVA PRIMERO EL LIVE DEL GRUPO","warning");return false}if(!groupLabel){setStatus("ESCRIBE EL NOMBRE O NÚMERO DEL GRUPO","warning");return false}setStatus("CONECTANDO MI SCORE CARD AL TORNEO…");const result=await request("join_tournament",{joinCode,groupLabel},stream.publisherSecret);if(!result.ok){setStatus(stateMessage(result.code),"warning");return false}stream.tournamentId=result.tournamentId;stream.groupLabel=result.groupLabel;saveState(state);renderActive();setStatus("SCORE CARD CONECTADA AL TORNEO · PUEDES SEGUIR ANOTANDO NORMALMENTE","ok");return true}
@@ -131,7 +149,7 @@
   function bind(){
     $("gscLiveLaunch").onclick=()=>{if(currentSnapshot())return quickShareGroup();foregroundStatus=false;renderConsent();renderActive();root.document.body.classList.add("gsc-live-open");$("gscLiveOverlay").classList.add("visible");$("gscLiveOverlay").setAttribute("aria-hidden","false")};$("closeGscLive").onclick=()=>{root.document.body.classList.remove("gsc-live-open");$("gscLiveOverlay").classList.remove("visible");$("gscLiveOverlay").setAttribute("aria-hidden","true")};
     document.querySelectorAll('input[name="liveScope"]').forEach(input=>input.onchange=renderConsent);$("livePlayerSelect").onchange=renderConsent;$("liveOpenHub").onclick=()=>openHub();$("liveActivateButton").onclick=activateStream;$("liveShareButton").onclick=shareStream;$("liveCopyButton").onclick=()=>copyValue("liveShareLink");$("liveOpenButton").onclick=()=>openValue("liveShareLink");$("liveRevokeButton").onclick=revokeStream;$("liveCreateTournament").onclick=createTournament;$("liveShareTournament").onclick=shareTournament;$("liveCopyTournament").onclick=()=>copyValue("liveTournamentLink");$("liveOpenTournament").onclick=()=>openHub("general",liveState().tournamentOwned?.viewerToken);$("liveRevokeTournament").onclick=revokeTournament;$("liveJoinTournament").onclick=joinTournament;$("liveLeaveTournament").onclick=leaveTournament;$("liveFollowOpen").onclick=openFollow;
-    root.addEventListener("online",()=>{const state=liveState();if(state.stream?.pendingSnapshot)publishLatest()});
+    root.addEventListener("online",()=>{const state=liveState();if(state.stream?.pendingSnapshot)publishLatest();const round=adapter?.getRound?.();if(round?.configured)void connectPendingRoundTournament(round)});
   }
   function mount(options){if(mounted||!root?.document)return false;adapter=options||{};inject();bind();const home=$("tournamentLiveHome");if(home)home.onclick=()=>openHub();$("liveOrganizerToggle").onclick=()=>{const panel=$("liveOrganizerPanel"),open=panel.classList.contains("hidden");panel.classList.toggle("hidden",!open);$("liveOrganizerToggle").setAttribute("aria-expanded",String(open));$("liveOrganizerToggle").textContent=open?"CERRAR ORGANIZACIÓN":"ORGANIZAR TORNEO"};mounted=true;renderConsent();renderActive();return true}
   async function createTournamentDirect(name,mode="general"){
