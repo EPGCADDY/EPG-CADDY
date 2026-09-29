@@ -49,6 +49,7 @@
     body:not(.public-display) .panel{margin:0 0 14px;padding:14px;border:1px solid var(--tour-line);border-radius:16px;background:var(--tour-card)}
     body:not(.public-display) .tournament-cards{display:grid;gap:10px}
     body:not(.public-display) .tournament-card{min-height:92px;padding:18px;border:1px solid var(--tour-green);border-radius:14px;background:#030503;color:#fff;font-size:clamp(18px,5vw,24px);font-weight:900}
+    body:not(.public-display) .portal-choice{display:block;width:100%;margin-top:10px;font-family:inherit}
     body:not(.public-display) .tournament-card small{display:block;margin-top:8px;color:var(--tour-muted);font-size:12px;font-weight:800}
     body:not(.public-display) #hubAddTournament{min-height:48px;margin-top:10px;border:1px solid #454a4d;border-radius:12px;background:#090a0a;color:#fff;font-size:14px}
     body:not(.public-display) .viewer-entry{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:9px;align-items:center}
@@ -168,10 +169,11 @@
 
     <div class="state" id="hubState" role="status" aria-live="polite">LISTO PARA ABRIR EL MONITOR DEL TORNEO</div>
     <div class="public-display-status" id="publicDisplayStatus" aria-live="polite"><strong id="publicDisplayScene">GENERAL</strong><span>PRÓXIMO CAMBIO EN <b id="publicDisplayCountdown">10</b>s</span></div>
-    <section class="tournament-shelf" id="hubTournamentShelf" aria-label="Mis torneos guardados">
-      <h2>MIS TORNEOS</h2>
-      <div class="tournament-cards" id="hubTournamentCards"></div>
-      <button class="secondary" id="hubPrivateRounds" type="button">RONDAS PARTICULARES</button>
+    <section class="tournament-shelf" id="hubTournamentShelf" aria-label="Torneos registrados">
+      <h2>TORNEOS REGISTRADOS</h2>
+      <button class="tournament-card portal-choice" id="hubRegisteredTournaments" type="button" aria-expanded="false">TORNEOS REGISTRADOS</button>
+      <div class="tournament-cards hidden" id="hubTournamentCards"></div>
+      <button class="tournament-card portal-choice" id="hubPrivateRounds" type="button">RONDAS PARTICULARES</button>
       <button class="secondary" id="hubAddTournament" type="button">+ AGREGAR TORNEO</button>
     </section>
     <nav class="monitor-switch" aria-label="Elegir función de torneos">
@@ -185,10 +187,9 @@
       <h2>AGREGAR TORNEO POR ENLACE</h2>
       <div><input id="hubTournamentLink" type="url" placeholder="Pega enlace del torneo" aria-label="Enlace del torneo"><button class="primary" id="hubOpenTournament" type="button">AGREGAR</button></div>
     </section>
-    <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← MIS TORNEOS</button>
+    <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← TORNEOS REGISTRADOS</button>
     <section class="round-create" id="hubRoundCreate" aria-label="Crear ronda">
       <button class="primary" id="hubCreateRound" type="button" aria-haspopup="dialog" aria-controls="hubRoundCreateDialog">CREAR TORNEO</button>
-      <button class="primary" id="hubCreatePrivateRound" type="button">CREAR RONDA PRIVADA</button>
     </section>
     <div class="round-create-dialog" id="hubRoundCreateDialog" role="presentation" aria-hidden="true" hidden>
       <section class="round-create-dialog-card" role="dialog" aria-modal="true" aria-labelledby="hubRoundDialogTitle">

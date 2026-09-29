@@ -502,3 +502,7 @@ Captura IMG_5275: `CREAR RONDA` abre el diálogo pero OK devuelve error. Causa r
 - Escape: pruebas estáticas no ejecutaron el control inyectado ni comprobaron el contenedor solicitado.
 - Control: test-lab-update-recovery.mjs ejecuta el script recuperador, valida URL no-cache y botón junto a RONDA PREVIA.
 - Estado: corregido localmente; pruebas y publicación LAB en curso; iPhone pendiente.
+
+
+### R140 · nombre de grupo y aviso innecesarios en tabla privada
+Causa: render de fila concatenaba groupLabel y player.name; refresco emitía un texto fijo. Escape: prueba dirigida anterior verificaba columnas y publicación, no limpieza del nombre. Control permanente: test-lab-private-rounds rechaza escape(group) y SCORES ACTUALIZADOS en el render. Corregido localmente; publicación LAB en curso.

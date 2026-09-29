@@ -1366,3 +1366,9 @@ Estado: validación física pendiente.
 ### R139 · Rondas particulares
 - `private-rounds.js`: nombre, código, lista y Scores por grupos.
 - `test-lab-private-rounds.mjs`: aislamiento de datos, código, pertenencia y escritor oficial.
+
+R140: `private-rounds.js` muestra únicamente el nombre del jugador y no emite SCORES ACTUALIZADOS.
+
+R140 · Ajuste solicitado: BORRAR RONDA Y JUGADORES junto a RONDA PREVIA; RONDA PARTICULAR y SCORES GRUPO en la última fila. SCORES GRUPO abre únicamente el marcador de la ronda vinculada. Pruebas dirigidas PASS.
+
+R140 · Marcador particular: acabado premium coherente con la aplicación, cabecera y filas alineadas, tipografía uniforme, neto verde, separadores y panel redondeado. Sin cambios de cálculos ni funciones.

@@ -30,8 +30,9 @@
     await scores(item);
   }
   async function scores(item){
-    show("RONDA PARTICULAR · "+item.name,(item.creator?'<p>CÓDIGO PARA COMPARTIR</p><strong style="color:#31ff00;font-size:24px">'+escape(item.joinCode)+'</strong>'+button("COMPARTIR CÓDIGO","privateShare"):"")+'<div data-scores></div>');
-    if(item.creator)dialog.querySelector('#privateShare').onclick=async()=>{const message=item.name+" · Código: "+item.joinCode+" · En Torneos abre RONDAS PARTICULARES y elige esta ronda.";try{if(root.navigator.share)await root.navigator.share({title:item.name,text:message});else{await root.navigator.clipboard.writeText(message);status("CÓDIGO COPIADO")}}catch(e){if(e.name!=="AbortError")status("CÓDIGO: "+item.joinCode)}};
+    show("RONDA PARTICULAR · "+item.name,(item.creator?'<p>CÓDIGO PARA COMPARTIR</p><strong style="color:#31ff00;font-size:24px">'+escape(item.joinCode)+'</strong>'+button("COMPARTIR CÓDIGO","privateShare"):"")+'<style>.private-score-panel{box-shadow:0 20px 70px rgba(0,0,0,.65);background:linear-gradient(145deg,#0d1010,#030404)!important}.private-score-panel h2{margin:0 42px 20px 0;font-size:clamp(18px,4.5vw,22px)!important;line-height:1.3;letter-spacing:.4px}.private-score-table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;color:#f4f6f5;font-size:clamp(11px,3vw,14px);font-variant-numeric:tabular-nums}.private-score-table th{height:44px;padding:8px 3px;background:#101513;color:#b7c2bc;font-size:clamp(10px,2.6vw,12px);font-weight:800;letter-spacing:.2px;border-bottom:1px solid #344139;text-align:center}.private-score-table th:first-child{width:26%;text-align:left;padding-left:12px}.private-score-table td{height:54px;padding:8px 3px;text-align:center;font-weight:800;border-bottom:1px solid #242c28;background:#070a08}.private-score-table td:first-child{text-align:left;padding-left:12px;overflow-wrap:anywhere;font-weight:900}.private-score-table td:nth-child(5){color:#31ff00}.private-score-table tr:last-child td{border-bottom:0}.private-score-panel [data-scores]{margin-top:20px;border:1px solid #344139;border-radius:12px;overflow:hidden}.private-score-panel [data-scores]>p{margin:0;padding:20px;color:#aeb8b2;font-size:12px;line-height:1.5}.private-score-panel [data-status]:empty{display:none}</style><div data-scores></div>');
+    dialog.querySelector('section').classList.add('private-score-panel');
+    if(item.creator)dialog.querySelector('#privateShare').onclick=async()=>{const message="Ronda "+item.name+"\n"+item.joinCode;try{if(root.navigator.share)await root.navigator.share({title:item.name,text:message});else{await root.navigator.clipboard.writeText(message);status("CÓDIGO COPIADO")}}catch(e){if(e.name!=="AbortError")status("CÓDIGO: "+item.joinCode)}};
     const current=dialog;
     async function refresh(){
       if(dialog!==current)return;let result=await request("read_private_round",{kind:"tournament",viewerToken:item.viewerToken,limit:50});
@@ -41,12 +42,13 @@
       while(cursor&&!seen.has(cursor)){seen.add(cursor);const page=await request("read_private_round",{kind:"tournament",viewerToken:item.viewerToken,limit:50,cursor});if(!page.ok){status(error(page.code));return}streams.push(...(page.streams||[]));cursor=page.nextCursor}
       if(dialog!==current)return;
       const rows=streams.flatMap(stream=>(stream.snapshot?.players||[]).map(player=>({player,group:stream.groupLabel||stream.snapshot.groupLabel})));
-      current.querySelector('[data-scores]').innerHTML=rows.length?'<table style="width:100%;border-collapse:collapse;margin-top:18px"><thead><tr><th>NOMBRE</th><th>HDCP</th><th>HOYO</th><th>GROSS</th><th>NETO</th><th>+/−</th></tr></thead><tbody>'+rows.map(({player,group})=>'<tr><td style="padding:10px 0;border-bottom:1px solid #444">'+escape(group)+'<br>'+escape(player.name)+'</td><td>'+escape(player.handicap)+'</td><td>'+escape(player.holes?.length?Math.max(...player.holes.map(h=>h.hole)):0)+'</td><td>'+escape(player.totals?.gross??"—")+'</td><td>'+escape(player.totals?.net??"—")+'</td><td>'+escape(player.holes?.length?(player.totals.relativeToPar===0?'EVEN':(player.totals.relativeToPar>0?'+':'')+player.totals.relativeToPar):'—')+'</td></tr>').join("")+'</tbody></table>':'<p>TODAVÍA NO HAY GRUPOS EN ESTA RONDA.</p>';
-      status("SCORES ACTUALIZADOS");timer=root.setTimeout(refresh,10000);
+      current.querySelector('[data-scores]').innerHTML=rows.length?'<table class="private-score-table"><thead><tr><th>NOMBRE</th><th>HDCP</th><th>HOYO</th><th>GROSS</th><th>NETO</th><th>+/−</th></tr></thead><tbody>'+rows.map(({player,group})=>'<tr><td>'+escape(player.name)+'</td><td>'+escape(player.handicap)+'</td><td>'+escape(player.holes?.length?Math.max(...player.holes.map(h=>h.hole)):0)+'</td><td>'+escape(player.totals?.gross??"—")+'</td><td>'+escape(player.totals?.net??"—")+'</td><td>'+escape(player.holes?.length?(player.totals.relativeToPar===0?'EVEN':(player.totals.relativeToPar>0?'+':'')+player.totals.relativeToPar):'—')+'</td></tr>').join("")+'</tbody></table>':'<p>TODAVÍA NO HAY GRUPOS EN ESTA RONDA.</p>';
+      status("");timer=root.setTimeout(refresh,10000);
     }
     await refresh();
   }
   function open(value){round=value||read(ACTIVE);const item=saved();if(item&&new Date(item.expiresAt||"2099-01-01")>new Date()&&(!item.roundId||item.roundId===active()?.id))return scores(item);show("RONDA PARTICULAR",input("NOMBRE DE LA RONDA","privateName")+button("CREAR RONDA PARTICULAR","privateCreate"));dialog.querySelector('#privateCreate').onclick=create;dialog.querySelector('#privateName').focus()}
+  function openScores(value){round=value||read(ACTIVE);const item=saved();if(item&&new Date(item.expiresAt||"2099-01-01")>new Date()&&(!item.roundId||item.roundId===active()?.id))return scores(item);show("SCORES GRUPO","<p>PRIMERO CREA O ÚNETE A UNA RONDA PARTICULAR.</p>")}
   async function list(){
     round=read(ACTIVE);show("RONDAS PARTICULARES",'<div data-rounds></div>');status("CARGANDO RONDAS…");const current=dialog,result=await request("list_private_rounds",{});if(dialog!==current)return;if(!result.ok){status(error(result.code));return}
     const target=dialog.querySelector('[data-rounds]');target.innerHTML=result.rounds.length?result.rounds.map(item=>button(escape(item.name),"private-"+item.id)).join(""):'<p>NO HAY RONDAS PARTICULARES ACTIVAS.</p>';status("");
@@ -54,5 +56,5 @@
   }
   let connecting=false;
   async function syncPending(value){const item=saved();if(connecting||!item?.creator||item.roundId||!value?.configured)return;connecting=true;try{const result=await root.GSCLiveControl.connectPrivateRound(item.id,item.joinCode,value);if(result.ok)store({...item,roundId:value.id})}finally{connecting=false}}
-  root.GSCPrivateRounds={open,list,close,syncPending};
+  root.GSCPrivateRounds={open,openScores,list,close,syncPending};
 })(globalThis);

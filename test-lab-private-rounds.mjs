@@ -24,4 +24,5 @@ assert.equal((await control.connectPrivateRound(id,'BADCODE123',round)).ok,false
 clientAllow=true;assert.equal((await control.connectPrivateRound(id,'ABCDEFGH23',round)).ok,true);assert.equal(JSON.parse(store.get(control.STORAGE_KEY)).privateStream.privateRound,true);
 control.onRoundPersisted(round);await new Promise(resolve=>setTimeout(resolve,450));assert.ok(clientCalls.some(c=>c.action==='publish_private_round'),'Official writer must publish Scores to private storage');assert.ok(!clientCalls.some(c=>c.action==='join_tournament_by_id'||c.action==='publish'),'Private Scores cannot go to tournaments');
 const table=fs.readFileSync('private-rounds.js','utf8');for(const heading of ['NOMBRE','HDCP','HOYO','GROSS','NETO','+/−'])assert.ok(table.includes('<th>'+heading+'</th>'));
-console.log('PASS R139: isolated SQL, wrong-code rejection, selected-round binding, private membership persistence, official writer and score columns');
+assert.ok(!table.includes("escape(group)+'<br>'"));assert.ok(!table.includes('SCORES ACTUALIZADOS'));assert.ok(!table.includes('En Torneos abre'));assert.ok(table.includes('\"Ronda \"+item.name'));
+console.log('PASS R140: isolated SQL, wrong-code rejection, selected-round binding, private membership persistence, official writer and score columns');
