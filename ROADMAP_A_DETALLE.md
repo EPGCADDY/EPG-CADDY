@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 63872)
-Total output lines: 1954
-
 # ROADMAP A DETALLE
 
 ## R135 · 29 septiembre 2026 · compatibilidad al vincular Friends
@@ -746,7 +743,571 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - `universales.js`: fuente única del reparto. Tres jugadores usan 6–4–2; cuatro usan 6–4–2–0. Los empates promedian exactamente los puestos ocupados y cada hoyo suma 12.
 - `index-grupal.html`: reemplaza el botón/configuración visible DOTS por UNIVERSALES; exige 3 o 4 jugadores; reutiliza campo, torneo, categoría, handicap, marcas, voz, control manual, persistencia, recuperación, tarjeta y acciones comunes; agrega fila PUNTOS y acumulados IN/OUT/TOTAL.
 - `card-library.js`: reconoce y filtra snapshots `universales` sin convertirlos en General.
-- `card-artifacts.js`: crea Tarjeta Global y Personal Universales, muestra G/N/P, IN/OUT/TOTAL …13872 tokens truncated… rechazo 403 PERMISSION_DENIED sin datos sensibles. Esto habilita diagnóstico; NO certifica restauración del tráfico ni latencia de voz. Archivos: api/_lib/traffic.js; test-v324-real-traffic.mjs; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
+- `card-artifacts.js`: crea Tarjeta Global y Personal Universales, muestra G/N/P, IN/OUT/TOTAL y deja de generar el panel DOTS.
+- `scripts/build-mobile-web.mjs`: copia `universales.js` al paquete móvil nativo/offline.
+- `api/live.js` y `live-hub.js`: aceptan la modalidad en snapshots y la muestran como UNIVERSALES en Torneo LIVE.
+- `live-control.js` y `live-view.js`: publican y muestran puntos Universales por hoyo y acumulados; el ranking del Centro LIVE usa mayor puntaje.
+- `database/005_live_tournament_mode.sql` y `api/live.js`: cada torneo anual o eventual guarda su modalidad y rechaza Score Cards de otra modalidad.
+- `voice-assistant.js` e `index-grupal.html`: “Quiero jugar Universales” abre el registro común con 3 o 4 jugadores.
+- `service-worker.js`: release/caché `V407-R6-UNIVERSALES-20260908` e inclusión offline de `universales.js`.
+- `test-v407-r6-universales.mjs`: cubre todos los patrones 3/4, resultados incompletos, cantidades inválidas, caso Jaime/Carlos/Miguel/Roberto 5–5–1–1, ausencia de botón/configuración DOTS y recorridos comunes.
+- `test-v311-voice-assistant.mjs`, `test-round-information.mjs` y `test-v261-registration-stableford-modality.mjs`: reconocen la navegación y el resumen Universales sin debilitar modalidades existentes.
+- `test-v406-r23-visible-version.mjs`: exige `V407 · R6` en el identificador visible de actualización.
+- `test-v260-round-points-player-return.mjs`: reconoce la retícula móvil R5A sin modificar su comportamiento.
+- `test-v405-registration-clear-final-mobile.mjs`: conserva BORRAR TODO y exige que UNIVERSALES comparta el Control Manual.
+- `test-v407-r1-premium-visual-system.mjs`: conserva la geometría R5 y reconoce únicamente el identificador R6.
+- `test-v330-side-games.mjs`: continúa probando el cálculo histórico DOTS sin permitir botón, configuración ni nueva activación; Skins, Wolf y Vegas conservan su matriz completa.
+- `test-v307-match-arrows-format.mjs`: mantiene el contrato Match Play e incorpora el rótulo UNIVERSALES en Información de Ronda.
+- `test-v329-skins.mjs`: mantiene intacto Skins y verifica que el selector lateral ahora contenga UNIVERSALES.
+- `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r4-mobile-controls.mjs` y `test-v406-r5-simple-tournament-live.mjs`: conservan sus verificaciones funcionales/visuales y avanzan únicamente el identificador a R6.
+- `audit-project.mjs`: ejecuta los dos bancos R6 antes del motor Gross/Neto/HCP y bloquea cualquier publicación si fallan.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: incorpora el motor, adaptador, controles y propiedad cruzada R6.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: registra 431 fuentes y los SHA-256 de los tres inventarios regenerados.
+- No se toca `main`; rollback: retirar el commit de coordinación de `lab/v407-r6-universales`.
+
+# V407-R5 · Auditoría visual física completa · inventario y primera corrección · 08 de septiembre de 2026
+
+- `INVENTARIO_PANTALLAS_ESTADOS_V407_R5.md`: 67 IDs únicos para Principal/Juegos, Asistencia, Tarjetas, Historial, Cuenta/Sistema, Torneo Live, Artefactos, Manual y adaptación transversal.
+- `MATRIZ_AUDITORIA_VISUAL_V407_R5.md`: diez criterios medibles; 9 FAIL físicos iniciales y 58 pendientes, sin convertir pruebas de código en aprobación visual.
+- `card-artifacts.js`: nuevo shell móvil premium; SHA-256 con corte seguro, metadatos responsive y tabla Stableford Global dividida en dos mitades legibles.
+- `test-v407-r5-visual-inventory.mjs`: bloquea conteo, unicidad, criterios y contadores.
+- `test-card-artifacts.mjs`: bloquea SHA contenido y secuencia IN/OUT en Global y seis personales.
+- `audit-project.mjs`: ejecuta obligatoriamente `test-v407-r5-visual-inventory.mjs`; total esperado 123 paquetes.
+- `index-grupal.html` y `service-worker.js`: candidato visible/caché V407-R5.
+- Evidencia real existente: `IMG_3125` APP-04/05 FAIL; `IMG_3126` APP-29/SAFE-02 FAIL; `IMG_3123` CARD-03/SAFE-03 FAIL; `IMG_3120`–`IMG_3122` APP-41/SAFE-01 FAIL histórico.
+- Evidencia Chrome R1: viewport 1363×936, documento 1348×2003 y cero overlay visible; sirve como medición de escritorio, no como aprobación móvil R5.
+- Rollback: revertir únicamente el commit R5 de `lab/premium-ui-v407`. Producción/main no cambia.
+- Transporte GitHub/Vercel: `ca1a13a` fue rechazado porque el Base64 de `index-grupal.html` quedó truncado; `bb21de0` repuso 805,296 bytes y árbol `9c2fa1ce965198848f360bfa6a6424150b3da6c4`, idéntico al commit local R5. El segundo build superó Gate, Intocables y Manual visual, pero ROADMAP rechazó correctamente que el commit reparador no estuviera anotado en ambos archivos; este renglón cierra esa trazabilidad para el nuevo intento.
+- Rutas exactas auditadas: `CONTROL_PROYECTO_SCIRE/AUDITORIA_VISUAL_V407/INVENTARIO_PANTALLAS_ESTADOS_V407_R5.md` y `CONTROL_PROYECTO_SCIRE/AUDITORIA_VISUAL_V407/MATRIZ_AUDITORIA_VISUAL_V407_R5.md`.
+- `index-grupal.html`: `#roundManualEntry` usa `width/max-width:100%`, `min-width:0` y `overflow:hidden`; en móvil `.round-player-grid` suma 325 px útiles y cada etiqueta puede cortar palabras largas. Las acciones de Tarjeta Digital miden 52 px con fuente 10 px en ambas capas heredadas.
+- `test-v407-r1-premium-visual-system.mjs`: exige contención móvil, retícula compacta y botones legibles; APP-04/05 y APP-29/30 siguen pendientes de nueva evidencia física R5.
+- `service-worker.js`, `index-grupal.html`, `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v406-r23-visible-version.mjs` y `test-v407-r1-premium-visual-system.mjs`: release/caché `V407-R5A-MOBILE-GRIDS-20260908` sincronizado.
+- `index-grupal.html`: APP-32–37 reciben área segura superior/inferior, paneles contenidos, filtros móviles en una columna, entradas del Historial en dos filas, paginación sin desbordamiento, confirmación destructiva apilada y cinco consultas rápidas simétricas.
+- `test-v407-r5a-history-visual-system.mjs`: bloquea la geometría premium de Historial y Estadísticas en escritorio e iPhone; `audit-project.mjs` lo incorpora como paquete 124. La aprobación física continúa pendiente y no se infiere del PASS automático.
+- `test-v260-round-points-player-return.mjs`: sustituye la expectativa obsoleta `78/44/66/47 px` por la retícula R5A `70/36/58/40 px`; el deployment `dpl_8SSK4fASsW8PBGnPasaK7gP8gT37` evidenció el fallo y fue rechazado antes de mover el alias LAB.
+# V407-R14 · Actualización manual permanente y tarjetas seguras · 08 de septiembre de 2026
+
+- Rama única: `codex/v407-r14-safe-update-cards`, nacida de `main` R10 después de sincronizar y rechazar el HTML truncado de R13.
+- `index-grupal.html`: ACTUALIZAR permanece verde, parpadeante y habilitado; cada toque conserva la ronda, limpia workers/cachés y recarga el release publicado.
+- `service-worker.js`: release y caché avanzan juntos a `V407-R14-PERSISTENT-MANUAL-UPDATE-20260908`.
+- `card-artifacts.js`: categoría opcional pequeña arriba del nombre en tarjetas Global/Personal; si no existe, no se inventa. Universales muestra leyenda y puntos por hoyo/totales en rojo.
+- `scripts/card-audit-fixtures.mjs` y `test-card-artifacts.mjs`: diez tarjetas reproducibles y candados de categorías/puntos.
+- Pruebas V365/V406/V407: sincronizadas con R14 y con el estado visible permanente.
+- Producción permanece intacta hasta auditoría integral y navegador real sin FAIL.
+- Preview R14 reparado: `index-grupal.html` se publica completo (812,277 bytes); el despliegue previo con blob vacío queda rechazado.
+- Cierre R14: ambos ROADMAPS y `INVENTARIOS_V311.lock.json` se sellan juntos para el build final.
+- Publicación R15: corrige exclusivamente el estado remoto del botón ACTUALIZAR.
+- Prueba R15: detector, limpieza de caché, recarga y estado final sin parpadeo quedan sellados.
+- R16: `syncDraftModeSelection` reconoce Universales y su botón recibe el mismo estado verde exclusivo.
+- R17: `index-grupal.html` renderiza `player-category` sólo cuando existe `tournamentCategory`, colorea toda `universales-row` en rojo y hace que `manualRowHasData` ignore categoría/marcas sin nombre ni handicap. `test-v407-r9-manual-update.mjs` bloquea las cuatro condiciones.
+- Reparación de transporte R17: el blob completo de `index-grupal.html` reemplaza el envío Base64 truncado; ambos ROADMAPS y el sello se actualizan en el mismo commit reparador.
+- LAB posterior a R17: `index-grupal.html` añade totales Universales rojos y corrige la retícula móvil superior; `live-view.js` identifica fila/total de puntos y `live.html` los presenta en rojo. MAIN/Producción no cambia.
+- Reparación documental R18: ambos ROADMAPS nombran literalmente `live.html`; el build anterior quedó bloqueado y Producción permaneció en R17.
+# R19 · Enlace invitado individual de un solo uso · 09 de septiembre de 2026
+
+- `api/_lib/app-access.js`: incorpora `redeemGuestToken`, cuyo `UPDATE` exige `opened_at IS NULL` y consume el token en una sola operación atómica.
+- `api/app-access.js`: el canje usa exclusivamente `redeemGuestToken` y rechaza reutilizaciones.
+- `test-r18-owner-guest-24h-access.mjs`: simula dos canjes consecutivos; el primero pasa y el segundo devuelve `null`.
+- Rollback: volver al commit R18 de LAB. MAIN no se modifica.
+
+# V407-R21 · SUPPORT y acceso 24 h cerrados · 09 de septiembre de 2026
+
+- `index-grupal.html`: restaura `href="/manual.pdf"` sin `target`, avanza el identificador visible a R21 y agrega `COMPARTIR 24H`, oculto para invitados.
+- `service-worker.js`: usa `V407-R21-SUPPORT-ACCESS-20260909`, caché propia y entrega `/access.html` directamente desde red.
+- `api/app-access.js`: devuelve enlaces sobre `APP_PUBLIC_ORIGIN` o `https://golf-sc-gt-lab.vercel.app`, nunca sobre una URL temporal de deployment.
+- `api/_lib/app-access.js`: `redeemGuestToken` exige `opened_at IS NULL`; sólo el primer canje obtiene acceso.
+- `test-v311-live-support-link.mjs`: prueba negativa contra `target="_blank"`; `test-r18-owner-guest-24h-access.mjs`: primer canje aceptado y segundo rechazado.
+- Pruebas de release V365/V406/V407 sincronizadas con R21. Rollback: R20 de LAB; MAIN permanece intacta.
+- `.github/workflows/hotfix-support-same-screen.yml`: se elimina el disparador temporal de R20 después de integrar y probar la corrección permanente R21 en LAB.
+- `docs/manual/v311/page-00.png`: fuente gráfica de portada resellada al reconstruir el inventario y los PDF del manual accesible desde SUPPORT.
+- Reparación de build R21: `service-worker.js` conserva explícitamente el marcador aprobado `v407-r18-live-points-header`; `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran y sellan la corrección. El Preview anterior quedó rechazado; MAIN/Producción no cambia.
+- Control maestro preservado: punto de corte `línea 185`; activación: 23 de agosto de 2026, 17:05:00, hora de Guatemala.
+- Resello remoto R21: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` usa el digest del árbol Git que audita Vercel; `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` documentan el mismo cambio. MAIN/Producción permanece intacta.
+- Verificación final del resello R21: los tres archivos anteriores se recalculan contra el `HEAD` remoto exacto que usa Vercel; no cambia código funcional ni MAIN/Producción.
+- Corrección física R21: `middleware.js` consulta el estado mediante `/api/app-access?action=status` y elimina la importación ESM incompatible que causaba `MIDDLEWARE_INVOCATION_FAILED`; ambos ROADMAPS y el sello se actualizan en el mismo commit. MAIN/Producción no cambia.
+- Propietario R21: `api/_lib/app-access.js` fija como identidad exclusiva `jaimekirste@gmail.com` cuando Vercel no define una variable más específica; `test-r18-owner-guest-24h-access.mjs` bloquea esa asignación. Otros usuarios siguen sin permiso para ver o crear invitaciones.
+- R21 enlace protegido contra previsualizadores: `api/app-access.js` entrega el token en fragmento y sólo permite consumirlo mediante POST; `access.html` ejecuta ese POST al abrirlo el invitado y entra inmediatamente; `index-grupal.html` contiene el botón propietario dentro del ancho móvil. Un GET automático ya no consume el acceso.
+- Cobertura preventiva R21: `test-r18-owner-guest-24h-access.mjs` bloquea el canje por GET y valida fragmento + POST; `test-v311-live-support-link.mjs` exige que INVITAR 24 H permanezca dentro de la barra. La causa y prevención quedan asentadas en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`.
+- Cierre remoto R21: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se resellan juntos contra el árbol exacto del Preview; Producción permanece intacta.
+- Reparación de transporte R21: `index-grupal.html` se retransmite íntegro con 818,400 bytes; ambos ROADMAPS y el sello se actualizan en el mismo commit. El build truncado queda rechazado.
+- Publicación productiva R21: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran el despliegue autorizado en `golf-sc-gt-lab`; el primer intento por `CRON_SECRET` y el commit vacío quedan rechazados sin sustituir R24.
+
+- Corrección productiva Support sin tocar ACTUALIZAR: `service-worker.js` excluye `/manual.pdf` y `/manual.html` del fallback general hacia la Score Card y entrega `manual.html` por red; `manual.html` monta una sola gráfica activa con precarga y sin `IntersectionObserver`. `test-v311-live-support-link.mjs` y `test-v311-manual-hosting.mjs` bloquean el parpadeo y el retorno silencioso. `vercel.json` regenera inventarios antes de la auditoría.
+
+- Portabilidad exclusiva del build: `scripts/rebuild-manual-bets-live-data.py` y `scripts/rebuild-inventory-pdfs.py` usan Bitstream Vera incluida en ReportLab; elimina la dependencia ausente de `/usr/share/fonts` sin modificar ninguna función de la aplicación ni ACTUALIZAR.
+
+- Regreso directo desde Support: `manual.html` incorpora el botón superior `← REGRESAR A MI RONDA`; usa `history.back()` cuando el Manual proviene de la aplicación y `location.replace("/index-grupal.html?source=manual-return")` sólo como recuperación. `test-v311-manual-hosting.mjs` exige ambos recorridos y la conservación de la ronda persistida. ACTUALIZAR no cambia.
+# V407-R23A · Invitación WhatsApp conserva token · 09 de septiembre de 2026
+
+- `test-r18-owner-guest-24h-access.mjs`: acepta espacios opcionales en `vercel.json`, porque Vercel lo minifica antes de ejecutar el banco; no cambia la regla validada.
+- `api/app-access.js`: genera la invitación como `/invite/<token>` en lugar de depender de un parámetro que WhatsApp eliminó físicamente.
+- `vercel.json`: reescribe `/invite/:token` hacia `access.html` sin mostrar una pantalla intermedia.
+- `middleware.js`: permite únicamente el prefijo público `/invite/` para que el canje ocurra antes del control propietario.
+- `access.html`: extrae el token desde la ruta, lo elimina de la barra y conserva compatibilidad con enlaces anteriores por query o fragmento.
+- `test-r18-owner-guest-24h-access.mjs`: exige los cuatro componentes y el canje POST de un solo uso.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-093 con evidencia física, causa y control permanente.
+- Rollback: commit productivo `73df15f`; LIVE, ACTUALIZAR, Support, score, voz y demás funciones no se modifican.
+
+# V407-R24 · WhatsApp, aislamiento visual e índice del Manual · 09 de septiembre de 2026
+
+- `index-grupal.html`: fila WhatsApp móvil de anchura completa, mínimo útil de 180 px, 🇬🇹 +502 editable por jugador.
+- `index-grupal.html`: ACTUALIZAR, INSTALAR APP y PRO se aíslan en overlays estándar, AI, Cuenta e Instalación; el lanzador de instalación queda en flujo normal y el área invisible del micrófono de campo se limita.
+- `manual.html`: ocho secciones temáticas con enlaces `#pagina-XX`, número y título; página 02 localizable por WhatsApp/teléfono/Guatemala/+502.
+- `service-worker.js`: caché/release R24 sincronizado.
+- Pruebas modificadas: V311 Manual, V365 recuperación, V405 Registro y móvil, V406 R2/R4/R5/R23 y V407 R1/R7/R9.
+- Revisión renderizada 390×844: siete modalidades y Registro, Confirmación, General, Tarjeta Digital, Historial, Estadísticas, AI, Reglas, Cuenta, Instalación y Manual con ancho 390 px y cero traslapes.
+- `REGISTRO_REINCIDENCIAS_CALIDAD.md`: RC-094 documenta causa, escape y control permanente.
+- Rollback: `73df15f`; score, voz, LIVE y acceso 24 h permanecen funcionalmente intactos.
+- Reparación de transporte R24: `index-grupal.html` se retransmite completo (830,274 bytes); el intento vacío queda rechazado y no llega a MAIN.
+- `test-v311-manual-search.mjs`: exige los ocho grupos, enlaces titulados y términos WhatsApp/Guatemala/+502.
+
+# V407-R24A · control manual de actualización restaurado · 09 de septiembre de 2026
+
+- `index-grupal.html`: `body.gsc-setup-open:has(#setupOverlay.visible)` vuelve visible `.mandatory-update` y añade `padding-top` seguro al Registro.
+- `service-worker.js`: `v407-r24a-update-visible` / `V407-R24A-UPDATE-VISIBLE-20260909` provoca la detección remota sin actualización silenciosa.
+- `test-v405-registration-clear-final-mobile.mjs` exige la excepción visible; pruebas de versión V365/V406/V407 se sincronizan con R24A.
+- Captura renderizada: botón `left 257`, `top 12`, `right 368`, `bottom 67`; tarjeta `top 90`; cero intersección y cero desbordamiento.
+- Rollback: commit productivo `2ba83ed`; ninguna función de score, WhatsApp, LIVE, Historial, voz o invitación cambia.
+
+# V407-R24B · puente manual para PWA detenida en R24 · 09 de septiembre de 2026
+
+- `service-worker.js`: `approvedNavigationWithManualUpdate(request)` lee el shell aprobado, añade `#gsc-update-recovery` antes de `</head>` y conserva status/headers; la navegación normal usa esa respuesta.
+- El CSS inyectado sólo aplica en `body.gsc-setup-open:has(#setupOverlay.visible)`: muestra `.mandatory-update` y baja `#setupOverlay` hasta 82 px/área segura.
+- No llama `installMandatoryUpdate`, no limpia caches, no recarga y no navega; el propietario conserva el único toque que instala.
+- `index-grupal.html`, release/caché y pruebas V365/V405/V406/V407 avanzan a R24B.
+- Rollback: `5e45b264`; datos locales, score, LIVE, WhatsApp, Historial, voz y acceso 24 h quedan intactos.
+- `scripts/lab-update-browser-review.mjs`: ejecutor Playwright con `launchPersistentContext`; activa cuatro deployments READY consecutivos en el mismo alias LAB, siembra y comprueba ronda/Historial/jugador/score/WhatsApp, detecta ACTUALIZAR, captura antes, toca, espera navegación, confirma ACTUALIZADO/release final, captura después y registra consola, red y geometría.
+- `scripts/lab-update-physical-gate.mjs`: validador independiente del JSON `gscg-lab-update-browser-evidence/v1`; recalcula SHA-256 y rechaza commit, deployment, alias, perfil, transición, captura o preservación inválidos. El nombre histórico del archivo no cambia la clasificación: Playwright es REVISIÓN AUTOMATIZADA EN NAVEGADOR REAL, nunca revisión física.
+- `test-v407-r24-update-physical-gate.mjs`, `package.json` y `audit-project.mjs`: prueba negativa, comandos `update:browser-review` / `update:browser-gate` e integración permanente en auditoría.
+- `DIRECTRICES_MANDATORIAS.md`, matrices Gate 0 humana/JSON y `REGISTRO_REINCIDENCIAS_CALIDAD.md`: fijan las tres puertas independientes y RC-097. Estado actual: NO REVISADO; la ejecución pública A→B→C→D y el micrófono físico iPhone siguen pendientes; MAIN/Producción intacta.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`: rutas literales registradas para el Gate ROADMAP.
+
+# V407-R24C · corrección física del encabezado de Historial · 09 de septiembre de 2026
+
+- Evidencia de entrada: `IMG_3303.png`, iPhone vertical, muestra `ACTUALIZADO` superpuesto al botón `ATRÁS` de `#cardLibraryOverlay`.
+- Causa: `body.gsc-setup-open:has(#setupOverlay.visible) .mandatory-update{display:block!important}` se evaluaba aunque Historial estuviera abierto y anulaba la regla general de aislamiento de overlays.
+- `index-grupal.html`: la excepción pasa a `body.gsc-setup-open:not(.gsc-history-open):has(#setupOverlay.visible)`; Registro conserva ACTUALIZAR y el Historial no hereda el lanzador del fondo.
+- `test-v407-r24b-history-update-isolation.mjs`: exige el aislamiento, exige la condición negativa de Historial y rechaza la antigua regla reincidente.
+- `audit-project.mjs`: incorpora el banco como prueba obligatoria de la auditoría maestra.
+- `test-v405-registration-clear-final-mobile.mjs`: conserva la obligación de mostrar ACTUALIZAR en Registro y añade la exclusión de Historial a la misma expectativa.
+- Estado honesto: FAIL físico encontrado y corregido en fuente; candidato NO REVISADO hasta comprobar el despliegue LAB público. Producción principal intacta.
+- `Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf`, `Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf`, `Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: regenerados y sellados con 448 fuentes remotas.
+- Cierre de transporte remoto: `.github/workflows/apply-r24c-lab.yml` queda eliminado; `index-grupal.html` y este ROADMAP se restauran completos. Los tres inventarios y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se resellan contra 448 fuentes presentes en el árbol LAB sin evidencia local ajena.
+- `.github/workflows/apply-r24b-lab.yml`: workflow de transporte temporal creado, ejecutado y eliminado; su eliminación queda documentada y el árbol final no lo conserva.
+# V407-R24D · separación física LIVE / aplicación 24 H · 10 de septiembre de 2026
+
+- `live-control.js`: `publicAppOrigin()` convierte cualquier dominio temporal del proyecto LAB en `https://golf-sc-gt-lab.vercel.app`; `viewerUrl()` y `hubUrl()` dejan de copiar `_vercel_share`. El receptor abre directamente `live.html`, Score Card LIVE de sólo lectura.
+- El acceso `INVITAR · 24 H` no se mezcla con LIVE: `api/app-access.js` conserva `/invite/{token}` hacia `index-grupal.html?source=guest24h`, y `middleware.js` mantiene sesión temporal, aislamiento de almacenamiento, límites de API, caducidad y revocación.
+- Pruebas: `test-v406-r22-share-live.mjs` exige dominio público y ausencia del bypass de Vercel; `test-r18-owner-guest-24h-access.mjs` vuelve a aprobar el acceso completo con candados. Rollback: revertir sólo este corte R24D; MAIN intacta.
+# V407-R24D · botón ACTUALIZAR decisivo y manual · 10 de septiembre de 2026
+
+- `index-grupal.html`: release `V407-R24D-MANUAL-UPDATE-20260910`, identificador visible `V407 · R24D` y estilo versionado R24D. El detector consulta el HTML publicado sin caché; si difiere de R24C habilita `ACTUALIZAR` y el parpadeo. No ejecuta la instalación.
+- `service-worker.js`: caché candidata `v407-r24d-manual-update`; mantiene por separado la caché aprobada y no llama `promoteCandidate()` desde `install` ni `activate`. Sólo `app_version=V407-R24D-MANUAL-UPDATE-20260910`, generado al tocar el botón, promueve R24D.
+- `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v406-r23-visible-version.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r7-ios-scroll.mjs` y `test-v407-r9-manual-update.mjs`: exigen interfaz, release y caché R24D; el banco visible agrega la prueba negativa que impide una promoción automática desde la instalación del worker.
+- Rollback: restablecer el commit R24C en el alias LAB. `main` y Producción permanecen congelados e intactos.
+- Reparación de transporte: el primer blob remoto de `index-grupal.html` llegó vacío y el build fue rechazado antes de activar LAB. El archivo completo de 830,526 bytes se retransmite junto con `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, cerrando trazabilidad en el mismo commit de publicación.
+
+# V407-R25 · BORRAR SCORES, hándicap firmado, RESET y autocompletado iPhone · 10 de septiembre de 2026
+
+- `index-grupal.html`: añade `#clearScoresOnly`, conserva `#clearRoundScores`, añade `#resetClockButton`, acepta hándicaps enteros firmados y captura del DOM nombre/teléfono antes de `OK`.
+- `player-registry.js`: preserva hándicaps enteros negativos, cero y positivos en perfiles e historial.
+- `live-control.js`: transporta el hándicap firmado al visor LIVE sin recortarlo a 0–54.
+- `service-worker.js` y pruebas de actualización: release/caché manual `V407-R25-CONTROLS-20260910`; sólo el propietario lo instala mediante `ACTUALIZAR`.
+- `test-v405-registration-clear-final-mobile.mjs` y `test-v407-r25-round-controls.mjs`: prueban la separación destructiva, conservación de ronda, RESET, hándicap firmado y autocompletado iPhone.
+- Rollback: commit Maestro R24D `841a8fc`; Maestro/Producción no se modifica durante la revisión LAB.
+- `.github/workflows/promote-r24d-lab.yml`: eliminado por ser un transporte temporal fallido y ajeno al candidato R25.
+- `test-v287-stableford-back-controls-clear.mjs`: actualizado para exigir la coexistencia ordenada de `BORRAR SCORES` y `BORRAR TODO`, manteniendo ATRÁS y + JUGADOR.
+
+# V407-R26 · OK sin límite heredado 0–54 · 10 de septiembre de 2026
+
+- `index-grupal.html`: las dos rutas posteriores al toque de `#setupOk` validan con `Number.isSafeInteger(hcp)`; ya no rechazan cero ni hándicaps negativos.
+- `service-worker.js`: candidato manual `V407-R26-OK-HOTFIX-20260910` y caché `v407-r26-ok-hotfix`.
+- Pruebas versionadas coordinadas a R26; `test-v407-r25-round-controls.mjs` prohíbe expresamente la condición residual `hcp<0||hcp>54`.
+
+# V407-R27 · avance directo del registro manual · 10 de septiembre de 2026
+
+- `#setupOk`: después de `captureVisibleRegistrationValues()` y validación estricta ejecuta `resetSetupCapture(); renderDraft(); showStep2(); speakSetupConfirmation()`.
+- Se elimina sólo la llamada de `OK` a `requestSetupFinalize()`; la captura y conversación por micrófono no se modifican.
+- `test-v407-r25-round-controls.mjs` exige la ruta directa y prohíbe que `OK` vuelva a depender del finalizador de voz.
+
+# V407-R28 · persistencia previa a actualización · 10 de septiembre de 2026
+
+- `installMandatoryUpdate()` ejecuta captura DOM, sincronización no destructiva y `persistDraftState()` antes de limpiar cachés y recargar.
+- Release/caché/pruebas avanzan coordinadamente a R28.
+
+
+## HOTFIX OFICIAL EL PULTÉ · 10 SEPTIEMBRE 2026
+
+`index-grupal.html` corrige exclusivamente `PULTE_SI_MEN` conforme a la tarjeta física oficial: 9,5,7,11,17,3,1,15,13,18,2,8,16,4,6,12,10,14. `service-worker.js` renueva únicamente las cachés activa y aprobada para entregar la corrección sin borrar la ronda. Sin cambios en jugadores, scores, diseño, modalidades o demás contenido.
+
+Registro conjunto del despliegue: hotfix `main` commits `481f716` y `c548f30`; matriz verificada como permutación exacta 1–18. Estado físico posterior al despliegue: pendiente.
+
+- Hotfix Maestro El Pulté (10 de septiembre de 2026): la regresión de recuperación acepta la identidad exacta del caché `v407-r28-pulte-handicap-hotfix`; cambio limitado a handicaps oficiales y entrega, sin alterar scores ni jugadores.
+
+- Seguimiento hotfix: se alinea la expectativa del caché aprobado con `approved-pulte-handicap-hotfix`; sin cambios funcionales adicionales.
+
+- Entrega del hotfix: identidad técnica `V407-R28-PULTE-HANDICAP-HOTFIX-20260910` para que instalaciones existentes detecten ACTUALIZAR sin borrar la ronda.
+- 2026-09-13 · R29: paquete de despliegue validado con el envío digital de iPhone, la prueba de activación del toque y el registro de cambios en un mismo commit.
+
+
+## R30 · Envío PNG validado en iPhone · 2026-09-13
+- `card-file-export.js`: SVG autocontenido en data URL evita SecurityError de canvas contaminado; texto blanco y Arial, límite de espera y control de contexto. PNG real: 160728 bytes.
+- Prueba física PASS: el usuario confirmó «Eso sí, funcionó y llegó». Integración Main solicitada explícitamente.
+- `index-grupal.html` y `service-worker.js`: identidad R30 para entregar el exportador mediante ACTUALIZAR. Sin cambios en almacenamiento de rondas ni scores.
+- Pruebas de versión y actualización alineadas con R30; registro RC-104 en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`; sello `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+- Evidencia de comparación en rama fix-r30-card-png; la página temporal no se incorpora en Main.
+
+
+## R31 · Comunicación universal clara · 2026-09-13
+- `api/universal-ai.js`: clima actual hablado sin ficha técnica, sin convertir nulos en cero; instrucciones de lenguaje natural y límites de diagnóstico y tasación.
+- `scripts/universal-quality-benchmark.mjs`: cuatro consultas reales al backend durante Preview, con resultados verificables; referencia ChatGPT de esta conversación y evaluación de contenido, no similitud literal.
+- `test-r31-universal-plain.mjs`: regresión de clima actual, datos ausentes y horizonte de lluvia.
+- `vercel.json`: ejecuta comparación solamente en la rama de revisión. Resultado y publicación pendientes.
+
+- `docs/quality/R31_COMPARACION_UNIVERSAL.md`: referencia previa, fuentes y rúbrica de 100 puntos; el análisis detallado se mantiene sólo cuando se solicita profundidad.
+
+- Comparación real: 4/4 respuestas; BMW rechazado por tasación local sin comparables locales y fuentes de variantes mezcladas. Se endurece identificación de variante y se repite únicamente ese caso. Sin aprobación del umbral 90 todavía.
+
+- Segunda comparación: BMW ya distingue referencia internacional y ausencia de precio local; se exige identificar año/fuente de comparables. iPhone añade alternativa cuando la pantalla no responde. Revisión focalizada de estos dos casos.
+
+- Paquete Main R31 preparado: `index-grupal.html` y `service-worker.js` renuevan sólo identificación; pruebas de versión alineadas. No cambia actualización, almacenamiento, scores ni exportador PNG. `vercel.json` conserva el comando original de producción; comparación externa sólo en rama de revisión.
+
+- `docs/quality/R31_RESPUESTAS_REALES.json`: respuestas reales y tiempos; evaluación manual acotada 94/100, sin garantía de similitud general ni de audio físico. Main/LAB R31: preparado para publicación del backend verificado.
+
+
+## 2026-09-13 · R32 · Preguntas abiertas y voz
+Filtro de conversación corregido; éxito audible real; liberación de audio AI ∞. Se preserva la corrección de actualización publicada en LAB y se mantiene R31. Pruebas y límites físicos en `docs/quality/R32_PREGUNTAS_Y_VOZ.md`.
+Archivos de esta versión:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `docs/quality/R32_PREGUNTAS_Y_VOZ.md`
+- `index-grupal.html`
+- `service-worker.js`
+- `test-r32-open-conversation.mjs`
+- `test-update-check-errors.mjs`
+- `test-v358-ios-score-universal-physical-recovery.mjs`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`
+- `test-voice-result-integrity.mjs`
+
+`Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: sello de microfono_compartido actualizado sólo por corrección universal autorizada; SHA previo conservado, aprobación física R32 pendiente. Banco V358 restaurado sin cambios; liberación de audio dentro de startAiUniversalListening.
+
+
+## 2026-09-13 · R33 · Error visible en comunicación universal
+Hallazgo en navegador R32: causa del silencio quedaba oculta. R33 muestra aviso junto a controles, independiente del reloj. Prueba física iPhone pendiente. Archivos:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `docs/quality/R33_ERROR_VISIBLE.md`
+- `index-grupal.html`
+- `service-worker.js`
+- `test-r33-visible-voice-errors.mjs`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`
+
+
+## V407-R34 · Respuesta escrita y reproducción verificable · 2026-09-13
+
+Base R33 ab2e227c6dc1. Incidente RC-108: audio iniciado no demuestra salida audible; texto oculto y esperas sin límite. Texto seguro junto a controles, reproductor nativo visible sin mute, plazos máximos y monitor de avance/final. Registro/scores, tarjeta R30 y updater preservados. Pruebas locales dirigidas PASS; Preview y prueba física pendientes. Detalle y rollback en docs/quality/R34_AUDIO_Y_TEXTO.md.
+
+Archivos exactos:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `api/voice-health.js`
+- `docs/quality/R34_AUDIO_Y_TEXTO.md`
+- `index-grupal.html`
+- `scripts/build-r34-voice-review.mjs`
+- `service-worker.js`
+- `test-r32-open-conversation.mjs`
+- `test-r34-audio-response.mjs`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`
+- `test-voice-result-integrity.mjs`
+- `vercel.json`
+
+- `audit-project.mjs`: bancos R32/R33/R34 e integridad de voz obligatorios en cada despliegue.
+
+R34 evidencia Preview: 0595868e64733075c00aa4d0ebe1eecaef438674 READY en ambos proyectos; reproducción real de frase sintética 5,12 s, RMS0,16452, avance/finalización y texto visible PASS. Prueba física iPhone pendiente.
+
+## R35 local y diagnóstico de captura R36 · 2026-09-13 · NO PUBLICADO
+
+Cambio autorizado: ubicación explícita del clima y recuperación de captura abandonada. Simulaciones dirigidas PASS; equivalencia ChatGPT, audio inyectado real y comprobación iPhone pendientes. Evidencia en docs/quality/R36_CAPTURE_DIAGNOSTIC.json. No se atribuye al iPhone la ausencia de dispositivo del navegador de pruebas.
+
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: código, prueba o evidencia de la revisión conversacional local.
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: código, prueba o evidencia de la revisión conversacional local.
+- `api/universal-ai.js`: código, prueba o evidencia de la revisión conversacional local.
+- `api/weather.js`: código, prueba o evidencia de la revisión conversacional local.
+- `docs/quality/R35_BANCO_100_PREGUNTAS.json`: código, prueba o evidencia de la revisión conversacional local.
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.json`: código, prueba o evidencia de la revisión conversacional local.
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.md`: código, prueba o evidencia de la revisión conversacional local.
+- `index-grupal.html`: código, prueba o evidencia de la revisión conversacional local.
+- `test-r31-universal-plain.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `test-r35-weather-location.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `test-r36-capture-permissions.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `test-r36-capture-release.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `test-v335-response-caliber.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `test-v364-vercel-oidc-recovery.mjs`: código, prueba o evidencia de la revisión conversacional local.
+- `audit-project.mjs`: exige pruebas de liberación de captura y permisos para prevenir reincidencias.
+
+### Seguimiento de aceptación de 100 conversaciones · 2026-09-13
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.json`: evidencia del banco externo 0/100 y límites del método.
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.md`: rechazo del banco como prueba de navegador consecutiva; infraestructura real pendiente. Sin publicación.
+
+
+## Continuidad conversacional R36 · 13 septiembre 2026 · NO APROBADO
+
+Motor real: 100/100 respuestas HTTP, mediana 3327 ms; 100 referencias ChatGPT observadas. Comparación editorial provisional: 98 aceptables, 1 fallo de costos/precios, 1 pendiente de revisar. No certifica equivalencia del flujo completo. Integración de servicios de audio externa: 100/100, sin reproducción y con cuatro trabajadores. Nueve consultas adicionales reales: texto y bytes de voz; costos aún necesita respuesta relativa correcta, las tres ciudades sí se resolvieron.
+
+Segunda escucha: R34 negativo (0 aperturas tras fin de voz), código local positivo (100 transiciones sin duplicados; Detener cancela). Reconocimiento simulado, no hardware iPhone. Persistencia real de ronda sintética LAB tras recarga: cinco tablas idénticas. TestMu documenta inyección iOS, pero no hay cuenta/plan ni dispositivo aprovisionado. Latencia integral <=40%, 100 turnos de navegador y comprobación física siguen pendientes. Regresión integral final reservada para candidato completo.
+
+Archivos del alcance y evidencias:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: corrección, control o evidencia de la conversación; no publicación.
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: corrección, control o evidencia de la conversación; no publicación.
+- `api/universal-ai.js`: corrección, control o evidencia de la conversación; no publicación.
+- `audit-project.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/ENGINE_100_COMPARISON.html`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/ENGINE_100_COMPARISON.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/ENGINE_CHATGPT_REFERENCES_100.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/ENGINE_R34_COMPLETE_100.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/ENGINE_R34_PARTIAL_18.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/R36_CONTINUITY_EVIDENCE.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/R36_TARGETED_CHATGPT.json`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/R36_TARGETED_CHATGPT_RAW.txt`: corrección, control o evidencia de la conversación; no publicación.
+- `docs/quality/R36_TARGETED_REAL_9.json`: corrección, control o evidencia de la conversación; no publicación.
+- `index-grupal.html`: corrección, control o evidencia de la conversación; no publicación.
+- `scripts/check-conversation-acceptance.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `scripts/render-engine-comparison.py`: corrección, control o evidencia de la conversación; no publicación.
+- `scripts/run-r36-build.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `scripts/run-r36-targeted.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `test-r34-audio-response.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `test-r35-weather-location.mjs`: corrección, control o evidencia de la conversación; no publicación.
+- `test-r36-followup-events.mjs`: corrección, control o evidencia de la conversación; no publicación.
+
+
+## R36 publicación autorizada — 2026-09-13
+Orden del propietario: Publica. Correcciones de liberación de captura, siguiente pregunta, ubicación explícita y voz por fragmentos. Pruebas controladas PASS; validación física y equivalencia integral de 100 conversaciones pendientes. No se certifica reducción total de latencia. Reversión: e871621c2af478deed6957a625feb0e280402d68 conservando almacenamiento local.
+Archivos exactos:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `api/universal-ai.js`
+- `api/weather.js`
+- `audit-project.mjs`
+- `docs/quality/ENGINE_100_COMPARISON.html`
+- `docs/quality/ENGINE_100_COMPARISON.json`
+- `docs/quality/ENGINE_CHATGPT_REFERENCES_100.json`
+- `docs/quality/ENGINE_R34_COMPLETE_100.json`
+- `docs/quality/ENGINE_R34_PARTIAL_18.json`
+- `docs/quality/R35_BANCO_100_PREGUNTAS.json`
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.json`
+- `docs/quality/R36_CAPTURE_DIAGNOSTIC.md`
+- `docs/quality/R36_CONTINUITY_EVIDENCE.json`
+- `docs/quality/R36_TARGETED_CHATGPT.json`
+- `docs/quality/R36_TARGETED_CHATGPT_RAW.txt`
+- `docs/quality/R36_TARGETED_COMPARISON_9.json`
+- `docs/quality/R36_TARGETED_REAL_9.json`
+- `docs/quality/R36_TTS_LATENCY_PAIRS.json`
+- `index-grupal.html`
+- `scripts/check-conversation-acceptance.mjs`
+- `scripts/render-engine-comparison.py`
+- `scripts/run-r36-audio-sequential.mjs`
+- `scripts/run-r36-build.mjs`
+- `scripts/run-r36-latency-probe.mjs`
+- `scripts/run-r36-targeted.mjs`
+- `service-worker.js`
+- `test-r31-universal-plain.mjs`
+- `test-r34-audio-response.mjs`
+- `test-r35-weather-location.mjs`
+- `test-r36-capture-permissions.mjs`
+- `test-r36-capture-release.mjs`
+- `test-r36-followup-events.mjs`
+- `test-v335-response-caliber.mjs`
+- `test-v364-vercel-oidc-recovery.mjs`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`
+
+R36: test-v365-active-round-empty-recovery.mjs conserva la prueba de recuperación y verifica el identificador sucesor de caché.
+
+## V407 · R37 — CLIMA VIVO CONSISTENTE
+
+- `index-grupal.html`: `activeCourseWeatherSnapshot` separa el dato meteorológico informativo actual de la tarjeta cerrada; `currentCourseWeatherSnapshot()` alimenta franja y contexto universal. El refresco ya no se cancela por `officiallyClosedAt`, pero `persist()` continúa prohibido en ese estado.
+- `service-worker.js`: `V407-R37-LIVE-WEATHER-20260913` y caché sucesor.
+- `test-r37-closed-round-live-weather.mjs`: ejecuta la función extraída con ronda cerrada, exige una consulta, render sincronizando/final, 27 °C visible, 20.7 °C histórico intacto y cero persistencias.
+- `test-v312-general-caddie.mjs`: sustituye la aserción histórica que exigía cancelar el clima en rondas cerradas por la separación entre instantánea viva y persistencia oficial.
+- `audit-project.mjs`: hace bloqueante la prueba R37.
+- `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r25-round-controls.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v407-r9-manual-update.mjs`: contrato R37 actualizado.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: causa, escape y prevención RC-104.
+- Reversión exacta: `ccdd004b361bd84dd5936aa069c7722b13b5659f`, sin borrar ronda, historial ni credenciales locales.
+
+
+## PTT — corrección local de duración (2026-09-13T22:19:28.097630+00:00)
+Estado: pendiente de validación física y publicación. Se detectó y corrigió que la espera de onstop inflaba la duración de pulsaciones breves. voice-turns.js registra stoppedAt al soltar. Evidencia: node test-ptt-independent-turns.mjs termina con exit 0; incluye 100 turnos simulados y casos de onstop demorado, pulsación de 50 ms con 1000 ms de espera y recuperación tras permiso denegado. No equivale a prueba iPhone ni proveedor real. Actualizar no fue modificado. Próximo paso: validación navegador/proveedor y controles pendientes antes de candidato.
+
+
+### Candidato local PTT — archivos incluidos
+- `index-grupal.html`
+- `voice-turns.js`
+- `api/voice-transcribe.js`
+- `test-ptt-independent-turns.mjs`
+- `audit-project.mjs`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+Estado: pruebas simuladas PASS; proveedor real, revisión navegador e iPhone pendientes. No aprobado como solución integral.
+
+
+## R38 — Publicación solicitada en Laboratorio y Maestro
+Nueva identidad de release y caché para activar el detector existente de Actualizar. Mantiene el toque manual y los datos locales. Push-to-talk incluido en shell. Orden expresa del propietario para ambos enlaces habituales. Comunicación Universal mantiene un fallo de disponibilidad pendiente; no se afirma solución integral.
+Archivos de esta actualización:
+- `index-grupal.html`
+- `service-worker.js`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+
+
+## OP-60 — Obligación permanente de ejecución visible
+Orden expresa 13 septiembre 2026: reportar acción y evidencia visible cada máximo 60 segundos, seguir ejecutando después del reporte y documentar bloqueos reales antes de detenerse. Aplicación a Laboratorio, Maestro y futuras continuaciones. Registro documental; no cambia el código de las aplicaciones.
+Archivos de esta modificación:
+- `AGENTS.md`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md`
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `ROADMAP_OVERALL.md`
+- `ROADMAP_A_DETALLE.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+
+
+## R39 — Grabación visible y respuesta sólo por sonido
+Corrección por orden del propietario: activar estado rojo/blanco del micrófono en tarjeta, sincronizar estado escuchando durante pulsación, ocultar párrafo hablado, no agregar despedidas de acompañamiento y descartar cierre inesperado del grabador antes de soltar. Banco simulado PASS incluyendo 20 segundos sostenidos; causa del corte físico aún no demostrada. No se declara validación física. Conserva OP-60.
+- `api/universal-ai.js`
+- `index-grupal.html`
+- `service-worker.js`
+- `test-ptt-independent-turns.mjs`
+- `test-v365-active-round-empty-recovery.mjs`
+- `test-v406-r2-professional-design.mjs`
+- `test-v406-r23-visible-version.mjs`
+- `test-v406-r4-mobile-controls.mjs`
+- `test-v406-r5-simple-tournament-live.mjs`
+- `test-v407-r1-premium-visual-system.mjs`
+- `test-v407-r25-round-controls.mjs`
+- `test-v407-r7-ios-scroll.mjs`
+- `test-v407-r9-manual-update.mjs`
+- `voice-turns.js`
+- `docs/quality/R39_PTT_RESULTADO.json`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+
+## R40 · 13 septiembre 2026 · pulsación sostenida y registro explícito
+
+Orden del propietario tras IMG_3669/IMG_3670: área táctil invisible +100%, no autocierre mientras mantiene pulsado, registro mediante jugador número/ nombre/handicap/marcas. Fuente R39 286aca44e54b00ced7726ba64ddc966d2153b0fa.
+
+Cambios: se elimina temporizador de cierre de 60 s; perder captura de puntero no equivale a soltar; touch-action none en botón y contenedor; área anterior multiplicada por dos; adaptador de comando explícito separa posición del nombre y evita tratar nombre+dígito conversacional como alta. Guía visible actualizada. Parsers y escritor oficiales conservados; el registro de scores mantiene silencio por regla existente.
+
+Evidencia controlada: 100 turnos, 90 s sin envío hasta soltar, analizador real de dos jugadores con posiciones y nombres correctos, cinco hoyos conservados. Pendiente revisión visual y física; no aprobado integralmente ni publicado en producción. Rollback: R39 286aca4.
+
+Archivos:
+- CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md
+- CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json
+- ROADMAP_A_DETALLE.md
+- ROADMAP_OVERALL.md
+- docs/quality/R40_PTT_RESULTADO.json
+- index-grupal.html
+- service-worker.js
+- test-ptt-independent-turns.mjs
+- test-r40-five-holes.mjs
+- audit-project.mjs
+- test-v365-active-round-empty-recovery.mjs
+- test-v406-r2-professional-design.mjs
+- test-v406-r23-visible-version.mjs
+- test-v406-r4-mobile-controls.mjs
+- test-v406-r5-simple-tournament-live.mjs
+- test-v407-r1-premium-visual-system.mjs
+- test-v407-r25-round-controls.mjs
+- test-v407-r7-ios-scroll.mjs
+- test-v407-r9-manual-update.mjs
+- voice-turns.js
+
+### R40 · corrección de construcción
+Los dos builds de ef096d1 fallaron porque las pruebas de guía visible aún exigían las instrucciones antiguas. Se actualizan las expectativas a jugador número/nombre/handicap/marcas según orden del propietario; no se eliminan verificaciones. Nuevos controles funcionales ejecutados antes de reconstruir.
+- test-v255-player-registration-boxes-codes.mjs
+- test-v261-registration-stableford-modality.mjs
+- test-v290-brand-icons-cleanup.mjs
+- test-v304-homogeneous-registration-actions.mjs
+- test-v305-registration-guides-parser-truth.mjs
+- CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json
+
+Se conserva MIGUEL como nombre de ejemplo por regla visual V311; sólo cambia la sintaxis explícita. Archivo adicional: index-grupal.html. Banco funcional: 143 PASS y un FAIL inicial por el nombre de ejemplo; corregido antes de reconstruir.
+
+### R40 · área táctil exacta por pantalla
+Revisión CSS detecta márgenes previos distintos: Registro 26 px y Score Card 10 px. Se ajusta inset con sqrt(2) sobre dimensiones efectivas para duplicar área, sin ampliar icono. Se sustituye cálculo inicial basado en margen genérico. Archivos: index-grupal.html; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json. Verificación matemática en anchos 84/109/180/220: área nueva/anterior 2 dentro de tolerancia 0.000001. Presentación física pendiente.
+
+## R40 · recuperación de invitación observada en navegador
+13 septiembre 2026, 18:41 Guatemala. Fuente: 1ce8223. Fallo real: navegación /invite/ entregó shell R38 en vez del formulario, scripts relativos /invite/*.js fallaron Unexpected token <. La ruta oficial /access.html?invite= permitió acceso temporal confirmado en el mismo navegador. Corrección: excluir /invite/ del shell de navegación y usar fetch no-store a la URL original. No modifica validación, permisos, base de datos, expiración ni uso único. No resuelve por sí sola el acceso entre producción y Preview.
+Prueba test-invite-service-worker.mjs: rutas invite/access van a red sin leer caché; pruebas existentes de acceso 24h y actualización PASS. Aceptación visual R40 y micrófono físico pendientes; producción intacta. Rollback: 1ce8223.
+Archivos: service-worker.js; test-invite-service-worker.mjs; audit-project.mjs; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json; CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md.
+
+
+## R41 · Inicio de respuesta de voz · 14 septiembre 2026
+Corrección limitada a splitUniversalSpeechText: primeras oraciones largas se dividen en pausa o espacio antes de 240 caracteres; se conserva respuesta completa y voz actual. Caso reproducido: primer bloque 1274 → 239 caracteres. test-r34-audio-response.mjs PASS, incluyendo cancelación y reproducción ordenada simulada. No demuestra reducción real a 1/6. Dictado de cinco hoyos pendiente: frase aportada pasa intérprete; falta transcripción original rechazada. Grabación y cierre por soltar intactos. Publicación autorizada en LAB y Maestro; reversión al commit b976451.
+
+
+## R41 · Corrección servidor tráfico al aeropuerto
+14 septiembre 2026: directTrafficRouteFromQuery reconoce conector al. Antes: desde mi ubicación al aeropuerto internacional La Aurora devuelve null; después: origen GPS y destino conservados. Pruebas test-v356-traffic-weather-accuracy.mjs y test-v324-real-traffic.mjs PASS. Archivo funcional: api/universal-ai.js. Dos HTTP 502 observados en Maestro 01:21 UTC siguen sin causa interna identificada; no declarar disponibilidad corregida. Sin cambios del micrófono ni del cliente. Publicación autorizada en ambos servidores.
+
+
+## R42 · Salida Fish en PTT y cierre de vuelta
+14 septiembre 2026. index-grupal.html: PTT evita voz del navegador y Cedar en consultas/cierres; usa speakAiUniversalText con servidor Fish existente a 0.90. El adaptador discreteVoiceController reproduce result.closure tras registro correcto, conservando intacto processBrowserVoiceTranscript y su bloque protegido. test-ptt-independent-turns.mjs agrega cierre Fish exitoso y fallido sin Realtime, con reintento. Pruebas de audio, cierre y pulsación PASS controlado. service-worker.js y pruebas de versión actualizados para entrega R42. Sin prueba física ni garantía de timbre fijo o de 1.5–3.5 segundos: faltan referencia Fish y medición real. Error de tráfico 502 pendiente. Reversión: 54cae71.
+
+
+## R42 · Diagnóstico específico de tráfico · 14 septiembre 2026
+Las dos frases del usuario extraen correctamente origen GPS/El Pulté y destino La Aurora/Oakland Mall. Los HTTP 502 de producción no identificaban su causa. api/_lib/traffic.js agrega registro traffic-failure con código interno, estado HTTP del proveedor, estado normalizado y duración; no registra credenciales, coordenadas, preguntas ni mensajes del proveedor. test-v324-real-traffic.mjs verifica rechazo 403 PERMISSION_DENIED sin datos sensibles. Esto habilita diagnóstico; NO certifica restauración del tráfico ni latencia de voz. Archivos: api/_lib/traffic.js; test-v324-real-traffic.mjs; ROADMAP_OVERALL.md; ROADMAP_A_DETALLE.md; CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
 
 
 ## Diagnóstico protegido de configuración de tráfico · 14 septiembre 2026
