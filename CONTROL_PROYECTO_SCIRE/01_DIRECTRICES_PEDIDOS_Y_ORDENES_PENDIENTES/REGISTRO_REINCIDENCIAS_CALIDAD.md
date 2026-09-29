@@ -508,3 +508,5 @@ Captura IMG_5275: `CREAR RONDA` abre el diálogo pero OK devuelve error. Causa r
 Causa: render de fila concatenaba groupLabel y player.name; refresco emitía un texto fijo. Escape: prueba dirigida anterior verificaba columnas y publicación, no limpieza del nombre. Control permanente: test-lab-private-rounds rechaza escape(group) y SCORES ACTUALIZADOS en el render. Corregido localmente; publicación LAB en curso.
 
 R141 · Incidencia primera apertura iPhone: R136/COMPROBANDO y campos sin respuesta, segunda apertura funcional. Hallazgo: dos navegaciones concurrentes (controllerchange reload y activate client.navigate) y fetch sin timeout. Escape: pruebas anteriores no cubrieron transición de controlador. Control permanente test-lab-first-open.mjs, timeout y no recarga automática. PASS simulación; comportamiento físico iPhone pendiente de evidencia.
+
+R142 · Indicador fijo R136 escapó a revisión de releases R137-R141. Diagnóstico de caché incorrecto; etiqueta data-server-release tenía prioridad sobre meta. Eliminado override. Control permanente test-lab-first-open compara badge y botón con release.json. PASS ejecución dinámica de etiqueta.

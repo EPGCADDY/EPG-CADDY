@@ -17,3 +17,8 @@ vm.runInContext(html.match(/if\(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in 
 context.fetch=async()=>({ok:true,json:async()=>({release})});await controllerChange();assert.equal(reloads,0,'First service-worker activation must not reload an editable page');
 assert.doesNotMatch(sw,/client\.navigate\(/,'Worker must not compete with page navigation');
 console.log('PASS R141: first activation preserves page; stalled release check times out and restores retry; no competing navigation');
+
+assert.equal(elements.appReleaseBadge.textContent,"VERSIÓN "+JSON.parse(fs.readFileSync("release.json")).label);
+assert.equal(elements.appVersionId.textContent,JSON.parse(fs.readFileSync("release.json")).label);
+assert.doesNotMatch(html,/data-server-release=/);
+console.log("PASS visible release badge and update ID equal published release");
