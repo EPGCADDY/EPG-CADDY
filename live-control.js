@@ -3,7 +3,7 @@
   // LIVE PUBLICATION REFRESH 2026-09-20 · deploy trigger only, no functional change
 
   const STORAGE_KEY="golf-score-card-gt-live-control-v1",POLICY_VERSION="gsc-gt-live-v1";
-  let adapter=null,mounted=false,publishTimer=null,publishRunning=false,publishAgain=false,foregroundStatus=false;
+  let adapter=null,mounted=false,publishTimer=null,publishRunning=false,publishAgain=false,foregroundStatus=false,tournamentConnectRetryTimer=null,tournamentConnectRetryRoundId="",tournamentConnectRetryCount=0;
   const $=id=>root?.document?.getElementById(id)||null;
   const text=(value,max=120)=>String(value??"").trim().replace(/\s+/g," ").slice(0,max);
   const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
@@ -102,21 +102,34 @@
     publishRunning=false;renderActive();if(publishAgain){publishAgain=false;setTimeout(publishLatest,0)}return result.ok;
   }
   let tournamentConnectRunning=false;
+  function clearTournamentConnectRetry(roundId=""){
+    if(roundId&&tournamentConnectRetryRoundId&&roundId!==tournamentConnectRetryRoundId)return false;
+    clearTimeout(tournamentConnectRetryTimer);tournamentConnectRetryTimer=null;tournamentConnectRetryRoundId="";tournamentConnectRetryCount=0;return true;
+  }
+  function scheduleTournamentConnectRetry(roundValue){
+    const roundId=text(roundValue?.id,160);if(!roundId||!roundValue?.configured)return false;
+    if(tournamentConnectRetryRoundId!==roundId){clearTournamentConnectRetry();tournamentConnectRetryRoundId=roundId}
+    if(tournamentConnectRetryTimer||tournamentConnectRetryCount>=7)return false;
+    const delays=[1200,2500,5000,8000,12000,15000,15000],delay=delays[tournamentConnectRetryCount++];
+    tournamentConnectRetryTimer=setTimeout(()=>{tournamentConnectRetryTimer=null;const current=adapter?.getRound?.();if(!current?.configured||String(current.id)!==roundId){clearTournamentConnectRetry(roundId);return}void connectPendingRoundTournament(current)},delay);return true;
+  }
   async function connectPendingRoundTournament(roundValue){
-    if(tournamentConnectRunning)return false;
+    if(tournamentConnectRunning){scheduleTournamentConnectRetry(roundValue);return false}
     let selection;try{selection=JSON.parse(root.localStorage.getItem("gsc-tournament-connect-selection-v1")||"null")}catch{return false}
     const snapshot=currentSnapshot(roundValue),tournamentId=text(selection?.id,50);
     if(!snapshot||!tournamentId)return false;
     const state=liveState(),stream=state.stream;
     if(stream?.roundId===snapshot.roundId&&stream?.tournamentId===tournamentId){
       if(selection.roundId!==snapshot.roundId){selection.roundId=snapshot.roundId;try{root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify(selection))}catch{}}
+      clearTournamentConnectRetry(snapshot.roundId);
       return true;
     }
     tournamentConnectRunning=true;
     try{
       const result=await connectTournamentById(tournamentId,snapshot.groupLabel);
-      if(result?.ok){selection.roundId=snapshot.roundId;selection.connected=true;try{root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify(selection))}catch{};onRoundPersisted(roundValue);return true}
-      return false;
+      if(result?.ok){selection.roundId=snapshot.roundId;selection.connected=true;try{root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify(selection))}catch{};clearTournamentConnectRetry(snapshot.roundId);onRoundPersisted(roundValue);return true}
+      setStatus(`${stateMessage(result?.code)} · REINTENTANDO VINCULAR EL TORNEO`,"warning",true);scheduleTournamentConnectRetry(roundValue);return false;
+    }catch(error){setStatus(`${stateMessage(error?.code||"NETWORK_ERROR")} · REINTENTANDO VINCULAR EL TORNEO`,"warning",true);scheduleTournamentConnectRetry(roundValue);return false;
     }finally{tournamentConnectRunning=false}
   }
   function onRoundPersisted(roundValue){const state=liveState(),snapshot=currentSnapshot(roundValue);if(!snapshot)return false;void connectPendingRoundTournament(roundValue);if(!state.stream?.publisherSecret||state.stream.roundId!==snapshot.roundId)return true;state.stream.pendingSnapshot=snapshot;state.stream.pendingMutationId=mutationId();saveState(state);clearTimeout(publishTimer);publishTimer=setTimeout(publishLatest,350);return true}
@@ -149,9 +162,10 @@
   function bind(){
     $("gscLiveLaunch").onclick=()=>{if(currentSnapshot())return quickShareGroup();foregroundStatus=false;renderConsent();renderActive();root.document.body.classList.add("gsc-live-open");$("gscLiveOverlay").classList.add("visible");$("gscLiveOverlay").setAttribute("aria-hidden","false")};$("closeGscLive").onclick=()=>{root.document.body.classList.remove("gsc-live-open");$("gscLiveOverlay").classList.remove("visible");$("gscLiveOverlay").setAttribute("aria-hidden","true")};
     document.querySelectorAll('input[name="liveScope"]').forEach(input=>input.onchange=renderConsent);$("livePlayerSelect").onchange=renderConsent;$("liveOpenHub").onclick=()=>openHub();$("liveActivateButton").onclick=activateStream;$("liveShareButton").onclick=shareStream;$("liveCopyButton").onclick=()=>copyValue("liveShareLink");$("liveOpenButton").onclick=()=>openValue("liveShareLink");$("liveRevokeButton").onclick=revokeStream;$("liveCreateTournament").onclick=createTournament;$("liveShareTournament").onclick=shareTournament;$("liveCopyTournament").onclick=()=>copyValue("liveTournamentLink");$("liveOpenTournament").onclick=()=>openHub("general",liveState().tournamentOwned?.viewerToken);$("liveRevokeTournament").onclick=revokeTournament;$("liveJoinTournament").onclick=joinTournament;$("liveLeaveTournament").onclick=leaveTournament;$("liveFollowOpen").onclick=openFollow;
-    root.addEventListener("online",()=>{const state=liveState();if(state.stream?.pendingSnapshot)publishLatest();const round=adapter?.getRound?.();if(round?.configured)void connectPendingRoundTournament(round)});
+    const retryPendingRoundConnection=()=>{const state=liveState();if(state.stream?.pendingSnapshot)publishLatest();const round=adapter?.getRound?.();if(round?.configured)void connectPendingRoundTournament(round)};
+    root.addEventListener("online",retryPendingRoundConnection);root.addEventListener("focus",retryPendingRoundConnection);root.addEventListener("pageshow",retryPendingRoundConnection);root.document.addEventListener("visibilitychange",()=>{if(!root.document.hidden)retryPendingRoundConnection()});
   }
-  function mount(options){if(mounted||!root?.document)return false;adapter=options||{};inject();bind();const home=$("tournamentLiveHome");if(home)home.onclick=()=>openHub();$("liveOrganizerToggle").onclick=()=>{const panel=$("liveOrganizerPanel"),open=panel.classList.contains("hidden");panel.classList.toggle("hidden",!open);$("liveOrganizerToggle").setAttribute("aria-expanded",String(open));$("liveOrganizerToggle").textContent=open?"CERRAR ORGANIZACIÓN":"ORGANIZAR TORNEO"};mounted=true;renderConsent();renderActive();return true}
+  function mount(options){if(mounted||!root?.document)return false;adapter=options||{};inject();bind();const home=$("tournamentLiveHome");if(home)home.onclick=()=>openHub();$("liveOrganizerToggle").onclick=()=>{const panel=$("liveOrganizerPanel"),open=panel.classList.contains("hidden");panel.classList.toggle("hidden",!open);$("liveOrganizerToggle").setAttribute("aria-expanded",String(open));$("liveOrganizerToggle").textContent=open?"CERRAR ORGANIZACIÓN":"ORGANIZAR TORNEO"};mounted=true;renderConsent();renderActive();const round=adapter?.getRound?.();if(round?.configured)void connectPendingRoundTournament(round);return true}
   async function createTournamentDirect(name,mode="general"){
     name=text(name,120);if(!name)return{ok:false,code:"LIVE_TOURNAMENT_NAME_REQUIRED"};
     mode=["general","match_play","four_ball","stableford","universales"].includes(mode)?mode:"general";
