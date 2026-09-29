@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20260929-R140">
+  <meta name="gscg-release" content="LABORATORIO-20260929-R141">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -4385,7 +4385,7 @@ window.GSCLiveControl?.mount({
   getPars:()=>PAR
 });
 $("shareRoundLiveButton")?.addEventListener("click",()=>window.GSCLiveControl?.quickShareGroup());
-if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator){navigator.serviceWorker.addEventListener("controllerchange",()=>{try{sessionStorage.setItem("gscg-sw-controller-changed","1")}catch{} location.reload()},{once:true});window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/",updateViaCache:"none"}).then(reg=>reg.update()).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});}
+if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator){navigator.serviceWorker.addEventListener("controllerchange",()=>{try{sessionStorage.setItem("gscg-sw-controller-changed","1")}catch{} syncPublishedAppVersion()},{once:true});window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/",updateViaCache:"none"}).then(reg=>reg.update()).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});}
 function recoverInstalledAppScrolling(){
   const root=document.scrollingElement||document.documentElement;
   for(const element of new Set([document.documentElement,document.body,root])){element.style.setProperty("overflow-y","auto","important");element.style.setProperty("height","auto","important");element.style.webkitOverflowScrolling="touch"}
@@ -4455,17 +4455,18 @@ async function installMandatoryUpdate(){
 async function syncPublishedAppVersion(){
   if(appBuildCheckRunning||appBuildReloading||document.hidden)return;
   appBuildCheckRunning=true;
+  const controller=new AbortController(),checkTimeout=setTimeout(()=>controller.abort(),8000);
   try{
     const checkUrl=new URL("/release.json",location.origin);
     checkUrl.searchParams.set("t",String(Date.now()));
-    const response=await fetch(checkUrl,{cache:"no-store",headers:{"Cache-Control":"no-cache"}});
+    const response=await fetch(checkUrl,{cache:"no-store",signal:controller.signal,headers:{"Cache-Control":"no-cache"}});
     if(!response.ok){showBuildCheckFailure();return}
     const release=await response.json().catch(()=>({}));
     const published=String(release.release||"");
     if(!published){showBuildCheckFailure();return}
     if(published===CURRENT_APP_BUILD)showCurrentBuild();else showMandatoryUpdate(published);
   }catch(error){showBuildCheckFailure();console.warn("APP_VERSION_SYNC",error?.message||error)}
-  finally{appBuildCheckRunning=false}
+  finally{clearTimeout(checkTimeout);appBuildCheckRunning=false}
 }
 
 $("mandatoryUpdateButton").addEventListener("click",installMandatoryUpdate);

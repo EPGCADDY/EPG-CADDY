@@ -1,3 +1,4 @@
+import vm from "node:vm";
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createRequire} from 'node:module';
@@ -26,3 +27,13 @@ control.onRoundPersisted(round);await new Promise(resolve=>setTimeout(resolve,45
 const table=fs.readFileSync('private-rounds.js','utf8');for(const heading of ['NOMBRE','HDCP','HOYO','GROSS','NETO','+/−'])assert.ok(table.includes('<th>'+heading+'</th>'));
 assert.ok(!table.includes("escape(group)+'<br>'"));assert.ok(!table.includes('SCORES ACTUALIZADOS'));assert.ok(!table.includes('En Torneos abre'));assert.ok(table.includes('\"Ronda \"+item.name'));
 console.log('PASS R140: isolated SQL, wrong-code rejection, selected-round binding, private membership persistence, official writer and score columns');
+// Scores-only entry: no creator code, and signed results retain their requested colors.
+const nodes={'section':{classList:{add(){}}},'[data-scores]':{innerHTML:''},'[data-status]':{textContent:''},'[data-close]':{}};
+const panel={style:{},setAttribute(){},remove(){},querySelector:key=>nodes[key],innerHTML:''};
+const scoreContext={document:{createElement:()=>panel,body:{appendChild(){}}},localStorage:{getItem:key=>JSON.stringify(key.includes('private-round')?{id:'private',name:'Cuates',creator:true,joinCode:'SECRET1234',viewerToken:'viewer',roundId:'active',expiresAt:'2099-01-01'}:{id:'active'})},GSCLiveControl:{request:async()=>({ok:true,streams:[{snapshot:{players:[{name:'Jaime',handicap:13,holes:[{hole:3}],totals:{gross:15,net:12,relativeToPar:-2}},{name:'Jessie',handicap:38,holes:[{hole:3}],totals:{gross:18,net:14,relativeToPar:2}}]}}]})},setTimeout:()=>0,clearTimeout(){}};
+vm.runInNewContext(fs.readFileSync('private-rounds.js','utf8'),scoreContext);
+await scoreContext.GSCPrivateRounds.openScores({id:'active'});
+assert.doesNotMatch(panel.innerHTML,/SECRET1234|CÓDIGO PARA COMPARTIR|COMPARTIR CÓDIGO/);
+assert.match(nodes['[data-scores]'].innerHTML,/class="private-score-under">-2/);
+assert.match(nodes['[data-scores]'].innerHTML,/class="private-score-over">\+2/);
+console.log('PASS R141: Scores-only creator view hides code; negative green and positive red');

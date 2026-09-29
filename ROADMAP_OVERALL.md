@@ -1910,3 +1910,9 @@ LAB now uses the approved two-nine Medal Play matrix for shared cards: 1–9 + 1
 R140 · Ajuste solicitado: BORRAR RONDA Y JUGADORES junto a RONDA PREVIA; RONDA PARTICULAR y SCORES GRUPO en la última fila. SCORES GRUPO abre únicamente el marcador de la ronda vinculada. Pruebas dirigidas PASS.
 
 R140 · Marcador particular: acabado premium coherente con la aplicación, cabecera y filas alineadas, tipografía uniforme, neto verde, separadores y panel redondeado. Sin cambios de cálculos ni funciones.
+
+R141 · Primera apertura: eliminadas navegaciones automáticas concurrentes al activar el service worker; cambio de controlador verifica versión sin recargar campos. Comprobación de release limitada a 8 segundos, libera estado en fallo. Prueba test-lab-first-open PASS. Evidencia iPhone R136/COMPROBANDO aportada por propietario; causa exacta del teclado físico aún no reproducida. Rollback: LAB R140 fa207a7 / dpl_BzbDc1PrmGmh47Z6kmXo1cm3vfne.
+
+R141 · SCORES GRUPO muestra únicamente Scores, sin código ni compartir. Código conservado en creación/gestión RONDA PARTICULAR. Resultado negativo verde, positivo rojo. X conservada, sin botón de regreso por cancelación expresa.
+
+R141 · Archivos de prueba: test-lab-first-open.mjs, test-lab-private-rounds.mjs, test-lab-round-create-modal.mjs. PASS arranque, timeout, ocultación de código y colores.

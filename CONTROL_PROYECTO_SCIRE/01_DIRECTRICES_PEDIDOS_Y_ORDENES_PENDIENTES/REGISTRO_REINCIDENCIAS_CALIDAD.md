@@ -506,3 +506,5 @@ Captura IMG_5275: `CREAR RONDA` abre el diálogo pero OK devuelve error. Causa r
 
 ### R140 · nombre de grupo y aviso innecesarios en tabla privada
 Causa: render de fila concatenaba groupLabel y player.name; refresco emitía un texto fijo. Escape: prueba dirigida anterior verificaba columnas y publicación, no limpieza del nombre. Control permanente: test-lab-private-rounds rechaza escape(group) y SCORES ACTUALIZADOS en el render. Corregido localmente; publicación LAB en curso.
+
+R141 · Incidencia primera apertura iPhone: R136/COMPROBANDO y campos sin respuesta, segunda apertura funcional. Hallazgo: dos navegaciones concurrentes (controllerchange reload y activate client.navigate) y fetch sin timeout. Escape: pruebas anteriores no cubrieron transición de controlador. Control permanente test-lab-first-open.mjs, timeout y no recarga automática. PASS simulación; comportamiento físico iPhone pendiente de evidencia.
