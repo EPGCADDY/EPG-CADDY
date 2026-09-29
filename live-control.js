@@ -185,11 +185,9 @@
       if(!created.ok)return created;
       state=liveState();state.stream={roundId:snapshot.roundId,scope:"group",streamId:created.streamId,publisherSecret:created.publisherSecret,viewerToken:created.viewerToken,revision:Number(created.revision)||0,expiresAt:created.expiresAt,groupLabel:groupLabel||snapshot.groupLabel,pendingSnapshot:null,tournamentId:null};saveState(state);stream=state.stream;
     }
-    let result=await request("join_tournament_by_id",{tournamentId,groupLabel:groupLabel||snapshot.groupLabel},stream.publisherSecret);
     // Older LIVE backends support joining by tournament code but not by ID.
     // The round-creation flow owns the code, so use that compatible route when needed.
-    if(!result.ok&&joinCode&&([404,405].includes(Number(result.status))||["LIVE_ACTION_UNSUPPORTED","HTTP_404","HTTP_405"].includes(String(result.code||""))))
-      result=await request("join_tournament",{joinCode:text(joinCode,20).toUpperCase(),groupLabel:groupLabel||snapshot.groupLabel},stream.publisherSecret);
+    const result=await joinTournamentWithFallback(tournamentId,groupLabel||snapshot.groupLabel,joinCode,stream.publisherSecret);
     if(result.ok){state=liveState();if(state.stream){state.stream.tournamentId=result.tournamentId;state.stream.groupLabel=result.groupLabel||groupLabel||snapshot.groupLabel;saveState(state)}renderActive()}
     return result;
   }
@@ -198,5 +196,12 @@
     const result=await request("leave_tournament",{},stream.publisherSecret);
     if(result.ok&&state.stream){state.stream.tournamentId=null;saveState(state);renderActive()}return result;
   }
-  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,publishLatest,quickShareGroup,createTournamentDirect,connectTournamentById,disconnectTournament};
+  async function joinTournamentWithFallback(tournamentId,groupLabel,joinCode,publisherSecret){
+    const label=groupLabel||currentSnapshot()?.groupLabel||"GRUPO";
+    let result=await request("join_tournament_by_id",{tournamentId,groupLabel:label},publisherSecret);
+    if(!result.ok&&joinCode&&([404,405].includes(Number(result.status))||["LIVE_ACTION_UNSUPPORTED","HTTP_404","HTTP_405"].includes(String(result.code||""))))
+      result=await request("join_tournament",{joinCode:text(joinCode,20).toUpperCase(),groupLabel:label},publisherSecret);
+    return result;
+  }
+  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,publishLatest,quickShareGroup,createTournamentDirect,connectTournamentById,joinTournamentWithFallback,disconnectTournament};
 });

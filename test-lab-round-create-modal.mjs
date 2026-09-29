@@ -4,6 +4,7 @@ import {createRequire} from "node:module";
 
 const require=createRequire(import.meta.url);
 const hub=require("./live-hub.js");
+const liveControlApi=require("./live-control.js");
 const html=fs.readFileSync("live-hub.html","utf8");
 const source=fs.readFileSync("live-hub.js","utf8");
 
@@ -73,6 +74,20 @@ assert.match(liveControl,/root\.addEventListener\("pageshow",retryPendingRoundCo
 assert.match(liveControl,/clearTournamentConnectRetry\(snapshot\.roundId\)/,"Una conexión correcta debe cancelar los reintentos pendientes");
 assert.match(liveControl,/joinCode=text\(selection\?\.joinCode\|\|ownedTournament\?\.joinCode,20\)\.toUpperCase\(\)/,"La conexión recupera el código guardado del torneo Friends");
 assert.match(liveControl,/request\("join_tournament_by_id"[\s\S]*?if\(!result\.ok&&joinCode[\s\S]*?request\("join_tournament",\{joinCode:text\(joinCode,20\)\.toUpperCase\(\),groupLabel/,"Si el backend aún no admite unir por ID, conecta por el código del torneo");
+const originalFetch=globalThis.fetch,joinCalls=[];
+try{
+  globalThis.fetch=async(_url,options)=>{
+    const body=JSON.parse(options.body);joinCalls.push({body,authorization:options.headers.Authorization});
+    const response=joinCalls.length===1?{ok:false,status:404,body:{ok:false,code:"LIVE_ACTION_UNSUPPORTED"}}:{ok:true,status:200,body:{ok:true,joined:true,tournamentId:"tournament-id",groupLabel:body.groupLabel}};
+    return{ok:response.ok,status:response.status,json:async()=>response.body};
+  };
+  const joined=await liveControlApi.joinTournamentWithFallback("tournament-id","GRUPO 1","abc123def4","publisher-secret");
+  assert.equal(joined.ok,true,"La unión por código debe completar el vínculo tras un 404 por ID");
+  assert.deepEqual(joinCalls.map(call=>call.body.action),["join_tournament_by_id","join_tournament"]);
+  assert.equal(joinCalls[1].body.joinCode,"ABC123DEF4");
+  assert.equal(joinCalls[1].body.groupLabel,"GRUPO 1");
+  assert.equal(joinCalls[1].authorization,"LivePublisher publisher-secret");
+}finally{globalThis.fetch=originalFetch}
 assert.match(liveControl,/joinCode=text\(selection\?\.joinCode\|\|ownedTournament\?\.joinCode,20\)\.toUpperCase\(\)/,"La conexión recupera el código guardado del torneo Friends");
 assert.match(liveControl,/request\("join_tournament_by_id"[\s\S]*?if\(!result\.ok&&joinCode[\s\S]*?request\("join_tournament",\{joinCode:text\(joinCode,20\)\.toUpperCase\(\),groupLabel/,"Si el backend aún no admite unir por ID, conecta por el código del torneo");
 
