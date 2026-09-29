@@ -249,3 +249,7 @@ El enlace V369 se creó correctamente, pero `live-view.js` sólo usaba `mode` pa
 ## V371 · Gross visible y posición Match sin contar flechas · 29 de agosto de 2026
 
 El visor muestra el Gross individual dentro de cada hoyo y el acumulado de ambos jugadores en el encabezado. Una flecha se dibuja únicamente en el hoyo con ganador/perdedor y se acompaña de `UP`, `DOWN` o `AS`; los hoyos empatados muestran `—`. Se conserva el mismo enlace, token, snapshot y cadencia de tres segundos. La Score Card y el micrófono no cambian.
+
+
+### R139 · 29 septiembre 2026
+Rondas particulares independientes, nombre/código, listado en Torneos, tabla Nombre/HDCP/Hoyo/Gross/Neto/+−; controles dirigidos PASS. Publicación LAB pendiente, Maestro intacto.

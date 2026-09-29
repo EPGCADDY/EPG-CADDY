@@ -1361,3 +1361,8 @@ Estado: validación física pendiente.
 - Rollback LAB: deployment dpl_9CQvZ6huTzxXhR6wHJ7N6bYzoKXf, commit f3f954f48a4cdc820031c75fea29faa2e2e02eb7.
 - Archivos: index-grupal.html, service-worker.js, release.json, test-lab-round-create-modal.mjs, test-lab-update-recovery.mjs, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md, CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md, CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md, CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
 - Estado: pruebas y publicación LAB en curso; verificación física iPhone pendiente.
+
+
+### R139 · Rondas particulares
+- `private-rounds.js`: nombre, código, lista y Scores por grupos.
+- `test-lab-private-rounds.mjs`: aislamiento de datos, código, pertenencia y escritor oficial.

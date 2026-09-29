@@ -123,7 +123,7 @@
       ]
     },
     {
-      "source": "/(player-registry|round-closure|card-artifacts|card-file-export|card-library|historical-analytics|match-play|four-ball|skins|wolf|vegas|dots|stableford|sync-queue|master-data-sync|account-backup|commerce|round-navigation|live-control|live-view|live-hub).js",
+      "source": "/(player-registry|round-closure|card-artifacts|card-file-export|card-library|historical-analytics|match-play|four-ball|skins|wolf|vegas|dots|stableford|sync-queue|master-data-sync|account-backup|commerce|round-navigation|live-control|live-view|live-hub|private-rounds).js",
       "headers": [
         {
           "key": "Cache-Control",

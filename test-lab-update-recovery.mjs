@@ -8,7 +8,7 @@ let out=await (await ctx.approvedNavigationWithManualUpdate({})).text();assert.m
 html='<head><meta name="gscg-release" content="R49"></head><body>current</body>';
 out=await (await ctx.approvedNavigationWithManualUpdate({})).text();assert.equal(out,html,'Current release must retain approved button geometry');
 html='<head><meta name="gscg-release" content="LABORATORIO-20260928-R129"></head><body><button id="mandatoryUpdateButton">ACTUALIZAR</button></body>';
-ctx.RELEASE='LABORATORIO-20260929-R138';
+ctx.RELEASE='LABORATORIO-20260929-R139';
 out=await (await ctx.approvedNavigationWithManualUpdate({})).text();
 const rescue=out.match(/<script id="gsc-fallback-update-script">([\s\S]*?)<\/script>/)?.[1];
 assert.ok(rescue,'Injected rescue script must have a valid closing script tag');
@@ -22,6 +22,6 @@ assert.doesNotMatch(rescue,/R129/,'Rescue must never target the old release');
 assert.match(code,/searchParams\.has\("__gscg_build_check"\)[^\n]*cache:"no-store"/);
 const app=fs.readFileSync('index-grupal.html','utf8');
 const actions=app.match(/<div class="round-actions">([\s\S]*?)<\/div>/)?.[1];
-assert.match(actions,/id="previousRoundButton"[^>]*>[^<]*<\/button><button id="myRoundButton"[^>]*>MI RONDA<\/button>/);
-assert.match(app,/\$\("myRoundButton"\)\.addEventListener\("click",[\s\S]*?\$\("scorecard"\)\?\.scrollIntoView/);
-console.log('PASS R138: R129 rescue targets published release without cache; MI RONDA beside RONDA PREVIA');
+assert.match(actions,/id="previousRoundButton"[^>]*>[^<]*<\/button><button id="myRoundButton"[^>]*>RONDA PARTICULAR<\/button>/);
+assert.match(app,/\$\("myRoundButton"\)\.addEventListener\("click",[\s\S]*?window\.GSCPrivateRounds\.open\(round\)/);
+console.log('PASS R139: R129 rescue targets published release without cache; MI RONDA beside RONDA PREVIA');

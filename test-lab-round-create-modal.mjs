@@ -46,7 +46,7 @@ assert.equal(full.full,true);
 assert.equal(full.state.tournaments.length,5,"La lista debe conservar el límite de cinco");
 
 const release=JSON.parse(fs.readFileSync("release.json","utf8"));
-assert.equal(release.release,"LABORATORIO-20260929-R138");
+assert.equal(release.release,"LABORATORIO-20260929-R139");
 const score=fs.readFileSync("index-grupal.html","utf8");
 assert.match(score,/registrationEventButton[^\n]*addEventListener\("click"[^\n]*new URL\("\/live-hub\.html",location\.origin\)/,"EVENTO desde Inicio debe llevar a la pantalla Torneos, donde vive el alta de ronda");
 assert.match(score,/registrationEventButton[^\n]*persistDraftState\(\)/,"EVENTO debe conservar los datos del registro antes de abrir Torneos");
@@ -59,7 +59,7 @@ const friendsDraft=score.slice(score.indexOf("function openFriendsRoundDraft()")
 assert.doesNotMatch(friendsDraft,/clearDraftState|localStorage\.removeItem|openNewRoundDraft/,"El alta Friends no puede borrar borradores ni llamar al inicio destructivo");
 assert.match(score,/if\(\["friends-round","private-round"\]\.includes\(new URLSearchParams\(location\.search\)\.get\("manual_action"\)\)\)return false/,"El inicio automático no debe borrar jugadores antes de abrir Registro para Friends o ronda privada");
 assert.match(score,/function openPrivateRoundDraft\(\)[\s\S]*?draftTournament=null;[\s\S]*?persistDraftState\(\)/,"La ronda privada debe excluir torneo y guardar el borrador");
-assert.match(score,/id="openMyRoundSetup">MI RONDA<\/button>/,"MI RONDA debe estar debajo de rondas guardadas");
+assert.match(score,/id="openMyRoundSetup">RONDA PARTICULAR<\/button>/,"MI RONDA debe estar debajo de rondas guardadas");
 assert.match(html,/id="hubCreateRound"[^>]*>CREAR TORNEO<\/button>[\s\S]*?id="hubCreatePrivateRound"[^>]*>CREAR RONDA PRIVADA<\/button>/,"Torneo y ronda privada deben ser botones separados y ordenados");
 assert.match(fs.readFileSync("live-control.js","utf8"),/async function connectPendingRoundTournament\(roundValue\)\{\s*if\(!roundValue\?\.tournament\?\.name\)return false/,"Una ronda privada no debe enviarse al torneo pendiente");
 const schema=fs.readFileSync("database/005_live_tournament_mode.sql","utf8");

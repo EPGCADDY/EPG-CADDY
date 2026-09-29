@@ -28,6 +28,41 @@ const ID_PATTERN=/^[A-Za-z0-9._:-]{1,160}$/;
 const UUID_PATTERN=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const CONTROL_ACTIONS=new Set(["create_stream","publish","revoke_stream","create_tournament","join_tournament","join_tournament_by_id","leave_tournament","revoke_tournament"]);
 
+// Separate tables prevent private rounds from appearing in any tournament client.
+export function privateRoundSql(sql){return(strings,...values)=>{const mapped=strings.map(part=>part.replace(/\blive_tournaments\b/g,"live_private_rounds").replace(/\blive_streams\b/g,"live_private_streams").replace(/\blive_events\b/g,"live_private_events"));mapped.raw=mapped.slice();return sql(mapped,...values)}}
+async function ensurePrivateRoundTables(sql){
+  await sql`CREATE TABLE IF NOT EXISTS live_private_rounds (LIKE live_tournaments INCLUDING DEFAULTS INCLUDING CONSTRAINTS INCLUDING INDEXES, viewer_access_token text)`;
+  await sql`CREATE TABLE IF NOT EXISTS live_private_streams (LIKE live_streams INCLUDING DEFAULTS INCLUDING CONSTRAINTS INCLUDING INDEXES)`;
+  await sql`CREATE TABLE IF NOT EXISTS live_private_events (LIKE live_events INCLUDING DEFAULTS INCLUDING CONSTRAINTS INCLUDING INDEXES INCLUDING IDENTITY)`;
+}
+export async function privateRoundAction(sql,req,body,action){
+  await ensurePrivateRoundTables(sql);const scoped=privateRoundSql(sql);
+  if(action==="create_private_round"){
+    const result=await createTournament(scoped,req,body);
+    await sql`UPDATE live_private_rounds SET viewer_access_token=${result.viewerToken} WHERE id=${result.tournamentId}::uuid`;
+    return{...result,kind:"private_round",privateRoundId:result.tournamentId};
+  }
+  if(action==="list_private_rounds"){
+    await rateLimit(sql,req,"list-private-rounds",tokenHash(requestAddress(req)),120);
+    const rows=await sql`SELECT id,name,mode,expires_at FROM live_private_rounds WHERE status='active' AND expires_at>now() ORDER BY updated_at DESC`;
+    return{ok:true,rounds:rows.map(row=>({id:row.id,name:row.name,mode:row.mode,expiresAt:row.expires_at}))};
+  }
+  if(action==="join_private_round"){
+    const id=cleanText(body.privateRoundId,50),code=cleanText(body.joinCode,20).toUpperCase();
+    if(!UUID_PATTERN.test(id)||!/^[A-HJ-NP-Z2-9]{10}$/.test(code))throw liveError("PRIVATE_ROUND_CODE_INVALID",401);
+    await rateLimit(sql,req,"private-code",tokenHash(requestAddress(req)),30);
+    const rows=await sql`SELECT id,name,viewer_access_token FROM live_private_rounds WHERE id=${id}::uuid AND join_code_hash=${tokenHash(code)}::char(64) AND status='active' AND expires_at>now() LIMIT 1`;
+    if(!rows.length||!rows[0].viewer_access_token)throw liveError("PRIVATE_ROUND_CODE_INVALID",401);
+    const result=await joinTournament(scoped,req,body);
+    return{...result,kind:"private_round",name:rows[0].name,viewerToken:rows[0].viewer_access_token};
+  }
+  if(action==="create_private_stream")return createStream(scoped,req,body);
+  if(action==="publish_private_round")return publish(scoped,req,body);
+  if(action==="read_private_round")return readLive(scoped,req,body);
+  if(action==="revoke_private_round")return revokeTournament(scoped,req);
+  throw liveError("LIVE_ACTION_UNSUPPORTED",404);
+}
+
 function liveError(code,status=400){return Object.assign(new Error(code),{code,status})}
 function cleanText(value,max=120){return String(value??"").trim().replace(/\s+/g," ").slice(0,max)}
 function tokenHash(value){return createHash("sha256").update(String(value||"")).digest("hex")}
@@ -474,13 +509,14 @@ export default async function handler(req,res){
   if(req.method!=="POST"){res.setHeader("Allow","POST");return res.status(405).json({ok:false,code:"METHOD_NOT_ALLOWED"})}
   try{
     const body=await readJson(req,600_000),action=cleanText(body.action,40).toLowerCase();
-    if(CONTROL_ACTIONS.has(action)&&!isAllowedAppOrigin(req))throw liveError("ORIGIN_NOT_ALLOWED",403);
+    const privateAction=["create_private_round","list_private_rounds","join_private_round","create_private_stream","publish_private_round","read_private_round","revoke_private_round"].includes(action);
+    if((CONTROL_ACTIONS.has(action)||privateAction)&&!isAllowedAppOrigin(req))throw liveError("ORIGIN_NOT_ALLOWED",403);
     let sql;
     try{sql=getDatabase()}catch(error){
       if(String(error?.code||"")==="DATABASE_NOT_CONFIGURED")return proxyLiveToProduction(req,res);
       throw error;
     }
-    const result=action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="join_tournament_by_id"?await joinTournamentById(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req):action==="read"?await readLive(sql,req,body):null;
+    const result=privateAction?await privateRoundAction(sql,req,body,action):action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="join_tournament_by_id"?await joinTournamentById(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req):action==="read"?await readLive(sql,req,body):null;
     if(!result)throw liveError("LIVE_ACTION_UNSUPPORTED",404);
     return res.status(200).json(result);
   }catch(error){
