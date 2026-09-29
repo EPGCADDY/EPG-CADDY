@@ -22,8 +22,13 @@ assert.doesNotMatch(rescue,/R129/,'Rescue must never target the old release');
 assert.match(code,/searchParams\.has\("__gscg_build_check"\)[^\n]*cache:"no-store"/);
 const app=fs.readFileSync('index-grupal.html','utf8');
 const actions=app.match(/<div class="round-actions">([\s\S]*?)<\/div>/)?.[1];
-assert.match(actions,/id="previousRoundButton"[^>]*>[^<]*<\/button><button class="clear-round-scores" id="clearRoundScores"[^>]*>BORRAR RONDA Y JUGADORES<\/button>/);
+const ids=[...actions.matchAll(/id="([^"]+)"/g)].map(match=>match[1]);
+assert.deepEqual(ids,['shareRoundLiveButton','backToRegistrationButton','finalCardButton','previousRoundButton','openCardLibraryButton','newRoundButton']);
+const deletion=app.match(/<div class="round-secondary-actions" id="roundSecondaryActions">([\s\S]*?)<\/div>/)?.[1];
+assert.deepEqual([...deletion.matchAll(/id="([^"]+)"/g)].map(match=>match[1]),['clearRoundScores','clearScoresOnly']);
+assert.match(app,/\.round-secondary-actions\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+
 assert.match(app,/\$\("myRoundButton"\)\.addEventListener\("click",[\s\S]*?window\.GSCPrivateRounds\.open\(round\)/);
 assert.match(app,/<div class="round-actions"><button id="myRoundButton"[^>]*>RONDA PARTICULAR<\/button><button id="privateGroupScoresButton"[^>]*>SCORES GRUPO<\/button><\/div>/);
 assert.match(app,/\$\("privateGroupScoresButton"\)\.addEventListener\("click",\(\)=>window\.GSCPrivateRounds\.openScores\(round\)/);
-console.log('PASS R140: update recovery and requested round button placement');
+console.log('PASS R143: update recovery and requested round button placement');
