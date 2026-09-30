@@ -10,8 +10,18 @@ const ACTIONS={
   signout:{method:"POST",path:"/sign-out"}
 };
 
+const OWNER_LOGIN_ALIAS="golf score card@gt.";
+const DEFAULT_OWNER_EMAIL="jaimekirste@gmail.com";
+
 function credentials(value,signup=false){
-  const email=String(value?.email||"").trim().toLowerCase(),password=String(value?.password||"");
+  let email=String(value?.email||"").trim().toLowerCase();
+  const password=String(value?.password||"");
+  // The iPhone Passwords entry stores the owner username as this label.
+  // Resolve that one exact legacy identifier server-side to the configured
+  // owner email; the auth provider still verifies the submitted password.
+  if(!signup&&email===OWNER_LOGIN_ALIAS){
+    email=String(process.env.EPG_OWNER_EMAIL||DEFAULT_OWNER_EMAIL).trim().toLowerCase();
+  }
   if(!/^\S+@\S+\.\S+$/.test(email))throw Object.assign(new Error("EMAIL_INVALID"),{code:"EMAIL_INVALID"});
   if(password.length<8||password.length>128)throw Object.assign(new Error("PASSWORD_INVALID"),{code:"PASSWORD_INVALID"});
   return signup?{name:String(value?.name||email.split("@")[0]).trim().slice(0,80)||"Jugador",email,password}:{email,password};
@@ -28,7 +38,7 @@ export default async function handler(req,res){
     if(action==="signup"||action==="signin")body=credentials(await readJson(req,32_000),action==="signup");
     else if(action==="signout")body={};
     const upstream=await neonAuthRequest(route.path,{method:route.method,cookie:req.headers.cookie||"",body});
-    const native=isNativeAppOrigin(req),cookies=authCookies(upstream).map(value=>sameOriginAuthCookie(value,{native})).filter(Boolean);if(cookies.length)res.setHeader("Set-Cookie",cookies);
+    const cookies=authCookies(upstream).map(value=>sameOriginAuthCookie(value,{native:isNativeAppOrigin(req)})).filter(Boolean);if(cookies.length)res.setHeader("Set-Cookie",cookies);
     const raw=await upstream.json().catch(()=>({})),data=raw?.data||raw;
     if(!upstream.ok)return res.status(upstream.status).json({ok:false,code:String(data?.code||"ACCOUNT_REQUEST_FAILED"),message:String(data?.message||"")});
     if(["signin","signup"].includes(action)&&!data?.user?.id)return res.status(503).json({ok:false,code:"ACCOUNT_AUTH_UNAVAILABLE"});
