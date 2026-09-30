@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {databaseUrlForEnvironment} from './api/_lib/database.js';
+const main='postgresql://fixture:fixture@ep-main.example/db';
+const lab='postgresql://fixture:fixture@ep-fragrant-pine-av6xi8hy.c-11.us-east-1.aws.neon.tech/neondb';
+assert.equal(databaseUrlForEnvironment({DATABASE_URL:main,GSC_LAB_DATABASE_URL:lab}),main);
+assert.equal(databaseUrlForEnvironment({DATABASE_URL:main,GSC_ENVIRONMENT:'lab'}),undefined);
+assert.equal(databaseUrlForEnvironment({DATABASE_URL:main,GSC_ENVIRONMENT:'lab',GSC_LAB_DATABASE_URL:lab}),lab);
+assert.equal(databaseUrlForEnvironment({VERCEL_PROJECT_ID:'prj_0KNTWUoiCiA3amKZQPDNNkWYFDbp',DATABASE_URL:main,GSC_LAB_DATABASE_URL:lab}),lab);
+assert.throws(()=>databaseUrlForEnvironment({GSC_ENVIRONMENT:'lab',GSC_LAB_DATABASE_URL:main}),/LAB_DATABASE_ENDPOINT_INVALID/);
+console.log('PASS LAB database isolation: candidate endpoint only; missing candidate URL fails closed; non-LAB uses existing DATABASE_URL.');

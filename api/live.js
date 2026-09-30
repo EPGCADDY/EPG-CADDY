@@ -9,7 +9,7 @@ const LIVE_UPSTREAM_URL="https://epg-caddy.vercel.app/api/live";
 
 async function proxyLiveToProduction(req,res){
   const host=String(req?.headers?.["x-forwarded-host"]||req?.headers?.host||"").split(",")[0].trim().toLowerCase();
-  if(host==="epg-caddy.vercel.app")throw liveError("DATABASE_NOT_CONFIGURED",503);
+  if(host==="epg-caddy.vercel.app"||host.includes("lab")||host.startsWith("golf-sc-gt-")||process.env.VERCEL_PROJECT_ID==="prj_0KNTWUoiCiA3amKZQPDNNkWYFDbp"||/^(localhost|127\.0\.0\.1)(:|$)/.test(host)||process.env.GSC_ENVIRONMENT==="lab")throw liveError("DATABASE_NOT_CONFIGURED",503);
   const headers={"content-type":"application/json"};
   if(req?.headers?.authorization)headers.authorization=String(req.headers.authorization);
   const body=typeof req.body==="string"?req.body:JSON.stringify(req.body||{});
@@ -524,7 +524,7 @@ export default async function handler(req,res){
     if((CONTROL_ACTIONS.has(action)||privateAction)&&!isAllowedAppOrigin(req))throw liveError("ORIGIN_NOT_ALLOWED",403);
     let sql;
     try{sql=getDatabase()}catch(error){
-      if(String(error?.code||"")==="DATABASE_NOT_CONFIGURED")return proxyLiveToProduction(req,res);
+      if(String(error?.code||"")==="DATABASE_NOT_CONFIGURED")return await proxyLiveToProduction(req,res);
       throw error;
     }
     const result=privateAction?await privateRoundAction(sql,req,body,action):action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="join_tournament_by_id"?await joinTournamentById(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req):action==="read"?await readLive(sql,req,body):null;

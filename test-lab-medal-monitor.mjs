@@ -9,7 +9,7 @@ const streams=new Map([['a',stream('A',3)],['b',stream('B',9)],['c',stream('C',6
 const rows=hub.buildLeaderboard(streams,false);
 assert.deepEqual(rows.map(p=>p.name),['B','C','A']);
 const wrap={innerHTML:'',querySelectorAll:()=>[]};
-const context={$:()=>wrap,buildLeaderboard:()=>rows,displayStreams:()=>streams,state:{follows:[]},escapeHtml:String,categoryShortLabel:()=>'',modeLabel:()=> 'MEDAL PLAY NORMAL',relation:n=>n===0?'EVEN':String(n)};
+const context={root:{},$:()=>wrap,buildLeaderboard:()=>rows,displayStreams:()=>streams,isRoundTournament:()=>false,state:{follows:[]},escapeHtml:String,categoryShortLabel:()=>'',modeLabel:()=> 'MEDAL PLAY NORMAL',relation:n=>n===0?'EVEN':String(n)};
 vm.runInNewContext(source.slice(source.indexOf('  function renderLeaderboard(){'),source.indexOf('  function categoryCell('))+';renderLeaderboard()',context);
 for(const title of ['HOYO ACTUAL','GROSS','NETO','RESULTADO'])assert.ok(wrap.innerHTML.includes('<th>'+title+'</th>'));
 assert.ok(!wrap.innerHTML.includes('<th>PUNTOS</th>'));

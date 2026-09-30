@@ -1382,3 +1382,18 @@ R142 · Corregido indicador hardcoded R136: badge y botón derivan exclusivament
 R142 · Rondas particulares: retiro reversible de las dos pruebas Cuates identificadas por UUID; caducidad 60 minutos después del score 18 del último jugador de todas las tarjetas vinculadas. Correcciones no reinician el reloj; nuevo jugador incompleto cancela el cierre hasta terminar. Lista refresca cada 10 segundos, marcador caducado cierra con X y conserva tarjeta local. Archivos: api/live.js, api/_lib/private-round-lifecycle.js, private-rounds.js, test-lab-private-lifecycle.mjs, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md, CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md, CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md, CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json. Pruebas dirigidas: último jugador, 60 minutos, corrección y nuevo grupo.
 
 R143 · Orden solicitado IMG_5330: ATRÁS izquierda / VER MI TARJETA derecha; RONDA PREVIA / VER RONDAS GUARDADAS juntas; dos botones de borrar juntos; RONDA PARTICULAR / SCORES GRUPO conservados abajo. Mismos IDs, textos, funciones y estilos. Archivos: index-grupal.html, service-worker.js, release.json, test-lab-update-recovery.mjs, test-lab-round-create-modal.mjs, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md, CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md, CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md, CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json. Rollback LAB R142: 19a7583 / dpl_7CMuwhhS1Tr8DVeb3PyZDYeZCchb.
+
+## R144 · candidato local no entregado
+
+- `scores-ui.js`, `scores-ui.css`: presentación compartida Scores y modal G/N; usadas por `live-hub.html` e `index-grupal.html`.
+- `api/_lib/personal-access.js`, `sql/personal-access-lab.sql`: base de permisos aún sin conectar ni migrar; NO certificada para uso real.
+- `test-scores-ui.mjs`, `test-scores-ui-browser.cjs`, `test-personal-access.mjs`, `test-lab-no-production-proxy.mjs`: verificación de datos/gestos/roles y aislamiento.
+- Ver estado exacto y dependencias en ambos ROADMAPS R144.
+
+- R144 continuación: `test-personal-access-postgres.mjs`, `package.json`: verificación SQL real local aislada; `test-private-scores-browser.cjs`: recorrido y pie fijo de Scores privado. No certifican proveedor telefónico o DB remota.
+
+## R144 · códigos LIVE de primer uso
+
+- `api/live-share.js`, `api/_lib/live-share.js`, `live-share.js`: código consumible y sesión read-only; reemplazan la propuesta local no conectada personal-access de teléfono.
+- `test-live-share-postgres.mjs`, `test-live-share-handler.mjs`, `test-live-share-middleware.mjs`, `test-live-share-browser.cjs`, `scripts/live-share-test-server.mjs`: controles del flujo nuevo.
+- Matriz vigente: `MATRIZ_LIVE_CODIGO_UN_SOLO_USO_R144.md`; estado y evidencia local `EVIDENCIAS_LIVE_R144/ESTADO.md`. Remoto pendiente; Producción intacta.

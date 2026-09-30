@@ -1,6 +1,7 @@
 import { next } from "@vercel/functions";
 
 const PUBLIC_PATHS=new Set([
+  "/live-hub.html","/live-hub.js","/live-control.js","/live-share.js","/scores-ui.js","/scores-ui.css","/private-rounds.js","/gsc-design-system.css","/shortcuts-ui.js",
   "/access.html","/live.html","/live-view.js","/match-play.js","/favicon.ico",
   "/service-worker.js","/release.json","/manifest.webmanifest","/manual.webmanifest","/audio-touch-test.html"
 ]);
@@ -15,7 +16,7 @@ export default async function accessGate(request){
   if(PUBLIC_PATHS.has(path)||path.startsWith("/invite/")||path.startsWith("/assets/official-logos/"))return next();
   // LIVE is token/secret-authorized inside api/live itself. Keep it independent from app-access
   // so installed/PWA clients can create, publish, read and revoke a private LIVE stream.
-  if(path==="/api/live"&&request.method==="POST")return next();
+  if((path==="/api/live"||path==="/api/live-share")&&request.method==="POST")return next();
   let access={ok:false,role:"none",code:"ACCESS_REQUIRED"};
   try{
     const statusUrl=new URL("/api/app-access?action=status",request.url);

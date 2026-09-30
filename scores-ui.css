@@ -1,0 +1,38 @@
+.scores-heading{color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0 0 18px;text-transform:uppercase}
+.scores-heading-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.scores-heading .scores-heading-top h2{font-size:20.25px!important;line-height:1.2;margin:0;color:#31ff00}
+.scores-heading img{width:145px;height:auto;object-fit:contain;flex-shrink:0}
+.scores-event,.scores-meta{font-size:16px;line-height:1.4;margin-top:9px;overflow-wrap:anywhere}
+.scores-event{font-weight:900}.scores-meta{color:#c9cecc}
+.scores-help{position:fixed;z-index:100;bottom:0;left:0;right:0;padding:12px 10px calc(12px + env(safe-area-inset-bottom));background:#050706;border-top:1px solid #31ff00;color:#c9cecc;text-align:center;font:700 11px/1.6 Arial,sans-serif}
+.scores-help[hidden]{display:none!important}.scores-detail-backdrop{position:fixed;inset:0;z-index:11000;display:grid;place-items:center;background:rgba(0,0,0,.86);padding:12px}
+.scores-detail{box-sizing:border-box;position:relative;width:min(560px,100%);max-height:calc(100dvh - 24px);overflow:auto;border:1px solid #31ff00;border-radius:18px;background:#050706;color:white;padding:48px 12px 18px;font-family:Arial,sans-serif}
+.scores-detail [data-scores-close],.scores-detail [data-close-share]{position:absolute;top:8px;right:8px;width:38px;height:38px;background:#111;color:white;border:1px solid #555;border-radius:50%;font-size:18px;cursor:pointer}
+.scores-detail h3{font-size:20px;color:#31ff00;text-transform:uppercase;margin:24px 0 12px}.scores-detail p{font-size:12px;color:#b8c0bc}
+.scores-nine{table-layout:fixed;border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;margin:18px 0;color:#31ff00;font-size:clamp(10px,2.7vw,14px)}
+.scores-nine th,.scores-nine td{text-align:center;padding:10px 0;border:1px solid #303831;white-space:nowrap}.scores-nine th:first-child{width:36px;color:#c6ceca;font-size:10px}.scores-nine thead th{color:#dfe5e1}.scores-nine td{font-weight:900}
+[data-score-player]{cursor:pointer;touch-action:manipulation}[data-score-player]:focus-visible{outline:2px solid #31ff00;outline-offset:-2px}
+body.hub-scores-view:not(.public-display) .hub{padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+body.hub-scores-view:not(.public-display) .head{grid-template-columns:minmax(0,1fr) 145px;gap:6px 12px;padding:16px}
+body.hub-scores-view:not(.public-display) .head>img{grid-column:2;grid-row:1;width:145px;height:auto}
+body.hub-scores-view:not(.public-display) .head>div:first-of-type{grid-column:1;grid-row:1}
+body.hub-scores-view:not(.public-display) .head h1{font-size:20.25px}
+body.hub-scores-view:not(.public-display) #hubEventName,body.hub-scores-view:not(.public-display) #hubEventMeta{grid-column:1 / -1;font-size:16px;line-height:1.4}
+body:not(.hub-scores-view) #hubEventName,body:not(.hub-scores-view) #hubEventMeta{display:none}
+body.hub-scores-view:not(.public-display) .monitor-switch{grid-template-columns:repeat(3,minmax(0,1fr))}
+body.hub-scores-view:not(.public-display) #hubShowIndividual,body.hub-scores-view:not(.public-display) #hubSummary,body.hub-scores-view:not(.public-display) #hubPanelTitle,body.hub-scores-view:not(.public-display) #hubCategoryCardToggle,body.hub-scores-view:not(.public-display) #hubSearchResults{display:none!important}
+body.hub-scores-view:not(.public-display) #hubGeneralPanel>.search{display:grid!important}
+body.hub-scores-view:not(.public-display) .leader-wrap{overflow:visible}
+.scores-compact{width:100%;table-layout:fixed;border-collapse:collapse;font:700 13px Arial,sans-serif;font-variant-numeric:tabular-nums}
+.scores-compact th{font-size:10px;color:#bcc4bf;height:36px;text-align:center}.scores-compact th:first-child{width:40%;text-align:left}.scores-compact th:last-child{width:38px}
+.scores-compact td{padding:12px 2px;text-align:center;border-bottom:1px solid #303733}.scores-compact td:first-child{text-align:left;overflow-wrap:anywhere}.scores-compact td:nth-child(4){color:#31ff00}.scores-compact strong{font-size:13px;text-transform:uppercase}.scores-compact small{display:block;font-size:10px;color:#bac2bd;margin-top:4px}
+.scores-compact button,.scores-favorite button{width:36px;min-height:44px;padding:0;color:#31ff00;background:#070909;border:1px solid #354038;border-radius:8px;font-size:22px}
+.scores-favorite{padding:16px 8px;border:1px solid #354038;border-radius:12px;background:#050706}.scores-favorite header{display:flex;justify-content:space-between;align-items:center;gap:12px}.scores-favorite h3{color:#fff;font-size:16px;margin:0;text-transform:uppercase}.scores-favorite small,.scores-favorite p{color:#bcc4bf;font-size:11px}
+.private-score-panel{padding-bottom:75px!important}.private-score-panel>.scores-heading{padding-right:34px}.private-score-panel .scores-heading img{width:145px}.private-score-panel .scores-help{position:fixed;bottom:0;left:0;right:0;margin:0;z-index:10001}
+.one-use-code{display:block;overflow-wrap:anywhere;color:#31ff00;font:700 18px/1.5 monospace;padding:12px;border:1px solid #354038;border-radius:8px}
+.one-use-send,#gscOneUseShare [data-native-share],#gscOneUseShare [data-copy-share]{display:block;box-sizing:border-box;width:100%;margin-top:12px;min-height:44px;padding:12px;text-align:center;text-decoration:none;background:#31ff00;color:black;border:1px solid #31ff00;border-radius:8px;font:700 14px Arial,sans-serif}
+body.shared-view #hubCreateRound,body.shared-view #hubPrivateRounds,body.shared-view #hubRegisteredTournaments,body.shared-view #gscShortcutsButton{display:none!important}
+
+body.private-live-view .monitor-switch,body.private-live-view #hubCategory{display:none!important}
+
+body.private-live-view .scores-compact td:nth-child(4){color:inherit}body.private-live-view .scores-compact td:nth-child(5){color:#31ff00}

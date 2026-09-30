@@ -14,6 +14,7 @@
   <meta property="og:description" content="Resultados, categorías y seguimiento de jugadores y grupos del torneo en vivo.">
   <meta property="og:image" content="/assets/official-logos/golf-score-card-gt-pwa-v345-512.png">
   <link rel="stylesheet" href="/gsc-design-system.css">
+  <link rel="stylesheet" href="/scores-ui.css">
   <style>
     :root{--tour-green:#31ff00;--tour-line:#2f3436;--tour-card:#070909;--tour-muted:#8d9294}
     body{background:#000}
@@ -162,8 +163,8 @@
 <body>
   <main class="hub">
     <header class="head">
-      <img src="/assets/official-logos/golf-score-card-gt-pwa-v345-192.png" alt="Golf Score Card GT">
-      <div><h1 id="hubPageTitle">TORNEOS</h1></div>
+      <img src="/assets/official-logos/golf-score-card-gt-horizontal-original.webp" alt="Golf Score Card GT">
+      <div><h1 id="hubPageTitle">TORNEOS</h1></div><div id="hubEventName" class="scores-event"></div><div id="hubEventMeta" class="scores-meta"></div>
       <button class="back" id="hubBack" type="button" aria-hidden="true">VOLVER A MI SCORE CARD</button>
     </header>
 
@@ -177,8 +178,8 @@
       <button class="secondary" id="hubAddTournament" type="button">+ AGREGAR TORNEO</button>
     </section>
     <nav class="monitor-switch" aria-label="Elegir función de torneos">
-      <button class="active" id="hubShowGeneral" type="button">RESULTADOS GENERALES</button>
-      <button id="hubShowCategories" type="button">RESULTADOS POR CATEGORÍA</button>
+      <button class="active" id="hubShowGeneral" type="button">GENERAL</button>
+      <button id="hubShowCategories" type="button">CATEGORÍA</button>
       <button id="hubShowIndividual" type="button">BUSCAR JUGADORES</button>
       <button id="hubAddToBoard" type="button">MIS FAVORITOS</button>
     </nav>
@@ -220,7 +221,7 @@
       <button class="secondary category-card-toggle" id="hubCategoryCardToggle" type="button" aria-expanded="false">DETALLE DE CATEGORÍA</button>
       <div class="category-card hidden" id="hubCategoryCard" aria-live="polite"></div>
       <details class="viewer-tools"><summary>OPCIONES</summary><div class="actions">
-        <button class="primary" id="hubShareGeneral" type="button">COMPARTIR</button>
+        <button class="primary" id="hubShareGeneral" type="button" hidden>COMPARTIR LIVE</button>
         <button class="secondary" id="hubRefresh" type="button">ACTUALIZAR</button>
         <button class="secondary" id="hubPublicDisplay" type="button">PANTALLA PÚBLICA</button>
         <button class="danger" id="hubRemoveGeneral" type="button">QUITAR ESTE TORNEO</button>
@@ -242,10 +243,12 @@
       </div>
     </section>
 
-    <footer class="footer">SOLO LECTURA</footer>
+    <footer class="footer">SOLO LECTURA</footer><div id="hubScoresHelp" class="scores-help" hidden>DOBLE TOQUE EN EL JUGADOR: VER 18 SCORES<br>☆ AGREGA · ★ QUITA FAVORITO</div>
   </main>
   <a id="gscShortcutsButton" href="/index-grupal.html" aria-label="Abrir Menú"><span>MENÚ</span></a>
   <script src="/live-control.js"></script>
+  <script src="/scores-ui.js"></script>
+  <script src="/live-share.js"></script>
   <script src="/private-rounds.js"></script>
   <script src="/live-hub.js"></script>
   <script src="/shortcuts-ui.js"></script>

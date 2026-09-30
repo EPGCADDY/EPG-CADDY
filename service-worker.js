@@ -2,8 +2,8 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r143-round-action-pairs`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r143-round-action-pairs`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r144-live-oneuse-scores`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r144-live-oneuse-scores`;
 const RELEASE_FALLBACK="LABORATORIO-20260929-R142";
 let RELEASE=RELEASE_FALLBACK;
 async function fetchPublishedRelease(){
@@ -51,6 +51,9 @@ const SHELL=[
   "/account-backup.js",
   "/live-control.js",
   "/private-rounds.js",
+  "/scores-ui.js",
+  "/live-share.js",
+  "/scores-ui.css",
   "/live-hub.html",
   "/live-hub.js",
   "/shortcuts-ui.js",
