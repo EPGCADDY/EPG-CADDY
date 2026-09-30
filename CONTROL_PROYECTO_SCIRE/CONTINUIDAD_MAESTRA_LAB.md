@@ -1,5 +1,13 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Candidato R147.1 · 30 septiembre 2026 · integración de MI RONDA
+
+- Función incorporada en fuente: botón `MI RONDA` en Registro, debajo de `VER RONDAS GUARDADAS`; abre solo el listado de rondas privadas autorizadas y sus scores. No muestra eventos privados como torneos ni altera Torneos.
+- No cambia voz de dictado, invitación temporal de 24 horas, inicio ni funciones de borrar.
+- Prueba dirigida `test-lab-registration-private-rounds-entry.mjs`: PASS. `test-lab-first-open.mjs` verifica R147 → R147.1.
+- Release y caché PWA avanzan a R147.1. Base de trabajo: rama local `lab/r147-public-update-20260930`, commit previo R147 `b897eaa84de3d35d854f0d19192c08a3b6ebf4bd`.
+- Estado: cambios locales, commit candidato `5db7f07`; perfil integral, controles de acceso, invitaciones 24 h, borrado y navegación de Torneos PASS. Push a GitHub rechazado por revisión automática al clasificar la transmisión del código como no autorizada; no se usó otra vía. No se generó Preview ni cambió Production. R147 permanece en `da1cb81f01d16de5133ecb8ba83f8297516297ca`.
+
 ## Candidato R147 · 30 de septiembre de 2026 · 15:05 Guatemala
 
 - Objetivo: desde Producción R146.1.1, publicar R147 para que ACTUALIZAR se active al detectar la versión nueva.

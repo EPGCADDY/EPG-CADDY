@@ -1403,6 +1403,12 @@ R142 · Rondas particulares: retiro reversible de las dos pruebas Cuates identif
 
 R143 · Orden solicitado IMG_5330: ATRÁS izquierda / VER MI TARJETA derecha; RONDA PREVIA / VER RONDAS GUARDADAS juntas; dos botones de borrar juntos; RONDA PARTICULAR / SCORES GRUPO conservados abajo. Mismos IDs, textos, funciones y estilos. Archivos: index-grupal.html, service-worker.js, release.json, test-lab-update-recovery.mjs, test-lab-round-create-modal.mjs, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md, CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md, CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md, CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json. Rollback LAB R142: 19a7583 / dpl_7CMuwhhS1Tr8DVeb3PyZDYeZCchb.
 
+## R147.1 · entrada MI RONDA desde Registro · 30 septiembre 2026
+- `index-grupal.html`: botón MI RONDA después de VER RONDAS GUARDADAS; abre el listado de rondas privadas.
+- `private-rounds.js`: título de listado parametrizable; conserva rutas de rondas previas y abre rondas personales como vista privada de scores.
+- `release.json` / `service-worker.js`: identidad PWA R147.1 y caché renovada.
+- `test-lab-registration-private-rounds-entry.mjs`: regresión de orden, autorización, presentación privada y exclusión de torneos; integrada a `scripts/build-manual-lab.mjs`.
+
 ## R144 · candidato local no entregado
 
 - `scores-ui.js`, `scores-ui.css`: presentación compartida Scores y modal G/N; usadas por `live-hub.html` e `index-grupal.html`.

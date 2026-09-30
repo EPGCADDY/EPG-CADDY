@@ -2383,3 +2383,12 @@ Archivo de escenario conservado: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ES
 - Pruebas dirigidas de actualización y compartir: PASS. La revisión física automatizada de cuatro etapas y publicación quedan pendientes; Producción está en R146.1.1 hasta verificar lo contrario.
 - Archivos: `release.json`, `index-grupal.html`, `service-worker.js`, `personal-events.js`, `test-lab-first-open.mjs`, `test-lab-private-round-share-flow.mjs`, `scripts/build-manual-lab.mjs`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 - El sello de inventario se regeneró junto con ambos ROADMAPS en un mismo commit para satisfacer el gate de Vercel.
+
+## R147.1 · acceso a MI RONDA desde Registro · 30 septiembre 2026
+
+- `index-grupal.html`: botón `MI RONDA` inmediatamente después de `VER RONDAS GUARDADAS`, con el mismo formato de acción secundaria.
+- `private-rounds.js`: el listado privado acepta el título `MI RONDA`; conserva su título anterior cuando se abre desde otros controles. Lee rondas privadas heredadas y `privateItems` autorizadas; al elegir una ronda personal abre `live-hub.html` como `personalKind=private`.
+- `live-hub.js` conserva el filtro que excluye eventos privados del estante de torneos y muestra para ellos la tabla particular de scores.
+- `release.json`, meta de versión y caché/fallback PWA avanzan a R147.1. `test-lab-registration-private-rounds-entry.mjs` comprueba orden del botón, ruta autorizada y separación de torneos; `test-lab-first-open.mjs` comprueba que R147 reciba `ACTUALIZAR`.
+- No se modifica voz, Registro, inicio, invitación 24 h ni acciones de borrado. Pruebas dirigidas e integrales locales PASS. Push al remoto GitHub rechazado por revisión automática por transmisión de código no autorizada; no se intentó alternativa. Preview y Production sin cambios; revisión de navegador/deployment pendiente.
+- Archivos: `index-grupal.html`, `private-rounds.js`, `release.json`, `service-worker.js`, `test-lab-first-open.mjs`, `test-lab-registration-private-rounds-entry.mjs`, `scripts/build-manual-lab.mjs`, ambos ROADMAPS, mapa maestro, continuidad, registro de reincidencias y sello de inventario.
