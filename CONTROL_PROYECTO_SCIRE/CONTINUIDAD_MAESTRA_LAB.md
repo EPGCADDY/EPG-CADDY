@@ -1,3 +1,12 @@
+# R147 · actualización pública y compartir Ronda Privada · 30 septiembre 2026
+
+- La tecla de actualización compara el release del HTML instalado con `/release.json`; la diferencia `R146.1.1` → `R147` activa `ACTUALIZAR` sin borrar la sesión ni los datos. La caché PWA y el badge se versionan en sincronía.
+- Se conserva el acceso directo público a Registro, la invitación opcional de 24 horas y todos los controles para borrar jugadores, rondas e historial.
+- En `personal-events.js`, compartir la Ronda Privada creada desde Registro abre el share sheet nativo, permite elegir WhatsApp/contactos, y tras completar cierra el diálogo y abre el Score Card. Cancelar permite reintentar o continuar.
+- PASS build LAB, prueba dirigida de compartir, descubrimiento ACTUALIZAR R146.1.1 → R147, inventario, ROADMAP y calidad de proyecto. BLOQUEADO despliegue: `node audit-project.mjs` falla porque `api/voice-speech.js` falta en este checkout y el candado V362/INT-05 aún lo exige; rama canónica obligatoria `fix-v366-integrated-main` (`03ca12e`) ausente de refs locales (checkout actual `lab/r146-entry-open-24h-invites-20260930`, `3542a2b`). Sin Preview, Producción intacta; prueba física iPhone pendiente.
+
+---
+
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
 ## Estado V407-R29 · 12 de septiembre de 2026
@@ -331,6 +340,12 @@ Evidencias adicionales: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R145/build.log`,
 
 
 # R146 · permisos personales integrados en LAB · NO ENTREGA FINAL
+
+## Continuación R147 · 30 septiembre 2026
+
+Versión objetivo R147 para proyecto LAB `golf-sc-gt-lab`; Producción no se despliega. `release.json`, badge y service worker ya identifican R147; las pruebas confirman que una instalación R146.1.1 habilita ACTUALIZAR al detectar ese release. El flujo de ronda privada ya presenta el código para compartir por WhatsApp y, al regresar con éxito, cierra el diálogo y abre Score Card.
+
+Build completo LAB, G0-12, proyecto, matriz, ROADMAP e inventario: PASS. `node audit-project.mjs` mantiene FAIL en `Intocables/intocables-gate.mjs` porque requiere `api/voice-speech.js`, endpoint retirado por instrucción previa. Se respeta la instrucción vigente: no tocar el dictado de resultados ni restaurar otras funciones de voz. Preview y alias LAB aún sin actualizar; R147 no está publicado todavía.
 
 Base canónica remota comprobada a75780974ef4a224d809eeeba561051c9d24f808; cambios locales sobre R145. Producción/main 89c64f348b6ce2a311218215c41488e04a588053 intacta. Proyecto exclusivo golf-sc-gt-lab / prj_0KNTWUoiCiA3amKZQPDNNkWYFDbp; DB permitida exclusivamente br-small-mouse-av0f24o9 / ep-fragrant-pine-av6xi8hy. No se utiliza base primaria ni proxy de Producción.
 

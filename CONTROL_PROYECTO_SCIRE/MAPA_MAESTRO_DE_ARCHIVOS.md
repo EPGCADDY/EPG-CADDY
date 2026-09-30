@@ -1,14 +1,16 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
-## R146.1.1 · entrada libre · 30 septiembre 2026
+## R147 · entrada libre y ronda privada compartible · 30 septiembre 2026
 
 | Archivos | Función | Protección |
 |---|---|---|
 | `middleware.js`, `access.html` | Las páginas normales abren libremente; `access.html` conserva canje de invitaciones y administración propietaria sólo para emitir/revocar invitaciones de 24 horas. | Ni el panel ni la invitación son requisitos de entrada; los permisos por torneo siguen aplicando. |
 | `index-grupal.html`, `guest-access.js` | La Score Card no carga el candado de entrada global; conserva el botón de invitación individual y el aislamiento/caducidad de la sesión invitada de 24 horas. | La expiración sólo afecta al invitado; no cierra la entrada normal ni elimina permisos por torneo. |
-| `release.json`, `service-worker.js` | Identifican el candidato R146.1.1 y renuevan caché PWA. | Producción y dominio estable sin cambios. |
+| `release.json`, `service-worker.js` | Identifican R147 y renuevan caché PWA para que las instalaciones anteriores detecten ACTUALIZAR. | La versión instalada conserva datos locales al actualizar. |
 | `test-live-share-middleware.mjs`, `test-owner-invitation-ui.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-v311-live-support-link.mjs`, `test-lab-r60-physical-matrix.mjs`, `test-manual-startup-sharing.mjs`, `test-lab-account-gate.mjs` | Impiden que vuelva la puerta global y comprueban que la invitación individual de 24 horas se conserva separada. | Gate técnico y build LAB. |
+| `personal-events.js`, `test-lab-private-round-share-flow.mjs`, `test-lab-first-open.mjs`, `scripts/build-manual-lab.mjs` | La Ronda Privada creada desde Registro entrega el código en la hoja nativa de compartir; al terminar compartir, abre su Score Card. | Cancelar mantiene una vía para reintentar o continuar; la regresión se ejecuta en el perfil LAB. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `INVENTARIOS_V311.lock.json` | Registro doble y sello del cambio. | Gates de roadmap e inventario. |
+
 
 ## LAB R136 · Registro simplificado · 29 septiembre 2026
 
@@ -1454,3 +1456,10 @@ El bloqueo EPERM del checkpoint R145 quedó resuelto tras cambio efectivo de per
 Vercel: GSC_PERSONAL_ACCESS_LAB_READY=1 guardado SOLO Preview; captura lab-preview-env.jpg. Canal fijo LAB no se activó ni redeployó. LAB público continúa R144 hasta revisión nueva. Estado actual: NO REVISADO. Pendientes ejecutables: sellar roadmaps/inventarios, commit y sincronizar rama LAB, comprobar Preview READY y revisión visual real. Pendiente de servicio: navegador carece de sesión autenticada de aplicación; no se puede certificar escritor/permisos remotos con fixtures ni saltar login. No se solicitan credenciales por chat ni una nueva autorización.
 
 Rollback: quitar activación Preview y volver solo LAB al commit a757809; ninguna promoción a main o a epg-caddy. Entrega integral bloqueada hasta cero fallos aplicables y recorrido remoto comprobado.
+## R147 · invitación privada, acceso inicial y actualización
+
+| Archivo | Función en R147 | Control |
+|---|---|---|
+| `auth-gate.js` | Evita abrir automáticamente la pantalla de cuenta al entrar sin sesión; la cuenta permanece opcional y explícita. | `test-global-public-entry-policy.mjs` |
+| `test-global-public-entry-policy.mjs` | Protege entrada pública libre y autorización privada por recurso. | G0-12; incluido en `scripts/build-manual-lab.mjs`. |
+| `test-lab-private-round-share-flow.mjs` | Protege código de ronda, selector para WhatsApp, cierre tras compartir y apertura de Score Card. | Build R147 LAB. |

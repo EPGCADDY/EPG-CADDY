@@ -1,5 +1,7 @@
 # Directrices mandatorias
 
+La entrada pública de la app permanece libre de credenciales globales y queda cubierta por G0-12. Cambios de autenticación se limitan a operaciones y recursos privados.
+
 ## Acceso global vigente (orden del propietario, 30 septiembre 2026)
 
 La aplicación se abre libremente en Registro y Score Card local: no solicitar ni exigir correo, contraseña, cuenta propietaria o código global para entrar. `middleware.js` no puede bloquear páginas normales por ausencia de sesión. La autorización de respaldos, publicación y datos privados de un torneo vive únicamente en cada API/recurso y nunca reinstala una puerta general. La invitación individual de 24 horas se conserva como herramienta opcional e independiente; su emisión no es requisito para entrar y su caducidad sólo limita esa sesión invitada.

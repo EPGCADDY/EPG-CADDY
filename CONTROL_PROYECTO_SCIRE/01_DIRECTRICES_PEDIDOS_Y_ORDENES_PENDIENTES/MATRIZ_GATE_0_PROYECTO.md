@@ -12,6 +12,7 @@
 - Criterio de regresión: sin cookie y sin sesión, la ruta Registro responde directamente; APIs de recursos privados siguen denegando lecturas/escrituras no autorizadas.
 - La invitación individual de 24 horas se conserva como función opcional, de un solo uso, con canje y vencimiento propios. No es requisito para abrir Registro ni activa el candado general.
 - Esta regla sustituye como requisito de producto cualquier referencia anterior a autenticarse como propietario para abrir la aplicación. Las menciones históricas quedan como registro, no como especificación activa.
+- Gate permanente asociado: G0-12; ejecutar `node test-global-public-entry-policy.mjs`.
 
 ## Siete entradas obligatorias
 
@@ -40,10 +41,11 @@
 | G0-09 | Clima | GPS primero, campo como respaldo, actual/pronóstico, inicio/cierre, artefactos, proveedor identificado y validación física | escenarios automáticos + comparación/medición de campo |
 | G0-10 | Integridad operativa | escritor único, estados, cálculos, persistencia, corrección, historial y modalidades; ACTUALIZAR exige además cuatro deployments READY consecutivos, mismo alias/perfil Playwright, A→B→C→D, capturas completas SHA-256 y cero errores | auditoría maestra; `node test-v407-r24-update-physical-gate.mjs`; revisión automatizada en navegador real y validador JSON |
 | G0-11 | Producción | sin cambios mientras exista un FAIL; despliegue sólo con aprobación expresa y rollback | commit/deployment exactos y hashes antes/después |
+| G0-12 | Entrada pública | `/`, `/index.html`, `/inicio`, PWA y páginas de app abren sin credenciales globales; autorización privada sigue por recurso | `node test-global-public-entry-policy.mjs` |
 
 ## Lógica de resultado
 
-`PASS INTEGRAL = G0-01 AND G0-02 AND ... AND G0-11`
+`PASS INTEGRAL = G0-01 AND G0-02 AND ... AND G0-12`
 
 Un PASS automático parcial no sustituye prueba física o humana exigida. Si falta una evidencia, el rubro permanece FAIL. Producción no se toca.
 

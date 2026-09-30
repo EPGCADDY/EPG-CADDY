@@ -15,8 +15,17 @@
     "requiresOwnerCredentials": false,
     "requiresGlobalEntryCode": false,
     "ownerLoginGate": "removed",
-    "scope": ["Registration", "local scorecard", "Scores"],
-    "resourceAuthorizationRemainsIndependent": ["private tournament membership", "central publishing and editing", "optional account backup", "optional single-use 24-hour guest invitation"],
+    "scope": [
+      "Registration",
+      "local scorecard",
+      "Scores"
+    ],
+    "resourceAuthorizationRemainsIndependent": [
+      "private tournament membership",
+      "central publishing and editing",
+      "optional account backup",
+      "optional single-use 24-hour guest invitation"
+    ],
     "twentyFourHourInvitation": "retained as an optional independent invite; expiry applies only to that guest session and never to ordinary app entry",
     "regression": "Una solicitud anónima a Registro no redirige a login/código; la invitación opcional de 24 horas conserva su canje y vencimiento; APIs privados conservan autorización por recurso."
   },
@@ -118,6 +127,15 @@
       "id": "G0-11",
       "name": "produccion_intacta",
       "requiresOwnerApproval": true
+    },
+    {
+      "id": "G0-12",
+      "name": "entrada_publica_sin_credenciales",
+      "evidence": [
+        "AGENTS.md",
+        "GOLF_SCORE_CARD_GT_PENDING_MATRIX.md",
+        "node test-global-public-entry-policy.mjs"
+      ]
     }
   ],
   "requiredControls": [

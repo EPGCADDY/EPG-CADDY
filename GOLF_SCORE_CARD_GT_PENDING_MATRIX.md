@@ -10,6 +10,8 @@
 
 La entrada a la aplicación es libre: Registro, Score Card local y Scores no requieren cuenta, correo, contraseña, autenticación como propietario ni código global. El acceso opcional a respaldos y la autorización de torneos privados son capacidades separadas por recurso; no pueden bloquear la pantalla inicial. Se conserva la invitación individual de 24 horas como herramienta opcional e independiente; nunca es un requisito de entrada.
 
+La regla permanente queda cubierta por G0-12 y `node test-global-public-entry-policy.mjs`.
+
 Este documento contiene únicamente funciones reales del producto pendientes o previstas. No incluye auditorías, ramas, publicaciones, permisos, facturación ni administración.
 
 ## Candado de ramas — MANDATORIO
