@@ -8,6 +8,13 @@
 
 Este documento contiene únicamente funciones reales del producto pendientes o previstas. No incluye auditorías, ramas, publicaciones, permisos, facturación ni administración.
 
+## Regla global permanente — acceso libre desde la raíz
+
+- No se requiere login ni credencial propietaria para abrir ninguna versión de Golf Score Card GT.
+- `/`, `/index.html`, `/inicio`, `/index-grupal.html`, PWA y pantallas de la app son entradas públicas. No redirigirlas a una pantalla de acceso.
+- Las operaciones privadas mantienen autorización por operación/API sin bloquear la entrada general.
+- Esta regla queda fijada en AGENTS, Directrices y Gate G0-12.
+
 ## Mapa único del producto
 
 Todas las configuraciones y combinaciones pertenecen a una sola arquitectura:

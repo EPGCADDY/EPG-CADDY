@@ -75,3 +75,5 @@ Solamente cuando sea necesario un nuevo turno debe indicarse expresamente. Cualq
 3. Continuar automáticamente la cola oficial en su orden vigente, sin pedir autorización intermedia ni volver a solicitar información ya entregada.
 4. Para cada pendiente: diseñar dentro de la arquitectura única, implementar, ejecutar regresión completa, desplegar Preview, realizar la prueba física correspondiente y montar sólo después de cero fallos.
 5. Los bloqueos externos reales —licencia, autorización de proveedor, credencial, contrato, pago o consentimiento— se documentan con honestidad; no se sustituyen por simulación ni por una declaración falsa de integración.
+
+- **Acceso global libre por instrucción permanente del propietario (30/09/2026):** raíz y rutas de la app nunca exigirán correo, contraseña o acceso de propietario. Toda versión presente/futura deja entrar a `/`, `/index.html`, `/inicio`, `/index-grupal.html` y PWA. La autenticación pertenece únicamente a la operación personal/privada que la requiera, nunca a la entrada general.

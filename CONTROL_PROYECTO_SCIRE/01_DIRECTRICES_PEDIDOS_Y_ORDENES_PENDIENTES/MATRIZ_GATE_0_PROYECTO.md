@@ -31,6 +31,7 @@
 | G0-09 | Clima | GPS primero, campo como respaldo, actual/pronóstico, inicio/cierre, artefactos, proveedor identificado y validación física | escenarios automáticos + comparación/medición de campo |
 | G0-10 | Integridad operativa | escritor único, estados, cálculos, persistencia, corrección, historial, modalidades y navegador real | auditoría maestra y recorrido real sin errores |
 | G0-11 | Producción | sin cambios mientras exista un FAIL; despliegue sólo con aprobación expresa y rollback | commit/deployment exactos y hashes antes/después |
+| G0-12 | Entrada libre | raíz, enlaces y PWA abren sin credenciales de propietario en cualquier release; controles privados siguen por operación | regla de raíz, matriz pendiente y prueba automatizada de despliegue |
 
 ## Lógica de resultado
 

@@ -1001,3 +1001,8 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `api/voice-health.js` | Registra `browser_fallback_general_in_place` sin texto ni nombres. | Privacidad y diagnóstico verificable. |
 | `test-v367-universal-voice-in-place.mjs` | Inspecciona respuesta, acceso de un toque, contexto inicial y telemetría. | Bloquea la reaparición del panel AI. |
 | `test-v354-voice-fallback.mjs`, `test-v358-ios-score-universal-physical-recovery.mjs` | Actualizan la expectativa histórica al mandato físico más reciente. | Multihoyos y gesto iPhone permanecen acumulados. |
+
+## Norma raíz de acceso libre
+- `AGENTS.md`, directrices, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` y Gate G0-12 prohíben volver a poner login propietario como puerta de entrada global.
+- `test-global-public-entry-policy.mjs` revisa rutas, páginas y cualquier middleware/auth gate presente en el build Vercel.
+- `vercel.json` ejecuta esa prueba antes del build de publicación.
