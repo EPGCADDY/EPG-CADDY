@@ -1,3 +1,9 @@
+## R144.1 · 30 septiembre 2026 · primer cambio visible
+- Se eliminó de la pantalla inicial el botón CREAR EVENTO y su navegación directa. La versión y el botón ACTUALIZAR ahora identifican esta revisión como R144.1 mediante release.json y el sello gscg-release de index-grupal.html.
+- Alcance de este cambio: únicamente retirar CREAR EVENTO; los accesos del menú y las pantallas de torneo/scores se revisan en cambios incrementales posteriores.
+- Rama Preview: lab/r144-simple-tournament-scores-20260930. Producción y alias golf-sc-gt-lab.vercel.app no se modificaron.
+- Evidencia de código: commit 8e6b895b82d75082a8745492a217041befac2d17 (pantalla) y 663c65c92b508caeaceaca6c79b37393903193b9 (release). Revisión visual de Preview READY pendiente.
+
 # ROADMAP OVERALL
 
 ## R144 · 30 septiembre 2026, 00:42 Guatemala · acceso Neon recuperado; publicación bloqueada
