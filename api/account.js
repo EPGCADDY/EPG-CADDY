@@ -1,3 +1,4 @@
+import { clearAccessCookies } from "./_lib/app-access.js";
 import { authCookies, neonAuthRequest, sameOriginAuthCookie } from "./_lib/account-auth.js";
 import { handleAppPreflight, isAllowedAppOrigin, isNativeAppOrigin } from "./_lib/cors.js";
 import { noStore, readJson } from "./_lib/http.js";
@@ -30,6 +31,8 @@ export default async function handler(req,res){
     const native=isNativeAppOrigin(req),cookies=authCookies(upstream).map(value=>sameOriginAuthCookie(value,{native})).filter(Boolean);if(cookies.length)res.setHeader("Set-Cookie",cookies);
     const raw=await upstream.json().catch(()=>({})),data=raw?.data||raw;
     if(!upstream.ok)return res.status(upstream.status).json({ok:false,code:String(data?.code||"ACCOUNT_REQUEST_FAILED"),message:String(data?.message||"")});
+    if(["signin","signup"].includes(action)&&!data?.user?.id)return res.status(503).json({ok:false,code:"ACCOUNT_AUTH_UNAVAILABLE"});
+    if(upstream.ok&&["signin","signup"].includes(action)&&data?.user?.id&&String(req.headers.cookie||"").split(";").some(value=>value.trim()==="gsc_guest_mode=1"))res.setHeader("Set-Cookie",[...cookies,...clearAccessCookies()]);
     return res.status(200).json({ok:true,user:data?.user||null,session:data?.session||null});
   }catch(error){
     const code=String(error?.code||"ACCOUNT_REQUEST_FAILED"),status=["EMAIL_INVALID","PASSWORD_INVALID","EMPTY_BODY","INVALID_JSON"].includes(code)?400:503;

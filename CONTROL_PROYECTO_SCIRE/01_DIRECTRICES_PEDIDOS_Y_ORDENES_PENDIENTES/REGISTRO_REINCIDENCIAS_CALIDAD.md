@@ -539,3 +539,7 @@ Se reportó READY tras pruebas locales sin comprobar que vercel.json ejecutaba l
 
 ### RC-R146-GUEST-PORTAL · 30 septiembre 2026 09:00 Guatemala
 Defecto escapado: invitado llega a login cuenta bloqueado con Google/Apple inactivos; error genérico. Causa: cookie guest no detectada en portal por auth-gate. Escape: revisión anterior sólo probó entrada tarjeta y fixtures de identidad, sin transición invitado→portal→cuenta. Control permanente: test-lab-guest-account-entry.mjs incluido en build, comprueba ausencia de request cuenta invitado y salida explícita con reload antes de login. Estado: pruebas locales PASS, publicación y revisión visual pendientes. Producción intacta.
+
+
+### RC-R146-GUEST-TRANSITION · 30 septiembre 2026 09:21 Guatemala
+Escape: botón continuar sólo oculta login sobre creación privada, y exit elimina acceso antes de autenticar. Causa: recorrido invitado→cuenta revisado sólo con caso ideal y VM de click, sin comprobar destino/preservación ante fallo. Control permanente: destino tarjeta en test-lab-guest-account-entry y test-lab-guest-login-transition ejecuta middleware/API reales con error/caída/éxito. Invitación nunca sustituye reparación del login habitual. Corrección local PASS; credenciales reales y navegador remoto pendientes. Revisión automática rechazó prueba de invitación incluso tras autorización expresa; no eludir ni repetir autorizaciones.

@@ -11,7 +11,7 @@ const SCORECARD_ASSETS=new Set(['/score-entry-contract.js','/guest-access.js','/
 export default async function accessGate(request){
   const url=new URL(request.url),path=url.pathname;
   const guestMode=(request.headers.get("cookie")||"").split(";").some(value=>value.trim()==="gsc_guest_mode=1");
-  if(path==="/api/account"&&guestMode)return new Response(JSON.stringify({ok:false,code:"OWNER_DATA_FORBIDDEN"}),{status:403,headers:{"content-type":"application/json","cache-control":"no-store"}});
+  if(path==="/api/account"&&guestMode&&!(request.method==="POST"&&["signin","signup"].includes(url.searchParams.get("action"))))return new Response(JSON.stringify({ok:false,code:"OWNER_DATA_FORBIDDEN"}),{status:403,headers:{"content-type":"application/json","cache-control":"no-store"}});
   if(path==="/api/account")return next();
   if(path==='/api/backup'||path==='/api/sync'){
     if(guestMode)return new Response(JSON.stringify({ok:false,code:'OWNER_DATA_FORBIDDEN'}),{status:403,headers:{'content-type':'application/json','cache-control':'no-store'}});

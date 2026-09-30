@@ -1,6 +1,7 @@
 (function(){
 "use strict";
 const $=id=>document.getElementById(id);
+let usingPersonalAccount=false;
 function isGuest(){return window.GSC_GUEST_ACCESS===true||document.cookie.split(';').some(value=>value.trim()==='gsc_guest_mode=1')}
 const css=`
 #gscAuthGate{position:fixed;inset:0;z-index:100000;background:#050505;color:#fff;display:none;align-items:center;justify-content:center;padding:22px;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -28,7 +29,7 @@ function render(){
     <h1 id="gscAuthTitle">Bienvenido</h1>
     <p class="lead" id="gscAuthLead">Tu Score Card, torneos y tableros personales quedan vinculados a tu cuenta.</p>
     <div id="gscGuestChoices" hidden>
-      <button class="primary" id="gscGuestContinue" type="button">CONTINUAR COMO INVITADO</button>
+      <button class="primary" id="gscGuestContinue" type="button">VOLVER A SCORE CARD</button>
       <button class="secondary" id="gscGuestAccount" type="button">USAR MI CUENTA PERSONAL</button>
     </div>
     <div id="gscAccountChoices">
@@ -49,16 +50,8 @@ function render(){
   $("gscAuthSignIn").addEventListener("click",()=>submit("signin"));
   $("gscAuthSignUp").addEventListener("click",()=>submit("signup"));
   $("gscAuthClose").addEventListener("click",hide);
-  $("gscGuestContinue").addEventListener("click",hide);
-  $("gscGuestAccount").addEventListener("click",async()=>{
-    $("gscGuestAccount").disabled=true;
-    try{
-      const response=await fetch('/api/app-access?action=exit',{method:'POST',credentials:'include',cache:'no-store'});
-      if(!response.ok)throw new Error('EXIT_FAILED');
-      // A full reload restores the unmodified account storage and clears the guest runtime.
-      location.replace('/live-hub.html?account=1');
-    }catch{$("gscAuthStatus").textContent='NO SE PUDO CAMBIAR EL ACCESO. INTENTA DE NUEVO.';$("gscGuestAccount").disabled=false}
-  });
+  $("gscGuestContinue").addEventListener("click",()=>location.assign('/index-grupal.html?source=guest24h'));
+  $("gscGuestAccount").addEventListener("click",()=>{usingPersonalAccount=true;show()});
 }
 async function request(action,payload){
   try{
@@ -67,19 +60,22 @@ async function request(action,payload){
     return {...body,ok:response.ok&&body?.ok!==false,status:response.status};
   }catch{return{ok:false,code:"NETWORK_ERROR"}}
 }
-function message(code){return({EMAIL_INVALID:"CORREO INVÁLIDO",INVALID_EMAIL:"CORREO INVÁLIDO",PASSWORD_INVALID:"USA AL MENOS 8 CARACTERES",INVALID_EMAIL_OR_PASSWORD:"CORREO O CONTRASEÑA INCORRECTOS",USER_ALREADY_EXISTS:"ESA CUENTA YA EXISTE",NETWORK_ERROR:"SIN CONEXIÓN"})[String(code||"").toUpperCase()]||"NO SE PUDO COMPLETAR"}
-function show(){style();render();const guest=isGuest(),gate=$("gscAuthGate");$("gscGuestChoices").hidden=!guest;$("gscAccountChoices").hidden=guest;$("gscAuthFine").hidden=guest;$("gscAuthTitle").textContent=guest?'Tu acceso de invitado':'Bienvenido';$("gscAuthLead").textContent=guest?'Puedes seguir usando tu Score Card. Para inscribirte en un evento privado, usa tu cuenta personal.':'Tu Score Card, torneos y tableros personales quedan vinculados a tu cuenta.';$("gscAuthStatus").textContent='';gate.classList.add("visible");gate.setAttribute("aria-hidden","false");document.documentElement.style.overflow="hidden"}
+function message(code){return({EMAIL_INVALID:"CORREO INVÁLIDO",INVALID_EMAIL:"CORREO INVÁLIDO",PASSWORD_INVALID:"USA AL MENOS 8 CARACTERES",INVALID_EMAIL_OR_PASSWORD:"CORREO O CONTRASEÑA INCORRECTOS",USER_ALREADY_EXISTS:"ESA CUENTA YA EXISTE",NETWORK_ERROR:"SIN CONEXIÓN",OWNER_DATA_FORBIDDEN:"EL ACCESO DE INVITADO NO PERMITE ESTA ACCIÓN",ACCOUNT_AUTH_UNAVAILABLE:"EL SERVICIO DE CUENTAS NO ESTÁ DISPONIBLE. INTENTA DE NUEVO.",ACCOUNT_REQUEST_FAILED:"EL SERVICIO NO PUDO INICIAR LA SESIÓN"})[String(code||"").toUpperCase()]||"NO SE PUDO COMPLETAR · "+String(code||"ERROR")}
+function show(){style();render();const guest=isGuest()&&!usingPersonalAccount,gate=$("gscAuthGate");$("gscGuestChoices").hidden=!guest;$("gscAccountChoices").hidden=guest;$("gscAuthFine").hidden=guest;$("gscAuthTitle").textContent=guest?'Tu acceso de invitado':'Bienvenido';$("gscAuthLead").textContent=guest?'Puedes seguir usando tu Score Card. Para inscribirte en un evento privado, usa tu cuenta personal.':'Tu Score Card, torneos y tableros personales quedan vinculados a tu cuenta.';$("gscAuthStatus").textContent='';gate.classList.add("visible");gate.setAttribute("aria-hidden","false");document.documentElement.style.overflow="hidden"}
 window.GSCOpenAccountLogin=show;
-function hide(){const gate=$("gscAuthGate");gate.classList.remove("visible");gate.setAttribute("aria-hidden","true");document.documentElement.style.removeProperty("overflow")}
+function hide(){usingPersonalAccount=false;const gate=$("gscAuthGate");gate.classList.remove("visible");gate.setAttribute("aria-hidden","true");document.documentElement.style.removeProperty("overflow")}
 async function submit(action){
-  if(isGuest()){show();return}
+  if(isGuest()&&!usingPersonalAccount){show();return}
   const name=$("gscAuthName").value.trim(),email=$("gscAuthEmail").value.trim().toLowerCase(),password=$("gscAuthPassword").value,status=$("gscAuthStatus");
   if(!/^\S+@\S+\.\S+$/.test(email)){status.textContent="CORREO INVÁLIDO";return}
   if(password.length<8){status.textContent="USA AL MENOS 8 CARACTERES";return}
   status.textContent=action==="signup"?"CREANDO CUENTA…":"INICIANDO SESIÓN…";
+  $("gscAuthSignIn").disabled=$("gscAuthSignUp").disabled=true;
+  const guestLogin=isGuest();
   const result=await request(action,{name,email,password});
+  $("gscAuthSignIn").disabled=$("gscAuthSignUp").disabled=false;
   if(!result.ok){status.textContent=message(result.code);return}
-  window.GSC_ACCOUNT_SIGNED_IN=true;window.dispatchEvent(new CustomEvent("gsc-account-ready",{detail:{user:result.user||null}}));status.textContent="LISTO";hide();
+  window.GSC_ACCOUNT_SIGNED_IN=true;window.dispatchEvent(new CustomEvent("gsc-account-ready",{detail:{user:result.user||null}}));status.textContent="LISTO";$("gscAuthPassword").value='';if(guestLogin){location.replace('/live-hub.html');return}hide();
 }
 async function init(){
   if(isGuest())return;
