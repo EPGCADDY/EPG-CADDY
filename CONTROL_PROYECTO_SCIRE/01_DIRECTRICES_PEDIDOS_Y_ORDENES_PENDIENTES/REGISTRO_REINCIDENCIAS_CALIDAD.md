@@ -518,3 +518,16 @@ R143 · Orden solicitado IMG_5330: ATRÁS izquierda / VER MI TARJETA derecha; RO
 ## R144 · 29 septiembre 2026 · continuidad del flujo LIVE
 
 Nueva orden elimina la dependencia telefónica y aprobación del organizador para compartir; registro actualizado. Browser/API/local SQL detectó y corrigió invitado sin stream, totals ausentes, X de compartir y nombre real en detalle. No se convierte PASS local en certificación remota. Reportes de ejecución excedieron tramos de 60s durante bloques: registrado incumplimiento OP-60; se retomó emisión visible con resultados reales. Producción intacta.
+
+## RC-OP60-R144-AUTH · 30 septiembre 2026, 04:29 Guatemala
+
+browserAuth bloqueó una llamada durante 5215.5275 segundos pese a timeout solicitado de 20000ms; devolvió timeout tools/call after 300s. No hubo ejecución verificable del escritor durante ese bloqueo. Retomar verificación de sesión y conservar estado completo. No repetir solicitud bloqueante sin recuperación, usar handoff manual para el único bloque de acceso. Producción no se tocó.
+
+## RC-R145-ENTRADA-APROBADA · 30 septiembre 2026
+
+Defecto que llegó al propietario: el enlace R144 no contenía los accesos iniciales aprobados ni integración completa del mapa. Causa: se implementó el bloque de compartir/scores sin cerrar navegación y autorización personal; se confundió un bloque parcial con entrega integral. Escape: regresión conservaba etiqueta CREAR EVENTO y no comprobaba orden de botones ni estados del portal. Control permanente: test-lab-tournament-navigation.mjs ejecuta renderTournamentShelf y comprueba botones contiguos, entrada crear/ver, estado vacío sin demo, resultados después del evento y compartir directo. test-live-official-flow.mjs prueba el API oficial con SQL real aislado. Estado: accesos corregidos localmente, regresión/build PASS; visual R145 y autorización personal completa PENDIENTES. No entrega final.
+
+Bloqueo de infraestructura separado: test-project-quality-gate.mjs no puede lanzar proceso Node (EPERM); revisión automática rechazó escalación por evasión de sandbox. No se altera ni omite el banco. Guardar checkpoint; no certificar release.
+
+
+R146 · Registro integral de permisos antes de entrega: se detectó desvío de lectura heredada al API personal durante integración. Causa: sustitución demasiado amplia de endpoint/formulario; escapó a bancos estáticos anteriores. Corrección read() /api/live, contrato real separado de miembros/compartir; test-personal-front-end.mjs lo ejecuta y verifica destino. PASS local, revisión remota pendiente. Se detectó también mezcla de almacenamiento entre cuentas y recuperación permanente bloqueada tras caducar stream; controles personales negativos y recuperación SQL añadidos. No se entregan como completos sin revisar navegador real. Control histórico de voz ENOENT por retiro autorizado; no se restaura transporte retirado. EPERM previo resuelto sin escalación, banco negativo real PASS.

@@ -51,6 +51,6 @@ assert(manual.includes("Registro de jugadores + MENÚ")&&manual.includes("Four B
 
 assert(sw.includes('await self.clients.claim()'),"Service Worker debe tomar control inmediato de la versión nueva");
 assert(!sw.includes('client.navigate(url.href)'),"Service Worker no debe sustituir la pantalla sin actualización manual");
-assert(app.includes('id="registrationEventButton"')&&app.includes('CREAR EVENTO'),"Inicio debe conservar CREAR EVENTO hacia Torneos");
+assert(app.includes('id="registrationEventButton"')&&app.includes('CREAR TORNEO'),"Inicio debe conservar CREAR TORNEO hacia Torneos");
 assert(!app.includes('body:has(#finalCardOverlay.visible) #gscShortcutsButton'),"Tarjeta Digital debe conservar MENÚ");
 console.log("PASS AUDITORÍA GLOBAL LAB · 5 MODALIDADES ACTIVAS · TARJETAS GLOBAL/PERSONAL · TORNEOS · MENÚ · PWA · MANUAL R4");

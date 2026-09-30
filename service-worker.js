@@ -2,8 +2,8 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r144-live-oneuse-scores`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r144-live-oneuse-scores`;
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r146-personal-event-permissions`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r146-personal-event-permissions`;
 const RELEASE_FALLBACK="LABORATORIO-20260929-R142";
 let RELEASE=RELEASE_FALLBACK;
 async function fetchPublishedRelease(){
@@ -53,6 +53,7 @@ const SHELL=[
   "/private-rounds.js",
   "/scores-ui.js",
   "/live-share.js",
+  "/personal-events.js",
   "/scores-ui.css",
   "/live-hub.html",
   "/live-hub.js",
@@ -140,6 +141,9 @@ self.addEventListener("fetch",event=>{
   if(request.method!=="GET")return;
   const url=new URL(request.url);
   if(url.origin!==self.location.origin||url.pathname.startsWith("/api/"))return;
+  // Personal scorecards require current server membership; never serve the owner shell
+  // or a cached scorecard in response to a forged/revoked personal account URL.
+  if(request.mode==='navigate'&&(url.searchParams.has('personalEvent')||url.searchParams.has('personalAccount'))){event.respondWith(fetch(request,{cache:'no-store'}));return}
   if(request.mode==="navigate"&&(url.pathname==="/access.html"||url.pathname==="/pwa-launch.html"||url.pathname.startsWith("/invite/"))){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"&&(url.pathname==="/manual.pdf"||url.pathname==="/manual.html")){event.respondWith(fetch("/manual.html?__gscg_build_check=1",{cache:"no-store"}));return}
   if(url.pathname==="/release.json"){event.respondWith(fetch(request,{cache:"no-store"}));return}

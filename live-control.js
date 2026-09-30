@@ -29,7 +29,7 @@
   }
   function buildLiveSnapshot(round,context={}){
     if(!round?.configured||round.provisional||!Array.isArray(round.players)||!round.players.length)return null;
-    const players=round.players.slice(0,6).map((player,index)=>{const holes=Object.entries(player.holes||{}).map(([number,value])=>holeEntry(value,number)).filter(Boolean).sort((left,right)=>left.hole-right.hole),handicap=Number(player.handicap);return{id:text(player.id||`player-${index+1}`,80),name:text(player.name||`JUGADOR ${index+1}`,80),tournamentCategory:text(player.tournamentCategory,24),handicap:Number.isSafeInteger(handicap)?handicap:0,tee:text(player.tee,40)||"—",visualSlot:integer(player.slot,1,6,index+1),holes,totals:playerTotals(holes)}});
+    const players=round.players.slice(0,6).map((player,index)=>{const holes=Object.entries(player.holes||{}).map(([number,value])=>holeEntry(value,number)).filter(Boolean).sort((left,right)=>left.hole-right.hole),handicap=Number(player.handicap);return{id:text(player.id||`player-${index+1}`,80),name:text(player.name||`JUGADOR ${index+1}`,80),tournamentCategory:text(round.mode==="stableford"?round.stablefordCategory:player.tournamentCategory,24),handicap:Number.isSafeInteger(handicap)?handicap:0,tee:text(player.tee,40)||"—",visualSlot:integer(player.slot,1,6,index+1),holes,totals:playerTotals(holes)}});
     if(round.mode==="universales"&&[3,4].includes(players.length)){const base=players.length===3?[6,4,2]:[6,4,2,0];for(let hole=1;hole<=18;hole++){const entries=players.map(player=>player.holes.find(item=>item.hole===hole));if(entries.some(item=>!item||item.explicitX||!Number.isInteger(item.net)))continue;const ranked=entries.map((item,index)=>({net:item.net,index})).sort((a,b)=>a.net-b.net||a.index-b.index);for(let start=0;start<ranked.length;){let end=start+1;while(end<ranked.length&&ranked[end].net===ranked[start].net)end++;const points=base.slice(start,end).reduce((sum,value)=>sum+value,0)/(end-start);for(let index=start;index<end;index++)entries[ranked[index].index].universalesPoints=points;start=end}}for(const player of players)player.totals=playerTotals(player.holes)}
     const pars=(Array.isArray(context.pars)?context.pars:[]).slice(0,18).map((par,index)=>({hole:index+1,par:integer(par,3,6,null)}));
     return{schemaVersion:1,appVersion:"V353",roundId:text(round.id,160),groupLabel:text(round.liveGroupLabel,120)||`GRUPO ${players[0].name}`,course:text(context.course||round.course,120)||"CAMPO",courseHoles:pars,tournament:text(round.tournament?.name,120)||null,mode:["general","match_play","four_ball","stableford","universales"].includes(round.mode)?round.mode:"general",status:round.status==="corrected"?"corrected":round.officiallyClosedAt?"officially_closed":"active",playedAt:iso(round.createdAt),updatedAt:iso(round.updatedAt),officiallyClosedAt:round.officiallyClosedAt?iso(round.officiallyClosedAt):null,players};
@@ -81,6 +81,8 @@
   async function quickShareGroup(){
     const snapshot=currentSnapshot();if(!snapshot){quickShareNotice("INICIA UNA RONDA PARA COMPARTIR LIVE","warning");return false}
     let state=liveState(),stream=state.stream;
+    const enrolled=state.privateStream?.roundId===snapshot.roundId?{kind:'private',stream:state.privateStream}:stream?.roundId===snapshot.roundId&&stream.tournamentId?{kind:'tournament',stream}:null;
+    if(enrolled&&root.GSCOneUseLive){const result=await root.GSCOneUseLive.share(enrolled.kind,enrolled.stream.tournamentId,snapshot.tournament||'LIVE');if(!result.ok)quickShareNotice(stateMessage(result.code),'warning');return result.ok}
     if(!(stream?.publisherSecret&&stream?.viewerToken&&stream.roundId===snapshot.roundId&&stream.scope==="group")){
       const selectedPlayerIds=snapshot.players.map(player=>player.id),consent={confirmed:true,playerIds:selectedPlayerIds,policyVersion:POLICY_VERSION,confirmedAt:new Date().toISOString(),authority:"scorekeeper_share_live_button"};
       setStatus("CREANDO ENLACE LIVE DEL GRUPO…");
@@ -129,7 +131,7 @@
     try{
       const ownedTournament=state.tournamentOwned?.tournamentId===tournamentId?state.tournamentOwned:null;
       const joinCode=text(selection?.joinCode||ownedTournament?.joinCode,20).toUpperCase();
-      const result=await connectTournamentById(tournamentId,snapshot.groupLabel,joinCode);
+      const result=selection.personal&&root.GSCPersonalEvents?await connectPersonalEvent(selection,roundValue):await connectTournamentById(tournamentId,selection?.groupLabel||snapshot.groupLabel,joinCode);
       if(result?.ok){selection.roundId=snapshot.roundId;selection.connected=true;try{root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify(selection))}catch{};clearTournamentConnectRetry(snapshot.roundId);onRoundPersisted(roundValue);return true}
       setStatus(`${stateMessage(result?.code)} · REINTENTANDO VINCULAR EL TORNEO`,"warning",true);scheduleTournamentConnectRetry(roundValue);return false;
     }catch(error){setStatus(`${stateMessage(error?.code||"NETWORK_ERROR")} · REINTENTANDO VINCULAR EL TORNEO`,"warning",true);scheduleTournamentConnectRetry(roundValue);return false;
@@ -205,6 +207,14 @@
     state=liveState();state.privateStream={...stream,tournamentId:result.tournamentId};state.privateRound={id:privateRoundId,name:result.name,viewerToken:result.viewerToken,roundId:snapshot.roundId};saveState(state);
     return result;
   }
+  async function connectPersonalEvent(event,roundValue=null){
+    const result=await root.GSCPersonalEvents.request('read',{eventId:event.id||event.eventId,eventKind:event.eventKind||'tournament'});if(!result.ok)return result;
+    const snapshot=currentSnapshot(roundValue),member=result.membership;if(!snapshot)return{ok:false,code:'LIVE_ROUND_REQUIRED'};
+    const privateEvent=(event.eventKind||'tournament')==='private',slot=privateEvent?'privateStream':'stream',state=liveState();let stream=state[slot];
+    if(!stream?.publisherSecret||stream.roundId!==snapshot.roundId||new Date(stream.expiresAt)<=new Date()){const ids=member.players.map(p=>p.id),created=await request(privateEvent?'create_private_stream':'create_stream',{scope:ids.length===1?'player':'group',selectedPlayerIds:ids,consent:{confirmed:true,playerIds:ids},groupLabel:member.groupLabel,snapshot});if(!created.ok)return created;stream={roundId:snapshot.roundId,scope:ids.length===1?'player':'group',streamId:created.streamId,publisherSecret:created.publisherSecret,viewerToken:created.viewerToken,revision:Number(created.revision)||0,expiresAt:created.expiresAt,groupLabel:member.groupLabel,privateRound:privateEvent};state[slot]=stream;saveState(state)}
+    const joined=await request(privateEvent?'join_private_round_by_id':'join_tournament_by_id',{tournamentId:event.id||event.eventId,groupLabel:member.groupLabel},stream.publisherSecret);
+    if(joined.ok){stream.tournamentId=joined.tournamentId;state[slot]=stream;if(privateEvent){state.privateRound={id:joined.tournamentId,roundId:snapshot.roundId};saveState(state);await publishPrivateLatest()}else saveState(state);renderActive()}return joined;
+  }
   let privatePublishTimer=null,privatePublishing=false;
   async function persistPrivateSnapshot(snapshot){
     if(!snapshot)return;const state=liveState();if(!state.privateStream?.publisherSecret||state.privateStream.roundId!==snapshot.roundId)return;
@@ -230,5 +240,5 @@
     return result;
   }
   root.addEventListener?.("online",()=>{void publishPrivateLatest()});
-  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,publishLatest,quickShareGroup,connectPrivateRound,publishPrivateLatest,createTournamentDirect,connectTournamentById,joinTournamentWithFallback,disconnectTournament};
+  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,publishLatest,quickShareGroup,connectPrivateRound,connectPersonalEvent,publishPrivateLatest,createTournamentDirect,connectTournamentById,joinTournamentWithFallback,disconnectTournament};
 });

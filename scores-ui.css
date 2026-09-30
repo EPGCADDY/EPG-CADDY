@@ -36,3 +36,12 @@ body.shared-view #hubCreateRound,body.shared-view #hubPrivateRounds,body.shared-
 body.private-live-view .monitor-switch,body.private-live-view #hubCategory{display:none!important}
 
 body.private-live-view .scores-compact td:nth-child(4){color:inherit}body.private-live-view .scores-compact td:nth-child(5){color:#31ff00}
+
+#gscPersonalDialog [data-close]{position:absolute;top:8px;right:8px;width:44px;height:44px;background:#111;color:#fff;border:1px solid #555;border-radius:50%;font-size:18px}
+#gscPersonalDialog label{display:block;margin:12px 0 6px;font-size:13px;color:#c9cecc}
+#gscPersonalDialog input:not([type=checkbox]),#gscPersonalDialog select{box-sizing:border-box;width:100%;min-height:44px;padding:10px;background:#080b09;color:#fff;border:1px solid #454b47;border-radius:8px}
+#gscPersonalDialog button:not([data-close]){box-sizing:border-box;min-height:44px;margin:10px 4px 0 0;padding:10px 14px;background:#080b09;color:#31ff00;border:1px solid #31ff00;border-radius:8px;font-weight:700}
+#gscPersonalDialog button.primary{background:#31ff00;color:#000}
+#gscPersonalDialog output{display:block;overflow-wrap:anywhere;padding:12px;color:#31ff00}
+#gscPersonalDialog fieldset{margin:12px 0;border:1px solid #454b47;border-radius:8px}
+#gscPersonalDialog legend,#gscPersonalDialog summary{font-size:13px;color:#31ff00}

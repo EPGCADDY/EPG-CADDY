@@ -48,6 +48,7 @@ async function request(action,payload){
 }
 function message(code){return({EMAIL_INVALID:"CORREO INVÁLIDO",INVALID_EMAIL:"CORREO INVÁLIDO",PASSWORD_INVALID:"USA AL MENOS 8 CARACTERES",INVALID_EMAIL_OR_PASSWORD:"CORREO O CONTRASEÑA INCORRECTOS",USER_ALREADY_EXISTS:"ESA CUENTA YA EXISTE",NETWORK_ERROR:"SIN CONEXIÓN"})[String(code||"").toUpperCase()]||"NO SE PUDO COMPLETAR"}
 function show(){const gate=$("gscAuthGate");gate.classList.add("visible");gate.setAttribute("aria-hidden","false");document.documentElement.style.overflow="hidden"}
+window.GSCOpenAccountLogin=show;
 function hide(){const gate=$("gscAuthGate");gate.classList.remove("visible");gate.setAttribute("aria-hidden","true");document.documentElement.style.removeProperty("overflow")}
 async function submit(action){
   const name=$("gscAuthName").value.trim(),email=$("gscAuthEmail").value.trim().toLowerCase(),password=$("gscAuthPassword").value,status=$("gscAuthStatus");
@@ -65,7 +66,7 @@ async function init(){
   $("gscAuthSignUp").addEventListener("click",()=>submit("signup"));
   const session=await request("session");
   if(session.ok&&session.user?.id){window.GSC_ACCOUNT_SIGNED_IN=true;window.dispatchEvent(new CustomEvent("gsc-account-ready",{detail:{user:session.user}}));hide();return}
-  show();
+  if(!location.pathname.endsWith("/live-hub.html"))show();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();

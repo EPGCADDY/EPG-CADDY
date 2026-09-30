@@ -42,3 +42,31 @@ assert.match(source,/pendingMonitor=kind/,'La función elegida debe conservarse 
 assert.match(source,/ELIGE EL TORNEO DONDE QUIERES BUSCAR/,'BUSCAR JUGADORES debe pedir torneo sin convertir la acción en pegar enlace');
 assert.match(source,/tournamentEntryOpen=!tournamentEntryOpen/,'El ingreso por enlace sólo aparece al tocar AGREGAR TORNEO');
 console.log("PASS R76: arquitectura TORNEOS conserva intención, muestra categorías y separa búsqueda de agregar por enlace");
+
+// Exercise the actual portal renderer in both entry and saved-event states.
+const nodes=new Map();
+function element(id){if(!nodes.has(id)){const hidden=new Set();nodes.set(id,{innerHTML:'',attributes:{},classList:{toggle(name,on){on?hidden.add(name):hidden.delete(name)},contains:name=>hidden.has(name)},setAttribute(name,value){this.attributes[name]=value},querySelectorAll(){return []}})}return nodes.get(id)}
+const portal={$:element,root:{location:{search:''},document:{querySelector:()=>element('monitor-switch')}},URLSearchParams,tournamentPortalOpen:true,registeredTournamentsOpen:false,tournamentEntryOpen:false,activeMonitor:'general',demoMode:()=>false,state:{tournaments:[]},escapeHtml:hub.escapeHtml||((s)=>s)};
+const renderer=source.slice(source.indexOf('  function renderTournamentShelf(){'),source.indexOf('  function resetGeneralView(){'));
+vm.runInNewContext(renderer+';renderTournamentShelf()',portal);
+assert.equal(element('hubTournamentShelf').classList.contains('hidden'),false);
+assert.equal(element('hubTournamentCards').classList.contains('hidden'),true);
+assert.equal(element('hubSavedEventActions').classList.contains('hidden'),true);
+assert.equal(element('monitor-switch').classList.contains('hidden'),true,'Results controls appear after event selection');
+assert.match(element('hubTournamentCards').innerHTML,/TODAVÍA NO HAY TORNEOS GUARDADOS/);
+assert.doesNotMatch(element('hubTournamentCards').innerHTML,/DEMOSTRACIÓN/,'No synthetic event is injected into the real entry');
+portal.registeredTournamentsOpen=true;
+vm.runInNewContext('renderTournamentShelf()',portal);
+assert.equal(element('hubTournamentCards').classList.contains('hidden'),false);
+assert.equal(element('hubSavedEventActions').classList.contains('hidden'),false);
+portal.tournamentPortalOpen=false;
+vm.runInNewContext('renderTournamentShelf()',portal);
+assert.equal(element('hubTournamentShelf').classList.contains('hidden'),true);
+assert.equal(element('monitor-switch').classList.contains('hidden'),false);
+const registration=fs.readFileSync('index-grupal.html','utf8');
+assert.match(registration,/id="registrationEventButton"[^>]*>CREAR TORNEO<\/button>\s*<button[^>]*id="openMyRoundSetup"[^>]*>CREAR RONDA PRIVADA<\/button>/,'Approved entry buttons remain adjacent');
+assert.match(registration,/GSCPersonalEvents\.createPrivate\(round\)/,'Create opens a new private form even with a saved event');
+assert.match(html,/id="hubRegisteredTournaments"[^>]*>VER SCORES<\/button>/);
+assert.ok(html.indexOf('id="hubCreateRound"')<html.indexOf('id="hubRegisteredTournaments"'));
+assert.ok(html.indexOf('id="hubShareGeneral"')<html.indexOf('<details class="viewer-tools"'),'COMPARTIR LIVE is directly accessible outside Options');
+console.log('PASS R145 approved entry: adjacent create buttons, real empty state, create/view scores order, saved-event actions, results after selection, direct LIVE share.');

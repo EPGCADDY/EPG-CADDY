@@ -3,6 +3,8 @@ import { createHash, randomBytes } from "node:crypto";
 import { getDatabase } from "./_lib/database.js";
 import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 import { noStore, readJson } from "./_lib/http.js";
+import {requireAccountSession} from './_lib/account-auth.js';
+import {ensurePersonalAccess,guardPersonalLive} from './_lib/personal-event-access.js';
 
 const LIVE_POLICY_VERSION="gsc-gt-live-v1";
 const LIVE_UPSTREAM_URL="https://epg-caddy.vercel.app/api/live";
@@ -63,6 +65,13 @@ export async function privateRoundAction(sql,req,body,action){
     return{...result,kind:"private_round",name:rows[0].name,viewerToken:rows[0].viewer_access_token};
   }
   if(action==="create_private_stream")return createStream(scoped,req,body);
+  if(action==="join_private_round_by_id"){
+    body={...body,tournamentId:body.tournamentId||body.privateRoundId};
+    const policies=await sql`SELECT event_id FROM gsc_personal_events WHERE event_id=${body.tournamentId}::uuid AND event_kind='private'`;
+    if(!policies.length)throw liveError('PERSONAL_EVENT_FORBIDDEN',403);
+    const result=await joinTournamentById(scoped,req,body),rows=await sql`SELECT name,viewer_access_token FROM live_private_rounds WHERE id=${body.tournamentId}::uuid`;
+    return{...result,kind:'private_round',name:rows[0].name,viewerToken:rows[0].viewer_access_token};
+  }
   if(action==="publish_private_round"){
     const secret=authorizationSecret(req);if(!SECRET_PATTERN.test(secret))throw liveError("LIVE_PUBLISHER_UNAUTHORIZED",401);
     const eligible=await sql`SELECT stream.id FROM live_private_streams stream LEFT JOIN live_private_rounds round ON round.id=stream.tournament_id WHERE stream.publisher_secret_hash=${tokenHash(secret)}::char(64) AND (stream.tournament_id IS NULL OR (round.status='active' AND round.expires_at>now())) LIMIT 1`;
@@ -514,20 +523,29 @@ async function readLive(sql,req,body){
   return body.kind==="tournament"?readTournament(sql,req,body,viewerToken):readStream(sql,req,body,viewerToken);
 }
 
-export default async function handler(req,res){
+// Dependency injection is module-only for isolated integration tests. HTTP clients
+// cannot choose a database; the deployed handler always uses getDatabase.
+export async function handleLive(req,res,databaseGetter=getDatabase,accountResolver=requireAccountSession){
   noStore(res);res.setHeader("X-Content-Type-Options","nosniff");res.setHeader("Referrer-Policy","no-referrer");
   if(handleAppPreflight(req,res))return;
   if(req.method!=="POST"){res.setHeader("Allow","POST");return res.status(405).json({ok:false,code:"METHOD_NOT_ALLOWED"})}
   try{
     const body=await readJson(req,600_000),action=cleanText(body.action,40).toLowerCase();
-    const privateAction=["create_private_round","list_private_rounds","join_private_round","create_private_stream","publish_private_round","read_private_round","revoke_private_round"].includes(action);
+    const privateAction=["create_private_round","list_private_rounds","join_private_round","join_private_round_by_id","create_private_stream","publish_private_round","read_private_round","revoke_private_round"].includes(action);
     if((CONTROL_ACTIONS.has(action)||privateAction)&&!isAllowedAppOrigin(req))throw liveError("ORIGIN_NOT_ALLOWED",403);
     let sql;
-    try{sql=getDatabase()}catch(error){
+    try{sql=databaseGetter()}catch(error){
       if(String(error?.code||"")==="DATABASE_NOT_CONFIGURED")return await proxyLiveToProduction(req,res);
       throw error;
     }
+    const personalEnabled=process.env.GSC_PERSONAL_ACCESS_LAB_READY==='1'||accountResolver!==requireAccountSession;
+    if(personalEnabled){await ensurePersonalAccess(sql);await guardPersonalLive(sql,req,body,accountResolver)}
     const result=privateAction?await privateRoundAction(sql,req,body,action):action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="join_tournament_by_id"?await joinTournamentById(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req):action==="read"?await readLive(sql,req,body):null;
+    if(personalEnabled&&result&&(action==='list_active_tournaments'||action==='list_private_rounds')){
+      let account=null;try{account=await accountResolver(req)}catch{}
+      const kind=action==='list_private_rounds'?'private':'tournament',policies=await sql`SELECT e.event_id,m.account_id FROM gsc_personal_events e LEFT JOIN gsc_personal_members m ON m.event_id=e.event_id AND m.event_kind=e.event_kind AND m.account_id=${account?.id||''} AND m.revoked_at IS NULL WHERE e.event_kind=${kind}`;
+      const forbidden=new Set(policies.filter(p=>!p.account_id).map(p=>p.event_id)),key=action==='list_private_rounds'?'rounds':'tournaments';result[key]=result[key].filter(event=>!forbidden.has(event.id));
+    }
     if(!result)throw liveError("LIVE_ACTION_UNSUPPORTED",404);
     return res.status(200).json(result);
   }catch(error){
@@ -537,5 +555,7 @@ export default async function handler(req,res){
     return res.status(status).json({ok:false,code});
   }
 }
+
+export default async function handler(req,res){return handleLive(req,res)}
 
 export { LIVE_POLICY_VERSION, TOKEN_PATTERN, ID_PATTERN, filterSnapshot, validateScope, validateConsent, newJoinCode, tokenHash, groupKey };
