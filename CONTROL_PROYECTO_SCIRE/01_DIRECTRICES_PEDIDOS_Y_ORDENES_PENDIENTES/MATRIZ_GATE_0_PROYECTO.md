@@ -4,6 +4,15 @@
 **Autorización:** el propietario ordenó reconstruir o rehacer los controles faltantes.  
 **Regla:** esta matriz no demuestra un PASS por sí sola; únicamente define la puerta que debe superarse con evidencia reproducible.
 
+## Política vigente de acceso a la aplicación
+
+- Registro, Score Card local y Scores se abren libremente. La entrada normal no solicita correo, contraseña, inicio como propietario ni código global.
+- La pantalla propietaria y el bloqueo general de middleware están retirados de la entrada principal. `/`, `/index.html`, `/inicio` y la apertura normal de `/access.html` conducen a Registro; un token de invitación temporal se canjea allí como flujo independiente.
+- El acceso a un torneo privado, publicación/edición central y respaldos se autoriza dentro de cada recurso, según su propia membresía o cuenta opcional. Esa autorización no puede volver a cerrar la entrada general de la aplicación.
+- Criterio de regresión: sin cookie y sin sesión, la ruta Registro responde directamente; APIs de recursos privados siguen denegando lecturas/escrituras no autorizadas.
+- La invitación individual de 24 horas se conserva como función opcional, de un solo uso, con canje y vencimiento propios. No es requisito para abrir Registro ni activa el candado general.
+- Esta regla sustituye como requisito de producto cualquier referencia anterior a autenticarse como propietario para abrir la aplicación. Las menciones históricas quedan como registro, no como especificación activa.
+
 ## Siete entradas obligatorias
 
 | Entrada | Fuente cerrada | Criterio de entrada |

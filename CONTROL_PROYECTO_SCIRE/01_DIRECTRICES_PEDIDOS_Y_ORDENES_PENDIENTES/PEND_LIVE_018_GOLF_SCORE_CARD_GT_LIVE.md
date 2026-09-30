@@ -1,5 +1,9 @@
 # PEND-LIVE-018 · GOLF SCORE CARD GT. LIVE
 
+## Regla vigente que reemplaza las notas de autenticación anteriores
+
+Desde la orden del propietario del 30/09/2026, Registro, Score Card local y Scores abren sin credenciales ni login propietario. La invitación individual opcional de 24 horas sigue disponible como recorrido independiente, con su canje y vencimiento originales; no es necesaria para abrir la aplicación. Las referencias R146 abajo a «cuenta validada en middleware antes de cargar tarjeta» describen el comportamiento previo y quedan reemplazadas para la entrada general. La API de cada torneo conserva comprobaciones de membresía/rol y sólo puede proteger ese evento; no puede redirigir la app a un login global.
+
 ## R144 · 29 septiembre 2026, 23:03 Guatemala · COMPARTIR LIVE de primer uso
 
 Última orden expresa del propietario 22:35: al tocar COMPARTIR LIVE dar un código, enviarlo y quemarlo al primer uso, como Ronda Particular. Sustituye para esta operación la propuesta de verificación telefónica/aprobación del organizador. No requiere proveedor SMS, cuenta nueva ni intervención del organizador.

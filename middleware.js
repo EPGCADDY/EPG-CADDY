@@ -2,7 +2,7 @@ import { next } from "@vercel/functions";
 
 const PUBLIC_PATHS=new Set([
   "/live-hub.html","/live-hub.js","/live-control.js","/live-share.js","/scores-ui.js","/scores-ui.css","/private-rounds.js","/gsc-design-system.css","/shortcuts-ui.js","/personal-events.js","/auth-gate.js",
-  "/access.html","/live.html","/live-view.js","/match-play.js","/favicon.ico",
+  "/access.html","/code-entry.html","/code-entry.js","/live.html","/live-view.js","/match-play.js","/favicon.ico",
   "/service-worker.js","/release.json","/manifest.webmanifest","/manual.webmanifest","/audio-touch-test.html"
 ]);
 const PRIVATE_GUEST_PREFIXES=["/api/account-backup","/api/backup","/api/commerce","/api/sync","/api/master-data"];
@@ -11,6 +11,8 @@ const SCORECARD_ASSETS=new Set(['/score-entry-contract.js','/guest-access.js','/
 export default async function accessGate(request){
   const url=new URL(request.url),path=url.pathname;
   const guestMode=(request.headers.get("cookie")||"").split(";").some(value=>value.trim()==="gsc_guest_mode=1");
+  const codeMode=(request.headers.get('cookie')||'').split(';').some(value=>value.trim().startsWith('gsc_code_session='));
+  if(codeMode&&PRIVATE_GUEST_PREFIXES.some(prefix=>path.startsWith(prefix)))return new Response(JSON.stringify({ok:false,code:'OWNER_DATA_FORBIDDEN'}),{status:403,headers:{'content-type':'application/json','cache-control':'no-store'}});
   if(path==="/api/account"&&guestMode&&!(request.method==="POST"&&["signin","signup"].includes(url.searchParams.get("action"))))return new Response(JSON.stringify({ok:false,code:"OWNER_DATA_FORBIDDEN"}),{status:403,headers:{"content-type":"application/json","cache-control":"no-store"}});
   if(path==="/api/account")return next();
   if(path==='/api/backup'||path==='/api/sync'){
@@ -41,19 +43,26 @@ export default async function accessGate(request){
       if(url.searchParams.get('personalEvent'))return new Response('Acceso personal no autorizado',{status:403,headers:{'cache-control':'no-store'}});
     }
   }
+  // The Score Card app is open: regular pages must never be routed through an
+  // owner sign-in or access-code wall. Keep the legacy authorization boundary
+  // only for APIs; those handlers also enforce their own capabilities.
+  if(!path.startsWith("/api/"))return next();
   let access={ok:false,role:"none",code:"ACCESS_REQUIRED"};
   try{
     const statusUrl=new URL("/api/app-access?action=status",request.url);
     const response=await fetch(statusUrl,{headers:{cookie:request.headers.get("cookie")||""},cache:"no-store"});
     const data=await response.json();
-    access={ok:response.ok&&data.ok===true,role:data.role||"none",code:data.code||null};
+    access={ok:response.ok&&data.ok===true,role:data.role||"none",code:data.code||null,codeAccess:data.codeAccess,accountCode:data.accountCode,eventId:data.eventId,eventKind:data.eventKind};
   }catch{}
   if(access.ok){
+    if(access.codeAccess&&PRIVATE_GUEST_PREFIXES.some(prefix=>path.startsWith(prefix)))return new Response(JSON.stringify({ok:false,code:'OWNER_DATA_FORBIDDEN'}),{status:403,headers:{'content-type':'application/json','cache-control':'no-store'}});
+    if(access.role==='player'&&path==='/index-grupal.html'&&url.searchParams.get('personalAccount')!==access.accountCode){const entry=new URL('/index-grupal.html',request.url);entry.searchParams.set('personalAccount',access.accountCode);entry.searchParams.set('inicio','1');return Response.redirect(entry,307)}
+    if(access.role==='viewer')return Response.redirect(new URL('/live-hub.html?personalEvent='+access.eventId+'&personalKind='+access.eventKind,request.url),307);
     if(access.role==="guest"&&PRIVATE_GUEST_PREFIXES.some(prefix=>path.startsWith(prefix)))return new Response(JSON.stringify({ok:false,code:"OWNER_DATA_FORBIDDEN"}),{status:403,headers:{"content-type":"application/json","cache-control":"no-store"}});
     return next({headers:{"x-gsc-access-role":access.role}});
   }
   if(path.startsWith("/api/"))return new Response(JSON.stringify({ok:false,code:access.code||"ACCESS_REQUIRED"}),{status:401,headers:{"content-type":"application/json","cache-control":"no-store"}});
-  const target=new URL("/access.html",request.url);return Response.redirect(target,307);
+  const target=new URL("/code-entry.html",request.url);return Response.redirect(target,307);
 }
 
 export const config={runtime:"nodejs",matcher:["/((?!access\.html$|api/app-access$|favicon\.ico$).*)"]};

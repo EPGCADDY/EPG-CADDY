@@ -1,3 +1,11 @@
+## RC-106 · CANDIDATO ABIERTO BORRÓ LA INVITACIÓN DE 24 H Y REACTIVÓ LA PUERTA AL RESTAURARLA · 30 SEPTIEMBRE 2026
+
+- Defecto expuesto: la corrección de entrada libre afirmó haber retirado la invitación de 24 horas; al restaurarla reapareció en `index-grupal.html` la carga de `auth-gate.js`, y el vencimiento temporal todavía enviaba al formulario propietario.
+- Causa raíz: mezcla de la entrada global con la herramienta de invitación y regresión de archivos completos desde el commit previo, sin probar juntos el arranque raíz y el ciclo de vencimiento.
+- Control permanente: `test-r18-owner-guest-24h-access.mjs` recorre `/`, Registro y `/access.html` anónimos, verifica que el módulo de login no se monte en Score Card, conserva emisión/canje/aislamiento/vencimiento de invitación y ejecuta el camino de expiración sin permitir expulsión a login. Las matrices distinguen explícitamente ambos alcances.
+- Evidencia: controles dirigidos por ejecutar después de esta corrección; sin despliegue publicado ni verificación física en esta etapa.
+- Estado: PRUEBAS DIRIGIDAS PASS; GATES COMPLETOS PENDIENTES; NO PUBLICADO; PRODUCCIÓN INTACTA.
+
 # Registro de reincidencias de calidad
 
 ## RC-105 · TORNEO FRIENDS SE CREABA SIN TARJETAS PUBLICADAS · 29 SEPTIEMBRE 2026
@@ -618,3 +626,21 @@ Escape: revisión previa no ejercitó el handler real de regreso con borrador; c
 - Vercel branch alias y deployment inmutable dpl_BcFVHEiGPSiuLHDTzafziKChBUc9/f243eb1 muestran tres controles. DOM real contiene hubShowIndividual con display:none: no fallo de enlace.
 - scores-ui.css ocultaba hubShowIndividual y hubSearchResults, y imponía tres columnas. Corregido incrementalmente a dos columnas/cuatro accesos aprobados y resultados visibles; ajustadas columnas del mismo Scores compacto para POS sin alterar ronda particular.
 - test-lab-tournament-navigation.mjs añade regresión de override CSS. Pendiente publicación Preview/revisión visual de cambios; sesión real sigue bloqueada. Producción intacta.
+
+### 30/09/2026 · Preview 410602d publicado y recorrido visible
+- Remoto rama lab/integral-round-tournament-r146-20260930: commit 410602d8371371e544a637084f025cd97ceb9e42, tree 2cf60af0b156dc747f44074364c557b748fb4993 idéntico al local f7f98b8. Deployment dpl_3RPDhSPe5nhHuQUzuBsp5EFpuJUA READY; golf-sc-gt-9gdh3se3g-epgcaddys-projects.vercel.app. Preview únicamente; no alias estable/Production/main modificados. Rollback remoto: f243eb17d5f280cc5009435bf12a9c17cd5a3cd2 / dpl_BcFVHEiGPSiuLHDTzafziKChBUc9.
+- Navegador real demo=1: cuatro accesos visibles; Buscar B 10 → GENERAL 1 / CATEGORÍA 1 → General sin búsqueda → Categoría B → doble toque detalle18 G/N / pendientes16-18 vacíos → cerrar → favorito B10 → Mis favoritos → General. DOM final category=all, rows=67, search vacío. PASS sólo consulta demo.
+- Evidencia: /workspace/scratch/3e936abcc9cb/lab-r146-busqueda-restaurada.jpg y /workspace/scratch/3e936abcc9cb/lab-r146-general-cuatro-accesos-verificado.jpg.
+- ← Score Card aún redirige a acceso privado por ausencia de sesión real: BLOQUEADO. Seis jugadores desde tarjeta, capturas persistentes, permisos con cuenta e iPhone no verificados; no 100% ni entrega final.
+
+### 30/09/2026 · diagnóstico acceso habitual / sin modificar credenciales
+- Comparado historial access.html desde b0bba28 (09/09) y account-auth en e0e11a9: flujo existente usa correo + contraseña y el mismo proveedor; no hay login por nombre implementado. vercel-gateway-auth corresponde a AI Gateway, no al propietario.
+- Recuperación de contexto confirma orden de no usar invitación 24h como sustituto y no cambiar credenciales; no recupera una vinculación verificable del identificador antiguo. Salidas antiguas del asistente que lo confundían con invitación no son evidencia.
+- Consulta sólo lectura en Neon candidato br-small-mouse-av0f24o9 / bold-block-51864691: usuario de propietario configurado tiene nombre Jaime Kirste; comparación exacta con identificador mostrado GOLF SCORE CARD@GT. devuelve false, sin otra coincidencia. No se leyeron hashes, contraseñas, sesiones ni tokens; no escritura DB.
+- BLOQUEO: desconocido el dominio/método al que corresponde la entrada guardada de iPhone. Falta metadato no secreto del sitio guardado; no inventar alias, no restablecer contraseña, no forjar sesión. No demuestra contraseña incorrecta. Producción intacta.
+
+### 30/09/2026 · acceso de participantes excesivo y confuso / nueva orden por código
+- Defecto expuesto: participante enviado a login con correo/contraseña o invitación 24h; regreso confundía rol de propietario con invitado. Escape: verificación de consulta demo no cerró sesión real ni recorrido Registro → Scores → Registro.
+- Fuente vigente: orden explícita propietario 11:20 Guatemala: sólo código de un uso para jugadores y visitantes, destino según rol; títulos fijos 11:35. No se atribuye a contraseña incorrecta ni se declara reparado acceso histórico propietario.
+- Control permanente: consumo atómico (ocho solicitudes, un ganador), hash de código y sesión, destino servidor, viewer no escritor, Registro con namespace de jugador, revocación emisor, prohibición de respaldos. test-lab-code-entry.mjs y test-live-share-middleware.mjs PASS; también conserva test-personal-event-permissions.mjs.
+- Estado honesto: implementación local pendiente publicación/revisión real; seis jugadores reales desde tarjeta, invitados y persistencia de ida/regreso todavía no certificados. Gráficas aprobadas conservadas, sin inventar sustitutas. Producción intacta.

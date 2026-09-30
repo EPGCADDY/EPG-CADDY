@@ -61,7 +61,7 @@ async function request(action,payload){
   }catch{return{ok:false,code:"NETWORK_ERROR"}}
 }
 function message(code){return({EMAIL_INVALID:"CORREO INVÁLIDO",INVALID_EMAIL:"CORREO INVÁLIDO",PASSWORD_INVALID:"USA AL MENOS 8 CARACTERES",INVALID_EMAIL_OR_PASSWORD:"CORREO O CONTRASEÑA INCORRECTOS",USER_ALREADY_EXISTS:"ESA CUENTA YA EXISTE",NETWORK_ERROR:"SIN CONEXIÓN",OWNER_DATA_FORBIDDEN:"EL ACCESO DE INVITADO NO PERMITE ESTA ACCIÓN",ACCOUNT_AUTH_UNAVAILABLE:"EL SERVICIO DE CUENTAS NO ESTÁ DISPONIBLE. INTENTA DE NUEVO.",ACCOUNT_REQUEST_FAILED:"EL SERVICIO NO PUDO INICIAR LA SESIÓN"})[String(code||"").toUpperCase()]||"NO SE PUDO COMPLETAR · "+String(code||"ERROR")}
-function show(){style();render();const guest=isGuest()&&!usingPersonalAccount,gate=$("gscAuthGate");$("gscGuestChoices").hidden=!guest;$("gscAccountChoices").hidden=guest;$("gscAuthFine").hidden=guest;$("gscAuthTitle").textContent=guest?'Tu acceso de invitado':'Bienvenido';$("gscAuthLead").textContent=guest?'Puedes seguir usando tu Score Card. Para inscribirte en un evento privado, usa tu cuenta personal.':'Tu Score Card, torneos y tableros personales quedan vinculados a tu cuenta.';$("gscAuthStatus").textContent='';gate.classList.add("visible");gate.setAttribute("aria-hidden","false");document.documentElement.style.overflow="hidden"}
+function show(){if(window.GSC_CODE_ACCESS){location.assign('/code-entry.html');return}style();render();const guest=isGuest()&&!usingPersonalAccount,gate=$("gscAuthGate");$("gscGuestChoices").hidden=!guest;$("gscAccountChoices").hidden=guest;$("gscAuthFine").hidden=guest;$("gscAuthTitle").textContent=guest?'Tu acceso de invitado':'Bienvenido';$("gscAuthLead").textContent=guest?'Puedes seguir usando tu Score Card. Para inscribirte en un evento privado, usa tu cuenta personal.':'Tu Score Card, torneos y tableros personales quedan vinculados a tu cuenta.';$("gscAuthStatus").textContent='';gate.classList.add("visible");gate.setAttribute("aria-hidden","false");document.documentElement.style.overflow="hidden"}
 window.GSCOpenAccountLogin=show;
 function hide(){usingPersonalAccount=false;const gate=$("gscAuthGate");gate.classList.remove("visible");gate.setAttribute("aria-hidden","true");document.documentElement.style.removeProperty("overflow")}
 async function submit(action){
@@ -86,7 +86,7 @@ async function init(){
   }
   style();render();
   const session=await request("session");
-  if(session.ok&&session.user?.id){window.GSC_ACCOUNT_SIGNED_IN=true;window.dispatchEvent(new CustomEvent("gsc-account-ready",{detail:{user:session.user}}));hide();return}
+  if(session.ok&&session.user?.id){window.GSC_CODE_ACCESS=!!session.user.codeAccess;window.GSC_ACCOUNT_SIGNED_IN=true;window.dispatchEvent(new CustomEvent("gsc-account-ready",{detail:{user:session.user}}));hide();return}
   if(!location.pathname.endsWith("/live-hub.html")||new URLSearchParams(location.search).get('account')==='1')show();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();

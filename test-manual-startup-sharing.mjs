@@ -10,5 +10,8 @@ const ctx={enforceCanonicalDraftNames(){},renderTournamentDraft(){},renderCourse
 vm.runInNewContext(prefix+';renderDraft()',ctx);
 assert.throws(()=>vm.runInNewContext(prefix.replace('function renderDraft(){','function renderDraft(){ document.querySelector(".newbie-guide-player").textContent="old";')+';renderDraft()',ctx),/Cannot set properties of null/);
 assert(html.includes('window.GSCLiveControl?.mount({'));
+assert(html.includes('ownerShare24h'));
+assert(!html.includes('src="./auth-gate.js"'));
 assert(html.includes('access?.role==="owner"'));
-console.log('PASS arranque manual sin guía de micrófono: regresión previa reproduce error; LIVE y permiso propietario preservados');
+assert(html.includes('window.GSCLiveControl?.mount({'));
+console.log('PASS arranque manual sin guía de micrófono: regresión previa reproduce error; LIVE preservado sin candado propietario');

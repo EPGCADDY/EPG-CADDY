@@ -30,7 +30,7 @@ export function isOwner(user){
 export async function requireOwner(req){
   if(!ownerConfigured())throw Object.assign(new Error("OWNER_NOT_CONFIGURED"),{code:"OWNER_NOT_CONFIGURED",status:503});
   const normalized=typeof req?.headers?.get==="function"?{headers:{cookie:req.headers.get("cookie")||""}}:req;
-  const user=await requireAccountSession(normalized);
+  const user=await requireAccountSession(normalized,{ownerOnly:true});
   if(!isOwner(user))throw Object.assign(new Error("OWNER_REQUIRED"),{code:"OWNER_REQUIRED",status:403});
   return user;
 }

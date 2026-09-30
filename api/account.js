@@ -1,3 +1,4 @@
+import {readCodeSession,CODE_COOKIE} from './_lib/code-access.js';
 import { clearAccessCookies } from "./_lib/app-access.js";
 import { authCookies, neonAuthRequest, sameOriginAuthCookie } from "./_lib/account-auth.js";
 import { handleAppPreflight, isAllowedAppOrigin, isNativeAppOrigin } from "./_lib/cors.js";
@@ -24,6 +25,13 @@ export default async function handler(req,res){
   if(!route||req.method!==route.method){res.setHeader("Allow",route?.method||"GET, POST");return res.status(405).json({ok:false,code:"METHOD_NOT_ALLOWED"})}
   try{
     if(req.method!=="GET"&&!isAllowedAppOrigin(req))return res.status(403).json({ok:false,code:"ORIGIN_NOT_ALLOWED"});
+    if(action==='session'){
+      const coded=await readCodeSession(req);
+      if(coded)return res.status(200).json({ok:true,user:coded,session:{codeAccess:true}});
+    }
+    if(action==='signout'&&String(req.headers.cookie||'').includes(CODE_COOKIE+'=')){
+      res.setHeader('Set-Cookie',CODE_COOKIE+'=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0');return res.status(200).json({ok:true});
+    }
     let body=null;
     if(action==="signup"||action==="signin")body=credentials(await readJson(req,32_000),action==="signup");
     else if(action==="signout")body={};
@@ -35,7 +43,7 @@ export default async function handler(req,res){
     if(upstream.ok&&["signin","signup"].includes(action)&&data?.user?.id&&String(req.headers.cookie||"").split(";").some(value=>value.trim()==="gsc_guest_mode=1"))res.setHeader("Set-Cookie",[...cookies,...clearAccessCookies()]);
     return res.status(200).json({ok:true,user:data?.user||null,session:data?.session||null});
   }catch(error){
-    const code=String(error?.code||"ACCOUNT_REQUEST_FAILED"),status=["EMAIL_INVALID","PASSWORD_INVALID","EMPTY_BODY","INVALID_JSON"].includes(code)?400:503;
+    const code=String(error?.code||"ACCOUNT_REQUEST_FAILED"),status=code==='CODE_SESSION_INVALID'?401:["EMAIL_INVALID","PASSWORD_INVALID","EMPTY_BODY","INVALID_JSON"].includes(code)?400:503;
     return res.status(status).json({ok:false,code});
   }
 }

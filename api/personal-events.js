@@ -1,3 +1,4 @@
+import {codeAccessEnabled,issueEntryCode} from './_lib/code-access.js';
 import {getDatabase} from './_lib/database.js';
 import {requireAccountSession} from './_lib/account-auth.js';
 import {isAllowedAppOrigin,handleAppPreflight} from './_lib/cors.js';
@@ -21,6 +22,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
     if(!isAllowedAppOrigin(req))throw accessError('ORIGIN_NOT_ALLOWED');
     if(database===getDatabase&&process.env.GSC_PERSONAL_ACCESS_LAB_READY!=='1')throw accessError('PERSONAL_ACCESS_NOT_ENABLED',503);
     const account=await accountResolver(req),sql=database(),body=await readJson(req,24000);await ensurePersonalAccess(sql);await limitPersonalAccess(sql,account,String(body.action||'').slice(0,24));
+    if(account.codeAccess&&account.entryRole==='viewer'&&!['identity','list','read'].includes(body.action))throw accessError('PERSONAL_WRITER_FORBIDDEN');
     if(body.action==='identity')return res.status(200).json({ok:true,personalCode:account.id,name:account.name});
     if(body.action==='redeem')return res.status(200).json(await consumePersonalInvite(sql,body,account));
     if(body.action==='list'){
@@ -45,6 +47,11 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
       const streams=await scoped`SELECT id,scope,group_label,status,revision,expires_at,updated_at,current_snapshot FROM live_streams WHERE tournament_id=${id}::uuid AND status='active' AND expires_at>now() ORDER BY id LIMIT 100`;
       res.setHeader('Set-Cookie','gsc_personal_context='+encodeURIComponent(JSON.stringify({eventId:id,eventKind:kind,accountId:account.id}))+'; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=691200');
       return res.status(200).json({ok:true,accountCode:account.id,tournament:{...rows[0],status:member.event_status,configuration:member.configuration},membership:{role:member.role,groupLabel:member.group_label,players:member.players},streams:streams.map(row=>({id:row.id,scope:row.scope,groupLabel:row.group_label,revision:Number(row.revision),snapshot:row.current_snapshot?{...row.current_snapshot,personal:true,players:(row.current_snapshot.players||[]).map(player=>({...player,participantId:id+':'+row.group_label+':'+player.id}))}:null}))});
+    }
+    if(body.action==='share-code'){
+      codeAccessEnabled();if(member.event_status!=='active'||!['organizer','player','scorer'].includes(member.role)||!member.players.length)throw accessError('PERSONAL_WRITER_FORBIDDEN');
+      const grant=await issueEntryCode(sql,{issuerId:account.id,role:'viewer',eventId:id,eventKind:kind});
+      return res.status(200).json({ok:true,...grant,url:'/code-entry.html?visitor=1'});
     }
     await organizer(sql,id,kind,account);
     if(body.action==='invite')return res.status(200).json(await issuePersonalInvite(sql,{...body,eventKind:kind},account));

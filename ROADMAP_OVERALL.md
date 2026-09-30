@@ -2217,3 +2217,60 @@ Archivo de escenario conservado: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ES
 - Vercel branch alias y deployment inmutable dpl_BcFVHEiGPSiuLHDTzafziKChBUc9/f243eb1 muestran tres controles. DOM real contiene hubShowIndividual con display:none: no fallo de enlace.
 - scores-ui.css ocultaba hubShowIndividual y hubSearchResults, y imponía tres columnas. Corregido incrementalmente a dos columnas/cuatro accesos aprobados y resultados visibles; ajustadas columnas del mismo Scores compacto para POS sin alterar ronda particular.
 - test-lab-tournament-navigation.mjs añade regresión de override CSS. Pendiente publicación Preview/revisión visual de cambios; sesión real sigue bloqueada. Producción intacta.
+
+### 30/09/2026 · Preview 410602d publicado y recorrido visible
+- Remoto rama lab/integral-round-tournament-r146-20260930: commit 410602d8371371e544a637084f025cd97ceb9e42, tree 2cf60af0b156dc747f44074364c557b748fb4993 idéntico al local f7f98b8. Deployment dpl_3RPDhSPe5nhHuQUzuBsp5EFpuJUA READY; golf-sc-gt-9gdh3se3g-epgcaddys-projects.vercel.app. Preview únicamente; no alias estable/Production/main modificados. Rollback remoto: f243eb17d5f280cc5009435bf12a9c17cd5a3cd2 / dpl_BcFVHEiGPSiuLHDTzafziKChBUc9.
+- Navegador real demo=1: cuatro accesos visibles; Buscar B 10 → GENERAL 1 / CATEGORÍA 1 → General sin búsqueda → Categoría B → doble toque detalle18 G/N / pendientes16-18 vacíos → cerrar → favorito B10 → Mis favoritos → General. DOM final category=all, rows=67, search vacío. PASS sólo consulta demo.
+- Evidencia: /workspace/scratch/3e936abcc9cb/lab-r146-busqueda-restaurada.jpg y /workspace/scratch/3e936abcc9cb/lab-r146-general-cuatro-accesos-verificado.jpg.
+- ← Score Card aún redirige a acceso privado por ausencia de sesión real: BLOQUEADO. Seis jugadores desde tarjeta, capturas persistentes, permisos con cuenta e iPhone no verificados; no 100% ni entrega final.
+
+### 30/09/2026 · diagnóstico acceso habitual / sin modificar credenciales
+- Comparado historial access.html desde b0bba28 (09/09) y account-auth en e0e11a9: flujo existente usa correo + contraseña y el mismo proveedor; no hay login por nombre implementado. vercel-gateway-auth corresponde a AI Gateway, no al propietario.
+- Recuperación de contexto confirma orden de no usar invitación 24h como sustituto y no cambiar credenciales; no recupera una vinculación verificable del identificador antiguo. Salidas antiguas del asistente que lo confundían con invitación no son evidencia.
+- Consulta sólo lectura en Neon candidato br-small-mouse-av0f24o9 / bold-block-51864691: usuario de propietario configurado tiene nombre Jaime Kirste; comparación exacta con identificador mostrado GOLF SCORE CARD@GT. devuelve false, sin otra coincidencia. No se leyeron hashes, contraseñas, sesiones ni tokens; no escritura DB.
+- BLOQUEO: desconocido el dominio/método al que corresponde la entrada guardada de iPhone. Falta metadato no secreto del sitio guardado; no inventar alias, no restablecer contraseña, no forjar sesión. No demuestra contraseña incorrecta. Producción intacta.
+
+### 30/09/2026 · orden vigente: participantes por código individual / textos fijos
+- Fuente: orden explícita 11:20 Guatemala, sustituye requisito previo de cuenta personal para participantes. Jugador: código de un uso → Registro aislado; visitante: código de un uso → Scores del evento autorizado. Sin correo, contraseña ni cuenta para participantes. Propietario conserva autenticación administrativa real; no se forja identidad ni se usa invitación como reparación de sus credenciales.
+- Gráficas: aprobadas Torneos_01_Entrada_y_Resultados.png y Torneos_04_Mapa_de_Pantallas.png recuperadas; misma tabla Scores, logo, cuatro accesos, posiciones, General/Categoría/búsqueda/favoritos y detalle 18 G/N. Ningún rediseño de tablas. Última orden: títulos/subtítulos/columnas no seleccionables; campos siguen editables.
+- Implementación LAB Preview: código hash SHA256; consumo atómico y sesión HttpOnly; rol y destino decididos en servidor. Viewer no crea eventos ni accede a Registro/respaldos. Emisión inicial jugador sólo propietario, compartir viewer sólo inscrito con roster; revocación por emisor. Compatibilidad de invitaciones antiguas conservada.
+- Criterios: Enter abre destino según rol; reutilización/expiración/forjado/revocación denegadas, un ganador entre ocho solicitudes simultáneas; visitante no escribe, sesión jugador aislada. Pruebas PGlite y middleware PASS. No equivale a recorrido real de seis jugadores.
+- Estado: cambios locales todavía no publicados al registrar este bloque. Build/regresión, gates, publicación Preview y revisión visual pendientes. No entrega integral ni 100%. Producción/main/DB primaria intactos. Rollback de publicación: remoto 410602d8371371e544a637084f025cd97ceb9e42 / dpl_3RPDhSPe5nhHuQUzuBsp5EFpuJUA; no alias estable.
+- Primer build detectó expectativa anterior de /access.html: ajustada exclusivamente a /code-entry.html por orden vigente; restricciones privadas conservadas.
+- Archivos de este bloque:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/RECORRIDO_REGISTRO_20260930.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `access.html`
+- `api/_lib/account-auth.js`
+- `api/_lib/app-access.js`
+- `api/_lib/code-access.js`
+- `api/account.js`
+- `api/app-access.js`
+- `api/personal-events.js`
+- `auth-gate.js`
+- `code-entry.html`
+- `code-entry.js`
+- `live-share.js`
+- `middleware.js`
+- `scores-ui.css`
+- `scripts/build-manual-lab.mjs`
+- `service-worker.js`
+- `test-lab-code-entry.mjs`
+- `test-live-share-middleware.mjs`
+
+- 11:54 Guatemala: orden de acotar publicación al bloque actual para enlace de revisión. Perfil técnico completo anterior PASS; añadidos límites de intentos con dirección hasheada, prueba de ventana real JS sin envío externo, mensaje código+enlace y Enter/reintento. Última ejecución test-lab-code-entry.mjs PASS. Seis jugadores desde Registro NO ejecutados; consulta demo NO sustituye ese recorrido. Publicación sólo Preview para revisión, sin declarar entrega integral.
+
+- 11:55 Guatemala: build técnico completo PASS /tmp/code-entry-final-build.log; aislamiento de respaldos reforzado antes de la autorización de eventos en middleware.js y probado en test-live-share-middleware.mjs. Títulos fijos aplicados en scores-ui.css; no revisión de seis jugadores ni iPhone certificada.
+## R146.1.1 · acceso libre a Registro · 30 septiembre 2026, 13:40 Guatemala
+
+Se retira el candado general de la aplicación. `/`, `/index.html` e Inicio llevan a Registro, y el middleware deja de redirigir a jugadores sin sesión a una pantalla propietaria o a un formulario de código. `access.html` queda como herramienta administrativa opcional para invitaciones de 24 horas; no es la puerta de Registro. Se conserva INVITAR · 24 H y el vencimiento de esa sesión invitada; al vencer, el usuario permanece en la app libre. Los APIs privados mantienen sus verificaciones de cuenta, membresía, capacidad y secreto; una apertura pública de Registro no expone torneos ni datos personales. Los códigos individuales de torneo siguen como función independiente.
+
+La versión identificable cambia a R146.1.1 en `release.json`, badge y caché PWA. Build y revisión visual/deployment están pendientes; Producción/alias estable no se modifican. Archivos: `middleware.js`, `access.html`, `index-grupal.html`, `guest-access.js`, `service-worker.js`, `release.json`, `test-live-share-middleware.mjs`, `test-owner-invitation-ui.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-v311-live-support-link.mjs`, `test-lab-r60-physical-matrix.mjs`, `test-manual-startup-sharing.mjs`, `test-lab-account-gate.mjs`, `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+
+## R146.1.1 · aclaración de invitación temporal · 30 septiembre 2026
+
+La entrada raíz (`/`, `/index.html`, `/inicio`) y Registro no cargan el módulo `auth-gate.js` ni requieren credenciales. `access.html` conserva su autenticación sólo para administrar invitaciones individuales de un uso y 24 horas; no ofrece un botón para abrir la app. Se conservan el botón INVITAR · 24 H, el canje, el aislamiento y la caducidad de la sesión invitada. Al vencer o fallar la consulta de sesión, la app permanece abierta y Registro sigue libre; sólo terminan los permisos de esa invitación. Matrices, mapa y regresiones reflejan la separación. Sin despliegue ni cambio a Production.
+
+Archivos: `index-grupal.html`, `access.html`, `guest-access.js`, `test-lab-account-gate.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-owner-invitation-ui.mjs`, `test-v311-live-support-link.mjs`, `test-lab-r60-physical-matrix.mjs`, `test-manual-startup-sharing.mjs`, `test-v405-registration-clear-final-mobile.mjs`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, ambos ROADMAPS e `INVENTARIOS_V311.lock.json`.

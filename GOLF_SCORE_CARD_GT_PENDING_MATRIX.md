@@ -6,6 +6,10 @@
 
 **Aplicación permanente:** `https://epg-caddy.vercel.app/`
 
+## Política de acceso vigente · orden del propietario · 30 septiembre 2026
+
+La entrada a la aplicación es libre: Registro, Score Card local y Scores no requieren cuenta, correo, contraseña, autenticación como propietario ni código global. El acceso opcional a respaldos y la autorización de torneos privados son capacidades separadas por recurso; no pueden bloquear la pantalla inicial. Se conserva la invitación individual de 24 horas como herramienta opcional e independiente; nunca es un requisito de entrada.
+
 Este documento contiene únicamente funciones reales del producto pendientes o previstas. No incluye auditorías, ramas, publicaciones, permisos, facturación ni administración.
 
 ## Candado de ramas — MANDATORIO
@@ -438,16 +442,11 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Separar secretos de publicación/lectura, guardar sólo SHA-256 y excluir contactos, ubicación, audio, IA, clima detallado y apuestas.
 - Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`.
 
-### 29. Acceso propietario temporal de 24 horas
+### 29. Invitación individual opcional de 24 horas · CONSERVADA
 
-**Estado:** IMPLEMENTACIÓN LAB Y BANCO DIRIGIDO PASS; IDENTIDAD, PREVIEW Y PRUEBA FÍSICA PENDIENTES · `PEND-ACC-019`
+**Estado:** CONSERVADA POR ACLARACIÓN DEL PROPIETARIO · 30 septiembre 2026. Invitación de un solo uso, con vencimiento a las 24 horas y sesión de invitado aislada. No es requisito de entrada; Registro y Score Card abren libremente.
 
-- Sólo la cuenta vinculada por `EPG_OWNER_USER_ID` puede crear o revocar un acceso.
-- El invitado recibe una instancia limpia y aislada; no recibe datos, historial, jugadores, rondas, tarjetas ni respaldo del propietario.
-- El servidor rechaza vencimiento y revocación; el cliente vuelve a validar cada 15 segundos y no admite instalación offline.
-- El reporte temporal registra únicamente apertura, modalidad, cantidad de jugadores, hoyos y número de anotaciones, nunca nombres o identidad.
-- La purga horaria comienza a las 47 horas para garantizar eliminación antes del máximo de 48 horas.
-- Antes de publicar: vincular la cuenta propietaria exacta y probar físicamente propietario, invitado, expiración, revocación, aislamiento y prohibición de crear enlaces.
+El panel de administración puede conservar autenticación propietaria para emitir, consultar o revocar invitaciones. No abre la aplicación ni protege la pantalla inicial. El vencimiento limita sólo la sesión invitada. Los códigos propios de un torneo siguen siendo permisos por evento, separados de la entrada general.
 
 ## Mejoras continuas
 

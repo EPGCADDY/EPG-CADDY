@@ -1,3 +1,6 @@
+/* Fixed labels retain their approved typography and interactive actions. */
+:is(h1,h2,h3,h4,h5,h6,th,caption,legend,label,[role="columnheader"],.summary-title,.device-closure-title,.scores-event,.scores-meta,.scores-help,.subtitle,.sub-title,#entryLead){-webkit-user-select:none;user-select:none}
+:is(input,textarea,[contenteditable="true"]){-webkit-user-select:text;user-select:text}
 .scores-heading{color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0 0 18px;text-transform:uppercase}
 .scores-heading-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .scores-heading .scores-heading-top h2{font-size:20.25px!important;line-height:1.2;margin:0;color:#31ff00}

@@ -2,9 +2,9 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 
 const html=readFileSync('index-grupal.html','utf8');
-assert.match(html,/id="clearAllRegistration">BORRAR TODO<\/button>/);
-assert.match(html,/id="clearRoundScores"[^>]*>BORRAR TODO<\/button>/);
-assert.match(html,/id="clearScoresOnly"[^>]*>BORRAR SCORES<\/button>/,"La ronda activa debe permitir borrar sólo scores");
+assert.match(html,/id="clearAllRegistration">BORRAR JUGADORES REGISTRADOS<\/button>/,"El botón de Registro borra los jugadores registrados; el BORRAR TODO de la ronda es un control independiente.");
+assert.match(html,/id="clearRoundScores"[^>]*>BORRAR RONDA Y JUGADORES<\/button>/,"La acción completa de la tarjeta conserva su texto vigente");
+assert.match(html,/id="clearScoresOnly"[^>]*>BORRAR RESULTADOS DE ESTA RONDA<\/button>/,"La ronda activa debe permitir borrar sólo sus resultados");
 assert.match(html,/function clearOnlyRoundScores\(\)[\s\S]*player\.holes=\{\}[\s\S]*JUGADORES Y RONDA CONSERVADOS/);
 const clearStart=html.indexOf("function clearAllRegistrationPlayers(){"),clearEnd=html.indexOf("function courseRatingText",clearStart),clearSource=html.slice(clearStart,clearEnd);
 assert.match(clearSource,/window\.confirm\("¿CONFIRMAS BORRAR JUGADORES, SCORES Y RONDA ACTIVA\?/);
@@ -15,8 +15,8 @@ assert.match(clearSource,/round=blankRound\(\)/);
 assert.match(clearSource,/draftPlayers=\[\];[\s\S]*?manualDraftRows=Array\.from\(\{length:6\},\(\)=>emptyManualDraftRow\(\)\);[\s\S]*?clearDraftState\(\);[\s\S]*?renderDraft\(\);/);
 assert.match(html,/\$\("clearAllRegistration"\)\.addEventListener\("click",clearAllRegistrationPlayers\)/);
 assert.match(html,/clearButton\.onclick=\(\)=>\{if\(locked\)return;clearAllRegistrationPlayers\(\)\}/);
-assert.match(html,/manual\.querySelector\("#roundManualTitle"\)\.textContent=`CONTROL MANUAL · \$\{stable\?"STABLEFORD":isFourBallRound\(\)\?"FOUR BALL":isMatchPlayRound\(\)\?"MATCH PLAY":isUniversalesRound\(\)\?"UNIVERSALES":"GENERAL"\}`/,
-  "General, Stableford, Match Play, Four Ball y Universales deben compartir el mismo render de tarjeta");
+assert.match(html,/manual\.querySelector\("#roundManualTitle"\)\.textContent="ANOTADOR"/,
+  "El panel de captura usa el título Anotador vigente");
 assert.match(clearSource,/openSetup\("new"\)/,"Tras confirmar debe mostrar Inicio limpio");
 assert.doesNotMatch(clearSource,/localStorage\.removeItem\(ROUND_ARCHIVE_KEY\)/,"otras rondas oficiales permanecen en Historial");
 assert.match(html,/function deleteRoundFromArchive\(roundId\)[\s\S]*?deleted\.add\(id\)/,"la ronda queda marcada aunque todavía no estuviera archivada");

@@ -1,5 +1,15 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## R146.1.1 · entrada libre · 30 septiembre 2026
+
+| Archivos | Función | Protección |
+|---|---|---|
+| `middleware.js`, `access.html` | Las páginas normales abren libremente; `access.html` conserva canje de invitaciones y administración propietaria sólo para emitir/revocar invitaciones de 24 horas. | Ni el panel ni la invitación son requisitos de entrada; los permisos por torneo siguen aplicando. |
+| `index-grupal.html`, `guest-access.js` | La Score Card no carga el candado de entrada global; conserva el botón de invitación individual y el aislamiento/caducidad de la sesión invitada de 24 horas. | La expiración sólo afecta al invitado; no cierra la entrada normal ni elimina permisos por torneo. |
+| `release.json`, `service-worker.js` | Identifican el candidato R146.1.1 y renuevan caché PWA. | Producción y dominio estable sin cambios. |
+| `test-live-share-middleware.mjs`, `test-owner-invitation-ui.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-v311-live-support-link.mjs`, `test-lab-r60-physical-matrix.mjs`, `test-manual-startup-sharing.mjs`, `test-lab-account-gate.mjs` | Impiden que vuelva la puerta global y comprueban que la invitación individual de 24 horas se conserva separada. | Gate técnico y build LAB. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `INVENTARIOS_V311.lock.json` | Registro doble y sello del cambio. | Gates de roadmap e inventario. |
+
 ## LAB R136 · Registro simplificado · 29 septiembre 2026
 
 | Archivo | Función | Protección |
@@ -236,12 +246,12 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 
 | Archivo | Función exacta |
 |---|---|
-| `access.html` | Pantalla privada para autenticar al propietario, crear/revocar accesos y ver el reporte anónimo. |
+| `access.html` | Ruta histórica retirada; redirige a Registro y ya no autentica al propietario. |
 | `api/_lib/app-access.js` | Identidad propietaria, token opaco, SHA-256, vigencia, revocación, métricas y purga. |
 | `api/app-access.js` | API de canje, estado, creación, revocación, feedback, reporte y limpieza. |
-| `middleware.js` | Bloqueo central de acceso y rutas privadas para invitados. |
-| `index-grupal.html` | Aislamiento local, aviso, telemetría agregada y cierre por vencimiento/revocación. |
-| `guest-access.js` | Crea el espacio de almacenamiento limpio y muestra el aviso de bitácora temporal al invitado. |
+| `middleware.js` | Registro libre; conserva sólo comprobaciones independientes de APIs y contexto de torneo. |
+| `index-grupal.html` | Elimina el login obligatorio, la invitación general y el cierre por vencimiento de acceso. |
+| `guest-access.js` | Aísla el almacenamiento de cada cuenta de torneo; ya no impone límite temporal global. |
 | `package.json` | Dependencia oficial de middleware Vercel. |
 | `vercel.json` | Limpieza horaria iniciada a las 47 horas. |
 | `test-r18-owner-guest-24h-access.mjs` | Regresión dirigida de seguridad, privacidad y caducidad. |
