@@ -53,10 +53,10 @@ await sql`UPDATE gsc_personal_members SET revoked_at=now() WHERE account_id='own
 await assert.rejects(()=>readCodeSession({headers:{cookie:CODE_COOKIE+'='+accepted.token}},sql),e=>e.code==='CODE_SESSION_INVALID');
 await db.close();
 // Exercise the real share window and message without sending anything externally.
-const controls=new Map(),control=selector=>controls.get(selector)||controls.set(selector,{textContent:'',focus(){}}).get(selector);
+const controls=new Map(),control=selector=>controls.get(selector)||controls.set(selector,{textContent:'',focus(){},addEventListener(type,handler){this['on'+type]=handler}}).get(selector);
 let rendered,copied='',shareCalls=0;
 const streamId='10000000-0000-4000-8000-000000000001';
-const shareRoot={URL,URLSearchParams,location:{origin:'https://lab.example'},localStorage:{getItem:k=>k==='golf-score-card-gt-live-control-v1'?JSON.stringify({stream:{tournamentId:streamId,publisherSecret:'test-fixture'}}):'{}'},GSCPersonalEvents:{storageSuffix:()=> 'anonymous',request:async(action,payload)=>{shareCalls++;assert.equal(action,'share-code');assert.equal(payload.eventId,streamId);return{ok:true,code:'FIXTURE-NOT-A-CREDENTIAL'}}},navigator:{clipboard:{writeText:async text=>{copied=text}}},document:{activeElement:{focus(){}},getElementById:()=>null,createElement:()=>({setAttribute(){},querySelector:control}),body:{appendChild:panel=>{rendered=panel}},addEventListener(){},removeEventListener(){}}};
+const shareRoot={URL,URLSearchParams,location:{origin:'https://lab.example'},localStorage:{getItem:k=>k==='golf-score-card-gt-live-control-v1'?JSON.stringify({stream:{tournamentId:streamId,publisherSecret:'test-fixture'}}):'{}'},GSCPersonalEvents:{storageSuffix:()=> 'anonymous',descriptor:token=>token==='personal_'+streamId?{eventId:streamId,eventKind:'tournament'}:null,request:async(action,payload)=>{shareCalls++;assert.equal(action,'share-code');assert.equal(payload.eventId,streamId);return{ok:true,code:'FIXTURE-NOT-A-CREDENTIAL'}}},navigator:{clipboard:{writeText:async text=>{copied=text}}},document:{activeElement:{focus(){}},getElementById:()=>null,createElement:()=>({setAttribute(){},querySelector:control}),body:{appendChild:panel=>{rendered=panel}},addEventListener(){},removeEventListener(){}}};
 vm.runInNewContext(fs.readFileSync('live-share.js','utf8'),shareRoot);
 assert.equal((await shareRoot.GSCOneUseLive.share('tournament',streamId,'DEMO')).ok,true);
 assert.equal(shareCalls,1);assert.equal(control('output').textContent,'FIXTURE-NOT-A-CREDENTIAL');

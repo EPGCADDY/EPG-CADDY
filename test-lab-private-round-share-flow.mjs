@@ -28,3 +28,8 @@ const cancelled=setup({cancel:true});await cancelled.make('[data-create-private]
 assert.equal(cancelled.panel.removed,undefined,'Cancelling the share sheet keeps recovery actions visible');assert.match(cancelled.make('[data-status]').textContent,/COMPARTIR CANCELADO/);
 await cancelled.make('[data-continue-private-round]').onclick();assert.ok(cancelled.panel.removed);assert.ok(cancelled.calls.some(call=>call.type==='request'&&call.body.action==='read'));assert.match(cancelled.assigned[0],/manual_action=personal-scorecard/);
 console.log('PASS R147 private round share: code → WhatsApp/native recipients → Score Card; cancellation preserves retry and direct continuation.');
+
+const tournament=setup();tournament.context.GSCPersonalEvents.presentCreatedTournament({eventId,name:'Copa Santa Delfina',joinCode:'ABCD234567'});
+assert.equal(tournament.make('h3').textContent,'TORNEO CREADO');await tournament.make('[data-share-private-round]').onclick();
+assert.match(tournament.calls.find(call=>call.type==='share').payload.text,/el torneo Copa Santa Delfina/);assert.match(tournament.assigned[0],/personalKind=tournament/);
+console.log('PASS R147.2 tournament: creation code, WhatsApp/native sharing, closed dialog and return to assigned tournament Score Card');

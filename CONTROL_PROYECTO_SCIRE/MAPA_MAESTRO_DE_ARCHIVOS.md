@@ -1472,3 +1472,18 @@ Rollback: quitar activación Preview y volver solo LAB al commit a757809; ningun
 - `release.json`, `index-grupal.html`, `service-worker.js`: release, distintivo y fallback de caché R147.1.
 - `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`: alcance y estado de la integración.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello regenerado para esta revisión.
+
+## R147.2 · compartir LIVE y tipografía legible · 30 septiembre 2026
+- `live-share.js`: selecciona la API según el evento y retorna a Score Card después de compartir.
+- `private-rounds.js`: cierra el modal sólo al completar el envío, muestra fallos de COMPARTIR LIVE y amplía la fuente de Scores.
+- `test-lab-private-rounds.mjs`, `test-lab-code-entry.mjs`, `test-lab-first-open.mjs`: cubren selección de API, retorno/cancelación, tipografía, evento personal y aviso R147.2.
+- `release.json`, `index-grupal.html`, `service-worker.js`: release R147.2 y caché actualizada.
+- Ambos ROADMAPS, PEND-LIVE-018, continuidad, reincidencias e inventario documentan alcance/estado.
+
+### R147.2 · sincronización MI RONDA y doble toque Scores
+Se conserva incrementalmente MI RONDA de f6ac0dd (otra conversación), sin restaurar controles antiguos. `scores-ui.js` admite doble clic explícito y doble toque hasta 600 ms: muestra 18 hoyos con X, cuyo cierre conserva los resultados. Archivos: `index-grupal.html`, `private-rounds.js`, `scores-ui.js`, `test-scores-ui.mjs`, `test-lab-registration-private-rounds-entry.mjs`, `scripts/build-manual-lab.mjs`. Pruebas y Preview pendientes de integración.
+
+## R147.2 · Torneos sin credenciales y recorrido completo · 30 septiembre 2026
+Orden expresa: mismo flujo de crear ronda, código, compartir y regreso a Score Card para torneo; General, Categorías, Buscar, estrellas/Mis favoritos y doble toque→18 scores→X. Se añade identidad automática por dispositivo con cookie HttpOnly y token aleatorio de 256 bits, hash en base LAB y pertenencia por evento. No se exige correo/contraseña al crear. Los accesos de lector conservan rol y otros dispositivos no reciben propiedad. `personal-events.js` prepara identidad automática y comparte torneo antes de abrir tarjeta asignada. `live-hub.js` añade detalle en Favoritos, busca entre categorías, selecciona categoría disponible y conserva nombre real del evento; no se agrega Seguros Universales. `scores-ui.css` unifica fuente Arial, tamaños, logo a la derecha, fondo y bordes de las referencias.
+Archivos: `api/_lib/device-event-identity.js`, `api/_lib/account-auth.js`, `api/personal-events.js`, `personal-events.js`, `live-hub.js`, `scores-ui.css`, `test-lab-device-event-identity.mjs`, `test-lab-private-round-share-flow.mjs`, `test-lab-registration-return-state.mjs`, `scripts/build-manual-lab.mjs`.
+Pruebas dirigidas PASS: identidad sin credenciales, crear/leer con roster, rechazo de otro dispositivo, token falso/vencido y lector; compartir torneo→Score Card; doble clic/toque→18 posiciones→X. Banco LAB actualizado EN CURSO; publicación, navegador real y aceptación física pendientes. El commit previo 646598b quedó local: git push falló por ausencia de credenciales; se usa conector GitHub para siguiente publicación.

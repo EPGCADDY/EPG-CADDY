@@ -34,4 +34,4 @@ assert.equal(staleElements.mandatoryUpdateButton.disabled,false);
 assert.equal(staleElements.mandatoryUpdateButton.ariaDisabled,'false');
 assert.equal(staleAvailable,true);
 assert.equal(staleElements.appReleaseBadge.textContent,'VERSIÓN R147 · ÚLTIMA '+JSON.parse(fs.readFileSync('release.json')).label);
-console.log('PASS R147.1 update discovery: installed R147 enables ACTUALIZAR for the published release');
+console.log(`PASS update discovery: installed R147 enables ACTUALIZAR for published ${JSON.parse(fs.readFileSync('release.json')).label}`);

@@ -1,6 +1,7 @@
 import {codeAccessEnabled,issueEntryCode} from './_lib/code-access.js';
 import {getDatabase} from './_lib/database.js';
 import {requireAccountSession} from './_lib/account-auth.js';
+import {readDeviceEventIdentity,createDeviceEventIdentity} from './_lib/device-event-identity.js';
 import {isAllowedAppOrigin,handleAppPreflight} from './_lib/cors.js';
 import {noStore,readJson} from './_lib/http.js';
 import {handleLive} from './live.js';
@@ -9,6 +10,16 @@ import {accessError,eventKind,eventScope,ensurePersonalAccess,personalMember,org
 
 const modes=['general','match_play','four_ball','stableford','universales'];
 const categories=['championship','a','b','c','d','female','senior','super_senior'];
+export async function resolveEventIdentity(req,res,sql,action,resolver=requireAccountSession){
+  const cookie=String(req.headers?.cookie||'');
+  if(/(?:^|;\s*)gsc_code_session=/.test(cookie))return resolver(req);
+  const device=await readDeviceEventIdentity(req,sql);if(device)return device;
+  if(resolver===requireAccountSession&&action==='identity'&&!/session[_-]token|neon.*session|auth.*session/i.test(cookie))return createDeviceEventIdentity(res,sql);
+  try{return await resolver(req)}catch(error){
+    if(resolver===requireAccountSession&&action==='identity'&&error.code==='ACCOUNT_UNAUTHORIZED')return createDeviceEventIdentity(res,sql);
+    throw error;
+  }
+}
 function configuration(body){
   const course=String(body.course||'').trim().slice(0,120),playedAt=String(body.playedAt||'');
   if(!course||!/^\d{4}-\d{2}-\d{2}$/.test(playedAt)||!Number.isFinite(new Date(playedAt).getTime())||new Date(playedAt).toISOString().slice(0,10)!==playedAt||!modes.includes(body.mode))throw accessError('PERSONAL_CONFIGURATION_INVALID',400);
@@ -21,7 +32,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
   try{
     if(!isAllowedAppOrigin(req))throw accessError('ORIGIN_NOT_ALLOWED');
     if(database===getDatabase&&process.env.GSC_PERSONAL_ACCESS_LAB_READY!=='1')throw accessError('PERSONAL_ACCESS_NOT_ENABLED',503);
-    const account=await accountResolver(req),sql=database(),body=await readJson(req,24000);await ensurePersonalAccess(sql);await limitPersonalAccess(sql,account,String(body.action||'').slice(0,24));
+    const sql=database(),body=await readJson(req,24000),account=await resolveEventIdentity(req,res,sql,body.action,accountResolver);await ensurePersonalAccess(sql);await limitPersonalAccess(sql,account,String(body.action||'').slice(0,24));
     if(account.codeAccess&&account.entryRole==='viewer'&&!['identity','list','read'].includes(body.action))throw accessError('PERSONAL_WRITER_FORBIDDEN');
     if(body.action==='identity')return res.status(200).json({ok:true,personalCode:account.id,name:account.name});
     if(body.action==='redeem')return res.status(200).json(await consumePersonalInvite(sql,body,account));

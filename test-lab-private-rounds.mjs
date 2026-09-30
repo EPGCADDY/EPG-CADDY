@@ -37,6 +37,29 @@ assert.doesNotMatch(panel.innerHTML,/SECRET1234|CÓDIGO PARA COMPARTIR|COMPARTIR
 assert.match(nodes['[data-scores]'].innerHTML,/class="private-score-under">-2/);
 assert.match(nodes['[data-scores]'].innerHTML,/class="private-score-over">\+2/);
 console.log('PASS R141: Scores-only creator view hides code; negative green and positive red');
+// Sharing a legacy private round must use its publisher API even though the
+// personal-events module is present, and successful sharing returns to the card.
+{
+ const shareStorage=new Map([['golf-score-card-gt-live-control-v1',JSON.stringify({version:1,privateStream:{tournamentId:id,publisherSecret:secret}})]]),shareCalls=[];
+ const elements=new Map();let sharePanelRemoved=false,privatePanelClosed=0;
+ const element=()=>({textContent:'',href:'',onclick:null,focus(){},addEventListener(){}});
+ const sharePanel={id:'gscOneUseShare',className:'',innerHTML:'',setAttribute(){},remove(){sharePanelRemoved=true},querySelector(selector){if(!elements.has(selector))elements.set(selector,element());return elements.get(selector)}};
+ const shareContext={URL,URLSearchParams,encodeURIComponent,localStorage:{getItem:key=>shareStorage.get(key)||null,setItem:(key,value)=>shareStorage.set(key,value)},location:{origin:'https://gsc.example',href:'https://gsc.example/live-hub.html'},document:{activeElement:element(),getElementById:key=>key==='gscOneUseShare'&&!sharePanelRemoved?sharePanel:null,createElement:()=>sharePanel,body:{appendChild(){}},addEventListener(){},removeEventListener(){}},navigator:{share:async()=>{},clipboard:{writeText:async()=>{}}},setTimeout:()=>0,clearTimeout(){},GSCPrivateRounds:{close(){privatePanelClosed++}},GSCPersonalEvents:{storageSuffix:()=> 'anonymous',descriptor:()=>null,request:async()=>{throw Error('legacy private event must not call personal-events')}} ,fetch:async(url,options)=>{shareCalls.push({url,body:JSON.parse(options.body)});return{ok:true,json:async()=>({ok:true,code:'ABCD23456789',name:'Golf amigos'})}}};
+ vm.runInNewContext(fs.readFileSync('live-share.js','utf8'),shareContext);
+ const result=await shareContext.GSCOneUseLive.share('private',id,'Golf amigos');assert.equal(result.ok,true);assert.equal(shareCalls[0].url,'/api/live-share');assert.equal(shareCalls[0].body.action,'create');
+ await elements.get('[data-native-share]').onclick();assert.equal(sharePanelRemoved,true);assert.equal(privatePanelClosed,1,'Successful share returns to the Score Card');
+}
+// The code-only share action also closes its overlay only after successful send;
+// cancel keeps it open so the owner can retry or continue manually.
+async function verifyCodeShare(share){
+ let removed=false;const nodes=new Map();const panel={style:{},innerHTML:'',setAttribute(){},remove(){removed=true},querySelector(selector){if(!nodes.has(selector))nodes.set(selector,{textContent:'',onclick:null,classList:{add(){} }});return nodes.get(selector)}};
+ const context={document:{createElement:()=>panel,body:{appendChild(){}},getElementById:()=>null},localStorage:{getItem:key=>JSON.stringify(key.includes('private-round')?{id:'private',name:'Cuates',creator:true,joinCode:'ABCD234567',viewerToken:'viewer',roundId:'active',expiresAt:'2099-01-01'}:{id:'active'})},GSCLiveControl:{request:async()=>({ok:true,streams:[]})},navigator:{share},setTimeout:()=>1,clearTimeout(){}};
+ vm.runInNewContext(fs.readFileSync('private-rounds.js','utf8'),context);await context.GSCPrivateRounds.open({id:'active',configured:true});await nodes.get('#privateShare').onclick();return{removed,panel,nodes};
+}
+const sharedCode=await verifyCodeShare(async()=>{});assert.equal(sharedCode.removed,true);
+const cancelledCode=await verifyCodeShare(async()=>{const error=new Error('cancel');error.name='AbortError';throw error});assert.equal(cancelledCode.removed,false);
+const privateRoundSource=fs.readFileSync('private-rounds.js','utf8');assert.match(privateRoundSource,/font-size:clamp\(15px,4vw,18px\)/);assert.match(privateRoundSource,/font-size:clamp\(13px,3\.4vw,15px\)/);
+console.log('PASS R147.2 regressions: legacy COMPARTIR LIVE API selection; native-share success closes overlays to Score Card; cancel preserves retry; private Scores type is larger');
 // Closed personal rounds remain in the authorized history, without duplicating legacy rows.
 const buttons=new Map();nodes['[data-rounds]']={innerHTML:'',querySelector:key=>{if(!buttons.has(key))buttons.set(key,{});return buttons.get(key)}};
 scoreContext.GSCLiveControl.request=async()=>({ok:true,rounds:[{id:'same',name:'Legacy'}]});

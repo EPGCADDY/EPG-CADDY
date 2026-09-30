@@ -1,4 +1,5 @@
 import {readCodeSession} from './code-access.js';
+import {readDeviceEventIdentity} from './device-event-identity.js';
 const DEFAULT_NEON_AUTH_URL="https://ep-dawn-hall-av9jmqel.neonauth.c-11.us-east-1.aws.neon.tech/neondb/auth";
 
 export function neonAuthUrl(){
@@ -21,6 +22,8 @@ export async function neonAuthRequest(path,{method="GET",cookie="",body=null}={}
 
 export async function requireAccountSession(req,{ownerOnly=false}={}){
   if(!ownerOnly){const coded=await readCodeSession(req);if(coded)return coded;}
+  if(!ownerOnly){const device=await readDeviceEventIdentity(req);if(device)return device;}
+  if(!String(req.headers.cookie||'').trim())throw Object.assign(new Error('ACCOUNT_UNAUTHORIZED'),{code:'ACCOUNT_UNAUTHORIZED'});
   let response;
   try{response=await neonAuthRequest("/get-session",{cookie:req.headers.cookie||""})}
   catch{throw Object.assign(new Error("ACCOUNT_AUTH_UNAVAILABLE"),{code:"ACCOUNT_AUTH_UNAVAILABLE"})}

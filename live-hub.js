@@ -182,8 +182,8 @@
     const visible=displayStreams(),streams=favoriteStreams(allTournamentStreams()),target=$("hubFavorites"),resolved=resolveFollows({...state,follows:state.follows.filter(item=>!root.GSCPersonalEvents?.descriptor(item.token)||root.GSCPersonalEvents.membership(item.token))},streams,externalStreams);if(!target)return;const rankByPlayer=new Map();for(const tournamentMap of tournamentStreams.values())for(const item of buildLeaderboard(tournamentMap,false))rankByPlayer.set(item.streamId+":"+item.playerId,item.rankLabel);for(const item of buildLeaderboard(visible,false))rankByPlayer.set(item.streamId+":"+item.playerId,item.rankLabel);
     if(root.GSCScoresUI&&!root.document.body.classList.contains('public-display')){
       const rows=uniqueFavoritePlayers(resolved).flatMap(row=>row.stream&&row.players.length?row.players.map(player=>({player,snapshot:row.stream.snapshot,item:row.item})):[{unavailable:true,item:row.item}]);
-      target.innerHTML=rows.length?rows.map(row=>row.unavailable?'<article class="scores-favorite"><header><h3>'+escapeHtml(row.item.label)+'</h3><button type="button" data-score-remove="'+escapeHtml(row.item.key)+'" aria-label="Quitar favorito '+escapeHtml(row.item.label)+'">★</button></header><p>ENLACE NO DISPONIBLE, CADUCADO O REVOCADO</p></article>':'<article class="scores-favorite"><header><h3>'+escapeHtml(row.player.name)+'</h3><button type="button" data-score-remove="'+escapeHtml(row.item.key)+'" aria-label="Quitar favorito '+escapeHtml(row.player.name)+'">★</button></header><small>'+escapeHtml(categoryLabel(row.player.tournamentCategory))+'</small><p>G/N = GROSS / NETO</p>'+root.GSCScoresUI.grid(row.player)+'</article>').join(''):'<div class="empty">TODAVÍA NO TIENES FAVORITOS DISPONIBLES.</div>';
-      target.querySelectorAll('[data-score-remove]').forEach(button=>button.onclick=()=>{state=removeFollowFromState(state,button.dataset.scoreRemove);saveState();renderAll()});return;
+      target.innerHTML=rows.length?rows.map((row,index)=>row.unavailable?'<article class="scores-favorite"><header><h3>'+escapeHtml(row.item.label)+'</h3><button type="button" data-score-remove="'+escapeHtml(row.item.key)+'" aria-label="Quitar favorito '+escapeHtml(row.item.label)+'">★</button></header><p>ENLACE NO DISPONIBLE, CADUCADO O REVOCADO</p></article>':'<article class="scores-favorite" data-score-player="'+index+'" tabindex="0"><header><h3>'+escapeHtml(row.player.name)+'</h3><button type="button" data-score-remove="'+escapeHtml(row.item.key)+'" aria-label="Quitar favorito '+escapeHtml(row.player.name)+'">★</button></header><small>'+escapeHtml(categoryLabel(row.player.tournamentCategory))+'</small><p>G/N = GROSS / NETO</p>'+root.GSCScoresUI.grid(row.player)+'</article>').join(''):'<div class="empty">TODAVÍA NO TIENES FAVORITOS DISPONIBLES.</div>';
+      root.GSCScoresUI.bindRows(target,rows.map(row=>({...row,eventName:row.item.tournamentLabel||general?.name})));target.querySelectorAll('[data-score-remove]').forEach(button=>button.onclick=()=>{state=removeFollowFromState(state,button.dataset.scoreRemove);saveState();renderAll()});return;
     }
     target.innerHTML=resolved.length?uniqueFavoritePlayers(resolved).map(item=>favoriteCard(item,rankByPlayer)).join(""):'<div class="empty">EN EL MONITOR DEL TORNEO, BUSCA UN JUGADOR Y TOCA + SEGUIR.</div>';
     target.querySelectorAll("[data-favorite-detail]").forEach(detail=>detail.ontoggle=()=>{if(detail.open)expandedFavorites.add(detail.dataset.favoriteDetail);else expandedFavorites.delete(detail.dataset.favoriteDetail)});
@@ -382,9 +382,10 @@
     $("hubShowIndividual")?.classList.toggle("active",add);
     $("hubAddToBoard")?.classList.toggle("active",individual);
     if(tournamentPortalOpen){setStatus("ELIGE UN TORNEO","warning");return}
-    if(kind==="general"||categories){
+    if(kind==="general"||categories||add){
       if($("hubSearch"))$("hubSearch").value="";
     }
+    if(add&&$("hubCategory"))$("hubCategory").value="all";
     if(kind==="general"){
       if($("hubCategory"))$("hubCategory").value="all";
       categoryCardOpen=false;
@@ -393,7 +394,7 @@
     if(categories){
       const select=$("hubCategory"),assignedCategories=[...new Set((root.GSCPersonalEvents?.membership(state.generalToken)?.players||[]).map(player=>player.tournamentCategory).filter(category=>Object.hasOwn(CATEGORY_LABELS,category)))];
       if(select&&assignedCategories.length===1)select.value=assignedCategories[0];
-      else if(select&&select.value==="all")select.value="championship";
+      else if(select&&select.value==="all")select.value=Object.keys(categoryIndex(displayStreams())).find(key=>Object.hasOwn(CATEGORY_LABELS,key))||"championship";
       categoryCardOpen=true;renderAll();
       setTimeout(()=>$("hubCategory")?.focus(),0);
     }
@@ -417,7 +418,7 @@
   }
   async function openRoundCreate(){
     const identity=await root.GSCPersonalEvents.request("identity");
-    if(!identity.ok){setStatus(root.GSCPersonalEvents.message(identity.code),"warning");if(identity.code==="ACCOUNT_UNAUTHORIZED")root.GSCOpenAccountLogin?.();return false}
+    if(!identity.ok){setStatus(root.GSCPersonalEvents.message(identity.code),"warning");return false}
     return setRoundCreateDialogOpen(true);
   }
   function roundCreateMessage(value,tone="warning"){const message=$("hubRoundDialogStatus");if(message)message.textContent=value;setStatus(value,tone)}
@@ -431,7 +432,7 @@
     if(!course||!playedAt||!categories.length){roundCreateMessage("COMPLETA CAMPO, FECHA Y CATEGORÍAS");if(okButton)okButton.disabled=false;return false}
     let response;try{response=await root.fetch("/api/personal-events",{method:"POST",headers:{"Content-Type":"application/json"},cache:"no-store",credentials:"same-origin",body:JSON.stringify({action:"create",eventKind:"tournament",name,mode,course,playedAt,categories,players:registrationEventDraft()?.players||[],groupLabel:registrationEventDraft()?.groupLabel||""})});}catch{roundCreateMessage("NO SE PUDO CREAR EL TORNEO · REVISA TU CONEXIÓN");if(okButton)okButton.disabled=false;return false}
     const result=await response.json().catch(()=>null);
-    if(!response.ok||!result?.viewerToken){if(result?.code==="ACCOUNT_UNAUTHORIZED")root.GSCOpenAccountLogin?.();const message=result?.code==="42703"?"TORNEOS NO DISPONIBLES · FALTA ACTUALIZAR EL SERVIDOR":result?.code==="DATABASE_NOT_CONFIGURED"||result?.code==="DATABASE_MIGRATION_REQUIRED"?"LIVE NO ESTÁ ACTIVADO EN LA BASE CENTRAL":root.GSCPersonalEvents?.message(result?.code)||"NO SE PUDO CREAR EL TORNEO";roundCreateMessage(message);if(okButton)okButton.disabled=false;return false}
+    if(!response.ok||!result?.viewerToken){const message=result?.code==="42703"?"TORNEOS NO DISPONIBLES · FALTA ACTUALIZAR EL SERVIDOR":result?.code==="DATABASE_NOT_CONFIGURED"||result?.code==="DATABASE_MIGRATION_REQUIRED"?"LIVE NO ESTÁ ACTIVADO EN LA BASE CENTRAL":root.GSCPersonalEvents?.message(result?.code)||"NO SE PUDO CREAR EL TORNEO";roundCreateMessage(message);if(okButton)okButton.disabled=false;return false}
     try{root.sessionStorage.removeItem("gsc-registration-event-draft-v1")}catch{}
     const saved=upsertTournamentState(state,result.viewerToken,name);
     if(saved.full){roundCreateMessage("YA TIENES 5 TORNEOS GUARDADOS");if(okButton)okButton.disabled=false;return false}
@@ -443,7 +444,7 @@
       root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify({label:name,id:result.tournamentId,joinCode:result.joinCode,mode,configuration:result.configuration,personal:true,roundId:"",connected:false}));
       const roundTokens=JSON.parse(root.localStorage.getItem(ROUND_TOURNAMENTS_KEY)||"[]"),safeTokens=Array.isArray(roundTokens)?roundTokens.filter(token=>tokenOk(token)&&token!==result.viewerToken):[];safeTokens.push(result.viewerToken);root.localStorage.setItem(ROUND_TOURNAMENTS_KEY,JSON.stringify(safeTokens.slice(-MAX_SAVED_TOURNAMENTS)));
     }catch{roundCreateMessage("NO SE PUDO PREPARAR LA TARJETA DE SCORE");if(okButton)okButton.disabled=false;return false}
-    const refreshed=await root.GSCPersonalEvents.sync(),item=refreshed.items?.find(item=>item.event.eventId===result.eventId);setRoundCreateDialogOpen(false);if(item){state=upsertTournamentState(state,item.token,item.label).state;saveState();await selectSavedTournament(item.token);await root.GSCPersonalEvents.organization(item.token)}return true;
+    const refreshed=await root.GSCPersonalEvents.sync(),item=refreshed.items?.find(item=>item.event.eventId===result.eventId);setRoundCreateDialogOpen(false);if(item){state=upsertTournamentState(state,item.token,item.label).state;saveState();await selectSavedTournament(item.token);root.GSCPersonalEvents.presentCreatedTournament(result)}return true;
   }
   async function start(){
     // Render the authorized entry immediately while account verification is pending.
