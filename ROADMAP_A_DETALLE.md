@@ -24,8 +24,7 @@
 
 ## R144 ¬∑ 30 septiembre 2026 ¬∑ candidato local en curso, NO entregado
 
-- Base recuperada: LAB R143 `013f046c44bd3b793ac86c5f02abb034c589badd`; matriz aprobada `Matriz_Acceso_Ronda_y_Torneo.md`, versi√≥n 4 de Library, 30 septiembre 2026. Producci√≥n no modiµ®•z∫ËØ
-‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^ficada; sin push, despliegue ni migraci√≥n remota.
+- Base recuperada: LAB R143 `013f046c44bd3b793ac86c5f02abb034c589badd`; matriz aprobada `Matriz_Acceso_Ronda_y_Torneo.md`, versi√≥n 4 de Library, 30 septiembre 2026. Producci√≥n no modificada; sin push, despliegue ni migraci√≥n remota.
 - Scores compartido en Torneos y Ronda Particular: t√≠tulo 20.25 px, logo horizontal original 145 px, metadatos reales 16 px, tabla compacta, favoritos personales y detalle por doble toque con 18 G/N en dos filas de nueve. Ausentes = ‚Äî; X/Escape cierran sin cambiar filtro. B√∫squeda actualiza tabla; favoritos caducados se pueden quitar.
 - Regresi√≥n heredada ajustada a aprobaciones vigentes (CREAR EVENTO, GENERAL/CATEGOR√çA y actualizaci√≥n expl√≠cita), sin retirar verificaciones de c√°lculo, navegaci√≥n o funciones retiradas. Build t√©cnico completo repetido tras integraci√≥n de cuatro regresiones nuevas: PASS.
 - Revisi√≥n Firefox 390√ó844: GENERAL, CATEGOR√çA, estrella independiente, favorito con 18 posiciones y X/Escape PASS, sin errores JS. Evidencia local temporal `/tmp/golf-mobile-detail.png`, `/tmp/golf-mobile-favorites.png`; fixture demo identificado, no datos reales. Ronda Particular revisada mediante fixture de API aislado; no equivale a prueba de backend real.
@@ -133,8 +132,7 @@ La captura f√≠sica `IMG_3615.png` demuestra que `FINALIZAR RONDA` habilita corre
 
 `test-v397-card-in-out-back-contract.mjs` construye una Tarjeta Global Universales de cuatro jugadores, ejecuta la funci√≥n en un entorno controlado y rechaza cualquier implementaci√≥n que llame a compartir despu√©s de perder la activaci√≥n. Release/cach√© avanzan a `V407-R29-DIGITAL-CARD-SHARE-20260913`. Estado autom√°tico dirigido PASS; queda pendiente Preview y recorrido f√≠sico en iPhone.
 
-Archivos exactos: `index-grupal.html`, `service-worker.js`, `test-v397-card-in-out-back-contract.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r25-round-controls.mjs`, `test-v407-r7-ios-scroll.mjs`, `testµ®•z∫ËØ
-‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^-v407-r9-manual-update.mjs`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+Archivos exactos: `index-grupal.html`, `service-worker.js`, `test-v397-card-in-out-back-contract.mjs`, `test-v365-active-round-empty-recovery.mjs`, `test-v406-r2-professional-design.mjs`, `test-v406-r23-visible-version.mjs`, `test-v406-r4-mobile-controls.mjs`, `test-v406-r5-simple-tournament-live.mjs`, `test-v407-r1-premium-visual-system.mjs`, `test-v407-r25-round-controls.mjs`, `test-v407-r7-ios-scroll.mjs`, `test-v407-r9-manual-update.mjs`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
 
 ## V407-R24D LAB ¬∑ service worker recuperable y control sin traslape ¬∑ 9 de septiembre de 2026
 
@@ -285,8 +283,7 @@ Cabecera LIVE de categor√≠a: fecha autom√°tica en zona `America/Guatemala`, nomb
 
 La Vista detallada de categor√≠a no es una Score Card nueva. Deriva en memoria una matriz temporal con la cantidad real de inscritos en esa categor√≠a ‚Äî14, 20, 22, 30 u otra‚Äî desde las Score Cards publicadas por sus foursomes; no existe cupo fijo ni filas de relleno por categor√≠a. Mezcla todos los grupos y ordena de l√≠der a peor resultado tras cada actualizaci√≥n. Muestra hoyos 1‚Äì18 como Gross/Neto/resultado y totales IN/OUT/TOTAL, sin escribir, archivar, exportar ni duplicar scores. El foursome se conserva √∫nicamente como referencia secundaria.
 
-Capacidad garantizada por servidor: una Score Card publica entre 1 y 6 jugadores y el conglomerado se pagina por grupos. `api/live.js` toma bloqueo `FOR UPDATE` del torneo en las operaciones de publicar y unir, vuelve a contar los jugadores visibles activos dentro de la misma senteµ®•z∫ËØ
-‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^ncia y rechaza cualquier resultado superior a 100 con `409 LIVE_TOURNAMENT_CAPACITY_REACHED`. `test-v406-tournament-categories.mjs` conserva el contrato del l√≠mite, la transacci√≥n y su mensaje visible.
+Capacidad garantizada por servidor: una Score Card publica entre 1 y 6 jugadores y el conglomerado se pagina por grupos. `api/live.js` toma bloqueo `FOR UPDATE` del torneo en las operaciones de publicar y unir, vuelve a contar los jugadores visibles activos dentro de la misma sentencia y rechaza cualquier resultado superior a 100 con `409 LIVE_TOURNAMENT_CAPACITY_REACHED`. `test-v406-tournament-categories.mjs` conserva el contrato del l√≠mite, la transacci√≥n y su mensaje visible.
 
 Pendiente f√≠sico: capturas y recorrido en iPhone/Safari de Registro, TORNEO LIVE, Mi Tablero y tarjetas. Producci√≥n permanece intacta.
 
@@ -450,8 +447,7 @@ La prueba f√≠sica de V326-R2 qued√≥ rechazada. Despu√©s de unas seis preguntas, 
 | `api/voice-health.js` | `ALLOWLIST / NO CONTENT / 202` | Conserva s√≥lo etapa, build, contexto, n√∫mero de turno, duraci√≥n, herramienta y banderas t√©cnicas; descarta pregunta, transcripci√≥n, nombre, GPS y credenciales. |
 | `api/_lib/traffic.js` | `AMBIGUOUS DESTINATION ‚Üí ONE QUESTION` | Una ruta inexistente o un destino fragmentario pide nombre completo, zona o municipio. La ruta exacta El Pult√© Golf ‚Üí Pradera Concepci√≥n permanece calculable. |
 | `api/universal-ai.js` | `TEXT TRAFFIC CLARIFICATION` | El canal de texto tampoco invoca tr√°fico con un fragmento ambiguo y, si el proveedor no identifica la ruta, formula solamente una pregunta breve. |
-| `test-v327-tool-followup-no-silence.mjs` | `550 TOOL/AUDIO SEQUENCES + 100 PRIVACY EVENTS` | Prueba cierres antes y despu√©s de crear el follow-up, con y sin ID, audio final, vigilancia de entrada/reproducci√≥n, recuperaci√≥n de canal, aclaraci√≥n de destinµ®•z∫ËØ
-‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^o y exclusi√≥n de contenido privado. |
+| `test-v327-tool-followup-no-silence.mjs` | `550 TOOL/AUDIO SEQUENCES + 100 PRIVACY EVENTS` | Prueba cierres antes y despu√©s de crear el follow-up, con y sin ID, audio final, vigilancia de entrada/reproducci√≥n, recuperaci√≥n de canal, aclaraci√≥n de destino y exclusi√≥n de contenido privado. |
 | `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs` | `REGRESSION-V327` | Conservan VAD 2.2 s, entrada 15/90 s, respuesta 30 s, contexto largo, b√∫squeda universal y tr√°fico real. |
 | `service-worker.js` | `gscg-mobile-v327-tool-followup-no-silence` | Fuerza al iPhone a sustituir la copia V326-R2. |
 | `audit-project.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs` | `BUILD/CACHE-V327` | Toda la regresi√≥n exige el nuevo corte sin alterar funciones anteriores. |
@@ -854,8 +850,7 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 
 - Rama √∫nica: `codex/v407-r14-safe-update-cards`, nacida de `main` R10 despu√©s de sincronizar y rechazar el HTML truncado de R13.
 - `index-grupal.html`: ACTUALIZAR permanece verde, parpadeante y habilitado; cada toque conserva la ronda, limpia workers/cach√©s y recarga el release publicado.
-- `serviceµ®•z∫ËØ
-‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^-worker.js`: release y cach√© avanzan juntos a `V407-R14-PERSISTENT-MANUAL-UPDATE-20260908`.
+- `service-worker.js`: release y cach√© avanzan juntos a `V407-R14-PERSISTENT-MANUAL-UPDATE-20260908`.
 - `card-artifacts.js`: categor√≠a opcional peque√±a arriba del nombre en tarjetas Global/Personal; si no existe, no se inventa. Universales muestra leyenda y puntos por hoyo/totales en rojo.
 - `scripts/card-audit-fixtures.mjs` y `test-card-artifacts.mjs`: diez tarjetas reproducibles y candados de categor√≠as/puntos.
 - Pruebas V365/V406/V407: sincronizadas con R14 y con el estado visible permanente.
@@ -896,8 +891,7 @@ Solicitud: **24 de agosto de 2026**. Alcance: hacer que el registro Stableford u
 - Cobertura preventiva R21: `test-r18-owner-guest-24h-access.mjs` bloquea el canje por GET y valida fragmento + POST; `test-v311-live-support-link.mjs` exige que INVITAR 24 H permanezca dentro de la barra. La causa y prevenci√≥n quedan asentadas en `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`.
 - Cierre remoto R21: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` se resellan juntos contra el √°rbol exacto del Preview; Producci√≥n permanece intacta.
 - Reparaci√≥n de transporte R21: `index-grupal.html` se retransmite √≠ntegro con 818,400 bytes; ambos ROADMAPS y el sello se actualizan en el mismo commit. El build truncado queda rechazado.
-- Pubµ®•z∫ËØ
-‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^licaci√≥n productiva R21: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran el despliegue autorizado en `golf-sc-gt-lab`; el primer intento por `CRON_SECRET` y el commit vac√≠o quedan rechazados sin sustituir R24.
+- Publicaci√≥n productiva R21: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` registran el despliegue autorizado en `golf-sc-gt-lab`; el primer intento por `CRON_SECRET` y el commit vac√≠o quedan rechazados sin sustituir R24.
 
 - Correcci√≥n productiva Support sin tocar ACTUALIZAR: `service-worker.js` excluye `/manual.pdf` y `/manual.html` del fallback general hacia la Score Card y entrega `manual.html` por red; `manual.html` monta una sola gr√°fica activa con precarga y sin `IntersectionObserver`. `test-v311-live-support-link.mjs` y `test-v311-manual-hosting.mjs` bloquean el parpadeo y el retorno silencioso. `vercel.json` regenera inventarios antes de la auditor√≠a.
 
@@ -1144,8 +1138,7 @@ Cambio autorizado: ubicaci√≥n expl√≠cita del clima y recuperaci√≥n de captura ab
 - `test-v364-vercel-oidc-recovery.mjs`: c√≥digo, prueba o evidencia de la revisi√≥n conversacional local.
 - `audit-project.mjs`: exige pruebas de liberaci√≥n de captura y permisos para prevenir reincidencias.
 
-### Seguimiento de aceptaci√≥n de 100 conversaciones µ®•z∫ËØ
-‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^¬∑ 2026-09-13
+### Seguimiento de aceptaci√≥n de 100 conversaciones ¬∑ 2026-09-13
 - `docs/quality/R36_CAPTURE_DIAGNOSTIC.json`: evidencia del banco externo 0/100 y l√≠mites del m√©todo.
 - `docs/quality/R36_CAPTURE_DIAGNOSTIC.md`: rechazo del banco como prueba de navegador consecutiva; infraestructura real pendiente. Sin publicaci√≥n.
 
@@ -1408,8 +1401,7 @@ IMG_4314: primera vuelta 44 gross/37 netos/+1 sin sonido. Prueba por interfaz de
 
 Se retiran transportes, manejadores y prompts inactivos de micr√≥fono/IA del HTML y el puente de dictado que stableford.js todav√≠a insertaba din√°micamente. Se conservan GSCDeviceClosures, logo, estilos deportivos, control manual, LIVE y permisos owner/guest. Se sincronizan meta release y worker como LAB-MANUAL-CLEAN-20260919.
 
-Evidencia: construcci√≥n manual y control de 23 m√≥dulos cargados PASS. Recorrido de navegador sobre LAB publicado 6b86f4d: Medal, Match Play seis jugadores (tres l√≠deres 1 UP), Four Ball (+1 pareja verde), Skins (Q10/-Q10), Universales (6/4/2 puntos), Stableford (par=2 puntos), pr√°ctica. El registro Stableford publicado conservaba dictado; corregido en este candidato, a√∫n pendiente verificaci√≥n autenticada del candidato. Las capturas revisadas son del publicado, no certifican el c√≥digo nuevo. Voz f√≠sica: √∫nicamente confirmaci√≥n del propietario al reeditar hoyo 9; cloud carece de voz espa√±ola local. No se afirma cobertura exhaustiva de todos los cierres,µ®•z∫ËØ
-‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^ formatos exportados ni iPhone. No se toca MAIN.
+Evidencia: construcci√≥n manual y control de 23 m√≥dulos cargados PASS. Recorrido de navegador sobre LAB publicado 6b86f4d: Medal, Match Play seis jugadores (tres l√≠deres 1 UP), Four Ball (+1 pareja verde), Skins (Q10/-Q10), Universales (6/4/2 puntos), Stableford (par=2 puntos), pr√°ctica. El registro Stableford publicado conservaba dictado; corregido en este candidato, a√∫n pendiente verificaci√≥n autenticada del candidato. Las capturas revisadas son del publicado, no certifican el c√≥digo nuevo. Voz f√≠sica: √∫nicamente confirmaci√≥n del propietario al reeditar hoyo 9; cloud carece de voz espa√±ola local. No se afirma cobertura exhaustiva de todos los cierres, formatos exportados ni iPhone. No se toca MAIN.
 
 ## LAB MANUAL 03 ¬∑ fallo de invitaci√≥n reportado 19/09/2026 08:32
 
@@ -1553,8 +1545,7 @@ Pruebas manuales t√©cnicas PASS; regresi√≥n ampl√≠a bloqueo a GPS y llamadas wea
 
 - FINAL R8 HOTFIX 2026-09-22: se elimina la cadena heredada `OK ¬∑ SIGUIENTE` del antiguo popup no utilizado. El flujo vigente permanece: teclado fijo 1‚Äì9 en las nueve posiciones derechas, guardado inmediato y selecci√≥n autom√°tica de la siguiente casilla GROSS. Sin cambios visuales adicionales.
 
-- FINAL R10 ¬∑ AUDIO INDIVIDUAL POR NOMBRE 2026-09-22: se corrige exclusivamente el toque sobre el nombre del jugador. El listener pasa a delegaci√≥n global en fase capture sobre `#scorecard .player-name[data-audio-player="1"]`, por lo que sigue funcionando despu√©s de cualqµ®•z∫ËØ
-‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^uier re-render y aunque otros controles detengan propagaci√≥n. La resoluci√≥n usa primero `data-player-id` real y fallback por slot visual. Tocar un nombre reproduce s√≥lo el acumulado de ese jugador. FRONT/BACK/TOTAL no se modifican.
+- FINAL R10 ¬∑ AUDIO INDIVIDUAL POR NOMBRE 2026-09-22: se corrige exclusivamente el toque sobre el nombre del jugador. El listener pasa a delegaci√≥n global en fase capture sobre `#scorecard .player-name[data-audio-player="1"]`, por lo que sigue funcionando despu√©s de cualquier re-render y aunque otros controles detengan propagaci√≥n. La resoluci√≥n usa primero `data-player-id` real y fallback por slot visual. Tocar un nombre reproduce s√≥lo el acumulado de ese jugador. FRONT/BACK/TOTAL no se modifican.
 
 - FINAL R9 ¬∑ FLUJO DE SELECCI√ìN DE SCORE 2026-09-22: el ANOTADOR inicia sin ninguna casilla GROSS seleccionada. El usuario debe tocar manualmente la primera casilla a utilizar; esa casilla se marca con borde/resplandor verde. Al tocar 1‚Äì9 se registra el score y la selecci√≥n verde pasa autom√°ticamente a la casilla GROSS del siguiente jugador del mismo hoyo. Al registrar el √∫ltimo jugador, se limpia por completo la selecci√≥n y la pantalla vuelve al estado normal. Cambiar de hoyo tambi√©n limpia la selecci√≥n. No se mueve ni redise√±a ning√∫n otro elemento.
 
@@ -1654,8 +1645,7 @@ Pruebas manuales t√©cnicas PASS; regresi√≥n ampl√≠a bloqueo a GPS y llamadas wea
 
 - R42 POSICI√ìN DE VERSI√ìN EN CABECERA 2026-09-22: mueve el indicador visible de versi√≥n por encima de ‚ÄúRonda en curso‚Äù, alineado a la derecha y con 17 px, el mismo tama√±o de fuente usado por fecha/hora. No modifica audio, teclado, c√°lculos ni navegaci√≥n.
 
-- R43 AUDITOR√çA COMPLETA DE RUTA DE SCORE 2026-09-22: endurece selecci√≥n de jugador objetivo del teclado compartido. Cada pulsaci√≥n resuelve primero jugador activo expl√≠cito y, si el estado se perdi√≥ tras render/navegaci√≥n, rearma autom√°ticamente el primer jugador pendiente del hoyo. Las teclas 1-9 escriben exactamente ese entero y nunca pasan por el parser de omisiones; 0 es la √∫nica tecla num√©rica que registra no jug√≥/status x; X √∫nicamente borra el score del jugador activo. Despu√©s de guardar, el foco avanza al siguiente jugador pendiente, no simplemente al siguiente √≠ndice. Si todos tienen score, ninguna tecµ®•z∫ËØ
-‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^la num√©rica sobrescribe silenciosamente: se exige seleccionar jugador para corregir. Se preservan R40-R42 (audio de cierre y versi√≥n visible).
+- R43 AUDITOR√çA COMPLETA DE RUTA DE SCORE 2026-09-22: endurece selecci√≥n de jugador objetivo del teclado compartido. Cada pulsaci√≥n resuelve primero jugador activo expl√≠cito y, si el estado se perdi√≥ tras render/navegaci√≥n, rearma autom√°ticamente el primer jugador pendiente del hoyo. Las teclas 1-9 escriben exactamente ese entero y nunca pasan por el parser de omisiones; 0 es la √∫nica tecla num√©rica que registra no jug√≥/status x; X √∫nicamente borra el score del jugador activo. Despu√©s de guardar, el foco avanza al siguiente jugador pendiente, no simplemente al siguiente √≠ndice. Si todos tienen score, ninguna tecla num√©rica sobrescribe silenciosamente: se exige seleccionar jugador para corregir. Se preservan R40-R42 (audio de cierre y versi√≥n visible).
 
 ## 2026-09-22 ¬∑ ACTUAL R32 ¬∑ reparaci√≥n local de teclado sobre R43, NO APROBADA
 
@@ -1791,8 +1781,7 @@ Prueba interactiva R48: hoyo1 jugador UNO corregido4‚Üí8‚Üí4 sin reselecci√≥n; s
 
 ### R49 READY en dominio LAB ‚Äî revisi√≥n interactiva bloqueada por acceso
 Publicado b2c528435528e2a2f65e5951d4aec7b2914b77a0 (√°rbol id√©ntico localddcd726). Preview dpl_7WuNs96S7WgB2zWjfKM5eVad9PZC READY; rebuild dominio LAB dpl_C2aB1p8tkpkRQLKJoWT1r1LZpmGb READY con alias golf-sc-gt-lab.vercel.app confirmado. Se mantuvo sesi√≥n Vercel abierta; proyecto principal intacto.
-Antes de verificar R49, pesta√±a LAB redirigi√≥ a access.html y solicita ENTRAR COMO PROPIETARIO. No se atribuye causa exacta sin prueba. Requiere autenticaci√≥n segura del propietario para continuar pruebas reales; no se elude el acceµ®•z∫ËØ
-‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^so. Pendientes: recuperaci√≥n ACTUALIZAR desde versi√≥n anterior, cambio de modalidad/tarjeta digital, Skins, audio residual, La Reuni√≥n y resto de matriz completa. R49 NO CERTIFICADA integralmente. Pruebas t√©cnicas PASS; revisi√≥n visible posterior publicaci√≥n pendiente. Rollback LAB: dpl_8MxdkZ8GDztr6fyWd7SX2RRGaaKs R48.
+Antes de verificar R49, pesta√±a LAB redirigi√≥ a access.html y solicita ENTRAR COMO PROPIETARIO. No se atribuye causa exacta sin prueba. Requiere autenticaci√≥n segura del propietario para continuar pruebas reales; no se elude el acceso. Pendientes: recuperaci√≥n ACTUALIZAR desde versi√≥n anterior, cambio de modalidad/tarjeta digital, Skins, audio residual, La Reuni√≥n y resto de matriz completa. R49 NO CERTIFICADA integralmente. Pruebas t√©cnicas PASS; revisi√≥n visible posterior publicaci√≥n pendiente. Rollback LAB: dpl_8MxdkZ8GDztr6fyWd7SX2RRGaaKs R48.
 
 Autenticaci√≥n segura solicitada y enviada; respuesta visible de LAB: NO SE PUDO VERIFICAR LA CUENTA PROPIETARIA. No prueba contrase√±a incorrecta ni causa concreta. Se detuvo repetici√≥n de inicio de sesi√≥n tras primer fallo gen√©rico conforme a control-browser. Sesi√≥n Vercel abierta.
 
