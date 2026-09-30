@@ -3427,13 +3427,13 @@ async function openAssignedPersonalScoreCard(){
     openFreshStablefordSetup();stablefordSetupCourseKey=courseKeyForName(configuration.course);stablefordSetupCategory=member.players[0].tournamentCategory;
     document.querySelectorAll('[data-stableford-name]').forEach((input,i)=>input.value=member.players[i]?.name||'');$('stablefordTournamentName').value=result.tournament.name;renderStablefordSetup();return true;
   }
-  openFriendsRoundDraft();draftPlayers=member.players.map((player,index)=>normalizePlayer({...player,tee:'Blanco',holes:{},activeFrom:1},index));draftRoundMode=configuration.mode;draftCourse=courseKeyForName(configuration.course);seedManualDraftRowsFromPlayers();persistDraftState();renderDraft();return true;
+  openFriendsRoundDraft();draftPlayers=member.players.map((player,index)=>normalizePlayer({...player,tee:player.tee||'Blanco',holes:{},activeFrom:1},index));draftRoundMode=configuration.mode;draftCourse=courseKeyForName(configuration.course);seedManualDraftRowsFromPlayers();persistDraftState();renderDraft();return true;
 }
 function openRegistrationPreservingActiveRound(){
   if(round.configured)persist();
   ;
-  clearDraftState();
-  draftPlayers=[];manualDraftRows=Array.from({length:6},()=>emptyManualDraftRow());progressiveVisibleRegistrationCount=1;draftTournament=null;draftCourse="pulte";draftRoundMode="general";resetDraftGames();;
+  // Abrir Registro es navegación: el borrador se elimina sólo con NUEVA RONDA
+  // o BORRAR JUGADORES, nunca al regresar de Torneos o de la pantalla inicial.
   dateSetup();
   openSetup("new");
   return true;
@@ -3443,7 +3443,7 @@ function ensurePrincipalEntry(){
   if(["friends-round","private-round"].includes(new URLSearchParams(location.search).get("manual_action")))return false;
   if(demoControlManual||sfEmergency||isRecoverableStoredRound(round))return false;
   const overlay=$("setupOverlay");if(!overlay)return false;
-  if(!overlay.classList.contains("visible"))openNewRoundDraft();
+  if(!overlay.classList.contains("visible"))openRegistrationPreservingActiveRound();
   document.body?.classList.add("gsc-setup-open");
   overlay.classList.add("visible");
   return true;
@@ -4113,7 +4113,7 @@ $("scorecard").addEventListener("change",e=>{if(!round.provisional)return;const 
 $("previousRoundButton").addEventListener("click",()=>activatePreviousOperationalRound());$("previousStablefordRoundButton").addEventListener("click",()=>activatePreviousOperationalRound("stableford",true));
 $("myRoundButton").addEventListener("click",()=>window.GSCPrivateRounds.open(round));
 $("privateGroupScoresButton").addEventListener("click",()=>window.GSCPrivateRounds.openScores(round));
-$("openMyRoundSetup").addEventListener("click",()=>window.GSCPersonalEvents.createPrivate(round));
+$("openMyRoundSetup").addEventListener("click",()=>{captureVisibleRegistrationValues();if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;persistDraftState();if(draftPlayers.some(player=>!player.tournamentCategory)){$("setupStatus").textContent="SELECCIONA LA CATEGORÍA DE CADA JUGADOR PARA LA RONDA PRIVADA";return}window.GSCPersonalEvents.createPrivate({...round,configured:true,provisional:false,registrationDraft:true,course:COURSE_CATALOG[draftCourse].name,mode:draftRoundMode,players:draftPlayers,liveGroupLabel:draftPlayers.map(player=>player.name).join(" / ").slice(0,120)})});
 $("newRoundButton").addEventListener("click",()=>isStablefordRound()?openFreshStablefordSetup():openNewRoundDraft());$("cancelSetup").addEventListener("click",closeSetup);$("backSetup").addEventListener("click",()=>{;showStep1();$("setupStatus").textContent=draftPlayers.length?"CORRIGE CON: CORRIJO / CORRIGIENDO / CORREGIR · LUEGO PRESIONA OK":""});
 $("detectedBody").addEventListener("click",e=>{
   const remove=e.target.closest?.("[data-draft-remove]");if(!remove)return;
@@ -4159,7 +4159,7 @@ $("detectedBody").addEventListener("change",e=>{
   if(saved)setManualRegistrationStatus(profileCorrectionMode?"CAMBIOS PENDIENTES · CONFIRMA UNA SOLA VEZ":"PERFIL GUARDADO · REVISA TODO Y PRESIONA OK")
   updateGeneralSetupValidity();
 });
-$("registrationEventButton")?.addEventListener("click",()=>{persistDraftState();const url=new URL("/live-hub.html?shortcut=create",location.origin),share=new URL(location.href).searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);location.assign(url.toString())});
+$("registrationEventButton")?.addEventListener("click",async()=>{captureVisibleRegistrationValues();if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;persistDraftState();const identity=await window.GSCPersonalEvents.request("identity");if(!identity.ok){$("setupStatus").textContent=window.GSCPersonalEvents.message(identity.code);window.GSCOpenAccountLogin?.();return}if(draftPlayers.some(player=>!player.tournamentCategory)){$("setupStatus").textContent="SELECCIONA LA CATEGORÍA DE CADA JUGADOR PARA EL TORNEO";return}try{sessionStorage.setItem("gsc-registration-event-draft-v1",JSON.stringify({accountCode:identity.personalCode,players:draftPlayers,name:draftTournament?.name||"",course:COURSE_CATALOG[draftCourse].name,mode:draftRoundMode,groupLabel:draftPlayers.map(player=>player.name).join(" / ").slice(0,120)}))}catch{$("setupStatus").textContent="NO SE PUDO CONSERVAR EL GRUPO · REINTENTA";return}const url=new URL("/live-hub.html?shortcut=create",location.origin),share=new URL(location.href).searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);location.assign(url.toString())});
 $("tournamentToggle").addEventListener("change",e=>{draftTournament=e.target.checked?{name:"",description:""}:null;persistDraftState();renderTournamentDraft();if(e.target.checked)$("tournamentName").focus()});
 $("tournamentName").addEventListener("input",e=>{if(!draftTournament)draftTournament={name:"",description:""};draftTournament.name=String(e.target.value||"").trimStart();persistDraftState()});
 $("tournamentName").addEventListener("change",e=>{if(!draftTournament)return;draftTournament.name=String(e.target.value||"").trim();persistDraftState();renderTournamentDraft()});

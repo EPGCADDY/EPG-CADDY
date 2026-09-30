@@ -45,8 +45,8 @@ export async function auditPersonal(sql,id,kind,account,action,details={}){await
 export function assignedPlayers(value,role){
   const players=Array.isArray(value)?value:[];
   if(role==='viewer'&&players.length||players.length>6||role==='player'&&players.length!==1||role==='scorer'&&!players.length)throw accessError('PERSONAL_ASSIGNMENT_INVALID',400);
-  const result=players.map(p=>({id:String(p.id||'').trim(),name:String(p.name||'').trim().slice(0,80),handicap:typeof p.handicap==='number'?p.handicap:NaN,tournamentCategory:String(p.tournamentCategory||'')}));
-  if(result.some(p=>!/^[A-Za-z0-9._:-]{1,80}$/.test(p.id)||!p.name||!Number.isInteger(p.handicap)||p.handicap<0||p.handicap>54||!['championship','a','b','c','d','female','senior','super_senior'].includes(p.tournamentCategory))||new Set(result.map(p=>p.id)).size!==result.length)throw accessError('PERSONAL_ASSIGNMENT_INVALID',400);
+  const result=players.map(p=>({id:String(p.id||'').trim(),name:String(p.name||'').trim().slice(0,80),handicap:typeof p.handicap==='number'?p.handicap:NaN,tournamentCategory:String(p.tournamentCategory||''),...(p.tee===undefined?{}:{tee:String(p.tee)})}));
+  if(result.some(p=>!/^[A-Za-z0-9._:-]{1,80}$/.test(p.id)||!p.name||!Number.isInteger(p.handicap)||p.handicap<0||p.handicap>54||!['championship','a','b','c','d','female','senior','super_senior'].includes(p.tournamentCategory))||result.some(p=>p.tee!==undefined&&!['Negro','Azul','Blanco','Rojo','Amarillo'].includes(p.tee))||new Set(result.map(p=>p.id)).size!==result.length)throw accessError('PERSONAL_ASSIGNMENT_INVALID',400);
   return result;
 }
 export function validateAssignedConfiguration(players,configuration){if(players.some(player=>!configuration.categories?.includes(player.tournamentCategory))||configuration.mode==='stableford'&&(players.some(player=>player.handicap!==0)||new Set(players.map(player=>player.tournamentCategory)).size>1))throw accessError('PERSONAL_ASSIGNMENT_INVALID',400)}

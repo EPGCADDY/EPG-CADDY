@@ -19,8 +19,8 @@ body.hub-scores-view:not(.public-display) .head>div:first-of-type{grid-column:1;
 body.hub-scores-view:not(.public-display) .head h1{font-size:20.25px}
 body.hub-scores-view:not(.public-display) #hubEventName,body.hub-scores-view:not(.public-display) #hubEventMeta{grid-column:1 / -1;font-size:16px;line-height:1.4}
 body:not(.hub-scores-view) #hubEventName,body:not(.hub-scores-view) #hubEventMeta{display:none}
-body.hub-scores-view:not(.public-display) .monitor-switch{grid-template-columns:repeat(3,minmax(0,1fr))}
-body.hub-scores-view:not(.public-display) #hubShowIndividual,body.hub-scores-view:not(.public-display) #hubSummary,body.hub-scores-view:not(.public-display) #hubPanelTitle,body.hub-scores-view:not(.public-display) #hubCategoryCardToggle,body.hub-scores-view:not(.public-display) #hubSearchResults{display:none!important}
+body.hub-scores-view:not(.public-display) .monitor-switch{grid-template-columns:repeat(2,minmax(0,1fr))}
+body.hub-scores-view:not(.public-display) #hubSummary,body.hub-scores-view:not(.public-display) #hubPanelTitle,body.hub-scores-view:not(.public-display) #hubCategoryCardToggle{display:none!important}
 body.hub-scores-view:not(.public-display) #hubGeneralPanel>.search{display:grid!important}
 body.hub-scores-view:not(.public-display) .leader-wrap{overflow:visible}
 .scores-compact{width:100%;table-layout:fixed;border-collapse:collapse;font:700 13px Arial,sans-serif;font-variant-numeric:tabular-nums}
@@ -61,3 +61,11 @@ body:not(.public-display) #hubBack{display:block!important;grid-column:1 / -1;mi
 .scores-detail h3{font-size:16px}
 
 .scores-nine th:first-child small{display:block;margin-top:3px;font-size:7px;line-height:1.25;font-weight:400;color:#c9cecc}
+
+/* Tournament position uses the existing compact Scores table; private round keeps its columns. */
+body.hub-scores-view:not(.private-live-view) .scores-compact th:first-child{width:8%;text-align:center}
+body.hub-scores-view:not(.private-live-view) .scores-compact th:nth-child(2){width:32%;text-align:left}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:first-child{text-align:center}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:nth-child(2){text-align:left;overflow-wrap:anywhere}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:nth-child(4){color:inherit}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:nth-child(5){color:#31ff00}

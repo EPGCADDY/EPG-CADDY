@@ -25,6 +25,7 @@ export default async function handler(req,res){
     }
     if(action==="status"&&req.method==="GET"){
       const access=await resolveAppAccess(req);
+      if(access.ok&&access.role==="owner"&&String(req.headers.cookie||"").split(";").some(value=>value.trim()==="gsc_guest_mode=1"))res.setHeader("Set-Cookie",clearAccessCookies());
       return res.status(access.ok?200:401).json({ok:access.ok,role:access.role,canShare:access.canShare,expiresAt:access.grant?.expiresAt||null,code:access.code||null});
     }
     if(req.method!=="POST")return res.status(405).json({ok:false,code:"METHOD_NOT_ALLOWED"});
