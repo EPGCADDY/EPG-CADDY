@@ -1,4 +1,5 @@
-# ROADMAP OVERALL
+µ®•z∫ËØ
+‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^# ROADMAP OVERALL
 
 ## R144 ¬∑ 30 septiembre 2026, 00:42 Guatemala ¬∑ acceso Neon recuperado; publicaci√≥n bloqueada
 
@@ -140,7 +141,8 @@
 - Esos tres recursos t√©cnicos quedan p√∫blicos; la aplicaci√≥n, los datos y las APIs privadas conservan el control de acceso.
 - `ACTUALIZADO` deja de ser fijo cuando no existe una versi√≥n pendiente, evitando que cubra `CONTROL MANUAL ¬∑ UNIVERSALES`; `ACTUALIZAR` disponible conserva visibilidad, verde, habilitaci√≥n y pulso.
 - Pruebas permanentes: `test-v407-r24c-public-pwa-bootstrap.mjs` y `test-v407-r24c-update-scroll-isolation.mjs`. MAIN permanece intacta.
-- Continuidad 10 de septiembre de 2026: se regeneran los tres inventarios desde el √°rbol limpio `a2d1d9a5ebdd36435daed6c34a0c8ff61561612a`; el candado confirma 450 fuentes y conserva MAIN sin cambios.
+- Continuidad 10 de septiembre de 2026: se regeneran los tres inventarios desde el √°rbol limpio `a2d1d9a5ebdd36435daed6c34a0c8ff61561612a`; el candado confirma 450 fuentes y conserva MAIN sin cambioµ®•z∫ËØ
+‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^s.
 
 ## V407-R24 LAB ¬∑ WhatsApp privado y transici√≥n de ronda ¬∑ 9 de septiembre de 2026
 
@@ -330,7 +332,8 @@ La consulta se a√≠sla de todos los escritores locales: dentro de REGLAS no se ej
 
 V328-R2 agrega `golf-rules-offline.js`: guarda √∫nicamente respuestas que ya aprobaron el filtro oficial, retiene hasta 24 entradas durante 90 d√≠as, conserva tokens normalizados en vez de la pregunta completa, exige coincidencia suficiente y modalidad compatible, muestra la fecha y nunca inventa si no existe una respuesta adecuada. `test-v328-offline-official-rules.mjs` comprueba fuente, privacidad, l√≠mite, caducidad, cruces negativos, integraci√≥n PWA y cero escritura. Con este paquete la auditor√≠a maestra sube a 87 paquetes m√°s la puerta viva de Vercel. El manual visible y sus dos PDF conservan 74 p√°ginas, p√°gina 73 actualizada, 2160 √ó 4320 px y 300 dpi; el control visual completo debe aprobar antes de entregar. `PEND-REG-001` contin√∫a abierto s√≥lo para voz f√≠sica y una eventual integraci√≥n comercial/licenciada; no se declara alianza oficial.
 
-Archivos exactos V328: `api/golf-rules.js`, `audit-project.mjs`, `index-grupal.html`, `service-worker.js`, `manual.html`, `scripts/update-manual-page-73.py`, `docs/manual/v311/manual-pages-17-35.json`, `docs/manual/v311/page-73.png`, `docs/manual/v311/Manual_Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf`, `test-v328-official-golf-rules.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-v307-match-arrows-format.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v284-native-package-generation.mjs`, `test-v281-pwa-installation.mjs`, `test-v280-local-history-insights.mjs`, `test-v279-local-card-library.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v277-official-round-corrections.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v272-definitive-operational-release.mjs`, `test-stableford-ui.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Los tres inventarios PDF externos se regeneran y verifican antes del build.
+Archivos exactos V328: `api/golf-rules.js`, `audit-project.mjs`, `index-grupal.html`, `service-worker.js`, `manual.html`, `scripts/update-manual-page-73.py`, `docs/manual/v311/manual-pages-17-35.json`, `docs/manual/v311/page-73.png`, `docs/manual/v311/Manual_µ®•z∫ËØ
+‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^Golf_Score_Card_GT_COMPLETO.pdf`, `docs/manual/v311/Manual_de_Funciones_Golf_Score_Card_GT_01-16.pdf`, `test-v328-official-golf-rules.mjs`, `test-v327-tool-followup-no-silence.mjs`, `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-v307-match-arrows-format.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v284-native-package-generation.mjs`, `test-v281-pwa-installation.mjs`, `test-v280-local-history-insights.mjs`, `test-v279-local-card-library.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v277-official-round-corrections.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v272-definitive-operational-release.mjs`, `test-stableford-ui.mjs`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`. Los tres inventarios PDF externos se regeneran y verifican antes del build.
 
 Archivos adicionales del cierre V328-R1: `test-v328-live-official-rules.mjs` agrega la puerta real y `vercel.json` la vuelve obligatoria. Archivos adicionales V328-R2: `golf-rules-offline.js`, `test-v328-offline-official-rules.mjs`, `test-v321-ai-universal-infinity.mjs`, `service-worker.js`, `index-grupal.html`, `audit-project.mjs`, `scripts/update-manual-page-73.py`, `docs/manual/v311/manual-pages-17-35.json`, los artefactos de manual, `scripts/update-inventory-v328.py`, los cuatro documentos de control, el candado y ambos ROADMAP.
 
@@ -394,7 +397,8 @@ V323 corrige una p√©rdida de contexto reproducida en producci√≥n: la comunicaci√
 
 La prueba `test-v323-long-multitopic-context.mjs` reproduce cambios consecutivos entre lluvia, salud, viajes, medicamentos, golf, tecnolog√≠a, cocina, filosof√≠a, ciencias, idiomas y otros temas; exige que el primer dato siga disponible en la √∫ltima pregunta, valida la misma memoria en texto y voz, y comprueba el descarte controlado √∫nicamente al superar 80 mensajes.
 
-Archivos V323: `api/universal-ai.js`, `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+Archivos V323: `api/universal-ai.js`, `index-grupal.html`, `service-worker.js`, `audit-project.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-completµ®•z∫ËØ
+‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^e-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
 
 ## Correcci√≥n operativa V322 ¬∑ conversaci√≥n sostenida y recuperaci√≥n comprobable
 
@@ -693,7 +697,8 @@ El **24 de agosto de 2026** se corrige la diferencia que obligaba al usuario a r
 | `index-grupal.html` | Instala el sistema visual compartido para OK, Ronda previa, Historial, Atr√°s y Cancelar en ambas tarjetas. |
 | `mobile-release.json` | N√∫mero de paquete preparado actualizado a V304. |
 | `service-worker.js` | Cach√© V304 para entregar inmediatamente la homologaci√≥n. |
-| `test-v290-brand-icons-cleanup.mjs` | Mantiene la validaci√≥n acumulada alineada con V304. |
+| `test-v290-brand-icons-cleanup.mjs` | Mantiene la validaci√≥n acumulada alineadaµ®•z∫ËØ
+‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^ con V304. |
 | `test-v304-homogeneous-registration-actions.mjs` | Impide autom√°ticamente diferencias futuras de fuente, peso, tama√±o, altura o brillo entre las acciones hermanas. |
 | `audit-project.mjs` | Ejecuta la comparaci√≥n V304 dentro del control maestro. |
 | `.github/workflows/roadmap-gate.yml` | Vuelve obligatorio el filtro hermano en GitHub. |
@@ -879,7 +884,8 @@ El **24 de agosto de 2026** se auditan todas las pantallas y rutas desde la base
 - `index-grupal.html`: destino visible R24B posterior al toque personal del propietario.
 - Candado permanente R24B: `scripts/lab-update-browser-review.mjs` separa la revisi√≥n automatizada en navegador real de la auditor√≠a est√°tica y del iPhone f√≠sico; exige cuatro deployments consecutivos A‚ÜíB‚ÜíC‚ÜíD sobre `https://golf-sc-gt-lab.vercel.app`, un perfil persistente, capturas completas y conservaci√≥n de datos.
 - `scripts/lab-update-physical-gate.mjs`, `test-v407-r24-update-physical-gate.mjs`, `package.json` y `audit-project.mjs`: rechazan evidencia JSON ausente, alterada, ajena o menor de tres transiciones. Hasta ejecutar el recorrido p√∫blico el estado es NO REVISADO; MAIN/Producci√≥n permanece intacta.
-- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`: integran el candado dentro de G0-10 sin crear una puerta paralela.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATEµ®•z∫ËØ
+‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^_0_PROYECTO.md` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`: integran el candado dentro de G0-10 sin crear una puerta paralela.
 - `.github/workflows/apply-r24b-lab.yml`: transporte temporal creado y eliminado en el mismo cierre remoto; no forma parte del candidato final.
 - `test-v407-r9-manual-update.mjs`: exige el puente manual y proh√≠be navegaci√≥n autom√°tica.
 - Rollback productivo: `5e45b264`; ninguna ronda, historial ni funci√≥n de juego se modifica.
@@ -1275,7 +1281,8 @@ Archivos:
 - voice-turns.js
 
 ### R40 ¬∑ correcci√≥n de construcci√≥n
-Los dos builds de ef096d1 fallaron porque las pruebas de gu√≠a visible a√∫n exig√≠an las instrucciones antiguas. Se actualizan las expectativas a jugador n√∫mero/nombre/handicap/marcas seg√∫n orden del propietario; no se eliminan verificaciones. Nuevos controles funcionales ejecutados antes de reconstruir.
+Los dos builds de ef096d1 fallaron porque las pruebas de gu√≠a visible a√∫n exig√≠an las instrucciones antiguas. Se actualizan las expectativas a jugador n√∫mero/nombre/handicap/marcas seg√∫n orden del propietario; no se eliminan verificaciones. Nuevos controles funcionaµ®•z∫ËØ
+‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^les ejecutados antes de reconstruir.
 - test-v255-player-registration-boxes-codes.mjs
 - test-v261-registration-stableford-modality.mjs
 - test-v290-brand-icons-cleanup.mjs
@@ -1428,7 +1435,8 @@ Pruebas manuales t√©cnicas PASS; regresi√≥n ampl√≠a bloqueo a GPS y llamadas wea
 
 - MANUAL HOTSPOTS REALES FASE 1 2026-09-21: se eliminan los botones externos de ‚ÄúMODO INTERACTIVO‚Äù del Manual general y se inicia la conversi√≥n correcta: zonas transparentes directamente sobre los controles visibles de las gr√°ficas. Primera cobertura aplicada a `APP_SETUP_CURRENT.png`, `APP_SCORECARD_ATAJOS.png`, `APP_ATAJOS_OVERLAY.png` y `APP_TORNEOS_HUB.png`, con rutas reales hacia Registro, Score Card, Anotador, MEN√ö, Mis Torneos, General, Categor√≠as, Buscar Jugador, Favoritos, Historial y Cuenta. Archivo principal: `manual.html`. Pendiente: extender la misma geometr√≠a a todos los dem√°s assets y validar f√≠sicamente cada hotspot.
 
-- MANUAL HOTSPOTS REALES FASE 2 2026-09-21: `manual.html` extiende hotspots transparentes directamente sobre todas las gr√°ficas operativas actuales: Stableford, Match Play, Four Ball, Pr√°ctica, Skins, Universales, Tarjeta Final, Correcci√≥n, Historial, Acceso/Cuenta, Categor√≠as, Campeonato, Torneos, Timer, zona operativa inferior y las cuatro capturas reales LAB. La capa interactiva se alinea din√°micamente al rect√°ngulo renderizado exacto de cada imagen mediante medici√≥n y ResizeObserver para evitar desplazamientos por padding/object-fit. Pendiente √∫nicamente certificaci√≥n f√≠sica automatizada de cada hotspot y destino.
+- µ®•z∫ËØ
+‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^MANUAL HOTSPOTS REALES FASE 2 2026-09-21: `manual.html` extiende hotspots transparentes directamente sobre todas las gr√°ficas operativas actuales: Stableford, Match Play, Four Ball, Pr√°ctica, Skins, Universales, Tarjeta Final, Correcci√≥n, Historial, Acceso/Cuenta, Categor√≠as, Campeonato, Torneos, Timer, zona operativa inferior y las cuatro capturas reales LAB. La capa interactiva se alinea din√°micamente al rect√°ngulo renderizado exacto de cada imagen mediante medici√≥n y ResizeObserver para evitar desplazamientos por padding/object-fit. Pendiente √∫nicamente certificaci√≥n f√≠sica automatizada de cada hotspot y destino.
 
 - √çNDICE USUARIO FINAL 2026-09-21: `manual.html` elimina del √≠ndice visible los bloques internos ‚ÄúPANTALLAS ACTUALES ¬∑ EVIDENCIA F√çSICA‚Äù y ‚ÄúPANTALLAS REALES ACTUALES ¬∑ LAB‚Äù, adem√°s del listado t√©cnico duplicado de diez entradas de Torneos. El usuario final conserva un √∫nico acceso claro ‚ÄúTorneos ¬∑ gu√≠a interactiva completa‚Äù. Las hojas internas y evidencias siguen existiendo para QA y navegaci√≥n contextual, pero dejan de ocupar espacio en el √≠ndice del usuario.
 
@@ -1519,7 +1527,8 @@ Pruebas manuales t√©cnicas PASS; regresi√≥n ampl√≠a bloqueo a GPS y llamadas wea
 - R25 BUTTON CLICK DOUBLE TAP 2026-09-22: se elimina dependencia de touchend/dblclick. El bot√≥n transparente que cubre el 100% de cada celda usa click nativo del bot√≥n: primer toque confirma recepci√≥n con flash amarillo y mensaje; segundo toque del mismo player.id dentro de 1000 ms confirma verde y ejecuta GSCPlayerNameAudio. Un toque no reproduce audio. C√°lculos y tarjeta intactos. index-grupal.html y service-worker.js sincronizados.
 
 
-- R26 PWA CACHE RELEASE FIX 2026-09-22: se elimina el APPROVED_CACHE_NAME fijo heredado que pod√≠a seguir sirviendo una versi√≥n anterior en iPhone aun con Vercel READY. El cach√© aprobado ahora es exclusivo de R26, por lo que en activate/ensureApprovedShell se llena desde el candidato R26 y las navegaciones principales dejan de quedar congeladas en una versi√≥n vieja. Tambi√©n se corrige el app_version hardcodeado del fallback de actualizaci√≥n. Funci√≥n de bot√≥n invisible y audio R25 se conserva sin cambios funcionales.
+- R26 PWA CACHE RELEASE FIX 2026-09-22: se elimina el APPROVED_CACHE_NAME fijo heredado que pod√≠a seguir sirviendo una versi√≥n anterior en iPhone aun con Vercel READY. El cach√© aprobado ahora es exclusivo de R26, por lo que en activµ®•z∫ËØ
+‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^ate/ensureApprovedShell se llena desde el candidato R26 y las navegaciones principales dejan de quedar congeladas en una versi√≥n vieja. Tambi√©n se corrige el app_version hardcodeado del fallback de actualizaci√≥n. Funci√≥n de bot√≥n invisible y audio R25 se conserva sin cambios funcionales.
 
 
 - R27 DIRECT TD CLICK AUDIO 2026-09-22: se elimina por completo el bot√≥n invisible y cualquier dependencia de touchend/dblclick/overlay. La propia celda TD.player-name es el control t√°ctil. Primer click/tap del mismo player.id produce flash amarillo y mensaje; segundo click/tap dentro de 1000 ms produce flash verde y llama directamente GSCPlayerNameAudio. C√°lculos, score y tarjeta permanecen intactos. index-grupal.html y service-worker.js sincronizados.
@@ -1660,7 +1669,8 @@ En LAB R43 real se abrieron la gu√≠a desde MEN√ö, Control manual, INICIO, VER √ç
 En LAB R43, pr√°ctica La Reuni√≥n: 4‚Üí4 y correcci√≥n4‚Üí8 en jugador1/hoyo10; jugador3 recibi√≥6, 0 mostr√≥X y X borr√≥; posterior4 mostr√≥4. Correcci√≥n num√©rica sigue desplazando selecci√≥n al siguiente jugador (fallo ya registrado). Timer paus√≥ en00:57:48 y mantuvo valor; se reanud√≥. RONDA ACTUAL volvi√≥ a la ronda sint√©tica El Pult√© Medal Play; VER MI TARJETA abri√≥ tarjeta digital. Se observ√≥ alias UNO/DOS/TRES/CUATRO sobre yardaje en hoyo10. Evidencia lab-r43-digital-hole10-overlap.jpg. Causa: alias con posici√≥n absoluta y altura16px dentro de celda de yardaje. Ajuste local: alias pasa a flujo normal bajo yardaje, conservando tipograf√≠a/colores; afecta tarjeta principal y clon digital. Build t√©cnico PASS; pendiente publicar s√≥lo LAB y repetir inspecci√≥n visual. No certificado f√≠sicamente el arreglo ni aprobaci√≥n integral.
 
 
-### Continuaci√≥n 23 septiembre UTC ¬∑ revisi√≥n y solicitud de actualizar LAB
+### Continuaci√≥n 23 septieµ®•z∫ËØ
+‚∂)‡≤÷ßu™›¢Îi∫–k¢Gß¶*^mbre UTC ¬∑ revisi√≥n y solicitud de actualizar LAB
 - Base local: bc30ad9, rama lab/r32-keypad-20260922. Usuario ordena actualizar LAB; Producci√≥n principal sigue prohibida.
 - Navegador conserv√≥ tarjeta digital El Pult√© Medal Play con cuatro jugadores sint√©ticos. ATR√ÅS retir√≥ controles de tarjeta digital del DOM; captura inmediata todav√≠a mostr√≥ la vista anterior, por lo que no se certifica el retorno visual con esa captura.
 - Intento de abrir confirmaci√≥n BORRAR RESULTADOS DE ESTA RONDA termin√≥ en timeout del navegador; di√°logo y captura tampoco respondieron. No se confirm√≥ borrado. Nueva pesta√±a del mismo LAB recuper√≥ ronda R43 y hoyo1 con scores 4,5,5,5. Hoyo2 registrado por botones con 4,5,5,5 avanz√≥ autom√°ticamente a3 sin ENTER: defecto R43 sigue presente. No se complet√≥ la ronda.
@@ -1832,7 +1842,7 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 
 ## R75 ¬∑ 2026-09-23 ¬∑ arquitectura UX TORNEOS
 - TORNEOS conserva t√≠tulo propio √∫nicamente en el portal de selecci√≥n.
-- RESULTADOS GENERALES, RESULTADOS POR CATEGOR√çA, BUSCAR JUGADORES y MIS FAVORITOS muestran t√≠tulo inequ√≠voco de la pantalla activa.
+- RESULTADOS GENERALES, RESULTADOS POR CATEGOR√çA, BUSCAR JUGADORES y MIS FAVORITOS mµ®•¬∏≠yÍÎ¢∞k¢Gß¶*^uestran t√≠tulo inequ√≠voco de la pantalla activa.
 - Accesos renombrados con vocabulario directo y consistente; MEN√ö y regreso a MIS TORNEOS permanecen disponibles.
 - Sin cambios en c√°lculo, clasificaci√≥n, LIVE ni datos de jugadores.
 - Release sincronizado como R75 en app, Service Worker, cach√© y regresi√≥n.
@@ -2274,3 +2284,8 @@ La versi√≥n identificable cambia a R146.1.1 en `release.json`, badge y cach√© PW
 La entrada ra√≠z (`/`, `/index.html`, `/inicio`) y Registro no cargan el m√≥dulo `auth-gate.js` ni requieren credenciales. `access.html` conserva su autenticaci√≥n s√≥lo para administrar invitaciones individuales de un uso y 24 horas; no ofrece un bot√≥n para abrir la app. Se conservan el bot√≥n INVITAR ¬∑ 24 H, el canje, el aislamiento y la caducidad de la sesi√≥n invitada. Al vencer o fallar la consulta de sesi√≥n, la app permanece abierta y Registro sigue libre; s√≥lo terminan los permisos de esa invitaci√≥n. Matrices, mapa y regresiones reflejan la separaci√≥n. Sin despliegue ni cambio a Production.
 
 Archivos: `index-grupal.html`, `access.html`, `guest-access.js`, `test-lab-account-gate.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-owner-invitation-ui.mjs`, `test-v311-live-support-link.mjs`, `test-lab-r60-physical-matrix.mjs`, `test-manual-startup-sharing.mjs`, `test-v405-registration-clear-final-mobile.mjs`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, ambos ROADMAPS e `INVENTARIOS_V311.lock.json`.
+
+### R146.1.1 ¬∑ normalizaci√≥n del parche visible ¬∑ 30 septiembre 2026
+- `index-grupal.html`: el parser de versiones ahora acepta varios segmentos num√©ricos y presenta `R146.1.1` en el badge en vez del identificador interno del despliegue.
+- Regresi√≥n: `test-lab-first-open.mjs` comprueba badge e ID contra `release.json`; PASS tras corregir el parser.
+- Hallazgo y control permanente registrados en `REGISTRO_REINCIDENCIAS_CALIDAD.md`. La publicaci√≥n de esta correcci√≥n queda pendiente de nueva verificaci√≥n Preview y Producci√≥n.
