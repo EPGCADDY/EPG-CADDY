@@ -2217,3 +2217,9 @@ Archivo de escenario conservado: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ES
 - Vercel branch alias y deployment inmutable dpl_BcFVHEiGPSiuLHDTzafziKChBUc9/f243eb1 muestran tres controles. DOM real contiene hubShowIndividual con display:none: no fallo de enlace.
 - scores-ui.css ocultaba hubShowIndividual y hubSearchResults, y imponía tres columnas. Corregido incrementalmente a dos columnas/cuatro accesos aprobados y resultados visibles; ajustadas columnas del mismo Scores compacto para POS sin alterar ronda particular.
 - test-lab-tournament-navigation.mjs añade regresión de override CSS. Pendiente publicación Preview/revisión visual de cambios; sesión real sigue bloqueada. Producción intacta.
+
+
+### R146 · 30/09/2026 · compatibilidad con usuario guardado en iPhone
+- `api/account.js`: reconoce `GOLF SCORE CARD@GT.` únicamente al iniciar sesión; lo normaliza en servidor a la cuenta propietaria configurada y conserva la validación normal de contraseña. No cambia altas ni proveedor.
+- Sello de fuentes recalculado para este código y registro. Los tres PDF de inventario no se regeneraron en esta corrección.
+- Preview pendiente de publicación y verificación del acceso; R144 y Producción no se modifican.
