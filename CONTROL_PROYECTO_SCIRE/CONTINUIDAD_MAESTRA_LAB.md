@@ -353,3 +353,9 @@ Vercel: GSC_PERSONAL_ACCESS_LAB_READY=1 guardado SOLO Preview; captura lab-previ
 Rollback: quitar activación Preview y volver solo LAB al commit a757809; ninguna promoción a main o a epg-caddy. Entrega integral bloqueada hasta cero fallos aplicables y recorrido remoto comprobado.
 
 Rama de revisión prevista: lab/integral-round-tournament-r146-20260930, basada en remoto a757809. No se actualizará el canal fijo ni la rama canónica de LAB hasta revisión remota. Preparación de Preview no equivale a entrega.
+
+## R147.1 · Compartir código de ronda privada desde Registro · 30 septiembre 2026
+
+Se integra el flujo aprobado en la creación de ronda privada desde Registro. Después de crearla, el código permanece visible; COMPARTIR POR WHATSAPP usa la hoja nativa en iPhone/soporte Web Share, y al cerrarla navega a la Score Card autorizada. Si el usuario cancela, puede reintentar o usar CONTINUAR AL SCORE CARD. Sin soporte nativo, prepara WhatsApp y abre la tarjeta al regresar al navegador. El código se envía en el texto del mensaje con la URL directa a Registro.
+
+Pruebas dirigidas PASS: `test-lab-private-round-share-flow.mjs` (creación, código, compartir, cancelar y continuación); `test-lab-first-open.mjs` (R147 detecta R147.1). Build completo y gates pendientes en este punto de continuidad. Esta prueba automática no acredita envío real por WhatsApp ni revisión física del iPhone. El acceso general sigue abierto; permisos de ronda siguen en API/recurso. Producción intacta.

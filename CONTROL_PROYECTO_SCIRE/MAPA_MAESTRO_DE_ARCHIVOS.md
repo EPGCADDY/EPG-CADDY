@@ -1462,3 +1462,13 @@ El bloqueo EPERM del checkpoint R145 quedó resuelto tras cambio efectivo de per
 Vercel: GSC_PERSONAL_ACCESS_LAB_READY=1 guardado SOLO Preview; captura lab-preview-env.jpg. Canal fijo LAB no se activó ni redeployó. LAB público continúa R144 hasta revisión nueva. Estado actual: NO REVISADO. Pendientes ejecutables: sellar roadmaps/inventarios, commit y sincronizar rama LAB, comprobar Preview READY y revisión visual real. Pendiente de servicio: navegador carece de sesión autenticada de aplicación; no se puede certificar escritor/permisos remotos con fixtures ni saltar login. No se solicitan credenciales por chat ni una nueva autorización.
 
 Rollback: quitar activación Preview y volver solo LAB al commit a757809; ninguna promoción a main o a epg-caddy. Entrega integral bloqueada hasta cero fallos aplicables y recorrido remoto comprobado.
+
+# R147.1 · compartir la ronda al crearla
+
+- `personal-events.js`: después de crear desde Registro, mantiene el código visible y habilita compartir nativamente/WhatsApp; cancelación conserva reintento y continuación. Tras compartir o continuar abre la Score Card autorizada.
+- `test-lab-private-round-share-flow.mjs`: cubre código, hoja de compartir, navegación y cancelación.
+- `test-lab-first-open.mjs`: asegura que R147 detecte release R147.1 y active ACTUALIZAR.
+- `scripts/build-manual-lab.mjs`: ejecuta ambas regresiones en el perfil LAB.
+- `release.json`, `index-grupal.html`, `service-worker.js`: release, distintivo y fallback de caché R147.1.
+- `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`: alcance y estado de la integración.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello regenerado para esta revisión.

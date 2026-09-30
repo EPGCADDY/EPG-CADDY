@@ -22,3 +22,16 @@ assert.equal(elements.appReleaseBadge.textContent,"VERSIÓN "+JSON.parse(fs.read
 assert.equal(elements.appVersionId.textContent,JSON.parse(fs.readFileSync("release.json")).label);
 assert.doesNotMatch(html,/data-server-release=/);
 console.log("PASS visible release badge and update ID equal published release");
+const staleRelease="LABORATORIO-20260930-R147";
+let staleAvailable=false;
+const staleElements=Object.fromEntries(['mandatoryUpdateButton','mandatoryUpdateAction','mandatoryUpdate','appReleaseBadge','appVersionId'].map(id=>[id,{dataset:{},style:{},classList:{add(name){if(name==='available')staleAvailable=true},remove(){}},setAttribute(_name,value){this.ariaDisabled=value}}]));
+const staleContext=vm.createContext({URL,AbortController,console:{warn(){}},document:{hidden:false,querySelector:()=>({content:staleRelease}),getElementById:id=>staleElements[id]},$:id=>staleElements[id],location:{origin:'https://golf-sc-gt-lab.vercel.app'},setTimeout:()=>1,clearTimeout(){}});
+vm.runInContext(html.slice(start,end),staleContext);
+staleContext.fetch=async()=>({ok:true,json:async()=>({release})});
+await vm.runInContext('syncPublishedAppVersion()',staleContext);
+assert.equal(staleElements.mandatoryUpdateAction.textContent,'ACTUALIZAR');
+assert.equal(staleElements.mandatoryUpdateButton.disabled,false);
+assert.equal(staleElements.mandatoryUpdateButton.ariaDisabled,'false');
+assert.equal(staleAvailable,true);
+assert.equal(staleElements.appReleaseBadge.textContent,'VERSIÓN R147 · ÚLTIMA '+JSON.parse(fs.readFileSync('release.json')).label);
+console.log('PASS R147.1 update discovery: installed R147 enables ACTUALIZAR for the published release');

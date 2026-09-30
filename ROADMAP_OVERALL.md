@@ -2287,3 +2287,7 @@ Archivos: `release.json`, `index-grupal.html`, `service-worker.js`, `test-lab-ac
 - `index-grupal.html`: el parser de versiones ahora acepta varios segmentos numéricos y presenta `R146.1.1` en el badge en vez del identificador interno del despliegue.
 - Regresión: `test-lab-first-open.mjs` comprueba badge e ID contra `release.json`; PASS tras corregir el parser.
 - Hallazgo y control permanente registrados en `REGISTRO_REINCIDENCIAS_CALIDAD.md`. La publicación de esta corrección queda pendiente de nueva verificación Preview y Producción.
+
+## R147.1 · COMPARTIR al crear una ronda privada · 30 septiembre 2026
+
+Al crear la ronda privada desde Registro aparece el código de acceso y la opción de compartirlo con WhatsApp. Al cerrar la hoja del teléfono después de compartir, abre la Score Card; al cancelar deja el botón para reintentar y la alternativa para continuar directamente. Se aumenta la revisión de R147 a R147.1 para avisar a la app instalada. Pruebas dirigidas cubren compartir/cancelar y detección de actualización; no certifican la entrega externa del mensaje ni la revisión física del iPhone. Archivos: `personal-events.js`, `test-lab-private-round-share-flow.mjs`, `test-lab-first-open.mjs`, `scripts/build-manual-lab.mjs`, `release.json`, `index-grupal.html`, `service-worker.js`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAPS, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.

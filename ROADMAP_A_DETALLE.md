@@ -2381,3 +2381,11 @@ Archivo de escenario conservado: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ES
 - El generador de inventarios toma el rótulo y la versión del `release.json`, evitando dejar los PDF y el sello con identidad R18.
 - Archivos: `release.json`, `index-grupal.html`, `service-worker.js`, `test-lab-account-gate.mjs`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 - Estado: build manual LAB PASS; project-quality, roadmap, inventario (761 fuentes/3 PDF) y regresiones dirigidas PASS. Los dos ROADMAP y el sello quedaron agrupados tras validar el gate de trazabilidad. Preview R147 pendiente de despliegue y verificación externa.
+
+## R147.1 · compartir ronda privada tras crearla desde Registro · 30 septiembre 2026
+- Al crear una ronda privada desde Registro se conserva el diálogo con código y se ofrecen COMPARTIR POR WHATSAPP y CONTINUAR AL SCORE CARD.
+- En iOS/soporte nativo usa navigator.share; si el usuario cancela, conserva el diálogo para reintentar o continuar. En el resto abre WhatsApp y espera el regreso antes de abrir la tarjeta.
+- `test-lab-private-round-share-flow.mjs` verifica envío/cancelación y lectura de API simulada; `test-lab-first-open.mjs` confirma que R147 detecta R147.1. No equivale a envío físico en WhatsApp ni revisión física iPhone.
+- El distintivo, release.json y caché PWA pasan a R147.1 para que R147 reciba el aviso ACTUALIZAR.
+- Archivos: `personal-events.js`, `test-lab-private-round-share-flow.mjs`, `test-lab-first-open.mjs`, `scripts/build-manual-lab.mjs`, `release.json`, `index-grupal.html`, `service-worker.js`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, ambos ROADMAPS y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+- Regresiones dirigidas y gates se ejecutan antes de Preview; Production permanece intacta.
