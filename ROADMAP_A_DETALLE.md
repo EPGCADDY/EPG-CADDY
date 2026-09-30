@@ -2163,3 +2163,25 @@ Archivos del bloque:
 ### R146 · corrección gráfica expresa 07:34 Guatemala
 Logo horizontal original ampliado hasta 320 px con adaptación al ancho disponible. Scores reducido a 16 px; título, nombre del evento, metadatos y botón usan fuente 16 px. Botón visible ← Score Card: navegación directa a tarjeta existente, con revalidación de asignación personal cuando corresponde. No se usa history.back. Pruebas navegación/frontend y build manual completo PASS. Revisión remota del cambio sigue pendiente.
 Archivos: `live-hub.html`, `live-hub.js`, `scores-ui.css`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/build.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ESTADO.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
+
+### R146 · recorrido Preview 07:45 Guatemala
+Commit remoto f54de0bf518b6636921004d55e150c8f976c4b49 / despliegue dpl_DQAEJT1DiEHvjgL7skjJgQxsxd7U READY. URL https://golf-sc-gt-aivs9bxsl-epgcaddys-projects.vercel.app/live-hub.html verificada en navegador. Entrada: logo medido 320px, título/botón 16px, Compartir LIVE oculto; formulario completo real; listado y botones de identidad/invitación. Identidad exige cuenta: login real apareció, sin credenciales ni sesión. Regreso ← Score Card navega al acceso protegido para usuario anónimo. Producción/main verificado 89c64f348b6ce2a311218215c41488e04a588053 intacto.
+Revisión Scores demo=1 explícita: dos vueltas de 9 G/N, Escape cierra, favorito independiente conservado, categoría B 24 filas. Captura inicial del detalle estaba atrasada; captura posterior confirma diálogo visible y persistente, no fallo de aplicación. Capturas guardadas son del commit f54de0b, no del ajuste posterior del header emergente.
+Ajuste posterior: header compartido del emergente usa también logo hasta320px y Scores16px; nombre16px. Historial de rondas particulares incorpora lista de eventos personales autorizados, conserva cerrados y elimina duplicados por ID. Prueba funcional VM con evento cerrado, duplicado y navegación por membresía PASS; no concede nuevas autorizaciones. Perfil build completo PASS después de cambios de aplicación.
+Entrega integral BLOQUEADA por ausencia de sesión real de aplicación para verificar escritor, captura, corrección, historial y roles en despliegue. PGlite y fixtures no sustituyen esa prueba ni concurrencia Neon remota. No se ofrece otra autorización ni se solicitan secretos por chat. Último bloque ejecutable: publicar ajustes y comprobar visual del emergente.
+Archivos:
+- `scores-ui.css`
+- `private-rounds.js`
+- `test-lab-private-rounds.mjs`
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/build.log`
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ESTADO.md`
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/preview-r146-fixed-entry.jpg`
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/preview-r146-detail-confirmed.jpg`
+- `ROADMAP_OVERALL.md`
+- `ROADMAP_A_DETALLE.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+
+
+### R146 · aclaración G/N aprobada 07:46 Guatemala
+En cada fila G/N de las dos vueltas del detalle, leyenda pequeña GROSS arriba y NETO abajo. Mantiene los 18 valores combinados y las casillas pendientes. Build completo PASS tras incorporar esta corrección y la prueba funcional del historial cerrado. Archivos: `scores-ui.js`, `scores-ui.css`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/build.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ESTADO.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.

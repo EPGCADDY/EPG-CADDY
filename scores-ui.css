@@ -54,3 +54,10 @@ body:not(.public-display) .head>img{grid-column:1!important;grid-row:1!important
 body:not(.public-display) .head>div:first-of-type{grid-column:1!important;grid-row:2!important}
 body:not(.public-display) .head h1,body:not(.public-display) #hubEventName,body:not(.public-display) #hubEventMeta,body:not(.public-display) #hubBack{font-size:16px!important;line-height:1.4}
 body:not(.public-display) #hubBack{display:block!important;grid-column:1 / -1;min-height:44px;padding:10px 16px;border:1px solid #31ff00;border-radius:10px;background:#050706;color:#31ff00;font-weight:700}
+
+.scores-heading-top{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.scores-heading img{grid-row:1;width:min(320px,100%);justify-self:center}
+.scores-heading .scores-heading-top h2{grid-row:2;font-size:16px!important}
+.scores-detail h3{font-size:16px}
+
+.scores-nine th:first-child small{display:block;margin-top:3px;font-size:7px;line-height:1.25;font-weight:400;color:#c9cecc}

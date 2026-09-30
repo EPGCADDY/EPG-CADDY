@@ -37,3 +37,10 @@ assert.doesNotMatch(panel.innerHTML,/SECRET1234|CÓDIGO PARA COMPARTIR|COMPARTIR
 assert.match(nodes['[data-scores]'].innerHTML,/class="private-score-under">-2/);
 assert.match(nodes['[data-scores]'].innerHTML,/class="private-score-over">\+2/);
 console.log('PASS R141: Scores-only creator view hides code; negative green and positive red');
+// Closed personal rounds remain in the authorized history, without duplicating legacy rows.
+const buttons=new Map();nodes['[data-rounds]']={innerHTML:'',querySelector:key=>{if(!buttons.has(key))buttons.set(key,{});return buttons.get(key)}};
+scoreContext.GSCLiveControl.request=async()=>({ok:true,rounds:[{id:'same',name:'Legacy'}]});
+scoreContext.GSCPersonalEvents={sync:async()=>({ok:true,privateItems:[{label:'Closed personal',event:{eventId:'closed',status:'closed'}},{label:'Personal version',event:{eventId:'same',status:'active'}}]}),descriptor:()=>({eventId:'closed',eventKind:'private'})};
+scoreContext.location={assign:url=>{scoreContext.destination=url}};
+await scoreContext.GSCPrivateRounds.list();assert.match(nodes['[data-rounds]'].innerHTML,/Closed personal/);assert.match(nodes['[data-rounds]'].innerHTML,/Personal version/);assert.doesNotMatch(nodes['[data-rounds]'].innerHTML,/Legacy/);buttons.get('#private-closed').onclick();assert.equal(scoreContext.destination,'/live-hub.html?personalEvent=closed&personalKind=private');
+console.log('PASS personal private history: closed authorized event retained, duplicates merged, membership route used.');
