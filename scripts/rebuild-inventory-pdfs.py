@@ -32,6 +32,8 @@ OVERALL = OUTPUT / "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf"
 DETAIL = OUTPUT / "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf"
 IMAGES = OUTPUT / "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf"
 LOCK = ROOT / "CONTROL_PROYECTO_SCIRE" / "INVENTARIOS_V311.lock.json"
+RELEASE = json.loads((ROOT / "release.json").read_text(encoding="utf-8"))
+RELEASE_LABEL = RELEASE["label"]
 REPORTLAB_FONTS = Path(reportlab.__file__).resolve().parent / "fonts"
 REGULAR = str(REPORTLAB_FONTS / "Vera.ttf")
 BOLD = str(REPORTLAB_FONTS / "VeraBd.ttf")
@@ -68,7 +70,7 @@ def markdown_pdf(source, target, title):
     h3 = ParagraphStyle("H3", parent=base, fontName="InventorySans-Bold", fontSize=9.5, leading=12, textColor=HexColor("#101010"), spaceBefore=5, spaceAfter=3)
     code = ParagraphStyle("Code", parent=base, fontName="InventorySans", fontSize=6.5, leading=8.2, leftIndent=4 * mm, rightIndent=2 * mm, backColor=HexColor("#f2f2f2"), borderPadding=3)
     cover = ParagraphStyle("Cover", parent=h1, alignment=TA_CENTER, fontSize=24, leading=29, spaceAfter=14)
-    story = [Spacer(1, 45 * mm), Paragraph(html.escape(title), cover), Paragraph("Fuente: R18-LAB - acceso propietario e invitado de 24 horas - Produccion intacta", ParagraphStyle("CoverSub", parent=base, alignment=TA_CENTER, fontSize=10)), PageBreak()]
+    story = [Spacer(1, 45 * mm), Paragraph(html.escape(title), cover), Paragraph(f"Fuente: {html.escape(RELEASE_LABEL)} LAB - entrada general libre - Produccion intacta", ParagraphStyle("CoverSub", parent=base, alignment=TA_CENTER, fontSize=10)), PageBreak()]
     for raw in source.read_text(encoding="utf-8").splitlines():
         line = clean(raw.rstrip())
         if not line:
@@ -102,7 +104,7 @@ def image_inventory_pdf(target):
     document.setFont("InventorySans-Bold", 21)
     document.drawCentredString(A4[0] / 2, A4[1] - 58 * mm, "INVENTARIO POR IMAGENES Y RUBROS")
     document.setFont("InventorySans", 10)
-    document.drawCentredString(A4[0] / 2, A4[1] - 70 * mm, "R18-LAB - acceso propietario e invitado de 24 horas - Produccion intacta")
+    document.drawCentredString(A4[0] / 2, A4[1] - 70 * mm, f"{RELEASE_LABEL} LAB - entrada general libre - Produccion intacta")
     document.showPage()
     for index, path in enumerate(paths, start=1):
         with Image.open(path) as image:
@@ -156,7 +158,7 @@ def source_state():
 def write_lock(paths):
     files, digest = source_state()
     payload = {
-        "version": "R18-LAB-OWNER-GUEST-24H-LOCK",
+        "version": f"{RELEASE_LABEL}-LAB-RELEASE",
         "generatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
         "sourceFileCount": len(files),
         "sourceDigest": digest,
@@ -179,7 +181,7 @@ def main():
     write_lock(paths)
     for path in paths:
         print(f"{path.name}\t{path.stat().st_size}\t{sha256(path)}")
-    print(f"INVENTORY_LOCK PASS version=R18-LAB-OWNER-GUEST-24H-LOCK sources={json.loads(LOCK.read_text(encoding='utf-8'))['sourceFileCount']}")
+    print(f"INVENTORY_LOCK PASS version={RELEASE_LABEL}-LAB-RELEASE sources={json.loads(LOCK.read_text(encoding='utf-8'))['sourceFileCount']}")
 
 
 if __name__ == "__main__":

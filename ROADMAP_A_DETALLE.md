@@ -2373,3 +2373,11 @@ Archivo de escenario conservado: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ES
 - Evidencia: `node test-lab-first-open.mjs` PASS; el badge e ID toman el label `R146.1.1` del release.
 - Archivos: `index-grupal.html`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 - Estado: Preview nuevo y despliegue Production pendientes.
+
+## R147 · acceso libre desde raíz matriz · 30 septiembre 2026
+- La verificación de archivos confirma que `/`, `/index.html` e `/inicio` redirigen directamente a Registro y que el middleware pasa las páginas normales sin consultar sesión propietaria. La regresión `test-lab-account-gate.mjs` verifica ahora los tres redirects además de comprobar que Registro no monta `auth-gate.js`.
+- R147 renueva `release.json`, el badge visible y las cachés PWA para que el botón de actualización detecte el build nuevo.
+- Se mantiene separado el panel opcional de administración de invitaciones temporales y la autorización por recurso de torneos/datos privados; nada de eso condiciona la entrada general.
+- El generador de inventarios toma el rótulo y la versión del `release.json`, evitando dejar los PDF y el sello con identidad R18.
+- Archivos: `release.json`, `index-grupal.html`, `service-worker.js`, `test-lab-account-gate.mjs`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+- Estado: build manual LAB PASS; project-quality, roadmap, inventario (761 fuentes/3 PDF) y regresiones dirigidas PASS. Los dos ROADMAP y el sello quedaron agrupados tras validar el gate de trazabilidad. Preview R147 pendiente de despliegue y verificación externa.

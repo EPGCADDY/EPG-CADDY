@@ -8,7 +8,7 @@
 
 ## Política de acceso vigente · orden del propietario · 30 septiembre 2026
 
-La entrada a la aplicación es libre: Registro, Score Card local y Scores no requieren cuenta, correo, contraseña, autenticación como propietario ni código global. El acceso opcional a respaldos y la autorización de torneos privados son capacidades separadas por recurso; no pueden bloquear la pantalla inicial. Se conserva la invitación individual de 24 horas como herramienta opcional e independiente; nunca es un requisito de entrada.
+La entrada a la aplicación es libre: Registro, Score Card local y Scores no requieren cuenta, correo, contraseña, autenticación como propietario ni código global. R147 fija como regresión permanente que `/`, `/index.html`, `/inicio` y la ruta de Registro abran directamente la aplicación. El acceso opcional a respaldos y la autorización de torneos privados son capacidades separadas por recurso; no pueden bloquear la pantalla inicial. Se conserva la invitación individual de 24 horas como herramienta opcional e independiente; nunca es un requisito de entrada.
 
 Este documento contiene únicamente funciones reales del producto pendientes o previstas. No incluye auditorías, ramas, publicaciones, permisos, facturación ni administración.
 

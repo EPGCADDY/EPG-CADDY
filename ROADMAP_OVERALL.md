@@ -2275,6 +2275,14 @@ La entrada raíz (`/`, `/index.html`, `/inicio`) y Registro no cargan el módulo
 
 Archivos: `index-grupal.html`, `access.html`, `guest-access.js`, `test-lab-account-gate.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-owner-invitation-ui.mjs`, `test-v311-live-support-link.mjs`, `test-lab-r60-physical-matrix.mjs`, `test-manual-startup-sharing.mjs`, `test-v405-registration-clear-final-mobile.mjs`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, ambos ROADMAPS e `INVENTARIOS_V311.lock.json`.
 
+## R147 · entrada libre desde raíz · 30 septiembre 2026
+
+Se publica como R147 la regla permanente de entrada pública: las rutas `/`, `/index.html` e `/inicio` llevan a Registro, y el middleware no coloca una puerta de cuenta en páginas normales. La nueva regresión comprueba esas rutas junto con la ausencia de `auth-gate.js` en Registro. Se conserva la autenticación exclusiva para el panel opcional de invitaciones y para recursos privados; no restringe el acceso a la aplicación general. `release.json`, el badge y la caché PWA se actualizan a R147 para habilitar la detección de la actualización instalada.
+
+El generador de inventarios toma su rótulo y versión de `release.json`, evitando sellos heredados de R18. Build manual LAB, quality gate, roadmap gate, inventario y regresiones dirigidas: PASS. Archivos: `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`. Preview R147 aún no enviado a Vercel.
+
+Archivos: `release.json`, `index-grupal.html`, `service-worker.js`, `test-lab-account-gate.mjs`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
 ### R146.1.1 · normalización del parche visible · 30 septiembre 2026
 - `index-grupal.html`: el parser de versiones ahora acepta varios segmentos numéricos y presenta `R146.1.1` en el badge en vez del identificador interno del despliegue.
 - Regresión: `test-lab-first-open.mjs` comprueba badge e ID contra `release.json`; PASS tras corregir el parser.
