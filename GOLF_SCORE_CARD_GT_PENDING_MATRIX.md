@@ -6,6 +6,13 @@
 
 **Aplicación permanente:** `https://epg-caddy.vercel.app/`
 
+## Regla global permanente — entrada sin candado
+
+- Instrucción expresa del propietario: la matriz y la raíz de la aplicación no deben exigir credenciales ni acceso de propietario para entrar. Aplicable a todas las versiones presentes y futuras.
+- Rutas públicas: `/`, `/index.html`, `/inicio`, `/index-grupal.html`, PWA y páginas de la aplicación. `access.html` sólo reenvía al inicio; nunca se usa como barrera.
+- La autenticación puede proteger una operación personal o privada y sus datos/API, pero nunca bloquea la apertura general de la app.
+- Regresión obligatoria: middleware confirma rutas públicas sin consultar `app-access`; auth gate no abre en el arranque; la suite LAB ejecuta `test-live-share-middleware.mjs`, `test-lab-account-gate.mjs`, `test-lab-owner-session-priority.mjs` y `test-r18-owner-guest-24h-access.mjs`.
+
 Este documento contiene únicamente funciones reales del producto pendientes o previstas. No incluye auditorías, ramas, publicaciones, permisos, facturación ni administración.
 
 ## Candado de ramas — MANDATORIO

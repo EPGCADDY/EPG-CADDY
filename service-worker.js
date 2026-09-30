@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r146-personal-event-permissions`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r146-personal-event-permissions`;
-const RELEASE_FALLBACK="LABORATORIO-20260929-R142";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-public-app-entry`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-public-app-entry`;
+const RELEASE_FALLBACK="LABORATORIO-20260930-R147";
 let RELEASE=RELEASE_FALLBACK;
 async function fetchPublishedRelease(){
   try{
@@ -144,7 +144,7 @@ self.addEventListener("fetch",event=>{
   // Personal scorecards require current server membership; never serve the owner shell
   // or a cached scorecard in response to a forged/revoked personal account URL.
   if(request.mode==='navigate'&&(url.searchParams.has('personalEvent')||url.searchParams.has('personalAccount'))){event.respondWith(fetch(request,{cache:'no-store'}));return}
-  if(request.mode==="navigate"&&(url.pathname==="/access.html"||url.pathname==="/pwa-launch.html"||url.pathname.startsWith("/invite/"))){event.respondWith(fetch(request,{cache:"no-store"}));return}
+  if(request.mode==="navigate"&&(url.pathname==="/access.html"||url.pathname==="/invite.html"||url.pathname==="/pwa-launch.html"||url.pathname.startsWith("/invite/"))){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"&&(url.pathname==="/manual.pdf"||url.pathname==="/manual.html")){event.respondWith(fetch("/manual.html?__gscg_build_check=1",{cache:"no-store"}));return}
   if(url.pathname==="/release.json"){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(url.searchParams.has("__gscg_build_check")||url.searchParams.has("update_check")){event.respondWith(fetch(request,{cache:"no-store"}));return}

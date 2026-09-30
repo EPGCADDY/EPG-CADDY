@@ -9,6 +9,7 @@ const middleware=fs.readFileSync("middleware.js","utf8");
 const app=fs.readFileSync("index-grupal.html","utf8");
 const guest=fs.readFileSync("guest-access.js","utf8");
 const access=fs.readFileSync("access.html","utf8");
+const invite=fs.readFileSync("invite.html","utf8");
 const vercel=JSON.parse(fs.readFileSync("vercel.json","utf8"));
 
 const token=newAccessToken();
@@ -49,18 +50,20 @@ assert.doesNotMatch(app,/ownerShare24h"\)\?\.addEventListener\("click",\(\)=>loc
 assert.match(guest,/gscg-guest24h:/);
 assert.match(guest,/ACTIVIDAD ANÓNIMA REGISTRADA HASTA 48 HORAS/);
 assert.match(app,/queueGuestAccessFeedback/);
-assert.match(app,/setInterval\(enforceGuestAccess,15000\)/);
+assert.doesNotMatch(app,/enforceGuestAccess|setInterval\(enforceGuestAccess/);
 assert.match(app,/getRegistrations/);
 assert.match(app,/installAppButton/);
-assert.match(access,/VER ACTIVIDAD ANÓNIMA/);
-assert.match(access,/ABRIÓ:/);
-assert.match(access,/searchParams\.get\("invite"\)/);
-assert.match(access,/location\.hash\.match\(\/\^#invite=/);
-assert.match(access,/location\.pathname\.match\(\/\^\\\/invite\\\//);
+assert.match(access,/index-grupal\.html\?inicio=1/);
+assert.doesNotMatch(access,/type=["'](?:email|password)["']/i);
+assert.doesNotMatch(access,/ENTRAR COMO PROPIETARIO|ACCESO PROPIETARIO REQUERIDO|VER ACTIVIDAD ANÓNIMA/i);
+assert.match(invite,/searchParams\.get\('invite'\)/);
+assert.match(invite,/location\.hash\.match\(\/\^#invite=/);
+assert.match(invite,/location\.pathname\.match\(\/\^\\\/invite\\\//);
 assert.match(middleware,/path\.startsWith\("\/invite\/"\)/);
 assert.match(fs.readFileSync("vercel.json","utf8"),/"source"\s*:\s*"\/invite\/:token"/);
-assert.match(access,/method:"POST"/);
-assert.doesNotMatch(access,/item\.name|item\.email|item\.identity/);
+assert.match(invite,/method:'POST'/);
+assert.match(invite,/Puedes abrir la aplicación libremente/);
+assert.doesNotMatch(invite,/item\.name|item\.email|item\.identity/);
 assert.deepEqual(vercel.crons,[{path:"/api/app-access?action=cleanup",schedule:"0 * * * *"}]);
 
 let redeemed=false;
@@ -75,4 +78,4 @@ const sql=async(parts,...values)=>{
 assert.equal((await redeemGuestToken(token,sql))?.id,"first-device");
 assert.equal(await redeemGuestToken(token,sql),null);
 
-console.log("PASS acceso propietario/invitado 24h: enlace individual de un solo uso, aislamiento, revocación, bloqueo, feedback anónimo y purga <48h");
+console.log("PASS entrada pública sin credenciales propietarias; invitación 24h de un solo uso, aislamiento, revocación y purga <48h");

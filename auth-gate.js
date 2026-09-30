@@ -78,16 +78,12 @@ async function submit(action){
   window.GSC_ACCOUNT_SIGNED_IN=true;window.dispatchEvent(new CustomEvent("gsc-account-ready",{detail:{user:result.user||null}}));status.textContent="LISTO";$("gscAuthPassword").value='';if(guestLogin){location.replace(location.pathname.endsWith('/index-grupal.html')?'/index-grupal.html?inicio=1':'/live-hub.html');return}hide();
 }
 async function init(){
-  if(isGuest()){
-    // La identidad del servidor prevalece sobre una marca temporal antigua.
-    try{const response=await fetch("/api/app-access?action=status",{credentials:"include",cache:"no-store"}),access=await response.json();if(response.ok&&access.ok&&access.role==="owner"&&!document.cookie.split(';').some(value=>value.trim()==='gsc_guest_mode=1')){location.replace(location.pathname+location.search);return}}catch{}
-    if(new URLSearchParams(location.search).get('account')==='1'){usingPersonalAccount=true;show()}
-    return;
+  // The app shell is public. Account UI opens only when a feature explicitly
+  // calls GSCOpenAccountLogin or the user opens the dedicated account route.
+  if(new URLSearchParams(location.search).get('account')==='1'){
+    usingPersonalAccount=true;
+    show();
   }
-  style();render();
-  const session=await request("session");
-  if(session.ok&&session.user?.id){window.GSC_ACCOUNT_SIGNED_IN=true;window.dispatchEvent(new CustomEvent("gsc-account-ready",{detail:{user:session.user}}));hide();return}
-  if(!location.pathname.endsWith("/live-hub.html")||new URLSearchParams(location.search).get('account')==='1')show();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();

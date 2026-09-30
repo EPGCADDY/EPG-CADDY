@@ -41,6 +41,9 @@ export default async function accessGate(request){
       if(url.searchParams.get('personalEvent'))return new Response('Acceso personal no autorizado',{status:403,headers:{'cache-control':'no-store'}});
     }
   }
+  // The application shell and all non-API routes are public. Keep identity
+  // checks at API boundaries and on explicitly addressed personal scorecards.
+  if(!path.startsWith('/api/'))return next();
   let access={ok:false,role:"none",code:"ACCESS_REQUIRED"};
   try{
     const statusUrl=new URL("/api/app-access?action=status",request.url);
@@ -53,7 +56,7 @@ export default async function accessGate(request){
     return next({headers:{"x-gsc-access-role":access.role}});
   }
   if(path.startsWith("/api/"))return new Response(JSON.stringify({ok:false,code:access.code||"ACCESS_REQUIRED"}),{status:401,headers:{"content-type":"application/json","cache-control":"no-store"}});
-  const target=new URL("/access.html",request.url);return Response.redirect(target,307);
+  return new Response(JSON.stringify({ok:false,code:access.code||"ACCESS_REQUIRED"}),{status:401,headers:{"content-type":"application/json","cache-control":"no-store"}});
 }
 
 export const config={runtime:"nodejs",matcher:["/((?!access\.html$|api/app-access$|favicon\.ico$).*)"]};

@@ -107,6 +107,17 @@
       "id": "G0-11",
       "name": "produccion_intacta",
       "requiresOwnerApproval": true
+    },
+    {
+      "id": "G0-12",
+      "name": "entrada_publica_sin_candado",
+      "acceptance": "La raíz, enlaces de entrada, páginas y PWA abren sin credenciales propietarias en toda versión. Las funciones/API privadas conservan sus permisos propios.",
+      "evidence": [
+        "node test-live-share-middleware.mjs",
+        "node test-lab-account-gate.mjs",
+        "node test-lab-owner-session-priority.mjs",
+        "node test-r18-owner-guest-24h-access.mjs"
+      ]
     }
   ],
   "requiredControls": [

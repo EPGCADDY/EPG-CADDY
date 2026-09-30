@@ -236,7 +236,8 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 
 | Archivo | Función exacta |
 |---|---|
-| `access.html` | Pantalla privada para autenticar al propietario, crear/revocar accesos y ver el reporte anónimo. |
+| `access.html` | Reenvía al inicio público; no pide credenciales ni crea/revoca accesos. |
+| `invite.html` | Canjea enlaces individuales de invitación de 24 horas; nunca es barrera para abrir la app. |
 | `api/_lib/app-access.js` | Identidad propietaria, token opaco, SHA-256, vigencia, revocación, métricas y purga. |
 | `api/app-access.js` | API de canje, estado, creación, revocación, feedback, reporte y limpieza. |
 | `middleware.js` | Bloqueo central de acceso y rutas privadas para invitados. |
@@ -1444,3 +1445,9 @@ El bloqueo EPERM del checkpoint R145 quedó resuelto tras cambio efectivo de per
 Vercel: GSC_PERSONAL_ACCESS_LAB_READY=1 guardado SOLO Preview; captura lab-preview-env.jpg. Canal fijo LAB no se activó ni redeployó. LAB público continúa R144 hasta revisión nueva. Estado actual: NO REVISADO. Pendientes ejecutables: sellar roadmaps/inventarios, commit y sincronizar rama LAB, comprobar Preview READY y revisión visual real. Pendiente de servicio: navegador carece de sesión autenticada de aplicación; no se puede certificar escritor/permisos remotos con fixtures ni saltar login. No se solicitan credenciales por chat ni una nueva autorización.
 
 Rollback: quitar activación Preview y volver solo LAB al commit a757809; ninguna promoción a main o a epg-caddy. Entrega integral bloqueada hasta cero fallos aplicables y recorrido remoto comprobado.
+
+## R147 · entrada pública permanente
+- `middleware.js`, `auth-gate.js`, `access.html`: raíz y páginas de aplicación sin login de propietario.
+- `invite.html`: canje de invitación opcional, sin bloquear app.
+- `AGENTS.md`, directrices, matrices y los tests focales: regla permanente que impide restaurar candado global.
+- `release.json`, `index-grupal.html`, `service-worker.js`: identifican R147 y renuevan caché PWA.

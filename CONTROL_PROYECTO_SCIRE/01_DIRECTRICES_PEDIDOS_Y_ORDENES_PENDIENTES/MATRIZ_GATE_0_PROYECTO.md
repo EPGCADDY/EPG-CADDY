@@ -31,6 +31,7 @@
 | G0-09 | Clima | GPS primero, campo como respaldo, actual/pronóstico, inicio/cierre, artefactos, proveedor identificado y validación física | escenarios automáticos + comparación/medición de campo |
 | G0-10 | Integridad operativa | escritor único, estados, cálculos, persistencia, corrección, historial y modalidades; ACTUALIZAR exige además cuatro deployments READY consecutivos, mismo alias/perfil Playwright, A→B→C→D, capturas completas SHA-256 y cero errores | auditoría maestra; `node test-v407-r24-update-physical-gate.mjs`; revisión automatizada en navegador real y validador JSON |
 | G0-11 | Producción | sin cambios mientras exista un FAIL; despliegue sólo con aprobación expresa y rollback | commit/deployment exactos y hashes antes/después |
+| G0-12 | Entrada pública sin candado | raíz, enlaces de entrada, páginas y PWA abren en todas las versiones sin credenciales de propietario; permisos privados permanecen por operación | `node test-live-share-middleware.mjs`, `node test-lab-account-gate.mjs`, `node test-lab-owner-session-priority.mjs`, `node test-r18-owner-guest-24h-access.mjs` |
 
 ## Lógica de resultado
 

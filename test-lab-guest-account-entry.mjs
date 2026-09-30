@@ -35,8 +35,10 @@ const initial=await setup('gsc_guest_mode=1','?inicio=1&account=1','/index-grupa
 initial.nodes.get('gscAuthEmail').value='fixture@example.com';initial.nodes.get('gscAuthPassword').value='fixture-passphrase';
 await initial.nodes.get('gscAuthSignIn').click();assert.deepEqual(initial.navigation,['/index-grupal.html?inicio=1']);
 const user=await setup('');await new Promise(resolve=>setImmediate(resolve));
+assert.equal(user.requests.length,0,'opening app without guest or account cookies must not request account session');
+assert.equal(user.nodes.has('gscAuthGate'),false,'opening app must not render a blocking sign-in gate');
 user.window.GSCOpenAccountLogin();
 assert.equal(user.nodes.get('gscAccountChoices').hidden,false);
 assert.equal(user.nodes.get('gscGuestChoices').hidden,true);
-assert.equal(user.requests[0].url,'/api/account?action=session');
-console.log('PASS guest entry: cookie recognized in portal, no blocked login, preserved invitation until authenticated reload, personal account unchanged.');
+assert.equal(user.requests.length,0,'opening explicit account UI must not query session without submitting credentials');
+console.log('PASS guest entry: public app opens without login; account UI remains feature-triggered and submits only on explicit sign-in.');

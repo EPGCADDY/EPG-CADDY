@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 4731)
+Total output lines: 100
+
 # ROADMAP A DETALLE
 
 ## R144 · 30 septiembre 2026, 00:42 Guatemala · acceso Neon recuperado; publicación bloqueada
@@ -32,14 +35,7 @@
 - Base de permisos personales y esquema SQL preparados, NO conectados ni aplicados: roles, caducidad, revocación, cookie HttpOnly, hashes, consumo en una sentencia CTE. Test unitario valida contrato SQL, NO certifica concurrencia real.
 - Bloqueo preciso: la matriz deja pendiente selección/configuración del proveedor de verificación telefónica. No existe prueba de control del teléfono implementada, ni se ha verificado una base LAB aislada para estas tablas. Conector Neon no está asociado a un proyecto: list_branches exige project_id; repositorio/mapa no lo documentan y no hay NEON_API_KEY ni VERCEL_TOKEN local. NO activar códigos personales, sesiones, permisos o compartir LIVE como completos; el flujo heredado sigue activo en LAB remoto R143.
 - Pendientes obligatorios: proveedor y prueba real, integración server/client de autorizaciones y enlace LIVE sin bearer compartido, restricción de compartir a inscritos, concurrencia y regresión end-to-end contra base LAB aislada; luego build/gates/revisión visual integral, commit y despliegue exclusivamente LAB. Sin certificación integral ni nueva entrega.
-- Archivos del bloque: `scores-ui.js`, `scores-ui.css`, `index-grupal.html`, `live-hub.html`, `live-hub.js`, `private-rounds.js`, `service-worker.js`, `api/live.js`, `api/_lib/personal-access.js`, `sql/personal-access-lab.sql`, `test-scores-ui.mjs`, `test-scores-ui-browser.cjs`, `test-personal-access.mjs`, `test-lab-no-production-proxy.mjs`, `test-lab-private-rounds.mjs`, `scripts/build-manual-lab.mjs`, `test-lab-medal-monitor.mjs`, `test-lab-r60-production-refresh.mjs`, `test-manual-no-assistant.mjs`, `test-lab-tournament-navigation.mjs`, `test-lab-shortcuts-navigation.mjs`, `test-lab-global-operational-audit.mjs`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
-
-
-## R140 · 29 septiembre 2026 · nombres limpios en Ronda Particular
-
-- `private-rounds.js`: cada fila muestra sólo el nombre del jugador; se retira el texto SCORES ACTUALIZADOS. El mensaje compartido contiene únicamente Ronda [nombre] y el código en la segunda línea, sin etiqueta. Se conservan columnas, cálculo, refresco automático y diseño.
-- `live-hub.html`: botones TORNEOS REGISTRADOS y RONDAS PARTICULARES con la misma clase, tamaño y fuente; cada botón abre su lista. Se retira ELIGE UN TORNEO · PUEDES GUARDAR HASTA 5 y CREAR RONDA PRIVADA de Torneos; la creación sigue en la tarjeta.
-- Corrección basada en capturas IMG_5319/IMG_5322; release y caché R140 para entregar la misma corrección en iPhone. Prueba dirigida de rondas particulares y matriz de release. Rollback LAB R139 dpl_9eTW16V8vUB5gU8fHGNF5ndcTJP9.
+- Archivos del bloque: `scores-ui.js`, `scores-ui.css`, `index-grupal.html`, `live-hub.html`, `live-hub.js`, `private-rounds.js`, `service-worker.js`, `api/live.js`, `api/_lib/personal-access.js`, `sql/personal-access-lab.sql`, `test-scores-ui.mjs`, `test-scores-ui-browser.cjs`, `test-personal-access.mjs`, `test-lab-no-production-proxy.mjs`, `test-lab-private-rounds.mjs`, `scripts/build-manual-lab.mjs`, `test-lab-medal-monitor.mjs`, `test-lab-r60-production-refresh.mjs`, `test-manual-no-assistant.mjs`, `test-lab-tournament-navigation.mjs`, `test-lab-shortcuts-navigation.mjs`…231 tokens truncated…n iPhone. Prueba dirigida de rondas particulares y matriz de release. Rollback LAB R139 dpl_9eTW16V8vUB5gU8fHGNF5ndcTJP9.
 
 ## R139 · 29 septiembre 2026 · Ronda Particular con nombre, código y grupos
 
@@ -398,6 +394,9 @@ Fuentes consultadas: 18Birdies documenta Wolf por mejor bola, punto por unidad, 
 | `audit-project.mjs` | `89 PACKAGES + LIVE VERCEL GATE` | Regresión local completa y build Preview aprobados; la puerta real confirmó modelo, búsqueda web, seis fuentes oficiales y `scoreChanged:false`. |
 
 Estado honesto: el Preview `dpl_4k5V9rFwkVXVwuRwktBjtgG4arAv` quedó `READY` desde `ea18aafb214731d44b41ea069fe27228407f9f47`; 89 paquetes, 322 fuentes, tres inventarios y la puerta viva aprobaron. La protección de acceso de Vercel impidió la inspección visual automática externa; revisión visual/táctil y prueba física de iPhone siguen abiertas antes de cualquier montaje en Producción.
+Warning: truncated output (original token count: 5130)
+Total output lines: 100
+
 
 ## Registro técnico V328-R2 · Reglas oficiales y respaldo básico sin conexión
 
@@ -445,15 +444,7 @@ La prueba física de V326-R2 quedó rechazada. Después de unas seis preguntas, 
 |---|---|---|
 | `index-grupal.html` | `TRANSCRIPTION UNTIL FINAL / FOLLOWUP AUDIO START / PLAYBACK 60S` | `speech_stopped` no cancela la vigilancia; un cierre tardío sin `response_id` se atribuye a la respuesta fuente hasta que empiece el audio final; generación y reproducción tienen recuperación independiente; el canal perdido nunca retorna en silencio. |
 | `api/voice-health.js` | `ALLOWLIST / NO CONTENT / 202` | Conserva sólo etapa, build, contexto, número de turno, duración, herramienta y banderas técnicas; descarta pregunta, transcripción, nombre, GPS y credenciales. |
-| `api/_lib/traffic.js` | `AMBIGUOUS DESTINATION → ONE QUESTION` | Una ruta inexistente o un destino fragmentario pide nombre completo, zona o municipio. La ruta exacta El Pulté Golf → Pradera Concepción permanece calculable. |
-| `api/universal-ai.js` | `TEXT TRAFFIC CLARIFICATION` | El canal de texto tampoco invoca tráfico con un fragmento ambiguo y, si el proveedor no identifica la ruta, formula solamente una pregunta breve. |
-| `test-v327-tool-followup-no-silence.mjs` | `550 TOOL/AUDIO SEQUENCES + 100 PRIVACY EVENTS` | Prueba cierres antes y después de crear el follow-up, con y sin ID, audio final, vigilancia de entrada/reproducción, recuperación de canal, aclaración de destino y exclusión de contenido privado. |
-| `test-v326-no-silent-conversation.mjs`, `test-v325-ideal-microphone-timings.mjs`, `test-v324-real-traffic.mjs`, `test-v323-long-multitopic-context.mjs`, `test-v322-real-sustained-caddie.mjs`, `test-v312-general-caddie.mjs` | `REGRESSION-V327` | Conservan VAD 2.2 s, entrada 15/90 s, respuesta 30 s, contexto largo, búsqueda universal y tráfico real. |
-| `service-worker.js` | `gscg-mobile-v327-tool-followup-no-silence` | Fuerza al iPhone a sustituir la copia V326-R2. |
-| `audit-project.mjs`, `test-stableford-ui.mjs`, `test-v272-definitive-operational-release.mjs`, `test-v274-complete-courses-voice-operations.mjs`, `test-v275-stable-live-voice-turns.mjs`, `test-v276-manual-hole-navigation.mjs`, `test-v277-official-round-corrections.mjs`, `test-v278-card-image-pdf-export.mjs`, `test-v279-local-card-library.mjs`, `test-v280-local-history-insights.mjs`, `test-v281-pwa-installation.mjs`, `test-v284-native-package-generation.mjs`, `test-v290-brand-icons-cleanup.mjs`, `test-v304-homogeneous-registration-actions.mjs`, `test-v305-history-navigation-zero-error.mjs`, `test-v307-match-arrows-format.mjs` | `BUILD/CACHE-V327` | Toda la regresión exige el nuevo corte sin alterar funciones anteriores. |
-| `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/COLA_DE_PENDIENTES.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `GOLF_SCORE_CARD_GT_GRUPAL_MANUAL_MAESTRO.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | `HONEST STATUS / MAP / DIGEST` | Registran V326-R2 rechazada, V327 en banco y la prohibición de montaje hasta PASS físico prolongado. |
-
-El cálculo directo real ejecutado durante el diagnóstico devolvió para El Pulté Golf → Pradera Concepción 15 km y cerca de 33 minutos en ese instante. `Concepción` sin más datos no debe convertirse arbitrariamente en Pradera Concepción ni en otro municipio: el modelo hace una sola pregunta breve. Producción permanece en V322 sin modificación.
+| `api/_lib/traffic.js` | `AMBIGUOUS DESTINATION → ONE QUESTION` | Una ruta inexistente o un destino fragmentario pide nombre completo, zona o municipio. La ruta exacta El Pulté Golf → Pradera Concepción permanece calculab…630 tokens truncated…anece en V322 sin modificación.
 
 ## Registro detallado V326-R1 · recarga controlada de la credencial de tráfico
 
@@ -1498,6 +1489,9 @@ Pruebas manuales técnicas PASS; regresión amplía bloqueo a GPS y llamadas wea
 - MANUAL COVER GATE SYNC 2026-09-21: `test-lab-global-operational-audit.mjs` deja de exigir la portada histórica `/docs/manual/layout/page-00.png` y valida el logo oficial cuadrado vigente `/assets/official-logos/golf-score-card-gt-official-master-1254.jpeg`, ya adoptado por `manual.html`. No altera pantallas internas de la app; sólo sincroniza el gate con la portada autorizada del Manual.
 
 - MANUAL HOTSPOTS REALES FASE 1 2026-09-21: se eliminan los botones externos de “MODO INTERACTIVO” del Manual general y se inicia la conversión correcta: zonas transparentes directamente sobre los controles visibles de las gráficas. Primera cobertura aplicada a `APP_SETUP_CURRENT.png`, `APP_SCORECARD_ATAJOS.png`, `APP_ATAJOS_OVERLAY.png` y `APP_TORNEOS_HUB.png`, con rutas reales hacia Registro, Score Card, Anotador, MENÚ, Mis Torneos, General, Categorías, Buscar Jugador, Favoritos, Historial y Cuenta. Archivo principal: `manual.html`. Pendiente: extender la misma geometría a todos los demás assets y validar físicamente cada hotspot.
+Warning: truncated output (original token count: 4739)
+Total output lines: 100
+
 
 - MANUAL HOTSPOTS REALES FASE 2 2026-09-21: `manual.html` extiende hotspots transparentes directamente sobre todas las gráficas operativas actuales: Stableford, Match Play, Four Ball, Práctica, Skins, Universales, Tarjeta Final, Corrección, Historial, Acceso/Cuenta, Categorías, Campeonato, Torneos, Timer, zona operativa inferior y las cuatro capturas reales LAB. La capa interactiva se alinea dinámicamente al rectángulo renderizado exacto de cada imagen mediante medición y ResizeObserver para evitar desplazamientos por padding/object-fit. Pendiente únicamente certificación física automatizada de cada hotspot y destino.
 
@@ -1541,11 +1535,7 @@ Pruebas manuales técnicas PASS; regresión amplía bloqueo a GPS y llamadas wea
 
 - ANOTADOR R6 · KEYPAD COMPACTO 2026-09-22: el popup de score se reduce aproximadamente 45–60% respecto de R5: ancho máximo 320px/88vw, altura visual objetivo ≤42vh, teclas de 38px, display de 38px, acciones de 40px, menos padding/gaps y overlay a 24% de opacidad. Antes de abrir, la fila/casilla activa se centra con `scrollIntoView` para permanecer visible por encima del panel. Se conservan `🎙 DICTAR`, `OK · SIGUIENTE`, dictado grupal, autoavance y motor de score sin cambios.
 
-- FINAL R8 · ANOTADOR 1–9 + AUDIO 2026-09-22: la pantalla conserva exactamente su estructura; las nueve posiciones de los tres totales parciales a la derecha del ANOTADOR se reemplazan por teclas fijas 1–9 (3×3). Tocar un número registra inmediatamente el score del jugador seleccionado y mueve la selección visual (borde verde fuerte) a la casilla GROSS del siguiente jugador, sin botón SIGUIENTE ni popup. Tocar el nombre de un jugador usa su `player.id` real y lee sólo sus resultados registrados. FRONT/BACK/TOTAL construyen explícitamente una línea para todos los jugadores con score disponible hasta el último hoyo registrado. No se alteran cálculos, tarjeta inferior ni demás elementos de pantalla.
-
-- FINAL R8 HOTFIX 2026-09-22: se elimina la cadena heredada `OK · SIGUIENTE` del antiguo popup no utilizado. El flujo vigente permanece: teclado fijo 1–9 en las nueve posiciones derechas, guardado inmediato y selección automática de la siguiente casilla GROSS. Sin cambios visuales adicionales.
-
-- FINAL R10 · AUDIO INDIVIDUAL POR NOMBRE 2026-09-22: se corrige exclusivamente el toque sobre el nombre del jugador. El listener pasa a delegación global en fase capture sobre `#scorecard .player-name[data-audio-player="1"]`, por lo que sigue funcionando después de cualquier re-render y aunque otros controles detengan propagación. La resolución usa primero `data-player-id` real y fallback por slot visual. Tocar un nombre reproduce sólo el acumulado de ese jugador. FRONT/BACK/TOTAL no se modifican.
+- FINAL R8 · ANOTADOR 1–9 + AUDIO 2026-09-22: la pantalla conserva exactamente su estructura; las nueve posiciones de los tres totales parciales a la derecha del ANOTADOR se reemplazan por teclas fijas 1–9 (3×3). Tocar un número registra inmediatamente el score del jugador seleccionado y mueve la selección visual (borde verde fuerte) a la casilla GROSS del siguiente jugador, sin botón SIGUIENTE ni popup. Tocar el nombre de un jugador usa su `player.id` real y lee sólo sus resultados registrados. FRONT/BACK/TOTAL construyen explícitamente una línea para todo…239 tokens truncated…n.
 
 - FINAL R9 · FLUJO DE SELECCIÓN DE SCORE 2026-09-22: el ANOTADOR inicia sin ninguna casilla GROSS seleccionada. El usuario debe tocar manualmente la primera casilla a utilizar; esa casilla se marca con borde/resplandor verde. Al tocar 1–9 se registra el score y la selección verde pasa automáticamente a la casilla GROSS del siguiente jugador del mismo hoyo. Al registrar el último jugador, se limpia por completo la selección y la pantalla vuelve al estado normal. Cambiar de hoyo también limpia la selección. No se mueve ni rediseña ningún otro elemento.
 
@@ -1698,6 +1688,9 @@ Control del navegador recuperado reiniciando su sesión de control; acceso invit
 
 Apertura interactiva de Score Card de práctica y selección BLANCAS: Mayan Golf par72, yardas3319+3376=6695; Hacienda Nueva par72,3286+3430=6716; Alta Vista par71,3146+3238=6384; La Reunión par72,3050+3227=6277. Datos observados en UI; no cotejo con tarjetas oficiales externas ni aprobación de todos los cálculos. La Reunión muestra Course Rating0.0 y Slope0: no validado. Capturas conservadas.
 
+Warning: truncated output (original token count: 4589)
+Total output lines: 100
+
 EMPEZAR NUEVA RONDA desde práctica repetidamente abrió formulario Stableford (flujo venía de Stableford). ATRÁS permitió registro general. Texto de audio de la ronda cerrada persistía en nuevas prácticas. En historial apareció la ronda oficial Stableford V1; tocarla no abrió detalle, aun tras nueva observación. FAIL funcional de apertura en esta sesión.
 
 MENÚ abrió y llevó al monitor LIVE. Torneo DEMOSTRACIÓN muestra17grupos/67jugadores; filtro FEMENINA abrió detalle. Seguir FEMENINA01 y abrir FAVORITOS mostró tarjeta individual Gross15/Neto9/resultado-3, sin recuadro Universales. Búsqueda FEMENINA01 mediante campo y Enter devolvió jugador/grupo13/3de18/neto9. Sólo datos de demostración, no certificación de compartición de una ronda real. Favorito de demostración añadido en esta sesión de prueba. Última pantalla: BUSCAR en monitor LAB, resultado FEMENINA01.
@@ -1743,9 +1736,7 @@ En LAB R43, práctica La Reunión: 4→4 y corrección4→8 en jugador1/hoyo10; 
 - Archivos del registro: docs/quality/LAB_R32_KEYPAD_20260922.md, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md y las dos capturas anteriores. Correcciones funcionales existentes sin cambio. Estado NO PUBLICADO / NO CERTIFICADO.
 - R44 CONTRATO ÚNICO DE CAPTURA DE SCORE 2026-09-22: crea score-entry-contract.js como semántica compartida: 1-9 = gross exacto, 0 = no jugó/status x, X = borrar. index-grupal.html consume el contrato y desacopla físicamente las cuatro filas del teclado del número de jugadores usando rowCount=max(jugadores,4), por lo que 0/X siempre aparecen con 1-6 jugadores. Medal Play, Match Play, Four Ball, Universales y Stableford integrado heredan el mismo motor principal. stableford-torneo.html, única Score Card independiente detectada con manejador propio, se alinea al mismo contrato compartido.
 
-- R45 POSICIONES FIJAS MENÚ / ACTUALIZAR 2026-09-22: corrige traslape de controles flotantes. MENÚ queda anclado arriba a la derecha en su posición aprobada; ACTUALIZAR queda anclado inmediatamente debajo con top independiente y z-index separado. Ninguno depende del layout de cabecera ni desplaza al otro. Conserva íntegro R44 y el contrato único de Score Cards.
-
-- R46 BLOQUEO DE POSICIÓN MÓVIL ACTUALIZAR 2026-09-22: elimina overrides móviles heredados que movían ACTUALIZAR a right:58px/right:22px y top +12px. Toda la app usa una sola coordenada contractual: MENÚ arriba a la derecha; ACTUALIZAR debajo, con safe-area y posición fija. No depende de cabecera, número de jugadores, overlay ni modalidad.
+- R45 POSICIONES FIJAS MENÚ / ACTUALIZAR 202…89 tokens truncated…ÓVIL ACTUALIZAR 2026-09-22: elimina overrides móviles heredados que movían ACTUALIZAR a right:58px/right:22px y top +12px. Toda la app usa una sola coordenada contractual: MENÚ arriba a la derecha; ACTUALIZAR debajo, con safe-area y posición fija. No depende de cabecera, número de jugadores, overlay ni modalidad.
 
 - R47 CORRECCIÓN SIN AUTOAVANCE 2026-09-22: cuando el usuario toca una casilla con score existente se activa correctionMode. X borra sólo ese score y mantiene el mismo jugador seleccionado. Al ingresar el score corregido, el foco permanece en esa misma casilla; el usuario puede seleccionar y corregir varios jugadores del mismo hoyo. ENTER es el único control que avanza al siguiente hoyo. La captura normal de un hoyo nuevo conserva el avance entre jugadores pendientes. Se preserva R46 de ACTUALIZAR fijo bajo MENÚ.
 
@@ -1998,6 +1989,9 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 
 ### R106-H4 — Matriz digital compartible 1920×1080 — 2026-09-24
 - Medal Play reconstruida en dos bloques: PRIMERA VUELTA 1–9 y SEGUNDA VUELTA 10–18.
+Warning: truncated output (original token count: 4740)
+Total output lines: 100
+
 - Cada hoyo Medal Play conserva Gross/Neto en una sola celda G/N.
 - Fila PAR, MARCAS, HCP, GROSS, NETO y +/- conservados.
 - Capacidad heredada del registro: hasta 6 jugadores sin volver a matriz 1–18 ultrapanorámica.
@@ -2054,13 +2048,7 @@ R143 · Orden solicitado IMG_5330: ATRÁS izquierda / VER MI TARJETA derecha; RO
 - Búsqueda adicional en Library confirma que la matriz v4 vigente mantiene pendiente seleccionar/configurar proveedor de verificación. No se encontró project_id Neon en los documentos consultados. No se crea una base ajena ni se simula prueba de identidad.
 - Sin commit de entrega ni despliegue; remoto LAB R143 y Producción permanecen intactos. La terminación integral requiere proveedor real configurado y acceso identificado a DB LAB para integrar y certificar la autorización de endpoints, invitaciones, ACCESOS y compartir LIVE sólo para inscritos.
 
-R144 · Evidencias locales registradas por ruta exacta: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/ESTADO.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/NEON_Y_PUBLICACION.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/build-local.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/golf-mobile-detail.png`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/golf-private-scores.png`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/golf-share-code.png`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/golf-shared-favorites.png`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/golf-shared-private-detail.png`.
-
-## R144 · 30 septiembre 2026, 00:58 Guatemala · candidato comprobado y Vercel LAB configurado
-
-Vercel browser autorizado por propietario 00:44. Guardadas como Secret GSC_LAB_DATABASE_URL, GSC_ENVIRONMENT y GSC_LIVE_SHARE_LAB_READY exclusivamente en proyecto golf-sc-gt-lab / prj_0KNTWUoiCiA3amKZQPDNNkWYFDbp; las variables administradas por integración Neon y los otros proyectos permanecen intactos. Canal Vercel Production es del proyecto LAB, no epg-caddy.
-
-api/_lib/database.js usa exclusivamente endpoint candidato br-small-mouse-av0f24o9 para LAB, falla cerrado si falta y rechaza otro host; no-LAB conserva resolución anterior. test-lab-database-isolation.mjs PASS. release.json, index-grupal.html y service-worker.js identifican R144. scripts/build-manual-lab.mjs incluye control nuevo. Build/regresión completos y Firefox 390x844 general/categoría/favoritos/18 G-N/privada/compartir de primer uso PASS en aplicación local con handler real y PostgreSQL aislado. Neon conector: consumo concurrente 8 solicitudes, 1 sesión PASS. E2E web remoto pendiente.
+R144 · Evidencias locales registradas por ruta exacta: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/ESTADO.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/NEON_Y_PUBLICACION.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/build-local.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/golf-mobile-detail.png`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/golf-private-scores.png`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/golf-share-code.png`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/golf-shared-favorites.png`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/golf-shared-priv…240 tokens truncated…handler real y PostgreSQL aislado. Neon conector: consumo concurrente 8 solicitudes, 1 sesión PASS. E2E web remoto pendiente.
 
 Incidencia OP60: la importación de archivo por CUA bloqueó la llamada 273 segundos; no fue posible emitir avances dentro de esa llamada. Se retomó reporte inmediato al terminar. El secreto quedó en Vercel como Secret; archivo temporal de importación eliminado. No imprimir ni guardar credenciales en repositorio o evidencias.
 
@@ -2097,6 +2085,9 @@ Registro: CREAR TORNEO seguido de CREAR RONDA PRIVADA. El primer botón conserva
 G0: referencia original recuperada; aceptación medible por navegación/orden/estado vacío/scores tras selección; riesgos: sesión propietaria ausente, identidad personal y permisos de organización todavía no implementados integralmente. Plan: regresión de navegación, API oficial con PGlite aislado, build y revisión en Preview LAB. Rollback: volver a a757809 únicamente en proyecto golf-sc-gt-lab, sin tocar Production ni base primaria.
 
 PASS API oficial aislado: creación, inscripción válida/inválida, lector no escribe, origen externo denegado, publicación, reintento idempotente, conflicto, corrección, persistencia, historial de eventos y revocación. No sustituye recorrido autenticado remoto. PASS navegación R145 y bancos privados. Build anterior PASS; nueva ejecución con banco API añadida pendiente de registrar salida final.
+
+Warning: truncated output (original token count: 4544)
+Total output lines: 100
 
 PENDIENTE: revisar Preview, probar escritor remoto con sesión propietaria, integrar autorización personal/roles/grupos/MI POSICIÓN y formulario completo según mapa. El diseño original propone verificación telefónica; la última orden sustituye envío de COMPARTIR LIVE por código quemado al primer uso. No inventar proveedor ni afirmar identidad verificada. R144 sigue en dominio fijo hasta revisión. No hay enlace final nuevo certificado.
 
@@ -2135,7 +2126,7 @@ Vercel: GSC_PERSONAL_ACCESS_LAB_READY=1 guardado SOLO Preview; captura lab-previ
 
 Rollback: quitar activación Preview y volver solo LAB al commit a757809; ninguna promoción a main o a epg-caddy. Entrega integral bloqueada hasta cero fallos aplicables y recorrido remoto comprobado.
 
-Archivos R146 y arrastre R145 desde remoto: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/ESTADO.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/gsc-r144-remote-detail.jpg`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/gsc-r144-stable-private-detail.jpg`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/gsc-r144-stable-publication.jpg`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R145/ESTADO.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R145/build.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R145/gate-bloqueado.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ESTADO.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/build.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/gates.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/lab-preview-env.jpg`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `api/_lib/personal-event-access.js`, `api/live-share.js`, `api/live.js`, `api/personal-events.js`, `auth-gate.js`, `guest-access.js`, `index-grupal.html`, `live-control.js`, `live-hub.html`, `live-hub.js`, `live-share.js`, `middleware.js`, `personal-events.js`, `private-rounds.js`, `release.json`, `scores-ui.css`, `scripts/build-manual-lab.mjs`, `service-worker.js`, `shortcuts-ui.js`, `test-lab-global-operational-audit.mjs`, `test-lab-shortcuts-navigation.mjs`, `test-lab-tournament-navigation.mjs`, `test-live-official-flow.mjs`, `test-live-share-browser.cjs`, `test-personal-event-permissions.mjs`, `test-personal-front-end.mjs`, `test-personal-storage-access.mjs`, `test-v353-live-hub.mjs`.
+Archivos R146 y arrastre R145 desde remoto: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/ESTADO.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/gsc-r144-remote-detail.jpg`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/gsc-r144-stable-private-detail.jpg`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R144/gsc-r144-stable-publication.jpg`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R145/ESTADO.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R145/build.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R145/gate-bloqueado.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ESTADO.md`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/build.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/gates.log`, `CONTROL_PROYECTO_SC…44 tokens truncated…, `ROADMAP_OVERALL.md`, `api/_lib/personal-event-access.js`, `api/live-share.js`, `api/live.js`, `api/personal-events.js`, `auth-gate.js`, `guest-access.js`, `index-grupal.html`, `live-control.js`, `live-hub.html`, `live-hub.js`, `live-share.js`, `middleware.js`, `personal-events.js`, `private-rounds.js`, `release.json`, `scores-ui.css`, `scripts/build-manual-lab.mjs`, `service-worker.js`, `shortcuts-ui.js`, `test-lab-global-operational-audit.mjs`, `test-lab-shortcuts-navigation.mjs`, `test-lab-tournament-navigation.mjs`, `test-live-official-flow.mjs`, `test-live-share-browser.cjs`, `test-personal-event-permissions.mjs`, `test-personal-front-end.mjs`, `test-personal-storage-access.mjs`, `test-v353-live-hub.mjs`.
 
 Rama de revisión prevista: lab/integral-round-tournament-r146-20260930, basada en remoto a757809. No se actualizará el canal fijo ni la rama canónica de LAB hasta revisión remota. Preparación de Preview no equivale a entrega.
 
@@ -2198,6 +2189,9 @@ Este checkpoint de evidencia no cambia código de aplicación y se guarda separa
 ### R146 · diagnóstico técnico de publicación 08:03 Guatemala
 Hallazgo real: vercel.json conservaba buildCommand echo Production-LIVE-hotfix. READY no certificaba regresión ejecutada por Vercel. Corregido únicamente en rama LAB: pipeline calidad → roadmaps → inventarios → build-manual-lab; && detiene primera falla. installCommand incluye devDependencies para PGlite0.5.8, necesario por pruebas PostgreSQL. No se cambia main, proyecto Producción ni DB primaria. Perfil completo local PASS. Prueba histórica V290 exige micrófono retirado; falla en esa cláusula, no se modifica el banco ni se reintroduce Mic.
 API de accesos personales: ACCOUNT_AUTH_UNAVAILABLE ahora503 y ACCOUNT_UNAUTHORIZED401; prueba de caída explícita PASS; mensaje frontend específico.
+Warning: truncated output (original token count: 4748)
+Total output lines: 100
+
 Diagnóstico remoto: despliegue613695e READY; logs de 30min muestran GET/api/account200 y advertencia deprecación url.parse, sin error funcional500 observado. Fetch externo del Preview devuelve302 Vercel Authentication; no implica fallo de sesión de aplicación. Link de revisión temporal23h emitido mediante herramienta autorizada, sin quitar autenticación de aplicación. No se guarda token temporal en git. Navegación directa a GET/api/account en navegador ERR_BLOCKED_BY_CLIENT: restricción cliente, no prueba de fallo proveedor.
 Este bloque continúa publicación y revisión de pipeline; sesión real de aplicación sigue no disponible, no se declara100%.
 Archivos: `vercel.json`, `api/personal-events.js`, `personal-events.js`, `test-personal-event-permissions.mjs`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/build.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ESTADO.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
@@ -2241,15 +2235,7 @@ Archivos: `auth-gate.js`, `test-lab-guest-account-entry.mjs`, `CONTROL_PROYECTO_
 - Corrección local: navegación inicial/regreso conserva borrador y ronda activa; limpieza permanece en NUEVA RONDA/BORRAR. Crear torneo captura valores visibles y sincroniza con validación antes de salir.
 - Evidencia VM: dos jugadores y scores sobreviven a regreso; orden captura/sincronización/persistencia/navegación; registro incompleto no navega. No equivale a revisión física.
 - Referencias recuperadas: Torneos_01_Entrada_y_Resultados.png y Torneos_04_Mapa_de_Pantallas.png. Se inspeccionaron ambas imágenes aprobadas; no se reemplaza su diseño.
-- Pendientes bloqueantes: traspaso del grupo al evento, doble captura reportada, acceso habitual, recorrido autenticado y revisión ida/regreso en navegador; no entrega integral ni publicación final. Producción intacta.
-- Test histórico test-v368-canonical-home-entry.mjs falla por start_url /pwa-launch.html vigente contra expectativa antigua /index-grupal.html?source=pwa; no se alteró manifest ni se presentó ese test como PASS.
-
-### R146 · 30/09/2026 10:01 Guatemala · conexión del grupo (local)
-- `index-grupal.html`: antes de navegar valida identidad central y categorías, conserva un borrador temporal ligado al código de cuenta; sin acceso permanece en Registro.
-- `live-hub.js`: recupera ese borrador sólo para la misma cuenta autenticada, precarga campo/modalidad y envía jugadores/grupo al escritor oficial `api/personal-events.js`; sólo elimina el traspaso después de creación exitosa.
-- `test-lab-registration-return-state.mjs`: PASS de funciones reales extraídas (VM), conservación, validación, orden de navegación, cuenta diferente/anónimo/JSON inválido.
-- Build completo perfil LAB: PASS, `/tmp/r146-connected-registration-build.log`.
-- Navegador real sobre f243eb1: Torneos → Crear torneo → cerrar → Ver Scores, estado sin eventos visible. Es la versión publicada anterior, NO evidencia visual de estas correcciones locales.
+- Pendientes bloqueantes: traspaso del grupo al evento, doble captura reportada, acceso habitual, recorrido autenticado y revisión ida/regreso en navegador; no entrega integral ni publicación final. Producció…248 tokens truncated… Torneos → Crear torneo → cerrar → Ver Scores, estado sin eventos visible. Es la versión publicada anterior, NO evidencia visual de estas correcciones locales.
 - Bloqueantes de entrega permanecen: acceso habitual no resuelto, recorrido autenticado y revisión física iPhone; asignación de marcas al reabrir tarjeta y conexión/corrección de scores requieren revisión. No publicación final ni 100%.
 
 ### R146 · 30/09/2026 10:03 Guatemala · marcas conservadas
@@ -2311,3 +2297,12 @@ Archivo de escenario conservado: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ES
 - `api/account.js`: reconoce `GOLF SCORE CARD@GT.` únicamente al iniciar sesión; lo normaliza en servidor a la cuenta propietaria configurada y conserva la validación normal de contraseña. No cambia altas ni proveedor.
 - Sello de fuentes recalculado para este código y registro. Los tres PDF de inventario no se regeneraron en esta corrección.
 - Preview pendiente de publicación y verificación del acceso; R144 y Producción no se modifican.
+
+## R147 · entrada global abierta sin credenciales · 30/09/2026 14:05 Guatemala
+
+Por instrucción permanente del propietario, se elimina el acceso de propietario como requisito de entrada en toda la aplicación. El middleware deja públicas la raíz, las rutas de app y páginas; `auth-gate.js` no muestra ni consulta la cuenta durante el arranque; `access.html` ahora redirige al inicio. Se conserva `invite.html` exclusivamente para canjear invitaciones voluntarias y se mantiene autorización dentro de operaciones/API privadas. Versión identificada R147; cache PWA invalidado para que el navegador cargue el cambio. Producción y R144/R128.18 permanecen intactas.
+
+- Tests focales PASS: `test-live-share-middleware.mjs`, `test-lab-account-gate.mjs`, `test-lab-owner-session-priority.mjs`, `test-global-public-entry-policy.mjs`, `test-lab-guest-account-entry.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-update-check-errors.mjs`.
+- Matriz G0 amplía la puerta permanente de 11 a 12 rubros; queda registrada en `AGENTS.md`, `DIRECTRICES_MANDATORIAS.md`, `MATRIZ_GATE_0_PROYECTO.md`, `.json` y `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`.
+- Archivos de código: `access.html`, `auth-gate.js`, `index-grupal.html`, `invite.html`, `middleware.js`, `release.json`, `service-worker.js`, `vercel.json`. Controles: `scripts/build-manual-lab.mjs`, `scripts/project-quality-gate.mjs`, `test-lab-account-gate.mjs`, `test-lab-guest-account-entry.mjs`, `test-lab-owner-session-priority.mjs`, `test-live-share-middleware.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-update-check-errors.mjs`. Documentación/sello: `AGENTS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+- Estado de candidato: revisión automatizada integral y Preview pendientes; no declarar publicado hasta confirmar el alias LAB. Producción intacta.

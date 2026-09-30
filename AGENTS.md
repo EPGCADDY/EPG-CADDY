@@ -20,6 +20,8 @@ Estas reglas aplican a todo el repositorio.
 11. Continuidad multiconversación vigente: V368/RC-040 se construye exclusivamente sobre `fix-v366-integrated-main` (`03ca12e`) y sustituye los candidatos divergentes anteriores. El enlace web oficial (`/`, `/index.html`, `/inicio`) debe abrir Registro aun con tarjeta guardada; la app instalada conserva su `start_url` sin `inicio=1` para reabrir la tarjeta viva. Antes de publicar, comparar ancestro, árbol y controles remotos; ninguna conversación puede presentar V365–V367 o un Preview previo como final.
 
 
+12. **Entrada pública permanente:** todas las versiones deben abrir `/`, `/index.html`, `/inicio`, `/index-grupal.html` y el inicio PWA sin credenciales de propietario, inicio de sesión ni redirección a una pantalla de acceso. `access.html` sólo conserva compatibilidad y reenvía a la app. No restaurar el candado global ni el login de propietario. La identidad puede solicitarse dentro de acciones personales/privadas y en sus APIs, sin impedir abrir la aplicación. `test-live-share-middleware.mjs`, `test-lab-account-gate.mjs` y `test-r18-owner-guest-24h-access.mjs` son regresiones obligatorias del build LAB.
+
 ## OP-60 — EJECUCIÓN VISIBLE Y CONTINUA OBLIGATORIA
 
 Orden expresa del propietario: 13 de septiembre de 2026. Aplica a toda tarea de este repositorio, Laboratorio y Maestro, y a cada continuación de conversación. El propietario no debe volver a repetir esta orden.
