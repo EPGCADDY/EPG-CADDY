@@ -1,10 +1,11 @@
 (function(){
 "use strict";
 const $=id=>document.getElementById(id);
+function isGuest(){return window.GSC_GUEST_ACCESS===true||document.cookie.split(';').some(value=>value.trim()==='gsc_guest_mode=1')}
 const css=`
 #gscAuthGate{position:fixed;inset:0;z-index:100000;background:#050505;color:#fff;display:none;align-items:center;justify-content:center;padding:22px;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 #gscAuthGate.visible{display:flex}
-#gscAuthGate .shell{width:min(430px,100%);border:1px solid #3e4347;border-radius:18px;background:linear-gradient(180deg,#111416 0%,#050505 44%,#000 100%);box-shadow:0 28px 90px rgba(0,0,0,.72);padding:30px 24px 24px}
+#gscAuthGate .shell{width:min(430px,100%);border:1px solid #3e4347;border-radius:18px;background:linear-gradient(180deg,#111416 0%,#050505 44%,#000 100%);box-shadow:0 28px 90px rgba(0,0,0,.72);padding:30px 24px 24px;max-height:calc(100dvh - 44px);overflow:auto}
 #gscAuthGate .brand{font-size:11px;letter-spacing:2.8px;color:#aeb4b8;text-align:center;margin-bottom:9px}
 #gscAuthGate h1{font-size:28px;line-height:1.05;text-align:center;margin:0 0 8px;font-weight:800}
 #gscAuthGate .lead{text-align:center;color:#aeb4b8;font-size:13px;line-height:1.45;margin:0 0 24px}
@@ -24,8 +25,13 @@ function render(){
   const el=document.createElement("section");el.id="gscAuthGate";el.setAttribute("aria-hidden","true");
   el.innerHTML=`<div class="shell" role="dialog" aria-modal="true" aria-label="Inicio de sesión">
     <div class="brand">GOLF SCORE CARD GT</div>
-    <h1>Bienvenido</h1>
-    <p class="lead">Tu Score Card, torneos y tableros personales quedan vinculados a tu cuenta.</p>
+    <h1 id="gscAuthTitle">Bienvenido</h1>
+    <p class="lead" id="gscAuthLead">Tu Score Card, torneos y tableros personales quedan vinculados a tu cuenta.</p>
+    <div id="gscGuestChoices" hidden>
+      <button class="primary" id="gscGuestContinue" type="button">CONTINUAR COMO INVITADO</button>
+      <button class="secondary" id="gscGuestAccount" type="button">USAR MI CUENTA PERSONAL</button>
+    </div>
+    <div id="gscAccountChoices">
     <button class="social" id="gscGoogleAuth" type="button" disabled>CONTINUAR CON GOOGLE · EN CONFIGURACIÓN</button>
     <button class="social" id="gscAppleAuth" type="button" disabled>CONTINUAR CON APPLE · PRÓXIMAMENTE</button>
     <div class="divider">O ENTRA CON TU CORREO</div>
@@ -34,10 +40,25 @@ function render(){
     <input id="gscAuthPassword" type="password" autocomplete="current-password" placeholder="Contraseña · mínimo 8 caracteres">
     <button class="primary" id="gscAuthSignIn" type="button">INICIAR SESIÓN</button>
     <button class="secondary" id="gscAuthSignUp" type="button">CREAR CUENTA</button>
+    </div>
+    <button class="secondary" id="gscAuthClose" type="button">VOLVER</button>
     <div class="status" id="gscAuthStatus"></div>
-    <p class="fine">LAB · La identidad se usa para separar tus Atajos, tableros, torneos y respaldos de los demás usuarios.</p>
+    <p class="fine" id="gscAuthFine">LAB · La identidad se usa para separar tus Atajos, tableros, torneos y respaldos de los demás usuarios.</p>
   </div>`;
   document.body.appendChild(el);
+  $("gscAuthSignIn").addEventListener("click",()=>submit("signin"));
+  $("gscAuthSignUp").addEventListener("click",()=>submit("signup"));
+  $("gscAuthClose").addEventListener("click",hide);
+  $("gscGuestContinue").addEventListener("click",hide);
+  $("gscGuestAccount").addEventListener("click",async()=>{
+    $("gscGuestAccount").disabled=true;
+    try{
+      const response=await fetch('/api/app-access?action=exit',{method:'POST',credentials:'include',cache:'no-store'});
+      if(!response.ok)throw new Error('EXIT_FAILED');
+      // A full reload restores the unmodified account storage and clears the guest runtime.
+      location.replace('/live-hub.html?account=1');
+    }catch{$("gscAuthStatus").textContent='NO SE PUDO CAMBIAR EL ACCESO. INTENTA DE NUEVO.';$("gscGuestAccount").disabled=false}
+  });
 }
 async function request(action,payload){
   try{
@@ -47,10 +68,11 @@ async function request(action,payload){
   }catch{return{ok:false,code:"NETWORK_ERROR"}}
 }
 function message(code){return({EMAIL_INVALID:"CORREO INVÁLIDO",INVALID_EMAIL:"CORREO INVÁLIDO",PASSWORD_INVALID:"USA AL MENOS 8 CARACTERES",INVALID_EMAIL_OR_PASSWORD:"CORREO O CONTRASEÑA INCORRECTOS",USER_ALREADY_EXISTS:"ESA CUENTA YA EXISTE",NETWORK_ERROR:"SIN CONEXIÓN"})[String(code||"").toUpperCase()]||"NO SE PUDO COMPLETAR"}
-function show(){const gate=$("gscAuthGate");gate.classList.add("visible");gate.setAttribute("aria-hidden","false");document.documentElement.style.overflow="hidden"}
+function show(){style();render();const guest=isGuest(),gate=$("gscAuthGate");$("gscGuestChoices").hidden=!guest;$("gscAccountChoices").hidden=guest;$("gscAuthFine").hidden=guest;$("gscAuthTitle").textContent=guest?'Tu acceso de invitado':'Bienvenido';$("gscAuthLead").textContent=guest?'Puedes seguir usando tu Score Card. Para inscribirte en un evento privado, usa tu cuenta personal.':'Tu Score Card, torneos y tableros personales quedan vinculados a tu cuenta.';$("gscAuthStatus").textContent='';gate.classList.add("visible");gate.setAttribute("aria-hidden","false");document.documentElement.style.overflow="hidden"}
 window.GSCOpenAccountLogin=show;
 function hide(){const gate=$("gscAuthGate");gate.classList.remove("visible");gate.setAttribute("aria-hidden","true");document.documentElement.style.removeProperty("overflow")}
 async function submit(action){
+  if(isGuest()){show();return}
   const name=$("gscAuthName").value.trim(),email=$("gscAuthEmail").value.trim().toLowerCase(),password=$("gscAuthPassword").value,status=$("gscAuthStatus");
   if(!/^\S+@\S+\.\S+$/.test(email)){status.textContent="CORREO INVÁLIDO";return}
   if(password.length<8){status.textContent="USA AL MENOS 8 CARACTERES";return}
@@ -60,13 +82,11 @@ async function submit(action){
   window.GSC_ACCOUNT_SIGNED_IN=true;window.dispatchEvent(new CustomEvent("gsc-account-ready",{detail:{user:result.user||null}}));status.textContent="LISTO";hide();
 }
 async function init(){
-  if(window.GSC_GUEST_ACCESS)return;
+  if(isGuest())return;
   style();render();
-  $("gscAuthSignIn").addEventListener("click",()=>submit("signin"));
-  $("gscAuthSignUp").addEventListener("click",()=>submit("signup"));
   const session=await request("session");
   if(session.ok&&session.user?.id){window.GSC_ACCOUNT_SIGNED_IN=true;window.dispatchEvent(new CustomEvent("gsc-account-ready",{detail:{user:session.user}}));hide();return}
-  if(!location.pathname.endsWith("/live-hub.html"))show();
+  if(!location.pathname.endsWith("/live-hub.html")||new URLSearchParams(location.search).get('account')==='1')show();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();

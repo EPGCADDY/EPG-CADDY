@@ -535,3 +535,7 @@ R146 · Registro integral de permisos antes de entrega: se detectó desvío de l
 
 ## RC-R146-PIPELINE-DEPLOYMENT · 30 septiembre 2026, 08:05 Guatemala
 Se reportó READY tras pruebas locales sin comprobar que vercel.json ejecutaba los controles: buildCommand era echo Production-LIVE-hotfix. Corregido en LAB, no main: cadena calidad/roadmap/inventario/regresión; dependencias de prueba instaladas. test-lab-deployment-gate.mjs provoca fallos de calidad, inventario y regresión y verifica que el despliegue se detenga. No prueba sesión remota ni habilita entrega100. Además, tramos OP60 excedidos durante lectura/subidas pese a acciones visibles; incumplimiento registrado, retomar reportes con hora y resultado <=60s. No afirmar actividad tras cierre.
+
+
+### RC-R146-GUEST-PORTAL · 30 septiembre 2026 09:00 Guatemala
+Defecto escapado: invitado llega a login cuenta bloqueado con Google/Apple inactivos; error genérico. Causa: cookie guest no detectada en portal por auth-gate. Escape: revisión anterior sólo probó entrada tarjeta y fixtures de identidad, sin transición invitado→portal→cuenta. Control permanente: test-lab-guest-account-entry.mjs incluido en build, comprueba ausencia de request cuenta invitado y salida explícita con reload antes de login. Estado: pruebas locales PASS, publicación y revisión visual pendientes. Producción intacta.
