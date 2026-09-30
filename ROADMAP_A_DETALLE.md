@@ -2382,3 +2382,4 @@ Archivo de escenario conservado: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ES
 - Se mantiene Registro público, flujo de inicio, invitaciones temporales de 24 horas y acciones de borrar jugadores, rondas y resultados.
 - Pruebas dirigidas de actualización y compartir: PASS. La revisión física automatizada de cuatro etapas y publicación quedan pendientes; Producción está en R146.1.1 hasta verificar lo contrario.
 - Archivos: `release.json`, `index-grupal.html`, `service-worker.js`, `personal-events.js`, `test-lab-first-open.mjs`, `test-lab-private-round-share-flow.mjs`, `scripts/build-manual-lab.mjs`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+- El sello de inventario se regeneró junto con ambos ROADMAPS en un mismo commit para satisfacer el gate de Vercel.
