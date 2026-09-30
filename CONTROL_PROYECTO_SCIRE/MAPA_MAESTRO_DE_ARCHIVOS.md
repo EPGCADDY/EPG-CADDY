@@ -1,3 +1,13 @@
+## Delta candidato R147 · 30 septiembre 2026
+
+| Archivo | Función |
+|---|---|
+| release.json, index-grupal.html, service-worker.js | Anuncian R147 para detectar actualización desde R146.1.1. |
+| personal-events.js | Comparte código de ronda privada por WhatsApp/hoja nativa y continúa a Score Card; permite recuperación tras cancelar. |
+| test-lab-first-open.mjs, test-lab-private-round-share-flow.mjs | Regresiones de detección ACTUALIZAR y flujo de compartir/cancelar. |
+| scripts/build-manual-lab.mjs | Integra ambas regresiones al build completo. |
+| ROADMAPS, continuidad, inventario | Trazabilidad y sello R147. |
+
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
 ## R146.1.1 · entrada libre · 30 septiembre 2026

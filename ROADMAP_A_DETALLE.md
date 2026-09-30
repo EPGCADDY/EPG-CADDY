@@ -2373,3 +2373,12 @@ Archivo de escenario conservado: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ES
 - Evidencia: `node test-lab-first-open.mjs` PASS; el badge e ID toman el label `R146.1.1` del release.
 - Archivos: `index-grupal.html`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 - Estado: Preview nuevo y despliegue Production pendientes.
+
+
+## R147 · activación de actualización y compartir ronda privada · 30 septiembre 2026
+
+- `release.json`, badge de `index-grupal.html` y caché/fallback de `service-worker.js` avanzan a R147; regresión asegura que una instalación R146.1.1 detecta el release y habilita `ACTUALIZAR`.
+- En ronda privada creada desde Registro, presenta código y acción de compartir por WhatsApp/hoja nativa; al terminar abre Score Card. Cancelar mantiene reintento y continuación.
+- Se mantiene Registro público, flujo de inicio, invitaciones temporales de 24 horas y acciones de borrar jugadores, rondas y resultados.
+- Pruebas dirigidas de actualización y compartir: PASS. La revisión física automatizada de cuatro etapas y publicación quedan pendientes; Producción está en R146.1.1 hasta verificar lo contrario.
+- Archivos: `release.json`, `index-grupal.html`, `service-worker.js`, `personal-events.js`, `test-lab-first-open.mjs`, `test-lab-private-round-share-flow.mjs`, `scripts/build-manual-lab.mjs`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.

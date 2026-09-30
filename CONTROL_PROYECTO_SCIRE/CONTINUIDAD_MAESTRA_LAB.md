@@ -1,5 +1,15 @@
 # EPG CADDY · CONTINUIDAD MAESTRA PERMANENTE DE LAB
 
+## Candidato R147 · 30 de septiembre de 2026 · 15:05 Guatemala
+
+- Objetivo: desde Producción R146.1.1, publicar R147 para que ACTUALIZAR se active al detectar la versión nueva.
+- Mantiene Registro público, flujo de inicio, invitaciones de 24 horas y borrado de jugadores, rondas y resultados.
+- Ronda privada desde Registro: muestra código y compartir por WhatsApp/hoja nativa; al completar abre Score Card. Cancelar mantiene reintento y continuación directa.
+- `test-lab-first-open.mjs` y `test-lab-private-round-share-flow.mjs`: PASS.
+- Candidato local aislado `lab/r147-public-update-20260930`, basado en `3542a2b071350bf7a35a2f27c37109e66adad587`. R147 aún no se declara desplegado; Producción verificada previamente R146.1.1 en https://epg-caddy.vercel.app/.
+- Falta compuerta de actualización: navegador Playwright persistente, cuatro releases READY del mismo alias (A→B→C→D), capturas SHA-256, cero errores; luego verificar la versión publicada. Playwright no sustituye revisión física iPhone.
+
+
 ## Estado V407-R29 · 12 de septiembre de 2026
 
 - Defecto físico: en Tarjeta Universales cerrada, `ENVIAR TARJETA DIGITAL` no abrió ninguna acción.
