@@ -23,7 +23,6 @@
     body:not(.public-display) .head img{width:58px;height:58px;object-fit:contain}
     body:not(.public-display) .head h1{margin:0;color:var(--tour-green);font-size:clamp(24px,7vw,34px);line-height:1;letter-spacing:.2px}
     body:not(.public-display) .head p,
-    body:not(.public-display) #hubBack,
     body:not(.public-display) .tournament-shelf>h2,
     body:not(.public-display) .tournament-shelf>p,
     body:not(.public-display) .viewer-entry>p,
@@ -171,7 +170,7 @@
     <header class="head">
       <img src="/assets/official-logos/golf-score-card-gt-horizontal-original.webp" alt="Golf Score Card GT">
       <div><h1 id="hubPageTitle">TORNEOS</h1></div><div id="hubEventName" class="scores-event"></div><div id="hubEventMeta" class="scores-meta"></div>
-      <button class="back" id="hubBack" type="button" aria-hidden="true">VOLVER A MI SCORE CARD</button>
+      <button class="back" id="hubBack" type="button">← Score Card</button>
     </header>
 
     <div class="state" id="hubState" role="status" aria-live="polite">LISTO PARA ABRIR EL MONITOR DEL TORNEO</div>
@@ -191,7 +190,7 @@
       <button class="secondary" id="hubPersonalInvite" type="button">TENGO UNA INVITACIÓN</button>
       </div>
     </section>
-    <nav class="monitor-switch" aria-label="Elegir función de torneos">
+    <nav class="monitor-switch hidden" aria-label="Elegir función de torneos">
       <button class="active" id="hubShowGeneral" type="button">GENERAL</button>
       <button id="hubShowCategories" type="button">CATEGORÍA</button>
       <button id="hubShowIndividual" type="button">BUSCAR JUGADORES</button>
@@ -226,7 +225,7 @@
     <button class="secondary" id="hubPersonalOrganization" type="button" hidden>ORGANIZACIÓN</button>
     <button class="secondary" id="hubPersonalScoreCard" type="button" hidden>ANOTAR MIS SCORES</button>
     <section class="panel" id="hubMyPosition" hidden><h2>MI POSICIÓN</h2><div></div></section>
-    <section class="panel monitor-panel" id="hubGeneralPanel">
+    <section class="panel monitor-panel hidden" id="hubGeneralPanel">
       <h2 id="hubPanelTitle">RESULTADOS</h2>
       <div class="search">
         <input id="hubSearch" type="search" maxlength="80" placeholder="Nombre del jugador">

@@ -23,6 +23,16 @@ export async function ensurePersonalAccess(sql){
       ) rosters CROSS JOIN LATERAL jsonb_array_elements(players) player;
       RETURN total<=100;
     END $fn$`;
+  await sql`CREATE OR REPLACE FUNCTION gsc_personal_can_publish(event uuid,kind text,actor text,stream uuid,snapshot jsonb,selected jsonb,grp text) RETURNS boolean LANGUAGE plpgsql VOLATILE AS $fn$
+    DECLARE member gsc_personal_members%ROWTYPE; config jsonb;
+    BEGIN
+      SELECT configuration INTO config FROM gsc_personal_events WHERE event_id=event AND event_kind=kind AND status='active' FOR SHARE;
+      IF NOT FOUND THEN RETURN false; END IF;
+      SELECT * INTO member FROM gsc_personal_members WHERE event_id=event AND event_kind=kind AND account_id=actor AND revoked_at IS NULL FOR SHARE;
+      IF NOT FOUND OR member.role NOT IN ('organizer','player','scorer') OR member.stream_id IS DISTINCT FROM stream OR member.group_label<>grp OR snapshot->>'mode' IS DISTINCT FROM config->>'mode' THEN RETURN false; END IF;
+      IF jsonb_array_length(member.players)=0 OR jsonb_array_length(member.players)<>jsonb_array_length(selected) OR jsonb_array_length(member.players)<>jsonb_array_length(snapshot->'players') THEN RETURN false; END IF;
+      RETURN NOT EXISTS(SELECT 1 FROM jsonb_array_elements(member.players) expected WHERE NOT EXISTS(SELECT 1 FROM jsonb_array_elements(snapshot->'players') actual WHERE expected->>'id'=actual->>'id' AND upper(regexp_replace(expected->>'name','[[:space:]]+',' ','g'))=upper(regexp_replace(actual->>'name','[[:space:]]+',' ','g')) AND (expected->>'handicap')::numeric=(actual->>'handicap')::numeric AND expected->>'tournamentCategory'=actual->>'tournamentCategory' AND selected ? (expected->>'id')));
+    END $fn$`;
   await sql`CREATE TABLE IF NOT EXISTS gsc_personal_limits(account_id text NOT NULL,action text NOT NULL,minute timestamptz NOT NULL,count integer NOT NULL,PRIMARY KEY(account_id,action,minute))`;
 }
 export async function limitPersonalAccess(sql,account,action){const maximum=['read','list','identity'].includes(action)?240:120,rows=await sql`INSERT INTO gsc_personal_limits(account_id,action,minute,count) VALUES(${account.id},${action},date_trunc('minute',now()),1) ON CONFLICT(account_id,action,minute) DO UPDATE SET count=gsc_personal_limits.count+1 RETURNING count`;if(rows[0].count>maximum)throw accessError('PERSONAL_RATE_LIMITED',429)}
@@ -85,7 +95,7 @@ export async function guardPersonalLive(sql,req,body,resolveAccount=requireAccou
   if(action.startsWith('revoke_tournament')||action==='revoke_private_round'){await organizer(sql,events[0].id,kind,account);return}
   if(!writing)return;
   if(!['player','scorer','organizer'].includes(member.role)||!member.players.length||!stream)throw accessError('PERSONAL_WRITER_FORBIDDEN');
-  const snapshot=body.snapshot||stream.current_snapshot,expected=member.players,selected=stream.selected_player_ids||[],actual=(snapshot?.players||[]).filter(p=>selected.includes(p.id));
+  const snapshot=body.snapshot||stream.current_snapshot;if(snapshot?.mode!==member.configuration.mode)throw accessError('PERSONAL_MODE_LOCKED',409);const expected=member.players,selected=stream.selected_player_ids||[],actual=(snapshot?.players||[]).filter(p=>selected.includes(p.id));
   if(selected.length!==expected.length||selected.some(id=>!expected.some(p=>p.id===id)))throw accessError('PERSONAL_GROUP_FORBIDDEN');
   if(actual.length!==expected.length||actual.some(p=>!expected.some(e=>e.id===p.id&&e.name.toUpperCase().replace(/\s+/g,' ')===String(p.name).toUpperCase().replace(/\s+/g,' ')&&e.handicap===Number(p.handicap)&&e.tournamentCategory===p.tournamentCategory))||String(body.groupLabel||stream.group_label)!==member.group_label)throw accessError('PERSONAL_GROUP_FORBIDDEN');
   if(member.stream_id&&member.stream_id!==stream.id){const prior=await scoped`SELECT id FROM live_streams WHERE id=${member.stream_id}::uuid AND status='active' AND expires_at>now()`;if(prior.length)throw accessError('PERSONAL_GROUP_FORBIDDEN')}
@@ -94,7 +104,12 @@ export async function guardPersonalLive(sql,req,body,resolveAccount=requireAccou
     const other=await scoped`SELECT id FROM live_streams WHERE tournament_id=${events[0].id}::uuid AND group_label=${member.group_label} AND id<>${stream.id}::uuid AND status='active' AND expires_at>now()`;if(other.length)throw accessError('PERSONAL_GROUP_ALREADY_CONNECTED',409);
     const bound=await sql`UPDATE gsc_personal_members SET stream_id=${stream.id}::uuid WHERE event_id=${events[0].id}::uuid AND event_kind=${kind} AND account_id=${account.id} AND (stream_id IS NULL OR stream_id=${stream.id}::uuid OR stream_id=${member.stream_id}::uuid) AND revoked_at IS NULL RETURNING stream_id`;if(!bound.length)throw accessError('PERSONAL_GROUP_FORBIDDEN');
   }
+  return {accountId:account.id,eventKind:kind};
 }
+
+// Context comes only from the authenticated guard, never from request JSON.
+// Membership and policy are locked/rechecked in the official publication statement.
+export function personalPublishingSql(sql,context){if(!context)return sql;const actorHex=Buffer.from(context.accountId,'utf8').toString('hex'),kind=eventKind(context.eventKind);return(strings,...values)=>{const parts=strings.map(part=>part.replace("WHEN status<>'active'", "WHEN NOT gsc_personal_can_publish(tournament_id,'"+kind+"',convert_from(decode('"+actorHex+"','hex'),'UTF8'),id,filtered_snapshot,selected_player_ids,group_label) THEN 'PERSONAL_EVENT_FORBIDDEN' WHEN status<>'active'"));parts.raw=parts.slice();return sql(parts,...values)}}
 
 export async function guardPersonalShare(sql,req,body,resolveAccount=requireAccountSession){
   const kind=eventKind(body.eventKind),id=body.eventId;

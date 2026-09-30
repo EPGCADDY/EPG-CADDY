@@ -21,3 +21,28 @@ Vercel: GSC_PERSONAL_ACCESS_LAB_READY=1 guardado SOLO Preview; captura lab-previ
 Rollback: quitar activación Preview y volver solo LAB al commit a757809; ninguna promoción a main o a epg-caddy. Entrega integral bloqueada hasta cero fallos aplicables y recorrido remoto comprobado.
 
 Rama de revisión prevista: lab/integral-round-tournament-r146-20260930, basada en remoto a757809. No se actualizará el canal fijo ni la rama canónica de LAB hasta revisión remota. Preparación de Preview no equivale a entrega.
+
+
+## R146 · corrección posterior a revisión Preview · 30/09/2026
+Preview f313b531441f1b76604bd875389a7608f887ea94 READY: https://golf-sc-gt-7w4bru5rg-epgcaddys-projects.vercel.app/live-hub.html. Revisión real detectó FAIL visual: CSS mostraba COMPARTIR LIVE aunque tenía hidden. Corregido con regla de visibilidad, navegación inicial oculta y entrada configurada antes de sincronización. Captura preview-before-visibility-fix.jpg documenta fallo anterior, no aceptación.
+Publicación revalida membresía, rol, evento, stream, grupo, modalidad y roster dentro de la misma sentencia SQL; bloquea evento/miembro durante escritura. Prueba revocación entre prevalidación y publicación PASS: score rechazado, revisión permanece 0. Perfil completo scripts/build-manual-lab.mjs PASS después de ambas correcciones; evidencia build.log.
+Estado: candidato de revisión, sin promoción a canal fijo LAB ni Producción. Sesión autenticada real de aplicación ausente en navegador; pruebas fixture no certifican recorrido remoto. Correcciones requieren nuevo Preview y revisión visual antes de aceptación.
+Archivos del bloque:
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ESTADO.md`
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/build.log`
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/preview-before-visibility-fix.jpg`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `api/_lib/personal-event-access.js`
+- `api/live.js`
+- `live-hub.html`
+- `live-hub.js`
+- `scores-ui.css`
+- `test-personal-event-permissions.mjs`
+- `test-personal-front-end.mjs`
+
+
+### R146 · corrección gráfica expresa 07:34 Guatemala
+Logo horizontal original ampliado hasta 320 px con adaptación al ancho disponible. Scores reducido a 16 px; título, nombre del evento, metadatos y botón usan fuente 16 px. Botón visible ← Score Card: navegación directa a tarjeta existente, con revalidación de asignación personal cuando corresponde. No se usa history.back. Pruebas navegación/frontend y build manual completo PASS. Revisión remota del cambio sigue pendiente.
+Archivos: `live-hub.html`, `live-hub.js`, `scores-ui.css`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/build.log`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ESTADO.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.

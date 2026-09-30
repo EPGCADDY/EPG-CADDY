@@ -45,3 +45,12 @@ body.private-live-view .scores-compact td:nth-child(4){color:inherit}body.privat
 #gscPersonalDialog output{display:block;overflow-wrap:anywhere;padding:12px;color:#31ff00}
 #gscPersonalDialog fieldset{margin:12px 0;border:1px solid #454b47;border-radius:8px}
 #gscPersonalDialog legend,#gscPersonalDialog summary{font-size:13px;color:#31ff00}
+
+body .hub [hidden]{display:none!important}
+
+/* R146: owner correction, 30 September: large original logo and equal header text. */
+body:not(.public-display) .head{grid-template-columns:minmax(0,1fr)!important;justify-items:start;gap:10px}
+body:not(.public-display) .head>img{grid-column:1!important;grid-row:1!important;width:min(320px,100%)!important;height:auto!important;justify-self:center}
+body:not(.public-display) .head>div:first-of-type{grid-column:1!important;grid-row:2!important}
+body:not(.public-display) .head h1,body:not(.public-display) #hubEventName,body:not(.public-display) #hubEventMeta,body:not(.public-display) #hubBack{font-size:16px!important;line-height:1.4}
+body:not(.public-display) #hubBack{display:block!important;grid-column:1 / -1;min-height:44px;padding:10px 16px;border:1px solid #31ff00;border-radius:10px;background:#050706;color:#31ff00;font-weight:700}
