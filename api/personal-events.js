@@ -78,6 +78,6 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
       await sql`UPDATE gsc_personal_events SET status='closed' WHERE event_id=${id}::uuid AND event_kind=${kind}`;await scoped`UPDATE live_tournaments SET status='finished',updated_at=now() WHERE id=${id}::uuid`;await auditPersonal(sql,id,kind,account,'closed');return res.status(200).json({ok:true});
     }
     throw accessError('PERSONAL_ACTION_INVALID',400);
-  }catch(error){return res.status(Number(error.status)||(error.code==='ACCOUNT_UNAUTHORIZED'?401:400)).json({ok:false,code:error.code||'PERSONAL_ACCESS_UNAVAILABLE'})}
+  }catch(error){return res.status(Number(error.status)||(error.code==='ACCOUNT_UNAUTHORIZED'?401:error.code==='ACCOUNT_AUTH_UNAVAILABLE'?503:400)).json({ok:false,code:error.code||'PERSONAL_ACCESS_UNAVAILABLE'})}
 }
 export default function handler(req,res){return handlePersonalEvents(req,res)}

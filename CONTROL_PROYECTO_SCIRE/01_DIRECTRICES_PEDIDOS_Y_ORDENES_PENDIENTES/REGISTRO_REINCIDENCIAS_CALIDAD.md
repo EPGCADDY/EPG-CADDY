@@ -531,3 +531,7 @@ Bloqueo de infraestructura separado: test-project-quality-gate.mjs no puede lanz
 
 
 R146 · Registro integral de permisos antes de entrega: se detectó desvío de lectura heredada al API personal durante integración. Causa: sustitución demasiado amplia de endpoint/formulario; escapó a bancos estáticos anteriores. Corrección read() /api/live, contrato real separado de miembros/compartir; test-personal-front-end.mjs lo ejecuta y verifica destino. PASS local, revisión remota pendiente. Se detectó también mezcla de almacenamiento entre cuentas y recuperación permanente bloqueada tras caducar stream; controles personales negativos y recuperación SQL añadidos. No se entregan como completos sin revisar navegador real. Control histórico de voz ENOENT por retiro autorizado; no se restaura transporte retirado. EPERM previo resuelto sin escalación, banco negativo real PASS.
+
+
+## RC-R146-PIPELINE-DEPLOYMENT · 30 septiembre 2026, 08:05 Guatemala
+Se reportó READY tras pruebas locales sin comprobar que vercel.json ejecutaba los controles: buildCommand era echo Production-LIVE-hotfix. Corregido en LAB, no main: cadena calidad/roadmap/inventario/regresión; dependencias de prueba instaladas. test-lab-deployment-gate.mjs provoca fallos de calidad, inventario y regresión y verifica que el despliegue se detenga. No prueba sesión remota ni habilita entrega100. Además, tramos OP60 excedidos durante lectura/subidas pese a acciones visibles; incumplimiento registrado, retomar reportes con hora y resultado <=60s. No afirmar actividad tras cierre.
