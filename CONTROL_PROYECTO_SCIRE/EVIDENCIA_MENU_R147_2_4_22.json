@@ -1,0 +1,20 @@
+{
+  "release": "R147.2.4.22",
+  "commit_probado": "40bd69a817e90d82ff2ca834c73daf8468d50858",
+  "preview_final": "dpl_FMEQ5VhnAvECANsr9wrhJNXNncVF",
+  "entorno": "Chrome cloud; no iPhone físico",
+  "recorridos_pass": [
+    "registro → torneo → tarjeta → score → MENÚ General",
+    "General → X → tarjeta con scores conservados",
+    "MENÚ Categoría → Senior Gross5/Neto4 → Femenina Gross6/Neto5",
+    "favorito → MENÚ favoritos desde tarjeta",
+    "MENÚ buscar → texto BUSQUEDA → jugador visible Gross5/Neto4",
+    "doble toque jugador → 18 scores",
+    "MENÚ Manual → MI SCORE CARD conserva cuenta y tarjeta",
+    "MENÚ TORNEOS → alta otro torneo conserva scores",
+    "consultar torneo anterior → volver a tarjeta → MENÚ General abre torneo actual",
+    "GENERAL vigente; GESTIONAR y MIS TORNEOS ausentes"
+  ],
+  "bancos": "scripts/build-manual-lab.mjs PASS; inventory gate PASS",
+  "publicacion": "main actualizado autorizado; recepción estable por comprobar"
+}
