@@ -904,3 +904,5 @@ Preview READY dpl_3yekEEj4VCsyno2ArkZjxoumN9mL, commit60ac19816835d30b494941e474
 
 ### 1 octubre 2026 · MENÚ y Scores de tarjeta divergentes
 Causa: shortcuts-ui.js usaba hub sin sufijo de cuenta, omitía personalEvent/returnTo y ejecutaba shortcut 250ms antes de finalizar sync. Escape: aceptación R21 cubrió controles de Scores sin recorrer equivalentes del MENÚ. Control permanente: ruta única openRoundTournament, vista tras autorización, test-menu-scorecard-tournament-sync.mjs con torneo ajeno guardado y cuenta personal. Estado: corregido técnicamente; navegador y publicación pendientes.
+
+R22 retenido internamente en navegador: búsqueda correcta sin filas visibles por reglas legacy hub-search-mode. Corrección en scores-ui.css; control test-menu-scorecard-tournament-sync.mjs y búsqueda real obligatoria antes de publicación.

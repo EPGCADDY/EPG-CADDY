@@ -18,3 +18,5 @@ console.log('PASS menu/card synchronization: current tournament overrides unrela
 assert.match(menu,/item\("general","GENERAL"/);assert.doesNotMatch(menu,/<h3>(GESTIONAR|MIS TORNEOS)<\/h3>/);
 
 backCtx.root.currentRoundReturnPath=()=>'/index-grupal.html?personalAccount=current-account&personalEvent=current-tournament&round_return=1';backCtx.nav('/manual.html');assert.equal(returned.pathname,'/manual.html');assert.equal(returned.searchParams.get('personalEvent'),'current-tournament');const manualURL=returned.toString();delete backCtx.root.currentRoundReturnPath;backCtx.root.location.href=manualURL;backCtx.nav('/index-grupal.html');assert.equal(returned.searchParams.get('personalAccount'),'current-account');backCtx.nav('/live-hub.html?shortcut=categories');assert.equal(returned.searchParams.get('personalEvent'),'current-tournament');console.log('PASS Manual round trip and categories retain originating card/account/event');
+
+assert.match(fs.readFileSync('scores-ui.css','utf8'),/body\.hub-scores-view\.hub-search-mode:not\(\.public-display\) #hubLeaderWrap\{display:block!important\}/,'Compact scores must remain visible when searching from the menu');

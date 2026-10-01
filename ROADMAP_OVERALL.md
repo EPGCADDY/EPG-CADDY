@@ -2708,3 +2708,5 @@ El control scripts/manual-screen-parity-gate.mjs exige GENERAL y TORNEOS en el M
 Revisión de recorrido completo: Manual conserva returnTo, personalEvent y personalKind; MI SCORE CARD y rutas de Scores desde Manual regresan a la misma tarjeta personal. Banco negativo adicional en test-menu-scorecard-tournament-sync.mjs.
 
 El contrato histórico test-lab-r60-physical-matrix.mjs se actualiza a TORNEOS y GENERAL según la orden vigente, manteniendo las pruebas de navegación, scores y flotación.
+
+Navegador real: General5/4 y6/5, Senior/Femenina y Favoritos PASS. BUSCAR JUGADOR detectó ocultación de #hubLeaderWrap por CSS de búsqueda antiguo; scores-ui.css mantiene la tabla compacta visible en hub-search-mode. Se revalida antes de promover.
