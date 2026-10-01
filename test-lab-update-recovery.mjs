@@ -49,17 +49,23 @@ for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.verc
  const previous=await open(prefix+'-approved-previous');
  await previous.put('/index-grupal.html',new Response('<head><meta name="gscg-release" content="OLD"></head><body>OLD CARD</body>'));
  await previous.put('/live-control.js',new Response('OLD SCRIPT'));
- let broken=false;
- const worker=vm.createContext({URL,Response,Headers,Date,caches,fetch:async input=>{const path=key(input);if(broken&&path==='/live-control.js')throw Error('offline');if(path==='/release.json')return Response.json({release:current});return new Response(path==='/index-grupal.html'?'<head><meta name="gscg-release" content="'+current+'"></head><body>NEW CARD</body>':'NEW SCRIPT')},self:{location:{origin},clients:{claim:async()=>{}},skipWaiting:async()=>{},addEventListener:(name,callback)=>listeners[name]=callback}});
+ let broken=false,denied=false,authorizationChecks=0;
+ const worker=vm.createContext({URL,Response,Headers,Date,caches,fetch:async input=>{const path=key(input);if(typeof input!=='string'&&new URL(input.url).searchParams.has('personalEvent')){authorizationChecks++;if(denied)return new Response('PERSONAL ACCESS DENIED',{status:403})}if(broken&&path==='/live-control.js')throw Error('offline');if(path==='/release.json')return Response.json({release:current});return new Response(path==='/index-grupal.html'?'<head><meta name="gscg-release" content="'+current+'"></head><body>NEW CARD</body>':'NEW SCRIPT')},self:{location:{origin},clients:{claim:async()=>{}},skipWaiting:async()=>{},addEventListener:(name,callback)=>listeners[name]=callback}});
  vm.runInContext(code,worker);
  const lifecycle=async name=>{let pending;listeners[name]({waitUntil:promise=>pending=promise});await pending};
  const navigate=async query=>{let pending;listeners.fetch({request:{url:origin+'/index-grupal.html'+query,method:'GET',mode:'navigate'},respondWith:promise=>pending=promise});return (await pending).text()};
  await lifecycle('install');await lifecycle('activate');
  let page=await navigate('');assert.match(page,/OLD CARD/);assert.match(page,/gscFallbackUpdateButton/);assert.doesNotMatch(page,/NEW CARD/);
  assert.match(await navigate('?app_version='+current),/OLD CARD/,'Version parameter alone is not consent');
+ const personal='?personalEvent=existing&personalAccount=account-a';
+ assert.match(await navigate(personal),/OLD CARD/,'Authorized personal navigation must retain the old build before consent');
+ assert.equal(authorizationChecks,1,'Personal membership is checked with the server');
+ denied=true;assert.equal(await navigate(personal),'PERSONAL ACCESS DENIED','A revoked account must never receive the cached shell');denied=false;
+
  let asset;listeners.fetch({request:{url:origin+'/live-control.js',method:'GET',mode:'cors'},respondWith:promise=>asset=promise});assert.equal(await(await asset).text(),'OLD SCRIPT');
  broken=true;assert.match(await navigate('?app_version='+current+'&update_check=1&__gscg_build_check=1'),/OLD CARD/,'Failed download preserves approved card');
- broken=false;assert.match(await navigate('?app_version='+current+'&update_check=2&__gscg_build_check=1'),/NEW CARD/);
+ assert.match(await navigate(personal+'&app_version='+current+'&update_check=1'),/OLD CARD/,'Failed personal update also retains the approved build');
+ broken=false;assert.match(await navigate(personal+'&app_version='+current+'&update_check=2&__gscg_build_check=1'),/NEW CARD/);
  assert.match(await navigate(''),/NEW CARD/,'Accepted version persists after reopening');
  console.log('PASS manual update '+origin+': install/reopen retain old card and scripts; button visible; partial download retains old build; explicit update installs complete build');
 }
