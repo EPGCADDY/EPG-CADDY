@@ -1,3 +1,4 @@
+import {personalAccessEnabled} from './_lib/personal-access-activation.js';
 import {codeAccessEnabled,issueEntryCode} from './_lib/code-access.js';
 import {getDatabase} from './_lib/database.js';
 import {requireAccountSession} from './_lib/account-auth.js';
@@ -31,7 +32,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
   if(handleAppPreflight(req,res))return;if(req.method!=='POST')return res.status(405).json({ok:false,code:'METHOD_NOT_ALLOWED'});
   try{
     if(!isAllowedAppOrigin(req))throw accessError('ORIGIN_NOT_ALLOWED');
-    if(database===getDatabase&&process.env.GSC_PERSONAL_ACCESS_LAB_READY!=='1')throw accessError('PERSONAL_ACCESS_NOT_ENABLED',503);
+    if(database===getDatabase&&!personalAccessEnabled())throw accessError('PERSONAL_ACCESS_NOT_ENABLED',503);
     const sql=database(),body=await readJson(req,24000),account=await resolveEventIdentity(req,res,sql,body.action,accountResolver);await ensurePersonalAccess(sql);await limitPersonalAccess(sql,account,String(body.action||'').slice(0,24));
     if(account.codeAccess&&account.entryRole==='viewer'&&!['identity','list','read'].includes(body.action))throw accessError('PERSONAL_WRITER_FORBIDDEN');
     if(body.action==='identity')return res.status(200).json({ok:true,personalCode:account.id,name:account.name});

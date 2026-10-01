@@ -28,9 +28,18 @@ assert.equal((await readCodeSession({headers:{cookie:CODE_COOKIE+'='+accepted.to
 const expired=await issueEntryCode(sql,{issuerId:'owner-fixture',role:'player'});
 await sql`UPDATE gsc_entry_codes SET expires_at=now()-interval '1 minute' WHERE id=${expired.id}::uuid`;
 await assert.rejects(()=>redeemEntryCode(sql,expired.code),e=>e.code==='CODE_INVALID_OR_USED');
+const expiringSession=await issueEntryCode(sql,{issuerId:'owner-fixture',role:'player'});
+const expiringGrant=await redeemEntryCode(sql,expiringSession.code);
+await sql`UPDATE gsc_entry_codes SET expires_at=now()-interval '1 minute' WHERE id=${expiringSession.id}::uuid`;
+await assert.rejects(()=>readCodeSession({headers:{cookie:CODE_COOKIE+'='+expiringGrant.token}},sql),e=>e.code==='CODE_SESSION_EXPIRED');
+const closedCode=await issueEntryCode(sql,{issuerId:'owner-fixture',role:'viewer',eventId:event,eventKind:'tournament'});
+await sql`UPDATE gsc_personal_events SET status='closed' WHERE event_id=${event}::uuid`;
+await assert.rejects(()=>redeemEntryCode(sql,closedCode.code),e=>e.code==='CODE_EVENT_CLOSED');
+assert.equal((await sql`SELECT consumed_at FROM gsc_entry_codes WHERE id=${closedCode.id}::uuid`)[0].consumed_at,null,'Closed event code is not consumed or reactivated');
+await sql`UPDATE gsc_personal_events SET status='active' WHERE event_id=${event}::uuid`;
 assert.equal(await revokeEntryCode(sql,player.id,'other-owner'),false,'Only issuer can revoke');
 assert.equal(await revokeEntryCode(sql,player.id,'owner-fixture'),true);
-await assert.rejects(()=>readCodeSession(req,sql),e=>e.code==='CODE_SESSION_INVALID');
+await assert.rejects(()=>readCodeSession(req,sql),e=>e.code==='CODE_SESSION_REVOKED');
 const invalidEvent=await issueEntryCode(sql,{issuerId:'outsider',role:'viewer',eventId:event,eventKind:'tournament'});
 await assert.rejects(()=>redeemEntryCode(sql,invalidEvent.code),e=>e.code==='CODE_INVALID_OR_USED');
 assert.equal((await sql`SELECT consumed_at FROM gsc_entry_codes WHERE id=${invalidEvent.id}::uuid`)[0].consumed_at,null,'Unauthorized event does not burn code');
@@ -64,10 +73,16 @@ assert.equal(control('[data-share-link]').textContent,'https://lab.example/code-
 await control('[data-copy-share]').onclick();assert(copied.includes('FIXTURE-NOT-A-CREDENTIAL'));assert(copied.includes('/code-entry.html?visitor=1'));assert(!copied.includes('#code='),'Link preview cannot consume typed code');
 assert(rendered.innerHTML.includes('COMPARTIR LIVE'));
 // Native form submission (Enter) uses server destination, without client-supplied role.
-const fields=Object.fromEntries(['entryTitle','entryLead','entryForm','entryCode','entryEnter','entryStatus'].map(id=>[id,{value:'FIXTURE-NOT-A-CREDENTIAL',textContent:'',addEventListener(t,fn){this.handler=fn}}]));
+const fields=Object.fromEntries(['guestScoresBackdrop','entryTitle','entryLead','entryForm','entryCode','entryEnter','entryStatus'].map(id=>[id,{value:'FIXTURE-NOT-A-CREDENTIAL',textContent:'',addEventListener(t,fn){this.handler=fn}}]));
 let entryRequests=0,entryDestination='',entryFailure=false;
-const entryRoot={URL,URLSearchParams,document:{getElementById:id=>fields[id]},location:{origin:'https://lab.example',search:'?visitor=1',assign:value=>{entryDestination=value}},fetch:async(url,options)=>{entryRequests++;assert.equal(url,'/api/app-access?action=redeem-code');assert.deepEqual(Object.keys(JSON.parse(options.body)),['code']);return{ok:!entryFailure,json:async()=>entryFailure?{code:'CODE_INVALID_OR_USED'}:{ok:true,destination:'/live-hub.html?personalEvent='+streamId}}}};
-vm.runInNewContext(fs.readFileSync('code-entry.js','utf8'),entryRoot);assert.equal(entryRequests,0,'Opening link does not redeem');
+const entryRoot={URL,URLSearchParams,document:{body:{classList:{add:name=>assert.equal(name,'visitor-entry')}},querySelector:()=>({setAttribute(){}}),getElementById:id=>fields[id]},location:{origin:'https://lab.example',search:'?visitor=1',assign:value=>{entryDestination=value}},fetch:async(url,options)=>{entryRequests++;assert.equal(url,'/api/app-access?action=redeem-code');assert.deepEqual(Object.keys(JSON.parse(options.body)),['code']);return{ok:!entryFailure,json:async()=>entryFailure?{code:'CODE_INVALID_OR_USED'}:{ok:true,destination:'/live-hub.html?personalEvent='+streamId}}}};
+vm.runInNewContext(fs.readFileSync('code-entry.js','utf8'),entryRoot);assert.equal(entryRequests,0,'Opening link does not redeem');assert.equal(fields.guestScoresBackdrop.hidden,false);const guestPage=fs.readFileSync('code-entry.html','utf8');assert.match(guestPage,/aria-hidden="true" inert hidden/);assert.match(guestPage,/filter:blur\(5px\)/);assert.doesNotMatch(guestPage,/JAIME|BECKY|JESSIE/);
 await fields.entryForm.handler({preventDefault(){}});assert(entryDestination.includes('/live-hub.html?personalEvent='));
 entryFailure=true;await fields.entryForm.handler({preventDefault(){}});assert.equal(fields.entryEnter.disabled,false);assert(fields.entryStatus.textContent.includes('YA FUE UTILIZADO'));
 console.log('PASS LAB code entry: one winner / no account / scoped viewer / expiration / revocation / invalid session / forbidden event');
+
+// Legacy one-use codes use their own event-bound endpoint and never ride in a URL.
+let legacyDestination='',legacyBody;const legacyRoot={...entryRoot,location:{origin:'https://lab.example',search:'?visitor=1&liveEvent='+streamId+'&liveKind=private',assign:value=>legacyDestination=value},fetch:async(url,options)=>{assert.equal(url,'/api/live-share');legacyBody=JSON.parse(options.body);return{ok:true,json:async()=>({ok:true})}}};
+vm.runInNewContext(fs.readFileSync('code-entry.js','utf8'),legacyRoot);await fields.entryForm.handler({preventDefault(){}});
+assert.deepEqual(legacyBody,{action:'redeem',eventId:streamId,eventKind:'private',code:'FIXTURE-NOT-A-CREDENTIAL'});assert.equal(new URL(legacyDestination).pathname,'/live-hub.html');assert.equal(new URL(legacyDestination).hash,'');assert.equal(new URL(legacyDestination).searchParams.get('liveKind'),'private');
+console.log('PASS legacy guest: explicit code entry, bound event/kind, no token or code in destination URL');

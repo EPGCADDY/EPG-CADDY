@@ -1,3 +1,4 @@
+import {personalAccessEnabled} from './_lib/personal-access-activation.js';
 import {refreshPrivateRoundLifecycle} from "./_lib/private-round-lifecycle.js";
 import { createHash, randomBytes } from "node:crypto";
 import { getDatabase } from "./_lib/database.js";
@@ -538,7 +539,7 @@ export async function handleLive(req,res,databaseGetter=getDatabase,accountResol
       if(String(error?.code||"")==="DATABASE_NOT_CONFIGURED")return await proxyLiveToProduction(req,res);
       throw error;
     }
-    const personalEnabled=process.env.GSC_PERSONAL_ACCESS_LAB_READY==='1'||accountResolver!==requireAccountSession;
+    const personalEnabled=personalAccessEnabled()||accountResolver!==requireAccountSession;
     if(personalEnabled){await ensurePersonalAccess(sql);const context=await guardPersonalLive(sql,req,body,accountResolver);sql=personalPublishingSql(sql,context)}
     const result=privateAction?await privateRoundAction(sql,req,body,action):action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="join_tournament_by_id"?await joinTournamentById(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req):action==="read"?await readLive(sql,req,body):null;
     if(personalEnabled&&result&&(action==='list_active_tournaments'||action==='list_private_rounds')){

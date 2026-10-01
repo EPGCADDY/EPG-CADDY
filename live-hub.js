@@ -133,12 +133,12 @@
     let response;try{response=await root.fetch("/api/live",{method:"POST",headers:{"Content-Type":"application/json"},cache:"no-store",credentials:"same-origin",body:JSON.stringify(Object.assign({action:"read",kind:kind,viewerToken:token},payload||{}))})}catch{return{ok:false,code:"NETWORK_ERROR"}}
     const body=await response.json().catch(()=>({ok:false,code:"HTTP_"+response.status}));return Object.assign({},body,{ok:response.ok&&body&&body.ok!==false,status:response.status});
   }
-  function errorMessage(code){return({NETWORK_ERROR:"SIN SEÑAL · CONSERVANDO LA ÚLTIMA VISTA",LIVE_LINK_INVALID:"ENLACE LIVE INVÁLIDO",LIVE_REVOKED:"UN ENLACE FUE REVOCADO",LIVE_EXPIRED:"UN ENLACE LIVE CADUCÓ",LIVE_RATE_LIMITED:"DEMASIADAS CONSULTAS · REINTENTANDO"})[String(code||"")]||"NO SE PUDO ACTUALIZAR EL MONITOR DEL TORNEO"}
+  function errorMessage(code){return({NETWORK_ERROR:"SIN SEÑAL · CONSERVANDO LA ÚLTIMA VISTA",LIVE_LINK_INVALID:"ENLACE LIVE INVÁLIDO",LIVE_REVOKED:"UN ENLACE FUE REVOCADO",LIVE_EXPIRED:"UN ENLACE LIVE CADUCÓ",LIVE_RATE_LIMITED:"DEMASIADAS CONSULTAS · REINTENTANDO"})[String(code||"")]||shareAccessMessage(code)}
 
   async function loadGeneral(){
     if(!tokenOk(state.generalToken))return{ok:true,empty:true};
     let result=await read("tournament",state.generalToken,{sinceRevision:generalRevision,limit:50});
-    if(!result.ok||result.unchanged){if(root.GSCPersonalEvents?.descriptor(state.generalToken)&&['PERSONAL_EVENT_FORBIDDEN','ACCOUNT_UNAUTHORIZED','LIVE_EXPIRED'].includes(result.code)){general=null;generalStreams.clear();tournamentStreams.delete(state.generalToken)}return result;}
+    if(!result.ok||result.unchanged){if(root.GSCPersonalEvents?.descriptor(state.generalToken)&&['PERSONAL_EVENT_FORBIDDEN','ACCOUNT_UNAUTHORIZED','LIVE_EXPIRED','CODE_SESSION_EXPIRED','CODE_SESSION_REVOKED'].includes(result.code)){general=null;generalStreams.clear();tournamentStreams.delete(state.generalToken)}return result;}
     general=result.tournament||general;generalRevision=Number(result.tournament&&result.tournament.revision||result.revision)||0;const next=new Map();
     for(const stream of result.streams||[])next.set(stream.id,stream);
     let cursor=result.nextCursor||null;const seenCursors=new Set();
@@ -363,7 +363,8 @@
     else setStatus(errorMessage(result&&result.code),result&&["LIVE_REVOKED","LIVE_EXPIRED","LIVE_LINK_INVALID"].includes(result.code)?"error":"warning");
     clearTimeout(timer);timer=setTimeout(refresh,POLL_MS);
   }
-  async function shareGeneral(){const kind=root.GSCPersonalEvents?.descriptor(state.generalToken)?.eventKind||root.GSCOneUseLive?.descriptor(state.generalToken)?.eventKind||'tournament';const result=await root.GSCOneUseLive?.share(kind,general?.id,general?.name);if(!result?.ok){setStatus(result?.code==='LIVE_SHARE_PLAYER_REQUIRED'?'SOLO JUGADORES INSCRITOS PUEDEN COMPARTIR LIVE':'NO SE PUDO GENERAR EL CÓDIGO LIVE','warning');return false}return true}
+  function shareAccessMessage(code){return({CODE_SESSION_EXPIRED:'ESTE ENLACE LIVE VENCIÓ',CODE_SESSION_REVOKED:'ESTE ENLACE LIVE FUE REVOCADO',CODE_EVENT_CLOSED:'ESTA RONDA YA ESTÁ CERRADA',LIVE_SHARE_EVENT_CLOSED:'ESTA RONDA YA ESTÁ CERRADA',PERSONAL_EVENT_CLOSED:'ESTA RONDA YA ESTÁ CERRADA',LIVE_SHARE_EVENT_EXPIRED:'ESTE ENLACE LIVE VENCIÓ',LIVE_SHARE_REVOKED:'ESTE ENLACE LIVE FUE REVOCADO',LIVE_SHARE_EVENT_INVALID:'ENLACE LIVE INVÁLIDO',LIVE_SHARE_CODE_INVALID_OR_USED:'ESTE CÓDIGO YA SE USÓ O CADUCÓ · PIDE UNO NUEVO',LIVE_SHARE_SESSION_REQUIRED:'INGRESA EL CÓDIGO DE INVITADO',NETWORK_ERROR:'SIN CONEXIÓN · CONSERVANDO LOS ÚLTIMOS SCORES'})[code]||'NO SE PUDO VALIDAR EL ACCESO LIVE'}
+  async function shareGeneral(){const kind=root.GSCPersonalEvents?.descriptor(state.generalToken)?.eventKind||root.GSCOneUseLive?.descriptor(state.generalToken)?.eventKind||'tournament';const result=await root.GSCOneUseLive?.share(kind,general?.id,general?.name);if(!result?.ok){setStatus(result?.code==='LIVE_SHARE_PLAYER_REQUIRED'?'SOLO JUGADORES INSCRITOS PUEDEN COMPARTIR LIVE':shareAccessMessage(result?.code),'warning');return false}return true}
   function showMonitor(kind){
     const individual=kind==="individual",categories=kind==="categories",add=kind==="add";
     const pageTitle=add?"BUSCAR JUGADORES":categories?"RESULTADOS POR CATEGORÍA":individual?"MIS FAVORITOS":"RESULTADOS GENERALES";
@@ -472,7 +473,7 @@
     $("hubClearFavorites").onclick=()=>{state.follows=[];saveState();externalStreams.clear();renderAll();setStatus("TABLERO DE MIS FAVORITOS VACÍO","warning")};
     root.addEventListener("online",refresh);root.document.addEventListener("visibilitychange",()=>{if(root.document.visibilityState==="visible")refresh()});
     const publicDisplay=params.get("display")==="1";
-    renderAll();if(oneUse&&!oneUse.ok){tournamentPortalOpen=false;generalStreams.clear();state.generalToken="";renderAll();setStatus(oneUse.code==="LIVE_SHARE_CODE_INVALID_OR_USED"?"ESTE CÓDIGO YA SE USÓ O CADUCÓ · PIDE UNO NUEVO":"NO SE PUDO VALIDAR EL ACCESO LIVE","error");return false}if(imported)await importAccess(imported);else if(tournamentPortalOpen&&!publicDisplay)setStatus("","");else await refresh();
+    renderAll();if(oneUse&&!oneUse.ok){tournamentPortalOpen=false;generalStreams.clear();state.generalToken="";renderAll();setStatus(shareAccessMessage(oneUse.code),"error");return false}if(imported)await importAccess(imported);else if(tournamentPortalOpen&&!publicDisplay)setStatus("","");else await refresh();
     if(params.get("personalEvent")&&personal?.ok){const token="personal_"+params.get("personalEvent");if([...personal.items,...(personal.privateItems||[])].some(item=>item.token===token))await selectSavedTournament(token)}
     if(params.get("shortcut")==="create"&&!shared)await openRoundCreate();
     if(params.get("shortcut")==="scores"&&!shared){
