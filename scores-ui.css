@@ -187,3 +187,6 @@ body.hub-scores-view:not(.private-live-view):not(.public-display) .head>img{widt
 
 /* Display titles remain fixed even when rendered as div/span rather than headings. */
 :is([class$="-title"],[class$="-subtitle"],[class*="-title "],[class*="-subtitle "]):not(input):not(textarea):not([contenteditable="true"]){-webkit-user-select:none;user-select:none}
+
+/* Reserve space for the Gross/Net label at phone width. */
+.scores-nine th:first-child{width:48px}
