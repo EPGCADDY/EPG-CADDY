@@ -23,7 +23,7 @@ assert.match(liveHub, /state\.tournaments\.filter\(item=>root\.GSCPersonalEvents
   'The tournament shelf excludes private rounds');
 assert.match(liveHub, /descriptor\(state\.generalToken\)\)\?\.eventKind==='private'/,
   'Private-event scores use the private score presentation');
-assert.equal(release.label, 'R147.2');
-assert.match(worker, /RELEASE_FALLBACK="LABORATORIO-20260930-R147\.2"/);
+assert.match(release.label, /^R147\.2(?:\.\d+)?$/);
+assert.ok(worker.includes('RELEASE_FALLBACK='+JSON.stringify(release.release)));
 
 console.log('PASS R147.2 MI RONDA: Registration → authorized private rounds → private scores; tournament shelf stays separate.');

@@ -32,3 +32,10 @@ assert.match(app,/\$\("myRoundButton"\)\.addEventListener\("click",[\s\S]*?windo
 assert.match(app,/<div class="round-actions"><button id="myRoundButton"[^>]*>RONDA PARTICULAR<\/button><button id="privateGroupScoresButton"[^>]*>SCORES GRUPO<\/button><\/div>/);
 assert.match(app,/\$\("privateGroupScoresButton"\)\.addEventListener\("click",\(\)=>window\.GSCPrivateRounds\.openScores\(round\)/);
 console.log('PASS R143: update recovery and requested round button placement');
+assert.match(app,/<div class="round-actions"><button id="roundTournamentButton"[^>]*>TORNEO<\/button><button id="roundTournamentScoresButton"[^>]*>SCORES TORNEO<\/button><\/div>/);
+const navigation=app.slice(app.indexOf('function openRoundTournament('),app.indexOf('$("roundTournamentButton").addEventListener'));
+for(const search of ['', '?personalEvent=event-123&personalKind=tournament', '?personalEvent=private-123&personalKind=private']){
+ let persisted=0,destination='';const context={URL,location:{origin:'https://golf-sc-gt-lab.vercel.app',href:'https://golf-sc-gt-lab.vercel.app/index-grupal.html'+search,assign:url=>destination=url},persist:()=>persisted++};vm.runInNewContext(navigation,context);context.openRoundTournament(true);const target=new URL(destination);assert.equal(persisted,1);assert.equal(target.pathname,'/live-hub.html');assert.equal(target.searchParams.get('shortcut'),'scores');assert.equal(target.searchParams.get('personalEvent'),search.includes('personalKind=tournament')?'event-123':null);
+ context.openRoundTournament();assert.equal(new URL(destination).searchParams.get('shortcut'),null);
+}
+console.log('PASS bottom TORNEO / SCORES TORNEO: round persisted before navigation; tournament membership retained; private event never selected as tournament');

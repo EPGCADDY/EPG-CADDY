@@ -653,3 +653,6 @@ Defecto reportado físicamente por el propietario en IMG_5433/IMG_5434. `live-sh
 
 ## RC-R147.2 continuidad visible
 El propietario informó ausencia de acción visible el 30/09 a las 17:49 Guatemala. Última evidencia: 646598b local, git push rechazado por credenciales ausentes. Recuperación: comandos visibles, creación de sesión automática de eventos, banco PGlite y recorridos UI; ningún despliegue afirmado antes de READY. No mantener intervalos de silencio ni confundir pruebas automáticas con revisión física.
+
+## RC-R147.2.1 · reintento de actualización invisible y botones omitidos
+Defecto reportado: instalación LAB R147.1 sin recibir 147.2; faltan TORNEO y SCORES TORNEO abajo. Causa reproducida del aviso: showCurrentBuild oculta el contenedor y showBuildCheckFailure no restaura display; REINTENTAR habilitado queda invisible. No acredita por sí sola la causa completa del dispositivo. Escape: banco comprobaba texto/disabled, no visibilidad después del estado actualizado. Control permanente: test-lab-first-open ejecuta actualizado→timeout→reintento visible→release nuevo y exige recuperación en online/pageshow/focus; test-lab-update-recovery ejecuta navegación/persistencia y aislamiento privado desde botones inferiores. Estado: corrección local dirigida PASS, Preview y actualización real pendientes; este parche no publicado en Producción.

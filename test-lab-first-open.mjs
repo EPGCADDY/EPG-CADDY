@@ -12,6 +12,15 @@ assert.equal(elements.mandatoryUpdateAction.textContent,'ACTUALIZADO');assert.eq
 context.fetch=(_url,{signal})=>new Promise((resolve,reject)=>signal.addEventListener('abort',()=>reject(new Error('timeout'))));
 const pending=vm.runInContext('syncPublishedAppVersion()',context);timeout();await pending;
 assert.equal(elements.mandatoryUpdateAction.textContent,'REINTENTAR');assert.equal(elements.mandatoryUpdateButton.disabled,false);assert.equal(vm.runInContext('appBuildCheckRunning',context),false);assert.ok(cleared>=2);
+assert.notEqual(elements.mandatoryUpdate.style.display,'none','A failed check after ACTUALIZADO must reveal the recovery button');
+context.fetch=async()=>({ok:true,json:async()=>({release:release+'-RECOVERY'})});
+await vm.runInContext('syncPublishedAppVersion()',context);
+assert.equal(elements.mandatoryUpdateAction.textContent,'ACTUALIZAR');
+assert.equal(elements.mandatoryUpdateButton.disabled,false);
+assert.notEqual(elements.mandatoryUpdate.style.display,'none');
+for(const event of ['online','pageshow','focus'])assert.ok(html.includes('window.addEventListener("'+event+'",syncPublishedAppVersion)'),'Version detection resumes on '+event);
+context.fetch=async()=>({ok:true,json:async()=>({release})});
+await vm.runInContext('syncPublishedAppVersion()',context);
 context.window={addEventListener(){}};context.navigator={serviceWorker:{addEventListener:(_name,fn)=>controllerChange=fn}};context.sessionStorage={setItem(){}};
 vm.runInContext(html.match(/if\(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator\)\{[^\n]+/)[0],context);
 context.fetch=async()=>({ok:true,json:async()=>({release})});await controllerChange();assert.equal(reloads,0,'First service-worker activation must not reload an editable page');

@@ -470,6 +470,11 @@
     renderAll();if(oneUse&&!oneUse.ok){tournamentPortalOpen=false;generalStreams.clear();state.generalToken="";renderAll();setStatus(oneUse.code==="LIVE_SHARE_CODE_INVALID_OR_USED"?"ESTE CÓDIGO YA SE USÓ O CADUCÓ · PIDE UNO NUEVO":"NO SE PUDO VALIDAR EL ACCESO LIVE","error");return false}if(imported)await importAccess(imported);else if(tournamentPortalOpen&&!publicDisplay)setStatus("","");else await refresh();
     if(params.get("personalEvent")&&personal?.ok){const token="personal_"+params.get("personalEvent");if([...personal.items,...(personal.privateItems||[])].some(item=>item.token===token))await selectSavedTournament(token)}
     if(params.get("shortcut")==="create"&&!shared)await openRoundCreate();
+    if(params.get("shortcut")==="scores"&&!shared){
+      const token=state.generalToken,privateEvent=root.GSCPersonalEvents?.descriptor(token)?.eventKind==='private';
+      if(token&&!privateEvent)await selectSavedTournament(token);
+      else{showTournamentPortal();registeredTournamentsOpen=true;renderTournamentShelf();setStatus("SELECCIONA UN TORNEO PARA VER SUS SCORES","");}
+    }
     if(publicDisplay)activatePublicDisplay();
     return true;
   }
