@@ -432,6 +432,7 @@
     const message=$("hubRoundDialogStatus");if(message)message.textContent="CREANDO RONDA…";setStatus("CREANDO RONDA…","");
     const mode=$("hubRoundMode")?.value||"general",course=text($("hubRoundCourse")?.value,120),playedAt=$("hubRoundDate")?.value,categories=[...root.document.querySelectorAll("#hubRoundCategories input:checked")].map(el=>el.value);
     if(!course||!playedAt||!categories.length){roundCreateMessage("COMPLETA CAMPO, FECHA Y CATEGORÍAS");if(okButton)okButton.disabled=false;return false}
+    const originDraft=registrationEventDraft();
     let response;try{response=await root.fetch("/api/personal-events",{method:"POST",headers:{"Content-Type":"application/json"},cache:"no-store",credentials:"same-origin",body:JSON.stringify({action:"create",eventKind:"tournament",name,mode,course,playedAt,categories,players:registrationEventDraft()?.players||[],groupLabel:registrationEventDraft()?.groupLabel||""})});}catch{roundCreateMessage("NO SE PUDO CREAR EL TORNEO · REVISA TU CONEXIÓN");if(okButton)okButton.disabled=false;return false}
     const result=await response.json().catch(()=>null);
     if(!response.ok||!result?.viewerToken){const message=result?.code==="42703"?"TORNEOS NO DISPONIBLES · FALTA ACTUALIZAR EL SERVIDOR":result?.code==="DATABASE_NOT_CONFIGURED"||result?.code==="DATABASE_MIGRATION_REQUIRED"?"LIVE NO ESTÁ ACTIVADO EN LA BASE CENTRAL":root.GSCPersonalEvents?.message(result?.code)||"NO SE PUDO CREAR EL TORNEO";roundCreateMessage(message);if(okButton)okButton.disabled=false;return false}
@@ -443,10 +444,10 @@
       const liveKey="golf-score-card-gt-live-control-v1",liveSaved=JSON.parse(root.localStorage.getItem(liveKey)||"null"),liveState=liveSaved&&liveSaved.version===1?liveSaved:{version:1};
       liveState.version=1;liveState.tournamentOwned={tournamentId:result.tournamentId,name,mode,configuration:result.configuration,organizerSecret:result.organizerSecret,viewerToken:result.viewerToken,joinCode:result.joinCode,expiresAt:result.expiresAt};
       root.localStorage.setItem(liveKey,JSON.stringify(liveState));
-      root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify({label:name,id:result.tournamentId,joinCode:result.joinCode,mode,configuration:result.configuration,personal:true,roundId:"",connected:false}));
+      root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify({label:name,id:result.tournamentId,joinCode:result.joinCode,mode,configuration:result.configuration,personal:true,eventKind:"tournament",roundId:originDraft?.roundId||"",players:originDraft?.players||[],groupLabel:originDraft?.groupLabel||"",connected:false}));
       const roundTokens=JSON.parse(root.localStorage.getItem(ROUND_TOURNAMENTS_KEY)||"[]"),safeTokens=Array.isArray(roundTokens)?roundTokens.filter(token=>tokenOk(token)&&token!==result.viewerToken):[];safeTokens.push(result.viewerToken);root.localStorage.setItem(ROUND_TOURNAMENTS_KEY,JSON.stringify(safeTokens.slice(-MAX_SAVED_TOURNAMENTS)));
     }catch{roundCreateMessage("NO SE PUDO PREPARAR LA TARJETA DE SCORE");if(okButton)okButton.disabled=false;return false}
-    const refreshed=await root.GSCPersonalEvents.sync(),item=refreshed.items?.find(item=>item.event.eventId===result.eventId);setRoundCreateDialogOpen(false);if(item){state=upsertTournamentState(state,item.token,item.label).state;saveState();await selectSavedTournament(item.token);root.GSCPersonalEvents.presentCreatedTournament(result)}return true;
+    const refreshed=await root.GSCPersonalEvents.sync(),item=refreshed.items?.find(item=>item.event.eventId===result.eventId);setRoundCreateDialogOpen(false);if(item){state=upsertTournamentState(state,item.token,item.label).state;saveState();await selectSavedTournament(item.token);root.GSCPersonalEvents.presentCreatedTournament(result,originDraft?.returnTo)}return true;
   }
   async function start(){
     // Render the authorized entry immediately while account verification is pending.

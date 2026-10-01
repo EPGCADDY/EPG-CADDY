@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20261001-R147.2.4.15">
+  <meta name="gscg-release" content="LABORATORIO-20261001-R147.2.4.16">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -4126,7 +4126,12 @@ async function openRoundTournament(scores=false){
   if(returnUrl.searchParams.get('source')==='pwa')returnUrl.searchParams.delete('source');
   returnUrl.searchParams.set('round_return','1');
   url.searchParams.set("returnTo",returnUrl.pathname+returnUrl.search);
+  if(!scores&&round.configured&&round.players?.length){
+    const identity=await window.GSCPersonalEvents.request('identity');
+    if(identity.ok)sessionStorage.setItem('gsc-registration-event-draft-v1',JSON.stringify({accountCode:identity.personalCode,players:round.players,roundId:round.id,returnTo:returnUrl.pathname+returnUrl.search,course:round.course,mode:round.mode,groupLabel:round.liveGroupLabel||round.players.map(player=>player.name).join(' / ').slice(0,120)}));
+  }
   if(scores){
+    if(selection?.personal&&selection.roundId===round.id&&selection.players?.length===round.players.length&&round.players.every(player=>selection.players.some(assigned=>assigned.id===player.id))){round.personalEventId=selection.id;round.liveGroupLabel=selection.groupLabel;round.tournament={name:selection.label};persist();}
     url.searchParams.set("shortcut","scores");
     const privateEvent=selection?.eventKind==='private'||current.searchParams.get("personalKind")==="private";
     const eventId=privateEvent?'':round.personalEventId||current.searchParams.get("personalEvent")||(selection?.personal?selection.id:'');

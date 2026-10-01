@@ -35,7 +35,7 @@ assert.equal(requests.at(-1).snapshot.players[0].holes[0].gross,6,'A late respon
 assert.equal(JSON.parse(store.get(api.STORAGE_KEY)).stream.pendingSnapshot,null);
 assert.equal(JSON.stringify(round),original);
 const card=fs.readFileSync('index-grupal.html','utf8'),begin=card.indexOf('async function openRoundTournament('),end=card.indexOf('\n$("roundTournamentButton")',begin),navigations=[];
-const routeContext={URL,round,persist(){},localStorage:context.localStorage,location:{origin:'https://fixture.example',href:'https://fixture.example/index-grupal.html?personalEvent=existing-event&personalKind=tournament&personalAccount=fixture-account',assign:url=>navigations.push(new URL(url))},window:{GSCLiveControl:{prepareTournamentScores:async()=>true}}};
+const routeContext={URL,round,persist(){},localStorage:context.localStorage,location:{origin:'https://fixture.example',href:'https://fixture.example/index-grupal.html?personalEvent=existing-event&personalKind=tournament&personalAccount=fixture-account',assign:url=>navigations.push(new URL(url))},sessionStorage:context.localStorage,window:{GSCPersonalEvents:{request:async()=>({ok:true,personalCode:'fixture-account'})},GSCLiveControl:{prepareTournamentScores:async()=>true}}};
 vm.runInNewContext(card.slice(begin,end)+';this.open=openRoundTournament;',routeContext);
 await routeContext.open(true);const target=navigations[0];assert.equal(target.pathname,'/live-hub.html');assert.equal(target.searchParams.get('personalEvent'),'existing-event');assert.equal(target.searchParams.get('shortcut'),'scores');const back=new URL(target.searchParams.get('returnTo'),target.origin);assert.equal(back.pathname,'/index-grupal.html');assert.equal(back.searchParams.get('personalAccount'),'fixture-account');
 assert.equal(JSON.stringify(round),original);
@@ -43,6 +43,7 @@ routeContext.location.href='https://fixture.example/index-grupal.html?inicio=1&s
 await routeContext.open(false);
 const localBack=new URL(navigations.at(-1).searchParams.get('returnTo'),'https://fixture.example');
 assert.equal(localBack.searchParams.get('round_return'),'1');
+const originDraft=JSON.parse(store.get('gsc-registration-event-draft-v1'));assert.equal(originDraft.roundId,round.id);assert.deepEqual(originDraft.players,round.players);assert.equal(originDraft.returnTo,localBack.pathname+localBack.search);
 assert.equal(localBack.searchParams.has('inicio'),false,'Returning from Torneo must reopen the existing card, not Inicio registration');
 assert.equal(localBack.searchParams.has('source'),false);
 const hub=fs.readFileSync('live-hub.js','utf8');
