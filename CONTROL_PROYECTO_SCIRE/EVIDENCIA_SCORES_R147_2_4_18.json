@@ -1,0 +1,133 @@
+{
+  "release": "R147.2.4.18",
+  "functionalCommit": "970a87f8878927592fbbad09ba4b1f7b7d7de9c1",
+  "scope": "Chromium browser own synthetic data; not physical iPhone",
+  "detailChecks": [
+    {
+      "view": "General R18",
+      "name": "PRUEBA RECORRIDO A",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "General R18",
+      "name": "PRUEBA RECORRIDO B",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "General R18",
+      "name": "PRUEBA RECORRIDO SENIOR",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "General R18",
+      "name": "PRUEBA RECORRIDO FEMENINA",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "A R18",
+      "name": "PRUEBA RECORRIDO A",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "B R18",
+      "name": "PRUEBA RECORRIDO B",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "SUPER SENIOR R18",
+      "name": "PRUEBA RECORRIDO SENIOR",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "FEMENINA R18",
+      "name": "PRUEBA RECORRIDO FEMENINA",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "Favoritos R18",
+      "name": "PRUEBA RECORRIDO A",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "Favoritos R18",
+      "name": "PRUEBA RECORRIDO SENIOR",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "Particular R18",
+      "name": "PRUEBA RECORRIDO A",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "Particular R18",
+      "name": "PRUEBA RECORRIDO B",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "Particular R18",
+      "name": "PRUEBA RECORRIDO SENIOR",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "Particular R18",
+      "name": "PRUEBA RECORRIDO FEMENINA",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "Individual GENERAL R18",
+      "name": "PRUEBA INDIVIDUAL R18",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "Individual CATEGORÍA R18",
+      "name": "PRUEBA INDIVIDUAL R18",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "Individual MIS FAVORITOS R18",
+      "name": "PRUEBA INDIVIDUAL R18",
+      "cells": 18,
+      "pair": 1
+    },
+    {
+      "view": "Particular individual R18",
+      "name": "PRUEBA INDIVIDUAL R18",
+      "cells": 18,
+      "pair": 1
+    }
+  ],
+  "privateCorrection": {
+    "hole": 2,
+    "privateGross": 6,
+    "privateNet": 5,
+    "tournamentGross": 5,
+    "tournamentNet": 4
+  },
+  "manualUpdates": [
+    "R147.2.4.15→R147.2.4.16",
+    "R147.2.4.16→R147.2.4.17",
+    "R147.2.4.17→R147.2.4.18"
+  ],
+  "mobileWidth": 390,
+  "screenshot": {
+    "file": "scores-r18-detail-mobile-20261001.jpg",
+    "sha256": "6ed2e22ced94053e7e29e4ffeeb34d3a80104e81efbcbf6baa84df555548525b",
+    "library_file_id": "libfile_d9021dbb310081919e0fd55827171b2e"
+  }
+}
