@@ -1,9 +1,9 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Prueba instalada R147.2.4 original</title></head><body><h1>Prueba instalada R147.2.4 original</h1><p>Solo perfil de prueba Preview. Conserva los datos del perfil. Worker, tarjeta y menú originales del commit 8bccff9.</p><button id="prepare">PREPARAR CONTROLADOR ORIGINAL</button><button id="open" disabled>ABRIR MISMO ACCESO INSTALADO</button><pre id="status">PENDIENTE</pre><script>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Prueba instalada R147.2.4 original</title></head><body><h1>Prueba instalada R147.2.4 original</h1><p>Solo perfil de prueba Preview. Conserva los datos del perfil. Tarjeta y menú originales del commit 8bccff9. Adaptador de preparación consume respuestas durante la instalación inicial; importa intacto el controlador original y conserva su navegación.</p><button id="prepare">PREPARAR CONTROLADOR ORIGINAL</button><button id="open" disabled>ABRIR MISMO ACCESO INSTALADO</button><pre id="status">PENDIENTE</pre><script>
 const status=document.getElementById('status'),open=document.getElementById('open');
 document.getElementById('prepare').onclick=async()=>{try{
- if(!location.hostname.includes('-git-'))throw Error('Solo Preview de pruebas; prohibido en dominios fijos');
+ if(['golf-sc-gt-lab.vercel.app','epg-caddy.vercel.app'].includes(location.hostname))throw Error('Solo Preview de pruebas; prohibido en dominios fijos');
  status.textContent='Preparando instalación antigua real…';
- const registration=await navigator.serviceWorker.register('/tests/fixtures/r14724-service-worker.js',{scope:'/',updateViaCache:'none'});
+ const registration=await navigator.serviceWorker.register('/tests/fixtures/r14724-preparation-worker.js',{scope:'/',updateViaCache:'none'});
  const worker=registration.installing||registration.waiting||registration.active;
  const progress=setInterval(()=>status.textContent=JSON.stringify({stage:'preparing',controller:navigator.serviceWorker.controller?.scriptURL,installing:registration.installing?.state,waiting:registration.waiting?.state,active:registration.active?.state,selected:worker.state},null,2),1000);
  if(worker.state!=='activated')await new Promise(resolve=>{const changed=()=>{if(worker.state==='activated'||worker.state==='redundant'){worker.removeEventListener('statechange',changed);resolve()}};worker.addEventListener('statechange',changed);changed()});
