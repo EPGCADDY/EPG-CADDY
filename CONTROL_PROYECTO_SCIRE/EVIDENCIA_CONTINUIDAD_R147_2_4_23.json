@@ -1,0 +1,27 @@
+{
+  "release": "R147.2.4.23",
+  "fecha_guatemala": "2026-10-01",
+  "fuente_probada": "ca9f1bd884c5db05789435522ff579baab462c86",
+  "preview": "dpl_GQYrvt7UBhJBPFCdTgKtnTiKdgCf",
+  "preview_estado": "READY",
+  "browser": "Chrome cloud mediante cua_repl; no iPhone físico",
+  "recorridos_comprobados": [
+    "Registro libre: jugador sintético QA CONTINUIDAD R23 / Senior / HCP14 / blancas",
+    "Score Card: Gross5 / Neto4 en hoyo1",
+    "Torneo: creación QA CONTINUIDAD R23 1534, campo elegible y fecha automática 2026-10-01",
+    "CONTINUAR AL SCORE CARD: regreso round_return=1, nombre y score5/4 conservados",
+    "Código creador visible al final de su tarjeta tras completar carga",
+    "SCORES TORNEO publica y General muestra5/4",
+    "Categoría Senior muestra5/4; favorito se conserva en MIS FAVORITOS",
+    "Doble clic abre exactamente hoyos1-18, primer par5/4, demás sin score",
+    "X cierra detalle; X de Scores regresa a tarjeta con5/4",
+    "Ronda Particular QA PARTICULAR R23 1535 creada separadamente; tabla5/4",
+    "Doble clic particular abre exactamente18casillas con5/4; cerrar conserva tarjeta"
+  ],
+  "cierres_medidos": {"color": "rgb(49, 255, 0)", "fontSize": "22.5px", "width": 44, "height": 44, "vistas": ["Scores torneo", "detalle18", "Ronda Particular"]},
+  "bancos": {"scripts/build-manual-lab.mjs": "PASS", "test-project-quality-gate.mjs": "PASS", "scripts/project-quality-gate.mjs": "PASS", "scripts/roadmap-gate.mjs": "PASS", "scripts/inventory-gate.mjs": "PASS 796 fuentes / tres PDF originales SHA coincidentes antes del registro documental"},
+  "consola": "Errores observados de chrome-extension metadata; no errores propios de aplicación observados en el recorrido",
+  "limites": ["No certifica iPhone físico", "No certifica recepción en instalaciones reales del propietario", "No se comparó original gráfico archivado contra captura pixel a pixel", "No se pulsó ACTUALIZAR en dispositivos del propietario"],
+  "publicacion": "Autorizada por continuidad y pedido actual; pendiente confirmar main y ambos dominios READY",
+  "rollback_codigo": "72d2cc5231330e87b6687fb3cad8288548ca0d75"
+}
