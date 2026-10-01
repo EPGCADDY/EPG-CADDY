@@ -1,0 +1,50 @@
+{
+  "version": "R147.2.4.19",
+  "dateGuatemala": "2026-10-01 10:31",
+  "candidateCommit": "b10872355e6eb7611bb38e1c83abff25d48d5863",
+  "browser": "Chrome cloud; not physical iPhone",
+  "entry": "/pwa-launch.html",
+  "manifestChanged": false,
+  "stableDomainsChanged": false,
+  "legacySourceCommit": "8bccff9025bbb1acd0ff1ab02f7808d6872ba873",
+  "legacyPreparation": "Transport adapter consumes initial download response bodies then imports unchanged original worker; original unadapted cold preparation became redundant. No claim of original cold install PASS.",
+  "tests": [
+    {
+      "name": "exact legacy cached card from installed entry",
+      "before": "LABORATORIO-20260930-R147.2.4",
+      "updateButtonVisible": true,
+      "result": "PASS browser"
+    },
+    {
+      "name": "explicit ACTUALIZAR on original card",
+      "after": "LABORATORIO-20261001-R147.2.4.19",
+      "sameOrigin": true,
+      "player": "PRUEBA R24 A R19",
+      "grossBefore": 5,
+      "grossAfter": 5,
+      "netBefore": 4,
+      "netAfter": 4,
+      "startBefore": "09:18 a. m.",
+      "startAfter": "09:18 a. m.",
+      "result": "PASS browser"
+    },
+    {
+      "name": "existing R18 test round",
+      "player": "PRUEBA INDIVIDUAL R18",
+      "grossBefore": 5,
+      "grossAfter": 5,
+      "netBefore": 4,
+      "netAfter": 4,
+      "startBefore": "08:16 a. m.",
+      "startAfter": "08:16 a. m.",
+      "result": "PASS browser"
+    }
+  ],
+  "automated": "Installed entry activation/offline/hung, genuine original network launch routing, independent delivery, shell drain, closed-round clock, full active manual LAB bank, negative project gate, inventory and roadmaps PASS.",
+  "ownerDataChanged": false,
+  "physicalOwnerDevice": "Pending observation; screenshot failure not claimed resolved on device",
+  "screenshots": [
+    "r24-update-arrived.jpg",
+    "r19-round-preserved.jpg"
+  ]
+}
