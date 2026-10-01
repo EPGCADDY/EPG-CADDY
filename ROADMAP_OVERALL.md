@@ -2342,3 +2342,6 @@ Archivos registrados: index-grupal.html, release.json, service-worker.js, live-h
 ## Diagnóstico aislado de instalación R147.2.4 · 1 octubre 2026
 
 Rama lab/r14724-installed-recovery-20261001. Se conserva íntegro el HTML, worker, scripts, versión y release antiguos para reproducir entrega hacia R147.2.4.14. No es candidato de producto ni modifica dominios fijos. Banco funcional original PASS local. Cambian únicamente ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md, vercel.json (regenerar inventario antes de su validación durante build) y CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json. Ambos ROADMAPS acompañan esta corrección documental; primera compilación histórica quedó bloqueada por las puertas documentales.
+
+
+Corrección del diagnóstico histórico: se restaura el buildCommand original de vercel.json. El bloqueo documentado fue ausencia de cambios en ambos ROADMAPS, que ahora se actualizan junto con CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json; no era evidencia de fallo funcional del producto. R147.2.4 permanece idéntica en HTML, scripts, worker y release.
