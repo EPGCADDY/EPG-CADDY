@@ -18,3 +18,6 @@
 /* Owner directive: headings and subtitles are fixed display labels. */
 :is(h1,h2,h3,h4,h5,h6,th,caption,legend,label,[role="columnheader"],.subtitle,.sub-title,.summary-title,.scores-event,.scores-meta,#hubEventName,#hubEventMeta){-webkit-user-select:none;user-select:none}
 :is(input,textarea,[contenteditable="true"]){-webkit-user-select:text;user-select:text}
+
+/* Display titles remain fixed even when rendered as div/span rather than headings. */
+:is([class$="-title"],[class$="-subtitle"],[class*="-title "],[class*="-subtitle "]):not(input):not(textarea):not([contenteditable="true"]){-webkit-user-select:none;user-select:none}

@@ -184,3 +184,6 @@ body.hub-scores-view:not(.private-live-view):not(.public-display) .head>img{widt
 
 /* Fixed titles, subtitles and score names; editable fields keep normal selection. */
 :is(#hubEventName,#hubEventMeta,#hubPanelTitle,#hubScoresHelp,.scores-heading,.scores-event,.scores-meta,.scores-help,[data-score-player]){-webkit-user-select:none;user-select:none}
+
+/* Display titles remain fixed even when rendered as div/span rather than headings. */
+:is([class$="-title"],[class$="-subtitle"],[class*="-title "],[class*="-subtitle "]):not(input):not(textarea):not([contenteditable="true"]){-webkit-user-select:none;user-select:none}
