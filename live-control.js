@@ -140,11 +140,11 @@
     }catch(error){setStatus(`${stateMessage(error?.code||"NETWORK_ERROR")} · REINTENTANDO VINCULAR EL TORNEO`,"warning",true);scheduleTournamentConnectRetry(roundValue);return false;
     }finally{tournamentConnectRunning=false;finishTournamentConnect?.();tournamentConnectCompletion=null;finishTournamentConnect=null}
   }
-  function onRoundPersisted(roundValue){const state=liveState(),snapshot=currentSnapshot(roundValue);if(!snapshot)return false;if(state.privateRound?.roundId!==snapshot.roundId)void connectPendingRoundTournament(roundValue);void persistPrivateSnapshot(snapshot);root.GSCPrivateRounds?.syncPending(roundValue);if(!state.stream?.publisherSecret||state.stream.roundId!==snapshot.roundId)return true;state.stream.pendingSnapshot=snapshot;state.stream.pendingMutationId=mutationId();saveState(state);clearTimeout(publishTimer);publishTimer=setTimeout(publishLatest,350);return true}
+  function onRoundPersisted(roundValue,explicitTournament=false){let state=liveState(),snapshot=currentSnapshot(roundValue);if(!snapshot)return false;if(state.privateRound?.roundId!==snapshot.roundId)void connectPendingRoundTournament(roundValue);void persistPrivateSnapshot(snapshot);root.GSCPrivateRounds?.syncPending(roundValue);if(state.privateRound?.roundId===snapshot.roundId&&!explicitTournament)return true;state=liveState();if(!state.stream?.publisherSecret||state.stream.roundId!==snapshot.roundId)return true;state.stream.pendingSnapshot=snapshot;state.stream.pendingMutationId=mutationId();saveState(state);clearTimeout(publishTimer);publishTimer=setTimeout(publishLatest,350);return true}
   async function prepareTournamentScores(roundValue){
     const snapshot=currentSnapshot(roundValue);if(!snapshot)return false;
     await connectPendingRoundTournament(roundValue);
-    onRoundPersisted(roundValue);
+    onRoundPersisted(roundValue,true);
     clearTimeout(publishTimer);
     if(publishRunning&&publishCompletion)await publishCompletion;
     return publishLatest();

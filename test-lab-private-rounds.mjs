@@ -24,6 +24,14 @@ const control=require('./live-control.js'),round={id:'round-private-0001',config
 assert.equal((await control.connectPrivateRound(id,'BADCODE123',round)).ok,false);assert.equal(store.get(control.STORAGE_KEY),undefined,'Rejected join must preserve prior state');
 clientAllow=true;assert.equal((await control.connectPrivateRound(id,'ABCDEFGH23',round)).ok,true);assert.equal(JSON.parse(store.get(control.STORAGE_KEY)).privateStream.privateRound,true);
 control.onRoundPersisted(round);await new Promise(resolve=>setTimeout(resolve,450));assert.ok(clientCalls.some(c=>c.action==='publish_private_round'),'Official writer must publish Scores to private storage');assert.ok(!clientCalls.some(c=>c.action==='join_tournament_by_id'||c.action==='publish'),'Private Scores cannot go to tournaments');
+// A prior tournament stream must not receive edits made in an active private round.
+const priorState=JSON.parse(store.get(control.STORAGE_KEY));
+priorState.stream={roundId:round.id,streamId:'previous-tournament',publisherSecret:secret,viewerToken:'T'.repeat(43),revision:0,tournamentId:'previous-event'};
+store.set(control.STORAGE_KEY,JSON.stringify(priorState));clientCalls.length=0;
+round.players[0].holes[1].gross=6;control.onRoundPersisted(round);
+await new Promise(resolve=>setTimeout(resolve,450));
+assert.ok(clientCalls.some(c=>c.action==='publish_private_round'&&c.snapshot.players[0].totals.gross===6),'Private correction must reach its own writer');
+assert.ok(!clientCalls.some(c=>c.action==='publish'),'A previous tournament connection must not receive private corrections');
 const table=fs.readFileSync('private-rounds.js','utf8');for(const heading of ['NOMBRE','HDCP','HOYO','GROSS','NETO','+/−'])assert.ok(table.includes('<th>'+heading+'</th>'));
 assert.ok(!table.includes("escape(group)+'<br>'"));assert.ok(!table.includes('SCORES ACTUALIZADOS'));assert.ok(!table.includes('En Torneos abre'));assert.ok(table.includes('\"Ronda \"+item.name'));
 console.log('PASS R140: isolated SQL, wrong-code rejection, selected-round binding, private membership persistence, official writer and score columns');
