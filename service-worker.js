@@ -2,10 +2,11 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-6-update-delivery`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-6-update-delivery`;
-const RELEASE_FALLBACK="LABORATORIO-20261001-R147.2.4.6";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-7-update-delivery`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-7-update-delivery`;
+const RELEASE_FALLBACK="LABORATORIO-20261001-R147.2.4.7";
 let RELEASE=RELEASE_FALLBACK;
+const UPDATE_DIAGNOSTICS={stage:"boot",resources:{}};
 async function fetchPublishedRelease(){
   const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),8000);
   try{
@@ -72,15 +73,20 @@ const SHELL=[
 ];
 
 async function refreshShell(){
+  UPDATE_DIAGNOSTICS.stage="release-check";
   await fetchPublishedRelease();
-  const staged=await Promise.all(SHELL.map(async url=>{try{const response=await fetch(url,{cache:"reload"});return response.ok?{url,response}:null}catch{return null}}));
-  if(staged.some(item=>!item))return false;
+  UPDATE_DIAGNOSTICS.stage="shell-fetch";
+  const staged=await Promise.all(SHELL.map(async url=>{const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);try{UPDATE_DIAGNOSTICS.resources[url]="fetching";const response=await fetch(url,{cache:"reload",signal:controller.signal});UPDATE_DIAGNOSTICS.resources[url]=response.status;return response.ok?{url,response}:null}catch(error){UPDATE_DIAGNOSTICS.resources[url]=error.message;return null}finally{clearTimeout(timeout)}}));
+  if(staged.some(item=>!item)){UPDATE_DIAGNOSTICS.stage="shell-incomplete";return false}
   const entry=staged.find(item=>item.url===OFFLINE_ENTRY);
+  UPDATE_DIAGNOSTICS.stage="entry-body";
   const html=await entry.response.clone().text();
   const build=html.match(/<meta\s+name=["']gscg-release["']\s+content=["']([^"']+)["']/i)?.[1];
   if(build!==RELEASE)return false;
+  UPDATE_DIAGNOSTICS.stage="cache-write";
   const cache=await caches.open(ACTIVE_CACHE_NAME);
-  await Promise.all(staged.map(({url,response})=>cache.put(url,response)));
+  await Promise.all(staged.map(async({url,response})=>{await cache.put(url,response);UPDATE_DIAGNOSTICS.resources[url]="cached"}));
+  UPDATE_DIAGNOSTICS.stage="shell-ready";
   return true;
 }
 
@@ -115,6 +121,7 @@ self.addEventListener("install",event=>event.waitUntil((async()=>{
 })()));
 self.addEventListener("activate",event=>event.waitUntil((async()=>{await ensureApprovedShell();await self.clients.claim()})()));
 self.addEventListener("message",event=>{
+  if(event.data?.type==="GET_UPDATE_DIAGNOSTICS")event.ports?.[0]?.postMessage(UPDATE_DIAGNOSTICS);
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
   if(event.data?.type==="GET_APPROVED_RELEASE")event.waitUntil((async()=>{await ensureApprovedShell();const entry=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});const html=entry?await entry.text():'';const release=html.match(/<meta\s+name=["']gscg-release["']\s+content=["']([^"']+)["']/i)?.[1]||'';event.ports?.[0]?.postMessage({release})})());
 });
