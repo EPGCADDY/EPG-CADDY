@@ -190,3 +190,11 @@ body.hub-scores-view:not(.private-live-view):not(.public-display) .head>img{widt
 
 /* Reserve space for the Gross/Net label at phone width. */
 .scores-nine th:first-child{width:48px}
+
+/* Shared typography and 25% logo increase in the private read-only LIVE viewer. */
+.live-app .live-head h1{font-size:var(--scores-title-size)}
+.live-app .live-head{grid-template-columns:115px 1fr}
+.live-app .live-head img{width:115px;height:auto}
+.live-app .group-meta,.live-app .live-head p{-webkit-user-select:none;user-select:none}
+.live-app .player-title strong,.live-app .score-live th,.live-app .score-live td{font-family:var(--scores-font);font-size:var(--scores-text-size)}
+@media(max-width:640px){.live-app .live-head{grid-template-columns:80px 1fr}.live-app .live-head img{width:80px}}
