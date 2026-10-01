@@ -39,8 +39,8 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
     if(body.action==='redeem')return res.status(200).json(await consumePersonalInvite(sql,body,account));
     if(body.action==='list'){
       const rows=await sql`SELECT e.event_id,e.event_kind,e.status,e.configuration,m.role,m.display_name,m.players,m.group_label FROM gsc_personal_events e JOIN gsc_personal_members m USING(event_id,event_kind) WHERE m.account_id=${account.id} AND m.revoked_at IS NULL`;
-      const events=[];for(const row of rows){const scoped=eventScope(sql,row.event_kind),live=await scoped`SELECT id,name,viewer_token_hash,expires_at FROM live_tournaments WHERE id=${row.event_id}::uuid AND status<>'revoked' AND expires_at>now()`;if(live.length)events.push({eventId:row.event_id,eventKind:row.event_kind,name:live[0].name,status:row.status,role:row.role,configuration:row.configuration,players:row.players,groupLabel:row.group_label})}
-      return res.status(200).json({ok:true,events,accountCode:account.id});
+      const events=[],aliases=[];for(const row of rows){const scoped=eventScope(sql,row.event_kind),live=await scoped`SELECT id,name,status,viewer_token_hash,expires_at FROM live_tournaments WHERE id=${row.event_id}::uuid`;if(live.length)aliases.push({eventId:row.event_id,eventKind:row.event_kind,hash:live[0].viewer_token_hash,removed:live[0].status==='revoked'||new Date(live[0].expires_at)<=new Date()});if(live.length&&live[0].status!=='revoked'&&new Date(live[0].expires_at)>new Date())events.push({eventId:row.event_id,eventKind:row.event_kind,name:live[0].name,status:row.status,role:row.role,configuration:row.configuration,players:row.players,groupLabel:row.group_label})}
+      return res.status(200).json({ok:true,events,aliases,accountCode:account.id});
     }
     const kind=eventKind(body.eventKind||'tournament');
     if(body.action==='create'){

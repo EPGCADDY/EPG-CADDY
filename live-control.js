@@ -123,6 +123,7 @@
     let selection;try{selection=JSON.parse(root.localStorage.getItem("gsc-tournament-connect-selection-v1")||"null")}catch{return false}
     const snapshot=currentSnapshot(roundValue),tournamentId=text(selection?.id,50);
     if(!snapshot||!tournamentId||selection?.eventKind==='private')return false;
+    if(selection.personal&&selection.roundId===roundValue.id&&selection.players?.length===roundValue.players?.length&&roundValue.players.every(player=>selection.players.some(assigned=>assigned.id===player.id&&text(assigned.name).toUpperCase()===text(player.name).toUpperCase()))){roundValue.personalEventId=tournamentId;roundValue.liveGroupLabel=selection.groupLabel;roundValue.tournament={name:selection.label}}
     if(!roundValue.tournament?.name&&!(selection.personal&&roundValue.personalEventId===tournamentId))return false;
     const state=liveState(),stream=state.stream;
     if(stream?.roundId===snapshot.roundId&&stream?.tournamentId===tournamentId){
