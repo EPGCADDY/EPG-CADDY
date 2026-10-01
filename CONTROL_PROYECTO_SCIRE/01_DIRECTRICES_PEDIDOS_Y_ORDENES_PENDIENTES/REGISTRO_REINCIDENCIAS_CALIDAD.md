@@ -659,3 +659,6 @@ Defecto reportado: instalación LAB R147.1 sin recibir 147.2; faltan TORNEO y SC
 
 ## RC · R147.2.2 · LIVE de Producción bloqueado
 Causa: control LAB aplicado a ambos proyectos y origen de invitaciones predeterminado LAB. Escape: publicación sin contraste de configuración de Producción. Control permanente: matriz de IDs/entornos y pruebas de origen de invitaciones con configuración cruzada; permisos LIVE SQL conservados. Estado: corrección local, pruebas y publicación pendientes; actualización instalada LAB continúa pendiente.
+
+## R147.2.3 · LIVE guardado vencido · 30 septiembre 2026
+IMG_5469 confirma fallo en R147.2.2. Registros del commit b77afb4: live-share 403 y live 410 a las 20:17. quickShareGroup no revisaba expiresAt antes de compartir un evento o reutilizar un enlace. Se ignoran streams vencidos y se emite un LIVE del grupo actual con tournament:null; no se reactiva ni extiende el evento anterior, no se altera la ronda local ni sus jugadores/scores. Regresión prueba stream particular/torneo vencido, conservación de snapshot y segundo compartir sin duplicado. Mensajes específicos para permiso, evento vencido y revocación. Rollback b77afb4. Estado: local; pruebas y publicación pendientes. Archivos: live-control.js, test-lab-share-direct.mjs, release.json, index-grupal.html, service-worker.js.

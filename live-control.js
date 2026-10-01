@@ -39,7 +39,7 @@
   function viewerUrl(kind,token){const url=new URL("/live.html",publicAppOrigin());url.hash=`${kind}=${encodeURIComponent(token)}`;return url.toString()}
   function hubUrl(kind="",token=""){const url=new URL("/live-hub.html",publicAppOrigin());if(token)url.hash=`${kind==="tournament"||kind==="general"?"general":"stream"}=${encodeURIComponent(token)}`;return url.toString()}
   function setStatus(message,tone="",background=false){if(background&&foregroundStatus)return;if(!background)foregroundStatus=true;const target=$("liveControlStatus");if(!target)return;target.textContent=message;target.dataset.tone=tone}
-  function stateMessage(code){return({NETWORK_ERROR:"SIN SEÑAL · EL ÚLTIMO SCORE QUEDA EN COLA",LIVE_CONSENT_REQUIRED:"FALTA CONFIRMAR EL PERMISO DE TODOS",LIVE_GROUP_CONSENT_REQUIRED:"EL GRUPO COMPLETO DEBE AUTORIZAR",LIVE_PLAYER_SCOPE_REQUIRED:"SELECCIONA UN JUGADOR",LIVE_REVISION_CONFLICT:"SINCRONIZANDO LA VERSIÓN MÁS RECIENTE",LIVE_NOT_ACTIVE:"EL ENLACE YA NO ESTÁ ACTIVO",LIVE_EXPIRED:"EL ENLACE CADUCÓ",LIVE_RATE_LIMITED:"DEMASIADAS SOLICITUDES · ESPERA UN MINUTO",LIVE_JOIN_CODE_INVALID:"CÓDIGO DE TORNEO INVÁLIDO",LIVE_GROUP_LABEL_REQUIRED:"ESCRIBE EL NOMBRE O NÚMERO DEL GRUPO",LIVE_TOURNAMENT_CAPACITY_REACHED:"TORNEO COMPLETO · MÁXIMO 100 JUGADORES",LIVE_TOURNAMENT_MODE_MISMATCH:"ESTA SCORE CARD USA OTRA MODALIDAD","42703":"TORNEOS NO DISPONIBLES · FALTA ACTUALIZAR EL SERVIDOR",DATABASE_MIGRATION_REQUIRED:"LIVE AÚN NO ESTÁ ACTIVADO EN LA BASE CENTRAL",DATABASE_NOT_CONFIGURED:"LIVE CENTRAL NO DISPONIBLE"})[String(code||"")]||"NO SE PUDO COMPLETAR LIVE"}
+  function stateMessage(code){return({NETWORK_ERROR:"SIN SEÑAL · EL ÚLTIMO SCORE QUEDA EN COLA",LIVE_CONSENT_REQUIRED:"FALTA CONFIRMAR EL PERMISO DE TODOS",LIVE_GROUP_CONSENT_REQUIRED:"EL GRUPO COMPLETO DEBE AUTORIZAR",LIVE_PLAYER_SCOPE_REQUIRED:"SELECCIONA UN JUGADOR",LIVE_REVISION_CONFLICT:"SINCRONIZANDO LA VERSIÓN MÁS RECIENTE",LIVE_NOT_ACTIVE:"EL ENLACE YA NO ESTÁ ACTIVO",LIVE_EXPIRED:"EL ENLACE CADUCÓ",LIVE_SHARE_PLAYER_REQUIRED:"EL LIVE ANTERIOR YA NO TIENE PERMISO · REVISA SU VIGENCIA",LIVE_SHARE_EVENT_EXPIRED:"EL EVENTO LIVE CADUCÓ",LIVE_REVOKED:"EL ENLACE LIVE FUE REVOCADO",PERSONAL_ACCESS_NOT_ENABLED:"EL ACCESO AL EVENTO NO ESTÁ ACTIVADO",LIVE_RATE_LIMITED:"DEMASIADAS SOLICITUDES · ESPERA UN MINUTO",LIVE_JOIN_CODE_INVALID:"CÓDIGO DE TORNEO INVÁLIDO",LIVE_GROUP_LABEL_REQUIRED:"ESCRIBE EL NOMBRE O NÚMERO DEL GRUPO",LIVE_TOURNAMENT_CAPACITY_REACHED:"TORNEO COMPLETO · MÁXIMO 100 JUGADORES",LIVE_TOURNAMENT_MODE_MISMATCH:"ESTA SCORE CARD USA OTRA MODALIDAD","42703":"TORNEOS NO DISPONIBLES · FALTA ACTUALIZAR EL SERVIDOR",DATABASE_MIGRATION_REQUIRED:"LIVE AÚN NO ESTÁ ACTIVADO EN LA BASE CENTRAL",DATABASE_NOT_CONFIGURED:"LIVE CENTRAL NO DISPONIBLE"})[String(code||"")]||"NO SE PUDO COMPLETAR LIVE"}
   function consentIds(scope){const snapshot=currentSnapshot();if(!snapshot)return[];if(scope==="player")return[$("livePlayerSelect")?.value].filter(Boolean);return snapshot.players.map(player=>player.id)}
   function renderConsent(){
     const snapshot=currentSnapshot(),scope=document.querySelector('input[name="liveScope"]:checked')?.value||"group",target=$("liveConsentPlayers"),select=$("livePlayerSelect");if(!target||!select)return;
@@ -81,12 +81,13 @@
   async function quickShareGroup(){
     const snapshot=currentSnapshot();if(!snapshot){quickShareNotice("INICIA UNA RONDA PARA COMPARTIR LIVE","warning");return false}
     let state=liveState(),stream=state.stream;
-    const enrolled=state.privateStream?.roundId===snapshot.roundId?{kind:'private',stream:state.privateStream}:stream?.roundId===snapshot.roundId&&stream.tournamentId?{kind:'tournament',stream}:null;
+    const expired=value=>Number.isFinite(Date.parse(value?.expiresAt))&&Date.parse(value.expiresAt)<=Date.now();
+    const enrolled=state.privateStream?.roundId===snapshot.roundId&&!expired(state.privateStream)?{kind:'private',stream:state.privateStream}:stream?.roundId===snapshot.roundId&&stream.tournamentId&&!expired(stream)?{kind:'tournament',stream}:null;
     if(enrolled&&root.GSCOneUseLive){const result=await root.GSCOneUseLive.share(enrolled.kind,enrolled.stream.tournamentId,snapshot.tournament||'LIVE');if(!result.ok)quickShareNotice(stateMessage(result.code),'warning');return result.ok}
-    if(!(stream?.publisherSecret&&stream?.viewerToken&&stream.roundId===snapshot.roundId&&stream.scope==="group")){
+    if(!(stream?.publisherSecret&&stream?.viewerToken&&stream.roundId===snapshot.roundId&&stream.scope==="group"&&!expired(stream))){
       const selectedPlayerIds=snapshot.players.map(player=>player.id),consent={confirmed:true,playerIds:selectedPlayerIds,policyVersion:POLICY_VERSION,confirmedAt:new Date().toISOString(),authority:"scorekeeper_share_live_button"};
       setStatus("CREANDO ENLACE LIVE DEL GRUPO…");
-      const result=await request("create_stream",{scope:"group",selectedPlayerIds,consent,durationHours:24,groupLabel:snapshot.groupLabel,snapshot});
+      const result=await request("create_stream",{scope:"group",selectedPlayerIds,consent,durationHours:24,groupLabel:snapshot.groupLabel,snapshot:{...snapshot,tournament:null}});
       if(!result.ok){quickShareNotice(stateMessage(result.code),"warning");return false}
       state=liveState();state.stream={roundId:snapshot.roundId,scope:"group",streamId:result.streamId,publisherSecret:result.publisherSecret,viewerToken:result.viewerToken,revision:Number(result.revision)||0,expiresAt:result.expiresAt,groupLabel:snapshot.groupLabel,pendingSnapshot:null,tournamentId:null};saveState(state);stream=state.stream;renderActive();
     }
@@ -182,7 +183,7 @@
   async function connectTournamentById(tournamentId,groupLabel="",joinCode=""){
     const snapshot=currentSnapshot();if(!snapshot)return{ok:false,code:"LIVE_ROUND_REQUIRED"};
     let state=liveState(),stream=state.stream;
-    if(!(stream?.publisherSecret&&stream.roundId===snapshot.roundId&&stream.scope==="group")){
+    if(!(stream?.publisherSecret&&stream.roundId===snapshot.roundId&&stream.scope==="group"&&!expired(stream))){
       const selectedPlayerIds=snapshot.players.map(player=>player.id),consent={confirmed:true,playerIds:selectedPlayerIds,policyVersion:POLICY_VERSION,confirmedAt:new Date().toISOString(),authority:"scorekeeper_tournament_connect"};
       const created=await request("create_stream",{scope:"group",selectedPlayerIds,consent,durationHours:24,groupLabel:groupLabel||snapshot.groupLabel,snapshot});
       if(!created.ok)return created;
