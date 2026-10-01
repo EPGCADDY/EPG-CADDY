@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-2-update-delivery`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-2-update-delivery`;
-const RELEASE_FALLBACK="LABORATORIO-20261001-R147.2.4.2";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-3-update-delivery`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-3-update-delivery`;
+const RELEASE_FALLBACK="LABORATORIO-20261001-R147.2.4.3";
 let RELEASE=RELEASE_FALLBACK;
 async function fetchPublishedRelease(){
   try{
@@ -116,6 +116,7 @@ self.addEventListener("install",event=>event.waitUntil((async()=>{
 self.addEventListener("activate",event=>event.waitUntil((async()=>{await fetchPublishedRelease();await ensureApprovedShell();await self.clients.claim()})()));
 self.addEventListener("message",event=>{
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
+  if(event.data?.type==="GET_APPROVED_RELEASE")event.waitUntil((async()=>{await ensureApprovedShell();const entry=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});const html=entry?await entry.text():'';const release=html.match(/<meta\s+name=["']gscg-release["']\s+content=["']([^"']+)["']/i)?.[1]||'';event.ports?.[0]?.postMessage({release})})());
 });
 
 async function networkFirst(request,allowCardFallback=true){
@@ -188,5 +189,5 @@ self.addEventListener("fetch",event=>{
     event.respondWith(manualAppNavigation(request));
     return;
   }
-  if(SHELL.includes(url.pathname))event.respondWith((async()=>{await ensureApprovedShell();return await caches.match(url.pathname,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)})());
+  if(SHELL.includes(url.pathname))event.respondWith((async()=>{await ensureApprovedShell();const response=await caches.match(url.pathname,{cacheName:APPROVED_CACHE_NAME})||await networkFirst(request);if(url.pathname!=="/shortcuts-ui.js"||!response.ok)return response;const headers=new Headers(response.headers);headers.delete('content-length');headers.set('content-type','application/javascript');return new Response((await response.text())+'\nimport("/app-update.js").catch(()=>{});',{status:response.status,headers})})());
 });

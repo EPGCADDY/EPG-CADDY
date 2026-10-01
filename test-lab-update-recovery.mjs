@@ -55,6 +55,8 @@ for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.verc
  const lifecycle=async name=>{let pending;listeners[name]({waitUntil:promise=>pending=promise});await pending};
  const navigate=async query=>{let pending;listeners.fetch({request:{url:origin+'/index-grupal.html'+query,method:'GET',mode:'navigate'},respondWith:promise=>pending=promise});return (await pending).text()};
  await lifecycle('install');assert.equal(installShellFetches,0,'A controller update with an approved card must not wait for the whole new shell before it can offer ACTUALIZAR');await lifecycle('activate');
+ let messageResult,pendingMessage;listeners.message({data:{type:'GET_APPROVED_RELEASE'},ports:[{postMessage:value=>messageResult=value}],waitUntil:promise=>pendingMessage=promise});await pendingMessage;assert.equal(messageResult.release,'OLD','Discovery reports the approved old build, not the new server release');
+ let menu;listeners.fetch({request:{url:origin+'/shortcuts-ui.js',method:'GET',mode:'cors'},respondWith:promise=>menu=promise});assert.match(await(await menu).text(),/import\("\/app-update\.js"\)/,'Old navigation menu receives only the independent discovery control');
  let page=await navigate('');assert.match(page,/OLD CARD/);assert.match(page,/gscFallbackUpdateButton/);assert.doesNotMatch(page,/NEW CARD/);
  assert.match(await navigate('?app_version='+current),/OLD CARD/,'Version parameter alone is not consent');
  const personal='?personalEvent=existing&personalAccount=account-a';

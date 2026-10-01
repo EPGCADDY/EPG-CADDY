@@ -1,0 +1,32 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Visibilidad heredada R147.2.4</title><style>body{background:#000;color:#fff;font:16px Arial;padding:20px}.mandatory-update{display:none;position:fixed;right:max(10px,env(safe-area-inset-right));top:max(60px,calc(env(safe-area-inset-top,0px) + 58px));z-index:2147482999}
+.final-card-overlay.visible~.mandatory-update,.final-card-overlay:not(.hidden)~.mandatory-update,body:has(#finalCardOverlay.visible) .mandatory-update{display:none!important}
+.mandatory-update.available{display:block}
+.mandatory-update-card h1,.mandatory-update-card p{display:none}
+.mandatory-update-card button{display:grid;place-items:center;gap:2px;min-width:118px;min-height:42px;padding:5px 10px;border:1px solid #454545;border-radius:7px;background:#080808;color:#777;font:900 11px/1 Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;touch-action:manipulation}
+.mandatory-update-card button:disabled{opacity:.72}
+.mandatory-update-card button small{color:#aaa;font:800 8px/1 Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:.35px}
+.mandatory-update.available .mandatory-update-card button{border-color:var(--lime);background:#061900;color:var(--lime);opacity:1;animation:gscUpdatePulse .8s infinite alternate;box-shadow:0 0 15px rgba(49,255,0,.48)}
+.overlay.visible~.mandatory-update{display:none!important}
+.mandatory-update.available .mandatory-update-card button small{color:var(--lime)}
+.mandatory-update{top:max(60px,calc(env(safe-area-inset-top,0px) + 58px));right:max(10px,env(safe-area-inset-right))}
+.mandatory-update-card button{min-width:108px;min-height:40px;border-radius:11px}
+
+  .mandatory-update{right:max(10px,env(safe-area-inset-right))}
+
+body:has(.overlay.visible) .mandatory-update,
+body:has(.overlay.visible) .pwa-install-button,
+body:has(.overlay.visible) .native-pro-button,
+body:has(.ai-universal-overlay.visible) .mandatory-update,
+body:has(.ai-universal-overlay.visible) .pwa-install-button,
+body:has(.ai-universal-overlay.visible) .native-pro-button,
+body:has(.account-backup-overlay.visible) .mandatory-update,
+body:has(.account-backup-overlay.visible) .pwa-install-button,
+body:has(.account-backup-overlay.visible) .native-pro-button{display:none!important}
+
+body:has(.pwa-install-overlay.visible) .mandatory-update,
+body:has(.pwa-install-overlay.visible) .pwa-install-button,
+body:has(.pwa-install-overlay.visible) .native-pro-button{display:none!important}
+
+body.gsc-setup-open:not(.gsc-history-open):has(#setupOverlay.visible) .mandatory-update{display:block!important}
+
+.mandatory-update-card{display:flex;flex-direction:column;align-items:center}</style></head><body><h1>Prueba aislada CSS R147.2.4</h1><p>Sin jugadores ni scores. El control de entrega usa el service worker real.</p><button id="overlayToggle">ABRIR/CERRAR CAPA</button><div class="overlay" id="oldOverlay">Capa heredada</div><div class="mandatory-update available" id="mandatoryUpdate"><div class="mandatory-update-card"><button id="mandatoryUpdateButton">ACTUALIZAR HEREDADO</button></div></div><script>document.getElementById("overlayToggle").onclick=()=>document.getElementById("oldOverlay").classList.toggle("visible")</script><script src="/app-update.js"></script></body></html>
