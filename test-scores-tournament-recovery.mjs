@@ -34,7 +34,7 @@ await Promise.all([first,second]);
 assert.equal(requests.at(-1).snapshot.players[0].holes[0].gross,6,'A late response must not discard the newer score queued before navigation');
 assert.equal(JSON.parse(store.get(api.STORAGE_KEY)).stream.pendingSnapshot,null);
 assert.equal(JSON.stringify(round),original);
-const card=fs.readFileSync('index-grupal.html','utf8'),begin=card.indexOf('async function openRoundTournament('),end=card.indexOf('\n$("roundTournamentButton")',begin),navigations=[];
+const card=fs.readFileSync('index-grupal.html','utf8'),begin=card.indexOf('function currentRoundReturnPath('),end=card.indexOf('\n$("roundTournamentButton")',begin),navigations=[];
 const routeContext={URL,round,persist(){},localStorage:context.localStorage,location:{origin:'https://fixture.example',href:'https://fixture.example/index-grupal.html?personalEvent=existing-event&personalKind=tournament&personalAccount=fixture-account',assign:url=>navigations.push(new URL(url))},sessionStorage:context.localStorage,window:{GSCPersonalEvents:{request:async()=>({ok:true,personalCode:'fixture-account'})},GSCLiveControl:{prepareTournamentScores:async()=>true}}};
 vm.runInNewContext(card.slice(begin,end)+';this.open=openRoundTournament;',routeContext);
 await routeContext.open(true);const target=navigations[0];assert.equal(target.pathname,'/live-hub.html');assert.equal(target.searchParams.get('personalEvent'),'existing-event');assert.equal(target.searchParams.get('shortcut'),'scores');const back=new URL(target.searchParams.get('returnTo'),target.origin);assert.equal(back.pathname,'/index-grupal.html');assert.equal(back.searchParams.get('personalAccount'),'fixture-account');
