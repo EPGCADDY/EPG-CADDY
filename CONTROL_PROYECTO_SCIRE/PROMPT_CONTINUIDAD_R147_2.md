@@ -1,3 +1,11 @@
+Continúa Golf Score Card GT / EPG Caddy y completa todo el paquete hasta publicarlo en LAB y Producción, ya autorizado. Lee el manual completo que sigue, AGENTS.md y los controles del proyecto. Ejecuta una cosa por vez con evidencia y avances reales cada <=60 s (hora Guatemala). No pidas reenviar instrucciones o imágenes. No fuerces la instalación en mis apps: deben recibir ACTUALIZAR y yo pulsarlo. No confundas PASS automático con prueba de mi iPhone.
+
+Repositorio: EPGCADDY/EPG-CADDY. Rama canónica: lab/r14721-update-recovery-20260930. Base publicada R147.2.4: 8bccff9. Manual: CONTROL_PROYECTO_SCIRE/MANUAL_TAREAS_R147_2.md. LAB: https://golf-sc-gt-lab.vercel.app; Producción: https://epg-caddy.vercel.app. La R147.2.4.1 sólo está preparada localmente; no publicada. Recupera la continuidad del workspace y compara con Git antes de editar. No uses main protegido para perder cambios. El último commit documental no contiene las correcciones locales todavía pendientes.
+
+A continuación está TODO el manual de tareas, no un resumen. Sus descripciones guardan el formato de las capturas y las órdenes. Si hay nueva evidencia, actualízalo y continúa desde el último punto comprobado.
+
+---
+
 # Manual de tareas — R147.2 · Laboratorio y Producción
 
 Fuente: órdenes del propietario y capturas de esta conversación, 30 de septiembre de 2026. Este documento conserva las instrucciones y su referencia visual; no sustituye las imágenes por un diseño inventado. Última actualización: 21:48, Guatemala.
