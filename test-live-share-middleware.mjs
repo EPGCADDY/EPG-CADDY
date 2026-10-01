@@ -10,6 +10,7 @@ try{
  globalThis.fetch=async()=>{calls++;return Response.json({ok:true,accountCode:'device:test',membership:{role:'viewer',players:[]},tournament:{status:'active'}})};
  const home=await accessGate(new Request('https://lab.example/index-grupal.html?inicio=1',{headers:{cookie:'gsc_personal_context='+context}}));
  assert.equal(home.headers.get('x-middleware-next'),'1','Explicit Inicio must not reopen a previously viewed tournament');
+ const installed=await accessGate(new Request('https://lab.example/index-grupal.html?source=pwa',{headers:{cookie:'gsc_personal_context='+context}}));assert.equal(installed.headers.get('x-middleware-next'),'1','Installed launch must not reopen the previous Scores monitor');
  const restored=await accessGate(new Request('https://lab.example/index-grupal.html',{headers:{cookie:'gsc_personal_context='+context}}));
  assert.match(restored.headers.get('location'),/live-hub\.html\?personalEvent=saved-event/,'Implicit personal return keeps its authorized event');
  globalThis.fetch=async()=>new Response(JSON.stringify({ok:false,code:'ACCESS_REQUIRED'}),{status:401});

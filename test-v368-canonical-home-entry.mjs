@@ -15,7 +15,8 @@ for(const source of ["/","/index.html","/inicio"]){
   const route=hosting.redirects.find(item=>item.source===source);
   assert.equal(route?.destination,"/index-grupal.html?inicio=1",`${source} debe abrir Inicio`);
 }
-assert.equal(manifest.start_url,"/index-grupal.html?source=pwa","La app instalada debe reabrir la tarjeta viva sin forzar Inicio");
+assert.equal(manifest.start_url,"/pwa-launch.html");
+assert.match(fs.readFileSync("pwa-launch.html","utf8"),/inicio=1&source=pwa/,"La apertura instalada solicitada abre Registro sin borrar la ronda");
 
 const persisted={configured:true,players:[{name:"JUGADOR",holes:{1:{gross:4}}}]};
 let saved=structuredClone(persisted),opened=false;

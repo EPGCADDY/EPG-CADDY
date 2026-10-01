@@ -2,18 +2,19 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-3-update-delivery`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-3-update-delivery`;
-const RELEASE_FALLBACK="LABORATORIO-20261001-R147.2.4.3";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-4-update-delivery`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-4-update-delivery`;
+const RELEASE_FALLBACK="LABORATORIO-20261001-R147.2.4.4";
 let RELEASE=RELEASE_FALLBACK;
 async function fetchPublishedRelease(){
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),8000);
   try{
-    const response=await fetch("/release.json?sw_release_check="+Date.now(),{cache:"no-store"});
+    const response=await fetch("/release.json?sw_release_check="+Date.now(),{cache:"no-store",signal:controller.signal});
     if(response.ok){
       const data=await response.json();
       if(data?.release)RELEASE=String(data.release);
     }
-  }catch{}
+  }catch{}finally{clearTimeout(timeout)}
   return RELEASE;
 }
 const OFFLINE_ENTRY="/index-grupal.html";
@@ -95,9 +96,9 @@ async function ensureApprovedShell(){
   const approved=await caches.open(APPROVED_CACHE_NAME);
   if(await approved.match(OFFLINE_ENTRY))return;
   const keys=await caches.keys();
-  const previous=keys.filter(key=>key.startsWith(`${CACHE_NAME}-approved-`)&&key!==APPROVED_CACHE_NAME).pop()||keys.filter(key=>key.startsWith(`${CACHE_NAME}-production-`)&&key!==ACTIVE_CACHE_NAME).pop();
-  if(previous)await copyCache(previous,APPROVED_CACHE_NAME);
-  else await copyCache(ACTIVE_CACHE_NAME,APPROVED_CACHE_NAME);
+  const previous=[...keys.filter(key=>key.startsWith(`${CACHE_NAME}-approved-`)&&key!==APPROVED_CACHE_NAME).reverse(),...keys.filter(key=>key.startsWith(`${CACHE_NAME}-production-`)&&key!==ACTIVE_CACHE_NAME).reverse()];
+  for(const name of previous){if(await caches.match(OFFLINE_ENTRY,{cacheName:name})){await copyCache(name,APPROVED_CACHE_NAME);return}}
+  await copyCache(ACTIVE_CACHE_NAME,APPROVED_CACHE_NAME);
 }
 
 async function promoteCandidate(){
@@ -105,7 +106,6 @@ async function promoteCandidate(){
 }
 
 self.addEventListener("install",event=>event.waitUntil((async()=>{
-  await fetchPublishedRelease();
   // Adopt the delivery controller independently of downloading the next app.
   // Existing approved cards stay intact; their new shell is fetched only on ACTUALIZAR.
   await ensureApprovedShell();
@@ -113,7 +113,7 @@ self.addEventListener("install",event=>event.waitUntil((async()=>{
   if(!approved){await refreshShell();await ensureApprovedShell()}
   await self.skipWaiting();
 })()));
-self.addEventListener("activate",event=>event.waitUntil((async()=>{await fetchPublishedRelease();await ensureApprovedShell();await self.clients.claim()})()));
+self.addEventListener("activate",event=>event.waitUntil((async()=>{await ensureApprovedShell();await self.clients.claim()})()));
 self.addEventListener("message",event=>{
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
   if(event.data?.type==="GET_APPROVED_RELEASE")event.waitUntil((async()=>{await ensureApprovedShell();const entry=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});const html=entry?await entry.text():'';const release=html.match(/<meta\s+name=["']gscg-release["']\s+content=["']([^"']+)["']/i)?.[1]||'';event.ports?.[0]?.postMessage({release})})());
