@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-7-update-delivery`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-7-update-delivery`;
-const RELEASE_FALLBACK="LABORATORIO-20261001-R147.2.4.7";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-8-update-delivery`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-8-update-delivery`;
+const RELEASE_FALLBACK="LABORATORIO-20261001-R147.2.4.8";
 let RELEASE=RELEASE_FALLBACK;
 const UPDATE_DIAGNOSTICS={stage:"boot",resources:{}};
 async function fetchPublishedRelease(){
@@ -76,7 +76,7 @@ async function refreshShell(){
   UPDATE_DIAGNOSTICS.stage="release-check";
   await fetchPublishedRelease();
   UPDATE_DIAGNOSTICS.stage="shell-fetch";
-  const staged=await Promise.all(SHELL.map(async url=>{const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);try{UPDATE_DIAGNOSTICS.resources[url]="fetching";const response=await fetch(url,{cache:"reload",signal:controller.signal});UPDATE_DIAGNOSTICS.resources[url]=response.status;return response.ok?{url,response}:null}catch(error){UPDATE_DIAGNOSTICS.resources[url]=error.message;return null}finally{clearTimeout(timeout)}}));
+  const staged=await Promise.all(SHELL.map(async url=>{const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);try{UPDATE_DIAGNOSTICS.resources[url]="fetching";const response=await fetch(url,{cache:"reload",signal:controller.signal});UPDATE_DIAGNOSTICS.resources[url]=response.status;if(!response.ok)return null;const body=await response.arrayBuffer();const headers=new Headers(response.headers);headers.delete("content-length");headers.delete("content-encoding");return {url,response:new Response(body,{status:response.status,statusText:response.statusText,headers})}}catch(error){UPDATE_DIAGNOSTICS.resources[url]=error.message;return null}finally{clearTimeout(timeout)}}));
   if(staged.some(item=>!item)){UPDATE_DIAGNOSTICS.stage="shell-incomplete";return false}
   const entry=staged.find(item=>item.url===OFFLINE_ENTRY);
   UPDATE_DIAGNOSTICS.stage="entry-body";
