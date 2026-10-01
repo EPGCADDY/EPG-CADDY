@@ -12,7 +12,7 @@ assert.equal(elements.mandatoryUpdateAction.textContent,'ACTUALIZADO');assert.eq
 context.fetch=(_url,{signal})=>new Promise((resolve,reject)=>signal.addEventListener('abort',()=>reject(new Error('timeout'))));
 const pending=vm.runInContext('syncPublishedAppVersion()',context);timeout();await pending;
 assert.equal(elements.mandatoryUpdateAction.textContent,'REINTENTAR');assert.equal(elements.mandatoryUpdateButton.disabled,false);assert.equal(vm.runInContext('appBuildCheckRunning',context),false);assert.ok(cleared>=2);
-assert.notEqual(elements.mandatoryUpdate.style.display,'none','A failed check after ACTUALIZADO must reveal the recovery button');
+assert.equal(elements.mandatoryUpdate.style.display,'block','Recovery must explicitly override the real .mandatory-update display:none; an empty inline value remains invisible');
 context.fetch=async()=>({ok:true,json:async()=>({release:release+'-RECOVERY'})});
 await vm.runInContext('syncPublishedAppVersion()',context);
 assert.equal(elements.mandatoryUpdateAction.textContent,'ACTUALIZAR');

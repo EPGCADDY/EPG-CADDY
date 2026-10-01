@@ -3,7 +3,7 @@ import { next } from "@vercel/functions";
 const PUBLIC_PATHS=new Set([
   "/live-hub.html","/live-hub.js","/live-control.js","/live-share.js","/scores-ui.js","/scores-ui.css","/private-rounds.js","/gsc-design-system.css","/shortcuts-ui.js","/personal-events.js","/auth-gate.js",
   "/access.html","/code-entry.html","/code-entry.js","/live.html","/live-view.js","/match-play.js","/favicon.ico",
-  "/service-worker.js","/release.json","/manifest.webmanifest","/manual.webmanifest","/audio-touch-test.html"
+  "/service-worker.js","/app-update.js","/release.json","/manifest.webmanifest","/manual.webmanifest","/audio-touch-test.html"
 ]);
 const PRIVATE_GUEST_PREFIXES=["/api/account-backup","/api/backup","/api/commerce","/api/sync","/api/master-data"];
 const SCORECARD_ASSETS=new Set(['/score-entry-contract.js','/guest-access.js','/player-registry.js','/round-closure.js','/device-closures.js','/card-artifacts.js','/card-file-export.js','/card-library.js','/historical-analytics.js','/sync-queue.js','/master-data-sync.js','/account-backup.js','/four-ball.js','/stableford.js','/universales.js','/skins.js','/wolf.js','/vegas.js','/dots.js','/round-navigation.js','/golf-rules-offline.js','/timer-inactivity.js']);
@@ -30,7 +30,7 @@ export default async function accessGate(request){
   if(path==='/index-grupal.html'){
     let context=null;
     if(url.searchParams.get('personalEvent'))context={eventId:url.searchParams.get('personalEvent'),eventKind:url.searchParams.get('personalKind')||'tournament',accountId:url.searchParams.get('personalAccount')};
-    else try{const raw=(request.headers.get('cookie')||'').split(';').map(value=>value.trim()).find(value=>value.startsWith('gsc_personal_context='));if(raw)context=JSON.parse(decodeURIComponent(raw.slice('gsc_personal_context='.length)))}catch{}
+    else if(url.searchParams.get('inicio')!=='1'&&url.searchParams.get('source')!=='pwa')try{const raw=(request.headers.get('cookie')||'').split(';').map(value=>value.trim()).find(value=>value.startsWith('gsc_personal_context='));if(raw)context=JSON.parse(decodeURIComponent(raw.slice('gsc_personal_context='.length)))}catch{}
     if(context){
       try{
         const response=await fetch(new URL('/api/personal-events',request.url),{method:'POST',headers:{cookie:request.headers.get('cookie')||'','content-type':'application/json'},body:JSON.stringify({action:'read',eventId:context.eventId,eventKind:context.eventKind}),cache:'no-store'}),data=await response.json();

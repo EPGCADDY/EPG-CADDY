@@ -188,6 +188,18 @@
           "value": "no-store, max-age=0"
         }
       ]
+    },
+    {
+      "source": "/app-update.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0, must-revalidate"
+        }
+      ]
     }
-  ]
+  ],
+  "env": {
+    "GSC_PERSONAL_ACCESS_PRODUCTION_READY": "1"
+  }
 }

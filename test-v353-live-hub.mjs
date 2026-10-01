@@ -84,7 +84,7 @@ assert.equal(groupKey("GRUPO 001"),"grupo 001");
 const index=read("index-grupal.html"),html=read("live-hub.html"),client=read("live-hub.js"),control=read("live-control.js"),viewer=read("live-view.js"),viewerHtml=read("live.html"),api=read("api/live.js"),worker=read("service-worker.js"),vercel=read("vercel.json");
 assert.match(client,/activeMonitor="general"/);
 assert.match(client,/activeMonitor=individual\?"individual":"general"/,"el selector guarda el monitor activo");
-assert.match(client,/portal\|\|activeMonitor==="individual"/,"cada refresco conserva Mi Tablero visible");
+assert.match(client,/activeMonitor!=="individual"\|\|state.follows.some/,"cada refresco filtra los favoritos en la misma tabla aprobada");
 assert.match(client,/resolved=resolveFollows\(/,"Mi Tablero resuelve contra los jugadores visibles, incluida la demostración");
 assert.match(index,/V363-RECORDED-MOBILE-BEHAVIOR-20260828/);
 // Current approved Scores labels supersede V353's original display wording.
