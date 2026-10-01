@@ -33,10 +33,10 @@ assert.match(app,/<div class="round-actions"><button id="myRoundButton"[^>]*>RON
 assert.match(app,/\$\("privateGroupScoresButton"\)\.addEventListener\("click",\(\)=>window\.GSCPrivateRounds\.openScores\(round\)/);
 console.log('PASS R143: update recovery and requested round button placement');
 assert.match(app,/<div class="round-actions"><button id="roundTournamentButton"[^>]*>TORNEO<\/button><button id="roundTournamentScoresButton"[^>]*>SCORES TORNEO<\/button><\/div>/);
-const navigation=app.slice(app.indexOf('function openRoundTournament('),app.indexOf('$("roundTournamentButton").addEventListener'));
+const navigation=app.slice(app.indexOf('async function openRoundTournament('),app.indexOf('$("roundTournamentButton").addEventListener'));
 for(const search of ['', '?personalEvent=event-123&personalKind=tournament', '?personalEvent=private-123&personalKind=private']){
- let persisted=0,destination='';const context={URL,location:{origin:'https://golf-sc-gt-lab.vercel.app',href:'https://golf-sc-gt-lab.vercel.app/index-grupal.html'+search,assign:url=>destination=url},persist:()=>persisted++};vm.runInNewContext(navigation,context);context.openRoundTournament(true);const target=new URL(destination);assert.equal(persisted,1);assert.equal(target.pathname,'/live-hub.html');assert.equal(target.searchParams.get('shortcut'),'scores');assert.equal(target.searchParams.get('personalEvent'),search.includes('personalKind=tournament')?'event-123':null);
- context.openRoundTournament();assert.equal(new URL(destination).searchParams.get('shortcut'),null);
+ let persisted=0,destination='';const context={URL,round:{configured:true,id:'existing',players:[]},localStorage:{getItem:()=>null},window:{GSCLiveControl:{prepareTournamentScores:async()=>true}},location:{origin:'https://golf-sc-gt-lab.vercel.app',href:'https://golf-sc-gt-lab.vercel.app/index-grupal.html'+search,assign:url=>destination=url},persist:()=>persisted++};vm.runInNewContext(navigation,context);await context.openRoundTournament(true);const target=new URL(destination);assert.equal(persisted,1);assert.equal(target.pathname,'/live-hub.html');assert.equal(target.searchParams.get('shortcut'),'scores');assert.equal(target.searchParams.get('personalEvent'),search.includes('personalKind=tournament')?'event-123':null);
+ await context.openRoundTournament();assert.equal(new URL(destination).searchParams.get('shortcut'),null);
 }
 console.log('PASS bottom TORNEO / SCORES TORNEO: round persisted before navigation; tournament membership retained; private event never selected as tournament');
 
@@ -49,17 +49,40 @@ for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.verc
  const previous=await open(prefix+'-approved-previous');
  await previous.put('/index-grupal.html',new Response('<head><meta name="gscg-release" content="OLD"></head><body>OLD CARD</body>'));
  await previous.put('/live-control.js',new Response('OLD SCRIPT'));
- let broken=false;
- const worker=vm.createContext({URL,Response,Headers,Date,caches,fetch:async input=>{const path=key(input);if(broken&&path==='/live-control.js')throw Error('offline');if(path==='/release.json')return Response.json({release:current});return new Response(path==='/index-grupal.html'?'<head><meta name="gscg-release" content="'+current+'"></head><body>NEW CARD</body>':'NEW SCRIPT')},self:{location:{origin},clients:{claim:async()=>{}},skipWaiting:async()=>{},addEventListener:(name,callback)=>listeners[name]=callback}});
+ let broken=false,denied=false,authorizationChecks=0;
+ const worker=vm.createContext({URL,Response,Headers,Date,caches,fetch:async input=>{const path=key(input);if(typeof input!=='string'&&new URL(input.url).searchParams.has('personalEvent')){authorizationChecks++;if(denied)return new Response('PERSONAL ACCESS DENIED',{status:403})}if(broken&&path==='/live-control.js')throw Error('offline');if(path==='/release.json')return Response.json({release:current});return new Response(path==='/index-grupal.html'?'<head><meta name="gscg-release" content="'+current+'"></head><body>NEW CARD</body>':'NEW SCRIPT')},self:{location:{origin},clients:{claim:async()=>{}},skipWaiting:async()=>{},addEventListener:(name,callback)=>listeners[name]=callback}});
  vm.runInContext(code,worker);
  const lifecycle=async name=>{let pending;listeners[name]({waitUntil:promise=>pending=promise});await pending};
  const navigate=async query=>{let pending;listeners.fetch({request:{url:origin+'/index-grupal.html'+query,method:'GET',mode:'navigate'},respondWith:promise=>pending=promise});return (await pending).text()};
  await lifecycle('install');await lifecycle('activate');
  let page=await navigate('');assert.match(page,/OLD CARD/);assert.match(page,/gscFallbackUpdateButton/);assert.doesNotMatch(page,/NEW CARD/);
  assert.match(await navigate('?app_version='+current),/OLD CARD/,'Version parameter alone is not consent');
+ const personal='?personalEvent=existing&personalAccount=account-a';
+ assert.match(await navigate(personal),/OLD CARD/,'Authorized personal navigation must retain the old build before consent');
+ assert.equal(authorizationChecks,1,'Personal membership is checked with the server');
+ denied=true;assert.equal(await navigate(personal),'PERSONAL ACCESS DENIED','A revoked account must never receive the cached shell');denied=false;
+
  let asset;listeners.fetch({request:{url:origin+'/live-control.js',method:'GET',mode:'cors'},respondWith:promise=>asset=promise});assert.equal(await(await asset).text(),'OLD SCRIPT');
  broken=true;assert.match(await navigate('?app_version='+current+'&update_check=1&__gscg_build_check=1'),/OLD CARD/,'Failed download preserves approved card');
- broken=false;assert.match(await navigate('?app_version='+current+'&update_check=2&__gscg_build_check=1'),/NEW CARD/);
+ assert.match(await navigate(personal+'&app_version='+current+'&update_check=1'),/OLD CARD/,'Failed personal update also retains the approved build');
+ broken=false;assert.match(await navigate(personal+'&app_version='+current+'&update_check=2&__gscg_build_check=1'),/NEW CARD/);
  assert.match(await navigate(''),/NEW CARD/,'Accepted version persists after reopening');
  console.log('PASS manual update '+origin+': install/reopen retain old card and scripts; button visible; partial download retains old build; explicit update installs complete build');
+}
+
+// Historical source, 70db4e8: prove why an unadopted legacy worker cannot be certified.
+{
+ const legacy=fs.readFileSync('tests/fixtures/r14723-service-worker-before-manual-consent.js','utf8');
+ const stores=new Map(),listeners={},origin='https://golf-sc-gt-lab.vercel.app';
+ const key=input=>new URL(typeof input==='string'?input:input.url,origin).pathname;
+ const open=async name=>{if(!stores.has(name))stores.set(name,new Map());const data=stores.get(name);return{match:async input=>data.get(key(input))?.clone(),put:async(input,response)=>data.set(key(input),response.clone()),keys:async()=>[...data.keys()]}};
+ const caches={open,keys:async()=>[...stores.keys()],delete:async name=>stores.delete(name),match:async(input,{cacheName}={})=>{if(cacheName)return(await open(cacheName)).match(input);for(const name of stores.keys()){const r=await(await open(name)).match(input);if(r)return r}}};
+ const prefix=legacy.match(/const CACHE_NAME="([^"]+)"/)[1],release='LEGACY-NEXT';
+ await(await open(prefix+'-approved-before')).put('/index-grupal.html',new Response('<head><meta name="gscg-release" content="OLD"></head><body>OLD CARD</body>'));
+ const ctx=vm.createContext({URL,Response,Headers,Date,caches,fetch:async input=>key(input)==='/release.json'?Response.json({release}):new Response(key(input)==='/index-grupal.html'?'<head><meta name="gscg-release" content="'+release+'"></head><body>NEW CARD</body>':'SCRIPT'),self:{location:{origin},clients:{claim:async()=>{}},skipWaiting:async()=>{},addEventListener:(name,cb)=>listeners[name]=cb}});
+ vm.runInContext(legacy,ctx);
+ for(const name of ['install','activate']){let pending;listeners[name]({waitUntil:promise=>pending=promise});await pending}
+ let response;listeners.fetch({request:{url:origin+'/index-grupal.html',method:'GET',mode:'navigate'},respondWith:promise=>response=promise});
+ const page=await(await response).text();assert.match(page,/NEW CARD/);assert.doesNotMatch(page,/OLD CARD/);
+ console.log('PASS legacy negative control: 70db4e8 auto-promotes before consent; legacy adoption must remain a separate migration check');
 }

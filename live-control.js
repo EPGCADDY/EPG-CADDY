@@ -3,7 +3,7 @@
   // LIVE PUBLICATION REFRESH 2026-09-20 · deploy trigger only, no functional change
 
   const STORAGE_KEY="golf-score-card-gt-live-control-v1",POLICY_VERSION="gsc-gt-live-v1";
-  let adapter=null,mounted=false,publishTimer=null,publishRunning=false,publishAgain=false,foregroundStatus=false,tournamentConnectRetryTimer=null,tournamentConnectRetryRoundId="",tournamentConnectRetryCount=0;
+  let adapter=null,mounted=false,publishTimer=null,publishRunning=false,publishAgain=false,publishCompletion=null,finishPublish=null,foregroundStatus=false,tournamentConnectRetryTimer=null,tournamentConnectRetryRoundId="",tournamentConnectRetryCount=0,tournamentConnectCompletion=null,finishTournamentConnect=null;
   const $=id=>root?.document?.getElementById(id)||null;
   const text=(value,max=120)=>String(value??"").trim().replace(/\s+/g," ").slice(0,max);
   const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
@@ -98,11 +98,11 @@
   async function recoverRevision(state){const stream=state.stream,result=await request("read",{kind:"stream",viewerToken:stream.viewerToken});if(result.ok&&result.stream){stream.revision=Number(result.stream.revision)||0;saveState(state);return true}return false}
   async function publishLatest(){
     if(publishRunning){publishAgain=true;return false}const state=liveState(),stream=state.stream,snapshot=stream?.pendingSnapshot||currentSnapshot();if(!stream?.publisherSecret||!snapshot||stream.roundId!==snapshot.roundId)return false;
-    publishRunning=true;stream.pendingSnapshot=snapshot;stream.pendingMutationId=stream.pendingMutationId||mutationId();saveState(state);
+    publishCompletion=new Promise(resolve=>{finishPublish=resolve});publishRunning=true;stream.pendingSnapshot=snapshot;stream.pendingMutationId=stream.pendingMutationId||mutationId();saveState(state);
     let result=await request("publish",{clientMutationId:stream.pendingMutationId,expectedRevision:Number(stream.revision)||0,snapshot},stream.publisherSecret);
     if(result.status===409&&await recoverRevision(state)){const refreshed=liveState();result=await request("publish",{clientMutationId:refreshed.stream.pendingMutationId,expectedRevision:Number(refreshed.stream.revision)||0,snapshot},refreshed.stream.publisherSecret)}
-    const latest=liveState();if(result.ok&&latest.stream?.streamId===stream.streamId){latest.stream.revision=Number(result.revision)||latest.stream.revision;latest.stream.pendingSnapshot=null;latest.stream.pendingMutationId=null;saveState(latest);setStatus("EN VIVO · ACTUALIZACIÓN CONFIRMADA","ok",true)}else if(latest.stream?.streamId===stream.streamId){latest.stream.pendingSnapshot=snapshot;saveState(latest);setStatus(stateMessage(result.code),"warning",true)}
-    publishRunning=false;renderActive();if(publishAgain){publishAgain=false;setTimeout(publishLatest,0)}return result.ok;
+    const latest=liveState();if(result.ok&&latest.stream?.streamId===stream.streamId){latest.stream.revision=Number(result.revision)||latest.stream.revision;if(latest.stream.pendingMutationId===stream.pendingMutationId){latest.stream.pendingSnapshot=null;latest.stream.pendingMutationId=null}saveState(latest);setStatus("EN VIVO · ACTUALIZACIÓN CONFIRMADA","ok",true)}else if(latest.stream?.streamId===stream.streamId){if(latest.stream.pendingMutationId===stream.pendingMutationId)latest.stream.pendingSnapshot=snapshot;saveState(latest);setStatus(stateMessage(result.code),"warning",true)}
+    publishRunning=false;finishPublish?.();publishCompletion=null;finishPublish=null;renderActive();if(publishAgain){publishAgain=false;setTimeout(publishLatest,0)}return result.ok;
   }
   let tournamentConnectRunning=false;
   function clearTournamentConnectRetry(roundId=""){
@@ -117,18 +117,19 @@
     tournamentConnectRetryTimer=setTimeout(()=>{tournamentConnectRetryTimer=null;const current=adapter?.getRound?.();if(!current?.configured||String(current.id)!==roundId){clearTournamentConnectRetry(roundId);return}void connectPendingRoundTournament(current)},delay);return true;
   }
   async function connectPendingRoundTournament(roundValue){
-    if(!roundValue?.tournament?.name)return false;
-    if(tournamentConnectRunning){scheduleTournamentConnectRetry(roundValue);return false}
+    if(!roundValue?.configured)return false;
+    if(tournamentConnectRunning){if(tournamentConnectCompletion)await tournamentConnectCompletion;const connected=liveState().stream;return connected?.roundId===roundValue.id&&!!connected.tournamentId}
     let selection;try{selection=JSON.parse(root.localStorage.getItem("gsc-tournament-connect-selection-v1")||"null")}catch{return false}
     const snapshot=currentSnapshot(roundValue),tournamentId=text(selection?.id,50);
-    if(!snapshot||!tournamentId)return false;
+    if(!snapshot||!tournamentId||selection?.eventKind==='private')return false;
+    if(!roundValue.tournament?.name&&!(selection.personal&&roundValue.personalEventId===tournamentId))return false;
     const state=liveState(),stream=state.stream;
     if(stream?.roundId===snapshot.roundId&&stream?.tournamentId===tournamentId){
       if(selection.roundId!==snapshot.roundId){selection.roundId=snapshot.roundId;try{root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify(selection))}catch{}}
       clearTournamentConnectRetry(snapshot.roundId);
       return true;
     }
-    tournamentConnectRunning=true;
+    tournamentConnectCompletion=new Promise(resolve=>{finishTournamentConnect=resolve});tournamentConnectRunning=true;
     try{
       const ownedTournament=state.tournamentOwned?.tournamentId===tournamentId?state.tournamentOwned:null;
       const joinCode=text(selection?.joinCode||ownedTournament?.joinCode,20).toUpperCase();
@@ -136,9 +137,17 @@
       if(result?.ok){selection.roundId=snapshot.roundId;selection.connected=true;try{root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify(selection))}catch{};clearTournamentConnectRetry(snapshot.roundId);onRoundPersisted(roundValue);return true}
       setStatus(`${stateMessage(result?.code)} · REINTENTANDO VINCULAR EL TORNEO`,"warning",true);scheduleTournamentConnectRetry(roundValue);return false;
     }catch(error){setStatus(`${stateMessage(error?.code||"NETWORK_ERROR")} · REINTENTANDO VINCULAR EL TORNEO`,"warning",true);scheduleTournamentConnectRetry(roundValue);return false;
-    }finally{tournamentConnectRunning=false}
+    }finally{tournamentConnectRunning=false;finishTournamentConnect?.();tournamentConnectCompletion=null;finishTournamentConnect=null}
   }
   function onRoundPersisted(roundValue){const state=liveState(),snapshot=currentSnapshot(roundValue);if(!snapshot)return false;if(state.privateRound?.roundId!==snapshot.roundId)void connectPendingRoundTournament(roundValue);void persistPrivateSnapshot(snapshot);root.GSCPrivateRounds?.syncPending(roundValue);if(!state.stream?.publisherSecret||state.stream.roundId!==snapshot.roundId)return true;state.stream.pendingSnapshot=snapshot;state.stream.pendingMutationId=mutationId();saveState(state);clearTimeout(publishTimer);publishTimer=setTimeout(publishLatest,350);return true}
+  async function prepareTournamentScores(roundValue){
+    const snapshot=currentSnapshot(roundValue);if(!snapshot)return false;
+    await connectPendingRoundTournament(roundValue);
+    onRoundPersisted(roundValue);
+    clearTimeout(publishTimer);
+    if(publishRunning&&publishCompletion)await publishCompletion;
+    return publishLatest();
+  }
   async function revokeStream(){const state=liveState();if(!state.stream?.publisherSecret)return false;setStatus("REVOCANDO ENLACE…");const result=await request("revoke_stream",{},state.stream.publisherSecret);if(!result.ok&&result.status!==410){setStatus(stateMessage(result.code),"warning");return false}delete state.stream;saveState(state);renderConsent();renderActive();return true}
   async function createTournament(){const name=text($("liveTournamentName")?.value,120),mode=$("liveTournamentMode")?.value||currentSnapshot()?.mode||"general";if(!name){setStatus("ESCRIBE EL NOMBRE DEL TORNEO","warning");return false}if(!$("liveTournamentConsent")?.checked){setStatus("CONFIRMA QUE PUEDES CREAR Y COMPARTIR EL TORNEO","warning");return false}setStatus("CREANDO TORNEO LIVE…");const result=await request("create_tournament",{name,mode,durationDays:Number($("liveTournamentDays")?.value)||2,consent:{confirmed:true,confirmedAt:new Date().toISOString()}});if(!result.ok){setStatus(stateMessage(result.code),"warning");return false}const state=liveState();state.tournamentOwned={tournamentId:result.tournamentId,name,mode:result.mode,organizerSecret:result.organizerSecret,viewerToken:result.viewerToken,joinCode:result.joinCode,expiresAt:result.expiresAt};saveState(state);renderActive();setStatus("TORNEO LIVE CREADO · "+String(result.mode||mode).toUpperCase()+" · COMPARTE EL CÓDIGO","ok");return true}
   async function joinTournament(){const state=liveState(),stream=state.stream,joinCode=text($("liveJoinCode")?.value,20).toUpperCase(),groupLabel=text($("liveGroupLabel")?.value,120);if(!stream?.publisherSecret){setStatus("ACTIVA PRIMERO EL LIVE DEL GRUPO","warning");return false}if(!groupLabel){setStatus("ESCRIBE EL NOMBRE O NÚMERO DEL GRUPO","warning");return false}setStatus("CONECTANDO MI SCORE CARD AL TORNEO…");const result=await request("join_tournament",{joinCode,groupLabel},stream.publisherSecret);if(!result.ok){setStatus(stateMessage(result.code),"warning");return false}stream.tournamentId=result.tournamentId;stream.groupLabel=result.groupLabel;saveState(state);renderActive();setStatus("SCORE CARD CONECTADA AL TORNEO · PUEDES SEGUIR ANOTANDO NORMALMENTE","ok");return true}
@@ -241,5 +250,5 @@
     return result;
   }
   root.addEventListener?.("online",()=>{void publishPrivateLatest()});
-  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,publishLatest,quickShareGroup,connectPrivateRound,connectPersonalEvent,publishPrivateLatest,createTournamentDirect,connectTournamentById,joinTournamentWithFallback,disconnectTournament};
+  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,prepareTournamentScores,publishLatest,quickShareGroup,connectPrivateRound,connectPersonalEvent,publishPrivateLatest,createTournamentDirect,connectTournamentById,joinTournamentWithFallback,disconnectTournament};
 });

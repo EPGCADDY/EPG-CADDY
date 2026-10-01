@@ -17,3 +17,19 @@ const event={target:{closest:()=>null},preventDefault(){}};
 row.ondblclick(event);assert.equal((created.innerHTML.match(/<td>/g)||[]).length,18);assert.match(created.innerHTML,/data-scores-close/);assert.match(created.innerHTML,/Becky/);controls['[data-scores-close]'].onclick();assert.equal(removed,true);
 removed=false;row.onclick(event);row.onclick(event);assert.match(created.innerHTML,/18|HOYO/);controls['[data-scores-close]'].onclick();assert.equal(removed,true);
 console.log('PASS R147.2: double click, mobile double tap, 18 scores, X closes only the player detail');
+
+assert.equal(ui.date("2026-09-30"),"30 DE SEPTIEMBRE DE 2026","A calendar date must not shift to the preceding day in Guatemala");
+
+// A server refresh between two taps must retain the gesture but use the new score.
+let creations=0;const create=document.createElement;document.createElement=function(){creations++;return create()};
+let liveNode={dataset:{scorePlayer:'0'}};const liveTarget={querySelectorAll:()=>[liveNode]};
+const liveRows=gross=>[{player:{id:'senior',name:'Senior',holes:[{hole:1,gross,net:3}]},eventName:'Copa'}];
+ui.bindRows(liveTarget,liveRows(4));liveNode.onclick(event);
+liveNode={dataset:{scorePlayer:'0'}};ui.bindRows(liveTarget,liveRows(5));liveNode.onclick(event);
+assert.equal(creations,1);assert.match(created.innerHTML,/>5\/3</);controls['[data-scores-close]'].onclick();
+const starEvent={target:{closest:()=>({tagName:'BUTTON'})},preventDefault(){throw Error('Star gesture intercepted')}};
+liveNode.onclick(starEvent);liveNode.ondblclick(starEvent);assert.equal(creations,1,'Double-clicking the star must not open detail');
+const other={dataset:{scorePlayer:'1'}};const multi={querySelectorAll:()=>[liveNode,other]};
+ui.bindRows(multi,[...liveRows(5),{player:{id:'b',name:'B'},eventName:'Copa'}]);liveNode.onclick(event);other.onclick(event);
+assert.equal(creations,1,'Taps on different players must not combine');other.onclick(event);assert.equal(creations,2);controls['[data-scores-close]'].onclick();
+console.log('PASS LIVE row refresh retains double tap, uses latest score, isolates stars and different players');

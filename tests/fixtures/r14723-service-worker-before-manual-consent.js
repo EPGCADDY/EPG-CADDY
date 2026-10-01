@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-1-manual-confirmation`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-1-manual-confirmation`;
-const RELEASE_FALLBACK="LABORATORIO-20260930-R147.2.4.1";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-3-live-expiry`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-3-live-expiry`;
+const RELEASE_FALLBACK="LABORATORIO-20260930-R147.2.3";
 let RELEASE=RELEASE_FALLBACK;
 async function fetchPublishedRelease(){
   try{
@@ -72,15 +72,8 @@ const SHELL=[
 
 async function refreshShell(){
   await fetchPublishedRelease();
-  const staged=await Promise.all(SHELL.map(async url=>{try{const response=await fetch(url,{cache:"reload"});return response.ok?{url,response}:null}catch{return null}}));
-  if(staged.some(item=>!item))return false;
-  const entry=staged.find(item=>item.url===OFFLINE_ENTRY);
-  const html=await entry.response.clone().text();
-  const build=html.match(/<meta\s+name=["']gscg-release["']\s+content=["']([^"']+)["']/i)?.[1];
-  if(build!==RELEASE)return false;
   const cache=await caches.open(ACTIVE_CACHE_NAME);
-  await Promise.all(staged.map(({url,response})=>cache.put(url,response)));
-  return true;
+  await Promise.all(SHELL.map(async url=>{try{const response=await fetch(url,{cache:"reload"});if(response.ok)await cache.put(url,response)}catch{}}));
 }
 
 async function copyCache(sourceName,targetName){
@@ -104,10 +97,11 @@ async function promoteCandidate(){
   await copyCache(ACTIVE_CACHE_NAME,APPROVED_CACHE_NAME);
 }
 
-self.addEventListener("install",event=>event.waitUntil((async()=>{await fetchPublishedRelease();await refreshShell();await ensureApprovedShell();await self.skipWaiting()})()));
-self.addEventListener("activate",event=>event.waitUntil((async()=>{await fetchPublishedRelease();await ensureApprovedShell();await self.clients.claim()})()));
+self.addEventListener("install",event=>event.waitUntil((async()=>{await fetchPublishedRelease();await refreshShell();await promoteCandidate();await self.skipWaiting()})()));
+self.addEventListener("activate",event=>event.waitUntil((async()=>{await fetchPublishedRelease();await promoteCandidate();await self.clients.claim();const keys=await caches.keys();await Promise.all(keys.filter(key=>key.startsWith(CACHE_NAME)&&key!==ACTIVE_CACHE_NAME&&key!==APPROVED_CACHE_NAME).map(key=>caches.delete(key)));})()));
 self.addEventListener("message",event=>{
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
+  if(event.data?.type==="PROMOTE_BUILD"&&event.data?.build===RELEASE)event.waitUntil(promoteCandidate());
 });
 
 async function networkFirst(request,allowCardFallback=true){
@@ -142,27 +136,6 @@ async function approvedNavigationWithManualUpdate(request){
   const headers=new Headers(approved.headers);headers.set("content-type","text/html; charset=utf-8");headers.delete("content-length");headers.set("cache-control","no-store");
   return new Response(servedHtml,{status:approved.status,statusText:approved.statusText,headers});
 }
-async function manualAppNavigation(request){
-  const url=new URL(request.url);
-  await fetchPublishedRelease();
-  if(url.searchParams.has("update_check")&&url.searchParams.get("app_version")===RELEASE){
-    if(!await refreshShell())return approvedNavigationWithManualUpdate(request);
-    await promoteCandidate();
-    return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request);
-  }
-  await ensureApprovedShell();
-  return approvedNavigationWithManualUpdate(request);
-}
-
-async function authorizedPersonalNavigation(request){
-  // Authorization must remain current, but a successful check is not update consent.
-  let authorization;
-  try{authorization=await fetch(request,{cache:"no-store"})}catch{return Response.error()}
-  if(!authorization.ok)return authorization;
-  if(authorization.redirected&&new URL(authorization.url).pathname!==OFFLINE_ENTRY)return authorization;
-  return manualAppNavigation(request);
-}
-
 self.addEventListener("fetch",event=>{
   const request=event.request;
   if(request.method!=="GET")return;
@@ -170,14 +143,27 @@ self.addEventListener("fetch",event=>{
   if(url.origin!==self.location.origin||url.pathname.startsWith("/api/"))return;
   // Personal scorecards require current server membership; never serve the owner shell
   // or a cached scorecard in response to a forged/revoked personal account URL.
-  if(request.mode==='navigate'&&(url.searchParams.has('personalEvent')||url.searchParams.has('personalAccount'))){event.respondWith(url.pathname===OFFLINE_ENTRY?authorizedPersonalNavigation(request):fetch(request,{cache:'no-store'}));return}
+  if(request.mode==='navigate'&&(url.searchParams.has('personalEvent')||url.searchParams.has('personalAccount'))){event.respondWith(fetch(request,{cache:'no-store'}));return}
   if(request.mode==="navigate"&&(url.pathname==="/access.html"||url.pathname==="/code-entry.html"||url.pathname==="/pwa-launch.html"||url.pathname.startsWith("/invite/"))){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"&&(url.pathname==="/manual.pdf"||url.pathname==="/manual.html")){event.respondWith(fetch("/manual.html?__gscg_build_check=1",{cache:"no-store"}));return}
   if(url.pathname==="/release.json"){event.respondWith(fetch(request,{cache:"no-store"}));return}
-  if((url.searchParams.has("__gscg_build_check")||url.searchParams.has("update_check"))&&!(request.mode==="navigate"&&url.searchParams.has("app_version"))){event.respondWith(fetch(request,{cache:"no-store"}));return}
+  if(url.searchParams.has("__gscg_build_check")||url.searchParams.has("update_check")){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"&&!["/","/index.html","/inicio",OFFLINE_ENTRY].includes(url.pathname)){event.respondWith(networkFirst(request,false));return}
   if(request.mode==="navigate"){
-    event.respondWith(manualAppNavigation(request));
+    event.respondWith((async()=>{
+      await fetchPublishedRelease();
+      if(url.searchParams.get("app_version")===RELEASE){await refreshShell();await promoteCandidate();return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)}
+      await ensureApprovedShell();
+      const approved=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});
+      const approvedHtml=approved?await approved.clone().text():"";
+      const approvedRelease=approvedHtml.match(/<meta\s+name=["\']gscg-release["\']\s+content=["\']([^"\']+)["\']/i)?.[1]||"";
+      if(approvedRelease!==RELEASE){
+        await refreshShell();await promoteCandidate();
+        const fresh=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});
+        if(fresh)return fresh;
+      }
+      return await approvedNavigationWithManualUpdate(request);
+    })());
     return;
   }
   if(SHELL.includes(url.pathname))event.respondWith((async()=>{await ensureApprovedShell();return await caches.match(url.pathname,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request)})());

@@ -14,7 +14,7 @@
   <meta property="og:description" content="Resultados, categorías y seguimiento de jugadores y grupos del torneo en vivo.">
   <meta property="og:image" content="/assets/official-logos/golf-score-card-gt-pwa-v345-512.png">
   <link rel="stylesheet" href="/gsc-design-system.css">
-  <link rel="stylesheet" href="/scores-ui.css">
+
   <style>
     :root{--tour-green:#31ff00;--tour-line:#2f3436;--tour-card:#070909;--tour-muted:#8d9294}
     body{background:#000}
@@ -164,9 +164,11 @@
     #hubRoundCategories{display:grid;grid-template-columns:1fr 1fr;gap:6px}#hubRoundCategories label{display:flex;align-items:center;gap:8px}body:not(.public-display) #hubRoundCategories input{width:20px;height:20px}
     #hubRoundMode,.scores-detail input,.scores-detail select{box-sizing:border-box;width:100%;min-height:48px;padding:10px;border:1px solid #31ff00;border-radius:10px;background:#050505;color:white;font:inherit;margin:6px 0}.scores-detail fieldset{border:1px solid #444;border-radius:10px;margin:10px 0;padding:10px}.scores-detail output{display:block;overflow-wrap:anywhere;margin:12px 0;color:#31ff00;font-weight:900}
   </style>
+  <link rel="stylesheet" href="/scores-ui.css">
 </head>
 <body>
   <main class="hub">
+    <button class="scores-return" id="hubScoresReturn" type="button" hidden>← VER SCORES</button>
     <header class="head">
       <img src="/assets/official-logos/golf-score-card-gt-horizontal-original.webp" alt="Golf Score Card GT">
       <div><h1 id="hubPageTitle">TORNEOS</h1></div><div id="hubEventName" class="scores-event"></div><div id="hubEventMeta" class="scores-meta"></div>
@@ -221,15 +223,15 @@
     </div>
 
 
-    <button class="primary one-use-send" id="hubShareGeneral" type="button" hidden>COMPARTIR LIVE</button>
     <button class="secondary" id="hubPersonalOrganization" type="button" hidden>ORGANIZACIÓN</button>
     <button class="secondary" id="hubPersonalScoreCard" type="button" hidden>ANOTAR MIS SCORES</button>
     <section class="panel" id="hubMyPosition" hidden><h2>MI POSICIÓN</h2><div></div></section>
     <section class="panel monitor-panel hidden" id="hubGeneralPanel">
       <h2 id="hubPanelTitle">RESULTADOS</h2>
       <div class="search">
-        <input id="hubSearch" type="search" maxlength="80" placeholder="Nombre del jugador">
+        <input id="hubSearch" type="search" maxlength="80" placeholder="BUSCAR JUGADOR" aria-label="Buscar jugador">
         <button class="primary" id="hubSearchButton" type="button">BUSCAR</button>
+        <button class="primary one-use-send" id="hubShareGeneral" type="button" hidden>COMPARTIR<br>LIVE</button>
       </div>
       <div class="search-results" id="hubSearchResults"></div>
       <div class="summary" id="hubSummary"></div>
