@@ -11,5 +11,6 @@ for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.verc
  approved='LABORATORIO-20261001-R147.2.4.3';await events.pageshow();assert.equal(elements.has('gscDeliveryUpdateButton'),false,'Current approved build hides the independent control');
  networkFailure=true;await events.online();assert.equal(elements.get('gscDeliveryUpdateButton').textContent,'REINTENTAR','A failed check remains actionable');
  assert.equal(destination,url.toString(),'A failed check never performs another navigation');
+ networkFailure=false;ctx.navigator.serviceWorker.ready=new Promise(()=>{});const stalled=events.pageshow();await new Promise(resolve=>setImmediate(resolve));timers.at(-1)();await stalled;assert.equal(elements.get('gscDeliveryUpdateButton').textContent,'REINTENTAR','An unavailable worker must not leave discovery pending forever');
  console.log('PASS independent discovery '+origin+': old approved R147.2.4 offers manual button; only click navigates; failure offers retry; current build hides control');
 }
