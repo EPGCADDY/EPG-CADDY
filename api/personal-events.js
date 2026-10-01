@@ -7,7 +7,7 @@ import {isAllowedAppOrigin,handleAppPreflight} from './_lib/cors.js';
 import {noStore,readJson} from './_lib/http.js';
 import {handleLive} from './live.js';
 import {refreshPrivateRoundLifecycle} from './_lib/private-round-lifecycle.js';
-import {accessError,eventKind,eventScope,ensurePersonalAccess,personalMember,organizer,assignedPlayers,validateAssignedConfiguration,issuePersonalInvite,consumePersonalInvite,auditPersonal,limitPersonalAccess} from './_lib/personal-event-access.js';
+import {accessError,joinPersonalTournamentCode,eventKind,eventScope,ensurePersonalAccess,personalMember,organizer,assignedPlayers,validateAssignedConfiguration,issuePersonalInvite,consumePersonalInvite,auditPersonal,limitPersonalAccess} from './_lib/personal-event-access.js';
 
 const modes=['general','match_play','four_ball','stableford','universales'];
 const categories=['championship','a','b','c','d','female','senior','super_senior'];
@@ -36,6 +36,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
     const sql=database(),body=await readJson(req,24000),account=await resolveEventIdentity(req,res,sql,body.action,accountResolver);await ensurePersonalAccess(sql);await limitPersonalAccess(sql,account,String(body.action||'').slice(0,24));
     if(account.codeAccess&&account.entryRole==='viewer'&&!['identity','list','read'].includes(body.action))throw accessError('PERSONAL_WRITER_FORBIDDEN');
     if(body.action==='identity')return res.status(200).json({ok:true,personalCode:account.id,name:account.name});
+    if(body.action==='join-code')return res.status(200).json(await joinPersonalTournamentCode(sql,body,account));
     if(body.action==='redeem')return res.status(200).json(await consumePersonalInvite(sql,body,account));
     if(body.action==='list'){
       const rows=await sql`SELECT e.event_id,e.event_kind,e.status,e.configuration,m.role,m.display_name,m.players,m.group_label FROM gsc_personal_events e JOIN gsc_personal_members m USING(event_id,event_kind) WHERE m.account_id=${account.id} AND m.revoked_at IS NULL`;

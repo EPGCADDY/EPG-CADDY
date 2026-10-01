@@ -125,3 +125,16 @@ export async function guardPersonalShare(sql,req,body,resolveAccount=requireAcco
   const shares=await sql`SELECT g.id,m.account_id,m.revoked_at,m.players FROM gsc_live_shares g LEFT JOIN gsc_personal_members m ON m.event_id=g.event_id AND m.event_kind=g.event_kind AND m.stream_id=g.issuer_stream_id WHERE g.event_id=${id}::uuid AND g.event_kind=${kind} AND (g.code_hash=${hash(body.code||'')} OR EXISTS(SELECT 1 FROM gsc_live_share_sessions session WHERE session.share_id=g.id AND session.token_hash=${hash(token)})) LIMIT 1`;
   if(shares.length&&(!shares[0].account_id||shares[0].revoked_at||!shares[0].players.length))throw accessError('PERSONAL_SHARE_ISSUER_REVOKED',410);
 }
+
+// Possession of the organizer-shared tournament code grants only this event/group.
+export async function joinPersonalTournamentCode(sql,body,account){
+ const code=String(body.joinCode||'').trim().toUpperCase();if(!/^[A-Z0-9]{10}$/.test(code))throw accessError('LIVE_JOIN_CODE_INVALID',400);
+ const rows=await sql`SELECT t.id,t.name,e.configuration FROM live_tournaments t JOIN gsc_personal_events e ON e.event_id=t.id AND e.event_kind='tournament' WHERE t.join_code_hash=${hash(code)}::char(64) AND t.status='active' AND t.expires_at>now() AND e.status='active' LIMIT 1`;
+ const event=rows[0];if(!event)throw accessError('LIVE_JOIN_CODE_INVALID',404);
+ const players=assignedPlayers(body.players,'scorer'),group=String(body.groupLabel||'').trim().slice(0,120);if(!group)throw accessError('PERSONAL_ASSIGNMENT_INVALID',400);validateAssignedConfiguration(players,event.configuration);
+ if(body.mode!==event.configuration.mode)throw accessError('LIVE_TOURNAMENT_MODE_MISMATCH',409);
+ const applied=await sql`INSERT INTO gsc_personal_members(event_id,event_kind,account_id,role,display_name,group_label,players) SELECT ${event.id}::uuid,'tournament',${account.id},'scorer',${account.name||group},${group},${JSON.stringify(players)}::jsonb WHERE gsc_personal_capacity(${event.id}::uuid,'tournament',${JSON.stringify(players)}::jsonb,${group},${account.id}) ON CONFLICT(event_id,event_kind,account_id) DO UPDATE SET role=CASE WHEN gsc_personal_members.role='organizer' THEN 'organizer' ELSE 'scorer' END,group_label=EXCLUDED.group_label,players=EXCLUDED.players,stream_id=NULL WHERE gsc_personal_members.revoked_at IS NULL RETURNING account_id`;
+ if(!applied.length)throw accessError('PERSONAL_JOIN_NOT_AVAILABLE',409);
+ await auditPersonal(sql,event.id,'tournament',account,'joined_by_code',{group,players});
+ return{ok:true,eventId:event.id,eventKind:'tournament',name:event.name,configuration:event.configuration};
+}

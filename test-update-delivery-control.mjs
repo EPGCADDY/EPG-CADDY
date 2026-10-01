@@ -37,3 +37,16 @@ for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.verc
  assert.doesNotMatch(oldMenu,/app-update/);
 }
 console.log('PASS real R147.2.4 worker: network Manual bootstraps independent recovery without its cached menu');
+
+// The real card update handler must keep the scoped personal card/account.
+const app=fs.readFileSync('index-grupal.html','utf8');
+const returnHelper=app.slice(app.indexOf('function currentRoundReturnPath('),app.indexOf('async function openRoundTournament('));
+const install=app.slice(app.indexOf('async function installMandatoryUpdate('),app.indexOf('async function syncPublishedAppVersion('));
+for(const configured of [true,false])for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.vercel.app']){
+ const round={configured,players:[{name:'BECKY',holes:[{gross:5,net:4}]}]},before=JSON.stringify(round);let destination='',writes=0;
+ const ctx=vm.createContext({URL,round,appBuildReloading:false,pendingPublishedBuild:'NEXT',location:{origin,href:origin+'/index-grupal.html?personalAccount=account-a&personalEvent=familia&personalKind=tournament&inicio=1',replace:url=>destination=url},persist:()=>writes++,$:()=>({classList:{contains:()=>false}})});
+ vm.runInContext(returnHelper+install,ctx);await ctx.installMandatoryUpdate();const url=new URL(destination);
+ for(const [key,value] of Object.entries({personalAccount:'account-a',personalEvent:'familia',personalKind:'tournament',app_version:'NEXT'}))assert.equal(url.searchParams.get(key),value);
+ assert.equal(url.searchParams.get('inicio'),configured?null:'1');assert.equal(url.searchParams.get('round_return'),configured?'1':null);assert.equal(writes,1);assert.equal(JSON.stringify(round),before);
+}
+console.log('PASS real ACTUALIZAR: scoped Familia card/account, current scores and registration context survive in LAB and Production');

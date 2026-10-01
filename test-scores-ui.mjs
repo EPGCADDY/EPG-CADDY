@@ -33,3 +33,5 @@ const other={dataset:{scorePlayer:'1'}};const multi={querySelectorAll:()=>[liveN
 ui.bindRows(multi,[...liveRows(5),{player:{id:'b',name:'B'},eventName:'Copa'}]);liveNode.onclick(event);other.onclick(event);
 assert.equal(creations,1,'Taps on different players must not combine');other.onclick(event);assert.equal(creations,2);controls['[data-scores-close]'].onclick();
 console.log('PASS LIVE row refresh retains double tap, uses latest score, isolates stars and different players');
+
+assert.match(ui.header("FAMILIA","El Pulté",ui.date("2026-10-01"),"four_ball"),/FAMILIA[\s\S]*El Pulté · FOUR BALL · 1 DE OCTUBRE DE 2026/);

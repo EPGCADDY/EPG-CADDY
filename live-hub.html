@@ -187,13 +187,14 @@
       <button class="primary" id="hubCreateRound" type="button" aria-haspopup="dialog" aria-controls="hubRoundCreateDialog">CREAR TORNEO</button>
     </section>
 
+      <button class="tournament-card portal-choice" id="hubEnterExisting" type="button">ENTRAR A TORNEO EXISTENTE</button>
       <button class="tournament-card portal-choice" id="hubRegisteredTournaments" type="button" aria-expanded="false">VER SCORES</button>
       <div class="tournament-cards hidden" id="hubTournamentCards"></div>
       <div id="hubSavedEventActions" class="hidden">
       <button class="tournament-card portal-choice" id="hubPrivateRounds" type="button">RONDAS PARTICULARES</button>
       <button class="secondary" id="hubAddTournament" type="button">+ AGREGAR TORNEO</button>
       <button class="secondary" id="hubPersonalIdentity" type="button">MI CÓDIGO PERSONAL</button>
-      <button class="secondary" id="hubPersonalInvite" type="button">TENGO UNA INVITACIÓN</button>
+      <button class="secondary" id="hubPersonalInvite" type="button">ENTRAR CON INVITACIÓN</button>
       </div>
     </section>
     <nav class="monitor-switch hidden" aria-label="Elegir función de torneos">
@@ -216,7 +217,7 @@
         <label for="hubRoundName">NOMBRE DEL EVENTO DE LA RONDA</label>
         <input id="hubRoundName" type="text" maxlength="120" placeholder="Nombre del torneo" autocomplete="off">
         <label for="hubRoundCourse">CAMPO</label><select id="hubRoundCourse" aria-label="Campo del torneo"><option value="">SELECCIONA EL CAMPO</option><option value="El Pulté">EL PULTÉ GOLF</option><option value="Country Club">GUATEMALA COUNTRY CLUB</option><option value="San Isidro">SAN ISIDRO</option><option value="Mayan Golf">MAYAN GOLF</option><option value="Hacienda Nueva">HACIENDA NUEVA COUNTRY CLUB</option><option value="Alta Vista">ALTA VISTA GOLF & TENNIS CLUB</option><option value="La Reunión" disabled>LA REUNIÓN GOLF RESORT · PENDIENTE</option></select>
-        <label for="hubRoundDate">FECHA</label><input id="hubRoundDate" type="date">
+        <label for="hubRoundDate">FECHA</label><input id="hubRoundDate" type="date" readonly aria-label="Fecha automática del torneo">
         <label for="hubRoundMode">MODALIDAD</label><select id="hubRoundMode"><option value="general">MEDAL PLAY</option><option value="match_play">MATCH PLAY</option><option value="four_ball">FOUR BALL</option><option value="stableford">STABLEFORD</option><option value="universales">UNIVERSALES</option></select>
         <details><summary>CATEGORÍAS</summary><div id="hubRoundCategories">
           <label><input type="checkbox" value="championship" checked>CAMPEONATO</label><label><input type="checkbox" value="a" checked>A</label><label><input type="checkbox" value="b" checked>B</label><label><input type="checkbox" value="c" checked>C</label><label><input type="checkbox" value="d" checked>D</label><label><input type="checkbox" value="female" checked>FEMENINA</label><label><input type="checkbox" value="senior" checked>SENIOR</label><label><input type="checkbox" value="super_senior" checked>SUPER SENIOR</label>
@@ -228,7 +229,7 @@
 
 
     <button class="secondary" id="hubPersonalOrganization" type="button" hidden>ORGANIZACIÓN</button>
-    <button class="secondary" id="hubPersonalScoreCard" type="button" hidden>ANOTAR MIS SCORES</button>
+    <button class="secondary" id="hubPersonalScoreCard" type="button" hidden>ENTRAR AL SCORE CARD DEL TORNEO</button>
     <section class="panel" id="hubMyPosition" hidden><h2>MI POSICIÓN</h2><div></div></section>
     <section class="panel monitor-panel hidden" id="hubGeneralPanel">
       <h2 id="hubPanelTitle">RESULTADOS</h2>
