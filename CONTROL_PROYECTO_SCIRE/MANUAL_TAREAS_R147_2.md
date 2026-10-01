@@ -163,3 +163,23 @@ Esta evidencia reemplaza cualquier interpretación de que no tiene scores: los s
 
 ## Orden visual expresa — 21:56:43, Guatemala
 El propietario exige que las imágenes de referencia aprobadas se reproduzcan IDÉNTICAS. No basta una interpretación, aproximación o estilo parecido. La captura aprobada de Scores 2B91A34E-3B06-4E5C-BB29-CC6C1F92378C.png gobierna composición, proporciones, tamaños, tipografía, pesos, colores, bordes, radios, espacios, logo, posiciones de botones, estrellas y columnas. Adaptar únicamente lo necesario al ancho del dispositivo sin cambiar la composición aprobada. Comparar una captura real del resultado a tamaño equivalente con la referencia antes de declarar terminado o publicar. Las capturas que muestran fallos documentan lo que debe corregirse; la de Universales fue descartada expresamente. No añadir ni omitir controles del formato aprobado, y conservar las funciones y datos reales. Las imágenes originales se recibieron dentro de la conversación; el respaldo documental conserva sus identificadores y descripción, no debe fingirse que el archivo original está físicamente archivado si no se recuperó.
+
+
+## Directrices adicionales del propietario · 2026-09-30 22:37 Guatemala
+
+Estas directrices amplían las tareas pendientes y no equivalen a pruebas aprobadas ni publicación.
+
+| Requisito | Comprobación obligatoria | Estado |
+|---|---|---|
+| Fuente, tipo y tamaños equivalentes iguales en todos los Scores | Comparar ronda, General, Categoría, Favoritos y detalle a igual ancho | Implementación común; verificación completa pendiente |
+| Logos 25% mayores, sin deformar | Medir ancho y relación de aspecto en cada vista de Scores | Torneo móvil comprobado; demás vistas pendientes |
+| General reúne todos; Categoría deriva de categoría asignada | Alternar General y categoría propia sin excluir ni modificar jugadores | Pendiente de recorrido integral |
+| Tablero Favoritos mezcla jugadores elegidos en General y categorías | Elegir jugadores de dos categorías; ambos deben aparecer sin filtro residual | Pendiente |
+| Doble clic/doble toque en cada nombre abre los 18 hoyos | Ver 1–9 y 10–18 Gross/Net en ronda y las tres vistas; estrella independiente | Pendiente de navegador en todas |
+| X arriba a la derecha cierra sólo detalle | Conservar vista, filtros, scroll, favoritos y datos | Pendiente de navegador |
+| SCORES TORNEO abre directamente pizarra asociada | Desde ronda anotada, entrar, alternar vistas y volver a la misma Score Card | Implementación local; pendiente navegador y servidor |
+| Invitado entra por código sobre Scores difuminado | Código válido cierra emergente y aclara fondo; inválido/vencido conserva bloqueo; sólo lectura según permiso | Pendiente |
+| Todos los títulos y subtítulos son fijos | No editar ni seleccionar encabezados, subencabezados, rótulos y tablas; campos de entrada siguen editables | Regla CSS existente; cobertura y prueba pendientes |
+| Referencia Universales anulada | No usar esa imagen como diseño; referencia torneo exclusiva 2—Categoría | Aplicado |
+
+No tocar selector CAMPO R147.2.4. No borrar, reemplazar ni exigir reanotar scores. No pulsar ACTUALIZAR en instalaciones del propietario. LAB y producción se entregan tras comprobación funcional y visual.

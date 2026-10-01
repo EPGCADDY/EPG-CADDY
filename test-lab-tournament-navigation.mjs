@@ -96,6 +96,10 @@ monitorContext.root.GSCPersonalEvents.membership=()=>({role:'viewer',players:[]}
 element('hubCategory').value='b';
 vm.runInNewContext('showMonitor("categories")',monitorContext);
 assert.equal(element('hubCategory').value,'b','Spectator preserves the chosen player category');
+element('hubCategory').value='b';element('hubSearch').value='DEMO 03';
+vm.runInNewContext('showMonitor("individual")',monitorContext);
+assert.equal(element('hubCategory').value,'all','Favorite board must include selections from every category');
+assert.equal(element('hubSearch').value,'','Entering Favorites removes the previous table search');
 const compactContext={general:null,activeMonitor:'general',$:element,fold:x=>String(x||'').toLowerCase(),state:{follows:[],generalToken:'token'},root:{GSCScoresUI:{bindRows(){}},GSCPersonalEvents:{descriptor:()=>({eventKind:'tournament'})}},escapeHtml:s=>String(s),relation:s=>String(s)};
 element('hubSearch').value='';
 const compactWrap={innerHTML:'',querySelectorAll:()=>[]};compactContext.wrap=compactWrap;compactContext.rows=[{name:'DEMO 03',rankLabel:'T2',categoryLabel:'B',currentHole:3,holes:3,gross:15,net:12,relativeToPar:0,streamId:'g',playerId:'p'}];

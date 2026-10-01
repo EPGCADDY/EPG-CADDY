@@ -181,3 +181,6 @@ body.hub-scores-view:not(.public-display) .head{grid-template-columns:minmax(0,1
 body.hub-scores-view:not(.public-display) .head>img{width:175px!important}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .head{grid-template-columns:minmax(0,1fr) 47.5%!important}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .head>img{width:100%!important}
+
+/* Fixed titles, subtitles and score names; editable fields keep normal selection. */
+:is(#hubEventName,#hubEventMeta,#hubPanelTitle,#hubScoresHelp,.scores-heading,.scores-event,.scores-meta,.scores-help,[data-score-player]){-webkit-user-select:none;user-select:none}

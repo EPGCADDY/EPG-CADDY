@@ -383,10 +383,10 @@
     $("hubShowIndividual")?.classList.toggle("active",add);
     $("hubAddToBoard")?.classList.toggle("active",individual);
     if(tournamentPortalOpen){setStatus("ELIGE UN TORNEO","warning");return}
-    if(kind==="general"||categories||add){
+    if(kind==="general"||categories||add||individual){
       if($("hubSearch"))$("hubSearch").value="";
     }
-    if(add&&$("hubCategory"))$("hubCategory").value="all";
+    if((add||individual)&&$("hubCategory"))$("hubCategory").value="all";
     if(kind==="general"){
       if($("hubCategory"))$("hubCategory").value="all";
       categoryCardOpen=false;
@@ -452,7 +452,10 @@
     tournamentPortalOpen=!demoMode()&&!parseHubHash(root.location.hash)&&!new URLSearchParams(root.location.search||'').has('liveEvent');renderAll();
     $('hubCreateRound').onclick=openRoundCreate;$('hubRegisteredTournaments').onclick=()=>{registeredTournamentsOpen=!registeredTournamentsOpen;renderTournamentShelf()};
     const personal=await root.GSCPersonalEvents?.sync();state=loadState();state.tournaments=state.tournaments.filter(item=>!item.token.startsWith("personal_"));if(personal?.ok)for(const item of personal.items)state=upsertTournamentState(state,item.token,item.label).state;const oneUse=await root.GSCOneUseLive?.open();const imported=oneUse?.ok?oneUse:parseHubHash(root.location.hash);if(imported&&!oneUse)clearHash();const params=new URLSearchParams(root.location.search||""),shared=params.get("shared")==="1";tournamentPortalOpen=!demoMode()&&!imported;root.document.body.classList.toggle("shared-view",shared);
-    $("hubScoresReturn").onclick=showTournamentPortal;
+    const returnTo=params.get('returnTo');let scorecardReturn=null;
+    if(returnTo){try{const candidate=new URL(returnTo,root.location.origin);if(candidate.origin===root.location.origin&&candidate.pathname==='/index-grupal.html')scorecardReturn=candidate}catch{}}
+    $("hubScoresReturn").textContent=scorecardReturn?'← SCORE CARD':'← VER SCORES';
+    $("hubScoresReturn").onclick=scorecardReturn?()=>root.location.assign(scorecardReturn.toString()):showTournamentPortal;
     $("hubBack").onclick=()=>{const url=new URL("/index-grupal.html",root.location.origin),personal=root.GSCPersonalEvents?.descriptor(state.generalToken);if(personal&&root.GSCPersonalEvents?.membership(state.generalToken)?.players?.length){root.GSCPersonalEvents.openAssignedCard(personal);return}const share=new URL(root.location.href).searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);root.location.assign(url.toString())};$("hubOpenTournament").onclick=openTournamentTyped;$("hubTournamentLink").onkeydown=event=>{if(event.key==="Enter")openTournamentTyped()};
     $("hubShowGeneral").onclick=()=>showMonitor("general");$("hubShowCategories").onclick=()=>showMonitor("categories");$("hubShowIndividual").onclick=()=>showMonitor("add");$("hubAddToBoard").onclick=()=>showMonitor("individual");$("hubShareGeneral").onclick=shareGeneral;$("hubRefresh").onclick=refresh;$("hubPublicDisplay").onclick=openPublicDisplay;$("hubCategory").onchange=renderAll;$("hubCourse").onchange=renderAll;$("hubCategoryCardToggle").onclick=()=>{categoryCardOpen=!categoryCardOpen;renderCategoryCard()};$("hubSearchButton").onclick=renderAll;$("hubSearch").oninput=renderAll;$("hubImportButton").onclick=importTyped;$("hubAddTournament").onclick=()=>{tournamentEntryOpen=!tournamentEntryOpen;renderTournamentShelf();if(tournamentEntryOpen)setTimeout(()=>$("hubTournamentLink")?.focus(),0)};$("hubTournamentHome").onclick=showTournamentPortal;
     $("hubPersonalIdentity").onclick=()=>root.GSCPersonalEvents.identity();$("hubPersonalInvite").onclick=()=>root.GSCPersonalEvents.invitation();$("hubPersonalOrganization").onclick=()=>root.GSCPersonalEvents.organization(state.generalToken);$("hubPersonalScoreCard").onclick=()=>root.GSCPersonalEvents.openAssignedCard(root.GSCPersonalEvents.descriptor(state.generalToken));root.addEventListener("gsc-personal-updated",refresh);

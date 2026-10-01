@@ -4117,12 +4117,19 @@ $("scorecard").addEventListener("change",e=>{if(!round.provisional)return;const 
 $("previousRoundButton").addEventListener("click",()=>activatePreviousOperationalRound());$("previousStablefordRoundButton").addEventListener("click",()=>activatePreviousOperationalRound("stableford",true));
 $("myRoundButton").addEventListener("click",()=>window.GSCPrivateRounds.open(round));
 $("privateGroupScoresButton").addEventListener("click",()=>window.GSCPrivateRounds.openScores(round));
-function openRoundTournament(scores=false){
+async function openRoundTournament(scores=false){
   persist();
-  const url=new URL("/live-hub.html",location.origin);
-  if(scores)url.searchParams.set("shortcut","scores");
-  const current=new URL(location.href),eventId=current.searchParams.get("personalEvent");
-  if(scores&&eventId&&current.searchParams.get("personalKind")==="tournament")url.searchParams.set("personalEvent",eventId);
+  const url=new URL("/live-hub.html",location.origin),current=new URL(location.href);
+  let selection;try{selection=JSON.parse(localStorage.getItem('gsc-tournament-connect-selection-v1')||'null')}catch{}
+  if(scores){
+    url.searchParams.set("shortcut","scores");
+    const privateEvent=selection?.eventKind==='private'||current.searchParams.get("personalKind")==="private";
+    const eventId=privateEvent?'':round.personalEventId||current.searchParams.get("personalEvent")||(selection?.personal?selection.id:'');
+    if(eventId){url.searchParams.set("personalEvent",eventId);url.searchParams.set("personalKind","tournament")}
+    const returnUrl=new URL(current);returnUrl.searchParams.delete('manual_action');
+    url.searchParams.set("returnTo",returnUrl.pathname+returnUrl.search);
+    await window.GSCLiveControl?.prepareTournamentScores?.(round);
+  }
   const share=current.searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);
   location.assign(url.toString());
 }
