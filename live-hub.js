@@ -407,6 +407,12 @@
     renderLeaderboard();renderScoresHeading();
   }
   function clearHash(){try{root.history.replaceState(null,"",root.location.pathname+root.location.search)}catch{}}
+  function roundCreationStoragePrefix(draft,origin){
+    if(!draft?.returnTo)return "";
+    const url=new URL(draft.returnTo,origin),account=url.searchParams.get('personalAccount');
+    if(url.origin!==origin||url.pathname!=='/index-grupal.html'||(account&&account!==draft.accountCode))throw new Error('INVALID_ROUND_RETURN');
+    return account?'gscg-personal:'+account+':':"";
+  }
   function registrationEventDraft(){
     try{const draft=JSON.parse(root.sessionStorage.getItem("gsc-registration-event-draft-v1")||"null");return draft&&draft.accountCode===root.GSCPersonalEvents?.storageSuffix()&&Array.isArray(draft.players)?draft:null}catch{return null}
   }
@@ -441,10 +447,10 @@
     if(saved.full){roundCreateMessage("YA TIENES 5 TORNEOS GUARDADOS");if(okButton)okButton.disabled=false;return false}
     state=saved.state;saveState();
     try{
-      const liveKey="golf-score-card-gt-live-control-v1",liveSaved=JSON.parse(root.localStorage.getItem(liveKey)||"null"),liveState=liveSaved&&liveSaved.version===1?liveSaved:{version:1};
+      const storagePrefix=roundCreationStoragePrefix(originDraft,root.location.origin),liveKey=storagePrefix+"golf-score-card-gt-live-control-v1",liveSaved=JSON.parse(root.localStorage.getItem(liveKey)||"null"),liveState=liveSaved&&liveSaved.version===1?liveSaved:{version:1};
       liveState.version=1;liveState.tournamentOwned={tournamentId:result.tournamentId,name,mode,configuration:result.configuration,organizerSecret:result.organizerSecret,viewerToken:result.viewerToken,joinCode:result.joinCode,expiresAt:result.expiresAt};
       root.localStorage.setItem(liveKey,JSON.stringify(liveState));
-      root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify({label:name,id:result.tournamentId,joinCode:result.joinCode,mode,configuration:result.configuration,personal:true,eventKind:"tournament",roundId:originDraft?.roundId||"",players:originDraft?.players||[],groupLabel:originDraft?.groupLabel||"",connected:false}));
+      root.localStorage.setItem(storagePrefix+"gsc-tournament-connect-selection-v1",JSON.stringify({label:name,id:result.tournamentId,joinCode:result.joinCode,mode,configuration:result.configuration,personal:true,eventKind:"tournament",roundId:originDraft?.roundId||"",players:originDraft?.players||[],groupLabel:originDraft?.groupLabel||"",connected:false}));
       const roundTokens=JSON.parse(root.localStorage.getItem(ROUND_TOURNAMENTS_KEY)||"[]"),safeTokens=Array.isArray(roundTokens)?roundTokens.filter(token=>tokenOk(token)&&token!==result.viewerToken):[];safeTokens.push("personal_"+result.eventId);root.localStorage.setItem(ROUND_TOURNAMENTS_KEY,JSON.stringify(safeTokens.slice(-MAX_SAVED_TOURNAMENTS)));
     }catch{roundCreateMessage("NO SE PUDO PREPARAR LA TARJETA DE SCORE");if(okButton)okButton.disabled=false;return false}
     const refreshed=await root.GSCPersonalEvents.sync(),item=refreshed.items?.find(item=>item.event.eventId===result.eventId);setRoundCreateDialogOpen(false);if(item){state=upsertTournamentState(state,item.token,item.label).state;saveState();await selectSavedTournament(item.token);root.GSCPersonalEvents.presentCreatedTournament(result,originDraft?.returnTo)}return true;
@@ -487,5 +493,5 @@
     return true;
   }
 
-  return{STORAGE_KEY,POLL_MS,DISPLAY_MS,MAX_SAVED_TOURNAMENTS,TOKEN_PATTERN,CATEGORY_LABELS,CATEGORY_DEFAULT_TEES,DEMO_DISTRIBUTION,demoTournamentStreams,favoriteStreams,parseHubHash,parseShareLink,generalShareUrl,tournamentHubShareUrl,tournamentHubOpenUrl,normalizeHubState,upsertTournamentState,removeTournamentFromState,addFollowToState,removeFollowFromState,uniquePlayerHoles,livePlayerTotals,tournamentPlayers,categoryIndex,categoryShortLabel,buildLeaderboard,sortRoundPlayers,categoryScoreboardRows,liveDate,modeLabel,unresolvedFollowTokens,resolveFollows,uniqueFavoritePlayers,read,start};
+  return{roundCreationStoragePrefix,STORAGE_KEY,POLL_MS,DISPLAY_MS,MAX_SAVED_TOURNAMENTS,TOKEN_PATTERN,CATEGORY_LABELS,CATEGORY_DEFAULT_TEES,DEMO_DISTRIBUTION,demoTournamentStreams,favoriteStreams,parseHubHash,parseShareLink,generalShareUrl,tournamentHubShareUrl,tournamentHubOpenUrl,normalizeHubState,upsertTournamentState,removeTournamentFromState,addFollowToState,removeFollowFromState,uniquePlayerHoles,livePlayerTotals,tournamentPlayers,categoryIndex,categoryShortLabel,buildLeaderboard,sortRoundPlayers,categoryScoreboardRows,liveDate,modeLabel,unresolvedFollowTokens,resolveFollows,uniqueFavoritePlayers,read,start};
 });

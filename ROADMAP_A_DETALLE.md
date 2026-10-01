@@ -2795,3 +2795,5 @@ Preview READY dpl_3yekEEj4VCsyno2ArkZjxoumN9mL, commit60ac19816835d30b494941e474
 Identificador único personal en alta y migración SHA-256 de enlaces anteriores. Retiro persistente de guardados y limpieza de alias revocados. Asociación automática de la ronda exacta al volver del alta; conserva holes y escritor oficial. Retiro autorizado de Santa delfina, Kilo y Familia (cinco tarjetas duplicadas, tres eventos) de la cuenta verificada; soft revoke, stream y 15 scores conservados. Fecha móvil restringida al ancho del diálogo. Bancos automáticos y navegador pendientes hasta registro de evidencia. No certifica iPhone físico.
 
 Banco nuevo: `test-tournament-shelf-canonical.mjs` valida alias duplicados, retiro persistente y conservación de eventos ajenos.
+
+R21 navegador: alta y General/Categorías/Favoritos/detalle PASS; revisión adicional detectó que el retorno desde tarjeta personal escribía la selección fuera de su cuenta. live-hub.js conserva ahora el prefijo de la tarjeta origen y rechaza cuenta/origen ajenos. Se revalida el recorrido antes de promover.
