@@ -17,3 +17,5 @@ const event={target:{closest:()=>null},preventDefault(){}};
 row.ondblclick(event);assert.equal((created.innerHTML.match(/<td>/g)||[]).length,18);assert.match(created.innerHTML,/data-scores-close/);assert.match(created.innerHTML,/Becky/);controls['[data-scores-close]'].onclick();assert.equal(removed,true);
 removed=false;row.onclick(event);row.onclick(event);assert.match(created.innerHTML,/18|HOYO/);controls['[data-scores-close]'].onclick();assert.equal(removed,true);
 console.log('PASS R147.2: double click, mobile double tap, 18 scores, X closes only the player detail');
+
+assert.equal(ui.date("2026-09-30"),"30 DE SEPTIEMBRE DE 2026","A calendar date must not shift to the preceding day in Guatemala");
