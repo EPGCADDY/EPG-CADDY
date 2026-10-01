@@ -1,0 +1,154 @@
+{
+  "schema": "gscg-lab-update-browser-evidence/v1",
+  "reviewType": "REVISIÓN AUTOMATIZADA EN NAVEGADOR REAL",
+  "status": "PASS",
+  "alias": "https://golf-sc-gt-lab-git-lab-r147244-update-683c10-epgcaddys-projects.vercel.app",
+  "commit": "a5a599858a2ca66f59bd334e3eccd45433548bf0",
+  "browser": {
+    "engine": "chromium",
+    "driver": "playwright",
+    "persistentProfileId": "cua-browser-1-update-20261001"
+  },
+  "stages": [
+    {
+      "alias": "https://golf-sc-gt-lab-git-lab-r147244-update-683c10-epgcaddys-projects.vercel.app",
+      "deploymentId": "dpl_DVkHDGyLe3tENAGaTBNh75pZBtfF",
+      "release": "LABORATORIO-20261001-R147.2.4.11",
+      "ready": true
+    },
+    {
+      "alias": "https://golf-sc-gt-lab-git-lab-r147244-update-683c10-epgcaddys-projects.vercel.app",
+      "deploymentId": "dpl_5RBiQmTLdtYm5xnsdsQyT4dxZTgh",
+      "release": "LABORATORIO-20261001-R147.2.4.12",
+      "ready": true
+    },
+    {
+      "alias": "https://golf-sc-gt-lab-git-lab-r147244-update-683c10-epgcaddys-projects.vercel.app",
+      "deploymentId": "dpl_D3yb8LpZKW48kw7Bbo375nyQ389B",
+      "release": "LABORATORIO-20261001-R147.2.4.13",
+      "ready": true
+    },
+    {
+      "alias": "https://golf-sc-gt-lab-git-lab-r147244-update-683c10-epgcaddys-projects.vercel.app",
+      "deploymentId": "dpl_65qcwkkK9TTfs58zXHbV956i3Nzk",
+      "release": "LABORATORIO-20261001-R147.2.4.14",
+      "ready": true
+    }
+  ],
+  "transitions": [
+    {
+      "from": "LABORATORIO-20261001-R147.2.4.11",
+      "to": "LABORATORIO-20261001-R147.2.4.12",
+      "alias": "https://golf-sc-gt-lab-git-lab-r147244-update-683c10-epgcaddys-projects.vercel.app",
+      "profileId": "cua-browser-1-update-20261001",
+      "detected": true,
+      "button": {
+        "visible": true,
+        "enabled": true,
+        "green": true,
+        "blinking": true,
+        "physicallyClicked": true
+      },
+      "navigated": true,
+      "finalAction": "ACTUALIZADO",
+      "finalRelease": "LABORATORIO-20261001-R147.2.4.12",
+      "preserved": {
+        "round": true,
+        "history": true,
+        "player": true,
+        "score": true,
+        "whatsapp": true
+      },
+      "consoleErrors": [],
+      "networkFailures": [],
+      "layoutIssues": [],
+      "screenshots": {
+        "before": {
+          "path": "evidence/update-20261001/11-12-before.jpg",
+          "sha256": "adb66c51a13a722b124e20fa54387d14c0b598f011ef6c0e16d2bd6f5a475e83"
+        },
+        "after": {
+          "path": "evidence/update-20261001/11-12-after.jpg",
+          "sha256": "ccb26556b30fa03fda6c80e1caf04765f1d3dbd4d197752c3c2d234f4d9205ee"
+        }
+      }
+    },
+    {
+      "from": "LABORATORIO-20261001-R147.2.4.12",
+      "to": "LABORATORIO-20261001-R147.2.4.13",
+      "alias": "https://golf-sc-gt-lab-git-lab-r147244-update-683c10-epgcaddys-projects.vercel.app",
+      "profileId": "cua-browser-1-update-20261001",
+      "detected": true,
+      "button": {
+        "visible": true,
+        "enabled": true,
+        "green": true,
+        "blinking": true,
+        "physicallyClicked": true
+      },
+      "navigated": true,
+      "finalAction": "ACTUALIZADO",
+      "finalRelease": "LABORATORIO-20261001-R147.2.4.13",
+      "preserved": {
+        "round": true,
+        "history": true,
+        "player": true,
+        "score": true,
+        "whatsapp": true
+      },
+      "consoleErrors": [],
+      "networkFailures": [],
+      "layoutIssues": [],
+      "screenshots": {
+        "before": {
+          "path": "evidence/update-20261001/12-13-before.jpg",
+          "sha256": "db559da21fba965cb4b26020ebf6fa7ef1de0fdbe416b45d55bb35d04d8d3305"
+        },
+        "after": {
+          "path": "evidence/update-20261001/12-13-after.jpg",
+          "sha256": "2f4c3fb0c457824381d5b0d73249b78ec6e330cb7b9bb58e205e007859b86d58"
+        }
+      }
+    },
+    {
+      "from": "LABORATORIO-20261001-R147.2.4.13",
+      "to": "LABORATORIO-20261001-R147.2.4.14",
+      "alias": "https://golf-sc-gt-lab-git-lab-r147244-update-683c10-epgcaddys-projects.vercel.app",
+      "profileId": "cua-browser-1-update-20261001",
+      "detected": true,
+      "button": {
+        "visible": true,
+        "enabled": true,
+        "green": true,
+        "blinking": true,
+        "physicallyClicked": true
+      },
+      "navigated": true,
+      "finalAction": "ACTUALIZADO",
+      "finalRelease": "LABORATORIO-20261001-R147.2.4.14",
+      "preserved": {
+        "round": true,
+        "history": true,
+        "player": true,
+        "score": true,
+        "whatsapp": true
+      },
+      "consoleErrors": [],
+      "networkFailures": [],
+      "layoutIssues": [],
+      "screenshots": {
+        "before": {
+          "path": "evidence/update-20261001/13-14-before.jpg",
+          "sha256": "b0e4fc2a4dad0ad197e26a9bd5e2e101a60d520a542f48a1570f5ed0f0a2de98"
+        },
+        "after": {
+          "path": "evidence/update-20261001/13-14-after.jpg",
+          "sha256": "e5664ac1317b97fd2fea9a4652034ef2720e246317c9edbe17aec7fb5d04e487"
+        }
+      }
+    }
+  ],
+  "devicePhysical": {
+    "iphoneMicrophone": "PENDING"
+  }
+}
