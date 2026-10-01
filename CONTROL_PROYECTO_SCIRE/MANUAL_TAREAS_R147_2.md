@@ -1,0 +1,131 @@
+# Manual de tareas — R147.2 · Laboratorio y Producción
+
+Fuente: órdenes del propietario y capturas de esta conversación, 30 de septiembre de 2026. Este documento conserva las instrucciones y su referencia visual; no sustituye las imágenes por un diseño inventado. Última actualización: 21:44, Guatemala.
+
+## Regla de ejecución y continuidad
+
+Ejecutar una tarea por vez, en el orden siguiente. Antes de pasar a la siguiente: registrar archivos, prueba ejecutada, resultado y evidencia. Un cambio local, un PASS automático, una publicación y una confirmación en el iPhone son estados diferentes. No cerrar un pendiente sólo porque pasó una prueba de Chromium. Reportar hora de Guatemala, operación real, resultado y evidencia sin dejar pasar más de 60 segundos. Al detenerse, indicar el último paso y la acción exacta para retomar.
+
+Publicación ya autorizada por el propietario. Publicar permite ofrecer una versión; instalarla en su dispositivo requiere que él pulse ACTUALIZAR. No pulsar ni forzar la actualización de sus apps.
+
+## Orden de tareas
+
+### 1. Scores de torneo: aplicar el formato aprobado
+
+**Orden:** “Así quiero el formato”. Referencia aprobada: 2B91A34E-3B06-4E5C-BB29-CC6C1F92378C.png, presentada como “2—Categoría”. La referencia de Universales enviada por equivocación no gobierna este diseño.
+
+Composición exacta que se debe conservar:
+
+- Fondo negro; una sola tarjeta oscura con borde verde y esquinas redondeadas.
+- Enlace de regreso “← VER SCORES” arriba de la tarjeta.
+- Encabezado “SCORES” verde a la izquierda; logo horizontal oficial a la derecha.
+- Nombre del torneo debajo; después campo y fecha; línea divisoria.
+- Una fila de tres botones rectangulares: GENERAL, CATEGORÍA y MIS FAVORITOS. Borde verde del seleccionado.
+- Siguiente fila: BUSCAR JUGADOR ocupando aproximadamente dos tercios; COMPARTIR LIVE al lado ocupando aproximadamente un tercio.
+- Selector de categoría a todo el ancho, con flecha. En la referencia aparece SENIOR.
+- Tabla de cinco columnas, en este orden: NOMBRE, HOYO, GROSS, NETO, +/−. No agregar POS ni una columna extra de favoritos.
+- Estrella a la izquierda del nombre. Nombre blanco y destacado; categoría debajo en gris.
+- NETO verde; resultado bajo par y EVEN verdes; sobre par rojo.
+- Ayuda al pie dentro de la tarjeta: “DOBLE TOQUE EN EL JUGADOR: VER 18 SCORES” y “☆ AGREGA · ★ QUITA FAVORITO”.
+- Doble toque abre los 18 scores reales del jugador. Estrella agrega/quita favorito sin abrir el detalle.
+- Conservar búsqueda, categorías, favoritos, compartir y navegación. No introducir botones visibles ajenos al formato aprobado; conservar administración accesible para quien tenga permiso.
+- Los datos Jaime Kirste / Becky / Justi y sus números de la imagen son ejemplos visuales: no insertarlos como resultados reales.
+- Verificar ancho móvil, legibilidad, bordes, ausencia de traslapes y funcionamiento en navegador antes de publicar.
+
+**Estado:** cambios locales iniciados en live-hub.html, live-hub.js y scores-ui.css. Detalle de 18 hoyos PASS automático. Diseño renderizado, recorrido funcional y publicación PENDIENTES. Corregir y revisar el HTML generado antes de considerar candidato.
+
+### 2. Scores de torneo: investigar resultados ausentes de “Kirstes”
+
+**Orden/evidencia:** “Esto es lo que vos tenés que no sirve”, IMG_5478.png. Captura: torneo Kirstes, El Pulté, 29 de septiembre de 2026; aparece “NO HAY SCORES DISPONIBLES CON ESTOS FILTROS”.
+
+- Comprobar torneo, jugadores asociados, snapshots publicados, filtros, estado y caducidad.
+- Distinguir falta de datos de filtro incorrecto o fallo de lectura.
+- Mostrar resultados reales existentes; no inventar scores ni usar datos de demostración.
+- Si no hay scores publicados, explicar esa condición con precisión.
+- Probar General, Categoría, búsqueda y favoritos con datos verificables.
+
+**Estado:** PENDIENTE de diagnóstico del torneo real. Se comprobó que la lectura actual filtra streams activos no vencidos; esto por sí solo no demuestra la causa de Kirstes.
+
+### 3. Botones inferiores de TORNEO y SCORES TORNEO
+
+**Orden:** “A los botones de hasta abajo. Pónleles sólo el recuadro el borde verde como los que dicen atrás y ver mi tarjeta”.
+
+- Fondo oscuro y borde verde, como ATRÁS y VER MI TARJETA.
+- Conservar texto, navegación, ronda y pertenencia al torneo.
+- Verificar visualmente ambos botones inferiores en ambas aplicaciones.
+
+**Estado:** regresión automática de navegación y persistencia PASS. Confirmación visual actual de los dos botones PENDIENTE; no asumir aprobación a partir del test.
+
+### 4. Crear torneo: Campo elegible, sin escribirlo
+
+**Orden/evidencia:** IMG_5477.png. Donde dice CAMPO, añadir flechas y elegir entre los campos del Registro inicial.
+
+- Selector nativo desplegable, con la misma fuente de campos y disponibilidad del Registro.
+- El Pulté Golf; Guatemala Country Club; San Isidro; Mayan Golf; Hacienda Nueva Country Club; Alta Vista Golf & Tennis Club; La Reunión conserva condición pendiente/no seleccionable del catálogo.
+- Conservar el campo elegido al crear el torneo; validar el formulario y no reemplazarlo por texto libre.
+
+**Estado:** implementado y publicado en R147.2.4. Prueba de catálogo PASS; San Isidro seleccionado mediante UI de laboratorio. Creación y persistencia de un torneo con el campo elegido PENDIENTES de prueba controlada.
+
+### 5. Actualización manual: corregir entrega a Laboratorio y mantener Producción
+
+**Órdenes:** “La nueva versión tiene que venir para ambos”; “No actualices desde tu lado, quiero que me lleguen las teclas de actualizar a cada versión”; “Sólo a producción llegó… a laboratorio no llegó y ya estaba actualizado”.
+
+Dominios confirmados:
+- Laboratorio: https://golf-sc-gt-lab.vercel.app
+- Producción: https://epg-caddy.vercel.app
+
+- La versión anterior debe conservarse hasta que el usuario pulse ACTUALIZAR.
+- Detectar la nueva versión y mostrar botón visible, habilitado y con la señal verde prevista.
+- No instalar automáticamente al abrir, volver del fondo o recargar.
+- Sólo después del toque instalar la versión completa; conservar jugadores, ronda, scores e historial.
+- Descarga incompleta o desconexión: mantener versión y datos anteriores, permitir reintento.
+- Examinar adopción del service worker antiguo por separado: la corrección nueva no prueba que todos los iPhone antiguos la hayan adoptado.
+- Repetir transiciones sucesivas en ambos entornos. Registrar versión anterior, nueva, commit, despliegue, captura antes del toque y resultado después.
+- No dar garantía absoluta ni “150%” por pruebas parciales.
+
+**Estado:** R147.2.4 publicada desde 8bccff9 en ambos dominios. Navegadores de prueba recibieron ACTUALIZAR y conservaron datos tras el toque. Propietario confirmó Producción correcta; Laboratorio ya apareció actualizado sin tecla: **FAIL instalado en Laboratorio, ABIERTO**. Motor histórico reproduce promoción automática sin consentimiento; control negativo permanente añadido localmente. Prueba física/sucesiva completa PENDIENTE.
+
+### 6. Publicar la siguiente prueba con botón en ambos entornos
+
+**Orden:** “Ya que termines manda una prueba R147.2.4. Para confirmar que en ambas llegue la actualización correctamente”; integrar el selector Campo.
+
+- R147.2.4 ya se publicó: no presentar como nueva una versión que el usuario ya tiene.
+- Siguiente preparación local: R147.2.4.1, incluyendo las correcciones verificadas.
+- Alinear release.json, etiqueta de pantalla y service-worker.js.
+- Completar pruebas aplicables, revisión visual y controles de documentación/inventario.
+- Publicar el mismo commit en los dos entornos; verificar que ambos sirven la misma release.
+- Dejar las apps del propietario esperando su toque; no actualizar sus instalaciones desde nuestro lado.
+- Documentar por separado entrega real a cada instalación.
+
+**Estado:** R147.2.4.1 LOCAL, NO PUBLICADA. Publicación autorizada, pendiente de completar tareas anteriores.
+
+### 7. LIVE en Laboratorio y Producción
+
+**Órdenes:** corregir “NO SE PUDO COMPLETAR LIVE”; “Y el Live de laboratorios se chingó”. El propietario aclaró que una ronda anterior estaba cerrada y compartió una nueva de Producción.
+
+- Comparar cada enlace sólo en su entorno original y mantener privacidad.
+- Producción confirmada por enlace epg-caddy.vercel.app; Laboratorio por golf-sc-gt-lab.vercel.app.
+- Probar compartir una ronda nueva activa, apertura en vista sólo lectura y recepción de cambios.
+- Distinguir ronda cerrada, enlace caducado, revocación y fallo de publicación.
+- No reactivar ni extender enlaces vencidos sin orden; no alterar scores para hacer la prueba.
+- Revalidar LAB con enlace vigente; un enlace histórico caducado no sirve para declarar LIVE roto ni reparado.
+
+**Estado:** recuperación de compartir enlace vencido implementada antes de R147.2.4; Producción nueva se vio activa. Enlace antiguo LAB caducado. Recorrido completo con LIVE vigente de LAB PENDIENTE.
+
+### 8. Entregar lista comprobable de modificaciones
+
+**Orden:** “Mándame una lista de las modificaciones que le hiciste a 147.2. Para revisarlo”.
+
+- Separar cambios publicados, locales y pendientes.
+- Referenciar commit, archivos y pruebas.
+- No presentar el manual de tareas como evidencia de implementación.
+- Registrar nuevos pedidos aquí y en continuidad; actualizar ambos ROADMAPS, mapa de archivos y sello en la versión de código correspondiente.
+
+**Estado:** este manual conserva las órdenes. Informe final de modificaciones PENDIENTE al completar la versión.
+
+## Punto de recuperación
+
+Base publicada: commit 8bccff9, R147.2.4. No se ha publicado R147.2.4.1.
+Últimos comandos comprobados: node --check live-hub.js; node test-scores-ui.mjs; node test-lab-update-recovery.mjs — PASS automático.
+Próxima acción exacta: revisar/corregir HTML de renderCompactScores, completar la composición del enlace de regreso y administración, abrir Scores en navegador y comparar con la referencia aprobada; después diagnosticar Kirstes. No saltar a publicación ni declarar LAB resuelto.
+
