@@ -1,0 +1,17 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Prueba instalada R147.2.4 original</title></head><body><h1>Prueba instalada R147.2.4 original</h1><p>Solo perfil de prueba Preview. Conserva los datos del perfil. Worker, tarjeta y menú originales del commit 8bccff9.</p><button id="prepare">PREPARAR CONTROLADOR ORIGINAL</button><button id="open" disabled>ABRIR MISMO ACCESO INSTALADO</button><pre id="status">PENDIENTE</pre><script>
+const status=document.getElementById('status'),open=document.getElementById('open');
+document.getElementById('prepare').onclick=async()=>{try{
+ if(!location.hostname.includes('-git-'))throw Error('Solo Preview de pruebas; prohibido en dominios fijos');
+ status.textContent='Preparando instalación antigua real…';
+ const registration=await navigator.serviceWorker.register('/tests/fixtures/r14724-service-worker.js',{scope:'/',updateViaCache:'none'});
+ const worker=registration.installing||registration.waiting||registration.active;
+ if(worker.state!=='activated')await new Promise(resolve=>{const changed=()=>{if(worker.state==='activated'){worker.removeEventListener('statechange',changed);resolve()}};worker.addEventListener('statechange',changed);changed()});
+ const source=await(await fetch('/tests/fixtures/r14724-service-worker.js',{cache:'no-store'})).text();
+ const prefix=source.match(/const CACHE_NAME="([^"]+)"/)[1];
+ const cache=await caches.open(prefix+'-approved-r147-2-4-manual-update');
+ for(const [path,fixture] of [['/index-grupal.html','r14724-card.html'],['/shortcuts-ui.js','r14724-shortcuts.js']]){const response=await fetch('/tests/fixtures/'+fixture,{cache:'no-store'});if(!response.ok)throw Error('Missing legacy fixture');await cache.put(path,response)}
+ const approved=await(await cache.match('/index-grupal.html')).text();
+ status.textContent=JSON.stringify({controller:navigator.serviceWorker.controller?.scriptURL,active:registration.active?.scriptURL,state:registration.active?.state,approvedRelease:approved.match(/<meta\s+name="gscg-release"\s+content="([^"]+)"/)[1],entry:'/pwa-launch.html',roundStorageChanged:false},null,2);open.disabled=false;
+ }catch(error){status.textContent='FAIL: '+error.message}};
+open.onclick=()=>location.assign('/pwa-launch.html');
+</script></body></html>

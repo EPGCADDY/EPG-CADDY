@@ -21,3 +21,19 @@ for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.verc
  assert.equal(destination,url.toString(),'Discovery and fallback never navigate without another click');
  console.log('PASS independent discovery '+origin+': old approved R147.2.4 offers manual button; only click navigates; failure offers retry; current build hides control');
 }
+
+// R147.2.4's real worker fetches the Manual from the network, but returns its
+// cached navigation script. Recovery must bootstrap without that cached script.
+{
+ const legacy=fs.readFileSync('tests/fixtures/r14724-service-worker.js','utf8'),manual=fs.readFileSync('manual.html','utf8'),listeners={},requests=[];
+ const oldMenu='/* legacy cached menu: no independent updater */';
+ const legacyContext={URL,Response,Headers,Date,fetch:async input=>{requests.push(String(input));return new Response(manual)},caches:{open:async()=>({match:async()=>new Response('<html>old card</html>')}),match:async path=>new Response(path==='/shortcuts-ui.js'?oldMenu:'<html>old card</html>')},self:{location:{origin:'https://legacy.example'},addEventListener:(name,fn)=>listeners[name]=fn}};
+ vm.runInNewContext(legacy,legacyContext);
+ let result;listeners.fetch({request:{method:'GET',mode:'navigate',url:'https://legacy.example/manual.html'},respondWith:promise=>result=promise});
+ const delivered=await(await result).text();assert.deepEqual(requests,['/manual.html?__gscg_build_check=1']);
+ const scripts=[...delivered.matchAll(/<script\b[^>]*src=["']([^"']+)["']/g)].map(m=>m[1]);
+ assert.ok(scripts.includes('/app-update.js'),'The legacy network Manual must load the independent updater directly, before cached menu code');
+ assert.ok(scripts.indexOf('/app-update.js')<scripts.indexOf('/shortcuts-ui.js'));
+ assert.doesNotMatch(oldMenu,/app-update/);
+}
+console.log('PASS real R147.2.4 worker: network Manual bootstraps independent recovery without its cached menu');

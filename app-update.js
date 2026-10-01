@@ -1,6 +1,7 @@
 (function(){
 "use strict";
-if(window.GSC_NATIVE_PLATFORM||!('serviceWorker' in navigator))return;
+if(window.GSC_NATIVE_PLATFORM||!('serviceWorker' in navigator)||window.GSC_DELIVERY_UPDATE_STARTED)return;
+window.GSC_DELIVERY_UPDATE_STARTED=true;
 let running=false;
 async function installedBuild(){
  const visible=document.querySelector('meta[name="gscg-release"]')?.content;
