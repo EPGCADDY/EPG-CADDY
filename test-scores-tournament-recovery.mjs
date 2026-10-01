@@ -54,4 +54,10 @@ const returnContext={URL,scorecardReturn:localBack,root:{location:{origin:'https
 vm.runInNewContext('this.back='+handler,returnContext);returnContext.back();
 assert.equal(actualBack,localBack.toString(),'Hub return must use the originating Score Card before a saved membership');
 assert.equal(JSON.stringify(round),original);
+routeContext.location.href='https://fixture.example/?_vercel_share=fixture-access';
+await routeContext.open(false);
+const homeBack=new URL(navigations.at(-1).searchParams.get('returnTo'),'https://fixture.example');
+assert.equal(homeBack.pathname,'/index-grupal.html','A cached home route must return to the canonical existing Score Card');
+assert.equal(homeBack.searchParams.get('round_return'),'1');
+assert.equal(homeBack.searchParams.get('_vercel_share'),'fixture-access');
 console.log('PASS recovery: existing scores published and retained; Torneo/Scores return to the original account and card even with another saved tournament. Browser/server review remains separate.');

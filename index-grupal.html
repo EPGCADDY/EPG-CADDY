@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20261001-R147.2.4.16">
+  <meta name="gscg-release" content="LABORATORIO-20261001-R147.2.4.17">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -4122,7 +4122,7 @@ async function openRoundTournament(scores=false){
   persist();
   const url=new URL("/live-hub.html",location.origin),current=new URL(location.href);
   let selection;try{selection=JSON.parse(localStorage.getItem('gsc-tournament-connect-selection-v1')||'null')}catch{}
-  const returnUrl=new URL(current);returnUrl.searchParams.delete('manual_action');returnUrl.searchParams.delete('inicio');
+  const returnUrl=new URL(current);returnUrl.pathname='/index-grupal.html';returnUrl.searchParams.delete('manual_action');returnUrl.searchParams.delete('inicio');
   if(returnUrl.searchParams.get('source')==='pwa')returnUrl.searchParams.delete('source');
   returnUrl.searchParams.set('round_return','1');
   url.searchParams.set("returnTo",returnUrl.pathname+returnUrl.search);
