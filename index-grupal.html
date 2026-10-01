@@ -4484,9 +4484,7 @@ async function installMandatoryUpdate(){
   appBuildReloading=true;
   if($("setupOverlay")?.classList.contains("visible")){captureVisibleRegistrationValues();syncDraftPlayersFromManualRows({strict:false,renderAfter:false});persistDraftState()}
   persist();
-  try{
-    if("caches" in window)for(const key of await caches.keys())if(key.startsWith("gscg-mobile-"))await caches.delete(key);
-  }catch(error){console.warn("APP_UPDATE_RESET",error?.message||error)}
+  // Keep the approved offline build until the worker finishes the requested update.
   const nextUrl=new URL("/index-grupal.html",location.origin);nextUrl.searchParams.set("__gscg_build_check","1");nextUrl.searchParams.set("app_version",pendingPublishedBuild);nextUrl.searchParams.set("update_check",String(Date.now()));location.replace(nextUrl.toString());
 }
 async function syncPublishedAppVersion(){

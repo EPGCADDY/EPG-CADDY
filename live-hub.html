@@ -154,7 +154,7 @@
     body:not(.public-display) .round-create-dialog-card h2{margin:0 36px 8px 0;color:var(--tour-green);font-size:22px;font-weight:900;text-align:center}
     body:not(.public-display) .round-create-dialog-card p{margin:0 0 16px;color:var(--tour-muted);font-size:13px;line-height:1.45;text-align:center}
     body:not(.public-display) .round-create-dialog-card label{display:block;margin:12px 4px 7px;color:var(--tour-muted);font-size:11px;font-weight:900;letter-spacing:.8px}
-    body:not(.public-display) .round-create-dialog-card input{box-sizing:border-box;width:100%;height:50px;border:1px solid var(--tour-green);border-radius:11px;background:#030303;color:#fff;padding:0 12px;font:inherit;font-size:16px}
+    body:not(.public-display) .round-create-dialog-card input,body:not(.public-display) .round-create-dialog-card select{box-sizing:border-box;width:100%;height:50px;border:1px solid var(--tour-green);border-radius:11px;background:#030303;color:#fff;padding:0 12px;font:inherit;font-size:16px}
     body:not(.public-display) #hubRoundOk{margin-top:14px;width:100%;min-height:50px}
     body:not(.public-display) #hubRoundClose{position:absolute;top:10px;right:10px;width:38px;min-height:38px;border:1px solid #444;border-radius:50%;background:#080808;color:#fff;font-size:22px}
     body:not(.public-display) #hubRoundDialogStatus{min-height:18px;margin-top:10px;color:var(--tour-muted);font-size:12px;font-weight:800;text-align:center}
@@ -209,7 +209,7 @@
         <p>Define el evento y autoriza a quienes podrán participar o consultar.</p>
         <label for="hubRoundName">NOMBRE DEL EVENTO DE LA RONDA</label>
         <input id="hubRoundName" type="text" maxlength="120" placeholder="Nombre del torneo" autocomplete="off">
-        <label for="hubRoundCourse">CAMPO</label><input id="hubRoundCourse" type="text" maxlength="120" autocomplete="off">
+        <label for="hubRoundCourse">CAMPO</label><select id="hubRoundCourse" aria-label="Campo del torneo"><option value="">SELECCIONA EL CAMPO</option><option value="El Pulté">EL PULTÉ GOLF</option><option value="Country Club">GUATEMALA COUNTRY CLUB</option><option value="San Isidro">SAN ISIDRO</option><option value="Mayan Golf">MAYAN GOLF</option><option value="Hacienda Nueva">HACIENDA NUEVA COUNTRY CLUB</option><option value="Alta Vista">ALTA VISTA GOLF & TENNIS CLUB</option><option value="La Reunión" disabled>LA REUNIÓN GOLF RESORT · PENDIENTE</option></select>
         <label for="hubRoundDate">FECHA</label><input id="hubRoundDate" type="date">
         <label for="hubRoundMode">MODALIDAD</label><select id="hubRoundMode"><option value="general">MEDAL PLAY</option><option value="match_play">MATCH PLAY</option><option value="four_ball">FOUR BALL</option><option value="stableford">STABLEFORD</option><option value="universales">UNIVERSALES</option></select>
         <details><summary>CATEGORÍAS</summary><div id="hubRoundCategories">

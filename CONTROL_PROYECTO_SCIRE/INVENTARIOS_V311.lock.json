@@ -1,18 +1,18 @@
 {
   "version": "R147.2.3-LAB-RELEASE",
-  "generatedAt": "2026-10-01T02:20:00Z",
-  "sourceFileCount": 765,
-  "sourceDigest": "28759a750dbdc930b2359f0eb7250a3b02cfc9855e438bf89c0680ef92e68bf9",
+  "generatedAt": "2026-10-01T03:03:34Z",
+  "sourceFileCount": 766,
+  "sourceDigest": "eedd3e0a2235af6f809561c41e0e767cd2e7b8d22c6222f35b748d4923cec396",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 322214,
-      "sha256": "e96332ec06c9c043e19ccf510327e7a88e66125c9648524f5314978220b4f654"
+      "size": 323701,
+      "sha256": "508dc3db5d63673e6d3a91b284b0097c7bb906375a4260bf90a49d2ae1ad7ddb"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 338596,
-      "sha256": "d343130da83a9c5fc46c8c90b92b4e738adf904098682f2d4cf540c990e17a78"
+      "size": 340882,
+      "sha256": "3ff936219d580256179d9758be55dff87465ffae46095afe1eb1ca0d21c6f5e1"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",

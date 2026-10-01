@@ -39,3 +39,27 @@ for(const search of ['', '?personalEvent=event-123&personalKind=tournament', '?p
  context.openRoundTournament();assert.equal(new URL(destination).searchParams.get('shortcut'),null);
 }
 console.log('PASS bottom TORNEO / SCORES TORNEO: round persisted before navigation; tournament membership retained; private event never selected as tournament');
+
+// Execute the complete worker lifecycle, including a previous approved cache.
+for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.vercel.app']){
+ const stores=new Map(),listeners={},prefix=code.match(/const CACHE_NAME="([^"]+)"/)[1],current=code.match(/const RELEASE_FALLBACK="([^"]+)"/)[1];
+ const key=request=>new URL(typeof request==='string'?request:request.url,origin).pathname;
+ const open=async name=>{if(!stores.has(name))stores.set(name,new Map());const data=stores.get(name);return {match:async request=>data.get(key(request))?.clone(),put:async(request,response)=>data.set(key(request),response.clone()),keys:async()=>[...data.keys()]}};
+ const caches={open,keys:async()=>[...stores.keys()],match:async(request,{cacheName}={})=>{if(cacheName)return (await open(cacheName)).match(request);for(const name of stores.keys()){const response=await(await open(name)).match(request);if(response)return response}},delete:async()=>{throw Error('Approved cache must not be deleted before consent')}};
+ const previous=await open(prefix+'-approved-previous');
+ await previous.put('/index-grupal.html',new Response('<head><meta name="gscg-release" content="OLD"></head><body>OLD CARD</body>'));
+ await previous.put('/live-control.js',new Response('OLD SCRIPT'));
+ let broken=false;
+ const worker=vm.createContext({URL,Response,Headers,Date,caches,fetch:async input=>{const path=key(input);if(broken&&path==='/live-control.js')throw Error('offline');if(path==='/release.json')return Response.json({release:current});return new Response(path==='/index-grupal.html'?'<head><meta name="gscg-release" content="'+current+'"></head><body>NEW CARD</body>':'NEW SCRIPT')},self:{location:{origin},clients:{claim:async()=>{}},skipWaiting:async()=>{},addEventListener:(name,callback)=>listeners[name]=callback}});
+ vm.runInContext(code,worker);
+ const lifecycle=async name=>{let pending;listeners[name]({waitUntil:promise=>pending=promise});await pending};
+ const navigate=async query=>{let pending;listeners.fetch({request:{url:origin+'/index-grupal.html'+query,method:'GET',mode:'navigate'},respondWith:promise=>pending=promise});return (await pending).text()};
+ await lifecycle('install');await lifecycle('activate');
+ let page=await navigate('');assert.match(page,/OLD CARD/);assert.match(page,/gscFallbackUpdateButton/);assert.doesNotMatch(page,/NEW CARD/);
+ assert.match(await navigate('?app_version='+current),/OLD CARD/,'Version parameter alone is not consent');
+ let asset;listeners.fetch({request:{url:origin+'/live-control.js',method:'GET',mode:'cors'},respondWith:promise=>asset=promise});assert.equal(await(await asset).text(),'OLD SCRIPT');
+ broken=true;assert.match(await navigate('?app_version='+current+'&update_check=1&__gscg_build_check=1'),/OLD CARD/,'Failed download preserves approved card');
+ broken=false;assert.match(await navigate('?app_version='+current+'&update_check=2&__gscg_build_check=1'),/NEW CARD/);
+ assert.match(await navigate(''),/NEW CARD/,'Accepted version persists after reopening');
+ console.log('PASS manual update '+origin+': install/reopen retain old card and scripts; button visible; partial download retains old build; explicit update installs complete build');
+}
