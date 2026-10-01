@@ -77,7 +77,7 @@ assert.ok(html.indexOf('id="hubShareGeneral"')<html.indexOf('<details class="vie
 console.log('PASS R145 approved entry: adjacent create buttons, real empty state, create/view scores order, saved-event actions, results after selection, direct LIVE share.');
 
 // A return to General must remove the category filter from the actual handler.
-const monitorContext={$:element,root:{document:{body:{classList:{toggle(){}}}}},tournamentPortalOpen:false,state:{generalToken:'event'},demoMode:()=>false,setPageTitle(){},renderTournamentShelf(){},renderAll(){},renderScoresHeading(){},setStatus(){},categoryCardOpen:true};
+const monitorContext={$:element,root:{document:{body:{classList:{toggle(){}}}}},tournamentPortalOpen:false,state:{generalToken:'event'},demoMode:()=>false,setPageTitle(){},renderTournamentShelf(){},renderAll(){},renderScoresHeading(){},renderLeaderboard(){},setStatus(){},categoryCardOpen:true};
 element('hubCategory').value='championship';
 vm.runInNewContext(source.slice(source.indexOf('  function showMonitor(kind){'),source.indexOf('  function clearHash(){'))+';showMonitor("general")',monitorContext);
 assert.equal(element('hubCategory').value,'all','General returns to all players after Category');
@@ -96,12 +96,12 @@ monitorContext.root.GSCPersonalEvents.membership=()=>({role:'viewer',players:[]}
 element('hubCategory').value='b';
 vm.runInNewContext('showMonitor("categories")',monitorContext);
 assert.equal(element('hubCategory').value,'b','Spectator preserves the chosen player category');
-const compactContext={general:null,$:element,fold:x=>String(x||'').toLowerCase(),state:{follows:[],generalToken:'token'},root:{GSCScoresUI:{bindRows(){}},GSCPersonalEvents:{descriptor:()=>({eventKind:'tournament'})}},escapeHtml:s=>String(s),relation:s=>String(s)};
+const compactContext={general:null,activeMonitor:'general',$:element,fold:x=>String(x||'').toLowerCase(),state:{follows:[],generalToken:'token'},root:{GSCScoresUI:{bindRows(){}},GSCPersonalEvents:{descriptor:()=>({eventKind:'tournament'})}},escapeHtml:s=>String(s),relation:s=>String(s)};
 element('hubSearch').value='';
 const compactWrap={innerHTML:'',querySelectorAll:()=>[]};compactContext.wrap=compactWrap;compactContext.rows=[{name:'DEMO 03',rankLabel:'T2',categoryLabel:'B',currentHole:3,holes:3,gross:15,net:12,relativeToPar:0,streamId:'g',playerId:'p'}];
 vm.runInNewContext(source.slice(source.indexOf('  function renderCompactScores('),source.indexOf('  function totalCell('))+';renderCompactScores(wrap,rows)',compactContext);
-assert.match(compactWrap.innerHTML,/<th>POS<\/th>/);
-assert.match(compactWrap.innerHTML,/<td>T2<\/td>/,'Ranking label including ties is displayed unchanged');
+assert.match(compactWrap.innerHTML,/<th>NOMBRE<\/th><th>HOYO<\/th><th>GROSS<\/th><th>NETO<\/th><th>\+\/−<\/th>/);
+assert.doesNotMatch(compactWrap.innerHTML,/<th>POS<\/th>/,'Approved five-column layout omits position');
 console.log('PASS player category / spectator category / search return / visible position including ties');
 // Spectator search exposes both standings from the same official ranking engine.
 const searchStreams=hub.demoTournamentStreams();
@@ -116,7 +116,7 @@ assert.match(element('hubSearchResults').innerHTML,/ · CATEGORÍA (?:T?\d+|—)
 console.log('PASS spectator search displays general and category standings without changing favorites');
 
 const scoresCSS=fs.readFileSync('scores-ui.css','utf8');
-assert.doesNotMatch(scoresCSS,/#hubShowIndividual[^{}]*\{[^}]*display\s*:\s*none/,'Approved search entry must not be hidden by shared Scores styles');
-assert.doesNotMatch(scoresCSS,/#hubSearchResults[^{}]*\{[^}]*display\s*:\s*none/,'Search results must remain visible in search mode');
+assert.match(scoresCSS,/#hubShowIndividual[^{}]*\{[^}]*display\s*:\s*none/,'Approved three tabs use the visible inline player search');
+assert.match(scoresCSS,/#hubSearchResults[^{}]*\{[^}]*display\s*:\s*none/,'Inline search filters the approved compact table');
 assert.match(scoresCSS,/\.monitor-switch\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)\}/);
 console.log('PASS approved four entries and search results are not overridden by Scores CSS');

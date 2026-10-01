@@ -94,3 +94,70 @@ body.hub-scores-view:not(.private-live-view) .scores-compact th:first-child{widt
 body.hub-scores-view:not(.private-live-view) .scores-compact th:nth-child(2){width:30%}
 .scores-compact th:last-child{width:30px}
 .scores-compact button{width:28px;min-height:44px}
+
+/* R147.2.4.1: tournament Scores reference approved 30 September, five columns. */
+body.hub-scores-view:not(.private-live-view):not(.public-display) .hub{box-sizing:border-box;width:min(780px,calc(100% - 24px));margin:90px auto 24px;padding:16px 12px;border:1px solid #31ff00;border-radius:20px;background:#070b09}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head{padding:0 0 14px;border:0;border-bottom:1px solid #303733;border-radius:0;background:transparent}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubBack{display:none!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubTournamentHome{margin:0 0 14px;width:auto;min-height:44px;padding:8px 0;border:0;background:transparent;color:#31ff00;font-size:16px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubState:not(.warning):not(.error){display:none}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch{position:static;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch button{min-height:56px;border-radius:12px;font-size:clamp(12px,3.3vw,17px);color:#31ff00;background:transparent}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShowIndividual{display:none}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel{padding:0;border:0;background:transparent;display:flex;flex-direction:column;gap:12px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel>.search{grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:8px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubSearchButton,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubSearchResults{display:none!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .search input{height:56px;font-size:16px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral{width:100%;margin:0;min-width:0;min-height:56px;border:1px solid #31ff00;border-radius:12px;background:transparent;color:#31ff00;font-size:14px;white-space:normal}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .category-filter{margin:0;grid-template-columns:1fr}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategory{height:48px;color:#31ff00;font-size:16px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCourse{display:none}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .viewer-tools{order:5;margin:0}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .leader-wrap{border:1px solid #303733;border-radius:14px;overflow:hidden;margin:0}
+body.hub-scores-view:not(.private-live-view) .scores-compact th:first-child{width:44%;text-align:left;padding-left:6px}
+body.hub-scores-view:not(.private-live-view) .scores-compact th:nth-child(2){width:13%;text-align:center}
+body.hub-scores-view:not(.private-live-view) .scores-compact th:last-child{width:15%}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:first-child{text-align:left}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:nth-child(2){text-align:center}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:nth-child(4){color:#31ff00}
+body.hub-scores-view:not(.private-live-view) .scores-compact td.over{color:#ff443d}
+body.hub-scores-view:not(.private-live-view) .scores-compact td.under{color:#31ff00}
+.scores-name{display:flex;align-items:center;gap:4px}.scores-name span{min-width:0}.scores-name button{flex:0 0 28px;border:0;background:transparent}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help{position:static;padding:12px 0 0;border:0;background:transparent;text-align:left;font-size:12px;line-height:1.7}
+
+/* Approved 2—Categoría composition, normalized from the original 1227px reference. */
+body.hub-scores-view:not(.private-live-view):not(.public-display) .hub{position:relative;width:min(780px,88.7%);margin:100px auto 24px;padding:10px 9px 12px;border-radius:16px;background:#080d0b;font-family:Arial,sans-serif}
+.scores-return{display:none}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-return{display:block;position:absolute;top:-36px;left:0;padding:0;min-height:28px;border:0;background:transparent;color:#31ff00;font:400 15px Arial,sans-serif;text-align:left}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head{margin:0 0 10px;gap:6px 12px;padding-bottom:10px;grid-template-columns:minmax(0,1fr) 38%!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head>img{width:100%!important;max-width:none;justify-self:end;object-fit:contain}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head h1{font:900 19px/1.2 Arial,sans-serif!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventName{font:900 15px/1.3 Arial,sans-serif!important;text-transform:uppercase;margin-top:5px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventMeta{font:400 14px/1.4 Arial,sans-serif!important;text-transform:uppercase;margin:0;color:#b5bcba}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch{display:grid!important;margin:0 0 10px;gap:5px;grid-template-columns:repeat(3,minmax(0,1fr))}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch button{font:400 14px/1.3 Arial,sans-serif;min-height:50px;padding:5px 3px;border-radius:9px;border-color:#303b35;background:transparent}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch button.active{border-color:#31ff00}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel{display:flex!important;gap:10px;padding:0;margin:0}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel>.search{display:grid!important;gap:7px;margin:0;grid-template-columns:minmax(0,2.15fr) minmax(0,1fr)}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .search input{height:46px;min-width:0;border:1px solid #303b35;border-radius:9px;background:#070b09;color:#fff;padding:0 9px;font:400 14px Arial,sans-serif}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .search input::placeholder{color:#b5bcba;opacity:1}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral{display:block;min-height:46px;height:auto;padding:4px 2px;font:400 14px/1.25 Arial,sans-serif;border-radius:9px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral[hidden]{display:block!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .category-filter{display:grid!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategory{height:36px;padding:0 9px;border:1px solid #303b35;border-radius:9px;background:#080d0b;font:400 14px Arial,sans-serif}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .leader-wrap{border-radius:10px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact{font:900 14px Arial,sans-serif}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th{height:36px;font:400 14px Arial,sans-serif;color:#b5bcba;background:#0d1411;white-space:nowrap}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact td{height:48px;padding:5px 2px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:first-child{width:42.5%;padding-left:4px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(2){width:13.5%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(3){width:16%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(4){width:14.5%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:last-child{width:13.5%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact small{font:400 11px/1.3 Arial,sans-serif;margin-top:4px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-name{gap:5px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-name button{flex-basis:32px;width:32px;color:#31ff00;font-size:20px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help{padding:0;font:400 10.5px/1.9 Arial,sans-serif;color:#b5bcba}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help span{display:block;font-size:14px;margin-top:5px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubTournamentHome,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubIndividualPanel,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategoryCard,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubMyPosition{display:none!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .viewer-tools,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubPersonalOrganization,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubPersonalScoreCard{display:none!important}

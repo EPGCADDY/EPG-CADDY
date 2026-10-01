@@ -63,3 +63,20 @@ for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.verc
  assert.match(await navigate(''),/NEW CARD/,'Accepted version persists after reopening');
  console.log('PASS manual update '+origin+': install/reopen retain old card and scripts; button visible; partial download retains old build; explicit update installs complete build');
 }
+
+// Historical source, 70db4e8: prove why an unadopted legacy worker cannot be certified.
+{
+ const legacy=fs.readFileSync('tests/fixtures/r14723-service-worker-before-manual-consent.js','utf8');
+ const stores=new Map(),listeners={},origin='https://golf-sc-gt-lab.vercel.app';
+ const key=input=>new URL(typeof input==='string'?input:input.url,origin).pathname;
+ const open=async name=>{if(!stores.has(name))stores.set(name,new Map());const data=stores.get(name);return{match:async input=>data.get(key(input))?.clone(),put:async(input,response)=>data.set(key(input),response.clone()),keys:async()=>[...data.keys()]}};
+ const caches={open,keys:async()=>[...stores.keys()],delete:async name=>stores.delete(name),match:async(input,{cacheName}={})=>{if(cacheName)return(await open(cacheName)).match(input);for(const name of stores.keys()){const r=await(await open(name)).match(input);if(r)return r}}};
+ const prefix=legacy.match(/const CACHE_NAME="([^"]+)"/)[1],release='LEGACY-NEXT';
+ await(await open(prefix+'-approved-before')).put('/index-grupal.html',new Response('<head><meta name="gscg-release" content="OLD"></head><body>OLD CARD</body>'));
+ const ctx=vm.createContext({URL,Response,Headers,Date,caches,fetch:async input=>key(input)==='/release.json'?Response.json({release}):new Response(key(input)==='/index-grupal.html'?'<head><meta name="gscg-release" content="'+release+'"></head><body>NEW CARD</body>':'SCRIPT'),self:{location:{origin},clients:{claim:async()=>{}},skipWaiting:async()=>{},addEventListener:(name,cb)=>listeners[name]=cb}});
+ vm.runInContext(legacy,ctx);
+ for(const name of ['install','activate']){let pending;listeners[name]({waitUntil:promise=>pending=promise});await pending}
+ let response;listeners.fetch({request:{url:origin+'/index-grupal.html',method:'GET',mode:'navigate'},respondWith:promise=>response=promise});
+ const page=await(await response).text();assert.match(page,/NEW CARD/);assert.doesNotMatch(page,/OLD CARD/);
+ console.log('PASS legacy negative control: 70db4e8 auto-promotes before consent; legacy adoption must remain a separate migration check');
+}
