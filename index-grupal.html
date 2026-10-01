@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20261001-R147.2.4.9">
+  <meta name="gscg-release" content="LABORATORIO-20261001-R147.2.4.10">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -2058,6 +2058,7 @@ function applyInlineManualRosterPhrase(input,index){
   ;updateGeneralSetupValidity();return true;
 }
 
+function formatRoundElapsed(ms){const sec=Math.max(0,Math.floor((Number(ms)||0)/1000)),hh=String(Math.floor(sec/3600)).padStart(2,"0"),mm=String(Math.floor((sec%3600)/60)).padStart(2,"0"),ss=String(sec%60).padStart(2,"0");return `${hh}:${mm}:${ss}`}
 function roundElapsedSecondsAt(endMs){const start=new Date(round.createdAt).getTime(),pausedTotal=Math.max(0,Number(round.timerPausedTotalMs)||0),pausedAt=round.timerPausedAt?Date.parse(round.timerPausedAt):NaN,effectiveEnd=Number.isFinite(pausedAt)?Math.min(endMs,pausedAt):endMs;return Math.max(0,Math.floor((effectiveEnd-start-pausedTotal)/1000))}
 function roundElapsedSeconds(){const end=round.endedAt?new Date(round.endedAt).getTime():round.timerPausedAt?new Date(round.timerPausedAt).getTime():Date.now();return roundElapsedSecondsAt(end)}
 function roundElapsedText(){const sec=roundElapsedSeconds(),hh=String(Math.floor(sec/3600)).padStart(2,"0"),mm=String(Math.floor((sec%3600)/60)).padStart(2,"0"),ss=String(sec%60).padStart(2,"0");return `${hh}:${mm}:${ss}`}

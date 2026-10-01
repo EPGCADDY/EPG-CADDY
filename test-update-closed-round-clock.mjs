@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const html=fs.readFileSync('index-grupal.html','utf8');
+const start=html.indexOf('function formatRoundElapsed(')>=0?html.indexOf('function formatRoundElapsed('):html.indexOf('function roundElapsedSecondsAt(');
+const code=html.slice(start,html.indexOf('let roundTimerIdleTimeout=',start));
+const nodes=new Map(['roundTimerToggle','roundElapsedStatus','roundTotalStatus','roundStartStatus','roundEndStatus'].map(id=>[id,{textContent:'',setAttribute(){}}]));
+const context=vm.createContext({Intl,Date,round:{configured:true,createdAt:'2026-10-01T12:00:00Z',endedAt:'2026-10-01T12:13:26Z',players:[]},$:id=>nodes.get(id)});
+vm.runInContext(code,context);
+context.renderRoundClockButton();
+assert.equal(nodes.get('roundTotalStatus').textContent,'00:13:26');
+assert.equal(nodes.get('roundElapsedStatus').textContent,'00:13:26');
+for(let tick=0;tick<3;tick++)assert.doesNotThrow(()=>context.renderRoundClockButton());
+context.round.configured=false;context.renderRoundClockButton();assert.equal(nodes.get('roundTotalStatus').textContent,'00:00:00');
+console.log('PASS update recovery: restored closed round renders timer on every tick without ReferenceError or changing saved timestamps');
