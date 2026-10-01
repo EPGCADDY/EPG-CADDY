@@ -189,5 +189,8 @@
         }
       ]
     }
-  ]
+  ],
+  "env": {
+    "GSC_PERSONAL_ACCESS_PRODUCTION_READY": "1"
+  }
 }
