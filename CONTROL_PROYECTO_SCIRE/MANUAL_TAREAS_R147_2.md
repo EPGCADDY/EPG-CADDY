@@ -153,3 +153,10 @@ Cambios locales después de 8bccff9: release/index/worker R147.2.4.1; control ne
 Limitación verificada: navegador cloud no abrió http://127.0.0.1:8765/live-hub.html?demo=1, ERR_BLOCKED_BY_CLIENT. Revisar por Preview. No clasificarlo como bot ni afirmar que la app está caída.
 
 Respaldo recuperable de TODOS los cambios locales y fixture: CONTROL_PROYECTO_SCIRE/RECUPERACION_R147_2_4_1.patch, basado en 9552ffb. Si falta el workspace, comparar árbol/base y ejecutar git apply --check antes de aplicar; el patch conserva el trabajo, no prueba calidad ni publicación.
+
+## Aclaración obligatoria del propietario — 21:50:59
+El propietario ABRIÓ el torneo KIRSTES y confirma jugadores registrados en la Score Card con algunos hoyos jugados y scores anotados. Al ir a la tabla sólo apareció el nombre del torneo. Pulsó General, Individual y Categorías y no abrió absolutamente nada. El formato actual tampoco cumple la referencia.
+
+Esta evidencia reemplaza cualquier interpretación de que no tiene scores: los scores EXISTEN localmente según el propietario. La consulta con cero streams demuestra sólo que no hay snapshots asociados al torneo en LAB. Tarea 3 debe investigar y corregir el recorrido Score Card → asociación al torneo KIRSTES → escritor/publicación de snapshot → lectura del monitor → tabla. No borrar ni reemplazar los scores locales, no exigir reanotarlos y no insertar ejemplos. Verificar que los tres controles citados sí cambien de vista y muestren los datos que corresponden. El cierre requiere prueba de esa cadena, además del formato y detalle de 18 hoyos.
+
+21:51:19 — El propietario confirma que tanto PRODUCCIÓN como LABORATORIO contienen jugadores con scores ya anotados para hacer los ejercicios. Probar los flujos en AMBOS entornos con esos datos existentes, sin borrar, modificar ni reanotar scores. No concluir que no existen datos porque una consulta por nombre de torneo no devuelve streams; verificar vínculo local/evento/grupo y publicación en cada entorno.
