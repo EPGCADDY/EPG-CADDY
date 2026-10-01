@@ -142,7 +142,7 @@ body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPan
 body.hub-scores-view:not(.private-live-view):not(.public-display) .search input{height:46px;min-width:0;border:1px solid #303b35;border-radius:9px;background:#070b09;color:#fff;padding:0 9px;font:400 14px Arial,sans-serif}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .search input::placeholder{color:#b5bcba;opacity:1}
 body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral{display:block;min-height:46px;height:auto;padding:4px 2px;font:400 14px/1.25 Arial,sans-serif;border-radius:9px}
-body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral[hidden]{display:block!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral:disabled{opacity:1;cursor:default}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .category-filter{display:grid!important}
 body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategory{height:36px;padding:0 9px;border:1px solid #303b35;border-radius:9px;background:#080d0b;font:400 14px Arial,sans-serif}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .leader-wrap{border-radius:10px}
@@ -161,3 +161,23 @@ body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help{p
 body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help span{display:block;font-size:14px;margin-top:5px}
 body.hub-scores-view:not(.private-live-view):not(.public-display) #hubTournamentHome,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubIndividualPanel,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategoryCard,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubMyPosition{display:none!important}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .viewer-tools,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubPersonalOrganization,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubPersonalScoreCard{display:none!important}
+
+@media(min-width:600px){body.hub-scores-view:not(.private-live-view):not(.public-display) .hub{container-type:inline-size;padding:22px 21px;border-radius:36px}body.hub-scores-view:not(.private-live-view):not(.public-display) .head h1{font-size:5.8cqw!important}body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventName{font-size:4.6cqw!important}body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventMeta{font-size:4.3cqw!important}body.hub-scores-view:not(.private-live-view):not(.public-display) .head{gap:12px 26px;padding-bottom:22px;margin-bottom:22px}body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch{gap:12px;margin-bottom:22px}body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch button{font-size:4.3cqw;min-height:15cqw;border-radius:20px}body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel{gap:22px}body.hub-scores-view:not(.private-live-view):not(.public-display) .search input,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral{font-size:4.3cqw;height:14cqw;border-radius:20px}body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategory{font-size:4.3cqw;height:11cqw;border-radius:20px}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact,body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th{font-size:4.3cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th{height:11cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact td{height:15cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact small{font-size:3.4cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-name{gap:12px}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-name button{flex-basis:9cqw;width:9cqw;font-size:6cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help{font-size:3.2cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help span{font-size:4.3cqw}}
+
+/* Shared Scores typography: equivalent labels and values match in every view. */
+:root{--scores-font:Arial,sans-serif;--scores-text-size:14px;--scores-title-size:19px;--scores-caption-size:11px}
+.scores-heading,.scores-detail,.scores-compact,.private-score-panel,.private-score-table{font-family:var(--scores-font)!important}
+.scores-heading .scores-heading-top h2,body.hub-scores-view:not(.private-live-view):not(.public-display) .head h1{font-size:var(--scores-title-size)!important}
+.scores-event,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventName{font-size:15px!important}
+.scores-meta,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventMeta,.scores-compact,.scores-compact th,.scores-compact strong,.private-score-table,.private-score-table th,.scores-nine,.scores-nine th,.scores-detail h3{font-size:var(--scores-text-size)!important}
+.scores-compact small,.scores-detail p,.scores-help,.scores-nine th:first-child small{font-size:var(--scores-caption-size)!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch button,body.hub-scores-view:not(.private-live-view):not(.public-display) .search input,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategory{font:400 var(--scores-text-size)/1.3 var(--scores-font)!important}
+
+/* Owner correction: logos 25% larger across Scores, with original proportions. */
+.scores-heading-top{display:grid;grid-template-columns:minmax(0,1fr) 47.5%;align-items:center;gap:12px}
+.scores-heading .scores-heading-top h2{grid-column:1;grid-row:1}
+.scores-heading img,.private-score-panel .scores-heading img{grid-column:2;grid-row:1;width:100%;max-width:none;height:auto;justify-self:end}
+body.hub-scores-view:not(.public-display) .head{grid-template-columns:minmax(0,1fr) 175px!important}
+body.hub-scores-view:not(.public-display) .head>img{width:175px!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head{grid-template-columns:minmax(0,1fr) 47.5%!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head>img{width:100%!important}
