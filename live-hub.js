@@ -489,6 +489,16 @@
       if(token&&!privateEvent)await selectSavedTournament(token);
       else{showTournamentPortal();registeredTournamentsOpen=true;renderTournamentShelf();setStatus("SELECCIONA UN TORNEO PARA VER SUS SCORES","");}
     }
+    const shortcut=params.get("shortcut"),monitor=params.get("monitor")||shortcut;
+    if(["general","categories","search","board"].includes(monitor)){
+      // Resolve the authorized tournament before selecting its view; no timer race.
+      if(state.generalToken&&tournamentPortalOpen)await selectSavedTournament(state.generalToken);
+      showMonitor(monitor==="search"?"add":monitor==="board"?"individual":monitor);
+      if(state.generalToken)await refresh();
+    }
+    if(shortcut==="add")$("hubAddTournament")?.click();
+    if(shortcut==="remove")$("hubRemoveGeneral")?.click();
+    if(shortcut==="clear-board")$("hubClearFavorites")?.click();
     if(publicDisplay)activatePublicDisplay();
     return true;
   }

@@ -2693,3 +2693,18 @@ Identificador único personal en alta y migración SHA-256 de enlaces anteriores
 Banco nuevo: `test-tournament-shelf-canonical.mjs` valida alias duplicados, retiro persistente y conservación de eventos ajenos.
 
 R21 navegador: alta y General/Categorías/Favoritos/detalle PASS; revisión adicional detectó que el retorno desde tarjeta personal escribía la selección fuera de su cuenta. live-hub.js conserva ahora el prefijo de la tarjeta origen y rechaza cuenta/origen ajenos. Se revalida el recorrido antes de promover.
+
+## R147.2.4.22 · MENÚ sincronizado con Score Card · 1 octubre 2026
+General, Categorías, Buscar Jugador y Favoritos usan la misma ruta/escritor de SCORES TORNEO, con personalEvent y retorno de la tarjeta actual. MENÚ lee el estante de su cuenta. El hub aplica la vista después de cargar identidad/evento; se elimina la carrera de 250ms. MI SCORE CARD conserva returnTo y la cuenta original. Cambian shortcuts-ui.js, index-grupal.html, live-hub.js, service-worker.js, release.json, scripts/build-manual-lab.mjs, test-menu-scorecard-tournament-sync.mjs, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md y CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json. Banco negativo con otro torneo guardado: test-menu-scorecard-tournament-sync.mjs. Browser/deploy pendientes. Rollback main 40ea15ffff18188ee2784a2b97d6da228bfabe40; sin migración de datos.
+
+Orden adicional: MONITOR DEL TORNEO EN VIVO se renombra GENERAL en MENÚ. Se actualizan test-lab-shortcuts-navigation.mjs y test-lab-global-operational-audit.mjs para exigir el nombre vigente. Registro en CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md.
+
+Orden adicional 12:25 Guatemala: retirar completamente GESTIONAR y + AGREGAR OTRO TORNEO, SALIR DE ESTE TORNEO, QUITAR DE MIS TORNEOS, VACIAR TABLERO DE MIS FAVORITOS del MENÚ. test-lab-shortcuts-navigation.mjs exige su ausencia.
+
+Orden adicional 12:26 Guatemala: retirar MIS TORNEOS / lista de guardados del MENÚ. TORNEOS se conserva como acceso principal.
+
+El control scripts/manual-screen-parity-gate.mjs exige GENERAL y TORNEOS en el MENÚ vigente según las órdenes adicionales; el capítulo histórico del manual mantiene su versión propia.
+
+Revisión de recorrido completo: Manual conserva returnTo, personalEvent y personalKind; MI SCORE CARD y rutas de Scores desde Manual regresan a la misma tarjeta personal. Banco negativo adicional en test-menu-scorecard-tournament-sync.mjs.
+
+El contrato histórico test-lab-r60-physical-matrix.mjs se actualiza a TORNEOS y GENERAL según la orden vigente, manteniendo las pruebas de navegación, scores y flotación.

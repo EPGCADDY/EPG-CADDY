@@ -24,7 +24,7 @@ assert(hub.includes('TABLERO DE MIS FAVORITOS'),'Falta favoritos');
 assert(hub.includes('rankLabel'),'Falta posición oficial');
 assert(hub.includes('COMPARTIR'),'Falta compartir torneo');
 assert(hub.includes('VER DETALLE LIVE DE CATEGORÍA'),'Falta detalle por categoría');
-assert(ui.includes('MI SCORE CARD')&&ui.includes('MANUAL DE USUARIO')&&ui.includes('MIS TORNEOS'),'MENÚ incompleto');
+assert(ui.includes('MI SCORE CARD')&&ui.includes('MANUAL DE USUARIO')&&ui.includes('TORNEOS')&&ui.includes('GENERAL'),'MENÚ incompleto');
 assert(ui.includes('position:fixed!important'),'MENÚ no es flotante');
 
 console.log('PASS R60 matriz contractual: doble toque, puntos, audio, compartir, menú, update, cierre, tarjeta, historial y corrección; acceso general libre');

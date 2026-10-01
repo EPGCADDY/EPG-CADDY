@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20261001-R147.2.4.21">
+  <meta name="gscg-release" content="LABORATORIO-20261001-R147.2.4.22">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -4125,7 +4125,7 @@ function currentRoundReturnPath(){
   url.searchParams.set('round_return','1');
   return url.pathname+url.search;
 }
-async function openRoundTournament(scores=false){
+async function openRoundTournament(scores=false,monitor="general"){
   persist();
   const url=new URL("/live-hub.html",location.origin),current=new URL(location.href);
   let selection;try{selection=JSON.parse(localStorage.getItem('gsc-tournament-connect-selection-v1')||'null')}catch{}
@@ -4138,6 +4138,7 @@ async function openRoundTournament(scores=false){
   if(scores){
     if(selection?.personal&&selection.roundId===round.id&&selection.players?.length===round.players.length&&round.players.every(player=>selection.players.some(assigned=>assigned.id===player.id))){round.personalEventId=selection.id;round.liveGroupLabel=selection.groupLabel;round.tournament={name:selection.label};persist();}
     url.searchParams.set("shortcut","scores");
+    if(["categories","search","board"].includes(monitor))url.searchParams.set("monitor",monitor);
     const privateEvent=selection?.eventKind==='private'||current.searchParams.get("personalKind")==="private";
     const eventId=privateEvent?'':round.personalEventId||current.searchParams.get("personalEvent")||(selection?.personal?selection.id:'');
     if(eventId){url.searchParams.set("personalEvent",eventId);url.searchParams.set("personalKind","tournament")}
