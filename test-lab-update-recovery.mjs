@@ -49,12 +49,12 @@ for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.verc
  const previous=await open(prefix+'-approved-previous');
  await previous.put('/index-grupal.html',new Response('<head><meta name="gscg-release" content="OLD"></head><body>OLD CARD</body>'));
  await previous.put('/live-control.js',new Response('OLD SCRIPT'));
- let broken=false,denied=false,authorizationChecks=0;
- const worker=vm.createContext({URL,Response,Headers,Date,caches,fetch:async input=>{const path=key(input);if(typeof input!=='string'&&new URL(input.url).searchParams.has('personalEvent')){authorizationChecks++;if(denied)return new Response('PERSONAL ACCESS DENIED',{status:403})}if(broken&&path==='/live-control.js')throw Error('offline');if(path==='/release.json')return Response.json({release:current});return new Response(path==='/index-grupal.html'?'<head><meta name="gscg-release" content="'+current+'"></head><body>NEW CARD</body>':'NEW SCRIPT')},self:{location:{origin},clients:{claim:async()=>{}},skipWaiting:async()=>{},addEventListener:(name,callback)=>listeners[name]=callback}});
+ let broken=false,denied=false,authorizationChecks=0,installShellFetches=0;
+ const worker=vm.createContext({URL,Response,Headers,Date,caches,fetch:async input=>{const path=key(input);if(path!=='/release.json')installShellFetches++;if(typeof input!=='string'&&new URL(input.url).searchParams.has('personalEvent')){authorizationChecks++;if(denied)return new Response('PERSONAL ACCESS DENIED',{status:403})}if(broken&&path==='/live-control.js')throw Error('offline');if(path==='/release.json')return Response.json({release:current});return new Response(path==='/index-grupal.html'?'<head><meta name="gscg-release" content="'+current+'"></head><body>NEW CARD</body>':'NEW SCRIPT')},self:{location:{origin},clients:{claim:async()=>{}},skipWaiting:async()=>{},addEventListener:(name,callback)=>listeners[name]=callback}});
  vm.runInContext(code,worker);
  const lifecycle=async name=>{let pending;listeners[name]({waitUntil:promise=>pending=promise});await pending};
  const navigate=async query=>{let pending;listeners.fetch({request:{url:origin+'/index-grupal.html'+query,method:'GET',mode:'navigate'},respondWith:promise=>pending=promise});return (await pending).text()};
- await lifecycle('install');await lifecycle('activate');
+ await lifecycle('install');assert.equal(installShellFetches,0,'A controller update with an approved card must not wait for the whole new shell before it can offer ACTUALIZAR');await lifecycle('activate');
  let page=await navigate('');assert.match(page,/OLD CARD/);assert.match(page,/gscFallbackUpdateButton/);assert.doesNotMatch(page,/NEW CARD/);
  assert.match(await navigate('?app_version='+current),/OLD CARD/,'Version parameter alone is not consent');
  const personal='?personalEvent=existing&personalAccount=account-a';

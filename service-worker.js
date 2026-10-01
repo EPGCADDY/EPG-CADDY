@@ -2,9 +2,9 @@
 
 const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
-const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-1-manual-confirmation`;
-const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-1-manual-confirmation`;
-const RELEASE_FALLBACK="LABORATORIO-20260930-R147.2.4.1";
+const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-2-update-delivery`;
+const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-2-update-delivery`;
+const RELEASE_FALLBACK="LABORATORIO-20261001-R147.2.4.2";
 let RELEASE=RELEASE_FALLBACK;
 async function fetchPublishedRelease(){
   try{
@@ -104,7 +104,15 @@ async function promoteCandidate(){
   await copyCache(ACTIVE_CACHE_NAME,APPROVED_CACHE_NAME);
 }
 
-self.addEventListener("install",event=>event.waitUntil((async()=>{await fetchPublishedRelease();await refreshShell();await ensureApprovedShell();await self.skipWaiting()})()));
+self.addEventListener("install",event=>event.waitUntil((async()=>{
+  await fetchPublishedRelease();
+  // Adopt the delivery controller independently of downloading the next app.
+  // Existing approved cards stay intact; their new shell is fetched only on ACTUALIZAR.
+  await ensureApprovedShell();
+  const approved=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});
+  if(!approved){await refreshShell();await ensureApprovedShell()}
+  await self.skipWaiting();
+})()));
 self.addEventListener("activate",event=>event.waitUntil((async()=>{await fetchPublishedRelease();await ensureApprovedShell();await self.clients.claim()})()));
 self.addEventListener("message",event=>{
   if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
