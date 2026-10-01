@@ -149,11 +149,11 @@ body.hub-scores-view:not(.private-live-view):not(.public-display) .leader-wrap{b
 body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact{font:900 14px Arial,sans-serif}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th{height:36px;font:400 14px Arial,sans-serif;color:#b5bcba;background:#0d1411;white-space:nowrap}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact td{height:48px;padding:5px 2px}
-body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:first-child{width:42.5%;padding-left:4px}
-body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(2){width:13.5%}
-body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(3){width:16%}
-body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(4){width:14.5%}
-body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:last-child{width:13.5%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:first-child{width:38%;padding-left:4px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(2){width:14%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(3){width:18%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(4){width:15%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:last-child{width:15%}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact small{font:400 11px/1.3 Arial,sans-serif;margin-top:4px}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-name{gap:5px}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-name button{flex-basis:32px;width:32px;color:#31ff00;font-size:20px}
