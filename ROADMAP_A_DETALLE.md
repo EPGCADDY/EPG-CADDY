@@ -3260,3 +3260,21 @@ Archivos de esta versión:
 - `test-lab-r60-physical-matrix.mjs` · exige los cinco nombres exactos del menú ordenados para B7.
 
 - `scripts/manual-screen-parity-gate.mjs` · control de nombres del menú actualizado a la orden B7; resto del banco conservado.
+
+
+### R24-B8 · 2 octubre 2026 17:22 Guatemala · Scores agrupados
+Orden más reciente: todos los Scores juntos; SCORES POR CATEGORÍA y MIS FAVORITOS. Sección SCORES exclusiva con cinco accesos contiguos: TORNEO, MI GRUPO, GENERAL, POR CATEGORÍA y FAVORITOS. Buscar y otras funciones fuera del bloque. Destinos y permisos sin cambio. B7 READY ambos dominios: dpl_pPbsZqWJFaWKshMfCTWx3CCFVyVi / dpl_3VNVqkBvxTAWjNSbosqxxPb4H8GY. Navegador real verificó cinco rutas, detalle18, retorno5/4 y ACTUALIZAR preservando registro. LAB creó QA LAB B7 CODIGO y devolvió código64WHBJ8RHF; Preview no configurado para API personal. No se declara iPhone ni WhatsApp enviado. B8 pendiente Preview y publicación.
+- `shortcuts-ui.js` · agrupación, nombre, release, regresión o control B8.
+- `index-grupal.html` · agrupación, nombre, release, regresión o control B8.
+- `service-worker.js` · agrupación, nombre, release, regresión o control B8.
+- `release.json` · agrupación, nombre, release, regresión o control B8.
+- `test-lab-shortcuts-navigation.mjs` · agrupación, nombre, release, regresión o control B8.
+- `test-lab-global-operational-audit.mjs` · agrupación, nombre, release, regresión o control B8.
+- `test-lab-r60-physical-matrix.mjs` · agrupación, nombre, release, regresión o control B8.
+- `scripts/manual-screen-parity-gate.mjs` · agrupación, nombre, release, regresión o control B8.
+- `ROADMAP_OVERALL.md` · agrupación, nombre, release, regresión o control B8.
+- `ROADMAP_A_DETALLE.md` · agrupación, nombre, release, regresión o control B8.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R147_2_4_24.md` · agrupación, nombre, release, regresión o control B8.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · agrupación, nombre, release, regresión o control B8.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · agrupación, nombre, release, regresión o control B8.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · agrupación, nombre, release, regresión o control B8.

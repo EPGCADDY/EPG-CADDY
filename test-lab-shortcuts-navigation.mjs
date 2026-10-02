@@ -6,7 +6,7 @@ const app=fs.readFileSync("index-grupal.html","utf8");
 assert(hub.includes('$("hubBack").onclick=()=>{if(scorecardReturn){root.location.assign(scorecardReturn.toString());return}const url=new URL("/index-grupal.html"'),"Cerrar debe priorizar la Score Card de origen y conservar el destino directo de respaldo");
 assert(!hub.includes('$("hubBack").onclick=()=>{root.close();setTimeout(()=>root.history.back(),100)}'),"No usar history.back para volver al Score Card");
 for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAddToBoard","hubTournamentHome"])assert(hub.includes(id),"Falta destino "+id);
-for(const label of ["MI SCORE CARD","SCORES TORNEO","SCORES MI GRUPO","SCORES GENERAL","SCORES CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS"])assert(ui.includes(label),"Falta atajo "+label);
+for(const label of ["MI SCORE CARD","SCORES TORNEO","SCORES MI GRUPO","SCORES GENERAL","SCORES POR CATEGORÍA","BUSCAR JUGADOR","MIS FAVORITOS"])assert(ui.includes(label),"Falta atajo "+label);
 assert(!ui.includes('b.innerHTML="<img'),"MENÚ no debe insertar ningún logo en el botón");
 assert(ui.includes('b.innerHTML="<span>MENÚ</span>"'),"MENÚ debe mostrar sólo la palabra MENÚ grande y centrada");
 assert(!ui.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png"),"MENÚ no debe usar el icono PWA cuadrado");
@@ -29,3 +29,5 @@ assert(fs.readFileSync('event-administration.html','utf8').includes('[hidden]{di
 for(const [surface,expected] of [["scorecard","privateGroupScoresButton"],["hub","/index-grupal.html?manual_action=group-scores"]]){let target;const context={root:{},page:()=>surface,hubState:()=>({}),close(){},click:id=>target=id,nav:url=>target=url};vm.runInNewContext(dispatch+';act("group-scores")',context);assert.equal(target,expected)}
 assert(app.includes('"group-scores":()=>window.GSCPrivateRounds.openGroupScores(round)'));
 console.log("PASS Scores Mi Grupo menu uses current card and restores its own group from hub");
+
+const renderSource=ui.slice(ui.indexOf('function render()'),ui.indexOf('function organizer()'));let menuHtml;const renderContext={hubState:()=>({}),page:()=> 'scorecard',item:(action,label)=>'<button data-shortcut="'+action+'">'+label+'</button>',$:()=>({set innerHTML(value){menuHtml=value},querySelectorAll:()=>[]})};vm.runInNewContext(renderSource+';render()',renderContext);const scoresBlock=menuHtml.split('<h3>SCORES</h3>')[1];assert(scoresBlock,'Dedicated Scores block required');assert.deepEqual([...scoresBlock.matchAll(/data-shortcut="([^"]+)"/g)].map(m=>m[1]),['tournaments','group-scores','general','categories','board']);console.log('PASS all five Scores entries are contiguous in one dedicated section, with no intervening action');
