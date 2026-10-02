@@ -30,3 +30,9 @@ const seedSource=app.slice(app.indexOf('function seedManualDraftRowsFromPlayers(
 vm.runInNewContext(saveSource+seedSource+';persistDraftState();manualDraftRows=[];seedManualDraftRowsFromPlayers(true)',draftContext);
 assert.equal(draftContext.manualDraftRows[0].name,'QA incomplete','Incomplete raw rows survive reload without becoming official players');assert.equal(draftContext.draftPlayers.length,0);
 console.log('PASS incomplete raw registration persists and restores without inventing handicap/category/tee');
+
+const groupSource=fs.readFileSync('private-rounds.js','utf8');const groupFunction=groupSource.slice(groupSource.indexOf('  function openGroupScores(value)'),groupSource.indexOf('  function openScores(value)'));
+let groupTitle,groupHtml,boundRows;const groupSnapshot={course:'El Pulté',playedAt:'2026-10-02',players:[{id:'p1',name:'QA group',handicap:14,holes:[{hole:1,gross:5,net:4}],totals:{gross:5,net:4,relativeToPar:0}}]};
+const groupContext={round:null,read(){throw Error('explicit current round required')},ACTIVE:'active',show:(title,html)=>{groupTitle=title;groupHtml=html},escape:String,Math,root:{GSCLiveControl:{buildLiveSnapshot:r=>{assert.equal(r.id,'current-group');return groupSnapshot}},GSCScoresUI:{date:v=>v,bindRows:(_target,rows)=>boundRows=rows}},dialog:{querySelector:()=>({})}};
+vm.runInNewContext(groupFunction,groupContext);groupContext.openGroupScores({configured:true,id:'current-group',players:[{}],personalEventKind:'tournament'});assert.equal(groupTitle,'SCORES MI GRUPO');assert.match(groupHtml,/5<\/td><td style="color:#31ff00">4/);assert.equal(boundRows[0].player.holes[0].net,4);assert.equal(boundRows[0].snapshot,groupSnapshot,'18-score detail receives full official snapshot');assert.match(app,/privateGroupScoresButton.*openGroupScores\(round\)/);
+console.log('PASS own group Scores works for tournament card without private enrollment; official totals and full 18-hole detail bound');

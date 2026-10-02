@@ -4060,7 +4060,7 @@ document.addEventListener("contextmenu",lockScorecardSelection,{capture:true});
 document.addEventListener("dragstart",lockScorecardSelection,{capture:true});
 $("backToRegistrationButton").addEventListener("click",()=>isStablefordRound()||round.provisional?openNewRoundDraft():openCurrentRoundDataEditor());
 window.GSCMenuRoundActions={previous:()=>activatePreviousOperationalRound(),saved:()=>openCardLibrary()};$("previousStablefordRoundButton").addEventListener("click",()=>activatePreviousOperationalRound("stableford",true));
-$("privateGroupScoresButton").addEventListener("click",()=>openRoundTournament(true,"general","private"));
+$("privateGroupScoresButton").addEventListener("click",()=>window.GSCPrivateRounds.openGroupScores(round));
 function currentRoundReturnPath(){
   const url=new URL(location.href);url.pathname='/index-grupal.html';
   url.searchParams.delete('manual_action');url.searchParams.delete('inicio');

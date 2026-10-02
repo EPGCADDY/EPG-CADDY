@@ -54,6 +54,13 @@
   }
   function open(value){round=value||read(ACTIVE);const item=saved();if(item&&new Date(item.expiresAt||"2099-01-01")>new Date()&&(!item.roundId||item.roundId===active()?.id))return scores(item,true);show("GRUPO PARTICULAR",input("NOMBRE DEL GRUPO","privateName")+button("CREAR MI GRUPO","privateCreate"));dialog.querySelector('#privateCreate').onclick=create;dialog.querySelector('#privateName').focus()}
   function openCreate(value){round=value||read(ACTIVE);show("CREAR MI GRUPO",input("NOMBRE DEL GRUPO","privateName")+button("CREAR MI GRUPO","privateCreate"));dialog.querySelector('#privateCreate').onclick=create;dialog.querySelector('#privateName').focus()}
+  function openGroupScores(value){
+    round=value||read(ACTIVE);
+    if(!round?.configured||!round.players?.length){show("SCORES MI GRUPO","<p>REGISTRA TU GRUPO E INICIA LA TARJETA.</p>");return}
+    const snapshot=root.GSCLiveControl.buildLiveSnapshot(round),rows=snapshot.players.map(player=>({player,snapshot,eventName:snapshot.tournament||"MI GRUPO"}));
+    const content='<p>'+escape([snapshot.course,root.GSCScoresUI.date(snapshot.playedAt)].filter(Boolean).join(' · '))+'</p><div data-group-scores style="overflow:auto"><table style="width:100%;border-collapse:collapse;text-align:center"><thead><tr><th>NOMBRE</th><th>HDCP</th><th>HOYO</th><th>GROSS</th><th>NETO</th><th>+/−</th></tr></thead><tbody>'+rows.map(({player},index)=>'<tr data-score-player="'+index+'" tabindex="0" aria-label="'+escape(player.name)+' · Ver 18 scores"><td style="padding:16px 4px;text-align:left">'+escape(player.name)+'</td><td>'+escape(player.handicap)+'</td><td>'+escape(player.holes?.length?Math.max(...player.holes.map(h=>h.hole)):'—')+'</td><td>'+escape(player.holes?.length?player.totals.gross:'—')+'</td><td style="color:#31ff00">'+escape(player.holes?.length?player.totals.net:'—')+'</td><td>'+escape(player.holes?.length?(player.totals.relativeToPar===0?'EVEN':(player.totals.relativeToPar>0?'+':'')+player.totals.relativeToPar):'—')+'</td></tr>').join('')+'</tbody></table></div><p>DOBLE TOQUE EN EL JUGADOR: VER 18 SCORES</p>';
+    show("SCORES MI GRUPO",content);root.GSCScoresUI.bindRows(dialog.querySelector('[data-group-scores]'),rows);
+  }
   function openScores(value){round=value||read(ACTIVE);const item=saved();if(item&&new Date(item.expiresAt||"2099-01-01")>new Date()&&(!item.roundId||item.roundId===active()?.id))return scores(item);show("SCORES MI GRUPO","<p>PRIMERO CREA O ÚNETE A UN GRUPO PARTICULAR.</p>")}
   async function list(title="GRUPOS PARTICULARES"){
     round=read(ACTIVE);show(title,'<div data-rounds></div>');status("CARGANDO GRUPOS…");const current=dialog;async function refresh(){if(dialog!==current)return;const legacy=await request("list_private_rounds",{}),personal=await root.GSCPersonalEvents?.sync();if(dialog!==current)return;if(!legacy.ok&&!personal?.ok){status(error(legacy.code));return}const rounds=new Map((legacy.rounds||[]).map(item=>[item.id,item]));for(const item of personal?.privateItems||[])rounds.set(item.event.eventId,{...item.event,id:item.event.eventId,name:item.label});const result={rounds:[...rounds.values()]}
@@ -63,5 +70,5 @@
   }
   let connecting=false;
   async function syncPending(value){const item=saved();if(connecting||!item?.creator||item.roundId||!value?.configured)return;connecting=true;try{const result=await root.GSCLiveControl.connectPrivateRound(item.id,item.joinCode,value);if(result.ok)store({...item,roundId:value.id})}finally{connecting=false}}
-  root.GSCPrivateRounds={open,openCreate,openScores,list,close,syncPending};
+  root.GSCPrivateRounds={open,openCreate,openScores,openGroupScores,list,close,syncPending};
 })(globalThis);
