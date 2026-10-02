@@ -1081,3 +1081,23 @@ Archivos registrados dentro de esta versión:
 
 ### R24-B5 · corrección adicional de prueba real · 2026-10-02
 Preview ac941a1: ronda creada sin autorización, código MJQGB9XDBS y regreso al registro. La prueba detectó pérdida del nombre visible al volver y rechazo de torneo tras preflight autorizado. Se captura el DOM del registro antes de evaluar el grupo y se conserva la identidad validada en la llamada interna a Live. Regresión de identidad: proveedor distinto no puede reemplazar al dispositivo autenticado. Verificación de nuevo Preview y publicación todavía PENDIENTES; no se declara prueba de iPhone ni de todos los botones.
+
+
+### R24-B7 · 2 octubre 2026 · accesos Scores del menú
+
+Orden expresa 17:09 Guatemala: SCORES TORNEO, SCORES MI GRUPO, SCORES GENERAL, MIS FAVORITOS y SCORES CATEGORÍAS en el menú. Se mantienen destinos existentes y se agrega acceso al snapshot oficial del grupo actual desde tarjeta y retorno desde hub. No modifica cálculos, permisos ni datos. B6 conservado como base 98a8631; publicación pendiente de banco integral y navegador B7. B6 navegador real: OK, INICIAR RONDA, entrada5, Scores Mi Grupo, doble clic y detalle18 Gross5/Neto4 comprobados; no certifica iPhone.
+
+Archivos de esta versión:
+- `index-grupal.html` · menú Scores B7, regresión, release o control correspondiente.
+- `release.json` · menú Scores B7, regresión, release o control correspondiente.
+- `service-worker.js` · menú Scores B7, regresión, release o control correspondiente.
+- `shortcuts-ui.js` · menú Scores B7, regresión, release o control correspondiente.
+- `test-lab-global-operational-audit.mjs` · menú Scores B7, regresión, release o control correspondiente.
+- `test-lab-shortcuts-navigation.mjs` · menú Scores B7, regresión, release o control correspondiente.
+- `test-menu-scorecard-tournament-sync.mjs` · menú Scores B7, regresión, release o control correspondiente.
+- `ROADMAP_OVERALL.md` · menú Scores B7, regresión, release o control correspondiente.
+- `ROADMAP_A_DETALLE.md` · menú Scores B7, regresión, release o control correspondiente.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R147_2_4_24.md` · menú Scores B7, regresión, release o control correspondiente.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · menú Scores B7, regresión, release o control correspondiente.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · menú Scores B7, regresión, release o control correspondiente.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · menú Scores B7, regresión, release o control correspondiente.

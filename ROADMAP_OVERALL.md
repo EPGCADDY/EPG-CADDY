@@ -3132,3 +3132,27 @@ Orden16:13: doble clic/doble toque abre los18 hoyos por jugador en Mi Grupo, Tor
 IMG_5656 confirmó etiqueta GRUPO PARTICULAR incorrecta en registrationJoinRound. Se corrige a MI GRUPO; destino de ingreso por código permanece. CREAR MI GRUPO y SCORES MI GRUPO ya estaban operativos. Error escapó por verificar creación y scores sin exigir nombre exacto de modalidad; test-r24-event-creation-feedback.mjs exige ahora MI GRUPO en ese botón. Archivos: index-grupal.html, test-r24-event-creation-feedback.mjs, release.json, service-worker.js; B6 permite actualización manual después de B5. Sin cambio de motor, datos ni autorización. Rollback8a05fd1.
 
 Orden16:29: fecha automática Guatemala, sin calendario. live-hub.html hubRoundDate y personal-events.js personalRoundDate pasan a texto readonly; mantienen valor automático actual. No nueva pantalla ni selección de fecha al crear.
+
+
+### R24-B7 · 2 octubre 2026 · accesos Scores del menú
+
+Orden expresa 17:09 Guatemala: SCORES TORNEO, SCORES MI GRUPO, SCORES GENERAL, MIS FAVORITOS y SCORES CATEGORÍAS en el menú. Se mantienen destinos existentes y se agrega acceso al snapshot oficial del grupo actual desde tarjeta y retorno desde hub. No modifica cálculos, permisos ni datos. B6 conservado como base 98a8631; publicación pendiente de banco integral y navegador B7. B6 navegador real: OK, INICIAR RONDA, entrada5, Scores Mi Grupo, doble clic y detalle18 Gross5/Neto4 comprobados; no certifica iPhone.
+
+Archivos de esta versión:
+- `index-grupal.html` · menú Scores B7, regresión, release o control correspondiente.
+- `release.json` · menú Scores B7, regresión, release o control correspondiente.
+- `service-worker.js` · menú Scores B7, regresión, release o control correspondiente.
+- `shortcuts-ui.js` · menú Scores B7, regresión, release o control correspondiente.
+- `test-lab-global-operational-audit.mjs` · menú Scores B7, regresión, release o control correspondiente.
+- `test-lab-shortcuts-navigation.mjs` · menú Scores B7, regresión, release o control correspondiente.
+- `test-menu-scorecard-tournament-sync.mjs` · menú Scores B7, regresión, release o control correspondiente.
+- `ROADMAP_OVERALL.md` · menú Scores B7, regresión, release o control correspondiente.
+- `ROADMAP_A_DETALLE.md` · menú Scores B7, regresión, release o control correspondiente.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R147_2_4_24.md` · menú Scores B7, regresión, release o control correspondiente.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · menú Scores B7, regresión, release o control correspondiente.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · menú Scores B7, regresión, release o control correspondiente.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · menú Scores B7, regresión, release o control correspondiente.
+
+- `test-lab-r60-physical-matrix.mjs` · exige los cinco nombres exactos del menú ordenados para B7.
+
+- `scripts/manual-screen-parity-gate.mjs` · control de nombres del menú actualizado a la orden B7; resto del banco conservado.

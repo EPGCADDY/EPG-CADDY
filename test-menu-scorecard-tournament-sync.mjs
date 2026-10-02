@@ -15,7 +15,7 @@ const read=menu.slice(menu.indexOf('function hubState('),menu.indexOf('function 
 assert.doesNotMatch(menu,/consumeShortcut|setTimeout\(function\(\)\{if\(value/,'Menu cannot race account/event initialization');assert.ok(hub.indexOf('const shortcut=params.get("shortcut"),monitor=')>hub.indexOf('if(!params.has("directory")&&params.get("personalEvent")&&personal?.ok)'), 'View is selected after authorized event');
 console.log('PASS menu/card synchronization: current tournament overrides unrelated saved event; four destinations publish current scores; category/search/favorites intent survives; return preserves personal card/account; scoped shelf and async initialization.');
 
-assert.match(menu,/item\("general","GENERAL"/);assert.doesNotMatch(menu,/<h3>(GESTIONAR|MIS TORNEOS)<\/h3>/);
+assert.match(menu,/item\("general","SCORES GENERAL"/);assert.doesNotMatch(menu,/<h3>(GESTIONAR|MIS TORNEOS)<\/h3>/);
 
 backCtx.root.currentRoundReturnPath=()=>'/index-grupal.html?personalAccount=current-account&personalEvent=current-tournament&round_return=1';backCtx.nav('/manual.html');assert.equal(returned.pathname,'/manual.html');assert.equal(returned.searchParams.get('personalEvent'),'current-tournament');const manualURL=returned.toString();delete backCtx.root.currentRoundReturnPath;backCtx.root.location.href=manualURL;backCtx.nav('/index-grupal.html');assert.equal(returned.searchParams.get('personalAccount'),'current-account');backCtx.nav('/live-hub.html?shortcut=categories');assert.equal(returned.searchParams.get('personalEvent'),'current-tournament');console.log('PASS Manual round trip and categories retain originating card/account/event');
 

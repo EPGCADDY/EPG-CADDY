@@ -66,7 +66,7 @@ for(let p=46;p<=67;p++) assert(!manual.includes("/docs/manual/layout/page-"+Stri
 assert(app.includes("shortcuts-ui.js"),"Score Card debe cargar MENÚ");
 assert(hub.includes("shortcuts-ui.js"),"Torneos debe cargar MENÚ");
 assert(manual.includes("shortcuts-ui.js"),"Manual completo debe cargar MENÚ flotante");
-for(const t of ["MI SCORE CARD","MANUAL DE USUARIO","TORNEOS","GENERAL","VER RESULTADOS POR CATEGORÍA","BUSCAR JUGADOR","TABLERO DE MIS FAVORITOS"]) assert(shortcuts.includes(t),"MENÚ incompleto: "+t);
+for(const t of ["MI SCORE CARD","MANUAL DE USUARIO","SCORES TORNEO","SCORES MI GRUPO","SCORES GENERAL","SCORES CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS"]) assert(shortcuts.includes(t),"MENÚ incompleto: "+t);
 assert(cards.includes("fourBallTeamLabel")&&!cards.includes("TEAM 1")&&!cards.includes("TEAM 2")&&!cards.includes("TEAM 3"),"Tarjetas Four Ball no deben reintroducir TEAM numerado");
 assert(!fourBall.includes('"TEAM 1"')&&!fourBall.includes('"TEAM 2"')&&!fourBall.includes('"TEAM 3"'),"Motor Four Ball no debe reintroducir TEAM numerado");
 if(fail.length){console.error("MANUAL ORIGINAL PARITY: FAIL");for(const item of fail) console.error("- "+item);process.exit(1);}

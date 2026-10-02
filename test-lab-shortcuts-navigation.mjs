@@ -6,7 +6,7 @@ const app=fs.readFileSync("index-grupal.html","utf8");
 assert(hub.includes('$("hubBack").onclick=()=>{if(scorecardReturn){root.location.assign(scorecardReturn.toString());return}const url=new URL("/index-grupal.html"'),"Cerrar debe priorizar la Score Card de origen y conservar el destino directo de respaldo");
 assert(!hub.includes('$("hubBack").onclick=()=>{root.close();setTimeout(()=>root.history.back(),100)}'),"No usar history.back para volver al Score Card");
 for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAddToBoard","hubTournamentHome"])assert(hub.includes(id),"Falta destino "+id);
-for(const label of ["MI SCORE CARD","TORNEOS","GENERAL","VER RESULTADOS POR CATEGORÍA","BUSCAR JUGADOR","TABLERO DE MIS FAVORITOS"])assert(ui.includes(label),"Falta atajo "+label);
+for(const label of ["MI SCORE CARD","SCORES TORNEO","SCORES MI GRUPO","SCORES GENERAL","SCORES CATEGORÍAS","BUSCAR JUGADOR","MIS FAVORITOS"])assert(ui.includes(label),"Falta atajo "+label);
 assert(!ui.includes('b.innerHTML="<img'),"MENÚ no debe insertar ningún logo en el botón");
 assert(ui.includes('b.innerHTML="<span>MENÚ</span>"'),"MENÚ debe mostrar sólo la palabra MENÚ grande y centrada");
 assert(!ui.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png"),"MENÚ no debe usar el icono PWA cuadrado");
@@ -25,3 +25,7 @@ console.log('PASS R22: sección GESTIONAR y sus cuatro opciones retiradas del ME
 
 const {default:vm}=await import('node:vm');const dispatch=ui.slice(ui.indexOf('function act(action)'),ui.indexOf('function start()'));for(const [action,destination] of Object.entries({general:'/live-hub.html?shortcut=general',categories:'/live-hub.html?shortcut=categories',search:'/live-hub.html?shortcut=search',board:'/live-hub.html?shortcut=board',tournaments:'/live-hub.html?directory=1',administration:'/event-administration.html',manual:'/manual.html'})){let target;const context={root:{openRoundTournament:async()=>false},page:()=> 'scorecard',hubState:()=>({}),nav:p=>target=p,close(){},click(){}};await vm.runInNewContext(dispatch+';act('+JSON.stringify(action)+')',context);assert.equal(target,destination,action+' reaches its destination even without assigned event');}
 assert(fs.readFileSync('event-administration.html','utf8').includes('[hidden]{display:none!important}'),'Owner-only controls cannot be exposed by button CSS');console.log('PASS actual Menu dispatcher: all seven destinations without assigned event; owner-only hidden controls protected against CSS override.');
+
+for(const [surface,expected] of [["scorecard","privateGroupScoresButton"],["hub","/index-grupal.html?manual_action=group-scores"]]){let target;const context={root:{},page:()=>surface,hubState:()=>({}),close(){},click:id=>target=id,nav:url=>target=url};vm.runInNewContext(dispatch+';act("group-scores")',context);assert.equal(target,expected)}
+assert(app.includes('"group-scores":()=>window.GSCPrivateRounds.openGroupScores(round)'));
+console.log("PASS Scores Mi Grupo menu uses current card and restores its own group from hub");
