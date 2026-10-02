@@ -15,8 +15,8 @@ const name={value:'Santa Delfina'},creator={value:'Jaime'},dialog={hidden:false,
 vm.runInNewContext(openSource,preserve);assert.equal(preserve.setRoundCreateDialogOpen(true),true);assert.equal(name.value,'Santa Delfina');assert.equal(creator.value,'Jaime','Late startup cannot reset an already open form');
 const menuSource=app.slice(app.indexOf('function menuCreationHasCompleteRoster'),app.indexOf('$("newRoundButton").addEventListener',app.indexOf('function menuCreationHasCompleteRoster')));
 let openedConfig,openedDefaults,persisted=0;
-const menuContext={manualDraftRows:[{name:'Jaime',category:'',tee:'',handicap:''}],persistDraftState(){persisted++},window:{GSCPersonalEvents:{createPrivate(config,defaults){openedConfig=config;openedDefaults=defaults}}},COURSE_CATALOG:{pulte:{name:'El Pulté'}},draftCourse:'pulte',draftRoundMode:'general'};
-vm.runInNewContext(menuSource+';createPrivateRoundFromMenu()',menuContext);assert.equal(openedConfig,null);assert.equal(openedDefaults.course,'El Pulté');assert.equal(persisted,1,'Incomplete roster remains saved while creation opens');
+const menuContext={manualDraftRows:[{name:'Jaime',category:'',tee:'',handicap:''}],persistDraftState(){persisted++},captureVisibleRegistrationValues(){menuContext.manualDraftRows[0].name="QA visible draft"},window:{GSCPersonalEvents:{createPrivate(config,defaults){openedConfig=config;openedDefaults=defaults}}},COURSE_CATALOG:{pulte:{name:'El Pulté'}},draftCourse:'pulte',draftRoundMode:'general'};
+vm.runInNewContext(menuSource+';createPrivateRoundFromMenu()',menuContext);assert.equal(menuContext.manualDraftRows[0].name,'QA visible draft','Capture visible values before checking incomplete roster');assert.equal(openedConfig,null);assert.equal(openedDefaults.course,'El Pulté');assert.equal(persisted,1,'Incomplete roster remains saved while creation opens');
 
 assert.match(app,/if\(!menuCreationHasCompleteRoster\(\)\)\{persistDraftState\(\);window\.GSCPersonalEvents\.createPrivate\(null,/,'Incomplete registration still opens creation, preserving its draft');
 assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\("create-round","CREAR MI RONDA"/);

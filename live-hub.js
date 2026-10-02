@@ -438,7 +438,7 @@
     if(!name){roundCreateMessage("ESCRIBE EL NOMBRE DEL TORNEO O EVENTO");$("hubRoundName")?.focus();return false}
     if(state.tournaments.length>=MAX_SAVED_TOURNAMENTS){roundCreateMessage("YA TIENES 5 TORNEOS GUARDADOS");return false}
     if(okButton)okButton.disabled=true;
-    const message=$("hubRoundDialogStatus");if(message)message.textContent="CREANDO RONDA…";setStatus("CREANDO RONDA…","");
+    const message=$("hubRoundDialogStatus");if(message)message.textContent="CREANDO TORNEO…";setStatus("CREANDO TORNEO…","");
     const creatorName=text($("hubRoundCreator")?.value,120);if(!creatorName){roundCreateMessage("ESCRIBE EL NOMBRE DEL CREADOR");if(okButton)okButton.disabled=false;return false}
     const mode=$("hubRoundMode")?.value||"general",course=text($("hubRoundCourse")?.value,120),playedAt=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Guatemala"}).format(new Date()),categories=[...root.document.querySelectorAll("#hubRoundCategories input:checked")].map(el=>el.value);
     if(!course||!playedAt||!categories.length){roundCreateMessage("COMPLETA CAMPO, FECHA Y CATEGORÍAS");if(okButton)okButton.disabled=false;return false}

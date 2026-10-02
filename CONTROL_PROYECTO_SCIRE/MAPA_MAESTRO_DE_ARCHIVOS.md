@@ -2135,3 +2135,6 @@ Archivos registrados dentro de esta versión:
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · corrección, prueba o registro R24-B5.
 
 - `test-lab-tournament-navigation.mjs` · fixture conserva roster completo y usa helper validado por banco B5.
+
+### R24-B5 · corrección adicional de prueba real · 2026-10-02
+Preview ac941a1: ronda creada sin autorización, código MJQGB9XDBS y regreso al registro. La prueba detectó pérdida del nombre visible al volver y rechazo de torneo tras preflight autorizado. Se captura el DOM del registro antes de evaluar el grupo y se conserva la identidad validada en la llamada interna a Live. Regresión de identidad: proveedor distinto no puede reemplazar al dispositivo autenticado. Verificación de nuevo Preview y publicación todavía PENDIENTES; no se declara prueba de iPhone ni de todos los botones.
