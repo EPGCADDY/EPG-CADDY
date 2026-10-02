@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const personal=fs.readFileSync('personal-events.js','utf8'),hub=fs.readFileSync('live-hub.js','utf8'),app=fs.readFileSync('index-grupal.html','utf8');
+const privateSource=personal.slice(personal.indexOf(' async function createPrivate(round'),personal.indexOf(' function personalStorageKey'));
+const fields=new Map();const field=s=>{if(!fields.has(s))fields.set(s,{value:'',textContent:'',disabled:false,isConnected:true,innerHTML:''});return fields.get(s)};
+let writes=0,created=0,releaseRequest;
+const panel={querySelector:field},context={root:{localStorage:{setItem(){}},GSCLiveControl:{}},dialog:()=>panel,escape:String,Intl,Date,labels:{a:'A'},status(){},sync:async()=>({ok:false}),request:async()=>{writes++;return new Promise(resolve=>releaseRequest=resolve)},close(){},installCreatedPrivateRoundActions(_panel,result){created++;assert.equal(result.joinCode,'CODE234567')}};
+vm.runInNewContext(privateSource,context);await context.createPrivate(null,{course:'El Pulté'});
+await field('[data-create-private]').onclick();assert.equal(writes,0);assert.match(field('[data-status]').textContent,/NOMBRE/);
+field('#personalRoundName').value='Santa Delfina';field('#personalRoundCourse').value='El Pulté';field('#personalRoundDate').value='2026-10-02';
+const pending=field('[data-create-private]').onclick();assert.equal(field('[data-create-private]').disabled,true);assert.match(field('[data-status]').textContent,/CREANDO/);await field('[data-create-private]').onclick();assert.equal(writes,1,'Second tap cannot create a second event');releaseRequest({ok:true,eventId:'event',joinCode:'CODE234567'});await pending;assert.equal(created,1,'Creation code remains available even when list refresh fails');
+const openSource=hub.slice(hub.indexOf('  function setRoundCreateDialogOpen('),hub.indexOf('  async function openRoundCreate('));
+const name={value:'Santa Delfina'},creator={value:'Jaime'},dialog={hidden:false,setAttribute(){}};const preserve={$:id=>({'hubRoundCreateDialog':dialog,'hubRoundName':name,'hubRoundCreator':creator}[id]),root:{document:{body:{classList:{toggle(){}}}}}};
+vm.runInNewContext(openSource,preserve);assert.equal(preserve.setRoundCreateDialogOpen(true),true);assert.equal(name.value,'Santa Delfina');assert.equal(creator.value,'Jaime','Late startup cannot reset an already open form');
+const menuSource=app.slice(app.indexOf('function menuCreationHasCompleteRoster'),app.indexOf('$("newRoundButton").addEventListener',app.indexOf('function menuCreationHasCompleteRoster')));
+let openedConfig,openedDefaults,persisted=0;
+const menuContext={manualDraftRows:[{name:'Jaime',category:'',tee:'',handicap:''}],persistDraftState(){persisted++},window:{GSCPersonalEvents:{createPrivate(config,defaults){openedConfig=config;openedDefaults=defaults}}},COURSE_CATALOG:{pulte:{name:'El Pulté'}},draftCourse:'pulte',draftRoundMode:'general'};
+vm.runInNewContext(menuSource+';createPrivateRoundFromMenu()',menuContext);assert.equal(openedConfig,null);assert.equal(openedDefaults.course,'El Pulté');assert.equal(persisted,1,'Incomplete roster remains saved while creation opens');
+
+assert.match(app,/if\(!menuCreationHasCompleteRoster\(\)\)\{persistDraftState\(\);window\.GSCPersonalEvents\.createPrivate\(null,/,'Incomplete registration still opens creation, preserving its draft');
+assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\("create-round","CREAR MI RONDA"/);
+assert.match(hub,/root\.GSCPersonalEvents\.request\("create",/,'Tournament uses the identity-prepared request');
+assert.match(hub,/\}root\.GSCPersonalEvents\.presentCreatedTournament\(result/,'Creation code is presented even without a shelf refresh');
+console.log('PASS R24-B5: named forms preserved; incomplete roster can open creation; missing fields reported; double tap creates once; share code survives failed refresh; private menu label correct.');

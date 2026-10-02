@@ -17,7 +17,7 @@ function setup({cancel=false}={}){
  return{context,calls,stored,assigned,panel,make};
 }
 const success=setup();await success.make('[data-create-private]').onclick();
-assert.equal(success.make('h3').textContent,'RONDA PRIVADA CREADA');assert.equal(success.make('[data-private-round-code]').textContent,'ABCD234567');
+assert.equal(success.make('h3').textContent,'MI RONDA CREADA');assert.equal(success.make('[data-private-round-code]').textContent,'ABCD234567');
 assert.equal(JSON.parse(success.stored.get('golf-score-card-gt-private-round-v1')).joinCode,'ABCD234567');
 await success.make('[data-copy-event-code]').onclick();assert.equal(success.calls.find(call=>call.type==='copy').text,'ABCD234567');
 await success.make('[data-share-private-round]').onclick();

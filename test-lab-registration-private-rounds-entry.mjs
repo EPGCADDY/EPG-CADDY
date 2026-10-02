@@ -10,7 +10,7 @@ const worker = fs.readFileSync('service-worker.js', 'utf8');
 assert.doesNotMatch(html,/id="openMyRoundsButton"/,'MI RONDA removed from Registration as requested');
 const modalities=html.slice(html.indexOf('aria-label="Modalidades"'),html.indexOf('aria-label="Registro manual"'));
 assert.doesNotMatch(modalities,/registrationEventButton|openMyRoundSetup|provisionalScorecardButton|CREAR TORNEO|CREAR RONDA/);
-assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\("create-round","CREAR RONDA PARTICULAR"/);
+assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\("create-round","CREAR MI RONDA"/);
 assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\("create-tournament","CREAR TORNEO"/);
 assert.match(privateRounds, /async function list\(title="RONDAS PARTICULARES"\)[\s\S]*show\(title,/,
   'The existing private-round list accepts a Registration title without changing its default entry');

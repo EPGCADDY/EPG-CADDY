@@ -68,7 +68,7 @@ assert.doesNotMatch(registration.slice(registration.indexOf('aria-label="Modalid
 const privateEntry=registration.match(/function createPrivateRoundFromMenu\(\)\{([^\n]*)\}/)[1];
 let requestedPrivate;
 const registered=[{id:'p1',name:'UNO',tournamentCategory:'b'}];
-vm.runInNewContext(`(()=>{${privateEntry}})()`,{captureVisibleRegistrationValues(){},syncDraftPlayersFromManualRows:()=>true,persistDraftState(){},draftPlayers:registered,round:{configured:true,id:'existing-round',players:[{name:'ANTERIOR'}]},COURSE_CATALOG:{pulte:{name:'El Pulté'}},draftCourse:'pulte',draftRoundMode:'general',window:{GSCPersonalEvents:{createPrivate:value=>{requestedPrivate=value}}}});
+vm.runInNewContext(`(()=>{${privateEntry}})()`,{menuCreationHasCompleteRoster:()=>true,captureVisibleRegistrationValues(){},syncDraftPlayersFromManualRows:()=>true,persistDraftState(){},draftPlayers:registered,round:{configured:true,id:'existing-round',players:[{name:'ANTERIOR'}]},COURSE_CATALOG:{pulte:{name:'El Pulté'}},draftCourse:'pulte',draftRoundMode:'general',window:{GSCPersonalEvents:{createPrivate:value=>{requestedPrivate=value}}}});
 assert.equal(requestedPrivate.registrationDraft,true,'Create opens a new private form even with a saved event');
 assert.equal(requestedPrivate.players[0].name,'UNO','Create uses the visible registered group rather than the prior saved round');
 assert.match(html,/id="hubRegisteredTournaments"[^>]*>VER SCORES<\/button>/);
