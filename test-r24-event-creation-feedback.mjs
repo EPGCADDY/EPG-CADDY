@@ -36,3 +36,8 @@ let groupTitle,groupHtml,boundRows;const groupSnapshot={course:'El Pulté',playe
 const groupContext={round:null,read(){throw Error('explicit current round required')},ACTIVE:'active',show:(title,html)=>{groupTitle=title;groupHtml=html},escape:String,Math,root:{GSCLiveControl:{buildLiveSnapshot:r=>{assert.equal(r.id,'current-group');return groupSnapshot}},GSCScoresUI:{date:v=>v,bindRows:(_target,rows)=>boundRows=rows}},dialog:{querySelector:()=>({})}};
 vm.runInNewContext(groupFunction,groupContext);groupContext.openGroupScores({configured:true,id:'current-group',players:[{}],personalEventKind:'tournament'});assert.equal(groupTitle,'SCORES MI GRUPO');assert.match(groupHtml,/5<\/td><td style="color:#31ff00">4/);assert.equal(boundRows[0].player.holes[0].net,4);assert.equal(boundRows[0].snapshot,groupSnapshot,'18-score detail receives full official snapshot');assert.match(app,/privateGroupScoresButton.*openGroupScores\(round\)/);
 console.log('PASS own group Scores works for tournament card without private enrollment; official totals and full 18-hole detail bound');
+
+assert.match(app, /id="registrationJoinRound"[^>]*>[\s\S]*?<span>MI GRUPO<\/span>/);
+
+assert.match(personal, /id="personalRoundDate" type="text" readonly/);
+assert.match(fs.readFileSync("live-hub.html","utf8"), /id="hubRoundDate" type="text" readonly/);
