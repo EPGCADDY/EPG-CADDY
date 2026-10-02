@@ -5,3 +5,5 @@ assert.match(html,/<label for="hubRoundName">TORNEO<\/label>/);assert.match(html
 console.log('PASS Menu Organizador: creation form, club/categories dropdowns, automatic date, creator and code result.');
 
 const keySource=personal.slice(personal.indexOf(' function personalStorageKey('),personal.indexOf(' async function openAssignedCard('));const scope={root:{}};vm.runInNewContext(keySource,scope);assert.equal(scope.personalStorageKey('a','card'),'gscg-personal:a:card');scope.root.GSC_PERSONAL_ACCOUNT='a';assert.equal(scope.personalStorageKey('a','card'),'card');assert.equal(scope.personalStorageKey('b','card'),'gscg-personal:b:card');console.log('PASS creator/join storage: unscoped and already scoped registration use one account prefix.');
+
+assert.match(personal,/membership\?\.role==='organizer'.*index-grupal\.html\?inicio=1/,'Empty creator returns to registration without auto-enrollment');console.log('PASS empty organizer continues to Registration; assigning the group still requires explicit event selection.');
