@@ -119,13 +119,14 @@
   }
   async function connectPendingRoundTournament(roundValue){
     if(!roundValue?.configured)return false;
-    if(tournamentConnectRunning){if(tournamentConnectCompletion)await tournamentConnectCompletion;const connected=liveState().stream;return connected?.roundId===roundValue.id&&!!connected.tournamentId}
+    if(tournamentConnectRunning){if(tournamentConnectCompletion)await tournamentConnectCompletion;const connected=[liveState().stream,liveState().privateStream].find(item=>item?.roundId===roundValue.id);return !!connected?.tournamentId}
     let selection;try{selection=JSON.parse(root.localStorage.getItem("gsc-tournament-connect-selection-v1")||"null")}catch{return false}
     const snapshot=currentSnapshot(roundValue),tournamentId=text(selection?.id,50);
-    if(!snapshot||!tournamentId||selection?.eventKind==='private'||selection?.roundId&&selection.roundId!==roundValue.id)return false;
+    if(!snapshot||!tournamentId||selection?.roundId&&selection.roundId!==roundValue.id)return false;
     if(selection.personal&&selection.roundId===roundValue.id&&selection.players?.length===roundValue.players?.length&&roundValue.players.every(player=>selection.players.some(assigned=>assigned.id===player.id&&text(assigned.name).toUpperCase()===text(player.name).toUpperCase()))){roundValue.personalEventId=tournamentId;roundValue.liveGroupLabel=selection.groupLabel;roundValue.tournament={name:selection.label}}
     if(!roundValue.tournament?.name&&!(selection.personal&&roundValue.personalEventId===tournamentId))return false;
-    const state=liveState(),stream=state.stream;
+    const privateEvent=selection.eventKind==='private';if(privateEvent&&(!selection.personal||selection.roundId!==roundValue.id||roundValue.personalEventId!==tournamentId))return false;
+    const state=liveState(),stream=state[privateEvent?'privateStream':'stream'];
     if(stream?.roundId===snapshot.roundId&&stream?.tournamentId===tournamentId){
       if(selection.roundId!==snapshot.roundId){selection.roundId=snapshot.roundId;try{root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify(selection))}catch{}}
       clearTournamentConnectRetry(snapshot.roundId);
@@ -146,6 +147,8 @@
     const snapshot=currentSnapshot(roundValue);if(!snapshot)return false;
     await connectPendingRoundTournament(roundValue);
     onRoundPersisted(roundValue,true);
+    const selection=JSON.parse(root.localStorage.getItem("gsc-tournament-connect-selection-v1")||"null");
+    if(selection?.personal&&selection.eventKind==="private"&&selection.roundId===roundValue.id){await persistPrivateSnapshot(currentSnapshot(roundValue));clearTimeout(privatePublishTimer);if(privatePublishing&&privatePublishCompletion)await privatePublishCompletion;return publishPrivateLatest()}
     clearTimeout(publishTimer);
     if(publishRunning&&publishCompletion)await publishCompletion;
     return publishLatest();
@@ -227,17 +230,17 @@
     const joined=await request(privateEvent?'join_private_round_by_id':'join_tournament_by_id',{tournamentId:event.id||event.eventId,groupLabel:member.groupLabel},stream.publisherSecret);
     if(joined.ok){stream.tournamentId=joined.tournamentId;state[slot]=stream;if(privateEvent){state.privateRound={id:joined.tournamentId,roundId:snapshot.roundId};saveState(state);await publishPrivateLatest()}else saveState(state);renderActive()}return joined;
   }
-  let privatePublishTimer=null,privatePublishing=false;
+  let privatePublishTimer=null,privatePublishing=false,privatePublishCompletion=null,finishPrivatePublish=null;
   async function persistPrivateSnapshot(snapshot){
     if(!snapshot)return;const state=liveState();if(!state.privateStream?.publisherSecret||state.privateStream.roundId!==snapshot.roundId)return;
     state.privateStream.pendingSnapshot={...snapshot,tournament:null};state.privateStream.pendingMutationId=mutationId();saveState(state);clearTimeout(privatePublishTimer);privatePublishTimer=setTimeout(publishPrivateLatest,350);
   }
   async function publishPrivateLatest(){
-    if(privatePublishing)return false;const state=liveState(),stream=state.privateStream;if(!stream?.pendingSnapshot)return false;privatePublishing=true;
+    if(privatePublishing)return false;const state=liveState(),stream=state.privateStream;if(!stream?.pendingSnapshot)return false;privatePublishing=true;privatePublishCompletion=new Promise(resolve=>{finishPrivatePublish=resolve});
     let result=await request("publish_private_round",{clientMutationId:stream.pendingMutationId,expectedRevision:Number(stream.revision)||0,snapshot:stream.pendingSnapshot},stream.publisherSecret);
     if(result.status===409){const read=await request("read_private_round",{kind:"stream",viewerToken:stream.viewerToken});if(read.ok)result=await request("publish_private_round",{clientMutationId:stream.pendingMutationId,expectedRevision:Number(read.stream.revision)||0,snapshot:stream.pendingSnapshot},stream.publisherSecret)}
     const latest=liveState();if(latest.privateStream?.streamId===stream.streamId){if(result.ok){latest.privateStream.revision=Number(result.revision)||0;if(latest.privateStream.pendingMutationId===stream.pendingMutationId){latest.privateStream.pendingSnapshot=null;latest.privateStream.pendingMutationId=null}}saveState(latest)}
-    privatePublishing=false;if(result.ok&&liveState().privateStream?.pendingSnapshot)void publishPrivateLatest();return result.ok;
+    privatePublishing=false;finishPrivatePublish?.();privatePublishCompletion=null;finishPrivatePublish=null;if(result.ok&&liveState().privateStream?.pendingSnapshot)void publishPrivateLatest();return result.ok;
   }
   async function disconnectTournament(){
     const state=liveState(),stream=state.stream;if(!stream?.publisherSecret)return{ok:true,left:false};

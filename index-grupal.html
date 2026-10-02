@@ -4148,7 +4148,7 @@ async function openRoundTournament(scores=false,monitor="general",eventKind="tou
     if(!access.ok||!access.membership?.players?.length){$('status').textContent=window.GSCPersonalEvents.message(access.code||'PERSONAL_WRITER_FORBIDDEN');return false}
     url.searchParams.set('shortcut','scores');url.searchParams.set('personalEvent',eventId);url.searchParams.set('personalKind',eventKind);
     if(["categories","search","board"].includes(monitor))url.searchParams.set('monitor',monitor);
-    if(eventKind==='tournament')await window.GSCLiveControl?.prepareTournamentScores?.(round);else await window.GSCLiveControl?.publishPrivateLatest?.();
+    await window.GSCLiveControl?.prepareTournamentScores?.(round);
   }
   const share=current.searchParams.get("_vercel_share");if(share)url.searchParams.set("_vercel_share",share);
   location.assign(url.toString());
@@ -4573,7 +4573,9 @@ window.addEventListener("scroll",()=>{const button=$("mandatoryUpdateButton");if
 <script>window.GSCDeviceClosures.bindControls();</script><a id="gscShortcutsButton" href="/live-hub.html" aria-label="Abrir Atajos"><span>ATAJOS</span></a><script src="./shortcuts-ui.js"></script>
 <script id="gsc-manual-action-router">
 document.addEventListener("DOMContentLoaded",()=>{
-  const action=new URLSearchParams(location.search).get("manual_action");
+  const params=new URLSearchParams(location.search),historyAction=params.get("history");
+  if(["saved","previous"].includes(historyAction)){setTimeout(()=>window.GSCMenuRoundActions[historyAction](),450);return}
+  const action=params.get("manual_action");
   if(!action)return;
   const later=(fn)=>setTimeout(()=>{try{fn()}catch(error){console.warn("MANUAL_ACTION",action,error?.message||error)}},450);
   const click=id=>document.getElementById(id)?.click();

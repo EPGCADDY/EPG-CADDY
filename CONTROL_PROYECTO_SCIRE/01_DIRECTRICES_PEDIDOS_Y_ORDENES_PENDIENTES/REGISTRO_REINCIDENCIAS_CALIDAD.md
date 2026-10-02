@@ -1080,3 +1080,25 @@ Archivos afectados en esta versión:
 - `test-lab-update-recovery.mjs`
 - `test-menu-scorecard-tournament-sync.mjs`
 - `test-scores-tournament-recovery.mjs`
+
+
+## R24 · reanudación 2 octubre 2026, 12:30 Guatemala
+
+GitHub main 1d483af y rama R24 6318884 comprobados. Preview dpl_7Td7vks5AYHJowXxjBHqMnuGi1nS READY; ambos dominios fijos R23. No procesos recuperados: ps falla por restricción de runtime. Historial externo FAIL reproducido en navegador: history=saved no se consumía. Corrección incremental conserva cuenta/returnTo y ejecuta acción oficial saved/previous. Grupo creador de torneo vacío: selección explícita asigna roster mediante API assign autorizada; no registrar automáticamente. Participante original recuperado en alias R24, código de creador oculto; teclado Gross5/Net4 PASS. Scores remotos FAIL: private excluido de connectPendingRoundTournament; corrección incorpora selección particular validada al controlador único, publicación antes de consultar y reutilización de stream. Regresiones negativas PASS. Navegador sobre correcciones, cron real, limpieza PROD y publicación PENDIENTES. No certificar iPhone ni cron sin evidencia.
+
+Archivos:
+- `index-grupal.html` · corrección, prueba o evidencia R24.
+- `shortcuts-ui.js` · corrección, prueba o evidencia R24.
+- `personal-events.js` · corrección, prueba o evidencia R24.
+- `live-control.js` · corrección, prueba o evidencia R24.
+- `scripts/build-manual-lab.mjs` · corrección, prueba o evidencia R24.
+- `test-event-directory-code.mjs` · corrección, prueba o evidencia R24.
+- `test-r24-history-routing.mjs` · corrección, prueba o evidencia R24.
+- `test-r24-private-member-publish.mjs` · corrección, prueba o evidencia R24.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R147_2_4_24.md` · corrección, prueba o evidencia R24.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · corrección, prueba o evidencia R24.
+- `CONTROL_PROYECTO_SCIRE/MATRIZ_ACEPTACION_SCORES_R147_2_4_1.md` · corrección, prueba o evidencia R24.
+- `CONTROL_PROYECTO_SCIRE/MANUAL_TAREAS_R147_2.md` · corrección, prueba o evidencia R24.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · corrección, prueba o evidencia R24.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · corrección, prueba o evidencia R24.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · corrección, prueba o evidencia R24.
