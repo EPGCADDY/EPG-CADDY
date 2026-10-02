@@ -29,7 +29,7 @@ assert.deepEqual([...deletion.matchAll(/id="([^"]+)"/g)].map(match=>match[1]),['
 assert.match(app,/\.round-secondary-actions\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
 
 assert.doesNotMatch(app,/id="(?:myRoundButton|roundTournamentButton|activeTournamentButton|previousRoundButton|openCardLibraryButton)"/);
-assert.match(app,/<button id="privateGroupScoresButton"[^>]*>SCORES MI RONDA<\/button>/);
+assert.match(app,/<button id="privateGroupScoresButton"[^>]*>SCORES MI GRUPO<\/button>/);
 assert.match(app,/<button id="roundTournamentScoresButton"[^>]*>SCORES TORNEO<\/button>/);
 const menu=fs.readFileSync('shortcuts-ui.js','utf8');assert.match(menu,/item\("previous","RONDA PREVIA"/);assert.match(menu,/item\("saved","RONDAS GUARDADAS"/);
 console.log('PASS R24 card actions: history in Menu, creation/join removed from card, only correctly named Scores buttons');

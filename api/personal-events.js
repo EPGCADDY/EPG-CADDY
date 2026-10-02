@@ -57,7 +57,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
     if(body.action==='create'){
       if(kind==='tournament')await tournamentOrganizer(sql,req,account);
       const config=configuration(body),players=assignedPlayers(body.players,'organizer'),group=String(body.groupLabel||'').trim().slice(0,120);if(players.length&&!group)throw accessError('PERSONAL_ASSIGNMENT_INVALID',400);validateAssignedConfiguration(players,config);let created,status=200;
-      await handleLive({...req,body:{action:kind==='private'?'create_private_round':'create_tournament',name:body.name,mode:config.mode,durationDays:8,consent:{confirmed:true}}},{setHeader(){},status(n){status=n;return this},json(value){created=value}},()=>sql,async()=>account);
+      await handleLive({...req,method:req.method,headers:req.headers,body:{action:kind==='private'?'create_private_round':'create_tournament',name:body.name,mode:config.mode,durationDays:8,consent:{confirmed:true}}},{setHeader(){},status(n){status=n;return this},json(value){created=value}},()=>sql,async()=>account);
       if(status!==200)return res.status(status).json(created);
       const id=created.tournamentId;
       await sql`INSERT INTO gsc_personal_events(event_id,event_kind,owner_account_id,configuration) VALUES(${id}::uuid,${kind},${account.id},${JSON.stringify(config)}::jsonb)`;

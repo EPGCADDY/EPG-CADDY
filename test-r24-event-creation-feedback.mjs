@@ -19,7 +19,14 @@ const menuContext={manualDraftRows:[{name:'Jaime',category:'',tee:'',handicap:''
 vm.runInNewContext(menuSource+';createPrivateRoundFromMenu()',menuContext);assert.equal(menuContext.manualDraftRows[0].name,'QA visible draft','Capture visible values before checking incomplete roster');assert.equal(openedConfig,null);assert.equal(openedDefaults.course,'El Pulté');assert.equal(persisted,1,'Incomplete roster remains saved while creation opens');
 
 assert.match(app,/if\(!menuCreationHasCompleteRoster\(\)\)\{persistDraftState\(\);window\.GSCPersonalEvents\.createPrivate\(null,/,'Incomplete registration still opens creation, preserving its draft');
-assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\("create-round","CREAR MI RONDA"/);
+assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\("create-round","CREAR MI GRUPO"/);
 assert.match(hub,/root\.GSCPersonalEvents\.request\("create",/,'Tournament uses the identity-prepared request');
 assert.match(hub,/\}root\.GSCPersonalEvents\.presentCreatedTournament\(result/,'Creation code is presented even without a shelf refresh');
 console.log('PASS R24-B5: named forms preserved; incomplete roster can open creation; missing fields reported; double tap creates once; share code survives failed refresh; private menu label correct.');
+
+const draftStore=new Map();const draftContext={manualDraftRows:[{name:'QA incomplete',category:'',handicap:'',tee:''}],draftPlayers:[],draftTournament:null,draftCourse:'pulte',draftRoundMode:'general',activeDraftStorageKey:()=>"draft",activeDraftGameKey:()=>null,manualRowHasData:r=>Boolean(r?.name),localStorage:{setItem:(k,v)=>draftStore.set(k,v),getItem:k=>draftStore.get(k),removeItem:k=>draftStore.delete(k)},COURSE_CATALOG:{pulte:{}},normalizePlayer:p=>p,normalizeTournament:p=>p,draftSideGames:()=>({}),window:{GSCSkins:{normalizeConfig:p=>p}},draftSkins:{},Date,emptyManualDraftRow:()=>({name:'',category:'',handicap:'',tee:''}),manualRowFromPlayer:p=>p};
+const saveSource=app.slice(app.indexOf('function persistDraftState(){'),app.indexOf('function loadDraftState(){'));
+const seedSource=app.slice(app.indexOf('function seedManualDraftRowsFromPlayers('),app.indexOf('function manualRowHasData('));
+vm.runInNewContext(saveSource+seedSource+';persistDraftState();manualDraftRows=[];seedManualDraftRowsFromPlayers(true)',draftContext);
+assert.equal(draftContext.manualDraftRows[0].name,'QA incomplete','Incomplete raw rows survive reload without becoming official players');assert.equal(draftContext.draftPlayers.length,0);
+console.log('PASS incomplete raw registration persists and restores without inventing handicap/category/tee');

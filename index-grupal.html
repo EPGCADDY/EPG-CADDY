@@ -1157,10 +1157,10 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
   <div class="summary-title" id="timeMonitorTitle">MONITOR DE TIEMPO</div>
   <div class="round-status-row gsc-time-four gsc-time-five"><div class="time-cell"><span class="time-label">INICIO</span><span class="time-value" id="roundStartStatus">—</span></div><div class="time-cell"><span class="time-label">FINAL</span><span class="time-value" id="roundEndStatus">—</span></div><div class="time-cell"><span class="time-label">TOTAL</span><span class="time-value" id="roundTotalStatus">00:00:00</span></div><div class="time-cell timer-toggle-cell" id="roundTimerToggle" role="button" tabindex="0" aria-label="Pausar o reanudar timer" aria-pressed="false"><span class="time-label">TIMER</span><span class="time-value" id="roundElapsedStatus">00:00:00</span></div><button class="timer-reset-button" id="resetClockButton" type="button">RESET</button><button class="hidden" id="stopClockButton" type="button" aria-hidden="true" tabindex="-1">TIMER</button><div class="status hidden" id="status"></div></div>
   <section class="stableford-series hidden" id="stablefordSeriesSection"><div class="summary-title">CLASIFICACIÓN ACUMULADA · MEJORES 3 DE 4</div><div class="stableford-series-tabs"><button type="button" id="stablefordSeniorTab">SENIOR</button><button type="button" id="stablefordSuperSeniorTab">SUPER SENIOR</button></div><table><thead><tr><th>POS.</th><th>JUGADOR</th><th>F1</th><th>F2</th><th>F3</th><th>F4</th><th>MEJORES 3</th></tr></thead><tbody id="stablefordStandingsBody"></tbody></table><div class="stableford-series-actions"><button type="button" id="openStablefordResult">AGREGAR RESULTADO OFICIAL</button></div></section>
-  <div class="round-actions"><button class="hidden" id="shareRoundLiveButton" type="button">COMPARTIR MI RONDA EN VIVO</button><button class="back-registration-button" id="backToRegistrationButton" aria-label="Atrás: volver a la pantalla principal" title="Volver a la pantalla principal">ATRÁS</button><button id="finalCardButton">VER MI TARJETA</button><button id="newRoundButton">EMPEZAR NUEVA RONDA</button></div>
+  <div class="round-actions"><button class="hidden" id="shareRoundLiveButton" type="button">COMPARTIR MI GRUPO EN VIVO</button><button class="back-registration-button" id="backToRegistrationButton" aria-label="Atrás: volver a la pantalla principal" title="Volver a la pantalla principal">ATRÁS</button><button id="finalCardButton">VER MI TARJETA</button><button id="newRoundButton">EMPEZAR NUEVA RONDA</button></div>
   <div class="round-secondary-actions" id="roundSecondaryActions"><button class="clear-round-scores" id="clearRoundScores" type="button">BORRAR RONDA Y JUGADORES</button><button class="clear-round-scores" id="clearScoresOnly" type="button">BORRAR RESULTADOS DE ESTA RONDA</button></div>
-  <div class="round-actions"><button id="privateGroupScoresButton" type="button">SCORES MI RONDA</button><button id="roundTournamentScoresButton" type="button">SCORES TORNEO</button></div>
-  <section id="creatorTournamentCode" class="creator-tournament-code" hidden><h2>ID DE MI RONDA</h2><p id="creatorTournamentName"></p><button id="copyCreatorTournamentCode" type="button" aria-label="Copiar código y compartir por WhatsApp"></button><p id="creatorTournamentCodeStatus" aria-live="polite">TOCA EL CÓDIGO PARA COPIARLO</p></section>
+  <div class="round-actions"><button id="privateGroupScoresButton" type="button">SCORES MI GRUPO</button><button id="roundTournamentScoresButton" type="button">SCORES TORNEO</button></div>
+  <section id="creatorTournamentCode" class="creator-tournament-code" hidden><h2>ID DE MI GRUPO</h2><p id="creatorTournamentName"></p><button id="copyCreatorTournamentCode" type="button" aria-label="Copiar código y compartir por WhatsApp"></button><p id="creatorTournamentCodeStatus" aria-live="polite">TOCA EL CÓDIGO PARA COPIARLO</p></section>
 </main>
 
 <div class="overlay" id="finalCardOverlay" aria-hidden="true">
@@ -1210,7 +1210,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
       </section>
       <section class="game-mode-column" aria-label="Modalidades">
         <div class="event-join-option"><button type="button" class="course-option stable-course-option" id="registrationJoinTournament"><span class="stable-course-dot">T</span><span>TORNEO</span></button></div>
-        <div class="event-join-option"><button type="button" class="course-option stable-course-option" id="registrationJoinRound"><span class="stable-course-dot">R</span><span>RONDA PARTICULAR</span></button></div>
+        <div class="event-join-option"><button type="button" class="course-option stable-course-option" id="registrationJoinRound"><span class="stable-course-dot">G</span><span>GRUPO PARTICULAR</span></button></div>
         <div class="skins-mode-option"><button type="button" class="course-option stable-course-option skins-round-option" id="skinsRoundButton" aria-label="Seleccionar juego Skins" aria-pressed="false"><span class="stable-course-dot">$</span><span>SKINS</span></button></div>
         <div class="universales-mode-option"><button type="button" class="course-option stable-course-option universales-round-option" id="universalesRoundButton" aria-label="Seleccionar modalidad Universales" aria-pressed="false"><span class="stable-course-dot">U</span><span>UNIVERSALES</span></button></div>
       </section>
@@ -1712,7 +1712,7 @@ function syncDraftModeSelection(preferredKey=undefined){
   return selected
 }
 function persistDraftState(){
-  try{const key=activeDraftStorageKey();if(!draftPlayers.length&&!activeDraftGameKey()){localStorage.removeItem(key);return}localStorage.setItem(key,JSON.stringify({players:draftPlayers.map((p,i)=>normalizePlayer(p,i)),tournament:normalizeTournament(draftTournament),course:COURSE_CATALOG[draftCourse]?draftCourse:"pulte",mode:draftRoundMode,sideGames:draftSideGames(),skins:window.GSCSkins.normalizeConfig(draftSkins),savedAt:new Date().toISOString()}))}catch(e){console.error("No se pudo persistir el registro en curso:",e)}
+  try{const key=activeDraftStorageKey();if(!draftPlayers.length&&!manualDraftRows.some(manualRowHasData)&&!activeDraftGameKey()){localStorage.removeItem(key);return}localStorage.setItem(key,JSON.stringify({manualRows:manualDraftRows.map(row=>({...row})),players:draftPlayers.map((p,i)=>normalizePlayer(p,i)),tournament:normalizeTournament(draftTournament),course:COURSE_CATALOG[draftCourse]?draftCourse:"pulte",mode:draftRoundMode,sideGames:draftSideGames(),skins:window.GSCSkins.normalizeConfig(draftSkins),savedAt:new Date().toISOString()}))}catch(e){console.error("No se pudo persistir el registro en curso:",e)}
 }
 function loadDraftState(){
   try{const raw=JSON.parse(localStorage.getItem(activeDraftStorageKey())||"null");if(!raw||!Array.isArray(raw.players)||!raw.players.length)return[];return raw.players.slice(0,6).map(normalizePlayer)}catch{return[]}
@@ -1726,7 +1726,7 @@ function courseKeyForName(name){const target=normalizeSpeech(name);return Object
 function clearDraftState(){try{localStorage.removeItem(activeDraftStorageKey())}catch{}}
 function emptyManualDraftRow(){return{name:"",category:"",handicap:"",tee:"",countryCode:"502",whatsapp:"",dirty:false}}
 function manualRowFromPlayer(player){const countryCode=normalizeWhatsAppCountryCode(player?.countryCode||player?.whatsapp?.countryCode||"502");return{name:canonicalPlayerName(player?.name),category:normalizeTournamentCategory(player?.tournamentCategory),handicap:Number.isInteger(Number(player?.handicap))?String(Number(player.handicap)):"",tee:TEES[player?.tee]?player.tee:"",countryCode,whatsapp:normalizeWhatsApp(player?.whatsapp,countryCode),dirty:false,id:player?.id||null}}
-function seedManualDraftRowsFromPlayers(){manualDraftRows=Array.from({length:6},(_,i)=>draftPlayers[i]?manualRowFromPlayer(draftPlayers[i]):emptyManualDraftRow())}
+function seedManualDraftRowsFromPlayers(restoreIncomplete=false){manualDraftRows=Array.from({length:6},(_,i)=>draftPlayers[i]?manualRowFromPlayer(draftPlayers[i]):emptyManualDraftRow());if(restoreIncomplete)try{const saved=JSON.parse(localStorage.getItem(activeDraftStorageKey())||"null")?.manualRows;if(Array.isArray(saved)&&saved.some(manualRowHasData))manualDraftRows=Array.from({length:6},(_,i)=>saved[i]?{...emptyManualDraftRow(),...saved[i]}:emptyManualDraftRow())}catch{}}
 function manualRowHasData(row){return !!(String(row?.name||"").trim()||String(row?.handicap??"").trim())}
 function primaryRegistrationFieldCount(row){
   return [String(row?.name||"").trim(),String(row?.category||"").trim(),String(row?.handicap??"").trim(),String(row?.tee||"").trim()].filter(Boolean).length;
@@ -3303,7 +3303,7 @@ function openSetup(mode="new"){
   const loadedGames=rosterEditMode?normalizeSideGames(round.sideGames||{}):loadDraftSideGames();draftSkins=loadedGames.skins;draftWolf=loadedGames.wolf;draftVegas=loadedGames.vegas;draftDots=loadedGames.dots;
   activateCourse(draftCourse);
   draftPlayers=rosterEditMode?round.players.map((p,i)=>normalizePlayer({...p,holes:{...p.holes}},i)):loadDraftState();
-  seedManualDraftRowsFromPlayers();
+  seedManualDraftRowsFromPlayers(!rosterEditMode);
   draftTournament=rosterEditMode?normalizeTournament(round.tournament):loadDraftTournament();
   ;
   renderDraft();
@@ -4111,13 +4111,13 @@ async function renderCreatorTournamentCode(){
  const owned=privateBound?privateOwned:state?.tournamentOwned;
  if(!round.configured||!eventId||!owned?.joinCode||(owned.tournamentId||owned.id)!==eventId||window.GSCPersonalEvents.membership('personal_'+eventId)?.role!=='organizer')return;
  $("creatorTournamentName").textContent=owned.name||selection?.label||'';$("copyCreatorTournamentCode").textContent=owned.joinCode;panel.hidden=false;
- $("copyCreatorTournamentCode").onclick=()=>{const message='Ronda '+(owned.name||selection?.label||'')+'\nCódigo: '+owned.joinCode;const link='https://wa.me/?text='+encodeURIComponent(message);navigator.clipboard?.writeText(owned.joinCode).then(()=>{$("creatorTournamentCodeStatus").textContent='CÓDIGO COPIADO · COMPARTIR EN WHATSAPP'},()=>{$("creatorTournamentCodeStatus").textContent='COMPARTIR EN WHATSAPP'});window.open(link,'_blank','noopener,noreferrer')};
+ $("copyCreatorTournamentCode").onclick=()=>{const message='Grupo '+(owned.name||selection?.label||'')+'\nCódigo: '+owned.joinCode;const link='https://wa.me/?text='+encodeURIComponent(message);navigator.clipboard?.writeText(owned.joinCode).then(()=>{$("creatorTournamentCodeStatus").textContent='CÓDIGO COPIADO · COMPARTIR EN WHATSAPP'},()=>{$("creatorTournamentCodeStatus").textContent='COMPARTIR EN WHATSAPP'});window.open(link,'_blank','noopener,noreferrer')};
 }
 window.GSCRefreshCreatorCode=()=>{renderActiveTournamentHeading();void renderCreatorTournamentCode()};
 setTimeout(()=>{renderActiveTournamentHeading();renderCreatorTournamentCode()},1500);
 
 function menuCreationHasCompleteRoster(){const named=manualDraftRows.filter(row=>String(row.name||'').trim());return named.length>0&&named.every(row=>row.category&&row.tee&&String(row.handicap??'').trim()!=='')}
-function createPrivateRoundFromMenu(){captureVisibleRegistrationValues();if(!menuCreationHasCompleteRoster()){persistDraftState();window.GSCPersonalEvents.createPrivate(null,{course:COURSE_CATALOG[draftCourse].name,mode:draftRoundMode});return}if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;persistDraftState();if(draftPlayers.some(player=>!player.tournamentCategory)){$("setupStatus").textContent="SELECCIONA LA CATEGORÍA DE CADA JUGADOR PARA LA RONDA PRIVADA";return}window.GSCPersonalEvents.createPrivate({...round,configured:true,provisional:false,registrationDraft:true,course:COURSE_CATALOG[draftCourse].name,mode:draftRoundMode,players:draftPlayers,liveGroupLabel:draftPlayers.map(player=>player.name).join(" / ").slice(0,120)})}
+function createPrivateRoundFromMenu(){captureVisibleRegistrationValues();if(!menuCreationHasCompleteRoster()){persistDraftState();window.GSCPersonalEvents.createPrivate(null,{course:COURSE_CATALOG[draftCourse].name,mode:draftRoundMode});return}if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;persistDraftState();if(draftPlayers.some(player=>!player.tournamentCategory)){$("setupStatus").textContent="SELECCIONA LA CATEGORÍA DE CADA JUGADOR PARA EL GRUPO PRIVADO";return}window.GSCPersonalEvents.createPrivate({...round,configured:true,provisional:false,registrationDraft:true,course:COURSE_CATALOG[draftCourse].name,mode:draftRoundMode,players:draftPlayers,liveGroupLabel:draftPlayers.map(player=>player.name).join(" / ").slice(0,120)})}
 $("newRoundButton").addEventListener("click",()=>isStablefordRound()?openFreshStablefordSetup():openNewRoundDraft());$("cancelSetup").addEventListener("click",closeSetup);$("backSetup").addEventListener("click",()=>{;showStep1();$("setupStatus").textContent=draftPlayers.length?"CORRIGE CON: CORRIJO / CORRIGIENDO / CORREGIR · LUEGO PRESIONA OK":""});
 $("detectedBody").addEventListener("click",e=>{
   const remove=e.target.closest?.("[data-draft-remove]");if(!remove)return;
