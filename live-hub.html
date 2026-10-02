@@ -214,14 +214,15 @@
         <button id="hubRoundClose" type="button" aria-label="Cerrar ventana">×</button>
         <h2 id="hubRoundDialogTitle">CREAR TORNEO</h2>
         <p>Define el evento y autoriza a quienes podrán participar o consultar.</p>
-        <label for="hubRoundName">NOMBRE DEL EVENTO DE LA RONDA</label>
+        <label for="hubRoundName">TORNEO</label>
         <input id="hubRoundName" type="text" maxlength="120" placeholder="Nombre del torneo" autocomplete="off">
-        <label for="hubRoundCourse">CAMPO</label><select id="hubRoundCourse" aria-label="Campo del torneo"><option value="">SELECCIONA EL CAMPO</option><option value="El Pulté">EL PULTÉ GOLF</option><option value="Country Club">GUATEMALA COUNTRY CLUB</option><option value="San Isidro">SAN ISIDRO</option><option value="Mayan Golf">MAYAN GOLF</option><option value="Hacienda Nueva">HACIENDA NUEVA COUNTRY CLUB</option><option value="Alta Vista">ALTA VISTA GOLF & TENNIS CLUB</option><option value="La Reunión" disabled>LA REUNIÓN GOLF RESORT · PENDIENTE</option></select>
-        <label for="hubRoundDate">FECHA</label><input id="hubRoundDate" type="date" readonly aria-label="Fecha automática del torneo">
+        <label for="hubRoundCourse">CLUB</label><select id="hubRoundCourse" aria-label="Campo del torneo"><option value="">SELECCIONA EL CAMPO</option><option value="El Pulté">EL PULTÉ GOLF</option><option value="Country Club">GUATEMALA COUNTRY CLUB</option><option value="San Isidro">SAN ISIDRO</option><option value="Mayan Golf">MAYAN GOLF</option><option value="Hacienda Nueva">HACIENDA NUEVA COUNTRY CLUB</option><option value="Alta Vista">ALTA VISTA GOLF & TENNIS CLUB</option><option value="La Reunión" disabled>LA REUNIÓN GOLF RESORT · PENDIENTE</option></select>
         <label for="hubRoundMode">MODALIDAD</label><select id="hubRoundMode"><option value="general">MEDAL PLAY</option><option value="match_play">MATCH PLAY</option><option value="four_ball">FOUR BALL</option><option value="stableford">STABLEFORD</option><option value="universales">UNIVERSALES</option></select>
         <details><summary>CATEGORÍAS</summary><div id="hubRoundCategories">
           <label><input type="checkbox" value="championship" checked>CAMPEONATO</label><label><input type="checkbox" value="a" checked>A</label><label><input type="checkbox" value="b" checked>B</label><label><input type="checkbox" value="c" checked>C</label><label><input type="checkbox" value="d" checked>D</label><label><input type="checkbox" value="female" checked>FEMENINA</label><label><input type="checkbox" value="senior" checked>SENIOR</label><label><input type="checkbox" value="super_senior" checked>SUPER SENIOR</label>
         </div></details>
+        <label for="hubRoundDate">FECHA</label><input id="hubRoundDate" type="date" readonly aria-label="Fecha automática del torneo">
+        <label for="hubRoundCreator">CREADOR</label><input id="hubRoundCreator" type="text" maxlength="120" autocomplete="name">
         <div id="hubRoundDialogStatus" role="status" aria-live="polite"></div>
         <button class="primary" id="hubRoundOk" type="button">OK</button>
       </section>

@@ -421,7 +421,7 @@
     const dialog=$("hubRoundCreateDialog");if(!dialog)return false;
     const visible=!!open;dialog.hidden=!visible;dialog.setAttribute("aria-hidden",String(!visible));root.document.body.classList.toggle("round-create-open",visible);
     const nameField=$("hubRoundName"),message=$("hubRoundDialogStatus");
-    if(visible){const draft=registrationEventDraft();if(draft){if($("hubRoundCourse"))$("hubRoundCourse").value=draft.course;if($("hubRoundMode"))$("hubRoundMode").value=draft.mode}if(nameField)nameField.value=draft?.name||"";if($("hubRoundDate"))$("hubRoundDate").value=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Guatemala"}).format(new Date());if(message)message.textContent=state.tournaments.length>=MAX_SAVED_TOURNAMENTS?"YA TIENES 5 TORNEOS GUARDADOS":"";setTimeout(()=>nameField?.focus(),0)}
+    if(visible){if($("hubRoundCreator"))$("hubRoundCreator").value="";const draft=registrationEventDraft();if(draft){if($("hubRoundCourse"))$("hubRoundCourse").value=draft.course;if($("hubRoundMode"))$("hubRoundMode").value=draft.mode}if(nameField)nameField.value=draft?.name||"";if($("hubRoundDate"))$("hubRoundDate").value=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Guatemala"}).format(new Date());if(message)message.textContent=state.tournaments.length>=MAX_SAVED_TOURNAMENTS?"YA TIENES 5 TORNEOS GUARDADOS":"";setTimeout(()=>nameField?.focus(),0)}
     else setTimeout(()=>$("hubCreateRound")?.focus(),0);
     return true;
   }
@@ -437,10 +437,11 @@
     if(state.tournaments.length>=MAX_SAVED_TOURNAMENTS){roundCreateMessage("YA TIENES 5 TORNEOS GUARDADOS");return false}
     if(okButton)okButton.disabled=true;
     const message=$("hubRoundDialogStatus");if(message)message.textContent="CREANDO RONDA…";setStatus("CREANDO RONDA…","");
+    const creatorName=text($("hubRoundCreator")?.value,120);if(!creatorName){roundCreateMessage("ESCRIBE EL NOMBRE DEL CREADOR");if(okButton)okButton.disabled=false;return false}
     const mode=$("hubRoundMode")?.value||"general",course=text($("hubRoundCourse")?.value,120),playedAt=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Guatemala"}).format(new Date()),categories=[...root.document.querySelectorAll("#hubRoundCategories input:checked")].map(el=>el.value);
     if(!course||!playedAt||!categories.length){roundCreateMessage("COMPLETA CAMPO, FECHA Y CATEGORÍAS");if(okButton)okButton.disabled=false;return false}
     const originDraft=registrationEventDraft();
-    let response;try{response=await root.fetch("/api/personal-events",{method:"POST",headers:{"Content-Type":"application/json"},cache:"no-store",credentials:"same-origin",body:JSON.stringify({action:"create",eventKind:"tournament",name,mode,course,playedAt,categories,players:registrationEventDraft()?.players||[],groupLabel:registrationEventDraft()?.groupLabel||""})});}catch{roundCreateMessage("NO SE PUDO CREAR EL TORNEO · REVISA TU CONEXIÓN");if(okButton)okButton.disabled=false;return false}
+    let response;try{response=await root.fetch("/api/personal-events",{method:"POST",headers:{"Content-Type":"application/json"},cache:"no-store",credentials:"same-origin",body:JSON.stringify({action:"create",eventKind:"tournament",name,mode,course,playedAt,categories,creatorName,players:registrationEventDraft()?.players||[],groupLabel:registrationEventDraft()?.groupLabel||""})});}catch{roundCreateMessage("NO SE PUDO CREAR EL TORNEO · REVISA TU CONEXIÓN");if(okButton)okButton.disabled=false;return false}
     const result=await response.json().catch(()=>null);
     if(!response.ok||!result?.viewerToken){const message=result?.code==="42703"?"TORNEOS NO DISPONIBLES · FALTA ACTUALIZAR EL SERVIDOR":result?.code==="DATABASE_NOT_CONFIGURED"||result?.code==="DATABASE_MIGRATION_REQUIRED"?"LIVE NO ESTÁ ACTIVADO EN LA BASE CENTRAL":root.GSCPersonalEvents?.message(result?.code)||"NO SE PUDO CREAR EL TORNEO";roundCreateMessage(message);if(okButton)okButton.disabled=false;return false}
     try{root.sessionStorage.removeItem("gsc-registration-event-draft-v1")}catch{}

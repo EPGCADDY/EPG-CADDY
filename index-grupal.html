@@ -2192,8 +2192,8 @@ function startConfirmedRound(){
   // el usuario llegó a la confirmación y presionó INICIAR RONDA.
   activateCourse(draftCourse);
   const startedAt=new Date().toISOString();round={id:newRoundId(),version:2,mode:draftRoundMode,configured:true,provisional:false,courseKey:draftCourse,course:selectedCourse.name,tournament:draftTournament,sideGames:draftSideGames(),players:assignStablePlayerSlots(draftPlayers.map((p,i)=>normalizePlayer({...p,holes:{},activeFrom:1},i))),announced:{front:false,back:false,complete:false},weather:null,createdAt:startedAt,updatedAt:startedAt,endedAt:null,durationSeconds:null,timerLastInstructionAt:startedAt};
-  let personalSelection;try{personalSelection=JSON.parse(localStorage.getItem('gsc-tournament-connect-selection-v1')||'null')}catch{}if(personalSelection?.personal){round.personalEventId=personalSelection.id;round.liveGroupLabel=personalSelection.groupLabel}
-  savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();scheduleRoundTimerIdleShutdown();return true
+  let personalSelection;try{personalSelection=JSON.parse(localStorage.getItem('gsc-tournament-connect-selection-v1')||'null')}catch{}if(personalSelection?.personal&&personalSelection.registrationApproved===true&&personalSelection.players?.length===round.players.length&&round.players.every(player=>personalSelection.players.some(assigned=>assigned.id===player.id))){round.personalEventId=personalSelection.id;round.liveGroupLabel=personalSelection.groupLabel;personalSelection.roundId=round.id;delete personalSelection.registrationApproved;localStorage.setItem('gsc-tournament-connect-selection-v1',JSON.stringify(personalSelection))}
+  savePlayersToDirectory(round.players);rosterEditMode=false;handicapRectificationMode=false;nameCorrectionMode=false;profileCorrectionMode=false;rosterEditJoinHole=1;draftPlayers=[];draftTournament=null;resetDraftGames();clearDraftState();persist();closeSetup();render();window.GSCRefreshCreatorCode?.();scheduleRoundTimerIdleShutdown();return true
 }
 function startProvisionalScorecard(){
   const selectedCourse=COURSE_CATALOG[draftCourse];
@@ -3432,7 +3432,7 @@ async function openAssignedPersonalScoreCard(){
   if(!result.ok||!result.membership?.players?.length||result.tournament.status==='closed'){dateSetup();openSetup('new');$('setupStatus').textContent=window.GSCPersonalEvents.message(result.code||'PERSONAL_WRITER_FORBIDDEN');return false}
   const member=result.membership,configuration=result.tournament.configuration;
   if(round.configured&&round.personalEventId===selected.id&&round.mode===configuration.mode&&round.liveGroupLabel===member.groupLabel&&round.players.length===member.players.length&&round.players.every(player=>member.players.some(assigned=>assigned.id===player.id&&assigned.name.toUpperCase()===player.name.toUpperCase()))){closeSetup();return true}
-  selected={...selected,configuration,mode:configuration.mode,groupLabel:member.groupLabel,players:member.players,label:result.tournament.name};localStorage.setItem('gsc-tournament-connect-selection-v1',JSON.stringify(selected));
+  selected={...selected,registrationApproved:true,configuration,mode:configuration.mode,groupLabel:member.groupLabel,players:member.players,label:result.tournament.name};localStorage.setItem('gsc-tournament-connect-selection-v1',JSON.stringify(selected));
   if(configuration.mode==='stableford'){
     openFreshStablefordSetup();stablefordSetupCourseKey=courseKeyForName(configuration.course);stablefordSetupCategory=member.players[0].tournamentCategory;
     document.querySelectorAll('[data-stableford-name]').forEach((input,i)=>input.value=member.players[i]?.name||'');$('stablefordTournamentName').value=result.tournament.name;renderStablefordSetup();return true;
@@ -4174,6 +4174,7 @@ async function renderCreatorTournamentCode(){
  $("creatorTournamentName").textContent=owned.name||selection?.label||'';$("copyCreatorTournamentCode").textContent=owned.joinCode;panel.hidden=false;
  $("copyCreatorTournamentCode").onclick=()=>{const message='Ronda '+(owned.name||selection?.label||'')+'\nCódigo: '+owned.joinCode;const link='https://wa.me/?text='+encodeURIComponent(message);navigator.clipboard?.writeText(owned.joinCode).then(()=>{$("creatorTournamentCodeStatus").textContent='CÓDIGO COPIADO · COMPARTIR EN WHATSAPP'},()=>{$("creatorTournamentCodeStatus").textContent='COMPARTIR EN WHATSAPP'});window.open(link,'_blank','noopener,noreferrer')};
 }
+window.GSCRefreshCreatorCode=()=>{renderActiveTournamentHeading();void renderCreatorTournamentCode()};
 setTimeout(()=>{renderActiveTournamentHeading();renderCreatorTournamentCode()},1500);
 
 $("openMyRoundSetup").addEventListener("click",()=>{captureVisibleRegistrationValues();if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;persistDraftState();if(draftPlayers.some(player=>!player.tournamentCategory)){$("setupStatus").textContent="SELECCIONA LA CATEGORÍA DE CADA JUGADOR PARA LA RONDA PRIVADA";return}window.GSCPersonalEvents.createPrivate({...round,configured:true,provisional:false,registrationDraft:true,course:COURSE_CATALOG[draftCourse].name,mode:draftRoundMode,players:draftPlayers,liveGroupLabel:draftPlayers.map(player=>player.name).join(" / ").slice(0,120)})});

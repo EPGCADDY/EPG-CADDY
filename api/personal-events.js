@@ -26,7 +26,7 @@ function configuration(body){
   const course=String(body.course||'').trim().slice(0,120),playedAt=String(body.playedAt||'');
   if(!course||!/^\d{4}-\d{2}-\d{2}$/.test(playedAt)||!Number.isFinite(new Date(playedAt).getTime())||new Date(playedAt).toISOString().slice(0,10)!==playedAt||!modes.includes(body.mode))throw accessError('PERSONAL_CONFIGURATION_INVALID',400);
   const selected=[...new Set(body.categories||[])];if(!selected.length||selected.some(c=>!categories.includes(c)))throw accessError('PERSONAL_CONFIGURATION_INVALID',400);
-  return{course,playedAt,mode:body.mode,categories:selected};
+  return{course,playedAt,mode:body.mode,categories:selected,...(body.creatorName?{creatorName:String(body.creatorName).trim().slice(0,120)}:{})};
 }
 export async function handlePersonalEvents(req,res,database=getDatabase,accountResolver=requireAccountSession){
   noStore(res);res.setHeader('Referrer-Policy','no-referrer');res.setHeader('X-Content-Type-Options','nosniff');
