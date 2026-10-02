@@ -9,8 +9,9 @@ const worker = fs.readFileSync('service-worker.js', 'utf8');
 
 assert.doesNotMatch(html,/id="openMyRoundsButton"/,'MI RONDA removed from Registration as requested');
 const modalities=html.slice(html.indexOf('aria-label="Modalidades"'),html.indexOf('aria-label="Registro manual"'));
-assert.match(modalities,/id="registrationEventButton"/);assert.match(modalities,/id="openMyRoundSetup"/);
-assert.equal((html.match(/id="registrationEventButton"/g)||[]).length,1);assert.equal((html.match(/id="openMyRoundSetup"/g)||[]).length,1);
+assert.doesNotMatch(modalities,/registrationEventButton|openMyRoundSetup|provisionalScorecardButton|CREAR TORNEO|CREAR RONDA/);
+assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\("create-round","CREAR RONDA PARTICULAR"/);
+assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\("create-tournament","CREAR TORNEO"/);
 assert.match(privateRounds, /async function list\(title="RONDAS PARTICULARES"\)[\s\S]*show\(title,/,
   'The existing private-round list accepts a Registration title without changing its default entry');
 assert.match(privateRounds, /personal\?\.privateItems\|\|\[\]/,
@@ -26,4 +27,4 @@ assert.match(liveHub, /descriptor\(state\.generalToken\)\)\?\.eventKind==='priva
 assert.match(release.label, /^R147\.2(?:\.\d+)*$/);
 assert.ok(worker.includes('RELEASE_FALLBACK='+JSON.stringify(release.release)));
 
-console.log('PASS R24: creation inside Modalidades, no duplicated buttons or MI RONDA, private/tournament shelves remain separate.');
+console.log('PASS R24: creation exclusively in Menu, no duplicated buttons or MI RONDA, private/tournament shelves remain separate.');

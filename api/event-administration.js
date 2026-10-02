@@ -1,4 +1,5 @@
 import {getDatabase} from './_lib/database.js';
+import {ensureTournamentOrganizers,issueTournamentOrganizer} from './_lib/tournament-organizers.js';
 import {requireOwner} from './_lib/app-access.js';
 import {requireAccountSession} from './_lib/account-auth.js';
 import {resolveEventIdentity} from './personal-events.js';
@@ -15,6 +16,7 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  const sql=database(),body=await readJson(req,4000);let account,owner=false;
  try{account=await ownerResolver(req);owner=true}catch(error){if(!['OWNER_REQUIRED','ACCOUNT_UNAUTHORIZED'].includes(error.code))throw error;account=await resolveEventIdentity(req,res,sql,'list',identityResolver)}
  await ensurePersonalAccess(sql);await ensureEventAdministration(sql);await refreshEventLifecycles(sql);await limitPersonalAccess(sql,account,'event-admin');
+ if(String(body.action).startsWith('organizer-')){if(!owner)throw accessError('OWNER_REQUIRED');await ensureTournamentOrganizers(sql);if(body.action==='organizer-issue')return res.status(200).json(await issueTournamentOrganizer(sql,account,body));if(body.action==='organizer-list')return res.status(200).json({ok:true,grants:await sql`SELECT id,recipient_account_id,recipient_name,expires_at,redeemed_at,revoked_at FROM gsc_tournament_organizers ORDER BY created_at DESC`});if(body.action==='organizer-revoke'){await sql`UPDATE gsc_tournament_organizers SET revoked_at=now() WHERE id=${body.grantId}::uuid`;return res.status(200).json({ok:true})}throw accessError('ADMIN_ACTION_INVALID',400)}
  if(body.action==='redeem')return res.status(200).json(await redeemEventAdmin(sql,account,body.code));
  if(body.action==='list'){
  const items=await sql`SELECT id,name,status,expires_at,'tournament' AS event_kind FROM live_tournaments UNION ALL SELECT id,name,status,expires_at,'private' AS event_kind FROM live_private_rounds`;

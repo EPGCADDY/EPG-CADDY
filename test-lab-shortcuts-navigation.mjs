@@ -15,8 +15,8 @@ assert(ui.includes("position:fixed!important"),"MENÚ debe permanecer flotante y
 assert(ui.includes('item("manual","MANUAL DE USUARIO"'),"MENÚ debe incluir acceso directo al Manual");
 assert(!ui.includes("padding-right:68px!important"),"MENÚ no debe reducir el ancho útil de la app");
 assert(!app.includes("#gscShortcutsButton{display:none"),"La app no debe ocultar MENÚ");
-assert(app.includes('id="registrationEventButton"')&&app.includes('CREAR TORNEO'),"CREAR TORNEO debe conservar el acceso aprobado desde INICIO");
-assert(app.includes('$("registrationEventButton")?.addEventListener("click"')&&app.includes('/live-hub.html'),"CREAR TORNEO debe navegar al hub conservando el borrador");
+assert(!app.includes('id="registrationEventButton"')&&ui.includes('CREAR TORNEO'),"CREAR TORNEO pertenece exclusivamente al MENÚ");
+assert(app.includes('async function createTournamentFromMenu()')&&app.includes('persistDraftState()'),"MENÚ conserva el borrador antes de crear torneo");
 assert(!app.includes('body:has(#finalCardOverlay.visible) #gscShortcutsButton'),"Tarjeta Digital no debe ocultar MENÚ");
 console.log("PASS LAB deterministic tournament navigation + MENÚ universal overlays");
 assert(!ui.includes('<h3>GESTIONAR</h3>'),'GESTIONAR eliminado por orden del propietario');

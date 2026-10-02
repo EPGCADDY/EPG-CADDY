@@ -1,0 +1,57 @@
+{
+  "version": "R147.2.4.24",
+  "ownerOrder": "2026-10-02T13:06:32-06:00",
+  "activeModes": [
+    "general",
+    "stableford",
+    "match_play",
+    "four_ball",
+    "universales"
+  ],
+  "creation": {
+    "tournament": {
+      "entry": "MENÚ → CREAR TORNEO",
+      "permission": "propietario u organizador con autorización individual activa",
+      "serverEnforced": true
+    },
+    "private": {
+      "entry": "MENÚ → CREAR RONDA PARTICULAR",
+      "permission": "cualquier jugador",
+      "serverEnforced": true
+    }
+  },
+  "creationResults": [
+    "código propio del evento",
+    "COMPARTIR POR WHATSAPP",
+    "COPIAR CÓDIGO"
+  ],
+  "registration": {
+    "createsEvent": false,
+    "defaultCode": false,
+    "creationControls": false
+  },
+  "scorecardNames": [
+    "SCORES MI RONDA",
+    "SCORES TORNEO"
+  ],
+  "retired": [
+    "Ronda de práctica",
+    "Score Card - Práctica",
+    "creación de eventos desde Modalidades"
+  ],
+  "installationUpdate": "ACTUALIZAR sólo mediante toque del propietario; B3 distingue compilación corregida",
+  "pending": [
+    "navegador B3",
+    "configuración y ejecución cron en Vercel",
+    "main y dominios fijos",
+    "prueba de actualización del propietario"
+  ],
+  "retention": {
+    "completed": "24h tras todos los scores de los 18 hoyos; correcciones no reinician",
+    "incomplete": "24h tras último score recibido en servidor; cambios de metadatos y reintentos no reinician",
+    "noScores": "24h desde creación",
+    "creatorDelete": "Puede eliminar su propio evento en cualquier momento con motivo y comprobante",
+    "ownerDelete": "Puede eliminar cualquier evento en cualquier momento con motivo y comprobante",
+    "scheduledExecution": "PENDIENTE evidencia CRON_SECRET y cron real"
+  }
+}

@@ -1,4 +1,4 @@
-import {refreshEventLifecycles} from './_lib/event-lifecycle.js';
+import {ensureEventLifecycle,refreshEventLifecycles} from './_lib/event-lifecycle.js';
 import {personalAccessEnabled} from './_lib/personal-access-activation.js';
 import {refreshPrivateRoundLifecycle} from "./_lib/private-round-lifecycle.js";
 import { createHash, randomBytes } from "node:crypto";
@@ -6,6 +6,8 @@ import { getDatabase } from "./_lib/database.js";
 import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 import { noStore, readJson } from "./_lib/http.js";
 import {requireAccountSession} from './_lib/account-auth.js';
+import {readDeviceEventIdentity} from './_lib/device-event-identity.js';
+import {tournamentOrganizer} from './_lib/tournament-organizers.js';
 import {ensurePersonalAccess,guardPersonalLive,personalPublishingSql} from './_lib/personal-event-access.js';
 
 const LIVE_POLICY_VERSION="gsc-gt-live-v1";
@@ -207,8 +209,8 @@ async function createStream(sql,req,body){
   const snapshot=normalizeLiveSnapshot(body.snapshot),scope=validateScope(snapshot,body.scope,body.selectedPlayerIds),consent=validateConsent(body.consent,scope.selectedPlayerIds),publisherSecret=newToken(),viewerToken=newToken(),hours=boundedInteger(body.durationHours,4,72,24),filtered=filterSnapshot(snapshot,scope.selectedPlayerIds),groupLabel=cleanText(body.groupLabel,120)||filtered.groupLabel;
   await rateLimit(sql,req,"create",tokenHash(requestAddress(req)),20);
   const rows=await sql`
-    INSERT INTO live_streams (round_client_id, scope, group_label, selected_player_ids, consent, publisher_secret_hash, viewer_token_hash, current_snapshot, device_at, expires_at)
-    VALUES (${snapshot.roundId}, ${scope.scope}, ${groupLabel}, ${JSON.stringify(scope.selectedPlayerIds)}::jsonb, ${JSON.stringify(consent)}::jsonb, ${tokenHash(publisherSecret)}, ${tokenHash(viewerToken)}, ${JSON.stringify(filtered)}::jsonb, ${snapshot.updatedAt}::timestamptz, now() + (${hours}::text || ' hours')::interval)
+    INSERT INTO live_streams (round_client_id, scope, group_label, selected_player_ids, consent, publisher_secret_hash, viewer_token_hash, current_snapshot, device_at, last_score_at, expires_at)
+    VALUES (${snapshot.roundId}, ${scope.scope}, ${groupLabel}, ${JSON.stringify(scope.selectedPlayerIds)}::jsonb, ${JSON.stringify(consent)}::jsonb, ${tokenHash(publisherSecret)}, ${tokenHash(viewerToken)}, ${JSON.stringify(filtered)}::jsonb, ${snapshot.updatedAt}::timestamptz, CASE WHEN gsc_score_fingerprint(${JSON.stringify(filtered)}::jsonb)<>'[]'::jsonb THEN now() ELSE NULL END, now() + interval '24 hours')
     RETURNING id, revision, expires_at, created_at
   `;
   const row=rows[0];
@@ -267,6 +269,7 @@ async function publish(sql,req,body){
     updated AS (
       UPDATE live_streams AS stream
       SET current_snapshot=decision.filtered_snapshot,
+          last_score_at=CASE WHEN gsc_score_fingerprint(decision.filtered_snapshot)<>'[]'::jsonb AND gsc_score_fingerprint(decision.filtered_snapshot) IS DISTINCT FROM gsc_score_fingerprint(decision.current_snapshot) THEN now() ELSE decision.last_score_at END,
           revision=decision.revision+1,
           last_mutation_id=${mutationId}::text,
           last_mutation_result=jsonb_build_object(
@@ -280,11 +283,11 @@ async function publish(sql,req,body){
           updated_at=now()
       FROM decision
       WHERE stream.id=decision.id AND decision.outcome_code='APPLY'
-      RETURNING stream.id,stream.tournament_id,stream.revision,stream.last_mutation_result AS result
+      RETURNING stream.id,stream.tournament_id,stream.revision,stream.last_score_at,stream.last_mutation_result AS result
     ),
     tournament_bump AS (
       UPDATE live_tournaments AS tournament
-      SET revision=tournament.revision+1,updated_at=now()
+      SET revision=tournament.revision+1,updated_at=now(),last_score_at=greatest(tournament.last_score_at,updated.last_score_at)
       FROM updated
       WHERE tournament.id=updated.tournament_id AND tournament.status='active'
       RETURNING tournament.id
@@ -332,7 +335,7 @@ async function createTournament(sql,req,body){
   await rateLimit(sql,req,"create-tournament",tokenHash(requestAddress(req)),10);
   const organizerSecret=newToken(),viewerToken=newToken(),joinCode=newJoinCode(),days=boundedInteger(body.durationDays,1,8,2),rows=await sql`
     INSERT INTO live_tournaments (name, mode, organizer_secret_hash, viewer_token_hash, join_code_hash, expires_at)
-    VALUES (${name}, ${mode}, ${tokenHash(organizerSecret)}, ${tokenHash(viewerToken)}, ${tokenHash(joinCode)}, now() + (${days}::text || ' days')::interval)
+    VALUES (${name}, ${mode}, ${tokenHash(organizerSecret)}, ${tokenHash(viewerToken)}, ${tokenHash(joinCode)}, now() + interval '24 hours')
     RETURNING id, revision, expires_at, created_at
   `,row=rows[0];
   await sql`INSERT INTO live_events (tournament_id, event_type, actor_hash, details) VALUES (${row.id}, 'created', ${tokenHash(organizerSecret)}, ${JSON.stringify({policyVersion:LIVE_POLICY_VERSION})}::jsonb)`;
@@ -540,6 +543,8 @@ export async function handleLive(req,res,databaseGetter=getDatabase,accountResol
       if(String(error?.code||"")==="DATABASE_NOT_CONFIGURED")return await proxyLiveToProduction(req,res);
       throw error;
     }
+    await ensureEventLifecycle(sql);
+    if(action==='create_tournament'){let account;try{account=await accountResolver(req)}catch(error){account=await readDeviceEventIdentity(req,sql);if(!account)throw liveError('TOURNAMENT_ORGANIZER_REQUIRED',403)}await tournamentOrganizer(sql,req,account)}
     const personalEnabled=personalAccessEnabled()||accountResolver!==requireAccountSession;
     if(personalEnabled){await ensurePersonalAccess(sql);await refreshEventLifecycles(sql);const context=await guardPersonalLive(sql,req,body,accountResolver);sql=personalPublishingSql(sql,context)}
     const result=privateAction?await privateRoundAction(sql,req,body,action):action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="join_tournament_by_id"?await joinTournamentById(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req):action==="read"?await readLive(sql,req,body):null;
@@ -548,7 +553,7 @@ export async function handleLive(req,res,databaseGetter=getDatabase,accountResol
       const kind=action==='list_private_rounds'?'private':'tournament',policies=await sql`SELECT e.event_id,m.account_id FROM gsc_personal_events e LEFT JOIN gsc_personal_members m ON m.event_id=e.event_id AND m.event_kind=e.event_kind AND m.account_id=${account?.id||''} AND m.revoked_at IS NULL WHERE e.event_kind=${kind}`;
       const forbidden=new Set(policies.filter(p=>!p.account_id).map(p=>p.event_id)),key=action==='list_private_rounds'?'rounds':'tournaments';result[key]=result[key].filter(event=>!forbidden.has(event.id));
     }
-    if(personalEnabled&&result&&(action==='publish'||action==='publish_private_round'))await refreshEventLifecycles(sql);
+    if(result&&(action==='publish'||action==='publish_private_round'))await refreshEventLifecycles(sql);
     if(!result)throw liveError("LIVE_ACTION_UNSUPPORTED",404);
     return res.status(200).json(result);
   }catch(error){

@@ -1,3 +1,4 @@
+import {authorizeTestOrganizer} from './tests/helpers/authorize-organizer.mjs';
 import assert from 'node:assert/strict';
 import {PGlite} from '@electric-sql/pglite';
 import {readFile} from 'node:fs/promises';
@@ -13,6 +14,7 @@ assert.equal((await readDeviceEventIdentity({...request,headers:{...request.head
 assert.equal(await readDeviceEventIdentity({...request,headers:{cookie:'gsc_event_device='+'A'.repeat(43)}},sql),null);
 const viewer=await resolveEventIdentity({...request,headers:{cookie:cookie+'; gsc_code_session='+'B'.repeat(43)}},response,sql,'identity',async()=>({id:'viewer',entryRole:'viewer'}));assert.equal(viewer.id,'viewer','Explicit viewer code retains read-only identity');
 async function call(body,identityCookie){let status=200,result;await handlePersonalEvents({...request,headers:{...request.headers,cookie:identityCookie},body},{setHeader(){},status(n){status=n;return this},json(v){result=v}},()=>sql,req=>readDeviceEventIdentity(req,sql));return{status,...result}}
+await authorizeTestOrganizer(sql,owner.id);
 const created=await call({action:'create',eventKind:'tournament',name:'Copa Santa Delfina',course:'El Pulté',playedAt:'2026-09-30',mode:'general',categories:['senior'],groupLabel:'Friends',players:[{id:'p1',name:'Jaime',handicap:13,tournamentCategory:'senior'}]},cookie);assert.equal(created.status,200);assert.ok(created.eventId);
 const read=await call({action:'read',eventKind:'tournament',eventId:created.eventId},cookie);assert.equal(read.status,200);assert.equal(read.membership.role,'organizer');assert.equal(read.membership.players[0].name,'Jaime');
 const otherHeaders={setHeader(name,value){if(name==='Set-Cookie')this.cookie=value}};await resolveEventIdentity(request,otherHeaders,sql,'identity');const denied=await call({action:'read',eventKind:'tournament',eventId:created.eventId},otherHeaders.cookie);assert.equal(denied.code,'PERSONAL_EVENT_FORBIDDEN');

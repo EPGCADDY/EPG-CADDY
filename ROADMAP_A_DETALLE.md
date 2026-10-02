@@ -3119,3 +3119,58 @@ BLOQUEO Vercel: navegador login; acceso seguro elegido GitHub, formulario devuel
 Se detecta fallo de entrega en previews: diferentes commits con mismo release no ofrecían ACTUALIZAR a una R24 ya instalada. Identificador incremental LABORATORIO-20261002-R147.2.4.24-B2 en release.json, meta index-grupal.html y fallback service-worker.js; etiqueta visible sigue R147.2.4.24. Sin promover instalaciones automáticamente; versión disponible se descubre cada30s y se instala sólo al toque. Banco update recovery/discovery debe comprobar B2 con versión previa de la misma R24; producción sigue R23 mientras cron no verificado. Archivos index-grupal.html, service-worker.js, release.json y controles/documentación/inventario.
 
 Prueba incremental `test-update-delivery-control.mjs`: misma R24 con identificador B2 ofrece ACTUALIZAR sin navegar hasta el toque, en ambos dominios.
+
+
+### R24 · orden vigente y corrección desde matriz, 13:06–13:13 Guatemala
+Orden anterior de creación en Modalidades queda sustituida: MENÚ contiene CREAR TORNEO y CREAR RONDA PARTICULAR. Ambos generan su propio código y ofrecen WhatsApp y COPIAR CÓDIGO. Torneo exige autorización individual de organizador o propietario; validación obligatoria en personal-events y live API. Ronda particular disponible a cualquier jugador. Propietario emite/revoca autorización de creación ligada al código personal del destinatario desde Administración; código de un solo canje, hash,24h, sin facultad para borrar eventos ajenos ni delegar.
+Retiro de Práctica desde matriz funcional canónica JSON, matriz editorial MD/JSON y ficha pendiente de modalidades. Eliminados creador/editor/entrada/renderizador específico y capítulos/índice/acciones del Manual. Sesiones antiguas de práctica no se recuperan como rondas oficiales; scores antiguos no se destruyen. Se mantienen sólo guardas de compatibilidad que impiden escrituras/cierres oficiales de ese formato retirado.
+Pruebas vigentes se corrigen para no reintroducir botones en Modalidades; fixtures positivos ahora reciben autorización de organizador explícita. Nuevo test de permisos prueba denegación en ambos endpoints, particular abierto, código individual de un uso, revocación/vencimiento y no delegación. Nuevo test de retiro comprueba matriz/manual/programa y recuperación de sesión antigua sin destruir scores. B3 conserva versión visible R147.2.4.24 y permite ACTUALIZAR desde R24/B2. Ningún candidato B2 se considera final tras esta orden.
+PENDIENTES: banco integral B3 y navegador; capturas de Manual con nueva ubicación; cron/configuración real Vercel con acceso manual (GitHub rechazó credenciales); publicación final main/dominos/rama LAB antigua y prueba de actualización del propietario. NO PUBLICADO en dominios fijos.
+
+Archivos de esta corrección:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.json` · retiro, navegación, permisos o prueba vigente.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_TECNICA_EDITORIAL_MANUAL.md` · retiro, navegación, permisos o prueba vigente.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_DID_017_FICHAS_MODALIDADES_PARA_APRENDER.md` · retiro, navegación, permisos o prueba vigente.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R147_2_4_24.md` · retiro, navegación, permisos o prueba vigente.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · retiro, navegación, permisos o prueba vigente.
+- `CONTROL_PROYECTO_SCIRE/MANUAL_TAREAS_R147_2.md` · retiro, navegación, permisos o prueba vigente.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · retiro, navegación, permisos o prueba vigente.
+- `CONTROL_PROYECTO_SCIRE/MATRIZ_ACEPTACION_SCORES_R147_2_4_1.md` · retiro, navegación, permisos o prueba vigente.
+- `api/event-administration.js` · retiro, navegación, permisos o prueba vigente.
+- `api/live.js` · retiro, navegación, permisos o prueba vigente.
+- `api/personal-events.js` · retiro, navegación, permisos o prueba vigente.
+- `event-administration-ui.js` · retiro, navegación, permisos o prueba vigente.
+- `event-administration.html` · retiro, navegación, permisos o prueba vigente.
+- `index-grupal.html` · retiro, navegación, permisos o prueba vigente.
+- `live-hub.js` · retiro, navegación, permisos o prueba vigente.
+- `manual.html` · retiro, navegación, permisos o prueba vigente.
+- `personal-events.js` · retiro, navegación, permisos o prueba vigente.
+- `release.json` · retiro, navegación, permisos o prueba vigente.
+- `scripts/build-manual-lab.mjs` · retiro, navegación, permisos o prueba vigente.
+- `scripts/manual-screen-parity-gate.mjs` · retiro, navegación, permisos o prueba vigente.
+- `service-worker.js` · retiro, navegación, permisos o prueba vigente.
+- `shortcuts-ui.js` · retiro, navegación, permisos o prueba vigente.
+- `test-event-administration.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-event-directory-code.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-lab-device-event-identity.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-lab-global-operational-audit.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-lab-private-round-share-flow.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-lab-registration-private-rounds-entry.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-lab-registration-return-state.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-lab-shortcuts-navigation.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-lab-tournament-navigation.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-live-official-flow.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-personal-event-permissions.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-tournament-active-code.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-update-delivery-control.mjs` · retiro, navegación, permisos o prueba vigente.
+- `CONTROL_PROYECTO_SCIRE/MATRIZ_FUNCIONAL_R147_2_4_24.json` · retiro, navegación, permisos o prueba vigente.
+- `api/_lib/tournament-organizers.js` · retiro, navegación, permisos o prueba vigente.
+- `test-r24-feature-retirement.mjs` · retiro, navegación, permisos o prueba vigente.
+- `test-tournament-organizer-permissions.mjs` · retiro, navegación, permisos o prueba vigente.
+- `tests/helpers/` · retiro, navegación, permisos o prueba vigente.
+- `tests/helpers/authorize-organizer.mjs` · retiro, navegación, permisos o prueba vigente.
+
+### Orden final del propietario · 2 octubre 2026, 13:22 Guatemala
+Publicación autorizada inmediata de R24-B3; instalación únicamente al pulsar ACTUALIZAR por el propietario. Rondas particulares y torneos incompletos: vencimiento 24h tras último score recibido en servidor; sin scores, 24h desde creación. Eventos completos: plazo fijo tras completar 18 hoyos, no reiniciado por correcciones. Creador elimina propios eventos; propietario elimina cualquiera con comprobante. Cron programado sigue PENDIENTE por sesión Vercel no autenticada: no afirmar ejecución. Pantallas anteriores del manual pendientes de renovación visual.
+
+R24-B3 retención: `api/_lib/event-lifecycle.js`, `api/_lib/private-round-lifecycle.js`, `api/live.js`, `test-event-lifecycle.mjs`, `test-live-official-flow.mjs`, `test-lab-private-lifecycle.mjs`: último score de servidor; huella de scores excluye metadatos y duplicados; eventos completados mantienen plazo fijo. Pruebas aisladas PASS; cron programado no comprobado.

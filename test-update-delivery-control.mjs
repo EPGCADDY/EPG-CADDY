@@ -20,7 +20,7 @@ for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.verc
  ctx.caches={keys:async()=>[]};await events.pageshow();assert.equal(elements.get('gscDeliveryUpdateButton').textContent,'ACTUALIZAR','Unknown legacy controller still offers explicit recovery for a verified published release');
  assert.equal(destination,url.toString(),'Discovery and fallback never navigate without another click');
  const candidate=JSON.parse(fs.readFileSync('release.json')).release;
- approved=candidate.replace(/-B2$/,'');ctx.document.querySelector=()=>({content:approved});ctx.fetch=async()=>Response.json({release:candidate});
+ approved=candidate.replace(/-B\d+$/,'');ctx.document.querySelector=()=>({content:approved});ctx.fetch=async()=>Response.json({release:candidate});
  await events.pageshow();assert.equal(elements.get('gscDeliveryUpdateButton').textContent,'ACTUALIZAR','Same visible R24 with a new build identity must offer manual update');assert.equal(destination,url.toString(),'Same-version build discovery never updates automatically');
  elements.get('gscDeliveryUpdateButton').onclick();assert.equal(new URL(destination).searchParams.get('app_version'),candidate);
  console.log('PASS same R24 build correction offers ACTUALIZAR without automatic navigation: '+origin);

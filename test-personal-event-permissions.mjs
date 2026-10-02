@@ -1,3 +1,4 @@
+import {authorizeTestOrganizer} from './tests/helpers/authorize-organizer.mjs';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
@@ -9,6 +10,7 @@ const sql=async(s,...v)=>(await db.query(s.reduce((q,x,i)=>q+(i?'$'+i:'')+x,''),
 let account={id:'owner-account',name:'ORGANIZADOR'},headers={host:'localhost:8877',origin:'http://localhost:8877'};
 const identity=async()=>{if(!account)throw Object.assign(new Error('ACCOUNT_UNAUTHORIZED'),{code:'ACCOUNT_UNAUTHORIZED',status:401});return account};
 async function call(handler,body,secret=''){let status=200,result,responseHeaders={};await handler({method:'POST',headers:{...headers,authorization:secret?'LivePublisher '+secret:''},body},{setHeader(name,value){responseHeaders[name]=value},status(n){status=n;return this},json(v){result=v}},()=>sql,identity);return{status,...result,responseHeaders}}
+await authorizeTestOrganizer(sql,'owner-account');
 const config={course:'CAMPO LAB',playedAt:'2026-09-30',mode:'general',categories:['b']};
 const event=await call(handlePersonalEvents,{action:'create',eventKind:'tournament',name:'PRIVADO',...config});assert.equal(event.status,200);
 const player={id:'p1',name:'JUGADOR AUTORIZADO',handicap:14,tournamentCategory:'b',holes:[{hole:1,par:4,gross:5,net:4}]};

@@ -1,6 +1,8 @@
+import {authorizeTestOrganizer} from './tests/helpers/authorize-organizer.mjs';
 import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import {PGlite} from '@electric-sql/pglite';import {handlePersonalEvents} from './api/personal-events.js';import {handleLive} from './api/live.js';
 const db=new PGlite();for(const file of ['database/004_live_scorecards.sql','database/005_live_tournament_mode.sql'])await db.exec(await readFile(file,'utf8'));const sql=async(s,...v)=>(await db.query(s.reduce((q,x,i)=>q+(i?'$'+i:'')+x,''),v)).rows;
 let account={id:'creator',name:'CREADOR'};const headers={host:'localhost:8877',origin:'http://localhost:8877'};async function call(handler,body,secret=''){let status=200,result;await handler({method:'POST',headers:{...headers,authorization:secret?'LivePublisher '+secret:''},body},{setHeader(){},status(n){status=n;return this},json(v){result=v}},()=>sql,async()=>account);return{status,...result}}
+await authorizeTestOrganizer(sql,'creator');
 const config={course:'EL PULTÉ GOLF',playedAt:'2026-10-01',mode:'general',categories:['a','b']};const event=await call(handlePersonalEvents,{action:'create',eventKind:'tournament',name:'FAMILIA QA',...config});assert.equal(event.status,200);
 const other=await call(handlePersonalEvents,{action:'create',eventKind:'tournament',name:'AJENO QA',...config});
 account={id:'late-player',name:'TARDÍO'};const player={id:'late1',name:'JUGADOR TARDÍO',handicap:14,tournamentCategory:'a',tee:'Blanco',holes:[{hole:1,par:4,gross:5,net:4}]},payload={action:'join-code',joinCode:event.joinCode,players:[player],groupLabel:'GRUPO TARDÍO',mode:'general'};

@@ -17,7 +17,6 @@ Crear un centro web y PDF, imprimible y consultable desde la aplicación, donde 
 2. Stableford: puntos por hoyo, X, total y desempate.
 3. Match Play: hoyos ganados, `EVEN`, `+N`, cierre anticipado y Matches independientes.
 4. Four Ball: parejas, mejor Neto por hoyo y resultado del Match.
-5. Score Card · Práctica: registro sin competencia ni liquidación.
 6. Skins: Gross/Neto, valor del hoyo, acumular, dividir o anular empates y carry final.
 7. Wolf: rotación, Con pareja, Lobo solitario, Lobo ciego, Wolf primero/último, multiplicadores, push/carry, riesgo y liquidación.
 8. Vegas: formación del número, scores de dos dígitos, volteo por birdie, dos birdies, águila, tope, parejas y liquidación; la versión de seis jugadores debe rotularse como adaptación Golf Score Card GT.

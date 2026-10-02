@@ -1,4 +1,5 @@
 import {refreshEventLifecycles} from './_lib/event-lifecycle.js';
+import {tournamentOrganizer,redeemTournamentOrganizer} from './_lib/tournament-organizers.js';
 import {personalAccessEnabled} from './_lib/personal-access-activation.js';
 import {codeAccessEnabled,issueEntryCode} from './_lib/code-access.js';
 import {getDatabase} from './_lib/database.js';
@@ -42,6 +43,8 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
       return res.status(200).json({ok:true,events});
     }
     if(body.action==='identity')return res.status(200).json({ok:true,personalCode:account.id,name:account.name});
+    if(body.action==='organizer-status'){try{const permission=await tournamentOrganizer(sql,req,account);return res.status(200).json({ok:true,canCreate:true,owner:permission.owner})}catch(error){if(error.code!=='TOURNAMENT_ORGANIZER_REQUIRED')throw error;return res.status(200).json({ok:true,canCreate:false,accountCode:account.id})}}
+    if(body.action==='organizer-redeem')return res.status(200).json(await redeemTournamentOrganizer(sql,account,body.code));
     if(body.action==='view-code')return res.status(200).json(await viewPersonalEventCode(sql,body,account));
     if(body.action==='join-code')return res.status(200).json(await joinPersonalTournamentCode(sql,body,account));
     if(body.action==='redeem')return res.status(200).json(await consumePersonalInvite(sql,body,account));
@@ -52,6 +55,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
     }
     const kind=eventKind(body.eventKind||'tournament');
     if(body.action==='create'){
+      if(kind==='tournament')await tournamentOrganizer(sql,req,account);
       const config=configuration(body),players=assignedPlayers(body.players,'organizer'),group=String(body.groupLabel||'').trim().slice(0,120);if(players.length&&!group)throw accessError('PERSONAL_ASSIGNMENT_INVALID',400);validateAssignedConfiguration(players,config);let created,status=200;
       await handleLive({...req,body:{action:kind==='private'?'create_private_round':'create_tournament',name:body.name,mode:config.mode,durationDays:8,consent:{confirmed:true}}},{setHeader(){},status(n){status=n;return this},json(value){created=value}},()=>sql,accountResolver);
       if(status!==200)return res.status(status).json(created);

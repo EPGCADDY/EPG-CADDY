@@ -13,7 +13,7 @@ assert(manual.includes('id="portada"')&&manual.includes("/assets/official-logos/
 assert(manual.indexOf('id="portada"')<manual.indexOf('id="indice"'),"La portada debe aparecer antes del índice");
 assert(manual.includes('id="indice"')&&manual.includes("Toca cualquier tema para saltar directamente"),"Falta índice general clickable");
 assert((manual.match(/href="#[^"]+"/g)||[]).length>=50,"Índice/navegación insuficiente");
-assert((manual.match(/<section class="sheet(?: |")/g)||[]).length===75,"Debe haber exactamente 75 hojas vigentes: estructura anterior + capítulo 30A Tarjetas Digitales");
+assert((manual.match(/<section class="sheet(?: |")/g)||[]).length===73,"Debe haber 73 hojas vigentes; Práctica retirada por orden del propietario");
 const mountedRealCurrent=[
 "/docs/manual/current/APP_ACCESS.png",
 "/docs/manual/current/APP_SETUP_CURRENT.png",
@@ -30,7 +30,6 @@ const mountedRealCurrent=[
 "/docs/manual/current/APP_MODE_FOUR_BALL.png",
 "/docs/manual/current/APP_MODE_SKINS.png",
 "/docs/manual/current/APP_MODE_UNIVERSALES.png",
-"/docs/manual/current/APP_MODE_PRACTICE.png",
 "/docs/manual/current/CAMPO_MODALIDAD_REAL.webp",
 "/docs/manual/current/REGISTRO_ATAJOS_REAL.webp",
 "/docs/manual/current/FOURBALL_ATAJOS_REAL.webp"
@@ -40,7 +39,7 @@ assert(!/\/docs\/manual\/layout\//.test(manual),"No se permiten láminas diseña
 assert(!/<img\b[^>]*src="[^"]+\.svg"/i.test(manual),"No se permiten SVG diseñados como pantallas de aplicación");
 for(const token of ["HACIENDA NUEVA","ALTA VISTA","↑ verde","↓ roja","= blanco","modalidad activa","lienzo negro excesivo"]) assert(manual.includes(token),"Función vigente no está documentada completamente: "+token);
 assert(manual.includes('id="tarjetas-digitales-capitulo"'),"Falta capítulo 30A Tarjetas Digitales");
-for(const token of ["COMPARTIR TARJETA","ENVIAR A JUGADORES","WhatsApp registrado","MEDAL PLAY NORMAL","STABLEFORD","MATCH PLAY","FOUR BALL","SCORE CARD · PRÁCTICA","SKINS","UNIVERSALES"]) assert(manual.includes(token),"Capítulo Tarjetas Digitales incompleto: "+token);
+for(const token of ["COMPARTIR TARJETA","ENVIAR A JUGADORES","WhatsApp registrado","MEDAL PLAY NORMAL","STABLEFORD","MATCH PLAY","FOUR BALL","SKINS","UNIVERSALES"]) assert(manual.includes(token),"Capítulo Tarjetas Digitales incompleto: "+token);
 assert(app.includes('id="sendFinalCard"')&&app.includes("COMPARTIR TARJETA"),"La app debe conservar COMPARTIR TARJETA");
 assert(app.includes('id="sendFinalCardPlayers"')&&app.includes("ENVIAR A JUGADORES"),"La app debe conservar ENVIAR A JUGADORES");
 for(const id of ["control-x","lab-scorecard"]){
@@ -72,4 +71,4 @@ assert(cards.includes("fourBallTeamLabel")&&!cards.includes("TEAM 1")&&!cards.in
 assert(!fourBall.includes('"TEAM 1"')&&!fourBall.includes('"TEAM 2"')&&!fourBall.includes('"TEAM 3"'),"Motor Four Ball no debe reintroducir TEAM numerado");
 if(fail.length){console.error("MANUAL ORIGINAL PARITY: FAIL");for(const item of fail) console.error("- "+item);process.exit(1);}
 console.log("MANUAL ORIGINAL PARITY: PASS");
-console.log("MANUAL RE-MAQUETADO: 75 hojas · capítulo Tarjetas Digitales · MENÚ vigente · pantallas actuales · 0 funciones retiradas");
+console.log("MANUAL RE-MAQUETADO: 73 hojas · capítulo Tarjetas Digitales · MENÚ vigente · pantallas actuales · 0 funciones retiradas");

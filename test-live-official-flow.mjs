@@ -1,3 +1,4 @@
+import {authorizeTestOrganizer} from './tests/helpers/authorize-organizer.mjs';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
@@ -13,9 +14,10 @@ async function call(body,secret='',origin='http://localhost:8877'){
   let status=200,result;
   const req={method:'POST',headers:{host:'localhost:8877',origin,authorization:secret?`LivePublisher ${secret}`:''},body};
   const res={setHeader(){},status(n){status=n;return this},json(value){result=value;return this}};
-  await handleLive(req,res,()=>sql);
+  await handleLive(req,res,()=>sql,async()=>({id:'test-organizer',name:'Organizador'}));
   return {status,...result};
 }
+await authorizeTestOrganizer(sql,'test-organizer');
 const snapshot={roundId:'official-test-round',mode:'general',course:'CAMPO LAB',groupLabel:'GRUPO LAB',updatedAt:new Date().toISOString(),players:[{id:'p1',name:'UNO',holes:[{hole:1,par:4,gross:5,net:4}]}]};
 const consent={confirmed:true,playerIds:['p1']};
 const tournament=await call({action:'create_tournament',name:'TORNEO INTEGRACIÓN',mode:'general',consent});
@@ -30,13 +32,16 @@ assert.equal((await call({action:'publish',snapshot,clientMutationId:'guest-writ
 assert.equal((await call({action:'publish',snapshot,clientMutationId:'cross-origin',expectedRevision:0},stream.publisherSecret,'https://untrusted.example')).status,403);
 const first=await call({action:'publish',snapshot,clientMutationId:'write-1',expectedRevision:0},stream.publisherSecret);
 assert.equal(first.revision,1);
+const initialScoreAt=(await sql`SELECT last_score_at FROM live_streams WHERE id=${stream.streamId}::uuid`)[0].last_score_at;
 const retry=await call({action:'publish',snapshot,clientMutationId:'write-1',expectedRevision:0},stream.publisherSecret);
 assert.equal(retry.duplicate,true);
+assert.equal(new Date((await sql`SELECT last_score_at FROM live_streams WHERE id=${stream.streamId}::uuid`)[0].last_score_at).getTime(),new Date(initialScoreAt).getTime(),'Retries and unchanged scores do not restart inactivity');
 snapshot.players[0].holes[0].gross=4;
 const stale=await call({action:'publish',snapshot,clientMutationId:'write-stale',expectedRevision:0},stream.publisherSecret);
 assert.equal(stale.code,'LIVE_REVISION_CONFLICT');
 const correction=await call({action:'publish',snapshot,clientMutationId:'write-2',expectedRevision:1},stream.publisherSecret);
 assert.equal(correction.revision,2);
+const changed=(await sql`SELECT last_score_at,expires_at FROM live_streams WHERE id=${stream.streamId}::uuid`)[0];assert.ok(new Date(changed.last_score_at)>=new Date(initialScoreAt));assert.equal(new Date(changed.expires_at)-new Date(changed.last_score_at),86400000,'Incomplete correction deadline starts at server receipt');
 const read=await call({action:'read',kind:'tournament',viewerToken:tournament.viewerToken});
 assert.equal(read.streams[0].snapshot.players[0].holes[0].gross,4);
 assert.equal(read.streams[0].revision,2);

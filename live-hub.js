@@ -426,8 +426,9 @@
     return true;
   }
   async function openRoundCreate(){
-    const identity=await root.GSCPersonalEvents.request("identity");
+    const identity=await root.GSCPersonalEvents.request("organizer-status");
     if(!identity.ok){setStatus(root.GSCPersonalEvents.message(identity.code),"warning");return false}
+    if(!identity.canCreate){root.GSCPersonalEvents.authorizeOrganizer(openRoundCreate,identity.accountCode);return false}
     return setRoundCreateDialogOpen(true);
   }
   function roundCreateMessage(value,tone="warning"){const message=$("hubRoundDialogStatus");if(message)message.textContent=value;setStatus(value,tone)}

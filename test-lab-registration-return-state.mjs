@@ -8,7 +8,7 @@ let opened=0,persisted=0;
 const ctx=vm.createContext({round:{configured:true,players:structuredClone(draft)},persist(){persisted++},dateSetup(){},openSetup(mode){assert.equal(mode,'new');opened++},clearDraftState(){throw Error('Regreso borró el registro')},draftPlayers:structuredClone(draft)});
 vm.runInContext(extract('openRegistrationPreservingActiveRound','ensurePrincipalEntry')+'openRegistrationPreservingActiveRound()',ctx);
 assert.equal(opened,1);assert.equal(persisted,1);assert.deepEqual(JSON.parse(JSON.stringify(ctx.draftPlayers)),draft);assert.deepEqual(JSON.parse(JSON.stringify(ctx.round.players)),draft);
-const handler=source.match(/\$\("registrationEventButton"\)\?\.addEventListener\("click",(?:async)?\(\)=>\{([\s\S]*?)\}\);/)[1];
+const handler=source.match(/async function createTournamentFromMenu\(\)\{([^\n]*)\}/)[1];
 const order=[];let nav;
 const fields={setupStatus:{textContent:''}};
 const eventCtx=vm.createContext({window:{GSCPersonalEvents:{request:async()=>({ok:true,personalCode:'account-a'}),message:code=>code}},sessionStorage:{setItem(key,value){eventCtx.savedDraft=JSON.parse(value)}},rosterEditMode:true,round:{configured:true,id:'active-round',players:structuredClone(draft)},draftPlayers:[{name:'Jugador A',tournamentCategory:'senior'}],COURSE_CATALOG:{pulte:{name:'El Pulté'}},draftCourse:'pulte',draftRoundMode:'general',draftTournament:{name:'Evento existente'},$:id=>fields[id],captureVisibleRegistrationValues(){order.push('capture')},syncDraftPlayersFromManualRows(options){assert.equal(options.strict,true);order.push('sync');return true},persistDraftState(){order.push('persist')},URL,location:{origin:'https://lab.example',href:'https://lab.example/?inicio=1&source=pwa&_vercel_share=qa',assign(url){nav=url;order.push('navigate')}}});
@@ -32,7 +32,7 @@ const assigned=assignedPlayers([{id:'p1',name:'Jugador A',handicap:14,tournament
 assert.equal(assigned[0].tee,'Azul');
 assert.throws(()=>assignedPlayers([{...assigned[0],tee:'INVALIDA'}],'organizer'));
 console.log('PASS: escritor conserva marcas registradas y rechaza marcas inválidas.');
-const privateHandler=source.match(/\$\("openMyRoundSetup"\)\.addEventListener\("click",\(\)=>\{([\s\S]*?)\}\);/)[1];
+const privateHandler=source.match(/function createPrivateRoundFromMenu\(\)\{([^\n]*)\}/)[1];
 let privateConfig;
 eventCtx.window.GSCPersonalEvents.createPrivate=config=>{privateConfig=config};eventCtx.round={configured:false,id:'draft-round'};eventCtx.syncDraftPlayersFromManualRows=()=>true;
 vm.runInContext(`(()=>{${privateHandler}})()`,eventCtx);assert.equal(privateConfig.registrationDraft,true);assert.equal(privateConfig.course,'El Pulté');assert.equal(privateConfig.players[0].name,'Jugador A');
@@ -42,7 +42,7 @@ const currentHub=fs.readFileSync('live-hub.js','utf8');
 const openFunction=currentHub.slice(currentHub.indexOf('  async function openRoundCreate(){'),currentHub.indexOf('  function roundCreateMessage('));
 for(const authorized of [false,true]){
  let shown=0,login=0;
- const ctx={root:{GSCPersonalEvents:{request:async()=>({ok:authorized,code:authorized?undefined:'ACCOUNT_UNAUTHORIZED'}),message:c=>c},GSCOpenAccountLogin(){login++}},setStatus(){},setRoundCreateDialogOpen(){shown++;return true}};
+ const ctx={root:{GSCPersonalEvents:{request:async()=>({ok:authorized,canCreate:authorized,code:authorized?undefined:'ACCOUNT_UNAUTHORIZED'}),message:c=>c},GSCOpenAccountLogin(){login++}},setStatus(){},setRoundCreateDialogOpen(){shown++;return true}};
  await vm.runInNewContext(openFunction+'openRoundCreate()',ctx);assert.equal(shown,authorized?1:0);assert.equal(login,0);
 }
 console.log('PASS: Torneos verifica identidad antes de abrir la captura; un error del servicio conserva el registro sin solicitar credenciales.');
