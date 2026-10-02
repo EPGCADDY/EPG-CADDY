@@ -23,22 +23,16 @@ assert.match(code,/searchParams\.has\("__gscg_build_check"\)[^\n]*cache:"no-stor
 const app=fs.readFileSync('index-grupal.html','utf8');
 const actions=app.match(/<div class="round-actions">([\s\S]*?)<\/div>/)?.[1];
 const ids=[...actions.matchAll(/id="([^"]+)"/g)].map(match=>match[1]);
-assert.deepEqual(ids,['shareRoundLiveButton','backToRegistrationButton','finalCardButton','previousRoundButton','openCardLibraryButton','newRoundButton']);
+assert.deepEqual(ids,['shareRoundLiveButton','backToRegistrationButton','finalCardButton','newRoundButton']);
 const deletion=app.match(/<div class="round-secondary-actions" id="roundSecondaryActions">([\s\S]*?)<\/div>/)?.[1];
 assert.deepEqual([...deletion.matchAll(/id="([^"]+)"/g)].map(match=>match[1]),['clearRoundScores','clearScoresOnly']);
 assert.match(app,/\.round-secondary-actions\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
 
-assert.match(app,/\$\("myRoundButton"\)\.addEventListener\("click",[\s\S]*?window\.GSCPrivateRounds\.open\(round\)/);
-assert.match(app,/<div class="round-actions"><button id="myRoundButton"[^>]*>RONDA PARTICULAR<\/button><button id="privateGroupScoresButton"[^>]*>SCORES GRUPO<\/button><\/div>/);
-assert.match(app,/\$\("privateGroupScoresButton"\)\.addEventListener\("click",\(\)=>window\.GSCPrivateRounds\.openScores\(round\)/);
-console.log('PASS R143: update recovery and requested round button placement');
-assert.match(app,/<div class="round-actions tournament-actions"><button id="roundTournamentButton"[^>]*>TORNEO<\/button><button id="activeTournamentButton"[^>]*>TORNEO ACTIVO<\/button><button id="roundTournamentScoresButton"[^>]*>SCORES TORNEO<\/button><\/div>/);
-const navigation=app.slice(app.indexOf('function currentRoundReturnPath('),app.indexOf('$("roundTournamentButton").addEventListener'));
-for(const search of ['', '?personalEvent=event-123&personalKind=tournament', '?personalEvent=private-123&personalKind=private']){
- let persisted=0,destination='';const context={URL,round:{configured:true,id:'existing',players:[]},localStorage:{getItem:()=>null},window:{GSCLiveControl:{prepareTournamentScores:async()=>true}},location:{origin:'https://golf-sc-gt-lab.vercel.app',href:'https://golf-sc-gt-lab.vercel.app/index-grupal.html'+search,assign:url=>destination=url},persist:()=>persisted++};vm.runInNewContext(navigation,context);await context.openRoundTournament(true);const target=new URL(destination);assert.equal(persisted,1);assert.equal(target.pathname,'/live-hub.html');assert.equal(target.searchParams.get('shortcut'),'scores');assert.equal(target.searchParams.get('personalEvent'),search.includes('personalKind=tournament')?'event-123':null);
- await context.openRoundTournament();assert.equal(new URL(destination).searchParams.get('shortcut'),null);
-}
-console.log('PASS bottom TORNEO / SCORES TORNEO: round persisted before navigation; tournament membership retained; private event never selected as tournament');
+assert.doesNotMatch(app,/id="(?:myRoundButton|roundTournamentButton|activeTournamentButton|previousRoundButton|openCardLibraryButton)"/);
+assert.match(app,/<button id="privateGroupScoresButton"[^>]*>SCORES MI RONDA<\/button>/);
+assert.match(app,/<button id="roundTournamentScoresButton"[^>]*>SCORES TORNEO<\/button>/);
+const menu=fs.readFileSync('shortcuts-ui.js','utf8');assert.match(menu,/item\("previous","RONDA PREVIA"/);assert.match(menu,/item\("saved","RONDAS GUARDADAS"/);
+console.log('PASS R24 card actions: history in Menu, creation/join removed from card, only correctly named Scores buttons');
 
 // Execute the complete worker lifecycle, including a previous approved cache.
 for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.vercel.app']){

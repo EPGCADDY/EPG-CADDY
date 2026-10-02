@@ -1,3 +1,4 @@
+import {refreshEventLifecycles} from './_lib/event-lifecycle.js';
 import {personalAccessEnabled} from './_lib/personal-access-activation.js';
 import {codeAccessEnabled,issueEntryCode} from './_lib/code-access.js';
 import {getDatabase} from './_lib/database.js';
@@ -7,7 +8,7 @@ import {isAllowedAppOrigin,handleAppPreflight} from './_lib/cors.js';
 import {noStore,readJson} from './_lib/http.js';
 import {handleLive} from './live.js';
 import {refreshPrivateRoundLifecycle} from './_lib/private-round-lifecycle.js';
-import {accessError,joinPersonalTournamentCode,eventKind,eventScope,ensurePersonalAccess,personalMember,organizer,assignedPlayers,validateAssignedConfiguration,issuePersonalInvite,consumePersonalInvite,auditPersonal,limitPersonalAccess} from './_lib/personal-event-access.js';
+import {accessError,viewPersonalEventCode,joinPersonalTournamentCode,eventKind,eventScope,ensurePersonalAccess,personalMember,organizer,assignedPlayers,validateAssignedConfiguration,issuePersonalInvite,consumePersonalInvite,auditPersonal,limitPersonalAccess} from './_lib/personal-event-access.js';
 
 const modes=['general','match_play','four_ball','stableford','universales'];
 const categories=['championship','a','b','c','d','female','senior','super_senior'];
@@ -33,9 +34,15 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
   try{
     if(!isAllowedAppOrigin(req))throw accessError('ORIGIN_NOT_ALLOWED');
     if(database===getDatabase&&!personalAccessEnabled())throw accessError('PERSONAL_ACCESS_NOT_ENABLED',503);
-    const sql=database(),body=await readJson(req,24000),account=await resolveEventIdentity(req,res,sql,body.action,accountResolver);await ensurePersonalAccess(sql);await limitPersonalAccess(sql,account,String(body.action||'').slice(0,24));
-    if(account.codeAccess&&account.entryRole==='viewer'&&!['identity','list','read'].includes(body.action))throw accessError('PERSONAL_WRITER_FORBIDDEN');
+    const sql=database(),body=await readJson(req,24000),account=await resolveEventIdentity(req,res,sql,body.action,accountResolver);await ensurePersonalAccess(sql);if(['list','read','close','directory'].includes(body.action))await refreshEventLifecycles(sql);await limitPersonalAccess(sql,account,String(body.action||'').slice(0,24));
+    if(account.codeAccess&&account.entryRole==='viewer'&&!['identity','list','read','directory','view-code'].includes(body.action))throw accessError('PERSONAL_WRITER_FORBIDDEN');
+    if(body.action==='directory'){
+      const scoped=eventScope(sql,eventKind(body.eventKind||'tournament'));
+      const events=await scoped`SELECT id,name,mode FROM live_tournaments WHERE status IN ('active','finished') AND expires_at>now() ORDER BY updated_at DESC`;
+      return res.status(200).json({ok:true,events});
+    }
     if(body.action==='identity')return res.status(200).json({ok:true,personalCode:account.id,name:account.name});
+    if(body.action==='view-code')return res.status(200).json(await viewPersonalEventCode(sql,body,account));
     if(body.action==='join-code')return res.status(200).json(await joinPersonalTournamentCode(sql,body,account));
     if(body.action==='redeem')return res.status(200).json(await consumePersonalInvite(sql,body,account));
     if(body.action==='list'){
@@ -95,7 +102,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
       await sql`UPDATE gsc_personal_events SET configuration=${JSON.stringify(config)}::jsonb WHERE event_id=${id}::uuid AND event_kind=${kind}`;await auditPersonal(sql,id,kind,account,'configuration_changed',{before:member.configuration,after:config});return res.status(200).json({ok:true,configuration:config});
     }
     if(body.action==='close'){
-      await sql`UPDATE gsc_personal_events SET status='closed' WHERE event_id=${id}::uuid AND event_kind=${kind}`;await scoped`UPDATE live_tournaments SET status='finished',updated_at=now() WHERE id=${id}::uuid`;await auditPersonal(sql,id,kind,account,'closed');return res.status(200).json({ok:true});
+      await sql`UPDATE gsc_personal_events SET status='closed' WHERE event_id=${id}::uuid AND event_kind=${kind}`;await scoped`UPDATE live_tournaments SET status='finished',completed_at=coalesce(completed_at,now()),expires_at=coalesce(completed_at,now())+interval '24 hours',updated_at=now() WHERE id=${id}::uuid`;await auditPersonal(sql,id,kind,account,'closed');return res.status(200).json({ok:true});
     }
     throw accessError('PERSONAL_ACTION_INVALID',400);
   }catch(error){return res.status(Number(error.status)||(error.code==='ACCOUNT_UNAUTHORIZED'?401:error.code==='ACCOUNT_AUTH_UNAVAILABLE'?503:400)).json({ok:false,code:error.code||'PERSONAL_ACCESS_UNAVAILABLE'})}

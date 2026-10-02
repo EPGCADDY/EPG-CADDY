@@ -4,7 +4,7 @@ const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-ro
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
 const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-20-registration-return`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-20-registration-return`;
-const RELEASE_FALLBACK="LABORATORIO-20261001-R147.2.4.23";
+const RELEASE_FALLBACK="LABORATORIO-20261002-R147.2.4.24";
 let RELEASE=RELEASE_FALLBACK;
 const UPDATE_DIAGNOSTICS={stage:"boot",resources:{}};
 async function fetchPublishedRelease(){
@@ -141,7 +141,7 @@ async function approvedNavigationWithManualUpdate(request){
   await fetchPublishedRelease();
   const approved=await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME});
   if(!approved)return networkFirst(request);
-  const html=await approved.text();
+  const html=removeHostingToolbar(await approved.text());
   const approvedRelease=html.match(/<meta\s+name=["']gscg-release["']\s+content=["']([^"']+)["']/i)?.[1]||"";
   const stale=approvedRelease!==RELEASE;
   if(!stale)return new Response(html,{status:approved.status,headers:approved.headers});
@@ -157,6 +157,11 @@ async function approvedNavigationWithManualUpdate(request){
   }
   const headers=new Headers(approved.headers);headers.set("content-type","text/html; charset=utf-8");headers.delete("content-length");headers.set("cache-control","no-store");
   return new Response(servedHtml,{status:approved.status,statusText:approved.statusText,headers});
+}
+// Hosting injects this script after the build. Older approved shells may retain it
+// even when the project setting is Off. Strip only the known vendor injection.
+function removeHostingToolbar(html){
+  return html.replace(/<script\b[^>]*\bsrc\s*=\s*["'](?:https?:)?\/\/vercel\.live\/[^"']*["'][^>]*>[\s\S]*?<\/script\s*>/gi,'');
 }
 async function manualAppNavigation(request){
   const url=new URL(request.url);
@@ -183,6 +188,7 @@ self.addEventListener("fetch",event=>{
   const request=event.request;
   if(request.method!=="GET")return;
   const url=new URL(request.url);
+  if(url.hostname==='vercel.live'){event.respondWith(new Response('',{headers:{'content-type':'application/javascript','cache-control':'no-store'}}));return}
   if(url.origin!==self.location.origin||url.pathname.startsWith("/api/"))return;
   // Personal scorecards require current server membership; never serve the owner shell
   // or a cached scorecard in response to a forged/revoked personal account URL.

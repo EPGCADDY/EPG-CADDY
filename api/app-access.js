@@ -1,3 +1,4 @@
+import {refreshEventLifecycles} from './_lib/event-lifecycle.js';
 import {createHash} from 'node:crypto';
 import {getDatabase} from './_lib/database.js';
 import {CODE_COOKIE,codeAccessEnabled,issueEntryCode,redeemEntryCode,revokeEntryCode,readCodeSession,codeSessionCookie} from './_lib/code-access.js';
@@ -29,6 +30,11 @@ export default async function handler(req,res){
   noStore(res);if(handleAppPreflight(req,res))return;
   const action=String(req.query?.action||"status").toLowerCase();
   try{
+    if(action==='cleanup'&&['GET','POST'].includes(req.method)){
+      const expected=String(process.env.CRON_SECRET||'');
+      if(!expected||String(req.headers.authorization||'')!==`Bearer ${expected}`)return res.status(401).json({ok:false,code:'CRON_UNAUTHORIZED'});
+      await ensurePersonalAccess(getDatabase());await refreshEventLifecycles(getDatabase());await purgeExpiredAccess();return res.status(200).json({ok:true});
+    }
     if(action==="redeem"&&req.method==="POST"){
       if(!isAllowedAppOrigin(req))return res.status(403).json({ok:false,code:"ORIGIN_NOT_ALLOWED"});
       const token=String(req.query?.token||""),grant=await redeemGuestToken(token);

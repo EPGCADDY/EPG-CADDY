@@ -64,7 +64,7 @@ vm.runInNewContext('renderTournamentShelf()',portal);
 assert.equal(element('hubTournamentShelf').classList.contains('hidden'),true);
 assert.equal(element('monitor-switch').classList.contains('hidden'),false);
 const registration=fs.readFileSync('index-grupal.html','utf8');
-assert.match(registration,/id="registrationEventButton"[^>]*>CREAR TORNEO<\/button>\s*<button[^>]*id="openMyRoundSetup"[^>]*>CREAR RONDA PRIVADA<\/button>/,'Approved entry buttons remain adjacent');
+assert.match(registration.slice(registration.indexOf('aria-label="Modalidades"'),registration.indexOf('aria-label="Registro manual"')),/id="registrationEventButton"[\s\S]*CREAR TORNEO[\s\S]*id="openMyRoundSetup"[\s\S]*CREAR RONDA/,'Creation options are in Modalidades as ordered');
 const privateEntry=registration.match(/\$\("openMyRoundSetup"\)\.addEventListener\("click",\(\)=>\{([\s\S]*?)\}\);/)[1];
 let requestedPrivate;
 const registered=[{id:'p1',name:'UNO',tournamentCategory:'b'}];

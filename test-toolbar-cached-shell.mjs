@@ -1,0 +1,7 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';
+const source=fs.readFileSync('service-worker.js','utf8'),context=vm.createContext({self:{addEventListener(){}},URL,Response,Headers});vm.runInContext(source,context);
+const original='<html><head><script src="/scores-ui.js"></script><script data-explicit-opt-in src="https://vercel.live/_next-live/feedback/feedback.js"></script></head><body>RONDA EN CURSO</body></html>';
+context.html=original;const clean=vm.runInContext('removeHostingToolbar(html)',context);assert(!clean.includes('vercel.live'));assert(clean.includes('/scores-ui.js'));assert(clean.includes('RONDA EN CURSO'));assert.equal(vm.runInContext('removeHostingToolbar(removeHostingToolbar(html))',context),clean);
+const release=source.match(/const RELEASE_FALLBACK="([^"]+)"/)[1];context.fetch=async()=>Response.json({release});context.caches={match:async()=>new Response(original.replace('<head>','<head><meta name="gscg-release" content="'+release+'">'))};context.Date=Date;context.AbortController=AbortController;context.setTimeout=setTimeout;context.clearTimeout=clearTimeout;
+const served=await vm.runInContext('approvedNavigationWithManualUpdate({})',context);assert(!(await served.text()).includes('vercel.live'),'same-release approved shell must also be sanitized');
+console.log('PASS cached toolbar removal: same-release approved shell, vendor script removed, application scripts and current card preserved; idempotent.');

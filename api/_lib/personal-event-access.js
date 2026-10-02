@@ -129,12 +129,23 @@ export async function guardPersonalShare(sql,req,body,resolveAccount=requireAcco
 // Possession of the organizer-shared tournament code grants only this event/group.
 export async function joinPersonalTournamentCode(sql,body,account){
  const code=String(body.joinCode||'').trim().toUpperCase();if(!/^[A-Z0-9]{10}$/.test(code))throw accessError('LIVE_JOIN_CODE_INVALID',400);
- const rows=await sql`SELECT t.id,t.name,e.configuration FROM live_tournaments t JOIN gsc_personal_events e ON e.event_id=t.id AND e.event_kind='tournament' WHERE t.join_code_hash=${hash(code)}::char(64) AND t.status='active' AND t.expires_at>now() AND e.status='active' LIMIT 1`;
- const event=rows[0];if(!event)throw accessError('LIVE_JOIN_CODE_INVALID',404);
+ const kind=eventKind(body.eventKind||'tournament'),scoped=eventScope(sql,kind);
+ const rows=await scoped`SELECT t.id,t.name,e.configuration FROM live_tournaments t JOIN gsc_personal_events e ON e.event_id=t.id AND e.event_kind=${kind} WHERE t.join_code_hash=${hash(code)}::char(64) AND t.status='active' AND t.expires_at>now() AND e.status='active' LIMIT 1`;
+ const event=rows[0];if(!event||body.eventId&&body.eventId!==event.id)throw accessError('LIVE_JOIN_CODE_INVALID',404);
  const players=assignedPlayers(body.players,'scorer'),group=String(body.groupLabel||'').trim().slice(0,120);if(!group)throw accessError('PERSONAL_ASSIGNMENT_INVALID',400);validateAssignedConfiguration(players,event.configuration);
  if(body.mode!==event.configuration.mode)throw accessError('LIVE_TOURNAMENT_MODE_MISMATCH',409);
- const applied=await sql`INSERT INTO gsc_personal_members(event_id,event_kind,account_id,role,display_name,group_label,players) SELECT ${event.id}::uuid,'tournament',${account.id},'scorer',${account.name||group},${group},${JSON.stringify(players)}::jsonb WHERE gsc_personal_capacity(${event.id}::uuid,'tournament',${JSON.stringify(players)}::jsonb,${group},${account.id}) ON CONFLICT(event_id,event_kind,account_id) DO UPDATE SET role=CASE WHEN gsc_personal_members.role='organizer' THEN 'organizer' ELSE 'scorer' END,group_label=EXCLUDED.group_label,players=EXCLUDED.players,stream_id=NULL WHERE gsc_personal_members.revoked_at IS NULL RETURNING account_id`;
+ const applied=await sql`INSERT INTO gsc_personal_members(event_id,event_kind,account_id,role,display_name,group_label,players) SELECT ${event.id}::uuid,${kind},${account.id},'scorer',${account.name||group},${group},${JSON.stringify(players)}::jsonb WHERE gsc_personal_capacity(${event.id}::uuid,${kind},${JSON.stringify(players)}::jsonb,${group},${account.id}) ON CONFLICT(event_id,event_kind,account_id) DO UPDATE SET role=CASE WHEN gsc_personal_members.role='organizer' THEN 'organizer' ELSE 'scorer' END,group_label=EXCLUDED.group_label,players=EXCLUDED.players,stream_id=NULL WHERE gsc_personal_members.revoked_at IS NULL RETURNING account_id`;
  if(!applied.length)throw accessError('PERSONAL_JOIN_NOT_AVAILABLE',409);
- await auditPersonal(sql,event.id,'tournament',account,'joined_by_code',{group,players});
- return{ok:true,eventId:event.id,eventKind:'tournament',name:event.name,configuration:event.configuration};
+ await auditPersonal(sql,event.id,kind,account,'joined_by_code',{group,players});
+ return{ok:true,eventId:event.id,eventKind:kind,name:event.name,configuration:event.configuration};
+}
+
+export async function viewPersonalEventCode(sql,body,account){
+ const kind=eventKind(body.eventKind||'tournament'),scoped=eventScope(sql,kind),code=String(body.joinCode||'').trim().toUpperCase();
+ if(!/^[A-Z0-9]{10}$/.test(code))throw accessError('LIVE_JOIN_CODE_INVALID',400);
+ const rows=await scoped`SELECT t.id,t.name FROM live_tournaments t JOIN gsc_personal_events e ON e.event_id=t.id AND e.event_kind=${kind} WHERE t.id=${body.eventId}::uuid AND t.join_code_hash=${hash(code)}::char(64) AND t.status IN ('active','finished') AND t.expires_at>now()`;
+ if(!rows.length)throw accessError('LIVE_JOIN_CODE_INVALID',404);
+ await sql`INSERT INTO gsc_personal_members(event_id,event_kind,account_id,role,display_name,group_label,players) VALUES(${body.eventId}::uuid,${kind},${account.id},'viewer',${account.name||'Invitado'},'', '[]'::jsonb) ON CONFLICT(event_id,event_kind,account_id) DO NOTHING`;
+ await personalMember(sql,body.eventId,kind,account);await auditPersonal(sql,body.eventId,kind,account,'viewed_by_code');
+ return{ok:true,eventId:body.eventId,eventKind:kind,name:rows[0].name};
 }

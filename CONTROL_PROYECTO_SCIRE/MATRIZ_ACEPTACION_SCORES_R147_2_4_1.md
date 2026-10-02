@@ -359,3 +359,134 @@ Propietario reporta IMG_5615: panel Vercel Toolbar tapa la aplicación LAB. Caus
 Republicación del mismo código con últimos ajustes: alias instalado LAB dpl_2KA1x6UUNctc1TZ7NP5nwzacUMFU READY (commit107812195a1ea8d2a425af8c50096253ba2625bf); producción dpl_AKf9qMXJkUDfo5Wa5WjtL266nv34 READY (commit94e02db1fc28154c7ac6ad03c87599e4bec51f73). El alias instalado conserva golf-sc-gt-lab-git-lab-r146-entry-ope-6b36ee-epgcaddys-projects.vercel.app. Browser verifica HTML nuevo con inicio=1 y __gscg_build_check=1: cero scripts/iframes vercel.live/feedback/toolbar, versión R147.2.4.23 y datos sintéticos previos conservados. HTML ya aprobado en cache puede conservar el script histórico; no se borra cache ni almacenamiento del propietario. No se certifica aún la reapertura física posterior en su iPhone.
 
 Control preventivo permanente: antes de entregar LAB/producción verificar ambos ajustes Off y ausencia del panel técnico en HTML nuevo del dominio fijo y del alias de la instalación. La aceptación física de la actualización 16:29 se mantiene. Registro documental e inventarios sincronizados sin cambios funcionales; publicación documental actual renovará además el dominio fijo LAB. Rollback de interfaz de hosting: restaurar visibilidad Default si el propietario lo solicita; código y datos permanecen intactos. Archivos: ambos ROADMAPS, matriz, continuidad, tareas, mapa, reincidencias e INVENTARIOS_V311.lock.json.
+
+
+## R147.2.4.24 - alcance final del propietario, 2 octubre 2026 11:31 Guatemala
+
+CREAR TORNEO y CREAR RONDA pasan a Modalidades, sin duplicarlos debajo del registro. MI RONDA se retira. Registro local no crea evento ni código por defecto. TORNEO / RONDA PARTICULAR muestran directorio de nombres activos; seleccionar requiere código deportivo correspondiente al mismo evento. No entregar scores, código ni permisos administrativos desde directorio. Sólo creador muestra código propio, previa membresía de organizador validada. Propietario autenticado conserva control pleno de eliminación y emisión/revocación de delegaciones ligadas a una persona. Prueba dirigida de seguridad y caducidad PASS, banco integral repetido por cambios de alcance; navegador/limpieza/publicación PENDIENTES.
+
+Base main 1d483af; script Vercel guardado y retención anterior 1h son causas confirmadas, con regresiones permanentes. Caducidad visible tras 24h desde recepción completa, cron GET autenticado hora a hora y validación de lecturas/escrituras. No destruir auditoría ni simular prueba física. Especificación CONTROL_PROYECTO_SCIRE/ACEPTACION_R147_2_4_24.md. Archivos:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` - cambio incremental y evidencia de R24.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R147_2_4_24.md` - cambio incremental y evidencia de R24.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` - cambio incremental y evidencia de R24.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` - cambio incremental y evidencia de R24.
+- `CONTROL_PROYECTO_SCIRE/MANUAL_TAREAS_R147_2.md` - cambio incremental y evidencia de R24.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` - cambio incremental y evidencia de R24.
+- `CONTROL_PROYECTO_SCIRE/MATRIZ_ACEPTACION_SCORES_R147_2_4_1.md` - cambio incremental y evidencia de R24.
+- `ROADMAP_A_DETALLE.md` - cambio incremental y evidencia de R24.
+- `ROADMAP_OVERALL.md` - cambio incremental y evidencia de R24.
+- `api/_lib/event-administration.js` - cambio incremental y evidencia de R24.
+- `api/_lib/event-lifecycle.js` - cambio incremental y evidencia de R24.
+- `api/_lib/personal-event-access.js` - cambio incremental y evidencia de R24.
+- `api/_lib/private-round-lifecycle.js` - cambio incremental y evidencia de R24.
+- `api/app-access.js` - cambio incremental y evidencia de R24.
+- `api/event-administration.js` - cambio incremental y evidencia de R24.
+- `api/live.js` - cambio incremental y evidencia de R24.
+- `api/personal-events.js` - cambio incremental y evidencia de R24.
+- `auth-gate.js` - cambio incremental y evidencia de R24.
+- `event-administration-ui.js` - cambio incremental y evidencia de R24.
+- `event-administration.html` - cambio incremental y evidencia de R24.
+- `index-grupal.html` - cambio incremental y evidencia de R24.
+- `live-control.js` - cambio incremental y evidencia de R24.
+- `middleware.js` - cambio incremental y evidencia de R24.
+- `personal-events.js` - cambio incremental y evidencia de R24.
+- `release.json` - cambio incremental y evidencia de R24.
+- `scripts/build-manual-lab.mjs` - cambio incremental y evidencia de R24.
+- `service-worker.js` - cambio incremental y evidencia de R24.
+- `shortcuts-ui.js` - cambio incremental y evidencia de R24.
+- `test-event-administration.mjs` - cambio incremental y evidencia de R24.
+- `test-event-directory-code.mjs` - cambio incremental y evidencia de R24.
+- `test-event-lifecycle.mjs` - cambio incremental y evidencia de R24.
+- `test-lab-private-lifecycle.mjs` - cambio incremental y evidencia de R24.
+- `test-lab-registration-private-rounds-entry.mjs` - cambio incremental y evidencia de R24.
+- `test-toolbar-cached-shell.mjs` - cambio incremental y evidencia de R24.
+- `test-tournament-code-round-binding.mjs` - cambio incremental y evidencia de R24.
+
+
+### R24 - último alcance y control de regresión
+
+Orden 11:29: lista de rondas/torneos registrados y después INGRESE EL CÓDIGO del seleccionado. Directorio permite sólo id/nombre/modalidad; no permite leer scores sin membresía. No se debilita directorio privado histórico ni el escritor. Sólo el creador muestra código propio tras verificar membresía. Delegación nominativa no autoriza a delegar a otros; su vencimiento se ajusta al cierre +24h. Caducidad privada utiliza el mismo controlador integral, sin escritor de eliminación paralelo. El banco anterior completo pasó; se repite por último alcance. Tabla de aceptación y evidencia se conservan en CONTROL_PROYECTO_SCIRE/ACEPTACION_R147_2_4_24.md. No publicado; navegador y limpieza pendientes.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` - fuente o regresión vigente.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R147_2_4_24.md` - fuente o regresión vigente.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` - fuente o regresión vigente.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` - fuente o regresión vigente.
+- `CONTROL_PROYECTO_SCIRE/MANUAL_TAREAS_R147_2.md` - fuente o regresión vigente.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` - fuente o regresión vigente.
+- `CONTROL_PROYECTO_SCIRE/MATRIZ_ACEPTACION_SCORES_R147_2_4_1.md` - fuente o regresión vigente.
+- `ROADMAP_A_DETALLE.md` - fuente o regresión vigente.
+- `ROADMAP_OVERALL.md` - fuente o regresión vigente.
+- `api/_lib/event-administration.js` - fuente o regresión vigente.
+- `api/_lib/event-lifecycle.js` - fuente o regresión vigente.
+- `api/_lib/personal-event-access.js` - fuente o regresión vigente.
+- `api/_lib/private-round-lifecycle.js` - fuente o regresión vigente.
+- `api/app-access.js` - fuente o regresión vigente.
+- `api/event-administration.js` - fuente o regresión vigente.
+- `api/live.js` - fuente o regresión vigente.
+- `api/personal-events.js` - fuente o regresión vigente.
+- `auth-gate.js` - fuente o regresión vigente.
+- `event-administration-ui.js` - fuente o regresión vigente.
+- `event-administration.html` - fuente o regresión vigente.
+- `index-grupal.html` - fuente o regresión vigente.
+- `live-control.js` - fuente o regresión vigente.
+- `middleware.js` - fuente o regresión vigente.
+- `personal-events.js` - fuente o regresión vigente.
+- `release.json` - fuente o regresión vigente.
+- `scripts/build-manual-lab.mjs` - fuente o regresión vigente.
+- `service-worker.js` - fuente o regresión vigente.
+- `shortcuts-ui.js` - fuente o regresión vigente.
+- `test-event-administration.mjs` - fuente o regresión vigente.
+- `test-event-directory-code.mjs` - fuente o regresión vigente.
+- `test-event-lifecycle.mjs` - fuente o regresión vigente.
+- `test-lab-private-lifecycle.mjs` - fuente o regresión vigente.
+- `test-lab-registration-private-rounds-entry.mjs` - fuente o regresión vigente.
+- `test-lab-tournament-navigation.mjs` - fuente o regresión vigente.
+- `test-toolbar-cached-shell.mjs` - fuente o regresión vigente.
+- `test-tournament-code-round-binding.mjs` - fuente o regresión vigente.
+
+
+## R147.2.4.24 · corte 2 octubre 2026 11:50 Guatemala
+
+Orden IMG_5632 y correcciones 11:39–11:44: historial trasladado al Menú; retirados RONDA PARTICULAR/TORNEO/TORNEO ACTIVO de tarjeta; únicamente SCORES MI RONDA y SCORES TORNEO. MI RONDA corresponde al evento en que juega el usuario. Sólo creador: ID DE MI RONDA, copia y apertura wa.me por acción del usuario. Registro: opciones de unirse por selección y código en Modalidades, sin creación automática. Menú Torneos: directorio completo vigente, seleccionar y código de acceso para lectura sin cambiar asignación ni jugadores.
+
+Evidencia: banco integral PASS; test-event-directory-code prueba lectura viewer, roster vacío y rechazo de otro código/evento; pruebas negativas de código heredado, recuperación y actualización manual PASS. Navegador Preview/publicación/limpieza todavía PENDIENTES. Respaldos Neon listos: LAB br-soft-frog-avuejybp; Producción br-tiny-math-avpu8yfk. Git CLI push bloqueado sin credenciales; conector GitHub create_blob confirmado.
+
+Archivos afectados en esta versión:
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R147_2_4_24.md`
+- `api/_lib/event-administration.js`
+- `api/_lib/event-lifecycle.js`
+- `api/event-administration.js`
+- `event-administration-ui.js`
+- `event-administration.html`
+- `test-event-administration.mjs`
+- `test-event-directory-code.mjs`
+- `test-event-lifecycle.mjs`
+- `test-toolbar-cached-shell.mjs`
+- `test-tournament-code-round-binding.mjs`
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`
+- `CONTROL_PROYECTO_SCIRE/MANUAL_TAREAS_R147_2.md`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `CONTROL_PROYECTO_SCIRE/MATRIZ_ACEPTACION_SCORES_R147_2_4_1.md`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `api/_lib/personal-event-access.js`
+- `api/_lib/private-round-lifecycle.js`
+- `api/app-access.js`
+- `api/live.js`
+- `api/personal-events.js`
+- `auth-gate.js`
+- `index-grupal.html`
+- `live-control.js`
+- `live-hub.js`
+- `middleware.js`
+- `personal-events.js`
+- `release.json`
+- `scripts/build-manual-lab.mjs`
+- `service-worker.js`
+- `shortcuts-ui.js`
+- `test-lab-private-lifecycle.mjs`
+- `test-lab-registration-private-rounds-entry.mjs`
+- `test-lab-tournament-navigation.mjs`
+- `test-lab-update-recovery.mjs`
+- `test-menu-scorecard-tournament-sync.mjs`
+- `test-scores-tournament-recovery.mjs`

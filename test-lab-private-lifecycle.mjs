@@ -8,10 +8,10 @@ let result=privateRoundCompletion(players,base);assert.equal(result.completedAt,
 players[1]=stream('b',18,'2026-09-29T23:10:00Z');result=privateRoundCompletion(players,base);
 assert.equal(result.completedAt,'2026-09-29T23:10:00.000Z');assert.equal(new Date(result.expiresAt)-new Date(result.completedAt),PRIVATE_ROUND_RETENTION_MS);
 const previous={...base,completed_at:result.completedAt,completed_roster:result.roster,expires_at:result.expiresAt};
-players[1].updated_at='2026-09-29T23:30:00Z';assert.equal(privateRoundCompletion(players,previous).expiresAt,result.expiresAt,'A correction or retry must not restart 60 minutes');
+players[1].updated_at='2026-09-29T23:30:00Z';assert.equal(privateRoundCompletion(players,previous).expiresAt,result.expiresAt,'A correction or retry must not restart 24 hours');
 players.push(stream('c',17,'2026-09-29T23:35:00Z'));let pending=privateRoundCompletion(players,previous);assert.equal(pending.completedAt,null);assert.equal(pending.expiresAt,new Date(base.expires_at).toISOString());
-players[2]=stream('c',18,'2026-09-29T23:40:00Z');let complete=privateRoundCompletion(players,{...base,completed_at:null,completed_roster:null});assert.equal(complete.expiresAt,'2026-09-30T00:40:00.000Z');
-assert.ok(new Date(complete.expiresAt)>new Date('2026-09-30T00:39:59Z'));assert.ok(new Date(complete.expiresAt)<=new Date('2026-09-30T00:40:00Z'));
+players[2]=stream('c',18,'2026-09-29T23:40:00Z');let complete=privateRoundCompletion(players,{...base,completed_at:null,completed_roster:null});assert.equal(complete.expiresAt,'2026-09-30T23:40:00.000Z');
+assert.ok(new Date(complete.expiresAt)>new Date('2026-09-30T23:39:59Z'));assert.ok(new Date(complete.expiresAt)<=new Date('2026-09-30T23:40:00Z'));
 players[2].current_snapshot.players[0].holes=Array(18).fill({hole:18,gross:4});assert.equal(privateRoundCompletion(players,base).completedAt,null,'18 duplicate entries do not complete 18 holes');
 assert.equal(privateRoundCompletion([],base).completedAt,null);
-console.log('PASS R142 private lifecycle: all groups, last Score 18 +60min, exact expiry boundary, retries stable, new player pending, distinct holes');
+console.log('PASS R142 private lifecycle: all groups, last Score 18 +24h, exact expiry boundary, retries stable, new player pending, distinct holes');

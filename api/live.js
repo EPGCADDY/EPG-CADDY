@@ -1,3 +1,4 @@
+import {refreshEventLifecycles} from './_lib/event-lifecycle.js';
 import {personalAccessEnabled} from './_lib/personal-access-activation.js';
 import {refreshPrivateRoundLifecycle} from "./_lib/private-round-lifecycle.js";
 import { createHash, randomBytes } from "node:crypto";
@@ -540,13 +541,14 @@ export async function handleLive(req,res,databaseGetter=getDatabase,accountResol
       throw error;
     }
     const personalEnabled=personalAccessEnabled()||accountResolver!==requireAccountSession;
-    if(personalEnabled){await ensurePersonalAccess(sql);const context=await guardPersonalLive(sql,req,body,accountResolver);sql=personalPublishingSql(sql,context)}
+    if(personalEnabled){await ensurePersonalAccess(sql);await refreshEventLifecycles(sql);const context=await guardPersonalLive(sql,req,body,accountResolver);sql=personalPublishingSql(sql,context)}
     const result=privateAction?await privateRoundAction(sql,req,body,action):action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="join_tournament_by_id"?await joinTournamentById(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req):action==="read"?await readLive(sql,req,body):null;
     if(personalEnabled&&result&&(action==='list_active_tournaments'||action==='list_private_rounds')){
       let account=null;try{account=await accountResolver(req)}catch{}
       const kind=action==='list_private_rounds'?'private':'tournament',policies=await sql`SELECT e.event_id,m.account_id FROM gsc_personal_events e LEFT JOIN gsc_personal_members m ON m.event_id=e.event_id AND m.event_kind=e.event_kind AND m.account_id=${account?.id||''} AND m.revoked_at IS NULL WHERE e.event_kind=${kind}`;
       const forbidden=new Set(policies.filter(p=>!p.account_id).map(p=>p.event_id)),key=action==='list_private_rounds'?'rounds':'tournaments';result[key]=result[key].filter(event=>!forbidden.has(event.id));
     }
+    if(personalEnabled&&result&&(action==='publish'||action==='publish_private_round'))await refreshEventLifecycles(sql);
     if(!result)throw liveError("LIVE_ACTION_UNSUPPORTED",404);
     return res.status(200).json(result);
   }catch(error){

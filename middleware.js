@@ -2,7 +2,7 @@ import { next } from "@vercel/functions";
 
 const PUBLIC_PATHS=new Set([
   "/live-hub.html","/live-hub.js","/live-control.js","/live-share.js","/scores-ui.js","/scores-ui.css","/private-rounds.js","/gsc-design-system.css","/shortcuts-ui.js","/personal-events.js","/auth-gate.js",
-  "/access.html","/code-entry.html","/code-entry.js","/live.html","/live-view.js","/match-play.js","/favicon.ico",
+  "/event-administration.html","/event-administration-ui.js","/access.html","/code-entry.html","/code-entry.js","/live.html","/live-view.js","/match-play.js","/favicon.ico",
   "/service-worker.js","/app-update.js","/release.json","/manifest.webmanifest","/manual.webmanifest","/audio-touch-test.html"
 ]);
 const PRIVATE_GUEST_PREFIXES=["/api/account-backup","/api/backup","/api/commerce","/api/sync","/api/master-data"];
@@ -26,7 +26,7 @@ export default async function accessGate(request){
   if(PUBLIC_PATHS.has(path)||SCORECARD_ASSETS.has(path)||path.startsWith("/invite/")||path.startsWith("/assets/official-logos/"))return next();
   // LIVE is token/secret-authorized inside api/live itself. Keep it independent from app-access
   // so installed/PWA clients can create, publish, read and revoke a private LIVE stream.
-  if((path==="/api/live"||path==="/api/live-share"||path==="/api/personal-events")&&request.method==="POST")return next();
+  if((path==="/api/live"||path==="/api/live-share"||path==="/api/personal-events"||path==="/api/event-administration")&&request.method==="POST")return next();
   if(path==='/index-grupal.html'){
     let context=null;
     if(url.searchParams.get('personalEvent'))context={eventId:url.searchParams.get('personalEvent'),eventKind:url.searchParams.get('personalKind')||'tournament',accountId:url.searchParams.get('personalAccount')};

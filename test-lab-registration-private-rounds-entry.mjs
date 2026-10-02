@@ -7,10 +7,10 @@ const liveHub = fs.readFileSync('live-hub.js', 'utf8');
 const release = JSON.parse(fs.readFileSync('release.json', 'utf8'));
 const worker = fs.readFileSync('service-worker.js', 'utf8');
 
-assert.match(html, /id="openCardLibrarySetup"[^>]*>VER RONDAS GUARDADAS<\/button>\s*<button class="nr-button secondary" type="button" id="openMyRoundsButton">MI RONDA<\/button>\s*<button class="nr-button secondary account-entry-button" type="button" id="accountBackupButtonSetup"/,
-  'MI RONDA appears in Registro after saved rounds and before backup');
-assert.match(html, /\$\("openMyRoundsButton"\)\.addEventListener\("click",\(\)=>window\.GSCPrivateRounds\.list\("MI RONDA"\)\)/,
-  'Registration opens the private-round list with the requested title');
+assert.doesNotMatch(html,/id="openMyRoundsButton"/,'MI RONDA removed from Registration as requested');
+const modalities=html.slice(html.indexOf('aria-label="Modalidades"'),html.indexOf('aria-label="Registro manual"'));
+assert.match(modalities,/id="registrationEventButton"/);assert.match(modalities,/id="openMyRoundSetup"/);
+assert.equal((html.match(/id="registrationEventButton"/g)||[]).length,1);assert.equal((html.match(/id="openMyRoundSetup"/g)||[]).length,1);
 assert.match(privateRounds, /async function list\(title="RONDAS PARTICULARES"\)[\s\S]*show\(title,/,
   'The existing private-round list accepts a Registration title without changing its default entry');
 assert.match(privateRounds, /personal\?\.privateItems\|\|\[\]/,
@@ -26,4 +26,4 @@ assert.match(liveHub, /descriptor\(state\.generalToken\)\)\?\.eventKind==='priva
 assert.match(release.label, /^R147\.2(?:\.\d+)*$/);
 assert.ok(worker.includes('RELEASE_FALLBACK='+JSON.stringify(release.release)));
 
-console.log('PASS R147.2 MI RONDA: Registration → authorized private rounds → private scores; tournament shelf stays separate.');
+console.log('PASS R24: creation inside Modalidades, no duplicated buttons or MI RONDA, private/tournament shelves remain separate.');
