@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20261003-R157">
+  <meta name="gscg-release" content="LABORATORIO-20261003-R158">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1194,7 +1194,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 </div>
 
 <div class="overlay" id="setupOverlay">
-  <section class="new-round-card" id="setupStep1">
+  <section class="new-round-card" id="setupStep1"><section id="setupEventIdentification" class="active-tournament-heading" hidden><strong id="setupEventIdentificationName"></strong><span id="setupEventIdentificationMeta"></span></section>
     <div class="screen-back-row"><button class="screen-back-button" type="button" id="cancelSetup">ATRÁS</button></div>
     <div class="registration-upper">
     <div class="nr-head"><img class="official-logo-target" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Golf Score Card Guatemala"></div>
@@ -3254,6 +3254,7 @@ function renderSideGameDrafts(){
 }
 function renderSkinsDraft(){return renderSideGameDrafts()}
 function renderDraft(){
+  renderActiveTournamentHeading();
   enforceCanonicalDraftNames();
   renderTournamentDraft();
   renderCourseDraft();
@@ -3288,6 +3289,7 @@ function renderDraft(){
   updateGeneralSetupValidity();
 }
 function openSetup(mode="new"){
+  renderActiveTournamentHeading();
   {}
   {}
   // REGISTRO y TARJETA usan transportes Realtime separados. No se reutiliza
@@ -4086,10 +4088,7 @@ async function joinCurrentRoundGroup(eventKind="private"){
 $("joinCurrentPrivateGroup").addEventListener("click",()=>joinCurrentRoundGroup("private"));
 $("leaveCurrentPrivateGroup").addEventListener("click",()=>window.GSCPrivateRounds.leaveGroup(round));
 window.GSCPrivateGroupLeft=()=>{persist();render()};
-$("privateGroupScoresButton").addEventListener("click",()=>{
- let selected;try{selected=JSON.parse(localStorage.getItem('gsc-tournament-connect-selection-v1')||'null')}catch{}
- return selected?.personal&&selected.eventKind==='private'&&selected.roundId===round.id?openRoundTournament(true,"general","private"):window.GSCPrivateRounds.openGroupScores(round);
-});
+$("privateGroupScoresButton").addEventListener("click",()=>window.GSCPrivateRounds.openGroupScores(round));
 function currentRoundReturnPath(){
   const url=new URL(location.href);url.pathname='/index-grupal.html';
   url.searchParams.delete('manual_action');url.searchParams.delete('inicio');
@@ -4129,11 +4128,13 @@ async function openRoundTournament(scores=false,monitor="general",eventKind="tou
 
 $("roundTournamentScoresButton").addEventListener("click",()=>openRoundTournament(true,"directory"));
 function renderActiveTournamentHeading(){
- const panel=$("activeTournamentHeading");if(!panel)return;panel.hidden=true;let selection;try{selection=JSON.parse(localStorage.getItem('gsc-tournament-connect-selection-v1')||'null')}catch{return}
- if(!selection?.personal||selection.eventKind==='private'||selection.roundId&&selection.roundId!==round.id)return;
- const config=selection.configuration;if(!config)return;$("activeTournamentHeadingName").textContent=selection.label||round.tournament||'';
- const mode=({general:'MEDAL PLAY',match_play:'MATCH PLAY',four_ball:'FOUR BALL',stableford:'STABLEFORD',universales:'UNIVERSALES'})[config.mode]||'';
- $("activeTournamentHeadingMeta").textContent=[config.course,mode,window.GSCScoresUI?.date(config.playedAt)||config.playedAt].filter(Boolean).join(' · ');panel.hidden=false;
+ let selection,legacy,state;try{selection=JSON.parse(localStorage.getItem('gsc-tournament-connect-selection-v1')||'null');legacy=JSON.parse(localStorage.getItem('golf-score-card-gt-private-round-v1')||'null');state=JSON.parse(localStorage.getItem('golf-score-card-gt-live-control-v1')||'null')}catch{}
+ let name='',kind='',config={};
+ if(selection?.personal&&selection.roundId===round.id){name=selection.label||round.tournament?.name||'';kind=selection.eventKind==='private'?'MI GRUPO':'TORNEO';config=selection.configuration||{}}
+ else if(legacy?.roundId===round.id&&new Date(legacy.expiresAt||'2099-01-01')>new Date()){name=legacy.name||'';kind='MI GRUPO'}
+ else if(state?.stream?.roundId===round.id&&state.stream.tournamentId){name=state.tournamentOwned?.id===state.stream.tournamentId?state.tournamentOwned.name:round.tournament?.name;kind='TORNEO'}
+ const meta=[config.course||round.course,window.GSCScoresUI?.date(config.playedAt||round.createdAt)].filter(Boolean).join(' · ');
+ for(const [panelId,nameId,metaId] of [['activeTournamentHeading','activeTournamentHeadingName','activeTournamentHeadingMeta'],['setupEventIdentification','setupEventIdentificationName','setupEventIdentificationMeta']]){const panel=$(panelId);if(!panel)continue;panel.hidden=!name;if(name){$(nameId).textContent=kind+' · '+name;$(metaId).textContent=meta}}
 }
 async function renderCreatorTournamentCode(){
  const panel=$("creatorTournamentCode");if(!panel)return;panel.hidden=true;

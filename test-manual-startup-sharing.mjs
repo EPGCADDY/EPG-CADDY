@@ -6,7 +6,7 @@ const start=html.indexOf('function renderDraft(){');
 const end=html.indexOf('  let editHtml=',start);
 assert(start>=0&&end>start);
 const prefix=html.slice(start,end)+'}';
-const ctx={enforceCanonicalDraftNames(){},renderTournamentDraft(){},renderCourseDraft(){},activeDraftGameKey:()=>'',renderSideGameDrafts(){},syncDraftModeSelection(){},draftRoundMode:'general',$:id=>html.includes(`id="${id}"`)?{textContent:''}:null,document:{querySelector:()=>null}};
+const ctx={renderActiveTournamentHeading(){},enforceCanonicalDraftNames(){},renderTournamentDraft(){},renderCourseDraft(){},activeDraftGameKey:()=>'',renderSideGameDrafts(){},syncDraftModeSelection(){},draftRoundMode:'general',$:id=>html.includes(`id="${id}"`)?{textContent:''}:null,document:{querySelector:()=>null}};
 vm.runInNewContext(prefix+';renderDraft()',ctx);
 assert.throws(()=>vm.runInNewContext(prefix.replace('function renderDraft(){','function renderDraft(){ document.querySelector(".newbie-guide-player").textContent="old";')+';renderDraft()',ctx),/Cannot set properties of null/);
 assert(html.includes('window.GSCLiveControl?.mount({'));

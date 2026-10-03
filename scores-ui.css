@@ -222,3 +222,26 @@ body :is(input,textarea,[contenteditable="true"]){-webkit-user-select:text;user-
 .tournament-event-entry{display:grid;gap:6px}.tournament-event-entry .event-delete{color:#ff4b4b;border-color:#ff4b4b;min-height:44px;background:#100606}
 
 #hubDeleteEvent[hidden]{display:none!important}#hubDeleteEvent:not([hidden]){display:block!important;width:100%;color:#ff4b4b;border-color:#ff4b4b}
+
+/* R158: approved continuous group table, without tournament dashboard tools. */
+.private-score-panel{background:#050505!important;padding:20px!important;box-shadow:none!important}
+.group-scores-heading h2{color:#31ff00;font:900 22px/1.25 Arial,sans-serif!important;margin:12px 0 20px!important}
+.group-scores-heading p{font:400 16px/1.4 Arial,sans-serif;color:#fff;margin:0 0 12px}
+.private-score-panel [data-scores]{border:0!important;border-radius:0!important;overflow:visible!important;margin-top:0!important}
+.private-score-table th,.private-score-table td{background:transparent!important;border:0!important;font-weight:400!important;height:50px!important;padding:8px 2px!important}
+.private-score-table th{font-weight:900!important;color:#fff!important;font-size:clamp(11px,2.85vw,14px)!important}
+.private-score-table th:first-child,.private-score-table td:first-child{width:26%;padding-left:0!important}
+.group-scores-help{position:static!important;font:400 16px/1.4 Arial,sans-serif;color:#fff;margin:20px 0 12px!important}
+body.hub-scores-view.private-live-view:not(.public-display) .hub{width:min(780px,88.7%)!important;border:1px solid #31ff00!important;border-radius:18px!important;padding:20px!important;background:#050505!important}
+body.hub-scores-view.private-live-view:not(.public-display) .head{display:block!important;padding:0!important;border:0!important;background:none!important}
+body.hub-scores-view.private-live-view:not(.public-display) .head>img,body.hub-scores-view.private-live-view:not(.public-display) #hubEventName,body.hub-scores-view.private-live-view:not(.public-display) #hubBack,body.hub-scores-view.private-live-view:not(.public-display) .monitor-switch,body.hub-scores-view.private-live-view:not(.public-display) .viewer-tools,body.hub-scores-view.private-live-view:not(.public-display) #hubState:not(.warning):not(.error),body.hub-scores-view.private-live-view:not(.public-display) #hubMyPosition,body.hub-scores-view.private-live-view:not(.public-display) #hubPersonalOrganization,body.hub-scores-view.private-live-view:not(.public-display) #hubPersonalScoreCard,body.hub-scores-view.private-live-view:not(.public-display) #hubGeneralPanel>.search,body.hub-scores-view.private-live-view:not(.public-display) .category-filter{display:none!important}
+body.hub-scores-view.private-live-view:not(.public-display) .head h1{font:900 22px/1.25 Arial,sans-serif!important;margin:12px 0 20px!important}
+body.hub-scores-view.private-live-view:not(.public-display) #hubEventMeta{font:400 16px/1.4 Arial,sans-serif!important;margin:0 0 12px!important}
+body.hub-scores-view.private-live-view:not(.public-display) .scores-compact th:first-child{width:26%!important}
+body.hub-scores-view.private-live-view:not(.public-display) .scores-compact td{border:0!important;height:50px!important;font-weight:400!important}
+body.hub-scores-view.private-live-view:not(.public-display) .scores-compact th{color:#fff!important;font-weight:900!important}
+body.hub-scores-view.private-live-view:not(.public-display) .scores-help{position:static!important;font:400 16px/1.4 Arial,sans-serif!important;color:#fff;margin:20px 0 12px!important;padding:0!important;border:0!important}
+body.hub-scores-view.private-live-view:not(.public-display) #hubGeneralPanel{margin:0!important;padding:0!important}
+body.hub-scores-view.private-live-view:not(.public-display) .leader-wrap{border:0!important;background:none!important}
+
+.private-score-table{width:100%;table-layout:fixed;border-collapse:collapse;font:400 clamp(15px,4vw,18px) Arial,sans-serif;font-variant-numeric:tabular-nums;color:#fff}.private-score-table th,.private-score-table td{text-align:center}.private-score-table th:first-child,.private-score-table td:first-child{text-align:left;overflow-wrap:anywhere}.private-score-table td:nth-child(5),.private-score-table .private-score-under{color:#31ff00}.private-score-table .private-score-over{color:#ff4545}.private-score-panel [data-status]:empty{display:none}

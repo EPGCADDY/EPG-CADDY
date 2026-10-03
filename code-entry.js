@@ -1,6 +1,7 @@
 (function(){'use strict';
  const $=id=>document.getElementById(id),params=new URLSearchParams(location.search),visitor=params.get('visitor')==='1',legacyId=params.get('liveEvent'),legacyKind=params.get('liveKind')||'tournament',legacy=!!legacyId;
  if(visitor){document.body.classList.add('visitor-entry');$('guestScoresBackdrop').hidden=false;$('entryTitle').textContent='INGRESA TU CÓDIGO';$('entryLead').textContent='Abre los Scores compartidos en una vista privada de sólo lectura.';const panel=document.querySelector('main.entry');panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-labelledby','entryTitle')}
+ if($('entryClose'))$('entryClose').onclick=()=>location.assign(new URL('/index-grupal.html',location.origin).toString());
  $('entryForm').addEventListener('submit',async event=>{
    event.preventDefault();const code=$('entryCode').value.trim();if(!code)return;
    $('entryEnter').disabled=true;$('entryStatus').textContent='ABRIENDO…';

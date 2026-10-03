@@ -3490,3 +3490,39 @@ Paneles centrados cuando caben, scroll seguro cuando son largos; MENÚ arriba de
 - `service-worker.js` · modificación, evidencia o control R157.
 - `shortcuts-ui.js` · modificación, evidencia o control R157.
 - `test-r157-uniform-navigation.mjs` · modificación, evidencia o control R157.
+
+
+## R158 · Scores mi grupo, navegación e identificación · 3 octubre 2026
+Tabla continua de grupo, todos los integrantes, doble toque18, cierres uniformes en todas las ramas Scores localizadas, identificación de pertenencia actual en Inicio y Score Card. Evidencia Chromium móvil con QA, no iPhone físico. Sin cambio de datos ni permisos. Rollback main R157 d0ff81d1b653.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · implementación, control o evidencia R158.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R158_SCORES.md` · implementación, control o evidencia R158.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · implementación, control o evidencia R158.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R158_SCORES/390-grupo-referencia.png` · implementación, control o evidencia R158.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R158_SCORES/390-grupo.png` · implementación, control o evidencia R158.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R158_SCORES/430-grupo-referencia.png` · implementación, control o evidencia R158.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R158_SCORES/430-grupo.png` · implementación, control o evidencia R158.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R158_SCORES/evidence.json` · implementación, control o evidencia R158.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · implementación, control o evidencia R158.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · implementación, control o evidencia R158.
+- `ROADMAP_A_DETALLE.md` · implementación, control o evidencia R158.
+- `ROADMAP_OVERALL.md` · implementación, control o evidencia R158.
+- `code-entry.html` · implementación, control o evidencia R158.
+- `code-entry.js` · implementación, control o evidencia R158.
+- `index-grupal.html` · implementación, control o evidencia R158.
+- `live-hub.html` · implementación, control o evidencia R158.
+- `live-hub.js` · implementación, control o evidencia R158.
+- `live-view.js` · implementación, control o evidencia R158.
+- `live.html` · implementación, control o evidencia R158.
+- `private-rounds.js` · implementación, control o evidencia R158.
+- `release.json` · implementación, control o evidencia R158.
+- `scores-ui.css` · implementación, control o evidencia R158.
+- `scores-ui.js` · implementación, control o evidencia R158.
+- `scripts/build-manual-lab.mjs` · implementación, control o evidencia R158.
+- `scripts/review-r158-scores.mjs` · implementación, control o evidencia R158.
+- `service-worker.js` · implementación, control o evidencia R158.
+- `shortcuts-ui.js` · implementación, control o evidencia R158.
+- `test-lab-private-rounds.mjs` · implementación, control o evidencia R158.
+- `test-r158-group-scores.mjs` · implementación, control o evidencia R158.
+- `test-r24-event-creation-feedback.mjs` · implementación, control o evidencia R158.
+
+- `test-manual-startup-sharing.mjs` · R158 actualiza mock de render de identificación, conserva negativo de arranque.

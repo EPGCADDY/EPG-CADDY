@@ -36,7 +36,7 @@ const table=fs.readFileSync('private-rounds.js','utf8');for(const heading of ['N
 assert.ok(!table.includes("escape(group)+'<br>'"));assert.ok(!table.includes('SCORES ACTUALIZADOS'));assert.ok(!table.includes('En Torneos abre'));assert.ok(table.includes('\"Ronda \"+item.name'));
 console.log('PASS R140: isolated SQL, wrong-code rejection, selected-round binding, private membership persistence, official writer and score columns');
 // Scores-only entry: no creator code, and signed results retain their requested colors.
-const nodes={'section':{classList:{add(){}}},'[data-scores]':{innerHTML:''},'[data-status]':{textContent:''},'[data-close]':{}};
+const nodes={'h2':{outerHTML:''},'.group-scores-heading':{outerHTML:''},'section':{classList:{add(){}},appendChild(){}},'[data-scores]':{innerHTML:''},'[data-status]':{textContent:''},'[data-close]':{}};
 const panel={style:{},setAttribute(){},remove(){},querySelector:key=>nodes[key],innerHTML:''};
 const scoreContext={document:{createElement:()=>panel,body:{appendChild(){}}},localStorage:{getItem:key=>JSON.stringify(key.includes('private-round')?{id:'private',name:'Cuates',creator:true,joinCode:'SECRET1234',viewerToken:'viewer',roundId:'active',expiresAt:'2099-01-01'}:{id:'active'})},GSCLiveControl:{request:async()=>({ok:true,streams:[{snapshot:{players:[{name:'Jaime',handicap:13,holes:[{hole:3}],totals:{gross:15,net:12,relativeToPar:-2}},{name:'Jessie',handicap:38,holes:[{hole:3}],totals:{gross:18,net:14,relativeToPar:2}}]}}]})},setTimeout:()=>0,clearTimeout(){}};
 vm.runInNewContext(fs.readFileSync('private-rounds.js','utf8'),scoreContext);
@@ -50,7 +50,7 @@ console.log('PASS R141: Scores-only creator view hides code; negative green and 
 {
  const shareStorage=new Map([['golf-score-card-gt-live-control-v1',JSON.stringify({version:1,privateStream:{tournamentId:id,publisherSecret:secret}})]]),shareCalls=[];
  const elements=new Map();let sharePanelRemoved=false,privatePanelClosed=0;
- const element=()=>({textContent:'',href:'',onclick:null,focus(){},addEventListener(){}});
+ const element=()=>({appendChild(){},textContent:'',href:'',onclick:null,focus(){},addEventListener(){}});
  const sharePanel={id:'gscOneUseShare',className:'',innerHTML:'',setAttribute(){},remove(){sharePanelRemoved=true},querySelector(selector){if(!elements.has(selector))elements.set(selector,element());return elements.get(selector)}};
  const shareContext={URL,URLSearchParams,encodeURIComponent,localStorage:{getItem:key=>shareStorage.get(key)||null,setItem:(key,value)=>shareStorage.set(key,value)},location:{origin:'https://gsc.example',href:'https://gsc.example/live-hub.html'},document:{activeElement:element(),getElementById:key=>key==='gscOneUseShare'&&!sharePanelRemoved?sharePanel:null,createElement:()=>sharePanel,body:{appendChild(){}},addEventListener(){},removeEventListener(){}},navigator:{share:async()=>{},clipboard:{writeText:async()=>{}}},setTimeout:()=>0,clearTimeout(){},GSCPrivateRounds:{close(){privatePanelClosed++}},GSCPersonalEvents:{storageSuffix:()=> 'anonymous',descriptor:()=>null,request:async()=>{throw Error('legacy private event must not call personal-events')}} ,fetch:async(url,options)=>{shareCalls.push({url,body:JSON.parse(options.body)});return{ok:true,json:async()=>({ok:true,code:'ABCD23456789',name:'Golf amigos'})}}};
  vm.runInNewContext(fs.readFileSync('live-share.js','utf8'),shareContext);
@@ -60,13 +60,13 @@ console.log('PASS R141: Scores-only creator view hides code; negative green and 
 // The code-only share action also closes its overlay only after successful send;
 // cancel keeps it open so the owner can retry or continue manually.
 async function verifyCodeShare(share){
- let removed=false;const nodes=new Map();const panel={style:{},innerHTML:'',setAttribute(){},remove(){removed=true},querySelector(selector){if(!nodes.has(selector))nodes.set(selector,{textContent:'',onclick:null,classList:{add(){} }});return nodes.get(selector)}};
+ let removed=false;const nodes=new Map();const panel={style:{},innerHTML:'',setAttribute(){},remove(){removed=true},querySelector(selector){if(!nodes.has(selector))nodes.set(selector,{appendChild(){},textContent:'',onclick:null,classList:{add(){} }});return nodes.get(selector)}};
  const context={document:{createElement:()=>panel,body:{appendChild(){}},getElementById:()=>null},localStorage:{getItem:key=>JSON.stringify(key.includes('private-round')?{id:'private',name:'Cuates',creator:true,joinCode:'ABCD234567',viewerToken:'viewer',roundId:'active',expiresAt:'2099-01-01'}:{id:'active'})},GSCLiveControl:{request:async()=>({ok:true,streams:[]})},navigator:{share},setTimeout:()=>1,clearTimeout(){}};
  vm.runInNewContext(fs.readFileSync('private-rounds.js','utf8'),context);await context.GSCPrivateRounds.open({id:'active',configured:true});await nodes.get('#privateShare').onclick();return{removed,panel,nodes};
 }
 const sharedCode=await verifyCodeShare(async()=>{});assert.equal(sharedCode.removed,true);
 const cancelledCode=await verifyCodeShare(async()=>{const error=new Error('cancel');error.name='AbortError';throw error});assert.equal(cancelledCode.removed,false);
-const privateRoundSource=fs.readFileSync('private-rounds.js','utf8');assert.match(privateRoundSource,/font-size:clamp\(15px,4vw,18px\)/);assert.match(privateRoundSource,/font-size:clamp\(13px,3\.4vw,15px\)/);
+const privateRoundStyle=fs.readFileSync('scores-ui.css','utf8');assert.match(privateRoundStyle,/clamp\(15px,4vw,18px\)/);assert.match(privateRoundStyle,/font-size:clamp\(11px,2\.85vw,14px\)/);
 console.log('PASS R147.2 regressions: legacy COMPARTIR LIVE API selection; native-share success closes overlays to Score Card; cancel preserves retry; private Scores type is larger');
 // Closed personal rounds remain in the authorized history, without duplicating legacy rows.
 const buttons=new Map();nodes['[data-rounds]']={innerHTML:'',querySelector:key=>{if(!buttons.has(key))buttons.set(key,{});return buttons.get(key)}};
