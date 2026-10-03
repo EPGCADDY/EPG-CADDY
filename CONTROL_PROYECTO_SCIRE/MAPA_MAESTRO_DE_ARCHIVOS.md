@@ -2432,3 +2432,5 @@ El propietario autorizó explícitamente la subida. El conector GitHub confirmó
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIA_R156_ADMINISTRACION.jpg` · captura auténtica de Administración R156 en Preview; permisos secundarios cerrados.
 
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIA_R156_TORNEO_VALIDO.jpg` · tarjeta real vinculada a torneo de prueba, sin código visible.
+
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIA_R156_CONFIRMACION_FINAL.jpg` · confirmación auténtica del receptor sin OK de Registro repetido, Preview e8955c4.
