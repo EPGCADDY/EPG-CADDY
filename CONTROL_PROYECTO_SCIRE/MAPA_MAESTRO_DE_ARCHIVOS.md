@@ -2452,3 +2452,35 @@ Cierres agregados/reparados en directorio, Scores General/Categorías/Buscar/Fav
 R157 fue publicada: PR47/main y rama instalada d0ff81d1b653; árbol2976ec19df7eff16df55bd0e008ab6383a15511f. Producción, LAB y alias instalado entregaron HTTP200 R157; tres despliegues READY verificados.
 
 R158 añade identificación MI GRUPO/TORNEO + nombre en Inicio y Score Card, sólo si pertenece a la tarjeta actual. El selector de favoritos queda fuera del panel oculto; X raíz se oculta mientras detalle/menú/selector utiliza su cierre para evitar interceptar el toque. Sin códigos de invitación en esta identificación.
+
+
+## R159 · invitaciones WhatsApp y copiar código con un toque · 3 octubre 2026
+Base remota R158 8c92f66. Recuperado trabajo de la conversación anterior sin sobrescribir la rama canónica. Mi grupo y Torneo comparten enlace con identidad y código en fragmento; receptor ve COPIAR CÓDIGO y puede tocar el código. Scores compartidos y autorizaciones personales precargan código sin consumirlo al abrir o copiar. Portapapeles denegado usa fallback y comunica fallo si no copia. No se agregan botones al mensaje nativo de WhatsApp; copia ocurre en página del enlace. Chromium real local: 24 casos 390/430 PASS, cero errores, fixtures QA, no iPhone físico. Banco integral en ejecución; Preview y publicación pendientes. Producción R158 intacta. Rollback R158 mediante reversión, sin borrar datos.
+
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R159_INVITACIONES.md` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_INVITACIONES/390-codigo-un-toque.png` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_INVITACIONES/430-codigo-un-toque.png` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_INVITACIONES/evidence.json` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · cambio, control o evidencia R159.
+- `ROADMAP_A_DETALLE.md` · cambio, control o evidencia R159.
+- `ROADMAP_OVERALL.md` · cambio, control o evidencia R159.
+- `code-entry.html` · cambio, control o evidencia R159.
+- `code-entry.js` · cambio, control o evidencia R159.
+- `index-grupal.html` · cambio, control o evidencia R159.
+- `invitation-code.js` · cambio, control o evidencia R159.
+- `live-hub.html` · cambio, control o evidencia R159.
+- `live-share.js` · cambio, control o evidencia R159.
+- `personal-events.js` · cambio, control o evidencia R159.
+- `private-rounds.js` · cambio, control o evidencia R159.
+- `release.json` · cambio, control o evidencia R159.
+- `scripts/build-manual-lab.mjs` · cambio, control o evidencia R159.
+- `scripts/review-r159-invitation-copy.mjs` · cambio, control o evidencia R159.
+- `service-worker.js` · cambio, control o evidencia R159.
+- `test-lab-code-entry.mjs` · cambio, control o evidencia R159.
+- `test-lab-private-round-share-flow.mjs` · cambio, control o evidencia R159.
+- `test-lab-private-rounds.mjs` · cambio, control o evidencia R159.
+- `test-r159-invitation-copy.mjs` · cambio, control o evidencia R159.
+- `vercel.json` · cambio, control o evidencia R159.

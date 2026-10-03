@@ -1259,3 +1259,9 @@ R157 fue publicada: PR47/main y rama instalada d0ff81d1b653; árbol2976ec19df7ef
 Causa raíz: redirección personal/private a live-hub General, retorno oculto en portal/privado y cierre inexistente en Live/código/picker; escape: revisión anterior 28 casos no cubrió ramificaciones de Scores. Control permanente: pruebas de rutas y navegador parametrizado con dos tamaños y todos los cierres localizados.
 
 R158 añade identificación MI GRUPO/TORNEO + nombre en Inicio y Score Card, sólo si pertenece a la tarjeta actual. El selector de favoritos queda fuera del panel oculto; X raíz se oculta mientras detalle/menú/selector utiliza su cierre para evitar interceptar el toque. Sin códigos de invitación en esta identificación.
+
+
+## R159 · invitaciones WhatsApp y copiar código con un toque · 3 octubre 2026
+Base remota R158 8c92f66. Recuperado trabajo de la conversación anterior sin sobrescribir la rama canónica. Mi grupo y Torneo comparten enlace con identidad y código en fragmento; receptor ve COPIAR CÓDIGO y puede tocar el código. Scores compartidos y autorizaciones personales precargan código sin consumirlo al abrir o copiar. Portapapeles denegado usa fallback y comunica fallo si no copia. No se agregan botones al mensaje nativo de WhatsApp; copia ocurre en página del enlace. Chromium real local: 24 casos 390/430 PASS, cero errores, fixtures QA, no iPhone físico. Banco integral en ejecución; Preview y publicación pendientes. Producción R158 intacta. Rollback R158 mediante reversión, sin borrar datos.
+
+Causa del defecto expuesto: código largo mezclado con texto sin superficie de copia individual. Control permanente: test-r159-invitation-copy.mjs y scripts/review-r159-invitation-copy.mjs; confirma código íntegro, no canje al copiar y errores visibles. Estado: pruebas dirigidas y navegador local PASS; entrega pendiente.

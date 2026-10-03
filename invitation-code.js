@@ -1,0 +1,5 @@
+(function(root){'use strict';
+ function withCode(value,code){const url=new URL(value,root.location.origin);url.hash='code='+encodeURIComponent(String(code||''));return url.toString()}
+ async function copy(code,status){const value=String(code||'').trim();if(!value){if(status)status.textContent='INGRESA EL CÓDIGO';return false}try{if(!root.navigator.clipboard?.writeText)throw Error('clipboard');await root.navigator.clipboard.writeText(value)}catch{const input=root.document.createElement('textarea');input.value=value;input.readOnly=true;input.style.cssText='position:fixed;left:0;top:0;opacity:0;font-size:16px';root.document.body.appendChild(input);input.focus();input.select();input.setSelectionRange(0,value.length);let ok=false;try{ok=root.document.execCommand?.('copy')===true}catch{}input.remove();if(!ok){if(status)status.textContent='NO SE PUDO COPIAR · MANTÉN PRESIONADO EL CÓDIGO';return false}}if(status)status.textContent='CÓDIGO COPIADO';return true}
+ root.GSCInvitationCode={withCode,copy};
+})(globalThis);

@@ -3526,3 +3526,43 @@ Tabla continua de grupo, todos los integrantes, doble toque18, cierres uniformes
 - `test-r24-event-creation-feedback.mjs` · implementación, control o evidencia R158.
 
 - `test-manual-startup-sharing.mjs` · R158 actualiza mock de render de identificación, conserva negativo de arranque.
+
+
+## R159 · invitaciones WhatsApp y copiar código con un toque · 3 octubre 2026
+Base remota R158 8c92f66. Recuperado trabajo de la conversación anterior sin sobrescribir la rama canónica. Mi grupo y Torneo comparten enlace con identidad y código en fragmento; receptor ve COPIAR CÓDIGO y puede tocar el código. Scores compartidos y autorizaciones personales precargan código sin consumirlo al abrir o copiar. Portapapeles denegado usa fallback y comunica fallo si no copia. No se agregan botones al mensaje nativo de WhatsApp; copia ocurre en página del enlace. Chromium real local: 24 casos 390/430 PASS, cero errores, fixtures QA, no iPhone físico. Banco integral en ejecución; Preview y publicación pendientes. Producción R158 intacta. Rollback R158 mediante reversión, sin borrar datos.
+
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R159_INVITACIONES.md` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_INVITACIONES/390-codigo-un-toque.png` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_INVITACIONES/430-codigo-un-toque.png` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_INVITACIONES/evidence.json` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · cambio, control o evidencia R159.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · cambio, control o evidencia R159.
+- `ROADMAP_A_DETALLE.md` · cambio, control o evidencia R159.
+- `ROADMAP_OVERALL.md` · cambio, control o evidencia R159.
+- `code-entry.html` · cambio, control o evidencia R159.
+- `code-entry.js` · cambio, control o evidencia R159.
+- `index-grupal.html` · cambio, control o evidencia R159.
+- `invitation-code.js` · cambio, control o evidencia R159.
+- `live-hub.html` · cambio, control o evidencia R159.
+- `live-share.js` · cambio, control o evidencia R159.
+- `personal-events.js` · cambio, control o evidencia R159.
+- `private-rounds.js` · cambio, control o evidencia R159.
+- `release.json` · cambio, control o evidencia R159.
+- `scripts/build-manual-lab.mjs` · cambio, control o evidencia R159.
+- `scripts/review-r159-invitation-copy.mjs` · cambio, control o evidencia R159.
+- `service-worker.js` · cambio, control o evidencia R159.
+- `test-lab-code-entry.mjs` · cambio, control o evidencia R159.
+- `test-lab-private-round-share-flow.mjs` · cambio, control o evidencia R159.
+- `test-lab-private-rounds.mjs` · cambio, control o evidencia R159.
+- `test-r159-invitation-copy.mjs` · cambio, control o evidencia R159.
+- `vercel.json` · cambio, control o evidencia R159.
+
+
+### R159 · bloqueo de subida confirmado en continuación
+Commit local de implementación 69676df. Banco scripts/build-manual-lab.mjs exit0 PASS; revisión Chromium local 24 casos exit0 PASS, evidencia JSON y SHA guardados. test-project-quality-gate, project-quality-gate, roadmap-gate e inventory-gate PASS. git push origin fix/r159-invitation-copy rechazado por revisión automática: repositorio público EPGCADDY/EPG-CADDY, exige autorización explícita para exportar código y controles. No eludir rechazo por otro transporte. Preview y publicación BLOQUEADOS, producción sin modificación en esta sesión. Siguiente acción indispensable del propietario: autorizar expresamente subir R159 al repositorio EPGCADDY/EPG-CADDY; agente después comprueba Preview real antes de promoción.
+
+
+### R159 · autorización explícita de subida · 3 octubre 2026 16:31 Guatemala
+El propietario respondió Autorizado a la solicitud concreta de subir R159 al repositorio público EPGCADDY/EPG-CADDY. Autoriza publicar código y controles de esta rama; Preview real se verifica antes de promover. No se repite permiso de subida.

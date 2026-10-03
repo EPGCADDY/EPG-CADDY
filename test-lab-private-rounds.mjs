@@ -33,7 +33,7 @@ await new Promise(resolve=>setTimeout(resolve,450));
 assert.ok(clientCalls.some(c=>c.action==='publish_private_round'&&c.snapshot.players[0].totals.gross===6),'Private correction must reach its own writer');
 assert.ok(!clientCalls.some(c=>c.action==='publish'),'A previous tournament connection must not receive private corrections');
 const table=fs.readFileSync('private-rounds.js','utf8');for(const heading of ['NOMBRE','HDCP','HOYO','GROSS','NETO','+/−'])assert.ok(table.includes('<th>'+heading+'</th>'));
-assert.ok(!table.includes("escape(group)+'<br>'"));assert.ok(!table.includes('SCORES ACTUALIZADOS'));assert.ok(!table.includes('En Torneos abre'));assert.ok(table.includes('\"Ronda \"+item.name'));
+assert.ok(!table.includes("escape(group)+'<br>'"));assert.ok(!table.includes('SCORES ACTUALIZADOS'));assert.ok(!table.includes('En Torneos abre'));assert.ok(table.includes('\"Mi grupo \"+item.name'));
 console.log('PASS R140: isolated SQL, wrong-code rejection, selected-round binding, private membership persistence, official writer and score columns');
 // Scores-only entry: no creator code, and signed results retain their requested colors.
 const nodes={'h2':{outerHTML:''},'.group-scores-heading':{outerHTML:''},'section':{classList:{add(){}},appendChild(){}},'[data-scores]':{innerHTML:''},'[data-status]':{textContent:''},'[data-close]':{}};
@@ -61,7 +61,7 @@ console.log('PASS R141: Scores-only creator view hides code; negative green and 
 // cancel keeps it open so the owner can retry or continue manually.
 async function verifyCodeShare(share){
  let removed=false;const nodes=new Map();const panel={style:{},innerHTML:'',setAttribute(){},remove(){removed=true},querySelector(selector){if(!nodes.has(selector))nodes.set(selector,{appendChild(){},textContent:'',onclick:null,classList:{add(){} }});return nodes.get(selector)}};
- const context={document:{createElement:()=>panel,body:{appendChild(){}},getElementById:()=>null},localStorage:{getItem:key=>JSON.stringify(key.includes('private-round')?{id:'private',name:'Cuates',creator:true,joinCode:'ABCD234567',viewerToken:'viewer',roundId:'active',expiresAt:'2099-01-01'}:{id:'active'})},GSCLiveControl:{request:async()=>({ok:true,streams:[]})},navigator:{share},setTimeout:()=>1,clearTimeout(){}};
+ const context={GSCInvitationCode:{withCode:(url,code)=>url+"#code="+code},document:{createElement:()=>panel,body:{appendChild(){}},getElementById:()=>null},localStorage:{getItem:key=>JSON.stringify(key.includes('private-round')?{id:'private',name:'Cuates',creator:true,joinCode:'ABCD234567',viewerToken:'viewer',roundId:'active',expiresAt:'2099-01-01'}:{id:'active'})},GSCLiveControl:{request:async()=>({ok:true,streams:[]})},navigator:{share},setTimeout:()=>1,clearTimeout(){}};
  vm.runInNewContext(fs.readFileSync('private-rounds.js','utf8'),context);await context.GSCPrivateRounds.open({id:'active',configured:true});await nodes.get('#privateShare').onclick();return{removed,panel,nodes};
 }
 const sharedCode=await verifyCodeShare(async()=>{});assert.equal(sharedCode.removed,true);

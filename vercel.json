@@ -21,6 +21,11 @@
       "permanent": false
     },
     {
+      "source": "/grupo/:nombre",
+      "destination": "/index-grupal.html?inicio=1&invitation=1&kind=private",
+      "permanent": false
+    },
+    {
       "source": "/",
       "destination": "/index-grupal.html?inicio=1",
       "permanent": false

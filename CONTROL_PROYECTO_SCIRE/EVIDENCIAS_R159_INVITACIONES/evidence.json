@@ -1,0 +1,85 @@
+{
+  "release": "R159",
+  "type": "LOCAL_REAL_CHROMIUM_QA_FIXTURES",
+  "physicalIphone": false,
+  "cases": [
+    {
+      "name": "390-copiar-visitor=1",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_INVITACIONES/390-codigo-un-toque.png",
+      "sha256": "e5ca41bf46874aac1f7ae0e54bece11e005ad5dfc313888cb55e88c093dd6d12"
+    },
+    {
+      "name": "390-copiar-visitor=1&liveEvent=11111111-1111-4111-8111-111111111111&liveKind=private"
+    },
+    {
+      "name": "390-copiar-joinKind=private"
+    },
+    {
+      "name": "390-copiar-joinKind=tournament"
+    },
+    {
+      "name": "390-copiar-personal=1"
+    },
+    {
+      "name": "390-invitacion-anterior-manual"
+    },
+    {
+      "name": "390-receptor-private"
+    },
+    {
+      "name": "390-receptor-tournament"
+    },
+    {
+      "name": "390-emisor-private"
+    },
+    {
+      "name": "390-emisor-tournament"
+    },
+    {
+      "name": "390-compartir-scores-private"
+    },
+    {
+      "name": "390-compartir-scores-tournament"
+    },
+    {
+      "name": "430-copiar-visitor=1",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_INVITACIONES/430-codigo-un-toque.png",
+      "sha256": "20b0df4fe03322dfac539c9b275f2296260b89d0a86258877b71350bfd736e5a"
+    },
+    {
+      "name": "430-copiar-visitor=1&liveEvent=11111111-1111-4111-8111-111111111111&liveKind=private"
+    },
+    {
+      "name": "430-copiar-joinKind=private"
+    },
+    {
+      "name": "430-copiar-joinKind=tournament"
+    },
+    {
+      "name": "430-copiar-personal=1"
+    },
+    {
+      "name": "430-invitacion-anterior-manual"
+    },
+    {
+      "name": "430-receptor-private"
+    },
+    {
+      "name": "430-receptor-tournament"
+    },
+    {
+      "name": "430-emisor-private"
+    },
+    {
+      "name": "430-emisor-tournament"
+    },
+    {
+      "name": "430-compartir-scores-private"
+    },
+    {
+      "name": "430-compartir-scores-tournament"
+    }
+  ],
+  "errors": [],
+  "status": "PASS"
+}

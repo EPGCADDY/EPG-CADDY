@@ -13,7 +13,7 @@ function setup({cancel=false}={}){
  const share=async payload=>{calls.push({type:'share',payload});if(cancel)throw Object.assign(new Error('dismissed'),{name:'AbortError'})};
  const location={origin:'https://golf.example',assign:url=>assigned.push(String(url))};
  const context={document,URL,Intl,Date,Map,Set,Array,JSON,String,Number,Math,Promise,encodeURIComponent,location,navigator:{share,clipboard:{writeText:async text=>calls.push({type:"copy",text})}},localStorage:{getItem:key=>stored.get(key)||null,setItem:(key,value)=>stored.set(key,value)},fetch:async(_url,options)=>{const body=JSON.parse(options.body);calls.push({type:'request',body});const response=body.action==='create'?{ok:true,eventId,eventKind:'private',name:'Ronda de prueba',joinCode:'ABCD234567',viewerToken:'V'.repeat(43),expiresAt:'2026-10-08'}:body.action==='list'?{ok:true,events:[],accountCode:'acct'}:{ok:true,accountCode:'acct',membership:{players:[{id:'p1',name:'Jugador'}],groupLabel:'GRUPO'},tournament:{status:'active',name:'Ronda de prueba',configuration:{mode:'general',playedAt:'2026-09-30'}}};return{ok:true,status:200,json:async()=>response}},GSCLiveControl:{buildLiveSnapshot:()=>({players:[{id:'p1',name:'Jugador'}],groupLabel:'GRUPO'})},GSCOpenAccountLogin(){},GSCPrivateRounds:{openScores(){}},addEventListener(){}};
- context.window=context;vm.runInNewContext(source,context);context.GSCPersonalEvents.createPrivate({configured:true,registrationDraft:true,course:'El Pulté',mode:'general',players:[{id:'p1',name:'Jugador'}]});
+ context.window=context;vm.runInNewContext(fs.readFileSync("invitation-code.js","utf8"),context);vm.runInNewContext(source,context);context.GSCPersonalEvents.createPrivate({configured:true,registrationDraft:true,course:'El Pulté',mode:'general',players:[{id:'p1',name:'Jugador'}]});
  return{context,calls,stored,assigned,panel,make};
 }
 const success=setup();await success.make('[data-create-private]').onclick();
@@ -21,7 +21,7 @@ assert.equal(success.make('h3').textContent,'MI GRUPO CREADO');assert.equal(succ
 assert.equal(JSON.parse(success.stored.get('golf-score-card-gt-private-round-v1')).joinCode,'ABCD234567');
 await success.make('[data-copy-event-code]').onclick();assert.equal(success.calls.find(call=>call.type==='copy').text,'ABCD234567');
 await success.make('[data-share-private-round]').onclick();
-const share=success.calls.find(call=>call.type==='share').payload;assert.match(share.text,/ABCD234567/);assert.equal(share.url,undefined,'Native share must contain the URL only once, inside text');assert.match(share.text,/https:\/\/golf.example\/index-grupal.html\?inicio=1/);assert.equal((share.text.match(/https:\/\//g)||[]).length,1);
+const share=success.calls.find(call=>call.type==='share').payload;assert.match(share.text,/ABCD234567/);assert.equal(share.url,undefined,'Native share must contain the URL only once, inside text');assert.match(share.text,/https:\/\/golf.example\/grupo\/RONDA-DE-PRUEBA#evento=/);assert.equal((share.text.match(/https:\/\//g)||[]).length,1);
 assert.ok(success.panel.removed,'Share sheet completion closes the creation dialog');
 assert.ok(success.calls.some(call=>call.type==='request'&&call.body.action==='read'&&call.body.eventId===eventId),'After sharing the created private event opens its Score Card');
 assert.match(success.assigned[0],/manual_action=personal-scorecard/);

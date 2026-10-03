@@ -69,8 +69,8 @@ const shareRoot={URL,URLSearchParams,location:{origin:'https://lab.example'},loc
 vm.runInNewContext(fs.readFileSync('live-share.js','utf8'),shareRoot);
 assert.equal((await shareRoot.GSCOneUseLive.share('tournament',streamId,'DEMO')).ok,true);
 assert.equal(shareCalls,1);assert.equal(control('output').textContent,'FIXTURE-NOT-A-CREDENTIAL');
-assert.equal(control('[data-share-link]').textContent,'https://lab.example/code-entry.html?visitor=1');
-await control('[data-copy-share]').onclick();assert(copied.includes('FIXTURE-NOT-A-CREDENTIAL'));assert(copied.includes('/code-entry.html?visitor=1'));assert(!copied.includes('#code='),'Link preview cannot consume typed code');
+assert.equal(control('[data-share-link]').textContent,'https://lab.example/code-entry.html?visitor=1#code=FIXTURE-NOT-A-CREDENTIAL');
+await control('[data-copy-share]').onclick();assert(copied.includes('FIXTURE-NOT-A-CREDENTIAL'));assert(copied.includes('/code-entry.html?visitor=1'));assert(copied.includes('#code='),'Code fragment prefills but does not redeem on page load');
 assert(rendered.innerHTML.includes('COMPARTIR LIVE'));
 // Native form submission (Enter) uses server destination, without client-supplied role.
 const fields=Object.fromEntries(['guestScoresBackdrop','entryTitle','entryLead','entryForm','entryCode','entryEnter','entryStatus'].map(id=>[id,{value:'FIXTURE-NOT-A-CREDENTIAL',textContent:'',addEventListener(t,fn){this.handler=fn}}]));
