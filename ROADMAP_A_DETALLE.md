@@ -3336,3 +3336,17 @@ Orden18:24 Guatemala: entrar aunque la ronda esté empezada. Botón ENTRAR A MI 
 - `scripts/build-manual-lab.mjs` · ingreso tardío, conservación o regresión R148.
 
 - `test-r24-event-creation-feedback.mjs` · ejecución real del dispatcher Mi Grupo: evento privado actual abre competidores; selección vieja/torneo/sin vínculo conserva tarjeta local.
+
+
+## R149 · recuperación exacta desde Scores · 2 octubre 2026
+Navegador R148 detectó fallo: ENTRAR AL SCORE CARD DEL TORNEO desde grupo ya vinculado abría Registro al cambiar innecesariamente el espacio de almacenamiento. La ronda original mantiene Gross9/Neto7, hoyos1/2 y reloj. openAssignedCard ahora detecta y verifica evento/grupo/modalidad/roster/cuenta actuales y vuelve por round_return sin cambiar namespace ni crear tarjeta. Si no hay ronda compatible sigue el flujo asignado original; cuenta diferente nunca reutiliza tarjeta. R148 pasó integral y late join; este regreso no pasó y por eso se corrige en publicación consecutiva R149. Rollback 1cac88bff1544206856903f4396eb73dfff2f1e5. Prueba VM positiva/negativa y navegador del mismo grupo/score antes y después.
+- `personal-events.js` · recuperación, versión, regresión o registro R149.
+- `index-grupal.html` · recuperación, versión, regresión o registro R149.
+- `release.json` · recuperación, versión, regresión o registro R149.
+- `service-worker.js` · recuperación, versión, regresión o registro R149.
+- `test-r148-late-group-join.mjs` · recuperación, versión, regresión o registro R149.
+- `ROADMAP_OVERALL.md` · recuperación, versión, regresión o registro R149.
+- `ROADMAP_A_DETALLE.md` · recuperación, versión, regresión o registro R149.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · recuperación, versión, regresión o registro R149.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · recuperación, versión, regresión o registro R149.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · recuperación, versión, regresión o registro R149.
