@@ -39,14 +39,14 @@
  function installCreatedPrivateRoundActions(panel,result,eventKind='private',returnTo=''){
   const code=String(result.joinCode||'').trim(),event={eventId:result.eventId,eventKind};
   panel.querySelector('h3').textContent=eventKind==='tournament'?'TORNEO CREADO':'MI GRUPO CREADO';
-  panel.querySelector('section').insertAdjacentHTML('beforeend','<p>'+(eventKind==='tournament'?'CÓDIGO DE TORNEO':'ID DE MI GRUPO')+'</p><output data-private-round-code></output><button class="primary" type="button" data-share-private-round>COMPARTIR POR WHATSAPP</button><button type="button" data-continue-private-round>CONTINUAR AL SCORE CARD</button>');
+  panel.querySelector('section').insertAdjacentHTML('beforeend','<p>'+(eventKind==='tournament'?'ID DE TORNEO':'ID DE MI GRUPO')+'</p><output data-private-round-code></output><button class="primary" type="button" data-share-private-round>COMPARTIR POR WHATSAPP</button><button type="button" data-continue-private-round>CONTINUAR AL SCORE CARD</button>');
   panel.querySelector('[data-private-round-code]').textContent=code||'CÓDIGO NO DISPONIBLE';panel.querySelector('section').insertAdjacentHTML('beforeend','<button type="button" data-copy-event-code>COPIAR CÓDIGO</button>');panel.querySelector('[data-copy-event-code]').onclick=async()=>{try{await root.navigator.clipboard.writeText(code);status(panel,{ok:true})}catch{status(panel,{ok:false,code:'SHARE_UNAVAILABLE'})}};
-  const shareUrl=new URL('/index-grupal.html?inicio=1',root.location.origin).toString();
+  const shareUrl=eventKind==='tournament'?eventInvitationUrl({...result,eventKind}):new URL('/index-grupal.html?inicio=1',root.location.origin).toString();
   const messageText='Te invito a '+(eventKind==='tournament'?'el torneo ':'el grupo privado ')+(result.name||'')+'.\nCódigo de acceso: '+code+'\nAbre Golf Score Card GT: '+shareUrl;
   const navigate=()=>{if(returnTo){try{const url=new URL(returnTo,root.location.origin);if(url.origin===root.location.origin&&url.pathname==='/index-grupal.html'){close();root.location.assign(url.toString());return}}catch{}}return continueToCreatedPrivateCard(panel,event)};
   panel.querySelector('[data-continue-private-round]').onclick=navigate;
   panel.querySelector('[data-share-private-round]').onclick=async()=>{
-   const shareData={title:result.name||'Mi grupo · Golf Score Card GT',text:messageText,url:shareUrl};
+   const shareData={title:result.name||'Mi grupo · Golf Score Card GT',text:messageText};
    if(typeof root.navigator?.share==='function'){
     try{await root.navigator.share(shareData);await navigate()}
     catch(error){if(error?.name==='AbortError')status(panel,{ok:false,code:'SHARE_CANCELLED'});else status(panel,{ok:false,code:'SHARE_UNAVAILABLE'})}
@@ -81,11 +81,55 @@
   };
  }
 
+
+ function eventInvitationUrl(event){
+  const kind=event.eventKind||'tournament',name=String(event.name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,'-').replace(/^-|-$/g,'')||'TORNEO';
+  const url=new URL('/'+(kind==='private'?'grupo':'torneo')+'/'+name,root.location.origin);
+  url.hash='evento='+encodeURIComponent(event.eventId||event.id||event.tournamentId)+'&codigo='+encodeURIComponent(event.joinCode);return url.toString();
+ }
+ let linkInvitation=null;
+ async function openLinkInvitation(){
+  const url=new URL(root.location.href);if(url.searchParams.get('invitation')!=='1')return false;
+  const params=new URLSearchParams(url.hash.slice(1)),id=params.get('evento'),code=params.get('codigo'),kind=url.searchParams.get('kind')==='private'?'private':'tournament';
+  url.hash='';url.searchParams.delete('invitation');url.searchParams.delete('kind');root.history.replaceState(null,'',url.toString());
+  const panel=dialog('INVITACIÓN AL '+(kind==='private'?'GRUPO':'TORNEO'),'');
+  if(!/^[a-f0-9-]{36}$/i.test(id||'')||! /^[A-Z0-9]{10}$/i.test(code||'')){status(panel,{ok:false,code:'LIVE_JOIN_CODE_INVALID'});return false}
+  const viewed=await request('view-code',{eventId:id,eventKind:kind,joinCode:code});status(panel,viewed);if(!viewed.ok)return false;
+  const access=await request('read',{eventId:id,eventKind:kind});status(panel,access);if(!access.ok)return false;
+  if(access.tournament.status!=='active'){status(panel,{ok:false,code:'PERSONAL_EVENT_CLOSED'});return false}
+  linkInvitation={eventId:id,eventKind:kind,joinCode:code,name:access.tournament.name,configuration:access.tournament.configuration};
+  panel.querySelector('h3').textContent=access.tournament.name;
+  panel.querySelector('section').insertAdjacentHTML('beforeend','<p>INVITACIÓN AL '+(kind==='private'?'GRUPO':'TORNEO')+'</p><p>'+escape(access.tournament.configuration.course)+'</p><button class="primary" data-register-invitation>REGISTRAR MIS JUGADORES</button>');
+  panel.querySelector('[data-register-invitation]').onclick=()=>{close();root.GSCPrepareEventInvitation?.(linkInvitation)};return true;
+ }
+ async function joinTournamentByCode(snapshot,onJoined){
+  const panel=dialog('INGRESE EL CÓDIGO','<label for="activeTournamentCode">CÓDIGO DEL ORGANIZADOR</label><input id="activeTournamentCode" maxlength="10" autocomplete="off" autocapitalize="characters"><button class="primary" type="button" data-join-active>ENTRAR</button>');
+  if(linkInvitation?.eventKind==='tournament')panel.querySelector('input').value=linkInvitation.joinCode;
+  panel.querySelector('[data-join-active]').onclick=async()=>{const b=panel.querySelector('[data-join-active]');if(b.disabled)return;b.disabled=true;try{
+   const code=panel.querySelector('input').value.trim(),bound=linkInvitation?.joinCode===code?linkInvitation:null;
+   const result=await request('join-code',{...(bound?{eventId:bound.eventId}:{}),eventKind:'tournament',joinCode:code,players:snapshot.players,groupLabel:snapshot.groupLabel,mode:snapshot.mode,course:snapshot.course});status(panel,result);if(!result.ok)return;
+   remember(result);await sync();if(await onJoined(result)){linkInvitation=null;close()}else status(panel,{ok:false,code:'NETWORK_ERROR'});
+  }finally{b.disabled=false}};panel.querySelector('input').focus();
+ }
+ async function organizerInvitations(){
+  const synced=await sync(),panel=dialog('ID DE TORNEO','<div data-owned-events></div>');status(panel,synced);if(!synced.ok)return;
+  const ownedEvents=events.filter(event=>event.eventKind==='tournament'&&event.role==='organizer'&&event.status==='active');
+  panel.querySelector('[data-owned-events]').innerHTML=ownedEvents.length?ownedEvents.map(event=>'<button data-owned-event="'+escape(event.eventId)+'">'+escape(event.name)+'</button>').join(''):'<p>NO TIENES TORNEOS ACTIVOS COMO ORGANIZADOR</p>';
+  panel.querySelectorAll('[data-owned-event]').forEach(button=>button.onclick=async()=>{
+   const event=ownedEvents.find(item=>item.eventId===button.dataset.ownedEvent),access=await request('read',{eventId:event.eventId,eventKind:'tournament'});
+   if(!access.ok||access.membership.role!=='organizer'){status(panel,{ok:false,code:'PERSONAL_EVENT_FORBIDDEN'});return}
+   let owned;try{owned=JSON.parse(root.localStorage.getItem('golf-score-card-gt-live-control-v1')||'null')?.tournamentOwned}catch{}
+   if(owned?.tournamentId!==event.eventId||!owned.joinCode){panel.querySelector('[data-status]').textContent='CÓDIGO NO DISPONIBLE EN ESTE DISPOSITIVO';return}
+   const sharing=dialog('ID DE TORNEO','');installCreatedPrivateRoundActions(sharing,{eventId:event.eventId,name:access.tournament.name,joinCode:owned.joinCode},'tournament');sharing.querySelector('h3').textContent=access.tournament.name;
+  });
+ }
+
  function personalStorageKey(account,key){return root.GSC_PERSONAL_ACCOUNT===account?key:'gscg-personal:'+account+':'+key}
  async function openAssignedCard(event){const result=await request('read',event);if(result.ok&&result.membership?.role==='organizer'&&!result.membership.players?.length&&result.tournament.status==='active'){close();root.location.assign(new URL('/index-grupal.html?inicio=1',root.location.origin).toString());return true}if(!result.ok||!result.membership?.players?.length||result.tournament.status==='closed'){const panel=dialog('SCORE CARD ASIGNADA','');status(panel,{ok:false,code:result.code||(result.tournament?.status==='closed'?'PERSONAL_EVENT_CLOSED':'PERSONAL_WRITER_FORBIDDEN')});return false}let currentCard;try{currentCard=JSON.parse(root.localStorage.getItem('golf-score-card-guatemala-active-round-v1')||'null')}catch{}if(currentCard?.configured&&currentCard.personalEventId===event.eventId&&currentCard.mode===result.tournament.configuration.mode&&currentCard.liveGroupLabel===result.membership.groupLabel&&currentCard.players?.length===result.membership.players.length&&currentCard.players.every(player=>result.membership.players.some(assigned=>assigned.id===player.id&&assigned.name.toUpperCase()===player.name.toUpperCase()))&&(!root.GSC_PERSONAL_ACCOUNT||root.GSC_PERSONAL_ACCOUNT===result.accountCode)){root.localStorage.setItem('gsc-tournament-connect-selection-v1',JSON.stringify({personal:true,id:event.eventId,eventKind:event.eventKind,label:result.tournament.name,roundId:currentCard.id,mode:result.tournament.configuration.mode,configuration:result.tournament.configuration,groupLabel:result.membership.groupLabel,players:result.membership.players}));const currentUrl=new URL('/index-grupal.html',root.location.origin);currentUrl.searchParams.set('round_return','1');if(root.GSC_PERSONAL_ACCOUNT)currentUrl.searchParams.set('personalAccount',root.GSC_PERSONAL_ACCOUNT);close();root.location.assign(currentUrl.toString());return true}if(result.membership.role==='organizer'){try{const liveKey='golf-score-card-gt-live-control-v1',prior=JSON.parse(root.localStorage.getItem(liveKey)||'null'),scopedKey=personalStorageKey(result.accountCode,liveKey);if(event.eventKind==='private'){const key='golf-score-card-gt-private-round-v1',owned=JSON.parse(root.localStorage.getItem(key)||'null');if(owned?.creator&&owned.id===event.eventId)root.localStorage.setItem(personalStorageKey(result.accountCode,key),JSON.stringify(owned))}if(prior?.tournamentOwned?.tournamentId===event.eventId){const scoped=JSON.parse(root.localStorage.getItem(scopedKey)||'null');root.localStorage.setItem(scopedKey,JSON.stringify({...scoped,version:1,tournamentOwned:prior.tournamentOwned}))}}catch{}}root.localStorage.setItem(personalStorageKey(result.accountCode,'gsc-tournament-connect-selection-v1'),JSON.stringify({personal:true,id:event.eventId,eventKind:event.eventKind,label:result.tournament.name,mode:result.tournament.configuration.mode,configuration:result.tournament.configuration,groupLabel:result.membership.groupLabel,players:result.membership.players}));const url=new URL('/index-grupal.html',root.location.origin);url.searchParams.set('manual_action','personal-scorecard');url.searchParams.set('personalAccount',result.accountCode);url.searchParams.set('personalEvent',event.eventId);url.searchParams.set('personalKind',event.eventKind);root.location.assign(url.toString());return true}
 
  async function joinTournament(round,onJoined,eventKind='tournament'){
   const snapshot=root.GSCLiveControl?.buildLiveSnapshot(round);if(!snapshot)return;
+  if(eventKind==='tournament')return joinTournamentByCode(snapshot,onJoined);
   const directory=await request('directory',{eventKind});
   const list=dialog(eventKind==='private'?'GRUPOS PARTICULARES':'TORNEOS','<p>Selecciona el evento al que quieres entrar.</p><div data-event-list></div>');status(list,directory);if(!directory.ok)return;
   list.querySelector('[data-event-list]').innerHTML=directory.events.length?directory.events.map(e=>'<button type="button" data-event="'+escape(e.id)+'">'+escape(e.name)+'</button>').join(''):'<p>NO HAY EVENTOS DISPONIBLES.</p>';
@@ -109,6 +153,6 @@
  async function administrationEvents(){try{const response=await root.fetch('/api/event-administration',{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'list'})});const result=await response.json();return response.ok&&result.ok?result.events:[]}catch{return []}}
  function openAdministration(event){const url=new URL('/event-administration.html',root.location.origin);if(event?.eventId){url.searchParams.set('eventId',event.eventId);url.searchParams.set('eventKind',event.eventKind||'tournament')}root.location.assign(url.toString())}
  function membership(token){return members.get(token)}
- root.GSCPersonalEvents={administrationEvents,openAdministration,authorizeOrganizer,viewDirectoryEvent,joinTournament,hide,canonicalToken,reconcile,storageSuffix:()=>accountCode||'anonymous',request,message,descriptor,sync,read,identity,invitation,organization,positions,membership,openAssignedCard,createPrivate,presentCreatedTournament,close};
+ root.GSCPersonalEvents={eventInvitationUrl,openLinkInvitation,organizerInvitations,administrationEvents,openAdministration,authorizeOrganizer,viewDirectoryEvent,joinTournament,hide,canonicalToken,reconcile,storageSuffix:()=>accountCode||'anonymous',request,message,descriptor,sync,read,identity,invitation,organization,positions,membership,openAssignedCard,createPrivate,presentCreatedTournament,close};
  root.document.addEventListener('keydown',e=>{const panel=root.document.getElementById('gscPersonalDialog');if(!panel)return;if(e.key==='Escape'){e.preventDefault();close()}else if(e.key==='Tab'){const nodes=[...panel.querySelectorAll('button,input,select,a[href],summary')].filter(node=>!node.disabled&&node.getClientRects().length),first=nodes[0],last=nodes.at(-1);if(e.shiftKey&&root.document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&root.document.activeElement===last){e.preventDefault();first.focus()}}});
 })(globalThis);

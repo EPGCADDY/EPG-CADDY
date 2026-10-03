@@ -16,6 +16,11 @@
   ],
   "redirects": [
     {
+      "source": "/torneo/:nombre",
+      "destination": "/index-grupal.html?inicio=1&invitation=1",
+      "permanent": false
+    },
+    {
       "source": "/",
       "destination": "/index-grupal.html?inicio=1",
       "permanent": false

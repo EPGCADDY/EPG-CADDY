@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20261002-R155">
+  <meta name="gscg-release" content="LABORATORIO-20261002-R156">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -4143,12 +4143,22 @@ async function renderCreatorTournamentCode(){
  const privateBound=privateOwned?.personal&&privateOwned.creator&&(privateOwned.roundId===round.id||(selection?.personal&&selection.eventKind==='private'&&selection.id===privateOwned.id&&selection.roundId===round.id))&&new Date(privateOwned.expiresAt)>new Date();
  const eventId=privateBound?privateOwned.id:boundSelection?selection.id:boundStream?state.stream.tournamentId:null;
  const owned=privateBound?privateOwned:state?.tournamentOwned;
+ // Los códigos de torneo se comparten exclusivamente desde ORGANIZADOR.
+ if(!privateBound)return;
  if(!round.configured||!eventId||!owned?.joinCode||(owned.tournamentId||owned.id)!==eventId||window.GSCPersonalEvents.membership('personal_'+eventId)?.role!=='organizer')return;
  $("creatorTournamentName").textContent=owned.name||selection?.label||'';$("copyCreatorTournamentCode").textContent=owned.joinCode;panel.hidden=false;
  $("copyCreatorTournamentCode").onclick=()=>{const message='Grupo '+(owned.name||selection?.label||'')+'\nCódigo: '+owned.joinCode;const link='https://wa.me/?text='+encodeURIComponent(message);navigator.clipboard?.writeText(owned.joinCode).then(()=>{$("creatorTournamentCodeStatus").textContent='CÓDIGO COPIADO · COMPARTIR EN WHATSAPP'},()=>{$("creatorTournamentCodeStatus").textContent='COMPARTIR EN WHATSAPP'});window.open(link,'_blank','noopener,noreferrer')};
 }
 window.GSCRefreshCreatorCode=()=>{renderActiveTournamentHeading();void renderCreatorTournamentCode()};
 setTimeout(()=>{renderActiveTournamentHeading();renderCreatorTournamentCode()},1500);
+window.GSCPrepareEventInvitation=invitation=>{
+ if(round.configured)persist();
+ const config=invitation.configuration,key=Object.keys(COURSE_CATALOG).find(key=>[COURSE_CATALOG[key].name,COURSE_CATALOG[key].displayName].some(name=>name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase()===String(config.course).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase()));
+ if(!key){$('setupStatus').textContent='CAMPO DEL TORNEO NO DISPONIBLE';return false}
+ openRegistrationPreservingActiveRound();draftCourse=key;draftRoundMode=config.mode;draftTournament={name:invitation.name};persistDraftState();renderDraft();$('setupStatus').textContent='TORNEO '+invitation.name+' · COMPLETA TUS JUGADORES Y TOCA TORNEO';return true;
+};
+setTimeout(()=>window.GSCPersonalEvents.openLinkInvitation(),0);
+
 
 function menuCreationHasCompleteRoster(){const named=manualDraftRows.filter(row=>String(row.name||'').trim());return named.length>0&&named.every(row=>row.category&&row.tee&&String(row.handicap??'').trim()!=='')}
 function createPrivateRoundFromMenu(){captureVisibleRegistrationValues();if(!menuCreationHasCompleteRoster()){persistDraftState();window.GSCPersonalEvents.createPrivate(null,{course:COURSE_CATALOG[draftCourse].name,mode:draftRoundMode});return}if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;persistDraftState();if(draftPlayers.some(player=>!player.tournamentCategory)){$("setupStatus").textContent="SELECCIONA LA CATEGORÍA DE CADA JUGADOR PARA EL GRUPO PRIVADO";return}window.GSCPersonalEvents.createPrivate({...round,configured:true,provisional:false,registrationDraft:true,course:COURSE_CATALOG[draftCourse].name,mode:draftRoundMode,players:draftPlayers,liveGroupLabel:draftPlayers.map(player=>player.name).join(" / ").slice(0,120)})}
@@ -4576,6 +4586,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     "create-round":()=>createPrivateRoundFromMenu(),
     "group-scores":()=>window.GSCPrivateRounds.openGroupScores(round),
     "personal-scorecard":()=>openAssignedPersonalScoreCard(),
+    "organizer-invitations":()=>window.GSCPersonalEvents.organizerInvitations(),
     setup:()=>openNewRoundDraft(),
     stableford:()=>openFreshStablefordSetup(),
     scorecard:()=>{document.querySelector(".app")?.scrollIntoView({block:"start"});},

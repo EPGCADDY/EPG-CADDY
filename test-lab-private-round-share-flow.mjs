@@ -21,7 +21,7 @@ assert.equal(success.make('h3').textContent,'MI GRUPO CREADO');assert.equal(succ
 assert.equal(JSON.parse(success.stored.get('golf-score-card-gt-private-round-v1')).joinCode,'ABCD234567');
 await success.make('[data-copy-event-code]').onclick();assert.equal(success.calls.find(call=>call.type==='copy').text,'ABCD234567');
 await success.make('[data-share-private-round]').onclick();
-const share=success.calls.find(call=>call.type==='share').payload;assert.match(share.text,/ABCD234567/);assert.equal(share.url,'https://golf.example/index-grupal.html?inicio=1');
+const share=success.calls.find(call=>call.type==='share').payload;assert.match(share.text,/ABCD234567/);assert.equal(share.url,undefined,'Native share must contain the URL only once, inside text');assert.match(share.text,/https:\/\/golf.example\/index-grupal.html\?inicio=1/);assert.equal((share.text.match(/https:\/\//g)||[]).length,1);
 assert.ok(success.panel.removed,'Share sheet completion closes the creation dialog');
 assert.ok(success.calls.some(call=>call.type==='request'&&call.body.action==='read'&&call.body.eventId===eventId),'After sharing the created private event opens its Score Card');
 assert.match(success.assigned[0],/manual_action=personal-scorecard/);
