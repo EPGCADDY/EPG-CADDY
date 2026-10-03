@@ -127,7 +127,7 @@
     if(!roundValue.tournament?.name&&!(selection.personal&&roundValue.personalEventId===tournamentId))return false;
     const privateEvent=selection.eventKind==='private';if(privateEvent&&(!selection.personal||selection.roundId!==roundValue.id||roundValue.personalEventId!==tournamentId))return false;
     const state=liveState(),stream=state[privateEvent?'privateStream':'stream'];
-    if(stream?.roundId===snapshot.roundId&&stream?.tournamentId===tournamentId){
+    if(stream?.roundId===snapshot.roundId&&stream?.tournamentId===tournamentId&&selection.connected!==false){
       if(selection.roundId!==snapshot.roundId){selection.roundId=snapshot.roundId;try{root.localStorage.setItem("gsc-tournament-connect-selection-v1",JSON.stringify(selection))}catch{}}
       clearTournamentConnectRetry(snapshot.roundId);
       return true;

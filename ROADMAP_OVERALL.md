@@ -3262,3 +3262,20 @@ Orden IMG_5666: SCORES MI GRUPO y SCORES TORNEO en la primera fila, uno a la par
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · disposición, código obligatorio, regresión o registro R150.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · disposición, código obligatorio, regresión o registro R150.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · disposición, código obligatorio, regresión o registro R150.
+
+
+## R151 · 2 octubre 2026 · reingreso por código con escritor ya vinculado
+Navegador LAB R150: código incorrecto se rechazó correctamente; código válido en el mismo grupo perdió la vinculación de publicación y mostró error. Causa: join-code limpiaba stream_id aunque roster/grupo fueran iguales y cliente reutilizaba conexión cacheada sin volver a enlazar. Corrección: conserva stream_id solamente para roster/grupo exactos; grupo distinto obliga nueva vinculación. Ingreso explícito marca connected:false y fuerza revalidación/enlace autenticado por el escritor existente antes de publicar. No amplía permisos ni borra scores. Pruebas SQL de reingreso y cambio de grupo; VM de conexión cacheada y reingreso explícito. Rollback c3ddc3b86e1008fd5593b886996c40d1844cc7d1. La entrega R150 pasó ACTUALIZAR en navegador LAB conservando Gross9/Neto7/hoyo3; IMG_5667 del propietario permanece R147.2.4.24 pese a aviso ACTUALIZADO, no se declara actualización de su dispositivo. Enlace manual directo de recuperación entregado. Banco y reingreso real R151 pendientes al registrar.
+- `api/_lib/personal-event-access.js` · reingreso, conservación del escritor, prueba o control R151.
+- `live-control.js` · reingreso, conservación del escritor, prueba o control R151.
+- `index-grupal.html` · reingreso, conservación del escritor, prueba o control R151.
+- `release.json` · reingreso, conservación del escritor, prueba o control R151.
+- `service-worker.js` · reingreso, conservación del escritor, prueba o control R151.
+- `test-event-directory-code.mjs` · reingreso, conservación del escritor, prueba o control R151.
+- `test-r150-group-entry.mjs` · reingreso, conservación del escritor, prueba o control R151.
+- `ROADMAP_OVERALL.md` · reingreso, conservación del escritor, prueba o control R151.
+- `ROADMAP_A_DETALLE.md` · reingreso, conservación del escritor, prueba o control R151.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · reingreso, conservación del escritor, prueba o control R151.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · reingreso, conservación del escritor, prueba o control R151.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · reingreso, conservación del escritor, prueba o control R151.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · reingreso, conservación del escritor, prueba o control R151.
