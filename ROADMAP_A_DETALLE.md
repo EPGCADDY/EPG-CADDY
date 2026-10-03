@@ -3306,3 +3306,33 @@ Títulos estáticos de Scores/torneos y descendientes de botones sin selección/
 - `live-control.js` · consulta de recuperación al montar ronda propia ya vinculada.
 
 - `test-lab-tournament-navigation.mjs` · fixture actualizado con renderer real y prueba de botón visible sólo para autoridad.
+
+
+## R148 · 2 octubre 2026 · numeración correlativa
+Orden IMG_5663: versión visible sencilla R148; siguientes publicaciones R149, R150 y sucesivas, sin puntos ni sufijos visibles. release.json, meta y fallback SW sincronizados. Se conserva toda la funcionalidad aprobada B9. Fuente/base 63407a28f37ecfa8b4d61904d22594fdd336d025; rollback a esa base. Prueba: recuperación de actualización, banco integral y navegador real con tarjeta conservada. No se declara prueba física de iPhone.
+- `index-grupal.html` · numeración correlativa o registro/sello R148.
+- `service-worker.js` · numeración correlativa o registro/sello R148.
+- `release.json` · numeración correlativa o registro/sello R148.
+- `ROADMAP_OVERALL.md` · numeración correlativa o registro/sello R148.
+- `ROADMAP_A_DETALLE.md` · numeración correlativa o registro/sello R148.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · numeración correlativa o registro/sello R148.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · numeración correlativa o registro/sello R148.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md` · numeración correlativa o registro/sello R148.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · numeración correlativa o registro/sello R148.
+
+- `test-update-delivery-control.mjs` · fixture independiente del sufijo B; conserva prueba de identidad distinta con etiqueta visible igual en R148.
+
+- `test-lab-registration-private-rounds-entry.mjs` · exige etiqueta R seguida únicamente de entero, según orden R148.
+
+
+### R148 · ingreso tardío al grupo con tarjeta en curso
+Orden18:24 Guatemala: entrar aunque la ronda esté empezada. Botón ENTRAR A MI GRUPO desde tarjeta, directorio y código propios; vinculación en el mismo objeto de ronda sin nueva tarjeta, sin borrar hoyos, sin reiniciar reloj. Backend conserva acceso nominativo/cupo/estado activo y rechaza campo/modalidad incompatibles. Al cambiar de evento se crea stream independiente, nunca se reutiliza uno vinculado a otro grupo. Scores Mi Grupo vinculado abre todos los competidores del evento; sin vínculo conserva la vista del grupo local. Posiciones usan el motor existente por resultado/puntos y hoyos efectivamente completados, sin imputar scores a hoyos no jugados. Prueba nueva verifica ingreso con hoyos1/2 existentes, identidad/fecha/reloj conservados, publicación, rechazo de tarjeta cerrada y posiciones antes/después de nuevo score. Banco y navegador sobre último alcance pendientes.
+- `index-grupal.html` · ingreso tardío, conservación o regresión R148.
+- `personal-events.js` · ingreso tardío, conservación o regresión R148.
+- `live-control.js` · ingreso tardío, conservación o regresión R148.
+- `api/_lib/personal-event-access.js` · ingreso tardío, conservación o regresión R148.
+- `test-r148-late-group-join.mjs` · ingreso tardío, conservación o regresión R148.
+- `test-event-directory-code.mjs` · ingreso tardío, conservación o regresión R148.
+- `scripts/build-manual-lab.mjs` · ingreso tardío, conservación o regresión R148.
+
+- `test-r24-event-creation-feedback.mjs` · ejecución real del dispatcher Mi Grupo: evento privado actual abre competidores; selección vieja/torneo/sin vínculo conserva tarjeta local.

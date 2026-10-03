@@ -97,3 +97,7 @@ Orden expresa del propietario: 13 de septiembre de 2026. Aplica a toda tarea de 
 6. Si una limitación real de plataforma o permisos impide continuar o mantener comunicación visible, declararla expresamente, guardar un punto de recuperación completo y cerrar. No convertir una limitación hipotética en excusa rutinaria ni presentar la revisión automática como prueba física.
 7. Conservar archivos, versión/commit, resultados, fallos y pendientes en el punto de recuperación. No pedir otra autorización para acciones ya autorizadas; sólo interrumpir por una necesidad real y explicada.
 8. La falta de ejecución visible es un incumplimiento operativo, aunque las pruebas técnicas pasen. Registrar la reincidencia y corregir el proceso. Este documento fija la obligación; por sí solo no ejecuta un temporizador ni garantiza el cumplimiento del agente.
+
+
+## Numeración visible correlativa · orden 2 octubre 2026
+Cada nueva publicación aumenta un entero: R148, R149, R150… La etiqueta visible y release.json.label usan exclusivamente R seguido de entero. No presentar subversiones con puntos ni sufijos B al usuario. Identificador técnico de caché sincronizado entre meta, release.json y SW.

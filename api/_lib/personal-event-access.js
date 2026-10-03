@@ -134,6 +134,7 @@ export async function joinPersonalTournamentCode(sql,body,account){
  const event=rows[0];if(!event||body.eventId&&body.eventId!==event.id)throw accessError('LIVE_JOIN_CODE_INVALID',404);
  const players=assignedPlayers(body.players,'scorer'),group=String(body.groupLabel||'').trim().slice(0,120);if(!group)throw accessError('PERSONAL_ASSIGNMENT_INVALID',400);validateAssignedConfiguration(players,event.configuration);
  if(body.mode!==event.configuration.mode)throw accessError('LIVE_TOURNAMENT_MODE_MISMATCH',409);
+ const foldCourse=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toUpperCase();if(body.course&&foldCourse(body.course)!==foldCourse(event.configuration.course))throw accessError('LIVE_TOURNAMENT_COURSE_MISMATCH',409);
  const applied=await sql`INSERT INTO gsc_personal_members(event_id,event_kind,account_id,role,display_name,group_label,players) SELECT ${event.id}::uuid,${kind},${account.id},'scorer',${account.name||group},${group},${JSON.stringify(players)}::jsonb WHERE gsc_personal_capacity(${event.id}::uuid,${kind},${JSON.stringify(players)}::jsonb,${group},${account.id}) ON CONFLICT(event_id,event_kind,account_id) DO UPDATE SET role=CASE WHEN gsc_personal_members.role='organizer' THEN 'organizer' ELSE 'scorer' END,group_label=EXCLUDED.group_label,players=EXCLUDED.players,stream_id=NULL WHERE gsc_personal_members.revoked_at IS NULL RETURNING account_id`;
  if(!applied.length)throw accessError('PERSONAL_JOIN_NOT_AVAILABLE',409);
  await auditPersonal(sql,event.id,kind,account,'joined_by_code',{group,players});

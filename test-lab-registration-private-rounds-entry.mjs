@@ -24,7 +24,7 @@ assert.match(liveHub, /state\.tournaments\.filter\(item=>root\.GSCPersonalEvents
   'The tournament shelf excludes private rounds');
 assert.match(liveHub, /descriptor\(state\.generalToken\)\)\?\.eventKind==='private'/,
   'Private-event scores use the private score presentation');
-assert.match(release.label, /^R147\.2(?:\.\d+)*$/);
+assert.match(release.label, /^R\d+$/);
 assert.ok(worker.includes('RELEASE_FALLBACK='+JSON.stringify(release.release)));
 
 console.log('PASS R24: creation exclusively in Menu, no duplicated buttons or MI RONDA, private/tournament shelves remain separate.');
