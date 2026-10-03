@@ -1400,3 +1400,38 @@ Cierres agregados/reparados en directorio, Scores General/Categorías/Buscar/Fav
 R157 fue publicada: PR47/main y rama instalada d0ff81d1b653; árbol2976ec19df7eff16df55bd0e008ab6383a15511f. Producción, LAB y alias instalado entregaron HTTP200 R157; tres despliegues READY verificados.
 
 R158 añade identificación MI GRUPO/TORNEO + nombre en Inicio y Score Card, sólo si pertenece a la tarjeta actual. El selector de favoritos queda fuera del panel oculto; X raíz se oculta mientras detalle/menú/selector utiliza su cierre para evitar interceptar el toque. Sin códigos de invitación en esta identificación.
+
+
+## R159 · invitación y código en dos mensajes WhatsApp · 3 octubre 2026
+Base canónica R158 8c92f66. Sustituye propuesta retirada PR49: el propietario aclaró copia dentro del mensaje WhatsApp y aprobó alternativa de código aislado. Primer mensaje: GOLF SCORE CARD GT + Te han invitado a participar en la ronda de NOMBRE DEL CREADOR. Torneo emplea el torneo de NOMBRE DEL CREADOR. Segundo payload exactamente el código; sin etiqueta, título, URL ni texto adicional. Envíos separados, cada uno bajo toque del propietario, al mismo contacto seleccionado por él en WhatsApp. No automatizar mensajes ni afirmar entrega real al resolverse Web Share. Cancelación conserva origen y reintento; segunda acción bloqueada antes de primera; doble toque no duplica.
+Se modifica exclusivamente compartir código de participación de grupos/torneos. Copia preexistente en aplicación conserva sus handlers; Scores LIVE de sólo lectura conserva su contrato independiente. Grupo recoge nombre de creador y lo guarda mediante configuration existente, sin nueva API ni migración. Torneo usa creatorName canónico; eventos antiguos pueden completar nombre al compartir sin inventarlo.
+Riesgos: pérdida del segundo mensaje, envío a contactos distintos, cancelación, falta de nombre, portapapeles, estilos heredados. Controles: dos acciones visibles; indicación mismo contacto; payload text únicamente en segundo; sin cierre después del primero; fallback wa.me por cada mensaje; fallos visibles. La herramienta no ve el destinatario que selecciona WhatsApp ni confirma entrega.
+Pruebas: test-r159-whatsapp-two-messages.mjs, integración test-lab-private-round-share-flow.mjs y test-r24-event-creation-feedback.mjs PASS; scripts/build-manual-lab.mjs exit0 PASS. Chromium local con mocks explícitos de navigator.share y APIs QA verifica 390/430, payloads exactos, cancelación/reintento, origen conservado, ausencia de overflow/errores y capturas 2160×4320. No prueba física iPhone ni envío WhatsApp real. Primera captura detectó controles sin estilo; corrección scoped en scores-ui.css y nueva revisión antes de candidato.
+Rollback R158 por reversión sin borrar datos. Producción/main y LAB instalado permanecen R158; subir rama autorizada por propietario, Preview real y publicación pendientes.
+
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · implementación, control o evidencia R159 de dos mensajes.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R159_DOS_MENSAJES.md` · implementación, control o evidencia R159 de dos mensajes.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · implementación, control o evidencia R159 de dos mensajes.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_DOS_MENSAJES/390-private.png` · implementación, control o evidencia R159 de dos mensajes.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_DOS_MENSAJES/390-tournament.png` · implementación, control o evidencia R159 de dos mensajes.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_DOS_MENSAJES/430-private.png` · implementación, control o evidencia R159 de dos mensajes.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_DOS_MENSAJES/430-tournament.png` · implementación, control o evidencia R159 de dos mensajes.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_DOS_MENSAJES/evidence.json` · implementación, control o evidencia R159 de dos mensajes.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · implementación, control o evidencia R159 de dos mensajes.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · implementación, control o evidencia R159 de dos mensajes.
+- `ROADMAP_A_DETALLE.md` · implementación, control o evidencia R159 de dos mensajes.
+- `ROADMAP_OVERALL.md` · implementación, control o evidencia R159 de dos mensajes.
+- `index-grupal.html` · implementación, control o evidencia R159 de dos mensajes.
+- `live-hub.html` · implementación, control o evidencia R159 de dos mensajes.
+- `personal-events.js` · implementación, control o evidencia R159 de dos mensajes.
+- `private-rounds.js` · implementación, control o evidencia R159 de dos mensajes.
+- `release.json` · implementación, control o evidencia R159 de dos mensajes.
+- `scores-ui.css` · implementación, control o evidencia R159 de dos mensajes.
+- `scripts/build-manual-lab.mjs` · implementación, control o evidencia R159 de dos mensajes.
+- `scripts/review-r159-whatsapp-two-messages.mjs` · implementación, control o evidencia R159 de dos mensajes.
+- `service-worker.js` · implementación, control o evidencia R159 de dos mensajes.
+- `test-lab-private-round-share-flow.mjs` · implementación, control o evidencia R159 de dos mensajes.
+- `test-lab-private-rounds.mjs` · implementación, control o evidencia R159 de dos mensajes.
+- `test-r159-whatsapp-two-messages.mjs` · implementación, control o evidencia R159 de dos mensajes.
+- `test-r24-event-creation-feedback.mjs` · implementación, control o evidencia R159 de dos mensajes.
+- `whatsapp-invitations.js` · implementación, control o evidencia R159 de dos mensajes.

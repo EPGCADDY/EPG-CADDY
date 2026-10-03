@@ -4,7 +4,7 @@ const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-ro
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
 const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-20-registration-return`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-20-registration-return`;
-const RELEASE_FALLBACK="LABORATORIO-20261003-R158";
+const RELEASE_FALLBACK="LABORATORIO-20261003-R159";
 let RELEASE=RELEASE_FALLBACK;
 const UPDATE_DIAGNOSTICS={stage:"boot",resources:{}};
 async function fetchPublishedRelease(){
@@ -55,6 +55,7 @@ const SHELL=[
   "/private-rounds.js",
   "/scores-ui.js",
   "/live-share.js",
+  "/whatsapp-invitations.js",
   "/personal-events.js",
   "/scores-ui.css",
   "/live-hub.html",

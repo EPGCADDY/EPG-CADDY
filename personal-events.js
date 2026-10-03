@@ -41,41 +41,27 @@
   panel.querySelector('h3').textContent=eventKind==='tournament'?'TORNEO CREADO':'MI GRUPO CREADO';
   panel.querySelector('section').insertAdjacentHTML('beforeend','<p>'+(eventKind==='tournament'?'ID DE TORNEO':'ID DE MI GRUPO')+'</p><output data-private-round-code></output><button class="primary" type="button" data-share-private-round>COMPARTIR POR WHATSAPP</button><button type="button" data-continue-private-round>CONTINUAR AL SCORE CARD</button>');
   panel.querySelector('[data-private-round-code]').textContent=code||'CÓDIGO NO DISPONIBLE';panel.querySelector('section').insertAdjacentHTML('beforeend','<button type="button" data-copy-event-code>COPIAR CÓDIGO</button>');panel.querySelector('[data-copy-event-code]').onclick=async()=>{try{await root.navigator.clipboard.writeText(code);status(panel,{ok:true})}catch{status(panel,{ok:false,code:'SHARE_UNAVAILABLE'})}};
-  const shareUrl=eventKind==='tournament'?eventInvitationUrl({...result,eventKind}):new URL('/index-grupal.html?inicio=1',root.location.origin).toString();
-  const messageText='Te invito a '+(eventKind==='tournament'?'el torneo ':'el grupo privado ')+(result.name||'')+'.\nCódigo de acceso: '+code+'\nAbre Golf Score Card GT: '+shareUrl;
   const navigate=()=>{if(returnTo){try{const url=new URL(returnTo,root.location.origin);if(url.origin===root.location.origin&&url.pathname==='/index-grupal.html'){close();root.location.assign(url.toString());return}}catch{}}return continueToCreatedPrivateCard(panel,event)};
   panel.querySelector('[data-continue-private-round]').onclick=navigate;
-  panel.querySelector('[data-share-private-round]').onclick=async()=>{
-   const shareData={title:result.name||'Mi grupo · Golf Score Card GT',text:messageText};
-   if(typeof root.navigator?.share==='function'){
-    try{await root.navigator.share(shareData);await navigate()}
-    catch(error){if(error?.name==='AbortError')status(panel,{ok:false,code:'SHARE_CANCELLED'});else status(panel,{ok:false,code:'SHARE_UNAVAILABLE'})}
-    return
-   }
-   const whatsapp='https://wa.me/?text='+encodeURIComponent(messageText);
-   shareReturnArmed=false;
-   const onVisibility=()=>{if(root.document.visibilityState==='hidden')shareReturnArmed=true;else if(shareReturnArmed){root.document.removeEventListener('visibilitychange',onVisibility);root.removeEventListener?.('focus',onFocus);shareReturnArmed=false;navigate()}};
-   const onFocus=()=>{if(shareReturnArmed)onVisibility()};
-   root.document.addEventListener('visibilitychange',onVisibility);root.addEventListener?.('focus',onFocus);
-   const opened=root.open?.(whatsapp,'_blank','noopener,noreferrer');
-   if(!opened)status(panel,{ok:false,code:'SHARE_UNAVAILABLE'});else status(panel,{ok:false,code:'SHARE_WAITING_RETURN'});
-  };
+  panel.querySelector('[data-share-private-round]').onclick=()=>root.GSCWhatsAppInvitations.open({kind:eventKind,code,creatorName:result.configuration?.creatorName||result.creatorName||''},navigate);
+
  }
  function presentCreatedTournament(result,returnTo=''){const panel=dialog('TORNEO CREADO','');installCreatedPrivateRoundActions(panel,result,'tournament',returnTo)}
  function authorizeOrganizer(onAuthorized,account){const panel=dialog('AUTORIZACIÓN DE ORGANIZADOR','<p>Crear torneos requiere autorización individual del propietario.</p><p>MI CÓDIGO PERSONAL: '+escape(account||accountCode)+'</p><label for="organizerAuthorizationCode">CÓDIGO DE ORGANIZADOR</label><input id="organizerAuthorizationCode" maxlength="64" autocomplete="off"><button data-redeem-organizer>ACTIVAR AUTORIZACIÓN</button><button data-owner-login>SOY EL PROPIETARIO · INICIAR SESIÓN</button>');panel.querySelector('[data-redeem-organizer]').onclick=async()=>{const result=await request('organizer-redeem',{code:panel.querySelector('input').value.trim()});status(panel,result);if(result.ok){close();await onAuthorized()}};panel.querySelector('[data-owner-login]').onclick=()=>{close();root.GSCOpenAccountLogin?.()}}
  async function createPrivate(round,defaults={}){
-  const config=round?.configured?round:null,panel=dialog('CREAR MI GRUPO','<label for="personalRoundName">NOMBRE DEL GRUPO</label><input id="personalRoundName" maxlength="120"><label for="personalRoundCourse">CAMPO</label><input id="personalRoundCourse" maxlength="120" value="'+escape(config?.course||defaults.course||'')+'"><label for="personalRoundDate">FECHA</label><input id="personalRoundDate" type="text" readonly aria-label="Fecha automática del grupo" value="'+new Intl.DateTimeFormat('en-CA',{timeZone:'America/Guatemala'}).format(new Date())+'"><button class="primary" data-create-private>CREAR MI GRUPO</button>');
+  const config=round?.configured?round:null,panel=dialog('CREAR MI GRUPO','<label for="personalRoundCreator">NOMBRE DEL CREADOR</label><input id="personalRoundCreator" maxlength="120"><label for="personalRoundName">NOMBRE DEL GRUPO</label><input id="personalRoundName" maxlength="120"><label for="personalRoundCourse">CAMPO</label><input id="personalRoundCourse" maxlength="120" value="'+escape(config?.course||defaults.course||'')+'"><label for="personalRoundDate">FECHA</label><input id="personalRoundDate" type="text" readonly aria-label="Fecha automática del grupo" value="'+new Intl.DateTimeFormat('en-CA',{timeZone:'America/Guatemala'}).format(new Date())+'"><button class="primary" data-create-private>CREAR MI GRUPO</button>');
   const button=panel.querySelector('[data-create-private]');
   button.onclick=async()=>{
    if(button.disabled)return;
-   const name=panel.querySelector('#personalRoundName').value.trim(),course=panel.querySelector('#personalRoundCourse').value.trim(),playedAt=panel.querySelector('#personalRoundDate').value;
+   const creatorName=panel.querySelector('#personalRoundCreator').value.trim(),name=panel.querySelector('#personalRoundName').value.trim(),course=panel.querySelector('#personalRoundCourse').value.trim(),playedAt=panel.querySelector('#personalRoundDate').value;
+   if(!creatorName){panel.querySelector('[data-status]').textContent='ESCRIBE EL NOMBRE DEL CREADOR';return}
    if(!name||!course||!playedAt){panel.querySelector('[data-status]').textContent=!name?'ESCRIBE EL NOMBRE DE MI GRUPO':!course?'SELECCIONA EL CAMPO':'COMPLETA LA FECHA';return}
    button.disabled=true;panel.querySelector('[data-status]').textContent='CREANDO MI GRUPO…';
    try{
-    const snapshot=config?root.GSCLiveControl.buildLiveSnapshot(config):null,result=await request('create',{eventKind:'private',name,course,playedAt,mode:config?.mode||defaults.mode||'general',categories:Object.keys(labels),players:snapshot?.players||[],groupLabel:snapshot?.groupLabel||''});
+    const snapshot=config?root.GSCLiveControl.buildLiveSnapshot(config):null,result=await request('create',{eventKind:'private',creatorName,name,course,playedAt,mode:config?.mode||defaults.mode||'general',categories:Object.keys(labels),players:snapshot?.players||[],groupLabel:snapshot?.groupLabel||''});
     status(panel,result);if(!result.ok)return;
-    root.localStorage.setItem('golf-score-card-gt-private-round-v1',JSON.stringify({id:result.eventId,name:result.name,viewerToken:result.viewerToken,joinCode:result.joinCode,creator:true,roundId:config?.registrationDraft?'':config?.id||'',expiresAt:result.expiresAt,personal:true}));
-    await sync();if(!config||config.registrationDraft){panel.querySelector('section').innerHTML='<button type="button" data-close aria-label="Cerrar">X</button><h3>MI GRUPO CREADO</h3><p data-status role="status" aria-live="polite"></p>';panel.querySelector('[data-close]').onclick=close;installCreatedPrivateRoundActions(panel,result);return}
+    root.localStorage.setItem('golf-score-card-gt-private-round-v1',JSON.stringify({id:result.eventId,name:result.name,creatorName,viewerToken:result.viewerToken,joinCode:result.joinCode,creator:true,roundId:config?.registrationDraft?'':config?.id||'',expiresAt:result.expiresAt,personal:true}));
+    await sync();if(!config||config.registrationDraft){panel.querySelector('section').innerHTML='<button type="button" data-close aria-label="Cerrar">X</button><h3>MI GRUPO CREADO</h3><p data-status role="status" aria-live="polite"></p>';panel.querySelector('[data-close]').onclick=close;installCreatedPrivateRoundActions(panel,{...result,creatorName});return}
     close();await root.GSCLiveControl.connectPrivateRound(result.eventId,result.joinCode,config);root.GSCPrivateRounds.openScores(config);
    }catch{panel.querySelector('[data-status]').textContent='NO SE PUDO CREAR MI GRUPO · REINTENTA'}finally{if(button.isConnected)button.disabled=false}
   };
@@ -120,7 +106,7 @@
    if(!access.ok||access.membership.role!=='organizer'){status(panel,{ok:false,code:'PERSONAL_EVENT_FORBIDDEN'});return}
    let owned;try{owned=JSON.parse(root.localStorage.getItem('golf-score-card-gt-live-control-v1')||'null')?.tournamentOwned}catch{}
    if(owned?.tournamentId!==event.eventId||!owned.joinCode){panel.querySelector('[data-status]').textContent='CÓDIGO NO DISPONIBLE EN ESTE DISPOSITIVO';return}
-   const sharing=dialog('ID DE TORNEO','');installCreatedPrivateRoundActions(sharing,{eventId:event.eventId,name:access.tournament.name,joinCode:owned.joinCode},'tournament');sharing.querySelector('h3').textContent=access.tournament.name;
+   const sharing=dialog('ID DE TORNEO','');installCreatedPrivateRoundActions(sharing,{eventId:event.eventId,name:access.tournament.name,configuration:access.tournament.configuration,joinCode:owned.joinCode},'tournament');sharing.querySelector('h3').textContent=access.tournament.name;
   });
  }
 
