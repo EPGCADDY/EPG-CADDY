@@ -3380,7 +3380,7 @@ async function openAssignedPersonalScoreCard(){
     openFreshStablefordSetup();stablefordSetupCourseKey=courseKeyForName(configuration.course);stablefordSetupCategory=member.players[0].tournamentCategory;
     document.querySelectorAll('[data-stableford-name]').forEach((input,i)=>input.value=member.players[i]?.name||'');$('stablefordTournamentName').value=result.tournament.name;renderStablefordSetup();return true;
   }
-  openFriendsRoundDraft();draftPlayers=member.players.map((player,index)=>normalizePlayer({...player,tee:player.tee||'Blanco',holes:{},activeFrom:1},index));draftRoundMode=configuration.mode;draftCourse=courseKeyForName(configuration.course);seedManualDraftRowsFromPlayers();persistDraftState();renderDraft();return true;
+  openFriendsRoundDraft();draftPlayers=member.players.map((player,index)=>normalizePlayer({...player,tee:player.tee||'Blanco',holes:{},activeFrom:1},index));draftRoundMode=configuration.mode;draftCourse=courseKeyForName(configuration.course);seedManualDraftRowsFromPlayers();persistDraftState();showStep2();return true;
 }
 function openRegistrationPreservingActiveRound(){
   if(round.configured)persist();

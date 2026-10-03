@@ -1242,3 +1242,6 @@ Revisión automática rechazó git push de fix/r156-tournament-invitation al rep
 
 ### R156 · autorización de subida · 2 octubre 2026 21:23 Guatemala
 El propietario autorizó explícitamente la subida. El conector GitHub confirmó propietario EPGCADDY, mismo ID de la cuenta conectada, permisos admin/push en EPGCADDY/EPG-CADDY. Se levanta el bloqueo de autorización; Preview y navegador siguen pendientes, sin promoción de Producción.
+
+## R156 · validación real detectó confirmación redundante después del código
+Causa: openAssignedPersonalScoreCard reutilizaba Registro tras validar jugadores, forzando otro OK. Escape: VM de join sólo comprobaba callback y destino, sin último estado de interfaz. Detectado internamente por Chrome con torneo de prueba. Control permanente: regresión de confirmación con membresía real simulada y verificación de pantalla REVISAR ANTES DE EMPEZAR; escritor oficial INICIAR RONDA conservado. Ajuste en revisión, Producción intacta.

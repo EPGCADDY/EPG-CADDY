@@ -30,3 +30,18 @@ const redirects=JSON.parse(fs.readFileSync('vercel.json')).redirects;assert.equa
 console.log('PASS R156: one code prompt; invalid access denied; link opens exact event using current name; rename preserves prior links; no player invitation controls; creator actions only in Organizador; scores/timer unchanged.');
 
 const admin=fs.readFileSync('event-administration.html','utf8'),adminUI=fs.readFileSync('event-administration-ui.js','utf8');assert.match(admin,/<details id="administrativePermissions"><summary>PERMISOS ADMINISTRATIVOS<\/summary>/);assert.doesNotMatch(admin,/<details id="administrativePermissions" open/);assert.match(adminUI,/<details><summary>PERMISOS<\/summary>/);assert.match(adminUI,/ownerLogin'\).hidden=!!result.owner/);console.log('PASS simplified administration: administrative permissions collapsed; per-event permissions collapsed; owner login hidden after authenticated owner listing; API permissions unchanged.');
+
+
+const cardHTML=fs.readFileSync('index-grupal.html','utf8');
+const assigned=cardHTML.slice(cardHTML.indexOf('async function openAssignedPersonalScoreCard(){'),cardHTML.indexOf('function openRegistrationPreservingActiveRound(){'));
+const assignmentStore=new Map([['gsc-tournament-connect-selection-v1',JSON.stringify({personal:true,id,eventKind:'tournament'})]]);
+let confirmation=0,registration=0,started=0;
+const members=[{id:'p1',name:'QA',handicap:10,tee:'Blanco',tournamentCategory:'a'}];
+const assignmentContext={JSON,round:{configured:false},window:{GSCPersonalEvents:{request:async()=>({ok:true,membership:{players:members,groupLabel:'QA'},tournament:{name:'CURRENT NAME',status:'active',configuration:{course:'El Pulté',mode:'general'}}})}},localStorage:{getItem:k=>assignmentStore.get(k)||null,setItem:(k,v)=>assignmentStore.set(k,v)},openFriendsRoundDraft(){registration++},normalizePlayer:p=>p,courseKeyForName:()=> 'pulte',seedManualDraftRowsFromPlayers(){},persistDraftState(){},renderDraft(){},showStep2(){confirmation++},startConfirmedRound(){started++}};
+vm.runInNewContext(assigned,assignmentContext);
+assert.equal(await assignmentContext.openAssignedPersonalScoreCard(),true);
+assert.equal(confirmation,1,'Valid assigned players go directly to final confirmation without a second OK');
+assert.equal(registration,1);assert.equal(started,0,'Starting the round still requires the official user confirmation');
+assert.equal(JSON.parse(assignmentStore.get('gsc-tournament-connect-selection-v1')).registrationApproved,true);
+assert.equal(assignmentContext.draftPlayers[0].id,'p1');assert.equal(assignmentContext.draftRoundMode,'general');
+console.log('PASS R156 assigned-card confirmation: official membership, course and players retained; no redundant registration OK; start writer still requires confirmation.');
