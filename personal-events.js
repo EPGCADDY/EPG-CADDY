@@ -43,7 +43,7 @@
   panel.querySelector('[data-private-round-code]').textContent=code||'CÓDIGO NO DISPONIBLE';panel.querySelector('section').insertAdjacentHTML('beforeend','<button type="button" data-copy-event-code>COPIAR CÓDIGO</button>');panel.querySelector('[data-copy-event-code]').onclick=async()=>{try{await root.navigator.clipboard.writeText(code);status(panel,{ok:true})}catch{status(panel,{ok:false,code:'SHARE_UNAVAILABLE'})}};
   const navigate=()=>{if(returnTo){try{const url=new URL(returnTo,root.location.origin);if(url.origin===root.location.origin&&url.pathname==='/index-grupal.html'){close();root.location.assign(url.toString());return}}catch{}}return continueToCreatedPrivateCard(panel,event)};
   panel.querySelector('[data-continue-private-round]').onclick=navigate;
-  panel.querySelector('[data-share-private-round]').onclick=()=>root.GSCWhatsAppInvitations.open({kind:eventKind,code,creatorName:result.configuration?.creatorName||result.creatorName||''},navigate);
+  panel.querySelector('[data-share-private-round]').onclick=()=>root.GSCWhatsAppInvitations.open({kind:eventKind,code,eventName:result.name||'',creatorName:result.configuration?.creatorName||result.creatorName||''},navigate);
 
  }
  function presentCreatedTournament(result,returnTo=''){const panel=dialog('TORNEO CREADO','');installCreatedPrivateRoundActions(panel,result,'tournament',returnTo)}

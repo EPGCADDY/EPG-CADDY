@@ -12,7 +12,7 @@
     {
       "width": 390,
       "kind": "private",
-      "firstMessage": "GOLF SCORE CARD GT\nTe han invitado a participar en la ronda de Jaime Kirste.",
+      "firstMessage": "GOLF SCORE CARD GT\nTe ha invitado a participar en el grupo de Jaime Kirste.",
       "secondMessage": "QA23456789",
       "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R160_WHATSAPP/390-private.png",
       "sha256": "1e9b006e67ae071df81327867f3319a99100d6a459e13f9866dcf1e46bc4a8d4",
@@ -27,7 +27,7 @@
     {
       "width": 390,
       "kind": "tournament",
-      "firstMessage": "GOLF SCORE CARD GT\nTe han invitado a participar en el torneo de Jaime Kirste.",
+      "firstMessage": "GOLF SCORE CARD GT\nTe ha invitado a participar en el torneo Torneo QA.",
       "secondMessage": "QA23456789",
       "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R160_WHATSAPP/390-tournament.png",
       "sha256": "1e9b006e67ae071df81327867f3319a99100d6a459e13f9866dcf1e46bc4a8d4",
@@ -52,7 +52,7 @@
     {
       "width": 430,
       "kind": "private",
-      "firstMessage": "GOLF SCORE CARD GT\nTe han invitado a participar en la ronda de Jaime Kirste.",
+      "firstMessage": "GOLF SCORE CARD GT\nTe ha invitado a participar en el grupo de Jaime Kirste.",
       "secondMessage": "QA23456789",
       "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R160_WHATSAPP/430-private.png",
       "sha256": "816de5d60c8eced33440e170955c7883e18ec026ade359c056dbd2976b78977b",
@@ -67,7 +67,7 @@
     {
       "width": 430,
       "kind": "tournament",
-      "firstMessage": "GOLF SCORE CARD GT\nTe han invitado a participar en el torneo de Jaime Kirste.",
+      "firstMessage": "GOLF SCORE CARD GT\nTe ha invitado a participar en el torneo Torneo QA.",
       "secondMessage": "QA23456789",
       "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R160_WHATSAPP/430-tournament.png",
       "sha256": "816de5d60c8eced33440e170955c7883e18ec026ade359c056dbd2976b78977b",
